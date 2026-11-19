@@ -1,0 +1,30 @@
+[
+  {
+    "file": "neptune-voyager-full-disk.jpg",
+    "image_url": "https://images-assets.nasa.gov/image/PIA01492/PIA01492~orig.jpg",
+    "page_url": "https://science.nasa.gov/photojournal/neptune-full-disk-view/",
+    "credit": "NASA/JPL",
+    "shows": "Voyager 2 full disk: blue bands, the Great Dark Spot and its bright companion, plus the Scooter cloud and the little dark spot."
+  },
+  {
+    "file": "neptune-voyager-high-cloud-shadows.jpg",
+    "image_url": "https://images-assets.nasa.gov/image/PIA00058/PIA00058~orig.jpg",
+    "page_url": "https://photojournal.jpl.nasa.gov/catalog/PIA00058",
+    "credit": "NASA/JPL",
+    "shows": "Voyager 2 near-terminator view of elongated high clouds with shadows visibly displaced over the deeper blue deck, demonstrating vertical relief."
+  },
+  {
+    "file": "neptune-voyager-faint-rings.jpg",
+    "image_url": "https://images-assets.nasa.gov/image/PIA02202/PIA02202~orig.jpg",
+    "page_url": "https://science.nasa.gov/photojournal/neptune-full-ring-system/",
+    "credit": "NASA/JPL",
+    "shows": "Two Voyager 2 long exposures of Neptune's narrow, faint rings and outer ring arcs."
+  },
+  {
+    "file": "triton-voyager-color-mosaic.jpg",
+    "image_url": "https://images-assets.nasa.gov/image/PIA00317/PIA00317~orig.jpg",
+    "page_url": "https://science.nasa.gov/resource/global-color-mosaic-of-triton/",
+    "credit": "NASA/JPL/USGS",
+    "shows": "Voyager 2 global mosaic of Triton's pale pink polar ice, variegated terrain, and dark streaks."
+  }
+]

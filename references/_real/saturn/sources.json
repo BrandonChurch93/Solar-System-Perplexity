@@ -1,0 +1,58 @@
+[
+ {
+  "file": "references/_real/saturn/cassini-pia06193-natural-color.jpg",
+  "image_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Saturn_from_Cassini_Orbiter_(2004-10-06).jpg",
+  "page_url": "https://commons.wikimedia.org/wiki/File:Saturn_from_Cassini_Orbiter_(2004-10-06).jpg",
+  "credit": "NASA/JPL/Space Science Institute (Cassini, PIA06193)",
+  "shows": "Natural-colour global mosaic: butterscotch banded globe, rings, globe shadow on rings, ring shadows on globe"
+ },
+ {
+  "file": "references/_real/saturn/hubble-2019-portrait.jpg",
+  "image_url": "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/09/hubble_reveals_latest_portrait_of_saturn/19701468-1-eng-GB/Hubble_Reveals_Latest_Portrait_of_Saturn_pillars.jpg",
+  "page_url": "https://www.esa.int/ESA_Multimedia/Images/2019/09/Hubble_reveals_latest_portrait_of_Saturn",
+  "credit": "NASA, ESA, A. Simon (GSFC), M.H. Wong (UC Berkeley) and the OPAL Team (Hubble, 2019)",
+  "shows": "Rings tilted wide open, crisp banding, Cassini Division and Encke gap"
+ },
+ {
+  "file": "references/_real/saturn/cassini-multicolored-rings.jpg",
+  "image_url": "https://cdn.mos.cms.futurecdn.net/JZgeCUZZb9NEoFnRxGkHH5.jpg",
+  "page_url": "https://www.space.com/40404-saturn-rings-nasa-cassini-photo.html",
+  "credit": "NASA/JPL-Caltech/Space Science Institute (Cassini)",
+  "shows": "Fine ringlet structure and subtle natural colour variation across the rings"
+ },
+ {
+  "file": "references/_real/saturn/cassini-titan-in-front-of-rings.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Titan_in_front_of_the_ring_and_Saturn.jpg",
+  "page_url": "https://commons.wikimedia.org/wiki/File:Titan_in_front_of_the_ring_and_Saturn.jpg",
+  "credit": "NASA/JPL-Caltech/Space Science Institute (Cassini)",
+  "shows": "Titan in front of Saturn with edge-on rings and ring shadows on the globe"
+ },
+ {
+  "file": "references/_real/saturn/cassini-rings-closeup-scinews.jpg",
+  "image_url": "https://cdn.sci.news/images/enlarge/image_2607e-Saturns-Rings.jpg",
+  "page_url": "https://www.sci.news/space/science-saturns-rings-02607.html",
+  "credit": "NASA/JPL-Caltech/Space Science Institute (Cassini)",
+  "shows": "Close view of ring bands and gaps"
+ },
+ {
+  "file": "references/_real/saturn/cassini-pia18365-great-divide.jpg",
+  "image_url": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/1/PIA18365_full.jpg",
+  "page_url": "https://science.nasa.gov/resource/the-great-divide/",
+  "credit": "NASA/JPL-Caltech/Space Science Institute (Cassini, PIA18365)",
+  "shows": "The Cassini Division between the B and A rings, with the globe's shadow"
+ },
+ {
+  "file": "references/_real/saturn/cassini-equinox-pia11141.jpg",
+  "image_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Saturn_during_Equinox.jpg",
+  "page_url": "https://commons.wikimedia.org/wiki/File:Saturn_during_Equinox.jpg",
+  "credit": "NASA/JPL/Space Science Institute (Cassini, PIA11141)",
+  "shows": "Whole globe and ring system at equinox, natural colour"
+ },
+ {
+  "file": "references/_real/saturn/cassini-pia11668-b-ring-peaks.jpg",
+  "image_url": "https://commons.wikimedia.org/wiki/Special:FilePath/PIA11668_B_ring_peaks_2x_crop.jpg",
+  "page_url": "https://commons.wikimedia.org/wiki/File:PIA11668_B_ring_peaks_2x_crop.jpg",
+  "credit": "NASA/JPL/Space Science Institute (Cassini, PIA11668)",
+  "shows": "Vertical peaks up to 2.5 km tall at the outer edge of the B ring throwing long shadows at equinox"
+ }
+]

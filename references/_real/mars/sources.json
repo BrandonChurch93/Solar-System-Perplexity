@@ -1,0 +1,30 @@
+[
+  {
+    "file": "viking-valles-tharsis-polar-cap.jpg",
+    "image_url": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia00/pia00407/PIA00407.jpg",
+    "page_url": "https://science.nasa.gov/resource/global-color-views-of-mars/",
+    "credit": "NASA/JPL-Caltech/USGS",
+    "shows": "Viking Orbiter orthographic mosaic showing the long, roughly equatorial Valles Marineris scar, broad Tharsis shields and calderas lying west of it, the bright north polar cap, and plausible Martian albedo variation."
+  },
+  {
+    "file": "hirise-phobos-stickney.jpg",
+    "image_url": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia10/pia10368/PIA10368.jpg?w=3374&h=3300&fit=clip",
+    "page_url": "https://science.nasa.gov/photojournal/phobos-from-6800-kilometers-color/",
+    "credit": "NASA/JPL-Caltech/University of Arizona",
+    "shows": "Mars Reconnaissance Orbiter HiRISE enhanced-color view of the irregular moon Phobos, with Stickney impact relief, smaller pocks, and parallel grooves on matte gray-brown regolith."
+  },
+  {
+    "file": "moc-regional-dust-storm.jpg",
+    "image_url": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia03/pia03168/PIA03168.jpg",
+    "page_url": "https://science.nasa.gov/photojournal/snapshot-of-southern-spring-dust-storm-activity/",
+    "credit": "NASA/JPL/MSSS",
+    "shows": "Mars Global Surveyor MOC image of July 8, 2001: mobile regional dust spilling from the southern polar region toward Noctis Labyrinthus, with a smaller dust event near Ascraeus Mons."
+  },
+  {
+    "file": "odyssey-melas-chasma-topography.jpg",
+    "image_url": "https://assets.science.nasa.gov/content/dam/science/psd/mars/downloadable_items/3/3/33136_2906_HighViewOfMidCanyonMelas.jpg",
+    "page_url": "https://science.nasa.gov/resource/high-view-of-melas/",
+    "credit": "NASA/JPL/Arizona State University",
+    "shows": "Oblique Melas Chasma terrain from a colorized Mars Odyssey THEMIS image mosaic draped on Mars Global Surveyor MOLA elevation data, showing parallel escarpments, landslide aprons, and the width of the central Valles Marineris trough."
+  }
+]

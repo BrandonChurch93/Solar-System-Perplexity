@@ -1,0 +1,30 @@
+[
+  {
+    "file": "references/_real/venus/mariner10-golden-swirling-globe.jpg",
+    "image_url": "https://science.nasa.gov/wp-content/uploads/2024/03/venus-mariner-10-pia23791-fig2.jpg",
+    "page_url": "https://science.nasa.gov/image-detail/venus-mariner-10-pia23791-fig2-2/",
+    "credit": "NASA/JPL-Caltech (Mariner 10, PIA23791)",
+    "shows": "Contrast-enhanced false-color global view of Venus wrapped in warm golden-cream swirling cloud bands and bright south polar hood"
+  },
+  {
+    "file": "references/_real/venus/akatsuki-uvi-chevron-bands.jpg",
+    "image_url": "https://akatsuki.isas.jaxa.jp/en/gallery/data/files/uvi_20180330_100111_283_365_l2b_v20180601_mod.png",
+    "page_url": "https://akatsuki.isas.jaxa.jp/en/gallery/data/001167.html",
+    "credit": "JAXA / ISAS / PLANET-C Project Team (Akatsuki UVI)",
+    "shows": "Dayside ultraviolet false-color portrait (283 nm and 365 nm) revealing Venus's planetary-scale V-shaped chevron cloud bands, cellular equatorial mottling, and smooth polar collars across the terminator"
+  },
+  {
+    "file": "references/_real/venus/akatsuki-ir2-cloud-deck-structure.jpg",
+    "image_url": "https://akatsuki.isas.jaxa.jp/en/gallery/data/files/ir2_20160904_170212_174_226_l2b_v20180501_mod.png",
+    "page_url": "https://akatsuki.isas.jaxa.jp/en/gallery/data/001177.html",
+    "credit": "JAXA / ISAS / PLANET-C Project Team (Akatsuki IR2)",
+    "shows": "Close-range near-infrared nightside view (1.735 um and 2.26 um) of Venus's middle and lower cloud decks showing deep sculpted cloud canyons, billowing convective cells, and sweeping wind-shear bands"
+  },
+  {
+    "file": "references/_real/venus/venus-express-polar-vortex-glow.jpg",
+    "image_url": "https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2015/01/venus_express_snaps_swirling_vortex/15199104-1-eng-GB/Venus_Express_snaps_swirling_vortex_pillars.jpg",
+    "page_url": "https://www.esa.int/ESA_Multimedia/Images/2015/01/Venus_Express_snaps_swirling_vortex",
+    "credit": "ESA/VIRTIS/INAF-IASF/Obs. de Paris-LESIA/Univ. Oxford (Venus Express)",
+    "shows": "Thermal-infrared (5.02 um) view looking into the glowing golden-amber swirling cloud walls and vortex eye 60 km above Venus's south pole"
+  }
+]

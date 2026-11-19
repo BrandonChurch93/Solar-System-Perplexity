@@ -1,0 +1,30 @@
+[
+  {
+    "file": "hubble-jupiter-full-disc-great-red-spot.jpg",
+    "image_url": "https://science.nasa.gov/wp-content/uploads/2023/04/stsci-h-p1936a-m-1999x2000-1.png?w=1999",
+    "page_url": "https://science.nasa.gov/missions/hubble/hubble-spots-jupiters-great-red-spot/",
+    "credit": "NASA, ESA, A. Simon (Goddard Space Flight Center), and M.H. Wong (University of California, Berkeley)",
+    "shows": "Full sunlit globe of Jupiter with cream, amber, rust, and slate blue-grey cloud bands, intricate storm eddies along every belt boundary, white ovals, and the crimson-orange Great Red Spot."
+  },
+  {
+    "file": "cassini-jupiter-io-transit-shadow-pia02860.jpg",
+    "image_url": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia02/pia02860/PIA02860.jpg?w=1020&h=986&fit=clip&crop=faces%2Cfocalpoint",
+    "page_url": "https://science.nasa.gov/photojournal/io-in-front-of-jupiter-2/",
+    "credit": "NASA/JPL/University of Arizona (PIA02860)",
+    "shows": "Southern hemisphere of Jupiter showing the Great Red Spot, cream zones, amber-rust belts, blue-grey equatorial festoons, volcanic moon Io suspended in front of the globe, and Io's crisp circular black shadow cast onto the clouds."
+  },
+  {
+    "file": "juno-great-red-spot-limb-pia21775.jpg",
+    "image_url": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia21/pia21775/PIA21775.jpg?w=1536&h=1365&fit=clip&crop=faces%2Cfocalpoint",
+    "page_url": "https://science.nasa.gov/photojournal/jupiters-great-red-spot-in-true-color/",
+    "credit": "Image data: NASA/JPL-Caltech/SwRI/MSSS; Image processing: Björn Jónsson (PIA21775)",
+    "shows": "Oblique Juno flyby view across Jupiter's curved limb showing the concentric rust-orange vortex of the Great Red Spot surrounded by textured cream and grey cloud tops."
+  },
+  {
+    "file": "juno-folded-filament-storms-shadows-pia25031.jpg",
+    "image_url": "https://science.nasa.gov/wp-content/uploads/2024/04/pia25031-junocam-giant-storms-and-high-clouds.jpg",
+    "page_url": "https://science.nasa.gov/mission/juno/",
+    "credit": "Image data: NASA/JPL-Caltech/SwRI/MSSS; Image processing: Kevin M. Gill (PIA25031)",
+    "shows": "Low-altitude JunoCam close-up of rotating storms, folded filamentary cloud walls in slate blue-grey, cream, and tan, and bright high-altitude pop-up storm clouds casting distinct shadows onto the lower cloud deck."
+  }
+]
