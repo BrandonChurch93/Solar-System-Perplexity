@@ -80,7 +80,7 @@ One section per stop. The approved images are the authority. These notes point a
 - Motion in the hold: the rings turn, inner parts faster than outer. The bands on the globe drift. Titan moves.
 - Moon: `titan`. Hazy and orange.
 - Spot: the ring plane. The dive goes to the rings, not to the globe.
-- Technique: true 3D. The camera skims just above the rings with Saturn huge behind, as in the approved close image. The rings resolve into thousands of fine bands, and near the lens into drifting grains of ice that sparkle. Change to a relief only if true 3D cannot match the approved close image inside the round limit.
+- Technique: true 3D. The camera skims just above the rings with Saturn huge behind, as in the approved close image. The rings resolve into thousands of fine bands, and near the lens into drifting grains of ice that sparkle. If true 3D has not matched the approved close image after `quality.plateauRounds` rounds, change to a relief for the far and middle distance and keep true 3D ice near the lens.
 - Cover: none is needed while the terrain view is true 3D. The dive is one continuous move.
 
 ## Uranus

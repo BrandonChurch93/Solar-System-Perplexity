@@ -66,9 +66,13 @@ Read `AGENTS.md` at the repo root before this file.
 | Still | A single frame rendered for review |
 | Judged frame | A still on the fixed list the critics score |
 | Comparison image | A judged frame beside its approved image, made by `npm run compare` |
-| Gate | A check a script can run and that must be green |
+| Machine check | An automated check on the code. Red means a bug |
+| Measure | An automated number on the picture. Red means a severe issue for the round, not a blocker |
+| Deliverable check | An automated check on a file that takes long to make, run only at the end of the phases that name it |
+| Gate | What has to be true before a phase ends. Listed at the end of each phase in `kit/08-BUILD-ORDER.md` |
 | Critic | A fresh agent that scores files against a rubric |
 | Round | One pass of build, gate, pack, critics, fixes |
-| Open item | An issue still unresolved when a round limit was reached |
+| Open item | An issue still unresolved when a limit was reached |
+| Chunk | One segment of the film, encoded so chunks join without being encoded again |
 | Harness | The scripts in `tools/` that render frames in a headless browser |
 | Export | The in-browser mode that renders and encodes the film on a computer with a GPU |

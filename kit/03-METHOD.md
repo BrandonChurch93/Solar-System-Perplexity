@@ -16,7 +16,7 @@ The orbit view has to look like the approved hero image, feature for feature. So
 2. Unproject the image onto the sphere. That gives a wrap map that is correct for the part of the globe the image shows.
 3. Remove the baked light from that part: the terminator shading, the limb glow, the shadow of a moon or ring. Use an image tool to relight it evenly. What remains is surface color only.
 4. Fill the rest of the globe in the same style with an image tool. Where a real map exists, use it as the layout guide so the far side has the right continents, canyons or bands. `kit/06-ASSETS.md` lists sources.
-5. Bring the map to `assetSets.full.wrapMapWidth` with detail that holds at native size, then derive the `web` set from it.
+5. Bring the map to `assetSets.full.wrapMapWidth` with detail that holds at native size, then derive the `web` set from it. The image tools return pictures a fraction of that size, in a few fixed shapes, so work in two passes. First one pass over the whole map at low resolution, to settle layout and color. Then overlapping tiles, each made with its piece of the low resolution pass and the approved image as inputs, blended across the overlaps.
 6. Make the extra maps the stop needs: night lights, clouds, height or normal, a mask for water glint.
 
 Check the map before it goes on a globe:
@@ -24,6 +24,7 @@ Check the map before it goes on a globe:
 - No seam where the left edge meets the right edge.
 - No pinching or swirling at the poles. Paint the poles in a polar view and reproject them if needed.
 - No region that is visibly softer than the rest.
+- No border between tiles, in color or in detail.
 - No baked highlight, shadow or glow.
 
 ### Light and atmosphere in code
@@ -68,7 +69,7 @@ The approved close image, given depth, so the camera can fly forward through it.
 
 ### Building a relief
 
-1. Source: the approved close image, brought to `assetSets.full.reliefWidth` with detail that holds at native size. Nothing in it is redrawn. Only resolution is added.
+1. Source: the approved close image, brought to `assetSets.full.reliefWidth` with detail that holds at native size. Nothing in it is redrawn. Only resolution is added. Use the tool from Phase 0 that adds resolution without redrawing. An image model may add fine detail on top only if the check in `kit/06-ASSETS.md` shows nothing moved.
 2. Sky: cut the sky above the horizon out of the image. The film's own sky shows through, so stars stay fixed at infinity while the ground moves.
 3. Ground: fit a curved surface to the ground in the image, matching the curve of the horizon. Project the image onto it from the position of the image's own camera.
 4. Depth: estimate depth for the image and use it to raise what stands above the ground: crater rims, canyon walls, cloud towers, storm walls.
@@ -80,6 +81,7 @@ The approved close image, given depth, so the camera can fly forward through it.
 A relief that does not move reads as a photograph. Every relief carries the motion its stop lists in `kit/02-STOPS.md`.
 
 - Motion is done in the shader: the image is pushed along a flow field, with masks that keep it to the right regions.
+- Inside a segment the push is one continuous displacement that grows with time and stays small. Do not cross-fade two offset copies of the image. That doubles edges and washes out contrast. Looping is needed only in `live` mode.
 - Rotation round a center for storms. Drift along a direction for mist, haze and cloud bands. Churn for the Sun's granulation. Shimmer for glint on water.
 - Every motion is a closed-form function of time. It does not pop, snap back or visibly repeat within the segment.
 - Motion is subtle. If a viewer notices the trick, it is too strong.
@@ -104,12 +106,12 @@ A dive goes from the orbit view to the terrain view. A rise goes back. Both happ
 - The wrap map is sharp enough for the `hold`. It is not sharp enough for a dive.
 - Lay detail patches over the wrap map at the spot. Each patch covers a smaller area than the one under it at higher detail, and its edges are feathered and color matched so it cannot be seen as a patch.
 - The deepest patch shows the spot from above in the style of the approved close image, so the ground the camera falls toward looks like the place it lands in.
-- Add patches until the measure in G13 of `kit/07-QUALITY-BAR.md` holds for every frame up to the cover.
+- Add patches until the G13 measure in `kit/07-QUALITY-BAR.md` holds for every frame outside the cover, and the deepest patch has real detail, not enlarged pixels.
 
 ### The cover
 
 - The cover is `cover.seconds` long. Its center is at `cover.diveCenterFraction` of a `dive` and `cover.riseCenterFraction` of a `rise`.
-- Before the cover the picture is the orbit view. After it the picture is the terrain view.
+- In a dive the picture is the orbit view before the cover and the terrain view after it. In a rise it is the other way round.
 - Each stop's cover is listed in `kit/02-STOPS.md`: haze, cloud, glare or a flare. It belongs to that world, so it reads as something the camera flew through.
 - Across the cover the direction of travel, the horizon line, the color and the exposure all carry over. Nothing jumps.
 - The camera is at its fastest during the cover.
@@ -134,9 +136,11 @@ A dive goes from the orbit view to the terrain view. A rise goes back. Both happ
 
 ## 5. The sky
 
-- One sky for the whole film: stars and the Milky Way, wrapped on a sphere at infinity, at `assetSets.full.skyWidth`.
-- It starts from a real star map, graded to match the approved images: a dense field of pin-sharp stars and a glowing, dusty band of the Milky Way. `kit/06-ASSETS.md` names the source.
-- Stars are points, never blobs. The brightest have a small soft glow.
+- One sky for the whole film, in two layers.
+- The glow: the Milky Way's band, its dust and the faint haze of unresolved stars, as a map at `assetSets.full.skyWidth` wrapped on a sphere at infinity. It starts from a real star map with the individual stars taken out or blurred away, graded to match the approved images. `kit/06-ASSETS.md` names the source.
+- The stars: points drawn in code on top of the glow, thousands of them, each with its own brightness and color. A map alone cannot do this. At the long lenses of the orbit views a map's stars turn into blobs.
+- Star positions come from a public catalog or from the seeded generator. Accuracy is not required. Density, sharpness and the look of the approved images are.
+- The brightest stars have a small soft glow.
 - The sky keeps one orientation for the whole film. It turns only because the camera turns.
 - Exposure dims the sky when a bright body or the Sun fills the frame, as a real lens would, but the sky never disappears completely.
 

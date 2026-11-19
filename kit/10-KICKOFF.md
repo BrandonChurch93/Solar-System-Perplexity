@@ -26,7 +26,7 @@ Use supporting agents wherever the kit calls for them. Do not lower the bar to f
 
 ## What you will see, in order
 
-1. A link to the live app, early.
+1. A link to the live app, early, and a review page at the same address under `review.html`. Everything the build shows you plays there.
 2. The rough cut: the whole film made from the approved stills, so you can judge the pacing. The build does not wait for you here.
 3. `MARS READY FOR REVIEW`. The build stops here and waits.
 4. A progress note with pictures after each of the other eight stops.
@@ -38,7 +38,7 @@ Use supporting agents wherever the kit calls for them. Do not lower the bar to f
 
 ## After MARS READY FOR REVIEW
 
-1. Open the "Watch it" link and the two side by side images.
+1. Open the review page. It has the Mars clip and the two side by side images.
 2. Bring what you like and dislike to the planning chat.
 3. If changes are needed they are pushed to the repo as an addendum first.
 4. Then send the resume prompt.
@@ -46,19 +46,21 @@ Use supporting agents wherever the kit calls for them. Do not lower the bar to f
 ## Resume prompt after the Mars review
 
 ```
-BUILD MODE. Mars is approved.
+BUILD MODE.
 
-Clone https://github.com/BrandonChurch93/Solar-System-Perplexity and continue from kit/PROGRESS.md. Read kit/addenda/ first. Same rules: no questions, show your work as you go, stop only at BUILD COMPLETE or a blocker as AGENTS.md defines one.
+Mars is approved.
+
+Clone https://github.com/BrandonChurch93/Solar-System-Perplexity and continue from kit/PROGRESS.md. Read AGENTS.md and kit/addenda/ first. Same rules: no questions, show your work as you go, stop only at BUILD COMPLETE or a blocker as AGENTS.md defines one.
 ```
 
 ## Resume prompt if a task ends early
 
-Use this if a task ends before the Mars review, or between the Mars review and BUILD COMPLETE. The Mars approval is remembered in `kit/PROGRESS.md`, so this one prompt works at any point.
+Use this if a task ends before the Mars review, or between the Mars review and BUILD COMPLETE. The Mars approval is remembered in `kit/PROGRESS.md`, so this one prompt works at any point. Do not use it to answer the Mars review itself: without the approval line the build stops again and shows the same review.
 
 ```
 BUILD MODE.
 
-Clone https://github.com/BrandonChurch93/Solar-System-Perplexity and continue from kit/PROGRESS.md. Read kit/addenda/ first. Same rules: no questions, show your work as you go, stop only at the Mars review, BUILD COMPLETE or a blocker as AGENTS.md defines one.
+Clone https://github.com/BrandonChurch93/Solar-System-Perplexity and continue from kit/PROGRESS.md. Read AGENTS.md and kit/addenda/ first. Same rules: no questions, show your work as you go, stop only at the Mars review, BUILD COMPLETE or a blocker as AGENTS.md defines one.
 ```
 
 ## After BUILD COMPLETE

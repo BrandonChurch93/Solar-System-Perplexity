@@ -1,8 +1,10 @@
 # 09 · QA gauntlet
 
-Run every item at the end of Phase 6. Record the evidence for each in `kit/PROGRESS.md`. One failed item means the build is not complete.
+Run every item at the end of Phase 6. Record the evidence for each in `kit/PROGRESS.md`.
 
-An open item from a round limit does not fail the gauntlet. A missing record of it does.
+- If an item fails, fix it and run the gauntlet again, for at most `quality.gauntletMaxPasses` passes in all.
+- An item that still fails after the last pass is listed under "Failed QA items" in `kit/PROGRESS.md` and in the `BUILD COMPLETE` block, with what was tried. The build then completes. It does not loop.
+- An open item from a round limit does not fail the gauntlet. A missing record of it does.
 
 ## The film
 
@@ -19,7 +21,7 @@ An open item from a round limit does not fail the gauntlet. A missing record of 
 
 | No. | Item | Evidence |
 | --- | --- | --- |
-| 7 | The record round ran every critic on the full judged list from the final build | The record round `SUMMARY.md` and the build hash |
+| 7 | The record round ran the measures and every critic on the full judged list from the frozen build | The record round `SUMMARY.md` and the hashes |
 | 8 | Every judged `hold` and `terrain` frame has a comparison image from the final build | File list with records |
 | 9 | Every open item is logged with its stop, its frame, the critic's words and what was tried | "Open items" in `kit/PROGRESS.md` |
 | 10 | The stress encode was judged | The R7 result |
@@ -28,12 +30,12 @@ An open item from a round limit does not fail the gauntlet. A missing record of 
 
 | No. | Item | Evidence |
 | --- | --- | --- |
-| 11 | G1 to G16 are green | `npm run gate -- --phase 6` output |
-| 12 | A clean clone builds and renders frame 0 identically | Hash of frame 0 from a fresh clone against the committed still |
+| 11 | The machine checks and the deliverable checks G8, G9 and G16 are green | `npm run gate -- --phase 6` output |
+| 12 | A clean clone on the same machine builds and renders frame 0 identically | Hash of frame 0 from a fresh clone against the same frame from the working copy |
 | 13 | `src/` takes frame rate, duration, formats, tiers, stops, segments, thresholds and names only from `src/config.ts` | Search of `src/` for those values, with every hit explained |
 | 14 | No `Math.random`, `Date.now` or `performance.now` on any path that affects a pixel | Search output with each remaining use explained |
 | 15 | Export proof exists and `ffprobe` accepts the file | `ffprobe` output |
-| 16 | `export` mode shows progress and time remaining, and memory stays flat across a `travel` segment | Log of memory readings |
+| 16 | `export` mode shows progress and time remaining, and the loader's texture total is back to one set after a `travel` segment | Log of the memory test |
 | 17 | `npm run build` output works from a subfolder path | A still rendered from `dist/` served under a subfolder |
 | 18 | The published app plays the film in `autopilot` and jumps to every stop in `live` | A still captured from the published URL at three different stops |
 
@@ -44,7 +46,7 @@ An open item from a round limit does not fail the gauntlet. A missing record of 
 | 19 | `ASSETS.md` lists every third-party file, and every generated asset has a recipe | G11 result |
 | 20 | Nothing under `references/approved/` has changed | G12 result |
 | 21 | `cut/SHOTS.md` and `cut/CUES.md` are committed and match the final timings | File list and a check against `segments` |
-| 22 | `out/roughcut.mp4`, `out/preview.mp4`, nine clips in `out/clips/` and `out/stills/` are committed | File list |
+| 22 | `out/roughcut.mp4`, `out/preview.mp4`, nine clips in `out/clips/` and `out/stills/` are committed. If the sandbox master could not be rendered, the log says so and the clips are the `review` tier renders | File list |
 | 23 | Every round has a folder in `scorecards/` | File list |
 | 24 | `README.md` has the app URL, how to fly it, how to export, and any credit the post must carry, with no em dashes and no model names | The file |
 | 25 | Everything is pushed | `git status` and `git log origin/main -1` |

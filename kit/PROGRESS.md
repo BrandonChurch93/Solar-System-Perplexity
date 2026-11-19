@@ -10,6 +10,8 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Blocked: no
 - App URL: not published yet
 - Mars review: not reached
+
+"Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
 - Last push: none by the Builder yet
 
 ## Latest pictures
@@ -32,17 +34,19 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 
 ## Stops
 
+State is one of `not started`, `stand-in`, `in progress` or `finished`. A finished stop also names the commit it was finished on.
+
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | stand-in not built | 0 | | | | | | |
-| mercury | stand-in not built | 0 | | | | | | |
-| venus | stand-in not built | 0 | | | | | | |
-| earth | stand-in not built | 0 | | | | | | |
-| mars | stand-in not built | 0 | | | | | | |
-| jupiter | stand-in not built | 0 | | | | | | |
-| saturn | stand-in not built | 0 | | | | | | |
-| uranus | stand-in not built | 0 | | | | | | |
-| neptune | stand-in not built | 0 | | | | | | |
+| sun | not started | 0 | | | | | | |
+| mercury | not started | 0 | | | | | | |
+| venus | not started | 0 | | | | | | |
+| earth | not started | 0 | | | | | | |
+| mars | not started | 0 | | | | | | |
+| jupiter | not started | 0 | | | | | | |
+| saturn | not started | 0 | | | | | | |
+| uranus | not started | 0 | | | | | | |
+| neptune | not started | 0 | | | | | | |
 
 ## Workspace record
 
@@ -58,7 +62,7 @@ To be filled in Phase 0.
 
 ## Render budget
 
-To be measured in Phase 0 and measured again on the real scene at the start of Phases 2, 3 and 5.
+To be measured in Phase 0 and measured again in Phases 2, 3 and 5, at the step `kit/08-BUILD-ORDER.md` names.
 
 ## Judged frames
 
@@ -76,9 +80,13 @@ None yet.
 
 None yet. One entry per issue left open by a round limit: the stop, the frame, the critic and its words, what was tried, what to try next.
 
+## Running jobs
+
+None. One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
+
 ## Rounds
 
-One line per round: number, phase, stop, scores, what changed next.
+One line per round, written when the round starts: number, phase, stop. Scores and what changes next are added when it ends.
 
 ## Final scores
 
@@ -87,6 +95,10 @@ To be written by the record round in Phase 6.
 ## QA results
 
 To be filled at the end of Phase 6.
+
+## Failed QA items
+
+None yet.
 
 ## Push log
 

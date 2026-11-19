@@ -54,7 +54,8 @@ The 18 approved images in `references/approved/` are this bar made concrete. Bra
 
 - A frame is the average of its samples, spread across the shutter set by `film.shutterDegrees` and across the pixel.
 - That gives real motion blur in dives, rises and travel, and clean edges on limbs, rings and stars.
-- Stars do not smear during slow camera drift.
+- Fast segments get more samples. `kit/05-ARCHITECTURE.md` says how. Blur is smooth. An edge never breaks into separate copies.
+- Stars stay points. They do not smear or streak, even when the camera turns.
 - Thin lines, such as Uranus's rings and ring bands at grazing angles, do not shimmer or crawl from frame to frame.
 
 ## 8. Diagnostic views
@@ -121,9 +122,15 @@ When a critic's issue survives `quality.plateauRounds` rounds, stop tuning and c
 
 ### The sky looks fake
 
-1. Raise the sky resolution, or draw the brightest stars as points on top of the map.
-2. Grade the Milky Way against the approved images.
+1. Draw more stars as points, with more variety in brightness and color.
+2. Grade the Milky Way's glow against the approved images.
 3. Check that stars stay fixed while the ground moves.
+
+### Fast motion breaks into ghost copies
+
+1. Raise `fastSamplesPerFrame` for the tier.
+2. Add blur along the direction of motion inside each sample.
+3. Slow the fastest part of the move slightly and let the cover carry it.
 
 ### Dark gradients band
 

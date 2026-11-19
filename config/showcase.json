@@ -4,7 +4,9 @@
   "repo": {
     "url": "https://github.com/BrandonChurch93/Solar-System-Perplexity",
     "branch": "main",
-    "maxFileMb": 95
+    "maxFileMb": 95,
+    "maxTreeGb": 3,
+    "maxPushGb": 1.5
   },
   "film": {
     "fps": 30,
@@ -13,9 +15,9 @@
     "hookSeconds": 2
   },
   "formats": {
-    "master": { "id": "16x9", "width": 1920, "height": 1080 },
-    "preview": { "id": "preview", "width": 960, "height": 540 },
-    "uhd": { "id": "uhd", "width": 3840, "height": 2160 }
+    "master": {"id": "16x9", "width": 1920, "height": 1080},
+    "preview": {"id": "preview", "width": 960, "height": 540},
+    "uhd": {"id": "uhd", "width": 3840, "height": 2160}
   },
   "platform": {
     "name": "X",
@@ -40,84 +42,98 @@
       "preview": "proof-preview.mp4"
     }
   },
-  "clips": {
-    "bitrateMbps": 12
-  },
   "previewFilm": {
-    "bitrateMbps": 3
+    "bitrateMbps": 2
   },
   "tiers": {
-    "draft": { "samplesPerFrame": 1 },
-    "review": { "samplesPerFrame": 4 },
-    "final": { "samplesPerFrame": 16 }
+    "draft": {"samplesPerFrame": 1, "fastSamplesPerFrame": 1},
+    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16},
+    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64}
+  },
+  "motion": {
+    "fastKinds": [
+      "dive",
+      "rise",
+      "travel",
+      "retreat"
+    ]
   },
   "assetSets": {
-    "web": { "wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096 },
-    "full": { "wrapMapWidth": 8192, "reliefWidth": 5632, "skyWidth": 8192 }
+    "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "maxSetMemoryMb": 450},
+    "full": {"wrapMapWidth": 8192, "reliefWidth": 5632, "skyWidth": 8192, "maxSetMemoryMb": 1400}
   },
   "sets": {
     "maxLoaded": 2
   },
   "lookLockStop": "mars",
-  "buildOrderAfterLookLock": ["saturn", "earth", "jupiter", "sun", "venus", "mercury", "neptune", "uranus"],
+  "buildOrderAfterLookLock": [
+    "saturn",
+    "earth",
+    "jupiter",
+    "sun",
+    "venus",
+    "mercury",
+    "neptune",
+    "uranus"
+  ],
   "stops": [
-    { "id": "sun", "name": "Sun", "hero": "references/approved/sun-hero.png", "close": "references/approved/sun-close.jpg", "moons": [], "rings": false },
-    { "id": "mercury", "name": "Mercury", "hero": "references/approved/mercury-hero.png", "close": "references/approved/mercury-close.jpg", "moons": [], "rings": false },
-    { "id": "venus", "name": "Venus", "hero": "references/approved/venus-hero.png", "close": "references/approved/venus-close.jpg", "moons": [], "rings": false },
-    { "id": "earth", "name": "Earth", "hero": "references/approved/earth-hero.png", "close": "references/approved/earth-close.jpg", "moons": ["moon"], "rings": false },
-    { "id": "mars", "name": "Mars", "hero": "references/approved/mars-hero.png", "close": "references/approved/mars-close.jpg", "moons": ["phobos"], "rings": false },
-    { "id": "jupiter", "name": "Jupiter", "hero": "references/approved/jupiter-hero.png", "close": "references/approved/jupiter-close.jpg", "moons": ["io"], "rings": false },
-    { "id": "saturn", "name": "Saturn", "hero": "references/approved/saturn-hero.png", "close": "references/approved/saturn-close.jpg", "moons": ["titan"], "rings": true },
-    { "id": "uranus", "name": "Uranus", "hero": "references/approved/uranus-hero.png", "close": "references/approved/uranus-close.jpg", "moons": ["miranda", "ariel"], "rings": true },
-    { "id": "neptune", "name": "Neptune", "hero": "references/approved/neptune-hero.png", "close": "references/approved/neptune-close.jpg", "moons": ["triton"], "rings": true }
+    {"id": "sun", "name": "Sun", "hero": "references/approved/sun-hero.png", "close": "references/approved/sun-close.jpg", "moons": [], "rings": false},
+    {"id": "mercury", "name": "Mercury", "hero": "references/approved/mercury-hero.png", "close": "references/approved/mercury-close.jpg", "moons": [], "rings": false},
+    {"id": "venus", "name": "Venus", "hero": "references/approved/venus-hero.png", "close": "references/approved/venus-close.jpg", "moons": [], "rings": false},
+    {"id": "earth", "name": "Earth", "hero": "references/approved/earth-hero.png", "close": "references/approved/earth-close.jpg", "moons": ["moon"], "rings": false},
+    {"id": "mars", "name": "Mars", "hero": "references/approved/mars-hero.png", "close": "references/approved/mars-close.jpg", "moons": ["phobos"], "rings": false},
+    {"id": "jupiter", "name": "Jupiter", "hero": "references/approved/jupiter-hero.png", "close": "references/approved/jupiter-close.jpg", "moons": ["io"], "rings": false},
+    {"id": "saturn", "name": "Saturn", "hero": "references/approved/saturn-hero.png", "close": "references/approved/saturn-close.jpg", "moons": ["titan"], "rings": true},
+    {"id": "uranus", "name": "Uranus", "hero": "references/approved/uranus-hero.png", "close": "references/approved/uranus-close.jpg", "moons": ["miranda", "ariel"], "rings": true},
+    {"id": "neptune", "name": "Neptune", "hero": "references/approved/neptune-hero.png", "close": "references/approved/neptune-close.jpg", "moons": ["triton"], "rings": true}
   ],
   "segments": [
-    { "id": "sun.terrain", "stop": "sun", "kind": "terrain", "start": 0, "end": 6 },
-    { "id": "sun.rise", "stop": "sun", "kind": "rise", "start": 6, "end": 9 },
-    { "id": "sun.hold", "stop": "sun", "kind": "hold", "start": 9, "end": 15 },
-    { "id": "sun.travel", "stop": "sun", "kind": "travel", "start": 15, "end": 18 },
-    { "id": "mercury.hold", "stop": "mercury", "kind": "hold", "start": 18, "end": 23 },
-    { "id": "mercury.dive", "stop": "mercury", "kind": "dive", "start": 23, "end": 26 },
-    { "id": "mercury.terrain", "stop": "mercury", "kind": "terrain", "start": 26, "end": 32 },
-    { "id": "mercury.rise", "stop": "mercury", "kind": "rise", "start": 32, "end": 34.5 },
-    { "id": "mercury.travel", "stop": "mercury", "kind": "travel", "start": 34.5, "end": 37 },
-    { "id": "venus.hold", "stop": "venus", "kind": "hold", "start": 37, "end": 42 },
-    { "id": "venus.dive", "stop": "venus", "kind": "dive", "start": 42, "end": 45 },
-    { "id": "venus.terrain", "stop": "venus", "kind": "terrain", "start": 45, "end": 51 },
-    { "id": "venus.rise", "stop": "venus", "kind": "rise", "start": 51, "end": 53.5 },
-    { "id": "venus.travel", "stop": "venus", "kind": "travel", "start": 53.5, "end": 56 },
-    { "id": "earth.hold", "stop": "earth", "kind": "hold", "start": 56, "end": 61 },
-    { "id": "earth.dive", "stop": "earth", "kind": "dive", "start": 61, "end": 64 },
-    { "id": "earth.terrain", "stop": "earth", "kind": "terrain", "start": 64, "end": 70 },
-    { "id": "earth.rise", "stop": "earth", "kind": "rise", "start": 70, "end": 72.5 },
-    { "id": "earth.travel", "stop": "earth", "kind": "travel", "start": 72.5, "end": 75 },
-    { "id": "mars.hold", "stop": "mars", "kind": "hold", "start": 75, "end": 80 },
-    { "id": "mars.dive", "stop": "mars", "kind": "dive", "start": 80, "end": 83 },
-    { "id": "mars.terrain", "stop": "mars", "kind": "terrain", "start": 83, "end": 89 },
-    { "id": "mars.rise", "stop": "mars", "kind": "rise", "start": 89, "end": 91.5 },
-    { "id": "mars.travel", "stop": "mars", "kind": "travel", "start": 91.5, "end": 94 },
-    { "id": "jupiter.hold", "stop": "jupiter", "kind": "hold", "start": 94, "end": 99 },
-    { "id": "jupiter.dive", "stop": "jupiter", "kind": "dive", "start": 99, "end": 102 },
-    { "id": "jupiter.terrain", "stop": "jupiter", "kind": "terrain", "start": 102, "end": 108 },
-    { "id": "jupiter.rise", "stop": "jupiter", "kind": "rise", "start": 108, "end": 110.5 },
-    { "id": "jupiter.travel", "stop": "jupiter", "kind": "travel", "start": 110.5, "end": 113 },
-    { "id": "saturn.hold", "stop": "saturn", "kind": "hold", "start": 113, "end": 118 },
-    { "id": "saturn.dive", "stop": "saturn", "kind": "dive", "start": 118, "end": 121 },
-    { "id": "saturn.terrain", "stop": "saturn", "kind": "terrain", "start": 121, "end": 127 },
-    { "id": "saturn.rise", "stop": "saturn", "kind": "rise", "start": 127, "end": 129.5 },
-    { "id": "saturn.travel", "stop": "saturn", "kind": "travel", "start": 129.5, "end": 132 },
-    { "id": "uranus.hold", "stop": "uranus", "kind": "hold", "start": 132, "end": 137 },
-    { "id": "uranus.dive", "stop": "uranus", "kind": "dive", "start": 137, "end": 140 },
-    { "id": "uranus.terrain", "stop": "uranus", "kind": "terrain", "start": 140, "end": 146 },
-    { "id": "uranus.rise", "stop": "uranus", "kind": "rise", "start": 146, "end": 148.5 },
-    { "id": "uranus.travel", "stop": "uranus", "kind": "travel", "start": 148.5, "end": 151 },
-    { "id": "neptune.hold", "stop": "neptune", "kind": "hold", "start": 151, "end": 156 },
-    { "id": "neptune.dive", "stop": "neptune", "kind": "dive", "start": 156, "end": 159 },
-    { "id": "neptune.terrain", "stop": "neptune", "kind": "terrain", "start": 159, "end": 165 },
-    { "id": "neptune.rise", "stop": "neptune", "kind": "rise", "start": 165, "end": 167.5 },
-    { "id": "ending.retreat", "stop": "ending", "kind": "retreat", "start": 167.5, "end": 171.5 },
-    { "id": "ending.lookback", "stop": "ending", "kind": "lookback", "start": 171.5, "end": 177.5 },
-    { "id": "ending.fade", "stop": "ending", "kind": "fade", "start": 177.5, "end": 180 }
+    {"id": "sun.terrain", "stop": "sun", "kind": "terrain", "start": 0, "end": 6},
+    {"id": "sun.rise", "stop": "sun", "kind": "rise", "start": 6, "end": 9},
+    {"id": "sun.hold", "stop": "sun", "kind": "hold", "start": 9, "end": 15},
+    {"id": "sun.travel", "stop": "sun", "kind": "travel", "start": 15, "end": 18},
+    {"id": "mercury.hold", "stop": "mercury", "kind": "hold", "start": 18, "end": 23},
+    {"id": "mercury.dive", "stop": "mercury", "kind": "dive", "start": 23, "end": 26},
+    {"id": "mercury.terrain", "stop": "mercury", "kind": "terrain", "start": 26, "end": 32},
+    {"id": "mercury.rise", "stop": "mercury", "kind": "rise", "start": 32, "end": 34.5},
+    {"id": "mercury.travel", "stop": "mercury", "kind": "travel", "start": 34.5, "end": 37},
+    {"id": "venus.hold", "stop": "venus", "kind": "hold", "start": 37, "end": 42},
+    {"id": "venus.dive", "stop": "venus", "kind": "dive", "start": 42, "end": 45},
+    {"id": "venus.terrain", "stop": "venus", "kind": "terrain", "start": 45, "end": 51},
+    {"id": "venus.rise", "stop": "venus", "kind": "rise", "start": 51, "end": 53.5},
+    {"id": "venus.travel", "stop": "venus", "kind": "travel", "start": 53.5, "end": 56},
+    {"id": "earth.hold", "stop": "earth", "kind": "hold", "start": 56, "end": 61},
+    {"id": "earth.dive", "stop": "earth", "kind": "dive", "start": 61, "end": 64},
+    {"id": "earth.terrain", "stop": "earth", "kind": "terrain", "start": 64, "end": 70},
+    {"id": "earth.rise", "stop": "earth", "kind": "rise", "start": 70, "end": 72.5},
+    {"id": "earth.travel", "stop": "earth", "kind": "travel", "start": 72.5, "end": 75},
+    {"id": "mars.hold", "stop": "mars", "kind": "hold", "start": 75, "end": 80},
+    {"id": "mars.dive", "stop": "mars", "kind": "dive", "start": 80, "end": 83},
+    {"id": "mars.terrain", "stop": "mars", "kind": "terrain", "start": 83, "end": 89},
+    {"id": "mars.rise", "stop": "mars", "kind": "rise", "start": 89, "end": 91.5},
+    {"id": "mars.travel", "stop": "mars", "kind": "travel", "start": 91.5, "end": 94},
+    {"id": "jupiter.hold", "stop": "jupiter", "kind": "hold", "start": 94, "end": 99},
+    {"id": "jupiter.dive", "stop": "jupiter", "kind": "dive", "start": 99, "end": 102},
+    {"id": "jupiter.terrain", "stop": "jupiter", "kind": "terrain", "start": 102, "end": 108},
+    {"id": "jupiter.rise", "stop": "jupiter", "kind": "rise", "start": 108, "end": 110.5},
+    {"id": "jupiter.travel", "stop": "jupiter", "kind": "travel", "start": 110.5, "end": 113},
+    {"id": "saturn.hold", "stop": "saturn", "kind": "hold", "start": 113, "end": 118},
+    {"id": "saturn.dive", "stop": "saturn", "kind": "dive", "start": 118, "end": 121},
+    {"id": "saturn.terrain", "stop": "saturn", "kind": "terrain", "start": 121, "end": 127},
+    {"id": "saturn.rise", "stop": "saturn", "kind": "rise", "start": 127, "end": 129.5},
+    {"id": "saturn.travel", "stop": "saturn", "kind": "travel", "start": 129.5, "end": 132},
+    {"id": "uranus.hold", "stop": "uranus", "kind": "hold", "start": 132, "end": 137},
+    {"id": "uranus.dive", "stop": "uranus", "kind": "dive", "start": 137, "end": 140},
+    {"id": "uranus.terrain", "stop": "uranus", "kind": "terrain", "start": 140, "end": 146},
+    {"id": "uranus.rise", "stop": "uranus", "kind": "rise", "start": 146, "end": 148.5},
+    {"id": "uranus.travel", "stop": "uranus", "kind": "travel", "start": 148.5, "end": 151},
+    {"id": "neptune.hold", "stop": "neptune", "kind": "hold", "start": 151, "end": 156},
+    {"id": "neptune.dive", "stop": "neptune", "kind": "dive", "start": 156, "end": 159},
+    {"id": "neptune.terrain", "stop": "neptune", "kind": "terrain", "start": 159, "end": 165},
+    {"id": "neptune.rise", "stop": "neptune", "kind": "rise", "start": 165, "end": 167.5},
+    {"id": "ending.retreat", "stop": "ending", "kind": "retreat", "start": 167.5, "end": 171.5},
+    {"id": "ending.lookback", "stop": "ending", "kind": "lookback", "start": 171.5, "end": 177.5},
+    {"id": "ending.fade", "stop": "ending", "kind": "fade", "start": 177.5, "end": 180}
   ],
   "cover": {
     "seconds": 0.5,
@@ -137,7 +153,9 @@
   },
   "detail": {
     "minTexelsPerPixel": 1.0,
-    "maxSoftPixelFraction": 0.02
+    "maxSoftPixelFraction": 0.02,
+    "minSharpnessRatio": 0.8,
+    "minBodyCoverage": 0.05
   },
   "assets": {
     "maxTakesPerAsset": 6
@@ -153,29 +171,40 @@
     "compressionStressMbps": 5,
     "stress": {
       "seconds": 0.5,
-      "segments": ["sun.terrain", "earth.hold", "mars.dive", "ending.lookback"],
+      "segments": [
+        "sun.terrain",
+        "earth.hold",
+        "mars.dive",
+        "ending.lookback"
+      ],
       "tier": "review"
     },
     "jury": {
-      "jurors": 3,
-      "minFilmVotes": 2,
-      "minControlFilmShare": 0.6,
-      "maxInvalidRuns": 2
+      "jurors": 5,
+      "maxShareGap": 0.2
     },
     "recognition": {
       "jurors": 3
-    }
+    },
+    "gateFixMaxAttempts": 5,
+    "recordRoundMaxRuns": 2,
+    "gauntletMaxPasses": 2,
+    "crossMachineMinPsnr": 45
   },
   "critics": {
     "maxImageLongEdgePx": 1400,
     "contactSheetFrames": 12,
-    "phonePreviewWidthPx": 400
+    "phonePreviewWidthPx": 400,
+    "maxFilesPerMessage": 10
   },
   "sandbox": {
     "stepTimeoutMinutes": 10,
     "chunkBudgetMinutes": 7,
     "previewFilmMaxHours": 8,
     "sandboxMasterMaxHours": 24,
-    "maxRenderProcesses": 1
+    "maxRenderProcesses": 1,
+    "maxFramesOnDisk": 450,
+    "minFreeDiskGb": 3,
+    "maxDownloadGb": 2
   }
 }
