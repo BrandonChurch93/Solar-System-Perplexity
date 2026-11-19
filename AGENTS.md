@@ -32,7 +32,7 @@ An earlier run on this project spent most of its time regenerating one image for
 
 Stop only for one of these:
 
-1. The Mars review. "Mars review" in `kit/PROGRESS.md` holds one of three words: `not reached`, `waiting` or `approved`. When the Phase 3 gate in `kit/08-BUILD-ORDER.md` is reached, or a task starts while the word is `waiting`, check whether the task prompt contains the text `Mars is approved.` anywhere. If it does, or the word is already `approved`, write `approved` and continue. If not, write `waiting` and end the task with the `MARS READY FOR REVIEW` block from `kit/08-BUILD-ORDER.md`.
+1. The Mars review. "Mars review" in `kit/PROGRESS.md` holds one of three words: `not reached`, `waiting` or `approved`. When the Phase 3 gate in `kit/08-BUILD-ORDER.md` is reached, or a task starts while the word is `waiting`, check whether the task prompt contains the text `Mars is approved.` anywhere. If it does, or the word is already `approved`, write `approved` and continue. If not, write `waiting` and end the task with the `MARS READY FOR REVIEW` block from `kit/08-BUILD-ORDER.md`. If Phase 3 is marked `done` and the word is still `not reached`, treat it as `waiting`.
 2. A true blocker. Only these count:
    - A capability the kit depends on does not exist in this workspace and has no substitute: no browser that renders WebGL2, no image generation tool, no image input for models, or no supporting agents.
    - In Phase 0 you cannot push to the repo, after retrying. Stop with exactly: `BLOCKED: cannot push to the repo.`
@@ -88,9 +88,10 @@ Measured in an earlier build in this kind of workspace on November 19, 2026. Re-
 - Remote: `repo.url`. Branch: `repo.branch`.
 - Commit after every meaningful step. Push as "Keeping Brandon in the loop" says.
 - Never force push, rewrite pushed history or delete a remote branch.
+- Brandon's review notes are pushed to `repo.branch` as addenda while you work. Fetch and merge `repo.branch` from the remote at the start of every phase, before you read `kit/addenda/`, and before every push. Merge, never rebase or force. If a push is rejected, fetch, merge and push again.
 - Clone shallow. The history holds every image of the reference run.
 - No file over `repo.maxFileMb` megabytes. No push over `repo.maxPushGb` gigabytes: push more often if one would be.
-- History cannot be rewritten, so every committed version of a large file stays forever. Commit generated assets once per round, after the best take is chosen, never per take. Commit clips only in Phase 6, or when the review page could not carry one.
+- History cannot be rewritten, so every committed version of a large file stays forever. Commit generated assets once per round, after the best take is chosen, never per take. Commit clips only in Phase 6, or with `npm run keep -- --clips --stop <id>` when the review page could not carry one.
 - `.gitignore` excludes all harness output under `out/work/` and the cache under `references/cache/`. Keep it that way.
 - `out/stills/`, `out/clips/`, `out/preview.mp4` and `out/roughcut.mp4` change only through `npm run keep` or `npm run animatic`.
 - An agent branch that carries render chunks is fetched, never merged.

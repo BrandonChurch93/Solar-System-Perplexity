@@ -127,18 +127,19 @@ Scripts in `tools/`, run through npm.
 
 | Command | Output |
 | --- | --- |
+| `npm run build` | The static site in `dist/` |
 | `npm run animatic` | The rough cut: `out/roughcut.mp4` in `formats.preview` at `previewFilm.bitrateMbps`, made only from the 18 approved images and the timings in `segments`. See below |
 | `npm run still -- --frame N --tier T --format F --assets A --diag V` | One still in `out/work/stills/` |
 | `npm run sheet -- --segment ID --tier T --format F` | A contact sheet of `critics.contactSheetFrames` frames across the segment. `--film` gives sheets with one frame per segment for the whole film. `--cover` gives one sheet of consecutive frames across the segment's cover |
 | `npm run seq -- --first N --last M --tier T` | Every frame from N to M as separate stills, for stepping through a move |
 | `npm run crops -- --frame N --tier T --format F` | Grids of native-size crops, each grid with a long edge of at most `critics.maxImageLongEdgePx`, covering every surface and every area of interest in the frame |
 | `npm run compare -- --stop ID --view hold` or `--view terrain` | A comparison image named `compare-<stop>-<view>.jpg`: the approved image beside the judged frame at the same size, and under them matching native-size crops of each |
-| `npm run film -- --tier T --format F --assets A` | The film as `out/work/film-F-T.mp4`, encoded at `previewFilm.bitrateMbps` in `formats.preview` and at `export.bitrateMbps` in any other format. Takes `--first` and `--last`. Each frame is checked for G5 as it is rendered and the result is stored in the film's record |
-| `npm run clip -- --stop ID --tier T` | That stop's clip in `formats.master`, encoded at `export.bitrateMbps`, as `out/work/clips/<stop>.mp4`. It reuses what a film render already made when the records match |
+| `npm run film -- --tier T --format F --assets A` | The film as `out/work/film-F-T.mp4`, encoded at `previewFilm.bitrateMbps` in `formats.preview` and at `export.bitrateMbps` in any other format. Takes `--first` and `--last`. `--segment ID` renders one segment's chunk. `--join` joins the chunks that exist into the film. `--from-master` makes the `formats.preview` film by scaling down a `formats.master` film of the same build, and carries its per-frame results over. Each frame is checked for G5 as it is rendered and the result is stored in the film's record |
+| `npm run clip -- --stop ID --tier T` | That stop's clip in `formats.master`, encoded at `export.bitrateMbps`, as `out/work/clips/<stop>.mp4`. If chunks of that stop at that tier exist with matching records, it joins them and renders nothing. Otherwise it renders the chunks first |
 | `npm run measure -- --stop ID` | The measures G5, G13 and G17 for that stop, as `kit/07-QUALITY-BAR.md` defines them |
 | `npm run stress` | For each segment in `quality.stress.segments`: `quality.stress.seconds` of film at `formats.master` and the `quality.stress.tier` tier, encoded at `export.bitrateMbps`, then re-encoded at `quality.compressionStressMbps`, with stills from both |
 | `npm run pack -- --phase N --round R --stop ID` | The critic packs for a round, as `kit/07-QUALITY-BAR.md` describes |
-| `npm run keep` | Copies into `out/stills/` the judged stills, comparison images and contact sheets of the stop or phase just finished, and the `formats.preview` film to `out/preview.mp4`, each with its record. With `--clips` it also copies the clips to `out/clips/<stop>.mp4`. Only Phase 6 uses `--clips` |
+| `npm run keep` | Copies into `out/stills/` the judged stills, comparison images and contact sheets of the stop or phase just finished, and the newest `formats.preview` film whose record matches the current build to `out/preview.mp4`, each with its record. With `--clips` it also copies clips from `out/work/clips/` to `out/clips/<stop>.mp4`, and `--stop ID` limits that to one stop. Phase 6 uses `--clips` for all nine. Before Phase 6 it is used only for a clip the review page could not carry |
 | `npm run review` | Builds the review page described under "Build output and publishing" |
 | `npm run proof` | Drives `?mode=export` at `formats.preview` and the `draft` tier for `export.proofSeconds` seconds of film, saves the download as the file named in `export.files.preview` under `out/work/export/` with its record, and runs `ffprobe` on it. `--memory` runs the memory test instead |
 | `npm run determinism` | Renders the same frames on fresh page loads and in a different order, and compares them |
@@ -209,6 +210,7 @@ Rules:
 Brandon reviews on a tablet. He needs one link where everything plays.
 
 - `npm run review` writes `dist/review.html` and copies into `dist/review/` whatever exists of: `out/roughcut.mp4`, `out/preview.mp4`, every clip in `out/work/clips/` and `out/clips/`, and every comparison image and contact sheet in `out/stills/`.
+- `out/work/` does not survive a new task. If a finished stop's clip is missing on disk, `npm run review` fetches it from the review page already published and carries it over. Only if it is on neither does the Builder run `npm run clip` for that stop again.
 - The page lists them newest first, with each video playable in the page and each image shown at full width. It carries the date and the current phase from `kit/PROGRESS.md`.
 - It is plain HTML with no framework. It is not part of the app and not part of any hash.
 - Run it before every publish, so the review page is always at `<url>/review.html`.

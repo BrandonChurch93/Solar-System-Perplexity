@@ -7,7 +7,7 @@ Every loop below has a limit in `kit/07-QUALITY-BAR.md`. A gate line that says "
 ## Before Phase 0
 
 1. Read `AGENTS.md` and `kit/00-README.md`.
-2. Read `kit/PROGRESS.md` and every file in `kit/addenda/`. If a phase is already in progress, continue it. Check "Running jobs" and pick up or restart anything listed there.
+2. Fetch and merge `repo.branch`. Read `kit/PROGRESS.md` and every file in `kit/addenda/`. If a phase is already in progress, continue it. Check "Running jobs" and pick up or restart anything listed there.
 
 ## Phase 0 · Ground truth
 
@@ -109,9 +109,9 @@ Steps:
 6. Run rounds with the measures and with R1, R2, R3, R4 and R8 on Mars's judged frames until the pass bar holds or `quality.lookLockMaxRounds` is reached.
 7. From the final build of this phase: `npm run clip -- --stop mars --tier review`, `npm run compare` for both views, then `npm run keep`.
 8. Write "Look lock" in `kit/PROGRESS.md`: every locked setting, each technique that worked and each that did not, so the other eight stops start from what Mars taught.
-9. Run `npm run review` and publish, so the Mars clip and both comparison images are on the review page.
-10. Mark Phase 3 `done` in `kit/PROGRESS.md`, commit and push.
-11. Follow stop condition 1 in `AGENTS.md`.
+9. Run `npm run review` and publish, so the Mars clip and both comparison images are on the review page. If the page could not carry the clip, run `npm run keep -- --clips --stop mars`.
+10. In one commit: mark Mars `finished` in the "Stops" table with the commit it was finished on, mark Phase 3 `done`, and set "Mars review" as stop condition 1 in `AGENTS.md` says. Push.
+11. If "Mars review" is now `waiting`, end the task as "The Mars review" below says.
 
 Gate:
 
@@ -122,11 +122,10 @@ Gate:
 
 ### The Mars review
 
-If stop condition 1 says to stop:
+If "Mars review" is `waiting`:
 
-1. Write `waiting` under "Mars review" in `kit/PROGRESS.md`, commit and push.
-2. Attach the clip and both comparison images to the final message.
-3. End the task with exactly this block, filled in:
+1. Attach both comparison images to the final message, and the clip if it is still on disk. The review page has the clip either way.
+2. End the task with exactly this block, filled in:
 
 ```
 MARS READY FOR REVIEW
@@ -145,12 +144,12 @@ To continue: send the resume prompt from kit/10-KICKOFF.md
 When a task starts and "Mars review" says `waiting`:
 
 - If the task prompt contains `Mars is approved.`, continue below.
-- If it does not, do nothing to Phase 3. End the task with the same block again.
+- If it does not, do nothing to Phase 3. Fill the block in from `kit/PROGRESS.md` and end the task with it again.
 
 When the build resumes with `Mars is approved.`:
 
 1. Write `approved` under "Mars review" in `kit/PROGRESS.md`. Phase 3 is done. Do not run its rounds or its gate again.
-2. Read every file in `kit/addenda/`. If one asks for changes to Mars or to the look, make them first, run rounds on Mars until its pass bar holds or `quality.maxRoundsPerStop` is reached, and update "Look lock". There is no second review stop.
+2. Fetch and merge `repo.branch`, then read every file in `kit/addenda/`. If one asks for changes to Mars or to the look, make them first, run rounds on Mars until its pass bar holds or `quality.maxRoundsPerStop` is reached, and update "Look lock". Then run `npm run clip -- --stop mars --tier review`, `npm run compare` for both views and `npm run keep`, update Mars's commit in the "Stops" table, run `npm run review` and publish. There is no second review stop.
 3. Start Phase 4.
 
 ## Phase 4 · The other eight stops
@@ -176,7 +175,7 @@ Gate:
 - The machine checks are green, with G11 and G15 covering all nine stops.
 - Every stop is marked `finished`: its pass bar held, or its limit was reached.
 - 18 comparison images are committed, two per stop, each from the build its stop was finished on.
-- The app is published with every finished clip on the review page.
+- The app is published with every finished stop's clip on the review page, or committed under `out/clips/` where the page could not carry it.
 
 ## Phase 5 · The space between
 
@@ -211,20 +210,20 @@ Steps:
 3. Render every judged still and both comparison images of every stop from the frozen build.
 4. Run the record round: the measures and every critic once, on the full judged list, from the frozen build. Write the scores into `kit/PROGRESS.md` as the final scores. The record round is a record. It is not followed by fixes.
 5. Render the sandbox master: every frame of the film in `formats.master`, in chunks as `kit/05-ARCHITECTURE.md` describes, at the highest tier that fits in `sandbox.sandboxMasterMaxHours` and never below `review`, with the segments split across sandbox agents. Join the chunks into the master. It is too large to commit. Share it as a file in the final message. If it cannot be shared, log why and continue.
-6. Make the nine clips by joining each stop's chunks. Make the final preview film by scaling the master down to `formats.preview`, with a record that carries the per-frame G5 results from the master render. If the sandbox master could not be rendered in the time allowed, render the nine clips at the `review` tier and the preview film at the highest tier that fits in `sandbox.previewFilmMaxHours`, and log it.
+6. Make the nine clips with `npm run clip` at the master's tier, which joins each stop's chunks. Make the final preview film with `npm run film -- --format preview --from-master`. If the sandbox master could not be rendered in the time allowed, render the nine clips at the `review` tier and the preview film at the highest tier that fits in `sandbox.previewFilmMaxHours`, and log it.
 7. Run `npm run keep -- --clips`.
 8. Run `npm run proof` and `npm run proof -- --memory` on the frozen build.
 9. Write `cut/CUES.md`.
 10. Write `README.md`: what this is, the app URL, how to fly it, how to export the film and a single clip, where the comparison images and scorecards are, and any credit the post must carry.
 11. Run `npm run review` and publish the final build.
 12. Run every item in `kit/09-QA-GAUNTLET.md` and record the evidence. If an item fails, fix it and run the gauntlet again, for at most `quality.gauntletMaxPasses` passes in all.
-13. If a fix in step 12 changed anything under `src/`, `public/` or `config/`, render the judged stills of the stops it touched again and run the record round again, for at most `quality.recordRoundMaxRuns` runs in all. The sandbox master is rendered again only if the fix changed what the film shows, and only once.
+13. If a fix in step 12 changed anything under `src/`, `public/` or `config/`: run `npm run proof` again, render the judged stills of the stops it touched again, and run the record round again, for at most `quality.recordRoundMaxRuns` runs in all. If the fix changed what the film shows, render the affected chunks again, once, and remake the master, the affected clips and the preview film from them, then run `npm run keep -- --clips`, `npm run review` and publish.
 14. Commit and push.
 
 Gate:
 
 - The machine checks are green, or a red one is logged as a severe open item under its limit.
-- G8 and G9 are green.
+- G8, G9 and G16 are green, or listed under "Failed QA items" after the last pass of the gauntlet.
 - Every item in `kit/09-QA-GAUNTLET.md` has its evidence in `kit/PROGRESS.md`. An item that still fails after the last pass is listed under "Failed QA items" with what was tried.
 
 ## BUILD COMPLETE

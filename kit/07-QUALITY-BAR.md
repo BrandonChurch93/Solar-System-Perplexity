@@ -50,9 +50,12 @@ They test files that take long to make. They run only where `kit/08-BUILD-ORDER.
 
 | Id | Check | Checked at the end of |
 | --- | --- | --- |
-| G16 | `out/roughcut.mp4` exists with exactly `frameCount` frames at the `formats.preview` size | Phase 1 |
-| G8 | `out/preview.mp4` exists and was rendered from the phase's final build. `ffprobe` reports `film.fps`, exactly `frameCount` frames and the `formats.preview` size. Its record shows every frame passed the G5 sanity test. The file is under `repo.maxFileMb` megabytes | Phases 2, 5 and 6 |
+| G16 | `out/roughcut.mp4` exists with exactly `frameCount` frames at the `formats.preview` size | Phases 1 and 6 |
+| G8 | `out/preview.mp4` exists and was rendered from the phase's final build. `ffprobe` reports `film.fps`, exactly `frameCount` frames and the `formats.preview` size. Its record holds the G5 sanity result of every frame, and every frame that failed is logged as an open item. The file is under `repo.maxFileMb` megabytes | Phases 2, 5 and 6 |
 | G9 | The Export proof exists from the phase's final build, as `kit/05-ARCHITECTURE.md` defines it, and its frames show no interface element | Phases 2 and 6 |
+
+- In Phase 6 the final build for G8 is the frozen build, or the build after the last fix that changed what the film shows. A later fix that changes no pixel does not make the preview stale. The proof for G9 is quick, so it is always made again after the last fix.
+- A deliverable check that is still red after the last pass of the QA gauntlet is listed under "Failed QA items". It does not hold the build open.
 
 ## Freshness
 
