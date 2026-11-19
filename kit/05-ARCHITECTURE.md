@@ -160,7 +160,8 @@ Rules:
 - A film is rendered one segment at a time. Each segment's frames are encoded into a chunk with the film's final settings and a closed group of pictures, so chunks join into a film, or into a clip, without being encoded again.
 - Frames are deleted as soon as their chunk is encoded. No command ever holds more than `sandbox.maxFramesOnDisk` frames on disk.
 - Every render command checks free disk first and refuses to start under `sandbox.minFreeDiskGb`.
-- A sandbox agent returns its chunks to the Builder as attachments, a few per message. If attachments cannot carry video, the agent pushes its chunks to its own branch under `out/chunks/`, and the Builder fetches that branch without merging it. If neither works, the Builder renders the range itself.
+- A sandbox agent returns its chunks to the Builder as attachments, a few per message. If attachments cannot carry video, the agent pushes its chunks, with their records, to its own branch under `out/chunks/`. The Builder fetches that branch, copies the chunks out of it into `out/work/chunks/` without checking the branch out or merging it, and never adds them to `repo.branch`. If neither works, the Builder renders the range itself.
+- Chunks live in `out/work/chunks/`. `npm run film -- --join` and `npm run clip` read them from there.
 - Every running long job is written under "Running jobs" in `kit/PROGRESS.md` when it starts: the command, the frame range, the log file and the VM. It is removed when the job is done.
 
 ## The rough cut
@@ -214,7 +215,7 @@ Brandon reviews on a tablet. He needs one link where everything plays.
 - The page lists them newest first, with each video playable in the page and each image shown at full width. It carries the date and the current phase from `kit/PROGRESS.md`.
 - It is plain HTML with no framework. It is not part of the app and not part of any hash.
 - Run it before every publish, so the review page is always at `<url>/review.html`.
-- If the hosting does not accept the size, leave out the largest videos, say so on the page, and commit the newest clip under `out/clips/` instead so it can still be reached.
+- If the hosting does not accept the size, leave out the largest videos, say so on the page, and commit every clip the page leaves out with `npm run keep -- --clips --stop <id>` so it can still be reached.
 
 ## Tests
 

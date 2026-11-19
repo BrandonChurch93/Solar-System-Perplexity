@@ -110,7 +110,7 @@ Steps:
 7. From the final build of this phase: `npm run clip -- --stop mars --tier review`, `npm run compare` for both views, then `npm run keep`.
 8. Write "Look lock" in `kit/PROGRESS.md`: every locked setting, each technique that worked and each that did not, so the other eight stops start from what Mars taught.
 9. Run `npm run review` and publish, so the Mars clip and both comparison images are on the review page. If the page could not carry the clip, run `npm run keep -- --clips --stop mars`.
-10. In one commit: mark Mars `finished` in the "Stops" table with the commit it was finished on, mark Phase 3 `done`, and set "Mars review" as stop condition 1 in `AGENTS.md` says. Push.
+10. Run `npm run gate -- --phase 3`, check every line of the gate below and log the evidence. Then, in one commit: mark Mars `finished` in the "Stops" table with the commit it was finished on, mark Phase 3 `done`, and set "Mars review" as stop condition 1 in `AGENTS.md` says. Push.
 11. If "Mars review" is now `waiting`, end the task as "The Mars review" below says.
 
 Gate:
@@ -144,7 +144,7 @@ To continue: send the resume prompt from kit/10-KICKOFF.md
 When a task starts and "Mars review" says `waiting`:
 
 - If the task prompt contains `Mars is approved.`, continue below.
-- If it does not, do nothing to Phase 3. Fill the block in from `kit/PROGRESS.md` and end the task with it again.
+- If it does not, do nothing to Phase 3. Fill the block in from `kit/PROGRESS.md` and the last Mars round in `scorecards/`, and end the task with it again.
 
 When the build resumes with `Mars is approved.`:
 
@@ -216,8 +216,8 @@ Steps:
 9. Write `cut/CUES.md`.
 10. Write `README.md`: what this is, the app URL, how to fly it, how to export the film and a single clip, where the comparison images and scorecards are, and any credit the post must carry.
 11. Run `npm run review` and publish the final build.
-12. Run every item in `kit/09-QA-GAUNTLET.md` and record the evidence. If an item fails, fix it and run the gauntlet again, for at most `quality.gauntletMaxPasses` passes in all.
-13. If a fix in step 12 changed anything under `src/`, `public/` or `config/`: run `npm run proof` again, render the judged stills of the stops it touched again, and run the record round again, for at most `quality.recordRoundMaxRuns` runs in all. If the fix changed what the film shows, render the affected chunks again, once, and remake the master, the affected clips and the preview film from them, then run `npm run keep -- --clips`, `npm run review` and publish.
+12. Run every item in `kit/09-QA-GAUNTLET.md` and record the evidence. If an item fails, fix it, do step 13, and only then run the gauntlet again, for at most `quality.gauntletMaxPasses` passes in all.
+13. If a fix in step 12 changed anything under `src/`, `public/` or `config/`: run `npm run proof` again, render the judged stills of the stops it touched again, run `npm run compare` for both views of those stops, run `npm run keep`, and run the record round again, for at most `quality.recordRoundMaxRuns` runs in all. If the fix changed what the film shows, render the affected chunks again, once, and remake the master, the affected clips and the preview film from them, then run `npm run keep -- --clips`, `npm run review` and publish.
 14. Commit and push.
 
 Gate:
