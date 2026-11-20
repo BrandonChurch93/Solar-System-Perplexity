@@ -2,10 +2,12 @@ import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { DIST, ROOT, WORK, args, ensureBuild, loadConfig } from './lib/common'
+import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, readRecord } from './lib/common'
 import { openCapture, renderPng } from './lib/browser'
+import { decodePng } from './lib/frames'
+import { decodeFramePng, psnrPng } from './lib/encode'
 import { needs } from '../src/core/caps'
-import { judgedFrames } from '../src/director/timeline'
+import { judgedFrames, setsForFrame, stopSegments } from '../src/director/timeline'
 
 const cfg = loadConfig()
 const a = args()
@@ -36,7 +38,234 @@ function probe(file: string): { frames: number; width: number; height: number; f
   return { frames: Number(s.nb_read_frames), width: s.width, height: s.height, fps: s.r_frame_rate }
 }
 
+function sameHashes(r: { engineHash: string; stopHashes: Record<string, string> } | null, h: { engine: string; stops: Record<string, string> }): string {
+  if (!r) return 'no record'
+  if (r.engineHash !== h.engine) return 'engine hash ' + r.engineHash + ' is not the current ' + h.engine
+  const stale = cfg.stopIds.filter((s) => r.stopHashes[s] !== h.stops[s])
+  return stale.length ? 'stale stop hashes: ' + stale.join(',') : ''
+}
+
+function progressSection(name: string): string {
+  const text = readFileSync(join(ROOT, 'kit/PROGRESS.md'), 'utf8')
+  return text.split('## ' + name)[1]?.split('\n## ')[0] ?? ''
+}
+
+function finishedStops(): string[] {
+  if (a['g15-stops']) return a['g15-stops'].split(',')
+  const rows = progressSection('Stops').split('\n').filter((l) => l.startsWith('|'))
+  const out: string[] = []
+  for (const r of rows) {
+    const c = r.split('|').map((x) => x.trim())
+    if (cfg.stopIds.includes(c[1] ?? '') && /^finished/.test(c[2] ?? '')) out.push(c[1]!)
+  }
+  return out
+}
+
+function fileNames(dir: string): string[] {
+  const out: string[] = []
+  const walk = (d: string, rel: string): void => {
+    if (!existsSync(d)) return
+    for (const n of readdirSync(d).sort()) {
+      const p = join(d, n)
+      if (statSync(p).isDirectory()) walk(p, rel + n + '/')
+      else out.push(rel + n)
+    }
+  }
+  walk(dir, '')
+  return out
+}
+
+async function noInterface(mode: string, format: string): Promise<string[]> {
+  const s = await openCapture({ dist: DIST, format, assets: 'web', mode })
+  const bad: string[] = []
+  try {
+    if (mode === 'capture') await renderPng(s.page, cfg.hookFrame, 'draft')
+    else {
+      await s.page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
+      await s.page.waitForTimeout(3000)
+    }
+    const dom = await s.page.evaluate(() => {
+      const c = document.querySelector('canvas')
+      const bodyBg = getComputedStyle(document.body).backgroundColor
+      const issues: string[] = []
+      if (!c) return { issues: ['no canvas'], rect: null, bg: bodyBg }
+      for (const el of Array.from(document.querySelectorAll('body *'))) {
+        if (el === c) continue
+        const name = el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ').join('.') : '')
+        const r = el.getBoundingClientRect()
+        const cs = getComputedStyle(el)
+        if (!(r.width > 0 && r.height > 0) || cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue
+        if (el.contains(c)) {
+          const border = ['Top', 'Right', 'Bottom', 'Left'].some((k) => parseFloat(cs.getPropertyValue('border-' + k.toLowerCase() + '-width')) > 0 && cs.getPropertyValue('border-' + k.toLowerCase() + '-style') !== 'none')
+          const text = Array.from(el.childNodes).some((n) => n.nodeType === 3 && (n.textContent ?? '').trim() !== '')
+          const paints = (cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== bodyBg) || cs.backgroundImage !== 'none' || border || cs.boxShadow !== 'none' || (cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) || text
+          if (paints) issues.push(name + ' around the canvas paints something')
+          continue
+        }
+        issues.push(name + ' has a visible box ' + Math.round(r.width) + 'x' + Math.round(r.height))
+      }
+      const r = c.getBoundingClientRect()
+      return { issues, rect: { x: r.left, y: r.top, w: r.width, h: r.height }, bg: bodyBg }
+    })
+    for (const i of dom.issues) bad.push(mode + ' ' + format + ': ' + i)
+    const m = /rgba?\((\d+), (\d+), (\d+)/.exec(dom.bg)
+    if (!m || !dom.rect) bad.push(mode + ' ' + format + ': cannot read page background')
+    else {
+      const bg = [Number(m[1]), Number(m[2]), Number(m[3])]
+      const shot = decodePng(await s.page.screenshot({ type: 'png' }))
+      const x0 = Math.floor(dom.rect.x) - 1
+      const y0 = Math.floor(dom.rect.y) - 1
+      const x1 = Math.ceil(dom.rect.x + dom.rect.w) + 1
+      const y1 = Math.ceil(dom.rect.y + dom.rect.h) + 1
+      let off = 0
+      let outside = 0
+      for (let y = 0; y < shot.height; y++)
+        for (let x = 0; x < shot.width; x++) {
+          if (x >= x0 && x < x1 && y >= y0 && y < y1) continue
+          outside++
+          const i = (y * shot.width + x) * shot.channels
+          if (Math.abs(shot.data[i]! - bg[0]!) > 1 || Math.abs(shot.data[i + 1]! - bg[1]!) > 1 || Math.abs(shot.data[i + 2]! - bg[2]!) > 1) off++
+        }
+      if (off > 0) bad.push(mode + ' ' + format + ': ' + off + ' of ' + outside + ' pixels outside the canvas are not the page background')
+    }
+  } finally {
+    await s.close()
+  }
+  return bad
+}
+
+function measureCheck(id: 'G5' | 'G13' | 'G17'): Result {
+  const h = ensureBuild()
+  const dir = join(WORK, 'measure')
+  const stops = a.stop ? a.stop.split(',') : existsSync(dir) ? readdirSync(dir).filter((n) => n.endsWith('.json')).map((n) => n.slice(0, -5)) : []
+  if (stops.length === 0) return { id, pass: false, note: 'no measures in out/work/measure; run npm run measure -- --stop ID' }
+  const notes: string[] = []
+  let pass = true
+  for (const stop of stops) {
+    const file = join(dir, stop + '.json')
+    if (!existsSync(file)) {
+      pass = false
+      notes.push(stop + ' not measured')
+      continue
+    }
+    const m = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown> & { engineHash: string; stopHash: string; every: number }
+    const r = m[id] as { pass: boolean } | undefined
+    const fresh = m.engineHash === h.engine && m.stopHash === h.stops[stop]
+    const ok = !!r && r.pass && fresh && (id !== 'G13' || m.every === 1)
+    if (!ok) pass = false
+    notes.push(stop + ' ' + (!r ? 'not measured' : !fresh ? 'stale' : r.pass ? (id === 'G13' && m.every !== 1 ? 'sampled only' : 'pass') : 'fail'))
+  }
+  return { id, pass, note: notes.join('; ') }
+}
+
 const checks: Record<string, () => Promise<Result> | Result> = {
+  G5: () => measureCheck('G5'),
+  G13: () => measureCheck('G13'),
+  G17: () => measureCheck('G17'),
+  G6: async () => {
+    ensureBuild()
+    const bad: string[] = []
+    bad.push(...(await noInterface('autopilot', cfg.formatKeys.master)))
+    bad.push(...(await noInterface('capture', cfg.formatKeys.master)))
+    bad.push(...(await noInterface('capture', cfg.formatKeys.preview)))
+    let exportNote = 'no export proof yet'
+    const proof = join(WORK, 'export', cfg.raw.export.files.preview)
+    const rec = readRecord(proof)
+    if (rec) {
+      const frame = rec.first ?? 0
+      const s = await openCapture({ dist: DIST, format: rec.format, assets: rec.assets })
+      const { png } = await renderPng(s.page, frame, rec.tier)
+      await s.close()
+      const dir = join(WORK, 'gate')
+      mkdirSync(dir, { recursive: true })
+      writeFileSync(join(dir, 'g6-still.png'), png)
+      decodeFramePng(proof, 0, join(dir, 'g6-export.png'))
+      const v = psnrPng(join(dir, 'g6-export.png'), join(dir, 'g6-still.png'))
+      exportNote = 'export frame ' + frame + ' PSNR ' + v.toFixed(1) + ' dB against its still'
+      if (!(v >= 30)) bad.push(exportNote)
+    }
+    return { id: 'G6', pass: bad.length === 0, note: bad.length === 0 ? 'autopilot and capture show only the canvas; ' + exportNote : bad.slice(0, 6).join('; ') }
+  },
+  G8: () => {
+    const h = ensureBuild()
+    const file = join(ROOT, 'out/preview.mp4')
+    const f = cfg.formats[cfg.formatKeys.preview]!
+    const p = probe(file)
+    if (!p) return { id: 'G8', pass: false, note: 'out/preview.mp4 missing or unreadable' }
+    const bad: string[] = []
+    if (p.fps !== cfg.fps + '/1') bad.push('fps ' + p.fps)
+    if (p.frames !== cfg.frameCount) bad.push(p.frames + ' frames, want ' + cfg.frameCount)
+    if (p.width !== f.width || p.height !== f.height) bad.push(p.width + 'x' + p.height)
+    const size = statSync(file).size
+    if (size > cfg.raw.repo.maxFileMb * 1e6) bad.push((size / 1e6).toFixed(1) + ' MB is over the file limit')
+    const rec = existsSync(file + '.json') ? (JSON.parse(readFileSync(file + '.json', 'utf8')) as { engineHash: string; stopHashes: Record<string, string>; format: string; extra?: { g5?: { frames: { frame: number }[]; failed: number[] } } }) : null
+    const stale = sameHashes(rec, h)
+    if (stale) bad.push(stale)
+    const g5 = rec?.extra?.g5
+    const have = new Set((g5?.frames ?? []).map((x) => x.frame))
+    let missing = 0
+    for (let i = 0; i < cfg.frameCount; i++) if (!have.has(i)) missing++
+    if (!g5 || missing > 0) bad.push('record lacks G5 for ' + (g5 ? missing : cfg.frameCount) + ' frames')
+    const open = progressSection('Open items')
+    const unlisted = (g5?.failed ?? []).filter((n) => !new RegExp('frame ' + n + '(?![0-9])').test(open))
+    if (unlisted.length) bad.push(unlisted.length + ' G5 failures not under Open items, first ' + unlisted.slice(0, 5).join(','))
+    return { id: 'G8', pass: bad.length === 0, note: bad.length === 0 ? p.frames + ' frames ' + p.width + 'x' + p.height + ' ' + p.fps + ', ' + (size / 1e6).toFixed(1) + ' MB, G5 failures ' + (g5?.failed.length ?? 0) + ' all listed' : bad.join('; ') }
+  },
+  G9: () => {
+    const h = ensureBuild()
+    const file = join(WORK, 'export', cfg.raw.export.files.preview)
+    const p = probe(file)
+    if (!p) return { id: 'G9', pass: false, note: 'out/work/export/' + cfg.raw.export.files.preview + ' missing; run npm run proof' }
+    const rec = readRecord(file)
+    const stale = sameHashes(rec, h)
+    const f = cfg.formats[cfg.formatKeys.preview]!
+    const bad: string[] = []
+    if (stale) bad.push(stale)
+    if (p.frames <= 0) bad.push('no frames')
+    if (p.width !== f.width || p.height !== f.height) bad.push(p.width + 'x' + p.height)
+    if (p.fps !== cfg.fps + '/1') bad.push('fps ' + p.fps)
+    return { id: 'G9', pass: bad.length === 0, note: bad.length === 0 ? 'proof ' + p.frames + ' frames ' + p.width + 'x' + p.height + ' ' + p.fps + ' from the current build' : bad.join('; ') }
+  },
+  G15: async () => {
+    const bad: string[] = []
+    let worst = 0
+    for (let i = 0; i < cfg.frameCount; i++) {
+      const n = setsForFrame(i).length
+      worst = Math.max(worst, n)
+      if (n > cfg.raw.sets.maxLoaded) {
+        bad.push('frame ' + i + ' needs ' + n + ' sets')
+        if (bad.length > 5) break
+      }
+    }
+    const done = finishedStops()
+    const mem: string[] = []
+    if (done.length) ensureBuild()
+    for (const stop of done) {
+      const base = join(ROOT, 'public/assets', stop)
+      const web = fileNames(join(base, 'web'))
+      const full = fileNames(join(base, 'full'))
+      const onlyWeb = web.filter((x) => !full.includes(x))
+      const onlyFull = full.filter((x) => !web.includes(x))
+      if (web.length === 0 && full.length === 0) bad.push(stop + ' has no files in public/assets/' + stop + '/web or /full')
+      if (onlyWeb.length || onlyFull.length) bad.push(stop + ' web and full differ: ' + [...onlyWeb.map((x) => 'web only ' + x), ...onlyFull.map((x) => 'full only ' + x)].slice(0, 4).join(', '))
+      const seg = stopSegments(stop).find((x) => x.kind === 'hold') ?? stopSegments(stop)[0]!
+      for (const set of Object.keys(cfg.assetSets)) {
+        const s = await openCapture({ dist: DIST, format: cfg.formatKeys.master, assets: set })
+        try {
+          await renderPng(s.page, seg.firstFrame, 'draft')
+          const m = await s.page.evaluate(() => (window as unknown as { showcase: { memory(): { perSet: Record<string, number> } } }).showcase.memory())
+          const bytes = m.perSet[stop] ?? 0
+          const limit = cfg.assetSets[set]!.maxSetMemoryMb * 1e6
+          mem.push(stop + '/' + set + ' ' + (bytes / 1e6).toFixed(0) + ' MB')
+          if (!(stop in m.perSet)) bad.push(stop + '/' + set + ' was not reported by the loader')
+          else if (bytes > limit) bad.push(stop + '/' + set + ' uses ' + (bytes / 1e6).toFixed(0) + ' MB, limit ' + cfg.assetSets[set]!.maxSetMemoryMb)
+        } finally {
+          await s.close()
+        }
+      }
+    }
+    return { id: 'G15', pass: bad.length === 0, note: (bad.length === 0 ? 'at most ' + worst + ' sets per frame; ' : bad.slice(0, 6).join('; ') + '; ') + 'finished stops: ' + (done.length ? mem.join(', ') : 'none yet') }
+  },
   G1: () => {
     const r = run('npm', ['run', 'build', '--silent'])
     return { id: 'G1', pass: r.ok, note: r.ok ? 'build clean' : r.out.slice(-600) }
@@ -162,9 +391,15 @@ const checks: Record<string, () => Promise<Result> | Result> = {
   },
 }
 
+const machine = ['G1', 'G2', 'G3', 'G4', 'G6', 'G7', 'G10', 'G11', 'G12', 'G14', 'G15']
 const byPhase: Record<number, string[]> = {
   0: ['G1', 'G2', 'G3', 'G4', 'G14'],
   1: ['G1', 'G2', 'G12', 'G16'],
+  2: [...machine, 'G8', 'G9'],
+  3: machine,
+  4: machine,
+  5: [...machine, 'G8'],
+  6: [...machine, 'G8', 'G9', 'G16'],
 }
 const list = only ?? byPhase[phase] ?? Object.keys(checks)
 for (const id of list) {
