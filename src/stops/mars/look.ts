@@ -16,6 +16,7 @@ export const light: PlanetLight = {
   reliefNear: 0.008,
   limb: 0,
   curve: fitted.curve,
+  nightFlat: [0.06, -0.3, 0.1],
 }
 
 export const haze = hazeJson.ground as HazeParams
