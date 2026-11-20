@@ -20,7 +20,7 @@ export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: { glide: number; rise: number; fall: number } }
-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
+  terrain: { vfov: number; gather?: number | { curve: number; anchorCurve: number; anchorForward: number; anchorTurnSpan: number }; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
@@ -190,10 +190,28 @@ export class StopPlan {
 
   terrain(tRel: number): Pose {
     const t = this.p.terrain
-    const lin = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
-    const u = lin + (t.gather ?? 0) * lin * lin
-    const e = new THREE.Euler(THREE.MathUtils.degToRad(t.pitchDeg) * u, THREE.MathUtils.degToRad(t.yawDeg) * u, 0, 'YXZ')
-    return { position: new THREE.Vector3(t.side * u, t.rise * u, -t.forward * u), quaternion: new THREE.Quaternion().setFromEuler(e), vfov: t.vfov }
+    const dur = this.seg.terrain.end - this.seg.terrain.start
+    const lin = tRel / dur - 0.5
+    const anchor = typeof t.gather === 'object' ? t.gather : undefined
+    const curve = typeof t.gather === 'number' ? t.gather : anchor?.curve ?? 0
+    const pivot = config.shutterFraction / (2 * config.fps * dur)
+    const old = anchor ? pivot + anchor.anchorCurve * pivot * pivot : 0
+    const delta = anchor ? lin - pivot + curve * (lin * lin - pivot * pivot) : lin + curve * lin * lin
+    const u = delta + old
+    const forward = t.forward * delta + (anchor?.anchorForward ?? 0) * old
+    const yaw = THREE.MathUtils.degToRad(t.yawDeg)
+    const pitch = THREE.MathUtils.degToRad(t.pitchDeg)
+    const quaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch * u, yaw * u, 0, 'YXZ'))
+    if (anchor && t.horizonDeg !== undefined && t.dipDeg !== undefined) {
+      const tilt = THREE.MathUtils.degToRad(t.horizonDeg + t.dipDeg)
+      const up = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt))
+      quaternion.setFromAxisAngle(Y, yaw * old)
+      quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(up, yaw * delta))
+      quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), pitch * delta))
+      const oldTurn = new THREE.Quaternion().setFromAxisAngle(Y, yaw * (lin + anchor.anchorCurve * lin * lin))
+      quaternion.slerp(oldTurn, 1 - smooth(Math.abs(lin) / anchor.anchorTurnSpan))
+    }
+    return { position: new THREE.Vector3(t.side * u, t.rise * u, -forward), quaternion, vfov: t.vfov }
   }
 
   exit(tRel: number): Pose {

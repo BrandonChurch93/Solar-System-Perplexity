@@ -28,6 +28,7 @@ python3 assets-src/mars/relief/fillfix.py
 python3 assets-src/mars/relief/zorder.py
 python3 assets-src/mars/relief/zcheck.py full
 python3 assets-src/mars/relief/zcheck.py web
+OPENBLAS_NUM_THREADS=1 python3 assets-src/mars/relief/apron.py
 python3 assets-src/mars/relief/test.py identity
 python3 assets-src/mars/relief/test.py sweep 1408 0.1,0.15,0.2,0.25,0.3 1
 python3 assets-src/mars/relief/test.py sweep 1408 0.1,0.15,0.2,0.25,0.3 -1
@@ -125,6 +126,27 @@ All written by `assets-src/mars/relief/build.py` with `MARGIN=1` unless noted. I
 - `public/assets/mars/<set>/relief-L0-dist.bin`, `public/assets/mars/<set>/relief-L1-dist.bin`, `public/assets/mars/<set>/relief-L2-dist.bin`: raw little endian float32, row major, half the layer pixel size (full set: L0 3492 x 1774, L1 2460 x 1234, L2 1762 x 544; web set: half again). Behind each cut L0 holds the background distance pushed in from outside the cut; each upper layer continues its own surface past its edge. Ranges: L0 3.49 to 44.11, L1 2.13 to 6.22, L2 5.73 to 16.45.
 - `public/assets/mars/<set>/relief-masks.png` (full 3492 x 1774, web 1746 x 887, box x -676, y 0, w 6984, h 3548), by `flowmasks.py` and `maskext.py` from `references/approved/mars-close.jpg`, `out/work/dist0.npy` and the mist zone in `cuts.json`. R: mist on the canyon floor. G: thin dust haze: the band just below the horizon plus smooth far areas at 0.6. B: 0.
 - `assets-src/mars/relief/relief.json` by `makejson.py`: image size, `margin` (left 676, right 676, bottom 380, full set px), camera, horizon line, per layer files, boxes, dist size and range, masks and their box, mist drift direction [0.899, 0.438] in image space, safe move.
+
+## Glide extensions
+
+Run `OPENBLAS_NUM_THREADS=1 python3 assets-src/mars/relief/apron.py` from the repository root after the previous layer build and z-order pass. The tool uses Python 3.14.8, NumPy 2.5.5, OpenCV 5.1.0, SciPy 1.18.1 and Pillow 13.0.0. Its exact inputs are `src/stops/mars/relief.json` and each set's L0, L1 and L2 `color`, `alpha` and `dist` files listed in that JSON. There is no model and no prompt. The original files are unchanged.
+
+The script packs the extensions into independent, padded strips. Color is reflected and sheared from the adjacent existing rock, alpha continues the silhouette from the edge, and distance extrapolates the local inverse depth along the image camera axis. Full strips use half-resolution samples; web strips are made from the web source at its own resolution. L0 and L1 had six takes: the first three exposed margins, take 4 fixed coverage, take 5 tested stratum-aligned shear, and take 6 kept its lower-face shear while restoring the edge silhouette. L2 had three takes: the first extended the mesh, the second aligned the bedding at the right boundary, and the third kept that alignment. The final generation writes all twelve paths below.
+
+At draw time the L0 bottom and right texture taps along the dark valley floor follow the local bedding direction. This extra shear is limited to the added strips; the original color and alpha samples are untouched. In L1 a bounded inverse-distance filter takes the sharp monocular depth step out of a single ridge without altering the silhouette or moving its rays in the reference camera.
+
+- `public/assets/mars/full/relief-L0-apron.webp`
+- `public/assets/mars/full/relief-L0-apron.bin`
+- `public/assets/mars/full/relief-L1-apron.webp`
+- `public/assets/mars/full/relief-L1-apron.bin`
+- `public/assets/mars/full/relief-L2-apron.webp`
+- `public/assets/mars/full/relief-L2-apron.bin`
+- `public/assets/mars/web/relief-L0-apron.webp`
+- `public/assets/mars/web/relief-L0-apron.bin`
+- `public/assets/mars/web/relief-L1-apron.webp`
+- `public/assets/mars/web/relief-L1-apron.bin`
+- `public/assets/mars/web/relief-L2-apron.webp`
+- `public/assets/mars/web/relief-L2-apron.bin`
 
 ## Checks run
 

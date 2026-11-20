@@ -62,6 +62,8 @@ export const descent = {
 }
 
 export const relief = {
+  apron: { ...reliefJson.apron, fullWidth: reliefJson.imageSize.full[0] as number },
+  ridge: reliefJson.ridge,
   mistSpeed: 0.004,
   dustSpeed: 0.0022,
   dustDir: [0.92, 0.38] as [number, number],
