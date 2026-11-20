@@ -38,7 +38,7 @@ export interface ReliefAir {
 
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
-interface ReliefApron { padding: number; fullWidth: number; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
+interface ReliefApron { padding: number; fullWidth: number; mips: boolean; baseAlphaNoMips: string[]; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
 interface ReliefRidge { layer: string; center: number[]; radius: number[]; core: number; slope: number; interval: number[]; taps: number[] }
 
 export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
@@ -287,7 +287,8 @@ export class Relief {
     for (let k = 0; k < def.layers.length; k++) {
       const l = def.layers[k]!
       const color = await ctx.texture(base + l.color, { srgb: true, anisotropy: 8 })
-      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4 }) : null
+      const alphaMips = !motion.apron?.baseAlphaNoMips.some((id) => l.alpha === `relief-${id}-alpha.png`)
+      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4, mips: alphaMips }) : null
       const dist = new Float32Array(await ctx.buffer(base + l.dist))
       const [dw, dh] = l.distSize
       if (dist.length !== dw * dh) throw new Error('relief distance size mismatch: ' + l.dist)
@@ -302,7 +303,7 @@ export class Relief {
       const right = (apron?.edges[1] ?? 0) * apronScale
       const bottom = (apron?.edges[2] ?? 0) * apronScale
       const pad = (motion.apron?.padding ?? 0) * apronScale
-      const apronTexture = apron ? await ctx.texture(base + apron.atlas, { srgb: true, anisotropy: 8 }) : null
+      const apronTexture = apron ? await ctx.texture(base + apron.atlas, { srgb: true, anisotropy: 8, mips: motion.apron?.mips }) : null
       const apronSize = apronTexture?.image as { width: number; height: number } | undefined
       const apronDist = apron ? new Float32Array(await ctx.buffer(base + apron.depth)) : null
       const aw = (apronSize?.width ?? 0) / 2
