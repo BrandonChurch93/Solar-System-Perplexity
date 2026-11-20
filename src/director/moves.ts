@@ -33,6 +33,7 @@ export interface MoveParams {
   coverLowTerrain?: [number, number, number]
   coverTop?: [number, number]
   coverEdge?: [number, number]
+  coverEdgeRise?: [number, number]
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
@@ -230,7 +231,7 @@ export class StopPlan {
       return time < c ? smooth((time - a) / (c - a)) : smooth((b - time) / (b - c))
     }
     const x = (time - a) / (b - a)
-    const [first, last] = seg.kind === 'dive' ? edge : [edge[1], edge[0]]
+    const [first, last] = seg.kind === 'dive' ? edge : this.p.coverEdgeRise ?? [edge[1], edge[0]]
     return Math.min(smooth(x / first), smooth((1 - x) / last))
   }
 
