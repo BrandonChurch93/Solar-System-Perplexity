@@ -2,9 +2,11 @@
 
 ## Overview
 
-Three nested gnomonic surface-color patches centered on the Mars dive spot in Valles Marineris (`lon = -81.86`, `lat = -4.54` in the body frame; hero pixel `(1267.110, 855.387)` vs target `(1267, 855)`, `0.402 px` error through `assets-src/mars/fit.json`):
+Five nested gnomonic surface-color patches centered on the Mars dive spot in Valles Marineris (`lon = -81.86`, `lat = -4.54` in the body frame; hero pixel `(1267.110, 855.387)` vs target `(1267, 855)`, `0.402 px` error through `assets-src/mars/fit.json`):
 
+- `public/assets/mars/<set>/patch-wide.jpg` (`public/assets/mars/full/patch-wide.jpg` at `4096 x 4096`, `public/assets/mars/web/patch-wide.jpg` at `2048 x 2048`): `96.0` degrees angular width (`halfTan = 1.11061251`).
 - `public/assets/mars/<set>/patch-1.jpg` (`public/assets/mars/full/patch-1.jpg` at `4096 x 4096`, `public/assets/mars/web/patch-1.jpg` at `2048 x 2048`): `48.0` degrees angular width (`halfTan = 0.44522869`).
+- `public/assets/mars/<set>/patch-mid.jpg` (`public/assets/mars/full/patch-mid.jpg` at `4096 x 4096`, `public/assets/mars/web/patch-mid.jpg` at `2048 x 2048`): `24.0` degrees angular width (`halfTan = 0.21255656`).
 - `public/assets/mars/<set>/patch-2.jpg` (`public/assets/mars/full/patch-2.jpg` at `4096 x 4096`, `public/assets/mars/web/patch-2.jpg` at `2048 x 2048`): `12.0` degrees angular width (`halfTan = 0.10510424`).
 - `public/assets/mars/<set>/patch-3.jpg` (`public/assets/mars/full/patch-3.jpg` at `4096 x 4096`, `public/assets/mars/web/patch-3.jpg` at `2048 x 2048`): `3.0` degrees angular width (`halfTan = 0.02618592`).
 
@@ -279,10 +281,188 @@ Running `python3 assets-src/mars/patches/verify.py --wrap out/work/wrap/stage1-c
 - **Spot projection check**: `lon = -81.86, lat = -4.54` projects to `(1267.110, 855.387)` vs `(1267, 855)` (`0.402 px` error).
 - **Nested consistency (`patch-1` vs `patch-2` at `967 x 967`)**: core `PSNR = 40.315 dB` (`RMS = 2.459 / 255`), full square `PSNR = 34.675 dB` (`RMS = 4.707 / 255`).
 - **Nested consistency (`patch-2` vs `patch-3` at `1020 x 1020`)**: core `PSNR = 41.954 dB` (`RMS = 2.036 / 255`), full square `PSNR = 39.776 dB` (`RMS = 2.617 / 255`).
+
+---
+
+## Asset 4: `public/assets/mars/<set>/patch-wide.jpg`
+
+- **Output files**:
+  - `public/assets/mars/full/patch-wide.jpg` (`4096 x 4096`, JPEG quality `94`, `subsampling=0`)
+  - `public/assets/mars/web/patch-wide.jpg` (`2048 x 2048`, JPEG quality `94`, `subsampling=0`, Lanczos downscale of `full`)
+- **Angular width**: `96.0` degrees (`halfTan = 1.11061251`) centered on `lon = -81.86, lat = -4.54`.
+- **Tools and models**:
+  - `assets-src/mars/patches/resample.py` (`to-patch`, `nest`)
+  - `generate_image` with model `nano_banana_pro` (`aspect_ratio = "1:1"`, `2048 x 2048` output)
+  - `assets-src/mars/patches/tile_assemble.py` (`split`, `assemble`)
+  - `assets-src/mars/patches/bake.py` (`fast_gaussian` low-frequency matching)
+  - OpenCV Farneback macro registration (`cv2.calcOpticalFlowFarneback` + `sigma = 10 px` Gaussian smoothing at `1092 x 1092`) and soft-knee highlight ceiling (`<= 0.848` display value, pale ochre rims)
+  - `tools/ml/checkmoved.py` (alignment verification)
+- **Input files**:
+  - `out/work/wrap-color.jpg` (`8192 x 4096` equirectangular Mars wrap map supplied by lead, SHA-256 `fd2b9a67209067a7498f714fe769a7af3e141c863cc020541a256282d8c1264f`, combining the unprojected delit hero map on the hero side and the painted orbital wrap elsewhere; resampled to `96.0` deg gnomonic reference scales `pw-src-4096.png`, `pw-src-2185.png`, `pw-src-1092.png`, and `pw-src-1024.png`, with highlights soft-kneed to `0.845` as `pw-in-1024.png`)
+  - `references/approved/mars-hero.png` (primary orbital color and clarity reference)
+  - `references/approved/mars-close.jpg` (canyon wall layering reference)
+  - `public/assets/mars/full/patch-1.jpg` (read-only on disk; an in-memory copy ratio-matched in scene-linear `gamma = 2.2` space at `0.35` deg to the `48` deg footprint of `wrap-color.jpg` and soft-kneed to `<= 0.845` pale ochre is nested into the central `48.0` deg of `patch-wide.jpg` with `feather = 0.12`)
+
+### Step 4A: `96.0` Degree Resample and `2048 x 2048` Global Pass
+
+1. Resampled `out/work/wrap-color.jpg` to `96.0` degree gnomonic patches at `4096`, `2185` (`8192 * 96 / 360`), `1092` (`4096 * 96 / 360`), and `1024` pixels using `equirect_to_patch(wc, -81.86, -4.54, 96.0, size)`, and applied a soft-knee highlight rolloff (`knee_start = 0.74, ceiling = 0.845`) to create `out/work/pwide/pw-in-1024.png`.
+2. Ran `generate_image` (`model: "nano_banana_pro"`, `aspect_ratio: "1:1"`) with input images `[out/work/pwide/pw-in-1024.png, references/approved/mars-hero.png, references/approved/mars-close.jpg]` and exact prompt:
+   ```text
+   Strict 2x super-resolution of Image 1, a wide 96 x 96 degree gnomonic top-down 90-degree nadir planetary surface map of Mars centered on Valles Marineris (1:1 square, north at the top).
+
+   EXACT LAYOUT AND REGIONAL TONE LOCK:
+   Image 1 is the exact resampled orbital map to sharpen in place. When scaled back to Image 1's resolution, every feature and regional tone MUST remain in its exact pixel position, shape, and brightness:
+   - Three diagonal Tharsis shield volcanoes and their dark calderas at middle-left, plus white orographic cloud banks at lower-left.
+   - Valles Marineris canyon system, Noctis Labyrinthus fracture network, and Candor-Ophir chasma bays across the center.
+   - Swirling ochre dust storm north of Valles Marineris, small frost patch at top-center, Chryse outflow channels and dark Acidalia-Xanthe basalt plains at upper-right, cratered southern highlands along the bottom, and darker terminator-side ground at right and lower-right.
+   - Do NOT shift, rotate, resize, invent, or erase any feature, and do NOT brighten the darker right/lower-right ground or add global vignetting.
+
+   ORBITAL GEOLOGY AND MODERATE RELIEF LIGHT:
+   Replace pixel blur and outer-corner radial stretch in Image 1 with crisp overhead nadir Martian geology matching the orbital finish and muted rust, terracotta, ochre, burgundy, and dark basalt palette of Image 2 (approved Mars orbital frame), with subtle canyon wall layering informed by Image 3 (approved Valles Marineris close frame):
+   - On Tharsis volcanoes: concentric caldera collapse terraces, fine radial lava flow lobes, volcanic rilles, and flank pit chains.
+   - Along Valles Marineris, Noctis Labyrinthus, and north-east outflow channels: sharp scalloped canyon rims, tributary gullies, streamlined channel islands, and layered rust-burgundy walls.
+   - Across highlands and dark plains (especially toward the four corners): resolve blurry radially stretched marks into crisp nadir circular impact craters, ejecta blankets, wrinkle ridges, and wind streaks.
+   - Inside existing dust storm and white clouds: fine filamentary cloud wisps within their exact existing boundaries.
+   - Light local relief moderately from one Sun in the upper-left (azimuth -47 degrees, elevation 28 degrees), casting subtle shadows toward the lower-right. Keep all highlights calm and restrained under 0.85 display brightness -- sunlit rims are muted pale ochre at most, never pure white and never saturated neon orange.
+
+   Strict nadir surface map filling the square edge to edge. No horizon, no planet limb, no sky, no stars, no border, no text, no watermark.
+   ```
+3. **Takes and selection**: 2 takes generated (`global-take-1.png`, `global-take-2.png`). Kept `global-take-2.png` (`PSNR 27.103 dB | SSIM 0.720434 | Flow median 0.2140 px | p99 0.9094 px`, `PASS` vs `pw-src-1024.png`; `PSNR 26.936 dB | Flow median 0.2453 px | p99 1.0418 px`, `PASS` vs `pw-src-1092.png`; chosen over take 1 at `p99 = 1.0031 px` for tighter alignment across the eastern terminator plains). Low frequencies (`sigma = 24 px` at `2048`) were locked to `pw-src-2048` and soft-kneed to `<= 0.84` as `out/work/pwide/pw-global-sharp-2048.png`.
+
+### Step 4B: Overlapping `2 x 2` Tile Pass to `4096 x 4096` and Nesting
+
+1. Split `out/work/pwide/pw-global-sharp-2048.png` into four `1120 x 1120` quadrant inputs (`out/work/pwide/tiles-sharp/in-{tl,tr,bl,br}.png`, covering `2240 x 2240` of the `4096 x 4096` grid with `384 px` overlap; after an initial softer exploratory set `take-1..3` in `out/work/pwide/tiles/` that constrained PSNR above `30 dB`, the sharp quadrant pass ran within the 6-take-per-quadrant cap).
+2. Ran `generate_image` (`model: "nano_banana_pro"`, `aspect_ratio: "1:1"`) on each quadrant `[out/work/pwide/tiles-sharp/in-<tag>.png, references/approved/mars-hero.png]` with exact prompt:
+   ```text
+   Top-down orthographic 90-degree nadir planetary surface map tile of Mars, 1:1 square, north at the top, filling the entire frame edge to edge.
+
+   REFERENCE IMAGES:
+   - Image 1 is the exact orbital base map tile to super-resolve 2x in place. Keep every shield volcano caldera, canyon wall, outflow channel, dust storm filament, white cloud bank, dark basalt patch, crater, and regional brightness and hue in its exact position and scale from Image 1. Nothing may shift, rotate, resize, appear, or vanish, and darker terminator-side regions must stay at their exact dark brightness.
+   - Image 2 is the approved Mars orbital frame from the same film, defining the orbital clarity and rich rust, terracotta, ochre, burgundy, and dark basalt palette.
+
+   CRISP NATIVE ORBITAL GEOLOGY AND MODERATE LIGHT:
+   Replace all remaining softness in Image 1 with razor-sharp high-resolution overhead Martian geology:
+   - Crisp concentric caldera fault terraces, fine radial lava flow lobes, and volcanic rilles on volcanoes.
+   - Razor-sharp scalloped canyon rims, stepped fault scarps, tributary gullies, and braided channel islands along canyons and outflow channels.
+   - Crisp circular impact craters with sharp rims and subtle ejecta blankets, fine wrinkle ridges, and wind-etched regolith streaks across plains and highlands.
+   - Delicate filamentary cloud wisps strictly inside existing dust and cloud regions.
+   - Moderate local relief shading from one Sun in the upper-left (azimuth -47 degrees, elevation 28 degrees) casting subtle shadows toward the lower-right. Keep all highlights calm under 0.85 display brightness -- sunlit rims are muted pale ochre at most, never pure white and never saturated neon orange.
+
+   Strict nadir map texture edge to edge. No border, no vignette, no horizon, no planet limb, no sky, no stars, no text, no watermark.
+   ```
+3. **Takes and selection** (at most 6 takes per quadrant across exploratory and sharp passes):
+   - `tl`: 4 takes total (`tile-tl-take-1` exploratory, `tile-tl-take-2..4` sharp); kept `out/work/pwide/tiles-sharp/tile-tl-take-4.png` (`PSNR 30.701 dB | SSIM 0.880368 | Flow median 0.1130 px | p99 0.6336 px | max 1.7054 px`, `PASS`; take 2 failed at `p99 = 1.7646 px`, take 3 had `p99 = 1.3134 px`).
+   - `tr`: 2 takes total (`tile-tr-take-1` exploratory, `tile-tr-take-2` sharp); kept `out/work/pwide/tiles-sharp/tile-tr-take-2.png` (`PSNR 29.515 dB | SSIM 0.832509 | Flow median 0.1749 px | p99 0.7335 px | max 2.7528 px`, `PASS`).
+   - `bl`: 3 takes total (`tile-bl-take-1..2` exploratory, `tile-bl-take-3` sharp); kept `out/work/pwide/tiles-sharp/tile-bl-take-3.png` (`PSNR 26.870 dB | SSIM 0.787769 | Flow median 0.1955 px | p99 0.8421 px | max 3.7495 px`, `PASS`).
+   - `br`: 4 takes total (`tile-br-take-1..3` exploratory, `tile-br-take-4` sharp); kept `out/work/pwide/tiles-sharp/tile-br-take-4.png` (`PSNR 28.633 dB | SSIM 0.752606 | Flow median 0.1627 px | p99 0.7915 px | max 3.7568 px`, `PASS`).
+4. Assembled `out/work/pwide/pw-sharp-assembled-4096.png` (`--lock-sigma-px 32`), removed sub-pixel global-pass drift with smooth (`sigma = 10 px`) `1092 x 1092` Farneback alignment, added high-pass geology (`sigma = 8.5 px` at `4096`) onto `pw-src-4096` (tamed), nested an in-memory `0.35`-deg scene-linear wrap-matched and highlight-tamed copy of `public/assets/mars/full/patch-1.jpg` (`48.0` deg, `feather = 0.12`) into the central `1642 x 1642` region without modifying `patch-1.jpg` on disk, applied the final `<= 0.848` pale-ochre highlight ceiling, and exported `full` (`4096 x 4096`) and `web` (`2048 x 2048`) JPEGs at quality `94` (`subsampling=0`).
+5. **Checks passed on final `public/assets/mars/full/patch-wide.jpg`**:
+   - `checkmoved.py` vs `2185 x 2185` (`8192 x 4096` wrap equirectangular pixel-grid scale): `PSNR 28.089 dB | SSIM 0.853821 | Flow median 0.2849 px | p99 1.4303 px | max 6.5660 px (PASS)`.
+   - `checkmoved.py` vs `1092 x 1092` (`4096 x 2048` outer painted wrap optical scale): `PSNR 28.315 dB | SSIM 0.865008 | Flow median 0.1303 px | p99 0.6723 px | max 2.3274 px (PASS)`.
+   - Nested consistency (`patch-wide` central `48.0` deg at `1642 x 1642` vs wrap-matched `patch-1`): core `PSNR 45.609 dB` (`RMS 1.337 / 255`), full `PSNR 31.933 dB`.
+   - Highlight ceiling: max display value `0.8468` (`p99 = 0.8261`), pale ochre rims, zero neon-orange saturation.
+
+---
+
+## Asset 5: `public/assets/mars/<set>/patch-mid.jpg`
+
+- **Output files**:
+  - `public/assets/mars/full/patch-mid.jpg` (`4096 x 4096`, JPEG quality `94`, `subsampling=0`)
+  - `public/assets/mars/web/patch-mid.jpg` (`2048 x 2048`, JPEG quality `94`, `subsampling=0`, Lanczos downscale of `full`)
+- **Angular width**: `24.0` degrees (`halfTan = 0.21255656`) centered on `lon = -81.86, lat = -4.54`.
+- **Tools and models**:
+  - `assets-src/mars/patches/resample.py` (`subpatch`, `nest`)
+  - OpenCV bilateral + Gaussian pre-cleaning (`cv2.bilateralFilter(d=5, sigmaColor=14.0, sigmaSpace=2.0)` + `cv2.GaussianBlur(sigma=0.65)`) on the `1956 x 1956` `patch-1` subpatch so 1-px parent grain is not amplified
+  - `generate_image` with model `nano_banana_pro` (`aspect_ratio = "1:1"`, `2048 x 2048` output)
+  - `assets-src/mars/patches/tile_assemble.py` (`split`, `assemble`)
+  - `assets-src/mars/patches/bake.py` (`fast_gaussian` low-frequency matching)
+  - `tools/ml/checkmoved.py` (alignment verification)
+- **Input files**:
+  - `public/assets/mars/full/patch-1.jpg` (read-only on disk; central `24.0` deg extracted via `extract_subpatch(p1, 48.0, 24.0, size)` at native parent grid `1956 x 1956` as `out/work/pmid/pm-src-1956.png`, web parent grid `978 x 978` as `out/work/pmid/pm-src-978.png`, `4096 x 4096` as `out/work/pmid/pm-src-4096.png`, and soft-kneed `1024 x 1024` as `out/work/pmid/pm-in-1024.png`)
+  - `references/approved/mars-hero.png`
+  - `references/approved/mars-close.jpg`
+  - `public/assets/mars/full/patch-2.jpg` (read-only on disk; an in-memory highlight-tamed and low-frequency-matched copy is nested into the central `12.0` deg of `patch-mid.jpg` with `feather = 0.12`)
+
+### Step 5A: `24.0` Degree Parent Subpatch and `2048 x 2048` Global Pass
+
+1. Extracted the central `24.0` degrees of `public/assets/mars/full/patch-1.jpg` (`tan(12 deg) / tan(24 deg) = 0.477410`, `1955.5 px` of `4096`) at `4096`, `1956`, `1024`, and `978` pixels, and prepared `out/work/pmid/pm-in-1024.png` (`knee_start = 0.72, ceiling = 0.835`) and native `1956 x 1956` pre-cleaned `out/work/pmid/pm-clean-1956.png`.
+2. Ran `generate_image` (`model: "nano_banana_pro"`, `aspect_ratio: "1:1"`) with input images `[out/work/pmid/pm-in-1024.png, references/approved/mars-hero.png, references/approved/mars-close.jpg]` and exact prompt:
+   ```text
+   Strict 2x super-resolution of Image 1, a 24 x 24 degree gnomonic top-down 90-degree nadir planetary surface map of central Valles Marineris on Mars (1:1 square, north at the top).
+
+   EXACT PIXEL-LOCKED LAYOUT AND TONE:
+   Image 1 is the exact parent map subpatch to sharpen in place. When scaled back to Image 1's resolution, every canyon wall, twin central trough, Noctis Labyrinthus fracture at left, north-east chasma bay and dark floor at upper-right, southern cratered plateau, swirling dust filaments across the upper plain, and every existing crater MUST stay in its exact pixel position, width, and brightness.
+   - Keep smooth northern dust plains and southern plateaus free of invented canyons or cliffs.
+   - Keep dark canyon troughs dark and existing regional rust, ochre, and burgundy tones locked to Image 1.
+
+   ADDED GEOLOGIC DETAIL AND MODERATE RELIEF LIGHT:
+   Add crisp meso-scale Martian canyon and plateau geology bridging Image 2 (approved Mars orbital frame) and Image 3 (approved Valles Marineris close frame):
+   - Along existing canyon walls, fault scarps, and chasma bays: razor-sharp crenulated rims, stepped fault terraces, closely spaced spur-and-gully cliff fluting exposing rust and dark burgundy rock strata, overlapping landslide aprons, and canyon-floor debris mounds, with subtle wispy pale dust haze only where pale floor bands already exist in Image 1.
+   - Across surrounding plateaus and northern plains: smooth wind-swept regolith, subtle aeolian streaks, fine wrinkle ridges, crisp rims on existing impact craters, and delicate dust cloud filaments in the upper plain.
+   - Light local canyon and crater relief moderately from one Sun in the upper-left (azimuth -47 degrees, elevation 28 degrees), casting coherent shadows toward the lower-right. Keep every highlight calm under 0.85 display brightness -- sunlit canyon rims are muted pale ochre or dusty tan at most, never bright white and never saturated neon orange or glowing lava-red.
+
+   Strict nadir map texture edge to edge. No horizon, no sky, no stars, no border, no vignette, no text, no watermark.
+   ```
+3. **Takes and selection**: 2 takes generated (`global-take-1.png`, `global-take-2.png`). Kept `global-take-1.png` (`PSNR 29.312 dB | SSIM 0.843603 | Flow median 0.1117 px | p99 0.7167 px | max 2.7524 px`, `PASS` vs `pm-src-1024.png`; take 2 zoomed/drifted and failed at `p99 = 143.28 px`).
+
+### Step 5B: Overlapping `2 x 2` Tile Pass to `4096 x 4096` and Nesting
+
+1. Split native `1956 x 1956` `out/work/pmid/pm-clean-1956.png` into four `1070 x 1070` true `1:1` parent-resolution quadrant inputs (`out/work/pmid/tiles-sharp/in-{tl,tr,bl,br}.png`, covering `2240 x 2240` of the `4096 x 4096` grid with `384 px` overlap; after an exploratory `>30 dB` pass in `out/work/pmid/tiles/`, the sharp native-resolution pass ran within the 6-take-per-quadrant cap), using `[in-<tag>.png, mars-hero.png]` on northern dust-plain quadrants (`tl`, `tr`) and `[in-<tag>.png, mars-hero.png, mars-close.jpg]` on canyon-rich southern quadrants (`bl`, `br`).
+2. Exact prompt for northern quadrants `tl` and `tr` (`out/work/pmid/tiles-sharp/tile-tl-take-4.png`, `out/work/pmid/tiles-sharp/tile-tr-take-4.png`, inputs `[out/work/pmid/tiles-sharp/in-<tag>.png, references/approved/mars-hero.png]`):
+   ```text
+   Top-down orthographic 90-degree nadir planetary surface map quadrant of Mars just north of Valles Marineris, 1:1 square, north at the top, filling the frame edge to edge.
+
+   EXACT LAYOUT AND TONE LOCK:
+   Image 1 is the exact low-resolution parent map tile to super-resolve 2x in place. Keep every region, smooth northern dust plain, swirling ochre dust cloud, dark chasma basin, Noctis Labyrinthus fracture, canyon rim, and existing crater in its exact position, shape, and brightness from Image 1.
+   - Smooth rust and ochre dust plains MUST stay smooth plains -- NEVER carve new canyons, valleys, cliffs, or fault benches onto smooth plains.
+
+   CRISP NATIVE GEOLOGIC DETAIL (matching Image 2 approved Mars orbital frame):
+   Replace all pixel softness of Image 1 with crisp, high-resolution Martian geology:
+   - Across smooth northern plateaus and dust clouds: fine wind-swept regolith, subtle aeolian dust streaks, delicate translucent dust cloud filaments, faint wrinkle ridges, and crisp rims on existing tiny circular craters (no noisy stippling).
+   - Along ONLY the existing canyon rims, Noctis fractures, and chasma scarps: razor-sharp crenulated canyon rims, stepped fault ledges, finely gullied cliff walls in rust and dark burgundy, and talus slopes, lit moderately from the upper-left (azimuth -47 degrees, elevation 28 degrees) with shadows toward the lower-right. Keep every highlight calm under 0.85 display brightness -- sunlit rims are muted pale ochre at most, never white and never saturated neon orange.
+
+   Strict nadir map texture edge to edge. No border, no vignette, no horizon, no sky, no stars, no text, no watermark.
+   ```
+3. Exact prompt for southern quadrants `bl` and `br` (`out/work/pmid/tiles-sharp/tile-bl-take-2.png`, `out/work/pmid/tiles-sharp/tile-br-take-2.png`, inputs `[out/work/pmid/tiles-sharp/in-<tag>.png, references/approved/mars-hero.png, references/approved/mars-close.jpg]`):
+   ```text
+   Top-down orthographic 90-degree nadir planetary surface map tile of Valles Marineris on Mars, 1:1 square, north at the top, filling the entire frame edge to edge.
+
+   REFERENCE IMAGES:
+   - Image 1 is the exact low-resolution parent map tile to super-resolve 2x in place. Keep every canyon wall, dark trough, smooth southern plateau, ridge, crater, and color region in its exact position, scale, and brightness from Image 1. Nothing may shift, rotate, resize, appear, or vanish, and dark canyon troughs must stay dark.
+   - Image 2 is the approved Mars orbital frame from the same film, defining the rust, ochre, crimson, and dark basalt color grade.
+   - Image 3 is the approved Valles Marineris close frame from the same film, defining the layered dark burgundy and iron-red cliff stratigraphy, fluted wall gullies, and landslide aprons.
+
+   SURFACE DETAIL AND MODERATE LIGHT:
+   Replace all pixel blur of Image 1 with crisp, high-resolution Martian geology seen straight from above (no noisy stipple dots): stepped parallel fault scarps, razor-sharp scalloped canyon rims, finely gullied cliff faces exposing layered rust and dark burgundy strata, overlapping landslide fans and talus aprons at wall bases, smooth wind-streaked southern plateaus with crisp rims on existing impact craters, and subtle wispy texture strictly inside existing pale canyon bands. Local canyon relief is lit moderately by one Sun from the upper-left (azimuth -47 degrees, elevation 28 degrees), casting coherent dark shadows toward the lower-right. Keep every highlight calm under 0.85 display brightness -- sunlit rims are muted pale ochre at most, never pure white and never saturated neon orange.
+
+   Strict nadir map texture only. No horizon, no sky, no stars, no vignette, no border, no text, no watermark.
+   ```
+4. **Takes and selection** (at most 6 takes per quadrant across exploratory and sharp passes):
+   - `tl`: 4 takes total (`tile-tl-take-1..3` exploratory, `tile-tl-take-4` sharp); kept `out/work/pmid/tiles-sharp/tile-tl-take-4.png` (`PSNR 32.335 dB | SSIM 0.940951 | Flow median 0.0299 px | p99 0.5342 px | max 1.1840 px`, `PASS`).
+   - `tr`: 5 takes total (`tile-tr-take-1..2` exploratory, `tile-tr-take-3..5` sharp); kept `out/work/pmid/tiles-sharp/tile-tr-take-4.png` (`PSNR 33.617 dB | SSIM 0.938803 | Flow median 0.0671 px | p99 0.4898 px | max 1.4635 px`, `PASS`; takes 3 and 5 failed at `p99 = 16.87 px` and `6.28 px`).
+   - `bl`: 2 takes total (`tile-bl-take-1` exploratory, `tile-bl-take-2` sharp); kept `out/work/pmid/tiles-sharp/tile-bl-take-2.png` (`PSNR 32.154 dB | SSIM 0.916028 | Flow median 0.0769 px | p99 0.6696 px | max 1.7204 px`, `PASS`).
+   - `br`: 2 takes total (`tile-br-take-1` exploratory, `tile-br-take-2` sharp); kept `out/work/pmid/tiles-sharp/tile-br-take-2.png` (`PSNR 30.728 dB | SSIM 0.908059 | Flow median 0.1026 px | p99 0.5631 px | max 1.2421 px`, `PASS`).
+5. Assembled `out/work/pmid/pm-sharp-assembled-4096.png` (`--lock-sigma-px 32` against `pm-clean-1956.png`), matched low frequencies (`sigma_in = 80 px, sigma_ed = 24 px, feather = 0.12`) to `pm-src-4096` (tamed), nested an in-memory highlight-tamed (`<= 0.835`) and low-frequency-matched copy of `public/assets/mars/full/patch-2.jpg` (`12.0` deg, `feather = 0.12`) into the central `2025 x 2025` region without modifying `patch-2.jpg` on disk, applied the final `<= 0.84` pale-ochre highlight ceiling and warm-ochre `G <= 0.90 R` highlight guard, and exported `full` (`4096 x 4096`) and `web` (`2048 x 2048`) JPEGs at quality `94` (`subsampling=0`).
+6. **Checks passed on final `public/assets/mars/full/patch-mid.jpg`**:
+   - `checkmoved.py` vs `1956 x 1956` (`4096 x 4096` `patch-1` full parent subpatch scale): `PSNR 34.869 dB | SSIM 0.911762 | Flow median 0.0574 px | p99 0.5382 px | max 3.2342 px (PASS)`.
+   - `checkmoved.py` vs `978 x 978` (`2048 x 2048` `patch-1` web parent subpatch scale): `PSNR 35.008 dB | SSIM 0.927659 | Flow median 0.0587 px | p99 0.3662 px | max 1.8087 px (PASS)`.
+   - Nested consistency (`patch-mid` central `12.0` deg at `2025 x 2025` vs highlight-tamed `patch-2`): core `PSNR 44.001 dB` (`RMS 1.609 / 255`), full `PSNR 35.880 dB`.
+   - Highlight ceiling: max display value `0.8387` (`p99 = 0.7953`), pale ochre rims, zero neon-orange saturation.
+---
+
+## End-to-End Verification Summary
+
+Running `python3 assets-src/mars/patches/verify.py --wrap out/work/wrap/stage1-color-4096.jpg` on the final delivered files:
+
+- **Spot projection check**: `lon = -81.86, lat = -4.54` projects to `(1267.110, 855.387)` vs `(1267, 855)` (`0.402 px` error).
+- **Nested consistency (`patch-wide` vs wrap-matched `patch-1` at `1642 x 1642`)**: core `PSNR = 45.609 dB` (`RMS = 1.337 / 255`), full square `PSNR = 31.933 dB` (`RMS = 6.455 / 255`).
+- **Nested consistency (`patch-1` vs `patch-2` at `967 x 967`)**: core `PSNR = 40.315 dB` (`RMS = 2.459 / 255`), full square `PSNR = 34.675 dB` (`RMS = 4.707 / 255`).
+- **Nested consistency (`patch-mid` vs highlight-tamed `patch-2` at `2025 x 2025`)**: core `PSNR = 44.001 dB` (`RMS = 1.609 / 255`), full square `PSNR = 35.880 dB` (`RMS = 4.098 / 255`).
+- **Nested consistency (`patch-2` vs `patch-3` at `1020 x 1020`)**: core `PSNR = 41.954 dB` (`RMS = 2.036 / 255`), full square `PSNR = 39.776 dB` (`RMS = 2.617 / 255`).
 - **Low-frequency feather match (`patch-1` vs `stage1-color-4096.jpg` over outer `12%`, `sigma = 0.25` deg)**: `RMS = 0.00124` (`0.316 / 255`), `p99 = 0.993 / 255`, `max = 3.378 / 255`.
-- **Provisional hero-calmed low-frequency match**: After the wrap map changed from `stage1-color-4096.jpg` to a direct light-curve-delit hero unprojection, all three patches (`full` and `web`) were matched with `python3 assets-src/mars/patches/bake.py --wrap out/work/wrap/hero-clean-wrap-4096.jpg --blur-deg 0.35`, calming the fiery orange region near `lon -65, lat 15` toward the hero's rust and burgundy while leaving all detail above `0.35` deg untouched and keeping feature alignment to the direct unprojected hero within `0.369 px` median / `0.941 px` p99 (`PASS`).
-- **Re-matching all three patches and baking into the final `8192 x 4096` wrap**: `python3 assets-src/mars/patches/bake.py --wrap <8192-map> --blur-deg 0.35 --out <out-map>` (or `--blur-px <wrap-px>`, or `--patch <single-patch>`) re-matches `patch-1`, `patch-2`, and `patch-3` (`full` and `web`) to `--wrap` at the chosen blur radius while leaving patch detail above that radius untouched, and composites `patch-1` into `<out-map>` with the `0.12` smoothstep feather.
-- **Simulated dive contact sheet**: 8 top-down views (`60.0, 33.429, 18.626, 10.377, 5.782, 3.221, 1.795, 1.0` degrees wide) blending wrap + `patch-1` + `patch-2` + `patch-3` with `0.12` smoothstep feather show zero visible patch edges and zero level-transition jumps; native `640 x 640` center and edge crops of all three `4096 x 4096` patches show crisp native detail and no text, watermark, border, logo, stray object, or baked stars.
+- **Provisional hero-calmed low-frequency match**: After the wrap map changed from `stage1-color-4096.jpg` to a direct light-curve-delit hero unprojection, all three initial patches (`full` and `web`) were matched with `python3 assets-src/mars/patches/bake.py --wrap out/work/wrap/hero-clean-wrap-4096.jpg --blur-deg 0.35`, calming the fiery orange region near `lon -65, lat 15` toward the hero's rust and burgundy while leaving all detail above `0.35` deg untouched and keeping feature alignment to the direct unprojected hero within `0.369 px` median / `0.941 px` p99 (`PASS`).
+- **Re-matching patches and optional wrap baking**: `python3 assets-src/mars/patches/bake.py --wrap <8192-map> --blur-deg 0.35 --out <out-map>` (or `--blur-px <wrap-px>`, or `--patch <single-patch>`) re-matches all patches in `patches.json` (`full` and `web`) to `--wrap` at the chosen blur radius while leaving patch detail above that radius untouched (`patch-wide` and `patch-mid` were delivered without baking into `wrap-color.jpg`, as requested).
+- **Simulated dive contact sheet**: 8 top-down views (`60.0, 33.429, 18.626, 10.377, 5.782, 3.221, 1.795, 1.0` degrees wide) and native `1:1` center and edge crops of `patch-wide.jpg` and `patch-mid.jpg` beside their resampled parents confirm crisp native detail, calm pale-ochre highlights under `0.85` display value, and no text, watermark, border, logo, stray object, or baked stars.
 
 ## Ledger rows
 
