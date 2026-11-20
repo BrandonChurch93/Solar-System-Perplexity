@@ -221,6 +221,13 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 2. Merged `agent/assets-shared`: the sky glow map made from the real star map by `tools/assets/sky.py`. It replaces the seeded stand-in sky, and `tools/spike-assets.py` is removed. Its grade and exposure are settled in Phase 3 against Mars's approved images and in Phase 5 for the whole film.
 - Phase 2. Four Mars asset agents were started while the blockout finished, as kit/08 allows: wrap maps, Phobos, dive patches, the relief. Each owns one subfolder of the Mars asset folders and its own branch (`agent/assets-mars-wrap`, `-phobos`, `-patches`, `-relief`). A tile or a layer of a map counts as its own asset for the take limit. Their briefs are in `out/work/briefs/`.
 - Phase 2. The sky glow map from the star map agent had not arrived when the blockout rounds started. The blockout uses the seeded stand-in sky. The real map is integrated when it lands, in Phase 2 or 3.
+- Phase 2 to 3. While the preview film renders on the lead's VM, the Phase 3 code is written in a second git worktree (branch `phase3-work`) so the build under the running render does not change. It is merged into main when Phase 3 starts.
+- Phase 3. The cover is a band of dust haze with a horizon: two colors split along the horizon line the camera would see, streaks that flow along the direction of travel, fully opaque at its center. It carries direction, horizon, color and exposure across the change of view.
+- Phase 3. The Mars dive is rebuilt as a swoop (open item 5): the camera arcs past Phobos, drops on a log altitude curve, levels out along the canyon and its speed, heading, pitch and roll at the cover center are derived from the terrain entry so the two views join.
+- Phase 3. The relief agent was asked for a margin: the close image extended by 12 percent left and right and 12 percent at the bottom, outpainted, original pixels untouched, so the camera can look around and move without showing an edge.
+- Phase 3. The relief shader cancels the lens vignette, because the approved close image carries its own.
+- Phase 3. Phobos is a displaced mesh lit with direct light, a faint ambient and a faint warm bounce from Mars, with no cast self shadow. A cast shadow blacks out Stickney, which the approved image shows lit on its rim.
+- Phase 3. The storm churns by rotating the color lookup about the storm center inside the storm mask, faster near the center. The rotation is zero at the judged hold frame.
 
 ## Open items
 
@@ -236,7 +243,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- `npm run film -- --tier draft --format preview`, frames 0 to 5399, log `out/work/film-preview.log`, the lead's VM, started 2026-11-20 about 02:05 UTC. Resumable: run the same command again.
+- `npm run film -- --tier draft --format preview`, frames 0 to 5399, log `out/work/film-preview.log`, the lead's VM, started 2026-11-20 about 01:50 UTC. Resumable: run the same command again.
 
 ## Rounds
 
