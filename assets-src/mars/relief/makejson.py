@@ -3,6 +3,7 @@ sys.path.insert(0, 'assets-src/mars/relief')
 from geom import CF, W, H
 meta = json.load(open('out/work/build-meta.json'))
 safe = json.load(open('out/work/safe.json')) if len(sys.argv) > 1 else None
+mg = meta.pop('_margin', dict(left=0, right=0, bottom=0))
 layers = {}
 for k, m in meta.items():
     x0, y0, x1, y1 = m['box']
@@ -16,7 +17,8 @@ order = ['L0', 'L2', 'L1']
 out = dict(
     source='references/approved/mars-close.jpg',
     imageSize=dict(full=[2 * W, 2 * H], web=[W, H], approved=[W, H]),
-    boxUnits='full-set pixels, origin top-left of the close image',
+    boxUnits='full-set pixels, origin top-left of the close image; with a margin, boxes may start at negative x and run past the image size',
+    margin=dict(left=mg['left'], right=mg['right'], bottom=mg['bottom'], units='full-set pixels of the close image, painted ground outside the close image, nothing added at the top'),
     distFormat='raw little-endian float32, row-major from top-left, no header; distance from the image camera along the pixel ray; unit = camera height above the rim plateau',
     camera=dict(vfovDeg=CF['vfovDeg'], focalPxFull=2 * CF['focalPx'], pitchDeg=round(CF['pitchDownDeg'], 3), pitchNote='negative looks below level', rollDeg=round(CF['rollDeg'], 3),
                 principalPointFull=[W, H], looksAlong='-Z, +Y image up, pitch applied about camera X',
@@ -26,7 +28,8 @@ out = dict(
                 horizonDistance=round(CF['horizonDistance'], 3)),
     drawOrder=order,
     layers={k: layers[k] for k in order},
-    masks=dict(full='public/assets/mars/full/relief-masks.png', web='public/assets/mars/web/relief-masks.png', size=dict(full=[W, H], web=[W // 2, H // 2]),
+    masks=dict(full='public/assets/mars/full/relief-masks.png', web='public/assets/mars/web/relief-masks.png', size=dict(full=[W + mg['left'] // 2 + mg['right'] // 2, H + mg['bottom'] // 2], web=[(W + mg['left'] // 2 + mg['right'] // 2) // 2, (H + mg['bottom'] // 2) // 2]),
+               box=dict(x=-mg['left'], y=0, w=2 * W + mg['left'] + mg['right'], h=2 * H + mg['bottom']),
                channels=dict(r='mist on the canyon floor, may drift', g='thin dust haze in the air, catches the low sun', b='unused, 0')),
     mistDriftImageDir=[0.899, 0.438],
     mistDriftNote='unit vector in image space (x right, y down) along the canyon floor, pointing down-canyon toward the lower right',

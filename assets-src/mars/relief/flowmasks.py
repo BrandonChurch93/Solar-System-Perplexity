@@ -16,6 +16,7 @@ dist = np.load('out/work/dist0.npy')
 r1 = np.load('out/work/L1-region.npy').astype(np.float32); r2 = np.load('out/work/L2-region.npy').astype(np.float32)
 near = cv2.GaussianBlur(np.maximum(r1, r2), (0, 0), 12)
 hy = np.load('out/work/hy_half.npy')
+if hy.shape[0] == 3492: hy = hy[338:338 + 2816]
 Y = np.arange(H, dtype=np.float32)[:, None]
 t = np.clip((np.log(dist) - np.log(8)) / (np.log(25) - np.log(8)), 0, 1)
 haze = t * t * (3 - 2 * t)

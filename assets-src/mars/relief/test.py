@@ -6,12 +6,19 @@ mode = sys.argv[1]
 if mode == 'identity':
     up = cv2.imread('out/work/mars-upscaled.png').astype(np.float32) / 255
     Ls = load('full')
-    acc = np.zeros_like(up); cov = np.zeros(up.shape[:2], np.float32)
+    mg = json.load(open('assets-src/mars/relief/relief.json')).get('margin', dict(left=0, right=0, bottom=0))
+    ox = mg['left']
+    acc = np.zeros((up.shape[0] + mg['bottom'], up.shape[1] + mg['left'] + mg['right'], 3), np.float32); cov = np.zeros(acc.shape[:2], np.float32)
     for L in Ls:
         x0, y0, x1, y1 = [int(v) for v in L['box']]
+        x0 += ox; x1 += ox
         a = L['alpha'][..., None]
         acc[y0:y1, x0:x1] = acc[y0:y1, x0:x1] * (1 - a) + L['color'] * a
         cov[y0:y1, x0:x1] = cov[y0:y1, x0:x1] * (1 - a[..., 0]) + a[..., 0]
+    if ox or mg['bottom']:
+        cv2.imwrite('out/work/identity-ext.jpg', np.clip(acc * 255, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 92])
+        extcov = cov.copy()
+    acc = acc[:up.shape[0], ox:ox + up.shape[1]]; cov = cov[:up.shape[0], ox:ox + up.shape[1]]
     ground = cov > 0.999
     d = np.abs(acc - up)[ground] * 255
     res = dict(groundPixels=int(ground.sum()), meanAbs=float(d.mean()), p99=float(np.percentile(d, 99)), p999=float(np.percentile(d, 99.9)), max=float(d.max()),
