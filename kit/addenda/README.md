@@ -7,4 +7,6 @@ Numbered changes made after the kit was written. Brandon's review notes arrive h
 - The Builder reads every addendum at the start of every task and after every compaction, and again when a phase begins.
 - The Builder never writes or edits an addendum. It logs how it applied each one in `kit/PROGRESS.md`.
 
-There are no addenda yet.
+| No. | File | What it changes |
+| --- | --- | --- |
+| 001 | `001-status-pictures.md` | Status pictures in the task thread after every round and every finished step |
