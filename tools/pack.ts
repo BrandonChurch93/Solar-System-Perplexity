@@ -241,7 +241,7 @@ async function continuity(): Promise<void> {
 
 async function hook(): Promise<void> {
   const list: Art[] = []
-  for (const frame of spread(0, Math.min(cfg.hookFrame, cfg.frameCount - 1), contactSheetFrames)) {
+  for (const frame of spread(0, Math.min(cfg.hookFrame, cfg.frameCount - 1), Math.min(contactSheetFrames, maxImages))) {
     const source = await renderSource(frame, tier, frame === 0 || frame === cfg.hookFrame)
     list.push(simple(source, 'hook-' + frame, { width: phonePreviewWidthPx }))
   }
@@ -250,7 +250,7 @@ async function hook(): Promise<void> {
 
 function compression(): void {
   const dir = join(WORK, 'stress')
-  const list: Art[] = []
+  const groups: Art[][] = []
   const entries = existsSync(dir) ? readdirSync(dir).sort() : []
   for (const segment of cfg.raw.quality.stress.segments) {
     for (const file of entries) {
@@ -268,11 +268,11 @@ function compression(): void {
         { path: before, key: { segment, frame, kind: 'before' }, record },
         { path: after, key: { segment, frame, kind: 'after' }, record: safeRecord(after) ?? record },
       ]
-      list.push(...pages('pair', 'compression-' + segment + '-' + stem, inputs, { together: true }))
+      groups.push(...chunk(pages('pair', 'compression-' + segment + '-' + stem, inputs, { together: true }), maxImages))
     }
   }
-  if (list.length === 0) console.log('R7 skipped: no matching before and after stills in out/work/stress; run npm run stress')
-  else publish('R7', singles(list))
+  if (groups.length === 0) console.log('R7 skipped: no matching before and after stills in out/work/stress; run npm run stress')
+  else publish('R7', groups)
 }
 
 try {
