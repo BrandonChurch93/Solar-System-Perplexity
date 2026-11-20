@@ -14,6 +14,7 @@ export interface PlanetLight {
   reliefNear: number
   limb: number
   curve?: number[][]
+  nightFlat?: [number, number, number]
 }
 
 export const CURVE_KNOTS = 33
@@ -102,6 +103,7 @@ uniform vec3 uTint;
 uniform float uWrap;
 uniform vec3 uCurve[33];
 uniform vec3 uNight;
+uniform vec3 uNightFlat;
 uniform float uRelief;
 uniform float uReliefNear;
 uniform float uLimb;
@@ -178,7 +180,13 @@ ${PATCH_LEVELS}
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
-  vec3 col = inverseFilmic(albedo) * shade * uTint;
+  vec3 lin = inverseFilmic(albedo);
+  if (uNightFlat.x > 0.0) {
+    float dark = 1.0 - smoothstep(uNightFlat.y, uNightFlat.z, ndl0);
+    float l = dot(lin, vec3(0.2126, 0.7152, 0.0722));
+    lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
+  }
+  vec3 col = lin * shade * uTint;
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -238,6 +246,7 @@ export class Planet {
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: o.light.wrap }, uCurve: { value: curve(o.light) }, uNight: { value: new THREE.Vector3().fromArray(o.light.night) },
+        uNightFlat: { value: new THREE.Vector3().fromArray(o.light.nightFlat ?? [0, 0, 0]) },
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
         uExtinction: { value: o.haze.extinction },
         uBodyToWorld: { value: this.bodyToWorld },
