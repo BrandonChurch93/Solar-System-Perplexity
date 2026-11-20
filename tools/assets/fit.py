@@ -279,7 +279,7 @@ def ring_normal_from_ellipse(cam, pts):
                                                 "poleAngleDeg": round(th, 3), "openingDeg": round(sublat, 3)}
 
 
-def fit_rings(cam, edges, normal_guess, ellipse_edge=None):
+def fit_rings(cam, edges, normal_guess, ellipse_edge=None, radius_from="median"):
     n0 = normalize(normal_guess)
 
     def unpack(p):
@@ -311,8 +311,12 @@ def fit_rings(cam, edges, normal_guess, ellipse_edge=None):
     if n @ n0 < 0:
         n = -n
     out = {"_ellipse": info} if info else {}
+    d = float(np.linalg.norm(cam.pos))
     for k, pts in edges.items():
         rr = radii(n, pts)
+        if radius_from == "ellipse" and len(pts) >= 5:
+            (_, _), (a, b), _ = cv2.fitEllipse(pts.astype(np.float32))
+            rr = np.full(len(pts), d * math.tan(math.atan(max(a, b) / 2 / cam.f)))
         out[k] = (float(np.median(rr)), float(rr.std()), int(len(rr)))
     return n, out
 
@@ -516,7 +520,7 @@ def run(stop, vfov, silhouette_only=False):
 
     def do_rings(cam_):
         pts = {k: ring_edge_points(img, spec) for k, spec in hint["rings"]["edges"].items()}
-        n, e = fit_rings(cam_, pts, hint["rings"].get("normalGuess", [0, 1, 0.3]), hint["rings"].get("ellipseEdge"))
+        n, e = fit_rings(cam_, pts, hint["rings"].get("normalGuess", [0, 1, 0.3]), hint["rings"].get("ellipseEdge"), hint["rings"].get("radiusFrom", "median"))
         return n, e, pts
 
     if "rings" in hint and not silhouette_only:
@@ -525,7 +529,7 @@ def run(stop, vfov, silhouette_only=False):
     def pole(cam_):
         if g.get("poleFromRings") and edges is not None:
             return n.copy(), "pole from ring normal"
-        return pole_from_angles(cam_, g["poleAngleDeg"], g["subLatDeg"]), "pole angle and sub-camera latitude"
+        return pole_from_angles(cam_, g.get("poleAngleDeg", 0), g.get("subLatDeg", 0)), "pole angle and sub-camera latitude"
 
     polar = 1.0
     if "oblate" in hint and not silhouette_only:
@@ -684,7 +688,12 @@ def run(stop, vfov, silhouette_only=False):
 
     if "sunInFrame" in hint:
         sfh = hint["sunInFrame"]
-        if "circleFit" in sfh:
+        if "points" in sfh:
+            q = np.asarray(sfh["points"], dtype=np.float64)
+            sx, sy, sr = fit_circle(q[:, 0], q[:, 1])
+            fit["sunInFrame"] = {"cx": round(float(sx), 2), "cy": round(float(sy), 2), "r": round(float(sr), 2),
+                                 "method": "circle through hand-picked points on the visible edge of the disc"}
+        elif "circleFit" in sfh:
             cf = sfh["circleFit"]
             qx, qy, _ = limb_points(img, {"circle": cf["circle"], "searchFrac": cf.get("searchFrac", 0.15),
                                           "arcs": cf["arcs"], "blur": 3.0, "strengthPct": 20})

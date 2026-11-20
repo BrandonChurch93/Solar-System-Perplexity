@@ -88,16 +88,16 @@
   ],
   "globe": {
     "quaternion": [
-      -0.0294201,
-      -0.0040439,
-      -0.000119,
-      0.9995589
+      -0.0870939,
+      0.5929208,
+      -0.0761783,
+      0.7969043
     ],
     "meshQuaternionForThreeSphereGeometry": [
-      -0.0208873,
-      -0.7096543,
-      0.020719,
-      0.7039355
+      -0.1154508,
+      -0.1442381,
+      0.0077185,
+      0.9827548
     ],
     "scale": [
       1.0,
@@ -105,16 +105,25 @@
       1.0
     ],
     "northPole": [
-      0.000476,
-      0.998269,
-      -0.058813
+      0.018134,
+      0.973223,
+      -0.229146
     ],
-    "subCameraLonDeg": 0.0,
-    "subCameraLatDeg": -0.0,
-    "method": "pole angle and sub-camera latitude",
-    "note": "",
-    "subSolarLonDeg": -65.749,
-    "subSolarLatDeg": 39.387
+    "subCameraLonDeg": -73.71,
+    "subCameraLatDeg": -9.884,
+    "method": "fitted to named landmarks (least squares rotation)",
+    "note": "the painted north cap sits too far south of the limb for the painted Valles Marineris, so the cap is left out and Tharsis and Valles set the rotation",
+    "landmarkErrDeg": {
+      "Noctis Labyrinthus": 2.8,
+      "Valles Marineris centre": 1.04,
+      "Valles Marineris east end": 2.14,
+      "Ascraeus Mons": 2.51,
+      "Pavonis Mons": 2.06,
+      "Arsia Mons": 1.53
+    },
+    "landmarkRmsDeg": 2.1,
+    "subSolarLonDeg": -133.303,
+    "subSolarLatDeg": 33.993
   },
   "unproject": {},
   "conventions": {

@@ -154,7 +154,9 @@
     "subSolarLonDeg": -85.502,
     "subSolarLatDeg": 18.607
   },
-  "unproject": {},
+  "unproject": {
+    "fill": "zonal"
+  },
   "conventions": {
     "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
     "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",

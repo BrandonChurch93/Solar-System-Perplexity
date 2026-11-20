@@ -90,16 +90,16 @@
   ],
   "globe": {
     "quaternion": [
-      -0.0003325,
-      -0.0101419,
-      -3.4e-06,
-      0.9999485
+      0.0833959,
+      0.6138742,
+      0.0869521,
+      0.7801557
     ],
     "meshQuaternionForThreeSphereGeometry": [
-      -0.0002375,
-      -0.7142418,
-      0.0002328,
-      0.6998989
+      0.1204542,
+      -0.1175788,
+      0.0025147,
+      0.985728
     ],
     "scale": [
       1.0,
@@ -107,16 +107,27 @@
       1.0
     ],
     "northPole": [
-      1.3e-05,
-      1.0,
-      -0.000665
+      -0.033283,
+      0.970969,
+      0.236879
     ],
-    "subCameraLonDeg": -0.0,
-    "subCameraLatDeg": -0.0,
-    "method": "pole angle and sub-camera latitude",
+    "subCameraLonDeg": -77.354,
+    "subCameraLatDeg": 13.777,
+    "method": "fitted to named landmarks (least squares rotation)",
     "note": "",
-    "subSolarLonDeg": -73.568,
-    "subSolarLatDeg": 32.256
+    "landmarkErrDeg": {
+      "Florida tip": 1.08,
+      "Yucatan northeast tip": 0.95,
+      "Lake Michigan south end": 3.87,
+      "Baja California tip": 3.79,
+      "Cuba east end": 2.53,
+      "Cuba west end": 1.24,
+      "Mississippi delta": 0.97,
+      "Panama isthmus": 2.96
+    },
+    "landmarkRmsDeg": 2.48,
+    "subSolarLonDeg": -160.212,
+    "subSolarLatDeg": 36.741
   },
   "unproject": {},
   "conventions": {

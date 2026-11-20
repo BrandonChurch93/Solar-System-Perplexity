@@ -58,28 +58,28 @@
     "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
   },
   "sunDir": [
-    -0.745734,
-    0.141036,
-    0.651145
+    -0.744226,
+    0.139788,
+    0.653136
   ],
   "sunFit": {
     "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
-    "shadingRms": 0.10332,
-    "terminatorRmsDeg": 25.6739,
-    "terminatorSamples": 3013,
-    "discSamples": 87482,
-    "gain": 0.88537,
-    "ambient": 0.00864
+    "shadingRms": 0.10199,
+    "terminatorRmsDeg": 25.85967,
+    "terminatorSamples": 2858,
+    "discSamples": 86739,
+    "gain": 0.88568,
+    "ambient": 0.00777
   },
   "moons": [
     {
       "id": "io",
-      "cx": 1511.0,
-      "cy": 996.09,
-      "r": 34.24,
+      "cx": 1524.0,
+      "cy": 1000.0,
+      "r": 45.0,
       "shadowPx": [
-        1646.84,
-        1014.14
+        1646.56,
+        1016.0
       ],
       "shadowHintPx": [
         1645,
@@ -87,27 +87,27 @@
       ],
       "depthFrom": "solved so the shadow centre lands on the shadow in the image",
       "position": [
-        0.114392,
-        -0.227042,
-        1.066322
+        0.129142,
+        -0.232241,
+        1.053324
       ],
-      "radius": 0.037477,
-      "distanceFromCamera": 3.24789,
-      "distanceFromBody": 1.09621
+      "radius": 0.049425,
+      "distanceFromCamera": 3.26175,
+      "distanceFromBody": 1.08633
     }
   ],
   "globe": {
     "quaternion": [
-      0.0004009,
+      0.024833,
       0.0001797,
-      -1e-07,
-      0.9999999
+      -4.5e-06,
+      0.9996916
     ],
     "meshQuaternionForThreeSphereGeometry": [
-      0.0002835,
-      -0.7069796,
-      -0.0002836,
-      0.7072338
+      0.0175564,
+      -0.7067617,
+      -0.0175627,
+      0.7070158
     ],
     "scale": [
       1.0,
@@ -115,18 +115,29 @@
       1.0
     ],
     "northPole": [
-      0.0,
-      1.0,
-      0.000802
+      1.8e-05,
+      0.998767,
+      0.049651
     ],
     "subCameraLonDeg": -0.0,
-    "subCameraLatDeg": -0.0,
+    "subCameraLatDeg": 2.8,
     "method": "pole angle and sub-camera latitude",
-    "note": "",
-    "subSolarLonDeg": -48.899,
-    "subSolarLatDeg": 8.138
+    "note": "bands are level, the straight equatorial band sits about 35 px below the disc centre",
+    "subSolarLonDeg": -49.089,
+    "subSolarLatDeg": 9.906
   },
-  "unproject": {},
+  "unproject": {
+    "maskEllipsesPx": [
+      [
+        1640,
+        1028,
+        100,
+        55,
+        25
+      ]
+    ],
+    "fill": "zonal"
+  },
   "conventions": {
     "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
     "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
