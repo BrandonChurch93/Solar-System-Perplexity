@@ -24,6 +24,10 @@ MARGIN=1 python3 assets-src/mars/relief/build.py
 python3 assets-src/mars/relief/makejson.py 1
 python3 assets-src/mars/relief/flowmasks.py
 python3 assets-src/mars/relief/maskext.py
+python3 assets-src/mars/relief/fillfix.py
+python3 assets-src/mars/relief/zorder.py
+python3 assets-src/mars/relief/zcheck.py full
+python3 assets-src/mars/relief/zcheck.py web
 python3 assets-src/mars/relief/test.py identity
 python3 assets-src/mars/relief/test.py sweep 1408 0.1,0.15,0.2,0.25,0.3 1
 python3 assets-src/mars/relief/test.py sweep 1408 0.1,0.15,0.2,0.25,0.3 -1
@@ -144,6 +148,21 @@ All written by `assets-src/mars/relief/build.py` with `MARGIN=1` unless noted. I
 ## Fill fix (lead, Phase 3)
 
 The hidden band of `relief-L0-color.jpg` behind the L2 mesa carried a near black wedge that showed as a dark sliver along the mesa's foot in the film view. `python3 assets-src/mars/relief/fillfix.py` (run once from the repo root on the agent's files at commit 58d0e17) repaints only that wedge, about 56,000 px at full size inside a hand outline, with an OpenCV inpaint from its surroundings plus fine noise. No image model is used. Nothing visible in the close image's own view changes.
+
+## Draw order fix (Round 4)
+
+Problem: in the film the three layers share one depth buffer and are drawn L0, L2, L1 with depth test on, each as a grid of 420 cells along its long side (`src/stops/mars/look.ts`, `src/terrain/relief.ts`). Under L2 and L1, L0 carried about the same distance as the upper layer (the mesa itself) or, in the hidden band behind the cut, a background distance pushed in from the nearer valley floor in front of the mesa foot. Where the interpolated L0 grid came out nearer than the upper layer, the upper layer failed the depth test and the hidden band of `relief-L0-color.jpg` showed through, even at the image's own camera: the bright displaced floor and the smooth brown smear along the L2 foot and the fleck on the mesa face at film frame 2580. The near black wedge that `fillfix.py` repainted was the same fault.
+
+Fix, by `assets-src/mars/relief/zorder.py`, run after `build.py`, `maskext.py` and `fillfix.py`, and only on `public/assets/mars/full/relief-L0-dist.bin` and `public/assets/mars/web/relief-L0-dist.bin`. Inputs: those two files, `public/assets/mars/<set>/relief-L1-dist.bin`, `public/assets/mars/<set>/relief-L2-dist.bin`, `public/assets/mars/<set>/relief-L1-alpha.png`, `public/assets/mars/<set>/relief-L2-alpha.png`, `assets-src/mars/relief/relief.json`. No image model, no color file changes.
+- For L2 and then L1: the upper layer's distance is placed on the L0 distance grid, continued past its box from the nearest box sample, and grown by a grey dilation of one L0 grid cell (about 8 distance samples in the full set, 4 in the web set), so the target holds at any point the 420 cell grid interpolates.
+- Wherever the upper layer's alpha is above 0.002, and over 1.5 grid cells past its edge, L0 is set to at least 1.03 times that target; over the next cell the weight falls to 0 with a smoothstep. L0 is never moved nearer.
+- Full set: 671,535 L0 distance samples moved back, median by a factor of 1.033. Web set: 167,718 samples, same median. Since all three layers sit on the rays of the image camera, a change of distance does not move any pixel in that camera; it only changes which layer wins the depth test there and the parallax of hidden L0 ground when the camera moves.
+
+Checks:
+- `zcheck.py <set>` rebuilds the 420 cell grids exactly as `src/terrain/relief.ts` does and counts pixels where an upper layer with alpha at least 0.004 lies behind a lower layer on the same ray. Before: L2 behind L0 882,373 px (771,026 with alpha at least 0.5), L1 behind L0 40,877 px (19,323). After, full and web: 0 for every pair.
+- Film stills, `npm run still -- --frame N --tier review --format master`, N = 2462, 2470, 2489, 2490, 2535, 2580, 2625, 2669, 2670, 2685, 2692: native crops along the L2 foot and the L1 foot show no gap, smear, doubled or displaced floor. Frames 2490, 2625, 2669 and 2462 rendered before and after differ only in about 4,000 to 6,200 px, all inside the band where the hidden L0 ground used to show.
+- `python3 tools/measure/g17.py out/work/stills/f02580-16x9-review-full.png references/approved/mars-close.jpg`: median 1.0161 before, 1.0163 after.
+- Contact sheet `npm run sheet -- --segment mars.terrain --format preview --tier draft`, checked by eye.
 
 ## Ledger rows
 
