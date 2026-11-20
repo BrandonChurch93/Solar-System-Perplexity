@@ -178,7 +178,13 @@ export class Engine {
     setSamples(count, GRAD_FLOOR)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, false)
-    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, shot.skyTurn, height, shot.sun)
+    if (!raw) {
+      cam.fov = mid.camera.vfov
+      cam.updateProjectionMatrix()
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun)
+      cam.fov = shot.camera.vfov
+      cam.updateProjectionMatrix()
+    }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {

@@ -19,9 +19,9 @@ export interface Fit {
 export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
-  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean }
+  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: { glide: number; rise: number; fall: number } }
   terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
   light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
@@ -40,6 +40,52 @@ export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment;
 export interface OrbitShot { pose: Pose; view: 'orbit' | 'terrain' }
 
 const Y = new THREE.Vector3(0, 1, 0)
+const SURGE_STEPS = 2048
+const SURGE_TAIL = 8
+const SURGE_LEAD = 0.25
+const surgeTables = new Map<string, Float64Array>()
+
+function hermite(x: number, m1: number): number {
+  return 3 * x * x - 2 * x * x * x + m1 * (x * x * x - x * x)
+}
+
+function unhermite(e: number, m1: number): number {
+  let lo = 0
+  let hi = 1
+  for (let i = 0; i < 48; i++) {
+    const mid = 0.5 * (lo + hi)
+    if (hermite(mid, m1) < e) lo = mid
+    else hi = mid
+  }
+  return 0.5 * (lo + hi)
+}
+
+function surgeTable(rise: number, fall: number): Float64Array {
+  const key = rise + '|' + fall
+  const hit = surgeTables.get(key)
+  if (hit) return hit
+  const table = new Float64Array(SURGE_STEPS + 1)
+  const f = (t: number): number => Math.pow(t, rise) * Math.pow(1 - t, fall)
+  const h = 1 / SURGE_STEPS
+  for (let i = 0; i < SURGE_STEPS; i++) {
+    const a = i * h
+    table[i + 1] = table[i]! + (h / 6) * (f(a) + 4 * f(a + 0.5 * h) + f(a + h))
+  }
+  surgeTables.set(key, table)
+  return table
+}
+
+function surge(s: { glide: number; rise: number; fall: number }, m1: number, x: number): number {
+  const table = surgeTable(s.rise, s.fall)
+  const at = x * SURGE_STEPS
+  const i = Math.min(Math.floor(at), SURGE_STEPS - 1)
+  const bump = mix(table[i]!, table[i + 1]!, at - i)
+  const k = Math.min(x / SURGE_LEAD, 1)
+  const lead = SURGE_LEAD * (k * k * k - 0.5 * k * k * k * k) + Math.max(x - SURGE_LEAD, 0)
+  const tail = (m1 - s.glide) / (SURGE_TAIL + 1)
+  const gain = (1 - s.glide * (1 - 0.5 * SURGE_LEAD) - tail) / table[SURGE_STEPS]!
+  return s.glide * lead + gain * bump + tail * Math.pow(x, SURGE_TAIL + 1)
+}
 const easeIn = ease('power2.in')
 const easeOut = ease('power3.out')
 const easeRise = ease('sine.out')
@@ -230,7 +276,7 @@ export class StopPlan {
     const d = this.p.dive
     const center = this.coverCenter(seg)
     const span = center - seg.start
-    const x = Math.min(Math.max((time - seg.start) / span, 0), 1)
+    const xr = Math.min(Math.max((time - seg.start) / span, 0), 1)
     const tau = center - time
     const at = this.entry(center)
     const unit = d.altitude / (1 + t.entryHeight * at.g)
@@ -239,7 +285,8 @@ export class StopPlan {
     const h1 = d.altitude
     const endRate = (t.entryHeight * at.rate) / (1 + t.entryHeight * at.g)
     const m1 = (endRate * span) / Math.log(h0 / h1)
-    const e = 3 * x * x - 2 * x * x * x + m1 * (x * x * x - x * x)
+    const e = d.surge ? surge(d.surge, m1, xr) : hermite(xr, m1)
+    const x = d.surge ? unhermite(e, m1) : xr
     const h = h0 * Math.pow(h1 / h0, e)
     const k = (h - h1) / (h0 - h1)
     const tq = this.turn(time)
@@ -318,7 +365,8 @@ export class StopPlan {
       }
       return { pose, view: 'terrain' }
     }
-    const e = easeRise(ramp(f.first, 1, u))
+    const settle = this.p.rise.settle
+    const e = settle ? 1 - Math.pow(1 - ramp(f.center, 1, u), settle) : easeRise(ramp(f.first, 1, u))
     const d = this.p.dive
     const end = this.after(seg.end)
     const tq = this.turn(time)

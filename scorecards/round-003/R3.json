@@ -1,0 +1,103 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "part": 1,
+    "agent": "reviewer_40",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "left plains through the central and lower-right canyon, confirmed in image-06.png crops B, D, F and image-08.png crops S-U",
+      "what": "Heavy directional smearing wipes out fine relief and stretches craters and ridgelines into brush-like streaks; the close view has almost no sharp terrain anchor.",
+      "fix": "Shorten the virtual shutter or choose a sharper point in the move, and use terrain detail that resolves at this distance."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops E and F, on the bright layered ridges",
+      "what": "Orange-red and pale green fringes split high-contrast ridge edges, making them look doubled.",
+      "fix": "Remove or reduce channel separation and re-render the ridge edges with stable antialiasing."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops L, M and R, sky along the right limb",
+      "what": "Background stars are short bright dashes, and the adjacent limb is smeared in the same direction.",
+      "fix": "Reduce camera-motion blur for this view and keep the stars point-like."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop H, illuminated crown of the foreground moon",
+      "what": "Fine surface grain is combed into parallel streaks across the crown, while crater pits stay much sharper.",
+      "fix": "Use more isotropic surface detail and better texture filtering across curved rock."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "part": 2,
+    "agent": "reviewer_41",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "globe surface across left, upper, and lower-left regions (image-14 crops B, D; image-15 crops J, K, N; image-16 crops S, T)",
+      "what": "heavy radial smearing and directional blur stretch craters, canyon walls, clouds, and specular highlights into long blurry streaks across most of the globe",
+      "fix": "remove the radial zoom blur or projection distortion and render planetary albedo, displacement, and cloud detail cleanly at uniform native resolution across the full sphere"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "north polar ice cap at top of globe (image-14 crop B; image-15 crops J, K)",
+      "what": "the white polar cap is visibly pixelated, blocky, and vertically smeared with stepped low-resolution texel edges",
+      "fix": "replace with a higher-resolution polar texture using non-pinching spherical or cube-map UVs and clean displacement anti-aliasing"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper-left lit limb and right-side dark limb/terminator (image-14 crops A, F; image-15 crops J, K, P; image-16 crop U)",
+      "what": "doubled edge and halo around the planet rim where blocky orange surface fragments sit inside a translucent shell ending in a hard thin blue-grey outer line",
+      "fix": "use a continuous volumetric atmosphere falloff without a hard outer shell edge and smoothly attenuate surface detail across the terminator and grazing limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Milky Way band and outer corner starfield (image-14 crops C, G, H; image-15 crop L; image-16 crop V)",
+      "what": "the Milky Way background is soft and blotchy at native crop size, and stars toward the outer corners are smeared into diagonal streaks and soft blobs",
+      "fix": "render a crisp native-resolution starfield and galactic dust plate free of corner radial blur so stars remain sharp point sources across the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "shaded right-hand canyon wall and deep lower-left shadow face (image-11 crop R; image-12 crops S, T)",
+      "what": "rock faces in shadow look soft and slightly airbrushed with muted vertical streaking compared to the sharp sunlit cliff in the left foreground",
+      "fix": "retain higher-frequency rock normal and displacement micro-detail in shaded canyon slopes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "horizon atmospheric haze to black sky transition (image-10 crops B, C, I; image-11 crops J, K, L, M)",
+      "what": "subtle horizontal gradient banding appears in the dark-tan-to-black upper atmosphere falloff",
+      "fix": "apply higher bit-depth rendering and dithering across the atmospheric scattering gradient"
+     }
+    ]
+   }
+  }
+ ]
+}

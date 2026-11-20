@@ -54,7 +54,9 @@ export const createSet: SetFactory = async (ctx) => {
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
   const shell = new HazeShell(look.shellHaze, diagUniform)
-  orbit.add(planet.mesh, shell.mesh)
+  const halo = new HazeShell(look.haloHaze, diagUniform)
+  halo.mesh.renderOrder = 4
+  orbit.add(planet.mesh, shell.mesh, halo.mesh)
 
   const moonSizes = phobos.sets[key]
   const moonHeights = await heights(ctx, base + 'phobos-height.bin', moonSizes.heightSize[0]!, moonSizes.heightSize[1]!)
@@ -84,6 +86,8 @@ export const createSet: SetFactory = async (ctx) => {
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
   const light = new THREE.Vector3()
+  const glow = new THREE.Vector3()
+  const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(plan.hold(plan.holdMid - plan.seg.hold.start).quaternion)
   const camera = new THREE.Vector3()
   const bounce = new THREE.Vector3()
   const turn = new THREE.Quaternion()
@@ -124,6 +128,10 @@ export const createSet: SetFactory = async (ctx) => {
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
       ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(light)
       shell.material.uniforms.uGain!.value = gain * state.weight
+      ;(halo.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
+      glow.copy(glowHome).applyQuaternion(state.rotation)
+      ;(halo.material.uniforms.uSunW!.value as THREE.Vector3).copy(glow)
+      halo.material.uniforms.uGain!.value = gain * state.weight * (1 - low)
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       moon.mesh.position.copy(moonHome).applyQuaternion(turn)
       moon.mesh.quaternion.setFromAxisAngle(tumbleAxis, THREE.MathUtils.degToRad(look.moon.tumbleDegPerSecond) * elapsed).multiply(moonHold)
@@ -136,12 +144,14 @@ export const createSet: SetFactory = async (ctx) => {
       const visible = radiusPx > 0.6
       planet.mesh.visible = visible
       shell.mesh.visible = visible
+      halo.mesh.visible = visible && low < 1
       moon.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       planet.dispose()
       shell.dispose()
+      halo.dispose()
       moon.dispose()
       far.dispose()
       ground.dispose()

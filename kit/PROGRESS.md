@@ -43,7 +43,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mercury | stand-in | 0 | | | | | | |
 | venus | stand-in | 0 | | | | | | |
 | earth | stand-in | 0 | | | | | | |
-| mars | in progress | 1 | | | | | | |
+| mars | in progress | 1 | 6 | pass | 4 | 6 | pass | |
 | jupiter | stand-in | 0 | | | | | | |
 | saturn | stand-in | 0 | | | | | | |
 | uranus | stand-in | 0 | | | | | | |
@@ -279,6 +279,11 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 
 - Addendum 001 (status pictures), applied 2026-11-20 UTC in Phase 3. `npm run status -- --stop ID` (`tools/status.ts`) renders the stop's hold and terrain comparison images and a dive contact sheet at the `review` tier into `out/stills/status/`, or the whole film sheets with no `--stop`, then runs `npm run review`. The review page lists them under "Status". A status is posted in the thread at the end of every round, after every finished numbered step of the phase and when Brandon asks, and is also written into the Session log.
 - Round 3 machine checks, 2026-11-20: G6 was red (the autopilot showed its Loading label while the first set loaded; the Mars set now loads longer than the check waits) and G11 was red (the relief recipe named the three distance files by a pattern, not by name). Fixed on the first attempt: the autopilot shows no label and holds the last complete frame as `kit/05-ARCHITECTURE.md` says, and the recipe names each file. The other machine checks were green on the same pixels. The pack and the measure were restarted on the fixed build so the round's evidence carries its hash.
+- Round 3 measures, 2026-11-20: `npm run measure -- --stop mars` ran on a supporting agent's VM with 4 cores on commit 696e228 (732 s there, about 48 min here). Verified here: the hashes in its result equal the Builder's build, and G17 recomputed from its stills gives the same numbers.
+- After round 3, sky and lens: the sky pass and the star points are now drawn with the lens and sky turn of the middle of the shutter in every time sample. Before, each sample used its own lens, so during a zoom every star became a short radial dash. `kit/04-LOOK.md` says stars stay points.
+- After round 3, dive and rise timing (ladder "Fast motion breaks into ghost copies", rung 3): R3 marked smear severe on both judged motion frames. `dive.surge` and `rise.settle` in `src/stops/mars/plan.ts` retime the same paths so the camera is slow until just before the cover, fastest inside it, and nearly still after it. Blur per shutter at the judged frames by `out/work/an/motion.ts`: dive 2427 from 25 px to 2.8 px median, rise 2726 from 11.5 px to 2.7 px. Peak about 60 px median, inside frames 2446 to 2461 and 2700 to 2708. The path itself is unchanged.
+- After round 3, relief: merged `agent/mars-relief`. The far grid is pushed to at least 1.03 times the distance of the layer above it, so it never wins the depth test in the band it should hide in. Verified here by render: the blob under the right mesa is gone at 2580, G17 1.016.
+- After round 3, limb: measured the glow of the approved hero across the limb at five places and ten distances and fitted the film to it: the thin shell is less saturated and a second wide haze layer (`halo` in `src/stops/mars/haze.json`, scale height 0.05) lights toward the hero's bright side and fades out in the dive.
 
 ## Open items
 
@@ -294,7 +299,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- `npm run gate -- --phase 3` then `npm run pack -- --phase 3 --round 3 --stop mars`, Mars judged frames and sheets, logs `out/work/gate-r3.log` and `out/work/pack-r3.log`, the Builder's VM, started 2026-11-20 UTC.
+None.
 
 ## Rounds
 
@@ -302,7 +307,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 
 - Round 1, Phase 2, blockout, whole film. R4 blockout 7, three major, two minor. Next: each stop arrives on its own curve, the approach starts earlier and eases longer, the lookback is reframed with a slow pan. `scorecards/round-001/`.
 - Round 2, Phase 2, blockout, whole film. R4 blockout 5, one severe, four major, two minor. Limit reached. After the round: arrivals start off center, the lookback never stops moving, the turn away from Mars is longer. Open items 1 to 5. `scorecards/round-002/`.
-- Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0.
+- Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0, judged on 696e228. G5, G13, G17 green. R1 6, R2 pass, R3 4, R4 6, R8 pass. Three severe (smear on both judged motion frames, blocky polar cap), majors on the limb glow, the Milky Way and stars, star dashes, a terrain blob, flat and lifeless terrain flight. Next: retime dive and rise so the speed sits in the cover, wide soft limb haze, sky band and star counts, sky drawn with the mid-shutter lens, relief depth fix, a real terrain glide with drifting dust. `scorecards/round-003/`.
 
 ## Final scores
 
@@ -332,6 +337,9 @@ None yet.
 - 2026-11-20 UTC: Phase 3 before round 3: sharpness fixes, patches re-matched, Phobos lit side, status command (addendum 001), status pictures.
 - 2026-11-20 UTC: Phase 3 before round 3: low dive ground, sky structure, terrain sky, second status pictures.
 - 2026-11-20 UTC: Phase 3 before round 3: five patch levels (merged `agent/assets-mars-patches`), dive roll fix, G13 green by render.
+- 2026-11-20 UTC: Phase 3 before round 3: Milky Way band strip, covers carry color and horizon, Mars budget (93ef0b0).
+- 2026-11-20 UTC: Round 3 started (8f3cd70). G6 and G11 fixed (696e228).
+- 2026-11-20 UTC: Round 3 closed with its scorecards. Merged `agent/mars-relief` (0f33967). First fixes for round 4.
 
 ## Session log
 

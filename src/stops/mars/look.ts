@@ -20,6 +20,8 @@ export const light: PlanetLight = {
 
 export const haze = hazeJson.ground as HazeParams
 export const shellHaze = hazeJson.shell as HazeParams
+export const haloHaze = hazeJson.halo as HazeParams
+export const haloDir = hazeJson.haloDir as [number, number, number]
 
 export const moon = {
   gain: 2.0,
