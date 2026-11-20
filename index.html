@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grand Tour</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #07080b; overflow: hidden; }
+      #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+      #stage canvas { max-width: 100%; max-height: 100%; display: block; }
+      body.capture #stage { position: static; display: block; }
+      body.capture #stage canvas { max-width: none; max-height: none; }
+    </style>
+    <link rel="icon" href="data:," />
+</head>
+  <body>
+    <div id="stage"></div>
+    <div id="ui"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -4,8 +4,10 @@ One row per third-party file that the app ships or that fed a generated asset. T
 
 | File | What it is | Source URL | License | Credit line | Date fetched |
 | --- | --- | --- | --- | --- | --- |
+| `references/cache/models/swin2sr-lightweight-x2.onnx` (not committed, not shipped) | Weights used by `tools/ml/upscale.py` to add resolution to approved images | https://huggingface.co/Xenova/swin2SR-lightweight-x2-64 | Apache-2.0 | none required | 2026-11-19 |
+| `references/cache/models/depth-anything-v2-small.onnx` (not committed, not shipped) | Weights used by `tools/ml/depth.py` to estimate depth for relief | https://huggingface.co/onnx-community/depth-anything-v2-small | Apache-2.0 | none required | 2026-11-19 |
 
-No rows yet.
+Pinned download URLs and hashes for both are in `tools/ml/MODELS.md`.
 
 ## Not third-party
 
