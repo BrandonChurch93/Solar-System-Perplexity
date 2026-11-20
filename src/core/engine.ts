@@ -19,7 +19,7 @@ export interface Director {
 
 export interface Sanity { invalid: number; coverage: number }
 
-const STAR_COUNT = 420000
+const STAR_COUNT = 900000
 const DUST_COUNT = 2600
 const GRAD_FLOOR = 0.5
 
@@ -168,7 +168,7 @@ export class Engine {
     setSamples(count, GRAD_FLOOR)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, false)
-    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, height, shot.sun)
+    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, shot.skyTurn, height, shot.sun)
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {

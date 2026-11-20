@@ -78,6 +78,11 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
+  const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
+  const hazeLow = new THREE.Vector3().fromArray(look.descent.hazeDay)
+  const shellLow = new THREE.Vector3().fromArray(look.descent.shellDay)
+  const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
+  const edge = new THREE.Vector2()
   const light = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const bounce = new THREE.Vector3()
@@ -103,6 +108,18 @@ export const createSet: SetFactory = async (ctx) => {
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
       planet.material.uniforms.uStormAngle!.value = (wrap.storm.counterclockwise ? -1 : 1) * THREE.MathUtils.degToRad(look.storm.degPerSecond) * Math.min(Math.max(elapsed, -12), 12)
+      const d = look.descent
+      const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
+      const pu = planet.material.uniforms
+      ;(pu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
+      ;(pu.uHazeDay!.value as THREE.Vector3).fromArray(look.haze.day).lerp(hazeLow, low)
+      pu.uHazeTau!.value = look.haze.depth * (1 + (d.hazeDepth - 1) * low)
+      const su = shell.material.uniforms
+      ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shellHaze.day).lerp(shellLow, low)
+      su.uHazeTau!.value = look.shellHaze.depth * (1 + (d.shellDepth - 1) * low)
+      edge.set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeLow, low)
+      ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
+      ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
       ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(light)

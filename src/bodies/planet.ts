@@ -98,6 +98,7 @@ uniform float uHeightStep;
 uniform float uSpin;
 uniform float uGain;
 uniform float uWeight;
+uniform vec3 uTint;
 uniform float uWrap;
 uniform vec3 uCurve[33];
 uniform vec3 uNight;
@@ -177,7 +178,7 @@ ${PATCH_LEVELS}
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
-  vec3 col = inverseFilmic(albedo) * shade;
+  vec3 col = inverseFilmic(albedo) * shade * uTint;
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -235,7 +236,7 @@ export class Planet {
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
         uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: o.light.wrap }, uCurve: { value: curve(o.light) }, uNight: { value: new THREE.Vector3().fromArray(o.light.night) },
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
         uExtinction: { value: o.haze.extinction },

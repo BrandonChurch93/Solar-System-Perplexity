@@ -46,6 +46,8 @@ export interface Shot {
   camera: Pose
   skyQuaternion: THREE.Quaternion
   skyExposure: number
+  skyGlow: number
+  skyTurn: THREE.Quaternion
   near: number
   far: number
   sun: SunState

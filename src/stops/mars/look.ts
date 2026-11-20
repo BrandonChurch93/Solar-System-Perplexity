@@ -35,6 +35,17 @@ export const moon = {
 
 export const storm = { degPerSecond: 1.1 }
 
+export const descent = {
+  high: 0.7,
+  low: 0.05,
+  tint: [0.4, 0.335, 0.28] as [number, number, number],
+  hazeDay: [0.4, 0.29, 0.22] as [number, number, number],
+  hazeDepth: 1.5,
+  shellDay: [0.42, 0.32, 0.26] as [number, number, number],
+  shellDepth: 1.6,
+  edge: [-0.3, 0.12] as [number, number],
+}
+
 export const relief = {
   mistSpeed: 0.004,
   dustSpeed: 0.0022,

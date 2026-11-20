@@ -84,7 +84,7 @@ void main() {
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
-  if (b > 0.0 && rt2 < 1.0) discard;
+  if (b > 0.0 && rt2 < 0.99) discard;
   vec3 at;
   float tau = hazeDepth(dir, false, at);
   vec3 col = hazeLight(at, dir) * (1.0 - exp(-tau)) * uGain;

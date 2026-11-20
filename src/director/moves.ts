@@ -24,7 +24,7 @@ export interface MoveParams {
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
   cover: [number, number, number]
   coverLow?: [number, number, number]
   spinDegPerSecond: number
