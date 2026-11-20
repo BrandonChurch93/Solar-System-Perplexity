@@ -4,7 +4,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 ## Status
 
-- Current phase: 0 · Ground truth
+- Current phase: 2 · Engine and blockout
 - Current stop: none
 - Current round: none
 - Blocked: no
@@ -12,7 +12,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-19, Phase 0 gate
+- Last push: 2026-11-19, Phase 1 gate
 
 ## Latest pictures
 
@@ -25,8 +25,8 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 | Phase | State | Gate evidence | Commit |
 | --- | --- | --- | --- |
 | 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
-| 1 · Rough cut | not started | | |
-| 2 · Engine and blockout | not started | | |
+| 1 · Rough cut | done | `npm run gate -- --phase 1`: G16 green (5400 frames, 960 x 540, 30 fps, 41 MB). One frame from the middle of each of the 46 segments was looked at: order and labels follow `segments`. Pushed, on the review page, shared in the thread | see Push log |
+| 2 · Engine and blockout | in progress | | |
 | 3 · Mars, the look lock | not started | | |
 | 4 · The other eight stops | not started | | |
 | 5 · The space between | not started | | |
@@ -59,7 +59,7 @@ Measured in Phase 0 on 2026-11-19. These replace the numbers in `AGENTS.md`.
 - WebGL2 under software rendering (ANGLE on SwiftShader, Vulkan 1.3): MAX_TEXTURE_SIZE 8192, MAX_RENDERBUFFER_SIZE 8192, MAX_SAMPLES 4, 32 fragment texture units, point size 1 to 1023, 30 extensions including EXT_color_buffer_float, EXT_color_buffer_half_float, EXT_float_blend, OES_texture_float_linear and EXT_texture_filter_anisotropic. The full list is in `config/webgl-caps.json`, written by `npm run caps`.
 - Codecs: `VideoEncoder` exists only on a secure context (http://localhost counts, about:blank does not). H.264 is reported as encodable: High, Main and Baseline at level 5.2 for all three formats (`avc1.640034` first choice), level 4.2 and 4.0 for master and preview. VP9, VP8 and AV1 are also reported. A real encode is proven in Phase 2 by `npm run proof`.
 - Detached processes: a process started with `(set -m; cmd > log 2>&1 &)` outlived the step that started it and finished its work. Long renders run this way with a polled log.
-- Sandbox agents: each got its own VM (4 cores, 7 GiB RAM, 18 GB free disk), cloned the repo shallow, pushed its own `agent/<folder>` branch and returned JPEG attachments. Video as an attachment is confirmed when the rough cut arrives (see Session log).
+- Sandbox agents: each got its own VM (4 cores, 7 GiB RAM, 18 GB free disk), cloned the repo shallow, pushed its own `agent/<folder>` branch and returned JPEG attachments. A 41 MB video arrived as an attachment from a sandbox agent, so render chunks can travel that way.
 - Image limit: a 1400 px long edge arrives untouched. 1600 px is downscaled to about 1430 px. `critics.maxImageLongEdgePx` stays as it is.
 - Memory: one spike set padded to `assetSets.full.maxSetMemoryMb` loads in about 20 s. Two such sets plus the 8192 sky held 2.86 GB of textures, the browser used 3.9 GB, and 3.9 GB of RAM was still free. Freeing a set gave its memory back (the total stayed flat across three travels). So two `full` sets fit in this VM and the harness uses `full` everywhere.
 
@@ -135,6 +135,8 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 0. Publishing: the kickoff prompt asks for the app to be published and forbids questions, so the Builder chose the address `grand-tour-film` itself. The host set visibility to Organization. Brandon can change that from the app card's Publish menu. A security review of the static build found nothing. The deploy step's automatic look check objected to the spike's stand-in picture, so validation is switched off for deploys while stand-ins are on screen.
 - Phase 0. The published site asks for a sign-in, so the harness cannot read clips back from it. When a stop is finished its clip is also kept with `npm run keep -- --clips --stop <id>`, which is the case `AGENTS.md` allows, so a later task can rebuild the review page.
 - Phase 0. `critics.maxImageLongEdgePx` unchanged after the image limit test.
+- Phase 1. The rough cut was built by a supporting agent on its own VM (`tools/animatic.py`, dive spots in `tools/animatic-spots.json`, two runs gave the same file hash). The Builder checked it with G16 and by looking at one frame per segment. The label fades out over the last fifth of `ending.fade` so the last frame is pure black.
+- Phase 2. Supporting agents, each on its own VM and branch: `agent/tools-stills` (sheet, seq, crops, compare, pack, keep), `agent/tools-film` (film, clip, stress, measure, gate checks G5 G6 G8 G9 G13 G15 G17), `agent/capture-export` (Export mode and proof), `agent/assets-shared` (the sky glow map), `agent/assets-fit` (sphere and camera fits, unprojection). The Builder writes the engine, the director, the stand-in sets, the modes and the diagnostic views, and integrates.
 
 ## Open items
 
@@ -166,6 +168,7 @@ None yet.
 - 2026-11-19: Builder push test, Phase 0 step 1.
 - 2026-11-19: Phase 0 scaffold, harness, spike, records. Merged `agent/tools-ml`.
 - 2026-11-19: Phase 0 gate.
+- 2026-11-19: Phase 1 gate. Merged `agent/animatic`.
 
 ## Session log
 
@@ -173,3 +176,4 @@ One entry per task: when it started, what it did, where it stopped.
 
 - Task 1, started 2026-11-19 (America/Boise evening). Kickoff prompt without the Mars approval line. Read AGENTS.md and the kit in order. No addenda. Started Phase 0.
   - Progress note, Phase 0 gate: the engine scaffold, the harness and a spike scene work under software rendering, and every Phase 0 check is green. App: https://grand-tour-film.pplx.app, review page at /review.html (empty until the rough cut lands). Next: the rough cut, then the engine and the blockout of all nine stops. Open: none.
+  - Progress note, rough cut: `out/roughcut.mp4` is pushed and on the review page. It is made only from the 18 approved stills and follows `segments` frame for frame, so Brandon can judge the pacing. App: https://grand-tour-film.pplx.app/review.html. Next: the engine and the blockout of all nine stops. Open: none. The build is continuing.
