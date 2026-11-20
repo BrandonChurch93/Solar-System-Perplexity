@@ -1,0 +1,11 @@
+{
+  "note": "real lon, lat of named features and where the hero image paints them (from tools/assets/hints.json pixels through fit.json)",
+  "points": [
+    {"name": "Noctis Labyrinthus", "real": [-102, -7], "painted": [-99.19, -6.79]},
+    {"name": "Valles Marineris centre", "real": [-72, -10], "painted": [-70.97, -9.77]},
+    {"name": "Valles Marineris east end", "real": [-45, -12], "painted": [-43.13, -13.12]},
+    {"name": "Ascraeus Mons", "real": [-104, 12], "painted": [-106.56, 11.96]},
+    {"name": "Pavonis Mons", "real": [-113, 1], "painted": [-115.03, 0.65]},
+    {"name": "Arsia Mons", "real": [-120, -9], "painted": [-121.1, -7.93]}
+  ]
+}
