@@ -1,0 +1,35 @@
+{
+ "engineHash": "ebc5aa3a77716610",
+ "stopHashes": {
+  "mars": "55840e2eff809818",
+  "jupiter": "728259323dc58bf9"
+ },
+ "format": "preview",
+ "tier": "draft",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 2745,
+ "last": 2819,
+ "extra": {
+  "frames": [
+   2745,
+   2752,
+   2758,
+   2765,
+   2772,
+   2779,
+   2785,
+   2792,
+   2799,
+   2806,
+   2812,
+   2819
+  ],
+  "segment": "mars.travel",
+  "cover": false,
+  "signature": "[\"f9a8d62bdb1e291c71f464ea42e1c30819c7ed935b7a99916cc1a5308ddd1e95\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

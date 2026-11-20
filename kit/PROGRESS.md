@@ -12,13 +12,13 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 2 round 2 closed, sky map merged
+- Last push: 2026-11-20 UTC, Phase 2 gate
 
 ## Latest pictures
 
 Newest first. Each line links a comparison image in `out/stills/` so this page shows the state of the film.
 
-- None yet.
+- Phase 2 gate, the blockout film in four sheets: `out/stills/sheet-film-01.jpg`, `out/stills/sheet-film-02.jpg`, `out/stills/sheet-film-03.jpg`, `out/stills/sheet-film-04.jpg`. The same film plays as `out/preview.mp4`.
 
 ## Phases
 
@@ -26,7 +26,7 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 | --- | --- | --- | --- |
 | 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
 | 1 · Rough cut | done | `npm run gate -- --phase 1`: G16 green (5400 frames, 960 x 540, 30 fps, 41 MB). One frame from the middle of each of the 46 segments was looked at: order and labels follow `segments`. Pushed, on the review page, shared in the thread | see Push log |
-| 2 · Engine and blockout | in progress | | |
+| 2 · Engine and blockout | done | `npm run gate -- --phase 2`: G1 to G4, G6, G7, G10, G11, G12, G14, G15 green; G8 green (`out/preview.mp4`, 5400 frames, 960 x 540, 30 fps, 45 MB, no G5 failure); G9 green (export proof and the memory proof across a travel). R4 blockout: round 1 scored 7, round 2 scored 5, limit reached, open items 1 to 5 carried to Phases 3 to 5. Judged list present (47 frames). The published app plays the film in autopilot | see Push log |
 | 3 · Mars, the look lock | not started | | |
 | 4 · The other eight stops | not started | | |
 | 5 · The space between | not started | | |
@@ -38,15 +38,15 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | not started | 0 | | | | | | |
-| mercury | not started | 0 | | | | | | |
-| venus | not started | 0 | | | | | | |
-| earth | not started | 0 | | | | | | |
-| mars | not started | 0 | | | | | | |
-| jupiter | not started | 0 | | | | | | |
-| saturn | not started | 0 | | | | | | |
-| uranus | not started | 0 | | | | | | |
-| neptune | not started | 0 | | | | | | |
+| sun | stand-in | 0 | | | | | | |
+| mercury | stand-in | 0 | | | | | | |
+| venus | stand-in | 0 | | | | | | |
+| earth | stand-in | 0 | | | | | | |
+| mars | stand-in | 0 | | | | | | |
+| jupiter | stand-in | 0 | | | | | | |
+| saturn | stand-in | 0 | | | | | | |
+| uranus | stand-in | 0 | | | | | | |
+| neptune | stand-in | 0 | | | | | | |
 
 ## Workspace record
 
@@ -243,7 +243,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- `npm run film -- --tier draft --format preview`, frames 0 to 5399, log `out/work/film-preview.log`, the lead's VM, started 2026-11-20 about 01:50 UTC. Resumable: run the same command again.
+- None.
 
 ## Rounds
 
@@ -274,6 +274,8 @@ None yet.
 - 2026-11-20 UTC: Phase 2 engine, director, stand-in sets, modes, menu. Merged `agent/tools-stills`, `agent/capture-export`, `agent/assets-fit`, `agent/tools-film`.
 - 2026-11-20 UTC: Phase 2 round 1 closed.
 - 2026-11-20 UTC: Phase 2 round 2 closed. Merged `agent/assets-shared`.
+- 2026-11-20 UTC: Phase 3 decisions logged.
+- 2026-11-20 UTC: Phase 2 gate. `out/preview.mp4` and the blockout sheets.
 
 ## Session log
 
@@ -282,3 +284,4 @@ One entry per task: when it started, what it did, where it stopped.
 - Task 1, started 2026-11-19 (America/Boise evening). Kickoff prompt without the Mars approval line. Read AGENTS.md and the kit in order. No addenda. Started Phase 0.
   - Progress note, Phase 0 gate: the engine scaffold, the harness and a spike scene work under software rendering, and every Phase 0 check is green. App: https://grand-tour-film.pplx.app, review page at /review.html (empty until the rough cut lands). Next: the rough cut, then the engine and the blockout of all nine stops. Open: none.
   - Progress note, rough cut: `out/roughcut.mp4` is pushed and on the review page. It is made only from the 18 approved stills and follows `segments` frame for frame, so Brandon can judge the pacing. App: https://grand-tour-film.pplx.app/review.html. Next: the engine and the blockout of all nine stops. Open: none. The build is continuing.
+  - Progress note, Phase 2 gate: the engine plays the whole film from stand-in sets, and `out/preview.mp4` (the blockout, 3 minutes) is on the review page with four sheets of it. All machine checks are green. The blockout critic scored 7, then 5, and the round limit was reached: five open items on camera movement go to Phases 3 to 5. App: https://grand-tour-film.pplx.app/review.html. Next: Mars, the look lock. Open: items 1 to 5 under Open items. The build is continuing.
