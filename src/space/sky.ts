@@ -2,24 +2,67 @@ import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import type { SunState } from '../core/types'
+import skyFrame from './skyframe.json'
 
 export const EQUIRECT_GLSL = /* glsl */ `
 const float PI = 3.141592653589793;
-vec4 equirect(sampler2D tex, vec3 dir) {
+vec4 equirectGrad(sampler2D tex, vec3 dir, float grad) {
   float u = atan(dir.x, dir.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(dir.y, -1.0, 1.0)) / PI + 0.5;
   float u2 = fract(u + 0.5) - 0.5;
   vec2 dx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v));
   vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
-  return textureGrad(tex, vec2(u, v), dx, dy);
+  return textureGrad(tex, vec2(u, v), dx * grad, dy * grad);
+}
+vec4 equirect(sampler2D tex, vec3 dir) {
+  return equirectGrad(tex, dir, 1.0);
 }`
+
+const SKY_CLOUD_GLSL = /* glsl */ `
+float cell(vec3 p) {
+  p = fract(p * 0.3183099 + vec3(0.11, 0.37, 0.73));
+  p *= 17.0;
+  return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+}
+float grainAt(vec3 d, float f) {
+  vec3 p = d * f;
+  vec3 i = floor(p);
+  vec3 t = p - i;
+  t = t * t * (3.0 - 2.0 * t);
+  float a = mix(mix(cell(i), cell(i + vec3(1, 0, 0)), t.x), mix(cell(i + vec3(0, 1, 0)), cell(i + vec3(1, 1, 0)), t.x), t.y);
+  float b = mix(mix(cell(i + vec3(0, 0, 1)), cell(i + vec3(1, 0, 1)), t.x), mix(cell(i + vec3(0, 1, 1)), cell(i + vec3(1, 1, 1)), t.x), t.y);
+  return mix(a, b, t.z);
+}
+float skyFbm(vec3 p) {
+  float a = 0.5;
+  float s = 0.0;
+  for (int i = 0; i < 5; i++) {
+    s += a * grainAt(p, 1.0);
+    p = p * 2.03 + vec3(0.0, 0.0, 0.47);
+    a *= 0.5;
+  }
+  return s / 0.96875;
+}
+vec2 skyCloud(vec3 d) {
+  vec3 w = d + 0.03 * (vec3(grainAt(d, 8.0), grainAt(d.yzx, 8.0), grainAt(d.zxy, 8.0)) - 0.5) + vec3(0.21, 0.0, 0.0);
+  float base = skyFbm(w * 5.0);
+  float lane = smoothstep(0.5, 0.7, skyFbm(w * 11.0 + vec3(4.1, 2.3, 7.7))) * smoothstep(0.3, 0.5, base);
+  return vec2(smoothstep(0.35, 0.7, base), lane);
+}
+`
 
 const SKY_FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uSky;
 uniform mat4 uInvProj;
 uniform mat3 uRot;
+uniform mat3 uFrame;
+uniform vec3 uTint;
+uniform vec3 uFloor;
+uniform float uGamma;
+uniform float uGrain;
 uniform float uExposure;
+uniform float uGlow;
 uniform vec3 uSunDir;
 uniform vec3 uSunColor;
 uniform float uSunRadius;
@@ -27,10 +70,22 @@ uniform float uSunGlare;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
+${SKY_CLOUD_GLSL}
 void main() {
   vec4 v = uInvProj * vec4(vUv * 2.0 - 1.0, 1.0, 1.0);
   vec3 dir = normalize(uRot * (v.xyz / v.w));
-  vec3 col = equirect(uSky, dir).rgb * uExposure;
+  vec3 sd = uFrame * dir;
+  vec3 col = equirect(uSky, sd).rgb;
+  float px = length(fwidth(sd));
+  float fine = grainAt(sd, 1400.0) * smoothstep(0.5, 1.6, 1.0 / (px * 1400.0));
+  float mid = grainAt(sd, 420.0) * smoothstep(0.5, 1.6, 1.0 / (px * 420.0));
+  float wide = grainAt(sd, 90.0);
+  float g = 0.5 * fine + 0.4 * mid + 0.1 * wide + 0.15;
+  vec2 cl = skyCloud(sd);
+  float den = (0.24 + 0.9 * cl.x) * (1.0 - 0.75 * cl.y);
+  col = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, 0.6);
+  col *= mix(vec3(1.0), (0.9 + 0.2 * g) * den * mix(vec3(0.9, 1.0, 1.08), vec3(1.1, 1.0, 0.92), cl.x * (1.0 - cl.y)), uGrain);
+  col = (pow(max(col, vec3(0.0)), vec3(uGamma)) * uTint + uFloor) * uGlow * uExposure;
   if (uSunGlare > 0.0) {
     float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
     float x = ang / uSunRadius;
@@ -50,10 +105,14 @@ void main() {
 const STAR_VERT = /* glsl */ `
 uniform float uPixel;
 uniform float uExposure;
+uniform sampler2D uSky;
+uniform float uHasSky;
+uniform float uGlow;
 in vec4 aStar;
 in vec3 aColor;
 out vec3 vColor;
 out float vSize;
+${SKY_CLOUD_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -61,7 +120,17 @@ void main() {
   float size = aStar.x * uPixel;
   vSize = size;
   gl_PointSize = size;
-  vColor = aColor * aStar.y * uExposure;
+  float crowd = 1.0;
+  if (uHasSky > 0.5) {
+    vec3 d = normalize(position);
+    vec2 uv = vec2(atan(d.x, d.z) / 6.283185307179586 + 0.5, asin(clamp(d.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+    float lum = dot(textureLod(uSky, uv, 1.0).rgb, vec3(0.3, 0.5, 0.2));
+    vec2 cl = skyCloud(d);
+    crowd = mix(1.0, clamp(lum * 9.0, 0.25, 3.0) * (0.4 + 2.6 * cl.x) * (1.0 - 0.9 * cl.y), aStar.z);
+  }
+  float b = aStar.y * mix(1.0, crowd, uGlow);
+  b = mix(b, 0.07 * pow(b / 0.07, 0.4), 1.0 - uGlow);
+  vColor = aColor * b * uExposure;
 }`
 
 const STAR_FRAG = /* glsl */ `
@@ -83,12 +152,14 @@ export class Sky {
   private readonly starScene = new THREE.Scene()
   private readonly rot = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
+  private readonly q = new THREE.Quaternion()
+  private readonly frame = new THREE.Quaternion().fromArray(skyFrame.quaternion)
   private texture: THREE.Texture | null = null
 
   constructor(count: number) {
     this.pass = new Pass(SKY_FRAG, {
-      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uExposure: { value: 1 },
-      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 },
+      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uGrain: { value: skyFrame.grade.grain }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 },
     })
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
@@ -96,25 +167,36 @@ export class Sky {
     const col = new Float32Array(count * 3)
     const pole = new THREE.Vector3(0.45, 0.82, 0.35).normalize()
     const v = new THREE.Vector3()
+    const warm = new THREE.Color(1.0, 0.58, 0.34)
+    const cool = new THREE.Color(0.5, 0.7, 1.0)
+    const white = new THREE.Color(1, 1, 1)
+    const rose = new THREE.Color(1.0, 0.42, 0.5)
+    const amber = new THREE.Color(1.0, 0.62, 0.25)
+    const azure = new THREE.Color(0.38, 0.6, 1.0)
+    const c = new THREE.Color()
     let i = 0
     while (i < count) {
       const z = rnd.range(-1, 1)
       const a = rnd.range(0, Math.PI * 2)
       const s = Math.sqrt(1 - z * z)
       v.set(s * Math.cos(a), z, s * Math.sin(a))
-      const band = Math.exp(-Math.pow(v.dot(pole) / 0.28, 2))
-      if (rnd.next() > 0.3 + 0.7 * band) continue
+      const lat = v.dot(pole)
+      const band = Math.exp(-Math.pow(lat / 0.2, 2)) + 0.35 * Math.exp(-Math.pow(lat / 0.5, 2))
+      if (rnd.next() > 0.3 + 0.7 * Math.min(band, 1)) continue
       pos[i * 3] = v.x
       pos[i * 3 + 1] = v.y
       pos[i * 3 + 2] = v.z
-      const mag = Math.pow(rnd.next(), 5.5)
-      const bright = 0.05 + 2.4 * mag + (mag > 0.9 ? 6 * (mag - 0.9) * 10 : 0)
-      star[i * 4] = 3.0 + 7.0 * Math.pow(mag, 3)
+      const bright = Math.min(0.012 * Math.pow(Math.max(rnd.next(), 1e-6), -1), 14)
+      star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), 11)
       star[i * 4 + 1] = bright
+      star[i * 4 + 2] = 1 - Math.min(bright * 2, 1)
       const temp = rnd.next()
-      const warm = new THREE.Color(1.0, 0.82, 0.62)
-      const cool = new THREE.Color(0.7, 0.82, 1.0)
-      const c = temp < 0.5 ? warm.lerp(new THREE.Color(1, 1, 1), temp * 2) : new THREE.Color(1, 1, 1).lerp(cool, (temp - 0.5) * 2)
+      if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
+      else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
+      const vivid = rnd.next()
+      if (vivid < 0.07) c.copy(rose)
+      else if (vivid < 0.13) c.copy(amber)
+      else if (vivid < 0.2) c.copy(azure)
       col[i * 3] = c.r
       col[i * 3 + 1] = c.g
       col[i * 3 + 2] = c.b
@@ -128,7 +210,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 } },
+      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -137,6 +219,7 @@ export class Sky {
     })
     this.stars = new THREE.Points(geo, mat)
     this.stars.frustumCulled = false
+    this.stars.quaternion.fromArray(skyFrame.quaternion).invert()
     this.starScene.add(this.stars)
   }
 
@@ -144,7 +227,7 @@ export class Sky {
     this.texture = t
   }
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, height: number, sun: SunState): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState): void {
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)
@@ -155,14 +238,21 @@ export class Sky {
     ;(u.uInvProj!.value as THREE.Matrix4).copy(camera.projectionMatrixInverse)
     this.rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(skyQuaternion))
     u.uExposure!.value = exposure
+    u.uGlow!.value = glow
+    this.q.copy(turn).invert().premultiply(this.frame)
+    ;(u.uFrame!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q))
+    this.stars.quaternion.copy(this.q).invert()
     ;(u.uSunDir!.value as THREE.Vector3).copy(sun.dir)
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
     if (this.texture) this.pass.render(renderer, target)
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
+    su.uSky!.value = this.texture
+    su.uHasSky!.value = this.texture ? 1 : 0
     su.uPixel!.value = height / 1080
     su.uExposure!.value = exposure
+    su.uGlow!.value = glow
     renderer.setRenderTarget(target)
     renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)

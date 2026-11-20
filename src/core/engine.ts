@@ -6,7 +6,7 @@ import { floatTarget } from './pass'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot } from './types'
-import { isRaw, setDiag } from '../diagnostics/diag'
+import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
@@ -19,8 +19,9 @@ export interface Director {
 
 export interface Sanity { invalid: number; coverage: number }
 
-const STAR_COUNT = 60000
+const STAR_COUNT = 900000
 const DUST_COUNT = 2600
+const GRAD_FLOOR = 0.5
 
 export class Engine {
   readonly renderer: THREE.WebGLRenderer
@@ -137,7 +138,7 @@ export class Engine {
       this.renderSample(shot, mid, s.jitterX, s.jitterY, i, samples.length)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
-    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag)
+    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag, samples.length > 1)
     this.lastShot = mid
     this.flush()
   }
@@ -164,9 +165,10 @@ export class Engine {
     const r = this.renderer
     const raw = isRaw(this.diag)
     setDiag(this.diag)
+    setSamples(count, GRAD_FLOOR)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, false)
-    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, height, shot.sun)
+    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, shot.skyTurn, height, shot.sun)
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {
@@ -194,7 +196,7 @@ export class Engine {
     }
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
-    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure)
+    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
   async prefetch(ids: string[]): Promise<void> {

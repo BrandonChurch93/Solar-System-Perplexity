@@ -4,21 +4,22 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 ## Status
 
-- Current phase: 2 · Engine and blockout
-- Current stop: none
-- Current round: 2 (Phase 2, blockout, done; limit reached)
+- Current phase: 3 · Mars, the look lock
+- Current stop: mars
+- Current round: none running (last: 2, Phase 2 blockout). Look lock rounds start at 3
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 2 round 2 closed, sky map merged
+- Last push: 2026-11-20 UTC, Phase 3 before round 3, with the second status pictures
 
 ## Latest pictures
 
 Newest first. Each line links a comparison image in `out/stills/` so this page shows the state of the film.
 
-- None yet.
+- Status before round 3 (work in progress): `out/stills/status/mars-hold.jpg`, `out/stills/status/mars-terrain.jpg`, `out/stills/status/mars-dive.jpg`.
+- Phase 2 gate, the blockout film in four sheets: `out/stills/sheet-film-01.jpg`, `out/stills/sheet-film-02.jpg`, `out/stills/sheet-film-03.jpg`, `out/stills/sheet-film-04.jpg`. The same film plays as `out/preview.mp4`.
 
 ## Phases
 
@@ -26,8 +27,8 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 | --- | --- | --- | --- |
 | 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
 | 1 · Rough cut | done | `npm run gate -- --phase 1`: G16 green (5400 frames, 960 x 540, 30 fps, 41 MB). One frame from the middle of each of the 46 segments was looked at: order and labels follow `segments`. Pushed, on the review page, shared in the thread | see Push log |
-| 2 · Engine and blockout | in progress | | |
-| 3 · Mars, the look lock | not started | | |
+| 2 · Engine and blockout | done | `npm run gate -- --phase 2`: G1 to G4, G6, G7, G10, G11, G12, G14, G15 green; G8 green (`out/preview.mp4`, 5400 frames, 960 x 540, 30 fps, 45 MB, no G5 failure); G9 green (export proof and the memory proof across a travel). R4 blockout: round 1 scored 7, round 2 scored 5, limit reached, open items 1 to 5 carried to Phases 3 to 5. Judged list present (47 frames). The published app plays the film in autopilot | see Push log |
+| 3 · Mars, the look lock | in progress | | |
 | 4 · The other eight stops | not started | | |
 | 5 · The space between | not started | | |
 | 6 · Polish and deliver | not started | | |
@@ -38,15 +39,15 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | not started | 0 | | | | | | |
-| mercury | not started | 0 | | | | | | |
-| venus | not started | 0 | | | | | | |
-| earth | not started | 0 | | | | | | |
-| mars | not started | 0 | | | | | | |
-| jupiter | not started | 0 | | | | | | |
-| saturn | not started | 0 | | | | | | |
-| uranus | not started | 0 | | | | | | |
-| neptune | not started | 0 | | | | | | |
+| sun | stand-in | 0 | | | | | | |
+| mercury | stand-in | 0 | | | | | | |
+| venus | stand-in | 0 | | | | | | |
+| earth | stand-in | 0 | | | | | | |
+| mars | in progress | 0 | | | | | | |
+| jupiter | stand-in | 0 | | | | | | |
+| saturn | stand-in | 0 | | | | | | |
+| uranus | stand-in | 0 | | | | | | |
+| neptune | stand-in | 0 | | | | | | |
 
 ## Workspace record
 
@@ -228,6 +229,26 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 3. The relief shader cancels the lens vignette, because the approved close image carries its own.
 - Phase 3. Phobos is a displaced mesh lit with direct light, a faint ambient and a faint warm bounce from Mars, with no cast self shadow. A cast shadow blacks out Stickney, which the approved image shows lit on its rim.
 - Phase 3. The storm churns by rotating the color lookup about the storm center inside the storm mask, faster near the center. The rotation is zero at the judged hold frame.
+- Phase 3. One sky for the whole film: the sky map and the star points share one fixed rotation (`src/space/skyframe.json`, written by `tools/assets/skyframe.ts` from the Mars hold camera) and one grade (cool tint, gamma, fine star grain), chosen so the Mars hold shows the Milky Way band where the approved hero has it. Stars stay points.
+- Phase 3. The planet's light is a measured curve over the sun angle, not a formula: `tools/assets/lightcurve.py` divides the approved hero (tone curve and ground haze removed) by the wrap map and takes the median per angle. The curve is `src/stops/mars/curve.json`. A formula light could not give the hero's long dim twilight and bright core together.
+- Phase 3. The wrap map on the hero's side is the hero itself (ladder rung 2 for "The orbit view does not match its approved hero image", taken before round 1 because the first compare showed the painted map's colors drifting from the hero). `assets-src/mars/wrap/match.py` keeps the agent's painted map everywhere the hero cannot see, behind Phobos and near the limb. Recipe in `assets-src/mars/wrap/RECIPE.md`.
+- Phase 3. Haze is two parts with their own numbers in `src/stops/mars/haze.json`: a warm thin ground haze drawn inside the planet shader (it is what the light fit removes from the hero) and a cool blue shell outside the limb. Both have a faint night term so the dark limb reads against the sky as it does in the hero.
+- Phase 3. The terrain view gets an air layer: a glow above the horizon (a warm thin band and a cool tall one, brighter toward the Sun's side) that also dims the stars near the horizon. Fitted by eye and by pixel readings from the approved close image. Without it the film's sky above the horizon was black and the Milky Way cut hard into the horizon.
+- Phase 3. The terrain move stays inside the relief's measured safe move from `relief.json` (forward 0.15, rise 0.045, pan 0.45 degrees). The live look-around clamp uses the same numbers.
+- Phase 3. A dark wedge at the foot of the far mesa was the hidden fill of relief layer L0 showing through the soft edge of L2. Repainted with `assets-src/mars/relief/fillfix.py`.
+- Phase 3. Phobos: lit a little more from the camera's side than the planet's Sun (a fixed offset to its light direction) so its lit face and the shadowed Stickney read as in the approved hero, plus a soft rim term and stronger crater shading. Pole rows of its height map are averaged so the mesh has no spike at its poles.
+- Phase 3. Until the patch agent delivers, the dive is tested with patches cut from the wrap map itself. Those files are never committed.
+- Phase 3. Stars: 420,000 points with a power law in brightness, placed by the sky glow map so they crowd along the Milky Way as in the approved hero, and tinted by the same grade as the glow. The first field was even across the sky and read as noise on black.
+- Phase 3. Terrain air: a veil of 0.55 over the stars near the horizon, and the dust cover is darker above its horizon line than below it, so the sky side of the cover matches the dark sky the terrain view opens on.
+- Phase 3. First preview of the measures before round 3 (every third frame): G5 passed; G17 failed at 0.55 (hold) and 0.54 (terrain); G13 failed on dive and rise frames. Three causes of the softness were found and fixed. 1. Texture lookups used the pixel's full footprint although each frame averages many jittered samples, which blurred twice: the gradient passed to every texture lookup is now scaled by `max(1 / sqrt(samples), 0.5)`. 2. The box filter over the pixel and the bloom mix cost fine contrast (measured: box filter alone gives 0.79 to 0.81, bloom mix alone 0.85): the lens chain ends with a small four-neighbor sharpen on display values, 0.6 when a frame is accumulated and 0.35 of that live. 3. The hero match pass blurred the hero before dividing by the light: it now blurs only where the light is dim. After the three: hold 0.999 median, terrain 1.01.
+- Phase 3. Patches: the agent's three patches (48, 12 and 3 degrees, 4096 each) are re-matched to the hero-matched wrap in scene-linear space by a ratio of low frequencies, with highlights tamed (`assets-src/mars/patches/rematch.py`). The agent's additive match clipped canyon rims to glowing orange. The wrap is not composited with patch 1.
+- Phase 3. Each patch level fades in by texel density: a level shows only where the level under it has fewer than about 1.25 texels per screen pixel (`fade` in `src/stops/mars/assets.ts`). The hold therefore shows the hero wrap alone, and a level never appears before it is needed.
+- Phase 3. Phobos carries the approved hero's own pixels on the side the hero shows (`assets-src/mars/phobos/lit.py`), mixed in by a mask. The shader light could not match the lit face and the Stickney rim, and Phobos is the largest thing in the hold. The rest of the moon stays shader lit for the tumble.
+- Phase 3. G13 on the dive and the rise. Measured with three levels: dive frames 2421 to 2436 were 3 to 12 percent soft, rise frames 2708 to 2720 were 19 to 56 percent soft. Cause: with 4096 px levels and a 16:9 frame, a level only covers the frame by the time its parent runs out of texels if it is at most about twice as narrow as the parent. The levels were four times apart, and the wrap alone runs out below a camera distance of about 2.5 radii. A small predictor that casts the film camera's rays at the sphere and repeats the shader's density math (it matched the measured frames within a point) was used to design the fix. Decision, ladder rung 1 of "A dive goes soft or shows a patch": two more levels with real generated detail, 96 degrees and 24 degrees, ordered 96, 48, 24, 12, 3 (asked of the patch agent, same pipeline); and the rise climbs over the spot before it drifts to its exit pose (`rise.ahead` 0.03, `rise.hug` 1.7 in `src/stops/mars/plan.ts`), so the low part of the rise looks at ground the levels cover. Not chosen: starting the visible rise above 2.5 radii (the cover would hide a jump of 1.5 radii, which is not one move), or enlarging existing levels with an upscaler alone (it would pass G13 and add nothing to see). The planet shader now takes up to six levels.
+- Phase 3. Low part of the dive. The first status sheet showed frames 2432 to 2449 as flat bright salmon ground, then a jump to the dark golden terrain view after the cover. Cause: near the ground the orbit view still used the hold's exposure, tint and thin cool haze, while the approved close image is lit low, warm and dusty. Fix in `src/stops/mars/look.ts` (`descent`) and `src/stops/mars/set.ts`: between altitude 0.7 and 0.05 radii the planet's color is brought down and warmed, the ground haze and the shell turn warm and thicker and their day edge widens, so the ground darkens toward the terrain view's light before the cover. The shell also stopped discarding the pixels exactly on the horizon, which left a dashed line.
+- Phase 3. Sky, ladder "The sky looks fake" rungs 1 and 2. 900,000 star points with a steeper brightness law and a few vivid rose, amber and blue ones. The glow map is broken up by a noise cloud field with dark lanes (the same field in the glow and in the star crowding), desaturated, with a small dark blue floor, and re-aimed with `tools/assets/skyframe.ts --along=158 --tilt=-8 --lift=2` so the dense band sits left of the globe and the fainter arm on the right, as in the approved hero. Checked by region medians against the hero. In a terrain view the glow is turned down (`terrainSkyGlow` in the stop's plan, 0.3 for Mars) because the approved close image shows fine stars on a dark sky, not a bright band; the star points stay.
+
+- Addendum 001 (status pictures), applied 2026-11-20 UTC in Phase 3. `npm run status -- --stop ID` (`tools/status.ts`) renders the stop's hold and terrain comparison images and a dive contact sheet at the `review` tier into `out/stills/status/`, or the whole film sheets with no `--stop`, then runs `npm run review`. The review page lists them under "Status". A status is posted in the thread at the end of every round, after every finished numbered step of the phase and when Brandon asks, and is also written into the Session log.
 
 ## Open items
 
@@ -243,7 +264,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- `npm run film -- --tier draft --format preview`, frames 0 to 5399, log `out/work/film-preview.log`, the lead's VM, started 2026-11-20 about 01:50 UTC. Resumable: run the same command again.
+- None.
 
 ## Rounds
 
@@ -274,6 +295,11 @@ None yet.
 - 2026-11-20 UTC: Phase 2 engine, director, stand-in sets, modes, menu. Merged `agent/tools-stills`, `agent/capture-export`, `agent/assets-fit`, `agent/tools-film`.
 - 2026-11-20 UTC: Phase 2 round 1 closed.
 - 2026-11-20 UTC: Phase 2 round 2 closed. Merged `agent/assets-shared`.
+- 2026-11-20 UTC: Phase 3 decisions logged.
+- 2026-11-20 UTC: Phase 2 gate. `out/preview.mp4` and the blockout sheets.
+- 2026-11-20 UTC: Phase 3 work before round 3: Mars set code, Phobos, relief with margin, wrap maps from the agent, light curve, haze, air layer, sky frame.
+- 2026-11-20 UTC: Phase 3 before round 3: sharpness fixes, patches re-matched, Phobos lit side, status command (addendum 001), status pictures.
+- 2026-11-20 UTC: Phase 3 before round 3: low dive ground, sky structure, terrain sky, second status pictures.
 
 ## Session log
 
@@ -282,3 +308,6 @@ One entry per task: when it started, what it did, where it stopped.
 - Task 1, started 2026-11-19 (America/Boise evening). Kickoff prompt without the Mars approval line. Read AGENTS.md and the kit in order. No addenda. Started Phase 0.
   - Progress note, Phase 0 gate: the engine scaffold, the harness and a spike scene work under software rendering, and every Phase 0 check is green. App: https://grand-tour-film.pplx.app, review page at /review.html (empty until the rough cut lands). Next: the rough cut, then the engine and the blockout of all nine stops. Open: none.
   - Progress note, rough cut: `out/roughcut.mp4` is pushed and on the review page. It is made only from the 18 approved stills and follows `segments` frame for frame, so Brandon can judge the pacing. App: https://grand-tour-film.pplx.app/review.html. Next: the engine and the blockout of all nine stops. Open: none. The build is continuing.
+  - Progress note, Phase 2 gate: the engine plays the whole film from stand-in sets, and `out/preview.mp4` (the blockout, 3 minutes) is on the review page with four sheets of it. All machine checks are green. The blockout critic scored 7, then 5, and the round limit was reached: five open items on camera movement go to Phases 3 to 5. App: https://grand-tour-film.pplx.app/review.html. Next: Mars, the look lock. Open: items 1 to 5 under Open items. The build is continuing.
+  - Status (asked for by Brandon, addendum 001), Phase 3, mars, before round 3: the hold and terrain match the approved images closely and measure at full sharpness (G17 about 1.0 in a quick check); Phobos carries the hero's lit side; the dive and rise are being fixed for G13 with two more detail levels (placeholders in the sheet). Next: the low dive ground (flat and bright before the cover), the sky against the hero's Milky Way, then round 3. Pictures: `out/stills/status/mars-hold.jpg`, `mars-terrain.jpg`, `mars-dive.jpg`, and `out/stills/sheet-film-02.jpg`. https://grand-tour-film.pplx.app/review.html
+  - Status, Phase 3, mars, before round 3 (steps 1 to 4 tuned, step 3 waits on two more patch levels from the patch agent): the low part of the dive now darkens and warms toward the canyon light before the dust cover, the sky has structure with dark lanes and matches the hero by region, and the terrain sky shows fine stars as in the close image; quick G17 is 1.06 (hold) and 1.01 (terrain). Next: merge the two new patch levels, confirm G13 by render, then round 3. The dive sheet in this status was rendered with stand-in files for the two levels that are not delivered yet. Review page: https://grand-tour-film.pplx.app/review.html

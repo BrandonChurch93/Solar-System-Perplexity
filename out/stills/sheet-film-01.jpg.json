@@ -1,0 +1,36 @@
+{
+ "engineHash": "ebc5aa3a77716610",
+ "stopHashes": {
+  "sun": "82a89e05c5996e98",
+  "mercury": "f894a2038d67bd16",
+  "venus": "2cedb9582ec83f21"
+ },
+ "format": "preview",
+ "tier": "draft",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 90,
+ "last": 1440,
+ "extra": {
+  "frames": [
+   90,
+   247,
+   360,
+   495,
+   615,
+   717,
+   870,
+   1016,
+   1072,
+   1185,
+   1287,
+   1440
+  ],
+  "film": true,
+  "part": 1,
+  "signature": "[\"d8c75b06294aa71ea2d0c57b0d2c966af69f68f997dc709a419f7d80cf71bf0e\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

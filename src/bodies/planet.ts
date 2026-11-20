@@ -1,0 +1,266 @@
+import * as THREE from 'three'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../post/chain'
+import { EQUIRECT_GLSL } from '../space/sky'
+import { HAZE_GLSL, hazeUniforms, type HazeParams } from './haze'
+
+export interface PlanetLight {
+  wrap: number
+  power: number
+  gain: number
+  night: [number, number, number]
+  sun: [number, number, number]
+  relief: number
+  reliefNear: number
+  limb: number
+  curve?: number[][]
+}
+
+export const CURVE_KNOTS = 33
+
+export interface PatchSet {
+  textures: THREE.Texture[]
+  widthsDeg: number[]
+  spot: THREE.Vector3
+  feather: number
+  fade: [number, number]
+  nearDeg: number
+}
+
+export interface StormParams {
+  mask: THREE.Texture
+  axis: THREE.Vector3
+  radius: number
+}
+
+export interface PlanetOptions {
+  map: THREE.Texture
+  mapWidth: number
+  height: THREE.Texture
+  heightWidth: number
+  light: PlanetLight
+  haze: HazeParams
+  patches?: PatchSet
+  storm?: StormParams
+  segments?: number
+}
+
+const VERT = /* glsl */ `
+out vec3 vLocal;
+out vec3 vWorldN;
+out vec3 vPos;
+out vec3 vView;
+void main() {
+  vLocal = position;
+  vWorldN = normalize(mat3(modelMatrix) * position);
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPos = wp.xyz;
+  vec4 mv = viewMatrix * wp;
+  vView = mv.xyz;
+  gl_Position = projectionMatrix * mv;
+}`
+
+export const MAX_PATCHES = 6
+
+const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+
+const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      vec2 q = g * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      texels = mix(texels, parent, step(0.5, w));
+      near = max(near, w * uPatchNear[${i}]);
+    }`).join('\n')
+
+const FRAG = /* glsl */ `
+precision highp float;
+uniform sampler2D uMap;
+uniform sampler2D uHeight;
+uniform sampler2D uStorm;
+${PATCH_SAMPLERS}
+uniform float uPatchScale[${MAX_PATCHES}];
+uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchNear[${MAX_PATCHES}];
+uniform float uPatchCount;
+uniform float uFeather;
+uniform vec2 uPatchFade;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform vec3 uStormAxis;
+uniform float uStormRadius;
+uniform float uStormAngle;
+uniform float uHasStorm;
+uniform float uMapWidth;
+uniform float uGrad;
+uniform float uHeightStep;
+uniform float uSpin;
+uniform float uGain;
+uniform float uWeight;
+uniform vec3 uTint;
+uniform float uWrap;
+uniform vec3 uCurve[33];
+uniform vec3 uNight;
+uniform float uRelief;
+uniform float uReliefNear;
+uniform float uLimb;
+uniform float uExtinction;
+uniform mat3 uBodyToWorld;
+in vec3 vLocal;
+in vec3 vWorldN;
+in vec3 vPos;
+in vec3 vView;
+out vec4 outColor;
+${EQUIRECT_GLSL}
+${INVERSE_FILMIC_GLSL}
+${DIAG_GLSL}
+${HAZE_GLSL}
+vec3 spinY(vec3 d, float a) {
+  float c = cos(a), s = sin(a);
+  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+float heightAt(vec3 d) {
+  float u = atan(d.x, d.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
+  return textureLod(uHeight, vec2(u, v), 0.0).r;
+}
+vec3 turnAbout(vec3 d, vec3 axis, float a) {
+  float c = cos(a), s = sin(a);
+  return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
+}
+vec3 curveAt(float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
+  int i = int(min(floor(x), 31.0));
+  return mix(uCurve[i], uCurve[i + 1], x - float(i));
+}
+void main() {
+  vec3 d = spinY(normalize(vLocal), uSpin);
+  vec3 dc = d;
+  float flow = 0.0;
+  if (uHasStorm > 0.5) {
+    float m = equirect(uStorm, d).r;
+    float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
+    flow = uStormAngle * m / (0.35 + ang * ang);
+    dc = turnAbout(d, uStormAxis, flow);
+  }
+  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
+  float texels = diagTexelsDir(d, uMapWidth);
+  float dn = dot(d, uSpotN);
+  float near = 0.0;
+  if (uPatchCount > 0.5) {
+    float inv = 1.0 / max(dn, 0.05);
+    vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
+    vec2 gx = dFdx(g);
+    vec2 gy = dFdy(g);
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    gx *= uGrad;
+    gy *= uGrad;
+    float front = step(0.3, dn);
+    float parent = texels;
+${PATCH_LEVELS}
+  }
+  vec3 n = normalize(vWorldN);
+  vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
+  float el = length(east);
+  east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
+  vec3 north = cross(d, east);
+  float e = uHeightStep;
+  float hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
+  float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
+  vec3 slope = (east * hE + north * hN) / (2.0 * e);
+  vec3 slopeW = uBodyToWorld * spinY(slope, -uSpin);
+  float ndl0 = dot(n, uSunW);
+  float strength = mix(uRelief, uReliefNear, near);
+  vec3 np = normalize(n - slopeW * strength);
+  float ndl = dot(np, uSunW);
+  float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
+  vec3 dir = normalize(vPos);
+  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
+  vec3 col = inverseFilmic(albedo) * shade * uTint;
+  vec3 at;
+  float tau = hazeDepth(dir, true, at);
+  col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  col *= uGain * uWeight;
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));
+}`
+
+function curve(l: PlanetLight): THREE.Vector3[] {
+  const out: THREE.Vector3[] = []
+  for (let i = 0; i < CURVE_KNOTS; i++) {
+    const given = l.curve?.[i]
+    if (given) {
+      out.push(new THREE.Vector3(given[0], given[1], given[2]))
+      continue
+    }
+    const ndl = (i / (CURVE_KNOTS - 1)) * 2 - 1
+    const base = Math.pow(Math.min(Math.max((ndl + l.wrap) / (1 + l.wrap), 0), 1), l.power) * l.gain
+    out.push(new THREE.Vector3(l.sun[0] * base + l.night[0], l.sun[1] * base + l.night[1], l.sun[2] * base + l.night[2]))
+  }
+  return out
+}
+
+export class Planet {
+  readonly mesh: THREE.Mesh
+  readonly material: THREE.ShaderMaterial
+  private readonly bodyToWorld = new THREE.Matrix3()
+  private readonly m4 = new THREE.Matrix4()
+
+  constructor(o: PlanetOptions) {
+    const p = o.patches
+    const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
+    const scale = (i: number): number => {
+      const w = p?.widthsDeg[i]
+      return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
+    }
+    const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
+    if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
+    const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
+    const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
+    const north = spot.clone().cross(east)
+    this.material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: {
+        ...hazeUniforms(o.haze),
+        uMap: { value: o.map }, uHeight: { value: o.height }, uStorm: { value: o.storm?.mask ?? o.map },
+        ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
+        uPatchCount: { value: p?.textures.length ?? 0 },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
+        uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
+        uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uWrap: { value: o.light.wrap }, uCurve: { value: curve(o.light) }, uNight: { value: new THREE.Vector3().fromArray(o.light.night) },
+        uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
+        uExtinction: { value: o.haze.extinction },
+        uBodyToWorld: { value: this.bodyToWorld },
+        uDiag: diagUniform, uGrad: gradUniform,
+      },
+    })
+    const seg = o.segments ?? 320
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+  }
+
+  update(camera: THREE.Vector3, sun: THREE.Vector3, spin: number, gain: number, weight: number): void {
+    const u = this.material.uniforms
+    ;(u.uCam!.value as THREE.Vector3).copy(camera)
+    ;(u.uSunW!.value as THREE.Vector3).copy(sun)
+    u.uSpin!.value = spin
+    u.uGain!.value = gain
+    u.uWeight!.value = weight
+    this.mesh.updateWorldMatrix(true, false)
+    this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+  }
+
+  dispose(): void {
+    this.mesh.geometry.dispose()
+    this.material.dispose()
+  }
+}

@@ -6,6 +6,10 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
 import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { segmentAtFrame } from './timeline'
+import skyFrame from '../space/skyframe.json'
+
+const SKY_TURNS: Record<string, number[]> = skyFrame.turns
+const NO_TURN = new THREE.Quaternion()
 
 export interface StopFrame { rotation: THREE.Quaternion; origin: THREE.Vector3 }
 
@@ -192,6 +196,8 @@ export class FilmDirector implements Director {
     let light = this.sunFor(0)
     let sunWeight = 1
     let flare = 0
+    let skyGlow = 1
+    let skyTurn = NO_TURN
     const index = config.stopIds.indexOf(segment.stop)
     const state = (i: number, view: ViewKind, weight = 1): SetState => {
       const p = this.plans[i]!
@@ -276,8 +282,19 @@ export class FilmDirector implements Director {
         view = r.view
         cover.amount = p.coverAmount(segment, time)
         cover.color = p.p.cover
+        if (p.p.coverLow) {
+          cover.low = p.p.coverLow
+          cover.horizon = p.horizon(view, local)
+          const dt = time - p.coverCenter(segment)
+          cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -5 : 5) * dt]
+        }
       }
       const s = state(index, view)
+      if (view === 'terrain') {
+        skyGlow = p.p.light.terrainSkyGlow ?? 1
+        const t = SKY_TURNS[p.id]
+        if (t) skyTurn = new THREE.Quaternion().fromArray(t)
+      }
       pose = inSet(s, local)
       sets = [s]
       if (view === 'terrain') {
@@ -293,7 +310,7 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, near, far, sun, sets, post, cover, dust, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, near, far, sun, sets, post, cover, dust, dustOffset }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

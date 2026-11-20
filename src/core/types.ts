@@ -15,6 +15,7 @@ export interface PostParams {
   gain: [number, number, number]
   fade: number
   flare: number
+  sharpen: number
 }
 
 export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number }
@@ -33,7 +34,9 @@ export interface SetState {
   view: ViewKind
 }
 
-export interface CoverState { amount: number; color: [number, number, number] }
+export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
+
+export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number] }
 
 export interface Shot {
   frame: number
@@ -43,6 +46,8 @@ export interface Shot {
   camera: Pose
   skyQuaternion: THREE.Quaternion
   skyExposure: number
+  skyGlow: number
+  skyTurn: THREE.Quaternion
   near: number
   far: number
   sun: SunState
@@ -61,6 +66,8 @@ export interface SetContext {
   url(path: string): string
   texture(path: string, options?: TextureOptions): Promise<THREE.Texture>
   dataTexture(path: string, width: number, height: number, channels: 1 | 4): Promise<THREE.DataTexture>
+  buffer(path: string): Promise<ArrayBuffer>
+  floatTexture(data: Float32Array, width: number, height: number, repeat?: boolean): THREE.DataTexture
 }
 
 export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3 }

@@ -1,0 +1,52 @@
+{
+ "ground": {
+  "scaleHeight": 0.0045,
+  "depth": 0.078,
+  "day": [
+   0.47,
+   0.43,
+   0.45
+  ],
+  "twilight": [
+   0.02,
+   0.03,
+   0.05
+  ],
+  "night": [
+   0.012,
+   0.017,
+   0.024
+  ],
+  "strength": 1,
+  "extinction": 1,
+  "forward": 1.2,
+  "top": 10,
+  "dayFrom": 0.05,
+  "dayTo": 0.8
+ },
+ "shell": {
+  "scaleHeight": 0.011,
+  "depth": 0.02,
+  "day": [
+   0.3,
+   0.46,
+   0.8
+  ],
+  "twilight": [
+   0.03,
+   0.05,
+   0.1
+  ],
+  "night": [
+   0.012,
+   0.02,
+   0.035
+  ],
+  "strength": 1,
+  "extinction": 1,
+  "forward": 1.2,
+  "top": 8,
+  "dayFrom": 0.05,
+  "dayTo": 0.8
+ }
+}

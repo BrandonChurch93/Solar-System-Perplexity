@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { Pose } from '../core/types'
+import type { CoverHorizon, Pose } from '../core/types'
 import { coverWindow } from './timeline'
-import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth } from './rig'
+import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
 export interface Fit {
@@ -19,13 +19,14 @@ export interface Fit {
 export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
-  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number }
-  terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; exitHeight: number; exitForward: number; exitPitchDeg: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number }
+  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean }
+  terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
   cover: [number, number, number]
+  coverLow?: [number, number, number]
   spinDegPerSecond: number
   moonDegPerSecond: number
   tint: [number, number, number]
@@ -169,23 +170,106 @@ export class StopPlan {
     return coverWindow(seg)!.centerFrame / config.fps
   }
 
+  horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
+    let nadir: THREE.Vector3
+    let alpha: number
+    if (view === 'orbit') {
+      nadir = local.position.clone().normalize().negate()
+      alpha = Math.asin(Math.min(1 / local.position.length(), 1))
+    } else {
+      const t = this.p.terrain
+      alpha = Math.PI / 2 - THREE.MathUtils.degToRad(t.dipDeg ?? 2)
+      const e = THREE.MathUtils.degToRad(t.horizonDeg ?? 0) - alpha
+      nadir = new THREE.Vector3(0, Math.sin(e), -Math.cos(e))
+    }
+    nadir.applyQuaternion(local.quaternion.clone().invert())
+    const theta = Math.acos(Math.min(Math.max(-nadir.z, -1), 1))
+    const len = Math.hypot(nadir.x, nadir.y)
+    const normal: [number, number] = len > 1e-5 ? [-nadir.x / len, -nadir.y / len] : [0, 1]
+    const gap = Math.min(Math.max(theta - alpha, -1.4), 1.4)
+    return { normal, offset: Math.tan(gap), soft: 0.22 }
+  }
+
+  private entry(time: number): { g: number; rate: number } {
+    const seg = this.seg.dive!
+    const dur = seg.end - seg.start
+    const f = this.coverFractions(seg)
+    const u = (time - seg.start) / dur
+    const x = Math.min(Math.max((1 - u) / (1 - f.first), 0), 1)
+    return { g: Math.pow(x, 2.2), rate: (2.2 * Math.pow(x, 1.2)) / ((1 - f.first) * dur) }
+  }
+
+  private diveTerrain(time: number): Pose {
+    const t = this.p.terrain
+    const base = this.terrain(time - this.seg.terrain.start)
+    const { g } = this.entry(time)
+    const yaw = THREE.MathUtils.degToRad(t.entryYawDeg ?? 0)
+    const turn = new THREE.Quaternion().setFromEuler(new THREE.Euler(-THREE.MathUtils.degToRad(t.entryPitchDeg) * g, yaw * g, THREE.MathUtils.degToRad(t.entryRollDeg ?? 0) * g, 'YXZ'))
+    return {
+      position: base.position.clone().add(new THREE.Vector3(0.5 * t.entryBack * yaw * g * g, t.entryHeight * g, t.entryBack * g)),
+      quaternion: base.quaternion.clone().multiply(turn),
+      vfov: t.vfov,
+    }
+  }
+
+  private swoop(time: number): Pose {
+    const seg = this.seg.dive!
+    const t = this.p.terrain
+    const d = this.p.dive
+    const center = this.coverCenter(seg)
+    const span = center - seg.start
+    const x = Math.min(Math.max((time - seg.start) / span, 0), 1)
+    const tau = center - time
+    const at = this.entry(center)
+    const unit = d.altitude / (1 + t.entryHeight * at.g)
+    const start = this.hold(this.seg.hold.end - this.seg.hold.start)
+    const h0 = start.position.length() - 1
+    const h1 = d.altitude
+    const endRate = (t.entryHeight * at.rate) / (1 + t.entryHeight * at.g)
+    const m1 = (endRate * span) / Math.log(h0 / h1)
+    const e = 3 * x * x - 2 * x * x * x + m1 * (x * x * x - x * x)
+    const h = h0 * Math.pow(h1 / h0, e)
+    const k = (h - h1) / (h0 - h1)
+    const tq = this.turn(time)
+    const spot = this.spot.clone().applyQuaternion(tq)
+    const normal = this.normal.clone().applyQuaternion(tq)
+    const heading = this.heading.clone().applyQuaternion(tq)
+    const right = new THREE.Vector3().crossVectors(heading, normal)
+    const uc = (center - this.seg.terrain.start) / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    const s1 = unit * (t.entryBack * at.g - t.forward * uc)
+    const v = unit * (t.entryBack * at.rate + t.forward / (this.seg.terrain.end - this.seg.terrain.start))
+    const yaw = THREE.MathUtils.degToRad(t.entryYawDeg ?? 0)
+    const thetaC = yaw * at.g
+    const thetaRate = yaw * at.rate
+    const b = smooth(ramp(0.2, 0.8, x))
+    const endDir = spot.clone().addScaledVector(heading, -s1).normalize()
+    const ground = slerpDir(start.position.clone().normalize(), endDir, 1 - k)
+    const side = new THREE.Vector3().crossVectors(start.position, endDir).normalize()
+    ground.addScaledVector(heading, -v * tau * b).addScaledVector(right, v * (thetaC * tau + 0.5 * thetaRate * tau * tau) * b).addScaledVector(side, d.bow * Math.sin(Math.PI * e) * k).normalize()
+    const position = ground.clone().multiplyScalar(1 + h)
+    const up0 = Y.clone().applyQuaternion(start.quaternion)
+    const far = start.position.clone().addScaledVector(new THREE.Vector3(0, 0, -1).applyQuaternion(start.quaternion), start.position.length())
+    const target = far.lerp(spot.clone().addScaledVector(heading, d.ahead), smooth(x * 1.7))
+    const toTarget = target.sub(position).normalize()
+    const level = heading.clone().addScaledVector(ground, -heading.dot(ground)).normalize().applyAxisAngle(ground, thetaC + thetaRate * tau * b)
+    const dip = Math.acos(1 / (1 + h))
+    const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g)
+    const final = level.multiplyScalar(Math.cos(pitch)).addScaledVector(ground, -Math.sin(pitch))
+    const w = smoother(ramp(0.3, 0.97, x))
+    const aim = slerpDir(toTarget, final, w)
+    const up = slerpDir(up0, ground, smooth(x * 1.25))
+    const roll = (t.entryRollDeg ?? 0) * at.g * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
+    return { position, quaternion: lookAt(position, position.clone().add(aim), up, roll), vfov: mix(start.vfov, t.vfov, smooth(x)) }
+  }
+
   dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
-    if (time >= this.coverCenter(seg)) {
-      const t = this.p.terrain
-      const base = this.terrain(time - this.seg.terrain.start)
-      const g = Math.pow(ramp(1, f.first, u), 2.2)
-      const pose: Pose = {
-        position: base.position.clone().add(new THREE.Vector3(0, t.entryHeight * g, t.entryBack * g)),
-        quaternion: base.quaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -THREE.MathUtils.degToRad(t.entryPitchDeg) * g)),
-        vfov: t.vfov,
-      }
-      return { pose, view: 'terrain' }
-    }
+    if (time >= this.coverCenter(seg)) return { pose: this.diveTerrain(time), view: 'terrain' }
     const held = this.hold(time - this.seg.hold.start)
+    if (this.p.dive.swoop) return { pose: blendPose(held, this.swoop(time), smooth(u / 0.3)), view: 'orbit' }
     const start = this.hold(this.seg.hold.end - this.seg.hold.start)
     const e = easeIn(ramp(0, f.last, u))
     const d = this.p.dive
@@ -229,12 +313,15 @@ export class StopPlan {
     const spot = this.spot.clone().applyQuaternion(tq)
     const normal = this.normal.clone().applyQuaternion(tq)
     const heading = this.heading.clone().applyQuaternion(tq)
-    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, d.ahead)
+    const ahead = this.p.rise.ahead ?? d.ahead
+    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, ahead)
     const span = end.position.clone().sub(from)
     const ratio = span.length() / d.altitude
     const m = (Math.pow(ratio, e) - 1) / (ratio - 1)
-    const position = from.clone().addScaledVector(span, m)
-    const ground = spot.clone().addScaledVector(heading, d.ahead * 2)
+    const up1 = span.dot(normal)
+    const across = span.clone().addScaledVector(normal, -up1)
+    const position = from.clone().addScaledVector(normal, up1 * m).addScaledVector(across, Math.pow(m, this.p.rise.hug ?? 1))
+    const ground = spot.clone().addScaledVector(heading, ahead * 2)
     const aim = end.position.clone().addScaledVector(new THREE.Vector3(0, 0, -1).applyQuaternion(end.quaternion), end.position.length())
     const target = ground.lerp(aim, smooth(e * 1.15))
     const up = slerpDir(normal, Y.clone().applyQuaternion(end.quaternion), smooth(e))

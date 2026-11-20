@@ -464,6 +464,15 @@ Running `python3 assets-src/mars/patches/verify.py --wrap out/work/wrap/stage1-c
 - **Re-matching patches and optional wrap baking**: `python3 assets-src/mars/patches/bake.py --wrap <8192-map> --blur-deg 0.35 --out <out-map>` (or `--blur-px <wrap-px>`, or `--patch <single-patch>`) re-matches all patches in `patches.json` (`full` and `web`) to `--wrap` at the chosen blur radius while leaving patch detail above that radius untouched (`patch-wide` and `patch-mid` were delivered without baking into `wrap-color.jpg`, as requested).
 - **Simulated dive contact sheet**: 8 top-down views (`60.0, 33.429, 18.626, 10.377, 5.782, 3.221, 1.795, 1.0` degrees wide) and native `1:1` center and edge crops of `patch-wide.jpg` and `patch-mid.jpg` beside their resampled parents confirm crisp native detail, calm pale-ochre highlights under `0.85` display value, and no text, watermark, border, logo, stray object, or baked stars.
 
+## Hero re-match pass (lead, Phase 3)
+
+Made by the Builder after delivery. `bake.py` matched the patches to the wrap by adding a low frequency difference in display values. On the hero-matched wrap that pushed canyon rims to clipped orange, which the tone curve turned into glowing edges. The shipped patches are re-matched with `rematch.py` and are not baked into the wrap.
+
+- Tool: `python3 assets-src/mars/patches/rematch.py --wrap public/assets/mars/full/wrap-color.jpg --src-dir <folder with the agent's originals> --full-dir public/assets/mars/full --web-dir public/assets/mars/web --ceiling 4.5`, run from the repo root. No image model is used. The originals are the files at commit 5a9f247 on `agent/assets-mars-patches`.
+- Steps: 1. Bring patch and wrap to scene-linear values through the inverse tone curve. 2. Multiply the patch by the ratio of the wrap's low frequencies to its own (0.35 degrees), so the patch keeps its fine detail and takes the wrap's regional color. 3. Tame highlights: detail brighter than 1.35 times its surroundings is compressed and capped at 1.9 times, with a hue preserving ceiling. 4. Back through the tone curve, saved as JPEG quality 94, 4:4:4, `web` by a 2x Lanczos downscale.
+- Outputs: `public/assets/mars/full/patch-1.jpg`, `public/assets/mars/full/patch-2.jpg`, `public/assets/mars/full/patch-3.jpg` and the same three under `public/assets/mars/web/`.
+- Use: `src/bodies/planet.ts` lays the levels over the wrap by gnomonic projection about the spot. Each level fades in only where the level under it has fewer than about 1.25 texels per screen pixel, so the hold frame shows the wrap alone.
+
 ## Ledger rows
 
 None (no third-party files were downloaded; all three patches were generated from `assets-src/mars/wrap/stage1-color-4096.jpg` and styled from `references/approved/mars-hero.png` and `references/approved/mars-close.jpg`).

@@ -11,14 +11,14 @@ const maxMb = Number(process.env.REVIEW_MAX_FILE_MB ?? cfg.raw.repo.maxFileMb)
 interface Item { file: string; title: string; kind: 'video' | 'image'; time: number; mb: number; left: boolean }
 const items: Item[] = []
 
-function add(path: string, title: string): void {
+function add(path: string, title: string, prefix = ''): void {
   if (!existsSync(path)) return
   const st = statSync(path)
   const ext = extname(path).toLowerCase()
   const kind = ext === '.mp4' ? 'video' : 'image'
   const mb = st.size / 1e6
   const left = mb > maxMb
-  const name = basename(path)
+  const name = prefix + basename(path)
   if (!left) copyFileSync(path, join(out, name))
   items.push({ file: name, title, kind, time: st.mtimeMs, mb, left })
 }
@@ -35,12 +35,13 @@ for (const dir of ['out/work/clips', 'out/clips']) {
     add(join(d, f), 'Clip: ' + basename(f, '.mp4'))
   }
 }
-const stills = join(ROOT, 'out/stills')
-if (existsSync(stills)) {
+for (const [dir, label] of [['out/stills', ''], ['out/stills/status', 'Status: ']] as const) {
+  const stills = join(ROOT, dir)
+  if (!existsSync(stills)) continue
   for (const f of readdirSync(stills).sort()) {
     const ext = extname(f).toLowerCase()
     if (ext !== '.jpg' && ext !== '.png' && ext !== '.webp') continue
-    add(join(stills, f), basename(f, ext).split('-').join(' '))
+    add(join(stills, f), label + basename(f, ext).split('-').join(' '), label ? 'status-' : '')
   }
 }
 items.sort((x, y) => y.time - x.time)

@@ -6,3 +6,4 @@ references/cache/
 .env.*
 .DS_Store
 *.log
+__pycache__/

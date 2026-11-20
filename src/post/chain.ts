@@ -70,6 +70,8 @@ uniform float uAspect;
 uniform int uMode;
 uniform sampler2D uStreak;
 uniform float uFlare;
+uniform float uSharpen;
+uniform vec2 uPixel;
 in vec2 vUv;
 out vec4 outColor;
 
@@ -87,6 +89,10 @@ vec3 toSrgb(vec3 c) {
   c = clamp(c, 0.0, 1.0);
   return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c));
 }
+vec3 develop(vec3 hdr, vec3 bloom, vec3 streak, float vig) {
+  hdr = mix(hdr, bloom, uBloomStrength) + streak;
+  return toSrgb(filmic(hdr * uExposure * vig));
+}
 void main() {
   vec4 scene = texture(uScene, vUv);
   vec3 hdr = scene.rgb;
@@ -99,14 +105,18 @@ void main() {
     return;
   }
   vec3 bloom = texture(uBloom, vUv).rgb * uBloomNorm;
-  hdr = mix(hdr, bloom, uBloomStrength);
-  hdr += texture(uStreak, vUv).rgb * vec3(0.55, 0.78, 1.0) * uFlare * 0.35;
-  hdr *= uExposure;
+  vec3 streak = texture(uStreak, vUv).rgb * vec3(0.55, 0.78, 1.0) * uFlare * 0.35;
   vec2 q = (vUv - 0.5) * vec2(uAspect, 1.0);
   float r2 = dot(q, q);
-  hdr *= mix(1.0, 1.0 / pow(1.0 + r2 * 0.9, 2.0), uVignette);
-  vec3 c = filmic(hdr);
-  c = toSrgb(c);
+  float vig = mix(1.0, 1.0 / pow(1.0 + r2 * 0.9, 2.0), uVignette);
+  vec3 c = develop(hdr, bloom, streak, vig);
+  if (uSharpen > 0.0) {
+    vec3 around = develop(texture(uScene, vUv + vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv - vec2(uPixel.x, 0.0)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv + vec2(0.0, uPixel.y)).rgb, bloom, streak, vig)
+      + develop(texture(uScene, vUv - vec2(0.0, uPixel.y)).rgb, bloom, streak, vig);
+    c = max(c + uSharpen * (c - around * 0.25), vec3(0.0));
+  }
   float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
   c = mix(vec3(l), c, uSaturation);
   c = (c - 0.5) * uContrast + 0.5;
@@ -151,6 +161,7 @@ vec3 inverseFilmic(vec3 y) {
 }`
 
 const LEVELS = 6
+const LIVE_SHARPEN = 0.35
 const STREAK_LEVEL = 3
 
 export class PostChain {
@@ -170,7 +181,7 @@ export class PostChain {
     this.final = new Pass(FINAL, {
       uScene: { value: null }, uBloom: { value: null }, uBloomStrength: { value: 0.1 }, uBloomNorm: { value: 1 / LEVELS }, uExposure: { value: 1 },
       uVignette: { value: 0.5 }, uGrain: { value: 0.01 }, uSaturation: { value: 1 }, uContrast: { value: 1 }, uLift: { value: new THREE.Vector3() }, uGain: { value: new THREE.Vector3(1, 1, 1) },
-      uFade: { value: 1 }, uFrame: { value: 0 }, uAspect: { value: 16 / 9 }, uMode: { value: 0 }, uStreak: { value: null }, uFlare: { value: 0 },
+      uFade: { value: 1 }, uFrame: { value: 0 }, uAspect: { value: 16 / 9 }, uMode: { value: 0 }, uStreak: { value: null }, uFlare: { value: 0 }, uSharpen: { value: 0 }, uPixel: { value: new THREE.Vector2() },
     })
     this.streak = new Pass(STREAK, { uTex: { value: null }, uStep: { value: new THREE.Vector2() }, uThreshold: { value: 0 } })
   }
@@ -191,7 +202,7 @@ export class PostChain {
     }
   }
 
-  render(renderer: THREE.WebGLRenderer, scene: THREE.Texture, p: PostParams, frame: number, diag: string): void {
+  render(renderer: THREE.WebGLRenderer, scene: THREE.Texture, p: PostParams, frame: number, diag: string, accumulated = false): void {
     const d = this.down.material.uniforms
     const u = this.up.material.uniforms
     let src = scene
@@ -229,6 +240,8 @@ export class PostChain {
     const f = this.final.material.uniforms
     f.uStreak!.value = this.streaks[1]!.texture
     f.uFlare!.value = p.flare
+    f.uSharpen!.value = isRaw(diag) || diag === 'ungraded' ? 0 : p.sharpen * (accumulated ? 1 : LIVE_SHARPEN)
+    ;(f.uPixel!.value as THREE.Vector2).set(1 / this.width, 1 / this.height)
     f.uScene!.value = scene
     f.uBloom!.value = acc
     f.uBloomStrength!.value = p.bloomStrength
@@ -257,5 +270,5 @@ export class PostChain {
 }
 
 export function defaultPost(): PostParams {
-  return { exposure: 1, bloomStrength: 0.08, bloomRadius: 1, vignette: 0.45, grain: 0.012, saturation: 1, contrast: 1, lift: [0, 0, 0], gain: [1, 1, 1], fade: 1, flare: 0 }
+  return { exposure: 1, bloomStrength: 0.08, bloomRadius: 1, vignette: 0.45, grain: 0.012, saturation: 1, contrast: 1, lift: [0, 0, 0], gain: [1, 1, 1], fade: 1, flare: 0, sharpen: 0.6 }
 }
