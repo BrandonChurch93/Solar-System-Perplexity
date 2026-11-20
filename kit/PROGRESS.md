@@ -4,9 +4,9 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 ## Status
 
-- Current phase: 2 · Engine and blockout
-- Current stop: none
-- Current round: 2 (Phase 2, blockout, done; limit reached)
+- Current phase: 3 · Mars, the look lock
+- Current stop: mars
+- Current round: none running (last: 2, Phase 2 blockout). Look lock rounds start at 3
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
@@ -27,7 +27,7 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 | 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
 | 1 · Rough cut | done | `npm run gate -- --phase 1`: G16 green (5400 frames, 960 x 540, 30 fps, 41 MB). One frame from the middle of each of the 46 segments was looked at: order and labels follow `segments`. Pushed, on the review page, shared in the thread | see Push log |
 | 2 · Engine and blockout | done | `npm run gate -- --phase 2`: G1 to G4, G6, G7, G10, G11, G12, G14, G15 green; G8 green (`out/preview.mp4`, 5400 frames, 960 x 540, 30 fps, 45 MB, no G5 failure); G9 green (export proof and the memory proof across a travel). R4 blockout: round 1 scored 7, round 2 scored 5, limit reached, open items 1 to 5 carried to Phases 3 to 5. Judged list present (47 frames). The published app plays the film in autopilot | see Push log |
-| 3 · Mars, the look lock | not started | | |
+| 3 · Mars, the look lock | in progress | | |
 | 4 · The other eight stops | not started | | |
 | 5 · The space between | not started | | |
 | 6 · Polish and deliver | not started | | |
@@ -42,7 +42,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mercury | stand-in | 0 | | | | | | |
 | venus | stand-in | 0 | | | | | | |
 | earth | stand-in | 0 | | | | | | |
-| mars | stand-in | 0 | | | | | | |
+| mars | in progress | 0 | | | | | | |
 | jupiter | stand-in | 0 | | | | | | |
 | saturn | stand-in | 0 | | | | | | |
 | uranus | stand-in | 0 | | | | | | |
