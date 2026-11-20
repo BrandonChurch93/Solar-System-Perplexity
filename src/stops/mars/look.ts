@@ -2,14 +2,14 @@ import type { HazeParams } from '../../bodies/haze'
 import type { PlanetLight } from '../../bodies/planet'
 
 export const light: PlanetLight = {
-  wrap: 0.12,
-  power: 0.8,
+  wrap: 0.2,
+  power: 1.9,
   gain: 1.25,
   night: [0.012, 0.011, 0.014],
   sun: [1, 0.97, 0.93],
   relief: 0.02,
   reliefNear: 0.008,
-  limb: 0.5,
+  limb: 0,
 }
 
 export const haze: HazeParams = {
