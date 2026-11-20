@@ -1,6 +1,7 @@
 import { config } from './config'
 import { Engine } from './core/engine'
 import { installShowcase } from './capture/frame'
+import { mountExport } from './capture/export'
 import { SpikeDirector } from './director/spike'
 import { createSpikeSet } from './stops/spike/set'
 
@@ -24,6 +25,7 @@ const ready = (async () => {
   await engine.prepare(startFrame)
 })()
 installShowcase(engine, ready, tier)
+if (mode === 'export') mountExport(engine, params)
 
 if (mode === 'live' || mode === 'autopilot') {
   void ready.then(async () => {
