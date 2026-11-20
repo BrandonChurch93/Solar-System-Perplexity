@@ -1,0 +1,65 @@
+{
+  "stop": "mars",
+  "spot": {
+    "lonDeg": -81.86,
+    "latDeg": -4.54,
+    "heroPixel": [1267.11, 855.39],
+    "direction": [-0.98681898, -0.07915506, 0.14114809],
+    "east": [0.14159236, 0.0, 0.98992505],
+    "north": [-0.07835757, 0.99686232, 0.01120775]
+  },
+  "sun": {
+    "bodyDir": [-0.60336961, 0.55908845, -0.56865212],
+    "patchEastNorthUp": [-0.64836, 0.59824, 0.4709],
+    "elevationDeg": 28.09,
+    "azimuthFromNorthCwDeg": -47.3
+  },
+  "featherFraction": 0.12,
+  "patches": [
+    {
+      "id": "patch-1",
+      "level": 1,
+      "widthDeg": 48.0,
+      "halfTan": 0.44522869,
+      "featherFraction": 0.12,
+      "files": {
+        "full": "mars/full/patch-1.jpg",
+        "web": "mars/web/patch-1.jpg"
+      },
+      "sizes": {
+        "full": [4096, 4096],
+        "web": [2048, 2048]
+      }
+    },
+    {
+      "id": "patch-2",
+      "level": 2,
+      "widthDeg": 12.0,
+      "halfTan": 0.10510424,
+      "featherFraction": 0.12,
+      "files": {
+        "full": "mars/full/patch-2.jpg",
+        "web": "mars/web/patch-2.jpg"
+      },
+      "sizes": {
+        "full": [4096, 4096],
+        "web": [2048, 2048]
+      }
+    },
+    {
+      "id": "patch-3",
+      "level": 3,
+      "widthDeg": 3.0,
+      "halfTan": 0.02618592,
+      "featherFraction": 0.12,
+      "files": {
+        "full": "mars/full/patch-3.jpg",
+        "web": "mars/web/patch-3.jpg"
+      },
+      "sizes": {
+        "full": [4096, 4096],
+        "web": [2048, 2048]
+      }
+    }
+  ]
+}
