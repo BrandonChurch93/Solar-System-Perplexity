@@ -276,6 +276,12 @@ export class FilmDirector implements Director {
         view = r.view
         cover.amount = p.coverAmount(segment, time)
         cover.color = p.p.cover
+        if (p.p.coverLow) {
+          cover.low = p.p.coverLow
+          cover.horizon = p.horizon(view, local)
+          const dt = time - p.coverCenter(segment)
+          cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -5 : 5) * dt]
+        }
       }
       const s = state(index, view)
       pose = inSet(s, local)

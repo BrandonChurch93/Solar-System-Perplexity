@@ -194,7 +194,7 @@ export class Engine {
     }
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
-    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure)
+    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
   async prefetch(ids: string[]): Promise<void> {
