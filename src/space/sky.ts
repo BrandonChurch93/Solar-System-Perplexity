@@ -83,6 +83,11 @@ ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
+vec3 patchTexel(sampler2D s, vec2 uv) {
+  vec2 dx = dFdx(uv) * 0.25;
+  vec2 dy = dFdy(uv) * 0.25;
+  return 0.25 * (texture(s, uv + dx + dy).rgb + texture(s, uv - dx + dy).rgb + texture(s, uv + dx - dy).rgb + texture(s, uv - dx - dy).rgb);
+}
 vec3 patched(vec3 col, vec3 p, vec3 t, int i, float k) {
   vec3 c = (uPatchMode[i].y > 0.5 ? t : inverseFilmic(t)) * uPatchLens[i].z * k;
   return uPatchMode[i].y > 0.5 ? col + c * p.z : mix(col, c, p.z);
@@ -114,8 +119,8 @@ void main() {
   col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
   vec3 pa = patchCoord(0, sd);
   vec3 pb = patchCoord(1, sd);
-  vec3 ta = texture(uPatchA, pa.xy).rgb;
-  vec3 tb = texture(uPatchB, pb.xy).rgb;
+  vec3 ta = patchTexel(uPatchA, pa.xy);
+  vec3 tb = patchTexel(uPatchB, pb.xy);
   vec2 lq = (vUv - 0.5) * vec2(uLens.y, 1.0);
   float pk = uGlow * uExposure / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x);
   col = patched(col, pa, ta, 0, pk);
