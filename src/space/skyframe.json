@@ -1,16 +1,71 @@
 {
+ "args": {
+  "stop": "mars",
+  "along": 158,
+  "tilt": -6,
+  "lift": 3,
+  "tstop": "mars",
+  "talong": 60,
+  "ttilt": -60,
+  "tlift": 18,
+  "r": 0.95,
+  "g": 1.38,
+  "b": 1.6,
+  "gamma": 1.7,
+  "fr": 0.003,
+  "fg": 0.009,
+  "fb": 0.014,
+  "repeats": 2,
+  "boffset": 90,
+  "blat": 45,
+  "bfade": 0.12,
+  "bgain": 1.1,
+  "bgamma": 1.4,
+  "bregion": 0.1,
+  "boff": 0.9,
+  "br": 0.8,
+  "bg": 1,
+  "bb": 1.2,
+  "bsat": 0.65,
+  "bcrowd": 0.013,
+  "blod": 2,
+  "btgain": 2,
+  "bclean": 1.6,
+  "bkeep": 0,
+  "bblur": 2.5,
+  "bwiden": 1.5,
+  "bfadeend": 0.3,
+  "bcpow": 1.5,
+  "bcmin": 0.06,
+  "sbright": 0.0065,
+  "sslope": 1,
+  "scount": 0.85,
+  "swidth": 0.14,
+  "shalo": 0,
+  "sfloor": 0.12,
+  "smicro": 3,
+  "smwidth": 0.12,
+  "smbright": 0.0025,
+  "svivid": 0.2,
+  "scolor": 0.7,
+  "score": 0.7,
+  "stgain": 2.2,
+  "stcrowd": -0.4,
+  "stcore": 0.3,
+  "stcap": 0.9
+ },
  "quaternion": [
-  0.8844452,
-  -0.1094275,
-  0.2106794,
-  0.4017419
+  0.883493,
+  -0.0637832,
+  0.2553499,
+  0.3875156
  ],
  "turns": {
   "mars": [
-   0.5365267,
-   0.6391907,
-   -0.4452596,
-   0.3245277
+   0.5568461,
+   0.6546313,
+   -0.4373379,
+   0.2647941
   ]
  },
  "grade": {
@@ -21,62 +76,57 @@
   ],
   "gamma": 1.7,
   "floor": [
-   0.005,
+   0.003,
    0.009,
-   0.012
+   0.014
   ]
  },
  "band": {
   "repeats": 2,
-  "offsetDeg": 45,
+  "offsetDeg": 90,
   "latSpanDeg": 45,
   "fadeStart": 0.12,
-  "gain": 1.4,
-  "gamma": 1.08,
+  "gain": 1.1,
+  "gamma": 1.4,
   "regionRef": 0.1,
-  "offGain": 0.6,
+  "offGain": 0.9,
   "tint": [
-   0.92,
+   0.8,
    1,
-   1.12
+   1.2
   ],
   "saturation": 0.65,
   "crowdRef": 0.013,
   "crowdLod": 2,
-  "terrainGain": 1,
+  "terrainGain": 2,
   "cleanRadius": 1.6,
   "cleanKeep": 0,
   "cleanBlur": 2.5,
   "widen": 1.5,
-  "fadeEnd": 0.3
+  "fadeEnd": 0.3,
+  "crowdPow": 1.5,
+  "crowdMin": 0.06
  },
  "stars": {
-  "brightness": 0.0045,
+  "brightness": 0.0065,
   "slope": 1,
-  "countScale": 1.6,
-  "bandWidth": 0.1,
+  "countScale": 0.85,
+  "bandWidth": 0.14,
   "halo": 0,
   "floor": 0.12,
-  "micro": 2.5,
-  "microWidth": 0.1,
-  "microBright": 0.009,
-  "vivid": 0.35,
+  "micro": 3,
+  "microWidth": 0.12,
+  "microBright": 0.0025,
+  "vivid": 0.2,
+  "color": 0.7,
   "core": 0.7,
-  "terrainGain": 1,
-  "terrainCrowd": 0.25
+  "terrainGain": 2.2,
+  "terrainCrowd": -0.4,
+  "terrainCore": 0.3,
+  "terrainCap": 0.9
  },
  "fitted": {
-  "stop": "mars",
   "frame": 2325,
-  "alongDeg": 158,
-  "tiltDeg": 1.5,
-  "liftDeg": 3,
-  "terrain": {
-   "stop": "mars",
-   "alongDeg": 60,
-   "tiltDeg": -60,
-   "liftDeg": 18,
-   "frame": 2580
-  }
+  "terrainFrame": 2580
  }
 }
