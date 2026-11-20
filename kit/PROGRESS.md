@@ -6,13 +6,13 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 3 · Mars, the look lock
 - Current stop: mars
-- Current round: 4 (Phase 3, mars, look lock round 2 of 5)
+- Current round: 5 (Phase 3, mars, look lock round 3 of 5, the last before the Mars review by Brandon's change of plan)
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 3, round 4 closed with its scorecards
+- Last push: 2026-11-20 UTC, Phase 3, round 5 started on 0ee8c76
 
 ## Latest pictures
 
@@ -313,6 +313,12 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - After round 4, polar cap and the ground behind Phobos repainted (`assets-src/mars/wrap/cap.py`, `hole.py`, recipes beside them).
 - After round 4, tool: `npm run pack -- --only <stills, segment ids, segment-cover ids>` renders only the named parts into the round's cache, so one pack can be split across machines and assembled here. Records match on the engine hash, the stop hashes, format, tier and asset set, not on the machine. Measures, pack parts and clip chunks now run on supporting agents' VMs; the round 4 pack took about nine hours on the Builder's two cores.
 - After round 4, dropped by Brandon's order: the 5 pixel outline fit of the upper left limb and other items that small.
+- Round 5, dust held inside the planet's air (R4 major on both covers, "paints bright tan cloud bands across empty black space outside the curved limb"; ladder "A cover can be seen as a join", rungs 1 and 2). Cause: the cover is a full-frame layer, so on the orbit side it also painted over space beyond the limb. Now, while the picture is the orbit view, each cover pixel is weighted by how far its view ray passes from the planet's centre: full inside 1.04 radii and gone at 1.14 (`coverShell: [1.04, 1.14]` in `src/stops/mars/plan.ts`, `CoverShell` in `src/core/types.ts`, the mask in `src/terrain/cover.ts`, set in `src/director/film.ts`). Seen in draft renders: at 2449 to 2451 the corner beyond the limb stays dark and the limb's haze band swings level by 2453; at 2704 to 2706 the dust sits on the planet and the sky above the limb is clear.
+- Round 5, the climb out with no roll (R4 major, "abrupt ~75-degree roll between 2705 and 2724"). Cause: the rise ended on a pose with the planet's north up, while the terrain view flies along the canyon, so the camera had to roll about 75 degrees between the cover and the pullback. Now `rise.level: true`: the canyon's heading stays up on screen from the terrain view to the end of the rise (`climb()` in `src/director/moves.ts`), the limb is held at a set angle above the lens axis while the camera tips back, and the pan to the end framing starts a third of the way in (`pan: 0.3`). Measured with `out/work/an/roll.ts`: the heading on screen is 90.3 degrees at 2701, 92.5 at 2707 and 87.8 from 2726 to the end. Cost, accepted for the motion: the pullback shows Mars with north to the left and lit from below, not the hero's framing (the judged rise frame 2726 changes with it), and the turn toward Jupiter in `mars.travel` now carries about 90 degrees of bank (peak turn 8.1 degrees per frame with 4.8 of twist at frame 2765; before 6.4 and 1.8). The travel is judged in Phase 5 with open item 3.
+- Round 5, the dive's heading: kept as built after round 4. The canyon's heading on screen is 0.2 degrees at 2440, 13.7 at 2446 and 22.6 at 2448, then turns to 90 under the full cover by 2454. With the dust held inside the air, the limb band is seen swinging level under the cover, so the horizon is carried into the terrain view and not hidden.
+- Round 5, Phobos in the pullback (R4 minor): not changed. It is below the frame during the rise and crosses the frame in `mars.travel`. Carried to the Mars review as open.
+- Round 5, tool: `npm run film -- --segment ID --span FIRST-LAST` renders one stretch of a segment and writes one span file with its record, so a clip chunk can be split across machines. With every span file in the chunk folder the normal command joins them into the chunk. Parts that do not line up stop the command with an error, and a part from another build is the only thing it deletes. Tested on `ending.fade` in two spans at the draft tier: 75 frames, one chunk, a gap reported.
+- Round 5, clip cost at the review tier in master on a supporting agent's VM (4 cores), measured on the build before this one: hold 14 s per frame (150 frames in 35 minutes), terrain 20 s (180 frames in 59 minutes), dive about 58 s. `cut/SHOTS.md` was written again from the plans.
 
 ## Open items
 
@@ -328,7 +334,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- Renders of the build prepared for round 5 (branch `agent/mars-r5` at dbce167), started 2026-11-20 21:40 UTC on seven supporting agents' VMs while the last critic of round 4 was still answering. Pack parts with `npm run pack -- --phase 3 --round 5 --stop mars --only ...` (judged stills with the hold and terrain sheets; the dive sheets; the rise sheets), `npm run measure -- --stop mars`, and the four clip chunks with `npm run film -- --segment mars.<kind> --tier review --format master` (frames 2250 to 2744). Files return as attachments. They are used as they are if the build does not change, and as check renders if it does.
+- Round 5 renders of the build at 0ee8c76 (branch `agent/mars-r5`), started 2026-11-20 22:55 UTC on six supporting agents' VMs, one job at a time on each. Pack parts: `npm run pack -- --phase 3 --round 5 --stop mars --only stills,mars.hold,mars.terrain`, `--only mars.dive,mars.dive-cover`, `--only mars.rise,mars.rise-cover`. Measures: `npm run measure -- --stop mars`. Clip chunks at the review tier in master: `npm run film -- --segment mars.hold --tier review --format master`, and spans of `mars.dive` (2400-2429, 2430-2459, 2460-2489), `mars.terrain` (2490-2579, 2580-2669) and `mars.rise` (2670-2707, 2708-2744) with `--span`. Logs are on each VM under `out/work/logs/`. Files return as attachments and are joined on the Builder's VM. The renders of dbce167 that were listed here are kept only as check renders.
 
 ## Rounds
 
@@ -338,6 +344,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 2, Phase 2, blockout, whole film. R4 blockout 5, one severe, four major, two minor. Limit reached. After the round: arrivals start off center, the lookback never stops moving, the turn away from Mars is longer. Open items 1 to 5. `scorecards/round-002/`.
 - Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0, judged on 696e228. G5, G13, G17 green. R1 6, R2 pass, R3 4, R4 6, R8 pass. Three severe (smear on both judged motion frames, blocky polar cap), majors on the limb glow, the Milky Way and stars, star dashes, a terrain blob, flat and lifeless terrain flight. Next: retime dive and rise so the speed sits in the cover, wide soft limb haze, sky band and star counts, sky drawn with the mid-shutter lens, relief depth fix, a real terrain glide with drifting dust. `scorecards/round-003/`.
 - Round 4, Phase 3, mars, look lock round 2 of 5. Started 2026-11-20 UTC on main at 24c2334. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15). Judged on 1d1a55c after the sky was changed inside the round. G5, G13, G17 green. R1 8, R2 pass, R3 5 (parts 5 and 7), R4 6, R8 pass. No severe issue. Majors: both dust covers paint over black space outside the limb and the canyon's direction does not carry across them, a 75 degree roll after the rise cover (R4); the lit limb is harder and speckled with stars too close to the rim (R1); airbrushed surface near the left limb, soft Phobos, a soft polar cap in the rise, hook strokes on the dark side at 2427, and two shapes in the canyon that the approved hero also has (R3). Next: the motion first, by Brandon's change of plan: the dive retimed with the plunge inside a cover that holds, a terrain glide with real forward travel, dust kept inside the planet's air on the orbit side, one heading through both covers. `scorecards/round-004/`.
+- Round 5, Phase 3, mars, look lock round 3 of 5. Started 2026-11-20 UTC on main at 0ee8c76. The last round before the Mars review, by Brandon's change of plan. In it: the dive retimed with the plunge under a cover that holds, a terrain glide of 1.65 camera heights over extended relief, dust held inside the planet's air on the orbit side, a climb out with no roll, and the limb, cap and sky patch fixes made after round 4.
 
 ## Final scores
 
