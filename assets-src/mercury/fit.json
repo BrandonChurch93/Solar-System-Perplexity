@@ -102,6 +102,18 @@
     "subSolarLonDeg": 88.815,
     "subSolarLatDeg": 33.28
   },
+  "sunInFrame": {
+    "cx": 2690.65,
+    "cy": 175.88,
+    "r": 564.41,
+    "method": "circle through hand-picked points on the visible edge of the disc",
+    "directionFromCamera": [
+      0.390996,
+      0.187815,
+      -0.901026
+    ],
+    "angleToSunDirDeg": 62.353
+  },
   "unproject": {},
   "conventions": {
     "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",

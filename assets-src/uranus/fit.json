@@ -57,6 +57,31 @@
     ],
     "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
   },
+  "rings": {
+    "normal": [
+      -0.110925,
+      0.133303,
+      0.984848
+    ],
+    "inner": 1.4118,
+    "outer": 1.5395,
+    "edges": {
+      "outer": {
+        "radius": 1.5395,
+        "std": 0.08554,
+        "points": 13
+      },
+      "inner": {
+        "radius": 1.4118,
+        "std": 0.03931,
+        "points": 9
+      }
+    },
+    "normalMethod": "perspective circle",
+    "ellipse": null,
+    "note": "faint rings, edges picked by hand on the display copy",
+    "poleToRingNormalDeg": 0.035
+  },
   "sunDir": [
     -0.519344,
     0.736074,
@@ -105,16 +130,16 @@
   ],
   "globe": {
     "quaternion": [
-      -0.0110531,
-      -0.0086088,
-      -9.52e-05,
-      0.9999019
+      0.6037428,
+      0.220878,
+      0.26238,
+      0.7196278
     ],
     "meshQuaternionForThreeSphereGeometry": [
-      -0.007883,
-      -0.7131247,
-      0.0077484,
-      0.7009501
+      0.6124413,
+      -0.3526694,
+      -0.24138,
+      0.6650381
     ],
     "scale": [
       1.0,
@@ -122,18 +147,20 @@
       1.0
     ],
     "northPole": [
-      0.000381,
-      0.999756,
-      -0.022102
+      -0.110925,
+      0.133303,
+      0.984848
     ],
     "subCameraLonDeg": 0.0,
-    "subCameraLatDeg": 0.0,
-    "method": "pole angle and sub-camera latitude",
-    "note": "",
-    "subSolarLonDeg": -48.101,
-    "subSolarLatDeg": 46.56
+    "subCameraLatDeg": 81.618,
+    "method": "pole from ring normal",
+    "note": "pole on the ring normal",
+    "subSolarLonDeg": 174.585,
+    "subSolarLatDeg": 35.682
   },
-  "unproject": {},
+  "unproject": {
+    "fill": "zonal"
+  },
   "conventions": {
     "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
     "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",

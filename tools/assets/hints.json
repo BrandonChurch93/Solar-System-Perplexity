@@ -13,14 +13,55 @@
    1223,
    823,
    718
-  ]
+  ],
+  "sunInFrame": {
+   "points": [
+    [
+     2136,
+     181
+    ],
+    [
+     2152,
+     382
+    ],
+    [
+     2233,
+     523
+    ],
+    [
+     2373,
+     634
+    ],
+    [
+     2534,
+     704
+    ],
+    [
+     2695,
+     734
+    ],
+    [
+     2816,
+     740
+    ]
+   ]
+  }
  },
  "venus": {
   "circle": [
    1484,
    790,
    674
-  ]
+  ],
+  "globe": {
+   "poleAngleDeg": 18.9,
+   "subLatDeg": 40.0,
+   "subLonDeg": 0,
+   "note": "north pole placed on the painted polar vortex at about px (1649, 302)"
+  },
+  "unproject": {
+   "fill": "zonal"
+  }
  },
  "earth": {
   "circle": [
@@ -57,7 +98,83 @@
     "orbitRadius": 60,
     "side": "back"
    }
-  ]
+  ],
+  "globe": {
+   "landmarks": [
+    {
+     "name": "Florida tip",
+     "lon": -81,
+     "lat": 25.2,
+     "px": [
+      1398,
+      627
+     ]
+    },
+    {
+     "name": "Yucatan northeast tip",
+     "lon": -86.8,
+     "lat": 21.5,
+     "px": [
+      1322,
+      675
+     ]
+    },
+    {
+     "name": "Lake Michigan south end",
+     "lon": -87.5,
+     "lat": 41.7,
+     "px": [
+      1354,
+      454
+     ]
+    },
+    {
+     "name": "Baja California tip",
+     "lon": -110,
+     "lat": 23,
+     "px": [
+      1101,
+      636
+     ]
+    },
+    {
+     "name": "Cuba east end",
+     "lon": -74.1,
+     "lat": 20.2,
+     "px": [
+      1473,
+      695
+     ]
+    },
+    {
+     "name": "Cuba west end",
+     "lon": -84.9,
+     "lat": 21.9,
+     "px": [
+      1354,
+      658
+     ]
+    },
+    {
+     "name": "Mississippi delta",
+     "lon": -89.2,
+     "lat": 29.1,
+     "px": [
+      1307,
+      585
+     ]
+    },
+    {
+     "name": "Panama isthmus",
+     "lon": -79.5,
+     "lat": 9,
+     "px": [
+      1448,
+      823
+     ]
+    }
+   ]
+  }
  },
  "mars": {
   "circle": [
@@ -84,7 +201,66 @@
     "side": "front",
     "note": "irregular body, circle is a generous cover"
    }
-  ]
+  ],
+  "globe": {
+   "landmarks": [
+    {
+     "name": "Noctis Labyrinthus",
+     "lon": -102,
+     "lat": -7,
+     "px": [
+      945,
+      915
+     ]
+    },
+    {
+     "name": "Valles Marineris centre",
+     "lon": -72,
+     "lat": -10,
+     "px": [
+      1488,
+      965
+     ]
+    },
+    {
+     "name": "Valles Marineris east end",
+     "lon": -45,
+     "lat": -12,
+     "px": [
+      1991,
+      1066
+     ]
+    },
+    {
+     "name": "Ascraeus Mons",
+     "lon": -104,
+     "lat": 12,
+     "px": [
+      865,
+      583
+     ]
+    },
+    {
+     "name": "Pavonis Mons",
+     "lon": -113,
+     "lat": 1,
+     "px": [
+      728,
+      804
+     ]
+    },
+    {
+     "name": "Arsia Mons",
+     "lon": -120,
+     "lat": -9,
+     "px": [
+      664,
+      975
+     ]
+    }
+   ],
+   "note": "the painted north cap sits too far south of the limb for the painted Valles Marineris, so the cap is left out and Tharsis and Valles set the rotation"
+  }
  },
  "jupiter": {
   "circle": [
@@ -118,9 +294,28 @@
      1645,
      1028
     ],
-    "shadowRadiusPx": 70
+    "shadowRadiusPx": 70,
+    "refine": false
    }
-  ]
+  ],
+  "globe": {
+   "poleAngleDeg": 0.0,
+   "subLatDeg": 2.8,
+   "subLonDeg": 0,
+   "note": "bands are level, the straight equatorial band sits about 35 px below the disc centre"
+  },
+  "unproject": {
+   "maskEllipsesPx": [
+    [
+     1640,
+     1028,
+     100,
+     55,
+     25
+    ]
+   ],
+   "fill": "zonal"
+  }
  },
  "saturn": {
   "circle": [
@@ -226,7 +421,10 @@
     "orbitRadius": 20,
     "side": "back"
    }
-  ]
+  ],
+  "unproject": {
+   "fill": "zonal"
+  }
  },
  "uranus": {
   "circle": [
@@ -267,7 +465,123 @@
     "orbitRadius": 7.5,
     "side": "back"
    }
-  ]
+  ],
+  "globe": {
+   "poleFromRings": true,
+   "subLonDeg": 0,
+   "note": "pole on the ring normal"
+  },
+  "rings": {
+   "normalGuess": [
+    0,
+    0.3,
+    0.95
+   ],
+   "innerEdge": "inner",
+   "outerEdge": "outer",
+   "note": "faint rings, edges picked by hand on the display copy",
+   "edges": {
+    "outer": {
+     "points": [
+      [
+       694,
+       764
+      ],
+      [
+       744,
+       503
+      ],
+      [
+       865,
+       322
+      ],
+      [
+       1046,
+       191
+      ],
+      [
+       1247,
+       127
+      ],
+      [
+       1448,
+       115
+      ],
+      [
+       1669,
+       131
+      ],
+      [
+       1891,
+       211
+      ],
+      [
+       2072,
+       342
+      ],
+      [
+       2213,
+       523
+      ],
+      [
+       2293,
+       764
+      ],
+      [
+       764,
+       1046
+      ],
+      [
+       885,
+       1207
+      ]
+     ]
+    },
+    "inner": {
+     "points": [
+      [
+       801,
+       764
+      ],
+      [
+       845,
+       543
+      ],
+      [
+       945,
+       372
+      ],
+      [
+       1126,
+       241
+      ],
+      [
+       1448,
+       191
+      ],
+      [
+       1770,
+       221
+      ],
+      [
+       1991,
+       352
+      ],
+      [
+       2142,
+       533
+      ],
+      [
+       2203,
+       764
+      ]
+     ]
+    }
+   }
+  },
+  "unproject": {
+   "fill": "zonal"
+  }
  },
  "neptune": {
   "circle": [
@@ -298,6 +612,78 @@
     "orbitRadius": 14,
     "side": "back"
    }
-  ]
+  ],
+  "sunInFrame": {
+   "near": [
+    2514,
+    227
+   ],
+   "radius": 40,
+   "threshold": 0.95
+  },
+  "globe": {
+   "poleFromRings": true,
+   "subLonDeg": 0,
+   "note": "pole on the ring normal"
+  },
+  "rings": {
+   "normalGuess": [
+    0,
+    0.9,
+    0.3
+   ],
+   "innerEdge": "outer",
+   "outerEdge": "outer",
+   "note": "faint ring arcs, outer arc picked by hand on the display copy; inner and outer both set from it, low confidence",
+   "edges": {
+    "outer": {
+     "points": [
+      [
+       40,
+       965
+      ],
+      [
+       101,
+       1106
+      ],
+      [
+       221,
+       1227
+      ],
+      [
+       382,
+       1317
+      ],
+      [
+       563,
+       1398
+      ],
+      [
+       764,
+       1478
+      ],
+      [
+       2444,
+       1183
+      ],
+      [
+       2595,
+       1237
+      ],
+      [
+       2736,
+       1287
+      ],
+      [
+       2812,
+       1324
+      ]
+     ]
+    }
+   }
+  },
+  "unproject": {
+   "fill": "zonal"
+  }
  }
 }
