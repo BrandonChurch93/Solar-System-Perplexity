@@ -1,0 +1,221 @@
+{
+ "source": "references/approved/mars-close.jpg",
+ "imageSize": {
+  "full": [
+   5632,
+   3168
+  ],
+  "web": [
+   2816,
+   1584
+  ],
+  "approved": [
+   2816,
+   1584
+  ]
+ },
+ "boxUnits": "full-set pixels, origin top-left of the close image",
+ "distFormat": "raw little-endian float32, row-major from top-left, no header; distance from the image camera along the pixel ray; unit = camera height above the rim plateau",
+ "camera": {
+  "vfovDeg": 60.0,
+  "focalPxFull": 2743.5684791891017,
+  "pitchDeg": -21.028,
+  "pitchNote": "negative looks below level",
+  "rollDeg": 0.037,
+  "principalPointFull": [
+   2816,
+   1584
+  ],
+  "looksAlong": "-Z, +Y image up, pitch applied about camera X",
+  "horizonLineFull": [
+   [
+    0,
+    726.5
+   ],
+   [
+    5632,
+    722.9
+   ]
+  ],
+  "horizonApexFull": [
+   2844.2,
+   669.7
+  ],
+  "horizonDipDeg": 2.598,
+  "groundModel": {
+   "kind": "sphere below camera",
+   "radius": 972.27,
+   "cameraHeight": 1.0
+  },
+  "horizonDistance": 44.108
+ },
+ "drawOrder": [
+  "L0",
+  "L2",
+  "L1"
+ ],
+ "layers": {
+  "L0": {
+   "files": {
+    "full": {
+     "color": "public/assets/mars/full/relief-L0-color.jpg",
+     "alpha": "public/assets/mars/full/relief-L0-alpha.png",
+     "dist": "public/assets/mars/full/relief-L0-dist.bin"
+    },
+    "web": {
+     "color": "public/assets/mars/web/relief-L0-color.jpg",
+     "alpha": "public/assets/mars/web/relief-L0-alpha.png",
+     "dist": "public/assets/mars/web/relief-L0-dist.bin"
+    }
+   },
+   "box": {
+    "x": 0,
+    "y": 0,
+    "w": 5632,
+    "h": 3168
+   },
+   "colorSize": {
+    "full": [
+     5632,
+     3168
+    ],
+    "web": [
+     2816,
+     1584
+    ]
+   },
+   "distSize": {
+    "full": [
+     2816,
+     1584
+    ],
+    "web": [
+     1408,
+     792
+    ]
+   },
+   "distRange": [
+    3.7982,
+    44.1083
+   ]
+  },
+  "L2": {
+   "files": {
+    "full": {
+     "color": "public/assets/mars/full/relief-L2-color.jpg",
+     "alpha": "public/assets/mars/full/relief-L2-alpha.png",
+     "dist": "public/assets/mars/full/relief-L2-dist.bin"
+    },
+    "web": {
+     "color": "public/assets/mars/web/relief-L2-color.jpg",
+     "alpha": "public/assets/mars/web/relief-L2-alpha.png",
+     "dist": "public/assets/mars/web/relief-L2-dist.bin"
+    }
+   },
+   "box": {
+    "x": 2784,
+    "y": 836,
+    "w": 2848,
+    "h": 1008
+   },
+   "colorSize": {
+    "full": [
+     2848,
+     1008
+    ],
+    "web": [
+     1424,
+     504
+    ]
+   },
+   "distSize": {
+    "full": [
+     1424,
+     504
+    ],
+    "web": [
+     712,
+     252
+    ]
+   },
+   "distRange": [
+    5.7274,
+    16.4527
+   ]
+  },
+  "L1": {
+   "files": {
+    "full": {
+     "color": "public/assets/mars/full/relief-L1-color.jpg",
+     "alpha": "public/assets/mars/full/relief-L1-alpha.png",
+     "dist": "public/assets/mars/full/relief-L1-dist.bin"
+    },
+    "web": {
+     "color": "public/assets/mars/web/relief-L1-color.jpg",
+     "alpha": "public/assets/mars/web/relief-L1-alpha.png",
+     "dist": "public/assets/mars/web/relief-L1-dist.bin"
+    }
+   },
+   "box": {
+    "x": 0,
+    "y": 1080,
+    "w": 4004,
+    "h": 2088
+   },
+   "colorSize": {
+    "full": [
+     4004,
+     2088
+    ],
+    "web": [
+     2002,
+     1044
+    ]
+   },
+   "distSize": {
+    "full": [
+     2002,
+     1044
+    ],
+    "web": [
+     1001,
+     522
+    ]
+   },
+   "distRange": [
+    2.3481,
+    5.9665
+   ]
+  }
+ },
+ "masks": {
+  "full": "public/assets/mars/full/relief-masks.png",
+  "web": "public/assets/mars/web/relief-masks.png",
+  "size": {
+   "full": [
+    2816,
+    1584
+   ],
+   "web": [
+    1408,
+    792
+   ]
+  },
+  "channels": {
+   "r": "mist on the canyon floor, may drift",
+   "g": "thin dust haze in the air, catches the low sun",
+   "b": "unused, 0"
+  }
+ },
+ "mistDriftImageDir": [
+  0.899,
+  0.438
+ ],
+ "mistDriftNote": "unit vector in image space (x right, y down) along the canyon floor, pointing down-canyon toward the lower right",
+ "safeMove": {
+  "forward": 0.2,
+  "rise": 0.06,
+  "panDeg": 0.0,
+  "note": "forward along the view direction and rise in camera heights; pan exposes the frame edge until the margin set lands"
+ }
+}

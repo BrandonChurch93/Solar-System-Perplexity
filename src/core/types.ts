@@ -33,7 +33,9 @@ export interface SetState {
   view: ViewKind
 }
 
-export interface CoverState { amount: number; color: [number, number, number] }
+export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
+
+export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number] }
 
 export interface Shot {
   frame: number
@@ -61,6 +63,8 @@ export interface SetContext {
   url(path: string): string
   texture(path: string, options?: TextureOptions): Promise<THREE.Texture>
   dataTexture(path: string, width: number, height: number, channels: 1 | 4): Promise<THREE.DataTexture>
+  buffer(path: string): Promise<ArrayBuffer>
+  floatTexture(data: Float32Array, width: number, height: number, repeat?: boolean): THREE.DataTexture
 }
 
 export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3 }

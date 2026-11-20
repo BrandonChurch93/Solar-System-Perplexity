@@ -96,7 +96,7 @@ export class SetLoader {
     let bytes = 0
     const textures: THREE.Texture[] = []
     const base = new URL('./assets/', document.baseURI).toString()
-    const ctx: SetContext = {
+    const ctx = {
       assets,
       format: this.getFormat(),
       url: (path) => base + path,
@@ -139,6 +139,24 @@ export class SetLoader {
         textures.push(tex)
         return tex
       },
+    } as SetContext
+    ctx.buffer = async (path) => {
+      const res = await fetch(base + path)
+      if (!res.ok) throw new Error('asset missing: ' + path)
+      return res.arrayBuffer()
+    }
+    ctx.floatTexture = (data, width, height, repeat = false) => {
+      if (data.length !== width * height) throw new Error('float texture size mismatch')
+      const tex = new THREE.DataTexture(data, width, height, THREE.RedFormat, THREE.FloatType)
+      tex.minFilter = THREE.LinearFilter
+      tex.magFilter = THREE.LinearFilter
+      tex.wrapS = repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping
+      tex.wrapT = THREE.ClampToEdgeWrapping
+      tex.needsUpdate = true
+      this.renderer.initTexture(tex)
+      bytes += data.byteLength
+      textures.push(tex)
+      return tex
     }
     const set = await factory(ctx)
     const dispose = set.dispose.bind(set)
