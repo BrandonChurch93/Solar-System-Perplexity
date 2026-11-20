@@ -92,6 +92,34 @@ Made by the Builder after the agent's delivery, because the film's hold frame is
 - Look lock changes (round 4 work): the tool takes an optional fourth argument, a 2x copy of the hero made with `python3 tools/ml/upscale.py --in references/approved/mars-hero.png --out out/work/match/hero-x2.png --width 5632` (checked with `tools/ml/checkmoved.py`: p99 shift 0.03 px), and takes the hero's pixels from it. Full command: `python3 assets-src/mars/wrap/match.py out/work/match/wrap-source.jpg public/assets/mars 12 out/work/match/hero-x2.png`. Hero pixels are resampled onto the map in tone-coded values, not scene-linear ones, because Lanczos ringing around highlights in linear values drove the red channel to zero and left teal pixels on ridge lines. Hero pixels now fade out between view cosine 0.42 and 0.2 (`LIMB`), the low frequency correction between 0.2 and 0.09 (`TONE`), so the hero's own limb haze and its stretched limb pixels are no longer painted into the map, where they showed as a pale arc from other angles. The bright cap at lon -73, lat 47 keeps its hero pixels down to view cosine 0.05 (`CAP`), since it sits on the limb in the hero. The ground haze the hero is divided by was refitted to the hero's limb first (`src/stops/mars/haze.json`, ground layer).
 - The dive patches are not baked into this map. The shader lays them over it and fades each one in only when the level under it runs out of texels, so the hold shows this map alone. See `assets-src/mars/patches/RECIPE.md`.
 
+## Repaint passes after the hero match (lead, Phase 3, look lock round 3)
+
+Both run on `public/assets/mars/full/wrap-color.jpg` after `match.py`, in this order, and write `public/assets/mars/full/wrap-color.jpg` and `public/assets/mars/web/wrap-color.jpg`. If `match.py` is run again, run both again.
+
+Commands, from the repo root:
+
+- `python3 assets-src/mars/wrap/cap.py public/assets/mars/full/wrap-color.jpg out/work/cap/cap-take1.png /tmp/wrap-cap.png /tmp/wrap-cap-web.png`
+- `python3 assets-src/mars/wrap/hole.py /tmp/wrap-cap.png out/work/hole/hole-take1.png public/assets/mars/full/wrap-color.jpg public/assets/mars/web/wrap-color.jpg`
+
+### Polar cap (`cap.py`)
+
+- Why: a reviewer of the rise frame 2726 marked the cap major: "a soft airbrushed smear with detached bright fragments". In the hero the cap sits on the limb, about one hero pixel for eight map pixels, so its map pixels were a blur.
+- Input to the image tool: `out/work/cap/cap-in.png`, the map crop centered on x 2430, y 969 (lon -73.2, lat 47.4), 900 x 610 map px, with its width scaled by cos 47.4 degrees and resized to a square so the cap is seen from straight above.
+- Tool and model: the workspace image tool, model `gpt_image_2_6_flare`, aspect ratio 1:1, reference image `out/work/cap/cap-in.png`.
+- Prompt, exact: "Edit image 1. Image 1 is a soft, low-resolution top-down satellite view of a small polar ice cap on orange-red Martian terrain. Recreate the same view at full sharpness, as a crisp high-resolution orbital photograph taken straight down. Keep every shape where it is: the same cap outline, the same swirl of troughs inside the cap, the same small outlying ice patches at the left and lower left, the same dark patches, craters and terrain colors around it. Replace the blur with real fine detail: layered white and pale cream ice with sharp narrow spiral troughs that expose dark red-brown ground, crisp scalloped cap edges with thin frost fringes, fine wind-carved ridges on the ice, small crisp craters, dunes and rocky texture on the surrounding ground. Flat even overhead light, no cast shadows, no atmosphere, no haze, no glow, no clouds, no vignette. Same colors and brightness as image 1. No text, no border."
+- Takes: 1 of the 6 allowed, kept (`out/work/cap/cap-take1.png`, 1254 x 1254): the outline, the swirl and the outlying patches sit where the input has them.
+- Steps in `cap.py`: the take is resized back to the 900 x 610 crop, its low frequencies (blur 36 px) are scaled to the map's so color and brightness do not shift, and it is feathered in over 90 px from the crop border.
+
+### Ground behind Phobos (`hole.py`)
+
+- Why: a reviewer of the dive frame 2427 marked major: "bright, broken, hook-shaped strokes float on the dark surface". The hero has no surface behind Phobos, so `match.py` kept the first painted map there, which was a smooth blank with stray white strokes and a teal smudge. The dive flies over it once the moon has passed.
+- Input to the image tool: the map crop x 1900 to 2900, y 2150 to 2900 (`BOX` in `hole.py`; run it with a fifth argument, a PNG path, to write the crop and the mask instead of the map).
+- Tool and model: the workspace image tool, model `gpt_image_2_6_flare`, aspect ratio 4:3, reference image that crop.
+- Prompt, exact: "Edit image 1. Image 1 is a top-down orbital view of orange-red Martian terrain, with a large canyon system across the top. The large oval area in the middle and lower part of the image is damaged: it is blurred and smeared, with a pale washed-out blank zone, a teal smudge at its right, and a few stray bright white squiggles and hook-shaped strokes near its bottom. Repaint that damaged oval area as crisp, sharp, believable Martian ground that continues the surrounding terrain: cratered rust-red plains with many small sharp-rimmed craters of different sizes, fine wind streaks, low wrinkle ridges, dune fields, darker basalt-toned patches toward the bottom where the image is already darker, and the canyon's lower rim and eroded slopes continuing naturally along the top of the oval. Remove every white squiggle, every hook-shaped stroke, the teal smudge and the pale blank zone. Keep the overall color and brightness of each part as it is: paler orange at the upper middle, darker brown-red at the bottom. Keep everything outside the damaged area unchanged: the canyon across the top, the craters at the upper left, the dark patch at the lower left. Flat even overhead light, no cast shadows, no atmosphere, no haze, no glow, no clouds, no vignette. Photographic, high-resolution orbital imagery. No text, no border."
+- Takes: 1 of the 6 allowed, kept (`out/work/hole/hole-take1.png`, 1448 x 1086): the surroundings stayed in place and the strokes are gone.
+- Steps in `hole.py`: the take is resized back to the crop and its low frequencies (blur 36 px) are scaled to the map's. It replaces the map only where the hero has Phobos in front of the globe: the hand outline of the moon from `match.py`, grown by 30 hero px, softened, projected onto the map with `assets-src/mars/fit.json`, and faded to nothing 50 px inside the crop border. Every map pixel the hero shows in the hold is untouched.
+- Checks for both: map crops before and after at native size; frames 2325, 2427 and 2726 at the review tier beside the round before; G17 on the hold.
+
 ## Ledger rows
 
 | File | What it is | Source URL | License | Credit line | Date fetched |

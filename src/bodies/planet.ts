@@ -34,6 +34,25 @@ export interface StormParams {
   radius: number
 }
 
+export interface GrazingHaze {
+  depth: number
+  width: number
+  duskWidth: number
+  power: number
+  dayFrom: number
+  dayTo: number
+  fill: [number, number, number]
+  highlight: [number, number, number]
+  dusk: [number, number, number]
+  highlightFrom: number
+  highlightTo: number
+  sideFrom: number
+  sideTo: number
+  detailFrom: number
+  detailTo: number
+  detailBlur: number
+}
+
 export interface PlanetOptions {
   map: THREE.Texture
   mapWidth: number
@@ -41,6 +60,7 @@ export interface PlanetOptions {
   heightWidth: number
   light: PlanetLight
   haze: HazeParams
+  grazing?: GrazingHaze
   patches?: PatchSet
   storm?: StormParams
   segments?: number
@@ -113,6 +133,16 @@ uniform float uExtinction;
 uniform mat3 uBodyToWorld;
 uniform float uVignette;
 uniform float uAspect;
+uniform vec4 uGrazingShape;
+uniform vec2 uGrazingDay;
+uniform vec3 uGrazingFill;
+uniform vec3 uGrazingHighlight;
+uniform vec3 uGrazingDusk;
+uniform vec3 uGrazingSun;
+uniform vec2 uGrazingRange;
+uniform vec3 uGrazingSide;
+uniform vec2 uGrazingSideRange;
+uniform vec4 uGrazingDetail;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -151,7 +181,14 @@ void main() {
     flow = uStormAngle * m / (0.35 + ang * ang);
     dc = turnAbout(d, uStormAxis, flow);
   }
-  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
+  vec3 n = normalize(vWorldN);
+  vec3 dir = normalize(vPos);
+  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  float ndl0 = dot(n, uSunW);
+  float grazingDay = smoothstep(uGrazingDay.x, uGrazingDay.y, ndl0);
+  float grazingSide = smoothstep(uGrazingSideRange.x, uGrazingSideRange.y, dot(n, uGrazingSide));
+  float detail = (1.0 - smoothstep(uGrazingDetail.x, uGrazingDetail.y, mu)) * grazingDay * grazingSide * uGrazingDetail.w;
+  vec3 albedo = equirectGrad(uMap, dc, uGrad * (1.0 + uGrazingDetail.z * detail)).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
   float near = 0.0;
@@ -167,7 +204,6 @@ void main() {
     float parent = texels;
 ${PATCH_LEVELS}
   }
-  vec3 n = normalize(vWorldN);
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
@@ -177,13 +213,10 @@ ${PATCH_LEVELS}
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
   vec3 slopeW = uBodyToWorld * spinY(slope, -uSpin);
-  float ndl0 = dot(n, uSunW);
-  float strength = mix(uRelief, uReliefNear, near);
+  float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
-  vec3 dir = normalize(vPos);
-  float mu = clamp(dot(n, -dir), 0.0, 1.0);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
   vec3 lin = inverseFilmic(albedo);
   if (uNightFlat.x > 0.0) {
@@ -195,6 +228,14 @@ ${PATCH_LEVELS}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  if (uGrazingShape.x > 0.0) {
+    float width = mix(uGrazingShape.z, uGrazingShape.y, grazingDay);
+    float path = exp(-pow(mu / width, uGrazingShape.w));
+    float transmit = exp(-uGrazingShape.x * path * grazingDay * grazingSide);
+    float highlight = smoothstep(uGrazingRange.x, uGrazingRange.y, dot(n, uGrazingSun));
+    vec3 pale = mix(uGrazingDusk, uGrazingFill + uGrazingHighlight * highlight, grazingDay) * hazeForward(dir);
+    col = mix(pale, col, transmit);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));
@@ -223,6 +264,7 @@ export class Planet {
 
   constructor(o: PlanetOptions) {
     const p = o.patches
+    const g = o.grazing
     const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
     const scale = (i: number): number => {
       const w = p?.widthsDeg[i]
@@ -240,6 +282,16 @@ export class Planet {
       fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(o.haze),
+        uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
+        uGrazingDay: { value: new THREE.Vector2(g?.dayFrom ?? 0, g?.dayTo ?? 1) },
+        uGrazingFill: { value: new THREE.Vector3().fromArray(g?.fill ?? [0, 0, 0]) },
+        uGrazingHighlight: { value: new THREE.Vector3().fromArray(g?.highlight ?? [0, 0, 0]) },
+        uGrazingDusk: { value: new THREE.Vector3().fromArray(g?.dusk ?? [0, 0, 0]) },
+        uGrazingSun: { value: new THREE.Vector3() },
+        uGrazingRange: { value: new THREE.Vector2(g?.highlightFrom ?? 0, g?.highlightTo ?? 1) },
+        uGrazingSide: { value: new THREE.Vector3() },
+        uGrazingSideRange: { value: new THREE.Vector2(g?.sideFrom ?? 0, g?.sideTo ?? 1) },
+        uGrazingDetail: { value: new THREE.Vector4(g?.detailFrom ?? 0, g?.detailTo ?? 1, g?.detailBlur ?? 0, 0) },
         uMap: { value: o.map }, uHeight: { value: o.height }, uStorm: { value: o.storm?.mask ?? o.map },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },

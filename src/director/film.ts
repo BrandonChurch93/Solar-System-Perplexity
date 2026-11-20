@@ -290,6 +290,18 @@ export class FilmDirector implements Director {
           cover.horizon = p.horizon(view, local)
           const dt = time - p.coverCenter(segment)
           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
+          const k = p.p.coverRush
+          if (k) {
+            const h = 0.125 / config.fps
+            const sign = segment.kind === 'dive' ? 1 : -1
+            const c = p.coverCenter(segment)
+            const at = (t: number): Pose => (segment.kind === 'dive' ? p.dive(t) : p.rise(t)).pose
+            const from = at(sign > 0 ? c : c - 2 * h)
+            const v = at(sign > 0 ? c + h : c - h).position.clone().sub(from.position).multiplyScalar(sign).applyQuaternion(from.quaternion.clone().invert())
+            const flat = Math.hypot(v.x, v.y)
+            const reach = v.z < 0 ? Math.min(flat / -v.z, k.reach) : k.reach
+            cover.rush = { focus: flat > 1e-9 ? [(v.x / flat) * reach, (v.y / flat) * reach] : [0, 0], phase: sign * k.speed * dt, billow: k.billow, streak: k.streak, contrast: k.contrast }
+          }
         }
       }
       const s = state(index, view)

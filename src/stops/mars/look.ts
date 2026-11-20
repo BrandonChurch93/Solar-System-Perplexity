@@ -1,10 +1,13 @@
 import type { HazeParams } from '../../bodies/haze'
-import type { PlanetLight } from '../../bodies/planet'
+import type { GrazingHaze, PlanetLight } from '../../bodies/planet'
 import fitted from './curve.json'
 import hazeJson from './haze.json'
 import reliefJson from './relief.json'
 
 const reliefCamera = reliefJson.camera
+const { obliqueDetail, ...grazingHaze } = hazeJson.grazing
+
+export { obliqueDetail }
 
 export const light: PlanetLight = {
   wrap: 0.2,
@@ -20,11 +23,15 @@ export const light: PlanetLight = {
 }
 
 export const haze = hazeJson.ground as HazeParams
+export const grazing = grazingHaze as GrazingHaze & { highlightDir: [number, number, number]; sideDir: [number, number, number] }
 export const shellHaze = hazeJson.shell as HazeParams
+export const shellDir = hazeJson.shellDir as [number, number, number]
 export const haloHaze = hazeJson.halo as HazeParams
 export const haloDir = hazeJson.haloDir as [number, number, number]
+export const haloCoreDir = hazeJson.haloCoreDir as [number, number, number]
 export const glintHaze = hazeJson.glint as HazeParams
 export const glintDir = hazeJson.glintDir as [number, number, number]
+export const glintCoreDir = hazeJson.glintCoreDir as [number, number, number]
 
 export const moon = {
   gain: 2.0,
@@ -47,11 +54,16 @@ export const descent = {
   hazeDay: [0.4, 0.29, 0.22] as [number, number, number],
   hazeDepth: 1.5,
   shellDay: [0.42, 0.32, 0.26] as [number, number, number],
+  shellTwilight: [0.045, 0.055, 0.075] as [number, number, number],
+  shellScaleHeight: 0.016,
+  shellBaseDepth: 0.016,
   shellDepth: 1.6,
   edge: [-0.3, 0.12] as [number, number],
 }
 
 export const relief = {
+  apron: { ...reliefJson.apron, fullWidth: reliefJson.imageSize.full[0] as number },
+  ridge: reliefJson.ridge,
   mistSpeed: 0.004,
   dustSpeed: 0.0022,
   dustDir: [0.92, 0.38] as [number, number],
@@ -78,6 +90,7 @@ export const relief = {
     warm: [0.27, 0.19, 0.14] as [number, number, number],
     warmScaleDeg: 0.95,
     side: [0.55, 1.4] as [number, number],
+    warmSide: [0.15, 1.1, 0.05, 0.85] as [number, number, number, number],
     starScaleDeg: 1.5,
     starCut: 0.9,
     veil: 0.55,

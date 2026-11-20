@@ -29,6 +29,7 @@ export interface ReliefAir {
   warm: [number, number, number]
   warmScaleDeg: number
   side: [number, number]
+  warmSide: [number, number, number, number]
   starScaleDeg: number
   starCut: number
   veil: number
@@ -37,9 +38,12 @@ export interface ReliefAir {
 
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
-export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number }
+interface ReliefApron { padding: number; fullWidth: number; mips: boolean; baseAlphaNoMips: string[]; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
+interface ReliefRidge { layer: string; center: number[]; radius: number[]; core: number; slope: number; interval: number[]; taps: number[] }
 
-const NOISE_GLSL = /* glsl */ `
+export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
+
+export const NOISE_GLSL = /* glsl */ `
 float vhash(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
   p += dot(p, p.yxz + 33.33);
@@ -72,6 +76,7 @@ uniform vec3 uCool;
 uniform vec3 uWarm;
 uniform vec4 uScale;
 uniform vec2 uSide;
+uniform vec4 uWarmSide;
 uniform float uSpan;
 uniform float uVeil;
 uniform vec4 uDrift;
@@ -92,7 +97,7 @@ void main() {
   float az = atan(d.x, -d.z);
   vec3 dq = vec3(az * uDrift.y - uDrift.z, elev * uDrift.w, uDrift.z * 0.4);
   float streak = 1.0 + uDrift.x * (0.65 * vnoise(dq) + 0.35 * vnoise(dq * vec3(2.3, 1.7, 1.0) + 5.2) - 0.5) * 2.0;
-  vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(1.0, side, 0.35) * streak;
+  vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(uWarmSide.x, uWarmSide.y, smoothstep(uWarmSide.z, uWarmSide.w, across)) * streak;
   float cut = 1.0 - (1.0 - uVeil) * (1.0 - uScale.w * exp(-elev / uScale.z));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -139,6 +144,30 @@ uniform vec4 uValley;
 uniform vec4 uValleyFlow;
 uniform vec4 uValleyShape;
 uniform vec3 uValleyColor;
+#ifdef RELIEF_APRON
+uniform sampler2D uApron;
+uniform vec2 uApronSize;
+uniform vec4 uApronEdges;
+uniform vec3 uApronBottomShear;
+uniform vec4 uApronRightShear;
+vec2 apronPixel(vec2 p, vec2 region) {
+  float pad = uApronEdges.w;
+  if (region.y > uSize.y) return vec2(p.x + uApronEdges.x, p.y - uSize.y + pad);
+  float start = uApronEdges.z > 0.0 ? uApronEdges.z + pad : 0.0;
+  if (region.x < 0.0) return p.yx + vec2(0.0, start + uApronEdges.x);
+  if (uApronEdges.x > 0.0) start += uApronEdges.x + pad;
+  return p.yx + vec2(0.0, start - uSize.x + pad);
+}
+vec2 apronUV(vec2 p) {
+  return vec2(p.x, uApronSize.y - p.y) / uApronSize;
+}
+vec2 apronColorSource(vec2 p) {
+  float w = smoothstep(uApronBottomShear.y, uApronBottomShear.z, p.x / uSize.x);
+  float v = p.y / uSize.y;
+  float r = smoothstep(uApronRightShear.y, uApronRightShear.z, v) * (1.0 - smoothstep(uApronRightShear.w, 1.0, v));
+  return p + max(p.yx - uSize.yx, 0.0) * vec2(w * uApronBottomShear.x, r * uApronRightShear.x);
+}
+#endif
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -167,6 +196,24 @@ void main() {
   vec2 uv = vUv - vec2(shift.x, -shift.y) * uToLayer;
   vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
   float alpha = uHasAlpha > 0.5 ? texture(uAlpha, vUv).r : texel.a;
+#ifdef RELIEF_APRON
+  vec2 source = vec2(vUv.x, 1.0 - vUv.y) * uSize;
+  vec2 sx = dFdx(source);
+  vec2 sy = dFdy(source);
+  vec2 cp = apronColorSource(source);
+  vec2 cx = dFdx(cp);
+  vec2 cy = dFdy(cp);
+  if (source.x < 0.0 || source.x > uSize.x || source.y > uSize.y) {
+    vec2 p = apronPixel(source, source);
+    vec2 ap = apronPixel(cp, source);
+    vec2 ax = (apronPixel(cp + cx, source) - ap) / uApronSize * vec2(1.0, -1.0);
+    vec2 ay = (apronPixel(cp + cy, source) - ap) / uApronSize * vec2(1.0, -1.0);
+    texel = textureGrad(uApron, apronUV(apronPixel(apronColorSource(source - shift * uToLayer * uSize), source)), ax * uGrad, ay * uGrad);
+    vec2 px = (apronPixel(source + sx, source) - p) / uApronSize * vec2(1.0, -1.0);
+    vec2 py = (apronPixel(source + sy, source) - p) / uApronSize * vec2(1.0, -1.0);
+    alpha = textureGrad(uApron, apronUV(p), px, py).a;
+  }
+#endif
   if (alpha < 0.004) discard;
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -218,7 +265,7 @@ export class Relief {
           uUp: { value: new THREE.Vector3(0, Math.cos(rad(a.pitchDeg)), Math.sin(rad(a.pitchDeg))) }, uDip: { value: rad(a.dipDeg) },
           uCool: { value: new THREE.Vector3().fromArray(a.cool) }, uWarm: { value: new THREE.Vector3().fromArray(a.warm) },
           uScale: { value: new THREE.Vector4(rad(a.coolScaleDeg), rad(a.warmScaleDeg), rad(a.starScaleDeg), a.starCut) },
-          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uVeil: { value: a.veil }, uDrift: { value: new THREE.Vector4(0, 1, 0, 1) }, uSpan: { value: th * aspect },
+          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uWarmSide: { value: new THREE.Vector4().fromArray(a.warmSide) }, uVeil: { value: a.veil }, uDrift: { value: new THREE.Vector4(0, 1, 0, 1) }, uSpan: { value: th * aspect },
           uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
         },
         transparent: true,
@@ -240,38 +287,90 @@ export class Relief {
     for (let k = 0; k < def.layers.length; k++) {
       const l = def.layers[k]!
       const color = await ctx.texture(base + l.color, { srgb: true, anisotropy: 8 })
-      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4 }) : null
+      const alphaMips = !motion.apron?.baseAlphaNoMips.some((id) => l.alpha === `relief-${id}-alpha.png`)
+      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4, mips: alphaMips }) : null
       const dist = new Float32Array(await ctx.buffer(base + l.dist))
       const [dw, dh] = l.distSize
       if (dist.length !== dw * dh) throw new Error('relief distance size mismatch: ' + l.dist)
       const [x0, y0, bw, bh] = l.box
       const nx = Math.max(2, Math.round(bw >= bh ? motion.mesh : (motion.mesh * bw) / bh))
       const ny = Math.max(2, Math.round(bw >= bh ? (motion.mesh * bh) / bw : motion.mesh))
-      const position = new Float32Array((nx + 1) * (ny + 1) * 3)
-      const uv = new Float32Array((nx + 1) * (ny + 1) * 2)
-      const image = new Float32Array((nx + 1) * (ny + 1) * 2)
-      const sample = (fx: number, fy: number): number => {
-        const px = Math.min(Math.max(fx * dw - 0.5, 0), dw - 1)
-        const py = Math.min(Math.max(fy * dh - 0.5, 0), dh - 1)
-        const ix = Math.min(Math.floor(px), dw - 2)
-        const iy = Math.min(Math.floor(py), dh - 2)
+      const apron = motion.apron?.layers.find((a) => l.color === `relief-${a.layer}-color.jpg`)
+      const ridge = l.color === `relief-${motion.ridge?.layer}-color.jpg` ? motion.ridge : undefined
+      const apronScale = W / (motion.apron?.fullWidth ?? W)
+      const apronResolution = motion.apron?.resolution[apronScale === 1 ? 'full' : 'web'] ?? 1
+      const left = (apron?.edges[0] ?? 0) * apronScale
+      const right = (apron?.edges[1] ?? 0) * apronScale
+      const bottom = (apron?.edges[2] ?? 0) * apronScale
+      const pad = (motion.apron?.padding ?? 0) * apronScale
+      const apronTexture = apron ? await ctx.texture(base + apron.atlas, { srgb: true, anisotropy: 8, mips: motion.apron?.mips }) : null
+      const apronSize = apronTexture?.image as { width: number; height: number } | undefined
+      const apronDist = apron ? new Float32Array(await ctx.buffer(base + apron.depth)) : null
+      const aw = (apronSize?.width ?? 0) / 2
+      const ah = (apronSize?.height ?? 0) / 2
+      if (apronDist && apronDist.length !== aw * ah) throw new Error('relief apron distance size mismatch: ' + apron?.depth)
+      const nl = Math.ceil(left * nx / bw)
+      const nr = Math.ceil(right * nx / bw)
+      const nb = Math.ceil(bottom * ny / bh)
+      const cols = nl + nx + nr + 1
+      const rows = ny + nb + 1
+      const position = new Float32Array(cols * rows * 3)
+      const uv = new Float32Array(cols * rows * 2)
+      const image = new Float32Array(cols * rows * 2)
+      const sample = (data: Float32Array, width: number, height: number, x: number, y: number): number => {
+        const px = Math.min(Math.max(x - 0.5, 0), width - 1)
+        const py = Math.min(Math.max(y - 0.5, 0), height - 1)
+        const ix = Math.min(Math.floor(px), width - 2)
+        const iy = Math.min(Math.floor(py), height - 2)
         const tx = px - ix
         const ty = py - iy
-        const a = dist[iy * dw + ix]!
-        const b = dist[iy * dw + ix + 1]!
-        const c = dist[(iy + 1) * dw + ix]!
-        const d = dist[(iy + 1) * dw + ix + 1]!
+        const a = data[iy * width + ix]!
+        const b = data[iy * width + ix + 1]!
+        const c = data[(iy + 1) * width + ix]!
+        const d = data[(iy + 1) * width + ix + 1]!
         return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty
       }
+      const distance = (fx: number, fy: number): number => {
+        if (!apronDist || (fx >= 0 && fx <= 1 && fy <= 1)) {
+          const d = sample(dist, dw, dh, fx * dw, fy * dh)
+          if (!ridge) return d
+          const y = (y0 + fy * bh) / H - ridge.center[1]!
+          const x = (x0 + fx * bw) / W - ridge.center[0]! - ridge.slope * y
+          const weight = 1 - THREE.MathUtils.smoothstep(Math.hypot(x / ridge.radius[0]!, y / ridge.radius[1]!), ridge.core, 1)
+          if (!weight) return d
+          const mid = (ridge.taps.length - 1) / 2
+          let sum = 0
+          let total = 0
+          for (const [j, wy] of ridge.taps.entries()) {
+            const sy = fy + (j - mid) * ridge.interval[1]! * H / bh
+            for (const [i, wx] of ridge.taps.entries()) {
+              const sx = fx + (i - mid) * ridge.interval[0]! * W / bw
+              const w = wx * wy
+              sum += w / sample(dist, dw, dh, sx * dw, sy * dh)
+              total += w
+            }
+          }
+          return THREE.MathUtils.lerp(d, total / sum, weight)
+        }
+        const px = fx * bw
+        const py = fy * bh
+        const side = bottom ? bottom + pad : 0
+        const texel = 1 / apronResolution
+        const s = apronResolution / 2
+        if (fy > 1) return sample(apronDist, aw, ah, Math.min(Math.max(px + left, texel), bw + left + right - texel) * s, Math.min(py - bh + pad, side - texel) * s)
+        if (fx < 0) return sample(apronDist, aw, ah, py * s, (side + Math.max(px + left, texel)) * s)
+        const start = side + (left ? left + pad : 0)
+        return sample(apronDist, aw, ah, py * s, (start + Math.min(px - bw + pad, right + pad - texel)) * s)
+      }
       let n = 0
-      for (let j = 0; j <= ny; j++) {
-        for (let i = 0; i <= nx; i++) {
-          const fx = i / nx
-          const fy = j / ny
+      for (let j = 0; j < rows; j++) {
+        for (let i = -nl; i <= nx + nr; i++) {
+          const fx = i < 0 ? i * left / (nl * bw) : i > nx ? 1 + (i - nx) * right / (nr * bw) : i / nx
+          const fy = j > ny ? 1 + (j - ny) * bottom / (nb * bh) : j / ny
           const ix = (x0 + fx * bw) / W
           const iy = (y0 + fy * bh) / H
           const dir = new THREE.Vector3((2 * ix - 1) * th * aspect, (1 - 2 * iy) * th, -1).normalize()
-          const dd = sample(fx, fy)
+          const dd = distance(fx, fy)
           position[n * 3] = dir.x * dd
           position[n * 3 + 1] = dir.y * dd
           position[n * 3 + 2] = dir.z * dd
@@ -282,13 +381,13 @@ export class Relief {
           n++
         }
       }
-      const index = new Uint32Array(nx * ny * 6)
+      const index = new Uint32Array((cols - 1) * (rows - 1) * 6)
       let m = 0
-      for (let j = 0; j < ny; j++) {
-        for (let i = 0; i < nx; i++) {
-          const a = j * (nx + 1) + i
+      for (let j = 0; j < rows - 1; j++) {
+        for (let i = 0; i < cols - 1; i++) {
+          const a = j * cols + i
           const b = a + 1
-          const c = a + nx + 1
+          const c = a + cols
           const d = c + 1
           index[m++] = a; index[m++] = c; index[m++] = b
           index[m++] = b; index[m++] = c; index[m++] = d
@@ -302,9 +401,16 @@ export class Relief {
       const size = color.image as unknown as { width: number; height: number }
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
+        ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
         vertexShader: VERT,
         fragmentShader: FRAG,
         uniforms: {
+          ...(apron && apronTexture && apronSize ? {
+            uApron: { value: apronTexture }, uApronSize: { value: new THREE.Vector2(apronSize.width / apronResolution, apronSize.height / apronResolution) },
+            uApronEdges: { value: new THREE.Vector4(left, right, bottom, pad) },
+            uApronBottomShear: { value: new THREE.Vector3().fromArray(apron.bottomColorShear) },
+            uApronRightShear: { value: new THREE.Vector4().fromArray(apron.rightColorShear) },
+          } : {}),
           uColor: { value: color }, uAlpha: { value: alpha ?? color }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
           uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) },
           uMist: { value: new THREE.Vector2() }, uDust: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 },

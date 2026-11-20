@@ -37,6 +37,7 @@ const size = [frameDims.width, frameDims.height]
 const key: Record<string, Record<string, unknown>> = {}
 const outputDirs = new Set<string>()
 const stopKinds = new Set(['hold', 'dive', 'terrain', 'rise'])
+const only = a.only ? new Set(a.only.split(',')) : null
 
 function renderSegment(segment: Segment, fallback: string): Promise<Source> {
   return renderSource(judged(cfg, segment), fallback, true)
@@ -206,12 +207,18 @@ async function detail(segments: Segment[]): Promise<void> {
 async function motion(segments: Segment[]): Promise<void> {
   const list: Art[] = []
   for (const s of segments) {
-    list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
-    if (s.kind === 'dive' || s.kind === 'rise') {
+    if (only === null || only.has(s.id)) list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
+    if ((s.kind === 'dive' || s.kind === 'rise') && (only === null || only.has(s.id + '-cover'))) {
       list.push(await contact('motion-' + s.id + '-cover', sheetFrames(cfg, s, true), motionTier, { kind: 'cover', segment: s.id }))
     }
   }
-  publish('R4', singles(list), 'sheet')
+  if (only === null) publish('R4', singles(list), 'sheet')
+}
+
+async function part(segments: Segment[]): Promise<void> {
+  const ids = new Set(segments.map((s) => s.id))
+  if (only!.has('stills')) for (const j of judgedFrames().filter((x) => ids.has(x.segment))) console.log((await renderSource(j.frame, tier, true)).path)
+  await motion(segments)
 }
 
 async function wholeJury(): Promise<void> {
@@ -276,7 +283,10 @@ function compression(): void {
 }
 
 try {
-  if (phase === 2) await blockout()
+  if (only) {
+    const stops = selectedStop ? [selectedStop] : cfg.stops
+    await part(cfg.segments.filter((s) => stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind)))
+  } else if (phase === 2) await blockout()
   else {
     const stops = selectedStop ? [selectedStop] : cfg.stops
     if (whole === false || phase === 6) await stopPacks(stops)
@@ -292,12 +302,14 @@ try {
     await detail(segments)
     await motion(segments)
   }
-  for (const entry of readdirSync(roundDir, { withFileTypes: true })) {
-    if (entry.isDirectory() && /^R[1-8](?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
+  if (only === null) {
+    for (const entry of readdirSync(roundDir, { withFileTypes: true })) {
+      if (entry.isDirectory() && /^R[1-8](?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
+    }
+    const keyFile = join(privateDir, roundId + '.json')
+    json(keyFile, { phase, round, files: key })
+    writeRecord(keyFile, { ...capture.record(tier, []), stopHashes: capture.hashes.stops, extra: { phase, round } })
   }
-  const keyFile = join(privateDir, roundId + '.json')
-  json(keyFile, { phase, round, files: key })
-  writeRecord(keyFile, { ...capture.record(tier, []), stopHashes: capture.hashes.stops, extra: { phase, round } })
 } finally {
   try { await capture.close() } finally { rmSync(temp, { recursive: true, force: true }) }
 }

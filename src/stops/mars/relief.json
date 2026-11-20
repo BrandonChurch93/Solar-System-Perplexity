@@ -224,11 +224,39 @@
   0.438
  ],
  "mistDriftNote": "unit vector in image space (x right, y down) along the canyon floor, pointing down-canyon toward the lower right",
+ "apron": {
+  "padding": 48,
+  "depthFit": 160,
+  "depthSlopeLimit": 0.35,
+  "textureBend": 0.38,
+  "textureFade": [0.42, 0.76],
+  "mips": false,
+  "baseAlphaNoMips": ["L0"],
+  "resolution": { "full": 0.5, "web": 1 },
+  "layers": [
+   { "layer": "L0", "atlas": "relief-L0-apron.webp", "depth": "relief-L0-apron.bin", "edges": [1344, 1184, 1456], "textureShear": [0, 0, 0], "bottomColorShear": [-1.65, 0.54, 0.9], "rightColorShear": [-0.9, 0.57, 0.79, 0.96] },
+   { "layer": "L1", "atlas": "relief-L1-apron.webp", "depth": "relief-L1-apron.bin", "edges": [3600, 0, 2104], "textureShear": [-0.43, 0, -0.62], "bottomColorShear": [0, 0, 1], "rightColorShear": [0, 0, 0.5, 0.9] },
+   { "layer": "L2", "atlas": "relief-L2-apron.webp", "depth": "relief-L2-apron.bin", "edges": [0, 960, 0], "textureShear": [0, -0.4, 0], "textureBend": 0.2, "bottomColorShear": [0, 0, 1], "rightColorShear": [0, 0, 0.5, 0.9] }
+  ]
+ },
+ "ridge": {
+  "layer": "L1",
+  "center": [0.308, 0.58],
+  "radius": [0.055, 0.21],
+  "core": 0.38,
+  "slope": 0.26,
+  "interval": [0.046, 0.018],
+  "taps": [1, 4, 6, 4, 1]
+ },
  "safeMove": {
-  "forward": 0.15,
-  "rise": 0.045,
-  "panDeg": 0.45,
-  "panDegMin": -0.45,
-  "note": "forward along the view direction and rise in camera heights, pan about the up axis in either direction up to panDeg; at forward 0.2 with pan -0.6 the render is still clean, with pan +0.6 a 2 px crack opens"
+  "forward": 1.65,
+  "rise": 0.06,
+  "side": 0.3,
+  "panDeg": 1.29,
+  "panDegMin": -1.61,
+  "yawDeg": -2.9,
+  "pitchDeg": 0.78,
+  "gather": 0.22,
+  "note": "Measured along the Mars glide, not a range of independently interchangeable pose offsets. Translation is in camera heights; pan limits refer to the main glide, excluding entry and exit."
  }
 }

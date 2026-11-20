@@ -24,18 +24,64 @@
   "dayFrom": -0.3,
   "dayTo": 0.95
  },
+ "grazing": {
+  "depth": 2.25,
+  "width": 0.10549,
+  "duskWidth": 0.30201,
+  "power": 1.80053,
+  "dayFrom": 0.11676,
+  "dayTo": 0.29676,
+  "fill": [
+   0.35133,
+   0.32469,
+   0.28189
+  ],
+  "highlight": [
+   2.5,
+   1.21165,
+   0.89113
+  ],
+  "dusk": [
+   0.14248,
+   0.07,
+   0.13919
+  ],
+  "highlightDir": [
+   -0.7933,
+   0.53369,
+   0.29299
+  ],
+  "highlightFrom": 0.8,
+  "highlightTo": 1.13176,
+  "sideDir": [
+   -1,
+   0,
+   0
+  ],
+  "sideFrom": 0.08,
+  "sideTo": 0.3,
+  "detailFrom": 0.13,
+  "detailTo": 0.33,
+  "detailBlur": 9,
+  "obliqueDetail": {
+   "viewFromDeg": 0.5,
+   "viewToDeg": 3.5,
+   "muFrom": 0.26,
+   "muTo": 0.53
+  }
+ },
  "shell": {
-  "scaleHeight": 0.016,
+  "scaleHeight": 0.0204,
   "depth": 0.016,
   "day": [
-   0.37,
-   0.43,
-   0.5
+   0.17851,
+   0.29492,
+   0.36456
   ],
   "twilight": [
-   0.045,
-   0.055,
-   0.075
+   0.03329,
+   0.04068,
+   0.05548
   ],
   "night": [
    0.016,
@@ -45,17 +91,22 @@
   "strength": 1,
   "extinction": 1,
   "forward": 1.2,
-  "top": 8,
-  "dayFrom": -0.1,
-  "dayTo": 0.8
+  "top": 6.27451,
+  "dayFrom": 0.36826,
+  "dayTo": 0.61826
  },
+ "shellDir": [
+  -0.51458,
+  0.75938,
+  0.39819
+ ],
  "halo": {
-  "scaleHeight": 0.035,
+  "scaleHeight": 0.02655,
   "depth": 0.008,
   "day": [
-   0.28,
-   0.31,
-   0.33
+   0.8364,
+   1.1,
+   1.13888
   ],
   "twilight": [
    0,
@@ -70,22 +121,32 @@
   "strength": 1,
   "extinction": 1,
   "forward": 0,
-  "top": 4,
-  "dayFrom": 0.35,
-  "dayTo": 1.0
+  "top": 5.27307,
+  "dayFrom": 0.12165,
+  "dayTo": 1.19086,
+  "core": {
+   "scaleHeight": 0.00586,
+   "dayFrom": 0.92,
+   "dayTo": 0.98695,
+   "day": [
+    0.23178,
+    0.3289,
+    0.53176
+   ]
+  }
  },
  "haloDir": [
-  -0.965,
-  0.17,
-  0.2
+  -0.97998,
+  -0.03443,
+  -0.19612
  ],
  "glint": {
-  "scaleHeight": 0.03,
+  "scaleHeight": 0.02001,
   "depth": 0.008,
   "day": [
-   0.85,
-   0.68,
-   0.68
+   2.5,
+   1.47378,
+   1.56481
   ],
   "twilight": [
    0,
@@ -100,13 +161,33 @@
   "strength": 1,
   "extinction": 1,
   "forward": 0,
-  "top": 4,
-  "dayFrom": 0.96,
-  "dayTo": 1.0
+  "top": 5.997,
+  "dayFrom": 0.94301,
+  "dayTo": 1.01841,
+  "core": {
+   "scaleHeight": 0.00586,
+   "dayFrom": 0.91501,
+   "dayTo": 0.96141,
+   "day": [
+    1.05253,
+    0.46973,
+    0.27168
+   ]
+  }
  },
  "glintDir": [
-  -0.845,
-  0.449,
-  0.29
+  -0.85164,
+  0.39758,
+  0.34152
+ ],
+ "glintCoreDir": [
+  -0.56158,
+  0.64801,
+  0.5145
+ ],
+ "haloCoreDir": [
+  -0.95408,
+  -0.08458,
+  0.28735
  ]
 }

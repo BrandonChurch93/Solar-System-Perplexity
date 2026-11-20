@@ -2,9 +2,9 @@
 
 Two regions of the one sky that carry the sky of the approved images, so the judged hold and terrain views show the sky the approved images show. `src/space/sky.ts` draws each patch on the fixed sky sphere where the approved view looks (`patches.mars` in `src/space/skyframe.json`), feathers its border into the rest of the sky and switches the drawn star points off inside it. `src/stops/mars/sky.json` holds the lens and gain of each patch.
 
-## public/assets/mars/full/sky-hold.jpg and public/assets/mars/web/sky-hold.jpg
+## public/assets/mars/full/sky-hold.webp and public/assets/mars/web/sky-hold.webp
 
-- Output files: `public/assets/mars/full/sky-hold.jpg` (`2816 x 1584`, JPEG quality 95, 4:4:4) and `public/assets/mars/web/sky-hold.jpg` (`1408 x 792`). The sky of `references/approved/mars-hero.png` with the planet, the moon and the planet's glow taken out.
+- Output files: `public/assets/mars/full/sky-hold.webp` (`3520 x 1980`, lossless WebP) and `public/assets/mars/web/sky-hold.webp` (`1760 x 990`, lossless WebP). The middle `2816 x 1584` is the picture; the rest is a margin, see step 5. The sky of `references/approved/mars-hero.png` with the planet, the moon and the planet's glow taken out.
 - Tool: `python3 assets-src/mars/sky/patch.py hold references/approved/mars-hero.png out/work/match/sky-fill-take1.png out/work/match/halo-only.png public/assets/mars` (`numpy`, `scipy`, `Pillow`; no generation in this step).
 - Inputs:
   - `references/approved/mars-hero.png`, the approved hero.
@@ -17,12 +17,16 @@ Two regions of the one sky that carry the sky of the approved images, so the jud
   1. The hero, the fill and the film frame are brought to the film's scene values (sRGB decode, then the inverse of the film's tone curve).
   2. Sky = hero minus film frame, floored at zero. Outside the globe this is the hero's sky without the glow the film already draws, so film plus patch gives the hero back.
   3. The hero's own sky is used from 1.07 globe radii outward (feathered from 1.03) and wherever the film's glow is under about 0.6 of the hero's brightness. Elsewhere the fill is used, scaled per channel to the hero's sky in a ring around the globe and, close to the ring, to the local brightness of the hero's sky so there is no step where the two meet.
-  4. Tone curve and sRGB encode, saved at the hero's own size for `full` and half that for `web`.
+  4. Tone curve and sRGB encode.
+  5. A margin of one eighth of the width and height is added on every side by mirroring the picture about its border (`MARGIN` in `patch.py`, `margin` in `src/stops/mars/sky.json`). The film feathers the patch into the rest of the sky across that margin, so the feather sits outside the approved view and the judged frame shows the approved sky to its corners. Saved lossless at that size for `full` and half that for `web`.
+- Next to the rim: between 1.008 and 1.02 globe radii (`RIM` in `patch.py`) the fill's stars are taken out. What is left there is the fill's smooth brightness (a minimum against a 4 px blur, blurred again) plus the hero's own star points (the hero less its own smooth brightness, floored at zero). The fill's stars showed through the thin glow at the rim brighter than any star in the approved image does.
+- Sampling in the film: `src/space/sky.ts` reads each patch with four taps spread over the pixel's footprint, so a star point comes out about as bright as in the approved image resampled to the frame size, not about 14 percent brighter as with one tap.
+- Block grid: the approved images carry a faint 8 px block grid in their dark sky (boundary steps about twice the steps inside a block). `assets-src/mars/sky/deblock.py` takes the step across each block boundary, less the local slope, capped at 4 code values, and spreads it over the four pixels on each side. It runs on the hero, the fill and the close image before anything else. Measured on the hero's sky: boundary to inside ratio 1.9 before, 0.8 to 1.0 after. The files are lossless so no new grid is added.
 - Checks: frame 2325 beside the hero at the review tier (limb profiles at 110 to 210 degrees within a few code values from 5 percent of a radius outward, star statistics by region equal to the hero's within 5 percent), frames 2255 and 2395 show no ring or hole where the globe has moved off its place in the hero.
 
-## public/assets/mars/full/sky-terrain.jpg and public/assets/mars/web/sky-terrain.jpg
+## public/assets/mars/full/sky-terrain.webp and public/assets/mars/web/sky-terrain.webp
 
-- Output files: `public/assets/mars/full/sky-terrain.jpg` (`2816 x 1584`, JPEG quality 95, 4:4:4) and `public/assets/mars/web/sky-terrain.jpg` (`1408 x 792`). The stars and fine band of `references/approved/mars-close.jpg` above its horizon, without the air glow the film draws itself.
+- Output files: `public/assets/mars/full/sky-terrain.webp` (`3520 x 1980`, lossless WebP) and `public/assets/mars/web/sky-terrain.webp` (`1760 x 990`, lossless WebP), with the same mirrored margin and the same block grid removal as the hold patch. The stars and fine band of `references/approved/mars-close.jpg` above its horizon, without the air glow the film draws itself.
 - Tool: `python3 assets-src/mars/sky/patch.py terrain references/approved/mars-close.jpg out/work/match/air-only.png public/assets/mars out/work/match/terrain-pass1.png` (no generation, no model).
 - Inputs:
   - `references/approved/mars-close.jpg`, the approved close image.
