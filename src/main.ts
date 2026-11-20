@@ -2,39 +2,39 @@ import { config } from './config'
 import { Engine } from './core/engine'
 import { installShowcase } from './capture/frame'
 import { mountExport } from './capture/export'
-import { SpikeDirector } from './director/spike'
-import { createSpikeSet } from './stops/spike/set'
+import type { ViewKind } from './core/types'
+import { FilmDirector } from './director/film'
+import { mountLoading, mountMenu } from './director/menu'
+import { rangeFrom, runAutopilot, runLive } from './director/modes'
+import { factories, plans } from './director/plans'
 
 const params = new URLSearchParams(location.search)
-const mode = params.get('mode') ?? 'live'
+const asked = params.get('mode') ?? 'live'
+const mode = ['live', 'autopilot', 'capture', 'export'].includes(asked) ? asked : 'live'
 const offline = mode === 'capture' || mode === 'export'
-const formatId = params.get('format') ?? (offline ? config.formatKeys.master : config.formatKeys.master)
+const formatId = params.get('format') ?? config.formatKeys.master
 const assets = params.get('assets') ?? (offline ? 'full' : 'web')
 const tier = params.get('tier') ?? 'draft'
 
 document.body.classList.add(mode)
 const engine = new Engine(formatId, assets)
 engine.diag = params.get('diag') ?? 'beauty'
-engine.director = new SpikeDirector()
-for (const id of config.stopIds) engine.sets.register(id, createSpikeSet)
+const director = new FilmDirector(plans)
+engine.director = director
+for (const id of config.stopIds) engine.sets.register(id, factories[id]!)
 document.getElementById('stage')!.appendChild(engine.canvas)
+const ui = document.getElementById('ui')!
 
-const startFrame = Number(params.get('frame') ?? 0)
-const ready = (async () => {
-  if (mode === 'capture') return
-  await engine.prepare(startFrame)
-})()
+const frameParam = params.get('frame')
+const startFrame = frameParam === null ? null : Number(frameParam)
+const ready = mode === 'export' ? engine.prepare(startFrame ?? 0) : Promise.resolve()
 installShowcase(engine, ready, tier)
-if (mode === 'export') mountExport(engine, params)
 
-if (mode === 'live' || mode === 'autopilot') {
-  void ready.then(async () => {
-    let frame = startFrame
-    const loop = async (): Promise<void> => {
-      await engine.renderFrame(frame, 'draft')
-      frame = (frame + 1) % config.frameCount
-      requestAnimationFrame(() => void loop())
-    }
-    await loop()
-  })
+if (mode === 'export') mountExport(engine, params)
+else if (mode === 'autopilot') runAutopilot(engine, rangeFrom(params), mountLoading(ui))
+else if (mode === 'live') {
+  const stop = params.get('stop')
+  const view: ViewKind = params.get('view') === 'terrain' ? 'terrain' : 'orbit'
+  const live = runLive(engine, director, mountLoading(ui), { stop: stop && config.stopIds.includes(stop) ? stop : config.stopIds[0]!, view, frame: startFrame, tier })
+  mountMenu(ui, engine, live)
 }

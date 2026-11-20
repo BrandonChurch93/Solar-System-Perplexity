@@ -16,7 +16,14 @@
     "review": "tsx tools/review.ts",
     "caps": "tsx tools/caps.ts",
     "budget": "tsx tools/budget.ts",
-    "animatic": "python3 tools/animatic.py"
+    "animatic": "python3 tools/animatic.py",
+    "sheet": "tsx tools/sheet.ts",
+    "seq": "tsx tools/seq.ts",
+    "crops": "tsx tools/crops.ts",
+    "compare": "tsx tools/compare.ts",
+    "pack": "tsx tools/pack.ts",
+    "keep": "tsx tools/keep.ts",
+    "proof": "tsx tools/proof.ts"
   },
   "dependencies": {
     "gsap": "3.15.1",

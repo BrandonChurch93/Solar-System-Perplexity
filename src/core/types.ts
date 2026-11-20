@@ -19,15 +19,21 @@ export interface PostParams {
 
 export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number }
 
+export type ViewKind = 'orbit' | 'terrain'
+
 export interface SetState {
   id: string
   origin: THREE.Vector3
   rotation: THREE.Quaternion
   time: number
+  local: number
   segment: Segment
   u: number
   weight: number
+  view: ViewKind
 }
+
+export interface CoverState { amount: number; color: [number, number, number] }
 
 export interface Shot {
   frame: number
@@ -42,9 +48,12 @@ export interface Shot {
   sun: SunState
   sets: SetState[]
   post: PostParams
+  cover: CoverState
+  dust: number
+  dustOffset: THREE.Vector3
 }
 
-export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
+export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
 
 export interface SetContext {
   assets: string
@@ -54,7 +63,7 @@ export interface SetContext {
   dataTexture(path: string, width: number, height: number, channels: 1 | 4): Promise<THREE.DataTexture>
 }
 
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number }
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3 }
 
 export interface StopSet {
   id: string

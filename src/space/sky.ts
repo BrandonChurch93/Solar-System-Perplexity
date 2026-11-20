@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
+import type { SunState } from '../core/types'
 
 export const EQUIRECT_GLSL = /* glsl */ `
 const float PI = 3.141592653589793;
@@ -19,13 +20,31 @@ uniform sampler2D uSky;
 uniform mat4 uInvProj;
 uniform mat3 uRot;
 uniform float uExposure;
+uniform vec3 uSunDir;
+uniform vec3 uSunColor;
+uniform float uSunRadius;
+uniform float uSunGlare;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 void main() {
   vec4 v = uInvProj * vec4(vUv * 2.0 - 1.0, 1.0, 1.0);
   vec3 dir = normalize(uRot * (v.xyz / v.w));
-  outColor = vec4(equirect(uSky, dir).rgb * uExposure, 0.0);
+  vec3 col = equirect(uSky, dir).rgb * uExposure;
+  if (uSunGlare > 0.0) {
+    float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
+    float x = ang / uSunRadius;
+    float edge = fwidth(x) + 1e-4;
+    float disc = smoothstep(1.0 + edge, 1.0 - edge, x);
+    float limb = 0.45 + 0.55 * sqrt(max(1.0 - x * x, 0.0));
+    float coreR = clamp(uSunRadius * 0.35, 0.0012, 0.004);
+    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR));
+    float o = max(x, 1.0);
+    float big = clamp(sqrt(0.02 / uSunRadius), 0.4, 1.0);
+    float corona = 1.3 * big * pow(o, -3.6) + 0.035 * pow(o, -1.6) * exp(-o * 0.2);
+    col += uSunColor * uSunGlare * (disc * (limb * 3.6 * big + core) + (1.0 - disc) * corona);
+  }
+  outColor = vec4(col, 0.0);
 }`
 
 const STAR_VERT = /* glsl */ `
@@ -38,6 +57,7 @@ out float vSize;
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
+  gl_Position.z = 0.0;
   float size = aStar.x * uPixel;
   vSize = size;
   gl_PointSize = size;
@@ -66,7 +86,10 @@ export class Sky {
   private texture: THREE.Texture | null = null
 
   constructor(count: number) {
-    this.pass = new Pass(SKY_FRAG, { uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uExposure: { value: 1 } })
+    this.pass = new Pass(SKY_FRAG, {
+      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uExposure: { value: 1 },
+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 },
+    })
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
     const star = new Float32Array(count * 4)
@@ -121,7 +144,7 @@ export class Sky {
     this.texture = t
   }
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, height: number): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, height: number, sun: SunState): void {
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)
@@ -132,6 +155,10 @@ export class Sky {
     ;(u.uInvProj!.value as THREE.Matrix4).copy(camera.projectionMatrixInverse)
     this.rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(skyQuaternion))
     u.uExposure!.value = exposure
+    ;(u.uSunDir!.value as THREE.Vector3).copy(sun.dir)
+    ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
+    u.uSunRadius!.value = sun.angularRadius
+    u.uSunGlare!.value = sun.glare
     if (this.texture) this.pass.render(renderer, target)
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
     su.uPixel!.value = height / 1080

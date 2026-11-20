@@ -1,0 +1,23 @@
+import type { SetFactory } from '../core/types'
+import type { StopPlan } from './moves'
+import { plan as sun } from '../stops/sun/plan'
+import { createSet as sunSet } from '../stops/sun/set'
+import { plan as mercury } from '../stops/mercury/plan'
+import { createSet as mercurySet } from '../stops/mercury/set'
+import { plan as venus } from '../stops/venus/plan'
+import { createSet as venusSet } from '../stops/venus/set'
+import { plan as earth } from '../stops/earth/plan'
+import { createSet as earthSet } from '../stops/earth/set'
+import { plan as mars } from '../stops/mars/plan'
+import { createSet as marsSet } from '../stops/mars/set'
+import { plan as jupiter } from '../stops/jupiter/plan'
+import { createSet as jupiterSet } from '../stops/jupiter/set'
+import { plan as saturn } from '../stops/saturn/plan'
+import { createSet as saturnSet } from '../stops/saturn/set'
+import { plan as uranus } from '../stops/uranus/plan'
+import { createSet as uranusSet } from '../stops/uranus/set'
+import { plan as neptune } from '../stops/neptune/plan'
+import { createSet as neptuneSet } from '../stops/neptune/set'
+
+export const plans: StopPlan[] = [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
+export const factories: Record<string, SetFactory> = { sun: sunSet, mercury: mercurySet, venus: venusSet, earth: earthSet, mars: marsSet, jupiter: jupiterSet, saturn: saturnSet, uranus: uranusSet, neptune: neptuneSet }

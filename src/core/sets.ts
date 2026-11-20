@@ -82,6 +82,10 @@ export class SetLoader {
     this.loaded.delete(id)
   }
 
+  release(keep: string[]): void {
+    for (const id of [...this.loaded.keys()]) if (!keep.includes(id)) this.free(id)
+  }
+
   freeAll(): void {
     for (const id of [...this.loaded.keys()]) this.free(id)
   }
@@ -108,14 +112,15 @@ export class SetLoader {
         tex.generateMipmaps = mips
         tex.minFilter = mips ? THREE.LinearMipmapLinearFilter : THREE.LinearFilter
         tex.magFilter = THREE.LinearFilter
-        tex.wrapS = options.repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping
-        tex.wrapT = THREE.ClampToEdgeWrapping
+        tex.wrapS = options.mirror ? THREE.MirroredRepeatWrapping : options.repeat ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping
+        tex.wrapT = options.mirror ? THREE.MirroredRepeatWrapping : THREE.ClampToEdgeWrapping
         tex.anisotropy = Math.min(options.anisotropy ?? 8, this.maxAnisotropy)
         tex.needsUpdate = true
         this.renderer.initTexture(tex)
-        bytes += bitmap.width * bitmap.height * 4 * (mips ? 4 / 3 : 1)
+        const size = { width: bitmap.width, height: bitmap.height }
+        bytes += size.width * size.height * 4 * (mips ? 4 / 3 : 1)
         bitmap.close()
-        tex.image = { width: bitmap.width, height: bitmap.height } as unknown as HTMLImageElement
+        tex.image = size as unknown as HTMLImageElement
         textures.push(tex)
         return tex
       },

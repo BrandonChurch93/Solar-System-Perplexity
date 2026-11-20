@@ -6,8 +6,11 @@ import { floatTarget } from './pass'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot } from './types'
+import { isRaw, setDiag } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
+import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
+import { Cover } from '../terrain/cover'
 import { segmentAtFrame, setsForFrame } from '../director/timeline'
 
 export interface Director {
@@ -17,6 +20,7 @@ export interface Director {
 export interface Sanity { invalid: number; coverage: number }
 
 const STAR_COUNT = 60000
+const DUST_COUNT = 2600
 
 export class Engine {
   readonly renderer: THREE.WebGLRenderer
@@ -33,6 +37,8 @@ export class Engine {
   private sampleTarget: THREE.WebGLRenderTarget
   private accumulator: Accumulator
   private readonly post = new PostChain()
+  private readonly dust = new Dust(DUST_COUNT)
+  private readonly cover = new Cover()
   private skyAssets = ''
   private skyTexture: THREE.Texture | null = null
   private attached: string[] = []
@@ -156,10 +162,12 @@ export class Engine {
     cam.updateProjectionMatrix()
     cam.updateMatrixWorld(true)
     const r = this.renderer
+    const raw = isRaw(this.diag)
+    setDiag(this.diag)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, false)
-    this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, height)
-    const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count }
+    if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, height, shot.sun)
+    const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {
       this.world.clear()
@@ -184,6 +192,17 @@ export class Engine {
       r.clearDepth()
       r.render(this.near, cam)
     }
+    if (raw) return
+    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
+    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure)
+  }
+
+  async prefetch(ids: string[]): Promise<void> {
+    await this.sets.ensure(ids, this.assets)
+  }
+
+  ready(frame: number): boolean {
+    return this.skyTexture !== null && this.skyAssets === this.assets && setsForFrame(frame).every((id) => this.sets.has(id, this.assets))
   }
 
   flush(): void {
