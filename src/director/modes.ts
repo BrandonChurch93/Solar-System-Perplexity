@@ -24,7 +24,7 @@ export function rangeFrom(params: URLSearchParams): Range {
 
 export interface Loading { show(on: boolean): void }
 
-export function runAutopilot(engine: Engine, range: Range, loading: Loading): void {
+export function runAutopilot(engine: Engine, range: Range): void {
   let origin = -1
   let shown = -1
   let busy = false
@@ -38,12 +38,10 @@ export function runAutopilot(engine: Engine, range: Range, loading: Loading): vo
     if (frame === shown) return
     if (!engine.ready(frame)) {
       busy = true
-      loading.show(shown < 0)
       const began = ts
       void engine.prepare(frame).then(() => {
         requestAnimationFrame((now) => {
           origin += now - began
-          loading.show(false)
           busy = false
         })
       })

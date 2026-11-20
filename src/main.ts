@@ -31,7 +31,7 @@ const ready = mode === 'export' ? engine.prepare(startFrame ?? 0) : Promise.reso
 installShowcase(engine, ready, tier)
 
 if (mode === 'export') mountExport(engine, params)
-else if (mode === 'autopilot') runAutopilot(engine, rangeFrom(params), mountLoading(ui))
+else if (mode === 'autopilot') runAutopilot(engine, rangeFrom(params))
 else if (mode === 'live') {
   const stop = params.get('stop')
   const view: ViewKind = params.get('view') === 'terrain' ? 'terrain' : 'orbit'

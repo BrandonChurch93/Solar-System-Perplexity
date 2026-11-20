@@ -278,6 +278,7 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 3, step 5. `npm run budget -- --stop mars` measures a named stop and its memory (the table is under "Render budget"). The Mars set is inside `maxSetMemoryMb` in both asset sets.
 
 - Addendum 001 (status pictures), applied 2026-11-20 UTC in Phase 3. `npm run status -- --stop ID` (`tools/status.ts`) renders the stop's hold and terrain comparison images and a dive contact sheet at the `review` tier into `out/stills/status/`, or the whole film sheets with no `--stop`, then runs `npm run review`. The review page lists them under "Status". A status is posted in the thread at the end of every round, after every finished numbered step of the phase and when Brandon asks, and is also written into the Session log.
+- Round 3 machine checks, 2026-11-20: G6 was red (the autopilot showed its Loading label while the first set loaded; the Mars set now loads longer than the check waits) and G11 was red (the relief recipe named the three distance files by a pattern, not by name). Fixed on the first attempt: the autopilot shows no label and holds the last complete frame as `kit/05-ARCHITECTURE.md` says, and the recipe names each file. The other machine checks were green on the same pixels. The pack and the measure were restarted on the fixed build so the round's evidence carries its hash.
 
 ## Open items
 
