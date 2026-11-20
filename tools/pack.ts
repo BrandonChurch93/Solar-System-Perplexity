@@ -1,0 +1,303 @@
+import { copyFileSync, existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs'
+import { basename, join } from 'node:path'
+import type { Segment, StopDef } from '../src/config'
+import { judgedFrames } from '../src/director/timeline'
+import { args, loadConfig, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
+import { Capture, cached, chunk, filmSheets, fingerprint, image, imageRevision, json, judged, outputFolder, padFrame, padImage, safeRecord, sheetFrames, spread, stopDependencies, type FrameSpec, type Rect } from './lib/render'
+
+type Critic = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'R7' | 'R8'
+interface Art { path: string; record: OutputRecord; signature: string; key: Record<string, unknown>; name?: string }
+interface Page { path: string; rectangles: Rect[] }
+interface Source { path: string; key: Record<string, unknown>; record?: OutputRecord }
+
+const cfg = loadConfig()
+requireDisk(cfg)
+const a = args()
+const phase = Number(a.phase)
+const round = Number(a.round)
+if ([2, 3, 4, 5, 6].includes(phase) === false || Number.isSafeInteger(round) === false || round < 1) throw new Error('expected --phase 2|3|4|5|6 --round R [--stop ID]')
+const selectedStop = cfg.stops.find((s) => s.id === a.stop)
+if ((a.stop && selectedStop === undefined) || ((phase === 3 || phase === 4) && selectedStop === undefined)) throw new Error('expected --stop ID')
+const whole = phase === 5 || phase === 6
+const roundId = 'round-' + String(round).padStart(3, '0')
+const allPacks = outputFolder(join(WORK, 'packs'))
+const roundDir = outputFolder(join(allPacks, roundId))
+const privateDir = outputFolder(join(allPacks, 'keys'))
+const stage = outputFolder(join(allPacks, '.cache', roundId))
+const temp = mkdtempSync(join(stage, '.frames-'))
+const capture = new Capture(cfg, a.format ?? (phase === 2 ? 'preview' : 'master'))
+const tier = a.tier ?? (phase === 2 ? 'draft' : 'final')
+const motionTier = phase === 2 ? tier : a.tier === 'final' ? 'final' : 'review'
+const { maxImageLongEdgePx: limit, maxFilesPerMessage, contactSheetFrames, phonePreviewWidthPx } = cfg.raw.critics
+const maxImages = maxFilesPerMessage - 1
+if (maxImages < 1) throw new Error('critics.maxFilesPerMessage must allow a manifest and an image')
+const revision = imageRevision()
+const frameDims = cfg.formats[capture.format]
+const size = [frameDims.width, frameDims.height]
+const key: Record<string, Record<string, unknown>> = {}
+const outputDirs = new Set<string>()
+const stopKinds = new Set(['hold', 'dive', 'terrain', 'rise'])
+
+function renderSegment(segment: Segment, fallback: string): Promise<Source> {
+  return renderSource(judged(cfg, segment), fallback, true)
+}
+
+async function renderSource(frame: number, fallback: string, keep: boolean): Promise<Source> {
+  const specific = keep ? undefined : join(temp, 'f' + padFrame(frame) + '-' + fallback + '.png')
+  const still = await capture.still(frame, fallback, specific)
+  return { path: still.file, record: still.record, key: { kind: 'frame', frame, segment: cfg.segments.find((s) => frame >= s.firstFrame && frame < s.endFrame)?.id } }
+}
+
+function approvedSource(stop: StopDef, view: 'hold' | 'terrain'): Source {
+  const asset = view === 'hold' ? stop.hero : stop.close
+  return { path: join(ROOT, asset), key: { kind: 'approved', stop: stop.id, view, asset } }
+}
+
+function simple(s: Source, name: string, extra: object = {}): Art {
+  const file = join(stage, name + '.png')
+  const record = s.record ?? capture.record(tier, [])
+  const signature = JSON.stringify([s.key, fingerprint(s.path), extra, limit, revision])
+  const prior = cached(file, record, Object.keys(record.stopHashes), signature)
+  if (prior) return { path: file, record: prior, signature, key: s.key }
+  image({ op: 'single', input: s.path, output: file, limit, ...extra })
+  const outputRecord = { ...record, extra: { signature, ...s.key } }
+  writeRecord(file, outputRecord)
+  return { path: file, record: outputRecord, signature, key: s.key }
+}
+
+function pages(op: 'pair' | 'crops', name: string, inputs: Source[], knobs: object = {}): Art[] {
+  const output = join(stage, name)
+  const index = output + '-index.json'
+  const frameRecord = inputs.find((s) => s.record)?.record ?? capture.record(tier, [])
+  const signature = JSON.stringify([op, inputs.map((s) => [s.key, fingerprint(s.path)]), knobs, limit, revision])
+  let generated = (cached(index, frameRecord, Object.keys(frameRecord.stopHashes), signature)?.extra?.pages ?? []) as Page[]
+  if (generated.length === 0 || generated.some((p) => cached(p.path, frameRecord, Object.keys(frameRecord.stopHashes), signature) === null)) {
+    generated = image<Page[]>({ op, output, limit, input: inputs[0].path, a: inputs[0].path, b: inputs[1]?.path, ...knobs })
+    if (op === 'pair') {
+      const configs = (knobs as { together?: boolean }).together ? [output + '.png'] : [output + '-a.png', output + '-b.png']
+      generated.unshift(...configs.map((path) => ({ path, rectangles: [] })))
+    }
+    for (const p of generated) writeRecord(p.path, { ...frameRecord, extra: { signature, rectangles: p.rectangles } })
+    json(index, generated)
+    writeRecord(index, { ...frameRecord, extra: { signature, pages: generated } })
+  }
+  return generated.map((p) => {
+    const index = p.path.endsWith('-a.png') ? 0 : p.path.endsWith('-b.png') ? 1 : null
+    const key = { sources: index === null ? inputs.map((s) => s.key) : [inputs[index].key], rectangles: p.rectangles }
+    return { path: p.path, record: frameRecord, signature, key }
+  })
+}
+
+async function contact(name: string, frames: FrameSpec[], quality: string, info: Record<string, unknown>): Promise<Art> {
+  const path = join(stage, name + '.png')
+  const record = await capture.sheet(path, frames, quality, temp, info, limit)
+  return { path, record, signature: String(record.extra?.signature), key: { ...info, frames: frames.map((f) => f.frame) } }
+}
+
+function shuffle<T>(input: T[]): T[] {
+  let state = (cfg.seed + round) >>> 0
+  const shuffled = [...input]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0
+    const j = Math.floor(state / 0x100000000 * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
+function divided(groups: Art[][]): Art[][] {
+  const parts: Art[][] = []
+  let current: Art[] = []
+  for (const group of groups) {
+    if (group.length > maxImages) throw new Error('a pack group does not fit in a critic folder')
+    if (current.length + group.length > maxImages) {
+      parts.push(current)
+      current = []
+    }
+    current.push(...group)
+  }
+  if (current.length > 0) parts.push(current)
+  return parts
+}
+
+function publish(critic: Critic, groups: Art[][], pattern = 'image'): void {
+  const parts = divided(groups)
+  for (const [i, files] of parts.entries()) {
+    const name = parts.length === 1 ? critic : critic + '-part' + (i + 1)
+    const dir = outputFolder(join(roundDir, name))
+    outputDirs.add(name)
+    const manifest: string[] = []
+    for (const art of files) {
+      const neutral = art.name ?? pattern + '-' + padImage(groups.flat().indexOf(art) + 1) + '.png'
+      const output = join(dir, neutral)
+      const provenance = join(privateDir, '.records', roundId, name, neutral)
+      if (existsSync(output) === false || cached(provenance, art.record, Object.keys(art.record.stopHashes), art.signature) === null) {
+        copyFileSync(art.path, output)
+        json(provenance, { file: neutral })
+        writeRecord(provenance, { ...art.record, extra: { ...art.record.extra, signature: art.signature } })
+      }
+      manifest.push(neutral)
+      key[name + '/' + neutral] = art.key
+    }
+    for (const file of readdirSync(dir)) if (file.endsWith('.png') && manifest.includes(file) === false) rmSync(join(dir, file))
+    const manifestPath = join(dir, 'manifest.json')
+    json(manifestPath, { files: manifest })
+    const provenance = join(privateDir, '.records', roundId, name, 'manifest.json')
+    json(provenance, { files: manifest })
+    const records = files.map((f) => f.record)
+    writeRecord(provenance, { ...records[0], stopHashes: Object.assign({}, ...records.map((r) => r.stopHashes)), extra: { files: manifest } })
+    console.log(dir + ' (' + manifest.length + ' images)')
+  }
+}
+
+const singles = (items: Art[]): Art[][] => items.map((item) => [item])
+
+async function blockout(): Promise<void> {
+  const list: Art[] = []
+  for (const [i, frames] of filmSheets(cfg, true).entries()) list.push(await contact('block-film-' + i, frames, tier, { kind: 'film', part: i + 1 }))
+  for (const id of ['sun.terrain', 'mars.dive', 'mars.travel', 'ending.lookback']) {
+    const s = cfg.segments.find((x) => x.id === id)
+    if (s === undefined) throw new Error('blockout segment missing: ' + id)
+    list.push(await contact('block-' + id, sheetFrames(cfg, s, false), tier, { kind: 'sheet', segment: id }))
+  }
+  publish('R4', singles(list), 'sheet')
+}
+
+async function stopPacks(stops: StopDef[]): Promise<void> {
+  const match: Art[][] = []
+  const recognition: Art[] = []
+  const jury: Art[] = []
+  let pairIndex = 0
+  for (const stop of stops) {
+    for (const view of ['hold', 'terrain'] as const) {
+      const segment = cfg.segments.find((x) => x.stop === stop.id && x.kind === view)
+      if (segment === undefined) throw new Error('missing ' + view + ' segment for ' + stop.id)
+      const film = await renderSegment(segment, tier)
+      const approval = approvedSource(stop, view)
+      const inputs = [approval, film]
+      const images = pages('pair', 'match-' + segment.id, inputs)
+      match.push(...chunk(images, 2).map((pair) => {
+        const prefix = 'pair-' + padImage(++pairIndex)
+        return pair.map((item, j) => ({ ...item, name: prefix + (j === 0 ? '-a.png' : '-b.png') }))
+      }))
+      if (whole === false || view === 'hold') {
+        const prepared = inputs.map((source, i) => simple(source, 'jury-' + segment.id + '-' + i, { size }))
+        if (whole === false) jury.push(...prepared)
+        if (view === 'hold') recognition.push(...prepared)
+      }
+    }
+  }
+  publish('R1', match)
+  if (jury.length > 0) publish('R2', singles(shuffle(jury)))
+  publish('R8', singles(shuffle(recognition)))
+}
+
+async function detail(segments: Segment[]): Promise<void> {
+  const groups: Art[][] = []
+  const ids = new Set(segments.map((s) => s.id))
+  for (const j of judgedFrames().filter((x) => ids.has(x.segment))) {
+    const film = await renderSource(j.frame, tier, true)
+    const items = [simple(film, 'detail-' + j.frame), ...pages('crops', 'detail-crop-' + j.frame, [film], { cover: true })]
+    groups.push(...chunk(items, maxImages))
+  }
+  publish('R3', groups)
+}
+
+async function motion(segments: Segment[]): Promise<void> {
+  const list: Art[] = []
+  for (const s of segments) {
+    list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
+    if (s.kind === 'dive' || s.kind === 'rise') {
+      list.push(await contact('motion-' + s.id + '-cover', sheetFrames(cfg, s, true), motionTier, { kind: 'cover', segment: s.id }))
+    }
+  }
+  publish('R4', singles(list), 'sheet')
+}
+
+async function wholeJury(): Promise<void> {
+  const judgedKinds = new Set(['hold', 'terrain', 'travel', 'lookback'])
+  const items: Art[] = []
+  for (const s of cfg.segments.filter((s) => judgedKinds.has(s.kind))) {
+    const film = await renderSegment(s, tier)
+    items.push(simple(film, 'whole-jury-' + s.id, { size }))
+    if (s.kind === 'hold' || s.kind === 'terrain') {
+      const stop = cfg.stops.find((x) => x.id === s.stop)
+      if (stop) items.push(simple(approvedSource(stop, s.kind), 'whole-control-' + s.id, { size }))
+    }
+  }
+  publish('R2', singles(shuffle(items)))
+}
+
+async function continuity(): Promise<void> {
+  const list: Art[] = []
+  for (const [i, frames] of filmSheets(cfg, true).entries()) list.push(await contact('whole-film-' + i, frames, tier, { kind: 'film', part: i + 1 }))
+  const holds = cfg.segments.filter((s) => s.kind === 'hold').map((s) => {
+    const frame = judged(cfg, s)
+    return { frame, label: String(frame) }
+  })
+  for (const [i, frames] of chunk(holds, contactSheetFrames).entries()) list.push(await contact('whole-holds-' + i, frames, tier, { kind: 'hold', part: i + 1 }))
+  publish('R5', singles(list), 'sheet')
+}
+
+async function hook(): Promise<void> {
+  const list: Art[] = []
+  for (const frame of spread(0, Math.min(cfg.hookFrame, cfg.frameCount - 1), contactSheetFrames)) {
+    const source = await renderSource(frame, tier, frame === 0 || frame === cfg.hookFrame)
+    list.push(simple(source, 'hook-' + frame, { width: phonePreviewWidthPx }))
+  }
+  publish('R6', singles(list))
+}
+
+function compression(): void {
+  const dir = join(WORK, 'stress')
+  const list: Art[] = []
+  const entries = existsSync(dir) ? readdirSync(dir).sort() : []
+  for (const segment of cfg.raw.quality.stress.segments) {
+    for (const file of entries) {
+      if (file.startsWith(segment + '-before-') === false || /-before-\d{5}\.png$/.test(file) === false) continue
+      const stem = basename(file, '.png').split('-').pop()
+      const frame = Number(stem)
+      const before = join(dir, file)
+      const after = join(dir, segment + '-after-' + stem + '.png')
+      if (existsSync(after) === false) continue
+      const original = safeRecord(before)
+      const deps = stopDependencies([frame])
+      if (original && (original.engineHash === capture.hashes.engine && deps.every((s) => original.stopHashes[s] === capture.hashes.stops[s])) === false) continue
+      const record = original ?? { ...capture.record(cfg.raw.quality.stress.tier, [frame]), format: cfg.formatKeys.master }
+      const inputs: Source[] = [
+        { path: before, key: { segment, frame, kind: 'before' }, record },
+        { path: after, key: { segment, frame, kind: 'after' }, record: safeRecord(after) ?? record },
+      ]
+      list.push(...pages('pair', 'compression-' + segment + '-' + stem, inputs, { together: true }))
+    }
+  }
+  if (list.length === 0) console.log('R7 skipped: no matching before and after stills in out/work/stress; run npm run stress')
+  else publish('R7', singles(list))
+}
+
+try {
+  if (phase === 2) await blockout()
+  else {
+    const stops = selectedStop ? [selectedStop] : cfg.stops
+    if (whole === false || phase === 6) await stopPacks(stops)
+    if (whole) {
+      compression()
+      await hook()
+      await wholeJury()
+      await continuity()
+    }
+    const segments = cfg.segments.filter((s) => (
+      (whole && (s.kind === 'travel' || s.stop === cfg.endingId)) || ((whole === false || phase === 6) && stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind))
+    ))
+    await detail(segments)
+    await motion(segments)
+  }
+  for (const entry of readdirSync(roundDir, { withFileTypes: true })) {
+    if (entry.isDirectory() && /^R[1-8](?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
+  }
+  const keyFile = join(privateDir, roundId + '.json')
+  json(keyFile, { phase, round, files: key })
+  writeRecord(keyFile, { ...capture.record(tier, []), stopHashes: capture.hashes.stops, extra: { phase, round } })
+} finally {
+  try { await capture.close() } finally { rmSync(temp, { recursive: true, force: true }) }
+}
