@@ -26,5 +26,5 @@ const seg = config.segments.find((x) => x.id === stop + '.hold')!
 const frame = Math.floor((seg.firstFrame + seg.endFrame) / 2)
 const shot = director.shotAt(frame, frame / config.fps)
 const f = s.clone().multiply(shot.camera.quaternion.clone().invert())
-writeFileSync('src/space/skyframe.json', JSON.stringify({ quaternion: f.toArray().map((x) => Number(x.toFixed(7))), grade: { tint: [Number(a.r ?? 0.8), Number(a.g ?? 0.95), Number(a.b ?? 1.2)], gamma: Number(a.gamma ?? 1.35), grain: Number(a.grain ?? 0.8) }, fitted: { stop, frame, alongDeg: Number(a.along ?? 140), tiltDeg: Number(a.tilt ?? -18), liftDeg: Number(a.lift ?? 0) } }, null, 1) + '\n')
+writeFileSync('src/space/skyframe.json', JSON.stringify({ quaternion: f.toArray().map((x) => Number(x.toFixed(7))), grade: { tint: [Number(a.r ?? 1.1), Number(a.g ?? 1.4), Number(a.b ?? 1.8)], gamma: Number(a.gamma ?? 1.7), grain: Number(a.grain ?? 0.8) }, fitted: { stop, frame, alongDeg: Number(a.along ?? 150), tiltDeg: Number(a.tilt ?? -12), liftDeg: Number(a.lift ?? 0) } }, null, 1) + '\n')
 console.log('sky frame', f.toArray(), 'from frame', frame)

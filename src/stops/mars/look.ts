@@ -22,7 +22,7 @@ export const haze = hazeJson.ground as HazeParams
 export const shellHaze = hazeJson.shell as HazeParams
 
 export const moon = {
-  gain: 2.3,
+  gain: 2.0,
   sun: [1, 0.84, 0.68] as [number, number, number],
   ambient: [0.01, 0.01, 0.012] as [number, number, number],
   bounce: [0.1, 0.045, 0.03] as [number, number, number],

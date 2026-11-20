@@ -55,7 +55,7 @@ void main() {
   float fine = grainAt(sd, 1400.0) * smoothstep(0.5, 1.6, 1.0 / (px * 1400.0));
   float mid = grainAt(sd, 420.0) * smoothstep(0.5, 1.6, 1.0 / (px * 420.0));
   float wide = grainAt(sd, 90.0);
-  float g = 0.45 * fine + 0.35 * mid + 0.4 * wide;
+  float g = 0.5 * fine + 0.4 * mid + 0.1 * wide + 0.15;
   col *= mix(1.0, 0.35 + 1.25 * g, uGrain);
   col = pow(max(col, vec3(0.0)), vec3(uGamma)) * uTint * uExposure;
   if (uSunGlare > 0.0) {
@@ -77,6 +77,8 @@ void main() {
 const STAR_VERT = /* glsl */ `
 uniform float uPixel;
 uniform float uExposure;
+uniform sampler2D uSky;
+uniform float uHasSky;
 in vec4 aStar;
 in vec3 aColor;
 out vec3 vColor;
@@ -88,7 +90,14 @@ void main() {
   float size = aStar.x * uPixel;
   vSize = size;
   gl_PointSize = size;
-  vColor = aColor * aStar.y * uExposure;
+  float crowd = 1.0;
+  if (uHasSky > 0.5) {
+    vec3 d = normalize(position);
+    vec2 uv = vec2(atan(d.x, d.z) / 6.283185307179586 + 0.5, asin(clamp(d.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+    float lum = dot(textureLod(uSky, uv, 1.0).rgb, vec3(0.3, 0.5, 0.2));
+    crowd = mix(1.0, clamp(lum * 9.0, 0.25, 3.0), aStar.z);
+  }
+  vColor = aColor * aStar.y * crowd * uExposure;
 }`
 
 const STAR_FRAG = /* glsl */ `
@@ -123,25 +132,29 @@ export class Sky {
     const col = new Float32Array(count * 3)
     const pole = new THREE.Vector3(0.45, 0.82, 0.35).normalize()
     const v = new THREE.Vector3()
+    const warm = new THREE.Color(1.0, 0.58, 0.34)
+    const cool = new THREE.Color(0.5, 0.7, 1.0)
+    const white = new THREE.Color(1, 1, 1)
+    const c = new THREE.Color()
     let i = 0
     while (i < count) {
       const z = rnd.range(-1, 1)
       const a = rnd.range(0, Math.PI * 2)
       const s = Math.sqrt(1 - z * z)
       v.set(s * Math.cos(a), z, s * Math.sin(a))
-      const band = Math.exp(-Math.pow(v.dot(pole) / 0.28, 2))
-      if (rnd.next() > 0.3 + 0.7 * band) continue
+      const lat = v.dot(pole)
+      const band = Math.exp(-Math.pow(lat / 0.2, 2)) + 0.35 * Math.exp(-Math.pow(lat / 0.5, 2))
+      if (rnd.next() > 0.3 + 0.7 * Math.min(band, 1)) continue
       pos[i * 3] = v.x
       pos[i * 3 + 1] = v.y
       pos[i * 3 + 2] = v.z
-      const mag = Math.pow(rnd.next(), 5.5)
-      const bright = 0.05 + 2.4 * mag + (mag > 0.9 ? 6 * (mag - 0.9) * 10 : 0)
-      star[i * 4] = 3.0 + 7.0 * Math.pow(mag, 3)
+      const bright = Math.min(0.045 * Math.pow(Math.max(rnd.next(), 1e-6), -0.72), 14)
+      star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), 11)
       star[i * 4 + 1] = bright
+      star[i * 4 + 2] = 1 - Math.min(bright * 2, 1)
       const temp = rnd.next()
-      const warm = new THREE.Color(1.0, 0.82, 0.62)
-      const cool = new THREE.Color(0.7, 0.82, 1.0)
-      const c = temp < 0.5 ? warm.lerp(new THREE.Color(1, 1, 1), temp * 2) : new THREE.Color(1, 1, 1).lerp(cool, (temp - 0.5) * 2)
+      if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
+      else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
       col[i * 3] = c.r
       col[i * 3 + 1] = c.g
       col[i * 3 + 2] = c.b
@@ -155,7 +168,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 } },
+      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -189,6 +202,8 @@ export class Sky {
     u.uSunGlare!.value = sun.glare
     if (this.texture) this.pass.render(renderer, target)
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
+    su.uSky!.value = this.texture
+    su.uHasSky!.value = this.texture ? 1 : 0
     su.uPixel!.value = height / 1080
     su.uExposure!.value = exposure
     renderer.setRenderTarget(target)
