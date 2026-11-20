@@ -85,6 +85,7 @@ export const relief = {
     warm: [0.27, 0.19, 0.14] as [number, number, number],
     warmScaleDeg: 0.95,
     side: [0.55, 1.4] as [number, number],
+    warmSide: [0.15, 1.1, 0.05, 0.85] as [number, number, number, number],
     starScaleDeg: 1.5,
     starCut: 0.9,
     veil: 0.55,

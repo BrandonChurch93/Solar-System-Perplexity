@@ -29,6 +29,7 @@ export interface ReliefAir {
   warm: [number, number, number]
   warmScaleDeg: number
   side: [number, number]
+  warmSide: [number, number, number, number]
   starScaleDeg: number
   starCut: number
   veil: number
@@ -72,6 +73,7 @@ uniform vec3 uCool;
 uniform vec3 uWarm;
 uniform vec4 uScale;
 uniform vec2 uSide;
+uniform vec4 uWarmSide;
 uniform float uSpan;
 uniform float uVeil;
 uniform vec4 uDrift;
@@ -92,7 +94,7 @@ void main() {
   float az = atan(d.x, -d.z);
   vec3 dq = vec3(az * uDrift.y - uDrift.z, elev * uDrift.w, uDrift.z * 0.4);
   float streak = 1.0 + uDrift.x * (0.65 * vnoise(dq) + 0.35 * vnoise(dq * vec3(2.3, 1.7, 1.0) + 5.2) - 0.5) * 2.0;
-  vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(1.0, side, 0.35) * streak;
+  vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(uWarmSide.x, uWarmSide.y, smoothstep(uWarmSide.z, uWarmSide.w, across)) * streak;
   float cut = 1.0 - (1.0 - uVeil) * (1.0 - uScale.w * exp(-elev / uScale.z));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -218,7 +220,7 @@ export class Relief {
           uUp: { value: new THREE.Vector3(0, Math.cos(rad(a.pitchDeg)), Math.sin(rad(a.pitchDeg))) }, uDip: { value: rad(a.dipDeg) },
           uCool: { value: new THREE.Vector3().fromArray(a.cool) }, uWarm: { value: new THREE.Vector3().fromArray(a.warm) },
           uScale: { value: new THREE.Vector4(rad(a.coolScaleDeg), rad(a.warmScaleDeg), rad(a.starScaleDeg), a.starCut) },
-          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uVeil: { value: a.veil }, uDrift: { value: new THREE.Vector4(0, 1, 0, 1) }, uSpan: { value: th * aspect },
+          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uWarmSide: { value: new THREE.Vector4().fromArray(a.warmSide) }, uVeil: { value: a.veil }, uDrift: { value: new THREE.Vector4(0, 1, 0, 1) }, uSpan: { value: th * aspect },
           uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
         },
         transparent: true,
