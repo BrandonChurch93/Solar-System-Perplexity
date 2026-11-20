@@ -23,12 +23,15 @@ const SKY_BAND_GLSL = /* glsl */ `
 uniform sampler2D uBand;
 uniform mat3 uGal;
 uniform vec4 uBandMap;
+uniform float uBandWiden;
+uniform float uBandFadeEnd;
 vec3 bandCoord(vec3 d) {
   vec3 g = uGal * d;
   float lat = asin(clamp(g.z, -1.0, 1.0));
   float t = (atan(g.y, g.x) / 6.283185307179586 + 0.5) * uBandMap.x + uBandMap.y;
-  float v = 0.5 + lat / uBandMap.z;
-  return vec3(t, v, 1.0 - smoothstep(uBandMap.w, 0.49, abs(v - 0.5)));
+  float x = lat / uBandMap.z;
+  float v = 0.5 + x * (uBandWiden + (1.0 - uBandWiden) * 4.0 * x * x);
+  return vec3(t, v, 1.0 - smoothstep(uBandMap.w, uBandFadeEnd, abs(x)));
 }
 vec3 bandPlane(vec3 d) {
   vec3 g = uGal * d;
@@ -53,6 +56,8 @@ uniform vec3 uSunDir;
 uniform vec3 uSunColor;
 uniform float uSunRadius;
 uniform float uSunGlare;
+uniform float uTerrainBand;
+uniform vec3 uBandClean;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -69,12 +74,19 @@ void main() {
   float t2 = fract(bc.x + 0.5) - 0.5;
   vec2 dx = vec2(abs(dFdx(bc.x)) < abs(dFdx(t2)) ? dFdx(bc.x) : dFdx(t2), dFdx(bc.y));
   vec2 dy = vec2(abs(dFdy(bc.x)) < abs(dFdy(t2)) ? dFdy(bc.x) : dFdy(t2), dFdy(bc.y));
-  vec3 band = inverseFilmic(textureGrad(uBand, bc.xy, dx, dy).rgb);
+  vec2 tx = uBandClean.x / vec2(textureSize(uBand, 0));
+  vec3 b0 = textureGrad(uBand, bc.xy, dx, dy).rgb;
+  vec2 gx = dx * uBandClean.z;
+  vec2 gy = dy * uBandClean.z;
+  vec3 lo = min(min(textureGrad(uBand, bc.xy + vec2(tx.x, tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy + vec2(-tx.x, tx.y), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(tx.x, -tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy - tx, gx, gy).rgb));
+  lo = min(lo, min(min(textureGrad(uBand, bc.xy + vec2(tx.x * 1.41, 0.0), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(tx.x * 1.41, 0.0), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(0.0, tx.y * 1.41), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(0.0, tx.y * 1.41), gx, gy).rgb)));
+  vec3 band = inverseFilmic(mix(min(b0, lo), b0, uBandClean.y));
   vec3 pd = bandPlane(sd);
   vec2 puv = vec2(atan(pd.x, pd.z) / (2.0 * PI) + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / PI + 0.5);
   float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
   float bl = dot(band, vec3(0.3, 0.5, 0.2));
   band = mix(vec3(bl), band, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(bl, 1e-5) / 0.05, uBandGrade.y - 1.0);
+  if (uGlow < 0.999) band *= uTerrainBand;
   col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
   if (uSunGlare > 0.0) {
     float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
@@ -102,6 +114,7 @@ in vec4 aStar;
 in vec3 aColor;
 out vec3 vColor;
 uniform vec2 uCrowd;
+uniform vec2 uTerrainStars;
 out float vSize;
 ${SKY_BAND_GLSL}
 void main() {
@@ -122,8 +135,7 @@ void main() {
     float field = clamp(lum * 9.0, 0.14, 3.0) * mix(1.0, inBand, bc.z);
     crowd = mix(min(pow(field, 0.6), 1.0), field, aStar.z);
   }
-  float b = aStar.y * mix(1.0, crowd, uGlow);
-  b = mix(b, 0.07 * pow(b / 0.07, 0.4), 1.0 - uGlow);
+  float b = aStar.y * (uGlow < 0.999 ? uTerrainStars.x * mix(1.0, crowd, uTerrainStars.y) : crowd);
   vColor = aColor * b * uExposure;
 }`
 
@@ -131,11 +143,12 @@ const STAR_FRAG = /* glsl */ `
 precision highp float;
 in vec3 vColor;
 in float vSize;
+uniform float uCore;
 out vec4 outColor;
 void main() {
   vec2 p = (gl_PointCoord - 0.5) * vSize;
   float r2 = dot(p, p);
-  float core = exp(-r2 / 0.55);
+  float core = exp(-r2 / uCore);
   float glow = 0.012 * exp(-r2 / (0.035 * vSize * vSize));
   outColor = vec4(vColor * (core + glow), 0.0);
 }`
@@ -168,10 +181,13 @@ export class Sky {
   private texture: THREE.Texture | null = null
   private band: THREE.Texture | null = null
 
-  constructor(count: number) {
+  constructor(base: number) {
+    const st = skyFrame.stars
+    const main = Math.round(base * st.countScale)
+    const count = main + Math.round(base * st.micro)
     this.pass = new Pass(SKY_FRAG, {
-      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
-      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 },
+      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
     })
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
@@ -193,22 +209,25 @@ export class Sky {
       const s = Math.sqrt(1 - z * z)
       v.set(s * Math.cos(a), z, s * Math.sin(a))
       const lat = v.dot(pole)
-      const band = Math.exp(-Math.pow(lat / 0.2, 2)) + 0.35 * Math.exp(-Math.pow(lat / 0.5, 2))
-      if (rnd.next() > 0.3 + 0.7 * Math.min(band, 1)) continue
+      const micro = i >= main
+      const band = micro ? Math.exp(-Math.pow(lat / st.microWidth, 2)) : Math.exp(-Math.pow(lat / st.bandWidth, 2)) + st.halo * Math.exp(-Math.pow(lat / 0.5, 2))
+      const floor = micro ? 0 : st.floor
+      if (rnd.next() > floor + (1 - floor) * Math.min(band, 1)) continue
       pos[i * 3] = v.x
       pos[i * 3 + 1] = v.y
       pos[i * 3 + 2] = v.z
-      const bright = Math.min(0.012 * Math.pow(Math.max(rnd.next(), 1e-6), -1), 14)
+      const u = Math.max(rnd.next(), 1e-6)
+      const bright = micro ? st.microBright * (0.4 + 0.6 * u) : Math.min(st.brightness * Math.pow(u, -st.slope), 14)
       star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), 11)
       star[i * 4 + 1] = bright
-      star[i * 4 + 2] = 1 - Math.min(bright * 2, 1)
+      star[i * 4 + 2] = micro ? 1 : 1 - Math.min(bright * 0.024 / st.brightness, 1)
       const temp = rnd.next()
       if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
       else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
       const vivid = rnd.next()
-      if (vivid < 0.07) c.copy(rose)
-      else if (vivid < 0.13) c.copy(amber)
-      else if (vivid < 0.2) c.copy(azure)
+      if (vivid < 0.35 * st.vivid) c.copy(rose)
+      else if (vivid < 0.65 * st.vivid) c.copy(amber)
+      else if (vivid < st.vivid) c.copy(azure)
       col[i * 3] = c.r
       col[i * 3 + 1] = c.g
       col[i * 3 + 2] = c.b
@@ -222,7 +241,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) } },
+      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector2(skyFrame.stars.terrainGain, skyFrame.stars.terrainCrowd) }, uCore: { value: skyFrame.stars.core } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
