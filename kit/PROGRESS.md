@@ -6,13 +6,13 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 2 · Engine and blockout
 - Current stop: none
-- Current round: none
+- Current round: 1 (Phase 2, blockout, R4)
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-19, Phase 1 gate
+- Last push: 2026-11-20 UTC, Phase 2 engine and blockout before round 1
 
 ## Latest pictures
 
@@ -115,7 +115,18 @@ Phase 0, spike scene (one globe with an 8192 wrap map, shell atmosphere, 8192 sk
 | review | 3.1 h | 11.2 h | 38 h |
 | final | 12 h | 44 h | 147 h |
 
-These are for the spike, which is far lighter than a finished stop. `AGENTS.md` measured 2.5 s per sample for a 300,000 triangle scene, three times this. Film renders above `draft` are split across sandbox agents by segment. One frame at `final` fits well inside `sandbox.chunkBudgetMinutes`, so no split-frame calls are needed. Measured again in Phases 2, 3 and 5.
+Phase 2, the blockout (stand-in sets, the real sky, stars, dust, lens chain), same VM, `npm run budget` on the `sun.hold` midpoint:
+
+| Format | Seconds per sample | Fixed seconds per frame | Draft frame |
+| --- | --- | --- | --- |
+| preview 960 x 540 | 0.26 | 0.07 | 0.33 s |
+| master 1920 x 1080 | 0.80 | 0.34 | 1.13 s |
+| uhd 3840 x 2160 | 2.74 | 1.68 | 4.42 s |
+
+- Loading a stand-in set: 3.6 s at `full` for the first, 1.0 s for the next. Textures: 69 MB per stand-in set, 179 MB for the sky at `full`. The browser held 1.3 GB with two sets.
+- The blockout preview film at `draft` in `preview`: about 0.5 h on this VM. The whole film numbers in the table above still hold for the blockout. Measured again on Mars in Phase 3.
+
+The first table is for the spike, which is far lighter than a finished stop. `AGENTS.md` measured 2.5 s per sample for a 300,000 triangle scene, three times this. Film renders above `draft` are split across sandbox agents by segment. One frame at `final` fits well inside `sandbox.chunkBudgetMinutes`, so no split-frame calls are needed. Measured again in Phases 2, 3 and 5.
 
 ## Judged frames
 
@@ -193,7 +204,17 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 2. Stand-ins are unlit. The approved pixels carry their own light, and they are passed through the inverse of the tone curve so they come out of the lens chain as approved. Only the ending relights Neptune. Stand-in wrap maps are 4096 and 2048 wide, not the final sizes. Stand-in terrain is the approved close image on a plane, mirrored past its edges so no edge shows while the camera moves. Covers are a plain haze in the stop's color.
 - Phase 2. Diagnostic views: `texels` writes red = texels per pixel divided by 2 (clamped) and green = 1 where the pixel counts for G13, with no lens or grade. `nograin` is the finished frame without grain and dither, for measuring. `ungraded` is the frame before lens and grade.
 - Phase 2. Mercury's Sun radius in the sky is 8.8 degrees, measured from the circle fitted to the Sun in the approved hero image. The radius falls at every stop after it (the numbers are in each stop's `plan.ts`).
-- Phase 2. Stand-in wraps for Mars and Jupiter paint Phobos and Io out of the unprojected image (OpenCV inpainting inside the fitted circle), because a stand-in sphere takes each moon's place.
+- Phase 2. Stand-in wraps for Mars and Jupiter paint Phobos and Io out of the unprojected image (a neighboring patch cloned seamlessly over the fitted circle), because a stand-in sphere takes each moon's place.
+- Phase 2. Stars and dust write the far depth, so the near plane never clips them. Before this, travel frames were black.
+- Phase 2. The far Sun disc dims as it grows in the sky (`clamp(sqrt(0.02 / radius), 0.4, 1)`), with a wide corona of 0.035, so Mercury's Sun is a glare and not a white card.
+- Phase 2. In a travel the next body is drawn as a bright point with a small glow and streak while it is under a few pixels (size `max(15, 30 * height / 1080)` pixels, brightness 5 to 14 times its tint), so it reads against the stars before it becomes a disc.
+- Phase 2. Stand-in rings narrower than a fifth of their radius are drawn as six faint thin lines. Neptune's fitted ring has no width, so it is given 2.5 percent each side.
+- Phase 2. The stand-in terrain plate has overscan, so the terrain move never reaches the end of the image. The judged terrain frame is a slightly tighter crop of the approved close image. The finished reliefs in Phases 3 and 4 remove that.
+- Phase 2. Dive entry offsets were cut to 55 to 60 percent. Rises use `sine.out`, so the pull-out is spread across the segment and not spent in its first frames. Earth leaves on azimuth -16.
+- Phase 2. The lookback: Neptune 31 degrees off the Sun line, aim 8 degrees, distance 9, roll 13, lens 34. Neptune is relit there so it shows as a crescent.
+- Phase 2. The menu opens with no slide. Under software rendering the slide never advanced and the menu stayed off screen.
+- Phase 2. `cut/SHOTS.md` is written by `npx tsx tools/shots.ts` from the config and each stop's plan, so it cannot drift from the code.
+- Phase 2. The sky glow map from the star map agent had not arrived when the blockout rounds started. The blockout uses the seeded stand-in sky. The real map is integrated when it lands, in Phase 2 or 3.
 
 ## Open items
 
@@ -206,6 +227,8 @@ None. One entry per long job while it runs: the command, the frame range, the lo
 ## Rounds
 
 One line per round, written when the round starts: number, phase, stop. Scores and what changes next are added when it ends.
+
+- Round 1, Phase 2, blockout, whole film. R4 blockout.
 
 ## Final scores
 
@@ -226,6 +249,7 @@ None yet.
 - 2026-11-19: Phase 0 scaffold, harness, spike, records. Merged `agent/tools-ml`.
 - 2026-11-19: Phase 0 gate.
 - 2026-11-19: Phase 1 gate. Merged `agent/animatic`.
+- 2026-11-20 UTC: Phase 2 engine, director, stand-in sets, modes, menu. Merged `agent/tools-stills`, `agent/capture-export`, `agent/assets-fit`, `agent/tools-film`.
 
 ## Session log
 

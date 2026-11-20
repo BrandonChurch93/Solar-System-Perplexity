@@ -57,5 +57,5 @@ for (const assets of ['full', 'web']) {
   await s.close()
 }
 mkdirSync(join(WORK, 'budget'), { recursive: true })
-writeFileSync(join(WORK, 'budget', 'spike.json'), JSON.stringify(result, null, 1))
+writeFileSync(join(WORK, 'budget', 'budget.json'), JSON.stringify(result, null, 1))
 console.log(JSON.stringify(result, null, 1))
