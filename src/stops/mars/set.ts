@@ -56,7 +56,9 @@ export const createSet: SetFactory = async (ctx) => {
   const shell = new HazeShell(look.shellHaze, diagUniform)
   const halo = new HazeShell(look.haloHaze, diagUniform)
   halo.mesh.renderOrder = 4
-  orbit.add(planet.mesh, shell.mesh, halo.mesh)
+  const glint = new HazeShell(look.glintHaze, diagUniform)
+  glint.mesh.renderOrder = 4
+  orbit.add(planet.mesh, shell.mesh, halo.mesh, glint.mesh)
 
   const moonSizes = phobos.sets[key]
   const moonHeights = await heights(ctx, base + 'phobos-height.bin', moonSizes.heightSize[0]!, moonSizes.heightSize[1]!)
@@ -87,7 +89,9 @@ export const createSet: SetFactory = async (ctx) => {
   const edge = new THREE.Vector2()
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
-  const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(plan.hold(plan.holdMid - plan.seg.hold.start).quaternion)
+  const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
+  const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(holdTurn)
+  const glintHome = new THREE.Vector3().fromArray(look.glintDir).normalize().applyQuaternion(holdTurn)
   const camera = new THREE.Vector3()
   const bounce = new THREE.Vector3()
   const turn = new THREE.Quaternion()
@@ -125,6 +129,8 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
       ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
+      pu.uVignette!.value = shot.post.vignette * (1 - low)
+      pu.uAspect!.value = view.format.width / view.format.height
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
       ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(light)
       shell.material.uniforms.uGain!.value = gain * state.weight
@@ -132,6 +138,10 @@ export const createSet: SetFactory = async (ctx) => {
       glow.copy(glowHome).applyQuaternion(state.rotation)
       ;(halo.material.uniforms.uSunW!.value as THREE.Vector3).copy(glow)
       halo.material.uniforms.uGain!.value = gain * state.weight * (1 - low)
+      ;(glint.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
+      glow.copy(glintHome).applyQuaternion(state.rotation)
+      ;(glint.material.uniforms.uSunW!.value as THREE.Vector3).copy(glow)
+      glint.material.uniforms.uGain!.value = gain * state.weight * (1 - low)
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       moon.mesh.position.copy(moonHome).applyQuaternion(turn)
       moon.mesh.quaternion.setFromAxisAngle(tumbleAxis, THREE.MathUtils.degToRad(look.moon.tumbleDegPerSecond) * elapsed).multiply(moonHold)
@@ -145,6 +155,7 @@ export const createSet: SetFactory = async (ctx) => {
       planet.mesh.visible = visible
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1
+      glint.mesh.visible = visible && low < 1
       moon.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
@@ -152,6 +163,7 @@ export const createSet: SetFactory = async (ctx) => {
       planet.dispose()
       shell.dispose()
       halo.dispose()
+      glint.dispose()
       moon.dispose()
       far.dispose()
       ground.dispose()

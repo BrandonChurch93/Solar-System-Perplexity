@@ -16,7 +16,7 @@ export const params: MoveParams = {
   coverLowTerrain: [0.085, 0.045, 0.028],
   coverTop: [0.25, 0.04],
   spinDegPerSecond: 0.9,
-  moonDegPerSecond: 0.5,
+  moonDegPerSecond: -1.2,
   tint: [0.9, 0.5, 0.3],
 }
 

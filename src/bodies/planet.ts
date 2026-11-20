@@ -51,6 +51,7 @@ out vec3 vLocal;
 out vec3 vWorldN;
 out vec3 vPos;
 out vec3 vView;
+out vec3 vClip;
 void main() {
   vLocal = position;
   vWorldN = normalize(mat3(modelMatrix) * position);
@@ -59,6 +60,7 @@ void main() {
   vec4 mv = viewMatrix * wp;
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
+  vClip = gl_Position.xyw;
 }`
 
 export const MAX_PATCHES = 6
@@ -109,6 +111,9 @@ uniform float uReliefNear;
 uniform float uLimb;
 uniform float uExtinction;
 uniform mat3 uBodyToWorld;
+uniform float uVignette;
+uniform float uAspect;
+in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vPos;
@@ -190,7 +195,8 @@ ${PATCH_LEVELS}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
-  col *= uGain * uWeight;
+  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));
 }`
 
@@ -244,7 +250,7 @@ export class Planet {
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
         uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: o.light.wrap }, uCurve: { value: curve(o.light) }, uNight: { value: new THREE.Vector3().fromArray(o.light.night) },
         uNightFlat: { value: new THREE.Vector3().fromArray(o.light.nightFlat ?? [0, 0, 0]) },
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },

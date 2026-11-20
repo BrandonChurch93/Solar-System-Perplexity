@@ -1,16 +1,16 @@
 {
  "ground": {
   "scaleHeight": 0.0045,
-  "depth": 0.078,
+  "depth": 0.066,
   "day": [
-   0.47,
-   0.43,
-   0.45
+   0.5,
+   0.55,
+   0.62
   ],
   "twilight": [
-   0.02,
-   0.03,
-   0.05
+   0.035,
+   0.028,
+   0.028
   ],
   "night": [
    0.012,
@@ -21,16 +21,16 @@
   "extinction": 1,
   "forward": 1.2,
   "top": 10,
-  "dayFrom": 0.05,
-  "dayTo": 0.8
+  "dayFrom": -0.3,
+  "dayTo": 0.95
  },
  "shell": {
   "scaleHeight": 0.016,
   "depth": 0.016,
   "day": [
-   0.38,
-   0.5,
-   0.6
+   0.37,
+   0.43,
+   0.5
   ],
   "twilight": [
    0.045,
@@ -46,16 +46,46 @@
   "extinction": 1,
   "forward": 1.2,
   "top": 8,
-  "dayFrom": 0.05,
+  "dayFrom": -0.1,
   "dayTo": 0.8
  },
  "halo": {
   "scaleHeight": 0.05,
   "depth": 0.0223,
   "day": [
-   0.25,
+   0.28,
    0.31,
-   0.335
+   0.33
+  ],
+  "twilight": [
+   0,
+   0,
+   0
+  ],
+  "night": [
+   0.07,
+   0.09,
+   0.105
+  ],
+  "strength": 1,
+  "extinction": 1,
+  "forward": 0,
+  "top": 4,
+  "dayFrom": 0.35,
+  "dayTo": 1.0
+ },
+ "haloDir": [
+  -0.965,
+  0.17,
+  0.2
+ ],
+ "glint": {
+  "scaleHeight": 0.045,
+  "depth": 0.027,
+  "day": [
+   0.85,
+   0.68,
+   0.68
   ],
   "twilight": [
    0,
@@ -71,12 +101,12 @@
   "extinction": 1,
   "forward": 0,
   "top": 4,
-  "dayFrom": 0.2,
+  "dayFrom": 0.96,
   "dayTo": 1.0
  },
- "haloDir": [
-  -1,
-  0.25,
-  0.2
+ "glintDir": [
+  -0.845,
+  0.449,
+  0.29
  ]
 }

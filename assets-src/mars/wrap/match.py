@@ -13,6 +13,10 @@ Image.MAX_IMAGE_PIXELS = None
 SRC, OUT = sys.argv[1], sys.argv[2]
 WORK = 'out/work/match'
 SIGMA, WIDE = float(sys.argv[3]) if len(sys.argv) > 3 else 12.0, 80.0
+FINE = sys.argv[4] if len(sys.argv) > 4 else ''
+LIMB = (0.2, 0.42)
+TONE = (0.09, 0.2)
+CAP = (-73, 47, 11, 0.6, 0.05, 0.14)
 OUTLINE = [(118, 330), (125, 270), (160, 215), (215, 170), (290, 140), (360, 128), (430, 128), (480, 150), (520, 180), (560, 215), (600, 265), (620, 310), (618, 380), (600, 450), (570, 510), (520, 550), (450, 568), (380, 560), (300, 540), (230, 510), (170, 470), (135, 420), (118, 370)]
 OFFSET = (1100, 900)
 
@@ -52,8 +56,15 @@ moon = cv2.dilate(moon, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25)))
 clear = 1 - blur(moon.astype(np.float32) / 255, 5)
 clear = smooth(0.5, 1.0, clear)
 edge = np.minimum(np.minimum(g['xs'], w - 1 - g['xs']), np.minimum(g['ys'], h - 1 - g['ys']))
-frame = (g['hit'] * smooth(0.03, 0.2, g['mu']) * smooth(4, 90, edge)).astype(np.float32)
-wgt = (g['hit'] * smooth(0.05, 0.3, g['mu']) * clear).astype(np.float32)
+cl, cb = np.radians(CAP[0]), np.radians(CAP[1])
+near = np.sin(g['lat']) * np.sin(cb) + np.cos(g['lat']) * np.cos(cb) * np.cos(g['lon'] - cl)
+ice = ((hero.min(axis=-1) > CAP[3]) & g['hit'] & (near > np.cos(np.radians(CAP[2])))).astype(np.uint8)
+ice = blur(cv2.dilate(ice, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))).astype(np.float32), 5)
+limb = np.maximum(smooth(LIMB[0], LIMB[1], g['mu']), ice * smooth(CAP[4], CAP[5], g['mu']))
+frame = (g['hit'] * limb * smooth(4, 90, edge)).astype(np.float32)
+wide = np.maximum(limb, smooth(TONE[0], TONE[1], g['mu']))
+tone = (g['hit'] * wide * smooth(4, 90, edge)).astype(np.float32)
+wgt = (g['hit'] * wide * clear).astype(np.float32)
 use = g['hit'] & (g['mu'] > 0.3) & (moon == 0)
 
 
@@ -89,7 +100,7 @@ for it in range(3):
     r = np.clip(r2 * (1 - k) + r1 * k, 0.3, 2.5)
     r = 1 + (r - 1) * smooth(0.02, 0.1, b2)[..., None]
     rw = cv2.remap(r.astype(np.float32), px4, py4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-    vis = (cv2.remap(frame, px4, py4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * (mu4 > 0))[..., None]
+    vis = (cv2.remap(tone, px4, py4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * (mu4 > 0))[..., None]
     total *= 1 + (rw - 1) * vis
     print('pass', it, 'ratio range', float(r.min()), float(r.max()))
 
@@ -98,7 +109,7 @@ lit = lc.curve_at(curve, g['ndl'])
 night = (seen / np.maximum(lit, 1e-3)).astype(np.float32)
 dim = np.clip((0.12 - lit.max(axis=-1)) / 0.08, 0, 1)[..., None].astype(np.float32)
 night = night * (1 - dim) + blur(night, 0.6) * dim
-nw = (wgt * frame).astype(np.float32)
+nw = (g['hit'] * limb * clear * frame).astype(np.float32)
 flat = np.round(np.clip(linear_to_srgb(filmic(night)), 0, 1) * 255).astype(np.uint8)
 small = cv2.resize(flat, (w // 4, h // 4), interpolation=cv2.INTER_AREA)
 hole = cv2.resize(cv2.dilate(moon, np.ones((9, 9), np.uint8)), (w // 4, h // 4), interpolation=cv2.INTER_NEAREST)
@@ -110,6 +121,23 @@ rw = cv2.remap(rh, px4, py4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
 vis = (cv2.remap(frame, px4, py4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * (mu4 > 0))[..., None]
 total = total * (1 - vis) + rw * vis
 np.save(f'{WORK}/total.npy', total.astype(np.float16))
+scale = 1
+if FINE:
+    fine = np.asarray(Image.open(FINE).convert('RGB')).astype(np.float32) / 255
+    scale = fine.shape[1] // w
+    for key in ['xs', 'ys', 'd', 'hit', 'ndl', 'mu', 'lon', 'lat']:
+        g.pop(key)
+    del seen, alb, pred, n1, d1, n2, d2, r1, r2, r, rh, filled, base, lit, dim, night, flat
+    g2 = lc.geometry(fit, fine.shape[1], fine.shape[0])
+    seen2 = lc.dehaze(lc.inverse_filmic(lc.srgb_to_linear(fine)), haze, g2).astype(np.float32)
+    lit2 = lc.curve_at(curve, g2['ndl']).astype(np.float32)
+    del g2, fine
+    night = seen2 / np.maximum(lit2, 1e-3)
+    dim = np.clip((0.12 - lit2.max(axis=-1)) / 0.08, 0, 1)[..., None]
+    night = night * (1 - dim) + blur(night, 0.6 * scale) * dim
+    del seen2, lit2, dim
+coded = linear_to_srgb(filmic(np.maximum(night, 0))).astype(np.float32)
+del night
 out = np.zeros((H8, W8, 3), np.uint8)
 STRIP = 256
 for y0 in range(0, H8, STRIP):
@@ -120,7 +148,8 @@ for y0 in range(0, H8, STRIP):
     uy = np.repeat(((rows + 0.5) / 2 - 0.5).astype(np.float32)[:, None], W8, 1)
     a = a * cv2.remap(total, ux, uy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
     inside = (mu > 0) & (px > 0) & (px < w - 1) & (py > 0) & (py < h - 1)
-    n = cv2.remap(night, px, py, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+    n = cv2.remap(coded, (px + 0.5) * scale - 0.5, (py + 0.5) * scale - 0.5, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+    n = lc.inverse_filmic(lc.srgb_to_linear(np.clip(n, 0, 1)))
     k = (cv2.remap(nw, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * inside)[..., None]
     a = a * (1 - k) + np.maximum(n, 0) * k
     out[rows] = np.round(np.clip(linear_to_srgb(filmic(a)), 0, 1) * 255).astype(np.uint8)
