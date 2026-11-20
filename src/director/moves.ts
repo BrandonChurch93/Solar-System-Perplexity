@@ -37,6 +37,7 @@ export interface OrbitShot { pose: Pose; view: 'orbit' | 'terrain' }
 const Y = new THREE.Vector3(0, 1, 0)
 const easeIn = ease('power2.in')
 const easeOut = ease('power3.out')
+const easeRise = ease('sine.out')
 const easeInOut = ease('power2.inOut')
 
 function v3(a: number[]): THREE.Vector3 {
@@ -220,7 +221,7 @@ export class StopPlan {
       }
       return { pose, view: 'terrain' }
     }
-    const e = easeOut(ramp(f.first, 1, u))
+    const e = easeRise(ramp(f.first, 1, u))
     const d = this.p.dive
     const end = this.after(seg.end)
     const tq = this.turn(time)

@@ -5,7 +5,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 8, axis: [-0.15, 1, 0], push: -0.04 },
   spot: { x: 0.45, y: 0.54 },
   dive: { headingDeg: -105, altitude: 0.03, back: 0.08, ahead: 0.16, bow: -0.2, rollDeg: -6 },
-  terrain: { vfov: 60, forward: 1.5, rise: 0.06, side: -0.15, yawDeg: -2, pitchDeg: 0, entryHeight: 1.7, entryBack: 2.6, entryPitchDeg: 10, exitHeight: 2.2, exitForward: 1.6, exitPitchDeg: 10 },
+  terrain: { vfov: 60, forward: 1.5, rise: 0.06, side: -0.15, yawDeg: -2, pitchDeg: 0, entryHeight: 1.02, entryBack: 1.43, entryPitchDeg: 6, exitHeight: 2.2, exitForward: 1.6, exitPitchDeg: 10 },
   rise: { azimuthDeg: 34, elevationDeg: 16, distance: 4.6, offset: [-0.32, -0.08], driftSpeed: 0.08, rollDeg: 5 },
   travel: { turnDeg: 130, side: -1 },
   light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 1.1, sunGlare: 0.8, flare: 0.3 },

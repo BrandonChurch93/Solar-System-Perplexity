@@ -23,7 +23,11 @@
     "compare": "tsx tools/compare.ts",
     "pack": "tsx tools/pack.ts",
     "keep": "tsx tools/keep.ts",
-    "proof": "tsx tools/proof.ts"
+    "proof": "tsx tools/proof.ts",
+    "film": "tsx tools/film.ts",
+    "clip": "tsx tools/clip.ts",
+    "stress": "tsx tools/stress.ts",
+    "measure": "tsx tools/measure.ts"
   },
   "dependencies": {
     "gsap": "3.15.1",

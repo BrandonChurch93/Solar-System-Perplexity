@@ -98,10 +98,10 @@ void main() {
   float lines = 0.0;
   for (int k = 0; k < 6; k++) {
     float c = 0.06 + 0.176 * float(k) + 0.03 * sin(float(k) * 2.4);
-    float w = max(0.012, fwidth(t) * 0.9);
+    float w = max(0.006, fwidth(t) * 0.9);
     lines += exp(-pow((t - c) / w, 2.0)) * (0.6 + 0.4 * sin(float(k) * 1.7 + 0.5));
   }
-  alpha = mix(alpha, clamp(lines, 0.0, 1.0) * 0.34, uThin);
+  alpha = mix(alpha, clamp(lines, 0.0, 1.0) * 0.13, uThin);
   vec3 col = uColor * mix(bands, 1.5, uThin) * shadow * uGain;
   if (uDiag >= 2 && alpha < 0.5) discard;
   outColor = diagOut(vec4(col, alpha), 0.0, 0.0, vec3(0.2, 0.85, 0.4), vec2(0.0), length(vView));
@@ -138,7 +138,7 @@ out vec4 outColor;
 void main() {
   vec2 p = (gl_PointCoord - 0.5) * uSize;
   float r2 = dot(p, p);
-  outColor = vec4(uColor * (exp(-r2 / 0.8) + 0.03 * exp(-r2 / (0.03 * uSize * uSize))), 0.0);
+  outColor = vec4(uColor * (exp(-r2 / 0.9) + 0.07 * exp(-r2 / (0.02 * uSize * uSize)) + 0.05 * exp(-p.y * p.y / 0.7 - p.x * p.x / (0.06 * uSize * uSize))), 0.0);
 }`
 
 const PLATE_DISTANCE = 10
@@ -200,7 +200,9 @@ export async function createStandinSet(ctx: SetContext, plan: StopPlan): Promise
   orbit.add(point)
 
   const plateMat = shader(PLATE, { uMap: { value: close }, uMapSize: { value: new THREE.Vector2(closeSize.width, closeSize.height) }, uGain: { value: 1 } })
-  const h = 2 * PLATE_DISTANCE * Math.tan(THREE.MathUtils.degToRad(plan.p.terrain.vfov) / 2)
+  const t = plan.p.terrain
+  const overscan = 1 + (0.5 * t.forward + 0.5 * Math.abs(t.side) + 0.5 * Math.abs(t.rise)) / PLATE_DISTANCE + Math.tan(THREE.MathUtils.degToRad(0.5 * Math.max(Math.abs(t.yawDeg), Math.abs(t.pitchDeg))))
+  const h = 2 * PLATE_DISTANCE * Math.tan(THREE.MathUtils.degToRad(t.vfov) / 2) * overscan
   const plate = new THREE.Mesh(new THREE.PlaneGeometry(h * (closeSize.width / closeSize.height) * 3, h * 3), plateMat)
   plate.position.set(0, 0, -PLATE_DISTANCE)
   terrain.add(plate)
@@ -245,8 +247,8 @@ export async function createStandinSet(ctx: SetContext, plan: StopPlan): Promise
       const far = 1 - smooth((radiusPx - 0.8) / 1.6)
       point.visible = far > 0 && view.diag === 'beauty'
       globe.visible = radiusPx > 0.6
-      pointMat.uniforms.uSize!.value = Math.max(9, 14 * view.format.height / 1080)
-      ;(pointMat.uniforms.uColor!.value as THREE.Vector3).fromArray(plan.p.tint).addScalar(0.35).multiplyScalar(far * gain * (2.2 + 4 * Math.min(radiusPx, 1)))
+      pointMat.uniforms.uSize!.value = Math.max(15, 30 * view.format.height / 1080)
+      ;(pointMat.uniforms.uColor!.value as THREE.Vector3).fromArray(plan.p.tint).addScalar(0.35).multiplyScalar(far * gain * (5 + 9 * Math.min(radiusPx, 1)))
     },
     dispose: () => {
       globe.geometry.dispose()
