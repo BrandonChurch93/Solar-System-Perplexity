@@ -1,16 +1,16 @@
 {
  "quaternion": [
-  0.8835656,
-  -0.0537979,
-  0.2683107,
-  0.3800356
+  0.8844452,
+  -0.1094275,
+  0.2106794,
+  0.4017419
  ],
  "turns": {
   "mars": [
-   0.6144147,
-   0.2000533,
-   -0.7016515,
-   0.3002639
+   0.5365267,
+   0.6391907,
+   -0.4452596,
+   0.3245277
   ]
  },
  "grade": {
@@ -30,8 +30,8 @@
   "repeats": 2,
   "offsetDeg": 45,
   "latSpanDeg": 45,
-  "fadeStart": 0.38,
-  "gain": 1.15,
+  "fadeStart": 0.12,
+  "gain": 1.4,
   "gamma": 1.08,
   "regionRef": 0.1,
   "offGain": 0.6,
@@ -40,21 +40,42 @@
    1,
    1.12
   ],
-  "saturation": 1,
+  "saturation": 0.65,
   "crowdRef": 0.013,
-  "crowdLod": 2
+  "crowdLod": 2,
+  "terrainGain": 1,
+  "cleanRadius": 1.6,
+  "cleanKeep": 0,
+  "cleanBlur": 2.5,
+  "widen": 1.5,
+  "fadeEnd": 0.3
+ },
+ "stars": {
+  "brightness": 0.0045,
+  "slope": 1,
+  "countScale": 1.6,
+  "bandWidth": 0.1,
+  "halo": 0,
+  "floor": 0.12,
+  "micro": 2.5,
+  "microWidth": 0.1,
+  "microBright": 0.009,
+  "vivid": 0.35,
+  "core": 0.7,
+  "terrainGain": 1,
+  "terrainCrowd": 0.25
  },
  "fitted": {
   "stop": "mars",
   "frame": 2325,
   "alongDeg": 158,
-  "tiltDeg": -8,
-  "liftDeg": 2.5,
+  "tiltDeg": 1.5,
+  "liftDeg": 3,
   "terrain": {
    "stop": "mars",
    "alongDeg": 60,
-   "tiltDeg": 0,
-   "liftDeg": 33,
+   "tiltDeg": -60,
+   "liftDeg": 18,
    "frame": 2580
   }
  }
