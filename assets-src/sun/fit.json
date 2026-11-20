@@ -1,0 +1,99 @@
+{
+  "stop": "sun",
+  "imageSize": [
+    2816,
+    1584
+  ],
+  "vfovDeg": 30.0,
+  "aspect": 1.7777777777777777,
+  "circle": {
+    "cx": 1410.37,
+    "cy": 791.81,
+    "r": 662.3
+  },
+  "silhouette": {
+    "model": "perspective sphere fitted on limb rays",
+    "bodyCenterPx": [
+      1410.49,
+      791.81
+    ],
+    "angularRadiusDeg": 12.62819,
+    "distance": 4.574077,
+    "limbPoints": 642,
+    "residualRmsPx": 2.038,
+    "residualMedianAbsPx": 1.231,
+    "sectorMedianResidualPx": {
+      "0": 0.45,
+      "30": -1.58,
+      "60": 2.17,
+      "90": 8.16,
+      "120": 3.89,
+      "150": -0.26,
+      "180": -0.11,
+      "210": 3.79,
+      "240": 6.23,
+      "270": 2.72,
+      "300": -0.58,
+      "330": -12.75
+    },
+    "note": ""
+  },
+  "camera": {
+    "position": [
+      -0.003852,
+      -0.000288,
+      4.574075
+    ],
+    "quaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
+  },
+  "sunDir": null,
+  "sunFit": {
+    "note": "the Sun is the light; sunDir is not defined"
+  },
+  "moons": [],
+  "globe": {
+    "quaternion": [
+      3.15e-05,
+      -0.000421,
+      0.0,
+      0.9999999
+    ],
+    "meshQuaternionForThreeSphereGeometry": [
+      2.23e-05,
+      -0.7074044,
+      -2.23e-05,
+      0.706809
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "northPole": [
+      -0.0,
+      1.0,
+      6.3e-05
+    ],
+    "subCameraLonDeg": 0.0,
+    "subCameraLatDeg": 0.0,
+    "method": "pole angle and sub-camera latitude",
+    "note": ""
+  },
+  "unproject": {},
+  "conventions": {
+    "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
+    "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
+    "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+  }
+}

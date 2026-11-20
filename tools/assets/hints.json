@@ -1,0 +1,303 @@
+{
+ "sun": {
+  "circle": [
+   1408,
+   789,
+   664
+  ],
+  "kind": "star",
+  "signal": "chroma"
+ },
+ "mercury": {
+  "circle": [
+   1223,
+   823,
+   718
+  ]
+ },
+ "venus": {
+  "circle": [
+   1484,
+   790,
+   674
+  ]
+ },
+ "earth": {
+  "circle": [
+   1470,
+   800,
+   686
+  ],
+  "excludeArcs": [
+   [
+    280,
+    360
+   ]
+  ],
+  "nightArcs": [
+   [
+    0,
+    60
+   ]
+  ],
+  "moons": [
+   {
+    "id": "moon",
+    "circle": [
+     2511,
+     224,
+     57
+    ],
+    "arcs": [
+     [
+      100,
+      260
+     ]
+    ],
+    "orbitRadius": 60,
+    "side": "back"
+   }
+  ]
+ },
+ "mars": {
+  "circle": [
+   1432,
+   976,
+   885
+  ],
+  "nightArcs": [
+   [
+    320,
+    420
+   ]
+  ],
+  "moons": [
+   {
+    "id": "phobos",
+    "circle": [
+     1466,
+     1242,
+     250
+    ],
+    "refine": false,
+    "orbitRadius": 2.76,
+    "side": "front",
+    "note": "irregular body, circle is a generous cover"
+   }
+  ]
+ },
+ "jupiter": {
+  "circle": [
+   1404,
+   795,
+   710
+  ],
+  "nightArcs": [
+   [
+    290,
+    420
+   ]
+  ],
+  "moons": [
+   {
+    "id": "io",
+    "circle": [
+     1524,
+     1000,
+     45
+    ],
+    "arcs": [
+     [
+      100,
+      280
+     ]
+    ],
+    "orbitRadius": 5.9,
+    "side": "front",
+    "shadow": [
+     1645,
+     1028
+    ],
+    "shadowRadiusPx": 70
+   }
+  ]
+ },
+ "saturn": {
+  "circle": [
+   1503,
+   823,
+   541
+  ],
+  "arcs": [
+   [
+    195,
+    362
+   ]
+  ],
+  "nightArcs": [
+   [
+    300,
+    370
+   ]
+  ],
+  "oblate": {
+   "polar": 0.902,
+   "fixed": true
+  },
+  "silhouetteNote": "the painted globe is clearly oblate, so the silhouette is an oblate spheroid with the pole on the ring normal",
+  "globe": {
+   "poleFromRings": true,
+   "subLonDeg": 0,
+   "note": "pole on the ring normal, north toward the visible pole at the top"
+  },
+  "rings": {
+   "normalGuess": [
+    0,
+    0.9,
+    0.4
+   ],
+   "innerEdge": "inner",
+   "outerEdge": "outer",
+   "note": "inner and outer are the edges of the bright rings at blurred luminance 0.25; the faint C ring inside and the thin outer ringlet beyond are not included",
+   "edges": {
+    "outer": {
+     "threshold": 0.25,
+     "mode": "external",
+     "boxes": [
+      [
+       0,
+       0,
+       1120,
+       1584,
+       "out"
+      ],
+      [
+       1960,
+       500,
+       2816,
+       1100,
+       "up"
+      ]
+     ],
+     "center": [
+      1500,
+      1000
+     ],
+     "probe": 90,
+     "exclude": [
+      [
+       600,
+       300,
+       1150,
+       480
+      ]
+     ]
+    },
+    "inner": {
+     "threshold": 0.25,
+     "mode": "holes",
+     "boxes": [
+      [
+       800,
+       520,
+       1010,
+       1000,
+       "right"
+      ]
+     ]
+    }
+   },
+   "ellipseEdge": "outer"
+  },
+  "moons": [
+   {
+    "id": "titan",
+    "circle": [
+     2468,
+     248,
+     46
+    ],
+    "arcs": [
+     [
+      100,
+      280
+     ]
+    ],
+    "orbitRadius": 20,
+    "side": "back"
+   }
+  ]
+ },
+ "uranus": {
+  "circle": [
+   1460,
+   849,
+   523
+  ],
+  "moons": [
+   {
+    "id": "miranda",
+    "circle": [
+     670,
+     342,
+     26
+    ],
+    "arcs": [
+     [
+      110,
+      270
+     ]
+    ],
+    "orbitRadius": 5.1,
+    "side": "front"
+   },
+   {
+    "id": "ariel",
+    "circle": [
+     2423,
+     439,
+     20
+    ],
+    "arcs": [
+     [
+      110,
+      270
+     ]
+    ],
+    "orbitRadius": 7.5,
+    "side": "back"
+   }
+  ]
+ },
+ "neptune": {
+  "circle": [
+   1430,
+   1201,
+   998
+  ],
+  "nightArcs": [
+   [
+    150,
+    250
+   ]
+  ],
+  "moons": [
+   {
+    "id": "triton",
+    "circle": [
+     337,
+     407,
+     95
+    ],
+    "arcs": [
+     [
+      280,
+      440
+     ]
+    ],
+    "orbitRadius": 14,
+    "side": "back"
+   }
+  ]
+ }
+}
