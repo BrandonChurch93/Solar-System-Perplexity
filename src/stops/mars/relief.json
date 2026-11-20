@@ -14,7 +14,13 @@
    1584
   ]
  },
- "boxUnits": "full-set pixels, origin top-left of the close image",
+ "boxUnits": "full-set pixels, origin top-left of the close image; with a margin, boxes may start at negative x and run past the image size",
+ "margin": {
+  "left": 676,
+  "right": 676,
+  "bottom": 380,
+  "units": "full-set pixels of the close image, painted ground outside the close image, nothing added at the top"
+ },
  "distFormat": "raw little-endian float32, row-major from top-left, no header; distance from the image camera along the pixel ray; unit = camera height above the rim plateau",
  "camera": {
   "vfovDeg": 60.0,
@@ -69,33 +75,33 @@
     }
    },
    "box": {
-    "x": 0,
+    "x": -676,
     "y": 0,
-    "w": 5632,
-    "h": 3168
+    "w": 6984,
+    "h": 3548
    },
    "colorSize": {
     "full": [
-     5632,
-     3168
+     6984,
+     3548
     ],
     "web": [
-     2816,
-     1584
+     3492,
+     1774
     ]
    },
    "distSize": {
     "full": [
-     2816,
-     1584
+     3492,
+     1774
     ],
     "web": [
-     1408,
-     792
+     1746,
+     887
     ]
    },
    "distRange": [
-    3.7982,
+    3.4922,
     44.1083
    ]
   },
@@ -115,31 +121,31 @@
    "box": {
     "x": 2784,
     "y": 836,
-    "w": 2848,
-    "h": 1008
+    "w": 3524,
+    "h": 1088
    },
    "colorSize": {
     "full": [
-     2848,
-     1008
+     3524,
+     1088
     ],
     "web": [
-     1424,
-     504
+     1762,
+     544
     ]
    },
    "distSize": {
     "full": [
-     1424,
-     504
+     1762,
+     544
     ],
     "web": [
-     712,
-     252
+     881,
+     272
     ]
    },
    "distRange": [
-    5.7274,
+    5.7267,
     16.4527
    ]
   },
@@ -157,34 +163,34 @@
     }
    },
    "box": {
-    "x": 0,
+    "x": -676,
     "y": 1080,
-    "w": 4004,
-    "h": 2088
+    "w": 4920,
+    "h": 2468
    },
    "colorSize": {
     "full": [
-     4004,
-     2088
+     4920,
+     2468
     ],
     "web": [
-     2002,
-     1044
+     2460,
+     1234
     ]
    },
    "distSize": {
     "full": [
-     2002,
-     1044
+     2460,
+     1234
     ],
     "web": [
-     1001,
-     522
+     1230,
+     617
     ]
    },
    "distRange": [
-    2.3481,
-    5.9665
+    2.1312,
+    6.2153
    ]
   }
  },
@@ -193,13 +199,19 @@
   "web": "public/assets/mars/web/relief-masks.png",
   "size": {
    "full": [
-    2816,
-    1584
+    3492,
+    1774
    ],
    "web": [
-    1408,
-    792
+    1746,
+    887
    ]
+  },
+  "box": {
+   "x": -676,
+   "y": 0,
+   "w": 6984,
+   "h": 3548
   },
   "channels": {
    "r": "mist on the canyon floor, may drift",
@@ -213,9 +225,10 @@
  ],
  "mistDriftNote": "unit vector in image space (x right, y down) along the canyon floor, pointing down-canyon toward the lower right",
  "safeMove": {
-  "forward": 0.2,
-  "rise": 0.06,
-  "panDeg": 0.0,
-  "note": "forward along the view direction and rise in camera heights; pan exposes the frame edge until the margin set lands"
+  "forward": 0.15,
+  "rise": 0.045,
+  "panDeg": 0.45,
+  "panDegMin": -0.45,
+  "note": "forward along the view direction and rise in camera heights, pan about the up axis in either direction up to panDeg; at forward 0.2 with pan -0.6 the render is still clean, with pan +0.6 a 2 px crack opens"
  }
 }

@@ -53,7 +53,7 @@ export const createSet: SetFactory = async (ctx) => {
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
-  const shell = new HazeShell(look.haze, diagUniform)
+  const shell = new HazeShell(look.shellHaze, diagUniform)
   orbit.add(planet.mesh, shell.mesh)
 
   const moonSizes = phobos.sets[key]
@@ -61,7 +61,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonMap = await ctx.texture(base + 'phobos-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const moon = new MoonBody({
     map: moonMap, mapWidth: moonSizes.colorSize[0]!, height: ctx.floatTexture(moonHeights, moonSizes.heightSize[0]!, moonSizes.heightSize[1]!, true), heights: moonHeights,
-    heightSize: [moonSizes.heightSize[0]!, moonSizes.heightSize[1]!], lo: phobos.lo, hi: phobos.hi, radius: phobos.radius, gain: look.moon.gain, ambient: look.moon.ambient, bounce: look.moon.bounce, sun: look.moon.sun,
+    heightSize: [moonSizes.heightSize[0]!, moonSizes.heightSize[1]!], lo: phobos.lo, hi: phobos.hi, radius: phobos.radius, gain: look.moon.gain, ambient: look.moon.ambient, bounce: look.moon.bounce, sun: look.moon.sun, bump: look.moon.bump, power: look.moon.power, rim: look.moon.rim,
   })
   orbit.add(moon.mesh)
   const moonHome = new THREE.Vector3().fromArray(phobos.center)
@@ -80,6 +80,7 @@ export const createSet: SetFactory = async (ctx) => {
   const bounce = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const moonWorld = new THREE.Quaternion()
+  const moonLight = new THREE.Vector3()
 
   return {
     id: plan.id,
@@ -98,7 +99,7 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
-      planet.material.uniforms.uStormAngle!.value = wrap.storm.sense * THREE.MathUtils.degToRad(look.storm.degPerSecond) * Math.min(Math.max(elapsed, -12), 12)
+      planet.material.uniforms.uStormAngle!.value = (wrap.storm.counterclockwise ? -1 : 1) * THREE.MathUtils.degToRad(look.storm.degPerSecond) * Math.min(Math.max(elapsed, -12), 12)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
       ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(light)
@@ -108,7 +109,8 @@ export const createSet: SetFactory = async (ctx) => {
       moon.mesh.quaternion.setFromAxisAngle(tumbleAxis, THREE.MathUtils.degToRad(look.moon.tumbleDegPerSecond) * elapsed).multiply(moonHold)
       moonWorld.copy(state.rotation).multiply(moon.mesh.quaternion)
       bounce.copy(moon.mesh.position).negate().normalize().applyQuaternion(state.rotation)
-      moon.update(light, bounce, moonWorld, gain * state.weight)
+      moonLight.fromArray(look.moon.sunBias).applyQuaternion(state.rotation).add(light).normalize()
+      moon.update(moonLight, bounce, moonWorld, gain * state.weight)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

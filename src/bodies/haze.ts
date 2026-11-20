@@ -5,6 +5,9 @@ export interface HazeParams {
   depth: number
   day: [number, number, number]
   twilight: [number, number, number]
+  night?: [number, number, number]
+  dayFrom?: number
+  dayTo?: number
   strength: number
   extinction: number
   forward: number
@@ -18,6 +21,8 @@ uniform float uHazeH;
 uniform float uHazeTau;
 uniform vec3 uHazeDay;
 uniform vec3 uHazeTwilight;
+uniform vec3 uHazeNight;
+uniform vec2 uHazeEdge;
 uniform float uHazeStrength;
 uniform float uHazeForward;
 float hazeCh(float c) {
@@ -52,10 +57,10 @@ float hazeDepth(vec3 dir, bool ground, out vec3 at) {
 }
 vec3 hazeLight(vec3 at, vec3 dir) {
   float ndl = dot(at, uSunW);
-  float day = smoothstep(-0.16, 0.34, ndl);
+  float day = smoothstep(uHazeEdge.x, uHazeEdge.y, ndl);
   float tw = smoothstep(-0.42, -0.04, ndl) * (1.0 - smoothstep(-0.04, 0.36, ndl));
   float fw = 1.0 + uHazeForward * pow(max(dot(dir, uSunW), 0.0), 6.0);
-  return (uHazeDay * day * day + uHazeTwilight * tw) * fw * uHazeStrength;
+  return ((uHazeDay * day * day + uHazeTwilight * tw) * fw + uHazeNight) * uHazeStrength;
 }`
 
 const VERT = /* glsl */ `
@@ -94,6 +99,8 @@ export function hazeUniforms(p: HazeParams): Record<string, THREE.IUniform> {
     uHazeTau: { value: p.depth },
     uHazeDay: { value: new THREE.Vector3().fromArray(p.day) },
     uHazeTwilight: { value: new THREE.Vector3().fromArray(p.twilight) },
+    uHazeEdge: { value: new THREE.Vector2(p.dayFrom ?? -0.16, p.dayTo ?? 0.34) },
+    uHazeNight: { value: new THREE.Vector3().fromArray(p.night ?? [0, 0, 0]) },
     uHazeStrength: { value: p.strength },
     uHazeForward: { value: p.forward },
   }

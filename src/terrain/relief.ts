@@ -17,10 +17,62 @@ export interface ReliefDef {
   vfovDeg: number
   layers: ReliefLayerDef[]
   masks: string
+  maskBox: [number, number, number, number]
   mistDir: [number, number]
 }
 
-export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number }
+export interface ReliefAir {
+  pitchDeg: number
+  dipDeg: number
+  cool: [number, number, number]
+  coolScaleDeg: number
+  warm: [number, number, number]
+  warmScaleDeg: number
+  side: [number, number]
+  starScaleDeg: number
+  starCut: number
+}
+
+export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir }
+
+const AIR_VERT = /* glsl */ `
+out vec3 vDir;
+out vec3 vClip;
+void main() {
+  vDir = position;
+  gl_Position = projectionMatrix * vec4(mat3(modelViewMatrix) * position, 1.0);
+  vClip = gl_Position.xyw;
+  gl_Position.z = gl_Position.w * 0.9999;
+}`
+
+const AIR_FRAG = /* glsl */ `
+precision highp float;
+uniform vec3 uUp;
+uniform float uDip;
+uniform vec3 uCool;
+uniform vec3 uWarm;
+uniform vec4 uScale;
+uniform vec2 uSide;
+uniform float uSpan;
+uniform float uGain;
+uniform float uVignette;
+uniform float uAspect;
+uniform int uDiag;
+in vec3 vDir;
+in vec3 vClip;
+out vec4 outColor;
+void main() {
+  if (uDiag >= 2) discard;
+  vec3 d = normalize(vDir);
+  float elev = max(asin(clamp(dot(d, uUp), -1.0, 1.0)) + uDip, 0.0);
+  float across = clamp(d.x / max(-d.z, 0.2) / uSpan, -1.0, 1.0) * 0.5 + 0.5;
+  float side = mix(uSide.x, uSide.y, across);
+  vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(1.0, side, 0.35);
+  float cut = uScale.w * exp(-elev / uScale.z);
+  vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+  outColor = vec4(glow * uGain * vig, cut);
+}`
 
 const VERT = /* glsl */ `
 in vec2 aImage;
@@ -44,6 +96,7 @@ uniform sampler2D uAlpha;
 uniform sampler2D uMasks;
 uniform float uHasAlpha;
 uniform vec2 uSize;
+uniform vec4 uMaskBox;
 uniform vec2 uToLayer;
 uniform vec2 uMist;
 uniform vec2 uDust;
@@ -59,7 +112,8 @@ out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 void main() {
-  vec3 m = texture(uMasks, vec2(vImage.x, 1.0 - vImage.y)).rgb;
+  vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
+  vec3 m = texture(uMasks, vec2(mq.x, 1.0 - mq.y)).rgb;
   vec2 shift = uMist * m.r + uDust * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) * uToLayer;
   vec4 texel = texture(uColor, uv);
@@ -74,9 +128,12 @@ void main() {
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
 
+const rad = THREE.MathUtils.degToRad
+
 export class Relief {
   readonly group = new THREE.Group()
   private readonly layers: Layer[] = []
+  private air: Layer | null = null
   private readonly def: ReliefDef
   private readonly motion: ReliefMotion
 
@@ -91,6 +148,35 @@ export class Relief {
     const masks = await ctx.texture(base + def.masks, { srgb: false, mips: false })
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
     const aspect = W / H
+    const a = motion.air
+    if (a) {
+      const material = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
+        vertexShader: AIR_VERT,
+        fragmentShader: AIR_FRAG,
+        uniforms: {
+          uUp: { value: new THREE.Vector3(0, Math.cos(rad(a.pitchDeg)), Math.sin(rad(a.pitchDeg))) }, uDip: { value: rad(a.dipDeg) },
+          uCool: { value: new THREE.Vector3().fromArray(a.cool) }, uWarm: { value: new THREE.Vector3().fromArray(a.warm) },
+          uScale: { value: new THREE.Vector4(rad(a.coolScaleDeg), rad(a.warmScaleDeg), rad(a.starScaleDeg), a.starCut) },
+          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uSpan: { value: th * aspect },
+          uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        },
+        transparent: true,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.OneFactor,
+        blendDst: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: THREE.OneFactor,
+        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+        side: THREE.BackSide,
+        depthTest: false,
+        depthWrite: false,
+      })
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), material)
+      mesh.frustumCulled = false
+      mesh.renderOrder = -1
+      r.group.add(mesh)
+      r.air = { mesh, material }
+    }
     for (let k = 0; k < def.layers.length; k++) {
       const l = def.layers[k]!
       const color = await ctx.texture(base + l.color, { srgb: true, anisotropy: 8 })
@@ -160,7 +246,7 @@ export class Relief {
         fragmentShader: FRAG,
         uniforms: {
           uColor: { value: color }, uAlpha: { value: alpha ?? color }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
-          uSize: { value: new THREE.Vector2(size.width, size.height) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) },
+          uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) },
           uMist: { value: new THREE.Vector2() }, uDust: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 },
           uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform,
         },
@@ -186,6 +272,12 @@ export class Relief {
   update(dt: number, gain: number, vignette: number, view: RenderView): void {
     const d = this.def
     const m = this.motion
+    if (this.air) {
+      const u = this.air.material.uniforms
+      u.uGain!.value = gain
+      u.uVignette!.value = vignette
+      u.uAspect!.value = view.format.width / view.format.height
+    }
     for (const l of this.layers) {
       const u = l.material.uniforms
       ;(u.uMist!.value as THREE.Vector2).set(d.mistDir[0] * m.mistSpeed * dt, d.mistDir[1] * m.mistSpeed * dt)
@@ -197,6 +289,10 @@ export class Relief {
   }
 
   dispose(): void {
+    if (this.air) {
+      this.air.mesh.geometry.dispose()
+      this.air.material.dispose()
+    }
     for (const l of this.layers) {
       l.mesh.geometry.dispose()
       l.material.dispose()

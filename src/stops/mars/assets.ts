@@ -1,12 +1,12 @@
 import type { ReliefDef } from '../../terrain/relief'
 import reliefJson from './relief.json'
+import wrapJson from './wrap.json'
 
 export const wrap = {
-  storm: { lon: -112, lat: 18, radiusDeg: 14, sense: 1 },
-  cap: { lon: 0, lat: 86 },
+  storm: { lon: wrapJson.storm.center_lon, lat: wrapJson.storm.center_lat, radiusDeg: wrapJson.storm.radius_core_deg, counterclockwise: true },
   sets: {
-    full: { color: [8192, 4096] as [number, number], height: [4096, 2048] as [number, number] },
-    web: { color: [4096, 2048] as [number, number], height: [2048, 1024] as [number, number] },
+    full: { color: [wrapJson.color.full.width, wrapJson.color.full.height] as [number, number], height: [wrapJson.height.full.width, wrapJson.height.full.height] as [number, number] },
+    web: { color: [wrapJson.color.web.width, wrapJson.color.web.height] as [number, number], height: [wrapJson.height.web.width, wrapJson.height.web.height] as [number, number] },
   },
 }
 
@@ -34,6 +34,7 @@ function reliefDef(key: 'full' | 'web'): ReliefDef {
       return { color: name(f.color), alpha: name(f.alpha), dist: name(f.dist), box: [l.box.x * k, l.box.y * k, l.box.w * k, l.box.h * k], distSize: [d[0]!, d[1]!], tint: TINTS[i % TINTS.length]! }
     }),
     masks: name(reliefJson.masks[key]),
+    maskBox: [reliefJson.masks.box.x * k, reliefJson.masks.box.y * k, reliefJson.masks.box.w * k, reliefJson.masks.box.h * k],
     mistDir: reliefJson.mistDriftImageDir as [number, number],
   }
 }

@@ -16,16 +16,21 @@ export interface MoonBodyOptions {
   ambient: [number, number, number]
   bounce: [number, number, number]
   sun: [number, number, number]
+  bump?: number
+  power?: number
+  rim?: number
   segments?: number
 }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vView;
+out vec3 vEye;
 void main() {
   vLocal = position;
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   vView = mv.xyz;
+  vEye = transpose(mat3(modelViewMatrix)) * -mv.xyz;
   gl_Position = projectionMatrix * mv;
 }`
 
@@ -44,8 +49,10 @@ uniform vec3 uAmbient;
 uniform vec3 uBounce;
 uniform vec3 uSunB;
 uniform vec3 uBounceB;
+uniform vec3 uShape;
 in vec3 vLocal;
 in vec3 vView;
+in vec3 vEye;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
@@ -64,8 +71,15 @@ void main() {
   vec3 a = surface(normalize(d + east * uStep)) - surface(normalize(d - east * uStep));
   vec3 b = surface(normalize(d + north * uStep)) - surface(normalize(d - north * uStep));
   vec3 n = normalize(cross(a, b));
+  float wide = uStep * 10.0;
+  vec3 ca = surface(normalize(d + east * wide)) - surface(normalize(d - east * wide));
+  vec3 cb = surface(normalize(d + north * wide)) - surface(normalize(d - north * wide));
+  vec3 g = normalize(cross(ca, cb));
+  n = normalize(g + (n - g) * uShape.x);
   vec3 albedo = inverseFilmic(equirect(uMap, d).rgb);
-  float ndl = max(dot(n, uSunB), 0.0);
+  float ndl = pow(max(dot(n, uSunB), 0.0), uShape.y);
+  float edge = pow(1.0 - max(dot(g, normalize(vEye)), 0.0), 3.0);
+  ndl += uShape.z * edge * smoothstep(-0.25, 0.35, dot(g, uSunB));
   float nb = max(dot(n, uBounceB) * 0.6 + 0.4, 0.0);
   vec3 col = albedo * (uSunTint * ndl * uSunGain + uBounce * nb + uAmbient) * uGain;
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
@@ -83,6 +97,13 @@ export class MoonBody {
     const [w, h] = o.heightSize
     const v = new THREE.Vector3()
     const at = (x: number, y: number): number => o.heights[Math.min(Math.max(y, 0), h - 1) * w + (((x % w) + w) % w)]!
+    const cap = (row: number): number => {
+      let sum = 0
+      for (let x = 0; x < w; x++) sum += o.heights[row * w + x]!
+      return sum / w
+    }
+    const south = cap(0)
+    const north = cap(h - 1)
     for (let i = 0; i < pos.count; i++) {
       v.fromBufferAttribute(pos, i).normalize()
       const fx = (Math.atan2(v.x, v.z) / (2 * Math.PI) + 0.5) * w - 0.5
@@ -91,7 +112,9 @@ export class MoonBody {
       const y0 = Math.floor(fy)
       const tx = fx - x0
       const ty = fy - y0
-      const value = (at(x0, y0) * (1 - tx) + at(x0 + 1, y0) * tx) * (1 - ty) + (at(x0, y0 + 1) * (1 - tx) + at(x0 + 1, y0 + 1) * tx) * ty
+      const polar = Math.min(Math.max((Math.abs(v.y) - 0.985) / 0.014, 0), 1)
+      const raw = (at(x0, y0) * (1 - tx) + at(x0 + 1, y0) * tx) * (1 - ty) + (at(x0, y0 + 1) * (1 - tx) + at(x0 + 1, y0 + 1) * tx) * ty
+      const value = raw + ((v.y > 0 ? north : south) - raw) * polar
       v.multiplyScalar(o.lo + (o.hi - o.lo) * value)
       pos.setXYZ(i, v.x, v.y, v.z)
     }
@@ -106,6 +129,7 @@ export class MoonBody {
         uLo: { value: o.lo }, uHi: { value: o.hi }, uGain: { value: 1 }, uSunGain: { value: o.gain },
         uSunTint: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) }, uBounce: { value: new THREE.Vector3().fromArray(o.bounce) },
         uSunB: { value: new THREE.Vector3(1, 0, 0) }, uBounceB: { value: new THREE.Vector3(0, 0, -1) },
+        uShape: { value: new THREE.Vector3(o.bump ?? 1, o.power ?? 1, o.rim ?? 0) },
         uDiag: diagUniform,
       },
     })

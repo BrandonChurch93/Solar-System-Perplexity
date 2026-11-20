@@ -1,6 +1,10 @@
 import type { HazeParams } from '../../bodies/haze'
 import type { PlanetLight } from '../../bodies/planet'
 import fitted from './curve.json'
+import hazeJson from './haze.json'
+import reliefJson from './relief.json'
+
+const reliefCamera = reliefJson.camera
 
 export const light: PlanetLight = {
   wrap: 0.2,
@@ -14,23 +18,19 @@ export const light: PlanetLight = {
   curve: fitted.curve,
 }
 
-export const haze: HazeParams = {
-  scaleHeight: 0.006,
-  depth: 0.03,
-  day: [0.6, 0.78, 1.0],
-  twilight: [0.16, 0.26, 0.5],
-  strength: 0.55,
-  extinction: 0.6,
-  forward: 1.2,
-  top: 10,
-}
+export const haze = hazeJson.ground as HazeParams
+export const shellHaze = hazeJson.shell as HazeParams
 
 export const moon = {
-  gain: 1.7,
-  sun: [1, 0.9, 0.78] as [number, number, number],
+  gain: 2.3,
+  sun: [1, 0.84, 0.68] as [number, number, number],
   ambient: [0.01, 0.01, 0.012] as [number, number, number],
-  bounce: [0.05, 0.03, 0.022] as [number, number, number],
+  bounce: [0.1, 0.045, 0.03] as [number, number, number],
   tumbleDegPerSecond: 0.9,
+  bump: 1.8,
+  power: 1.25,
+  rim: 0.5,
+  sunBias: [-0.35, 0.3, 0.02] as [number, number, number],
 }
 
 export const storm = { degPerSecond: 1.1 }
@@ -40,4 +40,15 @@ export const relief = {
   dustSpeed: 0.0022,
   dustDir: [0.92, 0.38] as [number, number],
   mesh: 420,
+  air: {
+    pitchDeg: -reliefCamera.pitchDeg,
+    dipDeg: reliefCamera.horizonDipDeg,
+    cool: [0.022, 0.024, 0.027] as [number, number, number],
+    coolScaleDeg: 12,
+    warm: [0.27, 0.19, 0.14] as [number, number, number],
+    warmScaleDeg: 0.95,
+    side: [0.55, 1.4] as [number, number],
+    starScaleDeg: 1.5,
+    starCut: 0.9,
+  },
 }

@@ -12,7 +12,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 2 gate
+- Last push: 2026-11-20 UTC, Phase 3 work before round 3
 
 ## Latest pictures
 
@@ -228,6 +228,15 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 3. The relief shader cancels the lens vignette, because the approved close image carries its own.
 - Phase 3. Phobos is a displaced mesh lit with direct light, a faint ambient and a faint warm bounce from Mars, with no cast self shadow. A cast shadow blacks out Stickney, which the approved image shows lit on its rim.
 - Phase 3. The storm churns by rotating the color lookup about the storm center inside the storm mask, faster near the center. The rotation is zero at the judged hold frame.
+- Phase 3. One sky for the whole film: the sky map and the star points share one fixed rotation (`src/space/skyframe.json`, written by `tools/assets/skyframe.ts` from the Mars hold camera) and one grade (cool tint, gamma, fine star grain), chosen so the Mars hold shows the Milky Way band where the approved hero has it. Stars stay points.
+- Phase 3. The planet's light is a measured curve over the sun angle, not a formula: `tools/assets/lightcurve.py` divides the approved hero (tone curve and ground haze removed) by the wrap map and takes the median per angle. The curve is `src/stops/mars/curve.json`. A formula light could not give the hero's long dim twilight and bright core together.
+- Phase 3. The wrap map on the hero's side is the hero itself (ladder rung 2 for "The orbit view does not match its approved hero image", taken before round 1 because the first compare showed the painted map's colors drifting from the hero). `assets-src/mars/wrap/match.py` keeps the agent's painted map everywhere the hero cannot see, behind Phobos and near the limb. Recipe in `assets-src/mars/wrap/RECIPE.md`.
+- Phase 3. Haze is two parts with their own numbers in `src/stops/mars/haze.json`: a warm thin ground haze drawn inside the planet shader (it is what the light fit removes from the hero) and a cool blue shell outside the limb. Both have a faint night term so the dark limb reads against the sky as it does in the hero.
+- Phase 3. The terrain view gets an air layer: a glow above the horizon (a warm thin band and a cool tall one, brighter toward the Sun's side) that also dims the stars near the horizon. Fitted by eye and by pixel readings from the approved close image. Without it the film's sky above the horizon was black and the Milky Way cut hard into the horizon.
+- Phase 3. The terrain move stays inside the relief's measured safe move from `relief.json` (forward 0.15, rise 0.045, pan 0.45 degrees). The live look-around clamp uses the same numbers.
+- Phase 3. A dark wedge at the foot of the far mesa was the hidden fill of relief layer L0 showing through the soft edge of L2. Repainted with `assets-src/mars/relief/fillfix.py`.
+- Phase 3. Phobos: lit a little more from the camera's side than the planet's Sun (a fixed offset to its light direction) so its lit face and the shadowed Stickney read as in the approved hero, plus a soft rim term and stronger crater shading. Pole rows of its height map are averaged so the mesh has no spike at its poles.
+- Phase 3. Until the patch agent delivers, the dive is tested with patches cut from the wrap map itself. Those files are never committed.
 
 ## Open items
 
@@ -276,6 +285,7 @@ None yet.
 - 2026-11-20 UTC: Phase 2 round 2 closed. Merged `agent/assets-shared`.
 - 2026-11-20 UTC: Phase 3 decisions logged.
 - 2026-11-20 UTC: Phase 2 gate. `out/preview.mp4` and the blockout sheets.
+- 2026-11-20 UTC: Phase 3 work before round 3: Mars set code, Phobos, relief with margin, wrap maps from the agent, light curve, haze, air layer, sky frame.
 
 ## Session log
 

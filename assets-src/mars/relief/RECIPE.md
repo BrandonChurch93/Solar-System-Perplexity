@@ -141,6 +141,10 @@ All written by `assets-src/mars/relief/build.py` with `MARGIN=1` unless noted. I
 - The far plain in the left margin near the horizon has a faint horizontal streak texture from the take.
 - The margin distance is the ground model plus a constant offset copied from the frame edge, so relief in the margin is flatter than inside.
 
+## Fill fix (lead, Phase 3)
+
+The hidden band of `relief-L0-color.jpg` behind the L2 mesa carried a near black wedge that showed as a dark sliver along the mesa's foot in the film view. `python3 assets-src/mars/relief/fillfix.py` (run once from the repo root on the agent's files at commit 58d0e17) repaints only that wedge, about 56,000 px at full size inside a hand outline, with an OpenCV inpaint from its surroundings plus fine noise. No image model is used. Nothing visible in the close image's own view changes.
+
 ## Ledger rows
 
 None. No third party downloads were used.

@@ -80,6 +80,16 @@ Tiles e3 and sp3 failed once with a service error and were run again with the sa
 - Height relief comes from the painted lightness (albedo read as relief); volcano shields come from the warped MOLA.
 - Slight diagonal crosshatch texture from the generator in places.
 
+## Hero match pass (lead, Phase 3)
+
+Made by the Builder after the agent's delivery, because the film's hold frame is judged against the approved hero and the painted map differed from it in color on the visible side (a fiery orange zone near lon -65, lat 15, paler plains at the upper left, a darker night side).
+
+- Tool: `python3 assets-src/mars/wrap/match.py <source wrap> public/assets/mars 12`, run from the repo root. No image model is used.
+- Inputs: the agent's `public/assets/mars/full/wrap-color.jpg` at commit 4181fcf as the source wrap, `references/approved/mars-hero.png`, `assets-src/mars/fit.json`, the ground haze in `src/stops/mars/haze.json`, `tools/assets/lightcurve.py`.
+- Steps: 1. Remove the tone curve and the fitted ground haze from the hero. 2. Fit the light curve over the sun angle (hero over map, median per angle bin), correct the map's low frequencies toward the hero (blur 12 px near, 80 px far, two passes), refit. 3. Inside the hero's frame, away from the frame edge and the limb, replace the map with the hero divided by the light curve at full strength (ladder rung 2 of "The orbit view does not match its approved hero image"). 4. Behind Phobos (a hand outline dilated 12 px) the hero has no surface: the low frequencies there are an inpaint of the divided hero and the detail is the agent's painted map. 5. Outside the frame and past the limb the agent's map is kept with the low frequency correction faded out.
+- Outputs: `public/assets/mars/full/wrap-color.jpg`, `public/assets/mars/web/wrap-color.jpg`, and the fitted curve `src/stops/mars/curve.json`.
+- Then the dive patches are baked in with `assets-src/mars/patches/bake.py` (see that folder's recipe).
+
 ## Ledger rows
 
 | File | What it is | Source URL | License | Credit line | Date fetched |
