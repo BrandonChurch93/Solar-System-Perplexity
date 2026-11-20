@@ -4,9 +4,10 @@ A three minute flight through the solar system, from the surface of the Sun to b
 
 ## Status
 
-The build has not started. This repo holds the approved reference images and the build kit.
+The build is in progress. `kit/PROGRESS.md` says where it is.
 
-- App URL: not published yet
+- App URL: https://grand-tour-film.pplx.app
+- Review page, where the rough cut, the preview film, clips and comparison images play: https://grand-tour-film.pplx.app/review.html
 - Progress: `kit/PROGRESS.md`
 - The 18 approved images: `references/approved/contact-sheet.jpg`
 

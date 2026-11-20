@@ -8,11 +8,11 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Current stop: none
 - Current round: none
 - Blocked: no
-- App URL: not published yet
+- App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-19, Phase 0 start
+- Last push: 2026-11-19, Phase 0 gate
 
 ## Latest pictures
 
@@ -24,7 +24,7 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 
 | Phase | State | Gate evidence | Commit |
 | --- | --- | --- | --- |
-| 0 · Ground truth | in progress | | |
+| 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
 | 1 · Rough cut | not started | | |
 | 2 · Engine and blockout | not started | | |
 | 3 · Mars, the look lock | not started | | |
@@ -132,7 +132,8 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 0. Scene conventions: right-handed, camera looks down -Z, +Y up, every body has radius 1 at its stop origin. Wrap maps are equirectangular: u = lon / 360 + 0.5, v = lat / 180 + 0.5, lon 0 lat 0 faces local +Z. Each stop's fitted camera, sun direction and globe rotation live in `assets-src/<stop>/fit.json`.
 - Phase 0. Each sample is rendered in linear light to a half float target, samples are averaged in a 32 bit float target, and bloom, tone curve and grade run once on the average. The alpha channel of the average carries body coverage for G5. The sky is drawn with the mid-shutter orientation in every sample.
 - Phase 0. Only weights with a license that permits commercial use are installed for adding resolution and depth.
-- Phase 0. Publishing: the kickoff prompt asks for the app to be published and forbids questions, so the Builder chose the address itself. See the App URL in Status.
+- Phase 0. Publishing: the kickoff prompt asks for the app to be published and forbids questions, so the Builder chose the address `grand-tour-film` itself. The host set visibility to Organization. Brandon can change that from the app card's Publish menu. A security review of the static build found nothing. The deploy step's automatic look check objected to the spike's stand-in picture, so validation is switched off for deploys while stand-ins are on screen.
+- Phase 0. The published site asks for a sign-in, so the harness cannot read clips back from it. When a stop is finished its clip is also kept with `npm run keep -- --clips --stop <id>`, which is the case `AGENTS.md` allows, so a later task can rebuild the review page.
 - Phase 0. `critics.maxImageLongEdgePx` unchanged after the image limit test.
 
 ## Open items
@@ -163,9 +164,12 @@ None yet.
 
 - The kit was pushed by the planner on 2026-11-19.
 - 2026-11-19: Builder push test, Phase 0 step 1.
+- 2026-11-19: Phase 0 scaffold, harness, spike, records. Merged `agent/tools-ml`.
+- 2026-11-19: Phase 0 gate.
 
 ## Session log
 
 One entry per task: when it started, what it did, where it stopped.
 
 - Task 1, started 2026-11-19 (America/Boise evening). Kickoff prompt without the Mars approval line. Read AGENTS.md and the kit in order. No addenda. Started Phase 0.
+  - Progress note, Phase 0 gate: the engine scaffold, the harness and a spike scene work under software rendering, and every Phase 0 check is green. App: https://grand-tour-film.pplx.app, review page at /review.html (empty until the rough cut lands). Next: the rough cut, then the engine and the blockout of all nine stops. Open: none.
