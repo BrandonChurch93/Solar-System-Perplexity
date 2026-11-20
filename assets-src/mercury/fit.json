@@ -1,0 +1,111 @@
+{
+  "stop": "mercury",
+  "imageSize": [
+    2816,
+    1584
+  ],
+  "vfovDeg": 30.0,
+  "aspect": 1.7777777777777777,
+  "circle": {
+    "cx": 1221.59,
+    "cy": 824.2,
+    "r": 718.91
+  },
+  "silhouette": {
+    "model": "perspective sphere fitted on limb rays",
+    "bodyCenterPx": [
+      1231.29,
+      822.31
+    ],
+    "angularRadiusDeg": 13.63927,
+    "distance": 4.240734,
+    "limbPoints": 669,
+    "residualRmsPx": 1.233,
+    "residualMedianAbsPx": 0.85,
+    "sectorMedianResidualPx": {
+      "0": 1.04,
+      "30": -5.99,
+      "60": 7.38,
+      "90": -3.89,
+      "120": -3.67,
+      "150": 12.26,
+      "180": 14.2,
+      "210": -19.51,
+      "240": 0.01,
+      "270": 0.35,
+      "300": -1.61,
+      "330": 0.42
+    },
+    "note": ""
+  },
+  "camera": {
+    "position": [
+      0.253064,
+      0.043411,
+      4.232954
+    ],
+    "quaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
+  },
+  "sunDir": [
+    0.835027,
+    0.548878,
+    -0.038235
+  ],
+  "sunFit": {
+    "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
+    "shadingRms": 0.05327,
+    "terminatorRmsDeg": 12.97355,
+    "terminatorSamples": 5505,
+    "discSamples": 91983,
+    "gain": 1.03118,
+    "ambient": 0.0439
+  },
+  "moons": [],
+  "globe": {
+    "quaternion": [
+      -0.0051161,
+      0.0298517,
+      0.0001528,
+      0.9995412
+    ],
+    "meshQuaternionForThreeSphereGeometry": [
+      -0.0035096,
+      -0.685674,
+      0.0037257,
+      0.7278908
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "northPole": [
+      -0.000611,
+      0.999948,
+      -0.010218
+    ],
+    "subCameraLonDeg": -0.0,
+    "subCameraLatDeg": -0.0,
+    "method": "pole angle and sub-camera latitude",
+    "note": "",
+    "subSolarLonDeg": 88.815,
+    "subSolarLatDeg": 33.28
+  },
+  "unproject": {},
+  "conventions": {
+    "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
+    "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
+    "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+  }
+}

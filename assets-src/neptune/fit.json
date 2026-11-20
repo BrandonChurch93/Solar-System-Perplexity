@@ -1,0 +1,123 @@
+{
+  "stop": "neptune",
+  "imageSize": [
+    2816,
+    1584
+  ],
+  "vfovDeg": 30.0,
+  "aspect": 1.7777777777777777,
+  "circle": {
+    "cx": 1410.57,
+    "cy": 1208.53,
+    "r": 1003.96
+  },
+  "silhouette": {
+    "model": "perspective sphere fitted on limb rays",
+    "bodyCenterPx": [
+      1408.33,
+      1176.17
+    ],
+    "angularRadiusDeg": 18.65005,
+    "distance": 3.12708,
+    "limbPoints": 454,
+    "residualRmsPx": 3.931,
+    "residualMedianAbsPx": 1.982,
+    "sectorMedianResidualPx": {
+      "0": 14.79,
+      "150": -43.97,
+      "180": -11.94,
+      "210": 1.59,
+      "240": -1.77,
+      "270": -0.04,
+      "300": 0.53,
+      "330": -1.94
+    },
+    "note": ""
+  },
+  "camera": {
+    "position": [
+      -0.00035,
+      0.40304,
+      3.100998
+    ],
+    "quaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
+  },
+  "sunDir": [
+    0.71645,
+    0.697532,
+    -0.012168
+  ],
+  "sunFit": {
+    "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
+    "shadingRms": 0.08236,
+    "terminatorRmsDeg": 14.49602,
+    "terminatorSamples": 6189,
+    "discSamples": 133326,
+    "gain": 0.94054,
+    "ambient": 0.03047
+  },
+  "moons": [
+    {
+      "id": "triton",
+      "cx": 338.14,
+      "cy": 408.13,
+      "r": 94.48,
+      "depthFrom": "orbit radius 14 body radii, back side",
+      "position": [
+        -5.671008,
+        2.437694,
+        -12.56572
+      ],
+      "radius": 0.475967,
+      "distanceFromCamera": 16.78518,
+      "distanceFromBody": 14.0
+    }
+  ],
+  "globe": {
+    "quaternion": [
+      -0.0645783,
+      -5.63e-05,
+      -3.6e-06,
+      0.9979126
+    ],
+    "meshQuaternionForThreeSphereGeometry": [
+      -0.0456663,
+      -0.7056706,
+      0.0456611,
+      0.705591
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "northPole": [
+      1.5e-05,
+      0.991659,
+      -0.128887
+    ],
+    "subCameraLonDeg": 0.0,
+    "subCameraLatDeg": -0.0,
+    "method": "pole angle and sub-camera latitude",
+    "note": "",
+    "subSolarLonDeg": 83.806,
+    "subSolarLatDeg": 43.891
+  },
+  "unproject": {},
+  "conventions": {
+    "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
+    "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
+    "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+  }
+}

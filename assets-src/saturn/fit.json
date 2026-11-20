@@ -1,0 +1,163 @@
+{
+  "stop": "saturn",
+  "imageSize": [
+    2816,
+    1584
+  ],
+  "vfovDeg": 30.0,
+  "aspect": 1.7777777777777777,
+  "circle": {
+    "cx": 1498.09,
+    "cy": 831.22,
+    "r": 552.22
+  },
+  "silhouette": {
+    "model": "perspective oblate spheroid fitted on limb rays",
+    "bodyCenterPx": [
+      1504.98,
+      774.17
+    ],
+    "angularRadiusDeg": 10.36186,
+    "distance": 5.559743,
+    "limbPoints": 405,
+    "residualRmsPx": 3.38,
+    "residualMedianAbsPx": 2.928,
+    "sectorMedianResidualPx": {
+      "0": -4.66,
+      "30": 27.45,
+      "60": 51.09,
+      "90": 55.48,
+      "120": 57.34,
+      "150": 12.94,
+      "180": 4.1,
+      "210": -3.61,
+      "240": -4.09,
+      "270": 3.93,
+      "300": -4.0,
+      "330": -0.74
+    },
+    "note": "the painted globe is clearly oblate, so the silhouette is an oblate spheroid with the pole on the ring normal"
+  },
+  "camera": {
+    "position": [
+      -0.182312,
+      -0.033514,
+      5.556652
+    ],
+    "quaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
+  },
+  "rings": {
+    "normal": [
+      0.200721,
+      0.864154,
+      0.461464
+    ],
+    "inner": 1.2458,
+    "outer": 2.3088,
+    "edges": {
+      "outer": {
+        "radius": 2.3088,
+        "std": 0.15443,
+        "points": 747
+      },
+      "inner": {
+        "radius": 1.2458,
+        "std": 0.01947,
+        "points": 113
+      }
+    },
+    "normalMethod": "ellipse",
+    "ellipse": {
+      "ellipseCenterPx": [
+        1471.99,
+        1034.25
+      ],
+      "ellipseAxesPx": [
+        2735.24,
+        1229.26
+      ],
+      "poleAngleDeg": 13.976,
+      "openingDeg": 26.706
+    },
+    "note": "inner and outer are the edges of the bright rings at blurred luminance 0.25; the faint C ring inside and the thin outer ringlet beyond are not included",
+    "poleToRingNormalDeg": 0.0
+  },
+  "sunDir": [
+    -0.862579,
+    0.4711,
+    0.184451
+  ],
+  "sunFit": {
+    "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
+    "shadingRms": 0.08086,
+    "terminatorRmsDeg": 14.89446,
+    "terminatorSamples": 695,
+    "discSamples": 43556,
+    "gain": 1.09572,
+    "ambient": 0.08554
+  },
+  "moons": [
+    {
+      "id": "titan",
+      "cx": 2470.52,
+      "cy": 251.86,
+      "r": 49.28,
+      "depthFrom": "orbit radius 20 body radii, back side",
+      "position": [
+        8.194999,
+        4.225177,
+        -17.747954
+      ],
+      "radius": 0.364424,
+      "distanceFromCamera": 25.12808,
+      "distanceFromBody": 20.0
+    }
+  ],
+  "globe": {
+    "quaternion": [
+      0.2340572,
+      -0.0435615,
+      -0.1146307,
+      0.9644581
+    ],
+    "meshQuaternionForThreeSphereGeometry": [
+      0.0844473,
+      -0.7127775,
+      -0.2465596,
+      0.6511722
+    ],
+    "scale": [
+      1.0,
+      0.902,
+      1.0
+    ],
+    "northPole": [
+      0.200721,
+      0.864154,
+      0.461464
+    ],
+    "subCameraLonDeg": 0.0,
+    "subCameraLatDeg": 29.15,
+    "method": "pole from ring normal",
+    "note": "pole on the ring normal, north toward the visible pole at the top",
+    "subSolarLonDeg": -85.502,
+    "subSolarLatDeg": 18.607
+  },
+  "unproject": {},
+  "conventions": {
+    "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
+    "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
+    "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+  }
+}
