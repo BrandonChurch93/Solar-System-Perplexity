@@ -182,8 +182,8 @@ export async function createStandinSet(ctx: SetContext, plan: StopPlan): Promise
   let ringMat: THREE.ShaderMaterial | null = null
   if (fit.rings) {
     const thin = (fit.rings.outer - fit.rings.inner) / fit.rings.inner < 0.2
-    const inner = thin ? Math.min(fit.rings.inner, fit.rings.outer * 0.9) : fit.rings.inner
-    const outer = thin ? Math.max(fit.rings.outer, fit.rings.inner * 1.04) : fit.rings.outer
+    const inner = thin ? Math.min(fit.rings.inner, fit.rings.outer * 0.975) : fit.rings.inner
+    const outer = thin ? Math.max(fit.rings.outer, fit.rings.inner * 1.025) : fit.rings.outer
     ringMat = shader(RING, { uLightLocal: { value: new THREE.Vector3(1, 0, 0) }, uColor: { value: new THREE.Vector3().fromArray(plan.p.tint) }, uInner: { value: inner }, uOuter: { value: outer }, uGain: { value: 1 }, uThin: { value: thin ? 1 : 0 } }, { transparent: true, depthWrite: false, side: THREE.DoubleSide })
     const ring = new THREE.Mesh(new THREE.RingGeometry(inner, outer, 256, 4), ringMat)
     ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3().fromArray(fit.rings.normal).normalize())

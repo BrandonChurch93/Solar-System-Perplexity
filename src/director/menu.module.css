@@ -45,11 +45,12 @@
   color: #d8dbe1;
   font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+  visibility: hidden;
   transform: translateX(100%);
-  transition: transform 0.22s ease;
 }
 
 .menu.open {
+  visibility: visible;
   transform: none;
 }
 

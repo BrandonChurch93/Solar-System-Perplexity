@@ -119,7 +119,57 @@ These are for the spike, which is far lighter than a finished stop. `AGENTS.md` 
 
 ## Judged frames
 
-To be computed in Phase 2 from `judged.fractions`.
+Computed in Phase 2 by `judgedFrames()` in `src/director/timeline.ts` from `film.hookSeconds` and `judged.fractions`. Frames are added, never removed.
+
+| Frame | Segment | Stop | Why |
+| --- | --- | --- | --- |
+| 0 | sun.terrain | sun | frame 0 |
+| 60 | sun.terrain | sun | hook |
+| 90 | sun.terrain | sun | terrain |
+| 247 | sun.rise | sun | rise |
+| 360 | sun.hold | sun | hold |
+| 495 | sun.travel | sun | travel |
+| 615 | mercury.hold | mercury | hold |
+| 717 | mercury.dive | mercury | dive |
+| 870 | mercury.terrain | mercury | terrain |
+| 1016 | mercury.rise | mercury | rise |
+| 1072 | mercury.travel | mercury | travel |
+| 1185 | venus.hold | venus | hold |
+| 1287 | venus.dive | venus | dive |
+| 1440 | venus.terrain | venus | terrain |
+| 1586 | venus.rise | venus | rise |
+| 1642 | venus.travel | venus | travel |
+| 1755 | earth.hold | earth | hold |
+| 1857 | earth.dive | earth | dive |
+| 2010 | earth.terrain | earth | terrain |
+| 2156 | earth.rise | earth | rise |
+| 2212 | earth.travel | earth | travel |
+| 2325 | mars.hold | mars | hold |
+| 2427 | mars.dive | mars | dive |
+| 2580 | mars.terrain | mars | terrain |
+| 2726 | mars.rise | mars | rise |
+| 2782 | mars.travel | mars | travel |
+| 2895 | jupiter.hold | jupiter | hold |
+| 2997 | jupiter.dive | jupiter | dive |
+| 3150 | jupiter.terrain | jupiter | terrain |
+| 3296 | jupiter.rise | jupiter | rise |
+| 3352 | jupiter.travel | jupiter | travel |
+| 3465 | saturn.hold | saturn | hold |
+| 3567 | saturn.dive | saturn | dive |
+| 3720 | saturn.terrain | saturn | terrain |
+| 3866 | saturn.rise | saturn | rise |
+| 3922 | saturn.travel | saturn | travel |
+| 4035 | uranus.hold | uranus | hold |
+| 4137 | uranus.dive | uranus | dive |
+| 4290 | uranus.terrain | uranus | terrain |
+| 4436 | uranus.rise | uranus | rise |
+| 4492 | uranus.travel | uranus | travel |
+| 4605 | neptune.hold | neptune | hold |
+| 4707 | neptune.dive | neptune | dive |
+| 4860 | neptune.terrain | neptune | terrain |
+| 5006 | neptune.rise | neptune | rise |
+| 5085 | ending.retreat | ending | retreat |
+| 5235 | ending.lookback | ending | lookback |
 
 ## Look lock
 
