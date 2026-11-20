@@ -8,6 +8,7 @@ Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 WEB = (1408, 792)
 MARGIN = 0.125
+RIM = (1.008, 1.02)
 
 
 def save(lin, name, out):
@@ -82,7 +83,11 @@ def hold(hero, fill, glow, out, fix=None):
     reach = (soft(near) > 0.02)[..., None] * step(d, 0.72, 1.04)[..., None]
     scale = gain * (1 - reach) + np.clip(local, gain * 0.35, gain * 2.5) * reach
     print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)))
-    lin = sky * own[..., None] + f * scale * (1 - own[..., None])
+    low = lambda v: np.stack([ndi.gaussian_filter(np.minimum(v[..., i], ndi.gaussian_filter(v[..., i], 4)), 4) for i in range(3)], -1)
+    rim = step(d, RIM[0], RIM[1])[..., None]
+    f = f * scale
+    f = f * (1 - rim) + (low(f) + np.maximum(a - low(a), 0)) * rim
+    lin = sky * own[..., None] + f * (1 - own[..., None])
     if fix:
         lin = np.maximum(lin + scene(fix[0], Image.LANCZOS) - scene(fix[1], Image.BICUBIC), 0) * own[..., None] + lin * (1 - own[..., None])
     save(lin, 'sky-hold.webp', out)
