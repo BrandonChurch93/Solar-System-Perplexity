@@ -49,7 +49,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const planet = new Planet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze,
+    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze, grazing: look.grazing,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
@@ -87,11 +87,15 @@ export const createSet: SetFactory = async (ctx) => {
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const hazeLow = new THREE.Vector3().fromArray(look.descent.hazeDay)
   const shellLow = new THREE.Vector3().fromArray(look.descent.shellDay)
+  const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
+  const grazingHome = new THREE.Vector3().fromArray(look.grazing.highlightDir).normalize().applyQuaternion(holdTurn)
+  const grazingSide = new THREE.Vector3().fromArray(look.grazing.sideDir).normalize().applyQuaternion(holdTurn)
+  const shellHome = new THREE.Vector3().fromArray(look.shellDir).normalize().applyQuaternion(holdTurn)
   const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(holdTurn)
   const glintHome = new THREE.Vector3().fromArray(look.glintDir).normalize().applyQuaternion(holdTurn)
   const camera = new THREE.Vector3()
@@ -131,9 +135,15 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       ;(pu.uHazeDay!.value as THREE.Vector3).fromArray(look.haze.day).lerp(hazeLow, low)
       pu.uHazeTau!.value = look.haze.depth * (1 + (d.hazeDepth - 1) * low)
+      ;(pu.uGrazingShape!.value as THREE.Vector4).x = look.grazing.depth * (1 - low)
+      ;(pu.uGrazingDetail!.value as THREE.Vector4).w = 1 - low
+      ;(pu.uGrazingSun!.value as THREE.Vector3).copy(grazingHome).applyQuaternion(state.rotation)
+      ;(pu.uGrazingSide!.value as THREE.Vector3).copy(grazingSide).applyQuaternion(state.rotation)
       const su = shell.material.uniforms
       ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shellHaze.day).lerp(shellLow, low)
-      su.uHazeTau!.value = look.shellHaze.depth * (1 + (d.shellDepth - 1) * low)
+      ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shellHaze.twilight).lerp(shellTwilightLow, low)
+      su.uHazeH!.value = THREE.MathUtils.lerp(look.shellHaze.scaleHeight, d.shellScaleHeight, low)
+      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shellHaze.depth, d.shellBaseDepth * d.shellDepth, low)
       edge.set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeLow, low)
       ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
       ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
@@ -141,7 +151,7 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height
       ;(shell.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
-      ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(light)
+      ;(shell.material.uniforms.uSunW!.value as THREE.Vector3).copy(shellHome).applyQuaternion(state.rotation).lerp(light, Math.max(low, lit)).normalize()
       shell.material.uniforms.uGain!.value = gain * state.weight
       ;(halo.material.uniforms.uCam!.value as THREE.Vector3).copy(camera)
       glow.copy(glowHome).applyQuaternion(state.rotation)

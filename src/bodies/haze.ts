@@ -55,12 +55,14 @@ float hazeDepth(vec3 dir, bool ground, out vec3 at) {
   at = tangent / rt;
   return max(uHazeTau * (2.0 * hazeDensity(rt - 1.0) * hazeCh(0.0) - here * hazeCh(-c)), 0.0);
 }
+float hazeForward(vec3 dir) {
+  return 1.0 + uHazeForward * pow(max(dot(dir, uSunW), 0.0), 6.0);
+}
 vec3 hazeLight(vec3 at, vec3 dir) {
   float ndl = dot(at, uSunW);
   float day = smoothstep(uHazeEdge.x, uHazeEdge.y, ndl);
   float tw = smoothstep(-0.42, -0.04, ndl) * (1.0 - smoothstep(-0.04, 0.36, ndl));
-  float fw = 1.0 + uHazeForward * pow(max(dot(dir, uSunW), 0.0), 6.0);
-  return ((uHazeDay * day * day + uHazeTwilight * tw) * fw + uHazeNight) * uHazeStrength;
+  return ((uHazeDay * day * day + uHazeTwilight * tw) * hazeForward(dir) + uHazeNight) * uHazeStrength;
 }`
 
 const VERT = /* glsl */ `

@@ -1,5 +1,5 @@
 import type { HazeParams } from '../../bodies/haze'
-import type { PlanetLight } from '../../bodies/planet'
+import type { GrazingHaze, PlanetLight } from '../../bodies/planet'
 import fitted from './curve.json'
 import hazeJson from './haze.json'
 import reliefJson from './relief.json'
@@ -20,7 +20,9 @@ export const light: PlanetLight = {
 }
 
 export const haze = hazeJson.ground as HazeParams
+export const grazing = hazeJson.grazing as GrazingHaze & { highlightDir: [number, number, number]; sideDir: [number, number, number] }
 export const shellHaze = hazeJson.shell as HazeParams
+export const shellDir = hazeJson.shellDir as [number, number, number]
 export const haloHaze = hazeJson.halo as HazeParams
 export const haloDir = hazeJson.haloDir as [number, number, number]
 export const glintHaze = hazeJson.glint as HazeParams
@@ -47,6 +49,9 @@ export const descent = {
   hazeDay: [0.4, 0.29, 0.22] as [number, number, number],
   hazeDepth: 1.5,
   shellDay: [0.42, 0.32, 0.26] as [number, number, number],
+  shellTwilight: [0.045, 0.055, 0.075] as [number, number, number],
+  shellScaleHeight: 0.016,
+  shellBaseDepth: 0.016,
   shellDepth: 1.6,
   edge: [-0.3, 0.12] as [number, number],
 }

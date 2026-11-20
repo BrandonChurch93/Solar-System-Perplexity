@@ -24,18 +24,58 @@
   "dayFrom": -0.3,
   "dayTo": 0.95
  },
+ "grazing": {
+  "depth": 2.25,
+  "width": 0.10549,
+  "duskWidth": 0.30201,
+  "power": 1.80053,
+  "dayFrom": 0.11676,
+  "dayTo": 0.29676,
+  "fill": [
+   0.35133,
+   0.32469,
+   0.28189
+  ],
+  "highlight": [
+   2.5,
+   1.21165,
+   0.89113
+  ],
+  "dusk": [
+   0.14248,
+   0.07,
+   0.13919
+  ],
+  "highlightDir": [
+   -0.7933,
+   0.53369,
+   0.29299
+  ],
+  "highlightFrom": 0.8,
+  "highlightTo": 1.13176,
+  "sideDir": [
+   -1,
+   0,
+   0
+  ],
+  "sideFrom": 0.08,
+  "sideTo": 0.3,
+  "detailFrom": 0.13,
+  "detailTo": 0.33,
+  "detailBlur": 9
+ },
  "shell": {
-  "scaleHeight": 0.016,
+  "scaleHeight": 0.01854,
   "depth": 0.016,
   "day": [
-   0.37,
-   0.43,
-   0.5
+   0.23206,
+   0.30142,
+   0.35585
   ],
   "twilight": [
-   0.045,
-   0.055,
-   0.075
+   0.03072,
+   0.03755,
+   0.0512
   ],
   "night": [
    0.016,
@@ -45,17 +85,22 @@
   "strength": 1,
   "extinction": 1,
   "forward": 1.2,
-  "top": 8,
-  "dayFrom": -0.1,
-  "dayTo": 0.8
+  "top": 6.904,
+  "dayFrom": 0.29778,
+  "dayTo": 0.64338
  },
+ "shellDir": [
+  -0.52957,
+  0.7297,
+  0.43255
+ ],
  "halo": {
-  "scaleHeight": 0.035,
+  "scaleHeight": 0.02237,
   "depth": 0.008,
   "day": [
-   0.28,
-   0.31,
-   0.33
+   0.65,
+   0.88809,
+   0.96783
   ],
   "twilight": [
    0,
@@ -70,22 +115,22 @@
   "strength": 1,
   "extinction": 1,
   "forward": 0,
-  "top": 4,
-  "dayFrom": 0.35,
-  "dayTo": 1.0
+  "top": 6.2584,
+  "dayFrom": 0.17699,
+  "dayTo": 1.023
  },
  "haloDir": [
-  -0.965,
-  0.17,
-  0.2
+  -0.99244,
+  0.07206,
+  -0.09934
  ],
  "glint": {
-  "scaleHeight": 0.03,
+  "scaleHeight": 0.02473,
   "depth": 0.008,
   "day": [
-   0.85,
-   0.68,
-   0.68
+   2.32931,
+   1.16029,
+   1.18779
   ],
   "twilight": [
    0,
@@ -100,13 +145,13 @@
   "strength": 1,
   "extinction": 1,
   "forward": 0,
-  "top": 4,
-  "dayFrom": 0.96,
-  "dayTo": 1.0
+  "top": 4.8524,
+  "dayFrom": 0.95128,
+  "dayTo": 1.023
  },
  "glintDir": [
-  -0.845,
-  0.449,
-  0.29
+  -0.87792,
+  0.40203,
+  0.26006
  ]
 }
