@@ -62,7 +62,13 @@
   "sideTo": 0.3,
   "detailFrom": 0.13,
   "detailTo": 0.33,
-  "detailBlur": 9
+  "detailBlur": 9,
+  "obliqueDetail": {
+   "viewFromDeg": 0.5,
+   "viewToDeg": 3.5,
+   "muFrom": 0.26,
+   "muTo": 0.53
+  }
  },
  "shell": {
   "scaleHeight": 0.0204,

@@ -5,6 +5,9 @@ import hazeJson from './haze.json'
 import reliefJson from './relief.json'
 
 const reliefCamera = reliefJson.camera
+const { obliqueDetail, ...grazingHaze } = hazeJson.grazing
+
+export { obliqueDetail }
 
 export const light: PlanetLight = {
   wrap: 0.2,
@@ -20,7 +23,7 @@ export const light: PlanetLight = {
 }
 
 export const haze = hazeJson.ground as HazeParams
-export const grazing = hazeJson.grazing as GrazingHaze & { highlightDir: [number, number, number]; sideDir: [number, number, number] }
+export const grazing = grazingHaze as GrazingHaze & { highlightDir: [number, number, number]; sideDir: [number, number, number] }
 export const shellHaze = hazeJson.shell as HazeParams
 export const shellDir = hazeJson.shellDir as [number, number, number]
 export const haloHaze = hazeJson.halo as HazeParams

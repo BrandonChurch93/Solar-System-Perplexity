@@ -92,7 +92,9 @@ export const createSet: SetFactory = async (ctx) => {
   const edge = new THREE.Vector2()
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
-  const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
+  const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
+  const holdTurn = holdPose.quaternion
+  const holdDirection = new THREE.Vector3()
   const grazingHome = new THREE.Vector3().fromArray(look.grazing.highlightDir).normalize().applyQuaternion(holdTurn)
   const grazingSide = new THREE.Vector3().fromArray(look.grazing.sideDir).normalize().applyQuaternion(holdTurn)
   const shellHome = new THREE.Vector3().fromArray(look.shellDir).normalize().applyQuaternion(holdTurn)
@@ -138,7 +140,14 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uHazeDay!.value as THREE.Vector3).fromArray(look.haze.day).lerp(hazeLow, low)
       pu.uHazeTau!.value = look.haze.depth * (1 + (d.hazeDepth - 1) * low)
       ;(pu.uGrazingShape!.value as THREE.Vector4).x = look.grazing.depth * (1 - low)
-      ;(pu.uGrazingDetail!.value as THREE.Vector4).w = 1 - low
+      const detail = look.obliqueDetail
+      const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
+      const wide = smooth((offAxis - detail.viewFromDeg) / (detail.viewToDeg - detail.viewFromDeg))
+      ;(pu.uGrazingDetail!.value as THREE.Vector4).set(
+        THREE.MathUtils.lerp(look.grazing.detailFrom, detail.muFrom, wide),
+        THREE.MathUtils.lerp(look.grazing.detailTo, detail.muTo, wide),
+        look.grazing.detailBlur, 1 - low,
+      )
       ;(pu.uGrazingSun!.value as THREE.Vector3).copy(grazingHome).applyQuaternion(state.rotation)
       ;(pu.uGrazingSide!.value as THREE.Vector3).copy(grazingSide).applyQuaternion(state.rotation)
       const su = shell.material.uniforms
