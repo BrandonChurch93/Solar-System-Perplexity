@@ -11,6 +11,7 @@ uniform vec3 uHorizon;
 uniform float uSoft;
 uniform vec2 uFlow;
 uniform vec2 uTan;
+uniform float uTop;
 in vec2 vUv;
 out vec4 outColor;
 float hash(vec2 p) {
@@ -43,15 +44,15 @@ void main() {
   float wisp = fbm(q * vec2(4.0, 13.0) + uFlow * 2.3 + 5.0) - 0.47;
   float band = smoothstep(-uSoft, uSoft, s + 0.12 * streak);
   vec3 col = mix(uLow, uColor, band) * (1.0 + 0.5 * streak + 0.22 * wisp);
-  col *= mix(1.0, 0.3, smoothstep(0.04, 0.55, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
-  float a = smoothstep(0.0, 1.0, uAmount * (1.35 + 0.9 * streak) - 0.18 * (1.0 - uAmount));
-  a = mix(a, 1.0, smoothstep(0.82, 1.0, uAmount));
+  col *= mix(1.0, uTop, smoothstep(0.0, 0.22, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
+  float a = smoothstep(0.0, 1.0, uAmount * (1.1 + 1.1 * streak + 0.5 * wisp) - 0.22 * (1.0 - uAmount));
+  a = mix(a, 1.0, smoothstep(0.86, 1.0, uAmount));
   outColor = vec4(col, a);
 }`
 
 export class Cover {
   private readonly pass = new Pass(FRAG, {
-    uColor: { value: new THREE.Vector3(1, 1, 1) }, uLow: { value: new THREE.Vector3(1, 1, 1) }, uAmount: { value: 0 }, uHorizon: { value: new THREE.Vector3(0, 1, 0) }, uSoft: { value: 0.2 }, uFlow: { value: new THREE.Vector2() }, uTan: { value: new THREE.Vector2(1, 1) },
+    uColor: { value: new THREE.Vector3(1, 1, 1) }, uLow: { value: new THREE.Vector3(1, 1, 1) }, uAmount: { value: 0 }, uHorizon: { value: new THREE.Vector3(0, 1, 0) }, uSoft: { value: 0.2 }, uFlow: { value: new THREE.Vector2() }, uTan: { value: new THREE.Vector2(1, 1) }, uTop: { value: 0.3 },
   }, {
     transparent: true,
     blending: THREE.CustomBlending,
@@ -66,6 +67,7 @@ export class Cover {
     ;(u.uColor!.value as THREE.Vector3).fromArray(cover.color).multiplyScalar(1 / exposure)
     ;(u.uLow!.value as THREE.Vector3).fromArray(cover.low ?? cover.color).multiplyScalar(1 / exposure)
     u.uAmount!.value = cover.amount
+    u.uTop!.value = cover.top ?? 0.3
     const h = cover.horizon
     ;(u.uHorizon!.value as THREE.Vector3).set(h ? h.normal[0] : 0, h ? h.normal[1] : 1, h ? h.offset : 0)
     u.uSoft!.value = h ? h.soft : 4

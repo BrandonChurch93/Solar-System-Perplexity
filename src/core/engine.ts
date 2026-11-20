@@ -42,6 +42,7 @@ export class Engine {
   private readonly cover = new Cover()
   private skyAssets = ''
   private skyTexture: THREE.Texture | null = null
+  private skyBand: THREE.Texture | null = null
   private attached: string[] = []
   private lastShot: Shot | null = null
 
@@ -95,10 +96,9 @@ export class Engine {
     this.sets.freeAll()
   }
 
-  private async ensureSky(): Promise<void> {
-    if (this.skyAssets === this.assets && this.skyTexture) return
-    const res = await fetch(new URL('./assets/shared/' + this.assets + '/sky.jpg', document.baseURI))
-    if (!res.ok) throw new Error('sky map missing')
+  private async skyMap(name: string): Promise<{ tex: THREE.Texture; bytes: number }> {
+    const res = await fetch(new URL('./assets/shared/' + this.assets + '/' + name, document.baseURI))
+    if (!res.ok) throw new Error('sky map missing: ' + name)
     const bitmap = await createImageBitmap(await res.blob(), { imageOrientation: 'flipY', colorSpaceConversion: 'none' })
     const tex = new THREE.Texture(bitmap as unknown as HTMLImageElement)
     tex.flipY = false
@@ -110,12 +110,22 @@ export class Engine {
     tex.anisotropy = Math.min(4, this.renderer.capabilities.getMaxAnisotropy())
     tex.needsUpdate = true
     this.renderer.initTexture(tex)
-    this.skyBytes = bitmap.width * bitmap.height * 4 * (4 / 3)
+    const bytes = bitmap.width * bitmap.height * 4 * (4 / 3)
     bitmap.close()
+    return { tex, bytes }
+  }
+
+  private async ensureSky(): Promise<void> {
+    if (this.skyAssets === this.assets && this.skyTexture) return
+    const glow = await this.skyMap('sky.jpg')
+    const band = await this.skyMap('skyband.jpg')
+    this.skyBytes = glow.bytes + band.bytes
     this.skyTexture?.dispose()
-    this.skyTexture = tex
+    this.skyBand?.dispose()
+    this.skyTexture = glow.tex
+    this.skyBand = band.tex
     this.skyAssets = this.assets
-    this.sky.setTexture(tex)
+    this.sky.setTexture(glow.tex, band.tex)
   }
 
   skyBytes = 0

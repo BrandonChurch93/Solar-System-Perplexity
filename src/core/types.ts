@@ -36,7 +36,7 @@ export interface SetState {
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
 
-export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number] }
+export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number]; top?: number }
 
 export interface Shot {
   frame: number

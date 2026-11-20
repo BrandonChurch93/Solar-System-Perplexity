@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import type { SunState } from '../core/types'
+import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
 
 export const EQUIRECT_GLSL = /* glsl */ `
@@ -18,36 +19,20 @@ vec4 equirect(sampler2D tex, vec3 dir) {
   return equirectGrad(tex, dir, 1.0);
 }`
 
-const SKY_CLOUD_GLSL = /* glsl */ `
-float cell(vec3 p) {
-  p = fract(p * 0.3183099 + vec3(0.11, 0.37, 0.73));
-  p *= 17.0;
-  return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+const SKY_BAND_GLSL = /* glsl */ `
+uniform sampler2D uBand;
+uniform mat3 uGal;
+uniform vec4 uBandMap;
+vec3 bandCoord(vec3 d) {
+  vec3 g = uGal * d;
+  float lat = asin(clamp(g.z, -1.0, 1.0));
+  float t = (atan(g.y, g.x) / 6.283185307179586 + 0.5) * uBandMap.x + uBandMap.y;
+  float v = 0.5 + lat / uBandMap.z;
+  return vec3(t, v, 1.0 - smoothstep(uBandMap.w, 0.49, abs(v - 0.5)));
 }
-float grainAt(vec3 d, float f) {
-  vec3 p = d * f;
-  vec3 i = floor(p);
-  vec3 t = p - i;
-  t = t * t * (3.0 - 2.0 * t);
-  float a = mix(mix(cell(i), cell(i + vec3(1, 0, 0)), t.x), mix(cell(i + vec3(0, 1, 0)), cell(i + vec3(1, 1, 0)), t.x), t.y);
-  float b = mix(mix(cell(i + vec3(0, 0, 1)), cell(i + vec3(1, 0, 1)), t.x), mix(cell(i + vec3(0, 1, 1)), cell(i + vec3(1, 1, 1)), t.x), t.y);
-  return mix(a, b, t.z);
-}
-float skyFbm(vec3 p) {
-  float a = 0.5;
-  float s = 0.0;
-  for (int i = 0; i < 5; i++) {
-    s += a * grainAt(p, 1.0);
-    p = p * 2.03 + vec3(0.0, 0.0, 0.47);
-    a *= 0.5;
-  }
-  return s / 0.96875;
-}
-vec2 skyCloud(vec3 d) {
-  vec3 w = d + 0.03 * (vec3(grainAt(d, 8.0), grainAt(d.yzx, 8.0), grainAt(d.zxy, 8.0)) - 0.5) + vec3(0.21, 0.0, 0.0);
-  float base = skyFbm(w * 5.0);
-  float lane = smoothstep(0.5, 0.7, skyFbm(w * 11.0 + vec3(4.1, 2.3, 7.7))) * smoothstep(0.3, 0.5, base);
-  return vec2(smoothstep(0.35, 0.7, base), lane);
+vec3 bandPlane(vec3 d) {
+  vec3 g = uGal * d;
+  return transpose(uGal) * vec3(normalize(g.xy + vec2(1e-6, 0.0)), 0.0);
 }
 `
 
@@ -60,7 +45,8 @@ uniform mat3 uFrame;
 uniform vec3 uTint;
 uniform vec3 uFloor;
 uniform float uGamma;
-uniform float uGrain;
+uniform vec4 uBandGrade;
+uniform vec4 uBandTint;
 uniform float uExposure;
 uniform float uGlow;
 uniform vec3 uSunDir;
@@ -70,22 +56,26 @@ uniform float uSunGlare;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
-${SKY_CLOUD_GLSL}
+${INVERSE_FILMIC_GLSL}
+${SKY_BAND_GLSL}
 void main() {
   vec4 v = uInvProj * vec4(vUv * 2.0 - 1.0, 1.0, 1.0);
   vec3 dir = normalize(uRot * (v.xyz / v.w));
   vec3 sd = uFrame * dir;
   vec3 col = equirect(uSky, sd).rgb;
-  float px = length(fwidth(sd));
-  float fine = grainAt(sd, 1400.0) * smoothstep(0.5, 1.6, 1.0 / (px * 1400.0));
-  float mid = grainAt(sd, 420.0) * smoothstep(0.5, 1.6, 1.0 / (px * 420.0));
-  float wide = grainAt(sd, 90.0);
-  float g = 0.5 * fine + 0.4 * mid + 0.1 * wide + 0.15;
-  vec2 cl = skyCloud(sd);
-  float den = (0.24 + 0.9 * cl.x) * (1.0 - 0.75 * cl.y);
   col = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, 0.6);
-  col *= mix(vec3(1.0), (0.9 + 0.2 * g) * den * mix(vec3(0.9, 1.0, 1.08), vec3(1.1, 1.0, 0.92), cl.x * (1.0 - cl.y)), uGrain);
-  col = (pow(max(col, vec3(0.0)), vec3(uGamma)) * uTint + uFloor) * uGlow * uExposure;
+  vec3 off = pow(max(col * uBandGrade.w, vec3(0.0)), vec3(uGamma)) * uTint;
+  vec3 bc = bandCoord(sd);
+  float t2 = fract(bc.x + 0.5) - 0.5;
+  vec2 dx = vec2(abs(dFdx(bc.x)) < abs(dFdx(t2)) ? dFdx(bc.x) : dFdx(t2), dFdx(bc.y));
+  vec2 dy = vec2(abs(dFdy(bc.x)) < abs(dFdy(t2)) ? dFdy(bc.x) : dFdy(t2), dFdy(bc.y));
+  vec3 band = inverseFilmic(textureGrad(uBand, bc.xy, dx, dy).rgb);
+  vec3 pd = bandPlane(sd);
+  vec2 puv = vec2(atan(pd.x, pd.z) / (2.0 * PI) + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / PI + 0.5);
+  float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
+  float bl = dot(band, vec3(0.3, 0.5, 0.2));
+  band = mix(vec3(bl), band, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(bl, 1e-5) / 0.05, uBandGrade.y - 1.0);
+  col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
   if (uSunGlare > 0.0) {
     float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
     float x = ang / uSunRadius;
@@ -111,8 +101,9 @@ uniform float uGlow;
 in vec4 aStar;
 in vec3 aColor;
 out vec3 vColor;
+uniform vec2 uCrowd;
 out float vSize;
-${SKY_CLOUD_GLSL}
+${SKY_BAND_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -125,8 +116,11 @@ void main() {
     vec3 d = normalize(position);
     vec2 uv = vec2(atan(d.x, d.z) / 6.283185307179586 + 0.5, asin(clamp(d.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
     float lum = dot(textureLod(uSky, uv, 1.0).rgb, vec3(0.3, 0.5, 0.2));
-    vec2 cl = skyCloud(d);
-    crowd = mix(1.0, clamp(lum * 9.0, 0.25, 3.0) * (0.4 + 2.6 * cl.x) * (1.0 - 0.9 * cl.y), aStar.z);
+    vec3 bc = bandCoord(d);
+    float bandLum = dot(textureLod(uBand, bc.xy, uCrowd.y).rgb, vec3(0.3, 0.5, 0.2));
+    float inBand = clamp(pow(bandLum / uCrowd.x, 0.75), 0.12, 2.3);
+    float field = clamp(lum * 9.0, 0.14, 3.0) * mix(1.0, inBand, bc.z);
+    crowd = mix(min(pow(field, 0.6), 1.0), field, aStar.z);
   }
   float b = aStar.y * mix(1.0, crowd, uGlow);
   b = mix(b, 0.07 * pow(b / 0.07, 0.4), 1.0 - uGlow);
@@ -146,6 +140,23 @@ void main() {
   outColor = vec4(vColor * (core + glow), 0.0);
 }`
 
+const POLE = [0.45, 0.82, 0.35] as const
+const GAMMA_TURN = 0.28
+
+function galactic(): THREE.Matrix3 {
+  const n = new THREE.Vector3(...POLE).normalize()
+  const r = new THREE.Vector3(0, 1, 0).cross(n).normalize()
+  const u = new THREE.Vector3().crossVectors(n, r)
+  const x = r.clone().multiplyScalar(-Math.cos(GAMMA_TURN)).addScaledVector(u, -Math.sin(GAMMA_TURN))
+  const y = new THREE.Vector3().crossVectors(n, x)
+  return new THREE.Matrix3().set(x.x, x.y, x.z, y.x, y.y, y.z, n.x, n.y, n.z)
+}
+
+function bandMap(): THREE.Vector4 {
+  const b = skyFrame.band
+  return new THREE.Vector4(b.repeats, b.offsetDeg / 360 * b.repeats, THREE.MathUtils.degToRad(b.latSpanDeg), b.fadeStart)
+}
+
 export class Sky {
   private readonly pass: Pass
   private readonly stars: THREE.Points
@@ -155,17 +166,18 @@ export class Sky {
   private readonly q = new THREE.Quaternion()
   private readonly frame = new THREE.Quaternion().fromArray(skyFrame.quaternion)
   private texture: THREE.Texture | null = null
+  private band: THREE.Texture | null = null
 
   constructor(count: number) {
     this.pass = new Pass(SKY_FRAG, {
-      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uGrain: { value: skyFrame.grade.grain }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
+      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 },
     })
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
     const star = new Float32Array(count * 4)
     const col = new Float32Array(count * 3)
-    const pole = new THREE.Vector3(0.45, 0.82, 0.35).normalize()
+    const pole = new THREE.Vector3(...POLE).normalize()
     const v = new THREE.Vector3()
     const warm = new THREE.Color(1.0, 0.58, 0.34)
     const cool = new THREE.Color(0.5, 0.7, 1.0)
@@ -210,7 +222,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 } },
+      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -223,8 +235,9 @@ export class Sky {
     this.starScene.add(this.stars)
   }
 
-  setTexture(t: THREE.Texture): void {
+  setTexture(t: THREE.Texture, band: THREE.Texture): void {
     this.texture = t
+    this.band = band
   }
 
   render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState): void {
@@ -235,6 +248,7 @@ export class Sky {
     camera.updateMatrixWorld(true)
     const u = this.pass.material.uniforms
     u.uSky!.value = this.texture
+    u.uBand!.value = this.band
     ;(u.uInvProj!.value as THREE.Matrix4).copy(camera.projectionMatrixInverse)
     this.rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(skyQuaternion))
     u.uExposure!.value = exposure
@@ -249,6 +263,7 @@ export class Sky {
     if (this.texture) this.pass.render(renderer, target)
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
     su.uSky!.value = this.texture
+    su.uBand!.value = this.band
     su.uHasSky!.value = this.texture ? 1 : 0
     su.uPixel!.value = height / 1080
     su.uExposure!.value = exposure

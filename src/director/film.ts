@@ -281,12 +281,15 @@ export class FilmDirector implements Director {
         local = r.pose
         view = r.view
         cover.amount = p.coverAmount(segment, time)
-        cover.color = p.p.cover
+        const side = p.coverSide(segment, time)
+        const blend = (x: [number, number, number], y?: [number, number, number]): [number, number, number] => (y ? [x[0] + (y[0] - x[0]) * side, x[1] + (y[1] - x[1]) * side, x[2] + (y[2] - x[2]) * side] : x)
+        cover.color = blend(p.p.cover, p.p.coverTerrain)
         if (p.p.coverLow) {
-          cover.low = p.p.coverLow
+          cover.low = blend(p.p.coverLow, p.p.coverLowTerrain)
+          if (p.p.coverTop) cover.top = p.p.coverTop[0] + (p.p.coverTop[1] - p.p.coverTop[0]) * side
           cover.horizon = p.horizon(view, local)
           const dt = time - p.coverCenter(segment)
-          cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -5 : 5) * dt]
+          cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
         }
       }
       const s = state(index, view)
@@ -303,6 +306,8 @@ export class FilmDirector implements Director {
       } else {
         const d = Math.abs(local.position.length() - 1)
         near = Math.min(Math.max(0.02 * d, 0.0004), 1)
+        const low = p.p.light.skyLow
+        if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
       }
     }
 

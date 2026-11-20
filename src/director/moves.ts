@@ -21,12 +21,15 @@ export interface MoveParams {
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean }
   terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
   cover: [number, number, number]
   coverLow?: [number, number, number]
+  coverTerrain?: [number, number, number]
+  coverLowTerrain?: [number, number, number]
+  coverTop?: [number, number]
   spinDegPerSecond: number
   moonDegPerSecond: number
   tint: [number, number, number]
@@ -164,6 +167,15 @@ export class StopPlan {
     const c = w.centerFrame / config.fps
     if (time <= a || time >= b) return 0
     return time < c ? smooth((time - a) / (c - a)) : smooth((b - time) / (b - c))
+  }
+
+  coverSide(seg: Segment, time: number): number {
+    const w = coverWindow(seg)
+    if (!w) return 0
+    const a = w.firstFrame / config.fps
+    const b = (w.lastFrame + 1) / config.fps
+    const k = smooth(ramp(0.25, 0.75, (time - a) / (b - a)))
+    return seg.kind === 'dive' ? k : 1 - k
   }
 
   coverCenter(seg: Segment): number {
@@ -326,6 +338,16 @@ export class StopPlan {
     const target = ground.lerp(aim, smooth(e * 1.15))
     const up = slerpDir(normal, Y.clone().applyQuaternion(end.quaternion), smooth(e))
     const path: Pose = { position, quaternion: lookAt(position, target, up), vfov: mix(t.vfov, end.vfov, smooth(e)) }
+    const tilt = this.p.rise.tilt ?? 0
+    const since = time - this.coverCenter(seg)
+    if (since < tilt) {
+      const out = position.clone().normalize()
+      const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+      const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
+      const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize())
+      path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))
+    }
     return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }
   }
 
