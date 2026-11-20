@@ -244,7 +244,7 @@ export async function createStandinSet(ctx: SetContext, plan: StopPlan): Promise
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const far = 1 - smooth((radiusPx - 0.8) / 1.6)
+      const far = 1 - smooth((radiusPx - 0.0015 * view.format.height) / (0.014 * view.format.height))
       point.visible = far > 0 && view.diag === 'beauty'
       globe.visible = radiusPx > 0.6
       pointMat.uniforms.uSize!.value = Math.max(15, 30 * view.format.height / 1080)

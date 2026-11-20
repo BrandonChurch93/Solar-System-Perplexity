@@ -39,7 +39,7 @@ for (const seg of config.segments) {
     end = 'the hero framing seen from half the arc past it. The midpoint matches the approved hero image'
     what = f.hold
   } else if (seg.kind === 'dive' && p && f) {
-    const w = coverWindow(seg)
+    const w = coverWindow(seg)!
     lens = hero + ' to ' + p.terrain.vfov + ' deg'
     move = 'fall on a logarithmic altitude curve toward the spot, heading ' + p.dive.headingDeg + ' deg, bowing ' + side(p.dive.bow, 'right', 'left') + ', roll ' + p.dive.rollDeg + ' deg. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame
     start = 'the end of the hold'
@@ -52,7 +52,7 @@ for (const seg of config.segments) {
     end = 'past the approved close framing. The midpoint matches the approved close image'
     what = f.terrain
   } else if (seg.kind === 'rise' && p && f) {
-    const w = coverWindow(seg)
+    const w = coverWindow(seg)!
     lens = p.terrain.vfov + ' to ' + hero + ' deg'
     move = plan!.id === 'sun' ? 'pull back and up through the flare. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame : 'climb on its own line, azimuth ' + p.rise.azimuthDeg + ' deg, elevation ' + p.rise.elevationDeg + ' deg, to distance ' + p.rise.distance + ', roll ' + p.rise.rollDeg + ' deg. Cover from frame ' + w.firstFrame + ' to ' + w.lastFrame
     start = 'the last frame of the terrain move'

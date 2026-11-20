@@ -214,6 +214,9 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 2. The lookback: Neptune 31 degrees off the Sun line, aim 8 degrees, distance 9, roll 13, lens 34. Neptune is relit there so it shows as a crescent.
 - Phase 2. The menu opens with no slide. Under software rendering the slide never advanced and the menu stayed off screen.
 - Phase 2. `cut/SHOTS.md` is written by `npx tsx tools/shots.ts` from the config and each stop's plan, so it cannot drift from the code.
+- Phase 2, after round 1. Arrivals: `approachLocal` in `src/director/film.ts` takes the hold pose, backs it away along its view axis on a logarithmic curve and swings it round the body by the stop's `arrive` angle, which decays to nothing by the hold. The approach starts when the departing body, its rings and its moons are all outside the frame with 3 degrees to spare (`clearAt`), never before 0.2 of the travel. From then on the departing set is not drawn and the camera is on the approach path. Growth follows `1 - (1 - x)^2.5`.
+- Phase 2, after round 1. Segment times were not changed to vary the cadence. Brandon judges pacing from the rough cut, and a retime would move every later judged frame. Variety comes from the approach side, the swing, the turn angle and the turn length of each stop.
+- Phase 2, after round 1. The lookback: aim 12.5 degrees, a 3.5 degree pan that settles over 4.5 seconds, Sun glare 1.5 with a flare of 0.22.
 - Phase 2. The sky glow map from the star map agent had not arrived when the blockout rounds started. The blockout uses the seeded stand-in sky. The real map is integrated when it lands, in Phase 2 or 3.
 
 ## Open items
@@ -228,7 +231,7 @@ None. One entry per long job while it runs: the command, the frame range, the lo
 
 One line per round, written when the round starts: number, phase, stop. Scores and what changes next are added when it ends.
 
-- Round 1, Phase 2, blockout, whole film. R4 blockout.
+- Round 1, Phase 2, blockout, whole film. R4 blockout 7, three major, two minor. Next: each stop arrives on its own curve, the approach starts earlier and eases longer, the lookback is reframed with a slow pan. `scorecards/round-001/`.
 
 ## Final scores
 

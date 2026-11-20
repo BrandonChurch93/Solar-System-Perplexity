@@ -22,7 +22,8 @@ export interface MoveParams {
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number }
   terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; exitHeight: number; exitForward: number; exitPitchDeg: number }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number }
-  travel: { turnDeg: number; side: number }
+  travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
+  arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number }
   light: { exposure: number; skyExposure: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
   cover: [number, number, number]
   spinDegPerSecond: number

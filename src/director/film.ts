@@ -4,18 +4,22 @@ import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
-import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
+import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { segmentAtFrame } from './timeline'
 
 export interface StopFrame { rotation: THREE.Quaternion; origin: THREE.Vector3 }
 
 const FAR_FACTOR = 2600
-const TURN_END = 0.52
-const APPROACH_START = 0.36
+const TURN_END = 0.46
+const APPROACH_START = 0.2
+const APPROACH_POWER = 2.5
+const SWING_FROM = 0.3
+const CLEAR_DEG = 3
 const SUN_PULL_END = 0.34
 const SUN_APPROACH_START = 0.42
-const LOOKBACK = { neptuneDeg: 31, aimDeg: 8, distance: 9, rollDeg: 13, vfov: 34 }
+const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 3.5, settleSeconds: 4.5, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
 const Y = new THREE.Vector3(0, 1, 0)
+const easeSettle = ease('sine.inOut')
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
@@ -26,7 +30,10 @@ export class FilmDirector implements Director {
   readonly sunWorld = new THREE.Vector3()
   private readonly approach: THREE.Vector3[] = []
   private readonly reach: number[] = []
+  private readonly begin: number[] = []
   private lookbackPose: Pose
+  private lookbackUp = new THREE.Vector3()
+  private lookbackSun = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
 
@@ -35,6 +42,7 @@ export class FilmDirector implements Director {
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
     this.reach.push(0)
+    this.begin.push(0)
     for (let i = 0; i + 1 < plans.length; i++) this.place(i)
     const last = plans.length - 1
     const n = this.plans[last]!
@@ -43,8 +51,61 @@ export class FilmDirector implements Director {
     const up = axis.clone()
     const toNeptune = s.clone().applyAxisAngle(up, THREE.MathUtils.degToRad(LOOKBACK.neptuneDeg))
     const position = toNeptune.clone().multiplyScalar(-LOOKBACK.distance)
-    const aim = s.clone().applyAxisAngle(up, THREE.MathUtils.degToRad(LOOKBACK.aimDeg))
-    this.lookbackPose = { position, quaternion: lookAt(position, position.clone().add(aim), up, LOOKBACK.rollDeg), vfov: LOOKBACK.vfov }
+    this.lookbackUp = up
+    this.lookbackSun = s
+    this.lookbackPose = { position, quaternion: this.lookbackAim(position, 0), vfov: LOOKBACK.vfov }
+  }
+
+  private lookbackAim(position: THREE.Vector3, extraDeg: number): THREE.Quaternion {
+    const aim = this.lookbackSun.clone().applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.aimDeg + extraDeg))
+    return lookAt(position, position.clone().add(aim), this.lookbackUp, LOOKBACK.rollDeg)
+  }
+
+  private turnEnd(i: number): number {
+    return this.plans[i]!.p.travel.turnEnd ?? TURN_END
+  }
+
+  private approachLocal(i: number, x: number, time: number): Pose {
+    const b = this.plans[i]!
+    const hold = b.hold(time - b.seg.hold.start)
+    const dh = b.hold(0).position.length()
+    const e = 1 - Math.pow(1 - x, b.p.arrive?.power ?? APPROACH_POWER)
+    const sigma = dh * (Math.pow(this.reach[i]! / dh, 1 - e) - 1)
+    const pose: Pose = { position: hold.position.clone().addScaledVector(forward(hold.quaternion), -sigma), quaternion: hold.quaternion.clone(), vfov: hold.vfov }
+    const a = b.p.arrive
+    if (a && a.swingDeg !== 0) {
+      const left = 1 - smoother(ramp(a.from ?? SWING_FROM, 1, x))
+      const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(a.axis[0], a.axis[1], a.axis[2]).normalize(), THREE.MathUtils.degToRad(a.swingDeg) * left)
+      pose.position.applyQuaternion(q)
+      pose.quaternion.premultiply(q)
+    }
+    return pose
+  }
+
+  private clearAt(i: number, rotation: THREE.Quaternion, seg: Segment): number {
+    const a = this.plans[i]!
+    const dur = seg.end - seg.start
+    const end = this.turnEnd(i)
+    const target = rotation.clone().multiply(this.approachLocal(i + 1, 0, seg.start).quaternion)
+    const half = Math.atan(Math.tan(THREE.MathUtils.degToRad(a.fit.vfovDeg) / 2) * Math.hypot(1, config.formats[config.formatKeys.master]!.width / config.formats[config.formatKeys.master]!.height))
+    const things: { at: THREE.Vector3; radius: number }[] = [{ at: new THREE.Vector3(), radius: Math.max(1, a.fit.rings?.outer ?? 0) }]
+    for (const m of a.fit.moons ?? []) things.push({ at: new THREE.Vector3(m.position[0], m.position[1], m.position[2]), radius: m.radius })
+    const least = a.p.travel.start ?? APPROACH_START
+    for (let k = 0; k <= 200; k++) {
+      const u = (k / 200) * end
+      if (u < least) continue
+      const from = this.toWorld(i, this.leaving(i, seg.start + u * dur))
+      const q = from.quaternion.clone().slerp(target, easeInOut(ramp(0, end, u)))
+      const f = forward(q)
+      let clear = true
+      for (const t of things) {
+        const to = t.at.clone().applyQuaternion(this.frames[i]!.rotation).add(this.frames[i]!.origin).sub(from.position)
+        const d = to.length()
+        if (f.angleTo(to) < half + Math.asin(Math.min(t.radius / d, 1)) + THREE.MathUtils.degToRad(CLEAR_DEG)) clear = false
+      }
+      if (clear) return u
+    }
+    return end
   }
 
   private toWorld(i: number, p: Pose): Pose {
@@ -61,17 +122,18 @@ export class FilmDirector implements Director {
     const a = this.plans[i]!
     const b = this.plans[i + 1]!
     const seg = a.seg.travel!
+    const dur = seg.end - seg.start
     const from = this.toWorld(i, this.leaving(i, seg.start))
-    const startAt = seg.start + (i === 0 ? SUN_APPROACH_START : APPROACH_START) * (seg.end - seg.start)
-    const holdStart = b.hold(startAt - b.seg.hold.start)
-    const arrive = b.hold(0)
-    const dLocal = forward(arrive.quaternion)
+    const dh = b.hold(0).position.length()
+    const reach = dh * FAR_FACTOR
+    this.reach.push(reach)
+    const first = this.approachLocal(i + 1, 0, seg.start)
+    const dLocal = forward(first.quaternion)
     if (i === 0) {
       this.sunWorld.copy(from.position).sub(this.frames[0]!.origin).normalize().negate()
       this.sunStart = from.position.distanceTo(this.frames[0]!.origin)
       this.sunSwap = 1 / Math.sin(THREE.MathUtils.degToRad(b.p.light.sunRadiusDeg))
-      from.position.copy(this.frames[0]!.origin).addScaledVector(this.sunWorld, -this.sunSwap)
-    } else from.position.copy(this.toWorld(i, this.leaving(i, startAt)).position)
+    }
     const r0 = arc(b.sunDir, this.sunWorld)
     const fr = forward(from.quaternion)
     const camUp = Y.clone().applyQuaternion(from.quaternion)
@@ -82,7 +144,7 @@ export class FilmDirector implements Director {
       const r = new THREE.Quaternion().setFromAxisAngle(this.sunWorld, (k / 720) * Math.PI * 2).multiply(r0)
       const d = dLocal.clone().applyQuaternion(r)
       let cost: number
-      if (i === 0) cost = from.quaternion.angleTo(r.clone().multiply(arrive.quaternion))
+      if (i === 0) cost = from.quaternion.angleTo(r.clone().multiply(first.quaternion))
       else {
         const side = new THREE.Vector3().crossVectors(fr, d).dot(camUp)
         cost = Math.abs(fr.angleTo(d) - want) + (side * a.p.travel.side < 0 ? 0.6 : 0)
@@ -92,13 +154,17 @@ export class FilmDirector implements Director {
         best = r
       }
     }
-    const dWorld = dLocal.clone().applyQuaternion(best)
-    const dh = arrive.position.length()
-    const reach = dh * FAR_FACTOR
-    const origin = from.position.clone().addScaledVector(dWorld, reach - dh).sub(holdStart.position.clone().applyQuaternion(best))
+    const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best, seg)
+    this.begin.push(begin)
+    const startAt = seg.start + begin * dur
+    const at = i === 0 ? this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunSwap) : this.toWorld(i, this.leaving(i, startAt)).position
+    const origin = at.sub(this.approachLocal(i + 1, 0, startAt).position.applyQuaternion(best))
     this.frames.push({ rotation: best, origin })
-    this.approach.push(dWorld)
-    this.reach.push(reach)
+    this.approach.push(dLocal.clone().applyQuaternion(best))
+  }
+
+  beginOf(i: number): number {
+    return this.begin[i] ?? 0
   }
 
   private sunFor(i: number): { radius: number; glare: number; exposure: number; sky: number } {
@@ -134,10 +200,15 @@ export class FilmDirector implements Director {
       const i = this.plans.length - 1
       const p = this.plans[i]!
       const s = state(i, 'orbit')
-      light = this.sunFor(i)
-      flare = p.p.light.flare
       const lb = config.segments.find((x) => x.kind === 'lookback')!
-      const look = (t: number): Pose => ({ position: this.lookbackPose.position.clone().multiplyScalar(1 + 0.004 * (t - lb.start)), quaternion: this.lookbackPose.quaternion.clone(), vfov: this.lookbackPose.vfov })
+      const look = (t: number): Pose => {
+        const position = this.lookbackPose.position.clone().multiplyScalar(1 + 0.004 * (t - lb.start))
+        const left = 1 - easeSettle(ramp(lb.start - 1, lb.start + LOOKBACK.settleSeconds, t))
+        return { position, quaternion: this.lookbackAim(position, LOOKBACK.settleDeg * left), vfov: this.lookbackPose.vfov }
+      }
+      const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived) }
+      flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
         const b = look(time)
@@ -159,22 +230,16 @@ export class FilmDirector implements Director {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
       const from = this.toWorld(index, this.leaving(index, time))
-      const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
-      const dh = b.hold(0).position.length()
-      const reach = this.reach[index + 1]!
-      const begin = index === 0 ? SUN_APPROACH_START : APPROACH_START
-      const e = easeInOut(ramp(begin, 1, u))
-      const sigma = dh * (Math.pow(reach / dh, 1 - e) - 1)
-      const b0 = hold.position.clone().addScaledVector(this.approach[index + 1]!, -sigma)
-      const w = smoother(ramp(begin - 0.14, begin + 0.1, u))
+      const begin = this.begin[index + 1]!
+      const to = this.toWorld(index + 1, this.approachLocal(index + 1, ramp(begin, 1, u), time))
       if (index === 0) {
         const g = easeInOut(ramp(0, SUN_PULL_END, u))
         const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
         from.position.lerp(radial, smooth(u / 0.12))
       }
-      const position = from.position.clone().lerp(b0, w)
-      const quaternion = from.quaternion.clone().slerp(hold.quaternion, easeInOut(ramp(0, TURN_END, u)))
-      pose = { position, quaternion, vfov: mix(from.vfov, hold.vfov, smooth(u)) }
+      const position = u < begin ? from.position.clone() : to.position.clone()
+      const quaternion = from.quaternion.clone().slerp(to.quaternion, easeInOut(ramp(0, this.turnEnd(index), u)))
+      pose = { position, quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
