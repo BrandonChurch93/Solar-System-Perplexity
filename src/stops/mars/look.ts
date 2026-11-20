@@ -53,6 +53,20 @@ export const relief = {
   dustSpeed: 0.0022,
   dustDir: [0.92, 0.38] as [number, number],
   mesh: 420,
+  pitchDeg: -reliefCamera.pitchDeg,
+  valley: {
+    top: -2.0,
+    soft: 0.7,
+    strength: 0.4,
+    color: [0.2, 0.135, 0.095] as [number, number, number],
+    wind: [0.8, -0.6] as [number, number],
+    speed: 0.3,
+    scale: 1.1,
+    stretch: 2.2,
+    churn: 0.06,
+    mask: [0.35, 1.2] as [number, number],
+    cut: [0.38, 0.75] as [number, number],
+  },
   air: {
     pitchDeg: -reliefCamera.pitchDeg,
     dipDeg: reliefCamera.horizonDipDeg,
@@ -64,5 +78,6 @@ export const relief = {
     starScaleDeg: 1.5,
     starCut: 0.9,
     veil: 0.55,
+    drift: [0.2, 16, 0.1, 70] as [number, number, number, number],
   },
 }

@@ -20,7 +20,7 @@ export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: { glide: number; rise: number; fall: number } }
-  terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
+  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
@@ -190,7 +190,8 @@ export class StopPlan {
 
   terrain(tRel: number): Pose {
     const t = this.p.terrain
-    const u = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    const lin = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    const u = lin + (t.gather ?? 0) * lin * lin
     const e = new THREE.Euler(THREE.MathUtils.degToRad(t.pitchDeg) * u, THREE.MathUtils.degToRad(t.yawDeg) * u, 0, 'YXZ')
     return { position: new THREE.Vector3(t.side * u, t.rise * u, -t.forward * u), quaternion: new THREE.Quaternion().setFromEuler(e), vfov: t.vfov }
   }
