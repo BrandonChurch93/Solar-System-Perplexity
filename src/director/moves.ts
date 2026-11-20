@@ -23,7 +23,7 @@ export interface MoveParams {
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
   terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
   light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
@@ -34,6 +34,7 @@ export interface MoveParams {
   coverTop?: [number, number]
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
+  coverShell?: [number, number]
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
@@ -168,6 +169,7 @@ export class StopPlan {
     const target = new THREE.Vector3(-p.rise.offset[0] * half * fit.aspect, -p.rise.offset[1] * half, 0).applyQuaternion(q0)
     this.risePose = { position: pos, quaternion: lookAt(pos, target, Y, p.rise.rollDeg), vfov: fit.vfovDeg }
     this.riseOut = dir
+    if (p.rise.level) this.risePose.quaternion = this.climb(pos, this.heading.clone().applyQuaternion(this.turn(rise.end)), 1)
   }
 
   turn(time: number): THREE.Quaternion {
@@ -207,6 +209,23 @@ export class StopPlan {
     const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt)), THREE.MathUtils.degToRad(t.yawDeg) * u)
     quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.pitchDeg) * u))
     return { position: new THREE.Vector3(t.side * u, t.rise * u, -t.forward * u), quaternion, vfov: t.vfov }
+  }
+
+  private climb(position: THREE.Vector3, heading: THREE.Vector3, e: number): THREE.Quaternion {
+    const t = this.p.terrain
+    const r = this.p.rise
+    const f = this.coverFractions(this.seg.rise)
+    const out = position.clone().normalize()
+    const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+    const th = Math.tan(THREE.MathUtils.degToRad(this.fit.vfovDeg) / 2)
+    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+    const framed = Math.asin(1 / r.distance) + Math.atan(r.offset[1] * th)
+    const pitch = Math.acos(Math.min(1 / position.length(), 1)) + mix(carried, framed, smooth(e))
+    const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
+    const w = smoother(ramp(r.pan ?? 0, 1, e))
+    const q = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize())
+    q.multiply(new THREE.Quaternion().setFromAxisAngle(Y, Math.atan(r.offset[0] * th * this.fit.aspect) * w))
+    return q.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(r.rollDeg) * w))
   }
 
   exit(tRel: number): Pose {
@@ -408,7 +427,8 @@ export class StopPlan {
     const path: Pose = { position, quaternion: lookAt(position, target, up), vfov: mix(t.vfov, end.vfov, smooth(e)) }
     const tilt = this.p.rise.tilt ?? 0
     const since = time - this.coverCenter(seg)
-    if (since < tilt) {
+    if (this.p.rise.level) path.quaternion = this.climb(position, heading, e)
+    else if (since < tilt) {
       const out = position.clone().normalize()
       const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
       const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))

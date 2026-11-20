@@ -17,6 +17,8 @@ uniform vec3 uFocus;
 uniform vec3 uBillow;
 uniform vec3 uStreak;
 uniform vec2 uContrast;
+uniform vec3 uCentre;
+uniform vec2 uShell;
 in vec2 vUv;
 out vec4 outColor;
 float hash(vec2 p) {
@@ -62,13 +64,20 @@ void main() {
   col *= mix(1.0, uTop, smoothstep(0.0, 0.22, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
   float a = smoothstep(0.0, 1.0, uAmount * (1.1 + 1.1 * streak + 0.5 * wisp + 1.6 * billow + 1.2 * fine) - 0.22 * (1.0 - uAmount));
   a = mix(a, 1.0, smoothstep(0.86, 1.0, uAmount));
+  vec3 ray = normalize(vec3(p, -1.0));
+  float reach = dot(uCentre, ray);
+  float miss = reach > 0.0 ? sqrt(max(dot(uCentre, uCentre) - reach * reach, 0.0)) : length(uCentre);
+  a *= 1.0 - smoothstep(uShell.x, uShell.y, miss);
   outColor = vec4(col, a);
 }`
+
+const OPEN = 1e9
 
 export class Cover {
   private readonly pass = new Pass(FRAG, {
     uColor: { value: new THREE.Vector3(1, 1, 1) }, uLow: { value: new THREE.Vector3(1, 1, 1) }, uAmount: { value: 0 }, uHorizon: { value: new THREE.Vector3(0, 1, 0) }, uSoft: { value: 0.2 }, uFlow: { value: new THREE.Vector2() }, uTan: { value: new THREE.Vector2(1, 1) }, uTop: { value: 0.3 },
     uFocus: { value: new THREE.Vector3() }, uBillow: { value: new THREE.Vector3(1, 1, 1) }, uStreak: { value: new THREE.Vector3(1, 1, 1) }, uContrast: { value: new THREE.Vector2() },
+    uCentre: { value: new THREE.Vector3() }, uShell: { value: new THREE.Vector2(OPEN, 2 * OPEN) },
   }, {
     transparent: true,
     blending: THREE.CustomBlending,
@@ -95,6 +104,9 @@ export class Cover {
       ;(u.uStreak!.value as THREE.Vector3).fromArray(k.streak)
     }
     ;(u.uContrast!.value as THREE.Vector2).set(k ? k.contrast[0] : 0, k ? k.contrast[1] : 0)
+    const shell = cover.shell
+    ;(u.uCentre!.value as THREE.Vector3).set(shell ? shell.centre[0] : 0, shell ? shell.centre[1] : 0, shell ? shell.centre[2] : 0)
+    ;(u.uShell!.value as THREE.Vector2).set(shell ? shell.inner : OPEN, shell ? shell.outer : 2 * OPEN)
     const t = Math.tan(THREE.MathUtils.degToRad(vfov) / 2)
     ;(u.uTan!.value as THREE.Vector2).set(t * aspect, t)
     this.pass.render(renderer, target)

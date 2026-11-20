@@ -9,7 +9,8 @@ import { X264_LEVEL, X264_PRESET, concatCopy, encodeTwoPass, openIntermediate, p
 import { segmentAtFrame, setsForFrame } from '../src/director/timeline'
 
 export interface G5Frame { frame: number; invalid: number; coverage: number }
-export interface Unit { id: string; first: number; end: number; dir?: string }
+export interface Unit { id: string; first: number; end: number; dir?: string; span?: boolean }
+interface Part { file: string; rec: OutputRecord }
 export interface Job {
   cfg: Config
   hashes: Hashes
@@ -72,26 +73,33 @@ export function chunkReady(job: Job, u: Unit): boolean {
   return recordMatches(r, wanted(job), unitStops(u)) && r!.first === u.first && r!.last === u.end - 1
 }
 
-function existingParts(job: Job, u: Unit): { file: string; rec: OutputRecord }[] {
+function spanFile(job: Job, u: Unit): string {
+  return join(unitDir(job, u), u.id + '.span' + u.first + '-' + (u.end - 1) + '.mp4')
+}
+
+function existingParts(job: Job, u: Unit): Part[] {
   const dir = unitDir(job, u)
   if (!existsSync(dir)) return []
-  const re = new RegExp('^' + u.id.replace(/[.]/g, '\\.') + '\\.part(\\d{3})\\.mp4$')
-  const names = readdirSync(dir).filter((n) => re.test(n)).sort()
+  const re = new RegExp('^' + u.id.replace(/[.]/g, '\\.') + '\\.(part\\d+|span\\d+-\\d+)\\.mp4$')
   const stops = unitStops(u)
-  const out: { file: string; rec: OutputRecord }[] = []
-  let next = u.first
-  let broken = false
-  for (const n of names) {
+  const drop = (file: string): void => {
+    rmSync(file, { force: true })
+    rmSync(file + '.json', { force: true })
+  }
+  const good: Part[] = []
+  for (const n of readdirSync(dir).filter((x) => re.test(x))) {
     const file = join(dir, n)
     const rec = readRecord(file)
-    if (!broken && rec && recordMatches(rec, wanted(job), stops) && rec.first === next && (rec.last ?? -1) < u.end) {
-      out.push({ file, rec })
-      next = rec.last! + 1
-    } else {
-      broken = true
-      rmSync(file, { force: true })
-      rmSync(file + '.json', { force: true })
-    }
+    if (!rec || rec.first === undefined || rec.last === undefined || !recordMatches(rec, wanted(job), stops)) drop(file)
+    else if (!u.span || (rec.first >= u.first && rec.last < u.end)) good.push({ file, rec })
+  }
+  good.sort((a, b) => a.rec.first! - b.rec.first!)
+  const out: Part[] = []
+  let next = u.first
+  for (const p of good) {
+    if (p.rec.first !== next || p.rec.last! >= u.end) throw new Error('parts of ' + u.id + ' do not line up: frame ' + next + ' is expected next and ' + p.file + ' holds ' + p.rec.first + ' to ' + p.rec.last + '. Add the missing parts or remove the ones after the gap')
+    out.push(p)
+    next = p.rec.last! + 1
   }
   return out
 }
@@ -198,8 +206,9 @@ export async function renderUnits(job: Job, units: Unit[]): Promise<void> {
   }
 }
 
-function buildChunk(job: Job, u: Unit, have: { file: string; rec: OutputRecord }[]): void {
-  const file = chunkFile(job, u)
+function buildChunk(job: Job, u: Unit, have: Part[]): void {
+  const file = u.span ? spanFile(job, u) : chunkFile(job, u)
+  if (have.length === 1 && have[0]!.file === file) return
   if (have.length === 1) {
     rmSync(file, { force: true })
     writeFileSync(file, readFileSync(have[0]!.file))
@@ -215,7 +224,7 @@ function buildChunk(job: Job, u: Unit, have: { file: string; rec: OutputRecord }
     rmSync(x.file, { force: true })
     rmSync(x.file + '.json', { force: true })
   }
-  log(job, 'chunk ' + u.id + '.mp4 ready from ' + have.length + ' part(s), ' + frames + ' frames')
+  log(job, (u.span ? 'span ' + file : 'chunk ' + u.id + '.mp4') + ' ready from ' + have.length + ' part(s), ' + frames + ' frames')
 }
 
 export function joinUnits(job: Job, units: Unit[], out: string, extra: Record<string, unknown> = {}): OutputRecord {
@@ -291,6 +300,15 @@ async function main(): Promise<void> {
     const ids = a.segment.split(',')
     for (const id of ids) if (!cfg.segments.some((s) => s.id === id)) throw new Error('unknown segment ' + id)
     units = segmentUnits(cfg, ids)
+    if (a.span) {
+      const m = /^(\d+)-(\d+)$/.exec(a.span)
+      const u = units[0]!
+      if (!m || units.length !== 1 || a.join) throw new Error('--span FIRST-LAST goes with one --segment and without --join')
+      const first = Number(m[1])
+      const last = Number(m[2])
+      if (!(first >= u.first && last >= first && last < u.end)) throw new Error('--span must lie inside ' + u.id + ' (' + u.first + ' to ' + (u.end - 1) + ')')
+      units = [{ id: u.id, first, end: last + 1, span: true }]
+    }
     out = join(WORK, 'film-' + format + '-' + tier + '-' + units[0]!.first + '-' + (units[units.length - 1]!.end - 1) + '.mp4')
   } else if (a.first !== undefined || a.last !== undefined) {
     const first = Number(a.first ?? 0)

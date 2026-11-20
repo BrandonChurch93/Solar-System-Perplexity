@@ -288,6 +288,11 @@ export class FilmDirector implements Director {
           cover.low = blend(p.p.coverLow, p.p.coverLowTerrain)
           if (p.p.coverTop) cover.top = p.p.coverTop[0] + (p.p.coverTop[1] - p.p.coverTop[0]) * side
           cover.horizon = p.horizon(view, local)
+          const shell = p.p.coverShell
+          if (shell && view === 'orbit') {
+            const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
+            cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
+          }
           const dt = time - p.coverCenter(segment)
           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
           const k = p.p.coverRush

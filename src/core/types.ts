@@ -37,7 +37,8 @@ export interface SetState {
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
 
 export interface CoverRush { focus: [number, number]; phase: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
-export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number]; top?: number; rush?: CoverRush }
+export interface CoverShell { centre: [number, number, number]; inner: number; outer: number }
+export interface CoverState { amount: number; color: [number, number, number]; low?: [number, number, number]; horizon?: CoverHorizon; flow?: [number, number]; top?: number; rush?: CoverRush; shell?: CoverShell }
 
 export interface Shot {
   frame: number
