@@ -12,7 +12,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 3, round 3 started, with the third status pictures
+- Last push: 2026-11-20 UTC, Phase 3, round 4 closed with its scorecards
 
 ## Latest pictures
 
@@ -43,7 +43,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mercury | stand-in | 0 | | | | | | |
 | venus | stand-in | 0 | | | | | | |
 | earth | stand-in | 0 | | | | | | |
-| mars | in progress | 1 | 6 | pass | 4 | 6 | pass | |
+| mars | in progress | 2 | 8 | pass | 5 | 6 | pass | |
 | jupiter | stand-in | 0 | | | | | | |
 | saturn | stand-in | 0 | | | | | | |
 | uranus | stand-in | 0 | | | | | | |
@@ -304,6 +304,7 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Round 4, terrain patch: the close image's sky minus the film's air and ground frame, divided by the share the film's air lets through (measured from a first pass). Star statistics in three regions of the sky at 2580 are within 10 percent of the close image's at the 99th percentile.
 - Round 4, patch timing: a patch is fully on in the hold, the dive and the terrain view, fades in over the arriving travel, and is off in the rise and the leaving travel (the dust cover hides the switch). Reason: in the rise the camera looks past the edge of the hero's view and the patch showed as a rectangle of dense stars with an edge.
 - Round 4, sky away from the patches: the band strip is drawn as made, with its own fine stars (`--bkeep=1 --bblur=1 --bsat=1`); the star removal and blur of the last fit are what made the band gray and soft. The sky floor is less blue (`--fb=0.0105`). `tools/assets/skyframe.ts --keep` now starts from the stored arguments.
+- 2026-11-20, Phase 3, during round 4. Change of plan from Brandon, recorded as given: finish round 4 and run round 5 with the prepared fixes. In round 5 the motion comes first: the dive between frames 2440 and 2460, where the picture goes soft at the handover, and the terrain view, which has to show clear forward movement and depth across its whole length. The 5 pixel outline fit and anything else that small is dropped. After round 5 the build goes to the Mars review whatever the scores are. Rounds 6 and 7 are not used. Whatever is still open is logged under "Open items".
 
 ## Open items
 
@@ -319,7 +320,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-None.
+- Renders of the build prepared for round 5 (branch `agent/mars-r5` at dbce167), started 2026-11-20 21:40 UTC on seven supporting agents' VMs while the last critic of round 4 was still answering. Pack parts with `npm run pack -- --phase 3 --round 5 --stop mars --only ...` (judged stills with the hold and terrain sheets; the dive sheets; the rise sheets), `npm run measure -- --stop mars`, and the four clip chunks with `npm run film -- --segment mars.<kind> --tier review --format master` (frames 2250 to 2744). Files return as attachments. They are used as they are if the build does not change, and as check renders if it does.
 
 ## Rounds
 
@@ -328,7 +329,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 1, Phase 2, blockout, whole film. R4 blockout 7, three major, two minor. Next: each stop arrives on its own curve, the approach starts earlier and eases longer, the lookback is reframed with a slow pan. `scorecards/round-001/`.
 - Round 2, Phase 2, blockout, whole film. R4 blockout 5, one severe, four major, two minor. Limit reached. After the round: arrivals start off center, the lookback never stops moving, the turn away from Mars is longer. Open items 1 to 5. `scorecards/round-002/`.
 - Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0, judged on 696e228. G5, G13, G17 green. R1 6, R2 pass, R3 4, R4 6, R8 pass. Three severe (smear on both judged motion frames, blocky polar cap), majors on the limb glow, the Milky Way and stars, star dashes, a terrain blob, flat and lifeless terrain flight. Next: retime dive and rise so the speed sits in the cover, wide soft limb haze, sky band and star counts, sky drawn with the mid-shutter lens, relief depth fix, a real terrain glide with drifting dust. `scorecards/round-003/`.
-- Round 4, Phase 3, mars, look lock round 2 of 5. Started 2026-11-20 UTC on main at 24c2334. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15).
+- Round 4, Phase 3, mars, look lock round 2 of 5. Started 2026-11-20 UTC on main at 24c2334. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15). Judged on 1d1a55c after the sky was changed inside the round. G5, G13, G17 green. R1 8, R2 pass, R3 5 (parts 5 and 7), R4 6, R8 pass. No severe issue. Majors: both dust covers paint over black space outside the limb and the canyon's direction does not carry across them, a 75 degree roll after the rise cover (R4); the lit limb is harder and speckled with stars too close to the rim (R1); airbrushed surface near the left limb, soft Phobos, a soft polar cap in the rise, hook strokes on the dark side at 2427, and two shapes in the canyon that the approved hero also has (R3). Next: the motion first, by Brandon's change of plan: the dive retimed with the plunge inside a cover that holds, a terrain glide with real forward travel, dust kept inside the planet's air on the orbit side, one heading through both covers. `scorecards/round-004/`.
 
 ## Final scores
 
@@ -362,6 +363,7 @@ None yet.
 - 2026-11-20 UTC: Round 3 started (8f3cd70). G6 and G11 fixed (696e228).
 - 2026-11-20 UTC: Round 3 closed with its scorecards. Merged `agent/mars-relief` (0f33967). First fixes for round 4.
 - 2026-11-20 UTC: Round 4, sky patches from the approved images, limb glow refit, raw band strip; machine checks green again.
+- 2026-11-20 UTC: Round 4 closed with its scorecards.
 
 ## Session log
 
@@ -375,3 +377,4 @@ One entry per task: when it started, what it did, where it stopped.
   - Status, Phase 3, mars, before round 3 (steps 1 to 4 tuned, step 3 waits on two more patch levels from the patch agent): the low part of the dive now darkens and warms toward the canyon light before the dust cover, the sky has structure with dark lanes and matches the hero by region, and the terrain sky shows fine stars as in the close image; quick G17 is 1.06 (hold) and 1.01 (terrain). Next: merge the two new patch levels, confirm G13 by render, then round 3. The dive sheet in this status was rendered with stand-in files for the two levels that are not delivered yet. Review page: https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, steps 1 to 5 finished, before round 3: the sky now carries a real Milky Way band strip placed as in the hero (region medians within two levels of the hero's), the dust cover carries ground color, exposure and horizon on both the dive and the rise, and the Mars set measures 1,273 MB of the 1,400 allowed; G13 is green by render and quick G17 is 1.19 (hold) and 1.01 (terrain). Next: look lock round 3 with the full measures and every critic. Review page: https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, after round 3 (look lock round 1 of 5): R1 6, R2 pass, R3 4, R4 6, R8 pass, G5, G13 and G17 green. Since the round: the dive and rise are retimed so both judged motion frames are sharp, the limb haze is fitted to the approved hero, the globe visibly turns in the hold, the canyon flight is a real glide with drifting valley dust, the night side no longer shows bright speckles, and a first sky checkpoint (wider diffuse band, finer stars) is merged. Next: the sky agent's final fit, then round 4. Pictures: `out/stills/status/mars-hold.jpg`, `mars-terrain.jpg`, `mars-dive.jpg`. https://grand-tour-film.pplx.app/review.html
+  - Status (asked for by Brandon), Phase 3, mars, round 4 (look lock round 2 of 5) in progress: the hold and canyon views now carry the approved images' own sky, the limb glow is refitted, measures are green (G5, G13, G17 hold 1.074, terrain 0.950), R1 came back 8 and R3 part 2 came back 7; the other critics are still answering. Next: close round 4, then fix the soft polar cap in the rise, the hold limb ring and the sky at the frame margins. Published the current build (the review page was written without a rebuild because the pack was rendering). https://grand-tour-film.pplx.app/review.html

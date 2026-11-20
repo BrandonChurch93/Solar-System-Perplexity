@@ -1,0 +1,106 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "western hemisphere and left limb (crops B, D, G, H, N, O)",
+      "what": "The surface looks airbrushed and painterly. Detail smears into soft, blurry patches, and the cloud and haze layer reads as a brushed overlay rather than real atmosphere. It falls apart at native size.",
+      "fix": "Regenerate or upscale with real high-frequency terrain detail near the limb. Keep the atmospheric haze as a thin, physically graded layer, not a smear over the terrain."
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png / image-05.png",
+      "where": "Valles Marineris centre (crops A, F, P, Q)",
+      "what": "A bushy, feather-like blob sits in the canyon, along with a dark plume that looks like an explosion or plant. These are invented shapes that give away that the image is generated.",
+      "fix": "Paint out the feather and plume shapes. Replace them with eroded canyon walls and chasma floor texture that matches the rest of the rift."
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png (crop V in image-08.png)",
+      "where": "lower right, dark side near terminator",
+      "what": "Bright, broken, hook-shaped strokes float on the dark surface. They read like random squiggles or glyphs rather than lit crater rims.",
+      "fix": "Remove the stray highlights, or replace them with continuous, correctly lit crater rims that fade into shadow."
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "Phobos (crops G, P, U)",
+      "what": "The moon's surface is soft and plasticky with mushy crater edges. Its edge against Mars has a slight cut-out look, with no matching light or shadow.",
+      "fix": "Sharpen the regolith and crater detail, light it to match the sun direction on Mars, and clean up the matte edge."
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png / image-05.png",
+      "where": "dark sky (crops S, T, J, W)",
+      "what": "A faint 8 px block grid shows in the near-black sky, from compression or upscaling. Many stars are soft, multi-pixel blobs.",
+      "fix": "Denoise or deband the sky without block artifacts, export at higher quality, and use crisp point-like stars."
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png / image-05.png",
+      "where": "terminator and right limb (crops C, E, I, M, R)",
+      "what": "The night side has faint wavy streak texture and a muddy gradient. The thin rim glow on the dark limb is uneven.",
+      "fix": "Smooth the terminator falloff with dithering, and make the dark-limb atmospheric scatter even and faint."
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png / image-05.png",
+      "where": "dust storm swirl, upper centre",
+      "what": "The spiral is soft and smudgy, and its edges have a halo where it blends into the terrain.",
+      "fix": "Add fine structure to the cloud bands and feather the edge of the layer so it casts subtle shadow onto the ground."
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "north polar cap, top edge (crops K, L)",
+      "what": "The polar cap is cropped by the frame edge and its texture breaks into blotchy white patches.",
+      "fix": "Reframe, or rebuild the cap with coherent layered ice texture."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "kimi_k3",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "polar cap, tile K in image-15.png / tile B in image-14.png",
+      "what": "the ice cap is a soft, airbrushed smear of swirls, visibly blurrier than the sharply textured terrain around it, and small detached bright fragments float off its lower-left edge",
+      "fix": "repaint the cap with crisper, small-scale ice texture at the same detail level as the surrounding disc and blend the stray bright chunks back into the surface"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night side, left of terminator, tile A in image-14.png",
+      "what": "faint bluish cloud wisps sit on the unlit disc with nothing to light them, reading as a pasted layer",
+      "fix": "darken or remove the wisps on the night side so clouds only read where the sun can reach them"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "mid-right mesa in deep shadow, tile E in image-10.png",
+      "what": "the shadowed rock and haze pool are soft and muddy at native size compared with the crisp ridges nearby",
+      "fix": "add fine grain and gently sharpen the shadow detail so it matches the lit slopes, keeping the haze falloff smooth"
+     }
+    ]
+   }
+  }
+ ]
+}
