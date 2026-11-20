@@ -12,7 +12,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: none by the Builder yet
+- Last push: 2026-11-19, Phase 0 start
 
 ## Latest pictures
 
@@ -24,7 +24,7 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 
 | Phase | State | Gate evidence | Commit |
 | --- | --- | --- | --- |
-| 0 · Ground truth | not started | | |
+| 0 · Ground truth | in progress | | |
 | 1 · Rough cut | not started | | |
 | 2 · Engine and blockout | not started | | |
 | 3 · Mars, the look lock | not started | | |
@@ -103,7 +103,10 @@ None yet.
 ## Push log
 
 - The kit was pushed by the planner on 2026-11-19.
+- 2026-11-19: Builder push test, Phase 0 step 1.
 
 ## Session log
 
 One entry per task: when it started, what it did, where it stopped.
+
+- Task 1, started 2026-11-19 (America/Boise evening). Kickoff prompt without the Mars approval line. Read AGENTS.md and the kit in order. No addenda. Started Phase 0.
