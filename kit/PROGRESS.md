@@ -6,13 +6,13 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 3 · Mars, the look lock
 - Current stop: mars
-- Current round: none running (last: 2, Phase 2 blockout). Look lock rounds start at 3
+- Current round: 3 (Phase 3, mars, look lock round 1 of 5)
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 3 before round 3, with the second status pictures
+- Last push: 2026-11-20 UTC, Phase 3, round 3 started, with the third status pictures
 
 ## Latest pictures
 
@@ -43,7 +43,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mercury | stand-in | 0 | | | | | | |
 | venus | stand-in | 0 | | | | | | |
 | earth | stand-in | 0 | | | | | | |
-| mars | in progress | 0 | | | | | | |
+| mars | in progress | 1 | | | | | | |
 | jupiter | stand-in | 0 | | | | | | |
 | saturn | stand-in | 0 | | | | | | |
 | uranus | stand-in | 0 | | | | | | |
@@ -293,7 +293,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- None.
+- `npm run gate -- --phase 3` then `npm run pack -- --phase 3 --round 3 --stop mars`, Mars judged frames and sheets, logs `out/work/gate-r3.log` and `out/work/pack-r3.log`, the Builder's VM, started 2026-11-20 UTC.
 
 ## Rounds
 
@@ -301,6 +301,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 
 - Round 1, Phase 2, blockout, whole film. R4 blockout 7, three major, two minor. Next: each stop arrives on its own curve, the approach starts earlier and eases longer, the lookback is reframed with a slow pan. `scorecards/round-001/`.
 - Round 2, Phase 2, blockout, whole film. R4 blockout 5, one severe, four major, two minor. Limit reached. After the round: arrivals start off center, the lookback never stops moving, the turn away from Mars is longer. Open items 1 to 5. `scorecards/round-002/`.
+- Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0.
 
 ## Final scores
 
