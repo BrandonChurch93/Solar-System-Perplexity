@@ -16,10 +16,12 @@ export interface Fit {
   globe: { quaternion: number[]; scale: number[] }
 }
 
+export interface Surge { glide: number; rise: number; fall: number; swell?: [number, number, number] }
+
 export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
-  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: { glide: number; rise: number; fall: number } }
+  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
   terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
@@ -30,6 +32,8 @@ export interface MoveParams {
   coverTerrain?: [number, number, number]
   coverLowTerrain?: [number, number, number]
   coverTop?: [number, number]
+  coverEdge?: [number, number]
+  coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
   tint: [number, number, number]
@@ -75,16 +79,20 @@ function surgeTable(rise: number, fall: number): Float64Array {
   return table
 }
 
-function surge(s: { glide: number; rise: number; fall: number }, m1: number, x: number): number {
-  const table = surgeTable(s.rise, s.fall)
+function bumpAt(rise: number, fall: number, x: number): number {
+  const table = surgeTable(rise, fall)
   const at = x * SURGE_STEPS
   const i = Math.min(Math.floor(at), SURGE_STEPS - 1)
-  const bump = mix(table[i]!, table[i + 1]!, at - i)
+  return mix(table[i]!, table[i + 1]!, at - i) / table[SURGE_STEPS]!
+}
+
+function surge(s: Surge, m1: number, x: number): number {
   const k = Math.min(x / SURGE_LEAD, 1)
   const lead = SURGE_LEAD * (k * k * k - 0.5 * k * k * k * k) + Math.max(x - SURGE_LEAD, 0)
+  const swell = s.swell ? s.swell[0] * bumpAt(s.swell[1], s.swell[2], x) : 0
   const tail = (m1 - s.glide) / (SURGE_TAIL + 1)
-  const gain = (1 - s.glide * (1 - 0.5 * SURGE_LEAD) - tail) / table[SURGE_STEPS]!
-  return s.glide * lead + gain * bump + tail * Math.pow(x, SURGE_TAIL + 1)
+  const gain = 1 - s.glide * (1 - 0.5 * SURGE_LEAD) - (s.swell ? s.swell[0] : 0) - tail
+  return s.glide * lead + swell + gain * bumpAt(s.rise, s.fall, x) + tail * Math.pow(x, SURGE_TAIL + 1)
 }
 const easeIn = ease('power2.in')
 const easeOut = ease('power3.out')
@@ -211,9 +219,15 @@ export class StopPlan {
     if (!w) return 0
     const a = w.firstFrame / config.fps
     const b = (w.lastFrame + 1) / config.fps
-    const c = w.centerFrame / config.fps
     if (time <= a || time >= b) return 0
-    return time < c ? smooth((time - a) / (c - a)) : smooth((b - time) / (b - c))
+    const edge = this.p.coverEdge
+    if (!edge) {
+      const c = w.centerFrame / config.fps
+      return time < c ? smooth((time - a) / (c - a)) : smooth((b - time) / (b - c))
+    }
+    const x = (time - a) / (b - a)
+    const [first, last] = seg.kind === 'dive' ? edge : [edge[1], edge[0]]
+    return Math.min(smooth(x / first), smooth((1 - x) / last))
   }
 
   coverSide(seg: Segment, time: number): number {
