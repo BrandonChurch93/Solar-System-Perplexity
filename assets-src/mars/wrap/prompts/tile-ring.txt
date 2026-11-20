@@ -1,0 +1,1 @@
+Parts of image 1 are smeared, stretched or blurred into streaks. Repaint those parts as sharp, natural ground seen from straight above, with the same crisp crater and terrain detail as the sharpest parts of the tile, following the layout of image 1.

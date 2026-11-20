@@ -1,0 +1,22 @@
+Image 1 is a square tile of a top-down surface map of Mars, seen straight down from orbit (gnomonic map projection, north up). Image 2 is an approved frame of Mars from a film: it is the style to match.
+
+Repaint image 1 as the same map tile in the exact style, palette and finish of the planet's surface in image 2: rust, ochre and crimson plains, deep crimson-brown and charcoal dark regions, pale dust, crisp crater rims, layered canyon walls, wind streaks and fine dusty grain, extreme surface detail at full resolution everywhere.
+
+Must not change: the layout. Every crater, canyon, volcano, ridge, dark region, bright region, dust cloud and patch of ice stays exactly where it is in image 1, with the same size and shape. Do not move, add or remove any large feature. Keep the framing exactly: the output covers the same square of ground as image 1, edge to edge, at the same scale.
+
+Make the whole tile one consistent surface: where parts of image 1 look soft, blurred, washed out or veiled by a pale haze, paint the same ground with the same crisp detail and the same colour depth as the sharpest parts. Where two looks meet in image 1, there must be no visible edge, arc or circle between them in the output.
+
+Lighting: completely even and flat, like an albedo map. No sun direction, no terminator, no night side, no cast shadows, no highlights, no atmospheric haze, no limb glow, no vignette.
+
+Nothing else: no stars, no black space, no planet edge or curvature, no moon, no text, labels, grid lines, border, frame, watermark or logo.
+
+Face notes appended to the prompt above (blank for c, e, b):
+ n: 
+
+This tile is centred on the north pole. The only ice is the bright white cap with its swirling edge; keep it exactly as it is. The smooth rounded patch at the very centre is not ice: dusty layered rust terrain with dark dune fields around it.
+ s: 
+
+This tile is centred on the south pole. Keep the small bright ice cap at the centre exactly as small as it is.
+ w: 
+
+Keep the large curling pale dust storm (a soft swirl of dust, it stays soft), the three volcanoes, the streaks of pale cloud at the lower left and the long canyon system exactly as they are.
