@@ -468,11 +468,11 @@ Running `python3 assets-src/mars/patches/verify.py --wrap out/work/wrap/stage1-c
 
 Made by the Builder after delivery. `bake.py` matched the patches to the wrap by adding a low frequency difference in display values. On the hero-matched wrap that pushed canyon rims to clipped orange, which the tone curve turned into glowing edges. The shipped patches are re-matched with `rematch.py` and are not baked into the wrap.
 
-- Tool: `python3 assets-src/mars/patches/rematch.py --wrap public/assets/mars/full/wrap-color.jpg --src-dir <folder with the agent's originals> --full-dir public/assets/mars/full --web-dir public/assets/mars/web --ceiling 4.5`, run from the repo root. No image model is used. The originals are the files at commit 5a9f247 on `agent/assets-mars-patches`.
+- Tool: `python3 assets-src/mars/patches/rematch.py --wrap public/assets/mars/full/wrap-color.jpg --src-dir <folder with the agent's originals> --full-dir public/assets/mars/full --web-dir public/assets/mars/web --ceiling 4.5`, run from the repo root. No image model is used. The originals are the agent's files: `patch-1.jpg`, `patch-2.jpg` and `patch-3.jpg` at commit 5a9f247 and `patch-wide.jpg` and `patch-mid.jpg` at commit afbd349 on `agent/assets-mars-patches`. The pass was run again over all five after the two new levels arrived.
 - Steps: 1. Bring patch and wrap to scene-linear values through the inverse tone curve. 2. Multiply the patch by the ratio of the wrap's low frequencies to its own (0.35 degrees), so the patch keeps its fine detail and takes the wrap's regional color. 3. Tame highlights: detail brighter than 1.35 times its surroundings is compressed and capped at 1.9 times, with a hue preserving ceiling. 4. Back through the tone curve, saved as JPEG quality 94, 4:4:4, `web` by a 2x Lanczos downscale.
-- Outputs: `public/assets/mars/full/patch-1.jpg`, `public/assets/mars/full/patch-2.jpg`, `public/assets/mars/full/patch-3.jpg` and the same three under `public/assets/mars/web/`.
+- Outputs: `public/assets/mars/full/patch-wide.jpg`, `patch-1.jpg`, `patch-mid.jpg`, `patch-2.jpg`, `patch-3.jpg` and the same five under `public/assets/mars/web/`.
 - Use: `src/bodies/planet.ts` lays the levels over the wrap by gnomonic projection about the spot. Each level fades in only where the level under it has fewer than about 1.25 texels per screen pixel, so the hold frame shows the wrap alone.
 
 ## Ledger rows
 
-None (no third-party files were downloaded; all three patches were generated from `assets-src/mars/wrap/stage1-color-4096.jpg` and styled from `references/approved/mars-hero.png` and `references/approved/mars-close.jpg`).
+None (no third-party files were downloaded; all five patches were generated from `assets-src/mars/wrap/stage1-color-4096.jpg` and styled from `references/approved/mars-hero.png` and `references/approved/mars-close.jpg`).

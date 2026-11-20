@@ -249,15 +249,15 @@ export class StopPlan {
     const position = ground.clone().multiplyScalar(1 + h)
     const up0 = Y.clone().applyQuaternion(start.quaternion)
     const far = start.position.clone().addScaledVector(new THREE.Vector3(0, 0, -1).applyQuaternion(start.quaternion), start.position.length())
-    const target = far.lerp(spot.clone().addScaledVector(heading, d.ahead), smooth(x * 1.7))
+    const target = far.lerp(spot.clone().addScaledVector(heading, d.ahead), smooth(x * 1.2))
     const toTarget = target.sub(position).normalize()
     const level = heading.clone().addScaledVector(ground, -heading.dot(ground)).normalize().applyAxisAngle(ground, thetaC + thetaRate * tau * b)
     const dip = Math.acos(1 / (1 + h))
     const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g)
-    const final = level.multiplyScalar(Math.cos(pitch)).addScaledVector(ground, -Math.sin(pitch))
-    const w = smoother(ramp(0.3, 0.97, x))
+    const final = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(ground, -Math.sin(pitch))
+    const w = smoother(ramp(0, 0.97, x))
     const aim = slerpDir(toTarget, final, w)
-    const up = slerpDir(up0, ground, smooth(x * 1.25))
+    const up = slerpDir(up0, ground.clone().add(level).normalize(), smooth(x))
     const roll = (t.entryRollDeg ?? 0) * at.g * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
     return { position, quaternion: lookAt(position, position.clone().add(aim), up, roll), vfov: mix(start.vfov, t.vfov, smooth(x)) }
   }
@@ -269,7 +269,7 @@ export class StopPlan {
     const f = this.coverFractions(seg)
     if (time >= this.coverCenter(seg)) return { pose: this.diveTerrain(time), view: 'terrain' }
     const held = this.hold(time - this.seg.hold.start)
-    if (this.p.dive.swoop) return { pose: blendPose(held, this.swoop(time), smooth(u / 0.3)), view: 'orbit' }
+    if (this.p.dive.swoop) return { pose: blendPose(held, this.swoop(time), smooth(u / 0.22)), view: 'orbit' }
     const start = this.hold(this.seg.hold.end - this.seg.hold.start)
     const e = easeIn(ramp(0, f.last, u))
     const d = this.p.dive
