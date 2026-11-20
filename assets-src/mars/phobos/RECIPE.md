@@ -48,6 +48,17 @@ The final asset iteration is procedural take 5, combining the traced silhouette 
 
 The comparison shows the correct shape, main craters and bowl orientation. It does not match the approved directional light pixel for pixel. The lit cap is paler and more uniformly lit, the lower terminator more broken, and Stickney's lit crescent narrower. No discrete wrap or polar pinch was evident in the lit reverse views or native map crops. Where the approved lighting was fully dark and could not validate edited texture, the material is lower contrast and synthetic. The lit reverse views verify continuous geometry, textures and crater registration, not an exact geological reconstruction.
 
+## Lit side pass (lead, Phase 3)
+
+Made by the Builder after the agent's delivery. The mesh and its map are right, but a shader light could not reproduce the approved hero's lit face and the lit rim of Stickney pixel for pixel, and Phobos is the largest thing in the hold frame. So the side of Phobos that the hero shows carries the hero's own pixels.
+
+- Files: `public/assets/mars/full/phobos-lit.jpg`, `public/assets/mars/full/phobos-lit-mask.png`, `public/assets/mars/web/phobos-lit.jpg`, `public/assets/mars/web/phobos-lit-mask.png` (4096 x 2048 and 2048 x 1024, the moon's own map layout).
+- Tool: `python3 assets-src/mars/phobos/lit.py`, run from the repo root. No image model is used. About 12 minutes and 4 GB.
+- Inputs: `references/approved/mars-hero.png`, `assets-src/mars/fit.json`, `assets-src/mars/phobos/phobos.json`, `public/assets/mars/full/phobos-height.bin`.
+- Steps: 1. Displace every texel of the moon's map by the height map and project it through the fitted camera at the hold pose. 2. Keep the texels the hero sees (a depth test against the nearest surface, facing the camera, at least 2.5 px inside the silhouette) and give each the hero pixel it lands on. 3. Fill the rest outward from the seen texels with a blur pyramid, so the soft edge of the mask never meets an unrelated color. 4. The mask is the seen region, softened by 2 degrees and grown by 14 degrees so the grazing ring at the silhouette also takes the hero's color and no shader-lit outline shows.
+- Use: `src/bodies/moonbody.ts` mixes the baked color in by the mask. The baked color is display color, so it goes through the inverse tone curve and the lens vignette is cancelled for it, like the relief. Outside the mask the moon is lit by the shader as before, which is what shows as it tumbles.
+- Check: the hold frame's Phobos crop beside the hero's (`out/work/phobos/lit-check.png` for the silhouette, a side by side crop at 1920 for the picture). The lit face, the grooves and the Stickney rim now match the hero. The outline that the first mask left along the silhouette is gone after the mask was grown.
+
 ## Ledger rows
 
 | File | What it is | Source URL | License | Credit line | Date fetched |

@@ -6,13 +6,16 @@ import skyFrame from './skyframe.json'
 
 export const EQUIRECT_GLSL = /* glsl */ `
 const float PI = 3.141592653589793;
-vec4 equirect(sampler2D tex, vec3 dir) {
+vec4 equirectGrad(sampler2D tex, vec3 dir, float grad) {
   float u = atan(dir.x, dir.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(dir.y, -1.0, 1.0)) / PI + 0.5;
   float u2 = fract(u + 0.5) - 0.5;
   vec2 dx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v));
   vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
-  return textureGrad(tex, vec2(u, v), dx, dy);
+  return textureGrad(tex, vec2(u, v), dx * grad, dy * grad);
+}
+vec4 equirect(sampler2D tex, vec3 dir) {
+  return equirectGrad(tex, dir, 1.0);
 }`
 
 const SKY_FRAG = /* glsl */ `

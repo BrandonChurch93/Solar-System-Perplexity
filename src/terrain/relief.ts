@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import type { RenderView, SetContext } from '../core/types'
-import { DIAG_GLSL, diagUniform } from '../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 
 export interface ReliefLayerDef {
@@ -31,6 +31,7 @@ export interface ReliefAir {
   side: [number, number]
   starScaleDeg: number
   starCut: number
+  veil: number
 }
 
 export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir }
@@ -54,6 +55,7 @@ uniform vec3 uWarm;
 uniform vec4 uScale;
 uniform vec2 uSide;
 uniform float uSpan;
+uniform float uVeil;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -68,7 +70,7 @@ void main() {
   float across = clamp(d.x / max(-d.z, 0.2) / uSpan, -1.0, 1.0) * 0.5 + 0.5;
   float side = mix(uSide.x, uSide.y, across);
   vec3 glow = uCool * exp(-elev / uScale.x) * side + uWarm * exp(-elev / uScale.y) * mix(1.0, side, 0.35);
-  float cut = uScale.w * exp(-elev / uScale.z);
+  float cut = 1.0 - (1.0 - uVeil) * (1.0 - uScale.w * exp(-elev / uScale.z));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   outColor = vec4(glow * uGain * vig, cut);
@@ -104,6 +106,7 @@ uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
 uniform vec3 uLayer;
+uniform float uGrad;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -116,7 +119,7 @@ void main() {
   vec3 m = texture(uMasks, vec2(mq.x, 1.0 - mq.y)).rgb;
   vec2 shift = uMist * m.r + uDust * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) * uToLayer;
-  vec4 texel = texture(uColor, uv);
+  vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
   float alpha = uHasAlpha > 0.5 ? texture(uAlpha, vUv).r : texel.a;
   if (alpha < 0.004) discard;
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -158,7 +161,7 @@ export class Relief {
           uUp: { value: new THREE.Vector3(0, Math.cos(rad(a.pitchDeg)), Math.sin(rad(a.pitchDeg))) }, uDip: { value: rad(a.dipDeg) },
           uCool: { value: new THREE.Vector3().fromArray(a.cool) }, uWarm: { value: new THREE.Vector3().fromArray(a.warm) },
           uScale: { value: new THREE.Vector4(rad(a.coolScaleDeg), rad(a.warmScaleDeg), rad(a.starScaleDeg), a.starCut) },
-          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uSpan: { value: th * aspect },
+          uSide: { value: new THREE.Vector2().fromArray(a.side) }, uVeil: { value: a.veil }, uSpan: { value: th * aspect },
           uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
         },
         transparent: true,
@@ -248,7 +251,7 @@ export class Relief {
           uColor: { value: color }, uAlpha: { value: alpha ?? color }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
           uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) },
           uMist: { value: new THREE.Vector2() }, uDust: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 },
-          uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform,
+          uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform,
         },
         transparent: true,
         blending: THREE.CustomBlending,

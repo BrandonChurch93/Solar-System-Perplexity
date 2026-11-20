@@ -6,7 +6,7 @@ import { floatTarget } from './pass'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot } from './types'
-import { isRaw, setDiag } from '../diagnostics/diag'
+import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
@@ -21,6 +21,7 @@ export interface Sanity { invalid: number; coverage: number }
 
 const STAR_COUNT = 420000
 const DUST_COUNT = 2600
+const GRAD_FLOOR = 0.5
 
 export class Engine {
   readonly renderer: THREE.WebGLRenderer
@@ -137,7 +138,7 @@ export class Engine {
       this.renderSample(shot, mid, s.jitterX, s.jitterY, i, samples.length)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
-    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag)
+    this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag, samples.length > 1)
     this.lastShot = mid
     this.flush()
   }
@@ -164,6 +165,7 @@ export class Engine {
     const r = this.renderer
     const raw = isRaw(this.diag)
     setDiag(this.diag)
+    setSamples(count, GRAD_FLOOR)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, false)
     if (!raw) this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, height, shot.sun)

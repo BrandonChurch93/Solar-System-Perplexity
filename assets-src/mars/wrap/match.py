@@ -94,8 +94,10 @@ for it in range(3):
     print('pass', it, 'ratio range', float(r.min()), float(r.max()))
 
 lc.save(curve, use.sum(), 'src/stops/mars/curve.json')
-night = (seen / np.maximum(lc.curve_at(curve, g['ndl']), 1e-3)).astype(np.float32)
-night = blur(night, 0.6)
+lit = lc.curve_at(curve, g['ndl'])
+night = (seen / np.maximum(lit, 1e-3)).astype(np.float32)
+dim = np.clip((0.12 - lit.max(axis=-1)) / 0.08, 0, 1)[..., None].astype(np.float32)
+night = night * (1 - dim) + blur(night, 0.6) * dim
 nw = (wgt * frame).astype(np.float32)
 flat = np.round(np.clip(linear_to_srgb(filmic(night)), 0, 1) * 255).astype(np.uint8)
 small = cv2.resize(flat, (w // 4, h // 4), interpolation=cv2.INTER_AREA)

@@ -43,6 +43,7 @@ void main() {
   float wisp = fbm(q * vec2(4.0, 13.0) + uFlow * 2.3 + 5.0) - 0.47;
   float band = smoothstep(-uSoft, uSoft, s + 0.12 * streak);
   vec3 col = mix(uLow, uColor, band) * (1.0 + 0.5 * streak + 0.22 * wisp);
+  col *= mix(1.0, 0.3, smoothstep(0.04, 0.55, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
   float a = smoothstep(0.0, 1.0, uAmount * (1.35 + 0.9 * streak) - 0.18 * (1.0 - uAmount));
   a = mix(a, 1.0, smoothstep(0.82, 1.0, uAmount));
   outColor = vec4(col, a);

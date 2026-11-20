@@ -50,5 +50,6 @@ export const relief = {
     side: [0.55, 1.4] as [number, number],
     starScaleDeg: 1.5,
     starCut: 0.9,
+    veil: 0.55,
   },
 }

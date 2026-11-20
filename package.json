@@ -14,6 +14,7 @@
     "determinism": "tsx tools/determinism.ts",
     "gate": "tsx tools/gate.ts",
     "review": "tsx tools/review.ts",
+    "status": "tsx tools/status.ts",
     "caps": "tsx tools/caps.ts",
     "budget": "tsx tools/budget.ts",
     "animatic": "python3 tools/animatic.py",

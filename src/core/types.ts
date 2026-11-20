@@ -15,6 +15,7 @@ export interface PostParams {
   gain: [number, number, number]
   fade: number
   flare: number
+  sharpen: number
 }
 
 export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number }

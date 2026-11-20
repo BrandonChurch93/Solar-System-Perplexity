@@ -88,7 +88,8 @@ Made by the Builder after the agent's delivery, because the film's hold frame is
 - Inputs: the agent's `public/assets/mars/full/wrap-color.jpg` at commit 4181fcf as the source wrap, `references/approved/mars-hero.png`, `assets-src/mars/fit.json`, the ground haze in `src/stops/mars/haze.json`, `tools/assets/lightcurve.py`.
 - Steps: 1. Remove the tone curve and the fitted ground haze from the hero. 2. Fit the light curve over the sun angle (hero over map, median per angle bin), correct the map's low frequencies toward the hero (blur 12 px near, 80 px far, two passes), refit. 3. Inside the hero's frame, away from the frame edge and the limb, replace the map with the hero divided by the light curve at full strength (ladder rung 2 of "The orbit view does not match its approved hero image"). 4. Behind Phobos (a hand outline dilated 12 px) the hero has no surface: the low frequencies there are an inpaint of the divided hero and the detail is the agent's painted map. 5. Outside the frame and past the limb the agent's map is kept with the low frequency correction faded out.
 - Outputs: `public/assets/mars/full/wrap-color.jpg`, `public/assets/mars/web/wrap-color.jpg`, and the fitted curve `src/stops/mars/curve.json`.
-- Then the dive patches are baked in with `assets-src/mars/patches/bake.py` (see that folder's recipe).
+- Sharpness: the hero's surface is blurred before the divide only where the light curve is dim (under 0.12), where the divide would amplify the hero's grain. Lit areas keep the hero's pixels unblurred. The first version blurred everywhere and the hold frame measured 0.55 of the hero's fine detail (G17). With this change it measures about 1.0.
+- The dive patches are not baked into this map. The shader lays them over it and fades each one in only when the level under it runs out of texels, so the hold shows this map alone. See `assets-src/mars/patches/RECIPE.md`.
 
 ## Ledger rows
 

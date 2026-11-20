@@ -44,11 +44,11 @@ export const createSet: SetFactory = async (ctx) => {
   const stormMask = await ctx.texture(base + 'wrap-storm.png', { srgb: false, repeat: true })
   const wrapHeight = ctx.floatTexture(await heights(ctx, base + 'wrap-height.bin', sizes.height[0], sizes.height[1]), sizes.height[0], sizes.height[1], true)
   const patchTextures: THREE.Texture[] = []
-  for (let i = 0; i < patches.widthsDeg.length; i++) patchTextures.push(await ctx.texture(base + 'patch-' + (i + 1) + '.jpg', { srgb: true, anisotropy: 16 }))
+  for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const planet = new Planet({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze,
-    patches: { textures: patchTextures, widthsDeg: patches.widthsDeg, spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -59,7 +59,10 @@ export const createSet: SetFactory = async (ctx) => {
   const moonSizes = phobos.sets[key]
   const moonHeights = await heights(ctx, base + 'phobos-height.bin', moonSizes.heightSize[0]!, moonSizes.heightSize[1]!)
   const moonMap = await ctx.texture(base + 'phobos-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  const moonLit = await ctx.texture(base + 'phobos-lit.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  const moonLitMask = await ctx.texture(base + 'phobos-lit-mask.png', { srgb: false, repeat: true })
   const moon = new MoonBody({
+    lit: { map: moonLit, mask: moonLitMask },
     map: moonMap, mapWidth: moonSizes.colorSize[0]!, height: ctx.floatTexture(moonHeights, moonSizes.heightSize[0]!, moonSizes.heightSize[1]!, true), heights: moonHeights,
     heightSize: [moonSizes.heightSize[0]!, moonSizes.heightSize[1]!], lo: phobos.lo, hi: phobos.hi, radius: phobos.radius, gain: look.moon.gain, ambient: look.moon.ambient, bounce: look.moon.bounce, sun: look.moon.sun, bump: look.moon.bump, power: look.moon.power, rim: look.moon.rim,
   })
@@ -110,7 +113,7 @@ export const createSet: SetFactory = async (ctx) => {
       moonWorld.copy(state.rotation).multiply(moon.mesh.quaternion)
       bounce.copy(moon.mesh.position).negate().normalize().applyQuaternion(state.rotation)
       moonLight.fromArray(look.moon.sunBias).applyQuaternion(state.rotation).add(light).normalize()
-      moon.update(moonLight, bounce, moonWorld, gain * state.weight)
+      moon.update(moonLight, bounce, moonWorld, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

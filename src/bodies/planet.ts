@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { DIAG_GLSL, diagUniform } from '../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { HAZE_GLSL, hazeUniforms, type HazeParams } from './haze'
@@ -23,6 +23,8 @@ export interface PatchSet {
   widthsDeg: number[]
   spot: THREE.Vector3
   feather: number
+  fade: [number, number]
+  nearDeg: number
 }
 
 export interface StormParams {
@@ -58,18 +60,31 @@ void main() {
   gl_Position = projectionMatrix * mv;
 }`
 
+export const MAX_PATCHES = 6
+
+const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+
+const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      vec2 q = g * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      texels = mix(texels, parent, step(0.5, w));
+      near = max(near, w * uPatchNear[${i}]);
+    }`).join('\n')
+
 const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uHeight;
 uniform sampler2D uStorm;
-uniform sampler2D uPatch0;
-uniform sampler2D uPatch1;
-uniform sampler2D uPatch2;
-uniform vec3 uPatchScale;
-uniform vec3 uPatchSize;
+${PATCH_SAMPLERS}
+uniform float uPatchScale[${MAX_PATCHES}];
+uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchNear[${MAX_PATCHES}];
 uniform float uPatchCount;
 uniform float uFeather;
+uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -78,6 +93,7 @@ uniform float uStormRadius;
 uniform float uStormAngle;
 uniform float uHasStorm;
 uniform float uMapWidth;
+uniform float uGrad;
 uniform float uHeightStep;
 uniform float uSpin;
 uniform float uGain;
@@ -127,7 +143,7 @@ void main() {
     flow = uStormAngle * m / (0.35 + ang * ang);
     dc = turnAbout(d, uStormAxis, flow);
   }
-  vec3 albedo = equirect(uMap, dc).rgb;
+  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
   float near = 0.0;
@@ -137,27 +153,11 @@ void main() {
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    gx *= uGrad;
+    gy *= uGrad;
     float front = step(0.3, dn);
-    vec2 q0 = g * uPatchScale.x;
-    float w0 = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q0.x), abs(q0.y)));
-    vec3 p0 = textureGrad(uPatch0, q0 + 0.5, gx * uPatchScale.x, gy * uPatchScale.x).rgb;
-    albedo = mix(albedo, p0, w0);
-    texels = mix(texels, gd * uPatchScale.x * uPatchSize.x, step(0.5, w0));
-    if (uPatchCount > 1.5) {
-      vec2 q1 = g * uPatchScale.y;
-      float w1 = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q1.x), abs(q1.y)));
-      vec3 p1 = textureGrad(uPatch1, q1 + 0.5, gx * uPatchScale.y, gy * uPatchScale.y).rgb;
-      albedo = mix(albedo, p1, w1);
-      texels = mix(texels, gd * uPatchScale.y * uPatchSize.y, step(0.5, w1));
-      near = w1;
-    }
-    if (uPatchCount > 2.5) {
-      vec2 q2 = g * uPatchScale.z;
-      float w2 = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q2.x), abs(q2.y)));
-      vec3 p2 = textureGrad(uPatch2, q2 + 0.5, gx * uPatchScale.z, gy * uPatchScale.z).rgb;
-      albedo = mix(albedo, p2, w2);
-      texels = mix(texels, gd * uPatchScale.z * uPatchSize.z, step(0.5, w2));
-    }
+    float parent = texels;
+${PATCH_LEVELS}
   }
   vec3 n = normalize(vWorldN);
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
@@ -214,6 +214,8 @@ export class Planet {
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
+    if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
@@ -224,11 +226,11 @@ export class Planet {
       uniforms: {
         ...hazeUniforms(o.haze),
         uMap: { value: o.map }, uHeight: { value: o.height }, uStorm: { value: o.storm?.mask ?? o.map },
-        uPatch0: { value: tex(0) }, uPatch1: { value: tex(1) }, uPatch2: { value: tex(2) },
-        uPatchScale: { value: new THREE.Vector3(scale(0), scale(1), scale(2)) },
-        uPatchSize: { value: new THREE.Vector3(size(0), size(1), size(2)) },
+        ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
-        uFeather: { value: p?.feather ?? 0.12 },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uStormAxis: { value: o.storm?.axis.clone().normalize() ?? new THREE.Vector3(0, 1, 0) },
         uStormRadius: { value: o.storm?.radius ?? 1 }, uStormAngle: { value: 0 }, uHasStorm: { value: o.storm ? 1 : 0 },
@@ -238,7 +240,7 @@ export class Planet {
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
         uExtinction: { value: o.haze.extinction },
         uBodyToWorld: { value: this.bodyToWorld },
-        uDiag: diagUniform,
+        uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     const seg = o.segments ?? 320

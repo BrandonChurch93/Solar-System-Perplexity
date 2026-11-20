@@ -12,8 +12,10 @@ export const wrap = {
 
 export const patches = {
   spot: { lon: -81.86, lat: -4.54 },
-  widthsDeg: [48, 12, 3],
+  levels: [{ file: 'patch-1.jpg', widthDeg: 48 }, { file: 'patch-2.jpg', widthDeg: 12 }, { file: 'patch-3.jpg', widthDeg: 3 }],
   feather: 0.12,
+  fade: [1.02, 1.5] as [number, number],
+  nearDeg: 12,
 }
 
 const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]

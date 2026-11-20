@@ -7,6 +7,12 @@ const CODES: Record<string, number> = { beauty: 0, ungraded: 0, nograin: 0, texe
 
 export const diagUniform: THREE.IUniform<number> = { value: 0 }
 
+export const gradUniform: THREE.IUniform<number> = { value: 1 }
+
+export function setSamples(count: number, floor: number): void {
+  gradUniform.value = Math.max(1 / Math.sqrt(Math.max(count, 1)), floor)
+}
+
 export function setDiag(view: string): number {
   diagUniform.value = CODES[view] ?? 0
   return diagUniform.value

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { DIAG_GLSL, diagUniform } from '../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { EQUIRECT_GLSL } from '../space/sky'
 
@@ -20,18 +20,21 @@ export interface MoonBodyOptions {
   power?: number
   rim?: number
   segments?: number
+  lit?: { map: THREE.Texture; mask: THREE.Texture }
 }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vView;
 out vec3 vEye;
+out vec3 vClip;
 void main() {
   vLocal = position;
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   vView = mv.xyz;
   vEye = transpose(mat3(modelViewMatrix)) * -mv.xyz;
   gl_Position = projectionMatrix * mv;
+  vClip = gl_Position.xyw;
 }`
 
 const FRAG = /* glsl */ `
@@ -39,6 +42,7 @@ precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uHeight;
 uniform float uMapWidth;
+uniform float uGrad;
 uniform float uStep;
 uniform float uLo;
 uniform float uHi;
@@ -50,6 +54,12 @@ uniform vec3 uBounce;
 uniform vec3 uSunB;
 uniform vec3 uBounceB;
 uniform vec3 uShape;
+uniform sampler2D uLit;
+uniform sampler2D uLitMask;
+uniform float uLitOn;
+uniform float uVignette;
+uniform float uAspect;
+in vec3 vClip;
 in vec3 vLocal;
 in vec3 vView;
 in vec3 vEye;
@@ -76,12 +86,18 @@ void main() {
   vec3 cb = surface(normalize(d + north * wide)) - surface(normalize(d - north * wide));
   vec3 g = normalize(cross(ca, cb));
   n = normalize(g + (n - g) * uShape.x);
-  vec3 albedo = inverseFilmic(equirect(uMap, d).rgb);
+  vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   float ndl = pow(max(dot(n, uSunB), 0.0), uShape.y);
   float edge = pow(1.0 - max(dot(g, normalize(vEye)), 0.0), 3.0);
   ndl += uShape.z * edge * smoothstep(-0.25, 0.35, dot(g, uSunB));
   float nb = max(dot(n, uBounceB) * 0.6 + 0.4, 0.0);
   vec3 col = albedo * (uSunTint * ndl * uSunGain + uBounce * nb + uAmbient) * uGain;
+  if (uLitOn > 0.0) {
+    vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+    float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+    vec3 baked = inverseFilmic(equirectGrad(uLit, d, uGrad).rgb) * uGain * vig;
+    col = mix(col, baked, equirect(uLitMask, d).r * uLitOn);
+  }
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
 }`
 
@@ -130,15 +146,18 @@ export class MoonBody {
         uSunTint: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) }, uBounce: { value: new THREE.Vector3().fromArray(o.bounce) },
         uSunB: { value: new THREE.Vector3(1, 0, 0) }, uBounceB: { value: new THREE.Vector3(0, 0, -1) },
         uShape: { value: new THREE.Vector3(o.bump ?? 1, o.power ?? 1, o.rim ?? 0) },
-        uDiag: diagUniform,
+        uLit: { value: o.lit?.map ?? o.map }, uLitMask: { value: o.lit?.mask ?? o.map }, uLitOn: { value: o.lit ? 1 : 0 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     this.mesh = new THREE.Mesh(geo, this.material)
     this.mesh.scale.setScalar(o.radius)
   }
 
-  update(sunWorld: THREE.Vector3, bounceWorld: THREE.Vector3, worldRotation: THREE.Quaternion, gain: number): void {
+  update(sunWorld: THREE.Vector3, bounceWorld: THREE.Vector3, worldRotation: THREE.Quaternion, gain: number, vignette = 0, aspect = 16 / 9): void {
     const u = this.material.uniforms
+    u.uVignette!.value = vignette
+    u.uAspect!.value = aspect
     this.inverse.copy(worldRotation).invert()
     ;(u.uSunB!.value as THREE.Vector3).copy(sunWorld).applyQuaternion(this.inverse)
     ;(u.uBounceB!.value as THREE.Vector3).copy(bounceWorld).applyQuaternion(this.inverse).normalize()

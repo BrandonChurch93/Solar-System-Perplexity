@@ -21,7 +21,7 @@ export interface MoveParams {
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean }
   terrain: { vfov: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
   light: { exposure: number; skyExposure: number; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
@@ -313,12 +313,15 @@ export class StopPlan {
     const spot = this.spot.clone().applyQuaternion(tq)
     const normal = this.normal.clone().applyQuaternion(tq)
     const heading = this.heading.clone().applyQuaternion(tq)
-    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, d.ahead)
+    const ahead = this.p.rise.ahead ?? d.ahead
+    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, ahead)
     const span = end.position.clone().sub(from)
     const ratio = span.length() / d.altitude
     const m = (Math.pow(ratio, e) - 1) / (ratio - 1)
-    const position = from.clone().addScaledVector(span, m)
-    const ground = spot.clone().addScaledVector(heading, d.ahead * 2)
+    const up1 = span.dot(normal)
+    const across = span.clone().addScaledVector(normal, -up1)
+    const position = from.clone().addScaledVector(normal, up1 * m).addScaledVector(across, Math.pow(m, this.p.rise.hug ?? 1))
+    const ground = spot.clone().addScaledVector(heading, ahead * 2)
     const aim = end.position.clone().addScaledVector(new THREE.Vector3(0, 0, -1).applyQuaternion(end.quaternion), end.position.length())
     const target = ground.lerp(aim, smooth(e * 1.15))
     const up = slerpDir(normal, Y.clone().applyQuaternion(end.quaternion), smooth(e))
