@@ -102,8 +102,9 @@ export const createSet: SetFactory = async (ctx) => {
 
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
-    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, anisotropy: 4 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.edge })
+    const wide = 1 + 2 * def.margin
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
   }
 
   return {

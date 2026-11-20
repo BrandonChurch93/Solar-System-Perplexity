@@ -2,17 +2,21 @@ import json, sys
 import numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
+from deblock import deblock
 
 Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 WEB = (1408, 792)
-HOLE = 1.04
+MARGIN = 0.125
 
 
-def save(img, name, out):
-    for key, size in (('full', FULL), ('web', WEB)):
-        im = img if img.size == size else img.resize(size, Image.LANCZOS)
-        im.save(f'{out}/{key}/{name}', quality=95, subsampling=0)
+def save(lin, name, out):
+    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
+    wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
+    for key, k in (('full', 1), ('web', 2)):
+        im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
+        im.save(f'{out}/{key}/{name}', lossless=True, quality=90, method=6)
 
 
 def to_linear(a):
@@ -36,9 +40,14 @@ def film(x):
     return np.clip(x * (2.51 * x + 0.03) / (x * (2.43 * x + 0.59) + 0.14), 0, 1)
 
 
-def scene(path, resample):
-    img = Image.open(path).convert('RGB').resize(FULL, resample)
-    return unfilm(to_linear(np.asarray(img).astype(np.float32) / 255))
+def scene(path, resample, blocks=False):
+    img = Image.open(path).convert('RGB')
+    a = np.asarray(img).astype(np.float32) / 255
+    if blocks:
+        a = np.clip(deblock(a), 0, 1)
+    if img.size != FULL:
+        a = np.clip(np.stack([np.asarray(Image.fromarray(a[..., i], 'F').resize(FULL, resample)) for i in range(3)], -1), 0, 1)
+    return unfilm(to_linear(a))
 
 
 def step(v, lo, hi):
@@ -57,9 +66,9 @@ def hold(hero, fill, glow, out, fix=None):
     k = FULL[0] / w
     yy, xx = np.mgrid[0:FULL[1], 0:FULL[0]]
     d = np.hypot(xx - c['cx'] * k, yy - c['cy'] * k) / (c['r'] * k)
-    a = scene(hero, Image.LANCZOS)
+    a = scene(hero, Image.LANCZOS, True)
     g = scene(glow, Image.BICUBIC)
-    f = scene(fill, Image.LANCZOS)
+    f = scene(fill, Image.LANCZOS, True)
     sky = np.maximum(a - g, 0)
     la = ndi.gaussian_filter(luma(a), 10)
     lg = ndi.gaussian_filter(luma(g), 10)
@@ -76,7 +85,7 @@ def hold(hero, fill, glow, out, fix=None):
     lin = sky * own[..., None] + f * scale * (1 - own[..., None])
     if fix:
         lin = np.maximum(lin + scene(fix[0], Image.LANCZOS) - scene(fix[1], Image.BICUBIC), 0) * own[..., None] + lin * (1 - own[..., None])
-    save(Image.fromarray((to_srgb(film(lin)) * 255 + 0.5).astype(np.uint8)), 'sky-hold.jpg', out)
+    save(lin, 'sky-hold.webp', out)
 
 
 def terrain(close, glow, out, seen=None):
@@ -88,7 +97,7 @@ def terrain(close, glow, out, seen=None):
     ys = np.array([line[0][1], apex[1], line[1][1]]) * k
     hy = np.polyval(np.polyfit(xs, ys, 2), np.arange(FULL[0]))[None, :]
     yy = np.arange(FULL[1], dtype=np.float32)[:, None]
-    a = scene(close, Image.LANCZOS)
+    a = scene(close, Image.LANCZOS, True)
     g = scene(glow, Image.BICUBIC)
     sky = np.maximum(a - g, 0)
     edge = hy - 48
@@ -104,7 +113,7 @@ def terrain(close, glow, out, seen=None):
     mirror = sky[rows, cols]
     print('own share', float(own.mean().round(3)))
     lin = sky * own[..., None] + mirror * (1 - own[..., None])
-    save(Image.fromarray((to_srgb(film(lin)) * 255 + 0.5).astype(np.uint8)), 'sky-terrain.jpg', out)
+    save(lin, 'sky-terrain.webp', out)
 
 
 if __name__ == '__main__':
