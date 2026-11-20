@@ -25,8 +25,10 @@ export const shellHaze = hazeJson.shell as HazeParams
 export const shellDir = hazeJson.shellDir as [number, number, number]
 export const haloHaze = hazeJson.halo as HazeParams
 export const haloDir = hazeJson.haloDir as [number, number, number]
+export const haloCoreDir = hazeJson.haloCoreDir as [number, number, number]
 export const glintHaze = hazeJson.glint as HazeParams
 export const glintDir = hazeJson.glintDir as [number, number, number]
+export const glintCoreDir = hazeJson.glintCoreDir as [number, number, number]
 
 export const moon = {
   gain: 2.0,
