@@ -8,6 +8,7 @@ export const params: MoveParams = {
   terrain: { vfov: 60, forward: 1.2, rise: 0.05, side: 0.25, yawDeg: 2, pitchDeg: 0, entryHeight: 0.96, entryBack: 1.32, entryPitchDeg: 6, exitHeight: 2.2, exitForward: 1.5, exitPitchDeg: 12 },
   rise: { azimuthDeg: -38, elevationDeg: 18, distance: 5.2, offset: [0.35, -0.1], driftSpeed: 0.08, rollDeg: -5 },
   travel: { turnDeg: 78, side: 1 },
+  arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.35, sunRadiusDeg: 8.8, sunGlare: 1, flare: 1 },
   cover: [1.7, 1.35, 0.95],
   spinDegPerSecond: 0.6,

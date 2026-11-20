@@ -17,9 +17,10 @@ const SWING_FROM = 0.3
 const CLEAR_DEG = 3
 const SUN_PULL_END = 0.34
 const SUN_APPROACH_START = 0.42
-const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 3.5, settleSeconds: 4.5, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
+const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 4.5, orbitDeg: 3, pullPerSecond: 0.012, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
+const OFFSET_FROM = 0.15
 const Y = new THREE.Vector3(0, 1, 0)
-const easeSettle = ease('sine.inOut')
+const easeSettle = ease('sine.out')
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
@@ -78,6 +79,11 @@ export class FilmDirector implements Director {
       const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(a.axis[0], a.axis[1], a.axis[2]).normalize(), THREE.MathUtils.degToRad(a.swingDeg) * left)
       pose.position.applyQuaternion(q)
       pose.quaternion.premultiply(q)
+    }
+    if (a?.offset) {
+      const left = 1 - smoother(ramp(OFFSET_FROM, 1, x))
+      const half = THREE.MathUtils.degToRad(hold.vfov) / 2
+      pose.quaternion.multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(a.offset[1] * half * left, a.offset[0] * half * left, 0, 'YXZ')))
     }
     return pose
   }
@@ -202,8 +208,8 @@ export class FilmDirector implements Director {
       const s = state(i, 'orbit')
       const lb = config.segments.find((x) => x.kind === 'lookback')!
       const look = (t: number): Pose => {
-        const position = this.lookbackPose.position.clone().multiplyScalar(1 + 0.004 * (t - lb.start))
-        const left = 1 - easeSettle(ramp(lb.start - 1, lb.start + LOOKBACK.settleSeconds, t))
+        const left = 1 - easeSettle(ramp(lb.start - 1, config.durationSeconds, t))
+        const position = this.lookbackPose.position.clone().multiplyScalar(1 + LOOKBACK.pullPerSecond * (t - lb.start)).applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.orbitDeg * left))
         return { position, quaternion: this.lookbackAim(position, LOOKBACK.settleDeg * left), vfov: this.lookbackPose.vfov }
       }
       const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1

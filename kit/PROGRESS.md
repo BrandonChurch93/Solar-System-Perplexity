@@ -6,13 +6,13 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 2 · Engine and blockout
 - Current stop: none
-- Current round: 1 (Phase 2, blockout, R4)
+- Current round: 2 (Phase 2, blockout, done; limit reached)
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: not reached
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-20 UTC, Phase 2 engine and blockout before round 1
+- Last push: 2026-11-20 UTC, Phase 2 round 2 closed, sky map merged
 
 ## Latest pictures
 
@@ -217,21 +217,33 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Phase 2, after round 1. Arrivals: `approachLocal` in `src/director/film.ts` takes the hold pose, backs it away along its view axis on a logarithmic curve and swings it round the body by the stop's `arrive` angle, which decays to nothing by the hold. The approach starts when the departing body, its rings and its moons are all outside the frame with 3 degrees to spare (`clearAt`), never before 0.2 of the travel. From then on the departing set is not drawn and the camera is on the approach path. Growth follows `1 - (1 - x)^2.5`.
 - Phase 2, after round 1. Segment times were not changed to vary the cadence. Brandon judges pacing from the rough cut, and a retime would move every later judged frame. Variety comes from the approach side, the swing, the turn angle and the turn length of each stop.
 - Phase 2, after round 1. The lookback: aim 12.5 degrees, a 3.5 degree pan that settles over 4.5 seconds, Sun glare 1.5 with a flare of 0.22.
+- Phase 2, after round 2 (the last blockout round). Fixes were made after the round with no critic left to see them: `arrive.offset`, the moving lookback, a longer turn out of Mars. The open items carry them to Phases 3 to 5.
+- Phase 2. Merged `agent/assets-shared`: the sky glow map made from the real star map by `tools/assets/sky.py`. It replaces the seeded stand-in sky, and `tools/spike-assets.py` is removed. Its grade and exposure are settled in Phase 3 against Mars's approved images and in Phase 5 for the whole film.
+- Phase 2. Four Mars asset agents were started while the blockout finished, as kit/08 allows: wrap maps, Phobos, dive patches, the relief. Each owns one subfolder of the Mars asset folders and its own branch (`agent/assets-mars-wrap`, `-phobos`, `-patches`, `-relief`). A tile or a layer of a map counts as its own asset for the take limit. Their briefs are in `out/work/briefs/`.
 - Phase 2. The sky glow map from the star map agent had not arrived when the blockout rounds started. The blockout uses the seeded stand-in sky. The real map is integrated when it lands, in Phase 2 or 3.
 
 ## Open items
 
-None yet. One entry per issue left open by a round limit: the stop, the frame, the critic and its words, what was tried, what to try next.
+One entry per issue left open by a round limit: the stop, the frame, the critic and its words, what was tried, what to try next.
+
+1. Whole film, frames 615 to 5006, R4 blockout round 2, severe: "every stop from Mercury through Neptune repeats the exact same 570-frame pacing cycle and dead-center bullseye hold framing with an on-axis zoom". Tried: a different arrival for each stop (side, swing, turn angle, turn length, and an off-center start that drifts to the hero framing). Not changed: the hold framing, which is the approved hero image, and the segment times, which are Brandon's in `config/showcase.json`. Next: per stop in Phases 3 and 4, vary what moves inside the hold (orbit direction and amount, moon paths, how far the push goes) and give each dive and rise its own line. If Brandon wants uneven stop lengths, that is a config change through an addendum.
+2. Ending, frames 5145 to 5362, R4 blockout round 2, major: "camera is nearly frozen for over 200 frames on a mostly black frame". Tried after the round: continuous pull back, a 3 degree circle round Neptune and a 4.5 degree pan on one ease to the last frame. Next: judged by R4 and R5 in Phase 5 with the finished Neptune and sky.
+3. `mars.travel`, frames 2745 to 2819, both blockout rounds, major: "Mars whips off-screen in 6 frames", "Jupiter scales straight out of the dead center". Tried: earlier reveal, a longer ease, a swing, an off-center start, a longer turn. Next: judge it with motion blur at the review tier in Phase 5. If the turn still reads as a whip, start it inside `mars.rise`.
+4. `sun.terrain`, frames 0 to 179, both blockout rounds, major: "almost completely static". Tried: a lateral creep and a longer push on the flat stand-in. Next: the Sun's relief in Phase 4, with loops as their own layers in front of the surface, and a glide that shows it.
+5. `mars.dive`, frames 2400 to 2489, R4 blockout round 2, major: "zooms flatly on-axis into Mars (pushing Phobos awkwardly out the bottom border), snaps pitch abruptly into the canyon horizon at 2465 ... then stalls". Next: rebuilt in Phase 3: arc past Phobos, carry the horizon angle and one canyon bend through the dust cover, keep gliding into the terrain move.
 
 ## Running jobs
 
-None. One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
+One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
+
+- `npm run film -- --tier draft --format preview`, frames 0 to 5399, log `out/work/film-preview.log`, the lead's VM, started 2026-11-20 about 02:05 UTC. Resumable: run the same command again.
 
 ## Rounds
 
 One line per round, written when the round starts: number, phase, stop. Scores and what changes next are added when it ends.
 
 - Round 1, Phase 2, blockout, whole film. R4 blockout 7, three major, two minor. Next: each stop arrives on its own curve, the approach starts earlier and eases longer, the lookback is reframed with a slow pan. `scorecards/round-001/`.
+- Round 2, Phase 2, blockout, whole film. R4 blockout 5, one severe, four major, two minor. Limit reached. After the round: arrivals start off center, the lookback never stops moving, the turn away from Mars is longer. Open items 1 to 5. `scorecards/round-002/`.
 
 ## Final scores
 
@@ -253,6 +265,8 @@ None yet.
 - 2026-11-19: Phase 0 gate.
 - 2026-11-19: Phase 1 gate. Merged `agent/animatic`.
 - 2026-11-20 UTC: Phase 2 engine, director, stand-in sets, modes, menu. Merged `agent/tools-stills`, `agent/capture-export`, `agent/assets-fit`, `agent/tools-film`.
+- 2026-11-20 UTC: Phase 2 round 1 closed.
+- 2026-11-20 UTC: Phase 2 round 2 closed. Merged `agent/assets-shared`.
 
 ## Session log
 
