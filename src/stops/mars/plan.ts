@@ -9,7 +9,7 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 34, elevationDeg: 16, distance: 4.6, offset: [-0.32, -0.08], driftSpeed: 0.08, rollDeg: 5 },
   travel: { turnDeg: 86, side: -1, turnEnd: 0.52 },
   arrive: { swingDeg: -30, axis: [0.3, 1, 0.1], offset: [-0.55, -0.2] },
-  light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 1.1, sunGlare: 0.8, flare: 0.3 },
+  light: { exposure: 1, skyExposure: 0.5, sunRadiusDeg: 1.1, sunGlare: 0.8, flare: 0.3 },
   cover: [0.92, 0.6, 0.4],
   coverLow: [0.5, 0.26, 0.15],
   spinDegPerSecond: 0.9,

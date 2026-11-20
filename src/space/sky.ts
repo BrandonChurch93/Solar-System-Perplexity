@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import type { SunState } from '../core/types'
+import skyFrame from './skyframe.json'
 
 export const EQUIRECT_GLSL = /* glsl */ `
 const float PI = 3.141592653589793;
@@ -19,6 +20,10 @@ precision highp float;
 uniform sampler2D uSky;
 uniform mat4 uInvProj;
 uniform mat3 uRot;
+uniform mat3 uFrame;
+uniform vec3 uTint;
+uniform float uGamma;
+uniform float uGrain;
 uniform float uExposure;
 uniform vec3 uSunDir;
 uniform vec3 uSunColor;
@@ -27,10 +32,32 @@ uniform float uSunGlare;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
+float cell(vec3 p) {
+  p = fract(p * 0.3183099 + vec3(0.11, 0.37, 0.73));
+  p *= 17.0;
+  return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+}
+float grainAt(vec3 d, float f) {
+  vec3 p = d * f;
+  vec3 i = floor(p);
+  vec3 t = p - i;
+  t = t * t * (3.0 - 2.0 * t);
+  float a = mix(mix(cell(i), cell(i + vec3(1, 0, 0)), t.x), mix(cell(i + vec3(0, 1, 0)), cell(i + vec3(1, 1, 0)), t.x), t.y);
+  float b = mix(mix(cell(i + vec3(0, 0, 1)), cell(i + vec3(1, 0, 1)), t.x), mix(cell(i + vec3(0, 1, 1)), cell(i + vec3(1, 1, 1)), t.x), t.y);
+  return mix(a, b, t.z);
+}
 void main() {
   vec4 v = uInvProj * vec4(vUv * 2.0 - 1.0, 1.0, 1.0);
   vec3 dir = normalize(uRot * (v.xyz / v.w));
-  vec3 col = equirect(uSky, dir).rgb * uExposure;
+  vec3 sd = uFrame * dir;
+  vec3 col = equirect(uSky, sd).rgb;
+  float px = length(fwidth(sd));
+  float fine = grainAt(sd, 1400.0) * smoothstep(0.5, 1.6, 1.0 / (px * 1400.0));
+  float mid = grainAt(sd, 420.0) * smoothstep(0.5, 1.6, 1.0 / (px * 420.0));
+  float wide = grainAt(sd, 90.0);
+  float g = 0.45 * fine + 0.35 * mid + 0.4 * wide;
+  col *= mix(1.0, 0.35 + 1.25 * g, uGrain);
+  col = pow(max(col, vec3(0.0)), vec3(uGamma)) * uTint * uExposure;
   if (uSunGlare > 0.0) {
     float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
     float x = ang / uSunRadius;
@@ -87,7 +114,7 @@ export class Sky {
 
   constructor(count: number) {
     this.pass = new Pass(SKY_FRAG, {
-      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uExposure: { value: 1 },
+      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uGamma: { value: skyFrame.grade.gamma }, uGrain: { value: skyFrame.grade.grain }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 },
     })
     const rnd = stream('stars')
@@ -137,6 +164,7 @@ export class Sky {
     })
     this.stars = new THREE.Points(geo, mat)
     this.stars.frustumCulled = false
+    this.stars.quaternion.fromArray(skyFrame.quaternion).invert()
     this.starScene.add(this.stars)
   }
 
