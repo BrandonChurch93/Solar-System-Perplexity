@@ -1,0 +1,32 @@
+{
+  "projection": "equirectangular, u = lon/360 + 0.5, north at top, direction of (lon, lat) = (cos lat sin lon, sin lat, cos lat cos lon)",
+  "color": {
+    "full": {"file": "public/assets/mars/full/wrap-color.jpg", "width": 8192, "height": 4096},
+    "web": {"file": "public/assets/mars/web/wrap-color.jpg", "width": 4096, "height": 2048},
+    "content": "surface albedo only, flat even light, sRGB"
+  },
+  "height": {
+    "full": {"file": "public/assets/mars/full/wrap-height.bin", "width": 4096, "height": 2048},
+    "web": {"file": "public/assets/mars/web/wrap-height.bin", "width": 2048, "height": 1024},
+    "format": "raw little endian uint16, row major, first row at top (north), first column at lon -180, no header",
+    "decode": "meters = min_m + v / 65535 * (max_m - min_m)",
+    "min_m": -7513.52,
+    "max_m": 19269.91,
+    "meaning": "relative height above the MOLA areoid datum, smoothed and repainted to follow the painted features; use for relief and normals, not as survey data"
+  },
+  "storm": {
+    "full": {"file": "public/assets/mars/full/wrap-storm.png", "width": 2048, "height": 1024},
+    "web": {"file": "public/assets/mars/web/wrap-storm.png", "width": 1024, "height": 512},
+    "format": "8 bit gray, 255 = full storm cover, soft edge",
+    "center_lon": -85.5,
+    "center_lat": 9.8,
+    "radius_core_deg": 10,
+    "radius_outer_deg": 24,
+    "rotation_seen_from_above": "counterclockwise (cyclonic for the north): the arms wind clockwise going outward, measured streak angle -40 to -60 degrees from radial"
+  },
+  "polar_caps": {
+    "north_hero_cap": {"lon": -73.2, "lat": 47.4, "radius_deg": 3.5, "note": "the cap seen in the hero image; the hero shows latitudes only up to 63, so it sits here"},
+    "north_pole_cap": {"lon": 30.0, "lat": 83.4, "radius_deg": 4.2, "note": "second cap at the geographic pole, painted in the far side fill"},
+    "south_cap": {"lon": -21.1, "lat": -84.8, "radius_deg": 4.3}
+  }
+}

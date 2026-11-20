@@ -43,7 +43,7 @@ def core(W=W, lo=0.55, hi=0.8):
     return (t * t * (3 - 2 * t)).astype(np.float32)
 
 
-def main(detail=float(sys.argv[1]) if len(sys.argv) > 1 else 0.5):
+def main(detail=0.5):
     s1 = WORK / "s1"
     H = W // 2
     acc = np.zeros((H, W, 3), np.float32)
@@ -76,4 +76,4 @@ def main(detail=float(sys.argv[1]) if len(sys.argv) > 1 else 0.5):
 
 
 if __name__ == "__main__":
-    main()
+    main(float(sys.argv[1]) if len(sys.argv) > 1 else 0.5)
