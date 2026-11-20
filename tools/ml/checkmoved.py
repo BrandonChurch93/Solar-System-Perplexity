@@ -48,9 +48,12 @@ def main():
     del difference
     psnr = float(10 * np.log10(255**2 / mse)) if mse > 0 else float("inf")
     structural = ssim(a, b)
-    gray_a, gray_b = (cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) for image in (a, b))
-    flow = cv2.calcOpticalFlowFarneback(gray_a, gray_b, None, 0.5, 5, 17, 4, 7, 1.5, 0)
-    magnitude = cv2.magnitude(flow[..., 0], flow[..., 1])
+    if mse == 0:
+        magnitude = np.zeros(a.shape[:2], dtype=np.float32)
+    else:
+        gray_a, gray_b = (cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) for image in (a, b))
+        flow = cv2.calcOpticalFlowFarneback(gray_a, gray_b, None, 0.5, 5, 17, 4, 7, 1.5, 0)
+        magnitude = cv2.magnitude(flow[..., 0], flow[..., 1])
     median, p99 = np.percentile(magnitude, [50, 99])
     maximum = float(magnitude.max())
     ceiling = max(args.max_shift, 0.01)

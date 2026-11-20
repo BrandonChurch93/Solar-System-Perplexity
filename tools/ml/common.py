@@ -66,14 +66,14 @@ def weights(name, url, sha256):
     return path
 
 
-def model_session(model_path):
+def model_session(model_path, reuse_memory=False):
     import onnxruntime as ort
 
     settings = ort.SessionOptions()
     settings.intra_op_num_threads = 2
     settings.inter_op_num_threads = 1
-    settings.enable_mem_pattern = False
-    settings.enable_cpu_mem_arena = False
+    settings.enable_mem_pattern = reuse_memory
+    settings.enable_cpu_mem_arena = reuse_memory
     return ort.InferenceSession(str(model_path), sess_options=settings, providers=["CPUExecutionProvider"])
 
 

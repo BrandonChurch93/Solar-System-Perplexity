@@ -64,13 +64,13 @@ def main():
     parser.add_argument("--in", dest="source", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--width", type=positive_int, required=True)
-    parser.add_argument("--tile", type=positive_int, default=352)
+    parser.add_argument("--tile", type=positive_int, default=448)
     args = parser.parse_args()
     if not 32 <= args.tile <= 512:
         parser.error("--tile must be between 32 and 512 for bounded CPU memory")
     start = time.perf_counter()
     source = load_rgb(args.source)
-    session = model_session(weights("swin2sr-lightweight-x2.onnx", MODEL_URL, MODEL_SHA256))
+    session = model_session(weights("swin2sr-lightweight-x2.onnx", MODEL_URL, MODEL_SHA256), reuse_memory=True)
     enhanced = upscale(np.asarray(source), session, args.tile)
     size = args.width, max(1, round(source.height * args.width / source.width))
     if not enhanced.size == size:
