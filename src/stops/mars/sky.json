@@ -1,0 +1,4 @@
+{
+ "orbit": { "file": "sky-hold.jpg", "vfovDeg": 30, "gain": 2, "add": false, "ring": [0.5, 0.5, -1, 0], "edge": 0.06 },
+ "terrain": { "file": "sky-terrain.jpg", "vfovDeg": 60, "gain": 8, "add": false, "ring": [0.5, 0.5, -1, 0], "edge": 0.06 }
+}

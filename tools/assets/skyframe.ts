@@ -1,7 +1,11 @@
-import { writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { skyAim, type SkyAimArgs } from './skyaim'
 
-const raw: Record<string, string> = Object.fromEntries(process.argv.slice(2).map((s) => s.replace(/^--/, '').split('=')))
+const FILE = 'src/space/skyframe.json'
+const given = process.argv.slice(2)
+const keep = given.includes('--keep') && existsSync(FILE)
+const stored: Record<string, string> = keep ? Object.fromEntries(Object.entries((JSON.parse(readFileSync(FILE, 'utf8')) as { args: Record<string, unknown> }).args).map(([k, v]) => [k, String(v)])) : {}
+const raw: Record<string, string> = { ...stored, ...Object.fromEntries(given.filter((s) => s !== '--keep').map((s) => s.replace(/^--/, '').split('='))) }
 const defaults = {
   stop: 'mars',
   along: 158,
@@ -67,6 +71,7 @@ const json = {
   args: a,
   quaternion: aim.quaternion,
   turns: aim.turns,
+  patches: aim.patches,
   grade: { tint: [a.r, a.g, a.b], gamma: a.gamma, floor: [a.fr, a.fg, a.fb] },
   band: {
     repeats: a.repeats,
@@ -110,5 +115,5 @@ const json = {
   },
   fitted: { frame: aim.frame, terrainFrame: aim.terrainFrame },
 }
-writeFileSync('src/space/skyframe.json', JSON.stringify(json, null, 1) + '\n')
+writeFileSync(FILE, JSON.stringify(json, null, 1) + '\n')
 console.log('sky frame', aim.quaternion, 'from frame', aim.frame, 'terrain turns', aim.turns, 'from frame', aim.terrainFrame)

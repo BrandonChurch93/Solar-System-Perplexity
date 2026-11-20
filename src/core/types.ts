@@ -72,10 +72,22 @@ export interface SetContext {
 
 export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3 }
 
+export interface SkyPatch {
+  view: ViewKind
+  texture: THREE.Texture
+  aim: THREE.Quaternion
+  tan: [number, number]
+  gain: number
+  add: boolean
+  ring: [number, number, number, number]
+  edge: number
+}
+
 export interface StopSet {
   id: string
   world: THREE.Object3D
   near?: THREE.Object3D
+  sky?: SkyPatch[]
   update(state: SetState, shot: Shot, view: RenderView): void
   dispose(): void
 }

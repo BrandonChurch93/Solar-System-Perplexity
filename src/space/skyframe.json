@@ -14,7 +14,7 @@
   "gamma": 1.7,
   "fr": 0.003,
   "fg": 0.009,
-  "fb": 0.014,
+  "fb": 0.0105,
   "repeats": 2,
   "boffset": 90,
   "blat": 45,
@@ -26,13 +26,13 @@
   "br": 0.8,
   "bg": 1,
   "bb": 1.2,
-  "bsat": 0.65,
+  "bsat": 1,
   "bcrowd": 0.013,
   "blod": 2,
   "btgain": 2,
   "bclean": 1.6,
-  "bkeep": 0,
-  "bblur": 2.5,
+  "bkeep": 1,
+  "bblur": 1,
   "bwiden": 1.5,
   "bfadeend": 0.3,
   "bcpow": 1.5,
@@ -68,6 +68,22 @@
    0.2647941
   ]
  },
+ "patches": {
+  "mars": {
+   "orbit": [
+    0.178491,
+    0.0143289,
+    -0.176408,
+    0.9678925
+   ],
+   "terrain": [
+    0.5379756,
+    0.5217139,
+    0.4278494,
+    0.5053135
+   ]
+  }
+ },
  "grade": {
   "tint": [
    0.95,
@@ -78,7 +94,7 @@
   "floor": [
    0.003,
    0.009,
-   0.014
+   0.0105
   ]
  },
  "band": {
@@ -95,13 +111,13 @@
    1,
    1.2
   ],
-  "saturation": 0.65,
+  "saturation": 1,
   "crowdRef": 0.013,
   "crowdLod": 2,
   "terrainGain": 2,
   "cleanRadius": 1.6,
-  "cleanKeep": 0,
-  "cleanBlur": 2.5,
+  "cleanKeep": 1,
+  "cleanBlur": 1,
   "widen": 1.5,
   "fadeEnd": 0.3,
   "crowdPow": 1.5,

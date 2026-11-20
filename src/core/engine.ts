@@ -5,7 +5,7 @@ import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
-import type { RenderView, Shot } from './types'
+import type { RenderView, Shot, SkyPatch } from './types'
 import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
 import { Dust } from '../space/dust'
@@ -41,6 +41,7 @@ export class Engine {
   private readonly dust = new Dust(DUST_COUNT)
   private readonly cover = new Cover()
   private skyAssets = ''
+  private readonly skyPatches: { patch: SkyPatch; weight: number }[] = []
   private skyTexture: THREE.Texture | null = null
   private skyBand: THREE.Texture | null = null
   private attached: string[] = []
@@ -181,7 +182,19 @@ export class Engine {
     if (!raw) {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun)
+      this.skyPatches.length = 0
+      for (const state of shot.sets) {
+        for (const patch of this.sets.get(state.id)?.sky ?? []) {
+          if (patch.view !== state.view) continue
+          const kind = shot.segment.kind
+          const arriving = kind === 'travel' && state.id !== shot.segment.stop
+          const weight = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          if (weight <= 0) continue
+          this.skyPatches.push({ patch, weight })
+        }
+      }
+      this.sky.setPatches(this.skyPatches)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
     }

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
-import type { SunState } from '../core/types'
+import type { SkyPatch, SunState } from '../core/types'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
 
@@ -39,6 +39,24 @@ vec3 bandPlane(vec3 d) {
 }
 `
 
+
+const SKY_PATCH_GLSL = /* glsl */ `
+uniform sampler2D uPatchA;
+uniform sampler2D uPatchB;
+uniform mat3 uPatchM[2];
+uniform vec4 uPatchLens[2];
+uniform vec4 uPatchRing[2];
+uniform vec3 uPatchMode[2];
+vec3 patchCoord(int i, vec3 d) {
+  vec3 pc = uPatchM[i] * d;
+  vec2 uv = pc.xy / max(-pc.z, 1e-4) / uPatchLens[i].xy * 0.5 + 0.5;
+  vec2 e = min(uv, 1.0 - uv);
+  float inside = step(0.0, -pc.z) * smoothstep(0.0, uPatchMode[i].z, min(e.x, e.y));
+  float r = length((uv - uPatchRing[i].xy) * vec2(uPatchLens[i].x / uPatchLens[i].y, 1.0));
+  return vec3(uv, inside * smoothstep(uPatchRing[i].z, uPatchRing[i].w, r) * uPatchMode[i].x);
+}
+`
+
 const SKY_FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uSky;
@@ -58,11 +76,17 @@ uniform float uSunRadius;
 uniform float uSunGlare;
 uniform float uTerrainBand;
 uniform vec3 uBandClean;
+uniform vec2 uLens;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${SKY_BAND_GLSL}
+${SKY_PATCH_GLSL}
+vec3 patched(vec3 col, vec3 p, vec3 t, int i, float k) {
+  vec3 c = (uPatchMode[i].y > 0.5 ? t : inverseFilmic(t)) * uPatchLens[i].z * k;
+  return uPatchMode[i].y > 0.5 ? col + c * p.z : mix(col, c, p.z);
+}
 void main() {
   vec4 v = uInvProj * vec4(vUv * 2.0 - 1.0, 1.0, 1.0);
   vec3 dir = normalize(uRot * (v.xyz / v.w));
@@ -88,6 +112,14 @@ void main() {
   band = mix(vec3(bl), band, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(bl, 1e-5) / 0.05, uBandGrade.y - 1.0);
   if (uGlow < 0.999) band *= uTerrainBand;
   col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
+  vec3 pa = patchCoord(0, sd);
+  vec3 pb = patchCoord(1, sd);
+  vec3 ta = texture(uPatchA, pa.xy).rgb;
+  vec3 tb = texture(uPatchB, pb.xy).rgb;
+  vec2 lq = (vUv - 0.5) * vec2(uLens.y, 1.0);
+  float pk = uGlow * uExposure / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x);
+  col = patched(col, pa, ta, 0, pk);
+  col = patched(col, pb, tb, 1, pk);
   if (uSunGlare > 0.0) {
     float ang = acos(clamp(dot(dir, uSunDir), -1.0, 1.0));
     float x = ang / uSunRadius;
@@ -118,6 +150,7 @@ uniform vec4 uTerrainStars;
 uniform vec2 uCrowdShape;
 out float vSize;
 ${SKY_BAND_GLSL}
+${SKY_PATCH_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -139,6 +172,7 @@ void main() {
   float lat = (uGal * normalize(position)).z;
   float b = aStar.y * (uGlow < 0.999 ? uTerrainStars.x * max(mix(1.0, crowd, uTerrainStars.y), 0.2) * mix(1.0, uTerrainStars.z, exp(-lat * lat / 0.012)) : crowd);
   if (uGlow < 0.999) b = min(b, uTerrainStars.w);
+  b *= (1.0 - patchCoord(0, normalize(position)).z * uPatchLens[0].w) * (1.0 - patchCoord(1, normalize(position)).z * uPatchLens[1].w);
   vColor = aColor * b * uExposure;
 }`
 
@@ -183,6 +217,12 @@ export class Sky {
   private readonly frame = new THREE.Quaternion().fromArray(skyFrame.quaternion)
   private texture: THREE.Texture | null = null
   private band: THREE.Texture | null = null
+  private readonly blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1)
+  private readonly patchM = [new THREE.Matrix3(), new THREE.Matrix3()]
+  private readonly patchLens = [new THREE.Vector4(1, 1, 0, 0), new THREE.Vector4(1, 1, 0, 0)]
+  private readonly patchRing = [new THREE.Vector4(0, 0, 0, 1), new THREE.Vector4(0, 0, 0, 1)]
+  private readonly patchMode = [new THREE.Vector3(0, 0, 0.05), new THREE.Vector3(0, 0, 0.05)]
+  private readonly patchTex: THREE.Texture[] = [this.blank, this.blank]
 
   constructor(base: number) {
     const st = skyFrame.stars
@@ -191,6 +231,7 @@ export class Sky {
     this.pass = new Pass(SKY_FRAG, {
       uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(skyFrame.quaternion))) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
+      uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
     })
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
@@ -244,7 +285,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core } },
+      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -257,12 +298,26 @@ export class Sky {
     this.starScene.add(this.stars)
   }
 
+  setPatches(list: { patch: SkyPatch; weight: number }[]): void {
+    for (let i = 0; i < 2; i++) {
+      const e = list[i]
+      this.patchMode[i]!.x = e ? e.weight : 0
+      this.patchTex[i] = e ? e.patch.texture : this.blank
+      if (!e) continue
+      const p = e.patch
+      this.patchM[i]!.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(p.aim).invert()))
+      this.patchLens[i]!.set(p.tan[0], p.tan[1], p.gain, 1)
+      this.patchRing[i]!.fromArray(p.ring)
+      this.patchMode[i]!.set(e.weight, p.add ? 1 : 0, p.edge)
+    }
+  }
+
   setTexture(t: THREE.Texture, band: THREE.Texture): void {
     this.texture = t
     this.band = band
   }
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number): void {
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)
@@ -275,6 +330,9 @@ export class Sky {
     this.rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(skyQuaternion))
     u.uExposure!.value = exposure
     u.uGlow!.value = glow
+    ;(u.uLens!.value as THREE.Vector2).set(vignette, aspect)
+    u.uPatchA!.value = this.patchTex[0]
+    u.uPatchB!.value = this.patchTex[1]
     this.q.copy(turn).invert().premultiply(this.frame)
     ;(u.uFrame!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q))
     this.stars.quaternion.copy(this.q).invert()
@@ -290,6 +348,8 @@ export class Sky {
     su.uPixel!.value = height / 1080
     su.uExposure!.value = exposure
     su.uGlow!.value = glow
+    su.uPatchA!.value = this.patchTex[0]
+    su.uPatchB!.value = this.patchTex[1]
     renderer.setRenderTarget(target)
     renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)

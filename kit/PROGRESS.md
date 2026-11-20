@@ -297,6 +297,13 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - After round 3, limb light inside the disc (R1 and R3 "limb glow"). The haze shells draw only outside the disc, so the limb ring inside it comes from the ground haze. The ground layer was fitted to the hero's limb ring by least squares on the film's own frame (`out/work/an/groundfit.py`): depth 0.066, day color 0.5, 0.55, 0.62, lit from sun angle -0.3 to 0.95. The planet shader now undoes the lens vignette on the globe as Phobos and the relief already do, since the map is matched to a hero that has its own. Against the hero across the limb at six angles, inside and outside, the film is now within about 15 levels (was up to 70).
 - After round 3, limb glow outside the disc: the hero has a warm white glint where the sun grazes the limb, a faint even rim on the night side and a blue thin shell. Added a narrow `glint` layer, a night term on the wide halo, and a slightly weaker shell. All three fade out in the dive as before. G17 hold 1.03.
 - After round 3, Phobos in the hold: with the reversed orbit Phobos crossed the frame at 10 px per frame (measured between frames 2323 and 2327), because it sits a fifth of the way from the camera to Mars and the orbit's parallax and its own motion added up. In the judged hold frame it was a smeared, stepped copy of the hero's sharp moon. `moonDegPerSecond` is now -1.2: Phobos moves with the camera's orbit and drifts about 2 px per frame across the disc. It is still in front of the disc when the dive starts and the camera passes over it in the first 20 frames of the dive, before the judged dive frame.
+- Round 4, before the pack: measures ran on the measure agent's VM at 24c2334 and were green (G13 0 of 463 frames soft, G5 coverage 0.496 hold, 0.624 dive, 0.917 terrain, 0.348 rise, G17 hold median 1.016, terrain median 0.970). The measure still of the hold beside the hero showed the sky was still the largest gap (a gray soft band and sparse even dots against the hero's dense fine colored stars and dust lanes, the R1 and R3 major of round 3). The pack that had started was stopped before any critic saw it, and the sky is fixed inside this same round. A round counts when it starts, so this is still round 4.
+- Round 4, "the sky looks fake" (R1 and R3 major two rounds running, plateau rule, next rung: use the approved image itself). Change of technique: sky patches. The one sky stays one fixed sphere for the whole film, and each stop may place regions on it that carry the sky of its approved images where the approved views look (`SkyPatch` in `src/core/types.ts`, drawn in `src/space/sky.ts`, aims stored under `patches` in `src/space/skyframe.json`, lens and gain in `src/stops/mars/sky.json`). Inside a patch the drawn star points are switched off, so nothing is doubled. Kit/06 allows approved images in the film, and kit/03 says the image wins over the words where they disagree; "stars stay points" still holds outside the patches, and inside them the stars are the approved image's own pixels at 1.5 texels per master pixel. Recipes: `assets-src/mars/sky/RECIPE.md`.
+- Round 4, hold patch: the hero's sky minus the film's own glow frame, so film plus patch gives the hero back and the planet's glow is not baked into the sky. Behind the globe, where the hero has no sky, one generated image of the hero without the planet fills in (take 1 of 6), level matched at the join. Without this a dark ring and a hole showed where the globe drifts off its place in the hero during the hold (frames 2255 and 2395).
+- Round 4, limb glow refit. With the hero's own sky behind the limb the wide halo was two to four times too strong from 3 to 11 percent of a radius out (it had been fitted against a dark sky while the hero has the band there). `halo` depth 0.0223 to 0.008 and scale height 0.05 to 0.035, `glint` depth 0.027 to 0.008 and scale height 0.045 to 0.03. Measured with `out/work/an/glow.py`: the film's glow now sits at or just under the hero's at 115 to 205 degrees, and the limb profiles of frame 2325 are within a few code values of the hero from 5 percent of a radius outward.
+- Round 4, terrain patch: the close image's sky minus the film's air and ground frame, divided by the share the film's air lets through (measured from a first pass). Star statistics in three regions of the sky at 2580 are within 10 percent of the close image's at the 99th percentile.
+- Round 4, patch timing: a patch is fully on in the hold, the dive and the terrain view, fades in over the arriving travel, and is off in the rise and the leaving travel (the dust cover hides the switch). Reason: in the rise the camera looks past the edge of the hero's view and the patch showed as a rectangle of dense stars with an edge.
+- Round 4, sky away from the patches: the band strip is drawn as made, with its own fine stars (`--bkeep=1 --bblur=1 --bsat=1`); the star removal and blur of the last fit are what made the band gray and soft. The sky floor is less blue (`--fb=0.0105`). `tools/assets/skyframe.ts --keep` now starts from the stored arguments.
 
 ## Open items
 
@@ -312,8 +319,7 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
 
-- `npm run pack -- --phase 3 --round 4 --stop mars`, Mars judged frames and sheets, log `out/work/pack-r4.log`, Builder VM, started 2026-11-20 about 10:15 UTC.
-- `npm run measure -- --stop mars`, on the sandbox VM of the measure agent at 24c2334, started 2026-11-20 about 10:06 UTC.
+None.
 
 ## Rounds
 
@@ -355,6 +361,7 @@ None yet.
 - 2026-11-20 UTC: Phase 3 before round 3: Milky Way band strip, covers carry color and horizon, Mars budget (93ef0b0).
 - 2026-11-20 UTC: Round 3 started (8f3cd70). G6 and G11 fixed (696e228).
 - 2026-11-20 UTC: Round 3 closed with its scorecards. Merged `agent/mars-relief` (0f33967). First fixes for round 4.
+- 2026-11-20 UTC: Round 4, sky patches from the approved images, limb glow refit, raw band strip; machine checks green again.
 
 ## Session log
 

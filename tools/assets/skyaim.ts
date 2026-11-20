@@ -17,6 +17,7 @@ export interface SkyAimArgs {
 export interface SkyAim {
   quaternion: number[]
   turns: Record<string, number[]>
+  patches: Record<string, { orbit: number[]; terrain: number[] }>
   frame: number
   terrainFrame: number
 }
@@ -55,5 +56,6 @@ export function skyAim(args: SkyAimArgs): SkyAim {
   const terrainFrame = midFrame(args.tstop + '.terrain')
   const tcam = director.shotAt(terrainFrame, terrainFrame / config.fps).camera.quaternion.clone()
   const turn = tcam.multiply(aimAt(args.talong, args.ttilt, args.tlift).invert()).multiply(f)
-  return { quaternion: round(f), turns: { [args.tstop]: round(turn) }, frame, terrainFrame }
+  const patches = { [args.stop]: { orbit: round(aimAt(args.along, args.tilt, args.lift)), terrain: round(aimAt(args.talong, args.ttilt, args.tlift)) } }
+  return { quaternion: round(f), turns: { [args.tstop]: round(turn) }, patches, frame, terrainFrame }
 }

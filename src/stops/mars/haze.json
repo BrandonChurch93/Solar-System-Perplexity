@@ -50,8 +50,8 @@
   "dayTo": 0.8
  },
  "halo": {
-  "scaleHeight": 0.05,
-  "depth": 0.0223,
+  "scaleHeight": 0.035,
+  "depth": 0.008,
   "day": [
    0.28,
    0.31,
@@ -80,8 +80,8 @@
   0.2
  ],
  "glint": {
-  "scaleHeight": 0.045,
-  "depth": 0.027,
+  "scaleHeight": 0.03,
+  "depth": 0.008,
   "day": [
    0.85,
    0.68,

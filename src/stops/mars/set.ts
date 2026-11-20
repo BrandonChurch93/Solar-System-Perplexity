@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
-import type { SetContext, SetFactory } from '../../core/types'
+import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -11,6 +11,8 @@ import { patches, relief as reliefDefs, wrap } from './assets'
 import * as look from './look'
 import phobos from './phobos.json'
 import { plan } from './plan'
+import skyFrame from '../../space/skyframe.json'
+import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -98,9 +100,16 @@ export const createSet: SetFactory = async (ctx) => {
   const moonWorld = new THREE.Quaternion()
   const moonLight = new THREE.Vector3()
 
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, anisotropy: 4 }), aim: new THREE.Quaternion().fromArray(skyFrame.patches.mars[view as ViewKind]), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.edge })
+  }
+
   return {
     id: plan.id,
     world,
+    sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
