@@ -1,50 +1,12 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T04:34:12.613Z",
- "head": "3c695d459bd7bf957c72a9aeeae912c2f252cd16",
- "note": "orbit view: rim residual transfer, premultiplied clouds, dusk zone; tracing the day side lift",
+ "pushed": "2026-11-21T04:47:29.385Z",
+ "head": "ca939748d3e516a07c5862f77cc1e467b41ae658",
+ "note": "orbit view: day side lift traced to bloom and fixed; rise now ends over the hero face",
  "looks": [
   {
-   "time": "2026-11-21T04:34:12.050Z",
-   "file": "20261121043412050-note-wrap-comp-small.jpg",
-   "source": "out/work/earth/view/wrap-comp-small.jpg",
-   "kind": "note",
-   "label": "wrap map composite after rim residual and premultiplied clouds",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:34:11.501Z",
-   "file": "20261121043411501-note-wrap-rim-residual.jpg",
-   "source": "out/work/earth/view/wrap-rim-residual.jpg",
-   "kind": "note",
-   "label": "rim residual transfer, hero space",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:34:10.904Z",
-   "file": "20261121043410904-note-holdcheck.jpg",
-   "source": "out/work/earth/view/holdcheck.jpg",
-   "kind": "note",
-   "label": "hold check: hero, film, 4x low-pass difference",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:34:04.422Z",
-   "file": "20261121043404422-frame-hold-m2.jpg",
-   "source": "out/work/earth/still/hold-m2.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:33:46.917Z",
-   "file": "20261121043346917-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-21T04:47:27.032Z",
+   "file": "20261121044727032-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, draft tier",
@@ -57,8 +19,8 @@
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:33:45.821Z",
-   "file": "20261121043345821-still-f01755-16x9-draft-full.jpg",
+   "time": "2026-11-21T04:47:25.903Z",
+   "file": "20261121044725903-still-f01755-16x9-draft-full.jpg",
    "source": "out/work/stills/f01755-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, draft tier",
@@ -71,12 +33,56 @@
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:13:19.268Z",
-   "file": "20261121041319268-note-sky-hold.jpg",
-   "source": "out/work/earth/view/sky-hold.jpg",
+   "time": "2026-11-21T04:47:07.765Z",
+   "file": "20261121044707765-note-lights-crop.jpg",
+   "source": "out/work/earth/view/lights-crop.jpg",
    "kind": "note",
-   "label": "sky patch for the hold, second pass (hero sky plus fill behind the planet)",
+   "label": "city lights, hero left, film right (before the lights gain)",
    "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T04:47:07.168Z",
+   "file": "20261121044707168-note-holdcheck.jpg",
+   "source": "out/work/earth/view/holdcheck.jpg",
+   "kind": "note",
+   "label": "hold check after bloom pre-emphasis and curve trim: hero, film, 4x low-pass difference",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T04:47:06.621Z",
+   "file": "20261121044706621-note-rise-frames.jpg",
+   "source": "out/work/earth/view/rise-frames.jpg",
+   "kind": "note",
+   "label": "rise frames 2156 and 2174 with the rise end over the hero face (azimuth 10, elevation 8)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T04:46:45.700Z",
+   "file": "20261121044645700-frame-rise-end-b3.jpg",
+   "source": "out/work/earth/still/rise-end-b3.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2174, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2174,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:44:52.433Z",
+   "file": "20261121044452433-frame-holdend-b2.jpg",
+   "source": "out/work/earth/still/holdend-b2.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1828, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1828,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
   },
   {
    "time": "2026-11-21T02:45:10.763Z",
