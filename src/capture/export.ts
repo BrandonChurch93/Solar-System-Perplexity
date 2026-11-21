@@ -67,6 +67,15 @@ function formatKey(id: string): 'master' | 'uhd' | 'preview' {
   return 'master'
 }
 
+let carried: Promise<string[]> | null = null
+function hostSets(): Promise<string[]> {
+  carried ??= fetch(new URL('site.json', document.baseURI).href, { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j: { sets?: string[] } | null) => (j && Array.isArray(j.sets) ? j.sets.filter((x) => !!config.assetSets[x]) : Object.keys(config.assetSets)))
+    .catch(() => Object.keys(config.assetSets))
+  return carried
+}
+
 function skyBytesFor(assets: string): number {
   const w = config.assetSets[assets]!.skyWidth
   return w * (w / 2) * 4 * (4 / 3)
@@ -254,6 +263,12 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
         fatal = true
         results.push({ level: 'bad', text: 'This browser cannot encode H.264 video at ' + p.format.width + ' by ' + p.format.height + '. Try a current desktop Chrome or Edge.' })
       }
+    }
+    const here = await hostSets()
+    if (id !== refreshId) return
+    if (here.includes(assets) === false && here.length > 0) {
+      assets = here.includes('web') ? 'web' : here[0]!
+      results.push({ level: 'warn', text: 'This copy of the site carries the ' + here.join(' and ') + ' texture set only, so the export uses it. The full set comes with the repository.' })
     }
     const set = config.assetSets[assets]!
     const largest = Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth)
