@@ -1,0 +1,74 @@
+{
+ "engineHash": "73b844358c466906",
+ "stopHashes": {
+  "mars": "353338cc5c905af5"
+ },
+ "format": "16x9",
+ "tier": "final",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "frame": 2580,
+ "extra": {
+  "signature": "[\"9ffaa170ba167901f3ae90a5a29e1205d453f39772f74a0c1877df6c23319118\",\"copy\"]",
+  "segment": "mars.terrain",
+  "rectangles": [
+   [
+    734,
+    324,
+    452,
+    433
+   ],
+   [
+    254,
+    54,
+    452,
+    433
+   ],
+   [
+    1214,
+    54,
+    452,
+    433
+   ],
+   [
+    254,
+    594,
+    452,
+    433
+   ],
+   [
+    1214,
+    594,
+    452,
+    433
+   ],
+   [
+    452,
+    216,
+    452,
+    433
+   ],
+   [
+    678,
+    647,
+    452,
+    433
+   ],
+   [
+    0,
+    0,
+    452,
+    433
+   ],
+   [
+    678,
+    0,
+    452,
+    433
+   ]
+  ],
+  "quality": 92
+ }
+}
