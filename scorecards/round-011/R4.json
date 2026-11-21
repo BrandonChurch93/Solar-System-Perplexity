@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 2129 to 2130, horizon and upper center",
+   "what": "the pullback cuts: the sun vanishes, the horizon jumps from mid-frame to the top, and heavy blur appears in one frame",
+   "fix": "ease the pitch and speed across several frames so the sun leaves with the same move and blur ramps with velocity"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 1883 to 1885, upper limb",
+   "what": "the limb snaps from a blurred corner sliver to a sharp full-width arc, then the camera holds still",
+   "fix": "spread the roll and pitch onto the horizon across the cover and keep a little motion through 1885"
+  }
+ ]
+}
