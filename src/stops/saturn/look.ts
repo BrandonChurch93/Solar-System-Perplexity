@@ -60,6 +60,7 @@ export const rings: RingLook = {
   sparkleTint: [1, 0.72, 0.5],
   sparkleCell: 0.005,
   closeTone: [1, 1, 1],
+  veil: [0.7, 1],
   heroTone: [1, 1, 1],
 }
 

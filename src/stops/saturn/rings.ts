@@ -19,6 +19,7 @@ export interface RingLook {
   sparkleTint: [number, number, number]
   sparkleCell: number
   closeTone: [number, number, number]
+  veil: [number, number]
   heroTone: [number, number, number]
 }
 
@@ -86,6 +87,7 @@ uniform vec4 uAzimuth;
 uniform vec3 uSparkleTint;
 uniform float uSparkleCell;
 uniform vec3 uCloseTone;
+uniform vec2 uVeil;
 uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
@@ -140,7 +142,7 @@ void main() {
   float mu = abs(V.y);
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rp) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rp));
   float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
-  float cut = 1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rp);
+  float cut = (1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rp)) * (disc ? smoothstep(-0.25, 0.0, r - mix(1.25, -0.01, smoothstep(uVeil.x, uVeil.y, uClose))) : 1.0);
   vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
   float kepler = uSpinRate * pow(max(rp, 1.0) / 1.86, -1.5);
@@ -182,7 +184,7 @@ void main() {
   float along = dot(vLocal, ss);
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss)));
-  float lit = along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0), miss);
+  float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0), miss));
   col = mix(uShadowFloor * (0.6 + 0.9 * smoothstep(0.0, 0.6, dot(col, vec3(0.2126, 0.7152, 0.0722)))) * body, col, mix(lit, 1.0, lay.z)) * lay.y;
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -230,7 +232,7 @@ export class Rings {
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({
