@@ -101,13 +101,14 @@ void main() {
   vec3 ray = normalize(vStage - uCam);
   float el = (acos(clamp(dot(ray, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / away, 0.0, 1.0))) * sqrt(max(away * away - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
   float limb = smoothstep(uBand.x, uBand.y, el);
-  for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
-    vec2 at2 = stPlate(stImage(stLimbDir(ray, c1, el)));
-    col = mix(col, inverseFilmic(textureLod(uPlate, at2, uLod).rgb), limb);
-  }
   vec2 gb = stImage(vStage);
+  for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
+    vec2 far = stImage(stLimbDir(ray, c1, el));
+    col = mix(col, inverseFilmic(textureLod(uPlate, stPlate(far), uLod).rgb), limb);
+    gb = mix(gb, far, limb);
+  }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
-  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col += inverseFilmic(textureLod(uGlow, gb, 0.0).rgb) * uGlowBeat;
+  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * uGlowBeat;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.5, 0.1), push * swing * 4.0, length(vView));
@@ -182,7 +183,7 @@ export class Ground {
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
-    u.uGlowBeat!.value = 1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83))
+    u.uGlowBeat!.value = stage.litMax * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect

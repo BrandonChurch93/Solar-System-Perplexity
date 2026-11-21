@@ -75,6 +75,7 @@ export const stage = {
   plateRows: c.height - c.plateTop,
   loopsBox: data.loopsBox as [number, number, number, number],
   feet: data.feet as [number, number][],
+  litMax: data.litMax,
   spot: data.spot as [number, number],
   umbra: data.umbra as [number, number],
   skyCentre: [((c.left + c.span / 2) - 0.5) * 2 * tx, (0.5 - (c.top + c.span / 2)) * 2 * ty] as [number, number],

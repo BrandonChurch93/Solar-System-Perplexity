@@ -3,6 +3,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
 import { config } from '../../config'
 import { Corona } from './corona'
+import { Flare } from './flare'
 import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
 import { Ground } from './ground'
@@ -11,6 +12,7 @@ import * as look from './look'
 import { plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
+import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
   const base = 'sun/' + ctx.assets + '/'
@@ -44,6 +46,12 @@ export const createSet: SetFactory = async (ctx) => {
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
+  const flare = new Flare(look.flare)
+  world.add(flare.mesh)
+  const coverAt = plan.coverCenter(plan.seg.rise)
+  const feet = stage.feet.map((f) => stage.onGround(f[0]!, f[1]!))
+  const arcade = feet[0]!.clone().add(feet[1]!).multiplyScalar(0.5).addScaledVector(stage.down, -look.flare.lift * feet[0]!.distanceTo(feet[1]!))
+  const spotAt = new THREE.Vector3()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
   const turn = new THREE.Quaternion()
@@ -62,12 +70,14 @@ export const createSet: SetFactory = async (ctx) => {
       const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : 1
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect)
+      const burst = kind === 'rise' ? flare.amount(state.time - coverAt) : 0
+      flare.update(inOrbit ? spotAt.copy(plan.spot).applyQuaternion(plan.turn(state.time)) : arcade, world, view.camera, burst, state.time - coverAt, gain, aspect)
       if (!inOrbit) {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height))
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height)
-        loops.update(t, gain, vignette, aspect)
+        loops.update(t, gain * (1 + look.flare.surge * burst), vignette, aspect)
         return
       }
       const elapsed = state.time - plan.holdMid
@@ -88,6 +98,7 @@ export const createSet: SetFactory = async (ctx) => {
       corona.dispose()
       prominences.dispose()
       far.dispose()
+      flare.dispose()
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()

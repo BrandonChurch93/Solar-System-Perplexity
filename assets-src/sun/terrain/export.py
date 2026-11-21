@@ -1,5 +1,5 @@
 import json
-from common import LEFT, TOP, SPAN, CANVAS, PLATE_TOP, LOOPS_BOX, FEET, VFOV, fit
+from common import LEFT, TOP, SPAN, CANVAS, PLATE_TOP, LOOPS_BOX, FEET, LIT, VFOV, fit
 
 f = fit()
 out = {
@@ -12,6 +12,7 @@ out = {
     'feet': [list(f) for f in FEET],
     'spot': [0.5237, 0.609],
     'umbra': [0.0616, 0.0303],
+    'litMax': LIT[1],
     'glow': json.load(open('assets-src/sun/terrain/glow.json')),
 }
 json.dump(out, open('src/stops/sun/terrain.json', 'w'), indent=2)

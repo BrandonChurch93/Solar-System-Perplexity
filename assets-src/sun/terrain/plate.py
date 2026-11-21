@@ -1,10 +1,11 @@
+import os
 import sys
 import numpy as np
 import cv2
 from scipy import ndimage as ndi
 from scipy.optimize import curve_fit
 import json
-from common import WORK, LOOPS_BOX, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, FEET, read, write, take_to_grid, step, scene, display, fit
+from common import WORK, LOOPS_BOX, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, FEET, LIT, read, write, take_to_grid, step, scene, display, to_linear, to_srgb, fit
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/sun'
 LUM = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
@@ -14,6 +15,10 @@ WIDEN = 49
 GLOW = (1.6, 4.2)
 RISE = 0.25
 FAN = (380, 560)
+RIM = (-1.4, -0.4)
+STARS = (7, 1.0, 2.0)
+HOLES = 13
+BASE = 'assets-src/sun/terrain/base90.jpg'
 UNDER = 0.88
 CUT = (5.0, 7.0)
 NEAR = (0.9, 1.8)
@@ -64,26 +69,43 @@ def main():
     del a2, c2
     a = scene(da)
     c = scene(dc)
-    lift = (da - dc) @ LUM
-    d = np.maximum(a - c, 0)
-    soft = cv2.GaussianBlur(np.maximum(da - dc, 0), (0, 0), 1.5)
-    warm = step((soft[..., 0] - soft[..., 2]) / (soft[..., 0] + 0.02), 0.2, 0.5)
-    warm = np.maximum(warm, step(cv2.GaussianBlur(np.maximum(lift, 0), (0, 0), 6), 0.12, 0.3))
-    glow = np.maximum(cv2.GaussianBlur(a - c, (0, 0), 14), 0)
-    glow = np.minimum(glow, glow[..., :1] * np.array([1, 1, 0.9], dtype=np.float32))
-    strands = step(cv2.GaussianBlur(lift, (0, 0), 1.2), 0.22, 0.45)
+    sky = step(cv2.resize(elevation(2816, 1584), (5632, 3168), interpolation=cv2.INTER_LINEAR), -0.25, 0.25)
+    el = cv2.resize(elevation(2816, 1584), (5632, 3168), interpolation=cv2.INTER_LINEAR)
     X2 = np.arange(5632, dtype=np.float32)
     Y2 = np.arange(3168, dtype=np.float32)
+    fans = np.zeros((3168, 5632), dtype=np.float32)
     for fx, fy in FEET:
         fan = step(fy * 3168 - Y2, -16, 40)[:, None] * (1 - step(np.abs(X2 - fx * 5632), FAN[0], FAN[1]))[None, :]
-        strands = np.maximum(strands, fan.astype(np.float32))
-    sky = step(cv2.resize(elevation(2816, 1584), (5632, 3168), interpolation=cv2.INTER_LINEAR), -0.25, 0.25)
-    del c, soft, lift
+        fans = np.maximum(fans, fan.astype(np.float32))
+    lit = np.clip(cv2.GaussianBlur(a, (0, 0), LIT[0]) / (cv2.GaussianBlur(c, (0, 0), LIT[0]) + 0.02), 1, LIT[1]) - 1
+    lit = cv2.GaussianBlur(lit * ((1 - step(el, LIT[2], LIT[3])) * (1 - fans) * m)[..., None], (0, 0), 10)
+    lit = to_linear(np.round(to_srgb(lit / LIT[1]) * 255) / 255).astype(np.float32) * LIT[1]
+    c *= 1 + lit
+    if os.path.exists(BASE):
+        base = read(BASE)
+        drawn = scene(cv2.resize(base, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255)
+        base = cv2.morphologyEx(base, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (STARS[0], STARS[0])))
+        drawn += (scene(cv2.resize(base, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255) - drawn) * step(el, STARS[1], STARS[2])[..., None]
+        c += (drawn - c) * sky[..., None]
+        del drawn, base
+    dce = display(c)
+    lift = (da - dce) @ LUM
+    la = a @ LUM
+    d = a * np.clip((la - c @ LUM) / (la + 1e-3), 0, 1)[..., None]
+    del la
+    soft = cv2.GaussianBlur(np.maximum(da - dce, 0), (0, 0), 1.5)
+    warm = step((soft[..., 0] - soft[..., 2]) / (soft[..., 0] + 0.02), 0.2, 0.5)
+    warm = np.maximum(warm, step(cv2.GaussianBlur(np.maximum(lift, 0), (0, 0), 6), 0.12, 0.3))
+    strands = np.maximum(np.maximum(step(cv2.GaussianBlur(lift, (0, 0), 1.2), 0.22, 0.45), fans), step(el, RIM[0], RIM[1]))
+    del dce
+    del c, soft, lift, el, fans
     on_ground = d * strands[..., None]
-    on_sky = d * warm[..., None]
+    under = cv2.GaussianBlur(cv2.morphologyEx(d, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (HOLES, HOLES))), (0, 0), 2)
+    on_sky = under + (d - under) * warm[..., None]
+    del under
     loops = np.minimum((on_ground + (on_sky - on_ground) * sky[..., None]) * m[..., None], a * 0.98)
-    baked = glow * ((1 - strands) * (1 - sky) * m)[..., None]
-    del on_ground, on_sky, glow, d, warm, strands, sky, a
+    baked = lit
+    del on_ground, on_sky, d, warm, strands, sky, a
     wide_m = cv2.dilate((m > 0.02).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (WIDEN, WIDEN)))
     wide_m = np.clip(cv2.GaussianBlur(wide_m, (0, 0), WIDEN / 4) * 1.5 - 0.25, 0, 1)
     ring = (wide_m > 0.05) & (wide_m < 0.6)
@@ -93,7 +115,7 @@ def main():
     del da, dc, wide_m, ring
     x0, y0, x1, y1 = LOOPS_BOX
     crop = display(loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
-    spill = display(baked[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
+    spill = to_srgb(baked[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)] / LIT[1]).astype(np.float32)
     del loops, baked
     write(f'{OUT}/full/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 4, spill.shape[0] // 4), interpolation=cv2.INTER_AREA))
     write(f'{OUT}/web/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 8, spill.shape[0] // 8), interpolation=cv2.INTER_AREA))

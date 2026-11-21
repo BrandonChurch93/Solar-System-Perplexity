@@ -5,6 +5,7 @@ import type { SkyCardDef } from './skycard'
 import type { GroundLook } from './ground'
 import type { FringeLook } from './fringe'
 import type { LoopsLook } from './loops'
+import type { FlareLook } from './flare'
 import { stage } from './stage'
 import fit from './fit.json'
 
@@ -66,3 +67,18 @@ export const loops: LoopsLook = {
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05 }
 
 export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png' }
+
+export const flare: FlareLook & { lift: number } = {
+  hot: [1, 0.9, 0.66],
+  warm: [1, 0.62, 0.2],
+  core: { radius: [0.02, 0.5], gain: 40 },
+  halo: { radius: [0.05, 3.2], gain: [1.2, 2.6], power: 1 },
+  rays: { amount: 0.9, reach: 3, turn: 0.5 },
+  streak: { amount: 1.5, height: 0.012, reach: 0.9 },
+  before: 0.95,
+  after: 1.0,
+  powerIn: 2.6,
+  powerOut: 2.4,
+  surge: 3,
+  lift: 0.3,
+}
