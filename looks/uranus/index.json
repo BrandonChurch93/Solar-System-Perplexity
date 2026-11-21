@@ -1,54 +1,68 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T19:02:40.898Z",
- "head": "4e4ce400bd074063e9373003579ae0e752a1d8e9",
- "note": "Saturn sky merged (efc8358): sky check in work, rim of the hold patch to be refitted to the new live sky",
+ "pushed": "2026-11-21T19:26:39.968Z",
+ "head": "de1f6043648a2b9b2a45f18341f40a009803087c",
+ "note": "Saturn's new sky: hold patch margin refitted with an irregular star fade, veil fades in the dive; final chain (measure, four sheets) running on the merged tree",
  "looks": [
   {
-   "time": "2026-11-21T19:02:33.238Z",
-   "file": "20261121190233238-note-live-wide110.jpg",
-   "source": "out/work/u/sky4/live-wide110.png",
-   "kind": "note",
-   "label": "live shared sky alone, 110 deg lens at the hold aim, after Saturn's turn",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:02:32.570Z",
-   "file": "20261121190232570-note-sa-4137.jpg",
-   "source": "out/work/u/r4/sa-4137.png",
-   "kind": "note",
-   "label": "4137 draft on main efc8358 (Saturn sky): dive sky now dark, patch rim still fitted to the old sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:01:15.243Z",
-   "file": "20261121190115243-note-live-wide110.jpg",
-   "source": "out/work/u/sky4/live-wide110.png",
-   "kind": "note",
-   "label": "live shared sky alone, 110 deg lens at the hold aim, after Saturn's turn",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:01:14.281Z",
-   "file": "20261121190114281-note-sa-4137.jpg",
-   "source": "out/work/u/r4/sa-4137.png",
-   "kind": "note",
-   "label": "4137 draft on main efc8358 (Saturn sky): dive sky now dark, patch rim still fitted to the old sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T18:58:17.832Z",
-   "file": "20261121185817832-frame-live-wide110.jpg",
-   "source": "out/work/u/sky4/live-wide110.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, draft tier",
+   "time": "2026-11-21T19:26:36.281Z",
+   "file": "20261121192636281-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, final tier",
    "stop": "uranus",
    "segment": "uranus.hold",
    "frame": 4035,
-   "tier": "draft",
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T19:26:35.182Z",
+   "file": "20261121192635182-still-f04035-16x9-final-full.jpg",
+   "source": "out/work/stills/f04035-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T19:26:32.547Z",
+   "file": "20261121192632547-note-c-all.jpg",
+   "source": "../../../../tmp/c-all.png",
+   "kind": "note",
+   "label": "before the cure: veil blocks between the ring arcs at 4128, 4131, 4137 and the straight star edge at 4124",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T19:26:31.577Z",
+   "file": "20261121192631577-note-sc-4145.jpg",
+   "source": "out/work/u/r4/sc-4145.png",
+   "kind": "note",
+   "label": "4145 draft: the live band of the new shared sky above the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T19:26:30.534Z",
+   "file": "20261121192630534-note-sc-4137.jpg",
+   "source": "out/work/u/r4/sc-4137.png",
+   "kind": "note",
+   "label": "4137 draft: veil faded in the dive, clean rings on the new dark sky",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T19:26:29.515Z",
+   "file": "20261121192629515-note-sc-4124.jpg",
+   "source": "out/work/u/r4/sc-4124.png",
+   "kind": "note",
+   "label": "4124 draft: margin refitted to Saturn's new sky, irregular outline of the star fade",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-21T18:34:15.775Z",
@@ -73,20 +87,6 @@
    "stop": "uranus",
    "segment": "uranus.terrain",
    "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:25:37.143Z",
-   "file": "20261121182537143-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
