@@ -34,6 +34,7 @@ export interface GlobeOptions {
   cloud: THREE.Texture
   emissive: THREE.Texture
   far: THREE.Texture
+  farCloud: THREE.Texture
   look: GlobeLook
   sunHold: THREE.Vector3
   patches?: GlobePatches
@@ -115,6 +116,8 @@ uniform vec3 uCentreHold;
 uniform vec4 uDuskZone;
 uniform float uDuskFade;
 uniform float uAway;
+uniform float uRise;
+uniform sampler2D uFarCloud;
 uniform vec3 uNightTone;
 uniform vec4 uNightFlat;
 uniform vec2 uNightGate;
@@ -182,12 +185,16 @@ void main() {
   float held = dot(d, uSunHold);
   float bad = 0.0;
   float rim = 0.0;
+  float swap = 0.0;
+  float drift = 0.0;
   float farLights = 0.0;
   for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) {
     vec4 far = equirectGrad(uFar, d, uGrad);
     bad = uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held - uFarCap.w * smoothstep(uFarLight.z, uFarLight.w, dot(d, uFarCap.xyz))));
     rim = uAway * (1.0 - smoothstep(uFarRim.x, uFarRim.y, dot(d, uCentreHold)));
-    albedo = mix(albedo, far.rgb, bad);
+    swap = max(bad, rim * uRise);
+    drift = max(uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held)), rim * uRise);
+    albedo = mix(albedo, far.rgb, swap);
     farLights = far.a * far.a;
   }
   float texels = diagTexelsDir(d, uMapWidth);
@@ -212,13 +219,14 @@ ${PATCH_LEVELS}
   float dim = 1.0 - uNightFlat.w * deep;
   float live = uCloudOn * (1.0 - baked);
   vec3 q = cloudDir(d);
-  vec4 cloud = equirectGrad(uCloud, q, uGrad * (1.0 + uNightFlat.z * deep));
+  vec4 cloud = equirectGrad(uCloud, q, uGrad * (1.0 + uNightFlat.z * bad));
   cloud.rgb = mix(cloud.rgb, vec3(dot(cloud.rgb, vec3(1.0 / 3.0))), bad);
+  for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) cloud = mix(cloud, equirectGrad(uFarCloud, q, uGrad), drift);
   float a = cloud.a * live;
   vec3 sunM = spinY(uSunW * uBodyToWorld, uSpin);
   vec3 toward = sunM - d * ndl;
   vec3 p = normalize(d + toward * (uShadow.x / max(ndl, uShadow.w)));
-  float thrown = textureLod(uCloud, lonLat(cloudDir(p)), uShadow.z).a;
+  float thrown = textureLod(uCloud, lonLat(cloudDir(p)), uShadow.z).a * (1.0 - drift);
   float shadow = 1.0 - uShadow.y * thrown * smoothstep(-0.05, 0.1, ndl) * live;
   vec3 shade = curveAt(ndl);
   vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * live * dim) * shade * uTint;
@@ -227,7 +235,10 @@ ${PATCH_LEVELS}
   for (int k = 0; k < 3; k++) {
     vec4 cw = equirectGrad(uCloud, q, reach);
     vec3 under = equirectGrad(uMap, d, reach).rgb;
-    for (int j = 0; j < (uAway > 0.0 ? 1 : 0); j++) under = mix(under, equirectGrad(uFar, d, reach).rgb, bad);
+    for (int j = 0; j < (uAway > 0.0 ? 1 : 0); j++) {
+      under = mix(under, equirectGrad(uFar, d, reach).rgb, swap);
+      cw = mix(cw, equirectGrad(uFarCloud, q, reach), drift);
+    }
     wide += mix(inverseFilmic(under), nightLin, deep) * (1.0 - cw.a * uCloudOn) + inverseFilmic(cw.rgb) * uCloudOn * dim;
     reach *= uBloomPre.z;
   }
@@ -240,8 +251,8 @@ ${PATCH_LEVELS}
   vec2 uv = lonLat(d);
   float phase = 6.2831853 * noise(uv * vec2(2.0, 1.0) * uTwinkle.z);
   float twinkle = 1.0 + uTwinkle.x * (sin(uTwinkle.y * uClock + phase) - sin(phase));
-  e.rgb = mix(e.rgb, uGold * farLights, rim);
   float zone = smoothstep(uDuskZone.x, uDuskZone.y, held) * smoothstep(uDuskZone.z, uDuskZone.w, dot(d, uCentreHold));
+  e.rgb = mix(e.rgb, uGold * farLights, max(rim, zone * uAway));
   float dusk = clamp(1.0 + (ndl - held) / uDuskFade, 0.0, 1.0);
   float gate = mix(ramp(uNight, ndl), ramp(uNightGate, ndl), uAway);
   col += e.rgb * (uPeak * mix(gate * twinkle * uTwinkle.w, dusk, zone * (1.0 - uAway)));
@@ -290,7 +301,7 @@ export class Globe {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map }, uCloud: { value: o.cloud }, uEmissive: { value: o.emissive }, uFar: { value: o.far },
+        uMap: { value: o.map }, uCloud: { value: o.cloud }, uEmissive: { value: o.emissive }, uFar: { value: o.far }, uFarCloud: { value: o.farCloud }, uRise: { value: 0 },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
@@ -325,7 +336,7 @@ export class Globe {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(sun: THREE.Vector3, eye: THREE.Vector3, rotation: THREE.Quaternion, spin: number, gain: number, weight: number, flow: number, clock: number, away: number): void {
+  update(sun: THREE.Vector3, eye: THREE.Vector3, rotation: THREE.Quaternion, spin: number, gain: number, weight: number, flow: number, clock: number, away: number, rise: number): void {
     const u = this.material.uniforms
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     ;(u.uEye!.value as THREE.Vector3).copy(eye)
@@ -335,6 +346,7 @@ export class Globe {
     u.uFlow!.value = flow
     u.uClock!.value = clock
     u.uAway!.value = away
+    u.uRise!.value = rise
     const home = this.stormHome
     const lat = Math.asin(Math.min(Math.max(home.y, -1), 1))
     const a = -THREE.MathUtils.degToRad(this.look.drift.degPerSecond) * -Math.cos(3 * lat) * flow

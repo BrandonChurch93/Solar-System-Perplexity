@@ -29,11 +29,12 @@ export const createSet: SetFactory = async (ctx) => {
   const cloud = await ctx.texture(base + 'wrap-cloud.webp', { srgb: true, anisotropy: 16, repeat: true })
   const emissive = await ctx.texture(base + 'wrap-emissive.webp', { srgb: true, anisotropy: 8, repeat: true })
   const farMap = await ctx.texture(base + 'wrap-far.webp', { srgb: true, anisotropy: 16, repeat: true })
+  const farCloud = await ctx.texture(base + 'wrap-far-cloud.webp', { srgb: true, anisotropy: 16, repeat: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const globe = new Globe({
-    map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, look: look.globe,
+    map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade },
   })
@@ -134,7 +135,7 @@ export const createSet: SetFactory = async (ctx) => {
       eye.copy(camera).applyQuaternion(back).applyMatrix3(unshape)
       eyeWorld.copy(eye).applyQuaternion(state.rotation)
       const away = smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
-      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid, away)
+      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid, away, state.time >= plan.seg.terrain.start ? 1 : 0)
       const gu = globe.material.uniforms
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
