@@ -604,7 +604,7 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Cause: the lens chain sharpens by 0.6 (`src/post/chain.ts`, not a per stop value) and the maps are read at full resolution at the final tier (`uGrad` is 1 / sqrt(samples), 1 / 8 at final; the hold has 2.8 texels per pixel).
 - Plan: a look value `soften` (try 0.6 and 0.85) as a floor of the gradient scale for `uMap`, `uCloud` and `uEmissive` only (not the far map, not the patch levels). Judge only at review or final (draft has `uGrad` 1 already). Keep only if every band comes to 1.0 to 1.05, G17 median stays at or above 1.0, `lightscheck.py` does not get worse (now energy ratio 1.024, film pixels over 0.08: 680 against hero 883, p99 0.777 against 0.62), and the crops look right. R1 is 9, so no change without a measured gain.
 
-### Orbit sky aim under the hero's band (13:40 to 14:25 UTC, `out/work/earth/p43/`, `p44/`)
+### Orbit sky aim under the hero's band (13:40 to 14:05 UTC, `out/work/earth/p43/`, `p44/`)
 
 - `skyAim.orbit` `[135.4027, 1.14981, 28.88925]` to `[90, -21, 4]`: the shared sky's band lies where the hero's band is (tilt and lift from `bandaxis.py`, `along` chosen from stills of 1755 without the patch in steps of 45 degrees, `out/work/earth/aimtry.sh`). `npm run -s aim -- --stop earth` reads it back within 0.000004 degrees.
 - Draft stills with the new aim against the stills before: 2010 0 pixels differ, 2156 0 differ, 1755: 5154 sky pixels differ by 1 code value, none by more, the disc is the same. 1680, 1700: only the strip right of the patch (shared sky) changes, no edge.
@@ -613,7 +613,7 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - `mirrorcheck.py` on 1680, 1700, 1755, 1840, 1857 with the new aim: all clean. Build passes, 59 of 59 tests.
 - Kept.
 
-### Easing of the dive and the rise, measured (13:50 to 14:25 UTC)
+### Easing of the dive and the rise, measured (13:50 to 14:05 UTC)
 
 - Tools: `npx tsx assets-src/earth/dive/ease.ts [--stop ID] [--kind dive|rise] [--step N] [--set JSON]` prints per frame the altitude, the limb radius on screen in px at 1920, its rate in percent per frame, the ratio to the frame before, and the cover. `assets-src/earth/diveprofile.ts STOP STEP` the older one.
 - Why: R4 of Jupiter round 2 (major): \"The globe grows smoothly through 2986 to 3010, then fills the frame in 9 frames ... a sudden lunge with no easing\". R4 of Mercury round 2 (major): \"abrupt deceleration to a near-complete stop by frame 1014-1021 ... lengthen the ease-out curve\". The rubric: \"Camera: it has mass. Starts and stops are eased.\"
@@ -624,8 +624,18 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Rise now (settle 10): 2134 -17.6, 2140 -13.1, 2144 -7.3, 2148 -2.85, 2152 -0.70, 2156 -0.09, 2158 to 2162 0.00, then -0.05 to 2174. The camera is at rest from 2154, 20 frames before the travel starts. Settle 8: 2148 -5.3, 2152 -1.9, 2156 -0.46, 2160 -0.06 (predicted blur at 2156 1.2 px median, 2.0 at the 90th percentile). Mars rise: -8.5 at 2708, -4.2 at 2720, -1.17 at its judged frame 2726, -0.07 at 2734.
 - Not changed yet. Round 11 faulted the smeared sky of 2156 (item 7) and soft finish at 1857, so the judged frames were made still; that costs the easing. Decide when the round 19 result is in: if R4 names the lunge or the stop, go to about 0.55 at 1857 (ratio 1.175) and settle 8 to 9; if R3 names softness, stay.
 
-### Detail takes for lit land and clouds (13:45 to 14:20 UTC, `out/work/earth/detail/`)
+### Detail takes for lit land and clouds (13:45 to 14:05 UTC, `out/work/earth/detail/`)
 
 - Asset name `detail`, 2 takes used of 6 (t1: the whole hero; t-sa: the South America crop of `out/work/earth/up/hero-x2.png`, hero px x 1117 to 2173, y 788 to 1382, at 2816 by 1584; the North America crop did not come back).
 - t1 against the hero: registered (flow median 0.09 px) but only lighter and less saturated, no new fine structure. Dropped.
 - t-sa against its input: registered (flow median 0.10 px, 90th percentile 0.55), rivers, forest mottling and cloud fibres at 2 to 10 take px, but it turned the dusk and night part into day (low pass differs 10.8 code values) and the new structure is 0.5 to 2.7 film px at 1857. Test at the film's scale (`/tmp/sim-full.jpg`, `/tmp/sim-andes.png`: hero low pass times take ratio): softer than the hero, no gain. Dropped unless round 19 names the land again.
+
+### The plunge runs ahead of a thin cover (found 14:10 UTC, not fixed yet)
+
+- Look lock, "What did not work": "A dive whose whole plunge ran ahead of a thin cover: frames of blur and nothing else." Mars after round 4 (Brandon's note): a steady approach with median blur 13, 21, 27 px in the last frames before the cover, the plunge under a full cover, `coverEdge` [0.2, 0.4].
+- This stop on the round 19 head (`predict.ts`, median blur px and cover): 1866 4.8, 1870 11.6, 1872 19.9, 1874 39.8, 1876 76.8 (0), 1877 89.9 (0.10), 1878 80.8 (0.28), 1879 85.9 (0.51), 1880 132 (0.74), 1881 128 (0.91), 1882 74 (1.0), 1883 15.7 (1.0). The surge of round 2 (`fall` 3, `rise` 40, `swell` 11) moved the plunge forward to land softly at the cover centre (R4 round 11: the limb snapped at 1883 to 1885). Round 1 had 30 px at 1876 and 200 px at 1882.
+- 1874 at the review tier (`out/work/earth/p45/r-1874.png`, 304 s): a zoom blur with a sharp centre over the Gulf, readable, smooth; a faint comb in the Rockies. 1876 to 1882 at review are rendering.
+- `predict.ts` prints `sky px` now: the shift of a star over the shutter at four corners and the centre. `assets-src/earth/dive/grid.ts LIMIT LAND` scans the surge values (rate at 1857 at most LIMIT, the landing rate above LAND costs), `scan.ts JSON` prints rates for a list.
+- Candidate D1: `surge { glide: 0.03, rise: 85, fall: 4, swell: [0.4, 9, 1.3] }` with `coverEdge` [0.2, 0.5]. Predicted blur and cover: 1857 1.4 (p90 1.8), 1866 8.1, 1870 16.9, 1874 31.5, 1876 36.6 (0.02), 1877 41 (0.34), 1878 52 (0.79), 1879 70 (1.0), 1880 83, 1881 178, 1882 175, 1883 33 (all 1.0). Limb from the top 1879 -0.024, 1880 0.064, 1881 0.123, 1882 0.151, 1883 0.164, 1884 0.166; tilt -28.9, -23.3, -15.8, -8.4, -4.3, -4.2. Rate ratio at most 1.243 per frame before the cover (now 1.29).
+- Candidate D2: the same with `rise` 110, `fall` 6: 1881 212, 1882 132, 1883 11.5; limb 1880 0.080, 1881 0.131, 1882 0.157, 1883 0.165.
+- Rise: the family `1 - (1 - x)^n (1 + n x)` halves the rate every 1.7 frames near 2156 whatever n is, so a lower `settle` only moves the stop later and blurs 2156 (sky px at 2156: settle 10 0.4 to 0.6, 9 0.8 to 1.0, 8.5 1.2 to 1.3, 8 1.6 to 1.8; round 1 with settle 5 and no `gentle` 3.0, body 2.2). On a sheet with a tile every 7 frames the limb radius reads 642, 415, 389, 389 px (2142 to 2163) now and 830, 460, 393, 389 with settle 8. Left as it is until R4 names it.
