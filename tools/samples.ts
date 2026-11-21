@@ -10,7 +10,7 @@ import { args } from './lib/common'
 import { samplesOf, samplesOfSpan, stressSpan } from './lib/samples'
 
 // The one place that answers "samples of frame N at tier T" for the tools: the same rule the engine applies when it renders the frame.
-// --tier T --frames a,b | --range a-b : one line per frame. --out file : JSON of every frame of the film for every tier. --report : frames whose count rises, by kind. --stress [ids] : JSON of the summed samples of each stress window.
+// --tier T --frames a,b | --range a-b : one line per frame. --out file : JSON of every frame of the film for every tier (- for the standard output). --report : frames whose count rises, by kind. --stress [ids] : JSON of the summed samples of each stress window.
 
 const a = args()
 const director = new FilmDirector(plans)
@@ -20,9 +20,12 @@ const counts = (tier: string, frames: number[]): number[] => frames.map((f) => s
 
 if (a.out) {
   const out = { fps: config.fps, frameCount: config.frameCount, maxStepPx: config.motion.maxStepPx, tiers: Object.fromEntries(tiers.map((t) => [t, counts(t, all)])) }
-  mkdirSync(dirname(a.out), { recursive: true })
-  writeFileSync(a.out, JSON.stringify(out))
-  console.log('wrote ' + a.out)
+  if (a.out === '-') console.log(JSON.stringify(out))
+  else {
+    mkdirSync(dirname(a.out), { recursive: true })
+    writeFileSync(a.out, JSON.stringify(out))
+    console.log('wrote ' + a.out)
+  }
 } else if (a.stress !== undefined) {
   const st = config.raw.quality.stress
   const tier = a.tier ?? st.tier
