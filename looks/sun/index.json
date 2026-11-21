@@ -1,20 +1,42 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T05:40:46.784Z",
- "head": "8ec629d86c0b43319a239f958eba2c187e526c96",
- "note": "terrain limb seam and star holes fixed; first pass of the rise with its flare",
+ "pushed": "2026-11-21T06:03:20.798Z",
+ "head": "4f393be6e6c9555091f687402a8b481261a44b81",
+ "note": "terrain milestone committed; rise with flare and gold cover; G13 0 soft on every third frame",
  "looks": [
   {
-   "time": "2026-11-21T05:40:46.229Z",
-   "file": "20261121054046229-note-rise-strip.jpg",
-   "source": "out/work/sun/rise-strip.jpg",
+   "time": "2026-11-21T06:03:20.286Z",
+   "file": "20261121060320286-note-cover-strip.jpg",
+   "source": "out/work/sun/cover-strip.jpg",
    "kind": "note",
-   "label": "sun.rise first pass with the flare, frames 190 to 247, draft",
+   "label": "sun.rise cover in gold, frames 211 216 221, draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T05:40:43.788Z",
-   "file": "20261121054043788-compare-compare-sun-terrain-view.jpg",
+   "time": "2026-11-21T06:03:19.765Z",
+   "file": "20261121060319765-note-t-phone.jpg",
+   "source": "out/work/sun/t-phone.jpg",
+   "kind": "note",
+   "label": "sun.terrain at phone size, frames 0 10 20 30 45 60, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T06:03:02.360Z",
+   "file": "20261121060302360-still-f00247-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00247-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.rise frame 247, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T06:02:44.215Z",
+   "file": "20261121060244215-compare-compare-sun-terrain-view.jpg",
    "source": "out/work/compare/compare-sun-terrain-view.jpg",
    "kind": "compare",
    "label": "sun.terrain: approved image left, film frame right, draft tier",
@@ -27,8 +49,8 @@
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:40:42.702Z",
-   "file": "20261121054042702-still-f00090-16x9-draft-full.jpg",
+   "time": "2026-11-21T06:02:43.184Z",
+   "file": "20261121060243184-still-f00090-16x9-draft-full.jpg",
    "source": "out/work/stills/f00090-16x9-draft-full.png",
    "kind": "still",
    "label": "sun.terrain frame 90, draft tier",
@@ -41,74 +63,46 @@
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:39:59.843Z",
-   "file": "20261121053959843-frame-s90.jpg",
-   "source": "out/work/sun/s90.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:37:30.873Z",
-   "file": "20261121053730873-still-f00247-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00247-16x9-draft-full.png",
+   "time": "2026-11-21T06:01:23.716Z",
+   "file": "20261121060123716-still-f00221-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00221-16x9-draft-full.png",
    "kind": "still",
-   "label": "sun.rise frame 247, draft tier",
+   "label": "sun.rise frame 221, draft tier",
    "stop": "sun",
    "segment": "sun.rise",
-   "frame": 247,
+   "frame": 221,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:37:12.190Z",
-   "file": "20261121053712190-still-f00240-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00240-16x9-draft-full.png",
+   "time": "2026-11-21T06:01:04.369Z",
+   "file": "20261121060104369-still-f00216-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00216-16x9-draft-full.png",
    "kind": "still",
-   "label": "sun.rise frame 240, draft tier",
+   "label": "sun.rise frame 216, draft tier",
    "stop": "sun",
    "segment": "sun.rise",
-   "frame": 240,
+   "frame": 216,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:36:52.814Z",
-   "file": "20261121053652814-still-f00232-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00232-16x9-draft-full.png",
+   "time": "2026-11-21T06:00:45.965Z",
+   "file": "20261121060045965-still-f00211-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00211-16x9-draft-full.png",
    "kind": "still",
-   "label": "sun.rise frame 232, draft tier",
+   "label": "sun.rise frame 211, draft tier",
    "stop": "sun",
    "segment": "sun.rise",
-   "frame": 232,
+   "frame": 211,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:36:34.231Z",
-   "file": "20261121053634231-still-f00226-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00226-16x9-draft-full.png",
-   "kind": "still",
-   "label": "sun.rise frame 226, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 226,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   }
  ]
 }
