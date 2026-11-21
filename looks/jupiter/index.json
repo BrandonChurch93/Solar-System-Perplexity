@@ -1,9 +1,38 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T21:13:08.890Z",
+ "pushed": "2026-11-21T21:33:37.105Z",
  "head": "51535de526070f53e95b89ca2689019d11d16fda",
- "note": "Polish (mail 24): review sheets of the new rise rendering; first frames across the cut",
+ "note": "Polish (mail 24): rise cover sheet at review tier with the new path and the map coming up through the pall",
  "looks": [
+  {
+   "time": "2026-11-21T21:32:22.415Z",
+   "file": "20261121213222415-sheet-jupiter.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.rise, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3265,
+   "last": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:32:20.626Z",
+   "file": "20261121213220626-frame-f03276-review.jpg",
+   "source": "out/work/sheets/.frames-E17OWd/f03276-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3276, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T21:13:07.860Z",
    "file": "20261121211307860-note-pol_rise_3268_3271.jpg",
@@ -11,20 +40,6 @@
    "kind": "note",
    "label": "polish item 1, review tier: rise frames 3268, 3269 (terrain side), 3270, 3271 (orbit side): the limb is one arc across the cut",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T21:10:41.989Z",
-   "file": "20261121211041989-frame-f03271-review.jpg",
-   "source": "out/work/sheets/.frames-E17OWd/f03271-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3271, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3271,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T20:52:05.819Z",
@@ -71,20 +86,6 @@
    "stop": "jupiter",
    "segment": "jupiter.rise",
    "frame": 3283,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T20:48:39.562Z",
-   "file": "20261121204839562-still-f03282-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03282-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3282, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3282,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
