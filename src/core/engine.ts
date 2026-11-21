@@ -3,7 +3,7 @@ import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
-import { openRects } from './tiles'
+import { openTiles, type Tiles } from './tiles'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot, SkyPatch } from './types'
@@ -225,12 +225,12 @@ export class Engine {
     }
     r.setRenderTarget(this.sampleTarget)
     const early = !raw && this.sky.cull && this.sortWorld()
-    let open: number[] | null = null
+    let open: Tiles | null = null
     if (early) {
       this.renderWorld(cam, this.veiled)
       if (this.alpha.length !== width * height * 4) this.alpha = new Uint16Array(width * height * 4)
       r.readRenderTargetPixels(this.sampleTarget, 0, 0, width, height, this.alpha)
-      open = openRects(this.alpha, width, height)
+      open = openTiles(this.alpha, width, height)
     }
     if (!raw) {
       cam.fov = mid.camera.vfov
