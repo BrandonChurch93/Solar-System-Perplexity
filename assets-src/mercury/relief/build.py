@@ -18,6 +18,7 @@ LIFT = 2.5
 DIST_SCALE = 0.25
 SPECK = (5.0, 8.0)
 GLINT = 0.7
+EDGE = (8.0, 10.0)
 W, H, ML, MB, CW, CH = geom.W, geom.H, geom.ML, geom.MB, geom.CW, geom.CH
 
 
@@ -42,6 +43,28 @@ def horizon():
     xs = np.arange(CW)
     inside = smooth(ML - 96, ML, xs) * (1 - smooth(ML + W, ML + W + 96, xs))
     return np.maximum(med * (1 - inside), 0)
+
+
+def calm(t, edge, drop):
+    b = geom.FAR * (1 + edge)
+    b0 = geom.FAR + geom.R * (EDGE[0] + drop[None, :]) / geom.F
+    root = np.sqrt(b0 * b0 - geom.FAR ** 2)
+    line = b0 - root + (1 - b0 / root) * (np.maximum(b, geom.FAR - geom.R * EDGE[1] / geom.F) - b0)
+    return np.where(b < b0, line, t)
+
+
+def distances(dist):
+    for name, s in (('full', 1.0), ('web', 0.5)):
+        dw, dh = int(int(CW * 2 * s) * DIST_SCALE), int(int(CH * 2 * s) * DIST_SCALE)
+        dm = np.exp(cv2.resize(np.log(dist), (dw, dh), interpolation=cv2.INTER_AREA)).astype('<f4')
+        dm.tofile(OUT + name + '/relief-dist.bin')
+        print(name, 'dist', (dw, dh))
+
+
+def only():
+    d = geom.rays()
+    t, _, edge = geom.ground(d)
+    distances((calm(t, edge, horizon()) * np.exp(np.load(WORK + 'relief-detail.npy'))).astype(np.float32))
 
 
 def lens(color, fix):
@@ -97,7 +120,7 @@ def main():
     print('horizon drop in the margins, px at 2816: left max %.1f right max %.1f' % (drop[:ML].max(), drop[ML + W:].max()))
     depth = np.fromfile(WORK + 'ext-depth.raw', np.float32).reshape(CH, CW)
     d = geom.rays()
-    t, hit, _ = geom.ground(d)
+    t, hit, edge = geom.ground(d)
     yy = np.arange(CH)[:, None] + 0.5
     hy = geom.horizon_y()[None, :] + drop[None, :]
     land = hit & (yy > hy + 2)
@@ -127,8 +150,7 @@ def main():
     fade = 1 - smooth(NEAR, FARFADE, t)
     relief = np.clip((detail - low) * GAIN, -0.4, 0.4) * fade * wt
     relief = cv2.GaussianBlur(relief.astype(np.float32), (0, 0), 2.0)
-    dist = (t * np.exp(relief)).astype(np.float32)
-    dist[~hit] = geom.FAR
+    dist = (calm(t, edge, drop) * np.exp(relief)).astype(np.float32)
     print('fit a %.5f g %.5f b %.5f; residual rms %.3f; relief p1 %.3f p99 %.3f' % (a, g, b, float(np.std(r[keep])), float(np.percentile(relief[land], 1)), float(np.percentile(relief[land], 99))))
     json.dump({'a': a, 'g': float(g), 'b': b, 'gain': GAIN, 'wide': WIDE}, open('assets-src/mercury/relief/depth-curve.json', 'w'), indent=1)
     np.save(WORK + 'relief-detail.npy', relief)
@@ -151,11 +173,9 @@ def main():
         c.save(OUT + name + '/relief-color.jpg', quality=93 if s == 1 else 90, subsampling=0)
         al = Image.fromarray(alpha8)
         (al if s == 1 else al.resize((cw, ch), Image.BOX)).save(OUT + name + '/relief-alpha.png', optimize=True)
-        dw, dh = int(cw * DIST_SCALE), int(ch * DIST_SCALE)
-        dm = np.exp(cv2.resize(np.log(dist), (dw, dh), interpolation=cv2.INTER_AREA)).astype('<f4')
-        dm.tofile(OUT + name + '/relief-dist.bin')
         Image.new('RGB', (16, 16), (0, 0, 0)).save(OUT + name + '/relief-masks.png')
-        print(name, 'color', (cw, ch), 'dist', (dw, dh))
+        print(name, 'color', (cw, ch))
+    distances(dist)
     dw, dh = int(CW * 2 * DIST_SCALE), int(CH * 2 * DIST_SCALE)
     out = {
         'imageSize': {'full': [W * 2, H * 2], 'web': [W, H]},
@@ -169,4 +189,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    only() if sys.argv[1:] == ['dist'] else main()
