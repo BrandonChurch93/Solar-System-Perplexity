@@ -4,7 +4,7 @@ import type { Shot } from '../../core/types'
 
 export interface FlowDirector { shotAt(frame: number, time: number): Shot }
 
-export const FLOW = { stepsPerFrame: 4, speed: 2.6, knee: 0.6, full: 20000, kinds: ['travel', 'retreat'] }
+export const FLOW = { stepsPerFrame: 4, speed: 0.9, knee: 0.6, full: 20000, kinds: ['travel', 'retreat'] }
 
 export function flowSpeed(real: number): number {
   return FLOW.speed * Math.min(Math.log(1 + real / FLOW.knee) / Math.log(1 + FLOW.full / FLOW.knee), 1.25)
