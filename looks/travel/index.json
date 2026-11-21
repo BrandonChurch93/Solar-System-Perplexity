@@ -1,9 +1,33 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T05:12:51.142Z",
- "head": "e4c9936db8eb45d86e84d788d066c975806f520a",
- "note": "baseline draft sheets of the travel segments, before any change",
+ "pushed": "2026-11-21T05:22:34.488Z",
+ "head": "47d9b45d0bab51838546f4d2e802218ca37265cc",
+ "note": "dust: streak per mote and flow direction, first pass",
  "looks": [
+  {
+   "time": "2026-11-21T05:22:33.796Z",
+   "file": "20261121052233796-note-dust-1078-review.jpg",
+   "source": "out/work/travel/dust-1078-review.png",
+   "kind": "note",
+   "label": "dust first pass dust-1078-review: streak per mote, flow from flight direction (look not tuned yet)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-21T05:22:33.171Z",
+   "file": "20261121052233171-note-dbg-2782.jpg",
+   "source": "out/work/travel/dbg-2782.png",
+   "kind": "note",
+   "label": "dust first pass dbg-2782: streak per mote, flow from flight direction (look not tuned yet)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-21T05:22:32.544Z",
+   "file": "20261121052232544-note-dbg-495.jpg",
+   "source": "out/work/travel/dbg-495.png",
+   "kind": "note",
+   "label": "dust first pass dbg-495: streak per mote, flow from flight direction (look not tuned yet)",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-21T05:12:50.223Z",
    "file": "20261121051250223-note-venus.travel-draft.jpg",
@@ -42,22 +66,6 @@
    "source": "out/work/travel/base-draft/mars.travel-draft.png",
    "kind": "note",
    "label": "baseline mars.travel-draft sheet (main 3523b45, before any change)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T05:12:46.253Z",
-   "file": "20261121051246253-note-jupiter.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/jupiter.travel-draft.png",
-   "kind": "note",
-   "label": "baseline jupiter.travel-draft sheet (main 3523b45, before any change)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T05:12:45.221Z",
-   "file": "20261121051245221-note-earth.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/earth.travel-draft.png",
-   "kind": "note",
-   "label": "baseline earth.travel-draft sheet (main 3523b45, before any change)",
    "stop": "travel"
   }
  ]
