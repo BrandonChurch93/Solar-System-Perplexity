@@ -34,8 +34,8 @@ export const wisp = {
   shadow: 0.08,
   shadowLength: 0.0045,
   shadowBlur: 3,
-  polarFrom: 50,
-  polarTo: 62,
+  polarFrom: 36,
+  polarTo: 45,
   fine: 0.5,
 }
 

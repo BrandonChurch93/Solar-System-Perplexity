@@ -58,8 +58,6 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const wispMap = await ctx.texture(base + 'wisp.png', { srgb: false, anisotropy: 8, repeat: true })
-  wispMap.wrapT = THREE.RepeatWrapping
-  wispMap.needsUpdate = true
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
