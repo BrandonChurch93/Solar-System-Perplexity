@@ -5,7 +5,7 @@ import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../co
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
 import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
-import { segmentAtFrame } from './timeline'
+import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
 import { aimAt, type SkyAims } from '../space/aim'
 
@@ -41,7 +41,7 @@ export class FilmDirector implements Director {
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
-  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '' }
+  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
 
   constructor(plans: StopPlan[]) {
     this.plans = plans
@@ -75,19 +75,25 @@ export class FilmDirector implements Director {
     const anchor = aimAt(a.along, a.tilt, a.lift)
     const frame = judged(a.stop + '.hold')!
     const f = anchor.clone().multiply(cam(frame).invert())
-    const out: SkyAims = { frame: round(f), turns: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop }
-    const own = this.plans.map((p, i): THREE.Quaternion | null | undefined => {
+    const out: SkyAims = { frame: round(f), turns: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop, follows: {}, open: {} }
+    const bare = (q: StopPlan, seg?: Segment): boolean => !!seg && !!coverWindow(seg) && q.coverAmount(seg, q.coverCenter(seg)) === 0
+    this.plans.forEach((p, i) => {
+      const before = this.plans[i - 1]
+      if (bare(p, p.seg.dive) || bare(p, p.seg.rise)) out.open[p.id] = true
+      if (before && (before.id === a.stop || bare(before, before.seg.rise))) out.follows[p.id] = before.id
+    })
+    const own = this.plans.map((p): THREE.Quaternion | null | undefined => {
       if (p.id === a.stop) return null
       const hold = judged(p.id + '.hold')
       const want = p.p.skyAim?.orbit
-      if (!want || hold === null || this.plans[i - 1]?.id === a.stop) return undefined
+      if (!want || hold === null || out.follows[p.id]) return undefined
       return round(cam(hold).multiply(aimAt(want[0], want[1], want[2]).invert()).multiply(f))
     })
     let carry: THREE.Quaternion | null = null
     this.plans.forEach((p, i) => {
       const hold = judged(p.id + '.hold')
       const terrain = judged(p.id + '.terrain')
-      const want = p.id === a.tstop ? [a.talong, a.ttilt, a.tlift] : p.p.skyAim?.terrain
+      const want = p.id === a.tstop ? [a.talong, a.ttilt, a.tlift] : out.open[p.id] ? undefined : p.p.skyAim?.terrain
       const next = i === 0 ? own[1] : undefined
       const mineOwn = next !== undefined ? next : own[i]
       const t = mineOwn !== undefined ? mineOwn : carry

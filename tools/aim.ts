@@ -19,10 +19,14 @@ plans.forEach((p, i) => {
   let note: string
   if (p.id === sky.anchor) note = 'this stop carries the fit of the whole sky: its aims are fixed in src/space/skyframe.json'
   else if (plans[i - 1]?.id === sky.anchor) note = 'the arrival here shares its sky with the approved rise of ' + sky.anchor + ': an orbit aim in this plan is ignored. In the plan now: orbit ' + (set?.orbit ? show(set.orbit) + ' (ignored)' : 'not set') + ', terrain ' + (set?.terrain ? show(set.terrain) : 'not set, follows the orbit view')
-  else {
+  else if (sky.follows[p.id]) {
+    const lead = sky.follows[p.id]!
+    note = lead + ' has no cover, so no frame hides a change of the sky between its hold and this one: both share one sky and the aim of ' + lead + ' decides it. An orbit aim in this plan is ignored. The sky behind this hold follows from ' + lead + "'s aim, its exit and its travel, and from this stop's arrival and hold, and from nothing else. In the plan now: orbit " + (set?.orbit ? show(set.orbit) + ' (ignored)' : 'not set') + ', terrain ' + (set?.terrain ? show(set.terrain) : 'not set, follows the orbit view') + '.'
+  } else {
     const second = plans[1]
     const shared = i === 0 && second ? ' This hold shares its sky with the arrival at ' + second.id + ': an orbit aim here is used only while ' + second.id + ' has none.' : ''
     note = 'in the plan now: orbit ' + (set?.orbit ? show(set.orbit) : 'not set, so it moves when another stop changes its exit, its travel or its own aim') + ', terrain ' + (set?.terrain ? show(set.terrain) : 'not set, follows the orbit view') + '.' + shared
   }
+  if (sky.open[p.id]) note += ' This stop has no cover, so its sky cannot change between its two views: a terrain aim in this plan is ignored' + (set?.terrain ? ' (set now: ' + show(set.terrain) + ')' : '') + ' and the terrain view keeps the sky of the orbit view.'
   console.log('  ' + note + ' Read back within ' + off.toFixed(6) + ' deg.')
 })
