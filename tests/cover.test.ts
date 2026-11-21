@@ -84,4 +84,31 @@ describe('cover window of a stop', () => {
     }
     expect(director.shotAt(w.firstFrame, w.firstFrame / config.fps).cover.amount).toBe(0)
   })
+
+  it('dims the sky under the cover by the square of what the cover leaves, unless the plan says otherwise', () => {
+    const floor = 0.25
+    class Floored extends StopPlan {
+      override skyUnderCover(amount: number): number {
+        return Math.max(floor, Math.pow(1 - amount, 2))
+      }
+    }
+    const base = new StopPlan('mars', fit as Fit, { ...params })
+    const kept = new Floored('mars', fit as Fit, { ...params })
+    for (const a of [0, 0.3, 0.94, 1]) expect(base.skyUnderCover(a, 0)).toBe(Math.pow(1 - a, 2))
+    const plain = new FilmDirector(plans.map((p) => (p.id === 'mars' ? base : p)))
+    const other = new FilmDirector(plans.map((p) => (p.id === 'mars' ? kept : p)))
+    const w = coverWindow(rise)!
+    const outside = rise.endFrame - 1
+    expect(other.shotAt(outside, outside / config.fps).skyExposure).toBe(plain.shotAt(outside, outside / config.fps).skyExposure)
+    let lifted = 0
+    for (let f = w.firstFrame + 1; f <= w.lastFrame; f++) {
+      const a = plain.shotAt(f, f / config.fps)
+      const b = other.shotAt(f, f / config.fps)
+      const open = a.skyExposure / Math.pow(1 - a.cover.amount, 2)
+      if (a.cover.amount < 1) expect(b.skyExposure).toBeCloseTo(open * Math.max(floor, Math.pow(1 - a.cover.amount, 2)), 12)
+      if (b.skyExposure > a.skyExposure) lifted++
+      expect(b.cover.amount).toBe(a.cover.amount)
+    }
+    expect(lifted).toBeGreaterThan(0)
+  })
 })

@@ -253,6 +253,10 @@ export class StopPlan {
     return 1
   }
 
+  skyUnderCover(amount: number, _time: number): number {
+    return Math.pow(1 - amount, 2)
+  }
+
   coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w) return 0
