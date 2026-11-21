@@ -23,7 +23,7 @@ export const params: MoveParams = {
 }
 
 export const climb = {
-  peak: 0.4,
+  peak: 0.385,
   early: 0,
   before: 0.12,
   after: 0.143,
