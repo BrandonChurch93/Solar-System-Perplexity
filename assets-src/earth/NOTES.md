@@ -772,3 +772,15 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Commit 8266062, then merged `origin/main` 530168f as 0f2d547 (tools only: a capture that loses its drawing context now throws and retries; no engine source changed). Build passes, vitest 62 of 62, `skyat.ts --frames 2156` prints `[-78.5, 100.8, 0.4]`, probe: join 1680 turn 0.004 to 0.004, speed 4.06e-2 to 3.11e-2; join 2175 turn 0.002 to 0.004, speed 4.99e-1 to 5.00e-1; join 2250 turn 0.056 to 0.056, speed 1.03e-1 to 1.03e-1; peak turn 4.92 at 2207. The probe's `ln rate` at a join compares the last set of each side (Earth before 2175, Mars after), so its step there is not a step of the camera.
 - Gates on 0f2d547: G11 pass, G12 pass (1976 tracked files, 1.41 GB), G15 pass (earth/web 347 MB, earth/full 1381 MB). Disk: full 98 MB, web 26 MB.
 - Queue running from 19:08: review stills 1876, 1878, 2131, 1874, 1880, 1872 (`out/work/earth/r3v/r-F.png`), then `npm run measure -- --stop earth` again at the new stop hash, then READY.
+
+### Review stills after `coverHides`, stop hash a1573c1a4a29dc23 (19:08 to 19:50 UTC)
+
+- `out/work/earth/r3v/r-F.png`, review tier, engine hash f854c8146f64c7e4:
+  - 1874 (125 samples, 619 s, 74 px): one smooth radial blur around the dive point, every cloud and coast one streak, no copies.
+  - 1876 (128 samples, 669 s, 86 px, cover 0.02): the same, the thin high cloud over the centre; native crop of the lower right (the fastest part) shows continuous bars.
+  - 1878 (59 samples, 310 s, 114 px under cover 0.79): the deck over the globe, the Rockies faintly through it, one soft limb.
+  - 1880 (47 samples, 268 s, 225 px under cover 1.0): the deck with one soft blurred limb top left.
+  - 2131 (99 samples, 647 s, 323 px under cover 0.93): the flecks of the 36 sample frame are now short soft streaks, at most 19 levels over the deck (`rc-2131-before-after.png`, pushed as a look). They are the terrain view's bright cloud tops seen through the deck.
+- Rise numbers again from `show.ts --kind rise`: limb px 2130 3782, 2131 3259, 2132 2490, 2133 1885, 2134 1517, 2136 1116, 2137 998, 2140 786, 2147 589, 2154 516, 2156 504, 2161 483, 2167 468, 2174 454; rate percent per frame 2137 9.3, 2140 5.8, 2147 2.5, 2156 1.0, 2167 0.45, 2174 0.38. Dive: limb 474 at 1830, 546 at 1857 (rate 1.07, 3.6 px), 747 at 1870, 1087 at 1876.
+- `holdcheck.ts`: globe centre fixed at (1000.9, 541.3), a surface spot 53.0 px east, the Moon 22.7 px, a star 0.0 px over 1680 to 1829.
+- `npm run measure -- --stop earth` running again from 19:50 at this hash (`out/work/earth/r3v/measure2.log`).
