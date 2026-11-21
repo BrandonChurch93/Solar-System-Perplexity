@@ -339,6 +339,20 @@ What is built (all in the stop folder):
 - Gates at 6d0519c: G5, G13, G17 PASS; G11 PASS; G12 PASS (1750 tracked files, 1.37 GB); G15 PASS (at most 2 sets per frame; jupiter/web 199 MB of 450, jupiter/full 796 MB of 1400; the sky patches now carry mips). Build green, vitest 59 of 59. Disk: full 45 MB, web 13 MB.
 - READY for round 2 sent after this entry.
 
+### After READY for round 2 (12:26 UTC onward): work on the weak list while the critics are out
+
+- **READY for round 2 sent 12:26 UTC at 92aca74** (main e9b2e90 merged, engine hash 020740ac07ff27f7, stop hash 1bfd428c151f758e). The round 2 result has not arrived yet (12:50). One more round after it.
+- **Push policy**: the Builder mirrors the head of `agent/jupiter` when a round starts. So code goes to the branch only when the full measure and the gates are green at that state. While `src/` holds unmeasured work, commit `assets-src/jupiter` alone (notes) and push looks.
+- Dive cover at the review tier (`out/work/sheets/jupiter.dive-cover-16x9-review.png`, 15 min, frames 3019 to 3030): haze continuous, 3023 and 3024 show the same haze field and limb, sky black 3020 to 3027, stars and blue rim back 3028 to 3030. The limb swings fast at 3021 to 3023 under full haze.
+- Rise cover at the review tier: rendering since 12:41 (dist of 92aca74).
+
+Work in the tree, not built, not measured (12:50):
+
+1. Smear cure, `deck.ts` and `look.deck.smear [2, 6, 1.3, 2.2, 0.7]`: at the end of the terrain view (3230 to 3252) the one relief is stretched along the view. `magA = uImage.y * pix / sMin` from the singular values of the Jacobian of `vPx`; texture gradients widened by `mix(1, clamp(sMax / (sMin * smear.x), 1, smear.y), smoothstep(smear.z, smear.w, magA))`, the detail layer opens with `max(mag, magA * smear[4])`. At 3150 the projector is the camera, so the judged frame must not change. To test: drafts 3239, 3245, 3250 against `out/work/view/f3239_r6_bottom.png`, then `/tmp/tex.sh` on 3249 to 3261.
+2. Sky level. Tile map of final 3150 against approved (16 by 9 tiles, mean level ratio): the upper third excess (+1.5 levels) is the sky, not the deck: sky tiles upper right 4 to 9 percent brighter, deck tiles within 2 percent. Hold 2895: sky mean ratio 1.024 to 1.028 (median 16.67 against 16.33). Likely the mips (stars averaged in linear light raise the mean of the displayed levels). `sky.json` gain: orbit 2, terrain 5.714. To test: terrain gain down about 5 percent, hold 2 percent, check `compare` final and G17.
+3. Lit limb of the hold against the hero (radius of the steepest fall, every 10 deg, fit circle centre (958, 537) r 481 px at 1920): the hero's disc is flattened on the lit side as well: limb at 1.0035 r on the equator, 0.994 r from 60 deg of latitude to the pole (4.6 px). Ours is a circle at 0.9985 with a soft skirt, so its steepest fall lies 2.2 to 3.6 px outside the hero's at 100 to 140 and 220 to 260 deg and 0.2 to 2.6 px on the equator, and the fall is half as steep (11 against 22 levels per px on the equator, 24 against 38 at 120 deg). Fit: hero limb = 0.994 + 0.0095 (1 - axial^2)^2. Code: `look.litEdge [0.0045, 0.0095, 2, 1]` (extra inset at the pole, bulge on the equator, power, factor on the wide air term on the lit side), in `globe.ts` `over` gets `(1 - dusk) * (litEdge.x - litEdge.y * (1 - axial^2)^litEdge.z)`; the night law is unchanged. Next: draft 2895, the same profile table, then lower the lit skirt (`litEdge[3]`) until the fall is as steep as the hero's without stair steps at 2997.
+4. Also seen in the tile map of the hold: sky tiles right outside the upper left lit limb are 14 to 22 percent brighter than the hero (halo of the haze shells at 110 to 140 deg). Check after 3.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
