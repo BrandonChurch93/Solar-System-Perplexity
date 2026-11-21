@@ -118,7 +118,7 @@ export const createSet: SetFactory = async (ctx) => {
         sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
         sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
         veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim, whole)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye.copy(world.position).applyQuaternion(back).negate())
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
