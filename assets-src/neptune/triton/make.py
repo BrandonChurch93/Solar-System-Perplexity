@@ -9,7 +9,10 @@ PIVOT = 0.5
 CONTRAST = 1.25
 CAP = (0, 45)
 WASH = (0.93, 0.84, 0.845)
-PLAIN = (0.97, 0.975, 1.0)
+CYAN = (0.86, 0.975, 1.0)
+ROSE = (1.0, 0.915, 0.94)
+ZONE = (-8, -40)
+DETAIL = (60, 0.55)
 
 
 def main():
@@ -18,10 +21,16 @@ def main():
     lum = img.mean(-1, keepdims=True)
     img = lum + (img - lum) * SATURATION
     img = np.clip((img - PIVOT) * CONTRAST + PIVOT, 0, 1)
+    wrap = np.concatenate([img[:, -3 * DETAIL[0]:], img, img[:, :3 * DETAIL[0]]], axis=1)
+    low = cv2.GaussianBlur(wrap, (0, 0), DETAIL[0])[:, 3 * DETAIL[0]:-3 * DETAIL[0]]
+    img = np.clip(low + (img - low) * DETAIL[1], 0, 1)
     lat0 = (0.5 - (np.arange(H) + 0.5) / H) * 180
     cap = np.clip((lat0 - CAP[0]) / (CAP[1] - CAP[0]), 0, 1)
     cap = (cap * cap * (3 - 2 * cap))[:, None, None].astype(np.float32)
-    img = img * ((1 - cap) * np.array(PLAIN, np.float32)[None, None, ::-1] + cap * np.array(WASH, np.float32)[None, None, ::-1])
+    zone = np.clip((lat0 - ZONE[0]) / (ZONE[1] - ZONE[0]), 0, 1)
+    zone = (zone * zone * (3 - 2 * zone))[:, None, None].astype(np.float32)
+    plain = (1 - zone) * np.array(CYAN, np.float32)[None, None, ::-1] + zone * np.array(ROSE, np.float32)[None, None, ::-1]
+    img = img * ((1 - cap) * plain + cap * np.array(WASH, np.float32)[None, None, ::-1])
     band = W // 10
     left = img[:, :band].copy()
     right = img[:, -band:].copy()

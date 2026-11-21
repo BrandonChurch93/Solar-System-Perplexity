@@ -15,7 +15,10 @@ STEP = 2.0
 LIMIT = 2.9
 EDGE = 3
 RIM = 8
-CAP = 1.2
+CAP = 0.6
+DEEP = 1.4
+SOFT = 2.0
+DARK = (0.01, 0.04)
 
 
 def step(v, lo, hi):
@@ -60,11 +63,13 @@ def main():
     starts = np.searchsorted(key, np.arange(2 * h_ * w_))
     ends = np.searchsorted(key, np.arange(2 * h_ * w_), side='right')
     logg = np.zeros((2 * h_ * w_, 3))
+    lev = np.zeros((2 * h_ * w_, 3))
     cnt = (ends - starts).astype(float)
     for k in np.nonzero(cnt >= 6)[0]:
         ma = np.median(av[starts[k]:ends[k]], axis=0)
         mb = np.median(bv[starts[k]:ends[k]], axis=0)
         logg[k] = np.log2((ma + EPS) / (mb + EPS))
+        lev[k] = ma
     logg = np.clip(logg.reshape(2, h_, w_, 3), -STEP, STEP)
     wgt = np.where(cnt >= 6, np.sqrt(np.minimum(cnt, 400)), 0).reshape(2, h_, w_)
     muc = (np.arange(w_) + 0.5) / w_ * (mu1 - mu0) + mu0
@@ -80,10 +85,19 @@ def main():
     seen = wgt > 0
     print('cells seen', int(seen.sum()), 'of', seen.size, 'residual rms log2', float(np.sqrt((logg[seen] ** 2).mean()).round(3)), 'p95', float(np.percentile(np.abs(logg[seen]), 95).round(3)))
     total = np.clip(np.log2(np.array(old['gain'])) + res, -LIMIT, LIMIT)
-    total[:, :, :RIM] = np.clip(total[:, :, :RIM], -CAP, CAP)
+    sure = step(lev[:, :1], DARK[0], DARK[1]).reshape(2, h_, w_, 1)
+    for k in range(2):
+        fine, den = smooth(sure[k], wgt[k], 1.0, 1.0)
+        far, _ = smooth(sure[k], wgt[k], 3.0, 4.0)
+        near = np.clip(den / 2.0, 0, 1)[..., None]
+        sure[k] = fine * near + far * (1 - near)
+    total[..., 0] = total[..., 0] * sure[..., 0] + total[..., 1] * (1 - sure[..., 0])
+    ext = ndi.gaussian_filter(total[:, :, RIM:RIM + 3].mean(2), (0, 1.0, 0), mode='nearest')[:, :, None, :]
+    rim = ndi.gaussian_filter(total[:, :, :RIM + 3], (0, 1.0, SOFT, 0), mode='nearest')
+    rim = ext + np.clip(rim - ext, -DEEP, CAP)
+    keep = np.clip((np.arange(RIM + 3) - RIM + 1) / 3.0, 0, 1)[None, None, :, None]
+    total[:, :, :RIM + 3] = total[:, :, :RIM + 3] * keep + rim * (1 - keep)
     ndc = (np.arange(h_) + 0.5) / h_ * (n1 - n0) + n0
-    hot = step(ndc, 0.84, 0.93)[None, :, None, None]
-    total[:, :, :RIM] = total[:, :, :RIM] * (1 - hot) + np.clip(total[:, :, :RIM], -0.4, 0.4) * hot
     dim = (1 - step(ndc, 0.2, 0.35))[None, :, None, None]
     total[:, :, :EDGE] = total[:, :, :EDGE] * (1 - dim) + np.clip(total[:, :, EDGE:EDGE + 1], -0.3, 0.3) * dim
     old['gain'] = np.round(2.0 ** total, 3).tolist()
