@@ -1,9 +1,39 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T04:30:46.765Z",
- "head": "5a416e09c4ed27df5c6d2b48c257820d4aff0d5a",
- "note": "orbit view: limb edge against the hero, sky patch v3 in place",
+ "pushed": "2026-11-21T04:43:36.094Z",
+ "head": "6d9a4aeb501772b5decd8122e2c39cf88f76a0c5",
+ "note": "orbit view: globe outline fitted as an ellipsoid, limb profile measured against the hero",
  "looks": [
+  {
+   "time": "2026-11-21T04:43:35.557Z",
+   "file": "20261121044335557-note-cmp-limb-ul.jpg",
+   "source": "out/work/u/cmp-limb-ul.jpg",
+   "kind": "note",
+   "label": "hold lit limb x3 after the outline fix: hero left, film right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:43:34.972Z",
+   "file": "20261121044334972-note-cmp-globe.jpg",
+   "source": "out/work/u/cmp-globe.jpg",
+   "kind": "note",
+   "label": "hold review tier, globe: hero left, film right. Globe is now the hero's slightly flattened ellipsoid; night side still flatter than the hero, next fix",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:41:42.518Z",
+   "file": "20261121044142518-frame-hold-review.jpg",
+   "source": "out/work/u/hold-review.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, review tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
   {
    "time": "2026-11-21T04:30:37.340Z",
    "file": "20261121043037340-note-cmp-limb-night3.jpg",
@@ -26,36 +56,6 @@
    "source": "out/work/u/cmp-ul.jpg",
    "kind": "note",
    "label": "hold review tier, upper left: hero left, film right (sky patch v3, traced rings, Miranda)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T04:27:22.038Z",
-   "file": "20261121042722038-frame-hold-review.jpg",
-   "source": "out/work/u/hold-review.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, review tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:12:26.639Z",
-   "file": "20261121041226639-note-sky-hold-preview.jpg",
-   "source": "out/work/u/sky/sky-hold-preview.jpg",
-   "kind": "note",
-   "label": "Sky patch for the hold: planet, moons and ring lines removed, stars kept from the approved image",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T04:12:26.075Z",
-   "file": "20261121041226075-note-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "note",
-   "label": "Hold with the sky patch in (draft tier): approved left, film right",
    "stop": "uranus"
   },
   {
