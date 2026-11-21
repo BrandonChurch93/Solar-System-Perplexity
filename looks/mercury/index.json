@@ -1,56 +1,56 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T08:04:42.523Z",
- "head": "ce594ff19dd8d96178bf193c954d0b0bf369915f",
- "note": "final tier look at 730 and 1007, dive strip 722 to 733; next: blur along the motion inside each sample",
+ "pushed": "2026-11-21T08:32:26.435Z",
+ "head": "371ea3697f9d9632b3b41aa82e11662da8a676cd",
+ "note": "after the merge of main 48a2bfc: frames checked; working on the comb in the fast dive and rise frames (motion smear)",
  "looks": [
   {
-   "time": "2026-11-21T08:04:41.944Z",
-   "file": "20261121080441944-note-f1007-term-a.jpg",
-   "source": "out/work/mercury/f1/f1007-term-a.png",
+   "time": "2026-11-21T08:32:25.888Z",
+   "file": "20261121083225888-note-f730-full-a.jpg",
+   "source": "out/work/mercury/s4/f730-full-a.jpg",
    "kind": "note",
-   "label": "Frame 1007 at the final tier, 2x crop: fine dotted comb left in the smears",
+   "label": "frame 730 review tier with the motion smear take 4 (in work)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T08:04:41.404Z",
-   "file": "20261121080441404-note-term-strip-a.jpg",
-   "source": "out/work/mercury/j6/term-strip-a.jpg",
+   "time": "2026-11-21T08:32:25.310Z",
+   "file": "20261121083225310-note-f1007-t4-x4-a.jpg",
+   "source": "out/work/mercury/s5/f1007-t4-x4-a.png",
    "kind": "note",
-   "label": "Dive 722 to 733 at draft, centre crops: rims at the terminator brighten as patch level 1 blends in (known weak point)",
+   "label": "frame 1007 review tier, crops at 2x: motion smear at strength 1 (rungs) and strength 4 (smooth), in work",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T08:03:05.472Z",
-   "file": "20261121080305472-frame-f733.jpg",
-   "source": "out/work/mercury/j6/f733.png",
+   "time": "2026-11-21T08:30:59.050Z",
+   "file": "20261121083059050-frame-f1007.jpg",
+   "source": "out/work/mercury/s5/f1007.png",
    "kind": "frame",
-   "label": "mercury.dive frame 733, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 733,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:59:50.795Z",
-   "file": "20261121075950795-frame-f1007.jpg",
-   "source": "out/work/mercury/f1/f1007.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1007, final tier",
+   "label": "mercury.rise frame 1007, review tier",
    "stop": "mercury",
    "segment": "mercury.rise",
    "frame": 1007,
-   "tier": "final",
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6d4f67865f286916"
+   "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T07:56:31.470Z",
-   "file": "20261121075631470-compare-compare-mercury-terrain-view.jpg",
+   "time": "2026-11-21T08:29:41.355Z",
+   "file": "20261121082941355-frame-f730.jpg",
+   "source": "out/work/mercury/s4/f730.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 730, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 730,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:23:45.137Z",
+   "file": "20261121082345137-compare-compare-mercury-terrain-view.jpg",
    "source": "out/work/compare/compare-mercury-terrain-view.jpg",
    "kind": "compare",
    "label": "mercury.terrain: approved image left, film frame right, final tier",
@@ -60,11 +60,11 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6d4f67865f286916"
+   "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T07:56:30.148Z",
-   "file": "20261121075630148-still-f00870-16x9-final-full.jpg",
+   "time": "2026-11-21T08:23:44.152Z",
+   "file": "20261121082344152-still-f00870-16x9-final-full.jpg",
    "source": "out/work/stills/f00870-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.terrain frame 870, final tier",
@@ -74,11 +74,11 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6d4f67865f286916"
+   "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T07:55:50.267Z",
-   "file": "20261121075550267-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T08:20:38.761Z",
+   "file": "20261121082038761-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, final tier",
@@ -88,11 +88,11 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6d4f67865f286916"
+   "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T07:55:49.126Z",
-   "file": "20261121075549126-still-f00615-16x9-final-full.jpg",
+   "time": "2026-11-21T08:20:37.756Z",
+   "file": "20261121082037756-still-f00615-16x9-final-full.jpg",
    "source": "out/work/stills/f00615-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, final tier",
@@ -102,7 +102,7 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6d4f67865f286916"
+   "engine": "a3d211c425dc0406"
   }
  ]
 }
