@@ -1,9 +1,45 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T05:21:18.606Z",
- "head": "126c3f48cf2e15d4a4206b696874db3f3e301aa7",
- "note": "Terrain: ground layer of the relief built from the close image with painted margins, judged frame beside the approved image; no towers, no flow, engine Sun still at the right edge",
+ "pushed": "2026-11-21T05:29:36.577Z",
+ "head": "0ac38d495faaa80ef5e542a245f21297e037df8e",
+ "note": "Terrain: ground layer in motion (first, judged, last, rise), Sun placed above the glint; towers, flow and sky patch next",
  "looks": [
+  {
+   "time": "2026-11-21T05:29:35.992Z",
+   "file": "20261121052935992-note-t-four.jpg",
+   "source": "out/work/earth/view/t-four.jpg",
+   "kind": "note",
+   "label": "earth.terrain frames 1920, 2010, 2099 and rise frame 2120: ground layer only, the Sun now sits above the top edge over the glint and enters in the rise; sky still the engine sky",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:29:14.856Z",
+   "file": "20261121052914856-frame-t-2120.jpg",
+   "source": "out/work/earth/still/t-2120.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2120, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2120,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T05:28:56.849Z",
+   "file": "20261121052856849-frame-t-2099.jpg",
+   "source": "out/work/earth/still/t-2099.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2099, draft tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2099,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
   {
    "time": "2026-11-21T05:19:44.087Z",
    "file": "20261121051944087-compare-compare-earth-terrain-view.jpg",
@@ -46,36 +82,6 @@
    "source": "out/work/earth/view/edge-takes.jpg",
    "kind": "note",
    "label": "terrain relief: margin takes for the left, right and bottom edges (aligned)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:01:23.599Z",
-   "file": "20261121050123599-note-margin-t2-small.jpg",
-   "source": "out/work/earth/view/margin-t2-small.jpg",
-   "kind": "note",
-   "label": "terrain relief: margin take 2, aligned to the close image",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:01:06.935Z",
-   "file": "20261121050106935-frame-hold-b5.jpg",
-   "source": "out/work/earth/still/hold-b5.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T04:59:43.906Z",
-   "file": "20261121045943906-note-margin-t1-small.jpg",
-   "source": "out/work/earth/view/margin-t1-small.jpg",
-   "kind": "note",
-   "label": "terrain relief: margin take 1 (close image continued left, right and below)",
    "stop": "earth"
   },
   {
