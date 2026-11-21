@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: open: 6 (uranus), 7 (mercury). The next round is 8. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 6 (uranus), 7 (mercury), 8 (jupiter), 9 (neptune), 10 (sun). The next round is 11. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_78
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -41,15 +41,15 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | in progress | 0 | | | | | | |
+| sun | in progress | 1 |  |  |  |  |  |  |
 | mercury | in progress | 1 |  |  |  |  |  |  |
 | venus | in progress | 0 | | | | | | |
 | earth | in progress | 0 | | | | | | |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
-| jupiter | in progress | 0 | | | | | | |
+| jupiter | in progress | 1 |  |  |  |  |  |  |
 | saturn | in progress | 0 | | | | | | |
 | uranus | in progress | 1 |  |  |  |  |  |  |
-| neptune | in progress | 0 | | | | | | |
+| neptune | in progress | 1 |  |  |  |  |  |  |
 
 ## Workspace record
 
@@ -522,6 +522,9 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 5, Phase 3, mars, look lock round 3 of 5. Started 2026-11-20 UTC on main at 0ee8c76. The last round before the Mars review, by Brandon's change of plan. In it: the dive retimed with the plunge under a cover that holds, a terrain glide of 1.65 camera heights over extended relief, dust held inside the planet's air on the orbit side, a climb out with no roll, and the limb, cap and sky patch fixes made after round 4. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15). G5, G13, G17 green. R1 7, R2 pass, R3 5 (parts 7 and 5), R4 6, R8 pass. No severe issue. Majors: the rise cover reads as a concealed cut and the canyon resolves almost in place as the dive cover thins (R4); the lit limb is a stepped cutout, the night limb is razor sharp, speckle and stepped rings near the limb and on the cap (R1); the storm spiral reads as painted, the pullback shows a smeared surface, a blown-out cap and no soft terminator, and the canyon view has muddy shadows and a flat hot horizon band (R3). The canyon view drew no motion issue. No fix follows: by Brandon's change of plan the build goes to the Mars review with open items 6 to 15. `scorecards/round-005/`.
 - Round 6, Phase 4, uranus, round 1 of 3. Started 2026-11-21 08:19 UTC.
 - Round 7, Phase 4, mercury, round 1 of 3. Started 2026-11-21 08:19 UTC.
+- Round 8, Phase 4, jupiter, round 1 of 3. Started 2026-11-21 08:19 UTC.
+- Round 9, Phase 4, neptune, round 1 of 3. Started 2026-11-21 08:19 UTC.
+- Round 10, Phase 4, sun, round 1 of 3. Started 2026-11-21 08:19 UTC.
 
 ## Final scores
 
