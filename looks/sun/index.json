@@ -1,9 +1,53 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T10:05:53.181Z",
+ "pushed": "2026-11-21T10:33:22.702Z",
  "head": "1f200dac73de2da92ffceb8f1720a94c3685529a",
- "note": "round 10 item 1: the rise rebuilt as one camera path across the cover, flare off to judge the stage",
+ "note": "round 10 fixes: rise rebuilt as one camera path, flare as one gold veil, grade LUT against approved",
  "looks": [
+  {
+   "time": "2026-11-21T10:33:21.599Z",
+   "file": "20261121103321599-note-i4-arch-gr1.jpg",
+   "source": "out/work/sun/i4-arch-gr1.png",
+   "kind": "note",
+   "label": "terrain 90 arch, film with grade LUT pass 1 (left) beside approved (right)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:33:20.788Z",
+   "file": "20261121103320788-note-fl7-b.jpg",
+   "source": "out/work/sun/fl7-b.jpg",
+   "kind": "note",
+   "label": "rise 180 to 228 at draft, one path on both sides of the switch at 216, gold flare veil (work in progress)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:32:57.662Z",
+   "file": "20261121103257662-frame-f00190.jpg",
+   "source": "out/work/seq/176-272/f00190.png",
+   "kind": "frame",
+   "label": "sun.rise frame 190, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 190,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
+  {
+   "time": "2026-11-21T10:32:10.458Z",
+   "file": "20261121103210458-frame-f00176.jpg",
+   "source": "out/work/seq/176-272/f00176.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 176, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 176,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:05:52.557Z",
    "file": "20261121100552557-note-raw1-b.jpg",
@@ -29,50 +73,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 449,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:43:13.449Z",
-   "file": "20261121094313449-note-hook2.jpg",
-   "source": "out/work/sun/hook2.jpg",
-   "kind": "note",
-   "label": "ghost found: hero, 270, 449. A thin strand of the upper left prominence has its far end on the sky card and stays behind",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T09:43:12.842Z",
-   "file": "20261121094312842-note-gh-pair2.jpg",
-   "source": "out/work/sun/gh-pair2.jpg",
-   "kind": "note",
-   "label": "hold 270 and 449 at draft with the corona and sky card rebuilt from hero pixels",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T09:25:50.148Z",
-   "file": "20261121092550148-frame-gh-462.jpg",
-   "source": "out/work/sun/gh-462.png",
-   "kind": "frame",
-   "label": "sun.travel frame 462, draft tier",
-   "stop": "sun",
-   "segment": "sun.travel",
-   "frame": 462,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:04:08.147Z",
-   "file": "20261121090408147-frame-f30-ap2.jpg",
-   "source": "out/work/sun/f30-ap2.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 30, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 30,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
