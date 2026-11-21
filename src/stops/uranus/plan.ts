@@ -6,7 +6,7 @@ import { blendPose, forward, lookAt, mix, ramp, slerpDir, smooth } from '../../d
 import { coverWindow } from '../../director/timeline'
 import deck from './deck.json'
 import fit from './fit.json'
-import { shape, show } from './look'
+import { haze, shape, show } from './look'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0.2, 1, 0], push: -0.03 },
@@ -37,11 +37,12 @@ export const move = {
   diveJoin: 2,
   diveEase: [30, 42] as [number, number],
   diveLook: [2, 16, 32, 47] as [number, number, number, number],
+  riseSwap: -8,
   riseJoin: 0,
   riseAim: [0, 0.95] as [number, number],
   riseEase: [6, 14, 28] as [number, number, number],
-  coverDive: [-13, -3, 2, 18] as [number, number, number, number],
-  coverRise: [-14, -3, 2, 18] as [number, number, number, number],
+  coverDive: [-13, -3, 2, 14] as [number, number, number, number],
+  coverRise: [-14, -3, 1, 11] as [number, number, number, number],
 }
 
 const X = new THREE.Vector3(1, 0, 0)
@@ -57,6 +58,12 @@ export function shaped(p: THREE.Vector3): THREE.Vector3 {
   const v = p.clone().applyQuaternion(AXIS_BACK)
   v.set(v.x * shape.polar, v.y * shape.equator, v.z * shape.equator)
   return v.applyQuaternion(AXIS).add(SHAPE_CENTRE)
+}
+
+function round(p: THREE.Vector3): THREE.Vector3 {
+  const v = p.clone().sub(SHAPE_CENTRE).applyQuaternion(AXIS_BACK)
+  v.set(v.x / shape.polar, v.y / shape.equator, v.z / shape.equator)
+  return v.applyQuaternion(AXIS)
 }
 
 function hide(alpha: number): number {
@@ -106,12 +113,16 @@ export class UranusPlan extends StopPlan {
     }
   }
 
+  swap(seg: Segment): number {
+    return this.coverCenter(seg) + (seg.kind === 'rise' ? move.riseSwap : 0) / config.fps
+  }
+
   coverAmount(seg: Segment, time: number): number {
     if (!coverWindow(seg)) return 0
-    const f = (time - this.coverCenter(seg)) * config.fps
+    const f = (time - this.swap(seg)) * config.fps
     if (!show.cover) return f === 0 ? 1e-9 : 0
     const k = seg.kind === 'dive' ? move.coverDive : move.coverRise
-    return hide(Math.min(smooth(ramp(k[0], k[1], f)), 1 - smooth(ramp(k[2], k[3], f))))
+    return Math.min(hide(smooth(ramp(k[0], k[1], f))), 1 - smooth(ramp(k[2], k[3], f)))
   }
 
   deckFrame(time: number): THREE.Quaternion {
@@ -173,7 +184,7 @@ export class UranusPlan extends StopPlan {
   rise(time: number): OrbitShot {
     const seg = this.seg.rise
     const c = this.coverCenter(seg)
-    if (time < c) return { pose: this.exitPath(time), view: 'terrain' }
+    if (time < this.swap(seg)) return { pose: this.exitPath(time), view: 'terrain' }
     const m = this.mapped(this.exitPath(time), time)
     const end = this.after(seg.end)
     const from = c + move.riseJoin / config.fps
@@ -199,15 +210,30 @@ export class UranusPlan extends StopPlan {
   }
 
   horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
-    if (view === 'orbit') return super.horizon(view, local)
-    const to = CENTRE.clone().sub(local.position)
-    const dist = to.length()
-    const alpha = Math.asin(Math.min(deck.radius / dist, 1))
-    const nadir = to.divideScalar(dist).applyQuaternion(local.quaternion.clone().invert())
-    const theta = Math.acos(Math.min(Math.max(-nadir.z, -1), 1))
-    const len = Math.hypot(nadir.x, nadir.y)
-    const normal: [number, number] = len > 1e-5 ? [-nadir.x / len, -nadir.y / len] : [0, 1]
-    return { normal, offset: Math.tan(Math.min(Math.max(theta - alpha, -1.4), 1.4)), soft: 0.22 }
+    const inward = view === 'orbit' ? round : (p: THREE.Vector3): THREE.Vector3 => p.clone().sub(CENTRE).multiplyScalar(UNIT)
+    const outward = view === 'orbit' ? shaped : (p: THREE.Vector3): THREE.Vector3 => p.clone().multiplyScalar(deck.radius).add(CENTRE)
+    const eye = inward(local.position)
+    const dist = Math.max(eye.length(), 1 + 1e-6)
+    const n = eye.clone().divideScalar(eye.length())
+    const ahead = inward(local.position.clone().add(forward(local.quaternion))).sub(eye)
+    const e1 = ahead.addScaledVector(n, -ahead.dot(n)).normalize()
+    const e2 = new THREE.Vector3().crossVectors(n, e1)
+    const back = local.quaternion.clone().invert()
+    const span = Math.min(Math.atan(haze.chord * Math.tan(rad(local.vfov) / 2) * this.fit.aspect) * dist, 1.2)
+    const seen = (phi: number, lift: number): THREE.Vector2 | null => {
+      const t = n.clone().multiplyScalar(1 / dist).addScaledVector(e1, Math.sqrt(1 - 1 / (dist * dist)) * Math.cos(phi)).addScaledVector(e2, Math.sqrt(1 - 1 / (dist * dist)) * Math.sin(phi))
+      const c = outward(t.multiplyScalar(lift)).sub(local.position).applyQuaternion(back)
+      return c.z < -1e-6 ? new THREE.Vector2(c.x / -c.z, c.y / -c.z) : null
+    }
+    const a = seen(-span, 1)
+    const b = seen(span, 1)
+    const sky = seen(0, 1.01)
+    const mid = seen(0, 1)
+    if (!a || !b || !sky || !mid) return { normal: [0, 1], offset: 1.4, soft: 0.22 }
+    const along = b.clone().sub(a).normalize()
+    const normal = new THREE.Vector2(-along.y, along.x)
+    if (sky.clone().sub(mid).dot(normal) < 0) normal.negate()
+    return { normal: [normal.x, normal.y], offset: -a.dot(normal) + haze.line, soft: 0.22 }
   }
 }
 

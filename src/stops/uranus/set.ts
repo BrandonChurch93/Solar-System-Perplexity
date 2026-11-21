@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
+import { config } from '../../config'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { ramp, smooth } from '../../director/rig'
 import { Deck } from './deck'
@@ -7,6 +8,7 @@ import deckJson from './deck.json'
 import deckRingsJson from './deck-rings.json'
 import { Globe } from './globe'
 import { Halo } from './halo'
+import { Mist } from './mist'
 import * as look from './look'
 import { Moon } from './moons'
 import patchJson from './patches.json'
@@ -105,6 +107,14 @@ export const createSet: SetFactory = async (ctx) => {
   arcs.mesh.scale.setScalar(deckRingsJson.scale)
   arcs.mesh.renderOrder = 8
   terrain.add(arcs.mesh)
+  const ball = new THREE.Group()
+  ball.position.fromArray(deckJson.centre)
+  ball.scale.setScalar(deckJson.radius)
+  terrain.add(ball)
+  const mist = new Mist(look.mist)
+  ball.add(mist.mesh)
+  const air = new Mist(look.air)
+  shape.add(air.mesh)
   const inverse = new THREE.Matrix4()
   const eye = new THREE.Vector3()
   const frameInverse = plan.terrainFrame.clone().invert()
@@ -117,12 +127,12 @@ export const createSet: SetFactory = async (ctx) => {
     world.updateMatrix()
     eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
-  const ground = (time: number, sunDir: THREE.Vector3, gain: number, vignette: number, aspect: number): void => {
+  const ground = (time: number, sunDir: THREE.Vector3, gain: number, lines: number, vignette: number, aspect: number): void => {
     deck.update(eye, time - terrainMid, gain, vignette, aspect, 1)
     skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
     arcs.mesh.quaternion.copy(skyTurn)
     arcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn)
-    arcs.update(sunDir, gain)
+    arcs.update(sunDir, gain * lines)
     arcs.mesh.visible = look.show.rings
     deck.group.visible = look.show.deck
   }
@@ -149,8 +159,16 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       if (!inOrbit) {
         place()
-        const clear = 1 - look.haze.dim * smooth(ramp(look.haze.span[0], look.haze.span[1], shot.cover.amount))
-        ground(state.time, shot.sun.dir, gain * clear, shot.post.vignette, aspect)
+        const seg = shot.segment
+        const mine = seg.stop === plan.id
+        const diving = mine && seg.kind === 'dive'
+        const rising = mine && seg.kind === 'rise'
+        const since = diving || rising ? (state.time - plan.swap(seg)) * config.fps : 0
+        const thick = diving ? 1 - smooth(ramp(look.clearing.mist[0], look.clearing.mist[1], since)) : rising ? smooth(ramp(look.closing.mist[0], look.closing.mist[1], since)) : 0
+        const lines = diving ? smooth(ramp(look.clearing.arcs[0], look.clearing.arcs[1], since)) : rising ? 1 - smooth(ramp(look.closing.arcs[0], look.closing.arcs[1], since)) : 1
+        ground(state.time, shot.sun.dir, gain, lines, shot.post.vignette, aspect)
+        const rush = shot.cover.rush
+        mist.update(look.show.cover && rush ? thick : 0, shot.sun.dir, rush ? rush.focus : [0, 0], rush ? rush.phase : 0, rush ? rush.billow : [1, 1, 1], gain)
         return
       }
       const kind = shot.segment.kind
@@ -192,6 +210,9 @@ export const createSet: SetFactory = async (ctx) => {
       veil.mesh.visible = visible && look.show.rings && look.show.sky
       for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
+      const rush = shot.cover.rush
+      const thick = mine && kind === 'rise' && rush ? 1 - smooth(ramp(look.lifting.mist[0], look.lifting.mist[1], (state.time - plan.swap(shot.segment)) * config.fps)) : 0
+      air.update(look.show.cover ? thick : 0, sun, rush ? rush.focus : [0, 0], rush ? rush.phase : 0, rush ? rush.billow : [1, 1, 1], gain)
     },
     dispose: () => {
       globe.dispose()
@@ -205,6 +226,8 @@ export const createSet: SetFactory = async (ctx) => {
       for (const m of moons) m.body.dispose()
       far.dispose()
       deck.dispose()
+      mist.dispose()
+      air.dispose()
       arcs.dispose()
       arcGeo.dispose()
     },

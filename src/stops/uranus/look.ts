@@ -1,4 +1,5 @@
 import type { DeckLook } from './deck'
+import type { MistLook } from './mist'
 import type { RingLook } from './rings'
 import type { VeilLook } from './veil'
 
@@ -104,4 +105,32 @@ export const deck: DeckLook = {
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
-export const haze = { dim: 0.9, span: [0.645, 0.86] as [number, number] }
+export const haze = { line: 0.07, chord: 0.6 }
+
+export const mist: MistLook = {
+  glow: [0.2, 0.58, 0.7],
+  deep: [0.03, 0.12, 0.17],
+  high: [0.012, 0.04, 0.05],
+  up: [0.0257, 0.087],
+  down: [0.14, 0.14],
+  peak: 0.017,
+  sun: [0.12, 0.96],
+  wisp: [0.35, 0.3],
+}
+
+export const air: MistLook = {
+  glow: [0.2, 0.5, 0.58],
+  deep: [0.035, 0.15, 0.2],
+  high: [0.012, 0.04, 0.05],
+  up: [0.0257, 0.087],
+  down: [0.14, 0.14],
+  peak: 0.017,
+  sun: [0.12, 0.96],
+  wisp: [0.35, 0.3],
+}
+
+export const clearing = { mist: [4, 30] as [number, number], arcs: [12, 30] as [number, number] }
+
+export const closing = { mist: [-22, -3] as [number, number], arcs: [-22, -8] as [number, number] }
+
+export const lifting = { mist: [1, 13] as [number, number] }
