@@ -1,9 +1,68 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T15:54:55.072Z",
- "head": "76073c07b273055092f45b6658ac5769bf6f1f62",
- "note": "round 3: terrain shell, 5006 calm, ringlets, Triton",
+ "pushed": "2026-11-21T16:32:54.851Z",
+ "head": "26882bb414ebfd7f1fbca01207303f5643a658d5",
+ "note": "round 3: rise cover as a join",
  "looks": [
+  {
+   "time": "2026-11-21T16:32:54.336Z",
+   "file": "20261121163254336-note-r4983-open.jpg",
+   "source": "out/work/nep/r3/r4983-open.jpg",
+   "kind": "note",
+   "label": "4983 review, 123 samples: globe through the thinning cover, no comb",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T16:32:53.762Z",
+   "file": "20261121163253762-note-rise-cover-draft-open.jpg",
+   "source": "out/work/nep/r3/rise-cover-draft-open.png",
+   "kind": "note",
+   "label": "rise cover 4975 to 4986 draft: the cover fills the frame at the switch, the globe comes out of it",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T16:32:30.199Z",
+   "file": "20261121163230199-sheet-neptune.rise-cover-16x9-draft.jpg",
+   "source": "out/work/sheets/neptune.rise-cover-16x9-draft.png",
+   "kind": "sheet",
+   "label": "Contact sheet neptune.rise, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "first": 4975,
+   "last": 4986,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:31:54.620Z",
+   "file": "20261121163154620-frame-f04975-draft.jpg",
+   "source": "out/work/sheets/.frames-6r4CFz/f04975-draft.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 4975, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4975,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T15:55:37.191Z",
+   "file": "20261121155537191-still-f04605-16x9-review-full.jpg",
+   "source": "out/work/stills/f04605-16x9-review-full.png",
+   "kind": "still",
+   "label": "neptune.hold frame 4605, review tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T15:54:50.826Z",
    "file": "20261121155450826-note-d5200.jpg",
@@ -21,38 +80,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T15:54:49.724Z",
-   "file": "20261121155449724-note-triton5006-bump.jpg",
-   "source": "out/work/nep/r3/triton5006-bump.png",
-   "kind": "note",
-   "label": "5006 Triton x4, bump 0.008 left, 0.018 right (kept 0.012)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T15:54:49.178Z",
-   "file": "20261121155449178-note-ring5006-cmp.jpg",
-   "source": "out/work/nep/r3/ring5006-cmp.jpg",
-   "kind": "note",
-   "label": "5006 ring crop, before above, ringlets below",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T15:54:48.664Z",
-   "file": "20261121155448664-note-r5006-c.jpg",
-   "source": "out/work/nep/r3/r5006-c.jpg",
-   "kind": "note",
-   "label": "5006 review: settle 4.75, ringlet lanes, Triton night side at sky level",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T15:54:48.130Z",
-   "file": "20261121155448130-note-terrain-cmp.jpg",
-   "source": "out/work/nep/r3/terrain-cmp.png",
-   "kind": "note",
-   "label": "terrain sheet, cloud shell 0.07 above, 0.30 below: ridge slides over the deck",
-   "stop": "neptune"
-  },
-  {
    "time": "2026-11-21T15:42:39.912Z",
    "file": "20261121154239912-still-f04860-16x9-review-full.jpg",
    "source": "out/work/stills/f04860-16x9-review-full.png",
@@ -65,20 +92,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T15:11:35.995Z",
-   "file": "20261121151135995-still-f04605-16x9-review-full.jpg",
-   "source": "out/work/stills/f04605-16x9-review-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, review tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   }
  ]
 }
