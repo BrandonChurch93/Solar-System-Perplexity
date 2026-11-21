@@ -53,12 +53,13 @@ export const moons = {
   heightSize: { full: [1536, 768], web: [768, 384] } as Record<'full' | 'web', [number, number]>,
   bump: 0.07,
   wrap: 0.25,
+  knee: [0.6, 1.6] as [number, number],
   bounce: [0.004, 0.012, 0.014] as Rgb,
   spinDegPerSecond: 1.5,
   bodies: {
-    miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [6.2, 5.4, 4.5] as Rgb, ambient: [0.012, 0.026, 0.034] as Rgb },
-    ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.45, 1.33, 1.28] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb },
-  } as Record<string, { light: Rgb; sun: Rgb; ambient: Rgb }>,
+    miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [1.8, 1.67, 1.53] as Rgb, ambient: [0.012, 0.026, 0.034] as Rgb, rim: [3.8, 2] as [number, number], seeliger: 0.6 },
+    ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.43, 1.33, 1.3] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb, rim: [0, 2] as [number, number], seeliger: 0 },
+  } as Record<string, { light: Rgb; sun: Rgb; ambient: Rgb; rim: [number, number]; seeliger: number }>,
 }
 
 export const deck: DeckLook = {

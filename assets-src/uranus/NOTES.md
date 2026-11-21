@@ -248,3 +248,28 @@ Branch head 11884d7 (main 558e3a5 merged, engine batch 7: dust only). Dive and r
 2. Ring residue in the hold sky patch (straighten the unwrap with the traced tracks, see above).
 3. Moons: soft knee so they do not read as white discs from the rise side (the hold must not change).
 4. Cover clearing frame 4167 (patchy at the top for one frame).
+
+## State at 08:35 UTC (read this first after a compaction)
+
+READY sent at b87454f (07:51). Round 6 is running from the branch head; the scorecard path arrives when it closes. `/root`: keep working the weak points, worst first; push only finished, green steps.
+
+### Merge of main 48a2bfc (7517b04)
+- Engine batches 8 and 9 (terrain shield, trim of discarded haze shell triangles) and all eight stop folders. `npm run -s aim -- --stop uranus` prints orbit `[145.41987, -22.38676, 20.05787]` with Saturn on main (the pin in `plan.ts` is ignored and matches).
+- Review frames before and after: 4035 max 17 levels on one pixel (else 1), 4137 max 3, 4290 max 1, 4436 only the sky changed (Neptune's now). No opt out of shield or trim needed.
+
+### Moons (weak point 2, done)
+- `moons.ts`: `mu = dot(n, v)`, `back = 1 - max(dot(v, sun), 0)`, `lit = mix(mu0, mu0 / (mu0 + mu + 0.08), seeliger x back) x (1 + rim.x x back x pow(1 - mu, rim.y))`, then a soft knee on luma (`look.moons.knee [0.6, 1.6]`).
+- `look.moons`: miranda `sun [1.8, 1.67, 1.53]`, `rim [3.8, 2]`, `seeliger 0.6` (was `[6.2, 5.4, 4.5]`, Lambert, clipped); ariel `sun [1.43, 1.33, 1.3]`, `rim [0, 2]`, `seeliger 0` (a rim on Ariel gave a jagged bright outline at its size).
+- `python3 assets-src/uranus/check/moons.py STILL` prints lit pixels, mean, p25, p50, p75, p90, p99 and tint for hero and film. At 4035 review: Miranda film 0.710, 0.565, 0.731, 0.854, 0.924 (mean, p25, p50, p75, p90) against hero 0.693, 0.537, 0.71, 0.862, 0.926 (before: mean 0.797, p50 0.866). Ariel film 0.637, 0.521, 0.66, 0.741, 0.813 against hero 0.629, 0.495, 0.638, 0.768, 0.825.
+- Rise 4436: Miranda is a shaded grey white sphere, no clipped disc (`out/work/u/r1/m6-rise-moons.jpg`).
+
+### Ring residue in the hold sky patch (weak point 1, not solved, shipped patch unchanged)
+- The shipped `sky-hold.webp` is still the rim only patch of READY. `sky/patch.py` and `RECIPE.md` in the working tree hold experiment g and are not committed (diff saved in `out/work/u/sky3/patch-g.diff`).
+- e: openings across radius of 25, 300 and 700 rows plus groove fill. Rings gone, but the Milky Way inside the ring zone right of the globe goes flat against the hero (`out/work/u/r1/c/cmp-right.jpg`). Rejected.
+- f: mask by share of sky. g: median along the ring over 40 degrees at quarter scale, neutral colour min. Both keep the Milky Way, both let faint arcs back in.
+- Ring levels measured: ring haze 0.003 to 0.02 scene units over sky 0.02; Milky Way core right of the globe 0.07 to 0.12. The two overlap in level, so only the shape along the ring separates them.
+- Straightening fit (`out/work/u/sky3/straight.py`, tracks in `out/work/u/rings2/tracks.json`, `r` there is in rows of 0.0005 R): Fourier model of the ring wander against angle and radius; rms 17.5 rows before, 14.3 (K 1), 10.5 (K 2), 9.4 (K 4), 9.2 (K 6). A global model leaves about 9 rows, too coarse for lines 2 to 4 rows wide: straighten per track instead (offset field interpolated between neighbouring tracks) or drop it.
+
+### Sheets seen at review (08:00)
+- Hold steady; terrain shows parallax of the deck against the ring arcs; dive 4142 ring ribbon fine; 4167 cover clearing patchy and blocky at the top for one frame; rise rings faint.
+- A faint curved line on the deck at lower left and right at 4175 and 4200: to inspect (plate or far map edge).

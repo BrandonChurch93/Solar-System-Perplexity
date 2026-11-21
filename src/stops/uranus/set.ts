@@ -68,7 +68,7 @@ export const createSet: SetFactory = async (ctx) => {
     const body = new Moon({
       map: await ctx.texture(base + m.id + '-color.jpg', { srgb: true, anisotropy: 16, repeat: true }),
       height: ctx.floatTexture(await heights(ctx, base + m.id + '-height.bin', moonSize[0], moonSize[1]), moonSize[0], moonSize[1], true),
-      heightWidth: moonSize[0], bump: look.moons.bump, wrap: look.moons.wrap, sun: tone.sun, ambient: tone.ambient, bounce: look.moons.bounce,
+      heightWidth: moonSize[0], bump: look.moons.bump, wrap: look.moons.wrap, seeliger: tone.seeliger, knee: look.moons.knee, rim: tone.rim, sun: tone.sun, ambient: tone.ambient, bounce: look.moons.bounce,
     })
     body.mesh.scale.setScalar(m.radius)
     orbit.add(body.mesh)

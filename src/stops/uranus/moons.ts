@@ -13,6 +13,9 @@ uniform float uGrad;
 uniform float uStep;
 uniform float uBump;
 uniform float uWrap;
+uniform float uSeeliger;
+uniform vec2 uKnee;
+uniform vec2 uRim;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -52,7 +55,16 @@ void main() {
   float ndl = mix(dot(np, uSunW), base, uWrap);
   float soft = smoothstep(-0.06, 0.12, base);
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
-  vec3 col = albedo * (uSun * max(ndl, 0.0) * soft + uAmbient + uBounce * max(dot(n, uBounceW), 0.0));
+  float mu0 = max(ndl, 0.0);
+  vec3 v = normalize(cameraPosition - vPos);
+  float mu = max(dot(n, v), 0.0);
+  float back = 1.0 - max(dot(v, uSunW), 0.0);
+  float lit = mix(mu0, mu0 / (mu0 + mu + 0.08), uSeeliger * back) * (1.0 + uRim.x * back * pow(1.0 - mu, uRim.y));
+  vec3 col = albedo * (uSun * lit * soft + uAmbient + uBounce * max(dot(n, uBounceW), 0.0));
+  float y = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  float over = max(y - uKnee.x, 0.0);
+  float span = uKnee.y - uKnee.x;
+  col *= (min(y, uKnee.x) + span * (1.0 - exp(-over / span))) / max(y, 1e-5);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
@@ -64,6 +76,9 @@ export interface MoonOptions {
   heightWidth: number
   bump: number
   wrap: number
+  seeliger: number
+  knee: [number, number]
+  rim: [number, number]
   sun: [number, number, number]
   ambient: [number, number, number]
   bounce: [number, number, number]
@@ -82,7 +97,7 @@ export class Moon {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: o.map }, uHeight: { value: o.height }, uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
-        uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uWrap: { value: o.wrap }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uWrap: { value: o.wrap }, uSeeliger: { value: o.seeliger }, uKnee: { value: new THREE.Vector2().fromArray(o.knee) }, uRim: { value: new THREE.Vector2().fromArray(o.rim) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) },
         uBounce: { value: new THREE.Vector3().fromArray(o.bounce) }, uBounceW: { value: new THREE.Vector3(0, 0, 1) }, uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
