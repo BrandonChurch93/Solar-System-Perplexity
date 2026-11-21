@@ -133,16 +133,25 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
 | far1 | c | 2782 | 0.60, 0.20 | 11 | 0.30 | -0.05 | 0 | 2769 to 2796 | 0.5 percent | Jupiter, 603 px |
 | hero | a | 2782 | 0.36, 0.47 | 3.5 | 0.30 | 0.2 | 0.1 | 2770 to 2799 | 6.2 percent | Jupiter, 565 px |
 | near | b | 2782 | 0.86, 0.15 | 1.05 | 0.16 | -1.6 | 0.3 | 2774 to 2792 | 15.8 percent | Jupiter, 357 px |
-| far2 | d | 2800 | 0.08, 0.62 | 15 | 0.36 | -0.1 | 0 | 2778 to 2802 | 0.4 percent | Jupiter, 64 px at 2787 |
+| far2 | d | 2800 | 0.08, 0.69 | 15 | 0.36 | -0.1 | 0 | 2779 to 2802 | 0.4 percent | Jupiter, 131 px at 2788 |
 
   - Rocks are in frame from 2754 to 2802 (before: 2767 to 2801). Before 2754 the camera turns less than a degree per frame with Mars filling the left half, after 2802 the pan dies and Jupiter fills the middle; a rock there could neither enter nor leave by the pan.
   - hero hold 0.25 made it graze the bottom edge twice (planner: NOT CONTIGUOUS), hold 0.3 kept it in the corner over the grown Jupiter until 2802, hold 0.55 never left. 0.2 it is.
   - near: distance 1.2 with radius 0.135 read as a second hero. 1.05 with 0.16 gives r 330 px at 2782 against 174 of the hero, cut by the top edge, 19 frames in frame.
-  - aperture 22 to 16: circle of confusion of the near rock 11 px at 2782, craters still read.
+  - aperture 22 to 16 to 12: circle of confusion of the near rock 8 px at 2782 (11 px at 16 was mushy at native size in the final still).
+  - far2 first passed 64 px from Jupiter's point at 2787 (`at` 0.08, 0.62); moved to 0.08, 0.69, now 131 px at 2788.
 - Dust order: `Belt.cover(shot)` gives the belt layer and one sphere per drawn rock; with `assets-src/belt/dust.patch` applied the dust hides motes behind a rock by the layer's alpha. Described in `ENGINE-REQUESTS.md`. Not committed (shared files); the old `engine.patch` is removed because the hook is on main.
 - Belt test updated to the new model (five tests: count, closed form, one visit inside the segment, hero plus two in the judged frame, off the discs of Mars and Jupiter, clear depth over 0.3, share under a fifth). `npx vitest run` green (the default reporter crashes on this Node with `Map.groupBy`; use `--reporter=tap`).
 - `assets-src/belt/sheet.ts --tier T --name N [--step 3]` renders every third frame of the segment in one browser session and builds a 5 by 5 sheet with `sheet.py`.
 - Draft cost in one session: 1.2 to 2 s per frame without rocks, 4 to 6 s with the hero and the near rock in frame.
+
+- 08:02 pushed bed0727 (model, planner, sheet tool, dust patch file) and looks (draft sheet `d2`, draft 2781).
+- 08:06 review sheet `out/work/belt/r1/sheet.jpg` (every third frame, 10 to 17 s per frame in one session, first frame 32 s): far3 with Mars, then hero, near, far1, far2, last rock out at 2802, Jupiter alone from 2805. Step 1 milestone sent.
+- 08:07 final 2782 at native size: hero crisp with a readable dark side; near rock at aperture 16 soft and flat lit (its lit face toward the lens, few shadows). Six tilts of the near rock at draft with aperture 12 (`out/work/belt/p5/nt.jpg`, order: [-80,10,200], [10,40,0], [100,-50,30], [-30,150,70], [200,80,-60], [60,-120,140]). Kept [10,40,0]: the terminator crosses the face, a ringed crater sits in the middle, the dark side is a blue grey that stands off the sky. `fill` of the near rock 2.2 to 2.0.
+- 08:15 finals of 2782, 2772, 2796 with the dust patch applied (`out/work/belt/p5/f*.png`, 56 to 63 s each), looked at whole and in four native quarters each:
+  - 2782: hero left of the middle, near rock top right cut by the top edge (soft from focus plus a short vertical smear, craters and rim read, dark side blue grey), far1 between them, far2 lower right, Jupiter's point at (1306,947) clear, 210 px left of far2.
+  - 2772: fastest pan. far3 leaving top left, far1 right, the dark top of the hero just entering at the bottom edge. Far rocks do not streak (smear 0, like the stars); the dust does.
+  - 2796: Jupiter r 62 px in the middle, far2 lower left with a lit cratered face, the hero leaving through the top left corner.
 
 ## Still weak
 - Rocks are in frame only from 2767 to 2801 (hero 2769 to 2798, near 2770 to 2787, far1 2767 to 2801, far2 2774 to 2791). No rock while Mars is in frame, none over the grown Jupiter.
