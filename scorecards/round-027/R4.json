@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 1870 to 1879",
+   "what": "the blurred full Earth, moon, and continents are replaced by a canted cloud limb; scale, roll, and exposure do not carry, and the arrival is not a blur of the same view",
+   "fix": "bridge those nine frames with one eased dive so each frame is a blurred continuation, with the horizon rolling continuously and exposure carrying"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2129 to 2132, top horizon",
+   "what": "the rise stalls, then the horizon leaps about 25 pixels and leaves in one frame while the top flips from black space to white",
+   "fix": "ease the speed up over several frames so the horizon travels off in one continuous blur and exposure carries"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 1884 to 1890, horizon",
+   "what": "the roll stops within a frame and the plate stays locked while the fog thins, so near cloud and horizon no longer move against each other",
+   "fix": "ease the stop and keep a slow move through the clouds instead of dissolving a still plate"
+  }
+ ]
+}
