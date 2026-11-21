@@ -1,90 +1,96 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T11:20:37.701Z",
- "head": "cd3825503440fe0246f235f46c2c83ec3d02b2c2",
- "note": "Round 2 build: batch 12 merged, engine sky flag in place of the stop's own lock, terrain sky card dims only its smooth floor near the limb, ground limb band ungraded (no dark line at the limb)",
+ "pushed": "2026-11-21T11:46:04.618Z",
+ "head": "e6cbf026fb049492344c0d588543bd1e085ff0c7",
+ "note": "Round 2 build: frames 0, 60, 90 at final after the sky card and loops layer rebuild, limb crops against approved, leaving strip; measures running",
  "looks": [
   {
-   "time": "2026-11-21T11:20:37.142Z",
-   "file": "20261121112037142-note-i14-specks.jpg",
-   "source": "out/work/sun/i14-specks.png",
+   "time": "2026-11-21T11:46:03.547Z",
+   "file": "20261121114603547-note-leave3.jpg",
+   "source": "out/work/sun/leave3.jpg",
    "kind": "note",
-   "label": "Frame 90 limb, approved left, film right: stars back near the limb, two dark specks left where approved stars sat in the haze",
+   "label": "Leaving at draft, frames 444 to 488 after the merges: no jump at 449 to 450, the Sun leaves over the top by 472",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T11:20:36.558Z",
-   "file": "20261121112036558-note-i8-247-stars.jpg",
-   "source": "out/work/sun/i8-247-stars.png",
-   "kind": "note",
-   "label": "Frame 247 at review, four corners at native size: stars are points",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:20:36.049Z",
-   "file": "20261121112036049-note-i8-247-full.jpg",
-   "source": "out/work/sun/i8-247-full.jpg",
-   "kind": "note",
-   "label": "Frame 247 at review with the engine sky clock flag",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:20:35.510Z",
-   "file": "20261121112035510-note-i10-f0.jpg",
-   "source": "out/work/sun/i10-f0.jpg",
-   "kind": "note",
-   "label": "Frame 0 at final, new terrain sky card",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:20:34.982Z",
-   "file": "20261121112034982-note-i13-rise-a.jpg",
-   "source": "out/work/sun/i13-rise-a.jpg",
-   "kind": "note",
-   "label": "Rise 196 to 236 at draft on main with batch 12: one climb and pull back through the gold veil",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:17:32.153Z",
-   "file": "20261121111732153-frame-f00262.jpg",
-   "source": "out/work/seq/176-272/f00262.png",
-   "kind": "frame",
-   "label": "sun.rise frame 262, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 262,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
-  },
-  {
-   "time": "2026-11-21T11:13:40.774Z",
-   "file": "20261121111340774-frame-f00176.jpg",
-   "source": "out/work/seq/176-272/f00176.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 176, draft tier",
+   "time": "2026-11-21T11:45:02.140Z",
+   "file": "20261121114502140-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
    "stop": "sun",
    "segment": "sun.terrain",
-   "frame": 176,
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T11:44:22.205Z",
+   "file": "20261121114422205-frame-f00486.jpg",
+   "source": "out/work/seq/440-490/f00486.png",
+   "kind": "frame",
+   "label": "sun.travel frame 486, draft tier",
+   "stop": "sun",
+   "segment": "sun.travel",
+   "frame": 486,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:07:43.310Z",
-   "file": "20261121110743310-frame-s360.jpg",
-   "source": "out/work/sun/r2/s360.png",
+   "time": "2026-11-21T11:43:02.392Z",
+   "file": "20261121114302392-note-i26-r9-f90.jpg",
+   "source": "out/work/sun/i26-r9-f90.jpg",
+   "kind": "note",
+   "label": "Frame 90 at final (judged terrain frame)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T11:43:01.496Z",
+   "file": "20261121114301496-note-i23-r7-f60.jpg",
+   "source": "out/work/sun/i23-r7-f60.jpg",
+   "kind": "note",
+   "label": "Frame 60 at final after the sky card and loops layer rebuild",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T11:43:00.845Z",
+   "file": "20261121114300845-note-i23-r7-f0.jpg",
+   "source": "out/work/sun/i23-r7-f0.jpg",
+   "kind": "note",
+   "label": "Frame 0 at final after the sky card and loops layer rebuild",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T11:42:50.210Z",
+   "file": "20261121114250210-frame-f00440.jpg",
+   "source": "out/work/seq/440-490/f00440.png",
    "kind": "frame",
-   "label": "sun.hold frame 360, review tier",
+   "label": "sun.hold frame 440, draft tier",
    "stop": "sun",
    "segment": "sun.hold",
-   "frame": 360,
+   "frame": 440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:31:11.392Z",
+   "file": "20261121113111392-frame-base90.jpg",
+   "source": "out/work/sun/base90.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
