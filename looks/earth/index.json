@@ -1,9 +1,47 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T14:27:40.561Z",
- "head": "b97ac293ce2c9cb29c5d6b5ea5685f4dc602ff4f",
- "note": "dive: review stills of the current plunge (1874 to 1878), candidate E1 with a steady approach and the plunge under the full cover in render",
+ "pushed": "2026-11-21T14:43:56.874Z",
+ "head": "2092c1e91bc2a6ea224a1681e036b5f5c82bacb3",
+ "note": "Dive candidate E1 at review beside the round 19 head (1876, 1878); landing frames and rise fast frames are rendering",
  "looks": [
+  {
+   "time": "2026-11-21T14:43:56.268Z",
+   "file": "20261121144356268-note-cmp-1878-head-e1.jpg",
+   "source": "out/work/earth/p46/cmp-1878-head-e1.jpg",
+   "kind": "note",
+   "label": "Dive 1878 at review: round 19 head above (cover 0.28, 81 px blur), candidate E1 below (cover 0.79, plunge inside the deck)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T14:43:55.639Z",
+   "file": "20261121144355639-note-cmp-1876-head-e1.jpg",
+   "source": "out/work/earth/p46/cmp-1876-head-e1.jpg",
+   "kind": "note",
+   "label": "Dive 1876 at review: round 19 head above (77 px blur, no cover), candidate E1 below (38 px, steady approach)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T14:43:35.351Z",
+   "file": "20261121144335351-frame-r-1878.jpg",
+   "source": "out/work/earth/p46/r-1878.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1878, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1878,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T14:36:13.135Z",
+   "file": "20261121143613135-note-strip-1874-1889.jpg",
+   "source": "out/work/earth/p46/strip-1874-1889.jpg",
+   "kind": "note",
+   "label": "dive candidate E1 at draft, every frame 1874 to 1889: steady approach, plunge under the full cover",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-21T14:27:19.789Z",
    "file": "20261121142719789-note-r-1878.jpg",
@@ -18,36 +56,6 @@
    "source": "out/work/earth/p45/r-1876.png",
    "kind": "note",
    "label": "dive 1876 at review on the round 19 head (plunge ahead of the cover)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:27:18.500Z",
-   "file": "20261121142718500-note-r-1874.jpg",
-   "source": "out/work/earth/p45/r-1874.png",
-   "kind": "note",
-   "label": "dive 1874 at review on the round 19 head (plunge ahead of the cover)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:26:38.448Z",
-   "file": "20261121142638448-frame-r-1878.jpg",
-   "source": "out/work/earth/p45/r-1878.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1878, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1878,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T14:01:36.532Z",
-   "file": "20261121140136532-note-t1.jpg",
-   "source": "out/work/earth/detail/t1.png",
-   "kind": "note",
-   "label": "detail take 1, full hero (modest restyle, not used)",
    "stop": "earth"
   },
   {
@@ -77,20 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T12:24:54.832Z",
-   "file": "20261121122454832-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   }
  ]
 }
