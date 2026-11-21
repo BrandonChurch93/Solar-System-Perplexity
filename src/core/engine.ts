@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
-import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
+import { OPTIONAL_EXTENSIONS, REQUIRED_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
@@ -64,6 +64,8 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  private asked = 0
+  private lastFrame: { frame: number; tier: string } | null = null
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -89,6 +91,29 @@ export class Engine {
     this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(format.width, format.height)
     this.applySize()
+    this.canvas.addEventListener('webglcontextlost', (e) => e.preventDefault())
+    this.canvas.addEventListener('webglcontextrestored', () => void this.revive().catch((e: unknown) => console.error(e)))
+  }
+
+  private async revive(): Promise<void> {
+    const gl = this.renderer.getContext()
+    for (const e of [...REQUIRED_EXTENSIONS, ...OPTIONAL_EXTENSIONS]) gl.getExtension(e)
+    this.renderer.setClearColor(0x000000, 0)
+    const ids = this.sets.loadedIds()
+    const last = this.lastFrame
+    const shot = this.lastShot
+    const mine = ++this.asked
+    this.sets.reset()
+    this.world.clear()
+    this.near.clear()
+    this.attached = []
+    this.skyAssets = ''
+    await this.ensureSky()
+    await this.sets.ensure(ids, this.assets)
+    if (last) await this.prepare(last.frame)
+    if (mine !== this.asked) return
+    if (last) this.drawFrame(last.frame, last.tier)
+    else if (shot && shot.sets.every((x) => this.sets.has(x.id, this.assets))) this.renderLive(shot)
   }
 
   private applySize(): void {
@@ -139,8 +164,14 @@ export class Engine {
 
   private async ensureSky(): Promise<void> {
     if (this.skyAssets === this.assets && this.skyTexture) return
+    const epoch = this.sets.epoch
     const glow = await this.skyMap('sky.jpg')
     const band = await this.skyMap('skyband.jpg')
+    if (epoch !== this.sets.epoch) {
+      glow.tex.dispose()
+      band.tex.dispose()
+      return this.ensureSky()
+    }
     this.skyBytes = glow.bytes + band.bytes
     this.skyTexture?.dispose()
     this.skyBand?.dispose()
@@ -161,7 +192,16 @@ export class Engine {
   async renderFrame(frame: number, tier: string): Promise<void> {
     if (!this.director) throw new Error('no director')
     const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
+    const epoch = this.sets.epoch
+    this.asked++
     await this.prepare(f)
+    if (epoch !== this.sets.epoch) return this.renderFrame(f, tier)
+    this.drawFrame(f, tier)
+  }
+
+  private drawFrame(f: number, tier: string): void {
+    if (!this.director) return
+    this.lastFrame = { frame: f, tier }
     const plan = framePlan(this.director, f, tier)
     const samples = samplesFor(plan.samples)
     this.soft = plan.soft
@@ -179,6 +219,7 @@ export class Engine {
   }
 
   renderLive(shot: Shot): void {
+    this.lastFrame = null
     this.soft = 0
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
