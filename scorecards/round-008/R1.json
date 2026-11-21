@@ -1,0 +1,28 @@
+{
+ "critic": "R3",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "middle and lower storm field, night-side clouds lower right",
+   "what": "overall a touch darker and slightly less warm than -a (about 1-2 levels lower in mid and lower regions, red/orange channel dropped most), so the lit cloud tops on the storm's south rim read a little duller",
+   "fix": "lift midtones by about 1-2 levels and restore a small amount of red/orange warmth in the lower two thirds; keep the blacks where they are"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right-side terminator/limb against the Milky Way (crops C, E, G)",
+   "what": "the dark limb edge sits a few pixels inward of -a, so the planet disc reads very slightly narrower on the night side",
+   "fix": "move the night-side limb outward by a few pixels to match -a's silhouette"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "starfield, upper left and right sky",
+   "what": "stars and Milky Way grain slightly busier/brighter than -a; the faint upper-left planet bands also a shade warmer",
+   "fix": "reduce star sparkle and fine noise slightly and pull the band warmth back a hair toward -a"
+  }
+ ]
+}

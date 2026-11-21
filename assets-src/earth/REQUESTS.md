@@ -2,6 +2,8 @@
 
 ## 1. Cover cut above the sea limb in the terrain view (`coverSea`)
 
+- Status: served. The key is on main since engine batch 8 (main 48a2bfc), the same change as `engine.patch`. Earth's plan carries it since 64659d1 (08:36 UTC). Nothing is open.
+
 - Asked for in the Builder's mail of 07:12 UTC: the grey cloud above the horizon at 1886 to 1888 and 2125 to 2128.
 - Why the stop's own controls cannot do it. On the terrain side the engine cover is drawn over the whole frame. Above the horizon its colour is `mix(low, color, band)` times a ramp to `coverTop`, with the band and the ramp both 0.22 tan units wide (`soft: 0.22` in `horizon()`, `smoothstep(0.0, 0.22, s)` in `src/terrain/cover.ts`). So for about 290 px above the horizon line at 1080 the cover stays a lit grey whatever `coverTerrain` and `coverTop` are (tried: `coverTop` terrain side 0.3, 0.12, 0.04, 0.012; `coverTerrain` [0.5, 0.68, 1] and [0.22, 0.34, 0.6]). In the rise the camera climbs 0.56 heights before the cover centre, the true dip grows from 14.0 to 17.6 degrees and the fixed horizon line of the cover then sits 60 to 150 px above the true limb, so the white `coverLowTerrain` is drawn over black space. In the orbit view the same problem is solved by `coverShell`, which cuts the cover's alpha outside the globe. The terrain view has no such cut.
 - The change, two files, patch in `assets-src/earth/engine.patch` (made with `git diff origin/main -- src/director/moves.ts src/director/film.ts`):

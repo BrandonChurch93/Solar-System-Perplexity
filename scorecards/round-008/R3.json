@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-08.png",
+      "where": "crop W (1824,866,96,214), also right edge of crop F in image-06.png, crop R in image-07.png, and lower-right border of image-05.png",
+      "what": "a vertical mirror-repeat seam runs down the Milky Way sky texture, reflecting stars and dust lanes symmetrically into a Rorschach pattern",
+      "fix": "replace tiled MirroredRepeatWrapping on the sky background with a seamless 360-degree spherical starfield or cubemap at native resolution"
+     },
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "crop H (0,0,456,433) and upper-left sky of crop B (252,54,456,433), also upper-left sky of image-05.png and left third of crop H in image-02.png (image-01.png)",
+      "what": "crossing horizontal and vertical mirror-repeat tile seams create a four-way symmetric reflection of bright orange and blue star groups and nebula dust",
+      "fix": "remove UV tiling and mirrored wrapping on the sky texture and map a single unrepeated high-resolution celestial sphere"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "Io in crop A (768,384,456,433) and crop I (912,647,456,433), also crop P in image-07.png, crop A in image-02.png, and crop O in image-03.png",
+      "what": "Io's surface texture is blocky and low-resolution at native scale, and its sunlit limb has jagged 1-pixel stair-stepping with a dark fringe against Jupiter's clouds",
+      "fix": "use a higher-resolution Io albedo map with proper filtering and apply multisample/supersampled anti-aliasing without dark unpremultiplied edge fringing"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "Milky Way in crop F (1464,647,456,433) and crop G (1368,216,456,433), also crops F and G in image-02.png, crop P in image-03.png, crop Q in image-07.png, and crop V in image-08.png",
+      "what": "the Milky Way texture shows coarse, noisy texels at 1:1 crop size and stars appear as hard single-pixel squares or blocky 2x2 blobs",
+      "fix": "use an 8K-16K sky map for diffuse galactic dust and render stars procedurally with smooth subpixel Airy/Gaussian point-spread falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "lower-left sunlit limb in crop T (456,866,456,214) and dark right limb in crop V (1368,866,456,214), also crop R in image-04.png, crop P in image-03.png, and crop F in image-06.png",
+      "what": "Jupiter's limb shows 1-pixel stair-stepped aliasing along the dark silhouette against the Milky Way and along the lower-left lit limb where atmospheric glow vanishes",
+      "fix": "enable supersampling or analytic sphere-edge anti-aliasing and maintain a subtle continuous atmospheric rim falloff along the entire sunlit limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "Great Red Spot and equatorial cloud bands in crop A (768,384,456,433), also crops J, K, O, and P in image-07.png",
+      "what": "Jupiter's cloud texture looks slightly soft and oversampled at native 1:1 scale in the closer frame",
+      "fix": "use a higher-resolution Jovian cloud map with anisotropic filtering or subtle high-frequency cloud detail modulation"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "sunlit left limb in crops B (252,54,456,433) and D (252,594,456,433), also crop N in image-03.png, crops B and D in image-06.png, and crop N in image-07.png",
+      "what": "intense limb brightening washes out the outer sunlit zone into a flat, featureless cream-white band",
+      "fix": "apply filmic highlight roll-off and reduce additive rim scattering intensity so cloud banding remains subtly visible near the limb"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "unlit limb, native in image-14.png tiles A and E and image-15.png tile P",
+      "what": "the dark limb is a hard circular mask; stars stop on a clean arc with no atmospheric falloff",
+      "fix": "add a thin nightside airglow and a short extinction gradient so the limb does not clip the starfield"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "shadow under the moon, native in image-14.png tile C and image-15.png tile K",
+      "what": "the moon shadow is a long vertical column that never closes into an ellipse and smears into the nightside",
+      "fix": "project a finite elliptical umbra and penumbra whose length matches the sun angle"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "tile Q, the unlit disk",
+      "what": "the nightside is a near-uniform fill with no residual cloud structure",
+      "fix": "keep a little low-contrast cloud relief in the shadow instead of a flat black disk"
+     }
+    ]
+   }
+  }
+ ]
+}
