@@ -1,46 +1,40 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T21:32:38.251Z",
- "head": "4192f3858f74fa831886a9ca25de20e1cfb666f7",
- "note": "Round 3: first 15 of 34 review frames of 4192f38 back from the render workers; stamped rims gone in the fastest frames; measures, compares and gates pass on this tree",
+ "pushed": "2026-11-21T22:19:33.135Z",
+ "head": "f2477b4ab983478c2c971f0d32ec8a8d63fc78ef",
+ "note": "Round 3: all 34 review frames of the second pass looked at, four sheets built; READY follows",
  "looks": [
   {
-   "time": "2026-11-21T21:32:37.673Z",
-   "file": "20261121213237673-note-s-first15.jpg",
-   "source": "out/work/mercury/rr2/looks/s-first15.jpg",
+   "time": "2026-11-21T22:19:32.535Z",
+   "file": "20261121221932535-note-sheet-risecover.jpg",
+   "source": "out/work/mercury/rr2/looks/sheet-risecover.jpg",
    "kind": "note",
-   "label": "first 15 review frames of 4192f38: 690 717 722 736 740 741 742 990 991 993 997 998 1000 1027 1034",
+   "label": "rise cover at review: 985 to 996",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T21:32:36.997Z",
-   "file": "20261121213236997-note-c736pair.jpg",
-   "source": "out/work/mercury/rr2/looks/c736pair.png",
+   "time": "2026-11-21T22:19:31.983Z",
+   "file": "20261121221931983-note-sheet-rise.jpg",
+   "source": "out/work/mercury/rr2/looks/sheet-rise.jpg",
    "kind": "note",
-   "label": "dive 736 at review from the render workers, native crop: box shutter (top) and triangular shutter (bottom)",
+   "label": "rise sheet at review: 960 967 973 980 987 994 1000 1007 1014 1021 1027 1034",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T21:32:36.218Z",
-   "file": "20261121213236218-note-c1000pair.jpg",
-   "source": "out/work/mercury/rr2/looks/c1000pair.png",
+   "time": "2026-11-21T22:19:31.403Z",
+   "file": "20261121221931403-note-sheet-divecover.jpg",
+   "source": "out/work/mercury/rr2/looks/sheet-divecover.jpg",
    "kind": "note",
-   "label": "rise 1000 at review from the render workers, native crop: box shutter (top, dd8c3dc) and triangular shutter (bottom, 4192f38)",
+   "label": "dive cover at review: 739 to 750",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T21:31:10.312Z",
-   "file": "20261121213110312-frame-f1016-final.jpg",
-   "source": "out/work/mercury/r14/f1016-final.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1016, final tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1016,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "time": "2026-11-21T22:19:30.699Z",
+   "file": "20261121221930699-note-sheet-dive.jpg",
+   "source": "out/work/mercury/rr2/looks/sheet-dive.jpg",
+   "kind": "note",
+   "label": "dive sheet at review, 4192f38 build: 690 698 706 714 722 730 739 747 755 763 771 779",
+   "stop": "mercury"
   },
   {
    "time": "2026-11-21T21:06:10.069Z",
