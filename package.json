@@ -32,7 +32,8 @@
     "post": "tsx tools/post.ts",
     "stress": "tsx tools/stress.ts",
     "measure": "tsx tools/measure.ts",
-    "aim": "tsx tools/aim.ts"
+    "aim": "tsx tools/aim.ts",
+    "master": "python3 tools/master.py"
   },
   "dependencies": {
     "gsap": "3.15.1",
