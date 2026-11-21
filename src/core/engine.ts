@@ -25,7 +25,7 @@ export interface Director {
 export interface Sanity { invalid: number; coverage: number }
 
 const STAR_COUNT = 900000
-const DUST_COUNT = 2600
+const DUST_COUNT = 4500
 const GRAD_FLOOR = 0.5
 
 export class Engine {
@@ -254,7 +254,7 @@ export class Engine {
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
+    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view)
     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
