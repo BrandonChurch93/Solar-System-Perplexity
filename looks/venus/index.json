@@ -1,55 +1,82 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T14:23:49.112Z",
- "head": "9f60ba1ae4e78c4f2cf3312223e9634caa64fa02",
- "note": "round 3 in progress: covers with one horizon, terrain exit rim, lightning off after the hold",
+ "pushed": "2026-11-21T14:45:52.568Z",
+ "head": "1db5292b0b62742267198cc72f6e90ce0aed6e5a",
+ "note": "round 3: dive cover at review tier, apron band, mauve pull",
  "looks": [
+  {
+   "time": "2026-11-21T14:45:51.490Z",
+   "file": "20261121144551490-note-la5.jpg",
+   "source": "out/work/venus/r3/la5.jpg",
+   "kind": "note",
+   "label": "round 3 item 5: 1287 and 1586 at draft, pink smudges pulled to warm brown",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:45:50.575Z",
+   "file": "20261121144550575-note-ap.jpg",
+   "source": "out/work/venus/r3/ap.jpg",
+   "kind": "note",
+   "label": "round 3: dive 1316 to 1350 at draft, chevron bars of the right apron gone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:45:49.518Z",
+   "file": "20261121144549518-note-venus.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-16x9-review.png",
+   "kind": "note",
+   "label": "round 3 item 2: dive cover sheet 1309 to 1320 at review tier, merged engine (main 5cfb8dc)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:45:43.633Z",
+   "file": "20261121144543633-frame-f01555-review.jpg",
+   "source": "out/work/sheets/.frames-B9c2RC/f01555-review.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1555, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1555,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T14:44:49.055Z",
+   "file": "20261121144449055-sheet-venus.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.dive, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1309,
+   "last": 1320,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T14:44:19.632Z",
+   "file": "20261121144419632-frame-f01319-review.jpg",
+   "source": "out/work/sheets/.frames-CNPuBV/f01319-review.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1319, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1319,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T14:23:35.273Z",
    "file": "20261121142335273-note-te.jpg",
    "source": "out/work/venus/r3/te.jpg",
    "kind": "note",
    "label": "round 3 item 3: terrain entry 1322 to 1350",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T14:23:34.674Z",
-   "file": "20261121142334674-note-la3.jpg",
-   "source": "out/work/venus/r3/la3.jpg",
-   "kind": "note",
-   "label": "round 3: 1287 and 1586 without lightning, stars dimmed in the limb glow; 1185 unchanged",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T14:23:34.137Z",
-   "file": "20261121142334137-note-rc4.jpg",
-   "source": "out/work/venus/r3/rc4.jpg",
-   "kind": "note",
-   "label": "round 3: terrain exit 1538 to 1557, plate rim line gone (rim fade, deck fill)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T14:23:33.575Z",
-   "file": "20261121142333575-note-dc3.jpg",
-   "source": "out/work/venus/r3/dc3.jpg",
-   "kind": "note",
-   "label": "round 3 item 2: dive cover 1309 to 1320 (+1322, 1330), one horizon, compact billows",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T14:23:32.904Z",
-   "file": "20261121142332904-note-rc3.jpg",
-   "source": "out/work/venus/r3/rc3.jpg",
-   "kind": "note",
-   "label": "round 3 item 1: rise cover 1555 to 1566, one horizon, veil structure readable",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T13:53:10.894Z",
-   "file": "20261121135310894-note-la.jpg",
-   "source": "out/work/venus/r3/la.jpg",
-   "kind": "note",
-   "label": "round 3 draft: 1185, 1287, 1586 with lightning faded out after the dive starts and the far limb table (one falloff at 1287)",
    "stop": "venus"
   },
   {
@@ -62,20 +89,6 @@
    "segment": "venus.hold",
    "frame": 1185,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:35:23.379Z",
-   "file": "20261121113523379-frame-f01350-draft.jpg",
-   "source": "out/work/sheets/.frames-OzUJRC/f01350-draft.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1350, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1350,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
