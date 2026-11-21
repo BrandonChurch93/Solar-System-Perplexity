@@ -11,3 +11,4 @@ Numbered changes made after the kit was written. Brandon's review notes arrive h
 | --- | --- | --- |
 | 001 | `001-status-pictures.md` | Status pictures in the task thread after every round and every finished step |
 | 002 | `002-status-rhythm.md` | A status with pictures shown inline at least every 30 minutes of working time |
+| 003 | `003-planet-posts.md` | Nine posts in Phase 6: each stop's clip opened by its prompt typed into the Perplexity interface |
