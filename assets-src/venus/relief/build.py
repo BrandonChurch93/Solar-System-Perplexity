@@ -55,15 +55,21 @@ def canvas2x():
 
 def grade(big):
     y0 = AH * K
-    part = big[y0:] / 255
-    g = smooth(10 * K, 230 * K, np.arange(part.shape[0], dtype=np.float32))[:, None]
-    lab = cv2.cvtColor(part, cv2.COLOR_BGR2Lab)
-    L = lab[..., 0]
-    k = 1 - g * (1 - (0.36 + 0.14 * smooth(40, 90, L)))
-    lab[..., 0] = L * k
-    lab[..., 1] *= k ** 0.7
-    lab[..., 2] *= k ** 0.7
-    big[y0:] = np.clip(cv2.cvtColor(lab, cv2.COLOR_Lab2BGR), 0, 1) * 255
+    x0 = MX * K
+    x1 = (MX + AW) * K
+    sig = 70 * K
+    img = big / 255
+    core = cv2.GaussianBlur(img[:y0, x0:x1], (0, 0), sig, borderType=cv2.BORDER_REFLECT)
+    yy = np.clip(np.arange(img.shape[0]), 0, y0 - 1)
+    xx = np.clip(np.arange(img.shape[1]), x0, x1 - 1) - x0
+    target = core[yy][:, xx]
+    own = cv2.GaussianBlur(img, (0, 0), sig, borderType=cv2.BORDER_REFLECT)
+    ratio = np.clip((target + 0.01) / (own + 0.01), 0.15, 1.6)
+    rows = np.arange(img.shape[0], dtype=np.float32)[:, None]
+    cols = np.arange(img.shape[1], dtype=np.float32)[None, :]
+    out = np.maximum(np.maximum(x0 - cols, cols - x1), rows - y0)
+    w = smooth(0, 40 * K, out) * smooth(y0 - 700 * K, y0 - 450 * K, rows)
+    big[:] = np.clip(img * ratio ** w[..., None], 0, 1) * 255
 
 
 def save_color(img, name, q=(94, 90)):

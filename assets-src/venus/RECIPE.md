@@ -74,7 +74,7 @@ Order: upscale, margins (image tool), clean plate (image tool), `compose.py`, de
 
 `python3 assets-src/venus/relief/build.py` (about 45 s, no arguments).
 
-- Canvas at 2x (7040 x 4752): `close-5632.png` inside, the upscaled strips outside. The bottom margin is graded down to the darkness of the approved image's bottom 200 rows (L p50 6.3, p90 13.7): L x (0.36 + 0.14 smooth(40, 90, L)), chroma x k^0.7, ramp from 10 to 230 px below the approved edge.
+- Canvas at 2x (7040 x 4752): `close-5632.png` inside, the upscaled strips outside. The margins take the tone of the approved image's own edge (`grade` in `build.py`): the low frequencies (Gaussian, sigma 70 px at 1x) of the approved image are continued outward from its nearest edge pixel, and each margin pixel is multiplied by the ratio of that target to the canvas's own low frequencies (limits 0.15 to 1.6), per channel, from 40 px past the edge on, for the bottom margin and the lower 450 to 700 rows of the side margins. Before this the generated cumulus below the frame stood pale grey against the approved image's dark golden foreground in frames 1322 to 1385.
 - Distance: dist = 1 / (a depth^g + 1 / 10.4736) fitted to the sphere (a 1.3896, g 0.9014, median abs log error 0.10), blended into the exact sphere distance within 3 deg of the horizon. Near cumulus stay in as bumps.
 - L1, the two central towers: hand outlines (`TOWERS` in build.py) refined by GrabCut at 2x, base faded over 34 and 46 px. Colour rebuilt in scene space so that L1 over L0 gives the approved pixels at the fit pose (clipped share 1.8e-5). Distance: a curtain standing on the base line of each tower, never behind 0.97 of the deck.
 - L0, the whole deck from 30 px above the horizon down, with the clean plate under the towers.
@@ -99,3 +99,27 @@ The entry of the terrain view starts higher and further back (camera height 1.42
 
 - Air (1024 x 512, azimuth +-80 deg by elevation 0 to 80 deg above the true horizon, power 0.5): the approved image with stars removed (opening 9 px, blur 2.5) minus the same of the base frame, in scene values. Sky values are continued downward from 0.08 deg above the horizon before the blur, so the blur does not mix deck into the horizon row. The dome draws it over everything, with opacity 0.92 where it is bright, so the Sun in the film is the approved Sun.
 - Sky patch: the stars of the approved image (image minus the calm sky, divided by what the dome lets through), mirrored about the horizon and faded out over 170 px below it, because the stars slide against the horizon as the camera sinks and rises. Margin 0.125, `sky.json` terrain gain 10.
+
+### Changes after the first entry and exit frames (05:05 to 05:45)
+
+- `build.py`: the relief of the bottom margin is pressed toward the deck (ratio to the sphere distance: 1 - (1 - ratio) x (1 - 0.8 smooth(1560, 1860, y)), canvas rows): the generated bank below the frame stood 0.33 camera heights above the deck and its lower edge came into frame at 1314 to 1350. Edge of L0 now below the frame on every frame from 1314 on (predicted by projecting the mesh edge through the poses of `poses.ts`).
+- `build.py`: slope of the log ratio limited to 0.0015 per px (`SLOPE`, a cone erosion at 1/8 size), so no wall of the mesh is steeper than that.
+- `build.py`: the haze mask is blurred with sigma 40 px (was 14) and the drift is clamped to +-3.3 s in `relief.ts`, speed 0.0025 widths per second: the sharp mask edges stretched the texture by up to 90 percent at the end of the drift (2.8 percent of relief pixels under one texel at frame 1551, now 0.4).
+- `apron.py ... dist` rebuilds only the distances. The far part of each apron follows the row profile of the canvas edge (blur 160 rows) and is blended into the sphere within 3 deg of the horizon, so no apron stands above the horizon when the camera rises.
+- `air.py`: stars are mirrored about the line 1.0 deg above the horizon (`SEAM`), faded from 130 to 260 px below it. Where the air is bright (around the Sun, along the limb) the star layer is filled from a clean part of the same image (`CLEAN`, rows 30 to 390, columns 100 to 1300, tiled by reflection, gain 0.7) instead of black: when the camera rises the horizon dips and that part of the patch comes out above the glow.
+- `relief.ts`: the dome cuts the sky fully within 2 deg of the film's Sun (fading to 5 deg), so the only Sun in the terrain view is the approved one in the air texture. Without it a second small Sun separated from the first on the rise.
+
+## File list
+
+Every file below exists in both sets (`full` and `web`); the section that makes it is named after it.
+
+- `public/assets/venus/<set>/wrap-color.jpg`: Orbit view, wrap.
+- `public/assets/venus/<set>/wrap-flow.jpg`: Orbit view, flow layer.
+- `public/assets/venus/<set>/bolt.jpg`: Orbit view, lightning.
+- `public/assets/venus/<set>/limb.bin`: Orbit view, limb table.
+- `public/assets/venus/<set>/sky-hold.webp`: Orbit view, sky patch of the hold.
+- `public/assets/venus/<set>/relief-L0-color.jpg`, `public/assets/venus/<set>/relief-L0-dist.bin`: Terrain view, `build.py`.
+- `public/assets/venus/<set>/relief-L1-color.jpg`, `public/assets/venus/<set>/relief-L1-alpha.png`, `public/assets/venus/<set>/relief-L1-dist.bin`: Terrain view, `build.py`.
+- `public/assets/venus/<set>/relief-masks.png`: Terrain view, `build.py`.
+- `public/assets/venus/<set>/relief-Al-color.jpg`, `public/assets/venus/<set>/relief-Al-dist.bin`, `public/assets/venus/<set>/relief-Ar-color.jpg`, `public/assets/venus/<set>/relief-Ar-dist.bin`: Terrain view, `apron.py`.
+- `public/assets/venus/<set>/relief-air.png`, `public/assets/venus/<set>/sky-terrain.webp`: Terrain view, `air.sh`.

@@ -6,6 +6,6 @@ t = cv2.imread(f'out/work/venus/tex-{sys.argv[1]}.png').astype(np.float32)
 c = t[..., 1] > 127
 x = t[..., 2] / 255 * 2
 v = x[c] if c.any() else np.array([9.0])
-print(sys.argv[1], 'counted', round(float(c.mean()), 3), 'share under 1.0 at master', round(float((v < 1.999).mean()), 4), 'under 0.9', round(float((v < 1.8).mean()), 4), 'under 0.75', round(float((v < 1.5).mean()), 4), 'min', round(float(v.min()) / 2, 3))
+print(sys.argv[1], 'counted', round(float(c.mean()), 3), 'G13 share under 1.0 (1920 x 1080)', round(float((t[..., 2][c] < 127.5).mean()) if c.any() else 0.0, 5), 'under 1.5', round(float((v < 1.5).mean()), 4), 'under 2.0 (1.0 at uhd)', round(float((v < 1.999).mean()), 4), 'min', round(float(v.min()), 3))
 PY
 done
