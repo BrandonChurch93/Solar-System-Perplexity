@@ -74,7 +74,8 @@ export const deck: DeckLook = {
     { px: [1512, 1914], axes: [0.28, 0.28], degPerSecond: 9, wispDegPerSecond: 14 },
   ],
   collar: [0.12, 0.45, 2.0],
-  tone: [1.03, 1.05, 1.055, 0.08, 0.4],
+  tone: [1.085, 1.085, 1.085, 0.08, 0.4],
+  toneHigh: [1.035, 1.045, 1.05],
   wisp: { tile: 3.2, amount: 0.2, shadow: 0.12, shadowLength: 0.02, fine: 0.5, drift: [0.05, -0.02], fade: [7, 14], sun: [-0.6, 0.8] },
   flashes: [
     { px: [1662, 1449], sizePx: 70, period: 3.1, phase: 0.43, gain: 0.5 },

@@ -290,6 +290,16 @@ What is built (all in the stop folder):
 - Item 7. `terrain.side -0.5` (edge.ts: no border in frame at -0.55), storm `degPerSecond 9`, wisps 18 with a collar (`deck.collar [0.12, 0.45, 2.0]`: the turn reaches to 2 storm radii, hero pixels 0.12, wisps 0.45), wisp amount 0.2.
 - Item 8. Final 3150 against approved, means over thirds: middle third -0.9 -1.5 -1.6, lower third -0.8 -1.1 -1.2 (darker by about one level; not less warm by the numbers). `deck.tone [1.03, 1.05, 1.055]` on the dark range (weight 1 below linear 0.08, 0 above 0.4).
 
+### Round 8, third pass (11:00 to 11:20 UTC)
+
+- Commits: 957e201 (code for items 4 to 8, rim and star ramp), 4cf2512 (the four sky binaries, once for the round), 9598f3d (merge of main e5c57ba, engine batch 11: sample count follows screen motion; judged frames keep 16 or 64 samples, 3020 gets 103, 3275 gets 74 at the final tier).
+- `strip_r3_cut.jpg`: both cuts hold. 3023 to 3024 same haze field, same limb, black sky on both sides; stars back by 3030, deck through by 3034. Rise: 3270 haze, 3273 thinning, 3276 globe clear, stars and rim back by 3280.
+- Io in the rise (`strip_io_rise.jpg`, `riseDeg 20.4`): enters from the bottom between 3282 and 3284, stands lit over the dusk zone below the storm, no shadow on the planet. Its lower half is its own night side (terminator parallel to Jupiter's).
+- Final 3296: a vertical step in Io's dark half was the map's left to right seam (mean step 11.5 levels; `io/build.py` never closed it, though the recipe said so). Now closed with the generated map's hidden middle rolled half a turn (140 px weight); hero region byte identical.
+- Final 2997 native: crops T, V smooth limb, soft stars, Io feathered with no fringe, shadow a closed ellipse with penumbra. `mirrorcheck` clean on final 2895, 2997, 3150. Final 3296 reports x 308, x 1816, x 48, y 60: each is one bright star of the shared star field on the test axis (`axis.py`: correlation 0.00 without the 6 px beside the axis; `mirror_3296_fin.png`). Not a reflection; the sky there is the film's, not this stop's.
+- Item 8 measured again on final 3150 (blurred sigma 6, binned by approved level, lower two thirds): ratio ours over approved 0.96 to 0.985 in every bin, red lowest in the darks. So a gain, not only a dark lift: `deck.tone [1.085, 1.085, 1.085]` on the dark range and new `deck.toneHigh [1.035, 1.045, 1.05]` above it.
+- Side: kept `terrain.side -0.5` (A/B at 3239 against -0.24: both show the single relief stretched at the bottom of the last frames, -0.5 a little more; the gain in sideways travel is worth it).
+
 ### Still to do
 
 - Look at strip r3, final frames, mirrorcheck on final frames, commit the four sky binaries once; merge main; measure; gates; READY.

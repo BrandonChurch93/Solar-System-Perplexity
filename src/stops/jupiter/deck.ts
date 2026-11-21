@@ -19,6 +19,7 @@ export interface DeckLook {
   vortices: Vortex[]
   collar: [number, number, number]
   tone: [number, number, number, number, number]
+  toneHigh: [number, number, number]
   settle: number
   wisp: { tile: number; amount: number; shadow: number; shadowLength: number; fine: number; drift: [number, number]; fade: [number, number]; sun: [number, number] }
   haze: { color: [number, number, number]; density: number; tile: number; layer: number; height: number; clear: number; gather: number; power: number }
@@ -75,6 +76,7 @@ uniform vec4 uVortex[${VORTICES}];
 uniform vec2 uTurn[${VORTICES}];
 uniform vec3 uCollar;
 uniform vec3 uTone;
+uniform vec3 uToneHigh;
 uniform vec2 uToneRange;
 uniform vec4 uWispShape;
 uniform vec4 uWispMove;
@@ -154,7 +156,7 @@ void main() {
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = inverseFilmic(texel);
   float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
-  col *= mix(uTone, vec3(1.0), smoothstep(uToneRange.x, uToneRange.y, lum));
+  col *= mix(uTone, uToneHigh, smoothstep(uToneRange.x, uToneRange.y, lum));
   col = mix(col, lum * uBeyond.x + vec3(uBeyond.y), off);
   for (int k = 0; k < (nearby * alpha > 0.0 ? 1 : 0); k++) {
     vec2 wuv = (wispG - uWispMove.xy) * uWispShape.x;
@@ -317,7 +319,7 @@ export class Deck {
         uFocal: { value: f }, uCentre: { value: centre }, uRadius: { value: meta.radius }, uEdge: { value: look.edgePixels },
         uS: { value: s }, uEx: { value: ex }, uEy: { value: ey }, uEn: { value: en },
         uVortex: { value: vortex }, uCollar: { value: new THREE.Vector3().fromArray(look.collar) },
-        uTone: { value: new THREE.Vector3(look.tone[0], look.tone[1], look.tone[2]) }, uToneRange: { value: new THREE.Vector2(look.tone[3], look.tone[4]) },
+        uTone: { value: new THREE.Vector3(look.tone[0], look.tone[1], look.tone[2]) }, uToneHigh: { value: new THREE.Vector3().fromArray(look.toneHigh) }, uToneRange: { value: new THREE.Vector2(look.tone[3], look.tone[4]) },
         uWispShape: { value: new THREE.Vector4(1 / w.tile, w.amount, w.shadow, w.shadowLength) },
         uWispMove: { value: new THREE.Vector4(0, 0, w.fade[0], w.fade[1]) },
         uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
