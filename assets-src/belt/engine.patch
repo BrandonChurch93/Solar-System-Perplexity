@@ -1,5 +1,5 @@
 diff --git a/src/core/engine.ts b/src/core/engine.ts
-index f189de5..320e467 100644
+index ee387b7..76cf0dc 100644
 --- a/src/core/engine.ts
 +++ b/src/core/engine.ts
 @@ -8,6 +8,7 @@ import { SetLoader } from './sets'
@@ -26,7 +26,7 @@ index f189de5..320e467 100644
    }
  
    async renderFrame(frame: number, tier: string): Promise<void> {
-@@ -229,6 +232,7 @@ export class Engine {
+@@ -230,6 +233,7 @@ export class Engine {
        r.clearDepth()
        r.render(this.near, cam)
      }
@@ -34,7 +34,7 @@ index f189de5..320e467 100644
      if (raw) return
      if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
      if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
-@@ -239,7 +243,7 @@ export class Engine {
+@@ -240,7 +244,7 @@ export class Engine {
    }
  
    ready(frame: number): boolean {
