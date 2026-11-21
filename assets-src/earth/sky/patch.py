@@ -17,6 +17,8 @@ STARS = (1.03, 1.06)
 SHARE = (0.6, 0.85)
 AURORA = (6.0, 86.0, 1.3)
 MOON = (1.35, 1.8)
+DISC = (1.06, 1.2)
+TINT = 1.25
 HERO = geo.HERO
 FILL = geo.WORK / "sky" / "fill-t1.png"
 OUT = geo.ROOT / "public" / "assets" / "earth"
@@ -83,18 +85,23 @@ def hold(film=None):
     scale = gain * (1 - reach) + local * reach
     print("fill gain", gain.round(3), "own share", float(own.mean().round(3)), "ring px", int(ring.sum()))
     low = lambda v: np.stack([ndi.gaussian_filter(np.minimum(v[..., i], ndi.gaussian_filter(v[..., i], 4)), 4) for i in range(3)], -1)
-    rim = (step(d, STARS[0], STARS[1]) * (1 - moon) * (1 - aurora))[..., None]
+    rim = step(d, STARS[0], STARS[1])[..., None]
     f = f * scale
     stars = np.maximum(a - low(a), 0)
     glow = step(lg, 0.02, 0.2)[..., None]
-    f = f * (1 - rim) + (low(f) + stars * (1 - glow)) * rim
+    top = stars.max(-1)
+    tint = np.maximum(stars[..., 1] - np.maximum(stars[..., 0], stars[..., 2]) * TINT, stars[..., 0] - np.maximum(stars[..., 1], stars[..., 2]) * TINT)
+    curtain = ndi.maximum_filter(step(tint / np.maximum(top, 1e-5), 0.0, 0.15) * (top > 2e-4), 3) * aurora
+    disc = 1 - step(np.hypot(xx - mx, yy - my) / mr, DISC[0], DISC[1])
+    keep = ((1 - curtain) * (1 - disc))[..., None]
+    f = f * (1 - rim) + (low(f) + stars * (1 - glow) * keep) * rim
     lin = sky * own[..., None] + f * (1 - own[..., None])
     save(lin, "sky-hold.webp")
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 
 CLOSE = geo.ROOT / "references" / "approved" / "earth-close.jpg"
-TERRAIN_MARGIN = 0.25
+TERRAIN_MARGIN = 0.5
 SUN_AT = (-0.083, 1.251)
 HELD = (40.0, 100.0, 70)
 GLOW = (120.0, 700.0, 3.0)
@@ -117,7 +124,8 @@ def terrain(film):
     w = step(above, HELD[0], HELD[1])[..., None]
     lin = d * w + held[None] * (1 - w)
     px, py = round(W * TERRAIN_MARGIN), round(H * TERRAIN_MARGIN)
-    wide = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode="symmetric")
+    half = px // 2
+    wide = np.pad(np.pad(lin, ((0, 0), (half, half), (0, 0)), mode="symmetric"), ((0, 0), (px - half, px - half), (0, 0)), mode="symmetric")
     sx, sy = W / 2 * (1 + SUN_AT[0]), H / 2 * (1 - SUN_AT[1])
     xs = np.arange(-px, W + px) + 0.5
     top = np.stack([ndi.gaussian_filter1d(wide[0:12, :, i].mean(0), 24, mode="nearest") for i in range(3)], -1)

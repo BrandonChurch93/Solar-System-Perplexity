@@ -88,7 +88,7 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 ### `public/assets/earth/<set>/sky-hold.webp` (3520 x 1980 and 1760 x 990, lossless)
 
 - Tool: `sky/patch.py` (`sky/deblock.py` is a copy of the Mars script). Inputs: hero, `out/work/earth/sky/fill-t1.png`, and a still of the film at frame 1755 with a black sky (`sky.json` gain set to 0 for that one render, review tier: `out/work/earth/still/hold-nosky.png`).
-- The patch is the hero minus the film's own planet, glow, aurora and Moon, so the film adds back to the hero. Behind the planet, under the Moon and inside the bright glow the fill is used, scaled per channel (gain 1.576, 1.44, 1.015) and locally near the join; outside 1.03 radii the fill gives only its smooth part and the hero's own star points stay. 12.5 percent mirrored margin for the camera's move in the hold.
+- The patch is the hero minus the film's own planet, glow, aurora and Moon, so the film adds back to the hero. Behind the planet, under the Moon and inside the bright glow the fill is used, scaled per channel (gain 1.576, 1.44, 1.015) and locally near the join; outside 1.03 radii the fill gives only its smooth part and the hero's own star points stay, also in the aurora sector (position angle 6 to 86 degrees, out to 1.3 radii) and around the Moon. There the points whose green or red stands 1.25 times above the other channels (what the fitted curtain leaves of the hero's aurora) are dropped, and so are the points on the Moon's disc (to 1.2 Moon radii). 12.5 percent mirrored margin for the camera's move in the hold.
 
 ### Terrain relief and its sky
 

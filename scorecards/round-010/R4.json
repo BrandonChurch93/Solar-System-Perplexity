@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 211-222 across the cover (and sheet-02.png frames 204-229)",
+   "what": "pre- and post-cover frames do not belong to one continuous move: at frames 211-214 the camera still skims low over a nearly flat horizon (y ~ 155-185 px, implied solar diameter >1800 px), then behind 3-4 yellow cloud frames (215-217) it cuts to an orbital view of a ~280-px globe whose top limb pops ~120 px upward to y ~ 35 px with the bottom limb clipped off-screen",
+   "fix": "begin pulling steeply up and away much earlier in the rise and match pre- and post-cover altitude, focal length, and horizon height along one continuous camera spline"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 204-237, left loop footpoint and solar disc center",
+   "what": "exposure and glare pop across the cover rather than carrying smoothly: a blinding white starburst erupts on the left footpoint at frames 204-212, swaps to flat drifting 2D yellow clouds in frames 214-218, jumps to dead-center of the solar disc in frames 220-229, and disappears abruptly by frame 237",
+   "fix": "keep bloom locked to the 3D active region on the receding globe and ramp exposure smoothly across the transition without jumping glare position or overlaying flat 2D clouds"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 221-269 into sheet-04.png frames 270-449, solar globe framing and starfield",
+   "what": "camera pitch, distance, and orbit speed kink and reverse instead of easing cleanly: post-cover pitch overshoots so the top limb rises from y ~ 35 px (frame 222) to y ~ 7 px (frame 237) before dropping back to y ~ 23 px (frame 261), star drift jerks between frames 245-270, and radial pullback stops at frame 269 (diameter ~210 px) only to slowly creep inward again across sheet-04.png (diameter ~218 px at frame 449)",
+   "fix": "solve pitch, radial distance, and orbital pan on a single C2-continuous curve that monotonically centers the Sun during rise and holds a constant orbital radius through hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 0-33 and transition to sheet-02.png frames 180-204",
+   "what": "camera motion starts un-eased at full forward speed at frame 0, pushes inward toward the sunspot until frame 180 (loop footpoint span growing from 123 px to 197 px), and then reverses travel sense to pull away in frames 188-204",
+   "fix": "ease camera speed in at the start if beginning from rest, and arc smoothly from forward skim into upward climb without reversing approach-to-retreat across the segment boundary"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "left and right background starfield across frames 270-449 (and sheet-02.png frames 245-269)",
+   "what": "horizontal orbital pan scrolls vertical mirror-reflection seams in the starfield skybox across the right background (frames 245-384) and into the left background (frames 384-449), showing symmetric twin dust clouds and paired stars",
+   "fix": "use a seamless non-mirrored spherical star map so background rotation shows no visible mirrored repeat"
+  }
+ ]
+}

@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "left sky outside the sunlit limb (also native crops I in image-06.png and J, O in image-07.png)",
+      "what": "a curved circular patch boundary abruptly cuts off the Milky Way dust, background stars, and warm atmospheric glow into empty black space",
+      "fix": "remove the circular mask around the globe and extend the skybox starfield and atmospheric scatter continuously to all frame edges"
+     },
+     {
+      "severity": "severe",
+      "file": "image-02.png",
+      "where": "central sunlit cloud deck near the terminator in crop A (also image-01.png, image-05.png, and crop A in image-06.png)",
+      "what": "a vertical UV longitude seam runs top-to-bottom down the globe where diagonal cloud streaks kink sharply into a V-shaped chevron that rotates with the sphere",
+      "fix": "make the cloud map seamless across the 0/360-degree longitude wrap or generate cloud flow with seamless 3D spherical noise"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "planet limb on both the bright upper-left edge and dark lower-right edge (crops B, D, E, I in image-02.png and image-06.png; crops K, L, R in image-03.png and image-07.png)",
+      "what": "jagged 1-pixel stair-stepping along the hard geometric sphere edge, plus a doubled orange atmospheric rim separated by a dark gap along the night-side limb",
+      "fix": "supersample or anti-alias the planet silhouette and replace the hard-clipped outer shell with a single continuous volumetric atmospheric falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "cloud tops along the terminator, polar vortex grazing limb, and night-side lightning (crops L, Q in image-03.png and image-07.png; crops A, I in image-02.png and image-06.png)",
+      "what": "stretched diagonal cloud streaks and visible blocky texels on high-contrast cloud edges and purple lightning bolts, with broken 1-pixel stair-stepped orange arcs near the grazing limb of the polar vortex",
+      "fix": "use higher-resolution cloud, displacement, and lightning textures or shader-space procedural detail with proper filtering at grazing angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "Milky Way backdrop and inner limb glow (crops K, R in image-03.png and image-07.png; crops F, G, H in image-02.png and image-06.png)",
+      "what": "the Milky Way plate looks soft and blocky with blurry star blobs beneath sharp 1-pixel overlay stars, and background stars shine unattenuated through the dense bright inner atmospheric limb glow",
+      "fix": "replace the upscaled Milky Way backdrop with a crisp native-resolution star plate and attenuate background stars by atmospheric optical depth near the limb"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sunlit disk, vortex, and upper cloud bands",
+      "what": "ridges read as combed painted strokes and sculpted impasto, smeared along the flow, not soft vapor",
+      "fix": "break the long strokes into small turbulent vapor and soften the embossed relief"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night side and left terminator",
+      "what": "cloud structure flattens to a murky field with only faint streaks",
+      "fix": "keep a low level of cloud relief through the shadow instead of a smooth murk"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "nearest dark cloud strip, lower left",
+      "what": "the near shadow goes smooth and empty, with noise in place of cloud structure",
+      "fix": "carry the mid-deck turbulence into the near shadow"
+     }
+    ]
+   }
+  }
+ ]
+}

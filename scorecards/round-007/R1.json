@@ -1,0 +1,84 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower-left night side and the flare path across the disk",
+   "what": "The bright flare point outside the limb survives, but its diagonal amber streak and broad green-blue ghost patches across the disk are mostly gone. Faint crater relief is more visible where the reference is veiled by the flare.",
+   "fix": "Reinstate the diagonal streak and soft colored ghosts at the reference positions. Keep the surrounding blacks deep and suppress the extra night-side relief where it competes with the flare."
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "crops D and I, lower-left night side",
+   "what": "The crop grid exposes the loss of the amber streak and diffuse lens ghosts; the remaining exterior flare point is also cleaner and more streak-like than the reference's soft point.",
+   "fix": "Match the reference flare shape, bloom, and placement both outside the limb and across the dark disk."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet outline and the upper and right sunlit limbs",
+   "what": "The planet is slightly fuller at the top and bottom. The warm rim is less distinctly separated from the bright ground, notably on the right arc.",
+   "fix": "Bring the silhouette back to the reference footprint and recover the narrow warm edge with its soft outward falloff."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "left sky and the star field below and right of the planet",
+   "what": "Individual stars read as larger and more prominent, particularly against the blue dust lane at left; the reference has finer pinpoints.",
+   "fix": "Reduce star diameter and bloom and match their local contrast, keeping the faint dust structure."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops B, E, and H, deep sky",
+   "what": "The brightest stars are fatter and softer, and the faint star field is less finely resolved.",
+   "fix": "Shrink diffuse star halos and restore the sharper faint points against the original sky grade."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops A, F, and G, illuminated crater fields and lower limb",
+   "what": "The landmark craters are preserved, but some fine grooves and crater edges are smoother or slightly displaced. The bright rim in F and G reads more as lit ground than as the reference's thin glowing edge.",
+   "fix": "Preserve the reference's fine crater-edge contrast and register the surface texture to the limb. Separate the narrow warm rim from the lit ground again."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crop C, solar halo in the gap between the sun and the planet",
+   "what": "The gold haze is slightly denser and smoother in the gap, so the faint stars and fine coronal filaments separate less cleanly from it.",
+   "fix": "Pull back the diffuse haze slightly while retaining the solar core and the finer coronal strands."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper center and right sky above the curved horizon",
+   "what": "Small black pinholes interrupt the star field, and some nearby stars are broader or more colorful than in the reference.",
+   "fix": "Remove the dark holes and bring the stars back to the reference's finer size and brightness distribution."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "distant horizon, center-left ejecta rays, and foreground crater relief",
+   "what": "The horizon and landmarks are very close, but the bright horizon line and some fine relief are fractionally off-register. Ejecta threads and lit ridges, especially on the large crater's right wall, are slightly softer and less warm.",
+   "fix": "Lock the horizon and landmark positions to the reference; recover the thin ejecta strands, crisp grayscale relief, and slight warmth on lit rock without lifting crater blacks."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, D, E, F, G, and H, terrain around and inside the main crater",
+   "what": "The major structures and shadows match, but fine pitting, rim contours, and bright grains are slightly softened or shifted. The illuminated wall in F has less crisp separation between its narrow ridges.",
+   "fix": "Register the terrain details to the reference and recover local edge contrast on the fine grooves and rims without adding global sharpening or changing shadow depth."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops B, C, and I, horizon and sky",
+   "what": "The horizon contour is fractionally shifted, and crop C makes the dark holes among the stars especially apparent. Some star points are also softer than the target.",
+   "fix": "Align the horizon, preserve the narrow warm limb beneath the sun, and clean up the dark holes and excess star bloom."
+  }
+ ]
+}

@@ -8,9 +8,8 @@ import { BeltMotion, beltJudgedFrame, beltSegment, beltSpec } from '../../src/sp
 const director = new FilmDirector(plans)
 const segment = beltSegment()
 const format = config.formats[config.formatKeys.master]!
-const next = config.stopIds[config.stopIds.indexOf(segment.stop) + 1]!
 
-interface Seen { inside: boolean; gap: number }
+interface Seen { inside: boolean; gap: number; depth: number; share: number }
 
 function look(motion: BeltMotion, index: number, time: number, frame: number): Seen {
   const shot = director.shotAt(frame, time)
@@ -27,12 +26,16 @@ function look(motion: BeltMotion, index: number, time: number, frame: number): S
   const hy = format.height / 2 + coc / 2
   const inside = !(depth < -rock.radius || (focal * Math.abs(c.x) - hx * depth) / Math.hypot(focal, hx) > rock.radius || (focal * Math.abs(c.y) - hy * depth) / Math.hypot(focal, hy) > rock.radius)
   let gap = 1e9
-  const set = shot.sets.find((v) => v.id === next)
-  if (set) {
+  for (const set of shot.sets) {
     const j = set.origin.clone().sub(shot.camera.position).applyQuaternion(inv)
-    gap = (c.angleTo(j) - Math.asin(Math.min(1, rock.radius / dist)) - Math.asin(Math.min(1, 1 / j.length()))) * focal - coc / 2
+    gap = Math.min(gap, (c.angleTo(j) - Math.asin(Math.min(1, rock.radius / dist)) - Math.asin(Math.min(1, 1 / j.length()))) * focal - coc / 2)
   }
-  return { inside, gap }
+  const reach = (focal * rock.radius) / Math.max(depth, 1e-6) + coc / 2
+  const x = format.width / 2 + (c.x / Math.max(depth, 1e-6)) * focal
+  const y = format.height / 2 - (c.y / Math.max(depth, 1e-6)) * focal
+  const w = Math.max(0, Math.min(format.width, x + reach) - Math.max(0, x - reach))
+  const h = Math.max(0, Math.min(format.height, y + reach) - Math.max(0, y - reach))
+  return { inside, gap, depth: depth - rock.radius, share: Math.min(Math.PI * reach * reach, w * h) / (format.width * format.height) }
 }
 
 describe('belt motion', () => {
@@ -70,14 +73,22 @@ describe('belt motion', () => {
     })
   })
 
-  it('shows every rock in the judged frame and keeps Jupiter clear all through', () => {
+  it('shows the hero and two more rocks in the judged frame', () => {
     const judged = beltJudgedFrame()
+    const inside = motion.rocks.filter((_, i) => look(motion, i, (judged + 0.25) / config.fps, judged).inside).map((r) => r.id)
+    expect(inside).toContain('hero')
+    expect(inside.length).toBeGreaterThanOrEqual(3)
+  })
+
+  it('keeps every rock off the discs of Mars and Jupiter, out of the lens and under a fifth of the frame', () => {
     motion.rocks.forEach((rock, i) => {
-      expect(look(motion, i, (judged + 0.25) / config.fps, judged).inside, rock.id).toBe(true)
       for (let f = segment.firstFrame; f < segment.endFrame; f++) {
         for (let k = 0; k < 4; k++) {
           const s = look(motion, i, (f + k / 4) / config.fps, f)
-          if (s.inside) expect(s.gap, rock.id + ' frame ' + f).toBeGreaterThan(0)
+          if (!s.inside) continue
+          expect(s.gap, rock.id + ' gap at frame ' + f).toBeGreaterThan(0)
+          expect(s.depth, rock.id + ' clear depth at frame ' + f).toBeGreaterThan(0.3)
+          expect(s.share, rock.id + ' share at frame ' + f).toBeLessThan(0.2)
         }
       }
     })

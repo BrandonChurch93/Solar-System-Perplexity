@@ -10,7 +10,7 @@ Source view: `references/approved/earth-close.jpg` (2816 x 1584). All paths are 
 | `public/assets/earth/<set>/relief-towers.webp` | 5616 x 2432, lossless, RGBA | 2808 x 1216, quality 92 | The thunderheads, colour premultiplied by alpha, box [5, 367] to [2813, 1583] of the image. |
 | `public/assets/earth/<set>/relief-lift.bin` | 1404 x 608 float32, little endian | the same | How far each tower pixel stands toward the camera: distance = sea distance x (1 - lift). |
 | `public/assets/earth/<set>/relief-masks.png` | 1024 x 495 | the same | R = sun glint (shimmer), G = weight of the slow drift of the cloud field (0 on the island and the banks). |
-| `public/assets/earth/<set>/sky-terrain.webp` | 4224 x 2376, lossless | 2112 x 1188, lossless | The sky of the close image, see "Sky" below. |
+| `public/assets/earth/<set>/sky-terrain.webp` | 5632 x 3168, lossless | 2816 x 1584, lossless | The sky of the close image, see "Sky" below. |
 
 `src/stops/earth/relief.json` is written by `build.py`. `src/stops/earth/relief.ts` draws it.
 
@@ -86,5 +86,5 @@ Tool for every take: `generate_image` (Perplexity Computer image generation), as
 
 - Output `public/assets/earth/<set>/sky-terrain.webp`. Inputs: the close image and a still of the film at frame 2010 with a black sky (`sky.json` terrain gain set to 0 for that one render, review tier: `out/work/earth/still/terrain-nosky.png`).
 - Patch = close image minus that still, in scene linear light, from 100 px above the horizon upward. Nearer the horizon and below it the patch holds the value found 70 px above the horizon, because the sky slides about 108 px against the ground over the segment.
-- Margin 25 percent. Left and right mirrored. Below: held. Above the top edge the glow of the Sun is continued by a power law around the Sun's place in the frame (0.251 frame half-heights above the top edge, 0.083 half-widths left of centre), fitted to the image per channel (powers 2.39, 2.05, 1.94), capped at 3.
+- Margin 50 percent on every side (25 percent until 08:05 UTC: the rise pitches up 11 degrees and showed the engine's sky with the band of the Milky Way beside the Sun above the patch at 2116 to 2122). Left and right: the outer quarter of the image mirrored twice, so the Sun's glow is not repeated at the ends. Below: held. Above the top edge the glow of the Sun is continued by a power law around the Sun's place in the frame (0.251 frame half-heights above the top edge, 0.083 half-widths left of centre), fitted to the image per channel (powers 2.39, 2.05, 1.94), capped at 3.
 - Check: `python3 assets-src/earth/relief/judged.py STILL` (film minus close image per region, code values).
