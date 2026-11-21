@@ -148,6 +148,27 @@ Phase 3, Mars (the finished set: five patch levels, relief, Phobos, haze, the sk
 
 A finished stop costs about three times the spike per sample, as `AGENTS.md` measured. Film renders above `draft` stay split across sandbox agents by segment (4 cores each, so about half these hours per agent).
 
+Phase 3 gate, Mars as it goes to the review (the round 5 build: the same set with the relief aprons, two sky patches, the fine star points and the grazing haze), same VM, `npm run budget -- --stop mars` on 2026-11-21 UTC:
+
+| Format | Seconds per sample | Fixed seconds per frame | Draft frame |
+| --- | --- | --- | --- |
+| preview 960 x 540 | 3.12 | 0.30 | 3.41 s |
+| master 1920 x 1080 | 6.86 | 0.83 | 7.69 s |
+| uhd 3840 x 2160 | 21.8 | 1.26 | 23.1 s |
+
+- Memory, estimated with mipmaps: the Mars set is 1,386 MB at `full` (limit 1,400) and 414 MB at `web` (limit 450). The sky is 268 MB at `full` and 67 MB at `web`. The browser held 3.1 GB with Mars and the next stand-in set loaded in master and 3.4 GB in uhd.
+- Loading the Mars set: 16 s at `full`, 5.5 s at `web`.
+- One frame in master, measured: hold 7.1 s draft, 29 s review, 112 s final; terrain 10 s, 40 s, 161 s; dive 7.2 s, 114 s, 445 s; rise 10 s, 154 s, 614 s (the rise frame that is timed is still over the relief).
+- On a supporting agent's VM (4 cores) the same frames take half as long. Measured on the clip chunks of this build at the review tier: hold 14 s per frame, terrain 20 s, dive about 58 s, rise about 69 s.
+
+| Whole film at this cost | preview | master | uhd |
+| --- | --- | --- | --- |
+| draft | 5.1 h | 11.5 h | 35 h |
+| review | 41 h | 91 h | 289 h |
+| final | 164 h | 362 h | 1,150 h |
+
+The cost per sample is 2.6 times the first Phase 3 measurement. Added since then: 2.7 million fine star points, two sky patches, the grazing haze and the relief aprons. The cost was not split by cause. To do at the start of Phase 4, before any film render: time one frame with each of these switched off, and make the dear one cheaper only if the picture does not change (G3 and a pixel comparison decide). Film renders above `draft` stay split across supporting agents' VMs by span. At 4 cores a VM needs half these hours, so the master film is about 46 VM hours at the review tier and about 181 at the final tier.
+
 The first table is for the spike, which is far lighter than a finished stop. `AGENTS.md` measured 2.5 s per sample for a 300,000 triangle scene, three times this. Film renders above `draft` are split across sandbox agents by segment. One frame at `final` fits well inside `sandbox.chunkBudgetMinutes`, so no split-frame calls are needed. Measured again in Phases 2, 3 and 5.
 
 ## Judged frames
@@ -206,7 +227,74 @@ Computed in Phase 2 by `judgedFrames()` in `src/director/timeline.ts` from `film
 
 ## Look lock
 
-To be written at the end of Phase 3: every locked setting, each technique that worked on Mars and each that did not.
+Written at the end of Phase 3 from the build judged in round 5 (code at 0ee8c76, engine hash 73b844358c466906, Mars hash 353338cc5c905af5). Mars is the pattern for the other eight stops: start each one from "What worked", do not spend rounds on "What did not work", and start past "Still open on Mars", because Mars went to its review with the pass bar not held (R1 7, R2 pass, R3 5, R4 6, R8 pass, measures green, open items 6 to 15).
+
+### Locked settings
+
+These are the film's defaults. A stop changes them only through its own folder under `src/stops/<id>/`.
+
+- Lens chain, `defaultPost()` in `src/post/chain.ts`: exposure 1, bloom strength 0.08 with radius 1 (six levels, mixed in, not added), vignette 0.45, grain 0.012 seeded per frame and strongest in the lower mid tones, saturation 1, contrast 1, no lift, gain 1, sharpen 0.6 on accumulated frames and 0.35 of that live, one code value of dither after the grain. Bloom, tone curve and grade run once on the average of the samples.
+- Tone curve, `filmic()` in the same file: the rational film curve with a 2.51, b 0.03, c 2.43, d 0.59, e 0.14, then the sRGB transfer. Approved pixels that are used as textures go through the inverse of this curve, so they come out of the lens chain as approved. The lens vignette is undone on the globe, the moon and the relief, because the approved pixels carry their own.
+- Lens: the field of view of each judged frame is the fitted one (`fit.json` for the orbit view, `camera` in `relief.json` for the terrain view; on Mars 30 and 60 degrees high). The change between them happens under the cover. Flare is a soft glow with a horizontal streak, set per stop by `light.flare` and `light.sunGlare` in `plan.ts` (Mars 0.3 and 0.8). Depth of field is not built: the approved Mars hero shows Phobos sharp, so Mars did not need it. A stop whose approved image shows a soft near object has to add it.
+- Sampling: `tiers` and `film.shutterDegrees` in `config/showcase.json`. A frame is the average of its samples across the shutter and across the pixel. Texture gradients are scaled by `max(1 / sqrt(samples), 0.5)` (`gradUniform` in `src/diagnostics/diag.ts`). The sky and the stars are drawn with the lens and the sky turn of the middle of the shutter in every sample, so stars stay points.
+- Sky: one fixed sphere for the whole film, `src/space/skyframe.json` (every argument is stored under `args`; `tests/skyframe.test.ts` fails when a plan change moves it, and `npx tsx tools/assets/skyframe.ts --keep` writes it again). About 3.5 million star points: 765,000 on a brightness law and 2.7 million fine ones along the band (`stars` in the same file), crowded by the band strip. The band strip `public/assets/shared/{full,web}/skyband.jpg` is drawn as made. Sky exposure is multiplied by (1 - cover amount) squared.
+- Cover timing: `cover.seconds`, `cover.diveCenterFraction` and `cover.riseCenterFraction` in the config. Per stop in `plan.ts`: the two color pairs (`cover`, `coverLow` on the orbit side, `coverTerrain`, `coverLowTerrain` on the ground side), `coverTop`, `coverEdge`, `coverEdgeRise`, `coverShell`, `coverRush`.
+- Mars's own numbers: `src/stops/mars/plan.ts` (moves, light, cover), `look.ts` (planet light, moon, storm, descent, valley dust, air), `haze.json`, `curve.json`, `relief.json`, `sky.json`, `fit.json`, `wrap.json`, `phobos.json`, `assets.ts` (patch levels and their fades).
+- Thresholds are the config's and were not changed: `detail.*`, `quality.*`.
+
+### What worked
+
+1. Orbit view from the approved hero itself. On the side the hero shows, the wrap map is the hero's own pixels taken from a 2x copy, resampled in tone-coded values and faded out toward the limb (view cosine 0.42 to 0.2, color correction to 0.09, `assets-src/mars/wrap/match.py`). The painted map fills the rest. Only the polar cap keeps hero pixels to the limb.
+2. Light as a measured curve. `tools/assets/lightcurve.py` divides the hero by the wrap map and takes the median per sun angle (`curve.json`). `nightFlat` compresses bright albedo below the terminator.
+3. Haze in fitted layers, each measured against the hero across the limb at several places and distances: a ground haze inside the planet shader, a thin cool shell, a wide halo, a glint where the Sun grazes the limb, a grazing haze with an oblique taper on the detail near the limb. All fade out in the dive. Outside the disc the glow measures within a few code values of the hero.
+4. The moon as a displaced mesh that carries the hero's pixels on the side the hero shows, mixed in by a mask, shader lit elsewhere. It moves with the camera's orbit so it drifts about 2 px per frame.
+5. Sky patches. The approved image's own sky is placed on the fixed sky sphere where the approved view looks, minus the film's own glow, with the drawn star points switched off inside it. On in the hold, the dive and the terrain view, off in the rise. This closed "the sky looks fake" after two rounds of trying to build the same sky from parts.
+6. Detail patches for the dive: five levels (96, 48, 24, 12 and 3 degrees, 4096 px each), each at most about twice as narrow as its parent, faded in by texel density, matched to the wrap by a ratio of low frequencies in scene-linear values. A predictor that casts the film camera's rays and repeats the shader's density math designs the levels before anything is rendered. Before: frames with 3 to 56 percent soft pixels in the dive and the rise. After: G13 counts 0 of 463 frames soft.
+7. A descent grade: between altitude 0.7 and 0.05 radii the planet's color, haze and shell move toward the terrain view's light, so color and exposure carry through the cover.
+8. The cover as a band of dust with a horizon line, a color pair for each side, full within the first fifth of its window, streaming outward from the direction of travel, and held inside the planet's air while the picture is the orbit view (full inside 1.04 radii of the view ray's closest pass, gone at 1.14).
+9. Timing that keeps judged motion frames sharp: a steady approach, the plunge inside the full cover, nearly still after it (`dive.surge`, `rise.settle`). The camera's up reference near the ground is the ground normal plus the level heading.
+10. A rise with no roll: the heading of the terrain flight stays up on screen to the end of the rise (`rise.level`), and the pan to the end framing starts a third of the way in.
+11. Terrain as a relief of the approved close image: resolution added without redrawing, layers with painted fills, painted aprons past every edge so the glide can travel 1.65 camera heights, one continuous camera curve that is the fitted pose at the judged frame, valley dust marched in the shader, an air layer with a warm side, a sky turn that blends in under the cover. R4 raised nothing against the canyon flight in round 5.
+12. Sharpness: the gradient scaling above and a small sharpen at the end of the lens chain brought G17 from 0.55 to about 1.0.
+13. Process: the measures, the pack and the clip are split across supporting agents' VMs (`npm run pack -- --only`, `npm run film -- --span`) and every part is checked here against the build's hashes before use. Every cause is measured before a number is changed. Motion is iterated at the draft tier and confirmed at the review tier.
+
+### What did not work
+
+- A painted wrap map on the hero's side: its colors drifted from the hero.
+- A formula light: it could not give the hero's long dim twilight and bright core together.
+- A sky made only from the real star map with its stars removed, and the same broken up by a noise field: it read as gray fog for two rounds. An even star field read as noise on black.
+- Resampling hero pixels in scene-linear values with a ringing filter: teal fringes on bright ridges.
+- Hero pixels painted all the way to the limb: a blocky cap and a doubled rim from another angle.
+- Patch levels four times apart: 3 to 56 percent soft pixels in the dive and the rise. An additive color match on patches clipped canyon rims to orange.
+- A cast self shadow on the moon (it blacked out the large crater), and a moon crossing the frame at 10 px per frame (a smear in the judged hold).
+- A dive whose whole plunge ran ahead of a thin cover: frames of blur and nothing else. A cover with one color pair, a cover that comes on in one frame, and a full-frame cover that paints over space beyond the limb.
+- A rise that ends north up: a 75 degree roll in under 20 frames.
+- A terrain move inside the first stated safe move (0.15 camera heights): it read as a zoom. A hold orbit in the same direction as the globe's spin: the globe looked still.
+- Glide lengths past the aprons: 1.8 showed a reflected fold at the entry, 2.2 magnified the near cliff at the exit. A terrain entry further back than `entryHeight` 0.4 with `entryBack` 0.5 showed a warped sliver.
+- Each time sample drawn with its own lens: every star became a dash during a zoom.
+- A general x4 model for adding resolution: it smeared rock grain.
+- Rendering a whole pack on the Builder's two cores: nine hours.
+
+### Still open on Mars, so start past it
+
+Round 5 left these open (open items 6 to 15 hold the critics' words). Each of the other stops is built so it does not meet the same issue.
+
+- Both covers still read as a join. The rise cover is a level, still band that clears onto a limb in two frames, so it reads as a concealed cut. The dive cover thins over a canyon that is almost still, so it reads as a dissolve in place. For every stop: the picture on each side of the cover moves at the speed and in the direction the camera has under it, the dust streams with the camera on both sides, the thinning lasts ten frames or more, and the sky patch fades across the pullback and is not switched under the cover. That needs relief painted behind the entry point and past the exit, so plan the aprons for it from the start.
+- The disc's own edge is geometry. The glow outside the disc matches the hero, yet R1 still sees a stepped cutout on the lit limb and a razor edge on the night limb. For every stop with air: one haze layer is drawn across the limb, over the last pixels of the disc and the first pixels of sky, on the lit side and the night side.
+- A rise with no roll shows the far side of the map, away from the hero's pixels. On Mars the painted far side read as smeared, the cap blew out, and the terminator was hard. For every stop: paint the whole map at the detail of the dive patches, check the cap and the terminator from the pullback's angle before the first round, and judge the rise frame as a view of its own.
+- Hero pixels near the limb were stretched into speckle and stepped rings where the hero has one pixel for many map pixels. Keep the fade toward the limb, and build polar caps on a polar projection.
+- A flow feature made of the hero's pixels reads as painted (the storm spiral). Flow needs its own layer above the ground with finer turbulence and a soft shadow, weak enough that the judged hold stays inside the hero match. `kit/03-METHOD.md` on flow applies to Venus, Earth, Jupiter, Saturn, Uranus and Neptune from the first build.
+- A terrain frame that matches its approved image inherits that image's soft shadows and flat glow. R1 passes it and R3 does not, because R3 judges the frame on its own. Add fine detail in the shadowed foreground and distance haze under the horizon glow, with the approved pixels kept as the low frequencies.
+- Dark areas shown to critics as large crop grids are resampled on their side into a grid pattern that is not in the frame. Send dark areas as native crops.
+
+### Carried to the other stops
+
+- Any change to a plan that moves a hold start or an arrival is followed by `npx tsx tools/assets/skyframe.ts --keep`.
+- A level rise leaves the body lit and turned as the flight left it, not as the hero frames it, and it moves bank into the travel that follows (on Mars about 90 degrees of bank and a peak turn of 8.1 degrees per frame in `mars.travel`). Judge that pair together in Phase 5.
+- The memory budget is tight: the Mars set is 1,386 MB of the 1,400 allowed at `full` and 414 of 450 at `web`, and that is after the mip chains were dropped on the apron atlases. A stop that needs aprons, five patch levels and a moon budgets for them before its assets are made.
+- Review tier cost in master on a 4 core VM: hold 14 s per frame, terrain 20 s, dive about 58 s, rise about 69 s. A stop's clip of 495 frames is about four and a half hours of one VM, so it is split in spans across VMs. The cost per sample on this build is 2.6 times the first Phase 3 measurement ("Render budget"): find where the time goes before the Phase 4 renders.
+- The review page: the site holds 500 MB and a stop's clip at the review tier is about 42 MB. Nine clips with the two films will not fit beside the app, so from the second finished stop on the page carries smaller encodes of the clips and the full clips stay under `out/clips/`.
+- Other stops have `quality.maxRoundsPerStop` rounds, fewer than Mars had, so the first build of each stop already carries everything above.
 
 ## Decisions made by the Builder
 
@@ -325,6 +413,10 @@ To be written at the end of Phase 3: every locked setting, each technique that w
 - Round 5, which build is kept. The round 5 build (0ee8c76), not the round 4 build (1d1a55c, R1 8). Reasons: it is the build Brandon ordered into the review; it carries both things he asked for (the dive reads as a growing globe up to frame 2447 and the plunge sits inside a cover that holds; the canyon view travels 1.65 camera heights and R4 raised nothing against it); the two R4 majors of round 4 (dust over black space, the 75 degree roll) were not raised again; R3 and R4 are level between the two builds; and the one point on R1 came from a different critic family, so it cannot be told apart from the difference between critics.
 - Round 5, the grid in dark areas (R3, rounds 4 and 5: "faint vertical striations and a grid-like texture"). Checked after the answers: the tiles of every crop grid are exact copies of the frame's pixels, and a Fourier check of dark crops of frames 2726 and 2325 shows no peak at 8 pixels. The crop grids are 1400 pixels wide and the viewer on the critic's side resamples them, which turns fine grain on near black into a pattern. Logged as open with this note. To do in Phase 4: send native crops of dark areas at no more than the size a critic sees without resampling.
 - Round 5, R8: the judged hold was named Mars by 1 of 3 jurors; two named Phobos, the moon in front, as two did for the approved hero in the control. The rule compares with the control, so it passes. In round 4 all three named Mars. The frame's composition is the approved hero's, so nothing is changed.
+- Phase 3, step 5 measured again on the build that goes to the review (2026-11-21 UTC, `npm run budget -- --stop mars`, numbers under "Render budget"). The Mars set is 1,386 MB at `full` and 414 MB at `web`, inside both limits. One sample in master costs 6.86 s on this VM, 2.6 times the first Phase 3 measurement, and a final tier frame of the dive costs 445 s. Time is not a limit, so nothing is made cheaper for it. To do at the start of Phase 4: split the cost by cause (fine star points, sky patches, grazing haze, aprons) before the first film render.
+- Phase 3, depth of field (`kit/04-LOOK.md`, the lens). Not built. The approved Mars hero shows Phobos sharp from edge to edge, and the hold is matched to it, so a blur on Phobos would move the judged frame away from the approved image. The first stop whose approved image shows a soft near object builds it.
+- Phase 3, site size, measured before the publish of step 9. The built app is 249 MB, of which Mars is 209 MB (63 MB at `web`, 147 MB at `full`). With the review media (the rough cut 41 MB, the preview film 45 MB, the Mars clip 42 MB, the stills) the site is about 390 MB of the 500 MB a site may hold. Eight more sets and clips of this size will not fit. Plan for Phase 4, before the second finished stop is published: the publish folder leaves out the `full` sets (the app loads `web` unless asked, and the harness reads `full` from the repo), and if the `web` sets and the review media still pass the limit, the review media moves to smaller encodes or to a second site that the review page links. No picture changes with either.
+- Phase 3, step 8. "Look lock" is written from the round 5 build. It also lists what round 5 left open, turned into rules for the other stops, because Mars goes to its review with the pass bar not held.
 
 ## Open items
 
@@ -415,3 +507,4 @@ One entry per task: when it started, what it did, where it stopped.
   - Status, Phase 3, mars, after round 4 (look lock round 2 of 5: R1 8, R2 pass, R3 5, R4 6, R8 pass): the dive now approaches steadily and plunges inside streaming dust, the canyon flight travels 1.65 camera heights with real parallax, the limb, cap and sky patches are refitted, and the measures of this build are green on a supporting VM (G13 0 of 463 soft, G17 hold 1.167, terrain 0.951). Next: keep the dust inside the planet's air and remove the roll after the rise, then round 5 and the Mars review. Pictures: `out/stills/status/mars-hold.jpg`, `mars-terrain.jpg`, `mars-dive.jpg`. https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, round 5 closed (look lock round 3 of 5, the last by Brandon's change of plan): R1 7, R2 pass, R3 5, R4 6, R8 pass, G5, G13 and G17 green, no severe issue. The dive now reads as a growing globe up to frame 2447 and plunges inside streaming dust that stays within the planet's air, the canyon view travels 1.65 camera heights and drew no motion issue, and the climb out has no roll; the two covers, the limb, the pullback surface and the storm spiral are still marked major and are logged as open items 6 to 15. Next: the Mars review steps, with no further fix: the clip, both comparison images, the Look lock, the gate. Pictures: `out/stills/status/mars-hold.jpg`, `mars-terrain.jpg`, `mars-dive.jpg`. https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, step 7 finished on the round 5 build: the review clip is joined from the four rendered chunks with no rendering (495 frames, 16.5 s, 1920 x 1080, no invalid frame, joins checked at 2399, 2489 and 2669), and both comparison images are made at the final tier and kept with the judged stills and six contact sheets in `out/stills/`. Next: write the Look lock (step 8), then the review page and the publish (step 9). Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/status/mars-dive.jpg`. https://grand-tour-film.pplx.app/review.html
+  - Status, Phase 3, mars, step 8 finished: "Look lock" is written in `kit/PROGRESS.md` (every locked setting, 13 techniques that worked, the ones that did not, what round 5 left open turned into rules for the other eight stops), and the render budget is measured again on this build (Mars set 1,386 MB of 1,400 at `full`, 6.86 s per sample in master here). Nothing in the film changed. Next: the review page with the Mars clip and both comparison images, and the publish (step 9), then the Phase 3 gate. Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/sheet-mars.dive.jpg`. https://grand-tour-film.pplx.app/review.html
