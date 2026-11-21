@@ -361,4 +361,33 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - Looks pushed 07:54. Draft dive sheet (`out/work/sheets/earth.dive-16x9-draft.png`): 1903, 1911, 1919 drift visibly, no stall; 1887 still has the grey cloud above the limb (waits for `coverSea`). Draft rise sheet: 2127 the same; 2120 clean; faint stars at the top left of 2120.
 - Gates without the browser: G11 PASS (every asset has a row or a recipe), G12 PASS (1120 tracked files, 0.90 GB). `npx vitest run` 35 of 35, `tsc` clean. Disk: full 85 MB, web 23 MB; the two sets hold the same 17 file names; no stand-in file left.
 - Running: `npm run -s measure -- --stop earth` (every frame, `out/work/earth/measure.log`), started 07:55:50.
-- In the tree, not yet seen: `light.terrainSkyGlow: 0.2` with the terrain patch `gain` times 5 (11.90476) in `sky.json`. In the engine the patch is multiplied by glow times exposure, so inside the patch nothing changes; outside it the sky is 5 times darker and the stars take the engine's terrain values (gain 2.2, cap 0.9), which may be brighter, not dimmer. Check 2010 (must be the same bytes as before), 2116, 2119, 2122 after the measure. If not clearly better, revert both values (plan: no `terrainSkyGlow`; sky.json terrain gain 2.380952).
+- Tried and dropped: `light.terrainSkyGlow: 0.2` with the terrain patch gain times 5. Not rendered alone. In the engine the stars outside the patch then take the terrain values (gain 2.2, cap 0.9), brighter, not dimmer. Reverted before any picture was kept.
+
+### Measure, every frame (07:55 to 08:13 UTC, tree 84abaca, `out/work/earth/measure.log`, `out/work/measure/earth.json`)
+
+- PASS G13: 0 of 463 frames over 0.02 soft.
+- PASS G5: 1755 hold invalid 0 coverage 0.329; 1857 dive invalid 0 coverage 0.483; 2010 terrain invalid 0 coverage 0.781; 2156 rise invalid 0 coverage 0.252.
+- PASS G17 (final, no grain): 1755 median 1.235, p25 1.191 over 72 tiles; 2010 median 1.012, p25 0.975 over 78 tiles.
+- The measure ran before the sky patch change and before the merge of main 48a2bfc. After both, the draft stills of 1755, 1857, 2010, 2156 and 2120 are the same bytes as before (`out/work/earth/p11/` against `p9/` and `p10/`), so the numbers stand; a full rerun costs 18 minutes.
+
+### Stars at 2116 to 2122 (08:03 to 08:20 UTC, commit 46ddc5b)
+
+- Cause: `set.ts` gave every sky patch `edge = margin / wide`, so the whole margin was the fade to the engine's sky. The rise pitches up 11 degrees before its cover, so from about 2110 the engine's sky came in at the top: the band of the Milky Way with dense stars right beside the Sun (`out/work/earth/p9/top-2120-before.jpg`).
+- Fix: `sky.json` carries `edge` per patch (orbit 0.1, the same number as before; terrain 0.05), and the terrain patch has `margin` 0.5 (`assets-src/earth/sky/patch.py` `TERRAIN_MARGIN = 0.5`, file 5632 x 3168 full, 2816 x 1584 web, 1.07 and 0.33 MB). The patch is solid to 14 degrees above the frame top of 2010. Left and right pads: the outer quarter of the image mirrored twice (one mirror of half the image put the Sun's glow at both ends of the top margin).
+- Checks: 2010 against the still before the change: sky rows max 1 code value; 2010 with edge 0.05 against edge 0.25: same bytes. 2120 (`p10/top-2120b.jpg`): dark blue sky with the Sun's glow, no band, no pop.
+- `out/work/earth/stills.sh` does not make its folder: `mkdir -p` first, or every still fails silently.
+
+### Merge of main 48a2bfc (08:21 UTC, 553bd02)
+
+- Main holds engine batches 8 and 9 (terrain shield, trim of haze shell triangles; engine hash a3d211c425dc0406) and the folders of all eight stops as of 08:05. Six add/add conflicts in my own files (main carried my 08:05 state, `git diff b8d32b6 origin/main -- my folders` was empty): resolved with my side.
+- After the merge: build passes, 48 of 48 tests, draft stills 1755, 1857, 2010, 2156, 2120 are the same bytes as before the merge. No opt out of the shield or the trim needed.
+- Travel probe: venus.travel joins my hold at 1680 with step 0.000 (speed 1.16e-1 to 1.15e-1); earth.travel joins my rise at 2175 with turn 0.002 to 0.003, speed 7.96e-2 to 8.00e-2.
+- Gates on the merged tree (08:27 UTC): G11 PASS (every asset has a row or a recipe), G12 PASS (1646 tracked files, 1.36 GB), G15 PASS (at most 2 sets per frame; earth/web 281 MB, earth/full 1118 MB). Disk: full 85 MB, web 23 MB.
+
+## Next (from 08:25 UTC)
+
+1. READY message with the head, the gates, the measure, the flow numbers and what is weak.
+2. Running: `out/work/earth/checks3.sh` (gates, compare hold and terrain at final, cover sheets, hold and terrain sheets at draft). Look at every picture, push looks.
+3. Review tier sheets (hold, terrain, dive, rise), `npm run crops -- --frame N` for 1755, 1857, 2010, 2156.
+4. When the Builder says `coverSea` is on main: merge, add the key to `plan.ts` (values in "Fix 2"), render 1885 to 1890 and 2124 to 2129.
+5. Known weak, in order: grey cloud above the limb under the cover (waits for `coverSea`); glide speed before 2010 limited by the bottom apron (1.2 px per frame at the frame bottom; a taller apron of about 300 image px would allow twice that; relief margin used 6 of 6 takes in round 1); level 12 patch has long soft cloud shadows.
