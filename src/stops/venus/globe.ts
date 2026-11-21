@@ -42,6 +42,8 @@ export interface GlobeOptions {
   flow: GlobeFlow
   bolts: GlobeBolts
   limb: THREE.Texture
+  graze: { most: number; from: number; to: number }
+  lift: { floor: number; stops: number; from: number; to: number }
   segments?: number
 }
 
@@ -117,6 +119,8 @@ uniform vec3 uCamObj;
 uniform vec3 uNextCam;
 uniform mat3 uNextRot;
 uniform vec2 uJitter;
+uniform vec3 uGraze;
+uniform vec4 uLift;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -167,7 +171,8 @@ void main() {
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
+  float grad = uGrad * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
+  vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(dc, uSpotN);
   float near = 0.0;
@@ -181,8 +186,8 @@ void main() {
     gx = dFdx(g);
     gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
-    gx *= uGrad;
-    gy *= uGrad;
+    gx *= grad;
+    gy *= grad;
     float front = step(0.3, dn);
     float parent = texels;
 ${PATCH_LEVELS}
@@ -190,8 +195,8 @@ ${PATCH_LEVELS}
   float eu = atan(dc.x, dc.z) / (2.0 * PI) + 0.5;
   float ev = asin(clamp(dc.y, -1.0, 1.0)) / PI + 0.5;
   float eu2 = fract(eu + 0.5) - 0.5;
-  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * uGrad;
-  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * uGrad;
+  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * grad;
+  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * grad;
   vec3 sx = dFdx(vLocal);
   vec3 sy = dFdy(vLocal);
   for (int once = 0; once < (uTaps > 0 ? 1 : 0); once++) {
@@ -222,7 +227,9 @@ ${TAP_LEVELS}
   }
   vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
   float k = uFlowLook.x * (1.0 - near);
-  float f0 = equirect(uFlow, dc).r - 0.5;
+  vec4 fl = equirect(uFlow, dc);
+  lin *= exp2(max(fl.g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(albedo.r, max(albedo.g, albedo.b))));
+  float f0 = fl.r - 0.5;
   float f1 = equirect(uFlow, df).r - 0.5;
   vec3 lean = uSunBody * uFlowLook.z;
   float s0 = equirect(uFlow, normalize(dc - lean)).r;
@@ -238,7 +245,7 @@ ${TAP_LEVELS}
     float lit = 0.015 + 1.5 * min(lum, 1.2) * lift * lift * lift;
     float bn = dot(dc, uBoltN);
     vec2 bq = vec2(dot(dc, uBoltE), dot(dc, uBoltU)) / max(bn, 0.05) * uBoltLook.x;
-    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(texture(uBolt, bq + 0.5).rgb) * uBoltLook.y : vec3(0.0);
+    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(textureGrad(uBolt, bq + 0.5, dFdx(bq) * uGrad, dFdy(bq) * uGrad).rgb) * uBoltLook.y : vec3(0.0);
     vec3 glow = vec3(0.0);
     for (int i = 0; i < ${MAX_CELLS}; i++) {
       if (float(i) >= uCellCount) break;
@@ -258,6 +265,8 @@ ${TAP_LEVELS}
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 past = uCam - dir * dot(uCam, dir);
+  if (dot(past, past) >= 1.0) discard;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
 }`
 
@@ -323,11 +332,13 @@ export class Globe {
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
         uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 },
         uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
+        uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
+        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     const seg = o.segments ?? 320
-    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 / Math.cos(Math.PI / seg) + 2e-4, seg, seg / 2), this.material)
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, world: THREE.Quaternion, spin: number, drift: number, flow: number, amps: number[], gain: number, weight: number): void {
