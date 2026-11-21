@@ -4,6 +4,7 @@ import sys
 import cv2
 import numpy as np
 from PIL import Image
+from scipy import ndimage as ndi
 
 sys.path.insert(0, 'assets-src/mercury/wrap')
 import geo
@@ -50,16 +51,24 @@ edge = cv2.GaussianBlur(cv2.erode(have, np.ones((49, 49), np.uint8)), (0, 0), 12
 whole = own * edge + gen * ratio * (1 - edge)
 yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
 r = np.hypot(xx + X0 - SUN[0], yy + Y0 - SUN[1]) / SUN[2]
+T, R = 360, 640
+reach = 2.2 * SUN[2]
+center = (SUN[0] - X0, SUN[1] - Y0)
+polar = cv2.warpPolar(np.minimum(whole, 3.2), (R, T), center, reach, cv2.WARP_POLAR_LINEAR | cv2.INTER_AREA)
+low = np.stack([ndi.percentile_filter(polar[..., i], 25, size=(41, 5), mode='wrap') for i in range(3)], -1)
+low = np.stack([ndi.gaussian_filter(low[..., i], (10, 3), mode=('wrap', 'nearest')) for i in range(3)], -1)
+calm = cv2.warpPolar(low.astype(np.float32), (S, S), center, reach, cv2.WARP_POLAR_LINEAR | cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
 code = geo.to_srgb(geo.film(whole)).astype(np.float32)
-opened = cv2.morphologyEx(code, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
-opened = np.minimum(cv2.GaussianBlur(opened, (0, 0), 2.5), code + 0.004)
-stars = geo.smooth(1.3, 1.5, r)[..., None]
+opened = cv2.morphologyEx(code, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+opened = np.minimum(cv2.GaussianBlur(opened, (0, 0), 2.0), code + 0.004)
+stars = geo.smooth(1.1, 1.2, r)[..., None]
 clean = geo.unfilm(geo.to_linear(code * (1 - stars) + opened * stars))
-ringv = clean[(r > 2.02) & (r < 2.15)]
-floor = np.percentile(ringv, 50, axis=0)
+far = geo.smooth(1.2, 1.34, r)[..., None]
+clean = clean * (1 - far) + np.minimum(calm, clean + 0.02) * far
+floor = np.median(calm[(r > 1.95) & (r < 2.1)], axis=0)
 print('floor at the border', floor.round(4))
-fade = (1 - geo.smooth(1.7, 2.1, r))[..., None]
-plate = np.maximum(clean - floor * geo.smooth(1.25, 1.9, r)[..., None], 0) * fade * KEEP
+fade = (1 - geo.smooth(1.6, 2.05, r))[..., None]
+plate = np.maximum(clean - floor * geo.smooth(1.2, 1.8, r)[..., None], 0) * fade * KEEP
 np.save('out/work/mercury/sun-plate.npy', plate.astype(np.float32))
 img = Image.fromarray(geo.coded(plate))
 for key, n in SIZE.items():

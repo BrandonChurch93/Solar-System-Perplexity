@@ -83,3 +83,16 @@ def sample_map(img, d, mode=cv2.INTER_LINEAR):
     u = (np.arctan2(d[..., 0], d[..., 2]) / (2 * np.pi) + 0.5) * w - 0.5
     v = (0.5 - np.arcsin(np.clip(d[..., 1], -1, 1)) / np.pi) * h - 0.5
     return cv2.remap(img, u.astype(np.float32), v.astype(np.float32), mode, borderMode=cv2.BORDER_WRAP)
+
+
+def shade(ndl, mu):
+    d = json.load(open('src/stops/mercury/curve.json'))
+    curve = np.array(d['curve'])
+    table = np.array(d['limb'])
+    night = curve[0]
+    n = len(table)
+    x = np.clip(mu / d['limbTo'], 0, 1) * (n - 1)
+    i = np.minimum(np.floor(x).astype(np.int32), n - 2)
+    f = (x - i)[..., None]
+    gain = table[i] * (1 - f) + table[i + 1] * f
+    return (np.maximum(lc.curve_at(curve, ndl) - night, 0) * gain + night).astype(np.float32)

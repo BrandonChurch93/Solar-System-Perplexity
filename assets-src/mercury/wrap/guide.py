@@ -13,12 +13,11 @@ CACHE = 'references/cache/mercury'
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'out/work/mercury/guide-8192.png'
 SHIFT_DEG = float(sys.argv[2]) if len(sys.argv) > 2 else 0.0
 
-curve = np.array(json.load(open('src/stops/mercury/curve.json'))['curve'])
 seen = geo.scene('references/approved/mercury-hero.png')
 h, w, _ = seen.shape
 g = lc.geometry(geo.FIT, w, h)
-lit = g['hit'] & (g['ndl'] > 0.3) & (g['mu'] > 0.45)
-alb = (seen / np.maximum(lc.curve_at(curve, g['ndl']), 1e-4))[lit]
+lit = g['hit'] & (g['ndl'] > 0.3) & (g['mu'] > 0.3)
+alb = (seen / np.maximum(geo.shade(g['ndl'], g['mu']), 1e-4))[lit]
 ll = np.log(np.maximum(alb @ geo.LUMA, 1e-3))
 rg = np.log(np.maximum(alb[:, 0], 1e-3) / np.maximum(alb[:, 1], 1e-3))
 bg = np.log(np.maximum(alb[:, 2], 1e-3) / np.maximum(alb[:, 1], 1e-3))

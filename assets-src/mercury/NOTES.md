@@ -4,55 +4,52 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 
 ## Where things stand
 
-- Branch `agent/mercury` (code, JSON, notes). Looks go to `agent/mercury-looks` through `npm run looks -- --push --folder mercury --note "..."` only.
-- Parent is `/root` (the Builder). Milestone messages: orbit view, terrain view, dive and rise, then `READY`. Each with commit, measured numbers, weak points.
-- VM: 4 cores, 7 GB RAM. `npm ci` done, `npm run build` passes. One render process at a time.
-
-## Log
-
-- 02:42 UTC Nov 21: cloned, branched, read the brief and the kit. Stand-in compares rendered (draft). First looks pushed (421bb9f5 on `agent/mercury-looks`).
-- Read the engine: types, moves, film, standin, planet, relief, cover, sky, aim, post chain, haze, rig, timeline, the Mars set and plan.
-- Merged origin/main 9602aca (status only).
+- Branch `agent/mercury` (code, JSON, notes). Looks go to `agent/mercury-looks` through `npm run looks -- --push --folder mercury --note "..."` only, at least every 30 minutes.
+- Parent is `/root` (the Builder). Milestone messages: orbit view, terrain view, dive and rise, then `READY`. Each with commit, measured numbers, weak points. Do not wait for replies.
+- Builder's notes: web set at most 35 MB on disk, full 150 MB. Engine requests early as `assets-src/mercury/engine.patch` (none needed so far). Travels before the hold and after the rise must stay free of pops (judged in Phase 5).
+- VM: 4 cores, about 8 GB RAM. Two heavy Python jobs at once get killed: run one at a time. One render process at a time.
 
 ## Segments and judged frames (30 fps)
 
-- hold 18 to 23 s, judged frame 615. dive 23 to 26 s, judged 717. terrain 26 to 32 s, judged 870. rise 32 to 34.5 s, judged 1016. travel 34.5 to 37 s (not mine).
+- hold 18 to 23 s, judged frame 615 (holdMid 20.5 s). dive 23 to 26 s, judged 717. terrain 26 to 32 s, judged 870. rise 32 to 34.5 s, judged 1016. Covers centered on frames 744 and 990. The Sun stop is before (travel 15 to 18 s), Venus after.
 
-## What the approved images show
+## How the orbit view is built (state at 03:45 UTC Nov 21)
 
-- Hero (2816x1584): globe center-left, lit from upper right, diagonal terminator, night side lower-left dark with faint detail. Grey, bronze and blue-tinted surface, bright ray craters. Enormous blown gold-white Sun at the upper-right edge with fringe and prominences, wide warm glow. A thin warm glow hugs the lit limb (lens bloom, the image wins over the words). Faint horizontal streak left of the Sun near the top. Small lens ghost lower left (about x 230 y 625 of 1400x788). Dense stars and Milky Way.
-- Close (2816x1584): oblique high view, convex horizon tilted (high at left, falling to the right). Sun a small blown blob with glow at the top edge left of center (about x 370 of 1400), just above the horizon, warm glow on the horizon near it. Large terraced crater right of center with black shadowed floor and a central peak crater. Pale ray crater upper left center. Small sharp pits lower left. Stars and faint Milky Way upper right. Razor shadows toward right and bottom.
+- `globe.ts`: stop-local impostor. A back-side shell of radius 1.3, ray-sphere in the fragment shader, analytic limb coverage (clean at every tier, no haze, no glow at the limb from air). Shade = (curve(ndl) - night) x limb(mu) x relief lift + night. `curve.json` holds both tables, measured from the hero by `wrap/curve.py`: the hero brightens up to 2.46 times toward the lit limb (mu below 0.5), separate from the ndl curve.
+- Lens glow outside the lit limb is a film layer in the same shader (the sky slides behind the globe in the hold, so it cannot live in the sky patch). It follows curve(dot(limb normal, Sun-in-sky direction projected on the image plane)), gated by the light on the limb. Hero glow is centered on position angle about 68 degrees (toward the Sun in frame), not on the light vector (57 degrees).
+- `sunplate.ts`: the Sun is stop-local. The engine Sun cannot match the hero (flat pale disc, core dot, wide glow), so `sunGlare` is 0.012 and a sky-fixed additive plate draws the hero Sun (hero pixels plus two outpaints to complete the disc), fixed to the hold camera at holdMid, breathing with a sine that is zero at holdMid. In the arriving travel it fades in with smooth(ramp(0.25, 0.8, u)), the same ramp the engine uses for the Sun's glare; in the leaving travel it fades out with the same ramp. The plate carries no stars (polar low-percentile smoothing past 1.2 Sun radii).
+- Sky patch `sky-hold.webp` (3520x1980 full, half for web, gain 4 with skyExposure 0.25): hero sky with the planet removed, minus the Sun plate, minus the film's bloom (frame 615 rendered with the rim glow off and a black sky patch). Hero stars kept between 1.012 and 1.3 radii on a star-free filled background, so no rim glow is baked in the sky.
+- Wrap v1: `wrap/guide.py` (real mosaic graded to the hero's albedo statistics) then `wrap/match.py` (hero-2x pixels divided by the fitted shade, faded out between view cosine 0.42 and 0.2, tone ratio carried to the limb). The far side is still the unpainted guide.
 
-## Stand-in state (what the compare showed)
+## Measured (frame 615, review tier, hero vs film, scene luminance)
 
-- Hold: hero-derived stand-in globe is in place, but the Sun is a flat disc with no fringe or flare and the sky is too bright and blue.
-- Terrain: flat plate of the close image.
+- Disc: night side ratio 0.96 to 1.10 by radius, day side 0.98 to 1.01 by ndl band.
+- Sky: low-pass luminance ratio film/hero median 1.018 (10th to 90th percentile 0.969 to 1.057).
+- Hero Sun: center (2690.65, 175.88) hero px, radius 564 px (9.4 degrees).
 
-## Plan
+## Still to do, in order
 
-1. Orbit view: wrap from hero pixels (2x copy, tone-coded resample, faded to the limb, view cosine 0.42 to 0.2), far side painted at dive-patch detail, polar caps on polar projection, measured light curve, height relief strongest at the terminator, clean sampled limb, hero sky patch, Sun glare that breathes in a stop-local `near` layer, globe turns.
-2. Terrain view: relief of the close image, aprons past every edge, terrain sky patch, `skyAim.terrain`.
-3. Dive and rise: patch levels at most 2x apart from a predictor, Sun glare cover that sweeps and thins over 10 frames or more.
-4. Checks: measure, compare at final, sheets at review, crops.
+1. Lens ghost in `near` (hero position (455, 1257) native, soft white-orange oval, red fringe), breathing veil.
+2. Painted far side (gnomonic tiles repainted by the image model; lon 55 to 115 and poles first). The guide is flat grey past latitude 85 and has dark blobs near the north pole.
+3. Height map: real DEM on the far side, shape from shading on the hero side. Then `wrap.height: true`.
+4. Rise azimuth positive (about +15 to +40) so the Sun leaves the frame.
+5. Dive patches (5 levels), terrain relief from `out/work/mercury/close-2x.png` (run `tools/ml/checkmoved.py` first), terrain sky patch with the Sun blob, plan values, glare cover in `near`.
+6. Checks: `npm run measure -- --stop mercury`, compares at final, sheets at review, crops.
+
+## Decisions
+
+- Terrain: spot near the terminator, light about 8 degrees above the local horizon, heading = light azimuth turned 26 degrees right, horizon tilt about 10.7 degrees, dip about 6.8 degrees at vfov 60. The terrain Sun comes from the terrain sky patch.
+- Cover: engine cover as a warm flash plus stop-local glare streaks in `near`.
+- Mars open items to avoid: covers that read as a cut, stepped disc edge, razor night limb, smeared far side, blown areas, no soft terminator in the rise, soft shadowed foreground, hard horizon glow edge, repeated patterns.
 
 ## Engine facts that matter here
 
-- `StopSet.near` is a second scene drawn after `world` with depth cleared: the place for a stop-local lens glare and cover layer.
-- Engine `Cover` is a dust band pass driven by plan fields; without `coverLow` it is a full-frame color with fbm streaks and the upper half darkened (`uTop` 0.3). Sky exposure is multiplied by (1 - cover)^2.
-- The Sun is drawn in `src/space/sky.ts` from `shot.sun` (`sunRadiusDeg`, `sunGlare`); streak flare from `light.flare` in the post chain (threshold 14 on the level 3 bloom buffer, horizontal).
-- Post: bloom 6 levels, filmic, vignette 0.45 default, grain, sharpen 0.6.
+- Render order: sky, `world`, `near` (depth cleared), dust, cover. Camera at the origin; the world group sits at origin minus camera with `state.rotation`.
+- Sky patches: replace mode, coords = aim^-1 x world ray, orbit aim = frame rotation x hold camera at frame 615. Patch weight 1 in hold, dive, terrain; 0 for the orbit patch in the rise; arriving travel smoothstep(u, 0.2, 0.8); leaving travel 0.
+- Travel from the Sun (index 0): the Sun set fades out and the engine Sun fades in over u 0.3 to 0.42 at Mercury's `sunRadiusDeg`; glare mixes to Mercury's value over u 0.25 to 0.8.
+- `plan.sunDir` (where the Sun is drawn) comes from `fit.sunInFrame`; `plan.lightDir` shades the globe. They are 62 degrees apart in the hero.
+- Post: bloom 6 levels, filmic, vignette, grain, sharpen. Stills: `npm run still -- --frame N --tier T --out FILE [--diag nograin]`.
 
-## Budgets (config/showcase.json)
+## Generated inputs kept (scratch, `out/work/mercury/gen/`)
 
-- Texture memory with mips: full 1400 MB, web 450 MB. Disk: full 150 MB, web 40 MB. Max file 95 MB. Max 6 takes per asset per round. 3 rounds.
-- Sizes: full wrap 8192, relief 5632, sky 8192. Web wrap 4096, relief 2816, sky 4096.
-
-## Design notes (03:00 UTC Nov 21)
-
-- fit.json: vfov 30, camera [0.253, 0.043, 4.233], globe circle r 718.9 px of 2816 wide. Light on the globe `sunDir` [0.835, 0.549, -0.038]. The Sun seen in frame is at [0.391, 0.188, -0.901] from the camera, 62 degrees from the light. `plan.lightDir` shades, `plan.sunDir` is where the Sun is drawn.
-- Hold at 1080p: globe radius about 490 px. An 8192 wrap gives about 2.66 texels per pixel at the disc center, so the far side needs true detail at 4096 equivalent or better.
-- At the stand-in spot the light is about 14 degrees above the local horizon and the seen Sun about 37 degrees below it. So the terrain Sun comes from the terrain sky patch. Choose spot and heading so `lightDir` sits 6 to 8 degrees above the local horizon and about 26 degrees left of the heading, as in the close image.
-- Close image at vfov 60: horizon dip about 6.8 degrees, camera altitude about 0.007 radii, the crater about 3.3 degrees of arc (about 28 px wide in the hold). The innermost dive patches show a top-down terraced crater made from the close image at the spot.
-- Sun: keep the engine Sun for continuity through the travels. Hold sky patch is hero minus film for the texture, prominences and glow. A stop-local `near` layer adds breathing glare, shifting ghosts and the dive's glare cover.
-- Height map: integrate hero shading along the light's tangent direction on the hero side (shape from shading with drift control) so shader relief agrees with the baked shadows. Far side from painted relief or a real DEM as a guide.
-- Stop-local planet shader: no haze, relief strongest at the terminator, limb clean by sampling, night side lifted off pure black.
+- `sky-fill-take1.png` (planet and ghost removed), `sky-wide-take1.png` (hero extended past its edges), `sun-full-take1.png` (Sun completed as a whole disc). Prompts are in `sky/RECIPE.md`.

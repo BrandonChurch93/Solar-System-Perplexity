@@ -2,10 +2,11 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
-import { ramp, smooth } from '../../director/rig'
+import { drift, ramp, smooth } from '../../director/rig'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { patches, wrap } from './assets'
 import { Globe } from './globe'
+import { Lens } from './lens'
 import * as look from './look'
 import { plan } from './plan'
 import skyJson from './sky.json'
@@ -83,8 +84,11 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], diagUniform)
   const sunAim = new THREE.Quaternion()
-  const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone()
+  const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
+  const lens = new Lens(look.lens, diagUniform)
+  const near = new THREE.Group()
+  near.add(lens.mesh)
 
   const close = await ctx.texture(base + 'standin-close.jpg', { srgb: true, anisotropy: 8, mirror: true })
   const closeSize = close.image as unknown as { width: number; height: number }
@@ -107,6 +111,7 @@ export const createSet: SetFactory = async (ctx) => {
   return {
     id: plan.id,
     world,
+    near,
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
@@ -114,22 +119,31 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       plateMat.uniforms.uGain!.value = gain
+      lens.mesh.visible = false
       if (!inOrbit) return
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      globe.update(light, plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
+      globe.update(light, shot.sun.dir, plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
       far.update(radiusPx, view, plan.p.tint, gain)
       const travel = state.segment.kind === 'travel' ? smooth(ramp(0.25, 0.8, state.u)) : 1
       const shown = state.segment.kind === 'travel' && state.segment.stop === plan.id ? 1 - travel : travel
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam), gain * shown * look.sun.gain * (1 + look.sun.breathe * Math.sin(state.local * look.sun.rate)), shot.post.vignette, view.format.width / view.format.height)
+      const tau = state.time - plan.holdMid
+      const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
+      const aspect = view.format.width / view.format.height
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam), gain * shown * look.sun.gain * breath, shot.post.vignette, aspect)
+      const sep = shot.sun.dir.angleTo(world.position)
+      const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
+      const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
+      lens.update(shot.sun.dir, view.camera, shown * clear * state.weight * (1 + 2 * (breath - 1)), gain, shot.post.vignette, aspect)
     },
     dispose: () => {
       globe.dispose()
       sunPlate.dispose()
+      lens.dispose()
       far.dispose()
       plateMat.dispose()
       plate.geometry.dispose()

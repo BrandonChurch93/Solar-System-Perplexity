@@ -17,12 +17,11 @@ NIGHT = (-0.14, -0.03)
 TONE = 40.0
 SOFT = 7.0
 
-curve = np.array(json.load(open('src/stops/mercury/curve.json'))['curve'])
 seen = geo.scene(HERO)
 h, w, _ = seen.shape
 g = lc.geometry(geo.FIT, w, h)
-lit = lc.curve_at(curve, g['ndl']).astype(np.float32)
-alb = np.clip(seen / np.maximum(lit, 1e-4), 0, 4.8).astype(np.float32)
+lit = geo.shade(g['ndl'], g['mu'])
+alb = np.clip(seen / np.maximum(lit, 1e-4), 0, 3.0).astype(np.float32)
 src = np.asarray(Image.open(SRC).convert('RGB'))
 H8, W8 = src.shape[:2]
 body = np.stack([np.cos(g['lat']) * np.sin(g['lon']), np.sin(g['lat']), np.cos(g['lat']) * np.cos(g['lon'])], -1).astype(np.float32)
@@ -48,7 +47,7 @@ for y0 in range(0, H8, 256):
     k = (cv2.remap(limb, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * inside)[..., None]
     n = geo.unfilm(geo.to_linear(np.clip(cv2.remap(code, px, py, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE), 0, 1)))
     a = geo.decoded(src[rows])
-    reach = geo.smooth(0.0, 0.25, mu)[..., None] * inside[..., None]
+    reach = geo.smooth(0.03, 0.15, mu)[..., None] * inside[..., None]
     t = cv2.remap(tone, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     a = a * (1 + (t - 1) * reach)
     a = a * (1 - k) + np.maximum(n, 0) * k
