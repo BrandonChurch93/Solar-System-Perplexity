@@ -56,7 +56,7 @@ void main() {
     vec3 d0 = stLimbDir(d, c1, max(el, 0.0) / lift + min(el, 0.0));
     vec2 uv = stPlate(stImage(d0));
     float keep = step(0.02, -d0.z) * step(0.0, uv.y) * step(uv.y, 1.0);
-    float phase2 = az * 517.0 + 3.0 * sin(az * 61.0);
+    float phase2 = az * 113.0 + 2.5 * sin(az * 29.0) + el * 260.0;
     float beat = 1.0 + uFlicker.x * (sin(t * 1.9 + phase2) - sin(phase2)) * smoothstep(0.0, 0.004, el);
     col = inverseFilmic(textureLod(uPlate, uv, uLod + log2(max(uGrad, 1e-3))).rgb) * keep * max(beat, 0.0);
   }

@@ -96,10 +96,10 @@ void main() {
   vec3 c1 = to / away;
   vec3 ray = normalize(vStage - uCam);
   float el = (acos(clamp(dot(ray, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / away, 0.0, 1.0))) * sqrt(max(away * away - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
-  float band = smoothstep(uBand.x, uBand.y, el);
-  for (int k = 0; k < (band > 0.0 ? 1 : 0); k++) {
+  float limb = smoothstep(uBand.x, uBand.y, el);
+  for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
     vec2 at2 = stPlate(stImage(stLimbDir(ray, c1, el)));
-    col = mix(col, inverseFilmic(textureLod(uPlate, at2, uLod).rgb), band);
+    col = mix(col, inverseFilmic(textureLod(uPlate, at2, uLod).rgb), limb);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);

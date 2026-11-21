@@ -72,3 +72,49 @@ Shared inputs:
 - Steps in `sky.py hold`: sky = hero minus the film's own frame, in scene values, floored at zero. The hero's own sky is used from 1.46 radii outward (feathered from 1.28). Inside that, and wherever a red remnant of a prominence is left in the difference, the fill is used, scaled per channel to the hero's sky in a ring from 1.5 to 2 radii. The fill's star points are taken out between 0.8 and 1.2 radii (feathered to 0.55 and 1.5), where the corona is bright and the hero shows no stars. Tone curve, sRGB, mirrored margin.
 - In the film: `src/stops/sun/skycard.ts` draws it on a card at the far plane, fixed in the set frame where the hero camera looks, over the film's own sky. Its weight is 1 in the hold and the orbit part of the rise and fades out over the first third of the travel.
 - Checks: hold compare, frames 270 and 449 for remnants that slide against the Sun.
+
+## Terrain view
+
+Shared inputs:
+- `references/approved/sun-close.jpg` (2816 x 1584), the approved close image.
+- `out/work/sun/close-x2.png`: `python3 tools/ml/upscale.py --in references/approved/sun-close.jpg --out out/work/sun/close-x2.png --width 5632` (no prompt).
+- `assets-src/sun/terrain/fit.json`: `python3 assets-src/sun/terrain/fit.py`, the ground sphere fitted to the horizon of the approved close image (radius 20.63 camera heights, limb half angle 72.51 deg, residual 0.2 deg rms).
+- `assets-src/sun/terrain/common.py`: the canvas (the approved field times 1.5, left -0.25, top -0.205, 8192 x 4608), the film tone curve and the registration helper.
+- `out/work/sun/register.json`: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/register.py`, the affine placement of each generated take against the approved image (phase correlation on the ground, no model).
+
+### Generated input: clean take (the close image without the loops)
+
+- Output: `out/work/sun/close-clean-take1.png` (1672 x 941), upscaled with `python3 tools/ml/upscale.py --in out/work/sun/close-clean-take1.png --out out/work/sun/close-clean-x.png --width 5632`.
+- Tool and model: `generate_image`, model `gpt_image_2_6_flare`, aspect 16:9.
+- Input image: `references/approved/sun-close.jpg`.
+- Prompt: "Edit image 1. Remove the glowing arcs of plasma completely: the tall arch of fine golden strands that leaps from the bright foot on the left of the sunspot to the bright foot on the right, every thin strand, spark and droplet of it, and the two bright fountains at its feet with their glare. Where the arch was, show the sky that is behind it: the same dense field of fine pinpoint stars and the same dusty Milky Way band continuing across. Where the two feet were, show the same granulated golden surface as around them, and keep the thin orange glow and tiny flames along the horizon unbroken behind them. Keep everything else exactly unchanged: the dark sunspot with its filaments, every granulation cell, the curved horizon with its glow, the stars, framing, exposure and color. No arcs, no loops, no flares, no new light sources, no text, no border."
+- Take kept: take 1 of 6. The loops and both fountains are gone, the ground under the feet is granulation of the same scale, the spot and the cells outside the loops stayed in place (registration residual under one pixel).
+- Use: only inside the widened loop mask. Outside it the approved pixels are used.
+
+### Generated input: wide take (the close image continued outward)
+
+- Output: `out/work/sun/close-wide-take1.png` (1672 x 941), upscaled with `python3 tools/ml/upscale.py --in out/work/sun/close-wide-take1.png --out out/work/sun/close-wide-x.png --width 5632`.
+- Tool and model: `generate_image`, model `gpt_image_2_6_flare`, aspect 16:9.
+- Input image: `out/work/sun/close-canvas.jpg`, the approved close image at two thirds scale pasted at (469, 264) on a 2816 x 1584 canvas of grey 128.
+- Prompt: "Image 1 is a photograph placed in the middle of a flat grey canvas. Fill the whole grey border by continuing the photograph outward seamlessly in every direction, so the result is one single wider picture with no visible frame or seam. Below and to the sides: more of the same boiling golden solar surface, granulation cells of the same size, color, contrast and lighting, growing larger toward the bottom of the picture as the ground comes closer to the camera. The curved horizon with its thin orange glow and tiny flames continues to the left and right and keeps curving downward at the same rate. Above: more of the same black sky with dense fine pinpoint stars and the dusty Milky Way band. Keep the central photograph exactly as it is, same position and size: the dark sunspot, the arch of golden plasma strands and its two bright feet. No new sunspots, no new arcs, no grey left anywhere, no text, no border, no vignette."
+- Take kept: take 1 of 6. The horizon continues on the fitted circle within 0.4 deg, the cells grow toward the bottom, no second spot, no seam at the pasted frame.
+- Use: only outside the approved frame, histogram matched to the centre (ground and sky separately), feathered 90 px on the ground and 380 px in the sky.
+
+### public/assets/sun/full/plate.jpg, loops.webp and the web copies
+
+- Output: `plate.jpg` 8192 x 2880 (canvas rows 1728 to 4608) and 4096 x 1440, JPEG 92 and 88, 4:4:4. `loops.webp` 3605 x 1838 (image box 0.22, 0.08, 0.86, 0.66 of the approved frame) and half size, WebP 92 and 90.
+- Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/plate.py` (numpy, OpenCV, scipy; no model, no prompt).
+- Inputs: `out/work/sun/close-x2.png`, `out/work/sun/close-clean-x.png`, `out/work/sun/close-wide-x.png`, `out/work/sun/register.json`, `assets-src/sun/terrain/fit.json`.
+- Steps: loop mask from the difference approved minus clean take. Loops layer in scene values: above the limb the warm or bright part of the difference (stars stay in the sky), on the ground a blurred glow plus the sharp strands. Clean centre: the clean take inside the widened mask, the approved pixels elsewhere. Canvas: the wide take outside the approved frame, matched and feathered. Plate: the canvas below the detected horizon, and above it only the orange glow and flames (split by colour, fading from 1.6 to 4.2 deg above the limb) on black.
+- Checks: `out/work/sun/canvas-check.jpg`, `plate-check.jpg`, `loops-mask.png`; frame 90 beside the approved close image in `npm run compare -- --stop sun --view terrain`.
+
+### public/assets/sun/full/sky-terrain.webp and the web copy
+
+- Output: 4096 x 2304 and 2048 x 1152, WebP 95 and 92.
+- Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/sky.py` after `plate.py` (no model, no prompt).
+- Steps: the canvas minus the plate (what is left above the horizon is stars and the Milky Way), mirrored below the horizon so the card has no edge behind the limb.
+- Check: `out/work/sun/sky-terrain-check.jpg`.
+
+### src/stops/sun/terrain.json
+
+- Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/export.py`. The fit, the canvas, the loops box, the feet and the spot for the set.
