@@ -1,9 +1,17 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T03:36:55.443Z",
- "head": "6dd24969f66492939e68f4e84f6b8a38397522ee",
- "note": "first orbit render from the layered globe (surface, clouds, shadows, lights, air shell); sky patch, moon and aurora curtains not in yet",
+ "pushed": "2026-11-21T03:51:45.278Z",
+ "head": "89586025d0875b63cb1b916da68e00843c151472",
+ "note": "limb work: the hero disc is an ellipse (1.6 percent), fitting the globe shape, glow layers and the blue limb line to it",
  "looks": [
+  {
+   "time": "2026-11-21T03:42:42.683Z",
+   "file": "20261121034242683-note-fill-t1-view.jpg",
+   "source": "out/work/earth/sky/fill-t1-view.jpg",
+   "kind": "note",
+   "label": "sky fill take 1 (hero above, planet, moon, aurora and glow removed below): used only behind the globe and near the limb",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-21T03:36:54.829Z",
    "file": "20261121033654829-note-reg-check-crop.jpg",
@@ -62,14 +70,6 @@
    "source": "out/work/earth/view/split-crop-aurora.jpg",
    "kind": "note",
    "label": "layer split of the hero: split-crop-aurora (hero, surface, recomposed, cloud alpha, emissive)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T03:22:10.729Z",
-   "file": "20261121032210729-note-split-crop-carib.jpg",
-   "source": "out/work/earth/view/split-crop-carib.jpg",
-   "kind": "note",
-   "label": "layer split of the hero: split-crop-carib (hero, surface, recomposed, cloud alpha, emissive)",
    "stop": "earth"
   },
   {
