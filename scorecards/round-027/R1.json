@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night-side right limb and lower-right limb southeast of South America; pair-02-b.png crops E, H and I",
+   "what": "The small, bright green auroral knots at the right edge and the isolated green streak farther down are greatly dimmed. The dark side loses those distinct accents.",
+   "fix": "Restore the localized green cores and their soft halos at the target positions without lifting the surrounding blacks."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right auroral curtain; pair-02-b.png crop C",
+   "what": "The aurora reads a little more diffuse and less striated, with a broader colored veil near the rim instead of the target's more distinct green rays.",
+   "fix": "Bring back the separation and vertical reach of the brighter green filaments and restrain the diffuse wash between them."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lit upper and left limb and the lower arc; pair-02-b.png crops B, D, F, G and H",
+   "what": "The left glow looks a touch paler, while a thin, more defined cyan outline is visible along the lower arc where the target fades more gently into space.",
+   "fix": "Keep the target's saturated blue atmospheric falloff on the lit side and soften and dim the narrow lower outline."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right moon",
+   "what": "The illuminated lunar surface reads marginally dimmer and less distinct against space.",
+   "fix": "Lift the lit lunar midtones slightly and recover the fine crater contrast without lifting the terminator."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "blue horizon, particularly the center of the arc; pair-04-b.png crops B and C",
+   "what": "The inner atmospheric band is slightly paler and less saturated blue than the target.",
+   "fix": "Remove a little warm fill from the inner band and restore the cooler blue transition into the sky without moving the horizon."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "cloud-shadow trains across the central sun glitter and lower-left water; pair-04-b.png crops A, D, F, G and H",
+   "what": "The cloud shadows take on a little warm fill, and the separation between their dark cores, the cloud edges and the bright water is slightly flatter.",
+   "fix": "Cool and deepen the shadow cores slightly and restore local contrast at the cloud and specular edges while preserving the light direction."
+  }
+ ]
+}

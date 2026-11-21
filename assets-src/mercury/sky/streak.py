@@ -76,7 +76,7 @@ lift = np.exp(np.minimum(hy[:MY], 0) / 110)[..., None]
 ring[:MY, MX:MX + W] = ring[:MY, MX:MX + W] * (1 - lift[:, MX:MX + W]) + row[None] * lift[:, MX:MX + W]
 edge = np.minimum(np.minimum(hx, W - 1 - hx), np.minimum(hy, H - 1 - hy))
 deep = 1 - geo.smooth(1.0, 1.15, rs)
-out = (1 - np.clip((edge + 28 - 34 * deep) / (24 + 6 * deep), 0, 1)) * (1 - geo.smooth(1.9, 2.15, rs))
+out = (1 - np.clip((edge + 28 - 34 * deep) / (24 + 6 * deep), 0, 1)) * (1 - geo.smooth(1.9, 2.15, rs)) * (1 - geo.smooth(1.3, 1.6, rs) * (hy > 0))
 sky = sky * (1 - out[..., None]) + ring * out[..., None]
 
 ARC = ((2050, -32), (1992, -12), (1964, 0), (1942, 70), (1947, 118))
