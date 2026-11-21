@@ -18,7 +18,7 @@ export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3,
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 2.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
-export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.6, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1] }
+export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.72, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1], rise: { power: 2.7, saturation: 0.12, pivot: 0.55, tint: [0.6, 0.82, 1] } }
 export const field = { amount: 1 }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
@@ -35,6 +35,7 @@ export const triton = {
   terminator: [-0.02, 0.18] as [number, number],
   power: 0.7,
   spinDegPerSecond: 0.4,
+  rise: { sun: 0.4, ambient: [0.007, 0.017, 0.027] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.004 },
 }
 
 export const ring = {
