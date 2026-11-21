@@ -1,9 +1,61 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T10:07:42.006Z",
+ "pushed": "2026-11-21T10:31:41.862Z",
  "head": "ae59e1b0a2a40db4fc9be4f6314db68e64aaeeff",
- "note": "round 2: sky edge in the dive and limb stair steps diagnosed, fix in work",
+ "note": "round 2: sky edge at 1287 and limb falloff rebuilt, checking dive frames",
  "looks": [
+  {
+   "time": "2026-11-21T10:31:41.298Z",
+   "file": "20261121103141298-note-look-limb-crops.jpg",
+   "source": "out/work/venus/r2/look-limb-crops.png",
+   "kind": "note",
+   "label": "limb crops hero against film after the edge ramp (hold 1185, review)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T10:31:40.769Z",
+   "file": "20261121103140769-note-look-sky-hold-patch.jpg",
+   "source": "out/work/venus/r2/look-sky-hold-patch.jpg",
+   "kind": "note",
+   "label": "hold sky patch, new layout with a ring of the live star sky, below boosted 4 times",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T10:31:40.198Z",
+   "file": "20261121103140198-note-look-1287-before-after.jpg",
+   "source": "out/work/venus/r2/look-1287-before-after.jpg",
+   "kind": "note",
+   "label": "dive 1287 round 1 (left) and now (right), below both boosted 4 times: the circular sky edge is gone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T10:31:26.887Z",
+   "file": "20261121103126887-frame-n2-1259.jpg",
+   "source": "out/work/venus/r2/n2-1259.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1259, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1259,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
+  {
+   "time": "2026-11-21T10:31:04.890Z",
+   "file": "20261121103104890-frame-n2-1287.jpg",
+   "source": "out/work/venus/r2/n2-1287.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1287, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1287,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:07:41.456Z",
    "file": "20261121100741456-note-live-along.jpg",
@@ -21,42 +73,6 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T10:07:40.348Z",
-   "file": "20261121100740348-note-1287-abc.jpg",
-   "source": "../../../../tmp/1287-abc.jpg",
-   "kind": "note",
-   "label": "round 2 item 1: frame 1287 as is, rim glow off, hold patch off (the circular edge is the rim glow sphere and the patch holes)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T10:04:31.213Z",
-   "file": "20261121100431213-frame-live-b-20.jpg",
-   "source": "out/work/venus/r2/live-b-20.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:53:43.655Z",
-   "file": "20261121095343655-frame-m10-1586.jpg",
-   "source": "out/work/venus/r2/m10-1586.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1586, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1586,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
    "time": "2026-11-21T09:53:21.430Z",
    "file": "20261121095321430-frame-m10-1440.jpg",
    "source": "out/work/venus/r2/m10-1440.png",
@@ -69,35 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:52:59.274Z",
-   "file": "20261121095259274-frame-m10-1287.jpg",
-   "source": "out/work/venus/r2/m10-1287.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1287, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1287,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:31:01.794Z",
-   "file": "20261121093101794-sheet-venus.rise-cover-16x9-review.jpg",
-   "source": "out/work/sheets/venus.rise-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet venus.rise, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1555,
-   "last": 1566,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   }
  ]
 }
