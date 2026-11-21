@@ -18,6 +18,7 @@ export const params: MoveParams = {
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
   cover: [1, 0.95, 0.86],
   coverEdge: [4, 4],
+  coverHides: 0,
   skyAim: { orbit: [77.38414, 172.96308, -53.87859], terrain: [12.8819, -127.45635, -55] },
   spinDegPerSecond: 0.6,
   moonDegPerSecond: 0,

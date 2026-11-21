@@ -218,7 +218,7 @@ export const createSet: SetFactory = async (ctx) => {
       const cut = diving ? smoother(ramp(look.cut.dive[0], look.cut.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.cut.rise[0], look.cut.rise[1], fromRise)) : 0
       const reach = look.cut.reach[diving ? 0 : 1]
       globe.cut(cut > 0 ? mix(closeRadius * Math.acos(Math.min(1 / distance, 1)) + look.cut.margin, reach, cut) : 0, mix(look.close.far[0], look.cut.far[0], cut), mix(look.close.far[1], look.cut.far[1], cut))
-      globe.night(state.time > covers[0]! ? look.light.nightAfter : 1)
+      globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6
       const fast = view.samples > 1 && (diving || rising)

@@ -23,12 +23,13 @@ export const light: GlobeLight = {
   edge: 1.2,
   rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.035, wideGain: 2.7 },
   glareGate: [0.7, 0.8, 0.06],
-  glareLens: [34, 48],
+  glareLens: [28.8, 36],
   nightAfter: 0.2,
+  shoulder: { from: 0.6, strength: 0.4, frames: [4, 14] },
 }
 
 export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; back: [number, number]; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
-  gain: 1, breathe: 0.03, rate: 1.9, limb: { dark: [0.25, 0.5, 0.62], edge: [1.0, 1.12] },
+  gain: 1, breathe: 0.03, rate: 1.9, limb: { dark: [0.08, 0.16, 0.2], edge: [1.0, 1.06] },
   small: { to: 0.14, pale: [1, 0.97, 0.9], lift: 2.5, white: [0.25, 0.85], feather: 0.06 },
   slide: { leave: [-24, -15], lock: [-6.5, -2.5], track: [[-22, 1.04, 0.19], [-18, 0.96, 0.18], [-14, 0.86, 0.13], [-11, 0.76, 0.06], [-8, 0.6, 0.01], [-6, 0.46, -0.01], [-4, 0.33, -0.02], [-3, 0.285, -0.015], [0, 0.26, 0.05]] },
   hand: [-3.5, -0.5],

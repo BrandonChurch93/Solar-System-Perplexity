@@ -25,6 +25,7 @@ export interface GlobeLight {
   glareGate: [number, number, number]
   glareLens: [number, number]
   nightAfter: number
+  shoulder: { from: number; strength: number; frames: [number, number] }
 }
 
 export interface GlobePatches {
@@ -120,6 +121,7 @@ uniform vec3 uLimb[17];
 uniform float uLimbTo;
 uniform vec3 uNight;
 uniform float uNightDim;
+uniform vec2 uShoulder;
 uniform vec4 uRelief;
 uniform vec4 uNightFlat;
 uniform vec4 uNightSoft;
@@ -309,6 +311,7 @@ ${PATCH_LEVELS}
   vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uCarry.z);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
+  col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
   col = mix(col, uHaze.rgb, uHaze.a);
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -377,7 +380,7 @@ export class Globe {
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
-        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uHaze: { value: new THREE.Vector4() },
+        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) }, uHaze: { value: new THREE.Vector4() },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: new THREE.Vector3(0, 0, 2) }, uClosePivot: { value: new THREE.Vector3(0, 1, 0) }, uCloseTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
         uCut: { value: 0 }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -416,8 +419,9 @@ export class Globe {
     fade.y = to
   }
 
-  night(dim: number): void {
+  night(dim: number, shoulder: number): void {
     this.material.uniforms.uNightDim!.value = dim
+    ;(this.material.uniforms.uShoulder!.value as THREE.Vector2).y = shoulder
   }
 
   haze(color: readonly [number, number, number], weight: number): void {
