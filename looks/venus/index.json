@@ -1,0 +1,64 @@
+{
+ "folder": "venus",
+ "pushed": "2026-11-21T02:45:19.944Z",
+ "head": "e9218073d785e03a096609473ebe4e76e56861bd",
+ "note": "start: stand-in hold and terrain beside the approved images",
+ "looks": [
+  {
+   "time": "2026-11-21T02:45:07.451Z",
+   "file": "20261121024507451-compare-compare-venus-terrain-view.jpg",
+   "source": "out/work/compare/compare-venus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "venus.terrain: approved image left, film frame right, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:45:06.454Z",
+   "file": "20261121024506454-still-f01440-16x9-draft-full.jpg",
+   "source": "out/work/stills/f01440-16x9-draft-full.png",
+   "kind": "still",
+   "label": "venus.terrain frame 1440, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:51.483Z",
+   "file": "20261121024451483-compare-compare-venus-hold-view.jpg",
+   "source": "out/work/compare/compare-venus-hold-view.jpg",
+   "kind": "compare",
+   "label": "venus.hold: approved image left, film frame right, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:50.138Z",
+   "file": "20261121024450138-still-f01185-16x9-draft-full.jpg",
+   "source": "out/work/stills/f01185-16x9-draft-full.png",
+   "kind": "still",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
