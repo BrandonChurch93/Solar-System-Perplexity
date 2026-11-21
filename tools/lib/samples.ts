@@ -1,11 +1,13 @@
 import { config, type Segment } from '../../src/config'
-import { frameSamples } from '../../src/core/motion'
+import { framePlan, frameSamples, type FramePlan } from '../../src/core/motion'
 import { FilmDirector } from '../../src/director/film'
 import { plans } from '../../src/director/plans'
 
 const director = new FilmDirector(plans)
 
 export const samplesOf = (frame: number, tier: string): number => frameSamples(director, frame, tier)
+
+export const planOf = (frame: number, tier: string): FramePlan => framePlan(director, frame, tier)
 
 export const samplesOfSpan = (first: number, end: number, tier: string): number => {
   let sum = 0
