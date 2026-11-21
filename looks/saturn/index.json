@@ -1,63 +1,59 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T15:27:01.947Z",
- "head": "90f1a41153df29a463e5360e43b1f66b0c2837bc",
- "note": "round 3: severe items removed by taking out the hero image projection; now sky aim, sky patch clean-up, ice, streak",
+ "pushed": "2026-11-21T16:09:38.212Z",
+ "head": "f34c27ffced09dee70e3d4255befc6f4862d8ffe",
+ "note": "round 3: C ring over the globe, limb glow refit to both approved images, shadowed ring and sky patch stars",
  "looks": [
   {
-   "time": "2026-11-21T15:27:01.177Z",
-   "file": "20261121152701177-note-sk3.jpg",
-   "source": "../../../../tmp/sk3.png",
+   "time": "2026-11-21T16:09:37.523Z",
+   "file": "20261121160937523-note-c9-3567.jpg",
+   "source": "out/work/saturn/c9-3567.png",
    "kind": "note",
-   "label": "sky aim trial: approved, aim a1, aim a2, current sky (patch off, lifted x4)",
+   "label": "round 3 draft c9-3567: rings by radius only, C ring over globe, glow refit",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T15:25:07.411Z",
-   "file": "20261121152507411-frame-a2-3465.jpg",
-   "source": "out/work/saturn/a2-3465.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "time": "2026-11-21T16:09:36.865Z",
+   "file": "20261121160936865-note-c9-3866.jpg",
+   "source": "out/work/saturn/c9-3866.png",
+   "kind": "note",
+   "label": "round 3 draft c9-3866: rings by radius only, C ring over globe, glow refit",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-21T15:22:29.032Z",
-   "file": "20261121152229032-frame-h6-3875.jpg",
-   "source": "out/work/saturn/h6-3875.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3875, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3875,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "time": "2026-11-21T16:09:36.198Z",
+   "file": "20261121160936198-note-d1-3720.jpg",
+   "source": "out/work/saturn/d1-3720.png",
+   "kind": "note",
+   "label": "round 3 draft d1-3720: rings by radius only, C ring over globe, glow refit",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-21T15:21:53.023Z",
-   "file": "20261121152153023-frame-h6-3597.jpg",
-   "source": "out/work/saturn/h6-3597.png",
+   "time": "2026-11-21T16:09:35.510Z",
+   "file": "20261121160935510-note-d1-3465.jpg",
+   "source": "out/work/saturn/d1-3465.png",
+   "kind": "note",
+   "label": "round 3 draft d1-3465: rings by radius only, C ring over globe, glow refit",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T16:09:19.362Z",
+   "file": "20261121160919362-frame-d1-3575.jpg",
+   "source": "out/work/saturn/d1-3575.png",
    "kind": "frame",
-   "label": "saturn.dive frame 3597, draft tier",
+   "label": "saturn.dive frame 3575, draft tier",
    "stop": "saturn",
    "segment": "saturn.dive",
-   "frame": 3597,
+   "frame": 3575,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T15:18:45.999Z",
-   "file": "20261121151845999-frame-h6-3720.jpg",
-   "source": "out/work/saturn/h6-3720.png",
+   "time": "2026-11-21T16:08:59.179Z",
+   "file": "20261121160859179-frame-d1-3720.jpg",
+   "source": "out/work/saturn/d1-3720.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3720, draft tier",
    "stop": "saturn",
@@ -66,37 +62,35 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T15:00:14.340Z",
-   "file": "20261121150014340-note-t1.jpg",
-   "source": "../../../../tmp/t1.png",
-   "kind": "note",
-   "label": "round 3: hold 3465 approved, polar map only, hero image on",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T15:00:13.754Z",
-   "file": "20261121150013754-note-i3-3465-lift.jpg",
-   "source": "../../../../tmp/i3-3465-lift.png",
-   "kind": "note",
-   "label": "round 3 item 3: lower right of hold 3465, approved, hero image on, hero image off (lifted)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T14:45:31.468Z",
-   "file": "20261121144531468-job-frame-03720.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.terrain frame 3720, final tier, nograin view, from the running measure job",
+   "time": "2026-11-21T16:08:39.261Z",
+   "file": "20261121160839261-frame-d1-3465.jpg",
+   "source": "out/work/saturn/d1-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
    "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:06:47.090Z",
+   "file": "20261121160647090-frame-c9-3866.jpg",
+   "source": "out/work/saturn/c9-3866.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3866, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   }
  ]
 }
