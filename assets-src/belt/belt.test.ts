@@ -124,15 +124,23 @@ describe('belt motion', () => {
     expect(soft).toBeGreaterThan(8)
   })
 
-  it('holds the hero in frame for twenty frames at under a dozen pixels of blur', () => {
+  it('lets the hero drift across: a quarter of the frame width or more, never hanging, readable for twenty frames', () => {
     const i = motion.rocks.findIndex((r) => r.id === 'hero')
     let calm = 0
+    let slow = 1e9
+    const xs: number[] = []
     for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
       const a = look(motion, i, (f + 0.25) / config.fps, f)
       const b = look(motion, i, (f + 1.25) / config.fps, f + 1)
-      if (a.inside && Math.hypot(b.x - a.x, b.y - a.y) * config.shutterFraction < 12) calm++
+      if (!a.inside) continue
+      const speed = Math.hypot(b.x - a.x, b.y - a.y)
+      xs.push(a.x)
+      slow = Math.min(slow, speed)
+      if (speed * config.shutterFraction < 16) calm++
     }
     expect(calm).toBeGreaterThanOrEqual(20)
+    expect(slow).toBeGreaterThan(15)
+    expect(Math.max(...xs) - Math.min(...xs)).toBeGreaterThan(format.width / 4)
   })
 
   it('brings the hero in with its lit side first', () => {
