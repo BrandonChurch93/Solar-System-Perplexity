@@ -18,6 +18,9 @@ FAN = (380, 560)
 RIM = (-1.4, -0.4)
 STARS = (7, 1.0, 2.0)
 HOLES = 13
+FILL = 27
+MEND = 8
+WHITE = (0.2, 0.5, 0.1, 0.4)
 BASE = 'assets-src/sun/terrain/base90.jpg'
 UNDER = 0.88
 CUT = (5.0, 7.0)
@@ -84,8 +87,12 @@ def main():
     if os.path.exists(BASE):
         base = read(BASE)
         drawn = scene(cv2.resize(base, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255)
-        base = cv2.morphologyEx(base, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (STARS[0], STARS[0])))
-        drawn += (scene(cv2.resize(base, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255) - drawn) * step(el, STARS[1], STARS[2])[..., None]
+        opened = cv2.morphologyEx(base, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (STARS[0], STARS[0])))
+        spark = cv2.GaussianBlur(np.maximum(base.astype(np.float32) - opened, 0) / 255, (0, 0), 1)
+        white = 1 - step((spark[..., 0] - spark[..., 2]) / (spark[..., 0] + 0.02), WHITE[0], WHITE[1])
+        white = cv2.resize(white.astype(np.float32), (5632, 3168), interpolation=cv2.INTER_LINEAR) * step(el, WHITE[2], WHITE[3])
+        drawn += (scene(cv2.resize(opened, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255) - drawn) * np.maximum(step(el, STARS[1], STARS[2]), white)[..., None]
+        del opened, spark, white
         c += (drawn - c) * sky[..., None]
         del drawn, base
     dce = display(c)
@@ -101,6 +108,9 @@ def main():
     del c, soft, lift, el, fans
     on_ground = d * strands[..., None]
     under = cv2.GaussianBlur(cv2.morphologyEx(d, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (HOLES, HOLES))), (0, 0), 2)
+    cover = cv2.GaussianBlur(warm, (0, 0), MEND)
+    under = np.maximum(under, cv2.GaussianBlur(d * warm[..., None], (0, 0), MEND) / (cover + 0.1)[..., None] * step(cover, 0.2, 0.5)[..., None])
+    del cover
     on_sky = under + (d - under) * warm[..., None]
     del under
     loops = np.minimum((on_ground + (on_sky - on_ground) * sky[..., None]) * m[..., None], a * 0.98)
@@ -225,7 +235,7 @@ def main():
     opened = cv2.morphologyEx(part, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13)))
     part += (opened - part) * step(above[:rows], 0.3, 0.7)[..., None]
     del opened
-    closed = cv2.morphologyEx(part, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
+    closed = cv2.morphologyEx(part, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (FILL, FILL)))
     part[:] = np.minimum(closed, rem[:rows])
     del closed, part
     near = (1 - step(above, NEAR[0], NEAR[1])).astype(np.float32)

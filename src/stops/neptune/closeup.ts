@@ -26,6 +26,7 @@ uniform sampler2D uHeight;
 uniform sampler2D uGlow;
 uniform vec3 uCentre;
 uniform vec3 uCam;
+uniform vec4 uHome;
 uniform float uRadius;
 uniform vec4 uCanvas;
 uniform vec2 uTan;
@@ -63,6 +64,14 @@ vec3 deckSource(vec3 q) {
 vec2 planeOf(vec3 q) {
   vec3 p = q + uCentre;
   return p.xy / max(-p.z, 0.02);
+}
+vec3 inSight(vec3 q) {
+  float r = length(q);
+  vec3 d = q / r;
+  float c = dot(d, uHome.xyz);
+  vec3 e = d - uHome.xyz * c;
+  vec3 rim = uHome.xyz * uHome.w + e / max(length(e), 1e-5) * sqrt(1.0 - uHome.w * uHome.w);
+  return mix(d, rim, step(c, uHome.w)) * r;
 }
 vec2 wideUv(vec2 xy) {
   return vec2((xy.x - uCanvas.x) / (uCanvas.y - uCanvas.x), (xy.y - uCanvas.w) / (uCanvas.z - uCanvas.w));
@@ -105,7 +114,7 @@ void main() {
   vec3 layer = vec3(0.05, 0.1, 0.3);
   float depth = 4000.0;
   for (int k = 0; k < (deckHit ? 1 : 0); k++) {
-    vec3 q = oc + rd * tDeck;
+    vec3 q = inSight(oc + rd * tDeck);
     vec2 xy = planeOf(deckSource(q));
     vec2 uc = coreUv(xy);
     float w = coreWeight(uc);
@@ -208,6 +217,7 @@ export class Closeup {
       uniforms: {
         uDeck: { value: maps.deck }, uDeckWide: { value: maps.deckWide }, uCloud: { value: maps.cloud }, uCloudWide: { value: maps.cloudWide }, uHeight: { value: maps.height }, uGlow: { value: maps.glow },
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
+        uHome: { value: new THREE.Vector4(this.up.x, this.up.y, this.up.z, Math.cos(Math.acos(radius / (radius + 1)) - look.sightMargin)) },
         uCanvas: { value: new THREE.Vector4(-look.wide * tx, look.wide * tx, ty, ty - 2 * look.wide * ty) }, uTan: { value: new THREE.Vector2(tx, ty) },
         uDeckSize: { value: size(maps.deck) }, uWideSize: { value: size(maps.deckWide) },
         uSlab: { value: new THREE.Vector3(look.cloudBase, look.cloudThickness, 0) },
