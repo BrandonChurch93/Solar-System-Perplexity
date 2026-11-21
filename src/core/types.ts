@@ -83,6 +83,7 @@ export interface SkyPatch {
   add: boolean
   ring: [number, number, number, number]
   edge: number
+  weight?: (time: number, view: ViewKind) => number
 }
 
 export interface StopSet {
