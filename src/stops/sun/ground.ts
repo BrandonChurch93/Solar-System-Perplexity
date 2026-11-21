@@ -8,6 +8,7 @@ export interface GroundLook {
   rings: number
   sectors: number
   cell: number
+  band: [number, number]
   boil: { reach: number; period: number; step: number; max: number }
   twinkle: { amount: number; rate: number; spread: number }
   inflow: { amount: number; waves: number; rate: number; inner: number; outer: number }
@@ -39,6 +40,9 @@ uniform vec4 uBoil;
 uniform vec3 uTwinkle;
 uniform vec4 uInflow;
 uniform vec2 uInflowRate;
+uniform vec3 uCam;
+uniform vec2 uBand;
+uniform float uLod;
 uniform vec3 uSpot;
 uniform vec3 uSpotE;
 uniform vec3 uSpotN;
@@ -53,13 +57,16 @@ float lumAt(vec2 uv, float lod) {
   return dot(textureLod(uPlate, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
 }
 void main() {
-  vec2 uv = stPlate(stImage(vStage));
+  vec3 at = stFold(vStage);
+  vec2 uv = stPlate(stImage(at));
   vec2 dx = dFdx(uv) * uGrad;
   vec2 dy = dFdy(uv) * uGrad;
   float texels = diagTexels(uv * uSize);
-  float dist = length(vStage);
-  vec3 normal = normalize(vStage - ST_CENTRE);
-  float graze = clamp(dot(normal, -vStage / dist), 0.08, 1.0);
+  float dist = length(at);
+  float graze = clamp(dot(normalize(at - ST_CENTRE), -at / dist), 0.0, 1.0);
+  float now = clamp(dot(normalize(vStage - ST_CENTRE), normalize(uCam - vStage)), 0.0, 1.0);
+  float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
+  graze = max(graze, 0.08);
   float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
   vec2 cell = vec2(cellU, cellU * graze * uSize.x / uSize.y);
   float lod = log2(max(cell.y * uSize.y * 0.25, 1.0));
@@ -83,7 +90,17 @@ void main() {
   float strand = 9.0 * sin(psi * 23.0) + 7.0 * sin(psi * 57.0 + 1.3) + 5.0 * sin(psi * 131.0 + 0.4);
   float wave = r / uInflow.w * uInflow.y * 6.283185307179586 + strand;
   beat *= 1.0 + uInflow.x * band * (0.6 * (sin(wave + uTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uTime * uInflowRate.y) - sin(wave * 2.3)));
-  vec3 col = lin * max(beat, 0.0);
+  vec3 col = lin * max(beat, 0.0) * tone;
+  vec3 to = ST_CENTRE - uCam;
+  float away = length(to);
+  vec3 c1 = to / away;
+  vec3 ray = normalize(vStage - uCam);
+  float el = (acos(clamp(dot(ray, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / away, 0.0, 1.0))) * sqrt(max(away * away - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
+  float band = smoothstep(uBand.x, uBand.y, el);
+  for (int k = 0; k < (band > 0.0 ? 1 : 0); k++) {
+    vec2 at2 = stPlate(stImage(stLimbDir(ray, c1, el)));
+    col = mix(col, inverseFilmic(textureLod(uPlate, at2, uLod).rgb), band);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.5, 0.1), push * swing * 4.0, length(vView));
@@ -116,7 +133,7 @@ export class Ground {
         uTwinkle: { value: new THREE.Vector3(look.twinkle.amount, look.twinkle.rate, look.twinkle.spread) },
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
-        uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN },
+        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -151,8 +168,10 @@ export class Ground {
     this.mesh.frustumCulled = false
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number): void {
     const u = this.material.uniforms
+    u.uLod!.value = lod
+    ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
     u.uGain!.value = gain
     u.uVignette!.value = vignette

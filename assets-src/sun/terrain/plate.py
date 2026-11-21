@@ -61,7 +61,9 @@ def main():
     d = np.maximum(a - c, 0)
     soft = cv2.GaussianBlur(np.maximum(da - dc, 0), (0, 0), 1.5)
     warm = step((soft[..., 0] - soft[..., 2]) / (soft[..., 0] + 0.02), 0.2, 0.5)
+    warm = np.maximum(warm, step(cv2.GaussianBlur(np.maximum(lift, 0), (0, 0), 6), 0.12, 0.3))
     glow = np.maximum(cv2.GaussianBlur(a - c, (0, 0), 14), 0)
+    glow = np.minimum(glow, glow[..., :1] * np.array([1, 1, 0.9], dtype=np.float32))
     strands = step(cv2.GaussianBlur(lift, (0, 0), 1.2), 0.22, 0.45)
     sky = step(cv2.resize(elevation(2816, 1584), (5632, 3168), interpolation=cv2.INTER_LINEAR), -0.25, 0.25)
     del c, soft, lift

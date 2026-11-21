@@ -43,23 +43,21 @@ void main() {
   vec3 to = ST_CENTRE - uCam;
   float dist = length(to);
   vec3 c1 = to / dist;
-  float el = acos(clamp(dot(d, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / dist, 0.0, 1.0));
+  float el = (acos(clamp(dot(d, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / dist, 0.0, 1.0))) * sqrt(max(dist * dist - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
   vec3 col = vec3(0.0);
   for (int k = 0; k < ((el > -0.006 && el < uReach) ? 1 : 0); k++) {
     vec3 ref = vec3(0.0, 0.0, -1.0);
     vec3 e1 = normalize(ref - c1 * dot(ref, c1));
-    vec3 e2 = cross(c1, e1);
-    float az = atan(dot(d, e2), dot(d, e1));
-    vec3 f1 = normalize(ref - ST_DOWN * dot(ref, ST_DOWN));
-    vec3 f2 = cross(ST_DOWN, f1);
-    float phase = az * 240.0 + 6.0 * sin(az * 131.0);
-    float lift = 1.0 + uFlicker.z * (sin(uTime * uFlicker.y + phase) - sin(phase));
-    float g0 = ST_ALPHA + max(el, 0.0) / lift + min(el, 0.0);
-    vec3 d0 = ST_DOWN * cos(g0) + sin(g0) * (f1 * cos(az) + f2 * sin(az));
+    float az = atan(dot(d, cross(c1, e1)), dot(d, e1));
+    float t = uTime * uFlicker.y;
+    float sway = 0.5 * sin(az * 37.0 + t) + 0.3 * sin(az * 83.0 - t * 1.3 + 1.7) + 0.2 * sin(az * 151.0 + t * 0.7 + 0.6);
+    float rest = 0.5 * sin(az * 37.0) + 0.3 * sin(az * 83.0 + 1.7) + 0.2 * sin(az * 151.0 + 0.6);
+    float lift = 1.0 + uFlicker.z * (sway - rest);
+    vec3 d0 = stLimbDir(d, c1, max(el, 0.0) / lift + min(el, 0.0));
     vec2 uv = stPlate(stImage(d0));
     float keep = step(0.02, -d0.z) * step(0.0, uv.y) * step(uv.y, 1.0);
-    float phase2 = az * 517.0;
-    float beat = 1.0 + uFlicker.x * (sin(uTime * uFlicker.y * 1.9 + phase2) - sin(phase2)) * smoothstep(0.0, 0.004, el);
+    float phase2 = az * 517.0 + 3.0 * sin(az * 61.0);
+    float beat = 1.0 + uFlicker.x * (sin(t * 1.9 + phase2) - sin(phase2)) * smoothstep(0.0, 0.004, el);
     col = inverseFilmic(textureLod(uPlate, uv, uLod + log2(max(uGrad, 1e-3))).rgb) * keep * max(beat, 0.0);
   }
   vec2 vq = vScreen * 0.5 * vec2(uAspect, 1.0);
@@ -109,7 +107,11 @@ export class Fringe {
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
-    u.uLod!.value = Math.log2(Math.max((this.texelsPerTan * 2 * Math.tan(THREE.MathUtils.degToRad(vfovDeg) / 2)) / heightPx, 1))
+    u.uLod!.value = this.lod(vfovDeg, heightPx)
+  }
+
+  lod(vfovDeg: number, heightPx: number): number {
+    return Math.log2(Math.max((this.texelsPerTan * 2 * Math.tan(THREE.MathUtils.degToRad(vfovDeg) / 2)) / heightPx, 1))
   }
 
   dispose(): void {

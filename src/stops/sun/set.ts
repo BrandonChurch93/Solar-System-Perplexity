@@ -65,7 +65,7 @@ export const createSet: SetFactory = async (ctx) => {
       if (!inOrbit) {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
-        ground.update(t, gain, vignette, aspect)
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height))
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height)
         loops.update(t, gain, vignette, aspect)
         return
