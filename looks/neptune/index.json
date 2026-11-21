@@ -1,12 +1,20 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T03:47:19.383Z",
- "head": "0f9a566be4c770f47e93362bdc0f17bab3a7a856",
- "note": "orbit view: fitted atmosphere layers and limb line, next limb brightening, ring, sky patch",
+ "pushed": "2026-11-21T03:54:53.766Z",
+ "head": "d5e47e05ed81b4f47185ebed523182a08ed5d980",
+ "note": "orbit view: limb veil, ring refit to the hero strand; next the hero sky patch, Triton light, rim line",
  "looks": [
   {
-   "time": "2026-11-21T03:46:23.711Z",
-   "file": "20261121034623711-compare-compare-neptune-hold-view.jpg",
+   "time": "2026-11-21T03:54:51.974Z",
+   "file": "20261121035451974-note-ringfit3-off.jpg",
+   "source": "out/work/nep/ringfit3-off.jpg",
+   "kind": "note",
+   "label": "Ring fit on the approved hero (brightened six times): one strand, normal, radius and centre fitted",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T03:53:51.272Z",
+   "file": "20261121035351272-compare-compare-neptune-hold-view.jpg",
    "source": "out/work/compare/compare-neptune-hold-view.jpg",
    "kind": "compare",
    "label": "neptune.hold: approved image left, film frame right, draft tier",
@@ -19,8 +27,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:46:22.659Z",
-   "file": "20261121034622659-still-f04605-16x9-draft-full.jpg",
+   "time": "2026-11-21T03:53:50.250Z",
+   "file": "20261121035350250-still-f04605-16x9-draft-full.jpg",
    "source": "out/work/stills/f04605-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, draft tier",
@@ -62,14 +70,6 @@
    "source": "out/work/nep/gen/sheet-mid.jpg",
    "kind": "note",
    "label": "Generated far side deck and cirrus tiles, mid band",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T03:34:11.827Z",
-   "file": "20261121033411827-note-wrap-preview.jpg",
-   "source": "out/work/nep/wrap/wrap-preview.jpg",
-   "kind": "note",
-   "label": "Wrap map preview: hero inset plus generated far side (flat lit)",
    "stop": "neptune"
   },
   {
