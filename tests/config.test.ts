@@ -24,6 +24,9 @@ describe('config validation', () => {
     const e = clone() as unknown as { motion: Record<string, unknown> }
     delete e.motion.terrainGround
     expect(() => buildConfig(e)).toThrow(/missing key motion.terrainGround/)
+    const g = clone()
+    g.motion.softToPx = g.motion.softFromPx
+    expect(() => buildConfig(g)).toThrow(/softToPx/)
   })
   it('fails when segments do not start at 0', () => {
     const c = clone()

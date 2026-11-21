@@ -9,7 +9,7 @@ export interface ShotSource { shotAt(frame: number, time: number): Shot }
 const RAD = Math.PI / 180
 const CENTRE = new THREE.Vector3()
 
-export function shutterMotion(open: Shot, mid: Shot, close: Shot): number {
+export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
   const m = config.motion
   const master = config.formats[config.formatKeys.master]!
   const half = master.height / 2
@@ -60,7 +60,21 @@ export function shutterMotion(open: Shot, mid: Shot, close: Shot): number {
       }
     }
   })
-  return most * Math.max(1 - mid.cover.amount, 0)
+  return most
+}
+
+export function seenShare(mid: Shot): number {
+  return Math.max(1 - mid.cover.amount * (mid.cover.hides ?? 1), 0)
+}
+
+export function shutterMotion(open: Shot, mid: Shot, close: Shot): number {
+  return rawMotion(open, mid, close) * seenShare(mid)
+}
+
+export function softness(raw: number): number {
+  const m = config.motion
+  const x = Math.min(Math.max((raw - m.softFromPx) / (m.softToPx - m.softFromPx), 0), 1)
+  return x * x * (3 - 2 * x)
 }
 
 export function samplesNeeded(base: number, cap: number, motion: number): number {
@@ -68,10 +82,18 @@ export function samplesNeeded(base: number, cap: number, motion: number): number
   return need <= base ? base : Math.min(need, Math.max(cap, base))
 }
 
-export function frameSamples(source: ShotSource, frame: number, tier: string): number {
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number }
+
+export function framePlan(source: ShotSource, frame: number, tier: string): FramePlan {
   const base = sampleCount(tier, segmentAtFrame(frame).kind)
   const cap = config.tiers[tier]!.maxSamplesPerFrame
-  if (cap <= base) return base
   const at = (offset: number): Shot => source.shotAt(frame, (frame + offset) / config.fps)
-  return samplesNeeded(base, cap, shutterMotion(at(0), at(shutterMid()), at(config.shutterFraction)))
+  const mid = at(shutterMid())
+  const raw = rawMotion(at(0), mid, at(config.shutterFraction))
+  const seen = raw * seenShare(mid)
+  return { samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: softness(raw) }
+}
+
+export function frameSamples(source: ShotSource, frame: number, tier: string): number {
+  return framePlan(source, frame, tier).samples
 }
