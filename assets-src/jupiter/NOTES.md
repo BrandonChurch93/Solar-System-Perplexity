@@ -250,6 +250,25 @@ Scorecards on main at dc0bf6d: `scorecards/round-008/` (SUMMARY.md, R1.json, R3.
 
 Before READY: merge origin/main (engine batch 10, asteroid belt), own gate and both measures green, looks pushed. READY names the commit, what changed per item, what is still weak.
 
+## Round 8 corrections, work log (from 09:35 UTC)
+
+Head before: 7780e18. Merged main 811fbca (engine batch 10) as 1f5c3e0. Main moved again (baed58d and later): merge again before READY.
+
+### Item 1 (sky reflection), done in the files, commit e1aa60c (code), binaries in the working tree until the round's best take is chosen
+
+- Tool `assets-src/jupiter/sky/margins.py` (`hold-prep`, `hold-place`, `terrain-prep`, `terrain-place`, run with `PYTHONPATH=assets-src/jupiter/sky`). `patch.py` no longer pads with `symmetric` (edge pad, and `side()` no longer blends a mirrored copy); the margins come from `margins.py`, which keeps the inside of the approved border byte for byte (it prints the check).
+- Hold patch: left and right margins from the takes of the earlier round (`gen/skyext_{left,right}_sd5.png`) placed without any mirror blend; top from two new takes `gen/skyext_{tl,tr}_sd5.png` (seedream_5, 16:9, take 1 each, phase correlation score 0.954 and 0.951), joined at the middle column over 32 px; bottom from `gen/skyext_br_sd5.png` (take 1, score 0.92, padded columns 704 to 3520) joined at column 736 to a translated copy (`borrow()`: the sky 198 rows higher and 250 px sideways, high pass sigma 24, on the border's level). Rejected: bottom left takes `skyext_bl_sd5`, `skyext_bl_t2_sd5`, `skyext_bl_t4_sd5` (seedream_5, redrew the whole picture), `skyext_bl_t3_nbp` (nano_banana_pro, second Milky Way band), centre window `skyext_bc_sd5` (redrew the picture).
+- Terrain patch: top from two takes `gen/skyterr_{tl,tr}_sd5.png` (seedream_5, 16:9, take 1 each, score 0.904 and 0.921) made on display domain windows of the canvas with the approved image inside (`gen/skyterr_{tl,tr}_in.png`, top 198 rows grey). Only the fine part of the takes is used (minus a Gaussian of sigma 40, in display values, each take on its own, cross-fade over 240 px from column 704), on a level taken from the 24 rows under the border, smoothed over 48 px and continued upward along a slope of 3 px sideways per row (the horizon and the Milky Way both run that way). Right margin: the canvas right tile, level matched to the inside at the border (harmonic), its chroma cut to 0.35 (the tile's stars were orange). Left and bottom margins lie below the horizon: the haze formula recovered from the inside (mean error 0.0006). First try (patch domain window with a grey bar on the right, `gen/skyterr_right_sd5.png`) redrew the picture, rejected.
+- The image model redraws the whole picture when the window is mostly dark, or is the patch domain terrain picture; it stays faithful on display domain pictures and where the Milky Way reaches the bar. `bar()` refuses a take whose phase correlation shift exceeds 8 px; good takes score 0.90 to 0.95, bad ones 0.1 to 0.26.
+- `tools/assets/mirrorcheck.py` on drafts after the hold rebuild: 2895, 2985, 2997, 3013 clean; 3005 reports x 1596 (0.60) and 3020 reports x 224 (0.56). Own scan `out/work/jupiter/tools/axis.py` repeats the tool's test and then leaves out the 6 px beside the axis: the correlation falls to 0.00 in both, so the score comes from one bright star sitting on the test axis, not from a reflection. Native windows `out/work/view/mirror_3005_3020.jpg` show no reflected pattern.
+- Weak: the generated margins hold fewer stars than the inside (hold), and the terrain top margin near the horizon glow is only a level continuation.
+
+### Plan for the other items (causes found)
+
+- Item 2: engine cover alpha falls 0.42 to 0.10 between 3028 and 3029 (amount 0.5 to 0.316; the alpha has a threshold) and on the terrain side it covers the whole frame with `coverTop [0, 0]`, so the sky is black under it and stars return in one frame. The cover window (16 frames) is the engine's. Plan: `coverSea { centre: nadir x (R + 1), radius: R, edge }` (nadir and R from `relief.json`; R 331.946, 1.004 R is about 2.9 deg over the horizon like `coverShell [1, 1.015]` at the handover altitude) so the sky is open on both sides of the cut; the deck's own haze takes over with a moving pattern and a rim softness that falls with the haze amount over about 20 frames.
+- Item 3: same on the rise side (cut 3269 to 3270).
+- Item 6: at 2997 the hold patch is minified 1.56 texels per pixel (hold 1.47), not magnified; the stars are the approved hero's. Test `mips: true` for the sky patches.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
