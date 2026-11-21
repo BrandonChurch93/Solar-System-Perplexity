@@ -166,6 +166,9 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
   - 2796: 88c4582a3831a96deea45b3ce42606ab95cd7b1582d1d1076a0dbd208dc987c9 (same bytes as with the first margin)
   - 2782 on the branch as committed, without the patch: 54ac7b032848cce37004ee07096520c02ee24874cfc899c1814659d700032003. Against the patched frame 473 pixels differ by more than 2: all on the near rock except 42 on the hero (one mote behind it).
 
+- 08:38 review contact sheet of the final state: `out/work/belt/r3/sheet.jpg` (25 frames, every third, patch applied). Seconds per frame: 31.8 (2745), 15.5, 16.1, 16.0, 14.9, 13.3, 12.1, 10.3, 9.6, 10.1 (2772), 11.8, 14.3, 15.3, 14.7, 15.3, 16.1 (2790), 14.1, 12.7, 12.2, 11.9, 10.8, 10.5, 10.1, 10.3, 10.4. Draft proof of 2325, 2580, 2212 repeated with the final patch: same three sha256 as main.
+- 08:39 looks pushed, DONE sent. Working tree keeps `dust.patch` applied (two shared files modified, never committed). `/tmp/mainwt` was a worktree of plain main for the proof, removed.
+
 ## Still weak (after task 2)
 - No rock before 2754 or after 2802. The pan is under a degree per frame there, so a rock could only cross with a speed of its own (`approach` exists in the model but is 0 for all rocks).
 - The rocks' lit faces are a light grey, lighter than Phobos in the approved Mars hero. `light.gain` 0.36 was kept from task 1.
