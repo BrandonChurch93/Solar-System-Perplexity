@@ -42,7 +42,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
-    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, nightRim: look.nightRim, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
+    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, shadowHaze: look.shadowHaze, nightRim: look.nightRim, litEdge: look.litEdge, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
@@ -54,7 +54,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur })
+  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur, term: look.io.term, dusk: look.io.dusk, crisp: look.io.crisp })
   orbit.add(io.mesh)
   const ioHome = new THREE.Vector3().fromArray(look.io.home)
 
@@ -75,6 +75,10 @@ export const createSet: SetFactory = async (ctx) => {
   const diveCover = plan.coverCenter(plan.seg.dive!)
   const riseCover = plan.coverCenter(plan.seg.rise)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const seaCentre = new THREE.Vector3().fromArray(nadir).multiplyScalar(seaRadius + 1)
+  const above = (p: THREE.Vector3) => p.distanceTo(seaCentre) - seaRadius
+  const floor = [above(plan.terrain(0).position), above(plan.terrain(plan.seg.terrain.end - plan.seg.terrain.start).position)]
+  const ceiling = [above(plan.dive(diveCover).pose.position), above(plan.rise(riseCover - 1e-6).pose.position)]
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
   const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
@@ -107,7 +111,11 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
         const h = look.deck.haze
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, Math.max(1 - (state.time - diveCover) / h.clear, 1 - (riseCover - state.time) / h.gather))
+        const seg = state.segment
+        const high = above(seg.kind === 'dive' ? plan.dive(state.time).pose.position : seg.kind === 'rise' ? plan.rise(state.time).pose.position : plan.terrain(state.time - plan.seg.terrain.start).position)
+        const fall = THREE.MathUtils.clamp((high - floor[0]) / (ceiling[0] - floor[0]), 0, 1)
+        const climb = THREE.MathUtils.clamp((high - floor[1]) / (ceiling[1] - floor[1]), 0, 1)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, seg.kind === 'dive' ? h.clear[0] * Math.pow(fall, h.clear[1]) : seg.kind === 'rise' ? h.gather[0] * Math.pow(climb, h.gather[1]) : 0)
         pall.apply(seaUniforms, state.segment, state.time, 'terrain', view.camera.fov, view.format.width / view.format.height)
         sea.material.uniforms.uGain!.value = gain
         sea.mesh.visible = (seaUniforms.uPall!.value as THREE.Vector4).x > 0
