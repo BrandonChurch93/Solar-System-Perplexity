@@ -1,9 +1,39 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T17:52:28.749Z",
- "head": "c3dd5d9d8be25da94428a7818209f4604b02f119",
- "note": "round 3 READY: all four sheets, judged stills and two fast frames on the final code",
+ "pushed": "2026-11-21T19:50:17.483Z",
+ "head": "a68edba4963aef5fe65e0a67b7f5ecbe8ada83ce",
+ "note": "Phase 6 polish, item 1 covers: before sheets; building an own veil that leaves the sky alone",
  "looks": [
+  {
+   "time": "2026-11-21T19:50:16.830Z",
+   "file": "20261121195016830-note-venus.dive-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-preview-review.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, before: dive cover sheet of the judged build",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T19:50:16.181Z",
+   "file": "20261121195016181-note-venus.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.rise-cover-preview-review.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, before: rise cover sheet of the judged build (sky black 1558 to 1562, red Sun)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T17:53:25.009Z",
+   "file": "20261121175325009-frame-fn3-1185.jpg",
+   "source": "out/work/venus/r3/fn3-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, review tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:52:28.080Z",
    "file": "20261121175228080-note-fn2-1308.jpg",
@@ -49,36 +79,6 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T17:41:39.734Z",
-   "file": "20261121174139734-sheet-venus.rise-preview-review.jpg",
-   "source": "out/work/sheets/venus.rise-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet venus.rise, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1604,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:36:32.883Z",
-   "file": "20261121173632883-sheet-venus.dive-preview-review.jpg",
-   "source": "out/work/sheets/venus.dive-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet venus.dive, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1260,
-   "last": 1349,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T16:59:56.740Z",
    "file": "20261121165956740-frame-fn2-1440.jpg",
    "source": "out/work/venus/r3/fn2-1440.png",
@@ -87,20 +87,6 @@
    "stop": "venus",
    "segment": "venus.terrain",
    "frame": 1440,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:58:05.484Z",
-   "file": "20261121165805484-frame-fn2-1185.jpg",
-   "source": "out/work/venus/r3/fn2-1185.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, review tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
