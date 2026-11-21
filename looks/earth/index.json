@@ -1,47 +1,53 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T14:01:37.123Z",
- "head": "6c0dd3ec8ac529096396a745c9e941a5becad3c9",
- "note": "sky aim under the hero band for the arrival, detail takes for lit land, dive and rise easing measured",
+ "pushed": "2026-11-21T14:27:40.561Z",
+ "head": "b97ac293ce2c9cb29c5d6b5ea5685f4dc602ff4f",
+ "note": "dive: review stills of the current plunge (1874 to 1878), candidate E1 with a steady approach and the plunge under the full cover in render",
  "looks": [
+  {
+   "time": "2026-11-21T14:27:19.789Z",
+   "file": "20261121142719789-note-r-1878.jpg",
+   "source": "out/work/earth/p45/r-1878.png",
+   "kind": "note",
+   "label": "dive 1878 at review on the round 19 head (plunge ahead of the cover)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T14:27:19.158Z",
+   "file": "20261121142719158-note-r-1876.jpg",
+   "source": "out/work/earth/p45/r-1876.png",
+   "kind": "note",
+   "label": "dive 1876 at review on the round 19 head (plunge ahead of the cover)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T14:27:18.500Z",
+   "file": "20261121142718500-note-r-1874.jpg",
+   "source": "out/work/earth/p45/r-1874.png",
+   "kind": "note",
+   "label": "dive 1874 at review on the round 19 head (plunge ahead of the cover)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T14:26:38.448Z",
+   "file": "20261121142638448-frame-r-1878.jpg",
+   "source": "out/work/earth/p45/r-1878.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1878, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1878,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T14:01:36.532Z",
    "file": "20261121140136532-note-t1.jpg",
    "source": "out/work/earth/detail/t1.png",
    "kind": "note",
    "label": "detail take 1, full hero (modest restyle, not used)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:01:35.953Z",
-   "file": "20261121140135953-note-t-sa.jpg",
-   "source": "out/work/earth/detail/t-sa.png",
-   "kind": "note",
-   "label": "detail take, South America crop (unjudged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:01:35.390Z",
-   "file": "20261121140135390-note-arrive.jpg",
-   "source": "out/work/earth/p42/arrive.jpg",
-   "kind": "note",
-   "label": "arrival 1655 to 1680 with the old aim: band rises from a plain star field",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:01:34.804Z",
-   "file": "20261121140134804-note-tl-1857.jpg",
-   "source": "../../../../tmp/tl-1857.png",
-   "kind": "note",
-   "label": "1857 top left, old aim against candidate aim (lifted)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:01:34.168Z",
-   "file": "20261121140134168-note-arr2.jpg",
-   "source": "../../../../tmp/arr2.jpg",
-   "kind": "note",
-   "label": "arrival 1662 1668 with the candidate orbit aim: shared band under the hero band",
    "stop": "earth"
   },
   {
