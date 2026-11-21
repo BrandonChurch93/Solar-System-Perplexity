@@ -200,6 +200,8 @@ void main() {
   outColor = vec4(vColor * (core + glow), 0.0);
 }`
 
+const BEHIND = { stencilWrite: true, stencilFunc: THREE.EqualStencilFunc, stencilRef: 0, stencilFuncMask: 0xff, stencilWriteMask: 0 } as const
+
 const POLE = [0.45, 0.82, 0.35] as const
 const GAMMA_TURN = 0.28
 const STAR_MAX_SIZE = 11
@@ -251,7 +253,7 @@ export class Sky {
       uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
-    })
+    }, BEHIND)
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
     const star = new Float32Array(count * 4)
@@ -319,6 +321,7 @@ export class Sky {
       depthTest: false,
       depthWrite: false,
       transparent: true,
+      ...BEHIND,
     })
     this.stars = new THREE.Points(geo, mat)
     this.stars.frustumCulled = false
@@ -385,7 +388,7 @@ export class Sky {
     this.band = band
   }
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: readonly number[] | null): void {
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)
@@ -408,7 +411,16 @@ export class Sky {
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
-    if (this.texture) this.pass.render(renderer, target)
+    if (this.texture && !open) this.pass.render(renderer, target)
+    if (this.texture && open) {
+      target.scissorTest = true
+      for (let i = 0; i < open.length; i += 4) {
+        target.scissor.set(open[i]!, open[i + 1]!, open[i + 2]!, open[i + 3]!)
+        this.pass.render(renderer, target)
+      }
+      target.scissorTest = false
+      target.scissor.set(0, 0, target.width, target.height)
+    }
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
     su.uSky!.value = this.texture
     su.uBand!.value = this.band
@@ -419,9 +431,9 @@ export class Sky {
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
     this.stars.geometry = this.cull ? this.starCulled : this.starPlain
-    if (this.cull) this.orderStars(camera, height, aspect)
+    if (this.cull && (!open || open.length > 0)) this.orderStars(camera, height, aspect)
     renderer.setRenderTarget(target)
-    renderer.render(this.starScene, camera)
+    if (!open || open.length > 0) renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)
     camera.position.copy(savedPos)
     camera.updateMatrixWorld(true)

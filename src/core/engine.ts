@@ -3,6 +3,7 @@ import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
+import { openRects } from './tiles'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot, SkyPatch } from './types'
@@ -48,6 +49,10 @@ export class Engine {
   private skyBand: THREE.Texture | null = null
   private attached: string[] = []
   private lastShot: Shot | null = null
+  private readonly solid: THREE.Material[] = []
+  private readonly veiled: THREE.Material[] = []
+  private readonly marked = new WeakSet<THREE.Material>()
+  private alpha = new Uint16Array(0)
 
   constructor(formatId: string, assets: string) {
     const format = config.formats[formatId]
@@ -67,7 +72,7 @@ export class Engine {
     for (const e of OPTIONAL_EXTENSIONS) gl.getExtension(e)
     this.sets = new SetLoader(this.renderer, () => this.format, this.renderer.capabilities.getMaxAnisotropy())
     this.sky = new Sky(STAR_COUNT)
-    this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true)
+    this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(format.width, format.height)
     this.applySize()
   }
@@ -78,7 +83,7 @@ export class Engine {
     this.canvas.style.aspectRatio = width + ' / ' + height
     this.sampleTarget.dispose()
     this.accumulator.dispose()
-    this.sampleTarget = floatTarget(width, height, THREE.HalfFloatType, true)
+    this.sampleTarget = floatTarget(width, height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(width, height)
     this.post.resize(width, height)
     this.camera.aspect = width / height
@@ -180,10 +185,8 @@ export class Engine {
     setDiag(this.diag)
     setSamples(count, GRAD_FLOOR)
     r.setRenderTarget(this.sampleTarget)
-    r.clear(true, true, false)
+    r.clear(true, true, true)
     if (!raw) {
-      cam.fov = mid.camera.vfov
-      cam.updateProjectionMatrix()
       this.skyPatches.length = 0
       const aims = this.director!.sky
       for (const state of shot.sets) {
@@ -200,9 +203,6 @@ export class Engine {
       }
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height)
-      cam.fov = shot.camera.vfov
-      cam.updateProjectionMatrix()
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
@@ -224,7 +224,24 @@ export class Engine {
       set.update(state, shot, view)
     }
     r.setRenderTarget(this.sampleTarget)
-    r.render(this.world, cam)
+    const early = !raw && this.sky.cull && this.sortWorld()
+    let open: number[] | null = null
+    if (early) {
+      this.renderWorld(cam, this.veiled)
+      if (this.alpha.length !== width * height * 4) this.alpha = new Uint16Array(width * height * 4)
+      r.readRenderTargetPixels(this.sampleTarget, 0, 0, width, height, this.alpha)
+      open = openRects(this.alpha, width, height)
+    }
+    if (!raw) {
+      cam.fov = mid.camera.vfov
+      cam.updateProjectionMatrix()
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height, open)
+      cam.fov = shot.camera.vfov
+      cam.updateProjectionMatrix()
+      r.setRenderTarget(this.sampleTarget)
+    }
+    if (early) this.renderWorld(cam, this.solid)
+    else r.render(this.world, cam)
     if (this.near.children.length > 0) {
       r.clearDepth()
       r.render(this.near, cam)
@@ -232,6 +249,48 @@ export class Engine {
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+  }
+
+  private sortWorld(): boolean {
+    const solid = this.solid
+    const veiled = this.veiled
+    solid.length = 0
+    veiled.length = 0
+    let plain = true
+    this.world.traverse((o) => {
+      const m = (o as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined
+      if (!m) return
+      for (const x of Array.isArray(m) ? m : [m]) {
+        if (x.transparent) {
+          if (!veiled.includes(x)) veiled.push(x)
+        } else if ((x.blending === THREE.NormalBlending || x.blending === THREE.NoBlending) && x.colorWrite && !x.alphaToCoverage && !((x as THREE.MeshPhysicalMaterial).transmission > 0) && (!x.stencilWrite || this.marked.has(x))) {
+          if (!solid.includes(x)) solid.push(x)
+        } else plain = false
+      }
+    })
+    if (!plain || solid.length === 0) return false
+    for (const x of solid) {
+      if (this.marked.has(x)) continue
+      x.stencilWrite = true
+      x.stencilFunc = THREE.AlwaysStencilFunc
+      x.stencilRef = 1
+      x.stencilFuncMask = 0xff
+      x.stencilWriteMask = 0xff
+      x.stencilFail = THREE.KeepStencilOp
+      x.stencilZFail = THREE.KeepStencilOp
+      x.stencilZPass = THREE.ReplaceStencilOp
+      this.marked.add(x)
+    }
+    return true
+  }
+
+  private renderWorld(cam: THREE.PerspectiveCamera, hidden: THREE.Material[]): void {
+    const was = hidden.map((m) => m.visible)
+    for (const m of hidden) m.visible = false
+    this.renderer.render(this.world, cam)
+    hidden.forEach((m, i) => {
+      m.visible = was[i]!
+    })
   }
 
   async prefetch(ids: string[]): Promise<void> {
