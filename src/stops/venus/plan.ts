@@ -1,6 +1,7 @@
 import { config, type Segment } from '../../config'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { coverWindow } from '../../director/timeline'
+import type { CoverHorizon, Pose } from '../../core/types'
 import fit from './fit.json'
 
 export const params: MoveParams = {
@@ -29,12 +30,24 @@ export const params: MoveParams = {
 
 export const haze = { dive: { lead: 3.5, hold: 1, tail: 16 }, rise: { lead: 10, hold: 1.5, tail: 16 } }
 
+export const shell = { thin: [0.985, 1.045], near: [1, 1.18], fade: [0.2, 0.5] }
+
 const ease = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   return t * t * (3 - 2 * t)
 }
 
+const shellAt = (height: number): [number, number] => {
+  const k = ease((height - shell.fade[0]!) / (shell.fade[1]! - shell.fade[0]!))
+  return [shell.near[0]! + (shell.thin[0]! - shell.near[0]!) * k, shell.near[1]! + (shell.thin[1]! - shell.near[1]!) * k]
+}
+
 class VenusPlan extends StopPlan {
+  override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
+    if (view === 'orbit') this.p.coverShell = shellAt(local.position.length() - 1)
+    return super.horizon(view, local)
+  }
+
   override coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 0
