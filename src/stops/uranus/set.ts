@@ -13,6 +13,7 @@ import patchJson from './patches.json'
 import { plan } from './plan'
 import { hairLines, parseLines, ringGeometry, Rings } from './rings'
 import skyJson from './sky.json'
+import { Veil } from './veil'
 
 async function heights(ctx: SetContext, path: string, width: number, height: number): Promise<Float32Array> {
   const raw = new Uint16Array(await ctx.buffer(path))
@@ -60,6 +61,8 @@ export const createSet: SetFactory = async (ctx) => {
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const rings = new Rings(ringGeo, look.rings, holdPose.position)
   orbit.add(rings.mesh)
+  const veil = new Veil(await ctx.texture(base + 'veil.webp', { srgb: false, anisotropy: 16, repeat: true }), look.veil)
+  orbit.add(veil.mesh)
   const ringNormal = new THREE.Vector3().fromArray(fit.rings!.normal).normalize()
   const moonSize = look.moons.heightSize[key]
   const moons: { body: Moon; home: THREE.Vector3; spinAxis: THREE.Vector3; phase: number; light: THREE.Vector3 }[] = []
@@ -135,6 +138,10 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(sun, plan.spin(state.time), elapsed, gain, state.weight, shot.post.vignette, aspect)
       halo.update(sun, gain * state.weight)
       rings.update(sun, gain * state.weight)
+      const kind = shot.segment.kind
+      const mine = shot.segment.stop === plan.id
+      const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && (kind === 'hold' || kind === 'dive') ? 1 : 0
+      veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
       turn.setFromAxisAngle(ringNormal, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       for (const m of moons) {
         m.body.mesh.position.copy(m.home).applyQuaternion(turn)
@@ -148,6 +155,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.mesh.visible = visible && look.show.globe
       halo.mesh.visible = visible && look.show.globe
       rings.mesh.visible = visible && look.show.rings
+      veil.mesh.visible = visible && look.show.rings && look.show.sky
       for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
     },
@@ -155,6 +163,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.dispose()
       halo.dispose()
       rings.dispose()
+      veil.dispose()
       ringGeo.dispose()
       for (const m of moons) m.body.dispose()
       far.dispose()

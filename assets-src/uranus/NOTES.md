@@ -273,3 +273,23 @@ READY sent at b87454f (07:51). Round 6 is running from the branch head; the scor
 ### Sheets seen at review (08:00)
 - Hold steady; terrain shows parallax of the deck against the ring arcs; dive 4142 ring ribbon fine; 4167 cover clearing patchy and blocky at the top for one frame; rise rings faint.
 - A faint curved line on the deck at lower left and right at 4175 and 4200: to inspect (plate or far map edge).
+
+## State at 09:10 UTC (read this first after a compaction)
+
+Round 6 renders from b87454f (mail 08:57); everything pushed later is judged in round 7. Scorecard expected 10:00 to 10:30.
+
+### Ring bands of the hold sky: veil (weak point 1, shipped)
+- Idea: the hero's faint ring bands cannot stay in the sky patch (they slide against the 3D rings when the camera orbits) and cannot simply be removed (the judged frame loses them). They are taken out of the patch and drawn again on the ring plane, so patch plus veil at 4035 is the shipped picture by construction and the bands move with the rings.
+- `sky/patch.py`: `grid()`, `unwrap()`, `coherent()` (median along the ring over 120 of 2700 columns, 17 shears), `cast()`. The veil code is sqrt encoded, `VEIL_MAX 0.04` scene units, limited to the room under the sky (7 px minimum filter), shifted by the drift of the camera fit (-1.79, 2.18 px at 1920), subtracted from the patch. Grooves of removed lines are filled only in dark sky (`GROOVE (0.004, 0.012)`). Writes `veil.webp` (2700 x 1520 full, 1350 x 760 web) beside `sky-hold.webp`.
+- `src/stops/uranus/veil.ts`: annulus of 96 segments in the plane of `look.veil.normal`, radius 1.08 to 1.84, additive, alpha 0, `textureGrad` with analytic gradients in angle and radius, same lens falloff as the sky. `set.ts` gives it the weight the engine gives the patch (`smoothstep(u, 0.2, 0.8)` in the travel of the stop before, 1 in hold and dive, else 0) times `shot.skyGlow`.
+- Measured at review against the shipped stills (`out/work/u/sky2/r-4035.png`): mean difference 0.05 levels, abs mean 0.12 levels, 0.87 percent of pixels over 3 levels, 0.17 percent over 8 (that includes the refitted moons). Final compare of the hold looks like before. Veil max 0.0276, mean in the zone 0.0018.
+- Patch alone, x4 crops: `out/work/u/sky4/top-before-veil.jpg`, `left-before-veil.jpg` (bands gone, grooves mostly filled). 3960 and 4109 side by side: `out/work/u/r2/c3-*.jpg`. Dive 4120, 4137, 4150 and arrival 3948: no blotch, no pop (`out/work/u/r2/v3-dive4.jpg`).
+- Disk: full 49 MB, web 20 MB.
+- Tried before the veil and dropped: flow straightening of the unwrap (`out/work/u/sky3/flow.py`): the traced tracks cross, flow error 7.8 rows after 40 columns on the 89 longest smooth tracks, global Fourier model 9 rows rms. Groove fill alone made bright seams.
+- Finding: the m-series stills of the moon fit (`out/work/u/r1/m*.png`) and the hold compare pushed to looks at 08:33 were rendered with experiment patch g in `public/`, not the shipped patch. The moon numbers are unaffected, the committed assets at e4e07fd were the shipped patch. The 09:05 compare is patch plus veil.
+
+### Next
+1. Rings faint in the rise (back-scatter term).
+2. Cover clearing 4167 patchy and blocky at the top.
+3. Faint curved line on the deck at 4175 and 4200.
+4. `npm run crops`, read R1, R3, R4.
