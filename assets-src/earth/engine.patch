@@ -1,28 +1,31 @@
-diff --git a/src/director/film.ts b/src/director/film.ts
-index e270072..55aaa8b 100644
---- a/src/director/film.ts
-+++ b/src/director/film.ts
-@@ -508,6 +508,11 @@ export class FilmDirector implements Director {
-             const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
-             cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
-           }
-+          const sea = p.p.coverSea
-+          if (sea && view === 'terrain') {
-+            const c = new THREE.Vector3().fromArray(sea.centre).sub(local.position).divideScalar(sea.radius).applyQuaternion(local.quaternion.clone().invert())
-+            cover.shell = { centre: [c.x, c.y, c.z], inner: sea.edge[0], outer: sea.edge[1] }
-+          }
-           const dt = time - p.coverCenter(segment)
-           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
-           const k = p.p.coverRush
 diff --git a/src/director/moves.ts b/src/director/moves.ts
-index 99868af..af3b93c 100644
+index af3b93c..b180ffb 100644
 --- a/src/director/moves.ts
 +++ b/src/director/moves.ts
-@@ -35,6 +35,7 @@ export interface MoveParams {
-   coverEdge?: [number, number]
-   coverEdgeRise?: [number, number]
-   coverShell?: [number, number]
-+  coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
-   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
-   spinDegPerSecond: number
-   moonDegPerSecond: number
+@@ -22,7 +22,7 @@ export interface MoveParams {
+   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
+   spot: { x: number; y: number; on?: 'globe' | 'rings' }
+   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
+-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
++  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
+   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
+   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
+   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
+@@ -222,7 +222,7 @@ export class StopPlan {
+     const out = position.clone().normalize()
+     const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+     const th = Math.tan(THREE.MathUtils.degToRad(this.fit.vfovDeg) / 2)
+-    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
++    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
+     const framed = Math.asin(1 / r.distance) + Math.atan(r.offset[1] * th)
+     const pitch = Math.acos(Math.min(1 / position.length(), 1)) + mix(carried, framed, smooth(e))
+     const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
+@@ -436,7 +436,7 @@ export class StopPlan {
+     else if (since < tilt) {
+       const out = position.clone().normalize()
+       const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+-      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
++      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
+       const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
+       const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
+       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))
