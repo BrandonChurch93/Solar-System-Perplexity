@@ -19,6 +19,7 @@ FAR_BASE = (4096, 2048)
 FAR_FINE = 0.003
 REACH = (0.02, 0.1)
 RAGGED = 0.012
+CARRY = (20, 40, 40, 700, 30, 60, 600)
 HEIGHT = (1024, 512)
 CLOUD_HEIGHT = 0.07
 WIDE_SMALL = WORK + 'plate/wide-canvas.png'
@@ -239,13 +240,23 @@ def main():
     base = ndi.gaussian_filter(low[idx[0], idx[1]], 50)
     glob = float(np.median(ll))
     base = base + (glob - base) * smooth(60, 700, dist)
-    lsyn = base + amount * syn
-    syn_rgb = np.stack([np.exp(line[c][1] + line[c][0] * lsyn) * (1 + (0.03, 0.01, -0.01)[c] * tone) for c in range(3)], -1)
     reach = np.minimum(np.minimum(px / AW, 1 - px / AW), 1 - py / AH) + RAGGED * tone
-    w = smooth(0.05, 0.95, ndi.gaussian_filter(ndi.binary_erosion(inside, iterations=10).astype(np.float32), 6)) * smooth(REACH[0], REACH[1], reach)
+    held = ndi.binary_erosion(inside, iterations=10)
+    wr = smooth(REACH[0], REACH[1], reach)
+    w = smooth(0.05, 0.95, ndi.gaussian_filter(held.astype(np.float32), 6)) * wr
     w = w[..., None]
+    lreal = np.log(np.maximum(real, 1e-3))
+    norm = np.maximum(ndi.gaussian_filter(held.astype(np.float32), CARRY[0]), 1e-3)
+    lowc = np.stack([ndi.gaussian_filter(np.where(held, lreal[..., c], 0), CARRY[0]) / norm for c in range(3)], -1)
+    trust = held & (wr > 0.999)
+    away, at = ndi.distance_transform_edt(~trust, return_indices=True)
+    t = smooth(CARRY[2], CARRY[3], away)
+    basec = np.stack([ndi.gaussian_filter(lowc[..., c][at[0], at[1]], CARRY[1]) * (1 - t) + (line[c][1] + line[c][0] * base) * t for c in range(3)], -1)
+    corr = (basec - lowc) * ((1 - wr) * held)[..., None]
+    calm = ndi.gaussian_filter(syn, CARRY[4]) * (1 - smooth(CARRY[5], CARRY[6], away))
+    syn_rgb = np.stack([np.exp(basec[..., c] + line[c][0] * amount * (syn - calm)) * (1 + (0.03, 0.01, -0.01)[c] * tone) for c in range(3)], -1)
     print('albedo colour line slope per channel', [round(float(l[0]), 3) for l in line], 'median', float(np.exp(glob)))
-    far = real * w + syn_rgb * (1 - w)
+    far = real * np.exp(corr) * w + syn_rgb * (1 - w)
     print('synth amount', amount, 'real fraction', float(inside.mean()))
 
     gw, gh = FAR['full']
@@ -263,11 +274,12 @@ def main():
         mu = (jf * fw - 0.5).astype(np.float32)
         mv = (kf * fh - 0.5).astype(np.float32)
         up = lambda v: cv2.remap(np.ascontiguousarray(v.astype(np.float32)), mu, mv, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-        lf = up(base) + amount * streaks(xf, zf, angle, 11, FAR_FINE)
+        sf2 = amount * (streaks(xf, zf, angle, 11, FAR_FINE) - up(calm))
         tf = streaks(xf, zf, angle, 301, FAR_FINE)
-        synf = np.stack([np.exp(line[c][1] + line[c][0] * lf) * (1 + (0.03, 0.01, -0.01)[c] * tf) for c in range(3)], -1)
+        bf = up(basec)
+        synf = np.stack([np.exp(bf[..., c] + line[c][0] * sf2) * (1 + (0.03, 0.01, -0.01)[c] * tf) for c in range(3)], -1)
         wf = np.clip(up(w[..., 0]), 0, 1)[..., None]
-        fine = realf * wf + synf * (1 - wf)
+        fine = realf * np.exp(up(corr)) * wf + synf * (1 - wf)
         enc[r0:r1] = (np.sqrt(np.clip(fine / A_MAX, 0, 1)) * 255 + 0.5).astype(np.uint8)
     img = Image.fromarray(enc[::-1])
     img.save(PUB + 'full/deck-far.jpg', quality=93, subsampling=0)

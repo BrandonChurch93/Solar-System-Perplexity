@@ -13,7 +13,7 @@ const toBody = (world: THREE.Vector3): THREE.Vector3 => {
   v.set(v.x / look.shape.polar, v.y / look.shape.equator, v.z / look.shape.equator)
   return v.applyQuaternion(axisQ).applyQuaternion(globeQ.clone().invert()).normalize()
 }
-const CENTRE_DEG = [25, -26]
+const CENTRE_DEG = [34, -24.5]
 const ground = toBody(plan.spot)
 const ahead = toBody(plan.spot.clone().addScaledVector(plan.heading, 0.01).normalize())
 const lon = THREE.MathUtils.degToRad(CENTRE_DEG[0]!)
