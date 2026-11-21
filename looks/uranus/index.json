@@ -1,9 +1,25 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T19:01:16.445Z",
+ "pushed": "2026-11-21T19:02:40.898Z",
  "head": "4e4ce400bd074063e9373003579ae0e752a1d8e9",
  "note": "Saturn sky merged (efc8358): sky check in work, rim of the hold patch to be refitted to the new live sky",
  "looks": [
+  {
+   "time": "2026-11-21T19:02:33.238Z",
+   "file": "20261121190233238-note-live-wide110.jpg",
+   "source": "out/work/u/sky4/live-wide110.png",
+   "kind": "note",
+   "label": "live shared sky alone, 110 deg lens at the hold aim, after Saturn's turn",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T19:02:32.570Z",
+   "file": "20261121190232570-note-sa-4137.jpg",
+   "source": "out/work/u/r4/sa-4137.png",
+   "kind": "note",
+   "label": "4137 draft on main efc8358 (Saturn sky): dive sky now dark, patch rim still fitted to the old sky",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-21T19:01:15.243Z",
    "file": "20261121190115243-note-live-wide110.jpg",
@@ -19,34 +35,6 @@
    "kind": "note",
    "label": "4137 draft on main efc8358 (Saturn sky): dive sky now dark, patch rim still fitted to the old sky",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:00:52.744Z",
-   "file": "20261121190052744-frame-f04413-review.jpg",
-   "source": "out/work/sheets/.frames-KsAbzX/f04413-review.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4413, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4413,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T19:00:43.721Z",
-   "file": "20261121190043721-frame-live-4145.jpg",
-   "source": "out/work/u/sky4/live-4145.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4145, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4145,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T18:58:17.832Z",
