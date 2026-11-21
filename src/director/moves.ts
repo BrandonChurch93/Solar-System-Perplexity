@@ -35,6 +35,7 @@ export interface MoveParams {
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
   coverShell?: [number, number]
+  coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
   spinDegPerSecond: number
   moonDegPerSecond: number
