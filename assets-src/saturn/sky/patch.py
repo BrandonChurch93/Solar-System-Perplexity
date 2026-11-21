@@ -99,11 +99,28 @@ def hold(hero, fill, glow):
     compose(a, f, g, body, "sky-hold.webp")
 
 
-def terrain(close, fill, glow, mask):
+def terrain(close, fill, glow):
+    import json
+    fit = json.loads((ROOT / "src/stops/saturn/close.json").read_text())
+    rings = json.loads((ROOT / "src/stops/saturn/rings.json").read_text())
+    w, h = FULL
+    t = np.tan(np.radians(fit["vfov"]) / 2)
+    xs, ys = np.meshgrid((np.arange(w) + 0.5) / w * 2 - 1, 1 - (np.arange(h) + 0.5) / h * 2)
+    d = np.stack([xs * t * w / h, ys * t, -np.ones_like(xs)], -1)
+    d /= np.linalg.norm(d, axis=-1, keepdims=True)
+    tilt, roll = np.radians(fit["tiltDeg"]), np.radians(fit["rollDeg"])
+    n = np.array([-np.sin(roll) * np.cos(tilt), np.cos(roll) * np.cos(tilt), np.sin(tilt)])
+    origin = -np.array(fit["centre"])
+    hit, _ = spheroid_hit(origin, d, n)
+    tr, pr = plane_hit(origin, d, n)
+    rr = np.linalg.norm(pr, axis=-1)
+    body = hit | ((tr > 0) & (rr < rings["warpClose"][3] + 0.03))
     a = scene(close, Image.LANCZOS, True)
+    body |= ndi.gaussian_filter(a @ LW, 6) > 0.05
+    body = ndi.binary_dilation(body, iterations=10)
+    Image.fromarray((body * 255).astype(np.uint8)).resize((1408, 792)).save(WORK / "sky-terrain-mask.png")
     g = scene(glow, Image.BICUBIC) if glow else np.zeros_like(a)
     f = scene(fill, Image.LANCZOS, True)
-    body = np.asarray(Image.open(mask).convert("L").resize(FULL, Image.BILINEAR)) > 127
     compose(a, f, g, body, "sky-terrain.webp")
 
 

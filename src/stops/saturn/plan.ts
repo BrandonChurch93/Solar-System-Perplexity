@@ -21,7 +21,7 @@ export const params: MoveParams = {
   tint: [0.92, 0.82, 0.6],
 }
 
-export const skim = { azimuthDeg: 0, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0.2 }
+export const skim = { azimuthDeg: 15, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0.2 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3

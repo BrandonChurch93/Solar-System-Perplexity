@@ -9,6 +9,7 @@ import { profileUniforms } from './profile'
 import { Rings } from './rings'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
+import shadowJson from './shadow.json'
 import skyJson from './sky.json'
 import { Titan } from './titan'
 
@@ -58,6 +59,8 @@ export const createSet: SetFactory = async (ctx) => {
   const sunL = new THREE.Vector3()
   const sunS = new THREE.Vector3()
   const light = new THREE.Vector3()
+  const shadowL = new THREE.Vector3()
+  const shadowTurn = new THREE.Quaternion().setFromUnitVectors(plan.lightDir.clone().applyQuaternion(tilt.quaternion.clone().invert()).normalize(), new THREE.Vector3().fromArray(shadowJson.local).normalize())
   const turn = new THREE.Quaternion()
   const moon = new THREE.Vector3()
   const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
@@ -111,6 +114,7 @@ export const createSet: SetFactory = async (ctx) => {
       const ru = rings.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
+      ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn))
       ru.uGain!.value = gain
       ru.uWeight!.value = state.weight
       ru.uTime!.value = elapsed

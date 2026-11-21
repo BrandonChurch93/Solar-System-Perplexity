@@ -1,7 +1,8 @@
 {
-  "source": "assets-src/saturn/close/fit_close2.py 56, ring edges held at the hero's radii (1.955, 2.03, 2.32), 41 px rms on 2816 px",
-  "vfov": 56,
-  "centre": [0.9954, -0.0653, -2.1202],
-  "tiltDeg": 9.88,
-  "rollDeg": -8.99
+  "source": "assets-src/saturn/close/fit_close2.py 48, joint fit of the limb and three ring edges with free radii, 12 px rms on 2816 px",
+  "vfov": 48,
+  "centre": [0.9254, -0.2123, -2.0082],
+  "tiltDeg": 7.72,
+  "rollDeg": -12.87,
+  "radii": { "bout": 1.787, "gapout": 1.8148, "outer": 2.0462 }
 }

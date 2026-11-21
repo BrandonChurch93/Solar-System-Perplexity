@@ -7,6 +7,7 @@ import ringsJson from './rings.json'
 
 export interface RingLook {
   shadowFloor: [number, number, number]
+  floorAlpha: number
   penumbra: [number, number, number]
   unlit: number
   lodBias: number
@@ -65,6 +66,9 @@ in vec3 vView;
 in vec3 vClip;
 uniform vec3 uCamL;
 uniform vec3 uSunL;
+uniform vec3 uShadowL;
+uniform float uFloorA;
+uniform vec2 uEdge;
 uniform float uPolar;
 uniform float uGain;
 uniform float uWeight;
@@ -125,11 +129,13 @@ void main() {
   vec3 V = toCam / dist;
   float nearest = dot(uCamL, V);
   if (uPass < 0.5 ? dist < nearest : dist >= nearest) discard;
-  float fr = length(vec2(dFdx(r), dFdy(r)));
+  float rp = ringWarp(r);
+  float fr = length(vec2(dFdx(rp), dFdy(rp)));
   float texels = ringTexels(fr);
   vec4 s = profAt(x, texels * uGrad * uLodBias);
   float mu = abs(V.y);
-  float alpha = 1.0 - pow(1.0 - min(s.a, 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
+  float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rp) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rp));
+  float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
   vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
   float th = atan(vLocal.z, vLocal.x) + uSpinRate * pow(r / 1.86, -1.5) * uTime;
@@ -162,15 +168,16 @@ void main() {
       float tw = 0.5 + 0.5 * sin(6.283185307 * hash3(id + ivec3(0, 0, 12)) + uTime * (2.0 + 5.0 * hash3(id + ivec3(0, 0, 16))));
       float glint = exp(-dot(px, px) / (size * size)) * pow(tw, 3.0) * (0.3 + 1.7 * pick / 0.2);
       vec3 tint = mix(vec3(1.0), uSparkleTint, hash3(id + ivec3(0, 0, 22)));
-      col += tint * glint * uAzimuth.w * show * smoothstep(0.05, 0.3, s.a);
+      col += tint * glint * uAzimuth.w * show * smoothstep(0.03, 0.2, dot(col, vec3(0.2126, 0.7152, 0.0722)));
     }
   }
 
-  vec3 ss = normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z));
+  vec3 ss = normalize(vec3(uShadowL.x, uShadowL.y / uPolar, uShadowL.z));
   float along = dot(vLocal, ss);
   float miss = length(vLocal - ss * along);
-  float lit = along > 0.0 ? 1.0 : smoothstep(uPenumbra.x, uPenumbra.y + uPenumbra.z * max(-along, 0.0), miss);
-  col = mix(dot(col, vec3(0.2126, 0.7152, 0.0722)) * uShadowFloor, col, lit);
+  float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss)));
+  float lit = along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0), miss);
+  col = mix(uShadowFloor * (0.6 + 0.9 * smoothstep(0.0, 0.6, dot(col, vec3(0.2126, 0.7152, 0.0722)))) * body, col, lit);
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -189,7 +196,7 @@ export class Rings {
     const bands = 6
     const pos = new Float32Array((seg + 1) * (bands + 1) * 3)
     const index: number[] = []
-    const inner = r0 - 0.01
+    const inner = Math.min(r0 - 0.01, 0.96)
     const outer = (r1 + 0.01) / Math.cos(Math.PI / seg)
     for (let j = 0; j <= bands; j++) {
       const r = inner + ((outer - inner) * j) / bands
@@ -208,7 +215,8 @@ export class Rings {
     this.geometry.setIndex(index)
     const shared = {
       ...profile,
-      uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
+      uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
+      uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
       uGrad: gradUniform, uDiag: diagUniform, uLodBias: { value: look.lodBias },
       uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uPenumbra: { value: new THREE.Vector3().fromArray(look.penumbra) }, uAzGain: { value: azimuth.coeffs.flat() }, uAzRadii: { value: azimuth.radii },

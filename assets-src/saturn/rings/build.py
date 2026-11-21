@@ -16,6 +16,16 @@ ROW = 8192
 INNER, OUTER = 1.2458, 2.3394
 axis = R0 + (np.arange(N) + 0.5) / N * (R1 - R0)
 per_radius = N / (R1 - R0)
+CR0, CR1 = 1.00, 2.60
+ANCH_H = [1.2458, 1.940, 2.063, 2.3394]
+ANCH_C = [1.02, 1.746, 1.858, 2.046]
+
+
+def to_world(rh):
+    h, c = ANCH_H, ANCH_C
+    lo = c[0] + (rh - h[0]) * (c[1] - c[0]) / (h[1] - h[0])
+    hi = c[3] + (rh - h[3]) * (c[3] - c[2]) / (h[3] - h[2])
+    return np.where(rh < h[0], lo, np.where(rh > h[3], hi, np.interp(rh, h, c)))
 
 
 def resample(prof, r0, r1):
@@ -106,32 +116,33 @@ def pack(profiles):
 def main():
     rng = np.random.default_rng(1806)
     hero, hero_ok = resample(np.load(WORK / "profile-hero.npy"), 1.10, 2.60)
-    close_a, a_ok = resample(np.load(WORK / "profile-close-a.npy"), 1.10, 2.60)
     cp = np.load(WORK / "close-polar-lin.npy")
     cok = np.load(WORK / "close-polar-ok.npy")
-    na = cp.shape[1]
+    nr, na = cp.shape[:2]
     az = lambda d: int((d + 75) / 150 * na)
-    prof_c, count_c, _ = align(cp, cok, list(range(az(-45), az(-39), 2)), az(-42) // 2 * 2, 4.0, sigma=2.0)
+    rw = CR0 + (np.arange(nr) + 0.5) / nr * (CR1 - CR0)
+    prof_a, _, _ = align(cp, cok, [az(-14) + 6 * k for k in range(-3, 4)], az(-14), 12.0, sigma=2.0)
+    prof_c, _, _ = align(cp, cok, list(range(az(-49), az(-45), 4)), az(-47), 6.0, sigma=2.0)
+    np.save(WORK / "profile-close-a.npy", prof_a)
     np.save(WORK / "profile-close-c.npy", prof_c)
-    close_c, c_ok = resample(prof_c, 1.10, 2.60)
-
+    a_ok = np.isfinite(prof_a[:, 0]) & (rw < 2.012)
+    c_ok = np.isfinite(prof_c[:, 0])
     bg_h = np.array([0.008, 0.011, 0.014])
     bg_c = np.array([0.006, 0.008, 0.010])
-    hero = np.clip(hero - bg_h, 0, None)
-    close_a = np.clip(close_a - bg_c, 0, None)
-    close_c = np.clip(close_c - bg_c, 0, None)
-
-    over = (axis > 2.08) & (axis < 2.16) & a_ok & c_ok
-    gain = np.median(close_a[over], 0) / np.maximum(np.median(close_c[over], 0), 1e-4)
+    hero = np.clip(hero - 0.1 * bg_h, 0, None)
+    pa = np.clip(np.nan_to_num(prof_a) - 0.1 * bg_c, 0, None)
+    pc = np.clip(np.nan_to_num(prof_c) - 0.1 * bg_c, 0, None)
+    over = (rw > 1.88) & (rw < 1.99) & a_ok & c_ok
+    gain = np.median(pa[over], 0) / np.maximum(np.median(pc[over], 0), 1e-4)
     print("close c to a gain", gain)
-    w = smoothstep(2.10, 2.16, axis)[:, None]
-    close = np.where(c_ok[:, None], close_a * (1 - w) + close_c * gain * w, close_a)
-    close = np.where(a_ok[:, None] | c_ok[:, None], close, 0)
-    last = np.max(np.where(c_ok)[0])
-    print("close data ends at r", axis[last])
-    tail = hero / np.maximum(blur(lum(hero), 0.02)[:, None], 1e-4) * np.median(close[(axis > 2.24) & (axis < axis[last] - 0.01)], 0) / np.array([1.3, 1.0, 0.8]) * 0.75
-    wt = smoothstep(axis[last] - 0.03, axis[last] - 0.005, axis)[:, None]
-    close = close * (1 - wt) + tail * wt
+    w = smoothstep(1.93, 1.99, rw)[:, None]
+    world = np.where(a_ok[:, None] & c_ok[:, None], pa * (1 - w) + pc * gain * w, np.where(a_ok[:, None], pa, pc * gain))
+    world = np.where(a_ok[:, None] | c_ok[:, None], world, 0)
+    grey = 1 - smoothstep(ANCH_C[0] + 0.07, ANCH_C[0] + 0.12, rw)
+    dim = 1 - grey * (0.62 + 0.3 * np.exp(-0.5 * ((rw - ANCH_C[0] - 0.012) / 0.012) ** 2) + 0.2 * np.exp(-0.5 * ((rw - ANCH_C[0] - 0.062) / 0.004) ** 2))
+    world = (world * (1 - 0.6 * grey[:, None]) + lum(world)[:, None] * np.array([0.95, 1.0, 1.06]) * 0.6 * grey[:, None]) * dim[:, None]
+    x = to_world(axis)
+    close = np.stack([np.interp(x, rw, world[:, k], left=0, right=0) for k in range(3)], -1)
 
     detail_c = lum(close) / np.maximum(blur(lum(close), 0.004), 1e-4)
     detail_c = np.clip(detail_c, 0.4, 2.2)
@@ -142,13 +153,13 @@ def main():
     close_fine = filmic(close) * unit_mean(0.5 * f1 + 0.5 * f2)[:, None]
 
     edge_h = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
-    edge_c = smoothstep(1.208, 1.214, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
-    line = 0.05 * np.exp(-0.5 * ((axis - 2.42) / 0.004) ** 2)
+    edge_c = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
+    line = 0.012 * np.exp(-0.5 * ((axis - 2.42) / 0.004) ** 2)
     hero_fine = np.clip(hero_fine * edge_h[:, None] + line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
     close_fine = np.clip(close_fine * edge_c[:, None] + 0.6 * line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
 
     alpha_h = 1 - np.exp(-scene_lum(hero_fine) / 0.04)
-    alpha_c = 1 - np.exp(-scene_lum(close_fine) / 0.07)
+    alpha_c = np.maximum(1 - np.exp(-scene_lum(close_fine) / 0.07), 0.95 * edge_c)
     out = [np.concatenate([hero_fine, alpha_h[:, None]], -1), np.concatenate([close_fine, alpha_c[:, None]], -1)]
 
     sets = {}
@@ -160,7 +171,7 @@ def main():
         data.astype("<f4").tofile(dest / "rings.bin")
         sets[name] = {"n": N // step, "width": ROW, "height": int(data.shape[0]), "hero": layout[0], "close": layout[1]}
         print(name, data.shape, "bytes", data.nbytes)
-    meta = {"span": [R0, R1], "inner": INNER, "outer": OUTER, "sets": sets}
+    meta = {"span": [R0, R1], "inner": INNER, "outer": OUTER, "warpHero": ANCH_H, "warpClose": ANCH_C, "sets": sets}
     (ROOT / "src/stops/saturn/rings.json").write_text(json.dumps(meta, indent=1) + "\n")
 
     np.save(WORK / "ring-profile-hero.npy", out[0])

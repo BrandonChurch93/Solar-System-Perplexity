@@ -9,6 +9,15 @@ uniform int uHeroRow[16];
 uniform int uCloseRow[16];
 uniform vec2 uSpan;
 uniform float uClose;
+uniform vec4 uWarpH;
+uniform vec4 uWarpC;
+float warpSeg(float r, float c0, float c1, float h0, float h1) {
+  return h0 + (r - c0) * (h1 - h0) / (c1 - c0);
+}
+float ringWarp(float r) {
+  float w = r < uWarpC.y ? warpSeg(r, uWarpC.x, uWarpC.y, uWarpH.x, uWarpH.y) : (r < uWarpC.z ? warpSeg(r, uWarpC.y, uWarpC.z, uWarpH.y, uWarpH.z) : warpSeg(r, uWarpC.z, uWarpC.w, uWarpH.z, uWarpH.w));
+  return mix(r, w, uClose);
+}
 vec4 profLevel(int row, int n, float x) {
   float f = clamp(x * float(n) - 0.5, 0.0, float(n - 1));
   int i = int(floor(f));
@@ -29,7 +38,7 @@ vec4 profAt(float x, float texels) {
   return mix(h, c, uClose);
 }
 float ringRadius(float r) {
-  return (r - uSpan.x) * uSpan.y;
+  return (ringWarp(r) - uSpan.x) * uSpan.y;
 }
 float ringTexels(float perPixel) {
   return perPixel * uSpan.y * float(uProfN);
@@ -57,5 +66,7 @@ export function profileUniforms(texture: THREE.DataTexture, key: 'full' | 'web',
     uCloseRow: { value: pad(set.close) },
     uSpan: { value: new THREE.Vector2(rings.span[0]!, 1 / (rings.span[1]! - rings.span[0]!)) },
     uClose: close,
+    uWarpH: { value: new THREE.Vector4().fromArray(rings.warpHero) },
+    uWarpC: { value: new THREE.Vector4().fromArray(rings.warpClose) },
   }
 }
