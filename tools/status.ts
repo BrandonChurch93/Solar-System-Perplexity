@@ -1,14 +1,27 @@
-import { copyFileSync, mkdirSync } from 'node:fs'
-import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
-import { args, loadConfig, ROOT } from './lib/common'
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { basename, join } from 'node:path'
+import { args, loadConfig, ROOT, WORK } from './lib/common'
+import { LOOKS, pickLooks, readLooks, type Look } from './lib/looks'
 
 const cfg = loadConfig()
 const a = args()
-if (a.stop && cfg.stopIds.includes(a.stop) === false) throw new Error('unknown stop ' + a.stop)
-const tier = a.tier ?? 'review'
+const rule = cfg.raw.status
+const stops = a.stop ? a.stop.split(',') : []
+for (const s of stops) if (cfg.stopIds.includes(s) === false) throw new Error('unknown stop ' + s)
 const out = join(ROOT, 'out/stills/status')
+const state = join(WORK, 'status')
+const lastFile = join(state, 'last.json')
 mkdirSync(out, { recursive: true })
+mkdirSync(state, { recursive: true })
+const last = existsSync(lastFile) ? (JSON.parse(readFileSync(lastFile, 'utf8')) as { time: string; count: number; shown: string[] }) : { time: '', count: 0, shown: [] }
+const sinceMinutes = last.time ? (Date.now() - Date.parse(last.time)) / 60000 : Infinity
+
+if (a.due) {
+  const word = sinceMinutes >= rule.maxGapMinutes ? 'OVERDUE' : sinceMinutes >= rule.maxGapMinutes - 6 ? 'DUE NOW' : sinceMinutes >= rule.minGapMinutes ? 'allowed, not due' : 'too soon'
+  console.log('last status ' + (last.time ? sinceMinutes.toFixed(0) + ' min ago' : 'never') + ': ' + word + ' (a status at least every ' + rule.maxGapMinutes + ' min, never closer than ' + rule.minGapMinutes + ')')
+  process.exit(0)
+}
 
 function run(script: string, argv: string[]): string[] {
   const r = spawnSync('npx', ['tsx', join('tools', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 })
@@ -16,31 +29,151 @@ function run(script: string, argv: string[]): string[] {
   return r.stdout.trim().split('\n').filter((l) => l.startsWith('/'))
 }
 
-function jpg(from: string, to: string): void {
-  const limit = cfg.raw.critics.maxImageLongEdgePx
-  const r = spawnSync('ffmpeg', ['-y', '-v', 'error', '-i', from, '-vf', 'scale=w=' + limit + ':h=' + limit + ':force_original_aspect_ratio=decrease', '-q:v', '2', to], { encoding: 'utf8' })
+function jpg(from: string, to: string, edge: number, q: number): void {
+  const r = spawnSync('ffmpeg', ['-y', '-v', 'error', '-i', from, '-vf', 'scale=w=' + edge + ':h=' + edge + ':force_original_aspect_ratio=decrease:flags=lanczos', '-frames:v', '1', '-q:v', String(q), to], { encoding: 'utf8' })
   if (r.status !== 0) throw new Error('ffmpeg failed: ' + r.stderr.slice(-400))
 }
 
-const made: string[] = []
-if (a.stop) {
-  for (const view of ['hold', 'terrain']) {
-    const files = run('compare.ts', ['--stop', a.stop, '--view', view, '--tier', tier])
-    const copy = files.find((f) => f.endsWith('-view.jpg')) ?? files[0]!
-    const to = join(out, a.stop + '-' + view + '.jpg')
-    copyFileSync(copy, to)
-    made.push(to)
+function beside(left: string, right: string, to: string): boolean {
+  const h = 540
+  const r = spawnSync('ffmpeg', ['-y', '-v', 'error', '-i', left, '-i', right, '-filter_complex', '[0:v]scale=-2:' + h + ':flags=lanczos[a];[1:v]scale=-2:' + h + ':flags=lanczos[b];[a][b]hstack=inputs=2', '-frames:v', '1', '-q:v', '4', to], { encoding: 'utf8' })
+  return r.status === 0
+}
+
+if (a.fetch) spawnSync('npx', ['tsx', 'tools/looks.ts', '--fetch'], { cwd: ROOT, stdio: 'inherit' })
+
+if (a.render) {
+  const tier = a.tier ?? 'review'
+  if (stops.length) for (const s of stops) {
+    for (const view of ['hold', 'terrain']) run('compare.ts', ['--stop', s, '--view', view, '--tier', tier])
+    if (cfg.segments.some((x) => x.id === s + '.dive')) run('sheet.ts', ['--segment', s + '.dive', '--format', 'preview', '--tier', tier])
+  } else run('sheet.ts', ['--film', '--format', 'preview', '--tier', tier])
+}
+
+interface Pic { path: string; caption: string; name: string; kept?: boolean }
+const nameOf = (id: string): string => cfg.stops.find((s) => s.id === id)?.name ?? id
+const ago = (time: string): string => {
+  const m = Math.round((Date.now() - Date.parse(time)) / 60000)
+  return m < 90 ? m + ' min ago' : (m / 60).toFixed(1) + ' h ago'
+}
+
+function gather(): (Look & { path: string })[] {
+  const all: (Look & { path: string })[] = readLooks().map((l) => ({ ...l, path: join(LOOKS, l.file) }))
+  const remote = join(LOOKS, 'remote')
+  if (existsSync(remote)) for (const folder of readdirSync(remote)) for (const l of readLooks(join(remote, folder))) all.push({ ...l, stop: l.stop ?? folder, path: join(remote, folder, l.file), from: l.from ?? 'agent/' + folder })
+  return all.sort((x, y) => (x.time < y.time ? 1 : -1))
+}
+
+function caption(l: Look): string {
+  const stop = l.stop ? nameOf(l.stop) + ': ' : ''
+  const label = l.stop && l.label.toLowerCase().startsWith(l.stop + '.') ? l.label.slice(l.stop.length + 1) : l.label
+  return stop + label + ' (' + (l.from ? 'from the supporting agent building it, ' : '') + ago(l.time) + ')'
+}
+
+const pics: Pic[] = []
+const used = new Set<string>()
+const all = gather()
+const max = rule.maxPictures
+const fresh = (l: Look): boolean => a.all === 'true' || last.shown.includes(l.file) === false
+
+function keyPicture(stop: string): Pic | null {
+  const mine = all.filter((l) => l.stop === stop)
+  const compare = mine.find((l) => l.kind === 'compare')
+  const def = cfg.stops.find((s) => s.id === stop)!
+  const frame = mine.find((l) => (l.kind === 'still' || l.kind === 'frame' || l.kind === 'job') && l.frame !== undefined && (l.segment === stop + '.hold' || l.segment === stop + '.terrain') && (!l.diag || l.diag === 'beauty'))
+  if (compare && (!frame || compare.time >= frame.time)) {
+    used.add(compare.path)
+    return { path: compare.path, caption: caption(compare), name: stop + '-key' }
   }
-  const sheet = run('sheet.ts', ['--segment', a.stop + '.dive', '--format', 'preview', '--tier', tier])[0]!
-  const to = join(out, a.stop + '-dive.jpg')
-  jpg(sheet, to)
-  made.push(to)
+  if (frame) {
+    const to = join(state, stop + '-key.jpg')
+    const approved = join(ROOT, frame.segment === stop + '.hold' ? def.hero : def.close)
+    if (beside(approved, frame.path, to)) {
+      used.add(frame.path)
+      return { path: to, caption: nameOf(stop) + ': approved image left, newest ' + frame.segment!.split('.')[1] + ' frame ' + frame.frame + ' right' + (frame.tier ? ', ' + frame.tier + ' tier' : '') + ' (' + (frame.from ? 'from the supporting agent building it, ' : '') + ago(frame.time) + ')', name: stop + '-key' }
+    }
+  }
+  if (compare) {
+    used.add(compare.path)
+    return { path: compare.path, caption: caption(compare), name: stop + '-key' }
+  }
+  const kept = join(ROOT, 'out/stills/compare-' + stop + '-hold.jpg')
+  if (existsSync(kept)) return { path: kept, caption: nameOf(stop) + ': approved image left, kept film frame right (the build this stop was finished on)', name: stop + '-key', kept: true }
+  return null
+}
+
+if (stops.length) {
+  for (const s of stops) {
+    if (pics.length >= max) break
+    const k = keyPicture(s)
+    if (k) pics.push(k)
+  }
+  const rest = pickLooks(all.filter((l) => l.stop !== undefined && stops.includes(l.stop) && used.has((l as Look & { path: string }).path) === false && l.kind !== 'compare' && fresh(l)), max * 3)
+  const perStop = new Map<string, number>()
+  for (const l of rest as (Look & { path: string })[]) {
+    if (pics.length >= max) break
+    const n = perStop.get(l.stop!) ?? 0
+    if (stops.length > 1 && n >= Math.max(1, Math.floor(max / stops.length) - 1)) continue
+    perStop.set(l.stop!, n + 1)
+    used.add(l.path)
+    pics.push({ path: l.path, caption: caption(l), name: l.stop + '-look-' + (n + 1) })
+  }
 } else {
-  for (const [i, sheet] of run('sheet.ts', ['--film', '--format', 'preview', '--tier', tier]).entries()) {
-    const to = join(out, 'film-' + String(i + 1).padStart(2, '0') + '.jpg')
-    jpg(sheet, to)
-    made.push(to)
+  const recent = pickLooks(all.filter((l) => fresh(l) && Date.parse(l.time) > (last.time ? Date.parse(last.time) - 60000 : 0)), max) as (Look & { path: string })[]
+  for (const [i, l] of recent.entries()) {
+    used.add(l.path)
+    pics.push({ path: l.path, caption: caption(l), name: 'film-look-' + (i + 1) })
   }
 }
-run('review.ts', [])
-console.log(made.join('\n'))
+if (pics.length < max) {
+  const stills = join(ROOT, 'out/stills')
+  const sheets = readdirSync(stills).filter((f) => /^sheet-film-\d+\.jpg$/.test(f)).sort()
+  const want = stops.length ? [] : sheets.map((_, i) => sheets[(last.count + i) % sheets.length]!)
+  for (const f of want) {
+    if (pics.length >= max) break
+    pics.push({ path: join(stills, f), caption: 'Whole film contact sheet, part ' + Number(/(\d+)/.exec(f)![1]) + ' of ' + sheets.length + ' (kept ' + ago(statSync(join(stills, f)).mtime.toISOString()) + ')', name: basename(f, '.jpg'), kept: true })
+  }
+}
+if (pics.length === 0) {
+  const stills = join(ROOT, 'out/stills')
+  const newest = readdirSync(stills).filter((f) => /\.(jpg|png)$/.test(f)).map((f) => ({ f, t: statSync(join(stills, f)).mtimeMs })).sort((x, y) => y.t - x.t).slice(0, max)
+  for (const n of newest) pics.push({ path: join(stills, n.f), caption: 'Newest kept still: ' + basename(n.f).replace(/\.[a-z]+$/, '').split('-').join(' '), name: basename(n.f, '.jpg'), kept: true })
+}
+
+const made: string[] = []
+const packed: { caption: string; src: string }[] = []
+for (const p of pics) {
+  let shown = p.path
+  if (!p.kept) {
+    shown = join(out, p.name + '.jpg')
+    jpg(p.path, shown, 1200, 5)
+  }
+  made.push(shown)
+  const small = join(state, 'inline-' + made.length + '.jpg')
+  jpg(shown, small, 900, 6)
+  packed.push({ caption: p.caption, src: 'data:image/jpeg;base64,' + readFileSync(small).toString('base64') })
+}
+
+const progressFile = join(ROOT, 'kit/PROGRESS.md')
+const progress = readFileSync(progressFile, 'utf8')
+const review = /review page: (https?:\/\/[^\s)]+)/i.exec(progress)?.[1] ?? ''
+const lines = [a.line1, a.line2].filter((l): l is string => !!l && l !== 'true')
+const pack = a.pack ?? join(state, 'status.json')
+writeFileSync(pack, JSON.stringify({ lines: [...lines, ...(review ? ['Review page: ' + review] : [])], pics: packed }))
+const now = new Date().toISOString()
+if (a['no-log'] !== 'true' && lines.length) {
+  const rel = (f: string): string => f.slice(ROOT.length + 1)
+  appendFileSync(progressFile, (progress.endsWith('\n') ? '' : '\n') + '  - Status, ' + now.slice(0, 16).replace('T', ' ') + ' UTC. ' + lines.join(' ') + ' Pictures shown inline: ' + pics.map((p, i) => p.caption + ' (`' + rel(made[i]!) + '`)').join('; ') + '.\n')
+}
+if (a['no-log'] !== 'true') writeFileSync(lastFile, JSON.stringify({ time: now, count: last.count + 1, shown: pics.filter((p) => !p.kept).map((p) => basename(p.path)) }))
+if (existsSync(join(ROOT, 'dist/index.html'))) spawnSync('npx', ['tsx', 'tools/review.ts', '--no-build'], { cwd: ROOT, encoding: 'utf8' })
+if (a.push) {
+  const git = (argv: string[]): number => spawnSync('git', argv, { cwd: ROOT, encoding: 'utf8' }).status ?? 1
+  git(['add', 'out/stills/status', 'kit/PROGRESS.md'])
+  git(['commit', '-q', '-m', 'Status: ' + (lines[0] ?? 'pictures').slice(0, 72) + '\n\nCo-authored-by: Perplexity <noreply@perplexity.ai>', '--', 'out/stills/status', 'kit/PROGRESS.md'])
+  const merged = git(['fetch', '-q', 'origin', cfg.raw.repo.branch]) === 0 && git(['merge', '-q', '--no-edit', 'origin/' + cfg.raw.repo.branch]) === 0
+  const pushed = merged && git(['push', '-q', 'origin', 'HEAD:' + cfg.raw.repo.branch]) === 0
+  console.log(pushed ? 'committed and pushed' : 'committed; the push did not go through and is retried with the next commit')
+}
+console.log('pack: ' + pack + ' (' + (statSync(pack).size / 1e6).toFixed(2) + ' MB)')
+for (const [i, p] of pics.entries()) console.log(made[i] + '  |  ' + p.caption)

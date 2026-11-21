@@ -39,6 +39,7 @@ export interface MoveParams {
   spinDegPerSecond: number
   moonDegPerSecond: number
   tint: [number, number, number]
+  skyAim?: { terrain?: [number, number, number] }
 }
 
 export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment; rise: Segment; travel?: Segment }

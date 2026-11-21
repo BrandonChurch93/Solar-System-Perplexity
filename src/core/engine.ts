@@ -10,11 +10,13 @@ import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
 import { PostChain } from '../post/chain'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
+import type { SkyAims } from '../space/aim'
 import { Cover } from '../terrain/cover'
 import { segmentAtFrame, setsForFrame } from '../director/timeline'
 
 export interface Director {
   shotAt(frame: number, time: number): Shot
+  readonly sky?: SkyAims
 }
 
 export interface Sanity { invalid: number; coverage: number }
@@ -183,6 +185,7 @@ export class Engine {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
       this.skyPatches.length = 0
+      const aims = this.director!.sky
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           if (patch.view !== state.view) continue
@@ -190,9 +193,12 @@ export class Engine {
           const arriving = kind === 'travel' && state.id !== shot.segment.stop
           const weight = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
           if (weight <= 0) continue
+          const aim = aims?.patches[state.id]?.[patch.view]
+          if (aim) patch.aim.copy(aim)
           this.skyPatches.push({ patch, weight })
         }
       }
+      if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
       this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height)
       cam.fov = shot.camera.vfov

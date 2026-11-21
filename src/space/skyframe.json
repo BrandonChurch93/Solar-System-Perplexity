@@ -54,20 +54,6 @@
   "stcore": 0.3,
   "stcap": 0.9
  },
- "quaternion": [
-  0.883493,
-  -0.0637832,
-  0.2553499,
-  0.3875156
- ],
- "turns": {
-  "mars": [
-   0.5568597,
-   0.6546274,
-   -0.437346,
-   0.2647615
-  ]
- },
  "patches": {
   "mars": {
    "orbit": [
@@ -140,9 +126,5 @@
   "terrainCrowd": -0.4,
   "terrainCore": 0.3,
   "terrainCap": 0.9
- },
- "fitted": {
-  "frame": 2325,
-  "terrainFrame": 2580
  }
 }

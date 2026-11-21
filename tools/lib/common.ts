@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path'
 import { hostname, cpus } from 'node:os'
 import { buildConfig, type Config } from '../../src/config'
 import { computeHashes, type Hashes } from './hashes'
+import { lookFromRecord } from './looks'
 
 export const ROOT = process.cwd()
 export const DIST = join(ROOT, 'dist')
@@ -96,6 +97,7 @@ export function machineId(): string {
 export function writeRecord(file: string, r: OutputRecord): void {
   mkdirSync(dirname(file), { recursive: true })
   writeFileSync(file + '.json', JSON.stringify(r, null, 1))
+  lookFromRecord(file, r)
 }
 
 export function readRecord(file: string): OutputRecord | null {

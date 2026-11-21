@@ -3,6 +3,8 @@ import { join } from 'node:path'
 import { inflateSync } from 'node:zlib'
 import { DIST, WORK, loadConfig } from './common'
 import { openCapture, type Session } from './browser'
+import { JobLooks } from './looks'
+import { basename } from 'node:path'
 
 export type GrabMode = 'png' | 'raw' | 'none'
 
@@ -48,8 +50,10 @@ export function takeRenderSlot(): void {
   process.on('exit', () => rmSync(myLock, { force: true }))
 }
 
-export async function openSource(opts: { format: string; assets: string; diag?: string; mode?: string }): Promise<FrameSource> {
+export async function openSource(opts: { format: string; assets: string; diag?: string; mode?: string; job?: string }): Promise<FrameSource> {
   takeRenderSlot()
+  const looks = new JobLooks(opts.job ?? basename(process.argv[1] ?? 'render').replace(/\.[a-z]+$/, ''))
+  let diag = opts.diag ?? 'beauty'
   const session = await openCapture({ dist: DIST, format: opts.format, assets: opts.assets, diag: opts.diag, mode: opts.mode })
   let crashed = ''
   session.page.on('crash', () => {
@@ -67,6 +71,7 @@ export async function openSource(opts: { format: string; assets: string; diag?: 
     width: size.w,
     height: size.h,
     async setDiagnostic(view) {
+      diag = view
       await session.page.evaluate((v) => (window as unknown as { showcase: { setDiagnostic(v: string): void } }).showcase.setDiagnostic(v), view)
     },
     async render(frame, tier, grab, sanity) {
@@ -109,7 +114,20 @@ export async function openSource(opts: { format: string; assets: string; diag?: 
         throw new PageFailure((crashed || 'page call failed') + ' at frame ' + frame + ': ' + String(e).split('\n')[0]!.slice(0, 200))
       }
       if (res.lost) throw new PageFailure('WebGL context lost at frame ' + frame)
-      return { frame, data: res.b64 ? Buffer.from(res.b64, 'base64') : null, invalid: res.invalid, coverage: res.coverage, renderSeconds: res.r, sanitySeconds: res.s, grabSeconds: res.g }
+      const data = res.b64 ? Buffer.from(res.b64, 'base64') : null
+      if (looks.due()) {
+        try {
+          const meta = { frame, tier, format: opts.format, diag }
+          if (data && grab === 'raw') looks.add({ raw: { data, width: size.w, height: size.h } }, meta)
+          else {
+            const png = data ?? Buffer.from(await session.page.evaluate(() => (window as unknown as { showcase: { png(): Promise<string> } }).showcase.png()), 'base64')
+            looks.add({ png }, meta)
+          }
+        } catch {
+          /* a look is never a reason to fail a render */
+        }
+      }
+      return { frame, data, invalid: res.invalid, coverage: res.coverage, renderSeconds: res.r, sanitySeconds: res.s, grabSeconds: res.g }
     },
     close: () => session.close(),
   }

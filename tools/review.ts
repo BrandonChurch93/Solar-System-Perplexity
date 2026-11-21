@@ -3,7 +3,7 @@ import { basename, extname, join } from 'node:path'
 import { DIST, ROOT, ensureBuild, loadConfig } from './lib/common'
 
 const cfg = loadConfig()
-ensureBuild()
+if (process.argv.includes('--no-build') === false) ensureBuild()
 const out = join(DIST, 'review')
 mkdirSync(out, { recursive: true })
 const maxMb = Number(process.env.REVIEW_MAX_FILE_MB ?? cfg.raw.repo.maxFileMb)

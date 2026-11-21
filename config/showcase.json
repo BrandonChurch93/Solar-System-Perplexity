@@ -197,6 +197,12 @@
     "phonePreviewWidthPx": 400,
     "maxFilesPerMessage": 10
   },
+  "status": {
+    "maxGapMinutes": 30,
+    "minGapMinutes": 10,
+    "maxPictures": 4,
+    "inlineMaxTries": 3
+  },
   "sandbox": {
     "stepTimeoutMinutes": 10,
     "chunkBudgetMinutes": 7,

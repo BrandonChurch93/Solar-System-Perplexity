@@ -7,8 +7,8 @@ import { StopPlan, easeInOut } from './moves'
 import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
+import { aimAt, type SkyAims } from '../space/aim'
 
-const SKY_TURNS: Record<string, number[]> = skyFrame.turns
 const NO_TURN = new THREE.Quaternion()
 
 export interface StopFrame { rotation: THREE.Quaternion; origin: THREE.Vector3 }
@@ -41,6 +41,7 @@ export class FilmDirector implements Director {
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
+  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 } }
 
   constructor(plans: StopPlan[]) {
     this.plans = plans
@@ -59,6 +60,38 @@ export class FilmDirector implements Director {
     this.lookbackUp = up
     this.lookbackSun = s
     this.lookbackPose = { position, quaternion: this.lookbackAim(position, 0), vfov: LOOKBACK.vfov }
+    this.sky = this.aimSky()
+  }
+
+  private aimSky(): SkyAims {
+    const a = skyFrame.args
+    const round = (q: THREE.Quaternion): THREE.Quaternion => new THREE.Quaternion().fromArray(q.toArray().map((x) => Number(x.toFixed(7))))
+    const fractions = config.raw.judged.fractions as Record<string, number>
+    const judged = (id: string): number | null => {
+      const s = config.segments.find((x) => x.id === id)
+      return s ? Math.min(s.endFrame - 1, s.firstFrame + Math.floor((fractions[s.kind] ?? 0.5) * s.frames + 1e-9)) : null
+    }
+    const cam = (frame: number): THREE.Quaternion => this.shotAt(frame, frame / config.fps).camera.quaternion.clone()
+    const anchor = aimAt(a.along, a.tilt, a.lift)
+    const frame = judged(a.stop + '.hold')!
+    const f = anchor.clone().multiply(cam(frame).invert())
+    const out: SkyAims = { frame: round(f), turns: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! } }
+    for (const p of this.plans) {
+      const hold = judged(p.id + '.hold')
+      const terrain = judged(p.id + '.terrain')
+      const want = p.id === a.tstop ? [a.talong, a.ttilt, a.tlift] : p.p.skyAim?.terrain
+      const orbit = p.id === a.stop || hold === null ? anchor.clone() : f.clone().multiply(cam(hold))
+      let low = orbit
+      if (terrain !== null) {
+        const tcam = cam(terrain)
+        if (want) {
+          low = aimAt(want[0]!, want[1]!, want[2]!)
+          out.turns[p.id] = round(tcam.clone().multiply(low.clone().invert()).multiply(f))
+        } else low = f.clone().multiply(tcam)
+      }
+      out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
+    }
+    return out
   }
 
   private lookbackAim(position: THREE.Vector3, extraDeg: number): THREE.Quaternion {
@@ -312,8 +345,8 @@ export class FilmDirector implements Director {
       const s = state(index, view)
       if (view === 'terrain') {
         skyGlow = p.p.light.terrainSkyGlow ?? 1
-        const t = SKY_TURNS[p.id]
-        if (t) skyTurn = new THREE.Quaternion().fromArray(t)
+        const t = this.sky.turns[p.id]
+        if (t) skyTurn = t
       }
       pose = inSet(s, local)
       sets = [s]

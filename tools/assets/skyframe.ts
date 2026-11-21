@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { skyAim, type SkyAimArgs } from './skyaim'
+import { aimAt, type SkyAimArgs } from './skyaim'
 
 const FILE = 'src/space/skyframe.json'
 const given = process.argv.slice(2)
@@ -66,12 +66,12 @@ for (const k of Object.keys(raw)) if (!(k in defaults)) throw new Error('unknown
 const a = Object.fromEntries(
   Object.entries(defaults).map(([k, d]) => [k, k in raw ? (typeof d === 'number' ? Number(raw[k]) : raw[k]) : d]),
 ) as unknown as Args
-const aim = skyAim(a)
+if (a.stop !== a.tstop) throw new Error('stop and tstop name the one stop the sky is fitted to')
+const list = (q: { toArray(): number[] }): number[] => q.toArray().map((x) => Number(x.toFixed(7)))
+const patches = { [a.stop]: { orbit: list(aimAt(a.along, a.tilt, a.lift)), terrain: list(aimAt(a.talong, a.ttilt, a.tlift)) } }
 const json = {
   args: a,
-  quaternion: aim.quaternion,
-  turns: aim.turns,
-  patches: aim.patches,
+  patches,
   grade: { tint: [a.r, a.g, a.b], gamma: a.gamma, floor: [a.fr, a.fg, a.fb] },
   band: {
     repeats: a.repeats,
@@ -113,7 +113,6 @@ const json = {
     terrainCore: a.stcore,
     terrainCap: a.stcap,
   },
-  fitted: { frame: aim.frame, terrainFrame: aim.terrainFrame },
 }
 writeFileSync(FILE, JSON.stringify(json, null, 1) + '\n')
-console.log('sky frame', aim.quaternion, 'from frame', aim.frame, 'terrain turns', aim.turns, 'from frame', aim.terrainFrame)
+console.log('sky arguments written; the sky frame, the terrain turns and every patch aim follow from them and the plans when the film starts')
