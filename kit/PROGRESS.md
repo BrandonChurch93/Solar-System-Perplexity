@@ -4,21 +4,21 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 ## Status
 
-- Current phase: 3 · Mars, the look lock
+- Current phase: 3 · Mars, the look lock (done, waiting at the Mars review)
 - Current stop: mars
 - Current round: 5 (Phase 3, mars, look lock round 3 of 5, closed; the last before the Mars review by Brandon's change of plan)
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
-- Mars review: not reached
+- Mars review: waiting
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: 2026-11-21 UTC, Phase 3, step 9 (review page published with the Mars clip and both comparison images)
+- Last push: 2026-11-21 UTC, Phase 3 gate: Mars finished, Phase 3 done, Mars review waiting
 
 ## Latest pictures
 
 Newest first. Each line links a comparison image in `out/stills/` so this page shows the state of the film.
 
-- Phase 3 step 7, Mars as it goes to the review (round 5 build, final tier, approved image on the left, film frame on the right): [out/stills/compare-mars-hold.jpg](../out/stills/compare-mars-hold.jpg), [out/stills/compare-mars-terrain.jpg](../out/stills/compare-mars-terrain.jpg). Contact sheets of the same build: [hold](../out/stills/sheet-mars.hold.jpg), [dive](../out/stills/sheet-mars.dive.jpg), [dive cover](../out/stills/sheet-mars.dive-cover.jpg), [terrain](../out/stills/sheet-mars.terrain.jpg), [rise](../out/stills/sheet-mars.rise.jpg), [rise cover](../out/stills/sheet-mars.rise-cover.jpg).
+- Phase 3 step 7, Mars as it goes to the review (round 5 build, final tier, approved image on the left, film frame on the right): [out/stills/compare-mars-hold.jpg](../out/stills/compare-mars-hold.jpg), [out/stills/compare-mars-terrain.jpg](../out/stills/compare-mars-terrain.jpg). Contact sheets of the same build: [hold](../out/stills/sheet-mars.hold.jpg), [dive](../out/stills/sheet-mars.dive.jpg), [dive cover](../out/stills/sheet-mars.dive-cover.jpg), [terrain](../out/stills/sheet-mars.terrain.jpg), [rise](../out/stills/sheet-mars.rise.jpg), [rise cover](../out/stills/sheet-mars.rise-cover.jpg). The clip of the same build (16.5 s, 1920 x 1080): [out/clips/mars.mp4](../out/clips/mars.mp4).
 - Status after round 5 (the build that goes to the Mars review): `out/stills/status/mars-hold.jpg`, `out/stills/status/mars-terrain.jpg`, `out/stills/status/mars-dive.jpg`.
 - Phase 2 gate, the blockout film in four sheets: `out/stills/sheet-film-01.jpg`, `out/stills/sheet-film-02.jpg`, `out/stills/sheet-film-03.jpg`, `out/stills/sheet-film-04.jpg`. The same film plays as `out/preview.mp4`.
 
@@ -29,7 +29,7 @@ Newest first. Each line links a comparison image in `out/stills/` so this page s
 | 0 · Ground truth | done | Push ok. `npm run gate -- --phase 0`: G1 build clean, G2 21 tests pass, G3 four frames identical across fresh loads and reversed order (preview, review tier), G4 all three formats exact and 5400 frames, G14 needs inside `config/webgl-caps.json`. Records, versions and budget are below. Published | see Push log |
 | 1 · Rough cut | done | `npm run gate -- --phase 1`: G16 green (5400 frames, 960 x 540, 30 fps, 41 MB). One frame from the middle of each of the 46 segments was looked at: order and labels follow `segments`. Pushed, on the review page, shared in the thread | see Push log |
 | 2 · Engine and blockout | done | `npm run gate -- --phase 2`: G1 to G4, G6, G7, G10, G11, G12, G14, G15 green; G8 green (`out/preview.mp4`, 5400 frames, 960 x 540, 30 fps, 45 MB, no G5 failure); G9 green (export proof and the memory proof across a travel). R4 blockout: round 1 scored 7, round 2 scored 5, limit reached, open items 1 to 5 carried to Phases 3 to 5. Judged list present (47 frames). The published app plays the film in autopilot | see Push log |
-| 3 · Mars, the look lock | in progress | | |
+| 3 · Mars, the look lock | done | `npm run gate -- --phase 3` on the round 5 build, run twice (with `--g15-stops mars` before the Stops table was marked, plain after) (engine hash 73b844358c466906, Mars hash 353338cc5c905af5): G1, G2 (22 tests), G3, G4, G6, G7 (47 judged frames), G10, G11, G12 (918 tracked files, 0.76 GB), G14 and G15 green. G11 covers the Mars set and G15 loaded it (414 MB at `web`, 1,386 MB at `full`, the same 32 file names in both). Measures fresh for this build: G5 pass, G13 pass (0 soft frames of 463), G17 pass (hold 1.167, terrain 0.951). The pass bar does not hold: round 5 scored R1 7, R2 pass, R3 5, R4 6, R8 pass against 9, and the rounds ended after look lock round 3 of 5 by Brandon's change of plan, with open items 6 to 15. Both comparison images committed and pushed (1893503). The Mars clip is on the published review page and under `out/clips/` (4809e6a). Look lock written (a43b14c). Published | see Push log |
 | 4 · The other eight stops | not started | | |
 | 5 · The space between | not started | | |
 | 6 · Polish and deliver | not started | | |
@@ -44,7 +44,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mercury | stand-in | 0 | | | | | | |
 | venus | stand-in | 0 | | | | | | |
 | earth | stand-in | 0 | | | | | | |
-| mars | in progress | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
+| mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | stand-in | 0 | | | | | | |
 | saturn | stand-in | 0 | | | | | | |
 | uranus | stand-in | 0 | | | | | | |
@@ -419,6 +419,10 @@ Round 5 left these open (open items 6 to 15 hold the critics' words). Each of th
 - Phase 3, step 8. "Look lock" is written from the round 5 build. It also lists what round 5 left open, turned into rules for the other stops, because Mars goes to its review with the pass bar not held.
 - Phase 3, step 9, the review page. `tools/review.ts` now puts the current stop's clip and its two comparison images first and says so under the title; everything after them stays newest first, as `kit/05-ARCHITECTURE.md` asks. Reason: the page holds 24 items and the three things the Mars review needs sat below the status pictures. A stop's clip also shows its judged hold still before it plays, so the page does not open on a black box. No film pixel changes: `tools/` is outside the build's hashes.
 - Phase 3, step 9, the clip. The published page carries the Mars clip (42 MB, 495 frames, 1920 x 1080). Checked on the preview of the same upload, because the published address asks for a sign-in: `review.html` lists the clip, then both comparison images, then 21 more items; the clip is served with byte ranges and its first 64 KB are identical to the local file; both comparison images answer. The clip is also kept with `npm run keep -- --clips --stop mars` (`out/clips/mars.mp4`, under `repo.maxFileMb`), as the Phase 0 decision on the sign-in says, so a later task can rebuild the page without rendering.
+- Phase 3 gate, 2026-11-21 UTC, every line checked on the round 5 build. Line 1, the machine checks: `npm run gate -- --phase 3 --g15-stops mars` is green on all eleven (`out/work/gate/phase-3.json`). G11 found a row or a recipe for every file of the Mars set. G15 loaded the Mars set in the browser at both sizes (414 MB at `web` against 450, 1,386 MB at `full` against 1,400) and found the same 32 file names in both folders. The gate was run twice: first with `--g15-stops mars`, before the Stops table was marked, then as the plain `npm run gate -- --phase 3` with the Mars row marked `finished`, before the commit. Both runs are green on all eleven with the same notes, and G3 gave the same four frame digests in both. Line 2, the pass bar: it does not hold (R1 7, R3 5 and R4 6 against `quality.passScore`), and the limit that applies was reached: Brandon's change of plan ends the Mars rounds at round 5, which is look lock round 3 of the 5 in `quality.lookLockMaxRounds`. The config value is not changed and the review block says 3 of 5. Line 3: both comparison images are on the remote branch (1893503). Line 4: the clip is on the published review page and on the remote branch under `out/clips/` (4809e6a). The measures were checked again against this build with `npm run gate -- --phase 3 --only G5,G13,G17 --stop mars`: all three pass and the measure file carries this build's hashes.
+- Phase 3 gate, the commit Mars was finished on. The Stops table names 0ee8c76, the commit that holds the film code judged in round 5. Nothing under `src/`, `public/`, `config/` or `package-lock.json` changed after it, so every later commit builds the same film (the build made by the gate carries the same two hashes). Its outputs were committed later: the kept stills and both comparison images at 1893503, the Look lock at a43b14c, the clip at 4809e6a.
+- Phase 3 gate, the two app links of the review block, opened in the harness browser on the build the gate made (`out/work/an/links.ts`). `?stop=mars` loads the Mars set (414 MB) and draws Mars in the live view with the menu. `?mode=autopilot&stop=mars` loads Mars, then Jupiter for the leaving move, and plays frames 2250 to 2819 with nothing but the canvas on the page. Under software rendering the playback skips frames, so smoothness was not judged here; the clip shows the motion.
+- Mars review. The task prompt and the messages Brandon sent after it do not contain the approval line, so the word is `waiting` and the task ends with the review block. The block as sent is kept at the end of the Session log, so a task that starts while the word is `waiting` can send it again as it is. Nothing of Phase 4 is started.
 
 ## Open items
 
@@ -495,6 +499,7 @@ None yet.
 - 2026-11-21 UTC: Phase 3 step 7 (1893503): the kept stills, both comparison images and six contact sheets of the round 5 build.
 - 2026-11-21 UTC: Phase 3 step 8 (a43b14c): Look lock and the render budget measured again.
 - 2026-11-21 UTC: Phase 3 step 9: the review page with the Mars clip and both comparison images first, published; `out/clips/mars.mp4` kept.
+- 2026-11-21 UTC: Phase 3 gate. Mars finished, Phase 3 done, Mars review waiting. Published.
 
 ## Session log
 
@@ -514,3 +519,22 @@ One entry per task: when it started, what it did, where it stopped.
   - Status, Phase 3, mars, step 7 finished on the round 5 build: the review clip is joined from the four rendered chunks with no rendering (495 frames, 16.5 s, 1920 x 1080, no invalid frame, joins checked at 2399, 2489 and 2669), and both comparison images are made at the final tier and kept with the judged stills and six contact sheets in `out/stills/`. Next: write the Look lock (step 8), then the review page and the publish (step 9). Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/status/mars-dive.jpg`. https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, step 8 finished: "Look lock" is written in `kit/PROGRESS.md` (every locked setting, 13 techniques that worked, the ones that did not, what round 5 left open turned into rules for the other eight stops), and the render budget is measured again on this build (Mars set 1,386 MB of 1,400 at `full`, 6.86 s per sample in master here). Nothing in the film changed. Next: the review page with the Mars clip and both comparison images, and the publish (step 9), then the Phase 3 gate. Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/sheet-mars.dive.jpg`. https://grand-tour-film.pplx.app/review.html
   - Status, Phase 3, mars, step 9 finished: the review page is published with the Mars clip first (16.5 s, 1920 x 1080, it opens on the judged hold frame) and both comparison images right after it, 24 items in all; the clip is also kept in the repo as `out/clips/mars.mp4`. Nothing in the film changed. Next: the Phase 3 gate (step 10), then the Mars review. Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/sheet-mars.terrain.jpg`. https://grand-tour-film.pplx.app/review.html
+  - Status, Phase 3, mars, step 10 finished: the Phase 3 gate is green on the round 5 build (eleven machine checks, G11 covering the Mars set and G15 loading it at 414 MB `web` and 1,386 MB `full`; G5, G13 and G17 pass), and Mars is marked finished, Phase 3 done and the Mars review waiting in one commit. Next: the Mars review; the build stops here and waits for Brandon. Pictures: `out/stills/compare-mars-hold.jpg`, `out/stills/compare-mars-terrain.jpg`, `out/stills/sheet-mars.dive.jpg`, `out/stills/sheet-mars.rise.jpg`. https://grand-tour-film.pplx.app/review.html
+  - Progress note, Phase 3 gate and Mars finished: Mars is built end to end (the whole globe, the dive through dust, the canyon flight, the climb out) and the look is locked for the other eight stops. Three rounds ran; the last scored R1 7, R2 pass, R3 5, R4 6, R8 pass with every measure green, and the rounds ended there by Brandon's change of plan. App: https://grand-tour-film.pplx.app, review page https://grand-tour-film.pplx.app/review.html with the Mars clip and both comparison images first. Next: Brandon's Mars review; the build waits for the resume prompt. Open: items 6 to 15, led by the two dust handovers, the limb and the surface in the pullback.
+  - Stopped at the Mars review, 2026-11-21 UTC. The block as sent. A task that starts while "Mars review" says `waiting`, with no approval line in its prompt, sends it again as it is:
+
+    ```
+    MARS READY FOR REVIEW
+    Review page: https://grand-tour-film.pplx.app/review.html
+    Watch it live: https://grand-tour-film.pplx.app?mode=autopilot&stop=mars
+    Fly it: https://grand-tour-film.pplx.app?stop=mars
+    Side by side: out/stills/compare-mars-hold.jpg and out/stills/compare-mars-terrain.jpg
+    Rounds run: 3 of 5
+    Scores: R1 7, R2 pass, R3 5, R4 6, R8 pass
+    Measures: G5 pass, G13 pass, G17 pass
+    Open items: ten, numbers 6 to 15 under "Open items" in kit/PROGRESS.md. The climb out reads as a concealed cut where the dust clears (frames 2695 to 2706). The canyon resolves almost in place as the dust of the dive thins (2456 to 2460). The sunlit limb is a hard stepped edge and the night limb is razor sharp (2325). Speckle near the limb and stepped rings on the polar cap (2325). The storm spiral reads as painted (2325, 2427). In the pullback the far side is smeared, the cap is blown out and there is no soft terminator (2726). The shadowed canyon ground is muddy and the horizon glow is a flat hot band, both as in the approved image (2580). Minors: the moon leaves the dive too fast, its edge is stepped and it is softer than the planet, the foreground rock is slightly soft. Carried: the pullback shows Mars lit from below with north to the left, the turn toward Jupiter banks about 90 degrees, and the moon is not in the pullback.
+    What I would improve next: The two handovers first: carry the speed of the plunge into the first second of the canyon view, and let the dust of the climb stream with the camera and thin over ten frames or more so the limb grows into view.
+    Then the limb: one haze layer drawn across the edge of the disc, and a faint blue rim on the night side.
+    Then the pullback: repaint the far side of the map at the detail of the dive patches, rebuild the cap on a polar projection and lower its exposure.
+    To continue: send the resume prompt from kit/10-KICKOFF.md
+    ```
