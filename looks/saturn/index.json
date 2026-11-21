@@ -1,9 +1,31 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T11:04:31.701Z",
- "head": "363d326cc7e7d0e0cf2d95af4b949a1d2ed49cd3",
- "note": "round 2 work: close view rings are the approved close image on the ring plane; new terrain flight across the bands",
+ "pushed": "2026-11-21T11:22:07.530Z",
+ "head": "16a8fecd2d09263f3793c7da62860bd4fec09552",
+ "note": "terrain flight: seam between the projected approved rings and the ring profile outside the approved frame",
  "looks": [
+  {
+   "time": "2026-11-21T11:22:04.550Z",
+   "file": "20261121112204550-note-f6.jpg",
+   "source": "../../../../tmp/f6.jpg",
+   "kind": "note",
+   "label": "terrain 3630 and 3675 draft, lower part: ring image inside the approved footprint, toned profile outside",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:21:49.818Z",
+   "file": "20261121112149818-frame-f6-3675.jpg",
+   "source": "out/work/saturn/f6-3675.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3675, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3675,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a9de32c960e5de06"
+  },
   {
    "time": "2026-11-21T11:04:19.747Z",
    "file": "20261121110419747-note-f1-strip.jpg",
@@ -19,20 +41,6 @@
    "kind": "note",
    "label": "terrain 3720 final: approved close image projected on the ring plane, light map on the globe (approved above, film below)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T10:58:26.649Z",
-   "file": "20261121105826649-frame-f1-3809.jpg",
-   "source": "out/work/saturn/f1-3809.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3809, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3809,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
   },
   {
    "time": "2026-11-21T10:40:45.752Z",
@@ -77,14 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T10:30:20.125Z",
-   "file": "20261121103020125-note-pair-hold-p5.jpg",
-   "source": "out/work/saturn/pair-hold-p5.jpg",
-   "kind": "note",
-   "label": "hold 3465 with projected hero rings and light map, approved above",
-   "stop": "saturn"
   }
  ]
 }
