@@ -1,32 +1,46 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T09:04:42.315Z",
+ "pushed": "2026-11-21T09:14:45.698Z",
  "head": "c8e93a992b9a2d4e3461bd57b1f2621bb8af7166",
- "note": "new foreground apron at true cell size; rise sheet with the reworked flare",
+ "note": "hold: corona fine detail and sky stars against the hero, measured weakest G17 tiles; rebuilding corona texture and sky card from hero pixels",
  "looks": [
   {
-   "time": "2026-11-21T09:04:41.765Z",
-   "file": "20261121090441765-note-sheet-rise.jpg",
-   "source": "out/work/sun/sheet-rise.jpg",
+   "time": "2026-11-21T09:14:45.171Z",
+   "file": "20261121091445171-note-h360-left.jpg",
+   "source": "out/work/sun/h360-left.jpg",
    "kind": "note",
-   "label": "sun.rise sheet, review tier, with the reworked flare",
+   "label": "sun.hold 360 final, approved hero left, film right, enlarged: corona and sky are softer than the hero (weakest G17 tiles), in work",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T09:04:41.251Z",
-   "file": "20261121090441251-note-f0-apron-before-after.jpg",
-   "source": "out/work/sun/f0-apron-before-after.jpg",
+   "time": "2026-11-21T09:14:44.646Z",
+   "file": "20261121091444646-note-g17-360-t36.jpg",
+   "source": "out/work/sun/g17-360-t36.jpg",
    "kind": "note",
-   "label": "sun.terrain frame 0, draft: old apron left, new apron right",
+   "label": "sun.hold 360 final, approved hero left, film right, enlarged: corona and sky are softer than the hero (weakest G17 tiles), in work",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T09:04:40.726Z",
-   "file": "20261121090440726-note-f60-apron-before-after.jpg",
-   "source": "out/work/sun/f60-apron-before-after.jpg",
+   "time": "2026-11-21T09:14:44.096Z",
+   "file": "20261121091444096-note-g17-360-t94.jpg",
+   "source": "out/work/sun/g17-360-t94.jpg",
    "kind": "note",
-   "label": "sun.terrain frame 60 lowest 380 rows, draft: old apron above, new apron (true cell size, three tiles) below",
+   "label": "sun.hold 360 final, approved hero left, film right, enlarged: corona and sky are softer than the hero (weakest G17 tiles), in work",
    "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T09:05:56.864Z",
+   "file": "20261121090556864-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
   },
   {
    "time": "2026-11-21T09:04:08.147Z",
@@ -38,21 +52,6 @@
    "segment": "sun.terrain",
    "frame": 30,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:01:46.704Z",
-   "file": "20261121090146704-sheet-sun.rise-16x9-review.jpg",
-   "source": "out/work/sheets/sun.rise-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet sun.rise, review tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 180,
-   "last": 269,
-   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
