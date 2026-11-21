@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
 import { STAGE_GLSL, stage } from './stage'
 
@@ -64,6 +65,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${STAGE_GLSL}
 ${APRON_GLSL}
+${NOISE_GLSL}
 float lumAt(sampler2D map, vec2 uv, float lod) {
   return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
 }
@@ -72,14 +74,13 @@ vec4 surface(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, flo
   float lX = lumAt(map, uv + vec2(e.x, 0.0), lod) - lumAt(map, uv - vec2(e.x, 0.0), lod);
   float lY = lumAt(map, uv + vec2(0.0, e.y), lod) - lumAt(map, uv - vec2(0.0, e.y), lod);
   vec2 push = vec2(lX, lY) * (uBoil.x / (2.0 * uBoil.z));
-  push *= min(1.0, uBoil.w / max(length(push), 1e-6));
+  push /= sqrt(1.0 + dot(push, push) / (uBoil.w * uBoil.w));
   float wide = lumAt(map, uv, lod + 2.0 + calm);
   float slow = wide * 26.0 + lumAt(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
   vec3 lin = inverseFilmic(textureGrad(map, uv + push * cell * swing, dx, dy).rgb);
-  float cellPhase = (lumAt(map, uv, lod + 1.0 + calm) + lumAt(map, uv * 0.83 + 0.29, lod + 1.5 + calm)) * uTwinkle.z;
   moved = push * swing;
-  return vec4(lin, 1.0 + uTwinkle.x * (sin(uTime * uTwinkle.y + cellPhase) - sin(cellPhase)));
+  return vec4(lin, 1.0);
 }
 void main() {
   vec3 at = stFold(vStage);
@@ -107,6 +108,10 @@ void main() {
   float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave + uTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uTime * uInflowRate.y) - sin(wave * 2.3)));
   vec3 col = vec3(0.0);
   vec2 moved = vec2(0.0);
+  vec3 lay = vStage - ST_DOWN;
+  vec2 gq = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD)) * uTwinkle.z;
+  float beat = vnoise(vec3(gq, uTime * uTwinkle.y)) - vnoise(vec3(gq, 0.0)) + 0.5 * (vnoise(vec3(gq * 2.3 + 7.3, uTime * uTwinkle.y * 1.7 + 3.1)) - vnoise(vec3(gq * 2.3 + 7.3, 3.1)));
+  inflow *= max(1.0 + uTwinkle.x * beat, 0.35);
   for (int k = 0; k < (w < 1.0 ? 1 : 0); k++) {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);

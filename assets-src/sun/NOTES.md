@@ -182,3 +182,11 @@ Sky card, infinity only (Builder note 2):
 - Cover colour: the old gold (2.4, 0.68, 0.11) was darker than the white frames around it (mean level 216 at 212, 167 at 216, 216 at 220: two flashes with a yellow card between). Now cover (2.8, 1.05, 0.28), low (2.6, 0.85, 0.19): mean 222 at 212, 192 at 216, 219 at 220.
 - In the orbit part the kernel sits on the plan spot and dies into the white active region by frame 237. Frame 247 is clean (amount 0 after 1.0 s).
 - Tool: `python3 out/work/sun/strip.py DIR OUT COLS WIDTH frames...` makes a contact strip from a `seq` folder.
+
+## Ground motion that damaged the stills (08:40 to 09:00 UTC)
+
+- Found on frame 60 at final, native crops: the whole ground had a melted marble look (wavy contour lines in every cell), and frame 0 had concentric rings in the near cells. Neither is in the plates.
+- Cause 1, the boil: the warp along the luminance gradient was clamped to a fixed length (0.14 of a cell), so its direction flipped across every lane and cell centre and stretched the picture there (about 25 px at 1920 in the near field). Now the push is soft limited (`push /= sqrt(1 + |push|^2 / max^2)`), `boil.reach` 0.25, `boil.max` 0.06. Mean absolute difference to the picture with no boil on frame 60: 19 before, about 10 now. At 0.09 the marble starts to come back.
+- Cause 2, the twinkle: its phase was the plate's luminance times 60, so away from frame 90 it drew contour rings inside each cell (the same fault the globe had). Now it is value noise on the ground plane in a third time dimension: `vnoise(g * spread, t * rate) - vnoise(g * spread, 0)` plus one finer octave, `twinkle = { amount 0.5, rate 0.9, spread 4 }`. Cells brighten and dim by about 15 percent, no rings. Two texture reads fewer per pixel.
+- Frame 90 is byte identical to before (both terms are zero at the judged frame).
+- Still open on frame 60: below row 935 the apron's painted cells are about 2.5 times larger than the approved cells just above them and softer (0.7 real pixels per frame pixel). Next: a plate painted from the frame 60 camera for that band.

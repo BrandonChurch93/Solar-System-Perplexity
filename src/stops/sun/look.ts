@@ -51,8 +51,8 @@ export const ground: GroundLook = {
   apron: { amount: 1, cell: 0.1, calm: 0 },
   band: [2.2, 1.2],
   glow: [0.22, 4.3],
-  boil: { reach: 0.5, period: 2.6, step: 0.3, max: 0.14 },
-  twinkle: { amount: 0.16, rate: 2.4, spread: 60 },
+  boil: { reach: 0.25, period: 2.6, step: 0.3, max: 0.06 },
+  twinkle: { amount: 0.5, rate: 0.9, spread: 4 },
   inflow: { amount: 0.3, waves: 5, rate: 2.2, inner: 1, outer: 2.6 },
 }
 
