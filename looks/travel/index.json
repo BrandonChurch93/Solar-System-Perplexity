@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T05:22:34.488Z",
- "head": "47d9b45d0bab51838546f4d2e802218ca37265cc",
- "note": "dust: streak per mote and flow direction, first pass",
+ "pushed": "2026-11-21T05:36:17.962Z",
+ "head": "8a4921b93a58d8ec00043471b87d411436501975",
+ "note": "new travel camera, first draft sheets of all eight (turn spread over the segment, approach from zero rate)",
  "looks": [
   {
-   "time": "2026-11-21T05:22:33.796Z",
-   "file": "20261121052233796-note-dust-1078-review.jpg",
-   "source": "out/work/travel/dust-1078-review.png",
+   "time": "2026-11-21T05:34:51.995Z",
+   "file": "20261121053451995-note-uranus.travel-draft.jpg",
+   "source": "out/work/travel/cam1/uranus.travel-draft.png",
    "kind": "note",
-   "label": "dust first pass dust-1078-review: streak per mote, flow from flight direction (look not tuned yet)",
+   "label": "cam1: contact sheet uranus.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:22:33.171Z",
-   "file": "20261121052233171-note-dbg-2782.jpg",
-   "source": "out/work/travel/dbg-2782.png",
+   "time": "2026-11-21T05:34:22.900Z",
+   "file": "20261121053422900-note-saturn.travel-draft.jpg",
+   "source": "out/work/travel/cam1/saturn.travel-draft.png",
    "kind": "note",
-   "label": "dust first pass dbg-2782: streak per mote, flow from flight direction (look not tuned yet)",
+   "label": "cam1: contact sheet saturn.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:22:32.544Z",
-   "file": "20261121052232544-note-dbg-495.jpg",
-   "source": "out/work/travel/dbg-495.png",
+   "time": "2026-11-21T05:33:53.770Z",
+   "file": "20261121053353770-note-earth.travel-draft.jpg",
+   "source": "out/work/travel/cam1/earth.travel-draft.png",
    "kind": "note",
-   "label": "dust first pass dbg-495: streak per mote, flow from flight direction (look not tuned yet)",
+   "label": "cam1: contact sheet earth.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:12:50.223Z",
-   "file": "20261121051250223-note-venus.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/venus.travel-draft.png",
+   "time": "2026-11-21T05:33:11.180Z",
+   "file": "20261121053311180-note-venus.travel-draft.jpg",
+   "source": "out/work/travel/cam1/venus.travel-draft.png",
    "kind": "note",
-   "label": "baseline venus.travel-draft sheet (main 3523b45, before any change)",
+   "label": "cam1: contact sheet venus.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:12:49.501Z",
-   "file": "20261121051249501-note-sun.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/sun.travel-draft.png",
+   "time": "2026-11-21T05:32:43.189Z",
+   "file": "20261121053243189-note-sun.travel-draft.jpg",
+   "source": "out/work/travel/cam1/sun.travel-draft.png",
    "kind": "note",
-   "label": "baseline sun.travel-draft sheet (main 3523b45, before any change)",
+   "label": "cam1: contact sheet sun.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:12:48.651Z",
-   "file": "20261121051248651-note-saturn.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/saturn.travel-draft.png",
+   "time": "2026-11-21T05:31:47.237Z",
+   "file": "20261121053147237-note-jupiter.travel-draft.jpg",
+   "source": "out/work/travel/cam1/jupiter.travel-draft.png",
    "kind": "note",
-   "label": "baseline saturn.travel-draft sheet (main 3523b45, before any change)",
+   "label": "cam1: contact sheet jupiter.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:12:47.885Z",
-   "file": "20261121051247885-note-mercury.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/mercury.travel-draft.png",
+   "time": "2026-11-21T05:31:17.533Z",
+   "file": "20261121053117533-note-mars.travel-draft.jpg",
+   "source": "out/work/travel/cam1/mars.travel-draft.png",
    "kind": "note",
-   "label": "baseline mercury.travel-draft sheet (main 3523b45, before any change)",
+   "label": "cam1: contact sheet mars.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:12:46.953Z",
-   "file": "20261121051246953-note-mars.travel-draft.jpg",
-   "source": "out/work/travel/base-draft/mars.travel-draft.png",
+   "time": "2026-11-21T05:30:25.689Z",
+   "file": "20261121053025689-note-mercury.travel-draft.jpg",
+   "source": "out/work/travel/cam1/mercury.travel-draft.png",
    "kind": "note",
-   "label": "baseline mars.travel-draft sheet (main 3523b45, before any change)",
+   "label": "cam1: contact sheet mercury.travel, draft tier",
    "stop": "travel"
   }
  ]
