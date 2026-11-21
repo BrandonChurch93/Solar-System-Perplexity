@@ -1,56 +1,44 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T11:16:59.733Z",
- "head": "6ce0cc67145483d88d91b704a9ef8d725877a273",
- "note": "round 8: Io in the rise, map seam closed, terrain tone gain, merges of engine batches 11 and 12",
+ "pushed": "2026-11-21T11:29:40.933Z",
+ "head": "2b1a504ac748b18cb738e92a724001ae07a4784b",
+ "note": "round 8: night limb fitted to the hero, cover cuts without rim step, measure running",
  "looks": [
   {
-   "time": "2026-11-21T11:16:58.558Z",
-   "file": "20261121111658558-note-f3150_fin_cmp.jpg",
-   "source": "out/work/view/f3150_fin_cmp.jpg",
+   "time": "2026-11-21T11:29:40.310Z",
+   "file": "20261121112940310-note-strip_n5.jpg",
+   "source": "out/work/view/strip_n5.jpg",
    "kind": "note",
-   "label": "round 8 item 8: terrain 3150 final beside approved (left approved), before the gain",
+   "label": "round 8: 2895 3296 2997 3286 draft after the night limb fit",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T11:16:57.690Z",
-   "file": "20261121111657690-note-io_rise_seamfix.jpg",
-   "source": "out/work/view/io_rise_seamfix.png",
+   "time": "2026-11-21T11:29:39.695Z",
+   "file": "20261121112939695-note-f3150_fin2_cmp.jpg",
+   "source": "out/work/view/f3150_fin2_cmp.jpg",
    "kind": "note",
-   "label": "round 8 item 5: Io at 3296 (6 times native) and 3286 (3 times), draft, after the map seam was closed",
+   "label": "round 8 item 8: terrain 3150 final beside approved (left approved) after the gain: lower two thirds within 0.5 level",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T11:16:04.476Z",
-   "file": "20261121111604476-still-f03060-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03060-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "time": "2026-11-21T11:29:39.060Z",
+   "file": "20261121112939060-note-f3296_n5_night.jpg",
+   "source": "out/work/view/f3296_n5_night.png",
+   "kind": "note",
+   "label": "round 8 item 4: night limb at 3296, native, draft: falloff into the sky, faint bands in the night side",
+   "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T11:15:43.255Z",
-   "file": "20261121111543255-still-f03296-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03296-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "time": "2026-11-21T11:29:38.516Z",
+   "file": "20261121112938516-note-strip_cut4.jpg",
+   "source": "out/work/view/strip_cut4.jpg",
+   "kind": "note",
+   "label": "round 8 items 2 3: cut frames 3023 3024 3270 3271 after the air fade (no orange rim on the orbit side), hold 2895, rise 3296, 3020, 3275 (draft)",
+   "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T11:15:22.430Z",
-   "file": "20261121111522430-still-f03286-16x9-draft-full.jpg",
+   "time": "2026-11-21T11:28:41.358Z",
+   "file": "20261121112841358-still-f03286-16x9-draft-full.jpg",
    "source": "out/work/stills/f03286-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.rise frame 3286, draft tier",
@@ -60,11 +48,25 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:15:01.857Z",
-   "file": "20261121111501857-still-f02895-16x9-draft-full.jpg",
+   "time": "2026-11-21T11:28:21.152Z",
+   "file": "20261121112821152-still-f02997-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02997-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:27:39.952Z",
+   "file": "20261121112739952-still-f02895-16x9-draft-full.jpg",
    "source": "out/work/stills/f02895-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.hold frame 2895, draft tier",
@@ -74,11 +76,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:14:40.474Z",
-   "file": "20261121111440474-still-f03150-16x9-final-full.jpg",
+   "time": "2026-11-21T11:17:34.925Z",
+   "file": "20261121111734925-still-f03150-16x9-final-full.jpg",
    "source": "out/work/stills/f03150-16x9-final-full.png",
    "kind": "still",
    "label": "jupiter.terrain frame 3150, final tier",
@@ -88,15 +90,7 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
-  },
-  {
-   "time": "2026-11-21T11:07:03.556Z",
-   "file": "20261121110703556-note-strip_io_rise.jpg",
-   "source": "out/work/view/strip_io_rise.jpg",
-   "kind": "note",
-   "label": "round 8 item 5: Io in the rise after the new place (draft): 3278 3280 3282 3284 3286 3290 3296 3304, no shadow column",
-   "stop": "jupiter"
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
