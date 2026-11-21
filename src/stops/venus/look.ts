@@ -73,7 +73,9 @@ export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
 export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, number], weight: 1, near: [0.03, 0.06] as [number, number], far: { inner: [0.86, 0.94] as [number, number], dense: 1.25, lod: 5 } }
 
-export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
+export const swirl = { lon: -13, lat: 19, deg: 130, wideDeg: 12 }
+
+export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, base: 128, cap: 2.5 }
 
 export const veil = {
   file: veilJson.file,

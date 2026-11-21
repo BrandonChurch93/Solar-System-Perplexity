@@ -47,9 +47,10 @@ export interface GlobeOptions {
   lift: { floor: number; stops: number; from: number; to: number }
   shade: { far: number; grad: number; cap: number }
   mauve: { from: number; to: number; rest: number }
-  weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
+  weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; lod: number; cap: number }
   rim: HoldRim
   hold: { map: THREE.Texture; right: THREE.Vector3; up: THREE.Vector3; forward: THREE.Vector3; centre: [number, number]; half: number; lod: number; stops: number; back: [number, number]; weight: number; margin: number; far: { inner: [number, number]; dense: number; lod: number } }
+  swirl: { axis: THREE.Vector3; wideDeg: number }
   segments?: number
 }
 
@@ -145,6 +146,8 @@ uniform vec4 uHoldMap;
 uniform vec4 uHoldLook;
 uniform vec4 uHoldFar;
 uniform vec2 uHoldLow;
+uniform vec4 uSwirl;
+uniform float uSwirlWide;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -160,6 +163,15 @@ ${HOLD_RIM_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+vec3 curl(vec3 v) {
+  for (int once = 0; once < (uSwirl.w != 0.0 ? 1 : 0); once++) {
+    float c = clamp(dot(v, uSwirl.xyz), -1.0, 1.0);
+    float away = acos(c);
+    float a = uSwirl.w * exp(-away * away * uSwirlWide);
+    v = v * cos(a) + cross(uSwirl.xyz, v) * sin(a) + uSwirl.xyz * (c * (1.0 - cos(a)));
+  }
+  return v;
 }
 vec3 onSphere(vec3 from, vec3 ray) {
   float b = dot(from, ray);
@@ -190,15 +202,15 @@ void main() {
   vec3 d = spinY(normalize(vLocal), uSpin);
   float band = 1.0 - d.y * d.y;
   float drift = uDrift.x * (band - uDrift.z);
-  vec3 dc = spinY(d, drift);
-  vec3 df = spinY(d, drift + uDrift.y * band);
+  vec3 dc = curl(spinY(d, drift));
+  vec3 df = curl(spinY(d, drift + uDrift.y * band));
   vec3 n = normalize(vWorldN);
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   float grad = uGrad * uSmear * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
   vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
-  float texels = diagTexelsDir(d, uMapWidth);
+  float texels = diagTexelsDir(uSwirl.w != 0.0 ? dc : d, uMapWidth);
   float dn = dot(dc, uSpotN);
   float near = 0.0;
   float wl[${MAX_PATCHES}];
@@ -228,11 +240,11 @@ ${PATCH_LEVELS}
     vec3 p0 = normalize(vLocal - uJitter.x * sx + uJitter.y * sy);
     vec3 move = onSphere(uNextCam, normalize(uNextRot * normalize(p0 - uCamObj))) - p0;
     vec3 acc = vec3(0.0);
-    vec3 da = spinY(spinY(normalize(p0 - 0.5 * move), uSpin), drift);
+    vec3 da = curl(spinY(spinY(normalize(p0 - 0.5 * move), uSpin), drift));
     vec2 ua = lonLat(da);
     vec2 ga = spotPlane(da);
     for (int t = 0; t < uTaps; t++) {
-      vec3 db = spinY(spinY(normalize(p0 + move * (float(t + 1) / float(uTaps) - 0.5)), uSpin), drift);
+      vec3 db = curl(spinY(spinY(normalize(p0 + move * (float(t + 1) / float(uTaps) - 0.5)), uSpin), drift));
       vec2 ub = lonLat(db);
       vec2 gb = spotPlane(db);
       vec2 du = ub - ua;
@@ -291,7 +303,7 @@ ${TAP_LEVELS}
     for (int inner = 0; inner < (ring > 0.0 ? 1 : 0); inner++) {
       vec3 from = normalize(dc - uWeave.x * normalize(uWeaveCam));
       vec3 narrow = equirect(uMap, from).rgb;
-      vec3 wide = equirectGrad(uMap, from, uWeave.z).rgb;
+      vec3 wide = textureLod(uMap, lonLat(from), uWeave.z).rgb;
       float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
       col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near) / uSmear);
     }
@@ -400,10 +412,11 @@ export class Globe {
         uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
-        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
+        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.lod, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
         ...o.rim.uniforms,
         uHold: { value: o.hold.map }, uHoldR: { value: o.hold.right }, uHoldU: { value: o.hold.up }, uHoldF: { value: o.hold.forward },
         uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) }, uHoldFar: { value: new THREE.Vector4((o.hold.map.image as unknown as { width: number }).width, o.hold.far.inner[0], o.hold.far.inner[1], o.hold.far.dense) }, uHoldLow: { value: new THREE.Vector2(o.hold.far.lod, 2 * o.hold.margin) },
+        uSwirl: { value: new THREE.Vector4(o.swirl.axis.x, o.swirl.axis.y, o.swirl.axis.z, 0) }, uSwirlWide: { value: 1 / Math.pow(THREE.MathUtils.degToRad(o.swirl.wideDeg), 2) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
