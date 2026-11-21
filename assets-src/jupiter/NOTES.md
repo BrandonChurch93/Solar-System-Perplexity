@@ -641,6 +641,8 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
   - Disk: full 44.96 MB (limit 150), web 12.98 MB (limit 40). `deck-core.jpg` full 3,218,635 bytes, web 612,240 bytes.
 - 23:10: main moved to 8cd371b (kit/PROGRESS.md and status pictures only), merged as 0210254; build green, tsc clean, vitest 62 of 62. PROGRESS says engine batch 16 will carry a plan hook `skyUnderCover(amount, time)` (base: the law of today) besides `coverWindow`; a stop sets its floor in Phase 6. Binaries committed once with this entry, then POLISH READY sent.
 
+- 23:12: POLISH READY f406b2b sent to /root (items 1, 3, 4 with before and after numbers and weak points, item 2 answer: cross fade of the two skies over about 4 frames round the cut or a floor of 0.3 to 0.35 from `skyUnderCover`; coverWindow: dive 8 and 8, rise 8 before and 2 after for the engine cover, 8 and 14 if the window also defines "under cover"). Looks pushed 23:08. Next: minors, south limb first (`/tmp/p/limb.py`, not applied yet).
+
 ## Next
 
 - Polish items 1, 3, 4 (then 5), see the list above. Then `POLISH READY <commit>` to /root.
