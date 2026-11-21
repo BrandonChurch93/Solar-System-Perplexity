@@ -11,14 +11,14 @@ export const deck = curve.deck.map((k, i) => {
   return k.map((v) => v * g)
 })
 export const cloud = curve.cloud
-export const air = hazeJson.air as AirParams
+export const air = { ...hazeJson.air, near: [0.22, 0.45, 0.9] } as AirParams
 export const limb = hazeJson.limb as LimbParams
 
 export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3, shear: 0.35, shearBands: 5, relief: 0 }
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 5 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
-export const near = { altitude: [0.05, 0.45], altitudeRise: [0.05, 1], amount: 1, gain: 0.55, gainRise: 0.8, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1] }
+export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.6, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1] }
 export const field = { amount: 1 }
 export const lineFade: [number, number] = [0.6, 0.15]
 
@@ -45,7 +45,7 @@ export const ring = {
   forward: 2.5,
   forwardPower: 5,
   sheet: [1.42, 1.78, 0.08, 0.008] as [number, number, number, number],
-  strands: [[1.52, 0.005, 0.05], [1.4, 0.004, 0.02], [1.7, 0.012, 0.012]],
+  strands: [[1.52, 0.005, 0.04], [1.4, 0.004, 0.016], [1.7, 0.012, 0.0096]],
   mapScale: 0.25,
   degPerSecond: 0.8,
 }

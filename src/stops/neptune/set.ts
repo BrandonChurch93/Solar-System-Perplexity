@@ -121,7 +121,10 @@ export const createSet: SetFactory = async (ctx) => {
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
       const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
       const pu = planet.material.uniforms
-      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight)
+      const rising = state.segment.kind === 'rise'
+      const nearRange = rising ? look.near.altitudeRise : look.near.altitude
+      const near = look.near.amount * (1 - smooth((camera.length() - 1 - nearRange[0]!) / (nearRange[1]! - nearRange[0]!)))
+      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight, near)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
@@ -131,9 +134,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
-      const rising = state.segment.kind === 'rise'
-      const nearRange = rising ? look.near.altitudeRise : look.near.altitude
-      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight, look.near.amount * (1 - smooth((camera.length() - 1 - nearRange[0]!) / (nearRange[1]! - nearRange[0]!))), rising ? look.near.gainRise : look.near.gain)
+      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)

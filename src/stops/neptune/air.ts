@@ -37,6 +37,7 @@ export interface AirParams {
   line: AirLine
   forward: number
   forwardPower: number
+  near: number[]
   extinction: number
   top: number
 }
@@ -59,6 +60,7 @@ uniform float uLineLift;
 uniform vec3 uLineTail;
 uniform vec2 uLineTailEdge;
 uniform vec2 uAirForward;
+uniform vec4 uAirNear;
 vec3 airLight(vec3 day, vec3 twilight, vec3 night, vec2 edge, vec3 sun, vec3 at, float fwd) {
   float s = smoothstep(edge.x, edge.y, dot(at, sun));
   float ndl = dot(at, uSunW);
@@ -89,7 +91,7 @@ vec4 air(vec3 dir, bool ground) {
     float tau = uLineShape.z * path;
     sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w;
   }
-  return vec4(sum, total);
+  return vec4(sum * mix(vec3(1.0), uAirNear.rgb, uAirNear.w), total);
 }`
 
 const VERT = /* glsl */ `
@@ -142,6 +144,7 @@ export function airUniforms(p: AirParams): Record<string, THREE.IUniform> {
     uLineTail: { value: new THREE.Vector3() },
     uLineTailEdge: { value: new THREE.Vector2(p.line.tailEdge[0], p.line.tailEdge[1]) },
     uAirForward: { value: new THREE.Vector2(p.forward, p.forwardPower) },
+    uAirNear: { value: new THREE.Vector4(p.near[0], p.near[1], p.near[2], 0) },
   }
 }
 
@@ -176,8 +179,9 @@ export class Air {
     this.users.push(uniforms)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number): void {
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0): void {
     for (const u of this.users) {
+      ;(u.uAirNear!.value as THREE.Vector4).w = near
       ;(u.uCam!.value as THREE.Vector3).copy(camera)
       ;(u.uSunW!.value as THREE.Vector3).copy(light)
       const suns = u.uAirSun!.value as THREE.Vector3[]
