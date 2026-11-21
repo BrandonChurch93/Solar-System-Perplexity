@@ -1,75 +1,62 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T11:14:48.293Z",
- "head": "eff4155df22da5aa591fb38a027bd9d03cecb23c",
- "note": "round 2 work: matching globe and terrain poses at both cover swaps (raw frames with the glare off, dive and rise sheets, 1016, 717)",
+ "pushed": "2026-11-21T11:37:14.566Z",
+ "head": "8c4fee2b6a67fe14f6765e7fcf34183b21087578",
+ "note": "round 2 work: both cover swaps are one move now (pose, brightness and horizon matched; veil keeps ground and horizon readable)",
  "looks": [
   {
-   "time": "2026-11-21T11:07:17.146Z",
-   "file": "20261121110717146-frame-f990.jpg",
-   "source": "out/work/mercury/r8/q3/f990.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 990, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "time": "2026-11-21T11:37:07.304Z",
+   "file": "20261121113707304-note-hz-teeth-b.jpg",
+   "source": "out/work/mercury/r8/q6/hz-teeth-b.png",
+   "kind": "note",
+   "label": "r8 terrain horizon at 744, 747, 751 after the far distance fix: no sawtooth",
+   "stop": "mercury"
   },
   {
-   "time": "2026-11-21T11:06:31.779Z",
-   "file": "20261121110631779-frame-f744.jpg",
-   "source": "out/work/mercury/r8/q3/f744.png",
+   "time": "2026-11-21T11:37:06.276Z",
+   "file": "20261121113706276-note-pair-rise-a.jpg",
+   "source": "out/work/mercury/r8/q5/pair-rise-a.png",
+   "kind": "note",
+   "label": "r8 raw swap, glare off: terrain 989 over globe 990 after the pose and brightness match",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T11:37:05.159Z",
+   "file": "20261121113705159-note-pair-dive-a.jpg",
+   "source": "out/work/mercury/r8/q5/pair-dive-a.png",
+   "kind": "note",
+   "label": "r8 raw swap, glare off: globe 743 over terrain 744 after the pose and brightness match",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T11:37:04.093Z",
+   "file": "20261121113704093-note-rise-a.jpg",
+   "source": "out/work/mercury/r8/q8/rise-a.jpg",
+   "kind": "note",
+   "label": "r8 rise cover 987 to 992 at draft: horizon readable, the rise starts over the same crater",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T11:37:03.239Z",
+   "file": "20261121113703239-note-dive-a.jpg",
+   "source": "out/work/mercury/r8/q8/dive-a.jpg",
+   "kind": "note",
+   "label": "r8 dive cover 741 to 746 at draft: ground and horizon stay readable, same crater on both sides of the swap",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T11:36:59.683Z",
+   "file": "20261121113659683-frame-f00690-review.jpg",
+   "source": "out/work/sheets/.frames-jsFN3h/f00690-review.png",
    "kind": "frame",
-   "label": "mercury.dive frame 744, draft tier",
+   "label": "mercury.dive frame 690, review tier",
    "stop": "mercury",
    "segment": "mercury.dive",
-   "frame": 744,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
-  },
-  {
-   "time": "2026-11-21T11:01:51.500Z",
-   "file": "20261121110151500-note-f717.jpg",
-   "source": "out/work/mercury/r8/q1/f717.png",
-   "kind": "note",
-   "label": "r8 frame 717 review: soft sliding streak, ghosts move with the Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:01:50.814Z",
-   "file": "20261121110150814-note-f1016.jpg",
-   "source": "out/work/mercury/r8/q1/f1016.png",
-   "kind": "note",
-   "label": "r8 frame 1016 review: crisp craters, no streaks",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:01:50.192Z",
-   "file": "20261121110150192-note-sheet-rise-a.jpg",
-   "source": "out/work/mercury/r8/p3/sheet-rise-a.png",
-   "kind": "note",
-   "label": "r8 rise sheet review: eased lift off, globe settles at the same scale",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T10:56:48.360Z",
-   "file": "20261121105648360-sheet-mercury.rise-16x9-review.jpg",
-   "source": "out/work/sheets/mercury.rise-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet mercury.rise, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 960,
-   "last": 1034,
+   "frame": 690,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T10:41:08.867Z",
