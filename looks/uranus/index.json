@@ -1,9 +1,59 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T12:57:46.459Z",
+ "pushed": "2026-11-21T13:16:27.956Z",
  "head": "1951b7bd887e8f83144f4917a12bd57ae9310679",
- "note": "round 2: hold and terrain acutance, ring shadow in the rise; check suite running",
+ "note": "round 2: G13 failed on the rebuilt dive, patch pyramid recentred, re-measuring before READY",
  "looks": [
+  {
+   "time": "2026-11-21T13:16:26.696Z",
+   "file": "20261121131626696-note-p-sheet.jpg",
+   "source": "../../../../tmp/p-sheet.jpg",
+   "kind": "note",
+   "label": "dive 4137, 4146, 4148 and rise 4422 at draft after the patch pyramid was recentred where the rebuilt dive looks (G13 fix)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T13:16:05.339Z",
+   "file": "20261121131605339-frame-ptx-4148.jpg",
+   "source": "out/work/u/r4/ptx-4148.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4148, draft tier, texels view",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4148,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T13:14:56.937Z",
+   "file": "20261121131456937-frame-p-4422.jpg",
+   "source": "out/work/u/r4/p-4422.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4422, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4422,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T13:00:46.185Z",
+   "file": "20261121130046185-job-frame-04453.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4453, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4453,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T12:57:45.418Z",
    "file": "20261121125745418-note-j-4035.jpg",
@@ -18,38 +68,6 @@
    "source": "out/work/u/r4/y-4428.png",
    "kind": "note",
    "label": "rise 4428 draft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T12:57:43.586Z",
-   "file": "20261121125743586-note-y-4436.jpg",
-   "source": "out/work/u/r4/y-4436.png",
-   "kind": "note",
-   "label": "rise 4436 draft: ring shadow band on the disc beside the near arc",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T12:57:42.586Z",
-   "file": "20261121125742586-note-l-4290.jpg",
-   "source": "out/work/u/r4/l-4290.png",
-   "kind": "note",
-   "label": "terrain 4290 final nograin, per tile G17 median 1.09, deck tiles 0.91 to 1.17",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T12:57:41.679Z",
-   "file": "20261121125741679-note-t-limb.jpg",
-   "source": "../../../../tmp/t-limb.png",
-   "kind": "note",
-   "label": "terrain 4290 rings and Sun crop x2: film above, approved below",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T12:57:40.827Z",
-   "file": "20261121125740827-note-t-deck.jpg",
-   "source": "../../../../tmp/t-deck.png",
-   "kind": "note",
-   "label": "terrain 4290 deck crop x2, final nograin: film above (sharper sampling of the plate), approved below",
    "stop": "uranus"
   },
   {
