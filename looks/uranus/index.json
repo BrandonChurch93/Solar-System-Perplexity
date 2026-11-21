@@ -1,9 +1,38 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T20:19:54.767Z",
- "head": "de1f6043648a2b9b2a45f18341f40a009803087c",
- "note": "measure green on the final merged tree (G13 0 of 463), dive and dive cover sheets viewed; rise sheets rendering",
+ "pushed": "2026-11-21T20:44:26.871Z",
+ "head": "cc0dd1d8f04efe6e40f58858acf3b4a67110f2d3",
+ "note": "rise sheet on the final merged tree viewed (unchanged by Saturn's sky); rise cover sheet rendering, then finals, gates, READY",
  "looks": [
+  {
+   "time": "2026-11-21T20:43:51.378Z",
+   "file": "20261121204351378-frame-f04412-review.jpg",
+   "source": "out/work/sheets/.frames-UWgvCT/f04412-review.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4412, review tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4412,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T20:34:54.903Z",
+   "file": "20261121203454903-sheet-uranus.rise-16x9-review.jpg",
+   "source": "out/work/sheets/uranus.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet uranus.rise, review tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4380,
+   "last": 4454,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T20:19:22.948Z",
    "file": "20261121201922948-sheet-uranus.dive-cover-16x9-review.jpg",
@@ -32,34 +61,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T19:54:31.760Z",
-   "file": "20261121195431760-job-frame-04335.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.terrain frame 4335, draft tier, texels view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4335,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T19:44:31.470Z",
-   "file": "20261121194431470-job-frame-03960.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 3960,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-21T19:26:36.281Z",
