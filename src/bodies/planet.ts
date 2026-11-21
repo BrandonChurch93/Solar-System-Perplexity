@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
+import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { HAZE_GLSL, hazeUniforms, type HazeParams } from './haze'
 
@@ -308,7 +309,7 @@ export class Planet {
         uRelief: { value: o.light.relief }, uReliefNear: { value: o.light.reliefNear }, uLimb: { value: o.light.limb },
         uExtinction: { value: o.haze.extinction },
         uBodyToWorld: { value: this.bodyToWorld },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uImplicit: implicitUniform,
       },
     })
     const seg = o.segments ?? 320

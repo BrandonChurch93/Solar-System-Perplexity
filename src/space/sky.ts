@@ -3,10 +3,12 @@ import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import { tileRects, type Tiles } from '../core/tiles'
 import type { SkyPatch, SunState } from '../core/types'
+import { TEXEL_GLSL, implicitUniform } from '../core/texel'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
 
 export const EQUIRECT_GLSL = /* glsl */ `
+${TEXEL_GLSL}
 const float PI = 3.141592653589793;
 vec4 equirectGrad(sampler2D tex, vec3 dir, float grad) {
   float u = atan(dir.x, dir.z) / (2.0 * PI) + 0.5;
@@ -14,7 +16,7 @@ vec4 equirectGrad(sampler2D tex, vec3 dir, float grad) {
   float u2 = fract(u + 0.5) - 0.5;
   vec2 dx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v));
   vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
-  return textureGrad(tex, vec2(u, v), dx * grad, dy * grad);
+  return gradTexel(tex, vec2(u, v), dx * grad, dy * grad);
 }
 vec4 equirect(sampler2D tex, vec3 dir) {
   return equirectGrad(tex, dir, 1.0);
@@ -115,7 +117,7 @@ void main() {
   vec3 band = vec3(0.0);
   for (int k = 0; k < (bc.z > 0.0 ? 1 : 0); k++) {
     vec2 tx = uBandClean.x / vec2(textureSize(uBand, 0));
-    vec3 b0 = textureGrad(uBand, bc.xy, dx, dy).rgb;
+    vec3 b0 = gradTexel(uBand, bc.xy, dx, dy).rgb;
     vec2 gx = dx * uBandClean.z;
     vec2 gy = dy * uBandClean.z;
     vec3 kept = b0;
@@ -148,11 +150,15 @@ void main() {
     float disc = smoothstep(1.0 + edge, 1.0 - edge, x);
     float limb = 0.45 + 0.55 * sqrt(max(1.0 - x * x, 0.0));
     float coreR = clamp(uSunRadius * 0.35, 0.0012, 0.004);
-    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR));
+    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR)) * (1.0 - smoothstep(0.06, 0.085, uSunRadius));
     float o = max(x, 1.0);
     float big = clamp(sqrt(0.02 / uSunRadius), 0.4, 1.0);
     float corona = 1.3 * big * pow(o, -3.6) + 0.035 * pow(o, -1.6) * exp(-o * 0.2);
-    col += uSunColor * uSunGlare * (disc * (limb * 3.6 * big + core) + (1.0 - disc) * corona);
+    float wide = smoothstep(0.06, 0.085, uSunRadius);
+    float mu = sqrt(max(1.0 - x * x, 0.0));
+    vec3 face = mix(vec3(1.0), 2.6 * pow(vec3(mu + 0.05), vec3(0.22, 0.42, 0.8)), wide);
+    corona += wide * (0.5 * exp(-(o - 1.0) * 9.0) + 0.16 * pow(o, -1.4) * exp(-(o - 1.0) * 0.3));
+    col += uSunColor * uSunGlare * (disc * (face * limb * 3.6 * big + core) + (1.0 - disc) * corona);
   }
   outColor = vec4(col, 0.0);
 }`
@@ -265,7 +271,7 @@ export class Sky {
     const main = Math.round(base * st.countScale)
     const count = main + Math.round(base * st.micro)
     this.pass = new Pass(SKY_FRAG, {
-      uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
+      uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
     }, BEHIND)
