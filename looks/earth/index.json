@@ -1,9 +1,33 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T02:45:28.943Z",
- "head": "9602acaf65c78e325792388b3af374422aad9b20",
- "note": "first looks: stand-in hold and terrain beside the approved images",
+ "pushed": "2026-11-21T02:59:38.443Z",
+ "head": "535a41272add2e8df23974279e3d123d9b85cd83",
+ "note": "Orbit view: splitting the hero into a surface map and a cloud layer",
  "looks": [
+  {
+   "time": "2026-11-21T02:59:37.834Z",
+   "file": "20261121025937834-note-limb-check.jpg",
+   "source": "out/work/assets/earth/limb-check.jpg",
+   "kind": "note",
+   "label": "Limb check of the hero fit, twelve places round the disc",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T02:59:37.277Z",
+   "file": "20261121025937277-note-decloud-cmp-carib.jpg",
+   "source": "out/work/earth/view/decloud-cmp-carib.jpg",
+   "kind": "note",
+   "label": "Caribbean at native size: hero, cloud-free take A, cloud-free take B",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T02:59:36.709Z",
+   "file": "20261121025936709-note-decloud-sd-small.jpg",
+   "source": "out/work/earth/view/decloud-sd-small.jpg",
+   "kind": "note",
+   "label": "Hero with clouds removed by the image tool, take 1: source for the surface under the cloud layer",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-21T02:45:10.763Z",
    "file": "20261121024510763-compare-compare-earth-terrain-view.jpg",
