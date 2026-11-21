@@ -233,6 +233,7 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - Chosen `moonDegPerSecond 2.6` (about 0.18 radii, 85 px across the hold).
 - Band flow and storm turn in the hold seen on 2820 against 2969 (`out/work/view/hold_pairs.jpg`, `hold_diff.jpg`): the storm arms turn about 22 deg, band edges shear against each other, the wisp layer drifts. Small by design (closed form, settles within a segment).
 - The second full measure was stopped at 220 of 463 to change Io; it runs again at the new head before any gate claim.
+- Third full measure at 7780e18 (Io 2.6), 867 s, log `out/work/jupiter/measure3.log`: G13 PASS 0 of 463 frames over 0.02 soft (worst 3260 0.91 percent, 3261 0.81 percent, 3259 0.38 percent); G5 PASS invalid 0, coverage hold 0.350, dive 0.459, terrain 0.754, rise 0.233; G17 PASS 2895 median 1.222 p25 0.963 over 81 tiles, 3150 median 1.026 p25 0.988 over 80 tiles. Gates G5, G13, G17, G11 PASS (09:18 UTC).
 
 ## Next
 
