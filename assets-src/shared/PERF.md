@@ -434,6 +434,8 @@ Earth's dive costs more per sample than the table of the second task knows: 1870
 
 Upper bound if every stop set `coverHides: 0` (the raw motion counts everywhere): review 128 gives 63,647 samples (35 frames at the cap, 17.1 to 30.6 hours), final 256 gives 195,459 samples (6 frames at the cap: jupiter.dive 2, neptune.dive 2, neptune.rise 2; 51.2 to 87.8 hours); without any cap the largest count would be 488.
 
+One capped frame, Earth 1877 at final on this VM (4 cores, 7 GB): with the cap at 256 the frame gets 162 samples (242 px in view at a 1.5 px step), 754.7 s, so 4.7 s per sample with the load. Memory is flat over the samples: all browser processes together 3.0 GB resident, the GPU process 2.08 GB, from the first sample to the last. A frame of 256 samples of that dive would take about 20 minutes and the same memory.
+
 ### C. What a cover hides
 
 Optional plan number `coverHides` (`MoveParams` in `src/director/moves.ts`, beside the other `cover` keys; default 1). The director copies it to `shot.cover.hides` only when the plan sets it, and the cover factor of the sample count is `max(1 - cover.amount * coverHides, 0)`. 1 is the old rule (an opaque cover: what it hides needs no samples), 0 counts the full motion under any cover, a value between is for a translucent cover through which a bright limb or ring shows (Uranus 4159 to 4161: raw 28.6 to 29.4 px, seen 6.9 to 2.5 px with the default; 4413: raw 69.3, seen 10.8). No plan sets it. The gradient scale of A reads the raw motion and does not depend on it.
