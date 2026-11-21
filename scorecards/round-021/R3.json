@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "lower and central cloud deck",
+      "what": "the near terrain and mid disk are a soft brushed smear, with linear streaks along the view, so the surface reads as stretched procedural texture rather than clouds",
+      "fix": "replace the directional smear with finer cloud structure that stays sharp from the near terrain up to the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "lit atmosphere crops",
+      "what": "at native size the disk is airbrushed and softly streaked, with no fine turbulence, so the crops give away the render",
+      "fix": "add small-scale cloud relief and break up the parallel streaks so a native crop holds up"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "bottom terrain crops",
+      "what": "the nearest ground keeps the same directional smear and loses detail",
+      "fix": "keep the near-field texture as crisp as the mid disk"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lower-left sky",
+      "what": "a faint greenish iridescent smudge sits in the starfield",
+      "fix": "remove the colored flare so the sky is only stars and faint dust"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crop P, illuminated mid-disc down toward the lower terminator",
+      "what": "Cloud texture stretches into long, nearly parallel streaks and loses fine structure, making the globe look airbrushed.",
+      "fix": "Use spherical cloud mapping that preserves texel density and introduce smaller, irregular breaks in the long bands."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops A and E, bright horizon and blue midground below it",
+      "what": "Much of the surface detail smears into similarly angled bands. The bright far layer loses separation from the limb glow.",
+      "fix": "Keep distinct cloud shapes at several scales and preserve local contrast beneath the atmospheric scattering."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crop H, small moon to the right of the ring plane",
+      "what": "The moon reads as a soft oval with a smeared brightness gradient and no distinct lit edge or surface relief.",
+      "fix": "Resolve the silhouette and terminator at output scale and add subtle, irregular albedo or relief."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "crops J and Q, outer ring tips at the horizon",
+      "what": "The thinnest bright ring ends as a sharp needle against the cyan haze, especially at the left intersection.",
+      "fix": "Attenuate ring brightness continuously through the atmospheric path and antialias the last visible pixels."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crops C and G, upper-right globe limb",
+      "what": "The almost white rim sits over a broader blue halo, reading as a separate outline rather than one continuous falloff.",
+      "fix": "Reduce the rim peak and blend the inner rim and outer glow into a single scattering profile."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "crops L and M, stars in the dark sky to the right of the rings",
+      "what": "Several brighter stars are softened into colored dashes or irregular blobs instead of compact points.",
+      "fix": "Use a compact, antialiased star profile and reserve broad bloom for the brightest sources."
+     }
+    ]
+   }
+  }
+ ]
+}
