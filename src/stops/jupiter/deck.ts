@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { PALL_GLSL, type PallLook } from './pall'
 
 export interface DeckMeta {
   canvas: number[]; origin: number[]; image: number[]; focalPx: number; cell: number; grid: number[]
@@ -16,9 +17,13 @@ export interface DeckLook {
   skyRimDeg: number
   edgePixels: number
   vortices: Vortex[]
+  collar: [number, number, number]
+  tone: [number, number, number, number, number]
+  toneHigh: [number, number, number]
   settle: number
   wisp: { tile: number; amount: number; shadow: number; shadowLength: number; fine: number; drift: [number, number]; fade: [number, number]; sun: [number, number] }
   haze: { color: [number, number, number]; density: number; tile: number; layer: number; height: number; clear: number; gather: number; power: number }
+  pall: PallLook
   flashes: Flash[]
   flashColor: [number, number, number]
   flashBody: [number, number]
@@ -69,6 +74,10 @@ uniform vec3 uEy;
 uniform vec3 uEn;
 uniform vec4 uVortex[${VORTICES}];
 uniform vec2 uTurn[${VORTICES}];
+uniform vec3 uCollar;
+uniform vec3 uTone;
+uniform vec3 uToneHigh;
+uniform vec2 uToneRange;
 uniform vec4 uWispShape;
 uniform vec4 uWispMove;
 uniform vec4 uWispSun;
@@ -92,6 +101,7 @@ in vec3 vEye;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
+${PALL_GLSL}
 vec2 toPx(vec2 g) {
   vec3 p = uS + uEx * g.x + uEy * g.y - uEn * (dot(g, g) / (2.0 * uRadius));
   return vec2(uFocal * p.x / -p.z, -uFocal * p.y / -p.z);
@@ -101,7 +111,8 @@ vec2 swirl(vec2 g, int k) {
   for (int i = 0; i < ${VORTICES}; i++) {
     vec2 q = (g - uVortex[i].xy) / uVortex[i].zw;
     float r2 = dot(q, q);
-    float a = -uTurn[i][k] / (1.0 + r2 * r2);
+    float wide = r2 / (uCollar.z * uCollar.z);
+    float a = -uTurn[i][k] * (1.0 / (1.0 + r2 * r2) + (i == 0 ? uCollar[k] : 0.0) / (1.0 + wide * wide));
     float c = cos(a);
     float s = sin(a);
     d += (vec2(c * q.x - s * q.y, s * q.x + c * q.y) - q) * uVortex[i].zw;
@@ -145,6 +156,7 @@ void main() {
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = inverseFilmic(texel);
   float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col *= mix(uTone, uToneHigh, smoothstep(uToneRange.x, uToneRange.y, lum));
   col = mix(col, lum * uBeyond.x + vec3(uBeyond.y), off);
   for (int k = 0; k < (nearby * alpha > 0.0 ? 1 : 0); k++) {
     vec2 wuv = (wispG - uWispMove.xy) * uWispShape.x;
@@ -186,9 +198,12 @@ void main() {
     fog = thick * (alpha + (1.0 - alpha) * above);
     fogTone = 0.8 + 0.4 * hv;
   }
-  col = (col * (1.0 - fog) + uHazeColor.rgb * fogTone * fog) * uGain * vig;
+  float held = 1.0;
+  for (int k = 0; k < (uPallSea.w > 0.0 ? 1 : 0); k++) held = mix(1.0, pallReach(vClip.xy / vClip.z), uPallSea.w);
+  col = (col * (1.0 - fog) + uHazeColor.rgb * fogTone * fog) * uGain * vig * held;
+  alpha *= held;
   if (uDiag >= 2 && alpha < 0.5) discard;
-  alpha += (1.0 - alpha) * fog;
+  alpha += (1.0 - alpha) * fog * held;
   float texels = mix(diagTexels(px / uCanvas * uWideSize), diagTexels(ip / uImage * uCoreSize), inCore);
   outColor = diagOut(vec4(col, alpha), texels, 1.0, mix(vec3(0.3, 0.5, 0.85), vec3(0.85, 0.45, 0.25), inCore), shift * 0.05, length(vView));
 }`
@@ -209,7 +224,7 @@ export class Deck {
     this.group.add(mesh)
   }
 
-  static async load(ctx: SetContext, base: string, meta: DeckMeta, look: DeckLook, wisp: THREE.Texture): Promise<Deck> {
+  static async load(ctx: SetContext, base: string, meta: DeckMeta, look: DeckLook, wisp: THREE.Texture, pall: Record<string, THREE.IUniform>): Promise<Deck> {
     const sizes = meta.sets[ctx.assets]!
     const wide = await ctx.texture(base + 'deck-wide.jpg', { srgb: true, anisotropy: 16 })
     const core = await ctx.texture(base + 'deck-core.jpg', { srgb: true, anisotropy: 16 })
@@ -303,7 +318,8 @@ export class Deck {
         uWideSize: { value: new THREE.Vector2().fromArray(sizes.wide) }, uCoreSize: { value: new THREE.Vector2().fromArray(sizes.core) },
         uFocal: { value: f }, uCentre: { value: centre }, uRadius: { value: meta.radius }, uEdge: { value: look.edgePixels },
         uS: { value: s }, uEx: { value: ex }, uEy: { value: ey }, uEn: { value: en },
-        uVortex: { value: vortex },
+        uVortex: { value: vortex }, uCollar: { value: new THREE.Vector3().fromArray(look.collar) },
+        uTone: { value: new THREE.Vector3(look.tone[0], look.tone[1], look.tone[2]) }, uToneHigh: { value: new THREE.Vector3().fromArray(look.toneHigh) }, uToneRange: { value: new THREE.Vector2(look.tone[3], look.tone[4]) },
         uWispShape: { value: new THREE.Vector4(1 / w.tile, w.amount, w.shadow, w.shadowLength) },
         uWispMove: { value: new THREE.Vector4(0, 0, w.fade[0], w.fade[1]) },
         uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
@@ -311,6 +327,7 @@ export class Deck {
         uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) }, uDetail: { value: new THREE.Vector4(look.detail[0], 1 / look.detail[1], look.detail[2], look.detail[3]) },
         uHaze: { value: new THREE.Vector4(0, 1 / look.haze.tile, look.haze.layer, THREE.MathUtils.degToRad(look.haze.height)) }, uHazeColor: { value: new THREE.Vector4(look.haze.color[0], look.haze.color[1], look.haze.color[2], THREE.MathUtils.degToRad(look.skyRimDeg)) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
+        ...pall,
       },
       transparent: true,
       blending: THREE.CustomBlending,
