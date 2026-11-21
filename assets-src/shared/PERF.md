@@ -105,3 +105,20 @@ If the world holds a non transparent material that is not plainly opaque (blendi
 | 2726 rise | 87.5 | 79.5 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
 
 Sky pass per sample (draft): 1.56 to 0.89 s (hold, 49.6 % of the frame covered), 1.58 to 0.64 s (dive, 62.4 %), 0.49 to 0.37 s (rise, 34.7 %). Whole sample: 2.81 to 2.12 s, 2.88 to 1.89 s, 1.35 to 1.19 s. `npm run build`, `npx vitest run` (28 tests) and `npm run determinism` pass.
+
+### 5. Star points that lie wholly on covered tiles are not drawn, capture mode (`c3f52bd`)
+
+`src/space/sky.ts`, `src/core/tiles.ts`, `src/core/engine.ts`. The star cull keeps the list of points in view per view (as in change 1) and filters it per sample against the tile grid of change 4: a point is dropped when every tile touched by its padded square (half the largest point plus 4 pixels plus the pixel jitter) is covered, which means every one of its fragments would fail the stencil test. The order of the points that remain is unchanged. The filter walks only the points in view (about 450,000, a few ms), the walk over all 3,465,000 points still happens once per view. When no tile is open the star draw is skipped.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 46.7 | 45.1 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 59.2 | 59.2 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 125.3 | 115.4 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 79.5 | 81.0 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Points drawn: 451,000 to 205,000 (hold), 474,000 to 165,000 (dive), 34,000 to 28,000 (rise). Star draw per sample: 0.24 to 0.10 s (hold), 0.24 to 0.09 s (dive).
+
+### Engine batch 2: changes 4 and 5 merged with main (`92edd3c`)
+
+Main `4704442` (which holds engine batch 1) merged into the branch. On the merged tree, `final` tier: hold 2325 44.5 s, terrain 2580 59.8 s, dive 2427 114.8 s, rise 2726 79.2 s, all four sha256 equal to the baselines. `npm run build`, `npx vitest run` (28 tests) and `npm run determinism` pass.
