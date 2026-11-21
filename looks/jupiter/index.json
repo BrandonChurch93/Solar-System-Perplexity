@@ -1,23 +1,40 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T05:58:57.558Z",
+ "pushed": "2026-11-21T06:20:44.701Z",
  "head": "c4961e9cd97557ffe78247fae463f5ca21e4ca10",
- "note": "Jupiter terrain view milestone: review sheet 3060 to 3239, next the dive patches",
+ "note": "dive patches in progress, haze first pass",
  "looks": [
   {
-   "time": "2026-11-21T05:55:40.609Z",
-   "file": "20261121055540609-sheet-jupiter.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.terrain, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "first": 3060,
-   "last": 3239,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "time": "2026-11-21T06:20:44.179Z",
+   "file": "20261121062044179-note-veil1.jpg",
+   "source": "out/work/view/veil1.jpg",
+   "kind": "note",
+   "label": "own haze first pass 3015 and 3027, streaks to fix",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T06:20:43.602Z",
+   "file": "20261121062043602-note-jupiter.dive-cover-16x9-draft.jpg",
+   "source": "out/work/sheets/jupiter.dive-cover-16x9-draft.png",
+   "kind": "note",
+   "label": "dive cover window first pass, engine cover only",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T06:20:43.061Z",
+   "file": "20261121062043061-note-near_global.jpg",
+   "source": "out/work/view/near_global.jpg",
+   "kind": "note",
+   "label": "dive patch near level, input left, painted right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T06:20:42.526Z",
+   "file": "20261121062042526-note-mid_full.jpg",
+   "source": "out/work/view/mid_full.jpg",
+   "kind": "note",
+   "label": "dive patch mid level painted, flat light",
+   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T05:55:29.100Z",
@@ -32,50 +49,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:51:35.289Z",
-   "file": "20261121055135289-sheet-jupiter.rise-16x9-draft.jpg",
-   "source": "out/work/sheets/jupiter.rise-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.rise, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "first": 3240,
-   "last": 3314,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:51:09.806Z",
-   "file": "20261121055109806-frame-f03240-draft.jpg",
-   "source": "out/work/sheets/.frames-X7v6QZ/f03240-draft.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3240, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3240,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:50:51.752Z",
-   "file": "20261121055051752-sheet-jupiter.dive-16x9-draft.jpg",
-   "source": "out/work/sheets/jupiter.dive-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.dive, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 2970,
-   "last": 3059,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
   },
   {
    "time": "2026-11-21T05:47:45.790Z",
