@@ -5,6 +5,7 @@ export interface VeilLook {
   normal: [number, number, number]
   range: [number, number]
   max: number
+  dive: [number, number]
 }
 
 const VERT = /* glsl */ `

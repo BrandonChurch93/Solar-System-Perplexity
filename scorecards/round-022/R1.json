@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon",
+   "what": "crater detail is softened and the disk is lifted about 4 luma, so the terminator is flatter and less jagged than the target. The moon also sits about 2 pixels right and 1 pixel down.",
+   "fix": "restore crater sharpness and terminator contrast, drop the disk brightness, and nudge the moon up and left"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "storm eye and sunlit cloud deck",
+   "what": "the finest cloud filaments are softened and the bright crests are compressed, including the storm-eye rim and the bands toward the right limb. The top of the highlight range sits about 10 luma under the target. Outer limb-glow width and the star match.",
+   "fix": "put the high-frequency filament detail back and lift the bright crests, especially the storm rim, up to the target peaks"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "storm crop and sunlit cloud crops",
+   "what": "the same loss is clearer in the native crops: storm-rim highlights are duller, cloud filaments are softer, and the dark pockets between bands are slightly lifted, so local contrast is lower.",
+   "fix": "restore the micro-filaments, raise the crest highlights, and deepen the shadow pockets between the bands"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "cloud field below the horizon",
+   "what": "cloud-edge microtexture is softened. Midtones are lifted about 2 luma and the crests are a few luma darker, so the terrain looks slightly flatter than the target. Horizon glow width holds.",
+   "fix": "restore the fine cloud edges, drop the midtone lift, and bring the crest highlights back up"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "detailed terrain crops",
+   "what": "the sharpest crops lose the most: fine edges are softened and the brightest cloud crests are duller, with the same slight midtone lift as the full frame.",
+   "fix": "match the target micro-contrast and crest brightness in the detailed crops, and take the midtones back down"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "lower-right rings",
+   "what": "ring brightness and placement match, but the finest ringlet edges are softer than the target.",
+   "fix": "sharpen the ringlet edges without changing ring brightness or position"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sky and shadow floor",
+   "what": "the blacks are lifted by about half a luma, so space and the deepest shadows are slightly milky.",
+   "fix": "drop the black floor to match the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sky and shadow floor",
+   "what": "the same slight black lift as the full terrain frame.",
+   "fix": "drop the black floor to match the target"
+  }
+ ]
+}

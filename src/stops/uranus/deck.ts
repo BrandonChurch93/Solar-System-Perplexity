@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import deckJson from './deck.json'
+import nearJson from './deck-near.json'
 
 export interface DeckLook {
   flow: [number, number, number, number]
@@ -10,6 +11,8 @@ export interface DeckLook {
   inset: [number, number]
   lift: number
   sharp: number
+  detail: { tone: number; relief: number; fleck: number; scale: number; stretch: [number, number] }
+  near: [number, number]
 }
 
 const COMMON = /* glsl */ `
@@ -90,6 +93,12 @@ uniform float uAspect;
 uniform float uFade;
 uniform float uGrad;
 uniform float uSharp;
+uniform vec4 uDetail;
+uniform vec4 uBase;
+uniform vec2 uSunG;
+uniform sampler2D uNear;
+uniform vec4 uNearWin;
+uniform vec3 uNearMix;
 in vec3 vBase;
 in vec3 vView;
 in vec3 vClip;
@@ -98,6 +107,30 @@ ${COMMON}
 ${DECK_LIGHT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
+float cell(vec2 p) {
+  vec3 q = fract(vec3(p.xyx) * 0.1031);
+  q += dot(q, q.yzx + 33.33);
+  return fract((q.x + q.y) * q.z);
+}
+float soft(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(cell(i), cell(i + vec2(1.0, 0.0)), u.x), mix(cell(i + vec2(0.0, 1.0)), cell(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+float billow(vec2 g, float fw) {
+  vec2 q = g + 0.45 * vec2(soft(g * 0.7 + 3.1), soft(g * 0.7 + 7.7));
+  float s = 0.0;
+  float a = 0.5;
+  float f = 1.0;
+  for (int i = 0; i < 4; i++) {
+    s += a * (1.0 - smoothstep(0.12, 0.35, fw * f)) * (soft(q * f) - 0.5);
+    q = mat2(0.8, 0.6, -0.6, 0.8) * q + 11.3;
+    f *= 2.07;
+    a *= 0.5;
+  }
+  return s;
+}
 void main() {
   vec3 p = onSphere(vBase);
   vec3 n = normalize(p - uCentre);
@@ -121,6 +154,17 @@ void main() {
   vec2 cy = dFdy(uvT) * uGrad;
   vec3 enc = textureGrad(uColor, uvC, cx, cy).rgb;
   enc = max(enc + uSharp * (enc - textureGrad(uColor, uvC, cx * 4.0, cy * 4.0).rgb), vec3(0.0));
+  float plateT = diagTexels(uvT * uColorSize);
+  vec2 uvN = (uvT - uNearWin.xy) / (uNearWin.zw - uNearWin.xy);
+  vec2 eN = min(uvN, 1.0 - uvN);
+  float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT));
+  for (int k = 0; k < (wN > 0.0 ? 1 : 0); k++) {
+    vec2 nx = cx / (uNearWin.zw - uNearWin.xy);
+    vec2 ny = cy / (uNearWin.zw - uNearWin.xy);
+    vec3 fine = textureGrad(uNear, uvN, nx, ny).rgb;
+    fine = max(fine + uSharp * (fine - textureGrad(uNear, uvN, nx * 4.0, ny * 4.0).rgb), vec3(0.0));
+    enc = mix(enc, fine, wN);
+  }
   vec3 aT = (inverseFilmic(enc) + uEps) / (lImg + uEps);
   uvS.y = clamp(uvS.y, 0.002, 0.998);
   float ua = fract(uvS.x + 0.5) - 0.5;
@@ -128,10 +172,26 @@ void main() {
   vec2 gy = vec2(abs(dFdy(uvS.x)) < abs(dFdy(ua)) ? dFdy(uvS.x) : dFdy(ua), dFdy(uvS.y));
   vec3 s = textureGrad(uFar, uvS, gx * uGrad, gy * uGrad).rgb;
   vec3 aS = s * s * uAMax;
-  vec3 col = mix(aS, aT, wT) * lNow;
+  vec2 nd = vClip.xy / vClip.z;
+  vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
+  vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit;
+  vec2 kb = dFdy(uvT) / max(abs(dFdy(nd.y)), 1e-9) / unit;
+  float sq = dot(ka, ka) + dot(kb, kb);
+  float dt = ka.x * kb.y - ka.y * kb.x;
+  float thin = sqrt(max(0.5 * (sq - sqrt(max(sq * sq - 4.0 * dt * dt, 0.0))), 0.0));
+  float farT = sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))) / max(abs(dFdy(nd.y)) * 540.0, 1e-9);
+  float wD = mix(1.0 - smoothstep(uBase.z, uBase.w, farT), 1.0 - smoothstep(uBase.z, uBase.w, thin), wT);
+  vec3 rel = pa - uCentre;
+  vec2 g = vec2(dot(rel, uF0) * uFlowDir.y + dot(rel, uR0) * uFlowDir.x, dot(rel, uF0) * uFlowDir.x - dot(rel, uR0) * uFlowDir.y) * vec2(0.55, 1.0) * uDetail.w;
+  float fw = max(length(dFdx(g)), length(dFdy(g)));
+  float c0 = billow(g, fw);
+  float c1 = billow(g + uSunG * 0.1, fw);
+  float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
+  float shade = 1.0 + wD * (uDetail.x * 2.0 * c0 + uDetail.y * clamp((c0 - c1) * 5.0, -1.0, 1.0) + uDetail.z * fl);
+  vec3 col = mix(aS, aT, wT) * lNow * max(shade, 0.3);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), diagTexels(uvT * uColorSize), wT);
+  float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), plateT * (1.0 + wN * (float(textureSize(uNear, 0).x) / ((uNearWin.z - uNearWin.x) * uColorSize.x) - 1.0)), wT);
   if (uDiag >= 2 && uFade < 0.5) discard;
   vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
   outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
@@ -177,7 +237,7 @@ void main() {
   outColor = vec4(col, 0.0);
 }`
 
-export interface DeckTextures { color: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
+export interface DeckTextures { color: THREE.Texture; near: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
 
 export class Deck {
   readonly group = new THREE.Group()
@@ -196,6 +256,8 @@ export class Deck {
     const r0 = new THREE.Vector3().fromArray(j.r0)
     const polar = new THREE.Vector4(j.psiMax, j.s0, Math.log(j.s1 / j.s0), 0)
     const flowDir = new THREE.Vector2(Math.cos(j.flowAngle), Math.sin(j.flowAngle))
+    const sunL = new THREE.Vector3().fromArray(j.sun)
+    const sunG = new THREE.Vector2(sunL.dot(f0) * flowDir.y + sunL.dot(r0) * flowDir.x, sunL.dot(f0) * flowDir.x - sunL.dot(r0) * flowDir.y).normalize()
     const shared = {
       uCentre: { value: this.centre }, uRadius: { value: j.radius }, uUp: { value: up }, uF0: { value: f0 }, uR0: { value: r0 }, uPolar: { value: polar },
       uFlow: { value: new THREE.Vector4().fromArray(look.flow) }, uFlowDir: { value: flowDir }, uTime: { value: 0 },
@@ -210,6 +272,10 @@ export class Deck {
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uSharp: { value: look.sharp },
+        uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
+        uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
+        uSunG: { value: sunG },
+        uNear: { value: t.near }, uNearWin: { value: new THREE.Vector4().fromArray(nearJson.window) }, uNearMix: { value: new THREE.Vector3(look.near[0], look.near[1], nearJson.edge) },
       },
     })
     const nPsi = 720

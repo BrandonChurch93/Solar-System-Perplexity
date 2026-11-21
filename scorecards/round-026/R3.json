@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A, lower cloud belts straddling the terminator",
+      "what": "The fine cloud texture drops out into broad, soft brown bands with a brushed look, especially just inside the shadow.",
+      "fix": "Preserve low-contrast cloud structure through the lighting falloff instead of broadening or blurring the bands."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crop L, blue polar cap and adjacent sunlit limb",
+      "what": "The blue cap resolves into smooth nested ovals with little internal texture, while the thin amber rim reads as a separate line outside the globe.",
+      "fix": "Break up the polar gradients with subtle cloud structure and blend the warm rim into the atmospheric falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops U and V, broad foreground ring bands",
+      "what": "The bright tracks have a uniformly speckled, scratchy finish at native size, particularly along the dark gap.",
+      "fix": "Filter subpixel ring tracks and vary the particulate contrast across ring bands."
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crops W and X, lower-right sky beyond the ring shadow",
+      "what": "A straight, soft horizontal glow crosses the background stars and reads as a composited streak.",
+      "fix": "Remove the streak or reduce its contrast so it does not form a visible stripe in the sky."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop M, small orange moon",
+      "what": "The illuminated face is nearly featureless and looks like a soft color gradient next to the sharper star field.",
+      "fix": "Keep the limb crisp and add restrained variation to the lit face without oversharpening it."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "near rings, lower left (crops D, G, T)",
+      "what": "bright single-pixel white and pink specks are scattered over the lit ring surface. They read as render noise or fireflies, not as ring particles",
+      "fix": "clamp or denoise specular samples on the ring shader, or raise samples so isolated hot pixels go away"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "rings, left and lower arcs (crops O, U, T)",
+      "what": "the same hot-pixel sparkle sits on the ring bands, most clearly on the inner bright ring and the outer A ring",
+      "fix": "apply the same firefly clamp or denoise to the ring pass"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "globe, lit hemisphere (crops P, K, D)",
+      "what": "at native size the cloud bands are soft and airbrushed, with almost no fine turbulence. The globe looks smooth and plastic next to the crisp rings",
+      "fix": "use a higher-resolution or sharper globe texture with small-scale storm and eddy detail in the bands"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "foreground ring plane, lower right (crops E, W, X)",
+      "what": "the closest ring texture turns into a uniform, slightly mottled grain of parallel streaks. Up close it looks like stretched noise, not structured ringlets",
+      "fix": "add a near-field detail layer with finer ringlet structure and less directional stretching at grazing angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "planet limb against the sky, upper left (crops L, A)",
+      "what": "the glow around the limb is a wide, even, warm halo that looks like a bloom glow on the layer, not atmosphere",
+      "fix": "narrow and weaken the limb bloom so the edge stays crisp, with only a thin atmospheric falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon, top centre (crop K)",
+      "what": "the moon is a flat orange disc with a soft edge and no surface detail, so it reads as a placeholder sprite",
+      "fix": "give the moon real shading, a sharp limb and some albedo or surface detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "beyond the outer ring, lower left (crops H, T)",
+      "what": "a faint thin arc runs through empty sky outside the main rings. It looks like a stray line or seam, not a deliberate faint ring",
+      "fix": "remove the arc, or make it read clearly as a faint outer ring with a consistent width and brightness"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper right sky (crops C, M, N)",
+      "what": "the dark sky gradient is very smooth and slightly blocky in tone, with faint banding near the vignette",
+      "fix": "dither the background gradient and add faint dust or star density variation"
+     }
+    ]
+   }
+  }
+ ]
+}

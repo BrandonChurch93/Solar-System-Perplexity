@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 3274-3276, whole disk",
+   "what": "the rise cover ends on a flat, band-free beige disk. The bands, small detail and star field then pop in within two frames, and the color jumps from grey-beige to bright cream by 3280 (sheet-05)",
+   "fix": "hold the banded albedo texture and the stars at low contrast through the whole blur, and cross-fade detail and color over 8-12 frames instead of 2"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 3270-3271, limb",
+   "what": "the limb goes from a shallow slope rising to the right to a steep arc in one frame. That reads as a snap in camera roll or direction, not one continuous move",
+   "fix": "spread the roll/yaw change over the cover with an eased curve so the limb angle rotates step by step"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 3021-3026, background",
+   "what": "the stars and Milky Way drop to pure black during the dive cover, then come back at 3026-3030. The exposure and sky do not carry across the cover. The same happens at 3267-3274 in sheet-06",
+   "fix": "keep the star field rendered (motion-blurred) through the cover, or dim it gradually, instead of cutting it to black"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 3002-3010",
+   "what": "Jupiter grows from about half the frame to filling it in 8 frames, after a nearly static hold. The dive start feels like a lurch, not an eased acceleration. The matching end of the rise, 3274-3287 in sheet-05, is just as abrupt",
+   "fix": "ease into the dive with a longer acceleration ramp, and ease the pull-back of the rise to a stop the same way"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "frames 3265-3267, lower left",
+   "what": "the orange storm streaks smear into parallel, repeated vertical strands that look like ghost copies more than one smooth blur",
+   "fix": "raise the motion-blur sample count or shutter samples during the fast segments"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "frame 3019, upper left",
+   "what": "the bright cloud fragments show stepped, duplicated edges in the blur",
+   "fix": "use more temporal samples for the motion blur in the first frames of the cover"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "storm across 3060-3239",
+   "what": "the vortex mostly grows and tilts as one sheet. The near cloud tops show little parallax against the horizon, so depth reads weakly",
+   "fix": "add a small lateral or forward camera move so the foreground cloud relief slides against the limb"
+  }
+ ]
+}
