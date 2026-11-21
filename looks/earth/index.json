@@ -1,9 +1,37 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T14:43:56.874Z",
- "head": "2092c1e91bc2a6ea224a1681e036b5f5c82bacb3",
- "note": "Dive candidate E1 at review beside the round 19 head (1876, 1878); landing frames and rise fast frames are rendering",
+ "pushed": "2026-11-21T15:14:25.969Z",
+ "head": "be53299adb51b2c4216888f1d57abe656d8c305b",
+ "note": "round 3: designing the dive ease in (item 1), nothing rendered yet",
  "looks": [
+  {
+   "time": "2026-11-21T14:58:00.412Z",
+   "file": "20261121145800412-frame-r-2138.jpg",
+   "source": "out/work/earth/p47/r-2138.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2138, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2138,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T14:52:19.910Z",
+   "file": "20261121145219910-frame-r-1877.jpg",
+   "source": "out/work/earth/p46/r-1877.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1877, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1877,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T14:43:56.268Z",
    "file": "20261121144356268-note-cmp-1878-head-e1.jpg",
@@ -21,20 +49,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T14:43:35.351Z",
-   "file": "20261121144335351-frame-r-1878.jpg",
-   "source": "out/work/earth/p46/r-1878.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1878, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1878,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
    "time": "2026-11-21T14:36:13.135Z",
    "file": "20261121143613135-note-strip-1874-1889.jpg",
    "source": "out/work/earth/p46/strip-1874-1889.jpg",
@@ -48,14 +62,6 @@
    "source": "out/work/earth/p45/r-1878.png",
    "kind": "note",
    "label": "dive 1878 at review on the round 19 head (plunge ahead of the cover)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T14:27:19.158Z",
-   "file": "20261121142719158-note-r-1876.jpg",
-   "source": "out/work/earth/p45/r-1876.png",
-   "kind": "note",
-   "label": "dive 1876 at review on the round 19 head (plunge ahead of the cover)",
    "stop": "earth"
   },
   {
