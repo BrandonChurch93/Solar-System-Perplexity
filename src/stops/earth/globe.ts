@@ -20,6 +20,7 @@ export interface GlobeLook {
   night: number[]
   auroraGate: number[]
   auroraKeep: number[]
+  calm: number[]
   twilight: number[]
   emissivePeak: number
   auroraColor: [number, number, number]
@@ -110,6 +111,8 @@ uniform float uPeak;
 uniform vec4 uBloomPre;
 uniform vec3 uAuroraColor;
 uniform vec2 uAuroraKeep;
+uniform float uCalm;
+uniform vec4 uCalmAt[3];
 uniform vec3 uTwilight;
 uniform vec2 uTwilightAt;
 uniform vec4 uTwinkle;
@@ -290,7 +293,11 @@ ${PATCH_LEVELS}
   col += e.rgb * (uPeak * uLights * mix(gate * twinkle * uTwinkle.w, dusk, zone * (1.0 - uRise)));
   float wave = uRipple.z * uv.x * 6.2831853 + 5.0 * noise(uv * vec2(2.0, 1.0) * uRipple.w);
   float ripple = 1.0 + uRipple.x * (sin(uRipple.y * uClock + wave) - sin(wave));
-  col += uAuroraColor * (e.a * e.a * uPeak * ramp(uAuroraGate, ndl) * ripple * (1.0 - uAway) * smoothstep(uAuroraKeep.x, uAuroraKeep.y, d.y));
+  float keep = smoothstep(uAuroraKeep.x, uAuroraKeep.y, d.y);
+  col += uAuroraColor * (e.a * e.a * uPeak * ramp(uAuroraGate, ndl) * ripple * (1.0 - uAway) * keep);
+  float calm = 0.0;
+  for (int k = 0; k < 3; k++) calm = max(calm, 1.0 - smoothstep(0.6, 1.0, acos(clamp(dot(d, uCalmAt[k].xyz), -1.0, 1.0)) / uCalmAt[k].w));
+  col.g = mix(col.g, min(col.g, max(col.r, col.b) * uCalm), calm * (1.0 - keep));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(twistOf(d) * uFlow * 8.0, uDrift * uFlow * 8.0), length(vView));
@@ -350,7 +357,7 @@ export class Globe {
         uShadow: { value: new THREE.Vector4(l.shadow.height, l.shadow.strength, l.shadow.lod + Math.log2(o.mapWidth / 8192), l.shadow.floor) },
         uLimbPale: { value: new THREE.Vector3().fromArray(l.limb.pale) }, uLimbNight: { value: new THREE.Vector3().fromArray(l.limb.night) }, uLimbDepth: { value: new THREE.Vector3().fromArray(l.limb.depth) },
         uLimbShape: { value: new THREE.Vector4(l.limb.width, l.limb.power, l.limb.gamma, 0) }, uLimbDay: { value: new THREE.Vector2(l.limb.dayFrom, l.limb.dayTo) },
-        uNight: { value: new THREE.Vector2(l.night[0], l.night[1]) }, uAuroraGate: { value: new THREE.Vector2(l.auroraGate[0], l.auroraGate[1]) }, uAuroraKeep: { value: new THREE.Vector2(l.auroraKeep[0], l.auroraKeep[1]) }, uTwilight: { value: new THREE.Vector3(l.twilight[0], l.twilight[1], l.twilight[2]) }, uTwilightAt: { value: new THREE.Vector2(l.twilight[3], l.twilight[4]) },
+        uNight: { value: new THREE.Vector2(l.night[0], l.night[1]) }, uAuroraGate: { value: new THREE.Vector2(l.auroraGate[0], l.auroraGate[1]) }, uAuroraKeep: { value: new THREE.Vector2(l.auroraKeep[0], l.auroraKeep[1]) }, uCalm: { value: l.calm[0] }, uCalmAt: { value: [0, 1, 2].map((k) => { const at = direction(l.calm[1 + k * 3]!, l.calm[2 + k * 3]!); return new THREE.Vector4(at.x, at.y, at.z, THREE.MathUtils.degToRad(l.calm[3 + k * 3]!)) }) }, uTwilight: { value: new THREE.Vector3(l.twilight[0], l.twilight[1], l.twilight[2]) }, uTwilightAt: { value: new THREE.Vector2(l.twilight[3], l.twilight[4]) },
         uPeak: { value: l.emissivePeak }, uBloomPre: { value: new THREE.Vector4(0, l.bloomPre[0], l.bloomPre[1], l.bloomPre[2]) }, uAuroraColor: { value: new THREE.Vector3().fromArray(l.auroraColor) },
         uTwinkle: { value: new THREE.Vector4().fromArray(l.twinkle) }, uRipple: { value: new THREE.Vector4(l.ripple[0], l.ripple[1], l.ripple[2], 40) },
         uClock: { value: 0 }, uCloudOn: { value: 1 },
