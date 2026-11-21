@@ -51,10 +51,14 @@ const phase = /- Current phase: (.*)/.exec(progress)?.[1] ?? ''
 const stop = /- Current stop: (.*)/.exec(progress)?.[1] ?? ''
 const date = process.env.REVIEW_DATE ?? new Date().toISOString().slice(0, 10)
 const esc = (s: string): string => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-const body = items
+const first = cfg.stopIds.includes(stop) ? [stop + '.mp4', 'compare-' + stop + '-hold.jpg', 'compare-' + stop + '-terrain.jpg'] : []
+const pinned = first.map((n) => items.find((i) => i.file === n)).filter((i): i is Item => !!i)
+const ordered = [...pinned, ...items.filter((i) => !pinned.includes(i))]
+const body = ordered
   .map((i) => {
     if (i.left) return '<section><h2>' + esc(i.title) + '</h2><p class="note">Left out of this page because the host does not accept a file of ' + i.mb.toFixed(0) + ' MB. It is in the repo under out/clips.</p></section>'
-    const media = i.kind === 'video' ? '<video controls playsinline preload="metadata" src="review/' + i.file + '"></video>' : '<a href="review/' + i.file + '"><img loading="lazy" src="review/' + i.file + '" alt="' + esc(i.title) + '" /></a>'
+    const still = i.kind === 'video' ? items.find((x) => x.kind === 'image' && !x.left && new RegExp('^f\\d+-' + basename(i.file, '.mp4') + '\\.hold\\.jpg$').test(x.file)) : undefined
+    const media = i.kind === 'video' ? '<video controls playsinline preload="metadata"' + (still ? ' poster="review/' + still.file + '"' : '') + ' src="review/' + i.file + '"></video>' : '<a href="review/' + i.file + '"><img loading="lazy" src="review/' + i.file + '" alt="' + esc(i.title) + '" /></a>'
     return '<section><h2>' + esc(i.title) + '</h2>' + media + '</section>'
   })
   .join('\n')
@@ -83,7 +87,7 @@ video, img { display: block; width: 100%; height: auto; background: #050506; bor
 <header>
 <h1>Grand Tour review</h1>
 <p>${esc(date)} · Phase ${esc(phase)}${stop && stop !== 'none' ? ' · Stop ' + esc(stop) : ''}</p>
-<p><a href="./">Open the app</a></p>
+<p><a href="./">Open the app</a>${pinned.length ? ' · The clip and the comparison images of the current stop come first, then everything newest first.' : ''}</p>
 </header>
 <main>
 ${body || '<p>Nothing to review yet.</p>'}
