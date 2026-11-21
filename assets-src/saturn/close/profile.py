@@ -10,7 +10,9 @@ from scipy.spatial import cKDTree
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "rings"))
 from lib import ROOT, WORK, lum, srgb_to_linear
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from extract import align
+from layoutgeo import a2g, g2a, k, C, hc, side, plane_from_grid, model_lambda
 
 sys.path.insert(0, str(ROOT / "tools" / "assets"))
 from lightcurve import inverse_filmic
@@ -22,9 +24,14 @@ lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
 close = json.loads((ROOT / "src/stops/saturn/close.json").read_text())
 field = np.load(WORK / "layout.npy")
 GH, GW = field.shape
-k = (GH / 2) / np.tan(np.radians(lay["vfovDeg"]) / 2) / ((H / 2) / np.tan(np.radians(close["vfov"]) / 2))
 xs, ys = np.meshgrid(np.arange(W) + 0.5, np.arange(H) + 0.5)
-at = lambda x, y: map_coordinates(field, [(y - H / 2) * k + GH / 2 - 0.5, (x - W / 2) * k + GW / 2 - 0.5], order=1, mode="nearest")
+
+
+def at(x, y):
+    qx, qy, ok = a2g(np.asarray(x, np.float64), np.asarray(y, np.float64))
+    return np.where(ok, map_coordinates(field, [qy - 0.5, qx - 0.5], order=1, mode="nearest"), 9.0)
+
+
 lam = at(xs, ys).astype(np.float32)
 axis = L0 + (np.arange(NL) + 0.5) / NL * (L1 - L0)
 
@@ -101,7 +108,8 @@ cov = cv2.GaussianBlur(m, (0, 0), SIG)
 shade = np.clip(num / np.maximum(den, 1e-5), 0.02, 1.2)
 known = (cov > 0.25) & (den > 2e-4)
 gx, gy = np.meshgrid(np.arange(GW) + 0.5, np.arange(GH) + 0.5)
-ax, ay = ((gx - GW / 2) / k + W / 2 - 0.5).astype(np.float32), ((gy - GH / 2) / k + H / 2 - 0.5).astype(np.float32)
+ax, ay, _ = g2a(gx, gy)
+ax, ay = (ax - 0.5).astype(np.float32), (ay - 0.5).astype(np.float32)
 sm = cv2.remap(cv2.GaussianBlur(np.where(known, shade, 0).astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 km = cv2.remap(cv2.GaussianBlur(known.astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 good = km > 0.6
@@ -119,7 +127,12 @@ wgt = wgt * wgt * (3 - 2 * wgt)
 hid = cv2.remap(gmask.astype(np.float32), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.5
 wgt = np.where(hid, 1.0, wgt)
 out = np.zeros((GH, GW, 4), np.float32)
-out[..., 0] = field
+X, live = plane_from_grid(gx, gy)
+P = X - C
+base = model_lambda(P @ hc, P @ side)
+edge = np.clip(np.minimum(np.minimum(gx, GW - gx), np.minimum(gy, GH - gy)) / (0.06 * GH), 0, 1)
+out[..., 0] = np.where(live & (np.abs(field) < 6), np.clip(field - base, -2, 2), 0) * edge * edge * (3 - 2 * edge)
+print("layout minus model: rms", float(np.sqrt((out[..., 0] ** 2).mean())), "largest", float(np.abs(out[..., 0]).max()))
 out[..., 1] = filled
 out[..., 2] = wgt
 for name in ("full", "web"):

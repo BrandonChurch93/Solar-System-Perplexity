@@ -5,30 +5,18 @@ from pathlib import Path
 import cv2
 import numpy as np
 from scipy import sparse
-from scipy.ndimage import gaussian_filter
+from scipy.ndimage import distance_transform_edt, gaussian_filter, map_coordinates
 from scipy.sparse.linalg import splu
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib import ROOT, WORK, POLAR, lum, spheroid_hit
 
-GW, GH, VL = 576, 432, 100.0
+from layoutgeo import GW, GH, VL, BACK, W, H, fa, fl, k, nc, C, height, hc, side, g2a, a2g, cam2g, plane_from_grid, model_lambda
+
 REF_AZ = -14.0
-close = json.loads((ROOT / "src/stops/saturn/close.json").read_text())
 rings = json.loads((ROOT / "src/stops/saturn/rings.json").read_text())
 AH, AC = np.array(rings["warpHero"]), np.array(rings["warpClose"])
 img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
-H, W = img.shape[:2]
-fa = (H / 2) / np.tan(np.radians(close["vfov"]) / 2)
-fl = (GH / 2) / np.tan(np.radians(VL) / 2)
-k = fl / fa
-tilt, roll = np.radians(close["tiltDeg"]), np.radians(close["rollDeg"])
-nc = np.array([-np.sin(roll) * np.cos(tilt), np.cos(roll) * np.cos(tilt), np.sin(tilt)])
-C = np.array(close["centre"])
-height = -C @ nc
-hc = -C - height * nc
-reach = np.linalg.norm(hc)
-hc /= reach
-side = np.cross(nc, hc)
 
 
 def unwarp(r):
@@ -38,26 +26,24 @@ def unwarp(r):
 
 
 gx, gy = np.meshgrid(np.arange(GW) + 0.5, np.arange(GH) + 0.5)
-d = np.stack([(gx - GW / 2) / fl, (GH / 2 - gy) / fl, -np.ones_like(gx)], -1)
-d /= np.linalg.norm(d, axis=-1, keepdims=True)
-den = d @ nc
-t = np.where(den < -1e-4, -height / np.minimum(den, -1e-4), np.inf)
-P = d * t[..., None] - C
-P[~np.isfinite(t)] = 0
+X, live = plane_from_grid(gx, gy)
+P = X - C
+P[~live] = 0
 pu, pv = P @ hc, P @ side
 r = np.hypot(pu, pv)
-live = np.isfinite(t) & (t < 40)
+live &= np.linalg.norm(X, axis=-1) < 40
 foot = np.maximum(np.hypot(np.gradient(pu, axis=1), np.gradient(pv, axis=1)), np.hypot(np.gradient(pu, axis=0), np.gradient(pv, axis=0)))
 foot = np.clip(foot, 1e-4, 5)
-prior = unwarp(r)
+MODEL_ON = len(sys.argv) > 7 and sys.argv[7] == "model"
+prior = model_lambda(pu, pv) if MODEL_ON else unwarp(r)
 
-ax, ay = (gx - GW / 2) / k + W / 2, (gy - GH / 2) / k + H / 2
-inframe = (ax > 4) & (ax < W - 4) & (ay > 4) & (ay < H - 4)
-th, _ = spheroid_hit(np.zeros(3), d, nc) if False else (None, None)
+ax, ay, seen = g2a(gx, gy)
+inframe = seen & (ax > 4) & (ax < W - 4) & (ay > 4) & (ay < H - 4)
 kk = 1.0 / POLAR - 1.0
 o = -C + nc * ((-C) @ nc) * kk
-ds = d + nc * (d @ nc)[..., None] * kk
-ds /= np.linalg.norm(ds, axis=-1, keepdims=True)
+dA = X / np.maximum(np.linalg.norm(X, axis=-1, keepdims=True), 1e-6)
+ds = dA + nc * (dA @ nc)[..., None] * kk
+ds /= np.maximum(np.linalg.norm(ds, axis=-1, keepdims=True), 1e-9)
 tc = -(ds @ o)
 miss = np.linalg.norm(o + ds * tc[..., None], axis=-1)
 globe = (miss < 1.0) & (tc > 0) & ~(live & ((r < 1.0) | (pu > 0)))
@@ -74,11 +60,37 @@ tr = jxx + jyy
 disc = np.sqrt(np.maximum((jxx - jyy) ** 2 + 4 * jxy * jxy, 0))
 coh = np.where(tr > 1e-9, disc / np.maximum(tr, 1e-9), 0) ** 2
 ang = 0.5 * np.arctan2(2 * jxy, jxx - jyy)
-tx, ty = -np.sin(ang), np.cos(ang)
-energy = np.clip(tr / np.percentile(tr[inframe & live & ~globe], 60), 0, 1)
-wt = coh * energy ** 0.3 * (inframe & live & ~globe)
-gm = cv2.erode((inframe & live & ~globe).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+OUT_W = float(sys.argv[6]) if len(sys.argv) > 6 else 0.1
+ta_x, ta_y = -np.sin(ang), np.cos(ang)
+a11, a12 = np.gradient(ax, axis=1), np.gradient(ax, axis=0)
+a21, a22 = np.gradient(ay, axis=1), np.gradient(ay, axis=0)
+tx, ty = a22 * ta_x - a12 * ta_y, -a21 * ta_x + a11 * ta_y
+tn = np.maximum(np.hypot(tx, ty), 1e-9)
+tx, ty = tx / tn, ty / tn
+core = inframe & live & ~globe
+energy = np.clip(tr / np.percentile(tr[core], 60), 0, 1)
+wt = coh * energy ** 0.3 * core
+gm = cv2.erode(core.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
 wt = wt * gm
+np.save(WORK / "layout-wt.npy", wt.astype(np.float32))
+rx, ry = np.gradient(prior, axis=1), np.gradient(prior, axis=0)
+rn = np.maximum(np.hypot(rx, ry), 1e-9)
+px2, py2 = -ry / rn, rx / rn
+src = wt > 0.2
+dist, (iy, ix) = distance_transform_edt(~src, return_indices=True)
+c2, s2 = (tx * tx - ty * ty)[iy, ix], (2 * tx * ty)[iy, ix]
+far = np.clip(dist / 50.0, 0, 1)
+far = far * far * (3 - 2 * far)
+c2 = c2 * (1 - far) + (px2 * px2 - py2 * py2) * far
+s2 = s2 * (1 - far) + (2 * px2 * py2) * far
+outside = live & ~core & ~globe
+c2, s2 = gaussian_filter(c2, 4.0), gaussian_filter(s2, 4.0)
+a2 = 0.5 * np.arctan2(s2, c2)
+tx = np.where(outside, np.cos(a2), tx)
+ty = np.where(outside, np.sin(a2), ty)
+if MODEL_ON:
+    tx, ty = np.where(outside, px2, tx), np.where(outside, py2, ty)
+wt = np.where(outside, 0.0 if MODEL_ON else OUT_W, wt)
 
 idx = -np.ones((GH, GW), int)
 idx[live] = np.arange(live.sum())
@@ -111,31 +123,28 @@ def sh(a, dy, dx):
     return out
 
 
+TW = float(sys.argv[1]) if len(sys.argv) > 1 else 3.0
 f = lambda a: a.ravel()
 c0, xp, xm, yp, ym = f(idx), f(sh(idx, 0, 1)), f(sh(idx, 0, -1)), f(sh(idx, 1, 0)), f(sh(idx, -1, 0))
 zero = np.zeros(GH * GW)
 ft = f(foot)
-TW = float(sys.argv[1]) if len(sys.argv) > 1 else 3.0
 add([(xp, 0.5 * f(tx)), (xm, -0.5 * f(tx)), (yp, 0.5 * f(ty)), (ym, -0.5 * f(ty))], zero, TW * np.sqrt(f(wt)) / ft)
 SM = float(sys.argv[2]) if len(sys.argv) > 2 else 0.25
-add([(xp, 1.0), (xm, 1.0), (c0, -2.0)], zero, SM / ft)
-add([(yp, 1.0), (ym, 1.0), (c0, -2.0)], zero, SM / ft)
-edge = np.minimum(np.minimum(ax, W - ax) / W, np.minimum(ay, H - ay) / H)
-out_frac = np.clip((-edge - 0.07) / 0.3, 0, 1)
+loose = (outside | globe) if MODEL_ON else np.zeros_like(outside)
+bend = lambda axis: f(np.where(loose, np.roll(prior, 1, axis) + np.roll(prior, -1, axis) - 2 * prior, 0.0))
+add([(xp, 1.0), (xm, 1.0), (c0, -2.0)], bend(1), SM / ft)
+add([(yp, 1.0), (ym, 1.0), (c0, -2.0)], bend(0), SM / ft)
 hidden = live & (pu < 0) & (r > 1.0) & (miss < 1.0)
 PW = float(sys.argv[3]) if len(sys.argv) > 3 else 0.001
-pw = np.where(hidden, 1.0, PW)
-gw = np.where(inframe | hidden, 0.0, out_frac ** 2)
-add([(xp, 0.5), (xm, -0.5)], f(np.gradient(prior, axis=1)), f(gw) / ft)
-add([(yp, 0.5), (ym, -0.5)], f(np.gradient(prior, axis=0)), f(gw) / ft)
+away = np.clip((dist - 8.0) / 60.0, 0, 1)
+pw = PW + 0.3 * away * away * (3 - 2 * away) if MODEL_ON else np.where(hidden, 1.0, PW)
 add([(c0, 1.0)], f(prior), f(pw) / ft)
 a = np.radians(REF_AZ)
 line = np.cos(a) * hc + np.sin(a) * side
 s = np.arange(-1.0, 2.2, 0.002)
 Q = C + line[None] * s[:, None]
-z = -Q[:, 2]
+lx, ly, z = cam2g(Q)
 ok = z > 0.05
-lx, ly = Q[:, 0] / z * fl + GW / 2, GH / 2 - Q[:, 1] / z * fl
 ok &= (lx > 1) & (lx < GW - 2) & (ly > 1) & (ly < GH - 2)
 lx, ly, s = lx[ok], ly[ok], s[ok]
 x0, y0 = np.floor(lx - 0.5).astype(int), np.floor(ly - 0.5).astype(int)
@@ -144,7 +153,7 @@ ent = [(idx[y0, x0], (1 - fx) * (1 - fy)), (idx[y0, x0 + 1], fx * (1 - fy)), (id
 add(ent, s, 6.0 / foot[y0, x0])
 
 oc = np.load(WORK / "close-outer.npy")
-ox, oy = (oc[:, 0] - W / 2) * k + GW / 2, (oc[:, 1] - H / 2) * k + GH / 2
+ox, oy, _ = a2g(oc[:, 0], oc[:, 1])
 x0, y0 = np.floor(ox - 0.5).astype(int), np.floor(oy - 0.5).astype(int)
 fx, fy = ox - 0.5 - x0, oy - 0.5 - y0
 ent = [(idx[y0, x0], (1 - fx) * (1 - fy)), (idx[y0, x0 + 1], fx * (1 - fy)), (idx[y0 + 1, x0], (1 - fx) * fy), (idx[y0 + 1, x0 + 1], fx * fy)]
@@ -173,16 +182,9 @@ nx, ny = -ty, tx
 pn = nx * px_ + ny * py_
 sg = np.where(pn < 0, -1.0, 1.0)
 agree = np.clip((np.abs(pn) / gp - 0.3) / 0.3, 0, 1)
-goal = sg * np.maximum((nx * fx_ + ny * fy_) * sg, NG * np.abs(pn))
-add([(xp, 0.5 * f(nx)), (xm, -0.5 * f(nx)), (yp, 0.5 * f(ny)), (ym, -0.5 * f(ny))], f(goal), NW * np.sqrt(f(wt * agree)) / ft)
+goal = sg * np.maximum((nx * fx_ + ny * fy_) * sg, np.where(outside, 2.0, 1.0) * NG * np.abs(pn))
+add([(xp, 0.5 * f(nx)), (xm, -0.5 * f(nx)), (yp, 0.5 * f(ny)), (ym, -0.5 * f(ny))], f(goal), NW * np.sqrt(f(np.where(outside, 1.0, wt) * agree)) / ft)
 field, res = solve()
-col = int(GW / 2 + (40 - W / 2) * k)
-ol = cv2.remap(field.astype(np.float32), ox.astype(np.float32)[None] - 0.5, oy.astype(np.float32)[None] - 0.5, cv2.INTER_LINEAR)[0]
-print("lambda along the traced outer edge, by x:", np.round(ol[::8], 3), "median", float(np.median(ol)))
-print("left edge, y lambda first second prior:")
-for yy in range(500, 1500, 100):
-    row = int(GH / 2 + (yy - H / 2) * k)
-    print(yy, round(float(first[row, col]), 4), round(float(field[row, col]), 4), round(float(prior[row, col]), 4))
 calm = (live & (np.abs(field) < 4)).astype(np.float32)
 soft = lambda a, sg: np.where(calm > 0, gaussian_filter(np.where(calm > 0, a, 0), sg) / np.maximum(gaussian_filter(calm, sg), 1e-4), a)
 field = soft(field, 0.9)
@@ -201,22 +203,30 @@ for way in (1.0, -1.0):
         cnt += wj
 field = np.where(calm > 0, acc / cnt, field)
 np.save(WORK / "layout.npy", field.astype(np.float32))
-(ROOT / "src/stops/saturn/layout.json").write_text(json.dumps({"source": "assets-src/saturn/close/layout.py and profile.py, band layout and soft shade of the approved close image on the ring plane, seen from the fitted close camera", "file": "layout.bin", "width": GW, "height": GH, "vfovDeg": VL, "refAzDeg": REF_AZ}, indent=1) + "\n")
+(ROOT / "src/stops/saturn/layout.json").write_text(json.dumps({"source": "assets-src/saturn/close/layout.py and profile.py, band layout and soft shade of the approved close image on the ring plane, seen from a camera behind the fitted close camera", "file": "layout.bin", "width": GW, "height": GH, "vfovDeg": VL, "back": BACK, "refAzDeg": REF_AZ}, indent=1) + "\n")
 
-big = cv2.resize(field.astype(np.float32), None, fx=1 / k, fy=1 / k, interpolation=cv2.INTER_CUBIC)
-cx, cy = big.shape[1] // 2, big.shape[0] // 2
-crop = big[cy - H // 2:cy + H // 2, cx - W // 2:cx + W // 2]
-vis = (img[..., ::-1] * 255).astype(np.uint8).copy()
+xs, ys = np.meshgrid(np.arange(0, W, 2) + 1.0, np.arange(0, H, 2) + 1.0)
+qx, qy, okp = a2g(xs, ys)
+lamA = map_coordinates(field.astype(np.float32), [qy - 0.5, qx - 0.5], order=1, mode="nearest")
+lamA = np.where(okp, lamA, 9.0)
+vis = cv2.resize((img[..., ::-1] * 255).astype(np.uint8), (W // 2, H // 2), interpolation=cv2.INTER_AREA)
 levels = np.arange(-1.0, 2.4, 0.1)
-for i, lv in enumerate(levels):
-    cs = cv2.findContours((crop > lv).astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[0]
-    col = (0, 255, 255) if abs(lv - round(lv)) < 1e-6 else ((0, 255, 0) if i % 2 == 0 else (255, 160, 0))
-    cv2.drawContours(vis, cs, -1, col, 2)
-for q in range(0, len(lx), 12):
-    cv2.circle(vis, (int((lx[q] - GW / 2) / k + W / 2), int((ly[q] - GH / 2) / k + H / 2)), 3, (255, 0, 255), -1)
-gl = cv2.resize(globe.astype(np.uint8), None, fx=1 / k, fy=1 / k, interpolation=cv2.INTER_NEAREST)[cy - H // 2:cy + H // 2, cx - W // 2:cx + W // 2]
-vis[gl > 0] = (vis[gl > 0] * 0.6).astype(np.uint8)
-cv2.imwrite(str(WORK / "layout-contours.jpg"), cv2.resize(vis, (1408, 792), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
-wv = cv2.applyColorMap((np.clip(wt / max(wt.max(), 1e-9), 0, 1) * 255).astype(np.uint8), cv2.COLORMAP_INFERNO)
-cv2.imwrite(str(WORK / "layout-weight.jpg"), cv2.resize(wv, (1152, 648), interpolation=cv2.INTER_NEAREST))
+
+
+def draw(canvas, lam2):
+    for i, lv in enumerate(levels):
+        cs = cv2.findContours((lam2 > lv).astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[0]
+        col = (0, 255, 255) if abs(lv - round(lv)) < 1e-6 else ((0, 255, 0) if i % 2 == 0 else (255, 160, 0))
+        cv2.drawContours(canvas, cs, -1, col, 1)
+
+
+draw(vis, lamA)
+cv2.imwrite(str(WORK / "layout-contours.jpg"), vis, [cv2.IMWRITE_JPEG_QUALITY, 88])
+Z = 2
+big = cv2.resize(np.clip(field, -3, 4).astype(np.float32), None, fx=Z, fy=Z, interpolation=cv2.INTER_LINEAR)
+gv = np.full((GH * Z, GW * Z, 3), 30, np.uint8)
+gv[cv2.resize(inframe.astype(np.uint8), None, fx=Z, fy=Z, interpolation=cv2.INTER_NEAREST) > 0] = 70
+gv[cv2.resize(globe.astype(np.uint8), None, fx=Z, fy=Z, interpolation=cv2.INTER_NEAREST) > 0] = (60, 40, 40)
+draw(gv, big)
+cv2.imwrite(str(WORK / "layout-grid.jpg"), gv, [cv2.IMWRITE_JPEG_QUALITY, 88])
 print("unknowns", n, "equations", eq, "residual rms", res)

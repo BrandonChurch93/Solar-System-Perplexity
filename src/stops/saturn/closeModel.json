@@ -1,0 +1,15 @@
+{
+ "c0": [
+  -0.8315148490716628,
+  -0.5409445194318284
+ ],
+ "c1": [
+  0.04566624820682828,
+  0.4952937392799148
+ ],
+ "R": [
+  0.8804265371215274,
+  0.9482543617855232
+ ],
+ "source": "assets-src/saturn/close/model.py, nested circles fitted to the band layout of the approved close image; plane coordinates along the camera foot direction and across it"
+}

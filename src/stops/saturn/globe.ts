@@ -122,6 +122,7 @@ void main() {
   vec3 at;
   float tau = hazeDepth(dirS, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
+  col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(drift * 8.0, 0.0), length(vView));
@@ -185,7 +186,7 @@ void main() {
   vec3 at;
   float tau = hazeDepth(dir, false, at);
   float shadow = 1.0 - uRingShadow * ringShadowAt(vec3(at.x, at.y * uPolar, at.z), uSunL, uRingSoft, 1.0);
-  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain, 0.0);
+  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
 }`
 
 export class Shell {
