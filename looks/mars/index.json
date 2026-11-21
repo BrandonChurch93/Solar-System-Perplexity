@@ -1,0 +1,22 @@
+{
+ "folder": "mars",
+ "pushed": "2026-11-21T02:39:14.492Z",
+ "head": "e512c065c51bce2bac6a4401f2822c842efdadc9",
+ "note": "harness check from the Builder",
+ "looks": [
+  {
+   "time": "2026-11-21T02:36:18.273Z",
+   "file": "20261121023618273-still-f02325-16x9-final-full.jpg",
+   "source": "out/work/stills/f02325-16x9-final-full.png",
+   "kind": "still",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
