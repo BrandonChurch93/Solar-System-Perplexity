@@ -90,6 +90,10 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 - Tool: `sky/patch.py` (`sky/deblock.py` is a copy of the Mars script). Inputs: hero, `out/work/earth/sky/fill-t1.png`, and a still of the film at frame 1755 with a black sky (`sky.json` gain set to 0 for that one render, review tier: `out/work/earth/still/hold-nosky.png`).
 - The patch is the hero minus the film's own planet, glow, aurora and Moon, so the film adds back to the hero. Behind the planet, under the Moon and inside the bright glow the fill is used, scaled per channel (gain 1.576, 1.44, 1.015) and locally near the join; outside 1.03 radii the fill gives only its smooth part and the hero's own star points stay. 12.5 percent mirrored margin for the camera's move in the hold.
 
+### Terrain relief and its sky
+
+- `public/assets/earth/<set>/relief-ground.webp`, `public/assets/earth/<set>/relief-towers.webp`, `public/assets/earth/<set>/relief-lift.bin`, `public/assets/earth/<set>/relief-masks.png` and `public/assets/earth/<set>/sky-terrain.webp`: see `assets-src/earth/relief/RECIPE.md`.
+
 ## Checks
 
 - `python3 assets-src/earth/holdcheck.py STILL`: mean difference of the hold frame against the hero per region, in code values.

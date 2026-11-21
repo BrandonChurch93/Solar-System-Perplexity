@@ -35,5 +35,28 @@
    1408.0,
    2048.0
   ]
+ },
+ "towers": {
+  "file": "relief-towers.webp",
+  "dist": "relief-lift.bin",
+  "box": [
+   5,
+   367,
+   2808,
+   1216
+  ],
+  "distSize": [
+   1404,
+   608
+  ]
+ },
+ "masks": {
+  "file": "relief-masks.png",
+  "box": [
+   -640,
+   0,
+   4096,
+   1980
+  ]
  }
 }

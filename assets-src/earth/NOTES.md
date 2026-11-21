@@ -7,7 +7,7 @@ Lab notebook of the agent that builds the `earth` stop. Read `assets-src/shared/
 - Branch `agent/earth`, looks on `agent/earth-looks`. VM: 4 cores, 7 GB RAM, no GPU.
 - Started 2026-11-21 02:43 UTC. Merged `origin/main` at 9602aca.
 - Judged frames: hold 1755, dive 1857, terrain 2010, rise 2156. Segments: hold 56 to 61 s, dive 61 to 64, terrain 64 to 70, rise 70 to 72.5, travel 72.5 to 75. 30 fps.
-- Milestones sent to `/root`: orbit view (04:52 UTC). Next: terrain view, then dive and rise.
+- Milestones sent to `/root`: orbit view (04:52 UTC, 90bedd6). Next: terrain view (in work, see "Terrain view as built"), then dive and rise.
 - Engine hash 05c29d3a1588e95f since the merge of main 9f78a4e (engine batch 2). Stills from before are stale.
 
 ## Hero facts (`references/approved/earth-hero.png`, 2816 x 1584)
@@ -200,8 +200,44 @@ Before this pass the day core was +7.23 +5.82 +5.28 (abs low 6.14) and the day r
 - Moon albedo is a mirrored fill. The sky fill puts a bright Milky Way band behind the planet. The rise sky has no Milky Way (hold patch only).
 - The Builder's `for` loop advice is not yet applied in `globe.ts` and `air.ts`.
 
+## Terrain view as built (04:55 to 05:50 UTC)
+
+The older "Terrain" design above (spot at lon -81, lat 19, patches with baked clouds) is replaced by this.
+
+### Scripts, in order (`assets-src/earth/relief/`, work files in `out/work/earth/relief/`)
+
+1. `camfit.py`: camera of the close image at vfov 45. Result `camera-fit.json`: pitch 28.348 degrees down, altitude 0.030751 radii, sphere radius 32.5197 camera heights, nadir [0.030783, -0.879541, -0.474826], horizon dip 14.03, roll -2.0. `geom.py` has the rays, the sea sphere and `horizon_row`.
+2. Margins (asset "relief margin", 6 of 6 takes used this round): the image is outpainted to a canvas 4096 x 1980 at 1x (640 px left and right, 396 px below). `marginfit.py`, `edgefit.py`, `margincomp.py`, `cornercomp.py` align the takes to the image and compose strips; strips and the close image are upscaled x2 (`tools/ml/upscale.py`). Prompts in `margin-prompt-*.txt`.
+3. Clean plate (asset "relief plate", take 1 kept): `nano_banana_pro` on `references/approved/earth-close.jpg`, prompt `plate-prompt.txt`, the thunderheads and their shadows painted out. `platefit.py t1` aligns it (ECC 0.9997, affine [[1.0001, 0, -0.2987], [0, 1.0079, -6.1258]], flow where unchanged median 0.20 px) and corrects a low-frequency colour offset. Fine texture is regenerated everywhere in the plate, so it is used only beneath the towers.
+4. Matte (asset "relief matte", take 1 kept): same tool and input, prompt `matte-prompt.txt`, white towers on black, aligned with the plate's affine. GrabCut and difference thresholds were tried first and rejected.
+5. `build.py`: everything that ships. Towers = matte components of 300 px and more, groups = components of the matte dilated 13 px, a base line per group, lift = 0.5 (1 - reach(base) / reach(pixel)) above the base and 0 below, capped at 0.085 (a 16 km tower seen from 196 km), alpha = matte dilated 2 px and blurred 1.2. Ground beneath the towers = clean plate plus a membrane (Laplace solve of image minus plate from 10 px outside the matte) blended in from 10 to 6 px, then limited so the tower layer stays above zero. Tower colour is premultiplied in scene linear: image minus (1 - alpha) ground. Layers put together give the image back: mean abs 0.003, max 4 code values. Above the horizon the ground texture holds air minus sky (sky = running minimum from the top of the star-free image, saved as `sky-target-1x.npy`), so the limb glow rides with the ground and the sky comes from the sky patch. Masks at a quarter of the canvas: R glint, G drift weight (off on land and banks, hand polygon `LAND`).
+   - Outputs in both sets: `relief-ground.webp` (full 8192 x 3960 lossless 21.3 MB, web 4096 x 1980 1.3 MB), `relief-towers.webp` (RGBA, full 5616 x 2432 1.6 MB), `relief-lift.bin` (float32, 1404 x 608), `relief-masks.png`; `src/stops/earth/relief.json`.
+   - `towers.py` is the rejected difference-threshold attempt (to delete).
+
+### Code
+
+- `relief.ts` (`Ground`): ground mesh on the sea sphere of the fitted camera, alpha = smoothstep across the fitted horizon polynomial, colour added above it. Towers mesh at distance sea x (1 - lift), premultiplied, no depth test. Drift `look.ground.drift` [-3.2, 0.1] px per second times masks.g and shimmer [0.3, 220, 1.6, 0] times masks.r, both zero at the judged frame (`ground.update(state.time - terrainMid, ...)`).
+
+### Spot, heading and the Sun
+
+- The close image has the Sun's glow at the top edge (peak near x 1300 of 2816, code 158 in row 0), so the Sun sits just above the frame over the glint. `plan.ts`: `spot: { x: 0.52, y: 0.46 }` (lon about -77, lat 18, south of eastern Cuba), `dive.headingDeg: 52.25`, `dive.rollDeg: 5`.
+- No Caribbean spot gives the 27 degrees of elevation the image needs (true elevation 9.1 at the spot), so `light.sunDir: [-0.692237, 0.508, 0.512586]` moves the drawn Sun (18.2 degrees off the fitted light). The sets still light from `plan.lightDir`. It also turns Earth's frame against the world Sun in the travel segments (told to the Builder at the terrain milestone).
+- `npx tsx assets-src/earth/sunat.ts FRAMES` prints the Sun on screen (x right, y up, frame edge at 1): 1920 (-0.085, 1.388), 2010 (-0.083, 1.251), 2099 (-0.081, 1.118), 2110 y 1.070, 2125 y 0.860 (enters the frame in the rise, above the glint). `python3 assets-src/earth/relief/spotfit.py [x y heading]` prints lon, lat, elevation and screen position.
+- Sky and Sun slide about 0.14 frame half-heights down over the segment against the ground (108 px at 1584), so the terrain sky patch has a margin of 0.25.
+
+### Seen in the renders
+
+- Compare at draft (05:47): the judged frame beside the close image is the same picture, towers included. Stills 1920, 2010, 2099, 2120 with the ground only (05:25) showed clean margins and clear motion of foreground against horizon.
+- Engine: sky patches with `add: false` replace the sky inside the patch (stars too), colour = inverseFilmic(texel) x gain x skyGlow x skyExposure; the Sun's glare is added after the patches. Terrain gain = 1 / skyExposure = 2.380952.
+
+### Engine batch 4 (main 2d2161b, merged as 0ac38d4 from d918687)
+
+- Before `READY`: `npm run -s gate -- --phase 4 --only G11` (every file under `public/assets/earth/` named in a `RECIPE.md` as its full path or as `public/assets/earth/<set>/NAME`), and `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,earth`. Put the three results in the `READY` message.
+- The sky behind the rise belongs to the next stop on main: nothing is painted against it.
+
 ## Next (current)
 
-1. Terrain view: relief of `references/approved/earth-close.jpg` (2x copy `out/work/earth/up/close-x2.png`), Mars pattern (`assets-src/mars/relief/RECIPE.md`, relief part of `src/stops/mars/set.ts`): depth, camera fit, layers with painted-in backgrounds, masks, aprons, flow (glint shimmer, cloud shadows creep), own sky patch `sky-terrain`, cover = thin veil of high cloud.
-2. Dive and rise: patch chain (`patches.levels` is empty), predictor, cover, G13.
-3. `for` loop advice in the shaders, far-side polish, own checks, `READY`.
+1. Terrain sky patch (`sky-terrain.webp`): `sky.json` has a `terrain` entry; with gain 0 a still of frame 2010 has a black sky (`out/work/earth/still/terrain-nosky.png`); `sky/patch.py terrain STILL` writes the patch = close image minus the still above the horizon, held below it and in the margins. Then set gain 2.380952 and the file name.
+2. Stills of 1920, 2010, 2099, 2120; check tower parallax, drift, shimmer, the sky rim. `relief/RECIPE.md`. Commit the binaries. Terrain milestone message (say that `light.sunDir` is set).
+3. Dive and rise: patch chain (`patches.levels` is empty), predictor, cover = thin veil of high cloud, G13; tune `dive` for the spot and heading.
+4. `for` loop advice in `globe.ts` and `air.ts`, far-side polish, own checks, gates G11, G12, G15, `READY`.

@@ -93,5 +93,63 @@ def hold(film=None):
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 
+CLOSE = geo.ROOT / "references" / "approved" / "earth-close.jpg"
+TERRAIN_MARGIN = 0.25
+SUN_AT = (-0.083, 1.251)
+HELD = (40.0, 100.0, 70)
+GLOW = (120.0, 700.0, 3.0)
+
+
+def terrain(film):
+    import json
+    a = scene(CLOSE, Image.LANCZOS, True)
+    g = scene(film, Image.BICUBIC)
+    W, H = FULL
+    r = json.load(open(geo.ROOT / "src" / "stops" / "earth" / "relief.json"))["ground"]
+    x = np.arange(W) + 0.5
+    hrow = np.polynomial.polynomial.polyval((x - r["horizonSpan"][0]) / r["horizonSpan"][1], np.array(r["horizon"]))
+    yy = np.arange(H)[:, None] + 0.5
+    above = hrow[None, :] - yy
+    d = np.maximum(a - g, 0)
+    low = np.stack([ndi.gaussian_filter(d[..., i], 6) for i in range(3)], -1)
+    rows = np.clip(np.round(hrow - HELD[2]).astype(int), 0, H - 1)
+    held = ndi.gaussian_filter1d(low[rows, np.arange(W)], 16, axis=0, mode="nearest")
+    w = step(above, HELD[0], HELD[1])[..., None]
+    lin = d * w + held[None] * (1 - w)
+    px, py = round(W * TERRAIN_MARGIN), round(H * TERRAIN_MARGIN)
+    wide = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode="symmetric")
+    sx, sy = W / 2 * (1 + SUN_AT[0]), H / 2 * (1 - SUN_AT[1])
+    xs = np.arange(-px, W + px) + 0.5
+    top = np.stack([ndi.gaussian_filter1d(wide[0:12, :, i].mean(0), 24, mode="nearest") for i in range(3)], -1)
+    off = (np.arange(W) + 0.5)[None, :] - sx
+    rr = np.hypot(off, (np.arange(0, 140) + 0.5)[:, None] - sy)
+    pick = (rr > GLOW[0]) & (rr < GLOW[1]) & (np.abs(off) < 600)
+    floor = np.percentile(low[0:140][:, np.abs(off[0]) > 900].reshape(-1, 3), 20, axis=0)
+    power = []
+    for i in range(3):
+        v = np.maximum(low[0:140, :, i][pick] - floor[i], 1e-5)
+        k = np.polyfit(np.log(rr[pick]), np.log(v), 1)
+        power.append(-k[0])
+    power = np.array(power)
+    r0 = np.hypot(xs - sx, 0.5 - sy)
+    ym = (np.arange(-py, 0) + 0.5)[:, None]
+    r1 = np.maximum(np.hypot(xs[None, :] - sx, ym - sy), 40.0)
+    rise = (r0[None, :] / r1)[..., None] ** power
+    cap = GLOW[2]
+    margin = np.minimum(floor + np.maximum(top[None] - floor, 0) * rise, cap)
+    wide = np.concatenate([margin.astype(np.float32), wide], 0)
+    wide = np.pad(wide, ((0, py), (0, 0), (0, 0)), mode="edge")
+    print("glow power", power.round(2), "floor", floor.round(4), "top max", float(top.max().round(3)), "margin max", float(margin.max().round(3)))
+    img = Image.fromarray((np.clip(geo.encode(wide.astype(np.float64)), 0, 1) * 255 + 0.5).astype(np.uint8))
+    for key, k in (("full", 1), ("web", 2)):
+        im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
+        im.save(OUT / key / "sky-terrain.webp", lossless=True, quality=90, method=6)
+        print(key, im.size, round((OUT / key / "sky-terrain.webp").stat().st_size / 1e6, 2), "MB")
+    img.resize((img.size[0] // 3, img.size[1] // 3), Image.LANCZOS).save(geo.WORK / "view" / "sky-terrain.jpg", quality=92)
+
+
 if __name__ == "__main__":
-    hold(sys.argv[1] if len(sys.argv) > 1 else None)
+    if len(sys.argv) > 2 and sys.argv[1] == "terrain":
+        terrain(sys.argv[2])
+    else:
+        hold(sys.argv[1] if len(sys.argv) > 1 else None)
