@@ -157,7 +157,24 @@ def main():
     far = np.stack([np.interp(idx, idx[have], acc[have, c] / cnt[have]) for c in range(3)], 1)
     far = ndimage.gaussian_filter1d(far, 4, axis=0, mode='nearest')
     print('haze fill below the horizon by azimuth, scene linear x1000', np.round(far[::max(n // 8, 1)] * 1000, 1).tolist())
-    haze = far[pb] * (1 - np.exp(np.minimum(e, 0) / 1.5))[..., None]
+    del full
+    small = cv2.GaussianBlur(cv2.morphologyEx(np.ascontiguousarray(own[::4, ::4]).astype(np.float32), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)), (0, 0), 3.5)
+    es, ps = e[::4, ::4], pb[::4, ::4]
+    over = (es > 0.5) & (es < 2.0)
+    acc = np.zeros((n, 3))
+    cnt = np.zeros(n)
+    np.add.at(acc, ps[over], small[over].astype(np.float64))
+    np.add.at(cnt, ps[over], 1)
+    have = cnt > 4
+    back = np.stack([np.interp(idx, idx[have], acc[have, c] / cnt[have]) for c in range(3)], 1)
+    back = ndimage.gaussian_filter1d(back, 4, axis=0, mode='nearest')
+    print('sky background kept below the horizon by azimuth, scene linear x1000', np.round(back[::max(n // 8, 1)] * 1000, 1).tolist())
+    del small, es, ps
+    grow = ((1 - np.exp(np.minimum(e, 0) / 1.5)) ** 2.5).astype(np.float32)[..., None]
+    haze = far.astype(np.float32)[pb]
+    haze *= grow
+    haze += back.astype(np.float32)[pb]
+    del grow
     w = np.clip((e - KEEP[0] + 0.15) / 0.15, 0, 1)[..., None].astype(np.float32)
     patch = (own * w + haze * (1 - w)).astype(np.float32)
     np.save(f'{WORK}/sky-lin.npy', patch.astype(np.float32))

@@ -194,6 +194,14 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - `canvas.py` needs about 6 GB: it is killed (exit 137, no message through a pipe) when a render runs beside it. Run it alone and read `out/work/jupiter/canvas.log`.
 - Do not `pkill -f batch` only: `strip.sh` and the npm child keep running. Kill `strip.sh`, `tools/still.ts`, `tools/compare.ts` too and check with `ps`.
 
+## Glow strip above the limb, second take (07:50 UTC)
+
+- `strip_band2.jpg`, `band2_three.jpg` (fill = far deck haze x (1 - exp(elev / 1.5))): 3030 to 3100 show a cream strip over the limb that reads as lit air, but its top is a hard edge with a thin black line (the fill is zero at the patch horizon, the sky above it is not). 3200 and 3239 are clean, the star speck on the limb is gone, 3255 and 3266 gather the fog.
+- Compare terrain draft with the rebuilt deck and patch: 3150 still matches the approved picture (`compare-jupiter-terrain-view.jpg`).
+- Second take in `canvas.py`: fill = star free sky background of that azimuth (0.5 to 2 deg above the horizon) + far deck haze x (1 - exp(elev / 1.5)) ^ 2.5. No dark line, the glow starts softly under the patch horizon. This is the last take before READY; if it is not better it goes on the weak list.
+- Committed and pushed 1864a85 (code and notes, binaries of the first take not committed).
+- Second take checked (`band3_four.jpg`, `band3_3060_crop.jpg`): the strip over the limb at 3030 to 3100 is a soft glow that fades into the stars, no hard top, no black line. Kept. `canvas.py` peaks near 7 GB even with the 4x reduced background pass: run it with nothing else on the VM.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
