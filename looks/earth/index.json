@@ -1,9 +1,75 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T10:42:18.868Z",
- "head": "3d76305515afc8a6267e0f71e0a4c26d419b1f10",
- "note": "round 11 corrections: night side, aurora, far map for the dark side, dive cover",
+ "pushed": "2026-11-21T11:03:09.208Z",
+ "head": "190969eb98f3ffefe3e57aabced278d144b0a8ca",
+ "note": "round 2 work: night side, far maps, aurora off the disc, sky margin; engine batch 11 merged",
  "looks": [
+  {
+   "time": "2026-11-21T11:03:08.605Z",
+   "file": "20261121110308605-note-f1857au.jpg",
+   "source": "../../../../tmp/f1857au.png",
+   "kind": "note",
+   "label": "dive 1857 aurora and east limb at 2.5x",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:03:07.960Z",
+   "file": "20261121110307960-note-e2156.jpg",
+   "source": "../../../../tmp/e2156.png",
+   "kind": "note",
+   "label": "rise 2156 draft, far map, far clouds, lights as points",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:03:07.285Z",
+   "file": "20261121110307285-note-e1857.jpg",
+   "source": "../../../../tmp/e1857.png",
+   "kind": "note",
+   "label": "dive 1857 draft, night side with the far map and far clouds",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:01:18.167Z",
+   "file": "20261121110118167-frame-f-1845.jpg",
+   "source": "out/work/earth/p29/f-1845.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1845, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1845,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
+  {
+   "time": "2026-11-21T11:00:20.494Z",
+   "file": "20261121110020494-frame-f-2156.jpg",
+   "source": "out/work/earth/p29/f-2156.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
+  {
+   "time": "2026-11-21T10:55:53.682Z",
+   "file": "20261121105553682-frame-f-1755.jpg",
+   "source": "out/work/earth/p28/f-1755.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
   {
    "time": "2026-11-21T10:42:18.292Z",
    "file": "20261121104218292-note-sky-edges.jpg",
@@ -18,72 +84,6 @@
    "source": "out/work/earth/view/wrap-far.jpg",
    "kind": "note",
    "label": "new far map: Blue Marble painted through the hero colours with a gentle registration, used outside the hold where the hero was dark",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:42:17.136Z",
-   "file": "20261121104217136-note-dive-strip.jpg",
-   "source": "out/work/earth/p24/dive-strip.jpg",
-   "kind": "note",
-   "label": "dive cover 1876 to 1896 at draft: limb rolls and pitches into frame over the cover",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:42:16.560Z",
-   "file": "20261121104216560-note-sheet.jpg",
-   "source": "out/work/earth/p25/sheet.jpg",
-   "kind": "note",
-   "label": "draft 1829, 1840, 2144, 2156 with the night side made opaque outside the hold (work in progress: green left on the disc at 2156)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:26:30.493Z",
-   "file": "20261121102630493-frame-f-2144.jpg",
-   "source": "out/work/earth/p25/f-2144.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2144, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2144,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T10:26:05.123Z",
-   "file": "20261121102605123-frame-f-1829.jpg",
-   "source": "out/work/earth/p25/f-1829.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1829, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1829,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T10:25:41.294Z",
-   "file": "20261121102541294-frame-f-1840.jpg",
-   "source": "out/work/earth/p25/f-1840.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1840, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1840,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T10:11:46.083Z",
-   "file": "20261121101146083-note-d-aur.jpg",
-   "source": "out/work/earth/p23/d-aur.jpg",
-   "kind": "note",
-   "label": "round 11 frame 1857, aurora crop x2: ribbon in front of the disc, bad",
    "stop": "earth"
   }
  ]
