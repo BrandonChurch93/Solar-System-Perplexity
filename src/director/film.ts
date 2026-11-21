@@ -515,11 +515,12 @@ export class FilmDirector implements Director {
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
-      const open = this.openOf(index, time)
-      light.sky = mix(light.sky, OPEN.openExposure, open)
-      skyStars = open
       const span = this.patchSpanOf(index)
       skyPatch = smoother(ramp(span[0], span[1], u))
+      const lens = this.openOf(index, time)
+      const open = lens + (1 - lens) * (1 - skyPatch) * smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
+      light.sky = mix(light.sky, OPEN.openExposure, open)
+      skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
