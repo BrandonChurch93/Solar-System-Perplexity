@@ -1,9 +1,63 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T23:20:29.360Z",
- "head": "68282b0611f3e75ceffeafdd958807a3d878c988",
- "note": "Phase 6 polish items 1 to 3: baselines of the kept build; new dive and rise camera laws are in, draft strips rendering",
+ "pushed": "2026-11-21T23:41:19.160Z",
+ "head": "09dab4077ef5d6370e85e87ff7b53e6f88d5d6d5",
+ "note": "Phase 6 items 1 to 3, version b drafts: globe grows centred under thickening mist (1870 to 1875), level horizon enters from the top under the deck (1880 to 1888), near cloud sheets under the camera (1888 to 1900). Rise frames still rendering.",
  "looks": [
+  {
+   "time": "2026-11-21T23:41:18.494Z",
+   "file": "20261121234118494-note-b-dive-b.jpg",
+   "source": "out/work/earth/p6/b-dive-b.jpg",
+   "kind": "note",
+   "label": "p6 version b b-dive-b",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T23:41:17.925Z",
+   "file": "20261121234117925-note-b-dive-a2.jpg",
+   "source": "out/work/earth/p6/b-dive-a2.jpg",
+   "kind": "note",
+   "label": "p6 version b b-dive-a2",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T23:41:17.380Z",
+   "file": "20261121234117380-note-b-dive-a.jpg",
+   "source": "out/work/earth/p6/b-dive-a.jpg",
+   "kind": "note",
+   "label": "p6 version b b-dive-a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T23:41:16.836Z",
+   "file": "20261121234116836-note-b-near2.jpg",
+   "source": "out/work/earth/p6/b-near2.jpg",
+   "kind": "note",
+   "label": "p6 version b b-near2",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T23:41:16.079Z",
+   "file": "20261121234116079-note-b-near.jpg",
+   "source": "out/work/earth/p6/b-near.jpg",
+   "kind": "note",
+   "label": "p6 version b b-near",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T23:41:00.858Z",
+   "file": "20261121234100858-frame-f-1876.jpg",
+   "source": "out/work/earth/p6/b/f-1876.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1876, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1876,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T23:20:23.988Z",
    "file": "20261121232023988-note-base-rise.jpg",
@@ -19,84 +73,6 @@
    "kind": "note",
    "label": "Kept build, dive cover 1882 to 1892, draft: baseline for polish item 3",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:20:21.832Z",
-   "file": "20261121232021832-note-base-dive-a.jpg",
-   "source": "out/work/earth/p6/base-dive-a.jpg",
-   "kind": "note",
-   "label": "Kept build (round 27), dive handover 1874 to 1881, draft: baseline for polish item 1",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:18:55.511Z",
-   "file": "20261121231855511-frame-f-2140.jpg",
-   "source": "out/work/earth/p6/base/f-2140.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2140, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2140,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:23:53.541Z",
-   "file": "20261121172353541-frame-f01815-review.jpg",
-   "source": "out/work/sheets/.frames-LiBCw9/f01815-review.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1815, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1815,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:21:34.404Z",
-   "file": "20261121172134404-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:21:33.362Z",
-   "file": "20261121172133362-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:20:36.455Z",
-   "file": "20261121172036455-compare-compare-earth-hold-view.jpg",
-   "source": "out/work/compare/compare-earth-hold-view.jpg",
-   "kind": "compare",
-   "label": "earth.hold: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   }
  ]
 }
