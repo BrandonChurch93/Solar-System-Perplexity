@@ -67,6 +67,7 @@ def flow(out):
     x, y = np.meshgrid(ax, -ax)
     vx = np.zeros_like(lum)
     vy = np.zeros_like(lum)
+    along = np.full_like(lum, 0.5)
     rim = np.sqrt(1 - PLANE ** 2)
     for i in range(1, count + 1):
         m = lab == i
@@ -89,14 +90,15 @@ def flow(out):
         fy = sy * c + cyn * (1 - c)
         ln = np.hypot(fx, fy) + 1e-6
         vx[m], vy[m] = fx / ln, fy / ln
+        along[m] = 0.5 + sign * np.arctan2(ry, rx) / (2 * np.pi)
     vx = cv2.GaussianBlur(vx, (0, 0), 3)
     vy = cv2.GaussianBlur(vy, (0, 0), 3)
     strength = np.clip(present * 3, 0, 1)
-    tex = np.stack([0.5 + 0.5 * vx * strength, 0.5 + 0.5 * vy * strength, strength], -1)
+    tex = np.stack([0.5 + 0.5 * vx * strength, 0.5 + 0.5 * vy * strength, strength, along], -1)
     tex = cv2.resize(tex, (1024, 1024), interpolation=cv2.INTER_AREA)
-    write(tex, out + '/full/prominence-flow.png', 'RGB')
-    write(cv2.resize(tex, (512, 512), interpolation=cv2.INTER_AREA), out + '/web/prominence-flow.png', 'RGB')
-    cv2.imwrite(WORK + '/flow-preview.jpg', cv2.cvtColor((tex * 255 + 0.5).astype(np.uint8), cv2.COLOR_RGB2BGR))
+    write(tex, out + '/full/prominence-flow.png', 'RGBA')
+    write(cv2.resize(tex, (512, 512), interpolation=cv2.INTER_AREA), out + '/web/prominence-flow.png', 'RGBA')
+    cv2.imwrite(WORK + '/flow-preview.jpg', cv2.cvtColor((tex[..., :3] * 255 + 0.5).astype(np.uint8), cv2.COLOR_RGB2BGR))
 
 
 if __name__ == '__main__':

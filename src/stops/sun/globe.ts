@@ -9,6 +9,7 @@ export interface GlobeLook {
   boil: { reach: number; period: number; step: number; max: number }
   hot: { from: number; to: number; boost: number }
   pulse: { amount: number; rate: number; from: number; to: number }
+  cell: { amount: number; rate: number; level: number; spread: number }
 }
 
 export interface GlobePatches {
@@ -82,6 +83,7 @@ uniform vec2 uRimShape;
 uniform vec4 uBoil;
 uniform vec3 uHot;
 uniform vec4 uPulse;
+uniform vec4 uCell;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -100,8 +102,13 @@ float lumAt(vec3 d, float lod) {
   float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
   return dot(textureLod(uMap, vec2(u, v), lod).rgb, vec3(0.3, 0.5, 0.2));
 }
+vec2 mapDx;
+vec2 mapDy;
+vec2 mapUv(vec3 d) {
+  return vec2(atan(d.x, d.z) / (2.0 * PI) + 0.5, asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5);
+}
 vec3 surface(vec3 d, vec3 d0, out float texels) {
-  vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
+  vec3 albedo = textureGrad(uMap, mapUv(d), mapDx, mapDy).rgb;
   texels = diagTexelsDir(d0, uMapWidth);
   if (uPatchCount > 0.5) {
     float dn = dot(d, uSpotN);
@@ -128,25 +135,28 @@ void main() {
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
   vec3 north = cross(d, east);
+  vec2 uv0 = mapUv(d);
+  float uAlt = fract(uv0.x + 0.5) - 0.5;
+  mapDx = vec2(abs(dFdx(uv0.x)) < abs(dFdx(uAlt)) ? dFdx(uv0.x) : dFdx(uAlt), dFdx(uv0.y)) * uGrad;
+  mapDy = vec2(abs(dFdy(uv0.x)) < abs(dFdy(uAlt)) ? dFdy(uv0.x) : dFdy(uAlt), dFdy(uv0.y)) * uGrad;
   float e = uBoil.z;
   float lod = log2(uMapWidth / 1024.0);
-  float lE = lumAt(normalize(d + east * e), lod) - lumAt(normalize(d - east * e), lod);
-  float lN = lumAt(normalize(d + north * e), lod) - lumAt(normalize(d - north * e), lod);
+  float lE = lumAt(normalize(d + east * e), lod + 1.5) - lumAt(normalize(d - east * e), lod + 1.5);
+  float lN = lumAt(normalize(d + north * e), lod + 1.5) - lumAt(normalize(d - north * e), lod + 1.5);
   vec3 push = (east * lE + north * lN) * (uBoil.x / (2.0 * e));
   float pl = length(push);
   push *= min(1.0, uBoil.w / max(pl, 1e-6));
-  float pa = fract(uTime / uBoil.y + 0.5) - 0.5;
-  float pb = fract(uTime / uBoil.y) - 0.5;
-  float wb = abs(pa) * 2.0;
+  vec3 dc = normalize(d.zxy + vec3(0.21, -0.13, 0.17));
+  float cellPhase = (lumAt(dc, lod + uCell.z) + lumAt(d, lod + uCell.z)) * uCell.w;
+  float slow = lumAt(dc, lod + 3.0) * 24.0 + lumAt(d, lod + 3.5) * 16.0;
+  float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
   float texels;
-  float texelsB;
-  vec3 ca = surface(normalize(d + push * pa), d, texels);
-  vec3 cb = surface(normalize(d + push * pb), d, texelsB);
-  vec3 lin = inverseFilmic(mix(ca, cb, wb));
+  vec3 lin = inverseFilmic(surface(normalize(d + push * swing), d, texels));
   float wide = lumAt(d, lod + 2.5);
   float region = smoothstep(uPulse.z, uPulse.w, wide);
   float phase = dot(d, vec3(23.0, 17.0, 29.0));
   float beat = 1.0 + uPulse.x * region * (sin(uTime * uPulse.y + phase) - sin(phase));
+  beat *= 1.0 + uCell.x * (sin(uTime * uCell.y + cellPhase) - sin(cellPhase));
   float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
   col += uRimColor * pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
@@ -192,6 +202,7 @@ export class SunGlobe {
         uBoil: { value: new THREE.Vector4(l.boil.reach, l.boil.period, l.boil.step, l.boil.max) },
         uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
         uPulse: { value: new THREE.Vector4(l.pulse.amount, l.pulse.rate, l.pulse.from, l.pulse.to) },
+        uCell: { value: new THREE.Vector4(l.cell.amount, l.cell.rate, l.cell.level, l.cell.spread) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })

@@ -42,8 +42,7 @@ vec4 strand(vec2 uv, float phase, vec2 dx, vec2 dy) {
   vec3 f2 = texture(uFlow, p).rgb;
   p -= (f2.xy - 0.5) * 2.0 * uMove.x * phase * 0.5;
   vec4 c = textureGrad(uMap, p, dx, dy);
-  float beat = 1.0 + uMove.z * f.b * sin((f2.b * 9.0 - uTime * 1.3) + p.x * 40.0);
-  return vec4(inverseFilmic(c.rgb) * beat, c.a);
+  return vec4(inverseFilmic(c.rgb), c.a);
 }
 void main() {
   if (uDiag >= 2) discard;
@@ -54,6 +53,10 @@ void main() {
   vec4 a = strand(vUv, pa * uMove.y, dx, dy);
   vec4 b = strand(vUv, pb * uMove.y, dx, dy);
   vec4 c = mix(a, b, abs(pa) * 2.0);
+  vec4 f = texture(uFlow, vUv);
+  float s = f.a * 6.283185307179586;
+  float run = 0.55 * (sin(s * 9.0 - uTime * 1.7) - sin(s * 9.0)) + 0.3 * (sin(s * 23.0 - uTime * 3.1) - sin(s * 23.0)) + 0.25 * (sin(s * 14.0 + uTime * 1.1) - sin(s * 14.0));
+  c.rgb *= 1.0 + uMove.z * f.b * run;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = c.rgb * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, c.a);
