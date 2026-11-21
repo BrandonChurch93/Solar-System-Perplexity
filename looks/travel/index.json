@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T23:21:06.867Z",
- "head": "f9c942eedf9215ca4303f80786e896948672fa19",
- "note": "task 5: finals 5085 (retreat lead 0.06, Sun clear of the limb) and 5235 with native crops",
+ "pushed": "2026-11-21T23:50:51.979Z",
+ "head": "85c0b7840258930a0b41dbaaf083e2757d0bd2e3",
+ "note": "task 5: finals of the judged travel frames with native crops, retreat review sheet (Sun clear of Neptune at 5085), sun.travel pull delayed",
  "looks": [
   {
-   "time": "2026-11-21T23:21:05.701Z",
-   "file": "20261121232105701-note-f5235-band-native.jpg",
-   "source": "out/work/travel/t5/f5235-band-native.png",
+   "time": "2026-11-21T23:50:51.108Z",
+   "file": "20261121235051108-note-f4492-native.jpg",
+   "source": "out/work/travel/t5/f4492-native.png",
    "kind": "note",
-   "label": "task 5 f5235-band-native",
+   "label": "task 5 f4492-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:04.880Z",
-   "file": "20261121232104880-note-f5235-crescent-native.jpg",
-   "source": "out/work/travel/t5/f5235-crescent-native.png",
+   "time": "2026-11-21T23:50:50.139Z",
+   "file": "20261121235050139-note-f3922-native.jpg",
+   "source": "out/work/travel/t5/f3922-native.png",
    "kind": "note",
-   "label": "task 5 f5235-crescent-native",
+   "label": "task 5 f3922-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:03.912Z",
-   "file": "20261121232103912-note-f5235-sun-native.jpg",
-   "source": "out/work/travel/t5/f5235-sun-native.png",
+   "time": "2026-11-21T23:50:49.556Z",
+   "file": "20261121235049556-note-f3352-native.jpg",
+   "source": "out/work/travel/t5/f3352-native.png",
    "kind": "note",
-   "label": "task 5 f5235-sun-native",
+   "label": "task 5 f3352-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:02.930Z",
-   "file": "20261121232102930-note-f5235-final.jpg",
-   "source": "out/work/travel/t5/f5235-final.png",
+   "time": "2026-11-21T23:50:48.855Z",
+   "file": "20261121235048855-note-f2782-native.jpg",
+   "source": "out/work/travel/t5/f2782-native.png",
    "kind": "note",
-   "label": "task 5 f5235-final",
+   "label": "task 5 f2782-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:02.014Z",
-   "file": "20261121232102014-note-f5085-band-native.jpg",
-   "source": "out/work/travel/t5/f5085-band-native.png",
+   "time": "2026-11-21T23:50:47.971Z",
+   "file": "20261121235047971-note-f2212-native.jpg",
+   "source": "out/work/travel/t5/f2212-native.png",
    "kind": "note",
-   "label": "task 5 f5085-band-native",
+   "label": "task 5 f2212-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:01.093Z",
-   "file": "20261121232101093-note-f5085-crescent-native.jpg",
-   "source": "out/work/travel/t5/f5085-crescent-native.png",
+   "time": "2026-11-21T23:50:47.271Z",
+   "file": "20261121235047271-note-f1642-native.jpg",
+   "source": "out/work/travel/t5/f1642-native.png",
    "kind": "note",
-   "label": "task 5 f5085-crescent-native",
+   "label": "task 5 f1642-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:21:00.119Z",
-   "file": "20261121232100119-note-f5085-sun-native.jpg",
-   "source": "out/work/travel/t5/f5085-sun-native.png",
+   "time": "2026-11-21T23:50:46.473Z",
+   "file": "20261121235046473-note-f1072-native.jpg",
+   "source": "out/work/travel/t5/f1072-native.png",
    "kind": "note",
-   "label": "task 5 f5085-sun-native",
+   "label": "task 5 f1072-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T23:20:58.743Z",
-   "file": "20261121232058743-note-f5085-final.jpg",
-   "source": "out/work/travel/t5/f5085-final.png",
+   "time": "2026-11-21T23:50:45.429Z",
+   "file": "20261121235045429-note-f495-native.jpg",
+   "source": "out/work/travel/t5/f495-native.png",
    "kind": "note",
-   "label": "task 5 f5085-final",
+   "label": "task 5 f495-native",
    "stop": "travel"
   }
  ]
