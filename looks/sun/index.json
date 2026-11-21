@@ -1,6 +1,6 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T17:35:33.948Z",
+ "pushed": "2026-11-21T17:35:59.668Z",
  "head": "471dbde13d1cf6163af9a74007fed6814ee23a95",
  "note": "sun round 3: review rise sheet and cover sheet on the final tree, hold sky card seam pass, last measures before READY",
  "looks": [
@@ -62,6 +62,76 @@
    "source": "out/work/sun/i138-rise-sheet-review.jpg",
    "kind": "note",
    "label": "sun rise sheet 180 to 269 at review tier, 1920, final tree",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T17:12:10.423Z",
+   "file": "20261121171210423-note-i137-rise-cover-review.jpg",
+   "source": "out/work/sun/i137-rise-cover-review.jpg",
+   "kind": "note",
+   "label": "sun rise cover sheet 211 to 222 at review tier on the final tree (212, 216, 220 at 1920, the rest at 960): limb readable in every frame, no whiteout",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T17:01:30.801Z",
+   "file": "20261121170130801-note-i136-cover-211-215-review-preview.jpg",
+   "source": "out/work/sun/i136-cover-211-215-review-preview.jpg",
+   "kind": "note",
+   "label": "sun rise 211, 213, 214, 215 at review tier (960 px format), final path of round 3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:36:57.535Z",
+   "file": "20261121163657535-note-i133-rv216.jpg",
+   "source": "out/work/sun/i133-rv216.jpg",
+   "kind": "note",
+   "label": "rise frame 216 at review after engine batch 15, 127 samples, limb readable, smooth blur",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:04.698Z",
+   "file": "20261121162204698-note-i132-c1-big.jpg",
+   "source": "out/work/sun/i132-c1-big.jpg",
+   "kind": "note",
+   "label": "rise 209, 211, 213, 215 at draft, relief dissolving into the globe",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:04.101Z",
+   "file": "20261121162204101-note-i131-c1-b.jpg",
+   "source": "out/work/sun/i131-c1-b.jpg",
+   "kind": "note",
+   "label": "rise 218 to 235 at draft, final path of round 3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:03.527Z",
+   "file": "20261121162203527-note-i131-c1-a.jpg",
+   "source": "out/work/sun/i131-c1-a.jpg",
+   "kind": "note",
+   "label": "rise 200 to 217 at draft, final path of round 3 (peak earlier and wider, no frame at the review sample cap)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:20:33.777Z",
+   "file": "20261121162033777-frame-f00220.jpg",
+   "source": "out/work/seq/198-236/f00220.png",
+   "kind": "frame",
+   "label": "sun.rise frame 220, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 220,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:05:55.415Z",
+   "file": "20261121160555415-note-i130-slow-b.jpg",
+   "source": "out/work/sun/i130-slow-b.jpg",
+   "kind": "note",
+   "label": "rise 218 to 235 at draft after engine batch 15",
    "stop": "sun"
   },
   {
