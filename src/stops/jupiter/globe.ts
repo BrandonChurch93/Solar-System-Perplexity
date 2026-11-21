@@ -109,6 +109,7 @@ uniform float uLimbAmount;
 uniform vec2 uShadeKnee;
 uniform vec4 uMoon;
 uniform vec3 uShadow;
+uniform vec3 uShadowSun;
 uniform vec3 uSunMap;
 uniform float uFlowT;
 uniform float uSwirlT;
@@ -134,7 +135,7 @@ vec3 spinY(vec3 d, float a) {
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
 }
 vec3 curveAt(float ndl) {
-  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
+  float x = clamp(sign(ndl) * sqrt(abs(ndl)) * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
   int i = int(min(floor(x), ${CURVE_KNOTS - 2}.0));
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
 }
@@ -177,9 +178,9 @@ vec3 flowed(vec3 d, out vec3 fl) {
 }
 float moonShadow(vec3 p) {
   vec3 m = uMoon.xyz - p;
-  float t = dot(m, uSunW);
+  float t = dot(m, uShadowSun);
   if (t <= 0.0 || uMoon.w <= 0.0) return 0.0;
-  float off = length(m - uSunW * t);
+  float off = length(m - uShadowSun * t);
   return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z;
 }
 void main() {
@@ -228,7 +229,7 @@ ${PATCH_LEVELS}
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
   lin *= max(1.0 + wisp, 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount);
-  vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n)) + uNight * mix(vec3(1.0), lin / uNightRef.rgb, uNightRef.a)) * uTint;
+  vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n)) + uNight * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -280,7 +281,7 @@ export class Globe {
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
         uLimbAmount: { value: 1 }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
-        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) },
+        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },
         uWispShape: { value: new THREE.Vector4(w.repeats, w.latScale, w.amount, 1) },

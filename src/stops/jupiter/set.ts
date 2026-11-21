@@ -75,11 +75,10 @@ export const createSet: SetFactory = async (ctx) => {
   const shells = look.shells.map((p) => new HazeShell(p, diagUniform))
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
-  const ioFit = fit.moons![0]!
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: ioFit.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim })
+  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim })
   orbit.add(io.mesh)
-  const ioHome = new THREE.Vector3().fromArray(ioFit.position)
+  const ioHome = new THREE.Vector3().fromArray(look.io.home)
 
   const far = new FarPoint()
   orbit.add(far.points)
@@ -99,6 +98,8 @@ export const createSet: SetFactory = async (ctx) => {
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
+  const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
+  const moonLight = new THREE.Vector3()
   const light = new THREE.Vector3()
   const glowDir = new THREE.Vector3()
   const camera = new THREE.Vector3()
@@ -140,14 +141,16 @@ export const createSet: SetFactory = async (ctx) => {
       io.mesh.position.copy(ioHome).applyQuaternion(turn)
       io.mesh.quaternion.setFromAxisAngle(up, THREE.MathUtils.degToRad(look.io.spinDegPerSecond) * elapsed)
       ioWorld.copy(io.mesh.position).applyQuaternion(state.rotation)
-      ;(gu.uMoon!.value as THREE.Vector4).set(ioWorld.x, ioWorld.y, ioWorld.z, ioFit.radius)
+      ;(gu.uMoon!.value as THREE.Vector4).set(ioWorld.x, ioWorld.y, ioWorld.z, look.io.radius)
+      moonLight.copy(moonHome).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
+      ;(gu.uShadowSun!.value as THREE.Vector3).copy(moonLight)
       globe.update(camera, light, plan.spin(state.time), gain, state.weight)
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = view.format.width / view.format.height
-      const along = ioWorld.dot(light)
-      const eclipse = along < 0 ? 1 - smooth((across.copy(ioWorld).addScaledVector(light, -along).length() - 0.97) / 0.06) : 0
+      const along = ioWorld.dot(moonLight)
+      const eclipse = along < 0 ? 1 - smooth((across.copy(ioWorld).addScaledVector(moonLight, -along).length() - 0.97) / 0.06) : 0
       toPlanet.copy(ioWorld).negate().normalize()
-      io.update(light, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
+      io.update(moonLight, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
       glowDir.copy(glowHome).applyQuaternion(state.rotation).lerp(light, lit).normalize()
       for (const s of shells) {
         const su = s.material.uniforms

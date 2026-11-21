@@ -39,30 +39,44 @@ for i, k in enumerate(knots):
 gl[0] = gl[1]
 print('limb gain by knot', np.round(gl[:10], 3).tolist())
 
-ck = np.linspace(-1, 1, len(C))
-ch = 2.0 / (len(C) - 1)
+deep = ok & (ndl < -0.27) & (mu > 0.22)
+nh, nf = hero[deep].mean(0), film[deep].mean(0)
+print('night hero', np.round(nh, 5).tolist(), 'film', np.round(nf, 5).tolist(), 'ratio', np.round(nh / nf, 3).tolist(), 'pixels', int(deep.sum()))
+
+ct = np.linspace(-1, 1, len(C))
+ck = np.sign(ct) * ct * ct
 gc = np.ones((len(C), 3))
 for i, k in enumerate(ck):
     if k < -0.3 or k > 0.62:
         continue
-    s = ok & (mu > 0.35) & (np.abs(ndl - k) < ch * 0.6)
+    lo, hi = (ck[i - 1] + k) / 2, (k + ck[i + 1]) / 2
+    s = ok & (mu > 0.35) & (ndl > lo) & (ndl < hi)
     if s.sum() >= 200:
-        gc[i] = np.median(ratio[s], axis=0)
+        if k < 0.12:
+            gc[i] = np.clip((hero[s].mean(0) - nh) / np.maximum(film[s].mean(0) - nf, 1e-5), 0.5, 2) ** 0.8
+        else:
+            gc[i] = np.median(ratio[s], axis=0)
 print('curve gain by knot')
 for i, k in enumerate(ck):
-    if -0.5 < k < 0.45:
+    if -0.35 < k < 0.45:
         print(f'  ndl {k:6.3f}', np.round(gc[i], 3).tolist(), 'C', np.round(C[i], 4).tolist())
-
-deep = ok & (ndl < -0.5) & (mu > 0.3)
-print('night ratio', np.round(np.median(ratio[deep], axis=0), 3).tolist(), 'hero', np.round(np.median(hero[deep], axis=0), 4).tolist(), 'film', np.round(np.median(film[deep], axis=0), 4).tolist())
 
 if write:
     L2 = L * gl
     C2 = C * gc
+    if not (np.isfinite(C2).all() and np.isfinite(L2).all() and np.isfinite(nh / nf).all()):
+        raise SystemExit('not finite, nothing written')
     for c in range(3):
-        C2[:, c] = np.maximum.accumulate(C2[:, c])
+        C2[:, c] = np.minimum.accumulate(C2[::-1, c])[::-1]
+    j = int(np.argmin(np.abs(ck - 0.035)))
+    for i in range(len(ck)):
+        if ck[i] <= 0:
+            C2[i] = 0
+        elif i < j:
+            C2[i] = np.minimum(C2[i], C2[j] * ck[i] / ck[j])
     lj['limb'] = np.round(L2, 4).tolist()
     cj['curve'] = np.round(C2, 5).tolist()
+    cj['night'] = np.round(np.array(cj['night']) * nh / nf, 5).tolist()
     json.dump(lj, open(lpath, 'w'))
     json.dump(cj, open(cpath, 'w'))
     print('written')
