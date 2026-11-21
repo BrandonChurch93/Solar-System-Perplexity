@@ -45,9 +45,9 @@ export const ring = {
   gain: 1,
   forward: 2.5,
   forwardPower: 5,
-  bandUnit: [0.16, 1] as [number, number],
-  bandHold: [0.1, 0.1] as [number, number],
-  bandAway: [0.9, 0.2] as [number, number],
+  bandUnit: [0.16, 1, 0.05] as [number, number, number],
+  bandHold: [0.1, 0.1, 0] as [number, number, number],
+  bandAway: [0.45, 0.2, 1.6] as [number, number, number],
   mapScale: 0.25,
   degPerSecond: 0.8,
 }

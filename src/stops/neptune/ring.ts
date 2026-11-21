@@ -13,9 +13,9 @@ export interface RingParams {
   map: THREE.Texture
   mapScale: number
   bands: THREE.Texture
-  bandUnit: [number, number]
-  bandHold: [number, number]
-  bandAway: [number, number]
+  bandUnit: [number, number, number]
+  bandHold: [number, number, number]
+  bandAway: [number, number, number]
 }
 
 const VERT = /* glsl */ `
@@ -34,7 +34,7 @@ uniform int uDiag;
 uniform sampler2D uMap;
 uniform float uMapScale;
 uniform sampler2D uBands;
-uniform vec2 uBandGain;
+uniform vec3 uBandGain;
 uniform vec3 uColor;
 uniform float uGain;
 uniform vec3 uSunL;
@@ -56,7 +56,7 @@ void main() {
   vec2 gx = vec2(dot(dFdx(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdx(r) / (uRange.y - uRange.x));
   vec2 gy = vec2(dot(dFdy(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdy(r) / (uRange.y - uRange.x));
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
-  vec2 band = textureGrad(uBands, uv, gx, gy).rg;
+  vec3 band = textureGrad(uBands, uv, gx, gy).rgb;
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
   float edge = smoothstep(uRange.x, uRange.x + 0.03, r) * (1.0 - smoothstep(uRange.y - 0.03, uRange.y, r));
   vec3 q = vLocal + uCentre;
@@ -74,9 +74,9 @@ export class Ring {
   private readonly inverse = new THREE.Quaternion()
   private readonly tilt = new THREE.Quaternion()
   private readonly gain: number
-  private readonly bandUnit: [number, number]
-  private readonly bandHold: [number, number]
-  private readonly bandAway: [number, number]
+  private readonly bandUnit: [number, number, number]
+  private readonly bandHold: [number, number, number]
+  private readonly bandAway: [number, number, number]
   private readonly centre: THREE.Vector3
   private readonly untilt = new THREE.Quaternion()
 
@@ -91,7 +91,7 @@ export class Ring {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uDiag: diagUniform, uMap: { value: p.map }, uMapScale: { value: p.mapScale }, uBands: { value: p.bands }, uBandGain: { value: new THREE.Vector2() },
+        uDiag: diagUniform, uMap: { value: p.map }, uMapScale: { value: p.mapScale }, uBands: { value: p.bands }, uBandGain: { value: new THREE.Vector3() },
         uColor: { value: new THREE.Vector3().fromArray(p.color) }, uGain: { value: 1 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uForward: { value: new THREE.Vector2(p.forward, p.forwardPower) }, uTurn: { value: 0 }, uRange: { value: new THREE.Vector2(p.inner, p.outer) }, uCentre: { value: new THREE.Vector3() },
         uHome: { value: 1 },
@@ -117,7 +117,8 @@ export class Ring {
     this.inverse.copy(rotation).multiply(this.tilt).invert()
     ;(u.uSunL!.value as THREE.Vector3).copy(light).applyQuaternion(this.inverse)
     u.uTurn!.value = turn
-    ;(u.uBandGain!.value as THREE.Vector2).set(this.bandUnit[0] * (this.bandAway[0] + (this.bandHold[0] - this.bandAway[0]) * home), this.bandUnit[1] * (this.bandAway[1] + (this.bandHold[1] - this.bandAway[1]) * home))
+    const bands = u.uBandGain!.value as THREE.Vector3
+    for (let k = 0; k < 3; k++) bands.setComponent(k, this.bandUnit[k]! * (this.bandAway[k]! + (this.bandHold[k]! - this.bandAway[k]!) * home))
     u.uHome!.value = home
     u.uGain!.value = gain * this.gain
   }

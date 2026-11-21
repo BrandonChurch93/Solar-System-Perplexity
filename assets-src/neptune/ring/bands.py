@@ -37,6 +37,15 @@ ARCS = [
     (1.686, 71.5, 0.90, 0.05),
     (1.774, 55.0, 0.50, 0.04),
 ]
+BODY_UNIT = 0.05
+BODIES = [
+    (1.345, 1.425, 0.010, 0.0050),
+    (1.488, 1.535, 0.006, 0.0105),
+    (1.535, 1.612, 0.012, 0.0060),
+    (1.628, 1.662, 0.005, 0.0125),
+    (1.690, 1.790, 0.016, 0.0036),
+]
+BODY_GRAIN = (140, 0.55)
 SHEET = (1.44, 1.76, 0.0045)
 GRAIN = (90, 0.7)
 SPARKS = (900, 0.05, 0.3)
@@ -94,13 +103,25 @@ def main(out):
     np.add.at(dots, (yy, xx), gg)
     dots = ndi.gaussian_filter(dots, (1.1, 2.6), mode=('nearest', 'wrap')) * 2 * np.pi * 1.1 * 2.6
     arcs += dots
+    bodies = np.zeros((NR, NA))
+    fine = np.zeros(NR)
+    for _ in range(BODY_GRAIN[0]):
+        fine += rng.uniform(-1, 1) * np.exp(-((r - rng.uniform(R0, R1)) / rng.uniform(0.0015, 0.006)) ** 2)
+    fine = fine / np.abs(fine).max()
+    for lo_b, hi_b, soft, gain in BODIES:
+        shape = step(r, lo_b - soft, lo_b + soft) * (1 - step(r, hi_b - soft, hi_b + soft))
+        tilt = 0.8 + 0.4 * rng.uniform(0, 1) * (r - lo_b) / (hi_b - lo_b)
+        m = 1 + 0.35 * wave(rng, NA, [(1, 0.6), (2, 0.5), (5, 0.5), (11, 0.4), (29, 0.3), (67, 0.2)]) / 1.3
+        bodies += gain * (shape * tilt * (1 + BODY_GRAIN[1] * fine))[:, None] * np.maximum(m, 0.2)[None]
     taper = (step(r, R0, R0 + 0.04) * (1 - step(r, R1 - 0.04, R1)))[:, None]
+    bodies = np.maximum(bodies * taper, 0)
     img = np.maximum(img * taper, 0)
     arcs = np.maximum(arcs * taper, 0)
     print('bands p50 p99 max', np.percentile(img, 50).round(5), np.percentile(img, 99).round(4), img.max().round(4), 'arcs max', arcs.max().round(3))
     png = np.zeros((NR, NA, 3), np.uint8)
     png[..., 2] = (np.clip(np.sqrt(img / UNIT), 0, 1)[::-1] * 255 + 0.5).astype(np.uint8)
     png[..., 1] = (np.clip(np.sqrt(arcs / ARC_UNIT), 0, 1)[::-1] * 255 + 0.5).astype(np.uint8)
+    png[..., 0] = (np.clip(np.sqrt(bodies / BODY_UNIT), 0, 1)[::-1] * 255 + 0.5).astype(np.uint8)
     os.makedirs(out + '/full', exist_ok=True)
     os.makedirs(out + '/web', exist_ok=True)
     cv2.imwrite(out + '/full/ring-bands.png', png, [cv2.IMWRITE_PNG_COMPRESSION, 9])
@@ -109,7 +130,7 @@ def main(out):
     cv2.imwrite(out + '/web/ring-bands.png', (np.sqrt(web) * 255 + 0.5).astype(np.uint8), [cv2.IMWRITE_PNG_COMPRESSION, 9])
     for k in ('full', 'web'):
         print(k, round(os.path.getsize(out + '/' + k + '/ring-bands.png') / 1e6, 3), 'MB')
-    view = np.clip((lin[..., 2] * UNIT + lin[..., 1] * ARC_UNIT * 0.15) * 14, 0, 1) ** 0.45
+    view = np.clip((lin[..., 2] * UNIT * 0.5 + lin[..., 1] * ARC_UNIT * 0.15 + lin[..., 0] * BODY_UNIT * 1.6) * 14, 0, 1) ** 0.45
     os.makedirs('out/work/nep/ring', exist_ok=True)
     cv2.imwrite('out/work/nep/ring/bands-view.jpg', (cv2.resize(view[:, :NA // 3], (NA // 3, NR), interpolation=cv2.INTER_AREA) * 255).astype(np.uint8))
 
