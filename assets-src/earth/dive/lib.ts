@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config } from '../../../src/config'
 import type { StopPlan } from '../../../src/director/moves'
 
-export interface Row { f: number; view: string; h: number; px: number; rate: number; motion: number; cover: number; top: number; tilt: number }
+export interface Row { f: number; view: string; h: number; px: number; rate: number; motion: number; cover: number; top: number; tilt: number; sky: number }
 
 type P = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
 const RAD = Math.PI / 180
@@ -42,6 +42,18 @@ export function motionOf(open: P, mid: P, close: P): number {
   return most
 }
 
+export function skyOf(open: P, close: P): number {
+  let most = 0
+  const th = Math.tan((open.vfov * RAD) / 2)
+  for (const [x, y] of [[0, 0], [-1, -1], [1, -1], [-1, 1], [1, 1]] as [number, number][]) {
+    const ray = new THREE.Vector3(x * th * (16 / 9), y * th, -1).normalize().applyQuaternion(open.quaternion).applyQuaternion(close.quaternion.clone().invert())
+    if (ray.z > -1e-6) continue
+    const k = 540 / Math.tan((close.vfov * RAD) / 2) / -ray.z
+    most = Math.max(most, Math.hypot(ray.x * k - x * 960, ray.y * k - y * 540))
+  }
+  return most
+}
+
 export function rows(plan: StopPlan, kind: 'dive' | 'rise', first: number, last: number): Row[] {
   const seg = kind === 'dive' ? plan.seg.dive! : plan.seg.rise
   const at = (t: number) => (kind === 'dive' ? plan.dive(t) : plan.rise(t))
@@ -67,6 +79,7 @@ export function rows(plan: StopPlan, kind: 'dive' | 'rise', first: number, last:
       motion: open.view === 'orbit' && close.view === 'orbit' ? motionOf(open.pose, p, close.pose) : NaN,
       cover: plan.coverAmount(seg, (f + sh / 2) / config.fps),
       top: 0.5 - (0.5 * Math.tan(lim)) / th,
+      sky: skyOf(open.pose, close.pose),
       tilt: THREE.MathUtils.radToDeg(Math.atan2(-down.dot(new THREE.Vector3(1, 0, 0).applyQuaternion(p.quaternion)), -down.dot(up))),
     })
   }

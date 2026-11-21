@@ -135,7 +135,7 @@ export const createSet: SetFactory = async (ctx) => {
       eye.copy(camera).applyQuaternion(back).applyMatrix3(unshape)
       eyeWorld.copy(eye).applyQuaternion(state.rotation)
       const away = smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
-      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid, away, state.time >= plan.seg.terrain.start ? 1 : 0)
+      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
@@ -151,16 +151,16 @@ export const createSet: SetFactory = async (ctx) => {
       const layers = au.uColor!.value as THREE.Vector3[]
       const tint = seg.kind === 'rise' ? d.glow.rise : d.glow.dive
       for (let i = 0; i < 2; i++) layers[i]!.fromArray(look.air.colors[i]!).multiply(airTint.set(1 + (tint[0] - 1) * low, 1 + (tint[1] - 1) * low, 1 + (tint[2] - 1) * low))
-      au.uPhysical!.value = state.time >= plan.seg.terrain.start ? 1 : Math.max(low, lit)
+      au.uPhysical!.value = Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
       curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
       stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
       curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
       const near = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
-      curtain.update(state.time - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect, away)
+      curtain.update(plan.clock(state.time) - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect, away)
       sunLocal.copy(light).applyQuaternion(back)
-      moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (state.time - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
+      moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (plan.clock(state.time) - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
