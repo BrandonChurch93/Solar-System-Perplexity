@@ -9,6 +9,8 @@ export interface TitanLook {
   haloHeight: number
   terminator: [number, number]
   limb: number
+  home: [number, number, number]
+  size: number
 }
 
 const VERT = /* glsl */ `
@@ -45,12 +47,12 @@ void main() {
   vec3 foot = dir * b - uCentre;
   float miss = length(foot) / uRadius;
   float px = length(vec2(dFdx(miss), dFdy(miss)));
-  float disc = 1.0 - smoothstep(1.0 - px, 1.0 + px, miss);
+  float disc = 1.0 - smoothstep(1.0 - 1.5 * px, 1.0 + 1.5 * px, miss);
   float z = sqrt(max(1.0 - miss * miss, 0.0));
   vec3 n = normalize(foot / uRadius - dir * z);
   float ndl = dot(n, uSun);
   float lit = smoothstep(uTerminator.x, uTerminator.y, ndl);
-  vec3 body = (uDay * lit * mix(1.0, pow(max(z, 0.0), 0.6), uLimb) + uRim * lit * pow(1.0 - z, 3.0) + uNight) * disc;
+  vec3 body = (uDay * lit * mix(1.0, pow(max(z, 0.0), 0.6), uLimb) + uRim * lit * pow(1.0 - z, 3.0) + uNight) * disc * sqrt(disc);
   vec3 edge = normalize(foot);
   float glow = exp(-max(miss - 1.0, 0.0) / uHaloHeight) * smoothstep(-0.35, 0.5, dot(edge, uSun));
   vec3 col = body + uHalo * glow * (1.0 - disc * 0.6);
@@ -77,7 +79,7 @@ export class Titan {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.6, 48, 24), this.material)
-    this.mesh.renderOrder = 1
+    this.mesh.renderOrder = 4
   }
 
   dispose(): void {
