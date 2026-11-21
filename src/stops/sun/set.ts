@@ -57,6 +57,8 @@ export const createSet: SetFactory = async (ctx) => {
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
   const turn = new THREE.Quaternion()
+  const carry = new THREE.Quaternion()
+  const spark = new THREE.Vector3()
   const tint = new THREE.Vector3()
   const tint2 = new THREE.Vector3().fromArray(look.dissolve.tint)
   const d = look.dissolve
@@ -73,9 +75,10 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit || mixed
       if (mixed) {
-        terrain.quaternion.copy(plan.toGlobe)
+        carry.copy(plan.carry(state.time))
+        terrain.quaternion.copy(carry).multiply(plan.toGlobe)
         terrain.scale.setScalar(1 / stage.radius)
-        terrain.position.copy(inGlobe)
+        terrain.position.copy(inGlobe).applyQuaternion(carry)
         backdropTerrain.mesh.quaternion.copy(plan.toGlobe)
       } else {
         terrain.quaternion.identity()
@@ -91,11 +94,11 @@ export const createSet: SetFactory = async (ctx) => {
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
       const burst = kind === 'rise' ? flare.amount(state.time - flareAt) : 0
-      flare.update(inOrbit ? kernelGlobe : kernel, world, view.camera, burst, inOrbit ? 1 / stage.radius : 1, gain, aspect)
+      flare.update(inOrbit ? spark.copy(kernelGlobe).applyQuaternion(mixed ? carry : carry.identity()) : kernel, world, view.camera, burst, inOrbit ? 1 / stage.radius : 1, gain, aspect)
       if (terrain.visible) {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
-        if (mixed) eye.applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
+        if (mixed) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
         const far = Math.min(Math.max((x - d.far[0]) / (d.far[1] - d.far[0]), 0), 1)
         ground.show(mixed, d.reach[0] + (d.reach[1] - d.reach[0]) * far, d.feather, 1 - share(x, d.cap), share(x, d.fold))
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)

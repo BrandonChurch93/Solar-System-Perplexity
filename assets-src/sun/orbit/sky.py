@@ -26,6 +26,7 @@ SMOOTH = 1.5
 MOTTLE = 6
 SEAM = 48
 RIM = (6, 8, 40, 1.3)
+CARRY = 110
 
 
 def rowgain(inner, outer, along, limits):
@@ -84,14 +85,19 @@ def save(lin, name, out):
     lin = lifted(lin)
     across = sides(lin)
     low = cv2.GaussianBlur(across, (0, 0), SOFT)
-    fine = across - low
-    fine = np.concatenate([fine[:py], fine, fine[H - py:]], 0)
-    base = np.pad(low, ((py, py), (0, 0), (0, 0)), mode='edge')
+    floor = split(across)[0]
+    near = cv2.GaussianBlur(floor, (0, 0), MOTTLE)
+    around = lambda v: np.concatenate([v[H - py:], v, v[:py]], 0)
+    straight = lambda v: np.pad(v, ((py, py), (0, 0), (0, 0)), mode='edge')
+    base = straight(low)
     calm = cv2.GaussianBlur(base, (0, 0), SOFT * 2.5)
     yy = np.arange(base.shape[0])[:, None]
-    t = np.clip(np.maximum(py - yy, yy - (py + H - 1)) / (py * CROSS), 0, 1)
-    t = (t * t * (3 - 2 * t))[..., None]
-    wide = np.maximum(base * (1 - t) + calm * t + fine, 0)
+    away = np.maximum(py - yy, yy - (py + H - 1))
+    ease = lambda v: (v * v * (3 - 2 * v))[..., None]
+    t = ease(np.clip(away / (py * CROSS), 0, 1))
+    hold = 1 - ease(np.clip(away / CARRY, 0, 1))
+    mottle = straight(near - low) * hold + around(near - low) * (1 - hold)
+    wide = np.maximum(base * (1 - t) + calm * t + mottle + around(across - near), 0)
     wide[py:py + H] = across
     wide[py:py + H, px:px + W] = lin
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))

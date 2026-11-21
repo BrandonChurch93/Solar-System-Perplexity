@@ -155,7 +155,7 @@ void main() {
   float shown = 1.0;
   for (int k = 0; k < (uMixed > 0.5 ? 1 : 0); k++) {
     float ring = length(vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD)));
-    float real = 1.0 - uShow.w * smoothstep(ST_FOLD.w - 1.6, ST_FOLD.w, ring);
+    float real = 1.0 - uShow.w * smoothstep(ST_FOLD.w - 1.1, ST_FOLD.w, ring);
     shown = uShow.z * real * (1.0 - smoothstep(uShow.x - uShow.y, uShow.x, length(vStage - uSpot))) * step(0.0, dot(normal, uCam - vStage));
   }
   outColor = diagOut(vec4(col, shown), texels, 1.0, vec3(0.9, 0.5, 0.1), moved * 4.0, length(vView));

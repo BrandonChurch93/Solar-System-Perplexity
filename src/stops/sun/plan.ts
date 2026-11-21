@@ -9,7 +9,7 @@ import { stage } from './stage'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0, 1, 0], push: 0 },
-  spot: { x: 0.54, y: 0.39 },
+  spot: { x: 0.57, y: 0.39 },
   dive: { headingDeg: 0, altitude: 0.7, back: 0.05, ahead: 0.12, bow: 0.15, rollDeg: 0 },
   terrain: { vfov: 55, gather: -0.5, forward: 2.0, rise: -0.1, side: 0.7, yawDeg: 8, pitchDeg: 8, horizonDeg: 3.2, dipDeg: 17.5, entryHeight: 0.9, entryBack: 1.1, entryPitchDeg: 4.8, exitHeight: 1.6, exitForward: -0.6, exitPitchDeg: -12 },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.6, offset: [0, 0], driftSpeed: 0.05, rollDeg: 0, settle: 2 },
@@ -153,6 +153,10 @@ export class SunPlan extends StopPlan {
     const seg = this.seg.rise
     const path = this.path((time - seg.start) / (seg.end - seg.start))
     return time < this.switchTime ? { pose: this.local(path), view: 'terrain' } : { pose: path, view: 'orbit' }
+  }
+
+  carry(time: number): THREE.Quaternion {
+    return this.turn(time).multiply(this.turn(this.switchTime).invert())
   }
 
   blend(time: number): number {
