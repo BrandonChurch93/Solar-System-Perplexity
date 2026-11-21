@@ -23,20 +23,20 @@ export const params: MoveParams = {
   coverTop: [0.3, 0.06],
   coverEdge: [0.2, 0.5],
   coverEdgeRise: [0.4, 0.5],
-  coverShell: [1.03, 1.1],
+  coverShell: [1.005, 1.03],
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.6, 0.45] },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
   tint: [0.3, 0.5, 1],
 }
 
-const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.03, 1.1], sea: [1.008, 1.024], clear: 0.8, full: 0.93 }
+const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.55, full: 0.93 }
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
 export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4730, place: [0, 0.1] as [number, number], placeOver: 14 }
-export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20 }
+export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.04, ramp: 5, hold: 16, rest: 26, late: 0.006 } }
 const smooth = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   return t * t * (3 - 2 * t)
@@ -50,6 +50,7 @@ const bankOf = (pose: Pose): number => {
   return Math.atan2(n.x, -n.y)
 }
 
+interface Climb { from: number; span: number; h0: number; top: number; out: number }
 interface Fall { start: number; join: number; span: number; h0: number; drift: number; accel: number; knee: number; late: number; power: number }
 
 class NeptunePlan extends StopPlan {
@@ -57,6 +58,8 @@ class NeptunePlan extends StopPlan {
   private fall: Fall | null = null
   private last: { time: number; at: number } | null = null
   private entryBank: number | null = null
+  private climbed: Climb | null = null
+  private lastUp: { time: number; at: number } | null = null
 
   private high(time: number): number {
     return super.dive(time).pose.position.length() - 1
@@ -126,9 +129,47 @@ class NeptunePlan extends StopPlan {
     return { pose, view: flown.view }
   }
 
+  private lift(time: number): number {
+    return super.rise(time).pose.position.length() - 1
+  }
+
+  private paced(time: number): number {
+    const seg = this.seg.rise
+    const fps = config.fps
+    const k = ascent.pace
+    if (!this.climbed) {
+      const from = this.coverCenter(seg)
+      const span = (seg.end - from) * fps
+      const h0 = this.lift(from)
+      const dt = 0.01 / fps
+      const far = this.exitPose(seg.end).position.length() - 1
+      const out = Math.log((this.exitPose(seg.end + dt).position.length() - 1) / far) / (dt * fps)
+      const top = (Math.log(far / h0) - 0.5 * k.start * k.ramp - 0.5 * k.late * (k.rest - k.hold) - 0.5 * (k.late + out) * (span - k.rest)) / (0.5 * k.ramp + k.hold - k.ramp + 0.5 * (k.rest - k.hold))
+      this.climbed = { from, span, h0, top, out }
+    }
+    const c = this.climbed
+    if (this.lastUp?.time === time) return this.lastUp.at
+    const t = (time - c.from) * fps
+    const part = (x: number): number => {
+      const y = Math.min(Math.max(x, 0), 1)
+      return y * y * y - 0.5 * y * y * y * y
+    }
+    const gone = k.start * Math.min(t, k.ramp) + (c.top - k.start) * k.ramp * part(t / k.ramp) + c.top * Math.max(t - k.ramp, 0) - (c.top - k.late) * (k.rest - k.hold) * part((t - k.hold) / (k.rest - k.hold)) - (t > k.rest ? (c.top - k.late) * (t - k.rest) + (k.late - c.out) * (c.span - k.rest) * part((t - k.rest) / (c.span - k.rest)) : 0)
+    const want = c.h0 * Math.exp(gone)
+    let a = c.from
+    let b = seg.end
+    for (let i = 0; i < 36; i++) {
+      const mid = 0.5 * (a + b)
+      if (this.lift(mid) < want) a = mid
+      else b = mid
+    }
+    this.lastUp = { time, at: 0.5 * (a + b) }
+    return this.lastUp.at
+  }
+
   override rise(time: number): OrbitShot {
-    const shot = super.rise(time)
-    if (shot.view !== 'orbit') return shot
+    if (time < this.coverCenter(this.seg.rise)) return super.rise(time)
+    const shot = super.rise(this.paced(time))
     const since = (time - this.coverCenter(this.seg.rise)) * config.fps
     return { pose: this.placed(shot.pose, time, ascent.place, 1 - smoother(since / ascent.placeFrames), THREE.MathUtils.degToRad(ascent.turnDeg) * (1 - smoother(since / ascent.turnFrames))), view: shot.view }
   }
@@ -176,7 +217,7 @@ class NeptunePlan extends StopPlan {
     const w = smooth((this.amount - veil.clear) / (veil.full - veil.clear))
     const tight = view === 'orbit' ? veil.air : veil.sea
     const lift = Math.max(far - tight[0], 0) * w
-    const edge: [number, number] = [tight[0] + lift, tight[1] + lift]
+    const edge: [number, number] = [tight[0] + lift * w, tight[1] + lift]
     if (view === 'orbit') this.p.coverShell = edge
     else this.p.coverSea = { centre: [deck.x, deck.y, deck.z], radius: close.radius, edge }
     return super.horizon(view, local)
