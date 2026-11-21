@@ -1,55 +1,55 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T12:35:21.567Z",
+ "pushed": "2026-11-21T12:57:46.459Z",
  "head": "1951b7bd887e8f83144f4917a12bd57ae9310679",
- "note": "round 2: dive cloud detail, rise terminator and rings, cover rush, hold acutance",
+ "note": "round 2: hold and terrain acutance, ring shadow in the rise; check suite running",
  "looks": [
   {
-   "time": "2026-11-21T12:35:20.867Z",
-   "file": "20261121123520867-note-hold2-top.jpg",
-   "source": "../../../../tmp/hold2-top.png",
+   "time": "2026-11-21T12:57:45.418Z",
+   "file": "20261121125745418-note-j-4035.jpg",
+   "source": "out/work/u/r4/j-4035.png",
    "kind": "note",
-   "label": "hold 4035 globe crop x2, film with wrap sharpening 0.35 above, approved below",
+   "label": "hold 4035 final nograin, wrap sharpening [0.3, 0.8], per tile G17 median 1.18, min 0.72",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T12:35:20.082Z",
-   "file": "20261121123520082-note-w-4166.jpg",
-   "source": "out/work/u/r4/w-4166.png",
+   "time": "2026-11-21T12:57:44.560Z",
+   "file": "20261121125744560-note-y-4428.jpg",
+   "source": "out/work/u/r4/y-4428.png",
    "kind": "note",
-   "label": "dive cover 4166, draft",
+   "label": "rise 4428 draft",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T12:35:19.426Z",
-   "file": "20261121123519426-note-w-4160.jpg",
-   "source": "out/work/u/r4/w-4160.png",
+   "time": "2026-11-21T12:57:43.586Z",
+   "file": "20261121125743586-note-y-4436.jpg",
+   "source": "out/work/u/r4/y-4436.png",
    "kind": "note",
-   "label": "dive cover 4160, rush speed 14, contrast 0.75, draft",
+   "label": "rise 4436 draft: ring shadow band on the disc beside the near arc",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T12:35:18.767Z",
-   "file": "20261121123518767-note-x-4436.jpg",
-   "source": "out/work/u/r4/x-4436.png",
+   "time": "2026-11-21T12:57:42.586Z",
+   "file": "20261121125742586-note-l-4290.jpg",
+   "source": "out/work/u/r4/l-4290.png",
    "kind": "note",
-   "label": "rise 4436 after: soft terminator, full ring circles with near arc, moon shine, draft",
+   "label": "terrain 4290 final nograin, per tile G17 median 1.09, deck tiles 0.91 to 1.17",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T12:35:18.090Z",
-   "file": "20261121123518090-note-u-4436.jpg",
-   "source": "out/work/u/r4/u-4436.png",
+   "time": "2026-11-21T12:57:41.679Z",
+   "file": "20261121125741679-note-t-limb.jpg",
+   "source": "../../../../tmp/t-limb.png",
    "kind": "note",
-   "label": "rise 4436 before",
+   "label": "terrain 4290 rings and Sun crop x2: film above, approved below",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T12:35:17.431Z",
-   "file": "20261121123517431-note-w-4137.jpg",
-   "source": "out/work/u/r4/w-4137.png",
+   "time": "2026-11-21T12:57:40.827Z",
+   "file": "20261121125740827-note-t-deck.jpg",
+   "source": "../../../../tmp/t-deck.png",
    "kind": "note",
-   "label": "dive 4137 after: generated cloud detail in the patches, draft",
+   "label": "terrain 4290 deck crop x2, final nograin: film above (sharper sampling of the plate), approved below",
    "stop": "uranus"
   },
   {
