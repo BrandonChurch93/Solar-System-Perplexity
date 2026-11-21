@@ -2,7 +2,7 @@ import type * as THREE from 'three'
 import { FilmDirector } from '../../src/director/film'
 import { plans } from '../../src/director/plans'
 
-export { aimAt } from '../../src/space/aim'
+export { aimAt, aimOf } from '../../src/space/aim'
 
 export interface SkyAimArgs {
   stop: string
@@ -18,6 +18,7 @@ export interface SkyAimArgs {
 export interface SkyAim {
   quaternion: number[]
   turns: Record<string, number[]>
+  orbits: Record<string, number[]>
   patches: Record<string, { orbit: number[]; terrain: number[] }>
   frame: number
   terrainFrame: number
@@ -30,6 +31,7 @@ export function skyAim(): SkyAim {
   return {
     quaternion: list(sky.frame),
     turns: Object.fromEntries(Object.entries(sky.turns).map(([k, q]) => [k, list(q)])),
+    orbits: Object.fromEntries(Object.entries(sky.orbits).map(([k, q]) => [k, list(q)])),
     patches: Object.fromEntries(Object.entries(sky.patches).map(([k, p]) => [k, { orbit: list(p.orbit), terrain: list(p.terrain) }])),
     frame: sky.fitted.frame,
     terrainFrame: sky.fitted.terrainFrame,
