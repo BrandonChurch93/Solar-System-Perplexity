@@ -1,9 +1,23 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T06:09:42.940Z",
+ "pushed": "2026-11-21T06:10:03.274Z",
  "head": "3a12b225e129623324a51d316048e521b86e9622",
  "note": "Session 6: cover is now the stop's own Sun glare (a bloom that grows from the Sun until the frame is white, engine cover hidden); dive patches levels 1 to 3 built, level 4 in progress; terrain side of the glare had the Sun in the wrong place and is being rendered again.",
  "looks": [
+  {
+   "time": "2026-11-21T06:09:48.137Z",
+   "file": "20261121060948137-frame-f746.jpg",
+   "source": "out/work/mercury/g6/f746.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 746, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 746,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
   {
    "time": "2026-11-21T06:09:42.365Z",
    "file": "20261121060942365-note-L1-view.jpg",
@@ -27,20 +41,6 @@
    "kind": "note",
    "label": "dive cover, draft frames 735 737 738 739 742: the Sun's bloom grows from the right until the frame is white",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:07:57.035Z",
-   "file": "20261121060757035-frame-f758.jpg",
-   "source": "out/work/mercury/g5/f758.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 758, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 758,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
   },
   {
    "time": "2026-11-21T06:01:16.611Z",
