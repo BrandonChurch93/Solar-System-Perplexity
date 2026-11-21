@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T20:40:24.614Z",
- "head": "a68edba4963aef5fe65e0a67b7f5ecbe8ada83ce",
- "note": "Phase 6 item 1 (covers): first review tier frames of the new veil",
+ "pushed": "2026-11-21T21:07:27.818Z",
+ "head": "c92450cd7b2b9a57db3b5d33b869c25acd62b27c",
+ "note": "Phase 6 items 1 and 5: cover veil with form in every frame, star double found in the terrain sky patch",
  "looks": [
+  {
+   "time": "2026-11-21T21:07:27.026Z",
+   "file": "20261121210727026-note-c8d.jpg",
+   "source": "../view/c8d.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, dive cover, take c8, draft tier, every frame 1299 to 1328",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T21:05:24.934Z",
+   "file": "20261121210524934-note-st5-cmp.jpg",
+   "source": "../view/st5-cmp.png",
+   "kind": "note",
+   "label": "Phase 6 item 5, the doubled stars at 1440, left limb, 3x: approved above, round 23 film below. The mirrored star fill of the terrain sky patch shows above the limb (bright pair 36 px below its original)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T21:05:22.451Z",
+   "file": "20261121210522451-note-c8r.jpg",
+   "source": "../view/c8r.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover, take c8, draft tier, every frame 1545 to 1574 (window 1.0 s): sheets stream slower than the pull back and draw their own streaks, holes stay open over a fog base",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T20:40:23.830Z",
    "file": "20261121204023830-note-c4r.jpg",
@@ -26,30 +50,6 @@
    "source": "../view/c3d.jpg",
    "kind": "note",
    "label": "Phase 6 item 1, dive cover draft take c3 (frames 1303 to 1326)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:29:29.635Z",
-   "file": "20261121202929635-note-c3r.jpg",
-   "source": "../view/c3r.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover draft take c3 (0.8 s window, frames 1549 to 1572): cloud tile sheets, fog base, sky and Sun carried",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:09:35.428Z",
-   "file": "20261121200935428-note-veil-tiled-2x2.jpg",
-   "source": "out/work/venus/veil-tiled-2x2.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, cloud tile for the veil sheets from patch d, shown 2 by 2 (seam check)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:09:34.826Z",
-   "file": "20261121200934826-note-b-rc.jpg",
-   "source": "../view/b-rc.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover draft take b: noise sheets read as flat blobs (rejected)",
    "stop": "venus"
   },
   {
