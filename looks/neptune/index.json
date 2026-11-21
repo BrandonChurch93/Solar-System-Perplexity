@@ -1,45 +1,29 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T23:14:33.198Z",
- "head": "2b07483caf200eaf1fd18f847e5737ca8205210e",
- "note": "item 4: hold line, steadied judged frames",
+ "pushed": "2026-11-21T23:41:30.529Z",
+ "head": "73b4427421706082892c665cb350cfd938384243",
+ "note": "item 24 terrain, bloom spill map trial",
  "looks": [
   {
-   "time": "2026-11-21T23:14:29.206Z",
-   "file": "20261121231429206-note-r-4860.jpg",
-   "source": "out/work/nep/p6/s1/r-4860.png",
+   "time": "2026-11-21T23:41:29.842Z",
+   "file": "20261121234129842-note-b-4860.jpg",
+   "source": "out/work/nep/p6/b1/b-4860.png",
    "kind": "note",
-   "label": "23:15 item 4 terrain 4860 review tier now, camera steadied only: mean abs diff to the approved close 2.1961 (before 4.2702)",
+   "label": "4860 review, trial: bloom inverse in the relief from a baked spill map; mean abs diff 2.196 to 2.048",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T23:14:28.540Z",
-   "file": "20261121231428540-note-r-4605.jpg",
-   "source": "out/work/nep/p6/s1/r-4605.png",
+   "time": "2026-11-21T23:41:29.245Z",
+   "file": "20261121234129245-note-terrain-approved-before-now.jpg",
+   "source": "out/work/nep/p6/b1/terrain-approved-before-now.png",
    "kind": "note",
-   "label": "23:15 item 4 hold 4605 review tier now: mean abs diff to the approved hero 3.0974 (before 4.5484)",
+   "label": "4860 crops x2, approved / 73b4427 / trial with the bloom's spill taken out in the relief (full inverse, fine contrast overshoots, being split)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T23:14:27.965Z",
-   "file": "20261121231427965-note-storm-hero-before-after.jpg",
-   "source": "out/work/nep/p6/s1/storm-hero-before-after.png",
-   "kind": "note",
-   "label": "23:15 item 4 hold 4605 storm, review tier: approved hero, before, now, 2x",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:14:27.395Z",
-   "file": "20261121231427395-note-limb-hero-before-after.jpg",
-   "source": "out/work/nep/p6/s1/limb-hero-before-after.png",
-   "kind": "note",
-   "label": "23:15 item 4 hold 4605 right limb, review tier: approved hero, before (7064b9d), now (hold line and steadied camera), 2x",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:13:16.351Z",
-   "file": "20261121231316351-frame-r-4860.jpg",
-   "source": "out/work/nep/p6/s1/r-4860.png",
+   "time": "2026-11-21T23:38:57.909Z",
+   "file": "20261121233857909-frame-b-4860.jpg",
+   "source": "out/work/nep/p6/b1/b-4860.png",
    "kind": "frame",
    "label": "neptune.terrain frame 4860, review tier",
    "stop": "neptune",
@@ -51,9 +35,9 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T23:12:43.010Z",
-   "file": "20261121231243010-frame-r-4605.jpg",
-   "source": "out/work/nep/p6/s1/r-4605.png",
+   "time": "2026-11-21T23:29:28.726Z",
+   "file": "20261121232928726-frame-m-4605.jpg",
+   "source": "out/work/nep/p6/s1/m-4605.png",
    "kind": "frame",
    "label": "neptune.hold frame 4605, review tier",
    "stop": "neptune",
@@ -65,19 +49,53 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T22:50:28.275Z",
-   "file": "20261121225028275-note-b-4605.jpg",
-   "source": "out/work/nep/p6/h4/b-4605.png",
-   "kind": "note",
-   "label": "item 4 hold 4605 nograin with hold layer v2 and hold line (uncommitted)",
-   "stop": "neptune"
+   "time": "2026-11-21T23:17:34.179Z",
+   "file": "20261121231734179-job-frame-04530.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
-   "time": "2026-11-21T22:50:27.685Z",
-   "file": "20261121225027685-note-cmp-right2.jpg",
-   "source": "out/work/nep/p6/h1/cmp-right2.png",
+   "time": "2026-11-21T23:17:02.133Z",
+   "file": "20261121231702133-frame-r-5006.jpg",
+   "source": "out/work/nep/p6/s1/r-5006.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 5006, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T23:16:08.025Z",
+   "file": "20261121231608025-frame-r-4707.jpg",
+   "source": "out/work/nep/p6/s1/r-4707.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4707, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4707,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T23:14:29.206Z",
+   "file": "20261121231429206-note-r-4860.jpg",
+   "source": "out/work/nep/p6/s1/r-4860.png",
    "kind": "note",
-   "label": "item 4 first try of the hold layer, right limb: hero, before, v1, v1 refit (dropped, MAD up)",
+   "label": "23:15 item 4 terrain 4860 review tier now, camera steadied only: mean abs diff to the approved close 2.1961 (before 4.2702)",
    "stop": "neptune"
   }
  ]
