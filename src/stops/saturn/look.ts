@@ -3,6 +3,7 @@ import closeFitted from './closeCurve.json'
 import closeGlobe from './closeGlobe.json'
 import fitted from './curve.json'
 import type { GlobeLook } from './globe'
+import type { IceLook } from './ice'
 import type { RingLook } from './rings'
 import type { TitanLook } from './titan'
 
@@ -51,6 +52,7 @@ export const shell: HazeParams = {
 
 export const rings: RingLook = {
   shadowFloor: [0.0075, 0.0095, 0.0125],
+  shadowClose: [28, 0],
   floorAlpha: 0.93,
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
@@ -81,6 +83,27 @@ export const rings: RingLook = {
   skimDensity: [0.8, 1.05],
   skimShow: 1,
   reach: 3.6,
+}
+
+export const ice: IceLook = {
+  count: 12000,
+  box: [1.3, 0.34, 0.004],
+  heightPower: 1.6,
+  blur: 1,
+  radius: [1.1, 46],
+  near: [0.012, 0.035],
+  energy: 5,
+  dim: [1.8, 1.2],
+  energyPower: 3,
+  tint: [1, 0.94, 0.86],
+  glint: [3, 8],
+  drift: 0.004,
+  thin: 0.25,
+  thinRange: [0.1, 0.45],
+  heightRange: [0.5, 1],
+  dense: [0.04, 0.15],
+  eye: [0.03, 0.09],
+  lod: 16,
 }
 
 export const titan: TitanLook = {

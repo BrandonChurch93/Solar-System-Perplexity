@@ -10,7 +10,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [-0.2, 1, 0.1], push: -0.03 },
   spot: { x: 0.256, y: 0.856, on: 'rings' },
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
-  terrain: { vfov: close.vfov, forward: 0.5, rise: -0.12, side: -0.04, yawDeg: -3, pitchDeg: 1.5, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6 },
+  terrain: { vfov: close.vfov, forward: 0.5, rise: -0.12, side: -0.04, yawDeg: -3, pitchDeg: 1.5, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0.27 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
   travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },

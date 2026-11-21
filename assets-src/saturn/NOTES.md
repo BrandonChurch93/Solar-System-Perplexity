@@ -225,3 +225,33 @@ Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
 - The film frame 3465 sits about (+1.5, +2.0) px from the hero as a whole.
 - Frames 3465 final, 3390, 3539, 3567 review checked: hold matches in place; the dive at 3567 shows the 1D profile.
 - Still open in the hold: Titan phase (hero crescent, film lit past half and dull), thin tan line on the hero's limb where the rings cross.
+
+## Round 2 work: close view from the approved close image's own pixels (10:40 to 11:06)
+
+- Rings in the close view: `assets-src/saturn/shot/skim_rings.py` writes `skim-rings.jpg` (approved close pixels, full from the x2 upscale `out/work/saturn/close-x2.png`) and `skim-rings-mask.png` (R alpha, G weight). The ring shader projects them from the fitted close camera (`skimM`, `shotUv`) at full strength inside the approved frame (`skimShow`, `skimW` by camera distance to the skim pose, `skimRange [0.5, 1.1]`); outside the frame the 1D profile with grain carries on.
+- Globe in the close view: `shot/light.py close FILM.png layers=LAYERS.png lo=0.02 erode=9 floor=0.0005` writes `skim-light.bin` (640 x 360 RGBA float32, ratio approved over film in scene light, projected from the close camera). Terminator, night side and limb are the approved ones at the pose.
+- Fetch footprint: `lodBiasClose` 1.2 (the Builder measured the weave on the outer ring at 3596 to 3600 as the profile fetched under a pixel at 0.35). The projected maps are fetched with `textureGrad` at `skimFoot` 0.7 of the pixel footprint or more.
+- Terrain flight: `forward 0.5, rise -0.12, side -0.04, yawDeg -3, pitchDeg 1.5`, linear in u through the approved pose at 3720. Camera height and foot radius: 3630 0.331 and 2.425; 3720 0.271 and 2.205; 3809 0.211 and 1.994. Share of ring pixels outside the approved frame: 3630 0.445, 3660 0.347, 3690 0.209, 3720 and later 0.
+- Batch 11 (e5c57ba) merged at 11:05 (363d326); commit 79ad210 holds the close image, light map and flight.
+
+## Seam between the close image and the profile (11:06 to 11:22)
+
+- `shot/ring_tone.py FILM.png` writes `layout-tone.bin` (640 x 480 RGBA float32 on the layout grid): per band coordinate (`out/work/saturn/layout-total.npy`) the median ratio approved over film (rings only, sigma 8 approved px), times a wide smooth residual clipped to 0.8 to 1.25 that fades to 1 within 80 cells. It also rewrites channel 1 of `layout.bin` outside the approved frame as the by-band median of the inside shade (`out/work/saturn/layout-shade.npy`, blended over 8 cells). Input film: frame 3720 at final with `rings.skimShow: 0` and the tone bin set to ones (`out/work/saturn/tone-P-3720.png`). Printed: film offset -1.83, -0.04 approved px; tone inside median [1.034, 1.001, 0.986], p5 [0.829, 0.851, 0.816], p95 [1.456, 1.267, 1.294], 9602 cells. A first take with nearest-cell extension gave pink and green blotches and was dropped.
+- Shader: `uLayoutTone`, `uToneW` (= skimW); `uSkimNear` (1 at the skim pose, 0 beyond `skimAway [0.01, 0.25]`) so the image beyond the profile's outer edge (far-left tip) only shows near the approved pose. `skimEdge [0, 0.14]`, `detailRange [0.5, 1.1]`.
+- Removed `skim_arcs.py`, `skim-arcs.bin`, `skim-arcs.json`.
+- Finding: the approved close image's B ring outer edge bends steeply down at the bottom centre (approved px x 1440 to 1470, y 1484 to 1534), which showed as a dark blotch when the shade was extended by nearest cell.
+- Left at draft: slight kink in the A ring at the footprint's left border (3630), small dark blotch at the Cassini division (3675, x about 700, y about 860 of 1920).
+- Commit 16a8fec pushed with looks. Batch 12 (759b70f) merged at 11:20 (2453ee9). Frame 3720 at final after the seam work: `out/work/saturn/t-q3-3720.png`, 52.1 s, 16 samples, very close to the approved image.
+- `ground: 0.27` in `params.terrain` (the Builder's `terrain.ground`, real height of the camera over the ring plane). Samples at review: 3585 to 3605 rise 16 to 33 (peak 3596 to 3599), 3825 to 3843 24 to 34, 3844 to 3845 17 (view switch), terrain frames 4.
+
+## Ring ice near the lens (11:22 to 11:50)
+
+- `src/stops/saturn/ice.ts`: 12000 instanced quads, seeds from an integer generator, positions wrapped in a box around the camera in the ring frame (`box` width 1.3, height 0.34, lowest 0.004, `heightPower` 1.6 puts most near the plane), disc radius `blur / distance` px clamped to `radius`, additive, alpha untouched, no depth test, `renderOrder` 9, discarded in every diagnostic view, dark in the globe's shadow, slow drift and twinkle, thinned to `thin` near the approved pose so frame 3720 stays the approved picture.
+- Takes: 1 (2600 grains: invisible), 2 (9000, box height 0.5: snow in the sky and over the night side, rejected), 3 (height 0.19: dots over the black Cassini division read as stars), 4 same with more grains, 5 and 6 (kept): a grain shows only where the ring is dense under it and behind it along the view ray (`ringAt` evaluates the same layout and profile as the ring shader in the vertex shader, `dense`), and only below eye level (`eye`: fades within 0.03 to 0.09 below the camera height), so no grain is ever seen against the sky, the gap or the globe.
+- Mesh is visible when the camera is under 1 radius above the plane (`heightRange [0.5, 1]`) and on the lit side.
+
+## Globe shadow on the rings and Titan in the dive (11:32 to 11:45)
+
+- Cause of the jump at 3572 to 3580: the computed shadow of the globe was multiplied out by the close layout weight (`mix(lit, 1.0, lay.z)`), which rises with `uClose` exactly there; the baked shade that replaces it only holds the approved shadow near the close pose. Titan does not pop: it is occulted by Saturn's night limb over frames 3574 to 3578 (crop `/tmp/titan-crop.png`); with the shadow gone in the same frames it read as one switch.
+- Fix: the computed shadow stays on in every view (`col = mix(floor, col, lit)`), and its direction turns with `uClose` from the hero's fitted direction (`shadow.json`) to the close light turned by `shadowClose [28, 0]` degrees about the ring normal, elevation 0. 28 degrees was chosen on frame 3720 with the ring image off: the lower edge of the shadow under the night side then meets the right frame border where the approved image has it (12, 22, 30 and -12 tried).
+- Dive at draft after the fix (3570 to 3620 every 6th): the shadow wedge is there in every frame and swings with the light.

@@ -3,6 +3,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { Globe, Shell } from './globe'
+import { Ice } from './ice'
 import * as look from './look'
 import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
@@ -73,6 +74,9 @@ export const createSet: SetFactory = async (ctx) => {
   const skimShot = shotUniforms('Skim', { map: await ctx.texture(base + 'skim-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'skim-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: skimM, weight: skimShow })
   const rings = new Rings(profile, layout, { ...hero, ...skimShot }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
+  const ice = new Ice(look.ice, polar, { ...profile, ...layout })
+  ;(ice.material.uniforms.uSkimL!.value as THREE.Vector3).copy(skimL)
+  tilt.add(ice.mesh)
 
   const moonFit = fit.moons![0]!
   const titan = new Titan(moonFit.radius, look.titan)
@@ -100,6 +104,7 @@ export const createSet: SetFactory = async (ctx) => {
   const light = new THREE.Vector3()
   const shadowL = new THREE.Vector3()
   const lightL = new THREE.Vector3()
+  const shadowClose = new THREE.Vector3()
   const UP = new THREE.Vector3(0, 1, 0)
   const closeEl = THREE.MathUtils.degToRad(look.closeLight.elevationDeg)
   const closeTurn = THREE.MathUtils.degToRad(look.closeLight.turnDeg)
@@ -171,7 +176,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       rings.cull(camL, close.value)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
-      ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn))
+      ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn).lerp(shadowClose.copy(lightL).applyAxisAngle(UP, THREE.MathUtils.degToRad(look.rings.shadowClose[0])).setY(Math.sin(THREE.MathUtils.degToRad(look.rings.shadowClose[1]))), close.value).normalize())
       ru.uGain!.value = gain
       ru.uWeight!.value = state.weight
       ru.uTime!.value = elapsed
@@ -185,6 +190,15 @@ export const createSet: SetFactory = async (ctx) => {
       const parted = smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0]))
       ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], parted)
       ru.uSkimNear!.value = 1 - parted
+
+      const iu = ice.material.uniforms
+      const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))
+      ice.mesh.visible = iceW > 0 && camL.y * sunL.y > 0
+      ;(iu.uCamL!.value as THREE.Vector3).copy(camL)
+      ;(iu.uShadowL!.value as THREE.Vector3).copy(shadowL)
+      ;(iu.uView!.value as THREE.Vector2).set(view.format.width, view.format.height)
+      iu.uTime!.value = elapsed
+      iu.uGain!.value = gain * state.weight * iceW
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       titan.mesh.position.copy(moonHome).applyQuaternion(turn)
@@ -205,6 +219,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.dispose()
       shell.dispose()
       rings.dispose()
+      ice.dispose()
       titan.dispose()
       far.dispose()
     },
