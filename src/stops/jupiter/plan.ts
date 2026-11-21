@@ -5,7 +5,7 @@ import { lookAt, mix, ramp, smooth } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
 import fit from './fit.json'
 
-export const climbOut = { bankDeg: -32, bankLead: 1.0, bankPower: 2.2, climb: 5, turn: 5, lens: 4 }
+export const climbOut = { bankDeg: -32, bankLead: 1.0, bankPower: 2.2, climb: 5, turn: 12, lens: 4 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
 
 export const params: MoveParams = {

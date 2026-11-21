@@ -514,10 +514,18 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - `strip_rise_r3h.jpg` (3270 3274 3278 3280 3283 3286 3290 3296): cover, the globe near with the Red Spot, the whole disc with Io and the terminator by 3283, then a settle. Final 3296 (`f3296_native_i.png`): bands with their cross lane detail, Io clean, no comb.
 - Chain started 15:50 (no src edits while it runs): quick G13 (`/tmp/mq.log`), terrain sheet at review tier (`/tmp/sheet_terrain.log`), rise sheet at review tier (`/tmp/sheet_rise.log`).
 
+### 15:52 to 16:05 UTC: mail 22, merge of engine batches 14 and 15, rise roll out
+
+- Quick G13 on the tree of 15:50 (every 6th frame): PASS 0 of 78, worst 3250 0.56 percent, 3256 0.31. Terrain sheet at review tier: reads as a forward flight toward the storm with depth; the foreground at 3223 and 3239 looks stretched vertically.
+- MAIL 22 (15:56, from /root): engine batches 14 and 15 are on main at ab342de, engine hash f854c8146f64c7e4. Merge now; READY for round 3 may be sent once the work is done and the checks are green on the merged tree (the 16:45 cutoff is gone). `motion.maxStepPx` 0.6 px (was 1.5), review cap 128 samples per frame (was 64), final 256 (was 128); frames with more than 10 px of shutter motion draw each sample with softer texture detail (full at 18 px). Frames at the cap (over 77 px at review, over 154 px at final) step wider than 0.6 px: `npm run -s samples -- --tier review --range A-B`. New optional plan number `coverHides` (default 1; lower if the cover stays translucent over fast motion). Travel sky opens from its first frames; last rise frame and first hold frame unchanged. Look again at dive, dive cover, rise, rise cover sheets at review tier on the merged tree.
+- Code commit 93d500a (round 3 work), merge 947accb (origin/main ab342de). Conflicts only in own files, resolved with ours: main's Jupiter files equal 92aca74 (round 2 head). Build green, vitest 62 of 62, `aim` reads back within 0.000007 deg (orbit aim ignored for this stop: the arrival shares its sky with the approved Mars rise).
+- Roll in the rise: own tool `tools/axisang.ts` (planet axis angle on screen). With `climbOut.turn 5` the axis is 22.4 deg off at 3278, 14.2 at 3280, 3.4 at 3284; with `turn 12` it is -1.7 at 3278, -5.9 at 3280, final -8.3 (the hold's tilt). Adopted `turn 12`: `strip_rise_r3i.jpg` (3274 3276 3278 3280 3282 3284 3287 3290) shows the bands near level from the first clear frame, a pure pullback, Io entering at the right edge at 3282.
+- `samples` at review tier on the merged tree, turn 12. Dive: 17.7 px at 3005, 58 at 3010, at the cap (128) 3011 to 3019, peak 204.9 px at 3016 (1.6 px per step), 3020 115 samples, 3023 16. Rise: under the cover 309 px at 3270 (in view 0.9), at the cap 3274 to 3283 (154 px to 83 px, 1.2 to 0.65 px per step), 3287 45 px, 3290 26, 3294 11.9 (soft 0.14), 3296 7.8 (soft 0), 3300 2.9. At final tier (cap 154 px) only dive 3014 to 3018 sit at the cap (0.65 to 0.8 px per step).
+- 16:03: chain of review sheets started on the merged tree (`/tmp/sheets.sh`, log `/tmp/sheets.log`): rise, rise cover, dive, dive cover, terrain. No src edits while it runs.
+
 ## Next
 
-- Finals 2895, 2997, 3150, 3296; `python3 /tmp/holdcmp.py TAG` (hero | now | before at Io and the sky); limb minors (`tools/litlimb.py`, `limb.py`); compare hold and terrain at final tier.
-- Texel spot check 3036 3048 3060 3239 3251 3254 3261, then `npm run -s measure -- --stop jupiter --only G13 --every 6`.
-- Before the engine batch: terrain sheet and both cover sheets at review tier, look at every frame (fault B ticks).
-- When the Builder writes that the fast frame batch is on main (or at 16:45): merge origin/main, build, vitest, aim, full measure, dive and rise sheets at review tier, gates G5 G13 G17, G11, G12 G15, mirrorcheck, hold 2895 beside the hero at the sky and Io.
-- RECIPE (sky steps 5, 9, 10), one binary commit (sky-hold.webp, sky-terrain.webp full and web), push code only when measure and gates are green, READY round 3.
+- Look at every frame of the five review sheets (`out/work/sheets/jupiter.<seg>[-cover]-16x9-review.png`); `coverHides` only if a cover shows stepped copies through it.
+- Full `npm run -s measure -- --stop jupiter`, gates `--phase 4 --only G5,G13,G17 --stop jupiter`, `--only G11`, `--only G12,G15 --g15-stops mars,jupiter`.
+- Finals 2895, 2997, 3150, 3296 on the merged tree; `python3 /tmp/holdcmp.py TAG`; compare hold and terrain at final tier; mirrorcheck on 2895, 2997, 3150, 3296, 3352, two dive and two rise frames.
+- One binary commit (full/sky-hold.webp, full/sky-terrain.webp, web/sky-terrain.webp), push, READY round 3 to /root (changes per item 1 to 8, still weak, measures).
