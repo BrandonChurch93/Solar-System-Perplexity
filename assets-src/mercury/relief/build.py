@@ -16,6 +16,8 @@ WIDE = 300
 NEAR, FARFADE = 3.5, 7.0
 LIFT = 2.5
 DIST_SCALE = 0.25
+SPECK = (5.0, 8.0)
+GLINT = 0.7
 W, H, ML, MB, CW, CH = geom.W, geom.H, geom.ML, geom.MB, geom.CW, geom.CH
 
 
@@ -69,6 +71,27 @@ def lens(color, fix):
     return Image.fromarray(res)
 
 
+def specks(color):
+    img = np.asarray(color)
+    med = cv2.medianBlur(img, 21)
+    a = cv2.cvtColor(img, cv2.COLOR_RGB2YCrCb).astype(np.float32)
+    m = cv2.cvtColor(med, cv2.COLOR_RGB2YCrCb).astype(np.float32)
+    d = np.hypot(a[..., 1] - m[..., 1], a[..., 2] - m[..., 2])
+    tint = cv2.dilate(smooth(SPECK[0], SPECK[1], d).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+    n = 15
+    y = a[..., 0]
+    op = None
+    for k in (np.ones((1, n), np.uint8), np.ones((n, 1), np.uint8), np.eye(n, dtype=np.uint8), np.eye(n, dtype=np.uint8)[::-1].copy()):
+        o = cv2.morphologyEx(y, cv2.MORPH_OPEN, k)
+        op = o if op is None else np.maximum(op, o)
+    wc = cv2.GaussianBlur(tint, (0, 0), 1.2)
+    print('specks: %.3f percent of the color' % (100 * float((tint > 0.5).mean())))
+    a[..., 0] = y - wc * GLINT * (y - op)
+    a[..., 1] += wc * (m[..., 1] - a[..., 1])
+    a[..., 2] += wc * (m[..., 2] - a[..., 2])
+    return Image.fromarray(cv2.cvtColor(np.clip(a + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_YCrCb2RGB))
+
+
 def main():
     drop = horizon()
     print('horizon drop in the margins, px at 2816: left max %.1f right max %.1f' % (drop[:ML].max(), drop[ML + W:].max()))
@@ -113,6 +136,7 @@ def main():
     Image.fromarray((vis * 255).astype(np.uint8)).save(WORK + 'relief-detail.png')
     color = Image.open(WORK + 'ext-2x.png').convert('RGB')
     assert color.size == (CW * 2, CH * 2), color.size
+    color = specks(color)
     if os.path.exists(WORK + 'lens-fix.npy'):
         color = lens(color, np.load(WORK + 'lens-fix.npy'))
     hy2 = np.interp((np.arange(CW * 2) + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop)
