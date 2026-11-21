@@ -8,6 +8,7 @@ import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoothe
 import { segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
 import { aimAt, type SkyAims } from '../space/aim'
+import { TravelShape, inFrame } from '../space/travel/path'
 
 const NO_TURN = new THREE.Quaternion()
 
@@ -36,6 +37,8 @@ export class FilmDirector implements Director {
   private readonly approach: THREE.Vector3[] = []
   private readonly reach: number[] = []
   private readonly begin: number[] = []
+  private readonly clear: number[] = [0]
+  private readonly shapes: TravelShape[] = []
   private lookbackPose: Pose
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
@@ -50,6 +53,10 @@ export class FilmDirector implements Director {
     this.reach.push(0)
     this.begin.push(0)
     for (let i = 0; i + 1 < plans.length; i++) this.place(i)
+    for (let i = 0; i + 1 < plans.length; i++) {
+      this.shapes.push(new TravelShape(plans[i]!.id))
+      this.clear.push(i === 0 ? SUN_APPROACH_START : this.clearOf(i))
+    }
     const last = plans.length - 1
     const n = this.plans[last]!
     const s = n.sunDir.clone()
@@ -121,22 +128,22 @@ export class FilmDirector implements Director {
     return this.plans[i]!.p.travel.turnEnd ?? TURN_END
   }
 
-  private approachLocal(i: number, x: number, time: number): Pose {
+  private approachLocal(i: number, x: number, time: number, shape?: TravelShape): Pose {
     const b = this.plans[i]!
     const hold = b.hold(time - b.seg.hold.start)
     const dh = b.hold(0).position.length()
-    const e = 1 - Math.pow(1 - x, b.p.arrive?.power ?? APPROACH_POWER)
+    const e = shape ? shape.grow(x) : 1 - Math.pow(1 - x, b.p.arrive?.power ?? APPROACH_POWER)
     const sigma = dh * (Math.pow(this.reach[i]! / dh, 1 - e) - 1)
     const pose: Pose = { position: hold.position.clone().addScaledVector(forward(hold.quaternion), -sigma), quaternion: hold.quaternion.clone(), vfov: hold.vfov }
     const a = b.p.arrive
     if (a && a.swingDeg !== 0) {
-      const left = 1 - smoother(ramp(a.from ?? SWING_FROM, 1, x))
+      const left = shape ? shape.swingLeft(x) : 1 - smoother(ramp(a.from ?? SWING_FROM, 1, x))
       const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(a.axis[0], a.axis[1], a.axis[2]).normalize(), THREE.MathUtils.degToRad(a.swingDeg) * left)
       pose.position.applyQuaternion(q)
       pose.quaternion.premultiply(q)
     }
     if (a?.offset) {
-      const left = 1 - smoother(ramp(OFFSET_FROM, 1, x))
+      const left = shape ? shape.offsetLeft(x) : 1 - smoother(ramp(OFFSET_FROM, 1, x))
       const half = THREE.MathUtils.degToRad(hold.vfov) / 2
       pose.quaternion.multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(a.offset[1] * half * left, a.offset[0] * half * left, 0, 'YXZ')))
     }
@@ -167,6 +174,38 @@ export class FilmDirector implements Director {
       if (clear) return u
     }
     return end
+  }
+
+  private clearOf(i: number): number {
+    const a = this.plans[i]!
+    const seg = a.seg.travel!
+    const dur = seg.end - seg.start
+    const shape = this.shapes[i]!
+    const master = config.formats[config.formatKeys.master]!
+    const steps = 600
+    for (let k = 1; k < steps; k++) {
+      const u = k / steps
+      const time = seg.start + u * dur
+      const from = this.toWorld(i, this.leaving(i, time))
+      const to = this.toWorld(i + 1, this.approachLocal(i + 1, 0, time, shape))
+      const q = shape.turn(from.quaternion, to.quaternion, u)
+      if (!this.leavingThings(i, time).some((t) => inFrame(q, from.vfov, master.width / master.height, t.to, t.radius, shape.look.clearDeg))) return u
+    }
+    return 1 - 1 / steps
+  }
+
+  clearAtOf(i: number): number {
+    return this.clear[i] ?? 0
+  }
+
+  leavingThings(i: number, time: number): { name: string; to: THREE.Vector3; radius: number }[] {
+    const a = this.plans[i]!
+    const from = this.toWorld(i, this.leaving(i, time))
+    const f = this.frames[i]!
+    const at = (p: THREE.Vector3): THREE.Vector3 => p.applyQuaternion(f.rotation).add(f.origin).sub(from.position)
+    const out = [{ name: a.id, to: at(new THREE.Vector3()), radius: Math.max(1, a.fit.rings?.outer ?? 0) }]
+    ;(a.fit.moons ?? []).forEach((m, k) => out.push({ name: a.id + ' moon ' + k, to: at(new THREE.Vector3(m.position[0], m.position[1], m.position[2])), radius: m.radius }))
+    return out
   }
 
   private toWorld(i: number, p: Pose): Pose {
@@ -295,15 +334,18 @@ export class FilmDirector implements Director {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
       const from = this.toWorld(index, this.leaving(index, time))
-      const begin = this.begin[index + 1]!
-      const to = this.toWorld(index + 1, this.approachLocal(index + 1, ramp(begin, 1, u), time))
+      const begin = this.clear[index + 1]!
+      const shape = this.shapes[index]!
+      const x = ramp(begin, 1, u)
+      const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
+      const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
       if (index === 0) {
         const g = easeInOut(ramp(0, SUN_PULL_END, u))
         const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
         from.position.lerp(radial, smooth(u / 0.12))
       }
-      const position = u < begin ? from.position.clone() : to.position.clone()
-      const quaternion = from.quaternion.clone().slerp(to.quaternion, easeInOut(ramp(0, this.turnEnd(index), u)))
+      const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
+      const quaternion = shape.turn(from.quaternion, to.quaternion, u)
       pose = { position, quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
