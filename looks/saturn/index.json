@@ -1,21 +1,21 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T06:05:29.401Z",
- "head": "7cd6b555e191e65d2c00bdd9f1027567fb56f25e",
- "note": "06:07 layout camera moved back 0.35 with a 104 degree view; frame 3720 unchanged in intent; working on the field outside the approved frame so the skim, dive and rise are clean",
+ "pushed": "2026-11-21T06:28:31.987Z",
+ "head": "4ec04a07cd33c877eac037b9c28084b15b3ebbe6",
+ "note": "06:26 close layout: smooth extension of the layout difference outside the approved frame; next the dive morph as exact nested circles",
  "looks": [
   {
-   "time": "2026-11-21T06:05:28.694Z",
-   "file": "20261121060528694-note-t-c1-3630.jpg",
-   "source": "out/work/saturn/t-c1-3630.png",
+   "time": "2026-11-21T06:28:31.435Z",
+   "file": "20261121062831435-note-three-d4.jpg",
+   "source": "out/work/saturn/three-d4.jpg",
    "kind": "note",
-   "label": "terrain first frame 3630, draft: layout field outside the approved frame is wrong (outer edge wanders at left, seam at the bottom); being replaced by a global ring model",
+   "label": "terrain frames 3630, 3720, 3809 draft: junction hole closed, outer edge lumps at 3630 still open (being replaced by an exact circle family)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T05:58:26.547Z",
-   "file": "20261121055826547-frame-t-c1-3809.jpg",
-   "source": "out/work/saturn/t-c1-3809.png",
+   "time": "2026-11-21T06:20:06.600Z",
+   "file": "20261121062006600-frame-t-d4-3809.jpg",
+   "source": "out/work/saturn/t-d4-3809.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3809, draft tier",
    "stop": "saturn",
@@ -25,6 +25,14 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T06:05:28.694Z",
+   "file": "20261121060528694-note-t-c1-3630.jpg",
+   "source": "out/work/saturn/t-c1-3630.png",
+   "kind": "note",
+   "label": "terrain first frame 3630, draft: layout field outside the approved frame is wrong (outer edge wanders at left, seam at the bottom); being replaced by a global ring model",
+   "stop": "saturn"
   },
   {
    "time": "2026-11-21T05:50:16.772Z",
@@ -50,21 +58,6 @@
    "stop": "saturn",
    "segment": "saturn.rise",
    "frame": 3810,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:49:35.743Z",
-   "file": "20261121054935743-sheet-saturn.dive-16x9-draft.jpg",
-   "source": "out/work/sheets/saturn.dive-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.dive, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "first": 3540,
-   "last": 3629,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
