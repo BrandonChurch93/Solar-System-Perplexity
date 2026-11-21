@@ -77,6 +77,7 @@ uniform float uGrad;
 uniform float uSpin;
 uniform float uGain;
 uniform float uWeight;
+uniform vec3 uTint;
 uniform float uVignette;
 uniform float uAspect;
 uniform float uTime;
@@ -155,7 +156,7 @@ void main() {
   float slow = lumAt(dc, lod + 3.0) * 24.0 + lumAt(d, lod + 3.5) * 16.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
   float texels;
-  vec3 lin = inverseFilmic(grade(surface(normalize(d + push * swing), d, texels), 2.0));
+  vec3 lin = inverseFilmic(grade(surface(normalize(d + push * swing), d, texels), 2.0) * uTint);
   float wide = lumAt(d, lod + 2.5);
   float region = smoothstep(uPulse.z, uPulse.w, wide);
   float phase = dot(d, vec3(23.0, 17.0, 29.0));
@@ -200,7 +201,7 @@ export class SunGlobe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uLimb: { value: new THREE.Vector2(l.limb[0], l.limb[1]) },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimShape: { value: new THREE.Vector2(l.rim.width, l.rim.power) },
@@ -215,12 +216,14 @@ export class SunGlobe {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(time: number, spin: number, gain: number, weight: number, vignette: number, aspect: number): void {
+  update(time: number, spin: number, gain: number, weight: number, vignette: number, aspect: number, tint?: THREE.Vector3): void {
     const u = this.material.uniforms
     u.uTime!.value = time
     u.uSpin!.value = spin
     u.uGain!.value = gain
     u.uWeight!.value = weight
+    if (tint) (u.uTint!.value as THREE.Vector3).copy(tint)
+    else (u.uTint!.value as THREE.Vector3).set(1, 1, 1)
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
   }
