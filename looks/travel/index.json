@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T17:37:14.168Z",
+ "pushed": "2026-11-21T19:13:06.364Z",
  "head": "0fa09dfa4da76d46ca4a22f034e2b82bdead7bd7",
- "note": "task 4: one sky, draft stills, pairs",
+ "note": "task 4 proof: nine review sheets, pairs, 2782 final, venus 1618 review",
  "looks": [
   {
-   "time": "2026-11-21T17:36:33.061Z",
-   "file": "20261121173633061-note-f5085-draft.jpg",
-   "source": "out/work/travel/t4s/f5085-draft.png",
+   "time": "2026-11-21T19:13:05.470Z",
+   "file": "20261121191305470-note-pair-venus-travel-1642-uranus-hero.jpg",
+   "source": "out/work/travel/t4/pair-venus-travel-1642-uranus-hero.png",
    "kind": "note",
-   "label": "t4s: f5085-draft",
+   "label": "t4: pair-venus-travel-1642-uranus-hero",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:32.414Z",
-   "file": "20261121173632414-note-f5060-draft.jpg",
-   "source": "out/work/travel/t4s/f5060-draft.png",
+   "time": "2026-11-21T19:13:04.369Z",
+   "file": "20261121191304369-note-pair-uranus-travel-4478-neptune-hero.jpg",
+   "source": "out/work/travel/t4/pair-uranus-travel-4478-neptune-hero.png",
    "kind": "note",
-   "label": "t4s: f5060-draft",
+   "label": "t4: pair-uranus-travel-4478-neptune-hero",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:31.759Z",
-   "file": "20261121173631759-note-f495-draft.jpg",
-   "source": "out/work/travel/t4s/f495-draft.png",
+   "time": "2026-11-21T19:13:03.582Z",
+   "file": "20261121191303582-note-pair-saturn-travel-3922-earth-hero.jpg",
+   "source": "out/work/travel/t4/pair-saturn-travel-3922-earth-hero.png",
    "kind": "note",
-   "label": "t4s: f495-draft",
+   "label": "t4: pair-saturn-travel-3922-earth-hero",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:31.026Z",
-   "file": "20261121173631026-note-f4492-draft.jpg",
-   "source": "out/work/travel/t4s/f4492-draft.png",
+   "time": "2026-11-21T19:13:02.668Z",
+   "file": "20261121191302668-note-pair-earth-travel-2212-jupiter-hero.jpg",
+   "source": "out/work/travel/t4/pair-earth-travel-2212-jupiter-hero.png",
    "kind": "note",
-   "label": "t4s: f4492-draft",
+   "label": "t4: pair-earth-travel-2212-jupiter-hero",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:30.304Z",
-   "file": "20261121173630304-note-f4489-draft.jpg",
-   "source": "out/work/travel/t4s/f4489-draft.png",
+   "time": "2026-11-21T19:10:33.577Z",
+   "file": "20261121191033577-note-f1618-review.jpg",
+   "source": "out/work/travel/t4s/f1618-review.png",
    "kind": "note",
-   "label": "t4s: f4489-draft",
+   "label": "t4s: f1618-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:29.634Z",
-   "file": "20261121173629634-note-f4478-draft.jpg",
-   "source": "out/work/travel/t4s/f4478-draft.png",
+   "time": "2026-11-21T19:08:33.692Z",
+   "file": "20261121190833692-note-f2782-final.jpg",
+   "source": "out/work/travel/t4s/f2782-final.png",
    "kind": "note",
-   "label": "t4s: f4478-draft",
+   "label": "t4s: f2782-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:28.936Z",
-   "file": "20261121173628936-note-f4475-draft.jpg",
-   "source": "out/work/travel/t4s/f4475-draft.png",
+   "time": "2026-11-21T19:07:02.861Z",
+   "file": "20261121190702861-note-ending.retreat-review.jpg",
+   "source": "out/work/travel/t4/ending.retreat-review.png",
    "kind": "note",
-   "label": "t4s: f4475-draft",
+   "label": "t4: ending.retreat-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T17:36:28.269Z",
-   "file": "20261121173628269-note-f4467-draft.jpg",
-   "source": "out/work/travel/t4s/f4467-draft.png",
+   "time": "2026-11-21T19:00:06.704Z",
+   "file": "20261121190006704-note-saturn.travel-review.jpg",
+   "source": "out/work/travel/t4/saturn.travel-review.png",
    "kind": "note",
-   "label": "t4s: f4467-draft",
+   "label": "t4: saturn.travel-review",
    "stop": "travel"
   }
  ]
