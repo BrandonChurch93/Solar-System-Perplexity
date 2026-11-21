@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "sky above the limb, frames 1556-1564",
+   "what": "starfield and sun glow collapse to black in two frames, stay pure black through 1559-1561, then pop back brighter than the terrain sky",
+   "fix": "hold star exposure through the rise and let the sun set with the camera arc instead of dropping the sky to black and restoring it hotter"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "cloud deck into the planet limb, frames 1556-1562",
+   "what": "terrain clouds dissolve into an untrackable wash and the disc that emerges is a different surface, so the cover is not one move",
+   "fix": "carry the same cloud forms out on directional blur so the pull-out stays one surface"
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "lit upper-left and lower-left limbs (B, D) and the shadowed upper-right, lower-right, and bottom limbs (C, E, H, I)",
+   "what": "The reference's fine cloud strands reach the edge and break up the rim. The candidate replaces them with broad, smooth bands, cream-white on the lit side and orange on the shadow side. The isolated gold glint just inside the lower-right edge is gone.",
+   "fix": "Narrow the smooth band inside the disk, carry the fine cloud detail right to the edge, and restore the intermittent glints and cool gray-green shadow-side rim. Keep the soft glow outside the silhouette."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet's top and right outline",
+   "what": "The top arc sits a few pixels high and the right edge pulls slightly inward, making the planet marginally narrower and taller than the reference.",
+   "fix": "Register the limb to the reference, lowering the top and moving the right silhouette a few pixels outward without moving the central vortex."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sunlit central fan and upper-right vortex (A, C)",
+   "what": "The principal formations align, but the golden fan is slightly hotter and the outermost vortex wisps blend into the smoothed edge earlier than in the reference.",
+   "fix": "Ease back the warm midtone gain on the fan and preserve the low-contrast wisps around the vortex."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "star field and dusty galactic band around the disk (B, D, F, G, H)",
+   "what": "Individual stars read a little larger and brighter against slightly lifted dark space. The dusty band consequently looks more speckled than in the reference.",
+   "fix": "Reduce star size and peak intensity slightly, and return the open sky to the reference black level without dimming the diffuse dust."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "upper sky and galactic band over the left and center horizon (B, F, G, H)",
+   "what": "The small stars are brighter and coarser, and the darker blue field between them is slightly lifted.",
+   "fix": "Subdue the smallest star highlights and restore the deeper cool black between them without moving the field."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sun, horizontal flare, and the nearby horizon (C)",
+   "what": "The horizontal flare is softer and a little less distinct from the cream glow around the sun than in the reference.",
+   "fix": "Tighten the narrow horizontal streak and restore its separation from the surrounding bloom, keeping the sun and horizon in place."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "left horizon, main backlit cloud towers, and lower-right foreground (A, D, E, F, H, I)",
+   "what": "The horizon and selected cloud edges read slightly hotter and more orange. The warm lift on the main tower faces and in the foreground softens the separation of thin gold rims from the dark cloud bodies and ray shadows.",
+   "fix": "Dial back the warm lift selectively and recover the reference's fine rim-to-shadow contrast, leaving the cloud positions and ray angles intact."
+  }
+ ]
+}
