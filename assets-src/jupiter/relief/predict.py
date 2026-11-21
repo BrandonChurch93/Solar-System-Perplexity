@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
-from geom import F, H, N, W, ground, project
+from geom import CANVAS, F, H, N, W, ground, project
 
 VFOV = 64.0
 HORIZON, DIP, ROLL = 17.72, 4.44, 17.09
@@ -46,18 +46,28 @@ def footprint(p, q):
 
 def report(t):
     rows = []
-    for u in np.linspace(-0.5, 0.5, 11):
-        rows.append(('terrain u %+.2f' % u,) + footprint(*terrain(u, t)))
+    gather = t.get('gather', 0)
+    u = lambda lin: lin + gather * lin * lin
+    for lin in np.linspace(-0.5, 0.5, 11):
+        rows.append(('terrain lin %+.2f u %+.2f' % (lin, u(lin)),) + footprint(*terrain(u(lin), t)))
     for g in (0.1, 0.2, 0.3, 0.4, 0.5, 0.66):
-        rows.append(('entry g %.2f' % g,) + footprint(*entry(-0.5, g, t)))
+        rows.append(('entry g %.2f' % g,) + footprint(*entry(u(-0.5), g, t)))
     for g in (0.1, 0.2, 0.33, 0.45, 0.61):
-        rows.append(('exit g %.2f' % g,) + footprint(*leave(0.5, g, t)))
+        rows.append(('exit g %.2f' % g,) + footprint(*leave(u(0.5), g, t)))
     for r in rows:
-        print('%-16s x %7.0f .. %7.0f  y %7.0f .. %7.0f  behind %.2f' % r)
+        print('%-28s x %7.0f .. %7.0f  y %7.0f .. %7.0f  behind %.2f' % r)
+    print('canvas x %d .. %d  y %d .. %d' % (-CANVAS['origin'][0], CANVAS['size'][0] - CANVAS['origin'][0], -CANVAS['origin'][1], CANVAS['size'][1] - CANVAS['origin'][1]))
     return rows
 
 
 if __name__ == '__main__':
-    L = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
-    t = {'forward': 0.926 * L, 'rise': 0.3 * L, 'side': 0.111 * L, 'yawDeg': 2, 'pitchDeg': 1, 'entryHeight': 0.8, 'entryBack': 0.6, 'entryPitchDeg': 6, 'exitHeight': 1.6, 'exitForward': 0.8, 'exitPitchDeg': 9}
+    import json
+    import re
+    text = open('src/stops/jupiter/plan.ts').read()
+    body = re.search(r"terrain: \{([^}]*)\}", text).group(1)
+    t = {k: float(v) for k, v in re.findall(r"(\w+): (-?[\d.]+)", body)}
+    for arg in sys.argv[1:]:
+        k, v = arg.split('=')
+        t[k] = float(v)
+    print(t)
     report(t)

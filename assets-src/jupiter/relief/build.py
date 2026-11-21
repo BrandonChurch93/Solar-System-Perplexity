@@ -27,27 +27,15 @@ def jpeg(path, rgb, quality=90):
 def textures():
     canvas = np.load(f'{WORK}/canvas-final.npy')
     core = np.load(f'{WORK}/core-final.npy')
-    jpeg(f'{OUT}/full/deck-wide.jpg', canvas)
-    jpeg(f'{OUT}/full/deck-core.jpg', core)
+    jpeg(f'{OUT}/full/deck-wide.jpg', canvas, 95)
+    jpeg(f'{OUT}/full/deck-core.jpg', core, 96)
     jpeg(f'{OUT}/web/deck-wide.jpg', cv2.resize(canvas, (CW // 2, CH // 2), interpolation=cv2.INTER_AREA), 88)
     jpeg(f'{OUT}/web/deck-core.jpg', cv2.resize(core, (W, H), interpolation=cv2.INTER_AREA), 88)
 
 
 def sky():
-    canvas = np.load(f'{WORK}/canvas-final.npy')
-    elev = np.load(f'{WORK}/canvas-elev.npy')[OY:OY + H, OX:OX + W]
-    phi = np.load(f'{WORK}/canvas-phi.npy')[OY:OY + H, OX:OX + W]
-    image = cv2.imread('references/approved/jupiter-close.jpg')[..., ::-1].astype(np.float32) / 255
-    deck = cv2.imread(f'{OUT}/full/deck-wide.jpg')[OY:OY + H, OX:OX + W, ::-1].astype(np.float32) / 255
-    lin = lambda a: skypatch.unfilm(skypatch.to_linear(a))
-    resid = np.maximum(lin(image) - lin(deck), 0)
-    resid *= np.clip((elev - 0.1) / 0.3, 0, 1)[..., None]
-    d = geom.unpolar(phi.astype(np.float64), np.abs(elev.astype(np.float64)) + 0.4)
-    x, y = geom.project(d)
-    mirror = cv2.remap(resid, x.astype(np.float32), y.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
-    w = np.clip(elev / 0.4, 0, 1)[..., None]
-    out = resid * w + mirror * (1 - w)
-    skypatch.save(out.astype(np.float32), 'sky-terrain.webp', OUT)
+    out = np.load(f'{WORK}/sky-lin.npy')
+    skypatch.save(out, 'sky-terrain.webp', OUT)
     cv2.imwrite('out/work/view/deck_sky.jpg', np.clip(skypatch.to_srgb(skypatch.film(out * 3))[::2, ::2, ::-1] * 255, 0, 255).astype(np.uint8))
 
 

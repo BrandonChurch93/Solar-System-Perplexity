@@ -1,8 +1,13 @@
+import sys
+
 import cv2
 import numpy as np
 from scipy import ndimage
 
 import geom
+
+sys.path.insert(0, 'assets-src/jupiter/sky')
+import patch as skypatch
 
 WORK = 'out/work/jupiter/relief'
 CW, CH = geom.CANVAS['size']
@@ -10,6 +15,7 @@ OX, OY = geom.CANVAS['origin']
 W, H = geom.W, geom.H
 PHI = (-100.0, 100.0, 0.1)
 ELEV = (0.0, 8.0, 0.025)
+KEEP = (0.4, 0.6)
 
 
 def table(image):
@@ -35,15 +41,64 @@ def table(image):
         out[r, :a] = low[0]
         out[r, b + 1:] = low[-1]
     out = ndimage.gaussian_filter1d(out, 1.5, axis=0, mode='nearest')
+    high = (elev >= 5.0) & (elev <= 7.5)
+    seen = ok[high].mean(0) > 0.6
+    lin = skypatch.unfilm(skypatch.to_linear(out / 255))
+    back = np.median(lin[high], axis=0)
+    idx = np.where(seen)[0]
+    back = back[np.clip(np.arange(len(phi)), idx[0], idx[-1])]
+    back = ndimage.gaussian_filter1d(back, 50, axis=0, mode='nearest')
+    print('sky background behind the rim glow, scene linear x1000', np.round(back[::200] * 1000, 1).tolist())
+    out = skypatch.to_srgb(skypatch.film(np.maximum(lin - back[None], 0))) * 255
     fade = 1 - np.clip((elev - 2.0) / 3.0, 0, 1)
     fade = fade * fade * (3 - 2 * fade)
     night = 1 - np.clip((phi - 38.0) / 40.0, 0, 1) * 0.85
     return out * fade[:, None, None] * night[None, :, None]
 
 
+def seam(canvas, image, scale=320.0, band=12, blend=24):
+    x1, y1 = OX + W, OY + H
+
+    def ratio(inner, outer):
+        r = (inner + 2.0) / (outer + 2.0)
+        return np.clip(ndimage.gaussian_filter1d(r, 12, axis=0, mode='nearest'), 0.3, 3.0)
+
+    right = ratio(image[:, W - band:].mean(1), canvas[OY:y1, x1:x1 + band].mean(1))
+    left = ratio(image[:, :band].mean(1), canvas[OY:y1, OX - band:OX].mean(1))
+    bottom = ratio(image[H - band:].mean(0), canvas[y1:y1 + band, OX:x1].mean(0))
+    top = np.ones((W, 3), np.float32)
+    print('seam ratios right', np.round(np.percentile(right, [5, 50, 95]), 2), 'left', np.round(np.percentile(left, [5, 50, 95]), 2), 'bottom', np.round(np.percentile(bottom, [5, 50, 95]), 2))
+
+    take = np.clip((blend - (np.arange(blend)[::-1] + 1)) / blend, 0, 1)
+    take = take * take * (3 - 2 * take)
+    core = canvas[OY:y1, OX:x1]
+    stripe = core[:, W - blend:]
+    stripe += (right[:, None, :] - 1) * (stripe - image[:, W - blend:] * (1 - take)[None, :, None])
+    stripe = core[:, :blend]
+    stripe += (left[:, None, :] - 1) * (stripe - image[:, :blend] * (1 - take[::-1])[None, :, None])
+    stripe = core[H - blend:]
+    stripe += (bottom[None, :, :] - 1) * (stripe - image[H - blend:] * (1 - take)[:, None, None])
+
+    ys, xs = np.mgrid[0:CH, 0:CW]
+    cx = np.clip(xs, OX, x1 - 1) - OX
+    cy = np.clip(ys, OY, y1 - 1) - OY
+    dx = np.abs(xs - (cx + OX)).astype(np.float32)
+    dy = np.abs(ys - (cy + OY)).astype(np.float32)
+    side = np.where((xs >= x1)[..., None], right[cy], left[cy])
+    side = np.where(((xs >= OX) & (xs < x1))[..., None], 1.0, side)
+    flat = np.where((ys >= y1)[..., None], bottom[cx], top[cx])
+    w = (dx / np.maximum(dx + dy, 1e-6))[..., None]
+    r = side * w + flat * (1 - w)
+    fall = np.exp(-np.hypot(dx, dy) / scale)[..., None]
+    outside = ((dx + dy) > 0)[..., None]
+    canvas *= np.where(outside, 1 + (r - 1) * fall, 1.0)
+    np.clip(canvas, 0, 255, out=canvas)
+
+
 def main():
     canvas = np.load(f'{WORK}/canvas.npy')
     image = cv2.imread('references/approved/jupiter-close.jpg')[..., ::-1].astype(np.float32)
+    seam(canvas, image)
     ys, xs = np.mgrid[0:CH, 0:CW].astype(np.float64)
     d = geom.rays(xs - OX + 0.5, ys - OY + 0.5)
     phi, elev = geom.polar(d)
@@ -66,11 +121,23 @@ def main():
     u = ((phi - PHI[0]) / PHI[2]).astype(np.float32)
     v = ((elev - ELEV[0]) / ELEV[2]).astype(np.float32)
     glow = cv2.remap(rim, u, v, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
-    keep = np.clip((0.4 - elev) / 0.15, 0, 1)[..., None]
-    inside = np.zeros((CH, CW, 1), np.float32)
-    inside[OY:OY + H, OX:OX + W] = 1
-    keep = keep * inside
-    canvas[sky] = (canvas * keep + glow * (1 - keep))[sky]
+    lin = lambda a: skypatch.unfilm(skypatch.to_linear(a / 255))
+    code = lambda a: skypatch.to_srgb(skypatch.film(a)) * 255
+    box = (slice(OY, OY + H), slice(OX, OX + W))
+    e, p = elev[box].astype(np.float64), phi[box].astype(np.float64)
+    glow_lin = lin(glow[box])
+    own = np.maximum(lin(image) - glow_lin, 0)
+    x, y = geom.project(geom.unpolar(p, KEEP[0] + np.abs(e - KEEP[0])))
+    mirror = cv2.remap(own, x.astype(np.float32), y.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    w = np.clip((e - KEEP[0] + 0.15) / 0.15, 0, 1)[..., None].astype(np.float32)
+    patch = own * w + mirror * (1 - w)
+    np.save(f'{WORK}/sky-lin.npy', patch.astype(np.float32))
+    keep = np.clip((KEEP[1] - e) / (KEEP[1] - KEEP[0]), 0, 1)[..., None].astype(np.float32)
+    calm = cv2.GaussianBlur(patch, (0, 0), 6)
+    held = code(np.maximum(lin(image) - calm, 0) * keep + glow_lin * (1 - keep))
+    canvas[sky] = glow[sky]
+    part = canvas[box]
+    part[sky[box]] = held[sky[box]]
     np.save(f'{WORK}/canvas-final.npy', canvas)
 
     core = cv2.imread(f'{WORK}/close2x.png')[..., ::-1].astype(np.float32)
@@ -80,8 +147,10 @@ def main():
     u2 = ((phi2 - PHI[0]) / PHI[2]).astype(np.float32)
     v2 = ((elev2 - ELEV[0]) / ELEV[2]).astype(np.float32)
     glow2 = cv2.remap(rim, u2, v2, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
-    keep2 = np.clip((0.4 - elev2) / 0.15, 0, 1)[..., None]
-    core[elev2 > 0] = (core * keep2 + glow2 * (1 - keep2))[elev2 > 0]
+    keep2 = np.clip((KEEP[1] - elev2) / (KEEP[1] - KEEP[0]), 0, 1)[..., None].astype(np.float32)
+    calm2 = cv2.resize(calm, (2 * W, 2 * H), interpolation=cv2.INTER_LINEAR)
+    held2 = code(np.maximum(lin(core) - calm2, 0) * keep2 + lin(glow2) * (1 - keep2))
+    core[elev2 > 0] = held2[elev2 > 0]
     np.save(f'{WORK}/core-final.npy', core)
     resid = np.clip(image - canvas[OY:OY + H, OX:OX + W], 0, 255)
     cv2.imwrite(f'{WORK}/canvas-half.png', np.round(cv2.resize(canvas, (CW // 2, CH // 2), interpolation=cv2.INTER_AREA)[..., ::-1]).astype(np.uint8))
