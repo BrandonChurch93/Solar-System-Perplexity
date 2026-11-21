@@ -33,6 +33,10 @@ export interface RingLook {
   heroDensity: [number, number]
   heroOver: [number, number]
   heroTurn: number
+  skimEdge: [number, number]
+  skimFoot: number
+  skimDensity: [number, number]
+  reach: number
 }
 
 const VERT = /* glsl */ `
@@ -117,6 +121,13 @@ uniform vec2 uHeroSize;
 uniform float uHeroW;
 uniform vec4 uHeroFit;
 uniform vec3 uHeroOver;
+uniform sampler2D uSkimMap;
+uniform sampler2D uSkimMask;
+uniform mat4 uSkimM;
+uniform vec2 uSkimSize;
+uniform float uSkimW;
+uniform vec4 uSkimFit;
+uniform float uReach;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
@@ -153,18 +164,32 @@ float grain(float phi, float r, float cellA, float cellR) {
 }
 void main() {
   float r = length(vLocal.xz);
-  vec3 lay = ringLayout(vLocal, r);
+  float inS;
+  vec2 kv = shotUv(uSkimM, vLocal, 1.0, inS);
+  vec2 kgx = dFdx(kv);
+  vec2 kgy = dFdy(kv);
+  vec2 ke = min(kv, 1.0 - kv);
+  float wS = uSkimW * (inS > 0.0 || min(ke.x, ke.y) > -0.004 ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y) + 0.004) : 0.0);
+  vec4 km = vec4(0.0);
+  for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
+    km = textureGrad(uSkimMask, kv, kgx * uSkimFit.w, kgy * uSkimFit.w);
+    vec2 tx = kgx * uSkimSize;
+    vec2 ty = kgy * uSkimSize;
+    wS *= km.g * smoothstep(uSkimFit.y, uSkimFit.z, sqrt(min(dot(tx, tx), dot(ty, ty))));
+  }
+  bool far = r > uReach;
+  vec3 lay = far ? vec3(r, 1.0, 0.0) : ringLayout(vLocal, r);
   bool disc = r < 1.0;
   float rp = disc ? max(lay.x, mix(r, uEdge.x + 0.006, lay.z)) : lay.x;
-  float x = ringRadius(rp);
+  float x = far ? -1.0 : ringRadius(rp);
   bool span = x > 0.0 && x < 1.0;
-  if (!span && (uHeroW <= 0.0 || r < 1.0)) discard;
+  if (!span && !(uHeroW > 0.0 && r >= 1.0 && !far) && wS <= 0.0) discard;
   vec3 toCam = uCamL - vLocal;
   float dist = length(toCam);
   vec3 V = toCam / dist;
   float nearest = dot(uCamL, V);
   bool hidden = false;
-  for (int k = 0; k < ((uClose > 0.0 && !disc && layoutOver > 0.0) ? 1 : 0); k++) {
+  for (int k = 0; k < ((uClose > 0.0 && !disc && (layoutOver > 0.0 || wS * km.r > 0.0)) ? 1 : 0); k++) {
     vec3 c = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
     vec3 d = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - c;
     float qa = dot(d, d);
@@ -189,9 +214,9 @@ void main() {
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rp) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rp));
   float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rp), over * (1.0 - uClose))), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
   float swept = (1.0 - smoothstep(uVeil.x, uVeil.y, uClose)) * uSweep;
-  float lift = smoothstep(-uJunction, uJunction, layoutDist + 2.0 * uJunction - swept);
+  float lift = max(smoothstep(-uJunction, uJunction, layoutDist + 2.0 * uJunction - swept), wS * (1.0 - smoothstep(0.0, 1.0, swept)));
   alpha = top ? 0.999 : alpha;
-  float cut = (1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rp)) * (top ? (hidden ? layoutOver : layoutCut) * lift : 1.0);
+  float cut = mix(1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rp), 1.0, wS) * (top ? mix(hidden ? layoutOver : layoutCut, 1.0, wS) * lift : 1.0);
   vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
   float kepler = uSpinRate * pow(max(rp, 1.0) / 1.86, -1.5);
@@ -264,7 +289,17 @@ void main() {
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  float vig = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
+    vec2 kq = (kv - 0.5) * vec2(uAspect, 1.0);
+    vec3 img = inverseFilmic(textureGrad(uSkimMap, kv, kgx * uSkimFit.w, kgy * uSkimFit.w).rgb) * vig / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette);
+    col = mix(col, img * km.r, wS);
+    alpha = mix(alpha, km.r, wS);
+    vec2 tx = kgx * uSkimSize;
+    vec2 ty = kgy * uSkimSize;
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wS);
+  }
+  col *= uGain * uWeight / vig;
   if (uDiag >= 2 && alpha * cut < 0.5) discard;
   outColor = diagOut(vec4(col, alpha * uWeight) * cut, texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
 }`
@@ -284,7 +319,7 @@ export class Rings {
     const pos = new Float32Array((seg + 1) * (bands + 1) * 3)
     const index: number[] = []
     const inner = Math.min(r0 - 0.01, 0.01)
-    const outer = (r1 + 0.01) / Math.cos(Math.PI / seg)
+    const outer = Math.max(r1 + 0.01, look.reach) / Math.cos(Math.PI / seg)
     for (let j = 0; j <= bands; j++) {
       const r = inner + ((outer - inner) * j) / bands
       for (let i = 0; i <= seg; i++) {
@@ -306,7 +341,7 @@ export class Rings {
       ...profile,
       ...layout,
       ...shots,
-      uHeroFit: { value: new THREE.Vector4(look.heroEdge, look.heroDensity[0], look.heroDensity[1], look.heroTurn) }, uHeroOver: { value: new THREE.Vector3(look.heroOver[0], look.heroOver[1], 0) },
+      uHeroFit: { value: new THREE.Vector4(look.heroEdge, look.heroDensity[0], look.heroDensity[1], look.heroTurn) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uHeroOver: { value: new THREE.Vector3(look.heroOver[0], look.heroOver[1], 0) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },

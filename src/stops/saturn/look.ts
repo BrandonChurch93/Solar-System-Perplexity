@@ -56,7 +56,7 @@ export const rings: RingLook = {
   penumbra: [0.978, 0.994, 0.006],
   unlit: 0.12,
   lodBias: 1.2,
-  lodBiasClose: 0.35,
+  lodBiasClose: 1.2,
   spokes: 0.1,
   clumps: 0.05,
   grain: 0.38,
@@ -76,6 +76,10 @@ export const rings: RingLook = {
   heroDensity: [0.95, 1.2],
   heroOver: [0.4, 0.5],
   heroTurn: 0.5,
+  skimEdge: [0, 0.08],
+  skimFoot: 0.7,
+  skimDensity: [0.8, 1.05],
+  reach: 3.6,
 }
 
 export const titan: TitanLook = {
@@ -91,5 +95,8 @@ export const titan: TitanLook = {
 export const closeRange: [number, number] = [0.35, 1.6]
 export const detailRange: [number, number] = [0.2, 0.5]
 export const heroRange: [number, number] = [0.6, 2.2]
+export const skimRange: [number, number] = [0.5, 1.1]
+export const skimAway: [number, number] = [0.01, 0.25]
+export const shellSkim: [number, number, number] = [0.92, 0.86, 0.74]
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }
