@@ -1,9 +1,39 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T10:04:27.187Z",
+ "pushed": "2026-11-21T10:30:20.698Z",
  "head": "6474c3b209b198d72f2814803be624845143a0a1",
- "note": "round 13 result in; hold wedge fixed, starting projected maps of the approved images on rings and globe",
+ "note": "round 2 work: hero rings projected on the ring plane, hold light map; next ring edge over the globe",
  "looks": [
+  {
+   "time": "2026-11-21T10:30:20.125Z",
+   "file": "20261121103020125-note-pair-hold-p5.jpg",
+   "source": "out/work/saturn/pair-hold-p5.jpg",
+   "kind": "note",
+   "label": "hold 3465 with projected hero rings and light map, approved above",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T10:30:19.531Z",
+   "file": "20261121103019531-note-hz6.jpg",
+   "source": "out/work/saturn/hz6.png",
+   "kind": "note",
+   "label": "hold 3465 lower left limb, approved left, film right: rings must be opaque over the globe",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T10:26:53.813Z",
+   "file": "20261121102653813-frame-h-p6-3465.jpg",
+   "source": "out/work/saturn/h-p6-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, final tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:04:26.587Z",
    "file": "20261121100426587-note-tz-junc2.jpg",
@@ -21,14 +51,6 @@
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T10:04:25.427Z",
-   "file": "20261121100425427-note-hz-c3b.jpg",
-   "source": "out/work/saturn/hz-c3b.png",
-   "kind": "note",
-   "label": "hold lower-left limb, hero left, film right: wedge gone",
-   "stop": "saturn"
-  },
-  {
    "time": "2026-11-21T09:54:05.604Z",
    "file": "20261121095405604-frame-t-m10-3720.jpg",
    "source": "out/work/saturn/t-m10-3720.png",
@@ -41,28 +63,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:53:18.992Z",
-   "file": "20261121095318992-frame-h-m10-3465.jpg",
-   "source": "out/work/saturn/h-m10-3465.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, final tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:40:48.231Z",
-   "file": "20261121094048231-note-hz-p3a.jpg",
-   "source": "out/work/saturn/hz-p3a.png",
-   "kind": "note",
-   "label": "hold lower-left limb at native scale: approved left, film right (orange wedge and box left of the limb still to fix)",
-   "stop": "saturn"
   },
   {
    "time": "2026-11-21T08:40:11.020Z",
