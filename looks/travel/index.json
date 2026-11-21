@@ -1,78 +1,72 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T15:41:58.483Z",
- "head": "1cc782e38dd93bb08173f6eb886316900b1585fb",
- "note": "task 3 final",
+ "pushed": "2026-11-21T17:37:14.168Z",
+ "head": "0fa09dfa4da76d46ca4a22f034e2b82bdead7bd7",
+ "note": "task 4: one sky, draft stills, pairs",
  "looks": [
   {
-   "time": "2026-11-21T15:39:18.622Z",
-   "file": "20261121153918622-note-uranus.travel-review.jpg",
-   "source": "out/work/travel/t3u/uranus.travel-review.png",
+   "time": "2026-11-21T17:36:33.061Z",
+   "file": "20261121173633061-note-f5085-draft.jpg",
+   "source": "out/work/travel/t4s/f5085-draft.png",
    "kind": "note",
-   "label": "t3u: uranus.travel-review",
+   "label": "t4s: f5085-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:39:17.976Z",
-   "file": "20261121153917976-note-saturn.travel-review.jpg",
-   "source": "out/work/travel/t3u/saturn.travel-review.png",
+   "time": "2026-11-21T17:36:32.414Z",
+   "file": "20261121173632414-note-f5060-draft.jpg",
+   "source": "out/work/travel/t4s/f5060-draft.png",
    "kind": "note",
-   "label": "t3u: saturn.travel-review",
+   "label": "t4s: f5060-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:27:54.964Z",
-   "file": "20261121152754964-note-f4605-draft.jpg",
-   "source": "out/work/travel/t3uafter/f4605-draft.png",
+   "time": "2026-11-21T17:36:31.759Z",
+   "file": "20261121173631759-note-f495-draft.jpg",
+   "source": "out/work/travel/t4s/f495-draft.png",
    "kind": "note",
-   "label": "t3uafter: f4605-draft",
+   "label": "t4s: f495-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:27:54.323Z",
-   "file": "20261121152754323-note-f4290-draft.jpg",
-   "source": "out/work/travel/t3uafter/f4290-draft.png",
+   "time": "2026-11-21T17:36:31.026Z",
+   "file": "20261121173631026-note-f4492-draft.jpg",
+   "source": "out/work/travel/t4s/f4492-draft.png",
    "kind": "note",
-   "label": "t3uafter: f4290-draft",
+   "label": "t4s: f4492-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:27:53.687Z",
-   "file": "20261121152753687-note-f4035-draft.jpg",
-   "source": "out/work/travel/t3uafter/f4035-draft.png",
+   "time": "2026-11-21T17:36:30.304Z",
+   "file": "20261121173630304-note-f4489-draft.jpg",
+   "source": "out/work/travel/t4s/f4489-draft.png",
    "kind": "note",
-   "label": "t3uafter: f4035-draft",
+   "label": "t4s: f4489-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:27:53.038Z",
-   "file": "20261121152753038-note-f3720-draft.jpg",
-   "source": "out/work/travel/t3uafter/f3720-draft.png",
+   "time": "2026-11-21T17:36:29.634Z",
+   "file": "20261121173629634-note-f4478-draft.jpg",
+   "source": "out/work/travel/t4s/f4478-draft.png",
    "kind": "note",
-   "label": "t3uafter: f3720-draft",
+   "label": "t4s: f4478-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:26:13.566Z",
-   "file": "20261121152613566-note-f4605-draft.jpg",
-   "source": "out/work/travel/t3umain/f4605-draft.png",
+   "time": "2026-11-21T17:36:28.936Z",
+   "file": "20261121173628936-note-f4475-draft.jpg",
+   "source": "out/work/travel/t4s/f4475-draft.png",
    "kind": "note",
-   "label": "t3umain: frame 4605, draft tier",
+   "label": "t4s: f4475-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T15:26:12.670Z",
-   "file": "20261121152612670-frame-f4605-draft.jpg",
-   "source": "out/work/travel/t3umain/f4605-draft.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d2db721a8d917fe8"
+   "time": "2026-11-21T17:36:28.269Z",
+   "file": "20261121173628269-note-f4467-draft.jpg",
+   "source": "out/work/travel/t4s/f4467-draft.png",
+   "kind": "note",
+   "label": "t4s: f4467-draft",
+   "stop": "travel"
   }
  ]
 }
