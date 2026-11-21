@@ -1,9 +1,31 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T20:52:06.571Z",
- "head": "93d80a043c367322da29528a5c26133e3be7cb5b",
- "note": "Polish (mail 24): rise and dive draft strips, fold detail in the film frame 3150; review sheets rendering",
+ "pushed": "2026-11-21T21:13:08.890Z",
+ "head": "51535de526070f53e95b89ca2689019d11d16fda",
+ "note": "Polish (mail 24): review sheets of the new rise rendering; first frames across the cut",
  "looks": [
+  {
+   "time": "2026-11-21T21:13:07.860Z",
+   "file": "20261121211307860-note-pol_rise_3268_3271.jpg",
+   "source": "out/work/view/pol_rise_3268_3271.jpg",
+   "kind": "note",
+   "label": "polish item 1, review tier: rise frames 3268, 3269 (terrain side), 3270, 3271 (orbit side): the limb is one arc across the cut",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T21:10:41.989Z",
+   "file": "20261121211041989-frame-f03271-review.jpg",
+   "source": "out/work/sheets/.frames-E17OWd/f03271-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3271, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3271,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T20:52:05.819Z",
    "file": "20261121205205819-note-strip_rise_p3.jpg",
@@ -69,20 +91,6 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:48:14.507Z",
-   "file": "20261121204814507-still-f03281-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03281-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3281, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3281,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T20:44:42.314Z",
    "file": "20261121204442314-still-f03150-16x9-review-full.jpg",
    "source": "out/work/stills/f03150-16x9-review-full.png",
@@ -92,20 +100,6 @@
    "segment": "jupiter.terrain",
    "frame": 3150,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:48:33.953Z",
-   "file": "20261121174833953-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
