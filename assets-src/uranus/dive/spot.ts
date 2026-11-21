@@ -13,15 +13,17 @@ const toBody = (world: THREE.Vector3): THREE.Vector3 => {
   v.set(v.x / look.shape.polar, v.y / look.shape.equator, v.z / look.shape.equator)
   return v.applyQuaternion(axisQ).applyQuaternion(globeQ.clone().invert()).normalize()
 }
-const spot = toBody(plan.spot)
+const CENTRE_DEG = [25, -26]
+const ground = toBody(plan.spot)
 const ahead = toBody(plan.spot.clone().addScaledVector(plan.heading, 0.01).normalize())
-const lat = Math.asin(spot.y)
-const lon = Math.atan2(spot.x, spot.z)
-const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
-const north = spot.clone().cross(east)
-const h = ahead.clone().sub(spot).normalize()
+const lon = THREE.MathUtils.degToRad(CENTRE_DEG[0]!)
+const lat = THREE.MathUtils.degToRad(CENTRE_DEG[1]!)
+const spot = new THREE.Vector3(Math.sin(lon) * Math.cos(lat), Math.sin(lat), Math.cos(lon) * Math.cos(lat))
+const east = new THREE.Vector3(0, 1, 0).cross(ground).normalize()
+const north = ground.clone().cross(east)
+const h = ahead.clone().sub(ground).normalize()
 const headingDeg = THREE.MathUtils.radToDeg(Math.atan2(h.dot(north), h.dot(east)))
 const sunBody = plan.lightDir.clone().applyQuaternion(globeQ.clone().invert())
-const out = { spot: spot.toArray(), latDeg: THREE.MathUtils.radToDeg(lat), lonDeg: THREE.MathUtils.radToDeg(lon), headingFromEastDeg: headingDeg, sunBody: sunBody.toArray(), ndl: sunBody.dot(spot), unit: plan.p.dive.altitude / (1 + plan.p.terrain.entryHeight * 0.6431), fps: config.fps }
+const out = { spot: spot.toArray(), ground: ground.toArray(), latDeg: THREE.MathUtils.radToDeg(lat), lonDeg: THREE.MathUtils.radToDeg(lon), headingFromEastDeg: headingDeg, sunBody: sunBody.toArray(), ndl: sunBody.dot(spot), unit: plan.p.dive.altitude / (1 + plan.p.terrain.entryHeight * 0.6431), fps: config.fps }
 writeFileSync('assets-src/uranus/dive/spot.json', JSON.stringify(out, null, 1) + '\n')
 console.log(JSON.stringify(out, null, 1))

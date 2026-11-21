@@ -1,0 +1,35 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 1557–1566, across the upper third",
+   "what": "A nearly straight bright band hangs in place while a second, curved limb emerges underneath it. The two horizon contours make the ascent read like a dissolve between views rather than one camera move.",
+   "fix": "Carry one projected horizon through the ascent and let foreground cloud occlude it without retaining a second horizon from the outgoing view."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 1315–1320, center and right side",
+   "what": "A distinct cloud-top horizon appears through the broad diagonal band while radial streaks remain fixed around the lower center. The layers do not read as detail resolving along the same descent.",
+   "fix": "Match the incoming horizon's placement and tilt to the dive camera, and use continuous shutter blur with a cloud layer that moves past the camera."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 1350–1529, lower foreground versus the horizon",
+   "what": "The cloud ridges and their long shadows retain nearly the same relative spacing as the view pushes forward. The shift reads more like a zoom into a plate than flight above clouds at different distances.",
+   "fix": "Separate nearby cloud banks, midground, and distant horizon in depth so near ridges travel faster across the frame while the horizon stays nearly still."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 1110–1259, upper-right vortex and bright central cloud belt",
+   "what": "The major cloud patterns barely migrate across the globe during the hold, making the atmosphere feel closer to a still than a turning planet.",
+   "fix": "Add persistent slow globe rotation and a small amount of cloud drift relative to the vortex, without moving the star field independently of the camera."
+  }
+ ]
+}

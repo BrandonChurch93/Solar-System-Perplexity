@@ -19,6 +19,8 @@ uniform vec4 uRect;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform vec4 uLimb;
+uniform vec2 uLimbEdge;
 uniform int uDiag;
 in vec3 vRay;
 in vec2 vNdc;
@@ -32,8 +34,12 @@ void main() {
   if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float k = uGain / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
-  outColor = vec4(inverseFilmic(texture(uMap, uv).rgb) * k, 0.0);
+  float r = length(uv - 0.5) / uLimb.w;
+  vec3 shade = mix(vec3(1.0) - uLimb.rgb * (1.0 - sqrt(max(1.0 - r * r, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, r));
+  outColor = vec4(inverseFilmic(texture(uMap, uv).rgb) * shade * k, 0.0);
 }`
+
+export interface SunLimb { dark: [number, number, number]; edge: [number, number] }
 
 export class SunPlate {
   readonly mesh: THREE.Mesh
@@ -41,11 +47,11 @@ export class SunPlate {
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
 
-  constructor(map: THREE.Texture, rect: [number, number, number, number], diag: THREE.IUniform<number>) {
+  constructor(map: THREE.Texture, rect: [number, number, number, number], disc: number, limb: SunLimb, diag: THREE.IUniform<number>) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
-      uniforms: { uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag },
+      uniforms: { uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLimb: { value: new THREE.Vector4(limb.dark[0], limb.dark[1], limb.dark[2], disc) }, uLimbEdge: { value: new THREE.Vector2(limb.edge[0], limb.edge[1]) }, uDiag: diag },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
     this.mesh.frustumCulled = false

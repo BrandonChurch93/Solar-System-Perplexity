@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 3,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 739-750, especially 743 to 744 across the horizon and lower-right crater",
+   "what": "an unphysical beige-white flash blows out exposure over an airless world to mask a one-frame pop between frame 743 and 744 from blurry 3D globe texture to sculpted terrain geometry, with an abrupt jump in surface relief, horizon profile, and motion speed",
+   "fix": "remove the whiteout flash and transition continuously from orbital globe to displaced 3D terrain with matched surface features, exposure, horizon curvature, and camera velocity"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 985-996, especially 989 to 990 across the horizon and lower-right crater",
+   "what": "a second whiteout haze flash blows out exposure and hides a one-frame pop between frame 989 and 990 from forward-moving high-relief terrain to the blurry 3D globe pulling backward, reversing surface flow and shifting the horizon arc",
+   "fix": "remove the whiteout flash, begin a true upward pullback over the terrain before handoff, and match geometry, motion vector, exposure, and horizon across the transition"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 722-730 vs frames 747-779, sun position, lighting direction, and horizon angle",
+   "what": "frames before and after the dive cover do not belong to one camera move: before frame 739 the camera plunges straight toward a vertical right-hand limb lit by a huge yellow sun at upper right, whereas after frame 747 it skims a horizontal limb lit by a small white sun at upper left",
+   "fix": "keep a single consistent 3D sun position, light direction, focal length, and continuous pitch-up descent arc from orbital approach into the terrain skim"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 980-1014, sun position, planetary phase lighting, and background starfield",
+   "what": "across the rise cover and pullback, a small white sun at upper left in frame 980 jumps to a huge yellow sun at top center in frame 1000, then vanishes into black space by frame 1007 while the lit hemisphere flips to the upper left without the Milky Way background",
+   "fix": "maintain consistent 3D solar placement, planetary illumination phase, and skybox orientation throughout the ascent and pullback"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frame 730, crater rims near center-left and lower solar limb at upper right",
+   "what": "high-speed dive zoom breaks into 5-6 discrete stepped ghost copies of crater edges and the sun's rim instead of a smooth continuous motion blur",
+   "fix": "increase temporal motion-blur subsamples or use continuous shutter integration so fast radial motion blurs smoothly without stepped ghost edges"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 1000-1021, across the globe face, upper-right limb, and pullback stop",
+   "what": "fast pullback motion in frames 1000 and 1007 splits crater rims and the planet limb into discrete stepped ghost copies, followed by an abrupt deceleration to a near-complete stop by frame 1014-1021",
+   "fix": "render smooth multi-sample motion blur without ghost copies and lengthen the ease-out curve so camera mass settles gradually into the final hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 540-581, lower-right starfield directly below the sun",
+   "what": "a vertical dark rectangular cutout edge from the solar glare layer is visible over the Milky Way and slides rightward toward the right frame border",
+   "fix": "expand and feather the solar glare bounds with pure additive blending so no rectangular card edge is visible against the background stars"
+  }
+ ]
+}

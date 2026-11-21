@@ -14,7 +14,12 @@ export const drift = {
   strength: 0.42,
   shadow: 0.22,
   shadowOffset: 0.012,
+  riseAt: 0.75,
 }
+
+export const graze = { most: 3, from: 0.45, to: 0.2 }
+
+export const lift = { floor: 0.012, stops: 3, from: 0.4, to: 0.8 }
 
 export const descent = {
   high: 0.7,

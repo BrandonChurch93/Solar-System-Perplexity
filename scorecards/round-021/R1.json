@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "ring arcs across upper-left, center-top, and right (tiles B, C, F, G, H; also pair-03-b.png)",
+   "what": "on the right arc (tiles C, F, H) the bright outer and inner ringlets collapse into thick, flat solid-white strokes lacking -a's fine multi-strand splitting and subtle warm/cyan tint, with dark speckled aliasing dots along the inner bright ringlet; on the upper and left arcs (tiles B, G) several fine inner ringlets and cyan dust bands simplify or fade out prematurely before reaching the limb",
+   "fix": "restore fine multi-strand ringlet subdivision, subtle cyan and warm rim tinting, clean anti-aliasing along the bright inner ring edge, and full ringlet continuity down into the left limb glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "sunlit planetary limb along the horizon (tiles A, B, E, F, H, I; also pair-03-b.png)",
+   "what": "a sharp, thin geometric line runs along the planet disc boundary inside the cyan atmospheric glow instead of diffusing continuously from sunlit cloud tops into haze as in -a",
+   "fix": "feather and soften the planetary disc horizon edge so the sunlit cloud deck blends smoothly into the atmospheric scattering glow without a hard step"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "upper-left and upper-right moons (tiles B, C, I; also pair-01-b.png)",
+   "what": "the right moon (tiles C, I) is roughly 25-30% larger in diameter than in -a, and both moons have crisp cut-out CG rims, uniform micro-noise instead of larger terminator crater basins, and crushed pitch-black night hemispheres that lose -a's dim planetshine fill",
+   "fix": "reduce the right moon diameter to match -a, restore subtle ambient planetshine fill on both moons' dark hemispheres, use broader crater relief near the terminators, and add slight optical rim softness matching -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "planetary rings (tiles B, D, E, G; also pair-01-b.png)",
+   "what": "fine concentric micro-ringlets and grainy particle texture in -a are softened into fewer, blurrier bands, with the top-left outer ringlet in tile G slightly over-brightened and the faint ring strands crossing the Milky Way in tile E nearly lost",
+   "fix": "increase radial micro-ringlet separation and fine particle grain, balance the top-left outer strand brightness, and raise visibility of the faint ring strands in front of the Milky Way"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Milky Way bright core and lower-right dark limb (tiles E, F, H)",
+   "what": "pinpoint star clusters and sharp dark dust filaments in the bright yellow-gold Milky Way core are slightly smudged into softer blotches, and the lower-right dark planetary crescent edge in tile E is a harder single-edge cutoff lacking -a's faint inner rim transition",
+   "fix": "preserve native pinpoint micro-star sharpness and dust contrast in the Milky Way core without smoothing, and soften the inner dark-limb edge transition in tile E"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "bright distant sun flare above the right limb (also pair-04-b.png tiles C, F)",
+   "what": "the star core is slightly softer and its horizontal diffraction/anamorphic flare streak extending rightward toward the inner rings is fainter and shorter than in -a",
+   "fix": "tighten the central star highlight slightly and boost the horizontal flare streak extending right toward the rings"
+  }
+ ]
+}

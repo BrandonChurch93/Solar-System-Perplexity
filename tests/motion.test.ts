@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import * as THREE from 'three'
 import { config } from '../src/config'
-import { frameSamples, samplesNeeded, shutterMotion } from '../src/core/motion'
+import { framePlan, frameSamples, rawMotion, samplesNeeded, seenShare, shutterMotion, softness } from '../src/core/motion'
+import { gradUniform, setSamples } from '../src/diagnostics/diag'
 import { sampleCount } from '../src/core/sampler'
 import type { Shot } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
@@ -105,5 +106,76 @@ describe('samples of a frame', () => {
     let most = 0
     for (let f = s.firstFrame; f < s.endFrame; f++) most = Math.max(most, frameSamples(director, f, 'review'))
     expect(most).toBeGreaterThan(config.tiers.review!.fastSamplesPerFrame)
+  })
+})
+
+describe('gradient scale under motion', () => {
+  const m = config.motion
+  it('is the still scale up to the lower motion and 1 from the upper motion on', () => {
+    expect(softness(0)).toBe(0)
+    expect(softness(m.softFromPx)).toBe(0)
+    expect(softness(m.softToPx)).toBe(1)
+    expect(softness(1e6)).toBe(1)
+    let last = 0
+    for (let x = m.softFromPx; x <= m.softToPx; x += (m.softToPx - m.softFromPx) / 40) {
+      const s = softness(x)
+      expect(s).toBeGreaterThanOrEqual(last)
+      last = s
+    }
+    for (const count of [1, 4, 16, 64, 256]) {
+      setSamples(count, 0.5)
+      const still = gradUniform.value
+      expect(still).toBe(Math.max(1 / Math.sqrt(count), 0.5))
+      setSamples(count, 0.5, 0)
+      expect(gradUniform.value).toBe(still)
+      setSamples(count, 0.5, 0.5)
+      expect(gradUniform.value).toBeCloseTo(still + (1 - still) * 0.5, 12)
+      setSamples(count, 0.5, 1)
+      expect(gradUniform.value).toBe(1)
+    }
+    setSamples(1, 0.5)
+  })
+  it('leaves the slow Mars frames alone and softens a fast dive whatever its cover', () => {
+    for (const f of [2325, 2427, 2580, 2726, 2772, 2782, 2796]) expect(framePlan(director, f, 'final').soft).toBe(0)
+    const fast = framePlan(director, 1870, 'review')
+    expect(fast.raw).toBeGreaterThan(m.softToPx)
+    expect(fast.soft).toBe(1)
+    const s = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
+    let covered = 0
+    for (let f = s.firstFrame; f < s.endFrame; f++) {
+      const [a, b, c] = ends(f)
+      const plan = framePlan(director, f, 'review')
+      expect(plan.raw).toBe(rawMotion(a, b, c))
+      expect(plan.seen).toBe(shutterMotion(a, b, c))
+      expect(plan.soft).toBe(softness(plan.raw))
+      expect(plan.samples).toBe(frameSamples(director, f, 'review'))
+      if (b.cover.amount > 0.5 && plan.raw > m.softToPx) covered++
+    }
+    expect(covered).toBeGreaterThan(0)
+  })
+})
+
+describe('what a cover hides', () => {
+  it('is all of its amount by default and the share a stop sets', () => {
+    const f = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
+    let n = 0
+    for (let i = f.firstFrame; i < f.endFrame; i++) {
+      const [a, b, c] = ends(i)
+      if (!(b.cover.amount > 0.2 && b.cover.amount < 1)) continue
+      n++
+      expect(b.cover.hides).toBeUndefined()
+      const raw = rawMotion(a, b, c)
+      expect(seenShare(b)).toBe(Math.max(1 - b.cover.amount, 0))
+      expect(shutterMotion(a, b, c)).toBe(raw * Math.max(1 - b.cover.amount, 0))
+      const half: Shot = { ...b, cover: { ...b.cover, hides: 0.5 } }
+      expect(seenShare(half)).toBeCloseTo(1 - b.cover.amount * 0.5, 12)
+      expect(shutterMotion(a, half, c)).toBeCloseTo(raw * (1 - b.cover.amount * 0.5), 9)
+      const none: Shot = { ...b, cover: { ...b.cover, hides: 0 } }
+      expect(shutterMotion(a, none, c)).toBe(raw)
+      const all: Shot = { ...b, cover: { ...b.cover, hides: 1 } }
+      expect(shutterMotion(a, all, c)).toBe(shutterMotion(a, b, c))
+    }
+    expect(n).toBeGreaterThan(0)
+    for (const p of plans) expect(p.p.coverHides).toBeUndefined()
   })
 })

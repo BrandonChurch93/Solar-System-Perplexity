@@ -5,7 +5,7 @@ import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
-import { frameSamples } from './motion'
+import { framePlan } from './motion'
 import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot, SkyPatch } from './types'
@@ -63,6 +63,7 @@ export class Engine {
   private readonly held: THREE.Object3D[] = []
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
+  private soft = 0
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -84,6 +85,7 @@ export class Engine {
     for (const e of OPTIONAL_EXTENSIONS) gl.getExtension(e)
     this.sets = new SetLoader(this.renderer, () => this.format, this.renderer.capabilities.getMaxAnisotropy())
     this.sky = new Sky(STAR_COUNT)
+    this.sky.setFlightStars(config.raw.travel.sky.flightStars)
     this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(format.width, format.height)
     this.applySize()
@@ -160,7 +162,9 @@ export class Engine {
     if (!this.director) throw new Error('no director')
     const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
     await this.prepare(f)
-    const samples = samplesFor(frameSamples(this.director, f, tier))
+    const plan = framePlan(this.director, f, tier)
+    const samples = samplesFor(plan.samples)
+    this.soft = plan.soft
     const mid = this.director.shotAt(f, (f + shutterMid()) / config.fps)
     this.accumulator.begin()
     samples.forEach((s, i) => {
@@ -175,6 +179,7 @@ export class Engine {
   }
 
   renderLive(shot: Shot): void {
+    this.soft = 0
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
@@ -197,7 +202,7 @@ export class Engine {
     const r = this.renderer
     const raw = isRaw(this.diag)
     setDiag(this.diag)
-    setSamples(count, GRAD_FLOOR)
+    setSamples(count, GRAD_FLOOR, this.soft)
     implicitUniform.value = this.sky.cull ? 1 : 0
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)
@@ -209,7 +214,7 @@ export class Engine {
           if (patch.view !== state.view) continue
           const kind = shot.segment.kind
           const arriving = kind === 'travel' && state.id !== shot.segment.stop
-          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
           const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           if (weight <= 0) continue
           const aim = aims?.patches[state.id]?.[patch.view]
@@ -219,6 +224,7 @@ export class Engine {
       }
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
+      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)

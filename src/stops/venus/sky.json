@@ -1,1 +1,1 @@
-{"orbit": {"file": "sky-hold.webp", "vfovDeg": 30, "margin": 0.125, "gain": 2.5, "add": false, "ring": [0.5, 0.5, -1, 0]}, "terrain": {"file": "sky-terrain.webp", "vfovDeg": 60, "margin": 0.125, "gain": 10, "add": false, "ring": [0.5, 0.5, -1, 0]}}
+{"orbit": {"file": "sky-hold.webp", "vfovDeg": 30, "margin": 0.25, "gain": 2.5, "add": false, "ring": [0.5, 0.5, -1, 0], "feather": 0.125}, "terrain": {"file": "sky-terrain.webp", "vfovDeg": 60, "margin": 0.125, "gain": 10, "add": false, "ring": [0.5, 0.5, -1, 0], "feather": 0.125}}

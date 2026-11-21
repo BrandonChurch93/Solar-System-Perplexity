@@ -199,6 +199,100 @@ def to8(v):
     return np.clip(v * 255 + 0.5, 0, 255).astype(np.uint8)
 
 
+FAR_PX = 6.0
+FAR_R = 178.0
+FAR_N = int(2 * FAR_R * FAR_PX)
+FAR_C = FAR_N / 2
+FAR_TRUST = (0.25, 0.4, 0.1, 0.3)
+FAR_REACH = ((6.0, 0.05, 0.5), (20.0, 0.02, 0.3), (45.0, 0.0, 0.05))
+FAR_END = (80.0, 172.0)
+FAR_SOUTH = (-63.0, -50.0)
+FAR_CLOUD_W = 5632
+FAR_ICE = (0.7, 0.86, 0.93)
+ICE = np.array([0.74, 0.78, 0.83])
+
+
+def far_flow():
+    flow = np.load(GUIDE / "flow.npy")
+    n, e, u = AZ
+    py, px = np.mgrid[0:FAR_N, 0:FAR_N].astype(np.float32)
+    dx, dy = (px + 0.5 - FAR_C) / FAR_PX, (FAR_C - py - 0.5) / FAR_PX
+    ang = np.hypot(dx, dy)
+    f = cv2.remap(flow, AZ_C + dx * AZ_PX - 0.5, AZ_C - dy * AZ_PX - 0.5, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) / AZ_PX
+    r = np.maximum(ang, 1e-9)
+    a = np.radians(r)
+    y = np.cos(a)[..., None] * n + (dx * np.sin(a) / r)[..., None] * e + (dy * np.sin(a) / r)[..., None] * u
+    _, _, cosv, ndl = geo.project_dirs(y, 1)
+    trust = (geo.smooth(FAR_TRUST[0], FAR_TRUST[1], cosv) * geo.smooth(FAR_TRUST[2], FAR_TRUST[3], ndl) * (ang < 88)).astype(np.float32)
+    out = np.zeros_like(f)
+    for deg, lo, hi in FAR_REACH[::-1]:
+        t = geo.smooth(lo, hi, geo.blur(trust, deg * FAR_PX))[..., None]
+        out = out * (1 - t) + nblur(f, trust, deg * FAR_PX) * t
+    out = f * trust[..., None] + out * (1 - trust[..., None])
+    out = out * geo.smooth(FAR_END[1], FAR_END[0], ang)[..., None]
+    gx, gy = np.gradient(out[..., 0], axis=1) * FAR_PX, np.gradient(out[..., 1], axis=0) * FAR_PX
+    far = trust < 0.5
+    print("far flow: stretch along x p1 %.2f p99 %.2f, along y p1 %.2f p99 %.2f outside the trusted zone" % (np.percentile(gx[far], 1), np.percentile(gx[far], 99), np.percentile(gy[far], 1), np.percentile(gy[far], 99)))
+    return out.astype(np.float32)
+
+
+def far_dirs(y, f):
+    n, e, u = AZ
+    ang = np.degrees(np.arccos(np.clip(y @ n, -1, 1)))
+    ex, uy = y @ e, y @ u
+    k = ang / np.maximum(np.hypot(ex, uy), 1e-9)
+    dx, dy = ex * k, uy * k
+    d = cv2.remap(f, (FAR_C + dx * FAR_PX - 0.5).astype(np.float32), (FAR_C - dy * FAR_PX - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    dx, dy = dx + d[..., 0], dy - d[..., 1]
+    r = np.maximum(np.hypot(dx, dy), 1e-9)
+    a = np.radians(r)
+    s = np.sin(a) / r
+    return np.cos(a)[..., None] * n + (dx * s)[..., None] * e + (dy * s)[..., None] * u
+
+
+def far_map(width):
+    height = width // 2
+    flow = far_flow()
+    lut = np.load(GUIDE / "lut.npy")
+    bm = guide("bm", 12288)
+    far = np.zeros((height, width, 4), np.uint8)
+    pad = 16
+    for r0 in range(0, height, 256):
+        r1 = min(r0 + 256, height)
+        rows = np.arange(max(r0 - pad, 0), min(r1 + pad, height))
+        keep = slice(r0 - rows[0], r1 - rows[0])
+        yr = far_dirs(geo.map_dirs(width, rows), flow)
+        b8 = sample(bm, yr[keep], cv2.INTER_CUBIC).astype(np.float32) / 255
+        ice = geo.smooth(FAR_ICE[0], FAR_ICE[1], b8.min(-1))[..., None]
+        white = geo.encode(ICE[None, None, :] * np.clip(b8.mean(-1) / FAR_ICE[2], 0.8, 1.05)[..., None])
+        far[r0:r1, :, :3] = to8(apply_lut(lut, sample(bm, yr[keep], cv2.INTER_CUBIC)) * (1 - ice) + white * ice)
+        e = far_lights(yr)[keep, :, 0] / GOLD[0]
+        far[r0:r1, :, 3] = to8(np.sqrt(np.clip(e / motion.EMISSIVE_PEAK, 0, 1)))
+    for key, k in (("full", 1), ("web", 2)):
+        fm = far if k == 1 else cv2.resize(far, (width // k, height // k), interpolation=cv2.INTER_AREA)
+        Image.fromarray(fm, "RGBA").save(PUBLIC / key / "wrap-far.webp", "WEBP", quality=90 if k == 1 else 84, exact=True, method=4)
+    cv2.imwrite(str(VIEW / "wrap-far-small.jpg"), cv2.resize(far[..., :3], (2048, 1024), interpolation=cv2.INTER_AREA)[..., ::-1], [cv2.IMWRITE_JPEG_QUALITY, 90])
+    cv2.imwrite(str(VIEW / "wrap-far-lights-small.jpg"), cv2.resize(far[..., 3], (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
+
+
+def far_cloud_map(width):
+    height = width // 2
+    flow = far_flow()
+    bm = guide("bm", 8192)
+    out = np.zeros((height, width, 4), np.uint8)
+    for r0 in range(0, height, 256):
+        rows = np.arange(r0, min(r0 + 256, height))
+        yr = far_dirs(geo.map_dirs(width, rows), flow)
+        a, c = far_cloud(yr, sample(bm, yr))
+        a = a * geo.smooth(FAR_SOUTH[0], FAR_SOUTH[1], np.degrees(np.arcsin(np.clip(yr[..., 1], -1, 1)))).astype(np.float32)
+        out[r0:r0 + len(rows), :, :3] = to8(geo.encode(c * a[..., None]))
+        out[r0:r0 + len(rows), :, 3] = to8(a)
+    for key, k in (("full", 1), ("web", 2)):
+        m = out if k == 1 else cv2.resize(out, (width // k, height // k), interpolation=cv2.INTER_AREA)
+        Image.fromarray(m, "RGBA").save(PUBLIC / key / "wrap-far-cloud.webp", "WEBP", quality=90 if k == 1 else 84, exact=True, method=4)
+    cv2.imwrite(str(VIEW / "wrap-far-cloud-small.jpg"), cv2.resize(out[..., 3], (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
+
+
 class Splat:
     def __init__(self, shape, channels):
         self.shape = shape
@@ -231,6 +325,12 @@ class Splat:
 
 def main(width, only):
     height = width // 2
+    if only == "far":
+        far_map(width)
+        return
+    if only == "farcloud":
+        far_cloud_map(FAR_CLOUD_W)
+        return
     if only == "emissive":
         emissive_map(width, register(np.load(SPLIT / "surface.npy").astype(np.float32)))
         return
