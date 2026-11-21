@@ -149,5 +149,6 @@ export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
 export const shellSkim: [number, number, number] = [0.958, 1.273, 1.826]
 export const shellSkimDepth: [number, number] = [0.03, 0.018]
+export const shellReach = 0.054
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

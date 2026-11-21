@@ -252,7 +252,7 @@ export class Shell {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(haze: HazeParams, look: GlobeLook, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(haze: HazeParams, look: GlobeLook, profile: Record<string, THREE.IUniform>, polar: number, height = haze.scaleHeight) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: SHELL_FRAG,
       uniforms: {
@@ -261,7 +261,7 @@ export class Shell {
       },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })
-    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 + haze.top * haze.scaleHeight, 192, 96), this.material)
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 + haze.top * height, 192, 96), this.material)
     this.mesh.scale.set(1, polar, 1)
     this.mesh.renderOrder = 1
   }

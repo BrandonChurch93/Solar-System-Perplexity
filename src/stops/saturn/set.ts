@@ -60,7 +60,7 @@ export const createSet: SetFactory = async (ctx) => {
     skim: { texture: await ctx.dataTexture(base + skimLight.file, skimLight.width, skimLight.height, 4), matrix: skimM, camera: skimL, weight: skimW },
   }
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, lights, look.globe, look.haze, profile, polar)
-  const shell = new Shell(look.shell, look.globe, profile, polar)
+  const shell = new Shell(look.shell, look.globe, profile, polar, look.shellReach)
   const layoutCamera = new THREE.PerspectiveCamera(layoutJson.vfovDeg, layoutJson.width / layoutJson.height, 0.01, 100)
   layoutCamera.position.copy(plan.skimPosition).addScaledVector(plan.skimForward, -layoutJson.back).applyQuaternion(toTilt)
   layoutCamera.quaternion.copy(toTilt).multiply(plan.skimQuaternion)
