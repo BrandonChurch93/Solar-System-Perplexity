@@ -85,10 +85,16 @@ ${INVERSE_FILMIC_GLSL}
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
 vec3 patchTexel(sampler2D s, vec3 p) {
-  vec2 dx = dFdx(p.xy) * 0.25;
-  vec2 dy = dFdy(p.xy) * 0.25;
+  vec2 gx = dFdx(p.xy);
+  vec2 gy = dFdy(p.xy);
+  vec2 dx = gx * 0.25;
+  vec2 dy = gy * 0.25;
   vec3 t = vec3(0.0);
+#ifdef PATCH_IMPLICIT
   for (int k = 0; k < (p.z > 0.0 ? 1 : 0); k++) t = 0.25 * (texture(s, p.xy + dx + dy).rgb + texture(s, p.xy - dx + dy).rgb + texture(s, p.xy + dx - dy).rgb + texture(s, p.xy - dx - dy).rgb);
+#else
+  for (int k = 0; k < (p.z > 0.0 ? 1 : 0); k++) t = 0.25 * (textureGrad(s, p.xy + dx + dy, gx, gy).rgb + textureGrad(s, p.xy - dx + dy, gx, gy).rgb + textureGrad(s, p.xy + dx - dy, gx, gy).rgb + textureGrad(s, p.xy - dx - dy, gx, gy).rgb);
+#endif
   return t;
 }
 vec3 patched(vec3 col, vec3 p, vec3 t, int i, float k) {
@@ -454,6 +460,12 @@ export class Sky {
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
+    const sky = this.pass.material
+    if (('PATCH_IMPLICIT' in sky.defines) !== this.cull) {
+      if (this.cull) sky.defines.PATCH_IMPLICIT = ''
+      else delete sky.defines.PATCH_IMPLICIT
+      sky.needsUpdate = true
+    }
     const rects = open ? tileRects(open, target.width, target.height) : null
     if (this.texture && !rects) this.pass.render(renderer, target)
     if (this.texture && rects) {
