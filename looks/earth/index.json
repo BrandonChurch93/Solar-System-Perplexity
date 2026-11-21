@@ -1,52 +1,80 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T12:24:20.707Z",
- "head": "675e53abc47610062d825831d621a3a835da02cb",
- "note": "round 2 checks: finals of 1857 and 2156, handover strips at review; measure running",
+ "pushed": "2026-11-21T12:44:57.700Z",
+ "head": "213fba6725b4c3de5143250516de30dc14714d81",
+ "note": "measure running; sky margin strip at 1857 found, new margin made, goes in after the measure",
  "looks": [
   {
-   "time": "2026-11-21T12:23:56.656Z",
-   "file": "20261121122356656-frame-t-2142.jpg",
-   "source": "out/work/earth/q1/t-2142.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2142, draft tier, texels view",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2142,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T12:22:53.172Z",
-   "file": "20261121122253172-frame-t-1875.jpg",
-   "source": "out/work/earth/q1/t-1875.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1875, draft tier, texels view",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1875,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T12:18:58.661Z",
-   "file": "20261121121858661-note-rd.jpg",
-   "source": "../../../../tmp/rd.jpg",
+   "time": "2026-11-21T12:44:56.753Z",
+   "file": "20261121124456753-note-s2.jpg",
+   "source": "../../../../tmp/s2.png",
    "kind": "note",
-   "label": "dive cover 1883, 1884 at the review tier: same limb line across the switch",
+   "label": "dive 1857 final, top left at native size (right half lifted): the starless margin strip of the sky patch, to fix",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T12:18:58.077Z",
-   "file": "20261121121858077-note-rr.jpg",
-   "source": "../../../../tmp/rr.jpg",
+   "time": "2026-11-21T12:44:55.902Z",
+   "file": "20261121124455902-note-tl2.jpg",
+   "source": "out/work/earth/skytry/tl2.jpg",
    "kind": "note",
-   "label": "rise handover 2129, 2130, 2131 at the review tier (top to bottom): same limb line, same deck",
+   "label": "hold sky patch, top left corner with its margin: shipped (left, starless strip) beside the new margin with a moved star field (right); not in the build yet",
    "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T12:35:23.362Z",
+   "file": "20261121123523362-job-frame-01986.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1986, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1986,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T12:25:23.007Z",
+   "file": "20261121122523007-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T12:24:54.832Z",
+   "file": "20261121122454832-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:24:53.757Z",
+   "file": "20261121122453757-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T12:09:14.856Z",
@@ -75,22 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:59:51.872Z",
-   "file": "20261121115951872-note-l2156.jpg",
-   "source": "../../../../tmp/l2156.jpg",
-   "kind": "note",
-   "label": "rise 2156 night South America, lifted: land relief (left) beside flat tone (right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:59:51.292Z",
-   "file": "20261121115951292-note-a2156.jpg",
-   "source": "../../../../tmp/a2156.png",
-   "kind": "note",
-   "label": "rise 2156 aurora at the right limb, 1.6x: fine rays (left) beside before (right)",
-   "stop": "earth"
   }
  ]
 }
