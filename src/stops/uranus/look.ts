@@ -2,10 +2,18 @@ import type { RingLook } from './rings'
 
 export const globe = {
   lightSize: [513, 128] as [number, number],
+  shadeSize: [512, 256] as [number, number],
   cloudWhite: 3.0878,
   shadowTint: [1.655, 0.957, 0.841] as [number, number, number],
   bandRate: [0, 0.0042, 2.4, 0.5] as [number, number, number, number],
   cloudRate: [0.006, 0.004, 3.1, 1.2] as [number, number, number, number],
+}
+
+export const shape = {
+  axis: [0.99885, -0.04789, 0] as [number, number, number],
+  polar: 0.9833,
+  equator: 1.00403,
+  center: [-0.00273, -0.00263, 0] as [number, number, number],
 }
 
 export const rings: RingLook = {

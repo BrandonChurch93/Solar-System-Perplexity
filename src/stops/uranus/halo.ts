@@ -2,11 +2,12 @@ import * as THREE from 'three'
 import { diagUniform } from '../../diagnostics/diag'
 
 const VERT = /* glsl */ `
-out vec3 vPos;
+out vec3 vLocal;
+flat out vec3 vCamL;
 void main() {
-  vec4 wp = modelMatrix * vec4(position, 1.0);
-  vPos = wp.xyz;
-  gl_Position = projectionMatrix * viewMatrix * wp;
+  vLocal = position;
+  vCamL = (inverse(modelMatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+  gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 }`
 
 const FRAG = /* glsl */ `
@@ -14,22 +15,22 @@ precision highp float;
 uniform sampler2D uHalo;
 uniform vec2 uHaloSize;
 uniform vec2 uRange;
-uniform vec3 uCam;
+uniform mat4 modelMatrix;
 uniform vec3 uSunW;
 uniform float uGain;
 uniform int uDiag;
-in vec3 vPos;
+in vec3 vLocal;
+flat in vec3 vCamL;
 out vec4 outColor;
 void main() {
   if (uDiag >= 2) discard;
-  vec3 dir = normalize(vPos);
-  float t = -dot(uCam, dir);
+  vec3 dir = normalize(vLocal - vCamL);
+  float t = -dot(vCamL, dir);
   if (t <= 0.0) discard;
-  vec3 pc = uCam + dir * t;
+  vec3 pc = vCamL + dir * t;
   float b = length(pc);
-  if (b < uRange.x) discard;
-  float ndl = dot(pc / b, uSunW);
-  float x = clamp((b - uRange.x) / (uRange.y - uRange.x), 0.0, 1.0);
+  float ndl = dot(normalize(mat3(modelMatrix) * (pc / b)), uSunW);
+  float x = sqrt(clamp((b - uRange.x) / (uRange.y - uRange.x), 0.0, 1.0));
   vec2 uv = vec2((clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * (uHaloSize.x - 1.0) + 0.5) / uHaloSize.x, (x * (uHaloSize.y - 1.0) + 0.5) / uHaloSize.y);
   vec3 col = textureLod(uHalo, uv, 0.0).rgb * (1.0 - smoothstep(0.9, 1.0, x));
   outColor = vec4(col * uGain, 0.0);
@@ -44,7 +45,7 @@ export class Halo {
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: FRAG,
-      uniforms: { uHalo: { value: lut }, uHaloSize: { value: new THREE.Vector2().fromArray(size) }, uRange: { value: new THREE.Vector2().fromArray(range) }, uCam: { value: new THREE.Vector3(0, 0, 3) }, uSunW: { value: new THREE.Vector3(1, 0, 0) }, uGain: { value: 1 }, uDiag: diagUniform },
+      uniforms: { uHalo: { value: lut }, uHaloSize: { value: new THREE.Vector2().fromArray(size) }, uRange: { value: new THREE.Vector2().fromArray(range) }, uSunW: { value: new THREE.Vector3(1, 0, 0) }, uGain: { value: 1 }, uDiag: diagUniform },
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
@@ -55,9 +56,8 @@ export class Halo {
     this.mesh.renderOrder = 5
   }
 
-  update(camera: THREE.Vector3, sun: THREE.Vector3, gain: number): void {
+  update(sun: THREE.Vector3, gain: number): void {
     const u = this.material.uniforms
-    ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     u.uGain!.value = gain
   }

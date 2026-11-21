@@ -6,6 +6,52 @@ VFOV = 30.0
 CAM = np.array([-0.097815, 0.125613, 5.680177])
 TH = np.tan(np.radians(VFOV) / 2)
 
+SHAPE_AXIS = np.array([0.99885, -0.04789, 0.0])
+SHAPE_AXIS = SHAPE_AXIS / np.linalg.norm(SHAPE_AXIS)
+SHAPE_POLAR = 0.9833
+SHAPE_EQUATOR = 1.00403
+SHAPE_CENTER = np.array([-0.00273, -0.00263, 0.0])
+SHAPE = SHAPE_EQUATOR * np.eye(3) + (SHAPE_POLAR - SHAPE_EQUATOR) * np.outer(SHAPE_AXIS, SHAPE_AXIS)
+SHAPE_INV = np.linalg.inv(SHAPE)
+
+DRIFT_HOLD = (2.2472, -3.4147)
+
+
+def undrift(a):
+    import cv2
+    m = np.float32([[1, 0, DRIFT_HOLD[0]], [0, 1, DRIFT_HOLD[1]]])
+    out = cv2.warpAffine(np.ascontiguousarray(a), m, (a.shape[1], a.shape[0]), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    return out if out.dtype == np.uint8 else np.clip(out, 0, 1)
+
+
+def globe(d, cam=CAM):
+    cu = SHAPE_INV @ (cam - SHAPE_CENTER)
+    du = d @ SHAPE_INV
+    du = du / np.linalg.norm(du, axis=-1, keepdims=True)
+    b = -(du @ cu)
+    disc = b * b - (cu @ cu - 1.0)
+    hit = disc > 0
+    u = cu + du * (b - np.sqrt(np.maximum(disc, 0)))[..., None]
+    n = u @ SHAPE
+    n = n / np.linalg.norm(n, axis=-1, keepdims=True)
+    q = np.sqrt(np.maximum(cu @ cu - b * b, 0))
+    mu = np.sqrt(np.maximum(1 - q * q, 0))
+    return u, n, hit, q, mu
+
+
+def graze(d, cam=CAM):
+    cu = SHAPE_INV @ (cam - SHAPE_CENTER)
+    du = d @ SHAPE_INV
+    du = du / np.linalg.norm(du, axis=-1, keepdims=True)
+    pc = cu + du * (-(du @ cu))[..., None]
+    b = np.linalg.norm(pc, axis=-1)
+    n = (pc / b[..., None]) @ SHAPE
+    return b, n / np.linalg.norm(n, axis=-1, keepdims=True)
+
+
+def surface(u):
+    return SHAPE_CENTER + u @ SHAPE
+
 
 def to_linear(a):
     return np.where(a <= 0.04045, a / 12.92, ((a + 0.055) / 1.055) ** 2.4)

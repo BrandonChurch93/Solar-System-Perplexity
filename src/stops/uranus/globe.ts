@@ -9,8 +9,10 @@ out vec3 vWorldN;
 out vec3 vPos;
 out vec3 vView;
 out vec3 vClip;
+flat out vec3 vCamL;
 void main() {
   vLocal = position;
+  vCamL = (inverse(modelMatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
   vWorldN = normalize(mat3(modelMatrix) * position);
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vPos = wp.xyz;
@@ -32,6 +34,7 @@ const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uCloud;
+uniform sampler2D uShade;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uSpin;
@@ -50,11 +53,15 @@ in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vPos;
 in vec3 vView;
+flat in vec3 vCamL;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${LIGHT_GLSL}
+vec3 shadeAt(vec3 d) {
+  return textureLod(uShade, vec2(atan(d.x, d.z) / (2.0 * PI) + 0.5, asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5), 0.0).rgb;
+}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -70,12 +77,11 @@ void main() {
   vec3 d = spinY(d0, uSpin + bandTurn);
   vec3 dc = spinY(d0, uSpin + cloudTurn);
   vec3 n = normalize(vWorldN);
-  vec3 dir = normalize(vPos);
-  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  float mu = clamp(dot(d0, normalize(vCamL - d0)), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg;
-  vec3 light = lightAt(ndl, mu);
+  vec3 light = lightAt(ndl, mu) * shadeAt(d0);
   vec3 col = albedo * light * max(vec3(1.0) - cloud.g * uShadowTint, vec3(0.04));
   float lit = smoothstep(-0.02, 0.32, ndl);
   col = mix(col, uCloudWhite * (0.02 + 0.98 * lit), cloud.r);
@@ -88,6 +94,7 @@ export interface GlobeOptions {
   map: THREE.Texture
   cloud: THREE.Texture
   light: THREE.Texture
+  shade: THREE.Texture
   lightSize: [number, number]
   cloudWhite: number
   shadowTint: [number, number, number]
@@ -105,7 +112,7 @@ export class Globe {
       vertexShader: SPHERE_VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map }, uCloud: { value: o.cloud }, uLight: { value: o.light }, uLightSize: { value: new THREE.Vector2().fromArray(o.lightSize) },
+        uMap: { value: o.map }, uCloud: { value: o.cloud }, uLight: { value: o.light }, uShade: { value: o.shade }, uLightSize: { value: new THREE.Vector2().fromArray(o.lightSize) },
         uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
         uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },

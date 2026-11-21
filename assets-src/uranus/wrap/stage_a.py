@@ -33,10 +33,9 @@ def main():
     h, w = im.shape[:2]
     lin = geo.scene(im).astype(np.float32)
     d = geo.rays(w, h)
-    p, hit, b = geo.sphere(d)
-    mu = -(p * d).sum(-1)
+    _, n, hit, b, mu = geo.globe(d)
     sun = SUN / np.linalg.norm(SUN)
-    ndl = p @ sun
+    ndl = n @ sun
     rot = body_rotation()
     x0, x1, y0, y1 = 1820, 4040, 620, 2820
     crop = im8[y0:y1, x0:x1]

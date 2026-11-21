@@ -14,6 +14,8 @@ OUT = 'out/work/u/wrap/'
 W, H = 8192, 4096
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
 NORTH = 44.0
+SHADE_SIGMA = 57
+SHADE_SIZE = (512, 256)
 
 
 def smooth(a, b, x):
@@ -81,7 +83,33 @@ def main():
     fill[..., 0] *= 1 + tint[0]
     fill[..., 2] *= 1 + tint[1]
     del luma, tint
-    keep = seen * (0.2 + 0.8 * smooth(-0.02, 0.15, ndl))
+    mu = np.load(OUT + 'map-mu.npy')
+    wgt = smooth(0.06, 0.14, mu).astype(np.float32)
+    del mu
+    pad = 4 * SHADE_SIGMA
+
+    def blur(v):
+        wide = np.concatenate([v[:, -pad:], v, v[:, :pad]], 1)
+        return cv2.GaussianBlur(wide, (0, 0), SHADE_SIGMA)[:, pad:-pad]
+
+    den = blur(wgt)
+    shade = np.zeros_like(alb)
+    for c in range(3):
+        ratio = np.log(np.clip(alb[..., c] / np.maximum(fill[..., c], 1e-3), 0.2, 5.0)) * wgt
+        shade[..., c] = blur(ratio) / np.maximum(den, 1e-4)
+    shade = np.exp(np.clip(shade, -1.2, 1.2) * smooth(0.03, 0.55, den)[..., None])
+    del den, wgt
+    alb = alb / shade
+    small = cv2.resize(shade, SHADE_SIZE, interpolation=cv2.INTER_AREA)
+    np.save(OUT + 'shade.npy', small)
+    Image.fromarray((np.clip(small * 0.5, 0, 1) * 255).astype(np.uint8)).resize((1024, 512), Image.BILINEAR).save(OUT + 'shade.jpg', quality=90)
+    print('shade range', small.min(0).min(0).round(3), small.max(0).max(0).round(3))
+    del shade
+    day = smooth(0.08, 0.3, ndl)[..., None]
+    grey = (alb @ LUMA)[..., None]
+    alb = grey + (alb - grey) * (0.15 + 0.85 * day)
+    del day, grey
+    keep = seen * (0.3 + 0.7 * smooth(-0.02, 0.15, ndl))
     out = np.clip(fill + (alb - fill) * keep[..., None], 0.1, 1.8)
     del fill, alb
     np.save(OUT + 'wrap-albedo.npy', out.astype(np.float32))

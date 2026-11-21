@@ -15,7 +15,6 @@ from deblock import deblock
 FULL = (2816, 1584)
 MARGIN = 0.125
 RIM = (1.008, 1.02)
-CIRCLE = (1460.3, 858.74, 528.64)
 MOONS = [(671.7, 343.9, 29.06), (2425.5, 444.2, 24.0)]
 LUMA = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
@@ -113,9 +112,8 @@ def save(lin, name, out):
 
 
 def hold(hero, fill, glow, out):
-    cx, cy, cr = CIRCLE
     yy, xx = np.mgrid[0:FULL[1], 0:FULL[0]]
-    d = np.hypot(xx - cx, yy - cy) / cr
+    d = geo.graze(geo.rays(FULL[0], FULL[1]))[0]
     dx, dy, resp = drift(hero, glow)
     print('film drift px at 1920', round(dx, 2), round(dy, 2), 'response', round(resp, 3))
     a = scene(hero, Image.LANCZOS, True)

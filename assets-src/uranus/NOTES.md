@@ -67,7 +67,7 @@ Scripts in `assets-src/uranus/wrap/`, work files in `out/work/u/wrap/`.
 - `stage_b.py`: unprojects to 8192 x 4096 equirect (u = lon/360 + 0.5, north at top): albedo = base / L, view-cosine fade 0.2 to 0.42, cloud map, ndl map.
 - `stage_c.py`: zonal profile per latitude (north of 44 reflected), detail tile from the lit region mirror-tiled for the unseen side, planar polar mapping blended at lat 68 to 80, far-side cloud copy. First result: mirror tiling shows as diamond repeats and the tile carries coloured speckle and blobby patches from the fleck inpaint. Next: replace the tile by synthesised streak detail with the hero's statistics, keep the zonal profile.
 
-## State at 04:25 UTC (read this first after a compaction)
+## State at 04:25 UTC (older; the section at the end is newer)
 
 Orbit view is close to the hero; not yet reported to `/root`. Order from here: finish the sky patch and rings, moons check, limb crops at final, NOTES and RECIPE, remove stand-ins, merge main, commit binaries, push, message `/root`. Then terrain, dive and rise, self checks, READY.
 
@@ -96,3 +96,29 @@ Budget change: web set at most 35 MB. Engine batch 1 is merged (hash 434d0a5e367
 - Film line FWHM is about 1.5 times the hero's at 1920 (raster limit); narrower sigma helps a little.
 - The hero's top glint streak (ring 2) has scene peak 0.9 to 1.9; with a wide line it looks fat, hence the knee.
 - Limb on the night side at review tier showed a dotted bright edge when brightened 3x: check at final.
+
+## State at 04:50 UTC (read this first after a compaction)
+
+Still on the orbit view. Not yet reported to `/root`. Engine batch 2 is merged (main 9f78a4e, hash 05c29d3a1588e95f, merge commit 6d9a4ae); frame 4035 at review was byte identical before and after. `terrain.rollDeg` exists now as an optional move parameter.
+
+### Globe is an ellipsoid (04:35)
+- The hero's disc outline is not a circle. Ellipse fit of the edge: centre (1458.86, 860.13), semi-axes 519.81 (0.9833 R) along -2.75 deg and 530.77 (1.00403 R), rms 0.91 px. A sphere left a 1.5 px mismatch round the limb that showed as a bright or dark edge line.
+- `look.shape = { axis [0.99885, -0.04789, 0], polar 0.9833, equator 1.00403, center [-0.00273, -0.00263, 0] }`, mirrored in `geo.py` (`geo.globe(d)`, `geo.graze(d)`, `geo.surface(u)`). In `set.ts` a `shape` group (rotate X to axis, scale, offset) holds an `upright` group (inverse rotation) that holds the globe and halo. Shaders take the camera in local space (`vCamL`), so the limb math is that of a unit sphere.
+- Film outline after the change: centre (1459.78, 861.00), semi 520.65 / 531.18, -2.51 deg (the offset is the camera drift).
+
+### Light
+- `light.bin` 513 (ndl) x 128 (mu) x 4 float. `stage_a2.py` fits a model for mu over 0.05. `stage_e.py` replaces the rows mu under 0.2 by direct medians of hero / film albedo, because the model extrapolated to a dotted bright edge at mu under 0.03.
+- `shade.bin` 512 x 256 x 4 float (04:50): a world-fixed light map. `stage_c.py` takes the low-pass (sigma 2.5 deg, normalised by weight, fading to 1 outside the seen side) of albedo / zonal fill, divides the albedo by it and ships it. The globe shader multiplies the light by it at the unspun direction, so the hero's broad light and night-side structure stays put while the fine albedo and the clouds turn. Reason: with the night albedo kept at only 20 percent the film's night side was flatter than the hero's.
+- Halo: `halo.bin` 64 x 64 over b 1.0..1.3 (sqrt rows) by ndl; percentile 50 for b under 1.04, 35 beyond.
+
+### Checks (use these, do not guess)
+- `python3 assets-src/uranus/check/crops.py FILM OUTDIR [names]`: hero beside film at native size, boxes ul, top, right, ll, lr, limb-ul, limb-night, limb-night3, disc, miranda, ariel.
+- `python3 assets-src/uranus/check/limb.py FILM angles...`: radial profiles across the limb, hero | film, scene linear.
+- `python3 assets-src/uranus/check/outline.py IMAGE [shift]`: ellipse fit of the disc edge.
+
+### Sky patch rebuild (needed after every change of halo or globe edge)
+1. Copy the real `full/sky-hold.webp` to `out/work/u/sky/real/`, put an all-black one in its place, `look.show` false/false, build, `npm run still -- --frame 4035 --tier review --out out/work/u/sky/glow.png`, restore.
+2. Delete `out/work/u/sky/along.npz`, then `python3 assets-src/uranus/sky/patch.py hold references/approved/uranus-hero.png out/work/u/sky/sky-fill-take1.png out/work/u/sky/glow.png public/assets/uranus` (about 10 min, detached).
+
+### Order from here
+Orbit: check shade map in the frame, rebuild sky patch, compare at final, RECIPE, remove stand-ins, commit binaries, push, message `/root`. Then terrain (fit `uranus-close.jpg`), dive and rise, self checks, READY.

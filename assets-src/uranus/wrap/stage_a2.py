@@ -36,9 +36,8 @@ def main():
     base = np.load(OUT + 'base.npy')
     h, w = base.shape[:2]
     d = geo.rays(w, h)
-    p, hit, _ = geo.sphere(d)
-    mu = -(p * d).sum(-1)
-    ndl = p @ np.array(meta['sun'])
+    _, n, hit, _, mu = geo.globe(d)
+    ndl = n @ np.array(meta['sun'])
     knots = np.linspace(-1, 1, meta['knots'])
     curve = np.array(meta['curve'])
     alpha = np.load(OUT + 'alpha.npy')

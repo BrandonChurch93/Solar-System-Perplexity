@@ -14,8 +14,8 @@ OUT = 'out/work/u/wrap/'
 DST = 'public/assets/uranus/'
 Q0, Q1, QN = 0.94, 1.0, 60
 NB = 129
-MU_A, MU_B = 0.24, 0.34
-Q_HOLD = 0.9993
+MU_A, MU_B = 0.2, 0.3
+Q_HOLD = 0.997
 
 
 def smooth(a, b, x):
@@ -31,13 +31,17 @@ def main():
     hero = geo.scene(np.asarray(Image.open('references/approved/uranus-hero.png').convert('RGB')).astype(np.float32) / 255)
     wrap = np.asarray(Image.open(DST + 'full/wrap-color.jpg').convert('RGB'))
     d = geo.rays()
-    p, hit, q = geo.sphere(d)
-    ndl = p @ sun
+    p, n, hit, q, _ = geo.globe(d)
+    ndl = n @ sun
     sel = hit & (q >= Q0)
     lon, lat = geo.lonlat(p[sel], rot)
     mx = (lon / (2 * np.pi) + 0.5) * wrap.shape[1] - 0.5
     my = np.clip((0.5 - lat / np.pi) * wrap.shape[0] - 0.5, 0, wrap.shape[0] - 1)
     alb = geo.scene(np.stack([ndi.map_coordinates(wrap[..., c], [my, mx], order=1, mode='grid-wrap') for c in range(3)], -1).astype(np.float32) / 255)
+    shade = np.load(OUT + 'shade.npy')
+    sx = np.clip((lon / (2 * np.pi) + 0.5) * shade.shape[1] - 0.5, 0, shade.shape[1] - 1)
+    sy = np.clip((0.5 - lat / np.pi) * shade.shape[0] - 0.5, 0, shade.shape[0] - 1)
+    alb = alb * np.stack([ndi.map_coordinates(shade[..., c], [sy, sx], order=1, mode='nearest') for c in range(3)], -1)
     ratio = hero[sel] / np.maximum(alb, 0.02)
     qi = np.clip(((q[sel] - Q0) / (Q1 - Q0) * QN).astype(int), 0, QN - 1)
     ni = np.clip(((ndl[sel] + 1) * 0.5 * (NB - 1) + 0.5).astype(int), 0, NB - 1)
@@ -55,7 +59,9 @@ def main():
         bad = np.isnan(a)
         idx = ndi.distance_transform_edt(bad, return_distances=False, return_indices=True, sampling=(8, 1))
         table[..., c] = a[tuple(idx)]
-    table = np.exp(ndi.gaussian_filter1d(np.log(np.maximum(table, 1e-4)), 2.0, axis=1, mode='nearest'))
+    table = np.log(np.maximum(table, 1e-4))
+    table = ndi.gaussian_filter1d(ndi.median_filter(table, size=(1, 5, 1), mode='nearest'), 3.0, axis=1, mode='nearest')
+    table = np.exp(ndi.convolve1d(table, np.array([0.25, 0.5, 0.25]), axis=0, mode='nearest'))
     n_l, n_m = model.shape[:2]
     mu = np.linspace(0, 1, n_m)
     qrow = np.minimum(np.sqrt(np.maximum(1 - mu * mu, 0)), Q_HOLD)

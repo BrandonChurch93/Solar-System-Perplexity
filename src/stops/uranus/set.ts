@@ -34,11 +34,20 @@ export const createSet: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const cloud = await ctx.texture(base + 'wrap-cloud.png', { srgb: false, anisotropy: 16, repeat: true })
   const light = await ctx.dataTexture(base + 'light.bin', look.globe.lightSize[0], look.globe.lightSize[1], 4)
+  const shade = await ctx.dataTexture(base + 'shade.bin', look.globe.shadeSize[0], look.globe.shadeSize[1], 4)
   const haloLut = await ctx.dataTexture(base + 'halo.bin', look.halo.size[0], look.halo.size[1], 4)
-  const globe = new Globe({ map, cloud, light, ...look.globe })
+  const globe = new Globe({ map, cloud, light, shade, ...look.globe })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range)
-  orbit.add(globe.mesh, halo.mesh)
+  const shape = new THREE.Group()
+  shape.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), new THREE.Vector3().fromArray(look.shape.axis).normalize())
+  shape.scale.set(look.shape.polar, look.shape.equator, look.shape.equator)
+  shape.position.fromArray(look.shape.center)
+  const upright = new THREE.Group()
+  upright.quaternion.copy(shape.quaternion).invert()
+  upright.add(globe.mesh, halo.mesh)
+  shape.add(upright)
+  orbit.add(shape)
 
   const ringGeo = ringGeometry(look.rings, [...parseLines(await ctx.buffer(base + 'rings.bin')), ...hairLines(look.rings)])
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
@@ -63,7 +72,6 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const sun = new THREE.Vector3()
-  const camera = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const bounce = new THREE.Vector3()
   const moonLight = new THREE.Vector3()
@@ -88,11 +96,10 @@ export const createSet: SetFactory = async (ctx) => {
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       sun.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
-      camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
       globe.update(sun, plan.spin(state.time), elapsed, gain, state.weight, shot.post.vignette, aspect)
-      halo.update(camera, sun, gain * state.weight)
+      halo.update(sun, gain * state.weight)
       rings.update(sun, gain * state.weight)
       turn.setFromAxisAngle(ringNormal, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       for (const m of moons) {

@@ -33,12 +33,16 @@ def main():
     lat = (0.5 - (np.arange(H) + 0.5) / H) * np.pi
     lo, la = np.meshgrid(lon, lat)
     p = geo.direction(lo, la) @ rot.T
-    to = geo.CAM - p
+    to = geo.SHAPE_INV @ (geo.CAM - geo.SHAPE_CENTER) - p
     dist = np.linalg.norm(to, axis=-1)
     mu = ((to * p).sum(-1) / dist).astype(np.float32)
-    ndl = (p @ sun).astype(np.float32)
+    del to, dist
+    n = p @ geo.SHAPE
+    ndl = ((n @ sun) / np.linalg.norm(n, axis=-1)).astype(np.float32)
+    del n
+    p = geo.surface(p)
     x, y = geo.project(p, w2, h2)
-    del p, to
+    del p
     mx, my = x.astype(np.float32), y.astype(np.float32)
     seen = smooth(MU0, MU1, mu).astype(np.float32)
     col = cv2.remap(base, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
@@ -51,13 +55,11 @@ def main():
     eps = 0.004
     alb = (np.maximum(col, 0) + eps * meta['norm']) / (light + eps)
     del col
-    day = smooth(0.08, 0.3, ndl)[..., None]
-    grey = (alb @ LUMA)[..., None]
-    alb = grey + (alb - grey) * (0.15 + 0.85 * day)
     alpha = cv2.remap(np.load(OUT + 'alpha.npy'), mx, my, cv2.INTER_LINEAR) * (seen > 0.999)
     shadow = cv2.remap(np.load(OUT + 'shadow.npy'), mx, my, cv2.INTER_LINEAR) * (seen > 0.999)
     np.save(OUT + 'map-albedo.npy', alb.astype(np.float32))
     np.save(OUT + 'map-seen.npy', seen)
+    np.save(OUT + 'map-mu.npy', mu)
     np.save(OUT + 'map-cloud.npy', np.stack([alpha, shadow], -1).astype(np.float32))
     np.save(OUT + 'map-ndl.npy', ndl)
     show = (geo.display(np.clip(alb, 0, 4) * seen[..., None]) * 255).astype(np.uint8)
