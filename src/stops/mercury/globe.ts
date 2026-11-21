@@ -65,11 +65,32 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       for (int k = 0; k < (uSmear > 0.0 ? 0 : 1); k++) {
         if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       }
-      for (int k = 0; k < (uSmear > 0.0 && w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, streak(uPatch${i}, q + 0.5, sx * uPatchScale[${i}], sy * uPatchScale[${i}], along, lat), w);
+      for (int k = 0; k < (uSmear > 0.0 && w > 0.0 && bare ? 1 : 0); k++) albedo = mix(albedo, streak(uPatch${i}, q + 0.5, sx * uPatchScale[${i}], sy * uPatchScale[${i}], along, lat), w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
+
+const CLOSE_SIDES = [1, -1, 0]
+
+const CLOSE_SPOTS = CLOSE_SIDES.map((side, i) => `  vec3 q${i} = closeSpot(${side === 0 ? 'dc' : `closeTurn(dc, ${side > 0 ? '' : '-'}uCloseTurn.x, uCloseTurn.y)`});
+  vec2 uv${i} = vec2(q${i}.x, 1.0 - q${i}.y);
+  vec2 ax${i} = dFdx(uv${i});
+  vec2 ay${i} = dFdy(uv${i});
+  float es${i} = min(q${i}.x, 1.0 - q${i}.x) / uCloseFade.z;
+  float eb${i} = (1.0 - q${i}.y) / uCloseFade.w;
+  float w${i} = span * step(0.02, q${i}.z) * step(0.0, q${i}.y) * smoothstep(0.0, 1.0, es${i}) * smoothstep(0.0, 1.0, eb${i})${side === 0 ? '' : ' * uCloseTurn.z'};`).join('\n')
+
+const CLOSE_DRAWS = CLOSE_SIDES.map((side, i) => `  for (int k = 0; k < (w${i} > 0.0${side === 0 ? '' : ' && bare'} ? 1 : 0); k++) {
+    vec3 photo = vec3(0.0);
+    for (int j = 0; j < (uSmear > 0.0 ? 0 : 1); j++) photo = textureGrad(uClose, uv${i}, ax${i} * uGrad, ay${i} * uGrad).rgb;
+    for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(uClose, uv${i}, ax${i} * mh.x + ay${i} * mh.y, ay${i} * mh.x - ax${i} * mh.y, along, lat);
+    float core = smoothstep(1.0, uCloseW.z, es${i}) * smoothstep(1.0, uCloseW.z, eb${i}) * inner;
+    col = mix(col, mix(inverseFilmic(photo), uHaze.rgb, uHaze.a * mix(1.0, ${side === 0 ? 'uCloseW.y' : 'uCloseTurn.w'}, core)), w${i});
+    vec2 tx = ax${i} * uCloseSize;
+    vec2 ty = ay${i} * uCloseSize;
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), step(0.5, w${i}));
+  }`).join('\n')
 
 const FRAG = /* glsl */ `
 precision highp float;
@@ -102,6 +123,16 @@ uniform vec4 uNightFlat;
 uniform vec4 uNightSoft;
 uniform vec3 uCarry;
 uniform vec4 uHaze;
+uniform sampler2D uClose;
+uniform mat3 uCloseCam;
+uniform vec3 uCloseUp;
+uniform vec4 uCloseLens;
+uniform vec4 uCloseBox;
+uniform vec4 uCloseFade;
+uniform vec2 uCloseSize;
+uniform vec3 uCloseW;
+uniform vec3 uClosePivot;
+uniform vec4 uCloseTurn;
 uniform vec4 uDusk;
 uniform float uDuskFrom;
 uniform vec2 uReliefRange;
@@ -158,6 +189,13 @@ vec3 streak(sampler2D tex, vec2 uv, vec2 am, vec2 an, float along, float lat) {
   for (int i = 0; i < int(count); i++) sum += textureGrad(tex, uv + am * (along * ((float(i) + 0.5) / count - 0.5)), am * f, an * f).rgb;
   return sum / count;
 }
+vec3 closeSpot(vec3 dc) {
+  vec3 cp = uCloseLens.x * dc - (uCloseLens.x + 1.0) * uCloseUp;
+  return vec3((uCloseLens.zw + uCloseLens.y * vec2(cp.x, -cp.y) / max(-cp.z, 0.02) - uCloseBox.xy) / uCloseBox.zw, -cp.z);
+}
+vec3 closeTurn(vec3 dc, float s, float c) {
+  return dc * c + cross(uClosePivot, dc) * s + uClosePivot * (dot(uClosePivot, dc) * (1.0 - c));
+}
 vec3 limbAt(float mu) {
   float x = clamp(mu / uLimbTo, 0.0, 1.0) * 16.0;
   int i = int(min(floor(x), 15.0));
@@ -200,6 +238,12 @@ void main() {
   vec2 jal = mh * dot(jit, mh);
   jit = jal * smoothstep(2.0, 6.0, sm * uJitter.z) + (jit - jal) * still;
   for (int k = 0; k < (uSmear > 0.0 ? 1 : 0); k++) d = normalize(d + jx * jit.x + jy * jit.y);
+  vec3 dc = uCloseCam * d;
+  float reach = uCloseLens.x * acos(clamp(dot(dc, uCloseUp), -1.0, 1.0));
+  float span = uCloseW.x * (1.0 - smoothstep(uCloseFade.x, uCloseFade.y, reach));
+  float inner = 1.0 - smoothstep(2.0 * uCloseFade.x - uCloseFade.y, uCloseFade.x, reach);
+${CLOSE_SPOTS}
+  bool bare = w2 < 1.0;
   float wu = atan(d.x, d.z) / (2.0 * PI) + 0.5;
   float wv = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
   float wu2 = fract(wu + 0.5) - 0.5;
@@ -207,7 +251,7 @@ void main() {
   vec2 wy = vec2(abs(dFdy(wu)) < abs(dFdy(wu2)) ? dFdy(wu) : dFdy(wu2), dFdy(wv));
   vec3 albedo = vec3(0.0);
   for (int k = 0; k < (uSmear > 0.0 ? 0 : 1); k++) albedo = equirectGrad(uMap, d, uGrad).rgb;
-  for (int k = 0; k < (uSmear > 0.0 ? 1 : 0); k++) albedo = streak(uMap, vec2(wu, wv), wx * mh.x + wy * mh.y, wy * mh.x - wx * mh.y, along, lat);
+  for (int k = 0; k < (uSmear > 0.0 && bare ? 1 : 0); k++) albedo = streak(uMap, vec2(wu, wv), wx * mh.x + wy * mh.y, wy * mh.x - wx * mh.y, along, lat);
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
   float near = 0.0;
@@ -230,11 +274,15 @@ ${PATCH_LEVELS}
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
   vec3 north = cross(d, east);
   float e = uHeightStep;
-  float hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
-  float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
+  float hE = 0.0;
+  float hN = 0.0;
+  for (int k = 0; k < (bare ? 1 : 0); k++) {
+    hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
+    hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
+  }
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
   vec3 dm = dFdx(d) * mh.x + dFdy(d) * mh.y;
-  for (int k = 0; k < (uSmear > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (uSmear > 0.0 && bare ? 1 : 0); k++) {
     float count = clamp(ceil(along / lat), 1.0, 4.0);
     slope = vec3(0.0);
     for (int i = 0; i < int(count); i++) slope += slopeAt(normalize(d + dm * (along * ((float(i) + 0.5) / count - 0.5))));
@@ -252,12 +300,13 @@ ${PATCH_LEVELS}
   float band = smoothstep(uDusk.x, uDusk.y, ndl0) * (1.0 - smoothstep(uDusk.z, uDusk.w, ndl0));
   vec3 calm = ground;
   float deep = 1.0 - smoothstep(uNightSoft.x, uNightSoft.y, ndl0);
-  for (int k = 0; k < (deep > 0.0 ? 1 : 0); k++) calm = mix(ground, mix(inverseFilmic(textureGrad(uMap, vec2(wu, wv), wx * uNightSoft.w, wy * uNightSoft.w).rgb), ground, uNightSoft.z), deep);
+  for (int k = 0; k < (deep > 0.0 && bare ? 1 : 0); k++) calm = mix(ground, mix(inverseFilmic(textureGrad(uMap, vec2(wu, wv), wx * uNightSoft.w, wy * uNightSoft.w).rgb), ground, uNightSoft.z), deep);
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
   vec3 col = (ground * lit + dim * uNight * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uCarry.z);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col = mix(col, uHaze.rgb, uHaze.a);
+${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   vec4 beauty = vec4((col * cov + rim) * k, cov);
@@ -322,7 +371,8 @@ export class Globe {
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
-        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uHaze: { value: new THREE.Vector4() }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
+        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uHaze: { value: new THREE.Vector4() },
+        uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: new THREE.Vector3(0, 0, 2) }, uClosePivot: { value: new THREE.Vector3(0, 1, 0) }, uCloseTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -332,6 +382,24 @@ export class Globe {
 
   carry(lift: number, knee: number, grey: number): void {
     ;(this.material.uniforms.uCarry!.value as THREE.Vector3).set(lift, knee, grey)
+  }
+
+  close(texture: THREE.Texture, toCamera: THREE.Quaternion, up: THREE.Vector3, pivot: THREE.Vector3, turn: readonly [number, number, number], radius: number, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], far: readonly [number, number], feather: readonly [number, number]): void {
+    const u = this.material.uniforms
+    const size = texture.image as unknown as { width: number; height: number }
+    u.uClose!.value = texture
+    ;(u.uCloseCam!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(toCamera))
+    ;(u.uCloseUp!.value as THREE.Vector3).copy(up)
+    ;(u.uClosePivot!.value as THREE.Vector3).copy(pivot)
+    ;(u.uCloseTurn!.value as THREE.Vector4).set(Math.sin(THREE.MathUtils.degToRad(turn[0])), Math.cos(THREE.MathUtils.degToRad(turn[0])), turn[1], turn[2])
+    ;(u.uCloseLens!.value as THREE.Vector4).set(radius, focal, center[0], center[1])
+    ;(u.uCloseBox!.value as THREE.Vector4).set(box[0], box[1], box[2], box[3])
+    ;(u.uCloseFade!.value as THREE.Vector4).set(far[0], far[1], feather[0], feather[1])
+    ;(u.uCloseSize!.value as THREE.Vector2).set(size.width, size.height)
+  }
+
+  near(weight: number, haze: number, soft: number): void {
+    ;(this.material.uniforms.uCloseW!.value as THREE.Vector3).set(weight, haze, soft)
   }
 
   haze(color: readonly [number, number, number], weight: number): void {

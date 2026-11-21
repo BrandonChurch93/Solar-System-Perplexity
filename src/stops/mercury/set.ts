@@ -5,6 +5,7 @@ import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/type
 import { diagUniform } from '../../diagnostics/diag'
 import { drift, ramp, smooth, smoother } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
+import { closeImage, closePivot, closeRadius, closeUp as nearUp } from './close'
 import { config } from '../../config'
 import { patches, relief, wrap } from './assets'
 import { Glare, type GlareSide } from './glare'
@@ -97,6 +98,13 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await Relief.load(ctx, base, relief[key], look.relief)
   terrain.add(ground.group)
+  const shots: THREE.Texture[] = []
+  ground.group.traverse((o) => {
+    const found = ((o as THREE.Mesh).material as THREE.ShaderMaterial | undefined)?.uniforms?.uColor?.value as THREE.Texture | undefined
+    if (found) shots.push(found)
+  })
+  const hasClose = shots.length > 0
+  if (hasClose) globe.close(shots[0]!, plan.anchor.frame.clone().invert().multiply(new THREE.Quaternion().fromArray(fit.globe.quaternion)), nearUp, closePivot, look.close.turn, closeRadius, closeImage.focal, closeImage.center, closeImage.box, look.close.far, look.close.feather)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
   const light = new THREE.Vector3()
@@ -134,6 +142,7 @@ export const createSet: SetFactory = async (ctx) => {
       let radius = 50
       let lift = 0
       let haze = 0
+      let veil = 0
       if (inOrbit) {
         line = limbLine(centre.copy(world.position).applyQuaternion(toCamera), tanHalf)
         radius = Math.min(1 / Math.sqrt(Math.max(world.position.lengthSq() - 1, 1e-6)) / tanHalf, 50)
@@ -143,7 +152,8 @@ export const createSet: SetFactory = async (ctx) => {
         glareSun.copy(sunShown)
         lift = !mine ? 0 : state.time < covers[0]! ? smoother(ramp(covers[0]! - look.carry.frames[0] / config.fps, covers[0]!, state.time)) : state.time >= covers[1]! ? 1 - smoother(ramp(covers[1]!, covers[1]! + look.carry.frames[1] / config.fps, state.time)) : 0
         const h = look.haze
-        haze = !mine ? 0 : state.time < covers[0]! ? (1 - smoother(ramp(h.dive[1], h.dive[0], -fromDive))) * (h.dive[3] + (1 - h.dive[3]) * smoother(ramp(0, h.dive[2], -fromDive))) : state.time >= covers[1]! ? (1 - smoother(ramp(h.rise[1], h.rise[2], fromRise))) * (h.rise[3] + (1 - h.rise[3]) * smoother(ramp(0, h.rise[0], fromRise))) : 0
+        veil = !mine ? 0 : state.time < covers[0]! ? 1 - smoother(ramp(h.dive[1], h.dive[0], -fromDive)) : state.time >= covers[1]! ? 1 - smoother(ramp(h.rise[1], h.rise[2], fromRise)) : 0
+        haze = state.time < covers[0]! ? veil * (h.dive[3] + (1 - h.dive[3]) * smoother(ramp(0, h.dive[2], -fromDive))) : veil * (h.rise[3] + (1 - h.rise[3]) * smoother(ramp(0, h.rise[0], fromRise)))
       } else {
         const kind = state.segment.kind
         line = closeLine(mine && kind === 'dive' ? plan.dive(state.time).pose : mine && kind === 'rise' ? plan.rise(state.time).pose : plan.terrain(state.time - plan.seg.terrain.start))
@@ -159,10 +169,13 @@ export const createSet: SetFactory = async (ctx) => {
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const distance = world.position.length()
+      const kind0 = state.segment.kind
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
       globe.carry(Math.pow(look.carry.gain, lift), look.carry.knee, look.carry.grey * lift)
       globe.haze(look.haze.color, look.haze.peak * haze)
+      const low = mine && hasClose && (kind0 === 'dive' || kind0 === 'rise') ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.close.height[0], look.close.height[1]) : 0
+      globe.near(low, look.close.haze, look.close.soft)
       globe.update(light, sunShown, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
       const kind = state.segment.kind
@@ -182,8 +195,9 @@ export const createSet: SetFactory = async (ctx) => {
       const sep = sunShown.angleTo(world.position)
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
-      lens.update(sunShown, view.camera, shown * clear * state.weight * (1 + 2 * (breath - 1)), gain, shot.post.vignette, aspect)
-      streak.update(sunShown, view.camera, shown * clear * state.weight * (1 + 2 * (breath - 1)), gain, shot.post.vignette, aspect)
+      const ghost = shown * clear * state.weight * (1 + 2 * (breath - 1)) * (1 - look.lens.veil * veil)
+      lens.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect)
+      streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect)
     },
     dispose: () => {
       globe.dispose()

@@ -31,7 +31,7 @@ export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb }
 export const smear = 1
 export const spinRest = 1
 
-export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
+export const lens: LensLook & { veil: number } = { gain: 1, fade: [1.15, 1.7], veil: 1 }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
 
 export const glare: GlareLook = {
@@ -42,6 +42,8 @@ export const glare: GlareLook = {
 export const ride: [number, number] = [18, 18]
 export const carry = { gain: 2.6, knee: 2.9, grey: 0.35, frames: [14, 14] as [number, number] }
 export const haze = { color: [0.3, 0.275, 0.23] as [number, number, number], peak: 0.68, dive: [13.5, 7.5, 3, 0.35] as [number, number, number, number], rise: [3, 6, 10.5, 0.35] as [number, number, number, number] }
+
+export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.07, 0.19] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], soft: 2.2, haze: 0.5, turn: [78, 1, 0.8] as [number, number, number] }
 
 export const edge = 10.1
 export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }
