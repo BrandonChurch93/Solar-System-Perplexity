@@ -1,84 +1,90 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T11:21:29.332Z",
- "head": "095a007d5c0ca51ed1a2ee7672abf2ce12394f6d",
- "note": "round 2 work: rise strip 2120 to 2140 checked frame by frame; night side and far maps",
+ "pushed": "2026-11-21T11:44:32.010Z",
+ "head": "805c2aa5b77f44345b8fb705db132de907dcca10",
+ "note": "dive start no longer dissolves the night side; limb rim widened to the hero's band; checks for READY running",
  "looks": [
   {
-   "time": "2026-11-21T11:21:28.713Z",
-   "file": "20261121112128713-note-h1857.jpg",
-   "source": "../../../../tmp/h1857.png",
+   "time": "2026-11-21T11:44:25.928Z",
+   "file": "20261121114425928-note-n1857.jpg",
+   "source": "../../../../tmp/n1857.jpg",
    "kind": "note",
-   "label": "dive 1857 draft",
+   "label": "dive 1857 night side at native size: meridian zone with matched night tone (left) against the first try with a visible edge (right)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T11:21:28.125Z",
-   "file": "20261121112128125-note-i2156.jpg",
-   "source": "../../../../tmp/i2156.png",
+   "time": "2026-11-21T11:44:25.380Z",
+   "file": "20261121114425380-note-t3.jpg",
+   "source": "../../../../tmp/t3.jpg",
    "kind": "note",
-   "label": "rise 2156 draft: far maps, night land, lights as points, aurora off the disc",
+   "label": "dive start 1829, 1842, 1857, 1866 after the fix: one picture, only the pale patch and the green on the disc at the right limb go",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T11:21:27.593Z",
-   "file": "20261121112127593-note-strip-s4.jpg",
-   "source": "out/work/earth/p31/strip-s4.jpg",
-   "kind": "note",
-   "label": "rise 2136 to 2140 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:21:27.015Z",
-   "file": "20261121112127015-note-strip-s3.jpg",
-   "source": "out/work/earth/p31/strip-s3.jpg",
-   "kind": "note",
-   "label": "rise 2131 to 2136 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:21:26.364Z",
-   "file": "20261121112126364-note-strip-s2.jpg",
-   "source": "out/work/earth/p31/strip-s2.jpg",
-   "kind": "note",
-   "label": "rise 2126 to 2132 draft, the switch 2129 to 2130",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:21:25.799Z",
-   "file": "20261121112125799-note-strip-s1.jpg",
-   "source": "out/work/earth/p31/strip-s1.jpg",
-   "kind": "note",
-   "label": "rise 2120 to 2127 draft, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:20:07.353Z",
-   "file": "20261121112007353-frame-f-2140.jpg",
-   "source": "out/work/earth/p31/f-2140.png",
+   "time": "2026-11-21T11:43:42.191Z",
+   "file": "20261121114342191-frame-f-2156.jpg",
+   "source": "out/work/earth/p35/f-2156.png",
    "kind": "frame",
-   "label": "earth.rise frame 2140, draft tier",
+   "label": "earth.rise frame 2156, draft tier",
    "stop": "earth",
    "segment": "earth.rise",
-   "frame": 2140,
+   "frame": 2156,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:08:07.860Z",
-   "file": "20261121110807860-frame-f-1755.jpg",
-   "source": "out/work/earth/p30/f-1755.png",
+   "time": "2026-11-21T11:43:11.781Z",
+   "file": "20261121114311781-frame-f-1866.jpg",
+   "source": "out/work/earth/p35/f-1866.png",
    "kind": "frame",
-   "label": "earth.hold frame 1755, draft tier",
+   "label": "earth.dive frame 1866, draft tier",
    "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
+   "segment": "earth.dive",
+   "frame": 1866,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a9de32c960e5de06"
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:41:39.334Z",
+   "file": "20261121114139334-note-reg.jpg",
+   "source": "../../../../tmp/reg.jpg",
+   "kind": "note",
+   "label": "wrap maps around the Atlantic (surface, lights with aurora alpha in green, cloud alpha): the hero's pale patch starts at lon -35, its Brazil ends at lon -45",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:41:38.745Z",
+   "file": "20261121114138745-note-r2156.jpg",
+   "source": "../../../../tmp/r2156.jpg",
+   "kind": "note",
+   "label": "rise 2156 at draft: now (night clouds fainter, softer rim) above the frame before",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:36:05.974Z",
+   "file": "20261121113605974-note-dc1.jpg",
+   "source": "../../../../tmp/dc1.jpg",
+   "kind": "note",
+   "label": "dive cover strip 1876 to 1888 at draft after engine batch 12",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:35:50.615Z",
+   "file": "20261121113550615-frame-f-1829.jpg",
+   "source": "out/work/earth/p33/f-1829.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1829, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1829,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
