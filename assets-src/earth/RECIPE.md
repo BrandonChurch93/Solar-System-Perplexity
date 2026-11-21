@@ -94,4 +94,6 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 
 - `python3 assets-src/earth/holdcheck.py STILL`: mean difference of the hold frame against the hero per region, in code values.
 - `python3 assets-src/earth/limbcheck.py STILL pa...`: radial profiles across the limb, hero against film.
+- `python3 assets-src/earth/lightscheck.py STILL`: energy and colour of the city lights, hero against film.
+- `python3 assets-src/earth/trim.py STILL reset`: after `trim.json` is set to ones and the hold still is rendered again, measures the film against the hero per sun-angle knot through the whole lens chain and writes `src/stops/earth/trim.json` (multipliers of the light curve, limits 0.8 to 1.2). Run it last, after every map and the sky patch.
 - Numbers of the current build are in `assets-src/earth/NOTES.md`.

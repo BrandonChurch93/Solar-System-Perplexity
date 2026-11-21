@@ -7,7 +7,8 @@ Lab notebook of the agent that builds the `earth` stop. Read `assets-src/shared/
 - Branch `agent/earth`, looks on `agent/earth-looks`. VM: 4 cores, 7 GB RAM, no GPU.
 - Started 2026-11-21 02:43 UTC. Merged `origin/main` at 9602aca.
 - Judged frames: hold 1755, dive 1857, terrain 2010, rise 2156. Segments: hold 56 to 61 s, dive 61 to 64, terrain 64 to 70, rise 70 to 72.5, travel 72.5 to 75. 30 fps.
-- Milestones sent to `/root`: none yet.
+- Milestones sent to `/root`: orbit view (04:52 UTC). Next: terrain view, then dive and rise.
+- Engine hash 05c29d3a1588e95f since the merge of main 9f78a4e (engine batch 2). Stills from before are stale.
 
 ## Hero facts (`references/approved/earth-hero.png`, 2816 x 1584)
 
@@ -144,3 +145,63 @@ All scripts in `assets-src/earth/`, work files in `out/work/earth/` (not in git)
 ### Builder mail 04:12 UTC
 
 - main moved to b4ae65c (engine batch 1). Sky patches may carry `weight?: (time, view) => number`. Software rasterizer computes both sides of an `if` but skips a `for` body: put expensive conditional shader work in `for (int k = 0; k < (cond ? 1 : 0); k++) { ... }` and use `textureGrad` or `textureLod` inside. Engine hash 434d0a5e367a62fd: stills from before the merge are stale.
+
+## Orbit view, third pass (04:28 to 04:50 UTC)
+
+### Engine facts found
+
+- A frame renders at the shutter's middle: time = (frame + 0.25) / 30.
+- `film.ts` applies `pose.quaternion.multiply(drift(time))` to every shot. At frame 1755 the film's disc sits (+0.14, +0.94) px (at 1920) from the hero's while the sky patch does not move. Not fixable in the stop, not visible side by side. `holdcheck.py` measures the shift by phase correlation and removes it inside 1.1 radii before it compares.
+- Bloom is `hdr = mix(hdr, bloom, 0.08)` with the mean of 6 blur levels (`defaultPost()` in `src/post/chain.ts`). It lifted the day side by about 5 code values.
+- Scaling the hero down in code values against the film's linear filtering accounts for about +1.2 to +1.9 code values on the day core. Left as it is.
+- Main 9f78a4e merged as 3c695d4: frame 1755 byte identical before and after (max diff 0).
+
+### What changed
+
+- `wrap.py` rewrite: premultiplied cloud colour (`wrap-cloud.webp` RGB = colour times alpha; shader `col = (lin * shadow * (1 - a) + inverseFilmic(cloud.rgb) * live) * shade * uTint`), and the hero's residual laid on the far painting between view cosine 0.2 and 0.1 (`out/work/earth/view/wrap-rim-residual.jpg`).
+- Bloom pre-emphasis in `globe.ts`: `uBloomPre` vec4 (x = `shot.post.bloomStrength`, set every frame in `set.ts`; y, z, w = `look.globe.bloomPre` [3, 4, 0.5]); three wide samples of surface and cloud with gradient scales 3, 12, 48; `col = max(col - wide * shade * uTint * (x / 3) * mix(w, 1, smoothstep(0, 0.5, mu)), 0) / (1 - x)` before the haze.
+- Curve trim: `src/stops/earth/trim.json` (33 knots x 3 multipliers, limits 0.8 to 1.2; night knots below index 13 use medians) multiplies `curve.json` in `look.ts`. Procedure: set `trim.json` to ones, build, render the hold still at draft, `python3 assets-src/earth/trim.py STILL reset`, build. Current trim about 0.92 to 0.99 on the day side, 0.87 to 0.98 at night.
+- City lights were 1.28 times the hero's energy and whiter. Lights gain 0.7 is the fourth value of `twinkle` ([0.22, 5.5, 900, 0.7], `uTwinkle.w`, on the night lights only, not on the dusk light). Ratio now 1.155 (`lightscheck.py STILL`).
+- On-disc aurora weight reaches the limb (`smooth(0.03, 0.1, cosv)` in `emissive_map`).
+- Dusk zone: light the hero shows on terrain just past the terminator (the Andes) is drawn from the emissive map as dusk light, full at mid hold, fading as the terminator moves (`uSunHold`, `uCentreHold`, `uDuskZone` from `wrap.json` `dusk` [-0.24, -0.2, 0.45, 0.6], `uDuskFade` 0.15).
+- `limb.json` now: pale [0.3116, 0.7163, 1.0621], depth 2.5503, width 0.1896, power 1.1656, gamma 0.8921, dayFrom -0.25, dayTo 0.15, night [0.0066, 0.0246, 0.0406]. (The values earlier in this file are older fits.)
+- Sky patch rebuilt at 04:49 after the trim (fill gain 1.579, 1.438, 1.015; own share 0.568).
+- `standin-wrap.jpg` removed from both sets.
+
+### Hold check, frame 1755 at draft (`holdcheck.py`, film minus hero in code values, shift removed)
+
+| region | r | g | b | abs | abs low |
+| --- | --- | --- | --- | --- | --- |
+| day core | +2.35 | +0.95 | +0.95 | 4.70 | 2.24 |
+| day rim | +2.88 | +1.80 | +0.76 | 7.12 | 4.33 |
+| terminator | +1.50 | +0.55 | +0.56 | 4.56 | 2.35 |
+| night core | -0.24 | -0.14 | +0.03 | 2.34 | 0.91 |
+| night rim | -0.11 | -0.13 | +1.28 | 3.33 | 1.59 |
+| glow 1.0 to 1.1 radii | +1.81 | +1.62 | +2.10 | 4.18 | 2.40 |
+| sky 1.1 to 1.5 | +0.10 | +0.32 | +0.46 | 2.08 | 0.66 |
+| sky beyond | -0.44 | -0.54 | -0.50 | 1.62 | 0.61 |
+
+Before this pass the day core was +7.23 +5.82 +5.28 (abs low 6.14) and the day rim abs low 10.99.
+
+### Rise direction
+
+- The globe spins 15.4 degrees by the end of the rise, so the hero face then sits at azimuth +14.93, elevation +0.91 from the hold direction. With the stand-in values (azimuth -16, elevation 24) frame 2156 showed the Pacific far side with a visible arc where the hero pixels end and heavy white far clouds.
+- `plan.ts` now: `rise: { azimuthDeg: 10, elevationDeg: 8, distance: 5.3, offset: [0.3, 0.15], driftSpeed: 0.08, rollDeg: -4 }`. Frames 2156 and 2174 show the hero face, the whole body in frame at the end, the terminator moved west with lights on Brazil, the far painting only as a limb crescent (`out/work/earth/view/rise-frames.jpg`). An image-model repaint of the far side is no longer critical.
+- Sun elevation at the spot (lon -81, lat 19): about 19.6 degrees at the hold, 12 at the terrain (67 s), 8 at the rise end. The close image has a low Sun ahead with long shadows toward the camera.
+
+### Budgets at the orbit milestone
+
+- Disk: `full/` 34 MB, `web/` 9.6 MB. `npx vitest run` green (28 tests).
+
+### Still weak in the orbit view
+
+- Day core about +2 red, +1 green and blue; day rim abs low 4.3; glow ring +2; city lights 1.15 times the hero's energy; ellipse fit max error 5 px lower right; disc 0.94 px low from the engine's camera drift.
+- Far side: palette (Antarctica grey, Arctic teal, Africa flat tan), soft, VIIRS clouds heavy with a cut at lat 66 to 78 south, poles not painted on a polar projection. Seen only as a limb crescent in the rise and in travel.
+- Moon albedo is a mirrored fill. The sky fill puts a bright Milky Way band behind the planet. The rise sky has no Milky Way (hold patch only).
+- The Builder's `for` loop advice is not yet applied in `globe.ts` and `air.ts`.
+
+## Next (current)
+
+1. Terrain view: relief of `references/approved/earth-close.jpg` (2x copy `out/work/earth/up/close-x2.png`), Mars pattern (`assets-src/mars/relief/RECIPE.md`, relief part of `src/stops/mars/set.ts`): depth, camera fit, layers with painted-in backgrounds, masks, aprons, flow (glint shimmer, cloud shadows creep), own sky patch `sky-terrain`, cover = thin veil of high cloud.
+2. Dive and rise: patch chain (`patches.levels` is empty), predictor, cover, G13.
+3. `for` loop advice in the shaders, far-side polish, own checks, `READY`.
