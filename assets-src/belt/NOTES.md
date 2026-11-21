@@ -190,3 +190,15 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
 - About 92 MB of half float render targets at 1080p while the segment is prepared, on top of 36.7 MB of textures.
 - The web set is softer (half size maps); only a draft still was checked with it.
 - The belt test is outside `tests/`; `npm run looks -- --push --folder belt` does not accept `belt`.
+
+## Task 3 (Phase 5 work started early), Nov 21 from 16:09 UTC
+
+The task is saved verbatim in `assets-src/belt/TASK3.md`. Findings of the Builder on finals 2772, 2782, 2796: no beat (nothing close, nothing blurred), rocks pale against Phobos, far rocks without blur in the fast pan, hero enters dark side first, dust order as a request only, cost up to 10 s per frame at review.
+
+- 16:10 dust patch reversed in the working tree, merged origin/main bf74284, `npm ci`, build. The dust order is already on main (ffe0a2d): `git diff origin/main` of the two shared files is empty.
+- 16:15 final 2782 of the merged state before any change (`out/work/belt/t3/main-f2782.png`, 80.5 s, 64 samples): the task 2 picture, near rock r 330 px top right, soft from focus, almost no streak; hero crisp. So the near rock was there but read as a second big rock, not as a pass.
+- Decided, model (`src/space/belt/motion.ts`, `belt.ts`):
+  - `smear` is gone. Every time step of a rock is drawn with the camera of its own time, so the layer holds the rock's full screen motion as blur (pan, own speed, parallax, spin). No star convention for rocks.
+  - New per rock: `velocity` (own speed in units per second, in the camera axes of the anchor frame: x right, y up, z toward the lens) and `ease` (the own path runs at `dt (1 + ease dt dt)`: slow at the anchor, faster away from it; closed form of film time). `approach` stays (radial).
+  - With `hold` 1 a rock rides with the camera and crosses the frame by its own speed alone, so it can cross while the pan is slow.
+- Phobos tone, measured: rectangle 220 x 150 at (1320,1090) of `references/approved/mars-hero.png`, wholly on the lit face: mean sRGB 133.6, 106.2, 87.6. The hero of task 2 in the same kind of rectangle: 101, 97, 95. Luma is close; the rocks read pale because they are neutral grey where Phobos is a warm grey brown, and their brightest parts are as bright (p95 luma 170 against 177).
