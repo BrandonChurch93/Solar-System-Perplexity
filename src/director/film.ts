@@ -25,6 +25,11 @@ const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
 const BOW_REACH = 24
+const SUN_SWAP: [number, number] = [0.3, 0.42]
+const SUN_BOW_REACH = 90
+const SUN_HIDDEN = 0.14
+const SUN_HALO = 1.2
+const SUN_GLOW_FROM = 0.06
 const RETREAT_DUST = 0.18
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
@@ -41,6 +46,7 @@ export class FilmDirector implements Director {
   private readonly begin: number[] = []
   private readonly clear: number[] = [0]
   private readonly shapes: TravelShape[] = []
+  private sunSwapSpan: [number, number] = SUN_SWAP
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
@@ -74,6 +80,7 @@ export class FilmDirector implements Director {
       this.shapes.push(shape)
       this.clear.push(clear)
     }
+    if (plans.length > 1) this.hideSun()
     const last = plans.length - 1
     const n = this.plans[last]!
     const s = n.sunDir.clone()
@@ -222,6 +229,49 @@ export class FilmDirector implements Director {
       if (!this.leavingThings(i, time).some((t) => inFrame(q, from.vfov, master.width / master.height, t.to, t.radius, shape.look.clearDeg))) return u
     }
     return 1 - 1 / steps
+  }
+
+  private hideSun(): void {
+    const id = this.plans[0]!.id
+    const tries: { shape: TravelShape; span: [number, number]; off: number }[] = []
+    for (let b = -SUN_BOW_REACH; b <= SUN_BOW_REACH; b += 3) {
+      const shape = new TravelShape(id, { bowDeg: b })
+      this.shapes[0] = shape
+      tries.push({ shape, span: this.sunHidden(), off: Math.abs(b) })
+    }
+    const long = tries.filter((t) => t.span[1] - t.span[0] >= SUN_HIDDEN).sort((p, q) => p.off - q.off)[0]
+    if (long) {
+      this.shapes[0] = long.shape
+      const w = long.span[1] - long.span[0]
+      this.sunSwapSpan = [long.span[0] + 0.2 * w, long.span[1] - 0.2 * w]
+    } else this.shapes[0] = new TravelShape(id)
+  }
+
+  private sunHidden(): [number, number] {
+    const seg = this.plans[0]!.seg.travel!
+    const master = config.formats[config.formatKeys.master]!
+    const aspect = master.width / master.height
+    const la = this.sunFor(0).radius
+    const lb = this.sunFor(1).radius
+    const steps = 180
+    let best: [number, number] = [0, 0]
+    let open = -1
+    for (let k = 1; k <= steps; k++) {
+      const u = k / steps
+      const pose = this.travelCamera(0, seg.start + u * (seg.end - seg.start))
+      const disc = Math.sin(Math.min(mix(la, lb, smooth(ramp(0.25, 0.8, u))) * SUN_HALO, 1.5))
+      const seen = k === steps || inFrame(pose.quaternion, pose.vfov, aspect, this.frames[0]!.origin.clone().sub(pose.position), SUN_HALO, 0) || inFrame(pose.quaternion, pose.vfov, aspect, this.sunWorld, disc, 0)
+      if (!seen && open < 0) open = u
+      if (seen && open >= 0) {
+        if (u - open > best[1] - best[0]) best = [open, u]
+        open = -1
+      }
+    }
+    return best
+  }
+
+  sunSwapOf(): { span: [number, number]; bowDeg: number } {
+    return { span: this.sunSwapSpan, bowDeg: this.shapes[0]?.look.bowDeg ?? 0 }
   }
 
   clearAtOf(i: number): number {
@@ -382,8 +432,8 @@ export class FilmDirector implements Director {
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
-      const leaveWeight = index === 0 ? 1 - smooth(ramp(0.3, 0.42, u)) : u < begin ? 1 : 0
-      if (index === 0) sunWeight = smooth(ramp(0.3, 0.42, u))
+      const leaveWeight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < begin ? 1 : 0
+      if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       const midTime = (frame + config.shutterFraction * 0.5) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {

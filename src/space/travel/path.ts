@@ -17,7 +17,7 @@ export interface TravelLook {
 const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], roll: [2, 2], rollSpan: [0.04, 0.9], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, clearBy: 0.34 }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
-  sun: { pan: [2, 3], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
+  sun: { pan: [2, 5], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
   mercury: { pan: [2, 5], bowDeg: 9, rollSpan: [0.1, 0.92], grow: [3, 3] },
   venus: { pan: [2, 5], bowDeg: -12, rollSpan: [0.05, 0.8], grow: [3, 3] },
   earth: { pan: [2, 4], panSpan: [0, 0.9], bowDeg: -7, rollSpan: [0.02, 0.86], grow: [3, 4] },
