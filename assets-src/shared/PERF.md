@@ -447,3 +447,40 @@ Optional plan number `coverHides` (`MoveParams` in `src/director/moves.ts`, besi
 - `npm run determinism -- --frames 2325,2445`: pass (2445 is a Mars dive frame of 39 samples at review, 57.7 px, soft 1).
 - Frame records carry the count (`extra.samples`): 1870 review 16, 4984 review 95 (64 before the cap was raised), 2325 final 16. `npm run -s samples -- --tier T --frames a,b` now also prints the motion before and after the cover factor and the soft share.
 - Files: `config/showcase.json` (two new keys under `motion`, the two caps), `src/config.ts`, `src/core/motion.ts`, `src/core/engine.ts`, `src/core/types.ts`, `src/diagnostics/diag.ts`, `src/director/moves.ts`, `src/director/film.ts`, `tools/samples.ts`, `tools/lib/samples.ts`, `tests/motion.test.ts`, `tests/config.test.ts`, `assets-src/shared/STOP-AGENT.md`, this file and the pictures.
+
+## Task 4: lost and restored WebGL context
+
+Working notes (task received 17:30 UTC, 21 Nov; base main `5c16a2c`, merged as `d63d75f`).
+
+Cause on main: `src/core/sets.ts` closes each bitmap after its first upload and leaves `tex.image = { width, height }`; the engine does the same for its two sky maps. After a restore three.js (0.187) throws away every GL handle and uploads lazily again, which fails for these textures (`texSubImage2D ... Overload resolution failed`), so every frame after is black.
+
+What three.js does by itself after a restore (`initGLContext`): geometry, programs, render targets and data textures (data kept in memory) are built again on first use. What it does not: textures whose bitmap was closed, extensions that were asked for by hand (`EXT_float_blend` and the other optional ones), and the clear colour (`setClearColor(0x000000, 0)` goes back to alpha 1, because the background object is new and the renderer has `alpha: false`). The clear alpha matters in capture mode only: with alpha 1 no tile counts as open, so the sky and the stars are culled away everywhere (first run of the proof tool: planet right, sky black, mean level 51.17 before and 42.44 after).
+
+The cure:
+
+- `src/core/sets.ts`: `epoch` counts the restores; `reset()` raises it and frees every set; `load()` builds again when the epoch changed while a set was being built (the half built set is disposed). Bitmaps are closed after the first upload as before.
+- `src/core/engine.ts`: `webglcontextlost` calls `preventDefault`; `webglcontextrestored` runs `revive()`: extensions again, clear colour again, `sets.reset()`, sky maps again, the sets that were loaded again, then the frame that was last drawn is drawn again (`drawFrame(frame, tier)` in capture and frame view, `renderLive(shot)` in the free view). `renderFrame` asks again when the epoch changed during its `prepare`. A newer `renderFrame` wins over the redraw of `revive()` (`asked` counter).
+- `src/capture/export.ts` and `src/director/modes.ts` are unchanged: the export still stops with its error, the live loops wait on `sets.has` or `engine.ready` and go on when the sets are back.
+- `tools/restore.ts` (`npx tsx tools/restore.ts [--frame N --tier T --stop ID --wait ms --settle ms]`): forces the loss with `WEBGL_lose_context`, restores, compares; pictures in `out/work/restore/`.
+
+### Proof (task 4)
+
+Commits: `c2fb2bb` (set loader and its two tests), `5339ca0` (engine), `37e0bd8` (the tool). Base `5c16a2c`; main has moved on with Venus files and `tools/master.py` only, not merged here.
+
+`npx tsx tools/restore.ts` (frame 2325, draft, context lost for 1 s, pictures taken 3 s after the sets are back), on the branch and on main `5c16a2c` in a second tree:
+
+| Check | Branch | Main |
+| --- | --- | --- |
+| capture, the page's own redraw against before | mean absolute difference 0 (mean level 51.17, 0.00 while lost, 51.17), sets back after 16 s | black, 51.17 |
+| capture, `renderPng` after | sha256 `fd128b1a999f76fa` before and after | refused: `THREE.WebGLState ... texSubImage2D ... Overload resolution failed` |
+| live, `frame=2325` | 0 (51.24, 0.00, 51.24), sets back after 7 s | black, 51.24 |
+| live, free view of Mars | Mars and the sky are back (mean level 50.41 before, 52.67 after); the clock of the free view runs on, so Mars has turned about 15 s further and the difference is 10.2 | a dark ball without surface, sky black (mean level 15.70) |
+| console after the restore, texSubImage2D or WebGLState lines | none in the three runs | 20 in capture, 8 in the free view |
+
+Seen: on the branch the capture picture and the live frame picture are Mars with Phobos in front of the Milky Way, the same as before the loss; the free view shows Mars turned further with its sky. `assets-src/shared/perf/restore-mars-2325-after-the-restore-branch-capture-and-live-top-main-capture-and-live-free-bottom.png`.
+
+No pixel change without a loss, draft tier, main `5c16a2c` and branch equal: 2325 `fd128b1a999f76fa…`, 2580 `7322ef9576f06ffb…`, 2782 `f87898956b1d6b48…`, 4860 `6814738e3a887201…`.
+
+`npx tsc --noEmit` clean, `npx vitest run` 13 files and 64 tests (two new in `tests/sets.test.ts`), `npm run build` clean.
+
+Not covered: a loss in the middle of an export still stops the export (as asked); a loss while a set is still loading is covered by the unit test only, not by a browser run; the autopilot loop was not run through a loss (it waits on `engine.ready` like the frame view).
