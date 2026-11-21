@@ -170,3 +170,15 @@ Sky card, infinity only (Builder note 2):
 - G13 not run at every frame. Texel check on 0, 20, 40, 60, 80 with the apron: 0 soft, lowest rate 1.41 at frame 80.
 - Named as weak in the READY message: frame 60 lowest 140 rows (apron enlarged 2 times), flare core reads as a ball at 196 to 204 and the cover centre is flat gold 212 to 220, corona under the big prominences, star trim not verified at final, clean-take sky at the upper left of the terrain view, travel in and out only checked for jumps.
 - While the critics are out: flare first, then the frame 60 strip.
+
+## Flare rework (08:14 to 08:40 UTC), after READY
+
+- Merged main 48a2bfc (engine batches 8 and 9, all eight stops' folders; engine hash a3d211c425dc0406) as 443c9a0. Frame 90 identical before and after; 0 and 204 differ by 1 level in the sky only; 360 on 2,603 pixels (world pin rounding). My set uses no shared Relief and no haze shell, so shield and trim do not apply. Round 10 runs from that head.
+- Fault: the flare was a soft white ball hanging in the air between the feet at 196 to 207 (anchor was a point between the feet lifted toward the crown, core power 2.2).
+- Now the flare belongs to the arcade:
+  - `loops.ts` `burst`: the loops layer is multiplied by 1 + surge x amount x (floor + (1 - floor) x climb), climb = exp(-along / reach) + other x exp(-(1 - along) / reach), reach grows from 0.03 to 0.55 of the strand with the amount, so the white heat climbs from the feet to the crown. Only texels brighter than `from` (0.03 to 0.18 scene luminance) are lifted: without that the faint residue of the layer came up as blotches and combs beside the feet.
+  - Two screen kernels (`flare.ts`, two instances): on the left foot and, 0.12 s later at half gain, on the right foot, both 0.06 above the ground. Core power 1.6, radius 0.006 to 0.42, gain 30; rays amount 1.6.
+  - Ground: the loop light gain map is multiplied by 1 + 6 x amount (`look.flare.ground`), so the ground under the arcade lights up.
+- Cover colour: the old gold (2.4, 0.68, 0.11) was darker than the white frames around it (mean level 216 at 212, 167 at 216, 216 at 220: two flashes with a yellow card between). Now cover (2.8, 1.05, 0.28), low (2.6, 0.85, 0.19): mean 222 at 212, 192 at 216, 219 at 220.
+- In the orbit part the kernel sits on the plan spot and dies into the white active region by frame 237. Frame 247 is clean (amount 0 after 1.0 s).
+- Tool: `python3 out/work/sun/strip.py DIR OUT COLS WIDTH frames...` makes a contact strip from a `seq` folder.
