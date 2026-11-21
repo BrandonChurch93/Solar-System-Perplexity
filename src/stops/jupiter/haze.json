@@ -1,0 +1,137 @@
+{
+ "ground": {
+  "scaleHeight": 0.006,
+  "depth": 0.05,
+  "day": [
+   0,
+   0,
+   0
+  ],
+  "twilight": [
+   0,
+   0,
+   0
+  ],
+  "night": [
+   0.0055,
+   0.007,
+   0.007
+  ],
+  "strength": 1,
+  "extinction": 0,
+  "forward": 0,
+  "top": 8
+ },
+ "shells": [
+  {
+   "scaleHeight": 0.006,
+   "depth": 0.004635,
+   "day": [
+    1.54428,
+    1.07479,
+    0.7143
+   ],
+   "twilight": [
+    0,
+    0,
+    0
+   ],
+   "night": [
+    0,
+    0,
+    0
+   ],
+   "dayFrom": 0.2,
+   "dayTo": 0.93,
+   "strength": 1,
+   "extinction": 1,
+   "forward": 0,
+   "top": 10,
+   "core": {
+    "scaleHeight": 0.006,
+    "day": [
+     3.144,
+     1.84327,
+     1.07231
+    ],
+    "dayFrom": 0.78,
+    "dayTo": 0.94
+   }
+  },
+  {
+   "scaleHeight": 0.025,
+   "depth": 0.009462,
+   "day": [
+    0.39983,
+    0.26186,
+    0.13553
+   ],
+   "twilight": [
+    0,
+    0,
+    0
+   ],
+   "night": [
+    0,
+    0,
+    0
+   ],
+   "dayFrom": 0.2,
+   "dayTo": 0.93,
+   "strength": 1,
+   "extinction": 1,
+   "forward": 0,
+   "top": 8,
+   "core": {
+    "scaleHeight": 0.025,
+    "day": [
+     0.70613,
+     0.43106,
+     0.18847
+    ],
+    "dayFrom": 0.78,
+    "dayTo": 0.94
+   }
+  },
+  {
+   "scaleHeight": 0.1,
+   "depth": 0.018923,
+   "day": [
+    0.46293,
+    0.5429,
+    0.53354
+   ],
+   "twilight": [
+    0,
+    0,
+    0
+   ],
+   "night": [
+    0,
+    0,
+    0
+   ],
+   "dayFrom": 0.2,
+   "dayTo": 0.93,
+   "strength": 1,
+   "extinction": 1,
+   "forward": 0,
+   "top": 6,
+   "core": {
+    "scaleHeight": 0.1,
+    "day": [
+     0.09317,
+     0.07401,
+     0.08005
+    ],
+    "dayFrom": 0.78,
+    "dayTo": 0.94
+   }
+  }
+ ],
+ "glowDir": [
+  -0.95106,
+  0.30902,
+  0
+ ]
+}

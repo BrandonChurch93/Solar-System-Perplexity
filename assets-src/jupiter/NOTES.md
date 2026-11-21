@@ -72,8 +72,18 @@ Dive and rise
 - 03:05. Four trial far side tiles back (copies and stripes guides, seedream_5 and nano_banana_pro). Evaluating.
 
 
+- 03:10 to 03:25. Far side method chosen after two trial rounds: seedream_5 edit of a stripes guide (zonal mean colors of the hero) with finished hero pixels at one edge. It continues every band at the right height with new detail in the hero style. Rejected: free repaint (band heights reinvented), nano_banana_pro on any guide (keeps the guide verbatim, smears included), a latitude locked quilt of hero pixels (`wrap/quilt.py`, repeats every 83 deg). Tiles T1 (hero on right), T3 (hero on left), T2 (bridge), 3200 x 1800 px at 8k each (lat +-39.5), take 1 kept for each. Polar caps on an azimuthal equidistant projection (60 deg, 2048 px), take 1 kept for each. `wrap/tiles.py` holds the state in `out/work/jupiter/far-canvas.npy`. Seam at lon 180 measured 1.98 mean code values against 1.75 between neighbours.
+- 03:26. `public/assets/jupiter/{full,web}/wrap-color.jpg` written (8192 and 4096 wide). Flow build (`flow/build.py`): `src/stops/jupiter/flow.json` (129 jet knots from the band passed zonal profile) and `wisp.png` (2048 square, tileable). Io map from `gen/iomap_sd5.png`.
+- 03:28. First real orbit render. `globe.ts` (own copy of the planet shader: curve light, limb table, Io shadow from the Sun direction, band flow by latitude, spot swirl, wisp layer with shadow, patches), `io.ts`, `set.ts`, `look.ts`.
+- 03:30 to 03:43. Closed loop light fit (`haze/refit.py`): render body only, median hero/film by mu knot and by ndl knot, multiply the tables, repeat (4 passes). The night is now its own term: `curve.json.night` (0.0033, 0.0048, 0.0061), 30 percent albedo modulated, plus a ground haze that only adds a night limb glow (extinction 0). The curve holds direct light only.
+- Limb glow of the hero falls off like 1/x, peak at screen angle 162 deg, flat between 150 and 180, and is about 30 times weaker at the top limb: it is bloom of the bright limb. Fitted as three haze shells (scale heights 0.006, 0.025, 0.1), each with a broad lobe and a narrow lobe (the shell's core), by non negative least squares on hero minus film (`haze/glow.py`, `haze/fitglow.py`, `haze/write.py 0.92`). Residual after the fit is within about 0.03 scene units where the hero has 0.2 to 0.5.
+- Sky patch: `sky/patch.py` (Mars pattern), fill image `gen/skyfill_sd5.png` (seedream_5 keeps the hero stars aligned; gpt_image_2_6_flare reinvented the whole sky, rejected). The engine aims the patch from the plan. `sky.json` gain 2. To do: fill gain is measured in a ring that holds glow (R 1.9), measure it farther out.
+- Engine facts learned: GLSL reserves the word `cast`. Review tier stills are 1920 x 1080 as well (4 samples), about 27 s.
+
 ## Next
 
-- Pick guide and model from the trials, generate all far side tiles and the polar caps, stitch, compose the wrap, write `public/assets/jupiter/{full,web}/wrap-color.jpg`.
-- Write `globe.ts`, `set.ts`, `look.ts`, `assets.ts`, new `plan.ts`. Io sphere. Haze fit. Sky patch.
-- Compare the hold after each change. Message /root at the orbit milestone.
+- Io: more orange and mottled like the hero, darker right rim. Shadow: hero ellipse is about 190 x 120 px, ours is longer and softer; limit the grazing stretch.
+- Terminator: tile content shows in the twilight (a blue white band at lat -25). Check after the Io work.
+- Check the hold sheet for motion: band flow, spot swirl, wisps, Io crossing. Flow diag view.
+- Sky patch fill gain. Then RECIPE.md for wrap, caps, Io map, sky fill, wisp. Commit binaries at the orbit milestone and message /root.
+- Then terrain view (relief of jupiter-close with flow), then dive and rise (patch levels).
