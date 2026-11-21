@@ -1,47 +1,59 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T10:03:33.036Z",
- "head": "71fea95efb30e4e13a217fe8dee44b0c3ff144ad",
- "note": "round 1 corrections: cover sides before the fix, working on one move across both covers",
+ "pushed": "2026-11-21T10:29:01.826Z",
+ "head": "34f3bed900f9d50a4724c0deb7404ebf7f30f1b8",
+ "note": "round 1 corrections: one camera move across both covers (plan.ts), first drafts",
  "looks": [
+  {
+   "time": "2026-11-21T10:29:01.288Z",
+   "file": "20261121102901288-note-a-rise.jpg",
+   "source": "out/work/u/r4/a-rise.jpg",
+   "kind": "note",
+   "label": "rise, new camera path, first draft (work in progress: globe leaves the frame at 4424, to fix)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T10:29:00.699Z",
+   "file": "20261121102900699-note-a-dive.jpg",
+   "source": "out/work/u/r4/a-dive.jpg",
+   "kind": "note",
+   "label": "dive, new camera path, first draft (work in progress: pose now continuous across the cover, too fast at 4137)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T10:23:11.136Z",
+   "file": "20261121102311136-frame-a-4436.jpg",
+   "source": "out/work/u/r4/a-4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
+  {
+   "time": "2026-11-21T10:20:57.530Z",
+   "file": "20261121102057530-frame-a-4155.jpg",
+   "source": "out/work/u/r4/a-4155.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4155, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4155,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:03:32.504Z",
    "file": "20261121100332504-note-deck-far-view.jpg",
    "source": "out/work/u/r3/deck-far-view.jpg",
    "kind": "note",
    "label": "deck far map, boundary between picture and fill (item 4)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:03:31.997Z",
-   "file": "20261121100331997-note-a-4414.jpg",
-   "source": "out/work/u/r3/a-4414.jpg",
-   "kind": "note",
-   "label": "round 1 baseline, frame 4414 at review (cover sides before the fix)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:03:31.485Z",
-   "file": "20261121100331485-note-a-4405.jpg",
-   "source": "out/work/u/r3/a-4405.jpg",
-   "kind": "note",
-   "label": "round 1 baseline, frame 4405 at review (cover sides before the fix)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:03:30.959Z",
-   "file": "20261121100330959-note-a-4175.jpg",
-   "source": "out/work/u/r3/a-4175.jpg",
-   "kind": "note",
-   "label": "round 1 baseline, frame 4175 at review (cover sides before the fix)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:03:30.416Z",
-   "file": "20261121100330416-note-a-4150.jpg",
-   "source": "out/work/u/r3/a-4150.jpg",
-   "kind": "note",
-   "label": "round 1 baseline, frame 4150 at review (cover sides before the fix)",
    "stop": "uranus"
   },
   {
