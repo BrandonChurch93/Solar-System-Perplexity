@@ -508,6 +508,11 @@ export class FilmDirector implements Director {
             const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
             cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
           }
+          const sea = p.p.coverSea
+          if (sea && view === 'terrain') {
+            const c = new THREE.Vector3().fromArray(sea.centre).sub(local.position).divideScalar(sea.radius).applyQuaternion(local.quaternion.clone().invert())
+            cover.shell = { centre: [c.x, c.y, c.z], inner: sea.edge[0], outer: sea.edge[1] }
+          }
           const dt = time - p.coverCenter(segment)
           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
           const k = p.p.coverRush
