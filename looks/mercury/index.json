@@ -1,9 +1,53 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T17:31:31.569Z",
+ "pushed": "2026-11-21T17:51:43.445Z",
  "head": "a35b1c38c43ca2c0d38f8bfdaf70e2d14cb94a47",
- "note": "review tier 739 to 745 and 989 to 991 on the merged tree; no white or milky frame so far",
+ "note": "dive cover complete at review tier; rise cover to 993",
  "looks": [
+  {
+   "time": "2026-11-21T17:51:42.827Z",
+   "file": "20261121175142827-note-sheet-divecover-review.jpg",
+   "source": "out/work/mercury/r11/s1/sheet-divecover-review.jpg",
+   "kind": "note",
+   "label": "dive cover 739 to 750, review tier, merged tree (own sheet of stills)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T17:51:42.218Z",
+   "file": "20261121175142218-note-review-990-993.jpg",
+   "source": "out/work/mercury/r11/s1/review-990-993.jpg",
+   "kind": "note",
+   "label": "review tier 990 991 | 992 993: rise leaves the swap, merged tree (57, 88, 128, 128 samples)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T17:51:37.769Z",
+   "file": "20261121175137769-frame-f988.jpg",
+   "source": "out/work/mercury/r11/s1/f988.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 988, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 988,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:49:06.125Z",
+   "file": "20261121174906125-frame-f750.jpg",
+   "source": "out/work/mercury/r11/s1/f750.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 750, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 750,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:31:30.921Z",
    "file": "20261121173130921-note-review-739-742.jpg",
@@ -13,33 +57,11 @@
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T17:31:16.573Z",
-   "file": "20261121173116573-frame-f740.jpg",
-   "source": "out/work/mercury/r11/s1/f740.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 740, review tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 740,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T17:13:33.729Z",
    "file": "20261121171333729-note-review-989-991.jpg",
    "source": "out/work/mercury/r11/s1/review-989-991.jpg",
    "kind": "note",
    "label": "review tier 989 990 | 991: rise swap on the merged tree (16, 57, 88 samples)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T17:13:33.082Z",
-   "file": "20261121171333082-note-review-742-745.jpg",
-   "source": "out/work/mercury/r11/s1/review-742-745.jpg",
-   "kind": "note",
-   "label": "review tier 742 743 | 744 745: dive swap on the merged tree (91, 39, 16, 16 samples)",
    "stop": "mercury"
   },
   {
@@ -69,34 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T15:41:30.528Z",
-   "file": "20261121154130528-compare-compare-mercury-terrain-view.jpg",
-   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
-   "kind": "compare",
-   "label": "mercury.terrain: approved image left, film frame right, final tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T15:40:54.127Z",
-   "file": "20261121154054127-compare-compare-mercury-hold-view.jpg",
-   "source": "out/work/compare/compare-mercury-hold-view.jpg",
-   "kind": "compare",
-   "label": "mercury.hold: approved image left, film frame right, final tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
   }
  ]
 }
