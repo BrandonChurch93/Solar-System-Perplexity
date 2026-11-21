@@ -580,10 +580,12 @@ def join(a):
     c = cfg()
     p = load(a.name)
     h = hashes()
-    if h['engine'] != p['engineHash'] or h['stops'] != p['stopHashes']:
-        sys.exit('this tree is another build than the plan (engine %s here, %s in the plan, commit %s); nothing was joined, because the join commands remove chunks of another build' % (h['engine'], p['engineHash'], p['commit'][:7]))
-    res = do_place(c, p, quiet=True)
     segs = {s['id']: s for s in segments(c)}
+    need = sorted(set(s for i in p['segments'] for s in stops_of(c, segs[i])))
+    moved = [s for s in need if h['stops'].get(s) != p['stopHashes'].get(s)]
+    if h['engine'] != p['engineHash'] or moved:
+        sys.exit('this tree is another build than the plan (engine %s here, %s in the plan, commit %s%s); nothing was joined, because the join commands remove chunks of another build' % (h['engine'], p['engineHash'], p['commit'][:7], ', changed since: ' + ', '.join(moved) if moved else ''))
+    res = do_place(c, p, quiet=True)
     loose = set(PART.match(pathlib.Path(f).name).group(1) for f in res['loose'])
     state_of = {}
     for i in p['segments']:
