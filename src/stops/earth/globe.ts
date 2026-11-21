@@ -23,6 +23,7 @@ export interface GlobeLook {
   auroraColor: [number, number, number]
   twinkle: [number, number, number]
   ripple: [number, number, number]
+  dusk: { zone: number[]; fade: number; centre: number[] }
 }
 
 export interface GlobeOptions {
@@ -31,6 +32,7 @@ export interface GlobeOptions {
   cloud: THREE.Texture
   emissive: THREE.Texture
   look: GlobeLook
+  sunHold: THREE.Vector3
   patches?: GlobePatches
   segments?: number
 }
@@ -104,6 +106,10 @@ uniform vec4 uTwinkle;
 uniform vec4 uRipple;
 uniform float uClock;
 uniform float uCloudOn;
+uniform vec3 uSunHold;
+uniform vec3 uCentreHold;
+uniform vec4 uDuskZone;
+uniform float uDuskFade;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vView;
@@ -184,7 +190,7 @@ ${PATCH_LEVELS}
   float thrown = textureLod(uCloud, lonLat(cloudDir(p)), uShadow.z).a;
   float shadow = 1.0 - uShadow.y * thrown * smoothstep(-0.05, 0.1, ndl) * live;
   vec3 shade = curveAt(ndl);
-  vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * a) * shade * uTint;
+  vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * live) * shade * uTint;
   float f = exp(-pow(mu / uLimbShape.x, uLimbShape.y));
   vec3 through = exp(-uLimbDepth * f);
   float lit = pow(shade.g * 0.5, uLimbShape.z) * ramp(uLimbDay, ndl);
@@ -193,7 +199,10 @@ ${PATCH_LEVELS}
   vec2 uv = lonLat(d);
   float phase = 6.2831853 * noise(uv * vec2(2.0, 1.0) * uTwinkle.z);
   float twinkle = 1.0 + uTwinkle.x * (sin(uTwinkle.y * uClock + phase) - sin(phase));
-  col += e.rgb * (uPeak * ramp(uNight, ndl) * twinkle);
+  float held = dot(d, uSunHold);
+  float zone = smoothstep(uDuskZone.x, uDuskZone.y, held) * smoothstep(uDuskZone.z, uDuskZone.w, dot(d, uCentreHold));
+  float dusk = clamp(1.0 + (ndl - held) / uDuskFade, 0.0, 1.0);
+  col += e.rgb * (uPeak * mix(ramp(uNight, ndl) * twinkle, dusk, zone));
   float wave = uRipple.z * uv.x * 6.2831853 + 5.0 * noise(uv * vec2(2.0, 1.0) * uRipple.w);
   float ripple = 1.0 + uRipple.x * (sin(uRipple.y * uClock + wave) - sin(wave));
   col += uAuroraColor * (e.a * e.a * uPeak * ramp(uAuroraGate, ndl) * ripple);
@@ -260,6 +269,8 @@ export class Globe {
         uPeak: { value: l.emissivePeak }, uAuroraColor: { value: new THREE.Vector3().fromArray(l.auroraColor) },
         uTwinkle: { value: new THREE.Vector4(l.twinkle[0], l.twinkle[1], l.twinkle[2], 0) }, uRipple: { value: new THREE.Vector4(l.ripple[0], l.ripple[1], l.ripple[2], 40) },
         uClock: { value: 0 }, uCloudOn: { value: 1 },
+        uSunHold: { value: o.sunHold.clone().normalize() }, uCentreHold: { value: direction(l.dusk.centre[0]!, l.dusk.centre[1]!) },
+        uDuskZone: { value: new THREE.Vector4().fromArray(l.dusk.zone) }, uDuskFade: { value: l.dusk.fade },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
