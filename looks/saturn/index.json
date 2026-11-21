@@ -1,9 +1,73 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T03:22:51.147Z",
- "head": "93a6e05df70697aa90f3b681b28c8e9ca796981a",
- "note": "Ring profiles measured from both approved images; shaders for rings and globe next",
+ "pushed": "2026-11-21T03:36:08.361Z",
+ "head": "bd38f7660b25bf139e91427aa05a6552f0719b84",
+ "note": "First true 3D frames: rings from the measured profile, both shadows computed, globe still on the stand-in map",
  "looks": [
+  {
+   "time": "2026-11-21T03:36:07.800Z",
+   "file": "20261121033607800-note-ring-profiles.jpg",
+   "source": "out/work/saturn/ring-profiles.jpg",
+   "kind": "note",
+   "label": "Ring profile asset: hero profile, close profile, opacity, zoom on the A ring",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T03:35:44.177Z",
+   "file": "20261121033544177-compare-compare-saturn-terrain-view.jpg",
+   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
+   "kind": "compare",
+   "label": "saturn.terrain: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8186370b5c106d3c"
+  },
+  {
+   "time": "2026-11-21T03:35:43.172Z",
+   "file": "20261121033543172-still-f03720-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03720-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8186370b5c106d3c"
+  },
+  {
+   "time": "2026-11-21T03:35:02.133Z",
+   "file": "20261121033502133-compare-compare-saturn-hold-view.jpg",
+   "source": "out/work/compare/compare-saturn-hold-view.jpg",
+   "kind": "compare",
+   "label": "saturn.hold: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8186370b5c106d3c"
+  },
+  {
+   "time": "2026-11-21T03:35:01.071Z",
+   "file": "20261121033501071-still-f03465-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03465-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8186370b5c106d3c"
+  },
   {
    "time": "2026-11-21T03:22:49.377Z",
    "file": "20261121032249377-note-close-polar.jpg",
@@ -27,64 +91,6 @@
    "kind": "note",
    "label": "fit work: hero-polar-small.jpg",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T03:08:05.855Z",
-   "file": "20261121030805855-note-hero-topdown.jpg",
-   "source": "out/work/saturn/hero-topdown.jpg",
-   "kind": "note",
-   "label": "fit work: hero-topdown.jpg",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T03:08:05.317Z",
-   "file": "20261121030805317-note-hero-shadow-overlay--20.jpg",
-   "source": "out/work/saturn/hero-shadow-overlay--20.jpg",
-   "kind": "note",
-   "label": "fit work: hero-shadow-overlay--20.jpg",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T02:44:57.741Z",
-   "file": "20261121024457741-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:56.729Z",
-   "file": "20261121024456729-still-f03720-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03720-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:41.572Z",
-   "file": "20261121024441572-compare-compare-saturn-hold-view.jpg",
-   "source": "out/work/compare/compare-saturn-hold-view.jpg",
-   "kind": "compare",
-   "label": "saturn.hold: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
