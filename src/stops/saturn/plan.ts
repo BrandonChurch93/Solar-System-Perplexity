@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { mix, ramp, smooth, smoother } from '../../director/rig'
+import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
 
@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [-14, 153, -7.3] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35, seatIn: 0.8 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -149,6 +149,21 @@ export class SaturnPlan extends StopPlan {
     if (time < d.start || time >= r.end) return 1
     const near = time < d.end ? smooth(this.diveX((time - d.start) / (d.end - d.start))) : time < r.start ? 1 : 1 - smooth(this.riseX((time - r.start) / (r.end - r.start)))
     return mix(1, skim.skyNear, near)
+  }
+
+  seat(time: number): THREE.Quaternion {
+    const h = this.seg.hold
+    const d = this.seg.dive!
+    const t = this.seg.terrain
+    const r = this.seg.rise
+    const out = new THREE.Quaternion()
+    if (time <= h.start || time >= r.end) return out
+    const fractions = config.raw.judged.fractions as Record<string, number>
+    const at = (s: typeof h): THREE.Quaternion => drift((s.firstFrame + Math.floor((fractions[s.kind] ?? 0.5) * s.frames + 1e-9)) / config.fps)
+    if (time < d.start) return out.slerp(at(h), smooth(ramp(h.start, mix(h.start, this.holdMid, skim.seatIn), time)))
+    if (time < d.end) return at(h).slerp(at(t), smooth(this.diveX((time - d.start) / (d.end - d.start))))
+    if (time < r.start) return at(t)
+    return at(t).slerp(out, smooth(this.riseX((time - r.start) / (r.end - r.start))))
   }
 
   patchWeight(time: number, view: ViewKind): number {

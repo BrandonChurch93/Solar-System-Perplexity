@@ -118,6 +118,8 @@ export const createSet: SetFactory = async (ctx) => {
   const centre = new THREE.Vector3()
   const total = new THREE.Quaternion()
   const toRing = new THREE.Quaternion()
+  const seat = new THREE.Quaternion()
+  const seatBack = new THREE.Quaternion()
   const camL = new THREE.Vector3()
   const camS = new THREE.Vector3()
   const sunL = new THREE.Vector3()
@@ -144,6 +146,9 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      seat.copy(shot.camera.quaternion).multiply(plan.seat(state.time)).multiply(seatBack.copy(shot.camera.quaternion).invert())
+      world.position.applyQuaternion(seat)
+      world.quaternion.premultiply(seat)
       if (inOrbit) {
         body.position.set(0, 0, 0)
         body.quaternion.identity()
