@@ -1,39 +1,31 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T23:21:48.756Z",
- "head": "6d58f272e035c4e3f53591ca35e0b699f37ffb00",
- "note": "Polish minors: south limb falloff, a halo at low sun fitted to the approved hero",
+ "pushed": "2026-11-21T23:33:50.777Z",
+ "head": "767d9924574ad40c0880b5f87c6235b7b970fca6",
+ "note": "minors: south limb, Io night fill",
  "looks": [
   {
-   "time": "2026-11-21T23:21:48.206Z",
-   "file": "20261121232148206-note-limb_3296.jpg",
-   "source": "out/work/view/limb_3296.jpg",
+   "time": "2026-11-21T23:33:21.854Z",
+   "file": "20261121233321854-note-io_night_2895_hero.jpg",
+   "source": "out/work/view/io_night_2895_hero.jpg",
    "kind": "note",
-   "label": "jupiter rise 3296 limb, 2x: before (top), with the low sun halo (bottom)",
+   "label": "Io at 2895: hero, before, first try with fill (rejected, fill now keyed on phase so the hold is unchanged)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T23:21:47.575Z",
-   "file": "20261121232147575-note-limb_2997.jpg",
-   "source": "out/work/view/limb_2997.jpg",
+   "time": "2026-11-21T23:33:21.335Z",
+   "file": "20261121233321335-note-io_night_3296.jpg",
+   "source": "out/work/view/io_night_3296.jpg",
    "kind": "note",
-   "label": "jupiter dive 2997 south limb, 2x: before (top), with the low sun halo (bottom)",
+   "label": "Io dark half at 3296, before and with the night fill (5x)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T23:21:47.046Z",
-   "file": "20261121232147046-note-limb_south_2895.jpg",
-   "source": "out/work/view/limb_south_2895.jpg",
-   "kind": "note",
-   "label": "jupiter hold 2895 south limb, 3x: approved (top), round 25 build (middle), with the low sun halo (bottom)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T23:21:21.698Z",
-   "file": "20261121232121698-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, final tier",
+   "time": "2026-11-21T23:33:12.996Z",
+   "file": "20261121233312996-still-f02895-16x9-final-full.jpg",
+   "source": "out/work/stills/f02895-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, final tier",
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
@@ -43,8 +35,8 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T23:21:18.324Z",
-   "file": "20261121232118324-still-f03296-16x9-final-full.jpg",
+   "time": "2026-11-21T23:32:31.148Z",
+   "file": "20261121233231148-still-f03296-16x9-final-full.jpg",
    "source": "out/work/stills/f03296-16x9-final-full.png",
    "kind": "still",
    "label": "jupiter.rise frame 3296, final tier",
@@ -57,11 +49,19 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T23:17:36.524Z",
-   "file": "20261121231736524-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
+   "time": "2026-11-21T23:21:48.206Z",
+   "file": "20261121232148206-note-limb_3296.jpg",
+   "source": "out/work/view/limb_3296.jpg",
+   "kind": "note",
+   "label": "jupiter rise 3296 limb, 2x: before (top), with the low sun halo (bottom)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T23:21:21.698Z",
+   "file": "20261121232121698-compare-compare-jupiter-hold-view.jpg",
+   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.hold: approved image left, film frame right, final tier",
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
