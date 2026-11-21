@@ -1,0 +1,12 @@
+Strict 2x super-resolution of Image 1, a top-down nadir view from low orbit of the Caribbean Sea between Jamaica, the east of Cuba and Hispaniola with scattered clouds (12 x 12 degrees, 1:1 square, north at the top).
+
+EXACT LAYOUT AND TONE LOCK:
+Image 1 is the exact map to sharpen in place. When scaled back to the resolution of Image 1, every coastline, island, turquoise bank, sea floor shading, mountain ridge, forest region, cloud cluster, small cloud and cloud shadow MUST stay at its exact pixel position, shape, size, brightness and hue. Do NOT shift, rotate, resize, add or remove any land, island or cloud mass. Keep the deep sea the same deep blue and the shallows the same turquoise. Do NOT brighten or darken any region and do NOT add a vignette.
+
+CRISP LOW ORBIT DETAIL:
+Replace only the softness of Image 1 with crisp photoreal detail seen from low orbit, in the finish and palette of Image 2 (the approved orbital frame of the same Earth from the same film):
+- Clouds: every existing white patch resolves into clusters of individual small cumulus puffs with crisp bright tops, fine lumpy texture and delicate edges, each with a soft shadow on the sea falling toward the lower right (the Sun is low in the upper left). No new large clouds.
+- Sea: clean deep blue water with fine swell lines and faint current streaks, sharp reef edges, sand ripples, tidal channels and gradients inside the existing turquoise shallows.
+- Land: sharp coastlines with small bays, beaches, headlands and river mouths, steep forested ridges and valleys, canopy texture, small plains, all in the existing colours.
+
+Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.

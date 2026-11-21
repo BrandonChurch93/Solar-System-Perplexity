@@ -1,0 +1,1 @@
+The flat grey disc in image 1 and the black streaks around it are missing data, not ground. Fill them with the same cratered ground as the rest of the tile, in the same colors, with craters of many sizes, so that no disc, ring, hole or radial streak remains. The harsh black shadows inside craters near it become normal crater floors.
