@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T23:07:06.343Z",
- "head": "483ae219050ba8f8156b298cc4c89e5600a2210b",
- "note": "Phase 6 polish: final tier proof stills rendering (1185, 1287, 1586, 1440), strips of hold to dive and rise",
+ "pushed": "2026-11-21T23:31:18.750Z",
+ "head": "b6042badd46697b8aa82094590a3ffc343d44354",
+ "note": "Phase 6 polish: final proof stills; dark cracks under the hold's lightning found and being cured; hold detail in the dive measured softer and dropped",
  "looks": [
+  {
+   "time": "2026-11-21T23:31:18.124Z",
+   "file": "20261121233118124-note-b2-bolts.jpg",
+   "source": "../view/b2-bolts.png",
+   "kind": "note",
+   "label": "Phase 6 lightning cure, pass 1: flash off with the old map, wrap alone, mask; approved, 1185 now, 1150 now (faint lines left)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:31:17.556Z",
+   "file": "20261121233117556-note-h8-bolts.jpg",
+   "source": "../view/h8-bolts.png",
+   "kind": "note",
+   "label": "Phase 6 fault found: dark cracks under the lightning in hold frames 1150 and 1230 (hold detail map fitted with the flash on), cure in work",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:31:16.995Z",
+   "file": "20261121233116995-note-k1-1287-night.jpg",
+   "source": "../view/k1-1287-night.png",
+   "kind": "note",
+   "label": "Phase 6 item 3, dive 1287 night side at native size: round 23, hold detail carried (softer, dropped), carried with the wrap's finest band",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:31:16.395Z",
+   "file": "20261121233116395-note-f1-1586-pair.jpg",
+   "source": "../view/f1-1586-pair.jpg",
+   "kind": "note",
+   "label": "Phase 6 final tier, rise 1586: round 23 (top) against now (curled plume, rewoven ring, night limb one falloff)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T23:07:05.121Z",
    "file": "20261121230705121-note-i4a-1287-pair.jpg",
@@ -18,38 +50,6 @@
    "source": "../view/r9.jpg",
    "kind": "note",
    "label": "Phase 6 draft strip, rise 1560 to 1590: veil thins, curled plume, rewoven ring",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:07:03.034Z",
-   "file": "20261121230703034-note-h9.jpg",
-   "source": "../view/h9.jpg",
-   "kind": "note",
-   "label": "Phase 6 draft strip, hold to dive 1259 to 1303 with the hold detail map at 2048 (take h3)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:59:25.055Z",
-   "file": "20261121225925055-note-c12-dc.jpg",
-   "source": "../view/c12-dc.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, dive cover sheet at review tier, take c12 (terrain side veil stood still, cured in d13)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:59:24.423Z",
-   "file": "20261121225924423-note-r23-1586-lr.jpg",
-   "source": "../view/r23-1586-lr.png",
-   "kind": "note",
-   "label": "Round 23 build, rise 1586 lower right at twice native, for comparison",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:59:23.851Z",
-   "file": "20261121225923851-note-i4c-1586-lr.jpg",
-   "source": "../view/i4c-1586-lr.png",
-   "kind": "note",
-   "label": "Phase 6 item 4, rise 1586 lower right at twice native, take i4c (round 23 had soft stretched arcs here)",
    "stop": "venus"
   },
   {
