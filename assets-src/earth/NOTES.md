@@ -445,3 +445,17 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - Draft stills `out/work/earth/p19/` (`cut-a.jpg` shell 1.035, `cut-b.jpg` shell 1.003, `cut-c.jpg` 2128 to 2133, `cut-d.jpg` air 0.2): the limb, its curve and the streaks of the deck carry across 2129 to 2130.
 - The dive cut already carries the limb: 0.189 from the top at 1883 (orbit side), 0.183 at 1884.
 - Not committed yet: `plan.ts` with `exitDipDeg` does not pass `tsc` without the shared change, so the branch head stays 9f1e1ff (whole frame veil) for code until the key is on main. `src/director/moves.ts` is changed in the working tree only and is never committed.
+
+### Limb glow carried across both cuts, whole frame veil removed (09:40 to 09:55 UTC, working tree)
+
+- `look.descent` is now `{ high, low, air: 0.25, glow: { dive, rise } }`. Near the ground (`low` 1 below 0.05 radii of altitude, 0 above 0.7) `set.ts` shrinks the two thin air layers to `air` times their fitted height and multiplies their colours by the tint of the segment. In the hold and at the judged frames `low` is 0, so nothing changes there (2156 against the still before: 793 pixels differ by more than 2 code values, all single points).
+- Why two tints: the relief's limb glow is baked (the approved close image), the orbit side's glow follows the Sun angle at the limb ahead, and the dive and the rise look at different parts of the limb.
+- Rise cut, column x 950 to 970, code values R G B at 3, 12, 30 px above the limb: 2129 (terrain) 26 105 157, 14 64 108, 6 28 46; 2130 (orbit, `air 0.25`, `rise: [0.6, 2.4, 2]`, `coverShell: [1, 1.0012]`) 31 106 155, 14 68 112, 6 28 51. Before (air 1): a glow 150 px tall. Limb rows at x 300, 950, 1600: 2128 269 202 236, 2129 269 201 236, 2130 268 204 225, 2131 278 197 236, 2132 283 184 242, 2133 292 167 245.
+- Left at the rise cut: the right end of the limb line is 11 px higher for the one frame 2130. Two causes, both in the engine's start of the orbit side: its height is the dive altitude (0.0376 radii at 2130, dip 15.5 degrees) while the terrain camera has climbed to 1.8 heights (dip 18.6), so the limb is less curved for a frame (9 px at 650 px from the middle); and the limb tilt is -2.0 against -1.6 degrees (4.5 px). Not asked for: a lower `exitHeight` would match the dip but takes the lift off out of 2100 to 2121.
+- Dive cut, same column: 1883 (orbit) with `dive: [0.2, 1.1, 1.25]` 24 87 154, 12 56 112, 5 23 52; 1884 (terrain) 16 93 148, 9 58 101, 5 24 46. Before the tint 1883 was 31 132 183. Limb rows 1883 284 198 196, 1884 246 183 196 (tilt -4.1 against -2.3 degrees: the dive is still rolling out when the cut comes; not touched).
+- The whole frame veil is gone: `veil.ts` is the file of 6d658f0 again, `look.veil.whole` and its lines in `set.ts` are removed.
+- Sheets: `out/work/earth/p20/cut-a.jpg` (2128 to 2133), `cut-native.jpg` (limb strips at native size), `cut-b.jpg` (2132 to 2137, 2126, 2120), `rise-terrain.jpg` (2099 to 2124: the ground sinks, the limb stays, the Sun leaves at the top), `dive-cut.jpg`.
+
+### Hold stars against the approved image, settled (09:43 UTC)
+
+- The earlier count (film 20 to 37 percent more star flux) came from resizing the approved image with an area filter. With a Lanczos resize to 1920 the far left sky (the hero's own pixels) has flux 859 approved against 866 film, peaks over 40 code values 1057 against 887; lower right 639 against 636. So the film's stars are the approved ones. Off the weak list.
