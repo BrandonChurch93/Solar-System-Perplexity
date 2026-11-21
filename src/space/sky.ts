@@ -148,7 +148,7 @@ void main() {
     float disc = smoothstep(1.0 + edge, 1.0 - edge, x);
     float limb = 0.45 + 0.55 * sqrt(max(1.0 - x * x, 0.0));
     float coreR = clamp(uSunRadius * 0.35, 0.0012, 0.004);
-    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR));
+    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR)) * (1.0 - smoothstep(0.02, 0.03, uSunRadius));
     float o = max(x, 1.0);
     float big = clamp(sqrt(0.02 / uSunRadius), 0.4, 1.0);
     float corona = 1.3 * big * pow(o, -3.6) + 0.035 * pow(o, -1.6) * exp(-o * 0.2);
