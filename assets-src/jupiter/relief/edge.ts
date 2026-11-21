@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import { readFileSync } from 'node:fs'
-import { StopPlan, type Fit, type MoveParams } from '../../../src/director/moves'
+import { type Fit, type MoveParams } from '../../../src/director/moves'
 import fit from '../../../src/stops/jupiter/fit.json'
-import { params } from '../../../src/stops/jupiter/plan'
+import { JupiterPlan, params } from '../../../src/stops/jupiter/plan'
 import meta from '../../../src/stops/jupiter/relief.json'
 import { config } from '../../../src/config'
 const overT = JSON.parse(process.env.TERRAIN ?? '{}')
 const p: MoveParams = { ...params, terrain: { ...params.terrain, ...overT } }
-const plan = new StopPlan('jupiter', fit as Fit, p)
+const plan = new JupiterPlan('jupiter', fit as Fit, p)
 const fps = config.fps
 const buf = readFileSync('public/assets/jupiter/full/deck-dist.bin')
 const dist = new Float32Array(buf.buffer, buf.byteOffset, buf.byteLength / 4)

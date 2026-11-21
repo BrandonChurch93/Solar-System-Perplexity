@@ -398,6 +398,37 @@ READY format: `READY <commit> round 3`, then changes per item number above, what
 
 Binaries: one commit of `public/assets/jupiter/` in round 3 (sky patches will change for item 1).
 
+## Round 3 work log (from 13:16 UTC)
+
+Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:31): engine batch 13 is on main 6ed0829 (sky across the travels; mirrorcheck no longer reports one bright star beside the axis). Merge before READY.
+
+### Item 3, rise: stop-local path (13:20 to 13:37)
+
+- Engine parameters alone cannot slow the visible pullback: `rise()` blends to `after()` over u 0.6 to 1, which fixes the pullback at about 15 frames and leaves 3298 to 3314 idle; with `level: true` the bands end 80 deg off level.
+- Decision: `class JupiterPlan extends StopPlan` in `src/stops/jupiter/plan.ts` overrides `rise(time)` only. No engine file touched; the film calls `p.rise(t)`. Constants in `climbOut`.
+  - Terrain side (before the cover centre 3270): the engine pose times a camera roll about the view axis, `bankDeg * ramp(c - bankLead, c, t)^bankPower`.
+  - Orbit side: position on the engine's own curve (`from`, `m = (ratio^e - 1)/(ratio - 1)`, `across * m^hug`) straight to `after(time)` with `e = 1 - (1 - x)^climb`, x over 3270 to 3314. Orientation: slerp from the horizon-carried pose at the current position (roll `terrain.rollDeg + bankDeg`) to `lookAt(position, end target, end up)` with weight `1 - (1 - x)^turn`. Lens `smooth(x)` from 64 to 30. End equals `after(time)` with zero relative rate (gap at 3314.999: 2.7e-6 units, 0 deg).
+  - `rise.level` removed, `settle 2`, `tilt 0.5` (used only by `risePose`, the travel's start: bands level there).
+- Numbers (tool `out/work/jupiter/tools/rise2.ts`, env `K` for the constants): globe size in half heights 5.25 at 3270, 3.42 at 3276, 2.60 at 3280, 1.70 at 3287, 1.07 at 3296, 0.68 at 3314; change of log size per frame 0.07 falling evenly to 0.004 (before: 3.12 at 3274, 0.98 at 3288, idle from 3298). Bands on screen: 78 deg at 3270, 33 at 3276, 15 at 3280, -2 at 3287, -8 at the end (before: 80 deg off at the end).
+- First take `bankDeg -50, lead 0.8, turn 4`: strip `strip_rise_r3a.jpg` reads as one continuous pullback, bands level by 3287, Io and the terminator come in from the right edge over 3291 to 3296. Fault found: **the Sun enters the top of the frame at 3269** (terrain side). The engine's Sun is not dimmed by the cover; without bank it sits 32 px above the top edge at 3269, at radius 598 px from the centre, 17 deg right of straight up, so a roll between -8 and +42 deg keeps it out (tool `out/work/jupiter/tools/sun.ts`).
+- Second take, in the tree: `bankDeg -32, bankLead 1.0, turn 5`: Sun 40 px above the top edge at 3269 (108 at 3262), turn rate 9.1 deg per frame at 3271 under 0.93 cover, 5.7 at 3276, 3.8 at 3280, 1.6 at 3287.
+
+### Item 4, dive (13:22 to 13:36)
+
+- `dive.surge { glide: 0.1, rise: 10, fall: 3 }` (no swell). Change of log size per frame: 0.010 at 2994, 0.035 at 3000, 0.073 at 3005, peak 0.099 at 3011 to 3012, 0.043 at 3019, 0.008 at 3023 (before: flat to 3010, then the whole plunge in 9 frames). Turn rate peak 8.9 deg per frame at 3012 (before 24 at 3022); 2.4 at 3019, 0.5 at 3022, so the limb no longer swings under the cover.
+- `strip_dive_r3a.jpg`: one swoop onto the Red Spot, rolling as it comes down (bands 4 deg at 2994, 51 at 3010, 105 at 3019). To check: texels 3008 to 3020 (the camera is low before the cover now), G13.
+
+### Item 1, hold sky (13:16 to 13:30)
+
+- Cause: the patch at the hero's scale is 1.47 texels per pixel at the hold; with mips the engine's `textureGrad` taps land between level 0 and 1. Round 1 had no mips (crisp hold, aliased 2997).
+- `sky/scale.py MASTER NAME OUT [gain] [knee]`: one Lanczos step from the 3520 x 1980 master to 2400 x 1350 (one texel per pixel at 1920), then a radial frequency gain in linear light, `1 + gain * ((f - knee)/(0.5 - knee))^1.5`.
+- Measured on final 2895, sky box x 1500 to 1900, y 100 to 500, film over hero (Lanczos to 1920): with the plain 2400 patch the transfer is 1.0 to 1.09 up to 0.2 cycles per pixel (post sharpen), 0.91 at 0.25, 0.75 at 0.325, 0.60 at 0.4, 0.45 at 0.475 (bilinear tap, the four taps of the engine, the pixel box of 16 samples). High pass std in the Builder's box: hero 12.8, plain 2400 patch 10.6, READY head 10.1. The inverse is gain 1.3, knee 0.2. Takes in `out/work/jupiter/sky-take/full/` (hold 4.2 MB, terrain 1.3 MB), not yet rendered.
+
+### Item 6, terrain depth: findings before any change (13:30)
+
+- The deck's relief is tiny: heights of the displaced mesh are -0.05 to +0.05 units (std 0.015) with the camera 1 unit up. One plane moves as a homography, which is exactly "a flat picture". Rung 1 was never really climbed.
+- Plan: (a) `look.deck.depth`: scale the relief at load (`dist = hit * (dist/hit)^k`, judged frame unchanged by construction), try k 3 to 5 and look for stretch at the tower silhouettes; (b) a wider sideways arc with counter yaw in an own `terrain()` so the foreground, the storm and the horizon slide against each other; (c) faster storm rotation; (d) haze between layers only if (a) to (c) leave time.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
