@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: open: 19 (earth), 20 (saturn). The next round is 21. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 19 (earth), 20 (saturn), 21 (uranus). The next round is 22. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_422
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -49,7 +49,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | in progress | 2 | 7 | pass | 7 | 4 | pass |  |
 | saturn | in progress | 2 | 4 | fail | 6 | 6 | pass |  |
-| uranus | in progress | 1 | 7 | pass | 5 | 4 | pass |  |
+| uranus | in progress | 2 | 7 | pass | 5 | 4 | pass |  |
 | neptune | in progress | 2 | 7 | pass | 5 | 4 | pass |  |
 
 ## Workspace record
@@ -558,6 +558,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 18, Phase 4, mercury, round 2 of 3. Started 2026-11-21 12:41 UTC. Judged on main at 0ef4b2d. Measures green. R1 8, R2 fail, R3 6, R4 3, R8 pass. 4 severe, 7 major. R1 fell from 9 to 8 (minors only: the Sun's corona about 8 levels low in blue, the disc 1 to 2 px off), R3 rose from 5 to 6, R4 fell from 5 to 3, R2 failed (4 of 10 against the control's 7 of 10) and counts as one major. Looked at by the Builder: both swaps sit under a whole frame beige white veil (739 to 747, 987 to 996); the Sun is a huge yellow disc at the upper right before the dive cover and a small white glow at the upper left after it; at 1016 the night side is a flat blue grey disc of about 10 code values against a sky of 2 with a crisp edge; 730 and 1000 show stepped copies. The lit speck in the crater's shadow, the black shadow and the concentric terraces that the render critic and two jurors fault are in the approved close image and stay. Plateau rule: the cover seen as a join survived rounds 7 and 18, see the decision "Phase 4, Mercury, the covers". Next (round 3, Mercury's last), worst first: the veil replaced by the Sun's glare sweeping across the lens (the kit's cover for Mercury) with the swap matched under it; one Sun through the dive and through the rise; the fastest frames slowed; the rise eased into its end; the night side dark; the smear at 717. Summary in `scorecards/round-018/`.
 - Round 19, Phase 4, earth, round 2 of 3. Started 2026-11-21 13:30 UTC.
 - Round 20, Phase 4, saturn, round 2 of 3. Started 2026-11-21 13:54 UTC.
+- Round 21, Phase 4, uranus, round 2 of 3. Started 2026-11-21 14:30 UTC.
 
 ## Final scores
 
