@@ -52,4 +52,4 @@ export const io = {
 }
 
 export const descent = { high: 0.7, low: 0.05 }
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.045, cap: 2, air: [0.15, 0.004, 0.1, 0.02] as [number, number, number, number] }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.045, cap: 2, air: [0.15, 0.004, 0.1, 0.02] as [number, number, number, number], soft: [0.3, 128] as [number, number] }

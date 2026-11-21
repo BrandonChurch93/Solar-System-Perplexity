@@ -61,6 +61,16 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
+def wide(v, sigma):
+    f = int(sigma // 6)
+    if f < 2:
+        return ndi.gaussian_filter(v, sigma)
+    h, w = v.shape
+    small = Image.fromarray(v.astype(np.float32), 'F').resize((max(w // f, 1), max(h // f, 1)), Image.BOX)
+    soft = ndi.gaussian_filter(np.asarray(small), sigma / f)
+    return np.asarray(Image.fromarray(soft, 'F').resize((w, h), Image.BICUBIC))
+
+
 def hold(hero, fill, glow, out):
     fit = json.load(open('assets-src/jupiter/fit.json'))
     c = fit['circle']
@@ -82,8 +92,8 @@ def hold(hero, fill, glow, out):
     ratio = None
     sure = None
     for sigma in SCALES:
-        n = ndi.gaussian_filter(near, sigma)
-        r = np.stack([ndi.gaussian_filter(ls[..., i] * near, sigma) / np.maximum(ndi.gaussian_filter(lf[..., i] * near, sigma), 1e-9) for i in range(3)], -1)
+        n = np.clip(wide(near, sigma), 0, 1)
+        r = np.stack([np.maximum(wide(ls[..., i] * near, sigma), 0) / np.maximum(wide(lf[..., i] * near, sigma), 1e-9) for i in range(3)], -1)
         m = step(n, 0.04, 0.3)[..., None] if sigma != SCALES[-1] else np.ones_like(n)[..., None]
         if ratio is None:
             ratio, sure = r, m
