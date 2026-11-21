@@ -1,5 +1,6 @@
 import type { HazeParams } from '../../bodies/haze'
 import closeFitted from './closeCurve.json'
+import closeGlobe from './closeGlobe.json'
 import fitted from './curve.json'
 import type { GlobeLook } from './globe'
 import type { RingLook } from './rings'
@@ -7,7 +8,7 @@ import type { TitanLook } from './titan'
 
 export const globe: GlobeLook = {
   curve: fitted.curve,
-  closeCurve: closeFitted.curve,
+  closeCurve: closeFitted.curve.map((c, i) => c.map((v, k) => v * closeGlobe.curveGain[i]![k]!)),
   limb: [0, 0.3],
   ringShadow: 0.94,
   ringSoft: [0.003, 0.012],
@@ -20,6 +21,7 @@ export const globe: GlobeLook = {
   rimNight: [0.004, 0.012, 0.025, 0.06],
   nightBlur: 16,
   termShift: [0.085, 0.55, 0.97],
+  probe: 0,
 }
 
 export const haze: HazeParams = {
@@ -55,7 +57,9 @@ export const rings: RingLook = {
   lodBiasClose: 0.7,
   spokes: 0.1,
   clumps: 0.05,
-  grain: 0.22,
+  grain: 0.35,
+  grainHero: 0,
+  streak: 12,
   sparkle: 1.6,
   sparkleTint: [1, 0.72, 0.5],
   sparkleCell: 0.005,

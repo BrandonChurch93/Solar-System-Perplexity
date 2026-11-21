@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT / "tools" / "assets"))
 from lightcurve import inverse_filmic
 
 L0, L1, NL = -1.05, 2.60, 20000
+DETAIL = float(sys.argv[6]) if len(sys.argv) > 6 else 8.0
 img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
 H, W = img.shape[:2]
 lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
@@ -104,6 +105,31 @@ def family(A, B, offs, reach, name):
     prof, count, shifts = align(pol, ok, list(range(len(offs))), len(offs) // 2, reach, sigma=4.0)
     good = np.isfinite(prof[:, 0])
     print(name, "lambda", round(float(axis[good].min()), 3), round(float(axis[good].max()), 3), "shifts", [round(float(shifts[k]), 1) for k in sorted(shifts)])
+    if DETAIL > 0:
+        p = A[None] + d[None] * t[:, None]
+        lc = at(p[:, 0], p[:, 1])
+        mono = np.maximum.accumulate(lc)
+        ok_t = (p[:, 0] > 8) & (p[:, 0] < W - 9) & (p[:, 1] > 8) & (p[:, 1] < H - 9) & (np.gradient(lc) > 1e-5) & (lc >= mono - 1e-6)
+        cuts = []
+        for off in (-2.0, 0.0, 2.0):
+            q = p + nrm[None] * off
+            c = cv2.remap(img, (q[:, 0] - 0.5).astype(np.float32)[None], (q[:, 1] - 0.5).astype(np.float32)[None], cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)[0]
+            c = inverse_filmic(srgb_to_linear(np.clip(c, 0, 1)))
+            lo = at(q[:, 0], q[:, 1])
+            o = np.argsort(lo)
+            cuts.append(np.stack([np.interp(lc, lo[o], c[o, k]) for k in range(3)], -1))
+        med = np.median(np.stack(cuts), 0)
+        sg = DETAIL / 0.25
+        base_t = np.stack([np.interp(lc, axis[good], prof[good, k]) for k in range(3)], -1)
+        lo_b = gaussian_filter1d(base_t, sg, axis=0, mode="nearest")
+        lo_m = gaussian_filter1d(med, sg, axis=0, mode="nearest")
+        new_t = lo_b * np.clip(med / np.maximum(lo_m, 1e-5), 0.2, 4.0)
+        sel = ok_t & (lc > axis[good].min()) & (lc < axis[good].max())
+        fresh = np.stack([np.interp(axis, lc[sel], new_t[sel, k]) for k in range(3)], -1)
+        span = good & (axis > lc[sel].min()) & (axis < lc[sel].max())
+        ratio = lum(med) / np.maximum(lum(lo_m), 1e-5)
+        print(name, "detail of the centre cuts, rms of ratio minus 1:", round(float(np.sqrt(((ratio[sel] - 1) ** 2).mean())), 4), "of the average:", round(float(np.sqrt(((lum(base_t)[sel] / np.maximum(lum(lo_b)[sel], 1e-5) - 1) ** 2).mean())), 4))
+        prof = np.where(span[:, None], fresh, prof)
     return prof, good
 
 

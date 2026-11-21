@@ -20,7 +20,10 @@ export interface GlobeLook {
   rimNight: [number, number, number, number]
   termShift: [number, number, number]
   nightBlur: number
+  probe: number
 }
+
+export interface GlobePatch { texture: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
@@ -62,6 +65,10 @@ uniform float uNightBlur;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform float uNightFloor;
+uniform int uProbe;
+uniform sampler2D uPatch;
+uniform vec4 uPatchBox;
+uniform vec2 uPatchSize;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vLocal;
@@ -110,6 +117,18 @@ void main() {
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
+  vec3 e = spinY(d, uPatchBox.x);
+  vec2 q = vec2(atan(e.z, e.x) / uPatchBox.y * 0.5 + 0.5, (asin(clamp(e.y, -1.0, 1.0)) - uPatchBox.z) / (uPatchBox.w - uPatchBox.z));
+  vec2 qe = min(q, 1.0 - q);
+  float pw = e.x > 0.0 ? uClose * smoothstep(0.0, 0.1, qe.x) * smoothstep(0.0, 0.1, qe.y) : 0.0;
+  for (int k = 0; k < (pw > 0.0 ? 1 : 0); k++) {
+    albedo = mix(albedo, inverseFilmic(textureGrad(uPatch, q, dFdx(q) * uGrad, dFdy(q) * uGrad).rgb), pw);
+    texels = mix(texels, diagTexels(q * uPatchSize), pw);
+  }
+  for (int k = 0; k < (uProbe >= 5 ? 1 : 0); k++) {
+    albedo = vec3(uProbe == 5 ? 0.0 : 0.6);
+    soft = albedo;
+  }
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
@@ -125,7 +144,13 @@ void main() {
   col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(drift * 8.0, 0.0), length(vView));
+  vec3 layer = vec3(0.15, 0.45, 0.9);
+  for (int k = 0; k < (uProbe > 0 ? 1 : 0); k++) {
+    float val = uProbe == 1 ? atan(d.z, d.x) / 6.283185307 + 0.5 : (uProbe == 2 ? asin(clamp(d.y, -1.0, 1.0)) / 3.14159265 + 0.5 : (uProbe == 3 ? clamp(ndl * 0.5 + 0.5, 0.0, 1.0) : mu));
+    float hi = min(floor(val * 255.0), 254.0);
+    layer = vec3(hi / 255.0, val * 255.0 - hi, 1.0);
+  }
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -137,7 +162,7 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
@@ -150,7 +175,8 @@ export class Globe {
         uHazeShadow: { value: look.hazeShadow },
         uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
-        uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
+        uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)

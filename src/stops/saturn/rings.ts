@@ -20,6 +20,8 @@ export interface RingLook {
   sparkleCell: number
   closeTone: [number, number, number]
   veil: [number, number]
+  grainHero: number
+  streak: number
   heroTone: [number, number, number]
 }
 
@@ -88,6 +90,8 @@ uniform vec3 uSparkleTint;
 uniform float uSparkleCell;
 uniform vec3 uCloseTone;
 uniform vec2 uVeil;
+uniform vec2 uGrain;
+uniform float uStreak;
 uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
@@ -156,7 +160,13 @@ void main() {
   vec2 qx = dFdx(q);
   vec2 qy = dFdy(q);
   float major = max(length(qx), length(qy));
-  mottle += uAzimuth.z * (grain(tu, r, 0.004, 0.0007) - 0.5) * (1.0 - smoothstep(0.25, 0.9, major / 0.0007)) * smoothstep(0.02, 0.1, s.a);
+  vec2 tang = vec2(-vLocal.z, vLocal.x) / max(r, 1e-4);
+  float fa = max(abs(dot(dFdx(vLocal.xz), tang)), abs(dot(dFdy(vLocal.xz), tang)));
+  float lm = log2(max(fr, 1e-7) * 1e4);
+  float ff = fract(lm);
+  float gc = 1e-4 * exp2(floor(lm) + 1.0);
+  float gr = ((grain(tu, rp, uStreak * gc, gc) - 0.5) * (1.0 - ff) + (grain(tu, rp, 2.0 * uStreak * gc, 2.0 * gc) - 0.5) * ff) / sqrt((1.0 - ff) * (1.0 - ff) + ff * ff);
+  mottle += mix(uGrain.x, uGrain.y, uClose) * 2.0 * gr * smoothstep(0.02, 0.1, s.a) * (1.0 - smoothstep(0.2, 0.5, fa / (uStreak * gc)));
   col *= mottle;
 
   float cell = uSparkleCell;
@@ -232,7 +242,7 @@ export class Rings {
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uStreak: { value: look.streak }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({

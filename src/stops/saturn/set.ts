@@ -7,6 +7,7 @@ import * as look from './look'
 import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
+import closeGlobe from './closeGlobe.json'
 import layoutJson from './layout.json'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
@@ -31,7 +32,14 @@ export const createSet: SetFactory = async (ctx) => {
   const profile = profileUniforms(await ctx.dataTexture(base + 'rings.bin', sizes.width, sizes.height, 4), key, close)
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const table = await ctx.dataTexture(base + lightJson.file, lightJson.width, lightJson.height, 4)
-  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, look.globe, look.haze, profile, polar)
+  const rad = THREE.MathUtils.degToRad
+  const patchSize = closeGlobe.sets[key] as [number, number]
+  const patch = {
+    texture: await ctx.texture(base + closeGlobe.file, { srgb: true, anisotropy: 16 }),
+    box: new THREE.Vector4(-rad(closeGlobe.lonCentreDeg), rad(closeGlobe.lonHalfDeg), rad(closeGlobe.latDeg[0]!), rad(closeGlobe.latDeg[1]!)),
+    size: new THREE.Vector2(patchSize[0], patchSize[1]),
+  }
+  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, look.globe, look.haze, profile, polar)
   const shell = new Shell(look.shell, look.globe, profile, polar)
   const toTilt = tilt.quaternion.clone().invert()
   const layoutCamera = new THREE.PerspectiveCamera(layoutJson.vfovDeg, layoutJson.width / layoutJson.height, 0.01, 100)
