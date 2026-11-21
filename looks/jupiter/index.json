@@ -1,9 +1,46 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T17:16:59.302Z",
- "head": "33da33133367ec14617b3ad07de81cbf2b121856",
- "note": "dive and dive cover sheets at review tier looked at; terrain sheet rendering, then measure, gates, finals",
+ "pushed": "2026-11-21T17:20:41.777Z",
+ "head": "66ca0ff35f2e47d8d6c84e3f8571ed03beafaad0",
+ "note": "all five review sheets looked at on the merged tree; full measure running, then gates and finals",
  "looks": [
+  {
+   "time": "2026-11-21T17:20:28.181Z",
+   "file": "20261121172028181-note-jupiter.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
+   "kind": "note",
+   "label": "terrain sheet 3060 to 3239 at review tier on the merged tree",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T17:20:18.450Z",
+   "file": "20261121172018450-sheet-jupiter.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.terrain, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "first": 3060,
+   "last": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:20:16.562Z",
+   "file": "20261121172016562-frame-f03239-review.jpg",
+   "source": "out/work/sheets/.frames-JPOnAD/f03239-review.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:16:58.675Z",
    "file": "20261121171658675-note-jupiter.dive-cover-16x9-review.jpg",
@@ -40,43 +77,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:56:38.388Z",
-   "file": "20261121165638388-note-jupiter.dive-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.dive-16x9-review.png",
-   "kind": "note",
-   "label": "dive sheet 2970 to 3059 at review tier on the merged tree",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T16:56:26.446Z",
-   "file": "20261121165626446-sheet-jupiter.dive-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.dive-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.dive, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 2970,
-   "last": 3059,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T15:54:56.068Z",
-   "file": "20261121155456068-frame-f03223-review.jpg",
-   "source": "out/work/sheets/.frames-DORxDQ/f03223-review.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3223, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3223,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T15:40:59.920Z",
