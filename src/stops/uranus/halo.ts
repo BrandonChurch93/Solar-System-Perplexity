@@ -25,8 +25,7 @@ out vec4 outColor;
 void main() {
   if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - vCamL);
-  float t = -dot(vCamL, dir);
-  if (t <= 0.0) discard;
+  float t = max(-dot(vCamL, dir), 0.0);
   vec3 pc = vCamL + dir * t;
   float b = length(pc);
   float ndl = dot(normalize(mat3(modelMatrix) * (pc / b)), uSunW);

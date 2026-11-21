@@ -17,6 +17,8 @@ PUB = 'public/assets/uranus/'
 FAR = {'full': (8192, 4096), 'web': (4096, 2048)}
 FAR_BASE = (4096, 2048)
 FAR_FINE = 0.003
+REACH = (0.02, 0.1)
+RAGGED = 0.012
 HEIGHT = (1024, 512)
 CLOUD_HEIGHT = 0.07
 WIDE_SMALL = WORK + 'plate/wide-canvas.png'
@@ -239,8 +241,9 @@ def main():
     base = base + (glob - base) * smooth(60, 700, dist)
     lsyn = base + amount * syn
     syn_rgb = np.stack([np.exp(line[c][1] + line[c][0] * lsyn) * (1 + (0.03, 0.01, -0.01)[c] * tone) for c in range(3)], -1)
-    w = ndi.gaussian_filter(core.astype(np.float32), 28)
-    w = smooth(0.05, 0.95, w)[..., None]
+    reach = np.minimum(np.minimum(px / AW, 1 - px / AW), 1 - py / AH) + RAGGED * tone
+    w = smooth(0.05, 0.95, ndi.gaussian_filter(ndi.binary_erosion(inside, iterations=10).astype(np.float32), 6)) * smooth(REACH[0], REACH[1], reach)
+    w = w[..., None]
     print('albedo colour line slope per channel', [round(float(l[0]), 3) for l in line], 'median', float(np.exp(glob)))
     far = real * w + syn_rgb * (1 - w)
     print('synth amount', amount, 'real fraction', float(inside.mean()))
