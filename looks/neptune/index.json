@@ -1,9 +1,33 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T22:13:12.835Z",
+ "pushed": "2026-11-21T22:28:55.916Z",
  "head": "49dbe51fe9b0d7ca60c4e494cc9ab0de32a36308",
- "note": "item 4 stage table: hold loses its crests before the lens (map), terrain in the bloom mix; 4994 final tier equals review",
+ "note": "item 4: hold layer (hero cirrus unfaded to the limb, opacity headroom), first render; cover window trial B",
  "looks": [
+  {
+   "time": "2026-11-21T22:28:55.355Z",
+   "file": "20261121222855355-note-crest-bands.jpg",
+   "source": "out/work/nep/p6/h1/crest-bands.png",
+   "kind": "note",
+   "label": "item 4 hold layer first render 4605: hero (crest pixels red) beside film, bands toward the right limb",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:28:54.773Z",
+   "file": "20261121222854773-note-cw-b-cover.jpg",
+   "source": "out/work/nep/p6/cw-b-cover.png",
+   "kind": "note",
+   "label": "cover window trial B: dive cover 4726 to 4752 draft, height 0.65 to 0.032 under the closing cover",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:28:54.197Z",
+   "file": "20261121222854197-note-cw-b-strip.jpg",
+   "source": "out/work/nep/p6/cw-b-strip.png",
+   "kind": "note",
+   "label": "cover window trial B (local scratch, engine-perf): dive 4716 to 4756 draft, 1 s window centred 0.7",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-21T22:12:48.660Z",
    "file": "20261121221248660-note-c4605-bands-stages.jpg",
@@ -30,43 +54,6 @@
    "segment": "neptune.rise",
    "frame": 4994,
    "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:57:40.429Z",
-   "file": "20261121215740429-note-f5006-review.jpg",
-   "source": "out/work/nep/p6/k6/f5006-review.png",
-   "kind": "note",
-   "label": "item 3: judged rise frame 5006 at review with the paced rise (3.94 radii, 3 px per frame)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T21:57:14.434Z",
-   "file": "20261121215714434-sheet-neptune.dive-16x9-draft.jpg",
-   "source": "out/work/sheets/neptune.dive-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet neptune.dive, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4680,
-   "last": 4769,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:56:36.594Z",
-   "file": "20261121215636594-frame-f04680-draft.jpg",
-   "source": "out/work/sheets/.frames-vuzDXR/f04680-draft.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4680, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4680,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
