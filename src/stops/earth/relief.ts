@@ -86,7 +86,8 @@ void main() {
   vec3 m = masks();
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
-  vec3 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad).rgb;
+  float wide = uGrad * (1.0 + 3.0 * max(uTop.x + 24.0 - vImage.y, 0.0));
+  vec3 texel = textureGrad(uColor, uv, dFdx(vUv) * wide, dFdy(vUv) * wide).rgb;
   vec3 col = inverseFilmic(texel) * exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
   vec2 g = vLocal.xz * uShimmer.y;
   float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)));

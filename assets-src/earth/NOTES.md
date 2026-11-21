@@ -275,6 +275,21 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 
 - 06:10. `plan.ts`: `dive.swoop` with the surge above and the rise set above. Draft sheet of the dive: the approach holds, frame 1879 is inside the cover over the Gulf, 1887 is the white veil over the terrain, 1895 to 1919 barely move (entry 0.3, 0.3 is too small: open item 7). The cover is still the grey default.
 
+- 06:15 to 06:24. Cover in `plan.ts`: `cover [0.5, 0.68, 1]`, `coverLow [0.9, 0.95, 1.02]`, the same pair for the terrain side, `coverTop [0.3, 0.12]`, `coverEdge [0.25, 0.5]`, `coverEdgeRise [0.45, 0.5]`, `coverShell [1.02, 1.08]`, `coverRush { speed 2.4, reach 2.5, billow [2.2, 0.9, 1], streak [9, 2.2, 1.6], contrast [0.7, 0.55] }`. Terrain entry `entryHeight 0.9, entryBack 1` (0.3, 0.3 left frames 1895 to 1919 nearly still), exit `exitHeight 2.3, exitForward 1.4, exitPitchDeg 11`. Sheets: the cover reads as a white cloud veil with streaks, full white 1879 to 1885 and 2127 to 2131, but thins over only about 5 frames per side.
+- Terrain entry limits: g = x^2.2 (0.643 at the centre, 0.37 at 1891, 0 at 1919); the ground canvas allows a footprint up to about 1.83 times laterally (side aprons 22.7 percent each), the bottom apron reaches 0.573 camera heights ahead of the judged nadir; exit g 0.30 at 2122 (footprint about 1.69 times).
+- 06:24. Engine batch 5 (main 9d33905) merged as c6ca1e1: world pin (sunDir, travel and exit poses are mine to set), `gradTexel` from `src/core/texel.ts` optional, G11 is about my folder only. Builder preflight of adc492d: build and 35 tests green, G12 PASS, G15 PASS (web 184 MB, full 728 MB), G11 FAIL on `moon-lit.webp` not named by its full path: fixed in `RECIPE.md` (each file needs `public/assets/earth/<set>/NAME` written out).
+- 06:25. Own veil `src/stops/earth/veil.ts` (class `Veil`, in the set's `world`, drawn last): the engine cover's fragment shader on a full-screen mesh, fed from `shot.cover` in `set.update`, amount = `look.veil.peak` x smooth ramp from `lead` seconds before the window's first frame to its centre and down to `tail` seconds after its last frame (`look.ts`: `veil = { lead, tail, peak }`). It lets the veil thin over more than ten frames on each side and drifts over the sky and the Sun too. It discards in diagnostic views. It must be 0 at 1857 and 2156.
+
+### Patch chain as made (`assets-src/earth/patches/`, work in `out/work/earth/patches/`)
+
+- `base.py composite(width_deg, size)`: filmic coded surface x shadow x (1 - a) + premultiplied cloud from the shipped full maps at cloud state 0, Sun at bake time 67.0 s (on the patch: azimuth -54 degrees from north, elevation 9.1; shadows fall to the lower right). `chain.py lock TAKE REF SIGMA OUT`, `chain.py sub PARENT PDEG CDEG SIZE OUT`, `chain.py nest PARENT CHILD PDEG CDEG OUT`. `shiftcheck.py A B`: block phase correlation plus low-frequency difference (`tools/ml/checkmoved.py` fails on repainted land).
+- Level 96: `p96-src-4096.png`, direct resample of the wrap (already as fine), no take.
+- Level 48: input `p48-in-1024.jpg`, `prompt-48.txt`, take 1 kept: shift median 0.21 px at 1024, p90 0.49, max 1.90; low-frequency difference mean 19 code values before the lock (sigma 24 against `p48-src-2048.png`).
+- Level 24: input `p24-in-1024.jpg` (centre of the locked 48), `prompt-24.txt`, take 1 kept: shift median 0.12, p90 0.25, max 0.50; low-frequency mean 2.71.
+- Level 12: input `p12-in-1024.jpg` (centre of the locked 24), `prompt-12.txt`, take 1 kept: shift median 0.17, p90 0.31, max 0.57; low-frequency mean 5.42. It painted long soft cloud shadows toward the lower right (longer than a 9 degree Sun gives for small cumulus); kept, weak point.
+- Takes this round: patch 48: 1, patch 24: 1, patch 12: 1.
+- Each locked 2048 goes to 4096 with `python3 tools/ml/upscale.py --in A --out B --width 4096` (5.6 minutes alone, one at a time), then `chain.py nest` 12 into 24, 24 into 48, 48 into 96, then JPEG q94 4:4:4 to `full/patch-NN.jpg` and Lanczos 2048 to `web/`.
+
 ## Next (current)
 
 1. Cover = thin veil of high cloud in white (`cover`, `coverLow`, `coverTerrain`, `coverLowTerrain`, `coverTop`, `coverEdge`, `coverEdgeRise`, `coverShell`, `coverRush`), larger terrain entry and exit, stills of the join with and without the cover.

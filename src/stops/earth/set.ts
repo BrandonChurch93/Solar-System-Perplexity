@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { coverWindow } from '../../director/timeline'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { config } from '../../config'
@@ -7,6 +8,7 @@ import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { Aurora } from './aurora'
 import { patches } from './assets'
+import { Veil } from './veil'
 import { Globe, direction } from './globe'
 import { Moon } from './moon'
 import { Ground, type GroundDef } from './relief'
@@ -58,6 +60,9 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
+  const veil = new Veil(diagUniform)
+  world.add(veil.mesh)
+
   const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground)
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
@@ -75,6 +80,9 @@ export const createSet: SetFactory = async (ctx) => {
   const eyeWorld = new THREE.Vector3()
   const back = new THREE.Quaternion()
   const sunLocal = new THREE.Vector3()
+  const sunView = new THREE.Vector3()
+  const turn = new THREE.Quaternion()
+  const dip = THREE.MathUtils.degToRad(plan.p.terrain.dipDeg ?? 2)
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const ease = look.globe.drift.ease
 
@@ -87,13 +95,24 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      const seg = state.segment
+      let thin = 0
+      if (seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')) {
+        const w = coverWindow(seg)!
+        const centre = w.centerFrame / config.fps
+        const from = w.firstFrame / config.fps - look.veil.lead
+        const to = (w.lastFrame + 1) / config.fps + look.veil.tail
+        thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
+      }
       if (!inOrbit) {
+        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, dip, look.veil.rim)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
+      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), dip, look.veil.rim)
       camera.copy(world.position).negate()
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
@@ -135,6 +154,7 @@ export const createSet: SetFactory = async (ctx) => {
       moon.dispose()
       curtain.dispose()
       far.dispose()
+      veil.dispose()
       ground.dispose()
     },
   }

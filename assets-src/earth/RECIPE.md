@@ -77,7 +77,7 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 
 - Tool: `air.py`. Rows 0 to 63: ratio of the hero's glow off the limb to the fitted layers, per position angle and height. Rows 64 to 71: colour of the hero's rim per position angle. Input: hero and the sky fill.
 
-### `public/assets/earth/<set>/moon-color.jpg`, `moon-lit.webp` (1024 x 512 and 512 x 256)
+### `public/assets/earth/<set>/moon-color.jpg`, `public/assets/earth/<set>/moon-lit.webp` (1024 x 512 and 512 x 256)
 
 - Tool: `moon.py`. Limb circle fitted on the lit arc of the 2x hero (69 points, rms 0.65 px, radius 58.1 px at 1x). `moon-lit.webp` holds the hero's own Moon pixels with their light baked, alpha = front mask. `moon-color.jpg` is the albedo from those pixels, mirrored to fill the far side.
 

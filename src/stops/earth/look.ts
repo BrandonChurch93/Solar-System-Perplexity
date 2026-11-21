@@ -39,3 +39,5 @@ export const moon: MoonLook = moonJson
 export const aurora: AuroraLook = auroraJson
 
 export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0] }
+
+export const veil = { lead: 0.5, tail: 0.5, peak: 0.6, rim: [0.985, 1.003] as [number, number] }
