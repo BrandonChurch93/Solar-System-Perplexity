@@ -36,6 +36,7 @@ const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
 const OPEN = config.raw.travel.sky
+const DUST_LOOK = config.raw.travel.dust
 const OPEN_TAPS = 8
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
@@ -544,7 +545,7 @@ export class FilmDirector implements Director {
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
-      dust = Math.sin(Math.PI * smooth(u))
+      dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u))))
       dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
       const t = this.sky.orbits[b.id]

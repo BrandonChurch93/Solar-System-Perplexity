@@ -19,6 +19,7 @@ uniform vec4 uLens;
 uniform float uLong;
 uniform float uCap;
 uniform vec2 uNear;
+uniform vec2 uKeep;
 #ifdef OCCLUDE
 uniform vec4 uRock[5];
 out float vBehind;
@@ -55,6 +56,7 @@ void main() {
   float phase = 0.32 + 0.4 * pow(lobe, 3.0) + 0.5 * pow(lobe, 22.0);
   float fade = smoothstep(span * 0.5, span * 0.34, d) * smoothstep(0.06, 0.2, d);
   float energy = uGain * phase * fade * (0.1 + 0.9 * aSeed.y * aSeed.y * aSeed.y) / pow(max(d, 0.3), 1.3);
+  energy *= 1.0 - smoothstep(uKeep.x, uKeep.x + uKeep.y, fract(aSeed.x * 13.7 + aSeed.z * 7.3));
   bool ok = v0.z < -0.05 && v1.z < -0.05 && energy > 0.0;
   vAt = q;
   vShape = vec3(len, r, soft);
@@ -101,7 +103,7 @@ void main() {
 #endif
 }`
 
-export const DUST = { span: 7, near: 0.35, nearSpan: 2.4, pan: 0.3, gain: 150, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 1.6, long: 40, cap: 0.4, tint: [1, 0.93, 0.82] }
+export const DUST = { span: 7, near: 0.35, nearSpan: 2.4, pan: 0.3, gain: 150, bokeh: 5, focus: 6, core: 1.5, coreSpread: 1.6, long: 40, cap: 0.04, keep: [0.35, 0.3, 0.8, 0.12], tint: [1, 0.93, 0.82] }
 
 export interface DustCover { mask: THREE.Texture; rocks: THREE.Vector4[] }
 
@@ -151,6 +153,7 @@ export class Dust {
         uGain: { value: 0 },
         uLong: { value: DUST.long },
         uCap: { value: DUST.cap },
+        uKeep: { value: new THREE.Vector2(1, DUST.keep[3]) },
         uNear: { value: new THREE.Vector2(DUST.near, DUST.nearSpan) },
         uLens: { value: new THREE.Vector4(DUST.bokeh, DUST.focus, DUST.core, DUST.coreSpread) },
       },
@@ -189,6 +192,8 @@ export class Dust {
     this.turn(this.held.copy(mid.camera.quaternion).slerp(close.camera.quaternion, DUST.pan), u.uRot1!.value as THREE.Matrix3)
     this.flow!.at(seg, frame, 0, u.uFlow0!.value as THREE.Vector3)
     this.flow!.at(seg, frame, Math.round(config.shutterFraction * FLOW.stepsPerFrame), u.uFlow1!.value as THREE.Vector3)
+    const pace = Math.min(Math.max(((u.uFlow1!.value as THREE.Vector3).distanceTo(u.uFlow0!.value as THREE.Vector3) * config.fps / config.shutterFraction - DUST.keep[1]!) / (DUST.keep[2]! - DUST.keep[1]!), 0), 1)
+    ;(u.uKeep!.value as THREE.Vector2).x = DUST.keep[0]! + (1 - DUST.keep[0]!) * pace * pace * (3 - 2 * pace)
     ;(u.uSun!.value as THREE.Vector3).copy(shot.sun.dir)
     const height = target.height
     ;(u.uView!.value as THREE.Vector2).set(target.width, height)
