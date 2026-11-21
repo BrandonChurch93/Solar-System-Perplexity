@@ -14,6 +14,8 @@ WHITE = 0.9
 MARGIN = 0.07
 CRISP = 1.0
 CRISP_MAX = 0.6
+SEAM_STRIP = 28
+SEAM_REACH = 900
 
 
 def lin(img):
@@ -80,6 +82,37 @@ for sig, lo, hi in ((8, 0, 60), (30, 60, 400), (90, 400, 4000)):
 wide = (gen + EPS) * np.exp(tone) - EPS
 wide = np.maximum(wide, 0)
 del away, pad, diff
+
+
+def seam(wide, box):
+    full = wide.copy()
+    full[:bh, bx:bx + bw] = box
+    inside = np.zeros((WH, WW), np.float32)
+    inside[:bh, bx:bx + bw] = 1
+    wi = np.maximum(blur(inside, SEAM_STRIP), 1e-4)
+    li = np.log(full + EPS)
+    m_in = blur(li * inside[..., None], SEAM_STRIP) / wi[..., None]
+    v_in = blur((lum(li) - lum(m_in)) ** 2 * inside, SEAM_STRIP) / wi
+    wo = np.maximum(blur(1 - inside, SEAM_STRIP), 1e-4)
+    lo = np.log(wide + EPS)
+    m_out = blur(lo * (1 - inside[..., None]), SEAM_STRIP) / wo[..., None]
+    v_out = blur((lum(lo) - lum(m_out)) ** 2 * (1 - inside), SEAM_STRIP) / wo
+    step = np.clip(m_in - m_out, -0.9, 0.9)
+    spread = np.clip(np.sqrt(np.maximum(v_in, 1e-6) / np.maximum(v_out, 1e-6)), 0.75, 1.7)
+    yy, xx = np.mgrid[0:WH, 0:WW]
+    ny = np.clip(yy, 0, bh - 1)
+    nx = np.clip(xx, bx, bx + bw - 1)
+    step = blur(step[ny, nx], 24)
+    spread = blur(spread[ny, nx], 24)
+    dist = np.hypot(yy - ny, xx - nx).astype(np.float32)
+    w = np.exp(-dist / SEAM_REACH)[..., None]
+    local = blur(lo, SEAM_STRIP)
+    fixed = local + (lo - local) * (1 + (spread[..., None] - 1) * w) + step * w
+    print('seam step p5 p50 p95 %.3f %.3f %.3f, spread p5 p95 %.2f %.2f' % (*np.percentile(step[dist > 0], [5, 50, 95]), *np.percentile(spread[dist > 0], [5, 95])))
+    return np.maximum(np.exp(fixed) - EPS, 0).astype(np.float32)
+
+
+wide = seam(wide, box)
 mask = np.zeros((WH, WW), np.float32)
 mask[:bh - 6, bx + 6:bx + bw - 6] = 1
 mask = blur(mask, 3)
