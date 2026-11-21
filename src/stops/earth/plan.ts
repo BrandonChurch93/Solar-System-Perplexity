@@ -9,8 +9,8 @@ export const params: MoveParams = {
   spot: { x: 0.52, y: 0.46 },
   dive: { headingDeg: 52.25, altitude: 0.030751, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 5, swoop: true, level: 0.62, surge: { glide: 0.03, rise: 85, fall: 4, swell: [0.38, 13, 2.4] } },
   terrain: { vfov: 45, gather: 0.4, forward: 0.44, rise: 0.237, side: 0.3, yawDeg: 0, pitchDeg: 0, entryHeight: 0, entryBack: 0, entryPitchDeg: 1.2, entryRollDeg: -3, entryDipDeg: 0.42, exitHeight: 2.3, exitForward: 1.4, exitPitchDeg: -13, exitDipDeg: 7.85, horizonDeg: 14.3175, dipDeg: 14.0305, rollDeg: -2.0044 },
-  rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.87, offset: [0, 0], driftSpeed: 0.2, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 3, gentle: true, tilt: 0.4, from: 0.0565 },
-  travel: { turnDeg: 70, side: 1, turnEnd: 0.42 },
+  rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.56, offset: [0, 0], driftSpeed: 0.5, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 3, gentle: true, tilt: 0.4, from: 0.0565 },
+  travel: { turnDeg: 93, side: 1, turnEnd: 0.42 },
   arrive: { swingDeg: 20, axis: [0.15, 1, 0], from: 0.2, offset: [0.4, 0.3] },
   light: { exposure: 1, skyExposure: 0.42, sunRadiusDeg: 1.8, sunGlare: 0.85, flare: 0.45, sunDir: [-0.692237, 0.508, 0.512586] },
   cover: [0.22, 0.34, 0.6],
@@ -30,12 +30,12 @@ export const params: MoveParams = {
 }
 
 export interface Approach { ease: number; cruise: number; swell: [number, number, number]; cap: [number, number]; until: number }
-export interface Retreat { lead: number; peak: number; turn: [number, number, number] }
+export interface Retreat { lead: number; peak: number; tail: [number, number]; turn: [number, number, number] }
 export interface Tune { dive: Approach | null; rise: Retreat | null }
 
 export const timing: Tune = {
   dive: { ease: 12, cruise: 0.6, swell: [16, 30, 0.12], cap: [7.3, 8], until: 47.5 },
-  rise: { lead: 3.5, peak: 21, turn: [0.75, 1.3, 1.5] },
+  rise: { lead: 2.5, peak: 30, tail: [0.4, 4], turn: [0.75, 1.3, 1.5] },
 }
 
 const STEPS = 16
@@ -92,6 +92,16 @@ export class Plan extends StopPlan {
     return super.spin(this.clock(time))
   }
 
+  pace(kind: 'dive' | 'rise', time: number): number {
+    const centre = this.coverCenter(kind === 'dive' ? this.seg.dive! : this.seg.rise)
+    const h = 0.25 / config.fps
+    const a = kind === 'dive' ? Math.min(time - h, centre - 3 * h) : Math.max(time - h, centre)
+    const b = a + 2 * h
+    const from = kind === 'dive' ? this.dive(a) : this.rise(a)
+    const to = kind === 'dive' ? this.dive(b) : this.rise(b)
+    return Math.abs(size(to.pose) - size(from.pose)) / (2 * h * config.fps)
+  }
+
   private diveTable(t: Approach): Float64Array {
     if (this.warps.dive) return this.warps.dive
     const seg = this.seg.dive!
@@ -129,8 +139,10 @@ export class Plan extends StopPlan {
     const shape = (q: number) => (x: number): number => {
       if (x < t.lead) return peak * (1 - Math.pow(1 - x / t.lead, 2))
       const k = Math.log(q)
-      const floor = Math.pow(q, frames - t.lead)
-      const fall = (y: number): number => Math.pow(q, y - t.lead) - floor * (1 + k * (y - frames))
+      const span = frames - t.lead
+      const slow = t.tail[0] * Math.pow(q, span)
+      const fast = (1 - t.tail[0]) * Math.pow(q, span * t.tail[1])
+      const fall = (y: number): number => t.tail[0] * Math.pow(q, y - t.lead) + (1 - t.tail[0]) * Math.pow(q, (y - t.lead) * t.tail[1]) - (slow + fast) - k * (slow + t.tail[1] * fast) * (y - frames)
       return last + ((peak - last) * fall(x)) / fall(t.lead)
     }
     const sum = (q: number): number => {
