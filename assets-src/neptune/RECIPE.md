@@ -19,7 +19,7 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 ## public/assets/neptune/<set>/triton.jpg
 
 - What: Triton's colour map, 4096x2048 (`web` 2048x1024).
-- Tool: image tool, then `python3 tools/ml/upscale.py --in out/work/nep/gen/triton-map-t3.png --out out/work/nep/gen/triton-map-t3-2x.png --width 4096`, then `python3 assets-src/neptune/triton/make.py` (seam mirror blend, poles smoothed to the zonal mean, saturation 0.3, contrast 1.25, detail finer than 60 map pixels times 0.55, colour wash to the hero's cap and plains).
+- Tool: image tool, then `python3 tools/ml/upscale.py --in out/work/nep/gen/triton-map-t3.png --out out/work/nep/gen/triton-map-t3-2x.png --width 4096`, then `python3 assets-src/neptune/triton/make.py` (seam mirror blend, poles smoothed to the zonal mean, saturation 0.3, contrast 1.25, detail finer than 60 map pixels times 0.55, colour wash to the hero's cap and plains; round 2: pale cyan `CYAN (0.86, 0.975, 1.0)` below the cap and rose `ROSE (1.0, 0.915, 0.94)` south of `ZONE (-8, -40)` degrees, after the hero's cyan band and pinkish tan gradient).
 - Input: `out/work/nep/triton-ref.jpg`, a crop of Triton from `references/approved/neptune-hero.png`.
 - Prompts: take 1 in `prompts/tiles-2.js` (`triton-map`, model `seedream_5`), takes 2 (`seedream_5`) and 3 (`gpt_image_2_6_flare`) in `prompts/triton-2-3.js`.
 - Take kept: 3 of 6. Take 1 had smooth empty areas, so takes 2 and 3 asked for dense texture everywhere (the ending passes Triton at close range). Takes 2 and 3 were compared side by side in crops and take 3 was chosen.
@@ -44,7 +44,7 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 
 ## public/assets/neptune/<set>/ring-bands.png
 
-- What: the ring's fine structure in ring coordinates (radius 1.28 to 1.92 by azimuth), 4096x512 (`web` 2048x256), designed, not generated and not measured. Red: 16 ringlets and a grainy sheet (square root coded, 1 = 0.16). Green: the bright arcs and sparse glints (square root coded, 1 = 1.0).
+- What: the ring's fine structure in ring coordinates (radius 1.28 to 1.92 by azimuth), 4096x512 (`web` 2048x256), designed, not generated and not measured. Red: 16 ringlets and a grainy sheet (square root coded, 1 = 0.16). Green: the bright arcs and sparse glints (square root coded, 1 = 1.0). Blue (round 2): five broad band bodies with fine radial grain and slow variation round the ring (`BODIES`, square root coded, 1 = 0.05), used only away from the hold (`look.ring.bandHold[2] = 0`, `bandAway[2] = 1.6`) so the ring reads as bands of material in the rise and the ending.
 - Tool: `python3 assets-src/neptune/ring/bands.py` (seed 20261121, no image tool, no take).
 - Why designed: the hero's dark side is heavily block coded, so its crisp ringlets cannot be measured; `ring.png` keeps only the broad glow. The ringlet radii follow the hero's strand peaks (1.51 to 1.53, 1.60 to 1.62, 1.65 to 1.69, 1.77, 1.377) and the two bright arcs sit at the hero's clumps (radius 1.641 at ring azimuth -117.0 degrees, radius 1.512 at -121.3), with five fainter ones.
 - Use: `ring.ts` adds it to `ring.png` in the hold (`look.ring.bandHold`) and draws it alone away from the hold (`look.ring.bandAway`), where the three analytic strands and the flat sheet used to be.

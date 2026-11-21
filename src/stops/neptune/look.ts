@@ -20,6 +20,7 @@ export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
 export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.6, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1] }
 export const field = { amount: 1 }
+export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
 
 export const triton = {
