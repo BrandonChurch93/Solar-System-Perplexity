@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: all eight in their third rounds (see the Stops table and "Running jobs")
-- Current round: open: 23 (venus), 24 (sun). The next round is 25. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 23 (venus), 24 (sun), 25 (jupiter). The next round is 26. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_473
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -47,7 +47,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | venus | in progress | 3 | 9 | pass | 6 | 6 | pass |  |
 | earth | in progress | 2 | 9 | pass | 5 | 4 | pass |  |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
-| jupiter | in progress | 2 | 7 | pass | 7 | 4 | pass |  |
+| jupiter | in progress | 3 | 7 | pass | 7 | 4 | pass |  |
 | saturn | in progress | 2 | 7 | pass | 4 | 8 | pass |  |
 | uranus | in progress | 2 | 7 | pass | 6 | 4 | pass |  |
 | neptune | in progress | 3 | 7 | pass | 6 | 3 | pass |  |
@@ -578,6 +578,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 22, Phase 4, neptune, round 3 of 3. Started 2026-11-21 16:57 UTC. Judged on main at f29800c. Measures green. R1 7, R2 pass, R3 6, R4 3, R8 pass. 2 severe, 16 major. Next: Neptune has used its three rounds, so nothing follows; what stays open, worst first. (1) Rise cover, 4975 to 4986 (severe, named in all three rounds): the frames before and after the cover are two shots, a low horizon lit from the upper right with the Milky Way, then a distant whole globe lit from the upper left with the rings at another tilt, Triton on the far right and no Milky Way. (2) Dive cover, 4729 to 4740 (severe; major in round 14): the plunge enters face on with the limb about 45 degrees down the right side and comes out on a shallow horizon across the whole frame; in this build the limb still shows at 4729 to 4731, which makes the change of place easier to see. (3) The cover is a flat radial streak layer that also lies over black space, the stars and the rings above the limb (4975 to 4977, 4981 to 4985, 4735 to 4739). (4) Fast frames of the rise, 4982 to 4990: the white clouds on the right of the storm break into stepped ticks and bars, with a faint second outline of the ring and the limb. (5) Hold, 4530 to 4679: the right and top edge of the approved image's sky patch stand inside the frame and slide across a flat dark blue backing (seen by the Builder at four times gain on this sheet and on round 14's; the patch needs sky painted on past its border). (6) Dive start, 4680 to 4696: almost no move, then a lurch; and the horizon's drift turns around between 4769 and 4770. (7) Stills: at 5006 the rings are bundles of soft strokes, the clouds are flat white scratches on a smooth base and the black sky shows faint upright stripes; at 4860 the eye is a smooth dark pit with no cloud wall and one cast shadow is a hard black ribbon wider than its cloud; at 4605 a thin cyan arc stands outside a dark trough at the lower right limb (one R2 juror named it as the mark of a generated picture) and the blue bands under the storm are smeared (4707). Match: Triton softer, lifted 4 levels and 2 px off; the finest cloud threads and the brightest crests about 10 levels under the approved image in both views; blacks half a level high. Against round 14: R1 stays 7, R3 rose from 5 to 6 (parts 7 and 6), R4 fell from 4 to 3 with the terrain sky seam of round 14 gone and nothing raised against the terrain view. Summary in `scorecards/round-022/`.
 - Round 23, Phase 4, venus, round 3 of 3. Started 2026-11-21 17:56 UTC.
 - Round 24, Phase 4, sun, round 3 of 3. Started 2026-11-21 18:20 UTC.
+- Round 25, Phase 4, jupiter, round 3 of 3. Started 2026-11-21 18:20 UTC.
 
 ## Final scores
 
