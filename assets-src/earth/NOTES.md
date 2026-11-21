@@ -784,3 +784,10 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Rise numbers again from `show.ts --kind rise`: limb px 2130 3782, 2131 3259, 2132 2490, 2133 1885, 2134 1517, 2136 1116, 2137 998, 2140 786, 2147 589, 2154 516, 2156 504, 2161 483, 2167 468, 2174 454; rate percent per frame 2137 9.3, 2140 5.8, 2147 2.5, 2156 1.0, 2167 0.45, 2174 0.38. Dive: limb 474 at 1830, 546 at 1857 (rate 1.07, 3.6 px), 747 at 1870, 1087 at 1876.
 - `holdcheck.ts`: globe centre fixed at (1000.9, 541.3), a surface spot 53.0 px east, the Moon 22.7 px, a star 0.0 px over 1680 to 1829.
 - `npm run measure -- --stop earth` running again from 19:50 at this hash (`out/work/earth/r3v/measure2.log`).
+
+## READY round 3 (20:20 UTC)
+
+- Measures at engine hash f854c8146f64c7e4, stop hash a1573c1a4a29dc23 (`out/work/earth/r3v/measure2.log`, 1514 s): G13 0 of 463 frames over 0.02 soft; G5 1755 0.329, 1857 0.452, 2010 0.780, 2156 0.386, invalid 0 on all four; G17 1755 median 1.225 p25 1.163 (72 tiles), 2010 median 1.012 p25 0.975 (78 tiles).
+- Merged `origin/main` 3e6ce64 as 0c7faaa (Saturn's stop files, `tools/master.py`, scorecards; no engine source, hashes unchanged). Build passes, vitest 62 of 62, `skyat.ts --frames 2156` `[-78.5, 100.8, 0.4]`, probe joins as above, gates G11, G12 (2039 tracked files, 1.46 GB), G15 (earth/web 347 MB, earth/full 1381 MB) pass.
+- READY sent to the Builder with this head. Round 3 is the last round: what is handed in is kept. After READY: wait for the Builder; render jobs may be asked at a commit of main.
+- Known weak points handed in: travel `turnDeg` 93 on the fragile branch of `place()` (check `skyat.ts` after any change of Mars's approach or Earth's exit), travel peak turn 4.92 deg per frame at 2207, join 1680 speed 4.06e-2 to 3.11e-2, rise 2134 to 2136 at 267, 162, 101 px under cover 0.45, 0.27, 0.12, limb in view at 2131 and gone at 2132, 1857 with the top limb at the frame's edge, sky at 2156 dimmer than at 1755 away from the band, faint green streak at the night limb, aurora still its own layer over the air shell, the minors of round 19 not done.
