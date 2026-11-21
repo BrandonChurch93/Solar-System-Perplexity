@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: open: 15 (sun), 16 (venus). The next round is 17. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 15 (sun), 16 (venus), 17 (jupiter). The next round is 18. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_336
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -47,7 +47,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | venus | in progress | 2 | 9 | pass | 4 | 6 | pass |  |
 | earth | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
-| jupiter | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
+| jupiter | in progress | 2 | 9 | pass | 4 | 6 | pass |  |
 | saturn | in progress | 1 | 4 | fail | 6 | 6 | pass |  |
 | uranus | in progress | 1 | 7 | pass | 5 | 4 | pass |  |
 | neptune | in progress | 2 | 7 | pass | 5 | 4 | pass |  |
@@ -551,6 +551,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 14, Phase 4, neptune, round 2 of 3. Started 2026-11-21 11:41 UTC. Judged on main at c57f694. Measures green. R1 7, R2 pass, R3 5, R4 4, R8 pass. 2 severe, 14 major. R1 rose from 6 to 7, R3 stayed at 5, R4 fell from 5 to 4: the new terrain travel brings the top border of the close image's sky patch into frame (a straight seam against the shared sky, 4851 to 4970) and the rise cover joins two pictures with different light. Next (round 3, Neptune's last), worst first: the sky patch faded into the shared sky outside the approved border and the left apron held; color, exposure, heading and Sun side carried across the rise cover with a slower pullback; the dive cover's brightness step at 4731 to 4732; the hold limb as one bright edge with the approved glow instead of a dark trough and a thin line; ring arcs and Triton brought to the approved image; the stray arc and the storm eye at 4707; Triton, rings and cloud streaks in the rise frame 5006; more depth in the terrain view. Summary in `scorecards/round-014/`.
 - Round 15, Phase 4, sun, round 2 of 3. Started 2026-11-21 11:58 UTC.
 - Round 16, Phase 4, venus, round 2 of 3. Started 2026-11-21 12:29 UTC.
+- Round 17, Phase 4, jupiter, round 2 of 3. Started 2026-11-21 12:29 UTC.
 
 ## Final scores
 
