@@ -89,8 +89,29 @@ Lab notebook of the stop agent for `neptune`. Read `assets-src/shared/STOP-AGENT
 - Check scripts: `check/profiles.py` (fine limb profiles), `check/outside.py` (compact table by theta), `check/ratio.py STILL OUT` (film over hero map in blue, red = film brighter, and a table of medians by ndl for mu > 0.45). At 04:05 the disc medians matched within 3 percent for ndl 0.1 to 0.8.
 - Engine batch 1 merged (b4ae65c): sky patch `weight(time, view)` optional, faster sky pass. Software rasterizer computes both sides of an `if`; put costly conditional work in `for (int k = 0; k < (cond ? 1 : 0); k++)` with `textureGrad`.
 
-## Next (04:20 UTC)
+## Orbit view work, 04:20 to 05:10 UTC
 
-1. Compare at draft after the limb terms, wrap rebuild and sky patch; tune Triton (gain 2.6, aim `[0.25, -0.25, 0.55]`, radius), ring right branch, check `check/outside.py` again.
-2. Lookback still (ending) and rise view check: crescent, night side, hero inset lens, far side tiles on the night side.
-3. Motion sheet of the hold, `RECIPE.md` files, final tier compare, measure, commit binaries, milestone 1 message.
+- Line shell (`air.ts`, `haze.json` `air.line`): `bulge [0.866,-0.496,0.0645,0.011]` (shell radius raised toward theta -30, times `home`), `tail [0.5,2.8,5.0]` with `tailEdge [0.3,0.75]` (extra cyan light on the line by `dot(tp, sun)`, times `home`), `inner 1.0005` (closed a dark gap at the night limb), `lift 0.0025`. Broad layer night colour `[0.0005,0.0016,0.0036]`.
+- Twilight cirrus: `sepmap.py` builds the 33 knot cloud curve itself (`CLOUD_KNOTS/CLOUD_VALUES`, tint by sun angle `TINT_KNOTS/TINT`: neutral grey at the terminator to `(0.30,0.39,1)` above ndl 0.3) and writes `src/stops/neptune/curve.json`. Alpha is extracted down to ndl -0.06. `gweight` (mu 0.08..0.26, ndl -0.1..-0.04) removes generated cirrus inside the hero's disc. `planet.ts` cloud fade `smoothstep(-0.09, -0.03, ndlc)`. Result: grey-white twilight cirrus like the hero.
+- Limb field: `field.json` 40x40 x 2 sides (side 1 = clockwise from the Sun direction), mu 0..1 by ndl -0.3..1, a log2 gain per cell, applied after the air, weighted by `home * look.field.amount`. One iteration: `npm run still -- --frame 4605 --tier review && python3 assets-src/neptune/check/field.py out/work/stills/f04605-16x9-review-full.png`. Rules in `field.py`: `EDGE 3`, `RIM 8, CAP 1.2`, `hot` (ndl above 0.84..0.93: columns below 8 clipped to +-0.4). Residual now rms log2 0.256, p95 0.568.
+- Limb terms in `planet.ts`: rim centred at `rimMu` (times `home`) and a cut at the very edge (`cut`, `cutMu`, `cutFrom`, `cutTo`, `cutAim`). `cut` 0.75 drew a dark outline at the lit limb in crops; it is 0.3 now and the outline is gone. The right limb still shows two or three thin stripes where the hero has one soft band and one thin cyan line.
+- Ring: `ring/map.py` measures the ring map from the hero (hero minus a still with the ring off, unwrapped into the fitted ring plane); a second pass adds the broad residual from a still with the first map. `STRAND 2.2`, `FLOOR 0.0008`. Annulus medians within about 5 percent of the hero by azimuth. The left ansa in front of the night side is fainter than the hero's (crop D).
+- Triton: `make.py` `SATURATION 0.3, CONTRAST 1.25, WASH (0.93,0.84,0.845), PLAIN (0.97,0.975,1.0)`; `triton.ts` relief step `eps = max(9/mapWidth, 2.5*length(fwidth(d)))`; `look.triton.gain 1.75`. In the final compare Triton is a little smaller (89 against 95 px radius in the hero frame), darker and more speckled pink than the hero's.
+- Sun: radial blue medians round the Sun equal the hero's at the review tier, rays the same.
+- Engine batches 1 to 3 merged (main 3523b45, engine hash e44fa21a5a599a98). `skyAim.orbit [25.78793, 56.89437, -50.63077]` is in `plan.ts` (printed by `npm run -s aim -- --stop neptune`; the hold is the same picture). Do not tune it for the ending.
+- `npm run budget -- --stop neptune` throws in `tools/budget.ts:18` (`travel.firstFrame` of undefined: Neptune has no travel segment). Reported to the Builder. Texture memory by hand: wrap 179 MB, Triton 44.7, sky patch 37.2, ring under 3, stand-in plate about 23: about 290 MB of 1400.
+- Builder at 05:03: motion first. Orbit milestone sent as it is; limb, ring and Triton refinements come back through the rounds. Move to the terrain view, then dive and rise.
+
+## Open on the orbit view (for the rounds)
+
+1. Right limb stripes, limb offset up to 4 px (hero body is not a circle), lit limb has a teal band outside the white rim where the hero has a soft glow.
+2. Ring left ansa fainter than the hero; ring map measured only where the hero shows the ring.
+3. Triton size, tone and speckle; its aliased edge at the final tier.
+4. Night side: faint dark blotches from generated deck tiles (`DARK, LIGHT = 0.14, 0.35` in `assemble.py`); hero night disc B 0.011 against film 0.006 to 0.008 near the left limb.
+5. Not yet checked: lookback crescent (`ending.lookback`), the rise view of the far side (hero inset lens, annulus with no cirrus at hero mu 0.08 to 0.26), hold motion sheet (clouds crossing the limb field, Triton speed, ring shimmer).
+
+## Next (05:10 UTC)
+
+1. Terrain view (milestone 2): fit the close image camera and horizon, deck plus raised cloud layer with real parallax, flow (band streams, storm turns), shadows, aprons, haze cover, terrain sky patch, `skyAim.terrain`.
+2. Dive and rise with patch levels and the predictor (milestone 3). Rise and lookback checks from item 5 above belong here.
+3. Self-check, `READY`.
