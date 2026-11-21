@@ -218,16 +218,35 @@ Checks beyond the four frames:
 
 Per sample at 2580 (`review`): layers 1.37 to 0.80 s (indices drawn 3,160,026 to 703,602), sky pass 0.49 to 0.22 s, stars 0.32 to 0.19 s, plus the mark pass 0.09 s and a second clear 0.03 s; the sample 2.4 to 1.6 s. New `tests/shield.test.ts`. Build, vitest and determinism pass.
 
+### 10. Capture: haze shell triangles that the shader discards are not drawn (`397cd04`)
+
+A `HazeShell` (`src/bodies/haze.ts`) is a back side sphere of 160 x 80 segments around the planet, additive, three of them on Mars. Its fragment shader discards every pixel whose view ray meets the planet (`b > 0.0 && rt2 < 0.99`), so only the thin ring between the planet disc and the top of the shell is ever written, but the whole far half of the sphere is shaded first: a discarded pixel pays for the whole shader, and the depth test does not stop it either. Cost 0.17 s per sample at the hold and the dive.
+
+The discard region is a cone around the direction from the camera to the planet centre, which is convex, so a triangle whose three vertices lie inside it lies inside it entirely. New `src/bodies/trim.ts`: `hazeHidden` evaluates the shader's own test per vertex on the CPU, in double precision with a margin (`b` above the limit by `1e-3 * (1 + r)`), and `keepTriangles` writes the index without the triangles whose three vertices are hidden, order unchanged, so the additive sum per pixel has the same terms in the same order. `HazeShell` implements `Trim { hide(); show() }` and hangs itself on `mesh.userData.trim`; `engine.ts` calls `hide()` on every visible object with that field before a sample is drawn and `show()` after it, in capture only (`sky.cull`). Any other body whose shader discards a convex region can use the same hook.
+
+In the same commit, a guard in change 9: a relief layer whose mesh is hidden is left out of the mark pass.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 34.0 | 33.0 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 40.4 | 40.7 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 82.6 | 76.7 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 68.9 | 63.7 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Haze shells per sample (`draft`): hold 0.168 to 0.063 s, dive 0.17 to 0.046 s, rise 0.044 s after. Without the 16 s of start and load the dive render is 9 to 11 % shorter (a second run gave 75.2 s), the rise 10 %, the hold 6 %. New `tests/trim.test.ts` (the dropped triangles are sampled and checked against the shader test in float arithmetic). Build, vitest (11 files) and determinism pass.
+
+Then main `e23c58a` (engine batch 7) was merged into the branch (`a2a50dd`); on the merged tree the four frames again have the baseline sha256 (75.3, 64.7, 33.6 and 40.7 s for dive, rise, hold and terrain), build and vitest pass.
+
 ## All steps, `final` tier, seconds per frame on this VM
 
-| Frame | Samples | Baseline | 1 | 2 and 3 | 4 | 5 | 6 | 7 | 8 | 9 | Now / baseline |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2325 hold | 16 | 72.2 | 59.6 | 57.0 | 46.7 | 45.1 | 44.1 | 38.0 | 34.5 | 34.0 | 47 % |
-| 2580 terrain | 16 | 92.5 | 80.8 | 58.9 | 59.2 | 59.2 | 60.8 | 53.8 | 51.8 | 40.4 | 44 % |
-| 2427 dive | 64 | 236.5 | 190.1 | 179.7 | 125.3 | 115.4 | 115.5 | 90.6 | 83.4 | 82.6 | 35 % |
-| 2726 rise | 64 | 250.0 | 207.5 | 87.5 | 79.5 | 81.0 | 79.2 | 73.8 | 68.2 | 68.9 | 28 % |
+| Frame | Samples | Baseline | 1 | 2 and 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Now / baseline |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2325 hold | 16 | 72.2 | 59.6 | 57.0 | 46.7 | 45.1 | 44.1 | 38.0 | 34.5 | 34.0 | 33.0 | 46 % |
+| 2580 terrain | 16 | 92.5 | 80.8 | 58.9 | 59.2 | 59.2 | 60.8 | 53.8 | 51.8 | 40.4 | 40.7 | 44 % |
+| 2427 dive | 64 | 236.5 | 190.1 | 179.7 | 125.3 | 115.4 | 115.5 | 90.6 | 83.4 | 82.6 | 76.7 | 32 % |
+| 2726 rise | 64 | 250.0 | 207.5 | 87.5 | 79.5 | 81.0 | 79.2 | 73.8 | 68.2 | 68.9 | 63.7 | 25 % |
 
-About 16 s of each figure is the browser start and the set load, which a film render pays once per worker and not per frame. Without it the render itself is 32 % (hold), 32 % (terrain), 30 % (dive) and 23 % (rise) of what it was.
+About 16 s of each figure is the browser start and the set load, which a film render pays once per worker and not per frame. Without it the render itself is 30 % (hold), 32 % (terrain), 28 % (dive) and 20 % (rise) of what it was. The sha256 of all four frames equals the baseline at every step; change 7 is the one step that is not provably identical on other content.
 
 ## Other kinds of frame
 
@@ -279,6 +298,8 @@ Recipe for the Saturn agent, proven locally with the same sha256: `assets-src/sh
 - Marks per tile as a set (change 9 keeps this form) against "one winner per tile": same seconds within noise.
 
 ## What is left in a sample
+
+No exact change found after change 10 takes a tenth off any of the four frames. The goal of a tenth of the first cost per part was reached for the star points (0.9 to about 0.1 s per sample) and nearly for the sky pass (1.65 to about 0.3 s at the hold); the planet, moon and relief shaders are where they were per shaded pixel, only the pixels and triangles that cannot show were taken away.
 
 Planet shader at the hold (`final`, 0.42 s per sample): map fetch 0.173, storm 0.087, patch levels 0.047, height fetches 0.045, haze 0.015, grazing 0.015, curve 0.010, inverse filmic 0.003, rest 0.06. Moon 0.13. These are fragment arithmetic and texture fetches on visible pixels; nothing exact was found that removes a tenth of a frame there.
 

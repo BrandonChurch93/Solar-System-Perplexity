@@ -1,0 +1,13 @@
+Strict 2x super-resolution of Image 1, a top-down nadir view from orbit of the Caribbean Sea, the Gulf of Mexico, Central America, the south-east of North America and the north of South America with their cloud cover (48 x 48 degrees, 1:1 square, north at the top).
+
+EXACT LAYOUT AND TONE LOCK:
+Image 1 is the exact map to sharpen in place. When scaled back to the resolution of Image 1, every coastline, island, lake, turquoise shallow, mountain range, forest and desert region, cloud bank, cloud streak, small cloud and cloud shadow MUST stay at its exact pixel position, shape, size, brightness and hue. Do NOT shift, rotate, resize, add or remove any land, island or cloud mass. Keep the deep ocean the same deep blue and the shallows the same turquoise. Do NOT brighten or darken any region and do NOT add a vignette.
+
+CRISP ORBITAL DETAIL:
+Replace only the softness, stipple and compression noise of Image 1 with crisp photoreal detail seen from orbit, in the finish and palette of Image 2 (the approved orbital frame of the same Earth from the same film):
+- Clouds: fine cumulus cells and cloud streets, crisp bright tops with delicate filament edges, thin cirrus wisps, all inside the cloud shapes that already exist. Their soft shadows fall on the sea toward the lower right (the Sun is low in the upper left).
+- Sea: clean deep blue water with faint swell and current texture, sharp reef lines, sand banks and gradients where the turquoise shallows already are.
+- Land: sharp coastlines with small bays, river courses, ridges and valleys in the mountain ranges, forest canopy texture, dry plateaus, all in the existing colours.
+- Remove halos, ringing and speckle noise along coasts and cloud edges.
+
+Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.

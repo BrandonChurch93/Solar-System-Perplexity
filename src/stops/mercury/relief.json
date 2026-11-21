@@ -1,0 +1,55 @@
+{
+ "imageSize": {
+  "full": [
+   5632,
+   3168
+  ],
+  "web": [
+   2816,
+   1584
+  ]
+ },
+ "vfovDeg": 60,
+ "box": {
+  "full": [
+   -1280,
+   0,
+   8192,
+   3864
+  ],
+  "web": [
+   -640,
+   0,
+   4096,
+   1932
+  ]
+ },
+ "distSize": {
+  "full": [
+   2048,
+   966
+  ],
+  "web": [
+   1024,
+   483
+  ]
+ },
+ "files": {
+  "color": "relief-color.jpg",
+  "alpha": "relief-alpha.png",
+  "dist": "relief-dist.bin",
+  "masks": "relief-masks.png"
+ },
+ "camera": {
+  "pitchDownDeg": 30.052357024509163,
+  "rollDeg": 11.271319882977656,
+  "dipDeg": 10.245756387780753,
+  "up": [
+   0.16917984676105027,
+   0.8488735984968769,
+   0.5007911672792068
+  ],
+  "planetRadius": 61.71115762707405,
+  "horizonDistance": 11.154475122306208
+ }
+}

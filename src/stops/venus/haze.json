@@ -1,0 +1,1 @@
+{"ground": {"scaleHeight": 0.006, "depth": 0.0001, "day": [0.6, 0.4, 0.2], "twilight": [0.05, 0.03, 0.02], "night": [0.004, 0.003, 0.002], "strength": 1, "extinction": 1, "forward": 0, "top": 8, "dayFrom": -0.2, "dayTo": 0.6}, "limb": {"gain": 1.0, "radius": 1.7, "file": "limb.bin"}}
