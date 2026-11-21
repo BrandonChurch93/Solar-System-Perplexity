@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
+import { bindImplicit } from './texel'
 import type { SetContext, SetFactory, StopSet, TextureOptions } from './types'
 
 interface Loaded { set: StopSet; bytes: number; assets: string; lastUsed: number }
@@ -159,6 +160,8 @@ export class SetLoader {
       return tex
     }
     const set = await factory(ctx)
+    bindImplicit(set.world)
+    bindImplicit(set.near)
     const dispose = set.dispose.bind(set)
     set.dispose = () => {
       dispose()
