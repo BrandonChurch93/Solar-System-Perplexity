@@ -1,0 +1,39 @@
+tier review: samples of the film 47340 before, 56148 after, frames raised 417 of 5400
+  terrain: frames 1620, raised 7, samples 6480 before, 6487 after
+  rise: frames 690, raised 132, samples 11040 before, 14736 after
+  hold: frames 1380, raised 0, samples 5520 before, 5520 after
+  travel: frames 615, raised 133, samples 9840 before, 11847 after
+  dive: frames 720, raised 140, samples 11520 before, 14609 after
+  retreat: frames 120, raised 5, samples 1920 before, 1929 after
+  lookback: frames 180, raised 0, samples 720 before, 720 after
+  fade: frames 75, raised 0, samples 300 before, 300 after
+  sun.terrain 0 to 6: 5 5 5 5 5 5 5
+  sun.travel 463 to 472: 17 21 24 27 29 31 33 35 36 36
+  mercury.dive 729 to 743: 17 20 24 28 33 38 44 51 62 64 64 64 64 64 64
+  mercury.rise 990 to 1011: 64 64 64 64 64 64 64 64 64 64 64 62 58 53 48 43 40 35 30 25 21 17
+  mercury.travel 1043 to 1052: 19 22 25 28 31 34 36 39 42 45
+  venus.dive 1301 to 1308: 18 22 27 32 39 47 43 25
+  venus.rise 1565 to 1579: 19 25 29 31 32 32 32 31 31 30 28 27 25 22 17
+  venus.travel 1613 to 1622: 20 24 27 32 37 41 44 47 52 57
+  earth.dive 1870 to 1881: 17 20 24 29 33 40 46 51 56 58 48 18
+  earth.rise 2132 to 2149: 25 37 47 59 64 64 64 64 63 55 48 43 37 32 29 25 21 17
+  earth.travel 2185 to 2195: 18 20 22 24 26 28 29 31 33 35 32
+  earth.travel 2229 to 2235: 17 17 18 21 18 20 17
+  mars.dive 2441 to 2448: 19 23 28 33 39 46 39 18
+  mars.rise 2703 to 2720: 21 33 41 47 52 53 52 47 42 37 37 32 30 29 26 23 20 17
+  mars.travel 2755 to 2766: 19 22 25 28 31 34 37 39 42 46 51 42
+  jupiter.dive 3012 to 3022: 18 21 25 30 37 47 61 64 64 64 36
+  jupiter.rise 3273 to 3290: 30 51 64 64 64 64 64 64 64 63 57 51 45 41 35 29 24 19
+  jupiter.travel 3324 to 3334: 19 22 25 28 31 33 36 38 42 45 39
+  jupiter.travel 3367 to 3377: 20 22 23 23 26 27 26 25 24 21 18
+  saturn.dive 3592 to 3601: 18 19 19 20 20 20 20 19 18 17
+  saturn.rise 3844 to 3846: 17 17 17
+  saturn.travel 3896 to 3912: 17 19 22 24 27 29 32 34 37 40 43 41 42 41 40 39 38
+  saturn.travel 3941 to 3950: 17 21 21 24 25 25 25 22 21 18
+  uranus.dive 4119 to 4156: 19 23 27 31 35 38 40 42 43 41 40 44 47 49 50 51 51 51 50 48 46 43 40 37 36 38 40 41 42 41 40 37 34 30 27 24 22 20
+  uranus.rise 4412 to 4432: 25 44 57 64 64 64 64 63 55 54 56 57 56 55 54 52 44 36 29 25 20
+  uranus.travel 4461 to 4471: 17 21 25 30 34 38 42 46 49 51 53
+  uranus.travel 4510 to 4522: 21 27 30 39 44 50 51 55 53 44 36 28 21
+  neptune.dive 4690 to 4727: 19 23 27 31 37 45 51 54 54 49 45 46 47 47 46 45 43 41 38 39 41 44 46 49 50 52 52 51 50 47 44 41 37 34 32 30 28 20
+  neptune.rise 4981 to 4997: 25 51 64 64 64 64 64 64 64 64 59 51 43 37 28 22 18
+  ending.retreat 5083 to 5087: 17 18 19 18 17
