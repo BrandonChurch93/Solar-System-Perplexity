@@ -3,6 +3,7 @@ import * as THREE from 'three'
 export interface TravelLook {
   pan: [number, number]
   panSpan: [number, number]
+  lead: [number, number]
   roll: [number, number]
   rollSpan: [number, number]
   bowDeg: number
@@ -14,17 +15,17 @@ export interface TravelLook {
   clearBy: number
 }
 
-const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], roll: [2, 2], rollSpan: [0.04, 0.9], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, clearBy: 0.34 }
+const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], lead: [0, 1], roll: [2, 2], rollSpan: [0.04, 0.9], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, clearBy: 0.34 }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
-  sun: { pan: [2, 5], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
+  sun: { pan: [2, 4], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
   mercury: { pan: [2, 5], bowDeg: 9, rollSpan: [0.1, 0.92], grow: [3, 3] },
-  venus: { pan: [2, 5], bowDeg: -12, rollSpan: [0.05, 0.8], grow: [3, 3] },
+  venus: { pan: [2, 4], panSpan: [0.2, 1], lead: [0.25, 0.35], bowDeg: -12, rollSpan: [0.2, 0.96], grow: [3, 3], clearBy: 0.7 },
   earth: { pan: [2, 4], panSpan: [0, 0.9], bowDeg: -7, rollSpan: [0.02, 0.86], grow: [3, 4] },
   mars: { pan: [2, 4], bowDeg: 10, roll: [2, 2], rollSpan: [0.02, 0.98], grow: [2, 3] },
   jupiter: { pan: [2, 5], bowDeg: -10, rollSpan: [0.08, 0.9], grow: [3, 4] },
   saturn: { pan: [2, 3], panSpan: [0, 0.96], bowDeg: 8, rollSpan: [0.05, 0.85], grow: [2, 3] },
-  uranus: { pan: [2, 5], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
+  uranus: { pan: [2, 4], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
 }
 
 export function travelLook(id: string): TravelLook {
@@ -64,6 +65,7 @@ export class TravelShape {
   private readonly growEase: (t: number) => number
   private readonly swingEase = betaEase(2, 3)
   private readonly settleEase = betaEase(2, 2)
+  private readonly leadEase = betaEase(2, 2)
 
   constructor(id: string, over: Partial<TravelLook> = {}) {
     this.look = { ...travelLook(id), ...over }
@@ -73,7 +75,9 @@ export class TravelShape {
   }
 
   pan(u: number): number {
-    return this.panEase(span(this.look.panSpan, u))
+    const main = this.panEase(span(this.look.panSpan, u))
+    const share = this.look.lead[0]
+    return share > 0 ? share * this.leadEase(span([0, this.look.lead[1]], u)) + (1 - share) * main : main
   }
 
   roll(u: number): number {
