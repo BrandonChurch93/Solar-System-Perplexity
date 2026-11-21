@@ -1,34 +1,50 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T06:49:09.354Z",
- "head": "95c38f2d0005d4ecb541324f8a64d658d8d52af0",
- "note": "dive and rise first strips: swoop dive, cover, rise",
+ "pushed": "2026-11-21T07:01:32.499Z",
+ "head": "75324a28ed7da35484d7a92276c6c959198fecf2",
+ "note": "rise view with terminator, sky patch fix",
  "looks": [
   {
-   "time": "2026-11-21T06:48:57.659Z",
-   "file": "20261121064857659-note-strip_rise2.jpg",
-   "source": "out/work/view/strip_rise2.jpg",
+   "time": "2026-11-21T07:01:31.905Z",
+   "file": "20261121070131905-note-r3_tl.jpg",
+   "source": "out/work/view/r3_tl.jpg",
    "kind": "note",
-   "label": "rise strip, terrain exit, cover, pull away, frames 3255 to 3310 (draft)",
+   "label": "way out of the terrain view 3255 and 3262, top left, after the sky patch fix (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T06:48:11.551Z",
-   "file": "20261121064811551-still-f03310-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03310-16x9-draft-full.png",
+   "time": "2026-11-21T07:01:31.337Z",
+   "file": "20261121070131337-note-r3_quad.jpg",
+   "source": "out/work/view/r3_quad.jpg",
+   "kind": "note",
+   "label": "rise frames 3281 3283 3290 3296 (draft), new rise view",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T07:01:30.768Z",
+   "file": "20261121070130768-note-strip_rise3.jpg",
+   "source": "out/work/view/strip_rise3.jpg",
+   "kind": "note",
+   "label": "rise strip with azimuth 44: half lit disc, Io and its shadow, frames 3273 to 3314 (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T07:00:16.831Z",
+   "file": "20261121070016831-still-f03314-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03314-16x9-draft-full.png",
    "kind": "still",
-   "label": "jupiter.rise frame 3310, draft tier",
+   "label": "jupiter.rise frame 3314, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3310,
+   "frame": 3314,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e6143083c024f4b9"
+   "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:47:52.240Z",
-   "file": "20261121064752240-still-f03296-16x9-draft-full.jpg",
+   "time": "2026-11-21T06:59:57.994Z",
+   "file": "20261121065957994-still-f03296-16x9-draft-full.jpg",
    "source": "out/work/stills/f03296-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.rise frame 3296, draft tier",
@@ -38,11 +54,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e6143083c024f4b9"
+   "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:47:33.017Z",
-   "file": "20261121064733017-still-f03290-16x9-draft-full.jpg",
+   "time": "2026-11-21T06:59:38.092Z",
+   "file": "20261121065938092-still-f03290-16x9-draft-full.jpg",
    "source": "out/work/stills/f03290-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.rise frame 3290, draft tier",
@@ -52,39 +68,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e6143083c024f4b9"
+   "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:47:13.987Z",
-   "file": "20261121064713987-still-f03286-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03286-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3286, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3286,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e6143083c024f4b9"
-  },
-  {
-   "time": "2026-11-21T06:46:54.477Z",
-   "file": "20261121064654477-still-f03283-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03283-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3283, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3283,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e6143083c024f4b9"
-  },
-  {
-   "time": "2026-11-21T06:31:51.938Z",
-   "file": "20261121063151938-compare-compare-jupiter-terrain-view.jpg",
+   "time": "2026-11-21T06:54:57.041Z",
+   "file": "20261121065457041-compare-compare-jupiter-terrain-view.jpg",
    "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
    "kind": "compare",
    "label": "jupiter.terrain: approved image left, film frame right, draft tier",
@@ -94,11 +82,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:31:31.497Z",
-   "file": "20261121063131497-still-f03150-16x9-draft-full.jpg",
+   "time": "2026-11-21T06:54:55.995Z",
+   "file": "20261121065455995-still-f03150-16x9-draft-full.jpg",
    "source": "out/work/stills/f03150-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.terrain frame 3150, draft tier",
@@ -108,7 +96,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "704d5d55f51b7b15"
   }
  ]
 }
