@@ -10,7 +10,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 0, side: 1 },
   arrive: { swingDeg: -34, axis: [0.1, 1, 0.2], from: 0.25, offset: [0.5, 0.2] },
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
-  skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [69.21908, 138.80252, 8.78195] },
+  skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
   cover: [0.27, 0.43, 0.8],
   coverLow: [0.03, 0.075, 0.22],
   coverTerrain: [0.4, 0.56, 0.85],

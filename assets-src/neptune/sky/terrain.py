@@ -10,7 +10,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'terrain'))
 import cgeo
 from deblock import deblock
-from patch import film, unfilm, to_linear, to_srgb, step, outward
+from patch import film, unfilm, to_linear, to_srgb, step
+
+Image.MAX_IMAGE_PIXELS = None
 
 FULL = (2816, 1584)
 MARGIN = 0.125
@@ -18,8 +20,14 @@ GLOW_TOP = 0.012
 AZIMUTH = np.radians(80)
 MAP = (512, 64)
 CUT = 0.06
-BELOW = (6.0, 14.0)
 GLOW_SMOOTH = (45, 41, 5)
+LIVE = 'out/work/nep/r3/live-u.png'
+REACH = (30, 120)
+ZONE_OUT = (60, 230)
+ZONE_UNDER = (2.5, 8.0)
+GEN_IN = 'out/work/nep/r3/sky-ext-in.jpg'
+GEN = 'out/work/nep/r3/sky-ext.png'
+ASK = (3072, 1728)
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/neptune'
 
 
@@ -93,26 +101,65 @@ sky = (far_flat + stars) * (1 - k) + sky * k
 alpha = np.radians(cgeo.FIT['alphaDeg']) + np.radians(CUT)
 theta = np.arccos(np.clip(d @ cgeo.NADIR, -1, 1))
 above = theta > alpha
-lifted = theta + np.radians(BELOW[0])
-horiz = d - (d @ cgeo.NADIR)[..., None] * cgeo.NADIR
-horiz /= np.maximum(np.linalg.norm(horiz, axis=-1, keepdims=True), 1e-6)
-horiz = horiz * np.cos(np.radians(BELOW[1])) + np.cross(cgeo.NADIR, horiz) * np.sin(np.radians(BELOW[1]))
-md = np.cos(lifted)[..., None] * cgeo.NADIR + np.sin(lifted)[..., None] * horiz
-px = ((md[..., 0] / -md[..., 2]) / cgeo.TX + 1) / 2 * w - 0.5
-py = (1 - (md[..., 1] / -md[..., 2]) / cgeo.TY) / 2 * h - 0.5
-bad = (md[..., 2] > -0.2) | (px < 0) | (px > w - 1) | (py < 0) | (py > h - 1)
-src = np.where(above[..., None], sky, 0).astype(np.float32)
-fill = cv2.remap(src, np.where(bad, 0, px).astype(np.float32), np.where(bad, 0, py).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
-level = np.stack([np.median(far_flat[..., c][above]) for c in range(3)]).astype(np.float32)
-fill = np.where((bad | (fill.sum(-1) <= 0))[..., None], level, fill)
-lin = np.where(above[..., None], sky, fill)
 
 px_m, py_m = round(w * MARGIN), round(h * MARGIN)
-wide, _ = outward(lin, px_m, py_m)
+cw, ch = w + 2 * px_m, h + 2 * py_m
+live = np.asarray(Image.open(LIVE).convert('RGB').resize((cw, ch), Image.LANCZOS)).astype(np.float32) / 255
+live = to_linear(live).astype(np.float32)
+live_bg = np.stack([low(live[..., c], 5) for c in range(3)], -1)
+live_stars = np.maximum(live - live_bg, 0)
+
+cy, cx = np.mgrid[0:ch, 0:cw]
+dc = np.stack([(2 * (cx + 0.5) / cw - 1) * cgeo.TX * (1 + 2 * MARGIN), (1 - 2 * (cy + 0.5) / ch) * cgeo.TY * (1 + 2 * MARGIN), -np.ones(cx.shape)], -1)
+dc /= np.linalg.norm(dc, axis=-1, keepdims=True)
+under = np.degrees(alpha - np.arccos(np.clip(dc @ cgeo.NADIR, -1, 1))).astype(np.float32)
+away = np.maximum.reduce([py_m - cy, cy - (py_m + h - 1), px_m - cx, cx - (px_m + w - 1), np.zeros_like(cy)]).astype(np.float32)
+del dc
+own = np.zeros((ch, cw), bool)
+own[py_m:py_m + h, px_m:px_m + w] = above
+mine = np.zeros((ch, cw, 3), np.float32)
+mine[py_m:py_m + h, px_m:px_m + w] = np.where(above[..., None], sky, far_flat)
+calm = np.stack([low(mine[..., c], 6) for c in range(3)], -1) * own[..., None]
+ext = np.zeros_like(mine)
+got = np.zeros((ch, cw), np.float32)
+for sigma in REACH:
+    den = ndi.gaussian_filter(own.astype(np.float32), sigma)
+    part = np.stack([ndi.gaussian_filter(calm[..., c], sigma) for c in range(3)], -1) / np.maximum(den, 1e-4)[..., None]
+    k = step(den, 0.01, 0.08) * (1 - got)
+    ext += part * k[..., None]
+    got += k
+level = np.stack([np.median(far_flat[..., c][above]) for c in range(3)]).astype(np.float32)
+ext += level * (1 - got)[..., None]
+to_live = np.maximum(step(away, ZONE_OUT[0], ZONE_OUT[1]), step(under, ZONE_UNDER[0], ZONE_UNDER[1]))
+to_live[own] = 0
+if not os.path.exists(GEN):
+    ask = to_srgb(film(np.where(own[..., None], mine, live)))
+    ask[~own & (to_live < 1)] = (1, 0, 1)
+    Image.fromarray((ask * 255 + 0.5).astype(np.uint8)).resize(ASK, Image.LANCZOS).save(GEN_IN, quality=96)
+    print('wrote', GEN_IN, 'generate', GEN, 'from it, then run again')
+    sys.exit(0)
+gen = np.asarray(Image.open(GEN).convert('RGB').resize((cw, ch), Image.LANCZOS)).astype(np.float32) / 255
+ref = to_srgb(film(mine)).astype(np.float32)
+grey = lambda x: cv2.GaussianBlur(x.mean(-1), (0, 0), 2)
+warp = np.eye(2, 3, dtype=np.float32)
+cc, warp = cv2.findTransformECC(grey(ref), grey(gen), warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 200, 1e-6), own.astype(np.uint8), 5)
+gen = cv2.warpAffine(gen, warp, (cw, ch), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+gen = unfilm(to_linear(np.clip(gen, 0, 1))).astype(np.float32)
+gen_calm = np.stack([low(gen[..., c], 6) for c in range(3)], -1)
+gen_fine = gen - np.stack([ndi.gaussian_filter(gen_calm[..., c], REACH[0]) for c in range(3)], -1)
+inner = ndi.binary_erosion(own, iterations=12)
+fine_gain = float(np.maximum(mine - calm, 0)[inner].mean() / max(np.maximum(gen - gen_calm, 0)[inner].mean(), 1e-6))
+print('generated sky registered', round(float(cc), 4), 'fine detail of the approved image over the generated', round(fine_gain, 3))
+fine_gain = float(np.clip(fine_gain, 0.5, 2.0))
+keep = (1 - to_live)[..., None]
+zone = np.maximum(ext * keep + live_bg * (1 - keep) + gen_fine * fine_gain * keep, 0) + live_stars * (1 - keep)
+wide = np.where(own[..., None], mine, zone)
+print('sky level of the approved image', (to_srgb(film(level)) * 255).round(1), 'of the live plate', (to_srgb(film(np.median(live_bg[~own], 0))) * 255).round(1))
+lin = wide[py_m:py_m + h, px_m:px_m + w]
 out = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
 for key, k in (('full', 1), ('web', 2)):
     im = out if k == 1 else out.resize((out.size[0] // k, out.size[1] // k), Image.LANCZOS)
     im.save(f'{OUT}/{key}/sky-terrain.webp', lossless=True, quality=90, method=6)
     print(key, im.size, round(os.path.getsize(f'{OUT}/{key}/sky-terrain.webp') / 1e6, 2), 'MB')
-Image.fromarray((to_srgb(film(lin)) * 255 + 0.5).astype(np.uint8)).resize((1408, 792)).save('out/work/nep/terrain/sky-terrain-preview.jpg', quality=88)
+Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8)).resize((1760, 990)).save('out/work/nep/terrain/sky-terrain-preview.jpg', quality=88)
 Image.fromarray(np.kron(png[::-1], np.ones((4, 2, 1), np.uint8))).save('out/work/nep/terrain/glow-preview.png')
