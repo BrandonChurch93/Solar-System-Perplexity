@@ -194,7 +194,8 @@ export class Engine {
           if (patch.view !== state.view) continue
           const kind = shot.segment.kind
           const arriving = kind === 'travel' && state.id !== shot.segment.stop
-          const weight = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          const base = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           if (weight <= 0) continue
           const aim = aims?.patches[state.id]?.[patch.view]
           if (aim) patch.aim.copy(aim)
