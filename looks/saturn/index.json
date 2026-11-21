@@ -1,55 +1,67 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T12:21:07.338Z",
+ "pushed": "2026-11-21T12:29:47.738Z",
  "head": "0bfa699ae7422fdce28a8778500e558468a42050",
- "note": "round 2: ice near the lens final values, globe check in dive and rise, sky margins, Titan crescent",
+ "note": "item 9: judged dive and rise frames are soft from motion blur, not from the map; working on the move",
  "looks": [
+  {
+   "time": "2026-11-21T12:29:47.149Z",
+   "file": "20261121122947149-note-g1c.jpg",
+   "source": "../../../../tmp/g1c.png",
+   "kind": "note",
+   "label": "rise 3866: rust strip in the gap and coloured mottle at the outer edge",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T12:29:46.574Z",
+   "file": "20261121122946574-note-k4.jpg",
+   "source": "../../../../tmp/k4.png",
+   "kind": "note",
+   "label": "pole and bands in dive 3567 and rise 3866 beside the hero",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T12:29:46.027Z",
+   "file": "20261121122946027-note-k5.jpg",
+   "source": "../../../../tmp/k5.png",
+   "kind": "note",
+   "label": "dive 3567 globe: review 16 samples above, draft 1 sample below. The airbrushed look is motion blur",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T12:27:52.749Z",
+   "file": "20261121122752749-frame-k5-3567.jpg",
+   "source": "out/work/saturn/k5-3567.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3567, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3567,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:23:42.818Z",
+   "file": "20261121122342818-frame-k1-3866-texels.jpg",
+   "source": "out/work/saturn/k1-3866-texels.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3866, draft tier, texels view",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T12:21:06.762Z",
    "file": "20261121122106762-note-g1.jpg",
    "source": "../../../../tmp/g1.jpg",
    "kind": "note",
    "label": "globe in dive 3567 and rise 3866 review",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T12:21:06.233Z",
-   "file": "20261121122106233-note-pair-hold-q4.jpg",
-   "source": "out/work/saturn/pair-hold-q4.jpg",
-   "kind": "note",
-   "label": "hold 3465 final beside approved",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T12:21:05.704Z",
-   "file": "20261121122105704-note-pair-terrain-q4.jpg",
-   "source": "out/work/saturn/pair-terrain-q4.jpg",
-   "kind": "note",
-   "label": "terrain 3720 final beside approved",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T12:21:05.100Z",
-   "file": "20261121122105100-note-r1.jpg",
-   "source": "../../../../tmp/r1.jpg",
-   "kind": "note",
-   "label": "rise draft 3812 to 3880 shadow stays",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T12:21:04.586Z",
-   "file": "20261121122104586-note-sky-hold-new.jpg",
-   "source": "../../../../tmp/sky-hold-new.jpg",
-   "kind": "note",
-   "label": "hold sky patch new margin",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T12:21:04.067Z",
-   "file": "20261121122104067-note-titan-pair.jpg",
-   "source": "../../../../tmp/titan-pair.png",
-   "kind": "note",
-   "label": "Titan hero and film",
    "stop": "saturn"
   },
   {
