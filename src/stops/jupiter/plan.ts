@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { Segment } from '../../config'
 import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { lookAt, mix, ramp, smooth } from '../../director/rig'
@@ -7,6 +8,7 @@ import fit from './fit.json'
 
 export const climbOut = { bankDeg: -32, bankLead: 1.0, bankPower: 2.2, climb: 5, turn: 12, lens: 4 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
+export const veil = { hides: 0, closed: 0.98 }
 
 export const params: MoveParams = {
   hold: { orbitDeg: 3, axis: [0.25, 1, 0], push: -0.03 },
@@ -37,6 +39,12 @@ const Z = new THREE.Vector3(0, 0, 1)
 const Y = new THREE.Vector3(0, 1, 0)
 
 export class JupiterPlan extends StopPlan {
+  override coverAmount(seg: Segment, time: number): number {
+    const amount = super.coverAmount(seg, time)
+    this.p.coverHides = amount < veil.closed ? veil.hides : undefined
+    return amount
+  }
+
   override turn(time: number): THREE.Quaternion {
     const low = time >= this.coverCenter(this.seg.dive!) && time < this.coverCenter(this.seg.rise)
     return super.turn(low ? (this.seg.terrain.start + this.seg.terrain.end) / 2 : time)
