@@ -1,0 +1,98 @@
+{
+ "critic": "R1",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "inner rings crossing Saturn's lower globe and night side (tiles A, E, H in pair-04-b.png)",
+   "what": "the inner C-ring and ring-shadow band are heavily smeared into blurry horizontal streaks with a wavy black cutout gap against the night side and a dark smudge at the left limb junction, losing all sharp individual ringlets",
+   "fix": "remove the directional blur and black cutout gap at the planet-ring intersection and render crisp, sharp translucent C-ring ringlets continuously across the lit globe and night hemisphere"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "right terminator, night hemisphere, and upper limb (tile C in pair-04-b.png)",
+   "what": "the terminator forms a straighter vertical dark band with a faintly re-lit night hemisphere and visible cyan-grey night limb to its right, ghosted/duplicated storm ovals near the shadow edge, and bright green-yellow artifact dots just above the top limb",
+   "fix": "curve the terminator naturally leftward toward the upper pole, drop the entire unlit night hemisphere and night limb to pure deep-space black, fix the cloud-texture duplication near the terminator, and remove the green-yellow artifact pixels above the limb"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-01-b.png",
+   "where": "lower-left lit globe and inner C-ring (tile G in pair-02-b.png)",
+   "what": "a harsh dark-brown shadow wedge cuts across Saturn's lit lower-left limb, a detached bright yellow rim line sits outside a dark gap on the left edge, and the inner C-ring region is nearly black instead of showing translucent crepe-ring bands",
+   "fix": "remove the dark wedge artifact on the lower-left globe and the detached rim line, and restore the soft semi-transparent inner C-ring bands overlapping the lower-left globe and inner B-ring"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "left and upper-left lit limb of Saturn (tiles A and C in pair-04-b.png)",
+   "what": "a wide, bright golden and greenish-yellow hazy glow bleeds far out into space off the lit limb, whereas target -a has a crisp, tight planetary edge against dark sky",
+   "fix": "tightly contract and reduce the atmospheric bloom so Saturn's lit limb stays sharp and clean with minimal halo falloff"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "main A, B, and Cassini ring bands (tiles D, E, F, G, I)",
+   "what": "ring bands are longitudinally smoothed and motion-smeared along their arcs, losing fine radial micro-ringlets and icy particle grain while over-brightening a smooth pinkish-white highlight band just outside the Cassini division",
+   "fix": "eliminate azimuthal smearing, restore crisp high-frequency ringlets and fine particulate sparkle across the rings and Cassini division, and tone down the hot highlight outside the Cassini gap"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "overall ring ellipse framing (left tip, bottom arc, and right shadowed edge)",
+   "what": "the ring system is scaled too large relative to the frame, pushing the left tip too close to the left border, clipping the lower ring arc at the bottom frame edge, and extending the shadowed right ring too far right",
+   "fix": "reduce the apparent ring scale and match camera framing/tilt to -a so the bottom ring arc stays unclipped and left/right margins match the target"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "outer A-ring and F-ring (tiles B, D, F, H, I)",
+   "what": "the A-ring is too warm and bright instead of cooler taupe-grey, misses the crisp thin Encke gap near its outer edge and fine particle stipple, and the thin outer F-ring dissolves into noisy red, orange, and green colored dots",
+   "fix": "darken and cool the A-ring relative to the B-ring, restore the sharp outer Encke gap and granular ring texture, and render the F-ring as a clean, continuous faint neutral-white strand without colored noise"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "planet shadow cast across the right rings (tile E in pair-02-b.png)",
+   "what": "concentric brown ring stripes and the outer ring rim remain far too bright and visible inside Saturn's umbra compared to the deep near-black shadow in -a",
+   "fix": "deepen shadow attenuation inside Saturn's umbra on the rings so unlit ring segments fall to near-black matching -a"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "Titan moon in upper right sky",
+   "what": "Titan is over-lit past half phase (~60% illuminated) with flat, dull tan shading and no bright rim, whereas -a shows a narrower ~38% crescent matching Saturn's sun angle with a crisp bright sunward limb highlight and richer orange-amber warmth",
+   "fix": "match Titan's illumination angle to the key light to produce the narrower ~38% crescent, add the bright sunlit upper-left limb highlight, and enrich the warm orange atmospheric gradient"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "Saturn north polar region and upper-left lit limb",
+   "what": "the north pole is a smooth, washed-out pale blue oval lacking the deep cyan hexagonal boundary, central vortex eye, fine white cloud spots, and soft cyan upper-right limb haze, while the upper-left bright limb shows stair-step pixel aliasing",
+   "fix": "restore the deep cyan hexagonal polar bands, central polar eye, internal cloud detail, and subtle upper-right cyan limb haze, and anti-alias the bright upper-left limb roll-off"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "mid-latitude cloud belts and foreground ring crossing on globe (tile A)",
+   "what": "warm amber cloud bands and atmospheric eddies have lower contrast and softer detail than -a, and the ring-crossing bands at the bottom-left of tile A are blurry",
+   "fix": "boost warm amber belt contrast and sharpen fine storm swirls as well as the ring/shadow bands crossing the lower globe"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left ring horizon and outer F-ring (tile B in pair-04-b.png)",
+   "what": "the ring horizon curves downward more steeply toward the left frame edge than in -a, and the faint outer F-ring above it is wider, blurrier, and offset in arc",
+   "fix": "flatten the left ring horizon angle to match -a's framing and sharpen the faint dusty F-ring into thin, crisp strands"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-right shadowed ring edge to right frame border",
+   "what": "the subtle horizontal warm-gold and cool-blue anamorphic lens flare streak present in -a is missing",
+   "fix": "add the subtle horizontal optical flare streak extending rightward from the sunlit ring/shadow boundary near the bottom right"
+  }
+ ]
+}
