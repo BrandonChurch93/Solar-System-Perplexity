@@ -78,7 +78,10 @@ export const deck: DeckLook = {
     { px: [2400, 1250], sizePx: 60, period: 4.7, phase: 0.62, gain: 0.3 },
     { px: [1850, 1900], sizePx: 110, period: 3.9, phase: 0.2, gain: 0.4 },
   ],
+  haze: { color: [0.2, 0.17, 0.135], density: 1.6, tile: 9, layer: 0.45, height: 0.5, clear: 0.8, gather: 0.8, power: 2 },
   flashColor: [0.45, 0.7, 1.0],
   flashBody: [0.25, 6],
   beyond: [0.6, 0.004, 300],
 }
+
+export const veil = { color: [0.8, 0.74, 0.62] as [number, number, number], amount: 0.65, from: 1.3, to: 0.3, height: 0.012, repeats: 20, drift: 0.02 }

@@ -41,7 +41,8 @@ export const createSet: SetFactory = async (ctx) => {
     curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
+    veil: look.veil,
+    patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const shells = look.shells.map((p) => new HazeShell(p, diagUniform))
@@ -59,6 +60,8 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.group)
 
   const riseMid = (plan.seg.rise.start + plan.seg.rise.end) / 2
+  const diveCover = plan.coverCenter(plan.seg.dive!)
+  const riseCover = plan.coverCenter(plan.seg.rise)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
@@ -90,7 +93,8 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        const h = look.deck.haze
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, Math.max(1 - (state.time - diveCover) / h.clear, 1 - (riseCover - state.time) / h.gather))
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -126,6 +130,9 @@ export const createSet: SetFactory = async (ctx) => {
         su.uGain!.value = gain * state.weight
       }
       const distance = world.position.length()
+      const veil = gu.uVeil!.value as THREE.Vector4
+      veil.x = look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
+      veil.w = look.veil.drift * elapsed
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible

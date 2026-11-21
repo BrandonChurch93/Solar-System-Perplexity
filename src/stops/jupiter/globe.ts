@@ -10,6 +10,7 @@ export const JET_KNOTS = 129
 export const MAX_PATCHES = 6
 
 export interface PatchSet {
+  center: THREE.Vector3
   textures: THREE.Texture[]
   widthsDeg: number[]
   feather: number
@@ -50,6 +51,7 @@ export interface GlobeOptions {
   spot: SpotShape
   wisp: WispParams
   patches?: PatchSet
+  veil: { color: [number, number, number]; height: number; repeats: number }
   limbLit: [number, number, number]
   edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number] }
   segments?: number
@@ -86,6 +88,11 @@ ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
 uniform float uPatchCount;
+uniform vec4 uVeil;
+uniform vec3 uVeilColor;
+uniform vec3 uPatchN;
+uniform vec3 uPatchE;
+uniform vec3 uPatchU;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
@@ -203,10 +210,10 @@ void main() {
   float soft = 1.0 - smoothstep(0.0, uLimbSoft.x, mu);
   vec3 albedo = mix(equirectGrad(uMap, df, uGrad).rgb, textureLod(uMap, vec2(atan(df.x, df.z) / (2.0 * PI) + 0.5, asin(clamp(df.y, -1.0, 1.0)) / PI + 0.5), uLimbSoft.y).rgb, soft);
   float texels = diagTexelsDir(d, uMapWidth);
-  float dn = dot(df, uSpotN);
+  float dn = dot(df, uPatchN);
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
-    vec2 g = vec2(dot(df, uSpotE), dot(df, uSpotU)) * inv;
+    vec2 g = vec2(dot(df, uPatchE), dot(df, uPatchU)) * inv;
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
@@ -240,6 +247,15 @@ ${PATCH_LEVELS}
   lin *= max(1.0 + wisp * (1.0 - soft), 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
   vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n)) + uNight * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
+  float vfoot = length(fwidth(d));
+  for (int k = 0; k < (uVeil.x > 0.0 ? 1 : 0); k++) {
+    vec3 hd = spinY(uToBody * normalize(n - dir * (uVeil.y / max(mu, 0.3))), uSpin);
+    vec2 huv = vec2(atan(hd.x, hd.z) / (2.0 * PI), asin(clamp(hd.y, -1.0, 1.0)) / (2.0 * PI)) * uVeil.z + vec2(uVeil.w, 0.0);
+    float hl = log2(max(vfoot * uVeil.z * 2048.0 / (2.0 * PI), 1e-6));
+    float hv = 0.62 * textureLod(uWisp, huv, hl + 2.5).r + 0.38 * textureLod(uWisp, huv * 3.1 + 0.37, hl + 3.2).r;
+    float ha = clamp(uVeil.x * (0.3 + 1.5 * smoothstep(0.25, 0.75, hv)), 0.0, 1.0);
+    col = mix(col, uVeilColor * knee(direct) * uTint, ha);
+  }
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
@@ -273,6 +289,9 @@ export class Globe {
     const spot = o.spot.center.clone().normalize()
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const pn = (p?.center ?? o.spot.center).clone().normalize()
+    const pe = new THREE.Vector3(0, 1, 0).cross(pn).normalize()
+    const pu = pn.clone().cross(pe)
     const rad = THREE.MathUtils.degToRad
     const w = o.wisp
     this.material = new THREE.ShaderMaterial({
@@ -285,6 +304,8 @@ export class Globe {
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
+        uPatchN: { value: pn }, uPatchE: { value: pe }, uPatchU: { value: pu },
+        uVeil: { value: new THREE.Vector4(0, o.veil.height, o.veil.repeats, 0) }, uVeilColor: { value: new THREE.Vector3().fromArray(o.veil.color) },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpotShape: { value: new THREE.Vector4(Math.sin(rad(o.spot.axesDeg[0])), Math.sin(rad(o.spot.axesDeg[1])), o.spot.core, o.spot.reach) },

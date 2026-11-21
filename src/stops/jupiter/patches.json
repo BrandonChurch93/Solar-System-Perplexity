@@ -1,0 +1,31 @@
+{
+  "centre": {
+    "lon": -12,
+    "lat": -10
+  },
+  "feather": 0.12,
+  "fade": [
+    1.02,
+    1.5
+  ],
+  "levels": [
+    {
+      "id": "wide",
+      "file": "patch-wide.jpg",
+      "widthDeg": 100,
+      "size": 5120
+    },
+    {
+      "id": "mid",
+      "file": "patch-mid.jpg",
+      "widthDeg": 61.5795,
+      "size": 4096
+    },
+    {
+      "id": "near",
+      "file": "patch-near.jpg",
+      "widthDeg": 33.1816,
+      "size": 4096
+    }
+  ]
+}

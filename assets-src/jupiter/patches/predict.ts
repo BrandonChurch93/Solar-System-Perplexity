@@ -85,13 +85,17 @@ for (const id of [stop + '.dive', stop + '.rise']) {
   const seg = config.segments.find((s) => s.id === id)!
   if (!brief) console.log(id)
   const bad: string[] = []
+  let low = Infinity
+  let lowAt = 0
   for (let f = seg.firstFrame; f < seg.endFrame; f++) {
     const line = sample(f)
     if (!line) continue
     if (!brief) console.log('  ' + line)
     const soft = Number(line.split(' soft ')[1]!.split(' ')[0])
     const cover = Number(line.split(' cover ')[1])
+    const min = Number(line.split(' min ')[1]!.split(' ')[0])
+    if (cover === 0 && f !== 3016 && min < low) { low = min; lowAt = f }
     if (soft > 0.02 && cover === 0) bad.push(f + ':' + soft.toFixed(3) + '@' + line.split('softest reach ')[1]!.split(' ')[0])
   }
-  console.log(id + ' frames over 0.02 outside the cover: ' + (bad.join(' ') || 'none'))
+  console.log(id + ' frames over 0.02 outside the cover: ' + (bad.join(' ') || 'none') + '; lowest min ' + low.toFixed(2) + ' at ' + lowAt)
 }
