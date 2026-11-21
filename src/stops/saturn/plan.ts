@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [34.43338, 66.84025, 41.06902] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0, riseEnd: 0.96 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -87,6 +87,14 @@ export class SaturnPlan extends StopPlan {
     return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
   }
 
+  private diveX(u: number): number {
+    return Math.pow(Math.min(Math.max(u, 0), 1), skim.divePower)
+  }
+
+  private riseX(u: number): number {
+    return 1 - Math.pow(1 - Math.min(Math.max(u / skim.riseEnd, 0), 1), skim.risePower)
+  }
+
   override terrain(tRel: number): Pose {
     return this.local(this.skimAt(this.seg.terrain.start + tRel))
   }
@@ -97,26 +105,26 @@ export class SaturnPlan extends StopPlan {
 
   override dive(time: number): OrbitShot {
     const seg = this.seg.dive!
-    const u = (time - seg.start) / (seg.end - seg.start)
-    const pose = this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), u, skim.diveBow)
-    return u < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
+    const x = this.diveX((time - seg.start) / (seg.end - seg.start))
+    const pose = this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), x, skim.diveBow)
+    return x < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
   }
 
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
-    const u = (time - seg.start) / (seg.end - seg.start)
-    const pose = this.join(this.skimAt(time), this.after(time), Math.min(u / skim.riseEnd, 1), skim.riseBow)
-    return u < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
+    const x = this.riseX((time - seg.start) / (seg.end - seg.start))
+    const pose = this.join(this.skimAt(time), this.after(time), x, skim.riseBow)
+    return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
   }
 
   patchWeight(time: number, view: ViewKind): number {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time >= d.start && time < d.end) {
-      const u = (time - d.start) / (d.end - d.start)
-      return view === 'orbit' ? 1 - smooth(ramp(0, skim.diveSwitch - 0.05, u)) : smooth(ramp(skim.diveSwitch + 0.05, 1, u))
+      const x = this.diveX((time - d.start) / (d.end - d.start))
+      return view === 'orbit' ? 1 - smooth(ramp(0, skim.diveSwitch - 0.05, x)) : smooth(ramp(skim.diveSwitch + 0.05, 1, x))
     }
-    if (time >= r.start && time < r.end && view === 'terrain') return 1 - smooth(ramp(0, skim.riseSwitch - 0.05, (time - r.start) / (r.end - r.start)))
+    if (time >= r.start && time < r.end && view === 'terrain') return 1 - smooth(ramp(0, skim.riseSwitch - 0.05, this.riseX((time - r.start) / (r.end - r.start))))
     return 1
   }
 }

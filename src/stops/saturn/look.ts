@@ -119,7 +119,7 @@ export const titan: TitanLook = {
 
 export const closeRange: [number, number] = [0.35, 1.6]
 export const detailRange: [number, number] = [0.5, 1.1]
-export const heroRange: [number, number] = [0.6, 2.2]
+export const heroRange: [number, number] = [0.6, 1.6]
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
 export const shellSkim: [number, number, number] = [0.92, 0.86, 0.74]

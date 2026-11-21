@@ -34,7 +34,7 @@ Every file under `public/assets/saturn/` and how it is made. All scripts run fro
 - Tool: `python3 assets-src/saturn/sky/patch.py hold references/approved/saturn-hero.png out/work/saturn/sky-fill-hero-take1.png out/work/saturn/halo-only.png` (numpy, OpenCV), fill image from the workspace image tool.
 - Model for the fill: `seedream_5`, 16:9, 2816 x 1584, reference image `references/approved/saturn-hero.png`.
 - Prompt for the fill: "Edit image 1. Remove the ringed planet, its whole ring system and the small orange moon completely, and remove every trace of their glow and shadow. Fill the area they covered with deep space that continues the surrounding sky exactly: the same field of fine, pinpoint, slightly colored stars, the same faint dusty Milky Way band crossing the frame, the same near-black blue background, the same star sizes, density, brightness and grain. Keep everything else unchanged: same framing, same stars in the same places, same exposure and color. No planet, no rings, no moon, no sun, no glow, no nebula colors that are not already present, no text, no border. Wide 16:9 frame."
-- What it does: where the hero shows sky, the patch is the hero minus the film's own glow (a render of the judged hold with the patch gain at 0, `halo-only.png`). Where the body, the rings or Titan cover the sky (mask from the fit: spheroid, the whole ring disc out to 2.45, moon circle, grown a little), only two things are taken from the generated fill: its stars (what stands above a local background by more than 2.5 to 5 times the noise, half desaturated, tinted and scaled to the hero's own stars) and half of its mid-scale brightness ripple. The background colour and level there are the hero's own sky carried inward (normalized blur at 70, 200 and 600 px), so no tint and no trace of the planet from the fill can show. A mirrored margin of 12.5 percent on every side lets the camera move in the hold.
+- What it does: where the hero shows sky, the patch is the hero minus the film's own glow (a render of the judged hold with the patch gain at 0, `halo-only.png`). Where the body, the rings or Titan cover the sky (mask from the fit: spheroid, the whole ring disc out to 2.45, moon circle, grown a little), only two things are taken from the generated fill: its stars (what stands above a local background by more than 2.5 to 5 times the noise, half desaturated, tinted and scaled to the hero's own stars) and half of its mid-scale brightness ripple. The background colour and level there are the hero's own sky carried inward (normalized blur at 70, 200 and 600 px), so no tint and no trace of the planet from the fill can show. A margin of 12.5 percent on every side lets the camera move in the hold. The margin is not a mirror: `python3 assets-src/saturn/sky/patch.py margin sky-hold.webp` (and the same with `sky-terrain.webp`) carries the star-free background outward and blurs it, moves the sparse bright stars of the frame outward by half a frame, and leaves crowded star clouds out, so no feature of the approved sky appears twice. Inside the approved border nothing changes (hold: largest difference 2 levels on 2.2e-7 of the pixels, terrain 1 level). `python3 tools/assets/mirrorcheck.py` is clean on both.
 - Take kept: take 1 of 1. The fill's stars match the hero's in size at native size.
 - Checks: hero over film sky medians 1.7 to 1.95 at gain 1, so `sky.json` gain 1.85. Share of star pixels: hero sky 0.0047, filled part 0.0040; star tint (R, G, B over luminance) hero 1.06, 0.97, 1.18, filled part matched to it. No baked star in any other asset.
 
@@ -71,3 +71,38 @@ Every file under `public/assets/saturn/` and how it is made. All scripts run fro
 - What it does: as the hold patch, with the close image and the close camera (vfov 48). No glow render is subtracted (`none`); instead every sky pixel within 160 px of the body whose star-free brightness is over 1.5 times the far sky counts as glow of the limb or the ring horizon and is filled like the body, so the patch holds sky only and the limb glow comes from the film's own haze.
 - Take kept: take 1 of 1.
 - Checks: judged frame 3720, top left sky: median 7 against 7 in the approved image, the same stars in the same places; share of star pixels own sky 0.0056, filled part 0.0040.
+
+## `public/assets/saturn/<set>/hero-rings.jpg` and `hero-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
+
+- Tool: `python3 assets-src/saturn/shot/hero_rings.py full web`. No generation.
+- Inputs: `references/approved/saturn-hero.png`, its x2 upscale `out/work/saturn/hero-x2.png` (`python3 tools/ml/upscale.py`), `src/stops/saturn/fit.json`.
+- What it does: the approved hero's own ring pixels, kept in the hero's image space and projected in the shader from the fitted hero camera onto the true ring plane (`shot.ts`). Mask R is the ring alpha (the hero's rings are opaque over the globe from an inner edge traced per azimuth, plus a luminance rule on the lit side), mask G the weight (0 on the globe, the sky and Titan). The shader shows it by camera distance to the hero pose (`heroRange` 0.6 to 1.6 radii) and only where the image holds about one texel per pixel (`heroDensity`); elsewhere the 1D profile draws the rings.
+- Checks: frame 3465 at final beside the hero (`out/work/saturn/pair-hold-q4.jpg`); left ansa crop at 3x.
+
+## `public/assets/saturn/<set>/hold-light.bin` (640 x 360 RGBA float32, same file in both sets)
+
+- Tool: `python3 assets-src/saturn/shot/light.py hero FILM.png erode=9`. No generation.
+- Inputs: the hero and a film frame 3465 at final rendered with the map set to ones.
+- What it does: ratio approved over film in scene light on the globe, shift compensated, carried outward past the limb. The globe shader multiplies by it, projected from the hero camera, with the weight of the hero pose. Median ratio [0.958, 0.986, 0.989], p5 [0.763, 0.868, 0.893], p95 [1.075, 1.09, 1.131].
+
+## `public/assets/saturn/<set>/skim-rings.jpg` and `skim-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
+
+- Tool: `python3 assets-src/saturn/shot/skim_rings.py`. No generation.
+- Inputs: `references/approved/saturn-close.jpg`, its x2 upscale `out/work/saturn/close-x2.png` (`python3 tools/ml/upscale.py`), the traced limb `out/work/saturn/close-limb.npy`, the fitted close camera (`src/stops/saturn/close.json`).
+- What it does: the approved close image's own ring pixels, projected in the shader from the fitted close camera onto the true ring plane. Mask R alpha, G weight (0 on the globe and the sky). Shown at full strength inside the approved frame near the close pose (`skimRange`, `skimEdge`, `skimDensity`), fetched with a footprint of 0.7 pixel or more (`skimFoot`); outside the frame the 1D profile with grain carries on.
+- Checks: frame 3720 at final beside the approved image (`out/work/saturn/pair-terrain-q4.jpg`).
+
+## `public/assets/saturn/<set>/skim-light.bin` (640 x 360 RGBA float32, same file in both sets)
+
+- Tool: `python3 assets-src/saturn/shot/light.py close FILM.png layers=LAYERS.png lo=0.02 erode=9 floor=0.0005`. No generation.
+- What it does: as `hold-light.bin`, for the close pose: the terminator, the night side and the limb of the globe are the approved ones at frame 3720.
+
+## `public/assets/saturn/<set>/layout-tone.bin` (640 x 480 RGBA float32, same file in both sets)
+
+- Tool: `python3 assets-src/saturn/shot/ring_tone.py out/work/saturn/tone-P-3720.png`. No generation.
+- Inputs: frame 3720 at final rendered with `rings.skimShow: 0` and the tone file set to ones; `out/work/saturn/layout-total.npy` and `layout-shade.npy` from `close/profile.py`.
+- What it does: per band coordinate the median ratio approved over film on the rings (sigma 8 approved px), times a wide smooth residual clipped to 0.8 to 1.25. It also rewrites channel 1 of `layout.bin` outside the approved frame as the by-band median of the inside shade, so the 1D profile outside the approved frame has the tone of the image beside it. Printed: tone inside median [1.034, 1.001, 0.986], p5 [0.829, 0.851, 0.816], p95 [1.456, 1.267, 1.294], 9602 cells.
+
+## `rings.bin`, round 2
+
+- `python3 assets-src/saturn/rings/build.py 0.35 0.22 1.5`: argument 1 share of the synthetic lines in the close profile, arguments 2 and 3 thin the hero alpha of the C ring from 0.22 at its inner edge to 1 at radius 1.5.
