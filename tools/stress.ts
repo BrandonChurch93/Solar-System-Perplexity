@@ -4,6 +4,7 @@ import { WORK, args, ensureBuild, loadConfig, machineId, requireDisk } from './l
 import { chunkFile, chunkReady, log, makeJob, renderUnits, type Unit } from './film'
 import { decodeFramePng, encodeOnePass, probeVideo, psnrPng } from './lib/encode'
 import { judgedFrames, segmentById } from '../src/director/timeline'
+import { stressSpan } from './lib/samples'
 
 const cfg = loadConfig()
 const a = args()
@@ -15,17 +16,14 @@ requireDisk(cfg)
 const hashes = ensureBuild()
 const dir = join(WORK, 'stress')
 const job = makeJob(cfg, hashes, cfg.formatKeys.master, tier, assets, { ...a, grab: 'png' })
-const length = Math.max(1, Math.round(st.seconds * cfg.fps))
 const pad = (n: number): string => String(n).padStart(5, '0')
 const summary: Record<string, unknown>[] = []
 try {
   for (const id of ids) {
     const seg = segmentById(id)
-    const fr = (cfg.raw.judged.fractions as Record<string, number>)[seg.kind]
-    const judged = fr === undefined ? seg.firstFrame + Math.floor(seg.frames / 2) : seg.firstFrame + Math.floor(fr * seg.frames + 1e-9)
-    if (fr !== undefined && !judgedFrames().some((j) => j.frame === judged)) throw new Error('judged frame ' + judged + ' of ' + id + ' is not on the judged list')
-    const len = Math.min(length, seg.frames)
-    const first = Math.min(Math.max(judged - Math.floor(len / 2), seg.firstFrame), seg.endFrame - len)
+    const { judged, first, end, fraction } = stressSpan(seg, st.seconds)
+    if (fraction !== undefined && !judgedFrames().some((j) => j.frame === judged)) throw new Error('judged frame ' + judged + ' of ' + id + ' is not on the judged list')
+    const len = end - first
     const u: Unit = { id, first, end: first + len, dir }
     const picks = [first, first + Math.floor((len - 1) / 2), first + len - 1]
     const before = (f: number): string => id + '-before-' + pad(f) + '.png'

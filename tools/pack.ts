@@ -2,6 +2,7 @@ import { copyFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSyn
 import { basename, join } from 'node:path'
 import type { Segment, StopDef } from '../src/config'
 import { judgedFrames } from '../src/director/timeline'
+import { samplesOf } from './lib/samples'
 import { args, loadConfig, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
 import { Capture, cached, chunk, filmSheets, fingerprint, image, imageRevision, json, judged, outputFolder, padFrame, padImage, safeRecord, sheetFrames, spread, stopDependencies, type FrameSpec, type Rect } from './lib/render'
 
@@ -291,11 +292,7 @@ async function hook(): Promise<Art[]> {
 }
 
 function plan(): object {
-  const count = (frame: number, quality: string): number => {
-    const kind = cfg.segments.find((s) => frame >= s.firstFrame && frame < s.endFrame)!.kind
-    return cfg.fastKinds.includes(kind) ? cfg.tiers[quality].fastSamplesPerFrame : cfg.tiers[quality].samplesPerFrame
-  }
-  const cost = (frames: FrameSpec[]): number => frames.reduce((sum, f) => sum + count(f.frame, motionTier), 0)
+  const cost = (frames: FrameSpec[]): number => frames.reduce((sum, f) => sum + samplesOf(f.frame, motionTier), 0)
   const sheets: { part: string; stop: string | null; samples: number }[] = []
   for (const s of cfg.segments) {
     const between = s.kind === 'travel' || s.stop === cfg.endingId
@@ -305,7 +302,7 @@ function plan(): object {
   }
   return {
     tier, motionTier, sheets,
-    finals: finalFrames().map((frame) => ({ frame, samples: count(frame, tier) })),
+    finals: finalFrames().map((frame) => ({ frame, samples: samplesOf(frame, tier) })),
     composites: [
       ...filmSheets(cfg, true).map((frames, i) => ({ part: 'film-' + (i + 1), frames: frames.map((f) => f.frame) })),
       { part: 'holds', frames: cfg.segments.filter((s) => s.kind === 'hold').map((s) => judged(cfg, s)) },

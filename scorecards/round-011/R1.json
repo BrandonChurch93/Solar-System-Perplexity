@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "C, upper-right auroral limb",
+   "what": "The green curtain reads as broader patches with less separation between the fine vertical rays, and bright stars compete more with the red fringe.",
+   "fix": "Restore the narrow green filaments and the softer transparent red fringe; mute the brightest nearby star cores."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "H and E, eastern South America and the night-side limb",
+   "what": "The warm city lights are larger and hotter, and the blue edge at the bottom reads as a more distinct line than in the target.",
+   "fix": "Reduce the size and intensity of the brightest lights and feather the faint blue edge into the dark ocean and sky."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "B, C, D, E, and I, surrounding star field",
+   "what": "Individual stars read as larger and more conspicuous against the fine dust and sky texture, most clearly beside the aurora and below the left limb.",
+   "fix": "Tighten and dim the stronger star points while preserving the underlying dust lanes and near-black sky."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "A, F, and G, Americas, Pacific clouds, and Arctic ice",
+   "what": "Terrain ridges, ice edges, and cloud streaks are more brittle and etched at native scale; some bright flecks pop out more than they do in the target.",
+   "fix": "Dial back local sharpening and highlight microcontrast, preserving the fine structures without the harder edges."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "B, D, F, and G, daylight atmospheric limb",
+   "what": "The cyan-white rim reads slightly harder where it meets the disk, especially down the left edge.",
+   "fix": "Reduce the edge contrast at the inner rim and blend it gradually into the blue falloff without moving the limb."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Upper-right Moon",
+   "what": "The disk reads slightly fuller because the unlit side is more visible, and the lit edge is a little coarser.",
+   "fix": "Deepen the night hemisphere, refine the illuminated silhouette, and preserve the target's left-hand lighting and crater relief."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Center sun track and foreground ocean",
+   "what": "The reflected sunlight and surrounding midtones are fractionally warmer and more open, softening the separation of the brightest water and the cloud shadows.",
+   "fix": "Trim the warm lift slightly and restore local contrast around the sun track without changing the shadow direction."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "A, F, and G, sunlit water, small cloud clusters, and long shadows",
+   "what": "The cloud faces and shadows are slightly lifted, and fine wavelets and glint texture read softer in places.",
+   "fix": "Back off the warm midtone lift, recover the finer wavelet texture, and deepen the cloud shadows slightly."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "D and H, foreground cloud banks; E and I, island shelf and nearby water",
+   "what": "Cloud rims and tiny glints have a slightly coarser, brighter finish against the darker ocean, including offshore around the island shelf.",
+   "fix": "Reduce the local bite of isolated highlights and retain the fine dark-blue and turquoise separation."
+  }
+ ]
+}

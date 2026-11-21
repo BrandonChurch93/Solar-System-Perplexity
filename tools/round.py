@@ -702,10 +702,8 @@ def film_jobs(a):
     for k, g in enumerate(groups([x for x in plan['sheets'] if x['stop'] is None]), 1):
         add('r%d-film-motion%02d' % (n, k), cmd([x['part'] for x in g]), [cache], weigh(g), pre)
     q = c['quality']['stress']
-    kinds = {x['id']: x['kind'] for x in c['segments']}
-    t = c['tiers'][s.get('tier') or q['tier']]
-    count = max(1, round(q['seconds'] * c['film']['fps']))
-    for k, g in enumerate(groups([{'id': i, 'samples': count * (t['fastSamplesPerFrame'] if kinds[i] in c['motion']['fastKinds'] else t['samplesPerFrame'])} for i in q['segments']]), 1):
+    true = json.loads(sh('npm run -s samples -- --stress --tier %s' % (s.get('tier') or q['tier'])).strip().split('\n')[-1])
+    for k, g in enumerate(groups([{'id': i, 'samples': true[i]} for i in q['segments']]), 1):
         ids = [x['id'] for x in g]
         add('r%d-film-stress%02d' % (n, k), 'npm run stress -- --segment %s%s' % (','.join(ids), tiers(s, 'stress')), ['out/work/stress/%s-before-*.png out/work/stress/%s-after-*.png out/work/stress/%s.json' % (i, i, i) for i in ids], weigh(g))
     if s['mode'] == 'record':
