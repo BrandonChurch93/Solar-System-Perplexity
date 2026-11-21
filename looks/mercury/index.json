@@ -1,9 +1,61 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T05:42:14.788Z",
- "head": "ce617d6b1c9b8b3c225c10dc89cfbd18700d79a7",
- "note": "dive and rise before patches; spot moved onto the hero's crater; building dive patches and the Sun glare cover",
+ "pushed": "2026-11-21T06:09:42.940Z",
+ "head": "3a12b225e129623324a51d316048e521b86e9622",
+ "note": "Session 6: cover is now the stop's own Sun glare (a bloom that grows from the Sun until the frame is white, engine cover hidden); dive patches levels 1 to 3 built, level 4 in progress; terrain side of the glare had the Sun in the wrong place and is being rendered again.",
  "looks": [
+  {
+   "time": "2026-11-21T06:09:42.365Z",
+   "file": "20261121060942365-note-L1-view.jpg",
+   "source": "out/work/mercury/patches/L1-view.jpg",
+   "kind": "note",
+   "label": "dive patch level 1 (76 degrees), north up, unlit colour as the globe shader reads it",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:09:41.807Z",
+   "file": "20261121060941807-note-L3-view-L4-in-c.jpg",
+   "source": "out/work/mercury/patches/L3-view-L4-in-c.jpg",
+   "kind": "note",
+   "label": "dive patches, north up: level 3 (19 degrees) and the level 4 centre input with the terraced crater placed on the hero's ring crater",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:09:41.186Z",
+   "file": "20261121060941186-note-dive-glare-strip.jpg",
+   "source": "out/work/mercury/g5/dive-glare-strip.jpg",
+   "kind": "note",
+   "label": "dive cover, draft frames 735 737 738 739 742: the Sun's bloom grows from the right until the frame is white",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:07:57.035Z",
+   "file": "20261121060757035-frame-f758.jpg",
+   "source": "out/work/mercury/g5/f758.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 758, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 758,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T06:01:16.611Z",
+   "file": "20261121060116611-frame-f985.jpg",
+   "source": "out/work/mercury/g3/f985.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 985, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 985,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
   {
    "time": "2026-11-21T05:42:14.176Z",
    "file": "20261121054214176-note-levels2-view.jpg",
@@ -21,28 +73,6 @@
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T05:42:13.050Z",
-   "file": "20261121054213050-note-dive-sheet-c.jpg",
-   "source": "out/work/mercury/d1/dive-sheet-c.jpg",
-   "kind": "note",
-   "label": "dive frames 705 717 726 732 735 738 740 at draft, before patches and before the glare cover (tan engine cover still on)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T05:39:47.609Z",
-   "file": "20261121053947609-frame-f1016.jpg",
-   "source": "out/work/mercury/d1/f1016.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1016, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1016,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
    "time": "2026-11-21T05:27:59.132Z",
    "file": "20261121052759132-frame-s4c-959.jpg",
    "source": "out/work/mercury/t/s4c-959.png",
@@ -55,48 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:21:13.094Z",
-   "file": "20261121052113094-compare-compare-mercury-terrain-view.jpg",
-   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
-   "kind": "compare",
-   "label": "mercury.terrain: approved image left, film frame right, review tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T04:56:06.076Z",
-   "file": "20261121045606076-compare-compare-mercury-hold-view.jpg",
-   "source": "out/work/compare/compare-mercury-hold-view.jpg",
-   "kind": "compare",
-   "label": "mercury.hold: approved image left, film frame right, review tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:56:05.030Z",
-   "file": "20261121045605030-still-f00615-16x9-review-full.jpg",
-   "source": "out/work/stills/f00615-16x9-review-full.png",
-   "kind": "still",
-   "label": "mercury.hold frame 615, review tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
   }
  ]
 }
