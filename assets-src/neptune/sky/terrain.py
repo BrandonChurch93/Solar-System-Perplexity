@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'terrain'))
 import cgeo
 from deblock import deblock
-from patch import film, unfilm, to_linear, to_srgb, step
+from patch import film, unfilm, to_linear, to_srgb, step, outward
 
 FULL = (2816, 1584)
 MARGIN = 0.125
@@ -18,6 +18,8 @@ GLOW_TOP = 0.012
 AZIMUTH = np.radians(80)
 MAP = (512, 64)
 CUT = 0.06
+BELOW = (6.0, 14.0)
+GLOW_SMOOTH = (45, 41, 5)
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/neptune'
 
 
@@ -65,7 +67,7 @@ for c in range(3):
     g = ndi.gaussian_filter(g * wgt, (0.7, 3)) / np.maximum(ndi.gaussian_filter(wgt, (0.7, 3)), 1e-4)
     g[:, :first + 4] = g[:, first + 4:first + 5]
     g[:, last - 3:] = g[:, last - 4:last - 3]
-    g = ndi.gaussian_filter(ndi.percentile_filter(g, 30, size=(1, 141), mode='nearest'), (0.5, 14), mode='nearest')
+    g = ndi.gaussian_filter(ndi.percentile_filter(g, GLOW_SMOOTH[0], size=(1, GLOW_SMOOTH[1]), mode='nearest'), (0.5, GLOW_SMOOTH[2]), mode='nearest')
     gmap[..., c] = g
 png = (to_srgb(film(gmap)) * 255 + 0.5).astype(np.uint8)
 for key in ('full', 'web'):
@@ -76,33 +78,37 @@ mu = np.clip(u * MAP[0] - 0.5, 0, MAP[0] - 1).astype(np.float32)
 mv = np.clip(v * MAP[1] - 0.5, 0, MAP[1] - 1).astype(np.float32)
 glow = cv2.remap(back.astype(np.float32), mu, mv, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
 glow *= ((v >= 0) & (v < 1))[..., None] * (1 - step(v, 0.8, 1.0))[..., None]
+for lo_u, hi_u in ((0.0, 0.2), (0.2, 0.4), (0.4, 0.6), (0.6, 0.8), (0.8, 1.0)):
+    m = above & (v > 0.03) & (v < 0.25) & (xs >= lo_u * w) & (xs < hi_u * w)
+    if m.any():
+        print('glow against the image, columns', lo_u, hi_u, 'ratio', float((glow[m][:, 2] + base[2]).mean() / smooth[m][:, 2].mean()))
 sky = np.maximum(a - glow, 0)
 flat = np.stack([low(sky[..., c], 3) for c in range(3)], -1)
 stars = np.maximum(sky - flat, 0) * step(v, 0.0, 0.05)[..., None]
 clear = (above & (v > 0.3)).astype(np.float32)
 far_flat = np.stack([ndi.gaussian_filter(flat[..., c] * clear, 30) for c in range(3)], -1) / np.maximum(ndi.gaussian_filter(clear, 30), 1e-4)[..., None]
 k = step(v, 0.12, 0.34)[..., None]
-sky = far_flat * (1 - k) + flat * k + stars
+sky = (far_flat + stars) * (1 - k) + sky * k
 
 alpha = np.radians(cgeo.FIT['alphaDeg']) + np.radians(CUT)
 theta = np.arccos(np.clip(d @ cgeo.NADIR, -1, 1))
 above = theta > alpha
-mirror = 2 * alpha - theta
+lifted = theta + np.radians(BELOW[0])
 horiz = d - (d @ cgeo.NADIR)[..., None] * cgeo.NADIR
 horiz /= np.maximum(np.linalg.norm(horiz, axis=-1, keepdims=True), 1e-6)
-md = np.cos(mirror)[..., None] * cgeo.NADIR + np.sin(mirror)[..., None] * horiz
+horiz = horiz * np.cos(np.radians(BELOW[1])) + np.cross(cgeo.NADIR, horiz) * np.sin(np.radians(BELOW[1]))
+md = np.cos(lifted)[..., None] * cgeo.NADIR + np.sin(lifted)[..., None] * horiz
 px = ((md[..., 0] / -md[..., 2]) / cgeo.TX + 1) / 2 * w - 0.5
 py = (1 - (md[..., 1] / -md[..., 2]) / cgeo.TY) / 2 * h - 0.5
+bad = (md[..., 2] > -0.2) | (px < 0) | (px > w - 1) | (py < 0) | (py > h - 1)
 src = np.where(above[..., None], sky, 0).astype(np.float32)
-bad = (md[..., 2] > -0.2) | (px < -w) | (px > 2 * w) | (py < -h) | (py > 2 * h)
-px = np.where(bad, xs, px)
-py = np.where(bad, np.abs(((ys + 0.37 * h) % (0.74 * h)) - 0.37 * h) * 0.5, py)
-fill = cv2.remap(src, px.astype(np.float32), py.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101)
-fill = np.where((fill.sum(-1) <= 0)[..., None], np.asarray(base, np.float32), fill)
+fill = cv2.remap(src, np.where(bad, 0, px).astype(np.float32), np.where(bad, 0, py).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+level = np.stack([np.median(far_flat[..., c][above]) for c in range(3)]).astype(np.float32)
+fill = np.where((bad | (fill.sum(-1) <= 0))[..., None], level, fill)
 lin = np.where(above[..., None], sky, fill)
 
 px_m, py_m = round(w * MARGIN), round(h * MARGIN)
-wide = np.pad(lin, ((py_m, py_m), (px_m, px_m), (0, 0)), mode='symmetric')
+wide, _ = outward(lin, px_m, py_m)
 out = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
 for key, k in (('full', 1), ('web', 2)):
     im = out if k == 1 else out.resize((out.size[0] // k, out.size[1] // k), Image.LANCZOS)

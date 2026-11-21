@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
 
 export interface LoopsLook {
@@ -9,7 +10,7 @@ export interface LoopsLook {
   gain: number
   far: number
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
-  flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number }
+  flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number; inside: [number, number]; from: [number, number] }
   swell: { amount: number; speed: number; width: number; lanes: number; calm: number }
   burst: { surge: number; floor: number; reach: [number, number]; other: number; white: number; from: number }
 }
@@ -37,15 +38,18 @@ uniform vec4 uBox;
 uniform vec4 uFeet;
 uniform vec4 uFlow;
 uniform vec2 uFlowMore;
+uniform vec4 uFlowMask;
 uniform vec4 uSwell;
 uniform float uCalm;
 uniform vec4 uBurst;
 uniform vec3 uBurstMore;
+uniform float uCut;
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${STAGE_GLSL}
+${GRADE_GLSL}
 float packets(vec2 q, float t) {
   float a = textureLod(uNoise, vec2(q.x - t * uFlow.w, fract(q.y)), 0.0).r;
   float b = textureLod(uNoise, vec2(q.x * 2.3 - t * uFlow.w * 1.9, fract(q.y * 1.7 + 0.37)), 0.0).r;
@@ -58,7 +62,7 @@ void main() {
   vec2 uv = vec2((a.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (a.y - uBox.y) / (uBox.w - uBox.y));
   vec2 dx = dFdx(uv) * uGrad;
   vec2 dy = dFdy(uv) * uGrad;
-  vec3 lin = inverseFilmic(textureGrad(uMap, uv, dx, dy).rgb);
+  vec3 lin = inverseFilmic(grade(textureGrad(uMap, uv, dx, dy).rgb, 1.0));
   vec2 p = vec2((a.x - 0.5) * 2.0 * ST_TAN.x, (0.5 - a.y) * 2.0 * ST_TAN.y);
   vec2 pa = uFeet.xy - p;
   vec2 pb = uFeet.zw - p;
@@ -71,9 +75,12 @@ void main() {
   float lane = textureLod(uNoise, vec2(arc * uSwell.w, 0.37), 0.0).r;
   float ds = fract(along - uTime * uSwell.y * (0.75 + 0.5 * lane) - lane * 3.0) - 0.5;
   float swell = exp(-ds * ds / (uSwell.z * uSwell.z)) * smoothstep(0.0, 0.14, along) * (1.0 - smoothstep(0.86, 1.0, along)) * (1.0 - exp(-uTime * uTime / (uCalm * uCalm)));
-  lin *= max(1.0 + uFlow.x * run + uSwell.x * swell, uFlowMore.y);
+  float strand = (1.0 - smoothstep(uFlowMask.x, uFlowMask.y, arc)) * smoothstep(uFlowMask.z, uFlowMask.w, dot(lin, vec3(0.3, 0.5, 0.2)));
+  float wave = strand * (uFlow.x * run + uSwell.x * swell);
+  lin *= 1.0 + (wave < 0.0 ? -uFlowMore.y * (1.0 - exp(wave / uFlowMore.y)) : wave);
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
+  for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0);
   float lit = uBurst.x * uBurst.y * (uBurst.w + (1.0 - uBurst.w) * min(climb, 1.0)) * smoothstep(uBurstMore.z, uBurstMore.z * 6.0, glow);
   lin = lin * (1.0 + lit) + glow * lit * uBurstMore.y * vec3(1.0, 0.9, 0.66);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -110,7 +117,7 @@ export class Loops {
   private readonly gain: number
   private readonly reach: [number, number]
 
-  constructor(map: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook) {
+  constructor(map: THREE.Texture, grade: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook) {
     this.gain = look.gain
     this.reach = look.burst.reach
     const [fa, fb] = stage.feet as [[number, number], [number, number]]
@@ -179,14 +186,15 @@ export class Loops {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: map }, uNoise: { value: noiseTexture(noise(256), 256) }, uDiag: diagUniform, uGrad: gradUniform,
+        uMap: { value: map }, uGrade: { value: grade }, uNoise: { value: noiseTexture(noise(256), 256) }, uDiag: diagUniform, uGrad: gradUniform,
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uBox: { value: new THREE.Vector4(box[0], box[1], box[2], box[3]) },
         uFeet: { value: new THREE.Vector4(ta.x, ta.y, tb.x, tb.y) },
         uFlow: { value: new THREE.Vector4(look.flow.amount, look.flow.lanes, look.flow.along, look.flow.speed) },
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
+        uFlowMask: { value: new THREE.Vector4(look.flow.inside[0], look.flow.inside[1], look.flow.from[0], look.flow.from[1]) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
-        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -204,11 +212,12 @@ export class Loops {
     this.mesh.frustumCulled = false
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number, burst: number): void {
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0): void {
     const u = this.material.uniforms
     const lit = u.uBurst!.value as THREE.Vector4
     lit.x = burst
     lit.z = this.reach[0] + (this.reach[1] - this.reach[0]) * burst
+    u.uCut!.value = cut
     u.uTime!.value = time
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette

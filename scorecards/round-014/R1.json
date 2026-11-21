@@ -1,0 +1,56 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "upper left moon",
+   "what": "the moon sits about 2px right and 3px down of the target relative to the star field, and its lit face is brighter and softer, so crater rims and the terminator read less sharp",
+   "fix": "move the moon up and left onto the target and restore crater contrast without lifting the lit face"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "panels G and I, the lit limb and the rings",
+   "what": "the outer cyan limb glow falls off sooner and the ring arcs are dimmer and softer than the target, so the limb and rings lose presence",
+   "fix": "widen the limb glow back out into space and raise ring brightness and edge contrast to the target"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "right limb and lower right rings",
+   "what": "the outer atmospheric haze is narrower and dimmer than the target, and the ring filaments are softer and slightly darker",
+   "fix": "extend and lift the limb falloff and sharpen the ring arcs back to the target brightness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet disc, storm and cloud bands",
+   "what": "the same shot, but fine cloud edges are softer and the disc is about 2px right and 1px up of the target while the star and glare stay put",
+   "fix": "shift the planet back onto the target and restore high-frequency cloud detail"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "panels A, E, F and H, cloud decks",
+   "what": "same crops and identical labels, but the panels do not share one registration (about 3px right and 1px up on the storm and limb panels, about 1px on the limb and ring panels) and cloud edges are softer",
+   "fix": "register every panel to the target and put the fine cloud detail back"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame",
+   "what": "same shot and same star field, but the frame is about one RGB level brighter and cloud and squall edges are softer, with the storm and cloud front about 2px right of the target",
+   "fix": "drop the exposure a step, shift the planet back, and restore edge detail"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "all nine crops",
+   "what": "same crops and identical labels, each about one RGB level brighter and slightly soft; most panels sit about 4px right and 1px down of the target while the star-field panels F and C do not",
+   "fix": "match the target exposure, register each panel, and restore the fine cloud edges"
+  }
+ ]
+}

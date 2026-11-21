@@ -56,3 +56,37 @@ def fill_scene():
 def fill_floor(f):
     low = np.stack([ndi.grey_opening(f[..., c], size=(OPEN + 2, OPEN + 2)) for c in range(3)], -1)
     return cv2.GaussianBlur(low, (0, 0), SOFT)
+
+
+STARS_FROM = (1.04, 1.12)
+OWN = (1.0, 1.12)
+FAR_BLEND = 0.18
+LEVEL = ROOT + '/assets-src/sun/orbit/level.npy'
+
+
+def card_scene():
+    import os
+    from polar import PW, PH, polar_of, sample_polar
+    g = fill_scene()
+    floor = fill_floor(g)
+    hero = scene(load(HERO)).astype(np.float32)
+    stars = np.load(WORK + '/hero-stars.npy').astype(np.float32)
+    yy, xx = np.mgrid[0:H, 0:W]
+    ray = np.stack([(xx + 0.5 - W / 2) / FOCAL, -(yy + 0.5 - H / 2) / FOCAL, -np.ones((H, W))], -1)
+    theta, b = polar_of(CAM + ray)
+    reach = np.load(WORK + '/polar-reach.npy')
+    at = theta / (2 * np.pi) * PW - 0.5
+    far = step((b - np.interp(at, np.arange(PW), reach, period=PW)) / FAR_BLEND, 0, 1).astype(np.float32)[..., None]
+    cor = np.load(WORK + '/polar-corona.npy').astype(np.float32)
+    if os.path.exists(LEVEL):
+        cor *= cv2.resize(np.load(LEVEL).astype(np.float32), (PW, PH), interpolation=cv2.INTER_LINEAR)
+    halo = sample_polar(cor, theta, b)
+    del cor
+    prom = sample_polar(np.load(WORK + '/polar-soft.npy').astype(np.float32), theta, b)
+    prom = cv2.GaussianBlur(cv2.dilate(prom, np.ones((9, 9), np.uint8)), (0, 0), 2)
+    points = (step(b, *STARS_FROM) * (1 - step(prom, 0.02, 0.2))).astype(np.float32)[..., None]
+    own = (1 - step(b, *OWN)).astype(np.float32)[..., None]
+    near = floor + (g - floor) * own + stars * points
+    out = near * (1 - far) + np.maximum(hero - halo, 0) * far
+    print('card: far share', float(far.mean().round(3)), 'hero star light', float(luma(stars * points).mean().round(5)), 'own star share', float(own.mean().round(3)))
+    return out.astype(np.float32)
