@@ -234,6 +234,9 @@ export class Rings {
   readonly group = new THREE.Group()
   readonly materials: THREE.ShaderMaterial[] = []
   private readonly geometry: THREE.BufferGeometry
+  private readonly parts: THREE.BufferGeometry[] = []
+  private pos: Float32Array = new Float32Array(0)
+  private all: number[] = []
 
   constructor(profile: Record<string, THREE.IUniform>, layout: Record<string, THREE.IUniform>, look: RingLook, polar: number) {
     const [r0, r1] = ringsJson.span as [number, number]
@@ -258,6 +261,8 @@ export class Rings {
     this.geometry = new THREE.BufferGeometry()
     this.geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     this.geometry.setIndex(index)
+    this.pos = pos
+    this.all = index
     const shared = {
       ...profile,
       ...layout,
@@ -278,12 +283,75 @@ export class Rings {
         side: THREE.DoubleSide, transparent: true, depthWrite: false, depthTest: pass === 0, premultipliedAlpha: true,
         blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
       })
-      const mesh = new THREE.Mesh(this.geometry, material)
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', this.geometry.getAttribute('position'))
+      const ia = new THREE.BufferAttribute(new Uint16Array(index), 1)
+      ia.setUsage(THREE.DynamicDrawUsage)
+      g.setIndex(ia)
+      this.parts.push(g)
+      const mesh = new THREE.Mesh(g, material)
       mesh.frustumCulled = false
       mesh.renderOrder = pass === 0 ? 2 : 6
       this.materials.push(material)
       this.group.add(mesh)
     }
+  }
+
+  cull(cam: THREE.Vector3, close: number): void {
+    const p = this.pos
+    const cx = cam.x * 0.5
+    const cz = cam.z * 0.5
+    const rad = Math.hypot(cx, cz)
+    const eps = 1e-3 * (1 + rad)
+    const seg = (ax: number, az: number, bx: number, bz: number, qx: number, qz: number): number => {
+      const dx = bx - ax
+      const dz = bz - az
+      const l = dx * dx + dz * dz
+      const t = l > 0 ? Math.min(1, Math.max(0, ((qx - ax) * dx + (qz - az) * dz) / l)) : 0
+      return Math.hypot(ax + dx * t - qx, az + dz * t - qz)
+    }
+    const inside = (x: number[], z: number[], qx: number, qz: number): boolean => {
+      let pos = 0
+      let neg = 0
+      for (let k = 0; k < 3; k++) {
+        const n = (k + 1) % 3
+        const c = (x[n]! - x[k]!) * (qz - z[k]!) - (z[n]! - z[k]!) * (qx - x[k]!)
+        if (c >= 0) pos++
+        if (c <= 0) neg++
+      }
+      return pos === 3 || neg === 3
+    }
+    const far = (x: number[], z: number[], qx: number, qz: number): number => inside(x, z, qx, qz) ? 0 : Math.min(seg(x[0]!, z[0]!, x[1]!, z[1]!, qx, qz), seg(x[1]!, z[1]!, x[2]!, z[2]!, qx, qz), seg(x[2]!, z[2]!, x[0]!, z[0]!, qx, qz))
+    const counts = [0, 0]
+    const out = this.parts.map((g) => g.getIndex()!.array as Uint16Array)
+    const x = [0, 0, 0]
+    const z = [0, 0, 0]
+    for (let t = 0; t < this.all.length; t += 3) {
+      let inK = 0
+      let inD = 0
+      for (let k = 0; k < 3; k++) {
+        const v = this.all[t + k]! * 3
+        x[k] = p[v]!
+        z[k] = p[v + 2]!
+        if (Math.hypot(x[k]! - cx, z[k]! - cz) < rad - eps) inK++
+        if (Math.hypot(x[k]!, z[k]!) < 1 - eps) inD++
+      }
+      const drop0 = inK === 3 || inD === 3
+      const drop1 = close <= 0 && far(x, z, cx, cz) > rad + eps && far(x, z, 0, 0) > 1 + eps
+      for (let pass = 0; pass < 2; pass++) {
+        if (pass === 0 ? drop0 : drop1) continue
+        const o = out[pass]!
+        const c = counts[pass]!
+        o[c] = this.all[t]!
+        o[c + 1] = this.all[t + 1]!
+        o[c + 2] = this.all[t + 2]!
+        counts[pass] = c + 3
+      }
+    }
+    this.parts.forEach((g, i) => {
+      g.setDrawRange(0, counts[i]!)
+      g.getIndex()!.needsUpdate = true
+    })
   }
 
   get uniforms(): Record<string, THREE.IUniform> {
