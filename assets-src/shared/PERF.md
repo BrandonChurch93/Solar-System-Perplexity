@@ -415,7 +415,7 @@ What the eye says: the sparkle is softer on Earth, the comb is not gone. City li
 | `maxStepPx` | review, cap 128 | final, cap 256 |
 | --- | --- | --- |
 | 1.5 | 58,721, 6 at the cap, 15.8 to 27.8 h | 191,130, 0, 50.1 to 85.4 h |
-| 1.0 | 67,576, 35, 17.8 to 32.0 h | 195,028, 0, 50.9 to 87.7 h |
+| 1.0 | 67,576, 35, 17.8 to 32.0 h | 195,028, 0, 51.0 to 87.7 h |
 | 0.75 | 76,256, 61, 19.7 to 35.8 h | 200,973, 6, 52.3 to 90.8 h |
 | 0.6 | 84,461, 98, 21.6 to 39.3 h | 207,755, 14, 53.8 to 94.2 h |
 
@@ -437,3 +437,11 @@ Upper bound if every stop set `coverHides: 0` (the raw motion counts everywhere)
 ### C. What a cover hides
 
 Optional plan number `coverHides` (`MoveParams` in `src/director/moves.ts`, beside the other `cover` keys; default 1). The director copies it to `shot.cover.hides` only when the plan sets it, and the cover factor of the sample count is `max(1 - cover.amount * coverHides, 0)`. 1 is the old rule (an opaque cover: what it hides needs no samples), 0 counts the full motion under any cover, a value between is for a translucent cover through which a bright limb or ring shows (Uranus 4159 to 4161: raw 28.6 to 29.4 px, seen 6.9 to 2.5 px with the default; 4413: raw 69.3, seen 10.8). No plan sets it. The gradient scale of A reads the raw motion and does not depend on it.
+
+### Proof (third task)
+
+- Mars at final against the baselines, all four equal: 2325 `9895a050…f744d`, 2580 `a7e1670a…c1f5b8`, 2427 `0a022282…7fc814`, 2726 `79352ec5…85c8b05`.
+- `npm run build` clean, `npx vitest run` 13 files and 62 tests (new: the gradient scale under motion, what a cover hides, the config check of the two soft keys).
+- `npm run determinism -- --frames 2325,2445`: pass (2445 is a Mars dive frame of 39 samples at review, 57.7 px, soft 1).
+- Frame records carry the count (`extra.samples`): 1870 review 16, 4984 review 95 (64 before the cap was raised), 2325 final 16. `npm run -s samples -- --tier T --frames a,b` now also prints the motion before and after the cover factor and the soft share.
+- Files: `config/showcase.json` (two new keys under `motion`, the two caps), `src/config.ts`, `src/core/motion.ts`, `src/core/engine.ts`, `src/core/types.ts`, `src/diagnostics/diag.ts`, `src/director/moves.ts`, `src/director/film.ts`, `tools/samples.ts`, `tools/lib/samples.ts`, `tests/motion.test.ts`, `tests/config.test.ts`, `assets-src/shared/STOP-AGENT.md`, this file and the pictures.
