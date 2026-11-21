@@ -11,7 +11,7 @@ export interface GroundLook {
   rings: number
   sectors: number
   cell: number
-  apron: { amount: number; cell: number; calm: number }
+  apron: { amount: number; cell: number; calm: number; out: [number, number] }
   band: [number, number]
   glow: [number, number]
   boil: { reach: number; period: number; step: number; max: number }
@@ -37,6 +37,7 @@ uniform sampler2D uPlate;
 uniform sampler2D uApron;
 uniform vec2 uApronSize;
 uniform float uApronOn;
+uniform float uApronOut;
 uniform vec2 uApronCell;
 uniform sampler2D uGlow;
 uniform vec4 uBox;
@@ -156,11 +157,13 @@ export class Ground {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly pulse: [number, number]
+  private readonly out: [number, number]
 
   constructor(plate: THREE.Texture, apron: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
     this.pulse = look.glow
+    this.out = look.apron.out
     const up = stage.down.clone().negate()
     const e1 = new THREE.Vector3(1, 0, 0).addScaledVector(up, -up.x).normalize()
     const e2 = up.clone().cross(e1)
@@ -175,7 +178,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
@@ -222,6 +225,7 @@ export class Ground {
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
+    u.uApronOut!.value = THREE.MathUtils.smoothstep(time, this.out[0], this.out[1])
     u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
     u.uGain!.value = gain
     u.uVignette!.value = vignette

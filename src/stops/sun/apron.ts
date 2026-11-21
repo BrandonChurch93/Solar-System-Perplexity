@@ -37,7 +37,8 @@ vec2 apUv(vec2 b) {
 }
 float apWeight(vec3 p, vec2 b) {
   vec2 a = stImage(p);
-  float inside = smoothstep(0.0, AP_FEATHER, a.x) * smoothstep(0.0, AP_FEATHER, 1.0 - a.x) * smoothstep(0.0, AP_FEATHER, 1.0 - a.y);
+  float shift = AP_FEATHER * uApronOut;
+  float inside = smoothstep(0.0, AP_FEATHER, a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.y + shift);
   vec3 r = p - ST_DOWN;
   float near = 1.0 - smoothstep(AP_NEAR.x, AP_NEAR.y, length(vec2(dot(r, ST_RIGHT), dot(r, ST_FWD)) - AP_NADIR));
   float beyond = max(max(-b.x, b.x - 1.0), b.y - 1.0);

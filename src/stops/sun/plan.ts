@@ -33,7 +33,7 @@ export const climb = {
   level: 0.15,
   coast: 4,
   steps: 2048,
-  ease: { over: 3, settle: 0.55, skew: 0.6, span: 0.8 },
+  ease: { over: 3, settle: 0.55, skew: 0.6, span: 0.8, lead: 1 / 120 },
 }
 
 interface Reading { out: THREE.Vector3; height: number; level: THREE.Vector3; limb: number; vfov: number; rest: THREE.Quaternion }
@@ -84,8 +84,9 @@ export class SunPlan extends StopPlan {
     }
     const calm = sum(slow)
     const fast = sum(swoop)
-    const gain = (1 - calm[climb.steps]!) / fast[climb.steps]!
-    this.eased = calm.map((v, i) => v + gain * fast[i]!)
+    const lead = k.lead / k.over
+    const gain = (1 - lead - calm[climb.steps]!) / fast[climb.steps]!
+    this.eased = calm.map((v, i) => lead + v + gain * fast[i]!)
   }
 
   private read(pose: Pose): Reading {
@@ -149,7 +150,7 @@ export class SunPlan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     const k = climb.ease
-    if (tRel <= 0) return super.terrain(tRel)
+    if (tRel <= 0) return super.terrain(k.lead + tRel)
     if (tRel >= k.over) return super.terrain(k.over + k.settle * (tRel - k.over))
     return super.terrain(k.over * this.warp(tRel / k.over))
   }
