@@ -25,8 +25,10 @@ LIFT = (0.4, 2.5)
 SMOOTH = 1.5
 MOTTLE = 6
 SEAM = 48
-RIM = (6, 8, 40, 1.3)
+RIM = (6, 8, 40, 1.3, 40, 1.8)
 CARRY = 110
+INSET = 16
+TIGHT = (4, 12)
 
 
 def rowgain(inner, outer, along, limits):
@@ -37,14 +39,21 @@ def lifted(lin):
     out = lin.copy()
     top = np.quantile(luma(lin), 0.995)
     level = lambda cols: float(np.minimum(luma(lin[:, cols]), top).mean())
+    low = luma(split(lin)[0])
+    along = lambda v: gaussian_filter1d(v, RIM[4], axis=0)
     gains = {}
     for side in ('left', 'right'):
         at = (lambda i: i) if side == 'left' else (lambda i: W - 1 - i)
-        ref = level(slice(RIM[1], RIM[2]) if side == 'left' else slice(W - RIM[2], W - RIM[1]))
-        gains[side] = [float(np.clip(ref / level(slice(at(i), at(i) + 1)), 1, RIM[3])) for i in range(RIM[0])]
-        for i, g in enumerate(gains[side]):
-            out[:, at(i)] *= g
-    print('rim gain of the outermost columns', {k: np.round(v, 3).tolist() for k, v in gains.items()})
+        inner = slice(RIM[1], RIM[2]) if side == 'left' else slice(W - RIM[2], W - RIM[1])
+        ref = level(inner)
+        g = np.array([np.clip(ref / level(slice(at(i), at(i) + 1)), 1, RIM[3]) for i in range(RIM[0])]) - 1
+        rows = along(low[:, inner].mean(1))
+        fit = sum(g[i] * (rows / np.maximum(along(low[:, at(i)]), 1e-6) - 1) for i in range(RIM[0])) / max(float((g * g).sum()), 1e-9)
+        strength = np.clip(fit, 0, RIM[5])
+        for i in range(RIM[0]):
+            out[:, at(i)] *= (1 + g[i] * strength)[:, None]
+        gains[side] = {'columns': (1 + g).round(3).tolist(), 'strength 5, 50, 95 percent of rows': np.quantile(strength, [0.05, 0.5, 0.95]).round(2).tolist()}
+    print('rim lift', gains)
     return out
 
 
@@ -61,9 +70,9 @@ def sides(lin):
         assert e.shape[:2] == (H, px), e.shape
         low = cv2.GaussianBlur(split(e)[0], (0, 0), SMOOTH)
         if side == 'right':
-            a, b, na, nb, d, far = slice(W - WIDE, W), slice(0, WIDE), slice(W - BAND, W), slice(0, BAND), fall, slice(0, px)
+            a, b, na, nb, d, far = slice(W - WIDE, W), slice(0, WIDE), slice(W - BAND, W), slice(0, BAND), fall, slice(INSET, INSET + px)
         else:
-            a, b, na, nb, d, far = slice(0, WIDE), slice(px - WIDE, px), slice(0, BAND), slice(px - BAND, px), fall[::-1], slice(W - px, W)
+            a, b, na, nb, d, far = slice(0, WIDE), slice(px - WIDE, px), slice(0, BAND), slice(px - BAND, px), fall[::-1], slice(W - px - INSET, W - INSET)
         floor = rowgain(hero_low[:, a].mean(1), low[:, b].mean(1), ALONG, FLOOR)
         low = low * floor[:, None, :]
         join = rowgain(hero_low[:, na].mean(1), low[:, nb].mean(1), NEAR, GAIN)
@@ -76,7 +85,12 @@ def sides(lin):
         calm = lambda v: np.minimum(v, top).mean(1)
         seam = rowgain(calm(lin[:, wa]), calm(part[:, wb]), NEAR, (0.6, 1.6))
         print(side, 'seam gain', np.quantile(seam, [0.05, 0.5, 0.95], axis=0).round(2).tolist())
-        parts[side] = part * seam[:, None, :] ** d[None, :, None]
+        part = part * seam[:, None, :] ** d[None, :, None]
+        ta, tb = (slice(W - TIGHT[0], W), slice(0, TIGHT[0])) if side == 'right' else (slice(0, TIGHT[0]), slice(px - TIGHT[0], px))
+        near = np.exp(-np.arange(px) / TIGHT[1])
+        tight = rowgain(calm(lin[:, ta]), calm(part[:, tb]), NEAR, (0.7, 1.4))
+        print(side, 'tight gain', np.quantile(tight, [0.05, 0.5, 0.95], axis=0).round(2).tolist())
+        parts[side] = part * tight[:, None, :] ** (near if side == 'right' else near[::-1])[None, :, None]
     return np.concatenate([parts['left'], lin, parts['right']], 1).astype(np.float32)
 
 
