@@ -28,6 +28,7 @@ export interface LimbParams {
   rimTo: number
   rimAim: [number, number, number]
   rimMu: number
+  melt: [number, number, number]
   cut: number
   cutMu: [number, number]
   cutFrom: number
@@ -161,6 +162,7 @@ uniform vec3 uForward;
 uniform vec2 uForwardShape;
 uniform vec4 uNear;
 uniform vec4 uNearTint;
+uniform vec2 uMelt;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -272,6 +274,13 @@ void main() {
   col *= mix(vec3(1.0), field, uFieldSide.w);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  float melt = uMelt.y * (1.0 - smoothstep(0.0, uMelt.x, mu));
+  for (int k = 0; k < (melt > 0.0 ? 1 : 0); k++) {
+    vec3 ax = -normalize(uCam);
+    vec3 side = normalize(dir - ax * dot(dir, ax));
+    float st = min(1.0006 / length(uCam), 1.0);
+    col = mix(col, air(ax * sqrt(1.0 - st * st) + side * st, false).rgb * uGain * uWeight, melt);
+  }
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), alpha), vec2(moved * 8.0 * alpha, shadow), length(vView));
 }`
@@ -326,7 +335,7 @@ export class NeptunePlanet {
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) },
-        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) },
+        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
       },

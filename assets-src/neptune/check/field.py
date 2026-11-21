@@ -15,8 +15,9 @@ STEP = 2.0
 LIMIT = 2.9
 EDGE = 3
 RIM = 8
-CAP = 1.2
-DEEP = 2.2
+CAP = 0.6
+DEEP = 1.4
+SOFT = 2.0
 
 
 def step(v, lo, hi):
@@ -81,10 +82,12 @@ def main():
     seen = wgt > 0
     print('cells seen', int(seen.sum()), 'of', seen.size, 'residual rms log2', float(np.sqrt((logg[seen] ** 2).mean()).round(3)), 'p95', float(np.percentile(np.abs(logg[seen]), 95).round(3)))
     total = np.clip(np.log2(np.array(old['gain'])) + res, -LIMIT, LIMIT)
-    total[:, :, :RIM] = np.clip(total[:, :, :RIM], -DEEP, CAP)
+    ext = ndi.gaussian_filter(total[:, :, RIM:RIM + 3].mean(2), (0, 1.0, 0), mode='nearest')[:, :, None, :]
+    rim = ndi.gaussian_filter(total[:, :, :RIM + 3], (0, 1.0, SOFT, 0), mode='nearest')
+    rim = ext + np.clip(rim - ext, -DEEP, CAP)
+    keep = np.clip((np.arange(RIM + 3) - RIM + 1) / 3.0, 0, 1)[None, None, :, None]
+    total[:, :, :RIM + 3] = total[:, :, :RIM + 3] * keep + rim * (1 - keep)
     ndc = (np.arange(h_) + 0.5) / h_ * (n1 - n0) + n0
-    hot = step(ndc, 0.84, 0.93)[None, :, None, None]
-    total[:, :, :RIM] = total[:, :, :RIM] * (1 - hot) + np.clip(total[:, :, :RIM], -0.4, 0.4) * hot
     dim = (1 - step(ndc, 0.2, 0.35))[None, :, None, None]
     total[:, :, :EDGE] = total[:, :, :EDGE] * (1 - dim) + np.clip(total[:, :, EDGE:EDGE + 1], -0.3, 0.3) * dim
     old['gain'] = np.round(2.0 ** total, 3).tolist()

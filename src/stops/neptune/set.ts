@@ -132,6 +132,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
+      ;(pu.uMelt!.value as THREE.Vector2).x = look.limb.melt[1] + (look.limb.melt[0] - look.limb.melt[1]) * home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
