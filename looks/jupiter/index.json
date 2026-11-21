@@ -1,40 +1,68 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T09:03:28.029Z",
- "head": "7780e18b3dc2328f1f56d4cf271cabfdd025c651",
- "note": "after READY: cover tone at the cuts, limb strip dimmed, Io crossing the disc",
+ "pushed": "2026-11-21T09:26:44.419Z",
+ "head": "c75e25c74bb8b7c94770f0d43d8d8ebd08c65296",
+ "note": "Io crossing, terrain motion pairs, travel frames; full measure green at 7780e18",
  "looks": [
   {
-   "time": "2026-11-21T09:03:27.471Z",
-   "file": "20261121090327471-note-hold_pairs.jpg",
-   "source": "out/work/view/hold_pairs.jpg",
+   "time": "2026-11-21T09:26:43.727Z",
+   "file": "20261121092643727-note-f3296_now.jpg",
+   "source": "out/work/view/f3296_now.jpg",
    "kind": "note",
-   "label": "hold 2820 against 2969, native crops and difference",
+   "label": "rise 3296 with Io at 2.6 deg/s, draft tier",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T09:03:26.935Z",
-   "file": "20261121090326935-note-strip_io26.jpg",
-   "source": "out/work/view/strip_io26.jpg",
+   "time": "2026-11-21T09:26:43.157Z",
+   "file": "20261121092643157-note-pairs_terr_b.jpg",
+   "source": "out/work/view/pairs_terr_b.jpg",
    "kind": "note",
-   "label": "Io at 2.6 deg/s: hold 2820 2895 2969, dive 2997 3017, rise 3286 3296 3314",
+   "label": "terrain 3200 against 3210, native crops and difference",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T09:03:26.271Z",
-   "file": "20261121090326271-note-strip_cut4.jpg",
-   "source": "out/work/view/strip_cut4.jpg",
+   "time": "2026-11-21T09:26:42.590Z",
+   "file": "20261121092642590-note-pairs_terr_a.jpg",
+   "source": "out/work/view/pairs_terr_a.jpg",
    "kind": "note",
-   "label": "cover at both cuts, no brightness dip",
+   "label": "terrain 3100 against 3110, native crops and difference",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T09:03:25.708Z",
-   "file": "20261121090325708-note-strip_band4.jpg",
-   "source": "out/work/view/strip_band4.jpg",
+   "time": "2026-11-21T09:26:41.966Z",
+   "file": "20261121092641966-note-strip_travel.jpg",
+   "source": "out/work/view/strip_travel.jpg",
    "kind": "note",
-   "label": "limb strip dimmed, 3024 to 3109",
+   "label": "travel in 2745 to 2819 and travel out 3315 to 3360",
    "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T09:26:22.858Z",
+   "file": "20261121092622858-still-f03360-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03360-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.travel frame 3360, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.travel",
+   "frame": 3360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T09:19:31.672Z",
+   "file": "20261121091931672-still-f03210-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03210-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3210, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3210,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
   },
   {
    "time": "2026-11-21T09:01:13.508Z",
@@ -63,34 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:40:53.395Z",
-   "file": "20261121084053395-still-f03150-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03150-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T07:59:56.336Z",
-   "file": "20261121075956336-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
   }
  ]
 }
