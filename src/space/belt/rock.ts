@@ -26,6 +26,7 @@ uniform vec3 uTint;
 uniform vec3 uFill;
 uniform vec4 uShape;
 uniform vec2 uTile;
+uniform vec3 uLook;
 uniform float uGain;
 uniform float uMapWidth;
 uniform float uCounted;
@@ -69,12 +70,12 @@ void main() {
   vec3 v = normalize(uEyeB - vLocal);
   float mu0 = max(dot(n, uSunB), 0.0);
   float mu = max(dot(n, v), 0.0);
-  float body = mix(mu0, 2.0 * mu0 / (mu0 + mu + 0.05), 0.45);
+  float body = mix(mu0, 2.0 * mu0 / (mu0 + mu + 0.05), uLook.x);
   float sh = uShape.w > 0.0 ? shade(d * textureLod(uHeight, d, 0.0).r + g * 0.004, uSunB) : 1.0;
   float cavity = mix(1.0, clamp(t1.z * 1.5 + 0.2, 0.0, 1.2) * clamp(t2.z * 1.5 + 0.2, 0.0, 1.2), 0.6);
   float ao = texture(uAo, d).r * cavity;
   float edge = pow(1.0 - max(dot(g, v), 0.0), 3.0) * smoothstep(-0.25, 0.35, dot(g, uSunB));
-  float tone = m.a * (0.8 + 0.4 * mix(t1.w, t2.w, 0.4));
+  float tone = pow(m.a, uLook.y) * uLook.z * (0.8 + 0.4 * mix(t1.w, t2.w, 0.4));
   vec3 albedo = uTint * tone * mix(vec3(0.94, 0.98, 1.05), vec3(1.05, 1.0, 0.93), clamp(tone * 1.4, 0.0, 1.0));
   vec3 sun = uSunTint * (body * sh * mix(0.75, 1.0, cavity) + uShape.z * edge * (0.35 + 0.65 * sh));
   vec3 col = albedo * (sun + uFill * ao * (0.6 + 0.4 * max(dot(n, v), 0.0))) * uGain;
@@ -91,7 +92,7 @@ export function rockMaterial(asset: RockAsset, detail: THREE.Texture): THREE.Sha
       uMap: { value: asset.map }, uHeight: { value: asset.height }, uAo: { value: asset.ao }, uDetail: { value: detail },
       uSunB: { value: new THREE.Vector3(1, 0, 0) }, uEyeB: { value: new THREE.Vector3(0, 0, 5) },
       uSunTint: { value: new THREE.Vector3(1, 1, 1) }, uTint: { value: new THREE.Vector3().fromArray(l.tint) }, uFill: { value: new THREE.Vector3().fromArray(l.fill) },
-      uShape: { value: new THREE.Vector4(l.bump, l.detail, l.rim, l.shadow) }, uTile: { value: new THREE.Vector2(l.tile[0], l.tile[1]) },
+      uShape: { value: new THREE.Vector4(l.bump, l.detail, l.rim, l.shadow) }, uTile: { value: new THREE.Vector2(l.tile[0], l.tile[1]) }, uLook: { value: new THREE.Vector3(l.seeliger, l.contrast, l.lift) },
       uGain: { value: 1 }, uMapWidth: { value: asset.size * 4 }, uCounted: { value: 1 }, uDiag: diagUniform,
     },
   })

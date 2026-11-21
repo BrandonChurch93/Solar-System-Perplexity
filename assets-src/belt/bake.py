@@ -146,7 +146,7 @@ def cells(d, freq, seed, fill, rlo, rhi, sign):
                     continue
                 deg = u01(h32(h5 ^ np.uint32(0x27D4EB2F)))
                 if sign > 0:
-                    v = crater(x[near], rad[near] * 0.24, rad[near] * 0.06, deg[near])
+                    v = crater(x[near], rad[near] * 0.3, rad[near] * 0.07, deg[near] ** 1.6)
                 else:
                     v = rad[near] * 0.55 * np.clip(1 - x[near] * x[near] * 2.2, 0, 1) ** 1.5
                 out[near] += v
@@ -189,7 +189,7 @@ def radius(d, p):
         pits = 0.62 + 0.38 * np.cos(along * F(38.0) + idx * F(2.4))
         prof = np.clip(1 - v / 0.34, 0, 1)
         r -= F(g['depth']) * amp * mask * pits * prof * prof * (3 - 2 * prof)
-    for i, (freq, fill) in enumerate(((6, 0.5), (10, 0.5), (17, 0.5), (29, 0.5), (50, 0.5), (82, 0.45))):
+    for i, (freq, fill) in enumerate(((6, 0.45), (10, 0.55), (17, 0.6), (29, 0.62), (50, 0.62), (82, 0.55))):
         r += cells(d, freq, p['seed'] + 50 + i, fill, 0.13, 0.3, 1)
     r += cells(d, 44, p['seed'] + 90, 0.2, 0.06, 0.16, -1)
     r += cells(d, 90, p['seed'] + 91, 0.25, 0.08, 0.2, -1)
@@ -240,16 +240,25 @@ def bake_rock(spec, out):
         cav_l = ndimage.gaussian_filter(rr[f], n / 24) - rr[f]
         a = 1 - 16 * np.clip(cav_l, 0, None) - 26 * np.clip(cav_m, 0, None) - 34 * np.clip(cav_s, 0, None) + 10 * np.clip(-cav_m, 0, 0.01)
         flat = d.reshape(-1, 3)
-        tone = 0.5 + 0.16 * fbm(flat * F(1.6) + p['off'][6], p['seed'] + 7, 3).reshape(m, m) + 0.07 * fbm(flat * F(8.5) + p['off'][7], p['seed'] + 8, 3).reshape(m, m)
-        tone += 0.3 * np.clip((slope - 0.015) / 0.2, 0, 1)
-        tone -= 3.2 * np.clip(cav_m, 0, 0.03)
-        tone += 2.0 * np.clip(-cav_s, 0, 0.02)
+        axis = p['gr'][0]['axis']
+        e1 = np.cross(axis, np.array([0.3, 0.9, 0.2], F))
+        e1 = e1 / np.linalg.norm(e1)
+        e2 = np.cross(axis, e1)
+        band = np.stack([(flat @ axis) * 34, (flat @ e1) * 2.2, (flat @ e2) * 2.2], -1).astype(F)
+        streak = (gnoise(band + p['off'][5], p['seed'] + 12) + 0.5 * gnoise(band * F(2.3) + p['off'][4], p['seed'] + 13)).reshape(m, m)
+        patch = np.clip(0.5 + 1.2 * gnoise(flat * F(1.3) + p['off'][3], p['seed'] + 14).reshape(m, m), 0, 1)
+        tone = 0.44 + 0.2 * fbm(flat * F(1.6) + p['off'][6], p['seed'] + 7, 3).reshape(m, m) + 0.1 * fbm(flat * F(8.5) + p['off'][7], p['seed'] + 8, 3).reshape(m, m)
+        tone += 0.13 * streak * patch
+        tone += 0.42 * np.clip((slope - 0.012) / 0.16, 0, 1)
+        tone -= 7.0 * np.clip(cav_m, 0, 0.03)
+        tone -= 5.0 * np.clip(cav_s, 0, 0.02)
+        tone += 4.0 * np.clip(-cav_s, 0, 0.02)
         for cdir, rho, depth, rim, deg in p['fresh']:
             ang = np.arccos(np.clip(flat @ cdir, -1, 1)).reshape(m, m) / rho
             rays = 0.6 + 0.4 * gnoise(flat * F(9.0 / float(rho) * 0.2) + p['off'][2], p['seed'] + 9).reshape(m, m)
             tone += 0.16 * np.exp(-np.clip(ang - 0.9, 0, None) / 0.8) * rays * (ang < 4)
         nrm[f] = nn[crop, crop]
-        alb[f] = np.clip(tone, 0.16, 1)[crop, crop]
+        alb[f] = np.clip(tone, 0.12, 1)[crop, crop]
         ao[f] = np.clip(a, 0.2, 1)[crop, crop]
     core = rr[:, crop, crop]
     lo = float(core.min())

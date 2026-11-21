@@ -24,8 +24,11 @@ uniform vec2 uDir;
 out vec4 outColor;
 void main() {
   vec4 sum = vec4(0.0);
-  for (int i = 0; i < 9; i++) sum += texture(uSrc, (gl_FragCoord.xy + uDir * (float(i) / 8.0 - 0.5)) / uSize);
-  outColor = sum / 9.0;
+  for (int i = 1; i < 10; i++) {
+    float t = float(i) / 5.0 - 1.0;
+    sum += texture(uSrc, (gl_FragCoord.xy + uDir * t) / uSize) * (1.0 - abs(t));
+  }
+  outColor = sum / 5.0;
 }`
 
 const BOKEH = /* glsl */ `
