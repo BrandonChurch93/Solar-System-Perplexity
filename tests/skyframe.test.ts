@@ -23,7 +23,8 @@ describe('sky frame', () => {
       const frameNo = config.segments.find((s) => s.id === p.id + '.hold')!
       const judged = frameNo.firstFrame + Math.floor(config.raw.judged.fractions.hold * frameNo.frames + 1e-9)
       const cam = director.shotAt(judged, judged / config.fps).camera.quaternion
-      const want = sky.frame.clone().multiply(cam)
+      const turn = sky.orbits[p.id]
+      const want = (turn ? sky.frame.clone().multiply(turn.clone().invert()) : sky.frame.clone()).multiply(cam)
       expect(Math.abs(want.dot(aim!.orbit))).toBeGreaterThan(1 - 1e-6)
     }
   })
