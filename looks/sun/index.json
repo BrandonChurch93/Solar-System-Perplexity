@@ -1,62 +1,76 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T15:41:06.627Z",
- "head": "5abee296704e367474bdc18c22079b898ad57856",
- "note": "round 3: sunspot of the relief meets the hero's sunspot in the rise dissolve; hold sky card top and bottom border",
+ "pushed": "2026-11-21T16:05:56.381Z",
+ "head": "68635874646aa4d2d786300791b1ae9696495c23",
+ "note": "round 3: engine batches 14 and 15 merged, rise peak slowed under the review sample cap, measures running",
  "looks": [
   {
-   "time": "2026-11-21T15:41:05.985Z",
-   "file": "20261121154105985-note-i124-carry-b.jpg",
-   "source": "out/work/sun/i124-carry-b.jpg",
+   "time": "2026-11-21T16:05:55.415Z",
+   "file": "20261121160555415-note-i130-slow-b.jpg",
+   "source": "out/work/sun/i130-slow-b.jpg",
    "kind": "note",
-   "label": "rise 217 to 232 at draft, same change",
+   "label": "rise 218 to 235 at draft after engine batch 15",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T15:41:05.382Z",
-   "file": "20261121154105382-note-i124-carry-a.jpg",
-   "source": "out/work/sun/i124-carry-a.jpg",
+   "time": "2026-11-21T16:05:54.345Z",
+   "file": "20261121160554345-note-i130-slow-a.jpg",
+   "source": "out/work/sun/i130-slow-a.jpg",
    "kind": "note",
-   "label": "rise 204 to 216 at draft: relief sunspot now lands on the hero's dark sunspot and turns with the globe",
+   "label": "rise 200 to 217 at draft after engine batch 15, peak slowed under the sample cap",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T15:39:52.134Z",
-   "file": "20261121153952134-frame-f00221.jpg",
-   "source": "out/work/seq/200-232/f00221.png",
-   "kind": "frame",
-   "label": "sun.rise frame 221, draft tier",
+   "time": "2026-11-21T16:05:53.329Z",
+   "file": "20261121160553329-note-i129-f247-final.jpg",
+   "source": "out/work/sun/i129-f247-final.jpg",
+   "kind": "note",
+   "label": "frame 247 at final, right and left sky at 3 times gain (two crops side by side)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:05:52.672Z",
+   "file": "20261121160552672-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
    "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 221,
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T16:05:52.489Z",
+   "file": "20261121160552489-note-i126-rv213-new.jpg",
+   "source": "out/work/sun/i126-rv213-new.jpg",
+   "kind": "note",
+   "label": "rise frame 213 at review, relief sunspot on the hero sunspot",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:05:51.600Z",
+   "file": "20261121160551600-note-i127-hold-sheet-review.jpg",
+   "source": "out/work/sun/i127-hold-sheet-review.jpg",
+   "kind": "note",
+   "label": "hold sheet at review tier, round 3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:04:49.260Z",
+   "file": "20261121160449260-frame-f00444.jpg",
+   "source": "out/work/seq/444-456/f00444.png",
+   "kind": "frame",
+   "label": "sun.hold frame 444, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 444,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T15:20:35.924Z",
-   "file": "20261121152035924-note-i115-card-topbottom-old-new-x4.jpg",
-   "source": "out/work/sun/i115-card-topbottom-old-new-x4.png",
-   "kind": "note",
-   "label": "hold sky card at 4 times gain, top and bottom border, old above new: straight edge gone",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T15:20:35.339Z",
-   "file": "20261121152035339-note-i104-rise-cover-review.jpg",
-   "source": "out/work/sun/i104-rise-cover-review.jpg",
-   "kind": "note",
-   "label": "rise cover sheet at review tier, 211 to 222: limb readable in each frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T15:20:34.788Z",
-   "file": "20261121152034788-note-i104-rise-sheet-review.jpg",
-   "source": "out/work/sun/i104-rise-sheet-review.jpg",
-   "kind": "note",
-   "label": "rise sheet at review tier, 180 to 269 (a9b90c6)",
-   "stop": "sun"
+   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T13:57:55.954Z",
@@ -71,20 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T11:42:50.210Z",
-   "file": "20261121114250210-frame-f00440.jpg",
-   "source": "out/work/seq/440-490/f00440.png",
-   "kind": "frame",
-   "label": "sun.hold frame 440, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 440,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   }
  ]
 }
