@@ -1,9 +1,41 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T17:56:05.844Z",
- "head": "0a86521c19379a47b04e7efd36a5a1145152e3cf",
- "note": "sun round 3 READY: review rise and cover sheets, hold sky seam pass, judged frames at final, measures green",
+ "pushed": "2026-11-21T21:20:00.978Z",
+ "head": "4081281a5569d0616bbbf1f45c86de7faf88cbd2",
+ "note": "Phase 6 polish: studying the rise cover from above and the mirrored strip under the limb",
  "looks": [
+  {
+   "time": "2026-11-21T21:20:00.411Z",
+   "file": "20261121212000411-note-i151-f60-limbstrip-x4.jpg",
+   "source": "out/work/sun/i151-f60-limbstrip-x4.png",
+   "kind": "note",
+   "label": "Polish item 3: frame 60 under the limb at 4 times, mirrored strip from the fold ring",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:19:59.893Z",
+   "file": "20261121211959893-note-i156-p1-212-216-crop.jpg",
+   "source": "out/work/sun/i156-p1-212-216-crop.jpg",
+   "kind": "note",
+   "label": "Polish item 1 study: loop cards and mirrored sunspot from above at 212 and 216",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:19:59.351Z",
+   "file": "20261121211959351-note-i155-p1-relief-full.jpg",
+   "source": "out/work/sun/i155-p1-relief-full.jpg",
+   "kind": "note",
+   "label": "Polish item 1 study: relief kept at full weight from above, 208 to 222 (mirrored far ground and loop card sheet exposed)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:19:58.561Z",
+   "file": "20261121211958561-note-i153-p0-draft.jpg",
+   "source": "out/work/sun/i153-p0-draft.jpg",
+   "kind": "note",
+   "label": "Polish item 1 baseline: rise 200 to 224 at draft, shipped build",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T17:56:03.529Z",
    "file": "20261121175603529-note-i147-f90-arch-approved-film-x22.jpg",
@@ -21,20 +53,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T17:50:19.473Z",
-   "file": "20261121175019473-frame-chk-460.jpg",
-   "source": "out/work/sun/chk-460.png",
-   "kind": "frame",
-   "label": "sun.travel frame 460, draft tier",
-   "stop": "sun",
-   "segment": "sun.travel",
-   "frame": 460,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T17:49:49.561Z",
    "file": "20261121174949561-frame-chk-360.jpg",
    "source": "out/work/sun/chk-360.png",
@@ -43,20 +61,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:49:29.730Z",
-   "file": "20261121174929730-frame-chk-247.jpg",
-   "source": "out/work/sun/chk-247.png",
-   "kind": "frame",
-   "label": "sun.rise frame 247, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 247,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -75,98 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:35:32.801Z",
-   "file": "20261121173532801-note-i145-f247-final-right-x3.jpg",
-   "source": "out/work/sun/i145-f247-final-right-x3.png",
-   "kind": "note",
-   "label": "sun rise frame 247 at final tier, right sky x 1500 to 1920 at 3 times gain after the seam pass: no straight edge",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:35:30.213Z",
-   "file": "20261121173530213-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T17:34:17.722Z",
-   "file": "20261121173417722-note-i143-f247-right-old-new-x22.jpg",
-   "source": "out/work/sun/i143-f247-right-old-new-x22.png",
-   "kind": "note",
-   "label": "sun rise frame 247 right sky at 2.2 times gain, review tier, before and after the tight seam pass of the hold sky card",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:34:16.729Z",
-   "file": "20261121173416729-note-i144-f270-border-old-new-x22.jpg",
-   "source": "out/work/sun/i144-f270-border-old-new-x22.png",
-   "kind": "note",
-   "label": "sun hold frame 270, right border of the approved picture at 2.2 times gain, before and after the rim and tight seam pass of the sky card (line at left gone at right)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:29:04.384Z",
-   "file": "20261121172904384-job-frame-00247.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 247,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T17:19:55.195Z",
-   "file": "20261121171955195-note-i138-rise-sheet-review.jpg",
-   "source": "out/work/sun/i138-rise-sheet-review.jpg",
-   "kind": "note",
-   "label": "sun rise sheet 180 to 269 at review tier, 1920, final tree",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:12:10.423Z",
-   "file": "20261121171210423-note-i137-rise-cover-review.jpg",
-   "source": "out/work/sun/i137-rise-cover-review.jpg",
-   "kind": "note",
-   "label": "sun rise cover sheet 211 to 222 at review tier on the final tree (212, 216, 220 at 1920, the rest at 960): limb readable in every frame, no whiteout",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:01:30.801Z",
-   "file": "20261121170130801-note-i136-cover-211-215-review-preview.jpg",
-   "source": "out/work/sun/i136-cover-211-215-review-preview.jpg",
-   "kind": "note",
-   "label": "sun rise 211, 213, 214, 215 at review tier (960 px format), final path of round 3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:36:57.535Z",
-   "file": "20261121163657535-note-i133-rv216.jpg",
-   "source": "out/work/sun/i133-rv216.jpg",
-   "kind": "note",
-   "label": "rise frame 216 at review after engine batch 15, 127 samples, limb readable, smooth blur",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:22:04.698Z",
-   "file": "20261121162204698-note-i132-c1-big.jpg",
-   "source": "out/work/sun/i132-c1-big.jpg",
-   "kind": "note",
-   "label": "rise 209, 211, 213, 215 at draft, relief dissolving into the globe",
-   "stop": "sun"
   }
  ]
 }
