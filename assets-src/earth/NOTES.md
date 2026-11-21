@@ -557,3 +557,13 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Flow 1903 to 1919 at draft (`flowpx.py`, px per frame at the bottom, the middle, the left): 1903 to 1904 (-1.13, +1.68), 1911 to 1912 (-1.08, +1.30), 1918 to 1919 (-1.03, +1.19). No stall.
 - Texel views (`texcount.py`): 1866, 1872, 1875, 2138, 2142 all soft 0 (mean 1.99, 1.80, 1.64, 1.80, 1.82 texels per pixel; min 1.22).
 - Next in the queue: terrain compare at final, measure (G13 over 463 frames, G5, G17, about 29 minutes), draft sheets of the dive and the rise.
+
+### Sky margin at 1857: a starless strip (found 12:27 UTC on the 1857 final, top left)
+
+- At 1857 the left 150 px of the frame are the margin of the hold sky patch. It read as a smooth hazy strip with few stars and a vertical edge against the hero's Milky Way (`/tmp/s2.png`; the round 11 frame had the mirrored copy there). Cause: the margin's star points were flipped top to bottom, so the top left got the star poor bottom left.
+- Fix in `sky/patch.py` `save()`: points = image minus its 4 px low envelope (`FINE`), moved outward by 1.8 margin widths along the row for the side margins and along the column for top and bottom (`SHIFT` 0.8 = the source strip starts 0.8 margins inside the border); a star above 0.2 linear (`PEAK`, the top 2.5 percent; star peaks: median 0.008, 90th 0.042, 97th 0.16, 99th 0.52) is scaled down to it within 8 px (`REACH`), so no bright star shows twice; fade in over 4 px from the border (`JOIN`).
+- First take (points above the 12 px envelope, peaks clipped at 0.12): clipped stars became flat blobs and copied Milky Way clouds were cut at the border (`out/work/earth/skytry/tl.jpg`). Dropped.
+- Second take, kept (`out/work/earth/skytry/tl2.jpg`, old left, new right): the margin is a field of fine stars at the density of the sky beside it (share over 60 code values 0.0064 against 0.0074 beside it; before 0.0048). Inside the approved border 0 pixels differ from the shipped file. Sizes: full 5.82 MB (5.75), web 1.68 MB (1.66).
+- `EARTH_SKY_OUT=DIR python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png` writes to `DIR/full` and `DIR/web` instead of `public` (for a try while a render queue runs). Run takes 100 s.
+- To do after the measure ends: copy the two files into `public/assets/earth/{full,web}/`, build, draft 1755 (must equal p37 inside the border), 1840 and 1857 (`mirrorcheck.py`), commit.
+- Also planned: `look.globe.away.landAt[2]` 0.28 to 0.2. At 2156 final the night land median is (14, 14, 20), 10th to 90th percentile of the mean 11 to 31, against the sea (4, 13, 27); with the flat tone before it was (21, 21, 28). A reference of 0.2 puts the median near 17 and keeps the light and dark.
