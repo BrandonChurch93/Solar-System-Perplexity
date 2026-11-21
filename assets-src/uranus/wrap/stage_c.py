@@ -13,8 +13,6 @@ Image.MAX_IMAGE_PIXELS = None
 OUT = 'out/work/u/wrap/'
 W, H = 8192, 4096
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
-TILE_LON = (-60.0, -3.0)
-TILE_LAT = (-41.0, -5.0)
 NORTH = 44.0
 
 
@@ -48,34 +46,46 @@ def main():
     for r in range(rows[-1] + 1, H):
         zonal[r] = zonal[rows[-1]]
     zonal = ndi.gaussian_filter1d(zonal, 1.5, axis=0, mode='nearest')
-    c0, c1 = [int((v + 180) / 360 * W) for v in TILE_LON]
-    r1, r0 = [int((90 - v) / 180 * H) for v in TILE_LAT]
-    src = alb[r0:r1, c0:c1] / zonal[r0:r1, None, :]
-    ok = full[r0:r1, c0:c1] & (ndl[r0:r1, c0:c1] > 0.22)
-    print('tile', src.shape, 'usable', float(ok.mean()))
-    low = cv2.GaussianBlur(np.where(ok[..., None], src, 0), (0, 0), 90) / np.maximum(cv2.GaussianBlur(ok.astype(np.float32), (0, 0), 90), 1e-3)[..., None]
-    tile = np.where(ok[..., None], src / np.maximum(low, 1e-3), 1).astype(np.float32)
-    th, tw = tile.shape[:2]
-    np.save(OUT + 'tile.npy', tile)
-    Image.fromarray((np.clip(tile * 0.5, 0, 1) * 255).astype(np.uint8)).resize((tw // 2, th // 2), Image.LANCZOS).save(OUT + 'tile.jpg', quality=90)
-    lo, la = np.meshgrid(lon, lat)
-    sx = tri((lo + 180 + 37.0) / 360 * W, tw - 1).astype(np.float32)
-    sy = tri((90 - la) / 180 * H + 311.0, th - 1).astype(np.float32)
-    zon = cv2.remap(tile, sx, sy, cv2.INTER_LINEAR)
-    cl = np.radians(90 - np.abs(la))
-    k = W / (2 * np.pi)
-    px = (cl * np.sin(np.radians(lo)) * k).astype(np.float32)
-    py = (cl * np.cos(np.radians(lo)) * k * np.sign(la)).astype(np.float32)
-    pol = cv2.remap(tile, tri(px + 4000.0, tw - 1).astype(np.float32), tri(py + 3000.0, th - 1).astype(np.float32), cv2.INTER_LINEAR)
-    wp = smooth(68, 80, np.abs(la)).astype(np.float32)[..., None]
-    mean = np.float32(1.0)
-    fill = mean + ((zon - mean) * np.sqrt(1 - wp) + (pol - mean) * np.sqrt(wp)) / np.sqrt(1 - wp + wp + 2 * np.sqrt(wp * (1 - wp)) * 0.0)
-    del zon, pol, px, py, sx, sy
-    fill *= zonal[:, None, :]
-    out = fill + (alb - fill) * seen[..., None]
+    lo, la = np.meshgrid(np.radians(lon).astype(np.float32), np.radians(lat).astype(np.float32))
+    p = np.stack([np.cos(la) * np.sin(lo), np.sin(la), np.cos(la) * np.cos(lo)], 0)
+    del lo
+    rng = np.random.default_rng(7)
+    N = 160
+    lattice = ndi.gaussian_filter(rng.standard_normal((N, N, N)).astype(np.float32), 1.2, mode='wrap')
+    lattice /= lattice.std()
+    unit = H / np.pi
+
+    def octave(q, size, stretch, seed):
+        o = np.random.default_rng(seed).uniform(0, N, 3)
+        c = np.stack([q[0] * (unit * 3 / (size * stretch)) + o[0], q[1] * (unit * 3 / size) + o[1], q[2] * (unit * 3 / (size * stretch)) + o[2]], 0)
+        return ndi.map_coordinates(lattice, c.reshape(3, -1), order=1, mode='grid-wrap').reshape(H, W)
+
+    warp = np.stack([octave(p, 420, 3, 100 + i) for i in range(3)], 0) * 0.011
+    q = p + warp
+    q /= np.linalg.norm(q, axis=0, keepdims=True)
+    del warp
+    luma = np.zeros((H, W), np.float32)
+    for i, (size, stretch, amp) in enumerate([(2.2, 1.3, 0.017), (4.5, 1.5, 0.018), (9, 2.0, 0.02), (18, 3.0, 0.018), (36, 6.0, 0.02), (72, 9.0, 0.024), (150, 10.0, 0.024), (300, 10.0, 0.02)]):
+        luma += amp * octave(q, size, stretch, 200 + i)
+    tint = np.zeros((2, H, W), np.float32)
+    for j in range(2):
+        for i, (size, stretch, amp) in enumerate([(9, 1.5, 0.012), (36, 4.0, 0.012), (150, 8.0, 0.01)]):
+            tint[j] += amp * octave(q, size, stretch, 300 + 10 * j + i)
+    row = (0.5 - np.arcsin(np.clip(q[1], -1, 1)) / np.pi) * H - 0.5
+    del p, q
+    r0 = np.clip(np.floor(row).astype(np.int32), 0, H - 2)
+    f = np.clip(row - r0, 0, 1)[..., None]
+    fill = zonal[r0] * (1 - f) + zonal[r0 + 1] * f
+    del row, r0, f
+    fill *= (1 + luma)[..., None]
+    fill[..., 0] *= 1 + tint[0]
+    fill[..., 2] *= 1 + tint[1]
+    del luma, tint
+    keep = seen * (0.2 + 0.8 * smooth(-0.02, 0.15, ndl))
+    out = np.clip(fill + (alb - fill) * keep[..., None], 0.1, 1.8)
     del fill, alb
     np.save(OUT + 'wrap-albedo.npy', out.astype(np.float32))
-    coded = geo.display(np.clip(out, 0, 4.5))
+    coded = geo.display(out)
     img = (np.clip(coded, 0, 1) * 255 + 0.5).astype(np.uint8)
     Image.fromarray(img).save(OUT + 'wrap-color.png')
     Image.fromarray(img).resize((2048, 1024), Image.LANCZOS).save(OUT + 'wrap-color-small.jpg', quality=90)
@@ -90,6 +100,7 @@ def main():
     pack[..., 0] = (np.clip(a, 0, 1) * 255 + 0.5).astype(np.uint8)
     pack[..., 1] = (np.clip(s, 0, 1) * 255 + 0.5).astype(np.uint8)
     Image.fromarray(pack).save(OUT + 'wrap-cloud.png')
+    Image.fromarray(img[1400:2600, 2600:5000]).save(OUT + 'wrap-crop.jpg', quality=92)
     print('zonal rows', top, edge, 'albedo range', float(out.min()), float(out.max()), 'cloud max', float(a.max()), float(s.max()))
 
 

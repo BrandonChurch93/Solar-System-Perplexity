@@ -13,7 +13,7 @@ Image.MAX_IMAGE_PIXELS = None
 OUT = 'out/work/u/wrap/'
 W, H = 8192, 4096
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
-MU0, MU1 = 0.2, 0.42
+MU0, MU1 = 0.14, 0.34
 
 
 def smooth(a, b, x):
@@ -43,7 +43,11 @@ def main():
     seen = smooth(MU0, MU1, mu).astype(np.float32)
     col = cv2.remap(base, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
     del base
-    light = np.stack([np.interp(ndl, knots, curve[:, c]) for c in range(3)], -1).astype(np.float32)
+    lut = np.load(OUT + 'light-lut.npy')
+    li = ((ndl + 1) * 0.5 * (lut.shape[0] - 1)).astype(np.float32)
+    lj = (np.clip(mu, 0, 1) * (lut.shape[1] - 1)).astype(np.float32)
+    light = cv2.remap(lut, lj, li, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    del li, lj
     eps = 0.004
     alb = (np.maximum(col, 0) + eps * meta['norm']) / (light + eps)
     del col
