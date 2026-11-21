@@ -4,7 +4,7 @@ import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
-import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
+import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -22,12 +22,11 @@ const SWING_FROM = 0.3
 const CLEAR_DEG = 3
 const SUN_PULL_END = 0.34
 const SUN_APPROACH_START = 0.42
-const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 4.5, orbitDeg: 3, pullPerSecond: 0.012, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
+const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
 const BOW_REACH = 24
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
-const easeSettle = ease('sine.out')
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
@@ -41,7 +40,6 @@ export class FilmDirector implements Director {
   private readonly begin: number[] = []
   private readonly clear: number[] = [0]
   private readonly shapes: TravelShape[] = []
-  private lookbackPose: Pose
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
@@ -80,11 +78,8 @@ export class FilmDirector implements Director {
     const s = n.sunDir.clone()
     const axis = new THREE.Vector3().crossVectors(s, Y).normalize()
     const up = axis.clone()
-    const toNeptune = s.clone().applyAxisAngle(up, THREE.MathUtils.degToRad(LOOKBACK.neptuneDeg))
-    const position = toNeptune.clone().multiplyScalar(-LOOKBACK.distance)
     this.lookbackUp = up
     this.lookbackSun = s
-    this.lookbackPose = { position, quaternion: this.lookbackAim(position, 0), vfov: LOOKBACK.vfov }
     this.sky = this.aimSky()
   }
 
@@ -134,12 +129,20 @@ export class FilmDirector implements Director {
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     })
+    const back = judged(config.endingId + '.lookback')
+    if (back !== null) out.orbits[config.endingId] = round(cam(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
     return out
   }
 
-  private lookbackAim(position: THREE.Vector3, extraDeg: number): THREE.Quaternion {
-    const aim = this.lookbackSun.clone().applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.aimDeg + extraDeg))
-    return lookAt(position, position.clone().add(aim), this.lookbackUp, LOOKBACK.rollDeg)
+  private lookback(t: number): Pose {
+    const lb = config.segments.find((x) => x.kind === 'lookback')!
+    const s = t - (lb.start + lb.end) / 2
+    const rad = THREE.MathUtils.degToRad
+    const up = this.lookbackUp
+    const position = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.neptuneDeg + LOOKBACK.neptunePerSecond * s)).multiplyScalar(-LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s))
+    const flat = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.aimDeg + LOOKBACK.aimPerSecond * s))
+    const aim = flat.clone().applyAxisAngle(new THREE.Vector3().crossVectors(flat, up).normalize(), rad(LOOKBACK.liftDeg))
+    return { position, quaternion: lookAt(position, position.clone().add(aim), up, LOOKBACK.rollDeg + LOOKBACK.rollPerSecond * s), vfov: LOOKBACK.vfov }
   }
 
   private turnEnd(i: number): number {
@@ -336,14 +339,9 @@ export class FilmDirector implements Director {
       const i = this.plans.length - 1
       const p = this.plans[i]!
       const s = state(i, 'orbit')
-      const lb = config.segments.find((x) => x.kind === 'lookback')!
-      const look = (t: number): Pose => {
-        const left = 1 - easeSettle(ramp(lb.start - 1, config.durationSeconds, t))
-        const position = this.lookbackPose.position.clone().multiplyScalar(1 + LOOKBACK.pullPerSecond * (t - lb.start)).applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.orbitDeg * left))
-        return { position, quaternion: this.lookbackAim(position, LOOKBACK.settleDeg * left), vfov: this.lookbackPose.vfov }
-      }
+      const look = (t: number): Pose => this.lookback(t)
       const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived) }
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: mix(p.p.light.skyExposure, LOOKBACK.skyExposure, arrived) }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
@@ -362,7 +360,7 @@ export class FilmDirector implements Director {
       }
       sets = [s]
       near = 0.2
-      const t = this.sky.orbits[p.id]
+      const t = this.sky.orbits[config.endingId]
       if (t) skyTurn = t
     } else if (segment.kind === 'travel' && index + 1 < this.plans.length) {
       const a = this.plans[index]!
@@ -448,7 +446,7 @@ export class FilmDirector implements Director {
         const t = this.sky.turns[p.id]
         if (t) skyTurn = t
       } else {
-        const t = this.sky.orbits[(segment.kind === 'rise' && index > 0 ? this.plans[index + 1] ?? p : p).id]
+        const t = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id]
         if (t) skyTurn = t
       }
       pose = inSet(s, local)
