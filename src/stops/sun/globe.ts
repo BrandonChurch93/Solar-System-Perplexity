@@ -1,0 +1,216 @@
+import * as THREE from 'three'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { EQUIRECT_GLSL } from '../../space/sky'
+
+export interface GlobeLook {
+  limb: [number, number]
+  rim: { color: [number, number, number]; width: number; power: number }
+  boil: { reach: number; period: number; step: number; max: number }
+  hot: { from: number; to: number; boost: number }
+  pulse: { amount: number; rate: number; from: number; to: number }
+}
+
+export interface GlobePatches {
+  textures: THREE.Texture[]
+  widthsDeg: number[]
+  spot: THREE.Vector3
+  feather: number
+  fade: [number, number]
+}
+
+export interface GlobeOptions {
+  map: THREE.Texture
+  mapWidth: number
+  look: GlobeLook
+  patches?: GlobePatches
+  segments?: number
+}
+
+const VERT = /* glsl */ `
+out vec3 vLocal;
+out vec3 vWorldN;
+out vec3 vPos;
+out vec3 vView;
+out vec3 vClip;
+void main() {
+  vLocal = position;
+  vWorldN = normalize(mat3(modelMatrix) * position);
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPos = wp.xyz;
+  vec4 mv = viewMatrix * wp;
+  vView = mv.xyz;
+  gl_Position = projectionMatrix * mv;
+  vClip = gl_Position.xyw;
+}`
+
+export const MAX_PATCHES = 4
+
+const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+
+const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      vec2 q = g * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      texels = mix(texels, parent, step(0.5, w));
+    }`).join('\n')
+
+const FRAG = /* glsl */ `
+precision highp float;
+uniform sampler2D uMap;
+${PATCH_SAMPLERS}
+uniform float uPatchScale[${MAX_PATCHES}];
+uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchCount;
+uniform float uFeather;
+uniform vec2 uPatchFade;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform float uMapWidth;
+uniform float uGrad;
+uniform float uSpin;
+uniform float uGain;
+uniform float uWeight;
+uniform float uVignette;
+uniform float uAspect;
+uniform float uTime;
+uniform vec2 uLimb;
+uniform vec3 uRimColor;
+uniform vec2 uRimShape;
+uniform vec4 uBoil;
+uniform vec3 uHot;
+uniform vec4 uPulse;
+in vec3 vClip;
+in vec3 vLocal;
+in vec3 vWorldN;
+in vec3 vPos;
+in vec3 vView;
+out vec4 outColor;
+${EQUIRECT_GLSL}
+${INVERSE_FILMIC_GLSL}
+${DIAG_GLSL}
+vec3 spinY(vec3 d, float a) {
+  float c = cos(a), s = sin(a);
+  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+float lumAt(vec3 d, float lod) {
+  float u = atan(d.x, d.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
+  return dot(textureLod(uMap, vec2(u, v), lod).rgb, vec3(0.3, 0.5, 0.2));
+}
+vec3 surface(vec3 d, vec3 d0, out float texels) {
+  vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
+  texels = diagTexelsDir(d0, uMapWidth);
+  if (uPatchCount > 0.5) {
+    float dn = dot(d, uSpotN);
+    float inv = 1.0 / max(dn, 0.05);
+    vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
+    vec2 g0 = vec2(dot(d0, uSpotE), dot(d0, uSpotU)) / max(dot(d0, uSpotN), 0.05);
+    vec2 gx = dFdx(g0);
+    vec2 gy = dFdy(g0);
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    gx *= uGrad;
+    gy *= uGrad;
+    float front = step(0.3, dn);
+    float parent = texels;
+${PATCH_LEVELS}
+  }
+  return albedo;
+}
+void main() {
+  vec3 d = spinY(normalize(vLocal), uSpin);
+  vec3 n = normalize(vWorldN);
+  vec3 dir = normalize(vPos);
+  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
+  float el = length(east);
+  east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
+  vec3 north = cross(d, east);
+  float e = uBoil.z;
+  float lod = log2(uMapWidth / 1024.0);
+  float lE = lumAt(normalize(d + east * e), lod) - lumAt(normalize(d - east * e), lod);
+  float lN = lumAt(normalize(d + north * e), lod) - lumAt(normalize(d - north * e), lod);
+  vec3 push = (east * lE + north * lN) * (uBoil.x / (2.0 * e));
+  float pl = length(push);
+  push *= min(1.0, uBoil.w / max(pl, 1e-6));
+  float pa = fract(uTime / uBoil.y + 0.5) - 0.5;
+  float pb = fract(uTime / uBoil.y) - 0.5;
+  float wb = abs(pa) * 2.0;
+  float texels;
+  float texelsB;
+  vec3 ca = surface(normalize(d + push * pa), d, texels);
+  vec3 cb = surface(normalize(d + push * pb), d, texelsB);
+  vec3 lin = inverseFilmic(mix(ca, cb, wb));
+  float wide = lumAt(d, lod + 2.5);
+  float region = smoothstep(uPulse.z, uPulse.w, wide);
+  float phase = dot(d, vec3(23.0, 17.0, 29.0));
+  float beat = 1.0 + uPulse.x * region * (sin(uTime * uPulse.y + phase) - sin(phase));
+  float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
+  vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
+  col += uRimColor * pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
+  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.95, 0.55, 0.1), push.xy * 200.0, length(vView));
+}`
+
+export class SunGlobe {
+  readonly mesh: THREE.Mesh
+  readonly material: THREE.ShaderMaterial
+
+  constructor(o: GlobeOptions) {
+    const p = o.patches
+    const l = o.look
+    const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
+    if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
+    const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
+    const scale = (i: number): number => {
+      const w = p?.widthsDeg[i]
+      return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
+    }
+    const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
+    const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
+    const north = spot.clone().cross(east)
+    this.material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: {
+        uMap: { value: o.map },
+        ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchCount: { value: p?.textures.length ?? 0 },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        uMapWidth: { value: o.mapWidth },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
+        uLimb: { value: new THREE.Vector2(l.limb[0], l.limb[1]) },
+        uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
+        uRimShape: { value: new THREE.Vector2(l.rim.width, l.rim.power) },
+        uBoil: { value: new THREE.Vector4(l.boil.reach, l.boil.period, l.boil.step, l.boil.max) },
+        uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
+        uPulse: { value: new THREE.Vector4(l.pulse.amount, l.pulse.rate, l.pulse.from, l.pulse.to) },
+        uDiag: diagUniform, uGrad: gradUniform,
+      },
+    })
+    const seg = o.segments ?? 320
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+  }
+
+  update(time: number, spin: number, gain: number, weight: number, vignette: number, aspect: number): void {
+    const u = this.material.uniforms
+    u.uTime!.value = time
+    u.uSpin!.value = spin
+    u.uGain!.value = gain
+    u.uWeight!.value = weight
+    u.uVignette!.value = vignette
+    u.uAspect!.value = aspect
+  }
+
+  dispose(): void {
+    this.mesh.geometry.dispose()
+    this.material.dispose()
+  }
+}

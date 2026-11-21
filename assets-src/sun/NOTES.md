@@ -14,6 +14,13 @@ Lab notebook of the agent that builds the `sun` stop. Branch `agent/sun`, looks 
 - Start. Cloned, branch `agent/sun`, `npm ci`, build green. Stand-in compare frames rendered at draft for hold and terrain and pushed as the first looks.
 - 03:05 UTC. Reading done (engine, Mars set and plan, relief, cover, sky, measures, recipes). Merged origin/main (2cbceef). Media skill loaded; image tools are `generate_image` (seedream_5 is the model of the approved images), called through the exec tool.
 
+## Builder notes (03:10 UTC)
+
+- `public/assets/sun/web/` at most 35 MB on disk (not 40). Full stays 150 MB. Film is rendered from full.
+- Engine requests are expensive for every stop (the hash moves). Keep everything stop-local when it can be. Decision: no engine request for the sky. The hold sky is drawn by my own set as a far card (vertex shader pins it at the far plane, normal blend over the engine sky, alpha left untouched), so its weight is mine and nothing pops at frames 270 and 450.
+- The set must also behave in an arriving travel (other stop's travel into the Sun's hold, FarPoint pattern from Mars) and in its own leaving travel. Judged in Phase 5; keep free of pops.
+- Frame 0 is the poster frame, first two seconds judged at phone size (R6): finished picture at frame 0, plasma visibly flowing from the first frame.
+
 ## Engine facts that shape the design
 
 - Post cannot be changed per stop. Bloom is mix(hdr, bloom, 0.08), streak from values above 14. So glare has to come from real HDR values in my layers.
@@ -61,3 +68,8 @@ Rise: terrain camera lifts and tips toward the surface, a flare grows from the l
 | total | | about 870 |
 
 Web set is every file at half size: about 220 MB (limit 450).
+
+## Log, continued
+
+- 03:08 UTC. `hero-x2.png` done (5632 wide, `tools/ml/upscale.py`). `orbit/wrap.py` run: 8192 x 4096 wrap, hero side from the 2x copy with limb curve (0.33 + 0.36 (1 - mu)) / 0.33 divided out, hero weight fades over view cosine 0.2 to 0.42, far side from 12 rotated hero caps. Not yet checked for seams at native size.
+- 03:14 UTC. `src/stops/sun/globe.ts` (emissive globe: wrap, limb curve, rim, boil by two-phase warp along the map's own low-pass luminance gradient with zero displacement at holdMid, region pulse, HDR boost of the hot cores, patch levels, diag outputs) and a first `set.ts` with globe and FarPoint. First hold compare: disc matches the hero in place and colour. No corona, prominences or sky yet.
