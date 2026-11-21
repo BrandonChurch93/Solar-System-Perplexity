@@ -1,0 +1,124 @@
+diff --git a/src/core/engine.ts b/src/core/engine.ts
+index 447d20c..b0b666e 100644
+--- a/src/core/engine.ts
++++ b/src/core/engine.ts
+@@ -254,7 +254,7 @@ export class Engine {
+     }
+     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
+     if (raw) return
+-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view)
++    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
+     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+   }
+ 
+diff --git a/src/space/dust.ts b/src/space/dust.ts
+index 5d1970e..d1bfcdb 100644
+--- a/src/space/dust.ts
++++ b/src/space/dust.ts
+@@ -19,6 +19,10 @@ uniform vec4 uLens;
+ uniform float uLong;
+ uniform float uCap;
+ uniform vec2 uNear;
++#ifdef OCCLUDE
++uniform vec4 uRock[5];
++out float vBehind;
++#endif
+ in vec3 aBase;
+ in vec4 aSeed;
+ out vec2 vAt;
+@@ -57,6 +61,20 @@ void main() {
+   float peak = energy * uPixel * uPixel / (area * (1.0 + len / (uLong * uPixel)));
+   vColor = uTint * mix(vec3(1.0, 0.9, 0.78), vec3(0.92, 0.95, 1.0), aSeed.z * aSeed.z) * peak / (1.0 + peak / uCap);
+   gl_Position = ok ? vec4(px / (0.5 * uView), 0.0, 1.0) : vec4(2.0, 2.0, 2.0, 1.0);
++#ifdef OCCLUDE
++  vec3 vm = 0.5 * (v0 + v1);
++  float dm = length(vm);
++  float behind = 0.0;
++  for (int i = 0; i < 5; i++) {
++    vec3 c = uRock[i].xyz;
++    float rr = uRock[i].w;
++    float along = dot(vm, c) / dm;
++    float off = length(cross(vm, c)) / dm;
++    float hit = along - sqrt(max(rr * rr - off * off, 0.0));
++    if (rr > 0.0 && along > 0.0 && dm > hit && off < rr * 1.25) behind = 1.0;
++  }
++  vBehind = behind;
++#endif
+ }`
+ 
+ const FRAG = /* glsl */ `
+@@ -64,6 +82,11 @@ precision highp float;
+ in vec2 vAt;
+ in vec3 vColor;
+ in vec3 vShape;
++#ifdef OCCLUDE
++uniform sampler2D uMask;
++uniform vec2 uView;
++in float vBehind;
++#endif
+ out vec4 outColor;
+ void main() {
+   float dx = vAt.x - clamp(vAt.x, 0.0, vShape.x);
+@@ -73,14 +96,20 @@ void main() {
+   float t = clamp(vAt.x / max(vShape.x, 1e-4), 0.0, 1.0) * 2.0 - 1.0;
+   float taper = mix(1.0, 1.5 * (1.0 - t * t), smoothstep(1.0, 4.0, vShape.x / vShape.y));
+   outColor = vec4(vColor * taper * mix(point, disc, vShape.z), 0.0);
++#ifdef OCCLUDE
++  for (int k = 0; k < (vBehind > 0.5 ? 1 : 0); k++) outColor.rgb *= 1.0 - textureLod(uMask, gl_FragCoord.xy / uView, 0.0).a;
++#endif
+ }`
+ 
+ export const DUST = { span: 7, near: 0.35, nearSpan: 2.4, pan: 0.3, gain: 150, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 1.6, long: 40, cap: 0.4, tint: [1, 0.93, 0.82] }
+ 
++export interface DustCover { mask: THREE.Texture; rocks: THREE.Vector4[] }
++
+ export class Dust {
+   private readonly mesh: THREE.Mesh
+   private readonly scene = new THREE.Scene()
+   private readonly material: THREE.ShaderMaterial
++  private readonly masked: THREE.ShaderMaterial
+   private flow: Flow | null = null
+   private owner: FlowDirector | null = null
+   private readonly inverse = new THREE.Quaternion()
+@@ -105,7 +134,7 @@ export class Dust {
+     geo.setAttribute('aBase', new THREE.InstancedBufferAttribute(base, 3))
+     geo.setAttribute('aSeed', new THREE.InstancedBufferAttribute(seed, 4))
+     geo.instanceCount = count
+-    this.material = new THREE.ShaderMaterial({
++    const params: THREE.ShaderMaterialParameters = {
+       glslVersion: THREE.GLSL3,
+       vertexShader: VERT,
+       fragmentShader: FRAG,
+@@ -131,7 +160,9 @@ export class Dust {
+       depthWrite: false,
+       transparent: true,
+       side: THREE.DoubleSide,
+-    })
++    }
++    this.material = new THREE.ShaderMaterial(params)
++    this.masked = new THREE.ShaderMaterial({ ...params, defines: { OCCLUDE: 1 }, uniforms: { ...this.material.uniforms, uMask: { value: null }, uRock: { value: [0, 1, 2, 3, 4].map(() => new THREE.Vector4()) } } })
+     this.mesh = new THREE.Mesh(geo, this.material)
+     this.mesh.frustumCulled = false
+     this.scene.add(this.mesh)
+@@ -141,7 +172,7 @@ export class Dust {
+     out.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.inverse.copy(q).invert()))
+   }
+ 
+-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, director: FlowDirector, shot: Shot, view: RenderView): void {
++  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, director: FlowDirector, shot: Shot, view: RenderView, cover: DustCover | null = null): void {
+     if (this.owner !== director) {
+       this.owner = director
+       this.flow = new Flow(director)
+@@ -163,6 +194,12 @@ export class Dust {
+     ;(u.uView!.value as THREE.Vector2).set(target.width, height)
+     u.uPixel!.value = height / 1080
+     u.uGain!.value = (DUST.gain * shot.dust) / Math.max(shot.post.exposure, 1e-3)
++    this.mesh.material = cover ? this.masked : this.material
++    if (cover) {
++      this.masked.uniforms.uMask!.value = cover.mask
++      const rocks = this.masked.uniforms.uRock!.value as THREE.Vector4[]
++      rocks.forEach((v, i) => (cover.rocks[i] ? v.copy(cover.rocks[i]) : v.set(0, 0, 0, 0)))
++    }
+     renderer.setRenderTarget(target)
+     renderer.render(this.scene, view.camera)
+   }
