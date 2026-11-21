@@ -16,6 +16,8 @@ export interface AirLook {
   rimNight: number[]
   inner: number
   innerStrength: number
+  lineAway: number[]
+  innerWide: number[]
 }
 
 const VERT = /* glsl */ `
@@ -47,9 +49,12 @@ uniform vec2 uRows;
 uniform vec3 uRim;
 uniform vec3 uRimNight;
 uniform vec2 uInner;
+uniform vec2 uInnerWide;
 uniform float uTop;
 uniform float uGain;
 uniform float uWide;
+uniform float uAway;
+uniform vec2 uLineAway;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
@@ -68,12 +73,13 @@ void main() {
   float turn = atan(dot(at, uRight), dot(at, uUp)) / 6.2831853;
   float rise = sqrt(clamp(h / uTop, 0.0, 1.0));
   vec4 seen = mix(texture(uMap, vec2(turn, clamp(rise, 0.008, 0.992) * uRows.x)) * 4.0, vec4(1.0), uPhysical);
-  float lw = (h - uLineShape.z) / uLineShape.x;
-  vec3 line = uLine.rgb * (pow(x, uLine.w) * exp(-lw * lw) * seen.a);
+  float lw = (h - uLineShape.z) / (uLineShape.x * (1.0 + uLineAway.x * uAway));
+  vec3 line = uLine.rgb * (pow(x, uLine.w) * exp(-lw * lw) * seen.a * (1.0 - uLineAway.y * uAway));
   if (h < 0.0) {
     vec3 held = texture(uMap, vec2(turn, uRows.y)).rgb;
     vec3 rim = mix(held * held * 4.0, mix(uRimNight, uRim, smoothstep(0.42, 0.68, x)), uPhysical);
-    float cover = exp(h / uInner.x) * uInner.y;
+    float hw = h / uInnerWide.x;
+    float cover = exp(h / uInner.x) * uInner.y + exp(-hw * hw) * uInnerWide.y;
     outColor = vec4((rim * cover + line) * lens, cover);
     return;
   }
@@ -109,8 +115,9 @@ export class Air {
         uRim: { value: new THREE.Vector3().fromArray(p.rim) },
         uRimNight: { value: new THREE.Vector3().fromArray(p.rimNight) },
         uInner: { value: new THREE.Vector2(p.inner, p.innerStrength) },
+        uInnerWide: { value: new THREE.Vector2().fromArray(p.innerWide) },
         uTop: { value: p.top },
-        uGain: { value: 1 }, uWide: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uGain: { value: 1 }, uWide: { value: 1 }, uAway: { value: 0 }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uDiag: diag,
       },
       side: THREE.BackSide,

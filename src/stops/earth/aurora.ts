@@ -10,6 +10,8 @@ export interface AuroraLook {
   stretch: number[]
   fade: number[]
   calm: number[]
+  tail: number[]
+  rays: number[]
 }
 
 const VERT = /* glsl */ `
@@ -32,10 +34,25 @@ uniform vec3 uStretch;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
+uniform float uAway;
+uniform vec2 uTail;
+uniform vec4 uRays;
 in vec2 vUv;
 in vec3 vClip;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
+float cell(float p) {
+  p = fract(p * 0.1031);
+  p *= p + 33.33;
+  p *= p + p;
+  return fract(p);
+}
+float streak(float x) {
+  float i = floor(x);
+  float f = fract(x);
+  f = f * f * (3.0 - 2.0 * f);
+  return mix(cell(i), cell(i + 1.0), f);
+}
 void main() {
   if (uDiag >= 2) discard;
   float a = vUv.x * 6.2831853;
@@ -43,7 +60,8 @@ void main() {
   float v = vUv.y / tall;
   float u = vUv.x + uSway.x * v * (sin(uSway.y * a + uSway.z * uClock + 4.0 * v) - sin(uSway.y * a + 4.0 * v));
   float bright = 1.0 + uWave.x * (sin(uWave.y * a - uWave.z * uClock) - sin(uWave.y * a));
-  vec3 col = inverseFilmic(texture(uMap, vec2(u, v)).rgb) * bright * step(v, 1.0);
+  float rays = smoothstep(0.25, 0.75, 0.6 * streak(u * uRays.x) + 0.4 * streak(u * uRays.y + 17.0));
+  vec3 col = inverseFilmic(texture(uMap, vec2(u, v)).rgb) * bright * step(v, 1.0) * (1.0 - uAway * smoothstep(uTail.x, uTail.y, vUv.x)) * mix(1.0, uRays.z + uRays.w * rays, uAway);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float lens = uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col * lens, 0.0);
@@ -64,7 +82,7 @@ export class Aurora {
       uniforms: {
         uMap: { value: map }, uClock: { value: 0 }, uGain: { value: 1 },
         uSway: { value: new THREE.Vector3().fromArray(p.sway) }, uWave: { value: new THREE.Vector3().fromArray(p.wave) }, uStretch: { value: new THREE.Vector3().fromArray(p.stretch) },
-        uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag,
+        uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag, uAway: { value: 0 }, uTail: { value: new THREE.Vector2().fromArray(p.tail) }, uRays: { value: new THREE.Vector4().fromArray(p.rays) },
       },
       side: THREE.DoubleSide,
       blending: THREE.CustomBlending,
@@ -120,7 +138,7 @@ export class Aurora {
     this.mesh.renderOrder = 6
   }
 
-  update(clock: number, gain: number, vignette: number, aspect: number): void {
+  update(clock: number, gain: number, vignette: number, aspect: number, away: number): void {
     const u = this.material.uniforms
     const c = this.look.calm
     const x = Math.min(Math.max((Math.abs(clock) - c[0]!) / (c[1]! - c[0]!), 0), 1)
@@ -132,6 +150,7 @@ export class Aurora {
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+    u.uAway!.value = away
   }
 
   dispose(): void {

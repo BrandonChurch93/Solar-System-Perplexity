@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops K and L, upper sunlit globe",
+      "what": "Fine crater rims and bright ejecta marks smear into diagonal streaks while the limb and background stars stay comparatively sharp.",
+      "fix": "Reduce the directional blur on the globe and retain enough texture resolution to resolve the crater rims in the close view."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crop V, lower sunlit limb",
+      "what": "The terrain breaks into soft, chunky clumps at the rim; individual crater edges merge even though the stars just outside it remain distinct.",
+      "fix": "Render the grazing-angle terrain from higher-resolution relief and use anisotropic filtering to preserve detail along the limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crops C and E, bright right limb",
+      "what": "A nearly uniform pale rim and amber halo wash out the last strip of surface detail, making the edge look like a separate layer.",
+      "fix": "Reduce the limb bloom and let its width and intensity vary with the underlying illumination."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crops M and N, bright solar disk",
+      "what": "Large patches flatten to featureless white and lose the texture visible in the surrounding photosphere.",
+      "fix": "Roll off the brightest highlights and keep a trace of photospheric structure underneath the bloom."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop D, lower-left sky and dark globe",
+      "what": "The bright oblong flare ghost and faint polygonal echoes stand out from the much smaller stars.",
+      "fix": "Reduce the opacity of the flare ghosts or remove the brightest one so it does not read as a stray object."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "large crater, right half (crops E, F, R, W)",
+      "what": "the crater walls are drawn as smooth concentric swirls, like brush strokes, not slumped terraces and rubble; they read as painted or AI-made, and the swirl pattern repeats around the bowl",
+      "fix": "replace the swirl displacement with broken terrace and landslide geometry, plus scattered boulders and small craters on the walls"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "shadowed crater interior, centre right (crops A, Q, H)",
+      "what": "the shadow is a flat, crushed black blob with no detail and no bounce light, and a small bright floating speck sits inside it (about x=750, y=410) like a stray object",
+      "fix": "add faint fill or earthshine so some floor relief shows, and remove the isolated bright speck"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "night side of the globe, lower half (crops D, H, P, and T in image-16)",
+      "what": "the unlit disc is a smooth, even blue-grey fill that is lighter than space and ends in a crisp circular edge; it looks like a flat cut-out with no terrain and no gradual fade at the terminator",
+      "fix": "darken the night side to near black, or add very faint terrain detail, and soften the outer edge so it doesn't stand out as a pasted disc"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "lit hemisphere, upper left and centre (crops B, F, J)",
+      "what": "the albedo looks airbrushed and blotchy, with soft colour clouds over the craters, and the bright ray system is overexposed into a glowing star shape",
+      "fix": "sharpen the albedo texture, cut back the soft colour washes and pull the highlight down on the ray crater"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "plains in the near and middle ground (crops D, O, T, U)",
+      "what": "scattered single-pixel bright and coloured specks (white, blue, orange) sparkle on the regolith like glitter or noise",
+      "fix": "clamp specular fireflies and remove the coloured hot pixels from the surface"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper left plains under the sun (crops B, G, P)",
+      "what": "faint streaky white smears across the surface look like a painted haze over the terrain, not ray material",
+      "fix": "remove the overlay streaks, or tie them to a real ray pattern coming from the crater"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "dark sky (crops S to W in image-16)",
+      "what": "very faint vertical banding shows in the black background at native size",
+      "fix": "add dither to the background and render it at a higher bit depth"
+     }
+    ]
+   }
+  }
+ ]
+}
