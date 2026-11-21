@@ -1,36 +1,60 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T13:30:36.173Z",
- "head": "33fab1cb85a26553565bc20bc8d05e206979e250",
- "note": "round 3 work: rise as a matched dissolve (no whiteout), moat at frame 90 removed",
+ "pushed": "2026-11-21T13:55:41.876Z",
+ "head": "3b0cc525671e387b9e429d17db3e52fdc82b4692",
+ "note": "round 3: rise as matched dissolve, terrain path eased, hold turn, moat fixed, hold sky border in work",
  "looks": [
   {
-   "time": "2026-11-21T13:30:35.585Z",
-   "file": "20261121133035585-note-i75-moat-approved-film.jpg",
-   "source": "out/work/sun/i75-moat-approved-film.png",
+   "time": "2026-11-21T13:55:41.293Z",
+   "file": "20261121135541293-note-i83-right-sky-x3.jpg",
+   "source": "out/work/sun/i83-right-sky-x3.png",
    "kind": "note",
-   "label": "frame 90 sky round the arch at 2.2 times gain, approved above, film below: moat gone",
+   "label": "hold sky border at 237 to 269, 3 times gain, still a hard edge, in work",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T13:30:35.037Z",
-   "file": "20261121133035037-note-i72-s4-b.jpg",
-   "source": "out/work/sun/i72-s4-b.jpg",
+   "time": "2026-11-21T13:55:40.714Z",
+   "file": "20261121135540714-note-i77-moat2.jpg",
+   "source": "out/work/sun/i77-moat2.png",
    "kind": "note",
-   "label": "rise 218 to 232 at draft, dissolve in work",
+   "label": "frame 90 sky round the arch at 2.2 times gain, approved left, film right, moat gone",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T13:30:34.457Z",
-   "file": "20261121133034457-note-i73-d5.jpg",
-   "source": "out/work/sun/i73-d5.jpg",
+   "time": "2026-11-21T13:55:40.110Z",
+   "file": "20261121135540110-note-i81-hold-sheet.jpg",
+   "source": "out/work/sun/i81-hold-sheet.jpg",
    "kind": "note",
-   "label": "rise 205 to 220 at draft, matched dissolve in work: relief view inside the globe view, footpoint glow as a partial veil",
+   "label": "hold 270 to 449 at draft, spin 3.4 deg per second",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T13:26:36.938Z",
-   "file": "20261121132636938-frame-base90.jpg",
+   "time": "2026-11-21T13:55:38.894Z",
+   "file": "20261121135538894-note-i81-terrain-sheet.jpg",
+   "source": "out/work/sun/i81-terrain-sheet.jpg",
+   "kind": "note",
+   "label": "terrain 0 to 176 every 16 frames at draft, eased start then constant speed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T13:55:37.601Z",
+   "file": "20261121135537601-note-i79-s6-b.jpg",
+   "source": "out/work/sun/i79-s6-b.jpg",
+   "kind": "note",
+   "label": "rise 216 to 232 at draft, matched dissolve",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T13:55:36.316Z",
+   "file": "20261121135536316-note-i79-s6-a.jpg",
+   "source": "out/work/sun/i79-s6-a.jpg",
+   "kind": "note",
+   "label": "rise 200 to 215 at draft, matched dissolve, no whiteout",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T13:31:35.149Z",
+   "file": "20261121133135149-frame-base90.jpg",
    "source": "out/work/sun/base90.png",
    "kind": "frame",
    "label": "sun.terrain frame 90, review tier",
@@ -41,36 +65,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T13:22:05.231Z",
-   "file": "20261121132205231-frame-f00220.jpg",
-   "source": "out/work/seq/200-232/f00220.png",
-   "kind": "frame",
-   "label": "sun.rise frame 220, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 220,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T13:00:55.766Z",
-   "file": "20261121130055766-note-f00090.jpg",
-   "source": "out/work/sun/ap8/f00090.png",
-   "kind": "note",
-   "label": "frame 90 final nograin, apron round 11, feather out",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T13:00:55.107Z",
-   "file": "20261121130055107-note-f00060.jpg",
-   "source": "out/work/sun/ap8/f00060.png",
-   "kind": "note",
-   "label": "frame 60 final nograin, apron round 11, feather out",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T11:42:50.210Z",
