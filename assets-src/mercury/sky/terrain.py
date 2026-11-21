@@ -22,6 +22,11 @@ CW, CH = (W + 2 * ML) * S, (H + 2 * MT) * S
 SUN = (745.0, -40.0)
 LIFT = build.LIFT
 ROWS = 2720
+TAKES = ((1, 320), (1, -320), (0, 640), (0, -640), (1, 960), (1, -960), (0, 1280), (0, -1280))
+SKIP = 2
+CLIP = 5.0
+GRAIN = ((35, 1), (52, 1.15), (70, 1.34), (95, 1.66), (130, 1.69), (175, 1.41), (228, 0.78))
+STARS = ((30, 1), (42, 0.4), (110, 0.4), (150, 0.12), (200, 0))
 
 
 def horizon2():
@@ -168,6 +173,42 @@ def calm():
     print('fix calmed: luminance p1 %.3f p50 %.3f p99 %.3f' % tuple(np.percentile(flat, [1, 50, 99])))
 
 
+def top(out):
+    im = np.asarray(Image.open(OUT + 'full/sky-terrain.webp').convert('RGB'))
+    t = MT * S
+    a = im[:2 * t].astype(np.float32)
+    back = cv2.GaussianBlur(cv2.medianBlur(np.ascontiguousarray(im[:2 * t]), 31).astype(np.float32), (0, 0), 2)
+    fine = a - back
+    lum = back @ geo.LUMA
+    yy = np.arange(2 * t, dtype=np.float32)[:, None] + 0.5
+    clear = geo.smooth(24 * S, 90 * S, horizon2()[None, :] - (LIFT - 0.9) * S - yy)
+    w = ((1 - geo.smooth(30, 45, lum)) * clear)[t:]
+    w[:SKIP] = 0
+    src = fine[t:] * w[..., None]
+    acc = np.zeros((t, CW, 3), np.float32)
+    left = np.ones((t, CW), np.float32)
+    for flip, side in TAKES:
+        s, ws = np.roll(src, side * S, axis=1), np.roll(w, side * S, axis=1)
+        if flip:
+            s, ws = np.roll(s, -SKIP, axis=0)[::-1], np.roll(ws, -SKIP, axis=0)[::-1]
+        acc += s * left[..., None]
+        left *= 1 - ws
+    grain = CLIP * np.tanh(acc / CLIP)
+    stars = acc - grain
+    lm = lum[:t]
+    new = back[:t] + grain * np.interp(lm, *zip(*GRAIN))[..., None].astype(np.float32) + stars * np.interp(lm, *zip(*STARS))[..., None].astype(np.float32)
+    full = im.copy()
+    full[:t] = (np.clip(new, 0, 255) + 0.5).astype(np.uint8)
+    print('rows below the top border changed:', int((full[t:] != im[t:]).sum()), 'margin pixels changed:', int((full[:t] != im[:t]).any(-1).sum()), 'margin without a source: %.4f' % float((left > 0.5).mean()))
+    res = Image.fromarray(full)
+    for n in ('full', 'web'):
+        os.makedirs(out + n, exist_ok=True)
+    res.save(out + 'full/sky-terrain.webp', lossless=True, method=4)
+    res.resize((CW // 2, CH // 2), Image.BOX).save(out + 'web/sky-terrain.webp', lossless=True, method=4)
+    for n in ('full', 'web'):
+        print(n, os.path.getsize(out + n + '/sky-terrain.webp') / 1e6, 'MB')
+
+
 if __name__ == '__main__':
     if sys.argv[1] == 'base':
         base()
@@ -175,5 +216,7 @@ if __name__ == '__main__':
         write()
     elif sys.argv[1] == 'calm':
         calm()
+    elif sys.argv[1] == 'top':
+        top(sys.argv[2] if len(sys.argv) > 2 else OUT)
     else:
         fix(sys.argv[2])
