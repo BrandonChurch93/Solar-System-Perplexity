@@ -33,6 +33,15 @@ float ringRadius(float r) {
 }
 float ringTexels(float perPixel) {
   return perPixel * uSpan.y * float(uProfN);
+}
+float ringShadowAt(vec3 P, vec3 sunL, vec3 soft, float grad) {
+  float t = -P.y / (abs(sunL.y) > 1e-4 ? sunL.y : 1e-4);
+  float rho = length(P.xz + sunL.xz * t);
+  float fp = max(length(vec2(dFdx(rho), dFdy(rho))) * grad, soft.x + soft.y * max(t, 0.0));
+  float x = ringRadius(rho);
+  if (t <= 0.0 || x <= 0.0 || x >= 1.0) return 0.0;
+  float a = profAt(x, ringTexels(fp)).a;
+  return 1.0 - pow(1.0 - min(a, 0.999), soft.z);
 }`
 
 export interface RingProfile { texture: THREE.DataTexture; uniforms: Record<string, THREE.IUniform>; close: THREE.IUniform<number> }

@@ -156,10 +156,10 @@ void main() {
   float miss = length(vLocal - ss * along);
   float w = uPenumbra.x + uPenumbra.y * max(-along, 0.0);
   float lit = along > 0.0 ? 1.0 : smoothstep(1.0 - w, 1.0 + w, miss);
-  vec3 shade = mix(uShadowFloor, vec3(1.0), lit);
-  if (uSunL.y * uCamL.y < 0.0) shade *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
+  col = mix(dot(col, vec3(0.2126, 0.7152, 0.0722)) * uShadowFloor, col, lit);
+  if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col *= shade * uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   if (uDiag >= 2 && alpha < 0.5) discard;
   outColor = diagOut(vec4(col, alpha * uWeight), texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(uSpinRate * pow(r / 1.86, -1.5) * 8.0, 0.0), length(vView));
 }`

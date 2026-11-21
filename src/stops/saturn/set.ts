@@ -27,7 +27,7 @@ export const createSet: SetFactory = async (ctx) => {
   const profile = profileUniforms(await ctx.dataTexture(base + 'rings.bin', sizes.width, sizes.height, 4), key, close)
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, look.globe, look.haze, profile, polar)
-  const shell = new Shell(look.shell, polar)
+  const shell = new Shell(look.shell, look.globe, profile, polar)
   const rings = new Rings(profile, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
 
@@ -95,6 +95,7 @@ export const createSet: SetFactory = async (ctx) => {
       const su = shell.material.uniforms
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)
+      ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = gain * state.weight
       const ru = rings.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)

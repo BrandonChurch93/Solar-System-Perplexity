@@ -85,18 +85,7 @@ void main() {
   float texels = diagTexelsDir(p, uMapWidth);
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
-  float shadow = 1.0;
-  if (P.y * uSunL.y < 0.0) {
-    float t = -P.y / uSunL.y;
-    vec3 hit = P + uSunL * t;
-    float rho = length(hit.xz);
-    float x = ringRadius(rho);
-    if (x > 0.0 && x < 1.0) {
-      float fp = max(length(vec2(dFdx(rho), dFdy(rho))) * uGrad, uRingSoft.x + uRingSoft.y * t);
-      float a = profAt(x, ringTexels(fp)).a;
-      shadow = 1.0 - uRingShadow * (1.0 - pow(1.0 - min(a, 0.999), uRingSoft.z));
-    }
-  }
+  float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
   vec3 night = uCurve[0];
   vec3 shade = max(curveAt(ndl) - night, vec3(0.0)) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
   shade += uRingShine * smoothstep(0.0, -0.5, ndl) * smoothstep(0.0, 0.35, abs(p.y)) * (1.0 - smoothstep(0.35, 0.9, abs(p.y)));
@@ -144,11 +133,17 @@ export class Globe {
 
 const SHELL_FRAG = /* glsl */ `
 precision highp float;
+precision highp int;
 in vec3 vLocal;
 uniform float uGain;
 uniform int uDiag;
+uniform vec3 uSunL;
+uniform float uPolar;
+uniform float uRingShadow;
+uniform vec3 uRingSoft;
 out vec4 outColor;
 ${HAZE_GLSL}
+${RING_PROFILE_GLSL}
 void main() {
   if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
@@ -158,17 +153,21 @@ void main() {
   if (b > 0.0 && rt2 < 0.99) discard;
   vec3 at;
   float tau = hazeDepth(dir, false, at);
-  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * uGain, 0.0);
+  float shadow = 1.0 - uRingShadow * ringShadowAt(vec3(at.x, at.y * uPolar, at.z), uSunL, uRingSoft, 1.0);
+  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain, 0.0);
 }`
 
 export class Shell {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(haze: HazeParams, polar: number) {
+  constructor(haze: HazeParams, look: GlobeLook, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: SHELL_FRAG,
-      uniforms: { ...hazeUniforms(haze), uGain: { value: 1 }, uDiag: diagUniform },
+      uniforms: {
+        ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
+        uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
+      },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 + haze.top * haze.scaleHeight, 192, 96), this.material)
