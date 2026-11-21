@@ -28,11 +28,13 @@ export const createSet: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + 'wrap-surface.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const cloud = await ctx.texture(base + 'wrap-cloud.webp', { srgb: true, anisotropy: 16, repeat: true })
   const emissive = await ctx.texture(base + 'wrap-emissive.webp', { srgb: true, anisotropy: 8, repeat: true })
+  const farMap = await ctx.texture(base + 'wrap-far.webp', { srgb: true, anisotropy: 16, repeat: true })
+  const farCloud = await ctx.texture(base + 'wrap-far-cloud.webp', { srgb: true, anisotropy: 16, repeat: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const globe = new Globe({
-    map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, look: look.globe,
+    map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade },
   })
@@ -81,6 +83,7 @@ export const createSet: SetFactory = async (ctx) => {
   const back = new THREE.Quaternion()
   const sunLocal = new THREE.Vector3()
   const sunView = new THREE.Vector3()
+  const airTint = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
   const sea = { nadir: new THREE.Vector3(), alpha: 0 }
@@ -115,7 +118,7 @@ export const createSet: SetFactory = async (ctx) => {
         sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
         sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
         veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye.copy(world.position).applyQuaternion(back).negate())
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -131,7 +134,8 @@ export const createSet: SetFactory = async (ctx) => {
       back.copy(state.rotation).invert()
       eye.copy(camera).applyQuaternion(back).applyMatrix3(unshape)
       eyeWorld.copy(eye).applyQuaternion(state.rotation)
-      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid)
+      const away = smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
+      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid, away, state.time >= plan.seg.terrain.start ? 1 : 0)
       const gu = globe.material.uniforms
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
@@ -141,6 +145,12 @@ export const createSet: SetFactory = async (ctx) => {
       ;(au.uGlowDir!.value as THREE.Vector3).copy(light).applyQuaternion(back).multiplyScalar(Math.max(low, lit)).addScaledVector(glowHome, 1 - Math.max(low, lit)).normalize()
       au.uGain!.value = gain * state.weight
       au.uWide!.value = 1 - low
+      au.uAway!.value = away
+      const thinAir = 1 + (d.air - 1) * low
+      ;(au.uHeight!.value as THREE.Vector4).set(look.air.heights[0]! * thinAir, look.air.heights[1]! * thinAir, look.air.heights[2]!, look.air.heights[3]!)
+      const layers = au.uColor!.value as THREE.Vector3[]
+      const tint = seg.kind === 'rise' ? d.glow.rise : d.glow.dive
+      for (let i = 0; i < 2; i++) layers[i]!.fromArray(look.air.colors[i]!).multiply(airTint.set(1 + (tint[0] - 1) * low, 1 + (tint[1] - 1) * low, 1 + (tint[2] - 1) * low))
       au.uPhysical!.value = state.time >= plan.seg.terrain.start ? 1 : Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
@@ -148,7 +158,7 @@ export const createSet: SetFactory = async (ctx) => {
       stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
       curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
       const near = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
-      curtain.update(state.time - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect)
+      curtain.update(state.time - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect, away)
       sunLocal.copy(light).applyQuaternion(back)
       moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (state.time - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
