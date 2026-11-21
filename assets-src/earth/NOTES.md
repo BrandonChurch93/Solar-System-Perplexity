@@ -339,7 +339,7 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - `relief.ts`: the ground mesh reaches `under` 140 image px below the canvas and mirrors the lookup there (`skip` 24 px above the canvas bottom, where the last rows have a line and speckles). With gather 0.4 the mirror is in frame only at 1886 to 1894, under cover and veil.
 - `look.veil.tail` is now [dive, rise] = [0.85, 0.5] s: wisps stream over the sea until about 1915 while it drifts. It must stay 0 at 1857 and 2156.
 - `out/work/earth/flowpx.py A B C` measures the flow between stills (bottom, mid, left windows).
-- The harness rebuilds `dist` only when `npm run build` is run: a still rendered after a source edit without a build shows the old code.
+- The harness (`ensureBuild` in `tools/lib/common.ts`) rebuilds `dist` at the start of every still, sheet, compare and measure when the tree changed. So do not edit sources while a long job is queued behind another: the queued job renders the tree as it is when it starts.
 
 ### Fix 2, grey cloud above the horizon (07:40 to 07:52 UTC)
 
@@ -350,3 +350,15 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 
 - Cause (`npx tsx assets-src/earth/aurat.ts FRAMES`): the ribbon stood on the limb circle of the hero camera and turned with the globe. At 2156 the camera is 12.8 degrees off the hero direction and the globe has turned 14.7 degrees, so the ribbon's foot was behind the limb and only its upper part (red) showed, detached.
 - Fix in `set.ts`: after the globe's turn the ribbon is leaned by the shortest rotation that puts its axis on the current camera direction, so it always stands on the limb of the current camera. `aurora.json` `fade` [1.0, 1.7]: the ribbon fades out below 1.7 radii of altitude (its cone is built for the hero distance). At the judged hold the lean is the identity.
+
+### Fix 3, second part: the ripple (07:50 to 07:56 UTC)
+
+- The lean alone left 2156 the same (a comb of bright stubs with separate red blobs, `out/work/earth/p8/aur-2156.jpg`). Real cause: the three ripple terms (`wave`, `sway`, `stretch`) are differences from clock 0 (mid hold), so far from the hold they reach twice their amplitude (clock 13.4 s at 2156: brightness 0.4 to 1.6 in 17 cycles along the ribbon).
+- Fix: `aurora.json` `calm: [2.6, 6.0, 0.15]`. `Aurora.update` scales the three amplitudes by 1 inside 2.6 s of mid hold (the whole hold), falling to 0.15 by 6 s. `out/work/earth/p9/aur-2156.jpg`: one curtain of rays with a continuous red border. Hold 1755 against the 05:58 state: max 2 code values in 0.0002 percent of pixels. 1857 and 2148 looked at (`p9/pair.jpg`): fine.
+
+### State at 07:57 UTC
+
+- Looks pushed 07:54. Draft dive sheet (`out/work/sheets/earth.dive-16x9-draft.png`): 1903, 1911, 1919 drift visibly, no stall; 1887 still has the grey cloud above the limb (waits for `coverSea`). Draft rise sheet: 2127 the same; 2120 clean; faint stars at the top left of 2120.
+- Gates without the browser: G11 PASS (every asset has a row or a recipe), G12 PASS (1120 tracked files, 0.90 GB). `npx vitest run` 35 of 35, `tsc` clean. Disk: full 85 MB, web 23 MB; the two sets hold the same 17 file names; no stand-in file left.
+- Running: `npm run -s measure -- --stop earth` (every frame, `out/work/earth/measure.log`), started 07:55:50.
+- In the tree, not yet seen: `light.terrainSkyGlow: 0.2` with the terrain patch `gain` times 5 (11.90476) in `sky.json`. In the engine the patch is multiplied by glow times exposure, so inside the patch nothing changes; outside it the sky is 5 times darker and the stars take the engine's terrain values (gain 2.2, cap 0.9), which may be brighter, not dimmer. Check 2010 (must be the same bytes as before), 2116, 2119, 2122 after the measure. If not clearly better, revert both values (plan: no `terrainSkyGlow`; sky.json terrain gain 2.380952).

@@ -9,6 +9,7 @@ export interface AuroraLook {
   wave: number[]
   stretch: number[]
   fade: number[]
+  calm: number[]
 }
 
 const VERT = /* glsl */ `
@@ -52,7 +53,10 @@ export class Aurora {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
+  private readonly look: AuroraLook
+
   constructor(p: AuroraLook, map: THREE.Texture, diag: THREE.IUniform<number>) {
+    this.look = p
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -118,6 +122,12 @@ export class Aurora {
 
   update(clock: number, gain: number, vignette: number, aspect: number): void {
     const u = this.material.uniforms
+    const c = this.look.calm
+    const x = Math.min(Math.max((Math.abs(clock) - c[0]!) / (c[1]! - c[0]!), 0), 1)
+    const lively = 1 + (c[2]! - 1) * x * x * (3 - 2 * x)
+    ;(u.uSway!.value as THREE.Vector3).x = this.look.sway[0]! * lively
+    ;(u.uWave!.value as THREE.Vector3).x = this.look.wave[0]! * lively
+    ;(u.uStretch!.value as THREE.Vector3).x = this.look.stretch[0]! * lively
     u.uClock!.value = clock
     u.uGain!.value = gain
     u.uVignette!.value = vignette
