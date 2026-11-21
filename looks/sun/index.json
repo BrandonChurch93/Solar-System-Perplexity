@@ -1,60 +1,66 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T10:57:27.090Z",
- "head": "1f200dac73de2da92ffceb8f1720a94c3685529a",
- "note": "Round 10 corrections: rise as one path with a longer flare veil, loop flow mesh gone, sky cards on the sky clock, grade pass 2 in check",
+ "pushed": "2026-11-21T11:20:37.701Z",
+ "head": "cd3825503440fe0246f235f46c2c83ec3d02b2c2",
+ "note": "Round 2 build: batch 12 merged, engine sky flag in place of the stop's own lock, terrain sky card dims only its smooth floor near the limb, ground limb band ungraded (no dark line at the limb)",
  "looks": [
   {
-   "time": "2026-11-21T10:57:26.477Z",
-   "file": "20261121105726477-note-i6-247-bottom-native.jpg",
-   "source": "out/work/sun/i6-247-bottom-native.png",
+   "time": "2026-11-21T11:20:37.142Z",
+   "file": "20261121112037142-note-i14-specks.jpg",
+   "source": "out/work/sun/i14-specks.png",
    "kind": "note",
-   "label": "Frame 247 at review, lower corona at native size",
+   "label": "Frame 90 limb, approved left, film right: stars back near the limb, two dark specks left where approved stars sat in the haze",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:57:25.871Z",
-   "file": "20261121105725871-note-i6-stars-lock.jpg",
-   "source": "out/work/sun/i6-stars-lock.png",
+   "time": "2026-11-21T11:20:36.558Z",
+   "file": "20261121112036558-note-i8-247-stars.jpg",
+   "source": "out/work/sun/i8-247-stars.png",
    "kind": "note",
-   "label": "Frame 247 at review, sky card on the sky clock: lower left, upper left, lower right stars are points",
+   "label": "Frame 247 at review, four corners at native size: stars are points",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:57:25.188Z",
-   "file": "20261121105725188-note-i5-mesh-f.jpg",
-   "source": "out/work/sun/i5-mesh-f.png",
+   "time": "2026-11-21T11:20:36.049Z",
+   "file": "20261121112036049-note-i8-247-full.jpg",
+   "source": "out/work/sun/i8-247-full.jpg",
    "kind": "note",
-   "label": "Arch interior after the loop flow fix: frames 150, 60, 0 (no scan lines or dotted tracks)",
+   "label": "Frame 247 at review with the engine sky clock flag",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:57:24.632Z",
-   "file": "20261121105724632-note-cover1.jpg",
-   "source": "out/work/sun/cover1.jpg",
+   "time": "2026-11-21T11:20:35.510Z",
+   "file": "20261121112035510-note-i10-f0.jpg",
+   "source": "out/work/sun/i10-f0.jpg",
    "kind": "note",
-   "label": "Rise cover 206 to 228 with the longer veil (rises over 12 frames, thins over 13)",
+   "label": "Frame 0 at final, new terrain sky card",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:57:24.074Z",
-   "file": "20261121105724074-note-rise9-b.jpg",
-   "source": "out/work/sun/rise9-b.jpg",
+   "time": "2026-11-21T11:20:34.982Z",
+   "file": "20261121112034982-note-i13-rise-a.jpg",
+   "source": "out/work/sun/i13-rise-a.jpg",
    "kind": "note",
-   "label": "Rise 215 to 269 at draft, one path",
+   "label": "Rise 196 to 236 at draft on main with batch 12: one climb and pull back through the gold veil",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:57:23.493Z",
-   "file": "20261121105723493-note-rise9-a.jpg",
-   "source": "out/work/sun/rise9-a.jpg",
-   "kind": "note",
-   "label": "Rise 176 to 214 at draft, one path, new terrain speed",
-   "stop": "sun"
+   "time": "2026-11-21T11:17:32.153Z",
+   "file": "20261121111732153-frame-f00262.jpg",
+   "source": "out/work/seq/176-272/f00262.png",
+   "kind": "frame",
+   "label": "sun.rise frame 262, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 262,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a9de32c960e5de06"
   },
   {
-   "time": "2026-11-21T10:45:54.554Z",
-   "file": "20261121104554554-frame-f00176.jpg",
+   "time": "2026-11-21T11:13:40.774Z",
+   "file": "20261121111340774-frame-f00176.jpg",
    "source": "out/work/seq/176-272/f00176.png",
    "kind": "frame",
    "label": "sun.terrain frame 176, draft tier",
@@ -64,21 +70,21 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "a9de32c960e5de06"
   },
   {
-   "time": "2026-11-21T09:50:52.781Z",
-   "file": "20261121095052781-frame-gh-449.jpg",
-   "source": "out/work/sun/gh-449.png",
+   "time": "2026-11-21T11:07:43.310Z",
+   "file": "20261121110743310-frame-s360.jpg",
+   "source": "out/work/sun/r2/s360.png",
    "kind": "frame",
-   "label": "sun.hold frame 449, draft tier",
+   "label": "sun.hold frame 360, review tier",
    "stop": "sun",
    "segment": "sun.hold",
-   "frame": 449,
-   "tier": "draft",
+   "frame": 360,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a3d211c425dc0406"
+   "engine": "a9de32c960e5de06"
   }
  ]
 }
