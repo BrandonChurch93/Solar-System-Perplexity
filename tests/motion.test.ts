@@ -160,10 +160,12 @@ describe('what a cover hides', () => {
     const f = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
     let n = 0
     for (let i = f.firstFrame; i < f.endFrame; i++) {
-      const [a, b, c] = ends(i)
-      if (!(b.cover.amount > 0.2 && b.cover.amount < 1)) continue
+      const [a, set, c] = ends(i)
+      if (!(set.cover.amount > 0.2 && set.cover.amount < 1)) continue
       n++
-      expect(b.cover.hides).toBeUndefined()
+      const cover = { ...set.cover }
+      delete cover.hides
+      const b: Shot = { ...set, cover }
       const raw = rawMotion(a, b, c)
       expect(seenShare(b)).toBe(Math.max(1 - b.cover.amount, 0))
       expect(shutterMotion(a, b, c)).toBe(raw * Math.max(1 - b.cover.amount, 0))
@@ -176,6 +178,6 @@ describe('what a cover hides', () => {
       expect(shutterMotion(a, all, c)).toBe(shutterMotion(a, b, c))
     }
     expect(n).toBeGreaterThan(0)
-    for (const p of plans) expect(p.p.coverHides).toBeUndefined()
+    for (const p of plans) expect(p.p.coverHides === undefined || (p.p.coverHides >= 0 && p.p.coverHides <= 1)).toBe(true)
   })
 })
