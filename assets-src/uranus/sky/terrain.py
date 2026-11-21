@@ -14,6 +14,8 @@ import tgeo as T
 from deblock import deblock
 
 FULL = (2816, 1584)
+STAR = (0.02, 7, 11, 0.05, 0.75)
+SPREAD = (0, 6, 16, 40, 100)
 MARGIN = 0.125
 WORK = 'out/work/u/sky/t/'
 LUMA = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
@@ -67,6 +69,31 @@ def ring_lines(sky):
     return line
 
 
+def scatter(lin, floor, clear, shape, inner):
+    lum = lin @ LUMA
+    top = lum - ndi.grey_opening(lum, size=(9, 9))
+    lab, n = ndi.label((top > STAR[0]) & clear)
+    half = STAR[1]
+    seen = []
+    for i, sl in enumerate(ndi.find_objects(lab)):
+        h, w = sl[0].stop - sl[0].start, sl[1].stop - sl[1].start
+        cy, cx = (sl[0].start + sl[0].stop) // 2, (sl[1].start + sl[1].stop) // 2
+        if max(h, w) > half or max(h, w) > 2.5 * min(h, w) or not (half <= cy < lin.shape[0] - half and half <= cx < lin.shape[1] - half):
+            continue
+        box = (slice(cy - half, cy + half + 1), slice(cx - half, cx + half + 1))
+        own = ndi.gaussian_filter(ndi.binary_dilation(lab[box] == i + 1, iterations=2).astype(np.float32), 0.8)
+        seen.append(np.maximum(lin[box] - floor[box], 0) * own[..., None])
+    rng = np.random.default_rng(STAR[2])
+    count = round(STAR[4] * len(seen) / max(clear.sum(), 1) * (~inner).sum())
+    out = np.zeros(shape + (3,), np.float32)
+    ys, xs = np.nonzero(~ndi.binary_dilation(inner, iterations=4)[half:-half, half:-half])
+    for j, k in zip(rng.integers(0, len(ys), count), rng.integers(0, len(seen), count)):
+        y, x = ys[j], xs[j]
+        out[y:y + 2 * half + 1, x:x + 2 * half + 1] += seen[k]
+    out[inner] = 0
+    return out, len(seen), count
+
+
 def main(close, glow, onesky, out):
     a = scene(close, Image.LANCZOS, True)
     g = scene(glow, Image.BICUBIC)
@@ -95,7 +122,20 @@ def main(close, glow, onesky, out):
     m = step(above, 40, 120)[..., None]
     lin = clean * m + below * (1 - m)
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    floor = np.stack([ndi.gaussian_filter(np.minimum(lin[..., k], ndi.gaussian_filter(lin[..., k], 5)), 14) for k in range(3)], -1)
+    pad = ((py, py), (px, px), (0, 0))
+    base = np.pad(floor, pad, mode='edge')
+    inner = np.zeros(base.shape[:2], bool)
+    inner[py:py + FULL[1], px:px + FULL[0]] = True
+    away = ndi.distance_transform_edt(~inner)
+    wide = base.copy()
+    for lo, hi in zip(SPREAD[:-1], SPREAD[1:]):
+        soft = np.stack([ndi.gaussian_filter(base[..., k], hi) for k in range(3)], -1)
+        t = np.clip((away - lo) / (hi - lo), 0, 1)[..., None]
+        wide = wide * (1 - t) + soft * t
+    stars, kinds, count = scatter(lin, floor, (above > 200) & (line @ LUMA < 1e-4) & (floor @ LUMA < STAR[3]), base.shape[:2], inner)
+    wide += stars
+    wide[py:py + FULL[1], px:px + FULL[0]] = lin
     img = Image.fromarray((geo.to_srgb(geo.film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -104,6 +144,7 @@ def main(close, glow, onesky, out):
     show(lin).resize((1408, 792), Image.LANCZOS).save(WORK + 'patch-v.jpg', quality=90)
     show(line * 2).resize((1408, 792), Image.LANCZOS).save(WORK + 'lines-v.jpg', quality=90)
     show(lin).crop((1500, 300, 2500, 1000)).save(WORK + 'patch-crop.png')
+    print('margin stars', count, 'from', kinds, 'stamps')
     print('sky level p50 above 200 px', np.percentile((clean @ LUMA)[above > 200], 50), 'one sky p50', np.percentile((s @ LUMA)[above > 200], 50), 'line energy', float(line.sum()))
 
 

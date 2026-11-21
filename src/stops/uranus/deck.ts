@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import deckJson from './deck.json'
 
@@ -7,7 +7,9 @@ export interface DeckLook {
   flow: [number, number, number, number]
   limb: [number, number]
   edge: number
+  inset: [number, number]
   lift: number
+  sharp: number
 }
 
 const COMMON = /* glsl */ `
@@ -79,11 +81,15 @@ uniform vec4 uWin;
 uniform vec3 uCamL;
 uniform vec2 uLimb;
 uniform float uEdge;
+uniform vec2 uInset;
 uniform float uAMax;
 uniform float uEps;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uFade;
+uniform float uGrad;
+uniform float uSharp;
 in vec3 vBase;
 in vec3 vView;
 in vec3 vClip;
@@ -103,25 +109,32 @@ void main() {
   float z = max(-pa.z, 1e-4);
   vec2 uvT = (pa.xy / z - uWin.xy) / (uWin.zw - uWin.xy);
   vec2 e = min(uvT, 1.0 - uvT);
-  float wT = step(0.0, -pa.z) * smoothstep(0.0, uEdge, min(e.x, e.y)) * smoothstep(uLimb.x, uLimb.y, muI);
+  float wT = step(0.0, -pa.z) * smoothstep(0.0, uEdge, e.y) * smoothstep(uInset.x, uInset.y, min(e.x, uvT.y)) * smoothstep(uLimb.x, uLimb.y, muI);
   vec2 uvS = polar(pa);
   vec3 dv = normalize(p - uCamL);
   float mu = dot(n, -dv);
   float psi = atan(dot(dv, uR0), dot(dv, uF0));
   vec3 lNow = deckLight(mu, psi);
   vec3 lImg = deckLight(muI, psiI);
-  vec3 aT = (inverseFilmic(texture(uColor, clamp(uvT, 0.0, 1.0)).rgb) + uEps) / (lImg + uEps);
+  vec2 uvC = clamp(uvT, 0.0, 1.0);
+  vec2 cx = dFdx(uvT) * uGrad;
+  vec2 cy = dFdy(uvT) * uGrad;
+  vec3 enc = textureGrad(uColor, uvC, cx, cy).rgb;
+  enc = max(enc + uSharp * (enc - textureGrad(uColor, uvC, cx * 4.0, cy * 4.0).rgb), vec3(0.0));
+  vec3 aT = (inverseFilmic(enc) + uEps) / (lImg + uEps);
   uvS.y = clamp(uvS.y, 0.002, 0.998);
   float ua = fract(uvS.x + 0.5) - 0.5;
   vec2 gx = vec2(abs(dFdx(uvS.x)) < abs(dFdx(ua)) ? dFdx(uvS.x) : dFdx(ua), dFdx(uvS.y));
   vec2 gy = vec2(abs(dFdy(uvS.x)) < abs(dFdy(ua)) ? dFdy(uvS.x) : dFdy(ua), dFdy(uvS.y));
-  vec3 s = textureGrad(uFar, uvS, gx, gy).rgb;
+  vec3 s = textureGrad(uFar, uvS, gx * uGrad, gy * uGrad).rgb;
   vec3 aS = s * s * uAMax;
   vec3 col = mix(aS, aT, wT) * lNow;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), diagTexels(uvT * uColorSize), wT);
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
+  if (uDiag >= 2 && uFade < 0.5) discard;
+  vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
+  outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
 }`
 
 const HALO_VERT = /* glsl */ `
@@ -169,11 +182,12 @@ export interface DeckTextures { color: THREE.Texture; far: THREE.Texture; height
 export class Deck {
   readonly group = new THREE.Group()
   readonly mesh: THREE.Mesh
+  readonly overlay: THREE.Mesh
   readonly haze: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  readonly overlayMaterial: THREE.ShaderMaterial
   readonly hazeMaterial: THREE.ShaderMaterial
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
-  private readonly local = new THREE.Vector3()
 
   constructor(t: DeckTextures, key: 'full' | 'web', look: DeckLook) {
     const j = deckJson
@@ -194,8 +208,8 @@ export class Deck {
         ...shared,
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uFar: { value: t.far }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
-        uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uSharp: { value: look.sharp },
       },
     })
     const nPsi = 720
@@ -235,6 +249,25 @@ export class Deck {
     this.material.side = THREE.DoubleSide
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.frustumCulled = false
+    this.overlayMaterial = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: { ...this.material.uniforms, uFade: { value: 0 } },
+      side: THREE.FrontSide,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      blending: THREE.CustomBlending,
+      blendSrc: THREE.SrcAlphaFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
+    })
+    this.overlay = new THREE.Mesh(geometry, this.overlayMaterial)
+    this.overlay.frustumCulled = false
+    this.overlay.renderOrder = 6
+    this.overlay.visible = false
     this.hazeMaterial = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: HALO_VERT,
@@ -250,26 +283,28 @@ export class Deck {
       depthWrite: false,
     })
     this.haze = new THREE.Mesh(new THREE.SphereGeometry(2000, 96, 48), this.hazeMaterial)
-    this.haze.renderOrder = 5
+    this.haze.renderOrder = 7
     this.haze.frustumCulled = false
-    this.group.add(this.mesh, this.haze)
+    this.group.add(this.mesh, this.overlay, this.haze)
   }
 
-  update(world: THREE.Object3D, elapsed: number, gain: number, vignette: number, aspect: number): void {
-    this.local.copy(world.position).negate().applyQuaternion(world.quaternion.clone().invert())
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1): void {
     const u = this.material.uniforms
-    ;(u.uCamL!.value as THREE.Vector3).copy(this.local)
+    ;(u.uCamL!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = elapsed
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+    this.mesh.visible = fade >= 1
+    this.overlay.visible = fade > 0 && fade < 1
+    this.overlayMaterial.uniforms.uFade!.value = fade
     const h = this.hazeMaterial.uniforms
-    this.haze.position.copy(this.local)
-    const to = this.centre.clone().sub(this.local)
+    this.haze.position.copy(camera)
+    const to = this.centre.clone().sub(camera)
     const dist = to.length()
     ;(h.uNadir!.value as THREE.Vector3).copy(to).divideScalar(dist)
     h.uAlpha!.value = Math.asin(Math.min(deckJson.radius / dist, 1))
-    h.uGain!.value = gain
+    h.uGain!.value = gain * fade
     h.uVignette!.value = vignette
     h.uAspect!.value = aspect
   }
@@ -278,6 +313,7 @@ export class Deck {
     this.mesh.geometry.dispose()
     this.haze.geometry.dispose()
     this.material.dispose()
+    this.overlayMaterial.dispose()
     this.hazeMaterial.dispose()
   }
 }
