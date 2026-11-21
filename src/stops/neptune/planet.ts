@@ -11,6 +11,7 @@ export interface CloudParams {
   height: number
   shadow: number
   shadowSoft: number
+  soft: number
   shear: number
   shearBands: number
   relief: number
@@ -129,6 +130,7 @@ uniform float uStormRadius;
 uniform float uStormAngle;
 uniform float uCloudHeight;
 uniform vec3 uShadow;
+uniform float uCloudSoft;
 uniform float uGain;
 uniform float uWeight;
 uniform vec3 uTint;
@@ -242,7 +244,7 @@ void main() {
   vec3 dd = deckDir(p);
   vec3 dcl = cloudDir(pc);
   vec4 deckTexel = layerAt(dd, 1.0, texels);
-  float alpha = layerAt(dcl, 1.0, texelsCloud).a;
+  float alpha = layerAt(dcl, uCloudSoft, texelsCloud).a;
   float reach = uCloudHeight / max(ndl, uShadow.z);
   vec3 ps = normalize(p + sunL * reach);
   vec3 ps2 = normalize(p + sunL * reach * 1.6);
@@ -324,7 +326,7 @@ export class NeptunePlanet {
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
-        uCloudHeight: { value: o.clouds.height }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
+        uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },

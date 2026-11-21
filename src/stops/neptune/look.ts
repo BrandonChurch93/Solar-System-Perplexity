@@ -14,7 +14,7 @@ export const cloud = curve.cloud
 export const air = { ...hazeJson.air, near: [0.22, 0.45, 0.9] } as AirParams
 export const limb = hazeJson.limb as LimbParams
 
-export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3, shear: 0.35, shearBands: 5, relief: 0 }
+export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3, soft: 1, shear: 0.35, shearBands: 5, relief: 0 }
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 5 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
