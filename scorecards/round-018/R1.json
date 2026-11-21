@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sun and corona, upper right",
+   "what": "the disk and corona are less blue and a little less green than the approved frame, so the falloff reads warmer and more amber",
+   "fix": "raise blue, and a little green, in the solar disk and corona so the falloff matches the approved white-gold"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sun crop C",
+   "what": "the same warm bias: bright corona blue is about 8 levels low and green about 3 levels low",
+   "fix": "cool the sun crop back toward the approved corona color; do not push it warmer"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet against the starfield",
+   "what": "the disk sits about 2 pixels right and 1 pixel up of the approved placement; the stars stay put",
+   "fix": "move the planet left about 2 pixels and down about 1 pixel, leaving the sky where it is"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "planet crops A, F, G, and I",
+   "what": "those crops are shifted about 2 pixels right and 2 pixels up relative to the approved crops; the starfield crops are not",
+   "fix": "nudge the planet content left and down to the approved registration"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "terrain against the sky",
+   "what": "the surface sits about 1 pixel right and 1 pixel up of the approved frame; limb, shadows, and crater pattern otherwise match",
+   "fix": "shift the terrain left 1 pixel and down 1 pixel"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "all terrain crops",
+   "what": "every crop is the same shot but registered about 1 pixel right and 1 pixel up; fine detail is not lost",
+   "fix": "shift each crop left 1 pixel and down 1 pixel"
+  }
+ ]
+}
