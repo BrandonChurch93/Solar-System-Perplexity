@@ -1,58 +1,66 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T10:35:30.546Z",
+ "pushed": "2026-11-21T10:54:04.222Z",
  "head": "55da10898f53a361e72b07968b9878133f894a9a",
- "note": "round 2: ring bands, Triton staged, terrain glow; next terrain drift and entry",
+ "note": "round 2: terrain view circles the storm, lower entry; working on top limb, ring bands, Triton zones",
  "looks": [
   {
-   "time": "2026-11-21T10:35:21.955Z",
-   "file": "20261121103521955-note-chk-c.jpg",
-   "source": "out/work/nep/chk-c.jpg",
+   "time": "2026-11-21T10:54:03.653Z",
+   "file": "20261121105403653-note-h-triton.jpg",
+   "source": "out/work/nep/h-triton.jpg",
    "kind": "note",
-   "label": "terrain view drafts 4775 4860 4945 before the drift change",
+   "label": "Triton at 4x: approved left, film right (before colour zones)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T10:35:21.444Z",
-   "file": "20261121103521444-note-t4860-ul2.jpg",
-   "source": "out/work/nep/t4860-ul2.jpg",
+   "time": "2026-11-21T10:54:03.070Z",
+   "file": "20261121105403070-note-chk-f.jpg",
+   "source": "out/work/nep/chk-f.jpg",
    "kind": "note",
-   "label": "terrain 4860 upper left glow: approved top, film bottom",
+   "label": "drafts 4690 4990 4997 5200",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T10:35:20.875Z",
-   "file": "20261121103520875-note-chk-b.jpg",
-   "source": "out/work/nep/chk-b.jpg",
+   "time": "2026-11-21T10:54:02.530Z",
+   "file": "20261121105402530-note-r4707-c.jpg",
+   "source": "out/work/nep/r4707-c.jpg",
    "kind": "note",
-   "label": "drafts 4533 4676 4745 4860 4975 5006 (Triton staged, ring bands)",
+   "label": "dive 4707 review, native centre crop",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T10:35:20.239Z",
-   "file": "20261121103520239-note-hold-b.jpg",
-   "source": "out/work/nep/hold-b.jpg",
+   "time": "2026-11-21T10:54:01.829Z",
+   "file": "20261121105401829-note-h-top3a.jpg",
+   "source": "out/work/nep/h-top3a.jpg",
    "kind": "note",
-   "label": "hold 4605 review: approved left, film right",
+   "label": "hold 4605 top limb at 3x before the rim change: approved top, film bottom (double line)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T10:35:19.714Z",
-   "file": "20261121103519714-note-ring-ll-boost3.jpg",
-   "source": "out/work/nep/ring-ll-boost3.jpg",
+   "time": "2026-11-21T10:54:01.064Z",
+   "file": "20261121105401064-note-e4745-ul.jpg",
+   "source": "out/work/nep/e4745-ul.jpg",
    "kind": "note",
-   "label": "hold 4605 lower left ring, boost 3.5: approved left, film right",
+   "label": "terrain entry 4745 upper left after lower entry and horizon clamp",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T10:32:02.585Z",
-   "file": "20261121103202585-still-f04900-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04900-16x9-draft-full.png",
+   "time": "2026-11-21T10:54:00.466Z",
+   "file": "20261121105400466-note-chk-e.jpg",
+   "source": "out/work/nep/chk-e.jpg",
+   "kind": "note",
+   "label": "terrain view after the drift change: 4725 4745 4775 4860 4945 4970 (camera circles the storm)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T10:44:09.534Z",
+   "file": "20261121104409534-still-f04945-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04945-16x9-draft-full.png",
    "kind": "still",
-   "label": "neptune.terrain frame 4900, draft tier",
+   "label": "neptune.terrain frame 4945, draft tier",
    "stop": "neptune",
    "segment": "neptune.terrain",
-   "frame": 4900,
+   "frame": 4945,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -71,20 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:12:32.171Z",
-   "file": "20261121091232171-compare-compare-neptune-hold-view.jpg",
-   "source": "out/work/compare/compare-neptune-hold-view.jpg",
-   "kind": "compare",
-   "label": "neptune.hold: approved image left, film frame right, final tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   }
  ]
 }
