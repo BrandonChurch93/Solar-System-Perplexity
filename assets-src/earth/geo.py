@@ -7,15 +7,55 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "assets"))
-from common import (body_from_fit, camera_from_fit, load_fit, lonlat_to_local,  # noqa: E402
+from common import (camera_from_fit, load_fit, lonlat_to_local, mat_to_quat,  # noqa: E402
                     local_to_lonlat, normalize, quat_to_mat)
 
 WORK = ROOT / "out" / "work" / "earth"
 WORK.mkdir(parents=True, exist_ok=True)
 FIT = load_fit("earth")
 CAM = camera_from_fit(FIT)
-BODY = body_from_fit(FIT)
 G = quat_to_mat(FIT["globe"]["quaternion"])
+SHAPE = np.array(json.loads((ROOT / "src" / "stops" / "earth" / "shape.json").read_text())["matrix"], dtype=np.float64)
+
+
+SHAPE_INV = np.linalg.inv(SHAPE)
+
+
+class Shaped:
+    def __init__(self, G, S):
+        self.G = G
+        self.M = S @ G
+        self.Minv = np.linalg.inv(self.M)
+        self.Sinv = np.linalg.inv(S)
+
+    def intersect(self, origin, dirs):
+        o = self.Minv @ np.asarray(origin, dtype=np.float64)
+        d = dirs @ self.Minv.T
+        a = (d * d).sum(-1)
+        bb = d @ o
+        disc = bb * bb - a * (o @ o - 1)
+        hit = disc >= 0
+        t = (-bb - np.sqrt(np.where(hit, disc, 0))) / a
+        hit &= t > 0
+        y = normalize(o + d * t[..., None])
+        v = o - y
+        cosv = (y * v).sum(-1) / np.linalg.norm(v, axis=-1)
+        return hit, t, y, y @ self.G.T, cosv
+
+    def visible(self, cam, y):
+        o = self.Minv @ cam.pos
+        v = o - y
+        return y @ self.M.T, y @ self.G.T, (y * v).sum(-1) / np.linalg.norm(v, axis=-1)
+
+    def tangent(self, origin, dirs):
+        o = self.Sinv @ np.asarray(origin, dtype=np.float64)
+        d = normalize(dirs @ self.Sinv.T)
+        b = -(d @ o)
+        rt = np.sqrt(np.maximum(o @ o - b * b, 0))
+        return rt, normalize(o + d * b[..., None])
+
+
+BODY = Shaped(G, SHAPE)
 SUN = normalize(np.asarray(FIT["sunDir"], dtype=np.float64))
 SUN_BODY = SUN @ G
 NIGHT = (0.04, -0.14)
@@ -92,13 +132,11 @@ def hero_geometry(scale=1):
     w, h = FIT["imageSize"][0] * scale, FIT["imageSize"][1] * scale
     py, px = np.mgrid[0:h, 0:w].astype(np.float64) + 0.5
     d = CAM.rays_world(px / scale, py / scale)
-    hit, t, y, n = BODY.intersect(CAM.pos, d)
-    cosv = -(n * d).sum(-1)
+    hit, t, y, n, cosv = BODY.intersect(CAM.pos, d)
     ndl = n @ SUN
     lon, lat = local_to_lonlat(y)
-    b = -(d @ CAM.pos)
-    rt = np.sqrt(np.maximum(CAM.pos @ CAM.pos - b * b, 0))
-    return dict(hit=hit, lon=lon.astype(np.float32), lat=lat.astype(np.float32), cosv=cosv.astype(np.float32), ndl=ndl.astype(np.float32), y=y.astype(np.float32), d=d.astype(np.float32), rt=rt.astype(np.float32))
+    rt, at = BODY.tangent(CAM.pos, d)
+    return dict(hit=hit, lon=lon.astype(np.float32), lat=lat.astype(np.float32), cosv=cosv.astype(np.float32), ndl=ndl.astype(np.float32), y=y.astype(np.float32), d=d.astype(np.float32), rt=rt.astype(np.float32), at=at.astype(np.float32))
 
 
 def map_dirs(W, rows=None):
@@ -170,10 +208,10 @@ def fields(scale=1, strip=264):
         ys = (np.arange(y0, y1, dtype=np.float64) + 0.5) / scale
         px, py = np.meshgrid(xs, ys)
         d = CAM.rays_world(px, py)
-        hit, t, y, n = BODY.intersect(CAM.pos, d)
+        hit, t, y, n, cosv = BODY.intersect(CAM.pos, d)
         out["hit"][y0:y1] = hit
         out["ndl"][y0:y1] = n @ SUN
-        out["cosv"][y0:y1] = -(n * d).sum(-1)
+        out["cosv"][y0:y1] = cosv
         out["n"][y0:y1] = n
         out["y"][y0:y1] = y
     return out

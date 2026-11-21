@@ -67,7 +67,7 @@ def main():
         t = np.clip(x * 0.5 + 0.5, 0, 1) * (KNOTS - 1)
         return np.stack([np.interp(t, np.arange(KNOTS), curve[:, c]) for c in range(3)], -1)
 
-    mus = np.array([0.1, 0.13, 0.16, 0.2, 0.25, 0.3, 0.36, 0.43, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+    mus = np.array([0.085, 0.1, 0.13, 0.16, 0.2, 0.25, 0.3, 0.36, 0.43, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
     nds = np.array([0.1, 0.25, 0.4, 0.55, 0.7, 0.85])
     data = []
     for i in range(len(mus) - 1):

@@ -113,7 +113,7 @@ def main():
     tang = geo.SUN[None, None, :].astype(np.float32) - n * ndl[..., None]
     shifted = n + tang * (SHADOW["height"] / np.maximum(ndl, 0.12))[..., None]
     shifted /= np.linalg.norm(shifted, axis=-1, keepdims=True)
-    px, py, z = geo.CAM.project(shifted.astype(np.float64))
+    px, py, z = geo.CAM.project(shifted.astype(np.float64) @ geo.SHAPE.T)
     soft = geo.blur(a, SHADOW["blur"])
     ash = cv2.remap(soft, (px * SCALE - 0.5).astype(np.float32), (py * SCALE - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
     ash *= geo.smooth(-0.05, 0.1, ndl)

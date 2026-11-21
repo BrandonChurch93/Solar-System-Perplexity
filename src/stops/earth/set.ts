@@ -1,14 +1,17 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import type { SetFactory } from '../../core/types'
+import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { Air } from './air'
+import { Aurora } from './aurora'
 import { patches } from './assets'
 import { Globe, direction } from './globe'
+import { Moon } from './moon'
 import * as look from './look'
 import { plan } from './plan'
+import skyJson from './sky.json'
 
 const PLATE_VERT = /* glsl */ `
 out vec2 vUv;
@@ -56,8 +59,24 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
-  const air = new Air(look.air, diagUniform)
-  orbit.add(globe.mesh, air.mesh)
+  const glow = await ctx.texture(base + 'air-glow.png', { srgb: false, mips: false, repeat: true, flipY: false })
+  const air = new Air(look.air, glow, diagUniform)
+  const shape = new THREE.Group()
+  const m = look.shape
+  shape.matrixAutoUpdate = false
+  shape.matrix.set(m[0]![0]!, m[0]![1]!, m[0]![2]!, 0, m[1]![0]!, m[1]![1]!, m[1]![2]!, 0, m[2]![0]!, m[2]![1]!, m[2]![2]!, 0, 0, 0, 0, 1)
+  const unshape = new THREE.Matrix3().setFromMatrix4(shape.matrix).invert()
+  const curtain = new Aurora(look.aurora, await ctx.texture(base + 'aurora.webp', { srgb: true, anisotropy: 4 }), diagUniform)
+  shape.add(globe.mesh, air.mesh, curtain.mesh)
+  orbit.add(shape)
+  const tilt = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const untilt = tilt.clone().invert()
+  const upAxis = new THREE.Vector3(0, 1, 0)
+
+  const moonMap = await ctx.texture(base + 'moon-color.jpg', { srgb: true, anisotropy: 8, repeat: true })
+  const moonLit = await ctx.texture(base + 'moon-lit.webp', { srgb: true, anisotropy: 8, repeat: true })
+  const moon = new Moon(look.moon, moonMap, moonLit)
+  orbit.add(moon.mesh)
 
   const far = new FarPoint()
   orbit.add(far.points)
@@ -72,15 +91,26 @@ export const createSet: SetFactory = async (ctx) => {
   plate.position.set(0, 0, -10)
   terrain.add(plate)
 
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const wide = 1 + 2 * def.margin
+    const tan = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  }
+
   const light = new THREE.Vector3()
   const camera = new THREE.Vector3()
+  const eye = new THREE.Vector3()
+  const eyeWorld = new THREE.Vector3()
+  const back = new THREE.Quaternion()
+  const sunLocal = new THREE.Vector3()
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const ease = look.globe.drift.ease
 
   return {
     id: plan.id,
     world,
-    sky: [],
+    sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
@@ -97,27 +127,39 @@ export const createSet: SetFactory = async (ctx) => {
       const x = plan.seg.hold.end - state.time
       const flow = x > 0 ? (-x * x) / (x + ease) : 0
       const aspect = view.format.width / view.format.height
-      globe.update(light, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid)
+      back.copy(state.rotation).invert()
+      eye.copy(camera).applyQuaternion(back).applyMatrix3(unshape)
+      eyeWorld.copy(eye).applyQuaternion(state.rotation)
+      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid)
       const gu = globe.material.uniforms
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       gu.uAspect!.value = aspect
       const au = air.material.uniforms
-      ;(au.uCam!.value as THREE.Vector3).copy(camera)
-      ;(au.uGlowDir!.value as THREE.Vector3).copy(glowHome).applyQuaternion(state.rotation).lerp(light, Math.max(low, lit)).normalize()
+      ;(au.uCam!.value as THREE.Vector3).copy(eye)
+      ;(au.uGlowDir!.value as THREE.Vector3).copy(light).applyQuaternion(back).multiplyScalar(Math.max(low, lit)).addScaledVector(glowHome, 1 - Math.max(low, lit)).normalize()
       au.uGain!.value = gain * state.weight
       au.uWide!.value = 1 - low
+      au.uPhysical!.value = state.time >= plan.seg.terrain.start ? 1 : Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
+      curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
+      curtain.update(state.time - plan.holdMid, gain * state.weight, shot.post.vignette * (1 - low), aspect)
+      sunLocal.copy(light).applyQuaternion(back)
+      moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (state.time - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       air.mesh.visible = visible
+      moon.mesh.visible = visible
+      curtain.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       globe.dispose()
       air.dispose()
+      moon.dispose()
+      curtain.dispose()
       far.dispose()
       plateMat.dispose()
       plate.geometry.dispose()

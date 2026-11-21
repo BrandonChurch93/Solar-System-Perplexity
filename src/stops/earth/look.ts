@@ -3,7 +3,12 @@ import airJson from './air.json'
 import fitted from './curve.json'
 import type { GlobeLook } from './globe'
 import limb from './limb.json'
+import type { AuroraLook } from './aurora'
+import auroraJson from './aurora.json'
+import type { MoonLook } from './moon'
+import moonJson from './moon.json'
 import motion from './motion.json'
+import shapeJson from './shape.json'
 
 export const globe: GlobeLook = {
   curve: fitted.curve,
@@ -19,6 +24,11 @@ export const globe: GlobeLook = {
   ripple: [0.3, 1.7, 14],
 }
 
-export const air = airJson as AirLook
+export const air: AirLook = airJson
+
+export const shape: number[][] = shapeJson.matrix
 
 export const descent = { high: 0.7, low: 0.05 }
+
+export const moon: MoonLook = moonJson
+export const aurora: AuroraLook = auroraJson

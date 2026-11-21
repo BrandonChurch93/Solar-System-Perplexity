@@ -37,16 +37,11 @@ export interface GlobeOptions {
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
-out vec3 vWorldN;
-out vec3 vPos;
 out vec3 vView;
 out vec3 vClip;
 void main() {
   vLocal = position;
-  vWorldN = normalize(mat3(modelMatrix) * position);
-  vec4 wp = modelMatrix * vec4(position, 1.0);
-  vPos = wp.xyz;
-  vec4 mv = viewMatrix * wp;
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
   vClip = gl_Position.xyw;
@@ -87,6 +82,7 @@ uniform float uWeight;
 uniform vec3 uTint;
 uniform vec3 uCurve[33];
 uniform mat3 uBodyToWorld;
+uniform vec3 uEye;
 uniform float uVignette;
 uniform float uAspect;
 uniform vec3 uSunW;
@@ -110,8 +106,6 @@ uniform float uClock;
 uniform float uCloudOn;
 in vec3 vClip;
 in vec3 vLocal;
-in vec3 vWorldN;
-in vec3 vPos;
 in vec3 vView;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -160,9 +154,8 @@ float noise(vec2 p) {
 }
 void main() {
   vec3 d = spinY(normalize(vLocal), uSpin);
-  vec3 n = normalize(vWorldN);
-  vec3 dir = normalize(vPos);
-  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  vec3 n = uBodyToWorld * normalize(vLocal);
+  float mu = clamp(dot(n, normalize(uEye - n)), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
@@ -220,6 +213,7 @@ export class Globe {
   readonly material: THREE.ShaderMaterial
   private readonly bodyToWorld = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
+  private readonly q = new THREE.Quaternion()
   private readonly stormHome: THREE.Vector3
   private readonly look: GlobeLook
 
@@ -254,7 +248,7 @@ export class Globe {
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: l.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
-        uBodyToWorld: { value: this.bodyToWorld },
+        uBodyToWorld: { value: this.bodyToWorld }, uEye: { value: new THREE.Vector3(0, 0, 4) },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uFlow: { value: 0 }, uDrift: { value: rad(l.drift.degPerSecond) },
         uStormAxis: { value: this.stormHome.clone() },
@@ -273,9 +267,10 @@ export class Globe {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(sun: THREE.Vector3, spin: number, gain: number, weight: number, flow: number, clock: number): void {
+  update(sun: THREE.Vector3, eye: THREE.Vector3, rotation: THREE.Quaternion, spin: number, gain: number, weight: number, flow: number, clock: number): void {
     const u = this.material.uniforms
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
+    ;(u.uEye!.value as THREE.Vector3).copy(eye)
     u.uSpin!.value = spin
     u.uGain!.value = gain
     u.uWeight!.value = weight
@@ -287,8 +282,7 @@ export class Globe {
     const c = Math.cos(a)
     const s = Math.sin(a)
     ;(u.uStormAxis!.value as THREE.Vector3).set(c * home.x - s * home.z, home.y, s * home.x + c * home.z)
-    this.mesh.updateWorldMatrix(true, false)
-    this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+    this.bodyToWorld.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(rotation).multiply(this.mesh.quaternion)))
   }
 
   dispose(): void {

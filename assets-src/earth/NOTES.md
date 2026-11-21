@@ -108,3 +108,39 @@ All scripts in `assets-src/earth/`, work files in `out/work/earth/` (not in git)
 - Far side palette: Antarctica grey, Arctic ocean teal, Africa flat tan (LUT weak for ice and for classes the hero does not show). Far side is soft: repaint in gnomonic tiles with the image model.
 - VIIRS far clouds too heavy, hard cut at lat 66 to 78 south.
 - Residual green aurora and noisy night albedo in the surface on the hero night side.
+
+## Orbit view, second pass (03:40 to 04:20 UTC)
+
+### Findings
+
+- The hero disc is an ellipse, not the fitted circle: limb deviation from -12 px (position angle 12 to 30) to +3 px (290). `shape.py` fits an ellipsoid in the camera frame (s1 1.00556, s2 0.98955, long axis at position angle 106, view axis sqrt(s1 s2)); lit limb rms 1.13 px, max 5.0. It writes `src/stops/earth/shape.json` (`matrix`). `geo.py` has `SHAPE`, `SHAPE_INV`, a `Shaped` body; `hero_geometry` returns `rt` (tangent distance in the unit-sphere space, 1 at the limb) and `at` (unit vector to the tangent point). In `set.ts` a `shape` group carries the matrix; globe, air and aurora are its children. The eye is brought into that space for the shaders.
+- Position angle convention everywhere: pa = atan2(px - cx, -(py - cy)), 0 up, 90 right, 180 down, 270 left. Lit limb about pa 200 to 20, night limb pa 80 to 190, aurora curtains pa 14 to 78. Fit camera quaternion is identity, so world x, y are image right, up.
+- GLSL: `cast` is a reserved word.
+- The image `read` tool often fails once right after a file is written. Retry.
+
+### Air (`air.py`, `air.ts`, `air.json`, `air-glow.png`)
+
+- Samples: median of hero minus sky fill minus offset (0.0021, 0.0026, -0.0008) per 4 degree sector and height bin, aurora sector and Moon masked. Four exponential layers times a day factor x = (dot(at, dir) + 1) / 2 raised to a power per layer. Fit: heights [0.012, 0.012, 0.0526, 0.5], powers [0.3, 4.08, 3.5, 1.0], dir [-0.9016, 0.3311, 0.2784], rms log 0.32. Angular lumps of about 40 percent remain, so a ratio map (180 x 64, u = position angle, v = sqrt(h / 0.6), RGB = ratio / 4, A = line ratio / 4) corrects the layers at the hold; `uPhysical` fades it to 1 with descent and after the hold. Rows 64 to 71 of the same PNG hold the rim colour per position angle (hero median 2.7 to 7.5 px inside the limb, sqrt coded, times 4).
+- Blue limb line: Gaussian of width 0.0016 radii centred at h = -0.0009 (measured peak at -0.0011), colour (0.496, 1.789, 4.195) times x^4.31 times the line ratio.
+- Inner band: cover = 0.92 exp(h / 0.007) toward the rim colour from the map (hold) or mix(rimNight, rim, smoothstep(0.42, 0.68, x)) (physical). The first version used x^0.5 as the day factor and drew a pale line round the night limb: fixed.
+- `limbcheck.py STILL pa...` prints hero and film radial profiles across the limb (scene linear). Run it on `npm run still -- --frame 1755 --tier draft --out FILE`.
+- Measured after the fix: lit limb pa 250 film within about 10 percent of the hero from +2 px outward; night limb pa 160 film (0.013, 0.026, 0.040) against hero (0.007, 0.014, 0.021) just inside (still a little bright); inside the lit limb the wrap content differs from the hero (far side painting starts at view cosine 0.42).
+
+### Moon (`moon.py`, `moon.ts`, `moon.json`)
+
+- Limb circle fitted on the lit arc of the 2x hero by steepest radial descent: centre shifted (+3.9, +1.05) px at 1x from the fit, radius 58.1 px (fit said 52.5). World centre [22.016856, 11.301699, -54.685321], radius 1.16755.
+- Maps 1024 x 512 (web 512 x 256): `moon-color.jpg` (albedo from the lit hero pixels, mirrored to fill, flat grey elsewhere, coded times 0.4) and `moon-lit.webp` (hero pixels with their light baked, alpha = front mask). Shader: albedo times sun colour times (smoothstep terminator times ndl^0.55) plus earthshine, mixed to the baked pixels by the mask. Motion as Mars: home rotated about `plan.axis` by `moonDegPerSecond` times (time - holdMid).
+
+### Sky patch (`sky/patch.py`, `sky.json`)
+
+- `sky.json` gain is 1 / skyExposure = 2.380952 (plan has skyExposure 0.42). To render the film with a black sky set that gain to 0 for one still (`out/work/earth/still/hold-nosky.png`, review tier), then `python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png`.
+- Own sky (hero minus film) from 1.012 radii (feathered to 1.04) where the film glow is under 0.6 to 0.85 of the hero; the fill elsewhere (behind the globe, in the bright glow, under the Moon out to 1.35 to 1.8 Moon radii, in the aurora sector pa 6 to 86 out to 1.3 radii), scaled per channel (gain 1.576, 1.441, 1.015) and locally near the join; from 1.03 radii outward the fill keeps only its smooth part plus the hero's star points. Deblocked, 12.5 percent mirrored margin, lossless WebP 3520 x 1980 and 1760 x 990.
+- First pass had a visible straight seam from a hard threshold in the local scaling: made smooth. To check again after the aurora and at the hold ends (frames 1680 and 1830), because the sky slides against the planet.
+
+### Aurora off the limb (`aurora.py`, `aurora.ts`, `aurora.json`, `aurora.webp`)
+
+- A ribbon standing on the hero's limb circle between pa 2 and 92, 0.27 radii tall: vertex (1 + h) at(pa, h) with at on the sphere of tangent points for the fit camera, so from the hero camera it lands exactly on the hero's pixels. Texture 2048 x 384 = hero (2x) minus smoothed fill minus offset minus the fitted glow, stars removed (opening and closing), chroma gate (green or red over blue), faded at the ends and the top. Additive, depth tested against the globe, turns with the globe spin, ripples by three sine terms that vanish at mid hold.
+
+### Builder mail 04:12 UTC
+
+- main moved to b4ae65c (engine batch 1). Sky patches may carry `weight?: (time, view) => number`. Software rasterizer computes both sides of an `if` but skips a `for` body: put expensive conditional shader work in `for (int k = 0; k < (cond ? 1 : 0); k++) { ... }` and use `textureGrad` or `textureLod` inside. Engine hash 434d0a5e367a62fd: stills from before the merge are stale.
