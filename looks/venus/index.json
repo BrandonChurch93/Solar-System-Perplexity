@@ -1,55 +1,55 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T22:02:37.868Z",
- "head": "e27cb08ab6821e9d57aafd1c3c1e5011eeaaff0d",
- "note": "P6 item 2: hold detail layer registered to the hero (dots measure), limb strands, night rim and glint from the hero",
+ "pushed": "2026-11-21T22:17:05.440Z",
+ "head": "321c674081f78cdb829583563a90a6141652f407",
+ "note": "Phase 6 polish: hold 1185 take g3 (zones 2.30 whole, 1.25 disc), doubled stars at 1440 removed; covers next",
  "looks": [
   {
-   "time": "2026-11-21T22:02:37.227Z",
-   "file": "20261121220237227-note-h6-limb-after.jpg",
-   "source": "../view/h6-limb-after.jpg",
+   "time": "2026-11-21T22:17:04.866Z",
+   "file": "20261121221704866-note-st5-three.jpg",
+   "source": "../view/st5-three.png",
    "kind": "note",
-   "label": "P6 item 2 limb crops 0, -45, 90, 135 deg: hero left, hold detail layer right (take f5)",
+   "label": "Terrain 1440, left limb: approved, old sky patch (twin stars), new sky patch",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T22:02:36.591Z",
-   "file": "20261121220236591-note-h6-limb-before.jpg",
-   "source": "../view/h6-limb-before.jpg",
+   "time": "2026-11-21T22:17:04.342Z",
+   "file": "20261121221704342-note-h8.jpg",
+   "source": "../view/h8.jpg",
    "kind": "note",
-   "label": "P6 item 2 limb crops 0, -45, 90, 135 deg: hero left, round 23 right",
+   "label": "Hold and dive start, draft frames 1095 to 1287, take g3",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T22:02:35.991Z",
-   "file": "20261121220235991-note-h6-whole.jpg",
-   "source": "../view/h6-whole.jpg",
+   "time": "2026-11-21T22:17:03.820Z",
+   "file": "20261121221703820-note-h8-limbs.jpg",
+   "source": "../view/h8-limbs.jpg",
    "kind": "note",
-   "label": "P6 item 2 hold 1185 nograin final: hero, round 23, hold detail layer (zones whole 1.96 disc 0.71 ring 0.47 halo 2.99 sky 2.41)",
+   "label": "Hold ends and dive start, take g3: limb crops (one clean edge)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T21:31:07.212Z",
-   "file": "20261121213107212-note-c8rr.jpg",
-   "source": "../view/c8rr.jpg",
+   "time": "2026-11-21T22:17:03.297Z",
+   "file": "20261121221703297-note-g3-limb-b.jpg",
+   "source": "../view/g3-limb-b.jpg",
    "kind": "note",
-   "label": "Phase 6 item 1, rise cover at the review tier (preview format), frames 1550 to 1572: sky, Sun and horizon carried, veil with streak form, no flat wash",
+   "label": "Hold 1185 take g3: limb crops at 90, 45, -90, -135 deg, hero beside film",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T21:07:27.026Z",
-   "file": "20261121210727026-note-c8d.jpg",
-   "source": "../view/c8d.jpg",
+   "time": "2026-11-21T22:17:02.773Z",
+   "file": "20261121221702773-note-g3-limb-a.jpg",
+   "source": "../view/g3-limb-a.jpg",
    "kind": "note",
-   "label": "Phase 6 item 1, dive cover, take c8, draft tier, every frame 1299 to 1328",
+   "label": "Hold 1185 take g3: limb crops at 0, -45, 180, 135 deg, hero beside film",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T21:05:24.934Z",
-   "file": "20261121210524934-note-st5-cmp.jpg",
-   "source": "../view/st5-cmp.png",
+   "time": "2026-11-21T22:17:02.195Z",
+   "file": "20261121221702195-note-g3-whole.jpg",
+   "source": "../view/g3-whole.jpg",
    "kind": "note",
-   "label": "Phase 6 item 5, the doubled stars at 1440, left limb, 3x: approved above, round 23 film below. The mirrored star fill of the terrain sky patch shows above the limb (bright pair 36 px below its original)",
+   "label": "Hold 1185: approved hero, round 23 build, polish take g3 (final tier, with grain)",
    "stop": "venus"
   },
   {
