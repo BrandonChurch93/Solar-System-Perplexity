@@ -1,9 +1,39 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T21:57:44.557Z",
- "head": "7064b9d2871fb6ca82750706b9abb081c1218e28",
- "note": "Neptune polish item 3: paced rise, tight cover shell, draft sheets of rise and dive, 5006 review; item 4 crest search begun",
+ "pushed": "2026-11-21T22:13:09.536Z",
+ "head": "49dbe51fe9b0d7ca60c4e494cc9ab0de32a36308",
+ "note": "item 4 stage table: hold loses its crests before the lens (map), terrain in the bloom mix; 4994 final tier equals review",
  "looks": [
+  {
+   "time": "2026-11-21T22:12:48.660Z",
+   "file": "20261121221248660-note-c4605-bands-stages.jpg",
+   "source": "out/work/nep/p6/st/c4605-bands-stages.png",
+   "kind": "note",
+   "label": "item 4 stage test, hold 4605 bands toward the right limb: approved, film as shipped, film before the lens (bloom 0 sharpen 0): the crests are lost before the lens",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:12:48.038Z",
+   "file": "20261121221248038-note-c4994-review-final.jpg",
+   "source": "out/work/nep/p6/k5/c4994-review-final.png",
+   "kind": "note",
+   "label": "4994 the fastest rise frame, review 128 samples above, final 195 samples below, 3 times: same picture, hard bar ends are the box shutter",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:06:27.548Z",
+   "file": "20261121220627548-frame-f4994-final.jpg",
+   "source": "out/work/nep/p6/k5/f4994-final.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 4994, final tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4994,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T21:57:40.429Z",
    "file": "20261121215740429-note-f5006-review.jpg",
@@ -42,35 +72,6 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T21:56:09.330Z",
-   "file": "20261121215609330-sheet-neptune.rise-16x9-draft.jpg",
-   "source": "out/work/sheets/neptune.rise-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet neptune.rise, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "first": 4950,
-   "last": 5024,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:55:37.169Z",
-   "file": "20261121215537169-frame-f04950-draft.jpg",
-   "source": "out/work/sheets/.frames-micSob/f04950-draft.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4950, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4950,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T21:52:38.165Z",
    "file": "20261121215238165-frame-w-4860.jpg",
    "source": "out/work/nep/p6/w-4860.png",
@@ -97,20 +98,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:42:40.236Z",
-   "file": "20261121214240236-job-frame-04530.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
