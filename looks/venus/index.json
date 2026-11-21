@@ -1,26 +1,56 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T04:38:12.169Z",
- "head": "b80dc35ab73dbd5006e29f8e2bfab492daaab306",
- "note": "terrain view: cloud relief in three layers (deck, towers, near cumulus) with air dome and star patch, towers recut with exact rebuild at the fit pose",
+ "pushed": "2026-11-21T05:02:39.934Z",
+ "head": "f50c88dd58dd3fb3614fe83fffc4d9aadcfc061f",
+ "note": "terrain view: frame 1440 matches; fixing the exit (horizon gap, star line), aprons for the entry in work",
  "looks": [
   {
-   "time": "2026-11-21T04:37:52.735Z",
-   "file": "20261121043752735-frame-t1440.jpg",
-   "source": "out/work/venus/t1440.png",
+   "time": "2026-11-21T05:02:39.326Z",
+   "file": "20261121050239326-note-v-r.jpg",
+   "source": "out/work/venus/v-r.jpg",
+   "kind": "note",
+   "label": "right apron takes: nano_banana_pro (left) and seedream_5 (right, kept)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T05:02:38.721Z",
+   "file": "20261121050238721-note-v-l.jpg",
+   "source": "out/work/venus/v-l.jpg",
+   "kind": "note",
+   "label": "left apron takes: nano_banana_pro (left) and seedream_5 (right, kept)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T04:57:27.449Z",
+   "file": "20261121045727449-frame-t1548.jpg",
+   "source": "out/work/venus/t1548.png",
    "kind": "frame",
-   "label": "venus.terrain frame 1440, review tier, nograin view",
+   "label": "venus.rise frame 1548, review tier",
    "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
+   "segment": "venus.rise",
+   "frame": 1548,
    "tier": "review",
    "format": "16x9",
-   "diag": "nograin",
+   "diag": "beauty",
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:37:30.839Z",
-   "file": "20261121043730839-compare-compare-venus-terrain-view.jpg",
+   "time": "2026-11-21T04:56:27.151Z",
+   "file": "20261121045627151-frame-t1529.jpg",
+   "source": "out/work/venus/t1529.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1529, review tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1529,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:56:00.498Z",
+   "file": "20261121045600498-compare-compare-venus-terrain-view.jpg",
    "source": "out/work/compare/compare-venus-terrain-view.jpg",
    "kind": "compare",
    "label": "venus.terrain: approved image left, film frame right, review tier",
@@ -33,8 +63,8 @@
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:37:29.825Z",
-   "file": "20261121043729825-still-f01440-16x9-review-full.jpg",
+   "time": "2026-11-21T04:55:59.318Z",
+   "file": "20261121045559318-still-f01440-16x9-review-full.jpg",
    "source": "out/work/stills/f01440-16x9-review-full.png",
    "kind": "still",
    "label": "venus.terrain frame 1440, review tier",
@@ -73,36 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:09:36.278Z",
-   "file": "20261121040936278-still-f01185-16x9-review-full.jpg",
-   "source": "out/work/stills/f01185-16x9-review-full.png",
-   "kind": "still",
-   "label": "venus.hold frame 1185, review tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:05:52.238Z",
-   "file": "20261121040552238-note-clean-sd1.jpg",
-   "source": "out/work/venus/relief/clean-sd1.png",
-   "kind": "note",
-   "label": "terrain clean plate: towers removed, used only behind the tower cutouts",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T04:05:51.726Z",
-   "file": "20261121040551726-note-v-ext-nb1.jpg",
-   "source": "out/work/venus/v-ext-nb1.jpg",
-   "kind": "note",
-   "label": "terrain margins: outpaint take kept (approved image in the top centre)",
-   "stop": "venus"
   }
  ]
 }
