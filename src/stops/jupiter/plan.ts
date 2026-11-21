@@ -19,6 +19,7 @@ export const params: MoveParams = {
   coverEdge: [0.5, 0.5],
   coverEdgeRise: [0.5, 0.5],
   coverShell: [1.0, 1.015],
+  coverSea: { centre: [-90.618901, -294.74045, -125.576803], radius: 331.946319, edge: [0.955, 0.972] },
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.45, 0.3] },
   spinDegPerSecond: 1.6,
   moonDegPerSecond: 2.6,

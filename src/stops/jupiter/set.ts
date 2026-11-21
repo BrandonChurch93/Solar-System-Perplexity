@@ -8,6 +8,7 @@ import { patches } from './assets'
 import { Deck, type DeckMeta } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
+import { Pall, PallSea, pallUniforms } from './pall'
 import * as look from './look'
 import { plan } from './plan'
 import reliefJson from './relief.json'
@@ -41,10 +42,11 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
-    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
+    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
+    pallShell: plan.p.coverShell ?? [1, 1.015],
     patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -52,16 +54,23 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim })
+  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur })
   orbit.add(io.mesh)
   const ioHome = new THREE.Vector3().fromArray(look.io.home)
 
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, wispMap)
+  const seaUniforms = pallUniforms(look.deck.pall.shell)
+  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, wispMap, seaUniforms)
   terrain.add(ground.group)
+  const sea = new PallSea(seaUniforms)
+  terrain.add(sea.mesh)
 
+  const orbitShell = plan.p.coverShell ?? [1, 1.015]
+  const nadir = (reliefJson as DeckMeta).nadir
+  const seaRadius = (reliefJson as DeckMeta).radius
+  const pall = new Pall(plan, look.deck.pall, { centre: [nadir[0]! * (seaRadius + 1), nadir[1]! * (seaRadius + 1), nadir[2]! * (seaRadius + 1)], radius: seaRadius, orbitShell })
   const riseMid = (plan.seg.rise.start + plan.seg.rise.end) / 2
   const diveCover = plan.coverCenter(plan.seg.dive!)
   const riseCover = plan.coverCenter(plan.seg.rise)
@@ -75,6 +84,7 @@ export const createSet: SetFactory = async (ctx) => {
   const camera = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const ioWorld = new THREE.Vector3()
+  const ioCentre = new THREE.Vector3()
   const toPlanet = new THREE.Vector3()
   const across = new THREE.Vector3()
   const up = new THREE.Vector3(0, 1, 0)
@@ -98,6 +108,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (!inOrbit) {
         const h = look.deck.haze
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view, Math.max(1 - (state.time - diveCover) / h.clear, 1 - (riseCover - state.time) / h.gather))
+        pall.apply(seaUniforms, state.segment, state.time, 'terrain', view.camera.fov, view.format.width / view.format.height)
+        sea.material.uniforms.uGain!.value = gain
+        sea.mesh.visible = (seaUniforms.uPall!.value as THREE.Vector4).x > 0
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -120,10 +133,11 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(camera, light, plan.spin(state.time), gain, state.weight)
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = view.format.width / view.format.height
+      pall.apply(gu, state.segment, state.time, 'orbit', view.camera.fov, view.format.width / view.format.height)
       const along = ioWorld.dot(moonLight)
       const eclipse = along < 0 ? 1 - smooth((across.copy(ioWorld).addScaledVector(moonLight, -along).length() - 0.97) / 0.06) : 0
       toPlanet.copy(ioWorld).negate().normalize()
-      io.update(moonLight, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height)
+      io.update(moonLight, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height, ioCentre.copy(world.position).add(ioWorld), world.position)
       glowDir.copy(glowHome).applyQuaternion(state.rotation).lerp(light, lit).normalize()
       for (const s of shells) {
         const su = s.material.uniforms

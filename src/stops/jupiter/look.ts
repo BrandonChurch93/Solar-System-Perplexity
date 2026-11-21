@@ -13,6 +13,7 @@ export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 
 
 export const shadeKnee: [number, number] = [2.4, 3.4]
 export const shadow: [number, number, number] = [0.798, 1.098, 0.985]
+export const shadowFade: [number, number] = [0.02, 0.2]
 export const moonSun: [number, number, number] = [-0.713344, 0.254075, 0.653136]
 
 export const haze = hazeJson.ground as HazeParams
@@ -50,11 +51,13 @@ export const io = {
   power: 1,
   rim: 0,
   spinDegPerSecond: 0.6,
+  feather: 1,
+  blur: 0.2,
 }
 
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.15, 0.004, 0, 0.02] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
 
 export const deck: DeckLook = {
   skyRimDeg: 5.2,
@@ -79,6 +82,7 @@ export const deck: DeckLook = {
     { px: [1850, 1900], sizePx: 110, period: 3.9, phase: 0.2, gain: 0.4 },
   ],
   haze: { color: [0.2, 0.17, 0.135], density: 8, tile: 9, layer: 0.45, height: 1.2, clear: 0.8, gather: 0.8, power: 2.5 },
+  pall: { clear: 0.6, gather: 0.5, orbitClear: 0.5, orbitGather: 0.35, shell: [1.0, 1.004], morph: 0.234 },
   flashColor: [0.45, 0.7, 1.0],
   flashBody: [0.25, 6],
   beyond: [0.6, 0.004, 300],

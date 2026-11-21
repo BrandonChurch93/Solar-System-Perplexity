@@ -263,11 +263,29 @@ Head before: 7780e18. Merged main 811fbca (engine batch 10) as 1f5c3e0. Main mov
 - `tools/assets/mirrorcheck.py` on drafts after the hold rebuild: 2895, 2985, 2997, 3013 clean; 3005 reports x 1596 (0.60) and 3020 reports x 224 (0.56). Own scan `out/work/jupiter/tools/axis.py` repeats the tool's test and then leaves out the 6 px beside the axis: the correlation falls to 0.00 in both, so the score comes from one bright star sitting on the test axis, not from a reflection. Native windows `out/work/view/mirror_3005_3020.jpg` show no reflected pattern.
 - Weak: the generated margins hold fewer stars than the inside (hold), and the terrain top margin near the horizon glow is only a level continuation.
 
-### Plan for the other items (causes found)
+### Items 2 and 3 (cover handover), in work (10:20 to 11:00 UTC)
 
-- Item 2: engine cover alpha falls 0.42 to 0.10 between 3028 and 3029 (amount 0.5 to 0.316; the alpha has a threshold) and on the terrain side it covers the whole frame with `coverTop [0, 0]`, so the sky is black under it and stars return in one frame. The cover window (16 frames) is the engine's. Plan: `coverSea { centre: nadir x (R + 1), radius: R, edge }` (nadir and R from `relief.json`; R 331.946, 1.004 R is about 2.9 deg over the horizon like `coverShell [1, 1.015]` at the handover altitude) so the sky is open on both sides of the cut; the deck's own haze takes over with a moving pattern and a rim softness that falls with the haze amount over about 20 frames.
-- Item 3: same on the rise side (cut 3269 to 3270).
-- Item 6: at 2997 the hold patch is minified 1.56 texels per pixel (hold 1.47), not magnified; the stars are the approved hero's. Test `mips: true` for the sky patches.
+Causes: (a) engine cover alpha has a threshold: 0.42 at 3028, 0.10 at 3029; (b) on the terrain side the cover had no shell, so it blacked the sky and the stars came back in one frame; (c) the limb is not the same curve on both sides of the cut: the orbit side sits at 0.045 radii (limb 73 deg from nadir), the terrain camera at 0.0045 to 0.0055 radii (84 deg), so at the cut the limb jumps up to 0.19 of the half height (about 100 px) at the frame sides while the centre matches (`out/work/jupiter/tools/hz.ts` prints the limb height at five columns per frame, `P='{"terrain.entryHeight":21}'` overrides plan values). Raising `entryHeight` and `exitHeight` to the true scale (21 and 25 units) was rejected: the deck mesh ends 5.2 deg over its own horizon at 25.8 units, so from 15 units it no longer reaches the horizon, the swoop changes with `entryHeight` (frame 2997 moved 10 to 20 px), and the dive side has no `entryDipDeg` to carry the extra dip.
+
+What is built (all in the stop folder):
+- `pall.ts`: `PALL_GLSL` is the engine cover's own pattern and alpha (copied formula, same focus, phase, flow, horizon and colours, computed by `Pall.apply` exactly as `src/director/film.ts` computes them), with its own amount `smooth(1 - |t - cut| / span)` (`look.deck.pall`: terrain side `clear` 0.6 s after the dive cut, `gather` 0.5 s before the rise cut, orbit side `orbitGather` 0.35 s and `orbitClear` 0.5 s). So the moving haze goes on for 18 frames past the cut and thins smoothly, where the engine cover ends after 5.
+- Orbit side: the globe shader draws the pall over the globe inside `coverShell` (its own `rt`).
+- Terrain side: `PallSea`, a full screen layer in the terrain group (render order 10, no depth, discards in raw diagnostic views). Its limb is an analytic sphere in camera space (`uPallSea`), and that sphere is morphed: at the cut it is the globe exactly as the orbit camera sees it at the cut (`Pall.cut`: orbit pose at the cover centre, minus 1e-6 s for the dive), and over `morph` 0.234 s (7 frames) it becomes the deck's own sphere (direction by slerp, altitude by a power law, shell from `coverShell` [1, 1.015] to `pall.shell` [1, 1.004]). While the morph weight is above 0 the deck is clipped by the same sphere (`held` in `deck.ts`), so it cannot stand above the limb at the frame sides. The weight is reset to 0 in every early return, because stills are rendered in any order.
+- Plan: `coverSea` (deck sphere, `edge [0.955, 0.972]`): the engine cover on the terrain side stays 9 deg under the true horizon, inside the morphed limb at both cuts and in the frame corners; the band up to the limb is the pall's (same colour and pattern, alpha 1 at the cut). The sky above the limb is open on both sides; its brightness is the engine's `(1 - amount)^2` (0 at the cut, back over 8 frames on each side).
+- Strips: `strip_cut0.jpg` (before), `strip_cut1_dive.jpg`, `strip_cut1_rise.jpg` (pall in the deck shader, limb not yet morphed), `strip_cut2.jpg` (morphed limb).
+
+### Items 4 and 5 in the tree (not yet rendered)
+
+- `io.ts` rewritten: analytic sphere on a mesh 1.12 times the radius, no depth test, render order 6, alpha from a `fwidth` feather (`look.io.feather` 1 px), hidden behind the planet analytically (`uPlanet`), map read with a gradient clamped at the limb (`look.io.blur` 0.2) so the lowest mip cannot darken the edge.
+- Shadow: `moonShadow(n, ndl)` fades with `smoothstep(0.02, 0.2, ndl)` (`look.shadowFade`), so it closes before the terminator instead of running into the night side as a column. At the hold the shadow sits at ndl 0.28: unchanged there.
+- Limb: `look.edge.air` from [0.15, 0.004, 0, 0.02] to [0.45, 0.0025, 0.4, 0.007]: alpha 0.85 at the edge, falling over about 0.007 radii (3 px at the hold), in the limb's own colour. The approved hero has a hard night limb (`out/work/view/nightlimb_ref_vs_draft.png`), so this is kept short.
+
+### Still to do
+
+- Item 6: `mips: true` for the sky patches (patch is minified 1.56 texels per pixel at 2997).
+- Item 7: more sideways travel, flow round the storm. Item 8: terrain lower two thirds one to two levels up and warmer.
+- Final tier native crops T (456,866,456,214) and V (1368,866,456,214) of 2997 and of 3296 for the stair steps.
+- Commit the four sky binaries once; mirrorcheck on final frames; merge main; measure; gates; READY.
 
 ## Next
 

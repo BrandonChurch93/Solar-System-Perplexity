@@ -3,6 +3,7 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33
 export const LIMB_KNOTS = 17
@@ -47,6 +48,7 @@ export interface GlobeOptions {
   night: [number, number, number]
   nightAlbedo: [number, number, number, number]
   shadow: [number, number, number]
+  shadowFade: [number, number]
   haze: HazeParams
   spot: SpotShape
   wisp: WispParams
@@ -54,6 +56,7 @@ export interface GlobeOptions {
   veil: { color: [number, number, number]; height: number; repeats: number }
   limbLit: [number, number, number]
   edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number] }
+  pallShell: [number, number]
   segments?: number
 }
 
@@ -116,6 +119,7 @@ uniform vec3 uLimbLit;
 uniform vec2 uShadeKnee;
 uniform vec4 uMoon;
 uniform vec3 uShadow;
+uniform vec2 uShadowFade;
 uniform vec3 uShadowSun;
 uniform vec3 uSunMap;
 uniform float uFlowT;
@@ -138,6 +142,7 @@ ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
+${PALL_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -184,12 +189,12 @@ vec3 flowed(vec3 d, out vec3 fl) {
   fl = vec3(jet, turn, inside);
   return o;
 }
-float moonShadow(vec3 p) {
+float moonShadow(vec3 p, float ndl) {
   vec3 m = uMoon.xyz - p;
   float t = dot(m, uShadowSun);
   if (t <= 0.0 || uMoon.w <= 0.0) return 0.0;
   float off = length(m - uShadowSun * t);
-  return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z;
+  return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z * smoothstep(uShadowFade.x, uShadowFade.y, ndl);
 }
 void main() {
   vec3 dir = normalize(vPos);
@@ -246,7 +251,7 @@ ${PATCH_LEVELS}
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
   lin *= max(1.0 + wisp * (1.0 - soft), 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
-  vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n)) + uNight * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
+  vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n, ndl)) + uNight * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
   float vfoot = length(fwidth(d));
   for (int k = 0; k < (uVeil.x > 0.0 ? 1 : 0); k++) {
     vec3 hd = spinY(uToBody * normalize(n - dir * (uVeil.y / max(mu, 0.3))), uSpin);
@@ -264,6 +269,13 @@ ${PATCH_LEVELS}
   col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
+    vec4 cloud = pall(vClip.xy / vClip.z);
+    float pa = cloud.a * (1.0 - smoothstep(uPallShell.x, uPallShell.y, rt));
+    float total = pa + cover * (1.0 - pa);
+    col = (cloud.rgb * uGain * uWeight * pa + col * cover * (1.0 - pa)) / max(total, 1e-5);
+    cover = total;
+  }
   outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
 }`
 
@@ -317,7 +329,7 @@ export class Globe {
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
         uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
-        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
+        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },
         uWispShape: { value: new THREE.Vector4(w.repeats, w.latScale, w.amount, 1) },
@@ -326,6 +338,7 @@ export class Globe {
         uExtinction: { value: o.haze.extinction },
         uToBody: { value: this.toBody }, uEdge: { value: new THREE.Vector4(o.edge.pixels, o.edge.inset, o.edge.rim, o.edge.cap) }, uAir: { value: new THREE.Vector4().fromArray(o.edge.air) },
         uDiag: diagUniform, uGrad: gradUniform,
+        ...pallUniforms(o.pallShell),
       },
       transparent: true,
       depthWrite: false,

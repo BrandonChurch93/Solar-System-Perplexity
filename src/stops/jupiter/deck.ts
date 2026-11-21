@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { PALL_GLSL, type PallLook } from './pall'
 
 export interface DeckMeta {
   canvas: number[]; origin: number[]; image: number[]; focalPx: number; cell: number; grid: number[]
@@ -19,6 +20,7 @@ export interface DeckLook {
   settle: number
   wisp: { tile: number; amount: number; shadow: number; shadowLength: number; fine: number; drift: [number, number]; fade: [number, number]; sun: [number, number] }
   haze: { color: [number, number, number]; density: number; tile: number; layer: number; height: number; clear: number; gather: number; power: number }
+  pall: PallLook
   flashes: Flash[]
   flashColor: [number, number, number]
   flashBody: [number, number]
@@ -92,6 +94,7 @@ in vec3 vEye;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
+${PALL_GLSL}
 vec2 toPx(vec2 g) {
   vec3 p = uS + uEx * g.x + uEy * g.y - uEn * (dot(g, g) / (2.0 * uRadius));
   return vec2(uFocal * p.x / -p.z, -uFocal * p.y / -p.z);
@@ -186,9 +189,12 @@ void main() {
     fog = thick * (alpha + (1.0 - alpha) * above);
     fogTone = 0.8 + 0.4 * hv;
   }
-  col = (col * (1.0 - fog) + uHazeColor.rgb * fogTone * fog) * uGain * vig;
+  float held = 1.0;
+  for (int k = 0; k < (uPallSea.w > 0.0 ? 1 : 0); k++) held = mix(1.0, pallReach(vClip.xy / vClip.z), uPallSea.w);
+  col = (col * (1.0 - fog) + uHazeColor.rgb * fogTone * fog) * uGain * vig * held;
+  alpha *= held;
   if (uDiag >= 2 && alpha < 0.5) discard;
-  alpha += (1.0 - alpha) * fog;
+  alpha += (1.0 - alpha) * fog * held;
   float texels = mix(diagTexels(px / uCanvas * uWideSize), diagTexels(ip / uImage * uCoreSize), inCore);
   outColor = diagOut(vec4(col, alpha), texels, 1.0, mix(vec3(0.3, 0.5, 0.85), vec3(0.85, 0.45, 0.25), inCore), shift * 0.05, length(vView));
 }`
@@ -209,7 +215,7 @@ export class Deck {
     this.group.add(mesh)
   }
 
-  static async load(ctx: SetContext, base: string, meta: DeckMeta, look: DeckLook, wisp: THREE.Texture): Promise<Deck> {
+  static async load(ctx: SetContext, base: string, meta: DeckMeta, look: DeckLook, wisp: THREE.Texture, pall: Record<string, THREE.IUniform>): Promise<Deck> {
     const sizes = meta.sets[ctx.assets]!
     const wide = await ctx.texture(base + 'deck-wide.jpg', { srgb: true, anisotropy: 16 })
     const core = await ctx.texture(base + 'deck-core.jpg', { srgb: true, anisotropy: 16 })
@@ -311,6 +317,7 @@ export class Deck {
         uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) }, uDetail: { value: new THREE.Vector4(look.detail[0], 1 / look.detail[1], look.detail[2], look.detail[3]) },
         uHaze: { value: new THREE.Vector4(0, 1 / look.haze.tile, look.haze.layer, THREE.MathUtils.degToRad(look.haze.height)) }, uHazeColor: { value: new THREE.Vector4(look.haze.color[0], look.haze.color[1], look.haze.color[2], THREE.MathUtils.degToRad(look.skyRimDeg)) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
+        ...pall,
       },
       transparent: true,
       blending: THREE.CustomBlending,
