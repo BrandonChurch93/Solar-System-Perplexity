@@ -37,3 +37,13 @@ After a compaction: read `assets-src/shared/TRAVEL-AGENT.md` first, then this fi
 
 ## Log
 
+- 05:12 UTC. First commit pushed to `agent/travel`. Looks: the harness tags every picture with the stop of its segment, and `--push --folder travel` drops pictures tagged with another stop, so sheets and stills of travel segments never reach `agent/travel-looks` on their own. Every picture I want pushed is added with `npm run looks -- --add FILE --stop travel --label "..."` (`sheets.sh` does it). Baseline draft sheets pushed 05:14.
+- 05:20 Builder mail: `saturn.travel` is a fixed point like `mars.travel` for the turn. Do not change `turnDeg` or `side` of `mars.travel` or `saturn.travel`, and nothing that moves the camera's direction at the first frame of those two travels or at the hold after them. The path between may change. Saturn's exit pose is still moving on its agent's branch: do Saturn's travel late.
+- `geom.ts`: prints for each travel the total turn, pan and its screen direction, roll, where the leaving body, the next body and the Sun sit at the first frame.
+
+## Design decisions
+
+- Dust: `shot.dustOffset` stays as it is (the belt reads it). The dust has its own flow: `src/space/travel/flow.ts` integrates the camera's flight direction times a logarithmic function of its real speed, at four fixed steps per frame from the first frame of the segment, cached per segment. Each mote is one instanced quad drawn from its screen position at shutter open to shutter close, energy divided by the streak's area, drawn the same in every time sample, so every tier gets the same smooth streak. Near motes get a circle of confusion (large faint discs). Lit by the Sun with a forward lobe. Amount is zero at both joins.
+- Sub-pixel bodies: "sky lock" in `shotAt`: rotate the arriving set about the camera per time sample so the far point holds still on the sky like the stars do, fading out as the disc grows (3 to 40 px).
+- Camera: turn spread over most of the segment with pan and roll decoupled, approach curve whose logarithmic rate starts at zero (no speed step at `begin`), own table in `src/space/travel/` that overrides each plan's `travel` and `arrive`, each of the eight its own side, swing and timing. `mars.travel` and `saturn.travel` keep their world rotation and both end directions.
+- Ending: own sky aim switched under the `neptune.rise` cover, Milky Way behind the Sun, Neptune a lit crescent at the frame edge, a move that never stops, last frame black.
