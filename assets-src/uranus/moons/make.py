@@ -72,11 +72,11 @@ def moon(name, seed, tone, count, grooves):
         h += ridges
     lo, hi = float(h.min()), float(h.max())
     hn = (h - lo) / (hi - lo)
-    alb = tone * (1 + 0.16 * noise(p, rng, 1.6, 5) + 0.1 * noise(p, rng, 9.0, 4))
-    alb *= 0.82 + 0.36 * ndi.gaussian_filter(hn, 2.0)
-    alb += 0.1 * np.clip(ndi.gaussian_laplace(hn, 1.2) * -40, -1, 1)
+    alb = tone * (1 + 0.09 * noise(p, rng, 1.6, 5) + 0.04 * noise(p, rng, 9.0, 4))
+    alb *= 0.9 + 0.2 * ndi.gaussian_filter(hn, 2.0)
+    alb += 0.035 * np.clip(ndi.gaussian_laplace(hn, 1.2) * -40, -1, 1)
     alb = np.clip(alb, 0.03, 0.95)
-    rgb = np.stack([alb * 1.0, alb * 1.0, alb * 1.03], -1)
+    rgb = np.stack([alb * 1.0, alb * 0.95, alb * 0.9], -1)
     img = (np.clip(geo.display(rgb), 0, 1) * 255 + 0.5).astype(np.uint8)
     for setname, width in (('full', W), ('web', W // 2)):
         os.makedirs(DST + setname, exist_ok=True)

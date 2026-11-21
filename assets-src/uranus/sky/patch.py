@@ -1,0 +1,162 @@
+import json
+import os
+import sys
+
+import cv2
+import numpy as np
+from PIL import Image
+from scipy import ndimage as ndi
+
+sys.path.insert(0, 'assets-src/uranus')
+sys.path.insert(0, 'assets-src/uranus/sky')
+import geo
+from deblock import deblock
+
+FULL = (2816, 1584)
+MARGIN = 0.125
+RIM = (1.008, 1.02)
+CIRCLE = (1460.3, 858.74, 528.64)
+MOONS = [(671.7, 343.9, 29.06), (2425.5, 444.2, 24.0)]
+LUMA = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+
+
+def scene(path, resample, blocks=False, shift=None):
+    img = Image.open(path).convert('RGB')
+    a = np.asarray(img).astype(np.float32) / 255
+    if blocks:
+        a = np.clip(deblock(a), 0, 1)
+    if shift is not None:
+        a = np.stack([ndi.shift(a[..., i], (shift[1], shift[0]), order=1, mode='nearest') for i in range(3)], -1)
+    if img.size != FULL:
+        a = np.clip(np.stack([np.asarray(Image.fromarray(a[..., i], 'F').resize(FULL, resample)) for i in range(3)], -1), 0, 1)
+    return geo.unfilm(geo.to_linear(a))
+
+
+def step(v, lo, hi):
+    t = np.clip((v - lo) / (hi - lo), 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+def drift(hero, film):
+    a = np.asarray(Image.open(hero).convert('L').resize((1920, 1080), Image.LANCZOS)).astype(np.float32) / 255
+    b = np.asarray(Image.open(film).convert('L')).astype(np.float32) / 255
+    hp = lambda v: v - ndi.gaussian_filter(v, 6)
+    x0, y0, sz = 740, 330, 512
+    win = cv2.createHanningWindow((sz, sz), cv2.CV_32F)
+    (dx, dy), resp = cv2.phaseCorrelate(hp(a)[y0:y0 + sz, x0:x0 + sz], hp(b)[y0:y0 + sz, x0:x0 + sz], win)
+    return dx, dy, resp
+
+
+T, R0, R1, NR = 1800, 1.08, 1.84, 760
+SHEARS = np.arange(-0.6, 0.601, 0.1)
+WIN = 15
+N0 = np.array([-0.1989, -0.6042, 0.7716])
+
+
+def basis():
+    n = N0 / np.linalg.norm(N0)
+    e1 = np.cross([0, 0, 1.0], n)
+    e1 /= np.linalg.norm(e1)
+    return n, e1, np.cross(n, e1)
+
+
+def along(img):
+    n, e1, e2 = basis()
+    th = (np.arange(T) + 0.5) / T * 2 * np.pi
+    rr = R0 + (np.arange(NR) + 0.5) / NR * (R1 - R0)
+    A, TH = np.meshgrid(rr, th, indexing='ij')
+    P = A[..., None] * (np.cos(TH)[..., None] * e1 + np.sin(TH)[..., None] * e2)
+    px, py = geo.project(P)
+    px, py = px.astype(np.float32), py.astype(np.float32)
+    lum = img @ LUMA
+    key = cv2.remap(lum - ndi.median_filter(lum, size=7), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    pol = cv2.remap(img, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    best = np.full(key.shape, -1.0, np.float32)
+    out = np.zeros(pol.shape, np.float32)
+    half = WIN // 2
+    for s in SHEARS:
+        ks, ps = [], []
+        for k in range(-half, half + 1):
+            dy = -s * k
+            ks.append(np.roll(ndi.shift(key, (dy, 0), order=1, mode='nearest') if abs(dy) > 1e-6 else key, -k, axis=1))
+            ps.append(np.roll(ndi.shift(pol, (dy, 0, 0), order=1, mode='nearest') if abs(dy) > 1e-6 else pol, -k, axis=1))
+        mk = np.median(np.stack(ks, 0), 0)
+        mp = np.median(np.stack(ps, 0), 0)
+        better = mk > best
+        best[better] = mk[better]
+        out[better] = mp[better]
+    rays = geo.rays()
+    t = -(geo.CAM @ n) / (rays @ n)
+    Q = geo.CAM + rays * t[..., None]
+    r = np.linalg.norm(Q, axis=-1)
+    ang = np.mod(np.arctan2(Q @ e2, Q @ e1), 2 * np.pi)
+    row = ((r - R0) / (R1 - R0) * NR - 0.5).astype(np.float32)
+    col = (ang / (2 * np.pi) * T - 0.5 + 2).astype(np.float32)
+    wrap = lambda v: np.concatenate([v[:, -2:], v, v[:, :2]], 1)
+    back = cv2.remap(wrap(out), col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    line = cv2.remap(wrap(np.maximum(best, 0)), col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+    ok = (t > 0) & (r > R0) & (r < R1)
+    line[~ok] = 0
+    return back, line, ok
+
+
+def save(lin, name, out):
+    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
+    wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    img = Image.fromarray((geo.to_srgb(geo.film(wide)) * 255 + 0.5).astype(np.uint8))
+    for key, k in (('full', 1), ('web', 2)):
+        im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
+        im.save(f'{out}/{key}/{name}', lossless=True, quality=90, method=6)
+
+
+def hold(hero, fill, glow, out):
+    cx, cy, cr = CIRCLE
+    yy, xx = np.mgrid[0:FULL[1], 0:FULL[0]]
+    d = np.hypot(xx - cx, yy - cy) / cr
+    dx, dy, resp = drift(hero, glow)
+    print('film drift px at 1920', round(dx, 2), round(dy, 2), 'response', round(resp, 3))
+    a = scene(hero, Image.LANCZOS, True)
+    g = scene(glow, Image.BICUBIC, False, (-dx, -dy))
+    f = scene(fill, Image.LANCZOS, True)
+    sky = np.maximum(a - g, 0).astype(np.float32)
+    luma = lambda v: v @ LUMA
+    low = lambda v: np.stack([ndi.gaussian_filter(np.minimum(v[..., i], ndi.gaussian_filter(v[..., i], 4)), 4) for i in range(3)], -1)
+    cache = 'out/work/u/sky/along.npz'
+    if os.path.exists(cache):
+        z = np.load(cache)
+        back, line, ok = z['back'], z['line'], z['ok']
+    else:
+        back, line, ok = along(sky)
+        np.savez(cache, back=back, line=line, ok=ok)
+    stars = np.maximum(sky - np.where(ok[..., None], np.maximum(back, low(sky)), low(sky)), 0)
+    band = step(ndi.gaussian_filter(line, 7), 0.00012, 0.0005)
+    band = step(ndi.gaussian_filter(np.maximum(band, ndi.maximum_filter(band, 9)), 5), 0.1, 0.6)
+    la = ndi.gaussian_filter(luma(a), 10)
+    lg = ndi.gaussian_filter(luma(g), 10)
+    own = step(d, 1.03, 1.07) * (1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85)) * (1 - band)
+    moon = np.ones_like(own)
+    for mx, my, mr in MOONS:
+        moon *= step(np.hypot(xx - mx, yy - my), mr + 5, mr + 12)
+    own = ndi.gaussian_filter(own * moon, 3)
+    ring = (d > 1.1) & (d < 1.9) & (own > 0.98)
+    gain = np.array([np.minimum(sky[..., i], 0.2)[ring].mean() / max(np.minimum(f[..., i], 0.2)[ring].mean(), 1e-6) for i in range(3)])
+    near = (own > 0.98).astype(np.float32)
+    soft = lambda v: ndi.gaussian_filter(v, 48)
+    local = np.stack([soft(np.minimum(sky[..., i], 0.2) * near) / np.maximum(soft(np.minimum(f[..., i], 0.2) * near), 1e-6) for i in range(3)], -1)
+    reach = (soft(near) > 0.02)[..., None] * step(d, 0.72, 1.04)[..., None]
+    scale = gain * (1 - reach) + np.clip(local, gain * 0.35, gain * 2.5) * reach
+    print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)), 'band share', float(band.mean().round(3)), 'film over hero share', float(((g - a).max(-1) > 0.004)[d > 1.03].mean().round(4)))
+    rim = (step(d, RIM[0], RIM[1]) * ndi.gaussian_filter(moon, 2))[..., None]
+    f = f * scale
+    f = f * (1 - rim) + (low(f) + stars) * rim
+    lin = sky * own[..., None] + f * (1 - own[..., None])
+    save(lin, 'sky-hold.webp', out)
+    prev = Image.fromarray((geo.to_srgb(geo.film(lin)) * 255 + 0.5).astype(np.uint8))
+    prev.resize((1408, 792), Image.LANCZOS).save('out/work/u/sky/sky-hold-preview.jpg', quality=90)
+    Image.fromarray((np.clip(lin[450:1050, 650:1250] * 4, 0, 1) ** 0.4545 * 255).astype(np.uint8)).save('out/work/u/sky/crop-left.jpg', quality=92)
+    Image.fromarray((np.clip(lin[60:560, 1100:1900] * 4, 0, 1) ** 0.4545 * 255).astype(np.uint8)).save('out/work/u/sky/crop-top.jpg', quality=92)
+    Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((1408, 792)).save('out/work/u/sky/own.jpg', quality=85)
+
+
+if __name__ == '__main__':
+    hold(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])

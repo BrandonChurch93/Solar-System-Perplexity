@@ -45,16 +45,17 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(rings.mesh)
   const ringNormal = new THREE.Vector3().fromArray(fit.rings!.normal).normalize()
   const moonSize = look.moons.heightSize[key]
-  const moons: { body: Moon; home: THREE.Vector3; spinAxis: THREE.Vector3; phase: number }[] = []
+  const moons: { body: Moon; home: THREE.Vector3; spinAxis: THREE.Vector3; phase: number; light: THREE.Vector3 }[] = []
   for (const [i, m] of (fit.moons ?? []).entries()) {
+    const tone = look.moons.bodies[m.id]!
     const body = new Moon({
       map: await ctx.texture(base + m.id + '-color.jpg', { srgb: true, anisotropy: 16, repeat: true }),
       height: ctx.floatTexture(await heights(ctx, base + m.id + '-height.bin', moonSize[0], moonSize[1]), moonSize[0], moonSize[1], true),
-      heightWidth: moonSize[0], bump: look.moons.bump, sun: look.moons.sun, ambient: look.moons.ambient, bounce: look.moons.bounce,
+      heightWidth: moonSize[0], bump: look.moons.bump, wrap: look.moons.wrap, sun: tone.sun, ambient: tone.ambient, bounce: look.moons.bounce,
     })
     body.mesh.scale.setScalar(m.radius)
     orbit.add(body.mesh)
-    moons.push({ body, home: new THREE.Vector3().fromArray(m.position), spinAxis: new THREE.Vector3(0.3 - 0.5 * i, 1, 0.2).normalize(), phase: 1.1 + 2.3 * i })
+    moons.push({ body, home: new THREE.Vector3().fromArray(m.position), spinAxis: new THREE.Vector3(0.3 - 0.5 * i, 1, 0.2).normalize(), phase: 1.1 + 2.3 * i, light: new THREE.Vector3().fromArray(tone.light).normalize() })
   }
 
   const far = new FarPoint()
@@ -64,6 +65,7 @@ export const createSet: SetFactory = async (ctx) => {
   const camera = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const bounce = new THREE.Vector3()
+  const moonLight = new THREE.Vector3()
 
   return {
     id: plan.id,
@@ -88,15 +90,15 @@ export const createSet: SetFactory = async (ctx) => {
         m.body.mesh.position.copy(m.home).applyQuaternion(turn)
         m.body.mesh.quaternion.setFromAxisAngle(m.spinAxis, m.phase + THREE.MathUtils.degToRad(look.moons.spinDegPerSecond) * elapsed)
         bounce.copy(m.body.mesh.position).negate().normalize().applyQuaternion(state.rotation)
-        m.body.update(sun, bounce, gain * state.weight, shot.post.vignette, aspect)
+        m.body.update(moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight, shot.post.vignette, aspect)
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       halo.mesh.visible = visible
-      rings.mesh.visible = visible
-      for (const m of moons) m.body.mesh.visible = visible
+      rings.mesh.visible = visible && look.show.rings
+      for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {

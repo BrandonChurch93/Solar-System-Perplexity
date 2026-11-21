@@ -12,6 +12,7 @@ uniform float uMapWidth;
 uniform float uGrad;
 uniform float uStep;
 uniform float uBump;
+uniform float uWrap;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -47,8 +48,9 @@ void main() {
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = uBodyToWorld * ((east * hE + north * hN) / (2.0 * e));
   vec3 np = normalize(n - slope * uBump);
-  float ndl = dot(np, uSunW);
-  float soft = smoothstep(-0.08, 0.1, dot(n, uSunW));
+  float base = dot(n, uSunW);
+  float ndl = mix(dot(np, uSunW), base, uWrap);
+  float soft = smoothstep(-0.06, 0.12, base);
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 col = albedo * (uSun * max(ndl, 0.0) * soft + uAmbient + uBounce * max(dot(n, uBounceW), 0.0));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -61,6 +63,7 @@ export interface MoonOptions {
   height: THREE.Texture
   heightWidth: number
   bump: number
+  wrap: number
   sun: [number, number, number]
   ambient: [number, number, number]
   bounce: [number, number, number]
@@ -79,7 +82,7 @@ export class Moon {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: o.map }, uHeight: { value: o.height }, uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
-        uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uWrap: { value: o.wrap }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) },
         uBounce: { value: new THREE.Vector3().fromArray(o.bounce) }, uBounceW: { value: new THREE.Vector3(0, 0, 1) }, uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
