@@ -1,9 +1,39 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T04:46:20.606Z",
- "head": "c377e839702940636a9f383b87688251ecef32ed",
- "note": "done: final 2782 and review sheet on main batch 2, proof and cost measured",
+ "pushed": "2026-11-21T08:01:23.592Z",
+ "head": "bed0727a40c82139a15063f9834d48219fe9c580",
+ "note": "belt refit to the new travel camera: draft sheet and 2781",
  "looks": [
+  {
+   "time": "2026-11-21T08:01:22.519Z",
+   "file": "20261121080122519-note-f02781.jpg",
+   "source": "out/work/belt/d2/f02781.png",
+   "kind": "note",
+   "label": "belt draft 2781, new layout with dust order patch",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:01:21.748Z",
+   "file": "20261121080121748-note-sheet.jpg",
+   "source": "out/work/belt/d2/sheet.jpg",
+   "kind": "note",
+   "label": "belt on the new camera, draft sheet every third frame 2745 to 2817, unfinished",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:00:38.836Z",
+   "file": "20261121080038836-frame-f02745.jpg",
+   "source": "out/work/belt/r1/f02745.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2745, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2745,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "19ff4677ff6f6dd1"
+  },
   {
    "time": "2026-11-21T04:45:30.045Z",
    "file": "20261121044530045-sheet-mars.travel-16x9-review.jpg",
@@ -14,20 +44,6 @@
    "segment": "mars.travel",
    "first": 2745,
    "last": 2819,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cdec05916ee737d7"
-  },
-  {
-   "time": "2026-11-21T04:45:08.531Z",
-   "file": "20261121044508531-frame-f02806-review.jpg",
-   "source": "out/work/sheets/.frames-bUAxly/f02806-review.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2806, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2806,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -88,22 +104,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "bf9e533c3bea77c1"
-  },
-  {
-   "time": "2026-11-21T04:32:45.693Z",
-   "file": "20261121043245693-note-r2796.jpg",
-   "source": "out/work/belt/r2796.png",
-   "kind": "note",
-   "label": "review still 2796, hero leaving left, streak check",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T04:32:45.066Z",
-   "file": "20261121043245066-note-r2772.jpg",
-   "source": "out/work/belt/r2772.png",
-   "kind": "note",
-   "label": "review still 2772, hero in the fast pan, streak check",
-   "stop": "mars"
   }
  ]
 }
