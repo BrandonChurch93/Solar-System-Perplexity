@@ -1,6 +1,8 @@
-import type { Segment } from '../../config'
+import * as THREE from 'three'
+import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose } from '../../core/types'
-import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
+import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
+import { coverWindow } from '../../director/timeline'
 import fit from './fit.json'
 
 export const params: MoveParams = {
@@ -30,9 +32,72 @@ export const params: MoveParams = {
 const shell: { near: [number, number]; rise: [number, number] } = { near: [1.03, 1.1], rise: [50, 60] }
 const hides = 0.4
 const closed = 0.98
+export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2 }
+
+interface Fall { start: number; join: number; span: number; h0: number; drift: number; accel: number; knee: number; late: number; power: number }
 
 class NeptunePlan extends StopPlan {
   private rising = false
+  private fall: Fall | null = null
+  private last: { time: number; at: number } | null = null
+
+  private high(time: number): number {
+    return super.dive(time).pose.position.length() - 1
+  }
+
+  private ramped(t: number): { v: number; s: number } {
+    const n = descent.onset
+    if (t >= n) return { v: t - n / 2, s: 0.5 * t * t - 0.5 * n * t + 0.15 * n * n }
+    const k = t / n
+    return { v: n * (k * k * k - 0.5 * k * k * k * k), s: n * n * (0.25 * k * k * k * k - 0.1 * k * k * k * k * k) }
+  }
+
+  private eased(): Fall {
+    if (this.fall) return this.fall
+    const seg = this.seg.dive!
+    const fps = config.fps
+    const start = seg.start
+    const join = coverWindow(seg)!.firstFrame / fps
+    const span = (join - start) * fps
+    const dt = 0.01 / fps
+    const h0 = this.high(start)
+    const drift = -Math.log(this.high(start + dt) / h0) / (dt * fps)
+    const hJ = this.high(join)
+    const vJ = -Math.log(this.high(join + dt) / this.high(join - dt)) / (2 * dt * fps)
+    const pin = descent.pin / fps
+    const knee = (pin - start) * fps
+    const pace = -Math.log(this.high(pin + dt) / this.high(pin - dt)) / (2 * dt * fps)
+    const accel = (pace - drift) / this.ramped(knee).v
+    const late = vJ - drift - accel * this.ramped(span).v
+    const power = (late * (span - knee)) / (Math.log(h0 / hJ) - drift * span - accel * this.ramped(span).s) - 1
+    this.fall = { start, join, span, h0, drift, accel, knee, late, power }
+    return this.fall
+  }
+
+  override dive(time: number): OrbitShot {
+    const seg = this.seg.dive!
+    const c = this.eased()
+    if (time >= this.coverCenter(seg)) {
+      const shot = super.dive(time)
+      const x = Math.min(Math.max((seg.end - time) / (seg.end - c.join), 0), 1)
+      const settle = new THREE.Quaternion().setFromEuler(new THREE.Euler(-THREE.MathUtils.degToRad(descent.settleDeg) * Math.pow(x, descent.settlePower), 0, 0))
+      return { pose: { position: shot.pose.position, quaternion: shot.pose.quaternion.clone().multiply(settle), vfov: shot.pose.vfov }, view: shot.view }
+    }
+    if (time <= c.start || time >= c.join) return super.dive(time)
+    const t = (time - c.start) * config.fps
+    const want = c.h0 * Math.exp(-(c.drift * t + c.accel * this.ramped(t).s + ((c.late * (c.span - c.knee)) / (c.power + 1)) * Math.pow(Math.max(t - c.knee, 0) / (c.span - c.knee), c.power + 1)))
+    if (this.last?.time !== time) {
+      let a = c.start
+      let b = c.join
+      for (let i = 0; i < 36; i++) {
+        const mid = 0.5 * (a + b)
+        if (this.high(mid) > want) a = mid
+        else b = mid
+      }
+      this.last = { time, at: 0.5 * (a + b) }
+    }
+    return super.dive(this.last.at)
+  }
 
   override coverAmount(seg: Segment, time: number): number {
     this.rising = seg.kind === 'rise'
