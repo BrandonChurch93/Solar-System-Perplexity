@@ -1,9 +1,23 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T08:36:10.506Z",
+ "pushed": "2026-11-21T08:39:07.118Z",
  "head": "6ddfe8c11b961b248c86891cd7b1f52de820ab2d",
  "note": "flare rework after READY: erupts from the loop feet, brighter gold cover",
  "looks": [
+  {
+   "time": "2026-11-21T08:39:01.692Z",
+   "file": "20261121083901692-frame-chk-90.jpg",
+   "source": "out/work/sun/chk-90.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
   {
    "time": "2026-11-21T08:36:09.971Z",
    "file": "20261121083609971-note-flare-orbit.jpg",
@@ -51,20 +65,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:21:01.832Z",
-   "file": "20261121082101832-frame-post-90.jpg",
-   "source": "out/work/sun/post-90.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
