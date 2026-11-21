@@ -751,3 +751,12 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - `look.globe.calm = [1.02, lon, lat, radius, ...]` (three spots in map degrees: (-33, 8) radius 7, (-38, -35) radius 11, (-9, 14) radius 13): inside a spot, below the aurora latitude, green is limited to 1.02 times the larger of red and blue. Only green dominant pixels change; sea, cloud and lights are untouched. A first try with the emissive alpha as the mask did nothing, the two strong blobs are in the surface map and not in the alpha. After: no green dominant cluster left at (1379, 547) or (1268, 895); at the limb a thin faint streak, mean (34, 59, 47), stays (`q5-nightlimb-hero-new.png`).
 - Night line `nightLine [0.7, 0.85, 0.04, 0.1]`, `nightAt [-0.02, 0.003, -0.002, 0.006]`: PA 95 to 120 the line peaks at 53.9 blue at -7 px (hero 54.3 at -7), within 2 levels from -11 to -3 px.
 - 1857 is closer than in round 2 (limb about 532 px against 474): the dive's push starts at 1830 now (item 1a).
+
+## Round 3 verification on the merged tree (16:45 UTC on), head db86a2a, engine hash f854c8146f64c7e4, stop hash ac79154f205dd19e
+
+- Merged `origin/main` 6d9a0e8 as db86a2a. Build passes, vitest 62 of 62. `skyat.ts --frames 2156` prints `[-78.5, 100.8, 0.4]`.
+- `npm run measure -- --stop earth` (1499 s): G13 0 of 463 frames over 0.02 soft; G5 1755 0.329, 1857 0.452, 2010 0.780, 2156 0.386, invalid 0 on all four; G17 1755 median 1.225 p25 1.163 (72 tiles), 2010 median 1.012 p25 0.975 (78 tiles).
+- Probe: join 1680 turn 0.004 to 0.004, speed 4.09e-2 to 3.11e-2; join 2175 turn 0.002 to 0.004, speed 4.99e-1 to 5.00e-1; join 2250 turn 0.056 to 0.056, speed 1.03e-1 to 1.03e-1; peak turn 4.92 deg per frame at 2207.
+- Finals (`out/work/earth/r3v/`): 1857 (64 samples, 294 s) the globe at limb 532 px with the top limb at the frame's top edge, aurora rays uneven with soft tops and a red haze, the blue rim runs under it, night limb a thin blue line; 2156 (64 samples, 262 s) is the hold's face under the hold's Sun, Moon top right, stars crisp across the frame, the band behind the globe; left of frame mean 8.9, right 6.1; `mirrorcheck.py` clean. Compares at final tier for hold and terrain: the same shot as the approved images, the three green blobs of the hero are limited in the film.
+- Hold sheet at review tier: the Americas move east between 1680 and 1829, the Moon barely moves, the stars hold still.
+- Review tier cost here: a final still 5 minutes, a review frame at the 128 sample cap 9 minutes.
