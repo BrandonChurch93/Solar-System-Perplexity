@@ -1,9 +1,52 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T16:29:15.884Z",
- "head": "5081cce271b30c2d6395504e987c5eacd1a825db",
- "note": "Round 3: final stills of the judged frames checked, limb glow mesh fix at 3720, review sheets rendering",
+ "pushed": "2026-11-21T17:01:28.204Z",
+ "head": "aac9a1b4c544c179cc886fe2bec784a18b5a9c4d",
+ "note": "Saturn round 3: review sheets running, outer ring edge and Encke gap at the left of the hold in work",
  "looks": [
+  {
+   "time": "2026-11-21T16:57:16.128Z",
+   "file": "20261121165716128-frame-f03823-review.jpg",
+   "source": "out/work/sheets/.frames-dRIvzq/f03823-review.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3823, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3823,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:47:51.876Z",
+   "file": "20261121164751876-sheet-saturn.dive-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.dive-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.dive, review tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "first": 3540,
+   "last": 3629,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:47:49.966Z",
+   "file": "20261121164749966-frame-f03629-review.jpg",
+   "source": "out/work/sheets/.frames-NV4jID/f03629-review.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3629, review tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3629,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T16:29:15.139Z",
    "file": "20261121162915139-note-r3-draft-contact.jpg",
@@ -29,28 +72,6 @@
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T16:29:12.817Z",
-   "file": "20261121162912817-note-r3-pair-hold-final.jpg",
-   "source": "out/work/saturn/r3-pair-hold-final.jpg",
-   "kind": "note",
-   "label": "Round 3 hold 3465 final, approved above",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T16:28:00.440Z",
-   "file": "20261121162800440-frame-d3-3866.jpg",
-   "source": "out/work/saturn/d3-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T16:27:41.876Z",
    "file": "20261121162741876-frame-d3-3465.jpg",
    "source": "out/work/saturn/d3-3465.png",
@@ -74,20 +95,6 @@
    "segment": "saturn.terrain",
    "frame": 3720,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:21:02.836Z",
-   "file": "20261121162102836-frame-f3-3567.jpg",
-   "source": "out/work/saturn/f3-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, final tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
