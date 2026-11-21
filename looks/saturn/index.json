@@ -1,81 +1,51 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T09:40:51.685Z",
- "head": "15b2e7553469497c1628b435d2b3cf0850760e77",
- "note": "terrain rings: sand grain and softer bands as in the approved close image; next the hold's lower-left limb",
+ "pushed": "2026-11-21T10:04:27.187Z",
+ "head": "6474c3b209b198d72f2814803be624845143a0a1",
+ "note": "round 13 result in; hold wedge fixed, starting projected maps of the approved images on rings and globe",
  "looks": [
   {
-   "time": "2026-11-21T09:40:48.231Z",
-   "file": "20261121094048231-note-hz-p3a.jpg",
-   "source": "out/work/saturn/hz-p3a.png",
+   "time": "2026-11-21T10:04:26.587Z",
+   "file": "20261121100426587-note-tz-junc2.jpg",
+   "source": "out/work/saturn/tz-junc2.png",
    "kind": "note",
-   "label": "hold lower-left limb at native scale: approved left, film right (orange wedge and box left of the limb still to fix)",
+   "label": "terrain junction: approved, round 13 frame, now",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T09:40:47.689Z",
-   "file": "20261121094047689-note-pair-hold-p3.jpg",
-   "source": "out/work/saturn/pair-hold-p3.jpg",
+   "time": "2026-11-21T10:04:26.010Z",
+   "file": "20261121100426010-note-pair-hold-c3.jpg",
+   "source": "out/work/saturn/pair-hold-c3.jpg",
    "kind": "note",
-   "label": "hold 3465 final: approved above, film below",
+   "label": "hold 3465 final, hero above, film below, after the C ring change",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T09:40:47.154Z",
-   "file": "20261121094047154-note-pair-terrain-p3.jpg",
-   "source": "out/work/saturn/pair-terrain-p3.jpg",
+   "time": "2026-11-21T10:04:25.427Z",
+   "file": "20261121100425427-note-hz-c3b.jpg",
+   "source": "out/work/saturn/hz-c3b.png",
    "kind": "note",
-   "label": "terrain 3720 final: approved above, film below, after the sand pass",
+   "label": "hold lower-left limb, hero left, film right: wedge gone",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T09:40:46.616Z",
-   "file": "20261121094046616-note-tz-p3b.jpg",
-   "source": "out/work/saturn/tz-p3b.png",
-   "kind": "note",
-   "label": "terrain 3720 final at native scale, approved left, film right: sand grain and softer bands",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T09:40:46.081Z",
-   "file": "20261121094046081-note-tz-p3.jpg",
-   "source": "out/work/saturn/tz-p3.png",
-   "kind": "note",
-   "label": "terrain 3720 final at native scale, approved left, film right: sand grain and softer bands",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T09:40:10.295Z",
-   "file": "20261121094010295-frame-t-p3r-3612.jpg",
-   "source": "out/work/saturn/t-p3r-3612.png",
+   "time": "2026-11-21T09:54:05.604Z",
+   "file": "20261121095405604-frame-t-m10-3720.jpg",
+   "source": "out/work/saturn/t-m10-3720.png",
    "kind": "frame",
-   "label": "saturn.dive frame 3612, review tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3612,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:39:23.301Z",
-   "file": "20261121093923301-frame-t-p3r-3720.jpg",
-   "source": "out/work/saturn/t-p3r-3720.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, review tier",
+   "label": "saturn.terrain frame 3720, final tier",
    "stop": "saturn",
    "segment": "saturn.terrain",
    "frame": 3720,
-   "tier": "review",
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a3d211c425dc0406"
+   "engine": "e96a669c7c94eb54"
   },
   {
-   "time": "2026-11-21T09:29:00.151Z",
-   "file": "20261121092900151-frame-h-p3-3465.jpg",
-   "source": "out/work/saturn/h-p3-3465.png",
+   "time": "2026-11-21T09:53:18.992Z",
+   "file": "20261121095318992-frame-h-m10-3465.jpg",
+   "source": "out/work/saturn/h-m10-3465.png",
    "kind": "frame",
    "label": "saturn.hold frame 3465, final tier",
    "stop": "saturn",
@@ -84,7 +54,15 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a3d211c425dc0406"
+   "engine": "e96a669c7c94eb54"
+  },
+  {
+   "time": "2026-11-21T09:40:48.231Z",
+   "file": "20261121094048231-note-hz-p3a.jpg",
+   "source": "out/work/saturn/hz-p3a.png",
+   "kind": "note",
+   "label": "hold lower-left limb at native scale: approved left, film right (orange wedge and box left of the limb still to fix)",
+   "stop": "saturn"
   },
   {
    "time": "2026-11-21T08:40:11.020Z",
