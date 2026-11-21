@@ -43,7 +43,7 @@ export const rings: RingLook = {
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
 
-export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04 }
+export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04, dive: [0.05, 0.17] }
 
 export const deckRings: RingLook = {
   color: [0.78, 1.0, 1.08],
