@@ -538,9 +538,19 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - Weak point found: at 3021 and 3022 the Red Spot shows through the cover (cover amount 0.73 and 0.88) with fine streaks along the motion: 64 and 23 samples for 138 and 110 px of raw motion (2.2 and 4.8 px per step), the same at final tier since the count is under the cap. `coverHides 0.5` would raise them to 128 and 103 at review (147 and 103 at final), but it is one number for both covers, so 3270 to 3273 would go to the cap as well and both cover sheets (about 60 min at review) would have to be rendered and looked at again. The rise cover shows nothing through it at those frames (native crops clean). Not set; named in READY as weak so the Builder can decide.
 - 16:43: the final chain waits for the sheets and then runs by itself (`/tmp/final_chain.sh`, log `/tmp/final_chain.log`): full measure (`/tmp/measure.log`), gates G5 G13 G17, G11, G12 G15, finals 2895 2997 3150 3296, compare hold and terrain at final tier, drafts 2985 3013 3286 3304 3352 3059 3060 3239 3240.
 
+### 17:17 to 17:58 UTC: terrain sheet, final chain, binaries, READY round 3
+
+- Terrain sheet (4 min, pushed 17:20): a forward flight toward the storm with depth, the near banks slide under the camera, the storm and the horizon move at their own rates. Late frames 3206 to 3239: the near field at lower left is the approved picture magnified, brushy and stretched by depth 3.
+- Full measure on the merged tree, turn 12 (936 s): G13 PASS, 0 of 463 frames over 0.02 soft, worst 3254 1.22 percent, 3253 0.91, 3255 0.84. G5 PASS, invalid 0, coverage hold 0.352, dive 0.443, terrain 0.754, rise 0.248. G17 PASS, 2895 median 1.042 p25 0.951 over 81 tiles, 3150 median 0.973 p25 0.926 over 80 tiles.
+- Gates: G5, G13, G17 PASS; G11 PASS; G12 PASS (1.41 GB); G15 PASS (jupiter/web 199 MB, jupiter/full 756 MB). On disk full 43 MB, web 13 MB.
+- Finals 2895, 2997, 3150, 3296 and drafts 2985, 3013, 3286, 3304, 3352: mirrorcheck clean on all nine.
+- Hold 2895 beside the hero at final tier (`out/work/view/io_r3z.png`, `sky_r3z.png`, hero, now, round 2). Sky high pass std in the critic's box: hero 12.84, now 12.40, round 2 10.06. Io along 0 deg at x/R .6 .7 .8 .9: hero (104 75 32)(44 36 20)(8 8 4)(6 7 5), now (110 80 38)(33 21 8)(11 5 2)(10 5 2), round 2 (168 94 37)(146 53 17)(27 6 2)(26 6 2). Shadow core: hero (5.1 8.2 10.3), now (6.4 8.4 10.1), round 2 (12.1 14.7 16.5); edge 10 to 90 percent 4 to 5 px against the hero's 8 to 10. Lit limb mean shift 0.41 px, max 1.2.
+- Compare hold and terrain at final tier looked at: same shot as the approved pictures in both.
+- `coverHides` not set: one number for both covers, both cover sheets would have to be rendered again (about 60 min). Named as a weak point in READY, the Builder may decide.
+- 17:50: main had moved to e4bda2a (harness retry on a lost drawing context, Neptune files). Binary commit 0ae6205 (full/sky-hold.webp, full/sky-terrain.webp, web/sky-terrain.webp), merge 633b7e2. After the merge: build green, vitest 62 of 62, final 2895 and draft 3060 byte identical to before the merge (same file hash), gates G5 G13 G17 G11 G12 G15 PASS, mirrorcheck clean again on the nine frames.
+- READY round 3 sent to /root.
+
 ## Next
 
-- Look at every frame of the five review sheets (`out/work/sheets/jupiter.<seg>[-cover]-16x9-review.png`); `coverHides` only if a cover shows stepped copies through it.
-- Full `npm run -s measure -- --stop jupiter`, gates `--phase 4 --only G5,G13,G17 --stop jupiter`, `--only G11`, `--only G12,G15 --g15-stops mars,jupiter`.
-- Finals 2895, 2997, 3150, 3296 on the merged tree; `python3 /tmp/holdcmp.py TAG`; compare hold and terrain at final tier; mirrorcheck on 2895, 2997, 3150, 3296, 3352, two dive and two rise frames.
-- One binary commit (full/sky-hold.webp, full/sky-terrain.webp, web/sky-terrain.webp), push, READY round 3 to /root (changes per item 1 to 8, still weak, measures).
+- Wait for the round 3 result from /root. Do not stop until the Builder says the stop is finished. Keep notes and looks pushed.
+- If the Builder asks for `coverHides`: set it in `src/stops/jupiter/plan.ts`, render both cover sheets at review tier again, look at every frame, run measure and gates.
