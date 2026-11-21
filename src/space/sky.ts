@@ -175,6 +175,7 @@ out vec3 vColor;
 uniform vec2 uCrowd;
 uniform vec4 uTerrainStars;
 uniform vec2 uCrowdShape;
+uniform vec2 uStarLift;
 out float vSize;
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
@@ -199,6 +200,7 @@ void main() {
   float lat = (uGal * normalize(position)).z;
   float b = aStar.y * (uGlow < 0.999 ? uTerrainStars.x * max(mix(1.0, crowd, uTerrainStars.y), 0.2) * mix(1.0, uTerrainStars.z, exp(-lat * lat / 0.012)) : crowd);
   if (uGlow < 0.999) b = min(b, uTerrainStars.w);
+  b *= mix(1.0, max(uStarLift.y / max(crowd, 1e-4), 1.0), uStarLift.x);
   b *= (1.0 - patchCoord(0, normalize(position)).z * uPatchLens[0].w) * (1.0 - patchCoord(1, normalize(position)).z * uPatchLens[1].w);
   vColor = aColor * b * uExposure;
 }`
@@ -336,7 +338,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
+      uniforms: { uStarLift: { value: new THREE.Vector2(0, 1) }, uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -351,6 +353,10 @@ export class Sky {
 
   setFrame(q: THREE.Quaternion): void {
     this.frame.copy(q)
+  }
+
+  setStarLift(amount: number, floor: number): void {
+    ;((this.stars.material as THREE.ShaderMaterial).uniforms.uStarLift!.value as THREE.Vector2).set(amount, floor)
   }
 
   setPatches(list: { patch: SkyPatch; weight: number }[]): void {

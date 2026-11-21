@@ -209,7 +209,7 @@ export class Engine {
           if (patch.view !== state.view) continue
           const kind = shot.segment.kind
           const arriving = kind === 'travel' && state.id !== shot.segment.stop
-          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
           const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           if (weight <= 0) continue
           const aim = aims?.patches[state.id]?.[patch.view]
@@ -219,6 +219,7 @@ export class Engine {
       }
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
+      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starFloor)
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)

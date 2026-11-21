@@ -140,6 +140,9 @@
     {"id": "ending.lookback", "stop": "ending", "kind": "lookback", "start": 171.5, "end": 177.5},
     {"id": "ending.fade", "stop": "ending", "kind": "fade", "start": 177.5, "end": 180}
   ],
+  "travel": {
+    "sky": {"openExposure": 1.0, "starFloor": 1.4, "brightShare": 0.12, "window": 0.3, "patchSettleDeg": 6, "patchSpan": 0.12, "patchDone": 0.96, "retreat": [0, 1], "retreatClose": [0.6, 1]}
+  },
   "cover": {
     "seconds": 0.5,
     "diveCenterFraction": 0.6,

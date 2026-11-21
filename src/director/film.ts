@@ -10,6 +10,7 @@ import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
 import { TravelShape, inFrame } from '../space/travel/path'
+import { discShare, openSky } from '../space/travel/open'
 
 const NO_TURN = new THREE.Quaternion()
 
@@ -34,6 +35,8 @@ const SUN_GLOW_FROM = 0.06
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
+const OPEN = config.raw.travel.sky
+const OPEN_TAPS = 8
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
@@ -48,6 +51,8 @@ export class FilmDirector implements Director {
   private readonly clear: number[] = [0]
   private readonly shapes: TravelShape[] = []
   private sunSwapSpan: [number, number] = SUN_SWAP
+  private readonly openRef = new Map<number, number>()
+  private readonly settled = new Map<number, [number, number]>()
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
@@ -390,6 +395,61 @@ export class FilmDirector implements Director {
     return { radius: THREE.MathUtils.degToRad(l.sunRadiusDeg), glare: l.sunGlare, exposure: l.exposure, sky: l.skyExposure }
   }
 
+  private leaveWeight(index: number, u: number): number {
+    return index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < this.clear[index + 1]! ? 1 : 0
+  }
+
+  private bright(index: number, at: number): number {
+    const seg = this.plans[index]!.seg.travel!
+    const time = Math.min(Math.max(at, seg.start), seg.end)
+    const u = (time - seg.start) / (seg.end - seg.start)
+    const pose = this.travelCamera(index, time)
+    const inv = pose.quaternion.clone().invert()
+    const master = config.formats[config.formatKeys.master]!
+    const aspect = master.width / master.height
+    const body = (i: number): number => {
+      const to = this.frames[i]!.origin.clone().sub(pose.position)
+      return discShare(to.clone().applyQuaternion(inv), Math.min(1 / to.length(), 1), pose.vfov, aspect)
+    }
+    const radius = mix(this.sunFor(index).radius, this.sunFor(index + 1).radius, smooth(ramp(0.25, 0.8, u)))
+    const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
+    const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
+    return Math.min(this.leaveWeight(index, u) * body(index) + body(index + 1) + glow * sun, 1)
+  }
+
+  private brightNear(index: number, time: number): number {
+    let sum = 0
+    for (let k = -OPEN_TAPS; k <= OPEN_TAPS; k++) sum += this.bright(index, time + (k / OPEN_TAPS) * OPEN.window)
+    return sum / (2 * OPEN_TAPS + 1)
+  }
+
+  openOf(index: number, time: number): number {
+    const seg = this.plans[index]!.seg.travel!
+    let ref = this.openRef.get(index)
+    if (ref === undefined) {
+      ref = Math.min(OPEN.brightShare, this.brightNear(index, seg.start + 1 / config.fps), this.brightNear(index, seg.end - 1 / config.fps))
+      this.openRef.set(index, ref)
+    }
+    return openSky(this.brightNear(index, time), ref)
+  }
+
+  patchSpanOf(index: number): [number, number] {
+    let span = this.settled.get(index)
+    if (!span) {
+      const seg = this.plans[index]!.seg.travel!
+      const end = this.travelCamera(index, seg.end).quaternion
+      const steps = 240
+      let from = 0
+      for (let k = steps - 1; k >= 0 && from === 0; k--) {
+        const off = THREE.MathUtils.radToDeg(this.travelCamera(index, seg.start + (k / steps) * (seg.end - seg.start)).quaternion.angleTo(end))
+        if (off > OPEN.patchSettleDeg) from = (k + 1) / steps
+      }
+      span = [Math.min(from, OPEN.patchDone - OPEN.patchSpan), OPEN.patchDone]
+      this.settled.set(index, span)
+    }
+    return span
+  }
+
   shotAt(frame: number, time: number): Shot {
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
@@ -406,6 +466,8 @@ export class FilmDirector implements Director {
     let flare = 0
     let skyGlow = 1
     let skyTurn = NO_TURN
+    let skyStars = 0
+    let skyPatch = 1
     const index = config.stopIds.indexOf(segment.stop)
     const state = (i: number, view: ViewKind, weight = 1): SetState => {
       const p = this.plans[i]!
@@ -422,7 +484,7 @@ export class FilmDirector implements Director {
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
       const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: mix(p.p.light.skyExposure, LOOKBACK.skyExposure, arrived) }
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: mix(p.p.light.skyExposure, LOOKBACK.skyExposure, segment.kind === 'retreat' ? smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u)) : 1) }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
@@ -433,6 +495,11 @@ export class FilmDirector implements Director {
         const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
         const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
         pose = inSet(s, local)
+        const to = s.origin.clone().sub(pose.position)
+        const master = config.formats[config.formatKeys.master]!
+        const lit = 0.5 - 0.5 * this.sunWorld.dot(to.clone().normalize())
+        const share = discShare(to.clone().applyQuaternion(pose.quaternion.clone().invert()), Math.min(1 / to.length(), 1), pose.vfov, master.width / master.height)
+        skyStars = openSky(share * lit, OPEN.brightShare) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
       } else {
@@ -446,14 +513,18 @@ export class FilmDirector implements Director {
     } else if (segment.kind === 'travel' && index + 1 < this.plans.length) {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
-      const begin = this.clear[index + 1]!
       pose = this.travelCamera(index, time)
       const position = pose.position
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
-      const leaveWeight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < begin ? 1 : 0
+      const open = this.openOf(index, time)
+      light.sky = mix(light.sky, OPEN.openExposure, open)
+      skyStars = open
+      const span = this.patchSpanOf(index)
+      skyPatch = smoother(ramp(span[0], span[1], u))
+      const leaveWeight = this.leaveWeight(index, u)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       const midTime = (frame + config.shutterFraction * 0.5) / config.fps
@@ -556,7 +627,7 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, near, far, sun, sets, post, cover, dust, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, near, far, sun, sets, post, cover, dust, dustOffset }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

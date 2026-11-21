@@ -98,3 +98,16 @@ After a compaction: read `assets-src/shared/TRAVEL-AGENT.md` first, then this fi
 - 07:12 Proof on the dust head passed (`out/work/travel/b6/`): 9895a050abe22d0c, a7e1670abf3e4a24, 0a022282c24d2285, 79352ec57fa5c00b. Milestone 3 (the ending) reported with the dust pairs.
 - 07:20 Review sheets with the new dust in `out/work/travel/rev2/` (jupiter, venus, saturn, sun travel): the open sky frames carry motes that drift and streak with the flight, no frame is empty. Final stills of the ten judged frames with the new dust in `out/work/travel/fin2/` (17 to 70 s each).
 - R4 read against the sheets: no jump in direction, speed or lens at any join (probe), leaving bodies blur smoothly at final, far points hold still (sky lock), stars hold still when the camera does. Left for the check with the finished stops: the speed into `saturn.travel` from Saturn's final rise, Mercury's own sun plate against the sky's disc in `sun.travel`, the lookback values against the real Neptune, 5090 to 5101 in the retreat.
+
+## Sky task (Builder mail 2026-11-21 11:15 UTC): sky across the eight travels and the retreat
+
+- Merged main 56b2ce9 into agent/travel (fast forward), build green. The harness renders from `dist`, so `npm run -s build` before every render and source edits during a render are safe.
+- Byte baseline at draft before any change: `bash assets-src/travel/bytes.sh sky-before` (22 frames in `out/work/travel/sky-before/`, hashes in `/tmp/bytes-before.log`). After: `bash assets-src/travel/bytes.sh sky-after`, then cmp each pair.
+- Cause of the black middle: `STAR_VERT` dims every star off the band by `crowd` (floor 0.14, about 0.31 after the power) times the stop's sky exposure (0.25 to 0.65). The band is only in view in earth.travel.
+- Built (all numbers in `config/showcase.json` `travel.sky`):
+  - `src/space/travel/open.ts`: `discShare` (share of the frame a disc covers, smooth) and `openSky`.
+  - `film.ts`: `bright(index, time)` = leaving body share times its weight + arriving body share + the sky's Sun disc share; `brightNear` averages it over plus and minus `window` seconds; `openOf` = `1 - smoothstep(bright / ref)` with `ref = min(brightShare, bright one frame after the start, bright one frame before the end)`, so the first and last travel frame keep today's sky exposure exactly (measured with `npx tsx assets-src/travel/open.ts`: open 0 at both).
+  - Travel sky exposure = mix(today's value, `openExposure`, open). New `Shot.skyStars` = open lifts the star floor (`Sky.setStarLift`, uniform `uStarLift` in the star vertex shader, factor exactly 1 when the lift is 0).
+  - New `Shot.skyPatch`: the arriving patch weight. `patchSpanOf` scans the travel camera for the last time it is more than `patchSettleDeg` off its final direction; the patch eases in from there to `patchDone`. The patch feather (margin 12.5 percent of a 30 degree view) is the hold frame's border, so any earlier and the border is in frame.
+  - Retreat: sky exposure eases over the whole retreat (`retreat`), stars lift with Neptune's lit share and close again from `retreatClose`, so the lookback is untouched.
+- Engine files touched: `src/core/types.ts` (two optional Shot fields), `src/core/engine.ts` (patch weight from the shot, star lift call), `src/space/sky.ts` (uniform and setter).
