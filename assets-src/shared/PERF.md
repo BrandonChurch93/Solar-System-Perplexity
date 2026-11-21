@@ -71,3 +71,20 @@ Seconds are the time `tools/still.ts` reports for one frame at `final` on this V
 | 2726 rise | 250.0 | 207.5 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
 
 Star draw per sample: 0.89 to 0.22 s (hold), 1.15 to 0.28 s (terrain), 1.07 to 0.24 s (dive), 0.77 to 0.03 s (rise). Points drawn: 451,000, 589,000, 474,000 and 34,000 of 3,465,000. `npm run build`, `npx vitest run` (24 tests) and `npm run determinism` pass.
+
+### 2. Sky pass: band, patch and glare work only where it has weight (`0ef5c3e`)
+
+`src/space/sky.ts`, fragment shader of the sky map pass. The band block (nine band fetches, the region fetch, `inverseFilmic`, `pow`) sits in a single pass loop that runs only where the band weight `bc.z` is above zero. The four patch fetches of each sky patch run only where the patch weight is above zero. The sun glare block is a loop on `uSunGlare > 0`. Zero weight leaves `mix` and the additive patch exactly unchanged, the derivatives are taken outside the loops.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 59.6 | 57.0 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 80.8 | 58.9 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 190.1 | 179.7 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 207.5 | 87.5 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Sky pass per sample: 1.65 to 1.56 s (hold), 2.30 to 0.87 s (terrain), 1.68 to 1.54 s (dive), 2.36 to 0.49 s (rise). The gain depends on how much of the frame the galactic band covers: at the hold and the dive it covers most of it.
+
+### 3. Star cull only in capture mode (`6e9659f`)
+
+Asked for by the Builder. The cull loop walks all 3,465,000 points each time the view changes. Measured in headless Chrome on this VM (13 views, both asset sets, the star count is the same for `web` and `full`): 44 to 67 ms per call, median 52 ms. That is nothing against a software rendered frame (one call per frame) and far too much for the interactive app. `Sky.cull` is a public field, off by default. `src/main.ts` switches it on when `mode === 'capture'`, which is the mode of every harness tool that renders frames (`tools/lib/browser.ts`). In live, autopilot and export the stars draw as the plain non indexed range of all points, exactly as before change 1.
