@@ -42,14 +42,18 @@ The two lightning cells of the hero, cut out by `lightning.py` as light above th
 
 Round 3: the file now holds 512 rows. Rows 0 to 255 are the hold table above, unchanged. Rows 256 to 511 are a far table for every frame after the hold, written by `python3 assets-src/venus/fit/far.py public/assets/venus/full/limb.bin` (it reads the first 256 rows of the file it is given and writes both sets): along the azimuth a median over 9 cells and a Gaussian of 2 cells in square root space, so the hero's short bright streak and violet patch on the night limb do not travel with the camera; on the night side the inside veil is one falloff (alpha halved, monotone inward and outward). `rim.ts` and `globe.ts` mix from the hold table to the far table with `uLimbFar` (0 in the hold, 1 from 0.5 s after it). Check at draft 1287: the deepest local dip of the radial luma profile across the limb is at most 3 levels at every azimuth (6 to 7 before).
 
-### public/assets/venus/{full,web}/hold-detail.jpg (1536 x 1536 and 768 x 768), hold-rim.bin (513 x 96 float32 RGBA, the same file in both sets), src/stops/venus/hold.json, assets-src/venus/hold/frame.json
+Phase 6, item 4 (night limb at the rise pose, rim line outside a dark trough): `far.py` again, same command (input the hold rows, kept in `out/work/venus/r3/bak/limb-hold.bin`; the round 23 table is `out/work/venus/r3/bak/limb-r23.bin`). The round 3 night model had a step at the silhouette (inside edge 0.072 against 0.040 just outside, linear) and an inside spike 2 px wide at the rise's disc radius of 405 px. Now the night side's inside rows start from the first outside row, so one value crosses the silhouette, and fall inward with `SHAPE = (0.3, 6.0, 0.7, 45.0)` (two exponentials: weight and length in px at 543 px radius). Only the night columns of the far rows change (columns 0 to 13 and 49 to 64); the hold rows and the outside rows are the same bytes. Radial luma rows (`limbrow`): 1586 at azimuth -90: inside 41 to 50, edge 56, outside 47, 45, 43 (round 23: trough 36, edge 65). 1287 at azimuth -60: inside 43 to 48, edge 53, outside 49, 47, 44 (round 23: edge 73, outside 65, 53).
+
+### public/assets/venus/{full,web}/hold-detail.jpg (2048 x 2048 and 1024 x 1024), hold-rim.bin (513 x 96 float32 RGBA, the same file in both sets), src/stops/venus/hold.json, assets-src/venus/hold/frame.json
 
 Phase 6 polish, item 2 (hold 1185: strands to the edge, grey green rim and gold glint on the night side, fine structure on the night side). No model. Two gain layers for the hold only, both log2 of (approved hero / film without the layers):
 
 - `hold-detail.jpg`: byte 128 is a gain of 1 and the 255 levels span 4 stops (`stops` in `hold.json`). The globe shader projects it onto the sphere through the fitted hold camera (`src/stops/venus/fit.json`, map half width 1.016 disc radii, `margin`), so it is painted on the cloud map and turns and drifts with it. Where the layer acts the wrap is read at a fixed level (512 px wide, `look.hold.base`) as the smooth base, and the layer puts the hero's own cloud detail back on top.
 - `hold-rim.bin`: float32 RGBA, 512 cells of azimuth plus one wrap column, 96 rows of radius about the film's silhouette in the view's frame (the closest approach point of the view ray projected through the fitted camera). Rows 0 to 39 lie inside the disc (0.95 to 1 radii, read by `globe.ts`), rows 40 to 95 outside (1 to 1.08 radii, read by `rim.ts`, faded out from 1.05 to 1.07). It is the part of the gain that is smooth along the limb (a median of 15 px runs along each ring before the ratio is taken), so no star enters it (the stars belong to the sky patch, which does not move with the planet). It carries the hero's out of round edge and the glow just past it. It acts only while the camera is within 3 to 6 percent of the fitted distance (`look.hold.near`).
 
-Both weights go to zero with `uLimbFar` in the 0.5 s after the hold, so the dive, the terrain and the rise do not see them.
+Both weights go to zero with `uLimbFar` in the 0.5 s after the hold, so the dive, the terrain and the rise do not see the hold's light.
+
+Items 3 and 4 (night side structure at 1287 and 1586): past the hold the detail map stays alive as a high pass only. `globe.ts` divides its gain by the gain of the same map read at mip level 5 (`look.hold.far.lod`), so the hero's fine cloud structure is carried and its broad light is not painted twice. It acts inside 0.86 to 0.94 of the hold's disc radius (`look.hold.far.inner`), only where the map has at least 1 to 1.25 texels per screen pixel (`look.hold.far.dense`) and not under the motion taps. For that the map went from 1536 to 2048 px (web 1024): at 1287 the screen has 766 px per radius at the nadir, the 2048 map 1008 texels per radius (1.32 per pixel; the 1536 map had 0.99).
 
 Why two layers: a single map painted on the globe (takes f1 to f5) reached the same numbers at 1185 but showed a doubled rim at frames 1110 and 1259, because its edge part turned with the clouds (1.4 deg over the hold). The edge light belongs to the view, the cloud detail to the globe.
 
@@ -62,12 +66,17 @@ Script: `assets-src/venus/hold/detail.py`, inputs `references/approved/venus-her
 
 The hero's painted disc is an ellipse (669.8 by 664.3 px at 2816 wide), the film's is a sphere (670.7 by 670.5): the outer 2.5 px at the top and 4.2 px at the bottom of the film's disc take the hero's glow there, so the visible edge is the hero's.
 
-Takes: f1 to f5 (one map, rejected for the doubled rim at the hold's ends), g1 (build), g2, g3 (kept).
+Takes: f1 to f5 (one map, rejected for the doubled rim at the hold's ends), g1 (build), g2, g3 (the 1536 map, kept until 23:00), then the same three steps at 2048 with `SIZE = {'full': 2048, 'web': 1024}`: h1 (build), h2, h3 (kept). `frame.json` and the rim strip's layout did not change.
 
 Checks, take g3 (frame 1185, final tier, mean absolute difference from the hero in levels of 255, zones whole, disc inside 395 px, ring 395 to 452 px, halo 456 to 560 px, sky):
 - nograin: 1.95, 0.72, 0.45, 2.96, 2.41 (round 23 build nograin 4.62, 8.65, 5.90, 4.91, 2.41).
 - with grain, as judged: 2.30, 1.25, 1.03, 3.19, 2.68 (round 23 build 4.80, 8.53, 5.95, 5.14, 2.73).
 - High pass luma against the hero in five boxes: shift under 0.03 px, correlation 0.995 to 0.997 (0.62 before), detail level 97 to 99 percent of the hero's.
+
+Checks, take h3 (the 2048 map, same zones):
+- nograin: 1.90, 0.56, 0.33, 2.96, 2.41.
+- with grain, as judged: 2.27, 1.15, 0.98, 3.19, 2.68.
+- High pass luma against the hero in five boxes: correlation 0.986 to 0.998.
 - Radial profile across the limb at eight azimuths within 3 levels of the hero except the one pixel on the silhouette at the top (177 against 163) and at -45 deg, 1.006 radii (56 against 67).
 - G17: 1185 median 1.124, p25 0.832 (1.122 before); 1440 median 1.035, p25 0.976.
 - Draft frames 1095, 1110, 1150, 1230, 1259, 1263, 1267, 1271, 1275, 1287: one clean edge in every frame, no doubled rim, the layers gone by 1275.

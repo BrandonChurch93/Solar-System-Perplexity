@@ -474,3 +474,11 @@ Item 4, rise 1586, draft stills at 16x9 (`r2/out/work/venus/p6/i4a-1586.png`, `i
 - The hold's detail layer is alive in the rise as a high pass too (the rise is not `ending`); at 1586 it gives the night side fine structure. To judge at final tier after the refine passes.
 
 Item 3: map at 2048 (web 1024), build pass h1: zones nograin 2.21, 1.46, 0.92, 3.26, 2.41 (1536 build g1 2.24, 1.54, 0.97, 3.26, 2.41). Refine passes h2, h3 running (`/home/user/workspace/hchain.sh`, logs `/tmp/hp-h2.log`, `/tmp/hp-h3.log`).
+
+## Phase 6 polish, state at 23:10 (read this first after a compaction)
+
+- Hold map at 2048 refined to take h3, kept: zones at 1185 final nograin 1.90, 0.56, 0.33, 2.96, 2.41; with grain, as judged (`r2/out/work/venus/p6/f1-1185.png`) 2.27, 1.15, 0.98, 3.19, 2.68. Guard 4.80, 8.53, 5.95, 5.14, 2.73.
+- `fit/far.py` has `LIT = (0.9, 0.85, 0.85)` (lit columns of the far rows: inside rgb, inside alpha, outside rgb) for minor 16 of the scorecard (1287, lit left limb broad and featureless with a heavy halo). Not yet judged in a still. Undo: set it to (1, 1, 1) and run `python3 assets-src/venus/fit/far.py out/work/venus/r3/bak/limb-hold.bin`.
+- Draft strips `view/h9.jpg` (hold to dive 1259 to 1303, one edge in every frame) and `view/r9.jpg` (rise 1560 to 1590, the plume curls from 1570 on) are in the looks.
+- Block pattern in the near black sky (minor): it is in the approved hero itself (an 8 px grid at 2816 px, the step at block edges is 1.91 times the step elsewhere in the dark sky; the film shows it at 5.45 px). Left as it is, the sky patch changes nothing inside the approved border.
+- Final tier proof stills rendering: `/home/user/workspace/fin.sh f1` (1185, 1287, 1586, 1440, into `r2/out/work/venus/p6/f1-F.png`). Then review sheets of both covers again (`./sheets2.sh c13 review eng both`), then the measure chain, RECIPE (done for the hold map and the far table), commit with binaries, POLISH READY.

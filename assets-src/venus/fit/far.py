@@ -10,6 +10,7 @@ NIGHT = (0.12, 0.5)
 REF_PX = 543.0
 SHAPE = (0.3, 6.0, 0.7, 45.0)
 VEIL = 0.5
+LIT = (0.9, 0.85, 0.85)
 
 
 def step(v, lo, hi):
@@ -43,9 +44,10 @@ def build(hold):
     low = np.minimum.accumulate(lum, axis=0)
     out = out * (low / np.maximum(lum, 1e-9))[..., None]
     far = np.zeros((2 * HALF, NA + 1, 4), np.float32)
-    far[:HALF, :NA, :3] = inside
-    far[HALF:, :NA, :3] = out
-    far[:HALF, :NA, 3] = alpha[:HALF] * (1 + (VEIL - 1) * night[None])
+    lit = 1 - night[None, :, None]
+    far[:HALF, :NA, :3] = inside * (1 + (LIT[0] - 1) * lit)
+    far[HALF:, :NA, :3] = out * (1 + (LIT[2] - 1) * lit)
+    far[:HALF, :NA, 3] = alpha[:HALF] * (1 + (VEIL - 1) * night[None]) * (1 + (LIT[1] - 1) * lit[..., 0])
     far[:, NA] = far[:, 0]
     return far
 
