@@ -6,7 +6,7 @@ import numpy as np
 from scipy.interpolate import PchipInterpolator
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lib import ROOT, WORK, lum  # noqa: E402
+from lib import ROOT, WORK, calm, lum  # noqa: E402
 
 REF = ROOT / "references" / "approved" / "saturn-close.jpg"
 SRC = {"full": WORK / "close-x2.png", "web": REF}
@@ -22,12 +22,67 @@ OUT = 3
 TOP = 1.0
 GHOST = [[1380, 730], [1375, 760], [1369, 795], [1362, 833]]
 ZONE = (50.0, 230.0)
+VEIL = (46.0, 62.0, 84.0)
+VEIL_RUN = 20
+VEIL_MAX = 0.5
+VEIL_LEFT = 150.0
+VEIL_LIMB = (22.0, 80.0)
 
 
 def disc(poly, w, h):
     globe = np.zeros((h * 4, w * 4), np.uint8)
     cv2.fillPoly(globe, [np.round(poly * 4).astype(np.int32)], 255)
     return cv2.resize(globe, (w, h), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+
+
+def scene(v):
+    c = v / 255.0
+    c = np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+    y = np.clip(c, 0, 0.985)
+    k = 0.59 * y - 0.03
+    return (-k - np.sqrt(np.maximum(k * k - 4 * (2.43 * y - 2.51) * 0.14 * y, 0))) / (2 * (2.43 * y - 2.51))
+
+
+def fill(img, known, k=1.0):
+    col = img.astype(np.float32) * known[..., None]
+    acc = known.copy()
+    for s in (2, 5, 12, 30, 70):
+        blur = cv2.GaussianBlur(col, (0, 0), s * k)
+        wb = cv2.GaussianBlur(acc, (0, 0), s * k)
+        hole = (acc < 0.5) & (wb > 0.02)
+        col[hole] = blur[hole] / wb[hole][:, None]
+        acc[hole] = 1
+    return col
+
+
+def veil(img, alpha, line, globe):
+    h, w = img.shape[:2]
+    n = len(line)
+    d = np.arange(-4, VEIL[2] + 1, dtype=np.float32)
+    mx = np.tile(np.arange(n, dtype=np.float32), (len(d), 1))
+    my = line[None, :].astype(np.float32) - d[:, None]
+    grey = lambda a: lum(scene(a[..., ::-1].astype(np.float64))).astype(np.float32)
+    strip = cv2.remap(grey(img), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    body = cv2.remap(globe, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    strip[body > 0.02] = np.nan
+    pad = np.pad(strip, ((0, 0), (VEIL_RUN, VEIL_RUN)), constant_values=np.nan)
+    calm = np.nanmedian(np.stack([pad[:, i:i + n] for i in range(2 * VEIL_RUN + 1)]), axis=0)
+    calm = np.where(np.isnan(calm), 0, calm)
+    sky = np.median(calm[(d >= VEIL[1]) & (d <= VEIL[2])], axis=0)
+    sky = cv2.GaussianBlur(sky.reshape(1, -1), (0, 0), 12, borderType=cv2.BORDER_REPLICATE).ravel()
+    ring = cv2.remap(grey(fill(img, (alpha > 0.6).astype(np.float32))), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    a = np.clip((calm - sky[None, :]) / np.maximum(ring - sky[None, :], 1e-4), 0, VEIL_MAX)
+    top = np.clip((VEIL[1] - d) / (VEIL[1] - VEIL[0]), 0, 1)[:, None]
+    foot = np.clip(d / 4.0, 0, 1)[:, None]
+    side = np.clip(np.arange(n) / VEIL_LEFT, 0, 1)[None, :]
+    ease = lambda t: t * t * (3 - 2 * t)
+    away = cv2.remap(cv2.distanceTransform((globe < 0.5).astype(np.uint8), cv2.DIST_L2, 5), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    a = cv2.GaussianBlur(a * ease(top) * ease(foot) * ease(side) * ease(np.clip((away - VEIL_LIMB[0]) / (VEIL_LIMB[1] - VEIL_LIMB[0]), 0, 1)), (0, 0), 0.7)
+    rows = np.arange(h, dtype=np.float32)[:, None]
+    out = np.zeros((h, w), np.float32)
+    out[:, :n] = cv2.remap(a, np.tile(np.arange(n, dtype=np.float32), (h, 1)), line[None, :].astype(np.float32) - rows + 4, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    print("veil above the ring horizon: alpha median, p90, max", [round(float(v), 3) for v in (np.median(a[a > 0.004]), np.percentile(a[a > 0.004], 90), a.max())], "sky level by column 100, 700, 1300:", [round(float(sky[x]), 4) for x in (100, 700, 1300)])
+    return out
 
 
 def ring_alpha():
@@ -67,7 +122,7 @@ def ring_alpha():
     wedge = np.clip(rows - carried - TOP, 0, 1)
     alpha[:, left:] = (rows > base[None, :] - 1.0).astype(np.float32)
     alpha[:, reach] = np.maximum(alpha[:, reach], wedge)
-    alpha = alpha * (1 - globe)
+    alpha = np.maximum(alpha, veil(img, alpha, np.concatenate([horizon[:left], np.polyval(fit, reach)]), globe)) * (1 - globe)
     edge = np.concatenate([limb[limb[:, 1] > 520], np.array(HEAD, np.float64), JPTS[:1]])
     edge = edge[np.argsort(edge[:, 1])]
     trace = np.concatenate([edge[edge[:, 1] > float(np.polyval(fit, JPTS[0, 0])) - ABOVE], GHOST])
@@ -87,15 +142,10 @@ def build(key, alpha, zone, under):
     h, w = img.shape[:2]
     k = w / alpha.shape[1]
     a = cv2.resize(alpha, (w, h), interpolation=cv2.INTER_LINEAR) if k > 1 else alpha
-    known = (a > 0.6).astype(np.float32)
-    col = img.astype(np.float32) * known[..., None]
-    acc = known.copy()
-    for s in (2, 5, 12, 30):
-        blur = cv2.GaussianBlur(col, (0, 0), s * k)
-        wb = cv2.GaussianBlur(acc, (0, 0), s * k)
-        fill = (acc < 0.5) & (wb > 0.02)
-        col[fill] = blur[fill] / wb[fill][:, None]
-        acc[fill] = 1
+    ring = cv2.GaussianBlur(cv2.erode((a > 0.98).astype(np.uint8), np.ones((int(4 * k) | 1,) * 2, np.uint8)).astype(np.float32), (0, 0), 2 * k)
+    img, share = calm(img, ring, k)
+    print(key, "share of ring texels calmed", round(share, 4))
+    col = fill(img, (a > 0.6).astype(np.float32), k)
     out = np.clip(np.where((a > 0.6)[..., None], img.astype(np.float32), col), 0, 255).astype(np.uint8)
     dst = ROOT / "public" / "assets" / "saturn" / key
     cv2.imwrite(str(dst / "skim-rings.jpg"), out, [cv2.IMWRITE_JPEG_QUALITY, 93])

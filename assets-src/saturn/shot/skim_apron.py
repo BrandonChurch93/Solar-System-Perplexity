@@ -10,7 +10,7 @@ from scipy.ndimage import distance_transform_edt, map_coordinates
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "close"))
-from lib import ROOT, WORK, lum  # noqa: E402
+from lib import ROOT, WORK, calm, lum  # noqa: E402
 from skim_rings import JPTS, ring_alpha  # noqa: E402
 from layoutgeo import GW, GH, C, hc, side, plane_from_approved, a2g, model_lambda  # noqa: E402
 
@@ -308,6 +308,10 @@ def ship():
     base[0:H, 2 * X0:2 * X0 + W] = ref
     img = np.clip(img * (1 - w) + base * w, 0, 255).astype(np.uint8)
     mask = cv2.imread(str(OUT / "apron-2k-mask.png"), cv2.IMREAD_GRAYSCALE)
+    ring = cv2.GaussianBlur(cv2.erode((mask > 250).astype(np.uint8), np.ones((3, 3), np.uint8)).astype(np.float32), (0, 0), 1)
+    img, share = calm(img, cv2.resize(ring, (2 * W, 2 * H), interpolation=cv2.INTER_LINEAR), 1.0)
+    img = img.astype(np.uint8)
+    print("share of ring texels calmed", round(share, 4))
     for key, (cw, ch) in SIZES.items():
         dst = ROOT / "public" / "assets" / "saturn" / key
         out = img if (cw, ch) == (2 * W, 2 * H) else cv2.resize(img, (cw, ch), interpolation=cv2.INTER_AREA)

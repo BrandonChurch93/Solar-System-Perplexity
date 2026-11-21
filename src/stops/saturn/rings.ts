@@ -52,7 +52,10 @@ export interface RingLook {
   apronEdge: [number, number, number]
   apronAway: [number, number]
   apronShow: number
+  debloom: number
+  skimHigh: [number, number, number, number]
   reach: number
+  skimReach: number
 }
 
 const VERT = /* glsl */ `
@@ -157,6 +160,9 @@ uniform sampler2D uApronMask;
 uniform vec4 uApron;
 uniform vec2 uApronSize;
 uniform vec4 uApronFit;
+uniform sampler2D uBloomMap;
+uniform vec2 uDebloom;
+uniform vec4 uSkimHigh;
 uniform sampler2D uPolarMap;
 uniform highp sampler2D uPolarWarp;
 uniform vec2 uPolarSpan;
@@ -211,7 +217,7 @@ void main() {
   vec2 kgx = dFdx(kv);
   vec2 kgy = dFdy(kv);
   vec2 ke = min(kv, 1.0 - kv);
-  float wI = (inS > 0.0 || min(ke.x, ke.y) > -0.004) ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y) + 0.004) : 0.0;
+  float wI = inS > 0.0 ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y)) : 0.0;
   vec2 av = (kv - uApron.xy) * uApron.zw;
   vec2 agx = kgx * uApron.zw;
   vec2 agy = kgy * uApron.zw;
@@ -398,8 +404,13 @@ void main() {
     vec2 kq = (clamp(kv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
     vec3 pix = vec3(0.0);
     for (int j = 0; j < (wK > 0.0 ? 1 : 0); j++) pix = textureGrad(uSkimMap, kv, kgx * uSkimFit.w, kgy * uSkimFit.w).rgb;
+    for (int j = 0; j < (wK * uSkimHigh.z > 0.0 ? 1 : 0); j++) {
+      vec3 wide = textureGrad(uSkimMap, kv, kgx * uSkimFit.w * uSkimHigh.w, kgy * uSkimFit.w * uSkimHigh.w).rgb;
+      pix -= uSkimHigh.z * max(pix - wide, 0.0) * smoothstep(uSkimHigh.x, uSkimHigh.y, max(pix.r, max(pix.g, pix.b)));
+    }
     for (int j = 0; j < (wK < 1.0 ? 1 : 0); j++) pix = mix(textureGrad(uApronMap, av, agx * uSkimFit.w, agy * uSkimFit.w).rgb, pix, wK);
-    vec3 img = inverseFilmic(pix) * vig / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette);
+    vec3 glow = textureLod(uBloomMap, clamp(av, 0.0, 1.0), 0.0).rgb;
+    vec3 img = max(inverseFilmic(pix) / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x) * vig;
     col = mix(col, img * km.r, wS);
     alpha = mix(alpha, km.r, wS);
     texels = mix(texels, skimTexels, wS);
@@ -420,13 +431,17 @@ export class Rings {
   constructor(profile: Record<string, THREE.IUniform>, layout: Record<string, THREE.IUniform>, shots: Record<string, THREE.IUniform>, look: RingLook, polar: number) {
     const [r0, r1] = ringsJson.span as [number, number]
     const seg = 720
-    const bands = 6
-    const pos = new Float32Array((seg + 1) * (bands + 1) * 3)
     const index: number[] = []
     const inner = Math.min(r0 - 0.01, 0.01)
     const outer = Math.max(r1 + 0.01, look.reach) / Math.cos(Math.PI / seg)
+    const radii: number[] = []
+    for (let j = 0; j <= 6; j++) radii.push(inner + ((outer - inner) * j) / 6)
+    const more = look.skimReach > outer ? Math.ceil(Math.log(look.skimReach / outer) / Math.log(1.25)) : 0
+    for (let j = 1; j <= more; j++) radii.push(outer * Math.pow(look.skimReach / outer, j / more))
+    const bands = radii.length - 1
+    const pos = new Float32Array((seg + 1) * (bands + 1) * 3)
     for (let j = 0; j <= bands; j++) {
-      const r = inner + ((outer - inner) * j) / bands
+      const r = radii[j]!
       for (let i = 0; i <= seg; i++) {
         const a = (i / seg) * Math.PI * 2
         pos.set([Math.cos(a) * r, 0, Math.sin(a) * r], (j * (seg + 1) + i) * 3)
