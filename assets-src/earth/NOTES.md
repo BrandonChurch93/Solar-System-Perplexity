@@ -649,3 +649,25 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - On a sheet with a tile every 8 frames the limb radius reads (px at 1920): now 474, 476, 482, 490, 507, 603, 1618 (cover 0.28); E1 474, 476, 482, 490, 513, 673, 1312 (cover 0.79); Mars 616, 620, 648, 682, 730, 856, 1228 (cover 0.79).
 - Cost against now: the landing under the cover is a little shorter (limb steps 57, 30, 13, 2 px per frame from 1880 against 36, 22, 14, 6, 1 from 1879).
 - Rise, thought through again: from 2144 to 2152 the rate falls by 0.79 per frame, an exponential with the same path length from 2140 would be 0.81 per frame. The curve is only steeper below 1 percent per frame (2152 to 2156). Left as it is.
+
+### E1 at the review tier, kept (14:36 to 14:52 UTC, `out/work/earth/p46/`)
+
+- E1 is in `plan.ts`: `surge { glide: 0.03, rise: 85, fall: 4, swell: [0.38, 13, 2.4] }`, `coverEdge` [0.2, 0.5]. Build passes, vitest 59 of 59, probe joins the same (1680 turn 0.049 to 0.050, speed 1.16e-1 to 1.15e-1; 2175 turn 0.002 to 0.003, speed 7.96e-2 to 8.00e-2).
+- Draft strip 1874 to 1889 (`p46/strip-1874-1889.jpg`): one move, the limb sweeps from a steep diagonal at the left to a shallow arc near the top over 1879 to 1883, the deck thins from 1886.
+- Review stills beside the round 19 head (`p46/cmp-1876-head-e1.jpg`, `cmp-1878-head-e1.jpg`, pushed as looks): 1876 (38 px against 77) the globe reads, streaks half as long; bright cloud specks still draw short bars with hard ends (a box shutter on point highlights, not stepped copies). 1878 (cover 0.79) is the deck over the globe with the limb, the blue line and the Rockies faintly through it; the head showed 81 px of streaks under a thin cover. 1880 the deck with a blurred limb, 1883 the deck with the limb near the top and the blue line, sky black (stars are smeared out until the camera lands at 1884).
+- Limb from the top, E1: 1879 -0.012, 1880 0.071, 1881 0.124, 1882 0.152, 1883 0.164, 1884 0.166, then 0.001 per frame through 1892 (the terrain camera's glide). Steps 90, 57, 30, 13, 2, 1 px: the same halving per frame as the head, one frame later.
+- Still to do before READY with E1: flow 1903 to 1919, texel views 1866, 1872, 1875, final of 1857 against `q3`, `npm run measure -- --stop earth` (G13 counts dive frames outside 1876 to 1891).
+
+### Night clouds of the far side are flat mauve patches (found 14:40 UTC on the 2156 final, not fixed yet)
+
+- 2156 final (`out/work/earth/q3/f-2156-final.png`, box x 1300 to 1660, y 520 to 760): the night Atlantic carries flat patches at (30, 32, 45) and (24, 26, 37) against a sea of (5, 15, 33). They read as pale land. They are the far cloud map's solid clouds: on the night side the cloud colour is made grey (`bad`), dimmed to 0.2 (`away.dim`), and the sea under it is blue, so red rises by 25 code values at the cloud's edge. The far map itself has no land there (checked, `/tmp/far-atl.jpg`).
+- The hero's own night clouds (1857 final, box x 1100 to 1460, y 380 to 620) are wisps of blue white highlights on dark blue, never a flat patch.
+- Plan: a look value `away.cloud` (a tint for far clouds past the terminator, same gate as `away.dim`), start with [0.3, 0.6, 0.95], judge on draft and final stills of 2156 and on 1857 (must not change where the hero's clouds are). Target for a solid night cloud about (13, 24, 44): a faint blue grey veil.
+
+### Rise: ease out without the stop and restart (designed 14:50 UTC, not applied yet)
+
+- Now (`npx tsx assets-src/earth/dive/ease.ts --kind rise --step 1`): the rate per frame falls with a ratio that steepens from 0.95 (2138) to 0.55 (2156), is 0.00 from 2160 to 2162 and comes back to -0.05 (the drift into the travel). A brake to a dead stop and a restart. Mercury and Neptune have the same curve and R4 faulted both (\"abrupt deceleration to a near-complete stop\", \"lengthen the ease-out curve\").
+- Cause of the stop: `StopPlan.rise` blends its path into `after(time)` over the last 40 percent, and the settle (10, gentle) has brought the path to rest before the drift has weight.
+- Round 11 faulted the smeared sky of 2156 (settle 5). That smear was the camera's turn, not its travel: stars do not move when the camera only recedes.
+- Design: `EarthPlan extends StopPlan`, `override rise` scales the camera position of `super.rise` by exp(-gain s^a (1 - s)^b), s from `tail.from` of the segment to its end. The direction from the planet and the camera's turn stay as they are, so the planet's centre stays on its screen point, the stars are as sharp as now, and the last frame is the same pose with the same speed (end gap 8e-8, speed 8.000e-2).
+- `npx tsx assets-src/earth/dive/tail.ts [--first FRAME] [--tail JSON]` prints rate, ratio and blur per frame, now and with the tail. `{from 0.5467, gain 3.5, shape [2, 6.5]}`: ratio 0.87 to 0.78 from 2141 to 2163, no stop; 2156 -0.41 percent per frame, body blur median 0.7 px, p90 1.0 (now 0.2 and 0.4; 1857 has 0.9). Gain 5.2: ratio 0.80 to 0.85, 2156 -0.56, blur 1.0 and 1.3. Limb radius px 2142, 2149, 2156, 2163: now 642, 415, 389, 389; gain 3.5: 645, 429, 395, 389; gain 5.2: 646, 437, 398, 390.
