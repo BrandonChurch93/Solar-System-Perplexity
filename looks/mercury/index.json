@@ -1,45 +1,39 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T09:32:49.500Z",
- "head": "ac90551eea617661cec736d91c61a3683d21143a",
- "note": "Mercury: spin rests during the terrain view, the rise terminator is now the hero's own ground",
+ "pushed": "2026-11-21T09:54:24.313Z",
+ "head": "95aaeb0d7158b786a16ec5859591c48dfb2dc764",
+ "note": "round 8: dive cover rebuilt as one approach (new surge, Sun ride to the terrain side, short flood plus Sun bloom); raw frames with the glare off",
  "looks": [
   {
-   "time": "2026-11-21T09:31:29.158Z",
-   "file": "20261121093129158-frame-f1007.jpg",
-   "source": "out/work/mercury/h4/f1007.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1007, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1007,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:29:34.117Z",
-   "file": "20261121092934117-note-band-painted-wrap-a.jpg",
-   "source": "out/work/mercury/h1/band-painted-wrap-a.png",
+   "time": "2026-11-21T09:54:23.757Z",
+   "file": "20261121095423757-note-base-grid-a.jpg",
+   "source": "out/work/mercury/r8/base-grid-a.jpg",
    "kind": "note",
-   "label": "Why: the painted band beyond the hero terminator (top painted map, bottom wrap) is grey clay",
+   "label": "round 8 dive cover work: base-grid-a (raw = glare off, new surge profile; base = judged dive)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T09:29:33.352Z",
-   "file": "20261121092933352-note-full1016-a.jpg",
-   "source": "out/work/mercury/h4/full1016-a.jpg",
+   "time": "2026-11-21T09:54:23.154Z",
+   "file": "20261121095423154-note-raw1c-grid-a.jpg",
+   "source": "out/work/mercury/r8/raw1c-grid-a.jpg",
    "kind": "note",
-   "label": "Judged rise frame 1016 at review: before (left), spin rest (right)",
+   "label": "round 8 dive cover work: raw1c-grid-a (raw = glare off, new surge profile; base = judged dive)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T09:29:32.548Z",
-   "file": "20261121092932548-note-pair1016-a.jpg",
-   "source": "out/work/mercury/h4/pair1016-a.png",
+   "time": "2026-11-21T09:54:22.567Z",
+   "file": "20261121095422567-note-raw1b-grid-a.jpg",
+   "source": "out/work/mercury/r8/raw1b-grid-a.jpg",
    "kind": "note",
-   "label": "Judged rise frame 1016 at review, terminator at 3x: before (left), spin rest (right)",
+   "label": "round 8 dive cover work: raw1b-grid-a (raw = glare off, new surge profile; base = judged dive)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T09:54:22.027Z",
+   "file": "20261121095422027-note-raw1-grid-a.jpg",
+   "source": "out/work/mercury/r8/raw1-grid-a.jpg",
+   "kind": "note",
+   "label": "round 8 dive cover work: raw1-grid-a (raw = glare off, new surge profile; base = judged dive)",
    "stop": "mercury"
   },
   {
