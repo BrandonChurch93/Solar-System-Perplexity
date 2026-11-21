@@ -1,0 +1,26 @@
+{
+  "segment": "mars.travel",
+  "focus": 170,
+  "aperture": 320,
+  "flow": -1,
+  "near": 0.05,
+  "far": 6000,
+  "steps": { "min": 12, "max": 48, "gap": 1.5 },
+  "light": {
+    "tint": [0.66, 0.6, 0.54],
+    "gain": 0.34,
+    "rim": 0.5,
+    "fill": [0.0042, 0.0048, 0.006],
+    "bump": 1,
+    "detail": 0.55,
+    "shadow": 1,
+    "tile": [2.6, 9.5]
+  },
+  "rocks": [
+    { "id": "hero", "asset": "a", "at": [0.32, 0.5], "distance": 170, "radius": 15, "hold": 0.85, "drift": [0, 0, 0], "tilt": [20, -35, 10], "axis": [0.3, 0.9, 0.2], "spin": 26, "mesh": 128 },
+    { "id": "near", "asset": "b", "at": [0.9, 0.93], "distance": 6.5, "radius": 0.9, "hold": 0, "drift": [0, 0, 0], "tilt": [-30, 60, 40], "axis": [0.7, 0.2, 0.6], "spin": 70, "mesh": 128 },
+    { "id": "far1", "asset": "c", "at": [0.53, 0.23], "distance": 520, "radius": 13, "hold": 0, "drift": [0, 0, 0], "tilt": [50, 20, -30], "axis": [0.1, 0.5, 0.8], "spin": 40, "mesh": 48 },
+    { "id": "far2", "asset": "d", "at": [0.13, 0.8], "distance": 700, "radius": 12, "hold": 0, "drift": [0, 0, 0], "tilt": [-10, -70, 80], "axis": [0.8, 0.5, 0.1], "spin": 34, "mesh": 48 }
+  ],
+  "blur": { "reduceAt": 8, "levels": 3, "minCoc": 0.75, "countedCoc": 2, "pad": 96 }
+}

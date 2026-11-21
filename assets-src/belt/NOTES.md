@@ -8,10 +8,11 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
 - Probe: `npx tsx assets-src/belt/probe.ts` prints camera, sun and Jupiter per frame.
 
 ## Baseline hashes (plain origin/main 2cbceef, `npm run still -- --frame N --tier final`)
-- 2325: see /tmp/baseline.log (fill in)
+- 2325: 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d
 - 2427: 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814
-- 2580: pending
-- 2726: pending
+- 2580: a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8
+- 2726: 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05
+- Files kept in `out/work/belt/base/` (not committed). Draft baseline of 2782 without the belt: 19.4 s.
 
 ## Measured facts about mars.travel (frames 2745 to 2819, judged 2782)
 - vfov 30 all through, 1920x1080 master, about 36 px per degree. Exposure 1.0.
@@ -38,6 +39,13 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
 - 03:00 baseline final renders started detached (`/tmp/baseline.sh`, log `/tmp/baseline.log`).
 - 03:05 probe written and run, facts above.
 - 03:08 notebook and looks pusher written. First push.
+
+- 03:16 baseline done, four hashes above.
+- 03:20 `bake.py` (numpy, procedural) and `preview.py` (offline ray cast of the baked maps). Take 1 too noisy (ridged relief hid the craters), take 2 lowers the relief and the regolith noise. Takes live in `out/work/belt/bake/takeN/`.
+- 03:30 found: the dust offset in the travel moves dust particles toward Jupiter (probe: flow direction dot Jupiter direction = +0.987). The rocks use the same closed form with the sign flipped (`flow: -1`), so they come from Jupiter's side toward the lens. Tell the Builder.
+- 03:35 planner `npx tsx assets-src/belt/plan.ts [--all]` prints per frame screen position, radius, circle of confusion, speed and whether a rock touches Jupiter. With the first layout: hero in frame 2769 to 2798, near 2770 to 2786, far1 2767 to 2801, far2 2774 to 2791, no rock on Jupiter.
+- 03:40 module written (`motion.ts`, `store.ts`, `rock.ts`, `belt.ts`), hook in `src/core/engine.ts` (5 lines, saved as `engine.patch`). First draft still of 2782 shows all four rocks. Draft cost 22.0 s with the belt against 19.4 s without.
+- Weak now: rocks too pale and too yellow, near rock reads as a flat tan blob, dark sides almost black, craters could be crisper. Assets (take 2) are in `public/` locally only, not committed yet.
 
 ## Next
 1. After the baseline finishes: bake.py, module, hook, first draft stills, message the Builder.

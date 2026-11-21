@@ -1,0 +1,45 @@
+diff --git a/src/core/engine.ts b/src/core/engine.ts
+index f189de5..320e467 100644
+--- a/src/core/engine.ts
++++ b/src/core/engine.ts
+@@ -8,6 +8,7 @@ import { SetLoader } from './sets'
+ import type { RenderView, Shot, SkyPatch } from './types'
+ import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
+ import { PostChain } from '../post/chain'
++import { Belt } from '../space/belt/belt'
+ import { Dust } from '../space/dust'
+ import { Sky } from '../space/sky'
+ import type { SkyAims } from '../space/aim'
+@@ -42,6 +43,7 @@ export class Engine {
+   private readonly post = new PostChain()
+   private readonly dust = new Dust(DUST_COUNT)
+   private readonly cover = new Cover()
++  readonly belt = new Belt()
+   private skyAssets = ''
+   private readonly skyPatches: { patch: SkyPatch; weight: number }[] = []
+   private skyTexture: THREE.Texture | null = null
+@@ -136,6 +138,7 @@ export class Engine {
+   async prepare(frame: number): Promise<void> {
+     await this.ensureSky()
+     await this.sets.ensure(setsForFrame(frame), this.assets)
++    await this.belt.prepare(frame, this.assets, this.renderer)
+   }
+ 
+   async renderFrame(frame: number, tier: string): Promise<void> {
+@@ -229,6 +232,7 @@ export class Engine {
+       r.clearDepth()
+       r.render(this.near, cam)
+     }
++    this.belt.render(r, this.sampleTarget, this.director!, shot, view)
+     if (raw) return
+     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
+     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+@@ -239,7 +243,7 @@ export class Engine {
+   }
+ 
+   ready(frame: number): boolean {
+-    return this.skyTexture !== null && this.skyAssets === this.assets && setsForFrame(frame).every((id) => this.sets.has(id, this.assets))
++    return this.skyTexture !== null && this.skyAssets === this.assets && setsForFrame(frame).every((id) => this.sets.has(id, this.assets)) && this.belt.ready(frame, this.assets)
+   }
+ 
+   flush(): void {
