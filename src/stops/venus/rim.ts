@@ -54,8 +54,8 @@ void main() {
   if (along <= 0.0) discard;
   vec3 p = uCam + dir * along;
   float b = length(p);
-  if (b < 1.0) discard;
   vec3 at = p / b;
+  b = max(b, 1.0);
   vec3 glow = max(limbGlow(at, b).rgb, 0.0);
   float t = clamp((b - 1.0) / uEdge, 0.0, 1.0);
   for (int k = 0; k < (t < 1.0 ? 1 : 0); k++) {
@@ -97,7 +97,7 @@ export class Rim {
       premultipliedAlpha: true,
       transparent: true,
       depthWrite: false,
-      depthTest: false,
+      depthTest: true,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 96, 48), this.material)
     this.mesh.renderOrder = 6

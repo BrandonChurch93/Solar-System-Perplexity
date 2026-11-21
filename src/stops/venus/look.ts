@@ -17,7 +17,7 @@ export const drift = {
   riseAt: 0.75,
 }
 
-export const graze = { most: 4, from: 0.32, to: 0.06 }
+export const graze = { most: 3, from: 0.45, to: 0.2 }
 
 export const lift = { floor: 0.012, stops: 3, from: 0.4, to: 0.8 }
 
