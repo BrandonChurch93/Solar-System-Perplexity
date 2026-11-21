@@ -1,36 +1,64 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T04:38:30.040Z",
- "head": "a1498b9d4bd0eea1a0d217b177ff51636beae5a0",
- "note": "soft disc edge and air tail in the globe shader, shells refit against a body-only render, sky patch rebuilt, limb detail fades to a coarse mip",
+ "pushed": "2026-11-21T04:56:56.082Z",
+ "head": "bf7b62f4ad05b42f14acd5e25bcc17fe5a088bc9",
+ "note": "sky patch: glow zone uses the fill's low frequencies and the hero's stars, margins painted by seedream instead of mirrored; air tail short, shells carry the wide glow",
  "looks": [
   {
-   "time": "2026-11-21T04:38:29.510Z",
-   "file": "20261121043829510-note-pair_top.jpg",
-   "source": "out/work/view/pair_top.jpg",
+   "time": "2026-11-21T04:56:55.531Z",
+   "file": "20261121045655531-note-boost_pair.jpg",
+   "source": "out/work/view/boost_pair.jpg",
    "kind": "note",
-   "label": "top limb, hero left, film right (cap still too teal)",
+   "label": "x3 exposure check: 2820, 2969 on top, approved image and 2895 below",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T04:38:28.987Z",
-   "file": "20261121043828987-note-pair_ll.jpg",
-   "source": "out/work/view/pair_ll.jpg",
+   "time": "2026-11-21T04:56:55.013Z",
+   "file": "20261121045655013-note-edges.jpg",
+   "source": "out/work/view/edges.jpg",
    "kind": "note",
-   "label": "lower left limb, hero left, film right",
+   "label": "frame edges at 2820 (right edge) and 2969 (left edge): margin is new sky, no mirror",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T04:38:28.460Z",
-   "file": "20261121043828460-note-f2895_c.jpg",
-   "source": "out/work/view/f2895_c.jpg",
+   "time": "2026-11-21T04:56:54.484Z",
+   "file": "20261121045654484-note-f2895_e.jpg",
+   "source": "out/work/view/f2895_e.jpg",
    "kind": "note",
-   "label": "hold 2895 soft edge, air tail, glow refit, limb detail fades, new sky patch",
+   "label": "hold 2895: no ghost arc, tail and shells refit, sky margin painted, not mirrored",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T04:38:08.448Z",
-   "file": "20261121043808448-still-f02895-16x9-review-full.jpg",
+   "time": "2026-11-21T04:56:21.135Z",
+   "file": "20261121045621135-still-f02969-16x9-review-full.jpg",
+   "source": "out/work/stills/f02969-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2969, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2969,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:56:01.997Z",
+   "file": "20261121045601997-still-f02820-16x9-review-full.jpg",
+   "source": "out/work/stills/f02820-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2820, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:55:42.555Z",
+   "file": "20261121045542555-still-f02895-16x9-review-full.jpg",
    "source": "out/work/stills/f02895-16x9-review-full.png",
    "kind": "still",
    "label": "jupiter.hold frame 2895, review tier",
@@ -41,22 +69,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:25:56.363Z",
-   "file": "20261121042556363-note-patch_new.jpg",
-   "source": "out/work/view/patch_new.jpg",
-   "kind": "note",
-   "label": "Hold sky patch boosted, rebuilt: the fill behind the planet now continues the Milky Way with no arc",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:25:55.796Z",
-   "file": "20261121042555796-note-limb_zoom.jpg",
-   "source": "out/work/view/limb_zoom.png",
-   "kind": "note",
-   "label": "Limb at x8 after the soft edge (hero left, film right): lit limb, upper left, top, night limb, lower left. Top limb still too dark, in work",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T04:04:06.989Z",
