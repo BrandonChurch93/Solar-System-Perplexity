@@ -1,9 +1,45 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T03:37:27.490Z",
+ "pushed": "2026-11-21T03:44:08.179Z",
  "head": "4c1c2954b804513379b1cc11bbd8bb8a46a25fa5",
- "note": "orbit view: globe with hero pixels and measured light now in the film; rings and sky patch next",
+ "note": "uranus orbit view: globe, halo, moons in; rings as measured 3D lines, first pass too faint, refitting",
  "looks": [
+  {
+   "time": "2026-11-21T03:44:07.635Z",
+   "file": "20261121034407635-note-overlay.jpg",
+   "source": "out/work/u/rings/overlay.jpg",
+   "kind": "note",
+   "label": "uranus rings: 16 fitted circles over the hero (right)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T03:43:39.662Z",
+   "file": "20261121034339662-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:43:38.630Z",
+   "file": "20261121034338630-still-f04035-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04035-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T03:37:26.939Z",
    "file": "20261121033726939-note-light-model.jpg",
@@ -21,34 +57,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T03:37:10.431Z",
-   "file": "20261121033710431-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:37:09.117Z",
-   "file": "20261121033709117-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
    "time": "2026-11-21T03:22:46.200Z",
    "file": "20261121032246200-note-wrap-color-small.jpg",
    "source": "out/work/u/wrap/wrap-color-small.jpg",
@@ -62,14 +70,6 @@
    "source": "out/work/u/wrap/map-seen.jpg",
    "kind": "note",
    "label": "wrap stage b: seen-side unprojection",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:22:45.114Z",
-   "file": "20261121032245114-note-separate.jpg",
-   "source": "out/work/u/wrap/separate.jpg",
-   "kind": "note",
-   "label": "wrap stage a: fleck separation",
    "stop": "uranus"
   },
   {
