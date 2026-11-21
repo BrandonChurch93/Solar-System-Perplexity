@@ -1,3 +1,5 @@
+import type { Segment } from '../../config'
+import type { CoverHorizon, Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import fit from './fit.json'
 
@@ -25,4 +27,24 @@ export const params: MoveParams = {
   tint: [0.3, 0.5, 1],
 }
 
-export const plan = new StopPlan('neptune', fit as Fit, params)
+const shell: { near: [number, number]; rise: [number, number] } = { near: [1.03, 1.1], rise: [50, 60] }
+const hides = 0.4
+const closed = 0.98
+
+class NeptunePlan extends StopPlan {
+  private rising = false
+
+  override coverAmount(seg: Segment, time: number): number {
+    this.rising = seg.kind === 'rise'
+    const amount = super.coverAmount(seg, time)
+    this.p.coverHides = amount < closed ? hides : undefined
+    return amount
+  }
+
+  override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
+    this.p.coverShell = this.rising ? shell.rise : shell.near
+    return super.horizon(view, local)
+  }
+}
+
+export const plan = new NeptunePlan('neptune', fit as Fit, params)
