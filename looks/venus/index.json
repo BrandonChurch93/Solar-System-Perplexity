@@ -1,75 +1,75 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T11:01:21.261Z",
- "head": "fbbb0400f32d7639f6c9ba163fa4621c833e4688",
- "note": "round 2: covers re-timed, highlight lift on cumulus, limb dots closed, rise flow re-anchored; grazing arcs near the vortex limb still weak",
+ "pushed": "2026-11-21T11:30:02.542Z",
+ "head": "0d4513b5a4705e34614276d328879d5b076b3f32",
+ "note": "round 2: covers carried, limb ring calmed, rim depth, review singles rendering",
  "looks": [
   {
-   "time": "2026-11-21T11:00:59.720Z",
-   "file": "20261121110059720-note-limb-crops3.jpg",
-   "source": "../../../../tmp/limb-crops3.png",
+   "time": "2026-11-21T11:30:01.542Z",
+   "file": "20261121113001542-note-g6-1440.jpg",
+   "source": "../../../../tmp/g6-1440.jpg",
    "kind": "note",
-   "label": "r2 limb crops",
+   "label": "1440 draft with forward 0.85",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:59.198Z",
-   "file": "20261121110059198-note-patch-view4.jpg",
-   "source": "../../../../tmp/patch-view4.jpg",
+   "time": "2026-11-21T11:30:00.002Z",
+   "file": "20261121113000002-note-g6-1586-native.jpg",
+   "source": "../../../../tmp/g6-1586-native.png",
    "kind": "note",
-   "label": "r2 hold sky patch take 4",
+   "label": "1586 native: round 1 beside now",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:58.682Z",
-   "file": "20261121110058682-note-r1586-native.jpg",
-   "source": "../../../../tmp/r1586-native.png",
+   "time": "2026-11-21T11:29:59.000Z",
+   "file": "20261121112959000-note-t1622.jpg",
+   "source": "../../../../tmp/t1622.png",
    "kind": "note",
-   "label": "r2 rise 1586 draft native: before left, after right (flow clock re-anchored)",
+   "label": "travel 1622 far side",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:58.147Z",
-   "file": "20261121110058147-note-c1287-c.jpg",
-   "source": "../../../../tmp/c1287-c.png",
+   "time": "2026-11-21T11:29:57.900Z",
+   "file": "20261121112957900-note-travel4.jpg",
+   "source": "out/work/venus/strip/travel4.jpg",
    "kind": "note",
-   "label": "r2 dive 1287 draft 4x: cumulus and limb, before left, after right",
+   "label": "travel strip 1605 to 1679 draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:57.627Z",
-   "file": "20261121110057627-note-vortex-crop3.jpg",
-   "source": "../../../../tmp/vortex-crop3.png",
+   "time": "2026-11-21T11:29:57.106Z",
+   "file": "20261121112957106-note-g6-1287-crops.jpg",
+   "source": "../../../../tmp/g6-1287-crops.png",
    "kind": "note",
-   "label": "r2 hold vortex limb: hero, before, after (grazing arcs still weak)",
+   "label": "1287 native crops limb and cumulus",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:57.117Z",
-   "file": "20261121110057117-note-cum-hold2.jpg",
-   "source": "../../../../tmp/cum-hold2.png",
+   "time": "2026-11-21T11:29:56.159Z",
+   "file": "20261121112956159-note-c1287-e.jpg",
+   "source": "../../../../tmp/c1287-e.png",
    "kind": "note",
-   "label": "r2 hold cumulus: hero, before, after highlight lift",
+   "label": "1287 limb after rim depth test",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T11:00:10.941Z",
-   "file": "20261121110010941-frame-t1-1529.jpg",
-   "source": "out/work/venus/r2/t1-1529.png",
+   "time": "2026-11-21T11:25:23.985Z",
+   "file": "20261121112523985-frame-g6-1440.jpg",
+   "source": "out/work/venus/r2/g6-1440.png",
    "kind": "frame",
-   "label": "venus.terrain frame 1529, draft tier",
+   "label": "venus.terrain frame 1440, draft tier",
    "stop": "venus",
    "segment": "venus.terrain",
-   "frame": 1529,
+   "frame": 1440,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T10:57:58.124Z",
-   "file": "20261121105758124-frame-t1-1185.jpg",
-   "source": "out/work/venus/r2/t1-1185.png",
+   "time": "2026-11-21T11:24:16.517Z",
+   "file": "20261121112416517-frame-g6-1185.jpg",
+   "source": "out/work/venus/r2/g6-1185.png",
    "kind": "frame",
    "label": "venus.hold frame 1185, review tier",
    "stop": "venus",
@@ -78,7 +78,7 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
