@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: open: 15 (sun). The next round is 16. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 15 (sun), 16 (venus). The next round is 17. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_336
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -44,7 +44,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | sun | in progress | 2 | 7 | pass | 5 | 4 | pass |  |
 | mercury | in progress | 1 | 9 | pass | 5 | 5 | pass |  |
-| venus | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
+| venus | in progress | 2 | 9 | pass | 4 | 6 | pass |  |
 | earth | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
@@ -550,6 +550,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 13, Phase 4, saturn, round 1 of 3. Started 2026-11-21 08:55 UTC. Judged on main at ae28011. Measures green. R1 4, R2 fail, R3 6, R4 6, R8 pass. 3 severe, 17 major. Next: Worst first. (1) R2 fails: 0 of 10 jurors call the film frames a film cinematic against 5 of 10 for the approved images; they read both views as a real time scene or stock, naming undersampled procedural rings. (2) Terrain flight 3630 to 3809 barely moves: the near ring bands and the planet's horizon hardly shift against each other, so it reads as a held still; it has to show clear forward travel and depth across its whole length. (3) Terrain 3720, where the rings cross the globe: the C ring and the ring shadow band are smeared into horizontal streaks with a wavy black cutout gap against the night side, and a straight translucent wedge extends the limb down into the rings. (4) Terrain 3720: the terminator is a straight upright band with a re-lit night hemisphere and a cyan grey night limb, with doubled storm ovals and green yellow dots above the limb. (5) Hold 3465: a dark brown shadow wedge across the lit lower left limb with a detached bright rim line outside a dark gap. (6) Hold 3465 framing: the ring system is too large in the frame, its left tip near the border and the lower arc clipped. (7) Rings in every view: lines run unbroken along the arcs with no grain along them, so they read as combed or motion smeared; the A ring too warm and bright without the Encke gap, the F ring as coloured dots, the rings too bright inside the planet's shadow. (8) Terrain: a wide golden green glow off the lit limb where the approved image has a tight edge. (9) Globe in dive and rise (3567, 3866): bands airbrushed with horizontal smear, the polar hood a smooth wash without hexagon, vortex or spots, a rust strip with an abrupt end outside the limb at 3866. (10) Dive 3572 to 3580: the planet's shadow on the rings vanishes in one step and Titan drops out with it. (11) Titan over lit and soft, the Milky Way fades during the rise 3830 to 3850, the lens streak of the approved hold is missing, fine ring lines likely to crawl. The stepped blur on the outer ring (3596 to 3600, 3835 to 3838) is an engine matter in work. `scorecards/round-013/`.
 - Round 14, Phase 4, neptune, round 2 of 3. Started 2026-11-21 11:41 UTC. Judged on main at c57f694. Measures green. R1 7, R2 pass, R3 5, R4 4, R8 pass. 2 severe, 14 major. R1 rose from 6 to 7, R3 stayed at 5, R4 fell from 5 to 4: the new terrain travel brings the top border of the close image's sky patch into frame (a straight seam against the shared sky, 4851 to 4970) and the rise cover joins two pictures with different light. Next (round 3, Neptune's last), worst first: the sky patch faded into the shared sky outside the approved border and the left apron held; color, exposure, heading and Sun side carried across the rise cover with a slower pullback; the dive cover's brightness step at 4731 to 4732; the hold limb as one bright edge with the approved glow instead of a dark trough and a thin line; ring arcs and Triton brought to the approved image; the stray arc and the storm eye at 4707; Triton, rings and cloud streaks in the rise frame 5006; more depth in the terrain view. Summary in `scorecards/round-014/`.
 - Round 15, Phase 4, sun, round 2 of 3. Started 2026-11-21 11:58 UTC.
+- Round 16, Phase 4, venus, round 2 of 3. Started 2026-11-21 12:29 UTC.
 
 ## Final scores
 
