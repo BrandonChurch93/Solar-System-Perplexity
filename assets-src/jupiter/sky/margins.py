@@ -12,6 +12,9 @@ RELIEF = 'out/work/jupiter/relief'
 OUT = 'public/assets/jupiter'
 GREY = 128
 JOIN = 32
+SOFT = 40
+SEAM = 240
+TILT = 3
 
 
 def code(lin):
@@ -183,41 +186,81 @@ def settle(wide, fill, elev):
     return out
 
 
+def glow(elev, phi):
+    rim = np.load(f'{RELIEF}/rim-table.npy')
+    u = ((phi + 100.0) / 0.1).astype(np.float32)
+    v = (elev / 0.025).astype(np.float32)
+    return lin_of(cv2.remap(rim, u, v, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0))
+
+
+def canvas_box():
+    oy, ox = 792, 1408
+    raw = np.load(f'{RELIEF}/canvas.npy', mmap_mode='r')
+    box = np.array(raw[oy - PY:oy + FULL[1] + PY, ox - PX:ox + FULL[0] + PX], dtype=np.float32)
+    image = np.asarray(Image.open('references/approved/jupiter-close.jpg').convert('RGB'), dtype=np.float32)
+    rows = slice(PY, PY + FULL[1])
+    box[rows, PX:PX + FULL[0]] = image
+    x1 = PX + FULL[0]
+    r = (image[:, -12:].mean(1) + 2.0) / (box[rows, x1:x1 + 12].mean(1) + 2.0)
+    r = np.clip(ndi.gaussian_filter1d(r, 12, axis=0, mode='nearest'), 0.3, 3.0)
+    print('right tile level ratio at the image border, 5 50 95 percent', np.percentile(r, [5, 50, 95]).round(3))
+    fall = np.exp(-np.arange(PX) / 320.0)
+    box[rows, x1:] *= 1 + (r[:, None, :] - 1) * fall[None, :, None]
+    return np.clip(box, 0, 255)
+
+
 def terrain_prep():
-    core = inner('sky-terrain.webp')
-    Image.fromarray(window(lin_of(core), 'right')).save(f'{GEN}/skyterr_right_in.png')
-    print('wrote', f'{GEN}/skyterr_right_in.png')
-
-
-def terrain_mid():
-    core = inner('sky-terrain.webp')
-    lin = lin_of(core)
-    elev, phi = fields()
-    wide = np.zeros((FULL[1] + 2 * PY, FULL[0] + 2 * PX, 3), np.float32)
-    wide[PY:PY + FULL[1], PX:PX + FULL[0]] = lin
-    wide[PY:PY + FULL[1], PX + FULL[0]:] = bar(lin, f'{GEN}/skyterr_right_sd5.png', 'right')
-    fill = haze(lin, elev, phi)
-    np.save(f'{GEN}/skyterr_fill.npy', fill.astype(np.float32))
-    wide = settle(wide, fill, elev)
-    np.save(f'{GEN}/skyterr_wide1.npy', wide)
-    body = wide[PY:PY + FULL[1]]
+    box = canvas_box()
+    np.save(f'{GEN}/skyterr_box.npy', box)
+    body = lin_of(box[PY:PY + FULL[1]])
     for key, x0 in (('tl', 0), ('tr', 2 * PX)):
         Image.fromarray(window(body[:, x0:x0 + FULL[0]], 'top')).save(f'{GEN}/skyterr_{key}_in.png')
         print('wrote', f'{GEN}/skyterr_{key}_in.png')
 
 
-def terrain_place():
+def terrain_place(top='takes'):
     core = inner('sky-terrain.webp')
-    wide = np.load(f'{GEN}/skyterr_wide1.npy')
-    fill = np.load(f'{GEN}/skyterr_fill.npy')
-    elev, _ = fields()
-    body = wide[PY:PY + FULL[1]]
+    box = np.load(f'{GEN}/skyterr_box.npy')
+    body = lin_of(box[PY:PY + FULL[1]])
     total = body.shape[1]
-    la = bar(body[:, :FULL[0]], f'{GEN}/skyterr_tl_sd5.png', 'top')
-    lb = bar(body[:, 2 * PX:], f'{GEN}/skyterr_tr_sd5.png', 'top')
-    wide[:PY] = join(la, lb, total / 2, total)
-    write(settle(wide, fill, elev), core, 'sky-terrain.webp')
+    elev, phi = fields()
+    wide = np.zeros((FULL[1] + 2 * PY, total, 3), np.float32)
+    wide[PY:PY + FULL[1]] = body
+    wide[:PY, :FULL[0]] = bar(body[:, :FULL[0]], f'{GEN}/skyterr_tl_sd5.png', 'top')
+    other = wide.copy()
+    other[:PY, 2 * PX:] = bar(body[:, 2 * PX:], f'{GEN}/skyterr_tr_sd5.png', 'top')
+    shine = glow(elev, phi)
+    own = np.maximum(wide - shine, 0)
+    lin = lin_of(core)
+    x1 = PX + FULL[0]
+    rows = slice(PY, PY + FULL[1])
+    gap = ndi.gaussian_filter1d(np.median(lin[:, -24:], 1) - np.median(own[rows, x1:x1 + 24], 1), 12, axis=0, mode='nearest')
+    print('right margin level step x1000', (gap.mean(0) * 1000).round(2), (gap.min(0) * 1000).round(2), (gap.max(0) * 1000).round(2))
+    n = gap.shape[0]
+    spec = np.fft.rfft(np.concatenate([gap, gap[::-1]], 0), axis=0)
+    freq = np.fft.rfftfreq(2 * n)[:, None]
+    for col in range(PX):
+        own[rows, x1 + col] += np.fft.irfft(spec * np.exp(-2 * np.pi * freq * max(col + 1.0, 12.0)), 2 * n, axis=0)[:n]
+    own = np.maximum(own, 0)
+    grey = luma(own[rows, x1:])[..., None]
+    own[rows, x1:] = grey + (own[rows, x1:] - grey) * 0.35
+    own[rows, PX:x1] = lin
+    fill = haze(lin, elev, phi)
+    seen = lambda a: to_srgb(film(a))
+    fine = lambda a: a - ndi.gaussian_filter(a, (SOFT, SOFT, 0), mode='nearest')
+    under = seen(settle(own, fill, elev)[PY:PY + 2 * SOFT])
+    floor = ndi.gaussian_filter1d(np.median(under[:24], 0), 48, axis=0, mode='nearest')
+    reach = np.clip(np.arange(total)[None, :] + TILT * np.arange(PY, 0, -1)[:, None], 0, total - 1).astype(int)
+    level = floor[reach]
+    grain = float(fine(under)[:, 2 * PX:].std())
+    w = step(np.arange(total, dtype=np.float32), 2 * PX, 2 * PX + SEAM)[None, :, None]
+    a = fine(seen(own[:PY]))
+    b = fine(seen(np.maximum(other - shine, 0)[:PY]))
+    print('star grain under the border and in the two takes x1000', round(grain * 1000, 2), round(float(a[:, 2 * PX:FULL[0]].std()) * 1000, 2), round(float(b[:, 2 * PX:].std()) * 1000, 2))
+    stars = a * (1 - w) + b * w
+    own[:PY] = unfilm(to_linear(np.clip(stars + level, 0, 1)))
+    write(settle(own, fill, elev), core, 'sky-terrain.webp')
 
 
 if __name__ == '__main__':
-    {'hold-prep': hold_prep, 'hold-place': hold_place, 'terrain-prep': terrain_prep, 'terrain-mid': terrain_mid, 'terrain-place': terrain_place}[sys.argv[1]]()
+    {'hold-prep': hold_prep, 'hold-place': hold_place, 'terrain-prep': terrain_prep, 'terrain-place': terrain_place}[sys.argv[1]]()
