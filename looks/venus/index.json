@@ -1,9 +1,39 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T06:46:39.650Z",
- "head": "3d9f912f2a3522851bc75ac4d8fd98fd60a61156",
- "note": "dive and rise: four patch levels in, haze cover first values, rise strip rendering",
+ "pushed": "2026-11-21T07:02:12.016Z",
+ "head": "384baabe703b74143942e665e00b98cca3b1f07f",
+ "note": "dive and rise: rise strip on engine batch 6, tuning the haze shell",
  "looks": [
+  {
+   "time": "2026-11-21T07:02:11.364Z",
+   "file": "20261121070211364-note-rise1-1586.jpg",
+   "source": "out/work/venus/strip/rise1-1586.png",
+   "kind": "note",
+   "label": "judged rise frame 1586 at review",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T07:02:10.829Z",
+   "file": "20261121070210829-note-rise1.jpg",
+   "source": "out/work/venus/strip/rise1.jpg",
+   "kind": "note",
+   "label": "rise strip at review, frames 1546 to 1595, engine batch 6: haze cover with a 14 frame tail",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T07:00:49.953Z",
+   "file": "20261121070049953-frame-rise1-1595.jpg",
+   "source": "out/work/venus/strip/rise1-1595.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1595, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1595,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "704d5d55f51b7b15"
+  },
   {
    "time": "2026-11-21T06:46:38.923Z",
    "file": "20261121064638923-note-view-a-1024.jpg",
@@ -21,28 +51,6 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T06:46:37.251Z",
-   "file": "20261121064637251-note-dive1.jpg",
-   "source": "out/work/venus/strip/dive1.jpg",
-   "kind": "note",
-   "label": "dive strip 1299 to 1323, review tier, first cover values",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T06:45:07.064Z",
-   "file": "20261121064507064-frame-b-1305.jpg",
-   "source": "out/work/venus/ab/b-1305.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1305, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1305,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
    "time": "2026-11-21T06:44:45.151Z",
    "file": "20261121064445151-frame-b-1185.jpg",
    "source": "out/work/venus/ab/b-1185.png",
@@ -55,14 +63,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T06:27:34.508Z",
-   "file": "20261121062734508-note-a2-seam.jpg",
-   "source": "out/work/venus/patches/a2-seam.jpg",
-   "kind": "note",
-   "label": "dive patch level A native crops: wrap resampled (left), faithful take (middle), kept take with real cloud detail (right)",
-   "stop": "venus"
   },
   {
    "time": "2026-11-21T05:59:55.451Z",
