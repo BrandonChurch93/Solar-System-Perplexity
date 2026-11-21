@@ -1,9 +1,59 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T16:43:52.564Z",
- "head": "38e32977915463ae04a6d5bd5352d91bde280eb1",
- "note": "round 3: look items done (aurora, night limb, twilight, green blobs); starting the verification chain: measures, finals, review sheets",
+ "pushed": "2026-11-21T17:08:25.573Z",
+ "head": "db86a2a665b0d3c542ab6aa0579118c0d007d7d0",
+ "note": "round 3: measures running (G13 frames done, G17 and G5 in work), then finals and review sheets",
  "looks": [
+  {
+   "time": "2026-11-21T17:08:24.220Z",
+   "file": "20261121170824220-note-w-1755-hero-new.jpg",
+   "source": "out/work/earth/r3/w-1755-hero-new.jpg",
+   "kind": "note",
+   "label": "1755: approved hero (left), round 3 draft (right)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T17:05:01.073Z",
+   "file": "20261121170501073-job-frame-01857.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T16:54:58.762Z",
+   "file": "20261121165458762-job-frame-01992.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1992, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1992,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T16:44:57.730Z",
+   "file": "20261121164457730-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T16:43:51.961Z",
    "file": "20261121164351961-note-q3-aur-hero-new.jpg",
@@ -21,28 +71,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T16:43:50.872Z",
-   "file": "20261121164350872-note-q5-nightlimb-hero-new.jpg",
-   "source": "out/work/earth/r3/q5-nightlimb-hero-new.png",
-   "kind": "note",
-   "label": "night limb at 1755: approved hero (left), round 3 draft (right): green blobs limited, thin blue line at the approved level",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T16:42:57.307Z",
-   "file": "20261121164257307-frame-f-1857.jpg",
-   "source": "out/work/earth/r3/f-1857.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T16:42:24.712Z",
    "file": "20261121164224712-frame-f-1755.jpg",
    "source": "out/work/earth/r3/f-1755.png",
@@ -55,22 +83,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:38:19.078Z",
-   "file": "20261121163819078-note-z-r2134.jpg",
-   "source": "out/work/earth/r3/z-r2134.jpg",
-   "kind": "note",
-   "label": "round 3 review tier 2134 (rise, cover 0.45, 267 px of motion): one smooth smear",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T16:38:18.478Z",
-   "file": "20261121163818478-note-q2-nightlimb-hero-old-new.jpg",
-   "source": "out/work/earth/r3/q2-nightlimb-hero-old-new.png",
-   "kind": "note",
-   "label": "night limb at 1755: approved hero, round 2 film, round 3 draft (the green blobs are in the approved hero)",
-   "stop": "earth"
   },
   {
    "time": "2026-11-21T13:53:42.200Z",
