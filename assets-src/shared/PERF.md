@@ -122,3 +122,15 @@ Points drawn: 451,000 to 205,000 (hold), 474,000 to 165,000 (dive), 34,000 to 28
 ### Engine batch 2: changes 4 and 5 merged with main (`92edd3c`)
 
 Main `4704442` (which holds engine batch 1) merged into the branch. On the merged tree, `final` tier: hold 2325 44.5 s, terrain 2580 59.8 s, dive 2427 114.8 s, rise 2726 79.2 s, all four sha256 equal to the baselines. `npm run build`, `npx vitest run` (28 tests) and `npm run determinism` pass.
+
+### 6. Sky patch taps: explicit gradients outside capture mode (`6df2459`)
+
+Asked for by the Builder, a robustness change for hardware drivers, not a speed change. Since change 2 the four `texture()` taps of `patchTexel` sit in a loop whose condition differs per pixel, where GLSL leaves implicit derivatives undefined. Tried on SwiftShader at the four frames (draft tier, sha256 against the draft references):
+
+| Form | Hashes | Sky pass per sample, terrain / hold |
+| --- | --- | --- |
+| `texture()` in the loop (change 2) | identical | 0.88 to 0.94 / 0.85 to 0.88 s |
+| `textureGrad` with the gradients of each of the four tap coordinates, taken outside the loop | identical | 1.09 to 1.14 / 0.92 to 0.94 s |
+| `textureGrad` with one gradient pair `dFdx(p.xy)`, `dFdy(p.xy)` for the four taps | identical | 1.10 / 0.95 s |
+
+So `textureGrad` gives the same bytes here but costs 0.06 to 0.2 s per sample where a patch is in view. Committed form: `textureGrad` with the one gradient pair is the default (live, autopilot, export); capture mode (`Sky.cull`) sets the define `PATCH_IMPLICIT` on the sky pass material and keeps the `texture()` form, whose shader text is the one that was proven in change 2. Final tier, capture: 44.1 / 60.8 / 115.5 / 79.2 s, four sha256 equal to the baselines; build, vitest and determinism pass.
