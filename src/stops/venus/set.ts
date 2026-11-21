@@ -1,5 +1,105 @@
-import { createStandinSet } from '../../bodies/standin'
-import type { SetFactory } from '../../core/types'
+import * as THREE from 'three'
+import { FarPoint } from '../../bodies/farpoint'
+import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
+import { diagUniform } from '../../diagnostics/diag'
+import { smooth } from '../../director/rig'
+import { patches, wrap } from './assets'
+import { Globe } from './globe'
+import * as look from './look'
 import { plan } from './plan'
+import { LIMB, Rim, limbFrame } from './rim'
+import skyJson from './sky.json'
 
-export const createSet: SetFactory = (ctx) => createStandinSet(ctx, plan)
+function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
+  const lon = THREE.MathUtils.degToRad(lonDeg)
+  const lat = THREE.MathUtils.degToRad(latDeg)
+  return new THREE.Vector3(Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon))
+}
+
+export const createSet: SetFactory = async (ctx) => {
+  const key = ctx.assets === 'full' ? 'full' : 'web'
+  const base = 'venus/' + ctx.assets + '/'
+  const fit = plan.fit
+  const world = new THREE.Group()
+  const orbit = new THREE.Group()
+  const terrain = new THREE.Group()
+  world.add(orbit, terrain)
+
+  const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  const flowMap = await ctx.texture(base + 'wrap-flow.jpg', { srgb: false, repeat: true })
+  const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
+  const patchTextures: THREE.Texture[] = []
+  for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 2, 4)
+  const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
+
+  const globe = new Globe({
+    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap,
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
+    flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
+    bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
+  })
+  globe.mesh.quaternion.copy(globeTurn)
+  globe.mesh.scale.fromArray(fit.globe.scale)
+  const rim = new Rim(limbMap, look.limb.radius, diagUniform)
+  const far = new FarPoint()
+  orbit.add(globe.mesh, rim.mesh, far.points)
+
+  const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
+  const light = new THREE.Vector3()
+  const limbS = new THREE.Vector3()
+  const limbT = new THREE.Vector3()
+  const camera = new THREE.Vector3()
+  const amps: number[] = look.cells.map(() => 0)
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const wide = 1 + 2 * def.margin
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  }
+
+  return {
+    id: plan.id,
+    world,
+    sky,
+    update: (state, shot, view) => {
+      const inOrbit = state.view === 'orbit'
+      orbit.visible = inOrbit && state.weight > 0
+      terrain.visible = !inOrbit
+      const gain = 1 / shot.post.exposure
+      if (!inOrbit) return
+      const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
+      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
+      camera.copy(world.position).negate()
+      const elapsed = Math.min(Math.max(state.time - plan.holdMid, look.drift.from), look.drift.to)
+      const d = look.descent
+      const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
+      for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time)
+      const gu = globe.material.uniforms
+      ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
+      const vignette = shot.post.vignette * (1 - low)
+      const aspect = view.format.width / view.format.height
+      limbFrame(camera, light, limbS, limbT)
+      gu.uVignette!.value = vignette
+      gu.uAspect!.value = aspect
+      gu.uLimbK!.value = look.limb.gain * (1 - low)
+      ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
+      ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
+      globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * elapsed, amps, gain, state.weight)
+      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect)
+      const distance = world.position.length()
+      const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
+      const visible = radiusPx > 0.6
+      globe.mesh.visible = visible
+      rim.mesh.visible = visible
+      far.update(radiusPx, view, plan.p.tint, gain)
+    },
+    dispose: () => {
+      globe.dispose()
+      rim.dispose()
+      far.dispose()
+    },
+  }
+}

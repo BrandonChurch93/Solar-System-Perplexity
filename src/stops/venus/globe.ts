@@ -1,0 +1,281 @@
+import * as THREE from 'three'
+import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import { EQUIRECT_GLSL } from '../../space/sky'
+import { wrap } from './assets'
+import { LIMB, LIMB_GLSL } from './rim'
+
+export const MAX_PATCHES = 6
+export const MAX_CELLS = 16
+
+export interface GlobePatches {
+  textures: THREE.Texture[]
+  widthsDeg: number[]
+  spot: THREE.Vector3
+  feather: number
+  fade: [number, number]
+}
+
+export interface GlobeFlow {
+  map: THREE.Texture
+  strength: number
+  shadow: number
+  shadowOffset: number
+}
+
+export interface GlobeBolts {
+  map: THREE.Texture
+  center: THREE.Vector3
+  widthDeg: number
+  gain: number
+  cells: { dir: THREE.Vector3; radiusDeg: number; painted: boolean }[]
+  color: [number, number, number]
+}
+
+export interface GlobeOptions {
+  map: THREE.Texture
+  mapWidth: number
+  curve: number[][]
+  haze: HazeParams
+  patches: GlobePatches
+  flow: GlobeFlow
+  bolts: GlobeBolts
+  limb: THREE.Texture
+  segments?: number
+}
+
+const VERT = /* glsl */ `
+out vec3 vLocal;
+out vec3 vWorldN;
+out vec3 vPos;
+out vec3 vView;
+out vec3 vClip;
+void main() {
+  vLocal = position;
+  vWorldN = normalize(mat3(modelMatrix) * position);
+  vec4 wp = modelMatrix * vec4(position, 1.0);
+  vPos = wp.xyz;
+  vec4 mv = viewMatrix * wp;
+  vView = mv.xyz;
+  gl_Position = projectionMatrix * mv;
+  vClip = gl_Position.xyw;
+}`
+
+const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+
+const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      vec2 q = g * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      texels = mix(texels, parent, step(0.5, w));
+      near = max(near, w * step(${i}.5, 2.0));
+    }`).join('\n')
+
+const FRAG = /* glsl */ `
+precision highp float;
+uniform sampler2D uMap;
+uniform sampler2D uFlow;
+uniform sampler2D uBolt;
+${PATCH_SAMPLERS}
+uniform float uPatchScale[${MAX_PATCHES}];
+uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchCount;
+uniform float uFeather;
+uniform vec2 uPatchFade;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform float uMapWidth;
+uniform float uGrad;
+uniform float uSpin;
+uniform float uGain;
+uniform float uWeight;
+uniform vec3 uTint;
+uniform vec3 uCurve[33];
+uniform float uExtinction;
+uniform float uVignette;
+uniform float uAspect;
+uniform vec3 uDrift;
+uniform vec4 uFlowLook;
+uniform vec3 uSunBody;
+uniform vec3 uBoltN;
+uniform vec3 uBoltE;
+uniform vec3 uBoltU;
+uniform vec2 uBoltLook;
+uniform vec3 uBoltColor;
+uniform vec4 uCell[${MAX_CELLS}];
+uniform vec2 uCellAmp[${MAX_CELLS}];
+uniform float uCellCount;
+uniform float uLimbK;
+in vec3 vClip;
+in vec3 vLocal;
+in vec3 vWorldN;
+in vec3 vPos;
+in vec3 vView;
+out vec4 outColor;
+${EQUIRECT_GLSL}
+${INVERSE_FILMIC_GLSL}
+${DIAG_GLSL}
+${HAZE_GLSL}
+${LIMB_GLSL}
+vec3 spinY(vec3 d, float a) {
+  float c = cos(a), s = sin(a);
+  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+vec3 curveAt(float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
+  int i = int(min(floor(x), 31.0));
+  return mix(uCurve[i], uCurve[i + 1], x - float(i));
+}
+void main() {
+  vec3 d = spinY(normalize(vLocal), uSpin);
+  float band = 1.0 - d.y * d.y;
+  float drift = uDrift.x * (band - uDrift.z);
+  vec3 dc = spinY(d, drift);
+  vec3 df = spinY(d, drift + uDrift.y * band);
+  vec3 n = normalize(vWorldN);
+  vec3 dir = normalize(vPos);
+  float mu = clamp(dot(n, -dir), 0.0, 1.0);
+  float ndl = dot(n, uSunW);
+  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
+  float texels = diagTexelsDir(d, uMapWidth);
+  float dn = dot(dc, uSpotN);
+  float near = 0.0;
+  if (uPatchCount > 0.5) {
+    float inv = 1.0 / max(dn, 0.05);
+    vec2 g = vec2(dot(dc, uSpotE), dot(dc, uSpotU)) * inv;
+    vec2 gx = dFdx(g);
+    vec2 gy = dFdy(g);
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+    gx *= uGrad;
+    gy *= uGrad;
+    float front = step(0.3, dn);
+    float parent = texels;
+${PATCH_LEVELS}
+  }
+  vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
+  float k = uFlowLook.x * (1.0 - near);
+  float f0 = equirect(uFlow, dc).r - 0.5;
+  float f1 = equirect(uFlow, df).r - 0.5;
+  vec3 lean = uSunBody * uFlowLook.z;
+  float s0 = equirect(uFlow, normalize(dc - lean)).r;
+  float s1 = equirect(uFlow, normalize(df - lean)).r;
+  float veil = (1.0 + k * f1) / (1.0 + k * f0) * (1.0 - uFlowLook.y * (1.0 - near) * s1) / (1.0 - uFlowLook.y * (1.0 - near) * s0);
+  vec3 col = lin * curveAt(ndl) * veil * uTint;
+  if (uCellCount > 0.5) {
+    float night = 1.0 - smoothstep(-0.05, 0.3, ndl);
+    float lum = dot(lin, vec3(0.2126, 0.7152, 0.0722));
+    vec3 soft = equirectGrad(uMap, dc, 40.0).rgb;
+    float lift = lum / max(dot(soft * soft * ${wrap.top.toFixed(1)}, vec3(0.2126, 0.7152, 0.0722)), 0.02);
+    lift = min(lift, 1.7);
+    float lit = 0.015 + 1.5 * min(lum, 1.2) * lift * lift * lift;
+    float bn = dot(dc, uBoltN);
+    vec2 bq = vec2(dot(dc, uBoltE), dot(dc, uBoltU)) / max(bn, 0.05) * uBoltLook.x;
+    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(texture(uBolt, bq + 0.5).rgb) * uBoltLook.y : vec3(0.0);
+    vec3 glow = vec3(0.0);
+    for (int i = 0; i < ${MAX_CELLS}; i++) {
+      if (float(i) >= uCellCount) break;
+      float x = clamp((1.0 - dot(dc, uCell[i].xyz)) / (1.0 - uCell[i].w), 0.0, 1.0);
+      float core = (1.0 - x) * (1.0 - x);
+      glow += uCellAmp[i].y > 0.5 ? painted * uCellAmp[i].x * smoothstep(1.0, 0.8, x) : uBoltColor * uCellAmp[i].x * core * core * lit * night;
+    }
+    col += glow;
+  }
+  vec3 at;
+  float tau = hazeDepth(dir, true, at);
+  col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  float b = sqrt(max(1.0 - mu * mu, 0.0));
+  if (b > ${(1 - LIMB.inside).toFixed(3)}) {
+    vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
+    col = col * (1.0 - lg.a) + max(lg.rgb, 0.0);
+  }
+  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
+}`
+
+export class Globe {
+  readonly mesh: THREE.Mesh
+  readonly material: THREE.ShaderMaterial
+  private readonly cells: THREE.Vector4[]
+  private readonly amps: THREE.Vector2[]
+  private readonly inverse = new THREE.Quaternion()
+
+  constructor(o: GlobeOptions) {
+    const p = o.patches
+    if (p.textures.length > MAX_PATCHES) throw new Error('too many patch levels')
+    if (o.bolts.cells.length > MAX_CELLS) throw new Error('too many lightning cells')
+    const levels = Array.from({ length: MAX_PATCHES }, (_, i) => i)
+    const tex = (i: number): THREE.Texture | null => p.textures[i] ?? p.textures[0] ?? o.map
+    const scale = (i: number): number => {
+      const w = p.widthsDeg[i]
+      return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
+    }
+    const size = (i: number): number => (p.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const frame = (c: THREE.Vector3): [THREE.Vector3, THREE.Vector3, THREE.Vector3] => {
+      const nrm = c.clone().normalize()
+      const east = new THREE.Vector3(0, 1, 0).cross(nrm).normalize()
+      return [nrm, east, nrm.clone().cross(east)]
+    }
+    const [spot, east, north] = frame(p.spot)
+    const [bn, be, bu] = frame(o.bolts.center)
+    this.cells = levels.concat(Array.from({ length: MAX_CELLS - MAX_PATCHES }, (_, i) => i + MAX_PATCHES)).map((i) => {
+      const c = o.bolts.cells[i]
+      return c ? new THREE.Vector4(c.dir.x, c.dir.y, c.dir.z, Math.cos(THREE.MathUtils.degToRad(c.radiusDeg))) : new THREE.Vector4(0, 1, 0, 0.99)
+    })
+    this.amps = this.cells.map((_, i) => new THREE.Vector2(0, o.bolts.cells[i]?.painted ? 1 : 0))
+    this.material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: {
+        ...hazeUniforms(o.haze),
+        uMap: { value: o.map }, uFlow: { value: o.flow.map }, uBolt: { value: o.bolts.map },
+        ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchCount: { value: p.textures.length },
+        uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2(p.fade[0], p.fade[1]) },
+        uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        uMapWidth: { value: o.mapWidth },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
+        uExtinction: { value: o.haze.extinction },
+        uDrift: { value: new THREE.Vector3(0, 0, 1 - spot.y * spot.y) },
+        uFlowLook: { value: new THREE.Vector4(o.flow.strength, o.flow.shadow, o.flow.shadowOffset, 0) },
+        uSunBody: { value: new THREE.Vector3(1, 0, 0) },
+        uBoltN: { value: bn }, uBoltE: { value: be }, uBoltU: { value: bu },
+        uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
+        uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
+        uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
+        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 },
+        uDiag: diagUniform, uGrad: gradUniform,
+      },
+    })
+    const seg = o.segments ?? 320
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+  }
+
+  update(camera: THREE.Vector3, sun: THREE.Vector3, world: THREE.Quaternion, spin: number, drift: number, flow: number, amps: number[], gain: number, weight: number): void {
+    const u = this.material.uniforms
+    ;(u.uCam!.value as THREE.Vector3).copy(camera)
+    ;(u.uSunW!.value as THREE.Vector3).copy(sun)
+    this.inverse.copy(world).multiply(this.mesh.quaternion).invert()
+    const s = (u.uSunBody!.value as THREE.Vector3).copy(sun).applyQuaternion(this.inverse)
+    const c = Math.cos(spin)
+    const sn = Math.sin(spin)
+    s.set(c * s.x - sn * s.z, s.y, sn * s.x + c * s.z)
+    u.uSpin!.value = spin
+    ;(u.uDrift!.value as THREE.Vector3).x = drift
+    ;(u.uDrift!.value as THREE.Vector3).y = flow
+    for (let i = 0; i < this.amps.length; i++) this.amps[i]!.x = amps[i] ?? 0
+    u.uGain!.value = gain
+    u.uWeight!.value = weight
+  }
+
+  dispose(): void {
+    this.mesh.geometry.dispose()
+    this.material.dispose()
+  }
+}
