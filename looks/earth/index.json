@@ -1,12 +1,28 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T05:47:33.946Z",
- "head": "03b6cb7045b411f1f7b3b14239c67fbd3ce45c03",
- "note": "terrain: towers layer with lift over a clean plate, judged frame beside the close image; sky patch for the terrain is next",
+ "pushed": "2026-11-21T05:58:47.755Z",
+ "head": "8afd5abfe5ee2fc1f35e598a83784735d4b8eca5",
+ "note": "terrain milestone: judged frame equals the close image with lifted towers, own sky patch; hold unchanged",
  "looks": [
   {
-   "time": "2026-11-21T05:46:48.346Z",
-   "file": "20261121054648346-compare-compare-earth-terrain-view.jpg",
+   "time": "2026-11-21T05:58:47.211Z",
+   "file": "20261121055847211-note-sky-terrain.jpg",
+   "source": "out/work/earth/view/sky-terrain.jpg",
+   "kind": "note",
+   "label": "terrain sky patch",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:58:46.676Z",
+   "file": "20261121055846676-note-t-four.jpg",
+   "source": "out/work/earth/view/t-four.jpg",
+   "kind": "note",
+   "label": "terrain frames 1920, 2010, 2099 and rise 2120, towers and terrain sky",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:58:38.054Z",
+   "file": "20261121055838054-compare-compare-earth-terrain-view.jpg",
    "source": "out/work/compare/compare-earth-terrain-view.jpg",
    "kind": "compare",
    "label": "earth.terrain: approved image left, film frame right, draft tier",
@@ -19,8 +35,8 @@
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:46:47.353Z",
-   "file": "20261121054647353-still-f02010-16x9-draft-full.jpg",
+   "time": "2026-11-21T05:58:37.062Z",
+   "file": "20261121055837062-still-f02010-16x9-draft-full.jpg",
    "source": "out/work/stills/f02010-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.terrain frame 2010, draft tier",
@@ -33,48 +49,8 @@
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:46:32.782Z",
-   "file": "20261121054632782-note-relief-under.jpg",
-   "source": "out/work/earth/view/relief-under.jpg",
-   "kind": "note",
-   "label": "terrain ground under the towers: clean plate with membrane fill, shadows kept",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:46:32.226Z",
-   "file": "20261121054632226-note-relief-lift.jpg",
-   "source": "out/work/earth/view/relief-lift.jpg",
-   "kind": "note",
-   "label": "terrain towers: matte and lift field over the approved close image",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:37:56.547Z",
-   "file": "20261121053756547-note-matte-a.jpg",
-   "source": "out/work/earth/view/matte-a.jpg",
-   "kind": "note",
-   "label": "terrain relief: tower matte take 1 outlined on the close image (foreground crop)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:37:55.945Z",
-   "file": "20261121053755945-note-plate-t1.jpg",
-   "source": "out/work/earth/view/plate-t1.jpg",
-   "kind": "note",
-   "label": "terrain relief: plate take 1, towers and their shadows painted out (used only beneath the towers)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:29:35.992Z",
-   "file": "20261121052935992-note-t-four.jpg",
-   "source": "out/work/earth/view/t-four.jpg",
-   "kind": "note",
-   "label": "earth.terrain frames 1920, 2010, 2099 and rise frame 2120: ground layer only, the Sun now sits above the top edge over the glint and enters in the rise; sky still the engine sky",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:50:37.256Z",
-   "file": "20261121045037256-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-21T05:58:16.808Z",
+   "file": "20261121055816808-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, draft tier",
@@ -84,7 +60,49 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T05:58:15.713Z",
+   "file": "20261121055815713-still-f01755-16x9-draft-full.jpg",
+   "source": "out/work/stills/f01755-16x9-draft-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T05:52:12.385Z",
+   "file": "20261121055212385-frame-t-2120.jpg",
+   "source": "out/work/earth/still/t-2120.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2120, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2120,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T05:51:52.681Z",
+   "file": "20261121055152681-frame-t-2099.jpg",
+   "source": "out/work/earth/still/t-2099.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2099, draft tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2099,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
   }
  ]
 }
