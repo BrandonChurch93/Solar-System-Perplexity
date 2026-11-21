@@ -1,0 +1,30 @@
+{
+ "spot": [
+  0.30269716465405955,
+  -0.6131131474363137,
+  0.7297031553660229
+ ],
+ "levels": [
+  {
+   "file": "patch-1.jpg",
+   "widthDeg": 76.0
+  },
+  {
+   "file": "patch-2.jpg",
+   "widthDeg": 42.0
+  },
+  {
+   "file": "patch-3.jpg",
+   "widthDeg": 22.0
+  },
+  {
+   "file": "patch-4.jpg",
+   "widthDeg": 11.0
+  }
+ ],
+ "feather": 0.12,
+ "fade": [
+  1.02,
+  1.5
+ ]
+}
