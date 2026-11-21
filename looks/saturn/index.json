@@ -1,9 +1,67 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T21:18:16.655Z",
- "head": "bf29d13fa2dcda2c014a72d91b8befe64816353c",
- "note": "polish item 1 apron take 3 in the terrain view, item 2 dive and rise on the new framing law",
+ "pushed": "2026-11-21T21:42:21.273Z",
+ "head": "5608524248316749d59f6ff331cdd0d1d66b5be9",
+ "note": "polish items 2 and 3: the notch where the rings meet the lit limb, mask wedge fix, limb handover to the model in the rise",
  "looks": [
+  {
+   "time": "2026-11-21T21:42:20.613Z",
+   "file": "20261121214220613-note-limb-b.jpg",
+   "source": "../../../../tmp/limb-b.png",
+   "kind": "note",
+   "label": "3720 lit limb at 6x: build b2 with the wedge fix (left), kept build 00c1f81 with the hard step (right)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T21:42:20.058Z",
+   "file": "20261121214220058-note-limb-a.jpg",
+   "source": "../../../../tmp/limb-a.png",
+   "kind": "note",
+   "label": "3720 lit limb at 6x: approved (left), build b3 with ring colours carried past the limb (right): the surplus draws over the globe, rejected",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T21:37:43.533Z",
+   "file": "20261121213743533-frame-b3-3624.jpg",
+   "source": "out/work/saturn/b3-3624.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3624, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3624,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:36:21.579Z",
+   "file": "20261121213621579-frame-b3-3831.jpg",
+   "source": "out/work/saturn/b3-3831.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3831, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3831,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:33:52.862Z",
+   "file": "20261121213352862-frame-b3-3809.jpg",
+   "source": "out/work/saturn/b3-3809.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T21:18:16.103Z",
    "file": "20261121211816103-note-b1-3822-notch.jpg",
@@ -11,44 +69,6 @@
    "kind": "note",
    "label": "item 2 open: notch where the rings meet the lit limb at 3822, native crop",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T21:18:15.506Z",
-   "file": "20261121211815506-note-b1-rise-sheet.jpg",
-   "source": "out/work/saturn/b1-rise-sheet.png",
-   "kind": "note",
-   "label": "item 2 in work: rise 3816 to 3852 with the framing law",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T21:18:14.838Z",
-   "file": "20261121211814838-note-b1-dive-sheet.jpg",
-   "source": "out/work/saturn/b1-dive-sheet.png",
-   "kind": "note",
-   "label": "item 2 in work: dive 3582 to 3624 with the framing law, bow out, one approach direction",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T21:18:14.277Z",
-   "file": "20261121211814277-note-b1-terrain-sheet.jpg",
-   "source": "out/work/saturn/b1-terrain-sheet.png",
-   "kind": "note",
-   "label": "item 1 after: terrain 3630 3663 3695 3744 with the take 3 apron, no border in frame",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T21:13:34.400Z",
-   "file": "20261121211334400-frame-b1-3744.jpg",
-   "source": "out/work/saturn/b1-3744.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3744, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3744,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T18:36:35.433Z",
@@ -73,20 +93,6 @@
    "stop": "saturn",
    "segment": "saturn.hold",
    "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:13:34.019Z",
-   "file": "20261121181334019-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
