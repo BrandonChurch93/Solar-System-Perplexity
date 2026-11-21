@@ -58,7 +58,7 @@ def comp(names):
             region[:, :GAP[0]] = 0
             region[:, GAP[1]:] = 0
             region[:H] = 0
-            region = cv2.GaussianBlur(region, (0, 0), 30)
+            region = cv2.GaussianBlur(region, (0, 0), sigmaX=30, sigmaY=0.01)
             region[:H] = 0
         else:
             region[done] = 0

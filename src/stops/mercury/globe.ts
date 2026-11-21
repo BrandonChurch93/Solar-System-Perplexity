@@ -20,6 +20,7 @@ export interface GlobeLight {
   edge: number
   rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
   glareGate: [number, number, number]
+  glareLens: [number, number]
 }
 
 export interface GlobePatches {
@@ -99,6 +100,7 @@ uniform float uRimWide;
 uniform vec3 uRimDir;
 uniform vec3 uGlareW;
 uniform vec3 uGlareGate;
+uniform float uGlareLens;
 uniform vec2 uRimWidth;
 uniform mat3 uBodyToWorld;
 uniform vec3 uCenter;
@@ -143,7 +145,7 @@ void main() {
   float t = -b - sqrt(max(h, 0.0));
   vec3 n = normalize(oc + ray * t);
   float out1 = max(s - 1.0, 0.0);
-  float toward = smoothstep(uGlareGate.x, uGlareGate.y, dot(ray, uGlareW));
+  float toward = smoothstep(uGlareGate.x, uGlareGate.y, dot(ray, uGlareW)) * uGlareLens;
   float ndlRim = dot(n, uSunW);
   vec3 rim = vec3(0.0);
   vec3 d = spinY(n * uBodyToWorld, uSpin);
@@ -248,7 +250,7 @@ export class Globe {
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
-        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
+        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -257,7 +259,7 @@ export class Globe {
     this.mesh.frustumCulled = false
   }
 
-  update(sun: THREE.Vector3, glare: THREE.Vector3, spin: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void {
+  update(sun: THREE.Vector3, glare: THREE.Vector3, lens: number, spin: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void {
     const u = this.material.uniforms
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     u.uSpin!.value = spin
@@ -272,6 +274,7 @@ export class Globe {
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
     const axis = this.axis.copy(this.center).normalize()
     ;(u.uGlareW!.value as THREE.Vector3).copy(glare).normalize()
+    u.uGlareLens!.value = lens
     const dir = u.uRimDir!.value as THREE.Vector3
     dir.copy(glare).addScaledVector(axis, -glare.dot(axis))
     if (dir.lengthSq() < 1e-6) dir.copy(sun).addScaledVector(axis, -sun.dot(axis))

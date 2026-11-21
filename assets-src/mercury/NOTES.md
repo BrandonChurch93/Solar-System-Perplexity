@@ -6,7 +6,7 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 
 - Branch `agent/mercury` (code, JSON, notes). Looks go to `agent/mercury-looks` through `npm run looks -- --push --folder mercury --note "..."` only, at least every 30 minutes.
 - Parent is `/root` (the Builder). Milestone messages: orbit view, terrain view, dive and rise, then `READY`. Each with commit, measured numbers, weak points. Do not wait for replies.
-- Builder's notes: web set at most 35 MB on disk, full 150 MB. Engine requests early as `assets-src/mercury/engine.patch` (none needed so far). Travels before the hold and after the rise must stay free of pops (judged in Phase 5).
+- Builder's notes: web set at most 35 MB on disk, full 150 MB. Engine requests early as `assets-src/mercury/engine.patch` (request 1, `terrain.rollDeg`, is on main). Travels before the hold and after the rise must stay free of pops (judged in Phase 5).
 - VM: 4 cores, about 8 GB RAM. Two heavy Python jobs at once get killed: run one at a time. One render process at a time.
 
 ## Segments and judged frames (30 fps)
@@ -37,6 +37,17 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 - Height map (`wrap/height.py`): real DEM at 4096x2048, flattened to its 40 px low-pass where the hero day pixels are kept (the hero carries its own shading). `wrap-height.bin` uint16, `assets.ts` `wrap.height: true`, shader relief by normal perturbation, mild.
 - Merged `origin/main` b4ae65c (engine hash 434d0a5e367a62fd): stills before it are stale. Shader tip from the Builder: expensive conditional work goes in `for (int k = 0; k < (cond ? 1 : 0); k++)` with `textureGrad`/`textureLod`.
 - Terrain inputs: `out/work/mercury/close-2x.png` passes `checkmoved` (p99 under 1.5 px). Depth: `out/work/mercury/close-depth.raw` (float32 2816x1584, near = 1). Camera fit `relief/camfit.py` -> `relief/camera-fit.json`: vfov 60 assumed, pitch down -30.05 (camera looks down 30 degrees... sign as Mars: see file), roll -11.27 degrees, dip 10.25 degrees, planet radius 61.7 camera heights, horizon distance 11.15 heights, rms 0.022 degrees.
+
+## Session 3 (04:15 to 04:50 UTC): what changed
+
+- Engine request 1 (`terrain.rollDeg`) is on `main` since 9f78a4e (engine hash 05c29d3a1588e95f). Local patch dropped, main merged (aa3e4fb). `engine.patch` and `ENGINE-REQUESTS.md` stay as the record. Check script: `npx tsx out/work/mercury/check-roll.ts <rollDeg> <altitudeScale>`. With `terrain.rollDeg: 11.27`, `horizonDeg: 19.8`, `dipDeg: 10.25`, `dive.swoop: true`, `rise.level: true`, `dive.altitude: 0.0162` the ground's up vector and the pitch carry across both covers (tilt 11.27 vs 11.75 and 10.59 vs 11.27; pitch 33.91 vs 33.83).
+- Rise: azimuth 12 (was 32). At 32 the far side filled a third of the disc and washed out; at 12 the rise shows a half-lit globe with the terminator, mostly hero pixels, the Sun out of frame at the lower left, the far side only at the lower-left limb (lon 75 to 113).
+- Glare gate (`look.light.glareGate [0.616, 0.766, 0.35]`): limb brightening and rim glow are lens glare, so they only apply where the drawn Sun is near the view ray. Frame 615 numbers did not change.
+- Guide v4 (`wrap/guide.py`): large scales of the real color removed (`WIDE 60`, `KEEP 0.35`), color spread 0.6 of the hero's, ring term from DEM slope where the Sun is high (`RING 0.14`), marks reduced 60 percent under a high Sun. The v3 high-Sun zone was pale cream blobs.
+- Tile takes: `c1` seedream and `d1` nano on guide v3 for all 38; `c2` seedream on guide v4 for e5 to e9, n4 to n7, s4 to s7, np3, np4, sp3 (the tiles the film can see lit); `d2` nano on 7 of them. Seedream adds real fine texture and crisp rims; nano keeps the blur and draws embossed white lines, so seedream is used. All kept takes pass the flow check (median under 0.4 px, p99 under 1 px at 2048). `wrap/takes.json` lists the take per tile.
+- Terrain margins (`relief/ext.py`): canvas 4096 x 1932 at approved scale (640 px left and right, 348 px below, nothing above). Left and right squares outpainted with nano (take t1 kept; seedream t2 on the left changed the whole picture to orange streaks, rejected), then the gap below with nano (t1 kept, t2 had a visible rectangle). Approved pixels are pasted back exactly. Painted horizon follows the fitted sphere within 1 to 4 px, except the far right edge (5 to 12 px low): the alpha cut uses the detected horizon in the margins.
+- Relief build (`relief/geom.py`, `relief/build.py`): distance = sphere ground model x exp(detail), detail = high-pass (300 px) of log(depth fit) minus log(sphere), gain 1.6, faded out between 4.5 and 8 camera heights so the horizon stays a clean curve. One layer, alpha cut at the horizon, black masks.
+- The `read` tool caches pictures by name: write each picture to a new file name.
 
 ## Terrain plan
 

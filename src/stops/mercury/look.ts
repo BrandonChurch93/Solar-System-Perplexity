@@ -18,7 +18,8 @@ export const light: GlobeLight = {
   nightVeilFrom: 0.75,
   edge: 1.2,
   rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.05, wideGain: 1.67 },
-  glareGate: [0.616, 0.766, 0.35],
+  glareGate: [0.7, 0.8, 0.06],
+  glareLens: [34, 48],
 }
 
 export const sun = { gain: 1, breathe: 0.03, rate: 1.9 }
@@ -27,3 +28,5 @@ export const lens: LensLook = {
   ghost: { at: 0.743, tiltDeg: -15, size: [0.03, 0.0185], core: [0.74, 0.56, 0.44], tail: [0.26, 0.15, 0.08], fringe: [0.05, 0.008, 0.012], halo: [0.02, 0.008, 0.012], haloSize: 0.05 },
   fade: [1.15, 1.7],
 }
+
+export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }

@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
-import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
+import { diagUniform } from '../../diagnostics/diag'
 import { drift, ramp, smooth } from '../../director/rig'
-import { INVERSE_FILMIC_GLSL } from '../../post/chain'
-import { patches, wrap } from './assets'
+import { Relief } from '../../terrain/relief'
+import { patches, relief, wrap } from './assets'
 import { Globe } from './globe'
 import { Lens } from './lens'
 import * as look from './look'
@@ -32,32 +32,6 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
   }
   return out
 }
-
-const PLATE_VERT = /* glsl */ `
-out vec2 vUv;
-out vec3 vView;
-void main() {
-  vUv = uv;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vView = mv.xyz;
-  gl_Position = projectionMatrix * mv;
-}`
-
-const PLATE_FRAG = /* glsl */ `
-precision highp float;
-uniform sampler2D uMap;
-uniform vec2 uMapSize;
-uniform float uGain;
-in vec2 vUv;
-in vec3 vView;
-out vec4 outColor;
-${INVERSE_FILMIC_GLSL}
-${DIAG_GLSL}
-void main() {
-  vec2 uv = vUv * 3.0 - 1.0;
-  vec3 col = inverseFilmic(texture(uMap, uv).rgb) * uGain;
-  outColor = diagOut(vec4(col, 1.0), diagTexels(uv * uMapSize), 1.0, vec3(0.85, 0.3, 0.25), vec2(0.0), length(vView));
-}`
 
 export const createSet: SetFactory = async (ctx) => {
   const key = ctx.assets === 'full' ? 'full' : 'web'
@@ -90,16 +64,12 @@ export const createSet: SetFactory = async (ctx) => {
   const near = new THREE.Group()
   near.add(lens.mesh)
 
-  const close = await ctx.texture(base + 'standin-close.jpg', { srgb: true, anisotropy: 8, mirror: true })
-  const closeSize = close.image as unknown as { width: number; height: number }
-  const plateMat = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: PLATE_VERT, fragmentShader: PLATE_FRAG, uniforms: { uMap: { value: close }, uMapSize: { value: new THREE.Vector2(closeSize.width, closeSize.height) }, uGain: { value: 1 }, uDiag: diagUniform } })
-  const t = plan.p.terrain
-  const h = 2 * 10 * Math.tan(THREE.MathUtils.degToRad(t.vfov) / 2) * 1.2
-  const plate = new THREE.Mesh(new THREE.PlaneGeometry(h * (closeSize.width / closeSize.height) * 3, h * 3), plateMat)
-  plate.position.set(0, 0, -10)
-  terrain.add(plate)
+  const ground = await Relief.load(ctx, base, relief[key], look.relief)
+  terrain.add(ground.group)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
   const light = new THREE.Vector3()
+  const forward = new THREE.Vector3()
   const holdRadius = 1 / plan.hold(plan.holdMid - plan.seg.hold.start).position.length() / Math.tan(THREE.MathUtils.degToRad(fit.vfovDeg) / 2) / 2
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson as Record<string, SkyDef>)) {
@@ -118,15 +88,18 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      plateMat.uniforms.uGain!.value = gain
       lens.mesh.visible = false
-      if (!inOrbit) return
+      if (!inOrbit) {
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        return
+      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      globe.update(light, shot.sun.dir, plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
+      const offAxis = THREE.MathUtils.radToDeg(shot.sun.dir.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
+      globe.update(light, shot.sun.dir, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
       far.update(radiusPx, view, plan.p.tint, gain)
       const travel = state.segment.kind === 'travel' ? smooth(ramp(0.25, 0.8, state.u)) : 1
@@ -145,8 +118,7 @@ export const createSet: SetFactory = async (ctx) => {
       sunPlate.dispose()
       lens.dispose()
       far.dispose()
-      plateMat.dispose()
-      plate.geometry.dispose()
+      ground.dispose()
     },
   }
 }
