@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: all eight in their third rounds (see the Stops table and "Running jobs")
-- Current round: open: 23 (venus), 24 (sun), 25 (jupiter). The next round is 26. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 23 (venus), 24 (sun), 25 (jupiter), 26 (saturn). The next round is 27. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_473
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -48,7 +48,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | earth | in progress | 2 | 9 | pass | 5 | 4 | pass |  |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | in progress | 3 | 7 | pass | 7 | 4 | pass |  |
-| saturn | in progress | 2 | 7 | pass | 4 | 8 | pass |  |
+| saturn | in progress | 3 | 7 | pass | 4 | 8 | pass |  |
 | uranus | in progress | 2 | 7 | pass | 6 | 4 | pass |  |
 | neptune | in progress | 3 | 7 | pass | 6 | 3 | pass | 18 to 27 |
 
@@ -590,6 +590,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 23, Phase 4, venus, round 3 of 3. Started 2026-11-21 17:56 UTC.
 - Round 24, Phase 4, sun, round 3 of 3. Started 2026-11-21 18:20 UTC.
 - Round 25, Phase 4, jupiter, round 3 of 3. Started 2026-11-21 18:20 UTC.
+- Round 26, Phase 4, saturn, round 3 of 3. Started 2026-11-21 18:48 UTC.
 
 ## Final scores
 
