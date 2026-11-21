@@ -1,9 +1,47 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T04:25:56.915Z",
- "head": "22a720a38b48137f60ebeec01bb79c01f4d15ad0",
- "note": "Orbit view: soft disc edge with an air tail, limb table repaired, sky patch fill rebuilt",
+ "pushed": "2026-11-21T04:38:30.040Z",
+ "head": "a1498b9d4bd0eea1a0d217b177ff51636beae5a0",
+ "note": "soft disc edge and air tail in the globe shader, shells refit against a body-only render, sky patch rebuilt, limb detail fades to a coarse mip",
  "looks": [
+  {
+   "time": "2026-11-21T04:38:29.510Z",
+   "file": "20261121043829510-note-pair_top.jpg",
+   "source": "out/work/view/pair_top.jpg",
+   "kind": "note",
+   "label": "top limb, hero left, film right (cap still too teal)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:38:28.987Z",
+   "file": "20261121043828987-note-pair_ll.jpg",
+   "source": "out/work/view/pair_ll.jpg",
+   "kind": "note",
+   "label": "lower left limb, hero left, film right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:38:28.460Z",
+   "file": "20261121043828460-note-f2895_c.jpg",
+   "source": "out/work/view/f2895_c.jpg",
+   "kind": "note",
+   "label": "hold 2895 soft edge, air tail, glow refit, limb detail fades, new sky patch",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:38:08.448Z",
+   "file": "20261121043808448-still-f02895-16x9-review-full.jpg",
+   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
   {
    "time": "2026-11-21T04:25:56.363Z",
    "file": "20261121042556363-note-patch_new.jpg",
@@ -18,44 +56,6 @@
    "source": "out/work/view/limb_zoom.png",
    "kind": "note",
    "label": "Limb at x8 after the soft edge (hero left, film right): lit limb, upper left, top, night limb, lower left. Top limb still too dark, in work",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:25:26.392Z",
-   "file": "20261121042526392-still-f02895-16x9-review-full.jpg",
-   "source": "out/work/stills/f02895-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:14:47.899Z",
-   "file": "20261121041447899-note-f2969_small.jpg",
-   "source": "out/work/view/f2969_small.jpg",
-   "kind": "note",
-   "label": "Hold last frame 2969 draft: Io and shadow have moved, faint arc right of the night limb from the sky patch",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:14:47.359Z",
-   "file": "20261121041447359-note-patch_now.jpg",
-   "source": "out/work/view/patch_now.jpg",
-   "kind": "note",
-   "label": "Hold sky patch boosted: the fill behind the planet shows a rim and a tint, being rebuilt",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:14:46.769Z",
-   "file": "20261121041446769-note-limb_zoom.jpg",
-   "source": "out/work/view/limb_zoom.png",
-   "kind": "note",
-   "label": "Limb at x8, hero left, film right: film has a dark line from the sharpen on a hard edge, to fix with a soft edge",
    "stop": "jupiter"
   },
   {
