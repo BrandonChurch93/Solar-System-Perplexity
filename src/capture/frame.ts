@@ -16,6 +16,7 @@ export interface Showcase {
   renderFrame(frameIndex: number, tier: string): Promise<void>
   png(): Promise<string>
   sanity(): Sanity
+  samples(): number
   memory(): { textureBytes: number; peakBytes: number; skyBytes: number; loaded: string[]; perSet: Record<string, number> }
 }
 
@@ -42,6 +43,7 @@ export function installShowcase(engine: Engine, ready: Promise<void>, tier: stri
       return btoa(s)
     },
     sanity: () => engine.sanity(),
+    samples: () => engine.samples,
     memory: () => {
       const perSet: Record<string, number> = {}
       for (const id of engine.sets.loadedIds()) perSet[id] = engine.sets.bytesOf(id)
