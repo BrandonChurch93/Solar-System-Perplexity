@@ -1,9 +1,47 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T04:12:42.466Z",
+ "pushed": "2026-11-21T04:30:37.916Z",
  "head": "5a416e09c4ed27df5c6d2b48c257820d4aff0d5a",
- "note": "Sky patch wired in; Miranda still dark, top ring glint too strong, left ring bundles too faint: next",
+ "note": "orbit view: limb edge against the hero, sky patch v3 in place",
  "looks": [
+  {
+   "time": "2026-11-21T04:30:37.340Z",
+   "file": "20261121043037340-note-cmp-limb-night3.jpg",
+   "source": "out/work/u/cmp-limb-night3.jpg",
+   "kind": "note",
+   "label": "hold night limb x3 at 3x brightness: hero left, film right. Dotted edge from the light table, being fixed",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:30:36.810Z",
+   "file": "20261121043036810-note-cmp-limb-ul.jpg",
+   "source": "out/work/u/cmp-limb-ul.jpg",
+   "kind": "note",
+   "label": "hold lit limb x3: hero left, film right. Film shows a dotted bright edge and a dark gap, being fixed",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:30:36.123Z",
+   "file": "20261121043036123-note-cmp-ul.jpg",
+   "source": "out/work/u/cmp-ul.jpg",
+   "kind": "note",
+   "label": "hold review tier, upper left: hero left, film right (sky patch v3, traced rings, Miranda)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:27:22.038Z",
+   "file": "20261121042722038-frame-hold-review.jpg",
+   "source": "out/work/u/hold-review.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, review tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "434d0a5e367a62fd"
+  },
   {
    "time": "2026-11-21T04:12:26.639Z",
    "file": "20261121041226639-note-sky-hold-preview.jpg",
@@ -33,50 +71,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:12:12.107Z",
-   "file": "20261121041212107-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:09:25.335Z",
-   "file": "20261121040925335-frame-glow-rings.jpg",
-   "source": "out/work/u/sky/glow-rings.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, review tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T03:55:44.012Z",
-   "file": "20261121035544012-note-cmp-ul.jpg",
-   "source": "out/work/u/rings2/cmp-ul.jpg",
-   "kind": "note",
-   "label": "uranus hold, brightened x2: hero left, film right (rings as traced 3D lines, no sky patch yet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:55:43.469Z",
-   "file": "20261121035543469-note-overlay.jpg",
-   "source": "out/work/u/rings2/overlay.jpg",
-   "kind": "note",
-   "label": "uranus rings: traced 3D curves projected back over the hero (bottom), hero brightened (top)",
-   "stop": "uranus"
   },
   {
    "time": "2026-11-21T02:45:31.326Z",
