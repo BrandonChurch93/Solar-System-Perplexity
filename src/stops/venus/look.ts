@@ -56,6 +56,8 @@ const SEEDED: Cell[] = Array.from({ length: 12 }, (_, i) => ({
 
 export const cells: Cell[] = [...PAINTED, { lon: 32.04, lat: 54.69, radiusDeg: 1.6, painted: false, period: 2.3, at: 39.5, gain: 0.9, seed: 0 }, ...SEEDED]
 
+export const motion = { from: 1.25, step: 1, most: 12 }
+
 export const boltColor: [number, number, number] = [0.105, 0.095, 0.14]
 
 function step(a: number, b: number, x: number): number {

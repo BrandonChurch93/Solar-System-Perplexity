@@ -1,6 +1,7 @@
 import * as THREE from 'three'
+import { config } from '../../config'
 import { FarPoint } from '../../bodies/farpoint'
-import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
+import type { Pose, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches, relief as reliefDefs, wrap } from './assets'
@@ -15,6 +16,27 @@ function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
   const lat = THREE.MathUtils.degToRad(latDeg)
   return new THREE.Vector3(Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon))
+}
+
+const PROBES: [number, number][] = [[0, 0], [0.7, 0], [-0.7, 0], [0, 0.7], [0, -0.7], [0.7, 0.7], [-0.7, 0.7], [0.7, -0.7], [-0.7, -0.7]]
+
+function slide(a: Pose, b: Pose, width: number, height: number): number {
+  const ta = Math.tan(THREE.MathUtils.degToRad(a.vfov) / 2)
+  const tb = Math.tan(THREE.MathUtils.degToRad(b.vfov) / 2)
+  const aspect = width / height
+  const back = b.quaternion.clone().invert()
+  const ray = new THREE.Vector3()
+  let most = 0
+  for (const [x, y] of PROBES) {
+    ray.set(x * ta * aspect, y * ta, -1).normalize().applyQuaternion(a.quaternion)
+    const along = a.position.dot(ray)
+    const h = along * along - a.position.lengthSq() + 1
+    if (h < 0) continue
+    const v = ray.multiplyScalar(-along - Math.sqrt(h)).add(a.position).sub(b.position).applyQuaternion(back)
+    if (v.z >= 0) continue
+    most = Math.max(most, Math.hypot(((v.x / -v.z / (tb * aspect)) - x) * width / 2, ((v.y / -v.z / tb) - y) * height / 2))
+  }
+  return most
 }
 
 export const createSet: SetFactory = async (ctx) => {
@@ -57,6 +79,10 @@ export const createSet: SetFactory = async (ctx) => {
   const limbT = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const amps: number[] = look.cells.map(() => 0)
+  const turnBack = new THREE.Quaternion()
+  const turn = new THREE.Quaternion()
+  const shift = new THREE.Vector3()
+  let zoom = 1
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
@@ -96,6 +122,24 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * elapsed, amps, gain, state.weight)
+      let taps = 0
+      const kind = state.segment.kind
+      if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')) {
+        const dt = config.shutterFraction / (view.samples * config.fps)
+        const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
+        const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
+        if (a.view === 'orbit' && b.view === 'orbit') {
+          const px = slide(a.pose, b.pose, view.format.width, view.format.height)
+          if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
+          if (taps > 0) {
+            turnBack.copy(a.pose.quaternion).invert()
+            shift.copy(b.pose.position).sub(a.pose.position).applyQuaternion(turnBack)
+            turn.copy(turnBack).multiply(b.pose.quaternion)
+            zoom = Math.tan(THREE.MathUtils.degToRad(b.pose.vfov) / 2) / Math.tan(THREE.MathUtils.degToRad(a.pose.vfov) / 2)
+          }
+        }
+      }
+      globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom)
       rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

@@ -19,7 +19,7 @@ export const params: MoveParams = {
   coverTop: [0.85, 0.12],
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
-  coverShell: [1.03, 1.13],
+  coverShell: [1.015, 1.07],
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.5, 0.35] },
   skyAim: { orbit: [-178.86124, 23.97435, -12.9392], terrain: [70.88563, -102.57248, -13.65] },
   spinDegPerSecond: -0.5,

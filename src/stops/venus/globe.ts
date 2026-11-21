@@ -67,11 +67,14 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      for (int k = 0; k < (w > 0.0 && uPatchCount > ${i}.5 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      wl[${i}] = w;
+      for (int k = 0; k < (w > 0.0 && uPatchCount > ${i}.5 && uTaps == 0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
       near = max(near, w * step(${i}.5, 2.0));
     }`).join('\n')
+
+const TAP_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    for (int k = 0; k < (wl[${i}] > 0.0 ? 1 : 0); k++) a = mix(a, textureGrad(uPatch${i}, gk * uPatchScale[${i}] + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, wl[${i}]);`).join('\n')
 
 const FRAG = /* glsl */ `
 precision highp float;
@@ -109,6 +112,10 @@ uniform vec4 uCell[${MAX_CELLS}];
 uniform vec2 uCellAmp[${MAX_CELLS}];
 uniform float uCellCount;
 uniform float uLimbK;
+uniform int uTaps;
+uniform vec3 uCamObj;
+uniform vec3 uNextCam;
+uniform mat3 uNextRot;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -123,6 +130,11 @@ ${LIMB_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+vec3 onSphere(vec3 from, vec3 ray) {
+  float b = dot(from, ray);
+  float h = max(b * b - dot(from, from) + 1.0, 0.0);
+  return from + ray * (-b - sqrt(h));
 }
 vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
@@ -143,11 +155,15 @@ void main() {
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(dc, uSpotN);
   float near = 0.0;
+  float wl[${MAX_PATCHES}];
+  for (int i = 0; i < ${MAX_PATCHES}; i++) wl[i] = 0.0;
+  vec2 gx = vec2(0.0);
+  vec2 gy = vec2(0.0);
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(dc, uSpotE), dot(dc, uSpotU)) * inv;
-    vec2 gx = dFdx(g);
-    vec2 gy = dFdy(g);
+    gx = dFdx(g);
+    gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
     gx *= uGrad;
     gy *= uGrad;
@@ -155,6 +171,24 @@ void main() {
     float parent = texels;
 ${PATCH_LEVELS}
   }
+  float eu = atan(dc.x, dc.z) / (2.0 * PI) + 0.5;
+  float ev = asin(clamp(dc.y, -1.0, 1.0)) / PI + 0.5;
+  float eu2 = fract(eu + 0.5) - 0.5;
+  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * uGrad;
+  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * uGrad;
+  vec3 ray = normalize(vLocal - uCamObj);
+  vec3 move = onSphere(uNextCam, normalize(uNextRot * ray)) - onSphere(uCamObj, ray);
+  vec3 p0 = normalize(vLocal);
+  vec3 acc = vec3(0.0);
+  for (int t = 0; t < uTaps; t++) {
+    float s = (float(t) + 0.5) / float(uTaps) - 0.5;
+    vec3 dk = spinY(spinY(normalize(p0 + move * s), uSpin), drift);
+    vec3 a = textureGrad(uMap, vec2(atan(dk.x, dk.z) / (2.0 * PI) + 0.5, asin(clamp(dk.y, -1.0, 1.0)) / PI + 0.5), ex, ey).rgb;
+    vec2 gk = vec2(dot(dk, uSpotE), dot(dk, uSpotU)) / max(dot(dk, uSpotN), 0.05);
+${TAP_LEVELS}
+    acc += a;
+  }
+  for (int t = 0; t < (uTaps > 0 ? 1 : 0); t++) albedo = acc / float(uTaps);
   vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
   float k = uFlowLook.x * (1.0 - near);
   float f0 = equirect(uFlow, dc).r - 0.5;
@@ -203,6 +237,11 @@ export class Globe {
   private readonly amps: THREE.Vector2[]
   private readonly inverse = new THREE.Quaternion()
   private readonly count: number
+  private readonly r0 = new THREE.Quaternion()
+  private readonly r1 = new THREE.Quaternion()
+  private readonly m0 = new THREE.Matrix4()
+  private readonly m1 = new THREE.Matrix4()
+  private readonly lens = new THREE.Matrix4()
 
   constructor(o: GlobeOptions) {
     const p = o.patches
@@ -252,6 +291,7 @@ export class Globe {
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
         uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 },
+        uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -280,6 +320,19 @@ export class Globe {
     u.uCellCount!.value = lit
     u.uGain!.value = gain
     u.uWeight!.value = weight
+  }
+
+  motion(taps: number, camera: THREE.Vector3, view: THREE.Quaternion, shift: THREE.Vector3, turn: THREE.Quaternion, zoom: number): void {
+    const u = this.material.uniforms
+    u.uTaps!.value = taps
+    const from = (u.uCamObj!.value as THREE.Vector3).copy(camera).applyQuaternion(this.inverse)
+    if (taps === 0) return
+    this.r0.copy(this.inverse).multiply(view)
+    this.r1.copy(this.r0).multiply(turn)
+    ;(u.uNextCam!.value as THREE.Vector3).copy(shift).applyQuaternion(this.r0).add(from)
+    this.m0.makeRotationFromQuaternion(this.r0).transpose()
+    this.m1.makeRotationFromQuaternion(this.r1).multiply(this.m0.premultiply(this.lens.makeScale(zoom, zoom, 1)))
+    ;(u.uNextRot!.value as THREE.Matrix3).setFromMatrix4(this.m1)
   }
 
   dispose(): void {
