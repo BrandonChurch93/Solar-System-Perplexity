@@ -9,8 +9,9 @@ export const diagUniform: THREE.IUniform<number> = { value: 0 }
 
 export const gradUniform: THREE.IUniform<number> = { value: 1 }
 
-export function setSamples(count: number, floor: number): void {
-  gradUniform.value = Math.max(1 / Math.sqrt(Math.max(count, 1)), floor)
+export function setSamples(count: number, floor: number, soft = 0): void {
+  const sharp = Math.max(1 / Math.sqrt(Math.max(count, 1)), floor)
+  gradUniform.value = soft > 0 ? sharp + (1 - sharp) * soft : sharp
 }
 
 export function setDiag(view: string): number {

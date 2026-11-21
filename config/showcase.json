@@ -61,7 +61,9 @@
     "probeGrid": [17, 9],
     "bodyReach": 2.5,
     "minBodyPx": 2,
-    "terrainGround": 1
+    "terrainGround": 1,
+    "softFromPx": 10,
+    "softToPx": 18
   },
   "assetSets": {
     "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "maxSetMemoryMb": 450},
