@@ -68,6 +68,19 @@ The five maps are `public/assets/neptune/<set>/close-deck.webp`, `public/assets/
 - What the script does: block grid removed, scene values, glow = smooth part above the far sky level, 30th percentile along azimuth so no star or cloud of the Milky Way gets into it. Sky = image minus glow; within 0.3 of the glow height the smooth part is taken from higher up so no line stays at the horizon. Below the horizon the sky is mirrored about the horizon, because the planet's turn moves the stars against the horizon by a few degrees during the view.
 - Checks: frames 4770 and 4949 at the review tier show no line in the sky where the horizon was.
 
+## public/assets/neptune/<set>/patch-96.webp, patch-64.webp, patch-40.webp, patch-26.webp, patch-16.webp, patch-10.webp
+
+- Files: `public/assets/neptune/<set>/patch-96.webp`, `public/assets/neptune/<set>/patch-64.webp`, `public/assets/neptune/<set>/patch-40.webp`, `public/assets/neptune/<set>/patch-26.webp`, `public/assets/neptune/<set>/patch-16.webp`, `public/assets/neptune/<set>/patch-10.webp`.
+- What: the dive patch levels, gnomonic squares round the dive spot (hero pixel 0.55, 0.52 = lon 0.23, lat -20.17), 96, 64, 40, 26, 16 and 10 degrees wide, 4096x4096 for `full`, 2048x2048 for `web`. RGBA like the wrap: RGB = deck albedo, A = cirrus opacity. Quality 92 (`web` 88), `exact`.
+- Tools: `python3 assets-src/neptune/patches/bake.py` (uses `patches/gnomon.py` and `geo.py`), about 2 minutes. It also writes `src/stops/neptune/patches.json` (spot, level list, feather, fade thresholds).
+- Inputs: `public/assets/neptune/full/wrap.webp` and two generated pictures.
+  1. `python3 assets-src/neptune/patches/guide.py 24` writes `out/work/nep/patches/guide-24.png`, the wrap (deck with the cirrus over it, flat light) resampled to a 24 degree square at 2048.
+  2. Image tool, prompt word for word in `prompts/patch-24.js`, input `guide-24.png`, 1:1. `patch24-t1` (model `seedream_5`, 2048x2048) kept, take 1 of 6: the layout stays (optical flow against the guide at 512 px: median 0.10 px, p99 0.56 px) and the cirrus becomes filaments, the storm gains spiral striations. `patch24-t2` (model `nano_banana_pro`) rejected: it returned the input unchanged.
+  3. `bake.py` run once without the second picture writes `out/work/nep/patches/guide-12.png`: the inner 12 degrees of the wrap with take 1 laid in.
+  4. Image tool, prompt in `prompts/patch-12.js`, input `guide-12.png`, model `seedream_5`: `patch12-t1` kept, take 1 of 6 (flow median 0.51 px at 512 px; the top edge lost a cloud streak, which lies inside the feather).
+- What `bake.py` does with a take: gain in linear light so that its blur (1/48 of the width) equals the guide's; cloud opacity = how far the red channel rises above the wrap's deck toward white (`MARGIN 0.04`, `WHITE 0.93`), with its low frequencies corrected to the wrap's opacity; deck = picture with the cloud divided out, its red and green held to at most 1.3 times the wrap deck's ratio to blue, its low frequencies set to the wrap's deck, and the wrap's deck under cloud thicker than 0.3. The layers are laid into every level with an 8 percent feather at their edge. Where a level is finer than its sources, streak noise octaves are added (unit noise blurred 6 to 1 east to west, one octave per halving down to 0.8 texels, deck gain 0.04 in linear light, opacity 0.45 at cloud edges, seed 7).
+- Checks: `out/work/nep/patches/separate-24.jpg` and `separate-12.jpg` (guide, matched take, recomposite, deck), `levels.jpg`. G13 on the dive and rise frames outside the cover, see NOTES.md.
+
 ## public/assets/neptune/<set>/standin-wrap.jpg and public/assets/neptune/<set>/standin-close.jpg
 
 - What: the stand-in maps the kit made with `python3 tools/assets/standin.py` before this stop was built. The stop no longer reads them. They stay until the Builder removes the stand-in set.
