@@ -22,7 +22,8 @@ const APPROACH_START = 0.2
 const APPROACH_POWER = 2.5
 const SWING_FROM = 0.3
 const CLEAR_DEG = 3
-const SUN_PULL_END = 0.34
+const SUN_PULL_FROM = 0.2
+const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
@@ -360,7 +361,7 @@ export class FilmDirector implements Director {
     const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
     const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
     if (index === 0) {
-      const g = easeInOut(ramp(0, SUN_PULL_END, u))
+      const g = easeInOut(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
       const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
       from.position.lerp(radial, smooth(u / 0.12))
     }
