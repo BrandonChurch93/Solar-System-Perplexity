@@ -1,9 +1,17 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T14:23:29.932Z",
- "head": "97da5731ff1cc86a02aaf4603caec4fef8e4d3ec",
- "note": "round 3: hold sky border painted on, rise 208 at review",
+ "pushed": "2026-11-21T14:51:54.673Z",
+ "head": "5abee296704e367474bdc18c22079b898ad57856",
+ "note": "round 3: rise frames at review",
  "looks": [
+  {
+   "time": "2026-11-21T14:51:53.575Z",
+   "file": "20261121145153575-note-i103-rv-partial.jpg",
+   "source": "out/work/sun/i103-rv-partial.jpg",
+   "kind": "note",
+   "label": "rise at review tier: 208, 212 to 218, 220, 222, limb readable in each, no whiteout",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T14:23:28.623Z",
    "file": "20261121142328623-note-i93-moat.jpg",
@@ -57,14 +65,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:55:41.293Z",
-   "file": "20261121135541293-note-i83-right-sky-x3.jpg",
-   "source": "out/work/sun/i83-right-sky-x3.png",
-   "kind": "note",
-   "label": "hold sky border at 237 to 269, 3 times gain, still a hard edge, in work",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T11:42:50.210Z",
