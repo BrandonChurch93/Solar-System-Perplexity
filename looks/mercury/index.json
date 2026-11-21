@@ -1,44 +1,50 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T20:52:43.607Z",
+ "pushed": "2026-11-21T21:32:38.251Z",
  "head": "4192f3858f74fa831886a9ca25de20e1cfb666f7",
- "note": "Round 3: review frames from the render workers looked at; triangular shutter cures the stamped crater rims in the fastest frames (commit 4192f38), second set of review frames requested",
+ "note": "Round 3: first 15 of 34 review frames of 4192f38 back from the render workers; stamped rims gone in the fastest frames; measures, compares and gates pass on this tree",
  "looks": [
   {
-   "time": "2026-11-21T20:52:42.975Z",
-   "file": "20261121205242975-note-s-b.jpg",
-   "source": "out/work/mercury/rr/s-b.jpg",
+   "time": "2026-11-21T21:32:37.673Z",
+   "file": "20261121213237673-note-s-first15.jpg",
+   "source": "out/work/mercury/rr2/looks/s-first15.jpg",
    "kind": "note",
-   "label": "worker review frames of dd8c3dc: 690 714 717 743 744 747 771 967 973",
+   "label": "first 15 review frames of 4192f38: 690 717 722 736 740 741 742 990 991 993 997 998 1000 1027 1034",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T20:52:42.440Z",
-   "file": "20261121205242440-note-s-g.jpg",
-   "source": "out/work/mercury/rr/s-g.jpg",
+   "time": "2026-11-21T21:32:36.997Z",
+   "file": "20261121213236997-note-c736pair.jpg",
+   "source": "out/work/mercury/rr2/looks/c736pair.png",
    "kind": "note",
-   "label": "worker review frames of dd8c3dc: 737 738 740 992 997 998 1001 1002 1007 (the stamped rims at 997 to 1002 are the fault being cured)",
+   "label": "dive 736 at review from the render workers, native crop: box shutter (top) and triangular shutter (bottom)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T20:52:41.833Z",
-   "file": "20261121205241833-note-t730-pair.jpg",
-   "source": "out/work/mercury/r13/t730-pair.png",
+   "time": "2026-11-21T21:32:36.218Z",
+   "file": "20261121213236218-note-c1000pair.jpg",
+   "source": "out/work/mercury/rr2/looks/c1000pair.png",
    "kind": "note",
-   "label": "dive 730 at review, crop: box shutter bars (top) and the triangular shutter (bottom)",
+   "label": "rise 1000 at review from the render workers, native crop: box shutter (top, dd8c3dc) and triangular shutter (bottom, 4192f38)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T20:52:41.192Z",
-   "file": "20261121205241192-note-t998-pair.jpg",
-   "source": "out/work/mercury/r13/t998-pair.png",
-   "kind": "note",
-   "label": "rise 998 at review, crop: box shutter with stamped rims (top, dd8c3dc) and the triangular shutter (bottom)",
-   "stop": "mercury"
+   "time": "2026-11-21T21:31:10.312Z",
+   "file": "20261121213110312-frame-f1016-final.jpg",
+   "source": "out/work/mercury/r14/f1016-final.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1016, final tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1016,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:21:05.803Z",
-   "file": "20261121202105803-compare-compare-mercury-terrain-view.jpg",
+   "time": "2026-11-21T21:06:10.069Z",
+   "file": "20261121210610069-compare-compare-mercury-terrain-view.jpg",
    "source": "out/work/compare/compare-mercury-terrain-view.jpg",
    "kind": "compare",
    "label": "mercury.terrain: approved image left, film frame right, final tier",
@@ -51,8 +57,8 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:21:04.795Z",
-   "file": "20261121202104795-still-f00870-16x9-final-full.jpg",
+   "time": "2026-11-21T21:06:09.074Z",
+   "file": "20261121210609074-still-f00870-16x9-final-full.jpg",
    "source": "out/work/stills/f00870-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.terrain frame 870, final tier",
@@ -65,8 +71,8 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:20:30.687Z",
-   "file": "20261121202030687-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T21:05:35.080Z",
+   "file": "20261121210535080-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, final tier",
@@ -79,8 +85,8 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:20:29.591Z",
-   "file": "20261121202029591-still-f00615-16x9-final-full.jpg",
+   "time": "2026-11-21T21:05:34.030Z",
+   "file": "20261121210534030-still-f00615-16x9-final-full.jpg",
    "source": "out/work/stills/f00615-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, final tier",
