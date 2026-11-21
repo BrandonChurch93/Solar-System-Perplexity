@@ -1,9 +1,67 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T03:19:42.784Z",
- "head": "fe800cdae3bb2b86dd3ded2907b58e712898abe3",
- "note": "orbit view in work: stop-local globe with hero pixels, measured light and rim glow; sky patch and Sun next",
+ "pushed": "2026-11-21T03:27:10.955Z",
+ "head": "0a6b891ed342b04bee8a1b33abf486332aef9e49",
+ "note": "Sun plate registered to the hero; sky patch, night side level and rim glow next",
  "looks": [
+  {
+   "time": "2026-11-21T03:27:09.092Z",
+   "file": "20261121032709092-note-sbs-a-s.jpg",
+   "source": "out/work/mercury/sbs-a-s.jpg",
+   "kind": "note",
+   "label": "hold x4 exposure: hero left, film right (night side and rim glow to fix)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T03:27:08.534Z",
+   "file": "20261121032708534-note-compare-mercury-hold-view.jpg",
+   "source": "out/work/compare/compare-mercury-hold-view.jpg",
+   "kind": "note",
+   "label": "hold: stop-local Sun plate in place, sky patch still black (review tier)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T03:26:21.040Z",
+   "file": "20261121032621040-frame-glow-615.jpg",
+   "source": "out/work/mercury/glow-615.png",
+   "kind": "frame",
+   "label": "mercury.hold frame 615, review tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:24:56.118Z",
+   "file": "20261121032456118-compare-compare-mercury-hold-view.jpg",
+   "source": "out/work/compare/compare-mercury-hold-view.jpg",
+   "kind": "compare",
+   "label": "mercury.hold: approved image left, film frame right, review tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:24:55.035Z",
+   "file": "20261121032455035-still-f00615-16x9-review-full.jpg",
+   "source": "out/work/stills/f00615-16x9-review-full.png",
+   "kind": "still",
+   "label": "mercury.hold frame 615, review tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T03:19:42.211Z",
    "file": "20261121031942211-note-wrap-small.jpg",
@@ -18,64 +76,6 @@
    "source": "out/work/mercury/gen/gen-sheet1.jpg",
    "kind": "note",
    "label": "sky generation takes: top row the hero with the planet removed (fill behind the globe), bottom row the hero extended past its edges (margin for the sky patch)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T03:17:19.808Z",
-   "file": "20261121031719808-frame-glow-615.jpg",
-   "source": "out/work/mercury/glow-615.png",
-   "kind": "frame",
-   "label": "mercury.hold frame 615, review tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:10:27.853Z",
-   "file": "20261121031027853-compare-compare-mercury-hold-view.jpg",
-   "source": "out/work/compare/compare-mercury-hold-view.jpg",
-   "kind": "compare",
-   "label": "mercury.hold: approved image left, film frame right, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:10:26.752Z",
-   "file": "20261121031026752-still-f00615-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00615-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mercury.hold frame 615, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:07:45.996Z",
-   "file": "20261121030745996-note-hero-2x-flow.jpg",
-   "source": "out/work/mercury/hero-2x-flow.jpg",
-   "kind": "note",
-   "label": "hero 2x upscale check: flow heat map against the approved hero (PASS, max 0.36 px)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T03:07:44.944Z",
-   "file": "20261121030744944-note-guide-8192-small.jpg",
-   "source": "out/work/mercury/guide-8192-small.jpg",
-   "kind": "note",
-   "label": "wrap guide v0: real MESSENGER mosaic graded to the hero albedo stats (input for the far side repaint, not shipped)",
    "stop": "mercury"
   },
   {
