@@ -1,20 +1,26 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T03:10:09.764Z",
+ "pushed": "2026-11-21T03:35:35.208Z",
  "head": "d85c0ab0ca1a36ff855a2211461d4741d2dadb9a",
- "note": "orbit view: emissive globe with the hero wrap is in; corona, prominences and sky come next",
+ "note": "orbit view: globe, corona, prominence card, sky card in; hold compare and hold ends",
  "looks": [
   {
-   "time": "2026-11-21T03:10:07.721Z",
-   "file": "20261121031007721-note-wrap-preview.jpg",
-   "source": "out/work/sun/wrap-preview.jpg",
-   "kind": "note",
-   "label": "wrap map, first take: hero pixels on the near side with the limb curve divided out, far side filled from rotated hero caps",
-   "stop": "sun"
+   "time": "2026-11-21T03:35:12.085Z",
+   "file": "20261121033512085-still-f00270-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00270-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.hold frame 270, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 270,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:09:54.403Z",
-   "file": "20261121030954403-compare-compare-sun-hold-view.jpg",
+   "time": "2026-11-21T03:34:52.865Z",
+   "file": "20261121033452865-compare-compare-sun-hold-view.jpg",
    "source": "out/work/compare/compare-sun-hold-view.jpg",
    "kind": "compare",
    "label": "sun.hold: approved image left, film frame right, draft tier",
@@ -27,8 +33,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:09:53.220Z",
-   "file": "20261121030953220-still-f00360-16x9-draft-full.jpg",
+   "time": "2026-11-21T03:34:51.749Z",
+   "file": "20261121033451749-still-f00360-16x9-draft-full.jpg",
    "source": "out/work/stills/f00360-16x9-draft-full.png",
    "kind": "still",
    "label": "sun.hold frame 360, draft tier",
@@ -41,27 +47,41 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:06:14.522Z",
-   "file": "20261121030614522-note-polar-study-s.jpg",
-   "source": "out/work/sun/polar-study-s.jpg",
+   "time": "2026-11-21T03:31:41.553Z",
+   "file": "20261121033141553-note-hold-ends.jpg",
+   "source": "out/work/sun/hold-ends.jpg",
    "kind": "note",
-   "label": "study: hero unwrapped around the disc (angle by log radius 0.94 to 2.5 R), source for the corona and prominence layers",
+   "label": "hold frames 270 and 449 draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T02:49:12.286Z",
-   "file": "20261121024912286-note-close-crops-a.jpg",
-   "source": "out/work/sun/close-crops-a.jpg",
+   "time": "2026-11-21T03:31:40.962Z",
+   "file": "20261121033140962-note-compare-sun-hold-view.jpg",
+   "source": "out/work/compare/compare-sun-hold-view.jpg",
    "kind": "note",
-   "label": "approved close image at native size, four crops (study, no film pixels yet)",
+   "label": "hold compare with corona, prominences and sky card",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T02:49:11.745Z",
-   "file": "20261121024911745-note-hero-crops-a.jpg",
-   "source": "out/work/sun/hero-crops-a.jpg",
+   "time": "2026-11-21T03:31:33.954Z",
+   "file": "20261121033133954-still-f00449-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00449-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.hold frame 449, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 449,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:10:07.721Z",
+   "file": "20261121031007721-note-wrap-preview.jpg",
+   "source": "out/work/sun/wrap-preview.jpg",
    "kind": "note",
-   "label": "approved hero at native size, four crops (study, no film pixels yet)",
+   "label": "wrap map, first take: hero pixels on the near side with the limb curve divided out, far side filled from rotated hero caps",
    "stop": "sun"
   },
   {
@@ -70,20 +90,6 @@
    "source": "out/work/compare/compare-sun-terrain-view.jpg",
    "kind": "compare",
    "label": "sun.terrain: approved image left, film frame right, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:59.728Z",
-   "file": "20261121024459728-still-f00090-16x9-draft-full.jpg",
-   "source": "out/work/stills/f00090-16x9-draft-full.png",
-   "kind": "still",
-   "label": "sun.terrain frame 90, draft tier",
    "stop": "sun",
    "segment": "sun.terrain",
    "frame": 90,
