@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "cover between frame 730 and frame 755",
+   "what": "the white hold on sheet-03 (739-750) hides a cut, not one move: the sun sits on the right through the dive and on the upper left after it, and a surface impact becomes an already-settled low skim. Horizon and direction do not carry across, and exposure then dumps from a white veil at 755 to a hard sun and black sky by 763",
+   "fix": "keep the same approach vector through the cover so sun side, horizon, and altitude match on the far side, and let the veil fall off instead of cutting to a new skim"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 722 to 730",
+   "what": "dive speed jumps: scale grows by about 0.03 per 8 frames through 722, then by about 0.23 in the next 8, and the planet overflows the frame as blur appears all at once",
+   "fix": "spread the last of the dive so speed and field of view accelerate continuously into the cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 960-973 into the white hold, then 1000-1014",
+   "what": "the departure lunges, ground flow rising from about 0.5 px/frame to about 2.3, into the solid white hold on sheet-06 (985-995). That hold erases the horizon. The globe after it is a different scale and exposure does not carry, though the sun stays on the terrain's side and the stop after 1014 is eased",
+   "fix": "ease the pullback and keep a readable horizon and exposure through the cover so the rise is the same move leaving the surface"
+  }
+ ]
+}

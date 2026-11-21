@@ -131,6 +131,11 @@ def checks(n, gate_args, allow_red):
     t = sh('npx vitest run 2>&1 | tail -12', check=False)
     if 'failed' in t or 'passed' not in t:
         sys.exit('tests:\n' + t)
+    if not SCRATCH:
+        g9 = subprocess.run('npm run -s gate -- ' + gate_args.split(' --g15')[0] + ' --only G9', shell=True, cwd=ROOT, capture_output=True, text=True)
+        if 'FAIL G9' in g9.stdout:
+            r = subprocess.run('npm run -s proof', shell=True, cwd=ROOT, capture_output=True, text=True)
+            print('export proof made again on this build: ' + ' | '.join(l for l in r.stdout.split('\n') if 'PSNR' in l)[:300])
     g = subprocess.run('npm run -s gate -- ' + gate_args, shell=True, cwd=ROOT, capture_output=True, text=True)
     gate = [l for l in g.stdout.split('\n') if l.startswith(('PASS', 'FAIL'))]
     (rdir(n) / 'gate.txt').write_text('\n'.join(gate) + '\n')
@@ -172,13 +177,29 @@ def start(a):
         sh('git checkout origin/agent/%s -- %s' % (stop, ' '.join(have)))
         rows = merge_rows(stop)
         state(n, {'agentHead': head, 'ledgerRows': rows})
-    done = sorted(set(finished(PROG.read_text()) + [stop]))
+    if a.defer:
+        commit('Round %d: %s from agent/%s at %s, checks follow with a later round' % (n, stop, stop, state(n).get('agentHead', 'main')), push=False)
+        state(n, {'deferred': True})
+        print('round %d %s mirrored at %s, checks deferred' % (n, stop, state(n).get('agentHead', 'main')))
+        return
+    others = [int(x) for x in (a.with_rounds or '').split(',') if x]
+    for m in others:
+        if not state(m).get('deferred'):
+            sys.exit('round %d was not started with --defer' % m)
+    done = sorted(set(finished(PROG.read_text()) + [stop] + [state(m)['stop'] for m in others]))
     green, build = checks(n, '--phase %d --g15-stops %s' % (phase, ','.join(done)), a.allow_red)
     s = state(n)
     sha = commit('Round %d: %s from agent/%s at %s' % (n, stop, stop, s.get('agentHead', 'main')))
     full = sh('git rev-parse HEAD').strip()
-    state(n, {'commit': full, 'engineHash': build.get('engineHash') or build.get('engine'), 'stopHash': (build.get('stopHashes') or build.get('stops') or {}).get(stop), 'gateGreen': green})
+    hashes = build.get('stopHashes') or build.get('stops') or {}
+    engine = build.get('engineHash') or build.get('engine')
+    state(n, {'commit': full, 'engineHash': engine, 'stopHash': hashes.get(stop), 'gateGreen': green})
     print('round %d %s commit %s engine %s stop %s' % (n, stop, sha, state(n)['engineHash'], state(n)['stopHash']))
+    for m in others:
+        shutil.copy(rdir(n) / 'gate.txt', rdir(m) / 'gate.txt')
+        ms = state(m)['stop']
+        state(m, {'commit': full, 'engineHash': engine, 'stopHash': hashes.get(ms), 'gateGreen': green, 'deferred': False, 'checkedWith': n})
+        print('round %d %s commit %s engine %s stop %s' % (m, ms, sha, engine, hashes.get(ms)))
 
 
 def still_tier(s):
@@ -1035,6 +1056,8 @@ for name in STEPS:
     q.add_argument('--measure-minutes', type=float, default=20)
     q.add_argument('--no-mirror', action='store_true')
     q.add_argument('--allow-red', action='store_true')
+    q.add_argument('--defer', action='store_true')
+    q.add_argument('--with', dest='with_rounds')
     q.add_argument('--no-cover', action='store_true')
     q.add_argument('--controls', action='store_true')
     q.add_argument('--force', action='store_true')

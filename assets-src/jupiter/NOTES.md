@@ -210,6 +210,9 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - `npm run compare` at final tier, both views: 2895 and 3150 read like the approved pictures (`out/work/compare/compare-jupiter-hold-view.jpg`, `compare-jupiter-terrain-view.jpg`).
 - READY sent at 08:02 UTC. The full measure (`--every 1`, log `out/work/jupiter/measure1.log`) runs after it; then review sheets with and without cover, crops, flow view, budget, travel frames.
 - Logs: `out/work/jupiter/gate-g11.log`, `gate-g12-g15.log`, `measure10.log`, `compare-hold-final.log`, `compare-terrain-final.log`.
+- Full measure done 08:15 UTC (`--every 1`, 864 s, `out/work/measure/jupiter.json`): G13 PASS, 0 of 463 frames over 0.02 soft; worst 3260 0.91 percent, 3261 0.81 percent, 3259 0.38 percent (the exit frames under the gathering fog). G5 and G17 as above. `npm run -s gate -- --phase 4 --only G5,G13,G17 --stop jupiter`: three PASS. Sent to the Builder as a follow-up.
+- Render cost seen in the measure: texels view at draft 1 to 2 s per frame once the page is loaded; a final tier frame about 60 s. The 14 s of a draft still is mostly page load and shader compile.
+- 08:16 UTC: `/tmp/after.sh` renders the review sheets (terrain, dive, rise, hold, then dive and rise with `--cover`) and the flow view at 3100, log `out/work/jupiter/after.log`.
 
 ## Next
 

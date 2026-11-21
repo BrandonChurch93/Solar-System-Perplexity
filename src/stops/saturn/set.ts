@@ -142,6 +142,7 @@ export const createSet: SetFactory = async (ctx) => {
       su.uGain!.value = gain * state.weight
       const ru = rings.uniforms
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
+      rings.cull(camL, close.value)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn))
       ru.uGain!.value = gain

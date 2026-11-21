@@ -80,8 +80,10 @@ float familyAt(vec3 p, float t) {
   return circleAt(q, c1, a, b);
 }
 float layoutCut = 1.0;
+float layoutOver = 0.0;
+float layoutDist = 4000.0;
 vec3 ringLayout(vec3 p, float r) {
-  vec4 t = vec4(0.0, 1.0, 0.0, 400.0);
+  vec4 t = vec4(0.0, 1.0, 0.0, 4000.0);
   float rho = r;
   float inside = 0.0;
   for (int k = 0; k < (uClose > 0.0 ? 1 : 0); k++) {
@@ -96,6 +98,8 @@ vec3 ringLayout(vec3 p, float r) {
       vec2 w = f - vec2(i);
       t = mix(mix(texelFetch(uLayout, i, 0), texelFetch(uLayout, ivec2(n.x, i.y), 0), w.x), mix(texelFetch(uLayout, ivec2(i.x, n.y), 0), texelFetch(uLayout, n, 0), w.x), w.y);
       layoutCut = mix(1.0, smoothstep(-uJunction, uJunction, t.a), inside);
+      layoutOver = inside * smoothstep(-uJunction, uJunction, t.a);
+      layoutDist = t.a;
     }
     rho = warpTo(familyAt(p, uClose) + inside * t.r * smoothstep(uSettle.x, uSettle.y, uClose));
   }
