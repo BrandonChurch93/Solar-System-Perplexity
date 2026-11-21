@@ -1,88 +1,81 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T14:45:52.568Z",
+ "pushed": "2026-11-21T15:15:48.143Z",
  "head": "1db5292b0b62742267198cc72f6e90ce0aed6e5a",
- "note": "round 3: dive cover at review tier, apron band, mauve pull",
+ "note": "round 3: review sheets of both covers and the terrain, final stills; testing veil structure and night side detail at 1586",
  "looks": [
   {
-   "time": "2026-11-21T14:45:51.490Z",
-   "file": "20261121144551490-note-la5.jpg",
-   "source": "out/work/venus/r3/la5.jpg",
+   "time": "2026-11-21T15:15:46.970Z",
+   "file": "20261121151546970-note-nc2.jpg",
+   "source": "out/work/venus/r3/nc2.jpg",
    "kind": "note",
-   "label": "round 3 item 5: 1287 and 1586 at draft, pink smudges pulled to warm brown",
+   "label": "swap frames without the veil: horizon place and tilt agree",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T14:45:50.575Z",
-   "file": "20261121144550575-note-ap.jpg",
-   "source": "out/work/venus/r3/ap.jpg",
+   "time": "2026-11-21T15:15:45.571Z",
+   "file": "20261121151545571-note-pk.jpg",
+   "source": "out/work/venus/r3/pk.jpg",
    "kind": "note",
-   "label": "round 3: dive 1316 to 1350 at draft, chevron bars of the right apron gone",
+   "label": "test, veil peak 0.76 at draft: structure under the veil, but the swap shows through",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T14:45:49.518Z",
-   "file": "20261121144549518-note-venus.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/venus.dive-cover-16x9-review.png",
+   "time": "2026-11-21T15:15:44.027Z",
+   "file": "20261121151544027-note-fin-1440.jpg",
+   "source": "out/work/venus/r3/fin-1440.png",
    "kind": "note",
-   "label": "round 3 item 2: dive cover sheet 1309 to 1320 at review tier, merged engine (main 5cfb8dc)",
+   "label": "round 3 review 1440",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T14:45:43.633Z",
-   "file": "20261121144543633-frame-f01555-review.jpg",
-   "source": "out/work/sheets/.frames-B9c2RC/f01555-review.png",
+   "time": "2026-11-21T15:15:42.083Z",
+   "file": "20261121151542083-note-fin-1185.jpg",
+   "source": "out/work/venus/r3/fin-1185.png",
+   "kind": "note",
+   "label": "round 3 review 1185 (zones against the hero as READY 2)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T15:15:40.669Z",
+   "file": "20261121151540669-job-frame-01185.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T15:15:40.386Z",
+   "file": "20261121151540386-note-fin-1586.jpg",
+   "source": "out/work/venus/r3/fin-1586.png",
+   "kind": "note",
+   "label": "round 3 review 1586",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T15:06:28.590Z",
+   "file": "20261121150628590-frame-fin-1440.jpg",
+   "source": "out/work/venus/r3/fin-1440.png",
    "kind": "frame",
-   "label": "venus.rise frame 1555, review tier",
+   "label": "venus.terrain frame 1440, review tier",
    "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1555,
+   "segment": "venus.terrain",
+   "frame": 1440,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T14:44:49.055Z",
-   "file": "20261121144449055-sheet-venus.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/venus.dive-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet venus.dive, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1309,
-   "last": 1320,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T14:44:19.632Z",
-   "file": "20261121144419632-frame-f01319-review.jpg",
-   "source": "out/work/sheets/.frames-CNPuBV/f01319-review.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1319, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1319,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T14:23:35.273Z",
-   "file": "20261121142335273-note-te.jpg",
-   "source": "out/work/venus/r3/te.jpg",
-   "kind": "note",
-   "label": "round 3 item 3: terrain entry 1322 to 1350",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T12:22:22.187Z",
-   "file": "20261121122222187-frame-fin2-1185.jpg",
-   "source": "out/work/venus/r2/fin2-1185.png",
+   "time": "2026-11-21T15:04:55.578Z",
+   "file": "20261121150455578-frame-fin-1185.jpg",
+   "source": "out/work/venus/r3/fin-1185.png",
    "kind": "frame",
    "label": "venus.hold frame 1185, review tier",
    "stop": "venus",
@@ -91,7 +84,7 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "020740ac07ff27f7"
+   "engine": "6728b99fa98fbd73"
   }
  ]
 }
