@@ -11,9 +11,9 @@ const rssMb = (): number => {
   return Number(out.trim() || 0) / 1024
 }
 const a = args()
-const own = (kind: string) => cfg.segments.find((s) => s.kind === kind && (!a.stop || s.stop === a.stop))!
-const hold = own('hold')
-const travel = own('travel')
+const own = (kind: string) => cfg.segments.find((s) => s.kind === kind && (!a.stop || s.stop === a.stop))
+const hold = own('hold')!
+const travel = own('travel') ?? cfg.segments.filter((s) => s.kind === 'travel' && s.firstFrame < hold.firstFrame).pop()!
 const holdFrame = hold.firstFrame + Math.floor(hold.frames / 2)
 const travelFrame = travel.firstFrame + Math.floor(travel.frames / 2)
 const result: Record<string, unknown> = { machine: machineId(), stop: hold.stop, formats: {} }
