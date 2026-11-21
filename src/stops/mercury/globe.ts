@@ -24,6 +24,7 @@ export interface GlobeLight {
   rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
   glareGate: [number, number, number]
   glareLens: [number, number]
+  nightAfter: number
 }
 
 export interface GlobePatches {
@@ -118,6 +119,7 @@ uniform vec3 uCurve[33];
 uniform vec3 uLimb[17];
 uniform float uLimbTo;
 uniform vec3 uNight;
+uniform float uNightDim;
 uniform vec4 uRelief;
 uniform vec4 uNightFlat;
 uniform vec4 uNightSoft;
@@ -152,6 +154,7 @@ uniform float uAspect;
 uniform mat4 uPrev;
 uniform float uSmear;
 uniform vec3 uJitter;
+uniform float uCut;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -240,6 +243,7 @@ void main() {
   for (int k = 0; k < (uSmear > 0.0 ? 1 : 0); k++) d = normalize(d + jx * jit.x + jy * jit.y);
   vec3 dc = uCloseCam * d;
   float reach = uCloseLens.x * acos(clamp(dot(dc, uCloseUp), -1.0, 1.0));
+  float cut = uCut > 0.0 ? 1.0 - clamp(0.5 + (reach - uCut) / max(fwidth(reach), 1e-6), 0.0, 1.0) : 1.0;
   float span = uCloseW.x * (1.0 - smoothstep(uCloseFade.x, uCloseFade.y, reach));
   float inner = 1.0 - smoothstep(2.0 * uCloseFade.x - uCloseFade.y, uCloseFade.x, reach);
 ${CLOSE_SPOTS}
@@ -302,13 +306,15 @@ ${PATCH_LEVELS}
   float deep = 1.0 - smoothstep(uNightSoft.x, uNightSoft.y, ndl0);
   for (int k = 0; k < (deep > 0.0 && bare ? 1 : 0); k++) calm = mix(ground, mix(inverseFilmic(textureGrad(uMap, vec2(wu, wv), wx * uNightSoft.w, wy * uNightSoft.w).rgb), ground, uNightSoft.z), deep);
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
-  vec3 col = (ground * lit + dim * uNight * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
+  vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uCarry.z);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col = mix(col, uHaze.rgb, uHaze.a);
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  cov *= cut;
+  rim *= cut;
   vec4 beauty = vec4((col * cov + rim) * k, cov);
   if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
   outColor = diagOut(beauty, texels, 1.0, vec3(0.55, 0.5, 0.45), vec2(0.0), t);
@@ -365,7 +371,7 @@ export class Globe {
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
-        uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) },
+        uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
@@ -373,7 +379,7 @@ export class Globe {
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uHaze: { value: new THREE.Vector4() },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: new THREE.Vector3(0, 0, 2) }, uClosePivot: { value: new THREE.Vector3(0, 1, 0) }, uCloseTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uCut: { value: 0 }, uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(SHELL, 96, 48), this.material)
@@ -400,6 +406,18 @@ export class Globe {
 
   near(weight: number, haze: number, soft: number): void {
     ;(this.material.uniforms.uCloseW!.value as THREE.Vector3).set(weight, haze, soft)
+  }
+
+  cut(reach: number, from: number, to: number): void {
+    const u = this.material.uniforms
+    u.uCut!.value = reach
+    const fade = u.uCloseFade!.value as THREE.Vector4
+    fade.x = from
+    fade.y = to
+  }
+
+  night(dim: number): void {
+    this.material.uniforms.uNightDim!.value = dim
   }
 
   haze(color: readonly [number, number, number], weight: number): void {
