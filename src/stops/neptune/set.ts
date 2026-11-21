@@ -4,12 +4,12 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { moon as moonAsset, plate as plateAsset, ringMap, wrap } from './assets'
+import { close, moon as moonAsset, ringMap, wrap } from './assets'
+import { Closeup } from './closeup'
 import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
 import { NeptunePlanet } from './planet'
-import { Plate } from './plate'
 import { Ring } from './ring'
 import skyJson from './sky.json'
 import { Triton } from './triton'
@@ -62,8 +62,16 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const plate = new Plate(await ctx.texture(base + plateAsset.file, { srgb: true, anisotropy: 8, mirror: true }), plan.p.terrain)
-  terrain.add(plate.mesh)
+  const closeup = new Closeup({
+    deck: await ctx.texture(base + close.deck, { srgb: true, anisotropy: 16 }),
+    cloud: await ctx.texture(base + close.cloud, { srgb: true, anisotropy: 16 }),
+    deckWide: await ctx.texture(base + close.deckWide, { srgb: true, anisotropy: 16, mirror: true }),
+    cloudWide: await ctx.texture(base + close.cloudWide, { srgb: true, anisotropy: 16, mirror: true }),
+    height: await ctx.texture(base + close.height, { srgb: false, anisotropy: 4, mirror: true }),
+    glow: await ctx.texture(base + close.glow, { srgb: true, mips: false, anisotropy: 1 }),
+  })
+  terrain.add(closeup.mesh)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
   const light = new THREE.Vector3()
   const camera = new THREE.Vector3()
@@ -90,7 +98,8 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        plate.material.uniforms.uGain!.value = gain
+        camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
+        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -136,7 +145,7 @@ export const createSet: SetFactory = async (ctx) => {
       triton.dispose()
       ring.dispose()
       far.dispose()
-      plate.dispose()
+      closeup.dispose()
     },
   }
 }
