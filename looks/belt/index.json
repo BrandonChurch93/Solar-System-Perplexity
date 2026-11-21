@@ -1,77 +1,83 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T16:43:16.573Z",
- "head": "ca4b1a1fe01b72e8e7ebfcbf4c96704e0f11cc9a",
- "note": "belt task 3: review sheet of the new layout",
+ "pushed": "2026-11-21T17:16:01.402Z",
+ "head": "4e8aadea1990909c5c6688523e6d7f2f7c287663",
+ "note": "task 3 done: hero drifts across, review sheet, finals 2782 to 2784, half star draft",
  "looks": [
+  {
+   "time": "2026-11-21T17:15:01.189Z",
+   "file": "20261121171501189-frame-f02754.jpg",
+   "source": "out/work/belt/t3r5/f02754.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2754, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2754,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "9db8e7cac0634236"
+  },
+  {
+   "time": "2026-11-21T17:12:30.222Z",
+   "file": "20261121171230222-note-f02784.jpg",
+   "source": "out/work/belt/t3f2/f02784.png",
+   "kind": "note",
+   "label": "task 3 final 2784, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T17:12:29.543Z",
+   "file": "20261121171229543-note-f02783.jpg",
+   "source": "out/work/belt/t3f2/f02783.png",
+   "kind": "note",
+   "label": "task 3 final 2783, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T17:12:28.698Z",
+   "file": "20261121171228698-note-f02782.jpg",
+   "source": "out/work/belt/t3f2/f02782.png",
+   "kind": "note",
+   "label": "task 3 final 2782, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T17:12:16.068Z",
+   "file": "20261121171216068-frame-f02325.jpg",
+   "source": "out/work/belt/t3proof-branch/f02325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, draft tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "9db8e7cac0634236"
+  },
+  {
+   "time": "2026-11-21T17:08:48.726Z",
+   "file": "20261121170848726-note-sheet.jpg",
+   "source": "out/work/belt/t3sheet/sheet.jpg",
+   "kind": "note",
+   "label": "task 3 review sheet of mars.travel, every third frame 2745 to 2817, hero on its drift path",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T17:01:53.058Z",
+   "file": "20261121170153058-note-half2782.jpg",
+   "source": "out/work/belt/t3/half2782.png",
+   "kind": "note",
+   "label": "task 3 draft 2782 with half the flight stars (400000), hero on its new drift path: dark sides read by hidden stars",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-21T16:43:15.418Z",
    "file": "20261121164315418-note-sheet.jpg",
    "source": "out/work/belt/t3r2/sheet.jpg",
    "kind": "note",
    "label": "belt task 3: review sheet every third frame 2745 to 2817, close pass 2776 to 2786, all rocks with their own motion blur (unfinished: rim and mid rock still to fix)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:42:23.793Z",
-   "file": "20261121164223793-frame-f02814.jpg",
-   "source": "out/work/belt/t3r2/f02814.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2814, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2814,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bc1527bc32dbd409"
-  },
-  {
-   "time": "2026-11-21T16:30:08.303Z",
-   "file": "20261121163008303-note-f02772.jpg",
-   "source": "out/work/belt/t3r1/f02772.png",
-   "kind": "note",
-   "label": "belt task 3: review 2772, rocks blurred in the fast pan (unfinished)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:30:07.266Z",
-   "file": "20261121163007266-note-f02782.jpg",
-   "source": "out/work/belt/t3r1/f02782.png",
-   "kind": "note",
-   "label": "belt task 3: review 2782, near rock passing top right, tone gain 0.24 (unfinished)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:30:06.499Z",
-   "file": "20261121163006499-note-sheet.jpg",
-   "source": "out/work/belt/t3d1/sheet.jpg",
-   "kind": "note",
-   "label": "belt task 3: draft sheet, first layout with own velocity and full blur (unfinished)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:30:05.379Z",
-   "file": "20261121163005379-note-main-f2782.jpg",
-   "source": "out/work/belt/t3/main-f2782.png",
-   "kind": "note",
-   "label": "belt task 3: final 2782 of main bf74284 before any change",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:38:02.095Z",
-   "file": "20261121083802095-note-f2782-nopatch.jpg",
-   "source": "out/work/belt/p5/f2782-nopatch.png",
-   "kind": "note",
-   "label": "belt final 2782 on the branch as committed, without the dust patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:38:01.556Z",
-   "file": "20261121083801556-note-dust-order-2782.jpg",
-   "source": "out/work/belt/p5/dust-order-2782.png",
-   "kind": "note",
-   "label": "near rock at final 2782, native size: left without the dust patch, right with it",
    "stop": "mars"
   }
  ]
