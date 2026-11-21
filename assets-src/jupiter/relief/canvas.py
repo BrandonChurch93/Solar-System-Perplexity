@@ -131,6 +131,17 @@ def main():
     mirror = cv2.remap(own, x.astype(np.float32), y.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
     w = np.clip((e - KEEP[0] + 0.15) / 0.15, 0, 1)[..., None].astype(np.float32)
     patch = own * w + mirror * (1 - w)
+    lost = ((x < 0) | (x > W - 1) | (y < 0) | (y > H - 1)) & (w[..., 0] < 1)
+    head = np.cumprod(lost, axis=1).astype(bool)
+    tail = np.cumprod(lost[:, ::-1], axis=1).astype(bool)[:, ::-1] & ~head
+    cols = np.arange(W)[None, :]
+    src = np.where(head, 2 * head.sum(1)[:, None] - 1 - cols, np.where(tail, 2 * (W - tail.sum(1))[:, None] - 1 - cols, cols))
+    src = np.clip(src, 0, W - 1)
+    rows = np.broadcast_to(np.arange(H)[:, None], src.shape)
+    still = lost[rows, src]
+    print('mirror samples outside the picture', int(lost.sum()), 'filled by row reflection', int((lost & ~still).sum()), 'left on the background', int(still.sum()))
+    back = np.median(own[e > 2.0], axis=0)
+    patch = np.where(lost[..., None], np.where(still[..., None], back, patch[rows, src]), patch).astype(np.float32)
     np.save(f'{WORK}/sky-lin.npy', patch.astype(np.float32))
     keep = np.clip((KEEP[1] - e) / (KEEP[1] - KEEP[0]), 0, 1)[..., None].astype(np.float32)
     calm = cv2.GaussianBlur(patch, (0, 0), 6)
