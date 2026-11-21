@@ -16,6 +16,7 @@ import { implicitUniform } from './texel'
 import type { SkyAims } from '../space/aim'
 import { Cover } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
+import type { Trim } from '../bodies/trim'
 import { marksIn } from '../terrain/shield'
 import { segmentAtFrame, setsForFrame } from '../director/timeline'
 
@@ -56,6 +57,7 @@ export class Engine {
   private lastShot: Shot | null = null
   private readonly solid: THREE.Material[] = []
   private readonly veiled: THREE.Material[] = []
+  private readonly trims: Trim[] = []
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -231,6 +233,15 @@ export class Engine {
       set.world.quaternion.copy(state.rotation)
       set.update(state, shot, view)
     }
+    const trims = this.trims
+    trims.length = 0
+    if (!raw && this.sky.cull) {
+      this.world.traverseVisible((o) => {
+        const t = o.userData.trim as Trim | undefined
+        if (t) trims.push(t)
+      })
+    }
+    for (const t of trims) t.hide()
     const ground = !raw && this.sky.cull ? this.shield() : null
     const covered = ground !== null && ground.screen(r, cam, width, height, TILE)
     r.setRenderTarget(this.sampleTarget)
@@ -263,6 +274,7 @@ export class Engine {
     if (early) this.renderWorld(cam, this.solid)
     else r.render(this.world, cam)
     if (ground && covered) ground.show()
+    for (const t of trims) t.show()
     if (this.near.children.length > 0) {
       r.clearDepth()
       r.render(this.near, cam)
