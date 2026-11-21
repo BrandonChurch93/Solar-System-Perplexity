@@ -1,90 +1,78 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T06:10:03.274Z",
- "head": "3a12b225e129623324a51d316048e521b86e9622",
- "note": "Session 6: cover is now the stop's own Sun glare (a bloom that grows from the Sun until the frame is white, engine cover hidden); dive patches levels 1 to 3 built, level 4 in progress; terrain side of the glare had the Sun in the wrong place and is being rendered again.",
+ "pushed": "2026-11-21T06:31:31.597Z",
+ "head": "2833fc84920ec091d17e030de3229df9ffb32f62",
+ "note": "dive patches wired and checked without glare; glare cover retuned so it thins over about ten frames on each side",
  "looks": [
   {
-   "time": "2026-11-21T06:09:48.137Z",
-   "file": "20261121060948137-frame-f746.jpg",
-   "source": "out/work/mercury/g6/f746.png",
+   "time": "2026-11-21T06:31:31.024Z",
+   "file": "20261121063131024-note-rest-a.jpg",
+   "source": "out/work/mercury/g7/rest-a.jpg",
+   "kind": "note",
+   "label": "glare take 6: terrain 759, 762 and the rise cover 993 to 1003",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:31:30.461Z",
+   "file": "20261121063130461-note-dive-a.jpg",
+   "source": "out/work/mercury/g7/dive-a.jpg",
+   "kind": "note",
+   "label": "glare take 6, dive side: frames 731 to 741 (white too early, retuned in take 7)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:29:39.727Z",
+   "file": "20261121062939727-frame-f1005.jpg",
+   "source": "out/work/mercury/g7/f1005.png",
    "kind": "frame",
-   "label": "mercury.dive frame 746, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 746,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T06:09:42.365Z",
-   "file": "20261121060942365-note-L1-view.jpg",
-   "source": "out/work/mercury/patches/L1-view.jpg",
-   "kind": "note",
-   "label": "dive patch level 1 (76 degrees), north up, unlit colour as the globe shader reads it",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:09:41.807Z",
-   "file": "20261121060941807-note-L3-view-L4-in-c.jpg",
-   "source": "out/work/mercury/patches/L3-view-L4-in-c.jpg",
-   "kind": "note",
-   "label": "dive patches, north up: level 3 (19 degrees) and the level 4 centre input with the terraced crater placed on the hero's ring crater",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:09:41.186Z",
-   "file": "20261121060941186-note-dive-glare-strip.jpg",
-   "source": "out/work/mercury/g5/dive-glare-strip.jpg",
-   "kind": "note",
-   "label": "dive cover, draft frames 735 737 738 739 742: the Sun's bloom grows from the right until the frame is white",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:01:16.611Z",
-   "file": "20261121060116611-frame-f985.jpg",
-   "source": "out/work/mercury/g3/f985.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 985, draft tier",
+   "label": "mercury.rise frame 1005, draft tier",
    "stop": "mercury",
    "segment": "mercury.rise",
-   "frame": 985,
+   "frame": 1005,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:42:14.176Z",
-   "file": "20261121054214176-note-levels2-view.jpg",
-   "source": "out/work/mercury/patches/levels2-view.jpg",
+   "time": "2026-11-21T06:27:57.122Z",
+   "file": "20261121062757122-note-c738-before-after.jpg",
+   "source": "out/work/mercury/p1/c738-before-after.jpg",
    "kind": "note",
-   "label": "spot moved so the hero's ring crater is the terraced crater: wrap at 76, 38, 19, 9.5 degrees and the close image rectified",
+   "label": "frame 738 native crop: wrap only (left), with patches (right)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T05:42:13.624Z",
-   "file": "20261121054213624-note-rise-sheet-a.jpg",
-   "source": "out/work/mercury/d1/rise-sheet-a.jpg",
+   "time": "2026-11-21T06:27:56.526Z",
+   "file": "20261121062756526-note-rise-sheet-b.jpg",
+   "source": "out/work/mercury/g6/rise-sheet-b.jpg",
    "kind": "note",
-   "label": "rise frames 994 996 998 1002 1008 1016 at draft, before patches: the Sun crosses the frame as the camera leaves",
+   "label": "glare take 5, rise cover: frames 985 to 1002",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T05:27:59.132Z",
-   "file": "20261121052759132-frame-s4c-959.jpg",
-   "source": "out/work/mercury/t/s4c-959.png",
-   "kind": "frame",
-   "label": "mercury.terrain frame 959, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 959,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "time": "2026-11-21T06:27:55.944Z",
+   "file": "20261121062755944-note-terrain-a.jpg",
+   "source": "out/work/mercury/g7/terrain-a.jpg",
+   "kind": "note",
+   "label": "glare take 6, terrain side after the dive cover: frames 746 to 757, bloom recedes into the Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:27:55.341Z",
+   "file": "20261121062755341-note-rise-noglare-sheet.jpg",
+   "source": "out/work/mercury/p1/rise-noglare-sheet.jpg",
+   "kind": "note",
+   "label": "rise 994 to 1000 with the patches, glare switched off for the check",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T06:27:54.715Z",
+   "file": "20261121062754715-note-dive-noglare-sheet.jpg",
+   "source": "out/work/mercury/p1/dive-noglare-sheet.jpg",
+   "kind": "note",
+   "label": "dive 730 to 742 with the four patch levels, glare switched off for the check",
+   "stop": "mercury"
   }
  ]
 }
