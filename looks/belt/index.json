@@ -1,9 +1,55 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T08:38:20.064Z",
- "head": "234fc04960326557f4d96fed632c556554e5781f",
- "note": "belt refit done: review sheet r3, finals 2772 2782 2796, dust order with and without the patch",
+ "pushed": "2026-11-21T16:30:09.528Z",
+ "head": "ca4b1a1fe01b72e8e7ebfcbf4c96704e0f11cc9a",
+ "note": "belt task 3: close pass with motion blur, darker warm rocks, first review stills",
  "looks": [
+  {
+   "time": "2026-11-21T16:30:08.303Z",
+   "file": "20261121163008303-note-f02772.jpg",
+   "source": "out/work/belt/t3r1/f02772.png",
+   "kind": "note",
+   "label": "belt task 3: review 2772, rocks blurred in the fast pan (unfinished)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T16:30:07.266Z",
+   "file": "20261121163007266-note-f02782.jpg",
+   "source": "out/work/belt/t3r1/f02782.png",
+   "kind": "note",
+   "label": "belt task 3: review 2782, near rock passing top right, tone gain 0.24 (unfinished)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T16:30:06.499Z",
+   "file": "20261121163006499-note-sheet.jpg",
+   "source": "out/work/belt/t3d1/sheet.jpg",
+   "kind": "note",
+   "label": "belt task 3: draft sheet, first layout with own velocity and full blur (unfinished)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T16:30:05.379Z",
+   "file": "20261121163005379-note-main-f2782.jpg",
+   "source": "out/work/belt/t3/main-f2782.png",
+   "kind": "note",
+   "label": "belt task 3: final 2782 of main bf74284 before any change",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T16:27:54.268Z",
+   "file": "20261121162754268-frame-f02783.jpg",
+   "source": "out/work/belt/t3r1/f02783.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2783, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2783,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "01d8c661215a0b90"
+  },
   {
    "time": "2026-11-21T08:38:02.095Z",
    "file": "20261121083802095-note-f2782-nopatch.jpg",
@@ -27,58 +73,6 @@
    "kind": "note",
    "label": "belt final 2796, final layout, dust patch applied",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:38:00.303Z",
-   "file": "20261121083800303-note-g2782.jpg",
-   "source": "out/work/belt/p5/g2782.png",
-   "kind": "note",
-   "label": "belt final 2782, final layout, dust patch applied",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:37:59.677Z",
-   "file": "20261121083759677-note-g2772.jpg",
-   "source": "out/work/belt/p5/g2772.png",
-   "kind": "note",
-   "label": "belt final 2772, final layout, dust patch applied",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:37:59.128Z",
-   "file": "20261121083759128-note-sheet.jpg",
-   "source": "out/work/belt/r3/sheet.jpg",
-   "kind": "note",
-   "label": "belt review contact sheet, every third frame 2745 to 2817, final layout with dust patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:37:48.280Z",
-   "file": "20261121083748280-frame-patch2-2212.jpg",
-   "source": "out/work/belt/p5/proof/patch2-2212.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2212, draft tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2212,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4410cec635d2f16c"
-  },
-  {
-   "time": "2026-11-21T08:37:24.348Z",
-   "file": "20261121083724348-frame-patch2-2580.jpg",
-   "source": "out/work/belt/p5/proof/patch2-2580.png",
-   "kind": "frame",
-   "label": "mars.terrain frame 2580, draft tier",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2580,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4410cec635d2f16c"
   }
  ]
 }
