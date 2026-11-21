@@ -14,9 +14,12 @@ CACHE = 'references/cache/mercury'
 DEM = f'{CACHE}/Mercury_Messenger_USGS_DEM_Global_665m_v2.tif'
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'out/work/mercury/guide-8192.png'
 W, H = 8192, 4096
-LOW = 0.55
-MARK = 0.3
-SLOPE = 0.22
+LOW = 0.6
+MARK = 0.22
+UNIT = 0.5
+RADIUS = 2439400.0
+STEEP = 2.5
+SOFT = 0.05
 
 
 def wrapblur(a, s):
@@ -71,29 +74,35 @@ else:
     np.save(dem_cache, dem)
 lat = ((0.5 - (np.arange(H) + 0.5) / H) * np.pi).astype(np.float32)
 coslat = np.maximum(np.cos(lat), 0.05)[:, None]
+dem = dem * UNIT
 hp = dem - wrapblur(dem, 10)
 scale = float(np.percentile(np.abs(hp[H // 6: -H // 6]), 90))
-mark = np.tanh(hp / scale)
+mark = np.clip(hp / scale, -2.5, 2.5) / 2.5
+cell = 2 * np.pi * RADIUS / W
 pad = np.concatenate([dem[:, -2:], dem, dem[:, :2]], 1)
-ge = (pad[:, 3:-1] - pad[:, 1:-3]) / 2 / coslat
-gn = -np.gradient(dem, axis=0)
+ge = (pad[:, 3:-1] - pad[:, 1:-3]) / 2 / coslat / cell * STEEP
+gn = -np.gradient(dem, axis=0) / cell * STEEP
 d = geo.directions(W, H)
 sun = np.array(geo.FIT['sunDir'], np.float32)
 sun /= np.linalg.norm(sun)
 east = np.stack([d[..., 2], np.zeros_like(d[..., 0]), -d[..., 0]], -1)
 east /= np.maximum(np.linalg.norm(east, axis=-1, keepdims=True), 1e-6)
 north = np.cross(d, east)
-se, sn = east @ sun, north @ sun
-flat = np.sqrt(se * se + sn * sn)
-along = -(ge * se + gn * sn)
-sscale = float(np.percentile(np.abs(along[H // 6: -H // 6]), 90))
-slope = np.tanh(along / sscale) * geo.smooth(0.0, 0.5, flat)
-del d, east, north, pad, ge, gn
-mix = ll.mean() + low + MARK * mark + SLOPE * slope
+se, sn, up = east @ sun, north @ sun, d @ sun
+flat = np.maximum(np.sqrt(se * se + sn * sn), 1e-4)
+night = 1 - geo.smooth(-0.25, -0.05, up)
+elev = np.maximum(up, 0.12) * (1 - night) + 0.3 * night
+ce = np.sqrt(1 - elev * elev)
+lit = (elev - (ge * se + gn * sn) / flat * ce) / np.sqrt(1 + ge * ge + gn * gn)
+ratio = np.clip((np.maximum(lit, 0) + SOFT) / (elev + SOFT), 0.12, 2.6)
+slope = np.log(ratio) * geo.smooth(0.0, 0.3, flat)
+print('slope 90th percentile', float(np.percentile(np.hypot(ge, gn)[H // 6: -H // 6], 90)) / STEEP)
+del d, east, north, pad, ge, gn, lit, ratio
+mix = ll.mean() + low + MARK * mark + slope
 mix += ll.mean() - mix[H // 6: -H // 6].mean()
 y = np.exp(mix)
 gch = y / (0.2126 * np.exp(crg) + 0.7152 + 0.0722 * np.exp(cbg))
 out = np.stack([gch * np.exp(crg), gch, gch * np.exp(cbg)], -1).astype(np.float32)
 Image.fromarray(geo.coded(out)).save(OUT)
 Image.fromarray(geo.coded(out)).resize((2048, 1024), Image.LANCZOS).save(OUT.replace('.png', '-small.jpg'), quality=90)
-print('written', OUT, 'mark scale', scale, 'slope scale', sscale)
+print('written', OUT, 'mark scale', scale)
