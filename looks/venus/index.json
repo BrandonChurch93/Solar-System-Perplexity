@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T21:31:08.760Z",
- "head": "50d8faaf609dc6f6dd79e62a18b843519d95c895",
- "note": "Phase 6: rise cover at review tier seen; veil pass cost found (anisotropic lookups), hold detail layer in work",
+ "pushed": "2026-11-21T22:02:37.868Z",
+ "head": "e27cb08ab6821e9d57aafd1c3c1e5011eeaaff0d",
+ "note": "P6 item 2: hold detail layer registered to the hero (dots measure), limb strands, night rim and glint from the hero",
  "looks": [
+  {
+   "time": "2026-11-21T22:02:37.227Z",
+   "file": "20261121220237227-note-h6-limb-after.jpg",
+   "source": "../view/h6-limb-after.jpg",
+   "kind": "note",
+   "label": "P6 item 2 limb crops 0, -45, 90, 135 deg: hero left, hold detail layer right (take f5)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:02:36.591Z",
+   "file": "20261121220236591-note-h6-limb-before.jpg",
+   "source": "../view/h6-limb-before.jpg",
+   "kind": "note",
+   "label": "P6 item 2 limb crops 0, -45, 90, 135 deg: hero left, round 23 right",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:02:35.991Z",
+   "file": "20261121220235991-note-h6-whole.jpg",
+   "source": "../view/h6-whole.jpg",
+   "kind": "note",
+   "label": "P6 item 2 hold 1185 nograin final: hero, round 23, hold detail layer (zones whole 1.96 disc 0.71 ring 0.47 halo 2.99 sky 2.41)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T21:31:07.212Z",
    "file": "20261121213107212-note-c8rr.jpg",
@@ -26,30 +50,6 @@
    "source": "../view/st5-cmp.png",
    "kind": "note",
    "label": "Phase 6 item 5, the doubled stars at 1440, left limb, 3x: approved above, round 23 film below. The mirrored star fill of the terrain sky patch shows above the limb (bright pair 36 px below its original)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T21:05:22.451Z",
-   "file": "20261121210522451-note-c8r.jpg",
-   "source": "../view/c8r.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover, take c8, draft tier, every frame 1545 to 1574 (window 1.0 s): sheets stream slower than the pull back and draw their own streaks, holes stay open over a fog base",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:40:23.830Z",
-   "file": "20261121204023830-note-c4r.jpg",
-   "source": "../view/c4r.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover at review tier, take c4 (1552 to 1570 every second frame, then 1559): sky and Sun stay, terrain leaves in streaks",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:29:31.742Z",
-   "file": "20261121202931742-note-c2r.jpg",
-   "source": "../view/c2r.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover draft take c2 (rejected: brown wrinkled surface, pale cut outs)",
    "stop": "venus"
   },
   {
