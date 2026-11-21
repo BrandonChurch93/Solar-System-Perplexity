@@ -1,67 +1,79 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T21:15:32.517Z",
- "head": "191b1f19f13dff2a5c1a26e65b9a5bbba1500e9b",
- "note": "Phase 6 item 3: both covers, bank and light carried across, cover inside the air shell",
+ "pushed": "2026-11-21T21:36:42.278Z",
+ "head": "a4f6041a72d8daed65bde39aa9a54000f3d7fcf8",
+ "note": "Phase 6 item 3: rise paced along the engine's path, cover held inside the air shell, deck grade across both covers",
  "looks": [
   {
-   "time": "2026-11-21T21:15:28.005Z",
-   "file": "20261121211528005-note-pick-sides-2.jpg",
-   "source": "out/work/nep/p6/pick-sides-2.png",
+   "time": "2026-11-21T21:34:27.504Z",
+   "file": "20261121213427504-note-k3-grid.jpg",
+   "source": "out/work/nep/p6/k3-grid.png",
    "kind": "note",
-   "label": "Item 3 trial, draft: the two sides of each cover, 4972 against 4987 and 4726 against 4741 (colour of the deck still differs)",
+   "label": "Deck grade across both covers (draft grid)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T21:15:27.414Z",
-   "file": "20261121211527414-note-pick-rise-1.jpg",
-   "source": "out/work/nep/p6/pick-rise-1.png",
+   "time": "2026-11-21T21:34:26.911Z",
+   "file": "20261121213426911-note-pick-sweep-4.jpg",
+   "source": "out/work/nep/p6/pick-sweep-4.png",
    "kind": "note",
-   "label": "Item 3 trial, draft: rise 4976 to 5006 from 0.3 radii, gentle start, turn of 49 degrees about the storm carried over 24 frames",
+   "label": "Both covers, cover held inside the air shell, haze top sweeps down over two frames (draft): 4727 to 4738 and 4975 to 4985",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T21:15:26.826Z",
-   "file": "20261121211526826-note-pick-risecover-2.jpg",
-   "source": "out/work/nep/p6/pick-risecover-2.png",
+   "time": "2026-11-21T21:34:26.331Z",
+   "file": "20261121213426331-note-pick-rise-3.jpg",
+   "source": "out/work/nep/p6/pick-rise-3.png",
    "kind": "note",
-   "label": "Item 3 trial, draft: rise cover 4972 to 4987, rise opens at 0.3 radii with the deck's horizon across the frame, cover inside the air shell while thin",
+   "label": "Rise 4976 to 5006 with the paced climb (draft): horizon across the frame at 4982 to 4986, disc by 4996, brake to 5006",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T21:15:26.225Z",
-   "file": "20261121211526225-note-pick-divecover-2.jpg",
-   "source": "out/work/nep/p6/pick-divecover-2.png",
-   "kind": "note",
-   "label": "Item 3 trial, draft: dive cover 4726 to 4744, cover inside the air shell while it is thin, full frame only near the switch",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T21:15:25.596Z",
-   "file": "20261121211525596-note-pick-dive-1.jpg",
-   "source": "out/work/nep/p6/pick-dive-1.png",
-   "kind": "note",
-   "label": "Item 3 trial, draft: dive 4710 to 4738 with the bank held at the terrain entry's, the storm kept in view and the camera turned 45 degrees about the storm",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T21:13:51.901Z",
-   "file": "20261121211351901-frame-f4972-draft.jpg",
-   "source": "out/work/nep/p6/k1/f4972-draft.png",
+   "time": "2026-11-21T21:34:08.398Z",
+   "file": "20261121213408398-frame-f04985-draft.jpg",
+   "source": "out/work/sheets/.frames-ohYKSS/f04985-draft.png",
    "kind": "frame",
-   "label": "neptune.rise frame 4972, draft tier",
+   "label": "neptune.rise frame 4985, draft tier",
    "stop": "neptune",
    "segment": "neptune.rise",
-   "frame": 4972,
+   "frame": 4985,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:59:46.979Z",
-   "file": "20261121205946979-frame-m-4605.jpg",
-   "source": "out/work/nep/p6/m-4605.png",
+   "time": "2026-11-21T21:33:21.930Z",
+   "file": "20261121213321930-frame-f04727-draft.jpg",
+   "source": "out/work/sheets/.frames-ohYKSS/f04727-draft.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4727, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4727,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:22:19.037Z",
+   "file": "20261121212219037-frame-f4860-review.jpg",
+   "source": "out/work/nep/p6/k4/f4860-review.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, review tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:21:25.924Z",
+   "file": "20261121212125924-frame-f4605-review.jpg",
+   "source": "out/work/nep/p6/k4/f4605-review.png",
    "kind": "frame",
    "label": "neptune.hold frame 4605, review tier",
    "stop": "neptune",
@@ -73,18 +85,12 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T20:56:17.138Z",
-   "file": "20261121205617138-frame-w-4860.jpg",
-   "source": "out/work/nep/p6/w-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "time": "2026-11-21T21:15:28.005Z",
+   "file": "20261121211528005-note-pick-sides-2.jpg",
+   "source": "out/work/nep/p6/pick-sides-2.png",
+   "kind": "note",
+   "label": "Item 3 trial, draft: the two sides of each cover, 4972 against 4987 and 4726 against 4741 (colour of the deck still differs)",
+   "stop": "neptune"
   }
  ]
 }
