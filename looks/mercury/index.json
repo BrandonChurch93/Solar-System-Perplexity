@@ -1,9 +1,39 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T14:50:47.007Z",
- "head": "f6df2fc903ba37eea84125ca37d3a5ec5e976437",
- "note": "round 3 wip: pace and flow match coded, veil off; sun, sky plate, glare next",
+ "pushed": "2026-11-21T15:14:50.488Z",
+ "head": "4bb60bca5a78de5e28ab2f834bfb56870365cd99",
+ "note": "Round 3: veil removed, one Sun through the dive, glare as one object; fixing sky plate and uncovered residual",
  "looks": [
+  {
+   "time": "2026-11-21T15:14:49.910Z",
+   "file": "20261121151449910-note-c730.jpg",
+   "source": "out/work/mercury/r11/p2/c730.jpg",
+   "kind": "note",
+   "label": "Fault found at 730: noisy block under the shrinking Sun is the hold sky patch residual, uncovered when the Sun plate shrinks; being cured with a hole at the hero Sun",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T15:14:49.333Z",
+   "file": "20261121151449333-note-g2.jpg",
+   "source": "out/work/mercury/r11/p2/g2.jpg",
+   "kind": "note",
+   "label": "Round 3 dive draft 734 to 745: veil gone, one Sun slides along the top and shrinks, glare as one object (sky plate not yet drawing, found and fixed after this take)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T15:14:46.311Z",
+   "file": "20261121151446311-frame-f730.jpg",
+   "source": "out/work/mercury/r11/p3/f730.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 730, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 730,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T14:50:46.480Z",
    "file": "20261121145046480-note-grid-rise.jpg",
@@ -11,42 +41,6 @@
    "kind": "note",
    "label": "r3 wip: rise with new pace, bare 990 994 998 1004 1010 1016",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T14:50:45.968Z",
-   "file": "20261121145045968-note-grid-dive.jpg",
-   "source": "out/work/mercury/r11/p1/grid-dive.jpg",
-   "kind": "note",
-   "label": "r3 wip: dive with new pace, bare (no veil, no glare yet) 717 730 736 740 743 744",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T14:50:08.587Z",
-   "file": "20261121145008587-frame-f1016.jpg",
-   "source": "out/work/mercury/r11/p1/f1016.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1016, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1016,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T14:47:46.858Z",
-   "file": "20261121144746858-frame-f744.jpg",
-   "source": "out/work/mercury/r11/p1/f744.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 744, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 744,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
   },
   {
    "time": "2026-11-21T13:54:23.277Z",
