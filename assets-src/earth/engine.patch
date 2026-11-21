@@ -1,14 +1,28 @@
-diff --git a/tests/skyframe.test.ts b/tests/skyframe.test.ts
-index 15b1b82..d77af20 100644
---- a/tests/skyframe.test.ts
-+++ b/tests/skyframe.test.ts
-@@ -23,7 +23,8 @@ describe('sky frame', () => {
-       const frameNo = config.segments.find((s) => s.id === p.id + '.hold')!
-       const judged = frameNo.firstFrame + Math.floor(config.raw.judged.fractions.hold * frameNo.frames + 1e-9)
-       const cam = director.shotAt(judged, judged / config.fps).camera.quaternion
--      const want = sky.frame.clone().multiply(cam)
-+      const turn = sky.orbits[p.id]
-+      const want = (turn ? sky.frame.clone().multiply(turn.clone().invert()) : sky.frame.clone()).multiply(cam)
-       expect(Math.abs(want.dot(aim!.orbit))).toBeGreaterThan(1 - 1e-6)
-     }
-   })
+diff --git a/src/director/film.ts b/src/director/film.ts
+index e270072..55aaa8b 100644
+--- a/src/director/film.ts
++++ b/src/director/film.ts
+@@ -508,6 +508,11 @@ export class FilmDirector implements Director {
+             const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
+             cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
+           }
++          const sea = p.p.coverSea
++          if (sea && view === 'terrain') {
++            const c = new THREE.Vector3().fromArray(sea.centre).sub(local.position).divideScalar(sea.radius).applyQuaternion(local.quaternion.clone().invert())
++            cover.shell = { centre: [c.x, c.y, c.z], inner: sea.edge[0], outer: sea.edge[1] }
++          }
+           const dt = time - p.coverCenter(segment)
+           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
+           const k = p.p.coverRush
+diff --git a/src/director/moves.ts b/src/director/moves.ts
+index 99868af..af3b93c 100644
+--- a/src/director/moves.ts
++++ b/src/director/moves.ts
+@@ -35,6 +35,7 @@ export interface MoveParams {
+   coverEdge?: [number, number]
+   coverEdgeRise?: [number, number]
+   coverShell?: [number, number]
++  coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
+   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
+   spinDegPerSecond: number
+   moonDegPerSecond: number
