@@ -7,8 +7,8 @@
   "stormDegPerSecond": 2.0,
   "streamPerSecond": 0.08,
   "streamShear": 1.0,
-  "cloudBase": 0.07,
-  "cloudThickness": 0.06,
+  "cloudBase": 0.3,
+  "cloudThickness": 0.04,
   "glowTop": 0.012,
   "glowAzimuthDeg": 80,
   "sightMargin": 0.012
