@@ -1,9 +1,69 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T09:41:38.016Z",
- "head": "9a5391fead9f512d34afa777fd99a2dc1f640762",
- "note": "rise cut without the white flash: limb, deck and limb glow carried across 2129 to 2130 (waits for exitDipDeg on main)",
+ "pushed": "2026-11-21T10:11:46.648Z",
+ "head": "3d76305515afc8a6267e0f71e0a4c26d419b1f10",
+ "note": "round 11 corrections: rise handover and dive cover moves, engine request 3",
  "looks": [
+  {
+   "time": "2026-11-21T10:11:46.083Z",
+   "file": "20261121101146083-note-d-aur.jpg",
+   "source": "out/work/earth/p23/d-aur.jpg",
+   "kind": "note",
+   "label": "round 11 frame 1857, aurora crop x2: ribbon in front of the disc, bad",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:11:45.544Z",
+   "file": "20261121101145544-note-sa-2156.jpg",
+   "source": "out/work/earth/p23/sa-2156.jpg",
+   "kind": "note",
+   "label": "round 11 frame 2156, South America crop x3: lights smeared by motion blur (settle 5), bad",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:11:45.023Z",
+   "file": "20261121101145023-note-cut-native.jpg",
+   "source": "out/work/earth/p20/cut-native.jpg",
+   "kind": "note",
+   "label": "rise cut limb strips at native size, 2128 to 2133",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:11:44.482Z",
+   "file": "20261121101144482-note-strip-a.jpg",
+   "source": "out/work/earth/p23/strip-a.jpg",
+   "kind": "note",
+   "label": "rise handover strip 2128 to 2138, draft, with the requested gentle start (no whole frame veil, limb carried)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:11:31.993Z",
+   "file": "20261121101131993-frame-f-1876.jpg",
+   "source": "out/work/earth/p24/f-1876.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1876, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1876,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
+  {
+   "time": "2026-11-21T10:04:50.787Z",
+   "file": "20261121100450787-frame-f-2156.jpg",
+   "source": "out/work/earth/p23/f-2156.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b24a7f2676171f28"
+  },
   {
    "time": "2026-11-21T09:41:37.436Z",
    "file": "20261121094137436-note-aur-2156.jpg",
@@ -11,52 +71,6 @@
    "kind": "note",
    "label": "aurora at the judged rise frame 2156, final tier crop (before settle 7)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:41:36.914Z",
-   "file": "20261121094136914-note-aur-1857.jpg",
-   "source": "out/work/earth/p19/aur-1857.jpg",
-   "kind": "note",
-   "label": "aurora at the judged dive frame 1857, final tier crop",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:41:36.362Z",
-   "file": "20261121094136362-note-cut-c.jpg",
-   "source": "out/work/earth/p19/cut-c.jpg",
-   "kind": "note",
-   "label": "rise cut test 2128 to 2133: limb and deck carry, glow on the orbit side still too tall (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:41:35.777Z",
-   "file": "20261121094135777-note-cut-b.jpg",
-   "source": "out/work/earth/p19/cut-b.jpg",
-   "kind": "note",
-   "label": "rise cut test: limb carried with exitDipDeg, shell 1.003, no whole frame veil (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:41:35.211Z",
-   "file": "20261121094135211-note-cut-s7.jpg",
-   "source": "out/work/earth/p18/cut-s7.jpg",
-   "kind": "note",
-   "label": "rise cut 2128 to 2137 as committed in 9f1e1ff: whole frame white veil, reads as a flash (to be replaced)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:41:20.157Z",
-   "file": "20261121094120157-frame-f-2133.jpg",
-   "source": "out/work/earth/p20/f-2133.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2133, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2133,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "161b25b2f48af07f"
   },
   {
    "time": "2026-11-21T09:19:02.520Z",
@@ -68,20 +82,6 @@
    "segment": "earth.terrain",
    "frame": 2099,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:13:46.957Z",
-   "file": "20261121091346957-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
