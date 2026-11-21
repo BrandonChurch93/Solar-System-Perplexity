@@ -30,6 +30,7 @@
     "film": "tsx tools/film.ts",
     "clip": "tsx tools/clip.ts",
     "post": "tsx tools/post.ts",
+    "samples": "tsx tools/samples.ts",
     "stress": "tsx tools/stress.ts",
     "measure": "tsx tools/measure.ts",
     "aim": "tsx tools/aim.ts",
