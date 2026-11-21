@@ -27,7 +27,7 @@ const stage = outputFolder(join(allPacks, '.cache', roundId))
 const temp = mkdtempSync(join(stage, '.frames-'))
 const capture = new Capture(cfg, a.format ?? (phase === 2 ? 'preview' : 'master'))
 const tier = a.tier ?? (phase === 2 ? 'draft' : 'final')
-const motionTier = phase === 2 ? tier : a.tier === 'final' ? 'final' : 'review'
+const motionTier = a['motion-tier'] ?? (phase === 2 ? tier : a.tier === 'final' ? 'final' : 'review')
 const { maxImageLongEdgePx: limit, maxFilesPerMessage, contactSheetFrames, phonePreviewWidthPx } = cfg.raw.critics
 const maxImages = maxFilesPerMessage - 1
 if (maxImages < 1) throw new Error('critics.maxFilesPerMessage must allow a manifest and an image')

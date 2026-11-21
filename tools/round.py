@@ -4,6 +4,8 @@ import argparse, datetime, json, pathlib, re, shutil, subprocess, sys, tarfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PROG = ROOT / 'kit' / 'PROGRESS.md'
 WORK = ROOT / 'out' / 'work'
+SC = ROOT / 'scorecards'
+SCRATCH = False
 ATT = pathlib.Path.home() / '.perplexity' / 'attachments'
 TRAILER = '\n\nCo-authored-by: Perplexity <noreply@perplexity.ai>\n'
 SLOTS = ['claude_opus_5_5', 'gemini_4_carbon', 'grok_4_7', 'gpt_6_2_sol']
@@ -78,6 +80,8 @@ def set_row(text, stop, cells):
 
 
 def commit(msg, push=True):
+    if SCRATCH:
+        return sh('git rev-parse --short HEAD').strip()
     sh('git add -A')
     if sh('git status --porcelain').strip() == '':
         return sh('git rev-parse --short HEAD').strip()
@@ -125,9 +129,10 @@ def finished(text):
 def start(a):
     n, stop, phase = a.round, a.stop, a.phase
     c = cfg()
-    if sh('git status --porcelain').strip():
-        sys.exit('the tree is not clean')
-    sh('git fetch -q origin main && git merge -q --no-edit origin/main')
+    if not SCRATCH:
+        if sh('git status --porcelain').strip():
+            sys.exit('the tree is not clean')
+        sh('git fetch -q origin main && git merge -q --no-edit origin/main')
     text = PROG.read_text()
     if not any(l.startswith('- Round %d,' % n) for l in round_lines(text)):
         k = len([l for l in round_lines(text) if re.match(r'- Round \d+, Phase %d, %s,' % (phase, stop), l)]) + 1
@@ -142,7 +147,7 @@ def start(a):
         text = set_row(text, stop, {2: 'in progress', 3: k})
         PROG.write_text(text)
         commit('Round %d starts: Phase %d, %s, round %d of %d' % (n, phase, stop, k, limit))
-        state(n, {'round': n, 'stop': stop, 'phase': phase, 'k': k})
+        state(n, {'round': n, 'stop': stop, 'phase': phase, 'k': k, 'tier': a.tier, 'every': a.every})
     if not a.no_mirror:
         sh('git fetch -q origin agent/' + stop)
         head = sh('git rev-parse --short origin/agent/' + stop).strip()
@@ -172,6 +177,19 @@ def start(a):
     print('round %d %s commit %s engine %s stop %s' % (n, stop, sha, state(n)['engineHash'], state(n)['stopHash']))
 
 
+def still_tier(s):
+    return s.get('tier') or 'final'
+
+
+def tiers(s, tool):
+    t = s.get('tier')
+    if not t:
+        return ''
+    if tool == 'pack':
+        return ' --tier %s --motion-tier %s' % (t, t)
+    return ' --tier %s' % t + (' --every %d' % s['every'] if tool == 'measure' and s.get('every') else '')
+
+
 def parts_of(stop):
     c = cfg()
     ids = [s['id'] for s in c['segments'] if s.get('stop') == stop and s.get('kind') in ('hold', 'dive', 'terrain', 'rise')]
@@ -191,16 +209,16 @@ def jobs(a):
     r = rid(n)
     tar = lambda name, paths: 'When the commands have finished: `tar -cf /tmp/%s.tar %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.' % (name, ' '.join(paths), name, name)
     out = []
-    extra = ' --no-cover ' + stop if a.no_cover else ''
+    extra = (' --no-cover ' + stop if a.no_cover else '') + tiers(s, 'measure')
     name = 'r%d-%s-measure' % (n, stop)
     out.append({'name': name, 'message': 'JOB %s. Commit %s. Command: `npm run measure -- --stop %s%s`. %s' % (name, sha, stop, extra, tar(name, ['out/work/measure/%s.json' % stop]))})
     for label, only in parts_of(stop):
         name = 'r%d-%s-%s' % (n, stop, label)
         paths = ['out/work/packs/.cache/' + r]
         if 'stills' in only:
-            paths.append('out/work/stills/f*-16x9-final-full.png out/work/stills/f*-16x9-final-full.png.json')
-        pre = 'Before the command: `rm -rf out/work/packs/.cache/%s out/work/stills/*-final-full.png*`. ' % r
-        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tar(name, paths))})
+            paths.append('out/work/stills/f*-16x9-%s-full.png out/work/stills/f*-16x9-%s-full.png.json' % (still_tier(s), still_tier(s)))
+        pre = 'Before the command: `rm -rf out/work/packs/.cache/%s out/work/stills/*-%s-full.png*`. ' % (r, still_tier(s))
+        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s%s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))})
     (rdir(n) / 'jobs.json').write_text(json.dumps(out, indent=1))
     print(json.dumps([j['name'] for j in out]))
 
@@ -244,7 +262,7 @@ def place(a):
     missing = [w for w in want if w not in done]
     print('missing: ' + (', '.join(missing) or 'none'))
     stale = []
-    for f in list((WORK / 'packs' / '.cache' / rid(n)).glob('*.json')) + list((WORK / 'stills').glob('f*-16x9-final-full.png.json')) + [WORK / 'measure' / (stop + '.json')]:
+    for f in list((WORK / 'packs' / '.cache' / rid(n)).glob('*.json')) + list((WORK / 'stills').glob('f*-16x9-%s-full.png.json' % still_tier(s))) + [WORK / 'measure' / (stop + '.json')]:
         if not f.exists():
             continue
         try:
@@ -263,7 +281,7 @@ def pack(a):
     n = a.round
     s = state(n)
     stop = s['stop']
-    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s' % (s['phase'], n, stop), shell=True, cwd=ROOT, capture_output=True, text=True)
+    out = subprocess.run('npm run -s pack -- --phase %d --round %d --stop %s%s' % (s['phase'], n, stop, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
     print((out.stdout + out.stderr)[-900:])
     if out.returncode != 0:
         sys.exit(1)
@@ -386,7 +404,7 @@ def close(a):
             return
     key = json.loads((WORK / 'packs' / 'keys' / (rid(n) + '.json')).read_text())
     kf = key['files']
-    sc = ROOT / 'scorecards' / rid(n)
+    sc = SC / rid(n)
     sc.mkdir(parents=True, exist_ok=True)
     live = [j for j in jobs_ if j['name'] not in void and isinstance(ans[j['name']], (dict, str)) and ans[j['name']] != 'unreadable']
     by = lambda role: [j for j in live if j['role'] == role]
@@ -416,8 +434,8 @@ def close(a):
         text = PROG.read_text()
         earlier = [int(re.match(r'- Round (\d+),', l).group(1)) for l in round_lines(text) if re.match(r'- Round \d+, Phase %d, %s,' % (phase, stop), l)]
         control_from = min(earlier)
-    ckey = json.loads((ROOT / 'scorecards' / rid(control_from) / 'key.json').read_text())['files'] if control_from != n else kf
-    clines = (ROOT / 'scorecards' / rid(control_from) / 'jurors.txt').read_text().split('\n') if control_from != n else lines
+    ckey = json.loads((SC / rid(control_from) / 'key.json').read_text())['files'] if control_from != n else kf
+    clines = (SC / rid(control_from) / 'jurors.txt').read_text().split('\n') if control_from != n else lines
 
     def collect(role, src_lines, k, kind):
         out = {}
@@ -575,5 +593,20 @@ for name, fn in (('start', start), ('jobs', jobs), ('place', place), ('pack', pa
     q.add_argument('--all', action='store_true')
     q.add_argument('--vote', action='append')
     q.add_argument('--next')
+    q.add_argument('--scratch', action='store_true')
+    q.add_argument('--tier')
+    q.add_argument('--every', type=int)
 a = p.parse_args()
+if a.scratch != (a.round > 900):
+    sys.exit('a scratch round has --scratch and a round number above 900; a real round has neither')
+if (a.tier or a.every) and not a.scratch:
+    sys.exit('--tier and --every are for scratch rounds only')
+if a.scratch:
+    SCRATCH = True
+    home = WORK / 'rounds' / 'scratch'
+    home.mkdir(parents=True, exist_ok=True)
+    SC = home / 'scorecards'
+    if not (home / 'PROGRESS.md').exists():
+        shutil.copy(PROG, home / 'PROGRESS.md')
+    PROG = home / 'PROGRESS.md'
 a.fn(a)
