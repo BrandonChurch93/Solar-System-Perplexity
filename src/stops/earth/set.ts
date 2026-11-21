@@ -134,6 +134,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid)
       const gu = globe.material.uniforms
       gu.uVignette!.value = shot.post.vignette * (1 - low)
+      ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
       gu.uAspect!.value = aspect
       const au = air.material.uniforms
       ;(au.uCam!.value as THREE.Vector3).copy(eye)

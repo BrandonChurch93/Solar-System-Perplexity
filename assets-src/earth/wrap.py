@@ -185,7 +185,7 @@ def emissive_map(width, flow):
     c = np.maximum(c, 0)
     e = (c / nf * (1 - zone) + c * zone) * own + lights * (1 - own)
     af = np.maximum(geo.smooth(*motion.AURORA_GATE, ndl), 0.25)
-    am = np.maximum(g, 0).max(-1) / af * w[..., 0]
+    am = np.maximum(g, 0).max(-1) / af * geo.smooth(0.03, 0.1, cosv)
     emissive = np.concatenate([geo.linear_to_srgb(np.clip(e / motion.EMISSIVE_PEAK, 0, 1)), np.sqrt(np.clip(am / motion.EMISSIVE_PEAK, 0, 1))[..., None]], -1)
     for key, k in (("full", 1), ("web", 2)):
         d = PUBLIC / key
