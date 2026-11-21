@@ -1,9 +1,37 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T03:34:14.428Z",
- "head": "0a88dec6c186777ca92f0a9a83d2e6471262a19a",
- "note": "Orbit view: first render of the real globe, cirrus layer, Triton and 3D ring beside the hero; sky patch, limb and ring fit are next",
+ "pushed": "2026-11-21T03:47:19.383Z",
+ "head": "0f9a566be4c770f47e93362bdc0f17bab3a7a856",
+ "note": "orbit view: fitted atmosphere layers and limb line, next limb brightening, ring, sky patch",
  "looks": [
+  {
+   "time": "2026-11-21T03:46:23.711Z",
+   "file": "20261121034623711-compare-compare-neptune-hold-view.jpg",
+   "source": "out/work/compare/compare-neptune-hold-view.jpg",
+   "kind": "compare",
+   "label": "neptune.hold: approved image left, film frame right, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:46:22.659Z",
+   "file": "20261121034622659-still-f04605-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04605-16x9-draft-full.png",
+   "kind": "still",
+   "label": "neptune.hold frame 4605, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T03:34:13.899Z",
    "file": "20261121033413899-note-triton-preview.jpg",
@@ -43,34 +71,6 @@
    "kind": "note",
    "label": "Wrap map preview: hero inset plus generated far side (flat lit)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T03:33:49.144Z",
-   "file": "20261121033349144-compare-compare-neptune-hold-view.jpg",
-   "source": "out/work/compare/compare-neptune-hold-view.jpg",
-   "kind": "compare",
-   "label": "neptune.hold: approved image left, film frame right, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:33:48.047Z",
-   "file": "20261121033348047-still-f04605-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04605-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   },
   {
    "time": "2026-11-21T02:45:05.435Z",
