@@ -2,14 +2,15 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import { HazeShell } from '../../bodies/haze'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
-import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
+import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
-import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { patches } from './assets'
+import { Deck, type DeckMeta } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
 import { plan } from './plan'
+import reliefJson from './relief.json'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -21,32 +22,6 @@ function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
 function settle(x: number, limit: number): number {
   return x / Math.sqrt(1 + (x / limit) * (x / limit))
 }
-
-const PLATE_VERT = /* glsl */ `
-out vec2 vUv;
-out vec3 vView;
-void main() {
-  vUv = uv;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vView = mv.xyz;
-  gl_Position = projectionMatrix * mv;
-}`
-
-const PLATE_FRAG = /* glsl */ `
-precision highp float;
-uniform sampler2D uMap;
-uniform vec2 uMapSize;
-uniform float uGain;
-in vec2 vUv;
-in vec3 vView;
-out vec4 outColor;
-${INVERSE_FILMIC_GLSL}
-${DIAG_GLSL}
-void main() {
-  vec2 uv = vUv * 3.0 - 1.0;
-  vec3 col = inverseFilmic(texture(uMap, uv).rgb) * uGain;
-  outColor = diagOut(vec4(col, 1.0), diagTexels(uv * uMapSize), 1.0, vec3(0.85, 0.3, 0.25), vec2(0.0), length(vView));
-}`
 
 export const createSet: SetFactory = async (ctx) => {
   const base = 'jupiter/' + ctx.assets + '/'
@@ -80,16 +55,8 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const close = await ctx.texture(base + 'standin-close.jpg', { srgb: true, anisotropy: 8, mirror: true })
-  const closeSize = close.image as unknown as { width: number; height: number }
-  const plateMat = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: PLATE_VERT, fragmentShader: PLATE_FRAG, uniforms: { uMap: { value: close }, uMapSize: { value: new THREE.Vector2(closeSize.width, closeSize.height) }, uGain: { value: 1 }, uDiag: diagUniform } })
-  const t = plan.p.terrain
-  const plateDistance = 10
-  const overscan = 1 + (0.5 * t.forward + 0.5 * Math.abs(t.side) + 0.5 * Math.abs(t.rise)) / plateDistance + Math.tan(THREE.MathUtils.degToRad(0.5 * Math.max(Math.abs(t.yawDeg), Math.abs(t.pitchDeg))))
-  const h = 2 * plateDistance * Math.tan(THREE.MathUtils.degToRad(t.vfov) / 2) * overscan
-  const plate = new THREE.Mesh(new THREE.PlaneGeometry(h * (closeSize.width / closeSize.height) * 3, h * 3), plateMat)
-  plate.position.set(0, 0, -plateDistance)
-  terrain.add(plate)
+  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, wispMap)
+  terrain.add(ground.group)
 
   const riseMid = (plan.seg.rise.start + plan.seg.rise.end) / 2
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
@@ -122,8 +89,10 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      plateMat.uniforms.uGain!.value = gain
-      if (!inOrbit) return
+      if (!inOrbit) {
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        return
+      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
@@ -169,8 +138,7 @@ export const createSet: SetFactory = async (ctx) => {
       for (const s of shells) s.dispose()
       io.dispose()
       far.dispose()
-      plateMat.dispose()
-      plate.geometry.dispose()
+      ground.dispose()
     },
   }
 }

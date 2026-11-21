@@ -1,0 +1,324 @@
+import * as THREE from 'three'
+import type { RenderView, SetContext } from '../../core/types'
+import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+
+export interface DeckMeta {
+  canvas: number[]; origin: number[]; image: number[]; focalPx: number; cell: number; grid: number[]
+  nadir: number[]; radius: number; tangent: number
+  sets: Record<string, { wide: number[]; core: number[] }>
+}
+
+export interface Vortex { px: [number, number]; axes: [number, number]; degPerSecond: number; wispDegPerSecond: number }
+export interface Flash { px: [number, number]; sizePx: number; period: number; phase: number; gain: number }
+
+export interface DeckLook {
+  skyRimDeg: number
+  edgePixels: number
+  vortices: Vortex[]
+  settle: number
+  wisp: { tile: number; amount: number; shadow: number; shadowLength: number; fine: number; drift: [number, number]; fade: [number, number]; sun: [number, number] }
+  flashes: Flash[]
+  flashColor: [number, number, number]
+  flashBody: [number, number]
+  beyond: [number, number, number]
+}
+
+const VORTICES = 6
+const FLASHES = 10
+
+const VERT = /* glsl */ `
+in vec2 aPx;
+in vec2 aGround;
+out vec2 vPx;
+out vec2 vGround;
+out vec3 vView;
+out vec3 vClip;
+out vec3 vLocal;
+out vec3 vEye;
+void main() {
+  vPx = aPx;
+  vGround = aGround;
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vView = mv.xyz;
+  vLocal = position;
+  vEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz;
+  gl_Position = projectionMatrix * mv;
+  vClip = gl_Position.xyw;
+}`
+
+const FRAG = /* glsl */ `
+precision highp float;
+uniform sampler2D uWide;
+uniform sampler2D uCore;
+uniform sampler2D uWisp;
+uniform vec2 uCanvas;
+uniform vec2 uOrigin;
+uniform vec2 uImage;
+uniform vec2 uWideSize;
+uniform vec2 uCoreSize;
+uniform float uFocal;
+uniform vec3 uCentre;
+uniform float uRadius;
+uniform float uEdge;
+uniform vec3 uS;
+uniform vec3 uEx;
+uniform vec3 uEy;
+uniform vec3 uEn;
+uniform vec4 uVortex[${VORTICES}];
+uniform vec2 uTurn[${VORTICES}];
+uniform vec4 uWispShape;
+uniform vec4 uWispMove;
+uniform vec4 uWispSun;
+uniform vec4 uFlash[${FLASHES}];
+uniform vec3 uFlashColor;
+uniform vec2 uFlashBody;
+uniform vec3 uBeyond;
+uniform float uGain;
+uniform float uVignette;
+uniform float uAspect;
+uniform float uGrad;
+in vec2 vPx;
+in vec2 vGround;
+in vec3 vView;
+in vec3 vClip;
+in vec3 vLocal;
+in vec3 vEye;
+out vec4 outColor;
+${INVERSE_FILMIC_GLSL}
+${DIAG_GLSL}
+vec2 toPx(vec2 g) {
+  vec3 p = uS + uEx * g.x + uEy * g.y - uEn * (dot(g, g) / (2.0 * uRadius));
+  return vec2(uFocal * p.x / -p.z, -uFocal * p.y / -p.z);
+}
+vec2 swirl(vec2 g, int k) {
+  vec2 d = vec2(0.0);
+  for (int i = 0; i < ${VORTICES}; i++) {
+    vec2 q = (g - uVortex[i].xy) / uVortex[i].zw;
+    float r2 = dot(q, q);
+    float a = -uTurn[i][k] / (1.0 + r2 * r2);
+    float c = cos(a);
+    float s = sin(a);
+    d += (vec2(c * q.x - s * q.y, s * q.x + c * q.y) - q) * uVortex[i].zw;
+  }
+  return g + d;
+}
+void main() {
+  vec3 ray = normalize(vLocal - vEye);
+  vec3 toC = uCentre - vEye;
+  float along = dot(toC, ray);
+  float miss = sqrt(max(dot(toC, toC) - along * along, 0.0)) - uRadius;
+  float soft = max(fwidth(miss), 1e-7) * uEdge;
+  float alpha = along > 0.0 ? 1.0 - smoothstep(-soft, soft, miss) : 0.0;
+  float reach = length(vLocal - vEye);
+  float nearby = 1.0 - smoothstep(uWispMove.z, uWispMove.w, reach);
+  vec2 warped = vGround;
+  vec2 wispG = vGround;
+  for (int k = 0; k < (nearby > 0.0 ? 1 : 0); k++) {
+    warped = swirl(vGround, 0);
+    wispG = swirl(vGround, 1);
+  }
+  vec2 shift = (toPx(warped) - toPx(vGround)) * nearby;
+  vec2 px = vPx + shift;
+  vec2 gx = dFdx(vPx) * uGrad;
+  vec2 gy = dFdy(vPx) * uGrad;
+  vec2 ip = px - uOrigin;
+  vec2 e = min(ip, uImage - ip);
+  float inCore = smoothstep(4.0, 28.0, min(e.x, e.y));
+  vec3 wide = vec3(0.0);
+  vec3 core = vec3(0.0);
+  for (int k = 0; k < (inCore < 1.0 ? 1 : 0); k++) wide = textureGrad(uWide, vec2(px.x, uCanvas.y - px.y) / uCanvas, gx / uCanvas, gy / uCanvas).rgb;
+  for (int k = 0; k < (inCore > 0.0 ? 1 : 0); k++) core = textureGrad(uCore, vec2(ip.x, uImage.y - ip.y) / uImage, gx / uImage, gy / uImage).rgb;
+  vec3 texel = mix(wide, core, inCore);
+  vec2 out2 = max(max(-px, px - uCanvas), vec2(0.0));
+  float off = smoothstep(0.0, uBeyond.z, max(out2.x, out2.y));
+  vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+  vec3 col = inverseFilmic(texel);
+  float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col = mix(col, lum * uBeyond.x + vec3(uBeyond.y), off);
+  for (int k = 0; k < (nearby * alpha > 0.0 ? 1 : 0); k++) {
+    vec2 wuv = (wispG - uWispMove.xy) * uWispShape.x;
+    vec2 wx = dFdx(vGround) * uWispShape.x;
+    vec2 wy = dFdy(vGround) * uWispShape.x;
+    vec2 fine = textureGrad(uWisp, wuv, wx * uGrad, wy * uGrad).rg;
+    float body = fine.r + (fine.g - 0.5) * uWispSun.z;
+    float shade = textureGrad(uWisp, wuv + uWispSun.xy * uWispShape.w * uWispShape.x, wx * 3.0, wy * 3.0).r;
+    float wv = ((body - 0.5) * uWispShape.y - (shade - 0.5) * uWispShape.z) * nearby;
+    col *= max(1.0 + wv, 0.0);
+  }
+  vec3 flash = vec3(0.0);
+  for (int i = 0; i < ${FLASHES}; i++) {
+    for (int k = 0; k < (uFlash[i].w > 0.0 ? 1 : 0); k++) {
+      vec2 d = px - uFlash[i].xy;
+      flash += uFlashColor * uFlash[i].w * exp(-dot(d, d) * uFlash[i].z);
+    }
+  }
+  col += flash * (uFlashBody.x + uFlashBody.y * lum) * alpha;
+  col *= uGain * vig;
+  if (uDiag >= 2 && alpha < 0.5) discard;
+  float texels = mix(diagTexels(px / uCanvas * uWideSize), diagTexels(ip / uImage * uCoreSize), inCore);
+  outColor = diagOut(vec4(col, alpha), texels, 1.0, mix(vec3(0.3, 0.5, 0.85), vec3(0.85, 0.45, 0.25), inCore), shift * 0.05, length(vView));
+}`
+
+export class Deck {
+  readonly group = new THREE.Group()
+  readonly material: THREE.ShaderMaterial
+  private readonly geometry: THREE.BufferGeometry
+  private readonly turn: THREE.Vector2[] = []
+
+  private constructor(private readonly look: DeckLook, geometry: THREE.BufferGeometry, material: THREE.ShaderMaterial) {
+    this.geometry = geometry
+    this.material = material
+    for (let i = 0; i < VORTICES; i++) this.turn.push(new THREE.Vector2())
+    material.uniforms.uTurn = { value: this.turn }
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.frustumCulled = false
+    this.group.add(mesh)
+  }
+
+  static async load(ctx: SetContext, base: string, meta: DeckMeta, look: DeckLook, wisp: THREE.Texture): Promise<Deck> {
+    const sizes = meta.sets[ctx.assets]!
+    const wide = await ctx.texture(base + 'deck-wide.jpg', { srgb: true, anisotropy: 16 })
+    const core = await ctx.texture(base + 'deck-core.jpg', { srgb: true, anisotropy: 16 })
+    const dist = new Float32Array(await ctx.buffer(base + 'deck-dist.bin'))
+    const [gw, gh] = meta.grid as [number, number]
+    if (dist.length !== gw * gh) throw new Error('deck distance grid size mismatch')
+    const [ox, oy] = meta.origin as [number, number]
+    const [iw, ih] = meta.image as [number, number]
+    const f = meta.focalPx
+    const nadir = new THREE.Vector3().fromArray(meta.nadir)
+    const centre = nadir.clone().multiplyScalar(meta.radius + 1)
+    const ray = (x: number, y: number) => new THREE.Vector3(x - iw / 2, -(y - ih / 2), -f).normalize()
+    const hit = (d: THREE.Vector3): number => {
+      const b = d.dot(centre)
+      const disc = b * b - (centre.lengthSq() - meta.radius * meta.radius)
+      return disc > 0 ? b - Math.sqrt(disc) : meta.tangent
+    }
+    const anchor = look.vortices[0]!.px
+    const sRay = ray(anchor[0], anchor[1])
+    const s = sRay.clone().multiplyScalar(hit(sRay))
+    const en = s.clone().sub(centre).normalize()
+    const ey = sRay.clone().addScaledVector(en, -sRay.dot(en)).normalize()
+    const ex = new THREE.Vector3().crossVectors(ey, en)
+    const ground = (x: number, y: number): [number, number] => {
+      const d = ray(x, y)
+      const p = d.multiplyScalar(hit(d)).sub(s)
+      return [p.dot(ex), p.dot(ey)]
+    }
+
+    const position = new Float32Array(gw * gh * 3)
+    const px = new Float32Array(gw * gh * 2)
+    const gr = new Float32Array(gw * gh * 2)
+    const high = new Uint8Array(gw * gh)
+    const cosLimit = Math.cos(Math.asin(meta.radius / (meta.radius + 1)) + THREE.MathUtils.degToRad(look.skyRimDeg))
+    for (let j = 0; j < gh; j++) {
+      for (let i = 0; i < gw; i++) {
+        const k = j * gw + i
+        const cx = i * meta.cell
+        const cy = j * meta.cell
+        const d = ray(cx - ox, cy - oy)
+        high[k] = d.dot(nadir) < cosLimit ? 1 : 0
+        const g = ground(cx - ox, cy - oy)
+        d.multiplyScalar(dist[k]!)
+        position[k * 3] = d.x
+        position[k * 3 + 1] = d.y
+        position[k * 3 + 2] = d.z
+        px[k * 2] = cx
+        px[k * 2 + 1] = cy
+        gr[k * 2] = g[0]
+        gr[k * 2 + 1] = g[1]
+      }
+    }
+    const index: number[] = []
+    for (let j = 0; j < gh - 1; j++) {
+      for (let i = 0; i < gw - 1; i++) {
+        const a = j * gw + i
+        const b = a + 1
+        const c = a + gw
+        const d = c + 1
+        if (high[a]! + high[b]! + high[c]! + high[d]! === 4) continue
+        index.push(a, c, b, b, c, d)
+      }
+    }
+    const geometry = new THREE.BufferGeometry()
+    geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
+    geometry.setAttribute('aPx', new THREE.BufferAttribute(px, 2))
+    geometry.setAttribute('aGround', new THREE.BufferAttribute(gr, 2))
+    geometry.setIndex(new THREE.BufferAttribute(new Uint32Array(index), 1))
+
+    const vortex: THREE.Vector4[] = []
+    for (let i = 0; i < VORTICES; i++) {
+      const v = look.vortices[i]
+      if (!v) { vortex.push(new THREE.Vector4(1e6, 1e6, 1, 1)); continue }
+      const g = ground(v.px[0], v.px[1])
+      vortex.push(new THREE.Vector4(g[0], g[1], v.axes[0], v.axes[1]))
+    }
+    const flash: THREE.Vector4[] = []
+    for (let i = 0; i < FLASHES; i++) {
+      const fl = look.flashes[i]
+      flash.push(fl ? new THREE.Vector4(fl.px[0] + ox, fl.px[1] + oy, 1 / (fl.sizePx * fl.sizePx), 0) : new THREE.Vector4(0, 0, 0, 0))
+    }
+    const w = look.wisp
+    const sunLen = Math.hypot(w.sun[0], w.sun[1])
+    const material = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: {
+        uWide: { value: wide }, uCore: { value: core }, uWisp: { value: wisp },
+        uCanvas: { value: new THREE.Vector2().fromArray(meta.canvas) }, uOrigin: { value: new THREE.Vector2(ox, oy) }, uImage: { value: new THREE.Vector2(iw, ih) },
+        uWideSize: { value: new THREE.Vector2().fromArray(sizes.wide) }, uCoreSize: { value: new THREE.Vector2().fromArray(sizes.core) },
+        uFocal: { value: f }, uCentre: { value: centre }, uRadius: { value: meta.radius }, uEdge: { value: look.edgePixels },
+        uS: { value: s }, uEx: { value: ex }, uEy: { value: ey }, uEn: { value: en },
+        uVortex: { value: vortex },
+        uWispShape: { value: new THREE.Vector4(1 / w.tile, w.amount, w.shadow, w.shadowLength) },
+        uWispMove: { value: new THREE.Vector4(0, 0, w.fade[0], w.fade[1]) },
+        uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
+        uFlash: { value: flash }, uFlashColor: { value: new THREE.Vector3().fromArray(look.flashColor) }, uFlashBody: { value: new THREE.Vector2().fromArray(look.flashBody) },
+        uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
+      },
+      transparent: true,
+      blending: THREE.CustomBlending,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.OneFactor,
+      blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+      side: THREE.DoubleSide,
+      depthTest: true,
+      depthWrite: true,
+    })
+    return new Deck(look, geometry, material)
+  }
+
+  update(dt: number, gain: number, vignette: number, view: RenderView): void {
+    const l = this.look
+    const u = this.material.uniforms
+    const calm = dt / Math.sqrt(1 + (dt / l.settle) * (dt / l.settle))
+    for (let i = 0; i < VORTICES; i++) {
+      const v = l.vortices[i]
+      this.turn[i]!.set(v ? THREE.MathUtils.degToRad(v.degPerSecond) * calm : 0, v ? THREE.MathUtils.degToRad(v.wispDegPerSecond) * calm : 0)
+    }
+    const move = u.uWispMove!.value as THREE.Vector4
+    move.x = l.wisp.drift[0] * dt
+    move.y = l.wisp.drift[1] * dt
+    const flashes = u.uFlash!.value as THREE.Vector4[]
+    for (let i = 0; i < FLASHES; i++) {
+      const fl = l.flashes[i]
+      if (!fl) continue
+      const x = ((((dt / fl.period + fl.phase) % 1) + 1) % 1) * fl.period
+      const first = Math.exp(-x / 0.07) * (0.55 + 0.45 * Math.cos(70 * x)) ** 2
+      const second = x > 0.19 ? 0.6 * Math.exp(-(x - 0.19) / 0.05) : 0
+      flashes[i]!.w = fl.gain * (first + second)
+    }
+    u.uGain!.value = gain
+    u.uVignette!.value = vignette
+    u.uAspect!.value = view.format.width / view.format.height
+  }
+
+  dispose(): void {
+    this.geometry.dispose()
+    this.material.dispose()
+  }
+}

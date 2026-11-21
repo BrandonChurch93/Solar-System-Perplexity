@@ -1,4 +1,5 @@
 import type { HazeParams } from '../../bodies/haze'
+import type { DeckLook } from './deck'
 import fitted from './curve.json'
 import flowJson from './flow.json'
 import hazeJson from './haze.json'
@@ -54,3 +55,30 @@ export const io = {
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
 export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.15, 0.004, 0, 0.02] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
+
+export const deck: DeckLook = {
+  skyRimDeg: 5.2,
+  edgePixels: 1.2,
+  settle: 6,
+  vortices: [
+    { px: [1132, 552], axes: [1.12, 2.18], degPerSecond: 5, wispDegPerSecond: 9 },
+    { px: [-618, 924], axes: [0.36, 0.36], degPerSecond: -9, wispDegPerSecond: -14 },
+    { px: [-558, 1524], axes: [0.3, 0.3], degPerSecond: 10, wispDegPerSecond: 16 },
+    { px: [912, 1284], axes: [0.3, 0.3], degPerSecond: -8, wispDegPerSecond: -13 },
+    { px: [1512, 1914], axes: [0.28, 0.28], degPerSecond: 9, wispDegPerSecond: 14 },
+  ],
+  wisp: { tile: 3.2, amount: 0.16, shadow: 0.12, shadowLength: 0.02, fine: 0.5, drift: [0.05, -0.02], fade: [7, 14], sun: [-0.6, 0.8] },
+  flashes: [
+    { px: [1662, 1449], sizePx: 70, period: 3.1, phase: 0.43, gain: 0.5 },
+    { px: [1812, 1149], sizePx: 55, period: 4.3, phase: 0.71, gain: 0.35 },
+    { px: [1542, 1344], sizePx: 60, period: 2.7, phase: 0.28, gain: 0.4 },
+    { px: [2082, 1464], sizePx: 80, period: 3.7, phase: 0.55, gain: 0.4 },
+    { px: [2052, 1644], sizePx: 90, period: 2.9, phase: 0.83, gain: 0.45 },
+    { px: [1300, 1500], sizePx: 75, period: 5.3, phase: 0.36, gain: 0.3 },
+    { px: [2400, 1250], sizePx: 60, period: 4.7, phase: 0.62, gain: 0.3 },
+    { px: [1850, 1900], sizePx: 110, period: 3.9, phase: 0.2, gain: 0.4 },
+  ],
+  flashColor: [0.45, 0.7, 1.0],
+  flashBody: [0.25, 6],
+  beyond: [0.6, 0.004, 300],
+}
