@@ -42,6 +42,37 @@ The two lightning cells of the hero, cut out by `lightning.py` as light above th
 
 Round 3: the file now holds 512 rows. Rows 0 to 255 are the hold table above, unchanged. Rows 256 to 511 are a far table for every frame after the hold, written by `python3 assets-src/venus/fit/far.py public/assets/venus/full/limb.bin` (it reads the first 256 rows of the file it is given and writes both sets): along the azimuth a median over 9 cells and a Gaussian of 2 cells in square root space, so the hero's short bright streak and violet patch on the night limb do not travel with the camera; on the night side the inside veil is one falloff (alpha halved, monotone inward and outward). `rim.ts` and `globe.ts` mix from the hold table to the far table with `uLimbFar` (0 in the hold, 1 from 0.5 s after it). Check at draft 1287: the deepest local dip of the radial luma profile across the limb is at most 3 levels at every azimuth (6 to 7 before).
 
+### public/assets/venus/{full,web}/hold-detail.jpg (1536 x 1536 and 768 x 768), hold-rim.bin (513 x 96 float32 RGBA, the same file in both sets), src/stops/venus/hold.json, assets-src/venus/hold/frame.json
+
+Phase 6 polish, item 2 (hold 1185: strands to the edge, grey green rim and gold glint on the night side, fine structure on the night side). No model. Two gain layers for the hold only, both log2 of (approved hero / film without the layers):
+
+- `hold-detail.jpg`: byte 128 is a gain of 1 and the 255 levels span 4 stops (`stops` in `hold.json`). The globe shader projects it onto the sphere through the fitted hold camera (`src/stops/venus/fit.json`, map half width 1.016 disc radii, `margin`), so it is painted on the cloud map and turns and drifts with it. Where the layer acts the wrap is read at a fixed level (512 px wide, `look.hold.base`) as the smooth base, and the layer puts the hero's own cloud detail back on top.
+- `hold-rim.bin`: float32 RGBA, 512 cells of azimuth plus one wrap column, 96 rows of radius about the film's silhouette in the view's frame (the closest approach point of the view ray projected through the fitted camera). Rows 0 to 39 lie inside the disc (0.95 to 1 radii, read by `globe.ts`), rows 40 to 95 outside (1 to 1.08 radii, read by `rim.ts`, faded out from 1.05 to 1.07). It is the part of the gain that is smooth along the limb (a median of 15 px runs along each ring before the ratio is taken), so no star enters it (the stars belong to the sky patch, which does not move with the planet). It carries the hero's out of round edge and the glow just past it. It acts only while the camera is within 3 to 6 percent of the fitted distance (`look.hold.near`).
+
+Both weights go to zero with `uLimbFar` in the 0.5 s after the hold, so the dive, the terrain and the rise do not see them.
+
+Why two layers: a single map painted on the globe (takes f1 to f5) reached the same numbers at 1185 but showed a doubled rim at frames 1110 and 1259, because its edge part turned with the clouds (1.4 deg over the hold). The edge light belongs to the view, the cloud detail to the globe.
+
+Script: `assets-src/venus/hold/detail.py`, inputs `references/approved/venus-hero.png`, `src/stops/venus/fit.json` and nograin final stills of frame 1185 (`npm run -s still -- --frame 1185 --tier final --diag nograin --out FILE`). Float state between passes: `out/work/venus/hold/logq.npy` (detail map) and `rim.npy` (rim strip). Steps, each followed by a build and a still:
+
+1. `python3 assets-src/venus/hold/detail.py neutral`, still S0 (the smooth base without the layers).
+2. `python3 assets-src/venus/hold/detail.py dots`, still DOTS; `python3 assets-src/venus/hold/detail.py measure S0 DOTS` writes `frame.json`: where the 45 dots of the map land in the film against the fitted camera (mean shift -0.62, -1.55 px at 1920 wide, rest after the affine fit 0.08 px rms; the film camera at 1185 is not the fitted camera to the pixel, the rig adds a seeded drift). Without this step the layer sat 1.6 px off and the disc zone stayed at 7.0 levels.
+3. `python3 assets-src/venus/hold/detail.py build S0`, still G1. Inside the disc the detail gain is hero / S0 texel by texel (the film sample is held 0.9 px inside the silhouette); the rim strip takes the ring medians of both pictures every 0.25 px of radius.
+4. `python3 assets-src/venus/hold/detail.py refine G1`, still G2; `refine G2`, still G3 (kept). Each pass adds log2(hero / film) to both float states.
+
+The hero's painted disc is an ellipse (669.8 by 664.3 px at 2816 wide), the film's is a sphere (670.7 by 670.5): the outer 2.5 px at the top and 4.2 px at the bottom of the film's disc take the hero's glow there, so the visible edge is the hero's.
+
+Takes: f1 to f5 (one map, rejected for the doubled rim at the hold's ends), g1 (build), g2, g3 (kept).
+
+Checks, take g3 (frame 1185, final tier, mean absolute difference from the hero in levels of 255, zones whole, disc inside 395 px, ring 395 to 452 px, halo 456 to 560 px, sky):
+- nograin: 1.95, 0.72, 0.45, 2.96, 2.41 (round 23 build nograin 4.62, 8.65, 5.90, 4.91, 2.41).
+- with grain, as judged: 2.30, 1.25, 1.03, 3.19, 2.68 (round 23 build 4.80, 8.53, 5.95, 5.14, 2.73).
+- High pass luma against the hero in five boxes: shift under 0.03 px, correlation 0.995 to 0.997 (0.62 before), detail level 97 to 99 percent of the hero's.
+- Radial profile across the limb at eight azimuths within 3 levels of the hero except the one pixel on the silhouette at the top (177 against 163) and at -45 deg, 1.006 radii (56 against 67).
+- G17: 1185 median 1.124, p25 0.832 (1.122 before); 1440 median 1.035, p25 0.976.
+- Draft frames 1095, 1110, 1150, 1230, 1259, 1263, 1267, 1271, 1275, 1287: one clean edge in every frame, no doubled rim, the layers gone by 1275.
+- `python3 tools/assets/mirrorcheck.py` on the judged still with grain: clean.
+
 ### public/assets/venus/{full,web}/sky-hold.webp
 
 The hero's own sky as the sky patch of the hold.
@@ -206,6 +237,7 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/wrap-flow.jpg`: Orbit view, flow layer.
 - `public/assets/venus/<set>/bolt.jpg`: Orbit view, lightning.
 - `public/assets/venus/<set>/limb.bin`: Orbit view, limb table.
+- `public/assets/venus/<set>/hold-detail.jpg`, `public/assets/venus/<set>/hold-rim.bin`: Orbit view, hold detail layer and rim strip, `hold/detail.py`.
 - `public/assets/venus/<set>/sky-hold.webp`: Orbit view, sky patch of the hold.
 - `public/assets/venus/<set>/relief-L0-color.jpg`, `public/assets/venus/<set>/relief-L0-dist.bin`: Terrain view, `build.py`.
 - `public/assets/venus/<set>/relief-L1-color.jpg`, `public/assets/venus/<set>/relief-L1-alpha.png`, `public/assets/venus/<set>/relief-L1-dist.bin`: Terrain view, `build.py`.

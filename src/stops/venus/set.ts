@@ -9,7 +9,7 @@ import { Globe } from './globe'
 import * as look from './look'
 import { deck, plan, veil as timing } from './plan'
 import { CloudRelief } from './relief'
-import { LIMB, Rim, limbFrame } from './rim'
+import { HoldRim, LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
 import { Veil } from './veil'
 
@@ -84,10 +84,12 @@ export const createSet: SetFactory = async (ctx) => {
   const holdBack = globeTurn.clone().invert()
   const holdCam = new THREE.Vector3().fromArray(fit.camera.position)
   const holdMap = await ctx.texture(base + look.hold.file, { srgb: false })
+  const holdRim = new HoldRim(await ctx.dataTexture(base + look.hold.rim.file, look.hold.rim.cols + 1, look.hold.rim.inside + look.hold.rim.outside, 4), holdCam, look.hold.near)
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
     map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
+    rim: holdRim,
     hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
@@ -95,7 +97,7 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.copy(globeTurn)
   globe.mesh.scale.fromArray(fit.globe.scale)
-  const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide)
+  const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide, holdRim)
   const far = new FarPoint()
   orbit.add(globe.mesh, rim.mesh, far.points)
 
@@ -231,6 +233,7 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
+      holdRim.update(camera, state.rotation, ending ? 0 : look.hold.weight * (1 - left))
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       rim.mesh.visible = visible

@@ -417,3 +417,16 @@ Item 2 (hold 1185), built 21:20 to 22:10:
 Item 3 (dive 1287) idea: `uLimbFar` is 1 from 1275, so the shade pass is already full at 1287. Keep `hold-detail.jpg` alive in the dive inside about 0.85 of the hold's disc radius (it is albedo detail there, not edge light), under the patches, so the night side at 1287 carries the hero's structure. Check one falloff with `/home/user/workspace/tools/limbdip.py`.
 
 Item 4 (rise 1586) ideas: swirl warp of the lookup about the apex of the V (rise only), far limb table rows 256 to 511 at the rise pose (`fit/far.py`), wider footprint for grazing bands (`look.graze`).
+
+## Phase 6 polish, state at 22:25
+
+Item 2 (hold 1185) is built: take g3 kept, committed with its binaries at 22:25 (`hold-detail.jpg`, `hold-rim.bin`, both sets).
+- Zones at 1185, final tier (whole, disc, ring, halo, sky): nograin 1.95, 0.72, 0.45, 2.96, 2.41; with grain, as judged, 2.30, 1.25, 1.03, 3.19, 2.68. Guard (round 23 build with grain) 4.80, 8.53, 5.95, 5.14, 2.73: better in every zone.
+- High pass luma against the hero: shift under 0.03 px, correlation 0.995 to 0.997 (0.62 before), detail 97 to 99 percent. Radial limb profile within 3 levels at eight azimuths except the silhouette pixel at the top (177 against 163) and -45 deg at 1.006 radii (56 against 67).
+- G17 PASS: 1185 median 1.124, p25 0.832; 1440 median 1.035, p25 0.976. mirrorcheck clean on the still with grain.
+- Draft strip h8 (1095, 1110, 1150, 1230, 1259, 1263, 1267, 1271, 1275, 1287; `view/h8.jpg`, crops `view/h8-limbs.jpg`): one clean edge in every frame; the one map take f5 had a doubled rim at 1110 and 1259 (`view/h7-limbs.jpg`).
+- Still to run for the hold: G13 every 1 over hold and dive start (in the chain before POLISH READY).
+
+Item 5 (doubled stars at 1440) is checked: with the same code and engine, old patch against new patch at 1440 (final, nograin; `r2/out/work/venus/p6/st5-old-1440.png` against `r2/out/work/measure/venus/g17-01440-final-nograin.png`): 454 px differ by more than 6 levels, all in rows 347 to 443 (the fill band at the horizon), none above; whole mean difference 0.026. The twins under the stars at x 206 and 239 are gone (`view/st5-three.png`: approved, old, new). Against the approved close image: whole 1.840 before, 1.852 after (nograin). The differences over the whole sky against the 15:20 still of the round 3 build come from the engine files of 837adbb in the render copy, not from the patch (old patch now against the 15:20 still: 3039 px, rows 0 to 417). mirrorcheck on the 1440 still: clean. On the patch file itself the checker reports seams at x 352, x 3168 and y 198 (the outer tenth, mirror padding that the engine's feather never shows); the old file reports the same and the round 23 frames were clean.
+
+Next: item 1 renders (draft strips c9r, c9d; review sheets; sky level per frame; sample counts), then items 3, 4, 6, then the chain and POLISH READY.

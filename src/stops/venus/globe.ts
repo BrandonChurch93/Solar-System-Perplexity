@@ -4,7 +4,8 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { wrap } from './assets'
-import { LIMB, LIMB_GLSL } from './rim'
+import holdJson from './hold.json'
+import { HOLD_RIM_GLSL, LIMB, LIMB_GLSL, type HoldRim } from './rim'
 
 export const MAX_PATCHES = 6
 export const MAX_CELLS = 16
@@ -47,6 +48,7 @@ export interface GlobeOptions {
   shade: { far: number; grad: number; cap: number }
   mauve: { from: number; to: number; rest: number }
   weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
+  rim: HoldRim
   hold: { map: THREE.Texture; right: THREE.Vector3; up: THREE.Vector3; forward: THREE.Vector3; centre: [number, number]; half: number; lod: number; stops: number; back: [number, number]; weight: number }
   segments?: number
 }
@@ -152,6 +154,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${LIMB_GLSL}
+${HOLD_RIM_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -313,6 +316,8 @@ ${TAP_LEVELS}
     vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
     col = col * (1.0 - lg.a) + max(lg.rgb, 0.0);
   }
+  vec3 past = uCam - dir * dot(uCam, dir);
+  for (int pass = 0; pass < (uHoldRimMap.w > 0.0 && b > ${(holdJson.rim.from - 0.02).toFixed(3)} ? 1 : 0); pass++) fine *= holdRim(past, false);
   col *= fine;
   for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
@@ -320,7 +325,6 @@ ${TAP_LEVELS}
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  vec3 past = uCam - dir * dot(uCam, dir);
   if (dot(past, past) >= 1.0) discard;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
 }`
@@ -390,6 +394,7 @@ export class Globe {
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
         uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
+        ...o.rim.uniforms,
         uHold: { value: o.hold.map }, uHoldR: { value: o.hold.right }, uHoldU: { value: o.hold.up }, uHoldF: { value: o.hold.forward },
         uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) },
         uDiag: diagUniform, uGrad: gradUniform,
