@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 import { config } from '../../../src/config'
 import type { MoveParams, StopPlan } from '../../../src/director/moves'
-import { Plan, timing as liveTune, params, plan as live, type Tune } from '../../../src/stops/earth/plan'
+import type { Tune } from '../../../src/stops/earth/plan'
+
+const { Plan, timing: liveTune, params, plan: live } = (await import(process.env.EARTH_PLAN ?? '../../../src/stops/earth/plan')) as typeof import('../../../src/stops/earth/plan')
 
 const arg = (name: string, d: string): string => {
   const i = process.argv.indexOf('--' + name)
