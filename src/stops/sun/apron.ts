@@ -41,6 +41,6 @@ float apWeight(vec3 p, vec2 b) {
   float inside = smoothstep(0.0, AP_FEATHER, a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.y + shift);
   vec3 r = p - ST_DOWN;
   float near = 1.0 - smoothstep(AP_NEAR.x, AP_NEAR.y, length(vec2(dot(r, ST_RIGHT), dot(r, ST_FWD)) - AP_NADIR));
-  float beyond = max(max(-b.x, b.x - 1.0), b.y - 1.0);
-  return (1.0 - inside) * near * (1.0 - smoothstep(0.08, 0.1, beyond));
+  float within = min(min(b.x, 1.0 - b.x), min(1.0 - b.y, b.y - AP_TOP));
+  return (1.0 - inside) * near * smoothstep(0.004, AP_FEATHER, within);
 }`

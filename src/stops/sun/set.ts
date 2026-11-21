@@ -42,7 +42,8 @@ export const createSet: SetFactory = async (ctx) => {
 
   const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
   const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
-  const ground = new Ground(plate, apron, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground)
+  const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
+  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground)
   const fringe = new Fringe(plate, look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
@@ -99,13 +100,13 @@ export const createSet: SetFactory = async (ctx) => {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
         if (mixed) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
-        const far = Math.min(Math.max((x - d.far[0]) / (d.far[1] - d.far[0]), 0), 1)
-        ground.show(mixed, d.reach[0] + (d.reach[1] - d.reach[0]) * far, d.feather, 1 - share(x, d.cap), share(x, d.fold))
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)
+        ground.show(mixed, 1 - share(x, d.ground), 1 - share(x, d.site))
+        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - share(x, d.fringe))
         const strands = 1 - share(x, d.loops)
         loops.mesh.visible = strands > 0
-        loops.update(t, gain * strands, vignette, aspect, burst * look.flare.loops, look.flare.cut * burst * burst)
+        const late = kind === 'rise' ? share(state.time - plan.window[0], d.lean) : 0
+        loops.update(t, gain * strands, vignette, aspect, burst * look.flare.loops, Math.max(look.flare.cut * burst * burst, d.cut * late), late)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid

@@ -9,10 +9,15 @@ DIR = f'{WORK}/field'
 SCALE = 320
 SUPER = 3
 BOX = (-4.6, 4.6, -3.2, 3.8)
-TILE = 2048
-BLOCK = 224
-LAP = 56
-TRIES = 260
+TILE = 4096
+STEP = 128
+LAP = 64
+BLOCK = STEP + LAP
+TOLERANCE = 0.12
+CROWD = 3.0
+FLATTEN = (220, 0.75)
+REF_MU = 0.25
+SOURCES = ('apron',)
 SPOT_CLEAR = 1.35
 FOOT_CLEAR = 0.7
 RING = (0.75, 3.15)
@@ -103,7 +108,7 @@ def ortho():
         py = (ay - TOP) / SPAN * CANVAS[1] - PLATE_TOP - 0.5
         graze = np.clip(-(normal * p).sum(-1) / dist, 0, 1)
         col = scene(graded(cv2.remap(plate, px.astype(np.float32), py.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT), table))
-        col *= (limb(1.0) / limb(graze))[..., None]
+        col *= (limb(REF_MU) / limb(graze))[..., None]
         ring = np.hypot(gx, gy)
         phi = np.arctan2(gx - 0.0234, gy + 0.3764)
         ok = clear & (ring > RING[0]) & (ring < RING[1]) & (np.abs(phi) < PHI) & (-p[..., 2] > 0.3) & (ax > 0.02) & (ax < 0.98) & (ay < 0.98)
@@ -118,7 +123,7 @@ def ortho():
         away = np.linalg.norm(r, axis=-1)
         seen = np.clip(-(normal * r).sum(-1) / away, 0, 1)
         col = scene(graded(cv2.remap(apron, qx.astype(np.float32), qy.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT), table))
-        col *= (limb(1.0) / limb(seen))[..., None]
+        col *= (limb(REF_MU) / limb(seen))[..., None]
         near = np.hypot(gx - nadir[0], gy - nadir[1])
         ok = clear & (bx > 0.03) & (bx < 0.97) & (by > A['top'] + 0.03) & (by < 0.97) & (near < A['near'][0]) & (-(r @ back) > 0.3)
         outs['apron'][y0 // SUPER:y1 // SUPER] = cv2.resize(col, (w // SUPER, (y1 - y0) // SUPER), interpolation=cv2.INTER_AREA)
@@ -131,5 +136,128 @@ def ortho():
     print('ortho', outs['plate'].shape, 'valid plate', float(masks['plate'].mean()), 'apron', float(masks['apron'].mean()))
 
 
+def sources():
+    out = []
+    for k in SOURCES:
+        img = display(np.load(f'{DIR}/ortho-{k}.npy'))
+        ok = (np.load(f'{DIR}/mask-{k}.npy') > 0.995).astype(np.uint8)
+        n, lab, st, _ = cv2.connectedComponentsWithStats(ok)
+        for i in range(1, n):
+            x, y, w, h, area = st[i]
+            if area < BLOCK * BLOCK * 2:
+                continue
+            part = np.ascontiguousarray(img[y:y + h, x:x + w])
+            good = (lab[y:y + h, x:x + w] == i).astype(np.float32)
+            full = cv2.matchTemplate(good, np.ones((BLOCK, BLOCK), np.float32), cv2.TM_CCORR) > BLOCK * BLOCK - 0.5
+            if full.sum() < 50:
+                continue
+            small = cv2.resize(part, (w // 2, h // 2), interpolation=cv2.INTER_AREA)
+            fits = np.zeros((small.shape[0] - BLOCK // 2 + 1, small.shape[1] - BLOCK // 2 + 1), bool)
+            sub = full[::2, ::2]
+            fits[:min(sub.shape[0], fits.shape[0]), :min(sub.shape[1], fits.shape[1])] = sub[:fits.shape[0], :fits.shape[1]]
+            out.append({'name': f'{k}{i}', 'img': part, 'small': small, 'sq': small * small, 'fits': fits, 'used': np.zeros(fits.shape, np.float32)})
+            print('source', k, i, part.shape, 'places', int(fits.sum()))
+    return out
+
+
+def path(e):
+    cost = e.copy()
+    for r in range(1, e.shape[0]):
+        prev = cost[r - 1]
+        best = np.minimum(prev, np.minimum(np.concatenate(([np.inf], prev[:-1])), np.concatenate((prev[1:], [np.inf]))))
+        cost[r] += best
+    out = np.zeros(e.shape[0], np.int64)
+    c = int(np.argmin(cost[-1]))
+    for r in range(e.shape[0] - 1, -1, -1):
+        out[r] = c
+        if r:
+            lo = max(c - 1, 0)
+            c = lo + int(np.argmin(cost[r - 1, lo:min(c + 2, e.shape[1])]))
+    return out
+
+
+def quilt():
+    rng = np.random.default_rng(SEED)
+    src = sources()
+    n = TILE // STEP
+    canvas = np.zeros((TILE, TILE, 3), np.float32)
+    filled = np.zeros((TILE, TILE), np.float32)
+    half = BLOCK // 2
+    ones = np.ones((half, half, 3), np.float32)
+    bump = cv2.getGaussianKernel(half + 1, half / 4)
+    bump = (bump @ bump.T) / (bump.max() ** 2)
+    log = []
+    for i in range(n):
+        for j in range(n):
+            ys = (i * STEP + np.arange(BLOCK)) % TILE
+            xs = (j * STEP + np.arange(BLOCK)) % TILE
+            t = canvas[np.ix_(ys, xs)]
+            m = filled[np.ix_(ys, xs)]
+            ts = cv2.resize(t, (half, half), interpolation=cv2.INTER_AREA)
+            ms = cv2.resize(m, (half, half), interpolation=cv2.INTER_AREA)
+            m3 = np.repeat(ms[..., None], 3, axis=2)
+            best = []
+            for k, s in enumerate(src):
+                if ms.max() > 0:
+                    err = cv2.matchTemplate(s['sq'], m3, cv2.TM_CCORR) - 2 * cv2.matchTemplate(s['small'], m3 * ts, cv2.TM_CCORR) + float((m3 * ts * ts).sum())
+                    err = np.maximum(err, 0) / max(float(m3.sum()), 1)
+                else:
+                    err = np.full(s['fits'].shape, 0.01, np.float32)
+                cost = (err + 2e-4) * (1 + CROWD * s['used'])
+                cost[~s['fits']] = np.inf
+                best.append(cost)
+            low = min(float(c.min()) for c in best)
+            picks = []
+            for k, c in enumerate(best):
+                yy, xx = np.where(c <= low * (1 + TOLERANCE))
+                picks += [(k, int(a), int(b)) for a, b in zip(yy, xx)]
+            k, y, x = picks[int(rng.integers(len(picks)))]
+            s = src[k]
+            u = s['used']
+            y0, y1 = max(y - half // 2, 0), min(y + half // 2 + 1, u.shape[0])
+            x0, x1 = max(x - half // 2, 0), min(x + half // 2 + 1, u.shape[1])
+            u[y0:y1, x0:x1] += bump[y0 - y + half // 2:y1 - y + half // 2, x0 - x + half // 2:x1 - x + half // 2]
+            p = s['img'][2 * y:2 * y + BLOCK, 2 * x:2 * x + BLOCK]
+            e = ((p - t) ** 2).sum(-1)
+            new = np.ones((BLOCK, BLOCK), np.float32)
+            if j > 0:
+                c = path(e[:, :LAP])
+                new *= (np.arange(BLOCK)[None, :] >= c[:, None]).astype(np.float32)
+            if i > 0:
+                c = path(e[:LAP, :].T.copy())
+                new *= (np.arange(BLOCK)[:, None] >= c[None, :]).astype(np.float32)
+            if j == n - 1:
+                c = path(e[:, STEP:])
+                new *= (np.arange(BLOCK)[None, :] <= STEP + c[:, None]).astype(np.float32)
+            if i == n - 1:
+                c = path(e[STEP:, :].T.copy())
+                new *= (np.arange(BLOCK)[:, None] <= STEP + c[None, :]).astype(np.float32)
+            soft = cv2.GaussianBlur(new, (0, 0), 1.2)
+            soft = np.where(m > 0, soft, 1.0)[..., None]
+            canvas[np.ix_(ys, xs)] = soft * p + (1 - soft) * t
+            filled[np.ix_(ys, xs)] = 1
+            log.append((s['name'], y, x, low))
+        print('row', i, flush=True)
+    np.save(f'{DIR}/quilt.npy', canvas)
+    names = sorted(set(l[0] for l in log))
+    print('blocks by source', {a: sum(1 for l in log if l[0] == a) for a in names}, 'mean match error', float(np.mean([l[3] for l in log])))
+    write(f'{DIR}/quilt.jpg', canvas, 90)
+
+
+def finish():
+    tile = np.load(f'{DIR}/quilt.npy')
+    lum = np.log(np.maximum(tile @ np.array([0.3, 0.5, 0.2], np.float32), 0.02))
+    pad = FLATTEN[0] * 3
+    wide = cv2.GaussianBlur(np.pad(lum, pad, mode='wrap'), (0, 0), FLATTEN[0])[pad:-pad, pad:-pad]
+    gain = np.exp(-(wide - wide.mean()) * FLATTEN[1])
+    lin = np.clip(tile, 0, 1) ** 2.2 * gain[..., None]
+    tile = np.clip(lin, 0, 1) ** (1 / 2.2)
+    print('flatten gain', float(gain.min()), float(gain.max()), 'mean', tile.reshape(-1, 3).mean(0))
+    for name, size in (('full', TILE), ('web', TILE // 2)):
+        out = tile if size == TILE else cv2.resize(tile, (size, size), interpolation=cv2.INTER_AREA)
+        write(f'{OUT}/{name}/field.jpg', out, 90)
+    json.dump({'size': TILE / SCALE, 'tone': REF_MU}, open('src/stops/sun/field.json', 'w'), indent=2)
+
+
 if __name__ == '__main__':
-    {'ortho': ortho}[sys.argv[1]]()
+    {'ortho': ortho, 'quilt': quilt, 'finish': finish}[sys.argv[1]]()

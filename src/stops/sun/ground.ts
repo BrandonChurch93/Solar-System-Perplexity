@@ -5,6 +5,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
 import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
+import fieldData from './field.json'
 
 export interface GroundLook {
   cap: number
@@ -13,6 +14,12 @@ export interface GroundLook {
   cell: number
   apron: { amount: number; cell: number; calm: number; out: [number, number] }
   band: [number, number]
+  own: { ring: [number, number]; side: number; near: number; up: [number, number]; rough: [number, number] }
+  lift: [number, number]
+  even: { from: [number, number]; tint: [number, number, number]; far: [number, number]; dim: number }
+  glowReach: [number, number]
+  site: [number, number]
+  field: { grid: number; sharp: number }
   glow: [number, number]
   boil: { reach: number; period: number; step: number; max: number }
   twinkle: { amount: number; rate: number; spread: number }
@@ -40,6 +47,15 @@ uniform float uApronOn;
 uniform float uApronOut;
 uniform vec2 uApronCell;
 uniform sampler2D uGlow;
+uniform sampler2D uField;
+uniform vec4 uFieldSize;
+uniform vec4 uOwn;
+uniform vec4 uUp;
+uniform vec2 uLift;
+uniform vec4 uEven;
+uniform vec4 uEvenTint;
+uniform vec2 uGlowReach;
+uniform vec2 uSite;
 uniform vec4 uBox;
 uniform float uGlowBeat;
 uniform vec2 uSize;
@@ -59,7 +75,7 @@ uniform float uLod;
 uniform vec3 uSpot;
 uniform vec3 uSpotE;
 uniform vec3 uSpotN;
-uniform vec4 uShow;
+uniform vec2 uShow;
 uniform float uMixed;
 in vec3 vStage;
 in vec3 vView;
@@ -87,8 +103,49 @@ vec4 surface(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, flo
   moved = push * swing;
   return vec4(lin, 1.0);
 }
+vec2 fieldShift(vec2 id) {
+  float lo = uFieldSize.z / uFieldSize.x + 0.02;
+  return mix(vec2(lo), vec2(1.0 - lo), vec2(vhash(vec3(id, 3.7)), vhash(vec3(id.yx + 17.3, 9.1))));
+}
+vec3 fieldTap(vec2 g, vec2 id, vec2 dx, vec2 dy) {
+  vec2 at = uFieldSize.z * vec2(id.x + 0.5 * id.y, 0.8660254 * id.y);
+  return textureGrad(uField, (g - at) / uFieldSize.x + fieldShift(id), dx, dy).rgb;
+}
+vec3 fieldAt(vec2 g, vec2 dx, vec2 dy) {
+  vec2 s = mat2(1.0, 0.0, -0.57735027, 1.15470054) * (g / uFieldSize.z);
+  vec2 base = floor(s);
+  vec3 t = vec3(fract(s), 0.0);
+  t.z = 1.0 - t.x - t.y;
+  bool lower = t.z > 0.0;
+  vec3 wt = lower ? vec3(t.z, t.y, t.x) : vec3(-t.z, 1.0 - t.y, 1.0 - t.x);
+  vec2 a = lower ? base : base + vec2(1.0, 1.0);
+  vec2 b = lower ? base + vec2(0.0, 1.0) : base + vec2(1.0, 0.0);
+  vec2 c = lower ? base + vec2(1.0, 0.0) : base + vec2(0.0, 1.0);
+  wt = pow(wt, vec3(uFieldSize.w));
+  wt /= wt.x + wt.y + wt.z;
+  vec3 mean = textureLod(uField, vec2(0.5), 20.0).rgb;
+  vec3 sum = wt.x * fieldTap(g, a, dx, dy) + wt.y * fieldTap(g, b, dx, dy) + wt.z * fieldTap(g, c, dx, dy);
+  return max(mean + (sum - mean) / sqrt(dot(wt, wt)), vec3(0.0));
+}
 void main() {
-  vec3 at = stFold(vStage);
+  vec3 at = vStage;
+  vec3 lay = vStage - ST_DOWN;
+  vec2 gnd = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD));
+  float ring = length(gnd);
+  vec2 fromApex = gnd - ST_FOLD.yz;
+  float phi = atan(fromApex.x, fromApex.y);
+  float dist = length(at);
+  float graze = clamp(dot(normalize(at - ST_CENTRE), -at / dist), 0.0, 1.0);
+  vec3 normal = normalize(vStage - ST_CENTRE);
+  float now = clamp(dot(normal, normalize(uCam - vStage)), 0.0, 1.0);
+  float lift = smoothstep(uLift.x, uLift.y, now - graze);
+  float edge = ring;
+  for (int k = 0; k < (lift > 0.0 ? 1 : 0); k++) edge += lift * uUp.z * (vnoise(vec3(gnd * uUp.w, 1.7)) + 0.5 * vnoise(vec3(gnd * uUp.w * 2.7, 5.3)) - 0.75);
+  float own = (1.0 - smoothstep(mix(uOwn.x, uUp.x, lift), mix(uOwn.y, uUp.y, lift), edge)) * smoothstep(0.0, uOwn.z, min(ST_PHI.y - phi, phi - ST_PHI.x)) * smoothstep(ST_FOLD.x, ST_FOLD.x + uOwn.w, gnd.y);
+  vec2 arc = gnd * (ST_RADIUS * asin(min(ring / ST_RADIUS, 1.0)) / max(ring, 1e-4));
+  vec2 uvF = arc / uFieldSize.x;
+  vec2 dxF = dFdx(uvF) * uGrad;
+  vec2 dyF = dFdy(uvF) * uGrad;
   vec2 uv = stPlate(stImage(at));
   vec2 dx = dFdx(uv) * uGrad;
   vec2 dy = dFdy(uv) * uGrad;
@@ -97,11 +154,8 @@ void main() {
   vec2 dxB = dFdx(uvB) * uGrad;
   vec2 dyB = dFdy(uvB) * uGrad;
   float w = apWeight(vStage, ab) * uApronOn;
-  float texels = mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
-  float dist = length(at);
-  float graze = clamp(dot(normalize(at - ST_CENTRE), -at / dist), 0.0, 1.0);
-  vec3 normal = normalize(vStage - ST_CENTRE);
-  float now = clamp(dot(normal, normalize(uCam - vStage)), 0.0, 1.0);
+  float bare = (1.0 - own) * (1.0 - w);
+  float texels = bare > 0.5 ? diagTexels(uvF * uFieldSize.y) : mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
   vec3 rel = vStage - uSpot;
   vec3 up = cross(uSpotE, uSpotN);
   rel -= up * dot(rel, up);
@@ -113,16 +167,20 @@ void main() {
   float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave + uTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uTime * uInflowRate.y) - sin(wave * 2.3)));
   vec3 col = vec3(0.0);
   vec2 moved = vec2(0.0);
-  vec3 lay = vStage - ST_DOWN;
-  vec2 gq = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD)) * uTwinkle.z;
+  vec2 gq = gnd * uTwinkle.z;
   float beat = vnoise(vec3(gq, uTime * uTwinkle.y)) - vnoise(vec3(gq, 0.0)) + 0.5 * (vnoise(vec3(gq * 2.3 + 7.3, uTime * uTwinkle.y * 1.7 + 3.1)) - vnoise(vec3(gq * 2.3 + 7.3, 3.1)));
   inflow *= max(1.0 + uTwinkle.x * beat, 0.35);
-  for (int k = 0; k < (w < 1.0 ? 1 : 0); k++) {
+  for (int k = 0; k < ((w < 1.0 && own > 0.0) ? 1 : 0); k++) {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
     vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
     vec4 s = surface(uPlate, uv, dx, dy, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, moved);
-    col = s.rgb * max(s.a * inflow, 0.0) * tone;
+    vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
+    col = s.rgb * max(s.a * inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
+  }
+  for (int k = 0; k < (bare > 0.0 ? 1 : 0); k++) {
+    float tone = clamp(stLimb(now) / stLimb(${fieldData.tone}), 0.25, 5.0);
+    col = mix(inverseFilmic(fieldAt(arc, dxF, dyF)) * max(inflow, 0.0) * tone, col, own);
   }
   for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
     vec3 toEye = AP_EYE - vStage;
@@ -149,14 +207,12 @@ void main() {
     gb = mix(gb, far, limb);
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
-  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * uGlowBeat;
+  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float shown = 1.0;
   for (int k = 0; k < (uMixed > 0.5 ? 1 : 0); k++) {
-    float ring = length(vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD)));
-    float real = 1.0 - uShow.w * smoothstep(ST_FOLD.w - 1.1, ST_FOLD.w, ring);
-    shown = uShow.z * real * (1.0 - smoothstep(uShow.x - uShow.y, uShow.x, length(vStage - uSpot))) * step(0.0, dot(normal, uCam - vStage));
+    shown = mix(uShow.x, uShow.y, 1.0 - smoothstep(uSite.x, uSite.y, r)) * step(0.0, dot(normal, uCam - vStage));
   }
   outColor = diagOut(vec4(col, shown), texels, 1.0, vec3(0.9, 0.5, 0.1), moved * 4.0, length(vView));
 }`
@@ -167,7 +223,7 @@ export class Ground {
   private readonly pulse: [number, number]
   private readonly out: [number, number]
 
-  constructor(plate: THREE.Texture, apron: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
+  constructor(plate: THREE.Texture, apron: THREE.Texture, field: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
     this.pulse = look.glow
@@ -186,14 +242,14 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
         uTwinkle: { value: new THREE.Vector3(look.twinkle.amount, look.twinkle.rate, look.twinkle.spread) },
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
-        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector4(1, 1, 1, 0) }, uMixed: { value: 0 },
+        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector2(1, 1) }, uMixed: { value: 0 },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -233,15 +289,15 @@ export class Ground {
     this.mesh.frustumCulled = false
   }
 
-  show(mixed: boolean, reach: number, feather: number, weight: number, fold: number): void {
+  show(mixed: boolean, weight: number, site: number): void {
     const m = this.material
     m.transparent = mixed
     m.blending = mixed ? THREE.CustomBlending : THREE.NormalBlending
     m.depthTest = !mixed
     m.depthWrite = !mixed
-    ;(m.uniforms.uShow!.value as THREE.Vector4).set(reach, feather, weight, fold)
+    ;(m.uniforms.uShow!.value as THREE.Vector2).set(weight, site)
     m.uniforms.uMixed!.value = mixed ? 1 : 0
-    this.mesh.visible = !mixed || weight > 0
+    this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
   update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number): void {

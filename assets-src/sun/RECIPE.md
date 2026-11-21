@@ -12,6 +12,8 @@ Every file under `public/assets/sun/`. The `web` file is always derived from the
 | `public/assets/sun/<set>/prominence-flow.png` | Orbit view |
 | `public/assets/sun/<set>/sky-hold.webp` | Orbit view |
 | `public/assets/sun/<set>/plate.jpg` | Terrain view |
+| `public/assets/sun/<set>/apron.jpg` | Terrain view |
+| `public/assets/sun/<set>/field.jpg` | Terrain view |
 | `public/assets/sun/<set>/loops.webp` | Terrain view |
 | `public/assets/sun/<set>/loops-glow.png` | Terrain view |
 | `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
@@ -147,6 +149,20 @@ Shared inputs:
 - Earlier tries, not shipped: two top-down granulation fields (`out/work/sun/apron-take1.png` with `seedream_5`, `out/work/sun/apron-take2.png` with `nano_banana_pro`), whose cells did not look like the cells of the approved image.
 - Feather: at frame 0 the plate is mixed in over 0.04 of the frame inside the approved frame's left, right and bottom edges. `look.ground.apron.out` [-1, -0.1] (seconds from the judged terrain frame) moves that feather to the outside of the approved frame between frames 60 and 87 (`uApronOut` in `ground.ts`, `shift` in `apron.ts`), so at frame 90 the approved frame is the approved pixels to its edges.
 - Checks: frame 0 with the base itself as the apron gives the base back in place; native crops of the lower part of frames 0, 30, 60 and 75 at final; `mirrorcheck.py` clean on 0, 30, 60, 90; frame 90 against the approved image in the bottom 43 rows (mean difference 10.7, was 19.9) and the side 77 columns (left 19.3, was 25.2; right 13.3, was 16.9); draft sequence 56 to 100 and 186 to 214 without a jump.
+
+### public/assets/sun/<set>/field.jpg (granulation for the ground the pictures do not reach)
+
+- Output: 4096 x 4096 (full), 2048 x 2048 (web), JPEG 90, 4:4:4. A square of granulation seen from straight above at 320 px a stage unit (12.8 units a side), in display coding, at the tone of a view 0.25 from grazing (`REF_MU`). Plus `src/stops/sun/field.json` (side in units, tone).
+- Why (Phase 6, item 3): the ground outside the plate and the apron (beyond 3.6 to 4 units from the down point, beyond the plate's side edges, and past the apron's own picture) was filled by reflecting the plate (`stFold`, textures with mirrored wrap). Under the limb that showed as mirrored shapes at frames 0, 60 and 90, and from above in the rise as mirrored sunspots. Now those places read this file and nothing is reflected.
+- Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/field.py ortho`, then `quilt`, then `finish` (no model, no prompt, fixed seed `SEED`).
+- Inputs: `public/assets/sun/full/plate.jpg`, `public/assets/sun/full/apron.jpg`, `public/assets/sun/full/grade.png` (row 0), `src/stops/sun/terrain.json`, `src/stops/sun/apron.json`.
+- Steps:
+  - `ortho`: plate and apron are projected onto the ground sphere and read from straight above, 3 times supersampled and reduced with an area filter; scene values with grade row 0 applied and the limb tone of the picture's own view divided out (the shader's `stLimb`). Valid where the picture is its own (not reflected), away from the sunspot (1.35 units) and the loop feet (0.7 units). Writes `out/work/sun/field/ortho-*.npy`, `mask-*.npy`.
+  - `quilt`: image quilting (Efros and Freeman 2001): blocks of 192 px with 64 px overlap, each chosen among the source places whose overlap error is within 12 percent of the best, with a penalty on places already used, joined along minimum error paths, on a torus so the square has no edge. Source: the apron's valid part only (1404 x 576 px). The plate's two wedges beside the sunspot were tried as a second source and dropped: their brighter, more orange blocks stood out as a repeating mark.
+  - `finish`: 75 percent of the brightness swell wider than 220 px taken out (it changed the tile by 1.4 percent at most), both sets written.
+- Shader (`src/stops/sun/ground.ts`, `fieldAt`): the tile is not repeated on a grid. Every corner of a triangle grid (1.6 units) reads its own window of the tile at a hashed place, three windows are blended with sharpened weights and the contrast lost by blending is put back (Heitz and Neyret 2018). Tone is `stLimb(now) / stLimb(0.25)`.
+- Take kept: run 2 (apron only). Run 1 (plate and apron) dropped as above.
+- Checks: `python3 tools/assets/mirrorcheck.py` clean on the tile and on draft frames 0, 60, 90, 150, 204, 208; texel view at draft, frames 0, 90, 179, 190, 200, 204, 207: no soft pixel (lowest 1.72 texels a pixel); frame 60 strip under the limb at 4 times beside round 24 (`i163-f60-limbstrip-old-new-x4.png`).
 
 ### public/assets/sun/<set>/sky-terrain.webp
 

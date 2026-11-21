@@ -6,7 +6,7 @@ import { STAGE_GLSL, stage } from './stage'
 
 export interface LoopsLook {
   grid: [number, number]
-  lean: { outerDeg: number; innerDeg: number; from: number; to: number }
+  lean: { outerDeg: number; innerDeg: number; from: number; to: number; late: [number, number] }
   gain: number
   far: number
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
@@ -16,11 +16,13 @@ export interface LoopsLook {
 }
 
 const VERT = /* glsl */ `
+in vec3 aLate;
+uniform float uLate;
 out vec3 vStage;
 out vec3 vClip;
 void main() {
   vStage = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate), 1.0);
   vClip = gl_Position.xyw;
 }`
 
@@ -134,6 +136,7 @@ export class Loops {
     const box = stage.loopsBox
     const [nx, ny] = look.grid
     const positions = new Float32Array((nx + 1) * (ny + 1) * 3)
+    const late = new Float32Array((nx + 1) * (ny + 1) * 3)
     const lineDir = tb.clone().sub(ta).normalize()
     const lineNormal = new THREE.Vector2(-lineDir.y, lineDir.x)
     const feetApart = ta.distanceTo(tb)
@@ -153,22 +156,27 @@ export class Loops {
         const pa = ta.clone().sub(p)
         const pb = tb.clone().sub(p)
         const arc = Math.acos(Math.min(Math.max(pa.dot(pb) / Math.max(pa.length() * pb.length(), 1e-9), -1), 1))
-        const lean = THREE.MathUtils.degToRad(look.lean.outerDeg + (look.lean.innerDeg - look.lean.outerDeg) * smooth(arc, look.lean.from, look.lean.to))
-        lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
-        normal.copy(axis).cross(lift).normalize()
-        const denom = r.dot(normal)
+        const share = smooth(arc, look.lean.from, look.lean.to)
         const hit = stage.groundDistance(ax, ay)
         const tGround = (hit > 0 ? hit : look.far) / r.length()
-        let t = Math.abs(denom) > 1e-5 ? footA.dot(normal) / denom : tGround
-        if (!(t > 0.3)) t = tGround
-        t = Math.min(t, hit > 0 ? tGround * 1.15 : tGround)
         const under = smooth(-(p.clone().sub(ta).dot(lineNormal)), 0.0, 0.05)
         const span = p.clone().sub(ta).dot(lineDir) / feetApart
         const above = THREE.MathUtils.radToDeg(Math.acos(Math.min(Math.max(r.clone().normalize().dot(stage.down), -1), 1)) - stage.alpha)
         const pin = smooth(span, look.pin.from, look.pin.from + look.pin.soft) * (1 - smooth(span, 1 - look.pin.from - look.pin.soft, 1 - look.pin.from)) * (1 - smooth(above, look.pin.lowDeg, look.pin.highDeg))
-        const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
-        const k = held + (tGround - held) * under
-        r.multiplyScalar(k).toArray(positions, (j * (nx + 1) + i) * 3)
+        const place = (outerDeg: number, innerDeg: number, into: Float32Array): void => {
+          const lean = THREE.MathUtils.degToRad(outerDeg + (innerDeg - outerDeg) * share)
+          lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
+          normal.copy(axis).cross(lift).normalize()
+          const denom = r.dot(normal)
+          let t = Math.abs(denom) > 1e-5 ? footA.dot(normal) / denom : tGround
+          if (!(t > 0.3)) t = tGround
+          t = Math.min(t, hit > 0 ? tGround * 1.15 : tGround)
+          const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
+          const k = held + (tGround - held) * under
+          r.clone().multiplyScalar(k).toArray(into, (j * (nx + 1) + i) * 3)
+        }
+        place(look.lean.outerDeg, look.lean.innerDeg, positions)
+        place(look.lean.late[0], look.lean.late[1], late)
       }
     }
     const index: number[] = []
@@ -180,6 +188,7 @@ export class Loops {
     }
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    geometry.setAttribute('aLate', new THREE.BufferAttribute(late, 3))
     geometry.setIndex(index)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
@@ -194,7 +203,7 @@ export class Loops {
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
         uFlowMask: { value: new THREE.Vector4(look.flow.inside[0], look.flow.inside[1], look.flow.from[0], look.flow.from[1]) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
-        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uLate: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -212,12 +221,13 @@ export class Loops {
     this.mesh.frustumCulled = false
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0): void {
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0): void {
     const u = this.material.uniforms
     const lit = u.uBurst!.value as THREE.Vector4
     lit.x = burst
     lit.z = this.reach[0] + (this.reach[1] - this.reach[0]) * burst
     u.uCut!.value = cut
+    u.uLate!.value = late
     u.uTime!.value = time
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette
