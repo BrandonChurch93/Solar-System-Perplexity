@@ -42,6 +42,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(planet.mesh, air.mesh)
   const rimAim = new THREE.Vector3().fromArray(look.limb.rimAim)
   const darkAim = new THREE.Vector3().fromArray(look.limb.darkAim)
+  const cutAim = new THREE.Vector3().fromArray(look.limb.cutAim)
   const veilAim = new THREE.Vector3().fromArray(look.limb.veilAim)
 
   const tritonFit = fit.moons![0]!
@@ -103,6 +104,8 @@ export const createSet: SetFactory = async (ctx) => {
       const pu = planet.material.uniforms
       air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      ;(pu.uCut!.value as THREE.Vector4).w = home
       ;(pu.uDarkDir!.value as THREE.Vector3).copy(darkAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home

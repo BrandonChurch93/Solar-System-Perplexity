@@ -14,8 +14,17 @@ import separate
 import unproject
 
 WORK = os.path.join(geo.ROOT, 'out/work/nep/wrap')
-CLOUD_KNOTS = np.array([-1, -0.2, 0.0, 0.06, 0.125, 0.19, 0.25, 0.31, 0.375, 0.44, 0.5, 0.56, 0.69, 1.0])
-CLOUD_VALUES = np.array([0.02, 0.02, 0.05, 0.15, 0.35, 0.77, 1.26, 1.7, 2.0, 2.3, 2.5, 2.7, 3.0, 3.2])
+CLOUD_KNOTS = np.array([-1, -0.2, -0.08, -0.03, 0.0, 0.03, 0.06, 0.125, 0.19, 0.25, 0.31, 0.375, 0.44, 0.5, 0.56, 0.69, 1.0])
+CLOUD_VALUES = np.array([0.02, 0.02, 0.025, 0.095, 0.08, 0.085, 0.15, 0.35, 0.77, 1.26, 1.7, 2.0, 2.3, 2.5, 2.7, 3.0, 3.2])
+TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 1.0])
+TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.39, 1], [0.30, 0.39, 1]])
+CURVE = os.path.join(geo.ROOT, 'src/stops/neptune/curve.json')
+
+
+def cloud_curve():
+    k = np.linspace(-1, 1, 33)
+    level = np.interp(k, CLOUD_KNOTS, CLOUD_VALUES)
+    return np.stack([level * np.interp(k, TINT_KNOTS, TINT[:, c]) for c in range(3)], -1)
 
 
 def shade_of(ndl, deck):
@@ -59,9 +68,15 @@ def main():
     w = limb['veilAmount'] * (1 - separate.smoothstep(limb['veilMu'][0], limb['veilMu'][1], mu)) * separate.smoothstep(vs[0], vs[1], q) ** vs[2]
     sc = np.maximum((sc - np.array(limb['veil'], np.float32) * w[..., None]) / (1 - w[..., None]), sc * 0.3).astype(np.float32)
     valid = (mu > 0.22) & (ndl > 0.06)
-    alb = np.where(valid[..., None], sc / shade, curves.A0).astype(np.float32)
+    seen = (mu > 0.22) & (ndl > -0.06)
+    alb = np.where(seen[..., None], sc / shade, curves.A0).astype(np.float32)
     del sc
-    white = (np.interp(ndl, CLOUD_KNOTS, CLOUD_VALUES) / shade[..., 2]).astype(np.float32)
+    cloud = cloud_curve()
+    look = json.load(open(CURVE))
+    look['cloud'] = np.round(cloud, 4).tolist()
+    json.dump(look, open(CURVE, 'w'))
+    wc = shade_of(ndl, cloud) / shade
+    white = wc[..., 2]
     a = alb
     floor = np.stack([separate.local_floor(np.ascontiguousarray(a[..., c]), 8, 25, 25, 5) for c in range(3)], -1)
     hue = floor / np.maximum(floor[..., 2:3], 1e-4)
@@ -83,13 +98,14 @@ def main():
     tex = np.tile(tile, (a.shape[0] // 768 + 1, a.shape[1] // 768 + 1))[:a.shape[0], :a.shape[1]]
     fill = fill * (1 + tex)[..., None]
     deck = a * (1 - m[..., None]) + fill * m[..., None]
-    wc = white[..., None] * separate.CLOUD
     ld = deck @ separate.LUM
     alpha = np.clip(((a @ separate.LUM) - ld) / np.maximum(wc @ separate.LUM - ld, 1e-4), 0, 1)
     alpha *= separate.smoothstep(0.0, 0.5, m)
-    alpha = np.where(valid, alpha, 0)
+    alpha = np.where(seen, alpha, 0)
     weight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(0.06, 0.2, ndl)
-    np.savez(os.path.join(WORK, 'hero-layers.npz'), deck=deck.astype(np.float32), alpha=alpha.astype(np.float32), weight=weight.astype(np.float32), window=g['window'])
+    aweight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(-0.06, -0.02, ndl)
+    gweight = separate.smoothstep(0.08, 0.26, mu) * separate.smoothstep(-0.1, -0.04, ndl)
+    np.savez(os.path.join(WORK, 'hero-layers.npz'), deck=deck.astype(np.float32), alpha=alpha.astype(np.float32), weight=weight.astype(np.float32), aweight=aweight.astype(np.float32), gweight=gweight.astype(np.float32), window=g['window'])
     comp = deck * (1 - alpha[..., None]) + alpha[..., None] * wc
     err = np.abs(geo.encode(comp * shade).astype(int) - img.astype(int))
     v = weight > 0.99

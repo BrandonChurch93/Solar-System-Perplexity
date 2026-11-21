@@ -28,6 +28,7 @@ CIRRUS = [
     ('cir-m5-t1', 100.0, 24.0, 112.0, False, 1.0), ('cir-m3-t1', 190.0, 22.0, 112.0, True, 1.0), ('cir-m4-t1', 282.0, 26.0, 112.0, True, 1.0),
     ('cir-m1-t1', 150.0, 2.0, 84.0, False, 0.8), ('cir-m2-t1', 250.0, -2.0, 84.0, True, 0.8), ('cir-m0-t1', 20.0, 30.0, 84.0, False, 0.8),
 ]
+DARK, LIGHT = 0.14, 0.35
 CIRRUS_CAPS = {'n': ('cir-n-t1', 34.0, 0.7), 's': ('cir-s-t1', 34.0, 0.7)}
 
 
@@ -138,7 +139,7 @@ def paste_max(dst, src, lon_c, lat_c):
 
 def shell_shift(layers, height):
     x0, y0, x1, y1 = [int(v) for v in layers['window']]
-    alpha, weight = layers['alpha'], layers['weight']
+    alpha, weight = layers['alpha'], layers['aweight']
     out_a = np.zeros_like(alpha)
     out_w = np.zeros_like(weight)
     step = 512
@@ -199,6 +200,7 @@ def main():
         wc = separate.smoothstep(35, 45, np.abs(lat[sl])).astype(np.float32)[:, None, None]
         acc[sl] = ((1 - wc) * acc[sl] + wc * d * g) / np.sqrt((1 - wc) ** 2 + wc ** 2)
         del d, rows
+    acc = np.where(acc < 0, -DARK * np.tanh(-acc / DARK), LIGHT * np.tanh(acc / LIGHT)).astype(np.float32)
     np.exp(acc, out=acc)
     acc *= z[:, None, :]
 
@@ -222,7 +224,7 @@ def main():
     ha, hw = shell_shift(layers, CLOUD_HEIGHT)
     wd = layers['weight'][..., None]
     acc[y0:y1, x0:x1] = acc[y0:y1, x0:x1] * (1 - wd) + layers['deck'] * wd
-    alpha[y0:y1, x0:x1] = alpha[y0:y1, x0:x1] * (1 - hw) + ha * hw
+    alpha[y0:y1, x0:x1] = alpha[y0:y1, x0:x1] * (1 - np.maximum(hw, layers['gweight'])) + ha * hw
 
     rgb = (geo.linear_to_srgb(np.clip(acc * CODE, 0, 1)) * 255 + 0.5).astype(np.uint8)
     a8 = (np.clip(alpha, 0, 1) * 255 + 0.5).astype(np.uint8)

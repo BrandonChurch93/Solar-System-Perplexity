@@ -26,6 +26,10 @@ export interface AirLine {
   dayTo: number
   aim: [number, number, number]
   away: [number, number, number]
+  bulge: [number, number, number, number]
+  lift: number
+  tail: [number, number, number]
+  tailEdge: [number, number]
 }
 
 export interface AirParams {
@@ -50,6 +54,10 @@ uniform vec3 uLineTwilight;
 uniform vec3 uLineNight;
 uniform vec3 uLineSun;
 uniform vec2 uLineEdge;
+uniform vec4 uLineBulge;
+uniform float uLineLift;
+uniform vec3 uLineTail;
+uniform vec2 uLineTailEdge;
 uniform vec2 uAirForward;
 vec3 airLight(vec3 day, vec3 twilight, vec3 night, vec2 edge, vec3 sun, vec3 at, float fwd) {
   float s = smoothstep(edge.x, edge.y, dot(at, sun));
@@ -70,14 +78,16 @@ vec4 air(vec3 dir, bool ground) {
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
-  float r1 = uLineShape.x;
-  float r2 = uLineShape.y;
+  vec3 tp = normalize(uCam + dir * b);
+  float bulge = uLineBulge.w * smoothstep(0.8, 0.99, dot(tp, uLineBulge.xyz));
+  float r1 = uLineShape.x + bulge + uLineLift * smoothstep(0.0, 0.4, dot(tp, uSunW));
+  float r2 = uLineShape.y + bulge;
   if (b > 0.0 && rt2 < r2 * r2 && r > r2) {
     float far = sqrt(r2 * r2 - rt2);
     float near = sqrt(max(r1 * r1 - rt2, 0.0));
     float path = (far - near) * (ground ? 1.0 : 2.0);
     float tau = uLineShape.z * path;
-    sum += airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) * (1.0 - exp(-tau)) * uLineShape.w;
+    sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w;
   }
   return vec4(sum, total);
 }`
@@ -127,6 +137,10 @@ export function airUniforms(p: AirParams): Record<string, THREE.IUniform> {
     uLineNight: { value: vec(p.line.night) },
     uLineSun: { value: new THREE.Vector3(1, 0, 0) },
     uLineEdge: { value: new THREE.Vector2(p.line.dayFrom, p.line.dayTo) },
+    uLineBulge: { value: new THREE.Vector4(1, 0, 0, 0) },
+    uLineLift: { value: p.line.lift },
+    uLineTail: { value: new THREE.Vector3() },
+    uLineTailEdge: { value: new THREE.Vector2(p.line.tailEdge[0], p.line.tailEdge[1]) },
     uAirForward: { value: new THREE.Vector2(p.forward, p.forwardPower) },
   }
 }
@@ -181,6 +195,9 @@ export class Air {
       ;(u.uLineEdge!.value as THREE.Vector2).set(ln.away[0] + (ln.dayFrom - ln.away[0]) * home, ln.away[1] + (ln.dayTo - ln.away[1]) * home)
       ;(u.uLineDay!.value as THREE.Vector3).fromArray(ln.day).multiplyScalar(ln.away[2] + (1 - ln.away[2]) * home)
       ;(u.uLineShape!.value as THREE.Vector4).w = line
+      ;(u.uLineTail!.value as THREE.Vector3).fromArray(ln.tail).multiplyScalar(home)
+      this.work.set(ln.bulge[0], ln.bulge[1], ln.bulge[2]).applyQuaternion(rotation).normalize()
+      ;(u.uLineBulge!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.bulge[3] * home)
     }
     this.material.uniforms.uGain!.value = gain
   }

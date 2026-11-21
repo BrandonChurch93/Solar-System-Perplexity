@@ -24,7 +24,7 @@ export const lineFade: [number, number] = [0.6, 0.15]
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
   aim: [0.121, -0.195, 0.226] as [number, number, number],
-  gain: 1.6,
+  gain: 1.75,
   bump: 0.008,
   rim: 0.4,
   sun: [1, 0.98, 0.96] as [number, number, number],

@@ -55,7 +55,7 @@ void main() {
   vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
   vec3 east = normalize(cross(vec3(0.0, 1.0, 0.0), d) + vec3(1e-5, 0.0, 0.0));
   vec3 north = cross(d, east);
-  float eps = 9.0 / uMapWidth;
+  float eps = max(9.0 / uMapWidth, 2.5 * length(fwidth(d)));
   const vec3 LUM = vec3(0.3, 0.5, 0.2);
   float h = dot(albedo, LUM);
   float he = dot(equirectGrad(uMap, normalize(d + east * eps), uGrad).rgb, LUM);

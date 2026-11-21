@@ -4,11 +4,12 @@ import numpy as np
 
 SRC = 'out/work/nep/gen/triton-map-t3-2x.png'
 W, H = 4096, 2048
-SATURATION = 0.6
+SATURATION = 0.3
 PIVOT = 0.5
-CONTRAST = 1.45
+CONTRAST = 1.25
 CAP = (0, 45)
-WASH = (0.86, 0.7, 0.72)
+WASH = (0.93, 0.84, 0.845)
+PLAIN = (0.97, 0.975, 1.0)
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
     lat0 = (0.5 - (np.arange(H) + 0.5) / H) * 180
     cap = np.clip((lat0 - CAP[0]) / (CAP[1] - CAP[0]), 0, 1)
     cap = (cap * cap * (3 - 2 * cap))[:, None, None].astype(np.float32)
-    img = img * (1 - cap + cap * np.array(WASH, np.float32)[None, None, ::-1])
+    img = img * ((1 - cap) * np.array(PLAIN, np.float32)[None, None, ::-1] + cap * np.array(WASH, np.float32)[None, None, ::-1])
     band = W // 10
     left = img[:, :band].copy()
     right = img[:, -band:].copy()

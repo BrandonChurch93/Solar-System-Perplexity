@@ -14,7 +14,8 @@ FORWARD, POWER = 2.5, 5.0
 SCALE = 0.25
 AZ = 10
 WIDE = 56
-FLOOR = 0.0012
+FLOOR = 0.0008
+STRAND = 2.2
 BROAD = 36
 TINT = [0.5, 0.85, 1.0]
 
@@ -59,11 +60,20 @@ def main():
     strands = np.maximum(fine - broad - FLOOR, 0)
     tint = np.array(TINT)
     glow = glow.mean(-1, keepdims=True) * tint / tint.mean() * 0.7 + glow * 0.3
-    strands = strands.mean(-1, keepdims=True) * 0.6 + strands * 0.4
+    strands = (strands.mean(-1, keepdims=True) * 0.6 + strands * 0.4) * STRAND
     med = glow + strands
     phase = 1 + FORWARD * np.maximum(dn @ geo.SUN, 0) ** POWER
     med = med / phase[..., None]
-    wsum = valid.sum(1, keepdims=True)
+    if len(sys.argv) > 3:
+        again = geo.decode(cv2.imread(sys.argv[3])[:, :, ::-1])
+        again = cv2.resize(again.astype(np.float32), (hero.shape[1], hero.shape[0]), interpolation=cv2.INTER_CUBIC)
+        E = measure.unwrap(hero - again)[0]
+        E = ndi.median_filter(E, size=(1, 7, 1), mode='wrap')
+        enum = ndi.gaussian_filter(E * valid[..., None], (6, BROAD, 0), mode=('nearest', 'wrap', 'nearest'))
+        rest = enum / np.maximum(bden, 1e-3)[..., None]
+        rest = rest.mean(-1, keepdims=True) * tint / tint.mean() * 0.7 + rest * 0.3
+        print('second pass rest p10 p50 p90', np.percentile(rest[..., 2][valid > 0.5], [10, 50, 90]))
+        med = np.maximum(med + rest / phase[..., None], 0)
     az = (np.arange(measure.NA) + 0.5) / measure.NA * 360 - 180
     prof = (med * valid[..., None]).sum(1) / np.maximum(valid.sum(1), 1e-3)[:, None]
     prof = ndi.gaussian_filter(prof, (1.5, 0)) * 0.8

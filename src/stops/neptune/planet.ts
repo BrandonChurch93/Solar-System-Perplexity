@@ -27,6 +27,12 @@ export interface LimbParams {
   rimFrom: number
   rimTo: number
   rimAim: [number, number, number]
+  rimMu: number
+  cut: number
+  cutMu: [number, number]
+  cutFrom: number
+  cutTo: number
+  cutAim: [number, number, number]
   dark: number
   darkMu: [number, number]
   darkFrom: number
@@ -130,6 +136,10 @@ uniform float uAspect;
 uniform vec3 uRim;
 uniform vec3 uRimShape;
 uniform vec3 uRimDir;
+uniform float uRimMu;
+uniform vec4 uCut;
+uniform vec2 uCutEdge;
+uniform vec3 uCutDir;
 uniform vec3 uLimbDark;
 uniform vec3 uVeilDir;
 uniform vec3 uTwi;
@@ -227,12 +237,13 @@ void main() {
   vec3 albedo = deckTexel.rgb / uCode;
   vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - alpha));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
-  vec3 col = mix(deck, knot(uCloud, ndlc), alpha) * uTint;
+  vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
   col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
-  col += uRim * exp(-mu / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
+  col += uRim * exp(-abs(mu - uRimMu * uCut.w) / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
+  col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
   col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
   vec4 sky = air(dir, true);
   sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
@@ -295,6 +306,7 @@ export class NeptunePlanet {
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
+        uRimMu: { value: l.rimMu }, uCut: { value: new THREE.Vector4(l.cut, l.cutMu[0], l.cutMu[1], 0) }, uCutEdge: { value: new THREE.Vector2(l.cutFrom, l.cutTo) }, uCutDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
