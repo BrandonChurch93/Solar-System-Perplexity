@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T19:50:17.483Z",
+ "pushed": "2026-11-21T20:09:36.026Z",
  "head": "a68edba4963aef5fe65e0a67b7f5ecbe8ada83ce",
- "note": "Phase 6 polish, item 1 covers: before sheets; building an own veil that leaves the sky alone",
+ "note": "Phase 6 item 1 (covers): own veil keeps sky and Sun; replacing noise sheets by a cloud tile",
  "looks": [
+  {
+   "time": "2026-11-21T20:09:35.428Z",
+   "file": "20261121200935428-note-veil-tiled-2x2.jpg",
+   "source": "out/work/venus/veil-tiled-2x2.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, cloud tile for the veil sheets from patch d, shown 2 by 2 (seam check)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T20:09:34.826Z",
+   "file": "20261121200934826-note-b-rc.jpg",
+   "source": "../view/b-rc.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover draft take b: noise sheets read as flat blobs (rejected)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T20:09:34.244Z",
+   "file": "20261121200934244-note-dc-a.jpg",
+   "source": "../view/dc-a.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, dive cover draft take a: own veil, sky kept",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T20:09:33.375Z",
+   "file": "20261121200933375-note-rc-a.jpg",
+   "source": "../view/rc-a.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover draft take a: own veil, sky and Sun kept, veil still a pale wash",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T19:50:16.830Z",
    "file": "20261121195016830-note-venus.dive-cover-preview-review.jpg",
@@ -29,50 +61,6 @@
    "stop": "venus",
    "segment": "venus.hold",
    "frame": 1185,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:52:28.080Z",
-   "file": "20261121175228080-note-fn2-1308.jpg",
-   "source": "out/work/venus/r3/fn2-1308.png",
-   "kind": "note",
-   "label": "venus dive 1308, review, 16x9, final round 3 code: soft radial streaks, no cards",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:52:27.435Z",
-   "file": "20261121175227435-note-fn2-1563.jpg",
-   "source": "out/work/venus/r3/fn2-1563.png",
-   "kind": "note",
-   "label": "venus rise 1563, review, 16x9, final round 3 code: soft under the veil, no cards",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:51:48.414Z",
-   "file": "20261121175148414-frame-fn2-1308.jpg",
-   "source": "out/work/venus/r3/fn2-1308.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1308, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1308,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:47:02.338Z",
-   "file": "20261121174702338-frame-fn2-1563.jpg",
-   "source": "out/work/venus/r3/fn2-1563.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1563, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1563,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
