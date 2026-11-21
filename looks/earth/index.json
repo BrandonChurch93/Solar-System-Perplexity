@@ -1,9 +1,47 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T04:51:29.473Z",
- "head": "90bedd63b26374866c1d36b4055b1948a86bdf2c",
- "note": "orbit view milestone: hold beside the hero after bloom pre-emphasis and trim; terrain relief next",
+ "pushed": "2026-11-21T05:08:01.641Z",
+ "head": "126c3f48cf2e15d4a4206b696874db3f3e301aa7",
+ "note": "terrain relief: margin takes for the left, right and bottom edges register with the close image; building the layers",
  "looks": [
+  {
+   "time": "2026-11-21T05:04:22.584Z",
+   "file": "20261121050422584-note-edge-takes.jpg",
+   "source": "out/work/earth/view/edge-takes.jpg",
+   "kind": "note",
+   "label": "terrain relief: margin takes for the left, right and bottom edges (aligned)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:01:23.599Z",
+   "file": "20261121050123599-note-margin-t2-small.jpg",
+   "source": "out/work/earth/view/margin-t2-small.jpg",
+   "kind": "note",
+   "label": "terrain relief: margin take 2, aligned to the close image",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:01:06.935Z",
+   "file": "20261121050106935-frame-hold-b5.jpg",
+   "source": "out/work/earth/still/hold-b5.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T04:59:43.906Z",
+   "file": "20261121045943906-note-margin-t1-small.jpg",
+   "source": "out/work/earth/view/margin-t1-small.jpg",
+   "kind": "note",
+   "label": "terrain relief: margin take 1 (close image continued left, right and below)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-21T04:50:37.256Z",
    "file": "20261121045037256-compare-compare-earth-hold-view.jpg",
@@ -33,56 +71,12 @@
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:49:58.492Z",
-   "file": "20261121044958492-frame-hold-b4.jpg",
-   "source": "out/work/earth/still/hold-b4.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
    "time": "2026-11-21T04:47:07.765Z",
    "file": "20261121044707765-note-lights-crop.jpg",
    "source": "out/work/earth/view/lights-crop.jpg",
    "kind": "note",
    "label": "city lights, hero left, film right (before the lights gain)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:47:07.168Z",
-   "file": "20261121044707168-note-holdcheck.jpg",
-   "source": "out/work/earth/view/holdcheck.jpg",
-   "kind": "note",
-   "label": "hold check after bloom pre-emphasis and curve trim: hero, film, 4x low-pass difference",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:47:06.621Z",
-   "file": "20261121044706621-note-rise-frames.jpg",
-   "source": "out/work/earth/view/rise-frames.jpg",
-   "kind": "note",
-   "label": "rise frames 2156 and 2174 with the rise end over the hero face (azimuth 10, elevation 8)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T04:46:45.700Z",
-   "file": "20261121044645700-frame-rise-end-b3.jpg",
-   "source": "out/work/earth/still/rise-end-b3.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2174, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2174,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
   },
   {
    "time": "2026-11-21T02:45:10.763Z",
