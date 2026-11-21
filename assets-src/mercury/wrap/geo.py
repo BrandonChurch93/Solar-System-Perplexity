@@ -11,6 +11,10 @@ import lightcurve as lc
 Image.MAX_IMAGE_PIXELS = None
 FIT = json.load(open('assets-src/mercury/fit.json'))
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
+NIGHT = (-0.14, -0.03)
+DAY = (0.0, 0.07)
+DUSK = (-0.12, -0.06)
+SIGNAL = (1.3, 2.0, 4.0)
 
 
 def to_linear(c):
@@ -96,3 +100,10 @@ def shade(ndl, mu):
     f = (x - i)[..., None]
     gain = table[i] * (1 - f) + table[i + 1] * f
     return (np.maximum(lc.curve_at(curve, ndl) - night, 0) * gain + night).astype(np.float32)
+
+
+def day(seen, g):
+    lum = seen @ LUMA
+    floor = float(np.median(lum[g['hit'] & (g['ndl'] > DUSK[0]) & (g['ndl'] < DUSK[1]) & (g['mu'] > 0.3)]))
+    lit = smooth(SIGNAL[0], SIGNAL[1], blur(lum, SIGNAL[2] * seen.shape[1] / 5632) / floor)
+    return np.maximum(smooth(DAY[0], DAY[1], g['ndl']), lit * smooth(NIGHT[0], NIGHT[1], g['ndl'])).astype(np.float32)

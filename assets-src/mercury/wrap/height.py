@@ -16,7 +16,7 @@ OUT = sys.argv[1]
 W, H = 4096, 2048
 CACHE = 'out/work/mercury/dem-4096.npy'
 LIMB = (0.2, 0.42)
-NIGHT = (-0.14, -0.03)
+HERO = sys.argv[2] if len(sys.argv) > 2 else 'out/work/mercury/hero-db-2x.png'
 
 if os.path.exists(CACHE):
     dem = np.load(CACHE)
@@ -36,7 +36,10 @@ low = geo.blur(pad, 40)[:, 64:-64]
 fine = geo.blur(pad, 0.7)[:, 64:-64]
 hw, hh = 1408, 792
 g = lc.geometry(geo.FIT, hw, hh)
-keep = (geo.smooth(LIMB[0], LIMB[1], g['mu']) * geo.smooth(NIGHT[0], NIGHT[1], g['ndl']) * g['hit']).astype(np.float32)
+seen = geo.scene(HERO)
+day = cv2.resize(geo.day(seen, lc.geometry(geo.FIT, seen.shape[1], seen.shape[0])), (hw, hh), interpolation=cv2.INTER_AREA)
+del seen
+keep = (geo.smooth(LIMB[0], LIMB[1], g['mu']) * day * g['hit']).astype(np.float32)
 d = geo.directions(W, H)
 px, py, mu, ndl = geo.hero_view(d, hw, hh)
 inside = (mu > 0.05) & (px > 1) & (px < hw - 2) & (py > 1) & (py < hh - 2)

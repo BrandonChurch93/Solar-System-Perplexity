@@ -26,7 +26,7 @@ export const light: GlobeLight = {
 export const sun = { gain: 1, breathe: 0.03, rate: 1.9 }
 
 export const lens: LensLook = {
-  ghost: { at: 0.743, tiltDeg: -15, size: [0.03, 0.0185], core: [0.74, 0.56, 0.44], tail: [0.26, 0.15, 0.08], fringe: [0.05, 0.008, 0.012], halo: [0.02, 0.008, 0.012], haloSize: 0.05 },
+  ghost: { at: 0.7404, turnDeg: 0.55, tiltDeg: -6.3, size: [0.0379, 0.0208], taper: 0.43, edge: [0.3, 1.1], blend: [-0.567, -0.167, -0.167, 0.5], head: [0.62, 0.55, 0.52], core: [0.74, 0.53, 0.33], tail: [0.3, 0.17, 0.1], fringe: [0.05, 0.008, 0.012], halo: [0.02, 0.008, 0.012], haloSize: 0.05 },
   fade: [1.15, 1.7],
 }
 

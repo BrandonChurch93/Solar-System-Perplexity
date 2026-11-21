@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 export interface LensLook {
-  ghost: { at: number; tiltDeg: number; size: [number, number]; core: [number, number, number]; tail: [number, number, number]; fringe: [number, number, number]; halo: [number, number, number]; haloSize: number }
+  ghost: { at: number; turnDeg: number; tiltDeg: number; size: [number, number]; taper: number; edge: [number, number]; blend: [number, number, number, number]; head: [number, number, number]; core: [number, number, number]; tail: [number, number, number]; fringe: [number, number, number]; halo: [number, number, number]; haloSize: number }
   fade: [number, number]
 }
 
@@ -21,12 +21,17 @@ uniform float uAspect;
 uniform float uVignette;
 uniform float uAt;
 uniform vec2 uSize;
+uniform float uTaper;
+uniform vec2 uEdge;
+uniform vec4 uBlend;
+uniform vec3 uHead;
 uniform vec3 uCore;
 uniform vec3 uTail;
 uniform vec3 uFringe;
 uniform vec3 uHalo;
 uniform float uHaloSize;
 uniform vec2 uTilt;
+uniform vec2 uTurn;
 uniform int uDiag;
 in vec2 vNdc;
 out vec4 outColor;
@@ -37,12 +42,14 @@ void main() {
   vec2 a = far > 1e-4 ? uSun / far : vec2(1.0, 0.0);
   a = vec2(a.x * uTilt.x - a.y * uTilt.y, a.x * uTilt.y + a.y * uTilt.x);
   vec2 b = vec2(-a.y, a.x);
-  vec2 q = p + uSun * uAt;
-  vec2 e = vec2(dot(q, a) / uSize.x, dot(q, b) / uSize.y);
+  vec2 q = p + vec2(uSun.x * uTurn.x - uSun.y * uTurn.y, uSun.x * uTurn.y + uSun.y * uTurn.x) * uAt;
+  vec2 e = vec2(dot(q, a) / uSize.x, 0.0);
+  e.y = dot(q, b) / (uSize.y * (1.0 - uTaper * clamp(e.x, -1.0, 1.0)));
   float r = length(e);
-  float body = 1.0 - smoothstep(0.55, 1.2, r);
-  float along = smoothstep(-0.5, 0.75, e.x);
-  vec3 col = mix(uCore, uTail, along) * body;
+  float body = 1.0 - smoothstep(uEdge.x, uEdge.y, r);
+  float head = clamp((e.x - uBlend.x) / (uBlend.y - uBlend.x), 0.0, 1.0);
+  float tail = 1.0 - clamp((e.x - uBlend.z) / (uBlend.w - uBlend.z), 0.0, 1.0);
+  vec3 col = mix(mix(uHead, uCore, head * head), uTail, 1.0 - tail * tail) * body;
   col += uFringe * smoothstep(0.2, 1.0, e.x) * (1.0 - smoothstep(0.9, 1.7, r)) * smoothstep(0.5, 1.0, r);
   col += uHalo * exp(-length(q) / uHaloSize);
   vec2 v = vNdc * 0.5 * vec2(uAspect, 1.0);
@@ -64,9 +71,9 @@ export class Lens {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
         uSun: { value: new THREE.Vector2() }, uAmount: { value: 0 }, uGain: { value: 1 }, uAspect: { value: 16 / 9 }, uVignette: { value: 0 },
-        uAt: { value: l.ghost.at }, uSize: { value: new THREE.Vector2().fromArray(l.ghost.size) }, uCore: { value: new THREE.Vector3().fromArray(l.ghost.core) }, uTail: { value: new THREE.Vector3().fromArray(l.ghost.tail) },
+        uAt: { value: l.ghost.at }, uSize: { value: new THREE.Vector2().fromArray(l.ghost.size) }, uTaper: { value: l.ghost.taper }, uEdge: { value: new THREE.Vector2().fromArray(l.ghost.edge) }, uBlend: { value: new THREE.Vector4().fromArray(l.ghost.blend) }, uHead: { value: new THREE.Vector3().fromArray(l.ghost.head) }, uCore: { value: new THREE.Vector3().fromArray(l.ghost.core) }, uTail: { value: new THREE.Vector3().fromArray(l.ghost.tail) },
         uFringe: { value: new THREE.Vector3().fromArray(l.ghost.fringe) }, uHalo: { value: new THREE.Vector3().fromArray(l.ghost.halo) }, uHaloSize: { value: l.ghost.haloSize },
-        uTilt: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(l.ghost.tiltDeg)), Math.sin(THREE.MathUtils.degToRad(l.ghost.tiltDeg))) }, uDiag: diag,
+        uTilt: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(l.ghost.tiltDeg)), Math.sin(THREE.MathUtils.degToRad(l.ghost.tiltDeg))) }, uTurn: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(l.ghost.turnDeg)), Math.sin(THREE.MathUtils.degToRad(l.ghost.turnDeg))) }, uDiag: diag,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
