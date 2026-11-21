@@ -1,9 +1,38 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T17:03:51.536Z",
+ "pushed": "2026-11-21T17:27:53.643Z",
  "head": "c39eaba5003d35180392838bdb4dee80b58456cc",
- "note": "round 3: G13 failed on the longer terrain flight, finer near level of the deck added, checks running again",
+ "note": "round 3 on merged tree: rise sheet at review after the deck near level; chain still running (rise cover, dive cover, measure)",
  "looks": [
+  {
+   "time": "2026-11-21T17:26:56.947Z",
+   "file": "20261121172656947-frame-f04411-review.jpg",
+   "source": "out/work/sheets/.frames-lo3Kc8/f04411-review.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4411, review tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4411,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:19:25.603Z",
+   "file": "20261121171925603-sheet-uranus.rise-16x9-review.jpg",
+   "source": "out/work/sheets/uranus.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet uranus.rise, review tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4380,
+   "last": 4454,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:03:50.919Z",
    "file": "20261121170350919-note-near-4391.jpg",
@@ -11,20 +40,6 @@
    "kind": "note",
    "label": "draft 4391 native crop of the near deck: plate only (left), with the finer near level (right)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T17:02:18.356Z",
-   "file": "20261121170218356-frame-tex-4391.jpg",
-   "source": "out/work/u/r4/tex-4391.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4391, draft tier, texels view",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4391,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T17:01:36.216Z",
@@ -78,20 +93,6 @@
    "segment": "uranus.dive",
    "first": 4110,
    "last": 4199,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:30:56.091Z",
-   "file": "20261121163056091-frame-f04199-review.jpg",
-   "source": "out/work/sheets/.frames-0fCa8k/f04199-review.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4199, review tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4199,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
