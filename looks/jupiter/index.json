@@ -1,20 +1,44 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T03:43:41.233Z",
- "head": "3ca2830e293a13c18f661f34c723b74aae111d51",
- "note": "orbit view: light and limb glow fitted in a closed loop against the hero, hero sky as a patch; next Io look and shadow shape",
+ "pushed": "2026-11-21T04:04:33.966Z",
+ "head": "e606569869d587168f94876ea00f68239a34631d",
+ "note": "orbit view: Io and its shadow fitted to the hero, terminator and night side refitted; next motion check in the hold",
  "looks": [
   {
-   "time": "2026-11-21T03:43:40.629Z",
-   "file": "20261121034340629-note-skyfill.jpg",
-   "source": "out/work/view/skyfill.jpg",
+   "time": "2026-11-21T04:04:31.927Z",
+   "file": "20261121040431927-note-shadowfit.jpg",
+   "source": "out/work/view/shadowfit.png",
    "kind": "note",
-   "label": "sky fill takes: hero, flare take (rejected, sky reinvented), seedream take (kept, stars aligned)",
+   "label": "Io shadow fit: hero shadow strength, computed shadow, difference",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T03:43:08.652Z",
-   "file": "20261121034308652-compare-compare-jupiter-hold-view.jpg",
+   "time": "2026-11-21T04:04:31.394Z",
+   "file": "20261121040431394-note-c_limb.jpg",
+   "source": "out/work/view/c_limb.jpg",
+   "kind": "note",
+   "label": "lit limb and glow, hero left, film right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:04:30.813Z",
+   "file": "20261121040430813-note-c_term.jpg",
+   "source": "out/work/view/c_term.jpg",
+   "kind": "note",
+   "label": "terminator and night side, hero left, film right, native pixels",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:04:30.267Z",
+   "file": "20261121040430267-note-c_io.jpg",
+   "source": "out/work/view/c_io.jpg",
+   "kind": "note",
+   "label": "Io and its shadow, hero left, film right: Io map now carries the hero's own Io pixels, shadow from a Sun direction fitted to the hero shadow",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:04:06.989Z",
+   "file": "20261121040406989-compare-compare-jupiter-hold-view.jpg",
    "source": "out/work/compare/compare-jupiter-hold-view.jpg",
    "kind": "compare",
    "label": "jupiter.hold: approved image left, film frame right, review tier",
@@ -27,8 +51,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:43:07.516Z",
-   "file": "20261121034307516-still-f02895-16x9-review-full.jpg",
+   "time": "2026-11-21T04:04:05.818Z",
+   "file": "20261121040405818-still-f02895-16x9-review-full.jpg",
    "source": "out/work/stills/f02895-16x9-review-full.png",
    "kind": "still",
    "label": "jupiter.hold frame 2895, review tier",
@@ -41,35 +65,11 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:28:48.395Z",
-   "file": "20261121032848395-note-wisp.jpg",
-   "source": "out/work/view/wisp.jpg",
+   "time": "2026-11-21T03:43:40.629Z",
+   "file": "20261121034340629-note-skyfill.jpg",
+   "source": "out/work/view/skyfill.jpg",
    "kind": "note",
-   "label": "flow layer texture (wisps)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:47.844Z",
-   "file": "20261121032847844-note-cap_join_n.jpg",
-   "source": "out/work/view/cap_join_n.jpg",
-   "kind": "note",
-   "label": "north cap joining the belt on the far side, native 8k crop",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:47.280Z",
-   "file": "20261121032847280-note-far-canvas.jpg",
-   "source": "out/work/view/far-canvas.jpg",
-   "kind": "note",
-   "label": "wrap map complete: hero pixels, three far side tiles, two polar caps",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:46.740Z",
-   "file": "20261121032846740-note-caps_out.jpg",
-   "source": "out/work/view/caps_out.jpg",
-   "kind": "note",
-   "label": "polar caps: inputs (left) and painted takes (right), north on top",
+   "label": "sky fill takes: hero, flare take (rejected, sky reinvented), seedream take (kept, stars aligned)",
    "stop": "jupiter"
   },
   {
