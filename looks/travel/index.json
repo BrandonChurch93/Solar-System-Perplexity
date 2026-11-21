@@ -1,110 +1,68 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T13:09:03.652Z",
- "head": "0ed917adc891c2e6882a3918f009d70d1dcb3b0f",
- "note": "sky7: mercury and venus review sheets on main with rounds 16 and 17, mars and jupiter draft, stills 1092 1095 1632, sun edge stills",
+ "pushed": "2026-11-21T14:06:45.587Z",
+ "head": "5710e9f5e707ba253606f029b9e9068b9d639809",
+ "note": "task 3 first looks: worst leaving frames of seven travels at review on the old path, new flight field previews, open sky from frame 1 drafts",
  "looks": [
   {
-   "time": "2026-11-21T13:08:08.851Z",
-   "file": "20261121130808851-note-jupiter.travel-draft.jpg",
-   "source": "out/work/travel/sky7/jupiter.travel-draft.png",
+   "time": "2026-11-21T14:06:44.838Z",
+   "file": "20261121140644838-note-crops471-4469.jpg",
+   "source": "out/work/travel/t3v/crops471-4469.png",
    "kind": "note",
-   "label": "sky7: contact sheet jupiter.travel, draft tier",
+   "label": "task 3 crops471-4469"
+  },
+  {
+   "time": "2026-11-21T14:06:44.193Z",
+   "file": "20261121140644193-note-fieldview-b.jpg",
+   "source": "out/work/travel/t3v/fieldview-b.png",
+   "kind": "note",
+   "label": "task 3 fieldview-b"
+  },
+  {
+   "time": "2026-11-21T14:06:43.545Z",
+   "file": "20261121140643545-note-t3b6.jpg",
+   "source": "out/work/travel/t3v/t3b6.png",
+   "kind": "note",
+   "label": "task 3 t3b6"
+  },
+  {
+   "time": "2026-11-21T14:06:42.829Z",
+   "file": "20261121140642829-note-leave6.jpg",
+   "source": "out/work/travel/t3v/leave6.png",
+   "kind": "note",
+   "label": "task 3 leave6"
+  },
+  {
+   "time": "2026-11-21T14:06:25.887Z",
+   "file": "20261121140625887-note-f4460-draft.jpg",
+   "source": "out/work/travel/t3b/f4460-draft.png",
+   "kind": "note",
+   "label": "t3b: f4460-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T13:08:07.917Z",
-   "file": "20261121130807917-sheet-jupiter.travel-16x9-draft.jpg",
-   "source": "out/work/sheets/jupiter.travel-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.travel, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.travel",
-   "first": 3315,
-   "last": 3389,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:07:47.482Z",
-   "file": "20261121130747482-frame-f03315-draft.jpg",
-   "source": "out/work/sheets/.frames-HvHpBe/f03315-draft.png",
-   "kind": "frame",
-   "label": "jupiter.travel frame 3315, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.travel",
-   "frame": 3315,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:07:21.127Z",
-   "file": "20261121130721127-note-mars.travel-draft.jpg",
-   "source": "out/work/travel/sky7/mars.travel-draft.png",
+   "time": "2026-11-21T14:06:25.203Z",
+   "file": "20261121140625203-note-f3922-draft.jpg",
+   "source": "out/work/travel/t3b/f3922-draft.png",
    "kind": "note",
-   "label": "sky7: contact sheet mars.travel, draft tier",
+   "label": "t3b: f3922-draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T13:07:19.873Z",
-   "file": "20261121130719873-sheet-mars.travel-16x9-draft.jpg",
-   "source": "out/work/sheets/mars.travel-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet mars.travel, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "first": 2745,
-   "last": 2819,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "time": "2026-11-21T14:06:24.496Z",
+   "file": "20261121140624496-note-f3352-draft.jpg",
+   "source": "out/work/travel/t3b/f3352-draft.png",
+   "kind": "note",
+   "label": "t3b: f3352-draft",
+   "stop": "travel"
   },
   {
-   "time": "2026-11-21T13:06:39.403Z",
-   "file": "20261121130639403-frame-f02745-draft.jpg",
-   "source": "out/work/sheets/.frames-ge2UPN/f02745-draft.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2745, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2745,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:05:53.328Z",
-   "file": "20261121130553328-frame-f5360.jpg",
-   "source": "out/work/travel/merged18/f5360.png",
-   "kind": "frame",
-   "label": "ending.fade frame 5360, draft tier",
-   "stop": "ending",
-   "segment": "ending.fade",
-   "frame": 5360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:05:26.715Z",
-   "file": "20261121130526715-frame-f5235.jpg",
-   "source": "out/work/travel/merged18/f5235.png",
-   "kind": "frame",
-   "label": "ending.lookback frame 5235, draft tier",
-   "stop": "ending",
-   "segment": "ending.lookback",
-   "frame": 5235,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "time": "2026-11-21T14:06:23.812Z",
+   "file": "20261121140623812-note-f2752-draft.jpg",
+   "source": "out/work/travel/t3b/f2752-draft.png",
+   "kind": "note",
+   "label": "t3b: f2752-draft",
+   "stop": "travel"
   }
  ]
 }
