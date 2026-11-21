@@ -49,7 +49,7 @@ export interface GlobeOptions {
   nightAlbedo: [number, number, number, number]
   shadow: [number, number, number]
   shadowFade: [number, number]
-  nightRim: { glow: [number, number, number]; power: number; air: number; from: number; to: number }
+  nightRim: { glow: [number, number, number]; power: number; air: number; from: number; to: number; out: number; bulge: number }
   haze: HazeParams
   spot: SpotShape
   wisp: WispParams
@@ -124,6 +124,7 @@ uniform vec2 uShadowFade;
 uniform vec4 uShadowAt;
 uniform vec4 uNightRim;
 uniform vec3 uNightAir;
+uniform vec2 uNightOut;
 uniform vec3 uShadowSun;
 uniform vec3 uSunMap;
 uniform float uFlowT;
@@ -206,12 +207,13 @@ void main() {
   float along = -dot(uCam, dir);
   vec3 nearest = uCam + dir * along;
   float rt = length(nearest);
-  float over = rt - 1.0 + uEdge.y;
+  vec3 n = normalize(rt < 1.0 ? uCam + dir * (along - sqrt(max(1.0 - rt * rt, 0.0))) : nearest);
+  float dusk = 1.0 - smoothstep(uNightAir.x, uNightAir.y, dot(n, uSunW));
+  float axial = (uToBody * n).y;
+  float over = rt - 1.0 + uEdge.y - dusk * uNightOut.x * pow(max(1.0 - axial * axial, 0.0), uNightOut.y);
   float inside = 1.0 - smoothstep(-uEdge.x, uEdge.x, over / max(fwidth(rt), 1e-7));
   float beyond = max(over, 0.0);
   if (uDiag >= 2 && inside < 0.5) discard;
-  vec3 n = normalize(rt < 1.0 ? uCam + dir * (along - sqrt(max(1.0 - rt * rt, 0.0))) : nearest);
-  float dusk = 1.0 - smoothstep(uNightAir.x, uNightAir.y, dot(n, uSunW));
   float air = (uAir.x * exp(-beyond / uAir.y) + uAir.z * exp(-beyond / mix(uAir.w, uNightAir.z, dusk))) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
   vec3 d = spinY(uToBody * n, uSpin);
   vec3 fl;
@@ -279,6 +281,7 @@ ${PATCH_LEVELS}
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     vec4 cloud = pall(vClip.xy / vClip.z);
     float pa = cloud.a * (1.0 - smoothstep(uPallShell.x, uPallShell.y, rt));
+    cover = mix(inside, cover, (1.0 - uPall.x) * (1.0 - uPall.x));
     float total = pa + cover * (1.0 - pa);
     col = (cloud.rgb * uGain * uWeight * pa + col * cover * (1.0 - pa)) / max(total, 1e-5);
     cover = total;
@@ -336,7 +339,7 @@ export class Globe {
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
         uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
-        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
+        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uNightOut: { value: new THREE.Vector2(o.nightRim.out, o.nightRim.bulge) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },
         uWispShape: { value: new THREE.Vector4(w.repeats, w.latScale, w.amount, 1) },

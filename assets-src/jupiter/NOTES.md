@@ -300,6 +300,19 @@ What is built (all in the stop folder):
 - Item 8 measured again on final 3150 (blurred sigma 6, binned by approved level, lower two thirds): ratio ours over approved 0.96 to 0.985 in every bin, red lowest in the darks. So a gain, not only a dark lift: `deck.tone [1.085, 1.085, 1.085]` on the dark range and new `deck.toneHigh [1.035, 1.045, 1.05]` above it.
 - Side: kept `terrain.side -0.5` (A/B at 3239 against -0.24: both show the single relief stretched at the bottom of the last frames, -0.5 a little more; the gain in sideways travel is worth it).
 
+### Round 8, fourth pass (11:20 to 11:35 UTC)
+
+- Merged main 759b70f (engine batch 12: the sky pass no longer drops out on single frames low over the planet; my frames 3023, 3270, 3271, 3273 were hit) as 6ce0cc6.
+- Item 8 second step, final 3150 against approved (blurred sigma 6, lower two thirds): with `tone [1.085 x3]` and `toneHigh [1.035, 1.045, 1.05]` red overshot (ratio 1.015 to 1.024). The toe of the film curve makes the darks answer with a power of about 1.1, not 1/2.2. Settled: `tone [1.066, 1.077, 1.08, 0.08, 0.4]`, `toneHigh [1.04, 1.052, 1.06]`. Result: middle third +0.5 +0.26 +0.23, lower third -0.1 -0.13 -0.13 levels; bins 0 to 160 within 1 percent. Upper third +1.5 +1.2 +1.1 (horizon band, was +0.8 +0.2 -0.2).
+- `strip_cut3.jpg` (after batch 12): both cuts continuous. Left over: a thin orange rim on the orbit side only (the globe's own air glow outside the pall). Now the air outside the limb fades with `(1 - pall)^2` like the shells (`cover = mix(inside, cover, ...)` in the globe's pall loop).
+- R3 minor (night side a uniform fill): `nightAlbedo` weight 0.08 to 0.3, so the night side carries a little of the cloud map.
+
+### Round 8, fifth pass (11:25 to 11:32 UTC): night limb against the approved hero
+
+- Tool `/tmp/limb.py` (copy in `out/work/jupiter/tools/limb.py`): radial profiles of the hold 2895 against the hero on the night side, fit circle centre (958, 537) r 481 px. Before: the hero's dark limb stands out from the fit circle by 0.001 r at 50 deg from the equator and 0.011 r (5.3 px) on the equator (an equatorial bulge); ours sat on the circle, 1 to 5 px inward (R1's minor). Also the night side inside was 3 to 6 levels too bright in green and blue (the rim glow of the fourth pass and the 0.3 night albedo weight).
+- Fix: `nightRim.out 0.0105`, `bulge 3`: on the night side (`dusk`) the limb moves out by `out * (1 - axial^2)^3` (axial is the normal along the planet's axis). `nightRim.glow [0.0015, 0.0027, 0.003]`, `air 0.011`. `nightAlbedo` weight 0.2 with `nightGain 0.86` so the mean level stays.
+- After (draft 2895): limb mid point equal to the hero's within 1 px at all eight angles (-50 to 55 deg), night level 7.4 to 12.0 against 7.1 to 11.9, inside the limb within 1.5 levels per channel. The 80 percent point lies 1 to 7 px further out than the hero's (the air falloff the motion and native critics asked for).
+
 ### Still to do
 
 - Look at strip r3, final frames, mirrorcheck on final frames, commit the four sky binaries once; merge main; measure; gates; READY.

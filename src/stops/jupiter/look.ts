@@ -8,14 +8,15 @@ import limbJson from './limb.json'
 export const curve = fitted.curve as number[][]
 export const limb = limbJson.limb as number[][]
 export const jet = flowJson.jet as number[]
-export const night = fitted.night as [number, number, number]
-export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 0.08]
+export const nightGain = 0.86
+export const night = (fitted.night as number[]).map((v) => v * nightGain) as [number, number, number]
+export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 0.2]
 
 export const shadeKnee: [number, number] = [2.4, 3.4]
 export const shadow: [number, number, number] = [0.798, 1.098, 0.985]
 export const shadowFade: [number, number] = [0.0, 0.1]
 export const shadowCap = { stretch: 0.35, from: 0.12, to: 0.36 }
-export const nightRim = { glow: [0.0035, 0.005, 0.0075] as [number, number, number], power: 3, air: 0.014, from: -0.05, to: 0.2 }
+export const nightRim = { glow: [0.0015, 0.0027, 0.003] as [number, number, number], power: 3, air: 0.011, from: -0.05, to: 0.2, out: 0.0105, bulge: 3 }
 export const moonSun: [number, number, number] = [-0.713344, 0.254075, 0.653136]
 
 export const haze = hazeJson.ground as HazeParams
@@ -74,8 +75,8 @@ export const deck: DeckLook = {
     { px: [1512, 1914], axes: [0.28, 0.28], degPerSecond: 9, wispDegPerSecond: 14 },
   ],
   collar: [0.12, 0.45, 2.0],
-  tone: [1.085, 1.085, 1.085, 0.08, 0.4],
-  toneHigh: [1.035, 1.045, 1.05],
+  tone: [1.066, 1.077, 1.08, 0.08, 0.4],
+  toneHigh: [1.04, 1.052, 1.06],
   wisp: { tile: 3.2, amount: 0.2, shadow: 0.12, shadowLength: 0.02, fine: 0.5, drift: [0.05, -0.02], fade: [7, 14], sun: [-0.6, 0.8] },
   flashes: [
     { px: [1662, 1449], sizePx: 70, period: 3.1, phase: 0.43, gain: 0.5 },
