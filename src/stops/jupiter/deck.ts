@@ -158,16 +158,20 @@ void main() {
     }
   }
   col += flash * (uFlashBody.x + uFlashBody.y * lum) * alpha;
+  float fog = 0.0;
   for (int k = 0; k < (uHaze.x > 0.0 ? 1 : 0); k++) {
     vec3 hp = vEye + (vLocal - vEye) * uHaze.z - uS;
-    vec2 hg = vec2(dot(hp, uEx), dot(hp, uEy)) * uHaze.y;
+    vec2 hg = vec2(dot(hp, uEx), dot(hp, uEy) * 0.35) * uHaze.y;
     float hv = 0.62 * textureLod(uWisp, hg, 3.0).r + 0.38 * textureLod(uWisp, hg * 2.7 + 0.37, 3.0).r;
     float thick = 1.0 - exp(-uHaze.x * reach * (0.35 + 1.4 * smoothstep(0.25, 0.75, hv)));
-    float hw = alpha + (1.0 - alpha) * exp(-max(miss, 0.0) / uHaze.w);
-    col = mix(col, uHazeColor.rgb, thick * hw);
+    float dC = length(toC);
+    float elev = asin(clamp((miss + uRadius) / dC, 0.0, 1.0)) - asin(clamp(uRadius / dC, 0.0, 1.0));
+    float above = exp(-max(elev, 0.0) / uHaze.w) * (1.0 - smoothstep(uHazeColor.a * 0.45, uHazeColor.a * 0.85, elev));
+    fog = thick * (alpha + (1.0 - alpha) * above);
   }
-  col *= uGain * vig;
+  col = (col * (1.0 - fog) + uHazeColor.rgb * fog) * uGain * vig;
   if (uDiag >= 2 && alpha < 0.5) discard;
+  alpha += (1.0 - alpha) * fog;
   float texels = mix(diagTexels(px / uCanvas * uWideSize), diagTexels(ip / uImage * uCoreSize), inCore);
   outColor = diagOut(vec4(col, alpha), texels, 1.0, mix(vec3(0.3, 0.5, 0.85), vec3(0.85, 0.45, 0.25), inCore), shift * 0.05, length(vView));
 }`
@@ -288,7 +292,7 @@ export class Deck {
         uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
         uFlash: { value: flash }, uFlashColor: { value: new THREE.Vector3().fromArray(look.flashColor) }, uFlashBody: { value: new THREE.Vector2().fromArray(look.flashBody) },
         uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) },
-        uHaze: { value: new THREE.Vector4(0, 1 / look.haze.tile, look.haze.layer, look.haze.height) }, uHazeColor: { value: new THREE.Vector4(look.haze.color[0], look.haze.color[1], look.haze.color[2], 1) },
+        uHaze: { value: new THREE.Vector4(0, 1 / look.haze.tile, look.haze.layer, THREE.MathUtils.degToRad(look.haze.height)) }, uHazeColor: { value: new THREE.Vector4(look.haze.color[0], look.haze.color[1], look.haze.color[2], THREE.MathUtils.degToRad(look.skyRimDeg)) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
       },
       transparent: true,

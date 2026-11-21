@@ -11,6 +11,9 @@ const levels = args.slice(1).map((a) => a.split(':').map(Number) as [number, num
 const [clon, clat] = (process.env.CENTRE ?? '-17.5,-10').split(',').map(Number) as [number, number]
 const spot = { lon: clon, lat: clat }
 const brief = !!process.env.BRIEF
+Object.assign(jplan.p.dive, JSON.parse(process.env.DIVE ?? '{}'))
+Object.assign(jplan.p.rise, JSON.parse(process.env.RISE ?? '{}'))
+Object.assign(jplan.p.terrain, JSON.parse(process.env.TERRAIN ?? '{}'))
 const director = new FilmDirector(plans)
 const width = config.raw.formats.master.width as number
 const height = config.raw.formats.master.height as number

@@ -250,10 +250,11 @@ ${PATCH_LEVELS}
   float vfoot = length(fwidth(d));
   for (int k = 0; k < (uVeil.x > 0.0 ? 1 : 0); k++) {
     vec3 hd = spinY(uToBody * normalize(n - dir * (uVeil.y / max(mu, 0.3))), uSpin);
-    vec2 huv = vec2(atan(hd.x, hd.z) / (2.0 * PI), asin(clamp(hd.y, -1.0, 1.0)) / (2.0 * PI)) * uVeil.z + vec2(uVeil.w, 0.0);
-    float hl = log2(max(vfoot * uVeil.z * 2048.0 / (2.0 * PI), 1e-6));
-    float hv = 0.62 * textureLod(uWisp, huv, hl + 2.5).r + 0.38 * textureLod(uWisp, huv * 3.1 + 0.37, hl + 3.2).r;
-    float ha = clamp(uVeil.x * (0.3 + 1.5 * smoothstep(0.25, 0.75, hv)), 0.0, 1.0);
+    float hlon = atan(hd.x, hd.z) / (2.0 * PI);
+    float hlat = asin(clamp(hd.y, -1.0, 1.0)) / (2.0 * PI) * uVeil.z;
+    float hl = log2(max(vfoot * 2048.0 / (2.0 * PI), 1e-6));
+    float hv = 0.6 * textureLod(uWisp, vec2(hlon * 4.0 + uVeil.w, hlat), hl + 3.0).r + 0.4 * textureLod(uWisp, vec2(hlon * 12.0 - 2.0 * uVeil.w, hlat * 3.0) + 0.37, hl + 4.2).r;
+    float ha = 1.0 - exp(-uVeil.x * (0.35 + 1.3 * smoothstep(0.3, 0.7, hv)) / max(mu, 0.25));
     col = mix(col, uVeilColor * knee(direct) * uTint, ha);
   }
   vec3 at;

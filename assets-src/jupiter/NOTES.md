@@ -121,18 +121,29 @@ Dive and rise
 - Weak: bottom left foreground soft and stretched at 3239 (magnified core, relief stretch); faint brownish smudge along the judged frame horizon in the sky at 3060 (only at 2.5 x exposure); br apron very dark; top left apron is a mirror fill; slow start (speed factor 0.4 at 3060, only 0.33 units of apron behind the judged pose); flow, lightning, wisps not yet checked in motion; fine detail std 15 percent over the approved (post sharpen plus wisps).
 - G11: recipe headings now carry `public/assets/jupiter/<set>/NAME`; the gate lists only shared belt files (not mine).
 
-## Dive and rise: patch design (predictor, 06:00 UTC)
+## Dive and rise: patches (built 06:25 UTC)
 
-- `assets-src/jupiter/patches/predict.ts MAPWIDTH [widthDeg:px ...]` with env `CENTRE=lon,lat`, `BRIEF=1`, `FEATHER`, `FADE`. It walks the dive and rise frames through the director and applies the shader's own rule per pixel (every 12th): texels = max of the two screen derivatives of the body direction x mapWidth / 2 pi; a patch level counts where its weight is at least 0.5 (feather 0.12, fade 1.02 to 1.5 on the parent's texels).
-- Cover window (engine, 0.5 s): dive 3016 to 3031, rise 3262 to 3277. Frames that must hold G13: dive to 3015, rise from 3278.
-- Wrap alone (8192): dive soft from 3007 (alt 1.33) to the cover, soft share up to 0.81 at 3015 (alt 0.67, min 0.58); rise soft from 3278 (alt 0.315, min 0.29, share 0.875) to 3289 (alt 1.29).
-- The dive comes in obliquely: the point under the camera is 18 to 21 deg east of the storm until the cover (lon +3 to 0, lat -7 to -10); the rise leaves west (lon -16 to -32). So the patches are centred between them, not on the storm.
-- Chosen: centre lon -10, lat -10; gnomonic levels 90, 53.13, 28.07 deg (half tangents 1, 0.5, 0.25: exactly twice apart) at 4096 px. Predicted min texels per pixel outside the cover: 1.09 (3013), every frame soft share 0. Texture memory 3 x 89.5 MB.
+- `assets-src/jupiter/patches/predict.ts MAPWIDTH [widthDeg:px ...]` with env `CENTRE=lon,lat`, `BRIEF=1`, `FEATHER`, `FADE`. It walks the dive and rise frames through the director and applies the shader's own rule per pixel (every 12th): texels = max of the two screen derivatives of the body direction x mapWidth / 2 pi; a patch level counts where its weight is at least 0.5 (feather 0.12, fade 1.02 to 1.5).
+- Cover window (engine, 0.5 s): dive 3016 to 3031 (view switches at 3024), rise 3262 to 3277 (centre 3270). Frames that must hold G13: dive to 3015, rise from 3278.
+- Camera altitude (planet radii): 3005 1.52, 3008 1.24, 3010 1.06, 3012 0.89, 3015 0.67, 3016 0.60, 3020 0.38, 3023 0.27; rise 3270 0.12, 3277 0.28, 3278 0.32, 3282 0.51, 3285 0.73, 3288 1.11, 3292 1.92, 3296 2.87.
+- Wrap alone (8192): dive soft from 3007 to the cover (share up to 0.81 at 3015); rise soft from 3278 to 3289.
+- The dive comes in obliquely: the point under the camera is 18 to 21 deg east of the storm until the cover; the rise leaves west. So the patches are centred between them, not on the storm.
+- Final: `src/stops/jupiter/patches.json`, centre lon -12, lat -10; gnomonic levels wide 100 deg at 5120, mid 61.5795 deg at 4096, near 33.1816 deg at 4096 (half tangents twice apart). Predicted min texels per pixel outside the cover 1.21 (3015) and 1.26 (3278), soft share 0 on every frame. The globe shader has its own patch centre (`uPatchN/E/U`), apart from the swirl centre.
+- Built with `assets-src/jupiter/patches/build.py` (recipe section "Dive patches"): wide = wrap resampled and ML upscaled, mid and near = one global repaint plus four tile repaints each, high pass locked onto the parent's low pass, then nested bottom up. Disk: full 50 MB, web 14 MB with the patches.
 - A gnomonic patch is finer toward its edge (1 / cos squared radially), so one wide level serves the oblique far field.
+
+## Dive and rise: cover and haze (in progress)
+
+- Engine cover can only ramp over 8 frames per side. Own haze carries it further on both sides:
+  - Orbit side, `globe.ts` veil (`look.veil`): a thin layer just above the cloud tops, opacity 1 - exp(-amount x pattern / mu), amount a closed form of camera altitude (from 1.5 down to 0.35 radii), so it gathers from frame 3006 and is gone again by 3290 in the rise. Pattern from `wisp.png` at 4 and 12 repeats in longitude, read with `textureLod`.
+  - Terrain side, `deck.ts` fog (`look.deck.haze`): 1 - exp(-density x distance x pattern), pattern read part way along the ray so it streams, also over the first degrees above the horizon; density is `(1 - (t - diveCover) / clear)^power` and the mirror of it before the rise cover.
+- `wisp.png` is loaded with repeat in u only (engine `ctx.texture`); `set.ts` sets `wrapT` to repeat on it. Before that the deck wisps and the veil were stretched into streaks wherever v left 0 to 1.
+- The deck writes its color unpremultiplied (the pixels above the horizon add the approved picture's rim glow onto the sky); leave it so, the judged frame matches.
 
 ## Next
 
-- Patches: build the three levels (resample of the wrap into gnomonic, painted detail in the style of the close picture, low frequencies locked to the wrap), `patches.levels` in `assets.ts` with their own centre (not the swirl centre), verify with the texels view at 3010, 3015, 3278, 3285.
-- Cover: `coverEdge`, `coverEdgeRise` (each at most 0.5), `coverShell`, cover colors in pale cream; own haze in `deck.ts` that thins over the first 15 to 20 terrain frames and thickens before the rise; exit and entry so speed and direction carry across.
+- Cover: view the strips (`/tmp/strip.sh NAME frames...` writes `out/work/view/strip_NAME.jpg`), tune veil, fog and `cover*` colors so color and exposure carry across; exit pose (`exitHeight 2.6, exitForward 1.2, exitPitchDeg 9` are stand-ins) and the dark corner bottom left at 3024 to 3028 (deck edge in view at the entry pose).
+- Verify G13 with the texels view at 3010, 3013, 3015, 3278, 3282, 3288, then `npm run measure -- --stop jupiter`.
 - Check in motion: storm rotation, vortices, wisps, lightning (`--diag flow`), shells fade with altitude, rise far side, poles, terminator, travel and FarPoint.
-- Self check: measure, compare final, sheets, crops, budget, gates G11, G12, G15. Then READY.
+- Milestone message dive and rise, commit the patch binaries once.
+- Self check: measure, compare final, sheets, crops, budget (alone, more than 8 min), gates `npm run -s gate -- --phase 4 --only G11` and `--only G12,G15 --g15-stops mars,jupiter`. Then READY (build and tests green on main merged, stand-ins removed, looks pushed).
