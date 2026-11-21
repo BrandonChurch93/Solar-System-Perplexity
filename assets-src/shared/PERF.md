@@ -408,6 +408,19 @@ Working notes (task received 15:00 UTC, 21 Nov; started from main `407a32b`). Co
 
 Raw motion of the frames the Builder named (px): Mars 2325 hold 0.45, 2427 dive 3.89, 2580 terrain 3.65 (the terrain peaks at 4.06 on 2669), 2726 rise 6.07, belt 2772 0.00, 2782 0.00, 2796 9.09. With the first proposal (4 and 12) 2726 and 2796 would have changed, so the keys are `softFromPx: 10`, `softToPx: 18`: all seven keep their bytes, Earth 1870 (18.9 px) is fully soft. At 16 samples 10 px is a step of 0.6 px, under which the sharper level cannot comb.
 
+Looks at review, native size, before on the left and after on the right, in `assets-src/shared/perf/`: `soft-earth-1870-review-16-samples-before-left-after-right.png`, `soft-earth-1872-review-24-samples-before-left-after-right.png`, `soft-uranus-4126-review-53-samples-before-left-after-right.png`, `soft-neptune-4984-review-64-samples-before-left-95-samples-after-right.png` (this one also has the raised cap), `soft-uranus-4160-review-16-samples-before-left-after-right.png`. Against before: Earth 1870 PSNR 36.8 dB, 1872 39.5 dB, Uranus 4126 57.1 dB, Neptune 4984 54.5 dB, Uranus 4160 61.3 dB.
+
+What the eye says: the sparkle is softer on Earth, the comb is not gone. City lights, coast and cloud edges are still rows of dots along the motion, one sample step apart (1.2 px at 1870, 1.5 px at 1872). A scratch render of 1870 with the soft scale and `motion.maxStepPx` 0.6 (32 samples, not committed) turns the dots into unbroken streaks: `step-earth-1870-review-lights-2x-before-left-soft-middle-soft-and-0.6px-step-32-samples-right.png` and `step-earth-1870-review-before-left-soft-middle-soft-and-0.6px-step-32-samples-right.png`. So on Earth the comb is mostly the step: 1.5 px is too wide for features one pixel wide, whatever the mip level. `maxStepPx` is the Builder's number and stays at 1.5. What a smaller step would cost with the caps of B (samples of the film, frames at the cap, hours as in the table of B):
+
+| `maxStepPx` | review, cap 128 | final, cap 256 |
+| --- | --- | --- |
+| 1.5 | 58,721, 6 at the cap, 15.8 to 27.8 h | 191,130, 0, 50.1 to 85.4 h |
+| 1.0 | 67,576, 35, 17.8 to 32.0 h | 195,028, 0, 50.9 to 87.7 h |
+| 0.75 | 76,256, 61, 19.7 to 35.8 h | 200,973, 6, 52.3 to 90.8 h |
+| 0.6 | 84,461, 98, 21.6 to 39.3 h | 207,755, 14, 53.8 to 94.2 h |
+
+Earth's dive costs more per sample than the table of the second task knows: 1870 took 82.5 s at 16 samples and 145.8 s at 32, so 4.0 s per sample.
+
 ### B. Caps
 
 `tiers.review.maxSamplesPerFrame` 64 to 128, `tiers.final.maxSamplesPerFrame` 128 to 256. Counts over the 5400 frames (the rule of `tools/lib/samples.ts`, hours with the seconds per sample of the table above, low is Mars, high is the costliest stop measured per kind):
