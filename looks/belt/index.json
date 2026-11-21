@@ -1,9 +1,25 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T03:45:52.297Z",
+ "pushed": "2026-11-21T03:46:12.652Z",
  "head": "39783f60a3082b56aa2a7d7e7c1a49962a664dba",
- "note": "belt: take 3 rocks, draft strip of the segment, near rock tilt tests, diag views",
+ "note": "belt: take 3 rocks, draft strip of the segment, near rock tilt tests",
  "looks": [
+  {
+   "time": "2026-11-21T03:46:11.943Z",
+   "file": "20261121034611943-note-tilt.jpg",
+   "source": "out/work/belt/tilt.jpg",
+   "kind": "note",
+   "label": "belt near rock, four tilt tests at frame 2780 draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T03:46:11.395Z",
+   "file": "20261121034611395-note-strip.jpg",
+   "source": "out/work/belt/s1/strip.jpg",
+   "kind": "note",
+   "label": "belt draft strip, frames 2767 to 2800 step 3, take 3 rocks",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-21T03:45:15.857Z",
    "file": "20261121034515857-frame-tilt4.jpg",
@@ -59,34 +75,6 @@
    "stop": "mars",
    "segment": "mars.rise",
    "frame": 2726,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:07:53.635Z",
-   "file": "20261121030753635-frame-f2580.jpg",
-   "source": "out/work/belt/base/f2580.png",
-   "kind": "frame",
-   "label": "mars.terrain frame 2580, final tier",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2580,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:06:11.134Z",
-   "file": "20261121030611134-frame-f2427.jpg",
-   "source": "out/work/belt/base/f2427.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2427, final tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2427,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
