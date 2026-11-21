@@ -1,21 +1,10 @@
-# Earth stand-ins
+# Earth: recipes
 
-Stand-ins for the Phase 2 blockout. Each is replaced when the stop is built.
+Every generated asset of the stop, in the order the scripts run. Working files stay under `out/work/earth/`; inputs from third parties stay under `references/cache/earth/` with rows in `ASSETS-ROWS.md`.
 
-## public/assets/earth/full/standin-wrap.jpg and public/assets/earth/web/standin-wrap.jpg
+## Working source: the hero without clouds
 
-- Tool: `python3 tools/assets/standin.py earth` (numpy and OpenCV, no model).
-- Inputs: `references/approved/earth-hero.png`, `assets-src/earth/fit.json`.
-- Prompt: none.
-- What it does: unprojects the approved hero image onto the fitted sphere as an equirectangular map, 4096 wide for `full` and 2048 wide for `web`. The part of the globe the image does not show is filled by mirroring the visible part about a circle at 0.9 of the limb angle. No cleanup: the light, the limb glow and anything in front of the globe stay baked in.
-- Take kept: the only one.
-- Checks: the judged `hold` frame lines up with the approved hero image in `npm run compare`.
-
-## public/assets/earth/full/standin-close.jpg and public/assets/earth/web/standin-close.jpg
-
-- Tool: `python3 tools/assets/standin.py earth`.
-- Input: `references/approved/earth-close.jpg`.
-- Prompt: none.
-- What it does: the approved close image, re-encoded at its own size for `full` and resized to 2048 wide for `web`. Nothing is redrawn.
-- Take kept: the only one.
-- Checks: the judged `terrain` frame lines up with the approved close image in `npm run compare`.
+- Output: `out/work/earth/decloud/decloud-seedream-t1.png` (2816 x 1584). Not shipped; it is the estimate of the surface under the clouds that the layer split uses.
+- Tool: image edit, Seedream. Input: `out/work/earth/hero.jpg` (the approved hero as JPEG, quality 96).
+- Prompt: "Edit image 1, a view of planet Earth from space. Remove every cloud, cloud band, cloud swirl, the hurricane and every patch of haze from the planet, so the whole surface is seen under a perfectly clear sky. Where clouds covered ocean, paint clean deep blue open ocean that matches the neighboring water, with only gentle tonal variation. Where clouds covered land, continue the neighboring terrain naturally: forest, plains, desert, mountains, tundra, ice. Keep everything else exactly as it is, pixel for pixel: the same coastlines, the same continents in the same positions and sizes, the same land colors and turquoise shallows, the same polar ice cap, the same lighting and the same day and night boundary, the same golden city lights on the night side, the same green aurora, the same blue atmosphere glow on the edge of the planet, the same Moon, the same stars and Milky Way. Do not move, resize or rotate the planet. Do not add anything. No text, no border."
+- Takes: 2. Take 1 (Seedream) kept: median shift against the hero on clear land 0.2 to 0.7 px, coasts in place. Take 2 (Nano Banana Pro) rejected: the planet is shifted by about 1.3 px and warped (flow median about 3 px).
