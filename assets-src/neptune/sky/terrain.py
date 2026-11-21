@@ -88,7 +88,7 @@ stars = np.maximum(sky - flat, 0) * step(v, 0.0, 0.05)[..., None]
 clear = (above & (v > 0.3)).astype(np.float32)
 far_flat = np.stack([ndi.gaussian_filter(flat[..., c] * clear, 30) for c in range(3)], -1) / np.maximum(ndi.gaussian_filter(clear, 30), 1e-4)[..., None]
 k = step(v, 0.12, 0.34)[..., None]
-sky = far_flat * (1 - k) + flat * k + stars
+sky = (far_flat + stars) * (1 - k) + sky * k
 
 alpha = np.radians(cgeo.FIT['alphaDeg']) + np.radians(CUT)
 theta = np.arccos(np.clip(d @ cgeo.NADIR, -1, 1))
