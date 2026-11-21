@@ -18,6 +18,7 @@ BODY = body_from_fit(FIT)
 G = quat_to_mat(FIT["globe"]["quaternion"])
 SUN = normalize(np.asarray(FIT["sunDir"], dtype=np.float64))
 SUN_BODY = SUN @ G
+NIGHT = (0.04, -0.14)
 HERO = ROOT / "references" / "approved" / "earth-hero.png"
 HOLD = json.loads((Path(__file__).resolve().parent / "hold.json").read_text()) if (Path(__file__).resolve().parent / "hold.json").exists() else {}
 
@@ -158,3 +159,44 @@ def gnomonic_xy(y, lon, lat, width_deg, size):
     x = (y @ e) * inv / t
     v = (y @ u) * inv / t
     return ((x + 1) / 2 * size - 0.5).astype(np.float32), ((1 - v) / 2 * size - 0.5).astype(np.float32), dn
+
+
+def fields(scale=1, strip=264):
+    w, h = FIT["imageSize"][0] * scale, FIT["imageSize"][1] * scale
+    out = dict(hit=np.zeros((h, w), bool), ndl=np.zeros((h, w), np.float32), cosv=np.zeros((h, w), np.float32), n=np.zeros((h, w, 3), np.float32), y=np.zeros((h, w, 3), np.float32))
+    xs = (np.arange(w, dtype=np.float64) + 0.5) / scale
+    for y0 in range(0, h, strip):
+        y1 = min(y0 + strip, h)
+        ys = (np.arange(y0, y1, dtype=np.float64) + 0.5) / scale
+        px, py = np.meshgrid(xs, ys)
+        d = CAM.rays_world(px, py)
+        hit, t, y, n = BODY.intersect(CAM.pos, d)
+        out["hit"][y0:y1] = hit
+        out["ndl"][y0:y1] = n @ SUN
+        out["cosv"][y0:y1] = -(n * d).sum(-1)
+        out["n"][y0:y1] = n
+        out["y"][y0:y1] = y
+    return out
+
+
+def curve():
+    c = json.loads((ROOT / "src" / "stops" / "earth" / "curve.json").read_text())
+    return np.array(c["curve"], dtype=np.float32)
+
+
+def shade(ndl, c=None):
+    c = curve() if c is None else c
+    k = c.shape[0]
+    t = np.clip(ndl * 0.5 + 0.5, 0, 1) * (k - 1)
+    return np.stack([np.interp(t, np.arange(k), c[:, i]) for i in range(3)], -1).astype(np.float32)
+
+
+LIMB = json.loads((Path(__file__).resolve().parent / "limbhaze.json").read_text()) if (Path(__file__).resolve().parent / "limbhaze.json").exists() else None
+
+
+def limb_haze(mu, ndl, sh):
+    p = LIMB
+    f = np.exp(-(np.clip(mu, 0, 1) / p["width"]) ** p["power"])[..., None]
+    t = np.exp(-np.asarray(p["depth"], dtype=np.float32) * f)
+    lit = (sh[..., 1] / 2.0) ** p["gamma"] * smooth(p["dayFrom"], p["dayTo"], ndl)
+    return (np.asarray(p["pale"], dtype=np.float32) * p["keep"] * lit[..., None] + np.asarray(p["night"], dtype=np.float32)) * (1 - t), t
