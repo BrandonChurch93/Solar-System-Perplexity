@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T19:13:22.322Z",
- "head": "0fa09dfa4da76d46ca4a22f034e2b82bdead7bd7",
- "note": "task 4 proof: nine review sheets, pairs, 2782 final, venus 1618 review",
+ "pushed": "2026-11-21T23:21:06.867Z",
+ "head": "f9c942eedf9215ca4303f80786e896948672fa19",
+ "note": "task 5: finals 5085 (retreat lead 0.06, Sun clear of the limb) and 5235 with native crops",
  "looks": [
   {
-   "time": "2026-11-21T19:13:05.470Z",
-   "file": "20261121191305470-note-pair-venus-travel-1642-uranus-hero.jpg",
-   "source": "out/work/travel/t4/pair-venus-travel-1642-uranus-hero.png",
+   "time": "2026-11-21T23:21:05.701Z",
+   "file": "20261121232105701-note-f5235-band-native.jpg",
+   "source": "out/work/travel/t5/f5235-band-native.png",
    "kind": "note",
-   "label": "t4: pair-venus-travel-1642-uranus-hero",
+   "label": "task 5 f5235-band-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:13:04.369Z",
-   "file": "20261121191304369-note-pair-uranus-travel-4478-neptune-hero.jpg",
-   "source": "out/work/travel/t4/pair-uranus-travel-4478-neptune-hero.png",
+   "time": "2026-11-21T23:21:04.880Z",
+   "file": "20261121232104880-note-f5235-crescent-native.jpg",
+   "source": "out/work/travel/t5/f5235-crescent-native.png",
    "kind": "note",
-   "label": "t4: pair-uranus-travel-4478-neptune-hero",
+   "label": "task 5 f5235-crescent-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:13:03.582Z",
-   "file": "20261121191303582-note-pair-saturn-travel-3922-earth-hero.jpg",
-   "source": "out/work/travel/t4/pair-saturn-travel-3922-earth-hero.png",
+   "time": "2026-11-21T23:21:03.912Z",
+   "file": "20261121232103912-note-f5235-sun-native.jpg",
+   "source": "out/work/travel/t5/f5235-sun-native.png",
    "kind": "note",
-   "label": "t4: pair-saturn-travel-3922-earth-hero",
+   "label": "task 5 f5235-sun-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:13:02.668Z",
-   "file": "20261121191302668-note-pair-earth-travel-2212-jupiter-hero.jpg",
-   "source": "out/work/travel/t4/pair-earth-travel-2212-jupiter-hero.png",
+   "time": "2026-11-21T23:21:02.930Z",
+   "file": "20261121232102930-note-f5235-final.jpg",
+   "source": "out/work/travel/t5/f5235-final.png",
    "kind": "note",
-   "label": "t4: pair-earth-travel-2212-jupiter-hero",
+   "label": "task 5 f5235-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:10:33.577Z",
-   "file": "20261121191033577-note-f1618-review.jpg",
-   "source": "out/work/travel/t4s/f1618-review.png",
+   "time": "2026-11-21T23:21:02.014Z",
+   "file": "20261121232102014-note-f5085-band-native.jpg",
+   "source": "out/work/travel/t5/f5085-band-native.png",
    "kind": "note",
-   "label": "t4s: f1618-review",
+   "label": "task 5 f5085-band-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:08:33.692Z",
-   "file": "20261121190833692-note-f2782-final.jpg",
-   "source": "out/work/travel/t4s/f2782-final.png",
+   "time": "2026-11-21T23:21:01.093Z",
+   "file": "20261121232101093-note-f5085-crescent-native.jpg",
+   "source": "out/work/travel/t5/f5085-crescent-native.png",
    "kind": "note",
-   "label": "t4s: f2782-final",
+   "label": "task 5 f5085-crescent-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:07:02.861Z",
-   "file": "20261121190702861-note-ending.retreat-review.jpg",
-   "source": "out/work/travel/t4/ending.retreat-review.png",
+   "time": "2026-11-21T23:21:00.119Z",
+   "file": "20261121232100119-note-f5085-sun-native.jpg",
+   "source": "out/work/travel/t5/f5085-sun-native.png",
    "kind": "note",
-   "label": "t4: ending.retreat-review",
+   "label": "task 5 f5085-sun-native",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T19:00:06.704Z",
-   "file": "20261121190006704-note-saturn.travel-review.jpg",
-   "source": "out/work/travel/t4/saturn.travel-review.png",
+   "time": "2026-11-21T23:20:58.743Z",
+   "file": "20261121232058743-note-f5085-final.jpg",
+   "source": "out/work/travel/t5/f5085-final.png",
    "kind": "note",
-   "label": "t4: saturn.travel-review",
+   "label": "task 5 f5085-final",
    "stop": "travel"
   }
  ]
