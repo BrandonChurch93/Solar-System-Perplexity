@@ -1,0 +1,59 @@
+diff --git a/src/director/moves.ts b/src/director/moves.ts
+index 41d8619..2a3e582 100644
+--- a/src/director/moves.ts
++++ b/src/director/moves.ts
+@@ -22,7 +22,7 @@ export interface MoveParams {
+   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
+   spot: { x: number; y: number; on?: 'globe' | 'rings' }
+   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
+-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number }
++  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
+   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
+   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
+   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
+@@ -207,7 +207,9 @@ export class StopPlan {
+     const pivot = config.shutterFraction / (2 * config.fps * dur)
+     const u = lin - pivot + (t.gather ?? 0) * (lin * lin - pivot * pivot)
+     const tilt = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + (t.dipDeg ?? 0))
+-    const quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt)), THREE.MathUtils.degToRad(t.yawDeg) * u)
++    const axis = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt))
++    if (t.rollDeg) axis.applyAxisAngle(new THREE.Vector3(0, 0, 1), -THREE.MathUtils.degToRad(t.rollDeg))
++    const quaternion = new THREE.Quaternion().setFromAxisAngle(axis, THREE.MathUtils.degToRad(t.yawDeg) * u)
+     quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.pitchDeg) * u))
+     return { position: new THREE.Vector3(t.side * u, t.rise * u, -t.forward * u), quaternion, vfov: t.vfov }
+   }
+@@ -226,7 +228,7 @@ export class StopPlan {
+     const w = smoother(ramp(r.pan ?? 0, 1, e))
+     const q = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize())
+     q.multiply(new THREE.Quaternion().setFromAxisAngle(Y, Math.atan(r.offset[0] * th * this.fit.aspect) * w))
+-    return q.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(r.rollDeg) * w))
++    return q.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(r.rollDeg) * w + THREE.MathUtils.degToRad(t.rollDeg ?? 0) * (1 - w)))
+   }
+ 
+   exit(tRel: number): Pose {
+@@ -279,6 +281,7 @@ export class StopPlan {
+       alpha = Math.PI / 2 - THREE.MathUtils.degToRad(t.dipDeg ?? 2)
+       const e = THREE.MathUtils.degToRad(t.horizonDeg ?? 0) - alpha
+       nadir = new THREE.Vector3(0, Math.sin(e), -Math.cos(e))
++      if (t.rollDeg) nadir.applyAxisAngle(new THREE.Vector3(0, 0, 1), -THREE.MathUtils.degToRad(t.rollDeg))
+     }
+     nadir.applyQuaternion(local.quaternion.clone().invert())
+     const theta = Math.acos(Math.min(Math.max(-nadir.z, -1), 1))
+@@ -357,7 +360,7 @@ export class StopPlan {
+     const w = smoother(ramp(0, 0.97, x))
+     const aim = slerpDir(toTarget, final, w)
+     const up = slerpDir(up0, ground.clone().add(level).normalize(), smooth(x))
+-    const roll = (t.entryRollDeg ?? 0) * at.g * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
++    const roll = ((t.entryRollDeg ?? 0) * at.g + (t.rollDeg ?? 0)) * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
+     return { position, quaternion: lookAt(position, position.clone().add(aim), up, roll), vfov: mix(start.vfov, t.vfov, smooth(x)) }
+   }
+ 
+@@ -434,7 +437,7 @@ export class StopPlan {
+       const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+       const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+       const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
+-      const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize())
++      const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
+       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))
+     }
+     return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }

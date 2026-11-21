@@ -1,0 +1,49 @@
+import apronJson from './aprons.json'
+import reliefJson from './relief.json'
+import type { CloudReliefDef } from './relief'
+import wrapJson from './wrap.json'
+
+export const wrap = {
+  top: wrapJson.top,
+  sets: {
+    full: { color: wrapJson.color.full as [number, number], flow: wrapJson.flow.full as [number, number], bolt: wrapJson.bolt.full },
+    web: { color: wrapJson.color.web as [number, number], flow: wrapJson.flow.web as [number, number], bolt: wrapJson.bolt.web },
+  },
+  bolt: { lon: wrapJson.bolt.lon, lat: wrapJson.bolt.lat, widthDeg: wrapJson.bolt.widthDeg },
+}
+
+export const patches = {
+  levels: [
+    { file: 'patch-a.jpg', widthDeg: 90 },
+    { file: 'patch-b.jpg', widthDeg: 53.13010235 },
+    { file: 'patch-c.jpg', widthDeg: 28.07248694 },
+    { file: 'patch-d.jpg', widthDeg: 14.2500327 },
+  ] as { file: string; widthDeg: number }[],
+  feather: 0.12,
+  fade: [1.02, 1.5] as [number, number],
+}
+
+const TINTS: [number, number, number][] = [[0.85, 0.3, 0.25], [0.3, 0.75, 0.35], [0.9, 0.75, 0.2], [0.4, 0.5, 0.9]]
+
+function reliefDef(key: 'full' | 'web'): CloudReliefDef {
+  const k = key === 'full' ? 1 : 0.5
+  const layers = { ...apronJson.layers, ...reliefJson.layers } as Record<string, { box: number[]; distSize: Record<string, number[]>; alpha: boolean; under?: boolean }>
+  const box = (b: number[]): [number, number, number, number] => [b[0]! * k, b[1]! * k, b[2]! * k, b[3]! * k]
+  return {
+    imageSize: reliefJson.imageSize[key] as [number, number],
+    vfovDeg: reliefJson.camera.vfovDeg,
+    up: reliefJson.camera.up as [number, number, number],
+    radius: reliefJson.camera.radius,
+    sun: reliefJson.camera.sun as [number, number],
+    layers: [...apronJson.order, ...reliefJson.drawOrder].map((id, i) => {
+      const l = layers[id]!
+      const d = l.distSize[key]!
+      return { color: `relief-${id}-color.jpg`, ...(l.alpha ? { alpha: `relief-${id}-alpha.png` } : {}), dist: `relief-${id}-dist.bin`, box: box(l.box), distSize: [d[0]!, d[1]!], tint: TINTS[i % TINTS.length]!, ...(l.under ? { under: true } : {}), ...(id === 'L0' ? { edge: apronJson.edge as [number, number] } : {}) }
+    }),
+    masks: 'relief-masks.png',
+    maskBox: box(reliefJson.masks.box),
+    air: 'relief-air.png',
+  }
+}
+
+export const relief: Record<'full' | 'web', CloudReliefDef> = { full: reliefDef('full'), web: reliefDef('web') }

@@ -3,7 +3,7 @@ import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
-import { openTiles, type Tiles } from './tiles'
+import { TILE, openTiles, type Tiles } from './tiles'
 import { sampleCount, samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot, SkyPatch } from './types'
@@ -15,6 +15,9 @@ import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import type { SkyAims } from '../space/aim'
 import { Cover } from '../terrain/cover'
+import type { Relief } from '../terrain/relief'
+import type { Trim } from '../bodies/trim'
+import { marksIn } from '../terrain/shield'
 import { segmentAtFrame, setsForFrame } from '../director/timeline'
 
 export interface Director {
@@ -54,6 +57,7 @@ export class Engine {
   private lastShot: Shot | null = null
   private readonly solid: THREE.Material[] = []
   private readonly veiled: THREE.Material[] = []
+  private readonly trims: Trim[] = []
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -229,14 +233,35 @@ export class Engine {
       set.world.quaternion.copy(state.rotation)
       set.update(state, shot, view)
     }
+    const trims = this.trims
+    trims.length = 0
+    if (!raw && this.sky.cull) {
+      this.world.traverseVisible((o) => {
+        const t = o.userData.trim as Trim | undefined
+        if (t) trims.push(t)
+      })
+    }
+    for (const t of trims) t.hide()
+    const ground = !raw && this.sky.cull ? this.shield() : null
+    const covered = ground !== null && ground.screen(r, cam, width, height, TILE)
     r.setRenderTarget(this.sampleTarget)
-    const early = !raw && this.sky.cull && this.sortWorld()
+    const early = !covered && !raw && this.sky.cull && this.sortWorld()
     let open: Tiles | null = null
     if (early) {
       this.renderWorld(cam, this.veiled)
       if (this.alpha.length !== width * height * 4) this.alpha = new Uint16Array(width * height * 4)
       r.readRenderTargetPixels(this.sampleTarget, 0, 0, width, height, this.alpha)
       open = openTiles(this.alpha, width, height)
+    }
+    if (ground && covered) {
+      ground.mark(r, cam)
+      if (this.alpha.length !== width * height * 4) this.alpha = new Uint16Array(width * height * 4)
+      r.readRenderTargetPixels(this.sampleTarget, 0, 0, width, height, this.alpha)
+      const marks = marksIn(this.alpha, width, height, TILE)
+      const cols = Math.ceil(width / TILE)
+      ground.hide(marks, cols)
+      open = { tile: TILE, cols, rows: Math.ceil(height / TILE), open: Uint8Array.from(marks, (m) => m & 1) }
+      r.clear(true, true, true)
     }
     if (!raw) {
       cam.fov = mid.camera.vfov
@@ -248,6 +273,8 @@ export class Engine {
     }
     if (early) this.renderWorld(cam, this.solid)
     else r.render(this.world, cam)
+    if (ground && covered) ground.show()
+    for (const t of trims) t.show()
     if (this.near.children.length > 0) {
       r.clearDepth()
       r.render(this.near, cam)
@@ -256,6 +283,27 @@ export class Engine {
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view)
     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+  }
+
+  private shield(): Relief | null {
+    let found: Relief | null = null
+    let count = 0
+    this.world.traverseVisible((o) => {
+      const s = o.userData.shield as Relief | undefined
+      if (s) {
+        found = s
+        count++
+      }
+    })
+    const ground = found as Relief | null
+    if (!ground || count !== 1) return null
+    let plain = true
+    this.world.traverseVisible((o) => {
+      const m = (o as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined
+      if (!m || ground.owns(o)) return
+      for (const x of Array.isArray(m) ? m : [m]) if (x.visible && (x.depthWrite || x.stencilWrite)) plain = false
+    })
+    return plain ? ground : null
   }
 
   private sortWorld(): boolean {
