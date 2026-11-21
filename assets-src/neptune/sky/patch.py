@@ -22,7 +22,24 @@ SUN = (2514, 227, 330)
 SUN_FROM = (-150, 900)
 SUN_OUT = 520
 SUN_STARS = 0.45
-OUTWARD = ((6, 0, 10), (18, 6, 40), (48, 30, 110))
+LIVE = 'out/work/nep/p6/live-hold.png'
+GEN_IN = 'out/work/nep/p6/sky-hold-ext-in.jpg'
+GEN = 'out/work/nep/p6/sky-hold-ext.png'
+CACHE = 'out/work/nep/p6/hold-lin.npy'
+ASK = (3072, 1728)
+ZONE_OUT = (0.22, 0.95)
+RAGGED = (0.2, 90)
+SEED = 7
+REACH_EDGE = (20, 12)
+FOLLOW = (0.002, 0.3, 3.0)
+FINE = 12
+GAIN = (0.6, 1.8)
+HAZE = 2
+RIM = 10
+RING_AT = (24, 56, 96)
+STAR_CUT = 1.5
+KEEP = 'out/work/nep/p6/sky-hold-full-r3.webp'
+LUM = np.array([0.3, 0.5, 0.2], np.float32)
 MOON = (337, 407, 95)
 RING = dict(normal=[0.1681, 0.9779, 0.1244], centre=[0.0533, 0.0532, -0.4902], inner=1.36, outer=1.86)
 SPECK = (0.001, 14)
@@ -47,38 +64,106 @@ def sunless(lin):
     src = np.roll(lin, (-SUN_FROM[1], -SUN_FROM[0]), axis=(0, 1))
     stars = np.maximum(src - np.stack([low(src[..., c]) for c in range(3)], -1), 0)
     m = (1 - step(r, SUN[2] * 0.85, SUN[2] * 1.1))[..., None]
-    return flat * (1 - m) + (back + stars * SUN_STARS) * m, mid, prof
+    return flat * (1 - m) + (back + stars * SUN_STARS) * m, mid, prof, flat
 
 
-def outward(lin, px, py):
-    h, w = lin.shape[:2]
-    calm = np.stack([ndi.gaussian_filter(np.minimum(lin[..., c], ndi.gaussian_filter(lin[..., c], 6)), 6) for c in range(3)], -1)
-    wide = np.pad(calm, ((py, py), (px, px), (0, 0)), mode='edge')
-    yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
-    away = np.maximum.reduce([py - yy, yy - (py + h - 1), px - xx, xx - (px + w - 1), np.zeros_like(yy)]).astype(np.float32)
-    out = wide.copy()
-    for sigma, lo, hi in OUTWARD:
-        soft = np.stack([ndi.gaussian_filter(wide[..., c], sigma, mode='nearest') for c in range(3)], -1)
-        k = step(away, lo, hi)[..., None]
-        out = out * (1 - k) + soft * k
-    out[py:py + h, px:px + w] = lin
-    return out, away
+def low(v, s=5):
+    return ndi.gaussian_filter(np.minimum(v, ndi.gaussian_filter(v, s)), s)
+
+
+def bulk(v):
+    half = cv2.resize(v.astype(np.float32), None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+    med = np.stack([cv2.medianBlur(np.ascontiguousarray(half[..., c]), 5) for c in range(3)], -1)
+    return cv2.resize(med, (v.shape[1], v.shape[0]), interpolation=cv2.INTER_LINEAR)
+
+
+def blur(v, s):
+    return np.stack([ndi.gaussian_filter(v[..., c], s, mode='nearest') for c in range(3)], -1)
 
 
 def save(lin, name, out):
-    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    bare, mid, prof = sunless(lin)
-    wide, away = outward(bare, px, py)
-    yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
-    r = np.hypot(xx - px - SUN[0], yy - py - SUN[1])
-    for c in range(3):
-        wide[..., c] += np.interp(r, mid, prof[:, c], right=0)
-    wide[py:py + FULL[1], px:px + FULL[0]] = lin
-    img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
+    w, h = FULL
+    px, py = round(w * MARGIN), round(h * MARGIN)
+    cw, ch = w + 2 * px, h + 2 * py
+    bare, mid, prof, flat = sunless(lin)
+    bare = bare.astype(np.float32)
+    own = np.zeros((ch, cw), bool)
+    own[py:py + h, px:px + w] = True
+    plain = np.zeros((ch, cw, 3), np.float32)
+    plain[py:py + h, px:px + w] = bare
+    live = to_linear(np.asarray(Image.open(os.path.join(geo.ROOT, LIVE)).convert('RGB').resize((cw, ch), Image.LANCZOS)).astype(np.float32) / 255).astype(np.float32)
+    live_bg = np.stack([low(live[..., c]) for c in range(3)], -1)
+    live_stars = np.maximum(live - live_bg, 0)
+    cy, cx = np.mgrid[0:ch, 0:cw]
+    xh, yh = cx - px, cy - py
+    away = np.maximum(np.maximum(-xh, xh - (w - 1)) / px, np.maximum(-yh, yh - (h - 1)) / py).clip(0).astype(np.float32)
+    ragged = ndi.gaussian_filter(np.random.default_rng(SEED).standard_normal((ch // 8, cw // 8)).astype(np.float32), RAGGED[1] / 8)
+    ragged = cv2.resize(ragged / np.abs(ragged).max(), (cw, ch), interpolation=cv2.INTER_CUBIC)
+    to_live = step(away + ragged * RAGGED[0], ZONE_OUT[0], ZONE_OUT[1])
+    to_live[own] = 0
+    level = bulk(plain)
+    calm = blur(level, 6) * own[..., None]
+    inner = ndi.binary_erosion(own, iterations=8)
+    nearest = ndi.distance_transform_edt(~inner, return_distances=False, return_indices=True)
+    rim = (inner & ~ndi.binary_erosion(own, iterations=8 + RIM)).astype(np.float32)
+    inside = np.maximum(ndi.gaussian_filter(rim, REACH_EDGE[0]), 1e-4)
+
+    def outward(x):
+        near = ndi.gaussian_filter(x * rim, REACH_EDGE[0]) / inside
+        return ndi.gaussian_filter(near[nearest[0], nearest[1]], REACH_EDGE[1])
+
+    ext = np.stack([outward(calm[..., c]) for c in range(3)], -1)
+    print('sky level of the approved image at the border', (to_srgb(film(np.median(ext[~own], 0))) * 255).round(1), 'of the live plate', (to_srgb(film(np.median(live_bg[~own], 0))) * 255).round(1))
+    gen_path = os.path.join(geo.ROOT, GEN)
+    if not os.path.exists(gen_path):
+        ask = to_srgb(film(np.where(own[..., None], plain, live)))
+        ask[~own & (to_live < 1)] = (1, 0, 1)
+        Image.fromarray((ask * 255 + 0.5).astype(np.uint8)).resize(ASK, Image.LANCZOS).save(os.path.join(geo.ROOT, GEN_IN), quality=96)
+        print('wrote', GEN_IN, 'generate', GEN, 'from it, then run again')
+        sys.exit(0)
+    gen = np.asarray(Image.open(gen_path).convert('RGB').resize((cw, ch), Image.LANCZOS)).astype(np.float32) / 255
+    ref = to_srgb(film(plain)).astype(np.float32)
+    grey = lambda x: cv2.GaussianBlur(x.mean(-1), (0, 0), 2)
+    warp = np.eye(2, 3, dtype=np.float32)
+    cc, warp = cv2.findTransformECC(grey(ref), grey(gen), warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 200, 1e-6), own.astype(np.uint8), 5)
+    gen = cv2.warpAffine(gen, warp, (cw, ch), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+    gen = unfilm(to_linear(np.clip(gen, 0, 1))).astype(np.float32)
+    lum_c = blur(bulk(gen), 6) @ LUM
+    off = ndi.distance_transform_edt(~own).astype(np.float32)
+    ring = (off >= RING_AT[0]) & (off <= RING_AT[1])
+    from_ring = ndi.distance_transform_edt(~ring, return_distances=False, return_indices=True)
+    there = (ndi.gaussian_filter(lum_c * ring, REACH_EDGE[0]) / np.maximum(ndi.gaussian_filter(ring.astype(np.float32), REACH_EDGE[0]), 1e-4))[from_ring[0], from_ring[1]]
+    carry = np.clip((lum_c + FOLLOW[0]) / (ndi.gaussian_filter(there, REACH_EDGE[1]) + FOLLOW[0]), FOLLOW[1], FOLLOW[2])
+    carry = 1 + (carry - 1) * step(off, RING_AT[0], RING_AT[2])
+    base = ext * carry[..., None]
+    sx = np.where(xh < 0, xh + px, np.where(xh >= w, xh - px, xh))
+    sy = np.where(yh < 0, yh + py, np.where(yh >= h, yh - py, yh))
+    calm_bare = bulk(bare)
+    bare_low = blur(np.minimum(bare, calm_bare + STAR_CUT * np.maximum(blur(np.abs(bare - calm_bare), FINE), 1e-5)), FINE)
+    src_low = bare_low[sy, sx] @ LUM
+    grain = (bare - bare_low)[sy, sx] * np.clip((base @ LUM + FOLLOW[0]) / (src_low + FOLLOW[0]), GAIN[0], GAIN[1])[..., None]
+    haze = np.zeros((ch, cw, 3), np.float32)
+    haze[py:py + h, px:px + w] = blur(bulk(flat.astype(np.float32)) - bulk(bare), 6)
+    r = np.hypot(xh - SUN[0], yh - SUN[1])
+    glow = np.stack([np.interp(r, mid, prof[:, c], right=0) for c in range(3)], -1).astype(np.float32)
+    fall = np.clip(r[nearest[0], nearest[1]] / np.maximum(r, 1), 0, 1) ** HAZE
+    haze = np.stack([outward(haze[..., c]) for c in range(3)], -1) * fall[..., None]
+    print('generated sky registered', round(float(cc), 4), 'carry median', round(float(np.median(carry[~own & (to_live < 1)])), 3), 'fine gain median', round(float(np.median((base @ LUM + FOLLOW[0])[~own] / (src_low + FOLLOW[0])[~own])), 3))
+    keep = (1 - to_live)[..., None]
+    wide = np.maximum((base + grain + haze) * keep + live_bg * (1 - keep), 0) + live_stars * (1 - keep) + glow
+    img = np.asarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8)).copy()
+    fixed = os.path.join(geo.ROOT, KEEP)
+    if os.path.exists(fixed):
+        img[py:py + h, px:px + w] = np.asarray(Image.open(fixed).convert('RGB'))[py:py + h, px:px + w]
+    else:
+        img[py:py + h, px:px + w] = (to_srgb(film(lin)) * 255 + 0.5).astype(np.uint8)
+    img = Image.fromarray(img)
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
         im.save(f'{out}/{key}/{name}', lossless=True, quality=90, method=6)
         print(key, name, im.size, round(os.path.getsize(f'{out}/{key}/{name}') / 1e6, 2), 'MB')
+    img.resize((1760, 990), Image.LANCZOS).save(os.path.join(geo.ROOT, 'out/work/nep/p6/sky-hold-preview.jpg'), quality=90)
+    Image.fromarray(np.clip(np.asarray(img).astype(np.float32) * 4, 0, 255).astype(np.uint8)).resize((1760, 990), Image.LANCZOS).save(os.path.join(geo.ROOT, 'out/work/nep/p6/sky-hold-preview-x4.jpg'), quality=90)
 
 
 def to_linear(a):
@@ -192,9 +277,13 @@ def hold(hero, fill, glow, out):
     behind = (1 - step(d, BEHIND[0], BEHIND[1]))[..., None]
     f = f - fs + fs * k * behind + hs * outside
     lin = sky * own[..., None] + f * (1 - own[..., None])
+    np.save(os.path.join(geo.ROOT, CACHE), lin.astype(np.float32))
     save(lin, 'sky-hold.webp', out)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((1408, 792)).save(os.path.join(geo.ROOT, 'out/work/nep/sky/own.png'))
 
 
 if __name__ == '__main__':
-    hold(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    if sys.argv[1] == 'zone':
+        save(np.load(os.path.join(geo.ROOT, CACHE)), 'sky-hold.webp', sys.argv[2])
+    else:
+        hold(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
