@@ -41,6 +41,10 @@ export interface RingLook {
   heroTone: [number, number, number]
   heroTurn: number
   shapeFit: [number, number]
+  outerFit: [number, number, number, number]
+  gapFit: [number, number]
+  arc: [number, number, number, number]
+  arcAz: [number, number, number, number]
   skimEdge: [number, number]
   skimFoot: number
   skimDensity: [number, number]
@@ -151,6 +155,10 @@ uniform float uPolarW;
 uniform float uPolarShape;
 uniform vec2 uPolarOuter;
 uniform vec2 uShapeFit;
+uniform vec4 uOuterFit;
+uniform vec2 uGapFit;
+uniform vec4 uArc;
+uniform vec4 uArcAz;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
@@ -238,7 +246,20 @@ void main() {
   if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
   float texels = ringTexels(fr);
-  vec4 s = span ? profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose)) * (1.0 - uPolarShape * (1.0 - uClose) * smoothstep(uEdge.y + 0.004, uEdge.y + 0.02, rq)) : vec4(0.0);
+  float pose = uPolarShape * (1.0 - uClose);
+  float edgeCut = smoothstep(uEdge.y + uOuterFit.w, uEdge.y + uOuterFit.w + 0.002, rq);
+  float xo = ringRadius(rq - pose * uOuterFit.x * smoothstep(uOuterFit.y, uOuterFit.z, rq));
+  float lodP = texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose);
+  vec4 s = span ? profAt(xo, lodP) * (1.0 - pose * edgeCut) : vec4(0.0);
+  for (int k = 0; k < ((pose > 0.0 && span && !disc && rq > uEdge.y + 0.02) ? 1 : 0); k++) {
+    float ua = atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5;
+    float re = uEdge.y + uOuterFit.x;
+    float e1 = re + uPolarShape * texture(uPolarWarp, vec2(ua, (re - uPolarSpan.x) * uPolarSpan.y)).r;
+    float e2 = re + uPolarShape * texture(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y)).r;
+    float along = smoothstep(uArcAz.x, uArcAz.y, azd) + 1.0 - smoothstep(uArcAz.z, uArcAz.w, azd);
+    float rl = uArc.x + (rp - e2 - uArc.y) * uArc.z;
+    s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * profAt(ringRadius(rl), lodP * uArc.z);
+  }
   float mu = abs(V.y);
   float over = 0.0;
   for (int k = 0; k < ((uClose < 1.0 && !disc && !far) ? 1 : 0); k++) {
@@ -292,7 +313,9 @@ void main() {
     vec2 tx = pgx * uPolarSize;
     vec2 ty = pgy * uPolarSize;
     float w = wP * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
-    col = mix(col, inverseFilmic(textureGrad(uPolarMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb) * mix(1.0, turning, uHeroTurn), w);
+    vec3 pm = inverseFilmic(textureGrad(uPolarMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb);
+    col = mix(col, pm * mix(1.0, turning, uHeroTurn), w);
+    alpha *= 1.0 - w * smoothstep(2.235, 2.25, rs) * (1.0 - smoothstep(uGapFit.x, uGapFit.y, dot(pm, vec3(0.2126, 0.7152, 0.0722))));
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
   }
 
@@ -391,7 +414,7 @@ export class Rings {
       ...profile,
       ...layout,
       ...shots,
-      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimCam: { value: new THREE.Vector3() },
+      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimCam: { value: new THREE.Vector3() },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },

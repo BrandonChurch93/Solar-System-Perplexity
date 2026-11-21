@@ -4,7 +4,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from scipy.ndimage import gaussian_filter1d
+from scipy.ndimage import gaussian_filter1d, grey_closing
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib import ROOT, WORK, load_json, lum  # noqa: E402
@@ -24,6 +24,9 @@ EDGE = 24
 GRAIN = 8
 OVER_END = 1.56
 WARP = (512, 64)
+GAP = (2.24, 2.252, 2.305, 2.317)
+GAP_SPAN = 0.03
+GAP_AZ = (72.0, 88.0, -165.0, -180.0)
 TIP = ((43.0, 2.262), (45.3, 2.264), (46.9, 2.274), (48.5, 2.284), (50.0, 2.297), (52.0, 2.315))
 
 
@@ -192,6 +195,11 @@ def build(key):
     okf = cv2.remap(ok.astype(np.float32), xs, rows.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0.999
     okf = cv2.erode(okf.astype(np.uint8), np.ones((3, int(TRIM * w / 4096) | 1), np.uint8)) > 0
     af = cv2.remap(alpha, xs, rows.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    band = np.clip((r - GAP[0]) / (GAP[1] - GAP[0]), 0, 1) * np.clip((GAP[3] - r) / (GAP[3] - GAP[2]), 0, 1)
+    az = ((np.arange(w) + 0.5) / w - 0.5) * 360
+    near = np.clip((az - GAP_AZ[0]) / (GAP_AZ[1] - GAP_AZ[0]), 0, 1) + np.clip((GAP_AZ[2] - az) / (GAP_AZ[2] - GAP_AZ[3]), 0, 1)
+    gap = np.clip(grey_closing(af, size=(int(GAP_SPAN * h / (SPAN[1] - SPAN[0])) | 1, 1)) - af, 0, 1) * near[None, :]
+    flat = flat.astype(np.float32) * (1 - band[:, None] * gap)[..., None]
     outer = np.argmax((af > 0.5) & (r[:, None] > 2.15), axis=0)
     outer = np.where(okf[np.minimum(outer + 12, h - 1), np.arange(w)], outer, -1)
     top = int(np.median(outer[outer >= 0])) + int(0.006 * h / (SPAN[1] - SPAN[0]))
@@ -208,6 +216,7 @@ def build(key):
     dst = ROOT / "public" / "assets" / "saturn" / key
     cv2.imwrite(str(dst / "polar-rings.jpg"), out, [cv2.IMWRITE_JPEG_QUALITY, 92])
     warp.tofile(dst / "polar-warp.bin")
+    flat = np.clip(flat, 0, 255).astype(np.uint8)
     view = np.concatenate([flat, np.where(okf[..., None], flat, 0), out], axis=0)
     cv2.imwrite(str(WORK / f"polar-{key}.jpg"), cv2.resize(view, (2048, 1536), interpolation=cv2.INTER_AREA))
     print(key, w, h, "valid share", round(float(okf.mean()), 3), "warp range", round(float(warp.min()), 4), round(float(warp.max()), 4))
