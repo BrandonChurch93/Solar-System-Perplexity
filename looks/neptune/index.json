@@ -1,9 +1,47 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T22:28:59.406Z",
+ "pushed": "2026-11-21T22:50:33.509Z",
  "head": "49dbe51fe9b0d7ca60c4e494cc9ab0de32a36308",
- "note": "item 4: hold layer (hero cirrus unfaded to the limb, opacity headroom), first render; cover window trial B",
+ "note": "item 4: hold layer v2 and hold limb line, 4605",
  "looks": [
+  {
+   "time": "2026-11-21T22:50:28.275Z",
+   "file": "20261121225028275-note-b-4605.jpg",
+   "source": "out/work/nep/p6/h4/b-4605.png",
+   "kind": "note",
+   "label": "item 4 hold 4605 nograin with hold layer v2 and hold line (uncommitted)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:50:27.685Z",
+   "file": "20261121225027685-note-cmp-right2.jpg",
+   "source": "out/work/nep/p6/h1/cmp-right2.png",
+   "kind": "note",
+   "label": "item 4 first try of the hold layer, right limb: hero, before, v1, v1 refit (dropped, MAD up)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:50:27.100Z",
+   "file": "20261121225027100-note-limb-ur-edge.jpg",
+   "source": "out/work/nep/p6/h4/limb-ur-edge.png",
+   "kind": "note",
+   "label": "item 4 hold 4605 upper right limb, 2x: approved hero, before, with the hold line (uncommitted)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T22:43:06.329Z",
+   "file": "20261121224306329-frame-r-4605.jpg",
+   "source": "out/work/nep/p6/h3/r-4605.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4605, review tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T22:28:55.355Z",
    "file": "20261121222855355-note-crest-bands.jpg",
@@ -29,36 +67,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T22:12:48.660Z",
-   "file": "20261121221248660-note-c4605-bands-stages.jpg",
-   "source": "out/work/nep/p6/st/c4605-bands-stages.png",
-   "kind": "note",
-   "label": "item 4 stage test, hold 4605 bands toward the right limb: approved, film as shipped, film before the lens (bloom 0 sharpen 0): the crests are lost before the lens",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T22:12:48.038Z",
-   "file": "20261121221248038-note-c4994-review-final.jpg",
-   "source": "out/work/nep/p6/k5/c4994-review-final.png",
-   "kind": "note",
-   "label": "4994 the fastest rise frame, review 128 samples above, final 195 samples below, 3 times: same picture, hard bar ends are the box shutter",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T22:06:27.548Z",
-   "file": "20261121220627548-frame-f4994-final.jpg",
-   "source": "out/work/nep/p6/k5/f4994-final.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4994, final tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4994,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T21:52:38.165Z",
    "file": "20261121215238165-frame-w-4860.jpg",
    "source": "out/work/nep/p6/w-4860.png",
@@ -67,20 +75,6 @@
    "stop": "neptune",
    "segment": "neptune.terrain",
    "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:50:51.734Z",
-   "file": "20261121215051734-frame-f4605-review.jpg",
-   "source": "out/work/nep/p6/k6/f4605-review.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, review tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
