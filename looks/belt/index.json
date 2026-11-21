@@ -1,9 +1,63 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T08:01:23.592Z",
- "head": "bed0727a40c82139a15063f9834d48219fe9c580",
- "note": "belt refit to the new travel camera: draft sheet and 2781",
+ "pushed": "2026-11-21T08:16:35.185Z",
+ "head": "67628129ed1e055bc281d6bfc2ec23a2a578be4a",
+ "note": "belt on the new camera: finals 2772 2782 2796, near rock tilts, review sheet",
  "looks": [
+  {
+   "time": "2026-11-21T08:16:34.142Z",
+   "file": "20261121081634142-note-sheet.jpg",
+   "source": "out/work/belt/r1/sheet.jpg",
+   "kind": "note",
+   "label": "belt review sheet every third frame 2745 to 2817, first layout",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:16:33.304Z",
+   "file": "20261121081633304-note-nt.jpg",
+   "source": "out/work/belt/p5/nt.jpg",
+   "kind": "note",
+   "label": "near rock, six tilts at draft, aperture 12",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:16:32.381Z",
+   "file": "20261121081632381-note-f2796.jpg",
+   "source": "out/work/belt/p5/f2796.png",
+   "kind": "note",
+   "label": "belt final 2796 on the new camera, dust patch applied",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:16:31.530Z",
+   "file": "20261121081631530-note-f2772.jpg",
+   "source": "out/work/belt/p5/f2772.png",
+   "kind": "note",
+   "label": "belt final 2772 on the new camera, dust patch applied",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:16:30.642Z",
+   "file": "20261121081630642-note-f2782.jpg",
+   "source": "out/work/belt/p5/f2782.png",
+   "kind": "note",
+   "label": "belt final 2782 on the new camera, dust patch applied",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:16:01.051Z",
+   "file": "20261121081601051-frame-f02745.jpg",
+   "source": "out/work/belt/r2/f02745.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2745, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2745,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "b2298702064d87b4"
+  },
   {
    "time": "2026-11-21T08:01:22.519Z",
    "file": "20261121080122519-note-f02781.jpg",
@@ -19,91 +73,6 @@
    "kind": "note",
    "label": "belt on the new camera, draft sheet every third frame 2745 to 2817, unfinished",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:00:38.836Z",
-   "file": "20261121080038836-frame-f02745.jpg",
-   "source": "out/work/belt/r1/f02745.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2745, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2745,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "19ff4677ff6f6dd1"
-  },
-  {
-   "time": "2026-11-21T04:45:30.045Z",
-   "file": "20261121044530045-sheet-mars.travel-16x9-review.jpg",
-   "source": "out/work/sheets/mars.travel-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet mars.travel, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "first": 2745,
-   "last": 2819,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cdec05916ee737d7"
-  },
-  {
-   "time": "2026-11-21T04:41:49.897Z",
-   "file": "20261121044149897-frame-2726.jpg",
-   "source": "out/work/belt/proof2/2726.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2726, final tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2726,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bf9e533c3bea77c1"
-  },
-  {
-   "time": "2026-11-21T04:40:24.918Z",
-   "file": "20261121044024918-frame-2580.jpg",
-   "source": "out/work/belt/proof2/2580.png",
-   "kind": "frame",
-   "label": "mars.terrain frame 2580, final tier",
-   "stop": "mars",
-   "segment": "mars.terrain",
-   "frame": 2580,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bf9e533c3bea77c1"
-  },
-  {
-   "time": "2026-11-21T04:39:19.706Z",
-   "file": "20261121043919706-frame-2427.jpg",
-   "source": "out/work/belt/proof2/2427.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2427, final tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2427,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bf9e533c3bea77c1"
-  },
-  {
-   "time": "2026-11-21T04:37:20.516Z",
-   "file": "20261121043720516-frame-2325.jpg",
-   "source": "out/work/belt/proof2/2325.png",
-   "kind": "frame",
-   "label": "mars.hold frame 2325, final tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "bf9e533c3bea77c1"
   }
  ]
 }
