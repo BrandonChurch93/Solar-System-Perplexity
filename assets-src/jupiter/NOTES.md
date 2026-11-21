@@ -364,6 +364,40 @@ Results 12:55 to 13:05 UTC:
 - Terrain sky: the excess is a gain, not the mips: sky and horizon glow are 4 to 7.5 percent brighter in every level bin (medians too); horizon position within 1 px. `sky.json` terrain gain 5.714 to 5.3.
 - Running: drafts 2895, 3296, 2997 and `compare` terrain final with these values.
 
+Results 13:05 to 13:15 UTC (drafts `wip3`, `wip4`):
+
+- Lit limb with `litEdge [0.0075, 0.0085, 2, 0]`: steepest fall now within 0.37 px of the hero's on average (max 1.2 at 260 deg; READY head: mean 2.42, max 3.61). Tool: `out/work/jupiter/tools/litlimb.py PNG`.
+- Io's shadow: `shadowHaze [1.0, 0.27]` (second value: the night term is cut by 27 percent inside the umbra). Shadow rgb (6.1, 8.3, 10.2), hero (5.3, 8.4, 10.4), READY head (11.7, 14.6, 16.6).
+- Io terminator with `io.term [0.35, 1.5]`: profile at 0 deg x/R 0.5 to 0.75: 90 76 66 46 23 12, hero 105 83 71 48 34 15.
+- Halo: rings at 1.03 to 1.25 radii, every 20 deg. With `glowDir` at 162 deg (the fit) the excess is at 110 to 150 deg (+16 at 130); at 169.4 deg it moves to 190 to 210 deg (+10); the sum of the excess is the same (81 against 79 levels), so the lobe is a little wide, not misdirected. Set to 166 deg (most even, largest excess about 12 levels). The rings include the sky patch (Milky Way upper left), so this is as far as the direction goes. Not worth a refit of the shells.
+- Terrain sky with gain 5.3: sky bins 0.94 to 0.98 of the approved (too low now), horizon glow bins +3.6 to +5.3 percent (a different term). Gain set to 5.5.
+- Running 13:10: finals 2997 and 3296, `compare` hold and terrain at final. Then the full measure and the gates; code is pushed only if all green.
+
+## Round 17 result (my round 2 of 3), mail 19, 13:15 UTC. Round 3 is the last: what it holds is what ships
+
+Judged on main at c08a38a. R1 7 (was 9). R3 7 (was 4; parts 9 and 7). R4 4 (was 6). R2 pass, R8 pass. G5, G13, G17 green. One severe, eight majors. Pass bar: R1, R3, R4 each at least 9, no severe or major open.
+
+Corrections, worst first (critic's words in quotes, then the Builder's own):
+
+1. HOLD SKY 2895 (R1 major). "stars and Milky Way dust lanes are noticeably blurred into soft 3-4px blobs instead of crisp 1-2px pinpoints, losing fine sky detail behind the sharp planet". Builder: confirmed at native size, x 1368 to 1824, y 216 to 649. Round 1 had this at 9. "Put the patch back to one texel per pixel at the hold framing (no mip level above 0 there, no resample through a smaller canvas)." Also 3150: "background pinpoint stars and faint Milky Way dust above the horizon are slightly softened" (R1 minor).
+2. IO 2895 (R1 major; R3 minors; four jurors name the shadow). "an unnatural bright reddish-orange band appears on Io's shadowed right limb where -a has a dark cool-shaded terminator falling cleanly to black, and Io's surface texture is slightly softer". "the shadow is a soft oval stuck to the moon's night limb, with no crisp umbra" (2997 and 2895). Builder: x 1010 to 1250, y 560 to 760; the hero's shadow is a crisp, deep black ellipse; ours has an orange band on the night limb and a softer, greyer shadow. "Bring both back to the hero. The shadow's direction is the hero's and stays."
+3. RISE 3274 to 3294 (R4 severe). "the globe pops to a different planet pose between these frames. At 3280 the bands run roughly horizontal ... By 3287 the bands run vertical, the lower half sits in deep night shadow, and Io has jumped". Builder: path is continuous, but from a limb close-up at 3274 to a small globe at 3287 in about 13 frames, ending with the bands upright. "Ease the pullback over many more frames so the turn can be followed, and take the roll out so the bands stay near level, as in the hold. The terminator and Io should come into view gradually, not between two samples."
+4. DIVE 3010 to 3019 (R4 major). "the speed jumps. The globe grows smoothly through 2986 to 3010, then fills the frame in 9 frames". "Ease across 2994 to 3019." Minor: "the limb swings from the left edge to an arc across the top in about 3 frames" (3019 to 3022).
+5. COVER EXIT 3035 to 3043 (R4 major). "color and exposure break. The cover ends in a flat warm tan haze, and the terrain opens dark, high-contrast and blue-shadowed with a bright warm horizon glow, so the change in tone reads as a cut". Builder: the cover is ten frames of soft tan with only a limb edge (3021 to 3030). "Carry the haze into the first terrain frames and thin it over 10 to 15 frames; keep cloud structure readable inside the cover."
+6. TERRAIN 3060 to 3239 (R4 major). Brandon: clear forward movement and depth across the whole length. "the terrain reads as a flat push-in on a single image. The vortex, the near cloud tops and the horizon arc all scale and slide together with no visible parallax between foreground and horizon". Ladder: more layers with what they hide painted in, independent motion (haze between layers, moving shadows, flow), and if the relief cannot give it, rung 4, the foreground third in true 3D. Minor: "the vortex barely rotates. Its spiral arms keep the same arrangement for about 180 frames".
+7. BEFORE THE RISE COVER 3240 to 3253 (R4 major). "exposure climbs fast. The terrain brightens and lifts toward pale tan over about 13 frames before the blur starts, which looks like a fade-to-white crossfade". "Tie haze and exposure to altitude over a longer stretch."
+8. RIBBONS at 3296 and NEAR CLOUD BANKS at 3150 (R3 major, two). "Several broad cloud lanes stretch into long, smooth ribbons with much less cross-lane detail than the compact red vortex. The bands look dragged across the globe rather than layered." "The curled ridges turn into soft, brushlike streaks with little small-scale structure, even beside the brighter cloud tips. The nearest clouds look less resolved than the middle-distance storm rim."
+
+Minors, after 1 to 8: sunlit limb glow "slightly wider and hotter"; night limb "soft 2-3px feathered fringe and faint night-side cloud bleed"; Io in the rise "stops at a nearly straight, abrupt boundary above a featureless dark half" (3296); "The brightest strip merges into a creamy band that wipes out the tops of adjacent cloud layers" (3150, upper left horizon); "Some bright points have swollen or slightly elongated profiles" (3296 star field); hold "the globe shows no visible rotation" (a slow turn inside what the hero covers).
+
+Travel: in the travel that arrives (2798 to 2816) the patch's Milky Way band appears out of a plain star field. Venus set `skyAim` in its plan so the shared sky's band lies under the patch's band (`src/stops/venus/plan.ts`, `skyAim.orbit`). Do the same in `src/stops/jupiter/plan.ts` if it can be done without moving the hold or the terrain frame.
+
+Rules unchanged: sky patches fade into the shared star sky outside the approved border and change nothing inside; the approved image wins in the hold and terrain frame when a critic faults what the approved image itself shows; stepped copies in fast frames are an engine matter; every number from config/showcase.json; every generated asset has a recipe; only my folders on agent/jupiter. Engine batch 13 (sky across the travels) is coming; merge origin/main before READY.
+
+READY format: `READY <commit> round 3`, then changes per item number above, what is still weak, measures (G5, G13, G17, mirrorcheck). Before sending: render the dive, rise and both cover sheets and the terrain sheet at review tier and look at every frame; put hold 2895 beside the hero at native size in the sky and at Io.
+
+Binaries: one commit of `public/assets/jupiter/` in round 3 (sky patches will change for item 1).
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
