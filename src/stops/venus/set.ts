@@ -7,7 +7,7 @@ import { smooth } from '../../director/rig'
 import { patches, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
-import { deck, plan } from './plan'
+import { deck, plan, veil as timing } from './plan'
 import { CloudRelief } from './relief'
 import { LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
@@ -74,7 +74,7 @@ export const createSet: SetFactory = async (ctx) => {
   const terrain = new THREE.Group()
   world.add(orbit, terrain)
 
-  const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 4, repeat: true })
   const flowMap = await ctx.texture(base + 'wrap-flow.jpg', { srgb: false, repeat: true })
   const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
   const patchTextures: THREE.Texture[] = []
@@ -98,7 +98,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const carry = ground.carry!
-  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 16, repeat: true })
+  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 4, repeat: true })
   const veil = new Veil(look.veil, clouds, carry, diagUniform)
   const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
   const swaps = { dive: swapOf('dive', sunTerrain, carry.fwd, carry.right), rise: swapOf('rise', sunTerrain, carry.fwd, carry.right) }
@@ -110,7 +110,6 @@ export const createSet: SetFactory = async (ctx) => {
   const localP = new THREE.Vector3()
   const centre = new THREE.Vector3()
   const eye = new THREE.Vector3()
-  const eyeNext = new THREE.Vector3()
   const veilTurn = new THREE.Quaternion()
   const sunCam = new THREE.Vector3()
   const airFwd = new THREE.Vector3()
@@ -163,12 +162,12 @@ export const createSet: SetFactory = async (ctx) => {
         localP.sub(deck.centre).divideScalar(deck.radius)
         centre.copy(localP).negate().applyQuaternion(localBack)
         eye.copy(localP).normalize().sub(sw.upTerrain).applyQuaternion(sw.turn).add(sw.up).normalize()
-        const streak = view.samples > 1
-        if (streak) eyeNext.copy(eye).multiplyScalar(1 + sw.height * Math.exp(sw.rate * plan.drop(state.segment, state.time + config.shutterFraction / (view.samples * config.fps))))
-        eye.multiplyScalar(1 + sw.height * Math.exp(sw.rate * plan.drop(state.segment, state.time)))
+        const fall = plan.drop(state.segment, state.time)
+        const rush = Math.min(Math.abs(sw.rate * (plan.drop(state.segment, state.time + config.shutterFraction / config.fps) - fall)) / timing.rush, 1)
+        eye.multiplyScalar(1 + sw.height * Math.exp(timing.slow * sw.rate * fall))
         veilTurn.copy(sw.turn).multiply(localQ)
         sunCam.copy(sunTerrain).applyQuaternion(localBack)
-        veil.update(view.camera, view.format.width, view.format.height, centre, eye, streak ? eyeNext : null, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, rush, 1, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -190,7 +189,11 @@ export const createSet: SetFactory = async (ctx) => {
         sunCam.copy(sw.sun).applyQuaternion(localBack)
         airFwd.copy(sw.fwd).applyQuaternion(localBack)
         airRight.copy(sw.right).applyQuaternion(localBack)
-        veil.update(view.camera, view.format.width, view.format.height, centre, localP, null, localQ, thick, released, sw, sunCam, Math.pow(1 - released, look.veil.sunFade), airFwd, airRight, gain, gain * look.relief.air.gain, vignette)
+        const high = Math.max(localP.length() - 1, 1e-6)
+        const low = sw.height * Math.pow(high / sw.height, timing.slow)
+        const after = Math.max((kind === 'dive' ? plan.dive(state.time + config.shutterFraction / config.fps) : plan.rise(state.time + config.shutterFraction / config.fps)).pose.position.length() - 1, 1e-6)
+        eye.copy(localP).normalize().multiplyScalar(1 + low)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, Math.pow(1 - released, look.veil.sunFade), airFwd, airRight, gain, gain * look.relief.air.gain, vignette)
       } else veil.hide()
       const aspect = view.format.width / view.format.height
       limbFrame(camera, light, limbS, limbT)

@@ -14,7 +14,7 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 18, elevationDeg: 12, distance: 5.4, offset: [-0.3, 0.12], driftSpeed: 0.08, rollDeg: 6, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 92, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -24, axis: [1, 0.25, 0], offset: [-0.45, 0.25] },
-  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, skyLow: [0.03, 1.2, 0.55], sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
+  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, skyLow: [0.03, 2, 0.55], sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
   cover: [1.0, 0.82, 0.5],
   coverLow: [0.6, 0.45, 0.24],
   coverTerrain: [0.9, 0.7, 0.4],
@@ -29,10 +29,10 @@ export const params: MoveParams = {
   spinDegPerSecond: -1,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
-  ...({ coverWindow: { dive: { seconds: 0.8 }, rise: { seconds: 0.8 } } } as object),
+  ...({ coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } } } as object),
 }
 
-export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1 } }
+export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1 } }
 
 export const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 

@@ -19,6 +19,8 @@ LINE = 25
 SEAM = 1.0
 CLEAN = (30, 390, 100, 1300)
 DONOR = 0.7
+LANE = (8.0, 64.0)
+SHIFT = (300, 137)
 
 
 def to_linear(a):
@@ -134,8 +136,9 @@ def main(base=None, sky_gain=10.0):
     stars = raw * np.minimum(1 / (1 - cut), 3)[..., None] * gate + donor * (1 - gate) * DONOR
     line = np.maximum((el > SEAM).sum(0) - 1, 0)[None, :]
     under = yy.astype(np.int64) - line
-    src = np.clip(np.where(under > 0, line - under, yy.astype(np.int64)), 0, AH - 1)
-    stars = stars[src, cols] * (1 - smooth(MIRROR * 0.5, MIRROR, under.astype(np.float32)))[..., None]
+    depth = under.astype(np.float32)
+    below = stars[np.abs(yy.astype(np.int64) - SHIFT[0]), np.abs(cols - SHIFT[1])] * smooth(LANE[0], LANE[1], depth)[..., None]
+    stars = np.where(under[..., None] > 0, below, stars) * (1 - smooth(MIRROR * 0.5, MIRROR, depth))[..., None]
     px_, py_ = round(AW * MARGIN), round(AH * MARGIN)
     wide = np.pad(stars, ((py_, py_), (px_, px_), (0, 0)), mode='symmetric')
     im = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
