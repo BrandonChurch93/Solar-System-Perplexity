@@ -864,7 +864,10 @@ def film_close(a):
 
     r2c, r2j = collect('R2', clines, ckey, 'approved'), collect('R2', lines, flat(kf), 'frame')
     r8c, r8j = collect('R8', clines, ckey, 'approved'), collect('R8', lines, flat(kf), 'frame')
-    over = dict(x.split('=') for x in (a.vote or []))
+    over = dict(state(source).get('votes', {})) if source != n else {}
+    over.update(s.get('votes', {}))
+    over.update(x.split('=') for x in (a.vote or []))
+    state(n, {'votes': over})
     vote = lambda v: over.get(v[0], letter(v[2]))
     gap = c['quality']['jury']['maxShareGap']
 
