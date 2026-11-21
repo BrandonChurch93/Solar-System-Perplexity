@@ -1,0 +1,4450 @@
+{
+ "stop": "earth",
+ "engineHash": "a3d211c425dc0406",
+ "stopHashes": {
+  "sun": "dde56bb294c7e67d",
+  "mercury": "1b13723ba62c554f",
+  "venus": "f65368e35188b639",
+  "earth": "f10b9e8f2b53dcc9",
+  "mars": "353338cc5c905af5",
+  "jupiter": "a1532f868cd3e034",
+  "saturn": "c0d4575db130471a",
+  "uranus": "c29e265718f0937e",
+  "neptune": "41e441c890b338d3"
+ },
+ "stopHash": "f10b9e8f2b53dcc9",
+ "format": "16x9",
+ "assets": "full",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "every": 1,
+ "noCover": false,
+ "G13": {
+  "pass": true,
+  "tier": "draft",
+  "view": "texels",
+  "frames": 463,
+  "of": 463,
+  "failed": [],
+  "zeroCounted": [],
+  "worst": [
+   {
+    "frame": 1680,
+    "segment": "earth.hold",
+    "counted": 658602,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1681,
+    "segment": "earth.hold",
+    "counted": 658925,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1682,
+    "segment": "earth.hold",
+    "counted": 659255,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1683,
+    "segment": "earth.hold",
+    "counted": 659562,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1684,
+    "segment": "earth.hold",
+    "counted": 659854,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1685,
+    "segment": "earth.hold",
+    "counted": 660197,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1686,
+    "segment": "earth.hold",
+    "counted": 660536,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1687,
+    "segment": "earth.hold",
+    "counted": 660830,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1688,
+    "segment": "earth.hold",
+    "counted": 661163,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1689,
+    "segment": "earth.hold",
+    "counted": 661500,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   }
+  ],
+  "results": [
+   {
+    "frame": 1680,
+    "segment": "earth.hold",
+    "counted": 658602,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1681,
+    "segment": "earth.hold",
+    "counted": 658925,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1682,
+    "segment": "earth.hold",
+    "counted": 659255,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1683,
+    "segment": "earth.hold",
+    "counted": 659562,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1684,
+    "segment": "earth.hold",
+    "counted": 659854,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1685,
+    "segment": "earth.hold",
+    "counted": 660197,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1686,
+    "segment": "earth.hold",
+    "counted": 660536,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1687,
+    "segment": "earth.hold",
+    "counted": 660830,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1688,
+    "segment": "earth.hold",
+    "counted": 661163,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1689,
+    "segment": "earth.hold",
+    "counted": 661500,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1690,
+    "segment": "earth.hold",
+    "counted": 661810,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1691,
+    "segment": "earth.hold",
+    "counted": 662150,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1692,
+    "segment": "earth.hold",
+    "counted": 662484,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1693,
+    "segment": "earth.hold",
+    "counted": 662794,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1694,
+    "segment": "earth.hold",
+    "counted": 663128,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1695,
+    "segment": "earth.hold",
+    "counted": 663437,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1696,
+    "segment": "earth.hold",
+    "counted": 663761,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1697,
+    "segment": "earth.hold",
+    "counted": 664079,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1698,
+    "segment": "earth.hold",
+    "counted": 664416,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1699,
+    "segment": "earth.hold",
+    "counted": 664723,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1700,
+    "segment": "earth.hold",
+    "counted": 665035,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1701,
+    "segment": "earth.hold",
+    "counted": 665374,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1702,
+    "segment": "earth.hold",
+    "counted": 665725,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1703,
+    "segment": "earth.hold",
+    "counted": 666041,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1704,
+    "segment": "earth.hold",
+    "counted": 666367,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1705,
+    "segment": "earth.hold",
+    "counted": 666695,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1706,
+    "segment": "earth.hold",
+    "counted": 667029,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1707,
+    "segment": "earth.hold",
+    "counted": 667372,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1708,
+    "segment": "earth.hold",
+    "counted": 667676,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1709,
+    "segment": "earth.hold",
+    "counted": 668011,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1710,
+    "segment": "earth.hold",
+    "counted": 668330,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1711,
+    "segment": "earth.hold",
+    "counted": 668673,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1712,
+    "segment": "earth.hold",
+    "counted": 668971,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1713,
+    "segment": "earth.hold",
+    "counted": 669316,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1714,
+    "segment": "earth.hold",
+    "counted": 669638,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1715,
+    "segment": "earth.hold",
+    "counted": 669956,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1716,
+    "segment": "earth.hold",
+    "counted": 670256,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1717,
+    "segment": "earth.hold",
+    "counted": 670577,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1718,
+    "segment": "earth.hold",
+    "counted": 670920,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1719,
+    "segment": "earth.hold",
+    "counted": 671297,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1720,
+    "segment": "earth.hold",
+    "counted": 671625,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1721,
+    "segment": "earth.hold",
+    "counted": 671956,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1722,
+    "segment": "earth.hold",
+    "counted": 672269,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1723,
+    "segment": "earth.hold",
+    "counted": 672565,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1724,
+    "segment": "earth.hold",
+    "counted": 672910,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1725,
+    "segment": "earth.hold",
+    "counted": 673262,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1726,
+    "segment": "earth.hold",
+    "counted": 673560,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1727,
+    "segment": "earth.hold",
+    "counted": 673907,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1728,
+    "segment": "earth.hold",
+    "counted": 674204,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1729,
+    "segment": "earth.hold",
+    "counted": 674514,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1730,
+    "segment": "earth.hold",
+    "counted": 674878,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1731,
+    "segment": "earth.hold",
+    "counted": 675185,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1732,
+    "segment": "earth.hold",
+    "counted": 675543,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1733,
+    "segment": "earth.hold",
+    "counted": 675872,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1734,
+    "segment": "earth.hold",
+    "counted": 676200,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1735,
+    "segment": "earth.hold",
+    "counted": 676549,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1736,
+    "segment": "earth.hold",
+    "counted": 676849,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1737,
+    "segment": "earth.hold",
+    "counted": 677156,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1738,
+    "segment": "earth.hold",
+    "counted": 677511,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1739,
+    "segment": "earth.hold",
+    "counted": 677834,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1740,
+    "segment": "earth.hold",
+    "counted": 678192,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1741,
+    "segment": "earth.hold",
+    "counted": 678522,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1742,
+    "segment": "earth.hold",
+    "counted": 678851,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1743,
+    "segment": "earth.hold",
+    "counted": 679171,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1744,
+    "segment": "earth.hold",
+    "counted": 679473,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1745,
+    "segment": "earth.hold",
+    "counted": 679845,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1746,
+    "segment": "earth.hold",
+    "counted": 680175,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1747,
+    "segment": "earth.hold",
+    "counted": 680510,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1748,
+    "segment": "earth.hold",
+    "counted": 680849,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1749,
+    "segment": "earth.hold",
+    "counted": 681152,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1750,
+    "segment": "earth.hold",
+    "counted": 681504,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1751,
+    "segment": "earth.hold",
+    "counted": 681834,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1752,
+    "segment": "earth.hold",
+    "counted": 682159,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1753,
+    "segment": "earth.hold",
+    "counted": 682495,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1754,
+    "segment": "earth.hold",
+    "counted": 682787,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1755,
+    "segment": "earth.hold",
+    "counted": 683160,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1756,
+    "segment": "earth.hold",
+    "counted": 683520,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1757,
+    "segment": "earth.hold",
+    "counted": 683808,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1758,
+    "segment": "earth.hold",
+    "counted": 684155,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1759,
+    "segment": "earth.hold",
+    "counted": 684456,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1760,
+    "segment": "earth.hold",
+    "counted": 684808,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1761,
+    "segment": "earth.hold",
+    "counted": 685177,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1762,
+    "segment": "earth.hold",
+    "counted": 685483,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1763,
+    "segment": "earth.hold",
+    "counted": 685817,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1764,
+    "segment": "earth.hold",
+    "counted": 686138,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1765,
+    "segment": "earth.hold",
+    "counted": 686478,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1766,
+    "segment": "earth.hold",
+    "counted": 686829,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1767,
+    "segment": "earth.hold",
+    "counted": 687174,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1768,
+    "segment": "earth.hold",
+    "counted": 687512,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1769,
+    "segment": "earth.hold",
+    "counted": 687868,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1770,
+    "segment": "earth.hold",
+    "counted": 688170,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1771,
+    "segment": "earth.hold",
+    "counted": 688550,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1772,
+    "segment": "earth.hold",
+    "counted": 688884,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1773,
+    "segment": "earth.hold",
+    "counted": 689203,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1774,
+    "segment": "earth.hold",
+    "counted": 689539,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1775,
+    "segment": "earth.hold",
+    "counted": 689873,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1776,
+    "segment": "earth.hold",
+    "counted": 690242,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1777,
+    "segment": "earth.hold",
+    "counted": 690565,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1778,
+    "segment": "earth.hold",
+    "counted": 690898,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1779,
+    "segment": "earth.hold",
+    "counted": 691242,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1780,
+    "segment": "earth.hold",
+    "counted": 691589,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1781,
+    "segment": "earth.hold",
+    "counted": 691938,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1782,
+    "segment": "earth.hold",
+    "counted": 692280,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1783,
+    "segment": "earth.hold",
+    "counted": 692630,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1784,
+    "segment": "earth.hold",
+    "counted": 692972,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1785,
+    "segment": "earth.hold",
+    "counted": 693316,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1786,
+    "segment": "earth.hold",
+    "counted": 693612,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1787,
+    "segment": "earth.hold",
+    "counted": 693987,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1788,
+    "segment": "earth.hold",
+    "counted": 694333,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1789,
+    "segment": "earth.hold",
+    "counted": 694697,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1790,
+    "segment": "earth.hold",
+    "counted": 695034,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1791,
+    "segment": "earth.hold",
+    "counted": 695355,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1792,
+    "segment": "earth.hold",
+    "counted": 695725,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1793,
+    "segment": "earth.hold",
+    "counted": 696090,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1794,
+    "segment": "earth.hold",
+    "counted": 696440,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1795,
+    "segment": "earth.hold",
+    "counted": 696751,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1796,
+    "segment": "earth.hold",
+    "counted": 697120,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1797,
+    "segment": "earth.hold",
+    "counted": 697471,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1798,
+    "segment": "earth.hold",
+    "counted": 697799,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1799,
+    "segment": "earth.hold",
+    "counted": 698114,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1800,
+    "segment": "earth.hold",
+    "counted": 698484,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1801,
+    "segment": "earth.hold",
+    "counted": 698863,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1802,
+    "segment": "earth.hold",
+    "counted": 699207,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1803,
+    "segment": "earth.hold",
+    "counted": 699544,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1804,
+    "segment": "earth.hold",
+    "counted": 699892,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1805,
+    "segment": "earth.hold",
+    "counted": 700250,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1806,
+    "segment": "earth.hold",
+    "counted": 700605,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1807,
+    "segment": "earth.hold",
+    "counted": 700962,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1808,
+    "segment": "earth.hold",
+    "counted": 701308,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1809,
+    "segment": "earth.hold",
+    "counted": 701672,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1810,
+    "segment": "earth.hold",
+    "counted": 702023,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1811,
+    "segment": "earth.hold",
+    "counted": 702369,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1812,
+    "segment": "earth.hold",
+    "counted": 702714,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1813,
+    "segment": "earth.hold",
+    "counted": 703070,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1814,
+    "segment": "earth.hold",
+    "counted": 703419,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1815,
+    "segment": "earth.hold",
+    "counted": 703779,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1816,
+    "segment": "earth.hold",
+    "counted": 704115,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1817,
+    "segment": "earth.hold",
+    "counted": 704452,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1818,
+    "segment": "earth.hold",
+    "counted": 704822,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1819,
+    "segment": "earth.hold",
+    "counted": 705167,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1820,
+    "segment": "earth.hold",
+    "counted": 705498,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1821,
+    "segment": "earth.hold",
+    "counted": 705861,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1822,
+    "segment": "earth.hold",
+    "counted": 706227,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1823,
+    "segment": "earth.hold",
+    "counted": 706607,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1824,
+    "segment": "earth.hold",
+    "counted": 706976,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1825,
+    "segment": "earth.hold",
+    "counted": 707297,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1826,
+    "segment": "earth.hold",
+    "counted": 707679,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1827,
+    "segment": "earth.hold",
+    "counted": 708019,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1828,
+    "segment": "earth.hold",
+    "counted": 708388,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1829,
+    "segment": "earth.hold",
+    "counted": 708750,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1830,
+    "segment": "earth.dive",
+    "counted": 709094,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1831,
+    "segment": "earth.dive",
+    "counted": 709446,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1832,
+    "segment": "earth.dive",
+    "counted": 709783,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1833,
+    "segment": "earth.dive",
+    "counted": 710208,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1834,
+    "segment": "earth.dive",
+    "counted": 710823,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1835,
+    "segment": "earth.dive",
+    "counted": 711900,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1836,
+    "segment": "earth.dive",
+    "counted": 713640,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1837,
+    "segment": "earth.dive",
+    "counted": 716398,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1838,
+    "segment": "earth.dive",
+    "counted": 720531,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1839,
+    "segment": "earth.dive",
+    "counted": 726360,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1840,
+    "segment": "earth.dive",
+    "counted": 734116,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1841,
+    "segment": "earth.dive",
+    "counted": 743973,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1842,
+    "segment": "earth.dive",
+    "counted": 755954,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1843,
+    "segment": "earth.dive",
+    "counted": 770005,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1844,
+    "segment": "earth.dive",
+    "counted": 785701,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1845,
+    "segment": "earth.dive",
+    "counted": 802766,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1846,
+    "segment": "earth.dive",
+    "counted": 820685,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1847,
+    "segment": "earth.dive",
+    "counted": 839122,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.999,
+    "pass": true
+   },
+   {
+    "frame": 1848,
+    "segment": "earth.dive",
+    "counted": 857309,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.998,
+    "pass": true
+   },
+   {
+    "frame": 1849,
+    "segment": "earth.dive",
+    "counted": 874445,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.996,
+    "pass": true
+   },
+   {
+    "frame": 1850,
+    "segment": "earth.dive",
+    "counted": 889826,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.994,
+    "pass": true
+   },
+   {
+    "frame": 1851,
+    "segment": "earth.dive",
+    "counted": 905168,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.991,
+    "pass": true
+   },
+   {
+    "frame": 1852,
+    "segment": "earth.dive",
+    "counted": 920616,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.988,
+    "pass": true
+   },
+   {
+    "frame": 1853,
+    "segment": "earth.dive",
+    "counted": 936129,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.985,
+    "pass": true
+   },
+   {
+    "frame": 1854,
+    "segment": "earth.dive",
+    "counted": 951988,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.981,
+    "pass": true
+   },
+   {
+    "frame": 1855,
+    "segment": "earth.dive",
+    "counted": 968303,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.976,
+    "pass": true
+   },
+   {
+    "frame": 1856,
+    "segment": "earth.dive",
+    "counted": 984937,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.971,
+    "pass": true
+   },
+   {
+    "frame": 1857,
+    "segment": "earth.dive",
+    "counted": 1002250,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.965,
+    "pass": true
+   },
+   {
+    "frame": 1858,
+    "segment": "earth.dive",
+    "counted": 1020576,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.957,
+    "pass": true
+   },
+   {
+    "frame": 1859,
+    "segment": "earth.dive",
+    "counted": 1040260,
+    "soft": 1,
+    "fraction": 0,
+    "meanTexels": 1.949,
+    "pass": true
+   },
+   {
+    "frame": 1860,
+    "segment": "earth.dive",
+    "counted": 1061627,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.939,
+    "pass": true
+   },
+   {
+    "frame": 1861,
+    "segment": "earth.dive",
+    "counted": 1085166,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.927,
+    "pass": true
+   },
+   {
+    "frame": 1862,
+    "segment": "earth.dive",
+    "counted": 1111376,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.913,
+    "pass": true
+   },
+   {
+    "frame": 1863,
+    "segment": "earth.dive",
+    "counted": 1140794,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.895,
+    "pass": true
+   },
+   {
+    "frame": 1864,
+    "segment": "earth.dive",
+    "counted": 1174072,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.874,
+    "pass": true
+   },
+   {
+    "frame": 1865,
+    "segment": "earth.dive",
+    "counted": 1211863,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.847,
+    "pass": true
+   },
+   {
+    "frame": 1866,
+    "segment": "earth.dive",
+    "counted": 1255011,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.815,
+    "pass": true
+   },
+   {
+    "frame": 1867,
+    "segment": "earth.dive",
+    "counted": 1304304,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 1868,
+    "segment": "earth.dive",
+    "counted": 1360674,
+    "soft": 1,
+    "fraction": 0,
+    "meanTexels": 1.725,
+    "pass": true
+   },
+   {
+    "frame": 1869,
+    "segment": "earth.dive",
+    "counted": 1425078,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.699,
+    "pass": true
+   },
+   {
+    "frame": 1870,
+    "segment": "earth.dive",
+    "counted": 1498358,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.7,
+    "pass": true
+   },
+   {
+    "frame": 1871,
+    "segment": "earth.dive",
+    "counted": 1579382,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.699,
+    "pass": true
+   },
+   {
+    "frame": 1872,
+    "segment": "earth.dive",
+    "counted": 1670731,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.697,
+    "pass": true
+   },
+   {
+    "frame": 1873,
+    "segment": "earth.dive",
+    "counted": 1760993,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.659,
+    "pass": true
+   },
+   {
+    "frame": 1874,
+    "segment": "earth.dive",
+    "counted": 1827140,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.66,
+    "pass": true
+   },
+   {
+    "frame": 1875,
+    "segment": "earth.dive",
+    "counted": 1884015,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.734,
+    "pass": true
+   },
+   {
+    "frame": 1892,
+    "segment": "earth.dive",
+    "counted": 1637861,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1893,
+    "segment": "earth.dive",
+    "counted": 1637704,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1894,
+    "segment": "earth.dive",
+    "counted": 1637524,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1895,
+    "segment": "earth.dive",
+    "counted": 1637353,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1896,
+    "segment": "earth.dive",
+    "counted": 1637181,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1897,
+    "segment": "earth.dive",
+    "counted": 1636993,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1898,
+    "segment": "earth.dive",
+    "counted": 1636777,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1899,
+    "segment": "earth.dive",
+    "counted": 1636580,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1900,
+    "segment": "earth.dive",
+    "counted": 1636404,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1901,
+    "segment": "earth.dive",
+    "counted": 1636235,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1902,
+    "segment": "earth.dive",
+    "counted": 1636049,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1903,
+    "segment": "earth.dive",
+    "counted": 1635876,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1904,
+    "segment": "earth.dive",
+    "counted": 1635690,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1905,
+    "segment": "earth.dive",
+    "counted": 1635501,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1906,
+    "segment": "earth.dive",
+    "counted": 1635307,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1907,
+    "segment": "earth.dive",
+    "counted": 1635081,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1908,
+    "segment": "earth.dive",
+    "counted": 1634868,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1909,
+    "segment": "earth.dive",
+    "counted": 1634694,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1910,
+    "segment": "earth.dive",
+    "counted": 1634515,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1911,
+    "segment": "earth.dive",
+    "counted": 1634330,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1912,
+    "segment": "earth.dive",
+    "counted": 1634157,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1913,
+    "segment": "earth.dive",
+    "counted": 1633952,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1914,
+    "segment": "earth.dive",
+    "counted": 1633772,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1915,
+    "segment": "earth.dive",
+    "counted": 1633566,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1916,
+    "segment": "earth.dive",
+    "counted": 1633353,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1917,
+    "segment": "earth.dive",
+    "counted": 1633142,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1918,
+    "segment": "earth.dive",
+    "counted": 1632960,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1919,
+    "segment": "earth.dive",
+    "counted": 1632788,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1920,
+    "segment": "earth.terrain",
+    "counted": 1632608,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1921,
+    "segment": "earth.terrain",
+    "counted": 1632431,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1922,
+    "segment": "earth.terrain",
+    "counted": 1632235,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1923,
+    "segment": "earth.terrain",
+    "counted": 1632055,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1924,
+    "segment": "earth.terrain",
+    "counted": 1631860,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1925,
+    "segment": "earth.terrain",
+    "counted": 1631648,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1926,
+    "segment": "earth.terrain",
+    "counted": 1631443,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1927,
+    "segment": "earth.terrain",
+    "counted": 1631277,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1928,
+    "segment": "earth.terrain",
+    "counted": 1631100,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1929,
+    "segment": "earth.terrain",
+    "counted": 1630945,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1930,
+    "segment": "earth.terrain",
+    "counted": 1630764,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1931,
+    "segment": "earth.terrain",
+    "counted": 1630594,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1932,
+    "segment": "earth.terrain",
+    "counted": 1630420,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1933,
+    "segment": "earth.terrain",
+    "counted": 1630244,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1934,
+    "segment": "earth.terrain",
+    "counted": 1630059,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1935,
+    "segment": "earth.terrain",
+    "counted": 1629831,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1936,
+    "segment": "earth.terrain",
+    "counted": 1629668,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1937,
+    "segment": "earth.terrain",
+    "counted": 1629525,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1938,
+    "segment": "earth.terrain",
+    "counted": 1629354,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1939,
+    "segment": "earth.terrain",
+    "counted": 1629199,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1940,
+    "segment": "earth.terrain",
+    "counted": 1629038,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1941,
+    "segment": "earth.terrain",
+    "counted": 1628874,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1942,
+    "segment": "earth.terrain",
+    "counted": 1628714,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1943,
+    "segment": "earth.terrain",
+    "counted": 1628549,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1944,
+    "segment": "earth.terrain",
+    "counted": 1628375,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1945,
+    "segment": "earth.terrain",
+    "counted": 1628198,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1946,
+    "segment": "earth.terrain",
+    "counted": 1628022,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1947,
+    "segment": "earth.terrain",
+    "counted": 1627877,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1948,
+    "segment": "earth.terrain",
+    "counted": 1627728,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1949,
+    "segment": "earth.terrain",
+    "counted": 1627582,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1950,
+    "segment": "earth.terrain",
+    "counted": 1627435,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1951,
+    "segment": "earth.terrain",
+    "counted": 1627306,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1952,
+    "segment": "earth.terrain",
+    "counted": 1627151,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1953,
+    "segment": "earth.terrain",
+    "counted": 1626999,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1954,
+    "segment": "earth.terrain",
+    "counted": 1626862,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1955,
+    "segment": "earth.terrain",
+    "counted": 1626713,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1956,
+    "segment": "earth.terrain",
+    "counted": 1626546,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1957,
+    "segment": "earth.terrain",
+    "counted": 1626356,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1958,
+    "segment": "earth.terrain",
+    "counted": 1626219,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1959,
+    "segment": "earth.terrain",
+    "counted": 1626096,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1960,
+    "segment": "earth.terrain",
+    "counted": 1625958,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1961,
+    "segment": "earth.terrain",
+    "counted": 1625827,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1962,
+    "segment": "earth.terrain",
+    "counted": 1625698,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1963,
+    "segment": "earth.terrain",
+    "counted": 1625562,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1964,
+    "segment": "earth.terrain",
+    "counted": 1625417,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1965,
+    "segment": "earth.terrain",
+    "counted": 1625278,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1966,
+    "segment": "earth.terrain",
+    "counted": 1625139,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1967,
+    "segment": "earth.terrain",
+    "counted": 1625003,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1968,
+    "segment": "earth.terrain",
+    "counted": 1624856,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1969,
+    "segment": "earth.terrain",
+    "counted": 1624698,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1970,
+    "segment": "earth.terrain",
+    "counted": 1624542,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1971,
+    "segment": "earth.terrain",
+    "counted": 1624415,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1972,
+    "segment": "earth.terrain",
+    "counted": 1624290,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1973,
+    "segment": "earth.terrain",
+    "counted": 1624157,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1974,
+    "segment": "earth.terrain",
+    "counted": 1624035,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1975,
+    "segment": "earth.terrain",
+    "counted": 1623894,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1976,
+    "segment": "earth.terrain",
+    "counted": 1623764,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1977,
+    "segment": "earth.terrain",
+    "counted": 1623645,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1978,
+    "segment": "earth.terrain",
+    "counted": 1623498,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1979,
+    "segment": "earth.terrain",
+    "counted": 1623356,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1980,
+    "segment": "earth.terrain",
+    "counted": 1623205,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1981,
+    "segment": "earth.terrain",
+    "counted": 1623048,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1982,
+    "segment": "earth.terrain",
+    "counted": 1622894,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1983,
+    "segment": "earth.terrain",
+    "counted": 1622765,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1984,
+    "segment": "earth.terrain",
+    "counted": 1622639,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1985,
+    "segment": "earth.terrain",
+    "counted": 1622506,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1986,
+    "segment": "earth.terrain",
+    "counted": 1622372,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1987,
+    "segment": "earth.terrain",
+    "counted": 1622238,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1988,
+    "segment": "earth.terrain",
+    "counted": 1622107,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1989,
+    "segment": "earth.terrain",
+    "counted": 1621959,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1990,
+    "segment": "earth.terrain",
+    "counted": 1621814,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1991,
+    "segment": "earth.terrain",
+    "counted": 1621660,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1992,
+    "segment": "earth.terrain",
+    "counted": 1621493,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1993,
+    "segment": "earth.terrain",
+    "counted": 1621311,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1994,
+    "segment": "earth.terrain",
+    "counted": 1621175,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1995,
+    "segment": "earth.terrain",
+    "counted": 1621042,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1996,
+    "segment": "earth.terrain",
+    "counted": 1620897,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1997,
+    "segment": "earth.terrain",
+    "counted": 1620758,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1998,
+    "segment": "earth.terrain",
+    "counted": 1620604,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 1999,
+    "segment": "earth.terrain",
+    "counted": 1620459,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2000,
+    "segment": "earth.terrain",
+    "counted": 1620304,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2001,
+    "segment": "earth.terrain",
+    "counted": 1620148,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2002,
+    "segment": "earth.terrain",
+    "counted": 1619974,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2003,
+    "segment": "earth.terrain",
+    "counted": 1619763,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2004,
+    "segment": "earth.terrain",
+    "counted": 1619617,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2005,
+    "segment": "earth.terrain",
+    "counted": 1619462,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2006,
+    "segment": "earth.terrain",
+    "counted": 1619311,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2007,
+    "segment": "earth.terrain",
+    "counted": 1619157,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2008,
+    "segment": "earth.terrain",
+    "counted": 1618992,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2009,
+    "segment": "earth.terrain",
+    "counted": 1618821,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2010,
+    "segment": "earth.terrain",
+    "counted": 1618612,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2011,
+    "segment": "earth.terrain",
+    "counted": 1618466,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2012,
+    "segment": "earth.terrain",
+    "counted": 1618258,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2013,
+    "segment": "earth.terrain",
+    "counted": 1618067,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2014,
+    "segment": "earth.terrain",
+    "counted": 1617899,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2015,
+    "segment": "earth.terrain",
+    "counted": 1617732,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2016,
+    "segment": "earth.terrain",
+    "counted": 1617554,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2017,
+    "segment": "earth.terrain",
+    "counted": 1617383,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2018,
+    "segment": "earth.terrain",
+    "counted": 1617197,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2019,
+    "segment": "earth.terrain",
+    "counted": 1616993,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2020,
+    "segment": "earth.terrain",
+    "counted": 1616785,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2021,
+    "segment": "earth.terrain",
+    "counted": 1616542,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2022,
+    "segment": "earth.terrain",
+    "counted": 1616370,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2023,
+    "segment": "earth.terrain",
+    "counted": 1616185,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2024,
+    "segment": "earth.terrain",
+    "counted": 1615992,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2025,
+    "segment": "earth.terrain",
+    "counted": 1615784,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2026,
+    "segment": "earth.terrain",
+    "counted": 1615574,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2027,
+    "segment": "earth.terrain",
+    "counted": 1615352,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2028,
+    "segment": "earth.terrain",
+    "counted": 1615108,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2029,
+    "segment": "earth.terrain",
+    "counted": 1614883,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2030,
+    "segment": "earth.terrain",
+    "counted": 1614681,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2031,
+    "segment": "earth.terrain",
+    "counted": 1614470,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2032,
+    "segment": "earth.terrain",
+    "counted": 1614260,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2033,
+    "segment": "earth.terrain",
+    "counted": 1614035,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2034,
+    "segment": "earth.terrain",
+    "counted": 1613808,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2035,
+    "segment": "earth.terrain",
+    "counted": 1613551,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2036,
+    "segment": "earth.terrain",
+    "counted": 1613267,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2037,
+    "segment": "earth.terrain",
+    "counted": 1613063,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2038,
+    "segment": "earth.terrain",
+    "counted": 1612837,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2039,
+    "segment": "earth.terrain",
+    "counted": 1612609,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2040,
+    "segment": "earth.terrain",
+    "counted": 1612364,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2041,
+    "segment": "earth.terrain",
+    "counted": 1612090,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2042,
+    "segment": "earth.terrain",
+    "counted": 1611801,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2043,
+    "segment": "earth.terrain",
+    "counted": 1611545,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2044,
+    "segment": "earth.terrain",
+    "counted": 1611301,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2045,
+    "segment": "earth.terrain",
+    "counted": 1611054,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2046,
+    "segment": "earth.terrain",
+    "counted": 1610798,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2047,
+    "segment": "earth.terrain",
+    "counted": 1610533,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2048,
+    "segment": "earth.terrain",
+    "counted": 1610230,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2049,
+    "segment": "earth.terrain",
+    "counted": 1609916,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2050,
+    "segment": "earth.terrain",
+    "counted": 1609656,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2051,
+    "segment": "earth.terrain",
+    "counted": 1609398,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2052,
+    "segment": "earth.terrain",
+    "counted": 1609117,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2053,
+    "segment": "earth.terrain",
+    "counted": 1608827,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2054,
+    "segment": "earth.terrain",
+    "counted": 1608516,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2055,
+    "segment": "earth.terrain",
+    "counted": 1608185,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2056,
+    "segment": "earth.terrain",
+    "counted": 1607903,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2057,
+    "segment": "earth.terrain",
+    "counted": 1607621,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2058,
+    "segment": "earth.terrain",
+    "counted": 1607323,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2059,
+    "segment": "earth.terrain",
+    "counted": 1607013,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2060,
+    "segment": "earth.terrain",
+    "counted": 1606652,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2061,
+    "segment": "earth.terrain",
+    "counted": 1606335,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2062,
+    "segment": "earth.terrain",
+    "counted": 1606049,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2063,
+    "segment": "earth.terrain",
+    "counted": 1605735,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2064,
+    "segment": "earth.terrain",
+    "counted": 1605416,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2065,
+    "segment": "earth.terrain",
+    "counted": 1605062,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2066,
+    "segment": "earth.terrain",
+    "counted": 1604684,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2067,
+    "segment": "earth.terrain",
+    "counted": 1604392,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2068,
+    "segment": "earth.terrain",
+    "counted": 1604060,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2069,
+    "segment": "earth.terrain",
+    "counted": 1603731,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2070,
+    "segment": "earth.terrain",
+    "counted": 1603366,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2071,
+    "segment": "earth.terrain",
+    "counted": 1602976,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2072,
+    "segment": "earth.terrain",
+    "counted": 1602643,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2073,
+    "segment": "earth.terrain",
+    "counted": 1602314,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2074,
+    "segment": "earth.terrain",
+    "counted": 1601958,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2075,
+    "segment": "earth.terrain",
+    "counted": 1601572,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2076,
+    "segment": "earth.terrain",
+    "counted": 1601181,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2077,
+    "segment": "earth.terrain",
+    "counted": 1600837,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2078,
+    "segment": "earth.terrain",
+    "counted": 1600491,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2079,
+    "segment": "earth.terrain",
+    "counted": 1600119,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2080,
+    "segment": "earth.terrain",
+    "counted": 1599709,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2081,
+    "segment": "earth.terrain",
+    "counted": 1599305,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2082,
+    "segment": "earth.terrain",
+    "counted": 1598956,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2083,
+    "segment": "earth.terrain",
+    "counted": 1598595,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2084,
+    "segment": "earth.terrain",
+    "counted": 1598206,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2085,
+    "segment": "earth.terrain",
+    "counted": 1597757,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2086,
+    "segment": "earth.terrain",
+    "counted": 1597389,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2087,
+    "segment": "earth.terrain",
+    "counted": 1597023,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2088,
+    "segment": "earth.terrain",
+    "counted": 1596632,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2089,
+    "segment": "earth.terrain",
+    "counted": 1596198,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2090,
+    "segment": "earth.terrain",
+    "counted": 1595782,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2091,
+    "segment": "earth.terrain",
+    "counted": 1595411,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2092,
+    "segment": "earth.terrain",
+    "counted": 1595036,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2093,
+    "segment": "earth.terrain",
+    "counted": 1594612,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2094,
+    "segment": "earth.terrain",
+    "counted": 1594148,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2095,
+    "segment": "earth.terrain",
+    "counted": 1593778,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2096,
+    "segment": "earth.terrain",
+    "counted": 1593396,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2097,
+    "segment": "earth.terrain",
+    "counted": 1592973,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2098,
+    "segment": "earth.terrain",
+    "counted": 1592489,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2099,
+    "segment": "earth.terrain",
+    "counted": 1592117,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2100,
+    "segment": "earth.rise",
+    "counted": 1591711,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2101,
+    "segment": "earth.rise",
+    "counted": 1590567,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2102,
+    "segment": "earth.rise",
+    "counted": 1588348,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2103,
+    "segment": "earth.rise",
+    "counted": 1584771,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2104,
+    "segment": "earth.rise",
+    "counted": 1579828,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2105,
+    "segment": "earth.rise",
+    "counted": 1573267,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2106,
+    "segment": "earth.rise",
+    "counted": 1565249,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2107,
+    "segment": "earth.rise",
+    "counted": 1555528,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2108,
+    "segment": "earth.rise",
+    "counted": 1544118,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2109,
+    "segment": "earth.rise",
+    "counted": 1531024,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2110,
+    "segment": "earth.rise",
+    "counted": 1516136,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2111,
+    "segment": "earth.rise",
+    "counted": 1499383,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2112,
+    "segment": "earth.rise",
+    "counted": 1480732,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2113,
+    "segment": "earth.rise",
+    "counted": 1460199,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2114,
+    "segment": "earth.rise",
+    "counted": 1437680,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2115,
+    "segment": "earth.rise",
+    "counted": 1413116,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2116,
+    "segment": "earth.rise",
+    "counted": 1386441,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2117,
+    "segment": "earth.rise",
+    "counted": 1357691,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2118,
+    "segment": "earth.rise",
+    "counted": 1326751,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2119,
+    "segment": "earth.rise",
+    "counted": 1293561,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2120,
+    "segment": "earth.rise",
+    "counted": 1257973,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2121,
+    "segment": "earth.rise",
+    "counted": 1220056,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2138,
+    "segment": "earth.rise",
+    "counted": 1436931,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.803,
+    "pass": true
+   },
+   {
+    "frame": 2139,
+    "segment": "earth.rise",
+    "counted": 1400598,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.789,
+    "pass": true
+   },
+   {
+    "frame": 2140,
+    "segment": "earth.rise",
+    "counted": 1352494,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.751,
+    "pass": true
+   },
+   {
+    "frame": 2141,
+    "segment": "earth.rise",
+    "counted": 1304291,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.68,
+    "pass": true
+   },
+   {
+    "frame": 2142,
+    "segment": "earth.rise",
+    "counted": 1256260,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.715,
+    "pass": true
+   },
+   {
+    "frame": 2143,
+    "segment": "earth.rise",
+    "counted": 1208481,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.729,
+    "pass": true
+   },
+   {
+    "frame": 2144,
+    "segment": "earth.rise",
+    "counted": 1159268,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.756,
+    "pass": true
+   },
+   {
+    "frame": 2145,
+    "segment": "earth.rise",
+    "counted": 1089818,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.856,
+    "pass": true
+   },
+   {
+    "frame": 2146,
+    "segment": "earth.rise",
+    "counted": 1009353,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.934,
+    "pass": true
+   },
+   {
+    "frame": 2147,
+    "segment": "earth.rise",
+    "counted": 929651,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.979,
+    "pass": true
+   },
+   {
+    "frame": 2148,
+    "segment": "earth.rise",
+    "counted": 850097,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.998,
+    "pass": true
+   },
+   {
+    "frame": 2149,
+    "segment": "earth.rise",
+    "counted": 767046,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2150,
+    "segment": "earth.rise",
+    "counted": 700877,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2151,
+    "segment": "earth.rise",
+    "counted": 649406,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2152,
+    "segment": "earth.rise",
+    "counted": 609444,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2153,
+    "segment": "earth.rise",
+    "counted": 578570,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2154,
+    "segment": "earth.rise",
+    "counted": 554796,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2155,
+    "segment": "earth.rise",
+    "counted": 536662,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2156,
+    "segment": "earth.rise",
+    "counted": 522964,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2157,
+    "segment": "earth.rise",
+    "counted": 512744,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2158,
+    "segment": "earth.rise",
+    "counted": 505189,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2159,
+    "segment": "earth.rise",
+    "counted": 499728,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2160,
+    "segment": "earth.rise",
+    "counted": 495914,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2161,
+    "segment": "earth.rise",
+    "counted": 493258,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2162,
+    "segment": "earth.rise",
+    "counted": 491439,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2163,
+    "segment": "earth.rise",
+    "counted": 490215,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2164,
+    "segment": "earth.rise",
+    "counted": 489381,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2165,
+    "segment": "earth.rise",
+    "counted": 488795,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2166,
+    "segment": "earth.rise",
+    "counted": 488370,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2167,
+    "segment": "earth.rise",
+    "counted": 487984,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2168,
+    "segment": "earth.rise",
+    "counted": 487606,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2169,
+    "segment": "earth.rise",
+    "counted": 487238,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2170,
+    "segment": "earth.rise",
+    "counted": 486830,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2171,
+    "segment": "earth.rise",
+    "counted": 486403,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2172,
+    "segment": "earth.rise",
+    "counted": 485929,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2173,
+    "segment": "earth.rise",
+    "counted": 485456,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 2174,
+    "segment": "earth.rise",
+    "counted": 484991,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   }
+  ],
+  "rule": "counted when green > 0.5; soft when red byte < 127.5 x detail.minTexelsPerPixel; pass when soft/counted <= detail.maxSoftPixelFraction"
+ },
+ "G5": {
+  "pass": true,
+  "tier": "final",
+  "diag": "nograin",
+  "frames": [
+   {
+    "frame": 1755,
+    "segment": "earth.hold",
+    "kind": "hold",
+    "invalid": 0,
+    "coverage": 0.32945,
+    "pass": true
+   },
+   {
+    "frame": 1857,
+    "segment": "earth.dive",
+    "kind": "dive",
+    "invalid": 0,
+    "coverage": 0.48334,
+    "pass": true
+   },
+   {
+    "frame": 2010,
+    "segment": "earth.terrain",
+    "kind": "terrain",
+    "invalid": 0,
+    "coverage": 0.78056,
+    "pass": true
+   },
+   {
+    "frame": 2156,
+    "segment": "earth.rise",
+    "kind": "rise",
+    "invalid": 0,
+    "coverage": 0.25221,
+    "pass": true
+   }
+  ]
+ },
+ "G17": {
+  "pass": true,
+  "tier": "final",
+  "diag": "nograin",
+  "minSharpnessRatio": 0.8,
+  "definition": {
+   "name": "dog-band-energy-v1",
+   "luma": "sRGB luma 0.2126 R + 0.7152 G + 0.0722 B on 0..1 values, no linearisation",
+   "band": "difference of Gaussians: blur sigma 0.6 px minus blur sigma 2.0 px, which keeps roughly 0.08 to 0.3 cycles per pixel",
+   "energy": "mean of the squared band signal inside a tile",
+   "grid": [
+    12,
+    8
+   ],
+   "tileMeanLumaFloor": 0.04,
+   "tileEnergyFloor": "max(2e-5, 0.05 x the 90th percentile of approved tile energy)",
+   "ratio": "per tile film energy / approved energy; median and 25th percentile over kept tiles",
+   "resize": "approved image centre cropped to the film aspect, then Lanczos to the film size"
+  },
+  "frames": [
+   {
+    "frame": 1755,
+    "segment": "earth.hold",
+    "approved": "references/approved/earth-hero.png",
+    "tiles": 72,
+    "median": 1.2251079008605958,
+    "p25": 1.1815503743901696,
+    "floor": 0.00011178434218064132,
+    "worst": [
+     {
+      "tile": [
+       9,
+       2
+      ],
+      "ratio": 0.9358
+     },
+     {
+      "tile": [
+       5,
+       0
+      ],
+      "ratio": 1.0346
+     },
+     {
+      "tile": [
+       3,
+       2
+      ],
+      "ratio": 1.0428
+     },
+     {
+      "tile": [
+       6,
+       0
+      ],
+      "ratio": 1.0448
+     },
+     {
+      "tile": [
+       4,
+       1
+      ],
+      "ratio": 1.0687
+     }
+    ],
+    "pass": true
+   },
+   {
+    "frame": 2010,
+    "segment": "earth.terrain",
+    "approved": "references/approved/earth-close.jpg",
+    "tiles": 78,
+    "median": 1.0120570496028878,
+    "p25": 0.9752793712232578,
+    "floor": 0.00008365129865478164,
+    "worst": [
+     {
+      "tile": [
+       5,
+       3
+      ],
+      "ratio": 0.7587
+     },
+     {
+      "tile": [
+       5,
+       2
+      ],
+      "ratio": 0.7742
+     },
+     {
+      "tile": [
+       5,
+       4
+      ],
+      "ratio": 0.7836
+     },
+     {
+      "tile": [
+       5,
+       5
+      ],
+      "ratio": 0.8463
+     },
+     {
+      "tile": [
+       5,
+       1
+      ],
+      "ratio": 0.8837
+     }
+    ],
+    "pass": true
+   }
+  ]
+ },
+ "seconds": 1073.779,
+ "pass": true
+}

@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, WORK, args, ensureBuild, loadConfig, machineId } from './lib/common'
 import { openCapture } from './lib/browser'
+import { samplesOf } from './lib/samples'
 
 const cfg = loadConfig()
 ensureBuild()
@@ -52,7 +53,7 @@ for (const assets of ['full', 'web']) {
       await time(holdFrame, 'draft')
       const one = (await time(holdFrame, 'draft') + (await time(holdFrame, 'draft'))) / 2
       const four = await time(holdFrame, 'review')
-      const n = cfg.tiers.review!.samplesPerFrame
+      const n = samplesOf(holdFrame, 'review')
       const perSample = (four - one) / (n - 1)
       ;(result.formats as Record<string, unknown>)[f.id] = { draftFrameSeconds: one, reviewHoldFrameSeconds: four, secondsPerSample: perSample, fixedPerFrameSeconds: one - perSample, rssMb: rssMb() }
     }

@@ -2,7 +2,8 @@ import raw from '../config/showcase.json'
 
 export type SegmentKind = 'hold' | 'dive' | 'terrain' | 'rise' | 'travel' | 'retreat' | 'lookback' | 'fade'
 export interface FormatDef { id: string; width: number; height: number }
-export interface TierDef { samplesPerFrame: number; fastSamplesPerFrame: number }
+export interface TierDef { samplesPerFrame: number; fastSamplesPerFrame: number; maxSamplesPerFrame: number }
+export interface MotionDef { maxStepPx: number; probeGrid: [number, number]; bodyReach: number; minBodyPx: number; terrainGround: number }
 export interface AssetSetDef { wrapMapWidth: number; reliefWidth: number; skyWidth: number; maxSetMemoryMb: number }
 export interface StopDef { id: string; name: string; hero: string; close: string; moons: string[]; rings: boolean }
 export interface SegmentDef { id: string; stop: string; kind: SegmentKind; start: number; end: number }
@@ -31,7 +32,7 @@ const REQUIRED = [
   'name', 'seed', 'repo.url', 'repo.branch', 'repo.maxFileMb', 'repo.maxTreeGb', 'film.fps', 'film.durationSeconds', 'film.shutterDegrees', 'film.hookSeconds',
   'formats.master', 'formats.preview', 'formats.uhd', 'platform.maxWidth', 'platform.maxHeight', 'platform.maxFps', 'platform.maxBitrateMbps', 'platform.loopsAtOrUnderSeconds',
   'export.container', 'export.videoCodec', 'export.bitrateMbps', 'export.proofSeconds', 'export.memoryTestSeconds', 'export.files.master', 'export.files.uhd', 'export.files.clip', 'export.files.preview',
-  'previewFilm.bitrateMbps', 'tiers.draft', 'tiers.review', 'tiers.final', 'motion.fastKinds', 'assetSets.web', 'assetSets.full', 'sets.maxLoaded', 'lookLockStop', 'buildOrderAfterLookLock',
+  'previewFilm.bitrateMbps', 'tiers.draft', 'tiers.review', 'tiers.final', 'motion.fastKinds', 'motion.maxStepPx', 'motion.probeGrid', 'motion.bodyReach', 'motion.minBodyPx', 'motion.terrainGround', 'assetSets.web', 'assetSets.full', 'sets.maxLoaded', 'lookLockStop', 'buildOrderAfterLookLock',
   'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
   'assets.maxTakesPerAsset', 'quality.passScore', 'critics.maxImageLongEdgePx', 'critics.contactSheetFrames', 'critics.phonePreviewWidthPx', 'critics.maxFilesPerMessage',
   'sandbox.chunkBudgetMinutes', 'sandbox.maxFramesOnDisk', 'sandbox.minFreeDiskGb', 'sandbox.maxRenderProcesses',
@@ -57,6 +58,7 @@ export interface Config {
   tiers: Record<string, TierDef>
   assetSets: Record<string, AssetSetDef>
   fastKinds: SegmentKind[]
+  motion: MotionDef
   stops: StopDef[]
   stopIds: string[]
   segments: Segment[]
@@ -101,7 +103,14 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   for (const id of stopIds) if (typeof prompts[id] !== 'string' || prompts[id].length === 0) fail('posts.prompts has no prompt for stop ' + id)
   if (!(r.posts.introMaxSeconds > 0) || !(r.posts.readHoldSeconds >= 0) || !(r.posts.readHoldSeconds < r.posts.introMaxSeconds)) fail('posts.readHoldSeconds must fit inside posts.introMaxSeconds')
   if (!(r.posts.introMaxTries >= 1) || !isWhole(r.posts.introMaxTries) || !(r.posts.checkMaxFixes >= 0) || !isWhole(r.posts.checkMaxFixes)) fail('posts.introMaxTries and posts.checkMaxFixes must be whole numbers')
-  for (const [id, t] of Object.entries(r.tiers)) if (!(t.samplesPerFrame >= 1) || !(t.fastSamplesPerFrame >= 1)) fail('tier ' + id + ' has no samples')
+  for (const [id, t] of Object.entries(r.tiers)) {
+    if (!(t.samplesPerFrame >= 1) || !(t.fastSamplesPerFrame >= 1)) fail('tier ' + id + ' has no samples')
+    if (!isWhole(t.maxSamplesPerFrame) || t.maxSamplesPerFrame < Math.max(t.samplesPerFrame, t.fastSamplesPerFrame)) fail('tier ' + id + ' has maxSamplesPerFrame under its sample counts')
+  }
+  const m = r.motion
+  if (!(m.maxStepPx > 0)) fail('motion.maxStepPx must be above 0')
+  if (m.probeGrid.length !== 2 || m.probeGrid.some((n) => !isWhole(n) || n < 2)) fail('motion.probeGrid needs two whole numbers of at least 2')
+  if (!(m.bodyReach >= 1) || !(m.minBodyPx >= 0) || !(m.terrainGround > 0)) fail('motion.bodyReach must be at least 1, motion.minBodyPx at least 0 and motion.terrainGround above 0')
   return {
     raw: r,
     name: r.name,
@@ -116,6 +125,7 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
     tiers: r.tiers,
     assetSets: r.assetSets,
     fastKinds,
+    motion: { maxStepPx: m.maxStepPx, probeGrid: [m.probeGrid[0]!, m.probeGrid[1]!], bodyReach: m.bodyReach, minBodyPx: m.minBodyPx, terrainGround: m.terrainGround },
     stops: r.stops,
     stopIds,
     segments,

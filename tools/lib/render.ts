@@ -121,10 +121,10 @@ export class Capture {
       if (still?.frame === frame && recordMatches(still, want, deps)) return { file: canonical, record: still }
     }
     this.session ??= await openCapture({ dist: DIST, format: this.format, assets: 'full', diag: 'beauty' })
-    const { png, seconds } = await renderPng(this.session.page, frame, tier)
+    const { png, seconds, samples } = await renderPng(this.session.page, frame, tier)
     mkdirSync(dirname(home), { recursive: true })
     writeFileSync(home, png)
-    const record = this.record(tier, [frame], { seconds })
+    const record = this.record(tier, [frame], { seconds, samples })
     writeRecord(home, record)
     return { file: home, record }
   }
