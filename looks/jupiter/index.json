@@ -1,46 +1,74 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T23:08:00.665Z",
- "head": "f406b2bb1ffaee0b97d8ed912739c452f8e80bb8",
- "note": "POLISH READY f406b2b: finals, measures and gates done (G17 at 3150 median 1.032, G13 0 of 463 soft)",
+ "pushed": "2026-11-21T23:21:48.756Z",
+ "head": "6d58f272e035c4e3f53591ca35e0b699f37ffb00",
+ "note": "Polish minors: south limb falloff, a halo at low sun fitted to the approved hero",
  "looks": [
   {
-   "time": "2026-11-21T23:00:39.148Z",
-   "file": "20261121230039148-job-frame-03234.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3234, draft tier, texels view, from the running measure job",
+   "time": "2026-11-21T23:21:48.206Z",
+   "file": "20261121232148206-note-limb_3296.jpg",
+   "source": "out/work/view/limb_3296.jpg",
+   "kind": "note",
+   "label": "jupiter rise 3296 limb, 2x: before (top), with the low sun halo (bottom)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T23:21:47.575Z",
+   "file": "20261121232147575-note-limb_2997.jpg",
+   "source": "out/work/view/limb_2997.jpg",
+   "kind": "note",
+   "label": "jupiter dive 2997 south limb, 2x: before (top), with the low sun halo (bottom)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T23:21:47.046Z",
+   "file": "20261121232147046-note-limb_south_2895.jpg",
+   "source": "out/work/view/limb_south_2895.jpg",
+   "kind": "note",
+   "label": "jupiter hold 2895 south limb, 3x: approved (top), round 25 build (middle), with the low sun halo (bottom)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T23:21:21.698Z",
+   "file": "20261121232121698-compare-compare-jupiter-hold-view.jpg",
+   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.hold: approved image left, film frame right, final tier",
    "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3234,
-   "tier": "draft",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T22:50:53.455Z",
-   "file": "20261121225053455-note-jupiter.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.dive-cover-16x9-review.png",
-   "kind": "note",
-   "label": "jupiter dive cover sheet, review tier, polish state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T22:50:52.556Z",
-   "file": "20261121225052556-note-jupiter.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
-   "kind": "note",
-   "label": "jupiter.terrain sheet, review tier, polish state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T22:50:51.749Z",
-   "file": "20261121225051749-note-f03296-16x9-final-full.jpg",
+   "time": "2026-11-21T23:21:18.324Z",
+   "file": "20261121232118324-still-f03296-16x9-final-full.jpg",
    "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "note",
-   "label": "jupiter frame 3296, final tier, polish state",
-   "stop": "jupiter"
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T23:17:36.524Z",
+   "file": "20261121231736524-still-f02895-16x9-final-full.jpg",
+   "source": "out/work/stills/f02895-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T22:49:53.115Z",
@@ -57,20 +85,6 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T22:49:49.579Z",
-   "file": "20261121224949579-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T22:48:23.604Z",
    "file": "20261121224823604-still-f03150-16x9-final-full.jpg",
    "source": "out/work/stills/f03150-16x9-final-full.png",
@@ -79,20 +93,6 @@
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T22:45:36.524Z",
-   "file": "20261121224536524-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
