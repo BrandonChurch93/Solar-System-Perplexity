@@ -1,69 +1,76 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T07:37:44.669Z",
- "head": "a5bea7669667a01113635cbe7b0697f46b11b31f",
- "note": "07:38 terrain fidelity round: slower skim, junction cut from the approved image, close light table, two-axis grain, grey shade; sheets of dive, terrain and rise",
+ "pushed": "2026-11-21T08:01:49.872Z",
+ "head": "a6d50da1b0fa7bd644b2f4764eea2c4a7d9e7754",
+ "note": "h4: junction of globe and rings rebuilt (hidden pass, traced junction, C ring band coordinate); hold re-check; measure running; open: rise 3837 fade smudge",
  "looks": [
   {
-   "time": "2026-11-21T07:37:39.998Z",
-   "file": "20261121073739998-note-sheet-terrain-r1.jpg",
-   "source": "out/work/saturn/sheet-terrain-r1.png",
+   "time": "2026-11-21T08:01:48.942Z",
+   "file": "20261121080148942-note-pair-hold-h4.jpg",
+   "source": "out/work/saturn/pair-hold-h4.jpg",
    "kind": "note",
-   "label": "terrain sheet draft 07:37",
+   "label": "Saturn hold 3465 final beside approved hero (h4)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T07:37:39.347Z",
-   "file": "20261121073739347-note-sheet-rise-r1.jpg",
-   "source": "out/work/saturn/sheet-rise-r1.png",
+   "time": "2026-11-21T08:01:47.872Z",
+   "file": "20261121080147872-note-sheet-rise-h4.jpg",
+   "source": "out/work/saturn/sheet-rise-h4.png",
    "kind": "note",
-   "label": "rise sheet draft 07:37",
+   "label": "Saturn rise sheet draft (h4)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T07:37:38.764Z",
-   "file": "20261121073738764-note-sheet-dive-r1.jpg",
-   "source": "out/work/saturn/sheet-dive-r1.png",
+   "time": "2026-11-21T08:01:46.872Z",
+   "file": "20261121080146872-note-sheet-dive-h4.jpg",
+   "source": "out/work/saturn/sheet-dive-h4.png",
    "kind": "note",
-   "label": "dive sheet draft 07:36",
+   "label": "Saturn dive sheet draft (h4)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T07:37:38.210Z",
-   "file": "20261121073738210-note-pair-terrain-r1.jpg",
-   "source": "out/work/saturn/pair-terrain-r1.jpg",
+   "time": "2026-11-21T08:01:46.025Z",
+   "file": "20261121080146025-note-junc-h4.jpg",
+   "source": "out/work/saturn/junc-h4.jpg",
    "kind": "note",
-   "label": "terrain 3720 final tier: approved above, film below (slower skim, junction cut, close light table)",
+   "label": "Saturn junction of globe and rings, native crops approved left film right (h4)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T07:37:30.614Z",
-   "file": "20261121073730614-sheet-saturn.terrain-16x9-draft.jpg",
-   "source": "out/work/sheets/saturn.terrain-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.terrain, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "first": 3630,
-   "last": 3809,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
+   "time": "2026-11-21T08:01:44.795Z",
+   "file": "20261121080144795-note-pair-terrain-h4.jpg",
+   "source": "out/work/saturn/pair-terrain-h4.jpg",
+   "kind": "note",
+   "label": "Saturn terrain 3720 final beside approved (junction round h4)",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-21T07:36:55.716Z",
-   "file": "20261121073655716-frame-f03630-draft.jpg",
-   "source": "out/work/sheets/.frames-xtO2Ze/f03630-draft.png",
+   "time": "2026-11-21T08:00:47.685Z",
+   "file": "20261121080047685-frame-h-h4-3465.jpg",
+   "source": "out/work/saturn/h-h4-3465.png",
    "kind": "frame",
-   "label": "saturn.terrain frame 3630, draft tier",
+   "label": "saturn.hold frame 3465, final tier",
    "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3630,
-   "tier": "draft",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
+   "engine": "6d4f67865f286916"
+  },
+  {
+   "time": "2026-11-21T07:56:37.393Z",
+   "file": "20261121075637393-frame-t-h4-3720.jpg",
+   "source": "out/work/saturn/t-h4-3720.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, final tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6d4f67865f286916"
   },
   {
    "time": "2026-11-21T06:48:54.773Z",
@@ -78,20 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e6143083c024f4b9"
-  },
-  {
-   "time": "2026-11-21T05:47:47.369Z",
-   "file": "20261121054747369-frame-hold.jpg",
-   "source": "out/work/saturn/hold.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
   }
  ]
 }
