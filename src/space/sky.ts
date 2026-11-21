@@ -85,10 +85,16 @@ ${INVERSE_FILMIC_GLSL}
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
 vec3 patchTexel(sampler2D s, vec3 p) {
-  vec2 dx = dFdx(p.xy) * 0.25;
-  vec2 dy = dFdy(p.xy) * 0.25;
+  vec2 gx = dFdx(p.xy);
+  vec2 gy = dFdy(p.xy);
+  vec2 dx = gx * 0.25;
+  vec2 dy = gy * 0.25;
   vec3 t = vec3(0.0);
+#ifdef PATCH_IMPLICIT
   for (int k = 0; k < (p.z > 0.0 ? 1 : 0); k++) t = 0.25 * (texture(s, p.xy + dx + dy).rgb + texture(s, p.xy - dx + dy).rgb + texture(s, p.xy + dx - dy).rgb + texture(s, p.xy - dx - dy).rgb);
+#else
+  for (int k = 0; k < (p.z > 0.0 ? 1 : 0); k++) t = 0.25 * (textureGrad(s, p.xy + dx + dy, gx, gy).rgb + textureGrad(s, p.xy - dx + dy, gx, gy).rgb + textureGrad(s, p.xy + dx - dy, gx, gy).rgb + textureGrad(s, p.xy - dx - dy, gx, gy).rgb);
+#endif
   return t;
 }
 vec3 patched(vec3 col, vec3 p, vec3 t, int i, float k) {
@@ -112,9 +118,13 @@ void main() {
     vec3 b0 = textureGrad(uBand, bc.xy, dx, dy).rgb;
     vec2 gx = dx * uBandClean.z;
     vec2 gy = dy * uBandClean.z;
-    vec3 lo = min(min(textureGrad(uBand, bc.xy + vec2(tx.x, tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy + vec2(-tx.x, tx.y), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(tx.x, -tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy - tx, gx, gy).rgb));
-    lo = min(lo, min(min(textureGrad(uBand, bc.xy + vec2(tx.x * 1.41, 0.0), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(tx.x * 1.41, 0.0), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(0.0, tx.y * 1.41), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(0.0, tx.y * 1.41), gx, gy).rgb)));
-    band = inverseFilmic(mix(min(b0, lo), b0, uBandClean.y));
+    vec3 kept = b0;
+    for (int j = 0; j < (uBandClean.y < 1.0 ? 1 : 0); j++) {
+      vec3 lo = min(min(textureGrad(uBand, bc.xy + vec2(tx.x, tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy + vec2(-tx.x, tx.y), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(tx.x, -tx.y), gx, gy).rgb, textureGrad(uBand, bc.xy - tx, gx, gy).rgb));
+      lo = min(lo, min(min(textureGrad(uBand, bc.xy + vec2(tx.x * 1.41, 0.0), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(tx.x * 1.41, 0.0), gx, gy).rgb), min(textureGrad(uBand, bc.xy + vec2(0.0, tx.y * 1.41), gx, gy).rgb, textureGrad(uBand, bc.xy - vec2(0.0, tx.y * 1.41), gx, gy).rgb)));
+      kept = mix(min(b0, lo), b0, uBandClean.y);
+    }
+    band = inverseFilmic(kept);
     vec3 pd = bandPlane(sd);
     vec2 puv = vec2(atan(pd.x, pd.z) / (2.0 * PI) + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / PI + 0.5);
     float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
@@ -454,6 +464,12 @@ export class Sky {
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
+    const sky = this.pass.material
+    if (('PATCH_IMPLICIT' in sky.defines) !== this.cull) {
+      if (this.cull) sky.defines.PATCH_IMPLICIT = ''
+      else delete sky.defines.PATCH_IMPLICIT
+      sky.needsUpdate = true
+    }
     const rects = open ? tileRects(open, target.width, target.height) : null
     if (this.texture && !rects) this.pass.render(renderer, target)
     if (this.texture && rects) {
