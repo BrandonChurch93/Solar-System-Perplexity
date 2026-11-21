@@ -1,19 +1,19 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T15:14:25.969Z",
- "head": "be53299adb51b2c4216888f1d57abe656d8c305b",
- "note": "round 3: designing the dive ease in (item 1), nothing rendered yet",
+ "pushed": "2026-11-21T15:50:21.092Z",
+ "head": "7e9d33a291b6c6927068679c7843c1bc56358ba3",
+ "note": "round 3 motion build: rise ends on the hold view (draft stills in work), dive retimed, hold stars locked, Moon slow",
  "looks": [
   {
-   "time": "2026-11-21T14:58:00.412Z",
-   "file": "20261121145800412-frame-r-2138.jpg",
-   "source": "out/work/earth/p47/r-2138.png",
+   "time": "2026-11-21T15:50:06.707Z",
+   "file": "20261121155006707-frame-f-2137.jpg",
+   "source": "out/work/earth/r1/f-2137.png",
    "kind": "frame",
-   "label": "earth.rise frame 2138, review tier",
+   "label": "earth.rise frame 2137, draft tier",
    "stop": "earth",
    "segment": "earth.rise",
-   "frame": 2138,
-   "tier": "review",
+   "frame": 2137,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
