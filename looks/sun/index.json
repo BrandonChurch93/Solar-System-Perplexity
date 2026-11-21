@@ -1,18 +1,70 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T12:38:23.715Z",
- "head": "00c51dc27e45a12c4a91c2ade3da4ba3accee75f",
- "note": "apron repainted (matte cells), frame 90 edges now approved pixels; verifying before commit",
+ "pushed": "2026-11-21T13:00:56.451Z",
+ "head": "33fab1cb85a26553565bc20bc8d05e206979e250",
+ "note": "checkpoint: new apron verified; next the rise as a matched dissolve (round 15 item 1)",
  "looks": [
   {
-   "time": "2026-11-21T12:37:50.324Z",
-   "file": "20261121123750324-frame-f00056.jpg",
-   "source": "out/work/seq/56-100/f00056.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 56, draft tier",
+   "time": "2026-11-21T13:00:55.766Z",
+   "file": "20261121130055766-note-f00090.jpg",
+   "source": "out/work/sun/ap8/f00090.png",
+   "kind": "note",
+   "label": "frame 90 final nograin, apron round 11, feather out",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T13:00:55.107Z",
+   "file": "20261121130055107-note-f00060.jpg",
+   "source": "out/work/sun/ap8/f00060.png",
+   "kind": "note",
+   "label": "frame 60 final nograin, apron round 11, feather out",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T13:00:54.438Z",
+   "file": "20261121130054438-note-f00000.jpg",
+   "source": "out/work/sun/ap8/f00000.png",
+   "kind": "note",
+   "label": "frame 0 final nograin, apron round 11, feather out",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:47:22.593Z",
+   "file": "20261121124722593-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
    "stop": "sun",
    "segment": "sun.terrain",
-   "frame": 56,
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T12:42:01.511Z",
+   "file": "20261121124201511-frame-f00214.jpg",
+   "source": "out/work/seq/186-214/f00214.png",
+   "kind": "frame",
+   "label": "sun.rise frame 214, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 214,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:40:08.795Z",
+   "file": "20261121124008795-frame-f00098.jpg",
+   "source": "out/work/seq/56-100/f00098.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 98, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 98,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -24,52 +76,6 @@
    "source": "out/work/sun/i52-f150.jpg",
    "kind": "note",
    "label": "frame 150 with the repainted apron",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:37:44.601Z",
-   "file": "20261121123744601-note-i51-f90-BL-approved-ap6-ap7.jpg",
-   "source": "out/work/sun/i51-f90-BL-approved-ap6-ap7.png",
-   "kind": "note",
-   "label": "frame 90 bottom left: approved, film before, film with the apron feather moved outside the approved frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:37:43.991Z",
-   "file": "20261121123743991-note-i50-f60-r10-vs-new.jpg",
-   "source": "out/work/sun/i50-f60-r10-vs-new.jpg",
-   "kind": "note",
-   "label": "frame 60, round 10 apron above, repainted apron below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:37:43.371Z",
-   "file": "20261121123743371-note-i50-f0-r10-vs-new.jpg",
-   "source": "out/work/sun/i50-f0-r10-vs-new.jpg",
-   "kind": "note",
-   "label": "frame 0, round 10 apron above, repainted apron below (final, no grain)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:29:04.763Z",
-   "file": "20261121122904763-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T12:13:26.996Z",
-   "file": "20261121121326996-note-i36-f0-corners.jpg",
-   "source": "out/work/sun/i36-f0-corners.png",
-   "kind": "note",
-   "label": "Frame 0 bottom corners at native size: round 10 apron above, round 11 apron below",
    "stop": "sun"
   },
   {
