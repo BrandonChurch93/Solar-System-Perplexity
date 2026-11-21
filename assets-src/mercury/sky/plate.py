@@ -76,5 +76,5 @@ for key, n in SIZE.items():
 img.resize((1024, 1024), Image.LANCZOS).save('out/work/mercury/sun-plate-small.jpg', quality=90)
 f = (H / 2) / np.tan(np.radians(15))
 rect = [(X0 - W / 2) / f, -(Y0 + S - H / 2) / f, (X0 + S - W / 2) / f, -(Y0 - H / 2) / f]
-json.dump({'file': 'sun-plate.webp', 'rect': [round(v, 6) for v in rect], 'keep': KEEP, 'sunPixel': SUN[:2], 'sunRadiusPx': SUN[2]}, open('src/stops/mercury/sunplate.json', 'w'), indent=1)
+json.dump({'file': 'sun-plate.webp', 'rect': [round(v, 6) for v in rect], 'keep': KEEP, 'sunPixel': SUN[:2], 'sunRadiusPx': SUN[2], 'disc': round(SUN[2] / S, 6)}, open('src/stops/mercury/sunplate.json', 'w'), indent=1)
 print('rect', rect)

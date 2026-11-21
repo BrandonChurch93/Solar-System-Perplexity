@@ -3,6 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { NOISE_GLSL } from '../../terrain/relief'
+import { GRADE_GLSL } from './grade'
 
 export interface GlobeLook {
   limb: [number, number]
@@ -23,6 +24,7 @@ export interface GlobePatches {
 
 export interface GlobeOptions {
   map: THREE.Texture
+  grade: THREE.Texture
   mapWidth: number
   look: GlobeLook
   patches?: GlobePatches
@@ -93,6 +95,7 @@ in vec3 vView;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
+${GRADE_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
 vec3 spinY(vec3 d, float a) {
@@ -152,7 +155,7 @@ void main() {
   float slow = lumAt(dc, lod + 3.0) * 24.0 + lumAt(d, lod + 3.5) * 16.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
   float texels;
-  vec3 lin = inverseFilmic(surface(normalize(d + push * swing), d, texels));
+  vec3 lin = inverseFilmic(grade(surface(normalize(d + push * swing), d, texels), 2.0));
   float wide = lumAt(d, lod + 2.5);
   float region = smoothstep(uPulse.z, uPulse.w, wide);
   float phase = dot(d, vec3(23.0, 17.0, 29.0));
@@ -190,7 +193,7 @@ export class SunGlobe {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map },
+        uMap: { value: o.map }, uGrade: { value: o.grade },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
