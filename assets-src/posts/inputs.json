@@ -1,0 +1,9 @@
+{
+  "skill": "org:synthetic-query-typing",
+  "skillFolder": "~/.perplexity/skills/org/synthetic-query-typing",
+  "preset": "full",
+  "cps": 20,
+  "hold": 0.55,
+  "logicalWidth": 1280,
+  "promptBox": { "x": 170, "y": 292, "width": 940, "height": 250 }
+}
