@@ -25,6 +25,14 @@ SKY = 34.0
 SIZES = {"full": (5632, 3168), "web": (4096, 2304)}
 OUTER = 2.12
 EDGE_REACH = 120.0
+SEAT_ZONE = 60.0
+SEAT_REACH = 260.0
+GAP_BOX = (1560, 2380, 780, 1180)
+GAP_REACH = 420
+GAP_STEP = 12
+GAP_SIGMA = 3.0
+GAP_RANK = 0.15
+GAP_DARK = (45.0, 75.0)
 
 
 def canvas():
@@ -163,6 +171,94 @@ def ring_mask(img, alpha):
     return out
 
 
+def seat(comp, mask):
+    edge = np.load(str(OUT / "edge.npy"))
+    ring = edge > 0.5
+    sdm = (distance_transform_edt(ring) - distance_transform_edt(~ring)).astype(np.float32)
+    rect = np.ones((H, W), bool)
+    rect[0:SH, X0:X0 + SW] = False
+    away = distance_transform_edt(rect).astype(np.float32)
+    zone = (np.abs(sdm) < SEAT_ZONE) & (away > 0)
+    zone[:, X0 + SW:] = False
+    painted = np.where(zone, mask > 0.5, ring)
+    sdp = (distance_transform_edt(painted) - distance_transform_edt(~painted)).astype(np.float32)
+    smooth = cv2.GaussianBlur(sdm, (0, 0), 6)
+    gx = cv2.Sobel(smooth, cv2.CV_32F, 1, 0, ksize=5)
+    gy = cv2.Sobel(smooth, cv2.CV_32F, 0, 1, ksize=5)
+    norm = np.maximum(np.hypot(gx, gy), 1e-6)
+    off = np.where(zone, sdm - sdp, 0.0).astype(np.float32)
+    known = np.abs(sdm) < 1.5
+    _, (iy, ix) = distance_transform_edt(~(known & zone), return_indices=True)
+    off = cv2.GaussianBlur(off[iy, ix], (0, 0), 10)
+    t = np.clip(sdm / SEAT_REACH, 0, 1)
+    fall = 1 - t * t * (3 - 2 * t)
+    g = np.clip((away - 12) / 110, 0, 1)
+    guard = g * g * (3 - 2 * g)
+    w = (fall * guard * (np.abs(sdm) < SEAT_REACH + 1)).astype(np.float32)
+    w[:, X0 + SW:] = 0
+    vx, vy = off * w * gx / norm, off * w * gy / norm
+    xs, ys = np.meshgrid(np.arange(W, dtype=np.float32), np.arange(H, dtype=np.float32))
+    out = cv2.remap(comp, xs + vx, ys + vy, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    m = cv2.remap(mask, xs + vx, ys + vy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    move = np.hypot(vx, vy)
+    print("edge seated on the layout model: moved median", round(float(np.median(move[known & zone])), 2), "px, max", round(float(move.max()), 2), "px")
+    rows = [340, 400, 520, 720, 920, 1120, 1320, 1520]
+    print("  outer edge x, painted / model, rows", rows, [(int(np.argmax(m[r, :1500] > 0.5)), int(np.argmax(edge[r, :1500] > 0.5))) for r in rows])
+    return out, m
+
+
+def level_gap(comp):
+    f = comp.astype(np.float32)
+    x0, x1, y0, y1 = GAP_BOX
+    pad = GAP_REACH + 40
+    X0b, X1b, Y0b, Y1b = max(x0 - pad, 0), min(x1 + pad, W), max(y0 - pad, 0), min(y1 + pad, H)
+    sub = f[Y0b:Y1b, X0b:X1b]
+    g = lum(sub[..., ::-1])
+    gs = cv2.GaussianBlur(g, (0, 0), 2.0)
+    gx = cv2.Sobel(gs, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(gs, cv2.CV_32F, 0, 1, ksize=3)
+    jxx, jyy, jxy = (cv2.GaussianBlur(v, (0, 0), 40) for v in (gx * gx, gy * gy, gx * gy))
+    ang = 0.5 * np.arctan2(2 * jxy, jxx - jyy) + np.pi / 2
+    dx, dy = np.cos(ang).astype(np.float32), np.sin(ang).astype(np.float32)
+    flip = dx < 0
+    dx[flip], dy[flip] = -dx[flip], -dy[flip]
+    low = cv2.GaussianBlur(sub, (0, 0), GAP_SIGMA)
+    hh, ww = g.shape
+    xs, ys = np.meshgrid(np.arange(ww, dtype=np.float32), np.arange(hh, dtype=np.float32))
+    stack = [lum(low[..., ::-1])]
+    cols = [low]
+    for sign in (1.0, -1.0):
+        px, py = xs.copy(), ys.copy()
+        for _ in range(GAP_REACH // GAP_STEP):
+            ddx = cv2.remap(dx, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+            ddy = cv2.remap(dy, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+            px, py = px + sign * GAP_STEP * ddx, py + sign * GAP_STEP * ddy
+            c = cv2.remap(low, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+            bad = (px < 0) | (px > ww - 1) | (py < 0) | (py > hh - 1) | (py + Y0b < SH + 2)
+            l = lum(c[..., ::-1])
+            l[bad] = 1e4
+            stack.append(l)
+            cols.append(c)
+    L = np.stack(stack)
+    order = np.argsort(L, axis=0)
+    valid = (L < 1e3).sum(axis=0)
+    pick = np.clip((valid * GAP_RANK).astype(np.int64), 0, L.shape[0] - 1)
+    idx = np.take_along_axis(order, pick[None], axis=0)[0]
+    C = np.stack(cols)
+    ref = np.take_along_axis(C, idx[None, ..., None].repeat(3, axis=-1), axis=0)[0]
+    refl = lum(ref[..., ::-1])
+    dark = 1 - np.clip((refl - GAP_DARK[0]) / (GAP_DARK[1] - GAP_DARK[0]), 0, 1)
+    gyy, gxx = np.mgrid[Y0b:Y1b, X0b:X1b].astype(np.float32)
+    z = np.clip((gyy - SH - 4) / 44, 0, 1) * np.clip((y1 - gyy) / 60, 0, 1) * np.clip((gxx - x0) / 60, 0, 1) * np.clip((x1 - gxx) / 60, 0, 1)
+    w = (dark * z * z * (3 - 2 * z))[..., None]
+    drop = np.maximum(low - ref, 0)
+    out = f.copy()
+    out[Y0b:Y1b, X0b:X1b] = np.clip(sub - w * drop, 0, 255)
+    change = np.abs(out - f).max(axis=2)
+    print("gap levelled below the frame: pixels changed by more than 3 levels", int((change > 3).sum()), "largest", round(float(change.max()), 1))
+    return out.astype(np.uint8)
+
+
 def build(path):
     take = cv2.imread(str(path))
     if take.shape[:2] != (H, W):
@@ -182,7 +278,11 @@ def build(path):
     base = take.copy()
     base[0:SH, X0:X0 + SW] = small
     comp = np.clip(take * (1 - w) + base * w, 0, 255).astype(np.uint8)
+    if "--gap" in sys.argv:
+        comp = level_gap(comp)
     mask = ring_mask(comp, alpha)
+    if (OUT / "edge.npy").exists() and "--seat" in sys.argv:
+        comp, mask = seat(comp, mask)
     cv2.imwrite(str(OUT / "apron-2k.png"), comp)
     cv2.imwrite(str(OUT / "apron-2k-mask.png"), np.clip(mask * 255 + 0.5, 0, 255).astype(np.uint8))
     view = comp.copy()
