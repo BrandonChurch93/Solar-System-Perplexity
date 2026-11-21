@@ -68,6 +68,8 @@ export const createSet: SetFactory = async (ctx) => {
   const glare = new Glare(look.glare, diagUniform)
   near.add(lens.mesh, glare.mesh)
   const covers = [plan.coverCenter(plan.seg.dive!), plan.coverCenter(plan.seg.rise)]
+  const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
+  const spin = (time: number) => plan.spin(time) - spinRate * look.spinRest * Math.min(Math.max(time - covers[0]!, 0), covers[1]! - covers[0]!)
   const closeTan = Math.tan(THREE.MathUtils.degToRad(relief.full.vfovDeg) / 2)
   const closeSun = new THREE.Vector3((look.glare.terrainSun[0] - 0.5) * 2 * closeTan * relief.full.imageSize[0] / relief.full.imageSize[1], (0.5 - look.glare.terrainSun[1]) * 2 * closeTan, -1).normalize()
   const glareSun = new THREE.Vector3()
@@ -123,7 +125,7 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const offAxis = THREE.MathUtils.radToDeg(shot.sun.dir.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
-      globe.update(light, shot.sun.dir, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
+      globe.update(light, shot.sun.dir, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
       const kind = state.segment.kind
       const fast = view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')
