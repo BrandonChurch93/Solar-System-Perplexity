@@ -286,6 +286,7 @@ ${PATCH_LEVELS}
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     vec4 cloud = pall(vClip.xy / vClip.z);
+    cloud.rgb *= max(smoothstep(uPallLit.x, uPallLit.y, ndl), uPallLit.z);
     float pa = cloud.a * (1.0 - smoothstep(uPallShell.x, uPallShell.y, rt));
     cover = mix(inside, cover, (1.0 - uPall.x) * (1.0 - uPall.x));
     float total = pa + cover * (1.0 - pa);

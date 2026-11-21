@@ -163,7 +163,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const distance = world.position.length()
       const veil = gu.uVeil!.value as THREE.Vector4
-      veil.x = look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
+      veil.x = (state.time < riseCover ? 1 : look.veil.rise) * look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
       veil.w = look.veil.drift * elapsed
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
