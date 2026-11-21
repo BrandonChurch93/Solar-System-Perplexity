@@ -25,7 +25,7 @@ export interface GlobeLook {
   bloomPre: [number, number, number]
   ripple: [number, number, number]
   dusk: { zone: number[]; fade: number; centre: number[] }
-  away: { tone: number[]; land: number[]; landAt: number[]; flat: number[]; soft: number; dim: number; gate: number[]; fine: number[]; far: { light: number[]; cap: number[]; rim: number[]; gold: number[]; ring: number[] } }
+  away: { tone: number[]; land: number[]; landAt: number[]; flat: number[]; soft: number; dim: number; gate: number[]; fine: number[]; far: { light: number[]; cap: number[]; rim: number[]; gold: number[]; ring: number[]; zone: number[]; east: number[] } }
 }
 
 export interface GlobeOptions {
@@ -127,6 +127,9 @@ uniform sampler2D uFar;
 uniform vec4 uFarLight;
 uniform vec4 uFarCap;
 uniform vec2 uFarRim;
+uniform vec2 uFarZone;
+uniform vec3 uFarEast;
+uniform vec4 uFarEdge;
 uniform vec3 uGold;
 uniform vec3 uNightLand;
 uniform vec2 uLandAt;
@@ -190,13 +193,22 @@ void main() {
   float swap = 0.0;
   float drift = 0.0;
   float farLights = 0.0;
+  float past = 0.0;
+  float fade = 0.0;
   for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) {
     vec4 far = equirectGrad(uFar, d, uGrad);
-    bad = uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held - uFarCap.w * smoothstep(uFarLight.z, uFarLight.w, dot(d, uFarCap.xyz))));
-    rim = uAway * (1.0 - smoothstep(uFarRim.x, uFarRim.y, dot(d, uCentreHold)));
-    float ring = uRise * (1.0 - smoothstep(uFarRing.x, uFarRing.y, dot(d, uCentreHold)));
+    float cc = dot(d, uCentreHold);
+    float cap = smoothstep(uFarLight.z, uFarLight.w, dot(d, uFarCap.xyz));
+    float cone = 1.0 - smoothstep(uFarZone.x, uFarZone.y, cc);
+    float east = dot(d, uFarEast);
+    past = mix(max(cone, smoothstep(uFarEdge.x, uFarEdge.y, east)), 1.0, uRise);
+    float pastCloud = mix(max(cone, smoothstep(uFarEdge.z, uFarEdge.w, east)), 1.0, uRise);
+    fade = mix(max(cone, smoothstep(uFarEdge.x, uFarEdge.w, east)), 1.0, uRise);
+    bad = uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held - uFarCap.w * cap)) * max(past, cap);
+    rim = uAway * (1.0 - smoothstep(uFarRim.x, uFarRim.y, cc));
+    float ring = uRise * (1.0 - smoothstep(uFarRing.x, uFarRing.y, cc));
     swap = max(bad, ring);
-    drift = max(uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held)), ring);
+    drift = max(uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held)) * pastCloud, ring);
     albedo = mix(albedo, far.rgb, swap);
     farLights = far.a * far.a;
   }
@@ -215,11 +227,11 @@ void main() {
     float parent = texels;
 ${PATCH_LEVELS}
   }
-  float deep = uAway * ramp(uNightFlat.xy, ndl);
+  float deep = uAway * ramp(uNightFlat.xy, ndl) * past;
   vec3 lin = inverseFilmic(albedo);
   vec3 nightLin = inverseFilmic(mix(uNightTone, uNightLand, smoothstep(uLandAt.x, uLandAt.y, lin.r / max(lin.b, 0.002))));
   lin = mix(lin, nightLin, deep);
-  float dim = 1.0 - uNightFlat.w * deep;
+  float dim = 1.0 - uNightFlat.w * uAway * ramp(uNightFlat.xy, ndl) * fade;
   float live = uCloudOn * (1.0 - baked);
   vec3 q = cloudDir(d);
   vec4 cloud = equirectGrad(uCloud, q, uGrad * (1.0 + uNightFlat.z * bad));
@@ -260,10 +272,10 @@ ${PATCH_LEVELS}
   float phase = 6.2831853 * noise(uv * vec2(2.0, 1.0) * uTwinkle.z);
   float twinkle = 1.0 + uTwinkle.x * (sin(uTwinkle.y * uClock + phase) - sin(phase));
   float zone = smoothstep(uDuskZone.x, uDuskZone.y, held) * smoothstep(uDuskZone.z, uDuskZone.w, dot(d, uCentreHold));
-  e.rgb = mix(e.rgb, uGold * farLights, max(rim, zone * uAway)) * mix(1.0, exp(-uFarRing.z * (1.0 / max(mu, 0.04) - 1.0)), uAway);
+  e.rgb = mix(e.rgb, uGold * farLights, max(rim, zone * uRise)) * mix(1.0, exp(-uFarRing.z * (1.0 / max(mu, 0.04) - 1.0)), uAway);
   float dusk = clamp(1.0 + (ndl - held) / uDuskFade, 0.0, 1.0);
   float gate = mix(ramp(uNight, ndl), ramp(uNightGate, ndl), uAway);
-  col += e.rgb * (uPeak * mix(gate * twinkle * uTwinkle.w, dusk, zone * (1.0 - uAway)));
+  col += e.rgb * (uPeak * mix(gate * twinkle * uTwinkle.w, dusk, zone * (1.0 - uRise)));
   float wave = uRipple.z * uv.x * 6.2831853 + 5.0 * noise(uv * vec2(2.0, 1.0) * uRipple.w);
   float ripple = 1.0 + uRipple.x * (sin(uRipple.y * uClock + wave) - sin(wave));
   col += uAuroraColor * (e.a * e.a * uPeak * ramp(uAuroraGate, ndl) * ripple * (1.0 - uAway));
@@ -335,7 +347,7 @@ export class Globe {
         uAway: { value: 0 }, uNightTone: { value: new THREE.Vector3().fromArray(l.away.tone) }, uNightFlat: { value: new THREE.Vector4(l.away.flat[0], l.away.flat[1], l.away.soft, l.away.dim) }, uNightGate: { value: new THREE.Vector2(l.away.gate[0], l.away.gate[1]) },
         uFarLight: { value: new THREE.Vector4(l.away.far.light[0], l.away.far.light[1], Math.cos(rad(l.away.far.cap[4]!)), Math.cos(rad(l.away.far.cap[3]!))) },
         uFarCap: { value: new THREE.Vector4(...direction(l.away.far.cap[0]!, l.away.far.cap[1]!).toArray(), l.away.far.cap[2]) },
-        uFarRim: { value: new THREE.Vector2(l.away.far.rim[0], l.away.far.rim[1]) }, uGold: { value: new THREE.Vector3().fromArray(l.away.far.gold) },
+        uFarRim: { value: new THREE.Vector2(l.away.far.rim[0], l.away.far.rim[1]) }, uFarZone: { value: new THREE.Vector2(l.away.far.zone[0], l.away.far.zone[1]) }, uFarEast: { value: direction(l.away.far.east[0]! + 90, 0) }, uFarEdge: { value: new THREE.Vector4(l.away.far.east[1], l.away.far.east[2], l.away.far.east[3], l.away.far.east[4]) }, uGold: { value: new THREE.Vector3().fromArray(l.away.far.gold) },
         uNightLand: { value: new THREE.Vector3().fromArray(l.away.land) }, uLandAt: { value: new THREE.Vector2(l.away.landAt[0], l.away.landAt[1]) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
