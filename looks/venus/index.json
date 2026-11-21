@@ -1,9 +1,46 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T17:24:02.992Z",
+ "pushed": "2026-11-21T17:32:31.500Z",
  "head": "b22a114d8f2d739ff658384eabe115481298f1c7",
- "note": "round 3: rise cover sheet on the final code; measures green; dive cover, dive and rise sheets rendering",
+ "note": "round 3: both cover sheets on the final code; dive and rise sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-21T17:32:30.476Z",
+   "file": "20261121173230476-note-venus.dive-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-preview-review.png",
+   "kind": "note",
+   "label": "venus dive cover sheet 1309 to 1320, review, preview format, final round 3 code (b22a114): soft streaks at 1309, one curved limb, the terrain resolves at the same horizon",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T17:32:08.411Z",
+   "file": "20261121173208411-sheet-venus.dive-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.dive, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1309,
+   "last": 1320,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:31:45.702Z",
+   "file": "20261121173145702-frame-f01318-review.jpg",
+   "source": "out/work/sheets/.frames-dZvf4U/f01318-review.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1318, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1318,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:24:01.875Z",
    "file": "20261121172401875-note-venus.rise-cover-preview-review.jpg",
@@ -40,30 +77,6 @@
    "format": "preview",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:02:01.921Z",
-   "file": "20261121170201921-note-venus.rise-preview-review.jpg",
-   "source": "out/work/sheets/venus.rise-preview-review.png",
-   "kind": "note",
-   "label": "venus rise sheet, review, preview format, before the footprint change (cards at 1564)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:02:00.616Z",
-   "file": "20261121170200616-note-sm3-1566.jpg",
-   "source": "out/work/venus/r3/sm3-1566.png",
-   "kind": "note",
-   "label": "venus rise 1566, review, preview format: wider texture footprint in fast frames, the cards become soft streaks (before: sm1-1563 look)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:01:59.377Z",
-   "file": "20261121170159377-note-fn2-1586.jpg",
-   "source": "out/work/venus/r3/fn2-1586.png",
-   "kind": "note",
-   "label": "venus frame 1586, review tier, 16x9, round 3 code on the merged engine (b22a114)",
-   "stop": "venus"
   },
   {
    "time": "2026-11-21T16:59:56.740Z",
