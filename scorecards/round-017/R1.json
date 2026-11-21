@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "background sky and Milky Way (pair-02-b crops B, C, E, F, G, H)",
+   "what": "stars and Milky Way dust lanes are noticeably blurred into soft 3-4px blobs instead of crisp 1-2px pinpoints, losing fine sky detail behind the sharp planet",
+   "fix": "render or composite the background starfield and Milky Way at full native resolution without blur or upscaling softness so stars remain sharp pinpoints"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "Io moon night-side terminator (pair-02-b crop A)",
+   "what": "an unnatural bright reddish-orange band appears on Io's shadowed right limb where -a has a dark cool-shaded terminator falling cleanly to black, and Io's surface texture is slightly softer",
+   "fix": "darken Io's right-hand terminator to match the left-side sunlight so the night side falls smoothly to black into the cast shadow, and preserve crisp surface detail"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit left limb (pair-02-b crops B, D)",
+   "what": "the bright atmospheric rim glow blooms slightly wider and hotter, washing out fine cloud-band striations right inside the sunlit edge",
+   "fix": "tighten and slightly reduce the sunlit limb bloom so fine cloud detail remains legible close to the horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "dark right planetary limb (pair-02-b crops C, E, G)",
+   "what": "Jupiter's unlit right edge has a soft 2-3px feathered fringe and faint night-side cloud bleed instead of a crisp black silhouette against the background stars",
+   "fix": "sharpen the dark-limb silhouette edge and deepen night-side shadow falloff to pure black at the right limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper-right sky and horizon limb (pair-04-b crops C, I)",
+   "what": "background pinpoint stars and faint Milky Way dust above the horizon are slightly softened compared to -a, with marginally brighter pale-blue limb haze",
+   "fix": "keep native-resolution crispness in the starfield sky layer and slightly trim upper-limb haze brightness"
+  }
+ ]
+}

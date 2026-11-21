@@ -14,7 +14,7 @@ export const patches = {
   spot: { lon: 14.472050590150058, lat: -13.872200112972783 },
   levels: [{ file: 'patch-1.jpg', widthDeg: 76 }, { file: 'patch-2.jpg', widthDeg: 38 }, { file: 'patch-3.jpg', widthDeg: 19 }, { file: 'patch-4.jpg', widthDeg: 9.5 }],
   feather: 0.12,
-  fade: [1.02, 1.5] as [number, number],
+  fade: [1.02, 1.95] as [number, number],
   nearDeg: 12,
 }
 

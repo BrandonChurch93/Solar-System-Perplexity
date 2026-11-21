@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-04.png",
+   "where": "upper sky above the horizon in frames 4851-4949 (continuing into sheet-05.png frames 4950-4970, plus mid-left border in 4957-4970)",
+   "what": "the top edge of the 2D terrain picture pulls down into frame as a hard straight seam between two mismatched starfields, and by frames 4957-4970 in sheet-05.png the left edge of the picture also enters the cloud deck as a dark triangular cutout",
+   "fix": "composite the planet limb cleanly over a single continuous 3D starfield or add generous sky and left-edge overscan to the terrain plate so no image boundary ever enters the viewport"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "across the rise cover in frames 4975-4986 (and frames 4950-5024 in sheet-05.png)",
+   "what": "frames before and after the cover do not belong to one move: before 4975 the camera is still drifting forward and down over a dark surface lit from the upper right, whereas after 4982 it rockets backward from a washed-out cyan globe whose sunlight has flipped to the upper left with terminator shadow on the bottom right and the moon jumped to the right with mismatched top-down lighting",
+   "fix": "keep a consistent sun direction, globe orientation, and moon orbit from hold through rise, start an eased upward pullback in terrain before entering the cover at 4975, and match horizon angle, color, and exposure across the cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 4729-4740 (and dive transition 4720-4745 in sheet-02.png)",
+   "what": "the consecutive cover sheet starts at 4729 when the screen is already fully occluded by blue streaks (omitting pre-cover frames), upper-center luminance pops abruptly by ~40 levels between 4731 and 4732, and the camera jumps from a steep face-on plunge at 4720 to a shallow horizon skim with open space in the upper right at 4736-4745",
+   "fix": "shift the dive-cover contact sheet window ~5 frames earlier so pre-cover frames are visible, smooth the internal cross-dissolve between 4731 and 4732 to eliminate the brightness pop, and arc the camera pitch toward the limb before the cover so the horizon carries across"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "planet surface and storm band in frames 4984-4997 (and frames 4983-4986 in sheet-06.png)",
+   "what": "during the fast pullback out of the rise cover, the planet surface stretches and breaks into jagged, stepped radial smear streaks across the lower-right cloud deck and terminator rather than smooth motion blur",
+   "fix": "render the pullback on true 3D spherical geometry with multi-sample shutter motion blur instead of 2D radial zoom stretching on the surface texture"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "foreground white cloud ridge versus mid-ground vortex and horizon across frames 4770-4949",
+   "what": "the near cloud ridge and distant storm eye/horizon slide downward at nearly the same screen rate like a flat 2D plate while local flow warping stretches and bloats the white cloud puffs in place instead of showing true depth parallax",
+   "fix": "place near cloud decks on closer 3D altitude layers so foreground clouds move faster against the distant vortex and horizon, and reduce 2D mesh distortion so cloud structures drift without stretching or swimming"
+  }
+ ]
+}

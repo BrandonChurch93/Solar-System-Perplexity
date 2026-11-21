@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops S and X, starfield at the extreme right of the second frame",
+      "what": "A thin, broken blue-green arc cuts across the stars and through the faint ring, leaving a visible stray contour in open space.",
+      "fix": "Remove the stray contour from the sky composite and preserve the ring and starfield underneath it."
+     },
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crop W, lower-right globe limb; also visible in image-08.png crop W",
+      "what": "A deep blue trough separates the bright globe edge from a second thin cyan contour, making the atmosphere look like a detached shell.",
+      "fix": "Blend the inner and outer limb into a continuous falloff and remove the secondary hard contour."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A, eye and inner white hook of the central storm; also visible in image-07.png crop Q",
+      "what": "The eye tightens into a pinched spiral of smeared blue texture while the inner white hook breaks into hard, crunchy speckles.",
+      "fix": "Rebuild the eye with irregular cloud filaments at several scales and soften the brittle highlights without blurring the surrounding cloud detail."
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop U, dark blue region immediately below the white clouds at upper right",
+      "what": "The dark cloud texture resolves into several large blocky patches as it fades into the terminator.",
+      "fix": "Feather the shadow transition and retain finer cloud structure at low contrast."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops E and G, cloud bands approaching the right limb",
+      "what": "Clouds flatten into long parallel streaks with little fine structure next to the smooth cyan rim.",
+      "fix": "Preserve smaller cloud wisps under foreshortening and reduce the directional smearing near the limb."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "moon at right (crops C, L)",
+      "what": "the moon is soft and blurry at native size, with only a faint smeared mottling and no craters or sharp detail. Its terminator is a straight, nearly horizontal cut with a hard edge, and the night half shows as a dark disc against the sky, so it looks like a pasted, airbrushed sprite",
+      "fix": "render the moon from a higher-resolution albedo or normal texture with real relief, curve the terminator to follow the sphere with a soft penumbra, and blend the unlit side into the sky"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring system, left and lower arcs (crops A, D, I, N, P, S, T)",
+      "what": "the rings are smeared, glowing brush strokes with no fine ringlet structure. Along their length they blur into soft streaks with doubled, ghosted edges, and some bands fade in and out unevenly. They look painted rather than made of particles",
+      "fix": "build the rings from a radial ringlet texture with crisp gaps, keep their edges sharp at native resolution, and drop the blur or glow pass on the ring layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sky background, whole frame (crops E, Q, U, V, W; most visible lower right)",
+      "what": "when brightened, the black sky shows a faint regular grid or checker pattern of fine vertical and horizontal stripes, which is a tiling or compression artifact in the background",
+      "fix": "regenerate the sky as one continuous non-tiled starfield, or add fine dithering and grain to break up the pattern before the gradient is quantized"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "planet disc, cloud streaks (crops B, G, J)",
+      "what": "the white cloud features are short, disconnected scratches and flecks laid over a smooth airbrushed blue base, like a painted overlay. The dark storm spot has a pasted look with a hard white rim",
+      "fix": "use a coherent banded atmosphere texture, so the cloud streaks follow the zonal flow and blend into the base at sub-pixel scale"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "cyclone eye, center (crops A, G, O)",
+      "what": "the storm eye is a smooth, featureless dark oval that looks airbrushed, with no eyewall cloud structure. The spiral arms round it are soft, smeared swirls with no cloud texture at native size",
+      "fix": "add a defined eyewall with towering cloud texture and break the spiral bands into resolved cloud cells"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "right-side cloud shadow band (crop P)",
+      "what": "the shadow under the right cloud bank is a uniform dark stroke with crisp edges that is offset from its cloud, so it reads as a pasted layer",
+      "fix": "match the shadow shape to the cloud it comes from and soften its edge with distance"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "lower left and bottom foreground (crops D, M, R, S, T)",
+      "what": "the dark foreground ocean is soft and muddy, with a low-detail noisy texture and faint streaks. Detail falls off where the near field should be sharpest",
+      "fix": "add surface and cloud detail to the near field and lift the shadows enough to show texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "main white cloud band (crops E, H, N)",
+      "what": "the cloud edges have a wispy, brush-like, painterly curl that repeats along the band. It reads as stylized rather than real cumulus",
+      "fix": "vary the cloud morphology along the band and give the tops crisper three-dimensional shading"
+     }
+    ]
+   }
+  }
+ ]
+}
