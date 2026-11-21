@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crop C, upper-right auroral limb",
+   "what": "The green curtain is more broken into soft knots; its longest vertical rays are shorter and less distinct, and nearby stars show through more conspicuously.",
+   "fix": "Restore the taller, closely spaced green filaments and their continuous bright base, keeping the diffuse red cap."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, D, F, G and H, backlit cloud towers and ocean shadows",
+   "what": "Several shadow cores are slightly lifted and their edges are feathered more broadly. The cloud towers and long shadows have less depth and definition against the sunlit sea, especially toward the foreground.",
+   "fix": "Restore the dark cores and firmer near-cloud shadow edges while preserving the softer far ends and the original light direction."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops B, D, F and G, sunlit left and top limb",
+   "what": "The pale rim and adjacent cyan bloom are slightly broader and more opaque, veiling the fine texture just inside the edge.",
+   "fix": "Tighten the near-surface glow and recover the thin bright edge and the darker blue immediately underneath it."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops E and H, eastern and southern South America and southern limb",
+   "what": "Coastal city lights are too bright and chunky, and a fine blue line traces the lower night-side edge that fades more naturally in the target.",
+   "fix": "Dial back the largest lights to restore separate points and blend out the thin southern outline into the dark."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops B, C, D, E and I, background star field and galactic band",
+   "what": "Several stars look larger and brighter, with more visible soft halos. This makes the star field busier and slightly weakens the separation between the galactic dust and the dark sky.",
+   "fix": "Reduce the size and bloom of the stars while keeping their overall density and the soft mottling of the dust band."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right moon",
+   "what": "The Moon reads slightly wider and its crater contrast is softer, with a faint cool fringe in the surrounding dark.",
+   "fix": "Match the target's small disk and quietly shaded terminator, recover crater contrast, and remove the fringe."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, E, F, G and I, sun-glittered sea and island shallows",
+   "what": "Some fine specular glints and coastal textures have merged into softer patches, particularly beside the brightest glare and along the foreground island.",
+   "fix": "Bring back discrete water glints and fine coastline and shoal detail without increasing the overall glare."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops B and C, horizon and sky immediately above it",
+   "what": "The blue atmospheric gradient is marginally milkier and the first layer of distant cloud is slightly less defined.",
+   "fix": "Pull back the pale haze a little and restore the subtle cloud separation just below the luminous horizon."
+  }
+ ]
+}

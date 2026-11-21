@@ -14,7 +14,12 @@ export const drift = {
   strength: 0.42,
   shadow: 0.22,
   shadowOffset: 0.012,
+  riseAt: 0.75,
 }
+
+export const graze = { most: 3, from: 0.45, to: 0.2 }
+
+export const lift = { floor: 0.012, stops: 3, from: 0.4, to: 0.8 }
 
 export const descent = {
   high: 0.7,
@@ -56,7 +61,17 @@ const SEEDED: Cell[] = Array.from({ length: 12 }, (_, i) => ({
 
 export const cells: Cell[] = [...PAINTED, { lon: 32.04, lat: 54.69, radiusDeg: 1.6, painted: false, period: 2.3, at: 39.5, gain: 0.9, seed: 0 }, ...SEEDED]
 
-export const motion = { from: 1, step: 6, most: 8, hidden: 0.95 }
+export const leave = { seconds: 0.5 }
+
+export const shade = { far: 0.8, grad: 16, cap: 2.5 }
+
+export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
+
+export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
+
+export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
+
+export const motion = { from: 1, step: 6, most: 8, hidden: 0.95, smear: { from: 20, share: 0.4, most: 120 } }
 
 export const boltColor: [number, number, number] = [0.105, 0.095, 0.14]
 
@@ -80,5 +95,5 @@ export const relief = {
   swayRad: 0.005,
   swayPerSecond: 0.9,
   edgeDeg: 0.06,
-  air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5] as [number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1 },
+  air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5, 15] as [number, number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1, deck: [[130, 103, 69], [194, 168, 125], [208, 183, 141], [232, 209, 168], [243, 222, 180], [247, 231, 199], [249, 237, 211], [251, 247, 231], [249, 237, 212], [237, 214, 172]] as [number, number, number][], deckSpanDeg: 45, deckHigh: [0.15, 0.4] as [number, number], rimDeg: 0.3 },
 }

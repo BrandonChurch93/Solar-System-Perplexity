@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:
 import { join } from 'node:path'
 import { inflateSync } from 'node:zlib'
 import { DIST, WORK, loadConfig } from './common'
-import { openCapture, type Session } from './browser'
+import { openCapture, pageFaults, type Session } from './browser'
 import { JobLooks } from './looks'
 import { basename } from 'node:path'
 
@@ -107,13 +107,15 @@ export async function openSource(opts: { format: string; assets: string; diag?: 
           }
           const t3 = performance.now()
           const gl = (c.getContext('webgl2') ?? c.getContext('webgl')) as WebGLRenderingContext | null
-          const lost = !gl || gl.isContextLost()
+          const lost = !gl || gl.isContextLost() || ((window as unknown as { __glLost?: number }).__glLost ?? 0) > 0
           return { b64, invalid, coverage, lost, r: (t1 - t0) / 1000, s: (t2 - t1) / 1000, g: (t3 - t2) / 1000 }
         }, [frame, tier, grab, sanity] as const)
       } catch (e) {
         throw new PageFailure((crashed || 'page call failed') + ' at frame ' + frame + ': ' + String(e).split('\n')[0]!.slice(0, 200))
       }
       if (res.lost) throw new PageFailure('WebGL context lost at frame ' + frame)
+      const fault = pageFaults(session.page)[0]
+      if (fault) throw new PageFailure('frame ' + frame + ' is not usable: ' + fault)
       const data = res.b64 ? Buffer.from(res.b64, 'base64') : null
       if (looks.due()) {
         try {

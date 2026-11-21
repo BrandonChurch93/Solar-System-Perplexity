@@ -245,9 +245,8 @@ def scan(c, p, attachments=True):
 
 def cost(c, a, key, tier):
     per = a.sample_seconds if a.sample_seconds else 4.3 * FACTOR[key]
-    t = c['tiers'][tier]
-    fast = c['motion']['fastKinds']
-    return per, lambda seg: per * (t['fastSamplesPerFrame'] if seg['kind'] in fast else t['samplesPerFrame'])
+    counts = json.loads(sh('npm run -s samples -- --tier %s --out -' % tier).strip().split('\n')[-1])['tiers'][tier]
+    return per, lambda first, last: per * sum(counts[first:last + 1])
 
 
 def lay_out(c, a, key, tier, segs, skip):
@@ -259,11 +258,14 @@ def lay_out(c, a, key, tier, segs, skip):
     for s in segs:
         if s['id'] in skip:
             continue
-        n = math.ceil(s['frames'] / max(1, math.floor(cap / sec(s))))
-        for i in range(n):
-            first = s['first'] + s['frames'] * i // n
-            last = s['first'] + s['frames'] * (i + 1) // n - 1
-            spans.append({'segment': s['id'], 'first': first, 'last': last, 'minutes': round((last - first + 1) * sec(s) / 60, 2)})
+        n = max(1, math.ceil(sec(s['first'], s['end'] - 1) / cap))
+        while True:
+            cuts = [(s['first'] + s['frames'] * i // n, s['first'] + s['frames'] * (i + 1) // n - 1) for i in range(n)]
+            if n >= s['frames'] or max(sec(first, last) for first, last in cuts) <= cap:
+                break
+            n += 1
+        for first, last in cuts:
+            spans.append({'segment': s['id'], 'first': first, 'last': last, 'minutes': round(sec(first, last) / 60, 2)})
     groups, cur, total = [], [], 0.0
     for i, sp in enumerate(spans):
         if cur and total + sp['minutes'] > cap / 60:
@@ -377,7 +379,7 @@ def message(p, name, spans):
     files = []
     for sp in spans:
         files += ['`%s%s.mp4`' % (d, key_of(sp)), '`%s%s.mp4.json`' % (d, key_of(sp))]
-    return 'JOB %s. Commit %s. Command%s: %s. When %s finished, send these %d files as attachments, at most 10 per message, and nothing else: %s.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), ', '.join(files)), [f.strip('`') for f in files]
+    return 'JOB %s. Commit %s. Command%s: %s. A command that ends with exit code 3 has lost its drawing context: run the same command again until it ends with 0, it goes on where it stopped. When %s finished, send these %d files as attachments, at most 10 per message, and nothing else: %s.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), ', '.join(files)), [f.strip('`') for f in files]
 
 
 def jobs(a):

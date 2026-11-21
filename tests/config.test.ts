@@ -14,6 +14,20 @@ describe('config validation', () => {
     delete c.seed
     expect(() => buildConfig(c)).toThrow(/missing key seed/)
   })
+  it('fails on a sample cap under the counts of a tier or a step limit that is not above 0', () => {
+    const c = clone()
+    c.tiers.review.maxSamplesPerFrame = c.tiers.review.fastSamplesPerFrame - 1
+    expect(() => buildConfig(c)).toThrow(/maxSamplesPerFrame/)
+    const d = clone()
+    d.motion.maxStepPx = 0
+    expect(() => buildConfig(d)).toThrow(/maxStepPx/)
+    const e = clone() as unknown as { motion: Record<string, unknown> }
+    delete e.motion.terrainGround
+    expect(() => buildConfig(e)).toThrow(/missing key motion.terrainGround/)
+    const g = clone()
+    g.motion.softToPx = g.motion.softFromPx
+    expect(() => buildConfig(g)).toThrow(/softToPx/)
+  })
   it('fails when segments do not start at 0', () => {
     const c = clone()
     c.segments[0]!.start = 1

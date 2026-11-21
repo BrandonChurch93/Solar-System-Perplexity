@@ -5,10 +5,11 @@
   "storm": [1490, 722],
   "stormRadius": 1.1,
   "stormDegPerSecond": 2.0,
-  "streamPerSecond": 0.035,
-  "streamShear": 3.0,
-  "cloudBase": 0.07,
-  "cloudThickness": 0.06,
+  "streamPerSecond": 0.08,
+  "streamShear": 1.0,
+  "cloudBase": 0.3,
+  "cloudThickness": 0.04,
   "glowTop": 0.012,
-  "glowAzimuthDeg": 80
+  "glowAzimuthDeg": 80,
+  "sightMargin": 0.012
 }

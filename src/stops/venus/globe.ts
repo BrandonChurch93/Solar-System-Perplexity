@@ -42,6 +42,11 @@ export interface GlobeOptions {
   flow: GlobeFlow
   bolts: GlobeBolts
   limb: THREE.Texture
+  graze: { most: number; from: number; to: number }
+  lift: { floor: number; stops: number; from: number; to: number }
+  shade: { far: number; grad: number; cap: number }
+  mauve: { from: number; to: number; rest: number }
+  weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
   segments?: number
 }
 
@@ -113,10 +118,19 @@ uniform vec2 uCellAmp[${MAX_CELLS}];
 uniform float uCellCount;
 uniform float uLimbK;
 uniform int uTaps;
+uniform float uSmear;
 uniform vec3 uCamObj;
 uniform vec3 uNextCam;
 uniform mat3 uNextRot;
 uniform vec2 uJitter;
+uniform vec3 uGraze;
+uniform vec4 uLift;
+uniform vec3 uShade;
+uniform vec3 uMauve;
+uniform vec3 uWeaveCam;
+uniform vec4 uWeaveRing;
+uniform vec4 uWeave;
+uniform float uWeaveLit;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -167,7 +181,8 @@ void main() {
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  vec3 albedo = equirectGrad(uMap, dc, uGrad).rgb;
+  float grad = uGrad * uSmear * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
+  vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(dc, uSpotN);
   float near = 0.0;
@@ -181,8 +196,8 @@ void main() {
     gx = dFdx(g);
     gy = dFdy(g);
     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
-    gx *= uGrad;
-    gy *= uGrad;
+    gx *= grad;
+    gy *= grad;
     float front = step(0.3, dn);
     float parent = texels;
 ${PATCH_LEVELS}
@@ -190,8 +205,8 @@ ${PATCH_LEVELS}
   float eu = atan(dc.x, dc.z) / (2.0 * PI) + 0.5;
   float ev = asin(clamp(dc.y, -1.0, 1.0)) / PI + 0.5;
   float eu2 = fract(eu + 0.5) - 0.5;
-  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * uGrad;
-  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * uGrad;
+  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * grad;
+  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * grad;
   vec3 sx = dFdx(vLocal);
   vec3 sy = dFdy(vLocal);
   for (int once = 0; once < (uTaps > 0 ? 1 : 0); once++) {
@@ -222,13 +237,35 @@ ${TAP_LEVELS}
   }
   vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
   float k = uFlowLook.x * (1.0 - near);
-  float f0 = equirect(uFlow, dc).r - 0.5;
+  vec4 fl = equirect(uFlow, dc);
+  lin *= exp2(max(fl.g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(albedo.r, max(albedo.g, albedo.b))));
+  float f0 = fl.r - 0.5;
   float f1 = equirect(uFlow, df).r - 0.5;
   vec3 lean = uSunBody * uFlowLook.z;
   float s0 = equirect(uFlow, normalize(dc - lean)).r;
   float s1 = equirect(uFlow, normalize(df - lean)).r;
   float veil = (1.0 + k * f1) / (1.0 + k * f0) * (1.0 - uFlowLook.y * (1.0 - near) * s1) / (1.0 - uFlowLook.y * (1.0 - near) * s0);
+  for (int pass = 0; pass < (uLimbFar > 0.0 ? 1 : 0); pass++) {
+    float pink = lin.r * lin.b / max(lin.g * lin.g, 1e-5);
+    lin.b *= mix(1.0, uMauve.z / max(pink, 1e-3), uLimbFar * smoothstep(uMauve.x, uMauve.y, pink));
+  }
   vec3 col = lin * curveAt(ndl) * veil * uTint;
+  for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
+    vec3 wide = equirectGrad(uMap, dc, max(uShade.y, grad)).rgb;
+    float ratio = dot(albedo * albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
+    col *= pow(clamp(ratio, 1.0 / uShade.z, uShade.z), uShade.x * uLimbFar * (1.0 - smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
+  }
+  for (int pass = 0; pass < (uWeave.y * uLimbFar > 0.0 ? 1 : 0); pass++) {
+    float seen = dot(dc, normalize(uWeaveCam - dc));
+    float ring = (1.0 - smoothstep(uWeaveRing.x, uWeaveRing.y, seen)) * smoothstep(uWeaveRing.z, uWeaveRing.w, seen);
+    for (int inner = 0; inner < (ring > 0.0 ? 1 : 0); inner++) {
+      vec3 from = normalize(dc - uWeave.x * normalize(uWeaveCam));
+      vec3 narrow = equirect(uMap, from).rgb;
+      vec3 wide = equirectGrad(uMap, from, uWeave.z).rgb;
+      float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
+      col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near) / uSmear);
+    }
+  }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
     float night = 1.0 - smoothstep(-0.05, 0.3, ndl);
     float lum = dot(lin, vec3(0.2126, 0.7152, 0.0722));
@@ -238,7 +275,7 @@ ${TAP_LEVELS}
     float lit = 0.015 + 1.5 * min(lum, 1.2) * lift * lift * lift;
     float bn = dot(dc, uBoltN);
     vec2 bq = vec2(dot(dc, uBoltE), dot(dc, uBoltU)) / max(bn, 0.05) * uBoltLook.x;
-    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(texture(uBolt, bq + 0.5).rgb) * uBoltLook.y : vec3(0.0);
+    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(textureGrad(uBolt, bq + 0.5, dFdx(bq) * uGrad, dFdy(bq) * uGrad).rgb) * uBoltLook.y : vec3(0.0);
     vec3 glow = vec3(0.0);
     for (int i = 0; i < ${MAX_CELLS}; i++) {
       if (float(i) >= uCellCount) break;
@@ -258,6 +295,8 @@ ${TAP_LEVELS}
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 past = uCam - dir * dot(uCam, dir);
+  if (dot(past, past) >= 1.0) discard;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
 }`
 
@@ -321,13 +360,16 @@ export class Globe {
         uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
-        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 },
-        uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
+        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
+        uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
+        uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
+        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
+        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     const seg = o.segments ?? 320
-    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 / Math.cos(Math.PI / seg) + 2e-4, seg, seg / 2), this.material)
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, world: THREE.Quaternion, spin: number, drift: number, flow: number, amps: number[], gain: number, weight: number): void {
@@ -353,9 +395,10 @@ export class Globe {
     u.uWeight!.value = weight
   }
 
-  motion(taps: number, camera: THREE.Vector3, view: THREE.Quaternion, shift: THREE.Vector3, turn: THREE.Quaternion, zoom: number, jitterX: number, jitterY: number): void {
+  motion(taps: number, smear: number, camera: THREE.Vector3, view: THREE.Quaternion, shift: THREE.Vector3, turn: THREE.Quaternion, zoom: number, jitterX: number, jitterY: number): void {
     const u = this.material.uniforms
     u.uTaps!.value = taps
+    u.uSmear!.value = smear
     ;(u.uJitter!.value as THREE.Vector2).set(jitterX, jitterY)
     const from = (u.uCamObj!.value as THREE.Vector3).copy(camera).applyQuaternion(this.inverse)
     if (taps === 0) return

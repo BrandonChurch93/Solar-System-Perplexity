@@ -27,7 +27,7 @@ export const corona: CoronaLook = {
   edge: 0.004,
   wave: { amount: 1.8, scale: 5, speed: 0.55, sway: 0.0024 },
   drift: 0.0008,
-  hide: { from: 0.012, to: 0.07, amount: 0.92 },
+  hide: { from: 0.3, to: 0.9, amount: 0.92 },
 }
 
 export const prominence: ProminenceLook = {
@@ -39,20 +39,20 @@ export const prominence: ProminenceLook = {
   surge: 0.6,
 }
 
-export const sky: SkyCardDef = { file: 'sky-hold.webp', vfovDeg: fit.vfovDeg, margin: 0.125, gain: 1 }
+export const sky: SkyCardDef = { file: 'sky-hold.webp', vfovDeg: fit.vfovDeg, margin: 0.3, gain: 1 }
 
 export const skyFade: [number, number] = [0.02, 0.34]
 
 export const ground: GroundLook = {
-  cap: 42,
-  rings: 168,
+  cap: 63,
+  rings: 252,
   sectors: 288,
   cell: 0.16,
-  apron: { amount: 1, cell: 0.1, calm: 0 },
+  apron: { amount: 1, cell: 0.1, calm: 0, out: [-1, -0.1] },
   band: [2.2, 1.2],
   glow: [0.22, 4.3],
-  boil: { reach: 0.5, period: 2.6, step: 0.3, max: 0.14 },
-  twinkle: { amount: 0.16, rate: 2.4, spread: 60 },
+  boil: { reach: 0.25, period: 4.2, step: 0.3, max: 0.035 },
+  twinkle: { amount: 0.3, rate: 0.4, spread: 4 },
   inflow: { amount: 0.3, waves: 5, rate: 2.2, inner: 1, outer: 2.6 },
 }
 
@@ -63,25 +63,43 @@ export const loops: LoopsLook = {
   lean: { outerDeg: 22, innerDeg: -28, from: 1.3, to: 2.55 },
   gain: 1,
   far: 9, pin: { from: 0.1, soft: 0.2, lowDeg: 0.2, highDeg: 3 },
-  flow: { amount: 0.55, lanes: 0.3, along: 1.5, speed: 0.12, back: 0.07, floor: 0.2 },
+  flow: { amount: 0.55, lanes: 0.12, along: 1.5, speed: 0.12, back: 0.07, floor: 0.25, inside: [1.9, 2.4], from: [0.02, 0.1] },
   swell: { amount: 1.6, speed: 0.42, width: 0.075, lanes: 0.5, calm: 0.45 },
+  burst: { surge: 26, floor: 0.12, reach: [0.03, 0.55], other: 0.6, white: 0.5, from: 0.03 },
 }
 
-export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05 }
+export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05, floor: [0.22, 0.34] }
 
-export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png' }
+export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', grade: 'grade.png' }
 
-export const flare: FlareLook & { lift: number } = {
-  hot: [1, 0.9, 0.66],
-  warm: [1, 0.62, 0.2],
-  core: { radius: [0.03, 0.42], gain: 14 },
-  halo: { radius: [0.05, 3.2], gain: [1.2, 2.6], power: 1 },
-  rays: { amount: 0.9, reach: 3, turn: 0.5 },
-  streak: { amount: 1.0, height: 0.022, reach: 0.4 },
-  before: 0.95,
-  after: 1.0,
-  powerIn: 2.6,
-  powerOut: 2.4,
-  surge: 3,
-  lift: 0.3,
+export const flare: FlareLook & { at: number; lift: number; ground: number; loops: number; cut: number } = {
+  hot: [1, 0.7, 0.34],
+  warm: [1, 0.38, 0.09],
+  core: { radius: 0.3, gain: 1.3, power: 2 },
+  halo: { radius: 1.1, gain: 0.4, power: 2 },
+  veil: 0.35,
+  at: 0.03,
+  before: 0.28,
+  after: 0.28,
+  powerIn: 1.5,
+  powerOut: 1.5,
+  lift: 0.12,
+  ground: 1.5,
+  loops: 0.5,
+  cut: 0.2,
+}
+
+export const dissolve = {
+  loops: [0, 0.26] as [number, number],
+  fold: [0, 0.36] as [number, number],
+  far: [0, 0.5] as [number, number],
+  reach: [14, 3.4] as [number, number],
+  feather: 2.8,
+  cap: [0.4, 0.75] as [number, number],
+  fringe: [0, 0.4] as [number, number],
+  sky: [0, 0.5] as [number, number],
+  corona: [0, 0.7] as [number, number],
+  match: [0.6, 2] as [number, number],
+  tint: [0.82, 0.74, 0.7] as [number, number, number],
+  glow: 0.5,
 }

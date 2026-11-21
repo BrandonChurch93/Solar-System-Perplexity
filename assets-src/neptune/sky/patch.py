@@ -16,14 +16,19 @@ Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 MARGIN = 0.125
 EDGE = (1.004, 1.014)
+BEHIND = (0.95, 0.99)
 LINE = 23
 SUN = (2514, 227, 330)
 SUN_FROM = (-150, 900)
 SUN_OUT = 520
 SUN_STARS = 0.45
-SEAM = 110
+OUTWARD = ((6, 0, 10), (18, 6, 40), (48, 30, 110))
 MOON = (337, 407, 95)
 RING = dict(normal=[0.1681, 0.9779, 0.1244], centre=[0.0533, 0.0532, -0.4902], inner=1.36, outer=1.86)
+SPECK = (0.001, 14)
+STRAND = (0.004, 22)
+LIMB = (0.99, 1.0, 1.04, 1.06)
+STRANDS = (1.3, 1.92)
 
 
 def sunless(lin):
@@ -45,17 +50,30 @@ def sunless(lin):
     return flat * (1 - m) + (back + stars * SUN_STARS) * m, mid, prof
 
 
+def outward(lin, px, py):
+    h, w = lin.shape[:2]
+    calm = np.stack([ndi.gaussian_filter(np.minimum(lin[..., c], ndi.gaussian_filter(lin[..., c], 6)), 6) for c in range(3)], -1)
+    wide = np.pad(calm, ((py, py), (px, px), (0, 0)), mode='edge')
+    yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
+    away = np.maximum.reduce([py - yy, yy - (py + h - 1), px - xx, xx - (px + w - 1), np.zeros_like(yy)]).astype(np.float32)
+    out = wide.copy()
+    for sigma, lo, hi in OUTWARD:
+        soft = np.stack([ndi.gaussian_filter(wide[..., c], sigma, mode='nearest') for c in range(3)], -1)
+        k = step(away, lo, hi)[..., None]
+        out = out * (1 - k) + soft * k
+    out[py:py + h, px:px + w] = lin
+    return out, away
+
+
 def save(lin, name, out):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
     bare, mid, prof = sunless(lin)
-    wide = np.pad(bare, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    wide, away = outward(bare, px, py)
     yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
     r = np.hypot(xx - px - SUN[0], yy - py - SUN[1])
     for c in range(3):
         wide[..., c] += np.interp(r, mid, prof[:, c], right=0)
-    away = np.maximum.reduce([py - yy, yy - (py + FULL[1] - 1), px - xx, xx - (px + FULL[0] - 1), np.zeros_like(yy)])
-    w = (1 - step(away, 0, SEAM))[..., None]
-    wide = wide * (1 - w) + np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric') * w
+    wide[py:py + FULL[1], px:px + FULL[0]] = lin
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -115,7 +133,18 @@ def compact(a):
     return np.maximum(a - best, 0)
 
 
-def ring_mask():
+def specks(hs, zone, rule):
+    lab, n = ndi.label(luma(hs) > rule[0], structure=np.ones((3, 3)))
+    size = np.array([max(s[0].stop - s[0].start, s[1].stop - s[1].start) for s in ndi.find_objects(lab)])
+    long = (size > rule[1])[lab - 1] & (lab > 0)
+    cut = ndi.gaussian_filter(ndi.binary_dilation(long, iterations=2).astype(np.float32), 1) * zone
+    print('lines taken out of the stars: px', int((cut > 0.5).sum()))
+    return hs * (1 - np.clip(cut, 0, 1))[..., None]
+
+
+def ring_mask(inner=None, outer=None):
+    inner = RING['inner'] if inner is None else inner
+    outer = RING['outer'] if outer is None else outer
     n = np.array(RING['normal'], float)
     n /= np.linalg.norm(n)
     c = np.array(RING['centre'], float)
@@ -125,7 +154,7 @@ def ring_mask():
     t = ((c - geo.CAM) @ n) / (d @ n)
     p = geo.CAM + d * t[..., None] - c
     r = np.linalg.norm(p, axis=-1)
-    m = step(r, RING['inner'] - 0.06, RING['inner']) * (1 - step(r, RING['outer'], RING['outer'] + 0.06)) * (t > 0)
+    m = step(r, inner - 0.06, inner) * (1 - step(r, outer, outer + 0.06)) * (t > 0)
     return m.astype(np.float32)
 
 
@@ -157,8 +186,11 @@ def hold(hero, fill, glow, out):
     hs, fs = compact(a), compact(f)
     k = float(luma(hs)[zone].mean() / max(luma(fs)[zone].mean(), 1e-6))
     print('fill star gain', round(k, 3))
+    hs = specks(hs, step(d, LIMB[0], LIMB[1]) * (1 - step(d, LIMB[2], LIMB[3])), SPECK)
+    hs = specks(hs, ring_mask(*STRANDS), STRAND)
     outside = (step(d, EDGE[0], EDGE[1]) * moon)[..., None]
-    f = f - fs + fs * k * (1 - outside) + hs * outside
+    behind = (1 - step(d, BEHIND[0], BEHIND[1]))[..., None]
+    f = f - fs + fs * k * behind + hs * outside
     lin = sky * own[..., None] + f * (1 - own[..., None])
     save(lin, 'sky-hold.webp', out)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((1408, 792)).save(os.path.join(geo.ROOT, 'out/work/nep/sky/own.png'))

@@ -11,16 +11,25 @@ import geo
 OUT = 'out/work/u/dive/'
 PUB = 'public/assets/uranus/'
 WRAP = 'out/work/u/wrap/wrap-albedo.npy'
-LEVELS = [('patch-1.jpg', 76.0), ('patch-2.jpg', 42.0), ('patch-3.jpg', 22.0), ('patch-4.jpg', 11.0)]
+LEVELS = [('patch-1.jpg', 80.0), ('patch-2.jpg', 46.0), ('patch-3.jpg', 24.0), ('patch-4.jpg', 12.2)]
 SIZE = 4096
 LAMBDA0 = 0.284
 OCTAVES = 6
 AMP = 0.045
 FALL = 0.66
-STRETCH = 14.0
+STRETCH = 5.0
+PROC = (0.3, 0.45, 0.7, 1.0, 1.0, 1.0)
+GEN = 'out/work/u/gen/dive-take1-2x.png'
+GEN_WIDTH = 80.0
+GEN_SIGMA = 260.0
+GEN_EDGE = 0.12
+GEN_AMP = 1.1
+GEN_CHROMA = 0.6
+GEN_FLOOR = 0.24
+GEN_CEIL = 0.42
 BEND = 0.5
 CURL = 0.18
-WISP = 0.22
+WISP = 0.12
 WISP_TINT = np.array([1.12, 1.0, 0.97], np.float32)
 TILE = 2048
 PREVIEW = len(sys.argv) > 1 and sys.argv[1] == 'preview'
@@ -71,11 +80,24 @@ def detail(along, across, texel):
         gain = 0.6 + 0.4 * np.tanh(patch * 1.2)
         streak = sample(noise_tile(500 + o, 5.0, 1.0), a / (lam * STRETCH) * 32.0 + 37.0 * o, c / lam * 32.0 + 91.0 * o)
         billow = sample(noise_tile(700 + o, 5.0, 1.0), a / (lam * 2.4) * 32.0 + 53.0 * o, c / (lam * 1.2) * 32.0 + 29.0 * o)
-        out += AMP * FALL ** o * w * (0.4 + gain) * (0.85 * streak + 0.4 * billow)
+        out += AMP * PROC[o] * FALL ** o * w * (0.4 + gain) * (0.85 * streak + 0.4 * billow)
         if 1 <= o <= 4:
-            fil = sample(noise_tile(600 + o, 5.0, 0.8), a / (lam * 36.0) * 32.0 + 71.0 * o, c / (lam * 1.3) * 32.0 + 23.0 * o)
+            fil = sample(noise_tile(600 + o, 5.0, 0.8), a / (lam * 10.0) * 32.0 + 71.0 * o, c / (lam * 1.3) * 32.0 + 23.0 * o)
             wisp += w * 0.6 ** (o - 1) * np.clip(0.8 * (fil - 0.9), 0, 1) * np.clip(patch * 0.8 - 0.1, 0, 1)
     return out, wisp
+
+
+def generated():
+    a = geo.to_linear(np.asarray(Image.open(GEN).convert('RGB'), np.float32) / 255).astype(np.float32)
+    n = a.shape[0]
+    l = np.log(a + 0.02)
+    sigma = GEN_SIGMA * n / 4096
+    d = l - cv2.GaussianBlur(l, (0, 0), sigma)
+    luma = d.mean(-1, keepdims=True)
+    luma = np.where(luma < 0, -GEN_FLOOR * np.tanh(-luma / GEN_FLOOR), GEN_CEIL * np.tanh(luma / GEN_CEIL))
+    out = GEN_AMP * (luma + GEN_CHROMA * (d - d.mean(-1, keepdims=True)))
+    print('generated detail rms', float(out.std()), 'p1', float(np.percentile(out, 1)), 'p99', float(np.percentile(out, 99)), 'sigma px', sigma)
+    return out.astype(np.float32)
 
 
 def main():
@@ -90,10 +112,15 @@ def main():
     wrap = np.load(WRAP, mmap_mode='r')
     H, W = wrap.shape[:2]
     rows = []
+    gen = generated()
+    gen_half = np.tan(np.radians(GEN_WIDTH) / 2)
     for name, width in LEVELS:
         half = np.tan(np.radians(width) / 2)
         g = ((np.arange(SIZE) + 0.5) / SIZE - 0.5) * 2 * half
         x, y = np.meshgrid(g.astype(np.float32), (-g).astype(np.float32))
+        gn = gen.shape[0]
+        gd = cv2.remap(gen, ((x / (2 * gen_half) + 0.5) * gn - 0.5).astype(np.float32), ((0.5 - y / (2 * gen_half)) * gn - 0.5).astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+        gd *= smooth(0.5, 0.5 - GEN_EDGE, np.maximum(np.abs(x), np.abs(y)) / (2 * gen_half))[..., None]
         d = n[None, None, :] + x[..., None] * east + y[..., None] * north
         d /= np.linalg.norm(d, axis=-1, keepdims=True)
         lon = np.arctan2(d[..., 0], d[..., 2])
@@ -111,10 +138,12 @@ def main():
         del lon, lat
         texel = 2 * half / SIZE / unit
         dl, wisp = detail(along, across, texel)
-        out = np.clip(base * np.exp(dl + WISP * wisp)[..., None] * (1 + (WISP_TINT - 1) * np.clip(wisp, 0, 1)[..., None]), 0.1, 1.8)
+        out = np.clip(base * np.exp(gd + (dl + WISP * wisp)[..., None]) * (1 + (WISP_TINT - 1) * np.clip(wisp, 0, 1)[..., None]), 0.1, 1.8)
+        del gd
         img = Image.fromarray((np.clip(geo.display(out), 0, 1) * 255 + 0.5).astype(np.uint8))
         if PREVIEW:
             img.crop((SIZE // 2 - 512, SIZE // 2 - 512, SIZE // 2 + 512, SIZE // 2 + 512)).save(OUT + name.replace('.jpg', '-crop.png'))
+            img.resize((1024, 1024), Image.LANCZOS).save(OUT + name.replace('.jpg', '-pv.jpg'), quality=88)
             print(name, 'detail rms', float(dl.std()), 'wisp mean', float(wisp.mean()), 'max', float(wisp.max()))
             continue
         img.save(PUB + 'full/' + name, quality=93, subsampling=0)

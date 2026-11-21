@@ -24,12 +24,12 @@ CAP_R = 55.0
 DECK_MID = [('deck-m0-t1', 60.0), ('deck-m1b-t1', 180.0), ('deck-m2-t1', 300.0)]
 DECK_CAPS = {'n': 'deck-n-t1', 's': 'deck-s-t1'}
 CIRRUS = [
-    ('cir-m3-t1', 118.0, -22.0, 112.0, False, 1.0), ('cir-m4-t1', 205.0, -24.0, 112.0, False, 1.0), ('cir-m5-t1', 292.0, -20.0, 112.0, True, 1.0),
-    ('cir-m5-t1', 100.0, 24.0, 112.0, False, 1.0), ('cir-m3-t1', 190.0, 22.0, 112.0, True, 1.0), ('cir-m4-t1', 282.0, 26.0, 112.0, True, 1.0),
-    ('cir-m1-t1', 150.0, 2.0, 84.0, False, 0.8), ('cir-m2-t1', 250.0, -2.0, 84.0, True, 0.8), ('cir-m0-t1', 20.0, 30.0, 84.0, False, 0.8),
+    ('cir-m3-t1', 118.0, -22.0, 112.0, False, 0.8), ('cir-m4-t1', 205.0, -24.0, 112.0, False, 0.8), ('cir-m5-t1', 292.0, -20.0, 112.0, True, 0.8),
+    ('cir-m5-t1', 100.0, 24.0, 112.0, False, 0.8), ('cir-m3-t1', 190.0, 22.0, 112.0, True, 0.8), ('cir-m4-t1', 282.0, 26.0, 112.0, True, 0.8),
+    ('cir-m1-t1', 150.0, 2.0, 84.0, False, 0.65), ('cir-m2-t1', 250.0, -2.0, 84.0, True, 0.65), ('cir-m0-t1', 20.0, 30.0, 84.0, False, 0.65),
 ]
 DARK, LIGHT = 0.14, 0.35
-CIRRUS_CAPS = {'n': ('cir-n-t1', 34.0, 0.7), 's': ('cir-s-t1', 34.0, 0.7)}
+CIRRUS_CAPS = {'n': ('cir-n-t1', 34.0, 0.56), 's': ('cir-s-t1', 34.0, 0.56)}
 
 
 def read(name):
@@ -221,6 +221,12 @@ def main():
         fade = separate.smoothstep(90 - radius, 90 - radius + 8, np.abs(lat[sl])).astype(np.float32)[:, None]
         alpha[sl] = np.maximum(alpha[sl], np.clip(rows, 0, 1) * fade * gain)
 
+    import sepmap
+    knots = np.linspace(-1, 1, 33)
+    dim = sepmap.cloud_curve(False)[:, :2].sum(1) / sepmap.cloud_curve(True)[:, :2].sum(1)
+    for ya in range(0, H, 256):
+        lo, la = np.meshgrid(np.radians(lon), np.radians(lat[ya:ya + 256]))
+        alpha[ya:ya + 256] *= np.interp(geo.lonlat_to_world(lo, la) @ geo.SUN, knots, dim).astype(np.float32)
     ha, hw = shell_shift(layers, CLOUD_HEIGHT)
     wd = layers['weight'][..., None]
     acc[y0:y1, x0:x1] = acc[y0:y1, x0:x1] * (1 - wd) + layers['deck'] * wd

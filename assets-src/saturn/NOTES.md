@@ -130,3 +130,176 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - Shade near the junction: mask growth 25 to 9 px, sigma 24 to 12 px, hole fill prefers near cells over the same band (weight 800 to 150): the zone under the night side is dark as in the approved image instead of tan. Where the shade is low the ring colour goes to neutral (`shadeTint`, `shadeGrey [0.3, 0.85]`): shadowed rings are grey in the approved image, not brown.
 - Column check across the junction (display values approved | film, final tier, 1920 scale): see `/tmp/cols.py` pattern in the recipe; at x 1500 the film's globe just above the junction is still about 1.3 times too bright (terminator region, few table samples).
 - Sparkles: size 0.4 to 0.85 px, tint [1, 0.9, 0.8].
+
+## Junction of globe and rings (07:40 to 07:57)
+
+- Native crops showed three faults under the dome: a hook at the left end (the true far arc of the equator lies lower than the approved junction there, so the cream globe ran on below it), a fan of streaks (grain rows meeting at the disc centre) and no line structure (the profile below band coordinate 0.42 was blurred because the solved layout was not constant along the junction: -0.12 at x 1500, -0.52 at x 2000, -0.44 at x 2300 of 2816).
+- Hidden pass: ring fragments at r >= 1 that the globe hides (ray against the spheroid in the ring frame) are drawn in the pass without depth test where `layoutOver` (layout channel 3, ring side) is above 0, faded in by `veil`. The dome base is now the approved junction along its whole length. `top = disc || hidden`; top fragments are opaque in the close view (the lit globe showed through the thin C ring and made the zone too light) and carry no grain.
+- Junction curve: 21 points traced on the first stripe under the cream globe, shape-preserving spline, sampled every 4 px (`JPTS` in `close/profile.py`). On the night side it runs where the first ring lines show against the black globe (928 at x 2300, 955.5 at x 2500), 17 to 57 px higher than the first trace.
+- Band coordinate between the junction and the inner edge of the B ring: `profile.py` now sets it in proportion to the distance from the junction along its normal, from `JL` -0.09 at the junction to 0.62 at the first crossing of 0.62 in the solved field (105 px at x 1500, 130 at 2000, 149 at 2300, 167 at 2500, 191 at 2700), blended back to the solved field over the last quarter and over the first 40 px from the left corner. The stripes under the dome now run parallel to its base as in the approved image and the profile there is no longer blurred (`SOFT` -0.3, argument 11).
+- Shade: in dark parts (scene luminance under 0.04) the shade is the smaller of the blurred ratio and a ratio against the brightest profile value within 15 px, so a bright profile line cannot glow in the dark lanes; cells without a shade value near the junction take it from the nearest cell along the junction normal.
+- Column check at final tier, display values approved | film: x 1100 y 550 to 660 within 20; x 1300 y 590 to 640 within 45 (stripe positions differ by a few px); x 1500 y 600 to 620 film 75 to 82 against 58 to 28 (globe just above the junction near the terminator, the light table has no rows under latitude 8); x 1700 within 16.
+- Still open in this zone: a faint dashed line on the night-side junction (grid of the layout, 9.5 approved px per cell), the limb glow over the far rings left of the limb (lighter box with a straight lower edge where the near half of the rings begins).
+
+## Rise and dive overlay, self-check (07:57 to 08:30)
+
+- Rise frame 3837 showed a smudge on the lower globe: the disc was swept by radius from its centre while the hidden far fragments faded, and both turned half transparent. Now one rule for all top fragments: they stay opaque while they are there and leave by an edge parallel to the junction, `lift = smoothstep(-J, J, layoutDist + 2J - sweep * (1 - veil))` with `veil [0.55, 1]` of `uClose` and `sweep` 700 approved px (`look.ts`). `layout.bin` channel 3 is kept to 4000 instead of 400 for this (spread by ring radius with `profile.py --trace`: under r 1 up to 425 px, r 1 to 1.25 up to 660 px). Frames 3828 to 3843 read as the globe lifting out of the rings; frame 3720 at final tier is byte identical to the round before.
+- Hold re-check at 3465 final after the close work: pair with the hero unchanged (open wedge of the globe's shadow, near black shadowed rings). Titan at 3465 sits at (1675, 166) of 1920 against the hero's (1684, 172); across the hold it moves from (1584, 192) to (1756, 138).
+- G13 self-check, every 5th frame, before the sweep: 0 of 99 frames over 2 percent soft, worst frame 3835 at 0.01 percent.
+- Engine batch 8 (1e19796) merged at 08:08.
+- `npm run budget` renders and reads the memory of every chrome process: never run it beside a measure.
+
+## Self-check for READY (08:11 to 08:45)
+
+- Measure at 94ed405 plus engine batch 8, `npm run measure -- --stop saturn --no-cover saturn --every 3`: G13 0 of 165 frames over 2 percent soft (worst frame 3834, 0.00 percent); G5 pass, coverage 0.552 (3465), 0.553 (3567), 0.731 (3720), 0.406 (3866), invalid 0; G17 3465 median 1.167 (p25 0.709, 71 tiles), 3720 median 1.289 (p25 0.927, 62 tiles).
+- Main at 48a2bfc merged at 08:22 (batches 8 and 9 and the real folders of the other stops). Add/add conflicts in my three folders taken from my side, nothing else touched. Against my renders from before that merge: 3866 byte identical; 3390, 3720 and 3837 differ by 1 to 3 levels on 220 to 1806 pixels, 3592 on 5218 pixels with 15 over 4 levels (star points moved by a fraction of a pixel). The stop has no relief shield and no trimmed shell, so neither opt-out applies.
+- Profiler patch `assets-src/shared/saturn-rings-cull.patch` applied with one change: the far half is only culled from the pass without depth test while `uClose` is 0, because that pass now also draws the far fragments the globe hides. Byte identical on 3390, 3592, 3837, 3866 (draft) and 3720 (final); 3720 final 44.8 to 38.2 s.
+- Gates at 52c68d7: G11 pass, G12 pass (1646 tracked files, 1.36 GB), G15 pass (saturn/web 73 MB, saturn/full 267 MB). Tests 46 of 46. Budget: texture memory full 266.8 MB, web 73.3 MB; disk full 22 MB, web 11 MB. Seconds per frame at final tier: hold 24.0, dive 98.6 (frame 3562), terrain 30.8, rise 125.8 (frame 3828); review tier 6.1, 25.3, 7.9, 30.9; draft 1.6 to 2.2. The dive and rise take four times the samples at review and final (`fastSamplesPerFrame` 16 and 64 in `config/showcase.json`), which is the whole difference.
+- Travel probe at the head: 8.00e-2 on 3882 to 3885, turn 0.003 to 0.004 deg per frame. Exit pose and travel values unchanged since EXIT FINAL (16a4b5f).
+
+## While round 13 is out (08:44 to 09:25)
+
+- READY sent 08:44 at 630a4df. Round 13 (first of three) judges that commit; everything after it counts in the next round.
+- Review sheets of all four segments rendered (in looks). They showed smudges on the rings in the dive (3597 to 3613) and the rise (3830 to 3837), and a hold sky with olive haze and orange stars at the left ansa.
+- Sky patches rebuilt (216a064): `sky/patch.py compose` keeps from the generated fill only its stars (positive residual over a local background, above 2.5 to 5 times the noise, half desaturated, tinted and scaled to the true sky's stars) and half of its mid-scale ripple; the background colour and level are the true sky carried inward (normalized blur at 70, 200 and 600 px on a 1/8 grid). Hold: the body mask is the whole ring disc out to 2.45 radii. Terrain: sky within 160 px of the body and brighter than 1.5 times the far sky counts as halo and is filled, so the patch is sky only. Terrain sky top left: median 7 against 7 in the approved image, same stars in place.
+- Smudges (eca8c75). Cause: the close shade (layout channel 1) is the band-wise shade of the approved image, which is right from the close camera but shows as dark and light stripes across the lanes when the camera is far above, and below the approved frame the weight (channel 2) faded in stripes. Fix: a second one-channel field `layout-even.bin` (640 x 480 float32, `profile.py` argument 12 `EVEN` 22 cells: the shade smoothed over 22 cells), the shader takes the even shade unless the camera is near the close pose (`uGate`, `detailRange [0.2, 0.5]` ring radii from the skim position in `look.ts`), and the weight stays 1 in cells below the approved frame. Frame 3720 final: byte identical with the gate alone, 290 pixels differ by one level with the weight change. A fade of the whole layout by distance (FADE) was tried and dropped.
+- Camera distance to the close pose in ring radii: dive 3596 1.17, 3604 0.65, 3608 0.47, 3612 0.34, 3616 0.25, 3620 0.20; terrain 0.15 at 3630, 0 at 3720, 0.15 at 3810; rise 3826 0.17, 3830 0.39, 3834 0.68, 3838 1.03.
+- Gates at eca8c75: G11 pass, G12 pass (1649 tracked files, 1.36 GB), G15 pass (saturn/web 75 MB, saturn/full 268 MB). tsc clean, tests 48 of 48.
+- Native crops of 3720 final beside the approved image (`out/work/saturn/tc-*.jpg`): (a) near B ring: the approved image is sand, broad soft strata with per-pixel grain and few thin dark lines (high-pass sigma 6 std 16.4, sigma 1.5 std 11.6 at 1920 scale); the film is crisp hairlines with no grain (27.1 and 19.8). (b) limb: the film's halo around the lit limb is wider and brighter than the thin warm glow, the far rings at the left are greyer with a bright top edge. (c) junction: the film's terminator sits about 40 px right at the base and is softer, the lit globe near it too bright, faint texture on the night side.
+
+## Weak list at 09:25, worst first
+
+1. Terrain near B ring: lower hairline contrast, add sand grain (profile fine detail in `rings/build.py` `fine`, `DETAIL` in `close/profile.py`, `grain`, `grainCell`, `lodBiasClose`).
+2. Terrain globe near the terminator above the junction too bright (75 to 82 against 58 to 28 at x 1500), terminator 40 px right at the base.
+3. Terrain limb halo too wide and bright; dashed line on the night-side junction.
+4. Hold: A ring at the left ansa is fine uniform lines where the hero has broad sandy bands; thin outer line too visible; left limb dotted against the gap; ring edges off up to 24 hero px at the left ansa; Titan within 10 px.
+5. Dive 3592 to 3596 a piece of the lower globe below the outer ring edge; rise 3864 to 3871 a reddish dark crescent at the lower-left limb under the ring plane; V kink in A ring bands at 3619 lower left.
+
+## Sand instead of hairlines (09:25 to 09:50)
+
+- Cause of the crisp hairlines in the near B ring: the detail finer than 8 px came from the median of three centre cuts through the approved image, so two thirds of its sand grain was drawn out around the ring as lines; `rings/build.py` then multiplied synthetic gaps and lines on top at full strength.
+- Fix: `profile.py` argument 13 `CUTS` 5 (mean of 11 cuts 2 px apart, lowest and highest dropped), `build.py` argument 1 share of the synthetic lines in the close profile 0.35, grain in the shader as sand: `grain` 0.38, `grainCell [0, -0.5]` (cells of one pixel footprint across the bands and 0.7 along; the film moves 3 to 4 px per frame along the bands in the near field, so the shutter stretches the grain along them).
+- `check/grain.py FILM`: windows of frame 3720 turned so the bands lie level, split into band structure (blur of 4 px along the bands, then high-pass 6 and 1.5 px) and the rest. Mean of 8 windows, approved | film: before 16.9, 10.2, 5.5 | 22.7, 13.9, 4.8; after 16.9, 10.2, 5.5 | 18.2, 11.5, 5.5.
+- Grain between frames 3719, 3720 and 3721: the rest alone correlates 0.5 to 0.8 at a whole-pixel shift of 2 to 4 px along the bands, so the grain flows with the ring and does not boil. Review tier (4 samples) shows the same sand.
+- G17 at this state: 3465 median 1.134 (p25 0.705, 71 tiles), 3720 median 1.015 (p25 0.804, 62 tiles). Pass. (Before: 1.167 and 1.289.)
+- Still different in the near left A ring (x 20 to 400, y 640 to 1080 of 1920): the approved image has crisper, darker grooves and pin-point sparkles; the film is softer there (shutter, 3 to 4 px per frame) and its sparkles are larger blobs.
+- Hold, lower-left limb (x 600 to 840, y 480 to 670 of 1920): the film has an orange-brown wedge about 30 px wide inside the limb with a sharp inner edge where the hero is cream to the limb with a thin darker rim; since the sky rebuild there is a lighter box left of the limb with a straight lower edge at y 512; stars in the gap between the C ring and the globe are brighter than in the hero. Next.
+
+## C ring over the globe in the hold (09:41 to 09:56)
+
+- Cause of the orange brown wedge inside the lower-left limb of the hold: the C ring was opaque (alpha 0.95 from the hero profile plus the floor 0.93), so its shadow on the globe was a hard dark band and the globe did not show through it. The lighter box left of the limb was the haze shell cut by the same sharp shadow.
+- Fix: `rings/build.py` arguments 2 and 3 (`C_THIN` 0.22, `C_END` 1.5): the hero alpha is scaled from 0.22 at the inner edge to 1 at radius 1.5. In the shader the alpha floor stays over the sky (stars hidden) and ramps from the inner edge to 1.5 where the view ray hits the globe (`floorRamp` in `look.ts`, `over` in `rings.ts`), faded out by `uClose`. Frame 3465 final: wedge gone, globe and limb show through the C ring; frame 3720 final byte identical.
+- `check/radial.py FILM [TURN_DEG] [OUT.jpg]`: radial cut at the left ansa of hero and film. The hero's rings are not concentric: outer edge (display 60) at -50, -25, 0, 25, 50 degrees from the left ansa 2.29, 2.324, 2.364, 2.378, 2.392 against the film's 2.328 to 2.344; B outer edge 1.968 to 1.94 against 1.946 to 1.964.
+- Engine batch 10 (811fbca) merged at 09:52: frames 3465 and 3720 at final byte identical before and after.
+
+## Round 13 result (09:57): R1 4, R3 6, R4 6, R2 fail 0 of 10 against 5 of 10, R8 pass
+
+Scorecard `scorecards/round-013/SUMMARY.md` on main. Two rounds left. Corrections, worst first:
+1. R2: both views read as real time or stock; rings perfectly regular lines without grain.
+2. R4 major: terrain 3630 to 3809 barely changes. Cross the bands toward the planet, globe grows, true 3D ice near the lens with depth of field. Sheet of every 15th frame: neighbours clearly differ.
+3. R1 severe, terrain junction: C ring and shadow band smeared, wavy black gap against the night side; R3: straight translucent wedge extends the limb into the rings.
+4. R1 severe, terrain terminator straighter and upright, night side re-lit, cyan grey night limb, doubled storm ovals, green yellow dots above the limb.
+5. R1 severe, hold: dark brown wedge at the lower-left limb, detached rim line (fixed above, to be judged).
+6. R1 major, hold framing: ring system too large, lower arc clipped more than the hero.
+7. Rings in every view: combed, no grain along the arcs, A ring too warm and bright, no Encke gap, F ring coloured dots, stripes too bright in the globe's shadow. Builder's advice: 2D maps unprojected from the approved images.
+8. Terrain: wide golden green glow off the lit limb.
+9. R3: globe in dive and rise airbrushed, polar hood without hexagon, vortex, spots; rust strip outside the limb at 3866.
+10. R4: dive 3572 to 3580 the globe's shadow on the rings vanishes in one step and Titan drops out; back at 3844 to 3850.
+11. Titan lit past half (hero: crescent about 38 percent), soft.
+12. Minors: lens streak of the hero missing, left ring horizon in the terrain view, F ring, Milky Way fades 3830 to 3850, crawl check on neighbouring frames.
+Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
+- Builder, 10:00: `kit/02-STOPS.md` fallback (relief for far and middle, true 3D ice near the lens, cover) must be prepared in parallel behind one flag in the plan; if R1 on 3720 is under 9 after round 2, round 3 runs on it. Say in READY how far it is.
+
+## Plan for round 2 (10:05)
+
+- Decision: both approved images become projected maps on the true geometry. Rings: the approved pixels projected from the fitted camera onto the ring plane (colour and a ring mask), at full strength where the image holds at least one texel per pixel, the 1D profile with grain everywhere else. Globe: a light map (approved image divided by the albedo, projected from the same camera, fixed in space) so the terminator and the night side are the approved ones; the table light stays outside the approved view.
+- Then: terrain flight across the bands toward the globe with 3D ice near the lens; dive shadow continuity; Titan phase.
+
+## Round 2 work: hold from the hero's own pixels (10:06 to 11:02)
+
+- `src/stops/saturn/shot.ts`: projection of an approved image from its fitted camera onto true geometry (`shotUv`, `shotMatrix`, `shotUniforms`). Used for the rings (colour and mask) and for the globe (light ratio).
+- Rings in the hold: `assets-src/saturn/shot/hero_rings.py full web` writes `hero-rings.jpg` (hero pixels, full from the x2 upscale `out/work/saturn/hero-x2.png`, web native) and `hero-rings-mask.png` (R alpha, G weight). The ring shader mixes them in by `heroW` (camera distance to the hero pose, `heroRange [0.6, 2.2]`), by the mask weight and by image texels per pixel (`heroDensity`), so the hold shows the hero's rings in place and the dive hands over to the 1D profile.
+- Finding: the hero's rings are opaque where they cross the globe, from an inner edge that is not a circle (radius 1.165 at azimuth 52 to 1.235 past 104 degrees of the ring frame), and the hero's globe outline at the lower left leaves the fitted spheroid by up to 8 px. The mask alpha over the globe follows the hero: radial edge per azimuth (`inner_edge`) plus a luminance rule on the lit side (`OVER_LIT`, `OVER_LUM`). The translucent procedural C ring over the globe (round 13 state) was the cause of the brown wedge and the detached rim line; `heroOver` now lets the image through over the globe.
+- Globe in the hold: `assets-src/saturn/shot/light.py hero FILM.png erode=9` writes `hold-light.bin` (640 x 360 RGBA float32, ratio approved over film in scene light, shift compensated, extended outward) from a film frame rendered with the map set to ones. The globe shader multiplies by it, projected from the hero camera (`shotLight` in `globe.ts`), weight `heroW`. Ratio on the globe: median [0.958, 0.986, 0.989], p5 [0.763, 0.868, 0.893], p95 [1.075, 1.09, 1.131].
+- Ring shadow on the globe and shell scaled to 0.25 near the hero pose (`ringShadowHero`): the hero has no B ring shadow band on the lower left. Far half of the rings drawn after the shell (`renderOrder` 5): removes the seam in the gap.
+- The film frame 3465 sits about (+1.5, +2.0) px from the hero as a whole.
+- Frames 3465 final, 3390, 3539, 3567 review checked: hold matches in place; the dive at 3567 shows the 1D profile.
+- Still open in the hold: Titan phase (hero crescent, film lit past half and dull), thin tan line on the hero's limb where the rings cross.
+
+## Round 2 work: close view from the approved close image's own pixels (10:40 to 11:06)
+
+- Rings in the close view: `assets-src/saturn/shot/skim_rings.py` writes `skim-rings.jpg` (approved close pixels, full from the x2 upscale `out/work/saturn/close-x2.png`) and `skim-rings-mask.png` (R alpha, G weight). The ring shader projects them from the fitted close camera (`skimM`, `shotUv`) at full strength inside the approved frame (`skimShow`, `skimW` by camera distance to the skim pose, `skimRange [0.5, 1.1]`); outside the frame the 1D profile with grain carries on.
+- Globe in the close view: `shot/light.py close FILM.png layers=LAYERS.png lo=0.02 erode=9 floor=0.0005` writes `skim-light.bin` (640 x 360 RGBA float32, ratio approved over film in scene light, projected from the close camera). Terminator, night side and limb are the approved ones at the pose.
+- Fetch footprint: `lodBiasClose` 1.2 (the Builder measured the weave on the outer ring at 3596 to 3600 as the profile fetched under a pixel at 0.35). The projected maps are fetched with `textureGrad` at `skimFoot` 0.7 of the pixel footprint or more.
+- Terrain flight: `forward 0.5, rise -0.12, side -0.04, yawDeg -3, pitchDeg 1.5`, linear in u through the approved pose at 3720. Camera height and foot radius: 3630 0.331 and 2.425; 3720 0.271 and 2.205; 3809 0.211 and 1.994. Share of ring pixels outside the approved frame: 3630 0.445, 3660 0.347, 3690 0.209, 3720 and later 0.
+- Batch 11 (e5c57ba) merged at 11:05 (363d326); commit 79ad210 holds the close image, light map and flight.
+
+## Seam between the close image and the profile (11:06 to 11:22)
+
+- `shot/ring_tone.py FILM.png` writes `layout-tone.bin` (640 x 480 RGBA float32 on the layout grid): per band coordinate (`out/work/saturn/layout-total.npy`) the median ratio approved over film (rings only, sigma 8 approved px), times a wide smooth residual clipped to 0.8 to 1.25 that fades to 1 within 80 cells. It also rewrites channel 1 of `layout.bin` outside the approved frame as the by-band median of the inside shade (`out/work/saturn/layout-shade.npy`, blended over 8 cells). Input film: frame 3720 at final with `rings.skimShow: 0` and the tone bin set to ones (`out/work/saturn/tone-P-3720.png`). Printed: film offset -1.83, -0.04 approved px; tone inside median [1.034, 1.001, 0.986], p5 [0.829, 0.851, 0.816], p95 [1.456, 1.267, 1.294], 9602 cells. A first take with nearest-cell extension gave pink and green blotches and was dropped.
+- Shader: `uLayoutTone`, `uToneW` (= skimW); `uSkimNear` (1 at the skim pose, 0 beyond `skimAway [0.01, 0.25]`) so the image beyond the profile's outer edge (far-left tip) only shows near the approved pose. `skimEdge [0, 0.14]`, `detailRange [0.5, 1.1]`.
+- Removed `skim_arcs.py`, `skim-arcs.bin`, `skim-arcs.json`.
+- Finding: the approved close image's B ring outer edge bends steeply down at the bottom centre (approved px x 1440 to 1470, y 1484 to 1534), which showed as a dark blotch when the shade was extended by nearest cell.
+- Left at draft: slight kink in the A ring at the footprint's left border (3630), small dark blotch at the Cassini division (3675, x about 700, y about 860 of 1920).
+- Commit 16a8fec pushed with looks. Batch 12 (759b70f) merged at 11:20 (2453ee9). Frame 3720 at final after the seam work: `out/work/saturn/t-q3-3720.png`, 52.1 s, 16 samples, very close to the approved image.
+- `ground: 0.27` in `params.terrain` (the Builder's `terrain.ground`, real height of the camera over the ring plane). Samples at review: 3585 to 3605 rise 16 to 33 (peak 3596 to 3599), 3825 to 3843 24 to 34, 3844 to 3845 17 (view switch), terrain frames 4.
+
+## Ring ice near the lens (11:22 to 11:50)
+
+- `src/stops/saturn/ice.ts`: 12000 instanced quads, seeds from an integer generator, positions wrapped in a box around the camera in the ring frame (`box` width 1.3, height 0.34, lowest 0.004, `heightPower` 1.6 puts most near the plane), disc radius `blur / distance` px clamped to `radius`, additive, alpha untouched, no depth test, `renderOrder` 9, discarded in every diagnostic view, dark in the globe's shadow, slow drift and twinkle, thinned to `thin` near the approved pose so frame 3720 stays the approved picture.
+- Takes: 1 (2600 grains: invisible), 2 (9000, box height 0.5: snow in the sky and over the night side, rejected), 3 (height 0.19: dots over the black Cassini division read as stars), 4 same with more grains, 5 and 6 (kept): a grain shows only where the ring is dense under it and behind it along the view ray (`ringAt` evaluates the same layout and profile as the ring shader in the vertex shader, `dense`), and only below eye level (`eye`: fades within 0.03 to 0.09 below the camera height), so no grain is ever seen against the sky, the gap or the globe.
+- Mesh is visible when the camera is under 1 radius above the plane (`heightRange [0.5, 1]`) and on the lit side.
+
+## Globe shadow on the rings and Titan in the dive (11:32 to 11:45)
+
+- Cause of the jump at 3572 to 3580: the computed shadow of the globe was multiplied out by the close layout weight (`mix(lit, 1.0, lay.z)`), which rises with `uClose` exactly there; the baked shade that replaces it only holds the approved shadow near the close pose. Titan does not pop: it is occulted by Saturn's night limb over frames 3574 to 3578 (crop `/tmp/titan-crop.png`); with the shadow gone in the same frames it read as one switch.
+- Fix: the computed shadow stays on in every view (`col = mix(floor, col, lit)`), and its direction turns with `uClose` from the hero's fitted direction (`shadow.json`) to the close light turned by `shadowClose [28, 0]` degrees about the ring normal, elevation 0. 28 degrees was chosen on frame 3720 with the ring image off: the lower edge of the shadow under the night side then meets the right frame border where the approved image has it (12, 22, 30 and -12 tried).
+- Dive at draft after the fix (3570 to 3620 every 6th): the shadow wedge is there in every frame and swings with the light.
+
+## Shadow values, ice, Titan, arrival strokes, sky margins (11:45 to 12:17)
+
+- Globe shadow on the rings: final `shadowClose [30, 0]` and `shadowLift 0.15` (`col = mix(floor, col, mix(lit, 1.0, uShadowLift * uClose))`), so the computed shadow never leaves; draft sheets of the dive 3570 to 3620 and the rise 3812 to 3880 show it in every frame. Commit 46e45b9.
+- Ice takes 7 to 9. 7 (blur 0.42, energy 4): nearly invisible, but the 3720 crop matched the approved sparkles. 8 (blur 1.2, energy 12, 12000 grains): sparse sparkles of mixed brightness. 9 (final): count 20000, box [1.3, 0.34, 0.004], heightPower 1.6, blur 1.2, radius [0.85, 46], near [0.012, 0.035], energy 16, dim [0.85, 1.5], energyPower 5, tint [1, 0.93, 0.82], glint [3, 8], drift 0.004, thin 0.3, thinRange [0.1, 0.45], heightRange [0.5, 1], dense [0.04, 0.15], eye [0.14, 0.22], lod 16. Takes 3 to 6 (hard white dots) rejected. Review stills 3690, 3691, 3760: mixed sparkles and soft discs over the dense rings only, none against sky, gaps or globe.
+- Titan: `look.titan` day [0.7, 0.245, 0.085], rim [1.4, 0.72, 0.3], night [0.0008, 0.0006, 0.0006], halo [0.02, 0.011, 0.007], haloHeight 0.03, terminator [0.02, 0.5], limb 0.3: a crescent with a bright rim as in the hero.
+- Arrival strokes at 3362 and 3369 (Builder, batch 12 mail): the hold sky patch of 630a4df (the state judged on main) held a generated green yellow crescent with thin curved strokes at about (0.36, 0.47) of the patch. The patch rebuilt at 216a064 does not have it; review stills 3362 and 3369 on this branch show no strokes.
+- Sky patch margins: `sky/patch.py margin NAME` replaces the mirrored pad (background carried outward and blurred, sparse bright stars moved outward by half a frame, crowded star clouds left out). Inside the approved border: hold largest difference 2 levels, terrain 1. `tools/assets/mirrorcheck.py` clean on both. Commit 0bfa699.
+- Milky Way in the rise: top-left sky mean 27.7 at 3826, 23.6 at 3834, 13.0 at 3842, 5.3 at 3850, 3.5 at 3866: the terrain sky patch fades before the view switch against a darker shared sky. Left as is (the sky behind the rise belongs to the next stop).
+- Final-tier pairs: `out/work/saturn/pair-terrain-q4.jpg` (3720, 54.1 s, 16 samples) and `pair-hold-q4.jpg` (3465, 42.5 s): both close to the approved images.
+
+## Item 9, judged dive and rise frames (12:20 to 12:45)
+
+- Finding: the globe at 3567 and 3866 was not soft from the map. A draft still (1 sample) of 3567 shows the hero's eddies crisp; the review still (16 samples) smears them along the bands. `assets-src/saturn/check/speed.ts [divePower=..] [risePower=..] FRAMES` prints the screen travel of the globe centre within one shutter: 9.2 px at 3567 and 9.0 px at 3866 (peak 12.1 at 3575 and 11.1 at 3855). The judged frames sat in the fast part of the move.
+- Fix: the progress of the dive is `u^divePower`, of the rise `1 - (1 - u / riseEnd)^risePower`, both 1.5 (`skim` in `plan.ts`), before the same `smoother` join. The dive starts slower and the rise settles earlier; positions and orientations along the path are the same curve. The view switch and the sky patch weights follow the progress, not the frame (`diveSwitch 0.5`, `riseSwitch 0.47` of progress). Screen travel of the globe centre per shutter, before | 1.4 | 1.6 | 1.8: 3567 9.2 | 2.5 | 1.3 | 0.7; 3866 9.0 | 3.0 | 1.5 | 0.7; peak dive 12.1 | 13.0 | 11.6 | 14.0; peak rise 11.1 | 11.8 | 12.4 | 13.2.
+- Exit: from u 0.96 the pose is `after(time)` as before, so the exit pose and the travel values are unchanged (probe to confirm).
+- Rise 3866 at the old timing had the hero ring image at weight 0.27 over the profile (camera 1.66 radii from the hero pose): coloured mottle on the outer A ring and crossing line families. `heroRange` is now [0.6, 1.6], so the hero image and the hold light are gone before the exit.
+- Rust strip left of the limb at 3866: the thick haze shell (fitted to the hero's glow) lit through the gap between the globe and the C ring, below the ring plane. The shell now counts the gap and the thin inner C ring as shadow (`uGap`, 1 minus the hero weight; radius under 1.3 to 1.55 on the ring plane).
+- Coloured speckle at the outer ring edge: was the hero image at partial weight; gone with the range. The blue fringe on the bright outer edge is the lens.
+
+## Junction cutout in the rise, shell gap, last checks (12:37 to 13:00)
+
+- Shell in the gap: `gap = uGap * smoothstep(0, 0.3, tg) * (1 - smoothstep(1.3, 1.55, radius on the ring plane))` in `SHELL_FRAG`. Review 3866: the gap between the C ring and the left limb is an even dark brown, no strip, no edge at the ring plane (`/tmp/m3c.png`). Hold 3465 and terrain 3720 at review unchanged (`look-m4b.jpg`).
+- Main merged at 12:40 (edb3318, round 17 state of main). `f4d2c29` holds the timing change.
+- Notch at the left limb junction in the rise (3822 to 3832): a black wedge with a straight edge from the limb up to the ring horizon. Cause, shown by `rings.skimShow: 0` (no notch): the close ring image has alpha 0 where the approved picture shows the globe, and those pixels are projected onto the far rings behind the globe. Away from the approved pose that part of the far rings comes into view as a hole whose edge is the approved limb projected onto the ring plane.
+- Fix (`db517a6`): `uSkimCam` in the ring shader. A ring point that the globe hides from the close camera (`behind`, same spheroid test as `hidden`, margin 0.006 inside the silhouette) and that the image marks as empty takes the profile instead (`wS *= mix(1 - behind, 1, km.r)`), only for fragments not drawn over the globe (`!hidden && !disc`). At the approved pose every such point is behind the globe, so 3720 is the same picture (479 pixels differ by more than 8 levels at draft, all at the junction).
+- Tried and dropped: margin 0.03 outside the silhouette to fill the 3 to 10 px gap between the end of the ring horizon and the lit limb at 3720. It drew a grey stub beside the limb.
+- Still there after the fix: at 3826 the image's dark C ring meets the profile's bright far B ring along the same straight line (tone step, thin dark sliver). It sits in the fastest part of the rise.
+- Seen at draft on 3720, night side, rings in shadow at the right border: a few black single pixel dots along one band. At review (4 samples) a faint dotted trace, at final (16 samples, `t-q4-3720.png`) nearly gone. Not traced.
+- Review cost with batch 11 sampling and the new timing: 3826 127 s (44 samples), 3832 91 s (35 samples), hold and terrain frames 19 to 21 s (4 samples).
+
+## Checks before READY for round 2 (12:57 to 13:50)
+
+- Head after the merge of main with batch 13 (6ed0829): 28f8d42. `npx tsc --noEmit -p .` clean, `npx vitest run` 13 files and 59 tests pass, `npm run build` passes.
+- `npm run measure -- --stop saturn --no-cover saturn --every 3` (688 s): G13 PASS, 0 of 165 frames over 2 percent soft (worst 0.00 percent). G5 PASS, coverage hold 0.576, dive 0.621, terrain 0.740, rise 0.392, no invalid pixel. G17 PASS, 3465 median 1.015 (p25 0.962, 71 tiles), 3720 median 0.819 (p25 0.769, 62 tiles). The terrain value was 1.02 before the close view took the approved pixels; it is now near the 0.8 line.
+- G11 failed once (the two ring masks were named without their full path in `RECIPE.md`), passes after the heading fix. G12 PASS (1809 tracked files, 1.39 GB). G15 PASS, texture memory saturn/web 182 MB, saturn/full 518 MB. Disk: full 36 MB, web 25 MB.
+- `npm run budget -- --stop saturn` was stopped after 10 minutes without output so main could be merged. Memory comes from G15.
+- Samples at review: 3598 to 3605 16 to 42; 3838 to 3845 20 to 16. Review stills cost up to 127 s (3826, 44 samples).
+- Exit: `probe.ts` 3878 to 3890: speed 8.44e-2 at 3878 settling to 8.00e-2 from 3881, 8.00e-2 on both sides of 3884 and 3885, turn 0.003 to 0.004 deg per frame, Saturn at 692,608 r 309 to 310. Exit pose and travel values unchanged.
+- Screen travel of the globe centre per shutter with power 1.5: 3567 1.8 px, 3866 2.1 px; peaks 12.6 px at 3585 and 12.0 px at 3845.
+- Final comparisons of both views and review sheets of the four segments viewed. Hold and terrain are close to the approved images. Terrain sheet: the globe grows and the ring tip leaves the frame between 3630 and 3711; 3728 to 3809 change less. Dive sheet: 3540 to 3572 change little (the slow start), the fast part is 3580 to 3613. Rise: one move, Titan comes out from behind the globe at 3850.
+- After the merge: review 3465 is byte identical to the still before it; draft 3362 and 3369 show no strokes; 3376 and 3384 show the hold patch coming in.
+- Anamorphic streak of the approved hold: present in the film at 3465 (crop at lower right, approved above film), carried by the hero's own pixels.
+
+## READY for round 2 sent (13:51)
+
+- READY sent to the Builder at 5d9b558 with the measures above, the changes per item and the weak list. Told plainly: dive and rise timing changed, exit pose and travel values did not; the fallback relief is not built; the batch 13 sky re-aim was not done; `npm run budget` did not finish.
+- While the critics are out, in this order: rings outside the approved frames (the judged rise frame 3866 is the 1D profile), the tone step at the junction in the rise near 3826, the gap between the ring horizon and the lit limb at 3720, the polar hood, the black dots on the shadowed rings at 3720, G17 at 3720 (0.819).

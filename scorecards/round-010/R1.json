@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "coronal arch and limb glow",
+   "what": "the arch, loop strands, and spicule glow are brighter than the target, and the arch highlights run cyan-white instead of amber",
+   "fix": "pull the arch and limb glow down and warm the loop highlights back to the target amber"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "upper arch and right-hand loops",
+   "what": "native crops of the arch and loops are hotter than the target, with highlight channels pushed toward cyan-white",
+   "fix": "reduce arch and loop highlight intensity and remove the cool bloom so the strands match the target"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "photosphere, penumbra, and granulation lanes",
+   "what": "dark lanes and spot shadows are lifted, so surface contrast is flatter than the target while the highlights stay put",
+   "fix": "drop the shadow floor on the photosphere and restore the dark intergranular lanes and umbra"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "central and mid photosphere",
+   "what": "granulation lanes and active-region shadows are lifted and slightly warmer, so the disk has less contrast than the target",
+   "fix": "lower the shadow floor on the solar surface and cool the lifted lanes back toward the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "left and right sky flanks",
+   "what": "faint stars and dust-lane highlights are dimmer than the target, especially on the right flank",
+   "fix": "bring the faint star and nebular highlights back up without lifting the black floor"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "whole frame",
+   "what": "every feature sits about one pixel to the right of the target, and the disk is a hair warmer",
+   "fix": "shift the frame left by one pixel and cool the disk slightly toward the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "whole crop grid",
+   "what": "native features sit about two pixels right and one pixel up of the target crops",
+   "fix": "shift the native frame left two pixels and down one pixel"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame and sky",
+   "what": "features sit about one pixel right and one pixel down, and the sky floor is slightly lifted",
+   "fix": "shift the frame left one pixel and up one pixel, and drop the sky floor to the target black"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "whole crop grid",
+   "what": "native features sit about one pixel right and one pixel down of the target crops",
+   "fix": "shift the native frame left one pixel and up one pixel"
+  }
+ ]
+}

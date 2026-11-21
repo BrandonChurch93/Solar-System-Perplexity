@@ -15,16 +15,22 @@ import unproject
 
 WORK = os.path.join(geo.ROOT, 'out/work/nep/wrap')
 CLOUD_KNOTS = np.array([-1, -0.2, -0.08, -0.03, 0.0, 0.03, 0.06, 0.125, 0.19, 0.25, 0.31, 0.375, 0.44, 0.5, 0.56, 0.69, 1.0])
-CLOUD_VALUES = np.array([0.02, 0.02, 0.025, 0.095, 0.08, 0.085, 0.15, 0.35, 0.77, 1.26, 1.7, 2.0, 2.3, 2.5, 2.7, 3.0, 3.2])
-TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 1.0])
-TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.39, 1], [0.30, 0.39, 1]])
+CLOUD_VALUES = np.array([0.02, 0.02, 0.025, 0.095, 0.08, 0.085, 0.165, 0.40, 0.92, 1.58, 2.1, 2.5, 2.9, 3.1, 3.4, 3.75, 4.0])
+TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 0.6, 1.0])
+TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.43, 1], [0.30, 0.48, 1], [0.30, 0.50, 1]])
 CURVE = os.path.join(geo.ROOT, 'src/stops/neptune/curve.json')
+FIT = np.array([0.5, 0.5, 0.0], np.float32)
+LIFT = {15: [0.05, 0.055, 0.06], 16: [0.24, 0.245, 0.235], 17: [0.2, 0.235, 0.28], 18: [0.315, 0.39, 0.56]}
 
 
-def cloud_curve():
+def cloud_curve(lift=True):
     k = np.linspace(-1, 1, 33)
     level = np.interp(k, CLOUD_KNOTS, CLOUD_VALUES)
-    return np.stack([level * np.interp(k, TINT_KNOTS, TINT[:, c]) for c in range(3)], -1)
+    c = np.stack([level * np.interp(k, TINT_KNOTS, TINT[:, c]) for c in range(3)], -1)
+    if lift:
+        for i, v in LIFT.items():
+            c[i] = np.maximum(c[i], v)
+    return c
 
 
 def shade_of(ndl, deck):
@@ -76,7 +82,7 @@ def main():
     look['cloud'] = np.round(cloud, 4).tolist()
     json.dump(look, open(CURVE, 'w'))
     wc = shade_of(ndl, cloud) / shade
-    white = wc[..., 2]
+    white = (shade_of(ndl, cloud_curve(False)) / shade)[..., 2]
     a = alb
     floor = np.stack([separate.local_floor(np.ascontiguousarray(a[..., c]), 8, 25, 25, 5) for c in range(3)], -1)
     hue = floor / np.maximum(floor[..., 2:3], 1e-4)
@@ -86,6 +92,8 @@ def main():
     m = separate.smoothstep(0.02, 0.10, z)
     hole = (m > 0.02) | ~valid
     fill, got = directional_fill(a, hole)
+    near = np.stack([separate.local_floor(np.ascontiguousarray(a[..., c]), 8, 25, 40, 5) for c in range(3)], -1)
+    fill = fill + near * (1 - got)[..., None]
     rel = a @ separate.LUM
     lo = gaussian_filter(rel, 3.0)
     grain = np.where(hole, 0, rel / np.maximum(lo, 1e-4) - 1)
@@ -98,8 +106,8 @@ def main():
     tex = np.tile(tile, (a.shape[0] // 768 + 1, a.shape[1] // 768 + 1))[:a.shape[0], :a.shape[1]]
     fill = fill * (1 + tex)[..., None]
     deck = a * (1 - m[..., None]) + fill * m[..., None]
-    ld = deck @ separate.LUM
-    alpha = np.clip(((a @ separate.LUM) - ld) / np.maximum(wc @ separate.LUM - ld, 1e-4), 0, 1)
+    rise = wc - deck
+    alpha = np.clip((((a - deck) * rise) @ FIT) / np.maximum((rise * rise) @ FIT, 1e-6), 0, 1)
     alpha *= separate.smoothstep(0.0, 0.5, m)
     alpha = np.where(seen, alpha, 0)
     weight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(0.06, 0.2, ndl)

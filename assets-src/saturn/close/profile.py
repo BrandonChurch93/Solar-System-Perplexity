@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 from scipy.ndimage import gaussian_filter1d, map_coordinates
 from scipy.spatial import cKDTree
+from scipy.interpolate import PchipInterpolator
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "rings"))
@@ -21,6 +22,8 @@ L0, L1, NL = -1.05, 2.60, 20000
 DETAIL = float(sys.argv[6]) if len(sys.argv) > 6 else 8.0
 GM = int(sys.argv[7]) if len(sys.argv) > 7 else 9
 CHROMA = float(sys.argv[10]) if len(sys.argv) > 10 else 0.25
+SOFT = float(sys.argv[11]) if len(sys.argv) > 11 else -0.3
+CUTS = int(sys.argv[13]) if len(sys.argv) > 13 else 5
 img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
 H, W = img.shape[:2]
 lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
@@ -29,7 +32,10 @@ field = np.load(WORK / "layout.npy")
 GH, GW = field.shape
 xs, ys = np.meshgrid(np.arange(W) + 0.5, np.arange(H) + 0.5)
 limb = np.load(WORK / "close-limb.npy")
-junction = np.array([[1500, 768], [1700, 815], [1900, 858], [2100, 895], [2300, 945], [2500, 985], [2700, 1020], [2816, 1046]], np.float64)
+JPTS = np.array([[1383, 718], [1400, 724.5], [1425, 735], [1450, 745.5], [1475, 757], [1500, 768], [1550, 782], [1600, 795], [1650, 806], [1700, 815.5], [1800, 838], [1900, 858], [2000, 877.5], [2100, 895.5], [2200, 912.5], [2300, 928], [2400, 942.5], [2500, 955.5], [2600, 967.5], [2700, 978], [2816, 989]], np.float64)
+jx = np.arange(JPTS[0, 0], JPTS[-1, 0] + 1, 4.0)
+junction = np.stack([jx, PchipInterpolator(JPTS[:, 0], JPTS[:, 1])(jx)], -1)
+junction = np.concatenate([[[1392, 687], [1389, 700], [1385, 711]], junction])
 poly = np.concatenate([limb, junction, [[W, 0], [limb[0, 0], 0]]]).astype(np.int32)
 gmask = np.zeros((H, W), np.uint8)
 cv2.fillPoly(gmask, [poly], 1)
@@ -66,6 +72,51 @@ diff_out[need] = ext
 diff_out *= edge * edge * (3 - 2 * edge)
 solved = field
 field = np.where(live, base + diff_out, solved)
+JL = -0.09
+jc = junction[3:]
+slope = (jc[-1] - jc[-2]) / np.linalg.norm(jc[-1] - jc[-2])
+jc = np.concatenate([jc, jc[-1] + slope[None] * np.arange(4.0, 2 * W, 4.0)[:, None]])
+jt = np.gradient(jc, axis=0)
+jt /= np.linalg.norm(jt, axis=1)[:, None]
+jn = np.stack([-jt[:, 1], jt[:, 0]], -1)
+js = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(jc, axis=0), axis=1))])
+axf, ayf = ax.astype(np.float64) + 0.5, ay.astype(np.float64) + 0.5
+_, ji = cKDTree(jc).query(np.stack([axf, ayf], -1).reshape(-1, 2))
+ji = ji.reshape(GH, GW)
+rel = np.stack([axf, ayf], -1) - jc[ji]
+jd = (rel * jn[ji]).sum(-1)
+along = js[ji] + (rel * jt[ji]).sum(-1)
+solved_total = field.copy()
+
+
+def at0(x, y):
+    qx, qy, ok = a2g(np.asarray(x, np.float64), np.asarray(y, np.float64))
+    return np.where(ok, map_coordinates(solved_total, [qy - 0.5, qx - 0.5], order=1, mode="nearest"), 9.0)
+
+
+if "--trace" in sys.argv:
+    for x in (1500, 2000, 2300, 2500, 2700):
+        yy = np.arange(900, 1300, 20.0)
+        print("solved field at x", x, " ".join(f"{int(y)}:{v:.2f}" for y, v in zip(yy, at0(np.full_like(yy, x), yy))))
+JE = 0.62
+dd = np.arange(0.0, 420.0, 2.0)
+ray = at0(jc[:, None, 0] + jn[:, None, 0] * dd[None], jc[:, None, 1] + jn[:, None, 1] * dd[None])
+low = (ray < JE) & (dd[None] > 30)
+start = np.argmax(low, axis=1)
+after = (ray >= JE) & (ray < 5) & (np.arange(len(dd))[None] > start[:, None])
+found = low.any(1) & after.any(1)
+width = np.where(found, dd[np.argmax(after, axis=1)], np.nan)
+idx = np.arange(len(jc))
+width = np.interp(idx, idx[found], width[found])
+width = gaussian_filter1d(width, 12.0, mode="nearest")
+print("junction to the inner edge of the B ring, px, at x 1500, 2000, 2300, 2500, 2700:", [round(float(width[np.argmin(np.abs(jc[:, 0] - x))]), 1) for x in (1500, 2000, 2300, 2500, 2700)])
+JDc = width[ji]
+jw = np.clip(along / 40.0, 0, 1) * np.clip((jd + 40.0) / 10.0, 0, 1) * np.clip((1 - jd / JDc) / 0.25, 0, 1) * (np.abs((rel * jt[ji]).sum(-1)) < 12) * live * (np.abs(field) < 2.2) * need
+jw = jw * jw * (3 - 2 * jw) * edge * edge * (3 - 2 * edge)
+delta = np.where(live & (jw > 0), jw * (JL + (JE - JL) * jd / JDc - field), 0).astype(np.float32)
+field = field + delta
+diff_out = diff_out + delta
+print("junction zone cells", int((jw > 0.5).sum()))
 np.save(WORK / "layout-total.npy", np.where(live, field, 9.0).astype(np.float32))
 bx, by = np.gradient(base, axis=1), np.gradient(base, axis=0)
 grow = (np.gradient(field, axis=1) * bx + np.gradient(field, axis=0) * by) / np.maximum(bx * bx + by * by, 1e-12)
@@ -80,6 +131,7 @@ def at(x, y):
 
 
 lam = at(xs, ys).astype(np.float32)
+np.save(WORK / "lam-approved.npy", lam)
 axis = L0 + (np.arange(NL) + 0.5) / NL * (L1 - L0)
 
 
@@ -113,14 +165,14 @@ def family(A, B, offs, reach, name):
         mono = np.maximum.accumulate(lc)
         ok_t = (p[:, 0] > 8) & (p[:, 0] < W - 9) & (p[:, 1] > 8) & (p[:, 1] < H - 9) & (np.gradient(lc) > 1e-5) & (lc >= mono - 1e-6)
         cuts = []
-        for off in (-2.0, 0.0, 2.0):
+        for off in np.arange(-CUTS, CUTS + 1) * 2.0:
             q = p + nrm[None] * off
             c = cv2.remap(img, (q[:, 0] - 0.5).astype(np.float32)[None], (q[:, 1] - 0.5).astype(np.float32)[None], cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)[0]
             c = inverse_filmic(srgb_to_linear(np.clip(c, 0, 1)))
             lo = at(q[:, 0], q[:, 1])
             o = np.argsort(lo)
             cuts.append(np.stack([np.interp(lc, lo[o], c[o, k]) for k in range(3)], -1))
-        med = np.median(np.stack(cuts), 0)
+        med = np.sort(np.stack(cuts), 0)[1:-1].mean(0)
         sg = DETAIL / 0.25
         base_t = np.stack([np.interp(lc, axis[good], prof[good, k]) for k in range(3)], -1)
         lo_b = gaussian_filter1d(base_t, sg, axis=0, mode="nearest")
@@ -162,7 +214,7 @@ have[:first] = True
 BASE = -0.12
 prof[axis < BASE] = prof[(axis >= BASE) & (axis < BASE + 0.06)].mean(0)
 soft = gaussian_filter1d(np.nan_to_num(prof), 0.03 / (L1 - L0) * NL, axis=0, mode="nearest")
-w = np.clip((axis - 0.42) / 0.14, 0, 1)[:, None]
+w = np.clip((axis - SOFT) / 0.14, 0, 1)[:, None]
 w = w * w * (3 - 2 * w)
 prof = np.where(np.isfinite(prof), soft * (1 - w) + prof * w, prof)
 prof[~have] = np.nan
@@ -180,6 +232,10 @@ num = cv2.GaussianBlur(lum(scene) * m, (0, 0), SIG)
 den = cv2.GaussianBlur(lum(rec) * m, (0, 0), SIG)
 cov = cv2.GaussianBlur(m, (0, 0), SIG)
 shade = np.clip(num / np.maximum(den, 1e-5), 0.02, 1.2)
+peak = cv2.dilate(lum(rec) * m, np.ones((15, 15), np.uint8))
+deep = np.clip(cv2.GaussianBlur(lum(scene) * m, (0, 0), 5.0) / np.maximum(cv2.GaussianBlur(peak, (0, 0), 5.0), 1e-5), 0.02, 1.2)
+dark = np.clip((0.04 - cv2.GaussianBlur(lum(scene), (0, 0), 8.0)) / 0.03, 0, 1)
+shade = shade + dark * dark * (3 - 2 * dark) * (np.minimum(shade, deep) - shade)
 known = (cov > 0.25) & (den > 2e-4)
 sm = cv2.remap(cv2.GaussianBlur(np.where(known, shade, 0).astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 km = cv2.remap(cv2.GaussianBlur(known.astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
@@ -190,14 +246,26 @@ tree = cKDTree(np.stack([gx[good], gy[good], np.clip(field[good], -3, 4) * LS], 
 _, near = tree.query(np.stack([gx[~good], gy[~good], np.clip(field[~good], -3, 4) * LS], -1))
 filled = val.copy()
 filled[~good] = val[good][near]
+band = ~good & live & (along > 0) & (jd > -45) & (jd < 60) & (np.abs((rel * jt[ji]).sum(-1)) < 12)
+src = good & (jd > 0) & (jd < 90) & (along > 0)
+_, near_j = cKDTree(np.stack([along[src], jd[src] * 0.15], -1)).query(np.stack([along[band], jd[band] * 0.15], -1))
+filled[band] = val[src][near_j]
 filled = np.where(good, val, cv2.GaussianBlur(filled, (0, 0), 2.0))
 dist = cv2.distanceTransform((~good).astype(np.uint8), cv2.DIST_L2, 5)
+EVEN = float(sys.argv[12]) if len(sys.argv) > 12 else 22.0
+calm = cv2.GaussianBlur(filled, (0, 0), 6.0)
+lit_part = np.clip((calm - 0.3) / 0.2, 0, 1)
+lit_part = lit_part * lit_part * (3 - 2 * lit_part)
+even = cv2.GaussianBlur(filled * lit_part, (0, 0), EVEN) / np.maximum(cv2.GaussianBlur(lit_part, (0, 0), EVEN), 1e-3)
+even = (calm + lit_part * (even - calm)).astype(np.float32)
 reach_cells = 0.22 * W * k
 wgt = np.clip(1 - dist / reach_cells, 0, 1)
 wgt = wgt * wgt * (3 - 2 * wgt)
 frame = live & (ax > 0) & (ax < W - 1) & (ay > 0) & (ay < H - 1)
 near_frame = np.clip(1 - cv2.distanceTransform((~frame).astype(np.uint8), cv2.DIST_L2, 5) / reach_cells, 0, 1)
 wgt = np.maximum(wgt, near_frame * near_frame * (3 - 2 * near_frame))
+under = np.clip((cv2.GaussianBlur(np.maximum.accumulate(good, axis=0).astype(np.float32), (0, 0), 10.0) - 0.5) / 0.45, 0, 1)
+wgt = np.maximum(wgt, under * under * (3 - 2 * under))
 out = np.zeros((GH, GW, 4), np.float32)
 out[..., 0] = diff_out
 out[..., 1] = filled
@@ -209,10 +277,16 @@ canvas = np.zeros((5 * H // Q, 5 * W // Q), np.uint8)
 cv2.fillPoly(canvas, [np.round((wide + [2 * W, 2 * H]) / Q).astype(np.int32)], 1)
 sdf = (cv2.distanceTransform(1 - canvas, cv2.DIST_L2, 5) - cv2.distanceTransform(canvas, cv2.DIST_L2, 5)) * Q
 sdf = cv2.GaussianBlur(sdf, (0, 0), 1.5)
-out[..., 3] = np.clip(cv2.remap(sdf.astype(np.float32), (ax + 2 * W) / Q, (ay + 2 * H) / Q, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), -400, 400)
-out[..., 3] = np.where(live, out[..., 3], 400)
+out[..., 3] = np.clip(cv2.remap(sdf.astype(np.float32), (ax + 2 * W) / Q, (ay + 2 * H) / Q, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), -400, 4000)
+out[..., 3] = np.where(live, out[..., 3], 4000)
+if "--trace" in sys.argv:
+    rr = np.hypot(pu, pv)
+    for lo, hi in ((0, 0.5), (0.5, 0.9), (0.9, 1.0), (1.0, 1.1), (1.1, 1.25), (1.25, 1.4)):
+        m = live & (rr >= lo) & (rr < hi)
+        print("sdf r", lo, hi, int(m.sum()), np.round(np.percentile(out[..., 3][m], [0, 5, 25, 50, 75, 95, 100]), 0) if m.any() else "")
 for name in ("full", "web"):
     out.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout.bin")
+    even.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout-even.bin")
 np.save(WORK / "layout-shade.npy", filled)
 print("shade in frame: percentiles", np.percentile(shade[known], [1, 10, 50, 90, 99]).round(3))
 check = np.clip(rec * shade[..., None], 0, None)

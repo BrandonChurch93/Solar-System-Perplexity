@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { dirname, join } from 'node:path'
 import type { Config, Segment } from '../../src/config'
 import { coverWindow, setsForFrame } from '../../src/director/timeline'
-import { openCapture, renderPng, type Session } from './browser'
+import { openCapture, renderPngFresh, type Session } from './browser'
 import { DIST, ROOT, WORK, ensureBuild, formatId, machineId, readRecord, recordMatches, requireDisk, writeRecord, type OutputRecord } from './common'
 
 export type Rect = [number, number, number, number]
@@ -92,7 +92,7 @@ export class Capture {
   readonly format: string
   readonly hashes: ReturnType<typeof ensureBuild>
   readonly machine = machineId()
-  private session?: Session
+  private readonly held: { session?: Session } = {}
 
   constructor(readonly cfg: Config, format: string | undefined) {
     requireDisk(cfg)
@@ -104,7 +104,7 @@ export class Capture {
     if (Object.hasOwn(this.cfg.tiers, tier) === false) throw new Error('unknown tier ' + tier)
     return {
       engineHash: this.hashes.engine, stopHashes: Object.fromEntries(stopDependencies(frames).map((s) => [s, this.hashes.stops[s]])),
-      format: this.format, tier, assets: 'full', diag: 'beauty', browser: this.session?.browserVersion ?? '', machine: this.machine,
+      format: this.format, tier, assets: 'full', diag: 'beauty', browser: this.held.session?.browserVersion ?? '', machine: this.machine,
       ...(frames.length === 1 ? { frame: frames[0] } : frames.length > 1 ? { first: Math.min(...frames), last: Math.max(...frames) } : {}), extra,
     }
   }
@@ -120,11 +120,10 @@ export class Capture {
       const still = safeRecord(canonical)
       if (still?.frame === frame && recordMatches(still, want, deps)) return { file: canonical, record: still }
     }
-    this.session ??= await openCapture({ dist: DIST, format: this.format, assets: 'full', diag: 'beauty' })
-    const { png, seconds } = await renderPng(this.session.page, frame, tier)
+    const { png, seconds, samples } = await renderPngFresh(() => openCapture({ dist: DIST, format: this.format, assets: 'full', diag: 'beauty' }), this.held, frame, tier)
     mkdirSync(dirname(home), { recursive: true })
     writeFileSync(home, png)
-    const record = this.record(tier, [frame], { seconds })
+    const record = this.record(tier, [frame], { seconds, samples })
     writeRecord(home, record)
     return { file: home, record }
   }
@@ -154,7 +153,7 @@ export class Capture {
   }
 
   async close(): Promise<void> {
-    if (this.session) await this.session.close()
+    if (this.held.session) await this.held.session.close()
   }
 }
 

@@ -53,25 +53,26 @@ export const createSet: SetFactory = async (ctx) => {
   const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
-  const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 2, 4)
+  const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
-    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap,
+    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
   globe.mesh.quaternion.copy(globeTurn)
   globe.mesh.scale.fromArray(fit.globe.scale)
-  const rim = new Rim(limbMap, look.limb.radius, diagUniform)
+  const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide)
   const far = new FarPoint()
   orbit.add(globe.mesh, rim.mesh, far.points)
 
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const riseAt = plan.seg.rise.start + look.drift.riseAt * (plan.seg.rise.end - plan.seg.rise.start)
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const light = new THREE.Vector3()
@@ -87,7 +88,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.feather / wide })
   }
 
   return {
@@ -100,7 +101,7 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir, Math.pow(1 - plan.coverAmount(state.segment, state.time), 2))
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -108,9 +109,11 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = Math.min(Math.max(state.time - plan.holdMid, look.drift.from), look.drift.to)
+      const flowing = state.time > terrainMid ? Math.min(Math.max(state.time - riseAt, look.drift.from), look.drift.to) : elapsed
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
-      for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time)
+      const left = ending ? 0 : smooth((state.time - plan.seg.dive!.start) / look.leave.seconds)
+      for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
@@ -119,10 +122,12 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
       gu.uLimbK!.value = look.limb.gain * (1 - low)
+      gu.uLimbFar!.value = left
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
-      globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * elapsed, amps, gain, state.weight)
+      globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
       let taps = 0
+      let smear = 1
       const kind = state.segment.kind
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && plan.coverAmount(state.segment, state.time) < look.motion.hidden) {
         const dt = config.shutterFraction / (view.samples * config.fps)
@@ -131,6 +136,8 @@ export const createSet: SetFactory = async (ctx) => {
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
           if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
+          const scale = view.format.height / config.formats[config.formatKeys.master]!.height
+          smear = 1 + Math.min(Math.max((px * view.samples / scale - look.motion.smear.from) * look.motion.smear.share, 0), look.motion.smear.most) * scale
           if (taps > 0) {
             turnBack.copy(a.pose.quaternion).invert()
             shift.copy(b.pose.position).sub(a.pose.position).applyQuaternion(turnBack)
@@ -139,10 +146,10 @@ export const createSet: SetFactory = async (ctx) => {
           }
         }
       }
-      globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
-      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect)
+      globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
+      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       rim.mesh.visible = visible

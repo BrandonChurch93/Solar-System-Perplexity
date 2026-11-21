@@ -21,9 +21,9 @@ export interface Surge { glide: number; rise: number; fall: number; swell?: [num
 export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
-  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
+  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge; level?: number }
+  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; entryDipDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number; ground?: number }
+  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
   light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
@@ -34,6 +34,7 @@ export interface MoveParams {
   coverTop?: [number, number]
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
+  coverHides?: number
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
@@ -195,6 +196,10 @@ export class StopPlan {
     return config.segments.find((s) => s.stop === this.id)!
   }
 
+  get ground(): number {
+    return this.p.terrain.ground ?? config.motion.terrainGround
+  }
+
   hold(tRel: number): Pose {
     const u = tRel / (this.seg.hold.end - this.seg.hold.start) - 0.5
     const q = new THREE.Quaternion().setFromAxisAngle(v3(this.p.hold.axis).normalize(), THREE.MathUtils.degToRad(this.p.hold.orbitDeg) * u)
@@ -222,7 +227,7 @@ export class StopPlan {
     const out = position.clone().normalize()
     const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
     const th = Math.tan(THREE.MathUtils.degToRad(this.fit.vfovDeg) / 2)
-    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
     const framed = Math.asin(1 / r.distance) + Math.atan(r.offset[1] * th)
     const pitch = Math.acos(Math.min(1 / position.length(), 1)) + mix(carried, framed, smooth(e))
     const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
@@ -356,9 +361,9 @@ export class StopPlan {
     const toTarget = target.sub(position).normalize()
     const level = heading.clone().addScaledVector(ground, -heading.dot(ground)).normalize().applyAxisAngle(ground, thetaC + thetaRate * tau * b)
     const dip = Math.acos(1 / (1 + h))
-    const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g)
+    const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g + (t.entryDipDeg ?? 0))
     const final = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(ground, -Math.sin(pitch))
-    const w = smoother(ramp(0, 0.97, x))
+    const w = smoother(ramp(0, d.level ?? 0.97, x))
     const aim = slerpDir(toTarget, final, w)
     const up = slerpDir(up0, ground.clone().add(level).normalize(), smooth(x))
     const roll = ((t.entryRollDeg ?? 0) * at.g + (t.rollDeg ?? 0)) * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
@@ -410,7 +415,8 @@ export class StopPlan {
       return { pose, view: 'terrain' }
     }
     const settle = this.p.rise.settle
-    const e = settle ? 1 - Math.pow(1 - ramp(f.center, 1, u), settle) : easeRise(ramp(f.first, 1, u))
+    const x = ramp(f.center, 1, u)
+    const e = settle ? 1 - Math.pow(1 - x, settle) * (this.p.rise.gentle ? 1 + settle * x : 1) : easeRise(ramp(f.first, 1, u))
     const d = this.p.dive
     const end = this.after(seg.end)
     const tq = this.turn(time)
@@ -418,9 +424,10 @@ export class StopPlan {
     const normal = this.normal.clone().applyQuaternion(tq)
     const heading = this.heading.clone().applyQuaternion(tq)
     const ahead = this.p.rise.ahead ?? d.ahead
-    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, ahead)
+    const low = this.p.rise.from ?? d.altitude
+    const from = spot.clone().addScaledVector(normal, low).addScaledVector(heading, ahead)
     const span = end.position.clone().sub(from)
-    const ratio = span.length() / d.altitude
+    const ratio = span.length() / low
     const m = (Math.pow(ratio, e) - 1) / (ratio - 1)
     const up1 = span.dot(normal)
     const across = span.clone().addScaledVector(normal, -up1)
@@ -436,7 +443,7 @@ export class StopPlan {
     else if (since < tilt) {
       const out = position.clone().normalize()
       const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
-      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
       const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
       const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))

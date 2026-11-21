@@ -11,6 +11,7 @@ export interface CloudParams {
   height: number
   shadow: number
   shadowSoft: number
+  soft: number
   shear: number
   shearBands: number
   relief: number
@@ -28,6 +29,7 @@ export interface LimbParams {
   rimTo: number
   rimAim: [number, number, number]
   rimMu: number
+  melt: [number, number, number]
   cut: number
   cutMu: [number, number]
   cutFrom: number
@@ -71,6 +73,7 @@ export interface NeptuneOptions {
   storm: StormParams
   field: LimbField
   near: { power: number; saturation: number; pivot: number; tint: number[] }
+  night: { flat: number; edge: [number, number]; texels: number }
   patches?: PatchSet
   segments?: number
 }
@@ -128,6 +131,7 @@ uniform float uStormRadius;
 uniform float uStormAngle;
 uniform float uCloudHeight;
 uniform vec3 uShadow;
+uniform float uCloudSoft;
 uniform float uGain;
 uniform float uWeight;
 uniform vec3 uTint;
@@ -161,6 +165,8 @@ uniform vec3 uForward;
 uniform vec2 uForwardShape;
 uniform vec4 uNear;
 uniform vec4 uNearTint;
+uniform vec2 uMelt;
+uniform vec4 uNight;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -240,13 +246,17 @@ void main() {
   vec3 dd = deckDir(p);
   vec3 dcl = cloudDir(pc);
   vec4 deckTexel = layerAt(dd, 1.0, texels);
-  float alpha = layerAt(dcl, 1.0, texelsCloud).a;
+  float alpha = layerAt(dcl, uCloudSoft, texelsCloud).a;
   float reach = uCloudHeight / max(ndl, uShadow.z);
   vec3 ps = normalize(p + sunL * reach);
   vec3 ps2 = normalize(p + sunL * reach * 1.6);
   float shadow = 0.6 * layerAt(cloudDir(ps), uShadow.y, texelsShadow).a + 0.4 * layerAt(cloudDir(ps2), uShadow.y * 1.8, texelsShadow).a;
   float lit = smoothstep(0.0, 0.2, ndl);
   vec3 albedo = deckTexel.rgb / uCode;
+  float flatten = uNight.x * (1.0 - smoothstep(uNight.y, uNight.z, ndl));
+  for (int k = 0; k < (flatten > 0.0 ? 1 : 0); k++) {
+    albedo = mix(albedo, textureLod(uMap, vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5), uNight.w).rgb / uCode, flatten);
+  }
   vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - alpha));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
@@ -256,7 +266,6 @@ void main() {
   float graze = exp(-mu / uForwardShape.x);
   col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
-  col += uRim * exp(-abs(mu - uRimMu * uCut.w) / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
   col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
   col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
   vec4 sky = air(dir, true);
@@ -272,6 +281,14 @@ void main() {
   col *= mix(vec3(1.0), field, uFieldSide.w);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  float melt = uMelt.y * (1.0 - smoothstep(0.0, uMelt.x, mu));
+  for (int k = 0; k < (melt > 0.0 ? 1 : 0); k++) {
+    vec3 ax = -normalize(uCam);
+    vec3 side = normalize(dir - ax * dot(dir, ax));
+    float st = min(1.0006 / length(uCam), 1.0);
+    col = mix(col, air(ax * sqrt(1.0 - st * st) + side * st, false).rgb * uGain * uWeight, melt);
+  }
+  col += uRim * exp(-abs(mu - uRimMu * uCut.w) / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir)) * uGain * uWeight;
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), alpha), vec2(moved * 8.0 * alpha, shadow), length(vView));
 }`
@@ -315,7 +332,7 @@ export class NeptunePlanet {
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
         uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
-        uCloudHeight: { value: o.clouds.height }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
+        uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },
@@ -326,7 +343,7 @@ export class NeptunePlanet {
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) },
-        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) },
+        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
       },

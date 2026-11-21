@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops C, I and M, the upper right limb and night side",
+      "what": "the aurora is a row of separate, smeared green blobs painted over the globe. It does not sit as a curtain above the limb, and loose green smudges float in the middle of the night side. It reads as a 2D overlay with halo bleed, not a lit volume above the surface",
+      "fix": "render the aurora as a thin emissive band at altitude that follows the limb, with soft vertical rays and continuous falloff. Remove the stray green patches inside the disc"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "right night-side limb (crops I and R in image-06/07)",
+      "what": "a pale grey-brown landmass patch (West Africa) shows on the dark side with a hard, stamped-in outline. The night side around it looks semi-transparent, and the Milky Way shows through near the limb",
+      "fix": "keep the night side fully opaque and dark-shaded so the land texture shows only through city lights and faint earthshine. Blend the patch edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops H and A, the Andes and the Amazon",
+      "what": "the terrain is over-sharpened and embossed into a plastic, airbrushed relief. The Andes ridge has a bright halo edge, and the Amazon is a flat, painterly green with soft, smeared detail at native size",
+      "fix": "reduce the normal/bump strength and the sharpening, and add real high-frequency albedo detail (rivers, mottled forest) instead of a smooth fill"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, F and P, the clouds over the Pacific and the Caribbean",
+      "what": "the clouds are soft, painterly cotton streaks. They have no fine structure and no cast shadows, and they look airbrushed at native size. The hurricane spiral is overly smooth",
+      "fix": "use a higher-resolution cloud layer with fine cellular detail, slight shadowing onto the ocean, and a sharper structure in the eyewall"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "South America, the terminator region (crops H and V)",
+      "what": "city lights burn on land that is still in full daylight colour. The day-night blend is a broad, muddy fade rather than a lit terminator",
+      "fix": "mask the night lights by the light term, and tighten the terminator with a warm transition band"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop V, near the southern limb",
+      "what": "a green smear sits on the open ocean at the limb with no aurora context. It looks like a stray object",
+      "fix": "remove it, or tie it to the auroral oval"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "the sky, lower left and upper left",
+      "what": "a few bright stars are slightly elongated or doubled blobs rather than crisp points",
+      "fix": "render the stars as point sprites of 1–2 px with consistent PSFs"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops B, D and F, the left limb",
+      "what": "the atmosphere glow is a uniform, saturated cyan rim of even width, which looks a little like an outer-glow effect",
+      "fix": "vary the scattering by sun angle, thinner and dimmer away from the sub-solar side"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "bottom of globe over South America night side (crop P in image-15.png, crops A and E in image-14.png)",
+      "what": "the landmass cuts off in an abrupt horizontal shelf lined with vertically stretched, blocky yellow rectangles instead of point city lights, with a flat smeared interior and a plastic clay-like ridge along the western coast",
+      "fix": "replace the clipped continent patch and stretched light bars with continuous high-resolution night terrain and crisp, naturally clustered point city lights that follow real coastlines to the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower-right Milky Way sky (crops E and H in image-14.png, crops Q and R in image-15.png, crops V and W in image-16.png)",
+      "what": "stars and nebula detail in the lower-right sky are smeared diagonally into soft, fuzzy blobs and streaks that contrast sharply with the pinpoint stars in the upper-left sky",
+      "fix": "render the Milky Way and starfield at full native resolution with unstretched, point-like stars matching the sharpness of the rest of the sky"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "globe limb and right-side aurora (crops A, C, F, G and I in image-14.png, crops K, L and Q in image-15.png)",
+      "what": "a hard cyan-white inner line creates a doubled edge inside the sunlit atmospheric glow, while the right-limb aurora looks airbrushed with blotchy red noise outside the limb, flat green smears over the clouds, and limb-stretched city-light streaks",
+      "fix": "replace the hard inner rim with a smooth volumetric atmospheric falloff and render the aurora as an elevated volumetric emission layer rather than painted surface and halo smears"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "daylit continents and lower-left limb clouds (crops A, C and F in image-14.png)",
+      "what": "North and Central American terrain looks painterly and airbrushed with crunchy oversharpening on western deserts, soft coastlines, and clouds stretching parallel to the lower-left limb",
+      "fix": "use higher-resolution, properly projected Earth albedo, relief, and cloud maps so surface and cloud detail stay crisp and unstretched out to oblique limb angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "foreground sunlit ocean surface (crops A, F and G in image-10.png, crop P in image-11.png, crops U and V in image-12.png)",
+      "what": "the ocean sun-glint zone shows coarse, oversized wave striations and directional shimmer that read as a stretched miniature water bump map at orbital altitude",
+      "fix": "scale down the ocean normal-map frequency to orbital proportions so specular sun glint resolves as fine, scale-accurate sea texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "Cuba and Florida landmasses and upper horizon glow (crops B, C, E and I in image-10.png, crops K, Q and R in image-11.png)",
+      "what": "small clouds and land features over Cuba and Florida soften into slightly painterly blotches at native size, and the upper limb and top-center lens glare show a faint stepped cyan band and subtle gradient banding",
+      "fix": "increase native-resolution coastal and cumulus texture fidelity and apply dithering and a smoother falloff to the atmospheric limb and upper sky glare"
+     }
+    ]
+   }
+  }
+ ]
+}

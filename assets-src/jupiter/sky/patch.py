@@ -40,21 +40,16 @@ def side(lin, take, left):
     far = np.arange(px, 0, -1) if left else np.arange(1, px + 1)
     for col in range(px):
         new[:, col] += np.fft.irfft(spec * np.exp(-2 * np.pi * freq * max(float(far[col]), 12.0)), 2 * rows, axis=0)[:rows]
-    new = np.maximum(new, 0)
-    old = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode='symmetric')
-    old = old[:, :px] if left else old[:, -px:]
-    away = np.arange(px, 0, -1) if left else np.arange(1, px + 1)
-    w = step(away.astype(np.float32), 0, 24)[None, :, None]
-    return old * (1 - w) + new * w
+    return np.maximum(new, 0)
 
 
 def save(lin, name, out, takes=None):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    wide = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode='symmetric')
+    wide = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode='edge')
     if takes:
         wide[:, :px] = side(lin, takes[0], True)
         wide[:, -px:] = side(lin, takes[1], False)
-    wide = np.pad(wide, ((py, py), (0, 0), (0, 0)), mode='symmetric')
+    wide = np.pad(wide, ((py, py), (0, 0), (0, 0)), mode='edge')
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)

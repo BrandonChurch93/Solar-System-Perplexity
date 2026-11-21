@@ -1,19 +1,119 @@
 import json
 import os
 import sys
+import cv2
 import numpy as np
 from PIL import Image
-from geo import W, H, CX, CY, RPX, ROOT, WORK, film, to_srgb
-from infinity import fill_scene
+from scipy.ndimage import gaussian_filter1d
+from geo import W, H, CX, CY, RPX, ROOT, WORK, film, to_srgb, scene, load, luma
+from infinity import card_scene, split
 
-MARGIN = 0.125
+MARGIN = 0.3
 VEIL = ROOT + '/assets-src/sun/orbit/veil.json'
 KEEP = 0.3
+CROSS = 0.25
+SOFT = 40
+EDGE = WORK + '/edge-%s.png'
+REACH = 160
+BAND = 32
+WIDE = 300
+ALONG = 80
+NEAR = 30
+FLOOR = (0.4, 1.8)
+GAIN = (0.4, 2.5)
+LIFT = (0.4, 2.5)
+SMOOTH = 1.5
+MOTTLE = 6
+SEAM = 48
+RIM = (6, 8, 40, 1.3, 40, 1.8)
+CARRY = 110
+INSET = 16
+TIGHT = (4, 12)
+
+
+def rowgain(inner, outer, along, limits):
+    return np.clip(gaussian_filter1d(inner, along, axis=0) / np.maximum(gaussian_filter1d(outer, along, axis=0), 1e-6), limits[0], limits[1])
+
+
+def lifted(lin):
+    out = lin.copy()
+    top = np.quantile(luma(lin), 0.995)
+    level = lambda cols: float(np.minimum(luma(lin[:, cols]), top).mean())
+    low = luma(split(lin)[0])
+    along = lambda v: gaussian_filter1d(v, RIM[4], axis=0)
+    gains = {}
+    for side in ('left', 'right'):
+        at = (lambda i: i) if side == 'left' else (lambda i: W - 1 - i)
+        inner = slice(RIM[1], RIM[2]) if side == 'left' else slice(W - RIM[2], W - RIM[1])
+        ref = level(inner)
+        g = np.array([np.clip(ref / level(slice(at(i), at(i) + 1)), 1, RIM[3]) for i in range(RIM[0])]) - 1
+        rows = along(low[:, inner].mean(1))
+        fit = sum(g[i] * (rows / np.maximum(along(low[:, at(i)]), 1e-6) - 1) for i in range(RIM[0])) / max(float((g * g).sum()), 1e-9)
+        strength = np.clip(fit, 0, RIM[5])
+        for i in range(RIM[0]):
+            out[:, at(i)] *= (1 + g[i] * strength)[:, None]
+        gains[side] = {'columns': (1 + g).round(3).tolist(), 'strength 5, 50, 95 percent of rows': np.quantile(strength, [0.05, 0.5, 0.95]).round(2).tolist()}
+    print('rim lift', gains)
+    return out
+
+
+def sides(lin):
+    px = round(W * MARGIN)
+    fall = np.exp(-np.arange(px) / REACH)
+    hero_low, hero_stars = split(lin)
+    haze = lambda v: cv2.GaussianBlur(luma(v), (0, 0), SOFT)
+    hero_haze = haze(hero_low)
+    fine = hero_stars + hero_low - cv2.GaussianBlur(hero_low, (0, 0), MOTTLE)
+    parts = {}
+    for side in ('left', 'right'):
+        e = scene(load(EDGE % side)).astype(np.float32)
+        assert e.shape[:2] == (H, px), e.shape
+        low = cv2.GaussianBlur(split(e)[0], (0, 0), SMOOTH)
+        if side == 'right':
+            a, b, na, nb, d, far = slice(W - WIDE, W), slice(0, WIDE), slice(W - BAND, W), slice(0, BAND), fall, slice(INSET, INSET + px)
+        else:
+            a, b, na, nb, d, far = slice(0, WIDE), slice(px - WIDE, px), slice(0, BAND), slice(px - BAND, px), fall[::-1], slice(W - px - INSET, W - INSET)
+        floor = rowgain(hero_low[:, a].mean(1), low[:, b].mean(1), ALONG, FLOOR)
+        low = low * floor[:, None, :]
+        join = rowgain(hero_low[:, na].mean(1), low[:, nb].mean(1), NEAR, GAIN)
+        low = low * join[:, None, :] ** d[None, :, None]
+        lift = np.clip(haze(low) / np.maximum(hero_haze[:, far], 1e-5), LIFT[0], LIFT[1])
+        print(side, 'floor gain', np.quantile(floor, [0.05, 0.5, 0.95], axis=0).round(2).tolist(), 'join gain', np.quantile(join, [0.05, 0.5, 0.95], axis=0).round(2).tolist(), 'star lift', np.quantile(lift, [0.05, 0.5, 0.95]).round(2).tolist())
+        part = np.maximum(low + fine[:, far] * lift[..., None], 0)
+        wa, wb = (slice(W - SEAM, W), slice(0, SEAM)) if side == 'right' else (slice(0, SEAM), slice(px - SEAM, px))
+        top = np.quantile(luma(lin[:, wa]), 0.995)
+        calm = lambda v: np.minimum(v, top).mean(1)
+        seam = rowgain(calm(lin[:, wa]), calm(part[:, wb]), NEAR, (0.6, 1.6))
+        print(side, 'seam gain', np.quantile(seam, [0.05, 0.5, 0.95], axis=0).round(2).tolist())
+        part = part * seam[:, None, :] ** d[None, :, None]
+        ta, tb = (slice(W - TIGHT[0], W), slice(0, TIGHT[0])) if side == 'right' else (slice(0, TIGHT[0]), slice(px - TIGHT[0], px))
+        near = np.exp(-np.arange(px) / TIGHT[1])
+        tight = rowgain(calm(lin[:, ta]), calm(part[:, tb]), NEAR, (0.7, 1.4))
+        print(side, 'tight gain', np.quantile(tight, [0.05, 0.5, 0.95], axis=0).round(2).tolist())
+        parts[side] = part * tight[:, None, :] ** (near if side == 'right' else near[::-1])[None, :, None]
+    return np.concatenate([parts['left'], lin, parts['right']], 1).astype(np.float32)
 
 
 def save(lin, name, out):
     px, py = round(W * MARGIN), round(H * MARGIN)
-    wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    lin = lifted(lin)
+    across = sides(lin)
+    low = cv2.GaussianBlur(across, (0, 0), SOFT)
+    floor = split(across)[0]
+    near = cv2.GaussianBlur(floor, (0, 0), MOTTLE)
+    around = lambda v: np.concatenate([v[H - py:], v, v[:py]], 0)
+    straight = lambda v: np.pad(v, ((py, py), (0, 0), (0, 0)), mode='edge')
+    base = straight(low)
+    calm = cv2.GaussianBlur(base, (0, 0), SOFT * 2.5)
+    yy = np.arange(base.shape[0])[:, None]
+    away = np.maximum(py - yy, yy - (py + H - 1))
+    ease = lambda v: (v * v * (3 - 2 * v))[..., None]
+    t = ease(np.clip(away / (py * CROSS), 0, 1))
+    hold = 1 - ease(np.clip(away / CARRY, 0, 1))
+    mottle = straight(near - low) * hold + around(near - low) * (1 - hold)
+    wide = np.maximum(base * (1 - t) + calm * t + mottle + around(across - near), 0)
+    wide[py:py + H] = across
+    wide[py:py + H, px:px + W] = lin
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -21,7 +121,7 @@ def save(lin, name, out):
 
 
 if __name__ == '__main__':
-    lin = fill_scene()
+    lin = card_scene()
     if os.path.exists(VEIL):
         veil = json.load(open(VEIL))
         yy, xx = np.mgrid[0:H, 0:W]

@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "moon just right of the Great Red Spot",
+      "what": "the shadow is a soft oval stuck to the moon's night limb, with no crisp umbra",
+      "fix": "offset the umbra from the limb and tighten the penumbra so it reads as a projected ellipse"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon just right of the Great Red Spot",
+      "what": "same soft limb-attached shadow, smaller in this wider frame",
+      "fix": "use the same tighter projected ellipse as on the closer frame"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "tile A, moon on the cloud deck",
+      "what": "at native size the shadow still fades as a broad soft oval instead of a defined umbra",
+      "fix": "sharpen the umbra core and keep only a short penumbra"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crops K–L, bright upper globe below the limb",
+      "what": "Several broad cloud lanes stretch into long, smooth ribbons with much less cross-lane detail than the compact red vortex. The bands look dragged across the globe rather than layered.",
+      "fix": "Break the longest ribbons into uneven, interleaved cloud structures and restore fine detail across the flow, especially as the bands curve toward the limb."
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "crops S–T, near shadowed cloud banks",
+      "what": "The curled ridges turn into soft, brushlike streaks with little small-scale structure, even beside the brighter cloud tips. The nearest clouds look less resolved than the middle-distance storm rim.",
+      "fix": "Restore fine, low-contrast wisps and density variation in the near cloud banks without simply lifting the blacks or sharpening the whole frame."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crop C, small orange moon in front of the globe",
+      "what": "The illuminated cap is mottled but soft, and it stops at a nearly straight, abrupt boundary above a featureless dark half. The moon reads like a small pasted-on disk.",
+      "fix": "Use a curved, terrain-modulated terminator and retain finer surface detail on the lit cap."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "crop J, upper-left distant horizon",
+      "what": "The brightest strip merges into a creamy band that wipes out the tops of adjacent cloud layers.",
+      "fix": "Reduce highlight bloom locally and preserve a little separation between the far cloud crests and the atmospheric glow."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crops T–U, dense part of the star field",
+      "what": "Some bright points have swollen or slightly elongated profiles against much finer neighboring stars, giving parts of the field a mottled, blurry look.",
+      "fix": "Tighten the brightest star cores and reserve wider glow for a few isolated stars."
+     }
+    ]
+   }
+  }
+ ]
+}

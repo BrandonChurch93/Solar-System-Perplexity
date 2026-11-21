@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, E and I, center through the lower-right globe",
+      "what": "Fine cloud detail smears into long, nearly parallel streaks. The brightest areas retain some texture, but the darker bands look brushed on rather than layered.",
+      "fix": "Use higher-resolution multiscale cloud detail and reduce directional stretching in the surface mapping."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop J, moon above the bright limb",
+      "what": "The granular lit portion ends against an unusually hard, smooth circular dark edge, making the moon look like two overlapping layers.",
+      "fix": "Render the lit and shadowed portions on one continuous sphere, then composite the planet's atmospheric glow over it."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop G, bright outer ring arc",
+      "what": "The narrow bright arc is so uniform and sharply defined against the softer ring bands that it reads like a drawn line.",
+      "fix": "Give the outer ring finite width and subtle density variation, and soften its brightest edge."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops V and W, lower-right star field",
+      "what": "Several bright stars resolve as soft oval blobs with colored fringes rather than compact points.",
+      "fix": "Use smaller antialiased star cores and reduce chromatic spread on the brightest stars."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "left side of the globe, along the terminator (crop A, P)",
+      "what": "the night-side shadow is a separate darker crescent with its own hard inner edge, so the globe shows a doubled edge, like a shadow layer laid over the texture instead of a smooth terminator",
+      "fix": "shade the terminator from the lighting model with a soft, wide falloff and drop the overlaid shadow crescent"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "globe surface (crops E, G, P, Q)",
+      "what": "the cloud bands are soft, airbrushed brush strokes with little fine detail at native size; the white storm blobs look pasted on and smeared, so the surface reads as painted and plastic",
+      "fix": "use a higher-resolution band texture with fine turbulent detail, and blend the storms into the bands with shear and soft edges"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring system round the globe (crops C, F, G, I, K, Q)",
+      "what": "the rings are faint, wobbly, scribbled threads that do not follow one clean ellipse; they swirl and cross each other like loose hair and only show behind the planet, with no part crossing in front",
+      "fix": "render the rings as concentric, coplanar ellipses with a consistent radial profile, and draw the near arc in front of the globe with its shadow on the disc"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower half of the planet surface, near foreground (crops D, N, S, T, U, V)",
+      "what": "the near terrain is smeared into soft directional streaks like motion blur, with no resolvable cloud or surface detail; the darkest corner is a flat, muddy gradient with faint banding",
+      "fix": "add high-frequency cloud and surface detail that grows sharper toward the camera, and dither the dark gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "lower right moon (crop V/W, around 1320,697)",
+      "what": "the moon is a stretched, squashed ellipse rather than a sphere, with flat, plastic shading",
+      "fix": "render the moon as a true sphere with a proper terminator and some surface texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper moon (crop F)",
+      "what": "the moon is a flat white half-disc with no surface detail, like a cutout",
+      "fix": "add albedo texture and a soft terminator"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "ring ends at the limb, left (crop J) and right (crop H, Q)",
+      "what": "the ring strands end abruptly at the atmosphere glow, with no occlusion through the haze or shadow on the planet, so the join looks like a cut edge",
+      "fix": "fade the rings through the atmosphere where they pass behind the limb and cast the ring shadow onto the day side"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "mid-distance clouds (crops A, O, P)",
+      "what": "the cloud wisps are streaky and repeat the same diagonal brush direction, which looks procedural",
+      "fix": "vary cloud scale and orientation and add cellular and convective structure"
+     }
+    ]
+   }
+  }
+ ]
+}
