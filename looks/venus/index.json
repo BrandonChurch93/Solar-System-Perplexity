@@ -1,9 +1,46 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T17:02:03.681Z",
+ "pushed": "2026-11-21T17:24:02.992Z",
  "head": "b22a114d8f2d739ff658384eabe115481298f1c7",
- "note": "round 3: judged stills at review on the final code; cover, dive and rise sheets rendering again with the fast-frame footprint",
+ "note": "round 3: rise cover sheet on the final code; measures green; dive cover, dive and rise sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-21T17:24:01.875Z",
+   "file": "20261121172401875-note-venus.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.rise-cover-preview-review.png",
+   "kind": "note",
+   "label": "venus rise cover sheet 1555 to 1566, review, preview format, final round 3 code (b22a114): one curved horizon, veil billows, no ring beside the Sun, no cards from 1562",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T17:23:33.627Z",
+   "file": "20261121172333627-sheet-venus.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/venus.rise-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.rise, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1555,
+   "last": 1566,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:23:32.826Z",
+   "file": "20261121172332826-frame-f01566-review.jpg",
+   "source": "out/work/sheets/.frames-CzI9Bs/f01566-review.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1566, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1566,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:02:01.921Z",
    "file": "20261121170201921-note-venus.rise-preview-review.jpg",
@@ -26,30 +63,6 @@
    "source": "out/work/venus/r3/fn2-1586.png",
    "kind": "note",
    "label": "venus frame 1586, review tier, 16x9, round 3 code on the merged engine (b22a114)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:01:57.740Z",
-   "file": "20261121170157740-note-fn2-1440.jpg",
-   "source": "out/work/venus/r3/fn2-1440.png",
-   "kind": "note",
-   "label": "venus frame 1440, review tier, 16x9, round 3 code on the merged engine (b22a114)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:01:56.499Z",
-   "file": "20261121170156499-note-fn2-1287.jpg",
-   "source": "out/work/venus/r3/fn2-1287.png",
-   "kind": "note",
-   "label": "venus frame 1287, review tier, 16x9, round 3 code on the merged engine (b22a114)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T17:01:54.898Z",
-   "file": "20261121170154898-note-fn2-1185.jpg",
-   "source": "out/work/venus/r3/fn2-1185.png",
-   "kind": "note",
-   "label": "venus frame 1185, review tier, 16x9, round 3 code on the merged engine (b22a114)",
    "stop": "venus"
   },
   {
