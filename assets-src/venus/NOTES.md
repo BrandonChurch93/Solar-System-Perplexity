@@ -50,3 +50,18 @@ After a compaction: read `assets-src/shared/STOP-AGENT.md`, then this file, then
 - Engine relief: `src/terrain/relief.ts` (`Relief.load(ctx, base, def, motion)`), layers with color JPG, alpha PNG, dist `.bin` (float32, half size, distance along the image ray), masks PNG (R drifts, G drifts, linear in time). A sway needs a sine of time, so a copy in `src/stops/venus/` if needed. Mars pattern: `src/stops/mars/set.ts`, `assets.ts` reliefDef, `look.ts` relief, `assets-src/mars/relief/RECIPE.md`.
 - Terrain pose units: camera height above the deck = 1. Venus sphere radius about 54.3 units, horizon about 10.5 units away, bottom ray meets the deck at about 1.3, centre ray at about 2.7.
 - Layers: L0 whole deck with outpainted margins and a soft cut at the horizon, L1 the three central towers as cutouts with painted fill behind, maybe L2 the near cloud mass. Depth from `tools/ml/depth.py` fitted to the sphere model. Masks: R haze between towers (drift), G shafts (sway). Colour `out/work/venus/close-5632.png`. Sky patch `sky-terrain.webp`.
+
+## Log, continued
+
+- 04:00 to 04:10 hold sheet (review) showed three faults, all fixed: a ghost arc behind the planet (the generated fill was brighter and greener than the hero's sky: its low frequencies now come from the hero's sky interpolated along each row), mirrored margins of the sky patch at the frame edges (now a generated outpaint, `sky-ext-sd.png`, registered by ECC 0.9982, gain 1.218), bright lightning dots at the limb (lift clamped at 1.7, lum at 1.2). `sky.json` orbit gain 2.5.
+- 04:07 Builder: main at b4ae65c (engine batch 1), merged as e8c5bc8. Engine hash 434d0a5e367a62fd. Shader tip: the software rasterizer computes both sides of an `if` but skips the body of a `for`; put expensive conditional work in `for (int k = 0; k < (cond ? 1 : 0); k++)` and read textures inside with `textureGrad` or `textureLod`.
+- 04:13 ORBIT MILESTONE sent. Hold compare at review close to the hero; vitest 24 of 24.
+
+## Terrain work (04:00 onward)
+
+- Canvas: the approved close image (2816 x 1584) sits at x 352 to 3168, y 0 to 1584 of a 3520 x 2376 canvas (margins 352 left and right, 792 bottom). Full asset scale is 2x (7040 x 4752), web 1x.
+- Margins: `out/work/venus/relief/ext-nb1.png` (nano_banana_pro kept: warmest, closest palette; two seedream_5 takes paler). Clean plate without the two central towers: `clean-sd1.png` (seedream_5). `python3 assets-src/venus/relief/compose.py ext-nb1.png clean-sd1.png` writes `ext-3520.png`, `clean-2816.png`, `ext-weight.png` (ECC 0.9984 and 0.99).
+- Depth: `relief/ext-depth.raw` (3520 x 2376 float32, relative inverse depth, near = 1).
+- Camera model `assets-src/venus/relief/cam.py`: vfov 60, focal 1371.78 px at approved scale, pitch down 21.48, roll -1.03 (up = [0.01673, 0.9304, 0.36618] in camera axes), height 1, sphere radius 54.35, horizon distance 10.47, dip 10.908. The 70 measured horizon points sit at elevation -0.015 +- 0.036 deg in this model.
+- Depth fit: dist = 1 / (a * depth^g + b), b = 1 / 10.47, a 1.3896, g 0.9014 (median abs log error 0.10 against the sphere). Ratio dist / sphere: towers 1.14 to 1.16 (the depth sees them as deck, so tower distances must come from their base), left bank 0.87, margins 0.74 to 0.97.
+- Towers in approved px: centre x 1360 to 1700, y 790 to 1025; right x 1750 to 2030, y 835 to 1025.
