@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { LimbField } from './field'
 import { AIR_GLSL, airUniforms, type AirParams } from './air'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { EQUIRECT_GLSL } from '../../space/sky'
@@ -62,6 +63,7 @@ export interface NeptuneOptions {
   limb: LimbParams
   clouds: CloudParams
   storm: StormParams
+  field: LimbField
   patches?: PatchSet
   segments?: number
 }
@@ -133,6 +135,9 @@ uniform vec3 uVeilDir;
 uniform vec3 uTwi;
 uniform vec4 uTwiSun;
 uniform vec4 uAirShade;
+uniform sampler2D uField;
+uniform vec4 uFieldRange;
+uniform vec4 uFieldSide;
 uniform vec2 uDarkEdge;
 uniform vec3 uDarkDir;
 uniform vec4 uVeil;
@@ -235,6 +240,11 @@ void main() {
   float dw = smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
   float dm = 0.6 + 0.4 * dw;
   col *= 1.0 - uLimbDark.x * pow(dw, 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
+  vec2 fuv = vec2(clamp(mu / uFieldRange.x, 0.5 / uFieldRange.z, 1.0 - 0.5 / uFieldRange.z) * 0.5, (ndl - uFieldRange.y) / (1.0 - uFieldRange.y));
+  vec3 fa = textureLod(uField, fuv, 0.0).rgb;
+  vec3 fb = textureLod(uField, fuv + vec2(0.5, 0.0), 0.0).rgb;
+  vec3 field = exp2((mix(fa, fb, smoothstep(-0.06, 0.06, dot(n, uFieldSide.xyz))) - 0.5) * uFieldRange.w);
+  col *= mix(vec3(1.0), field, uFieldSide.w);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
@@ -289,6 +299,7 @@ export class NeptunePlanet {
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
+        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
       },

@@ -4,7 +4,8 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { moon as moonAsset, plate as plateAsset, wrap } from './assets'
+import { moon as moonAsset, plate as plateAsset, ringMap, wrap } from './assets'
+import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
 import { NeptunePlanet } from './planet'
@@ -28,7 +29,9 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(orbit, terrain)
 
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
+  const field = limbField()
   const planet = new NeptunePlanet({
+    field,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
   })
@@ -43,7 +46,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const tritonFit = fit.moons![0]!
   const moonMap = await ctx.texture(base + moonAsset.file, { srgb: true, anisotropy: 16, repeat: true })
-  const triton = new Triton({ map: moonMap, mapWidth: (moonMap.image as unknown as { width: number }).width, radius: tritonFit.radius, gain: look.triton.gain, sun: look.triton.sun, ambient: look.triton.ambient, terminator: look.triton.terminator, power: look.triton.power })
+  const triton = new Triton({ map: moonMap, mapWidth: (moonMap.image as unknown as { width: number }).width, radius: tritonFit.radius, gain: look.triton.gain, sun: look.triton.sun, ambient: look.triton.ambient, terminator: look.triton.terminator, power: look.triton.power, bump: look.triton.bump, rim: look.triton.rim })
   orbit.add(triton.mesh)
   const moonHome = new THREE.Vector3().fromArray(tritonFit.position)
   const moonUp = new THREE.Vector3().fromArray(look.triton.up).normalize()
@@ -52,7 +55,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonAim = new THREE.Vector3().fromArray(look.triton.aim)
   const moonLight = new THREE.Vector3()
 
-  const ring = new Ring(look.ring)
+  const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }) })
   orbit.add(ring.mesh)
 
   const far = new FarPoint()
@@ -64,6 +67,8 @@ export const createSet: SetFactory = async (ctx) => {
   const light = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const turn = new THREE.Quaternion()
+  const side = new THREE.Vector3()
+  const sideCam = new THREE.Vector3()
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const holdDirection = new THREE.Vector3()
 
@@ -102,6 +107,8 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
+      side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
+      ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
@@ -121,6 +128,7 @@ export const createSet: SetFactory = async (ctx) => {
     },
     dispose: () => {
       planet.dispose()
+      field.texture.dispose()
       air.dispose()
       triton.dispose()
       ring.dispose()

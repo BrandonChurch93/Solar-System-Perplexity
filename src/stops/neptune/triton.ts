@@ -11,14 +11,18 @@ export interface TritonParams {
   ambient: [number, number, number]
   terminator: [number, number]
   power: number
+  bump: number
+  rim: number
 }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vWorldN;
 out vec3 vView;
+out vec3 vViewN;
 void main() {
   vLocal = position;
+  vViewN = normalMatrix * position;
   vWorldN = normalize(mat3(modelMatrix) * position);
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   vView = mv.xyz;
@@ -35,9 +39,13 @@ uniform vec3 uSun;
 uniform vec3 uAmbient;
 uniform vec3 uLightW;
 uniform vec3 uShape;
+uniform float uBump;
+uniform float uRim;
+uniform mat4 modelMatrix;
 in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vView;
+in vec3 vViewN;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${DIAG_GLSL}
@@ -45,8 +53,19 @@ void main() {
   vec3 d = normalize(vLocal);
   vec3 n = normalize(vWorldN);
   vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
+  vec3 east = normalize(cross(vec3(0.0, 1.0, 0.0), d) + vec3(1e-5, 0.0, 0.0));
+  vec3 north = cross(d, east);
+  float eps = 9.0 / uMapWidth;
+  const vec3 LUM = vec3(0.3, 0.5, 0.2);
+  float h = dot(albedo, LUM);
+  float he = dot(equirectGrad(uMap, normalize(d + east * eps), uGrad).rgb, LUM);
+  float hn = dot(equirectGrad(uMap, normalize(d + north * eps), uGrad).rgb, LUM);
+  float polar = 1.0 - smoothstep(0.9, 0.98, abs(d.y));
+  n = normalize(n - mat3(modelMatrix) * (east * (he - h) + north * (hn - h)) * (uBump * polar / (eps * length(modelMatrix[0].xyz))));
   float ndl = dot(n, uLightW);
   float lit = smoothstep(uShape.x, uShape.y, ndl) * pow(max(ndl, 0.0), uShape.z);
+  float mu = max(dot(normalize(vViewN), normalize(-vView)), 0.0);
+  lit *= 1.0 + uRim * pow(1.0 - mu, 3.0);
   vec3 col = albedo * (uSun * lit + uAmbient) * uGain;
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
 }`
@@ -63,7 +82,7 @@ export class Triton {
       uniforms: {
         uMap: { value: p.map }, uMapWidth: { value: p.mapWidth }, uGrad: gradUniform, uGain: { value: 1 },
         uSun: { value: new THREE.Vector3().fromArray(p.sun).multiplyScalar(p.gain) }, uAmbient: { value: new THREE.Vector3().fromArray(p.ambient).multiplyScalar(p.gain) },
-        uLightW: { value: new THREE.Vector3(1, 0, 0) }, uShape: { value: new THREE.Vector3(p.terminator[0], p.terminator[1], p.power) },
+        uLightW: { value: new THREE.Vector3(1, 0, 0) }, uShape: { value: new THREE.Vector3(p.terminator[0], p.terminator[1], p.power) }, uBump: { value: p.bump }, uRim: { value: p.rim },
         uDiag: diagUniform,
       },
     })
