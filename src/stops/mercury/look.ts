@@ -14,6 +14,7 @@ export const light: GlobeLight = {
   reliefNear: 0.012,
   reliefDay: 0.008,
   reliefRange: [0.1, 0.45],
+  silhouette: { amp: 0.02, floor: 0.45, taps: 1.5, fade: [0.2, 0.4] },
   nightFlat: 0.2,
   nightDetail: 0.15,
   nightVeil: 0.4,
@@ -52,7 +53,7 @@ export const glare: GlareLook = {
   halo: [0.45, 0.25], core: [0.2, 8], rays: [0.5, 0.5], bar: [0.7, 0.014, 0.3], turn: 0.9,
   terrainSun: [745 / 2816, -40 / 1584],
 }
-export const carry = { gain: 1, knee: 2.9, grey: 0 }
+export const carry = { gain: 1, knee: 2.9, grey: 0.7 }
 export const haze = { color: [0.3, 0.275, 0.23] as [number, number, number], peak: 0 }
 
 export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.07, 0.19] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], soft: 2.2, haze: 0.5, turn: [78, 1, 0.8] as [number, number, number] }

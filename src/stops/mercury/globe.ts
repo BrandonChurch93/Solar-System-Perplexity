@@ -14,6 +14,7 @@ export interface GlobeLight {
   reliefNear: number
   reliefDay: number
   reliefRange: [number, number]
+  silhouette: { amp: number; floor: number; taps: number; fade: [number, number] }
   nightFlat: number
   nightDetail: number
   nightVeil: number
@@ -140,6 +141,7 @@ uniform vec4 uCloseTurn;
 uniform vec4 uDusk;
 uniform float uDuskFrom;
 uniform vec2 uReliefRange;
+uniform vec3 uSil;
 uniform float uEdge;
 uniform vec3 uRimColor;
 uniform float uRimWide;
@@ -213,12 +215,22 @@ void main() {
   float c = dot(oc, oc) - 1.0;
   float s = sqrt(max(dot(oc, oc) - b * b, 0.0));
   float px = max(fwidth(s), 1e-7);
-  float cov = c > 0.0 ? clamp(0.5 + (1.0 - s) / (px * uEdge), 0.0, 1.0) : 1.0;
+  float crest = 0.0;
+  for (int k = 0; k < (uSil.x > 0.0 && c > 0.0 && b < 0.0 && abs(s - 1.0) < uSil.x + 3.0 * px ? 1 : 0); k++) {
+    vec3 nc = normalize(oc - ray * b);
+    vec3 dl = spinY(nc * uBodyToWorld, uSpin);
+    vec3 tl = spinY(normalize(cross(nc, ray)) * uBodyToWorld, uSpin);
+    float w = max(uSil.z * px, uHeightStep);
+    float hh = 0.0;
+    for (int i = -2; i <= 2; i++) hh += heightAt(normalize(dl + tl * (w * float(i))));
+    crest = uSil.x * max(hh / 5.0 - uSil.y, 0.0);
+  }
+  float cov = c > 0.0 ? clamp(0.5 + (1.0 + crest - s) / (px * uEdge), 0.0, 1.0) : 1.0;
   if (c > 0.0 && b > 0.0) cov = 0.0;
   float h = b * b - c;
   float t = -b - sqrt(max(h, 0.0));
   vec3 n = normalize(oc + ray * t);
-  float out1 = max(s - 1.0, 0.0);
+  float out1 = max(s - 1.0 - crest, 0.0);
   float toward = smoothstep(uGlareGate.x, uGlareGate.y, dot(ray, uGlareW)) * uGlareLens;
   float ndlRim = dot(n, uSunW);
   vec3 rim = vec3(0.0);
@@ -375,7 +387,7 @@ export class Globe {
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
-        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
+        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
@@ -422,6 +434,10 @@ export class Globe {
   night(dim: number, shoulder: number): void {
     this.material.uniforms.uNightDim!.value = dim
     ;(this.material.uniforms.uShoulder!.value as THREE.Vector2).y = shoulder
+  }
+
+  silhouette(amp: number): void {
+    ;(this.material.uniforms.uSil!.value as THREE.Vector3).x = amp
   }
 
   haze(color: readonly [number, number, number], weight: number): void {
