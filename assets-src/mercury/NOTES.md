@@ -331,3 +331,9 @@ Not yet reported to the Builder: smear 01d4f57, patch fade a1d2250, spin rest ac
 - Swap residual: about 30 px at the crater centre, 115 to 150 px at its left rim (the relief is not a sphere at that height); under the brightest frame of the veil.
 - A faint starless band (about 5 codes, 40 px) above the terrain horizon at 744 to 755.
 - Minors of round 7 not addressed: column banding at the bottom of the hold (not reproduced at 12 times gain), near rock blur and colour fringing in the terrain view, amber fringe along the horizon, stars fatter than approved in the hold, silhouette slightly fuller at top and bottom. Faint dark specks in the hold sky left of the globe at 12 times gain, not looked into.
+
+## READY for round 2 of 3 (12:41 UTC)
+
+- Work commit 31cc39d, merge of main 06ebd6d (rounds 14 to 17: Neptune, Sun, Venus on main) = d6f4ef6. Stop hash 36c76b0a8ae4f7f2 and engine hash 020740ac07ff27f7 unchanged by the merge.
+- After the merge: `compare` signatures of hold and terrain at final identical to before; 717 at review byte identical (md5 ed35921d); 1016 at review differs only in the sky (0.27 percent of the pixels by more than 2 codes): Venus's new orbit aim puts a sparse star field behind the rise (`out/work/mercury/r8/v1/f1016-x4-a.jpg`, `rise-late-a.jpg`), median sky (1, 2, 2). Globe at the left third from 1010 to 1034. Gate G11, G12, G15 PASS again.
+- While the critics are out: the two tone globe ground at 0.03 to 0.2 radii (the reason for the haze), the starless band above the terrain horizon in the entry frames, the round 7 minors.
