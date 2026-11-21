@@ -1,14 +1,42 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T04:13:35.502Z",
- "head": "b462888c22f7598218a0623c0de4acee4871d4b1",
- "note": "orbit view done (hold compare at review); terrain relief in work: margins, clean plate, depth",
+ "pushed": "2026-11-21T04:38:12.169Z",
+ "head": "b80dc35ab73dbd5006e29f8e2bfab492daaab306",
+ "note": "terrain view: cloud relief in three layers (deck, towers, near cumulus) with air dome and star patch, towers recut with exact rebuild at the fit pose",
  "looks": [
   {
-   "time": "2026-11-21T04:09:58.126Z",
-   "file": "20261121040958126-frame-terrain-empty.jpg",
-   "source": "out/work/venus/terrain-empty.png",
+   "time": "2026-11-21T04:37:52.735Z",
+   "file": "20261121043752735-frame-t1440.jpg",
+   "source": "out/work/venus/t1440.png",
    "kind": "frame",
+   "label": "venus.terrain frame 1440, review tier, nograin view",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:37:30.839Z",
+   "file": "20261121043730839-compare-compare-venus-terrain-view.jpg",
+   "source": "out/work/compare/compare-venus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "venus.terrain: approved image left, film frame right, review tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:37:29.825Z",
+   "file": "20261121043729825-still-f01440-16x9-review-full.jpg",
+   "source": "out/work/stills/f01440-16x9-review-full.png",
+   "kind": "still",
    "label": "venus.terrain frame 1440, review tier",
    "stop": "venus",
    "segment": "venus.terrain",
@@ -16,7 +44,21 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:34:04.090Z",
+   "file": "20261121043404090-frame-post-1185.jpg",
+   "source": "out/work/venus/post-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, review tier, nograin view",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "05c29d3a1588e95f"
   },
   {
    "time": "2026-11-21T04:09:37.381Z",
@@ -61,49 +103,6 @@
    "kind": "note",
    "label": "terrain margins: outpaint take kept (approved image in the top centre)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T04:05:51.003Z",
-   "file": "20261121040551003-frame-hold-1259.jpg",
-   "source": "out/work/venus/hold-1259.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1259, review tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1259,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T04:00:05.050Z",
-   "file": "20261121040005050-sheet-venus.hold-16x9-review.jpg",
-   "source": "out/work/sheets/venus.hold-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet venus.hold, review tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "first": 1110,
-   "last": 1259,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:59:22.925Z",
-   "file": "20261121025922925-compare-compare-venus-terrain-view.jpg",
-   "source": "out/work/compare/compare-venus-terrain-view.jpg",
-   "kind": "compare",
-   "label": "venus.terrain: approved image left, film frame right, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
