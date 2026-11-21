@@ -518,7 +518,8 @@ export class FilmDirector implements Director {
       const span = this.patchSpanOf(index)
       skyPatch = smoother(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
-      const open = lens + (1 - lens) * (1 - skyPatch) * smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
+      const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
+      const open = lens + (1 - lens) * (OPEN.leave.level * smoother(ramp(0, OPEN.leave.by, u)) * (1 - arrive) + (1 - skyPatch) * arrive)
       light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
