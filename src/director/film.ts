@@ -461,6 +461,7 @@ export class FilmDirector implements Director {
     let near = 0.01
     let far = 80000
     let dust = 0
+    let dustLook = 0
     const dustOffset = new THREE.Vector3()
     let light = this.sunFor(0)
     let sunWeight = 1
@@ -498,6 +499,7 @@ export class FilmDirector implements Director {
         pose = inSet(s, local)
         skyStars = smoother(ramp(OPEN.retreatOpen[0], OPEN.retreatOpen[1], u)) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
+        dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
       } else {
         pose = inSet(s, look(time))
@@ -520,7 +522,7 @@ export class FilmDirector implements Director {
       skyPatch = smoother(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
-      const open = lens + (1 - lens) * (OPEN.leave.level * smoother(ramp(0, OPEN.leave.by, u)) * (1 - arrive) + (1 - skyPatch) * arrive)
+      const open = lens + (1 - lens) * (OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)) * (1 - arrive) + (1 - skyPatch) * arrive)
       light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
@@ -545,7 +547,8 @@ export class FilmDirector implements Director {
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
-      dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u))))
+      dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
+      dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * dustLook)
       dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
       const t = this.sky.orbits[b.id]
@@ -627,7 +630,7 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, near, far, sun, sets, post, cover, dust, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, near, far, sun, sets, post, cover, dust, dustLook, dustOffset }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {
