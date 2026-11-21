@@ -12,6 +12,7 @@ import { PostChain } from '../post/chain'
 import { Belt } from '../space/belt/belt'
 import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
+import { implicitUniform } from './texel'
 import type { SkyAims } from '../space/aim'
 import { Cover } from '../terrain/cover'
 import { segmentAtFrame, setsForFrame } from '../director/timeline'
@@ -187,6 +188,7 @@ export class Engine {
     const raw = isRaw(this.diag)
     setDiag(this.diag)
     setSamples(count, GRAD_FLOOR)
+    implicitUniform.value = this.sky.cull ? 1 : 0
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)
     if (!raw) {
