@@ -1,5 +1,4 @@
 import type { DeckLook } from './deck'
-import type { FlareLook } from './flare'
 import type { RingLook } from './rings'
 import type { VeilLook } from './veil'
 
@@ -46,11 +45,11 @@ export const rings: RingLook = {
 export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04 }
 
 export const deckRings: RingLook = {
-  color: [0.943, 1.013, 1.039],
+  color: [0.78, 1.0, 1.08],
   sigma: 0.0004,
   filter: 0.11,
   halfWidth: 0.02,
-  gain: 1.6,
+  gain: 1.66,
   glint: [0.6, 24],
   forward: [0, 6],
   back: [0, 2],
@@ -63,6 +62,8 @@ export const deckRings: RingLook = {
   air: [1, 1.04],
   hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
 }
+
+export const deckStrands = { count: 48, spread: 0.012, amp: [0.004, 0.02] as [number, number], minSpan: 2.1 }
 
 export const show = { rings: true, moons: true, deck: true, globe: true, sky: true, cover: true }
 
@@ -84,8 +85,8 @@ export const moons = {
   away: 0.45,
   shine: 5,
   bodies: {
-    miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [1.8, 1.67, 1.53] as Rgb, ambient: [0.012, 0.026, 0.034] as Rgb, rim: [3.8, 2] as [number, number], seeliger: 0.6, depth: 1.2 },
-    ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.43, 1.33, 1.3] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb, rim: [0, 2] as [number, number], seeliger: 0, depth: 1.3 },
+    miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [1.8, 1.67, 1.53] as Rgb, ambient: [0.02, 0.044, 0.058] as Rgb, rim: [3.8, 2] as [number, number], seeliger: 0.6, depth: 1.2 },
+    ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.43, 1.33, 1.3] as Rgb, ambient: [0.008, 0.023, 0.032] as Rgb, rim: [0, 2] as [number, number], seeliger: 0, depth: 1.3 },
   } as Record<string, { light: Rgb; sun: Rgb; ambient: Rgb; rim: [number, number]; seeliger: number; depth: number }>,
 }
 
@@ -96,8 +97,7 @@ export const deck: DeckLook = {
   inset: [0.1, 0.2],
   lift: 1,
   sharp: 0.3,
+  detail: { tone: 0.2, relief: 0.4, fleck: 0.3, scale: 1.0, stretch: [0.3, 0.8] },
 }
-
-export const flare: FlareLook = { sun: [0.6676, 0.5172], reach: [0.05, 0.2], blur: 6, distance: 1200 }
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }

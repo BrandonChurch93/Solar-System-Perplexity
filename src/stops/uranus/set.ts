@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
+import { config } from '../../config'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
-import { drift, ramp, smooth } from '../../director/rig'
+import { ramp, smooth } from '../../director/rig'
 import { Deck } from './deck'
-import { Flare } from './flare'
 import deckJson from './deck.json'
 import deckRingsJson from './deck-rings.json'
 import { Globe } from './globe'
@@ -12,7 +12,7 @@ import * as look from './look'
 import { Moon } from './moons'
 import patchJson from './patches.json'
 import { move, plan } from './plan'
-import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings } from './rings'
+import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
 import { Veil } from './veil'
 
@@ -98,45 +98,32 @@ export const createSet: SetFactory = async (ctx) => {
   }, key, look.deck)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
-  const arcGeo = ringGeometry(look.deckRings, parseLines(await ctx.buffer(base + 'deck-rings.bin')))
+  const arcLines = parseLines(await ctx.buffer(base + 'deck-rings.bin'))
+  const arcGeo = ringGeometry(look.deckRings, [...arcLines, ...strandLines(arcLines, look.deckStrands)])
   const arcCentre = new THREE.Vector3().fromArray(deckRingsJson.centre)
   const arcs = new Rings(arcGeo, look.deckRings, arcCentre.clone().multiplyScalar(-1 / deckRingsJson.scale))
   arcs.mesh.scale.setScalar(deckRingsJson.scale)
   arcs.mesh.renderOrder = 8
   terrain.add(arcs.mesh)
-  terrain.matrixAutoUpdate = false
-  const unit = 1 / deckJson.radius
-  const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
-  const shaped = new THREE.Matrix4().compose(shape.position, shape.quaternion, shape.scale).multiply(new THREE.Matrix4().makeRotationFromQuaternion(upright.quaternion))
   const inverse = new THREE.Matrix4()
   const eye = new THREE.Vector3()
-  const frameTurn = new THREE.Quaternion()
-  const framePlace = new THREE.Vector3()
-  const frameScale = new THREE.Vector3(unit, unit, unit)
   const frameInverse = plan.terrainFrame.clone().invert()
   const turnMid = plan.turn(terrainMid)
   const skyTurn = new THREE.Quaternion()
 
   const sun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
-  const place = (time: number, inOrbit: boolean): void => {
-    if (inOrbit) {
-      frameTurn.copy(plan.deckFrame(time))
-      framePlace.copy(deckCentre).multiplyScalar(-unit).applyQuaternion(frameTurn)
-      terrain.matrix.compose(framePlace, frameTurn, frameScale).premultiply(shaped)
-    } else terrain.matrix.identity()
-    terrain.matrixWorldNeedsUpdate = true
+  const place = (): void => {
     world.updateMatrix()
-    eye.set(0, 0, 0).applyMatrix4(inverse.multiplyMatrices(world.matrix, terrain.matrix).invert())
+    eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
-  const ground = (time: number, sunDir: THREE.Vector3, gain: number, vignette: number, aspect: number, fade: number, arcGain: number, flareGain: number): void => {
-    deck.update(eye, time - terrainMid, gain, vignette, aspect, fade)
+  const ground = (time: number, sunDir: THREE.Vector3, gain: number, vignette: number, aspect: number): void => {
+    deck.update(eye, time - terrainMid, gain, vignette, aspect, 1)
     skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
-    flare.update(eye, flareTurn.copy(skyTurn).multiply(flareFrame), flareGain, vignette, aspect)
     arcs.mesh.quaternion.copy(skyTurn)
     arcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn)
-    arcs.update(sunDir, gain * arcGain)
-    arcs.mesh.visible = look.show.rings && arcGain > 0
+    arcs.update(sunDir, gain)
+    arcs.mesh.visible = look.show.rings
     deck.group.visible = look.show.deck
   }
   const bounce = new THREE.Vector3()
@@ -150,12 +137,6 @@ export const createSet: SetFactory = async (ctx) => {
     sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
   }
 
-  const terrainSky = sky.find((p) => p.view === 'terrain')!
-  const flare = new Flare(terrainSky.texture, terrainSky.tan, skyJson.terrain.gain * plan.p.light.skyExposure, look.flare)
-  terrain.add(flare.mesh)
-  const flareFrame = plan.terrain(terrainMid - plan.seg.terrain.start).quaternion.clone().multiply(drift(terrainMid))
-  const flareTurn = new THREE.Quaternion()
-
   return {
     id: plan.id,
     world,
@@ -165,36 +146,32 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
-      place(state.time, inOrbit)
+      terrain.visible = !inOrbit
       if (!inOrbit) {
-        terrain.visible = true
-        ground(state.time, shot.sun.dir, gain, shot.post.vignette, aspect, 1, 1, 0)
+        place()
+        ground(state.time, shot.sun.dir, gain, shot.post.vignette, aspect)
         return
       }
       const kind = shot.segment.kind
       const mine = shot.segment.stop === plan.id
       const low = mine && (kind === 'dive' || kind === 'rise') && state.weight > 0
       const altitude = world.position.length() - 1
-      const fade = low ? plan.deckWeight(altitude) : 0
-      const arcGain = low ? 1 - smooth(ramp(move.arcFade[0], move.arcFade[1], altitude)) : 0
-      const ringGain = low ? smooth(ramp(move.ringFade[0], move.ringFade[1], altitude)) : 1
       const near = low ? 1 - smooth(ramp(Math.log(look.near.span[0]), Math.log(look.near.span[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
-      terrain.visible = fade > 0 || arcGain > 0
-      if (terrain.visible) ground(state.time, shot.sun.dir, gain, shot.post.vignette, aspect, fade, arcGain, look.show.sky ? gain * arcGain * shot.skyExposure / plan.p.light.skyExposure : 0)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       sun.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const elapsed = state.time - plan.holdMid
       const left = mine ? kind === 'rise' || kind === 'travel' : kind !== 'travel'
+      const moonGain = mine && kind === 'rise' ? smooth(ramp(move.riseMoons[0], move.riseMoons[1], state.time * config.fps)) : 1
       globe.update(sun, plan.spin(state.time), elapsed, gain * (left ? look.globe.away : 1), state.weight, shot.post.vignette, aspect)
       globe.soften(left ? look.globe.soft : 0, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
-      halo.update(sun, gain * state.weight * (1 - fade) * (1 + (look.near.halo - 1) * near))
-      rings.update(sun, gain * state.weight * ringGain)
-      farRings.update(sun, gain * state.weight * ringGain)
+      halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near))
+      rings.update(sun, gain * state.weight)
+      farRings.update(sun, gain * state.weight)
       globe.shadeRings(left ? look.rings.shade[0] : 0, farRings.mesh, farRings.sunLocal)
       const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && (kind === 'hold' || kind === 'dive') ? 1 : 0
-      veil.update(gain * state.weight * veiled * shot.skyGlow * ringGain, shot.post.vignette, aspect)
+      veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
       turn.setFromAxisAngle(ringNormal, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       shape.updateWorldMatrix(true, false)
       planetInverse.copy(shape.matrixWorld).invert()
@@ -202,17 +179,17 @@ export const createSet: SetFactory = async (ctx) => {
         m.body.mesh.position.copy(m.home).applyQuaternion(turn)
         m.body.mesh.quaternion.setFromAxisAngle(m.spinAxis, m.phase + THREE.MathUtils.degToRad(look.moons.spinDegPerSecond) * elapsed)
         bounce.copy(m.body.mesh.position).negate().normalize().applyQuaternion(state.rotation)
-        m.body.update(left ? sun : moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight * (left ? look.moons.away : 1), shot.post.vignette, aspect, planetInverse, left ? look.moons.shine : 1)
+        m.body.update(left ? sun : moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight * moonGain * (left ? look.moons.away : 1), shot.post.vignette, aspect, planetInverse, left ? look.moons.shine : 1)
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
-      globe.mesh.visible = visible && look.show.globe && fade < 1
+      globe.mesh.visible = visible && look.show.globe
       halo.mesh.visible = visible && look.show.globe
       rings.mesh.visible = visible && look.show.rings && !left
       farRings.mesh.visible = visible && look.show.rings && left
       veil.mesh.visible = visible && look.show.rings && look.show.sky
-      for (const m of moons) m.body.mesh.visible = visible && look.show.moons && fade < 1
+      for (const m of moons) m.body.mesh.visible = visible && look.show.moons && moonGain > 0
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
@@ -229,7 +206,6 @@ export const createSet: SetFactory = async (ctx) => {
       deck.dispose()
       arcs.dispose()
       arcGeo.dispose()
-      flare.dispose()
     },
   }
 }

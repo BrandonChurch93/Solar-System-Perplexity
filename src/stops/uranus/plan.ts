@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { blendPose, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from '../../director/rig'
+import { blendPose, forward, lookAt, mix, ramp, slerpDir, smooth } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
 import deck from './deck.json'
 import fit from './fit.json'
@@ -12,8 +12,8 @@ export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0.2, 1, 0], push: -0.03 },
   spot: { x: 0.5574, y: 0.6721 },
   dive: { headingDeg: 53.784, altitude: 0.02623, back: 0.07, ahead: 0.14, bow: 0.2, rollDeg: 7, swoop: true },
-  terrain: { vfov: 60, forward: 2.0, rise: 0.43, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
-  rise: { azimuthDeg: -36, elevationDeg: 15, distance: 6.8, offset: [0.3, -0.12], driftSpeed: 0.08, rollDeg: -5, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
+  terrain: { vfov: 60, forward: 3.2, rise: 0.7107, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
+  rise: { azimuthDeg: 65, elevationDeg: 0, distance: 6.8, offset: [0.3, -0.12], driftSpeed: 0.08, rollDeg: -5, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 66, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [-0.5, 0.3] },
   light: { exposure: 1, skyExposure: 0.6, sunRadiusDeg: 0.2, sunGlare: 0.65, flare: 0 },
@@ -33,22 +33,15 @@ export const params: MoveParams = {
 }
 
 export const move = {
-  diveJoin: 4,
-  diveBeats: [28, 26] as [number, number],
-  diveShare: 0.47,
-  diveLook: 32,
-  diveAim: 24,
-  diveTilt: [28, 44] as [number, number],
-  diveZoom: 0.35,
-  riseJoin: 2,
-  riseSettle: 7,
-  riseAim: [0.05, 0.8] as [number, number],
-  deckFade: [0.05, 0.2] as [number, number],
-  arcFade: [0.06, 0.3] as [number, number],
-  ringFade: [0.22, 0.45] as [number, number],
-  coverDive: [-12, -2, 1, 12] as [number, number, number, number],
-  coverRise: [-11, -2, 1, 13] as [number, number, number, number],
-  coverPeak: 0.93,
+  diveJoin: 2,
+  diveEase: [30, 42] as [number, number],
+  diveLook: [2, 16, 32, 47] as [number, number, number, number],
+  riseJoin: 0,
+  riseAim: [0, 0.95] as [number, number],
+  riseEase: [6, 14, 28] as [number, number, number],
+  riseMoons: [4426, 4436] as [number, number],
+  coverDive: [-13, -3, 2, 18] as [number, number, number, number],
+  coverRise: [-14, -3, 2, 18] as [number, number, number, number],
 }
 
 const X = new THREE.Vector3(1, 0, 0)
@@ -64,6 +57,21 @@ export function shaped(p: THREE.Vector3): THREE.Vector3 {
   const v = p.clone().applyQuaternion(AXIS_BACK)
   v.set(v.x * shape.polar, v.y * shape.equator, v.z * shape.equator)
   return v.applyQuaternion(AXIS).add(SHAPE_CENTRE)
+}
+
+function hide(alpha: number): number {
+  if (alpha <= 0) return 0
+  const x = 0.5 - Math.sin(Math.asin(1 - 2 * Math.min(alpha, 1)) / 3)
+  return mix((x + 0.22) / 1.32, 1, smooth(ramp(0.9, 1, alpha))) * smooth(ramp(0, 0.2, alpha))
+}
+
+function trapeze(x: number, a: number, b: number, slope: number): number {
+  const up = (v: number, w: number): number => (v * v * v) / (w * w) - (v * v * v * v) / (2 * w * w * w)
+  const c = 1 - b
+  const area = a / 2 + (b - a) + c / 2
+  const y = x - b
+  const sum = x < a ? up(x, a) : x < b ? a / 2 + (x - a) : a / 2 + (b - a) + y - up(y, c)
+  return sum / area + slope * x * Math.pow(1 - x, 3)
 }
 
 export class UranusPlan extends StopPlan {
@@ -103,7 +111,7 @@ export class UranusPlan extends StopPlan {
     const f = (time - this.coverCenter(seg)) * config.fps
     if (!show.cover) return f === 0 ? 1e-9 : 0
     const k = seg.kind === 'dive' ? move.coverDive : move.coverRise
-    return move.coverPeak * Math.min(smooth(ramp(k[0], k[1], f)), 1 - smooth(ramp(k[2], k[3], f)))
+    return hide(Math.min(smooth(ramp(k[0], k[1], f)), 1 - smooth(ramp(k[2], k[3], f))))
   }
 
   deckFrame(time: number): THREE.Quaternion {
@@ -115,10 +123,6 @@ export class UranusPlan extends StopPlan {
     return { position: shaped(local.position.clone().sub(CENTRE).multiplyScalar(UNIT).applyQuaternion(r)), quaternion: r.multiply(local.quaternion), vfov: local.vfov }
   }
 
-  deckWeight(altitude: number): number {
-    return 1 - smooth(ramp(move.deckFade[0], move.deckFade[1], altitude))
-  }
-
   dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const c = this.coverCenter(seg)
@@ -127,9 +131,9 @@ export class UranusPlan extends StopPlan {
     const fps = config.fps
     const m = this.mapped(this.entryPath(time), time)
     const held = this.hold(time - this.seg.hold.start)
-    const s1 = smoother(ramp(seg.start, seg.start + move.diveBeats[0] / fps, time))
-    const s2 = smoother(ramp(seg.start + move.diveBeats[1] / fps, c - move.diveJoin / fps, time))
-    const s = move.diveShare * s1 + (1 - move.diveShare) * s2
+    const span = (c - seg.start) * fps - move.diveJoin
+    const x = ramp(seg.start, c - move.diveJoin / fps, time)
+    const s = trapeze(x, move.diveEase[0] / span, move.diveEase[1] / span, 0)
     const hF = held.position.length() - 1
     const hM = m.position.length() - 1
     const h = hF * Math.pow(hM / hF, s)
@@ -139,15 +143,10 @@ export class UranusPlan extends StopPlan {
     const side = new THREE.Vector3().crossVectors(dF, dM).normalize()
     const ground = slerpDir(dF, dM, 1 - k).addScaledVector(side, d.bow * Math.sin(Math.PI * s) * k).normalize()
     const position = ground.clone().multiplyScalar(1 + h)
-    const level = forward(m.quaternion)
-    level.addScaledVector(dM, -level.dot(dM)).normalize()
-    const look = dM.clone().multiplyScalar(Math.cos(rad(move.diveLook))).addScaledVector(level, Math.sin(rad(move.diveLook)))
-    const far = held.position.clone().addScaledVector(forward(held.quaternion), held.position.length())
-    const aim = smoother(ramp(seg.start, seg.start + move.diveAim / fps, time))
-    const up = slerpDir(Y.clone().applyQuaternion(held.quaternion), level, aim)
-    const tilt = smoother(ramp(seg.start + move.diveTilt[0] / fps, seg.start + move.diveTilt[1] / fps, time))
-    const quaternion = lookAt(position, far.lerp(look, aim), up).slerp(this.carried(m, position), tilt)
-    return { pose: { position, quaternion, vfov: mix(held.vfov, m.vfov, move.diveZoom * s1 + (1 - move.diveZoom) * s2) }, view: 'orbit' }
+    const l = move.diveLook
+    const w = trapeze(ramp(seg.start + l[0] / fps, seg.start + l[3] / fps, time), (l[1] - l[0]) / (l[3] - l[0]), (l[2] - l[0]) / (l[3] - l[0]), 0)
+    const quaternion = held.quaternion.clone().slerp(m.quaternion, w)
+    return { pose: { position, quaternion, vfov: mix(held.vfov, m.vfov, smooth(x)) }, view: 'orbit' }
   }
 
   private carried(m: Pose, position: THREE.Vector3): THREE.Quaternion {
@@ -175,12 +174,9 @@ export class UranusPlan extends StopPlan {
     const seg = this.seg.rise
     const c = this.coverCenter(seg)
     if (time < c) return { pose: this.exitPath(time), view: 'terrain' }
-    const r = this.p.rise
     const m = this.mapped(this.exitPath(time), time)
     const end = this.after(seg.end)
     const from = c + move.riseJoin / config.fps
-    const span = seg.end - from
-    const tau = ramp(from, seg.end, time)
     const at = (t: number): number => this.mapped(this.exitPath(t), t).position.length() - 1
     const h0 = at(from)
     const step = 1e-3
@@ -188,12 +184,15 @@ export class UranusPlan extends StopPlan {
     const n = m.position.clone().normalize()
     const top = end.position.dot(n)
     const log = Math.log((top - 1) / h0)
-    const m0 = (rate * span) / log
-    const e = 1 - Math.pow(1 - tau, move.riseSettle) * (1 + (move.riseSettle - m0) * tau)
+    const ease = move.riseEase
+    const e = trapeze(ramp(from, from + ease[2] / config.fps, time), ease[0] / ease[2], ease[1] / ease[2], (rate * ease[2]) / config.fps / log)
     const z = time < from ? m.position.length() : 1 + h0 * Math.exp(log * e)
-    const lean = Math.pow(Math.max((z - 1 - h0) / (top - 1 - h0), 0), r.hug ?? 1)
-    const position = n.clone().multiplyScalar(z).addScaledVector(end.position.clone().addScaledVector(n, -top), lean)
-    const quaternion = this.carried(m, position).slerp(this.framed(position, time), smoother(ramp(move.riseAim[0], move.riseAim[1], e)))
+    const across = end.position.clone().addScaledVector(n, -top)
+    const dip = (h: number): number => Math.acos(1 / (1 + h))
+    const swing = Math.max((dip(z - 1) - dip(h0)) / (dip(top - 1) - dip(h0)), 0)
+    const lean = (z * Math.tan(Math.atan2(across.length(), top) * swing)) / across.length()
+    const position = n.clone().multiplyScalar(z).addScaledVector(across, lean)
+    const quaternion = this.carried(m, position).slerp(this.framed(position, time), smooth(ramp(move.riseAim[0], move.riseAim[1], e)))
     const path: Pose = { position, quaternion, vfov: mix(m.vfov, end.vfov, smooth(e)) }
     const u = (time - seg.start) / (seg.end - seg.start)
     return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }
