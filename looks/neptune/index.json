@@ -1,9 +1,25 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T02:51:35.346Z",
- "head": "b321c87c21e98465b1346865a0be60d7e0fbed27",
- "note": "reading the engine and the approved images, planning the Neptune set",
+ "pushed": "2026-11-21T03:03:30.661Z",
+ "head": "32bcacd6404b5e94ea20bb30152a870e738f8319",
+ "note": "Neptune: studying the close image horizon and the hero, design of the cloud layer written to notes",
  "looks": [
+  {
+   "time": "2026-11-21T02:59:47.699Z",
+   "file": "20261121025947699-note-hz_right.jpg",
+   "source": "out/work/nep/hz_right.jpg",
+   "kind": "note",
+   "label": "close image horizon, right half, brightened for study",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T02:59:47.102Z",
+   "file": "20261121025947102-note-hz_left.jpg",
+   "source": "out/work/nep/hz_left.jpg",
+   "kind": "note",
+   "label": "close image horizon, left half, brightened for study",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-21T02:51:34.788Z",
    "file": "20261121025134788-note-h_ringL.jpg",
