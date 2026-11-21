@@ -148,11 +148,15 @@ void main() {
     float disc = smoothstep(1.0 + edge, 1.0 - edge, x);
     float limb = 0.45 + 0.55 * sqrt(max(1.0 - x * x, 0.0));
     float coreR = clamp(uSunRadius * 0.35, 0.0012, 0.004);
-    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR)) * (1.0 - smoothstep(0.02, 0.03, uSunRadius));
+    float core = 40.0 * exp(-(ang * ang) / (coreR * coreR)) * (1.0 - smoothstep(0.06, 0.085, uSunRadius));
     float o = max(x, 1.0);
     float big = clamp(sqrt(0.02 / uSunRadius), 0.4, 1.0);
     float corona = 1.3 * big * pow(o, -3.6) + 0.035 * pow(o, -1.6) * exp(-o * 0.2);
-    col += uSunColor * uSunGlare * (disc * (limb * 3.6 * big + core) + (1.0 - disc) * corona);
+    float wide = smoothstep(0.06, 0.085, uSunRadius);
+    float mu = sqrt(max(1.0 - x * x, 0.0));
+    vec3 face = mix(vec3(1.0), 2.6 * pow(vec3(mu + 0.05), vec3(0.22, 0.42, 0.8)), wide);
+    corona += wide * (0.5 * exp(-(o - 1.0) * 9.0) + 0.16 * pow(o, -1.4) * exp(-(o - 1.0) * 0.3));
+    col += uSunColor * uSunGlare * (disc * (face * limb * 3.6 * big + core) + (1.0 - disc) * corona);
   }
   outColor = vec4(col, 0.0);
 }`
