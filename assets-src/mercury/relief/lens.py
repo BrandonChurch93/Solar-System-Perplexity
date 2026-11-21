@@ -14,6 +14,20 @@ WORK = 'out/work/mercury/relief/'
 FIX = WORK + 'lens-fix.npy'
 W, H, ML = geom.W, geom.H, geom.ML
 
+
+
+def tidy(fix):
+    k = fix.shape[1] / 1920
+    lum = fix @ geo.LUMA
+    tint = np.clip(cv2.GaussianBlur(fix / lum[..., None], (0, 0), 40 * k), 0.94, 1.06)
+    size = 2 * int(round(3 * k)) + 1
+    calm = cv2.GaussianBlur(cv2.medianBlur(lum.astype(np.float32), min(size, 5)), (0, 0), 1.5 * k)
+    return (np.clip(calm, 0.4, 1.6)[..., None] * tint).astype(np.float32)
+
+
+if sys.argv[1] == '--tidy':
+    np.save(FIX, tidy(np.load(FIX)))
+    sys.exit(0)
 film = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(np.float32) / 255
 fh, fw = film.shape[:2]
 ref = np.asarray(Image.open('out/work/mercury/close-db.png').convert('RGB')).astype(np.float32) / 255
@@ -36,4 +50,4 @@ lum = ratio @ geo.LUMA
 print('ground approved/film before this fix: median %.3f p10 %.3f p90 %.3f' % tuple(np.percentile(lum[g > 0.5], [50, 10, 90])))
 if os.path.exists(FIX) and '--fresh' not in sys.argv:
     ratio = ratio * np.load(FIX)
-np.save(FIX, ratio.astype(np.float32))
+np.save(FIX, tidy(ratio.astype(np.float32)))

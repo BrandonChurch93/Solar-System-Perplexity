@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 
 import cv2
@@ -100,6 +101,32 @@ def shade(ndl, mu):
     f = (x - i)[..., None]
     gain = table[i] * (1 - f) + table[i + 1] * f
     return (np.maximum(lc.curve_at(curve, ndl) - night, 0) * gain + night).astype(np.float32)
+
+
+def look(name, count=1):
+    text = open('src/stops/mercury/look.ts').read()
+    found = re.search(name + r': \[?([-0-9., ]+)', text).group(1)
+    v = [float(x) for x in found.split(',') if x.strip()][:count]
+    return v[0] if count == 1 else v
+
+
+def ground(seen, ndl, mu):
+    d = json.load(open('src/stops/mercury/curve.json'))
+    curve = np.array(d['curve'])
+    table = np.array(d['limb'])
+    n = len(table)
+    x = np.clip(mu / d['limbTo'], 0, 1) * (n - 1)
+    i = np.minimum(np.floor(x).astype(np.int32), n - 2)
+    f = (x - i)[..., None]
+    lit = np.maximum(lc.curve_at(curve, ndl) - curve[0], 0) * (table[i] * (1 - f) + table[i + 1] * f)
+    flat, detail, veil, veil_from, start = look('nightFlat'), look('nightDetail'), look('nightVeil'), look('nightVeilFrom'), look('from')
+    r = look('range', 4)
+    dark = curve[0] * (1 + veil * smooth(veil_from, 1, mu))[..., None]
+    band = (smooth(r[0], r[1], ndl) * (1 - smooth(r[2], r[3], ndl)) * (1 - detail))[..., None]
+    rest = seen - flat * (1 - detail) * dark
+    low = rest / np.maximum(lit + detail * dark, 1e-5)
+    high = (rest + band * start * dark) / np.maximum(lit + (detail + band) * dark, 1e-5)
+    return np.where(low > start, high, low).astype(np.float32)
 
 
 def day(seen, g):

@@ -14,11 +14,12 @@ export const light: GlobeLight = {
   reliefDay: 0.008,
   reliefRange: [0.1, 0.45],
   nightFlat: 0.2,
-  nightDetail: 0.3,
+  nightDetail: 0.15,
   nightVeil: 0.4,
   nightVeilFrom: 0.75,
+  dusk: { from: 1, range: [-0.12, 0, 0.15, 0.35] },
   edge: 1.2,
-  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.05, wideGain: 1.67 },
+  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.035, wideGain: 2.7 },
   glareGate: [0.7, 0.8, 0.06],
   glareLens: [34, 48],
 }
@@ -26,7 +27,7 @@ export const light: GlobeLight = {
 export const sun = { gain: 1, breathe: 0.03, rate: 1.9 }
 
 export const lens: LensLook = {
-  ghost: { at: 0.7404, turnDeg: 0.55, tiltDeg: -6.3, size: [0.0379, 0.0208], taper: 0.43, edge: [0.3, 1.1], blend: [-0.567, -0.167, -0.167, 0.5], head: [0.62, 0.55, 0.52], core: [0.74, 0.53, 0.33], tail: [0.3, 0.17, 0.1], fringe: [0.05, 0.008, 0.012], halo: [0.02, 0.008, 0.012], haloSize: 0.05 },
+  ghost: { at: 0.7376, turnDeg: 0.585, tiltDeg: -6.3, size: [0.0355, 0.0188], taper: 0.35, edge: [0.3, 1.1], blend: [-0.567, -0.167, -0.167, 0.5], head: [0.62, 0.55, 0.52], core: [0.74, 0.53, 0.33], tail: [0.3, 0.17, 0.1], fringe: [0.05, 0.008, 0.012], halo: [0.02, 0.008, 0.012], haloSize: 0.05 },
   fade: [1.15, 1.7],
 }
 
