@@ -235,9 +235,49 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - Before `READY`: `npm run -s gate -- --phase 4 --only G11` (every file under `public/assets/earth/` named in a `RECIPE.md` as its full path or as `public/assets/earth/<set>/NAME`), and `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,earth`. Put the three results in the `READY` message.
 - The sky behind the rise belongs to the next stop on main: nothing is painted against it.
 
+## Terrain milestone (sent 05:58 UTC, commit 8afd5ab)
+
+- Frame 2010 at draft, film minus close image, code values b, g, r; abs; abs low: sky -0.04 -0.07 -0.01; 0.87; 0.34. Limb +0.14 +1.03 +4.41; 3.43; 2.07. Sea and land +0.74 +1.02 +1.60; 4.56; 1.19. Towers +0.91 +1.89 +3.64; 10.37; 2.97. Disk: full 59 MB, web 14 MB.
+- Engine request 1 (`engine.patch`, `ENGINE-REQUESTS.md`): the shared test "every stop has an orbit patch aim on the view of its judged hold frame" ignores `sky.orbits[id]`, so it fails for earth because `light.sunDir` turns Earth's frame. The fix lives in `tests/skyframe.test.ts` in the working tree and is never committed. When the Builder says it is on main: `git checkout tests/skyframe.test.ts`, merge main.
+- Never `git add` `tests/` or `.vitest/`.
+
+## Dive and rise (from 06:00 UTC)
+
+### Engine facts (`src/director/moves.ts`, `src/director/film.ts`, `src/terrain/cover.ts`)
+
+- Cover windows: dive frames 1876 to 1891, centre 1884 (the view switches from orbit to terrain at the centre); rise 2122 to 2137, centre 2130. The cover is a full-frame pass. Without `coverEdge` the amount is a smooth rise to 1 at the centre and back. With `coverEdge: [first, last]` the amount is min(smooth(x / first), smooth((1 - x) / last)) over the window; the rise uses `coverEdgeRise`. Colours: `cover` and `coverLow` on the orbit side, `coverTerrain` and `coverLowTerrain` on the terrain side; `coverLow` must be set for horizon, `coverTop`, `coverShell`, flow and `coverRush` to apply. Sky exposure is times (1 - amount) squared. To look at the join without the cover set `coverEdge: [1e6, 1e6]` for a still.
+- Terrain entry: offset (height `entryHeight` g, back `entryBack` g), g = x^2.2, x from 1 at the cover's first frame to 0 at the end of the dive (g 0.643 at the centre, 0.37 at 1891). Exit: g = (u / 0.5067)^2.2 from frame 2100 (0.243 at 2120, 0.594 at 2130).
+- `dive.swoop: true` takes position, heading, pitch and roll at the cover centre from the terrain entry, so the views join; `surge` retimes it. `rise.level: true` carries pitch and heading across the rise cover (the pullback then shows Earth rolled about 52 degrees; `rise.rollDeg` may take part of it back); `settle`, `hug`, `ahead`, `pan`.
+- G13: a pixel is soft when texel density is under 1; a frame fails over 2 percent soft; measured at draft on hold, dive, terrain and rise frames outside the cover windows. Patch weight = front x feather 0.12 x (1 - smoothstep(1.02, 1.5, parent density)).
+- Mars open items to stay clear of: 6 (rise reads as a concealed cut: streaming cover in the climb, thinning of ten frames or more on the orbit side, terrain sky faded across the pullback) and 7 (dive seems to stop under a blur dissolve: carry the plunge's speed through the first second of the terrain view).
+
+### Tools
+
+- `npx tsx assets-src/earth/dive/predict.ts --frames A,B --widths "96,48,24,12,6" --set '{"dive":{...},"rise":{...}}'` prints altitude, pitch, horizon position, heading on screen, soft fraction, blur per shutter and cover per frame. Agrees with rendered texel stills within a point.
+- `python3 assets-src/earth/texcount.py FILES` counts the soft pixels of `--diag texels` stills. `npx tsx assets-src/earth/pathat.ts` prints the camera path.
+
+### Measured before any change (no patches)
+
+- Soft fraction 0 at 1840 and 1857, 0.203 at 1866, 0.886 at 1872, 0.991 at 1875; 0 in the terrain view; 0.888 at 2138, 0.830 at 2142, 0.607 at 2148, 0 at 2156. Blur at the judged frames 8.3 px (1857) and 16.8 px (2156): too much.
+- Predicted with swoop, surge `{ glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] }`, rise `ahead 0.03, hug 1.7, settle 5, level true, pan 0.3` and levels 96, 48, 24, 12, 6: soft 0 on all frames outside the cover; altitude 2.59 at 1857 (blur 2.7 px), 1.04 at 1875, 0.036 at 1883 (pitch 29.5, horizon y 0.62); rise 0.036 at 2130, 0.71 at 2138, 4.11 at 2156 (blur 2.6 px). Three levels (96, 48, 24) cover every frame outside the cover; 12 is margin for frames seen through the thinning veil.
+
+### Memory (full set, by hand; `npm run budget` renders at final and is slow)
+
+- 752 MB before patches: ground 173, towers 72.8, cloud 179, surface 179, emissive 44.7, sky-hold 37.2, sky-terrain 53.5, small ones 13. Each 4096 squared patch adds 89.5 MB; four levels give about 1110 of 1400.
+
+### Patch plan
+
+- Spot lon -77.4757, lat 18.1499 (from `spotfit.spot(0.52, 0.46)`), set in `assets.ts`.
+- Content = filmic coded composite before shading: filmic(surface x shadow x (1 - a) + cloud premultiplied) at cloud state 0 (flow 0 after the hold), since a patch at full weight turns the live cloud layer and its shadow off.
+- Per level as on Mars (`assets-src/mars/patches/RECIPE.md`): gnomonic resample of the parent, one strict super-resolution take at 2048 (`nano_banana_pro`, 1:1), flow and low-frequency check, low frequencies locked to the parent, 4096 by the ML upscaler, nested into the coarser level. At most 6 takes per asset.
+
+### Log
+
+- 06:10. `plan.ts`: `dive.swoop` with the surge above and the rise set above. Draft sheet of the dive: the approach holds, frame 1879 is inside the cover over the Gulf, 1887 is the white veil over the terrain, 1895 to 1919 barely move (entry 0.3, 0.3 is too small: open item 7). The cover is still the grey default.
+
 ## Next (current)
 
-1. Terrain sky patch (`sky-terrain.webp`): `sky.json` has a `terrain` entry; with gain 0 a still of frame 2010 has a black sky (`out/work/earth/still/terrain-nosky.png`); `sky/patch.py terrain STILL` writes the patch = close image minus the still above the horizon, held below it and in the margins. Then set gain 2.380952 and the file name.
-2. Stills of 1920, 2010, 2099, 2120; check tower parallax, drift, shimmer, the sky rim. `relief/RECIPE.md`. Commit the binaries. Terrain milestone message (say that `light.sunDir` is set).
-3. Dive and rise: patch chain (`patches.levels` is empty), predictor, cover = thin veil of high cloud, G13; tune `dive` for the spot and heading.
-4. `for` loop advice in `globe.ts` and `air.ts`, far-side polish, own checks, gates G11, G12, G15, `READY`.
+1. Cover = thin veil of high cloud in white (`cover`, `coverLow`, `coverTerrain`, `coverLowTerrain`, `coverTop`, `coverEdge`, `coverEdgeRise`, `coverShell`, `coverRush`), larger terrain entry and exit, stills of the join with and without the cover.
+2. Patch chain 96, 48, 24 (12 as margin), `patches.levels` in `assets.ts`, recipe, G13 over the dive and rise.
+3. Descent grade, rise sheet (far side, poles, terminator), milestone message with numbers. Merge `origin/main` first.
+4. `for` loop advice in `globe.ts` and `air.ts`, bloom pre-emphasis for the relief limb, far-side polish, own checks, gates G11, G12, G15, `READY`.
