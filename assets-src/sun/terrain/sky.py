@@ -8,6 +8,7 @@ NEAR = (0.9, 0.5, 1.7, 4.5)
 ARCH = 0.25
 SOFT = 24
 SHIFT = 160
+STARS = 0.4
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/sun'
 sky = np.load(f'{WORK}/sky-scene.npy')
@@ -34,7 +35,8 @@ inv = np.array([[k, 0, LEFT * mask.shape[1] + 0.5 * k - 0.5], [0, k, TOP * mask.
 mask = cv2.GaussianBlur(cv2.warpAffine(mask, inv, (w, h), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP), (0, 0), 20)
 deg = (edge[None, :] - rows) * 2 * np.degrees(np.arctan(TY * SPAN)) / h
 near = NEAR[0] * step(deg, NEAR[1], NEAR[2]) + (1 - NEAR[0]) * step(deg, NEAR[2], NEAR[3])
-out = np.maximum(out - cv2.GaussianBlur(out, (0, 0), SOFT) * (1 - near * (1 - ARCH * mask))[..., None], 0)
+floor = cv2.GaussianBlur(out, (0, 0), SOFT)
+out = np.maximum(floor * near[..., None] + (out - floor) * (STARS + (1 - STARS) * near)[..., None], 0) * (1 - ARCH * mask)[..., None]
 img = display(out)
 print('sky max', float(img.max()), 'mean', float(img.mean()))
 write(f'{OUT}/full/sky-terrain.webp', img, 95)
