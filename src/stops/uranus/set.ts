@@ -1,9 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { config } from '../../config'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
-import { FilmDirector } from '../../director/film'
-import { plans } from '../../director/plans'
 import { smooth } from '../../director/rig'
 import { Deck } from './deck'
 import deckJson from './deck.json'
@@ -106,13 +103,6 @@ export const createSet: SetFactory = async (ctx) => {
   const turnMid = plan.turn(terrainMid)
   const skyTurn = new THREE.Quaternion()
 
-  const director = new FilmDirector(plans)
-  const delta = new THREE.Matrix4()
-  const before = new THREE.Matrix4()
-  const after = new THREE.Matrix4()
-  const eye = new THREE.Matrix4()
-  const offset = new THREE.Vector3()
-  const unit = new THREE.Vector3(1, 1, 1)
   const sun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const bounce = new THREE.Vector3()
@@ -153,20 +143,8 @@ export const createSet: SetFactory = async (ctx) => {
       halo.update(sun, gain * state.weight)
       const kind = shot.segment.kind
       const mine = shot.segment.stop === plan.id
-      let moving = false
-      if (view.samples > 1 && config.fastKinds.includes(kind)) {
-        const next = director.shotAt(shot.frame, shot.time + config.shutterFraction / (config.fps * view.samples))
-        const then = next.sets.find((s) => s.id === plan.id)
-        if (then && then.view === 'orbit') {
-          before.compose(offset.copy(state.origin).sub(shot.camera.position), state.rotation, unit).premultiply(eye.makeRotationFromQuaternion(shot.camera.quaternion).invert())
-          after.compose(offset.copy(then.origin).sub(next.camera.position), then.rotation, unit).premultiply(eye.makeRotationFromQuaternion(next.camera.quaternion).invert())
-          delta.copy(after).multiply(before.invert())
-          moving = true
-        }
-      }
-      const half: [number, number] = [view.format.width / 2, view.format.height / 2]
-      rings.update(sun, gain * state.weight, moving ? delta : undefined, half)
-      farRings.update(sun, gain * state.weight, moving ? delta : undefined, half)
+      rings.update(sun, gain * state.weight)
+      farRings.update(sun, gain * state.weight)
       const left = mine ? kind === 'rise' || kind === 'travel' : kind !== 'travel'
       const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && (kind === 'hold' || kind === 'dive') ? 1 : 0
       veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
@@ -185,8 +163,7 @@ export const createSet: SetFactory = async (ctx) => {
       rings.mesh.visible = visible && look.show.rings && !left
       farRings.mesh.visible = visible && look.show.rings && left
       veil.mesh.visible = visible && look.show.rings && look.show.sky
-      const whip = mine && kind === 'rise' && shot.time < plan.seg.rise.start + look.moons.riseFrom
-      for (const m of moons) m.body.mesh.visible = visible && look.show.moons && !whip
+      for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {

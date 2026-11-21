@@ -311,3 +311,27 @@ Round 6 renders from b87454f (mail 08:57); everything pushed later is judged in 
   6. R1: ring strands and dust softer than approved (hold), ring lanes and limb softer (terrain).
   7. R3: dive 4137 cloud detail smeared, moon with hard dark edge, rise 4436 terminator as a hard crescent, bands airbrushed, storms pasted, rings wobbly (fixed above), terrain near field smeared, dark corner banding.
   8. Minor: mirrored stars at the terrain sky margins (top 15 px, right 20 px), one pixel stars flicker, inner ring beading in the hold, squashed moon, flat white moon, even outer arc, ring strands ending at the haze.
+
+## State at 10:05 UTC (read this first after a compaction)
+
+Round 1 result is in (list above). Two rounds remain. Branch head pushed: bd3fef5, local merge 71fea95 (main 811fbca, engine batch 10: `terrain.exitDipDeg`).
+
+### Correction to the 09:55 section
+- Mail 09:52: stepped ghost copies in the fastest dive and rise frames are an engine matter (time samples that follow the screen motion). No blur tricks, extra sprites or slower moves in the stop folder. So the motion smear (`look.rings.smear`), the set's own `FilmDirector` copy and the moon hiding (`look.moons.riseFrom`) are removed again. Kept: `flat`, `evenLines` and `farRings` (`look.rings.even 0.1`), back-scatter `look.rings.back [3, 2]`.
+- After the removal: build green, 48 tests pass, 4035 at review equals the render before (max 1 level on 0.008 percent).
+- Item 5 finding for the READY message: globe, flecks, rings and moons all take `state.time` of the time sample (`globe.update(sun, plan.spin(state.time), elapsed, ...)`), no coarser clock. The copies come from the sample count, not from my layers.
+
+### Cover analysis (items 1 and 2), measured with `out/work/u/dbg/track.ts` and `sunlimb.ts`
+- Horizon angle on screen is continuous at the swap (orbit 4162 -13.8 deg, terrain 4164 -14.3) but only -2.6 at 4150: the roll arrives too late.
+- Sun jumps: orbit 4162 at (1381, 363), 9.77 deg above the limb; terrain 4164 at (1293, 508), 3.17 deg. Aim above limb -6.68 against -4.28. Rise: 4408 terrain 14.08 deg, 4410 orbit 18.72.
+- Cause: the deck sphere's up `[0.2364, 0.9462, 0.2212]` is 18.9 deg from terrain local Y, the engine's `terrainFrame` maps local Y to the spot normal, and `swoop` only lines the horizon up on screen.
+- Speeds: orbit 4150 20.3 mR per frame and 4.94 deg per frame, 4162 4.0 and 1.0, terrain 4166 2.17 and 0.46, 4200 0.36.
+- The engine sky exposure is times `(1 - cover.amount)^2` in `film.ts`: reads as the Milky Way pop at 4169 to 4170 and 4415 to 4416.
+- Terrain mapping: unit 0.0151344 R per terrain unit, deck centre `[-15.8563, -63.4702, -14.8357]`, radius 66.0819 units (1.0001 R). Deck ring arcs: circle radius 49.934 units, centre `[-8.5202, -28.6297, -52.036]`, mesh scale 33.289.
+
+### Plan, worst first
+1. `plan.ts`: own subclass of `StopPlan` so the orbit pose at each cover centre equals the world mapped terrain pose (position, look, roll, velocity), roll and pitch arriving before 4150. Longer cover thinning.
+2. Deck (and haze, arcs) drawn in the orbit view under the same mapping, cross-faded with the globe by altitude before the dive cover and after the rise cover.
+3. Sun on both sides alike.
+4. Cover rush: faster veil, finer billow, lower contrast.
+5. Far map fill (item 4), then items 6 to 8.
