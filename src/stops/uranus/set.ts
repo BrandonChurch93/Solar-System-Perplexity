@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { config } from '../../config'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { ramp, smooth } from '../../director/rig'
 import { Deck } from './deck'
@@ -11,7 +10,7 @@ import { Halo } from './halo'
 import * as look from './look'
 import { Moon } from './moons'
 import patchJson from './patches.json'
-import { move, plan } from './plan'
+import { plan } from './plan'
 import { fullLines, hairLines, parseLines, ringGeometry, ringProfile, Rings, strandLines } from './rings'
 import skyJson from './sky.json'
 import { Veil } from './veil'
@@ -162,7 +161,6 @@ export const createSet: SetFactory = async (ctx) => {
       sun.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const elapsed = state.time - plan.holdMid
       const left = mine ? kind === 'rise' || kind === 'travel' : kind !== 'travel'
-      const moonGain = mine && kind === 'rise' ? smooth(ramp(move.riseMoons[0], move.riseMoons[1], state.time * config.fps)) : 1
       globe.update(sun, plan.spin(state.time), elapsed, gain * (left ? look.globe.away : 1), state.weight, shot.post.vignette, aspect)
       globe.soften(left ? look.globe.soft : 0, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
@@ -179,7 +177,7 @@ export const createSet: SetFactory = async (ctx) => {
         m.body.mesh.position.copy(m.home).applyQuaternion(turn)
         m.body.mesh.quaternion.setFromAxisAngle(m.spinAxis, m.phase + THREE.MathUtils.degToRad(look.moons.spinDegPerSecond) * elapsed)
         bounce.copy(m.body.mesh.position).negate().normalize().applyQuaternion(state.rotation)
-        m.body.update(left ? sun : moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight * moonGain * (left ? look.moons.away : 1), shot.post.vignette, aspect, planetInverse, left ? look.moons.shine : 1)
+        m.body.update(left ? sun : moonLight.copy(m.light).applyQuaternion(state.rotation), bounce, gain * state.weight * (left ? look.moons.away : 1), shot.post.vignette, aspect, planetInverse, left ? look.moons.shine : 1)
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
@@ -189,7 +187,7 @@ export const createSet: SetFactory = async (ctx) => {
       rings.mesh.visible = visible && look.show.rings && !left
       farRings.mesh.visible = visible && look.show.rings && left
       veil.mesh.visible = visible && look.show.rings && look.show.sky
-      for (const m of moons) m.body.mesh.visible = visible && look.show.moons && moonGain > 0
+      for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
