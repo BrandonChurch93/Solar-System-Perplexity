@@ -88,3 +88,37 @@ Sky pass per sample: 1.65 to 1.56 s (hold), 2.30 to 0.87 s (terrain), 1.68 to 1.
 ### 3. Star cull only in capture mode (`6e9659f`)
 
 Asked for by the Builder. The cull loop walks all 3,465,000 points each time the view changes. Measured in headless Chrome on this VM (13 views, both asset sets, the star count is the same for `web` and `full`): 44 to 67 ms per call, median 52 ms. That is nothing against a software rendered frame (one call per frame) and far too much for the interactive app. `Sky.cull` is a public field, off by default. `src/main.ts` switches it on when `mode === 'capture'`, which is the mode of every harness tool that renders frames (`tools/lib/browser.ts`). In live, autopilot and export the stars draw as the plain non indexed range of all points, exactly as before change 1.
+
+### 4. Sky and stars are not shaded under opaque objects, capture mode (`de72ad1`)
+
+`src/core/engine.ts`, `src/core/pass.ts`, `src/core/tiles.ts` (new), `src/space/sky.ts`, `tests/tiles.test.ts`. Only when `Sky.cull` is on (capture mode). The sample target gets a stencil buffer. The world is drawn in two parts: first the opaque materials (not transparent, no blending, color write on), each marked once to write stencil 1 where it passes the depth test; then the sky pass and the star points, which pass only where the stencil is 0; then the blended materials (haze shells and the like) as before. An opaque fragment replaces the color, so what the sky wrote under it never reached the frame; the pixels with stencil 0 see the same draws in the same order as before. The stencil decides, not the depth, because a depth of 1.0 can also belong to an opaque fragment at the far plane.
+
+SwiftShader does not reject a fragment early by stencil or by depth (WebGL2 has no `early_fragment_tests`), so the stencil alone gave nothing: sky pass 1.55 s with and without. What saves the time is a scissor. After the opaque part the alpha of the sample target is read back (the clear alpha is 0, an opaque fragment writes more), the frame is cut into 32 px tiles, tiles that still hold a pixel with alpha 0 are merged into rectangles (33 to 36 at these frames), and the sky pass is drawn once per rectangle with the scissor set. A tile is dropped only when every pixel of it carries stencil 1. Tiles of 16 px gave the same time as 32 px.
+
+If the world holds a non transparent material that is not plainly opaque (blending, alpha to coverage, transmission, its own stencil use), or no opaque material at all, the old order is used. The terrain view has no opaque material (the relief layers are blended), so it is unchanged.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 57.0 | 46.7 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 58.9 | 59.2 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 179.7 | 125.3 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 87.5 | 79.5 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Sky pass per sample (draft): 1.56 to 0.89 s (hold, 49.6 % of the frame covered), 1.58 to 0.64 s (dive, 62.4 %), 0.49 to 0.37 s (rise, 34.7 %). Whole sample: 2.81 to 2.12 s, 2.88 to 1.89 s, 1.35 to 1.19 s. `npm run build`, `npx vitest run` (28 tests) and `npm run determinism` pass.
+
+### 5. Star points that lie wholly on covered tiles are not drawn, capture mode (`c3f52bd`)
+
+`src/space/sky.ts`, `src/core/tiles.ts`, `src/core/engine.ts`. The star cull keeps the list of points in view per view (as in change 1) and filters it per sample against the tile grid of change 4: a point is dropped when every tile touched by its padded square (half the largest point plus 4 pixels plus the pixel jitter) is covered, which means every one of its fragments would fail the stencil test. The order of the points that remain is unchanged. The filter walks only the points in view (about 450,000, a few ms), the walk over all 3,465,000 points still happens once per view. When no tile is open the star draw is skipped.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 46.7 | 45.1 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 59.2 | 59.2 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 125.3 | 115.4 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 79.5 | 81.0 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Points drawn: 451,000 to 205,000 (hold), 474,000 to 165,000 (dive), 34,000 to 28,000 (rise). Star draw per sample: 0.24 to 0.10 s (hold), 0.24 to 0.09 s (dive).
+
+### Engine batch 2: changes 4 and 5 merged with main (`92edd3c`)
+
+Main `4704442` (which holds engine batch 1) merged into the branch. On the merged tree, `final` tier: hold 2325 44.5 s, terrain 2580 59.8 s, dive 2427 114.8 s, rise 2726 79.2 s, all four sha256 equal to the baselines. `npm run build`, `npx vitest run` (28 tests) and `npm run determinism` pass.

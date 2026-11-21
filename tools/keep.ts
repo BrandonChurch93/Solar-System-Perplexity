@@ -126,3 +126,14 @@ if (a.clips) {
     else console.log('Note: no current clip for ' + stop)
   }
 }
+
+if (a.posts) {
+  for (const stop of a.stop ? [a.stop] : cfg.stopIds) {
+    for (const name of ['intro-' + stop + '.mp4', stop + '.mp4']) {
+      const item = candidates([join(WORK, 'posts', name)], existsSync)[0]
+      const post = name === stop + '.mp4'
+      if (item && (post === false || current(item, [stop]))) keep(item, join(out, 'posts', name), false)
+      else console.log('Note: no ' + (post ? 'current post' : 'intro') + ' for ' + stop)
+    }
+  }
+}
