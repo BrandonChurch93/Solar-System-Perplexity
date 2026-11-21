@@ -1,60 +1,76 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T04:22:48.188Z",
- "head": "9dcb05033d32b86641e990b15b4d732c9f8534f4",
- "note": "far side repaint in tiles on the height-lit guide; terrain depth and camera fit done; engine request for a tilted terrain horizon sent",
+ "pushed": "2026-11-21T04:51:45.955Z",
+ "head": "aa3e4fb6a324b30fc7581325f6e81bc245a57c06",
+ "note": "terrain view: first relief render on the painted margins, sky patch and relief gain next",
  "looks": [
   {
-   "time": "2026-11-21T04:22:47.633Z",
-   "file": "20261121042247633-note-close-depth.jpg",
-   "source": "out/work/mercury/close-depth.jpg",
+   "time": "2026-11-21T04:51:45.404Z",
+   "file": "20261121045145404-note-terrain-a.jpg",
+   "source": "../../../../tmp/terrain-a.jpg",
    "kind": "note",
-   "label": "terrain: depth of the approved close image",
+   "label": "terrain first relief render: frames 781, 870, 959 and the approved close image (bottom right)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T04:22:47.086Z",
-   "file": "20261121042247086-note-look-tiles-v3-crop.jpg",
-   "source": "out/work/mercury/look-tiles-v3-crop.jpg",
-   "kind": "note",
-   "label": "far side tiles e2 and n6 at native size: guide, take c1, take d1",
-   "stop": "mercury"
+   "time": "2026-11-21T04:51:00.718Z",
+   "file": "20261121045100718-frame-t959-a.jpg",
+   "source": "out/work/mercury/st/t959-a.png",
+   "kind": "frame",
+   "label": "mercury.terrain frame 959, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 959,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:22:46.538Z",
-   "file": "20261121042246538-note-look-tiles-v3.jpg",
-   "source": "out/work/mercury/look-tiles-v3.jpg",
-   "kind": "note",
-   "label": "far side tiles e2 e7 n6 s3: guide (top), repaint take c1 (middle), take d1 (bottom)",
-   "stop": "mercury"
+   "time": "2026-11-21T04:49:41.197Z",
+   "file": "20261121044941197-compare-compare-mercury-terrain-view.jpg",
+   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
+   "kind": "compare",
+   "label": "mercury.terrain: approved image left, film frame right, review tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 870,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:22:45.999Z",
-   "file": "20261121042245999-note-look-guide-v3.jpg",
-   "source": "out/work/mercury/look-guide-v3.jpg",
-   "kind": "note",
-   "label": "far side guide v3: real height data lit by the film's Sun, real color, before repaint",
-   "stop": "mercury"
+   "time": "2026-11-21T04:49:40.017Z",
+   "file": "20261121044940017-still-f00870-16x9-review-full.jpg",
+   "source": "out/work/stills/f00870-16x9-review-full.png",
+   "kind": "still",
+   "label": "mercury.terrain frame 870, review tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 870,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:05:38.567Z",
-   "file": "20261121040538567-note-look-night.jpg",
-   "source": "out/work/mercury/look-night.jpg",
-   "kind": "note",
-   "label": "night side at 6 times gain: approved left, film right",
-   "stop": "mercury"
+   "time": "2026-11-21T04:48:40.566Z",
+   "file": "20261121044840566-frame-f1016-v6.jpg",
+   "source": "out/work/mercury/st/f1016-v6.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1016, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1016,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:05:38.008Z",
-   "file": "20261121040538008-note-look-tiles.jpg",
-   "source": "out/work/mercury/look-tiles.jpg",
-   "kind": "note",
-   "label": "far side tiles, first takes: guide tile, take A, take B for four regions (colors too strong, craters too dark, one pole take rejected)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T04:04:27.882Z",
-   "file": "20261121040427882-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T04:47:34.240Z",
+   "file": "20261121044734240-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, review tier",
@@ -64,21 +80,29 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "cae3193a3821716c"
+   "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T02:45:05.822Z",
-   "file": "20261121024505822-compare-compare-mercury-terrain-view.jpg",
-   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
-   "kind": "compare",
-   "label": "mercury.terrain: approved image left, film frame right, draft tier",
+   "time": "2026-11-21T04:47:32.349Z",
+   "file": "20261121044732349-still-f00615-16x9-review-full.jpg",
+   "source": "out/work/stills/f00615-16x9-review-full.png",
+   "kind": "still",
+   "label": "mercury.hold frame 615, review tier",
    "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "draft",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "cae3193a3821716c"
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:38:10.609Z",
+   "file": "20261121043810609-note-ts-v4-a.jpg",
+   "source": "../../../../tmp/ts-v4-a.jpg",
+   "kind": "note",
+   "label": "far side tiles on guide v4: input, seedream take, nano take",
+   "stop": "mercury"
   }
  ]
 }
