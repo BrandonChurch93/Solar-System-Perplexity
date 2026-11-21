@@ -324,6 +324,21 @@ What is built (all in the stop folder):
 - Cause (`/tmp/tex.sh`, `out/work/view/tex3258_soft.png`, `tex3251_layers3258.png`): one patch of near ground at the bottom left of the exit frames, all inside the core map, at 0.92 to 1.0 texels per pixel. The deck is the approved picture projected from the judged camera, so ground the camera flies up to is magnified. `terrain.side -0.5` took the camera 0.047 units lower over the deck in the exit than `side -0.24` did (the deck's up direction has an x part of 0.27): altitude over the deck sphere (`out/work/jupiter/tools/alt.ts`) 3250 0.817 against 0.864, 3258 1.051 against 1.102.
 - Fix: `terrain.rise 0.12 to 0.2` gives exactly the altitude profile of the passing build with the wider sideways travel (3060 1.147, 3239 0.795), and the exit climbs a little sooner and pushes a little less: `exitHeight 2.6 to 3.0`, `exitForward 1.2 to 1.0` (3250 0.887, 3258 1.185, 3269 1.975). The judged frame 3150 is the pivot of the move and does not change.
 
+- Checked on texel views at draft (`/tmp/tex.sh`): 3239 0, 3249 0.39, 3250 1.12, 3251 1.22, 3252 0.77, 3253 0.24, 3256 0.01, 3258 0.45, 3259 0.69, 3261 0.12 percent soft. `strip_exit6.jpg`: no pop at 3059 to 3060 and 3239 to 3240, fog gathers 3250 to 3264, limb and haze continuous over 3268 to 3270.
+- Committed 78675a0, merged main 893337f (a log only) as 6d0519c, pushed. Build green, vitest 59 of 59.
+- **Full measure at 6d0519c (929 s, 12:14 UTC): G13 PASS 0 of 463 frames over 0.02 soft (worst 3251 1.22 percent, 3250 1.12, 3252 0.77); G5 PASS invalid 0, coverage hold 0.355, dive 0.464, terrain 0.754, rise 0.235; G17 PASS 2895 median 0.954 p25 0.900 over 81 tiles, 3150 median 0.996 p25 0.949 over 80 tiles.** G11 PASS.
+- Lesson: after any change to the terrain move run `/tmp/tex.sh` on the exit frames (3249 to 3261) before the long measure; the first soft ground is the near patch at the bottom left of the exit.
+
+### Own checks at the round 2 head (12:15 to 12:25 UTC, code at 6d0519c)
+
+- Finals rendered at this head: 2895 (33 s, 16 samples), 2997 (101 s, 64), 3296 (91 s, 64), 3150 by `compare` (16).
+- `mirrorcheck`: clean on final 2895, 2997, 3150 and drafts 2985, 3013. Reports on final 3296 (x 308 0.71, x 1816 0.68, x 48 0.56, y 60 0.51), drafts 3286 (x 174 0.74, x 1792 0.61) and 3304 (x 1818, x 208, x 374, y 1014, x 1828, y 758; 0.51 to 0.63): `axis.py` gives 0.00 to 0.03 for every one of them without the 6 px beside the axis, so each is one bright star on the test axis. Draft 3352 (travel): x 1750 0.85 (0.02 without the axis band, a star), x 478 0.80 (0.52 without: a round rock of the engine's asteroid belt, `f3352_r6.png`).
+- Native looks: `f2997_r6_crops.png` (T smooth lit limb, V and W soft star points, H no seam), `f2997_r6_wedge.png` (night limb fades into the Milky Way), `f3296_r6_full.png`, `f3296_r6_io.png` (Io round, feathered, half lit with a crisp straight terminator), `f2895_r6_limb_pair.png`, `f2895_r6_sky_pair.png` (our stars a little larger and softer than the hero's).
+- `limb.py final`: limb mid point within 1 px of the hero at eight angles, night level 6.3 to 12.0 against 5.8 to 11.9. Final 3150 minus approved: upper +1.53 +1.23 +1.08, middle +0.51 +0.27 +0.23, lower -0.09 -0.12 -0.13.
+- `compare` final, both views: same shot (`compare-jupiter-hold-view.jpg`, `compare-jupiter-terrain-view.jpg`).
+- Gates at 6d0519c: G5, G13, G17 PASS; G11 PASS; G12 PASS (1750 tracked files, 1.37 GB); G15 PASS (at most 2 sets per frame; jupiter/web 199 MB of 450, jupiter/full 796 MB of 1400; the sky patches now carry mips). Build green, vitest 59 of 59. Disk: full 45 MB, web 13 MB.
+- READY for round 2 sent after this entry.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
