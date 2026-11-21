@@ -61,6 +61,16 @@ def save(lin, name):
     img.resize((1760, 990), Image.LANCZOS).convert("RGB").save(WORK / (name.replace(".webp", "") + "-preview.jpg"), quality=90)
 
 
+def layers(x, mask=None):
+    low = np.stack([ndi.gaussian_filter(ndi.grey_opening(x[..., i], size=(9, 9)), 5) for i in range(3)], -1)
+    res = x - low
+    lum = res @ LW
+    pick = lum if mask is None else lum[mask]
+    noise = 1.4826 * float(np.median(np.abs(pick - np.median(pick))))
+    keep = step(lum, 2.5 * noise, 5 * noise)
+    return low, np.maximum(res, 0) * keep[..., None], noise
+
+
 def compose(a, f, g, body, name):
     sky = np.maximum(a - g, 0)
     la = ndi.gaussian_filter(a @ LW, 10)
@@ -69,13 +79,42 @@ def compose(a, f, g, body, name):
     own = step(far, 5, 14) * (1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85))
     own = ndi.gaussian_filter(own, 3)
     near = (own > 0.98).astype(np.float32)
-    gain = np.array([np.median(sky[..., i][near > 0]) / max(np.median(f[..., i][near > 0]), 1e-6) for i in range(3)])
-    soft = lambda v: ndi.gaussian_filter(v, 70)
-    local = np.stack([soft(np.minimum(sky[..., i], 0.2) * near) / np.maximum(soft(np.minimum(f[..., i], 0.2) * near), 1e-6) for i in range(3)], -1)
-    known = np.clip(soft(near) / 0.25, 0, 1)[..., None]
-    scale = gain * (1 - known) + np.clip(local, gain * 0.35, gain * 2.5) * known
-    print(name, "fill gain", gain.round(3), "own share", float(own.mean().round(3)))
-    lin = sky * own[..., None] + f * scale * (1 - own[..., None])
+    pick = near > 0
+    low_s, star_s, noise_s = layers(sky, pick)
+    low_f, star_f, noise_f = layers(f, pick)
+    gain = np.array([np.median(low_s[..., i][pick]) / max(np.median(low_f[..., i][pick]), 1e-6) for i in range(3)])
+    k = 8
+    small = lambda v: v.reshape(v.shape[0] // k, k, v.shape[1] // k, k).mean((1, 3))
+    grow = lambda v: ndi.zoom(v, k, order=1, mode="nearest", grid_mode=True)
+    near_s = small(near)
+    low_small = [small(low_s[..., i] * near) for i in range(3)]
+    wide = None
+    for sigma in (600, 200, 70):
+        soft = lambda v: ndi.gaussian_filter(v, sigma / k)
+        support = soft(near_s)
+        est = np.stack([grow(soft(c) / np.maximum(support, 1e-6)) for c in low_small], -1)
+        known = np.clip(grow(support) / 0.25, 0, 1)[..., None]
+        wide = est if wide is None else wide * (1 - known) + est * known
+    lum_f = low_f @ LW
+    mod = np.clip(lum_f / np.maximum(grow(ndi.gaussian_filter(small(lum_f), 70 / k)), 1e-6), 0.6, 1.8)
+    mod = 1 + 0.5 * (ndi.gaussian_filter(mod, 6) - 1)
+    inner = (1 - own) > 0.98
+    top = lambda v: float(np.percentile((v @ LW)[pick], 99.9))
+    count = lambda v, t: float(((v @ LW)[pick] > t).mean())
+    level = top(star_s)
+    sgain = float(np.clip(level / max(top(star_f), 1e-6), 0.3, 3.0))
+    for _ in range(12):
+        ratio = count(star_s, 0.25 * level) / max(count(star_f * sgain, 0.25 * level), 1e-9)
+        sgain = float(np.clip(sgain * np.clip(ratio, 0.5, 2.0) ** 0.5, 0.2, 4.0))
+    print(name, "background gain", gain.round(3), "star gain", round(sgain, 3), "noise sky fill", round(noise_s, 5), round(noise_f, 5), "own share", float(own.mean().round(3)))
+    tint = lambda v, m: np.array([float(v[..., i][m & ((v @ LW) > 0.25 * level)].mean()) for i in range(3)])
+    ts, tf = tint(star_s, pick), tint(star_f * sgain, inner)
+    hue = (ts / (ts @ LW)) / (tf / (tf @ LW))
+    grey = (star_f @ LW)[..., None]
+    stars = (grey + 0.5 * (star_f - grey)) * hue * sgain
+    print(name, "star tint sky", (ts / (ts @ LW)).round(3), "fill", (tf / (tf @ LW)).round(3), "share sky", round(count(star_s, 0.25 * level), 5), "fill", round(float(((stars @ LW)[inner] > 0.25 * level).mean()), 5))
+    fill = wide * mod[..., None] + stars
+    lin = sky * own[..., None] + fill * (1 - own[..., None])
     save(lin, name)
 
 
@@ -88,7 +127,7 @@ def hold(hero, fill, glow):
     hit, _ = spheroid_hit(cam.pos, d, n)
     tr, pr = plane_hit(cam.pos, d, n)
     rr = np.linalg.norm(pr, axis=-1)
-    body = hit | ((tr > 0) & (rr > FIT["rings"]["inner"] - 0.01) & (rr < 2.45))
+    body = hit | ((tr > 0) & (rr < 2.45))
     moon = np.array(FIT["moons"][0]["position"])
     mx, my, _ = cam.project(moon)
     mr = FIT["moons"][0]["radius"] / np.linalg.norm(moon - cam.pos) / np.tan(np.radians(cam.vfov) / 2) * cam.h / 2
@@ -118,6 +157,12 @@ def terrain(close, fill, glow):
     a = scene(close, Image.LANCZOS, True)
     body |= ndi.gaussian_filter(a @ LW, 6) > 0.05
     body = ndi.binary_dilation(body, iterations=10)
+    calm = ndi.gaussian_filter(ndi.grey_opening(a @ LW, size=(9, 9)), 8)
+    far = ndi.distance_transform_edt(~body)
+    base = float(np.median(calm[far > 250]))
+    halo = (calm > 1.5 * base) & (far < 160)
+    print("halo share", float(halo.mean().round(4)), "base", round(base, 5))
+    body |= ndi.binary_dilation(halo, iterations=8)
     Image.fromarray((body * 255).astype(np.uint8)).resize((1408, 792)).save(WORK / "sky-terrain-mask.png")
     g = scene(glow, Image.BICUBIC) if glow else np.zeros_like(a)
     f = scene(fill, Image.LANCZOS, True)
