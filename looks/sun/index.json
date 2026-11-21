@@ -1,9 +1,65 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T17:35:59.668Z",
- "head": "471dbde13d1cf6163af9a74007fed6814ee23a95",
- "note": "sun round 3: review rise sheet and cover sheet on the final tree, hold sky card seam pass, last measures before READY",
+ "pushed": "2026-11-21T17:51:58.652Z",
+ "head": "4cd1880b5d94e64434acf953e3ed7ce2c515c0b3",
+ "note": "sun round 3 READY at 4cd1880: review rise and cover sheets, hold sky seam pass, measures green",
  "looks": [
+  {
+   "time": "2026-11-21T17:50:19.473Z",
+   "file": "20261121175019473-frame-chk-460.jpg",
+   "source": "out/work/sun/chk-460.png",
+   "kind": "frame",
+   "label": "sun.travel frame 460, draft tier",
+   "stop": "sun",
+   "segment": "sun.travel",
+   "frame": 460,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:49:49.561Z",
+   "file": "20261121174949561-frame-chk-360.jpg",
+   "source": "out/work/sun/chk-360.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:49:29.730Z",
+   "file": "20261121174929730-frame-chk-247.jpg",
+   "source": "out/work/sun/chk-247.png",
+   "kind": "frame",
+   "label": "sun.rise frame 247, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:48:24.268Z",
+   "file": "20261121174824268-frame-chk-90.jpg",
+   "source": "out/work/sun/chk-90.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T17:35:32.801Z",
    "file": "20261121173532801-note-i145-f247-final-right-x3.jpg",
@@ -111,56 +167,6 @@
    "kind": "note",
    "label": "rise 200 to 217 at draft, final path of round 3 (peak earlier and wider, no frame at the review sample cap)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:20:33.777Z",
-   "file": "20261121162033777-frame-f00220.jpg",
-   "source": "out/work/seq/198-236/f00220.png",
-   "kind": "frame",
-   "label": "sun.rise frame 220, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 220,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:05:55.415Z",
-   "file": "20261121160555415-note-i130-slow-b.jpg",
-   "source": "out/work/sun/i130-slow-b.jpg",
-   "kind": "note",
-   "label": "rise 218 to 235 at draft after engine batch 15",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:04:49.260Z",
-   "file": "20261121160449260-frame-f00444.jpg",
-   "source": "out/work/seq/444-456/f00444.png",
-   "kind": "frame",
-   "label": "sun.hold frame 444, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 444,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T13:57:55.954Z",
-   "file": "20261121135755954-frame-base90.jpg",
-   "source": "out/work/sun/base90.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
   }
  ]
 }
