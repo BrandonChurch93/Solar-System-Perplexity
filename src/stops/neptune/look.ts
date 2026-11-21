@@ -26,18 +26,19 @@ export const triton = {
 }
 
 export const ring = {
-  normal: [0.169, 0.983, 0.0785] as [number, number, number],
-  inner: 1.2,
-  outer: 1.85,
-  color: [0.5, 0.72, 1] as [number, number, number],
-  gain: 0.05,
+  normal: [0.1681, 0.9779, 0.1244] as [number, number, number],
+  centre: [0.0533, 0.0532, -0.4902] as [number, number, number],
+  inner: 1.28,
+  outer: 1.92,
+  color: [0.42, 0.7, 1] as [number, number, number],
+  gain: 0.02,
   forward: 2.5,
   forwardPower: 5,
-  sheet: [1.3, 1.72, 0.06, 0.35] as [number, number, number, number],
+  sheet: [1.42, 1.78, 0.08, 0.5] as [number, number, number, number],
   lines: [
-    [1.345, 0.006, 0.7], [1.39, 0.004, 0.45], [1.47, 0.008, 1], [1.505, 0.003, 0.5],
-    [1.56, 0.005, 0.6], [1.6, 0.007, 0.9], [1.66, 0.004, 0.4], [1.7, 0.003, 0.3],
+    [1.455, 0.006, 0.35], [1.497, 0.004, 0.6], [1.52, 0.005, 1], [1.543, 0.004, 0.7],
+    [1.575, 0.008, 0.45], [1.63, 0.012, 0.4], [1.7, 0.015, 0.3],
   ] as [number, number, number][],
-  clumps: 0.35,
+  clumps: 0.45,
   degPerSecond: 0.8,
 }

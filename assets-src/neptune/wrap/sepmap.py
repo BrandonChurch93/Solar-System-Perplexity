@@ -45,6 +45,10 @@ def main():
     deckc = np.array(cv_['deck'])
     shade = shade_of(ndl, deckc)
     sc = geo.decode(img).astype(np.float32)
+    limb = json.load(open(os.path.join(geo.ROOT, 'src/stops/neptune/haze.json')))['limb']
+    vs = limb['veilSun']
+    w = limb['veilAmount'] * (1 - separate.smoothstep(limb['veilMu'][0], limb['veilMu'][1], mu)) * separate.smoothstep(vs[0], vs[1], ndl) ** vs[2]
+    sc = np.maximum((sc - np.array(limb['veil'], np.float32) * w[..., None]) / (1 - w[..., None]), sc * 0.3).astype(np.float32)
     valid = (mu > 0.22) & (ndl > 0.06)
     alb = np.where(valid[..., None], sc / shade, curves.A0).astype(np.float32)
     del sc

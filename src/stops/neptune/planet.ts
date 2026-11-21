@@ -31,6 +31,10 @@ export interface LimbParams {
   darkFrom: number
   darkTo: number
   darkAim: [number, number, number]
+  veil: [number, number, number]
+  veilAmount: number
+  veilMu: [number, number]
+  veilSun: [number, number, number]
   forward: [number, number, number]
   forwardWidth: number
   forwardPower: number
@@ -123,6 +127,9 @@ uniform vec3 uRimDir;
 uniform vec3 uLimbDark;
 uniform vec2 uDarkEdge;
 uniform vec3 uDarkDir;
+uniform vec4 uVeil;
+uniform vec2 uVeilMu;
+uniform vec3 uVeilSun;
 uniform vec3 uForward;
 uniform vec2 uForwardShape;
 in vec3 vClip;
@@ -210,6 +217,7 @@ void main() {
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha) * uTint;
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
+  col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, ndl), uVeilSun.z));
   col *= 1.0 - uLimbDark.x * (1.0 - smoothstep(uLimbDark.y, uLimbDark.z, mu)) * smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
   col += uRim * exp(-mu / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
   col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
@@ -266,6 +274,7 @@ export class NeptunePlanet {
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
+        uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
