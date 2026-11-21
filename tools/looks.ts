@@ -62,7 +62,7 @@ if (a.add) {
   console.log('pushed ' + chosen.length + ' looks to ' + branch(folder) + ' (' + commit.slice(0, 8) + '):')
   for (const l of chosen) console.log('  ' + age(l.time) + '  ' + l.label)
 } else if (a.fetch) {
-  const folders = a.folders ? a.folders.split(',') : [...cfg.stops, 'belt', 'posts']
+  const folders = a.folders ? a.folders.split(',') : [...cfg.stops, 'belt', 'posts', 'travel']
   for (const folder of folders) {
     const remote = 'refs/remotes/origin/' + branch(folder)
     if (tryGit(['fetch', '-q', '--depth', '1', 'origin', '+refs/heads/' + branch(folder) + ':' + remote]) === null) continue
