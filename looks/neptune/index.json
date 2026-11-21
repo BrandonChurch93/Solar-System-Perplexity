@@ -1,28 +1,44 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T04:38:28.711Z",
- "head": "cd7400902a6d7d68a40f8c05a042e2dd15c710d2",
- "note": "orbit view: limb field, ring map from the hero, new Triton map",
+ "pushed": "2026-11-21T05:02:22.638Z",
+ "head": "e70a6c720038846b8b6b0651f8406e853e452054",
+ "note": "neptune orbit view: limb edge, twilight cirrus, ring strands, Triton colour; engine batch 3 merged",
  "looks": [
   {
-   "time": "2026-11-21T04:38:28.163Z",
-   "file": "20261121043828163-note-ring-both.jpg",
-   "source": "out/work/nep/ring-both.jpg",
+   "time": "2026-11-21T05:02:20.560Z",
+   "file": "20261121050220560-note-cmp-C.jpg",
+   "source": "out/work/nep/cmp-C.jpg",
    "kind": "note",
-   "label": "ring, approved left, film right, brightened",
+   "label": "neptune hold, lit limb crop: approved left, film right (review tier)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T04:38:27.648Z",
-   "file": "20261121043827648-note-triton-cmp.jpg",
+   "time": "2026-11-21T05:02:20.053Z",
+   "file": "20261121050220053-note-cmp-H.jpg",
+   "source": "out/work/nep/cmp-H.jpg",
+   "kind": "note",
+   "label": "neptune hold, right limb and ring crop: approved left, film right (review tier)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T05:02:19.551Z",
+   "file": "20261121050219551-note-triton-cmp.jpg",
    "source": "out/work/nep/triton-cmp.jpg",
    "kind": "note",
-   "label": "Triton, approved left, film right, 4x",
+   "label": "neptune hold, Triton crop: approved left, film right (review tier)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T04:38:25.214Z",
-   "file": "20261121043825214-compare-compare-neptune-hold-view.jpg",
+   "time": "2026-11-21T05:02:19.045Z",
+   "file": "20261121050219045-note-cmp-I.jpg",
+   "source": "out/work/nep/cmp-I.jpg",
+   "kind": "note",
+   "label": "neptune hold, twilight zone crop: approved left, film right (review tier)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T05:01:58.009Z",
+   "file": "20261121050158009-compare-compare-neptune-hold-view.jpg",
    "source": "out/work/compare/compare-neptune-hold-view.jpg",
    "kind": "compare",
    "label": "neptune.hold: approved image left, film frame right, draft tier",
@@ -32,11 +48,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
+   "engine": "e44fa21a5a599a98"
   },
   {
-   "time": "2026-11-21T04:38:24.112Z",
-   "file": "20261121043824112-still-f04605-16x9-draft-full.jpg",
+   "time": "2026-11-21T05:01:56.918Z",
+   "file": "20261121050156918-still-f04605-16x9-draft-full.jpg",
    "source": "out/work/stills/f04605-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, draft tier",
@@ -46,30 +62,14 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
+   "engine": "e44fa21a5a599a98"
   },
   {
-   "time": "2026-11-21T04:16:32.458Z",
-   "file": "20261121041632458-note-patch-view.jpg",
-   "source": "out/work/nep/sky/patch-view.jpg",
+   "time": "2026-11-21T04:38:28.163Z",
+   "file": "20261121043828163-note-ring-both.jpg",
+   "source": "out/work/nep/ring-both.jpg",
    "kind": "note",
-   "label": "hold sky patch with mirrored sunless margin (brightened)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T04:16:31.899Z",
-   "file": "20261121041631899-note-ratio.jpg",
-   "source": "out/work/nep/ratio.jpg",
-   "kind": "note",
-   "label": "film over hero brightness map, red = film brighter (limb terms in work)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T03:54:51.974Z",
-   "file": "20261121035451974-note-ringfit3-off.jpg",
-   "source": "out/work/nep/ringfit3-off.jpg",
-   "kind": "note",
-   "label": "Ring fit on the approved hero (brightened six times): one strand, normal, radius and centre fitted",
+   "label": "ring, approved left, film right, brightened",
    "stop": "neptune"
   },
   {
