@@ -1,22 +1,30 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T04:01:13.338Z",
- "head": "e788d76aaaad8126b711f23f7e918348ebd7e607",
- "note": "belt: review sheet of mars.travel, web set check, near rock retilted",
+ "pushed": "2026-11-21T04:06:19.193Z",
+ "head": "d71d18647dfa96128549957b58abe8571030196b",
+ "note": "motion edge check at native size, milestone commit, review sheet next",
  "looks": [
   {
-   "time": "2026-11-21T04:00:46.890Z",
-   "file": "20261121040046890-frame-d2782.jpg",
-   "source": "out/work/belt/d2782.png",
+   "time": "2026-11-21T04:06:12.556Z",
+   "file": "20261121040612556-note-strip.jpg",
+   "source": "out/work/belt/s2/strip.jpg",
+   "kind": "note",
+   "label": "draft strip 2772 2782 2796, aperture 250, detail 0.9, motion edge check",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T04:04:35.977Z",
+   "file": "20261121040435977-frame-2796.jpg",
+   "source": "out/work/belt/s2/2796.png",
    "kind": "frame",
-   "label": "mars.travel frame 2782, draft tier",
+   "label": "mars.travel frame 2796, draft tier",
    "stop": "mars",
    "segment": "mars.travel",
-   "frame": 2782,
+   "frame": 2796,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "72a09f191cff3774"
+   "engine": "6461e0c529238628"
   },
   {
    "time": "2026-11-21T03:59:30.651Z",
@@ -71,14 +79,6 @@
    "source": "out/work/belt/bake/take2/view-a.png",
    "kind": "note",
    "label": "belt rock a, bake take 2, offline preview of the baked maps",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T03:20:52.884Z",
-   "file": "20261121032052884-note-view-d.jpg",
-   "source": "out/work/belt/bake/take2/view-d.png",
-   "kind": "note",
-   "label": "belt rock d, bake take 2, offline preview of the baked maps (three views)",
    "stop": "mars"
   }
  ]
