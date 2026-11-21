@@ -154,3 +154,28 @@ describe('gradient scale under motion', () => {
     expect(covered).toBeGreaterThan(0)
   })
 })
+
+describe('what a cover hides', () => {
+  it('is all of its amount by default and the share a stop sets', () => {
+    const f = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
+    let n = 0
+    for (let i = f.firstFrame; i < f.endFrame; i++) {
+      const [a, b, c] = ends(i)
+      if (!(b.cover.amount > 0.2 && b.cover.amount < 1)) continue
+      n++
+      expect(b.cover.hides).toBeUndefined()
+      const raw = rawMotion(a, b, c)
+      expect(seenShare(b)).toBe(Math.max(1 - b.cover.amount, 0))
+      expect(shutterMotion(a, b, c)).toBe(raw * Math.max(1 - b.cover.amount, 0))
+      const half: Shot = { ...b, cover: { ...b.cover, hides: 0.5 } }
+      expect(seenShare(half)).toBeCloseTo(1 - b.cover.amount * 0.5, 12)
+      expect(shutterMotion(a, half, c)).toBeCloseTo(raw * (1 - b.cover.amount * 0.5), 9)
+      const none: Shot = { ...b, cover: { ...b.cover, hides: 0 } }
+      expect(shutterMotion(a, none, c)).toBe(raw)
+      const all: Shot = { ...b, cover: { ...b.cover, hides: 1 } }
+      expect(shutterMotion(a, all, c)).toBe(shutterMotion(a, b, c))
+    }
+    expect(n).toBeGreaterThan(0)
+    for (const p of plans) expect(p.p.coverHides).toBeUndefined()
+  })
+})
