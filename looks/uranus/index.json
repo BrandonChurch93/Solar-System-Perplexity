@@ -1,9 +1,55 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T05:27:04.363Z",
- "head": "2fd342b58cec9926cf19648d84b8172d48461755",
- "note": "terrain view: first render of the 3D haze deck with forward motion; apron and rings next",
+ "pushed": "2026-11-21T05:41:16.702Z",
+ "head": "6ac56bdff4661e2d9df358e4589778624d891a94",
+ "note": "terrain rings in 3D, plate take 3 kept, next: wide plate on the deck, sky patch, cover",
  "looks": [
+  {
+   "time": "2026-11-21T05:41:16.153Z",
+   "file": "20261121054116153-note-terrain-pair.jpg",
+   "source": "out/work/u/t/terrain-pair.jpg",
+   "kind": "note",
+   "label": "terrain frame 4290 review (bottom) under the close image (top), rings wired, no terrain sky patch yet",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:41:15.484Z",
+   "file": "20261121054115484-note-terrain-rings-crop.jpg",
+   "source": "out/work/u/t/terrain-rings-crop.png",
+   "kind": "note",
+   "label": "terrain rings as true 3D lines (right) beside the close image (left), frame 4290 review, before width fix",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:37:30.461Z",
+   "file": "20261121053730461-frame-terrain-review.jpg",
+   "source": "out/work/u/t/terrain-review.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, review tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T05:33:44.466Z",
+   "file": "20261121053344466-note-ring-unwrap.jpg",
+   "source": "out/work/u/t/ring-unwrap.jpg",
+   "kind": "note",
+   "label": "terrain rings: close image unwrapped in the fitted 3D ring plane (lines to trace)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:33:43.824Z",
+   "file": "20261121053343824-note-take3-v.jpg",
+   "source": "out/work/u/t/plate/take3-v.jpg",
+   "kind": "note",
+   "label": "terrain plate, take 3 (kept): the close image extended on the left, right and below for the aprons of the haze deck",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-21T05:27:03.749Z",
    "file": "20261121052703749-note-albedo-v.jpg",
@@ -11,28 +57,6 @@
    "kind": "note",
    "label": "terrain: close image divided by the fitted light table (albedo for the deck)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:27:03.202Z",
-   "file": "20261121052703202-note-t-firstlast.jpg",
-   "source": "out/work/u/t/t-firstlast.jpg",
-   "kind": "note",
-   "label": "terrain first render, frames 4200 and 4379 at draft: 3D haze deck, forward move, apron and light extrapolation still wrong",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:24:31.891Z",
-   "file": "20261121052431891-frame-t-4379.jpg",
-   "source": "out/work/u/t/t-4379.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4379, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4379,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
   },
   {
    "time": "2026-11-21T05:24:01.298Z",
@@ -47,36 +71,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:24:00.214Z",
-   "file": "20261121052400214-still-f04290-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04290-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.terrain frame 4290, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:05:09.176Z",
-   "file": "20261121050509176-note-fit-horizon.jpg",
-   "source": "out/work/u/t/fit-horizon.jpg",
-   "kind": "note",
-   "label": "terrain: horizon fit on the close image",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:05:08.665Z",
-   "file": "20261121050508665-note-cmp-limb-night.jpg",
-   "source": "out/work/u/cmp-limb-night.jpg",
-   "kind": "note",
-   "label": "hold final, hero left film right: limb-night",
-   "stop": "uranus"
   },
   {
    "time": "2026-11-21T05:03:55.327Z",
