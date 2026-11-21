@@ -1,0 +1,70 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 994-1014, rise out to the globe",
+   "what": "the departing globe does not match the place the camera left: the grey terrain at 994 pops to a warm brown, blue-flecked crater field at 1000, the sun vanishes, and from 1014 the globe is lit from the upper left with its dark limb lower right, while the hold had the sun at upper right lighting the right limb",
+   "fix": "keep one sun direction and one surface albedo/grade through the rise; pull back along the reverse of the dive path so the same lit hemisphere and the sun stay in frame"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 722-743, dive cover",
+   "what": "the cover is not one move: the sun jumps from upper right (722-730) to top centre on the horizon (739+), the warm tan/blue globe colour becomes neutral grey terrain, and the limb curvature changes abruptly from 739 to 743",
+   "fix": "match sun azimuth, horizon curvature and colour grade between the orbital and terrain cameras, and blend over the cover rather than cutting at 739"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 741-743, arrival in terrain",
+   "what": "heavy motion blur through 742 stops dead at 743; the camera goes from high speed to almost still in one frame, so it has no mass",
+   "fix": "ease out the dive over 15-30 frames so speed and blur fall off gradually into the terrain hold"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 991-993, start of rise",
+   "what": "the camera is nearly still at 991 and then fully blurred at 992-993; there is no ease-in on the departure",
+   "fix": "ramp speed up over several frames before the cover, with blur growing in step"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frame 730, globe surface",
+   "what": "the zoom blur smears the crater texture into radial streaks of repeated crater copies, which reads as a stretched texture, not a smooth blur",
+   "fix": "use more motion-blur samples, or a higher-resolution surface map at close range so the blur integrates smoothly"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 780-959, whole terrain segment",
+   "what": "the camera hardly travels, and near ground and horizon shift together with little parallax, so the view reads as a flat slow pan instead of flight over relief",
+   "fix": "add forward or lateral translation at low altitude so the foreground craters sweep past faster than the horizon"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 743-750 to sheet-04 frame 780, sun at the horizon",
+   "what": "the star-burst flare at 743-779 has collapsed to a dim glow by 780 without the camera or sun moving appreciably, so the exposure changes",
+   "fix": "keep the flare intensity tied to how much of the sun disc shows above the horizon, and change it smoothly"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "inside the large crater shadow, frames 743-750 and on",
+   "what": "small bright dash-shaped specks sit in the black crater floor and shimmer from frame to frame",
+   "fix": "clamp or filter specular fireflies in shadowed terrain, or increase the number of samples"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 1014-1034, end hold",
+   "what": "the background turns almost pure black with few stars, so the end does not match the star field in the opening hold",
+   "fix": "use the same star layer and exposure as the opening hold"
+  }
+ ]
+}
