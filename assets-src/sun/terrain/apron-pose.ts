@@ -14,5 +14,6 @@ writeFileSync('src/stops/sun/apron.json', JSON.stringify({
   top: 0.5,
   near: [3.0, 3.6],
   feather: 0.04,
+  front: { side: 0.67, centre: 0.79, at: 0.5237, span: [0.16, 0.34], feather: 0.03 },
 }, null, 2) + '\n')
 console.log('src/stops/sun/apron.json')

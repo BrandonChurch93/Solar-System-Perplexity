@@ -1,7 +1,7 @@
 import json, sys
 import numpy as np
 import cv2
-from common import WORK, APPROVED, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, read, write, step
+from common import WORK, APPROVED, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, read, write, step
 
 DIR = f'{WORK}/detail'
 NATIVE = (2816, 1584)
@@ -14,8 +14,15 @@ CORNER = ((0.60, 1.0), (0.655, 0.83), (0.74, 0.735), (0.86, 0.69), (1.0, 0.67), 
 WIDEN = 90
 EDGE = 48
 FLOOR = 0.02
-PEAK = (40, 1.9, 0.7)
+PEAK = (72, 0.75)
+HUE = (48, 1.5)
 CROP = 640
+APRON_OUT = (5504, 1548)
+APRON_CROP = 688
+APRON_FIT = (0.46, 0.8, 0.2, 0.8)
+APRON_TONE = 420
+APRON_PEAK = (96, 0.75)
+APRON_SKY = (0.02, 0.1)
 
 
 def band(a, lo, hi):
@@ -93,7 +100,7 @@ def compose(out_full, out_web, check):
     del up
     b = base.astype(np.float32) / 255
     del base
-    back = np.linalg.inv(a)[:2]
+    back = a[:2]
     wn = weight()
     w = cv2.warpAffine(wn, back, (pw, ph), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
     cn = cv2.GaussianBlur(cv2.dilate(corner(*NATIVE), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (WIDEN, WIDEN))), (0, 0), WIDEN / 3)
@@ -117,10 +124,34 @@ def compose(out_full, out_web, check):
             out += take * ratio * part[..., None]
         del ratio
     del take
-    top = cv2.dilate(low(b, PEAK[0]), np.ones((3, 3), np.uint8)) * PEAK[1]
-    over = np.maximum(out - top, 0)
-    out -= over * PEAK[2]
-    del over, top
+    q = 4
+    small = cv2.resize(b, (pw // q, ph // q), interpolation=cv2.INTER_AREA)
+    top = cv2.dilate(small, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (PEAK[0] // q, PEAK[0] // q)))
+    top = cv2.resize(cv2.GaussianBlur(top, (0, 0), PEAK[0] / q / 3), (pw, ph), interpolation=cv2.INTER_LINEAR)
+    out -= np.maximum(out - top, 0) * PEAK[1]
+    del top, small
+    np.clip(out, 0, 1, out=out)
+    ref = b[int(oy + k * NATIVE[1] * 0.5):int(oy + k * NATIVE[1]):3, int(ox):int(ox + k * NATIVE[0]):3].reshape(-1, 3)
+    bins = np.linspace(0, 1, HUE[0] + 1)
+    mid = (bins[:-1] + bins[1:]) / 2
+    idx = np.clip(np.digitize(ref[:, 0], bins) - 1, 0, HUE[0] - 1)
+    red = out[..., 0]
+    for ch in (1, 2):
+        lo_, hi_ = np.zeros(HUE[0]), np.zeros(HUE[0])
+        for i in range(HUE[0]):
+            sel = ref[idx == i]
+            if len(sel) > 200:
+                rr = sel[:, ch] / np.maximum(sel[:, 0], 1e-3)
+                lo_[i], hi_[i] = np.percentile(rr, HUE[1]), np.percentile(rr, 100 - HUE[1])
+            else:
+                lo_[i], hi_[i] = np.nan, np.nan
+        ok = ~np.isnan(lo_)
+        lo_ = np.interp(mid, mid[ok], lo_[ok])
+        hi_ = np.interp(mid, mid[ok], hi_[ok])
+        before = out[..., ch].copy()
+        out[..., ch] = np.clip(out[..., ch], red * np.interp(red, mid, lo_).astype(np.float32), red * np.interp(red, mid, hi_).astype(np.float32))
+        print('hue clamp channel', ch, 'share of the changed area moved by more than 2 levels', round(float((np.abs(out[..., ch] - before)[w > 0.5] > 2 / 255).mean()), 4))
+        del before
     res = b + (np.clip(out, 0, 1) - b) * w[..., None]
     del out
     write(out_full, res, 92)
@@ -131,6 +162,125 @@ def compose(out_full, out_web, check):
     print('changed share of the plate', round(float((w > 0.01).mean()), 3), 'mean before', (b[w > 0.5].mean(0) * 255).round(2).tolist(), 'after', (res[w > 0.5].mean(0) * 255).round(2).tolist())
 
 
+def front():
+    from field import A, CENTRE, RADIUS, quat
+    w, h = 1920, 1080
+    eye = np.array(A['position'], dtype=np.float64)
+    q = A['quaternion']
+    X, Y = np.meshgrid((np.arange(w) + 0.5) / w, (np.arange(h) + 0.5) / h)
+    d = np.stack([(X - 0.5) * 2 * TX, (0.5 - Y) * 2 * TY, -np.ones_like(X)], -1).reshape(-1, 3)
+    u = np.array(q[:3])
+    d = d + 2 * np.cross(u, np.cross(u, d) + q[3] * d)
+    d /= np.linalg.norm(d, axis=1, keepdims=True)
+    oc = eye - CENTRE
+    b = d @ oc
+    disc = b * b - (oc @ oc - RADIUS * RADIUS)
+    hit = disc > 0
+    t = -b - np.sqrt(np.maximum(disc, 0))
+    p = eye + d * t[:, None]
+    z = np.maximum(-p[:, 2], 1e-3)
+    ax = (p[:, 0] / z / (2 * TX) + 0.5).reshape(h, w)
+    ay = (0.5 - p[:, 1] / z / (2 * TY)).reshape(h, w)
+    f = A['front']
+    line = f['side'] + (f['centre'] - f['side']) * (1 - step(np.abs(ax - f['at']), f['span'][0], f['span'][1]))
+    return ax.astype(np.float32), ay.astype(np.float32), line.astype(np.float32), hit.reshape(h, w), f
+
+
+def apron_grey(base):
+    ax, ay, line, hit, f = front()
+    img = read(base)
+    grey = hit & (ay > line)
+    out = img.copy()
+    out[grey] = 128
+    write(f'{DIR}/apron-base.png', img)
+    write(f'{DIR}/apron-input.png', out)
+    write(f'{DIR}/apron-grey.png', np.repeat((grey * 255).astype(np.uint8)[..., None], 3, -1))
+    ys = np.where(grey.any(1))[0]
+    inside = (ax > 0) & (ax < 1) & (ay > 0) & (ay < 1)
+    cols = np.where(inside.any(0))[0]
+    rows = np.where(inside.any(1))[0]
+    print('grey share', round(float(grey.mean()), 3), 'first grey row', int(ys.min()), 'approved frame in this picture: columns', int(cols.min()), int(cols.max()), 'rows', int(rows.min()), int(rows.max()))
+
+
+def apron_place(take):
+    base = read(f'{DIR}/apron-base.png')
+    h, w = base.shape[:2]
+    new = cv2.resize(read(take), (w, h), interpolation=cv2.INTER_AREA)
+    k = 2
+    small = lambda a: cv2.resize(cv2.cvtColor(a, cv2.COLOR_RGB2GRAY), (w // k, h // k), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+    keep = np.zeros((h // k, w // k), np.uint8)
+    keep[int(APRON_FIT[0] * h / k):int(APRON_FIT[1] * h / k), int(APRON_FIT[2] * w / k):int(APRON_FIT[3] * w / k)] = 255
+    warp = np.eye(2, 3, dtype=np.float32)
+    cc, warp = cv2.findTransformECC(small(base), small(new), warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 400, 1e-7), keep, 5)
+    warp[:, 2] *= k
+    moved = cv2.warpAffine(new, warp, (w, h), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT_101)
+    a = cv2.cvtColor(base, cv2.COLOR_RGB2GRAY)
+    b = cv2.cvtColor(moved, cv2.COLOR_RGB2GRAY)
+    r = agree(a, b, 2, 8, 30)
+    rows = [(0.5, 0.62), (0.62, 0.8), (0.8, 1.0)]
+    out = [[round(float(r[int(v0 * h):int(v1 * h), i * w // 5:(i + 1) * w // 5].mean()), 2) for i in range(5)] for v0, v1 in rows]
+    write(f'{DIR}/apron-moved.png', moved)
+    json.dump({'take': take, 'matrix': warp.tolist(), 'cc': float(cc), 'agreement': out}, open(f'{DIR}/apron-place.json', 'w'), indent=1)
+    a0 = read(take)
+    write(f'{DIR}/apron-take-low.png', a0[APRON_CROP:])
+    print('cc', round(float(cc), 4), 'matrix', warp.round(5).tolist(), 'band agreement 2 to 8 px, rows', rows, 'in five columns', out)
+
+
+def apron_build(out_full, out_web, check):
+    base = read(f'{DIR}/apron-base.png')
+    h, w = base.shape[:2]
+    info = json.load(open(f'{DIR}/apron-place.json'))
+    tw, th = cv2.imread(info['take']).shape[1::-1]
+    up = read(f'{DIR}/apron-take-low-x2.png')
+    ow, oh = APRON_OUT
+    s = ow / w
+    a = np.array([[1 / s, 0, 0.5 / s - 0.5], [0, 1 / s, 0.5 / s - 0.5 + h * 0.5], [0, 0, 1]])
+    m = np.vstack([np.array(info['matrix'], dtype=np.float64), [0, 0, 1]])
+    sx, sy = up.shape[1] / w, (up.shape[0] + 2 * APRON_CROP) / h
+    u = np.array([[sx, 0, 0.5 * sx - 0.5], [0, sy, 0.5 * sy - 0.5 - 2 * APRON_CROP], [0, 0, 1]])
+    full = (u @ m @ a)[:2]
+    print('apron px a take px', round(float(1 / full[0, 0]), 4), round(float(1 / full[1, 1]), 4), 'take size', tw, th)
+    take = cv2.warpAffine(up, full, (ow, oh), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT_101).astype(np.float32) / 255
+    del up
+    b = cv2.warpAffine(base, a[:2], (ow, oh), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE).astype(np.float32) / 255
+
+    def low(x, sig):
+        q = 8
+        small = cv2.resize(x, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
+        return cv2.resize(cv2.GaussianBlur(small, (0, 0), sig / q), (ow, oh), interpolation=cv2.INTER_CUBIC)
+
+    out = take * (low(b, APRON_TONE) + FLOOR) / (low(take, APRON_TONE) + FLOOR)
+    q = 4
+    small = cv2.resize(b, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
+    top = cv2.dilate(small, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (APRON_PEAK[0] // q, APRON_PEAK[0] // q)))
+    top = cv2.resize(cv2.GaussianBlur(top, (0, 0), APRON_PEAK[0] / q / 3), (ow, oh), interpolation=cv2.INTER_LINEAR)
+    out -= np.maximum(out - top, 0) * APRON_PEAK[1]
+    del top, small
+    np.clip(out, 0, 1, out=out)
+    ref = b[int(0.12 * oh)::3, ::3].reshape(-1, 3)
+    bins = np.linspace(0, 1, HUE[0] + 1)
+    mid = (bins[:-1] + bins[1:]) / 2
+    idx = np.clip(np.digitize(ref[:, 0], bins) - 1, 0, HUE[0] - 1)
+    red = out[..., 0]
+    for ch in (1, 2):
+        lo_, hi_ = np.full(HUE[0], np.nan), np.full(HUE[0], np.nan)
+        for i in range(HUE[0]):
+            sel = ref[idx == i]
+            if len(sel) > 200:
+                rr = sel[:, ch] / np.maximum(sel[:, 0], 1e-3)
+                lo_[i], hi_[i] = np.percentile(rr, HUE[1]), np.percentile(rr, 100 - HUE[1])
+        ok = ~np.isnan(lo_)
+        lo_ = np.interp(mid, mid[ok], lo_[ok])
+        hi_ = np.interp(mid, mid[ok], hi_[ok])
+        out[..., ch] = np.clip(out[..., ch], red * np.interp(red, mid, lo_).astype(np.float32), red * np.interp(red, mid, hi_).astype(np.float32))
+    sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
+    res = b + (out - b) * sky
+    write(out_full, res, 92)
+    write(out_web, cv2.resize(res, (ow // 2, oh // 2), interpolation=cv2.INTER_AREA), 88)
+    write(check, np.concatenate([cv2.resize(b, (w, h // 2), interpolation=cv2.INTER_AREA), cv2.resize(res, (w, h // 2), interpolation=cv2.INTER_AREA)], 0), 92)
+    print('mean before', (b[oh // 4:].mean((0, 1)) * 255).round(2).tolist(), 'after', (res[oh // 4:].mean((0, 1)) * 255).round(2).tolist())
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1]
     if cmd == 'place':
@@ -139,3 +289,9 @@ if __name__ == '__main__':
         crop(sys.argv[2])
     if cmd == 'compose':
         compose(*sys.argv[2:5])
+    if cmd == 'apron-grey':
+        apron_grey(sys.argv[2])
+    if cmd == 'apron-place':
+        apron_place(sys.argv[2])
+    if cmd == 'apron-build':
+        apron_build(*sys.argv[2:5])
