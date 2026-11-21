@@ -1,0 +1,16 @@
+tier final: samples of the film 189360 before, 190349 after, frames raised 42 of 5400
+  terrain: frames 1620, raised 0, samples 25920 before, 25920 after
+  rise: frames 690, raised 33, samples 44160 before, 44727 after
+  hold: frames 1380, raised 0, samples 22080 before, 22080 after
+  travel: frames 615, raised 0, samples 39360 before, 39360 after
+  dive: frames 720, raised 9, samples 46080 before, 46502 after
+  retreat: frames 120, raised 0, samples 7680 before, 7680 after
+  lookback: frames 180, raised 0, samples 2880 before, 2880 after
+  fade: frames 75, raised 0, samples 1200 before, 1200 after
+  mercury.dive 738 to 743: 85 128 128 128 128 128
+  mercury.rise 990 to 1000: 100 101 98 95 92 87 83 78 73 69 65
+  earth.rise 2136 to 2139: 75 83 81 72
+  jupiter.dive 3019 to 3021: 82 103 88
+  jupiter.rise 3275 to 3281: 74 92 100 93 80 71 67
+  uranus.rise 4416 to 4418: 68 74 71
+  neptune.rise 4983 to 4990: 68 75 80 93 90 86 77 68
