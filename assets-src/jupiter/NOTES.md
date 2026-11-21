@@ -147,10 +147,32 @@ Dive and rise
 - Predictor with these moves and the built patches: no frame over 0.02 soft outside the cover, lowest min 1.26 texels per pixel (3011 and 3278). Env `DIVE`, `RISE`, `TERRAIN` (JSON) override plan values in the predictor.
 - `out/work/jupiter/tools/try.ts` and `tryrise.ts` print horizon, lens, altitude and camera space velocity per frame.
 
+## Dive and rise: first pictures (06:45 to 07:00 UTC)
+
+- Strips `out/work/view/strip_dive2.jpg`, `strip_rise2.jpg` (draft): the dive swoops in, Io and its shadow cross, cover gathers 3019 to 3023, 3023 and 3024 match in tone and direction; the way out fogs from 3262, 3269 and 3270 match, the globe clears by 3277, veil to 3283.
+- Texels view (draft, 1920 x 1080): 3011 soft share 0, min 1.26; 3015 soft 0, min 1.24; 3278 soft 0, min 1.24.
+- Found on the way out (3255, 3262): a streaked slab above the horizon top left. Cause: the sky patch below the horizon held reflected cloud where the mirrored sample fell outside the picture (cv2 BORDER_REFLECT), exposed when the camera climbs and the horizon drops. Fixed in `relief/canvas.py` (row reflection about the valid part, median sky far below), `sky-terrain.webp` and the deck textures rebuilt; the same garbage had made a small black notch in the deck at the picture's top left corner, gone too. Judged frame 3150 unchanged by eye (draft compare).
+- Main 45d1651 (engine batch 6) merged at b3ad07e. `npx tsx assets-src/travel/probe.ts`: jupiter.travel join in turn 0.005 to 0.007 deg per frame, speed 7.96e-2 to 8.00e-2; mars.travel join out (into my hold) turn 0.041 to 0.041, speed 9.56e-2 to 9.51e-2.
+- Rise view: `azimuthDeg -44` gave phase 21 deg (flat, nearly full disc). `out/work/jupiter/tools/risevar.ts` (env `RISE` JSON, builds its own StopPlan) prints phase, disc centre and axis per frame; `phase.ts` lists phase by azimuth. Trying `azimuthDeg 44` (phase 93 deg, Sun from the top of the frame, half lit); predictor lowest min 1.16 at 3283, no soft frame. The predictor's `RISE` override does not move the end pose (it is set in the constructor): edit `plan.ts` instead.
+
+## Rise view and terrain speed (07:00 UTC)
+
+- Rise `azimuthDeg 44` kept (`strip_rise3.jpg`): the storm upright, Io in front with its shadow drawn out toward the terminator, the lower half in night. Judged rise frame 3296 is this view.
+- Terrain speed: the old values (`gather 0.6, forward 0.95, rise 0.37`) started the view at 0.0021 units per frame forward (hover) and ended at 0.0083. Mars uses `gather 0.22, rise 0.06`. The apron limits backing up to about 0.41 units (canvas x -1408, y 2376; a lower camera needs more bottom apron, so less climb allows more backing). Now `gather 0.35, forward 1.05, rise 0.12`: 0.0038 at 3060, 0.0058 at 3150, 0.0078 at 3239; footprint at the start x -1216, y 2288 (see the next section for the entry). The judged frame is u 0 and does not move.
+- Handover numbers now: orbit 3023 horizon normal 77.8 deg, offset -0.391, vfov 62.3; terrain 3024 72.6 deg, -0.362, 64. Terrain 3269 73.2 deg, -0.274; orbit 3270 72.9 deg, -0.219.
+
+## Entry: canvas edge in frame, found and fixed (07:10 UTC)
+
+- `strip_entry.jpg` with `side 0.114, entryBack 0.2`: the left canvas edge was in frame bottom left from 3024 to 3055 (a black wedge with stars, up to 97 px at draft). `relief/predict.py` missed it: its entry rows hold the base pose at the segment start, but the base path keeps running backward before 3060 (lin below -0.5), so the camera is further back than the predictor says.
+- New tool `npx tsx assets-src/jupiter/relief/edge.ts` (env `TERRAIN` JSON override, `FR` like `3024-3060:2,3060-3239:20`): projects the real mesh border (with relief, `deck-dist.bin`) through the real director poses and prints how far the border reaches into the frame, per frame. Use this, not predict.py, for entry and exit.
+- Fix: `side -0.24` (the camera starts right of the judged pose and drifts left toward the storm; the right apron had 960 px spare, the left 190) and `entryBack 0.1`. edge.ts: no border vertex in frame on any frame 3024 to 3269.
+- Texels view at the old values: 3060 soft 0, min 1.29; 3239 soft 0, min 1.50.
+
 ## Next
 
-- Cover: view the strips (`/tmp/strip.sh NAME frames...` writes `out/work/view/strip_NAME.jpg`), tune veil, fog and `cover*` colors so color and exposure carry across; exit pose (`exitHeight 2.6, exitForward 1.2, exitPitchDeg 9` are stand-ins) and the dark corner bottom left at 3024 to 3028 (deck edge in view at the entry pose).
-- Verify G13 with the texels view at 3010, 3013, 3015, 3278, 3282, 3288, then `npm run measure -- --stop jupiter`.
+- Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
+- Entry frames 3024 to 3030: look for the dark deck edge bottom left; exit pose values are still the first guess but the strips show no edge.
+- `npm run measure -- --stop jupiter` (long: every frame of four segments; `--only G13 --every 6` for a first pass).
 - Check in motion: storm rotation, vortices, wisps, lightning (`--diag flow`), shells fade with altitude, rise far side, poles, terminator, travel and FarPoint.
 - Milestone message dive and rise, commit the patch binaries once.
 - Self check: measure, compare final, sheets, crops, budget (alone, more than 8 min), gates `npm run -s gate -- --phase 4 --only G11` and `--only G12,G15 --g15-stops mars,jupiter`. Then READY (build and tests green on main merged, stand-ins removed, looks pushed).
