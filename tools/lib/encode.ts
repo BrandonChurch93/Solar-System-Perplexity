@@ -98,7 +98,14 @@ export function concatCopy(files: string[], dst: string, faststart: boolean): vo
   if (files.length === 0) throw new Error('nothing to join')
   mkdirSync(dirname(dst), { recursive: true })
   const list = dst + '.list.txt'
-  writeFileSync(list, files.map((f) => "file '" + f.replace(/'/g, "'\\''") + "'").join('\n') + '\n')
+  const span = (f: string): string => {
+    const r = spawnSync(FFPROBE, ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=nb_frames,r_frame_rate', '-of', 'json', f], { encoding: 'utf8' })
+    const st = r.status === 0 ? (JSON.parse(r.stdout) as { streams: { nb_frames?: string; r_frame_rate?: string }[] }).streams[0] : undefined
+    const [num, den] = (st?.r_frame_rate ?? '').split('/').map(Number)
+    const frames = Number(st?.nb_frames)
+    return frames > 0 && num! > 0 && den! > 0 ? '\nduration ' + (frames * den! / num!).toFixed(6) : ''
+  }
+  writeFileSync(list, files.map((f) => "file '" + f.replace(/'/g, "'\\''") + "'" + span(f)).join('\n') + '\n')
   const tmp = dst + '.tmp.mp4'
   runFf(['-y', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-map', '0:v:0', ...(faststart ? ['-movflags', '+faststart'] : []), tmp], 'join')
   rmSync(list)
