@@ -107,5 +107,6 @@ export const dissolve = {
   corona: [0.1, 0.8] as [number, number],
   match: [0.6, 2] as [number, number],
   tint: [0.77, 0.69, 0.65] as [number, number, number],
+  calm: { knee: [0.8, 0.5, 0.22] as [number, number, number], press: 0.85 },
   glow: 0.5,
 }

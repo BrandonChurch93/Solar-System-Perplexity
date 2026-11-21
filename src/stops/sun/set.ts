@@ -62,6 +62,7 @@ export const createSet: SetFactory = async (ctx) => {
   const spark = new THREE.Vector3()
   const tint = new THREE.Vector3()
   const tint2 = new THREE.Vector3().fromArray(look.dissolve.tint)
+  const calm = new THREE.Vector4()
   const d = look.dissolve
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
 
@@ -114,7 +115,7 @@ export const createSet: SetFactory = async (ctx) => {
       const glow = share(x, d.corona)
       const match = 1 - share(x, d.match)
       const dim = 1 + (d.glow - 1) * match
-      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match))
+      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match))
       corona.update(world.position, state.rotation, elapsed, gain * state.weight * dim, vignette, aspect, look.corona, glow)
       prominences.update(elapsed, spin, gain * state.weight * dim, vignette, aspect, glow)
       const distance = world.position.length()
