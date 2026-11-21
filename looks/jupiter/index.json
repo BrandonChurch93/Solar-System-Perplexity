@@ -1,9 +1,23 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T22:50:54.420Z",
- "head": "47ee6baa0da38e5018333220e1080a64aa81185a",
- "note": "Polish (mail 24): finals 2997, 3150, 3296 and fold crops D, E before and after; measure running",
+ "pushed": "2026-11-21T23:08:00.665Z",
+ "head": "f406b2bb1ffaee0b97d8ed912739c452f8e80bb8",
+ "note": "POLISH READY f406b2b: finals, measures and gates done (G17 at 3150 median 1.032, G13 0 of 463 soft)",
  "looks": [
+  {
+   "time": "2026-11-21T23:00:39.148Z",
+   "file": "20261121230039148-job-frame-03234.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3234, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3234,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T22:50:53.455Z",
    "file": "20261121225053455-note-jupiter.dive-cover-16x9-review.jpg",
@@ -26,14 +40,6 @@
    "source": "out/work/stills/f03296-16x9-final-full.png",
    "kind": "note",
    "label": "jupiter frame 3296, final tier, polish state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T22:50:50.828Z",
-   "file": "20261121225050828-note-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "note",
-   "label": "jupiter frame 3150, final tier, polish state",
    "stop": "jupiter"
   },
   {
