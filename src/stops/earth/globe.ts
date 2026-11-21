@@ -57,7 +57,7 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
       baked = max(baked, w);
@@ -197,7 +197,7 @@ ${PATCH_LEVELS}
   float reach = uBloomPre.y;
   for (int k = 0; k < 3; k++) {
     vec4 cw = equirectGrad(uCloud, q, reach);
-    wide += inverseFilmic(equirectGrad(uMap, d, reach).rgb) * (1.0 - cw.a * live) + inverseFilmic(cw.rgb) * live;
+    wide += inverseFilmic(equirectGrad(uMap, d, reach).rgb) * (1.0 - cw.a * uCloudOn) + inverseFilmic(cw.rgb) * uCloudOn;
     reach *= uBloomPre.z;
   }
   col = max(col - wide * shade * uTint * (uBloomPre.x / 3.0) * mix(uBloomPre.w, 1.0, smoothstep(0.0, 0.5, mu)), 0.0) / (1.0 - uBloomPre.x);
