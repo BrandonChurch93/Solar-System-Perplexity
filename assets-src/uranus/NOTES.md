@@ -122,3 +122,19 @@ Still on the orbit view. Not yet reported to `/root`. Engine batch 2 is merged (
 
 ### Order from here
 Orbit: check shade map in the frame, rebuild sky patch, compare at final, RECIPE, remove stand-ins, commit binaries, push, message `/root`. Then terrain (fit `uranus-close.jpg`), dive and rise, self checks, READY.
+
+## State at 05:30 UTC (read this first after a compaction)
+
+Orbit milestone was sent to `/root` at 05:05 with commit 2fd342b (binaries committed, stand-ins removed). Now on the terrain view. Priority from `/root`: motion first (sharp dive handover, clear forward movement and depth across the whole terrain segment); limb and sky fits of a few pixels wait for the rounds.
+
+### Mail since 04:50
+- Batch 3 (main 3523b45) merged: `skyAim` in plan, `npm run -s aim -- --stop uranus`. The sky behind the rise belongs to the next stop: paint nothing against it.
+- Batch 4 (main 2d2161b, merge it at the next commit): Saturn has no cover, so Saturn and Uranus share one sky and Saturn's aim decides it. `skyAim.orbit` in my plan has no effect. The rim of the hold sky patch gets fitted LAST, when `/root` says Saturn's exit and travel are final (merge main, read the aim, fit the rim). Until then keep the rim wide and soft. `skyAim.terrain` still works.
+- Before READY: `npm run -s gate -- --phase 4 --only G11` (every file under `public/assets/uranus/` named in a RECIPE.md, by full path or as `public/assets/uranus/<set>/NAME`), and `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,uranus`; put the three results in the READY message.
+
+### Terrain view: true 3D haze deck
+- Fit of the close image (`terrain/fit.py`, `terrain/fit.json`): the terrain-local frame IS the close image's camera frame (camera at the origin, identity, vfov 60, unit = camera height). Nadir `[-0.23637, -0.94616, -0.22116]`, horizon angular radius 80.0945 deg (rms 1.9 px), sphere radius 66.08 units, altitude 0.0151327 R, Sun at px (1998, 758) of 2816 x 1584, direction `[0.395, 0.02276, -0.9184]`, 4.85 deg above the limb.
+- Plan: `terrain { horizonDeg 2.874, dipDeg 9.9055, rollDeg 14.03 }` puts the engine's nadir on the fitted one. `spot { x 0.5574, y 0.6721 }` and `dive.headingDeg 53.784` make the world Sun fall on the image's Sun at frame 4290 (the spot is on the hero's terminator; `out/work/u/t/solve.ts` lists the one-parameter family, this is the member deepest inside the disc). `dive.swoop true`, `dive.altitude 0.02623` = 0.0151327 x (1 + entryHeight x g), g 0.6431 at the cover centre (frame 4164); `terrain/predict.ts` prints these. The globe spin of -1 deg/s turns the Sun against the deck: 2.2 deg above the limb at frame 4200, 7.4 deg at 4379.
+- `terrain/tgeo.py` (geometry), `terrain/build.py [2x image]` (light table L(mu, psi), halo table, `deck-color.jpg`, `deck-far.jpg` log-polar albedo, `deck-height.bin`, `src/stops/uranus/deck.json`), `src/stops/uranus/deck.ts` (log-polar mesh displaced along the image ray by cloud height, colour = mix(far albedo, image / L(image view)) x L(current view), shear flow, halo sphere).
+- First render 05:25: the judged frame reproduces the image; forward 1.2 gives strong motion; but at frame 4200 the image footprint is a trapezoid in the middle and the synthesized surround is far too bright and smooth, with a hard edge. Decision: paint a wider plate of the close image (same camera, wider field, original pixels in the middle) with the image model, fit the light table on the plate, keep the synthesized map only beyond the plate.
+- Still to do in the terrain view: plate, rings (second `Rings` instance fitted to the close image's arch, in terrain-local space), terrain sky patch and `skyAim.terrain`, cover, G13 check.

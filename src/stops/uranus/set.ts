@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
+import { Deck } from './deck'
+import deckJson from './deck.json'
 import { Globe } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
@@ -71,6 +73,16 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
+  const deck = new Deck({
+    color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
+    far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16 }),
+    height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
+    light: await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4),
+    halo: await ctx.dataTexture(base + 'deck-halo.bin', deckJson.haloSize[0]!, deckJson.haloSize[1]!, 4),
+  }, key, look.deck)
+  terrain.add(deck.group)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+
   const sun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const bounce = new THREE.Vector3()
@@ -92,7 +104,10 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      if (!inOrbit) return
+      if (!inOrbit) {
+        deck.update(world, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height)
+        return
+      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       sun.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
@@ -124,6 +139,7 @@ export const createSet: SetFactory = async (ctx) => {
       ringGeo.dispose()
       for (const m of moons) m.body.dispose()
       far.dispose()
+      deck.dispose()
     },
   }
 }

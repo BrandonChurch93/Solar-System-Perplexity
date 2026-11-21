@@ -1,3 +1,4 @@
+import type { DeckLook } from './deck'
 import type { RingLook } from './rings'
 
 export const globe = {
@@ -46,4 +47,11 @@ export const moons = {
     miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [6.2, 5.4, 4.5] as Rgb, ambient: [0.012, 0.026, 0.034] as Rgb },
     ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.45, 1.33, 1.28] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb },
   } as Record<string, { light: Rgb; sun: Rgb; ambient: Rgb }>,
+}
+
+export const deck: DeckLook = {
+  flow: [0, 0.01, 0.9, 0.4],
+  limb: [0.02, 0.06],
+  edge: 0.02,
+  lift: 1,
 }

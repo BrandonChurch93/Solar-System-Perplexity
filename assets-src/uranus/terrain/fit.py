@@ -69,7 +69,7 @@ def main():
     sx += 1700
     sun = ray(np.float64(sx), np.float64(sy))
     print('sun px', sx, sy, 'dir', sun.round(5).tolist(), 'angle to centre', np.degrees(np.arccos(sun @ c)), 'above limb deg', np.degrees(np.arccos(sun @ c)) - np.degrees(alpha))
-    json.dump({'vfov': VFOV, 'centre': c.tolist(), 'alpha': float(alpha), 'altitude': float(h), 'sun': sun.tolist(), 'sunPx': [int(sx), int(sy)]}, open(OUT + 'fit.json', 'w'), indent=1)
+    json.dump({'vfov': VFOV, 'centre': c.tolist(), 'alpha': float(alpha), 'altitude': float(h), 'sun': sun.tolist(), 'sunPx': [int(sx), int(sy)]}, open('assets-src/uranus/terrain/fit.json', 'w'), indent=1)
     np.save(OUT + 'horizon.npy', pts)
     ov = (im * 255).astype(np.uint8).copy()
     for x, y, _ in pts:
