@@ -1,9 +1,47 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T11:46:04.618Z",
- "head": "e6cbf026fb049492344c0d588543bd1e085ff0c7",
- "note": "Round 2 build: frames 0, 60, 90 at final after the sky card and loops layer rebuild, limb crops against approved, leaving strip; measures running",
+ "pushed": "2026-11-21T12:13:27.596Z",
+ "head": "00c51dc27e45a12c4a91c2ade3da4ba3accee75f",
+ "note": "READY for round 2 sent at 294ef64; now painting the foreground apron again (soft glossy cells at frames 0 and 60)",
  "looks": [
+  {
+   "time": "2026-11-21T12:13:26.996Z",
+   "file": "20261121121326996-note-i36-f0-corners.jpg",
+   "source": "out/work/sun/i36-f0-corners.png",
+   "kind": "note",
+   "label": "Frame 0 bottom corners at native size: round 10 apron above, round 11 apron below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:13:26.451Z",
+   "file": "20261121121326451-note-i35-ap4-f60.jpg",
+   "source": "out/work/sun/i35-ap4-f60.jpg",
+   "kind": "note",
+   "label": "Frame 60 at final with the round 11 apron; not committed yet",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:13:25.885Z",
+   "file": "20261121121325885-note-i35-ap4-f0.jpg",
+   "source": "out/work/sun/i35-ap4-f0.jpg",
+   "kind": "note",
+   "label": "Frame 0 at final, apron painted again in round 11 (matte pillow cells, cut along a least difference path between tiles); not committed yet",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T11:55:19.544Z",
+   "file": "20261121115519544-job-frame-00360.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.hold frame 360, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T11:46:03.547Z",
    "file": "20261121114603547-note-leave3.jpg",
@@ -25,44 +63,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-21T11:44:22.205Z",
-   "file": "20261121114422205-frame-f00486.jpg",
-   "source": "out/work/seq/440-490/f00486.png",
-   "kind": "frame",
-   "label": "sun.travel frame 486, draft tier",
-   "stop": "sun",
-   "segment": "sun.travel",
-   "frame": 486,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:43:02.392Z",
-   "file": "20261121114302392-note-i26-r9-f90.jpg",
-   "source": "out/work/sun/i26-r9-f90.jpg",
-   "kind": "note",
-   "label": "Frame 90 at final (judged terrain frame)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:43:01.496Z",
-   "file": "20261121114301496-note-i23-r7-f60.jpg",
-   "source": "out/work/sun/i23-r7-f60.jpg",
-   "kind": "note",
-   "label": "Frame 60 at final after the sky card and loops layer rebuild",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:43:00.845Z",
-   "file": "20261121114300845-note-i23-r7-f0.jpg",
-   "source": "out/work/sun/i23-r7-f0.jpg",
-   "kind": "note",
-   "label": "Frame 0 at final after the sky card and loops layer rebuild",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T11:42:50.210Z",
