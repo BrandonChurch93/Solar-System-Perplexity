@@ -14,6 +14,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 1.1,
   moonDegPerSecond: 0.5,
   tint: [0.55, 0.7, 1],
+  skyAim: { orbit: [135.4027, 1.14981, 28.88925], terrain: [36.77227, -52.29257, 2.15534] },
 }
 
 export const plan = new StopPlan('earth', fit as Fit, params)
