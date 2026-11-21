@@ -1,9 +1,51 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T05:02:22.638Z",
- "head": "e70a6c720038846b8b6b0651f8406e853e452054",
- "note": "neptune orbit view: limb edge, twilight cirrus, ring strands, Triton colour; engine batch 3 merged",
+ "pushed": "2026-11-21T05:07:06.389Z",
+ "head": "875f57991944242aae0502749abda76e162bb306",
+ "note": "neptune orbit view milestone: hold compare at the final tier; next the terrain view",
  "looks": [
+  {
+   "time": "2026-11-21T05:07:04.742Z",
+   "file": "20261121050704742-job-frame-04530.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T05:05:37.210Z",
+   "file": "20261121050537210-compare-compare-neptune-hold-view.jpg",
+   "source": "out/work/compare/compare-neptune-hold-view.jpg",
+   "kind": "compare",
+   "label": "neptune.hold: approved image left, film frame right, final tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:05:36.127Z",
+   "file": "20261121050536127-still-f04605-16x9-final-full.jpg",
+   "source": "out/work/stills/f04605-16x9-final-full.png",
+   "kind": "still",
+   "label": "neptune.hold frame 4605, final tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
   {
    "time": "2026-11-21T05:02:20.560Z",
    "file": "20261121050220560-note-cmp-C.jpg",
@@ -34,42 +76,6 @@
    "source": "out/work/nep/cmp-I.jpg",
    "kind": "note",
    "label": "neptune hold, twilight zone crop: approved left, film right (review tier)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T05:01:58.009Z",
-   "file": "20261121050158009-compare-compare-neptune-hold-view.jpg",
-   "source": "out/work/compare/compare-neptune-hold-view.jpg",
-   "kind": "compare",
-   "label": "neptune.hold: approved image left, film frame right, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:01:56.918Z",
-   "file": "20261121050156918-still-f04605-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04605-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T04:38:28.163Z",
-   "file": "20261121043828163-note-ring-both.jpg",
-   "source": "out/work/nep/ring-both.jpg",
-   "kind": "note",
-   "label": "ring, approved left, film right, brightened",
    "stop": "neptune"
   },
   {
