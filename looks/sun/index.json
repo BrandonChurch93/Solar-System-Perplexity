@@ -1,51 +1,51 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T06:57:24.299Z",
- "head": "6b93f953a113c1f013992c083680cb338fd772fb",
- "note": "hold: corona hides stars, sky card infinity only, wrap limb levelled to the hero, batch 6 merged",
+ "pushed": "2026-11-21T07:19:20.381Z",
+ "head": "0ffff90619f7e62aebe493c41a4e54f39cfbc91d",
+ "note": "hold second pass committed (0ffff90); G5 and G17 pass; now the foreground of frame 0",
  "looks": [
   {
-   "time": "2026-11-21T06:57:23.767Z",
-   "file": "20261121065723767-note-h-ur.jpg",
-   "source": "out/work/sun/h-ur.jpg",
+   "time": "2026-11-21T07:19:19.827Z",
+   "file": "20261121071919827-note-f0-ll.jpg",
+   "source": "out/work/sun/f0-ll.jpg",
    "kind": "note",
-   "label": "upper right prominence, native, 270 342 378 449",
+   "label": "frame 0 lower left at native size: stretched cells from the folded ground, in work",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T06:57:23.244Z",
-   "file": "20261121065723244-note-c-l3.jpg",
-   "source": "out/work/sun/c-l3.jpg",
-   "kind": "note",
-   "label": "left limb: hero, film 270, 360, 449 after the limb level of the wrap",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T06:57:22.726Z",
-   "file": "20261121065722726-note-ghost.jpg",
-   "source": "out/work/sun/ghost.jpg",
-   "kind": "note",
-   "label": "ghost test before batch 6: 247 269 270 449 / 450 472 495 540",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T06:57:22.216Z",
-   "file": "20261121065722216-note-h-phone.jpg",
+   "time": "2026-11-21T07:19:19.296Z",
+   "file": "20261121071919296-note-h-phone.jpg",
    "source": "out/work/sun/h-phone.jpg",
    "kind": "note",
-   "label": "hold at phone size, frames 270 306 342 378 414 449",
+   "label": "hold at phone size after the straighter corona: 270 306 342 378 414 449",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T06:56:52.710Z",
-   "file": "20261121065652710-frame-h449-w2.jpg",
-   "source": "out/work/sun/h449-w2.png",
-   "kind": "frame",
-   "label": "sun.hold frame 449, review tier",
+   "time": "2026-11-21T07:19:18.757Z",
+   "file": "20261121071918757-note-c-l4.jpg",
+   "source": "out/work/sun/c-l4.jpg",
+   "kind": "note",
+   "label": "left limb after wrap take 3: hero, film 270, 360, 449 (review)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T07:19:18.235Z",
+   "file": "20261121071918235-note-rise-end.jpg",
+   "source": "out/work/sun/rise-end.jpg",
+   "kind": "note",
+   "label": "end of the rise into the hold, draft: 262 265 268 / 269 270 271",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T07:13:01.762Z",
+   "file": "20261121071301762-still-f00449-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00449-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.hold frame 449, draft tier",
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 449,
-   "tier": "review",
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
