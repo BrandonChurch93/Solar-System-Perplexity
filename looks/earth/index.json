@@ -1,65 +1,75 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T11:03:09.208Z",
- "head": "190969eb98f3ffefe3e57aabced278d144b0a8ca",
- "note": "round 2 work: night side, far maps, aurora off the disc, sky margin; engine batch 11 merged",
+ "pushed": "2026-11-21T11:21:29.332Z",
+ "head": "095a007d5c0ca51ed1a2ee7672abf2ce12394f6d",
+ "note": "round 2 work: rise strip 2120 to 2140 checked frame by frame; night side and far maps",
  "looks": [
   {
-   "time": "2026-11-21T11:03:08.605Z",
-   "file": "20261121110308605-note-f1857au.jpg",
-   "source": "../../../../tmp/f1857au.png",
+   "time": "2026-11-21T11:21:28.713Z",
+   "file": "20261121112128713-note-h1857.jpg",
+   "source": "../../../../tmp/h1857.png",
    "kind": "note",
-   "label": "dive 1857 aurora and east limb at 2.5x",
+   "label": "dive 1857 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T11:03:07.960Z",
-   "file": "20261121110307960-note-e2156.jpg",
-   "source": "../../../../tmp/e2156.png",
+   "time": "2026-11-21T11:21:28.125Z",
+   "file": "20261121112128125-note-i2156.jpg",
+   "source": "../../../../tmp/i2156.png",
    "kind": "note",
-   "label": "rise 2156 draft, far map, far clouds, lights as points",
+   "label": "rise 2156 draft: far maps, night land, lights as points, aurora off the disc",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T11:03:07.285Z",
-   "file": "20261121110307285-note-e1857.jpg",
-   "source": "../../../../tmp/e1857.png",
+   "time": "2026-11-21T11:21:27.593Z",
+   "file": "20261121112127593-note-strip-s4.jpg",
+   "source": "out/work/earth/p31/strip-s4.jpg",
    "kind": "note",
-   "label": "dive 1857 draft, night side with the far map and far clouds",
+   "label": "rise 2136 to 2140 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T11:01:18.167Z",
-   "file": "20261121110118167-frame-f-1845.jpg",
-   "source": "out/work/earth/p29/f-1845.png",
+   "time": "2026-11-21T11:21:27.015Z",
+   "file": "20261121112127015-note-strip-s3.jpg",
+   "source": "out/work/earth/p31/strip-s3.jpg",
+   "kind": "note",
+   "label": "rise 2131 to 2136 draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:21:26.364Z",
+   "file": "20261121112126364-note-strip-s2.jpg",
+   "source": "out/work/earth/p31/strip-s2.jpg",
+   "kind": "note",
+   "label": "rise 2126 to 2132 draft, the switch 2129 to 2130",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:21:25.799Z",
+   "file": "20261121112125799-note-strip-s1.jpg",
+   "source": "out/work/earth/p31/strip-s1.jpg",
+   "kind": "note",
+   "label": "rise 2120 to 2127 draft, every frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T11:20:07.353Z",
+   "file": "20261121112007353-frame-f-2140.jpg",
+   "source": "out/work/earth/p31/f-2140.png",
    "kind": "frame",
-   "label": "earth.dive frame 1845, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1845,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T11:00:20.494Z",
-   "file": "20261121110020494-frame-f-2156.jpg",
-   "source": "out/work/earth/p29/f-2156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, draft tier",
+   "label": "earth.rise frame 2140, draft tier",
    "stop": "earth",
    "segment": "earth.rise",
-   "frame": 2156,
+   "frame": 2140,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "2d0860205d08936f"
+   "engine": "a9de32c960e5de06"
   },
   {
-   "time": "2026-11-21T10:55:53.682Z",
-   "file": "20261121105553682-frame-f-1755.jpg",
-   "source": "out/work/earth/p28/f-1755.png",
+   "time": "2026-11-21T11:08:07.860Z",
+   "file": "20261121110807860-frame-f-1755.jpg",
+   "source": "out/work/earth/p30/f-1755.png",
    "kind": "frame",
    "label": "earth.hold frame 1755, draft tier",
    "stop": "earth",
@@ -68,23 +78,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T10:42:18.292Z",
-   "file": "20261121104218292-note-sky-edges.jpg",
-   "source": "../../../../tmp/sky-edges.png",
-   "kind": "note",
-   "label": "bad: starless strip at the left frame edge in the dive (sky patch margin), in work",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:42:17.745Z",
-   "file": "20261121104217745-note-wrap-far.jpg",
-   "source": "out/work/earth/view/wrap-far.jpg",
-   "kind": "note",
-   "label": "new far map: Blue Marble painted through the hero colours with a gentle registration, used outside the hold where the hero was dark",
-   "stop": "earth"
+   "engine": "a9de32c960e5de06"
   }
  ]
 }
