@@ -2,13 +2,15 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
-import { smooth } from '../../director/rig'
+import { ramp, smooth } from '../../director/rig'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { patches, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { plan } from './plan'
 import skyJson from './sky.json'
+import { SunPlate } from './sunplate'
+import sunJson from './sunplate.json'
 
 interface SkyDef { file: string; vfovDeg: number; margin: number; gain: number; add: boolean; ring: number[] }
 
@@ -79,7 +81,10 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
-  orbit.add(globe.mesh, far.points)
+  const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], diagUniform)
+  const sunAim = new THREE.Quaternion()
+  const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone()
+  orbit.add(sunPlate.mesh, globe.mesh, far.points)
 
   const close = await ctx.texture(base + 'standin-close.jpg', { srgb: true, anisotropy: 8, mirror: true })
   const closeSize = close.image as unknown as { width: number; height: number }
@@ -118,9 +123,13 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(light, plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
       far.update(radiusPx, view, plan.p.tint, gain)
+      const travel = state.segment.kind === 'travel' ? smooth(ramp(0.25, 0.8, state.u)) : 1
+      const shown = state.segment.kind === 'travel' && state.segment.stop === plan.id ? 1 - travel : travel
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam), gain * shown * look.sun.gain * (1 + look.sun.breathe * Math.sin(state.local * look.sun.rate)), shot.post.vignette, view.format.width / view.format.height)
     },
     dispose: () => {
       globe.dispose()
+      sunPlate.dispose()
       far.dispose()
       plateMat.dispose()
       plate.geometry.dispose()

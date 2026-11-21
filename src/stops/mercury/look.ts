@@ -12,3 +12,5 @@ export const light: GlobeLight = {
   edge: 1.2,
   rim: { color: [0.065, 0.054, 0.042], width: 0.014, wide: 0.08, wideGain: 0.6, blurLod: 6 },
 }
+
+export const sun = { gain: 1, breathe: 0.035, rate: 1.9 }
