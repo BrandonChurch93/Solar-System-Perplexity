@@ -64,14 +64,35 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
 - 03:59 review sheet done (`out/work/sheets/mars.travel-16x9-review.png`). Rocks are in 2772, 2779, 2785, 2792, 2799 of the 12 sheet frames; Mars is still in frame up to 2758. Per frame seconds at review with the belt (from the sheet records): 2745 83.3, 2752 69.5, 2758 61.7, 2765 53.3, 2772 59.7, 2779 57.0, 2785 57.4, 2792 61.5, 2799 67.1, 2806 69.4, 2812 71.7.
 - 04:00 web set derived (`python3 assets-src/belt/web.py`, 6.9 MB on disk); draft still of 2782 with `--assets web` loads and renders, softer than full as expected (`out/work/belt/d2782-web.png`).
 
-## Next
-1. Review tier sheet of the segment, native crops, fix what R3 and R4 would raise (hero crispness, streak edges).
-2. Web set (`python3 assets-src/belt/web.py`), check a still with `--assets web` if the harness has it.
-3. Commit binaries once (milestone), byte identity proof at final (2325, 2427, 2580, 2726), final 2782, review cost with and without, vitest, DONE message.
+- 04:12 review sheet with the belt on the merged main: 3 minutes for 12 frames (the sky pass of engine batch 1 is much cheaper; before the merge the same sheet took 13). Records in `out/work/belt/sheet2/`. Engine hash with the hook 6ec52800c697524e; with the hook reversed but the belt files present 737dd9e204c8e41e (main alone is 434d0a5e367a62fd, so the hash counts the new files under `src/`).
+- 04:19 byte proof done at the final tier with the hook and the module on the merged main (`out/work/belt/proof/`). All four equal the baseline made on plain main 2cbceef:
+  - 2325 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d
+  - 2427 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814
+  - 2580 a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8
+  - 2726 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05
+  - The baseline was not rendered again on plain b4ae65c; the Builder states batch 1 is byte identical, and the equal hashes agree with that.
+- 04:23 review sheet with the hook reversed (`out/work/belt/sheet0/`). Seconds per frame at review, with the belt and without, same 12 sheet frames, same VM, merged main:
 
-- 04:02 review still of 2782 (`out/work/belt/r2782.png`, 75.3 s): hero, two far rocks, Jupiter clear, near rock soft with lit crescent. Native crops of all five checked, no defect seen.
-- 04:08 aperture 320 to 250 (near rock keeps a little more shape, circle of confusion 37 px at 2782) and detail 0.7 to 0.9. Draft frames 2772 and 2796 at native size (`out/work/belt/s2/`): hero streak is continuous. Planner speed 112 px per frame at 2772, shutter half a frame, 39 time steps, 1.5 px apart. The serrated limb where the edge is oblique to the motion is the bumpy limb smeared along the motion, not copies; lines inside the streak run along the motion.
-- 04:10 milestone commit of the binaries (take 3 full 28 MB, web 6.9 MB). Then: review sheet again with the final values, byte proof at final, final 2782, review sheet without the hook for the cost.
-- 04:08 the Builder says main moved to b4ae65c (engine batch 1, engine hash 434d0a5e367a62fd, frames byte identical, sky pass cheaper). Killed the sheet that had just started, reversed the hook, merged `origin/main` (cc3fd68), applied the hook again without conflict, regenerated `engine.patch` against the new main. Build ok, vitest 24 green, belt test 4 green.
-- 04:10 Builder's profiler tip used in `rock.ts`: the self shadow march now runs inside `for (k < (lit or rim ? 1 : 0))`, so pixels that face away from the Sun skip it. Draft 2782 is byte identical to the frame before the merge and the change (sha256 3fe5011d...), 19.4 s against 23.7 s.
-- 04:11 chain started detached (`/tmp/run1.sh`, log `/tmp/run1.log`): review sheet with the belt, four proof frames at final with the hook, final 2782. After it: review sheet without the hook for the cost.
+| Frame | With belt | Without |
+| --- | --- | --- |
+| 2745 (first, asset load) | 33.5 | 33.3 |
+| 2752 | 17.7 | 18.2 |
+| 2758 | 14.6 | 14.7 |
+| 2765 | 9.7 | 9.6 |
+| 2772 | 13.8 | 8.4 |
+| 2779 | 11.4 | 8.5 |
+| 2785 | 11.0 | 8.6 |
+| 2792 | 11.3 | 8.2 |
+| 2799 | 11.6 | 9.4 |
+| 2806 | 11.6 | 11.6 |
+| 2812 | 12.4 | 12.2 |
+| 2819 | 12.6 | 12.5 |
+
+  - Mean of the 11 frames after the first: 12.51 s with, 11.07 s without. Mean of the five frames with rocks (2772 to 2799): 11.81 s with, 8.61 s without, so the belt costs about 3.2 s per frame where rocks are in frame (5.3 s at 2772, the fastest pan with the most time steps) and nothing elsewhere.
+- 04:20 final 2782 (51.4 s) looked at whole and in native crops. Hero holds up. far1 read as a dark shape with only a thin lit edge, so four tilts were tried at draft (`/home/user/workspace/view/ft.jpg`, logged as a look); far1 tilt is now [140, 20, 60], a lit cratered face. far2 keeps its tilt (dark shape with a lit left edge against the Milky Way glow; it sits toward the Sun side of the frame so its crescent is thin at any tilt).
+- Faint thin streaks near the hero in 2782 are the film's dust motes, not the belt.
+- 04:26 chain started (`/tmp/run3.sh`): final 2782 again, review sheet again (`out/work/belt/sheet3/`), review stills of 2772 and 2796.
+
+## Next
+1. Look at the final 2782, the sheet and the two fast frames; native crops with `npm run crops`.
+2. DONE message: commit, eight hashes, cost table, weak points.
