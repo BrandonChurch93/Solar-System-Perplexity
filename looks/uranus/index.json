@@ -1,45 +1,53 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T09:41:27.386Z",
- "head": "cb9cb5a2c8abcd0163692b6924df7a9c88152197",
- "note": "Rise rings regularised in the ring plane, back-scatter gain, motion smear for thin ring lines in fast shots (uncommitted, in verification)",
+ "pushed": "2026-11-21T10:03:33.036Z",
+ "head": "71fea95efb30e4e13a217fe8dee44b0c3ff144ad",
+ "note": "round 1 corrections: cover sides before the fix, working on one move across both covers",
  "looks": [
   {
-   "time": "2026-11-21T09:41:26.822Z",
-   "file": "20261121094126822-note-f3-4460.jpg",
-   "source": "out/work/u/r2/f3-4460.jpg",
+   "time": "2026-11-21T10:03:32.504Z",
+   "file": "20261121100332504-note-deck-far-view.jpg",
+   "source": "out/work/u/r3/deck-far-view.jpg",
    "kind": "note",
-   "label": "Own travel 4460 review",
+   "label": "deck far map, boundary between picture and fill (item 4)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T09:41:26.297Z",
-   "file": "20261121094126297-note-f3-4142.jpg",
-   "source": "out/work/u/r2/f3-4142.jpg",
+   "time": "2026-11-21T10:03:31.997Z",
+   "file": "20261121100331997-note-a-4414.jpg",
+   "source": "out/work/u/r3/a-4414.jpg",
    "kind": "note",
-   "label": "Dive 4142 review with the smear",
+   "label": "round 1 baseline, frame 4414 at review (cover sides before the fix)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T09:41:25.769Z",
-   "file": "20261121094125769-note-f3-4436.jpg",
-   "source": "out/work/u/r2/f3-4436.jpg",
+   "time": "2026-11-21T10:03:31.485Z",
+   "file": "20261121100331485-note-a-4405.jpg",
+   "source": "out/work/u/r3/a-4405.jpg",
    "kind": "note",
-   "label": "Rise judged frame 4436 review",
+   "label": "round 1 baseline, frame 4405 at review (cover sides before the fix)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T09:41:25.217Z",
-   "file": "20261121094125217-note-f3-4415.jpg",
-   "source": "out/work/u/r2/f3-4415.jpg",
+   "time": "2026-11-21T10:03:30.959Z",
+   "file": "20261121100330959-note-a-4175.jpg",
+   "source": "out/work/u/r3/a-4175.jpg",
    "kind": "note",
-   "label": "Rise 4415 review with the smear, moons held out of the whip",
+   "label": "round 1 baseline, frame 4175 at review (cover sides before the fix)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T09:38:29.517Z",
-   "file": "20261121093829517-frame-f3-4035.jpg",
-   "source": "out/work/u/r2/f3-4035.png",
+   "time": "2026-11-21T10:03:30.416Z",
+   "file": "20261121100330416-note-a-4150.jpg",
+   "source": "out/work/u/r3/a-4150.jpg",
+   "kind": "note",
+   "label": "round 1 baseline, frame 4150 at review (cover sides before the fix)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T09:53:12.870Z",
+   "file": "20261121095312870-frame-a-4035.jpg",
+   "source": "out/work/u/r3/a-4035.png",
    "kind": "frame",
    "label": "uranus.hold frame 4035, review tier",
    "stop": "uranus",
@@ -48,7 +56,7 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a3d211c425dc0406"
+   "engine": "e96a669c7c94eb54"
   },
   {
    "time": "2026-11-21T09:03:29.749Z",
@@ -77,20 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T07:51:04.369Z",
-   "file": "20261121075104369-compare-compare-uranus-terrain-view.jpg",
-   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
-   "kind": "compare",
-   "label": "uranus.terrain: approved image left, film frame right, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
   }
  ]
 }
