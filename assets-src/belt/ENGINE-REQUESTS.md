@@ -1,35 +1,41 @@
 # Engine requests from the belt module
 
-One shared file is touched: `src/core/engine.ts`, five lines. The exact change is `assets-src/belt/engine.patch` (made with `git diff origin/main -- src/core/engine.ts`). It is never committed on `agent/belt`; apply it with `git apply assets-src/belt/engine.patch`.
+The first request (the hook of the belt in `src/core/engine.ts`) is on main since 3523b45 and is closed. One request is open.
 
-## The five lines
-1. `import { Belt } from '../space/belt/belt'`
-2. A field on `Engine`: `readonly belt = new Belt()`
-3. In `prepare(frame)`, after the sets: `await this.belt.prepare(frame, this.assets, this.renderer)`. Loads the belt assets of the active set when `frame` is inside `mars.travel`, frees them when it is outside.
-4. In `renderSample`, after the near scene and before `if (raw) return`: `this.belt.render(r, this.sampleTarget, this.director!, shot, view)`. In beauty views it composites the belt layer over the sample target (premultiplied over, alpha written, so rocks hide sky, planets and stars and sit under dust, cover and post). In raw diagnostic views it draws the rock meshes with `diagOut` after a depth clear.
-5. In `ready(frame)`: `&& this.belt.ready(frame, this.assets)`. True outside `mars.travel`; inside it, true once the assets of the active set are loaded.
+## Open: dust order against the rocks (`assets-src/belt/dust.patch`)
 
-## Why frames outside mars.travel keep their bytes
-- `Belt.render` returns on its first line when `shot.segment.id` is not the id in `src/space/belt/belt.json` (`mars.travel`). It then touches no GL state: no target switch, no clear, no draw.
-- `Belt.prepare` outside the segment only disposes what the belt owns; `Belt.ready` returns true.
-- Proof by render is in `NOTES.md` (four frames at the final tier, sha256 before and after).
+Two shared files, `src/space/dust.ts` and `src/core/engine.ts`. The exact change is `assets-src/belt/dust.patch` (made with `git diff origin/main -- src/core/engine.ts src/space/dust.ts` on main 558e3a5). It is never committed on `agent/belt`; apply it with `git apply assets-src/belt/dust.patch`. The belt module on the branch builds and renders with and without it.
+
+### What is wrong without it
+The dust is drawn after the belt, additive, without a depth test, so every mote draws over every rock. In the flow space of the travel the motes live within 3.5 units of the camera (the near layer within 1.2). The near rock passes at 1.05 to 0.8 units and the hero at 3.5 to 3.1, so motes that are farther than the near rock (most of them) show on its face.
+
+### The change
+1. `src/core/engine.ts`, one line: `this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))`. `Belt.cover(shot)` returns `null` outside `mars.travel`, in raw diagnostic views and in frames where no rock is drawn; otherwise `{ mask, rocks }`: the belt layer of this film frame (alpha is the coverage of the rocks with their motion blur and focus blur) and one sphere per drawn rock (centre in the camera space of the shutter middle, radius in flow units).
+2. `src/space/dust.ts`:
+   - `Dust.render` takes an optional last argument `cover: DustCover | null = null`.
+   - A second material `masked` with the same shader source and `defines: { OCCLUDE: 1 }`, sharing the uniform objects of the first, plus `uMask` and `uRock[5]`. The mesh uses it only when `cover` is not null.
+   - Under `#ifdef OCCLUDE` the vertex shader sets `vBehind = 1` for a mote whose distance along its ray is past the front of a rock sphere and whose ray passes within 2.5 radii of the centre. The fragment shader multiplies the colour of such a mote by `1 - alpha` of the belt layer at the pixel (read inside a one pass `for` loop with `textureLod`, so fragments of motes in front pay nothing in the software rasterizer).
+   - So a mote behind a rock is hidden where the rock covers it and fades across the rock's soft edge; a mote in front of every rock draws as before.
+
+### Why other frames keep their bytes
+With `cover === null` the mesh uses the first material, whose shader source without the define is the text main has now, so the program is the same and so are the pixels. Measured on this VM at the draft tier, plain main against the branch with the patch: see `NOTES.md` (frames 2325 and 2580, and 2212, the middle of earth.travel, as a travel frame with dust and without the belt).
+
+### Limits
+- One mask for all rocks: a mote between two rocks that overlap on screen is hidden by the alpha of both. The far rocks are at 11 to 15 units, past all dust, so this can only happen between the near rock and the hero, which do not overlap.
+- A rock is tested as a sphere of its largest radius; the edge is exact because the mask is the drawn alpha.
+- The streak of a mote is tested as a whole at the middle of the shutter.
 
 ## What the module needs from the engine and the director
-- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 64 per rock), so its motion blur does not depend on the tier's sample count. It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample.
-- From the shot: `segment.id`, `camera` (position, quaternion, vfov), `sun.dir`, `sun.color`, `sun.intensity`, `post.exposure`, `dustOffset`, `frame`.
+- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 64 per rock). It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample.
+- `Flow` from `src/space/travel/flow.ts` (read only): the rocks live in the flow space of the dust, so they shift against the stars with the same travel as the motes.
+- From the shot: `segment`, `camera` (quaternion, vfov), `sun.dir`, `sun.color`, `sun.intensity`, `post.exposure`, `frame`, `time`.
 - From the view: `format`, `sample`, `diag`, `camera.view` (jitter for the raw views).
 
-## Things the Builder may want to change at integration
-- The engine could own the field privately; it is `readonly` and public only so tools can read `belt.bytes`.
-- The belt is not a set in `SetLoader`; it loads `./assets/shared/belt/<full|web>/` itself. Its texture memory is `belt.bytes`.
-- `npm run looks -- --push --folder belt` rejects `belt` because it is not a stop id; looks were pushed with `assets-src/belt/pushlooks.ts`.
-- The travel dust offset moves dust toward Jupiter by my probe (flow direction dot Jupiter direction is +0.987). The rocks use the same closed form with the sign flipped (`flow: -1` in `belt.json`).
-
 ## Cost and memory to know about
-- Texture memory of the full set with mipmaps: about 36.7 MB (normal and tone cubes 30.9 MB, radius and occlusion cubes 4.35 MB without mipmaps, detail tile 1.4 MB). `belt.bytes` reports it together with the render targets.
-- Render targets, alive only while a frame of `mars.travel` is prepared: three half float targets of the frame plus a border of 96 px on each side (2112 x 1272 at the master size, 21.5 MB each, one with a depth buffer) and one layer target of the frame size (16.6 MB). About 92 MB at 1920 x 1080. They are freed with the assets when `prepare` sees a frame outside the segment.
-- The layer is built once per film frame (engine sample 0), so the cost per frame does not grow with the tier's sample count. In a live (real time) mode the layer is rebuilt every displayed frame: up to 64 draws of a 128 grid cube sphere per rock plus the blur passes. If the live mode needs it cheaper, lower `steps.max` in `belt.json`.
-- Dust is drawn after the belt, so motes pass in front of the rocks. That is correct for the near motes and wrong for motes farther than a rock; at this dust density it shows as a few faint points over the dark side of the hero rock.
+- Texture memory of the full set with mipmaps: about 36.7 MB. `belt.bytes` reports it together with the render targets.
+- Render targets, alive only while a frame of `mars.travel` is prepared: three half float targets of the frame plus a border of 96 px on each side and one layer target of the frame size, about 92 MB at 1920 x 1080.
+- The layer is built once per film frame, so the cost does not grow with the tier's sample count. Up to 64 draws per rock plus the blur passes.
 
 ## Tests
 - The repo vitest config only includes `tests/`, which the belt agent does not own. The belt test is `assets-src/belt/belt.test.ts`, run with `npx vitest run --config assets-src/belt/vitest.config.ts`. Move it to `tests/` at integration.
+- `npm run looks -- --push --folder belt` rejects `belt` because it is not a stop id; looks are pushed with `assets-src/belt/pushlooks.ts`.

@@ -117,6 +117,33 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
   - Mean of the ten frames 2752 to 2812: 12.10 s with, 10.40 s without. Mean of the five frames with rocks: 12.18 s with, 8.78 s without (plus 3.4 s; plus 5.3 s at 2772). Frames without rocks cost the same.
 - 04:47 DONE sent to the Builder.
 
+## Task 2 (Phase 5 preparation), Nov 21 from 07:40 UTC
+
+The Builder's task: fit the rocks to the travel agent's new camera of `mars.travel` (main 558e3a5), near rock with real detail, far2 readable, dust order, evidence (review sheet every third frame, finals of 2772, 2782, 2796), byte proof of 2325 and 2580 at draft. Never change `turnDeg` or `side`.
+
+- 07:40 merged main (fast forward to 558e3a5, the hook is on main now, so the working tree had no shared diff). Old proof frames no longer hold: the pan is now 2.3 to 3.7 degrees per frame from 2760 to 2802 with roll in it, Mars leaves the frame by 2766, Jupiter is a point at (1306,947) in 2782 and grows from 2793 (r 28 px) to r 473 at 2817. `assets-src/belt/probe2.ts` prints camera turn, discs, sun and flow per frame.
+- The dust now lives in a flow space (`src/space/travel/flow.ts`): 0.93 units of travel over the segment, motes within 3.5 units, a near layer within 1.2, 30 percent of the pan drawn as blur.
+- Decided: a new motion model in the dust's flow space (`src/space/belt/motion.ts`). Per rock an anchor `frame` and a screen position `at` in that frame, a `distance`, and `hold`: 0 means fixed against the stars, 1 means fixed in the frame, negative means it crosses faster than the sky. The flow travel is subtracted, so rocks shift against the stars by parallax like the motes (0.93 units against 1 unit of distance for the near rock, 15 for far2). `smear` is the share of a rock's own screen motion that is drawn as blur (0 like the stars, 0.3 like the dust); blur from parallax and spin is always drawn. Old keys `flow`, `enter`, `exit` are gone.
+- `assets-src/belt/plan.ts [--all]` prints per frame position, radius, circle of confusion and speed of every rock, and per rock the frames in frame, largest share of the frame, smallest gap to a disc (with the disc and the frame) and the smallest clear depth.
+- Layout after eight planner rounds and three draft sheets (`out/work/belt/s1`, `d1`, `d2`):
+
+| Rock | Asset | Anchor | At | Distance | Radius | Hold | Smear | In frame | Largest share | Nearest disc |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| far3 | c | 2760 | 0.80, 0.35 | 12 | 0.33 | -0.08 | 0 | 2754 to 2773 | 0.6 percent | Mars, 798 px |
+| far1 | c | 2782 | 0.60, 0.20 | 11 | 0.30 | -0.05 | 0 | 2769 to 2796 | 0.5 percent | Jupiter, 603 px |
+| hero | a | 2782 | 0.36, 0.47 | 3.5 | 0.30 | 0.2 | 0.1 | 2770 to 2799 | 6.2 percent | Jupiter, 565 px |
+| near | b | 2782 | 0.86, 0.15 | 1.05 | 0.16 | -1.6 | 0.3 | 2774 to 2792 | 15.8 percent | Jupiter, 357 px |
+| far2 | d | 2800 | 0.08, 0.62 | 15 | 0.36 | -0.1 | 0 | 2778 to 2802 | 0.4 percent | Jupiter, 64 px at 2787 |
+
+  - Rocks are in frame from 2754 to 2802 (before: 2767 to 2801). Before 2754 the camera turns less than a degree per frame with Mars filling the left half, after 2802 the pan dies and Jupiter fills the middle; a rock there could neither enter nor leave by the pan.
+  - hero hold 0.25 made it graze the bottom edge twice (planner: NOT CONTIGUOUS), hold 0.3 kept it in the corner over the grown Jupiter until 2802, hold 0.55 never left. 0.2 it is.
+  - near: distance 1.2 with radius 0.135 read as a second hero. 1.05 with 0.16 gives r 330 px at 2782 against 174 of the hero, cut by the top edge, 19 frames in frame.
+  - aperture 22 to 16: circle of confusion of the near rock 11 px at 2782, craters still read.
+- Dust order: `Belt.cover(shot)` gives the belt layer and one sphere per drawn rock; with `assets-src/belt/dust.patch` applied the dust hides motes behind a rock by the layer's alpha. Described in `ENGINE-REQUESTS.md`. Not committed (shared files); the old `engine.patch` is removed because the hook is on main.
+- Belt test updated to the new model (five tests: count, closed form, one visit inside the segment, hero plus two in the judged frame, off the discs of Mars and Jupiter, clear depth over 0.3, share under a fifth). `npx vitest run` green (the default reporter crashes on this Node with `Map.groupBy`; use `--reporter=tap`).
+- `assets-src/belt/sheet.ts --tier T --name N [--step 3]` renders every third frame of the segment in one browser session and builds a 5 by 5 sheet with `sheet.py`.
+- Draft cost in one session: 1.2 to 2 s per frame without rocks, 4 to 6 s with the hero and the near rock in frame.
+
 ## Still weak
 - Rocks are in frame only from 2767 to 2801 (hero 2769 to 2798, near 2770 to 2787, far1 2767 to 2801, far2 2774 to 2791). No rock while Mars is in frame, none over the grown Jupiter.
 - The near rock is a soft pale shape with a dark side that barely separates from the sky; it reads as a near rock in the whole frame, less so in a tight crop.
