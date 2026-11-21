@@ -4,10 +4,12 @@ import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
-import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
+import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
+import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
+import { TravelShape, inFrame } from '../space/travel/path'
 
 const NO_TURN = new THREE.Quaternion()
 
@@ -21,10 +23,17 @@ const SWING_FROM = 0.3
 const CLEAR_DEG = 3
 const SUN_PULL_END = 0.34
 const SUN_APPROACH_START = 0.42
-const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 4.5, orbitDeg: 3, pullPerSecond: 0.012, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
+const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
+const BOW_REACH = 24
+const SUN_SWAP: [number, number] = [0.3, 0.42]
+const SUN_BOW_REACH = 90
+const SUN_HIDDEN = 0.14
+const SUN_HALO = 1.2
+const SUN_GLOW_FROM = 0.06
+const RETREAT_DUST = 0.18
+const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
-const easeSettle = ease('sine.out')
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
 export interface LiveControl { stop: string; view: ViewKind; yaw: number; pitch: number; zoom: number; time: number }
@@ -36,7 +45,9 @@ export class FilmDirector implements Director {
   private readonly approach: THREE.Vector3[] = []
   private readonly reach: number[] = []
   private readonly begin: number[] = []
-  private lookbackPose: Pose
+  private readonly clear: number[] = [0]
+  private readonly shapes: TravelShape[] = []
+  private sunSwapSpan: [number, number] = SUN_SWAP
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
@@ -50,16 +61,35 @@ export class FilmDirector implements Director {
     this.reach.push(0)
     this.begin.push(0)
     for (let i = 0; i + 1 < plans.length; i++) this.place(i)
+    this.pin()
+    for (let i = 0; i + 1 < plans.length; i++) {
+      const id = plans[i]!.id
+      let shape = new TravelShape(id)
+      let clear = i === 0 ? SUN_APPROACH_START : this.clearOf(i, shape)
+      if (i > 0 && clear > shape.look.clearBy) {
+        const tries: { shape: TravelShape; clear: number; off: number }[] = []
+        for (let b = -BOW_REACH; b <= BOW_REACH; b += 2) {
+          const t = new TravelShape(id, { bowDeg: b })
+          tries.push({ shape: t, clear: this.clearOf(i, t), off: Math.abs(b - shape.look.bowDeg) })
+        }
+        const limit = Math.max(shape.look.clearBy, Math.min(...tries.map((t) => t.clear)) + 0.02)
+        const pick = tries.filter((t) => t.clear <= limit).sort((p, q) => p.off - q.off)[0]
+        if (pick) {
+          shape = pick.shape
+          clear = pick.clear
+        }
+      }
+      this.shapes.push(shape)
+      this.clear.push(clear)
+    }
+    if (plans.length > 1) this.hideSun()
     const last = plans.length - 1
     const n = this.plans[last]!
     const s = n.sunDir.clone()
     const axis = new THREE.Vector3().crossVectors(s, Y).normalize()
     const up = axis.clone()
-    const toNeptune = s.clone().applyAxisAngle(up, THREE.MathUtils.degToRad(LOOKBACK.neptuneDeg))
-    const position = toNeptune.clone().multiplyScalar(-LOOKBACK.distance)
     this.lookbackUp = up
     this.lookbackSun = s
-    this.lookbackPose = { position, quaternion: this.lookbackAim(position, 0), vfov: LOOKBACK.vfov }
     this.sky = this.aimSky()
   }
 
@@ -115,34 +145,45 @@ export class FilmDirector implements Director {
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     })
+    const back = judged(config.endingId + '.lookback')
+    const lastId = this.plans[this.plans.length - 1]!.id
+    const kept = out.orbits[lastId]
+    if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(cam(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
+    else if (kept) out.orbits[config.endingId] = kept
     return out
   }
 
-  private lookbackAim(position: THREE.Vector3, extraDeg: number): THREE.Quaternion {
-    const aim = this.lookbackSun.clone().applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.aimDeg + extraDeg))
-    return lookAt(position, position.clone().add(aim), this.lookbackUp, LOOKBACK.rollDeg)
+  private lookback(t: number): Pose {
+    const lb = config.segments.find((x) => x.kind === 'lookback')!
+    const s = t - (lb.start + lb.end) / 2
+    const rad = THREE.MathUtils.degToRad
+    const up = this.lookbackUp
+    const position = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.neptuneDeg + LOOKBACK.neptunePerSecond * s)).multiplyScalar(-LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s))
+    const flat = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.aimDeg + LOOKBACK.aimPerSecond * s))
+    const aim = flat.clone().applyAxisAngle(new THREE.Vector3().crossVectors(flat, up).normalize(), rad(LOOKBACK.liftDeg))
+    return { position, quaternion: lookAt(position, position.clone().add(aim), up, LOOKBACK.rollDeg + LOOKBACK.rollPerSecond * s), vfov: LOOKBACK.vfov }
   }
 
   private turnEnd(i: number): number {
     return this.plans[i]!.p.travel.turnEnd ?? TURN_END
   }
 
-  private approachLocal(i: number, x: number, time: number): Pose {
+  private approachLocal(i: number, x: number, time: number, shape?: TravelShape): Pose {
     const b = this.plans[i]!
     const hold = b.hold(time - b.seg.hold.start)
     const dh = b.hold(0).position.length()
-    const e = 1 - Math.pow(1 - x, b.p.arrive?.power ?? APPROACH_POWER)
+    const e = shape ? shape.grow(x) : 1 - Math.pow(1 - x, b.p.arrive?.power ?? APPROACH_POWER)
     const sigma = dh * (Math.pow(this.reach[i]! / dh, 1 - e) - 1)
     const pose: Pose = { position: hold.position.clone().addScaledVector(forward(hold.quaternion), -sigma), quaternion: hold.quaternion.clone(), vfov: hold.vfov }
     const a = b.p.arrive
     if (a && a.swingDeg !== 0) {
-      const left = 1 - smoother(ramp(a.from ?? SWING_FROM, 1, x))
+      const left = shape ? shape.swingLeft(x) : 1 - smoother(ramp(a.from ?? SWING_FROM, 1, x))
       const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(a.axis[0], a.axis[1], a.axis[2]).normalize(), THREE.MathUtils.degToRad(a.swingDeg) * left)
       pose.position.applyQuaternion(q)
       pose.quaternion.premultiply(q)
     }
     if (a?.offset) {
-      const left = 1 - smoother(ramp(OFFSET_FROM, 1, x))
+      const left = shape ? shape.offsetLeft(x) : 1 - smoother(ramp(OFFSET_FROM, 1, x))
       const half = THREE.MathUtils.degToRad(hold.vfov) / 2
       pose.quaternion.multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(a.offset[1] * half * left, a.offset[0] * half * left, 0, 'YXZ')))
     }
@@ -173,6 +214,80 @@ export class FilmDirector implements Director {
       if (clear) return u
     }
     return end
+  }
+
+  clearOf(i: number, shape: TravelShape): number {
+    const a = this.plans[i]!
+    const seg = a.seg.travel!
+    const dur = seg.end - seg.start
+    const master = config.formats[config.formatKeys.master]!
+    const steps = 600
+    for (let k = 1; k < steps; k++) {
+      const u = k / steps
+      const time = seg.start + u * dur
+      const from = this.toWorld(i, this.leaving(i, time))
+      const to = this.toWorld(i + 1, this.approachLocal(i + 1, 0, time, shape))
+      const q = shape.turn(from.quaternion, to.quaternion, u)
+      if (!this.leavingThings(i, time).some((t) => inFrame(q, from.vfov, master.width / master.height, t.to, t.radius, shape.look.clearDeg))) return u
+    }
+    return 1 - 1 / steps
+  }
+
+  private hideSun(): void {
+    const id = this.plans[0]!.id
+    const tries: { shape: TravelShape; span: [number, number]; off: number }[] = []
+    for (let b = -SUN_BOW_REACH; b <= SUN_BOW_REACH; b += 3) {
+      const shape = new TravelShape(id, { bowDeg: b })
+      this.shapes[0] = shape
+      tries.push({ shape, span: this.sunHidden(), off: Math.abs(b) })
+    }
+    const long = tries.filter((t) => t.span[1] - t.span[0] >= SUN_HIDDEN).sort((p, q) => p.off - q.off)[0]
+    if (long) {
+      this.shapes[0] = long.shape
+      const w = long.span[1] - long.span[0]
+      this.sunSwapSpan = [long.span[0] + 0.2 * w, long.span[1] - 0.2 * w]
+    } else this.shapes[0] = new TravelShape(id)
+  }
+
+  private sunHidden(): [number, number] {
+    const seg = this.plans[0]!.seg.travel!
+    const master = config.formats[config.formatKeys.master]!
+    const aspect = master.width / master.height
+    const la = this.sunFor(0).radius
+    const lb = this.sunFor(1).radius
+    const steps = 180
+    let best: [number, number] = [0, 0]
+    let open = -1
+    for (let k = 1; k <= steps; k++) {
+      const u = k / steps
+      const pose = this.travelCamera(0, seg.start + u * (seg.end - seg.start))
+      const disc = Math.sin(Math.min(mix(la, lb, smooth(ramp(0.25, 0.8, u))) * SUN_HALO, 1.5))
+      const seen = k === steps || inFrame(pose.quaternion, pose.vfov, aspect, this.frames[0]!.origin.clone().sub(pose.position), SUN_HALO, 0) || inFrame(pose.quaternion, pose.vfov, aspect, this.sunWorld, disc, 0)
+      if (!seen && open < 0) open = u
+      if (seen && open >= 0) {
+        if (u - open > best[1] - best[0]) best = [open, u]
+        open = -1
+      }
+    }
+    return best
+  }
+
+  sunSwapOf(): { span: [number, number]; bowDeg: number } {
+    return { span: this.sunSwapSpan, bowDeg: this.shapes[0]?.look.bowDeg ?? 0 }
+  }
+
+  clearAtOf(i: number): number {
+    return this.clear[i] ?? 0
+  }
+
+  leavingThings(i: number, time: number): { name: string; to: THREE.Vector3; radius: number }[] {
+    const a = this.plans[i]!
+    const from = this.toWorld(i, this.leaving(i, time))
+    const f = this.frames[i]!
+    const at = (p: THREE.Vector3): THREE.Vector3 => p.applyQuaternion(f.rotation).add(f.origin).sub(from.position)
+    const out = [{ name: a.id, to: at(new THREE.Vector3()), radius: Math.max(1, a.fit.rings?.outer ?? 0) }]
+    ;(a.fit.moons ?? []).forEach((m, k) => out.push({ name: a.id + ' moon ' + k, to: at(new THREE.Vector3(m.position[0], m.position[1], m.position[2])), radius: m.radius }))
+    return out
   }
 
   private toWorld(i: number, p: Pose): Pose {
@@ -230,6 +345,42 @@ export class FilmDirector implements Director {
     this.approach.push(dLocal.clone().applyQuaternion(best))
   }
 
+  private travelCamera(index: number, time: number): Pose {
+    const seg = this.plans[index]!.seg.travel!
+    const u = (time - seg.start) / (seg.end - seg.start)
+    const from = this.toWorld(index, this.leaving(index, time))
+    const shape = this.shapes[index]!
+    const x = ramp(this.clear[index + 1]!, 1, u)
+    const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
+    const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
+    if (index === 0) {
+      const g = easeInOut(ramp(0, SUN_PULL_END, u))
+      const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
+      from.position.lerp(radial, smooth(u / 0.12))
+    }
+    const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
+    return { position, quaternion: shape.turn(from.quaternion, to.quaternion, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
+  }
+
+  private pin(): void {
+    const m = this.plans.findIndex((p) => p.id === world.stop)
+    const at = this.frames[m]
+    if (!at) return
+    const rotation = new THREE.Quaternion().fromArray(world.rotation)
+    const origin = new THREE.Vector3().fromArray(world.origin)
+    const turn = rotation.clone().multiply(at.rotation.clone().invert())
+    const base = at.origin.clone()
+    this.frames.forEach((f, i) => {
+      if (i === m) return
+      f.origin.sub(base).applyQuaternion(turn).add(origin)
+      f.rotation.premultiply(turn).normalize()
+    })
+    at.rotation.copy(rotation)
+    at.origin.copy(origin)
+    for (const a of this.approach) a.applyQuaternion(turn)
+    this.sunWorld.fromArray(world.sun)
+  }
+
   beginOf(i: number): number {
     return this.begin[i] ?? 0
   }
@@ -269,14 +420,9 @@ export class FilmDirector implements Director {
       const i = this.plans.length - 1
       const p = this.plans[i]!
       const s = state(i, 'orbit')
-      const lb = config.segments.find((x) => x.kind === 'lookback')!
-      const look = (t: number): Pose => {
-        const left = 1 - easeSettle(ramp(lb.start - 1, config.durationSeconds, t))
-        const position = this.lookbackPose.position.clone().multiplyScalar(1 + LOOKBACK.pullPerSecond * (t - lb.start)).applyAxisAngle(this.lookbackUp, THREE.MathUtils.degToRad(LOOKBACK.orbitDeg * left))
-        return { position, quaternion: this.lookbackAim(position, LOOKBACK.settleDeg * left), vfov: this.lookbackPose.vfov }
-      }
+      const look = (t: number): Pose => this.lookback(t)
       const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived) }
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: mix(p.p.light.skyExposure, LOOKBACK.skyExposure, arrived) }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
@@ -287,7 +433,7 @@ export class FilmDirector implements Director {
         const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
         const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
         pose = inSet(s, local)
-        dust = Math.sin(Math.PI * u) * 0.6
+        dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
       } else {
         pose = inSet(s, look(time))
@@ -295,29 +441,37 @@ export class FilmDirector implements Director {
       }
       sets = [s]
       near = 0.2
-      const t = this.sky.orbits[p.id]
+      const t = this.sky.orbits[config.endingId]
       if (t) skyTurn = t
     } else if (segment.kind === 'travel' && index + 1 < this.plans.length) {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
-      const from = this.toWorld(index, this.leaving(index, time))
-      const begin = this.begin[index + 1]!
-      const to = this.toWorld(index + 1, this.approachLocal(index + 1, ramp(begin, 1, u), time))
-      if (index === 0) {
-        const g = easeInOut(ramp(0, SUN_PULL_END, u))
-        const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
-        from.position.lerp(radial, smooth(u / 0.12))
-      }
-      const position = u < begin ? from.position.clone() : to.position.clone()
-      const quaternion = from.quaternion.clone().slerp(to.quaternion, easeInOut(ramp(0, this.turnEnd(index), u)))
-      pose = { position, quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
+      const begin = this.clear[index + 1]!
+      pose = this.travelCamera(index, time)
+      const position = pose.position
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
-      const leaveWeight = index === 0 ? 1 - smooth(ramp(0.3, 0.42, u)) : u < begin ? 1 : 0
-      if (index === 0) sunWeight = smooth(ramp(0.3, 0.42, u))
-      sets = [state(index, 'orbit', leaveWeight), state(index + 1, 'orbit')]
+      const leaveWeight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < begin ? 1 : 0
+      if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
+      const arriving = state(index + 1, 'orbit')
+      const midTime = (frame + config.shutterFraction * 0.5) / config.fps
+      if (Math.abs(time - midTime) > 1e-9) {
+        const to = arriving.origin.clone().sub(position)
+        const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
+        const lock = 1 - smooth(ramp(LOCK_PX[0], LOCK_PX[1], px))
+        if (lock > 0) {
+          const mid = this.travelCamera(index, midTime)
+          const qs = pose.quaternion.clone().multiply(drift(time))
+          const seen = to.clone().normalize().applyQuaternion(qs.clone().invert())
+          const held = arriving.origin.clone().sub(mid.position).normalize().applyQuaternion(mid.quaternion.multiply(drift(midTime)).invert())
+          const r = new THREE.Quaternion().slerp(qs.clone().multiply(new THREE.Quaternion().setFromUnitVectors(seen, held)).multiply(qs.clone().invert()), lock)
+          arriving.origin.copy(to.applyQuaternion(r).add(position))
+          arriving.rotation.premultiply(r)
+        }
+      }
+      sets = [state(index, 'orbit', leaveWeight), arriving]
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
@@ -376,7 +530,7 @@ export class FilmDirector implements Director {
         const t = this.sky.turns[p.id]
         if (t) skyTurn = t
       } else {
-        const t = this.sky.orbits[(segment.kind === 'rise' && index > 0 ? this.plans[index + 1] ?? p : p).id]
+        const t = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id]
         if (t) skyTurn = t
       }
       pose = inSet(s, local)
