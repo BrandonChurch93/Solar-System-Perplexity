@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "north-central dust storm; native crop in image-02.png tile A",
+      "what": "the spiral is a soft painted layer: smeared wisps, no self-shadow, and a frequency disconnect from the sharp canyons under it",
+      "fix": "break the spiral into multi-scale dust that occludes and shadows the ground"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "north-central dust cyclone; native crop in image-06.png tile A",
+      "what": "the cyclone reads as painted rather than turbulent dust, with soft brush-like arms over the plains",
+      "fix": "replace the brush spiral with finer turbulent structure that interacts with the terrain"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "open plains and shield slopes in tiles B, D, and F",
+      "what": "those surfaces go airbrushed and low-frequency beside the sharp canyon scarps, so the crops do not hold at native size",
+      "fix": "add fine regolith and small craters in the smooth regions"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "foreground moon, lower center; native crop in image-02.png tile G",
+      "what": "the moon is softer than the planet, and the large crater wall on the right is slightly stretched",
+      "fix": "match the moon's texture scale to the planet and relax the stretched crater mapping"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_sonnet_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png (crops in image-14/15/16.png)",
+      "where": "Globe surface, especially the Valles Marineris-like trench on the right and the surrounding terrain (crops A, F, H, P)",
+      "what": "Surface looks melted and smeared, like an upscaled or diffusion-generated image. The trench has wobbly, liquid edges, and craters and ridges blur into mush at native size. No consistent crisp detail; reads as painted, not as a rendered planet.",
+      "fix": "Rebuild the globe from a real high-resolution height and albedo map with normal-mapped relief and fine detail noise. Do not stretch a low-resolution texture. Check at 1:1."
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Lower-center swirl storm and the tan cloud smear above it (crops D, F, H, P, U)",
+      "what": "The spiral is a tight, painterly whorl with streaky, liquid-looking bands. It does not read as a cloud layer: no thickness, no shadow, no edge. The cloud streaks in the center look like brush strokes laid over the surface.",
+      "fix": "Make clouds a separate layer with soft volumetric noise, a slight shadow onto the surface, and a thinner, believable swirl. Remove the brush-stroke streaks."
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "White polar cap at lower left (crops D, G, O)",
+      "what": "The cap is a blown-out, nearly pure white blob with a swirled pattern and a ragged edge with scattered white flecks. It is much brighter than anything else on the planet and looks pasted on. It sits far from the pole, near the limb, with no matching foreshortening.",
+      "fix": "Lower its brightness so it keeps detail. Give it a soft, irregular edge that breaks up into the terrain. Shade it with the same lighting as the surface and place it at the correct latitude with correct foreshortening."
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Upper and left of the globe, dark side (crops A, B, J, K)",
+      "what": "The unlit area shows faint vertical striations and a grid-like texture, with fine vertical line artifacts at the left edge of crop A. This looks like a tiling or compression pattern. The dark side is a flat murky maroon with no soft terminator; the planet fades to black with no gradual shading.",
+      "fix": "Remove the vertical line pattern and re-render the dark side without banding. Add a soft, gradual terminator with a little earthshine or ambient light so the dark side keeps some surface detail."
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "Lower right and bottom of the terrain (crops E, G, Q, R; bottom strip crops S, T, U, V, W)",
+      "what": "The shadowed lower terrain is muddy and smeared with little real detail. Crop E and the lower-right quadrant read as an airbrushed, melted rock surface. The bottom strip (S to W) is very dark with faint blocky noise and soft, directionless streaks, with no clear fine structure.",
+      "fix": "Add fine rock detail, grain and small debris to the shadowed foreground. Lift shadow detail slightly. Remove the compression-like blockiness in the dark bottom strip."
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "Horizon glow band (crops B, C, H, I, J, K, L)",
+      "what": "The warm horizon glow is a flat, hot band with a fairly hard lower edge where it meets the ground. It looks like a gradient layered on top, because the ground does not fade into haze beneath it. The bright strip at the right is overexposed and flat, with no detail.",
+      "fix": "Blend the atmosphere into the ground with aerial perspective, so distance haze builds up smoothly and the glow does not stop at a hard line. Add some structure to the glow and keep it below clipping."
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "Middle and far canyon walls (crops B, F, I, J, K)",
+      "what": "The far terraces and cliff faces repeat the same stripe and ledge patterns. Some far plateau detail goes soft, and the fog patches in the middle ground (crops A, P, Q) have a smeared look.",
+      "fix": "Vary the strata and ledge patterns and sharpen the far geometry before adding haze. Break up the fog with finer, less uniform structure."
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Limb rim (crops G, H, I, O, Q, U, V)",
+      "what": "The thin cyan atmosphere rim is a uniform, narrow line that does not change along the limb. It gets brighter and creamier at the bottom with a faint doubled edge. It does not widen toward the lit side or fade properly on the dark side.",
+      "fix": "Vary the atmospheric rim with the lighting: wider and brighter on the lit side, fading toward the terminator. Remove the doubled edge."
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Star field (crops T, W, V, G)",
+      "what": "Stars are uneven. A few bright ones in crop T are soft, colored blobs. Star density and brightness differ sharply between the lower-left corner and the rest of the sky. Crop W has a stray pink dot with a small horizontal smear near its center.",
+      "fix": "Use point-like stars with consistent sizes and falloff. Remove the stray colored dot and smear, and blend the density change into a smooth Milky Way band."
+     }
+    ]
+   }
+  }
+ ]
+}
