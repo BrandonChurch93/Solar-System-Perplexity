@@ -23,6 +23,7 @@ export interface DeckLook {
   flashColor: [number, number, number]
   flashBody: [number, number]
   beyond: [number, number, number]
+  detail: [number, number, number, number]
 }
 
 const VORTICES = 6
@@ -75,6 +76,7 @@ uniform vec4 uFlash[${FLASHES}];
 uniform vec3 uFlashColor;
 uniform vec2 uFlashBody;
 uniform vec3 uBeyond;
+uniform vec4 uDetail;
 uniform vec4 uHaze;
 uniform vec4 uHazeColor;
 uniform float uGain;
@@ -136,6 +138,10 @@ void main() {
   vec2 out2 = max(max(-px, px - uCanvas), vec2(0.0));
   float off = smoothstep(0.0, uBeyond.z, max(out2.x, out2.y));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float pix = length(vec2(dFdx(q.y), dFdy(q.y)));
+  vec2 ax = dFdx(vPx);
+  vec2 ay = dFdy(vPx);
+  float mag = uImage.y * pix / sqrt(max(abs(ax.x * ay.y - ax.y * ay.x), 1e-9));
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = inverseFilmic(texel);
   float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
@@ -148,6 +154,15 @@ void main() {
     float body = fine.r + (fine.g - 0.5) * uWispSun.z;
     float shade = textureGrad(uWisp, wuv + uWispSun.xy * uWispShape.w * uWispShape.x, wx * 3.0, wy * 3.0).r;
     float wv = ((body - 0.5) * uWispShape.y - (shade - 0.5) * uWispShape.z) * nearby;
+    float open = smoothstep(uDetail.z, uDetail.w, mag) * nearby;
+    for (int j = 0; j < (open > 0.0 ? 1 : 0); j++) {
+      vec2 duv = warped * uDetail.y;
+      vec2 dx = wx / uWispShape.x * uDetail.y * uGrad;
+      vec2 dy = wy / uWispShape.x * uDetail.y * uGrad;
+      vec2 a1 = textureGrad(uWisp, duv, dx, dy).rg;
+      float a2 = textureGrad(uWisp, duv * 2.7 + 0.31, dx * 2.7, dy * 2.7).g;
+      wv += uDetail.x * open * ((a1.r - 0.5) + 0.7 * (a1.g - 0.5) + 0.6 * (a2 - 0.5));
+    }
     col *= max(1.0 + wv, 0.0);
   }
   vec3 flash = vec3(0.0);
@@ -159,6 +174,7 @@ void main() {
   }
   col += flash * (uFlashBody.x + uFlashBody.y * lum) * alpha;
   float fog = 0.0;
+  float fogTone = 1.0;
   for (int k = 0; k < (uHaze.x > 0.0 ? 1 : 0); k++) {
     vec3 hp = vEye + (vLocal - vEye) * uHaze.z - uS;
     vec2 hg = vec2(dot(hp, uEx), dot(hp, uEy) * 0.35) * uHaze.y;
@@ -168,8 +184,9 @@ void main() {
     float elev = asin(clamp((miss + uRadius) / dC, 0.0, 1.0)) - asin(clamp(uRadius / dC, 0.0, 1.0));
     float above = exp(-max(elev, 0.0) / uHaze.w) * (1.0 - smoothstep(uHazeColor.a * 0.45, uHazeColor.a * 0.85, elev));
     fog = thick * (alpha + (1.0 - alpha) * above);
+    fogTone = 0.8 + 0.4 * hv;
   }
-  col = (col * (1.0 - fog) + uHazeColor.rgb * fog) * uGain * vig;
+  col = (col * (1.0 - fog) + uHazeColor.rgb * fogTone * fog) * uGain * vig;
   if (uDiag >= 2 && alpha < 0.5) discard;
   alpha += (1.0 - alpha) * fog;
   float texels = mix(diagTexels(px / uCanvas * uWideSize), diagTexels(ip / uImage * uCoreSize), inCore);
@@ -291,7 +308,7 @@ export class Deck {
         uWispMove: { value: new THREE.Vector4(0, 0, w.fade[0], w.fade[1]) },
         uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
         uFlash: { value: flash }, uFlashColor: { value: new THREE.Vector3().fromArray(look.flashColor) }, uFlashBody: { value: new THREE.Vector2().fromArray(look.flashBody) },
-        uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) },
+        uBeyond: { value: new THREE.Vector3().fromArray(look.beyond) }, uDetail: { value: new THREE.Vector4(look.detail[0], 1 / look.detail[1], look.detail[2], look.detail[3]) },
         uHaze: { value: new THREE.Vector4(0, 1 / look.haze.tile, look.haze.layer, THREE.MathUtils.degToRad(look.haze.height)) }, uHazeColor: { value: new THREE.Vector4(look.haze.color[0], look.haze.color[1], look.haze.color[2], THREE.MathUtils.degToRad(look.skyRimDeg)) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
       },

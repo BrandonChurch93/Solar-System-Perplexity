@@ -95,6 +95,21 @@ def seam(canvas, image, scale=320.0, band=12, blend=24):
     np.clip(canvas, 0, 255, out=canvas)
 
 
+def night(canvas, elev, level=6.5):
+    lum = canvas.mean(-1)
+    calm = cv2.GaussianBlur(lum, (0, 0), 60)
+    dark = 1 - np.clip((calm - 5) / 12, 0, 1)
+    ys, xs = np.mgrid[0:CH, 0:CW].astype(np.float32)
+    dx = np.maximum(np.maximum(OX - xs, xs - (OX + W)), 0)
+    dy = np.maximum(np.maximum(OY - ys, ys - (OY + H)), 0)
+    outside = np.clip(np.hypot(dx, dy) / 240, 0, 1)
+    low = np.clip((ys - (OY + 0.55 * H)) / (0.25 * H), 0, 1) * (elev < -0.5)
+    source = cv2.GaussianBlur(lum[:, ::-1], (0, 0), 1.2)
+    add = level * np.clip(source / (cv2.GaussianBlur(source, (0, 0), 120) + 6), 0, 2.2) * dark * outside * low
+    canvas += add[..., None] * np.array([0.8, 0.95, 1.2], np.float32)
+    print('night lift mean over the lifted part', float(add[add > 0.5].mean()) if (add > 0.5).any() else 0.0, 'share of canvas', float((add > 0.5).mean()))
+
+
 def main():
     canvas = np.load(f'{WORK}/canvas.npy')
     image = cv2.imread('references/approved/jupiter-close.jpg')[..., ::-1].astype(np.float32)
@@ -105,6 +120,8 @@ def main():
     sky = elev > 0
     np.save(f'{WORK}/canvas-elev.npy', elev.astype(np.float32))
     np.save(f'{WORK}/canvas-phi.npy', phi.astype(np.float32))
+
+    night(canvas, elev)
 
     fill = canvas[OY:2 * OY, :OX][::-1]
     blank = np.zeros((CH, CW), bool)
@@ -127,25 +144,28 @@ def main():
     e, p = elev[box].astype(np.float64), phi[box].astype(np.float64)
     glow_lin = lin(glow[box])
     own = np.maximum(lin(image) - glow_lin, 0)
-    x, y = geom.project(geom.unpolar(p, KEEP[0] + np.abs(e - KEEP[0])))
-    mirror = cv2.remap(own, x.astype(np.float32), y.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    full = lin(image).astype(np.float64)
+    band = (e < -0.3) & (e > -1.2)
+    pb = np.round((p - p.min()) / 0.5).astype(int)
+    n = int(pb.max()) + 1
+    acc = np.zeros((n, 3))
+    cnt = np.zeros(n)
+    np.add.at(acc, pb[band], full[band])
+    np.add.at(cnt, pb[band], 1)
+    have = cnt > 50
+    idx = np.arange(n)
+    far = np.stack([np.interp(idx, idx[have], acc[have, c] / cnt[have]) for c in range(3)], 1)
+    far = ndimage.gaussian_filter1d(far, 4, axis=0, mode='nearest')
+    print('haze fill below the horizon by azimuth, scene linear x1000', np.round(far[::max(n // 8, 1)] * 1000, 1).tolist())
+    haze = far[pb] * (1 - np.exp(np.minimum(e, 0) / 1.5))[..., None]
     w = np.clip((e - KEEP[0] + 0.15) / 0.15, 0, 1)[..., None].astype(np.float32)
-    patch = own * w + mirror * (1 - w)
-    lost = ((x < 0) | (x > W - 1) | (y < 0) | (y > H - 1)) & (w[..., 0] < 1)
-    head = np.cumprod(lost, axis=1).astype(bool)
-    tail = np.cumprod(lost[:, ::-1], axis=1).astype(bool)[:, ::-1] & ~head
-    cols = np.arange(W)[None, :]
-    src = np.where(head, 2 * head.sum(1)[:, None] - 1 - cols, np.where(tail, 2 * (W - tail.sum(1))[:, None] - 1 - cols, cols))
-    src = np.clip(src, 0, W - 1)
-    rows = np.broadcast_to(np.arange(H)[:, None], src.shape)
-    still = lost[rows, src]
-    print('mirror samples outside the picture', int(lost.sum()), 'filled by row reflection', int((lost & ~still).sum()), 'left on the background', int(still.sum()))
-    back = np.median(own[e > 2.0], axis=0)
-    patch = np.where(lost[..., None], np.where(still[..., None], back, patch[rows, src]), patch).astype(np.float32)
+    patch = (own * w + haze * (1 - w)).astype(np.float32)
     np.save(f'{WORK}/sky-lin.npy', patch.astype(np.float32))
     keep = np.clip((KEEP[1] - e) / (KEEP[1] - KEEP[0]), 0, 1)[..., None].astype(np.float32)
-    calm = cv2.GaussianBlur(patch, (0, 0), 6)
-    held = code(np.maximum(lin(image) - calm, 0) * keep + glow_lin * (1 - keep))
+    whole = lin(image).astype(np.float32)
+    star = np.maximum(whole - cv2.morphologyEx(whole, cv2.MORPH_OPEN, np.ones((9, 9), np.uint8)), 0) * (e > 0)[..., None]
+    calm = cv2.GaussianBlur(np.maximum(patch - star * w, 0).astype(np.float32), (0, 0), 6)
+    held = code(np.maximum(whole - star - calm, 0) * keep + glow_lin * (1 - keep))
     canvas[sky] = glow[sky]
     part = canvas[box]
     part[sky[box]] = held[sky[box]]
@@ -160,6 +180,9 @@ def main():
     glow2 = cv2.remap(rim, u2, v2, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
     keep2 = np.clip((KEEP[1] - elev2) / (KEEP[1] - KEEP[0]), 0, 1)[..., None].astype(np.float32)
     calm2 = cv2.resize(calm, (2 * W, 2 * H), interpolation=cv2.INTER_LINEAR)
+    opened = cv2.morphologyEx(core, cv2.MORPH_OPEN, np.ones((17, 17), np.uint8))
+    core[elev2 > 0] = np.minimum(opened, core)[elev2 > 0]
+    del opened
     held2 = code(np.maximum(lin(core) - calm2, 0) * keep2 + lin(glow2) * (1 - keep2))
     core[elev2 > 0] = held2[elev2 > 0]
     np.save(f'{WORK}/core-final.npy', core)

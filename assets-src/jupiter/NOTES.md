@@ -168,6 +168,32 @@ Dive and rise
 - Fix: `side -0.24` (the camera starts right of the judged pose and drifts left toward the storm; the right apron had 960 px spare, the left 190) and `entryBack 0.1`. edge.ts: no border vertex in frame on any frame 3024 to 3269.
 - Texels view at the old values: 3060 soft 0, min 1.29; 3239 soft 0, min 1.50.
 
+## After milestone 3: the Builder's order (07:15 UTC)
+
+Builder's list, worst first: (1) cover fog outside the limb against black sky at 3019 and 3275, nothing may hang in space; (2) the quick first step of the cover 3026 to 3028; (3) terrain: soft bottom left at 3239, very dark bottom right apron, flow and wisps must be seen moving; (4) mirrored stars below the horizon in the terrain sky patch: fill with haze color, no stars; (5) Io close at 3281 is fine if it does not cover the storm at 3296. The 5 deg horizon step under full cover is accepted.
+
+Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `strip_exit3.jpg`, `strip_ends3.jpg`):
+- (1) The ring outside the limb was the engine cover between 1.0 and 1.08 radii (`coverShell`), not my veil (the veil is mixed into the surface color, body pixels only). `coverShell [1.0, 1.015]`. On the terrain side the engine cover has no shell and covers the sky with `cover color x coverTop`: `coverTop [0.3, 0.05]` (was [0.6, 0.3]) so the sky above the horizon goes dark under the cover instead of brown (Mars [0.25, 0.04]).
+- (2) The engine cover's alpha runs from full to about one third within about 3 frames whatever `coverEdge` is (amount 0.85 to 0.3; with `last` 0.5 that is 3026 to 3029; `last` above 0.5 leaves the cover short of full at the cut). So the ten frames come from my own deck fog: `look.deck.haze` density 1.6 to 8, power 2 to 2.5 (clear 0.8 s). Optical depth k = 8 x h^2.5: near field (reach 1.2, thin pattern) 0.97 at 3024, 0.88 at 3028, 0.76 at 3031, 0.58 at 3034, 0.38 at 3037, 0.19 at 3040; far field clear by 3047. The fog color now carries the fog pattern (x 0.8 to 1.2), it was flat.
+- (3) `deck.ts` detail layer (`look.deck.detail [amount 0.3, tile 0.7 units, magnification 1.1 to 1.9]`): fine turbulence from `wisp.png` in the turned ground coordinates (it sits on the cloud texture), multiplied in only where the texture is magnified against the judged frame (mag = judged footprint / current footprint from screen derivatives, 1 at the judged frame, so 3150 does not change). `canvas.py night()` lifts the black night side of the aprons to about 6 of 255 with cloud structure.
+- (4) `canvas.py`: the sky patch below 0.4 deg is the mirror of a star free copy of the sky.
+
+## Checks of the Builder's list by picture (07:35 UTC)
+
+- `strip_cover3.jpg`, `strip_exit3.jpg`: (1) no ring outside the limb at 3019, 3021, 3273, 3275 (the cream halo that stays is the limb glow of the orbit view). (2) the deck fog now thins from 3028 to about 3044 and gathers from 3246 to 3266. On the rise the globe veil is altitude driven: altitude 0.045 at 3270, 0.26 at 3275, 0.9 at 3280, 2.3 at 3286, so it thins until 3286.
+- Found in the same strips: a black belt between the limb and a detached thin rim line, on every terrain frame where the camera is higher than at the judged frame (3024 to about 3100, and the exit). Cause: the deck's wall above the horizon is transparent above the analytic limb, the limb drops against the sky when the camera is higher, and the sky patch below its horizon was the dark mirror fill. Fix as the Builder said: the sky patch below the horizon is the haze color of the far deck per azimuth (`canvas.py`, RECIPE step 4). Check `strip_band.jpg`.
+- The page console error "texSubImage2D: Overload resolution failed" came from my `set.ts`: `wispMap.needsUpdate = true` (to get `wrapT` repeat) asked three for a second upload after the engine had closed the bitmap. The upload failed, the wrap mode was still set, so the picture was right. Fix: `wispMap.source.dataReady = false` before `needsUpdate`, three then only sets the parameters.
+- Storm rotation raised: `vortices[0]` 5 to 7 deg/s, wisps 9 to 12 deg/s (dt 0 at the judged frame, 3150 unchanged).
+- (5) Io at 3296 sits below the storm, clear of it (`r3_quad.jpg`).
+
+## The sky turns against the deck in the terrain view (07:45 UTC)
+
+- The engine sets the terrain set's rotation to `frame x turn(time) x terrainFrame` (`film.ts` state()): the deck rides the spinning planet (`spinDegPerSecond 1.6`), the sky does not. So the sky and its patch move against the limb by about 1.07 deg per second in the pitch direction: at 3060 the patch horizon is 3.2 deg above the limb, at 3150 on it, after 3150 below it (stars set behind the limb). Camera height adds only 0.25 deg at 3060 (`out/work/jupiter/tools/dip.ts`, `lines.ts`: limb at x 1500 predicted y 452, seen 450; patch horizon seen at 375).
+- So before the judged frame there is always a strip between the limb and the patch horizon that shows the sky patch below its horizon. Mirror fill: mirrored stars (the Builder's item 4). Star free mirror: a black belt under a detached line. Flat haze color: a flat belt with a hard top (`strip_band.jpg`). Now: haze color of the far deck per azimuth x (1 - exp(elev / 1.5 deg)), dark at the patch horizon, so it reads as glow over the limb (`strip_band2.jpg`).
+- A star of the approved picture 0.3 deg above the horizon was baked into `deck-core.jpg` (dot with a dark red halo, seen riding on the limb at 3200 and 3239). `canvas.py` now takes stars out of the deck's sky rows (opening) and subtracts the star free blurred patch.
+- `canvas.py` needs about 6 GB: it is killed (exit 137, no message through a pipe) when a render runs beside it. Run it alone and read `out/work/jupiter/canvas.log`.
+- Do not `pkill -f batch` only: `strip.sh` and the npm child keep running. Kill `strip.sh`, `tools/still.ts`, `tools/compare.ts` too and check with `ps`.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
