@@ -25,6 +25,12 @@ RING_STEP_PX = 0.25
 TURN = 4096
 FLOOR = 1e-3
 QUALITY = 95
+BOLT_CELLS = ((23.33, 17.8, 6.5), (9.32, 14.74, 6.5))
+BOLT_SHARE = 0.15
+BOLT_FLOOR = 0.002
+BOLT_REACH = 1.5
+BOLT_GROW_PX = 3.5
+BOLT_SOFT_PX = 3.0
 DOTS = 9
 DOT_GAIN = 1.5
 DOT_SIGMA = 3.0
@@ -214,6 +220,33 @@ def strip(ring, limb):
     return np.concatenate([out, np.ones(out.shape[:2] + (1,))], 2).astype(np.float32)
 
 
+def turned(q, v):
+    u = np.array(q[:3])
+    return v + 2 * np.cross(u, np.cross(u, v) + q[3] * v)
+
+
+def bolts(fit, on, off, limb, w, h):
+    luma = np.array([0.2126, 0.7152, 0.0722], np.float32)
+    calm = cv2.medianBlur(off @ luma, 5)
+    lit = (on - off) @ luma > BOLT_SHARE * calm + BOLT_FLOOR
+    cam = np.array(fit['camera']['position'])
+    t = np.tan(np.radians(fit['vfovDeg']) / 2)
+    a = frame()
+    yy, xx = np.mgrid[0:h, 0:w]
+    near = np.zeros((h, w), bool)
+    for lon, lat, radius in BOLT_CELLS:
+        lo, la = np.radians(lon), np.radians(lat)
+        p = turned(fit['globe']['quaternion'], np.array([np.cos(la) * np.sin(lo), np.sin(la), np.cos(la) * np.cos(lo)])) - cam
+        x, y = (p[0] / -p[2] / (t * w / h) + 1) * w / 2, (1 - p[1] / -p[2] / t) * h / 2
+        x, y = a[0, 0] * x + a[0, 1] * y + a[0, 2], a[1, 0] * x + a[1, 1] * y + a[1, 2]
+        near |= np.hypot(xx + 0.5 - x, yy + 0.5 - y) < BOLT_REACH * np.radians(radius) * limb[2]
+    size = 2 * int(np.ceil(BOLT_GROW_PX)) + 1
+    grown = cv2.dilate((lit & near).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (size, size)))
+    soft = np.clip(cv2.GaussianBlur(grown, (0, 0), BOLT_SOFT_PX) * 2, 0, 1)
+    print('bolt mask: %d film px lit, weight over %.0f film px' % ((lit & near).sum(), soft.sum()))
+    return soft
+
+
 def write(logq, ring, fit, limb):
     np.save(WORK + '/logq.npy', logq.astype(np.float32))
     np.save(WORK + '/rim.npy', ring.astype(np.float32))
@@ -248,8 +281,22 @@ if __name__ == '__main__':
     if mode == 'measure':
         measure(fit, sys.argv[2], sys.argv[3])
         sys.exit()
+    if mode == 'bolts':
+        unlit, plain = scene(sys.argv[3]), scene(sys.argv[4])
+        spot = at(limb, np.minimum(rho, 1 - 1e-6), th)
+        if os.path.exists(WORK + '/bolts.npy'):
+            weight = np.load(WORK + '/bolts.npy')
+        else:
+            soft = bolts(fit, scene(sys.argv[2]), unlit, limb, w, h)
+            if len(sys.argv) > 5:
+                cv2.imwrite(sys.argv[5], (soft * 255).astype(np.uint8))
+            weight = sample(soft, spot)
+            np.save(WORK + '/bolts.npy', weight.astype(np.float32))
+        step = np.log2((sample(plain, spot) + FLOOR) / (sample(unlit, spot) + FLOOR))
+        write(np.clip(np.load(WORK + '/logq.npy') + weight[..., None] * step, -STOPS / 2, STOPS / 2), np.load(WORK + '/rim.npy'), fit, limb)
+        sys.exit()
     if mode not in ('build', 'refine'):
-        raise SystemExit('mode: neutral, dots, measure FLAT DOTTED, build FLAT, refine FILM [gain]')
+        raise SystemExit('mode: neutral, dots, measure FLAT DOTTED, build FLAT, refine FILM [gain], bolts LIT UNLIT PLAIN [MASKOUT]')
     film = scene(sys.argv[2])
     if film.shape[:2] != (h, w):
         raise SystemExit('the still must be %d by %d' % (w, h))
@@ -265,4 +312,6 @@ if __name__ == '__main__':
     inside = np.minimum(rho, 1 - 1e-6)
     step = calm(hero, hero_k, level, film, limb, first)
     fine = ratios(hero, hero_k, level, film, limb, inside, th, first) - lookup(step, limb, inside, th, True)
+    if not first and os.path.exists(WORK + '/bolts.npy'):
+        fine *= 1 - np.load(WORK + '/bolts.npy')[..., None]
     write(np.clip(was + gain * fine, -STOPS / 2, STOPS / 2), np.clip(ring + gain * step, -STOPS / 2, STOPS / 2), fit, limb)

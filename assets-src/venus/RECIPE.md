@@ -51,9 +51,9 @@ Phase 6 polish, item 2 (hold 1185: strands to the edge, grey green rim and gold 
 - `hold-detail.jpg`: byte 128 is a gain of 1 and the 255 levels span 4 stops (`stops` in `hold.json`). The globe shader projects it onto the sphere through the fitted hold camera (`src/stops/venus/fit.json`, map half width 1.016 disc radii, `margin`), so it is painted on the cloud map and turns and drifts with it. Where the layer acts the wrap is read at a fixed level (512 px wide, `look.hold.base`) as the smooth base, and the layer puts the hero's own cloud detail back on top.
 - `hold-rim.bin`: float32 RGBA, 512 cells of azimuth plus one wrap column, 96 rows of radius about the film's silhouette in the view's frame (the closest approach point of the view ray projected through the fitted camera). Rows 0 to 39 lie inside the disc (0.95 to 1 radii, read by `globe.ts`), rows 40 to 95 outside (1 to 1.08 radii, read by `rim.ts`, faded out from 1.05 to 1.07). It is the part of the gain that is smooth along the limb (a median of 15 px runs along each ring before the ratio is taken), so no star enters it (the stars belong to the sky patch, which does not move with the planet). It carries the hero's out of round edge and the glow just past it. It acts only while the camera is within 3 to 6 percent of the fitted distance (`look.hold.near`).
 
-Both weights go to zero with `uLimbFar` in the 0.5 s after the hold, so the dive, the terrain and the rise do not see the hold's light.
+Both weights go to zero with `uLimbFar` in the 0.5 s after the hold, so the dive, the terrain and the rise do not see them.
 
-Items 3 and 4 (night side structure at 1287 and 1586): past the hold the detail map stays alive as a high pass only. `globe.ts` divides its gain by the gain of the same map read at mip level 5 (`look.hold.far.lod`), so the hero's fine cloud structure is carried and its broad light is not painted twice. It acts inside 0.86 to 0.94 of the hold's disc radius (`look.hold.far.inner`), only where the map has at least 1 to 1.25 texels per screen pixel (`look.hold.far.dense`) and not under the motion taps. For that the map went from 1536 to 2048 px (web 1024): at 1287 the screen has 766 px per radius at the nadir, the 2048 map 1008 texels per radius (1.32 per pixel; the 1536 map had 0.99).
+Tried and dropped (23:20): the detail map carried past the hold as a high pass, to give the night side at 1287 and 1586 the hero's structure. Measured at the final tier on the night side at 1287 (standard deviation of luma less its Gaussian of 1 px, levels): round 23 build 4.13, with the carried map 2.33, with the wrap's finest band kept on top 3.18. The wrap on the hero's side already holds the hero's structure and is sharper than the hero's own pixels magnified 1.2 times, so the layer only softened the picture. The map stays at 2048 px for the hold (disc zone 0.56 against 0.72 with 1536).
 
 Why two layers: a single map painted on the globe (takes f1 to f5) reached the same numbers at 1185 but showed a doubled rim at frames 1110 and 1259, because its edge part turned with the clouds (1.4 deg over the hold). The edge light belongs to the view, the cloud detail to the globe.
 
@@ -66,17 +66,23 @@ Script: `assets-src/venus/hold/detail.py`, inputs `references/approved/venus-her
 
 The hero's painted disc is an ellipse (669.8 by 664.3 px at 2816 wide), the film's is a sphere (670.7 by 670.5): the outer 2.5 px at the top and 4.2 px at the bottom of the film's disc take the hero's glow there, so the visible edge is the hero's.
 
-Takes: f1 to f5 (one map, rejected for the doubled rim at the hold's ends), g1 (build), g2, g3 (the 1536 map, kept until 23:00), then the same three steps at 2048 with `SIZE = {'full': 2048, 'web': 1024}`: h1 (build), h2, h3 (kept). `frame.json` and the rim strip's layout did not change.
+5. Lightning (23:30). The hero holds two lightning cells; the film draws them as light that flashes over the cloud (`bolt.jpg`), at full strength at 1185. Fitted against the hero with the flash on, the map under the strokes came out near black (the gain has to take away what the flash adds), which showed as dark cracks in every hold frame where the flash is off, 1150 and 1230 for example. Cure: three stills of frame 1185, final tier, nograin: LIT (as the film is), UNLIT (`flashGain = 0` in `look.ts`) and PLAIN (`flashGain = 0` and `hold.weight = 0`, the wrap alone with its repainted cloud under the strokes), then `python3 assets-src/venus/hold/detail.py bolts LIT UNLIT PLAIN`. Where the flash adds more than 0.15 of the cloud under it (`BOLT_SHARE`), within 1.5 cell radii of the two painted cells (`BOLT_CELLS`, the painted cells of `look.ts`), grown by 3.5 px and feathered by 3 px, the map takes log2(PLAIN / UNLIT), so with the flash off the film shows the wrap's own cloud there. The weight is kept in `out/work/venus/hold/bolts.npy`; a second `bolts` call reuses it, and refine passes leave those texels alone. Run: `bolts`, UNLIT again, `bolts`, LIT again, `refine LIT` (take b5). Both switches are back at 1 afterwards. The first try took the unlit still from frame 1180, where the flash is off by itself: the picture moves 2 to 4 px between 1180 and 1185, the correction landed beside the strokes and smeared the region, so all three stills are of 1185.
+
+Takes: f1 to f5 (one map, rejected for the doubled rim at the hold's ends), g1 (build), g2, g3 (the 1536 map, kept until 23:00), then the same three steps at 2048 with `SIZE = {'full': 2048, 'web': 1024}`: h1 (build), h2, h3, then step 5 (b2 to b5, b5 kept). `frame.json` and the rim strip's layout did not change.
 
 Checks, take g3 (frame 1185, final tier, mean absolute difference from the hero in levels of 255, zones whole, disc inside 395 px, ring 395 to 452 px, halo 456 to 560 px, sky):
 - nograin: 1.95, 0.72, 0.45, 2.96, 2.41 (round 23 build nograin 4.62, 8.65, 5.90, 4.91, 2.41).
 - with grain, as judged: 2.30, 1.25, 1.03, 3.19, 2.68 (round 23 build 4.80, 8.53, 5.95, 5.14, 2.73).
 - High pass luma against the hero in five boxes: shift under 0.03 px, correlation 0.995 to 0.997 (0.62 before), detail level 97 to 99 percent of the hero's.
 
-Checks, take h3 (the 2048 map, same zones):
+Checks, take h3 (the 2048 map, same zones; it had the dark cracks under the lightning):
 - nograin: 1.90, 0.56, 0.33, 2.96, 2.41.
 - with grain, as judged: 2.27, 1.15, 0.98, 3.19, 2.68.
-- High pass luma against the hero in five boxes: correlation 0.986 to 0.998.
+
+Checks, take b5 (kept):
+- nograin: 1.92, 0.65, 0.26, 2.94, 2.41.
+- High pass luma against the hero: correlation 0.997 to 0.999 in four boxes, 0.845 in the bottom box, which holds the lightning region (there the cloud under the strokes is the wrap's, as in round 23; mean difference from the hero in that region 2.43 levels, round 23 build 7.92).
+- Hold frames 1150 and 1230, final tier: no dark lines under the strokes (`view/b5-bolts.png`).
 - Radial profile across the limb at eight azimuths within 3 levels of the hero except the one pixel on the silhouette at the top (177 against 163) and at -45 deg, 1.006 radii (56 against 67).
 - G17: 1185 median 1.124, p25 0.832 (1.122 before); 1440 median 1.035, p25 0.976.
 - Draft frames 1095, 1110, 1150, 1230, 1259, 1263, 1267, 1271, 1275, 1287: one clean edge in every frame, no doubled rim, the layers gone by 1275.

@@ -71,7 +71,7 @@ export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
 
 export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
-export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, number], weight: 1, near: [0.03, 0.06] as [number, number], far: { inner: [0.86, 0.94] as [number, number], dense: 1.25, lod: 5 } }
+export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, number], weight: 1, near: [0.03, 0.06] as [number, number] }
 
 export const swirl = { lon: -13, lat: 19, deg: 130, wideDeg: 12 }
 
@@ -107,11 +107,13 @@ function step(a: number, b: number, x: number): number {
   return t * t * (3 - 2 * t)
 }
 
+export const flashGain = 1
+
 export function flash(c: Cell, time: number): number {
   const s = ((((time - c.at + 0.15) % c.period) + c.period) % c.period)
   const body = s < 0.3 ? 1 : Math.exp(-(s - 0.3) / 0.22) * (0.72 + 0.28 * Math.cos(s * 41 + c.seed * 2.4))
   const again = 0.55 * Math.exp(-Math.pow((s - 0.66 - 0.07 * seeded(c.seed + 9)) / 0.045, 2))
-  return c.gain * (step(0, 0.07, s) * body + again)
+  return flashGain * c.gain * (step(0, 0.07, s) * body + again)
 }
 
 export const relief = {
