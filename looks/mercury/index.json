@@ -1,9 +1,61 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T11:57:45.577Z",
+ "pushed": "2026-11-21T12:15:57.443Z",
  "head": "8c4fee2b6a67fe14f6765e7fcf34183b21087578",
- "note": "round 8: dive and rise sheets at review after the pose match; 994 and 739 ground bars under the veil in work",
+ "note": "round 8: ground haze in the lowest, fastest frames of dive and rise (no bars at 739 and 994); final checks running",
  "looks": [
+  {
+   "time": "2026-11-21T12:15:56.164Z",
+   "file": "20261121121556164-note-rise-grid-a.jpg",
+   "source": "out/work/mercury/r8/t2/rise-grid-a.jpg",
+   "kind": "note",
+   "label": "rise 990 to 998 at draft with the ground haze",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T12:15:55.267Z",
+   "file": "20261121121555267-note-dive-grid-a.jpg",
+   "source": "out/work/mercury/r8/t2/dive-grid-a.jpg",
+   "kind": "note",
+   "label": "dive 735 to 743 at draft with the ground haze",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T12:15:54.168Z",
+   "file": "20261121121554168-note-r739-half-a.jpg",
+   "source": "out/work/mercury/r8/t3/r739-half-a.jpg",
+   "kind": "note",
+   "label": "dive 739 at review with the ground haze: soft streaks under the veil, hard limb, no bars",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T12:14:40.463Z",
+   "file": "20261121121440463-frame-f739.jpg",
+   "source": "out/work/mercury/r8/t3/f739.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 739, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 739,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:09:21.426Z",
+   "file": "20261121120921426-frame-f998.jpg",
+   "source": "out/work/mercury/r8/t2/f998.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 998, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 998,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T11:57:45.034Z",
    "file": "20261121115745034-note-r994-half-a.jpg",
@@ -28,57 +80,6 @@
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:57:15.615Z",
-   "file": "20261121115715615-frame-f01034-review.jpg",
-   "source": "out/work/sheets/.frames-5s9OHW/f01034-review.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1034, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1034,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:47:16.918Z",
-   "file": "20261121114716918-sheet-mercury.dive-16x9-review.jpg",
-   "source": "out/work/sheets/mercury.dive-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet mercury.dive, review tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "first": 690,
-   "last": 779,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:46:43.989Z",
-   "file": "20261121114643989-frame-f00763-review.jpg",
-   "source": "out/work/sheets/.frames-jsFN3h/f00763-review.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 763, review tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 763,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:37:07.304Z",
-   "file": "20261121113707304-note-hz-teeth-b.jpg",
-   "source": "out/work/mercury/r8/q6/hz-teeth-b.png",
-   "kind": "note",
-   "label": "r8 terrain horizon at 744, 747, 751 after the far distance fix: no sawtooth",
-   "stop": "mercury"
-  },
-  {
    "time": "2026-11-21T10:41:08.867Z",
    "file": "20261121104108867-frame-f615.jpg",
    "source": "out/work/mercury/r8/p2/f615.png",
@@ -88,20 +89,6 @@
    "segment": "mercury.hold",
    "frame": 615,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T10:33:26.100Z",
-   "file": "20261121103326100-frame-f870-r3.jpg",
-   "source": "out/work/mercury/r8/n1/f870-r3.png",
-   "kind": "frame",
-   "label": "mercury.terrain frame 870, review tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
