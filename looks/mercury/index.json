@@ -1,56 +1,40 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T13:51:44.898Z",
- "head": "50e6f7b27cd759b5978cae3874066188cd1b2585",
- "note": "close layer verified exact at 717, 1016, hold, terrain; rise launch eased; measure running",
+ "pushed": "2026-11-21T14:08:36.284Z",
+ "head": "f6df2fc903ba37eea84125ca37d3a5ec5e976437",
+ "note": "Round 3 starts: base with the close layer and exact pose at both swaps; the veil goes next",
  "looks": [
   {
-   "time": "2026-11-21T13:51:44.322Z",
-   "file": "20261121135144322-note-f991-s.jpg",
-   "source": "out/work/mercury/r9/g0r/f991-s.jpg",
-   "kind": "note",
-   "label": "rise 991 at review before the eased launch: the blur came on in one frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T13:51:43.785Z",
-   "file": "20261121135143785-note-rise-grid.jpg",
-   "source": "out/work/mercury/r9/b5/rise-grid.jpg",
-   "kind": "note",
-   "label": "rise 989 to 997 with the eased launch (speed continuous at the swap), draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T13:51:05.792Z",
-   "file": "20261121135105792-frame-f997.jpg",
-   "source": "out/work/mercury/r9/b5/f997.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 997, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:39:40.106Z",
-   "file": "20261121133940106-frame-f740.jpg",
-   "source": "out/work/mercury/r9/g1/f740.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 740, draft tier",
+   "time": "2026-11-21T14:04:54.248Z",
+   "file": "20261121140454248-job-frame-00717.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.dive frame 717, final tier, nograin view, from the running measure job",
    "stop": "mercury",
    "segment": "mercury.dive",
-   "frame": 740,
-   "tier": "draft",
+   "frame": 717,
+   "tier": "final",
    "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "diag": "nograin",
+   "job": "measure"
   },
   {
-   "time": "2026-11-21T13:35:12.214Z",
-   "file": "20261121133512214-compare-compare-mercury-terrain-view.jpg",
+   "time": "2026-11-21T13:54:44.984Z",
+   "file": "20261121135444984-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T13:54:23.277Z",
+   "file": "20261121135423277-compare-compare-mercury-terrain-view.jpg",
    "source": "out/work/compare/compare-mercury-terrain-view.jpg",
    "kind": "compare",
    "label": "mercury.terrain: approved image left, film frame right, final tier",
@@ -63,8 +47,8 @@
    "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T13:35:11.086Z",
-   "file": "20261121133511086-still-f00870-16x9-final-full.jpg",
+   "time": "2026-11-21T13:54:22.216Z",
+   "file": "20261121135422216-still-f00870-16x9-final-full.jpg",
    "source": "out/work/stills/f00870-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.terrain frame 870, final tier",
@@ -77,8 +61,8 @@
    "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T13:34:36.444Z",
-   "file": "20261121133436444-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T13:53:47.946Z",
+   "file": "20261121135347946-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, final tier",
@@ -91,8 +75,8 @@
    "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T13:34:35.330Z",
-   "file": "20261121133435330-still-f00615-16x9-final-full.jpg",
+   "time": "2026-11-21T13:53:46.880Z",
+   "file": "20261121135346880-still-f00615-16x9-final-full.jpg",
    "source": "out/work/stills/f00615-16x9-final-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, final tier",
@@ -100,6 +84,34 @@
    "segment": "mercury.hold",
    "frame": 615,
    "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T13:53:01.979Z",
+   "file": "20261121135301979-frame-f1016.jpg",
+   "source": "out/work/mercury/r9/u1/f1016.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1016, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1016,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T13:52:18.847Z",
+   "file": "20261121135218847-frame-f717.jpg",
+   "source": "out/work/mercury/r9/u1/f717.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 717, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 717,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
