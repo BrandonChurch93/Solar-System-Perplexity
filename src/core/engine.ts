@@ -4,7 +4,8 @@ import { Accumulator } from './accumulator'
 import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
-import { sampleCount, samplesFor, shutterMid } from './sampler'
+import { frameSamples } from './motion'
+import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
 import type { RenderView, Shot, SkyPatch } from './types'
 import { isRaw, setDiag, setSamples } from '../diagnostics/diag'
@@ -18,7 +19,7 @@ import { Cover } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
 import { marksIn } from '../terrain/shield'
-import { segmentAtFrame, setsForFrame } from '../director/timeline'
+import { setsForFrame } from '../director/timeline'
 
 export interface Director {
   shotAt(frame: number, time: number): Shot
@@ -58,6 +59,7 @@ export class Engine {
   private readonly solid: THREE.Material[] = []
   private readonly veiled: THREE.Material[] = []
   private readonly trims: Trim[] = []
+  private sampleCount = 1
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -155,8 +157,7 @@ export class Engine {
     if (!this.director) throw new Error('no director')
     const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
     await this.prepare(f)
-    const segment = segmentAtFrame(f)
-    const samples = samplesFor(sampleCount(tier, segment.kind))
+    const samples = samplesFor(frameSamples(this.director, f, tier))
     const mid = this.director.shotAt(f, (f + shutterMid()) / config.fps)
     this.accumulator.begin()
     samples.forEach((s, i) => {
@@ -166,6 +167,7 @@ export class Engine {
     })
     this.post.render(this.renderer, this.accumulator.texture, mid.post, f, this.diag, samples.length > 1)
     this.lastShot = mid
+    this.sampleCount = samples.length
     this.flush()
   }
 
@@ -175,6 +177,7 @@ export class Engine {
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
     this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.diag)
     this.lastShot = shot
+    this.sampleCount = 1
   }
 
   private renderSample(shot: Shot, mid: Shot, jx: number, jy: number, index: number, count: number): void {
@@ -360,6 +363,10 @@ export class Engine {
     const gl = this.renderer.getContext()
     this.renderer.setRenderTarget(null)
     gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4))
+  }
+
+  get samples(): number {
+    return this.sampleCount
   }
 
   sanity(): Sanity {

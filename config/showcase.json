@@ -46,9 +46,9 @@
     "bitrateMbps": 2
   },
   "tiers": {
-    "draft": {"samplesPerFrame": 1, "fastSamplesPerFrame": 1},
-    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16},
-    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64}
+    "draft": {"samplesPerFrame": 1, "fastSamplesPerFrame": 1, "maxSamplesPerFrame": 1},
+    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16, "maxSamplesPerFrame": 64},
+    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64, "maxSamplesPerFrame": 128}
   },
   "motion": {
     "fastKinds": [
@@ -56,7 +56,12 @@
       "rise",
       "travel",
       "retreat"
-    ]
+    ],
+    "maxStepPx": 1.5,
+    "probeGrid": [17, 9],
+    "bodyReach": 2.5,
+    "minBodyPx": 2,
+    "terrainGround": 1
   },
   "assetSets": {
     "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "maxSetMemoryMb": 450},
