@@ -1,9 +1,25 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T02:45:23.228Z",
- "head": "9602acaf65c78e325792388b3af374422aad9b20",
- "note": "start: stand-in hold and terrain beside the approved images",
+ "pushed": "2026-11-21T02:51:35.346Z",
+ "head": "b321c87c21e98465b1346865a0be60d7e0fbed27",
+ "note": "reading the engine and the approved images, planning the Neptune set",
  "looks": [
+  {
+   "time": "2026-11-21T02:51:34.788Z",
+   "file": "20261121025134788-note-h_ringL.jpg",
+   "source": "out/work/nep/h_ringL.jpg",
+   "kind": "note",
+   "label": "approved hero, ring arcs lower left (study)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T02:51:34.180Z",
+   "file": "20261121025134180-note-h_storm.jpg",
+   "source": "out/work/nep/h_storm.jpg",
+   "kind": "note",
+   "label": "approved hero, storm crop at native size x2 (study)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-21T02:45:05.435Z",
    "file": "20261121024505435-compare-compare-neptune-terrain-view.jpg",
