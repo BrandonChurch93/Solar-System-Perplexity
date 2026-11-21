@@ -80,7 +80,7 @@ const G = 1.32471795724474602596
 const RAD = Math.PI / 180
 const blend = (dst: THREE.BlendingDstFactor): Partial<THREE.ShaderMaterialParameters> => ({ transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: dst, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: dst })
 
-interface Seen { x: number; y: number; r: number; dist: number; depth: number }
+interface Seen { x: number; y: number; r: number; dist: number; depth: number; out: boolean }
 interface Item { mesh: THREE.Mesh; material: THREE.ShaderMaterial; radius: number; spin: number }
 
 export class Belt {
@@ -186,14 +186,17 @@ export class Belt {
     }
   }
 
-  private see(index: number, shot: Shot, focal: number, cx: number, cy: number): Seen {
+  private see(index: number, shot: Shot, focal: number, cx: number, cy: number, scale: number): Seen {
     this.motion!.pose(index, shot, this.pose)
     const c = this.v.copy(this.pose.position).applyQuaternion(this.inv.copy(shot.camera.quaternion).invert())
     const dist = c.length()
     const depth = -c.z
     const radius = this.items[index]!.radius
-    if (depth < radius * 1.2) return { x: cx, y: cy, r: depth > -radius ? 1e6 : -1, dist, depth }
-    return { x: cx + (c.x / depth) * focal, y: cy + (c.y / depth) * focal, r: ((focal * radius) / (depth - radius)) * (dist / depth), dist, depth }
+    const hx = cx + this.coc(dist, scale) / 2 + 2
+    const hy = cy + this.coc(dist, scale) / 2 + 2
+    const out = depth < -radius || (focal * Math.abs(c.x) - hx * depth) / Math.hypot(focal, hx) > radius || (focal * Math.abs(c.y) - hy * depth) / Math.hypot(focal, hy) > radius
+    if (depth < radius * 1.2) return { x: cx, y: cy, r: 1e6, dist, depth, out }
+    return { x: cx + (c.x / depth) * focal, y: cy + (c.y / depth) * focal, r: ((focal * radius) / (depth - radius)) * (dist / depth), dist, depth, out }
   }
 
   private place(index: number, shot: Shot): void {
@@ -248,9 +251,8 @@ export class Belt {
     const focal = height / 2 / Math.tan((shot.camera.vfov * RAD) / 2)
     let any = false
     this.items.forEach((it, i) => {
-      const s = this.see(i, shot, focal, width / 2, height / 2)
-      const reach = Math.min(s.r, 1e5)
-      it.mesh.visible = s.r > 0 && s.x + reach > 0 && s.x - reach < width && s.y + reach > 0 && s.y - reach < height
+      const s = this.see(i, shot, focal, width / 2, height / 2, scale)
+      it.mesh.visible = !s.out
       if (!it.mesh.visible) return
       any = true
       this.place(i, shot)
@@ -289,10 +291,10 @@ export class Belt {
     const cy = pad + height / 2
     const plan: { index: number; depth: number; coc: number; steps: number; shift: [number, number]; box: [number, number, number, number]; level: number }[] = []
     this.items.forEach((it, i) => {
-      const s0 = this.see(i, open, focal, cx, cy)
-      const s1 = this.see(i, close, focal, cx, cy)
-      const sm = this.see(i, mid, focal, cx, cy)
-      if (s0.r < 0 && s1.r < 0 && sm.r < 0) return
+      const s0 = this.see(i, open, focal, cx, cy, scale)
+      const s1 = this.see(i, close, focal, cx, cy, scale)
+      const sm = this.see(i, mid, focal, cx, cy, scale)
+      if (s0.out && s1.out && sm.out) return
       const coc = this.coc(sm.dist, scale)
       const huge = Math.max(s0.r, s1.r, sm.r) > 1e5
       const move = huge ? 1e4 : Math.hypot(s1.x - s0.x, s1.y - s0.y) + Math.abs(s1.r - s0.r) + it.spin * RAD * span * sm.r
