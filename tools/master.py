@@ -379,7 +379,7 @@ def message(p, name, spans):
     files = []
     for sp in spans:
         files += ['`%s%s.mp4`' % (d, key_of(sp)), '`%s%s.mp4.json`' % (d, key_of(sp))]
-    return 'JOB %s. Commit %s. Command%s: %s. When %s finished, send these %d files as attachments, at most 10 per message, and nothing else: %s.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), ', '.join(files)), [f.strip('`') for f in files]
+    return 'JOB %s. Commit %s. Command%s: %s. A command that ends with exit code 3 has lost its drawing context: run the same command again until it ends with 0, it goes on where it stopped. When %s finished, send these %d files as attachments, at most 10 per message, and nothing else: %s.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), ', '.join(files)), [f.strip('`') for f in files]
 
 
 def jobs(a):
