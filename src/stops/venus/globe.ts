@@ -45,6 +45,7 @@ export interface GlobeOptions {
   graze: { most: number; from: number; to: number }
   lift: { floor: number; stops: number; from: number; to: number }
   shade: { far: number; grad: number; cap: number }
+  mauve: { from: number; to: number; rest: number }
   segments?: number
 }
 
@@ -123,6 +124,7 @@ uniform vec2 uJitter;
 uniform vec3 uGraze;
 uniform vec4 uLift;
 uniform vec3 uShade;
+uniform vec3 uMauve;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -237,6 +239,10 @@ ${TAP_LEVELS}
   float s0 = equirect(uFlow, normalize(dc - lean)).r;
   float s1 = equirect(uFlow, normalize(df - lean)).r;
   float veil = (1.0 + k * f1) / (1.0 + k * f0) * (1.0 - uFlowLook.y * (1.0 - near) * s1) / (1.0 - uFlowLook.y * (1.0 - near) * s0);
+  for (int pass = 0; pass < (uLimbFar > 0.0 ? 1 : 0); pass++) {
+    float pink = lin.r * lin.b / max(lin.g * lin.g, 1e-5);
+    lin.b *= mix(1.0, uMauve.z / max(pink, 1e-3), uLimbFar * smoothstep(uMauve.x, uMauve.y, pink));
+  }
   vec3 col = lin * curveAt(ndl) * veil * uTint;
   for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
     vec3 wide = equirectGrad(uMap, dc, uShade.y).rgb;
@@ -340,7 +346,7 @@ export class Globe {
         uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
         uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
-        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) },
+        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })

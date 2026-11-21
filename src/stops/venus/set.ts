@@ -58,14 +58,14 @@ export const createSet: SetFactory = async (ctx) => {
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
-    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade,
+    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
   globe.mesh.quaternion.copy(globeTurn)
   globe.mesh.scale.fromArray(fit.globe.scale)
-  const rim = new Rim(limbMap, look.limb.radius, diagUniform)
+  const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide)
   const far = new FarPoint()
   orbit.add(globe.mesh, rim.mesh, far.points)
 

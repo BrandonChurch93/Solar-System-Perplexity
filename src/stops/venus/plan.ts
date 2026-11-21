@@ -15,22 +15,22 @@ export const params: MoveParams = {
   travel: { turnDeg: 92, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -24, axis: [1, 0.25, 0], offset: [-0.45, 0.25] },
   light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
-  cover: [1.25, 1.02, 0.62],
-  coverLow: [0.95, 0.7, 0.36],
-  coverTerrain: [1.3, 1.0, 0.56],
-  coverLowTerrain: [0.55, 0.38, 0.18],
+  cover: [1.0, 0.82, 0.5],
+  coverLow: [0.6, 0.45, 0.24],
+  coverTerrain: [0.9, 0.7, 0.4],
+  coverLowTerrain: [0.36, 0.26, 0.13],
   coverTop: [1, 1],
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
   coverShell: [0.99, 1.01],
-  coverRush: { speed: 5, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 1.6, 1.2], contrast: [0.7, 0.55] },
+  coverRush: { speed: 5, reach: 2.5, billow: [2.2, 2.4, 2.4], streak: [7, 4, 4.4], contrast: [1.3, 0.9] },
   skyAim: { orbit: [-160, -4, -1], terrain: [70.88563, -102.57248, -13.65] },
   spinDegPerSecond: -0.5,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
 }
 
-export const veil = { peak: 0.88, inside: 0.006, outside: 0.05, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
+export const veil = { peak: 0.88, inside: 0.006, outside: 0.02, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
 
 const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 
