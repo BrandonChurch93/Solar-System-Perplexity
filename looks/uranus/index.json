@@ -1,29 +1,65 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T05:41:16.702Z",
+ "pushed": "2026-11-21T06:03:09.680Z",
  "head": "6ac56bdff4661e2d9df358e4589778624d891a94",
- "note": "terrain rings in 3D, plate take 3 kept, next: wide plate on the deck, sky patch, cover",
+ "note": "terrain: wide plate deck, full circle far field, 3D ring arcs fitted to the close image, sky patch minus film glow; forward 2.0",
  "looks": [
   {
-   "time": "2026-11-21T05:41:16.153Z",
-   "file": "20261121054116153-note-terrain-pair.jpg",
-   "source": "out/work/u/t/terrain-pair.jpg",
+   "time": "2026-11-21T06:03:09.111Z",
+   "file": "20261121060309111-note-wide-v.jpg",
+   "source": "out/work/u/t/plate/wide-v.jpg",
    "kind": "note",
-   "label": "terrain frame 4290 review (bottom) under the close image (top), rings wired, no terrain sky patch yet",
+   "label": "wide deck plate (take 3 outpaint, original in the centre)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T05:41:15.484Z",
-   "file": "20261121054115484-note-terrain-rings-crop.jpg",
-   "source": "out/work/u/t/terrain-rings-crop.png",
+   "time": "2026-11-21T06:03:08.501Z",
+   "file": "20261121060308501-note-q-sheet.jpg",
+   "source": "out/work/u/t/q-sheet.jpg",
    "kind": "note",
-   "label": "terrain rings as true 3D lines (right) beside the close image (left), frame 4290 review, before width fix",
+   "label": "terrain frames 4175 4200 4290 4379 draft, forward 2.0, wide plate",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T05:37:30.461Z",
-   "file": "20261121053730461-frame-terrain-review.jpg",
-   "source": "out/work/u/t/terrain-review.png",
+   "time": "2026-11-21T06:03:07.964Z",
+   "file": "20261121060307964-note-compare-uranus-terrain-view.jpg",
+   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
+   "kind": "note",
+   "label": "terrain 4290 review: 3D deck on the wide plate, 3D ring arcs, terrain sky patch",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T06:02:56.876Z",
+   "file": "20261121060256876-compare-compare-uranus-terrain-view.jpg",
+   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "uranus.terrain: approved image left, film frame right, review tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T06:02:55.938Z",
+   "file": "20261121060255938-still-f04290-16x9-review-full.jpg",
+   "source": "out/work/stills/f04290-16x9-review-full.png",
+   "kind": "still",
+   "label": "uranus.terrain frame 4290, review tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a7e2e4a9a2b7be97"
+  },
+  {
+   "time": "2026-11-21T06:00:17.207Z",
+   "file": "20261121060017207-frame-sky.jpg",
+   "source": "out/work/u/sky/t/sky.png",
    "kind": "frame",
    "label": "uranus.terrain frame 4290, review tier",
    "stop": "uranus",
@@ -35,42 +71,18 @@
    "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:33:44.466Z",
-   "file": "20261121053344466-note-ring-unwrap.jpg",
-   "source": "out/work/u/t/ring-unwrap.jpg",
-   "kind": "note",
-   "label": "terrain rings: close image unwrapped in the fitted 3D ring plane (lines to trace)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:33:43.824Z",
-   "file": "20261121053343824-note-take3-v.jpg",
-   "source": "out/work/u/t/plate/take3-v.jpg",
-   "kind": "note",
-   "label": "terrain plate, take 3 (kept): the close image extended on the left, right and below for the aprons of the haze deck",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:27:03.749Z",
-   "file": "20261121052703749-note-albedo-v.jpg",
-   "source": "out/work/u/t/albedo-v.jpg",
-   "kind": "note",
-   "label": "terrain: close image divided by the fitted light table (albedo for the deck)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:24:01.298Z",
-   "file": "20261121052401298-compare-compare-uranus-terrain-view.jpg",
-   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
-   "kind": "compare",
-   "label": "uranus.terrain: approved image left, film frame right, draft tier",
+   "time": "2026-11-21T05:58:04.192Z",
+   "file": "20261121055804192-frame-q-4175.jpg",
+   "source": "out/work/u/t/q-4175.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4175, draft tier",
    "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
+   "segment": "uranus.dive",
+   "frame": 4175,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   },
   {
    "time": "2026-11-21T05:03:55.327Z",
