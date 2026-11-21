@@ -203,6 +203,23 @@
     "maxPictures": 4,
     "inlineMaxTries": 3
   },
+  "posts": {
+    "introMaxSeconds": 5,
+    "readHoldSeconds": 0.8,
+    "introMaxTries": 3,
+    "checkMaxFixes": 2,
+    "prompts": {
+      "sun": "Give me a hyperrealistic Sun using three.js",
+      "mercury": "Give me a hyperrealistic Mercury using three.js",
+      "venus": "Give me a hyperrealistic Venus using three.js",
+      "earth": "Give me a hyperrealistic Earth using three.js",
+      "mars": "Give me a hyperrealistic Mars using three.js",
+      "jupiter": "Give me a hyperrealistic Jupiter using three.js",
+      "saturn": "Give me a hyperrealistic Saturn using three.js",
+      "uranus": "Give me a hyperrealistic Uranus using three.js",
+      "neptune": "Give me a hyperrealistic Neptune using three.js"
+    }
+  },
   "sandbox": {
     "stepTimeoutMinutes": 10,
     "chunkBudgetMinutes": 7,

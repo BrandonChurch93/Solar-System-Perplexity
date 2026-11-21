@@ -36,6 +36,7 @@ const REQUIRED = [
   'assets.maxTakesPerAsset', 'quality.passScore', 'critics.maxImageLongEdgePx', 'critics.contactSheetFrames', 'critics.phonePreviewWidthPx', 'critics.maxFilesPerMessage',
   'sandbox.chunkBudgetMinutes', 'sandbox.maxFramesOnDisk', 'sandbox.minFreeDiskGb', 'sandbox.maxRenderProcesses',
   'status.maxGapMinutes', 'status.minGapMinutes', 'status.maxPictures', 'status.inlineMaxTries',
+  'posts.introMaxSeconds', 'posts.readHoldSeconds', 'posts.introMaxTries', 'posts.checkMaxFixes', 'posts.prompts',
 ]
 
 function isWhole(x: number): boolean {
@@ -96,6 +97,10 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   for (const f of Object.values(r.formats)) formats[f.id] = f
   const fastKinds = r.motion.fastKinds as SegmentKind[]
   for (const k of fastKinds) if (!KINDS.includes(k)) fail('motion.fastKinds has unknown kind ' + k)
+  const prompts = r.posts.prompts as Record<string, string>
+  for (const id of stopIds) if (typeof prompts[id] !== 'string' || prompts[id].length === 0) fail('posts.prompts has no prompt for stop ' + id)
+  if (!(r.posts.introMaxSeconds > 0) || !(r.posts.readHoldSeconds >= 0) || !(r.posts.readHoldSeconds < r.posts.introMaxSeconds)) fail('posts.readHoldSeconds must fit inside posts.introMaxSeconds')
+  if (!(r.posts.introMaxTries >= 1) || !isWhole(r.posts.introMaxTries) || !(r.posts.checkMaxFixes >= 0) || !isWhole(r.posts.checkMaxFixes)) fail('posts.introMaxTries and posts.checkMaxFixes must be whole numbers')
   for (const [id, t] of Object.entries(r.tiers)) if (!(t.samplesPerFrame >= 1) || !(t.fastSamplesPerFrame >= 1)) fail('tier ' + id + ' has no samples')
   return {
     raw: r,
