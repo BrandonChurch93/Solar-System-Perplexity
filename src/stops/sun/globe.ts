@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import { NOISE_GLSL } from '../../terrain/relief'
 
 export interface GlobeLook {
   limb: [number, number]
@@ -9,7 +10,7 @@ export interface GlobeLook {
   boil: { reach: number; period: number; step: number; max: number }
   hot: { from: number; to: number; boost: number }
   pulse: { amount: number; rate: number; from: number; to: number }
-  cell: { amount: number; rate: number; level: number; spread: number }
+  cell: { amount: number; rate: number; scale: number; fine: number }
 }
 
 export interface GlobePatches {
@@ -93,6 +94,7 @@ out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
+${NOISE_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -147,7 +149,6 @@ void main() {
   float pl = length(push);
   push *= min(1.0, uBoil.w / max(pl, 1e-6));
   vec3 dc = normalize(d.zxy + vec3(0.21, -0.13, 0.17));
-  float cellPhase = (lumAt(dc, lod + uCell.z) + lumAt(d, lod + uCell.z)) * uCell.w;
   float slow = lumAt(dc, lod + 3.0) * 24.0 + lumAt(d, lod + 3.5) * 16.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
   float texels;
@@ -156,7 +157,8 @@ void main() {
   float region = smoothstep(uPulse.z, uPulse.w, wide);
   float phase = dot(d, vec3(23.0, 17.0, 29.0));
   float beat = 1.0 + uPulse.x * region * (sin(uTime * uPulse.y + phase) - sin(phase));
-  beat *= 1.0 + uCell.x * (sin(uTime * uCell.y + cellPhase) - sin(cellPhase));
+  float churn = vnoise(d * (uCell.z + uTime * uCell.y)) - vnoise(d * uCell.z) + uCell.w * (vnoise(d * (uCell.z * 2.9 + uTime * uCell.y * 2.3) + 7.3) - vnoise(d * uCell.z * 2.9 + 7.3));
+  beat *= max(1.0 + uCell.x * churn, 0.35);
   float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
   col += uRimColor * pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
@@ -202,7 +204,7 @@ export class SunGlobe {
         uBoil: { value: new THREE.Vector4(l.boil.reach, l.boil.period, l.boil.step, l.boil.max) },
         uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
         uPulse: { value: new THREE.Vector4(l.pulse.amount, l.pulse.rate, l.pulse.from, l.pulse.to) },
-        uCell: { value: new THREE.Vector4(l.cell.amount, l.cell.rate, l.cell.level, l.cell.spread) },
+        uCell: { value: new THREE.Vector4(l.cell.amount, l.cell.rate, l.cell.scale, l.cell.fine) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })

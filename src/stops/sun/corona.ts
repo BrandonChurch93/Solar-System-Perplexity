@@ -9,6 +9,7 @@ export interface CoronaLook {
   edge: number
   wave: { amount: number; scale: number; speed: number; sway: number }
   drift: number
+  hide: { from: number; to: number; amount: number }
 }
 
 const VERT = /* glsl */ `
@@ -33,6 +34,7 @@ uniform float uEdge;
 uniform float uTime;
 uniform vec4 uWave;
 uniform float uDrift;
+uniform vec3 uHide;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vPos;
@@ -40,6 +42,22 @@ in vec3 vClip;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 const float TAU = 6.283185307179586;
+float hash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+float cells(vec2 p, float wrap) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float x0 = mod(i.x, wrap);
+  float x1 = mod(i.x + 1.0, wrap);
+  return mix(mix(hash(vec2(x0, i.y)), hash(vec2(x1, i.y)), f.x), mix(hash(vec2(x0, i.y + 1.0)), hash(vec2(x1, i.y + 1.0)), f.x), f.y);
+}
+float stream(float u, float lr, float t) {
+  return 0.5 * cells(vec2(u * 11.0 + 3.0, lr * uWave.y * 0.45 - t * 0.6 + 5.0), 11.0) + 0.3 * cells(vec2(u * 40.0, lr * uWave.y - t), 40.0) + 0.2 * cells(vec2(u * 96.0 + 7.0, lr * uWave.y * 1.9 - t * 1.6 + 3.0), 96.0);
+}
 vec3 ray(vec2 uv, vec2 dx, vec2 dy) {
   return inverseFilmic(textureGrad(uMap, uv, dx, dy).rgb);
 }
@@ -58,24 +76,19 @@ void main() {
   vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
   float height = max(b - 1.0, 0.0);
   float grow = smoothstep(0.0, 0.25, height);
-  float sway = uWave.w * grow * (sin(u * TAU * 9.0 + v * 7.0 - uTime * 0.5) - sin(u * TAU * 9.0 + v * 7.0) + 0.6 * (sin(u * TAU * 23.0 - v * 11.0 + uTime * 0.8) - sin(u * TAU * 23.0 - v * 11.0)));
+  float sway = uWave.w * grow * (sin(u * TAU * 9.0 + v * 2.5 - uTime * 1.1) - sin(u * TAU * 9.0 + v * 2.5) + 0.6 * (sin(u * TAU * 23.0 - v * 4.0 + uTime * 1.7) - sin(u * TAU * 23.0 - v * 4.0)));
   float turn = uDrift * uTime * grow;
   vec2 uv = vec2(u + sway + turn, clamp(v, 0.0, 1.0));
   vec3 col = ray(uv, dx, dy);
-  float pa = fract(uTime * uWave.z + 0.5) - 0.5;
-  float pb = fract(uTime * uWave.z) - 0.5;
-  vec2 wa = vec2(u * uWave.y + 0.37, v - pa * 0.35);
-  vec2 wb = vec2(u * uWave.y + 0.81, v - pb * 0.35);
-  float la = dot(textureGrad(uMap, vec2(wa.x, clamp(wa.y, 0.02, 0.6)), dx * uWave.y, dy).rgb, vec3(0.333));
-  float lb = dot(textureGrad(uMap, vec2(wb.x, clamp(wb.y, 0.02, 0.6)), dx * uWave.y, dy).rgb, vec3(0.333));
-  float l0 = dot(textureGrad(uMap, vec2(u * uWave.y + 0.37, clamp(v, 0.02, 0.6)), dx * uWave.y, dy).rgb, vec3(0.333));
-  float flick = mix(la, lb, abs(pa) * 2.0) - l0;
-  col *= 1.0 + uWave.x * grow * clamp(flick * 6.0, -0.6, 1.2);
+  float glare = uHide.z * smoothstep(uHide.x, uHide.y, dot(col, vec3(0.2126, 0.7152, 0.0722)));
+  float lr = log(max(b, 1.0));
+  float flick = stream(u, lr, uTime * uWave.z) - stream(u, lr, 0.0);
+  col *= max(1.0 + uWave.x * grow * flick, 0.3);
   float inside = b < 1.0 ? exp((b - 1.0) / uEdge) : 1.0;
   float out0 = 1.0 - smoothstep(0.92, 1.0, v);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * inside * out0 / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, 0.0);
+  outColor = vec4(col, glare * inside * out0);
 }`
 
 export class Corona {
@@ -96,11 +109,15 @@ export class Corona {
         uRange: { value: new THREE.Vector2(look.inner, look.outer) },
         uGain: { value: look.gain }, uEdge: { value: look.edge }, uTime: { value: 0 },
         uWave: { value: new THREE.Vector4(look.wave.amount, look.wave.scale, look.wave.speed, look.wave.sway) },
-        uDrift: { value: look.drift }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      premultipliedAlpha: true,
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
       transparent: true,
       depthWrite: false,
       depthTest: false,

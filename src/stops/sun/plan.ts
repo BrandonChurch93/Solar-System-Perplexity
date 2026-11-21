@@ -12,7 +12,7 @@ export const params: MoveParams = {
   cover: [2.4, 0.68, 0.11],
   coverLow: [2.3, 0.6, 0.08],
   coverTop: [1, 1],
-  spinDegPerSecond: 0.5,
+  spinDegPerSecond: 1.6,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
   skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: [8.48669, -141.8932, 32.09218] },

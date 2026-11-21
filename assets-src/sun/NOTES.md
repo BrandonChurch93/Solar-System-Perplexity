@@ -118,3 +118,36 @@ Web set is every file at half size: about 220 MB (limit 450).
 
 - `src/stops/sun/flare.ts`: one full-screen additive layer anchored on a world point (in the terrain view a point between the feet lifted toward the crown, in the orbit view the plan spot). Core, halo with rays, a thin streak. Amount rises over `before` seconds to the cover centre and falls over `after` seconds, so the judged frame 247 is clean. The loops surge with it.
 - Engine cover colour set to gold, `coverTop [1, 1]`. `dive.altitude` 1.0 so the orbit part starts one radius up: with 0.05 frame 226 was 100 percent soft in G13.
+
+## Milestone 4f393be (06:03 UTC): terrain view and the rise with its flare
+
+- `dive.altitude` 0.7, `rise.settle` 2. G13 on every third counted frame: 0 of 145 frames over 2 percent soft.
+- Stand-ins removed, RECIPE has a Files table that names every shipped file as `public/assets/sun/<set>/NAME` (G11).
+- Sets on disk then: full about 34 MB, web about 11 MB.
+
+## Hold rework (from 06:05 UTC), Builder notes 1 to 3
+
+Rule adopted: every hold frame must look as good as frame 360. A motion term that damages a still is wrong, however visible it is. Every term is still zero at holdMid, so frame 360 is the hero.
+
+- First exaggeration failed: a luminance-phase twinkle (difference of two sines, reaches 2) drew contour rings on the globe away from frame 360, and the prominence brightness wave went negative (teal gashes in the upper right prominence at frame 270 and 414).
+- Globe now: `cell` twinkle is a difference of value noise at two times (`churn`), clamped at 0.35; boil reach 0.0018, max 0.006; `spinDegPerSecond` 1.6 so the surface visibly turns over the 6 s.
+- Corona now: a procedural `stream(angle, ln r, t)` (hash value noise, 40 and 96 cells around, periodic) brightens and dims the rays as it runs outward. The old texture flicker is gone.
+- Prominences: the brightness wave is `exp2(surge * strength * run)`, so it cannot go negative. `prominence-flow.png` alpha (position along the strand) is now measured from the outward direction at the foot, so its wrap seam lies inside the disc, and the strength channel fades to zero within 0.03 to 0.12 radii of the foot point, where the angle turns too fast (spoke pattern).
+- Phone strip measure (`out/work/sun/change.py`, mean absolute difference between frames 36 apart at 400 px wide): disc about 21, corona about 11, sky about 5 of 255.
+
+Sky card, infinity only (Builder note 2):
+- Found: the old card was hero minus the film's own halo outside 1.46 radii. Everything the corona model did not reproduce (ray ends, chevrons at the top and bottom frame edge, grain) stayed in the card and would slide against the Sun, because the camera orbits 6 degrees in the hold (about 225 px of sky shift).
+- Now: the card is only the generated empty sky (`out/work/sun/sky-fill-take1.png`, upscaled 2x to `sky-fill-x.png`), with its floor (7 px opening) and its stars (the rest) each mapped by quantiles onto the hero's floor and stars measured beyond 1.9 radii (`orbit/infinity.py`). No hero pixel is in the card.
+- The corona carries every ray: hero minus the low-pass of that sky, hero data as far out as the corona is at least about twice the sky (`TRUST` 0.3 of the total), a monotone envelope along the radius beyond 1.25 to 1.42 radii, then the power law. Stray orange Milky Way clouds at 1.34 to 1.58 radii on the right were in the prominence matte; detached pieces now have to start below 1.2 radii.
+- The engine's own stars do not show through the card in the hold (checked at one bright engine star: 255 without the card, 15 with it).
+- Level pass (`orbit/match.py`): the lens bloom adds a veil that the old card had swallowed. One pass: render frame 360 at review without `level.npy` and `veil.json`, compare floors with the hero in polar form, scale the corona by a smooth factor (6 degrees across, 0.02 in ln r, limits 0.3 to 1.5), and take what the corona cannot absorb out of the card as a function of radius only.
+
+## Hold, second pass (06:47 to 07:10 UTC)
+
+- Merged main 45d1651 (engine batch 6: travel cameras, dust, sky lock, ending; engine hash 704d5d55f51b7b15). 35 tests green before, to run again. `npx tsx assets-src/travel/probe.ts`: `sun.travel` join in at 450 turn 0.035 to 0.035 deg per frame, speed 8.19e-2 to 8.15e-2, departing body in view 450 to 472.
+- Corona hides what is behind it: alpha = `hide.amount` (0.92) times smoothstep(0.012, 0.07, luminance of the corona texel), blend One / OneMinusSrcAlpha. Film stars no longer shine through the glare near the limb, as in the hero. The level pass (`match.py`) ran once more after it. Floors film against hero at review: far 0.0319 / 0.0322, 1.5 to 1.9 radii 0.0608 / 0.0589, 1.25 to 1.5 radii 0.1668 / 0.1661, 1.08 to 1.25 radii 0.3481 / 0.3491.
+- Corona stream has a slow part (11 cells around) so the six phone frames differ; sway 0.0024 with little change along the radius (2.5 and 4.0 rad over the layer), because at 0.004 with 7 and 11 the rays bent into curls at frames 270 and 449. Rule kept: rays stay straight.
+- Phone strip numbers (`change.py`, frames 36 apart, 400 px wide, of 255): disc 19 to 26, corona about 9, sky 4.6.
+- White smears on the disc at 0.93 to 0.99 radii (found in a native crop of the upper left limb): the far side fill of the wrap comes from the hero's centre, bright and contrasty, and the shader multiplies the limb by 2. Fixed in `wrap.py` (`level`, `level_at`): the fill takes the hero's low-pass colour and local contrast in a zone around the limb, highlights capped and kept warm. Wrap take 3 is in. Limb at frames 270, 360, 449 checked beside the hero: orange, no smear.
+- Sky card stars: density map (hero local star light / card local star light, 160 px Gaussian, beyond 1.6 radii, limits 0.5 to 1.7) so the band has as many stars as the hero. Measured at 1920 at the final tier the stars of the dark field came out 24 percent brighter than the hero's (band equal), so the dark field stars are trimmed by 0.8 (`TRIM`). To verify at final.
+- Tools: `npm run seq -- --first A --last B --tier draft` renders a range in one browser (11 s a frame). `out/work/sun/jump.py DIR` prints the difference between neighbours and flags a jump.

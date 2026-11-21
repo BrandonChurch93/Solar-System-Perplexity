@@ -4,10 +4,16 @@ import cv2
 from scipy import ndimage as ndi
 from geo import *
 from polar import *
+from infinity import fill_scene, fill_floor
 
 FEET = 1.035
 TOP = 1.8
-DATA_END = 1.42
+DATA_END = 2.6
+DATA_START = 1.3
+DETACHED = 1.2
+TRUST = 0.3
+ENVELOPE = (1.25, 1.42)
+SMOOTH = 0.03
 CLOSE = 72
 POWER_BAND = (1.12, 1.26)
 
@@ -46,7 +52,7 @@ def main():
     top = ndi.maximum(np.broadcast_to(b, lab.shape), lab, np.arange(1, n + 1))
     low = ndi.minimum(np.broadcast_to(b, lab.shape), lab, np.arange(1, n + 1))
     keep = np.zeros(n + 1, bool)
-    keep[1:] = ((area > 1500) & (top > 1.06) & (low < 1.12)) | ((area > 400) & (low >= FEET) & (top < 1.7))
+    keep[1:] = ((area > 1500) & (top > 1.06) & (low < 1.12)) | ((area > 400) & (low >= FEET) & (low < DETACHED) & (top < 1.7))
     tall = keep[lab]
     row_feet = int(np.searchsorted(rows(), FEET))
     band = tall[row_feet:row_feet + 40].any(0)
@@ -89,10 +95,15 @@ def main():
     del clean
 
     edge = frame_edge()
-    wide = (b > 1.6) & (b < 1.9) & inside
-    floor = np.array([np.percentile(cor[..., c][wide], 30) for c in range(3)])
-    print('sky floor', floor.round(4))
-    cor = np.maximum(cor - floor, 0)
+    sky, _ = unwrap(fill_floor(fill_scene()))
+    share = cv2.GaussianBlur(luma(sky), (0, 0), 6) / np.maximum(cv2.GaussianBlur(luma(cor), (0, 0), 6), 1e-5)
+    doubt = (share > TRUST) & (b > DATA_START)
+    reach = np.where(doubt.any(0), rr[np.argmax(doubt, 0)], DATA_END)
+    reach = ndi.minimum_filter1d(reach, 81, mode='wrap')
+    reach = ndi.gaussian_filter1d(reach, 60, mode='wrap')
+    print('trusted reach', float(reach.min().round(3)), float(np.median(reach).round(3)), float(reach.max().round(3)))
+    cor = np.maximum(cor - sky, 0)
+    del sky, share, doubt
 
     lo, hi = np.searchsorted(rr, POWER_BAND[0]), np.searchsorted(rr, POWER_BAND[1])
     horiz = edge > 1.7
@@ -102,7 +113,7 @@ def main():
     print('power', round(float(p), 2))
     p = float(np.clip(p, 4.0, 8.0))
 
-    b_end = np.minimum(DATA_END, edge - 0.03)
+    b_end = np.minimum(reach, edge - 0.03)
     start = b_end - 0.07
     amp = np.zeros((PW, 3), np.float32)
     for x in range(PW):
@@ -117,10 +128,15 @@ def main():
     t = np.clip((b - b_end[None, :]) / np.maximum(blend_end - b_end, 1e-3)[None, :], 0, 1)
     t = (t * t * (3 - 2 * t))[..., None]
     cor = cor * (1 - t) + model * t
+    smooth = ndi.gaussian_filter1d(cor, SMOOTH / np.log(B1 / B0) * PH, axis=0, mode='nearest')
+    y0 = int(np.searchsorted(rr, ENVELOPE[0]))
+    smooth[y0:] = np.minimum.accumulate(smooth[y0:], axis=0)
+    t = step(b, ENVELOPE[0], ENVELOPE[1])[..., None]
+    cor = cor * (1 - t) + smooth * t
+    del smooth
     cor *= (1 - step(b, 2.4, 3.0))[..., None]
     np.save(WORK + '/polar-prom.npy', np.concatenate([prom, alpha[..., None]], -1).astype(np.float16))
     np.save(WORK + '/polar-corona.npy', cor.astype(np.float16))
-    np.save(WORK + '/polar-floor.npy', floor)
 
     vis = lambda a: cv2.cvtColor((code(a)[::-1] * 255 + 0.5).astype(np.uint8), cv2.COLOR_RGB2BGR)
     for k, x0 in enumerate([0, 2048, 4096, 6144]):

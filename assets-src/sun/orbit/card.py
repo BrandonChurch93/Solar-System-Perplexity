@@ -1,3 +1,4 @@
+import os
 import sys
 import numpy as np
 import cv2
@@ -10,6 +11,8 @@ N = 4096
 HALF = 1.56
 PLANE = 1 / DIST
 CW, CH = 8192, 1024
+CALM = (0.03, 0.12)
+LEVEL = ROOT + '/assets-src/sun/orbit/level.npy'
 
 
 def write(a, path, mode):
@@ -23,6 +26,8 @@ def write(a, path, mode):
 def corona(out):
     cor = np.load(WORK + '/polar-corona.npy').astype(np.float32)
     cor = cv2.resize(cor, (CW, CH), interpolation=cv2.INTER_AREA)
+    if os.path.exists(LEVEL):
+        cor *= cv2.resize(np.load(LEVEL).astype(np.float32), (CW, CH), interpolation=cv2.INTER_LINEAR)
     img = code(cor)[::-1]
     write(img, out + '/full/corona.webp', 'RGB')
     write(cv2.resize(img, (CW // 2, CH // 2), interpolation=cv2.INTER_AREA), out + '/web/corona.webp', 'RGB')
@@ -68,6 +73,7 @@ def flow(out):
     vx = np.zeros_like(lum)
     vy = np.zeros_like(lum)
     along = np.full_like(lum, 0.5)
+    quiet = np.zeros_like(lum)
     rim = np.sqrt(1 - PLANE ** 2)
     for i in range(1, count + 1):
         m = lab == i
@@ -90,11 +96,13 @@ def flow(out):
         fy = sy * c + cyn * (1 - c)
         ln = np.hypot(fx, fy) + 1e-6
         vx[m], vy[m] = fx / ln, fy / ln
-        along[m] = 0.5 + sign * np.arctan2(ry, rx) / (2 * np.pi)
+        ox, oy = cx / rim, cy / rim
+        along[m] = 0.5 + sign * np.arctan2(ox * ry - oy * rx, ox * rx + oy * ry) / (2 * np.pi)
+        quiet[m] = step(np.hypot(rx, ry), CALM[0], CALM[1])
     vx = cv2.GaussianBlur(vx, (0, 0), 3)
     vy = cv2.GaussianBlur(vy, (0, 0), 3)
     strength = np.clip(present * 3, 0, 1)
-    tex = np.stack([0.5 + 0.5 * vx * strength, 0.5 + 0.5 * vy * strength, strength, along], -1)
+    tex = np.stack([0.5 + 0.5 * vx * strength, 0.5 + 0.5 * vy * strength, strength * quiet, along], -1)
     tex = cv2.resize(tex, (1024, 1024), interpolation=cv2.INTER_AREA)
     write(tex, out + '/full/prominence-flow.png', 'RGBA')
     write(cv2.resize(tex, (512, 512), interpolation=cv2.INTER_AREA), out + '/web/prominence-flow.png', 'RGBA')

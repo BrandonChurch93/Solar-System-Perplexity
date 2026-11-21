@@ -56,7 +56,7 @@ void main() {
   vec4 f = texture(uFlow, vUv);
   float s = f.a * 6.283185307179586;
   float run = 0.55 * (sin(s * 9.0 - uTime * 1.7) - sin(s * 9.0)) + 0.3 * (sin(s * 23.0 - uTime * 3.1) - sin(s * 23.0)) + 0.25 * (sin(s * 14.0 + uTime * 1.1) - sin(s * 14.0));
-  c.rgb *= 1.0 + uMove.z * f.b * run;
+  c.rgb *= exp2(uMove.z * f.b * run);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = c.rgb * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, c.a);
