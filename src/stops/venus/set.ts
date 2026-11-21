@@ -124,7 +124,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * elapsed, amps, gain, state.weight)
       let taps = 0
       const kind = state.segment.kind
-      if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')) {
+      if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && plan.coverAmount(state.segment, state.time) < look.motion.hidden) {
         const dt = config.shutterFraction / (view.samples * config.fps)
         const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
         const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
