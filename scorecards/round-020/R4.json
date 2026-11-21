@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 3589–3613, leftmost tip of the rings",
+   "what": "The ring tip swings right, nearly stalls, then sweeps back left while the dive continues. The turn is continuous in the cover frames, but the broad lateral correction makes the approach feel briefly steered rather than inertial.",
+   "fix": "Spread the lateral turn over more of the dive and ease the camera aim and position together so the ring tip does not pause independently of the approach."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 3679–3776, foreground rings on either side of the dark gap",
+   "what": "The foreground sweeps past the distant ring horizon, but most of the visible detail is made of uninterrupted concentric bands. Individual particles are difficult to follow between samples, leaving little readable motion within the ring plane itself.",
+   "fix": "Keep a few subtle, persistent clusters of ring particles visible through the pass, with orbital motion tied to their ring radius and blur matched to the camera."
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "critic": "reviewer_422",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "ring plane across the frame, worst at left and center (crops D, E, F, G, I)",
+   "what": "bright white speckles and small soft blobs are scattered over the ring bands. They are not in the target, read as sensor or dust artifacts, and break up the clean streaked ring texture",
+   "fix": "remove the sparkle and particle layer from the rings so the ring surface is only the fine concentric streaks shown in -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper left limb of the planet against the sky",
+   "what": "the limb glow is wider and whiter than the target and spills into the sky as a haze. The planet also sits a few pixels lower",
+   "fix": "tighten the glow and warm it toward the target's thinner golden rim, and nudge the planet back up to match the target's top edge"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper right moon",
+   "what": "the moon is slightly larger, sits a little lower and to the right, and has a wider dark side than the target's thin lit crescent",
+   "fix": "shrink the moon a little, move it up and left to the target position, and narrow its shadowed side to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lit northern hemisphere and terminator (crop A)",
+   "what": "the fine swirl and storm detail in the upper bands is a bit softer and lower in contrast, and the day-night terminator is a bit broader and softer than the target",
+   "fix": "restore fine cloud texture in the upper bands and sharpen the terminator transition slightly toward -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "overall grade",
+   "what": "the whole frame is slightly brighter (mean about 2 levels higher), which lifts the blacks a little in the ring shadow and sky",
+   "fix": "lower exposure slightly and bring the deep blacks in the ring shadow and sky back down to the target level"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall grade",
+   "what": "slightly brighter than the target (mean about 2 levels higher), which lifts the shadowed planet hemisphere a little",
+   "fix": "lower exposure slightly to match the depth of the target's night side"
+  }
+ ]
+}
