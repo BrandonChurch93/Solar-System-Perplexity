@@ -1,0 +1,72 @@
+# Harness notebook
+
+Lab notebook of the harness agent (branch `agent/harness`). After a compaction: read `assets-src/shared/HARNESS-AGENT.md` again, then this file from the top.
+
+## Where things are
+
+- My clone: `/home/user/workspace/repo`, branch `agent/harness`. A second clone that plays the worker machine in tests: `/home/user/workspace/worker`.
+- Files I own: `tools/round.py`, `tools/pack.ts`, this notebook. One new file under `tools/`: `tools/scratch_answers.py` (makes up critics' answers for scratch rounds, named in every report).
+- Nothing under `src/`, `public/`, `config/` or `tools/lib/` is changed.
+- Tests use the draft tier only.
+
+## Facts read from the repo (2026-11-20, main at 7ba15bc)
+
+- 46 segments, 47 judged frames. Fast kinds (`motion.fastKinds`): dive, rise, travel, retreat. Samples per frame: draft 1 and 1, review 4 and 16, final 16 and 64.
+- The whole film pack of Phase 5 needs these rendered frames. Final tier: the 47 judged frames, the middle frame of `ending.fade` (the whole film sheets show one frame per segment, 46 in 4 sheets) and 7 more frames between 0 and 60 for the hook (9 hook frames, 0 and 60 are judged). Review tier: 12 frames for each of 8 travel segments and 3 ending segments.
+- Cost on a worker, from the brief: a slow final still 40 to 95 s, a slow review frame 10 to 25 s. That is about 4.3 s per sample. A fast frame costs four times a slow one at the same tier (`kit/PROGRESS.md`, Render budget, Mars).
+- `pack.ts` before my change: `--only` exists for one stop (`part()`): the word `stills` renders the stop's judged frames into `out/work/stills/`, a segment id renders its motion sheet into the round's cache, `ID-cover` its cover sheet. The hook rendered its 7 middle frames into a temp folder that is deleted, so a later run rendered them again.
+- `stress.ts` writes `out/work/stress/<segment>-before-NNNNN.png`, `-after-NNNNN.png` and `<segment>.json` (a record for the segment). The PNG files have no record of their own.
+- `round.py` before my change handles only `R3-part1` and `R3-part2`. The Sun has 5 judged frames (0, 60, terrain, rise, hold), which makes 3 parts. Reported to the Builder.
+- A draft still of `mars.hold` takes 18 s here with the set load (4 cores).
+
+## Decisions
+
+1. Scratch mode (`--scratch`, round above 900) swaps two paths and switches git off: the ledger is a copy of `kit/PROGRESS.md` at `out/work/rounds/scratch/PROGRESS.md`, the scorecards go to `out/work/rounds/scratch/scorecards/`. Every other line of code is the same as in a real round, so the scratch run tests the real code. A round above 900 without `--scratch` is refused, and `--scratch` with a round up to 900 is refused.
+2. Tiers below final are allowed in scratch mode only (`--tier draft`); the tool then adds `--tier draft --motion-tier draft` to every pack command and `--tier draft` to stress and measure.
+3. Whole film part names for `npm run pack -- --phase 5|6 --round N --only ...` (no `--stop`): `stills:A-B` (every final tier frame of the whole film pack with A <= frame <= B: judged frames, whole film sheet frames, hook frames, all kept in `out/work/stills/`), `film-K` (whole film sheet K), `holds` (the grid of judged hold frames), `hook` (the phone size hook images), a segment id (its motion sheet), `ID-cover`. With `--stop` the old stop names keep their meaning.
+4. The record round's pack (Phase 6) publishes one folder per stop and critic (`R1-mars`, `R3-mars-part1`, `R4-mars`), the whole film folders without a stop (`R3-part1`, `R4-part1`, `R5`, `R6`, `R7-part1`, `R2-part1`, `R8-part1`). Each R2 image is judged once; a stop's R2 is tallied from the votes on its own two frames and two controls, the whole film R2 from all of them.
+5. Jobs are packed by expected minutes from a cost model (samples per frame times `--sample-seconds`, default 4.3) to at most `--job-minutes` (default 15) and spread over `--workers` (default 8); a worker gets several jobs in a row.
+6. The record round collects its controls itself by default; `--controls-from N` reuses those of round N.
+7. In whole film and record rounds a failed R2 is counted as one major issue in the round line, as the kit says. The stop round's line is left as it was.
+8. A stop round with three or more R3 parts (the Sun: frames 0, 60, terrain, rise, hold): the extra parts are added after the four old critics, so R1, R3 part 1, R3 part 2 and R4 keep the families they had; `close` reads every part.
+9. `close --vote NAME=LETTER` in a whole film or record round is kept in the round's state (`votes`) and is applied again by every later `close`; a round that reuses the controls of another round takes that round's corrections with them. The stop round is as before (the correction holds for that one call).
+10. In the record round the families turn by stop: the critic at seat i of stop number s (Sun is 1) gets `SLOTS[(i + round + s) % 4]`, as if the stops had been judged in rounds that follow each other. The whole film critics get `SLOTS[(i + round) % 4]`, as in a whole film round.
+11. A merge commit of mine is written with `git merge --no-ff -m` and carries the trailer. Two early ones (8ca6364, 7bbddc7) do not; they were pushed and stay.
+
+## How to run (one line each)
+
+- Render named parts of the whole film pack on a worker: `npm run pack -- --phase 5 --round N --only stills:0-1500,film-1,hook` (parts: `stills:A-B`, `film-K`, `holds`, `hook`, a segment id; in Phase 6 also `ID-cover`). The last line says whether a render session was opened.
+- The list of frames and sheets a whole film pack needs, with nothing rendered: `npm run -s pack -- --phase 5 --round N --plan`.
+- Whole film round: `python3 tools/round.py start --round N --whole`, then `jobs`, `place`, `pack`, `votes`, `close`, each with `--round N`. After `start` the tool knows the round's kind from its state.
+- Record round: `python3 tools/round.py start --round N --record`, then the same five steps. `pack --controls-from M` reuses the controls of round M.
+- Scratch: add `--scratch` to every step and use a round above 900; `start` also takes `--tier draft --every 10 --allow-red`. Made up answers: `python3 tools/scratch_answers.py --round N | python3 tools/round.py votes --round N --scratch`.
+- `jobs` takes `--workers 8 --job-minutes 15 --sample-seconds 4.3 --measure-minutes 20`.
+
+## Log
+
+- 2026-11-20: cloned, read the brief and the files it names, set up, wrote this plan.
+- 2026-11-21: scratch mode and scratch tiers committed (ad82bb7). Stop round 901 (mars, draft, `--every 10`, `--no-mirror --allow-red`) run start to close on ad82bb7 with seven worker jobs in the second clone and made up answers; every file it wrote was copied to `/home/user/workspace/scratch/before/` (172 files).
+- 2026-11-21: new pack.ts and round.py committed (39e79a8, 03cf490). The same stop round run again from nothing on 03cf490 (ledger, round folder, pack, cache, stills and measure deleted first, all seven jobs rendered again in the second clone). Same 172 file names. All 78 PNG files are byte identical. The files that differ, and only in this: the commit sha (state, jobs, ledger line, summary), the start time in the ledger line, `seconds` in render records and in the measure, and G12's count of tracked files (996 to 997, the new `tools/scratch_answers.py`). Critics' list, key, tallies, scorecards: identical.
+- The gate on main is red at G11 (belt files under `public/assets/shared/belt/full/` without a ledger row or recipe). Not mine. Scratch runs use `--allow-red`, so `gateGreen` is false and no pass bar can hold in them.
+- Real tiers, plan only (`jobs` with the state of a whole film round and no tier): 25 jobs for a whole film round, about 40 min per worker on 8 workers; 77 jobs for the record round, about 130 min per worker. Two kinds of job cannot be split below 15 min: the stress clip of `mars.dive` (15 fast frames at the review tier, 17 min expected) and a stop's measure (about 20 min).
+- When the final stills are split over several jobs, a whole film sheet or the holds grid whose frames lie in more than one job is put together by the full pack from the stills in `out/work/stills/`. That opens no render session.
+- 2026-11-21, part 1 proof, scratch whole film round 911 at draft on 03cf490: `jobs --job-minutes 1.2 --workers 3` made 19 jobs (4 of stills, 11 motion sheets, 4 stress clips); the second clone rendered them one after the other in 664 s and sent 22 tar pieces. After `place`, the full pack (`round.py pack`) printed `pack round-911: nothing was rendered, no render session was opened, 45.4 s`. All 180 files of the tars (55 stills and 55 records, 21 sheets and 21 records, 24 stress stills and 4 records) are byte identical in the repo after the full pack, so the pack wrote none of them again. Whole film sheets 1, 2, 4 and the holds grid were put together from the stills by the full pack.
+- 2026-11-21, part 2, round 911 closed with made up answers: 237 critics (R5 1, R6 1, R7 3 parts, R3 5 parts, R4 2 parts, R2 45 images by 5 jurors). Tool: R5 9, R6 10, R7 8, R3 6, R4 6, 2 severe, 4 major, R2 84 of 135 judged against 57 of 90 controls, pass bar does not hold. By hand from the made up cards: R7 parts 9, 8, 9 give 8 with 1 major; R3 parts 6, 9, 10, 9, 8 give 6 with 1 severe and 2 major; R4 parts 9, 6 give 6 with 1 severe and 1 major: 2 severe, 4 major. By hand from jurors.txt and key.json: judged 66 answers that start with a plus 18 prose answers the old reader takes as a = 84; controls 47 plus 10 = 57. `close --vote reviewer_134=b --vote reviewer_126=b` gave 83 and 56. The tool lists every vote it did not read from the start of the answer.
+- 2026-11-21, round 912 (second whole film round, draft, cache copied from round 911 by hand because nothing changed in the build): `pack` asked for 147 critics instead of 237 and printed `controls reused from round 911`; with all pass answers the tool gave R5 9, R6 10, R7 9, R3 9, R4 9, R2 135 of 135 against the 57 of 90 of round 911, and with the gate green on 7bbddc7 `whole film pass bar HOLDS`. All judged votes set to b: R2 fail, 0 severe, 1 major, does not hold. One R3 part's answer removed: `close` names the missing critic and stops; with `--force` R3 is not passed (4 of 5 parts). A fourth whole film round is refused (`the whole film has used its 3 rounds`).
+- 2026-11-21: the Builder mailed that engine batch 5 is on main (9d33905) and asks for a merge at my next commit. The record round 921 was already running on c54fc2e, so the merge comes after its close.
+- 2026-11-21, part 3, scratch record round 921 at draft on c54fc2e (`start --record --tier draft --every 30`, gate green): 55 jobs (stills with the film sheets, holds grid and hook; 11 motion sheets; 4 stress clips; per stop the measure and its views, dive, dive cover, rise, rise cover), rendered in the second clone in 1905 s, 61 tar pieces. After `place`: `pack round-921: nothing was rendered, no render session was opened, 124.3 s`. 328 critics: R1 9, R3 24 (the Sun in 3 parts, the others in 2, the whole film in 5), R4 11, R5, R6, R7 3, R2 225 jurors, R8 54 jurors.
+- Record round tallies with made up answers, tool against hand: stops R1 9, 6, 8, 10, 6, 8, 10, 6, 8; R3 8, 9, 6, 8, 9, 6, 8, 9, 6; R4 all 9; whole film R5 10, R6 9, R7 6, R3 8, R4 6; 8 severe, 16 major; whole film R2 84 of 135 against 57 of 90; per stop R2 and R8 counted by a separate script from jurors.txt and key.json, all nine equal to the tool (R8 fails for mercury, venus, earth, 2 of 3 named against 3 of 3). Final line: `Final scores: R1 mercury 6, R2 pass, R3 venus 6, R4 whole film 6, R5 10, R6 9, R7 6, R8 fail`; the section "Final scores" of the scratch ledger holds the stop table, the whole film table, the R2 and R8 table and that line. With all pass answers: whole film pass bar holds, no stop's bar holds because the measures at draft are not green.
+- Each measure comes back as `out/work/measure/<stop>.json` in the tar of the job `rN-<stop>-measure`; `place` unpacks it, `close` checks its hashes against the round's build and copies it to `measures-<stop>.json`.
+- 2026-11-21: after the merge of main at 45d1651 (9 test files) `start` stopped with "tests:" although 35 of 35 tests pass: the test runner prints three more lines after its summary, so "passed" was no longer in the last 6 lines the tool reads. `checks()` now reads the last 12. Main has the same line (tools/round.py line 157 there); the Builder was told.
+- 2026-11-21, scratch Sun stop round 902 at draft on 5e5def3 (engine 704d5d55f51b7b15): the pack made `R3-part1`, `R3-part2`, `R3-part3`; 31 critics, R1, R3 part 1, R3 part 2, R4 on the families they would have had before, R3 part 3 on the next one; `close` gave R3 9 (part 1: 10, part 2: 9, part 3: 9) with the major issue of part 2, as the made up cards say. `place` listed the draft stills of the earlier engine as records from another build, and the pack did not use them.
+- Since the stop round comparison (03cf490) the stop round's code changed in one place only: the 12 lines above. `git diff 03cf490 HEAD -- tools/round.py tools/pack.ts` shows that and three hunks inside `film_pack` and `film_close`.
+
+## Not covered
+
+- No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
+- The worker was a second clone on the same VM, the tars went through the attachments folder by a script (`/home/user/workspace/scratch/run_jobs.py`, not in the repo). No real second VM, no real critic.
+- The real mode of the film steps (round line in `kit/PROGRESS.md`, commit, push to main, `scorecards/`) was not run; it goes through the same `commit()`, `PROG` and `SC` as a stop round, which scratch mode swaps.
+- A stop's measure is one job of about 20 min; the stress clip of `mars.dive` is one job of about 17 min at the review tier.
+- The record round judges main as it is; it does not mirror the stops' branches.
+- `--plan` leaves an empty cache folder for the round.
+
