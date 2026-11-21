@@ -545,3 +545,15 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - `globe.ts`: `uLandAt` is a vec4 now, `look.globe.away.landAt` [0.4, 1, 0.28, 0.7]. Night land tone times `clamp(1 + 0.7 * (mean albedo / 0.28 - 1), 0.55, 1.7)`: the night land keeps the map's own light and dark (forest, range, plain) instead of one flat tone. 2156 crop new beside old `/tmp/l2156.jpg` (pushed).
 - `aurora.ts`: `look.aurora.rays` [150, 340, 0.6, 0.9]: two value noise bands along the ribbon (150 and 340 cells), `col *= mix(1, 0.6 + 0.9 * rays, away)`. First take [90, 210, 0.35, 1.5] read as a bar code of hard dark gaps at 2156 (p36, pushed as a look), dropped. p37: 1857 a thin band with fine soft rays, 2156 fine rays across the column.
 - 1755 at draft against `out/work/earth/p33/rimE.png`: 0 pixels differ. Build passes, 59 of 59 tests.
+
+### Checks on 290c041 (12:00 to 12:25 UTC, `out/work/earth/q1/`, queue `out/work/earth/q2.sh`)
+
+- Commit 290c041 (night land relief, aurora rays), pushed 12:00. `origin/main` moved to eef880d (Neptune files and `kit/PROGRESS.md` only): merge after the queue, before READY.
+- 2156 at final (64 samples, 3 min 55 s): whole frame reads as one planet; night South America dark with its own light and dark and point lights on the coasts, land to the limb, no shelf; aurora at the right limb a band with fine rays; lower right stars sharp points.
+- 1857 at final: aurora a thin band above the limb with fine rays and a soft red top, no green on the disc except the hero's own thin green limb line, night side opaque, no pale patch, Brazil with its lights as in the hold.
+- Hold compare at final (`out/work/compare/compare-earth-hold.jpg`): same shot as the approved hero in all nine crops.
+- Rise handover at review (16 samples): limb row at x = 100, 500, 960, 1400, 1820: 2129 [309, 237, 199, 213, 267], 2130 [320, 241, 199, 213, 268], 2131 [326, 242, 198, 215, 274]. Same line and same deck across the switch; the left end sinks 11 px, then 6. In 2131 a few faint hatched marks low left where small bright cloud specks show through the thinning deck (stepped copies at 16 samples, the engine's matter).
+- Dive cover at review: limb row 1883 [292, 215, 164, 156, 175], 1884 [288, 214, 163, 151, 168]. Same line, same deck.
+- Flow 1903 to 1919 at draft (`flowpx.py`, px per frame at the bottom, the middle, the left): 1903 to 1904 (-1.13, +1.68), 1911 to 1912 (-1.08, +1.30), 1918 to 1919 (-1.03, +1.19). No stall.
+- Texel views (`texcount.py`): 1866, 1872, 1875, 2138, 2142 all soft 0 (mean 1.99, 1.80, 1.64, 1.80, 1.82 texels per pixel; min 1.22).
+- Next in the queue: terrain compare at final, measure (G13 over 463 frames, G5, G17, about 29 minutes), draft sheets of the dive and the rise.
