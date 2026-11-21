@@ -125,13 +125,13 @@ await page.addInitScript(install, [RULES, edits] as [[string, string][], [string
 await page.goto(url + '?mode=capture&format=' + format + '&assets=full')
 await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 120000 })
 
-type Result = { plain: number; timed: number; png: number; rows: Row[]; uploads: number; uploadMs: number; image: string }
+type Result = { plain: number; timed: number; png: number; rows: Row[]; uploads: number; uploadMs: number; coverage: number; image: string }
 const out: Record<string, unknown> = { machine: machineId(), format, tier, skip, frames: {} }
 const lines: string[] = []
 
 for (const frame of frames) {
   const r = await page.evaluate(async ([f, t, s, k]) => {
-    const w = window as unknown as { perf: Perf; showcase: { renderFrame(f: number, t: string): Promise<void>; png(): Promise<string> } }
+    const w = window as unknown as { perf: Perf; showcase: { renderFrame(f: number, t: string): Promise<void>; png(): Promise<string>; sanity(): { coverage: number } } }
     await w.showcase.renderFrame(f as number, 'draft')
     let t0 = performance.now()
     await w.showcase.renderFrame(f as number, t as string)
@@ -149,7 +149,7 @@ for (const frame of frames) {
     await w.showcase.renderFrame(f as number, t as string)
     const timed = performance.now() - t0
     w.perf.on = false
-    return { plain, timed, png, rows: w.perf.rows, uploads: w.perf.uploads, uploadMs: w.perf.uploadMs, image: k ? await w.showcase.png() : '' }
+    return { plain, timed, png, rows: w.perf.rows, uploads: w.perf.uploads, uploadMs: w.perf.uploadMs, coverage: w.showcase.sanity().coverage, image: k ? await w.showcase.png() : '' }
   }, [frame, tier, skip, a.png !== undefined] as const) as Result
   if (a.png) {
     const bytes = Buffer.from(r.image, 'base64')
@@ -185,7 +185,7 @@ for (const frame of frames) {
   const fixed = [...sums.entries()].filter(([, e]) => e.perFrame).map(([part, e]) => ({ part, seconds: e.ms / 1000 }))
   const sampleTotal = perSample.reduce((s, x) => s + x.seconds, 0)
   const fixedTotal = fixed.reduce((s, x) => s + x.seconds, 0)
-  lines.push('', 'frame ' + frame + ' ' + tier + ' ' + samples + ' samples: ' + (r.plain / 1000).toFixed(2) + ' s untimed, ' + (r.timed / 1000).toFixed(2) + ' s timed, png ' + (r.png / 1000).toFixed(2) + ' s, uploads ' + r.uploads + ' (' + (r.uploadMs / 1000).toFixed(3) + ' s)')
+  lines.push('', 'frame ' + frame + ' ' + tier + ' ' + samples + ' samples: ' + (r.plain / 1000).toFixed(2) + ' s untimed, ' + (r.timed / 1000).toFixed(2) + ' s timed, png ' + (r.png / 1000).toFixed(2) + ' s, uploads ' + r.uploads + ' (' + (r.uploadMs / 1000).toFixed(3) + ' s), alpha coverage ' + (100 * r.coverage).toFixed(1) + ' %')
   lines.push('| Part | Vertices | Seconds per sample | Share |', '| --- | --- | --- | --- |')
   for (const x of perSample.sort((p, q) => q.seconds - p.seconds)) lines.push('| ' + x.part + ' | ' + x.vertices + ' | ' + x.seconds.toFixed(3) + ' | ' + (100 * x.seconds / sampleTotal).toFixed(1) + ' % |')
   lines.push('| script between calls | | ' + (gap / 1000 / samples).toFixed(3) + ' | |', '| all draw calls of a sample | | ' + sampleTotal.toFixed(3) + ' | 100 % |')
