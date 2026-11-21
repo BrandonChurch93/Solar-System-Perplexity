@@ -47,6 +47,7 @@ export interface GlobeOptions {
   shade: { far: number; grad: number; cap: number }
   mauve: { from: number; to: number; rest: number }
   weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
+  hold: { map: THREE.Texture; right: THREE.Vector3; up: THREE.Vector3; forward: THREE.Vector3; centre: [number, number]; half: number; lod: number; stops: number; back: [number, number]; weight: number }
   segments?: number
 }
 
@@ -134,6 +135,12 @@ uniform vec3 uWeaveCam;
 uniform vec4 uWeaveRing;
 uniform vec4 uWeave;
 uniform float uWeaveLit;
+uniform sampler2D uHold;
+uniform vec3 uHoldR;
+uniform vec3 uHoldU;
+uniform vec3 uHoldF;
+uniform vec4 uHoldMap;
+uniform vec4 uHoldLook;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -238,6 +245,16 @@ ${TAP_LEVELS}
     }
     albedo = acc / float(uTaps);
   }
+  vec3 hv = dc - uWeaveCam;
+  vec2 hq = (vec2(dot(hv, uHoldR), dot(hv, uHoldU)) / max(dot(hv, uHoldF), 1e-3) - uHoldMap.xy) * uHoldMap.z + 0.5;
+  vec2 hx = dFdx(hq);
+  vec2 hy = dFdy(hq);
+  float held = uHoldLook.x * (1.0 - uLimbFar) * smoothstep(uHoldLook.z, uHoldLook.w, dot(dc, normalize(-hv)));
+  vec3 fine = vec3(1.0);
+  for (int pass = 0; pass < (held > 0.0 ? 1 : 0); pass++) {
+    albedo = mix(albedo, textureLod(uMap, lonLat(dc), uHoldMap.w).rgb, held);
+    fine = exp2((textureGrad(uHold, hq, hx, hy).rgb - ${(128 / 255).toFixed(6)}) * uHoldLook.y * held);
+  }
   vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
   float k = uFlowLook.x * (1.0 - near);
   vec4 fl = equirect(uFlow, dc);
@@ -296,6 +313,7 @@ ${TAP_LEVELS}
     vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
     col = col * (1.0 - lg.a) + max(lg.rgb, 0.0);
   }
+  col *= fine;
   for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
     col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
@@ -372,6 +390,8 @@ export class Globe {
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
         uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
+        uHold: { value: o.hold.map }, uHoldR: { value: o.hold.right }, uHoldU: { value: o.hold.up }, uHoldF: { value: o.hold.forward },
+        uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })

@@ -81,10 +81,14 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
+  const holdBack = globeTurn.clone().invert()
+  const holdCam = new THREE.Vector3().fromArray(fit.camera.position)
+  const holdMap = await ctx.texture(base + look.hold.file, { srgb: false })
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
     map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade, mauve: look.mauve, weave: { ...look.weave, camera: new THREE.Vector3().fromArray(fit.camera.position).applyQuaternion(globeTurn.clone().invert()) },
+    hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
@@ -98,7 +102,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const carry = ground.carry!
-  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 4, repeat: true })
+  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 1, repeat: true })
   const veil = new Veil(look.veil, clouds, carry, diagUniform)
   const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
   const swaps = { dive: swapOf('dive', sunTerrain, carry.fwd, carry.right), rise: swapOf('rise', sunTerrain, carry.fwd, carry.right) }

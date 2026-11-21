@@ -70,6 +70,8 @@ export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
 
 export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
+export const hold = { file: 'hold-detail.jpg', margin: 1.016, base: 512, stops: 4, back: [-0.15, -0.03] as [number, number], weight: 1 }
+
 export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
 
 export const veil = {
