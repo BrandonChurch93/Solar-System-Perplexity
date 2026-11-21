@@ -1,78 +1,84 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T08:16:35.185Z",
- "head": "67628129ed1e055bc281d6bfc2ec23a2a578be4a",
- "note": "belt on the new camera: finals 2772 2782 2796, near rock tilts, review sheet",
+ "pushed": "2026-11-21T08:38:20.064Z",
+ "head": "234fc04960326557f4d96fed632c556554e5781f",
+ "note": "belt refit done: review sheet r3, finals 2772 2782 2796, dust order with and without the patch",
  "looks": [
   {
-   "time": "2026-11-21T08:16:34.142Z",
-   "file": "20261121081634142-note-sheet.jpg",
-   "source": "out/work/belt/r1/sheet.jpg",
+   "time": "2026-11-21T08:38:02.095Z",
+   "file": "20261121083802095-note-f2782-nopatch.jpg",
+   "source": "out/work/belt/p5/f2782-nopatch.png",
    "kind": "note",
-   "label": "belt review sheet every third frame 2745 to 2817, first layout",
+   "label": "belt final 2782 on the branch as committed, without the dust patch",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T08:16:33.304Z",
-   "file": "20261121081633304-note-nt.jpg",
-   "source": "out/work/belt/p5/nt.jpg",
+   "time": "2026-11-21T08:38:01.556Z",
+   "file": "20261121083801556-note-dust-order-2782.jpg",
+   "source": "out/work/belt/p5/dust-order-2782.png",
    "kind": "note",
-   "label": "near rock, six tilts at draft, aperture 12",
+   "label": "near rock at final 2782, native size: left without the dust patch, right with it",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T08:16:32.381Z",
-   "file": "20261121081632381-note-f2796.jpg",
-   "source": "out/work/belt/p5/f2796.png",
+   "time": "2026-11-21T08:38:00.924Z",
+   "file": "20261121083800924-note-g2796.jpg",
+   "source": "out/work/belt/p5/g2796.png",
    "kind": "note",
-   "label": "belt final 2796 on the new camera, dust patch applied",
+   "label": "belt final 2796, final layout, dust patch applied",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T08:16:31.530Z",
-   "file": "20261121081631530-note-f2772.jpg",
-   "source": "out/work/belt/p5/f2772.png",
+   "time": "2026-11-21T08:38:00.303Z",
+   "file": "20261121083800303-note-g2782.jpg",
+   "source": "out/work/belt/p5/g2782.png",
    "kind": "note",
-   "label": "belt final 2772 on the new camera, dust patch applied",
+   "label": "belt final 2782, final layout, dust patch applied",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T08:16:30.642Z",
-   "file": "20261121081630642-note-f2782.jpg",
-   "source": "out/work/belt/p5/f2782.png",
+   "time": "2026-11-21T08:37:59.677Z",
+   "file": "20261121083759677-note-g2772.jpg",
+   "source": "out/work/belt/p5/g2772.png",
    "kind": "note",
-   "label": "belt final 2782 on the new camera, dust patch applied",
+   "label": "belt final 2772, final layout, dust patch applied",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T08:16:01.051Z",
-   "file": "20261121081601051-frame-f02745.jpg",
-   "source": "out/work/belt/r2/f02745.png",
+   "time": "2026-11-21T08:37:59.128Z",
+   "file": "20261121083759128-note-sheet.jpg",
+   "source": "out/work/belt/r3/sheet.jpg",
+   "kind": "note",
+   "label": "belt review contact sheet, every third frame 2745 to 2817, final layout with dust patch",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T08:37:48.280Z",
+   "file": "20261121083748280-frame-patch2-2212.jpg",
+   "source": "out/work/belt/p5/proof/patch2-2212.png",
    "kind": "frame",
-   "label": "mars.travel frame 2745, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2745,
-   "tier": "review",
+   "label": "earth.travel frame 2212, draft tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2212,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "b2298702064d87b4"
+   "engine": "4410cec635d2f16c"
   },
   {
-   "time": "2026-11-21T08:01:22.519Z",
-   "file": "20261121080122519-note-f02781.jpg",
-   "source": "out/work/belt/d2/f02781.png",
-   "kind": "note",
-   "label": "belt draft 2781, new layout with dust order patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T08:01:21.748Z",
-   "file": "20261121080121748-note-sheet.jpg",
-   "source": "out/work/belt/d2/sheet.jpg",
-   "kind": "note",
-   "label": "belt on the new camera, draft sheet every third frame 2745 to 2817, unfinished",
-   "stop": "mars"
+   "time": "2026-11-21T08:37:24.348Z",
+   "file": "20261121083724348-frame-patch2-2580.jpg",
+   "source": "out/work/belt/p5/proof/patch2-2580.png",
+   "kind": "frame",
+   "label": "mars.terrain frame 2580, draft tier",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2580,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "4410cec635d2f16c"
   }
  ]
 }
