@@ -1,0 +1,64 @@
+{
+ "folder": "saturn",
+ "pushed": "2026-11-21T02:45:05.987Z",
+ "head": "9602acaf65c78e325792388b3af374422aad9b20",
+ "note": "first looks: stand-in hold and terrain beside the approved images; reading the brief and Mars pattern",
+ "looks": [
+  {
+   "time": "2026-11-21T02:44:57.741Z",
+   "file": "20261121024457741-compare-compare-saturn-terrain-view.jpg",
+   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
+   "kind": "compare",
+   "label": "saturn.terrain: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:56.729Z",
+   "file": "20261121024456729-still-f03720-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03720-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:41.572Z",
+   "file": "20261121024441572-compare-compare-saturn-hold-view.jpg",
+   "source": "out/work/compare/compare-saturn-hold-view.jpg",
+   "kind": "compare",
+   "label": "saturn.hold: approved image left, film frame right, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:40.388Z",
+   "file": "20261121024440388-still-f03465-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03465-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
