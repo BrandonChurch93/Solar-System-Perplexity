@@ -1,55 +1,61 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T14:51:54.673Z",
+ "pushed": "2026-11-21T15:41:06.627Z",
  "head": "5abee296704e367474bdc18c22079b898ad57856",
- "note": "round 3: rise frames at review",
+ "note": "round 3: sunspot of the relief meets the hero's sunspot in the rise dissolve; hold sky card top and bottom border",
  "looks": [
   {
-   "time": "2026-11-21T14:51:53.575Z",
-   "file": "20261121145153575-note-i103-rv-partial.jpg",
-   "source": "out/work/sun/i103-rv-partial.jpg",
+   "time": "2026-11-21T15:41:05.985Z",
+   "file": "20261121154105985-note-i124-carry-b.jpg",
+   "source": "out/work/sun/i124-carry-b.jpg",
    "kind": "note",
-   "label": "rise at review tier: 208, 212 to 218, 220, 222, limb readable in each, no whiteout",
+   "label": "rise 217 to 232 at draft, same change",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T14:23:28.623Z",
-   "file": "20261121142328623-note-i93-moat.jpg",
-   "source": "out/work/sun/i93-moat.png",
+   "time": "2026-11-21T15:41:05.382Z",
+   "file": "20261121154105382-note-i124-carry-a.jpg",
+   "source": "out/work/sun/i124-carry-a.jpg",
    "kind": "note",
-   "label": "frame 90 sky round the arch at 2.2 times gain at final, approved left, film right",
+   "label": "rise 204 to 216 at draft: relief sunspot now lands on the hero's dark sunspot and turns with the globe",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T14:23:27.483Z",
-   "file": "20261121142327483-note-i88-f0.jpg",
-   "source": "out/work/sun/i88-f0.jpg",
+   "time": "2026-11-21T15:39:52.134Z",
+   "file": "20261121153952134-frame-f00221.jpg",
+   "source": "out/work/seq/200-232/f00221.png",
+   "kind": "frame",
+   "label": "sun.rise frame 221, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 221,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T15:20:35.924Z",
+   "file": "20261121152035924-note-i115-card-topbottom-old-new-x4.jpg",
+   "source": "out/work/sun/i115-card-topbottom-old-new-x4.png",
    "kind": "note",
-   "label": "frame 0 at final after the eased start",
+   "label": "hold sky card at 4 times gain, top and bottom border, old above new: straight edge gone",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T14:23:26.346Z",
-   "file": "20261121142326346-note-i99-rv208.jpg",
-   "source": "out/work/sun/i99-rv208.jpg",
+   "time": "2026-11-21T15:20:35.339Z",
+   "file": "20261121152035339-note-i104-rise-cover-review.jpg",
+   "source": "out/work/sun/i104-rise-cover-review.jpg",
    "kind": "note",
-   "label": "rise frame 208 at review: limb readable, partial veil on the left foot",
+   "label": "rise cover sheet at review tier, 211 to 222: limb readable in each frame",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T14:23:25.427Z",
-   "file": "20261121142325427-note-i98-border-x3.jpg",
-   "source": "out/work/sun/i98-border-x3.png",
+   "time": "2026-11-21T15:20:34.788Z",
+   "file": "20261121152034788-note-i104-rise-sheet-review.jpg",
+   "source": "out/work/sun/i104-rise-sheet-review.jpg",
    "kind": "note",
-   "label": "the same at 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T14:23:24.621Z",
-   "file": "20261121142324621-note-i98-border-x1.jpg",
-   "source": "out/work/sun/i98-border-x1.png",
-   "kind": "note",
-   "label": "hold sky border at 247, 270, 449 at review, 1 times: Milky Way runs on across the approved border",
+   "label": "rise sheet at review tier, 180 to 269 (a9b90c6)",
    "stop": "sun"
   },
   {
