@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "near foreground, mid cloud band, and far upper surface",
+      "what": "directional smear and stretched, airbrushed texture with almost no micro-detail, so the terrain reads as a blur or warp filter; the same smear fills the native crops on image-06, image-07, and image-08",
+      "fix": "rebuild the near, mid, and far surface so detail stays sharp and unstretched in the native crops"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "lower-center vortex",
+      "what": "the storm core pinches into a rotational smear, like a swirl filter; the same pinch is in the lower-middle crop on image-06 and crop U on image-08",
+      "fix": "replace the warped core with turbulent structure that does not spiral into a pinched center"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper-left far surface",
+      "what": "flat light on a featureless blue sheet, with no relief or specular break; the top-left crops on image-06 and image-07 show the same plastic surface",
+      "fix": "add fine relief and a light response that changes across the far surface"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring arcs to the right of and below the globe; also visible in image-16.png crops U and V",
+      "what": "The rings resolve into smooth, nearly uniform outlines with a diffuse duplicate-looking outer arc. They read as drawn curves rather than bands of material.",
+      "fix": "Give the ring bands distinct widths and vary their opacity across and along the arcs. Keep the diffuse dust component subtler than the ring cores."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crop F, the storm eye and the cloud lanes extending above it",
+      "what": "The filaments stretch into long parallel strokes and pinch into an S-shaped hook around a smooth dark eye. The contrast between the smeared blue field and bright flecks makes the vortex look warped in two dimensions.",
+      "fix": "Break the parallel lanes into cloud structures at several scales, reduce stretching around the eye, and carry fine tonal detail into the vortex interior."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crops J and K, the sunlit upper-left limb",
+      "what": "A thin bright outline stands apart from the broader blue bloom, creating a doubled edge.",
+      "fix": "Blend the narrow rim and the wide atmospheric glow into one continuous falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crops S and T, the dark near foreground below the bright cloud bank",
+      "what": "The shadowed texture collapses into broad navy smudges and grain, losing fine structure even where adjacent cloud filaments remain crisp.",
+      "fix": "Preserve some low-contrast fine structure in the foreground shadows without lifting the overall black level."
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops C and F, the brightest stars above the horizon",
+      "what": "Several bright stars have soft colored blobs that overwhelm their point cores.",
+      "fix": "Reduce bloom on the brightest stars and retain compact cores with a more varied falloff."
+     }
+    ]
+   }
+  }
+ ]
+}

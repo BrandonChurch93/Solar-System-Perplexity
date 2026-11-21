@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "right and lower-right planet limb (pair-02-b.png tiles E, G, H)",
+   "what": "a dark blue-black gap separates the sunlit cloud deck from a detached thin cyan outer rim, and the top limb shows a double concentric line instead of a single continuous glow",
+   "fix": "close the gap between the planet surface and atmosphere shell and blend the limb scattering into one smooth, continuous outward falloff matching pair-01-a.png"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower-center terminator across the planet disc (pair-02-b.png tiles A, I)",
+   "what": "the shadow transition breaks into jagged, posterized dark-teal and black blotches, and grazing sunlit cloud tufts along the terminator look dim and greenish",
+   "fix": "remove the quantized shadow banding so the terminator grades smoothly from deep blue into black, and restore crisp warm-white grazing light on the low terminator cloud tops"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "ring system, especially lower-left foreground arc over the dark disc and lower-right loop (pair-02-b.png tiles D, H)",
+   "what": "the crisp multi-stranded ringlets and bright clumpy ring arcs crossing the lower-left dark hemisphere are smeared into a single blurry, featureless grey band",
+   "fix": "sharpen the individual concentric ring strands and restore the distinct bright foreground ring arcs across the lower-left hemisphere"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "upper-left horizon limb (pair-04-b.png tiles B, I)",
+   "what": "the blue atmospheric glow stops in a hard crisp edge right at the geometric horizon with almost no outer haze fading into space",
+   "fix": "widen and soften the outer atmospheric falloff above the upper-left limb so it matches the smooth blue haze of pair-03-a.png across the full horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon (pair-02-b.png tile B)",
+   "what": "the moon loses its pale cyan mid-latitude band and smooth pinkish-tan polar gradient, appearing uniformly chalky grey-pink with coarser dark spots and a clockwise-rotated terminator that puts more of the lower-left pole in shadow",
+   "fix": "restore the soft pinkish-tan to pale-cyan surface color zoning, soften the albedo markings, and rotate the lighting terminator counterclockwise to illuminate the lower limb as in pair-01-a.png"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sunlit white cirrus bands near the upper-right limb and storm rim (tiles A, C, E, H)",
+   "what": "fine wind-sheared white cloud wisps break up into harsh, stippled, aliased white flecks",
+   "fix": "soften and anti-alias the high-altitude white cloud streaks into smooth, fibrous wisps with feathered edges"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left planet limb toward the terminator (pair-02-b.png tile B)",
+   "what": "the soft cyan outer atmospheric haze above the darkened upper-left limb is clipped down to a thin, hard blue edge",
+   "fix": "extend and soften the faint blue atmospheric glow outward into space along the upper-left limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "bright white star in the upper-right sky (pair-04-b.png tile C)",
+   "what": "the crisp four-point diffraction spikes on the bright white star are softened into a round blur",
+   "fix": "restore the sharp cross diffraction spikes and pinpoint star core in the upper-right sky"
+  }
+ ]
+}
