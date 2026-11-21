@@ -1,9 +1,41 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T22:00:42.030Z",
- "head": "c63a012aea92af691dfb4269edfd619baf80a736",
- "note": "Phase 6 polish: rise cover (item 1) in work, field (item 3) built",
+ "pushed": "2026-11-21T22:17:51.109Z",
+ "head": "59b58797316c5a32fce0ba38a507bce17fc3752a",
+ "note": "polish: rise cover at review tier renders (200 to 224); near ground detail takes in work",
  "looks": [
+  {
+   "time": "2026-11-21T22:17:49.878Z",
+   "file": "20261121221749878-note-i179-rf7-bottom-0-60-90.jpg",
+   "source": "out/work/sun/i179-rf7-bottom-0-60-90.jpg",
+   "kind": "note",
+   "label": "polish item 2, before: round 24 final frames 0, 60, 90, bottom strip corners over the middle ground, native size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:17:49.078Z",
+   "file": "20261121221749078-note-i188-plate-R-screen-scale.jpg",
+   "source": "out/work/sun/i188-plate-R-screen-scale.png",
+   "kind": "note",
+   "label": "polish item 2, failed takes: lower right of the plate at screen scale. Top left the approved smear, top right take 2 (pebbles), bottom left take 1 (flat pale cells)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:17:47.908Z",
+   "file": "20261121221747908-note-i182-q8.jpg",
+   "source": "out/work/sun/i182-q8.jpg",
+   "kind": "note",
+   "label": "polish item 1: draft 213, 216, 218, 220, 224, 232 with the hero's highlights held under the relief's tone in the dissolve; bottom row 216, 220, 224 before",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:17:45.852Z",
+   "file": "20261121221745852-note-i189-rv8-213.jpg",
+   "source": "out/work/sun/i189-rv8-213.jpg",
+   "kind": "note",
+   "label": "polish item 1: rise cover frame 213 at the review tier with motion blur (preview format), two world fixed zones",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T22:00:40.971Z",
    "file": "20261121220040971-note-i173-q4-211-top.jpg",
@@ -82,38 +114,6 @@
    "source": "out/work/sun/i151-f60-limbstrip-x4.png",
    "kind": "note",
    "label": "Polish item 3: frame 60 under the limb at 4 times, mirrored strip from the fold ring",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T21:19:59.893Z",
-   "file": "20261121211959893-note-i156-p1-212-216-crop.jpg",
-   "source": "out/work/sun/i156-p1-212-216-crop.jpg",
-   "kind": "note",
-   "label": "Polish item 1 study: loop cards and mirrored sunspot from above at 212 and 216",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T21:19:59.351Z",
-   "file": "20261121211959351-note-i155-p1-relief-full.jpg",
-   "source": "out/work/sun/i155-p1-relief-full.jpg",
-   "kind": "note",
-   "label": "Polish item 1 study: relief kept at full weight from above, 208 to 222 (mirrored far ground and loop card sheet exposed)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T21:19:58.561Z",
-   "file": "20261121211958561-note-i153-p0-draft.jpg",
-   "source": "out/work/sun/i153-p0-draft.jpg",
-   "kind": "note",
-   "label": "Polish item 1 baseline: rise 200 to 224 at draft, shipped build",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:56:03.529Z",
-   "file": "20261121175603529-note-i147-f90-arch-approved-film-x22.jpg",
-   "source": "out/work/sun/i147-f90-arch-approved-film-x22.png",
-   "kind": "note",
-   "label": "sun frame 90 sky round the arch at 2.2 times gain, approved left, film right: no moat",
    "stop": "sun"
   },
   {
