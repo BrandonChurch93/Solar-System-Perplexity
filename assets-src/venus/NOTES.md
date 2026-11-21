@@ -280,3 +280,18 @@ Minors: night side lifted about 1.3 levels and smoother than the hero; exposure 
 Builder: travel path and shutter are the Builder's (Phase 5), leave the rise's end pose. Engine batch 13 (sky across the travels) is coming, does not touch hold or terrain frames; merge origin/main before READY. READY format: `READY <commit> round 3`, changes per item number, what is still weak, measures (G5, G13, G17, mirrorcheck). Before READY render both cover sheets and the terrain sheet at review tier and look at every frame.
 
 ## Round 3 work (13:10 onward)
+
+Second render copy: `/home/user/workspace/r2` (git worktree) with `/home/user/workspace/rr.sh NAME COLS TIER FRAME...` (syncs the three venus folders, renders there, writes `out/work/venus/r3/NAME-FRAME.png` and the strip `NAME.jpg`; `NOCOVER=1` switches the veil off in the copy). Sheets, compare, measure, gates and looks run in the main repo.
+
+Diagnosis (13:13 to 13:30):
+- Covers rendered without the veil (`out/work/venus/strip/nc-dive.jpg`, `nc-rise.jpg`): the two views already agree closely at both swaps (rise: curved horizon, terrain 1559 at 0.53 of frame height, orbit 1560 at 0.43). What makes two horizons is the engine's straight band and my thick shell (1.18 radii).
+- The engine's terrain horizon ignores the camera's height above the deck (true dip at the exit height is 15.1 degrees, the fit's 10.9), so the band and my dive override sat above the visible terrain horizon (dive 1314: engine 0.446 half heights above centre, visible about 0.16).
+- Cover shader (`src/terrain/cover.ts`): colour from a straight line, alpha cut by a shell around the planet centre (`coverShell`, orbit) or around a sphere I name (`coverSea`, terrain). The rush pattern only moves radially (`phase = sign * speed * dt`).
+- 1287 limb: the violet highlight is a seeded lightning cell on the limb. The orange line is the hero's short bright streak in the hold table. Band and gap: the hold table's veil (alpha 1 at the edge, plateau 0.04 to 26 px inside) over a globe that is brighter than the veil near the limb once the camera has moved. At the hold the film matches the hero there, so the hold table stays for the hold.
+- Hold table layout: `limb.bin` float32 RGBA, 65 columns; rows 0 to 127 inside (row 127 the edge, square root mapping over 0.3 radii), rows 128 to 255 outside (1.5 radii).
+
+Decisions and changes (uncommitted at 13:35, see the commit that holds these notes):
+- Item 5: lightning off once the dive starts (`look.leave.seconds 0.5`, `left` in `set.ts`); none in 1287 or 1586.
+- Item 4: `limb.bin` now has 512 rows. Rows 256 to 511 are a far table (`assets-src/venus/fit/far.py`, from the hold table: azimuth median 9 plus Gaussian 2 cells, night side inside veil one falloff, inside alpha halved on the night side, monotone inside and outside). `uLimbFar = left` mixes hold table to far table in `rim.ts` and `globe.ts`.
+- Items 1 and 2: the veil's edge is the limb in both views. `VenusPlan.horizon()` sets `coverShell` (orbit) or `coverSea` (terrain, the relief's own sphere from `relief.json` camera up and radius) to a thin edge, a few thousandths of the limb's angular radius, and returns the true sphere horizon for the terrain view too. Cover colours uniform (`coverTop [1, 1]`, cover = coverLow), so there is no straight band. `veil` replaces `haze`/`shell`. Faster rush.
+- Item 3: terrain `side` from -0.1 to about -0.9 (test `r3/ta.jpg` at -0.7: the towers cross a third of the frame against the horizon, near banks pass out at the bottom, no holes at 1350 or 1529).
