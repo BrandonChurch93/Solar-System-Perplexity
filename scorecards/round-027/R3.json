@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "night-side limb, lower right (crops E, H, R in image-02/03)",
+      "what": "the dark limb has a doubled edge: a thin bright rim sits a few pixels inside a second dark rim, like a shadow disc laid over the globe and slightly misaligned",
+      "fix": "drop the separate night overlay or match its radius exactly to the globe and blend its edge into the atmosphere falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night-side limb, right and lower right (crops E, H, Q in image-06/07, U in image-08)",
+      "what": "same doubled ring on the dark limb, more visible here as a grey arc separated from the globe edge",
+      "fix": "align the shadow layer with the sphere and let the rim light fade continuously into the terminator"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "upper right limb, aurora (crop C in image-02, L/M in image-03)",
+      "what": "the aurora is a row of repeated, evenly spaced green comb strokes pasted on the limb, with a flat red smudge behind it; reads as a sticker layer rather than light in the atmosphere",
+      "fix": "vary the curtain spacing, height and brightness, follow the limb curvature, and blend the red upper fringe into a soft gradient"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper right limb, aurora (crop C in image-06, K/L in image-07)",
+      "what": "same repeated comb-like aurora strokes with a hard inner edge on the limb",
+      "fix": "use varied, translucent curtains with soft falloff and less regular spacing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop T, southern limb clouds",
+      "what": "cloud texture near the limb smears into streaky, stretched striations with oversharpened white fringes",
+      "fix": "use higher-resolution cloud texture near the limb and reduce sharpening"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "land surfaces, North and South America (crops A, G, H)",
+      "what": "terrain looks airbrushed and oversharpened, with uniform halo-like bright coastlines and painted mountain ridges",
+      "fix": "reduce local contrast and edge sharpening, add finer natural variation to land texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "top and bottom frame edges",
+      "what": "the globe and its atmosphere are cut off by the frame at top and bottom, so the limb glow ends abruptly at the border",
+      "fix": "scale the globe down or reframe so the full limb and glow fit inside the frame"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "night side, eastern South America (crop H)",
+      "what": "city lights are uniform round dots of similar size and brightness, scattered like a pattern",
+      "fix": "vary light size and intensity and cluster them along coasts and road networks"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right and lower-right night-side limb (image-14.png crops C, E, H, I; image-15.png crop R; image-16.png crop V)",
+      "what": "a dark gap and sharp thin outer shell create a clear doubled edge along the shadowed limb inside a faint outer haze",
+      "fix": "remove the detached outer shell line so the night-side limb transitions smoothly and continuously into a single atmospheric falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "dense starfield and Milky Way band behind the upper-left and bottom limb (image-14.png crops G, H; image-15.png crop K; image-16.png crops U, V)",
+      "what": "stars in the dense galactic band are blurry, smeared blobs and blocky low-resolution patches rather than crisp point sources",
+      "fix": "render stars at native resolution with sub-pixel anti-aliased point sources and clean, high-resolution galactic dust/starfield detail"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Moon in upper right sky (image-15.png crop M)",
+      "what": "lunar maria and craters look soft and airbrushed at native scale, and the sunlit left edge has a jagged, stepped bright rim",
+      "fix": "use a sharp native-resolution lunar surface map with crisp terminator crater relief and clean anti-aliasing along the lit limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "South America night side and aurora-lit northern night region (image-14.png crops C, E, H; image-15.png crop Q)",
+      "what": "city lights appear as oversized soft yellow blobs with blocky pixel halos and isolated square bright dots under the aurora",
+      "fix": "replace blobby light spots with fine-scale coastal and inland urban light networks properly attenuated by atmosphere and clouds"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "North American terrain, Pacific cyclone clouds, and sunlit left limb (image-14.png crops F, G; image-15.png crop P; image-16.png crop U)",
+      "what": "landmasses and cloud tops mix painterly smoothing with crunchy pixelation at 1:1 scale, and the left limb clips into a bright halo band",
+      "fix": "render higher-resolution albedo and cloud displacement textures without sharpening artifacts and soften the bright-side Rayleigh rim"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper sky gradient above the limb and cloud over Florida's east coast (image-10.png crops B, C; image-11.png crops K, L, Q, R)",
+      "what": "subtle tonal stepping appears in the dark blue-to-black sky and top-edge flare haze, with a faint chromatic smudge under a coastal cloud in crop Q",
+      "fix": "dither the upper atmospheric and flare gradient at higher bit depth and clean up the localized color artifact on the Florida coastline"
+     }
+    ]
+   }
+  }
+ ]
+}
