@@ -23,14 +23,14 @@ export const params: MoveParams = {
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
   coverShell: [0.99, 1.01],
-  coverRush: { speed: 5, reach: 2.5, billow: [2.2, 2.4, 2.4], streak: [7, 4, 4.4], contrast: [1.3, 0.9] },
+  coverRush: { speed: 5, reach: 1.0, billow: [3.5, 3.5, 1.0], streak: [9, 6, 1.6], contrast: [1.7, 1.2] },
   skyAim: { orbit: [-160, -4, -1], terrain: [70.88563, -102.57248, -13.65] },
-  spinDegPerSecond: -0.5,
+  spinDegPerSecond: -1,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
 }
 
-export const veil = { peak: 0.88, inside: 0.006, outside: 0.02, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
+export const veil = { peak: 0.94, inside: 0.006, outside: 0.02, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
 
 const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 

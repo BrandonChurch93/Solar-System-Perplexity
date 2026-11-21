@@ -69,6 +69,8 @@ export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
 
 export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
+export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
+
 export const motion = { from: 1, step: 6, most: 8, hidden: 0.95 }
 
 export const boltColor: [number, number, number] = [0.105, 0.095, 0.14]

@@ -46,6 +46,7 @@ export interface GlobeOptions {
   lift: { floor: number; stops: number; from: number; to: number }
   shade: { far: number; grad: number; cap: number }
   mauve: { from: number; to: number; rest: number }
+  weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
   segments?: number
 }
 
@@ -125,6 +126,10 @@ uniform vec3 uGraze;
 uniform vec4 uLift;
 uniform vec3 uShade;
 uniform vec3 uMauve;
+uniform vec3 uWeaveCam;
+uniform vec4 uWeaveRing;
+uniform vec4 uWeave;
+uniform float uWeaveLit;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -249,6 +254,17 @@ ${TAP_LEVELS}
     float ratio = dot(albedo * albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
     col *= pow(clamp(ratio, 1.0 / uShade.z, uShade.z), uShade.x * uLimbFar * (1.0 - smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
   }
+  for (int pass = 0; pass < (uWeave.y * uLimbFar > 0.0 ? 1 : 0); pass++) {
+    float seen = dot(dc, normalize(uWeaveCam - dc));
+    float ring = (1.0 - smoothstep(uWeaveRing.x, uWeaveRing.y, seen)) * smoothstep(uWeaveRing.z, uWeaveRing.w, seen);
+    for (int inner = 0; inner < (ring > 0.0 ? 1 : 0); inner++) {
+      vec3 from = normalize(dc - uWeave.x * normalize(uWeaveCam));
+      vec3 narrow = equirect(uMap, from).rgb;
+      vec3 wide = equirectGrad(uMap, from, uWeave.z).rgb;
+      float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
+      col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
+    }
+  }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
     float night = 1.0 - smoothstep(-0.05, 0.3, ndl);
     float lum = dot(lin, vec3(0.2126, 0.7152, 0.0722));
@@ -347,6 +363,7 @@ export class Globe {
         uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
+        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
