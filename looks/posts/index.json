@@ -1,9 +1,25 @@
 {
  "folder": "posts",
- "pushed": "2026-11-21T03:53:36.878Z",
- "head": "ce9881fe2e69dccd484f2edb7c204522762ff771",
- "note": "First intro (Sun) rendered with the query typing skill: 137 frames, 4.567 s, full prompt held 1.6 s before the submit",
+ "pushed": "2026-11-21T04:04:23.231Z",
+ "head": "c35ec07c47fdcc5dffbaa7ac4ed17bb92ad4604a",
+ "note": "Tools pushed to agent/posts. Mars post joined without encoding, check passes. Nine intros and nine sheets exist.",
  "looks": [
+  {
+   "time": "2026-11-21T04:04:22.614Z",
+   "file": "20261121040422614-note-mars-post-cut.jpg",
+   "source": "../../../../tmp/mars-post-cut.png",
+   "kind": "note",
+   "label": "Mars post, frames 137 to 140: full prompt, submit, then the first two frames of the clip",
+   "stop": "posts"
+  },
+  {
+   "time": "2026-11-21T04:04:22.029Z",
+   "file": "20261121040422029-note-sheet-mercury.jpg",
+   "source": "out/work/posts/sheet-mercury.png",
+   "kind": "note",
+   "label": "contact sheet of the Mercury intro with the native crop of the prompt box",
+   "stop": "posts"
+  },
   {
    "time": "2026-11-21T03:53:36.293Z",
    "file": "20261121035336293-note-intro-sun-frame-before-submit.jpg",
