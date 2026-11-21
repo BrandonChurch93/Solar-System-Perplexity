@@ -197,6 +197,8 @@ void main() {
 
 const POLE = [0.45, 0.82, 0.35] as const
 const GAMMA_TURN = 0.28
+const STAR_MAX_SIZE = 11
+const STAR_CULL_PAD_PX = 4
 
 function galactic(): THREE.Matrix3 {
   const n = new THREE.Vector3(...POLE).normalize()
@@ -228,6 +230,10 @@ export class Sky {
   private readonly patchRing = [new THREE.Vector4(0, 0, 0, 1), new THREE.Vector4(0, 0, 0, 1)]
   private readonly patchMode = [new THREE.Vector3(0, 0, 0.05), new THREE.Vector3(0, 0, 0.05)]
   private readonly patchTex: THREE.Texture[] = [this.blank, this.blank]
+  private readonly starPos: Float32Array
+  private readonly starOrder: THREE.BufferAttribute
+  private readonly starView = new THREE.Matrix3()
+  private readonly starKey = new Float64Array(13).fill(NaN)
 
   constructor(base: number) {
     const st = skyFrame.stars
@@ -267,7 +273,7 @@ export class Sky {
       pos[i * 3 + 2] = v.z
       const u = Math.max(rnd.next(), 1e-6)
       const bright = micro ? st.microBright * (0.4 + 0.6 * u) : Math.min(st.brightness * Math.pow(u, -st.slope), 14)
-      star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), 11)
+      star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), STAR_MAX_SIZE)
       star[i * 4 + 1] = bright
       star[i * 4 + 2] = micro ? 1 : 1 - Math.min(bright * 0.024 / st.brightness, 1)
       const temp = rnd.next()
@@ -286,6 +292,11 @@ export class Sky {
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     geo.setAttribute('aStar', new THREE.BufferAttribute(star, 4))
     geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3))
+    this.starPos = pos
+    this.starOrder = new THREE.BufferAttribute(new Uint32Array(count), 1)
+    this.starOrder.setUsage(THREE.DynamicDrawUsage)
+    geo.setIndex(this.starOrder)
+    geo.setDrawRange(0, 0)
     const mat = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
@@ -318,6 +329,43 @@ export class Sky {
       this.patchRing[i]!.fromArray(p.ring)
       this.patchMode[i]!.set(e.weight, p.add ? 1 : 0, p.edge)
     }
+  }
+
+  private cullStars(camera: THREE.PerspectiveCamera, height: number, aspect: number): void {
+    const m = this.starView.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(camera.quaternion).invert().multiply(this.stars.quaternion))).elements
+    const p = camera.projectionMatrix.elements
+    const half = STAR_MAX_SIZE * 0.5 * height / 1080 + STAR_CULL_PAD_PX
+    const limX = 1 + (half + Math.ceil(Math.abs(p[8]!) * height * aspect * 0.5)) * 2 / (height * aspect)
+    const limY = 1 + (half + Math.ceil(Math.abs(p[9]!) * height * 0.5)) * 2 / height
+    const key = this.starKey
+    const px = p[0]!
+    const py = p[5]!
+    let same = key[9] === px && key[10] === py && key[11] === limX && key[12] === limY
+    for (let i = 0; i < 9; i++) same = same && key[i] === m[i]
+    if (same) return
+    for (let i = 0; i < 9; i++) key[i] = m[i]!
+    key[9] = px
+    key[10] = py
+    key[11] = limX
+    key[12] = limY
+    const m0 = m[0]!, m1 = m[1]!, m2 = m[2]!, m3 = m[3]!, m4 = m[4]!, m5 = m[5]!, m6 = m[6]!, m7 = m[7]!, m8 = m[8]!
+    const pos = this.starPos
+    const order = this.starOrder.array as Uint32Array
+    const count = pos.length / 3
+    let n = 0
+    for (let i = 0; i < count; i++) {
+      const x = pos[i * 3]!
+      const y = pos[i * 3 + 1]!
+      const z = pos[i * 3 + 2]!
+      const w = -(m2 * x + m5 * y + m8 * z)
+      if (w <= 0) continue
+      if (Math.abs(px * (m0 * x + m3 * y + m6 * z)) > w * limX || Math.abs(py * (m1 * x + m4 * y + m7 * z)) > w * limY) continue
+      order[n++] = i
+    }
+    this.starOrder.clearUpdateRanges()
+    this.starOrder.addUpdateRange(0, n)
+    this.starOrder.needsUpdate = true
+    this.stars.geometry.setDrawRange(0, n)
   }
 
   setTexture(t: THREE.Texture, band: THREE.Texture): void {
@@ -358,6 +406,7 @@ export class Sky {
     su.uGlow!.value = glow
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
+    this.cullStars(camera, height, aspect)
     renderer.setRenderTarget(target)
     renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)
