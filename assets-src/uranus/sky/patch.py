@@ -22,7 +22,17 @@ SHIFT = 700
 SEAM = 28
 RING_ZONE = (1.9, 2.02)
 RING_FILL = 0.0
-BAND = (0, 1800, 1.04, 2.05, 81, 201)
+BAND_ROWS = (300, 700)
+BAND_MAX = (0.02, 0.008)
+BAND_IN = (1.12, 1.17)
+BAND_OUT = (1.74, 1.84)
+BAND_LONG = 120
+BAND_SKY = (0.06, 0.12)
+BAND_TINT = np.array([1.0, 1.15, 1.3], dtype=np.float32)
+VEIL_MAX = 0.04
+GROOVE = (0.004, 0.012)
+VEIL_EDGE = 60
+POLAR = 'out/work/u/sky/along-polar.npy'
 RIM = (1.008, 1.02)
 MOONS = [(671.7, 343.9, 29.06), (2425.5, 444.2, 24.0)]
 LUMA = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
@@ -69,14 +79,18 @@ def basis():
     return n, e1, np.cross(n, e1)
 
 
-def along(img):
+def grid():
     n, e1, e2 = basis()
     th = (np.arange(T) + 0.5) / T * 2 * np.pi
     rr = R0 + (np.arange(NR) + 0.5) / NR * (R1 - R0)
     A, TH = np.meshgrid(rr, th, indexing='ij')
     P = A[..., None] * (np.cos(TH)[..., None] * e1 + np.sin(TH)[..., None] * e2)
     px, py = geo.project(P)
-    px, py = px.astype(np.float32), py.astype(np.float32)
+    return px.astype(np.float32), py.astype(np.float32)
+
+
+def unwrap(img):
+    px, py = grid()
     lum = img @ LUMA
     planes = [cv2.remap(lum - ndi.median_filter(lum, size=7), px, py, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)]
     planes += [cv2.remap(np.ascontiguousarray(img[..., c]), px, py, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE) for c in range(3)]
@@ -95,8 +109,40 @@ def along(img):
         best[better] = meds[0][better]
         for c in range(3):
             out[..., c][better] = meds[c + 1][better]
-    np.save('out/work/u/sky/along-polar.npy', out)
-    thin = np.stack([out[..., c] - ndi.grey_opening(out[..., c], size=(THIN, 1)) for c in range(3)], -1)
+    np.save(POLAR, out)
+    return out
+
+
+def coherent(haze):
+    small = cv2.resize(haze, None, fx=0.25, fy=0.25, interpolation=cv2.INTER_AREA)
+    half = BAND_LONG // 8
+    best = np.full(small.shape[:2], -1.0, np.float32)
+    out = np.zeros_like(small)
+    for s in SHEARS:
+        stack = np.empty((2 * half + 1,) + small.shape, np.float32)
+        for i, k in enumerate(range(-half, half + 1)):
+            stack[i] = np.roll(ndi.shift(small, (-s * k, 0, 0), order=1, mode='nearest'), -k, axis=1)
+        med = np.median(stack, 0)
+        lum = med @ LUMA
+        better = lum > best
+        best[better] = lum[better]
+        out[better] = med[better]
+    return np.minimum(haze, cv2.resize(out, (haze.shape[1], haze.shape[0]), interpolation=cv2.INTER_LINEAR))
+
+
+def along(img):
+    out = np.load(POLAR) if os.path.exists(POLAR) else unwrap(img)
+    base = np.stack([ndi.grey_opening(out[..., c], size=(THIN, 1)) for c in range(3)], -1)
+    thin = out - base
+    haze = np.zeros_like(base)
+    rest = base
+    for rows, most in zip(BAND_ROWS, BAND_MAX):
+        wide = np.minimum(np.stack([ndi.gaussian_filter(ndi.grey_opening(rest[..., c], size=(rows, 1)), (rows / 6, 0)) for c in range(3)], -1), rest)
+        haze += np.clip(rest - wide, 0, most)
+        rest = wide
+    if BAND_LONG > 0:
+        haze = coherent(haze)
+    n, e1, e2 = basis()
     rays = geo.rays()
     t = -(geo.CAM @ n) / (rays @ n)
     Q = geo.CAM + rays * t[..., None]
@@ -109,35 +155,10 @@ def along(img):
     line = cv2.remap(wrap(thin), col, row, cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT)
     ok = (t > 0) & (r > R0) & (r < R1)
     line[~ok] = 0
-    return back, np.maximum(line, 0), ok
-
-
-def band(img, own):
-    nr, nt, r0, r1, across, around = BAND
-    n, e1, e2 = basis()
-    th = (np.arange(nt) + 0.5) / nt * 2 * np.pi
-    rr = r0 + (np.arange(nr) + 0.5) / nr * (r1 - r0)
-    A, TH = np.meshgrid(rr, th, indexing='ij')
-    P = A[..., None] * (np.cos(TH)[..., None] * e1 + np.sin(TH)[..., None] * e2)
-    px, py = geo.project(P)
-    px, py = px.astype(np.float32), py.astype(np.float32)
-    seen = cv2.remap(own.astype(np.float32), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.98
-    D = np.zeros((nr, nt, 3), np.float32)
-    for c in range(3):
-        v = cv2.remap(np.ascontiguousarray(img[..., c]), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-        smooth = ndi.gaussian_filter(ndi.median_filter(v, size=(across, 1), mode='nearest'), (across / 8, 0))
-        D[..., c] = ndi.gaussian_filter(ndi.median_filter((v - smooth) * seen, size=(1, around), mode='wrap'), (0, 4), mode='wrap')
-    rays = geo.rays()
-    t = -(geo.CAM @ n) / (rays @ n)
-    Q = geo.CAM + rays * t[..., None]
-    r = np.linalg.norm(Q, axis=-1)
-    ang = np.mod(np.arctan2(Q @ e2, Q @ e1), 2 * np.pi)
-    row = ((r - r0) / (r1 - r0) * nr - 0.5).astype(np.float32)
-    col = (ang / (2 * np.pi) * nt - 0.5 + 2).astype(np.float32)
-    wrap = np.concatenate([D[:, -2:], D, D[:, :2]], 1)
-    out = cv2.remap(wrap, col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
-    out[~((t > 0) & (r > r0) & (r < r1))] = 0
-    return out * own[..., None]
+    broad = ndi.gaussian_filter(np.minimum(img @ LUMA, 0.3), 40)
+    grey = np.minimum(haze, haze.min(-1, keepdims=True) * BAND_TINT)
+    keep = step(r, BAND_IN[0], BAND_IN[1]) * (1 - step(r, BAND_OUT[0], BAND_OUT[1])) * (1 - step(broad, BAND_SKY[0], BAND_SKY[1])) * ok
+    return back, np.maximum(line, 0), ok, grey, keep, lambda v: cv2.remap(wrap(v), col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 
 
 def low(v):
@@ -168,23 +189,23 @@ def one_sky(path, size):
 
 def shifted(v, px, py):
     h, w = v.shape[:2]
-    out = np.pad(v, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    out = np.zeros((h + 2 * py, w + 2 * px, v.shape[2]), np.float32)
+    out[py:py + h, px:px + w] = v
     yy, xx = np.mgrid[-py:h + py, -px:w + px]
     todo = (xx < 0) | (xx >= w) | (yy < 0) | (yy >= h)
     dx, dy = round(SHIFT * np.cos(np.radians(BAND_DEG))), round(SHIFT * np.sin(np.radians(BAND_DEG)))
-    near = np.zeros(todo.shape, np.float32)
-    for k in (-1, 1, -2, 2, -3, 3):
-        sx, sy = xx + k * dx, yy + k * dy
-        ok = todo & (sx >= 0) & (sx < w) & (sy >= 0) & (sy < h)
-        near[ok] = 1
-        todo &= ~ok
-        out[ok] = v[sy[ok], sx[ok]]
-    return out, ndi.gaussian_filter(near, 3)
+    for side in (1, -1):
+        for k in (-1, 1, -2, 2, -3, 3):
+            sx, sy = xx + k * dx * side, yy + k * dy
+            ok = todo & (sx >= 0) & (sx < w) & (sy >= 0) & (sy < h)
+            todo &= ~ok
+            out[ok] = v[sy[ok], sx[ok]]
+    print('margin pixels without a shifted source', int(todo.sum()))
+    return out
 
 
 def widen(lin, one):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    pad = lambda v: np.pad(v, ((py, py), (px, px), (0, 0)), mode='symmetric')
     broad = np.stack([ndi.gaussian_filter(low(lin)[..., i], WIDE_LOW) for i in range(3)], -1)
     far = carry(broad, px, py)
     far = np.stack([ndi.gaussian_filter(far[..., i], 6) for i in range(3)], -1)
@@ -195,11 +216,12 @@ def widen(lin, one):
     w = step(m, 0, FADE)[..., None]
     sky = one_sky(one, (FULL[0] + 2 * px, FULL[1] + 2 * py))
     inside = ((ox == 0) & (oy == 0))[..., None]
-    fine = lin - broad
-    moved, got = shifted(fine, px, py)
-    t = (step(np.hypot(ox, oy), 0, SEAM) * got)[..., None]
-    detail = (pad(fine) * (1 - t) + moved * t) * (1 - step(m, DETAIL[0], DETAIL[1]))[..., None]
-    held = np.where(inside, pad(broad), far)
+    edge = lambda v: np.pad(v, ((py, py), (px, px), (0, 0)), mode='edge')
+    floor = low(lin)
+    t = step(np.hypot(ox, oy), 0, SEAM)[..., None]
+    detail = (edge(floor - broad) * (1 - t) + shifted(floor - broad, px, py) * t + shifted(lin - floor, px, py)) * (1 - step(m, DETAIL[0], DETAIL[1]))[..., None]
+    detail = np.where(inside, edge(lin - broad), detail)
+    held = np.where(inside, edge(broad), far)
     return np.maximum(detail + held * (1 - w) + sky * w, 0), w[..., 0], sky
 
 
@@ -230,13 +252,7 @@ def hold(hero, fill, glow, out):
     f = scene(fill, Image.LANCZOS, True)
     sky = np.maximum(a - g, 0).astype(np.float32)
     luma = lambda v: v @ LUMA
-    cache = 'out/work/u/sky/along.npz'
-    if os.path.exists(cache):
-        z = np.load(cache)
-        back, line, ok = z['back'], z['line'], z['ok']
-    else:
-        back, line, ok = along(sky)
-        np.savez(cache, back=back, line=line, ok=ok)
+    back, line, ok, grey, keep, fall = along(sky)
     stars = np.maximum(sky - np.where(ok[..., None], np.maximum(back, low(sky)), low(sky)), 0)
     floor = np.minimum(sky, np.maximum(back - line, 0))
     hot = step(ndi.maximum_filter(luma(line), 5), 0.02, 0.06)[..., None]
@@ -249,10 +265,6 @@ def hold(hero, fill, glow, out):
     for mx, my, mr in MOONS:
         moon *= step(np.hypot(xx - mx, yy - my), mr + 5, mr + 12)
     own = ndi.gaussian_filter(own * moon, 3)
-    if BAND[0] > 0:
-        b = band(sky, own)
-        np.save('out/work/u/sky/band.npy', b)
-        sky = np.maximum(sky - b, 0)
     ring = (d > 1.1) & (d < 1.9) & (own > 0.98)
     gain = np.array([np.minimum(sky[..., i], 0.2)[ring].mean() / max(np.minimum(f[..., i], 0.2)[ring].mean(), 1e-6) for i in range(3)])
     near = (own > 0.98).astype(np.float32)
@@ -270,6 +282,32 @@ def hold(hero, fill, glow, out):
     inring = ((1 - step(np.linalg.norm(geo.CAM + rays * t[..., None], axis=-1), RING_ZONE[0], RING_ZONE[1])) * (t > 0) * RING_FILL)[..., None].astype(np.float32)
     bare = np.minimum(f, low(f)) + stars
     lin = (sky * (1 - inring) + bare * inring) * own[..., None] + f * (1 - own[..., None])
+    np.save('out/work/u/sky/hold-lin-whole.npy', lin)
+    edge = step(np.minimum(np.minimum(xx, FULL[0] - 1 - xx), np.minimum(yy, FULL[1] - 1 - yy)), 0, VEIL_EDGE)
+    px, py = grid()
+
+    def cast(weight):
+        share = cv2.remap(weight.astype(np.float32), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+        code = np.round(np.sqrt(np.clip(grey * share[..., None] / VEIL_MAX, 0, 1)) * 255).astype(np.uint8)
+        v = fall((code.astype(np.float32) / 255) ** 2 * VEIL_MAX)
+        v[~ok] = 0
+        return code, v
+
+    weight = keep * own * edge
+    code, veil = cast(weight)
+    room = np.min([ndi.minimum_filter(lin[..., c], 7) / np.maximum(ndi.maximum_filter(veil[..., c], 7), 1e-6) for c in range(3)], 0)
+    code, veil = cast(weight * ndi.gaussian_filter(np.clip(room, 0, 1), 2))
+    veil = ndi.shift(veil, (dy * FULL[0] / 1920, dx * FULL[0] / 1920, 0), order=1, mode='constant')
+    print('veil max', float(veil.max().round(4)), 'mean in zone', veil[ok].mean(0).round(5), 'clamped share', float(((lin - veil).min(-1) < 0)[ok].mean().round(4)))
+    lin = np.maximum(lin - veil, 0)
+    half = cv2.resize(lin, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+    typical = cv2.resize(np.stack([ndi.median_filter(half[..., c], size=5) for c in range(3)], -1), FULL, interpolation=cv2.INTER_LINEAR)
+    seam = (step(ndi.maximum_filter(luma(line), 5), GROOVE[0], GROOVE[1]) * keep)[..., None]
+    lin = np.maximum(lin, typical * seam)
+    for key, k in (('full', 1), ('web', 2)):
+        im = Image.fromarray(code)
+        (im if k == 1 else im.resize((T // k, NR // k), Image.LANCZOS)).save(f'{out}/{key}/veil.webp', lossless=True, quality=90, method=6)
+    Image.fromarray((np.clip(veil * 20, 0, 1) ** 0.4545 * 255).astype(np.uint8)).resize((1408, 792)).save('out/work/u/sky/veil.jpg', quality=90)
     np.save('out/work/u/sky/hold-lin.npy', lin)
     prev = Image.fromarray((geo.to_srgb(geo.film(lin)) * 255 + 0.5).astype(np.uint8))
     prev.resize((1408, 792), Image.LANCZOS).save('out/work/u/sky/sky-hold-preview.jpg', quality=90)
