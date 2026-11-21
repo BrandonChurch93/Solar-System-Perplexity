@@ -1,0 +1,8 @@
+{
+  "source": "assets-src/saturn/close/fit_close2.py 48, joint fit of the limb and three ring edges with free radii, 12 px rms on 2816 px",
+  "vfov": 48,
+  "centre": [0.9254, -0.2123, -2.0082],
+  "tiltDeg": 7.72,
+  "rollDeg": -12.87,
+  "radii": { "bout": 1.787, "gapout": 1.8148, "outer": 2.0462 }
+}

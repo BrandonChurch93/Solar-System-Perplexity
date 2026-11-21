@@ -1,0 +1,8 @@
+{
+ "drift": { "degPerSecond": 0.4, "ease": 0.5 },
+ "storm": { "lon": -106.154, "lat": 17.368, "degPerSecond": 5, "coreDeg": 6, "fadeDeg": [10, 16] },
+ "shadow": { "height": 0.006, "strength": 0.4, "lod": 2.5, "floor": 0.12 },
+ "night": [0.04, -0.14],
+ "auroraGate": [0.3, 0.05],
+ "emissivePeak": 5
+}
