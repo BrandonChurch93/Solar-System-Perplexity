@@ -48,4 +48,4 @@ export const aurora: AuroraLook = { ...auroraJson, wave: [0.24, 17, 2.1], tail: 
 
 export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0], fold: 110, lock: [-0.014, -0.003] }
 
-export const veil = { lead: 0.5, tail: [0.85, 0.5] as [number, number], peak: 0.6, rim: [0.985, 1.003] as [number, number] }
+export const veil = { lead: 0.5, full: 0.2, tail: [0.85, 0.5] as [number, number], peak: 0.6, rim: [0.985, 1.003] as [number, number], near: { depth: [0.035, 0.09] as [number, number], grain: [50, 40] as [number, number], gain: [1.3, 1, 0.5] as [number, number, number] } }

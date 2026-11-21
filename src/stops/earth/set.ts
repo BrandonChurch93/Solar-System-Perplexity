@@ -87,6 +87,11 @@ export const createSet: SetFactory = async (ctx) => {
   const turn = new THREE.Quaternion()
   const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
   const sea = { nadir: new THREE.Vector3(), alpha: 0 }
+  const upAt = seaCentre.clone().normalize().negate()
+  const east = new THREE.Vector3().crossVectors(upAt, new THREE.Vector3(0, 0, 1)).normalize()
+  const lay = new THREE.Matrix4().makeBasis(east, new THREE.Vector3().crossVectors(upAt, east), upAt).transpose()
+  const wisps = { ...look.veil.near, eye: new THREE.Vector3(), turn: new THREE.Matrix3() }
+  const spin = new THREE.Matrix4()
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const auroraHome = new THREE.Vector3().fromArray(look.aurora.eye).normalize()
   const stand = new THREE.Vector3()
@@ -111,15 +116,19 @@ export const createSet: SetFactory = async (ctx) => {
         const centre = w.centerFrame / config.fps
         const from = w.firstFrame / config.fps - look.veil.lead
         const to = (w.lastFrame + 1) / config.fps + look.veil.tail[seg.kind === 'dive' ? 0 : 1]
-        thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
+        const full = seg.kind === 'dive' ? (w.firstFrame + look.veil.full * (w.lastFrame + 1 - w.firstFrame)) / config.fps : centre
+        thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (full - from)) : smooth((to - state.time) / (to - centre)))
       }
       if (!inOrbit) {
         back.copy(state.rotation).invert()
         sea.nadir.copy(world.position).applyQuaternion(back).add(seaCentre)
         sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
         sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
-        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye.copy(world.position).applyQuaternion(back).negate())
+        eye.copy(world.position).applyQuaternion(back).negate()
+        wisps.eye.copy(eye).applyMatrix4(lay)
+        wisps.turn.setFromMatrix4(spin.makeRotationFromQuaternion(turn.copy(back).multiply(shot.camera.quaternion)).premultiply(lay))
+        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim, seg.kind === 'dive' ? wisps : null)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'

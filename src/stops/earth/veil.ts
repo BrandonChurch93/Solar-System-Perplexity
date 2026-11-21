@@ -27,6 +27,10 @@ uniform vec3 uCentre;
 uniform vec2 uShell;
 uniform vec4 uSun;
 uniform vec4 uNadir;
+uniform vec4 uNear;
+uniform vec4 uGrain;
+uniform vec3 uEye;
+uniform mat3 uTurn;
 uniform int uDiag;
 in vec2 vUv;
 out vec4 outColor;
@@ -65,10 +69,23 @@ void main() {
   float s = dot(p, uHorizon.xy) + uHorizon.z;
   vec2 along = vec2(uHorizon.y, -uHorizon.x);
   vec2 q = vec2(dot(p, along), s);
-  float streak = fbm(q * vec2(1.6, 5.0) + uFlow) - 0.47;
-  float wisp = fbm(q * vec2(4.0, 13.0) + uFlow * 2.3 + 5.0) - 0.47;
-  float billow = uContrast.x * rush(p, uBillow);
-  float fine = uContrast.y * rush(p, uStreak);
+  float streak = 0.0;
+  float wisp = 0.0;
+  float billow = 0.0;
+  float fine = 0.0;
+  for (int k = 0; k < (uNear.x > 0.5 ? 0 : 1); k++) {
+    streak = fbm(q * vec2(1.6, 5.0) + uFlow) - 0.47;
+    wisp = fbm(q * vec2(4.0, 13.0) + uFlow * 2.3 + 5.0) - 0.47;
+    billow = uContrast.x * rush(p, uBillow);
+    fine = uContrast.y * rush(p, uStreak);
+  }
+  for (int k = 0; k < (uNear.x > 0.5 ? 1 : 0); k++) {
+    vec3 w = uTurn * normalize(vec3(p, -1.0));
+    float fall = 1.0 / max(-w.z, 0.03);
+    billow = uGrain.z * (fbm((uEye.xy + w.xy * (uEye.z + uNear.y) * fall) * uGrain.x) - 0.47);
+    fine = uGrain.w * (fbm((uEye.xy + w.xy * (uEye.z + uNear.z) * fall) * uGrain.y + 31.7) - 0.47);
+    wisp = uNear.w * (fbm((uEye.xy + w.xy * (uEye.z + uNear.z) * fall) * uGrain.y * 3.1 + 7.9) - 0.47);
+  }
   float band = smoothstep(-uSoft, uSoft, s + 0.12 * streak + 0.2 * billow);
   vec3 col = mix(uLow, uColor, band) * (1.0 + 0.5 * streak + 0.22 * wisp) * max(1.0 + billow + fine, 0.15);
   col *= mix(1.0, uTop, smoothstep(0.0, 0.22, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
@@ -86,6 +103,8 @@ void main() {
 
 const OPEN = 1e9
 
+export interface Near { depth: [number, number]; grain: [number, number]; gain: [number, number, number]; eye: THREE.Vector3; turn: THREE.Matrix3 }
+
 export class Veil {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
@@ -101,6 +120,7 @@ export class Veil {
         uFocus: { value: new THREE.Vector3() }, uBillow: { value: new THREE.Vector3(1, 1, 1) }, uStreak: { value: new THREE.Vector3(1, 1, 1) }, uContrast: { value: new THREE.Vector2() },
         uCentre: { value: new THREE.Vector3() }, uShell: { value: new THREE.Vector2(OPEN, 2 * OPEN) },
         uSun: { value: new THREE.Vector4(0, 0, 1, 0) }, uNadir: { value: new THREE.Vector4(0, -1, 0, 10) },
+        uNear: { value: new THREE.Vector4() }, uGrain: { value: new THREE.Vector4() }, uEye: { value: new THREE.Vector3() }, uTurn: { value: new THREE.Matrix3() },
         uDiag: diag,
       },
       transparent: true,
@@ -118,10 +138,16 @@ export class Veil {
     this.mesh.visible = false
   }
 
-  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, sea: { nadir: THREE.Vector3; alpha: number } | null, rim: [number, number]): void {
+  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, sea: { nadir: THREE.Vector3; alpha: number } | null, rim: [number, number], near: Near | null = null): void {
     this.mesh.visible = amount > 0 && cover.low !== undefined
     if (!this.mesh.visible) return
     const u = this.material.uniforms
+    ;(u.uNear!.value as THREE.Vector4).set(near ? 1 : 0, near ? near.depth[0] : 0, near ? near.depth[1] : 0, near ? near.gain[2] : 0)
+    if (near) {
+      ;(u.uGrain!.value as THREE.Vector4).set(near.grain[0], near.grain[1], near.gain[0], near.gain[1])
+      ;(u.uEye!.value as THREE.Vector3).copy(near.eye)
+      ;(u.uTurn!.value as THREE.Matrix3).copy(near.turn)
+    }
     ;(u.uColor!.value as THREE.Vector3).fromArray(cover.color).multiplyScalar(1 / exposure)
     ;(u.uLow!.value as THREE.Vector3).fromArray(cover.low ?? cover.color).multiplyScalar(1 / exposure)
     u.uAmount!.value = amount

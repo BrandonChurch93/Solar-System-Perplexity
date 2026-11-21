@@ -33,14 +33,14 @@ export const params: MoveParams = {
 
 export interface Approach { ease: number; cruise: number; swell: [number, number, number]; cap: [number, number]; until: number }
 export interface Retreat { lead: number; peak: number; tail: [number, number]; turn: [number, number, number] }
-export interface Entry { free: [number, number]; hide: [number, number]; drop: [number, number, number]; bend: number }
+export interface Entry { free: [number, number]; hide: [number, number]; drop: [number, number, number]; bend: number; lean: number }
 export interface Leave { from: number; ramp: number; rate: number; gain: number; soft: number }
 export interface Tune { dive: Approach | null; rise: Retreat | null; entry: Entry | null; leave: Leave | null }
 
 export const timing: Tune = {
   dive: { ease: 12, cruise: 0.6, swell: [16, 30, 0.12], cap: [7.3, 8], until: 47.5 },
   rise: { lead: 2.5, peak: 30, tail: [0.4, 4], turn: [0.75, 1.3, 1.5] },
-  entry: { free: [26, 14], hide: [5.5, 4], drop: [0.111, 1.2, 0.75], bend: 0.0556 },
+  entry: { free: [26, 14], hide: [5.5, 4], drop: [0.111, -1.33, 0.75], bend: 0.0556, lean: 0.4 },
   leave: { from: 6.5, ramp: 3, rate: 0.085, gain: 0.0135, soft: 1 },
 }
 
@@ -259,12 +259,13 @@ export class Plan extends StopPlan {
     const x = (centre - time) * config.fps
     if (!e || x >= e.free[0]) return seen.shot
     const j = this.entryJoin(e)
-    let pitch = 0
+    const lean = THREE.MathUtils.degToRad(e.lean)
+    let pitch = lean
     let tilt = -seen.head
     if (x <= e.hide[1]) [pitch, tilt] = this.landing(e, j.land, seen, x)
     else if (x < e.hide[0]) {
       const s = (e.hide[0] - x) / (e.hide[0] - e.hide[1])
-      pitch = hermite(s, 0, 0, j.pitch[0], j.pitch[1])
+      pitch = hermite(s, lean, 0, j.pitch[0], j.pitch[1])
       tilt = hermite(s, j.tilt[0], j.tilt[1], j.tilt[2], j.tilt[3])
     }
     const axis = seen.down.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(seen.ahead, Math.sin(pitch))
