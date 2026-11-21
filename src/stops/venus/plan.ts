@@ -27,7 +27,7 @@ export const params: MoveParams = {
   tint: [0.95, 0.8, 0.5],
 }
 
-export const haze = { dive: { lead: 3.5, hold: 1, tail: 14 }, rise: { lead: 10, hold: 1.5, tail: 14 } }
+export const haze = { dive: { lead: 3.5, hold: 1, tail: 16 }, rise: { lead: 10, hold: 1.5, tail: 16 } }
 
 const ease = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
@@ -42,7 +42,7 @@ class VenusPlan extends StopPlan {
     const f = time * config.fps - w.centerFrame
     const before = seg.kind === 'dive' ? (f + (w.centerFrame - w.firstFrame)) / h.lead : (f + h.hold + h.lead) / h.lead
     const after = (h.hold + h.tail - f) / h.tail
-    return Math.min(ease(before), ease(after))
+    return Math.min(ease(before), Math.min(Math.max(after, 0), 1))
   }
 }
 
