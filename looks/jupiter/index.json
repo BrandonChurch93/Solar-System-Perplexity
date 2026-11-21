@@ -1,44 +1,20 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T17:52:30.037Z",
- "head": "ebf222e5484ca1029bed5792ad797d9d83509bb0",
- "note": "Round 3 final checks on the merged tree: hold beside hero at Io and sky, rise 3296 final, compares at final tier. READY round 3 follows.",
+ "pushed": "2026-11-21T18:19:36.753Z",
+ "head": "24383239c7b2d6c95f914139afa003b118f88598",
+ "note": "Cover hides per frame: dive cover 3021, 3022 and rise cover 3271, 3272 before and after at native size.",
  "looks": [
   {
-   "time": "2026-11-21T17:52:29.442Z",
-   "file": "20261121175229442-note-compare-jupiter-terrain-view.jpg",
-   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
+   "time": "2026-11-21T18:19:23.179Z",
+   "file": "20261121181923179-note-hides_3271.jpg",
+   "source": "out/work/view/hides_3271.png",
    "kind": "note",
-   "label": "compare terrain 3150 final: approved, film",
+   "label": "rise cover 3271 at native size: before (24 samples), after (128)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-21T17:52:28.887Z",
-   "file": "20261121175228887-note-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "note",
-   "label": "compare hold 2895 final: approved, film",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T17:52:28.241Z",
-   "file": "20261121175228241-note-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "note",
-   "label": "rise 3296 final, merged tree",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T17:52:27.687Z",
-   "file": "20261121175227687-note-sky_r3z.jpg",
-   "source": "out/work/view/sky_r3z.png",
-   "kind": "note",
-   "label": "hold 2895 final sky box: hero, now, round 2",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T17:48:57.386Z",
-   "file": "20261121174857386-still-f03060-16x9-draft-full.jpg",
+   "time": "2026-11-21T18:17:58.807Z",
+   "file": "20261121181758807-still-f03060-16x9-draft-full.jpg",
    "source": "out/work/stills/f03060-16x9-draft-full.png",
    "kind": "still",
    "label": "jupiter.terrain frame 3060, draft tier",
@@ -49,6 +25,36 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T18:17:10.008Z",
+   "file": "20261121181710008-still-f03271-16x9-review-full.jpg",
+   "source": "out/work/stills/f03271-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3271, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3271,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T18:12:00.035Z",
+   "file": "20261121181200035-note-hides_3272.jpg",
+   "source": "out/work/view/hides_3272.png",
+   "kind": "note",
+   "label": "rise cover 3272 at native size: before (50 samples), after (128)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T18:11:59.176Z",
+   "file": "20261121181159176-note-hides_3022.jpg",
+   "source": "out/work/view/hides_3022.png",
+   "kind": "note",
+   "label": "dive cover 3022 at native size: before (23 samples), after (128)",
+   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T17:48:33.953Z",
