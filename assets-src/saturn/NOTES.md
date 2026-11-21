@@ -285,3 +285,16 @@ Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
 - Still there after the fix: at 3826 the image's dark C ring meets the profile's bright far B ring along the same straight line (tone step, thin dark sliver). It sits in the fastest part of the rise.
 - Seen at draft on 3720, night side, rings in shadow at the right border: a few black single pixel dots along one band. At review (4 samples) a faint dotted trace, at final (16 samples, `t-q4-3720.png`) nearly gone. Not traced.
 - Review cost with batch 11 sampling and the new timing: 3826 127 s (44 samples), 3832 91 s (35 samples), hold and terrain frames 19 to 21 s (4 samples).
+
+## Checks before READY for round 2 (12:57 to 13:50)
+
+- Head after the merge of main with batch 13 (6ed0829): 28f8d42. `npx tsc --noEmit -p .` clean, `npx vitest run` 13 files and 59 tests pass, `npm run build` passes.
+- `npm run measure -- --stop saturn --no-cover saturn --every 3` (688 s): G13 PASS, 0 of 165 frames over 2 percent soft (worst 0.00 percent). G5 PASS, coverage hold 0.576, dive 0.621, terrain 0.740, rise 0.392, no invalid pixel. G17 PASS, 3465 median 1.015 (p25 0.962, 71 tiles), 3720 median 0.819 (p25 0.769, 62 tiles). The terrain value was 1.02 before the close view took the approved pixels; it is now near the 0.8 line.
+- G11 failed once (the two ring masks were named without their full path in `RECIPE.md`), passes after the heading fix. G12 PASS (1809 tracked files, 1.39 GB). G15 PASS, texture memory saturn/web 182 MB, saturn/full 518 MB. Disk: full 36 MB, web 25 MB.
+- `npm run budget -- --stop saturn` was stopped after 10 minutes without output so main could be merged. Memory comes from G15.
+- Samples at review: 3598 to 3605 16 to 42; 3838 to 3845 20 to 16. Review stills cost up to 127 s (3826, 44 samples).
+- Exit: `probe.ts` 3878 to 3890: speed 8.44e-2 at 3878 settling to 8.00e-2 from 3881, 8.00e-2 on both sides of 3884 and 3885, turn 0.003 to 0.004 deg per frame, Saturn at 692,608 r 309 to 310. Exit pose and travel values unchanged.
+- Screen travel of the globe centre per shutter with power 1.5: 3567 1.8 px, 3866 2.1 px; peaks 12.6 px at 3585 and 12.0 px at 3845.
+- Final comparisons of both views and review sheets of the four segments viewed. Hold and terrain are close to the approved images. Terrain sheet: the globe grows and the ring tip leaves the frame between 3630 and 3711; 3728 to 3809 change less. Dive sheet: 3540 to 3572 change little (the slow start), the fast part is 3580 to 3613. Rise: one move, Titan comes out from behind the globe at 3850.
+- After the merge: review 3465 is byte identical to the still before it; draft 3362 and 3369 show no strokes; 3376 and 3384 show the hold patch coming in.
+- Anamorphic streak of the approved hold: present in the film at 3465 (crop at lower right, approved above film), carried by the hero's own pixels.
