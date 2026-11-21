@@ -37,7 +37,7 @@ def unproject(key):
     m = np.array(shots["hero"]["matrix"], dtype=np.float64).reshape(4, 4)
     cam = np.array(shots["hero"]["camera"])
     shadow = np.array(load_json(ROOT / "src" / "stops" / "saturn" / "shadow.json")["local"])
-    base = ROOT / "public" / "assets" / "saturn" / key
+    base = WORK / "shot" / key
     img = cv2.imread(str(base / "hero-rings.jpg"), cv2.IMREAD_COLOR)
     mask = cv2.imread(str(base / "hero-rings-mask.png"), cv2.IMREAD_COLOR)
     w, h = SIZE[key]

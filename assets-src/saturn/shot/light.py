@@ -31,7 +31,7 @@ def hero_mask():
     t, P = plane_hit(cam.pos, dirs, n)
     hit, ts = spheroid_hit(cam.pos, dirs, n)
     r = np.linalg.norm(P, axis=-1)
-    alpha = cv2.resize(cv2.imread(str(ROOT / "public" / "assets" / "saturn" / "web" / "hero-rings-mask.png"))[..., 2], (W, H), interpolation=cv2.INTER_AREA)
+    alpha = cv2.resize(cv2.imread(str(WORK / "shot" / "web" / "hero-rings-mask.png"))[..., 2], (W, H), interpolation=cv2.INTER_AREA)
     covered = (t > 0) & (t < ts) & (alpha > 40)
     return hit & ~covered
 
