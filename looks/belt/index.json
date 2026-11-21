@@ -1,9 +1,38 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T03:46:12.652Z",
- "head": "39783f60a3082b56aa2a7d7e7c1a49962a664dba",
- "note": "belt: take 3 rocks, draft strip of the segment, near rock tilt tests",
+ "pushed": "2026-11-21T04:01:13.338Z",
+ "head": "e788d76aaaad8126b711f23f7e918348ebd7e607",
+ "note": "belt: review sheet of mars.travel, web set check, near rock retilted",
  "looks": [
+  {
+   "time": "2026-11-21T04:00:46.890Z",
+   "file": "20261121040046890-frame-d2782.jpg",
+   "source": "out/work/belt/d2782.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2782, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "72a09f191cff3774"
+  },
+  {
+   "time": "2026-11-21T03:59:30.651Z",
+   "file": "20261121035930651-sheet-mars.travel-16x9-review.jpg",
+   "source": "out/work/sheets/mars.travel-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mars.travel, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "first": 2745,
+   "last": 2819,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e5081e84fa871744"
+  },
   {
    "time": "2026-11-21T03:46:11.943Z",
    "file": "20261121034611943-note-tilt.jpg",
@@ -19,20 +48,6 @@
    "kind": "note",
    "label": "belt draft strip, frames 2767 to 2800 step 3, take 3 rocks",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T03:45:15.857Z",
-   "file": "20261121034515857-frame-tilt4.jpg",
-   "source": "out/work/belt/tilt4.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2780, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2780,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cab38ea051d9c160"
   },
   {
    "time": "2026-11-21T03:26:24.965Z",
@@ -65,20 +80,6 @@
    "kind": "note",
    "label": "belt rock d, bake take 2, offline preview of the baked maps (three views)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T03:12:09.635Z",
-   "file": "20261121031209635-frame-f2726.jpg",
-   "source": "out/work/belt/base/f2726.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2726, final tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2726,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
