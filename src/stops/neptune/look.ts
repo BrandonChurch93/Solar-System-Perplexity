@@ -18,7 +18,11 @@ export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3,
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 2.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
-export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.72, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1], rise: { power: 2.7, saturation: 0.12, pivot: 0.55, tint: [0.6, 0.82, 1] } }
+export const near = {
+  amount: 1,
+  dive: { altitude: [0.45, 1.25], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 0.1], fallAltitude: [0.5, 1] },
+  rise: { altitude: [0.4, 2.6], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 0.3], fallAltitude: [0.5, 1.6] },
+}
 export const field = { amount: 1 }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]

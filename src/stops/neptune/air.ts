@@ -212,9 +212,11 @@ export class Air {
     this.users.push(uniforms)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0): void {
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[]): void {
     for (const u of this.users) {
-      ;(u.uAirNear!.value as THREE.Vector4).w = near
+      const hue = u.uAirNear!.value as THREE.Vector4
+      if (tint) hue.set(tint[0]!, tint[1]!, tint[2]!, near)
+      else hue.w = near
       ;(u.uCam!.value as THREE.Vector3).copy(camera)
       ;(u.uSunW!.value as THREE.Vector3).copy(light)
       const suns = u.uAirSun!.value as THREE.Vector3[]

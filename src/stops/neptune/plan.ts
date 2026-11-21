@@ -3,6 +3,7 @@ import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { coverWindow } from '../../director/timeline'
+import close from './close.json'
 import fit from './fit.json'
 
 export const params: MoveParams = {
@@ -10,7 +11,7 @@ export const params: MoveParams = {
   spot: { x: 0.55, y: 0.52 },
   dive: { headingDeg: -70, altitude: 0.0331, back: 0.07, ahead: 0.14, bow: -0.22, rollDeg: -5, swoop: true, level: 0.5, surge: { glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] } },
   terrain: { vfov: 30, forward: 0.42, rise: 0.33, side: -0.6, yawDeg: -5, pitchDeg: 0.6, entryHeight: 0.6, entryBack: 1.4, entryPitchDeg: 3, exitHeight: 0.45, exitForward: -2.6, exitPitchDeg: 0, exitDipDeg: 3.35, horizonDeg: 8.22, dipDeg: 12.41, rollDeg: 9.54 },
-  rise: { azimuthDeg: -26, elevationDeg: 17.5, distance: 5.2, offset: [-0.3, 0.1], driftSpeed: 0.1, rollDeg: 4, ahead: 0, hug: 1.2, settle: 4.75, level: true, pan: 0.3, from: 1.0 },
+  rise: { azimuthDeg: -26, elevationDeg: 17.5, distance: 5.2, offset: [-0.3, 0.1], driftSpeed: 0.1, rollDeg: 4, ahead: 0, hug: 1.2, settle: 5, gentle: true, level: true, pan: 0.3, from: 0.3 },
   travel: { turnDeg: 0, side: 1 },
   arrive: { swingDeg: -34, axis: [0.1, 1, 0.2], from: 0.25, offset: [0.5, 0.2] },
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
@@ -29,17 +30,33 @@ export const params: MoveParams = {
   tint: [0.3, 0.5, 1],
 }
 
-const shell: { near: [number, number]; rise: [number, number] } = { near: [1.03, 1.1], rise: [50, 60] }
+const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.03, 1.1], sea: [1.008, 1.024], clear: 0.8, full: 0.93 }
+const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
+const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
-export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2 }
+export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4730, place: [0, 0.1] as [number, number], placeOver: 14 }
+export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20 }
+const smooth = (x: number): number => {
+  const t = Math.min(Math.max(x, 0), 1)
+  return t * t * (3 - 2 * t)
+}
+const smoother = (x: number): number => {
+  const t = Math.min(Math.max(x, 0), 1)
+  return t * t * t * (t * (6 * t - 15) + 10)
+}
+const bankOf = (pose: Pose): number => {
+  const n = pose.position.clone().normalize().negate().applyQuaternion(pose.quaternion.clone().invert())
+  return Math.atan2(n.x, -n.y)
+}
 
 interface Fall { start: number; join: number; span: number; h0: number; drift: number; accel: number; knee: number; late: number; power: number }
 
 class NeptunePlan extends StopPlan {
-  private rising = false
+  private amount = 0
   private fall: Fall | null = null
   private last: { time: number; at: number } | null = null
+  private entryBank: number | null = null
 
   private high(time: number): number {
     return super.dive(time).pose.position.length() - 1
@@ -74,7 +91,49 @@ class NeptunePlan extends StopPlan {
     return this.fall
   }
 
+  private placed(pose: Pose, time: number, place: [number, number], w: number, psi: number): Pose {
+    const spot = this.spot.clone().applyQuaternion(this.turn(time)).normalize()
+    const r = new THREE.Quaternion()
+    if (w > 0) {
+      const th = Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+      const wide = th * this.fit.aspect
+      const s = spot.clone().sub(pose.position).applyQuaternion(pose.quaternion.clone().invert())
+      const x = s.x / -s.z / wide
+      const y = s.y / -s.z / th
+      const d = new THREE.Vector3((x + (place[0] - x) * w) * wide, (y + (place[1] - y) * w) * th, -1).normalize().applyQuaternion(pose.quaternion)
+      const b = pose.position.dot(d)
+      const disc = b * b - (pose.position.lengthSq() - 1)
+      if (disc > 0) r.setFromUnitVectors(pose.position.clone().addScaledVector(d, -b - Math.sqrt(disc)).normalize(), spot)
+    }
+    if (psi !== 0) r.premultiply(new THREE.Quaternion().setFromAxisAngle(spot, psi))
+    return { position: pose.position.clone().applyQuaternion(r), quaternion: r.multiply(pose.quaternion), vfov: pose.vfov }
+  }
+
   override dive(time: number): OrbitShot {
+    const flown = this.flown(time)
+    const frame = time * config.fps
+    if (flown.view !== 'orbit' || frame <= descent.from) return flown
+    const pose = this.placed(flown.pose, time, descent.place, smoother((frame - descent.from) / descent.placeOver), THREE.MathUtils.degToRad(descent.turnDeg) * smoother((frame - descent.from) / (descent.turnTo - descent.from)))
+    if (this.entryBank === null) {
+      const n = this.horizon('terrain', super.dive(this.coverCenter(this.seg.dive!)).pose).normal
+      this.entryBank = Math.atan2(-n[0], n[1])
+    }
+    const bank = bankOf(pose)
+    const knee = THREE.MathUtils.degToRad(descent.bankKneeDeg)
+    const held = 0.5 * (bank + this.entryBank + Math.sqrt((bank - this.entryBank) ** 2 + knee * knee))
+    const roll = (bank - held) * smooth((frame - descent.from) / descent.bankOver)
+    pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), roll))
+    return { pose, view: flown.view }
+  }
+
+  override rise(time: number): OrbitShot {
+    const shot = super.rise(time)
+    if (shot.view !== 'orbit') return shot
+    const since = (time - this.coverCenter(this.seg.rise)) * config.fps
+    return { pose: this.placed(shot.pose, time, ascent.place, 1 - smoother(since / ascent.placeFrames), THREE.MathUtils.degToRad(ascent.turnDeg) * (1 - smoother(since / ascent.turnFrames))), view: shot.view }
+  }
+
+  private flown(time: number): OrbitShot {
     const seg = this.seg.dive!
     const c = this.eased()
     if (time >= this.coverCenter(seg)) {
@@ -100,14 +159,26 @@ class NeptunePlan extends StopPlan {
   }
 
   override coverAmount(seg: Segment, time: number): number {
-    this.rising = seg.kind === 'rise'
     const amount = super.coverAmount(seg, time)
+    this.amount = amount
     this.p.coverHides = amount < closed ? hides : undefined
     return amount
   }
 
   override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
-    this.p.coverShell = this.rising ? shell.rise : shell.near
+    const c = (view === 'orbit' ? local.position.clone().negate() : deck.clone().sub(local.position).divideScalar(close.radius)).applyQuaternion(local.quaternion.clone().invert())
+    const th = Math.tan(THREE.MathUtils.degToRad(local.vfov) / 2)
+    let far = 0
+    for (const [x, y] of rim) {
+      const reach = c.dot(new THREE.Vector3(x * th * this.fit.aspect, y * th, -1).normalize())
+      far = Math.max(far, reach > 0 ? Math.sqrt(Math.max(c.lengthSq() - reach * reach, 0)) : c.length())
+    }
+    const w = smooth((this.amount - veil.clear) / (veil.full - veil.clear))
+    const tight = view === 'orbit' ? veil.air : veil.sea
+    const lift = Math.max(far - tight[0], 0) * w
+    const edge: [number, number] = [tight[0] + lift, tight[1] + lift]
+    if (view === 'orbit') this.p.coverShell = edge
+    else this.p.coverSea = { centre: [deck.x, deck.y, deck.z], radius: close.radius, edge }
     return super.horizon(view, local)
   }
 }
