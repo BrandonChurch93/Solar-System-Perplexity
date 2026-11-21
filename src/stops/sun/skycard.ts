@@ -71,6 +71,7 @@ export class SkyCard {
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
     this.mesh.renderOrder = -10
     this.mesh.frustumCulled = false
+    this.mesh.userData.skyClock = true
   }
 
   update(weight: number, exposure: number, vignette: number, aspect: number): void {

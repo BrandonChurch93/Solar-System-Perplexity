@@ -23,7 +23,8 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(orbit, terrain)
 
   const map = await ctx.texture(base + look.files.wrap, { srgb: true, anisotropy: 16, repeat: true })
-  const globe = new SunGlobe({ map, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe })
+  const grade = await ctx.texture(base + look.files.grade, { srgb: false, mips: false, anisotropy: 1, flipY: false })
+  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   orbit.add(globe.mesh)
 
@@ -41,18 +42,17 @@ export const createSet: SetFactory = async (ctx) => {
 
   const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
   const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
-  const ground = new Ground(plate, apron, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), look.ground)
+  const ground = new Ground(plate, apron, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground)
   const fringe = new Fringe(plate, look.fringe)
-  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
+  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
   const flare = new Flare(look.flare)
-  const flareOther = new Flare(look.flare)
-  world.add(flare.mesh, flareOther.mesh)
-  const coverAt = plan.coverCenter(plan.seg.rise)
-  const feet = stage.feet.map((f) => stage.onGround(f[0]!, f[1]!))
-  const kernels = feet.map((f) => f.clone().addScaledVector(f.clone().sub(stage.centre).normalize(), look.flare.lift))
+  world.add(flare.mesh)
+  const coverAt = plan.switchTime
+  const kernel = stage.onGround(stage.feet[0]![0]!, stage.feet[0]![1]!).sub(stage.centre).setLength(stage.radius + look.flare.lift).add(stage.centre)
+  const kernelBody = kernel.clone().sub(stage.centre).divideScalar(stage.radius).applyQuaternion(plan.toGlobe).applyQuaternion(plan.turn(plan.switchTime).invert())
   const spotAt = new THREE.Vector3()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
@@ -73,14 +73,13 @@ export const createSet: SetFactory = async (ctx) => {
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect)
       const burst = kind === 'rise' ? flare.amount(state.time - coverAt) : 0
-      flare.update(inOrbit ? spotAt.copy(plan.spot).applyQuaternion(plan.turn(state.time)) : kernels[0]!, world, view.camera, burst, state.time - coverAt, gain, aspect)
-      flareOther.update(kernels[1]!, world, view.camera, inOrbit ? 0 : flare.amount(state.time - coverAt - look.flare.other.delay), state.time - coverAt + 1.7, gain * look.flare.other.gain, aspect)
+      flare.update(inOrbit ? spotAt.copy(kernelBody).applyQuaternion(plan.turn(state.time)) : kernel, world, view.camera, burst, kind === 'rise' ? flare.cover(state.time - coverAt) : 0, gain, aspect)
       if (!inOrbit) {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
         ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height)
-        loops.update(t, gain, vignette, aspect, burst)
+        loops.update(t, gain, vignette, aspect, burst * look.flare.loops, look.flare.cut * burst * burst)
         return
       }
       const elapsed = state.time - plan.holdMid
@@ -102,7 +101,6 @@ export const createSet: SetFactory = async (ctx) => {
       prominences.dispose()
       far.dispose()
       flare.dispose()
-      flareOther.dispose()
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()
