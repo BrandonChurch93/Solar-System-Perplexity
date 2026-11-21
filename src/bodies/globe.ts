@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 
 const VERT = /* glsl */ `
@@ -48,7 +49,7 @@ export class Globe {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map },
+        uMap: { value: o.map }, uImplicit: implicitUniform,
         uSunDir: { value: new THREE.Vector3(1, 0, 0) },
         uSunColor: { value: new THREE.Color(1, 1, 1) },
         uTerminator: { value: o.terminator ?? 0.08 },
