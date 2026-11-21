@@ -1,9 +1,41 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T21:20:00.978Z",
- "head": "4081281a5569d0616bbbf1f45c86de7faf88cbd2",
- "note": "Phase 6 polish: studying the rise cover from above and the mirrored strip under the limb",
+ "pushed": "2026-11-21T21:39:41.623Z",
+ "head": "c63a012aea92af691dfb4269edfd619baf80a736",
+ "note": "Polish item 3: reflected fill replaced by a quilted granulation field; item 1 next",
  "looks": [
+  {
+   "time": "2026-11-21T21:39:40.993Z",
+   "file": "20261121213940993-note-i163-f60-limbstrip-old-new-x4.jpg",
+   "source": "out/work/sun/i163-f60-limbstrip-old-new-x4.png",
+   "kind": "note",
+   "label": "Frame 60 strip under the limb at 4 times: round 24 (top, mirrored shapes) and now (bottom, draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:39:40.432Z",
+   "file": "20261121213940432-note-i161-q1-rise.jpg",
+   "source": "out/work/sun/i161-q1-rise.jpg",
+   "kind": "note",
+   "label": "Draft rise 196 to 216 with the field: far ground is even granulation, no mirrored sunspots (dissolve not yet reworked)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:39:39.781Z",
+   "file": "20261121213939781-note-i161-q1-terrain.jpg",
+   "source": "out/work/sun/i161-q1-terrain.jpg",
+   "kind": "note",
+   "label": "Draft terrain 0, 60, 90, 150 with the field in place of the reflected fill",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T21:39:38.307Z",
+   "file": "20261121213938307-note-i160-quilt-native.jpg",
+   "source": "out/work/sun/i160-quilt-native.jpg",
+   "kind": "note",
+   "label": "Field tile at native size (320 px a unit): granulation quilted from the apron's own top-down picture, no mirror",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T21:20:00.411Z",
    "file": "20261121212000411-note-i151-f60-limbstrip-x4.jpg",
@@ -53,6 +85,20 @@
    "stop": "sun"
   },
   {
+   "time": "2026-11-21T17:50:19.473Z",
+   "file": "20261121175019473-frame-chk-460.jpg",
+   "source": "out/work/sun/chk-460.png",
+   "kind": "frame",
+   "label": "sun.travel frame 460, draft tier",
+   "stop": "sun",
+   "segment": "sun.travel",
+   "frame": 460,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
    "time": "2026-11-21T17:49:49.561Z",
    "file": "20261121174949561-frame-chk-360.jpg",
    "source": "out/work/sun/chk-360.png",
@@ -61,6 +107,20 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:49:29.730Z",
+   "file": "20261121174929730-frame-chk-247.jpg",
+   "source": "out/work/sun/chk-247.png",
+   "kind": "frame",
+   "label": "sun.rise frame 247, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -79,6 +139,28 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:35:32.801Z",
+   "file": "20261121173532801-note-i145-f247-final-right-x3.jpg",
+   "source": "out/work/sun/i145-f247-final-right-x3.png",
+   "kind": "note",
+   "label": "sun rise frame 247 at final tier, right sky x 1500 to 1920 at 3 times gain after the seam pass: no straight edge",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T17:35:30.213Z",
+   "file": "20261121173530213-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   }
  ]
 }
