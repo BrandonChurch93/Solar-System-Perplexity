@@ -43,3 +43,27 @@ Lab notebook of the stop agent for `neptune`. Read `assets-src/shared/STOP-AGENT
 
 1. Orbit view: fit.json quaternion, 2x hero, cloud-free deck, RGBA wrap, light curve, shader, haze, Triton, ring, sky patch, Sun. Compare draft then final. Message `/root`.
 2. Terrain view. 3. Dive and rise. 4. Self-check, `READY`.
+
+## Notes from the Builder (03:15 UTC, day 1)
+
+- `public/assets/neptune/web/` at or under 35 MB on disk (not 40). Full stays 150 MB. The film is rendered from full.
+- Engine requests as early as possible (they move the engine hash for every stop). Prefer stop-local code.
+- The set is also on screen in the travel before the hold (body grows from a point of light: `FarPoint` as in the Mars set) and after the rise. Keep both free of pops. Judged in Phase 5.
+- Ending (`ending.retreat`, `lookback`, `fade`): camera pulls away past Triton at close range, turns back, Neptune a thin blue crescent, Sun one bright star. The crescent needs a glowing limb and a night side that is not pure black. Triton's map must hold up larger than in the hero. Judged in Phase 5.
+
+## Geometry decided
+
+- `src/stops/neptune/fit.json` globe quaternion = `[-0.3659887, 0.0456763, -0.1774456, 0.9124029]`: body Y = band axis, body Z = camera direction projected (lon 0 under the hold camera). Sub-camera lon 0, lat -36.3. Sub-solar lon 35.0, lat 43.1 (the visible south pole is in polar night). Storm at lon -0.25, lat -18.8.
+- `assets-src/neptune/geo.py` holds the shared geometry and tone functions (decode = inverse filmic of sRGB to linear, encode = the reverse).
+- Hero in scene-linear: night side about (0.0013, 0.007, 0.017); deck blue rises 0.09 at ndl 0.15 to 1.14 at ndl 0.75; deck R/B about 0.07, G/B 0.40 at the terminator to 0.24 at high sun; brightest cloud luminance about 1.2 for ndl > 0.4, 0.7 at 0.2 to 0.4, 0.25 at 0.15.
+
+## Wrap pipeline (decided and measured, 03:15 UTC)
+
+- Scripts: `assets-src/neptune/wrap/unproject.py` (2x hero to the band-aligned equirect window, `out/work/nep/wrap/hero-map.png` 4552x3641 with `hero-map-geo.npz`: mu, ndl, window), `curves.py` (deck and cloud light curves, `curves-measured.json`), `separate.py` (functions), `sepmap.py` (separation in map space, writes `hero-layers.npz`: deck albedo, alpha, weight).
+- 2x hero: `tools/ml/upscale.py`, about 6 minutes, `checkmoved` PASS (PSNR 54.17 dB, SSIM 0.9989, flow p99 0.028 px).
+- Deck albedo reference `A0 = (0.058, 0.215, 0.80)` scene-linear. scene = albedo * deckCurve(ndl), 33 knots over ndl -1..1. Night about (0.022, 0.034, 0.021), terminator 0.027/0.040/0.027, 0.27/0.33/0.25 at ndl 0.25, 0.71/0.81/0.79 at 0.5, 1.18/1.06/1.14 at 0.625, 1.58/1.14/1.32 at 1.
+- Clouds are bluish in scene-linear: `K = (0.30, 0.39, 1.0)`. Cloud scene blue level by ndl knots `[-1,-0.2,0,0.06,0.125,0.19,0.25,0.31,0.375,0.44,0.5,0.56,0.69,1]` is `[0.02,0.02,0.05,0.15,0.35,0.77,1.26,1.7,2.0,2.3,2.5,2.7,3.0,3.2]`. The shader gets a second 33 knot curve for the cirrus.
+- Separation: albedo = decode(map)/deckCurve; local floor (25th percentile) gives the deck hue; least squares unmix `C = p*hue + q*K`; zone m from `q/white`; deck = albedo outside the zone, anisotropic fill along longitude inside (normalized convolution at growing scales, clean pixels only, plus a grain tile); alpha from luminance. Recomposite error in the well lit part: mean 2.48 of 255, p99 37 (thin bright cloud cores). Telea inpainting was tried first and rejected (bright blobs, blur). First unmix with a white cloud colour left pale clouds in the deck, fixed with K.
+- Hero-lit part of the sphere is only about lon -60..70, lat -47..35 (12 percent). Hero pixels fade out for mu < 0.42 and ndl < 0.2. Everything else is generated.
+- Far side plan: separate layers. Deck tiles (cloud free, flat lit, band aligned) and cirrus tiles (white on black, alpha directly). Mid band: 3 tiles of 160 x 90 deg at lon 60, 180, 300. Poles: polar projection caps of radius 55 deg, north and south. All upscaled 2x. Detail of each tile kept as ratio to its low pass, colour set from a zonal target profile so tiles cannot differ in colour. Cross-fade overlaps (cirrus by max).
+- Limb in the hero (sRGB): thin bright line at the disc edge, strongest at theta 45 to 90 deg (R to 240), into the twilight (theta 120 B 169, 135 B 55, 150 B 33), gone at 165 to 180. Outside glow at theta 45: B 235 at +3 px, 209 at +11, 166 at +25, 123 at +40, 85 at +70. Inside the sun side limb brightens over the last 20 to 30 px. Night side inside about (2, 6, 17). Plan: ground haze in the shader, thin bright core shell plus wide halo, forward scatter term (zero at the hold, strong in the lookback crescent).
