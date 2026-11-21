@@ -351,15 +351,27 @@ def votes(a):
     print('%d answers written' % k)
 
 
+PHRASES = {'a': r'top.budget|AAA|cinematic', 'b': r'stock', 'c': r'textbook', 'd': r'amateur|generated art', 'e': r'web 3D|web demo|real.time'}
+
+
+ARTICLE = {'frame': 'a', 'top': 'a', 'aaa': 'a', 'stock': 'b', 'science': 'c', 'textbook': 'c', 'amateur': 'd', 'real': 'e'}
+
+
 def letter_how(t):
     t = t.strip()
+    m = re.match(r'^\W*an?\s+(frame|top|aaa|stock|science|textbook|amateur|real)', t, re.I)
+    if m:
+        return ARTICLE[m.group(1).lower()], 'phrase'
     m = re.match(r'^\W*(?:answer|vote|my (?:independent )?(?:visual )?(?:vote|answer))?\W*\(?([a-eA-E])\)?(?![a-zA-Z])', t, re.I)
     if m:
         return m.group(1).lower(), 'start'
     m = re.search(r'\(([a-e])\)', t)
     if m:
         return m.group(1), 'brackets'
-    m = re.search(r'(?:^|[\s:*"])([a-e])(?=[\s,.:;*")]|$)', t)
+    hits = [k for k, w in PHRASES.items() if re.search(w, t, re.I)]
+    if len(hits) == 1:
+        return hits[0], 'phrase'
+    m = re.search(r'(?:^|[\s:*"])([b-e])(?=[\s,.:;*")]|$)', t)
     return (m.group(1), 'prose') if m else ('?', 'none')
 
 
@@ -473,6 +485,11 @@ def close(a):
     ja, jn = share(r2j)
     gap = c['quality']['jury']['maxShareGap']
     r2pass = jn > 0 and cn > 0 and ja / jn >= ca / cn - gap - 1e-9
+    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
+    if loose:
+        print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
+        for x in loose:
+            print('    %s read as %s <%s>' % x)
     right = lambda g: (sum(1 for vs in g.values() for v in vs if over.get(v[0], 'y' if named(v[2], stop) else 'n') == 'y'), sum(len(vs) for vs in g.values()))
     c8, c8n = right(r8c)
     j8, j8n = right(r8j)
