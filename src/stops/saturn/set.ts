@@ -5,8 +5,9 @@ import { smooth } from '../../director/rig'
 import { Globe, Shell } from './globe'
 import * as look from './look'
 import { plan } from './plan'
-import { profileUniforms } from './profile'
+import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
+import layoutJson from './layout.json'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
 import shadowJson from './shadow.json'
@@ -32,7 +33,15 @@ export const createSet: SetFactory = async (ctx) => {
   const table = await ctx.dataTexture(base + lightJson.file, lightJson.width, lightJson.height, 4)
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, look.globe, look.haze, profile, polar)
   const shell = new Shell(look.shell, look.globe, profile, polar)
-  const rings = new Rings(profile, look.rings, polar)
+  const toTilt = tilt.quaternion.clone().invert()
+  const layoutCamera = new THREE.PerspectiveCamera(layoutJson.vfovDeg, layoutJson.width / layoutJson.height, 0.01, 100)
+  layoutCamera.position.copy(plan.skimPosition).applyQuaternion(toTilt)
+  layoutCamera.quaternion.copy(toTilt).multiply(plan.skimQuaternion)
+  layoutCamera.updateMatrixWorld(true)
+  layoutCamera.updateProjectionMatrix()
+  const layoutMatrix = new THREE.Matrix4().multiplyMatrices(layoutCamera.projectionMatrix, layoutCamera.matrixWorldInverse)
+  const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), layoutMatrix, layoutJson.width, layoutJson.height)
+  const rings = new Rings(profile, layout, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
 
   const moonFit = fit.moons![0]!

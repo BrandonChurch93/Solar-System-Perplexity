@@ -33,7 +33,7 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - Shell (`globe.ts` Shell): additive haze shell with `HAZE_GLSL`, ring shadowed.
 - Rings (`rings.ts`): annulus, two passes split around the shell, premultiplied colour with coverage alpha, 1D profile with explicit mip rows (`rings.bin`, 32768 samples in `full`), two profiles (hero, close) cross-faded by `uClose` (camera height above the ring plane, `closeRange` in `look.ts`). Profile colour is filmic display space, `inverseFilmic` in the shader. Azimuthal brightness of the hero as an order 2 Fourier gain in 5 radial bands (`azimuth.json`), faded out by `uClose`. Globe shadow on rings by line miss distance with a penumbra. Kepler turn of azimuthal structure. Sparkle cells.
 - Titan (`titan.ts`), FarPoint for travel, sky patches with `weight` from `plan.patchWeight`.
-- Still to build: ice grains near the lens (`set.near`), terrain sky patch, depth of field if needed.
+- Still to build: ice grains near the lens (`set.near`), terrain sky patch with glow, depth of field if needed.
 
 ## Asset pipeline (all under `assets-src/saturn/`)
 
@@ -56,11 +56,13 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 
 ## Open list (worst first)
 
-1. Hold sky patch: glow-only render, final patch, gain by measurement.
-2. Terrain view: camera refit (rms 41 px, film globe larger and further right), close profile bright from r 1.21, close alpha higher (sky shows through Cassini and outer A), stronger dark grooves in the foreground, paler globe in the close view, globe shadow on rings at right, sky patch from the close image.
-3. Ice grains near the lens, sparkle tuning, Titan tune (hero circle about [2470, 252, 49] px, moon speed about 0.8 deg/s).
-4. Dive and rise sheets: profile cross-fade, azimuth gain fade, rise pose lit north side, fill repetition every 30 degrees, travel free of pops.
-5. RECIPE.md for wrap, rings, curve, azimuth, sky. Delete `standin-close.jpg` and `standin-wrap.jpg` from both sets. Commit binaries at the milestone. Self-check, budget, vitest.
+1. Terrain view: globe too orange and band contrast too strong against the approved pale cream; terminator more upright than the approved; limb halo wider and yellower; rings softer than the approved (median profile, lod), no sandy grain, sparkles are dashes, not points; hooks at the right frame edge of the layout.
+2. Terrain motion: sheet of `saturn.terrain`, foreground against horizon, layout border at first and last frame, shade outside the approved frame.
+3. Terrain sky patch with the film's glow, gain by measurement; G17 terrain (0.718 with the old profile, needs 0.8).
+4. Ice grains near the lens (`set.near`), Titan tune (hero circle about [2470, 252, 49] px, moon speed about 0.8 deg/s).
+5. Dive and rise sheets: layout blend-in, inner edge sweep over the globe, shade and shadow hand-over, G13 on every frame, rise pose, travel free of pops. Then "EXIT FINAL" plus the commit to the Builder (rise exit pose and `travel` turnDeg 88, side -1) and no change after that without telling the Builder.
+6. Hold: check after the profile and shader changes (3465, `check/shadow_edge.py`), ring edge remap by azimuth at the left ansa, limb, grain.
+7. Self-check: final compares, sheets, crops, `npx vitest run`, `npm run budget -- --stop saturn`, `npm run -s gate -- --phase 4 --only G11`, `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,saturn` (the three results go into the READY message).
 
 ## Log
 
@@ -86,3 +88,15 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - Close light (`close/light_fit.py`): terminator contours of the approved are great circles; light at skim azimuth -2, elevation -2 (the Sun projected to about the ring plane, phase about 90). The real Sun is 15.78 deg above the plane. `set.ts` turns the light for the globe in the close view (`uLightL`, `closeLight`), `globe.ts` has a second curve `closeCurve.json` blended by `uClose`. The curve is still a copy of the hero curve: `close/curve.py` has to fit it. Approved light by cosine (display linear luminance): 0.0035 night, 0.01 at 0.016, 0.05 at 0.05, 0.2 at 0.11, 0.39 at 0.17, 0.52 at 0.23, 0.6 at 0.3, 0.71 at 0.39, 0.81 at 0.52, 0.89 at 0.67, 0.93 at 0.8.
 - Close shadow of the globe on the rings in the approved: a soft grey band under the junction right of the terminator, dark for about 140 to 160 px (2816 scale), not the hard strip the hold formula gives. Needs its own soft form blended by `uClose`.
 - Builder's profiler tip (not applied yet): the software rasterizer computes both sides of an `if` but skips a `for` body. Put the sparkle block and the two `profAt` branches in `for (int k = 0; k < (cond ? 1 : 0); k++)` with `textureGrad`/`textureLod` or `texelFetch` inside.
+
+- 04:37 to 05:11 Close light fit, inner disc over the globe (2bde814), sky aim (9792195, `skyAim.orbit` [34.43338, 66.84025, 41.06902]); a free fit showed no rigid world gives the approved close image.
+- 05:11 to 05:50 Layout field, profile by band coordinate, soft shade map, shader wiring, profiler tip applied (`for` loops in `profAt`, the sparkle block, `ringLayout`), close curve fitted twice, engine batch 4 merged (2eb195e), recipes for G11.
+
+## Close view as built (05:10 to 05:50)
+
+- The band layout of the close view comes from the approved image as a field on the ring plane (`close/layout.py`, `close/profile.py`, `layout.bin`, recipe in RECIPE.md). True 3D is kept, no relief fallback. The layout camera is the plan's skim pose taken into the tilt frame (`set.ts`), so the layout sits still on the ring plane while the film camera moves.
+- Shader: `RING_LAYOUT_GLSL` in `profile.ts` (`ringLayout(p, r)` gives radius in hero space, shade, weight; border fade 8 percent; times `uClose`), `warpTo` maps the band coordinate to hero radius with the anchors in `rings.json` (`warpClose` [-1.0, 1.746, 1.858, 2.12] to `warpHero` [1.2458, 1.94, 2.063, 2.3394]). In `rings.ts` the colour is `mix(floor, col, mix(lit, 1, weight)) * shade`: inside the layout the soft shade replaces the hard globe shadow. Lod bias 1.2 in the hold, 0.7 in the close view (`lodBiasClose`), because the close profile is about 8 samples per draft pixel in the foreground.
+- What went wrong on the way, so it is not repeated: (1) a swirl like wood grain at the upper left came from pinning the outer A edge at 2.046 while the reference line already gives 2.006 at the left frame edge, which left 0.04 for a wide triangle of bands; the outer edge now sits at 2.12 and is pinned on the traced curve. (2) A gradient prior from the physical ring radius inside the frame is wrong by more than a factor 2 in the foreground B ring and makes swirls at the bottom right; only a floor of 0.15 of it is used, to keep the coordinate rising. (3) `cv2.INTER_CUBIC` does not reproduce a linear ramp and put a ripple of one cell on the band coordinate; `profile.py` now reads the field bilinearly, exactly as the shader does. (4) The band at the left frame edge really is tangent to the edge near y 1000 (2816 scale): the picture has a left ansa there.
+- Close light: `close/curve.py FILM` multiplies the knots of `closeCurve.json` by approved over film per channel by Sun cosine (light at skim azimuth -2 plus `turnDeg`, elevation -2). After two rounds the medians agree within 5 percent above cosine 0.05; cosine -0.2 to 0.05 is still 2 to 4 times too bright in red.
+- Sky chain (Builder, engine batch 4): `coverAmount()` is 0 at the rise's cover centre, so this stop's `skyAim.orbit` decides the sky from the hold to Uranus's dive cover and a `skyAim.terrain` would be ignored. Uranus's hold sky follows from the rise exit pose and the `travel` values.
+- G11: every file under `public/assets/saturn/` is named in RECIPE.md as `public/assets/saturn/<set>/NAME`.

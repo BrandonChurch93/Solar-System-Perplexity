@@ -1,0 +1,141 @@
+import json
+import sys
+from pathlib import Path
+
+import cv2
+import numpy as np
+from scipy.ndimage import map_coordinates
+from scipy.spatial import cKDTree
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "rings"))
+from lib import ROOT, WORK, lum, srgb_to_linear
+from extract import align
+
+sys.path.insert(0, str(ROOT / "tools" / "assets"))
+from lightcurve import inverse_filmic
+
+L0, L1, NL = -1.05, 2.60, 20000
+img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
+H, W = img.shape[:2]
+lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
+close = json.loads((ROOT / "src/stops/saturn/close.json").read_text())
+field = np.load(WORK / "layout.npy")
+GH, GW = field.shape
+k = (GH / 2) / np.tan(np.radians(lay["vfovDeg"]) / 2) / ((H / 2) / np.tan(np.radians(close["vfov"]) / 2))
+xs, ys = np.meshgrid(np.arange(W) + 0.5, np.arange(H) + 0.5)
+at = lambda x, y: map_coordinates(field, [(y - H / 2) * k + GH / 2 - 0.5, (x - W / 2) * k + GW / 2 - 0.5], order=1, mode="nearest")
+lam = at(xs, ys).astype(np.float32)
+axis = L0 + (np.arange(NL) + 0.5) / NL * (L1 - L0)
+
+
+def family(A, B, offs, reach, name):
+    d = (B - A) / np.linalg.norm(B - A)
+    nrm = np.array([-d[1], d[0]])
+    t = np.arange(0, np.linalg.norm(B - A), 0.25)
+    cols, oks = [], []
+    for off in offs:
+        p = A[None] + d[None] * t[:, None] + nrm[None] * off
+        inside = (p[:, 0] > 2) & (p[:, 0] < W - 3) & (p[:, 1] > 2) & (p[:, 1] < H - 3)
+        mx, my = (p[:, 0] - 0.5).astype(np.float32)[None], (p[:, 1] - 0.5).astype(np.float32)[None]
+        c = cv2.remap(img, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)[0]
+        l = at(p[:, 0], p[:, 1])
+        c = inverse_filmic(srgb_to_linear(np.clip(c, 0, 1)))
+        keep = inside & (np.gradient(l) > 1e-5)
+        l, c = l[keep], c[keep]
+        order = np.argsort(l)
+        l, c = l[order], c[order]
+        cols.append(np.stack([np.interp(axis, l, c[:, k], left=0, right=0) for k in range(3)], -1))
+        gap = np.interp(axis, l[:-1], np.diff(l), left=1, right=1)
+        oks.append((axis > l[0]) & (axis < l[-1]) & (gap < 0.01))
+    pol = np.stack(cols, 1).astype(np.float32)
+    ok = np.stack(oks, 1)
+    prof, count, shifts = align(pol, ok, list(range(len(offs))), len(offs) // 2, reach, sigma=4.0)
+    good = np.isfinite(prof[:, 0])
+    print(name, "lambda", round(float(axis[good].min()), 3), round(float(axis[good].max()), 3), "shifts", [round(float(shifts[k]), 1) for k in sorted(shifts)])
+    return prof, good
+
+
+far, far_ok = family(np.array([0.90 * W, 0.615 * H]), np.array([0.012 * W, 0.985 * H]), [-120, -90, -60, -30, 0, 30, 60, 90, 120], 40.0, "shadow side line")
+lit, lit_ok = family(np.array([0.56 * W, 0.47 * H]), np.array([0.50 * W, 0.995 * H]), [-90, -60, -30, 0, 30, 60, 90], 40.0, "lit side line")
+left, left_ok = family(np.array([620.0, 970.0]), np.array([60.0, 610.0]), [-60, -30, 0, 30, 60], 30.0, "left line")
+lit_ok &= axis > -0.60
+far_ok &= axis > -0.60
+over = (axis > 0.70) & (axis < 1.3) & far_ok & lit_ok
+gain = np.median(far[over], 0) / np.maximum(np.median(lit[over], 0), 1e-4)
+print("gain shadow side over lit side in the B ring", gain.round(3))
+far, lit, left = np.nan_to_num(far), np.nan_to_num(lit) * gain, np.nan_to_num(left)
+w = np.clip((axis - 0.64) / 0.08, 0, 1)[:, None]
+w = w * w * (3 - 2 * w)
+prof = np.where(lit_ok[:, None], lit * (1 - w) + far * w, far)
+over = (axis > 1.84) & (axis < 1.98) & far_ok & left_ok
+gain_l = np.median(far[over], 0) / np.maximum(np.median(left[over], 0), 1e-4)
+print("gain shadow side line over left line in the A ring", gain_l.round(3))
+w = np.clip((axis - 1.985) / 0.023, 0, 1)[:, None]
+w = w * w * (3 - 2 * w)
+prof = np.where(left_ok[:, None] & far_ok[:, None], prof * (1 - w) + left * gain_l * w, np.where(left_ok[:, None], left * gain_l, prof))
+have = far_ok | lit_ok | left_ok
+first = int(np.argmax(have))
+prof[:first] = prof[first:first + 60].mean(0)
+have[:first] = True
+prof[~have] = np.nan
+np.save(WORK / "profile-close-lam.npy", prof.astype(np.float32))
+
+pp = np.nan_to_num(prof)
+scene = inverse_filmic(srgb_to_linear(np.clip(img, 0, 1)))
+ix = np.clip(((lam - L0) / (L1 - L0) * NL).astype(int), 0, NL - 1)
+rec = pp[ix]
+ring = (lam > L0) & (lam < json.loads((ROOT / "src/stops/saturn/rings.json").read_text())["warpClose"][3]) & have[ix]
+limb = np.load(WORK / "close-limb.npy")
+junction = np.array([[1500, 768], [1700, 815], [1900, 858], [2100, 895], [2300, 945], [2500, 985], [2700, 1020], [2816, 1046]], np.float64)
+poly = np.concatenate([limb, junction, [[W, 0], [limb[0, 0], 0]]]).astype(np.int32)
+gmask = np.zeros((H, W), np.uint8)
+cv2.fillPoly(gmask, [poly], 1)
+gmask = cv2.dilate(gmask, np.ones((25, 25), np.uint8)) > 0
+ring &= ~gmask
+SIG = 24.0
+m = ring.astype(np.float32)
+num = cv2.GaussianBlur(lum(scene) * m, (0, 0), SIG)
+den = cv2.GaussianBlur(lum(rec) * m, (0, 0), SIG)
+cov = cv2.GaussianBlur(m, (0, 0), SIG)
+shade = np.clip(num / np.maximum(den, 1e-5), 0.02, 1.2)
+known = (cov > 0.25) & (den > 2e-4)
+gx, gy = np.meshgrid(np.arange(GW) + 0.5, np.arange(GH) + 0.5)
+ax, ay = ((gx - GW / 2) / k + W / 2 - 0.5).astype(np.float32), ((gy - GH / 2) / k + H / 2 - 0.5).astype(np.float32)
+sm = cv2.remap(cv2.GaussianBlur(np.where(known, shade, 0).astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+km = cv2.remap(cv2.GaussianBlur(known.astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+good = km > 0.6
+val = np.where(good, sm / np.maximum(km, 1e-4), 0)
+LS = 800.0
+tree = cKDTree(np.stack([gx[good], gy[good], np.clip(field[good], -3, 4) * LS], -1))
+_, near = tree.query(np.stack([gx[~good], gy[~good], np.clip(field[~good], -3, 4) * LS], -1))
+filled = val.copy()
+filled[~good] = val[good][near]
+filled = np.where(good, val, cv2.GaussianBlur(filled, (0, 0), 2.0))
+dist = cv2.distanceTransform((~good).astype(np.uint8), cv2.DIST_L2, 5)
+reach_cells = 0.22 * W * k
+wgt = np.clip(1 - dist / reach_cells, 0, 1)
+wgt = wgt * wgt * (3 - 2 * wgt)
+hid = cv2.remap(gmask.astype(np.float32), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.5
+wgt = np.where(hid, 1.0, wgt)
+out = np.zeros((GH, GW, 4), np.float32)
+out[..., 0] = field
+out[..., 1] = filled
+out[..., 2] = wgt
+for name in ("full", "web"):
+    out.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout.bin")
+np.save(WORK / "layout-shade.npy", filled)
+print("shade in frame: percentiles", np.percentile(shade[known], [1, 10, 50, 90, 99]).round(3))
+check = np.clip(rec * shade[..., None], 0, None)
+check = np.where(ring[..., None], check, scene)
+disp = lambda x: np.clip(x * (2.51 * x + 0.03) / (x * (2.43 * x + 0.59) + 0.14), 0, 1) ** (1 / 2.2)
+both = np.vstack([cv2.resize(img[..., ::-1], (1100, 619), interpolation=cv2.INTER_AREA), cv2.resize(disp(check)[..., ::-1].astype(np.float32), (1100, 619), interpolation=cv2.INTER_AREA)])
+cv2.imwrite(str(WORK / (sys.argv[1] if len(sys.argv) > 1 else "profile-check.jpg")), (both * 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 88])
+cv2.imwrite(str(WORK / "profile-rebuild.png"), (disp(check)[..., ::-1] * 255).astype(np.uint8))
+cv2.imwrite(str(WORK / "layout-shade.jpg"), np.hstack([cv2.resize((np.clip(a, 0, 1) * 255).astype(np.uint8), (720, 540), interpolation=cv2.INTER_NEAREST) for a in (filled / 1.2, wgt)]))
+lp = lum(np.nan_to_num(prof))
+print(" ".join(f"{axis[i]:.2f}:{lp[i]:.3f}" for i in range(0, NL, 110)))
+vis = np.clip(np.nan_to_num(prof) / (1 + np.nan_to_num(prof)) * 1.6, 0, 1) ** (1 / 2.2)
+bar = np.repeat(vis[None, :, ::-1], 120, axis=0)
+rows = [cv2.resize((bar[:, i:i + NL // 3] * 255).astype(np.uint8), (2000, 120), interpolation=cv2.INTER_AREA) for i in range(0, NL - 2, NL // 3)]
+cv2.imwrite(str(WORK / "profile-close-lam.jpg"), np.vstack(rows[:3]), [cv2.IMWRITE_JPEG_QUALITY, 90])

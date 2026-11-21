@@ -16,9 +16,9 @@ ROW = 8192
 INNER, OUTER = 1.2458, 2.3394
 axis = R0 + (np.arange(N) + 0.5) / N * (R1 - R0)
 per_radius = N / (R1 - R0)
-CR0, CR1 = 0.02, 2.60
+CR0, CR1 = -1.05, 2.60
 ANCH_H = [1.2458, 1.940, 2.063, 2.3394]
-ANCH_C = [0.02, 1.746, 1.858, 2.046]
+ANCH_C = [-1.0, 1.746, 1.858, 2.12]
 
 
 def to_world(rh):
@@ -116,28 +116,12 @@ def pack(profiles):
 def main():
     rng = np.random.default_rng(1806)
     hero, hero_ok = resample(np.load(WORK / "profile-hero.npy"), 1.10, 2.60)
-    cp = np.load(WORK / "close-polar-lin.npy")
-    cok = np.load(WORK / "close-polar-ok.npy")
-    nr, na = cp.shape[:2]
-    az = lambda d: int((d + 75) / 150 * na)
-    rw = CR0 + (np.arange(nr) + 0.5) / nr * (CR1 - CR0)
-    prof_a, _, _ = align(cp, cok, [az(-14) + 3 * k for k in range(-3, 4)], az(-14), 20.0, sigma=3.0)
-    prof_c, _, _ = align(cp, cok, list(range(az(-49), az(-45), 2)), az(-47), 10.0, sigma=3.0)
-    np.save(WORK / "profile-close-a.npy", prof_a)
-    np.save(WORK / "profile-close-c.npy", prof_c)
-    a_ok = np.isfinite(prof_a[:, 0]) & (rw < 2.012)
-    c_ok = np.isfinite(prof_c[:, 0])
+    lam = np.load(WORK / "profile-close-lam.npy")
+    rw = CR0 + (np.arange(lam.shape[0]) + 0.5) / lam.shape[0] * (CR1 - CR0)
     bg_h = np.array([0.008, 0.011, 0.014])
     bg_c = np.array([0.006, 0.008, 0.010])
     hero = np.clip(hero - 0.1 * bg_h, 0, None)
-    pa = np.clip(np.nan_to_num(prof_a) - 0.1 * bg_c, 0, None)
-    pc = np.clip(np.nan_to_num(prof_c) - 0.1 * bg_c, 0, None)
-    over = (rw > 1.88) & (rw < 1.99) & a_ok & c_ok
-    gain = np.median(pa[over], 0) / np.maximum(np.median(pc[over], 0), 1e-4)
-    print("close c to a gain", gain)
-    w = smoothstep(1.93, 1.99, rw)[:, None]
-    world = np.where(a_ok[:, None] & c_ok[:, None], pa * (1 - w) + pc * gain * w, np.where(a_ok[:, None], pa, pc * gain))
-    world = np.where(a_ok[:, None] | c_ok[:, None], world, 0)
+    world = np.clip(np.nan_to_num(lam) - 0.1 * bg_c, 0, None)
     x = to_world(axis)
     close = np.stack([np.interp(x, rw, world[:, k], left=0, right=0) for k in range(3)], -1)
 

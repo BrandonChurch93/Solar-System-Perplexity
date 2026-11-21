@@ -52,6 +52,7 @@ export const rings: RingLook = {
   penumbra: [0.978, 0.994, 0.006],
   unlit: 0.12,
   lodBias: 1.2,
+  lodBiasClose: 0.7,
   spokes: 0.1,
   clumps: 0.05,
   grain: 0.22,
