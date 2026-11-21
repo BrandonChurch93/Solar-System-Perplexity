@@ -77,6 +77,15 @@ Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero 
 - Take kept: the current run (deterministic).
 - Checks: `npm run compare -- --stop uranus --view terrain --tier final`, terrain sheet `npm run sheet -- --segment uranus.terrain`.
 
+## deck-near.jpg
+
+- Output: `public/assets/uranus/<set>/deck-near.jpg` (4352 x 2176 full, 2176 x 1088 web) and the table `src/stops/uranus/deck-near.json` (its window in the plate, the fade at its edge).
+- Tool: `python3 assets-src/uranus/terrain/near.py` (`again` as argument runs the upscale again). No generation: it is the band x 2576 to 4752, y 848 to 1936 of `public/assets/uranus/full/deck-color.jpg` at twice the plate's density, made with `python3 tools/ml/upscale.py --in out/work/u/t/near/crop.png --out out/work/u/t/near/crop-2x.png --width 4352` (the same model the plate went through); everything coarser than a gaussian of 6 pixels is put back from the plate itself, so the two levels are the same picture and only detail under about 3 plate pixels differs.
+- Inputs: `public/assets/uranus/full/deck-color.jpg`.
+- Why (round 3): the terrain view flies 3.2 units forward (was 2.0), 1.58 of it past the judged pose. The deck under the camera near the end is the approved picture's own middle ground, magnified from 2.37 texels per pixel to 0.79: G13 failed on 43 frames (4359 to 4401, worst 4391 at 11.56 percent). `npx tsx assets-src/uranus/terrain/softdeck.ts FIRST LAST STEP LIMIT` (the film's own camera against the deck sphere and the plate window) gave the same numbers within 0.7 percent and the box of plate pixels that fall under 1.25 texels per pixel in any frame from 4330 to 4409: u 0.339 to 0.555, v 0.607 to 0.792. The band is that box plus a margin of 0.024 or more on every side.
+- How it is used: `deck.ts` blends it in only where the plate's own density is under 1.25 texels per pixel (full weight under 1.0, `look.deck.near`) and inside the window less its faded edge. At the judged frame 4290 the plate is at 2.37 everywhere, so the level has weight 0 and the frame is the same bytes. The texels view reports the plate's density times `1 + weight`.
+- Checks: draft 4290 before and after is byte equal; `softdeck.ts`; `npm run measure -- --stop uranus --only G13`.
+
 ## deck-rings.bin
 
 - Output: `deck-rings.bin`: 36 ring lines as sampled 3D curves with amplitude (21,503 samples), and `src/stops/uranus/deck-rings.json` (centre, scale).
@@ -124,6 +133,7 @@ Every file the set loads, in both sets (`<set>` is `full` or `web`), with the se
 - `public/assets/uranus/<set>/deck-halo.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
 - `public/assets/uranus/<set>/deck-height.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
 - `public/assets/uranus/<set>/deck-light.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-near.jpg`: section "deck-near.jpg"
 - `public/assets/uranus/<set>/deck-rings.bin`: section "deck-rings.bin"
 - `public/assets/uranus/<set>/halo.bin`: section "halo.bin"
 - `public/assets/uranus/<set>/light.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
