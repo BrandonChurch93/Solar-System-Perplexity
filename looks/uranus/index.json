@@ -1,0 +1,64 @@
+{
+ "folder": "uranus",
+ "pushed": "2026-11-21T02:45:41.889Z",
+ "head": "e9218073d785e03a096609473ebe4e76e56861bd",
+ "note": "first looks: stand-in hold and terrain beside the approved images",
+ "looks": [
+  {
+   "time": "2026-11-21T02:45:31.326Z",
+   "file": "20261121024531326-compare-compare-uranus-terrain-view.jpg",
+   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "uranus.terrain: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:45:30.369Z",
+   "file": "20261121024530369-still-f04290-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04290-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.terrain frame 4290, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:45:15.426Z",
+   "file": "20261121024515426-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:45:14.200Z",
+   "file": "20261121024514200-still-f04035-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04035-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
