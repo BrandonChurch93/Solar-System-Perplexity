@@ -89,7 +89,9 @@ const CLOSE_DRAWS = CLOSE_SIDES.map((side, i) => `  for (int k = 0; k < (w${i} >
     for (int j = 0; j < (uSmear > 0.0 ? 0 : 1); j++) photo = textureGrad(uClose, uv${i}, ax${i} * uGrad, ay${i} * uGrad).rgb;
     for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(uClose, uv${i}, ax${i} * mh.x + ay${i} * mh.y, ay${i} * mh.x - ax${i} * mh.y, along, lat);
     float core = smoothstep(1.0, uCloseW.z, es${i}) * smoothstep(1.0, uCloseW.z, eb${i}) * inner;
-    col = mix(col, mix(inverseFilmic(photo), uHaze.rgb, uHaze.a * mix(1.0, ${side === 0 ? 'uCloseW.y' : 'uCloseTurn.w'}, core)), w${i});
+    vec3 tone = inverseFilmic(photo);
+    tone = mix(tone, dot(tone, vec3(0.2126, 0.7152, 0.0722)) * uClosePlain.rgb, uClosePlain.a * smoothstep(uCloseFade.x, mix(uCloseFade.x, uCloseFade.y, 0.4), reach));
+    col = mix(col, mix(tone, uHaze.rgb, uHaze.a * mix(1.0, ${side === 0 ? 'uCloseW.y' : 'uCloseTurn.w'}, core)), w${i});
     vec2 tx = ax${i} * uCloseSize;
     vec2 ty = ay${i} * uCloseSize;
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), step(0.5, w${i}));
@@ -142,6 +144,7 @@ uniform vec4 uDusk;
 uniform float uDuskFrom;
 uniform vec2 uReliefRange;
 uniform vec3 uSil;
+uniform vec4 uClosePlain;
 uniform float uEdge;
 uniform vec3 uRimColor;
 uniform float uRimWide;
@@ -321,7 +324,7 @@ ${PATCH_LEVELS}
   for (int k = 0; k < (deep > 0.0 && bare ? 1 : 0); k++) calm = mix(ground, mix(inverseFilmic(textureGrad(uMap, vec2(wu, wv), wx * uNightSoft.w, wy * uNightSoft.w).rgb), ground, uNightSoft.z), deep);
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
   vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
-  col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uCarry.z);
+  col = mix(col, dot(col, vec3(0.2126, 0.7152, 0.0722)) * uClosePlain.rgb, uCarry.z);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
   col = mix(col, uHaze.rgb, uHaze.a);
@@ -394,7 +397,7 @@ export class Globe {
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) }, uHaze: { value: new THREE.Vector4() },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: new THREE.Vector3(0, 0, 2) }, uClosePivot: { value: new THREE.Vector3(0, 1, 0) }, uCloseTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
-        uCut: { value: 0 }, uDiag: diagUniform, uGrad: gradUniform,
+        uCut: { value: 0 }, uClosePlain: { value: new THREE.Vector4(1, 1, 1, 0) }, uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(SHELL, 96, 48), this.material)
@@ -434,6 +437,10 @@ export class Globe {
   night(dim: number, shoulder: number): void {
     this.material.uniforms.uNightDim!.value = dim
     ;(this.material.uniforms.uShoulder!.value as THREE.Vector2).y = shoulder
+  }
+
+  plain(tint: readonly [number, number, number], amount: number): void {
+    ;(this.material.uniforms.uClosePlain!.value as THREE.Vector4).set(tint[0], tint[1], tint[2], amount)
   }
 
   silhouette(amp: number): void {

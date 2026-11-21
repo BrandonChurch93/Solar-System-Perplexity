@@ -133,6 +133,7 @@ export const createSet: SetFactory = async (ctx) => {
   const skyPlate = new SkyPlate(low.texture, low.tan, low.edge, closeUp, Math.sin(THREE.MathUtils.degToRad(reliefJson.camera.dipDeg)), look.sky.band.soft, diagUniform)
   orbit.add(skyPlate.mesh)
   globe.carry(look.carry.gain, look.carry.knee, 0)
+  globe.plain(look.close.plain.tint, 0)
   globe.haze(look.haze.color, look.haze.peak)
 
   return {
@@ -215,10 +216,11 @@ export const createSet: SetFactory = async (ctx) => {
       const offAxis = THREE.MathUtils.radToDeg(rimSun.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
       const close = mine && hasClose && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.close.height[0], look.close.height[1]) : 0
       globe.near(close, look.close.haze, look.close.soft)
-      globe.carry(look.carry.gain, look.carry.knee, look.carry.grey * close)
+      globe.carry(mix(look.carry.gain, look.carry.lift, close), look.carry.knee, look.carry.grey * close)
       const cut = diving ? smoother(ramp(look.cut.dive[0], look.cut.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.cut.rise[0], look.cut.rise[1], fromRise)) : 0
       const reach = look.cut.reach[diving ? 0 : 1]
       globe.cut(cut > 0 ? mix(closeRadius * Math.acos(Math.min(1 / distance, 1)) + look.cut.margin, reach, cut) : 0, mix(look.close.far[0], look.cut.far[0], cut), mix(look.close.far[1], look.cut.far[1], cut))
+      globe.plain(look.close.plain.tint, 1 - THREE.MathUtils.smoothstep(cut, look.close.plain.until[0], look.close.plain.until[1]))
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)

@@ -31,7 +31,7 @@ export const light: GlobeLight = {
 
 export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; back: [number, number]; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
   gain: 1, breathe: 0.03, rate: 1.9, limb: { dark: [0.08, 0.16, 0.2], edge: [1.0, 1.06] },
-  small: { to: 0.14, pale: [1, 0.97, 0.9], lift: 2.5, white: [0.25, 0.85], feather: 0.06 },
+  small: { to: 0.14, pale: [1, 0.97, 0.9], lift: 3, white: [0.25, 0.85], feather: 0.06 },
   slide: { leave: [-24, -15], lock: [-6.5, -2.5], track: [[-22, 1.04, 0.19], [-18, 0.96, 0.18], [-14, 0.86, 0.13], [-11, 0.76, 0.06], [-8, 0.6, 0.01], [-6, 0.46, -0.01], [-4, 0.33, -0.02], [-3, 0.285, -0.015], [0, 0.26, 0.05]] },
   hand: [-3.5, -0.5],
   ghost: [-14, -5],
@@ -53,10 +53,10 @@ export const glare: GlareLook = {
   halo: [0.45, 0.25], core: [0.2, 8], rays: [0.5, 0.5], bar: [0.7, 0.014, 0.3], turn: 0.9,
   terrainSun: [745 / 2816, -40 / 1584],
 }
-export const carry = { gain: 1, knee: 2.9, grey: 0.7 }
+export const carry = { gain: 1, lift: 3, knee: 2.9, grey: 0.7 }
 export const haze = { color: [0.3, 0.275, 0.23] as [number, number, number], peak: 0 }
 
-export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.07, 0.19] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], soft: 2.2, haze: 0.5, turn: [78, 1, 0.8] as [number, number, number] }
+export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.07, 0.19] as [number, number], far: [7, 10] as [number, number], plain: { tint: [1.2, 0.972, 0.78] as [number, number, number], until: [0.7, 1] as [number, number] }, feather: [0.22, 0.12] as [number, number], soft: 2.2, haze: 0.5, turn: [78, 1, 0.8] as [number, number, number] }
 
 export const edge = 10.1
 export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }
