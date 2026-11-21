@@ -1,9 +1,39 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T10:40:46.329Z",
- "head": "78c1496077d5b3e49c53e38fe8ad7a9bbebbf748",
- "note": "hold matched to the hero in place; next the close view from the approved close image and the terrain flight",
+ "pushed": "2026-11-21T11:04:31.701Z",
+ "head": "363d326cc7e7d0e0cf2d95af4b949a1d2ed49cd3",
+ "note": "round 2 work: close view rings are the approved close image on the ring plane; new terrain flight across the bands",
  "looks": [
+  {
+   "time": "2026-11-21T11:04:19.747Z",
+   "file": "20261121110419747-note-f1-strip.jpg",
+   "source": "out/work/saturn/f1-strip.jpg",
+   "kind": "note",
+   "label": "terrain flight draft: frames 3630 3675 3720 3765 3809, new path across the bands toward the globe",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:04:19.078Z",
+   "file": "20261121110419078-note-pair-terrain-q2.jpg",
+   "source": "out/work/saturn/pair-terrain-q2.jpg",
+   "kind": "note",
+   "label": "terrain 3720 final: approved close image projected on the ring plane, light map on the globe (approved above, film below)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T10:58:26.649Z",
+   "file": "20261121105826649-frame-f1-3809.jpg",
+   "source": "out/work/saturn/f1-3809.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:40:45.752Z",
    "file": "20261121104045752-note-hz9.jpg",
@@ -55,48 +85,6 @@
    "kind": "note",
    "label": "hold 3465 with projected hero rings and light map, approved above",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T09:54:05.604Z",
-   "file": "20261121095405604-frame-t-m10-3720.jpg",
-   "source": "out/work/saturn/t-m10-3720.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T08:40:11.020Z",
-   "file": "20261121084011020-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:39:22.985Z",
-   "file": "20261121083922985-compare-compare-saturn-hold-view.jpg",
-   "source": "out/work/compare/compare-saturn-hold-view.jpg",
-   "kind": "compare",
-   "label": "saturn.hold: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   }
  ]
 }
