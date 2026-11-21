@@ -131,13 +131,9 @@ def checks(n, gate_args, allow_red):
     t = sh('npx vitest run 2>&1 | tail -12', check=False)
     if 'failed' in t or 'passed' not in t:
         sys.exit('tests:\n' + t)
-    built = json.loads((ROOT / 'dist' / 'build.json').read_text())
-    proof = WORK / 'export' / (cfg()['export']['files']['preview'] + '.json')
-    if proof.exists() and not SCRATCH:
-        rec = json.loads(proof.read_text())
-        first = next(x['stop'] for x in cfg()['segments'] if x.get('stop'))
-        now = (built.get('engineHash') or built.get('engine'), (built.get('stopHashes') or built.get('stops') or {}).get(first))
-        if (rec.get('engineHash'), (rec.get('stopHashes') or {}).get(first)) != now:
+    if not SCRATCH:
+        g9 = subprocess.run('npm run -s gate -- ' + gate_args.split(' --g15')[0] + ' --only G9', shell=True, cwd=ROOT, capture_output=True, text=True)
+        if 'FAIL G9' in g9.stdout:
             r = subprocess.run('npm run -s proof', shell=True, cwd=ROOT, capture_output=True, text=True)
             print('export proof made again on this build: ' + ' | '.join(l for l in r.stdout.split('\n') if 'PSNR' in l)[:300])
     g = subprocess.run('npm run -s gate -- ' + gate_args, shell=True, cwd=ROOT, capture_output=True, text=True)
