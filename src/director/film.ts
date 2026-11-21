@@ -137,7 +137,10 @@ export class FilmDirector implements Director {
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     })
     const back = judged(config.endingId + '.lookback')
-    if (back !== null) out.orbits[config.endingId] = round(cam(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
+    const lastId = this.plans[this.plans.length - 1]!.id
+    const kept = out.orbits[lastId]
+    if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(cam(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
+    else if (kept) out.orbits[config.endingId] = kept
     return out
   }
 
