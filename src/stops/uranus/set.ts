@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import type { SetContext, SetFactory } from '../../core/types'
+import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { Globe } from './globe'
 import { Halo } from './halo'
@@ -8,6 +8,7 @@ import * as look from './look'
 import { Moon } from './moons'
 import { plan } from './plan'
 import { hairLines, parseLines, ringGeometry, Rings } from './rings'
+import skyJson from './sky.json'
 
 async function heights(ctx: SetContext, path: string, width: number, height: number): Promise<Float32Array> {
   const raw = new Uint16Array(await ctx.buffer(path))
@@ -67,9 +68,17 @@ export const createSet: SetFactory = async (ctx) => {
   const bounce = new THREE.Vector3()
   const moonLight = new THREE.Vector3()
 
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const wide = 1 + 2 * def.margin
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  }
+
   return {
     id: plan.id,
     world,
+    sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0

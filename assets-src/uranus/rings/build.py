@@ -1,4 +1,5 @@
 import json
+import os
 import struct
 import sys
 
@@ -14,6 +15,7 @@ OUT = 'out/work/u/rings2/'
 LONG = 25.0
 SHORT = 6.0
 FLOOR = 0.3
+HOT = 0.3
 
 
 def basis(n):
@@ -43,6 +45,7 @@ def main():
     T, R0, R1, NR = d['T'], d['R0'], d['R1'], d['NR']
     n0, e1, e2 = basis(np.array(d['normal']))
     items = []
+    cal = json.load(open('assets-src/uranus/rings/gain.json')) if os.path.exists('assets-src/uranus/rings/gain.json') else None
     for t in d['tracks']:
         j = np.array(t['j'])
         r = R0 + (np.array(t['r']) + 0.5) / NR * (R1 - R0)
@@ -54,12 +57,19 @@ def main():
         rs = ndi.gaussian_filter1d(r, 4)
         rough = float(np.sqrt(np.mean((r - rs) ** 2))) / ((R1 - R0) / NR)
         fillf = len(j) / (j[-1] - j[0] + 1)
-        if rough > 0.75 or fillf < 0.85 or np.median(a) < 0.003:
+        if rough > 0.75 or fillf < 0.85 or np.median(t['a']) < 0.003:
             continue
         p = rs[:, None] * (np.cos(th)[:, None] * e1 + np.sin(th)[:, None] * e2)
         ray = p - geo.CAM
         ray /= np.linalg.norm(ray, axis=1, keepdims=True)
-        items.append({'span': span, 'ray': ray, 'a': ndi.gaussian_filter1d(a, 3), 'p0': p})
+        a = ndi.gaussian_filter1d(a, 3)
+        if cal:
+            g = np.array(cal['gain'])
+            ti = np.mod(th / (2 * np.pi) * cal['nt'] - 0.5, cal['nt'])
+            ri = np.clip((rs - cal['r0']) / (cal['r1'] - cal['r0']) * cal['nr'] - 0.5, 0, cal['nr'] - 1)
+            a = a * ndi.map_coordinates(np.concatenate([g, g[:1]], 0), [ti, ri], order=1, mode='nearest')
+        a = np.where(a > HOT, HOT + (a - HOT) * 0.5, a)
+        items.append({'span': span, 'ray': ray, 'a': a, 'p0': p})
     items.sort(key=lambda t: -t['span'])
     print(len(items), 'tracks kept', [round(t['span']) for t in items[:30]])
     longs = [t for t in items if t['span'] >= LONG]

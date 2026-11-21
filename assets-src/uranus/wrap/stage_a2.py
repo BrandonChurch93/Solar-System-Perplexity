@@ -12,6 +12,7 @@ NDL_KNOTS = np.array([-1.0, -0.6, -0.3, -0.1, 0.0, 0.1, 0.2, 0.35, 0.5, 0.7, 0.8
 POWERS = [3, 6, 12, 24, 60]
 MU_N = 128
 EPS = 0.004
+MU_HOLD = 0.06
 
 
 def hats(x, knots):
@@ -62,7 +63,7 @@ def main():
         print('channel', c, 'residual', float(np.median(r)))
     coef = np.array(coef)
     gn, gm = np.meshgrid(knots, np.linspace(0, 1, MU_N), indexing='ij')
-    a = design(gn.ravel(), gm.ravel())
+    a = design(gn.ravel(), np.maximum(gm.ravel(), MU_HOLD))
     lut = np.zeros((len(knots), MU_N, 3), np.float32)
     for c in range(3):
         lut[..., c] = curve[:, c][:, None] * np.exp(np.clip(a @ coef[c], -2.0, 2.5)).reshape(len(knots), MU_N)

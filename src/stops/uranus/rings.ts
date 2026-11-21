@@ -65,7 +65,7 @@ float toward(vec3 v) {
 void main() {
   if (uDiag >= 2) discard;
   float fw = length(vec2(dFdx(vS), dFdy(vS)));
-  float sig = sqrt(uSigma * uSigma + fw * fw * 0.16);
+  float sig = sqrt(uSigma * uSigma + fw * fw * 0.11);
   float line = exp(-0.5 * vS * vS / (sig * sig)) * uSigma / sig;
   vec3 t = normalize(vTan);
   vec3 v = normalize(uCamL - vLocal);

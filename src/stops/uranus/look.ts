@@ -10,9 +10,9 @@ export const globe = {
 
 export const rings: RingLook = {
   color: [0.943, 1.013, 1.039],
-  sigma: 0.0013,
+  sigma: 0.0009,
   halfWidth: 0.02,
-  gain: 1.5,
+  gain: 2.17,
   glint: [1.6, 24],
   forward: [5, 6],
   shadowFloor: 0.05,
@@ -30,12 +30,12 @@ type Rgb = [number, number, number]
 
 export const moons = {
   heightSize: { full: [1536, 768], web: [768, 384] } as Record<'full' | 'web', [number, number]>,
-  bump: 0.045,
+  bump: 0.07,
   wrap: 0.25,
   bounce: [0.004, 0.012, 0.014] as Rgb,
   spinDegPerSecond: 1.5,
   bodies: {
-    miranda: { light: [-0.609, 0.5, -0.615] as Rgb, sun: [10, 9, 8] as Rgb, ambient: [0.026, 0.055, 0.074] as Rgb },
-    ariel: { light: [-0.695, 0.686, -0.215] as Rgb, sun: [1.7, 1.56, 1.42] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb },
+    miranda: { light: [-0.811, 0.584, 0.022] as Rgb, sun: [6.2, 5.4, 4.5] as Rgb, ambient: [0.012, 0.026, 0.034] as Rgb },
+    ariel: { light: [-0.624, 0.723, -0.296] as Rgb, sun: [1.45, 1.33, 1.28] as Rgb, ambient: [0.007, 0.02, 0.028] as Rgb },
   } as Record<string, { light: Rgb; sun: Rgb; ambient: Rgb }>,
 }

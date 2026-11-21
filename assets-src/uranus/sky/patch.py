@@ -47,9 +47,10 @@ def drift(hero, film):
     return dx, dy, resp
 
 
-T, R0, R1, NR = 1800, 1.08, 1.84, 760
-SHEARS = np.arange(-0.6, 0.601, 0.1)
-WIN = 15
+T, R0, R1, NR = 2700, 1.08, 1.84, 1520
+SHEARS = np.arange(-0.8, 0.801, 0.1)
+WIN = 21
+THIN = 25
 N0 = np.array([-0.1989, -0.6042, 0.7716])
 
 
@@ -69,22 +70,24 @@ def along(img):
     px, py = geo.project(P)
     px, py = px.astype(np.float32), py.astype(np.float32)
     lum = img @ LUMA
-    key = cv2.remap(lum - ndi.median_filter(lum, size=7), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-    pol = cv2.remap(img, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-    best = np.full(key.shape, -1.0, np.float32)
-    out = np.zeros(pol.shape, np.float32)
+    planes = [cv2.remap(lum - ndi.median_filter(lum, size=7), px, py, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)]
+    planes += [cv2.remap(np.ascontiguousarray(img[..., c]), px, py, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE) for c in range(3)]
+    best = np.full(planes[0].shape, -1.0, np.float32)
+    out = np.zeros(planes[0].shape + (3,), np.float32)
     half = WIN // 2
     for s in SHEARS:
-        ks, ps = [], []
-        for k in range(-half, half + 1):
-            dy = -s * k
-            ks.append(np.roll(ndi.shift(key, (dy, 0), order=1, mode='nearest') if abs(dy) > 1e-6 else key, -k, axis=1))
-            ps.append(np.roll(ndi.shift(pol, (dy, 0, 0), order=1, mode='nearest') if abs(dy) > 1e-6 else pol, -k, axis=1))
-        mk = np.median(np.stack(ks, 0), 0)
-        mp = np.median(np.stack(ps, 0), 0)
-        better = mk > best
-        best[better] = mk[better]
-        out[better] = mp[better]
+        meds = []
+        for v in planes:
+            stack = np.empty((WIN,) + v.shape, np.float32)
+            for i, k in enumerate(range(-half, half + 1)):
+                dy = -s * k
+                stack[i] = np.roll(ndi.shift(v, (dy, 0), order=1, mode='nearest') if abs(dy) > 1e-6 else v, -k, axis=1)
+            meds.append(np.median(stack, 0))
+        better = meds[0] > best
+        best[better] = meds[0][better]
+        for c in range(3):
+            out[..., c][better] = meds[c + 1][better]
+    thin = np.stack([out[..., c] - ndi.grey_opening(out[..., c], size=(THIN, 1)) for c in range(3)], -1)
     rays = geo.rays()
     t = -(geo.CAM @ n) / (rays @ n)
     Q = geo.CAM + rays * t[..., None]
@@ -94,10 +97,10 @@ def along(img):
     col = (ang / (2 * np.pi) * T - 0.5 + 2).astype(np.float32)
     wrap = lambda v: np.concatenate([v[:, -2:], v, v[:, :2]], 1)
     back = cv2.remap(wrap(out), col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-    line = cv2.remap(wrap(np.maximum(best, 0)), col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+    line = cv2.remap(wrap(thin), col, row, cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT)
     ok = (t > 0) & (r > R0) & (r < R1)
     line[~ok] = 0
-    return back, line, ok
+    return back, np.maximum(line, 0), ok
 
 
 def save(lin, name, out):
@@ -129,11 +132,13 @@ def hold(hero, fill, glow, out):
         back, line, ok = along(sky)
         np.savez(cache, back=back, line=line, ok=ok)
     stars = np.maximum(sky - np.where(ok[..., None], np.maximum(back, low(sky)), low(sky)), 0)
-    band = step(ndi.gaussian_filter(line, 7), 0.00012, 0.0005)
-    band = step(ndi.gaussian_filter(np.maximum(band, ndi.maximum_filter(band, 9)), 5), 0.1, 0.6)
+    floor = np.minimum(sky, np.maximum(back - line, 0))
+    hot = step(ndi.maximum_filter(luma(line), 5), 0.02, 0.06)[..., None]
+    clean = np.maximum(sky - line, floor)
+    sky = np.where(ok[..., None], clean * (1 - hot) + np.minimum(clean, np.maximum(back - line, 0)) * hot, sky)
     la = ndi.gaussian_filter(luma(a), 10)
     lg = ndi.gaussian_filter(luma(g), 10)
-    own = step(d, 1.03, 1.07) * (1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85)) * (1 - band)
+    own = step(d, 1.03, 1.07) * (1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85))
     moon = np.ones_like(own)
     for mx, my, mr in MOONS:
         moon *= step(np.hypot(xx - mx, yy - my), mr + 5, mr + 12)
@@ -145,7 +150,7 @@ def hold(hero, fill, glow, out):
     local = np.stack([soft(np.minimum(sky[..., i], 0.2) * near) / np.maximum(soft(np.minimum(f[..., i], 0.2) * near), 1e-6) for i in range(3)], -1)
     reach = (soft(near) > 0.02)[..., None] * step(d, 0.72, 1.04)[..., None]
     scale = gain * (1 - reach) + np.clip(local, gain * 0.35, gain * 2.5) * reach
-    print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)), 'band share', float(band.mean().round(3)), 'film over hero share', float(((g - a).max(-1) > 0.004)[d > 1.03].mean().round(4)))
+    print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)), 'film over hero share', float(((g - a).max(-1) > 0.004)[d > 1.03].mean().round(4)))
     rim = (step(d, RIM[0], RIM[1]) * ndi.gaussian_filter(moon, 2))[..., None]
     f = f * scale
     f = f * (1 - rim) + (low(f) + stars) * rim
