@@ -1,9 +1,59 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T16:31:28.919Z",
- "head": "9233c048a0cf153ad63b8ea2f633f250be3ef13f",
- "note": "round 3 on the merged tree: dive sheet at review, terminator widened in the dive; measures running",
+ "pushed": "2026-11-21T17:03:51.536Z",
+ "head": "c39eaba5003d35180392838bdb4dee80b58456cc",
+ "note": "round 3: G13 failed on the longer terrain flight, finer near level of the deck added, checks running again",
  "looks": [
+  {
+   "time": "2026-11-21T17:03:50.919Z",
+   "file": "20261121170350919-note-near-4391.jpg",
+   "source": "../../../../tmp/near-4391.png",
+   "kind": "note",
+   "label": "draft 4391 native crop of the near deck: plate only (left), with the finer near level (right)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T17:02:18.356Z",
+   "file": "20261121170218356-frame-tex-4391.jpg",
+   "source": "out/work/u/r4/tex-4391.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4391, draft tier, texels view",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4391,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T17:01:36.216Z",
+   "file": "20261121170136216-frame-non-4370.jpg",
+   "source": "out/work/u/r4/non-4370.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4370, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4370,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:41:24.458Z",
+   "file": "20261121164124458-job-frame-04336.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.terrain frame 4336, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4336,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T16:31:22.931Z",
    "file": "20261121163122931-job-frame-03960.jpg",
@@ -48,14 +98,6 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T16:13:13.569Z",
-   "file": "20261121161313569-note-s16-crop.jpg",
-   "source": "../../../../tmp/s16-crop.jpg",
-   "kind": "note",
-   "label": "draft 4126, terminator in the dive: before (left), widened with the approach (right); 4035 is byte equal",
-   "stop": "uranus"
-  },
-  {
    "time": "2026-11-21T16:12:22.205Z",
    "file": "20261121161222205-frame-s16-4035.jpg",
    "source": "out/work/u/r4/s16-4035.png",
@@ -68,36 +110,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:07:43.056Z",
-   "file": "20261121160743056-note-q4-4126.jpg",
-   "source": "../../../../tmp/q4-4126.jpg",
-   "kind": "note",
-   "label": "round 3 draft 4126: terminator in the dive",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T16:07:42.044Z",
-   "file": "20261121160742044-note-moons-cmp4.jpg",
-   "source": "../../../../tmp/moons-cmp4.png",
-   "kind": "note",
-   "label": "moons at 4035: approved hero, new relief, previous",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T15:55:38.856Z",
-   "file": "20261121155538856-frame-q3-4290.jpg",
-   "source": "out/work/u/r4/q3-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
   }
  ]
 }
