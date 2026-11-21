@@ -7,6 +7,7 @@ import { Halo } from './halo'
 import * as look from './look'
 import { Moon } from './moons'
 import { plan } from './plan'
+import { hairLines, parseLines, ringGeometry, Rings } from './rings'
 
 async function heights(ctx: SetContext, path: string, width: number, height: number): Promise<Float32Array> {
   const raw = new Uint16Array(await ctx.buffer(path))
@@ -38,6 +39,10 @@ export const createSet: SetFactory = async (ctx) => {
   const halo = new Halo(haloLut, look.halo.size, look.halo.range)
   orbit.add(globe.mesh, halo.mesh)
 
+  const ringGeo = ringGeometry(look.rings, [...parseLines(await ctx.buffer(base + 'rings.bin')), ...hairLines(look.rings)])
+  const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
+  const rings = new Rings(ringGeo, look.rings, holdPose.position)
+  orbit.add(rings.mesh)
   const ringNormal = new THREE.Vector3().fromArray(fit.rings!.normal).normalize()
   const moonSize = look.moons.heightSize[key]
   const moons: { body: Moon; home: THREE.Vector3; spinAxis: THREE.Vector3; phase: number }[] = []
@@ -77,6 +82,7 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
       globe.update(sun, plan.spin(state.time), elapsed, gain, state.weight, shot.post.vignette, aspect)
       halo.update(camera, sun, gain * state.weight)
+      rings.update(sun, gain * state.weight)
       turn.setFromAxisAngle(ringNormal, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       for (const m of moons) {
         m.body.mesh.position.copy(m.home).applyQuaternion(turn)
@@ -89,12 +95,15 @@ export const createSet: SetFactory = async (ctx) => {
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       halo.mesh.visible = visible
+      rings.mesh.visible = visible
       for (const m of moons) m.body.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       globe.dispose()
       halo.dispose()
+      rings.dispose()
+      ringGeo.dispose()
       for (const m of moons) m.body.dispose()
       far.dispose()
     },
