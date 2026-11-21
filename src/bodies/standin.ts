@@ -4,6 +4,7 @@ import { DIAG_GLSL, diagUniform } from '../diagnostics/diag'
 import type { StopPlan } from '../director/moves'
 import { smooth } from '../director/rig'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
+import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 
 const VERT = /* glsl */ `
@@ -144,7 +145,7 @@ void main() {
 const PLATE_DISTANCE = 10
 
 function shader(fragment: string, uniforms: Record<string, THREE.IUniform>, extra: Partial<THREE.ShaderMaterialParameters> = {}): THREE.ShaderMaterial {
-  return new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: fragment, uniforms: { ...uniforms, uDiag: diagUniform }, ...extra })
+  return new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: fragment, uniforms: { ...uniforms, uImplicit: implicitUniform, uDiag: diagUniform }, ...extra })
 }
 
 const MOON_COLORS: Record<string, [number, number, number]> = {
