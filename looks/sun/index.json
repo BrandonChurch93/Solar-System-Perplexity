@@ -1,18 +1,34 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T08:39:07.118Z",
- "head": "6ddfe8c11b961b248c86891cd7b1f52de820ab2d",
- "note": "flare rework after READY: erupts from the loop feet, brighter gold cover",
+ "pushed": "2026-11-21T08:50:32.469Z",
+ "head": "baee73f43b28ceb9643bc2997d9102631e200141",
+ "note": "terrain ground: boil and twinkle no longer damage frames 0 and 60",
  "looks": [
   {
-   "time": "2026-11-21T08:39:01.692Z",
-   "file": "20261121083901692-frame-chk-90.jpg",
-   "source": "out/work/sun/chk-90.png",
+   "time": "2026-11-21T08:50:31.929Z",
+   "file": "20261121085031929-note-tw-crops.jpg",
+   "source": "out/work/sun/tw-crops.jpg",
+   "kind": "note",
+   "label": "sun.terrain frames 0, 20, 40, draft: cells brighten and dim, no rings",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T08:50:31.415Z",
+   "file": "20261121085031415-note-f60-before-after.jpg",
+   "source": "out/work/sun/f60-before-after.jpg",
+   "kind": "note",
+   "label": "sun.terrain frame 60, native crop: before (marble lines from the boil) and after",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T08:49:39.551Z",
+   "file": "20261121084939551-frame-f60-tw.jpg",
+   "source": "out/work/sun/f60-tw.png",
    "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
+   "label": "sun.terrain frame 60, draft tier",
    "stop": "sun",
    "segment": "sun.terrain",
-   "frame": 90,
+   "frame": 60,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -33,28 +49,6 @@
    "kind": "note",
    "label": "sun.rise 198, 202, 206, 209, draft: heat climbing the loops",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T08:36:08.913Z",
-   "file": "20261121083608913-note-flare-strip4.jpg",
-   "source": "out/work/sun/flare-strip4.jpg",
-   "kind": "note",
-   "label": "sun.rise 188 to 228, draft: flare now erupts from the loop feet, brighter gold cover",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T08:35:06.213Z",
-   "file": "20261121083506213-frame-f00231.jpg",
-   "source": "out/work/seq/231-246/f00231.png",
-   "kind": "frame",
-   "label": "sun.rise frame 231, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 231,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   },
   {
    "time": "2026-11-21T08:21:40.840Z",
