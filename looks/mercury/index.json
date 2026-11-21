@@ -1,12 +1,28 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T03:49:19.113Z",
- "head": "0a6b891ed342b04bee8a1b33abf486332aef9e49",
- "note": "Orbit view: hold frame registered to the hero (Sun plate, sky, ghost); far side painting is next",
+ "pushed": "2026-11-21T04:05:39.131Z",
+ "head": "c965e950ea611df7f80c6770207ae978978c1994",
+ "note": "Far side: guide rebuilt from the real height data, first repaint takes; night side flattened to the hero",
  "looks": [
   {
-   "time": "2026-11-21T03:49:05.909Z",
-   "file": "20261121034905909-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T04:05:38.567Z",
+   "file": "20261121040538567-note-look-night.jpg",
+   "source": "out/work/mercury/look-night.jpg",
+   "kind": "note",
+   "label": "night side at 6 times gain: approved left, film right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T04:05:38.008Z",
+   "file": "20261121040538008-note-look-tiles.jpg",
+   "source": "out/work/mercury/look-tiles.jpg",
+   "kind": "note",
+   "label": "far side tiles, first takes: guide tile, take A, take B for four regions (colors too strong, craters too dark, one pole take rejected)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T04:04:27.882Z",
+   "file": "20261121040427882-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, review tier",
@@ -19,8 +35,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:49:04.798Z",
-   "file": "20261121034904798-still-f00615-16x9-review-full.jpg",
+   "time": "2026-11-21T04:04:26.741Z",
+   "file": "20261121040426741-still-f00615-16x9-review-full.jpg",
    "source": "out/work/stills/f00615-16x9-review-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, review tier",
@@ -60,22 +76,6 @@
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "note",
    "label": "hold: stop-local Sun plate in place, sky patch still black (review tier)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T03:19:42.211Z",
-   "file": "20261121031942211-note-wrap-small.jpg",
-   "source": "out/work/mercury/wrap-small.jpg",
-   "kind": "note",
-   "label": "wrap map v0: hero pixels merged into the graded real mosaic (far side still the unpainted guide)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T03:19:41.650Z",
-   "file": "20261121031941650-note-gen-sheet1.jpg",
-   "source": "out/work/mercury/gen/gen-sheet1.jpg",
-   "kind": "note",
-   "label": "sky generation takes: top row the hero with the planet removed (fill behind the globe), bottom row the hero extended past its edges (margin for the sky patch)",
    "stop": "mercury"
   },
   {
