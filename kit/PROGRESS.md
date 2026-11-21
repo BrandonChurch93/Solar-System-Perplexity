@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: 5 closed (Phase 3, mars). The next round is 6. All eight remaining stops are built at the same time by supporting agents, one per stop; "Current stop" names the first in `buildOrderAfterLookLock` that is not finished
+- Current round: open: 6 (uranus). The next round is 7. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_78
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -48,7 +48,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | in progress | 0 | | | | | | |
 | saturn | in progress | 0 | | | | | | |
-| uranus | in progress | 0 | | | | | | |
+| uranus | in progress | 1 |  |  |  |  |  |  |
 | neptune | in progress | 0 | | | | | | |
 
 ## Workspace record
@@ -520,6 +520,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 3, Phase 3, mars, look lock round 1 of 5. Started 2026-11-20 UTC on main at 93ef0b0, judged on 696e228. G5, G13, G17 green. R1 6, R2 pass, R3 4, R4 6, R8 pass. Three severe (smear on both judged motion frames, blocky polar cap), majors on the limb glow, the Milky Way and stars, star dashes, a terrain blob, flat and lifeless terrain flight. Next: retime dive and rise so the speed sits in the cover, wide soft limb haze, sky band and star counts, sky drawn with the mid-shutter lens, relief depth fix, a real terrain glide with drifting dust. `scorecards/round-003/`.
 - Round 4, Phase 3, mars, look lock round 2 of 5. Started 2026-11-20 UTC on main at 24c2334. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15). Judged on 1d1a55c after the sky was changed inside the round. G5, G13, G17 green. R1 8, R2 pass, R3 5 (parts 5 and 7), R4 6, R8 pass. No severe issue. Majors: both dust covers paint over black space outside the limb and the canyon's direction does not carry across them, a 75 degree roll after the rise cover (R4); the lit limb is harder and speckled with stars too close to the rim (R1); airbrushed surface near the left limb, soft Phobos, a soft polar cap in the rise, hook strokes on the dark side at 2427, and two shapes in the canyon that the approved hero also has (R3). Next: the motion first, by Brandon's change of plan: the dive retimed with the plunge inside a cover that holds, a terrain glide with real forward travel, dust kept inside the planet's air on the orbit side, one heading through both covers. `scorecards/round-004/`.
 - Round 5, Phase 3, mars, look lock round 3 of 5. Started 2026-11-20 UTC on main at 0ee8c76. The last round before the Mars review, by Brandon's change of plan. In it: the dive retimed with the plunge under a cover that holds, a terrain glide of 1.65 camera heights over extended relief, dust held inside the planet's air on the orbit side, a climb out with no roll, and the limb, cap and sky patch fixes made after round 4. Machine checks green before the pack (G1, G2 with 22 tests, G3, G4, G6, G7, G10, G11, G12, G14, G15). G5, G13, G17 green. R1 7, R2 pass, R3 5 (parts 7 and 5), R4 6, R8 pass. No severe issue. Majors: the rise cover reads as a concealed cut and the canyon resolves almost in place as the dive cover thins (R4); the lit limb is a stepped cutout, the night limb is razor sharp, speckle and stepped rings near the limb and on the cap (R1); the storm spiral reads as painted, the pullback shows a smeared surface, a blown-out cap and no soft terminator, and the canyon view has muddy shadows and a flat hot horizon band (R3). The canyon view drew no motion issue. No fix follows: by Brandon's change of plan the build goes to the Mars review with open items 6 to 15. `scorecards/round-005/`.
+- Round 6, Phase 4, uranus, round 1 of 3. Started 2026-11-21 08:19 UTC.
 
 ## Final scores
 
