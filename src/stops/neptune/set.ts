@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { HazeShell } from '../../bodies/haze'
 import type { SetFactory } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
+import { Air } from './air'
 import { moon as moonAsset, plate as plateAsset, wrap } from './assets'
 import * as look from './look'
 import { plan } from './plan'
@@ -28,15 +28,16 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const planet = new NeptunePlanet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, haze: look.ground, limb: look.limb, clouds: look.clouds,
+    map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
-  const shell = new HazeShell(look.shell, diagUniform)
-  const halo = new HazeShell(look.halo, diagUniform)
-  halo.mesh.renderOrder = 4
-  orbit.add(planet.mesh, shell.mesh, halo.mesh)
+  const air = new Air(look.air, diagUniform)
+  air.share(planet.material.uniforms)
+  orbit.add(planet.mesh, air.mesh)
+  const rimAim = new THREE.Vector3().fromArray(look.limb.rimAim)
+  const darkAim = new THREE.Vector3().fromArray(look.limb.darkAim)
 
   const tritonFit = fit.moons![0]!
   const moonMap = await ctx.texture(base + moonAsset.file, { srgb: true, anisotropy: 16, repeat: true })
@@ -83,15 +84,12 @@ export const createSet: SetFactory = async (ctx) => {
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
       const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
       const pu = planet.material.uniforms
-      planet.update(camera, light, plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
+      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight)
+      ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      ;(pu.uDarkDir!.value as THREE.Vector3).copy(darkAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
-      for (const h of [shell, halo]) {
-        const u = h.material.uniforms
-        ;(u.uCam!.value as THREE.Vector3).copy(camera)
-        ;(u.uSunW!.value as THREE.Vector3).copy(light)
-        u.uGain!.value = gain * state.weight
-      }
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       triton.mesh.position.copy(moonHome).applyQuaternion(turn)
       triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
@@ -101,16 +99,14 @@ export const createSet: SetFactory = async (ctx) => {
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
       planet.mesh.visible = visible
-      shell.mesh.visible = visible
-      halo.mesh.visible = visible
+      air.mesh.visible = visible
       triton.mesh.visible = visible
       ring.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       planet.dispose()
-      shell.dispose()
-      halo.dispose()
+      air.dispose()
       triton.dispose()
       ring.dispose()
       far.dispose()

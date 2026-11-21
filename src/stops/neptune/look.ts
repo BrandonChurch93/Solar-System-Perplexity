@@ -1,4 +1,4 @@
-import type { HazeParams } from '../../bodies/haze'
+import type { AirParams } from './air'
 import curve from './curve.json'
 import hazeJson from './haze.json'
 import type { CloudParams, LimbParams } from './planet'
@@ -6,15 +6,14 @@ import type { CloudParams, LimbParams } from './planet'
 export const code = curve.code
 export const deck = curve.deck
 export const cloud = curve.cloud
-export const ground = hazeJson.ground as HazeParams
-export const shell = hazeJson.shell as HazeParams
-export const halo = hazeJson.halo as HazeParams
+export const air = hazeJson.air as AirParams
 export const limb = hazeJson.limb as LimbParams
 
 export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3, shear: 0.35, shearBands: 5, relief: 0 }
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 5 }
 export const stream = { degPerSecond: 1.5 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
+export const lineFade: [number, number] = [0.6, 0.15]
 
 export const triton = {
   up: [-0.2, 0.9, 0.35] as [number, number, number],

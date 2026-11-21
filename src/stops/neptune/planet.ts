@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
+import { AIR_GLSL, airUniforms, type AirParams } from './air'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { EQUIRECT_GLSL } from '../../space/sky'
 
@@ -25,8 +25,12 @@ export interface LimbParams {
   rimWidth: number
   rimFrom: number
   rimTo: number
+  rimAim: [number, number, number]
   dark: number
-  darkWidth: number
+  darkMu: [number, number]
+  darkFrom: number
+  darkTo: number
+  darkAim: [number, number, number]
   forward: [number, number, number]
   forwardWidth: number
   forwardPower: number
@@ -46,7 +50,7 @@ export interface NeptuneOptions {
   code: number
   deck: number[][]
   cloud: number[][]
-  haze: HazeParams
+  air: AirParams
   limb: LimbParams
   clouds: CloudParams
   storm: StormParams
@@ -115,7 +119,10 @@ uniform float uVignette;
 uniform float uAspect;
 uniform vec3 uRim;
 uniform vec3 uRimShape;
-uniform vec2 uLimbDark;
+uniform vec3 uRimDir;
+uniform vec3 uLimbDark;
+uniform vec2 uDarkEdge;
+uniform vec3 uDarkDir;
 uniform vec3 uForward;
 uniform vec2 uForwardShape;
 in vec3 vClip;
@@ -126,7 +133,7 @@ in vec3 vView;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${DIAG_GLSL}
-${HAZE_GLSL}
+${AIR_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -203,13 +210,11 @@ void main() {
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha) * uTint;
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
-  float day = smoothstep(uRimShape.y, uRimShape.z, ndl);
-  col *= 1.0 - uLimbDark.x * exp(-mu / uLimbDark.y) * day;
-  col += uRim * exp(-mu / uRimShape.x) * day;
+  col *= 1.0 - uLimbDark.x * (1.0 - smoothstep(uLimbDark.y, uLimbDark.z, mu)) * smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
+  col += uRim * exp(-mu / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
   col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
-  vec3 at;
-  float tau = hazeDepth(dir, true, at);
-  col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  vec4 sky = air(dir, true);
+  col = col * exp(-sky.a * uExtinction) + sky.rgb;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
@@ -246,7 +251,7 @@ export class NeptunePlanet {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        ...hazeUniforms(o.haze),
+        ...airUniforms(o.air),
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
@@ -258,9 +263,9 @@ export class NeptunePlanet {
         uCloudHeight: { value: o.clouds.height }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
-        uExtinction: { value: o.haze.extinction },
-        uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) },
-        uLimbDark: { value: new THREE.Vector2(l.dark, l.darkWidth) },
+        uExtinction: { value: o.air.extinction },
+        uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
+        uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
@@ -270,10 +275,8 @@ export class NeptunePlanet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(camera: THREE.Vector3, sun: THREE.Vector3, spin: number, stream: number, storm: number, gain: number, weight: number): void {
+  update(spin: number, stream: number, storm: number, gain: number, weight: number): void {
     const u = this.material.uniforms
-    ;(u.uCam!.value as THREE.Vector3).copy(camera)
-    ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     u.uSpin!.value = spin
     u.uStream!.value = stream
     u.uStormAngle!.value = storm
