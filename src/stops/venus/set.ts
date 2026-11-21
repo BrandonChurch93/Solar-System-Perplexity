@@ -139,7 +139,7 @@ export const createSet: SetFactory = async (ctx) => {
           }
         }
       }
-      globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom)
+      globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
