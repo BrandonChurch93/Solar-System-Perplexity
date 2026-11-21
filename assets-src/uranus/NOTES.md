@@ -401,3 +401,15 @@ Round 2 build is complete in the working tree on top of the local merge 8c5b7c0 
 - `tools/assets/mirrorcheck.py`: final still 4035 clean, `sky-hold` clean, `sky-terrain` clean; final still 4290 reports one vertical axis at x 782 from row 0 with correlation 0.56, which is the apex of the real ring arcs (it moves with the camera: 722, 784, 832 at 4200, 4290, 4379), nothing at the top or right margins.
 - Terrain 4200, lower right (round 1 item 4): the straight plate edge and the corner are gone. What is left at draft and in the review sheet is a soft darker patch low right of centre where the far map takes over from the plate. It has no straight side and reads as cloud shading. Left, reported as weak.
 - 14:11 to 14:26, full measure on the final tree (`out/work/u/r4/measure-1426.json`): PASS G13 0 of 463 frames over 0.02 soft, worst 4392 and 4393 0.57 percent, 4391 0.53; PASS G5 (4035 coverage 0.196, 4137 0.499, 4290 0.519, 4436 0.158, invalid 0); PASS G17 (4035 median 1.177, p25 1.082 over 70 tiles; 4290 median 1.093, p25 0.988 over 59 tiles).
+
+## State at 14:30 UTC (read this first after a compaction)
+
+READY for round 2 sent at 14:29 with commit cae2846 on `agent/uranus` (work commit 54e0471, merge of main 5cfb8dc with Saturn's round 2; no engine change in that merge, engine hash 6728b99fa98fbd73 and stop hash ea6fbabf377550d2 are the same before and after, aim unchanged, vitest and gates run again after the merge and green). Looks pushed 14:28.
+
+Reported as still weak (work on these while the round is out, motion first, push only finished and green steps):
+- Rise turn peaks at about 11.9 deg per frame near 4422; the Sun leaves the frame under the rise cover.
+- Terrain 4200 to 4216 low right: soft darker patch where the far map takes over from the plate.
+- Terrain ring arcs: discrete bright lines where the approved has a milky sheet with fine lanes (needs a refit of `deck-rings.bin`).
+- Hold pole tiles 0.72 (approved has fine filaments).
+- Miranda out of frame in the rise. Dive 4142 ring as a soft thick band (motion blur).
+- Not mine: stepped copies (engine), Milky Way change under the covers (engine sky turn), oval stars with fringes in the dive (lens chain).
