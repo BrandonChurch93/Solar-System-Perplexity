@@ -444,10 +444,10 @@ def do_place(c, p, quiet=False):
         groups = {}
         for k in res['missing']:
             groups.setdefault(owner[k], []).append(k)
-        print('missing: ' + ('none' if not groups else ''))
+        print('missing:' + (' none' if not groups else ''))
         for (name, w), ks in sorted(groups.items()):
             print('  %s (worker %d): %s' % (name, w, ', '.join(ks)))
-        print('records from another build: ' + ('none' if not res['build'] else ''))
+        print('records from another build:' + (' none' if not res['build'] else ''))
         for f, why in res['build']:
             print('  %s: %s' % (f, why))
         if res['other']:
@@ -521,14 +521,14 @@ def join(a):
         t = sh('npm run -s film -- --segment %s%s' % (','.join(todo), tf))
         if re.search(r'^wrote ', t, re.M):
             print('warning: frames were rendered here:\n' + '\n'.join(l for l in t.split('\n') if l.startswith('wrote ')))
-        print('%d chunks put together from their spans, no frame rendered here: %s' % (len(todo), ', '.join(todo)))
+        print('%d chunk%s put together from their spans, no frame rendered here: %s' % (len(todo), '' if len(todo) == 1 else 's', ', '.join(todo)))
     ready = [i for i in p['segments'] if chunk_ready(c, p, segs[i])]
     every = [s['id'] for s in segments(c)]
     if not a.no_film and (p['whole'] or a.film):
         order = [i for i in every if i in p['segments']]
         run = every[every.index(order[0]):every.index(order[-1]) + 1] == order
         if set(order) - set(ready):
-            print('film: not joined, %d of %d chunks are not ready' % (len(set(order) - set(ready)), len(order)))
+            print('film: not joined, %d of %d chunks not ready' % (len(set(order) - set(ready)), len(order)))
             ok = False
         elif not run:
             print('film: not joined, the plan\'s segments do not follow each other')
