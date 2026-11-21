@@ -16,9 +16,9 @@ ROW = 8192
 INNER, OUTER = 1.2458, 2.3394
 axis = R0 + (np.arange(N) + 0.5) / N * (R1 - R0)
 per_radius = N / (R1 - R0)
-CR0, CR1 = 1.00, 2.60
+CR0, CR1 = 0.02, 2.60
 ANCH_H = [1.2458, 1.940, 2.063, 2.3394]
-ANCH_C = [1.02, 1.746, 1.858, 2.046]
+ANCH_C = [0.02, 1.746, 1.858, 2.046]
 
 
 def to_world(rh):
@@ -121,8 +121,8 @@ def main():
     nr, na = cp.shape[:2]
     az = lambda d: int((d + 75) / 150 * na)
     rw = CR0 + (np.arange(nr) + 0.5) / nr * (CR1 - CR0)
-    prof_a, _, _ = align(cp, cok, [az(-14) + 6 * k for k in range(-3, 4)], az(-14), 12.0, sigma=2.0)
-    prof_c, _, _ = align(cp, cok, list(range(az(-49), az(-45), 4)), az(-47), 6.0, sigma=2.0)
+    prof_a, _, _ = align(cp, cok, [az(-14) + 3 * k for k in range(-3, 4)], az(-14), 20.0, sigma=3.0)
+    prof_c, _, _ = align(cp, cok, list(range(az(-49), az(-45), 2)), az(-47), 10.0, sigma=3.0)
     np.save(WORK / "profile-close-a.npy", prof_a)
     np.save(WORK / "profile-close-c.npy", prof_c)
     a_ok = np.isfinite(prof_a[:, 0]) & (rw < 2.012)
@@ -138,9 +138,6 @@ def main():
     w = smoothstep(1.93, 1.99, rw)[:, None]
     world = np.where(a_ok[:, None] & c_ok[:, None], pa * (1 - w) + pc * gain * w, np.where(a_ok[:, None], pa, pc * gain))
     world = np.where(a_ok[:, None] | c_ok[:, None], world, 0)
-    grey = 1 - smoothstep(ANCH_C[0] + 0.07, ANCH_C[0] + 0.12, rw)
-    dim = 1 - grey * (0.62 + 0.3 * np.exp(-0.5 * ((rw - ANCH_C[0] - 0.012) / 0.012) ** 2) + 0.2 * np.exp(-0.5 * ((rw - ANCH_C[0] - 0.062) / 0.004) ** 2))
-    world = (world * (1 - 0.6 * grey[:, None]) + lum(world)[:, None] * np.array([0.95, 1.0, 1.06]) * 0.6 * grey[:, None]) * dim[:, None]
     x = to_world(axis)
     close = np.stack([np.interp(x, rw, world[:, k], left=0, right=0) for k in range(3)], -1)
 

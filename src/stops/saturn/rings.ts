@@ -128,7 +128,8 @@ void main() {
   float dist = length(toCam);
   vec3 V = toCam / dist;
   float nearest = dot(uCamL, V);
-  if (uPass < 0.5 ? dist < nearest : dist >= nearest) discard;
+  bool disc = r < 1.0;
+  if (uPass < 0.5 ? (dist < nearest || disc) : (dist >= nearest && !disc)) discard;
   float rp = ringWarp(r);
   float fr = length(vec2(dFdx(rp), dFdy(rp)));
   float texels = ringTexels(fr);
@@ -138,9 +139,10 @@ void main() {
   float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
   vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
-  float th = atan(vLocal.z, vLocal.x) + uSpinRate * pow(r / 1.86, -1.5) * uTime;
+  float kepler = uSpinRate * pow(max(rp, 1.0) / 1.86, -1.5);
+  float th = atan(vLocal.z, vLocal.x) + kepler * uTime;
   float tu = th / 6.283185307;
-  float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
+  float inB = smoothstep(1.5, 1.6, rp) * (1.0 - smoothstep(1.88, 1.95, rp));
   float n1 = vnoise(vec2(tu * 36.0, r * 3.0), 36);
   float n2 = vnoise(vec2(tu * 640.0, r * 70.0), 640);
   float mottle = 1.0 - uAzimuth.x * inB * smoothstep(0.55, 0.9, n1) + uAzimuth.y * (n2 - 0.5);
@@ -182,7 +184,7 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   if (uDiag >= 2 && alpha < 0.5) discard;
-  outColor = diagOut(vec4(col, alpha * uWeight), texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(uSpinRate * pow(r / 1.86, -1.5) * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col, alpha * uWeight), texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
 }`
 
 export class Rings {
@@ -196,7 +198,7 @@ export class Rings {
     const bands = 6
     const pos = new Float32Array((seg + 1) * (bands + 1) * 3)
     const index: number[] = []
-    const inner = Math.min(r0 - 0.01, 0.96)
+    const inner = Math.min(r0 - 0.01, 0.01)
     const outer = (r1 + 0.01) / Math.cos(Math.PI / seg)
     for (let j = 0; j <= bands; j++) {
       const r = inner + ((outer - inner) * j) / bands
@@ -229,7 +231,7 @@ export class Rings {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
         uniforms: { ...shared, uPass: { value: pass } },
-        side: THREE.DoubleSide, transparent: true, depthWrite: false, premultipliedAlpha: true,
+        side: THREE.DoubleSide, transparent: true, depthWrite: false, depthTest: pass === 0, premultipliedAlpha: true,
         blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
       })
       const mesh = new THREE.Mesh(this.geometry, material)

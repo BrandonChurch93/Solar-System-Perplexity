@@ -23,8 +23,8 @@ hc = -C - height * nc
 reach = np.linalg.norm(hc)
 hc /= reach
 side = np.cross(nc, hc)
-R0, R1, NR = 1.00, 2.60, 6400
-A0, A1, NA = -75.0, 75.0, 3000
+R0, R1, NR = 0.02, 2.60, 16000
+A0, A1, NA = -75.0, 75.0, 1500
 az = np.radians(A0 + (np.arange(NA) + 0.5) / NA * (A1 - A0))
 rr = R0 + (np.arange(NR) + 0.5) / NR * (R1 - R0)
 AZ, RR = np.meshgrid(az, rr)
@@ -42,7 +42,7 @@ np.save(WORK / "close-polar-lin.npy", pol)
 np.save(WORK / "close-polar-dens.npy", dens.astype(np.float32))
 np.save(WORK / "close-polar-ok.npy", ok)
 print("height", height, "reach", reach, "max density px per radius", dens.max())
-for a in range(0, NA, 250):
+for a in range(0, NA, 125):
     col = dens[:, a]
     print("az", round(float(np.degrees(az[a])), 1), "ok rows", int(ok[:, a].sum()), "dens max", round(float(col.max()), 0), "at r", round(float(rr[col.argmax()]), 3), "r range", round(float(rr[ok[:, a]].min()), 3) if ok[:, a].any() else None, round(float(rr[ok[:, a]].max()), 3) if ok[:, a].any() else None)
 out = np.clip(linear_to_srgb(pol / (1 + pol) * 1.6), 0, 1)

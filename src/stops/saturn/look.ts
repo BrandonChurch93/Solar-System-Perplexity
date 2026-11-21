@@ -1,4 +1,5 @@
 import type { HazeParams } from '../../bodies/haze'
+import closeFitted from './closeCurve.json'
 import fitted from './curve.json'
 import type { GlobeLook } from './globe'
 import type { RingLook } from './rings'
@@ -6,6 +7,7 @@ import type { TitanLook } from './titan'
 
 export const globe: GlobeLook = {
   curve: fitted.curve,
+  closeCurve: closeFitted.curve,
   limb: [0, 0.3],
   ringShadow: 0.94,
   ringSoft: [0.003, 0.012],
@@ -71,3 +73,5 @@ export const titan: TitanLook = {
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]
+
+export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

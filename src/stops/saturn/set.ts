@@ -60,6 +60,10 @@ export const createSet: SetFactory = async (ctx) => {
   const sunS = new THREE.Vector3()
   const light = new THREE.Vector3()
   const shadowL = new THREE.Vector3()
+  const lightL = new THREE.Vector3()
+  const UP = new THREE.Vector3(0, 1, 0)
+  const closeEl = THREE.MathUtils.degToRad(look.closeLight.elevationDeg)
+  const closeTurn = THREE.MathUtils.degToRad(look.closeLight.turnDeg)
   const shadowTurn = new THREE.Quaternion().setFromUnitVectors(plan.lightDir.clone().applyQuaternion(tilt.quaternion.clone().invert()).normalize(), new THREE.Vector3().fromArray(shadowJson.local).normalize())
   const turn = new THREE.Quaternion()
   const moon = new THREE.Vector3()
@@ -89,17 +93,21 @@ export const createSet: SetFactory = async (ctx) => {
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
+      close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
+      const el = THREE.MathUtils.lerp(Math.asin(THREE.MathUtils.clamp(sunL.y, -1, 1)), closeEl, close.value)
+      lightL.set(sunL.x, 0, sunL.z).normalize().applyAxisAngle(UP, closeTurn * close.value).multiplyScalar(Math.cos(el))
+      lightL.y = Math.sin(el)
       camS.set(camL.x, camL.y / polar, camL.z)
-      sunS.set(sunL.x, sunL.y / polar, sunL.z).normalize()
+      sunS.set(lightL.x, lightL.y / polar, lightL.z).normalize()
       const gain = 1 / shot.post.exposure
       const elapsed = state.time - plan.holdMid
       const aspect = view.format.width / view.format.height
-      close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
 
       const gu = globe.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
+      ;(gu.uLightL!.value as THREE.Vector3).copy(lightL)
       gu.uSpin!.value = plan.spin(state.time)
       gu.uDrift!.value = THREE.MathUtils.degToRad(look.globe.drift) * elapsed
       gu.uGain!.value = gain

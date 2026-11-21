@@ -7,6 +7,7 @@ import { RING_PROFILE_GLSL } from './profile'
 
 export interface GlobeLook {
   curve: number[][]
+  closeCurve: number[][]
   limb: [number, number]
   ringShadow: number
   ringSoft: [number, number]
@@ -44,6 +45,8 @@ uniform float uDrift;
 uniform vec3 uSunL;
 uniform float uPolar;
 uniform vec3 uCurve[33];
+uniform vec3 uCurveC[33];
+uniform vec3 uLightL;
 uniform vec2 uLimb;
 uniform float uGain;
 uniform float uWeight;
@@ -79,6 +82,11 @@ vec3 curveAt(float ndl) {
   int i = int(min(floor(x), 31.0));
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
 }
+vec3 curveCloseAt(float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
+  int i = int(min(floor(x), 31.0));
+  return mix(uCurveC[i], uCurveC[i + 1], x - float(i));
+}
 vec3 tableAt(float ndl, float lat) {
   ivec2 size = textureSize(uTable, 0);
   vec2 q = vec2(clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * float(size.x - 1), clamp(lat / 3.14159265 + 0.5, 0.0, 1.0) * float(size.y - 1));
@@ -95,7 +103,7 @@ void main() {
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
-  float ndl = dot(nL, uSunL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
+  float ndl = dot(nL, uLightL) - (1.0 - uClose) * uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   float drift = uDrift * zonal(lat);
   vec3 d = spinY(p, uSpin + drift);
@@ -105,7 +113,7 @@ void main() {
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
-  vec3 light = curveAt(ndl) * tableAt(ndl, lat);
+  vec3 light = mix(curveAt(ndl) * tableAt(ndl, lat), curveCloseAt(ndl), uClose);
   vec3 night = min(light, vec3(uNightFloor));
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
@@ -135,7 +143,7 @@ export class Globe {
         ...hazeUniforms(haze), ...profile,
         uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
-        uCurve: { value: curveUniform(look.curve) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
+        uCurve: { value: curveUniform(look.curve) }, uCurveC: { value: curveUniform(look.closeCurve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uHazeShadow: { value: look.hazeShadow },
