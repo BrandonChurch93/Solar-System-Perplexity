@@ -263,14 +263,27 @@ export class Plan extends StopPlan {
     return side === 'dive' ? this.divePace().top : this.risePace().top
   }
 
+  shut(time: number): number {
+    const a = this.tempo.taper
+    if (!this.tempo.on || a <= 0) return time
+    const f = time * config.fps
+    const base = Math.floor(f + 1e-9)
+    const x = (f - base) / config.shutterFraction
+    if (x <= 0 || x >= 1) return time
+    const inv = (y: number): number => (Math.sqrt((1 - a) * (1 - a) + 8 * a * y) - (1 - a)) / (4 * a)
+    return (base + (x <= 0.5 ? inv(x) : 1 - inv(1 - x)) * config.shutterFraction) / config.fps
+  }
+
   override dive(time: number): OrbitShot {
     if (time >= this.coverCenter(this.seg.dive!)) return super.dive(time)
-    return this.flow('dive', this.diveAt(time, this.paced('dive', time)), time)
+    const t = this.shut(time)
+    return this.flow('dive', this.diveAt(t, this.paced('dive', t)), t)
   }
 
   override rise(time: number): OrbitShot {
     if (time < this.coverCenter(this.seg.rise)) return super.rise(time)
-    return this.flow('rise', this.riseAt(time, this.paced('rise', time)), time)
+    const t = this.shut(time)
+    return this.flow('rise', this.riseAt(t, this.paced('rise', t)), t)
   }
 }
 

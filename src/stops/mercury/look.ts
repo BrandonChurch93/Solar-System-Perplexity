@@ -66,4 +66,5 @@ export const pace = {
   dive: { still: 1.6, end: 6, shape: [[0, 0], [4.75, 0.26], [8.75, 0.48], [12.75, 0.69], [16.75, 1], [22.75, 1], [26.75, 0]] as [number, number][] },
   rise: { floor: 0.3, until: 43, shape: [[0, 0], [3.5, 1], [14, 1], [18, 0.5], [21, 0.14], [23.5, 0.045], [26, 0]] as [number, number][], tail: [[0, 6], [26, 1.9], [32, 1.5], [38, 1.1], [43, 0.6]] as [number, number][] },
   flow: [12, 12] as [number, number],
+  taper: 1,
 }
