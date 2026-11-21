@@ -46,3 +46,13 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 
 - Texture memory with mips: full 1400 MB, web 450 MB. Disk: full 150 MB, web 40 MB. Max file 95 MB. Max 6 takes per asset per round. 3 rounds.
 - Sizes: full wrap 8192, relief 5632, sky 8192. Web wrap 4096, relief 2816, sky 4096.
+
+## Design notes (03:00 UTC Nov 21)
+
+- fit.json: vfov 30, camera [0.253, 0.043, 4.233], globe circle r 718.9 px of 2816 wide. Light on the globe `sunDir` [0.835, 0.549, -0.038]. The Sun seen in frame is at [0.391, 0.188, -0.901] from the camera, 62 degrees from the light. `plan.lightDir` shades, `plan.sunDir` is where the Sun is drawn.
+- Hold at 1080p: globe radius about 490 px. An 8192 wrap gives about 2.66 texels per pixel at the disc center, so the far side needs true detail at 4096 equivalent or better.
+- At the stand-in spot the light is about 14 degrees above the local horizon and the seen Sun about 37 degrees below it. So the terrain Sun comes from the terrain sky patch. Choose spot and heading so `lightDir` sits 6 to 8 degrees above the local horizon and about 26 degrees left of the heading, as in the close image.
+- Close image at vfov 60: horizon dip about 6.8 degrees, camera altitude about 0.007 radii, the crater about 3.3 degrees of arc (about 28 px wide in the hold). The innermost dive patches show a top-down terraced crater made from the close image at the spot.
+- Sun: keep the engine Sun for continuity through the travels. Hold sky patch is hero minus film for the texture, prominences and glow. A stop-local `near` layer adds breathing glare, shifting ghosts and the dive's glare cover.
+- Height map: integrate hero shading along the light's tangent direction on the hero side (shape from shading with drift control) so shader relief agrees with the baked shadows. Far side from painted relief or a real DEM as a guide.
+- Stop-local planet shader: no haze, relief strongest at the terminator, limb clean by sampling, night side lifted off pure black.
