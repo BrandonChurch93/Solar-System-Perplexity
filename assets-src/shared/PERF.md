@@ -484,3 +484,77 @@ No pixel change without a loss, draft tier, main `5c16a2c` and branch equal: 232
 `npx tsc --noEmit` clean, `npx vitest run` 13 files and 64 tests (two new in `tests/sets.test.ts`), `npm run build` clean.
 
 Not covered: a loss in the middle of an export still stops the export (as asked); a loss while a set is still loading is covered by the unit test only, not by a browser run; the autopilot loop was not run through a loss (it waits on `engine.ready` like the frame view).
+
+## Task 5: a cover window per stop
+
+Working notes (task received 18:51 UTC, 21 Nov, time box 90 minutes; base `45cfb88` with main `efc8358` merged as `9c3ef1d`). Asked: optional plan field `coverWindow: { dive?: { seconds?, center? }, rise?: { seconds?, center? } }`, every user of the window takes it from the stop, draft sha256 of 2325, 2427, 2456, 2580, 2700, 2726, 4729, 4980, 1317, 1557 equal to main, a scratch demonstration with `rise.seconds` 1.0 (not committed into a stop), tests, a read only table of each stop's cover (frames, frames above 0.98, thinning frames per side), list of tools that hard code the range (name, do not edit). DONE message: commit, files, hashes table, cover table, what could not be done.
+
+Plan: the window lives in `src/director/timeline.ts` (`coverWindow(seg)`), which stop files and tools call with the segment only. So the override is kept in a small registry in `timeline.ts` keyed by stop id (`setCoverWindow`), filled by the `StopPlan` constructor from `p.coverWindow`. Tools that call `coverWindow` without loading the plans (`tools/lib/render.ts`, `tools/measure.ts`, `tools/cues.ts`) get `import '../src/director/plans'`. `tools/animatic.py` reads the three config numbers itself: named, not edited.
+
+### What was changed
+
+- `src/director/timeline.ts`: `setCoverWindow(stop, timings)` keeps a stop's own numbers, `coverTiming(segment)` returns `{ seconds, center }` (centre in film seconds) from them or from the config, `coverWindow(segment)` is built on it with the arithmetic of before. Bad numbers throw (`seconds` not above 0, `center` not between 0 and 1).
+- `src/director/moves.ts`: `MoveParams.coverWindow?: { dive?: { seconds?, center? }, rise?: { seconds?, center? } }`; the `StopPlan` constructor hands it to `setCoverWindow` before anything reads the window. The last plan built for a stop id decides (a test or a scratch copy that sets the field must put the old one back).
+- `tools/lib/render.ts` (cover sheets), `tools/measure.ts` (G13), `tools/cues.ts`: one import of `src/director/plans` each, so the plans have set their windows before the tool asks; `tools/cues.ts` takes the centre time from `coverTiming` instead of the two config fractions. `tools/shots.ts` already loaded the plans.
+- `tests/cover.test.ts` (5 tests), a bullet in `assets-src/shared/STOP-AGENT.md`.
+
+### Who reads the window
+
+All through `coverWindow(seg)` or `coverCenter(seg)`, so all follow the plan field:
+
+- `src/director/moves.ts`: cover amount and side (`coverAmount`, `coverSide`), the view switch at the centre (`dive`, `rise`), the swoop (runs from the segment start to the centre, with the surge on it), the terrain entry of a dive (eases from the window's first frame), the terrain exit of a rise (eases to the window's last frame), the settle of a rise (from the centre), the carried pitch of `climb` and `tilt` (last and centre), the flow and rush of the cover (time since the centre).
+- `src/director/film.ts`: `bare` (a stop without a cover shares its sky), sky exposure `(1 - amount)^2`, `cover.hides`; the sky patches follow the view; `src/core/motion.ts` (sample counts) and the engine read `shot.cover` only. Set loading does not depend on the cover (`setsForFrame` goes by segment).
+- Stops, read only: `sun/plan.ts` (view switch at the window's first frame, amount flag over the window), `mercury/plan.ts` (centre), `venus/plan.ts` (own amount shape in frames about the centre: follows `center`, not `seconds`), `earth/set.ts` (its veil runs from the window's first frame minus a lead to its last plus a tail), `jupiter/plan.ts` (centre, last), `uranus/plan.ts` (own amount shape in frames about the centre: follows `center`, not `seconds`; its entry and exit paths read first and last), `neptune/plan.ts` and Mars (base shape, follow both), `saturn/plan.ts` (no cover, amount 0; view switch and paths still follow).
+- Tools: `tools/lib/render.ts` `sheetFrames` (the `*-cover` sheets of `tools/sheet.ts`, `tools/pack.ts` and the round tool), `tools/measure.ts` (G13 skips the window), `tools/shots.ts`, `tools/cues.ts`: follow. `tools/animatic.py` lines 390 to 392, 520 and 541 reads `cover.seconds` and the two fractions from the config itself: not edited. `tools/round.py` and `tools/keep.ts` only name the cover sheets.
+- A cover sheet holds `critics.contactSheetFrames` (12) frames about the centre. The window is 16 frames already, so the sheet does not show its ends; with 1.0 s (31 frames) it shows 12 of 31, none of the thinning ends.
+- A longer window also moves the camera outside the cover: Mars with `rise.seconds` 1.0 has another camera distance on frames 2671 to 2699 (the exit eases to the window's last frame), up to 0.089 stage units.
+
+### Demonstration (scratch, not in any stop)
+
+A copy of the Mars plan with `coverWindow: { rise: { seconds: 1.0 } }`: window 2685 to 2715 (31 frames), centre 2700, 15 frames before and 15 after; default 2692 to 2707 (16 frames), centre 2700, 8 before and 7 after. The view switches at 2700 in both. Amount above 0 on 30 frames instead of 15, above 0.98 on 7 (2697 to 2703) instead of 4 (2698 to 2701), thinning 10 frames in and 11 out instead of 5 and 6. The dive window is unchanged.
+
+### The covers now (read only)
+
+Amount at each frame's own time, `director.shotAt(f, f / fps).cover.amount` (mid shutter gives the same counts within one frame). Thinning is the count of frames with the amount from 0.02 to 0.98, before and after the frames above 0.98 (or about the peak frame when the peak is lower).
+
+| Move | Window | Amount above 0 | Peak | Frames above 0.98 | Thinning in | Thinning out | Shape |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| sun.rise | 208 to 223 (16) | 209 to 223 (15) | 0.0001 | 0 | 0 | 0 | a flag, no haze |
+| mercury.dive | 736 to 751 (16) | 737 to 751 (15) | 0.043 | 0 | 2 | 2 | base, nearly none |
+| mercury.rise | 982 to 997 (16) | 983 to 997 (15) | 0.043 | 0 | 2 | 2 | base, nearly none |
+| venus.dive | 1306 to 1321 (16) | 1308 to 1324 (17) | 0.94 | 0 | 5 | 11 | own, about the centre |
+| venus.rise | 1552 to 1567 (16) | 1555 to 1568 (14) | 0.94 | 0 | 5 | 8 | own, about the centre |
+| earth.dive | 1876 to 1891 (16) | 1877 to 1891 (15) | 1.00 | 3 | 5 | 7 | base |
+| earth.rise | 2122 to 2137 (16) | 2123 to 2137 (15) | 1.00 | 1 | 7 | 7 | base |
+| mars.dive | 2446 to 2461 (16) | 2447 to 2461 (15) | 1.00 | 8 | 2 | 5 | base |
+| mars.rise | 2692 to 2707 (16) | 2693 to 2707 (15) | 1.00 | 4 | 5 | 6 | base |
+| jupiter.dive | 3016 to 3031 (16) | 3017 to 3031 (15) | 1.00 | 1 | 7 | 7 | base |
+| jupiter.rise | 3262 to 3277 (16) | 3263 to 3277 (15) | 1.00 | 1 | 7 | 7 | base |
+| saturn.dive | 3586 to 3601 (16) | none | 0 | 0 | 0 | 0 | no cover |
+| saturn.rise | 3832 to 3847 (16) | none | 0 | 0 | 0 | 0 | no cover |
+| uranus.dive | 4156 to 4171 (16) | 4153 to 4175 (23) | 0.93 | 0 | 9 | 13 | own, about the centre |
+| uranus.rise | 4402 to 4417 (16) | 4400 to 4422 (23) | 0.93 | 0 | 8 | 13 | own, about the centre |
+| neptune.dive | 4726 to 4741 (16) | 4727 to 4741 (15) | 1.00 | 6 | 2 | 7 | base |
+| neptune.rise | 4972 to 4987 (16) | 4973 to 4987 (15) | 1.00 | 3 | 5 | 7 | base |
+
+On the base shape the 15 frames with any cover hold both thinnings and the closed frames together, so 7 and 7 with one closed frame (Earth's rise, Jupiter) is the longest the film wide 0.5 s allows; Mars and Neptune's dive spend it on closed frames and thin in over 2. Venus and Uranus already run past the window with their own shapes and never close fully.
+
+### Proof (task 5)
+
+Commits: `262ff1f` (director and tests), `3b66aa6` (tools), `c176410` (STOP-AGENT.md). No plan sets the field.
+
+Draft tier sha256, main `efc8358` in a second tree and the branch on this VM, all ten equal:
+
+| Frame | sha256 (first 16) | Frame | sha256 (first 16) |
+| --- | --- | --- | --- |
+| 2325 | `fd128b1a999f76fa` | 2726 | `d408b434a0b12d9f` |
+| 2427 | `5636a9764d87cc2e` | 4729 | `f9880be6df32e190` |
+| 2456 | `d3922b02dee46265` | 4980 | `5ff7bd53e2965fca` |
+| 2580 | `7322ef9576f06ffb` | 1317 | `ca901ac976d51b1c` |
+| 2700 | `0f60fc91acdf939e` | 1557 | `bed5d481d55117b9` |
+
+Beyond the ten frames: a hash over the shots of all 5400 frames at the three shutter times (camera, cover, sky, sets, post) and over all cover windows is `43a53d0d86995acc` on main and on the branch (scratch script, not committed). `npm run cues -- --check` prints the same text on both (it fails on both: `cut/CUES.md` is missing and `cut/SHOTS.md` is stale, as on main).
+
+`npx tsc --noEmit` clean, `npx vitest run` 14 files and 69 tests (5 new in `tests/cover.test.ts`: the default, more seconds about the same centre, a moved centre and the clamp to the segment, bad numbers, the plan field through amount, view switch and film shots), `npm run build` clean.
+
+Not done: no frame was rendered with a longer window (the demonstration is numbers from the director); no stop file, `kit/` file or `tools/animatic.py` was touched, so `kit/03-METHOD.md` line 113, `kit/05-ARCHITECTURE.md` line 47 and the animatic still speak of the film wide window only; Venus and Uranus need their own shape numbers to lengthen their covers.
