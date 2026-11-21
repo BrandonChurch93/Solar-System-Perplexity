@@ -235,6 +235,21 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - The second full measure was stopped at 220 of 463 to change Io; it runs again at the new head before any gate claim.
 - Third full measure at 7780e18 (Io 2.6), 867 s, log `out/work/jupiter/measure3.log`: G13 PASS 0 of 463 frames over 0.02 soft (worst 3260 0.91 percent, 3261 0.81 percent, 3259 0.38 percent); G5 PASS invalid 0, coverage hold 0.350, dive 0.459, terrain 0.754, rise 0.233; G17 PASS 2895 median 1.222 p25 0.963 over 81 tiles, 3150 median 1.026 p25 0.988 over 80 tiles. Gates G5, G13, G17, G11 PASS (09:18 UTC).
 
+## Round 8 result (first of three), 09:31 UTC, judged on main 47a7600 (my b3bc1be)
+
+Scorecards on main at dc0bf6d: `scorecards/round-008/` (SUMMARY.md, R1.json, R3.json, R4.json, key.json). R1 9 (three minors), R3 4, R4 6, R2 pass (3 of 10 against 2 of 10), R8 pass, G5 G13 G17 green. 2 severe, 7 major. Two rounds left. Corrections from the Builder, worst first (motion first where two compete):
+
+1. SEVERE twice: dive 2997 shows the sky repeated by mirroring (vertical seam near x 1848, crop 1824,866,96,214; crossing seams upper left 0,0,456,433). Cause: `assets-src/jupiter/sky/patch.py` pads the sky patch with `np.pad(mode='symmetric')` past the approved image's border. Outside the border: fade into the film's shared star sky (graded to the patch's level and star density) within a short band, or continue with content that is not a reflection. Inside the border nothing changes. Check: `python3 tools/assets/mirrorcheck.py <png...>` must print clean for 2895, 2997, 3150, 3296, 3352 and two more frames in the dive and two in the rise; also look at native size.
+2. MAJOR dive cover 3028 to 3029: blurred cloud field becomes in one frame a flat tan veil with a sharper rim and much clearer stars. Carry the moving haze into the terrain view for several more frames, match rim sharpness and star visibility on both sides of the cut.
+3. MAJOR rise cover 3269 to 3274: broad blurred haze gives way to a clean curved limb and nearly black sky around 3270, then rim detail and stars return within a few frames. Align the limb on both sides, bring rim brightness and stars back over ten frames or more.
+4. MAJOR night limb (3296 and 2997): hard circular mask, stars stop on a clean arc; stair steps along the dark silhouette and the lower left lit limb. One haze falloff across the limb.
+5. MAJOR Io: surface blocky at native size, lit limb with one pixel stair steps and a dark fringe against Jupiter; shadow in the rise a long vertical column that never closes into an ellipse and smears into the night side. Finer colour map, feathered edge with no dark fringe, shadow as a closed ellipse with a penumbra.
+6. MAJOR Milky Way in 2997: coarse noisy texels at 1:1, stars hard single pixel squares or 2 by 2 blocks. Check the patch's scale at that camera and the star rendering.
+7. MINOR terrain 3060 to 3239: weak parallax. More sideways travel so near ridges cross faster than the horizon, and band flow round the storm that can be followed.
+8. R1 minors: lower two thirds of the terrain view one to two levels darker and less warm than approved (red and orange most); night limb a few pixels inward in the hold; stars a little busier; R3 minors: lit limb washed to a flat cream band (hold crops B, D), night side a uniform fill, cloud map slightly soft at 2997.
+
+Before READY: merge origin/main (engine batch 10, asteroid belt), own gate and both measures green, looks pushed. READY names the commit, what changed per item, what is still weak.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
