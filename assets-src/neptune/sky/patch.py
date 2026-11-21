@@ -21,7 +21,7 @@ SUN = (2514, 227, 330)
 SUN_FROM = (-150, 900)
 SUN_OUT = 520
 SUN_STARS = 0.45
-SEAM = 110
+OUTWARD = ((6, 0, 10), (18, 6, 40), (48, 30, 110))
 MOON = (337, 407, 95)
 RING = dict(normal=[0.1681, 0.9779, 0.1244], centre=[0.0533, 0.0532, -0.4902], inner=1.36, outer=1.86)
 
@@ -45,17 +45,30 @@ def sunless(lin):
     return flat * (1 - m) + (back + stars * SUN_STARS) * m, mid, prof
 
 
+def outward(lin, px, py):
+    h, w = lin.shape[:2]
+    calm = np.stack([ndi.gaussian_filter(np.minimum(lin[..., c], ndi.gaussian_filter(lin[..., c], 6)), 6) for c in range(3)], -1)
+    wide = np.pad(calm, ((py, py), (px, px), (0, 0)), mode='edge')
+    yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
+    away = np.maximum.reduce([py - yy, yy - (py + h - 1), px - xx, xx - (px + w - 1), np.zeros_like(yy)]).astype(np.float32)
+    out = wide.copy()
+    for sigma, lo, hi in OUTWARD:
+        soft = np.stack([ndi.gaussian_filter(wide[..., c], sigma, mode='nearest') for c in range(3)], -1)
+        k = step(away, lo, hi)[..., None]
+        out = out * (1 - k) + soft * k
+    out[py:py + h, px:px + w] = lin
+    return out, away
+
+
 def save(lin, name, out):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
     bare, mid, prof = sunless(lin)
-    wide = np.pad(bare, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    wide, away = outward(bare, px, py)
     yy, xx = np.mgrid[0:wide.shape[0], 0:wide.shape[1]]
     r = np.hypot(xx - px - SUN[0], yy - py - SUN[1])
     for c in range(3):
         wide[..., c] += np.interp(r, mid, prof[:, c], right=0)
-    away = np.maximum.reduce([py - yy, yy - (py + FULL[1] - 1), px - xx, xx - (px + FULL[0] - 1), np.zeros_like(yy)])
-    w = (1 - step(away, 0, SEAM))[..., None]
-    wide = wide * (1 - w) + np.pad(lin, ((py, py), (px, px), (0, 0)), mode='symmetric') * w
+    wide[py:py + FULL[1], px:px + FULL[0]] = lin
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)

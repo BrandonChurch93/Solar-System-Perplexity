@@ -117,7 +117,6 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
-      const bounded = Math.min(Math.max(elapsed, -12), 12)
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
       const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
       const pu = planet.material.uniforms
@@ -135,7 +134,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uMelt!.value as THREE.Vector2).x = look.limb.melt[1] + (look.limb.melt[0] - look.limb.melt[1]) * home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
-      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
+      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
