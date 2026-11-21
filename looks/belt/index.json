@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T16:30:09.528Z",
+ "pushed": "2026-11-21T16:30:20.931Z",
  "head": "ca4b1a1fe01b72e8e7ebfcbf4c96704e0f11cc9a",
  "note": "belt task 3: close pass with motion blur, darker warm rocks, first review stills",
  "looks": [
+  {
+   "time": "2026-11-21T16:30:17.445Z",
+   "file": "20261121163017445-frame-f02745.jpg",
+   "source": "out/work/belt/t3r2/f02745.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2745, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2745,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "bc1527bc32dbd409"
+  },
   {
    "time": "2026-11-21T16:30:08.303Z",
    "file": "20261121163008303-note-f02772.jpg",
@@ -35,20 +49,6 @@
    "kind": "note",
    "label": "belt task 3: final 2782 of main bf74284 before any change",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:27:54.268Z",
-   "file": "20261121162754268-frame-f02783.jpg",
-   "source": "out/work/belt/t3r1/f02783.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2783, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2783,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "01d8c661215a0b90"
   },
   {
    "time": "2026-11-21T08:38:02.095Z",
