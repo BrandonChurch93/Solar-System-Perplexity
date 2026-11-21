@@ -128,7 +128,7 @@ def finished(text):
 
 def checks(n, gate_args, allow_red):
     sh('npm run -s build')
-    t = sh('npx vitest run 2>&1 | tail -6', check=False)
+    t = sh('npx vitest run 2>&1 | tail -12', check=False)
     if 'failed' in t or 'passed' not in t:
         sys.exit('tests:\n' + t)
     g = subprocess.run('npm run -s gate -- ' + gate_args, shell=True, cwd=ROOT, capture_output=True, text=True)
