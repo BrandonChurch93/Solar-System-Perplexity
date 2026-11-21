@@ -52,7 +52,7 @@ void main() {
   vec3 n = normalize(foot / uRadius - dir * z);
   float ndl = dot(n, uSun);
   float lit = smoothstep(uTerminator.x, uTerminator.y, ndl);
-  vec3 body = (uDay * lit * mix(1.0, pow(max(z, 0.0), 0.6), uLimb) + uRim * lit * pow(1.0 - z, 3.0) + uNight) * disc;
+  vec3 body = (uDay * lit * mix(1.0, pow(max(z, 0.0), 0.6), uLimb) + uRim * lit * pow(1.0 - z, 3.0) + uNight) * disc * sqrt(disc);
   vec3 edge = normalize(foot);
   float glow = exp(-max(miss - 1.0, 0.0) / uHaloHeight) * smoothstep(-0.35, 0.5, dot(edge, uSun));
   vec3 col = body + uHalo * glow * (1.0 - disc * 0.6);

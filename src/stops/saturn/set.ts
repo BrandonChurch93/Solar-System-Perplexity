@@ -198,6 +198,8 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uSkimFit!.value as THREE.Vector4).w = Math.max(ru.uGrad!.value as number, look.rings.skimFoot)
       ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - skimW.value)
       ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shell.day).multiply(dayTone.set(1, 1, 1).lerp(shellSkim, skimW.value))
+      su.uHazeH!.value = THREE.MathUtils.lerp(look.shell.scaleHeight, look.shellSkimDepth[0], skimW.value)
+      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shell.depth, look.shellSkimDepth[1], skimW.value)
       ;(gu.uRimNight!.value as THREE.Vector4).fromArray(look.globe.rimNight).multiplyScalar(1 - skimW.value).setW(look.globe.rimNight[3])
       const parted = smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0]))
       ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], parted)

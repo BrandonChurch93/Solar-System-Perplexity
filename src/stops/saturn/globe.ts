@@ -176,7 +176,7 @@ void main() {
   float along = -dot(uCam, dirS);
   float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover, cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * cover, cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {

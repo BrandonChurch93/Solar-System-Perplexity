@@ -25,7 +25,7 @@ export const globe: GlobeLook = {
   nightBlur: 16,
   termShift: [0.085, 0.55, 0.97],
   probe: 0,
-  edgePx: 2,
+  edgePx: 2.6,
 }
 
 export const haze: HazeParams = {
@@ -40,9 +40,9 @@ export const haze: HazeParams = {
 }
 
 export const shell: HazeParams = {
-  scaleHeight: 0.034,
-  depth: 0.018,
-  day: [0.5, 0.42, 0.33],
+  scaleHeight: 0.015,
+  depth: 0.027,
+  day: [0.48, 0.275, 0.115],
   twilight: [0.02, 0.03, 0.04],
   dayFrom: -0.05,
   dayTo: 0.5,
@@ -147,6 +147,7 @@ export const polarShow = 1
 export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
-export const shellSkim: [number, number, number] = [0.92, 0.86, 0.74]
+export const shellSkim: [number, number, number] = [0.958, 1.273, 1.826]
+export const shellSkimDepth: [number, number] = [0.03, 0.018]
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

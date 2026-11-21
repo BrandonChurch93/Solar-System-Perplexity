@@ -238,7 +238,7 @@ void main() {
   if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
   float texels = ringTexels(fr);
-  vec4 s = span ? profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose)) : vec4(0.0);
+  vec4 s = span ? profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose)) * (1.0 - uPolarShape * (1.0 - uClose) * smoothstep(uEdge.y + 0.004, uEdge.y + 0.02, rq)) : vec4(0.0);
   float mu = abs(V.y);
   float over = 0.0;
   for (int k = 0; k < ((uClose < 1.0 && !disc && !far) ? 1 : 0); k++) {
@@ -322,7 +322,7 @@ void main() {
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss)));
   float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
-  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * (disc ? 0.0 : 1.0);
+  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (disc ? 0.0 : 1.0);
   over *= lit;
   alpha = max(alpha, uOver.z * over) * thin;
   for (int k = 0; k < (over > 0.0 ? 1 : 0); k++) {

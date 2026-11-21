@@ -96,7 +96,12 @@ def hold(source):
     hole = rim | disc | (streak & ~body)
     low = heal(low, hole, 70)
     gap = ndi.gaussian_filter((ndi.binary_dilation((tr > 0) & (rr < 1.62) | hit, iterations=60)).astype(np.float32), 12)[..., None]
-    stars = stars * (1 - 0.5 * ndi.gaussian_filter(body.astype(np.float32), 8)[..., None]) * (1 - 0.3 * gap)
+    hero = np.asarray(Image.open(ROOT / "references/approved/saturn-hero.png").convert("RGB")).astype(np.float32) / 255
+    _, seen, base = layers(unfilm(to_linear(hero)).astype(np.float32))
+    real = ndi.gaussian_filter(ndi.binary_dilation((seen @ LW) > 4 * base, iterations=3).astype(np.float32), 1.5)[..., None]
+    tight = hit | ((tr > 0) & (rr < 2.345))
+    stars = stars * (1 - (0.5 + 0.38 * (1 - real)) * ndi.gaussian_filter(tight.astype(np.float32), 3)[..., None]) * (1 - 0.3 * gap)
+    print("real star share", float((real > 0.5).mean().round(4)))
     stars = stars * (1 - 0.8 * ndi.gaussian_filter((streak & ~body).astype(np.float32), 4)[..., None] * (stars @ LW < 0.02)[..., None])
     print("healed share", float(hole.mean().round(4)), "moon", round(float(mx), 1), round(float(my), 1), round(float(mr), 1))
     save(margin(low, stars, px, py), "sky-hold.webp")
