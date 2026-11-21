@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T13:53:11.508Z",
- "head": "ce205a55c3e7cbd05d635594e4bff64c5b95152c",
- "note": "round 3: one horizon through both covers, terrain parallax, far limb table, lightning off after the hold",
+ "pushed": "2026-11-21T14:23:35.825Z",
+ "head": "9f60ba1ae4e78c4f2cf3312223e9634caa64fa02",
+ "note": "round 3 in progress: covers with one horizon, terrain exit rim, lightning off after the hold",
  "looks": [
+  {
+   "time": "2026-11-21T14:23:35.273Z",
+   "file": "20261121142335273-note-te.jpg",
+   "source": "out/work/venus/r3/te.jpg",
+   "kind": "note",
+   "label": "round 3 item 3: terrain entry 1322 to 1350",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:23:34.674Z",
+   "file": "20261121142334674-note-la3.jpg",
+   "source": "out/work/venus/r3/la3.jpg",
+   "kind": "note",
+   "label": "round 3: 1287 and 1586 without lightning, stars dimmed in the limb glow; 1185 unchanged",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:23:34.137Z",
+   "file": "20261121142334137-note-rc4.jpg",
+   "source": "out/work/venus/r3/rc4.jpg",
+   "kind": "note",
+   "label": "round 3: terrain exit 1538 to 1557, plate rim line gone (rim fade, deck fill)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:23:33.575Z",
+   "file": "20261121142333575-note-dc3.jpg",
+   "source": "out/work/venus/r3/dc3.jpg",
+   "kind": "note",
+   "label": "round 3 item 2: dive cover 1309 to 1320 (+1322, 1330), one horizon, compact billows",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T14:23:32.904Z",
+   "file": "20261121142332904-note-rc3.jpg",
+   "source": "out/work/venus/r3/rc3.jpg",
+   "kind": "note",
+   "label": "round 3 item 1: rise cover 1555 to 1566, one horizon, veil structure readable",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T13:53:10.894Z",
    "file": "20261121135310894-note-la.jpg",
@@ -11,58 +51,6 @@
    "kind": "note",
    "label": "round 3 draft: 1185, 1287, 1586 with lightning faded out after the dive starts and the far limb table (one falloff at 1287)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T13:53:10.224Z",
-   "file": "20261121135310224-note-rc.jpg",
-   "source": "out/work/venus/r3/rc.jpg",
-   "kind": "note",
-   "label": "round 3 draft: rise cover 1555 to 1567, veil edge on the limb, one horizon; veil too opaque 1558 to 1561, Sun pops at the top of 1560: in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T13:53:09.666Z",
-   "file": "20261121135309666-note-dc.jpg",
-   "source": "out/work/venus/r3/dc.jpg",
-   "kind": "note",
-   "label": "round 3 draft: dive cover 1309 to 1323, veil edge on the limb in both views, one curved horizon (rush still weak, Sun dot teal under the veil: both in work)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T13:53:09.035Z",
-   "file": "20261121135309035-note-tc.jpg",
-   "source": "out/work/venus/r3/tc.jpg",
-   "kind": "note",
-   "label": "round 3 draft: terrain 1350 to 1545, camera slides left 1 unit with a bend, towers cross a third of the frame against a still horizon",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T13:22:50.133Z",
-   "file": "20261121132250133-frame-nc-rise-1566.jpg",
-   "source": "out/work/venus/strip/nc-rise-1566.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1566, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1566,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T13:19:01.827Z",
-   "file": "20261121131901827-frame-nc-dive-1320.jpg",
-   "source": "out/work/venus/strip/nc-dive-1320.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1320, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1320,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T12:22:22.187Z",
