@@ -170,7 +170,7 @@ def main():
     back = ndimage.gaussian_filter1d(back, 4, axis=0, mode='nearest')
     print('sky background kept below the horizon by azimuth, scene linear x1000', np.round(back[::max(n // 8, 1)] * 1000, 1).tolist())
     del small, es, ps
-    grow = ((1 - np.exp(np.minimum(e, 0) / 1.5)) ** 2.5).astype(np.float32)[..., None]
+    grow = (0.3 * (1 - np.exp(np.minimum(e, 0) / 1.5)) ** 2.5).astype(np.float32)[..., None]
     haze = far.astype(np.float32)[pb]
     haze *= grow
     haze += back.astype(np.float32)[pb]
