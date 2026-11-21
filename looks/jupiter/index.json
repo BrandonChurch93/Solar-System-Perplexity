@@ -1,16 +1,52 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T18:19:36.753Z",
- "head": "24383239c7b2d6c95f914139afa003b118f88598",
- "note": "Cover hides per frame: dive cover 3021, 3022 and rise cover 3271, 3272 before and after at native size.",
+ "pushed": "2026-11-21T20:03:32.708Z",
+ "head": "cda8f8cc0c8d4160fca57bcd849a399757998252",
+ "note": "Phase 6 polish: measuring the rise and dive before the rework (roll per frame, size rate, cover amounts)",
  "looks": [
   {
-   "time": "2026-11-21T18:19:23.179Z",
-   "file": "20261121181923179-note-hides_3271.jpg",
-   "source": "out/work/view/hides_3271.png",
+   "time": "2026-11-21T20:03:32.093Z",
+   "file": "20261121200332093-note-jupiter.rise-16x9-review.jpg",
+   "source": "../../../../tmp/jupiter.rise-16x9-review.jpg",
    "kind": "note",
-   "label": "rise cover 3271 at native size: before (24 samples), after (128)",
+   "label": "polish before: rise 3240 to 3314 at review tier (round 25 build)",
    "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T20:03:31.471Z",
+   "file": "20261121200331471-note-jupiter.rise-cover-16x9-review.jpg",
+   "source": "../../../../tmp/jupiter.rise-cover-16x9-review.jpg",
+   "kind": "note",
+   "label": "polish before: rise cover 3265 to 3276 at review tier (round 25 build), limb snap 3270 to 3271, flat beige to 3274",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T19:50:22.148Z",
+   "file": "20261121195022148-job-frame-03296.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T18:30:23.290Z",
+   "file": "20261121183023290-job-frame-03227.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3227, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3227,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
    "time": "2026-11-21T18:17:58.807Z",
@@ -25,36 +61,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:17:10.008Z",
-   "file": "20261121181710008-still-f03271-16x9-review-full.jpg",
-   "source": "out/work/stills/f03271-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3271, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3271,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:12:00.035Z",
-   "file": "20261121181200035-note-hides_3272.jpg",
-   "source": "out/work/view/hides_3272.png",
-   "kind": "note",
-   "label": "rise cover 3272 at native size: before (50 samples), after (128)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T18:11:59.176Z",
-   "file": "20261121181159176-note-hides_3022.jpg",
-   "source": "out/work/view/hides_3022.png",
-   "kind": "note",
-   "label": "dive cover 3022 at native size: before (23 samples), after (128)",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T17:48:33.953Z",
