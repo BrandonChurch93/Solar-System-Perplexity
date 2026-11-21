@@ -1,28 +1,20 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T13:20:48.591Z",
- "head": "a3b76b5608ab7c484606ba3adb23202607448916",
- "note": "r3 item 1: terrain sky patch rebuilt, left apron knit",
+ "pushed": "2026-11-21T13:46:21.311Z",
+ "head": "78f3f68229022556736e19950b602d782ebefd37",
+ "note": "round 3: terrain sky and left apron border done, starting the rise",
  "looks": [
   {
-   "time": "2026-11-21T13:20:39.210Z",
-   "file": "20261121132039210-note-look-wedge.jpg",
-   "source": "out/work/nep/r3/look-wedge.jpg",
+   "time": "2026-11-21T13:46:17.961Z",
+   "file": "20261121134617961-note-line3.jpg",
+   "source": "out/work/nep/r3/line3.jpg",
    "kind": "note",
-   "label": "r3 item 1: left edge 4957 4965 4970, 2x boost, deck knit",
+   "label": "left apron border after plate edge and core defringe, frames 4970 4742 4965 4957, 1.6x boost 2x zoom",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T13:20:38.570Z",
-   "file": "20261121132038570-note-look-sky.jpg",
-   "source": "out/work/nep/r3/look-sky.jpg",
-   "kind": "note",
-   "label": "r3 item 1: terrain sky 4742 4957 4965 4970, 2.5x boost, generated zone outside the approved border",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T13:17:54.450Z",
-   "file": "20261121131754450-still-f04970-16x9-draft-full.jpg",
+   "time": "2026-11-21T13:44:18.439Z",
+   "file": "20261121134418439-still-f04970-16x9-draft-full.jpg",
    "source": "out/work/stills/f04970-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.rise frame 4970, draft tier",
@@ -35,8 +27,8 @@
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T13:17:28.341Z",
-   "file": "20261121131728341-still-f04965-16x9-draft-full.jpg",
+   "time": "2026-11-21T13:43:52.836Z",
+   "file": "20261121134352836-still-f04965-16x9-draft-full.jpg",
    "source": "out/work/stills/f04965-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.rise frame 4965, draft tier",
@@ -49,8 +41,8 @@
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T13:17:02.480Z",
-   "file": "20261121131702480-still-f04957-16x9-draft-full.jpg",
+   "time": "2026-11-21T13:43:27.121Z",
+   "file": "20261121134327121-still-f04957-16x9-draft-full.jpg",
    "source": "out/work/stills/f04957-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.rise frame 4957, draft tier",
@@ -63,8 +55,22 @@
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T13:16:36.405Z",
-   "file": "20261121131636405-still-f04742-16x9-draft-full.jpg",
+   "time": "2026-11-21T13:43:01.636Z",
+   "file": "20261121134301636-still-f04860-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04860-16x9-draft-full.png",
+   "kind": "still",
+   "label": "neptune.terrain frame 4860, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T13:42:36.745Z",
+   "file": "20261121134236745-still-f04742-16x9-draft-full.jpg",
    "source": "out/work/stills/f04742-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4742, draft tier",
@@ -77,18 +83,12 @@
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T13:12:27.086Z",
-   "file": "20261121131227086-still-f04945-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04945-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.terrain frame 4945, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4945,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
+   "time": "2026-11-21T13:20:39.210Z",
+   "file": "20261121132039210-note-look-wedge.jpg",
+   "source": "out/work/nep/r3/look-wedge.jpg",
+   "kind": "note",
+   "label": "r3 item 1: left edge 4957 4965 4970, 2x boost, deck knit",
+   "stop": "neptune"
   },
   {
    "time": "2026-11-21T12:12:41.147Z",
