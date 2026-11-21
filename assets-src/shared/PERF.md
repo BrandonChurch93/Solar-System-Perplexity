@@ -134,3 +134,20 @@ Asked for by the Builder, a robustness change for hardware drivers, not a speed 
 | `textureGrad` with one gradient pair `dFdx(p.xy)`, `dFdy(p.xy)` for the four taps | identical | 1.10 / 0.95 s |
 
 So `textureGrad` gives the same bytes here but costs 0.06 to 0.2 s per sample where a patch is in view. Committed form: `textureGrad` with the one gradient pair is the default (live, autopilot, export); capture mode (`Sky.cull`) sets the define `PATCH_IMPLICIT` on the sky pass material and keeps the `texture()` form, whose shader text is the one that was proven in change 2. Final tier, capture: 44.1 / 60.8 / 115.5 / 79.2 s, four sha256 equal to the baselines; build, vitest and determinism pass.
+
+### 7. NOT PROVABLY IDENTICAL, kept apart: the eight clean taps of the band are skipped when `cleanKeep` is 1 (`9e72ac2`)
+
+`src/space/sky.ts`, sky pass. `band = inverseFilmic(mix(min(b0, lo), b0, uBandClean.y))` needs `lo`, the minimum of eight more band fetches, only when `cleanKeep` (`uBandClean.y`) is below 1. `skyframe.json` has `cleanKeep` 1, so the commit puts the eight fetches in a loop on `uBandClean.y < 1.0` and uses `b0` otherwise.
+
+Why it is not exact in principle: on SwiftShader `mix(x, y, 1)` is `(y - x) + x`. Measured in a test shader on this Chrome (`mix(min(b0, lo), b0, uOne)` over 3 x 3,145,728 random float pairs): the result differs from `b0` in the last bit of the float32 for 2.3 to 3.9 % of the values. That is a relative step of 6e-8, before the value is rounded to the half float sample target (relative step 5e-4 to 1e-3), averaged over the samples and quantized to 8 bits.
+
+What was measured on the frames: all four frames are byte identical to the baselines, at draft (one sample) and at final. Largest difference per channel 0 code values, PSNR infinite, on these four frames. Over a whole film a pixel here or there may differ by one code value; I could not produce one.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 44.1 | 38.0 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 60.8 | 53.8 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 115.5 | 90.6 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 79.2 | 73.8 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Sky pass per sample (draft): 0.85 to 0.32 s (hold), 0.89 to 0.56 s (terrain), 0.62 to 0.25 s (dive), 0.38 to 0.27 s (rise). Whole sample: 1.95 to 1.45 s (26 %), 3.00 to 2.55 s (15 %), 1.73 to 1.34 s (23 %), 1.20 to 1.14 s. Build, vitest and determinism pass. To drop it: `git revert 9e72ac2` (one block of the sky shader).
