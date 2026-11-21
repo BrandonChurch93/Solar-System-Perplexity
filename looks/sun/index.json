@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T22:39:03.150Z",
- "head": "86950e11d60ddd620d5d285be0f5097db7d40ec0",
- "note": "Polish item 2: generated foreground detail in the plate (take W-3) and a new apron in the view of frame 0",
+ "pushed": "2026-11-21T22:58:31.246Z",
+ "head": "cee709a0d6f45647d049ab24ba776f2935954973",
+ "note": "item 2: apron take A-3, foreground painted new from grey, being built into the apron",
  "looks": [
+  {
+   "time": "2026-11-21T22:58:30.415Z",
+   "file": "20261121225830415-note-i213-apron-take-A-3-native-right.jpg",
+   "source": "out/work/sun/i213-apron-take-A-3-native-right.png",
+   "kind": "note",
+   "label": "apron take A-3, native size, right foreground (take pixels)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:58:28.976Z",
+   "file": "20261121225828976-note-i213-apron-take-A-3-native-left.jpg",
+   "source": "out/work/sun/i213-apron-take-A-3-native-left.png",
+   "kind": "note",
+   "label": "apron take A-3, native size, left foreground (take pixels)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T22:39:02.492Z",
    "file": "20261121223902492-note-i204-apron-take-A-2-right.jpg",
@@ -98,22 +114,6 @@
    "source": "out/work/sun/i189-rv8-213.jpg",
    "kind": "note",
    "label": "polish item 1: rise cover frame 213 at the review tier with motion blur (preview format), two world fixed zones",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:00:40.971Z",
-   "file": "20261121220040971-note-i173-q4-211-top.jpg",
-   "source": "out/work/sun/i173-q4-211-top.jpg",
-   "kind": "note",
-   "label": "Polish item 1, draft 211 native: the straight line through the loop feet and the glow column are gone",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:00:40.314Z",
-   "file": "20261121220040314-note-i172-q4-b.jpg",
-   "source": "out/work/sun/i172-q4-b.jpg",
-   "kind": "note",
-   "label": "Polish item 1, draft: 216 to 223 (and terrain 150), relief patch still too visible at 216 to 218",
    "stop": "sun"
   },
   {
