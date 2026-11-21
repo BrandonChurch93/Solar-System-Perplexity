@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T23:00:58.389Z",
+ "pushed": "2026-11-21T23:07:06.343Z",
  "head": "483ae219050ba8f8156b298cc4c89e5600a2210b",
- "note": "Phase 6 polish: item 4 rise 1586 at draft (swirl, night limb, rewoven ring), dive cover streams past the swap",
+ "note": "Phase 6 polish: final tier proof stills rendering (1185, 1287, 1586, 1440), strips of hold to dive and rise",
  "looks": [
+  {
+   "time": "2026-11-21T23:07:05.121Z",
+   "file": "20261121230705121-note-i4a-1287-pair.jpg",
+   "source": "../view/i4a-1287-pair.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 3 draft, dive 1287: round 23 against hold detail carried as a high pass",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:07:04.193Z",
+   "file": "20261121230704193-note-r9.jpg",
+   "source": "../view/r9.jpg",
+   "kind": "note",
+   "label": "Phase 6 draft strip, rise 1560 to 1590: veil thins, curled plume, rewoven ring",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:07:03.034Z",
+   "file": "20261121230703034-note-h9.jpg",
+   "source": "../view/h9.jpg",
+   "kind": "note",
+   "label": "Phase 6 draft strip, hold to dive 1259 to 1303 with the hold detail map at 2048 (take h3)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T22:59:25.055Z",
    "file": "20261121225925055-note-c12-dc.jpg",
@@ -26,30 +50,6 @@
    "source": "../view/i4c-1586-lr.png",
    "kind": "note",
    "label": "Phase 6 item 4, rise 1586 lower right at twice native, take i4c (round 23 had soft stretched arcs here)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:59:23.317Z",
-   "file": "20261121225923317-note-i4c-1586-half.jpg",
-   "source": "../view/i4c-1586-half.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 4, rise 1586 at draft, take i4c: plume curled by the swirl, night limb one falloff, lower right ring rewoven from the far side",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:59:22.584Z",
-   "file": "20261121225922584-note-d13.jpg",
-   "source": "../view/d13.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, dive cover at draft, take d13: the veil now streams on past the swap (1314 to 1322) instead of standing still",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:47:12.941Z",
-   "file": "20261121224712941-note-c12-1559.jpg",
-   "source": "../view/c12-1559.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, draft strip of the rise swap, take c12",
    "stop": "venus"
   },
   {
