@@ -1,81 +1,87 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T11:30:02.542Z",
- "head": "0d4513b5a4705e34614276d328879d5b076b3f32",
- "note": "round 2: covers carried, limb ring calmed, rim depth, review singles rendering",
+ "pushed": "2026-11-21T11:52:09.598Z",
+ "head": "8278f9d5791e1c0d64857a1e595a6298190aa06f",
+ "note": "round 2 final checks: night limb single rim, highlight points rehued, cover sheets, verification running",
  "looks": [
   {
-   "time": "2026-11-21T11:30:01.542Z",
-   "file": "20261121113001542-note-g6-1440.jpg",
-   "source": "../../../../tmp/g6-1440.jpg",
-   "kind": "note",
-   "label": "1440 draft with forward 0.85",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:30:00.002Z",
-   "file": "20261121113000002-note-g6-1586-native.jpg",
-   "source": "../../../../tmp/g6-1586-native.png",
-   "kind": "note",
-   "label": "1586 native: round 1 beside now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:29:59.000Z",
-   "file": "20261121112959000-note-t1622.jpg",
-   "source": "../../../../tmp/t1622.png",
-   "kind": "note",
-   "label": "travel 1622 far side",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:29:57.900Z",
-   "file": "20261121112957900-note-travel4.jpg",
-   "source": "out/work/venus/strip/travel4.jpg",
-   "kind": "note",
-   "label": "travel strip 1605 to 1679 draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:29:57.106Z",
-   "file": "20261121112957106-note-g6-1287-crops.jpg",
-   "source": "../../../../tmp/g6-1287-crops.png",
-   "kind": "note",
-   "label": "1287 native crops limb and cumulus",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:29:56.159Z",
-   "file": "20261121112956159-note-c1287-e.jpg",
-   "source": "../../../../tmp/c1287-e.png",
-   "kind": "note",
-   "label": "1287 limb after rim depth test",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T11:25:23.985Z",
-   "file": "20261121112523985-frame-g6-1440.jpg",
-   "source": "out/work/venus/r2/g6-1440.png",
+   "time": "2026-11-21T11:51:32.727Z",
+   "file": "20261121115132727-frame-fin-1586.jpg",
+   "source": "out/work/venus/r2/fin-1586.png",
    "kind": "frame",
-   "label": "venus.terrain frame 1440, draft tier",
+   "label": "venus.rise frame 1586, review tier",
    "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "draft",
+   "segment": "venus.rise",
+   "frame": 1586,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T11:24:16.517Z",
-   "file": "20261121112416517-frame-g6-1185.jpg",
-   "source": "out/work/venus/r2/g6-1185.png",
+   "time": "2026-11-21T11:51:27.577Z",
+   "file": "20261121115127577-note-rv6-1586.jpg",
+   "source": "../../../../tmp/rv6-1586.jpg",
+   "kind": "note",
+   "label": "rise 1586 review, flow clock anchored at the judged frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T11:51:26.571Z",
+   "file": "20261121115126571-note-g9-1575.jpg",
+   "source": "../../../../tmp/g9-1575.jpg",
+   "kind": "note",
+   "label": "rise 1575 draft after the limb pass",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T11:51:25.463Z",
+   "file": "20261121115125463-note-near1440.jpg",
+   "source": "../../../../tmp/near1440.png",
+   "kind": "note",
+   "label": "terrain 1440 near shadow: approved close image beside the film",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T11:51:24.413Z",
+   "file": "20261121115124413-note-pink11.jpg",
+   "source": "../../../../tmp/pink11.png",
+   "kind": "note",
+   "label": "two highlight points beside the vortex: hero, before, after the hue fix",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T11:51:23.352Z",
+   "file": "20261121115123352-note-limb9.jpg",
+   "source": "../../../../tmp/limb9.png",
+   "kind": "note",
+   "label": "limb crops at the hold: hero, round 1, now",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T11:49:49.215Z",
+   "file": "20261121114949215-frame-g11-1185.jpg",
+   "source": "out/work/venus/r2/g11-1185.png",
    "kind": "frame",
    "label": "venus.hold frame 1185, review tier",
    "stop": "venus",
    "segment": "venus.hold",
    "frame": 1185,
    "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:35:23.379Z",
+   "file": "20261121113523379-frame-f01350-draft.jpg",
+   "source": "out/work/sheets/.frames-OzUJRC/f01350-draft.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1350, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1350,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
