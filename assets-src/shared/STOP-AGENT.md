@@ -75,11 +75,21 @@ The first build of your stop already carries everything "Look lock" lists under 
    - Everything the stop's section of `kit/02-STOPS.md` lists under "Keep" and "Motion in the hold": the globe turns, clouds and bands flow as their own layer with a soft shadow, moons move, shadows are computed where the kit says computed.
    - The hero's own sky as a sky patch for the `hold` (`assets-src/mars/sky/`). The engine aims every sky patch from your plan; your set does not set `aim`.
 2. Terrain view, with the technique your stop's section names. The judged `terrain` frame beside the approved close image has lost nothing. Between the first and the last frame of the segment the foreground and the horizon clearly move against each other: a flight through space, not a zoom into a picture. Aprons are painted past every edge from the start, behind the entry point and past the exit, so the covers can move. Flow as `kit/03-METHOD.md` says. Fine detail is added in shadowed foregrounds with the approved pixels kept as the low frequencies.
-   - The terrain view may ask for a turn of the fixed sky with `skyAim: { terrain: [along, tilt, lift] }` in `plan.ts`, as Mars does, and carries its own sky patch.
+   - The terrain view may ask for a turn of the fixed sky with `skyAim: { terrain: [along, tilt, lift] }` in `plan.ts`, as Mars does, and carries its own sky patch. See "Sky aim".
 3. Dive and rise. Sharp all the way in: G13 holds on every frame outside the cover. Patch levels at most twice apart, designed with a predictor before anything is rendered. The cover belongs to your world, streams with the camera on both sides and thins over ten frames or more; color, exposure, horizon and direction of travel carry across it. The rise is a view of its own: check the far side, the poles and the terminator from its angle. The judged `dive` and `rise` frames are sharp.
 4. Check your own work the way the critics will: `npm run measure -- --stop ID` (G5, G13, G17), `npm run compare` for both views at the `final` tier, `npm run sheet -- --segment ID.hold` and the same for `dive`, `terrain` and `rise` at the `review` tier, native crops of every surface with `npm run crops`. Read the R1, R3 and R4 rubrics against your own pictures and fix what they would raise before you report.
 
 Mars is not the ceiling. Round 5 left ten issues open on it (open items 6 to 15 in `kit/PROGRESS.md`). Build so your stop does not meet them.
+
+## Sky aim
+
+- The one sky is fitted to Mars. What sits behind your stop at its hold follows from the plans of every stop between yours and Mars, so it moves whenever one of them changes its exit or its travel. Your stop can fix it instead: `skyAim: { orbit: [along, tilt, lift] }` in your `plan.ts`, beside `skyAim.terrain`. It is the sky direction and roll your camera sees at the judged `hold` frame: `along` in degrees along the band of the Milky Way, `lift` in degrees off the band, `tilt` the roll.
+- `npm run -s aim -- --stop ID` prints the aims your branch shows now. Paste the orbit values into your plan and render the judged hold again: it is the same picture. From then on the sky behind your hold and your dive stays where it is, whatever any stop does, and the rim of your sky patch stays matched to the sky around it.
+- You may choose other values, for example to put the band of the one sky where your approved hero has its band, so your patch has less to replace and the dive leaves the patch without a visible rim.
+- `skyAim.terrain` fixes the sky of the terrain view at its judged frame. Without it the terrain view keeps the orbit view's sky, turned only by the camera.
+- The sky changes its turn only under a cover, never in view. Your orbit aim holds from the rise of the stop before yours (after its cover), through its travel and your hold, to your dive cover. From your rise cover on, the sky already belongs to the next stop. So the sky behind your rise is not yours to tune: on your branch it is your own sky, on `main` it becomes the next stop's. Do not paint anything against it.
+- Jupiter: the arrival shares its sky with the approved Mars rise, so an orbit aim in Jupiter's plan is ignored. Jupiter's sky follows only from Mars, which is finished, and from Jupiter's own plan.
+- Sun: there is no cover between the Sun's hold and Mercury's, so both share one sky and Mercury's aim decides it. The engine drops a leaving stop's sky patch at the first frame of its `travel`: a hold patch of the Sun fades out with its own `weight` before the hold ends.
 
 ## Working with the Builder
 
