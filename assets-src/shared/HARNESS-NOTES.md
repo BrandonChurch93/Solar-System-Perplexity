@@ -29,6 +29,15 @@ Lab notebook of the harness agent (branch `agent/harness`). After a compaction: 
 6. The record round collects its controls itself by default; `--controls-from N` reuses those of round N.
 7. In whole film and record rounds a failed R2 is counted as one major issue in the round line, as the kit says. The stop round's line is left as it was.
 
+## How to run (one line each)
+
+- Render named parts of the whole film pack on a worker: `npm run pack -- --phase 5 --round N --only stills:0-1500,film-1,hook` (parts: `stills:A-B`, `film-K`, `holds`, `hook`, a segment id; in Phase 6 also `ID-cover`). The last line says whether a render session was opened.
+- The list of frames and sheets a whole film pack needs, with nothing rendered: `npm run -s pack -- --phase 5 --round N --plan`.
+- Whole film round: `python3 tools/round.py start --round N --whole`, then `jobs`, `place`, `pack`, `votes`, `close`, each with `--round N`. After `start` the tool knows the round's kind from its state.
+- Record round: `python3 tools/round.py start --round N --record`, then the same five steps. `pack --controls-from M` reuses the controls of round M.
+- Scratch: add `--scratch` to every step and use a round above 900; `start` also takes `--tier draft --every 10 --allow-red`. Made up answers: `python3 tools/scratch_answers.py --round N | python3 tools/round.py votes --round N --scratch`.
+- `jobs` takes `--workers 8 --job-minutes 15 --sample-seconds 4.3 --measure-minutes 20`.
+
 ## Log
 
 - 2026-11-20: cloned, read the brief and the files it names, set up, wrote this plan.

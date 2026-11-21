@@ -207,8 +207,9 @@ def parts_of(stop):
 
 
 def jobs(a):
-    n, stop = a.round, a.stop
+    n = a.round
     s = state(n)
+    stop = a.stop or s['stop']
     sha = s['commit']
     r = rid(n)
     tar = lambda name, paths: 'When the commands have finished: `tar -cf /tmp/%s.tar %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.' % (name, ' '.join(paths), name, name)
@@ -1036,4 +1037,6 @@ if a.scratch:
 film = a.whole or a.record or state(a.round).get('mode') in FILM
 if film and a.stop:
     sys.exit('a whole film round and the record round take no --stop')
+if a.cmd == 'start' and not film and not a.stop:
+    sys.exit('a stop round takes --stop; a whole film round takes --whole, the record round --record')
 STEPS[a.cmd][1 if film else 0](a)
