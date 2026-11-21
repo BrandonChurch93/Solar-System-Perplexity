@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops L and Q along the upper-right and lower-right dark limb (also image-02.png crops C and E, image-06.png crops C and E)",
+      "what": "the atmosphere forms a doubled edge with a thin bright outer ring (including an unnatural pale violet highlight on the upper-right limb and a crisp orange line on the lower-right limb) separated by a dark gap from an inner hazy band, plus a grainy outer halo",
+      "fix": "replace the separate shell/rim composite with a single continuous volumetric scattering falloff across the limb with no hard outer ring, dark inner gap, or violet specular tint"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "lower-left of crop A (also image-03.png crops P and Q, image-06.png crop A, image-07.png crop O)",
+      "what": "cloud bands radially pinch into a tight convergence knot on the lower-left lit hemisphere with visibly stretched linear streaks radiating toward the terminator",
+      "fix": "remap or paint out the spherical UV pole pinch using triplanar, cubed-sphere, or seamless flow-mapped cloud coordinates so cloud filaments do not stretch into a point"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop P middle-right and bottom-left night-side clouds (also image-05.png and image-06.png crop E upper-left)",
+      "what": "blurry, airbrushed bluish-purple and magenta smudges sit over the dark clouds where sharp lightning filaments existed in the wider frame",
+      "fix": "remove the smeared purple/magenta blotches or render crisp, physically integrated internal cloud illumination and lightning at native resolution"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crops A, B, and I on the sunlit globe and polar vortex (also image-07.png crops K and O)",
+      "what": "cloud surfaces look slightly soft and upscaled at native 1:1 crop size in the closer shot, while sunlit cloud-top edges along the terminator show slight pixel stair-stepping",
+      "fix": "use a higher-resolution cloud texture/displacement map for the closer camera distance and anti-alias high-contrast terminator highlights"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop H left-side Milky Way patch and crops B and D sunlit limb glare (also image-02.png crops B and D)",
+      "what": "the blue nebula patch on the left sky is soft and pixelated relative to overlaid point stars, and sharp 1-2 px stars shine undimmed right through the bright golden limb bloom",
+      "fix": "match the sky background map resolution to native render resolution and attenuate background stars inside bright atmospheric scattering and glare"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop S outer glow transition into dark space (also image-04.png crop T)",
+      "what": "faint tonal banding steps appear where the warm atmospheric glow fades into the near-black sky",
+      "fix": "render and composite the atmospheric falloff in 16-bit/32-bit float and apply subtle blue-noise dithering before 8-bit output"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper cloud fountain, also image-14.png tile B",
+      "what": "strands comb and stretch into linear fibers toward the convergence instead of breaking into eddies",
+      "fix": "ease the polar stretch and replace the combed flow with multi-scale turbulence"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "left-limb dark rift and upper troughs, also image-14.png tiles B and H",
+      "what": "lightning sits on the cloud as painted purple-white strokes rather than light inside the volume",
+      "fix": "embed the discharge in the cloud so it scatters onto nearby faces"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tile D night-side limb, and the shadowed lower left of image-13.png",
+      "what": "shadowed clouds lose fine structure and read as airbrushed low-frequency tone",
+      "fix": "keep high-frequency cloud detail in the shadow and add a little scattered fill"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "tile C, radial falloff above the sun, also the upper right of image-09.png",
+      "what": "faint concentric steps in the sun glow",
+      "fix": "dither the gradient and widen the falloff so the bands disappear"
+     }
+    ]
+   }
+  }
+ ]
+}

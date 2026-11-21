@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 204 to 229, center of the sheet",
+   "what": "the limb close-up cuts to a centered full disk through a full-frame whiteout. Field of view, camera position and horizon jump; frames 212 and 220 are clipped, so the move has no readable path and no mass",
+   "fix": "keep the same limb and sunspot readable through the pullback, and ease the zoom so exposure never clips the horizon away"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 211 to 222",
+   "what": "the consecutive cover stays inside the whiteout. The frame before is still a surface limb and the frame after is a full disk, so color, exposure and horizon do not carry across one move",
+   "fix": "span the cover with frames that still show the limb becoming the disk, not a held white field"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "photosphere, lower two-thirds of every frame",
+   "what": "granulation is replaced between samples 16 frames apart, so the ground swims instead of flowing. Near ground and horizon do not read as depth",
+   "fix": "keep granule identity so cells evolve in place, and move the near ground against a steadier horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "limb and central sunspot, frames 0 to 179",
+   "what": "the hold is not locked. The limb drifts about 24 pixels and the dark sunspot region slides down about 50 pixels, with no eased start from rest",
+   "fix": "ease into a true hold, then keep horizon and sunspot fixed until the pullback begins"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "full disk and limb prominences, frames 270 to 449",
+   "what": "scale and center hold, but surface features and prominences stay frozen, so the globe does not turn and limb flow does not read",
+   "fix": "give the disk a slow continuous rotation and let prominences drift without popping"
+  }
+ ]
+}
