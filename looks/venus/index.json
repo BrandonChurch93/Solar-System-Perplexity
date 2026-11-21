@@ -1,34 +1,12 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T03:37:08.836Z",
+ "pushed": "2026-11-21T03:46:44.038Z",
  "head": "30defe0b0d793b79d24a2f39d494e162d2ff4ffe",
- "note": "venus orbit view: hero sky patch in, limb table being refit (rings on the night limb)",
+ "note": "venus orbit view: limb refit as a haze layer over the disc edge (no rings), hero sky patch in",
  "looks": [
   {
-   "time": "2026-11-21T03:37:08.205Z",
-   "file": "20261121033708205-note-v.jpg",
-   "source": "out/work/venus/v.jpg",
-   "kind": "note",
-   "label": "venus hold native crops at the limb, approved left, film right: sky patch in, limb table rings on the night side (to fix)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T03:36:28.799Z",
-   "file": "20261121033628799-frame-hold-ng.jpg",
-   "source": "out/work/venus/hold-ng.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, review tier, nograin view",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "nograin",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:35:14.488Z",
-   "file": "20261121033514488-compare-compare-venus-hold-view.jpg",
+   "time": "2026-11-21T03:46:25.437Z",
+   "file": "20261121034625437-compare-compare-venus-hold-view.jpg",
    "source": "out/work/compare/compare-venus-hold-view.jpg",
    "kind": "compare",
    "label": "venus.hold: approved image left, film frame right, review tier",
@@ -41,8 +19,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:35:13.400Z",
-   "file": "20261121033513400-still-f01185-16x9-review-full.jpg",
+   "time": "2026-11-21T03:46:24.311Z",
+   "file": "20261121034624311-still-f01185-16x9-review-full.jpg",
    "source": "out/work/stills/f01185-16x9-review-full.png",
    "kind": "still",
    "label": "venus.hold frame 1185, review tier",
@@ -53,6 +31,28 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:45:23.299Z",
+   "file": "20261121034523299-frame-halo-only.jpg",
+   "source": "out/work/venus/halo-only.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, review tier, nograin view",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:37:08.205Z",
+   "file": "20261121033708205-note-v.jpg",
+   "source": "out/work/venus/v.jpg",
+   "kind": "note",
+   "label": "venus hold native crops at the limb, approved left, film right: sky patch in, limb table rings on the night side (to fix)",
+   "stop": "venus"
   },
   {
    "time": "2026-11-21T03:20:11.215Z",
