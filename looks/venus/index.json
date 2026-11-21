@@ -1,12 +1,42 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T03:46:44.038Z",
+ "pushed": "2026-11-21T04:05:52.789Z",
  "head": "30defe0b0d793b79d24a2f39d494e162d2ff4ffe",
- "note": "venus orbit view: limb refit as a haze layer over the disc edge (no rings), hero sky patch in",
+ "note": "orbit view: sky patch fill fixed behind the disc, lightning cells light the cloud texture; terrain relief: margins and clean plate generated",
  "looks": [
   {
-   "time": "2026-11-21T03:46:25.437Z",
-   "file": "20261121034625437-compare-compare-venus-hold-view.jpg",
+   "time": "2026-11-21T04:05:52.238Z",
+   "file": "20261121040552238-note-clean-sd1.jpg",
+   "source": "out/work/venus/relief/clean-sd1.png",
+   "kind": "note",
+   "label": "terrain clean plate: towers removed, used only behind the tower cutouts",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T04:05:51.726Z",
+   "file": "20261121040551726-note-v-ext-nb1.jpg",
+   "source": "out/work/venus/v-ext-nb1.jpg",
+   "kind": "note",
+   "label": "terrain margins: outpaint take kept (approved image in the top centre)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T04:05:51.003Z",
+   "file": "20261121040551003-frame-hold-1259.jpg",
+   "source": "out/work/venus/hold-1259.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1259, review tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1259,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T04:04:55.556Z",
+   "file": "20261121040455556-compare-compare-venus-hold-view.jpg",
    "source": "out/work/compare/compare-venus-hold-view.jpg",
    "kind": "compare",
    "label": "venus.hold: approved image left, film frame right, review tier",
@@ -19,8 +49,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:46:24.311Z",
-   "file": "20261121034624311-still-f01185-16x9-review-full.jpg",
+   "time": "2026-11-21T04:04:54.438Z",
+   "file": "20261121040454438-still-f01185-16x9-review-full.jpg",
    "source": "out/work/stills/f01185-16x9-review-full.png",
    "kind": "still",
    "label": "venus.hold frame 1185, review tier",
@@ -33,17 +63,18 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:45:23.299Z",
-   "file": "20261121034523299-frame-halo-only.jpg",
-   "source": "out/work/venus/halo-only.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, review tier, nograin view",
+   "time": "2026-11-21T04:00:05.050Z",
+   "file": "20261121040005050-sheet-venus.hold-16x9-review.jpg",
+   "source": "out/work/sheets/venus.hold-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.hold, review tier",
    "stop": "venus",
    "segment": "venus.hold",
-   "frame": 1185,
+   "first": 1110,
+   "last": 1259,
    "tier": "review",
    "format": "16x9",
-   "diag": "nograin",
+   "diag": "beauty",
    "engine": "cae3193a3821716c"
   },
   {
@@ -52,30 +83,6 @@
    "source": "out/work/venus/v.jpg",
    "kind": "note",
    "label": "venus hold native crops at the limb, approved left, film right: sky patch in, limb table rings on the night side (to fix)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T03:20:11.215Z",
-   "file": "20261121032011215-note-compare-venus-hold.jpg",
-   "source": "out/work/compare/compare-venus-hold.jpg",
-   "kind": "note",
-   "label": "hold f1185: first real globe (hero unprojected, light curve, lightning cells), far side placeholder, limb layers not fitted yet, no sky patch",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T03:00:31.497Z",
-   "file": "20261121030031497-note-hero-limb-crops.jpg",
-   "source": "out/work/venus/hero-limb-crops.jpg",
-   "kind": "note",
-   "label": "venus hero limb crops used to fit the haze layers",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T03:00:30.950Z",
-   "file": "20261121030030950-note-hero-spot-contour.jpg",
-   "source": "out/work/venus/hero-spot-contour.jpg",
-   "kind": "note",
-   "label": "venus spot choice: green line is where the Sun stands 11 deg high at terrain time; spot at the lit towers",
    "stop": "venus"
   },
   {
