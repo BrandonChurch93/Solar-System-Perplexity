@@ -1,6 +1,6 @@
 #!/bin/bash
 # usage: stills.sh TIER LABEL frames...
-cd /home/user/workspace/repo
+cd "$(dirname "$0")/../.."
 T=$1; L=$2; shift 2
 mkdir -p out/work/travel/$L
 for N in "$@"; do
