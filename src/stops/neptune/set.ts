@@ -9,6 +9,7 @@ import { Closeup } from './closeup'
 import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
+import patches from './patches.json'
 import { NeptunePlanet } from './planet'
 import { Ring } from './ring'
 import skyJson from './sky.json'
@@ -18,6 +19,13 @@ function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
   const lat = THREE.MathUtils.degToRad(latDeg)
   return new THREE.Vector3(Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon))
+}
+
+function eased(t: number, full: number, ease: number): number {
+  const a = Math.abs(t)
+  if (a <= full) return t
+  const x = Math.min((a - full) / ease, 1)
+  return Math.sign(t) * (full + ease * (x - 0.5 * x * x))
 }
 
 export const createSet: SetFactory = async (ctx) => {
@@ -30,10 +38,12 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
+  const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const planet = new NeptunePlanet({
-    field,
+    field, near: look.near,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
@@ -121,7 +131,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
-      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
+      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight, look.near.amount * (1 - smooth((camera.length() - 1 - look.near.altitude[0]) / (look.near.altitude[1] - look.near.altitude[0]))), state.segment.kind === 'rise' ? look.near.gainRise : look.near.gain)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)

@@ -11,6 +11,7 @@ export interface RingParams {
   forward: number
   forwardPower: number
   sheet: [number, number, number, number]
+  strands: number[][]
   map: THREE.Texture
   mapScale: number
 }
@@ -40,6 +41,8 @@ uniform vec2 uForward;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
+uniform vec3 uStrand[3];
+uniform float uHome;
 in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
@@ -53,7 +56,14 @@ void main() {
   vec2 gx = vec2(dot(dFdx(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdx(r) / (uRange.y - uRange.x));
   vec2 gy = vec2(dot(dFdy(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdy(r) / (uRange.y - uRange.x));
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
-  vec3 strands = code * code * uMapScale;
+  float fw = fwidth(r);
+  float thin = 0.0;
+  for (int i = 0; i < 3; i++) {
+    float w = max(uStrand[i].y, 0.8 * fw);
+    float x = (r - uStrand[i].x) / w;
+    thin += uStrand[i].z * uStrand[i].y / w * exp(-x * x);
+  }
+  vec3 strands = code * code * uMapScale * uHome + uColor * thin * (1.0 - uHome);
   float edge = smoothstep(uRange.x, uRange.x + 0.03, r) * (1.0 - smoothstep(uRange.y - 0.03, uRange.y, r));
   vec3 q = vLocal + uCentre;
   float b = dot(q, uSunL);
@@ -84,6 +94,7 @@ export class Ring {
         uDiag: diagUniform, uMap: { value: p.map }, uMapScale: { value: p.mapScale }, uSheetGain: { value: 0 }, uSheet: { value: new THREE.Vector4().fromArray(p.sheet) },
         uColor: { value: new THREE.Vector3().fromArray(p.color) }, uGain: { value: 1 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uForward: { value: new THREE.Vector2(p.forward, p.forwardPower) }, uTurn: { value: 0 }, uRange: { value: new THREE.Vector2(p.inner, p.outer) }, uCentre: { value: new THREE.Vector3() },
+        uStrand: { value: p.strands.map((r) => new THREE.Vector3(r[0], r[1], r[2])) }, uHome: { value: 1 },
       },
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending,
@@ -107,6 +118,7 @@ export class Ring {
     ;(u.uSunL!.value as THREE.Vector3).copy(light).applyQuaternion(this.inverse)
     u.uTurn!.value = turn
     u.uSheetGain!.value = 1 - home
+    u.uHome!.value = home
     u.uGain!.value = gain * this.gain
   }
 

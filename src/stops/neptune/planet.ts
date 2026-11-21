@@ -70,6 +70,7 @@ export interface NeptuneOptions {
   clouds: CloudParams
   storm: StormParams
   field: LimbField
+  near: { power: number; saturation: number; pivot: number; tint: number[] }
   patches?: PatchSet
   segments?: number
 }
@@ -93,13 +94,16 @@ void main() {
 
 const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-const LEVELS = Array.from({ length: MAX_LEVELS }, (_, i) => `    if (uPatchCount > ${i}.5) {
+const WEIGHTS = Array.from({ length: MAX_LEVELS }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      if (w > 0.0) c = mix(c, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]), w);
+      w${i} = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w));
+      texels = mix(texels, parent, step(0.5, w${i}));
     }`).join('\n')
+
+const FETCHES = Array.from({ length: MAX_LEVELS }, (_, n) => MAX_LEVELS - 1 - n).map((i) => `  float k${i} = w${i} * rest;
+  rest *= 1.0 - w${i};
+  for (int k = 0; k < (k${i} > 0.0 ? 1 : 0); k++) c += k${i} * textureGrad(uPatch${i}, g * uPatchScale[${i}] + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]);`).join('\n')
 
 const FRAG = /* glsl */ `
 precision highp float;
@@ -155,6 +159,8 @@ uniform vec2 uVeilMu;
 uniform vec3 uVeilSun;
 uniform vec3 uForward;
 uniform vec2 uForwardShape;
+uniform vec4 uNear;
+uniform vec4 uNearTint;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -191,21 +197,27 @@ vec3 cloudDir(vec3 p) {
   return turnAbout(d, uStormAxis, stormTurn(d));
 }
 vec4 layerAt(vec3 dd, float soft, out float texels) {
-  vec4 c = equirectGrad(uMap, dd, uGrad * soft);
+  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
+  float u2 = fract(u + 0.5) - 0.5;
+  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
+  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
   texels = diagTexelsDir(dd, uMapWidth);
-  if (uPatchCount > 0.5) {
-    float dn = dot(dd, uSpotN);
-    float inv = 1.0 / max(dn, 0.05);
-    vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) * inv;
-    vec2 gx = dFdx(g);
-    vec2 gy = dFdy(g);
-    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
-    gx *= uGrad * soft;
-    gy *= uGrad * soft;
-    float front = step(0.3, dn);
-    float parent = texels;
-${LEVELS}
-  }
+  float dn = dot(dd, uSpotN);
+  vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) / max(dn, 0.05);
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+  gx *= uGrad * soft;
+  gy *= uGrad * soft;
+  float front = step(0.3, dn);
+  float parent = texels;
+${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;').join('\n')}
+${WEIGHTS}
+  float rest = 1.0;
+  vec4 c = vec4(0.0);
+${FETCHES}
+  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) c += rest * textureGrad(uMap, vec2(u, v), mx, my);
   return c;
 }
 void main() {
@@ -238,6 +250,8 @@ void main() {
   vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - alpha));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
+  vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
+  col = mix(col, uNearTint.rgb * uNearTint.a * pow(nearCol / uNearTint.a, vec3(uNear.z)) * uNear.y, uNear.x);
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
   col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
@@ -311,6 +325,7 @@ export class NeptunePlanet {
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
+        uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) },
         uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
@@ -320,8 +335,10 @@ export class NeptunePlanet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(spin: number, stream: number, storm: number, gain: number, weight: number): void {
+  update(spin: number, stream: number, storm: number, gain: number, weight: number, near = 0, nearGain = 1): void {
     const u = this.material.uniforms
+    ;(u.uNear!.value as THREE.Vector4).x = near
+    ;(u.uNear!.value as THREE.Vector4).y = nearGain
     u.uSpin!.value = spin
     u.uStream!.value = stream
     u.uStormAngle!.value = storm
