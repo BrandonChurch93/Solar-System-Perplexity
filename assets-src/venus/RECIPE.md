@@ -109,6 +109,72 @@ The entry of the terrain view starts higher and further back (camera height 1.42
 - `air.py`: stars are mirrored about the line 1.0 deg above the horizon (`SEAM`), faded from 130 to 260 px below it. Where the air is bright (around the Sun, along the limb) the star layer is filled from a clean part of the same image (`CLEAN`, rows 30 to 390, columns 100 to 1300, tiled by reflection, gain 0.7) instead of black: when the camera rises the horizon dips and that part of the patch comes out above the glow.
 - `relief.ts`: the dome cuts the sky fully within 2 deg of the film's Sun (fading to 5 deg), so the only Sun in the terrain view is the approved one in the air texture. Without it a second small Sun separated from the first on the rise.
 
+## Dive patches
+
+### public/assets/venus/{full,web}/patch-a.jpg, patch-b.jpg, patch-c.jpg, patch-d.jpg (4096 x 4096 and 2048 x 2048)
+
+Four gnomonic levels about the dive spot (`assets-src/venus/patches/spot.json`, body lon 25.4909, lat 50.3727, written by `npx tsx assets-src/venus/patches/spot.ts`), widths 90, 53.13010235, 28.07248694 and 14.25003270 deg (half-tangent 1, 0.5, 0.25, 0.125: each level is exactly twice the scale of its parent). North up. Same albedo encoding as the wrap (24 * v * v). Designed with the predictor before anything was rendered: `npx tsx assets-src/venus/patches/predict.ts --levels "90,53.13,28.07,14.25" --kinds dive,rise --every 3` gives 0 soft pixels at 1920 x 1080 on every frame outside the covers (the same tool gives 0 on the Mars dive and rise).
+
+No real data exists for the cloud tops at this scale, so the detail is generated, level by level, each from its parent:
+
+1. Canvas. Level A: `python3 assets-src/venus/patches/patch.py to-patch public/assets/venus/full/wrap-color.jpg 90 4096 out/work/venus/patches/a-src-4096.png`. Levels B, C, D: `patch.py subpatch PARENT-4096.png PARENT_DEG CHILD_DEG 4096 CHILD-src-4096.png` (the parent's central half, enlarged twice).
+2. `python3 assets-src/venus/patches/tiles.py split CANVAS OUTDIR SIZE`: 2 x 2 tiles of 2240 px with 384 px overlap, written at 1408 px (level A) or 1120 px (B, C, D) as `in-tl.png`, `in-tr.png`, `in-bl.png`, `in-br.png`.
+3. Each tile: `generate_image`, model `seedream_5`, aspect 1:1, one input (`in-<tile>.png`), output 2048 x 2048. Prompts below.
+4. `python3 assets-src/venus/patches/tiles.py assemble CANVAS TILE_DIR OUT-4096.png 12 TL,TR,BL,BR cut` (the four numbers are the takes kept): each tile is resized to 2240, its low frequencies are locked to the canvas (ratio of Gaussian blurs, sigma 12 px), its chroma is taken from the canvas (sigma 3 px: the model turns the pink-cream highlights cream), and the tiles are joined along the least-difference path through the overlap (`cut`, feather 6 px). A cross-fade over the overlap ghosts, because two takes of the same area do not agree in their fine detail.
+5. `python3 assets-src/venus/patches/patch.py export out/work/venus/patches public/assets/venus 4`: nests the levels from the deepest up (every parent carries its child's pixels, reduced, in its centre, feather 0.12, so nothing changes shape where a level fades in), JPEG 94 4:4:4, `full` at 4096 and `web` at 2048.
+
+The approved images are not inputs of these takes. The patches are albedo (the hero divided by its light curve, encoded), a muted tan map that does not look like either approved image, and a style image pulled the tiles toward the lit hero colours (tried on the far side of the wrap: the style image was pasted into the tile). The approved hero is in every tile through the canvas: level A is the hero's own pixels in the wrap.
+
+Prompt, levels C and D (take 1 of every tile):
+
+"Faithful 2x enlargement of Image 1, a small square crop of a top-down (straight down, nadir) aerial photograph of the cloud tops of Venus: one thick unbroken deck of cloud seen from above, north at the top.
+
+LAYOUT, TONE AND COLOR LOCK:
+Image 1 fixes the picture. Every cloud bank, bright cloud top, streak, swirl, soft shadow and darker trough that can be seen in Image 1 stays at its exact position, with its exact outline, brightness and color. Smooth areas of Image 1 stay evenly toned: do not put a new cloud bank, a new tower, a new dark shadow or a new bright patch where Image 1 has none. Keep the muted tan and beige palette with pale pink-cream highlights exactly as in Image 1, and the same gentle contrast: no deep shadows, no grey or cold tones. Scaled back down to the size of Image 1, the result must look identical to Image 1.
+
+DETAIL TO ADD, ALL OF IT SMALLER THAN THE SMALLEST FEATURE OF IMAGE 1:
+Image 1 has far too few pixels. Give every part of it the fine grain of a sharp, high resolution aerial photograph taken straight down: the outlines of the brighter banks break up into small knotted cauliflower billows and crisp scalloped edges; the surfaces of the banks show fine cottony cumulus texture; the smooth areas show fine fibrous streaks combed along the flow, faint ripples and rows of tiny soft puffs; thin wisps of haze feather the edges of the darker gaps. It is cloud everywhere, soft and vaporous, never rock, sand or foam. The Sun is very low in the upper left: the small billows catch warm light on their left side and lay short soft shadows to the right. Every part is in sharp focus down to the pixel. No blur, no noise, no grain stipple, no sharpening halos, no painterly brush strokes.
+
+Strict nadir aerial texture edge to edge. No horizon, no sky, no stars, no planet limb, no vignette, no border, no text, no watermark."
+
+- Level D, take 1: the same with "seen from above at close range".
+- Level D, later takes (the first takes of level D drifted toward an oblique view, one with a Sun on a horizon): the first paragraph ends "seen from directly above at close range, north at the top. The camera looks straight down: there is no horizon, no sky and no Sun anywhere in the picture, every part of the frame is cloud deck seen from above."; the lock adds "a new glow", "no grey, white or cold tones, no glare" (and for tile tl, takes 3 and 4: "Same framing, same scale, same crop: nothing is shifted, zoomed, rotated or recomposed."); the sentence on the Sun becomes "The small billows catch warm light on their left side and lay short soft shadows to the right."; the last paragraph is "Strict nadir aerial texture edge to edge, evenly lit from corner to corner. No horizon, no sky, no Sun, no glow, no stars, no planet limb, no vignette, no border, no text, no watermark."
+- Level B: as C with "fine pebbled cumulus texture", "rows of tiny puffs", and without the sentence "It is cloud everywhere, soft and vaporous, never rock, sand or foam."
+- Level A: as B with "a square crop of a top-down (straight down, nadir) orbital photograph", "seen from far above", "Every cloud band", "Image 1 has too few pixels", "orbital photograph taken straight down", "Strict nadir orbital texture".
+
+Takes and checks. Check: `python3 tools/ml/checkmoved.py --a in-<tile>.png --b <take resized to the input size>.png`, passes when the 99th percentile of the flow is at most 1.5 px.
+
+| Level | Tile | Takes | Kept | p99 of the kept take (px) | Rejected |
+| --- | --- | --- | --- | --- | --- |
+| A | tl | 2 | 2 | 3.74, fails | take 1 (other model, see below) |
+| A | tr | 2 | 2 | 9.35, fails | take 1 |
+| A | bl | 2 | 2 | 4.23, fails | take 1 |
+| A | br | 2 | 2 | 7.39, fails | take 1 |
+| B | tl | 1 | 1 | 0.95 | |
+| B | tr | 1 | 1 | 0.60 | |
+| B | bl | 1 | 1 | 0.68 | |
+| B | br | 1 | 1 | 0.73 | |
+| C | tl | 1 | 1 | 0.76 | |
+| C | tr | 3 | 3 | 1.02 | take 1: 16.2 px; take 2: the service returned an error, no image |
+| C | bl | 1 | 1 | 0.54 | |
+| C | br | 1 | 1 | 1.44 | |
+| D | tl | 4 | 4 | 1.47 | take 1: 2.68; take 2: 52.7 (the picture shifted); take 3: 2.80 |
+| D | tr | 3 | 3 | 1.50 | take 1: 37.5 (an oblique view with a Sun); take 2: 0.31, passes but adds almost nothing |
+| D | bl | 2 | 2 | 1.28 | take 1: 1.52 |
+| D | br | 2 | 2 | 0.75 | take 1: 1.96 |
+
+Known departure, level A. Take 1 of level A was `nano_banana_pro` with this prompt: "Strict 2x super-resolution of Image 1, a square crop of a top-down (straight down, nadir) orbital map of the cloud tops of Venus: one thick unbroken deck of cloud seen from far above, north at the top.
+
+EXACT LAYOUT, TONE AND COLOR LOCK:
+Image 1 is the exact map to sharpen in place. Scaled back to the size of Image 1, every cloud band, streak, swirl, filament, bright cloud top and darker trough must stay at its exact position, shape, brightness and color. Keep the muted tan and beige palette with pale pink-cream highlights exactly as in Image 1. Do not shift, rotate, resize, add or remove any large feature. Do not brighten, darken, recolor or raise the contrast.
+
+DETAIL TO RESOLVE:
+Replace only the softness of Image 1 with crisp, photoreal cloud-top structure, as a high resolution orbital photograph would show it: fine fibrous streaks combed along the flow, feathered filament edges, small billows and cauliflower cumulus tops along the brighter ridges, soft troughs between the bands, thin wisps of haze. The Sun is very low in the upper left: raised cloud tops catch light on their left side and lay soft shadows to the right. No noise, no grain stipple, no sharpening halos, no painterly brush strokes.
+
+Strict nadir map texture edge to edge. No horizon, no sky, no stars, no planet limb, no vignette, no border, no text, no watermark." It passes the check and adds nothing: the tile comes back as soft as the wrap, and the frames of the dive between 1.7 and 0.6 radii showed enlarged pixels. `kit/03-METHOD.md` asks for real detail, not enlarged pixels. The `seedream_5` takes kept for level A add cumulus and fibrous structure below the size of the wrap's features. Their median flow is 0.29 to 0.41 px, but their 99th percentile is 3.7 to 9.4 px at the input size of 1408 px, above the limit: against a soft input the flow tool reads the new fine structure as movement. By eye every band, bank and the vortex sit where the wrap has them (`out/work/venus/patches/a-seam.jpg`, canvas beside result), and the low frequencies and the chroma are the wrap's by construction (step 4). From level B on, where the input is already sharp, the same model and prompt pass. Rejected takes from the prompt search (folders `b`, `b2`, `c`, `c2`, `c3` under `out/work/venus/patches/`) were a "DETAIL TO INVENT" prompt that added towers and shadows of its own (rejected by eye and by the check) and the faithful model at levels B and C (no detail added).
+
+The join between wrap and levels is checked in rendered frames, not only in the maps: stills of the dive at 1287, 1296, 1299, 1302, 1305 and of the rise at 1563 to 1586.
+
 ## File list
 
 Every file below exists in both sets (`full` and `web`); the section that makes it is named after it.
@@ -123,3 +189,4 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/relief-masks.png`: Terrain view, `build.py`.
 - `public/assets/venus/<set>/relief-Al-color.jpg`, `public/assets/venus/<set>/relief-Al-dist.bin`, `public/assets/venus/<set>/relief-Ar-color.jpg`, `public/assets/venus/<set>/relief-Ar-dist.bin`: Terrain view, `apron.py`.
 - `public/assets/venus/<set>/relief-air.png`, `public/assets/venus/<set>/sky-terrain.webp`: Terrain view, `air.sh`.
+- `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`, `public/assets/venus/<set>/patch-c.jpg`, `public/assets/venus/<set>/patch-d.jpg`: Dive patches, `patch.py export`.

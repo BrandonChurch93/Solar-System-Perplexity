@@ -67,7 +67,7 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
+      for (int k = 0; k < (w > 0.0 && uPatchCount > ${i}.5 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
       near = max(near, w * step(${i}.5, 2.0));
@@ -164,7 +164,7 @@ ${PATCH_LEVELS}
   float s1 = equirect(uFlow, normalize(df - lean)).r;
   float veil = (1.0 + k * f1) / (1.0 + k * f0) * (1.0 - uFlowLook.y * (1.0 - near) * s1) / (1.0 - uFlowLook.y * (1.0 - near) * s0);
   vec3 col = lin * curveAt(ndl) * veil * uTint;
-  if (uCellCount > 0.5) {
+  for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
     float night = 1.0 - smoothstep(-0.05, 0.3, ndl);
     float lum = dot(lin, vec3(0.2126, 0.7152, 0.0722));
     vec3 soft = equirectGrad(uMap, dc, 40.0).rgb;
@@ -202,6 +202,7 @@ export class Globe {
   private readonly cells: THREE.Vector4[]
   private readonly amps: THREE.Vector2[]
   private readonly inverse = new THREE.Quaternion()
+  private readonly count: number
 
   constructor(o: GlobeOptions) {
     const p = o.patches
@@ -221,6 +222,7 @@ export class Globe {
     }
     const [spot, east, north] = frame(p.spot)
     const [bn, be, bu] = frame(o.bolts.center)
+    this.count = o.bolts.cells.length
     this.cells = levels.concat(Array.from({ length: MAX_CELLS - MAX_PATCHES }, (_, i) => i + MAX_PATCHES)).map((i) => {
       const c = o.bolts.cells[i]
       return c ? new THREE.Vector4(c.dir.x, c.dir.y, c.dir.z, Math.cos(THREE.MathUtils.degToRad(c.radiusDeg))) : new THREE.Vector4(0, 1, 0, 0.99)
@@ -269,7 +271,13 @@ export class Globe {
     u.uSpin!.value = spin
     ;(u.uDrift!.value as THREE.Vector3).x = drift
     ;(u.uDrift!.value as THREE.Vector3).y = flow
-    for (let i = 0; i < this.amps.length; i++) this.amps[i]!.x = amps[i] ?? 0
+    let lit = 0
+    for (let i = 0; i < this.amps.length; i++) {
+      const a = amps[i] ?? 0
+      this.amps[i]!.x = a
+      if (i < this.count && a > 0) lit = this.count
+    }
+    u.uCellCount!.value = lit
     u.uGain!.value = gain
     u.uWeight!.value = weight
   }

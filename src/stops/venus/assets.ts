@@ -13,7 +13,12 @@ export const wrap = {
 }
 
 export const patches = {
-  levels: [] as { file: string; widthDeg: number }[],
+  levels: [
+    { file: 'patch-a.jpg', widthDeg: 90 },
+    { file: 'patch-b.jpg', widthDeg: 53.13010235 },
+    { file: 'patch-c.jpg', widthDeg: 28.07248694 },
+    { file: 'patch-d.jpg', widthDeg: 14.2500327 },
+  ] as { file: string; widthDeg: number }[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
 }

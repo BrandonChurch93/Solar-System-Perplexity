@@ -87,3 +87,14 @@ if __name__ == '__main__':
         write(sys.argv[6], subpatch(read(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), int(sys.argv[5])))
     elif cmd == 'nest':
         write(sys.argv[6], nest(read(sys.argv[2]), float(sys.argv[3]), read(sys.argv[4]), float(sys.argv[5])))
+    elif cmd == 'export':
+        work, public = Path(sys.argv[2]), Path(sys.argv[3])
+        widths = [90.0, 53.13010235, 28.07248694, 14.25003270]
+        tags = ['a', 'b', 'c', 'd'][:int(sys.argv[4]) if len(sys.argv) > 4 else 4]
+        imgs = [read(work / f'{t}-4096.png') for t in tags]
+        for i in range(len(tags) - 2, -1, -1):
+            imgs[i] = nest(imgs[i], widths[i], imgs[i + 1], widths[i + 1])
+        for t, img in zip(tags, imgs):
+            write(public / 'full' / f'patch-{t}.jpg', img)
+            write(public / 'web' / f'patch-{t}.jpg', cv2.resize(img, (2048, 2048), interpolation=cv2.INTER_AREA))
+
