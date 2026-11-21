@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 4150 to 4175 across the dive cover",
+   "what": "the frames before and after the cover do not belong to one move: a level pale-teal limb with a vertical Milky Way column and no sun in 4150 cuts to a ~20-degree tilted deep-cobalt horizon with a bright sun, overhead double rings, and an abrupt drop in camera speed by 4175",
+   "fix": "align camera pose, roll, horizon angle, sun placement, ring geometry, color/exposure, and velocity between the globe dive and terrain rig so both sides of the cover continue one trajectory"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 4405 to 4416 across the rise cover, especially upper sky in 4415-4416",
+   "what": "the dark cobalt horizon with a bright right-limb sun and overhead ring arcs in 4405 swaps behind the cloud wipe to a bright front-lit mint-cyan globe with no sun and a single side ring in 4414-4415, and the Milky Way skybox pops on in a single frame between 4415 and 4416",
+   "fix": "match lighting, sun, ring orientation, exposure, and horizon curvature across the rise cover, and keep the Milky Way skybox rendered throughout the cover instead of switching it on at frame 4416"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 4159-4170, foreground streak blur and upper-center cloud veil",
+   "what": "the radially streaked cloud cover stays nearly static across 4159-4165 instead of carrying the dive motion forward, breaks into vertical dark and bright bands over the rings in 4166-4168, and pops the Milky Way dust lane inside the rings on between 4169 and 4170",
+   "fix": "advect the cloud cover continuously at the camera dive speed, use smooth volumetric alpha falloff free of vertical banding, and keep background sky layers continuous across 4169-4170"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 4200-4216 lower center-right (continuing from sheet-02.png 4175-4199)",
+   "what": "the bottom-right edge and corner of the projected terrain picture come into frame with clamped, radially stretched border streaks below the seam",
+   "fix": "extend terrain plate coverage or tighten camera framing so no texture boundary or stretched edge pixels enter the frame"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 4126-4134 upper-right cloud highlights and ring arcs",
+   "what": "fast dive motion breaks bright cloud puffs and thin ring edges into four separate stepped ghost copies rather than a smooth blur",
+   "fix": "increase temporal motion-blur subsamples or add stochastic shutter jitter so fast-moving high-contrast edges smear continuously"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4420-4427 upper-right ring arcs and globe cloud highlights",
+   "what": "fast pullback motion splits the thin ring arcs and bright cloud features into three to four discrete stepped ghost copies",
+   "fix": "increase temporal supersampling or apply jittered subframe shutter integration during the rise pullback"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 4200-4379 top sky margin (~15 px) and right sky margin (~20 px)",
+   "what": "the background starfield plate reaches its boundary inside the frame and mirror-repeats, creating symmetrical Rorschach star pairs along the top and right edges",
+   "fix": "overscan the sky plate or use a spherical 360-degree starfield environment so mirrored texture borders never enter the viewport"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 3960-4109 background point stars and thin inner ring arc",
+   "what": "unfiltered 1-pixel stars flicker in brightness and the thin inner ring line shimmers in stair-stepped beads during slow subpixel drift",
+   "fix": "prefilter point stars to a soft >=1.5 px footprint and antialias/filter thin ring geometry across subpixel camera motion"
+  }
+ ]
+}

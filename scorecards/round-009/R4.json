@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 4680-4696, dive start",
+   "what": "the camera barely moves from 4680 to 4688, then the planet jumps from framed in full to filling the frame by 4696. The dive starts with a jump in speed and scale, not an eased push",
+   "fix": "ease the dive in over 20-30 frames with a gradual speed ramp out of the hold, so the push begins slowly and builds"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 4982-4986, lower half and cloud bands",
+   "what": "during the rise-out the motion blur on the cloud streaks breaks into blocky, stepped rectangular smears, like repeated copies of each edge, not one smooth blur",
+   "fix": "raise the motion-blur sample count or use a continuous shutter so fast cloud edges blur smoothly without stepped copies"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4950-4970, rise segment",
+   "what": "the rise first pushes in, with the storm and cloud band growing larger through 4963, then by 4970 it is suddenly level and high with the storm gone. Direction reverses inside the segment, so the climb does not read as one move",
+   "fix": "make the rise one continuous climb and pull-back from the terrain view, with no push-in before it, and ease out of the terrain hold"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4986-4997, exit to orbit",
+   "what": "the view jumps from a limb across the top of the frame (4986) to a heavily blurred planet filling the left side (4990), and then to a small planet with rings (4997). The planet's orientation and the storm layout change between these frames, so the pull-back does not read as continuous",
+   "fix": "keep one camera path from the limb view out to the orbital view, with the planet's orientation and the storm's position continuous as the camera pulls back"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "white cloud band, left half, frames 4770-4949",
+   "what": "the camera hardly moves in the terrain view, so near ground and horizon show almost no parallax and the view reads flat. Meanwhile the cloud band changes shape and brightness over the segment, which looks like the texture is swimming rather than moving with the wind",
+   "fix": "add a slow, steady forward or lateral drift so the near ground moves against the horizon, and advect the cloud band coherently instead of letting its shape morph in place"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png / sheet-03.png",
+   "where": "dive-to-terrain cover, frames 4720-4745",
+   "what": "the dive heads into the vortex near the white band, but the terrain view revealed after the cloud cover has a different storm and band layout, so arrival reads as a cut to a different place",
+   "fix": "match the terrain view's storm and band layout and the camera heading to the last dive frames before the cover"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "final orbital frames 4997-5024 vs hold sheet-01",
+   "what": "the moon and the bright star from the hold are gone in the return view, and the planet's framing and lighting differ, so the round trip does not close on the place it left",
+   "fix": "return to the hold's framing or keep the moon and star in view so the exit clearly reads as the same place"
+  }
+ ]
+}
