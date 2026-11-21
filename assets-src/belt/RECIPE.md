@@ -39,5 +39,8 @@ Cube faces are in GL order (+X, -X, +Y, -Y, +Z, -Z), rows top to bottom, no head
 
 ## Checks
 - No text, logo, border or baked stars: the files hold normals, tones, radii and occlusion only.
-- Sizes on disk and texture memory: see `NOTES.md` (measured at the milestone).
+- Sizes on disk (`du -sh`): full 28 MB (limit 30 MB), web 6.9 MB (limit 10 MB). Largest file `rock-a.map.bin`, 9.4 MB.
+- Texture memory of the full set with mipmaps: about 36.7 MB (limit 64 MB): normal and tone cubes 6 x (640^2 + 512^2 + 2 x 384^2) x 4 bytes x 4/3 = 30.9 MB, radius and occlusion cubes 6 x (320^2 + 256^2 + 2 x 192^2) x 3 bytes = 4.35 MB (no mipmaps), detail tile 512^2 x 4 x 4/3 = 1.4 MB.
+- The web set loads and renders (`npm run still -- --frame 2782 --tier draft --assets web`), softer than full.
+- Takes used: 3 of 6.
 - Seams: cube faces are baked with a padded border and cropped, the mesh is welded across cube edges; no seam seen in the previews or in the native crops.

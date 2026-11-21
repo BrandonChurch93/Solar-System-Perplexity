@@ -15,7 +15,7 @@ One shared file is touched: `src/core/engine.ts`, five lines. The exact change i
 - Proof by render is in `NOTES.md` (four frames at the final tier, sha256 before and after).
 
 ## What the module needs from the engine and the director
-- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 48 per rock), so its motion blur does not depend on the tier's sample count. It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample.
+- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 64 per rock), so its motion blur does not depend on the tier's sample count. It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample.
 - From the shot: `segment.id`, `camera` (position, quaternion, vfov), `sun.dir`, `sun.color`, `sun.intensity`, `post.exposure`, `dustOffset`, `frame`.
 - From the view: `format`, `sample`, `diag`, `camera.view` (jitter for the raw views).
 
@@ -24,3 +24,12 @@ One shared file is touched: `src/core/engine.ts`, five lines. The exact change i
 - The belt is not a set in `SetLoader`; it loads `./assets/shared/belt/<full|web>/` itself. Its texture memory is `belt.bytes`.
 - `npm run looks -- --push --folder belt` rejects `belt` because it is not a stop id; looks were pushed with `assets-src/belt/pushlooks.ts`.
 - The travel dust offset moves dust toward Jupiter by my probe (flow direction dot Jupiter direction is +0.987). The rocks use the same closed form with the sign flipped (`flow: -1` in `belt.json`).
+
+## Cost and memory to know about
+- Texture memory of the full set with mipmaps: about 36.7 MB (normal and tone cubes 30.9 MB, radius and occlusion cubes 4.35 MB without mipmaps, detail tile 1.4 MB). `belt.bytes` reports it together with the render targets.
+- Render targets, alive only while a frame of `mars.travel` is prepared: three half float targets of the frame plus a border of 96 px on each side (2112 x 1272 at the master size, 21.5 MB each, one with a depth buffer) and one layer target of the frame size (16.6 MB). About 92 MB at 1920 x 1080. They are freed with the assets when `prepare` sees a frame outside the segment.
+- The layer is built once per film frame (engine sample 0), so the cost per frame does not grow with the tier's sample count. In a live (real time) mode the layer is rebuilt every displayed frame: up to 64 draws of a 128 grid cube sphere per rock plus the blur passes. If the live mode needs it cheaper, lower `steps.max` in `belt.json`.
+- Dust is drawn after the belt, so motes pass in front of the rocks. That is correct for the near motes and wrong for motes farther than a rock; at this dust density it shows as a few faint points over the dark side of the hero rock.
+
+## Tests
+- The repo vitest config only includes `tests/`, which the belt agent does not own. The belt test is `assets-src/belt/belt.test.ts`, run with `npx vitest run --config assets-src/belt/vitest.config.ts`. Move it to `tests/` at integration.
