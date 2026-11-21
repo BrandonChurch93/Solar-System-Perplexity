@@ -24,6 +24,8 @@ const SUN_PULL_END = 0.34
 const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 31, aimDeg: 12.5, settleDeg: 4.5, orbitDeg: 3, pullPerSecond: 0.012, distance: 9, rollDeg: 13, vfov: 34, glare: 1.5, flare: 0.22 }
 const OFFSET_FROM = 0.15
+const BOW_REACH = 24
+const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
 const easeSettle = ease('sine.out')
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
@@ -54,8 +56,24 @@ export class FilmDirector implements Director {
     this.begin.push(0)
     for (let i = 0; i + 1 < plans.length; i++) this.place(i)
     for (let i = 0; i + 1 < plans.length; i++) {
-      this.shapes.push(new TravelShape(plans[i]!.id))
-      this.clear.push(i === 0 ? SUN_APPROACH_START : this.clearOf(i))
+      const id = plans[i]!.id
+      let shape = new TravelShape(id)
+      let clear = i === 0 ? SUN_APPROACH_START : this.clearOf(i, shape)
+      if (i > 0 && clear > shape.look.clearBy) {
+        const tries: { shape: TravelShape; clear: number; off: number }[] = []
+        for (let b = -BOW_REACH; b <= BOW_REACH; b += 2) {
+          const t = new TravelShape(id, { bowDeg: b })
+          tries.push({ shape: t, clear: this.clearOf(i, t), off: Math.abs(b - shape.look.bowDeg) })
+        }
+        const limit = Math.max(shape.look.clearBy, Math.min(...tries.map((t) => t.clear)) + 0.02)
+        const pick = tries.filter((t) => t.clear <= limit).sort((p, q) => p.off - q.off)[0]
+        if (pick) {
+          shape = pick.shape
+          clear = pick.clear
+        }
+      }
+      this.shapes.push(shape)
+      this.clear.push(clear)
     }
     const last = plans.length - 1
     const n = this.plans[last]!
@@ -176,11 +194,10 @@ export class FilmDirector implements Director {
     return end
   }
 
-  private clearOf(i: number): number {
+  clearOf(i: number, shape: TravelShape): number {
     const a = this.plans[i]!
     const seg = a.seg.travel!
     const dur = seg.end - seg.start
-    const shape = this.shapes[i]!
     const master = config.formats[config.formatKeys.master]!
     const steps = 600
     for (let k = 1; k < steps; k++) {
@@ -263,6 +280,23 @@ export class FilmDirector implements Director {
     this.approach.push(dLocal.clone().applyQuaternion(best))
   }
 
+  private travelCamera(index: number, time: number): Pose {
+    const seg = this.plans[index]!.seg.travel!
+    const u = (time - seg.start) / (seg.end - seg.start)
+    const from = this.toWorld(index, this.leaving(index, time))
+    const shape = this.shapes[index]!
+    const x = ramp(this.clear[index + 1]!, 1, u)
+    const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
+    const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
+    if (index === 0) {
+      const g = easeInOut(ramp(0, SUN_PULL_END, u))
+      const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
+      from.position.lerp(radial, smooth(u / 0.12))
+    }
+    const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
+    return { position, quaternion: shape.turn(from.quaternion, to.quaternion, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
+  }
+
   beginOf(i: number): number {
     return this.begin[i] ?? 0
   }
@@ -333,27 +367,29 @@ export class FilmDirector implements Director {
     } else if (segment.kind === 'travel' && index + 1 < this.plans.length) {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
-      const from = this.toWorld(index, this.leaving(index, time))
       const begin = this.clear[index + 1]!
-      const shape = this.shapes[index]!
-      const x = ramp(begin, 1, u)
-      const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
-      const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
-      if (index === 0) {
-        const g = easeInOut(ramp(0, SUN_PULL_END, u))
-        const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
-        from.position.lerp(radial, smooth(u / 0.12))
-      }
-      const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
-      const quaternion = shape.turn(from.quaternion, to.quaternion, u)
-      pose = { position, quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
+      pose = this.travelCamera(index, time)
+      const position = pose.position
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       const leaveWeight = index === 0 ? 1 - smooth(ramp(0.3, 0.42, u)) : u < begin ? 1 : 0
       if (index === 0) sunWeight = smooth(ramp(0.3, 0.42, u))
-      sets = [state(index, 'orbit', leaveWeight), state(index + 1, 'orbit')]
+      const arriving = state(index + 1, 'orbit')
+      const midTime = (frame + config.shutterFraction * 0.5) / config.fps
+      if (Math.abs(time - midTime) > 1e-9) {
+        const to = arriving.origin.clone().sub(position)
+        const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
+        const lock = 1 - smooth(ramp(LOCK_PX[0], LOCK_PX[1], px))
+        if (lock > 0) {
+          const qm = this.travelCamera(index, midTime).quaternion.multiply(drift(midTime))
+          const r = new THREE.Quaternion().slerp(pose.quaternion.clone().multiply(drift(time)).multiply(qm.invert()), lock)
+          arriving.origin.copy(to.applyQuaternion(r).add(position))
+          arriving.rotation.premultiply(r)
+        }
+      }
+      sets = [state(index, 'orbit', leaveWeight), arriving]
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)

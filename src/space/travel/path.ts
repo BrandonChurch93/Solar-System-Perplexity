@@ -11,19 +11,20 @@ export interface TravelLook {
   offset: [number, number]
   settle: number
   clearDeg: number
+  clearBy: number
 }
 
-const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], roll: [2, 2], rollSpan: [0.04, 0.9], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2 }
+const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], roll: [2, 2], rollSpan: [0.04, 0.9], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, clearBy: 0.34 }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { pan: [2, 3], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
-  mercury: { pan: [2, 4], bowDeg: 9, rollSpan: [0.1, 0.92], grow: [2, 3] },
+  mercury: { pan: [2, 5], bowDeg: 9, rollSpan: [0.1, 0.92], grow: [3, 3] },
   venus: { pan: [2, 5], bowDeg: -12, rollSpan: [0.05, 0.8], grow: [3, 3] },
-  earth: { pan: [2, 4], panSpan: [0, 0.94], bowDeg: -7, rollSpan: [0.02, 0.86], grow: [2, 4] },
+  earth: { pan: [2, 4], panSpan: [0, 0.9], bowDeg: -7, rollSpan: [0.02, 0.86], grow: [3, 4] },
   mars: { pan: [2, 4], bowDeg: 10, roll: [2, 2], rollSpan: [0.02, 0.98], grow: [2, 3] },
   jupiter: { pan: [2, 5], bowDeg: -10, rollSpan: [0.08, 0.9], grow: [3, 4] },
   saturn: { pan: [2, 3], panSpan: [0, 0.96], bowDeg: 8, rollSpan: [0.05, 0.85], grow: [2, 3] },
-  uranus: { pan: [2, 4], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [3, 3] },
+  uranus: { pan: [2, 5], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
 }
 
 export function travelLook(id: string): TravelLook {
@@ -64,8 +65,8 @@ export class TravelShape {
   private readonly swingEase = betaEase(2, 3)
   private readonly settleEase = betaEase(2, 2)
 
-  constructor(id: string) {
-    this.look = travelLook(id)
+  constructor(id: string, over: Partial<TravelLook> = {}) {
+    this.look = { ...travelLook(id), ...over }
     this.panEase = betaEase(this.look.pan[0], this.look.pan[1])
     this.rollEase = betaEase(this.look.roll[0], this.look.roll[1])
     this.growEase = betaEase(this.look.grow[0], this.look.grow[1])
