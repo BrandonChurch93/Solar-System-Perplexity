@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
+import { tileRects, type Tiles } from '../core/tiles'
 import type { SkyPatch, SunState } from '../core/types'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
@@ -200,10 +201,13 @@ void main() {
   outColor = vec4(vColor * (core + glow), 0.0);
 }`
 
+const BEHIND = { stencilWrite: true, stencilFunc: THREE.EqualStencilFunc, stencilRef: 0, stencilFuncMask: 0xff, stencilWriteMask: 0 } as const
+
 const POLE = [0.45, 0.82, 0.35] as const
 const GAMMA_TURN = 0.28
 const STAR_MAX_SIZE = 11
 const STAR_CULL_PAD_PX = 4
+const NO_TILES = new Uint8Array(0)
 
 function galactic(): THREE.Matrix3 {
   const n = new THREE.Vector3(...POLE).normalize()
@@ -242,6 +246,9 @@ export class Sky {
   private readonly starCulled: THREE.BufferGeometry
   private readonly starView = new THREE.Matrix3()
   private readonly starKey = new Float64Array(13).fill(NaN)
+  private starTiles: Uint8Array = NO_TILES
+  private starInView = new Uint32Array(0)
+  private starInViewCount = 0
 
   constructor(base: number) {
     const st = skyFrame.stars
@@ -251,7 +258,7 @@ export class Sky {
       uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
-    })
+    }, BEHIND)
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
     const star = new Float32Array(count * 4)
@@ -319,6 +326,7 @@ export class Sky {
       depthTest: false,
       depthWrite: false,
       transparent: true,
+      ...BEHIND,
     })
     this.stars = new THREE.Points(geo, mat)
     this.stars.frustumCulled = false
@@ -343,7 +351,7 @@ export class Sky {
     }
   }
 
-  private orderStars(camera: THREE.PerspectiveCamera, height: number, aspect: number): void {
+  private orderStars(camera: THREE.PerspectiveCamera, height: number, aspect: number, tiles: Tiles | null): void {
     const m = this.starView.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(camera.quaternion).invert().multiply(this.stars.quaternion))).elements
     const p = camera.projectionMatrix.elements
     const half = STAR_MAX_SIZE * 0.5 * height / 1080 + STAR_CULL_PAD_PX
@@ -354,25 +362,63 @@ export class Sky {
     const py = p[5]!
     let same = key[9] === px && key[10] === py && key[11] === limX && key[12] === limY
     for (let i = 0; i < 9; i++) same = same && key[i] === m[i]
-    if (same) return
-    for (let i = 0; i < 9; i++) key[i] = m[i]!
-    key[9] = px
-    key[10] = py
-    key[11] = limX
-    key[12] = limY
     const m0 = m[0]!, m1 = m[1]!, m2 = m[2]!, m3 = m[3]!, m4 = m[4]!, m5 = m[5]!, m6 = m[6]!, m7 = m[7]!, m8 = m[8]!
     const pos = this.starPos
+    if (this.starInView.length !== pos.length / 3) this.starInView = new Uint32Array(pos.length / 3)
+    const inView = this.starInView
+    if (!same) {
+      for (let i = 0; i < 9; i++) key[i] = m[i]!
+      key[9] = px
+      key[10] = py
+      key[11] = limX
+      key[12] = limY
+      const count = pos.length / 3
+      let n = 0
+      for (let i = 0; i < count; i++) {
+        const x = pos[i * 3]!
+        const y = pos[i * 3 + 1]!
+        const z = pos[i * 3 + 2]!
+        const w = -(m2 * x + m5 * y + m8 * z)
+        if (w <= 0) continue
+        if (Math.abs(px * (m0 * x + m3 * y + m6 * z)) > w * limX || Math.abs(py * (m1 * x + m4 * y + m7 * z)) > w * limY) continue
+        inView[n++] = i
+      }
+      this.starInViewCount = n
+    }
+    const grid = tiles ? tiles.open : NO_TILES
+    const seen = this.starTiles
+    same = same && seen.length === grid.length
+    for (let i = 0; same && i < grid.length; i++) same = seen[i] === grid[i]
+    if (same) return
+    this.starTiles = grid.slice()
     const order = this.starOrder.array as Uint32Array
-    const count = pos.length / 3
+    const total = this.starInViewCount
     let n = 0
-    for (let i = 0; i < count; i++) {
-      const x = pos[i * 3]!
-      const y = pos[i * 3 + 1]!
-      const z = pos[i * 3 + 2]!
-      const w = -(m2 * x + m5 * y + m8 * z)
-      if (w <= 0) continue
-      if (Math.abs(px * (m0 * x + m3 * y + m6 * z)) > w * limX || Math.abs(py * (m1 * x + m4 * y + m7 * z)) > w * limY) continue
-      order[n++] = i
+    if (tiles) {
+      const { tile, cols, rows } = tiles
+      const halfW = height * aspect * 0.5
+      const halfH = height * 0.5
+      const padX = (limX - 1) * halfW
+      const padY = (limY - 1) * halfH
+      for (let j = 0; j < total; j++) {
+        const i = inView[j]!
+        const x = pos[i * 3]!
+        const y = pos[i * 3 + 1]!
+        const z = pos[i * 3 + 2]!
+        const w = -(m2 * x + m5 * y + m8 * z)
+        const sx = (px * (m0 * x + m3 * y + m6 * z) / w + 1) * halfW
+        const sy = (py * (m1 * x + m4 * y + m7 * z) / w + 1) * halfH
+        const c0 = Math.max(Math.floor((sx - padX) / tile), 0)
+        const c1 = Math.min(Math.floor((sx + padX) / tile), cols - 1)
+        const r0 = Math.max(Math.floor((sy - padY) / tile), 0)
+        const r1 = Math.min(Math.floor((sy + padY) / tile), rows - 1)
+        let any = false
+        for (let r = r0; r <= r1 && !any; r++) for (let c = c0; c <= c1; c++) any = any || grid[r * cols + c] === 1
+        if (any) order[n++] = i
+      }
+    } else {
+      order.set(inView.subarray(0, total))
+      n = total
     }
     this.starOrder.clearUpdateRanges()
     this.starOrder.addUpdateRange(0, n)
@@ -385,7 +431,7 @@ export class Sky {
     this.band = band
   }
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null): void {
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)
@@ -408,7 +454,17 @@ export class Sky {
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
-    if (this.texture) this.pass.render(renderer, target)
+    const rects = open ? tileRects(open, target.width, target.height) : null
+    if (this.texture && !rects) this.pass.render(renderer, target)
+    if (this.texture && rects) {
+      target.scissorTest = true
+      for (let i = 0; i < rects.length; i += 4) {
+        target.scissor.set(rects[i]!, rects[i + 1]!, rects[i + 2]!, rects[i + 3]!)
+        this.pass.render(renderer, target)
+      }
+      target.scissorTest = false
+      target.scissor.set(0, 0, target.width, target.height)
+    }
     const su = (this.stars.material as THREE.ShaderMaterial).uniforms
     su.uSky!.value = this.texture
     su.uBand!.value = this.band
@@ -419,9 +475,10 @@ export class Sky {
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
     this.stars.geometry = this.cull ? this.starCulled : this.starPlain
-    if (this.cull) this.orderStars(camera, height, aspect)
+    const some = !rects || rects.length > 0
+    if (this.cull && some) this.orderStars(camera, height, aspect, open)
     renderer.setRenderTarget(target)
-    renderer.render(this.starScene, camera)
+    if (some) renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)
     camera.position.copy(savedPos)
     camera.updateMatrixWorld(true)
