@@ -8,7 +8,7 @@ import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { Aurora } from './aurora'
 import { patches } from './assets'
-import { Veil } from './veil'
+import { Veil, type Deck } from './veil'
 import { Globe, direction } from './globe'
 import { Moon } from './moon'
 import { Ground, type GroundDef } from './relief'
@@ -92,6 +92,7 @@ export const createSet: SetFactory = async (ctx) => {
   const lay = new THREE.Matrix4().makeBasis(east, new THREE.Vector3().crossVectors(upAt, east), upAt).transpose()
   const wisps = { ...look.veil.near, eye: new THREE.Vector3(), turn: new THREE.Matrix3() }
   const spin = new THREE.Matrix4()
+  const layer: Deck = { grain: look.veil.deck.grain, gain: look.veil.deck.gain, rush: 0, shade: 1, turn: new THREE.Matrix3() }
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const auroraHome = new THREE.Vector3().fromArray(look.aurora.eye).normalize()
   const stand = new THREE.Vector3()
@@ -111,13 +112,15 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const seg = state.segment
       let thin = 0
+      let grow = 0
       if (seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')) {
         const w = coverWindow(seg)!
         const centre = w.centerFrame / config.fps
         const from = w.firstFrame / config.fps - look.veil.lead
         const to = (w.lastFrame + 1) / config.fps + look.veil.tail[seg.kind === 'dive' ? 0 : 1]
         const full = seg.kind === 'dive' ? (w.firstFrame + look.veil.full * (w.lastFrame + 1 - w.firstFrame)) / config.fps : centre
-        thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (full - from)) : smooth((to - state.time) / (to - centre)))
+        grow = (state.time - from) / (full - from)
+        thin = look.veil.peak[seg.kind === 'dive' ? 0 : 1] * (state.time < centre ? smooth((state.time - from) / (full - from)) : smooth((to - state.time) / (to - centre)))
       }
       if (!inOrbit) {
         back.copy(state.rotation).invert()
@@ -134,7 +137,15 @@ export const createSet: SetFactory = async (ctx) => {
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
-      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim)
+      let deck: Deck | null = null
+      if (seg.stop === plan.id && seg.kind === 'dive') {
+        const k = look.veil.deck
+        layer.rush = smooth((grow - k.rush[0]) / (k.rush[1] - k.rush[0]))
+        layer.shade = 1 - smooth((grow - k.lit[0]) / (k.lit[1] - k.lit[0]))
+        layer.turn.setFromMatrix4(spin.makeRotationFromQuaternion(lean.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt).invert().multiply(back.copy(state.rotation).invert()).multiply(shot.camera.quaternion)))
+        deck = layer
+      }
+      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim, null, deck)
       camera.copy(world.position).negate()
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
