@@ -87,7 +87,7 @@ npm run post -- --check
 
 ## Take kept
 
-The first take of each. No take was thrown away. The skill renders by seeking to each frame time, and its own check of that (`seekDeterminism`) passed for all nine.
+The first take of each. No take was thrown away. The skill renders by seeking to each frame time, and its own check of that (`seekDeterminism`) passed for all nine. Mars was made a second time and the file was the same byte for byte.
 
 ## Checks each intro passed
 

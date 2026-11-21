@@ -22,6 +22,8 @@ Work for `kit/addenda/003-planet-posts.md`, on branch `agent/posts`. Dates are U
 - `npm run post -- --check` with no stop: exit code 1, because eight posts do not exist yet.
 - A post file swapped for another under its record: the check fails with "post record is of another file".
 - `npm run keep -- --posts --stop mars`: copies the intro. It says "no current post for mars", because the committed Mars clip is of engine `73b844358c466906` and the build on this branch is `cae3193a3821716c`. With the record set to the current build for the test, the post was copied and a second run said "(current)". The test output in `out/posts/` was removed and the record put back.
+- After the merge of main b4ae65c, with the fallback read removed: `npm run build`, `npm test` and `npm run post -- --check --stop mars` run again, all pass. The nine intro records carry the same prompt strings as the config block, checked by `--check` for Mars and by a comparison of all nine records.
+- The Mars intro made a second time with `npx tsx assets-src/posts/intro.ts --stop mars`, reading the config only: the file is the same byte for byte (sha256 `dabd99b2...b88b8c8`). The first take and its record were kept.
 - Not run: the text check of the addendum with a fresh agent. The sheets are ready for it.
 
 ## Decisions
@@ -36,7 +38,7 @@ Work for `kit/addenda/003-planet-posts.md`, on branch `agent/posts`. Dates are U
 8. cps 20 at 30 fps: a key lands every 1.5 frames, so keys come in a 2 frame, 1 frame rhythm. No frame adds two characters. The record lists the time of every key under `extra.keySeconds` for the sound cues.
 9. Records have the shape of `OutputRecord`, so `readRecord` and the `keep()` of `tools/keep.ts` work on them unchanged. An intro has an empty `engineHash` and no stop hashes, because it does not depend on the build. A post carries the hashes of its clip, so `keep -- --posts` copies a post only when its clip is of the current build, as `--clips` does. All other data sits under `extra`.
 10. `keep -- --posts` copies an intro without a build check, for the same reason.
-11. Config. The `posts` block is not on main yet. Until it is, `postsConfig` in `tools/post.ts` reads `cfg.raw.posts` and, if that is missing, the file `out/work/posts/config-fallback.json`, which is ignored by git. So no kit number is in a committed file. Each run that uses the fallback prints a note. The fallback read goes away when the block is on main.
+11. Config. Every number and every prompt comes from the `posts` block of `config/showcase.json` (`postsConfig` in `tools/post.ts` returns `cfg.raw.posts`). There is no fallback. While the block was not on main yet, the intros were made with the same values from a file under `out/work/`, which git ignores, so no kit number was ever in a committed file. That read was removed when the block landed with main b4ae65c.
 12. `--encode` was added to `npm run post` to force the encode path, so that path can be tested with a clip that also joins without encoding.
 13. Sheets: `critics.contactSheetFrames` frames at `critics.phonePreviewWidthPx` in three columns, evenly spread from the first frame to the submit frame, and under them the prompt box from the frame before the submit at native size. No labels are drawn, so the sheet carries no text but the interface's own. The prompt card is 1410 px wide and `critics.maxImageLongEdgePx` is 1400, so the crop leaves out 5 px of the card's edge on each side. The text is not touched by that.
 
@@ -58,6 +60,5 @@ Work for `kit/addenda/003-planet-posts.md`, on branch `agent/posts`. Dates are U
 
 ## Open
 
-- The `posts` block in `config/showcase.json`: waiting for the Builder. Then merge main and remove the fallback read.
 - The eight other posts wait for their clips. `npm run post` makes them, nothing else is needed.
 - The text check with a fresh agent is the Builder's.

@@ -26,16 +26,9 @@ export interface IntroExtra {
 }
 
 export const POSTS = join(WORK, 'posts')
-const FALLBACK = join(POSTS, 'config-fallback.json')
 
 export function postsConfig(cfg: Config): PostsConfig {
-  const inConfig = (cfg.raw as unknown as { posts?: PostsConfig }).posts
-  const p = inConfig ?? (existsSync(FALLBACK) ? (JSON.parse(readFileSync(FALLBACK, 'utf8')) as PostsConfig) : undefined)
-  if (!p) throw new Error('config/showcase.json has no posts block and there is no ' + relative(ROOT, FALLBACK))
-  if (!inConfig) console.log('note: posts values come from ' + relative(ROOT, FALLBACK) + ' until config/showcase.json carries them')
-  for (const key of ['introMaxSeconds', 'readHoldSeconds', 'introMaxTries', 'checkMaxFixes'] as const) if (!(p[key] > 0)) throw new Error('posts.' + key + ' is missing')
-  for (const stop of cfg.stopIds) if (!p.prompts?.[stop]) throw new Error('posts.prompts.' + stop + ' is missing')
-  return p
+  return cfg.raw.posts
 }
 
 export function sha256(file: string): string {
