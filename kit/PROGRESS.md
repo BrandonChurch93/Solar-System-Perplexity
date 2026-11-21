@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 4 · The other eight stops
 - Current stop: saturn
-- Current round: open: 18 (mercury). The next round is 19. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 18 (mercury), 19 (earth). The next round is 20. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_405
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
@@ -45,7 +45,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | sun | in progress | 2 | 8 | pass | 3 | 4 | pass |  |
 | mercury | in progress | 2 | 9 | pass | 5 | 5 | pass |  |
 | venus | in progress | 2 | 9 | pass | 6 | 6 | pass |  |
-| earth | in progress | 1 | 9 | pass | 4 | 6 | pass |  |
+| earth | in progress | 2 | 9 | pass | 4 | 6 | pass |  |
 | mars | finished (0ee8c76) | 3 | 7 | pass | 5 | 6 | pass | 6 to 15 |
 | jupiter | in progress | 2 | 7 | pass | 7 | 4 | pass |  |
 | saturn | in progress | 1 | 4 | fail | 6 | 6 | pass |  |
@@ -555,6 +555,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 16, Phase 4, venus, round 2 of 3. Started 2026-11-21 12:29 UTC. Judged on main at c08a38a. Measures green. R1 9, R2 pass, R3 6, R4 6, R8 pass. 0 severe, 9 major. R1 stayed at 9, R3 rose from 4 to 6, R4 stayed at 6. Looked at by the Builder: at 1287 the night limb is a doubled edge (inner hazy band, dark gap, thin outer line with a violet highlight upper right and an orange line lower right); the rise cover 1564 to 1566 shows a straight bright band above the globe's curved limb; the convergence knot faulted at 1185 is in the approved hero as well and is not a fault. Next (round 3, Venus's last), worst first: one horizon carried through the rise cover; the dive cover's incoming horizon matched to the dive camera; near cloud banks passing faster than the horizon in the terrain view across all 180 frames; one continuous falloff at the night limb in the dive; lightning as light inside the cloud; fine structure kept in shadowed clouds at 1586; then the minors (night side 1.3 levels high, exposure 1 level high, steps in the glow at 1287 and 1440, a slow turn in the hold). Summary in `scorecards/round-016/`.
 - Round 17, Phase 4, jupiter, round 2 of 3. Started 2026-11-21 12:29 UTC. Judged on main at c08a38a. Measures green. R1 7, R2 pass, R3 7, R4 4, R8 pass. 1 severe, 8 major. R1 fell from 9 to 7, R3 rose from 4 to 7, R4 fell from 6 to 4. Looked at by the Builder at native size: the hold sky's stars are larger and softer than the approved hero's, Io has a bright orange band on its night limb and a softer, lighter shadow than the hero's; both are new in this build. The severe on the rise ("the globe pops to a different planet pose") is a misreading of a continuous path, the dark half is below the frame at 3280, but the pullback takes about 13 frames and ends with the bands upright, so it is treated as a real fault of pace and roll. Next (round 3, Jupiter's last), worst first: the hold sky and Io back to the hero; the rise eased with the roll taken out; the dive eased across 2994 to 3019; the tan haze carried into the first terrain frames; parallax between near cloud tops, vortex and limb in the terrain view; the exposure lift ahead of the rise cover tied to altitude; then ribbons at 3296, near cloud banks at 3150, a slow turn of globe and vortex. Summary in `scorecards/round-017/`.
 - Round 18, Phase 4, mercury, round 2 of 3. Started 2026-11-21 12:41 UTC.
+- Round 19, Phase 4, earth, round 2 of 3. Started 2026-11-21 13:30 UTC.
 
 ## Final scores
 
