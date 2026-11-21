@@ -87,6 +87,8 @@ Dive and rise
 - 05:10. Orbit milestone sent. Builder's time check: motion first, move to the terrain view now, limb and sky refinements wait for the rounds.
 - 05:10 to 05:36. Terrain view built (see the section below). Judged frame 3150 beside the approved picture reads as the same shot at draft tier. First and last frame show strong forward movement. Open: right tile seam, foreground stretch at the last frame, cover colors, dive patches. Builder: main 2d2161b (engine batch 4) to merge; before READY run `npm run -s gate -- --phase 4 --only G11` (every file under public/assets/jupiter named in a RECIPE.md, by full path or `public/assets/jupiter/<set>/NAME`) and `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,jupiter`, put the three results in the READY message.
 
+- 05:36 to 06:00. Seam and sky fixes of the terrain canvas, sky aim, terrain sky glow, review sheet of the terrain, G11 clean for my files, merged main 2d2161b (engine batch 4), terrain milestone sent. Predictor for the dive and rise patches written (exact shader rule), design chosen.
+
 ## Orbit view: known weak points (for the rounds)
 
 - Lower left glow at 225 deg slightly weak (film 19/17/17 against hero 33/29/23 x1000 at r 1.03). Glow at 135 deg: film G and B about 20 percent high at r 1.03.
@@ -109,8 +111,28 @@ Dive and rise
 - Predictor `relief/predict.py` (reads the terrain params from `plan.ts`, `key=value` overrides): footprint of every pose in image pixels against the canvas (x -1408..4224, y -792..2376). Backing up needs the bottom apron fast (about 2000 px per unit), so the judged frame sits at u 0 with only 0.33 units behind it: `gather 0.6, forward 0.95` gives u -0.35..0.65 (slow after the dive, faster toward the rise). Forward needs no apron.
 - Sky patch value = inverseFilmic(texel) x gain x skyGlow x skyExposure, so gain 2 with skyExposure 0.5 is unity.
 
+## Terrain view: state at the milestone (06:00 UTC)
+
+- Seam: `canvas.py seam()` takes a multiplicative tone ratio (approved pixels against tile) along the right, left and bottom image edges, applied outside with an exponential fall of 320 px and inside a 24 px blend band (ratios right 0.46 to 1.89, left 0.89 to 1.19, bottom 0.81 to 1.25). The right seam is gone.
+- Sky: the rim glow table is the glow minus the sky background (median of 5 to 7.5 deg elevation per azimuth), so the sky patch keeps its background down to the horizon. The sky patch is built in `canvas.py` (image minus glow table from 0.4 deg up, mirrored about 0.4 deg below, `sky-lin.npy`); `build.py sky` only saves it. Deck above the horizon = (image minus blurred patch) x keep + glow x (1 minus keep), keep from 0.4 to 0.6 deg.
+- `skyAim.terrain [0, -21.8, 31]` (band of the one sky where the approved picture has its band), `light.terrainSkyGlow 0.35` (the engine sky was 2.6 to 3.2 times the approved sky), `sky.json` terrain gain 5.714 (= 2 / 0.35, unity). The judged frame did not change.
+- Measured, review tier, judged frame 3150 against the approved picture: luminance ratio 1.00 to 1.06 over a 12 x 6 grid, mean abs diff 3.99, p95 14.1 (8 bit), fine detail std ratio 1.148. Texels view at 3239: min 1.36 per pixel. Disk: full 34 MB, web 10 MB.
+- Review sheet 3060 to 3239: the camera flies in toward the storm, foreground leaves at the bottom, horizon holds, no seam.
+- Weak: bottom left foreground soft and stretched at 3239 (magnified core, relief stretch); faint brownish smudge along the judged frame horizon in the sky at 3060 (only at 2.5 x exposure); br apron very dark; top left apron is a mirror fill; slow start (speed factor 0.4 at 3060, only 0.33 units of apron behind the judged pose); flow, lightning, wisps not yet checked in motion; fine detail std 15 percent over the approved (post sharpen plus wisps).
+- G11: recipe headings now carry `public/assets/jupiter/<set>/NAME`; the gate lists only shared belt files (not mine).
+
+## Dive and rise: patch design (predictor, 06:00 UTC)
+
+- `assets-src/jupiter/patches/predict.ts MAPWIDTH [widthDeg:px ...]` with env `CENTRE=lon,lat`, `BRIEF=1`, `FEATHER`, `FADE`. It walks the dive and rise frames through the director and applies the shader's own rule per pixel (every 12th): texels = max of the two screen derivatives of the body direction x mapWidth / 2 pi; a patch level counts where its weight is at least 0.5 (feather 0.12, fade 1.02 to 1.5 on the parent's texels).
+- Cover window (engine, 0.5 s): dive 3016 to 3031, rise 3262 to 3277. Frames that must hold G13: dive to 3015, rise from 3278.
+- Wrap alone (8192): dive soft from 3007 (alt 1.33) to the cover, soft share up to 0.81 at 3015 (alt 0.67, min 0.58); rise soft from 3278 (alt 0.315, min 0.29, share 0.875) to 3289 (alt 1.29).
+- The dive comes in obliquely: the point under the camera is 18 to 21 deg east of the storm until the cover (lon +3 to 0, lat -7 to -10); the rise leaves west (lon -16 to -32). So the patches are centred between them, not on the storm.
+- Chosen: centre lon -10, lat -10; gnomonic levels 90, 53.13, 28.07 deg (half tangents 1, 0.5, 0.25: exactly twice apart) at 4096 px. Predicted min texels per pixel outside the cover: 1.09 (3013), every frame soft share 0. Texture memory 3 x 89.5 MB.
+- A gnomonic patch is finer toward its edge (1 / cos squared radially), so one wide level serves the oblique far field.
+
 ## Next
 
-- Terrain: fix the right seam, check the review sheet for stretch and depth, RECIPE entries for the deck assets and the terrain sky, cover colors (pale ammonia haze), `skyAim.terrain` so the band of the one sky sits where the approved picture has it, measure G13 on the terrain frames, commit binaries, message the Builder.
-- Dive and rise: patch levels at most 2x apart centred on the GRS (lon -17.5, lat -10), for example 4096 px at 90, 45, 22.5, 11.25 deg; `assets-src/mars/patches/RECIPE.md`; `patches.levels` in `assets.ts` is empty. Shells fade with altitude. Exit params are still stand-ins.
+- Patches: build the three levels (resample of the wrap into gnomonic, painted detail in the style of the close picture, low frequencies locked to the wrap), `patches.levels` in `assets.ts` with their own centre (not the swirl centre), verify with the texels view at 3010, 3015, 3278, 3285.
+- Cover: `coverEdge`, `coverEdgeRise` (each at most 0.5), `coverShell`, cover colors in pale cream; own haze in `deck.ts` that thins over the first 15 to 20 terrain frames and thickens before the rise; exit and entry so speed and direction carry across.
+- Check in motion: storm rotation, vortices, wisps, lightning (`--diag flow`), shells fade with altitude, rise far side, poles, terminator, travel and FarPoint.
 - Self check: measure, compare final, sheets, crops, budget, gates G11, G12, G15. Then READY.

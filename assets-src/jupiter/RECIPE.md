@@ -2,7 +2,7 @@
 
 All scripts run from the repo root. Wrap scripts need `PYTHONPATH=assets-src/jupiter/wrap`, the sky script `PYTHONPATH=assets-src/jupiter/sky`. Takes and inputs live under `out/work/jupiter/` (not in git). Image tool: `generate_image` of the agent runner. Models by tool id: `seedream_5` (2816 x 1584, edits stay pixel aligned), `nano_banana_pro` (2752 x 1536, stretches 0.8 percent vertically).
 
-## wrap-color.jpg (full 8192 x 4096, web 4096 x 2048)
+## `public/assets/jupiter/<set>/wrap-color.jpg` (full 8192 x 4096, web 4096 x 2048)
 
 Tone coded albedo (sRGB of the filmic curve), decoded in `src/stops/jupiter/globe.ts`.
 
@@ -20,15 +20,15 @@ Tone coded albedo (sRGB of the filmic curve), decoded in `src/stops/jupiter/glob
 
 Checks: no seam at lon 180, no pinch at the poles (polar projection), hero side equals the hero under the fitted light (`npm run compare -- --stop jupiter --view hold`), no moon, no shadow, no stars, no text.
 
-## io-color.jpg (full 2048 x 1024, web 1024 x 512)
+## `public/assets/jupiter/<set>/io-color.jpg` (full 2048 x 1024, web 1024 x 512)
 
 Tool `seedream_5`, 16:9, input `gen/io_ref.jpg` (crop of Io from the hero). Prompt: "Equirectangular cylindrical surface texture map (flat unwrapped map, for wrapping on a sphere) of Jupiter's volcanic moon Io, under flat even light with no shading, no terminator and no shadows. Sulfur yellow and pale yellow plains mottled with orange and rust-brown patches, dark brown and black volcanic calderas with soft reddish halos, many small dark pits, greenish yellow smudges. Same palette, same mottling scale and same photoreal painterly finish as the moon in the reference image. The texture fills the whole frame edge to edge and tiles seamlessly left to right. No sphere, no globe, no black background, no stars, no text, no border. Wide 16:9 image." Two takes, one per model. Kept `gen/iomap_sd5.png`, rejected `gen/iomap_nbp.png` (pattern repeats twice). `io/build.py` closes the left to right seam, matches the mean color to Io in the hero and writes both sets. `io/shadowfit.py` and `io/lightfit.py` fit the moon position, radius and light from the hero (values in `look.ts`).
 
-## wisp.png (2048 square, both sets)
+## `public/assets/jupiter/<set>/wisp.png` (2048 square, both sets)
 
 No model. `flow/build.py`: seeded band limited noise, tileable, zero mean; also writes `src/stops/jupiter/flow.json` (129 jet knots from the band passed zonal profile of the hero).
 
-## sky-hold.webp (full 3520 x 1980, web 1760 x 990)
+## `public/assets/jupiter/<set>/sky-hold.webp` (full 3520 x 1980, web 1760 x 990)
 
 The hero's own sky with the planet, the moon and the glow removed, 12.5 percent margin on every side.
 
@@ -57,9 +57,9 @@ Files: `public/assets/jupiter/<set>/deck-core.jpg` (full 5632 x 3168, web 2816 x
    - bl: "The top half and the lower right quarter are finished. The lower left quarter is a flat grey area that is unfinished. Replace all of the grey with a seamless continuation of the finished parts: more of the same foreground cloud deck, closer to the camera and therefore larger toward the bottom edge: warm brown, umber and amber cumulus towers with sunlit cream tops on their upper left sides, folded filaments and curling eddies, darker toward the lower right. The whole grey area is cloud deck, there is no sky in it."
    - br: "The top half and the lower left quarter are finished. The lower right quarter is a flat grey area that is unfinished. Replace all of the grey with a seamless continuation of the finished parts: more of the same very dark foreground cloud deck on the night side, closer to the camera and therefore larger toward the bottom edge: deep slate blue, charcoal and dark brown cumulus towers and folded filaments with only faint cool light on them, and one or two faint blue-white lightning glows deep inside the clouds. The whole grey area is dark cloud deck, there is no sky in it."
    - Rejected: tl (top left, one take: the horizon was drawn at another height; that triangle below the horizon is a mirror fill of the left tile, blurred toward the horizon). A whole canvas outpaint at half size (asset "wide", three takes: `seedream_5` twice redrew the scene at another size, `nano_banana_pro` pasted the picture as a rectangle).
-4. `relief/canvas.py`: tone ratio between the approved pixels and each tile along the image edges, taken out with a fall of 320 px; stars above the horizon replaced by a rim glow table (25th percentile along the horizon by elevation, faded from 2 to 5 deg), approved pixels kept below 0.4 deg above the fitted horizon. No star is left in the deck textures. Writes `canvas-final.npy`, `core-final.npy`, `canvas-half.png`.
+4. `relief/canvas.py`: `seam()` takes the tone step between the approved pixels and each tile out along the right, left and bottom image edges (multiplicative ratio per channel in a 12 px band, low passed along the edge at 320 px, applied outside with an exponential fall of 320 px and inside a 24 px blend band). `table()` measures the rim glow above the horizon by elevation and azimuth and takes the sky background off it (median of 5 to 7.5 deg elevation per azimuth, scene linear). Above the horizon the deck holds (image minus blurred sky patch) x keep + glow x (1 - keep), keep falling from 0.4 to 0.6 deg elevation, so no star is left in the deck textures. The sky patch is built here too: image minus glow table from 0.4 deg elevation up, mirrored about 0.4 deg below, saved as `out/work/jupiter/relief/sky-lin.npy`. Writes `canvas-final.npy`, `core-final.npy`, `canvas-half.png`.
 5. `python3 tools/ml/depth.py --in out/work/jupiter/relief/canvas-half.png --out-prefix out/work/jupiter/relief/canvas-depth`.
-6. `relief/build.py textures sky grid`: `deck-wide.jpg` (canvas, JPEG 95, web half size 88), `deck-core.jpg` (core, JPEG 96, web half size 88), `sky-terrain.webp` (approved image minus the deck texture in scene linear above the horizon, mirrored below it, 12.5 percent margin, written by `save()` of `sky/patch.py`; stars are allowed here because it is a sky patch), `deck-dist.bin` (distance along each image ray on a grid of 8 canvas px: sphere distance x exp(-relief), relief 0.55 x the high pass of the log depth ratio, faded between 5 and 14 units of camera height), `src/stops/jupiter/relief.json`.
+6. `relief/build.py textures sky grid`: `deck-wide.jpg` (canvas, JPEG 95, web half size 88), `deck-core.jpg` (core, JPEG 96, web half size 88), `sky-terrain.webp` (`sky-lin.npy` of step 4 with a 12.5 percent margin, written by `save()` of `sky/patch.py`; stars are allowed here because it is a sky patch; `src/stops/jupiter/sky.json` terrain gain 5.714 with `terrainSkyGlow 0.35` in the plan is unity), `deck-dist.bin` (distance along each image ray on a grid of 8 canvas px: sphere distance x exp(-relief), relief 0.55 x the high pass of the log depth ratio, faded between 5 and 14 units of camera height), `src/stops/jupiter/relief.json`.
 7. `relief/predict.py [key=value ...]`: footprint of the terrain poses in image pixels against the canvas.
 
 Checks: judged frame 3150 beside the approved image (`npm run compare -- --stop jupiter --view terrain`), the canvas at 1.8 times the exposure shows no step at the image edges, texels view of frame 3239 at least 1.36 texels per pixel.
