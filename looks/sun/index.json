@@ -1,9 +1,103 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T23:06:34.254Z",
- "head": "cee709a0d6f45647d049ab24ba776f2935954973",
- "note": "item 2: new generated foreground (take A-3) in the film at 0 and 90, draft",
+ "pushed": "2026-11-21T23:22:08.071Z",
+ "head": "76566a0b2af70ace7af571407fe8baade7a6a0aa",
+ "note": "Polish item 2: take A-3 of the nearest ground judged at the final tier, crisp but too glossy and too large; next take from a sketch of the approved lanes",
  "looks": [
+  {
+   "time": "2026-11-21T23:22:07.489Z",
+   "file": "20261121232207489-note-i221-f90-lower-approved-over-now.jpg",
+   "source": "out/work/sun/i221-f90-lower-approved-over-now.jpg",
+   "kind": "note",
+   "label": "Frame 90 lower part: approved image over take A-3. Not good enough: cells too large and glossy, a new take follows",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:06.893Z",
+   "file": "20261121232206893-note-i220-f90-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i220-f90-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "Frame 90 final: bottom strip and middle ground at native size, round 24 beside take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:06.320Z",
+   "file": "20261121232206320-note-i220-f60-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i220-f60-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "Frame 60 final: bottom strip and middle ground at native size, round 24 beside take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:05.755Z",
+   "file": "20261121232205755-note-i220-f0-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i220-f0-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "Frame 0 final: bottom strip and middle ground at native size, round 24 beside take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:05.237Z",
+   "file": "20261121232205237-note-i219-d5-f204.jpg",
+   "source": "out/work/sun/i219-d5-f204.jpg",
+   "kind": "note",
+   "label": "Frame 204 draft from above, take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:04.697Z",
+   "file": "20261121232204697-note-i219-d5-f179-bottom.jpg",
+   "source": "out/work/sun/i219-d5-f179-bottom.jpg",
+   "kind": "note",
+   "label": "Frame 179 draft, bottom, take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:04.161Z",
+   "file": "20261121232204161-note-i218-d5-150-212.jpg",
+   "source": "out/work/sun/i218-d5-150-212.jpg",
+   "kind": "note",
+   "label": "Drafts 150 to 212 with take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:03.630Z",
+   "file": "20261121232203630-note-i217-d5-f0-bottom-right.jpg",
+   "source": "out/work/sun/i217-d5-f0-bottom-right.png",
+   "kind": "note",
+   "label": "Frame 0 draft, bottom right at native size, take A-3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:03.070Z",
+   "file": "20261121232203070-note-i217-d5-f0-bottom-left.jpg",
+   "source": "out/work/sun/i217-d5-f0-bottom-left.png",
+   "kind": "note",
+   "label": "Frame 0 draft, bottom left at native size, take A-3 with the edge opening",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:22:02.416Z",
+   "file": "20261121232202416-note-i216-apron-take-A-4.jpg",
+   "source": "out/work/sun/i216-apron-take-A-4.jpg",
+   "kind": "note",
+   "label": "Rejected take A-4 of the foreground: giant cells below the line",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T23:18:10.141Z",
+   "file": "20261121231810141-frame-f00060.jpg",
+   "source": "out/work/sun/rf8/f00060.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, final tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T23:06:33.594Z",
    "file": "20261121230633594-note-i214-d4-f0-bottom-right.jpg",
@@ -37,86 +131,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T22:58:30.415Z",
-   "file": "20261121225830415-note-i213-apron-take-A-3-native-right.jpg",
-   "source": "out/work/sun/i213-apron-take-A-3-native-right.png",
-   "kind": "note",
-   "label": "apron take A-3, native size, right foreground (take pixels)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:58:28.976Z",
-   "file": "20261121225828976-note-i213-apron-take-A-3-native-left.jpg",
-   "source": "out/work/sun/i213-apron-take-A-3-native-left.png",
-   "kind": "note",
-   "label": "apron take A-3, native size, left foreground (take pixels)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:39:02.492Z",
-   "file": "20261121223902492-note-i204-apron-take-A-2-right.jpg",
-   "source": "out/work/sun/i204-apron-take-A-2-right.jpg",
-   "kind": "note",
-   "label": "Apron take A-2, lower right of frame 0: base above, take below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:39:01.922Z",
-   "file": "20261121223901922-note-i204-apron-take-A-2-low.jpg",
-   "source": "out/work/sun/i204-apron-take-A-2-low.jpg",
-   "kind": "note",
-   "label": "Apron take A-2, lower left of frame 0: base above, take below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:39:01.213Z",
-   "file": "20261121223901213-note-i202-d1-bottom-old-new-0-60-90.jpg",
-   "source": "out/work/sun/i202-d1-bottom-old-new-0-60-90.jpg",
-   "kind": "note",
-   "label": "Bottom strip at native size, frames 0, 60, 90: round 24 final above, new plate draft below (apron not yet new)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:39:00.571Z",
-   "file": "20261121223900571-note-i201-plate-new-left.jpg",
-   "source": "out/work/sun/i201-plate-new-left.png",
-   "kind": "note",
-   "label": "New plate foreground, left: round 24 plate above, composed plate below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:38:59.910Z",
-   "file": "20261121223859910-note-i201-plate-new-right.jpg",
-   "source": "out/work/sun/i201-plate-new-right.png",
-   "kind": "note",
-   "label": "New plate foreground, right: round 24 plate above, composed plate below (screen scale of frame 90)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:38:59.245Z",
-   "file": "20261121223859245-note-i195-take-W-3-crops.jpg",
-   "source": "out/work/sun/i195-take-W-3-crops.png",
-   "kind": "note",
-   "label": "Plate take W-3, lower right at screen scale: approved image above, take below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:38:58.469Z",
-   "file": "20261121223858469-note-i198-rv8-206-219.jpg",
-   "source": "out/work/sun/i198-rv8-206-219.jpg",
-   "kind": "note",
-   "label": "Rise cover, review tier preview, frames 206 and 219",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T22:38:57.348Z",
-   "file": "20261121223857348-note-i197-rv8-210-213-216.jpg",
-   "source": "out/work/sun/i197-rv8-210-213-216.jpg",
-   "kind": "note",
-   "label": "Rise cover, review tier preview, frames 210, 213, 216 with the calm knee",
-   "stop": "sun"
-  },
-  {
    "time": "2026-11-21T17:49:49.561Z",
    "file": "20261121174949561-frame-chk-360.jpg",
    "source": "out/work/sun/chk-360.png",
@@ -125,20 +139,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:48:24.268Z",
-   "file": "20261121174824268-frame-chk-90.jpg",
-   "source": "out/work/sun/chk-90.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
