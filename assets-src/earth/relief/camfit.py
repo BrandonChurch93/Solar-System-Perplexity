@@ -2,7 +2,7 @@ import json
 import numpy as np, cv2
 from scipy.optimize import least_squares
 
-VFOV = 60.0
+VFOV = 45.0
 im = cv2.imread('references/approved/earth-close.jpg').astype(np.float32)
 H, W = im.shape[:2]
 red = cv2.GaussianBlur(im[:, :, 2], (0, 0), 3)

@@ -1,24 +1,24 @@
 {
- "vfovDeg": 60.0,
+ "vfovDeg": 45.0,
  "imageSize": [
   2816,
   1584
  ],
- "pitchDeg": 30.3443,
- "rollDeg": 2.0033,
- "dipDeg": 10.7329,
- "horizonDeg": 19.6114,
- "altitude": 0.017805,
- "radius": 56.1629,
- "horizonDistance": 10.6455,
+ "pitchDeg": 28.348,
+ "rollDeg": 2.0044,
+ "dipDeg": 14.0305,
+ "horizonDeg": 14.3175,
+ "altitude": 0.030751,
+ "radius": 32.5197,
+ "horizonDistance": 8.1265,
  "nadir": [
-  0.030167,
-  -0.862478,
-  -0.505194
+  0.030783,
+  -0.879541,
+  -0.474826
  ],
  "residualDeg": {
-  "rms": 0.0658,
-  "max": 0.2039
+  "rms": 0.045,
+  "max": 0.1337
  },
  "points": 171
 }
