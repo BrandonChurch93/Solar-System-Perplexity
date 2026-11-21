@@ -1,12 +1,28 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T02:45:19.944Z",
- "head": "e9218073d785e03a096609473ebe4e76e56861bd",
- "note": "start: stand-in hold and terrain beside the approved images",
+ "pushed": "2026-11-21T03:00:32.049Z",
+ "head": "30defe0b0d793b79d24a2f39d494e162d2ff4ffe",
+ "note": "venus: spot moved to the terminator towers, heading set so the Sun lands where the close image has it; stand-in still",
  "looks": [
   {
-   "time": "2026-11-21T02:45:07.451Z",
-   "file": "20261121024507451-compare-compare-venus-terrain-view.jpg",
+   "time": "2026-11-21T03:00:31.497Z",
+   "file": "20261121030031497-note-hero-limb-crops.jpg",
+   "source": "out/work/venus/hero-limb-crops.jpg",
+   "kind": "note",
+   "label": "venus hero limb crops used to fit the haze layers",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T03:00:30.950Z",
+   "file": "20261121030030950-note-hero-spot-contour.jpg",
+   "source": "out/work/venus/hero-spot-contour.jpg",
+   "kind": "note",
+   "label": "venus spot choice: green line is where the Sun stands 11 deg high at terrain time; spot at the lit towers",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T02:59:22.925Z",
+   "file": "20261121025922925-compare-compare-venus-terrain-view.jpg",
    "source": "out/work/compare/compare-venus-terrain-view.jpg",
    "kind": "compare",
    "label": "venus.terrain: approved image left, film frame right, draft tier",
@@ -19,8 +35,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:45:06.454Z",
-   "file": "20261121024506454-still-f01440-16x9-draft-full.jpg",
+   "time": "2026-11-21T02:59:21.889Z",
+   "file": "20261121025921889-still-f01440-16x9-draft-full.jpg",
    "source": "out/work/stills/f01440-16x9-draft-full.png",
    "kind": "still",
    "label": "venus.terrain frame 1440, draft tier",
@@ -33,8 +49,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:44:51.483Z",
-   "file": "20261121024451483-compare-compare-venus-hold-view.jpg",
+   "time": "2026-11-21T02:59:01.075Z",
+   "file": "20261121025901075-compare-compare-venus-hold-view.jpg",
    "source": "out/work/compare/compare-venus-hold-view.jpg",
    "kind": "compare",
    "label": "venus.hold: approved image left, film frame right, draft tier",
@@ -47,8 +63,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:44:50.138Z",
-   "file": "20261121024450138-still-f01185-16x9-draft-full.jpg",
+   "time": "2026-11-21T02:58:59.887Z",
+   "file": "20261121025859887-still-f01185-16x9-draft-full.jpg",
    "source": "out/work/stills/f01185-16x9-draft-full.png",
    "kind": "still",
    "label": "venus.hold frame 1185, draft tier",
