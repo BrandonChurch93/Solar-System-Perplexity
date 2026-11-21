@@ -1,9 +1,39 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T09:43:14.043Z",
- "head": "cf48ba128f7ce9786501fa7b8b9109a1fd1d7cfb",
- "note": "round 10 corrections read; sky card and corona rebuilt from hero pixels, ghost strand being moved onto the Sun's layers; rise redesign next",
+ "pushed": "2026-11-21T10:05:53.181Z",
+ "head": "1f200dac73de2da92ffceb8f1720a94c3685529a",
+ "note": "round 10 item 1: the rise rebuilt as one camera path across the cover, flare off to judge the stage",
  "looks": [
+  {
+   "time": "2026-11-21T10:05:52.557Z",
+   "file": "20261121100552557-note-raw1-b.jpg",
+   "source": "out/work/sun/raw1-b.jpg",
+   "kind": "note",
+   "label": "rise as one path, flare off, 216 to 269: orbit side takes over at the same limb height",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:05:51.957Z",
+   "file": "20261121100551957-note-raw1-a.jpg",
+   "source": "out/work/sun/raw1-a.jpg",
+   "kind": "note",
+   "label": "rise as one path, flare off, 184 to 215: the terrain camera climbs and the limb curves",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T09:50:52.781Z",
+   "file": "20261121095052781-frame-gh-449.jpg",
+   "source": "out/work/sun/gh-449.png",
+   "kind": "frame",
+   "label": "sun.hold frame 449, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 449,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
   {
    "time": "2026-11-21T09:43:13.449Z",
    "file": "20261121094313449-note-hook2.jpg",
@@ -21,20 +51,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T09:34:58.083Z",
-   "file": "20261121093458083-frame-gh-449.jpg",
-   "source": "out/work/sun/gh-449.png",
-   "kind": "frame",
-   "label": "sun.hold frame 449, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 449,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
    "time": "2026-11-21T09:25:50.148Z",
    "file": "20261121092550148-frame-gh-462.jpg",
    "source": "out/work/sun/gh-462.png",
@@ -43,20 +59,6 @@
    "stop": "sun",
    "segment": "sun.travel",
    "frame": 462,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:24:53.092Z",
-   "file": "20261121092453092-frame-gh-229.jpg",
-   "source": "out/work/sun/gh-229.png",
-   "kind": "frame",
-   "label": "sun.rise frame 229, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 229,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -85,20 +87,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:58:49.856Z",
-   "file": "20261121075849856-compare-compare-sun-terrain-view.jpg",
-   "source": "out/work/compare/compare-sun-terrain-view.jpg",
-   "kind": "compare",
-   "label": "sun.terrain: approved image left, film frame right, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
