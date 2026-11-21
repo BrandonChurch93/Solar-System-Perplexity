@@ -1,0 +1,64 @@
+{
+ "folder": "mercury",
+ "pushed": "2026-11-21T02:45:16.249Z",
+ "head": "e9218073d785e03a096609473ebe4e76e56861bd",
+ "note": "start: stand-in hold and terrain beside the approved images",
+ "looks": [
+  {
+   "time": "2026-11-21T02:45:05.822Z",
+   "file": "20261121024505822-compare-compare-mercury-terrain-view.jpg",
+   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
+   "kind": "compare",
+   "label": "mercury.terrain: approved image left, film frame right, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 870,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:45:04.744Z",
+   "file": "20261121024504744-still-f00870-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00870-16x9-draft-full.png",
+   "kind": "still",
+   "label": "mercury.terrain frame 870, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 870,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:49.614Z",
+   "file": "20261121024449614-compare-compare-mercury-hold-view.jpg",
+   "source": "out/work/compare/compare-mercury-hold-view.jpg",
+   "kind": "compare",
+   "label": "mercury.hold: approved image left, film frame right, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:48.330Z",
+   "file": "20261121024448330-still-f00615-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00615-16x9-draft-full.png",
+   "kind": "still",
+   "label": "mercury.hold frame 615, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
