@@ -1,28 +1,44 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T06:51:29.733Z",
+ "pushed": "2026-11-21T07:09:56.697Z",
  "head": "a5ae15de8f6ef59838e36eeb3e7d556ab147df8d",
- "note": "hold after engine batch 6: sky patch rebuilt without the lens ghost, ghost shaped on the approved one, terminator band of the wrap replaced, glare take 7 strips",
+ "note": "Session 7: glint halos in the terrain view fixed, thin arc in the hold sky patch fixed, rim glow outside the lit limb matched (0.140/0.140, 0.190/0.191 at 1.006 to 1.012 radii), sun.travel strip on batch 6, terminator rims in work",
  "looks": [
   {
-   "time": "2026-11-21T06:51:23.810Z",
-   "file": "20261121065123810-note-wrap-term-new-b.jpg",
-   "source": "out/work/mercury/wrap-term-new-b.jpg",
+   "time": "2026-11-21T07:09:52.233Z",
+   "file": "20261121070952233-note-tile-i-a.jpg",
+   "source": "out/work/mercury/j2/tile-i-a.jpg",
    "kind": "note",
-   "label": "wrap map at the terminator after the new mask (hero pixels right, painted night side left)",
+   "label": "mercury.hold frame 615 terminator: approved left, film right, before the dusk rim fix",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T06:51:23.300Z",
-   "file": "20261121065123300-note-ghost-hero-film-d.jpg",
-   "source": "out/work/mercury/ghost-hero-film-d.jpg",
+   "time": "2026-11-21T07:09:51.662Z",
+   "file": "20261121070951662-note-strip-a.jpg",
+   "source": "out/work/mercury/st1/strip-a.jpg",
    "kind": "note",
-   "label": "lens ghost, approved (left) and film (right) at frame 615, review tier, after the sky patch was rebuilt without the ghost",
+   "label": "sun.travel frames 488 to 539, draft tier, on engine batch 6",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T06:51:00.769Z",
-   "file": "20261121065100769-compare-compare-mercury-hold-view.jpg",
+   "time": "2026-11-21T07:09:50.933Z",
+   "file": "20261121070950933-note-f717-arc-pair-b.jpg",
+   "source": "out/work/mercury/j2/f717-arc-pair-b.jpg",
+   "kind": "note",
+   "label": "mercury.dive frame 717 sky beside the lit limb at 3x gain: before left (thin dark arc in the sky patch), after right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T07:09:50.342Z",
+   "file": "20261121070950342-note-glint-tidy-a.jpg",
+   "source": "out/work/mercury/glint-tidy-a.jpg",
+   "kind": "note",
+   "label": "mercury.terrain frame 870 glints: approved left, film right, after the lens fix lost its fine chroma (purple halos gone)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T07:08:17.558Z",
+   "file": "20261121070817558-compare-compare-mercury-hold-view.jpg",
    "source": "out/work/compare/compare-mercury-hold-view.jpg",
    "kind": "compare",
    "label": "mercury.hold: approved image left, film frame right, review tier",
@@ -35,8 +51,8 @@
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:50:59.665Z",
-   "file": "20261121065059665-still-f00615-16x9-review-full.jpg",
+   "time": "2026-11-21T07:08:16.452Z",
+   "file": "20261121070816452-still-f00615-16x9-review-full.jpg",
    "source": "out/work/stills/f00615-16x9-review-full.png",
    "kind": "still",
    "label": "mercury.hold frame 615, review tier",
@@ -49,42 +65,32 @@
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:50:02.009Z",
-   "file": "20261121065002009-frame-base-615-c.jpg",
-   "source": "out/work/mercury/base/base-615-c.png",
-   "kind": "frame",
-   "label": "mercury.hold frame 615, review tier",
+   "time": "2026-11-21T06:55:33.205Z",
+   "file": "20261121065533205-compare-compare-mercury-terrain-view.jpg",
+   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
+   "kind": "compare",
+   "label": "mercury.terrain: approved image left, film frame right, review tier",
    "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
+   "segment": "mercury.terrain",
+   "frame": 870,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:42:23.493Z",
-   "file": "20261121064223493-note-rise-1002-1004.jpg",
-   "source": "out/work/mercury/g8/rise-1002-1004.jpg",
-   "kind": "note",
-   "label": "rise frames 1002 and 1004 (draft), glare receding",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:42:22.914Z",
-   "file": "20261121064222914-note-rise-c.jpg",
-   "source": "out/work/mercury/g8/rise-c.jpg",
-   "kind": "note",
-   "label": "glare take 7, rise side, frames 992 to 1004 (draft)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T06:42:22.345Z",
-   "file": "20261121064222345-note-leave-c.jpg",
-   "source": "out/work/mercury/g8/leave-c.jpg",
-   "kind": "note",
-   "label": "glare take 7, leaving the terrain view, frames 976 to 994 (draft)",
-   "stop": "mercury"
+   "time": "2026-11-21T06:55:32.199Z",
+   "file": "20261121065532199-still-f00870-16x9-review-full.jpg",
+   "source": "out/work/stills/f00870-16x9-review-full.png",
+   "kind": "still",
+   "label": "mercury.terrain frame 870, review tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 870,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "704d5d55f51b7b15"
   }
  ]
 }
