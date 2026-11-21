@@ -37,6 +37,21 @@ Cube faces are in GL order (+X, -X, +Y, -Y, +Z, -Z), rows top to bottom, no head
 - Tool: `python3 assets-src/belt/web.py` (numpy). Input: `public/assets/shared/belt/full/`. Output: `public/assets/shared/belt/web/`.
 - What it does: 2 x 2 box average of every cube face and of the detail tile; normals are renormalised after the average; the manifest sizes are halved.
 
+## Files
+
+Every file the two recipes above write, in both sets (`<set>` is `full` or `web`):
+
+- `public/assets/shared/belt/<set>/detail.bin`
+- `public/assets/shared/belt/<set>/manifest.json`
+- `public/assets/shared/belt/<set>/rock-a.aux.bin`
+- `public/assets/shared/belt/<set>/rock-a.map.bin`
+- `public/assets/shared/belt/<set>/rock-b.aux.bin`
+- `public/assets/shared/belt/<set>/rock-b.map.bin`
+- `public/assets/shared/belt/<set>/rock-c.aux.bin`
+- `public/assets/shared/belt/<set>/rock-c.map.bin`
+- `public/assets/shared/belt/<set>/rock-d.aux.bin`
+- `public/assets/shared/belt/<set>/rock-d.map.bin`
+
 ## Checks
 - No text, logo, border or baked stars: the files hold normals, tones, radii and occlusion only.
 - Sizes on disk (`du -sh`): full 28 MB (limit 30 MB), web 6.9 MB (limit 10 MB). Largest file `rock-a.map.bin`, 9.4 MB.
