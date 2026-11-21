@@ -402,3 +402,10 @@ Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
   - Measure (every 3rd frame, 825 s, 18:33): G13 PASS 0 of 165 frames soft; G5 PASS hold 0.512, dive 0.552, terrain 0.740, rise 0.381, invalid 0; G17 PASS 3465 median 1.061 (p25 0.975, 71 tiles), 3720 median 0.801 (p25 0.757, 62 tiles). Same numbers as before the fix.
   - Inside the 3720 frame (outside the 5 percent margins) 73 of the 117 clusters are shader specks at 0.8 to 0.95 units from the lens, median 5 levels, at most 22: not visible at 4 times zoom. 44 are in the bottom and left margins, median 10 levels, 9 over 40.
   - `npx tsc --noEmit -p .` clean, G11 PASS, disk full 36 MB, web 24 MB, same 16 files in both sets, `plan.ts` differs from the round 2 hand-in (5d9b558) only in `skyAim.orbit`.
+- Binaries of the round committed once (b535e50): `polar-rings.jpg` take 6, `polar-warp.bin`, `sky-hold.webp` take 4, `sky-terrain.webp` take 1, both sets.
+- Main merged again at 18:36 (530168f: Sun and Jupiter work, round 22 scorecards; no engine, config, tools or Saturn change). On that tree: build, draft stills 3465, 3567, 3720, 3866 with a clean console, `npx tsc --noEmit -p .` clean, `npx vitest run` 13 files and 62 tests pass, G11 PASS, G12 PASS, G15 PASS (saturn web 146 MB, full 444 MB).
+- Seen in passing: between the builds at 1259820 and 530168f about 5,000 to 10,000 dark sky pixels of a draft differ (3465 by at most 2 levels, single star pixels by up to 13 at 3567 and 16 at 3866); the globe is identical (0 or 1 of 75,000 pixels). Two runs of one build differ in 1 pixel by 1 level. So it comes from the shared sky and the other stops' plans, not from this folder.
+
+## READY for round 3 sent (18:45)
+
+- State handed in: see the commit named in the READY mail. Round 3 is the last round. If the Builder asks for renders or measures at a commit of main, do that; otherwise nothing more is to be changed without word from the Builder.
