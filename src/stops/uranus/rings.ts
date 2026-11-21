@@ -17,11 +17,16 @@ export interface RingLook {
   gain: number
   glint: [number, number]
   forward: [number, number]
+  back: [number, number]
   shadowFloor: number
+  flat: boolean
+  even: number
+  smear: number
   hair: { normal: [number, number, number]; count: number; from: number; to: number; amp: [number, number]; tiltDeg: number }
 }
 
 const VERT = /* glsl */ `
+uniform mat4 uDelta;
 in float aS;
 in float aAmp;
 in vec3 aTan;
@@ -29,12 +34,17 @@ out float vS;
 out float vAmp;
 out vec3 vTan;
 out vec3 vLocal;
+out vec4 vNow;
+out vec4 vNext;
 void main() {
   vS = aS;
   vAmp = aAmp;
   vTan = aTan;
   vLocal = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  vNow = gl_Position;
+  vNext = projectionMatrix * (uDelta * mv);
 }`
 
 const FRAG = /* glsl */ `
@@ -46,13 +56,18 @@ uniform vec3 uCamL;
 uniform vec3 uHoldCamL;
 uniform vec2 uGlint;
 uniform vec2 uForward;
+uniform vec2 uBack;
 uniform float uShadowFloor;
 uniform float uGain;
+uniform vec3 uMotion;
+uniform float uReach;
 uniform int uDiag;
 in float vS;
 in float vAmp;
 in vec3 vTan;
 in vec3 vLocal;
+in vec4 vNow;
+in vec4 vNext;
 out vec4 outColor;
 float strand(vec3 t, vec3 v) {
   float tl = dot(t, uSunL);
@@ -62,16 +77,23 @@ float strand(vec3 t, vec3 v) {
 float toward(vec3 v) {
   return pow(max(dot(-v, uSunL), 0.0), uForward.y);
 }
+float away(vec3 v) {
+  return pow(max(dot(v, uSunL), 0.0), uBack.y);
+}
 void main() {
   if (uDiag >= 2) discard;
-  float fw = length(vec2(dFdx(vS), dFdy(vS)));
-  float sig = sqrt(uSigma * uSigma + fw * fw * 0.11);
+  vec2 across = vec2(dFdx(vS), dFdy(vS));
+  float fw = length(across);
+  vec2 move = (vNext.xy / max(vNext.w, 1e-5) - vNow.xy / max(vNow.w, 1e-5)) * uMotion.xy;
+  float smear = min(abs(dot(move, across)) * uMotion.z, uReach);
+  float sig = sqrt(uSigma * uSigma + fw * fw * 0.11 + smear * smear);
   float line = exp(-0.5 * vS * vS / (sig * sig)) * uSigma / sig;
   vec3 t = normalize(vTan);
   vec3 v = normalize(uCamL - vLocal);
   vec3 vh = normalize(uHoldCamL - vLocal);
   float glint = (1.0 + uGlint.x * strand(t, v)) / (1.0 + uGlint.x * strand(t, vh));
   float forward = (1.0 + uForward.x * toward(v)) / (1.0 + uForward.x * toward(vh));
+  forward *= (1.0 + uBack.x * away(v)) / (1.0 + uBack.x * away(vh));
   float ps = dot(vLocal, uSunL);
   float perp = length(vLocal - ps * uSunL);
   float shadow = ps < 0.0 ? mix(uShadowFloor, 1.0, smoothstep(0.96, 1.04, perp)) : 1.0;
@@ -92,6 +114,14 @@ export function parseLines(buffer: ArrayBuffer): RingLine[] {
     at = start + 2 * m
   }
   return lines
+}
+
+export function evenLines(lines: RingLine[], normal: [number, number, number], keep: number): RingLine[] {
+  return lines.map((line) => {
+    let mean = 0
+    for (const r of line.radius) mean += r / line.radius.length
+    return { ...line, normal, radius: Array.from(line.radius, (r) => mean + (r - mean) * keep) }
+  })
 }
 
 export function hairLines(look: RingLook): RingLine[] {
@@ -125,7 +155,7 @@ export function hairLines(look: RingLook): RingLine[] {
   return lines
 }
 
-export function ringGeometry(look: RingLook, lines: RingLine[]): THREE.BufferGeometry {
+export function ringGeometry(look: RingLook, lines: RingLine[], flat?: { eye: THREE.Vector3; normal: THREE.Vector3 }): THREE.BufferGeometry {
   let count = 0
   for (const line of lines) count += (line.radius.length + (line.closed ? 1 : 0)) * 2
   const position = new Float32Array(count * 3)
@@ -140,6 +170,7 @@ export function ringGeometry(look: RingLook, lines: RingLine[]): THREE.BufferGeo
   const q = new THREE.Vector3()
   const t = new THREE.Vector3()
   const out = new THREE.Vector3()
+  const ray = new THREE.Vector3()
   let v = 0
   for (const line of lines) {
     n.fromArray(line.normal).normalize()
@@ -150,14 +181,17 @@ export function ringGeometry(look: RingLook, lines: RingLine[]): THREE.BufferGeo
     const point = (k: number, target: THREE.Vector3): THREE.Vector3 => {
       const i = line.closed ? ((k % m) + m) % m : Math.min(Math.max(k, 0), m - 1)
       const a = line.theta0 + k * line.step
-      return target.copy(u1).multiplyScalar(Math.cos(a) * line.radius[i]!).addScaledVector(u2, Math.sin(a) * line.radius[i]!)
+      target.copy(u1).multiplyScalar(Math.cos(a) * line.radius[i]!).addScaledVector(u2, Math.sin(a) * line.radius[i]!)
+      if (!flat) return target
+      ray.copy(target).sub(flat.eye)
+      return target.copy(flat.eye).addScaledVector(ray, -flat.eye.dot(flat.normal) / ray.dot(flat.normal))
     }
     const start = v
     for (let k = 0; k < total; k++) {
       const i = line.closed ? k % m : k
       point(k, p)
       t.copy(point(k + 1, q)).sub(point(k - 1, q)).normalize()
-      out.copy(t).cross(n).normalize()
+      out.copy(t).cross(flat ? flat.normal : n).normalize()
       for (const s of [-1, 1]) {
         position.set([p.x + out.x * s * look.halfWidth, p.y + out.y * s * look.halfWidth, p.z + out.z * s * look.halfWidth], v * 3)
         tan.set([t.x, t.y, t.z], v * 3)
@@ -186,6 +220,7 @@ export class Rings {
   private readonly inverse = new THREE.Matrix4()
   private readonly rotation = new THREE.Matrix3()
   private readonly level: number
+  private readonly smear: number
 
   constructor(geometry: THREE.BufferGeometry, look: RingLook, holdCamera: THREE.Vector3) {
     this.material = new THREE.ShaderMaterial({
@@ -195,8 +230,9 @@ export class Rings {
       uniforms: {
         uSigma: { value: look.sigma }, uColor: { value: new THREE.Vector3().fromArray(look.color) },
         uSunL: { value: new THREE.Vector3(1, 0, 0) }, uCamL: { value: new THREE.Vector3(0, 0, 5) }, uHoldCamL: { value: holdCamera.clone() },
-        uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) },
+        uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) }, uBack: { value: new THREE.Vector2().fromArray(look.back) },
         uShadowFloor: { value: look.shadowFloor }, uGain: { value: 1 }, uDiag: diagUniform,
+        uDelta: { value: new THREE.Matrix4() }, uMotion: { value: new THREE.Vector3() }, uReach: { value: look.halfWidth * 0.4 },
       },
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending,
@@ -205,13 +241,18 @@ export class Rings {
       depthWrite: false,
     })
     this.level = look.gain
+    this.smear = look.smear
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.frustumCulled = false
     this.mesh.renderOrder = 3
   }
 
-  update(sunWorld: THREE.Vector3, gain: number): void {
+  update(sunWorld: THREE.Vector3, gain: number, delta?: THREE.Matrix4, half?: [number, number]): void {
     const u = this.material.uniforms
+    if (delta && half) {
+      ;(u.uDelta!.value as THREE.Matrix4).copy(delta)
+      ;(u.uMotion!.value as THREE.Vector3).set(half[0], half[1], this.smear)
+    } else (u.uMotion!.value as THREE.Vector3).set(0, 0, 0)
     this.mesh.updateWorldMatrix(true, false)
     this.inverse.copy(this.mesh.matrixWorld).invert()
     ;(u.uCamL!.value as THREE.Vector3).set(0, 0, 0).applyMatrix4(this.inverse)

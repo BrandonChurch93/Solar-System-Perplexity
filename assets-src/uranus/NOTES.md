@@ -293,3 +293,21 @@ Round 6 renders from b87454f (mail 08:57); everything pushed later is judged in 
 2. Cover clearing 4167 patchy and blocky at the top.
 3. Faint curved line on the deck at 4175 and 4200.
 4. `npm run crops`, read R1, R3, R4.
+
+## State at 09:55 UTC (rise rings, motion smear, round 1 scorecard arrived)
+
+- Rings, orbit view (`rings.ts`, `set.ts`, `look.ts`):
+  - `flat`: every ring line point is projected along the ray from the hold camera onto the common ring plane (`fit.rings.normal`). The hold frame 4035 stays the same picture (max 1 level on 0.008 percent of pixels against the render before), and the lines are coplanar with the veil. Reason: the lines in `rings.bin` each had their own normal, tilted 2 to 10 degrees, which showed as a tangle from the rise side.
+  - `evenLines` and a second mesh `farRings`: in the rise and the own travel all lines sit in the common plane with radius `mean + even * (r - mean)`, `look.rings.even 0.1`. The swap happens under the terrain interlude. The hold and dive keep the hero's wavy lines.
+  - Back-scatter: `look.rings.back [3, 2]`, gain normalised to the hold camera, so the hold is unchanged and the rings read from the far side.
+  - Motion smear: the film takes 4 or 16 time samples per frame at review (16 or 64 at final). A line thinner than its travel per sample strobes into a comb (ring line, 4410 to 4420, about 120 px per frame). The set holds its own `FilmDirector`, asks it for the pose one sample later, and passes the camera space delta to the ring shader, which widens the line's gaussian along the screen motion (`look.rings.smear 0.55`, reach 0.4 of the half width). Only in fast kinds (dive, rise, travel), so the hold is bit exact. Checked at review 4415, 4142, 4460 and final 4415 (116 s, no cost).
+  - Moons are hidden in the first 1.4 s of the rise (`look.moons.riseFrom`): Miranda's back lit crescent strobed into a dotted line while it crossed the frame at 4412 to 4420. They enter from the frame edge after 4428.
+- Round 1 scorecard (round 6 of the film, `scorecards/round-006/` on main): R1 7, R3 5, R4 4, R2 and R8 pass, measures green. 2 severe, 13 major. Worst first:
+  1. Dive cover 4150 to 4175: the two sides are not one move (pose, roll, horizon angle, Sun, rings, colour, exposure, speed).
+  2. Rise cover 4405 to 4416: same, and the Milky Way pops on at 4416.
+  3. The cover itself 4159 to 4170: stands still, upright bands at 4166 to 4168, dust lane pops at 4170.
+  4. Terrain picture edge in frame 4175 to 4216, lower centre right.
+  5. Stepped copies in fast motion: puffs and ring edges 4126 to 4134, 4420 to 4427.
+  6. R1: ring strands and dust softer than approved (hold), ring lanes and limb softer (terrain).
+  7. R3: dive 4137 cloud detail smeared, moon with hard dark edge, rise 4436 terminator as a hard crescent, bands airbrushed, storms pasted, rings wobbly (fixed above), terrain near field smeared, dark corner banding.
+  8. Minor: mirrored stars at the terrain sky margins (top 15 px, right 20 px), one pixel stars flicker, inner ring beading in the hold, squashed moon, flat white moon, even outer arc, ring strands ending at the haze.

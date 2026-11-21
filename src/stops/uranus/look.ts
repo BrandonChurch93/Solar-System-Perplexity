@@ -26,7 +26,11 @@ export const rings: RingLook = {
   gain: 2.17,
   glint: [1.6, 24],
   forward: [5, 6],
+  back: [3, 2],
   shadowFloor: 0.05,
+  flat: true,
+  even: 0.1,
+  smear: 0.55,
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
 
@@ -39,7 +43,11 @@ export const deckRings: RingLook = {
   gain: 1.6,
   glint: [0.6, 24],
   forward: [0, 6],
+  back: [0, 2],
   shadowFloor: 1,
+  flat: false,
+  even: 1,
+  smear: 0,
   hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
 }
 
@@ -57,6 +65,7 @@ export const moons = {
   bump: 0.07,
   wrap: 0.25,
   knee: [0.6, 1.6] as [number, number],
+  riseFrom: 1.4,
   bounce: [0.004, 0.012, 0.014] as Rgb,
   spinDegPerSecond: 1.5,
   bodies: {
