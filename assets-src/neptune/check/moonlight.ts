@@ -8,6 +8,7 @@ import fit from '../../../src/stops/neptune/fit.json'
 const DEG = 180 / Math.PI
 const frame = Number(process.argv[2] ?? 4605)
 const turnDeg = Number(process.argv[3] ?? 0)
+const fullerDeg = Number(process.argv[4] ?? 0)
 const home = new THREE.Vector3().fromArray((fit as any).moons[0].position)
 const director = new FilmDirector(plans)
 const shot: any = director.shotAt(frame, frame / config.fps)
@@ -27,5 +28,6 @@ const show = (name: string, l: THREE.Vector3) => {
 show('true sun  ', plan.lightDir.clone())
 show('aimed now ', lit)
 const turned = lit.clone().applyAxisAngle(toMoon, turnDeg / DEG)
+turned.applyAxisAngle(new THREE.Vector3().crossVectors(turned, toMoon.clone().negate()).normalize(), fullerDeg / DEG)
 show('turned    ', turned)
 console.log('aim', turned.clone().multiplyScalar(scale).sub(plan.lightDir).toArray().map((v) => Number(v.toFixed(4))).join(', '))

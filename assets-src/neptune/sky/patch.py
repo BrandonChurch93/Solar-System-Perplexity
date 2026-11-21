@@ -16,6 +16,7 @@ Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 MARGIN = 0.125
 EDGE = (1.004, 1.014)
+BEHIND = (0.95, 0.99)
 LINE = 23
 SUN = (2514, 227, 330)
 SUN_FROM = (-150, 900)
@@ -171,7 +172,8 @@ def hold(hero, fill, glow, out):
     k = float(luma(hs)[zone].mean() / max(luma(fs)[zone].mean(), 1e-6))
     print('fill star gain', round(k, 3))
     outside = (step(d, EDGE[0], EDGE[1]) * moon)[..., None]
-    f = f - fs + fs * k * (1 - outside) + hs * outside
+    behind = (1 - step(d, BEHIND[0], BEHIND[1]))[..., None]
+    f = f - fs + fs * k * behind + hs * outside
     lin = sky * own[..., None] + f * (1 - own[..., None])
     save(lin, 'sky-hold.webp', out)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((1408, 792)).save(os.path.join(geo.ROOT, 'out/work/nep/sky/own.png'))
