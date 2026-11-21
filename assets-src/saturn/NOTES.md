@@ -298,3 +298,8 @@ Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
 - Final comparisons of both views and review sheets of the four segments viewed. Hold and terrain are close to the approved images. Terrain sheet: the globe grows and the ring tip leaves the frame between 3630 and 3711; 3728 to 3809 change less. Dive sheet: 3540 to 3572 change little (the slow start), the fast part is 3580 to 3613. Rise: one move, Titan comes out from behind the globe at 3850.
 - After the merge: review 3465 is byte identical to the still before it; draft 3362 and 3369 show no strokes; 3376 and 3384 show the hold patch coming in.
 - Anamorphic streak of the approved hold: present in the film at 3465 (crop at lower right, approved above film), carried by the hero's own pixels.
+
+## READY for round 2 sent (13:51)
+
+- READY sent to the Builder at 5d9b558 with the measures above, the changes per item and the weak list. Told plainly: dive and rise timing changed, exit pose and travel values did not; the fallback relief is not built; the batch 13 sky re-aim was not done; `npm run budget` did not finish.
+- While the critics are out, in this order: rings outside the approved frames (the judged rise frame 3866 is the 1D profile), the tone step at the junction in the rise near 3826, the gap between the ring horizon and the lit limb at 3720, the polar hood, the black dots on the shadowed rings at 3720, G17 at 3720 (0.819).
