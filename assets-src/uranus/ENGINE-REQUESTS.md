@@ -20,3 +20,5 @@ This is the cause of the round 1 notes on Uranus "the Milky Way pops on in one f
 The change. After the inverse projection is copied into the uniform, if the float32 sum of elements 11 and 15 is exactly 0, set element 11 to 0 and element 15 to 1. Then `v.w` is 1 and the ray is `normalize(v.xyz)`, which is the true ray. Every frame whose sum is not 0 takes the old path with the old numbers, so it renders the same bytes as before. Only frames that are broken now change.
 
 Checked. Mars 2325 and 2580 at draft before and after the change: `cmp` reports identical files (`out/work/u/eng/before-2325.png` against `after-2325.png`, the same for 2580). Uranus 4412 with the cover switched off: before, no Sun disc and no band; after, the Sun disc is at (1431, 576) where the plan puts it.
+
+Accepted as written: engine batch 12 on main (759b70f). The patch file is removed from this folder.

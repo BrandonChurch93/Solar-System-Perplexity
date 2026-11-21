@@ -189,23 +189,23 @@ def one_sky(path, size):
 
 def shifted(v, px, py):
     h, w = v.shape[:2]
-    out = np.pad(v, ((py, py), (px, px), (0, 0)), mode='symmetric')
+    out = np.zeros((h + 2 * py, w + 2 * px, v.shape[2]), np.float32)
+    out[py:py + h, px:px + w] = v
     yy, xx = np.mgrid[-py:h + py, -px:w + px]
     todo = (xx < 0) | (xx >= w) | (yy < 0) | (yy >= h)
     dx, dy = round(SHIFT * np.cos(np.radians(BAND_DEG))), round(SHIFT * np.sin(np.radians(BAND_DEG)))
-    near = np.zeros(todo.shape, np.float32)
-    for k in (-1, 1, -2, 2, -3, 3):
-        sx, sy = xx + k * dx, yy + k * dy
-        ok = todo & (sx >= 0) & (sx < w) & (sy >= 0) & (sy < h)
-        near[ok] = 1
-        todo &= ~ok
-        out[ok] = v[sy[ok], sx[ok]]
-    return out, ndi.gaussian_filter(near, 3)
+    for side in (1, -1):
+        for k in (-1, 1, -2, 2, -3, 3):
+            sx, sy = xx + k * dx * side, yy + k * dy
+            ok = todo & (sx >= 0) & (sx < w) & (sy >= 0) & (sy < h)
+            todo &= ~ok
+            out[ok] = v[sy[ok], sx[ok]]
+    print('margin pixels without a shifted source', int(todo.sum()))
+    return out
 
 
 def widen(lin, one):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    pad = lambda v: np.pad(v, ((py, py), (px, px), (0, 0)), mode='symmetric')
     broad = np.stack([ndi.gaussian_filter(low(lin)[..., i], WIDE_LOW) for i in range(3)], -1)
     far = carry(broad, px, py)
     far = np.stack([ndi.gaussian_filter(far[..., i], 6) for i in range(3)], -1)
@@ -216,11 +216,12 @@ def widen(lin, one):
     w = step(m, 0, FADE)[..., None]
     sky = one_sky(one, (FULL[0] + 2 * px, FULL[1] + 2 * py))
     inside = ((ox == 0) & (oy == 0))[..., None]
-    fine = lin - broad
-    moved, got = shifted(fine, px, py)
-    t = (step(np.hypot(ox, oy), 0, SEAM) * got)[..., None]
-    detail = (pad(fine) * (1 - t) + moved * t) * (1 - step(m, DETAIL[0], DETAIL[1]))[..., None]
-    held = np.where(inside, pad(broad), far)
+    edge = lambda v: np.pad(v, ((py, py), (px, px), (0, 0)), mode='edge')
+    floor = low(lin)
+    t = step(np.hypot(ox, oy), 0, SEAM)[..., None]
+    detail = (edge(floor - broad) * (1 - t) + shifted(floor - broad, px, py) * t + shifted(lin - floor, px, py)) * (1 - step(m, DETAIL[0], DETAIL[1]))[..., None]
+    detail = np.where(inside, edge(lin - broad), detail)
+    held = np.where(inside, edge(broad), far)
     return np.maximum(detail + held * (1 - w) + sky * w, 0), w[..., 0], sky
 
 
