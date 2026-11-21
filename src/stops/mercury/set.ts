@@ -6,7 +6,7 @@ import { drift, ramp, smooth } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
 import { config } from '../../config'
 import { patches, relief, wrap } from './assets'
-import { Glare } from './glare'
+import { Glare, type GlareSide } from './glare'
 import { Globe } from './globe'
 import { Lens } from './lens'
 import * as look from './look'
@@ -70,6 +70,10 @@ export const createSet: SetFactory = async (ctx) => {
   const closeTan = Math.tan(THREE.MathUtils.degToRad(relief.full.vfovDeg) / 2)
   const closeSun = new THREE.Vector3((look.glare.terrainSun[0] - 0.5) * 2 * closeTan * relief.full.imageSize[0] / relief.full.imageSize[1], (0.5 - look.glare.terrainSun[1]) * 2 * closeTan, -1).normalize()
   const glareSun = new THREE.Vector3()
+  const closeAim = plan.terrain((plan.seg.terrain.end - plan.seg.terrain.start) / 2).quaternion.clone()
+  const closeTurn = plan.turn((plan.seg.terrain.start + plan.seg.terrain.end) / 2).clone()
+  const closeFrame = plan.terrainFrame.clone().invert()
+  const closeFix = new THREE.Quaternion()
 
   const ground = await Relief.load(ctx, base, relief[key], look.relief)
   terrain.add(ground.group)
@@ -97,15 +101,17 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       lens.mesh.visible = false
       let flood = 0
+      let side: GlareSide = 'dive'
       if (state.segment.stop === plan.id && state.weight > 0) {
         const fromDive = (state.time - covers[0]!) * config.fps
         const fromRise = (state.time - covers[1]!) * config.fps
-        flood = Math.max(glare.strength(fromDive, fromDive < 0), glare.strength(fromRise, fromRise >= 0))
+        const first = Math.abs(fromDive) <= Math.abs(fromRise)
+        side = first ? (inOrbit ? 'dive' : 'enter') : inOrbit ? 'rise' : 'leave'
+        flood = glare.strength(first ? fromDive : fromRise, side)
       }
-      const terrainSky = sky.find((p) => p.view === 'terrain')
-      if (inOrbit || !terrainSky) glareSun.copy(shot.sun.dir)
-      else glareSun.copy(closeSun).applyQuaternion(terrainSky.aim)
-      glare.update(flood, glareSun, view.camera, gain, view.format.width / view.format.height, state.time, inOrbit || !terrainSky)
+      if (inOrbit) glareSun.copy(shot.sun.dir)
+      else glareSun.copy(closeSun).applyQuaternion(closeAim).applyQuaternion(closeFix.copy(closeFrame).multiply(plan.turn(state.time).clone().invert()).multiply(closeTurn).multiply(plan.terrainFrame)).applyQuaternion(state.rotation)
+      glare.update(flood, glareSun, view.camera, gain, view.format.width / view.format.height, state.time, side)
       if (!inOrbit) {
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return

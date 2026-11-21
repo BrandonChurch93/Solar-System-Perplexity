@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 
+export type GlareSide = 'dive' | 'enter' | 'leave' | 'rise'
+
 export interface GlareLook {
   plateau: number
-  rampOrbit: number
-  rampTerrain: number
-  floor: { peak: number; curve: number; color: [number, number, number]; even: number; orbit: [number, number]; terrain: [number, number] }
+  sides: Record<GlareSide, { ramp: number; reach: [number, number] }>
+  floor: { peak: number; curve: number; color: [number, number, number]; even: number }
   sun: { peak: number; curve: number; lead: number; color: [number, number, number]; wide: [number, number]; core: [number, number]; rays: [number, number]; turn: number }
   terrainSun: [number, number]
 }
@@ -77,12 +78,11 @@ export class Glare {
     this.mesh.visible = false
   }
 
-  strength(frames: number, orbitSide: boolean): number {
-    const span = orbitSide ? this.look.rampOrbit : this.look.rampTerrain
-    return 1 - THREE.MathUtils.clamp((Math.abs(frames) - this.look.plateau) / span, 0, 1)
+  strength(frames: number, side: GlareSide): number {
+    return 1 - THREE.MathUtils.clamp((Math.abs(frames) - this.look.plateau) / this.look.sides[side].ramp, 0, 1)
   }
 
-  update(s: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number, orbit: boolean): void {
+  update(s: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number, side: GlareSide): void {
     this.mesh.visible = s > 0
     if (s <= 0) return
     const u = this.material.uniforms
@@ -95,7 +95,7 @@ export class Glare {
     u.uGain!.value = gain
     u.uAspect!.value = aspect
     u.uPhase!.value = time * this.look.sun.turn
-    const reach = orbit ? this.look.floor.orbit : this.look.floor.terrain
+    const reach = this.look.sides[side].reach
     ;(u.uEven!.value as THREE.Vector2).set(this.look.floor.even, reach[0] * Math.exp(-reach[1] * (1 - s)))
   }
 

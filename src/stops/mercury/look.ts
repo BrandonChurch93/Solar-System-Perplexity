@@ -32,9 +32,13 @@ export const lens: LensLook = {
 
 export const glare: GlareLook = {
   plateau: 2.5,
-  rampOrbit: 14,
-  rampTerrain: 18,
-  floor: { peak: 60, curve: 6, color: [1, 0.88, 0.7], even: 0.004, orbit: [8, 7], terrain: [8, 7] },
+  sides: {
+    dive: { ramp: 22, reach: [3.2, 4.5] },
+    enter: { ramp: 24, reach: [3.6, 3.6] },
+    leave: { ramp: 24, reach: [3.6, 3.6] },
+    rise: { ramp: 23, reach: [3.4, 3.4] },
+  },
+  floor: { peak: 60, curve: 6, color: [1, 0.88, 0.7], even: 0.004 },
   sun: { peak: 2.2, curve: 12, lead: 0.02, color: [1, 0.84, 0.6], wide: [0.9, 5], core: [0.22, 40], rays: [0.7, 6], turn: 0.9 },
   terrainSun: [745 / 2816, -40 / 1584],
 }
