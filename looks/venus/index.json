@@ -1,9 +1,82 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T08:36:33.736Z",
- "head": "5b613d3c8548413b4a1a1cd43e46db47a7cf4a37",
- "note": "READY: dive and rise in, own checks green",
+ "pushed": "2026-11-21T09:00:22.758Z",
+ "head": "05cff438a3b2dd1216c378278c96e93ef234631b",
+ "note": "Round 12 is out; official review sheets of the dive cover, rise cover and rise; dive sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-21T08:59:50.923Z",
+   "file": "20261121085950923-sheet-venus.rise-16x9-review.jpg",
+   "source": "out/work/sheets/venus.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.rise, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1530,
+   "last": 1604,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:59:30.508Z",
+   "file": "20261121085930508-frame-f01597-review.jpg",
+   "source": "out/work/sheets/.frames-xlrxdw/f01597-review.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1597, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1597,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:53:53.591Z",
+   "file": "20261121085353591-sheet-venus.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/venus.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.rise, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1555,
+   "last": 1566,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:44:52.632Z",
+   "file": "20261121084452632-sheet-venus.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/venus.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet venus.dive, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1309,
+   "last": 1320,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:44:22.967Z",
+   "file": "20261121084422967-frame-f01319-review.jpg",
+   "source": "out/work/sheets/.frames-KaKuZb/f01319-review.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1319, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1319,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
   {
    "time": "2026-11-21T08:36:31.693Z",
    "file": "20261121083631693-note-review-1570.jpg",
@@ -11,34 +84,6 @@
    "kind": "note",
    "label": "rise 1570 at review tier on main 48a2bfc merged: smooth blur under the thinning haze",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T08:36:07.326Z",
-   "file": "20261121083607326-frame-review-1570.jpg",
-   "source": "out/work/venus/post/review-1570.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1570, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1570,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:35:05.444Z",
-   "file": "20261121083505444-frame-review-1305.jpg",
-   "source": "out/work/venus/post/review-1305.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1305, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1305,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   },
   {
    "time": "2026-11-21T08:26:05.180Z",
@@ -55,14 +100,6 @@
    "job": "measure"
   },
   {
-   "time": "2026-11-21T08:25:55.879Z",
-   "file": "20261121082555879-note-tail3.jpg",
-   "source": "out/work/venus/strip/tail3.jpg",
-   "kind": "note",
-   "label": "haze tail at draft, every frame: dive 1315 to 1332 and rise 1561 to 1578, linear tail of 16 frames",
-   "stop": "venus"
-  },
-  {
    "time": "2026-11-21T08:22:50.492Z",
    "file": "20261121082250492-frame-draft-1185.jpg",
    "source": "out/work/venus/post/draft-1185.png",
@@ -75,22 +112,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:00:42.838Z",
-   "file": "20261121080042838-note-rise2.jpg",
-   "source": "out/work/venus/strip/rise2.jpg",
-   "kind": "note",
-   "label": "rise strip at review tier with the smooth blur and the tighter haze shell: cover 1558 to 1572, globe from 1575, 1586 judged",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T07:48:56.279Z",
-   "file": "20261121074856279-note-dive2.jpg",
-   "source": "out/work/venus/strip/dive2.jpg",
-   "kind": "note",
-   "label": "dive strip at review tier with the smooth blur: 1287 judged, 1296 to 1305 approach, haze 1308 to 1321, terrain from 1323",
-   "stop": "venus"
   }
  ]
 }
