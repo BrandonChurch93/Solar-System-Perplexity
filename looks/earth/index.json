@@ -1,9 +1,39 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T13:03:46.814Z",
+ "pushed": "2026-11-21T13:16:29.833Z",
  "head": "150094553afeb08d84cc16e37169b9d0f96bc7aa",
- "note": "round 2 build: sky margin of the hold patch as a moved star field, night land relief from the far map; gates running before READY",
+ "note": "round 2 head checked: rise handover strip 2120 to 2140, gates green, sending READY",
  "looks": [
+  {
+   "time": "2026-11-21T13:16:29.256Z",
+   "file": "20261121131629256-note-strip-b.jpg",
+   "source": "out/work/earth/p41/strip-b.jpg",
+   "kind": "note",
+   "label": "rise handover 2129 to 2140 at draft, larger",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T13:16:28.711Z",
+   "file": "20261121131628711-note-strip-2120-2140.jpg",
+   "source": "out/work/earth/p41/strip-2120-2140.jpg",
+   "kind": "note",
+   "label": "rise handover, every frame 2120 to 2140 at draft on the round 2 head",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T13:16:05.860Z",
+   "file": "20261121131605860-frame-f-2140.jpg",
+   "source": "out/work/earth/p41/f-2140.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2140, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2140,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T13:02:40.854Z",
    "file": "20261121130240854-note-land-2156.jpg",
@@ -11,42 +41,6 @@
    "kind": "note",
    "label": "rise 2156 night South America (bottom row lifted): relief from the far map (left) beside the build before (right)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T13:02:40.239Z",
-   "file": "20261121130240239-note-tl-1857.jpg",
-   "source": "out/work/earth/p39/tl-1857.png",
-   "kind": "note",
-   "label": "dive 1857 top left at native size: new sky margin with a moved star field (left) beside the starless strip (right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T13:01:59.169Z",
-   "file": "20261121130159169-frame-f-1857.jpg",
-   "source": "out/work/earth/p40/f-1857.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T13:01:27.136Z",
-   "file": "20261121130127136-frame-f-2156.jpg",
-   "source": "out/work/earth/p40/f-2156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T12:58:38.179Z",
