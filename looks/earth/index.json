@@ -1,18 +1,40 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T19:19:35.094Z",
+ "pushed": "2026-11-21T19:45:34.148Z",
  "head": "327769d9c9c6b9d0c4078664e010c25644eb95d7",
- "note": "round 3 final checks: rise cover sheet at review, dive 1876 at review with 128 samples (one smooth blur)",
+ "note": "round 3 final checks: dive 1874, 1876, 1878 and rise 2131 at review, one smooth blur each",
  "looks": [
   {
-   "time": "2026-11-21T19:18:57.604Z",
-   "file": "20261121191857604-frame-r-1876.jpg",
-   "source": "out/work/earth/r3v/r-1876.png",
+   "time": "2026-11-21T19:45:13.520Z",
+   "file": "20261121194513520-frame-r-1874.jpg",
+   "source": "out/work/earth/r3v/r-1874.png",
    "kind": "frame",
-   "label": "earth.dive frame 1876, review tier",
+   "label": "earth.dive frame 1874, review tier",
    "stop": "earth",
    "segment": "earth.dive",
-   "frame": 1876,
+   "frame": 1874,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T19:35:46.283Z",
+   "file": "20261121193546283-note-rc-2131-before-after.jpg",
+   "source": "out/work/earth/r3v/rc-2131-before-after.png",
+   "kind": "note",
+   "label": "rise 2131 at review, lower left under the deck: 36 samples (left) and 99 samples with coverHides 0.875 (right)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T19:34:54.868Z",
+   "file": "20261121193454868-frame-r-2131.jpg",
+   "source": "out/work/earth/r3v/r-2131.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2131, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2131,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -32,28 +54,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T19:06:07.675Z",
-   "file": "20261121190607675-frame-f02136-review.jpg",
-   "source": "out/work/sheets/.frames-PnEKwW/f02136-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2136, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2136,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:29:26.560Z",
-   "file": "20261121182926560-note-rc-2127-2130.jpg",
-   "source": "out/work/earth/r3v/rc-2127-2130.jpg",
-   "kind": "note",
-   "label": "rise cover at review tier: 2127, 2128, 2129, 2130 (the handover, limb in place)",
-   "stop": "earth"
   },
   {
    "time": "2026-11-21T17:23:53.541Z",
