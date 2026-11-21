@@ -162,7 +162,8 @@ export const createSet: SetFactory = async (ctx) => {
       const elapsed = state.time - plan.holdMid
       const left = mine ? kind === 'rise' || kind === 'travel' : kind !== 'travel'
       globe.update(sun, plan.spin(state.time), elapsed, gain * (left ? look.globe.away : 1), state.weight, shot.post.vignette, aspect)
-      globe.soften(left ? look.globe.soft : 0, left ? look.globe.awayShade : 1)
+      const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
+      globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near))
       rings.update(sun, gain * state.weight)
