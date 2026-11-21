@@ -22,7 +22,7 @@ export interface MoveParams {
   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
   spot: { x: number; y: number; on?: 'globe' | 'rings' }
   dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
+  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
@@ -222,7 +222,7 @@ export class StopPlan {
     const out = position.clone().normalize()
     const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
     const th = Math.tan(THREE.MathUtils.degToRad(this.fit.vfovDeg) / 2)
-    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+    const carried = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
     const framed = Math.asin(1 / r.distance) + Math.atan(r.offset[1] * th)
     const pitch = Math.acos(Math.min(1 / position.length(), 1)) + mix(carried, framed, smooth(e))
     const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
@@ -436,7 +436,7 @@ export class StopPlan {
     else if (since < tilt) {
       const out = position.clone().normalize()
       const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
-      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2))
+      const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, f.last, f.center), 2.2) - (t.exitDipDeg ?? 0))
       const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
       const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))

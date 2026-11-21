@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "ring arcs and Milky Way crops, tiles B, E, F, G, and H",
+   "what": "bright ring strands and galactic dust are softer than the approved crops; highlight detail is about three quarters of the target, and faint ring gaps merge",
+   "fix": "restore ring-edge and dust acutance to the approved crop, and separate the faint gaps instead of smoothing them"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "ring divisions and limb crops, tiles A, C, F, and H",
+   "what": "midtone ring lanes and limb filaments are softer than the approved crops, worst where the rings cross the glare",
+   "fix": "bring ring-lane separation and atmospheric filament contrast back up to the approved crop"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "limb beside the sun and the ring strands crossing it",
+   "what": "the atmospheric edge is softer and a little brighter, and the ring edges have lost contrast against the glare",
+   "fix": "tighten the limb falloff and restore ring-edge contrast to the approved frame"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit disk and bright rings",
+   "what": "cloud filaments and bright ring edges are slightly softer, and the disk sits a little high",
+   "fix": "restore filament and ring-edge contrast, and drop the disk exposure a hair"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "left limb",
+   "what": "the bright edge is dimmer and the glow extends a few pixels farther into the sky",
+   "fix": "match the approved limb brightness and pull the falloff in"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky corners",
+   "what": "the black floor is slightly crushed, so more of the sky sits near black and faint dust drops out",
+   "fix": "lift the sky floor to the approved black level"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper ring arcs",
+   "what": "the rings read slightly less cyan and a touch more neutral than the approved frame",
+   "fix": "shift the ring color back toward the approved cyan"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sunlit limb crops F and H",
+   "what": "those crops are lifted and warmer, with red up by about two points",
+   "fix": "cool and darken the sunlit limb to the approved grade"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "atmosphere crop A",
+   "what": "the disk crop is slightly brighter and bluer than the approved crop",
+   "fix": "pull exposure and blue back to the approved atmosphere crop"
+  }
+ ]
+}

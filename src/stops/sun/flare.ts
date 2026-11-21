@@ -4,7 +4,7 @@ import { diagUniform } from '../../diagnostics/diag'
 export interface FlareLook {
   hot: [number, number, number]
   warm: [number, number, number]
-  core: { radius: [number, number]; gain: number }
+  core: { radius: [number, number]; gain: number; power: number }
   halo: { radius: [number, number]; gain: [number, number]; power: number }
   rays: { amount: number; reach: number; turn: number }
   streak: { amount: number; height: number; reach: number }
@@ -12,7 +12,6 @@ export interface FlareLook {
   after: number
   powerIn: number
   powerOut: number
-  surge: number
 }
 
 const VERT = /* glsl */ `
@@ -42,7 +41,7 @@ void main() {
   vec2 p = (vScreen - uAt) * vec2(uAspect, 1.0);
   float r = length(p);
   float ang = atan(p.y, p.x);
-  float core = pow(1.0 / (1.0 + r * r / (uSize.x * uSize.x)), 2.2);
+  float core = pow(1.0 / (1.0 + r * r / (uSize.x * uSize.x)), uSize.w);
   float halo = pow(1.0 / (1.0 + r * r / (uSize.y * uSize.y)), uSize.z);
   float turn = uTime * uRays.z;
   float n = 0.5 + 0.5 * (0.45 * sin(ang * 5.0 + 0.6 + turn) + 0.3 * sin(ang * 11.0 - 1.1 - turn * 1.7) + 0.25 * sin(ang * 23.0 + 2.3 + turn * 2.9));
@@ -108,7 +107,7 @@ export class Flare {
     u.uGain!.value = gain
     u.uTime!.value = time
     const grow = amount * amount
-    ;(u.uSize!.value as THREE.Vector4).set(k.core.radius[0] + (k.core.radius[1] - k.core.radius[0]) * amount, k.halo.radius[0] + (k.halo.radius[1] - k.halo.radius[0]) * grow, k.halo.power, 0)
+    ;(u.uSize!.value as THREE.Vector4).set(k.core.radius[0] + (k.core.radius[1] - k.core.radius[0]) * amount, k.halo.radius[0] + (k.halo.radius[1] - k.halo.radius[0]) * grow, k.halo.power, k.core.power)
     ;(u.uLevel!.value as THREE.Vector4).set(k.core.gain * amount, k.halo.gain[0] * Math.sqrt(amount) + (k.halo.gain[1] - k.halo.gain[0]) * grow, amount, 0)
   }
 

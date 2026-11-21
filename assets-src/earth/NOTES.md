@@ -384,10 +384,21 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - Travel probe: venus.travel joins my hold at 1680 with step 0.000 (speed 1.16e-1 to 1.15e-1); earth.travel joins my rise at 2175 with turn 0.002 to 0.003, speed 7.96e-2 to 8.00e-2.
 - Gates on the merged tree (08:27 UTC): G11 PASS (every asset has a row or a recipe), G12 PASS (1646 tracked files, 1.36 GB), G15 PASS (at most 2 sets per frame; earth/web 281 MB, earth/full 1118 MB). Disk: full 85 MB, web 23 MB.
 
-## Next (from 08:25 UTC)
+### `coverSea` in the plan (08:30 to 08:37 UTC, commit 64659d1)
 
-1. READY message with the head, the gates, the measure, the flow numbers and what is weak.
-2. Running: `out/work/earth/checks3.sh` (gates, compare hold and terrain at final, cover sheets, hold and terrain sheets at draft). Look at every picture, push looks.
-3. Review tier sheets (hold, terrain, dive, rise), `npm run crops -- --frame N` for 1755, 1857, 2010, 2156.
-4. When the Builder says `coverSea` is on main: merge, add the key to `plan.ts` (values in "Fix 2"), render 1885 to 1890 and 2124 to 2129.
-5. Known weak, in order: grey cloud above the limb under the cover (waits for `coverSea`); glide speed before 2010 limited by the bottom apron (1.2 px per frame at the frame bottom; a taller apron of about 300 image px would allow twice that; relief margin used 6 of 6 takes in round 1); level 12 patch has long soft cloud shadows.
+- The key is on main since batch 8. `plan.ts` now has `coverSea: { centre: [1.031837, -29.481955, -15.916028], radius: 32.5197, edge: [1, 1.003] }` after `coverShell`. `REQUESTS.md` says served.
+- Draft stills `out/work/earth/p12/` (sheets `dive-sea.jpg`, `rise-sea.jpg`, `joins.jpg`): 1884 to 1889 a white deck under a crisp blue limb, black sky. 2125 to 2129 black sky with the Sun, white deck below, no grey cloud above the horizon; the limb there is a dark edge, not a blue line (column 400 to 420 at 2127: sky (27,13,5) BGR to deck (198,191,186) within 9 px, no blue peak), small blue patches at the limb ends at 2125 to 2126. 2130 is the orbit side at full cover with a soft blue limb.
+- Possible later: `edge: [0.997, 1]` to keep the blue line at full cover in the rise. Not tried.
+- The Builder was told the head 64659d1 at 08:37; round 11 runs from it.
+
+### Hold sky, stars beside the aurora and the Moon (08:26 to 08:45 UTC)
+
+- Found in the final compare of the hold: in the aurora sector (position angle 6 to 86 degrees, out to 1.3 radii) and around the Moon the patch used the fill's own stars times the fill gain (1.58, 1.44, 1.02): dense bright orange points where the approved image has sparse faint white ones (`out/work/earth/p11/aurora-pair.jpg`).
+- Fix in `sky/patch.py` `hold()`: the hero's own star points are kept everywhere beyond `STARS`; inside the aurora sector the points with a green or red tint (`TINT = 1.25`, residue of the curtain) are dropped, and the points on the Moon's disc (`DISC = (1.06, 1.2)` Moon radii). Run: `python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png` (40 s, writes both sets). The old files are in `out/work/earth/skyold/`.
+- Draft 1755 against the still before (`out/work/earth/p13/hold-sky-3.jpg`, `hold-sky-zoom.jpg`): 5.0 percent of pixels change, all inside x 1068 to 1771, y 0 to 473. Star points over 40 code values above the local median, approved, before, after: aurora sector (x 1250 to 1500, y 40 to 340) 544, 860, 704; Moon side (x 1500 to 1780, y 60 to 420) 341, 548, 466; far left untouched 978, 1179, 1179. 1680 and 1829 looked at (`p13/hold-3.jpg`): no seam.
+
+## Next (from 08:45 UTC)
+
+1. Round 11 runs from 64659d1. When its issues arrive: fix causes, worst first.
+2. Own checks still owed: G17 and G5 again after the hold sky change; cover sheets with `coverSea`, hold and terrain sheets at draft (`sh out/work/earth/sheets.sh rise-cover dive-cover hold terrain`); review tier sheets (hold, terrain, dive, rise); `npm run crops -- --frame N` for 1755, 1857, 2010, 2156. Look at every picture, push looks.
+3. Known weak, in order: glide speed before 2010 limited by the bottom apron (1.2 px per frame at the frame bottom; a taller apron of about 300 image px would allow twice that; relief margin used 6 of 6 takes in round 1); level 12 patch has long soft cloud shadows; rise cover 2127 to 2129 has no blue limb line; hold aurora rays a little softer than the approved ones and city lights show through on the limb; star flux in the hold about 20 percent above the approved image (G17 median 1.235, passes).

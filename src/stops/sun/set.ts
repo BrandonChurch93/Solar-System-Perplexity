@@ -48,10 +48,11 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
   const flare = new Flare(look.flare)
-  world.add(flare.mesh)
+  const flareOther = new Flare(look.flare)
+  world.add(flare.mesh, flareOther.mesh)
   const coverAt = plan.coverCenter(plan.seg.rise)
   const feet = stage.feet.map((f) => stage.onGround(f[0]!, f[1]!))
-  const arcade = feet[0]!.clone().add(feet[1]!).multiplyScalar(0.5).addScaledVector(stage.down, -look.flare.lift * feet[0]!.distanceTo(feet[1]!))
+  const kernels = feet.map((f) => f.clone().addScaledVector(f.clone().sub(stage.centre).normalize(), look.flare.lift))
   const spotAt = new THREE.Vector3()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
@@ -72,13 +73,14 @@ export const createSet: SetFactory = async (ctx) => {
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect)
       const burst = kind === 'rise' ? flare.amount(state.time - coverAt) : 0
-      flare.update(inOrbit ? spotAt.copy(plan.spot).applyQuaternion(plan.turn(state.time)) : arcade, world, view.camera, burst, state.time - coverAt, gain, aspect)
+      flare.update(inOrbit ? spotAt.copy(plan.spot).applyQuaternion(plan.turn(state.time)) : kernels[0]!, world, view.camera, burst, state.time - coverAt, gain, aspect)
+      flareOther.update(kernels[1]!, world, view.camera, inOrbit ? 0 : flare.amount(state.time - coverAt - look.flare.other.delay), state.time - coverAt + 1.7, gain * look.flare.other.gain, aspect)
       if (!inOrbit) {
         const t = state.time - terrainMid
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height))
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height)
-        loops.update(t, gain * (1 + look.flare.surge * burst), vignette, aspect)
+        loops.update(t, gain, vignette, aspect, burst)
         return
       }
       const elapsed = state.time - plan.holdMid
@@ -100,6 +102,7 @@ export const createSet: SetFactory = async (ctx) => {
       prominences.dispose()
       far.dispose()
       flare.dispose()
+      flareOther.dispose()
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()

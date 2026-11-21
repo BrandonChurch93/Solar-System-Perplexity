@@ -1,0 +1,268 @@
+[
+ {
+  "name": "reviewer_229",
+  "role": "R1",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R1/pair-01-a.png",
+   "R1/pair-01-b.png",
+   "R1/pair-02-a.png",
+   "R1/pair-02-b.png",
+   "R1/pair-03-a.png",
+   "R1/pair-03-b.png",
+   "R1/pair-04-a.png",
+   "R1/pair-04-b.png"
+  ]
+ },
+ {
+  "name": "reviewer_230",
+  "role": "R3-part1",
+  "model": "grok_4_7",
+  "files": [
+   "R3-part1/image-01.png",
+   "R3-part1/image-02.png",
+   "R3-part1/image-03.png",
+   "R3-part1/image-04.png",
+   "R3-part1/image-05.png",
+   "R3-part1/image-06.png",
+   "R3-part1/image-07.png",
+   "R3-part1/image-08.png"
+  ]
+ },
+ {
+  "name": "reviewer_231",
+  "role": "R3-part2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R3-part2/image-09.png",
+   "R3-part2/image-10.png",
+   "R3-part2/image-11.png",
+   "R3-part2/image-12.png",
+   "R3-part2/image-13.png",
+   "R3-part2/image-14.png",
+   "R3-part2/image-15.png",
+   "R3-part2/image-16.png"
+  ]
+ },
+ {
+  "name": "reviewer_232",
+  "role": "R4",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R4/sheet-01.png",
+   "R4/sheet-02.png",
+   "R4/sheet-03.png",
+   "R4/sheet-04.png",
+   "R4/sheet-05.png",
+   "R4/sheet-06.png"
+  ]
+ },
+ {
+  "name": "reviewer_233",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_234",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_235",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_236",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_237",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_238",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_239",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_240",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_241",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_242",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_243",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_244",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_245",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_246",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_247",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-03.png"
+  ]
+ },
+ {
+  "name": "reviewer_248",
+  "role": "R2",
+  "model": "claude_opus_5_5",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_249",
+  "role": "R2",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_250",
+  "role": "R2",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_251",
+  "role": "R2",
+  "model": "kimi_k3",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_252",
+  "role": "R2",
+  "model": "grok_4_7",
+  "files": [
+   "R2/image-04.png"
+  ]
+ },
+ {
+  "name": "reviewer_253",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_254",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_255",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-01.png"
+  ]
+ },
+ {
+  "name": "reviewer_256",
+  "role": "R8",
+  "model": "claude_sonnet_5_5",
+  "files": [
+   "R8/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_257",
+  "role": "R8",
+  "model": "gpt_6_2_sol",
+  "files": [
+   "R8/image-02.png"
+  ]
+ },
+ {
+  "name": "reviewer_258",
+  "role": "R8",
+  "model": "gemini_4_carbon",
+  "files": [
+   "R8/image-02.png"
+  ]
+ }
+]
