@@ -95,6 +95,13 @@ export class Triton {
     this.material.uniforms.uGain!.value = gain
   }
 
+  shape(terminator: [number, number], power: number, ambient: [number, number, number], gain: number, bump: number): void {
+    const u = this.material.uniforms
+    ;(u.uShape!.value as THREE.Vector3).set(terminator[0], terminator[1], power)
+    ;(u.uAmbient!.value as THREE.Vector3).fromArray(ambient).multiplyScalar(gain)
+    u.uBump!.value = bump
+  }
+
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()

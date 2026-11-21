@@ -101,11 +101,12 @@ export class Fringe {
     this.mesh.frustumCulled = false
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, vfovDeg: number, heightPx: number): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, vfovDeg: number, heightPx: number, weight = 1): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
-    u.uGain!.value = this.gain * gain
+    u.uGain!.value = this.gain * gain * weight
+    this.mesh.visible = weight > 0
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
     u.uLod!.value = this.lod(vfovDeg, heightPx)

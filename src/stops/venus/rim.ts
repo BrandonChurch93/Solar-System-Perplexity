@@ -7,10 +7,11 @@ export const LIMB_GLSL = /* glsl */ `
 uniform sampler2D uLimb;
 uniform vec3 uLimbS;
 uniform vec3 uLimbT;
+uniform float uLimbFar;
 vec4 limbAt(vec3 at, float row) {
   float phi = atan(dot(at, uLimbT), dot(at, uLimbS));
   float u = ((phi / 6.2831853 + 0.5) * ${LIMB.azimuth}.0 + 0.5) / ${LIMB.azimuth + 1}.0;
-  return textureLod(uLimb, vec2(u, row / ${LIMB.half * 2}.0), 0.0);
+  return mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
 }
 vec4 limbGlow(vec3 at, float b) {
   float x = b - 1.0;
@@ -41,6 +42,7 @@ uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
 uniform float uEdge;
+uniform vec3 uHide;
 out vec4 outColor;
 ${LIMB_GLSL}
 ${INVERSE_FILMIC_GLSL}
@@ -64,7 +66,7 @@ void main() {
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = glow * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, 0.0);
+  outColor = vec4(col, uLimbFar * uHide.z * smoothstep(uHide.x, uHide.y, dot(shown(col), vec3(0.3, 0.5, 0.2))));
 }`
 
 export function limbFrame(camera: THREE.Vector3, sun: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3): void {
@@ -83,18 +85,21 @@ export class Rim {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(lut: THREE.Texture, radius: number, diag: THREE.IUniform<number>) {
+  constructor(lut: THREE.Texture, radius: number, diag: THREE.IUniform<number>, hide: [number, number, number]) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
         uCam: { value: new THREE.Vector3(0, 0, 3) }, uLimb: { value: lut }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uDiag: diag,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
       },
       side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
-      premultipliedAlpha: true,
+      blending: THREE.CustomBlending,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
       transparent: true,
       depthWrite: false,
       depthTest: true,
@@ -103,7 +108,7 @@ export class Rim {
     this.mesh.renderOrder = 6
   }
 
-  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number): void {
+  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number, far: number): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uLimbS!.value as THREE.Vector3).copy(s)
@@ -112,6 +117,7 @@ export class Rim {
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
     u.uEdge!.value = edge
+    u.uLimbFar!.value = far
   }
 
   dispose(): void {

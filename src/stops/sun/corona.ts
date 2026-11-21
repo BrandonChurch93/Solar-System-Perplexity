@@ -30,6 +30,7 @@ uniform vec3 uCenter;
 uniform mat3 uToSet;
 uniform vec2 uRange;
 uniform float uGain;
+uniform float uShow;
 uniform float uEdge;
 uniform float uTime;
 uniform vec4 uWave;
@@ -88,7 +89,7 @@ void main() {
   float out0 = 1.0 - smoothstep(0.92, 1.0, v);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * inside * out0 / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, glare * inside * out0);
+  outColor = vec4(col, glare * inside * out0) * uShow;
 }`
 
 export class Corona {
@@ -107,7 +108,7 @@ export class Corona {
         uMap: { value: map }, uDiag: diagUniform,
         uCenter: { value: new THREE.Vector3() }, uToSet: { value: this.toSet },
         uRange: { value: new THREE.Vector2(look.inner, look.outer) },
-        uGain: { value: look.gain }, uEdge: { value: look.edge }, uTime: { value: 0 },
+        uGain: { value: look.gain }, uShow: { value: 1 }, uEdge: { value: look.edge }, uTime: { value: 0 },
         uWave: { value: new THREE.Vector4(look.wave.amount, look.wave.scale, look.wave.speed, look.wave.sway) },
         uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
@@ -127,12 +128,13 @@ export class Corona {
     this.mesh.frustumCulled = false
   }
 
-  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook): void {
+  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1): void {
     const u = this.material.uniforms
     ;(u.uCenter!.value as THREE.Vector3).copy(center)
     this.toSet.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(rotation).invert()))
     u.uTime!.value = time
     u.uGain!.value = gain * look.gain
+    u.uShow!.value = shown
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
   }
