@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -19,9 +20,15 @@ AURORA = (6.0, 86.0, 1.3)
 MOON = (1.35, 1.8)
 DISC = (1.06, 1.2)
 TINT = 1.25
+CALM = 12.0
+SHIFT = (0.0, 0.0)
+PEAK = 0.08
+FINE = 4.0
+REACH = 8
+JOIN = 4.0
 HERO = geo.HERO
 FILL = geo.WORK / "sky" / "fill-t1.png"
-OUT = geo.ROOT / "public" / "assets" / "earth"
+OUT = Path(os.environ["EARTH_SKY_OUT"]) if "EARTH_SKY_OUT" in os.environ else geo.ROOT / "public" / "assets" / "earth"
 
 
 def scene(path, resample, blocks=False):
@@ -43,9 +50,25 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
-def save(lin, name):
+def save(lin, name, calm=0.0):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
     wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode="symmetric")
+    if calm:
+        soft = np.stack([ndi.gaussian_filter(np.minimum(wide[..., i], ndi.gaussian_filter(wide[..., i], calm)), calm) for i in range(3)], -1)
+        fine = np.stack([ndi.gaussian_filter(np.minimum(wide[..., i], ndi.gaussian_filter(wide[..., i], FINE)), FINE) for i in range(3)], -1)
+        points = np.maximum(wide - fine, 0)
+        yy, xx = np.mgrid[-REACH:REACH + 1, -REACH:REACH + 1]
+        top = ndi.maximum_filter(points.max(-1), footprint=np.hypot(yy, xx) <= REACH)
+        points = points * np.minimum(1, PEAK / np.maximum(top, 1e-6))[..., None]
+        ys, xs = np.arange(wide.shape[0]), np.arange(wide.shape[1])
+        dx, dy = px + round(px * SHIFT[0]), py + round(py * SHIFT[1])
+        sx = np.where(xs < px, xs + dx, np.where(xs >= px + FULL[0], xs - dx, xs))
+        sy = np.where(ys < py, ys + dy, np.where(ys >= py + FULL[1], ys - dy, ys))
+        edge = lambda v, lo, hi: np.clip(np.maximum(lo - v, v - hi + 1) / JOIN, 0, 1)
+        fade = np.maximum(edge(ys, py, py + FULL[1])[:, None], edge(xs, px, px + FULL[0])[None, :])
+        soft += points[sy][:, sx] * fade[..., None]
+        soft[py:py + FULL[1], px:px + FULL[0]] = lin
+        wide = soft
     img = Image.fromarray((np.clip(geo.encode(wide.astype(np.float64)), 0, 1) * 255 + 0.5).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -96,7 +119,7 @@ def hold(film=None):
     keep = ((1 - curtain) * (1 - disc))[..., None]
     f = f * (1 - rim) + (low(f) + stars * (1 - glow) * keep) * rim
     lin = sky * own[..., None] + f * (1 - own[..., None])
-    save(lin, "sky-hold.webp")
+    save(lin, "sky-hold.webp", CALM)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 

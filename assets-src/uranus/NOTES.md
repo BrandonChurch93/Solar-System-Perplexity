@@ -248,3 +248,168 @@ Branch head 11884d7 (main 558e3a5 merged, engine batch 7: dust only). Dive and r
 2. Ring residue in the hold sky patch (straighten the unwrap with the traced tracks, see above).
 3. Moons: soft knee so they do not read as white discs from the rise side (the hold must not change).
 4. Cover clearing frame 4167 (patchy at the top for one frame).
+
+## State at 08:35 UTC (read this first after a compaction)
+
+READY sent at b87454f (07:51). Round 6 is running from the branch head; the scorecard path arrives when it closes. `/root`: keep working the weak points, worst first; push only finished, green steps.
+
+### Merge of main 48a2bfc (7517b04)
+- Engine batches 8 and 9 (terrain shield, trim of discarded haze shell triangles) and all eight stop folders. `npm run -s aim -- --stop uranus` prints orbit `[145.41987, -22.38676, 20.05787]` with Saturn on main (the pin in `plan.ts` is ignored and matches).
+- Review frames before and after: 4035 max 17 levels on one pixel (else 1), 4137 max 3, 4290 max 1, 4436 only the sky changed (Neptune's now). No opt out of shield or trim needed.
+
+### Moons (weak point 2, done)
+- `moons.ts`: `mu = dot(n, v)`, `back = 1 - max(dot(v, sun), 0)`, `lit = mix(mu0, mu0 / (mu0 + mu + 0.08), seeliger x back) x (1 + rim.x x back x pow(1 - mu, rim.y))`, then a soft knee on luma (`look.moons.knee [0.6, 1.6]`).
+- `look.moons`: miranda `sun [1.8, 1.67, 1.53]`, `rim [3.8, 2]`, `seeliger 0.6` (was `[6.2, 5.4, 4.5]`, Lambert, clipped); ariel `sun [1.43, 1.33, 1.3]`, `rim [0, 2]`, `seeliger 0` (a rim on Ariel gave a jagged bright outline at its size).
+- `python3 assets-src/uranus/check/moons.py STILL` prints lit pixels, mean, p25, p50, p75, p90, p99 and tint for hero and film. At 4035 review: Miranda film 0.710, 0.565, 0.731, 0.854, 0.924 (mean, p25, p50, p75, p90) against hero 0.693, 0.537, 0.71, 0.862, 0.926 (before: mean 0.797, p50 0.866). Ariel film 0.637, 0.521, 0.66, 0.741, 0.813 against hero 0.629, 0.495, 0.638, 0.768, 0.825.
+- Rise 4436: Miranda is a shaded grey white sphere, no clipped disc (`out/work/u/r1/m6-rise-moons.jpg`).
+
+### Ring residue in the hold sky patch (weak point 1, not solved, shipped patch unchanged)
+- The shipped `sky-hold.webp` is still the rim only patch of READY. `sky/patch.py` and `RECIPE.md` in the working tree hold experiment g and are not committed (diff saved in `out/work/u/sky3/patch-g.diff`).
+- e: openings across radius of 25, 300 and 700 rows plus groove fill. Rings gone, but the Milky Way inside the ring zone right of the globe goes flat against the hero (`out/work/u/r1/c/cmp-right.jpg`). Rejected.
+- f: mask by share of sky. g: median along the ring over 40 degrees at quarter scale, neutral colour min. Both keep the Milky Way, both let faint arcs back in.
+- Ring levels measured: ring haze 0.003 to 0.02 scene units over sky 0.02; Milky Way core right of the globe 0.07 to 0.12. The two overlap in level, so only the shape along the ring separates them.
+- Straightening fit (`out/work/u/sky3/straight.py`, tracks in `out/work/u/rings2/tracks.json`, `r` there is in rows of 0.0005 R): Fourier model of the ring wander against angle and radius; rms 17.5 rows before, 14.3 (K 1), 10.5 (K 2), 9.4 (K 4), 9.2 (K 6). A global model leaves about 9 rows, too coarse for lines 2 to 4 rows wide: straighten per track instead (offset field interpolated between neighbouring tracks) or drop it.
+
+### Sheets seen at review (08:00)
+- Hold steady; terrain shows parallax of the deck against the ring arcs; dive 4142 ring ribbon fine; 4167 cover clearing patchy and blocky at the top for one frame; rise rings faint.
+- A faint curved line on the deck at lower left and right at 4175 and 4200: to inspect (plate or far map edge).
+
+## State at 09:10 UTC (read this first after a compaction)
+
+Round 6 renders from b87454f (mail 08:57); everything pushed later is judged in round 7. Scorecard expected 10:00 to 10:30.
+
+### Ring bands of the hold sky: veil (weak point 1, shipped)
+- Idea: the hero's faint ring bands cannot stay in the sky patch (they slide against the 3D rings when the camera orbits) and cannot simply be removed (the judged frame loses them). They are taken out of the patch and drawn again on the ring plane, so patch plus veil at 4035 is the shipped picture by construction and the bands move with the rings.
+- `sky/patch.py`: `grid()`, `unwrap()`, `coherent()` (median along the ring over 120 of 2700 columns, 17 shears), `cast()`. The veil code is sqrt encoded, `VEIL_MAX 0.04` scene units, limited to the room under the sky (7 px minimum filter), shifted by the drift of the camera fit (-1.79, 2.18 px at 1920), subtracted from the patch. Grooves of removed lines are filled only in dark sky (`GROOVE (0.004, 0.012)`). Writes `veil.webp` (2700 x 1520 full, 1350 x 760 web) beside `sky-hold.webp`.
+- `src/stops/uranus/veil.ts`: annulus of 96 segments in the plane of `look.veil.normal`, radius 1.08 to 1.84, additive, alpha 0, `textureGrad` with analytic gradients in angle and radius, same lens falloff as the sky. `set.ts` gives it the weight the engine gives the patch (`smoothstep(u, 0.2, 0.8)` in the travel of the stop before, 1 in hold and dive, else 0) times `shot.skyGlow`.
+- Measured at review against the shipped stills (`out/work/u/sky2/r-4035.png`): mean difference 0.05 levels, abs mean 0.12 levels, 0.87 percent of pixels over 3 levels, 0.17 percent over 8 (that includes the refitted moons). Final compare of the hold looks like before. Veil max 0.0276, mean in the zone 0.0018.
+- Patch alone, x4 crops: `out/work/u/sky4/top-before-veil.jpg`, `left-before-veil.jpg` (bands gone, grooves mostly filled). 3960 and 4109 side by side: `out/work/u/r2/c3-*.jpg`. Dive 4120, 4137, 4150 and arrival 3948: no blotch, no pop (`out/work/u/r2/v3-dive4.jpg`).
+- Disk: full 49 MB, web 20 MB.
+- Tried before the veil and dropped: flow straightening of the unwrap (`out/work/u/sky3/flow.py`): the traced tracks cross, flow error 7.8 rows after 40 columns on the 89 longest smooth tracks, global Fourier model 9 rows rms. Groove fill alone made bright seams.
+- Finding: the m-series stills of the moon fit (`out/work/u/r1/m*.png`) and the hold compare pushed to looks at 08:33 were rendered with experiment patch g in `public/`, not the shipped patch. The moon numbers are unaffected, the committed assets at e4e07fd were the shipped patch. The 09:05 compare is patch plus veil.
+
+### Next
+1. Rings faint in the rise (back-scatter term).
+2. Cover clearing 4167 patchy and blocky at the top.
+3. Faint curved line on the deck at 4175 and 4200.
+4. `npm run crops`, read R1, R3, R4.
+
+## State at 09:55 UTC (rise rings, motion smear, round 1 scorecard arrived)
+
+- Rings, orbit view (`rings.ts`, `set.ts`, `look.ts`):
+  - `flat`: every ring line point is projected along the ray from the hold camera onto the common ring plane (`fit.rings.normal`). The hold frame 4035 stays the same picture (max 1 level on 0.008 percent of pixels against the render before), and the lines are coplanar with the veil. Reason: the lines in `rings.bin` each had their own normal, tilted 2 to 10 degrees, which showed as a tangle from the rise side.
+  - `evenLines` and a second mesh `farRings`: in the rise and the own travel all lines sit in the common plane with radius `mean + even * (r - mean)`, `look.rings.even 0.1`. The swap happens under the terrain interlude. The hold and dive keep the hero's wavy lines.
+  - Back-scatter: `look.rings.back [3, 2]`, gain normalised to the hold camera, so the hold is unchanged and the rings read from the far side.
+  - Motion smear: the film takes 4 or 16 time samples per frame at review (16 or 64 at final). A line thinner than its travel per sample strobes into a comb (ring line, 4410 to 4420, about 120 px per frame). The set holds its own `FilmDirector`, asks it for the pose one sample later, and passes the camera space delta to the ring shader, which widens the line's gaussian along the screen motion (`look.rings.smear 0.55`, reach 0.4 of the half width). Only in fast kinds (dive, rise, travel), so the hold is bit exact. Checked at review 4415, 4142, 4460 and final 4415 (116 s, no cost).
+  - Moons are hidden in the first 1.4 s of the rise (`look.moons.riseFrom`): Miranda's back lit crescent strobed into a dotted line while it crossed the frame at 4412 to 4420. They enter from the frame edge after 4428.
+- Round 1 scorecard (round 6 of the film, `scorecards/round-006/` on main): R1 7, R3 5, R4 4, R2 and R8 pass, measures green. 2 severe, 13 major. Worst first:
+  1. Dive cover 4150 to 4175: the two sides are not one move (pose, roll, horizon angle, Sun, rings, colour, exposure, speed).
+  2. Rise cover 4405 to 4416: same, and the Milky Way pops on at 4416.
+  3. The cover itself 4159 to 4170: stands still, upright bands at 4166 to 4168, dust lane pops at 4170.
+  4. Terrain picture edge in frame 4175 to 4216, lower centre right.
+  5. Stepped copies in fast motion: puffs and ring edges 4126 to 4134, 4420 to 4427.
+  6. R1: ring strands and dust softer than approved (hold), ring lanes and limb softer (terrain).
+  7. R3: dive 4137 cloud detail smeared, moon with hard dark edge, rise 4436 terminator as a hard crescent, bands airbrushed, storms pasted, rings wobbly (fixed above), terrain near field smeared, dark corner banding.
+  8. Minor: mirrored stars at the terrain sky margins (top 15 px, right 20 px), one pixel stars flicker, inner ring beading in the hold, squashed moon, flat white moon, even outer arc, ring strands ending at the haze.
+
+## State at 10:05 UTC (read this first after a compaction)
+
+Round 1 result is in (list above). Two rounds remain. Branch head pushed: bd3fef5, local merge 71fea95 (main 811fbca, engine batch 10: `terrain.exitDipDeg`).
+
+### Correction to the 09:55 section
+- Mail 09:52: stepped ghost copies in the fastest dive and rise frames are an engine matter (time samples that follow the screen motion). No blur tricks, extra sprites or slower moves in the stop folder. So the motion smear (`look.rings.smear`), the set's own `FilmDirector` copy and the moon hiding (`look.moons.riseFrom`) are removed again. Kept: `flat`, `evenLines` and `farRings` (`look.rings.even 0.1`), back-scatter `look.rings.back [3, 2]`.
+- After the removal: build green, 48 tests pass, 4035 at review equals the render before (max 1 level on 0.008 percent).
+- Item 5 finding for the READY message: globe, flecks, rings and moons all take `state.time` of the time sample (`globe.update(sun, plan.spin(state.time), elapsed, ...)`), no coarser clock. The copies come from the sample count, not from my layers.
+
+### Cover analysis (items 1 and 2), measured with `out/work/u/dbg/track.ts` and `sunlimb.ts`
+- Horizon angle on screen is continuous at the swap (orbit 4162 -13.8 deg, terrain 4164 -14.3) but only -2.6 at 4150: the roll arrives too late.
+- Sun jumps: orbit 4162 at (1381, 363), 9.77 deg above the limb; terrain 4164 at (1293, 508), 3.17 deg. Aim above limb -6.68 against -4.28. Rise: 4408 terrain 14.08 deg, 4410 orbit 18.72.
+- Cause: the deck sphere's up `[0.2364, 0.9462, 0.2212]` is 18.9 deg from terrain local Y, the engine's `terrainFrame` maps local Y to the spot normal, and `swoop` only lines the horizon up on screen.
+- Speeds: orbit 4150 20.3 mR per frame and 4.94 deg per frame, 4162 4.0 and 1.0, terrain 4166 2.17 and 0.46, 4200 0.36.
+- The engine sky exposure is times `(1 - cover.amount)^2` in `film.ts`: reads as the Milky Way pop at 4169 to 4170 and 4415 to 4416.
+- Terrain mapping: unit 0.0151344 R per terrain unit, deck centre `[-15.8563, -63.4702, -14.8357]`, radius 66.0819 units (1.0001 R). Deck ring arcs: circle radius 49.934 units, centre `[-8.5202, -28.6297, -52.036]`, mesh scale 33.289.
+
+### Plan, worst first
+1. `plan.ts`: own subclass of `StopPlan` so the orbit pose at each cover centre equals the world mapped terrain pose (position, look, roll, velocity), roll and pitch arriving before 4150. Longer cover thinning.
+2. Deck (and haze, arcs) drawn in the orbit view under the same mapping, cross-faded with the globe by altitude before the dive cover and after the rise cover.
+3. Sun on both sides alike.
+4. Cover rush: faster veil, finer billow, lower contrast.
+5. Far map fill (item 4), then items 6 to 8.
+
+## State at 12:30 UTC (read this first after a compaction)
+
+Round 2 build in work. Branch pushed at fd27cc1; local merge 1951b7b of main (engine batch 12, 759b70f, my engine request 1 accepted, `engine.patch` removed). Mails since 10:05: batch 11 (sample count follows screen motion, up to 64 at review and 128 at final; the cure for the stepped copies, not mine to fix; check motion at draft, confirm single frames at review), batch 12 (sky keeps its true ray).
+
+### Done since 10:05, by item of the round 1 list
+1. and 2. Covers (severe). `plan.ts` is now `UranusPlan extends StopPlan`: the orbit pose at each cover centre is the world mapped terrain pose (position, look, roll, speed), two beat dive, `coverAmount` override, `deckWeight(altitude)`. `set.ts` draws the deck, the deck ring arcs and a Sun flare card in the orbit view of the own dive and rise, cross-faded with the globe by altitude (`move.deckFade`, `arcFade`, `ringFade`), with a near grade on the globe (`look.near`) that bridges the colour of the two approved looks. Checked with the cover on at draft (batch q and v, `out/work/u/r4/`): one move across both covers, horizon angle, Sun and ring arcs continuous, stars fade in over 4169 to 4171.
+3. Cover veil: `params.coverRush { speed 14, reach 2.5, billow [3, 3, 1], streak [10, 6, 1.6], contrast [0.75, 0.5] }`. Measured (log-polar correlation about the rush focus): speed 6 moved 0.047 ln r per frame, speed 12 moved 0.105 to 0.111. Contrast 1.4 and 1.1 left dark holes, 0.75 does not. The static part of the cover (engine `cover.flow`) cannot be changed from the plan. A faint weave shows in the dark upper part at draft (one sample).
+4. Plate edge 4175 to 4216: `deck.ts` `uInset`, `look.deck.inset [0.1, 0.2]`, far map rebuilt by `terrain/build.py` so the real picture is continued to the plate edge. Draft 4175, 4200, 4216: edge and corner gone.
+5. Stepped copies: all my layers take `state.time` of the time sample. Own smear and moon hiding were removed at 10:05. Engine batch 11 is the cure.
+7. Dive detail: generated asset `dive-detail` (take 1 of 6, kept) is the mid-scale cloud structure of the four patches (`dive/patches.py`: `GEN_SIGMA 260, GEN_AMP 1.1, GEN_FLOOR 0.24, GEN_CEIL 0.42`, procedural `STRETCH 5`, `PROC`, `WISP 0.12`, wisp stretch 10). First try with sigma 100 and amp 0.8 was too faint in the frame. Recipe is in RECIPE.md with the exact prompt; the input is made by `dive/gen_input.py`.
+7. Moons: air extinction by impact parameter (`look.moons.air [1.0, 1.04]`), depth along the hold ray (`depth` 1.2 Miranda, 1.3 Ariel; the hold keeps place and size by construction, draft 4035 differs only in aliased edge pixels of the moons), in the rise lit by the film Sun at `away 0.45` with planet shine `shine 5` so the dark limb reads as a sphere. Miranda sets behind the limb near 4124 and is out of frame in the rise; Ariel is at about (1805, 735) in 4436.
+7. Rise globe. Finding: the rise camera at 4436 sits over wrap longitude -27, latitude -20, only 27 degrees from the hold camera's point (0, -26), so the rise shows the hero's own side, not the painted far side. The planet has turned 13.4 degrees by then, so the hero's night side structure baked in `shade.bin` and in the albedo sits in the light. Changes, all only after the terrain interlude (`left`): light table averaged over sun cosine +-0.22 (`look.globe.soft`), shade map at 0.3 (`awayShade`), globe gain 0.85 (`away`). The darker crescent with the hard inner edge and the seam at the upper left are gone at draft.
+7. Rise rings: `fullLines` replaces `evenLines`: every line is a full circle in the common plane at its mean radius, level = mean of the upper half of its samples times `look.rings.far 0.5`, slow variation along the ring (`vary 0.35`). The far ring material blends as `src + dst * (1 - a)` with `a` = `look.rings.near [0.45, 120]` so the near arc reads as thin dark lines across the lit disc, and fades through the air where a line passes behind the limb (`look.rings.air`). The hold and dive rings are unchanged (additive, alpha 0).
+8. Sky margin of the terrain view rebuilt without mirroring (`sky/terrain.py`, 8469 margin stars from 4491 stamps).
+
+### Still to do before READY
+- Hold acutance (item 6): per tile G17 of a final still (old measure: worst tiles [5,2] 0.55, [7,3] 0.57, [6,2], all at the globe's limb and rings, not the open sky).
+- `python3 tools/assets/mirrorcheck.py` on terrain frames. Build, vitest, G11, measure, compares at final, sheets at review, budget, travel probe, commit binaries once, push, READY.
+- Left as weak: terrain near field and dark corner follow the approved picture; rise bands are the hero's own pixels seen front lit; ring shadow on the disc is not drawn.
+
+## State at 12:55 UTC (read this first after a compaction)
+
+Round 2 build, all code changes are in the working tree, nothing committed since fd27cc1 (local merge 1951b7b). The check suite is running (measure first). After it: compares at final, sheets at review, budget, travel probe, commit with binaries, push, READY.
+
+### Done since 12:30
+- Item 6, hold acutance. Per tile G17 (12 x 8, `out/work/u/dbg/g17tiles.py FILM APPROVED`, final nograin): before median 1.177, p25 1.041, min 0.55, the soft tiles were all on the globe (0.55 to 0.69), the sky tiles are 1.0 to 1.4. Cause: the wrap is minified about 2 texels per pixel in the hold and read between two mip levels. Change: unsharp term on the wrap in `globe.ts` (`enc + sharp * (enc - wider sample)`, `look.globe.sharp [0.3, 0.8]`, second value times `1 - view cosine`, so more at the limb). It is zero where the wrap is magnified (both samples hit mip 0), so the dive patches are untouched. Tried 0.35 flat (min 0.65), 0.7 flat (centre tiles 1.67, speckle too strong, dropped). Kept [0.3, 0.8]: median 1.176, p25 1.085, min 0.72. Still soft: tiles row 2 cols 5, 6 (0.72): the approved has fine filaments at the bright pole, the wrap there is painted flecks.
+- Item 6, terrain acutance. Per tile G17 of 4290 before: median 1.035, p25 0.778, min 0.60, all deck tiles 0.62 to 0.69. Cause: `deck.ts` read the 8192 px picture with implicit derivatives, 4.3 texels per pixel, so between mip 2 and mip 3. Change: `textureGrad` with the derivatives times `uGrad` (the engine's sample count uniform, 0.5 from 4 samples up) for the picture and the far map, plus an unsharp term `look.deck.sharp 0.3`. After: median 1.093, p25 0.988, min 0.80, deck tiles 0.91 to 1.17. Side by side with the approved the cloud wisps match. Still different: the ring arcs are discrete bright lines, the approved has a milky sheet with fine lanes between them (tiles 0.80 to 0.93 near the glare). Needs a refit of `deck-rings.bin`, not done.
+- Item 8, hold ring beading: `RingLook.filter` (screen filter term of the line width, was a fixed 0.11): 0.2 for the orbit rings, 0.11 for the deck arcs. At x4 nearest no beads at either value at review; 0.2 chosen as the safer one.
+- Item 8, star flicker measured (`out/work/u/dbg/flicker.py A B dx dy`): the sky drifts 1.5 px per frame in the hold; star peak two frames apart varies by 10 percent (one sigma), the 3 x 3 sum by 8 percent, the same at review (4 samples) and final (16). The engine reads the patch with four taps and full derivatives, so this is the 1 px star size of the approved hero against the pixel grid. Wider stars would cost the sky acutance R1 already faults. Left, reported.
+- Item 8, mirrored stars: `tools/assets/mirrorcheck.py` on 4200, 4290, 4379 reports only a vertical axis at x 722, 784, 832 from row 0: that is the apex of the real ring arcs (a symmetric curve), it moves with the camera. Nothing at the top or right margins.
+- Item 7, ring shadow on the disc in the rise: `ringProfile()` in `rings.ts` (1024 texel radial density of the full circle lines, mipmapped), `globe.ringShade()` and `globe.shadeRings()`; the fragment follows the Sun ray to the ring plane and darkens by the density there (`look.rings.shade [0.55, 0.004]`, strength and line sigma in radii). Sun stands 9.5 degrees off the ring plane, so the shadow is a narrow band of thin arcs beside the near arc. Only after the terrain interlude, the hold is untouched.
+- Rise 4436 at draft (`y-4436`): soft terminator, full ring ellipse, near arc as thin dark lines over the lit disc, shadow band, Ariel as a sphere.
+
+### Numbers so far (to be confirmed by the suite)
+- Build green, 59 tests pass, G11 pass.
+
+## State at 13:25 UTC (read this first after a compaction)
+
+### G13 failed after the cover rebuild, cause and cure
+- Full measure at 13:00 (`out/work/u/r4/measure2.log`): G5 pass (hold coverage 0.196, dive 0.499, terrain 0.519, rise 0.158), G17 pass (hold median 1.176, p25 1.085; terrain median 1.093, p25 0.988), G13 FAIL: 15 of 463 frames over 0.02 soft, 4131 to 4140 at 2.0 to 2.66 percent, 4144 to 4148 at 2.2, 3.4, 4.4, 5.4, 13.05 percent. Rise max 1.09 percent at 4424.
+- Cause: the dive of `UranusPlan` ends over the deck sphere's centre (mapped pose), wrap longitude 38.6, latitude -24.4, 19 degrees from the old patch centre (22.5, -37.8, the engine's `plan.spot`). The camera looks west from there, so the near field fell outside patch levels 2 and 3 and the far field outside level 1.
+- Predictor: `npx tsx assets-src/uranus/dive/softmap.ts A B STEP '[lon,lat]' '[widths]'` reads the film's own camera from the director (so it follows `UranusPlan`), the shape, spin and band drift, and the patch table. Sample time `(f + 0.5 shutter) / fps`. It gives the measured numbers back: 4144 to 4148 predicted 2.23, 3.41, 4.45, 5.53, 13.08 percent. `softfit.ts` uses the plain `StopPlan` path and is out of date for the dive.
+- Scan of the patch centre (`out/work/u/dbg/spotscan.ts '[widths]'`, frames 4126 to 4148 and 4418 to 4454): with 76, 42, 22, 11 deg only longitude 23 to 25 at latitude -30 to -22 gives zero on both sides (dive needs level 3 out to longitude 34, rise needs level 1 out to longitude -12). With 80, 44, 24, 12 deg: zero from longitude 22 to 28 (texels view at draft, frames 4137, 4146, 4148: soft 0). Chosen: centre `[25, -26]` (`CENTRE_DEG` in `dive/spot.ts`), levels 80, 46, 24, 12.2 deg (densities over the wrap 1.87, 3.70, 7.39, 14.7, every step at most 2.0; same zero region in the scan). Predicted soft 0 on every dive and rise frame outside the cover.
+- `spot.json` keeps the engine ground spot as `ground`; `spot` is the patch centre. `GEN_WIDTH` 80.
+- 13:19 to 13:35, full measure with the new patches (tree before the batch 13 merge and before the hold sky margin): PASS G13 0 of 463 frames over 0.02 soft, worst 4392 0.57 percent; PASS G5 (4035 coverage 0.196, 4137 0.499, 4290 0.519, 4436 0.158, invalid 0); PASS G17 (4035 median 1.176, p25 1.085 over 70 tiles; 4290 median 1.093, p25 0.988 over 59 tiles). Gates: G11 PASS, G12 PASS (1827 tracked files, 1.36 GB), G15 PASS (uranus/web 313 MB, uranus/full 1230 MB). Build green, 59 tests pass. Copy of the JSON: `out/work/u/r4/measure-1335.json`.
+
+### Mail 13:31, engine batch 13 (6ed0829) and the hold sky margin
+- Batch 13: sky across the travels (lens opens to a star field, the arriving stop's orbit patch comes in over the last quarter of the travel). No hold, dive, terrain or rise frame moves. Merged: 973c134 (main ab7c0de), then 8c5b7c0 (main 5710e9f). `npm run -s aim -- --stop uranus` after the merge: orbit `[145.41987, -22.38676, 20.05787]` (ignored, Saturn decides), terrain as in the plan, so the margin fit of the hold patch still holds.
+- The Builder's new `tools/assets/mirrorcheck.py` reported the hold patch: seams at x 1056 and 3872, y 594 and 2178, correlation 0.95 to 0.98. True: `widen()` in `sky/patch.py` used a symmetric pad for the fine detail in a 28 px seam at the frame edge and everywhere no copy shifted along the band existed (right end of the top edge, left end of the bottom edge, two corners: a four fold kaleidoscope at the upper right corner, see the look pushed 13:45).
+- Cure: `shifted()` fills the whole margin from shifted copies (along the band, then across it), no pad; the star free mottle (`low(lin) - broad`) of the edge row is held outward and crosses over to the shifted copy within `SEAM` 28 px; the star points come straight from the shifted copy. Inside the frame the old expression is kept, so the inner 2816 x 1584 pixels of the full file are byte identical (checked against a rebuild with the old code, which gave the committed bytes back). New tool on the new file: `clean`.
+- 13:39: `out/work/u/r4/final2.sh` runs detached (log `final2.log`): compares at final, four sheets at review, budget, travel probe, vitest, gates, then the full measure again on the final tree. Then commit with binaries, push, READY.
+
+## State at 14:15 UTC (read this first after a compaction)
+
+Round 2 build is complete in the working tree on top of the local merge 8c5b7c0 (main 5710e9f, engine batch 13). The final check chain (`out/work/u/r4/final2.sh`, log `final2.log`) ran on this tree from 13:39.
+
+### Final checks on the round 2 tree
+- Compares at final: hold and terrain beside the approved images, both read as the same shot (`out/work/compare/compare-uranus-{hold,terrain}-view.jpg`).
+- Sheets at review, all four viewed: hold steady; dive one move across the cover (Sun, horizon slope and ring arcs carried); terrain; rise (cover 4407 and 4414 keep the arcs and the haze, 4420 the limb with the Milky Way, from 4427 the globe with the full ring ellipse, Ariel at the right).
+- Budget (`out/work/budget/budget.json`): full set 1230 MB, web set 313 MB; disk 48 MB full, 20 MB web. Frame seconds at 16x9: hold 1.3 draft, 5.1 review, 19.7 final; dive 1.4, 28.8, 85.6; terrain 1.8, 6.8, 26.0; rise 2.0, 27.6, 110.1.
+- Travel probe: `saturn.travel` joins out at 3960 with turn 0.042 to 0.042 deg per frame; `uranus.travel` joins in at 4455 with turn 0.002 to 0.001, peak turn 4.40 deg per frame at 4476, departing body in view 4455 to 4469.
+- vitest: 13 files, 59 tests pass. Gates: G11 PASS, G12 PASS (1832 tracked files, 1.36 GB), G15 PASS (uranus/web 313 MB, uranus/full 1230 MB).
+- `tools/assets/mirrorcheck.py`: final still 4035 clean, `sky-hold` clean, `sky-terrain` clean; final still 4290 reports one vertical axis at x 782 from row 0 with correlation 0.56, which is the apex of the real ring arcs (it moves with the camera: 722, 784, 832 at 4200, 4290, 4379), nothing at the top or right margins.
+- Terrain 4200, lower right (round 1 item 4): the straight plate edge and the corner are gone. What is left at draft and in the review sheet is a soft darker patch low right of centre where the far map takes over from the plate. It has no straight side and reads as cloud shading. Left, reported as weak.
+- 14:11 to 14:26, full measure on the final tree (`out/work/u/r4/measure-1426.json`): PASS G13 0 of 463 frames over 0.02 soft, worst 4392 and 4393 0.57 percent, 4391 0.53; PASS G5 (4035 coverage 0.196, 4137 0.499, 4290 0.519, 4436 0.158, invalid 0); PASS G17 (4035 median 1.177, p25 1.082 over 70 tiles; 4290 median 1.093, p25 0.988 over 59 tiles).
+
+## State at 14:30 UTC (read this first after a compaction)
+
+READY for round 2 sent at 14:29 with commit cae2846 on `agent/uranus` (work commit 54e0471, merge of main 5cfb8dc with Saturn's round 2; no engine change in that merge, engine hash 6728b99fa98fbd73 and stop hash ea6fbabf377550d2 are the same before and after, aim unchanged, vitest and gates run again after the merge and green). Looks pushed 14:28.
+
+Reported as still weak (work on these while the round is out, motion first, push only finished and green steps):
+- Rise turn peaks at about 11.9 deg per frame near 4422; the Sun leaves the frame under the rise cover.
+- Terrain 4200 to 4216 low right: soft darker patch where the far map takes over from the plate.
+- Terrain ring arcs: discrete bright lines where the approved has a milky sheet with fine lanes (needs a refit of `deck-rings.bin`).
+- Hold pole tiles 0.72 (approved has fine filaments).
+- Miranda out of frame in the rise. Dive 4142 ring as a soft thick band (motion blur).
+- Not mine: stepped copies (engine), Milky Way change under the covers (engine sky turn), oval stars with fringes in the dive (lens chain).

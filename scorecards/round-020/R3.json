@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-07.png",
+      "where": "crop P lower-left sunlit limb (also image-05.png and image-06.png crop G)",
+      "what": "a sharp, bright detached crescent floats several pixels outside Saturn's lower-left limb with a dark gap between it and the globe, forming an obvious doubled edge",
+      "fix": "align the atmospheric shell and inner-ring occlusion mask tightly with the planet sphere so no detached bright sliver forms outside the limb"
+     },
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "crops C and H on the lit A and B rings just right of Saturn's dark limb (also image-05.png and image-07.png crops M, R)",
+      "what": "a straight diagonal seam cuts across the lit rings; between this line and the nightside limb the ring bands and Cassini Division become blurred, smeared, and brighter than the adjacent sharp ring texture",
+      "fix": "eliminate the ring UV/tile or screen-space patch boundary and sample high-resolution ring detail continuously right up to the planet's limb"
+     },
+     {
+      "severity": "severe",
+      "file": "image-04.png",
+      "where": "crop W bottom-right outer ring edge inside Saturn's shadow (also image-01.png, image-05.png, and image-08.png crop W)",
+      "what": "an angular, straight-edged polygonal notch cuts into the shadowed outer rings exposing starry sky, with a clipped lit ring sliver protruding at the bottom edge of image-04.png crop W",
+      "fix": "fix the outer ring geometry bounds and shadow clipping so the ring edge follows a continuous smooth ellipse into shadow without angular cutouts"
+     },
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crops W and X across the lower-right shadowed rings (also image-02.png crop E, image-06.png crop E, and image-08.png crops W, X)",
+      "what": "horizontal blue and amber streak artifacts and a bright blue smudge cross the shadowed rings and clip in a hard line along the outer boundary of the ring mesh in crop X",
+      "fix": "remove baked or ring-masked flare streaks from the ring shader and apply any optical glare in full-frame post-processing without clipping to the ring alpha"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crop P inner ring gap beside the lower-left sunlit limb (also image-02.png crop G, image-06.png crop G, and image-07.png crop P)",
+      "what": "the warm atmospheric limb glow drops in a hard curved step along the inner boundary of the translucent C/D ring plane instead of fading smoothly across the gap",
+      "fix": "composite atmospheric limb scattering continuously behind and through the inner ring alpha without stepping at the inner ring mesh edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crops K, L, M, P, and Q along sunlit planet/moon limbs and lower-right nightside globe edge (also image-02.png crops B, E and image-06.png/image-07.png equivalents)",
+      "what": "high-contrast sunlit limbs on Saturn and the upper-right moon show raw 1-pixel stair-stepping beneath the haze, and Saturn's dark lower-right limb has a sharp polygonal corner where it meets the ring shadow",
+      "fix": "increase sphere tessellation on Saturn and apply supersampling or anti-aliasing across planet, moon, and shadow edges"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop M sky immediately surrounding the moon (also image-07.png crop M)",
+      "what": "a dark circular matte halo wider than the moon suppresses faint background stars around the disc, with an isolated bright pixel sitting just off the dark right limb in image-03.png",
+      "fix": "tighten the moon's alpha and atmosphere falloff so it does not punch an oversized dark cutout into the background starfield"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops D, F, and I on the rings/Cassini Division and image-03.png crops J, K, L in the starfield (also image-06.png and image-07.png equivalents)",
+      "what": "background stars and Milky Way dust appear blocky at 1-2 pixel scale, and isolated single-pixel white pinpoints sit inside the Cassini Division and across dense lit ring bands",
+      "fix": "render stars with smooth sub-pixel point-spread profiles, suppress single-pixel shader fireflies on the rings, and attenuate background stars by physical ring optical depth"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop J upper-left sky gradient and crop L blue north polar vortex (also image-01.png, image-05.png, and image-07.png crops J, L)",
+      "what": "the upper-left sky glow shows faint concentric 8-bit banding, and the blue polar vortex looks overly soft and airbrushed next to the crisp mid-latitude cloud curls",
+      "fix": "dither low-slope sky gradients to prevent banding and add fine-scale concentric cloud detail to the polar region to match mid-latitude sharpness"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "near and mid ring plane; same dots in the ring tiles of image-10.png, image-11.png, and image-12.png",
+      "what": "soft round white dots sit on the ringlets like overlaid sprites, the same circular profile on bright and dark bands",
+      "fix": "remove the billboard pass, or replace it with sparse irregular grains that lie in the ring plane and shrink toward the far ansa"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "mid-latitude cloud deck",
+      "what": "the bands and eddies look airbrushed, with little fine convective texture",
+      "fix": "add finer shear and small-scale cloud texture so the painted look breaks up"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "small moon above the north limb",
+      "what": "the disc is a smooth shaded bead with no haze rim outside the limb",
+      "fix": "add a thin brighter haze just outside the limb"
+     }
+    ]
+   }
+  }
+ ]
+}

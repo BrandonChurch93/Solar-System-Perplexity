@@ -19,6 +19,9 @@ per_radius = N / (R1 - R0)
 CR0, CR1 = -1.05, 2.60
 ANCH_H = [1.2458, 1.940, 2.063, 2.3394]
 ANCH_C = [-1.0, 1.746, 1.858, 2.12]
+CLOSE_FINE = float(sys.argv[1]) if len(sys.argv) > 1 else 0.35
+C_THIN = float(sys.argv[2]) if len(sys.argv) > 2 else 0.22
+C_END = float(sys.argv[3]) if len(sys.argv) > 3 else 1.5
 
 
 def to_world(rh):
@@ -132,7 +135,7 @@ def main():
     f2 = fine(rng, 0.2)
     hero_fine = filmic(hero) * unit_mean((1 + (detail_c - 1) * 0.5 * keep) * f1)[:, None]
     quiet = smoothstep(0.30, 0.60, x)
-    close_fine = filmic(close) * (1 + (unit_mean(0.5 * f1 + 0.5 * f2) - 1) * quiet)[:, None]
+    close_fine = filmic(close) * (1 + (unit_mean(0.5 * f1 + 0.5 * f2) - 1) * quiet * CLOSE_FINE)[:, None]
 
     edge_h = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
     edge_c = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
@@ -140,7 +143,7 @@ def main():
     hero_fine = np.clip(hero_fine * edge_h[:, None] + line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
     close_fine = np.clip(close_fine * edge_c[:, None] + 0.6 * line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
 
-    alpha_h = 1 - np.exp(-scene_lum(hero_fine) / 0.04)
+    alpha_h = (1 - np.exp(-scene_lum(hero_fine) / 0.04)) * (C_THIN + (1 - C_THIN) * smoothstep(INNER, C_END, axis))
     alpha_c = np.maximum(1 - np.exp(-scene_lum(close_fine) / 0.07), 0.95 * edge_c)
     out = [np.concatenate([hero_fine, alpha_h[:, None]], -1), np.concatenate([close_fine, alpha_c[:, None]], -1)]
 
