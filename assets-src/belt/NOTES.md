@@ -289,3 +289,24 @@ Saved verbatim in `assets-src/belt/TASK4.md` (after a compaction read BRIEF.md, 
 - Layout: hero `at` 0.36, 0.52, own speed 8 px per frame at the anchor (down left), `ease` 6.5: planner 9 to 10 px per frame from 2781 to 2785 (under 5 px of blur at 2782), in frame 2759 to 2803, 108 px per frame at the entry, 93 at the exit; 2775 (782,552) to 2793 (591,691). So it is sharp in the judged frame and a fast streak at both ends, and it still moves 235 px over those 18 frames (60 px when it hung, 400 px in the task 3 drift).
   - near: own speed times 0.7 with 0.2 units per second toward the lens: in frame 2773 to 2787 (15 frames, was 11), r 118 px at the right edge to 177 at 2783 (354 px tall, last frame whole in frame), 93 to 122 px per frame (47 to 61 px of streak), 1.11 to 0.54 units from the lens.
 - Tests: hero test now asks under 6 px of blur in the judged frame and never under 6 px per frame; 9 green.
+- 23:22 `blur.fineSteps` 16: only rocks with at most 16 time steps (under about 24 px of motion in the shutter) use the smoothed target; faster ones are streaks and stay on the plain scratch. Committed and pushed d688465 (all pictures below are of d688465).
+- 23:26 draft sheet `out/work/belt/t4/d1/sheet.jpg`, drafts at twice native `out/work/belt/t4/d2rocks.png`: mid crisp with pits at 2763, hero a clean streak at 2763 and 2769, sharp from 2775, far rocks streaks.
+- 23:42 review sheet, one run of d688465: `out/work/belt/t4/r1/sheet.jpg` (25 frames, every third 2745 to 2817). Seconds (samples): 40.8 (2745, load, 16), 18.6, 22.3 (20), 42.1 (39), 60.3 (62), 75.8 (84), 86.3 (104), 78.4 (2766, 105), 15.0 (2769, 16), 16.8, 18.3, 18.5, 18.7 (2781), 18.7, 17.5, 17.7, 18.7, 17.1 (2796), 28.4 (23), 37.1 (29), 40.5 (2805, 32), 34.3 (24), 24.5, 25.7, 23.7. Against the task 3 sheet the frames 2772 to 2796 cost 1.5 to 3.5 s more (smoothed target, four more frames of the near rock); without rocks they cost 12 to 14 s (task 3 measure, not repeated), so the belt adds about 4.5 to 6.5 s there.
+  - Read on the sheet: mid 2748 to 2775 from the top right down; hero in at the top at 2760, slows left of the middle 2775 to 2790, out at the bottom at 2802; near rock at the right edge at 2775, 2778, 2781, 2784 and at the top at 2787, growing; far1 and far2 small. Review crops at twice native 2757 to 2769 (`/home/user/workspace/view/t4/r1early.png`): streaks are smooth, no second contour.
+- 23:44 finals, one session (`out/work/belt/t4/f1/`, 64 samples, 79.3 s with the load, 53.9 s):
+  - 2782: f24948ce31865d764722aec97e63e054a6e3bca6b8cae5cabe3a4a68370d99d5
+  - 2783: 77c5c8ae5b5daf2d5332e940f0d127bb0dffabfa2239d639cbb5ffca4f27ce55
+  - native crops of each rock at 2782: `out/work/belt/t4/f1/crops-2782.png` (also crop-hero.png, crop-near.png, crop-far1.png, crop-far2.png).
+  - Tone, final 2782: hero lit face 80 x 80 at (600,560): mean sRGB 90.6, 80.2, 68.9 (luma 81.6, p95 132.3); hero night side 60 x 45 at (720,490): 22.9, 24.0, 27.4 (luma 24.0, p5 11.1). Phobos lit face 133.6, 106.2, 87.6. Sky median there about 5, 8, 10.
+- 23:46 byte proof at draft, d688465 against a worktree of 4e8aade with its own build (`/tmp/proof4.sh`), six pairs equal, same hashes as at 17:13: 2325 fd128b1a..., 2427 5636a976..., 2580 7322ef95..., 2726 d408b434..., 2745 3fae3f66..., 2819 22e950ad... (full values in the 17:13 entry).
+- tsc clean, 13 repo test files green, 9 belt tests green.
+- Memory: the smoothed target is 640 x 640 at 1080p, half float with 4 samples and depth: about 20 MB more while the segment is prepared.
+
+## What a critic would still write (after task 4), worst first
+- The near rock is a soft blob with a dark hollow in its middle; its face is not readable and its edge fades, so its visible core is about 250 px across at 2782 though its outline is 336 px. Stars and motes show in its soft edge.
+- far1 and far2 are in the judged frame as streaks of 22 and 25 px on rocks of 55 and 51 px radius (they cross at 44 and 51 px per frame): neither sharp nor a long streak.
+- The hero slows left of the middle (9 px per frame, 2781 to 2785) and speeds up toward both ends (108 px per frame at the entry): a made path. On the sheet it can read as a rock that brakes and leaves.
+- The hero enters as a pale flat streak (2760 to 2769, 40 to 54 px of blur); relief shows there only on the mid rock.
+- The night side (23, 24, 27 in sRGB) was judged against the dense sky of 4e8aade. On the sparse, darker sky of batch 16 it may read as a grey fill; the knob is `light.fill`. The Sun rim past the terminator is faint; the dark limb has no bright line.
+- The clean limb needs a multisampled half float target. It works in this renderer (the pictures differ and are clean); not tried on another GPU.
+- Motes in front of the hero draw on its face. mid and near share asset b. The web set was not rendered. Belt test outside `tests/`.
