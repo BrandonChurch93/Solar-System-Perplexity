@@ -34,7 +34,7 @@ inv = np.array([[k, 0, LEFT * mask.shape[1] + 0.5 * k - 0.5], [0, k, TOP * mask.
 mask = cv2.GaussianBlur(cv2.warpAffine(mask, inv, (w, h), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP), (0, 0), 20)
 deg = (edge[None, :] - rows) * 2 * np.degrees(np.arctan(TY * SPAN)) / h
 near = NEAR[0] * step(deg, NEAR[1], NEAR[2]) + (1 - NEAR[0]) * step(deg, NEAR[2], NEAR[3])
-out *= (near * (1 - ARCH * mask))[..., None]
+out = np.maximum(out - cv2.GaussianBlur(out, (0, 0), SOFT) * (1 - near * (1 - ARCH * mask))[..., None], 0)
 img = display(out)
 print('sky max', float(img.max()), 'mean', float(img.mean()))
 write(f'{OUT}/full/sky-terrain.webp', img, 95)
