@@ -631,6 +631,16 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - 22:44: terrain sheet at review tier (`jupiter.terrain-16x9-review.png`; lower halves of 3093 and 3206 at native size): the new fold detail holds in the other poses of the flight, no pasted look, no new seams; 3239 shows the bank begun.
 - 22:44: main moved to 8c9aa59 (round 29 start: other stops and kit/PROGRESS.md only; no engine, config, tools, Mars or Saturn change). Merged (e511dc9), build green, tsc clean, vitest 62 of 62. Final chain started 22:44:50 (`/tmp/chain_f.sh`, log `/tmp/chain_f.log`, ends "ALL done"): finals 2895 2997 3150 3296, sha256 of 2895, compare hold and terrain at final tier, mirrorcheck, measure, gates.
 
+- 23:07: FINAL CHAIN DONE (22:44:50 to 23:07:01), on e511dc9 (main 8c9aa59 merged) with the new `deck-core.jpg`:
+  - Finals: 2895 34.1 s 16 samples, sha256 059d70e1304b46df... (byte identical to the judged round 25 final); 2997 99.7 s 64 samples; 3150 49.3 s 16 samples; 3296 72.9 s 64 samples. mirrorcheck clean on all four.
+  - G13 PASS: 0 of 463 frames over 0.02 soft; worst 3253 0.95 percent, 3254 0.78, 3261 0.71.
+  - G5 PASS: 2895 invalid 0 coverage 0.352; 2997 invalid 0 coverage 0.460; 3150 invalid 0 coverage 0.754; 3296 invalid 0 coverage 0.280.
+  - G17 PASS: 2895 median 1.042 p25 0.951 over 81 tiles; 3150 median 1.032 p25 0.967 over 80 tiles (before the folds: 0.973 and 0.926).
+  - Gates: G5, G13, G17 pass; G11 pass (every asset has a row or a recipe); G12 pass (2183 tracked files, 1.66 GB); G15 pass (jupiter/web 199 MB, jupiter/full 756 MB). Measure 916 s.
+  - Looked at, native size: final 3150 crops D and E beside the round 25 final (`out/work/view/pol_cropD_final.jpg`, `pol_cropE_final.jpg`): the broad folds carry fine wisps, puffs and filaments, the tube forms themselves are the approved picture's and are still there under the detail; a patch of fine scale like ridges in crop E (left of centre) is the densest new texture, dark on dark. Final 2997 (7.6 px motion): Io, its shadow, the storm and the band edges sharp. Final 3296: sharp; Io half lit in front of the terminator with a hard edge (the "cutout" minor, not yet worked). Compare terrain at the final tier: same shot as the approved image in all nine crops.
+  - Disk: full 44.96 MB (limit 150), web 12.98 MB (limit 40). `deck-core.jpg` full 3,218,635 bytes, web 612,240 bytes.
+- 23:10: main moved to 8cd371b (kit/PROGRESS.md and status pictures only), merged as 0210254; build green, tsc clean, vitest 62 of 62. PROGRESS says engine batch 16 will carry a plan hook `skyUnderCover(amount, time)` (base: the law of today) besides `coverWindow`; a stop sets its floor in Phase 6. Binaries committed once with this entry, then POLISH READY sent.
+
 ## Next
 
 - Polish items 1, 3, 4 (then 5), see the list above. Then `POLISH READY <commit>` to /root.
