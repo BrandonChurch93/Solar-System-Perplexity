@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "cloud bands across the planet disc (crop A, crop I)",
+   "what": "fine fibrous cloud texture is a touch softer than the target (edge energy about 4% lower), and the storm filaments look slightly smoothed",
+   "fix": "restore micro-contrast and sharpening on the cloud surface to match the target's crispness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet disc, right and lower limb",
+   "what": "the disc is a few pixels smaller and sits marginally higher and tighter on the right limb than in the target",
+   "fix": "scale the planet up slightly and nudge it down/right so the limb lines up with the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "whole frame grade",
+   "what": "overall exposure is about 1 to 1.5% brighter and a hair warmer than the target, lifting the night-side shadows slightly",
+   "fix": "pull overall exposure down slightly and keep the shadow side of the planet as deep as the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame grade and star field",
+   "what": "overall exposure is about 1% brighter than the target and the dark floor is slightly raised (crop pack 1st percentile 6 vs 5); the star field is marginally crisper/grainier than the target",
+   "fix": "pull exposure down slightly to match the target's black depth and soften star/sky grain a touch toward the target"
+  }
+ ]
+}

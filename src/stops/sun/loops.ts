@@ -11,6 +11,7 @@ export interface LoopsLook {
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
   flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number }
   swell: { amount: number; speed: number; width: number; lanes: number; calm: number }
+  burst: { surge: number; floor: number; reach: [number, number]; other: number; white: number; from: number }
 }
 
 const VERT = /* glsl */ `
@@ -38,6 +39,8 @@ uniform vec4 uFlow;
 uniform vec2 uFlowMore;
 uniform vec4 uSwell;
 uniform float uCalm;
+uniform vec4 uBurst;
+uniform vec3 uBurstMore;
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -69,6 +72,10 @@ void main() {
   float ds = fract(along - uTime * uSwell.y * (0.75 + 0.5 * lane) - lane * 3.0) - 0.5;
   float swell = exp(-ds * ds / (uSwell.z * uSwell.z)) * smoothstep(0.0, 0.14, along) * (1.0 - smoothstep(0.86, 1.0, along)) * (1.0 - exp(-uTime * uTime / (uCalm * uCalm)));
   lin *= max(1.0 + uFlow.x * run + uSwell.x * swell, uFlowMore.y);
+  float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
+  float glow = dot(lin, vec3(0.3, 0.5, 0.2));
+  float lit = uBurst.x * uBurst.y * (uBurst.w + (1.0 - uBurst.w) * min(climb, 1.0)) * smoothstep(uBurstMore.z, uBurstMore.z * 6.0, glow);
+  lin = lin * (1.0 + lit) + glow * lit * uBurstMore.y * vec3(1.0, 0.9, 0.66);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   lin *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(lin, 0.0);
@@ -101,9 +108,11 @@ export class Loops {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly gain: number
+  private readonly reach: [number, number]
 
   constructor(map: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook) {
     this.gain = look.gain
+    this.reach = look.burst.reach
     const [fa, fb] = stage.feet as [[number, number], [number, number]]
     const tan = (f: [number, number]): THREE.Vector2 => new THREE.Vector2((f[0] - 0.5) * 2 * stage.tan[0], (0.5 - f[1]) * 2 * stage.tan[1])
     const ta = tan(fa)
@@ -177,6 +186,7 @@ export class Loops {
         uFlow: { value: new THREE.Vector4(look.flow.amount, look.flow.lanes, look.flow.along, look.flow.speed) },
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -194,8 +204,11 @@ export class Loops {
     this.mesh.frustumCulled = false
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number): void {
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number): void {
     const u = this.material.uniforms
+    const lit = u.uBurst!.value as THREE.Vector4
+    lit.x = burst
+    lit.z = this.reach[0] + (this.reach[1] - this.reach[0]) * burst
     u.uTime!.value = time
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette
