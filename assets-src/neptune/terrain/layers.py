@@ -16,6 +16,16 @@ CRISP = 1.0
 CRISP_MAX = 0.6
 SEAM_STRIP = 28
 SEAM_REACH = 900
+PLATE_EDGE = 16
+KNIT_IN = 16
+KNIT_OUT = 10
+KNIT_STRIP = 6
+KNIT_REACH = 700
+KNIT_NEAR = 140
+KNIT_ALONG = 24
+KNIT_COARSE = 120
+KNIT_FINE = 2
+KNIT_FRINGE = 10
 LIMB_TOP, LIMB_FULL, LIMB_END = -24, 150, 320
 LIMB_ALONG, LIMB_REACH, LIMB_IN = 50, 700, 14
 
@@ -187,6 +197,9 @@ def level(x, weight, strip=SEAM_STRIP, along=24, reach=SEAM_REACH, lo=0.2, hi=1.
     return np.clip(np.exp(lx + step * np.exp(-dist / reach) * (dist > 0)), lo, hi).astype(np.float32)
 
 
+cleanN[:bh, bx:bx + PLATE_EDGE] = cleanN[:bh, bx + PLATE_EDGE:bx + PLATE_EDGE + 1]
+cleanN[:bh, bx + bw - PLATE_EDGE:bx + bw] = cleanN[:bh, bx + bw - PLATE_EDGE - 1:bx + bw - PLATE_EDGE]
+cleanN[bh - PLATE_EDGE:bh, bx:bx + bw] = cleanN[bh - PLATE_EDGE - 1:bh - PLATE_EDGE, bx:bx + bw]
 belowf = below.astype(np.float32)
 cleanN = np.dstack([level(cleanN[..., c], belowf, 3, 3, 160, 0.0, 4.0, 'plate knit %d' % c) for c in range(3)])
 alpha = alpha_of(wide, cleanN) * below
@@ -217,9 +230,7 @@ def split(app, clean_n, a, sh):
 
 
 deckW, cloudW = split(wide, cleanN, alpha, s)
-check = deckW * s[..., None] * (1 - alpha[..., None]) + cloudW * alpha[..., None]
-err = np.abs(enc(check).astype(np.int32) - enc(wide).astype(np.int32))[below]
-print('wide recomposite error mean %.2f p99 %.0f' % (err.mean(), np.percentile(err, 99)))
+
 
 cleanC = cv2.resize(cleanN[:bh, bx:bx + bw], (CW, CH), interpolation=cv2.INTER_CUBIC)
 sC = cv2.resize(s[:bh, bx:bx + bw], (CW, CH), interpolation=cv2.INTER_LINEAR)
@@ -227,9 +238,44 @@ belowC = cv2.resize(below[:bh, bx:bx + bw].astype(np.float32), (CW, CH), interpo
 alphaC = alpha_of(core, cleanC) * belowC
 alphaC = np.where(cv2.resize(blur(alpha, 6)[:bh, bx:bx + bw], (CW, CH), interpolation=cv2.INTER_LINEAR) > 0.03, alphaC, 0).astype(np.float32)
 deckC, cloudC = split(core, cleanC, alphaC, sC)
+
+
+def defringe(deck, cloud, app, a, sh):
+    f = CW / bw
+    n = int(round(KNIT_IN * f))
+    m = 3 * n
+    t = np.clip((np.arange(n) / n - 0.6) / 0.4, 0, 1)
+    w = (1 - t * t * (3 - 2 * t)).astype(np.float32)
+    seen = []
+    for name in ('left', 'right', 'base'):
+        turn = (lambda x: x) if name == 'left' else (lambda x: x[:, ::-1]) if name == 'right' else (lambda x: np.swapaxes(x, 0, 1)[:, ::-1])
+        d = np.ascontiguousarray(turn(deck)[:, :m])
+        al = np.ascontiguousarray(turn(a)[:, :m])
+        L = np.log(np.maximum(d, 1e-3))
+        side = cv2.GaussianBlur(L, (0, 0), sigmaX=KNIT_FINE * f, sigmaY=KNIT_ALONG * f)
+        under = np.clip(blur(al, 2.5) * 4, 0, 1)[..., None]
+        g = np.zeros_like(L)
+        g[:, :n] = np.clip(side[:, n:n + 1] - side[:, :n], -1.2, 1.2) * w[None, :, None]
+        if name == 'base':
+            edge = np.ones(d.shape[0], np.float32)
+            edge[:n] = 1 - w
+            edge[-n:] = 1 - w[::-1]
+            g *= edge[:, None, None]
+        d2 = np.clip(d * np.exp(g * under), 0, 1)
+        c2 = np.clip((np.ascontiguousarray(turn(app)[:, :m]) - (1 - al[..., None]) * d2 * np.ascontiguousarray(turn(sh)[:, :m])[..., None]) / np.maximum(al[..., None], 0.02), 0, 1)
+        wgt = np.clip(al * 2, 0, 1) ** 2
+        c2 = c2 * wgt[..., None] + ncblur(c2, wgt, 12) * (1 - wgt[..., None])
+        seen.append((g * under)[:, :n // 2, 1][under[:, :n // 2, 0] > 0.5])
+        turn(deck)[:, :n] = d2[:, :n]
+        turn(cloud)[:, :n] = c2[:, :n]
+    print('core fringe p5 p50 p95 %.3f %.3f %.3f' % tuple(np.percentile(np.concatenate(seen), [5, 50, 95])))
+
+
+defringe(deckC, cloudC, core, alphaC, sC)
 check = deckC * sC[..., None] * (1 - alphaC[..., None]) + cloudC * alphaC[..., None]
 err = np.abs(enc(check).astype(np.int32) - enc(core).astype(np.int32))[belowC > 0.5]
 print('core recomposite error mean %.2f p99 %.0f' % (err.mean(), np.percentile(err, 99)))
+del check, err, cleanC
 
 body = lum(cloudW) * alpha
 height = blur((alpha * (0.3 + 0.7 * np.clip(lum(cloudW) / 0.6, 0, 1))).astype(np.float32), 6)
@@ -237,6 +283,81 @@ height = np.clip(height / np.percentile(height[alpha > 0.5], 97), 0, 1)
 hmap = np.zeros((HH, HW, 3), np.uint8)
 hmap[..., 2] = np.clip(cv2.resize(height, (HW, HH), interpolation=cv2.INTER_AREA) * 255 + 0.5, 0, 255)
 hmap[..., 1] = np.clip(cv2.resize(s, (HW, HH), interpolation=cv2.INTER_AREA) * 255 + 0.5, 0, 255)
+
+
+
+def place(x):
+    full = np.zeros((WH, WW) + x.shape[2:], np.float32)
+    full[:bh, bx:bx + bw] = cv2.resize(x, (bw, bh), interpolation=cv2.INTER_AREA)
+    return full
+
+
+def knit(deck, a, cloud):
+    inside = np.zeros((WH, WW), np.float32)
+    inside[:bh, bx:bx + bw] = 1
+    outside = 1 - inside
+    yy, xx = np.mgrid[0:WH, 0:WW].astype(np.int32)
+    ny = np.clip(yy, 0, bh - 1)
+    nx = np.clip(xx, bx, bx + bw - 1)
+    dist = np.hypot(yy - ny, xx - nx).astype(np.float32)
+    iy = np.clip(yy, 0, bh - 1 - KNIT_IN)
+    ix = np.clip(xx, bx + KNIT_IN, bx + bw - 1 - KNIT_IN)
+    oy = np.clip(np.where(yy > bh - 1, bh - 1 + KNIT_OUT, iy), 0, WH - 1)
+    ox = np.clip(np.where(xx < bx, bx - KNIT_OUT, np.where(xx > bx + bw - 1, bx + bw - 1 + KNIT_OUT, ix)), 0, WW - 1)
+    under_box = yy > bh - 1
+    del yy, xx, ny, nx
+    far = np.exp(-dist / KNIT_REACH) * (dist > 0)
+    close = np.exp(-dist / KNIT_NEAR) * (dist > 0)
+    fringe = np.exp(-dist / KNIT_FRINGE) * (dist > 0)
+
+    def strips(ref, x, w_in, w_out):
+        m_in = blur(ref * w_in, KNIT_STRIP) / np.maximum(blur(w_in, KNIT_STRIP), 1e-3)
+        m_out = blur(x * w_out, KNIT_STRIP) / np.maximum(blur(w_out, KNIT_STRIP), 1e-3)
+        return m_in[iy, ix], m_out[oy, ox]
+
+    def along(x, w):
+        side = cv2.GaussianBlur(x * w, (0, 0), sigmaX=KNIT_FINE, sigmaY=KNIT_ALONG) / np.maximum(cv2.GaussianBlur(w, (0, 0), sigmaX=KNIT_FINE, sigmaY=KNIT_ALONG), 1e-3)
+        base = cv2.GaussianBlur(x * w, (0, 0), sigmaX=KNIT_ALONG, sigmaY=KNIT_FINE) / np.maximum(cv2.GaussianBlur(w, (0, 0), sigmaX=KNIT_ALONG, sigmaY=KNIT_FINE), 1e-3)
+        return np.where(under_box, base, side)
+
+    refD, refC, refA = place(deckC), place(cloudC), place(alphaC)
+    deck = deck.copy()
+    cloud = cloud.copy()
+    wo = outside * belowf
+    for c in range(3):
+        lx = np.log(np.maximum(deck[..., c], 1e-3))
+        m_in, m_out = strips(np.log(np.maximum(refD[..., c], 1e-3)), lx, inside * belowf, wo)
+        goal = ncblur(m_in, outside, KNIT_ALONG)
+        d = ncblur(np.clip(m_in - m_out, -1.2, 1.2), outside, KNIT_ALONG)
+        coarse = ncblur(d, outside, KNIT_COARSE)
+        edge = np.clip(goal - along(lx, wo), -1.2, 1.2)
+        deck[..., c] *= np.exp((edge * fringe + (coarse * far + (d - coarse) * close) * (1 - fringe)) * (dist > 0))
+        if c == 1:
+            print('deck knit step p5 p50 p95 %.3f %.3f %.3f' % tuple(np.percentile(d[(dist > 0) & (dist < 40) & below], [5, 50, 95])))
+    m_in, m_out = strips(refA, a, inside * belowf, wo)
+    da = ncblur(np.clip(m_in - m_out, -1, 1), outside, KNIT_ALONG)
+    print('alpha knit step p5 p50 p95 %.3f %.3f %.3f' % tuple(np.percentile(da[(dist > 0) & (dist < 40) & below], [5, 50, 95])))
+    a2 = np.where(a > 0.03, np.clip(a + da * close, 0, 1), a).astype(np.float32)
+    w_in = inside * refA
+    w_out = outside * a
+    sure = np.clip(np.minimum(blur(w_in, KNIT_STRIP)[iy, ix], blur(w_out, KNIT_STRIP)[oy, ox]) / 0.08, 0, 1)
+    for c in range(3):
+        m_in, m_out = strips(np.log(np.maximum(refC[..., c], 1e-3)), np.log(np.maximum(cloud[..., c], 1e-3)), w_in, w_out)
+        d = ncblur(np.clip(m_in - m_out, -0.7, 0.7) * sure, outside, KNIT_ALONG)
+        cloud[..., c] *= np.exp(d * close)
+    m = inside[..., None]
+    deck = deck * (1 - m) + refD * m
+    cloud = cloud * (1 - m) + refC * m
+    a2 = a2 * (1 - inside) + refA * inside
+    return np.clip(deck, 0, 1).astype(np.float32), np.clip(cloud, 0, 1).astype(np.float32), a2.astype(np.float32)
+
+
+deckW, cloudK, alphaW = knit(deckW, alpha, cloudW)
+comp = deckW * s[..., None] * (1 - alphaW[..., None]) + cloudK * alphaW[..., None]
+for name, i0, o0 in (('left', bx + 2, bx - 10), ('right', bx + bw - 10, bx + bw + 2)):
+    gap = np.abs(enc(blur(comp[:bh, i0:i0 + 8], 4)).astype(np.int32).mean(1) - enc(blur(comp[:bh, o0:o0 + 8], 4)).astype(np.int32).mean(1))[below[:bh, bx + 4]]
+    print('%s border composite step mean %.2f p95 %.1f' % (name, gap.mean(), np.percentile(gap, 95)))
+del comp
 
 from PIL import Image
 
@@ -271,7 +392,7 @@ kW = reach(WW, WH, None)
 save('close-deck.webp', deckC, None, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-cloud.webp', cloudC, alphaC, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-deck-wide.webp', deckW, None, (WW // 2, WH // 2), bw / 1920, kW)
-save('close-cloud-wide.webp', cloudW, alpha, (WW // 2, WH // 2), bw / 1920, kW)
+save('close-cloud-wide.webp', cloudK, alphaW, (WW // 2, WH // 2), bw / 1920, kW)
 cv2.imwrite(OUT + '/full/close-height.png', hmap)
 cv2.imwrite(OUT + '/web/close-height.png', cv2.resize(hmap, (HW // 2, HH // 2), interpolation=cv2.INTER_AREA))
 cv2.imwrite(WORK + 'wide.png', enc(wide))

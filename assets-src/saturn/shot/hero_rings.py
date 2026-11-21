@@ -129,7 +129,8 @@ def build(key):
     mask = np.zeros((h, w, 3), np.uint8)
     mask[..., 2] = np.clip(alpha * 255 + 0.5, 0, 255)
     mask[..., 1] = np.clip(weight * 255 + 0.5, 0, 255)
-    dst = ROOT / "public" / "assets" / "saturn" / key
+    dst = WORK / "shot" / key
+    dst.mkdir(parents=True, exist_ok=True)
     cv2.imwrite(str(dst / "hero-rings.jpg"), out, [cv2.IMWRITE_JPEG_QUALITY, 93])
     small = cv2.resize(mask, tuple(fit["imageSize"]), interpolation=cv2.INTER_AREA) if k > 1 else mask
     cv2.imwrite(str(dst / "hero-rings-mask.png"), small, [cv2.IMWRITE_PNG_COMPRESSION, 9])

@@ -22,6 +22,7 @@ uniform int uDiag;
 uniform float uGain;
 uniform float uWeight;
 uniform float uEdge;
+uniform vec2 uFloor;
 uniform float uVignette;
 uniform float uAspect;
 in vec2 vUv;
@@ -37,10 +38,10 @@ void main() {
   float inside = smoothstep(0.0, uEdge, min(e.x, e.y));
   vec2 vq = vScreen * 0.5 * vec2(uAspect, 1.0);
   vec3 col = inverseFilmic(t) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, inside * uWeight);
+  outColor = vec4(col, inside * uWeight * smoothstep(uFloor.x, uFloor.y, vUv.y));
 }`
 
-export interface SkyCardDef { file: string; vfovDeg: number; margin: number; gain: number; centre?: [number, number]; edge?: number }
+export interface SkyCardDef { file: string; vfovDeg: number; margin: number; gain: number; centre?: [number, number]; edge?: number; floor?: [number, number] }
 
 export class SkyCard {
   readonly mesh: THREE.Mesh
@@ -57,7 +58,7 @@ export class SkyCard {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: map }, uDiag: diagUniform, uTan: { value: new THREE.Vector2((t * 16) / 9, t) }, uShift: { value: new THREE.Vector2(def.centre?.[0] ?? 0, def.centre?.[1] ?? 0) },
-        uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.edge ?? def.margin / wide }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.edge ?? def.margin / wide }, uFloor: { value: new THREE.Vector2(def.floor?.[0] ?? -2, def.floor?.[1] ?? -1) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,

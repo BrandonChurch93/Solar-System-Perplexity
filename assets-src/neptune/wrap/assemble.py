@@ -221,6 +221,12 @@ def main():
         fade = separate.smoothstep(90 - radius, 90 - radius + 8, np.abs(lat[sl])).astype(np.float32)[:, None]
         alpha[sl] = np.maximum(alpha[sl], np.clip(rows, 0, 1) * fade * gain)
 
+    import sepmap
+    knots = np.linspace(-1, 1, 33)
+    dim = sepmap.cloud_curve(False)[:, :2].sum(1) / sepmap.cloud_curve(True)[:, :2].sum(1)
+    for ya in range(0, H, 256):
+        lo, la = np.meshgrid(np.radians(lon), np.radians(lat[ya:ya + 256]))
+        alpha[ya:ya + 256] *= np.interp(geo.lonlat_to_world(lo, la) @ geo.SUN, knots, dim).astype(np.float32)
     ha, hw = shell_shift(layers, CLOUD_HEIGHT)
     wd = layers['weight'][..., None]
     acc[y0:y1, x0:x1] = acc[y0:y1, x0:x1] * (1 - wd) + layers['deck'] * wd
