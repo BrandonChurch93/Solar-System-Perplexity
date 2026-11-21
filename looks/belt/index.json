@@ -1,9 +1,23 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T03:26:27.338Z",
- "head": "322bd066ddddb024b8c5d4c15e9d1ce9c1cf25a5",
- "note": "first rocks in frame at 2782 draft; rocks too pale, tuning light and bake next",
+ "pushed": "2026-11-21T03:45:52.297Z",
+ "head": "39783f60a3082b56aa2a7d7e7c1a49962a664dba",
+ "note": "belt: take 3 rocks, draft strip of the segment, near rock tilt tests, diag views",
  "looks": [
+  {
+   "time": "2026-11-21T03:45:15.857Z",
+   "file": "20261121034515857-frame-tilt4.jpg",
+   "source": "out/work/belt/tilt4.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2780, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2780,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cab38ea051d9c160"
+  },
   {
    "time": "2026-11-21T03:26:24.965Z",
    "file": "20261121032624965-note-view-c.jpg",
@@ -27,20 +41,6 @@
    "kind": "note",
    "label": "belt rock a, bake take 2, offline preview of the baked maps",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T03:25:51.173Z",
-   "file": "20261121032551173-frame-d2782.jpg",
-   "source": "out/work/belt/d2782.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2782, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4e24939e6c7dd036"
   },
   {
    "time": "2026-11-21T03:20:52.884Z",
