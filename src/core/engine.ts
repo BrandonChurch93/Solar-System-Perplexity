@@ -291,7 +291,7 @@ export class Engine {
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view)
+    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
