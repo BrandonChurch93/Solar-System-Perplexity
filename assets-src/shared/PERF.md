@@ -397,3 +397,51 @@ Added at review: 8808 samples (dive 3089, rise 3696, travel 2007, terrain 7, ret
 ### Saturn's rings at 3598 and 3835
 
 Not a matter of the count: the weave is there at 16 and at 20 samples and gone at 64 (final). It is the ring profile fetched with a footprint under a pixel: `src/stops/saturn/rings.ts` line 163, `profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose))`, with `lodBias: 1.2` and `lodBiasClose: 0.35` (`src/stops/saturn/look.ts` lines 56 and 57) and `uGrad` 0.5 for any frame of 4 samples or more. In the close view the footprint is 0.175 to 0.6 of a pixel, so one sample is aliased (the draft frame shows the herringbone in the same bands) and the picture relies on the jitter of the samples to filter it. The likely reason it shows under slow motion and not in a hold: the jitter follows the sample order, which is also the time order (a step of 0.245 px in x and 0.43 px in y per sample), so where the ring moves a few tenths of a pixel per sample, motion and jitter partly cancel and the samples see the ringlets at nearly the same place inside the pixel. That part is reasoning, not measured; the rest is from the renders. With `lodBiasClose: 1.2` (scratch tree, same frame, 20 samples) the weave is nearly gone: `assets-src/shared/perf/saturn-3598-rings-as-is-left-lodBiasClose-1.2-right.png`; the draft and the final frame are in `saturn-3598-rings-draft-1-sample-left-final-64-samples-right.png`. The grain (`grain: 0`) and the sparkle (`sparkle: 0`) change nothing in it.
+
+## Third task: fast motion again (gradient scale, caps, what a cover hides)
+
+Working notes (task received 15:00 UTC, 21 Nov; started from main `407a32b`). Commits: `63bfd2e` (A), `02cc08b` (C), `d84e94b` (B). Scratch pictures in `/home/user/workspace/t3/{before,after,mars,earth}`, chain `/home/user/workspace/t3chain.sh` with logs `/tmp/t3*.log`; the before set is rendered in the dev tree at `407a32b`.
+
+### A. The gradient scale follows the motion
+
+`src/core/motion.ts`: `rawMotion(open, mid, close)` is the shutter motion before the cover factor, `seenShare(mid)` is the cover factor, `shutterMotion` is their product (as before). `framePlan(source, frame, tier)` returns `{ samples, raw, seen, soft }`; `soft = softness(raw)` is a smoothstep from `motion.softFromPx` to `motion.softToPx` (px at 1920 wide). `setSamples(count, floor, soft)` in `src/diagnostics/diag.ts` sets `uGrad = sharp + (1 - sharp) * soft` with `sharp = max(1 / sqrt(count), floor)`; with `soft` 0 it takes the old expression, so a frame at or under `softFromPx` has the bytes of before. The engine asks once per frame (`renderFrame`), the live view stays at 0.
+
+Raw motion of the frames the Builder named (px): Mars 2325 hold 0.45, 2427 dive 3.89, 2580 terrain 3.65 (the terrain peaks at 4.06 on 2669), 2726 rise 6.07, belt 2772 0.00, 2782 0.00, 2796 9.09. With the first proposal (4 and 12) 2726 and 2796 would have changed, so the keys are `softFromPx: 10`, `softToPx: 18`: all seven keep their bytes, Earth 1870 (18.9 px) is fully soft. At 16 samples 10 px is a step of 0.6 px, under which the sharper level cannot comb.
+
+Looks at review, native size, before on the left and after on the right, in `assets-src/shared/perf/`: `soft-earth-1870-review-16-samples-before-left-after-right.png`, `soft-earth-1872-review-24-samples-before-left-after-right.png`, `soft-uranus-4126-review-53-samples-before-left-after-right.png`, `soft-neptune-4984-review-64-samples-before-left-95-samples-after-right.png` (this one also has the raised cap), `soft-uranus-4160-review-16-samples-before-left-after-right.png`. Against before: Earth 1870 PSNR 36.8 dB, 1872 39.5 dB, Uranus 4126 57.1 dB, Neptune 4984 54.5 dB, Uranus 4160 61.3 dB.
+
+What the eye says: the sparkle is softer on Earth, the comb is not gone. City lights, coast and cloud edges are still rows of dots along the motion, one sample step apart (1.2 px at 1870, 1.5 px at 1872). A scratch render of 1870 with the soft scale and `motion.maxStepPx` 0.6 (32 samples, not committed) turns the dots into unbroken streaks: `step-earth-1870-review-lights-2x-before-left-soft-middle-soft-and-0.6px-step-32-samples-right.png` and `step-earth-1870-review-before-left-soft-middle-soft-and-0.6px-step-32-samples-right.png`. So on Earth the comb is mostly the step: 1.5 px is too wide for features one pixel wide, whatever the mip level. `maxStepPx` is the Builder's number and stays at 1.5. What a smaller step would cost with the caps of B (samples of the film, frames at the cap, hours as in the table of B):
+
+| `maxStepPx` | review, cap 128 | final, cap 256 |
+| --- | --- | --- |
+| 1.5 | 58,721, 6 at the cap, 15.8 to 27.8 h | 191,130, 0, 50.1 to 85.4 h |
+| 1.0 | 67,576, 35, 17.8 to 32.0 h | 195,028, 0, 51.0 to 87.7 h |
+| 0.75 | 76,256, 61, 19.7 to 35.8 h | 200,973, 6, 52.3 to 90.8 h |
+| 0.6 | 84,461, 98, 21.6 to 39.3 h | 207,755, 14, 53.8 to 94.2 h |
+
+Earth's dive costs more per sample than the table of the second task knows: 1870 took 82.5 s at 16 samples and 145.8 s at 32, so 4.0 s per sample.
+
+### B. Caps
+
+`tiers.review.maxSamplesPerFrame` 64 to 128, `tiers.final.maxSamplesPerFrame` 128 to 256. Counts over the 5400 frames (the rule of `tools/lib/samples.ts`, hours with the seconds per sample of the table above, low is Mars, high is the costliest stop measured per kind):
+
+| Tier, cap | Samples | Frames at the cap | Largest count | Machine hours |
+| --- | --- | --- | --- | --- |
+| review 64 | 57,070 | 61 (mercury.dive 9, mercury.rise 11, venus.dive 2, earth.dive 5, earth.rise 6, jupiter.dive 3, jupiter.rise 7, uranus.rise 7, neptune.rise 11) | 64 | 15.4 to 26.8 |
+| review 128 | 58,721 | 6 (earth.dive 2, uranus.rise 1, neptune.rise 3) | 128 | 15.8 to 27.8 |
+| final 128 | 191,011 | 6 (the same six) | 128 | 50.0 to 85.3 |
+| final 256 | 191,130 | 0 | 162 | 50.1 to 85.4 |
+
+Upper bound if every stop set `coverHides: 0` (the raw motion counts everywhere): review 128 gives 63,647 samples (35 frames at the cap, 17.1 to 30.6 hours), final 256 gives 195,459 samples (6 frames at the cap: jupiter.dive 2, neptune.dive 2, neptune.rise 2; 51.2 to 87.8 hours); without any cap the largest count would be 488.
+
+### C. What a cover hides
+
+Optional plan number `coverHides` (`MoveParams` in `src/director/moves.ts`, beside the other `cover` keys; default 1). The director copies it to `shot.cover.hides` only when the plan sets it, and the cover factor of the sample count is `max(1 - cover.amount * coverHides, 0)`. 1 is the old rule (an opaque cover: what it hides needs no samples), 0 counts the full motion under any cover, a value between is for a translucent cover through which a bright limb or ring shows (Uranus 4159 to 4161: raw 28.6 to 29.4 px, seen 6.9 to 2.5 px with the default; 4413: raw 69.3, seen 10.8). No plan sets it. The gradient scale of A reads the raw motion and does not depend on it.
+
+### Proof (third task)
+
+- Mars at final against the baselines, all four equal: 2325 `9895a050…f744d`, 2580 `a7e1670a…c1f5b8`, 2427 `0a022282…7fc814`, 2726 `79352ec5…85c8b05`.
+- `npm run build` clean, `npx vitest run` 13 files and 62 tests (new: the gradient scale under motion, what a cover hides, the config check of the two soft keys).
+- `npm run determinism -- --frames 2325,2445`: pass (2445 is a Mars dive frame of 39 samples at review, 57.7 px, soft 1).
+- Frame records carry the count (`extra.samples`): 1870 review 16, 4984 review 95 (64 before the cap was raised), 2325 final 16. `npm run -s samples -- --tier T --frames a,b` now also prints the motion before and after the cover factor and the soft share.
+- Files: `config/showcase.json` (two new keys under `motion`, the two caps), `src/config.ts`, `src/core/motion.ts`, `src/core/engine.ts`, `src/core/types.ts`, `src/diagnostics/diag.ts`, `src/director/moves.ts`, `src/director/film.ts`, `tools/samples.ts`, `tools/lib/samples.ts`, `tests/motion.test.ts`, `tests/config.test.ts`, `assets-src/shared/STOP-AGENT.md`, this file and the pictures.

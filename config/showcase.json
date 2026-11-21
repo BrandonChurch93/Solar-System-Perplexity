@@ -47,8 +47,8 @@
   },
   "tiers": {
     "draft": {"samplesPerFrame": 1, "fastSamplesPerFrame": 1, "maxSamplesPerFrame": 1},
-    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16, "maxSamplesPerFrame": 64},
-    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64, "maxSamplesPerFrame": 128}
+    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16, "maxSamplesPerFrame": 128},
+    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64, "maxSamplesPerFrame": 256}
   },
   "motion": {
     "fastKinds": [
@@ -57,11 +57,13 @@
       "travel",
       "retreat"
     ],
-    "maxStepPx": 1.5,
+    "maxStepPx": 0.6,
     "probeGrid": [17, 9],
     "bodyReach": 2.5,
     "minBodyPx": 2,
-    "terrainGround": 1
+    "terrainGround": 1,
+    "softFromPx": 10,
+    "softToPx": 18
   },
   "assetSets": {
     "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "maxSetMemoryMb": 450},
@@ -141,7 +143,7 @@
     {"id": "ending.fade", "stop": "ending", "kind": "fade", "start": 177.5, "end": 180}
   ],
   "travel": {
-    "sky": {"openExposure": 0.45, "starLevel": 1.9, "flightStars": {"count": 600000, "brightness": 0.018, "slope": 1, "max": 8, "color": 0.7, "level": 1.9}, "brightShare": 0.12, "window": 0.3, "patchSettleDeg": 6, "patchSpan": 0.24, "arriveFrom": [0.3, 0.5], "patchDone": 0.96, "retreat": [0.5, 0.5], "retreatGlow": 0.25, "retreatOpen": [0, 0.55], "retreatClose": [0.62, 1]}
+    "sky": {"openExposure": 0.45, "starLevel": 1.9, "flightStars": {"count": 800000, "brightness": 0.018, "slope": 1, "max": 8, "color": 0.9, "pale": 0.35, "vivid": [0.15, 1.2], "level": 1.9, "floor": 0.4, "clouds": {"count": 44, "lobes": 4, "widthDeg": [2.5, 11], "step": 1, "gain": [0.4, 2.2]}, "clusters": {"count": 60, "radiusDeg": [0.2, 1], "stars": [40, 260], "lift": 1.6, "cool": 0.35}, "glow": 0.009, "glowTint": [0.8, 0.88, 1]}, "brightShare": 0.12, "leave": {"level": 0.6, "by": 0.16}, "window": 0.3, "patchSettleDeg": 6, "patchSpan": 0.24, "arriveFrom": [0.3, 0.5], "patchDone": 0.96, "retreat": [0.5, 0.5], "retreatGlow": 0.25, "retreatOpen": [0, 0.55], "retreatClose": [0.62, 1]}
   },
   "cover": {
     "seconds": 0.5,

@@ -34,6 +34,7 @@ export interface MoveParams {
   coverTop?: [number, number]
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
+  coverHides?: number
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }

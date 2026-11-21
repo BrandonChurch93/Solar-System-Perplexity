@@ -3,6 +3,7 @@ import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import { tileRects, type Tiles } from '../core/tiles'
 import type { SkyPatch, SunState } from '../core/types'
+import { flightField, type FlightDef } from './travel/field'
 import { TEXEL_GLSL, implicitUniform } from '../core/texel'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
@@ -80,6 +81,8 @@ uniform float uSunGlare;
 uniform float uTerrainBand;
 uniform vec3 uBandClean;
 uniform vec2 uLens;
+uniform sampler2D uFlightMap;
+uniform vec4 uFlightGlow;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -135,6 +138,7 @@ void main() {
   }
   if (uGlow < 0.999) band *= uTerrainBand;
   col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
+  if (uFlightGlow.w > 0.0) col += uFlightGlow.rgb * (uFlightGlow.w * textureLod(uFlightMap, vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5), 0.0).r);
   vec3 pa = patchCoord(0, sd);
   vec3 pb = patchCoord(1, sd);
   vec3 ta = patchTexel(uPatchA, pa);
@@ -227,7 +231,7 @@ const STAR_MAX_SIZE = 11
 const STAR_CULL_PAD_PX = 4
 const NO_TILES = new Uint8Array(0)
 
-function galactic(): THREE.Matrix3 {
+export function galactic(): THREE.Matrix3 {
   const n = new THREE.Vector3(...POLE).normalize()
   const r = new THREE.Vector3(0, 1, 0).cross(n).normalize()
   const u = new THREE.Vector3().crossVectors(n, r)
@@ -248,6 +252,8 @@ export class Sky {
   private readonly starScene = new THREE.Scene()
   private readonly flight: THREE.Points
   private flightLevel = 0
+  private flightLift = 0
+  private readonly flightGlow = new THREE.Vector3()
   private readonly rot = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
@@ -278,6 +284,7 @@ export class Sky {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
+      uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() },
     }, BEHIND)
     const rnd = stream('stars')
     const pos = new Float32Array(count * 3)
@@ -359,31 +366,21 @@ export class Sky {
     this.stars.add(this.flight)
   }
 
-  setFlightStars(def: { count: number; brightness: number; slope: number; max: number; color: number }): void {
-    const rnd = stream('flight stars')
-    const pos = new Float32Array(def.count * 3)
-    const star = new Float32Array(def.count * 4)
-    const col = new Float32Array(def.count * 3)
-    const warm = new THREE.Color(1.0, 0.58, 0.34)
-    const cool = new THREE.Color(0.5, 0.7, 1.0)
-    const white = new THREE.Color(1, 1, 1)
-    const c = new THREE.Color()
-    for (let i = 0; i < def.count; i++) {
-      const z = rnd.range(-1, 1)
-      const a = rnd.range(0, Math.PI * 2)
-      const r = Math.sqrt(1 - z * z)
-      pos.set([r * Math.cos(a), z, r * Math.sin(a)], i * 3)
-      const bright = Math.min(def.brightness * Math.pow(Math.max(rnd.next(), 1e-6), -def.slope), def.max)
-      star.set([Math.min(2.6 + 2.2 * Math.log2(1 + bright), STAR_MAX_SIZE), bright, 1, 0], i * 4)
-      const temp = rnd.next()
-      if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
-      else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
-      col.set([Math.max(1 + (c.r - 1) * def.color, 0.05), Math.max(1 + (c.g - 1) * def.color, 0.05), Math.max(1 + (c.b - 1) * def.color, 0.05)], i * 3)
-    }
+  setFlightStars(def: FlightDef): void {
+    const field = flightField(def)
     const geo = this.flight.geometry
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    geo.setAttribute('aStar', new THREE.BufferAttribute(star, 4))
-    geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3))
+    geo.setAttribute('position', new THREE.BufferAttribute(field.position, 3))
+    geo.setAttribute('aStar', new THREE.BufferAttribute(field.star, 4))
+    geo.setAttribute('aColor', new THREE.BufferAttribute(field.color, 3))
+    const half = new Uint16Array(field.glow.length)
+    for (let i = 0; i < half.length; i++) half[i] = THREE.DataUtils.toHalfFloat(field.glow[i]!)
+    const map = new THREE.DataTexture(half, field.width, field.height, THREE.RedFormat, THREE.HalfFloatType)
+    map.wrapS = THREE.RepeatWrapping
+    map.magFilter = THREE.LinearFilter
+    map.minFilter = THREE.LinearFilter
+    map.needsUpdate = true
+    this.pass.material.uniforms.uFlightMap!.value = map
+    this.flightGlow.fromArray(def.glowTint).multiplyScalar(def.glow)
   }
 
   setFrame(q: THREE.Quaternion): void {
@@ -393,6 +390,7 @@ export class Sky {
   setStarLift(amount: number, floor: number, flight: number): void {
     ;((this.stars.material as THREE.ShaderMaterial).uniforms.uStarLift!.value as THREE.Vector2).set(amount, floor)
     this.flightLevel = amount * flight
+    this.flightLift = amount
   }
 
   setPatches(list: { patch: SkyPatch; weight: number }[]): void {
@@ -510,6 +508,7 @@ export class Sky {
     ;(u.uLens!.value as THREE.Vector2).set(vignette, aspect)
     u.uPatchA!.value = this.patchTex[0]
     u.uPatchB!.value = this.patchTex[1]
+    ;(u.uFlightGlow!.value as THREE.Vector4).set(this.flightGlow.x, this.flightGlow.y, this.flightGlow.z, this.flightLift)
     this.q.copy(turn).invert().premultiply(this.frame)
     ;(u.uFrame!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q))
     this.stars.quaternion.copy(this.q).invert()
