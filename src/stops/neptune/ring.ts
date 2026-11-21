@@ -71,7 +71,7 @@ void main() {
   float shadow = b < 0.0 ? smoothstep(0.985, 1.025, miss) : 1.0;
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
-  outColor = vec4((uColor * sheet + strands) * edge * (0.03 + 0.97 * shadow) * phase * uGain, 0.0);
+  outColor = vec4((uColor * sheet + strands) * edge * mix(0.03 + 0.97 * shadow, 1.0, uHome) * phase * uGain, 0.0);
 }`
 
 export class Ring {

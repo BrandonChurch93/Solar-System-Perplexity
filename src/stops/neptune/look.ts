@@ -24,14 +24,14 @@ export const lineFade: [number, number] = [0.6, 0.15]
 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
-  aim: [0.121, -0.195, 0.226] as [number, number, number],
+  aim: [0.2445, -0.4561, 0.1475] as [number, number, number],
   gain: 1.75,
   bump: 0.008,
   rim: 0.4,
   sun: [1, 0.98, 0.96] as [number, number, number],
   ambient: [0.004, 0.007, 0.014] as [number, number, number],
-  terminator: [-0.02, 0.25] as [number, number],
-  power: 0.85,
+  terminator: [-0.02, 0.18] as [number, number],
+  power: 0.7,
   spinDegPerSecond: 0.4,
 }
 

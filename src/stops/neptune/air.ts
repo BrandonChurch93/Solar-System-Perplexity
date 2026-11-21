@@ -30,6 +30,7 @@ export interface AirLine {
   lift: number
   tail: [number, number, number]
   tailEdge: [number, number]
+  fade: [number, number, number]
 }
 
 export interface AirParams {
@@ -59,6 +60,7 @@ uniform vec4 uLineBulge;
 uniform float uLineLift;
 uniform vec3 uLineTail;
 uniform vec2 uLineTailEdge;
+uniform vec3 uLineFade;
 uniform vec2 uAirForward;
 uniform vec4 uAirNear;
 vec3 airLight(vec3 day, vec3 twilight, vec3 night, vec2 edge, vec3 sun, vec3 at, float fwd) {
@@ -89,7 +91,7 @@ vec4 air(vec3 dir, bool ground) {
     float near = sqrt(max(r1 * r1 - rt2, 0.0));
     float path = (far - near) * (ground ? 1.0 : 2.0);
     float tau = uLineShape.z * path;
-    sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w;
+    sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w * (1.0 - uLineFade.z * smoothstep(uLineFade.x, uLineFade.y, dot(tp, uSunW)));
   }
   return vec4(sum * mix(vec3(1.0), uAirNear.rgb, uAirNear.w), total);
 }`
@@ -143,6 +145,7 @@ export function airUniforms(p: AirParams): Record<string, THREE.IUniform> {
     uLineLift: { value: p.line.lift },
     uLineTail: { value: new THREE.Vector3() },
     uLineTailEdge: { value: new THREE.Vector2(p.line.tailEdge[0], p.line.tailEdge[1]) },
+    uLineFade: { value: new THREE.Vector3(p.line.fade[0], p.line.fade[1], 0) },
     uAirForward: { value: new THREE.Vector2(p.forward, p.forwardPower) },
     uAirNear: { value: new THREE.Vector4(p.near[0], p.near[1], p.near[2], 0) },
   }
@@ -200,6 +203,7 @@ export class Air {
       ;(u.uLineDay!.value as THREE.Vector3).fromArray(ln.day).multiplyScalar(ln.away[2] + (1 - ln.away[2]) * home)
       ;(u.uLineShape!.value as THREE.Vector4).w = line
       ;(u.uLineTail!.value as THREE.Vector3).fromArray(ln.tail).multiplyScalar(home)
+      ;(u.uLineFade!.value as THREE.Vector3).z = ln.fade[2] * home
       this.work.set(ln.bulge[0], ln.bulge[1], ln.bulge[2]).applyQuaternion(rotation).normalize()
       ;(u.uLineBulge!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.bulge[3] * home)
     }

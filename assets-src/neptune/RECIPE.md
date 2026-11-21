@@ -18,11 +18,11 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 ## public/assets/neptune/<set>/triton.jpg
 
 - What: Triton's colour map, 4096x2048 (`web` 2048x1024).
-- Tool: image tool, then `python3 tools/ml/upscale.py --in out/work/nep/gen/triton-map-t3.png --out out/work/nep/gen/triton-map-t3-2x.png --width 4096`, then `python3 assets-src/neptune/triton/make.py` (seam mirror blend, poles smoothed to the zonal mean, saturation 0.3, contrast 1.25, colour wash to the hero's cap and plains).
+- Tool: image tool, then `python3 tools/ml/upscale.py --in out/work/nep/gen/triton-map-t3.png --out out/work/nep/gen/triton-map-t3-2x.png --width 4096`, then `python3 assets-src/neptune/triton/make.py` (seam mirror blend, poles smoothed to the zonal mean, saturation 0.3, contrast 1.25, detail finer than 60 map pixels times 0.55, colour wash to the hero's cap and plains).
 - Input: `out/work/nep/triton-ref.jpg`, a crop of Triton from `references/approved/neptune-hero.png`.
 - Prompts: take 1 in `prompts/tiles-2.js` (`triton-map`, model `seedream_5`), takes 2 (`seedream_5`) and 3 (`gpt_image_2_6_flare`) in `prompts/triton-2-3.js`.
 - Take kept: 3 of 6. Take 1 had smooth empty areas, so takes 2 and 3 asked for dense texture everywhere (the ending passes Triton at close range). Takes 2 and 3 were compared side by side in crops and take 3 was chosen.
-- Checks: hero cap sRGB (188, 173, 173) and plains (193, 193, 199) against the film crop `out/work/nep/triton-cmp.jpg`.
+- Checks: hero cap sRGB (188, 173, 173) and plains (193, 193, 199) against the film crop `out/work/nep/triton-cmp.jpg`. Round 1 remake (08:25, same take 3, no new generation): fine detail contrast on the lit part (high pass sigma 3 px at 1920 wide) 6.2 in the hero, 12.4 before, 6.7 after; cap (194, 179, 179) against (199, 183, 184), plains (199, 200, 206) against (198, 199, 203).
 
 ## public/assets/neptune/<set>/sky-hold.webp
 
@@ -37,7 +37,7 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 
 - What: the ring's brightness map in ring coordinates (radius 1.28 to 1.92 by azimuth), measured, not generated.
 - Tool: `python3 assets-src/neptune/ring/map.py out/work/nep/ring/noring.png public/assets/neptune out/work/nep/ring/withring.png`.
-- Inputs: the hero; a review still of frame 4605 with the ring off (`noring.png`); a second still rendered with the first pass map (`withring.png`) for the residual pass.
+- Inputs: the hero; a review still of frame 4605 with the ring off (`noring.png`); a second still rendered with the first pass map (`withring.png`) for the residual pass. The ring is turned off for the first still by setting `look.ring.gain` to 0 for that render only. Measured again at 08:30 after `ring.ts` stopped shading the ring with the planet's shadow in the hold view (the approved image shows the ring lit in front of the night side).
 - What the script does: hero minus the film without the ring, unwrapped into the fitted ring plane (`look.ring.normal`, `centre`), stars removed, strands kept with gain 2.2. Where the hero does not show the ring (behind the globe, outside the frame) the map continues the measured azimuth profile.
 - Checks: ring annulus medians within 5 percent of the hero by azimuth. Shimmer is checked in the hold sheet at the review tier; the map is filtered with mipmaps and the sheet term is analytic.
 
