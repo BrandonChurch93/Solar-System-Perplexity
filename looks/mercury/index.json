@@ -1,9 +1,31 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T14:08:36.284Z",
+ "pushed": "2026-11-21T14:25:47.853Z",
  "head": "f6df2fc903ba37eea84125ca37d3a5ec5e976437",
- "note": "Round 3 starts: base with the close layer and exact pose at both swaps; the veil goes next",
+ "note": "Round 3: veil removed; bare frames show the swap matched on the ground; sky, Sun and limb come next",
  "looks": [
+  {
+   "time": "2026-11-21T14:25:46.730Z",
+   "file": "20261121142546730-note-grid.jpg",
+   "source": "out/work/mercury/r10/a2/grid.jpg",
+   "kind": "note",
+   "label": "Round 3 work: dive 736 to 756 with the veil, haze and flood removed (draft, bare; sky plate and Sun slide still to come)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T14:20:50.329Z",
+   "file": "20261121142050329-frame-f730.jpg",
+   "source": "out/work/mercury/r10/a3/f730.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 730, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 730,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T14:04:54.248Z",
    "file": "20261121140454248-job-frame-00717.jpg",
@@ -84,34 +106,6 @@
    "segment": "mercury.hold",
    "frame": 615,
    "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:53:01.979Z",
-   "file": "20261121135301979-frame-f1016.jpg",
-   "source": "out/work/mercury/r9/u1/f1016.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 1016, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 1016,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:52:18.847Z",
-   "file": "20261121135218847-frame-f717.jpg",
-   "source": "out/work/mercury/r9/u1/f717.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 717, review tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 717,
-   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "6728b99fa98fbd73"
