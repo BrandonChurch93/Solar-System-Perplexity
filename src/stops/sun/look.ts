@@ -44,8 +44,8 @@ export const sky: SkyCardDef = { file: 'sky-hold.webp', vfovDeg: fit.vfovDeg, ma
 export const skyFade: [number, number] = [0.02, 0.34]
 
 export const ground: GroundLook = {
-  cap: 42,
-  rings: 168,
+  cap: 63,
+  rings: 252,
   sectors: 288,
   cell: 0.16,
   apron: { amount: 1, cell: 0.1, calm: 0 },
@@ -63,27 +63,28 @@ export const loops: LoopsLook = {
   lean: { outerDeg: 22, innerDeg: -28, from: 1.3, to: 2.55 },
   gain: 1,
   far: 9, pin: { from: 0.1, soft: 0.2, lowDeg: 0.2, highDeg: 3 },
-  flow: { amount: 0.55, lanes: 0.3, along: 1.5, speed: 0.12, back: 0.07, floor: 0.2 },
+  flow: { amount: 0.55, lanes: 0.12, along: 1.5, speed: 0.12, back: 0.07, floor: 0.25, inside: [1.9, 2.4], from: [0.02, 0.1] },
   swell: { amount: 1.6, speed: 0.42, width: 0.075, lanes: 0.5, calm: 0.45 },
   burst: { surge: 26, floor: 0.12, reach: [0.03, 0.55], other: 0.6, white: 0.5, from: 0.03 },
 }
 
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05 }
 
-export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png' }
+export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', grade: 'grade.png' }
 
-export const flare: FlareLook & { lift: number; ground: number; other: { delay: number; gain: number } } = {
-  hot: [1, 0.9, 0.66],
-  warm: [1, 0.62, 0.2],
-  core: { radius: [0.006, 0.42], gain: 30, power: 1.6 },
-  halo: { radius: [0.03, 3.2], gain: [1.0, 2.6], power: 1 },
-  rays: { amount: 1.6, reach: 3, turn: 0.5 },
-  streak: { amount: 1.0, height: 0.022, reach: 0.4 },
-  before: 0.95,
-  after: 1.0,
-  powerIn: 2.6,
-  powerOut: 2.4,
-  lift: 0.06,
-  ground: 6,
-  other: { delay: 0.12, gain: 0.5 },
+export const flare: FlareLook & { lift: number; ground: number; loops: number; cut: number } = {
+  hot: [1, 0.75, 0.4],
+  warm: [1, 0.38, 0.09],
+  core: { radius: [0.32, 0.6], gain: 5, power: 2.5 },
+  halo: { radius: [0.7, 1.4], gain: 1.4, power: 1 },
+  veil: 1.2,
+  cover: { rise: [-0.45, -0.035], fall: [0.02, 0.45], power: 2 },
+  before: 0.8,
+  after: 0.9,
+  powerIn: 2.5,
+  powerOut: 2,
+  lift: 0.12,
+  ground: 3,
+  loops: 0.5,
+  cut: 0.2,
 }

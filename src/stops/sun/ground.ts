@@ -3,6 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
+import { GRADE_GLSL } from './grade'
 import { STAGE_GLSL, stage } from './stage'
 
 export interface GroundLook {
@@ -66,6 +67,7 @@ ${DIAG_GLSL}
 ${STAGE_GLSL}
 ${APRON_GLSL}
 ${NOISE_GLSL}
+${GRADE_GLSL}
 float lumAt(sampler2D map, vec2 uv, float lod) {
   return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
 }
@@ -78,7 +80,7 @@ vec4 surface(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, flo
   float wide = lumAt(map, uv, lod + 2.0 + calm);
   float slow = wide * 26.0 + lumAt(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
-  vec3 lin = inverseFilmic(textureGrad(map, uv + push * cell * swing, dx, dy).rgb);
+  vec3 lin = inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));
   moved = push * swing;
   return vec4(lin, 1.0);
 }
@@ -140,7 +142,7 @@ void main() {
   vec2 gb = stImage(vStage);
   for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
     vec2 far = stImage(stLimbDir(ray, c1, el));
-    col = mix(col, inverseFilmic(textureLod(uPlate, stPlate(far), uLod).rgb), limb);
+    col = mix(col, inverseFilmic(grade(textureLod(uPlate, stPlate(far), uLod).rgb, 0.0)), limb);
     gb = mix(gb, far, limb);
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
@@ -155,7 +157,7 @@ export class Ground {
   readonly material: THREE.ShaderMaterial
   private readonly pulse: [number, number]
 
-  constructor(plate: THREE.Texture, apron: THREE.Texture, glow: THREE.Texture, look: GroundLook) {
+  constructor(plate: THREE.Texture, apron: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
     this.pulse = look.glow
@@ -173,7 +175,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },

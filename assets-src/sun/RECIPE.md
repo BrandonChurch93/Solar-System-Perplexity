@@ -15,6 +15,7 @@ Every file under `public/assets/sun/`. The `web` file is always derived from the
 | `public/assets/sun/<set>/loops.webp` | Terrain view |
 | `public/assets/sun/<set>/loops-glow.png` | Terrain view |
 | `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
+| `public/assets/sun/<set>/grade.png` | Grade |
 
 `<set>` is `full` or `web`.
 
@@ -139,3 +140,13 @@ Shared inputs:
 ### src/stops/sun/terrain.json
 
 - Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/export.py`. The fit, the canvas, the loops box, the feet and the spot for the set.
+
+## Grade
+
+### public/assets/sun/<set>/grade.png
+
+- Output: 256 x 4, PNG, the same file in both sets. A tone table per layer in display coding: row 0 ground (plate, apron, limb band), row 1 loops, row 2 globe, row 3 identity. `src/stops/sun/grade.ts` applies it to the picture value before the inverse film curve.
+- Tool: `python3 assets-src/sun/grade/grade.py` (no model, no prompt). `reset` writes the identity table to `out/work/sun/grade.npy`; `ground|loops|globe FILM APPROVED lo hi limit` matches the histogram of a `final` tier `--diag nograin` render of the judged frame to the approved image per channel inside the region and composes the result into the table; `export` writes both sets.
+- Inputs: `references/approved/sun-close.jpg` against frame 90 for ground (0 1 40) and loops (10 30 40), `references/approved/sun-hero.png` against frame 360 for the globe (0 1 40, `SUN_DISC=960,540,454.6`).
+- Kept: the table after two passes. Check: `python3 out/work/sun/gradecheck.py REGION FILM APPROVED` prints the percentiles of both.
+

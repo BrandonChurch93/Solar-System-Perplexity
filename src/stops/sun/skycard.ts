@@ -5,11 +5,14 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 const VERT = /* glsl */ `
 uniform vec2 uTan;
 uniform vec2 uShift;
+uniform mat3 uLock;
+uniform float uZoom;
 out vec2 vUv;
 out vec2 vScreen;
 void main() {
   vUv = uv;
-  vec3 d = mat3(viewMatrix) * mat3(modelMatrix) * vec3(position.xy * uTan + uShift, -1.0);
+  vec3 d = uLock * (mat3(viewMatrix) * mat3(modelMatrix) * vec3(position.xy * uTan + uShift, -1.0));
+  d.xy *= uZoom;
   gl_Position = projectionMatrix * vec4(d, 1.0);
   gl_Position.z = gl_Position.w * 0.999999;
   vScreen = gl_Position.xy / gl_Position.w;
@@ -57,7 +60,7 @@ export class SkyCard {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: map }, uDiag: diagUniform, uTan: { value: new THREE.Vector2((t * 16) / 9, t) }, uShift: { value: new THREE.Vector2(def.centre?.[0] ?? 0, def.centre?.[1] ?? 0) },
-        uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.edge ?? def.margin / wide }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uLock: { value: new THREE.Matrix3() }, uZoom: { value: 1 }, uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.edge ?? def.margin / wide }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -73,8 +76,10 @@ export class SkyCard {
     this.mesh.frustumCulled = false
   }
 
-  update(weight: number, exposure: number, vignette: number, aspect: number): void {
+  update(weight: number, exposure: number, vignette: number, aspect: number, lock: THREE.Matrix4, zoom: number): void {
     const u = this.material.uniforms
+    ;(u.uLock!.value as THREE.Matrix3).setFromMatrix4(lock)
+    u.uZoom!.value = zoom
     u.uWeight!.value = weight
     u.uGain!.value = this.gain * exposure
     u.uVignette!.value = vignette
