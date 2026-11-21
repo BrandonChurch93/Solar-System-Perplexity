@@ -22,7 +22,7 @@ if (a.add) {
   console.log(look ? 'look added: ' + look.label : 'the file could not be read as a picture')
 } else if (a.push) {
   const folder = a.folder
-  if (!folder || !cfg.stops.includes(folder)) throw new Error('expected --folder STOP')
+  if (!folder || /^[a-z][a-z0-9-]*$/.test(folder) === false) throw new Error('expected --folder NAME')
   const max = Number(a.max ?? 8)
   const chosen = pick(readLooks().filter((l) => !l.stop || l.stop === folder), max, folder)
   if (chosen.length === 0) {
@@ -62,7 +62,7 @@ if (a.add) {
   console.log('pushed ' + chosen.length + ' looks to ' + branch(folder) + ' (' + commit.slice(0, 8) + '):')
   for (const l of chosen) console.log('  ' + age(l.time) + '  ' + l.label)
 } else if (a.fetch) {
-  const folders = a.folders ? a.folders.split(',') : cfg.stops
+  const folders = a.folders ? a.folders.split(',') : [...cfg.stops, 'belt', 'posts']
   for (const folder of folders) {
     const remote = 'refs/remotes/origin/' + branch(folder)
     if (tryGit(['fetch', '-q', '--depth', '1', 'origin', '+refs/heads/' + branch(folder) + ':' + remote]) === null) continue
