@@ -16,6 +16,15 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 - Takes: 1 of 6 for every tile, 2 for the middle deck tile.
 - Checks: recomposite error against the hero in the well lit part, mean 1.20 of 255, p99 16 (2.50 and 36 with the blue channel in the fit, 1.49 and 18 before the cloud curve was raised); disc medians of the judged hold within 3 percent of the hero for ndl 0.1 to 0.8 (`check/ratio.py`). Still to check from the rise angle: the seam at lon 180, the poles, the lighter lens of the hero inset.
 
+## public/assets/neptune/<set>/hold.webp
+
+- What: the cirrus of the approved hero for the judged hold, as a second layer over the hero's window of the globe map: 4552x3641 RGBA for `full` (3.36 MB), 2276x1821 for `web` (0.79 MB). RGB = the same deck colour as `wrap.webp` in that window, A = cirrus opacity divided by 1.5, so opacities up to 1.5 are kept (the wrap clips them at 1). Lossless alpha (`exact`), quality 92 (`web` 88). Its place in the map and the head room are written to `src/stops/neptune/hold.json` (`box`, `head`). No new generation: it is made from the hero's own pixels.
+- Tools: `python3 assets-src/neptune/wrap/sepmap.py`, then `python3 assets-src/neptune/wrap/assemble.py` (function `hold()`), after the steps of `wrap.webp`. `sepmap.py`: `HEAD = 1.5`, `HOLD_MU = (0.22, 0.27)`; it keeps the unclipped opacity (`over`) and the weights `hweight`, `haweight` in `out/work/nep/wrap/hero-layers.npz`.
+- Inputs: the same as `wrap.webp` (`references/approved/neptune-hero.png`, `src/stops/neptune/fit.json`, `src/stops/neptune/haze.json`).
+- Why: in the wrap the hero's cirrus is clipped at opacity 1 and faded out toward the limb from mu 0.42 to 0.22, which took 6 to 15 levels off the brightest crests of the judged hold (storm rim, the bands toward the right limb). The layer keeps the hero's cirrus up to opacity 1.5 and unfaded down to mu 0.27 to 0.22. It is shown only near the hold's view (`uHold.x = home * amount` in `set.ts`; 0 in the terrain, the rise and the ending), so the far views keep the wrap.
+- Takes: 2 of 6. Take 1 also took the hero's deck unfaded down to mu 0.22 to 0.27; its dark trough with a hard edge under the limb veil moved the judged hold away from the hero (mean abs diff 4.5484 to 4.6758) and was dropped. Take 2, kept: the deck weight is the wrap's (fade 0.22 to 0.42), only the cirrus opacity is the hero's.
+- Checks: `wrap.webp` (both sets) and `curve.json` byte identical after the rebuild (md5); recomposite with opacity up to 1.5 against the hero: mean 1.21 of 255, p99 16, share of texels over opacity 1: 0.0013; judged hold 4605 crest tops and mean abs diff in `NOTES.md` (Phase 6, item 4).
+
 ## public/assets/neptune/<set>/triton.jpg
 
 - What: Triton's colour map, 4096x2048 (`web` 2048x1024).

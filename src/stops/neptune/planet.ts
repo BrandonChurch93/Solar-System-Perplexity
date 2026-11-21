@@ -29,6 +29,7 @@ export interface LimbParams {
   rimTo: number
   rimAim: [number, number, number]
   rimMu: number
+  edge: { amount: number; core: [number, number, number]; fall: number; cut: [number, number]; wide: [number, number, number]; wideDeg: number; wideEdge: [number, number]; mu: [number, number, number, number]; width: [number, number]; near: [number, number, number, number]; far: [number, number, number, number] }
   melt: [number, number, number]
   cut: number
   cutMu: [number, number]
@@ -75,6 +76,7 @@ export interface NeptuneOptions {
   near: { power: number; saturation: number; pivot: number; tint: number[] }
   night: { flat: number; edge: [number, number]; texels: number }
   patches?: PatchSet
+  hold?: { map: THREE.Texture; box: number[]; head: number }
   segments?: number
 }
 
@@ -145,6 +147,16 @@ uniform vec3 uRim;
 uniform vec3 uRimShape;
 uniform vec3 uRimDir;
 uniform float uRimMu;
+uniform vec3 uEdgeCore;
+uniform vec3 uEdgeWide;
+uniform vec3 uEdgeSun;
+uniform vec3 uEdgeSide;
+uniform vec3 uEdgeWideDir;
+uniform vec4 uEdgeMu;
+uniform vec4 uEdgeShape;
+uniform vec4 uEdgeWidth;
+uniform vec4 uEdgeNear;
+uniform vec4 uEdgeFar;
 uniform vec4 uCut;
 uniform vec2 uCutEdge;
 uniform vec3 uCutDir;
@@ -153,6 +165,9 @@ uniform vec3 uVeilDir;
 uniform vec3 uTwi;
 uniform vec4 uTwiSun;
 uniform vec4 uAirShade;
+uniform sampler2D uHoldMap;
+uniform vec4 uHoldBox;
+uniform vec2 uHold;
 uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
@@ -224,7 +239,16 @@ ${WEIGHTS}
   float rest = 1.0;
   vec4 c = vec4(0.0);
 ${FETCHES}
-  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) c += rest * textureGrad(uMap, vec2(u, v), mx, my);
+  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) {
+    vec4 base = textureGrad(uMap, vec2(u, v), mx, my);
+    vec2 hq = (vec2(u, v) - uHoldBox.xy) * uHoldBox.zw;
+    float hw = uHold.x * step(0.0, min(min(hq.x, hq.y), min(1.0 - hq.x, 1.0 - hq.y)));
+    for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
+      vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
+      base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
+    }
+    c += rest * base;
+  }
   return c;
 }
 void main() {
@@ -251,14 +275,14 @@ void main() {
   float reach = uCloudHeight / max(ndl, uShadow.z);
   vec3 ps = normalize(p + sunL * reach);
   vec3 ps2 = normalize(p + sunL * reach * 1.6);
-  float shadow = 0.6 * layerAt(cloudDir(ps), uShadow.y, texelsShadow).a + 0.4 * layerAt(cloudDir(ps2), uShadow.y * 1.8, texelsShadow).a;
+  float shadow = 0.6 * min(layerAt(cloudDir(ps), uShadow.y, texelsShadow).a, 1.0) + 0.4 * min(layerAt(cloudDir(ps2), uShadow.y * 1.8, texelsShadow).a, 1.0);
   float lit = smoothstep(0.0, 0.2, ndl);
   vec3 albedo = deckTexel.rgb / uCode;
   float flatten = uNight.x * (1.0 - smoothstep(uNight.y, uNight.z, ndl));
   for (int k = 0; k < (flatten > 0.0 ? 1 : 0); k++) {
     albedo = mix(albedo, textureLod(uMap, vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5), uNight.w).rgb / uCode, flatten);
   }
-  vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - alpha));
+  vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
@@ -293,9 +317,19 @@ void main() {
     float st = min(1.0006 / length(uCam), 1.0);
     col = mix(col, air(ax * sqrt(1.0 - st * st) + side * st, false).rgb * uGain * uWeight, melt);
   }
-  col += uRim * exp(-abs(mu - uRimMu * uCut.w) / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir)) * uGain * uWeight;
+  col += uRim * (1.0 - uEdgeShape.w) * exp(-abs(mu - uRimMu * uCut.w) / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir)) * uGain * uWeight;
+  for (int k = 0; k < (uEdgeShape.w > 0.0 && mu < 0.4 ? 1 : 0); k++) {
+    vec3 ax = normalize(uCam);
+    vec3 q = normalize(n - ax * dot(n, ax));
+    float cs = dot(q, uEdgeSun);
+    float sn = dot(q, uEdgeSide);
+    float x = mu - clamp(uEdgeMu.x + (sn < 0.0 ? uEdgeMu.y : uEdgeMu.z) * sn, uEdgeFar.w, uEdgeMu.w);
+    vec3 line = uEdgeCore * exp(-acos(clamp(cs, -1.0, 1.0)) / uEdgeShape.x) * smoothstep(uEdgeShape.y, uEdgeShape.z, cs) + uEdgeWide * smoothstep(uEdgeWidth.z, uEdgeWidth.w, dot(q, uEdgeWideDir));
+    float turn = smoothstep(uEdgeNear.z, uEdgeNear.w, sn);
+    col += line * exp(-abs(x) / (x > 0.0 ? mix(uEdgeNear.x, uEdgeWidth.x, turn) : mix(mix(uEdgeNear.y, uEdgeWidth.y, turn), uEdgeFar.x, smoothstep(uEdgeFar.y, uEdgeFar.z, sn)))) * uEdgeShape.w * uGain * uWeight;
+  }
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), alpha), vec2(moved * 8.0 * alpha, shadow), length(vView));
+  outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
 }`
 
 function knots(rows: number[][]): THREE.Vector3[] {
@@ -330,6 +364,7 @@ export class NeptunePlanet {
       uniforms: {
         ...airUniforms(o.air),
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
+        uHoldMap: { value: o.hold?.map ?? o.map }, uHoldBox: { value: o.hold ? new THREE.Vector4(o.hold.box[0], o.hold.box[1], 1 / (o.hold.box[2]! - o.hold.box[0]!), 1 / (o.hold.box[3]! - o.hold.box[1]!)) : new THREE.Vector4(0, 0, 1, 1) }, uHold: { value: new THREE.Vector2(0, o.hold?.head ?? 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },
@@ -342,7 +377,12 @@ export class NeptunePlanet {
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
-        uRimMu: { value: l.rimMu }, uCut: { value: new THREE.Vector4(l.cut, l.cutMu[0], l.cutMu[1], 0) }, uCutEdge: { value: new THREE.Vector2(l.cutFrom, l.cutTo) }, uCutDir: { value: new THREE.Vector3(1, 0, 0) },
+        uRimMu: { value: l.rimMu },
+        uEdgeCore: { value: new THREE.Vector3().fromArray(l.edge.core) }, uEdgeWide: { value: new THREE.Vector3().fromArray(l.edge.wide) }, uEdgeSun: { value: new THREE.Vector3(1, 0, 0) }, uEdgeSide: { value: new THREE.Vector3(0, 1, 0) }, uEdgeWideDir: { value: new THREE.Vector3(1, 0, 0) },
+        uEdgeMu: { value: new THREE.Vector4().fromArray(l.edge.mu) }, uEdgeShape: { value: new THREE.Vector4(THREE.MathUtils.degToRad(l.edge.fall), Math.cos(THREE.MathUtils.degToRad(l.edge.cut[1])), Math.cos(THREE.MathUtils.degToRad(l.edge.cut[0])), 0) },
+        uEdgeNear: { value: new THREE.Vector4().fromArray(l.edge.near) }, uEdgeFar: { value: new THREE.Vector4().fromArray(l.edge.far) },
+        uEdgeWidth: { value: new THREE.Vector4(l.edge.width[0], l.edge.width[1], Math.cos(THREE.MathUtils.degToRad(l.edge.wideEdge[1])), Math.cos(THREE.MathUtils.degToRad(l.edge.wideEdge[0]))) },
+        uCut: { value: new THREE.Vector4(l.cut, l.cutMu[0], l.cutMu[1], 0) }, uCutEdge: { value: new THREE.Vector2(l.cutFrom, l.cutTo) }, uCutDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
         uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },

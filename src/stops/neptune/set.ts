@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, moon as moonAsset, ringBands, ringMap, wrap } from './assets'
+import { close, held, moon as moonAsset, ringBands, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { limbField } from './field'
 import * as look from './look'
@@ -38,12 +38,14 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
+  const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const planet = new NeptunePlanet({
     field, near: look.near.dive, night: look.night,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
+    hold: { map: holdMap, box: look.held.box, head: look.held.head },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
@@ -90,6 +92,8 @@ export const createSet: SetFactory = async (ctx) => {
   const turn = new THREE.Quaternion()
   const side = new THREE.Vector3()
   const sideCam = new THREE.Vector3()
+  const edgeSun = new THREE.Vector3()
+  const edgeTurn = THREE.MathUtils.degToRad(look.limb.edge.wideDeg)
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const holdDirection = new THREE.Vector3()
 
@@ -137,7 +141,13 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uNight!.value as THREE.Vector4).x = look.night.flat * (1 - home)
       ;(pu.uMelt!.value as THREE.Vector2).x = look.limb.melt[1] + (look.limb.melt[0] - look.limb.melt[1]) * home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
+      edgeSun.copy(light).addScaledVector(sideCam, -light.dot(sideCam)).normalize()
+      ;(pu.uEdgeSun!.value as THREE.Vector3).copy(edgeSun)
+      ;(pu.uEdgeSide!.value as THREE.Vector3).copy(side).negate()
+      ;(pu.uEdgeWideDir!.value as THREE.Vector3).copy(edgeSun).multiplyScalar(Math.cos(edgeTurn)).addScaledVector(side, -Math.sin(edgeTurn))
+      ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
+      ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, grade.gain)
       ;(pu.uNearFall!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(grade.fall[0]!), THREE.MathUtils.degToRad(grade.fall[1]!), 1 - (1 - grade.fall[2]!) * (1 - smooth((high - grade.fallAltitude[0]!) / (grade.fallAltitude[1]! - grade.fallAltitude[0]!))))
       ;(pu.uNear!.value as THREE.Vector4).z = grade.power

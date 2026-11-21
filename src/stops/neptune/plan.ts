@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
+import { drift } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
 import close from './close.json'
 import fit from './fit.json'
@@ -37,6 +38,7 @@ const hides = 0.4
 const closed = 0.98
 export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4730, place: [0, 0.1] as [number, number], placeOver: 14 }
 export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.04, ramp: 5, hold: 16, rest: 26, late: 0.006 } }
+export const steady = { hold: 0.5, terrain: 1 }
 const smooth = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   return t * t * (3 - 2 * t)
@@ -110,6 +112,25 @@ class NeptunePlan extends StopPlan {
     }
     if (psi !== 0) r.premultiply(new THREE.Quaternion().setFromAxisAngle(spot, psi))
     return { position: pose.position.clone().applyQuaternion(r), quaternion: r.multiply(pose.quaternion), vfov: pose.vfov }
+  }
+
+  private steadied(pose: Pose, kind: 'hold' | 'terrain', tRel: number): Pose {
+    const s = this.seg[kind]
+    const fractions = config.raw.judged.fractions as Record<string, number>
+    const frame = Math.min(s.endFrame - 1, s.firstFrame + Math.floor((fractions[kind] ?? 0.5) * s.frames + 1e-9))
+    const at = (frame + config.shutterFraction / 2) / config.fps
+    const time = s.start + tRel
+    const w = smooth((time - s.start - steady[kind]) / (at - s.start - steady[kind])) * (1 - smooth((time - at) / (s.end - steady[kind] - at)))
+    if (w <= 0) return pose
+    return { ...pose, quaternion: pose.quaternion.clone().multiply(new THREE.Quaternion().slerp(drift(at).invert(), w)) }
+  }
+
+  override hold(tRel: number): Pose {
+    return this.steadied(super.hold(tRel), 'hold', tRel)
+  }
+
+  override terrain(tRel: number): Pose {
+    return this.steadied(super.terrain(tRel), 'terrain', tRel)
   }
 
   override dive(time: number): OrbitShot {
