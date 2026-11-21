@@ -1,29 +1,75 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T07:51:24.203Z",
+ "pushed": "2026-11-21T08:14:28.366Z",
  "head": "b87454f0ef188d1d66d30706bf08acc62988b0dc",
- "note": "READY: compares at final for hold and terrain, measures and gates green",
+ "note": "after READY: ring bands out of the hold sky patch, review sheets of all four segments, moons next",
  "looks": [
+  {
+   "time": "2026-11-21T08:14:27.761Z",
+   "file": "20261121081427761-note-cmp-miranda.jpg",
+   "source": "out/work/u/r1/c/cmp-miranda.jpg",
+   "kind": "note",
+   "label": "Miranda at 4035: hero left, film right (film mid tones too bright, in work)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T08:14:27.230Z",
+   "file": "20261121081427230-note-band.jpg",
+   "source": "out/work/u/sky3/band.jpg",
+   "kind": "note",
+   "label": "what the band removal takes out of the hero sky, x20 (version f, patchy, rejected)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T08:14:26.690Z",
+   "file": "20261121081426690-note-crop-top-e.jpg",
+   "source": "out/work/u/sky3/crop-top-e.jpg",
+   "kind": "note",
+   "label": "hold sky patch above the pole, x4: ring bands removed (version e)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T08:14:26.159Z",
+   "file": "20261121081426159-note-crop-top-before.jpg",
+   "source": "out/work/u/sky3/crop-top-before.jpg",
+   "kind": "note",
+   "label": "hold sky patch above the pole, x4: before the band removal",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T08:05:16.481Z",
+   "file": "20261121080516481-frame-s-4109.jpg",
+   "source": "out/work/u/r1/s-4109.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4109, review tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4109,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6d4f67865f286916"
+  },
+  {
+   "time": "2026-11-21T07:59:37.207Z",
+   "file": "20261121075937207-frame-f04346-review.jpg",
+   "source": "out/work/sheets/.frames-Sz0N8Q/f04346-review.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4346, review tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4346,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6d4f67865f286916"
+  },
   {
    "time": "2026-11-21T07:51:04.369Z",
    "file": "20261121075104369-compare-compare-uranus-terrain-view.jpg",
    "source": "out/work/compare/compare-uranus-terrain-view.jpg",
    "kind": "compare",
    "label": "uranus.terrain: approved image left, film frame right, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:51:02.533Z",
-   "file": "20261121075102533-still-f04290-16x9-final-full.jpg",
-   "source": "out/work/stills/f04290-16x9-final-full.png",
-   "kind": "still",
-   "label": "uranus.terrain frame 4290, final tier",
    "stop": "uranus",
    "segment": "uranus.terrain",
    "frame": 4290,
@@ -45,64 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:50:24.890Z",
-   "file": "20261121075024890-still-f04035-16x9-final-full.jpg",
-   "source": "out/work/stills/f04035-16x9-final-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:43:07.970Z",
-   "file": "20261121074307970-job-frame-04436.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4436, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T07:34:59.089Z",
-   "file": "20261121073459089-note-k-sheet.jpg",
-   "source": "out/work/u/dive/k-sheet.jpg",
-   "kind": "note",
-   "label": "cover frames at review: dive 4163, 4167, 4170, rise 4406, 4413",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T07:34:58.114Z",
-   "file": "20261121073458114-note-tx-4231.jpg",
-   "source": "out/work/u/m/tx-4231.jpg",
-   "kind": "note",
-   "label": "terrain 4231 texels view: red corner was under one texel per pixel (G13), fixed with a finer far deck map",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T07:32:55.832Z",
-   "file": "20261121073255832-job-frame-03960.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 3960,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
