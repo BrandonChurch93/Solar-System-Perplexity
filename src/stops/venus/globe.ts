@@ -99,6 +99,9 @@ uniform float uMapWidth;
 uniform float uGrad;
 uniform float uSpin;
 uniform float uGain;
+uniform vec4 uCarry;
+uniform vec3 uCarryTint;
+uniform float uCarryOn;
 uniform float uWeight;
 uniform vec3 uTint;
 uniform vec3 uCurve[33];
@@ -293,6 +296,10 @@ ${TAP_LEVELS}
     vec4 lg = limbGlow(normalize(n + dir * mu), b) * uLimbK;
     col = col * (1.0 - lg.a) + max(lg.rgb, 0.0);
   }
+  for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
+    float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+    col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   vec3 past = uCam - dir * dot(uCam, dir);
@@ -350,7 +357,7 @@ export class Globe {
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2(p.fade[0], p.fade[1]) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uCarry: { value: new THREE.Vector4(1, 1, 1, 1) }, uCarryTint: { value: new THREE.Vector3(1, 1, 1) }, uCarryOn: { value: 0 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: o.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
         uExtinction: { value: o.haze.extinction },
         uDrift: { value: new THREE.Vector3(0, 0, 1 - spot.y * spot.y) },

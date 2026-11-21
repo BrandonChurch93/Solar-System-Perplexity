@@ -184,6 +184,19 @@ Strict nadir map texture edge to edge. No horizon, no sky, no stars, no planet l
 
 The join between wrap and levels is checked in rendered frames, not only in the maps: stills of the dive at 1287, 1296, 1299, 1302, 1305 and of the rise at 1563 to 1586.
 
+## Cover veil
+
+### public/assets/venus/{full,web}/veil-clouds.jpg (2048 x 2048 and 1024 x 1024)
+
+What it is: the cloud texture of the stop's own cover (`src/stops/venus/veil.ts`), a tile of cloud deck that repeats without a seam. The veil draws it on four sheets below the camera, each 2.5 times finer than the one above.
+
+- Tool: `python3 assets-src/venus/veil/tile.py`. No model, no prompt: the file is derived from a generated asset of this stop.
+- Input: `public/assets/venus/full/patch-d.jpg`, the finest dive patch (its recipe is under "Dive patches").
+- Steps: resize to 2048; divide by its own blur of a fifth of the width so no side is brighter than the other; close the tile on itself along x, then along y (the last fifth is laid over the first fifth and the two are joined along the path of least difference, found by dynamic programming, feathered by 6 px; nothing is cross faded, so no cloud appears twice); the tile is then 1639 px. The engine's loader repeats a texture along u only, so the file carries the tile with an eighth of itself repeated above and below, and the shader wraps v itself. Resize to 2048 x 2048 for `full`, 1024 x 1024 for `web`.
+- Also written: `src/stops/venus/veil.json` (file name, pad, mean of the linear texels, 95 percent quantile of their luma), read by `look.ts`.
+- Takes: 2. Take 1 joined the tile by a cross fade with itself half a tile away: every cloud appeared twice (`out/work/venus/veil-tiled.jpg` of that take showed the doubled banks). Take 2, kept, is the seam cut above.
+- Checks: `out/work/venus/veil-tiled.jpg` (the tile 2 by 2): no line at the joins, no doubled cloud. No text, no stars, no sky in the tile.
+
 ## File list
 
 Every file below exists in both sets (`full` and `web`); the section that makes it is named after it.
@@ -199,3 +212,4 @@ Every file below exists in both sets (`full` and `web`); the section that makes 
 - `public/assets/venus/<set>/relief-Al-color.jpg`, `public/assets/venus/<set>/relief-Al-dist.bin`, `public/assets/venus/<set>/relief-Ar-color.jpg`, `public/assets/venus/<set>/relief-Ar-dist.bin`: Terrain view, `apron.py`.
 - `public/assets/venus/<set>/relief-air.png`, `public/assets/venus/<set>/sky-terrain.webp`: Terrain view, `air.sh`.
 - `public/assets/venus/<set>/patch-a.jpg`, `public/assets/venus/<set>/patch-b.jpg`, `public/assets/venus/<set>/patch-c.jpg`, `public/assets/venus/<set>/patch-d.jpg`: Dive patches, `patch.py export`.
+- `public/assets/venus/<set>/veil-clouds.jpg`: Cover veil, `veil/tile.py`.

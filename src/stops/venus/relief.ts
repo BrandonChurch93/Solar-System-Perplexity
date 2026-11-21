@@ -199,6 +199,7 @@ export class CloudRelief {
   private readonly layers: Layer[] = []
   private air: Layer | null = null
   private readonly motion: CloudMotion
+  carry: { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number } | null = null
 
   private constructor(motion: CloudMotion) {
     this.motion = motion
@@ -236,6 +237,7 @@ export class CloudRelief {
     dome.renderOrder = -1
     r.group.add(dome)
     r.air = { mesh: dome, material: airMaterial }
+    r.carry = { map: airMap, fwd, right, span: airMaterial.uniforms.uSpan!.value as THREE.Vector3, cut: airMaterial.uniforms.uCut!.value as THREE.Vector3, gain: a.gain }
 
     for (let k = 0; k < def.layers.length; k++) {
       const l = def.layers[k]!

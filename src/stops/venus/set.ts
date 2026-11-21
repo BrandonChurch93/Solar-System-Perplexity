@@ -7,10 +7,11 @@ import { smooth } from '../../director/rig'
 import { patches, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
-import { plan } from './plan'
+import { deck, plan } from './plan'
 import { CloudRelief } from './relief'
 import { LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
+import { Veil } from './veil'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -37,6 +38,31 @@ function slide(a: Pose, b: Pose, width: number, height: number): number {
     most = Math.max(most, Math.hypot(((v.x / -v.z / (tb * aspect)) - x) * width / 2, ((v.y / -v.z / tb) - y) * height / 2))
   }
   return most
+}
+
+interface Swap { at: number; turn: THREE.Quaternion; up: THREE.Vector3; upTerrain: THREE.Vector3; height: number; rate: number; sun: THREE.Vector3; fwd: THREE.Vector3; right: THREE.Vector3; e1: THREE.Vector3; e2: THREE.Vector3 }
+
+function swapOf(kind: 'dive' | 'rise', sunTerrain: THREE.Vector3, fwd: THREE.Vector3, right: THREE.Vector3): Swap {
+  const at = plan.coverCenter(kind === 'dive' ? plan.seg.dive! : plan.seg.rise)
+  const tiny = 1e-6
+  const dt = 0.125 / config.fps
+  const shot = (t: number): Pose => (kind === 'dive' ? plan.dive(t) : plan.rise(t)).pose
+  const o = shot(kind === 'dive' ? at - tiny : at)
+  const g = shot(kind === 'dive' ? at : at - tiny)
+  const o2 = shot(kind === 'dive' ? at - tiny - dt : at + dt)
+  const height = o.position.length() - 1
+  const turn = o.quaternion.clone().multiply(g.quaternion.clone().invert())
+  const up = o.position.clone().normalize()
+  const sun = sunTerrain.clone().applyQuaternion(turn)
+  const e1 = sun.clone().addScaledVector(up, -sun.dot(up)).normalize()
+  return {
+    at, turn, height, up, sun, e1,
+    e2: new THREE.Vector3().crossVectors(up, e1),
+    upTerrain: g.position.clone().sub(deck.centre).normalize(),
+    rate: Math.log((o2.position.length() - 1) / height) / (kind === 'dive' ? -dt : dt),
+    fwd: fwd.clone().applyQuaternion(turn),
+    right: right.clone().applyQuaternion(turn),
+  }
 }
 
 export const createSet: SetFactory = async (ctx) => {
@@ -71,6 +97,24 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
+  const carry = ground.carry!
+  const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 16, repeat: true })
+  const veil = new Veil(look.veil, clouds, carry, diagUniform)
+  const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
+  const swaps = { dive: swapOf('dive', sunTerrain, carry.fwd, carry.right), rise: swapOf('rise', sunTerrain, carry.fwd, carry.right) }
+  ;(globe.material.uniforms.uCarry!.value as THREE.Vector4).set(look.veil.grade.keep, look.veil.grade.gamma, look.veil.grade.pivot, look.veil.grade.gain)
+  ;(globe.material.uniforms.uCarryTint!.value as THREE.Vector3).fromArray(look.veil.grade.tint)
+  const back = new THREE.Quaternion()
+  const localQ = new THREE.Quaternion()
+  const localBack = new THREE.Quaternion()
+  const localP = new THREE.Vector3()
+  const centre = new THREE.Vector3()
+  const eye = new THREE.Vector3()
+  const eyeNext = new THREE.Vector3()
+  const veilTurn = new THREE.Quaternion()
+  const sunCam = new THREE.Vector3()
+  const airFwd = new THREE.Vector3()
+  const airRight = new THREE.Vector3()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const riseAt = plan.seg.rise.start + look.drift.riseAt * (plan.seg.rise.end - plan.seg.rise.start)
 
@@ -94,14 +138,37 @@ export const createSet: SetFactory = async (ctx) => {
   return {
     id: plan.id,
     world,
+    near: veil.mesh,
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      const kind = state.segment.kind
+      const covering = state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')
+      const thick = covering ? plan.veilAmount(state.segment, state.time) : 0
+      const released = covering ? smooth(plan.release(state.segment, state.time)) : 1
+      const sw = swaps[kind === 'dive' ? 'dive' : 'rise']
+      back.copy(state.rotation).invert()
+      localQ.copy(back).multiply(shot.camera.quaternion)
+      localBack.copy(localQ).invert()
+      localP.copy(shot.camera.position).sub(state.origin).applyQuaternion(back)
       if (!inOrbit) {
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir, Math.pow(1 - plan.coverAmount(state.segment, state.time), 2))
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
+        if (thick <= 0) {
+          veil.hide()
+          return
+        }
+        localP.sub(deck.centre).divideScalar(deck.radius)
+        centre.copy(localP).negate().applyQuaternion(localBack)
+        eye.copy(localP).normalize().sub(sw.upTerrain).applyQuaternion(sw.turn).add(sw.up).normalize()
+        const streak = view.samples > 1
+        if (streak) eyeNext.copy(eye).multiplyScalar(1 + sw.height * Math.exp(sw.rate * plan.drop(state.segment, state.time + config.shutterFraction / (view.samples * config.fps))))
+        eye.multiplyScalar(1 + sw.height * Math.exp(sw.rate * plan.drop(state.segment, state.time)))
+        veilTurn.copy(sw.turn).multiply(localQ)
+        sunCam.copy(sunTerrain).applyQuaternion(localBack)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, streak ? eyeNext : null, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -117,6 +184,14 @@ export const createSet: SetFactory = async (ctx) => {
       const gu = globe.material.uniforms
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
+      gu.uCarryOn!.value = 1 - released
+      if (thick > 0 || released < 1) {
+        centre.copy(localP).negate().applyQuaternion(localBack)
+        sunCam.copy(sw.sun).applyQuaternion(localBack)
+        airFwd.copy(sw.fwd).applyQuaternion(localBack)
+        airRight.copy(sw.right).applyQuaternion(localBack)
+        veil.update(view.camera, view.format.width, view.format.height, centre, localP, null, localQ, thick, released, sw, sunCam, Math.pow(1 - released, look.veil.sunFade), airFwd, airRight, gain, gain * look.relief.air.gain, vignette)
+      } else veil.hide()
       const aspect = view.format.width / view.format.height
       limbFrame(camera, light, limbS, limbT)
       gu.uVignette!.value = vignette
@@ -128,8 +203,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
       let taps = 0
       let smear = 1
-      const kind = state.segment.kind
-      if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && plan.coverAmount(state.segment, state.time) < look.motion.hidden) {
+      if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && thick < look.motion.hidden) {
         const dt = config.shutterFraction / (view.samples * config.fps)
         const a = kind === 'dive' ? plan.dive(state.time) : plan.rise(state.time)
         const b = kind === 'dive' ? plan.dive(state.time + dt) : plan.rise(state.time + dt)
@@ -160,6 +234,7 @@ export const createSet: SetFactory = async (ctx) => {
       rim.dispose()
       far.dispose()
       ground.dispose()
+      veil.dispose()
     },
   }
 }

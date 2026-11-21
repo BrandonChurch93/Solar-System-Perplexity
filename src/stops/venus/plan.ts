@@ -14,7 +14,7 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 18, elevationDeg: 12, distance: 5.4, offset: [-0.3, 0.12], driftSpeed: 0.08, rollDeg: 6, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 92, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -24, axis: [1, 0.25, 0], offset: [-0.45, 0.25] },
-  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
+  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, skyLow: [0.03, 1.2, 0.55], sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
   cover: [1.0, 0.82, 0.5],
   coverLow: [0.6, 0.45, 0.24],
   coverTerrain: [0.9, 0.7, 0.4],
@@ -22,18 +22,19 @@ export const params: MoveParams = {
   coverTop: [1, 1],
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
-  coverShell: [0.99, 1.01],
-  coverHides: 0.7,
+  coverShell: [-2, -1],
+  coverHides: 33,
   coverRush: { speed: 5, reach: 1.0, billow: [3.5, 3.5, 1.0], streak: [9, 6, 1.6], contrast: [1.7, 1.2] },
   skyAim: { orbit: [-160, -4, -1], terrain: [70.88563, -102.57248, -13.65] },
   spinDegPerSecond: -1,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
+  ...({ coverWindow: { dive: { seconds: 0.8 }, rise: { seconds: 0.8 } } } as object),
 }
 
-export const veil = { peak: 0.94, inside: 0.006, outside: 0.02, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
+export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1 } }
 
-const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
+export const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 
 const ease = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
@@ -109,22 +110,42 @@ class VenusPlan extends StopPlan {
 
   override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
     const rel = view === 'orbit' ? local.position : local.position.clone().sub(deck.centre).divideScalar(deck.radius)
-    const d = rel.length()
-    const w = Math.tan(THREE.MathUtils.degToRad(local.vfov) / 2) * Math.sqrt(Math.max(d * d - 1, 1e-6))
-    const edge: [number, number] = [1 - veil.inside * w, 1 + veil.outside * w]
-    if (view === 'orbit') this.p.coverShell = edge
-    else this.p.coverSea = { centre: [deck.centre.x, deck.centre.y, deck.centre.z], radius: deck.radius, edge }
+    if (view === 'terrain') this.p.coverSea = { centre: [deck.centre.x, deck.centre.y, deck.centre.z], radius: deck.radius, edge: [-2, -1] }
     return super.horizon('orbit', { position: rel, quaternion: local.quaternion, vfov: local.vfov })
   }
 
-  override coverAmount(seg: Segment, time: number): number {
+  phase(seg: Segment, time: number): number | null {
     const w = coverWindow(seg)
-    if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 0
-    const h = veil[seg.kind]
+    if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
     const f = time * config.fps - w.centerFrame
-    const before = (f + h.before + h.lead) / h.lead
-    const after = (h.after + h.tail - f) / h.tail
-    return veil.peak * Math.min(ease(before), Math.min(Math.max(after, 0), 1))
+    return f < 0 ? f / (w.centerFrame - w.firstFrame) : f / (w.lastFrame + 1 - w.centerFrame)
+  }
+
+  override coverAmount(seg: Segment, time: number): number {
+    const x = this.phase(seg, time)
+    return x === null ? 0 : veil.sky * ease((1 - Math.abs(x)) / (1 - veil.shoulder))
+  }
+
+  veilAmount(seg: Segment, time: number): number {
+    const x = this.phase(seg, time)
+    if (x === null) return 0
+    const h = veil[seg.kind as 'dive' | 'rise']
+    return Math.min(Math.max(Math.min((x - h.from) / (h.full - h.from), 1 - (x - h.to) / (h.clear - h.to)), 0), 1)
+  }
+
+  drop(seg: Segment, time: number): number {
+    const w = coverWindow(seg)
+    const x = this.phase(seg, time)
+    if (!w || x === null) return 0
+    const half = (seg.kind === 'rise' ? w.firstFrame - w.centerFrame : w.lastFrame + 1 - w.centerFrame) / config.fps
+    return half * (1 - Math.pow(1 - Math.min(Math.abs(x), 1), veil.ease + 1)) / (veil.ease + 1)
+  }
+
+  release(seg: Segment, time: number): number {
+    const w = coverWindow(seg)
+    if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 1
+    const f = time * config.fps - w.centerFrame
+    return Math.min(Math.max((seg.kind === 'dive' ? -f : f) / veil.carry, 0), 1)
   }
 }
 

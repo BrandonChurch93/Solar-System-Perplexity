@@ -1,6 +1,7 @@
 import type { HazeParams } from '../../bodies/haze'
 import fitted from './curve.json'
 import hazeJson from './haze.json'
+import veilJson from './veil.json'
 
 export const curve = fitted.curve
 export const haze = hazeJson.ground as HazeParams
@@ -70,6 +71,24 @@ export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
 export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
 export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
+
+export const veil = {
+  file: veilJson.file,
+  pad: veilJson.pad,
+  mean: veilJson.mean as [number, number, number],
+  sheets: { lowest: 1e-5, step: 2.5, size: 3, near: [0.3, 1.1, 3] as [number, number, number], gamma: 1.6, top: veilJson.top, holes: [1.2, 0.5] as [number, number], deep: 0.85, edge: [0.65, 0.35] as [number, number], thin: 1.55, haze: 0.8, sunward: [3, 4] as [number, number], shift: [0.37, 0.61] as [number, number], dense: 0.8, ceiling: [0.05, 0.1] as [number, number], solid: [0.55, 1] as [number, number] },
+  fog: [0.12, 2.6, 4] as [number, number, number],
+  fogOrbit: [0.8, 0.4, 5] as [number, number, number],
+  light: [-0.94, 0.34] as [number, number],
+  lit: [0.34, 0.2, 0.07] as [number, number, number],
+  litTerrain: [0.035, 0.026, 0.016] as [number, number, number],
+  haze: [0.62, 0.45, 0.2] as [number, number, number],
+  hazeTerrain: [0.22, 0.155, 0.08] as [number, number, number],
+  edgePx: 1.5,
+  sun: [0.5071, 0.2105] as [number, number],
+  grade: { keep: 0.7, gamma: 1.3, pivot: 0.3, gain: 0.45, tint: [1, 0.93, 0.8] as [number, number, number] },
+  sunFade: 2,
+}
 
 export const motion = { from: 1, step: 6, most: 8, hidden: 0.95, smear: { from: 20, share: 0.4, most: 120 } }
 
