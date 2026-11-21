@@ -1,9 +1,53 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T03:22:48.424Z",
- "head": "09bf6b3fb8cf3deb1e5072a59825d232893b7f5f",
- "note": "wrap map from hero pixels: corrected band axis, first albedo map (far side still rough)",
+ "pushed": "2026-11-21T03:37:27.490Z",
+ "head": "4c1c2954b804513379b1cc11bbd8bb8a46a25fa5",
+ "note": "orbit view: globe with hero pixels and measured light now in the film; rings and sky patch next",
  "looks": [
+  {
+   "time": "2026-11-21T03:37:26.939Z",
+   "file": "20261121033726939-note-light-model.jpg",
+   "source": "out/work/u/wrap/light-model.jpg",
+   "kind": "note",
+   "label": "light table fitted from the hero (right) beside the hero",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T03:37:26.421Z",
+   "file": "20261121033726421-note-wrap-color-small.jpg",
+   "source": "out/work/u/wrap/wrap-color-small.jpg",
+   "kind": "note",
+   "label": "wrap albedo map take 2: hero pixels on the seen side, synthesised streaks elsewhere",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T03:37:10.431Z",
+   "file": "20261121033710431-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:37:09.117Z",
+   "file": "20261121033709117-still-f04035-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04035-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T03:22:46.200Z",
    "file": "20261121032246200-note-wrap-color-small.jpg",
@@ -29,30 +73,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T03:22:44.425Z",
-   "file": "20261121032244425-note-hero-bands.jpg",
-   "source": "out/work/u/hero-bands.png",
-   "kind": "note",
-   "label": "hero bands high-pass (pole at bottom-left)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:05:57.478Z",
-   "file": "20261121030557478-note-hero-bright.jpg",
-   "source": "out/work/u/hero-bright.jpg",
-   "kind": "note",
-   "label": "hero brightened to read rings and sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:05:56.870Z",
-   "file": "20261121030556870-note-unwrap3d.jpg",
-   "source": "out/work/u/unwrap3d.jpg",
-   "kind": "note",
-   "label": "hero rings unwrapped in the fitted ring plane",
-   "stop": "uranus"
-  },
-  {
    "time": "2026-11-21T02:45:31.326Z",
    "file": "20261121024531326-compare-compare-uranus-terrain-view.jpg",
    "source": "out/work/compare/compare-uranus-terrain-view.jpg",
@@ -61,20 +81,6 @@
    "stop": "uranus",
    "segment": "uranus.terrain",
    "frame": 4290,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:45:15.426Z",
-   "file": "20261121024515426-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
