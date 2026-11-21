@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T17:51:58.652Z",
- "head": "4cd1880b5d94e64434acf953e3ed7ce2c515c0b3",
- "note": "sun round 3 READY at 4cd1880: review rise and cover sheets, hold sky seam pass, measures green",
+ "pushed": "2026-11-21T17:56:05.844Z",
+ "head": "0a86521c19379a47b04e7efd36a5a1145152e3cf",
+ "note": "sun round 3 READY: review rise and cover sheets, hold sky seam pass, judged frames at final, measures green",
  "looks": [
+  {
+   "time": "2026-11-21T17:56:03.529Z",
+   "file": "20261121175603529-note-i147-f90-arch-approved-film-x22.jpg",
+   "source": "out/work/sun/i147-f90-arch-approved-film-x22.png",
+   "kind": "note",
+   "label": "sun frame 90 sky round the arch at 2.2 times gain, approved left, film right: no moat",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T17:56:02.952Z",
+   "file": "20261121175602952-note-i147-f0-60-90-final-approved.jpg",
+   "source": "out/work/sun/i147-f0-60-90-final-approved.jpg",
+   "kind": "note",
+   "label": "sun terrain frames 0, 60, 90 at final tier on the READY tree, approved close image at lower right",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T17:50:19.473Z",
    "file": "20261121175019473-frame-chk-460.jpg",
@@ -150,22 +166,6 @@
    "source": "out/work/sun/i132-c1-big.jpg",
    "kind": "note",
    "label": "rise 209, 211, 213, 215 at draft, relief dissolving into the globe",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:22:04.101Z",
-   "file": "20261121162204101-note-i131-c1-b.jpg",
-   "source": "out/work/sun/i131-c1-b.jpg",
-   "kind": "note",
-   "label": "rise 218 to 235 at draft, final path of round 3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:22:03.527Z",
-   "file": "20261121162203527-note-i131-c1-a.jpg",
-   "source": "out/work/sun/i131-c1-a.jpg",
-   "kind": "note",
-   "label": "rise 200 to 217 at draft, final path of round 3 (peak earlier and wider, no frame at the review sample cap)",
    "stop": "sun"
   }
  ]
