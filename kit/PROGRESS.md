@@ -7,7 +7,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Current phase: 4 · The other eight stops
 - Current stop: all eight in their third rounds (see the Stops table and "Running jobs")
 - Current round: open: 23 (venus), 24 (sun), 25 (jupiter), 26 (saturn). The next round is 27. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
-- Next critic name: reviewer_473
+- Next critic name: reviewer_490
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: approved
