@@ -1,9 +1,59 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T18:57:26.666Z",
- "head": "8d2a798d900f352e71a7769158c049f13dcb0ce8",
- "note": "far band at 738 to 741 and 993 to 997 carried to the close photo's tone; review chain restarts now",
+ "pushed": "2026-11-21T19:21:39.560Z",
+ "head": "a0c59ce5e9834a1277be0645aed6ab6ddb2dbdf3",
+ "note": "739 at review tier with the tone carry; measures green on the tree (G13 0 of 463, G5, G17 pass)",
  "looks": [
+  {
+   "time": "2026-11-21T19:21:38.976Z",
+   "file": "20261121192138976-note-band739-review.jpg",
+   "source": "out/work/mercury/r12/band739-review.jpg",
+   "kind": "note",
+   "label": "739 review tier, 128 samples: before (top), with the tone carry (bottom): one ground to the limb, no white bars, no pink line",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T19:21:20.714Z",
+   "file": "20261121192120714-frame-f739.jpg",
+   "source": "out/work/mercury/r12/s3/f739.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 739, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 739,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T19:08:53.356Z",
+   "file": "20261121190853356-job-frame-00717.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.dive frame 717, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 717,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T18:58:20.803Z",
+   "file": "20261121185820803-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T18:57:26.088Z",
    "file": "20261121185726088-note-rise-993-998-draft.jpg",
@@ -18,14 +68,6 @@
    "source": "out/work/mercury/r12/dive-736-741-draft.jpg",
    "kind": "note",
    "label": "dive 736 to 741, one sample, far band carried to the close photo's tone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T18:57:24.986Z",
-   "file": "20261121185724986-note-band739-lift.jpg",
-   "source": "out/work/mercury/r12/band739-lift.jpg",
-   "kind": "note",
-   "label": "739 one sample: limb band before (top) and with the tone carry of the close photo (bottom): lift, knee, photo tint, no chroma fringe at the photo's far edge",
    "stop": "mercury"
   },
   {
@@ -55,42 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:56:04.341Z",
-   "file": "20261121185604341-frame-f999.jpg",
-   "source": "out/work/mercury/r12/g3/f999.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 999, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 999,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:52:41.552Z",
-   "file": "20261121185241552-frame-f743.jpg",
-   "source": "out/work/mercury/r12/g3/f743.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 743, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 743,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:30:21.563Z",
-   "file": "20261121183021563-note-limb717-x3.jpg",
-   "source": "out/work/mercury/r12/limb717-x3.png",
-   "kind": "note",
-   "label": "717 limb at 3x: before (left), relief in silhouette (right)",
-   "stop": "mercury"
   }
  ]
 }
