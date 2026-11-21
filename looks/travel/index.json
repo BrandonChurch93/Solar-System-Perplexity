@@ -1,20 +1,20 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T11:45:51.887Z",
- "head": "fe35490fd120139476bad22a0b4acb45e289b386",
- "note": "sky3: stars lifted to one absolute level in flight, band glow at the stop level; all eight travels and the retreat at draft",
+ "pushed": "2026-11-21T12:08:23.349Z",
+ "head": "938113c500d07af21df127ae313eed969aff8a26",
+ "note": "sky6: flight star layer (600000 points), glow on its own level, open sky hands over to the arriving patch; draft sheets sun, mars, jupiter, saturn, earth and stills 1632, 3922, 5090, 5101; 22 protected frames byte identical at draft",
  "looks": [
   {
-   "time": "2026-11-21T11:45:38.785Z",
-   "file": "20261121114538785-note-earth.travel-draft.jpg",
-   "source": "out/work/travel/sky3/earth.travel-draft.png",
+   "time": "2026-11-21T12:07:55.195Z",
+   "file": "20261121120755195-note-earth.travel-draft.jpg",
+   "source": "out/work/travel/sky6/earth.travel-draft.png",
    "kind": "note",
-   "label": "sky3: contact sheet earth.travel, draft tier",
+   "label": "sky6: contact sheet earth.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T11:45:37.856Z",
-   "file": "20261121114537856-sheet-earth.travel-16x9-draft.jpg",
+   "time": "2026-11-21T12:07:54.271Z",
+   "file": "20261121120754271-sheet-earth.travel-16x9-draft.jpg",
    "source": "out/work/sheets/earth.travel-16x9-draft.png",
    "kind": "sheet",
    "label": "Contact sheet earth.travel, draft tier",
@@ -25,12 +25,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "0c70751dd08bec81"
+   "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T11:45:15.481Z",
-   "file": "20261121114515481-frame-f02175-draft.jpg",
-   "source": "out/work/sheets/.frames-YAyMm2/f02175-draft.png",
+   "time": "2026-11-21T12:07:31.669Z",
+   "file": "20261121120731669-frame-f02175-draft.jpg",
+   "source": "out/work/sheets/.frames-GG5Bxs/f02175-draft.png",
    "kind": "frame",
    "label": "earth.travel frame 2175, draft tier",
    "stop": "earth",
@@ -39,19 +39,19 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "0c70751dd08bec81"
+   "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T11:44:38.203Z",
-   "file": "20261121114438203-note-saturn.travel-draft.jpg",
-   "source": "out/work/travel/sky3/saturn.travel-draft.png",
+   "time": "2026-11-21T12:06:54.956Z",
+   "file": "20261121120654956-note-saturn.travel-draft.jpg",
+   "source": "out/work/travel/sky6/saturn.travel-draft.png",
    "kind": "note",
-   "label": "sky3: contact sheet saturn.travel, draft tier",
+   "label": "sky6: contact sheet saturn.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T11:44:37.343Z",
-   "file": "20261121114437343-sheet-saturn.travel-16x9-draft.jpg",
+   "time": "2026-11-21T12:06:54.168Z",
+   "file": "20261121120654168-sheet-saturn.travel-16x9-draft.jpg",
    "source": "out/work/sheets/saturn.travel-16x9-draft.png",
    "kind": "sheet",
    "label": "Contact sheet saturn.travel, draft tier",
@@ -62,12 +62,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "0c70751dd08bec81"
+   "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T11:44:20.262Z",
-   "file": "20261121114420262-frame-f03885-draft.jpg",
-   "source": "out/work/sheets/.frames-rTUJqR/f03885-draft.png",
+   "time": "2026-11-21T12:06:35.676Z",
+   "file": "20261121120635676-frame-f03885-draft.jpg",
+   "source": "out/work/sheets/.frames-EgU0DM/f03885-draft.png",
    "kind": "frame",
    "label": "saturn.travel frame 3885, draft tier",
    "stop": "saturn",
@@ -76,19 +76,19 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "0c70751dd08bec81"
+   "engine": "6728b99fa98fbd73"
   },
   {
-   "time": "2026-11-21T11:43:55.168Z",
-   "file": "20261121114355168-note-jupiter.travel-draft.jpg",
-   "source": "out/work/travel/sky3/jupiter.travel-draft.png",
+   "time": "2026-11-21T12:06:09.993Z",
+   "file": "20261121120609993-note-jupiter.travel-draft.jpg",
+   "source": "out/work/travel/sky6/jupiter.travel-draft.png",
    "kind": "note",
-   "label": "sky3: contact sheet jupiter.travel, draft tier",
+   "label": "sky6: contact sheet jupiter.travel, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T11:43:54.360Z",
-   "file": "20261121114354360-sheet-jupiter.travel-16x9-draft.jpg",
+   "time": "2026-11-21T12:06:09.155Z",
+   "file": "20261121120609155-sheet-jupiter.travel-16x9-draft.jpg",
    "source": "out/work/sheets/jupiter.travel-16x9-draft.png",
    "kind": "sheet",
    "label": "Contact sheet jupiter.travel, draft tier",
@@ -99,7 +99,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "0c70751dd08bec81"
+   "engine": "6728b99fa98fbd73"
   }
  ]
 }
