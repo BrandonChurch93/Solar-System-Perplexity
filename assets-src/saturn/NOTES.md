@@ -174,3 +174,13 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 3. Terrain limb halo too wide and bright; dashed line on the night-side junction.
 4. Hold: A ring at the left ansa is fine uniform lines where the hero has broad sandy bands; thin outer line too visible; left limb dotted against the gap; ring edges off up to 24 hero px at the left ansa; Titan within 10 px.
 5. Dive 3592 to 3596 a piece of the lower globe below the outer ring edge; rise 3864 to 3871 a reddish dark crescent at the lower-left limb under the ring plane; V kink in A ring bands at 3619 lower left.
+
+## Sand instead of hairlines (09:25 to 09:50)
+
+- Cause of the crisp hairlines in the near B ring: the detail finer than 8 px came from the median of three centre cuts through the approved image, so two thirds of its sand grain was drawn out around the ring as lines; `rings/build.py` then multiplied synthetic gaps and lines on top at full strength.
+- Fix: `profile.py` argument 13 `CUTS` 5 (mean of 11 cuts 2 px apart, lowest and highest dropped), `build.py` argument 1 share of the synthetic lines in the close profile 0.35, grain in the shader as sand: `grain` 0.38, `grainCell [0, -0.5]` (cells of one pixel footprint across the bands and 0.7 along; the film moves 3 to 4 px per frame along the bands in the near field, so the shutter stretches the grain along them).
+- `check/grain.py FILM`: windows of frame 3720 turned so the bands lie level, split into band structure (blur of 4 px along the bands, then high-pass 6 and 1.5 px) and the rest. Mean of 8 windows, approved | film: before 16.9, 10.2, 5.5 | 22.7, 13.9, 4.8; after 16.9, 10.2, 5.5 | 18.2, 11.5, 5.5.
+- Grain between frames 3719, 3720 and 3721: the rest alone correlates 0.5 to 0.8 at a whole-pixel shift of 2 to 4 px along the bands, so the grain flows with the ring and does not boil. Review tier (4 samples) shows the same sand.
+- G17 at this state: 3465 median 1.134 (p25 0.705, 71 tiles), 3720 median 1.015 (p25 0.804, 62 tiles). Pass. (Before: 1.167 and 1.289.)
+- Still different in the near left A ring (x 20 to 400, y 640 to 1080 of 1920): the approved image has crisper, darker grooves and pin-point sparkles; the film is softer there (shutter, 3 to 4 px per frame) and its sparkles are larger blobs.
+- Hold, lower-left limb (x 600 to 840, y 480 to 670 of 1920): the film has an orange-brown wedge about 30 px wide inside the limb with a sharp inner edge where the hero is cream to the limb with a thin darker rim; since the sky rebuild there is a lighter box left of the limb with a straight lower edge at y 512; stars in the gap between the C ring and the globe are brighter than in the hero. Next.

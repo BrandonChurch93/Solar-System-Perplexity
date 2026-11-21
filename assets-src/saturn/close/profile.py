@@ -23,6 +23,7 @@ DETAIL = float(sys.argv[6]) if len(sys.argv) > 6 else 8.0
 GM = int(sys.argv[7]) if len(sys.argv) > 7 else 9
 CHROMA = float(sys.argv[10]) if len(sys.argv) > 10 else 0.25
 SOFT = float(sys.argv[11]) if len(sys.argv) > 11 else -0.3
+CUTS = int(sys.argv[13]) if len(sys.argv) > 13 else 5
 img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
 H, W = img.shape[:2]
 lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
@@ -164,14 +165,14 @@ def family(A, B, offs, reach, name):
         mono = np.maximum.accumulate(lc)
         ok_t = (p[:, 0] > 8) & (p[:, 0] < W - 9) & (p[:, 1] > 8) & (p[:, 1] < H - 9) & (np.gradient(lc) > 1e-5) & (lc >= mono - 1e-6)
         cuts = []
-        for off in (-2.0, 0.0, 2.0):
+        for off in np.arange(-CUTS, CUTS + 1) * 2.0:
             q = p + nrm[None] * off
             c = cv2.remap(img, (q[:, 0] - 0.5).astype(np.float32)[None], (q[:, 1] - 0.5).astype(np.float32)[None], cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)[0]
             c = inverse_filmic(srgb_to_linear(np.clip(c, 0, 1)))
             lo = at(q[:, 0], q[:, 1])
             o = np.argsort(lo)
             cuts.append(np.stack([np.interp(lc, lo[o], c[o, k]) for k in range(3)], -1))
-        med = np.median(np.stack(cuts), 0)
+        med = np.sort(np.stack(cuts), 0)[1:-1].mean(0)
         sg = DETAIL / 0.25
         base_t = np.stack([np.interp(lc, axis[good], prof[good, k]) for k in range(3)], -1)
         lo_b = gaussian_filter1d(base_t, sg, axis=0, mode="nearest")
