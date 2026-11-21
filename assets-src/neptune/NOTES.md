@@ -181,3 +181,19 @@ Milestone 3 sent at 07:06 on 956d8b4. Builder's order for what is left, worst fi
 - 07:36: committed 11a20d8, merged main (0cd3228, tools only) as c0afbe6, build green, vitest 35 of 35, pushed. The merge commit has no trailer (`git merge --no-edit`); it is pushed and stays. From now on merge with `git merge --no-ff -m "Merge main into agent/neptune" -m "Co-authored-by: Perplexity <noreply@perplexity.ai>" origin/main`.
 - After the knit, draft 4742, 4746 and 4755 are clean at both borders (`out/work/nep/left-after2.jpg`, `q6-a.jpg`).
 - 07:37: self-check queue `out/work/nep/q7.sh` started (log `q7.log`, one log per step in `out/work/nep/`): compare hold and terrain at final, crops of 4605 and 4860, full measure, budget, G11, G12 and G15, review sheets for dive, rise, hold, terrain. Nothing else may render until its last line `done`.
+- 07:40: Builder mail: engine batch 7 on main (558e3a5, hash 6d4f67865f286916, dust between the stops only). "Do not hold READY back for polish, the rounds will name what matters." Queue q7 stopped one minute into the measure, main merged with the trailer (76e6c50), build green, vitest 35 of 35, pushed, q7 started again at 07:41 so the measure is taken on the head that READY names.
+
+## Right limb, read from the final hold compare (07:45, for the first round)
+
+Crops `out/work/nep/limbH.jpg` (lower right, 3x) and `limbF.jpg` (upper right, 2.4x), approved left, film right.
+- Lower right (position angle 0 to -25 from the disc centre, x to the right, y up): the hero's disc darkens softly toward the limb, then one thin cyan line, then a soft glow. The film shows three stripes: a light blue stripe (the sphere's own rim), a dark blue gap, and a teal band with a hard outer edge. Cause: `air.line.bulge` lifts the line shell 0.011 radii (7.4 px) off the sphere toward theta -30 to follow the hero's outline, which is not a circle. The sphere's limb stays where it is, so both are seen. Plan: bulge 0 (the Builder dropped outline fits of a few pixels), then refit `field.json` once.
+- Upper right (angle 15 to 55): blue equals the hero within 3 levels from 20 px inside to 34 px outside the limb, but red and green are 20 to 35 levels higher in the first 12 px outside the white rim (at angle 35, 4 to 14 px outside: R 169 148 125 118 100 against 145 113 96 89 79). That is the line shell (inner 1.0005, outer 1.0065, lift 0.0025, with `tail [0.5, 2.8, 5.0]` at full strength where `dot(tp, sun)` is above 0.75). The hero has its crisp cyan line only where `dot(tp, sun)` is below about 0.65. Plan: fade the tail out again above about 0.8, check the profile, keep blue.
+- Idea if the simple fix is not enough: a measured table for the light outside the limb (altitude by sun angle, two sides, weighted by `home`), the same way `field.json` works on the disc.
+
+## Triton, read from the final hold compare (07:47, for the rounds)
+
+Crop `out/work/nep/triton-cmp.jpg` (approved left, film right, 3x, frame 4605 at 1920 wide).
+- Size: whole disc 131 px across in the approved image, 127 px in the film (3 percent small). Lit part: bbox 100 by 128 px approved, 105 by 112 px film.
+- Terminator: approved runs steeper (light from the right, about 21 degrees above the horizontal in the picture), film about 38 degrees. Turn `look.triton.aim` about 16 degrees.
+- Tone: approved is neutral to cool white in the lower half (mean R G B 176 171 173, p10 100 98 97) with a smooth pink wash over the cap; film is pinker everywhere (187 177 179) and carries brown blotches with more contrast. Plan in `triton/make.py`: contrast 1.25 to about 1.0, saturation 0.3 to about 0.18, keep the cap wash.
+- The limb fix is prepared as files in `out/work/nep/next/` (air.ts with `uLineFade`, haze.json with bulge amount 0 and `fade [0.66, 0.86, 1]`), not in the tree while the self checks run.
