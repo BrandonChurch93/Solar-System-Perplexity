@@ -18,6 +18,7 @@ export const light: GlobeLight = {
   nightVeilFrom: 0.75,
   edge: 1.2,
   rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.05, wideGain: 1.67 },
+  glareGate: [0.616, 0.766, 0.35],
 }
 
 export const sun = { gain: 1, breathe: 0.03, rate: 1.9 }

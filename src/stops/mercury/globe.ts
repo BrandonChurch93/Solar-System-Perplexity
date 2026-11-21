@@ -19,6 +19,7 @@ export interface GlobeLight {
   nightVeilFrom: number
   edge: number
   rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
+  glareGate: [number, number, number]
 }
 
 export interface GlobePatches {
@@ -96,6 +97,8 @@ uniform float uEdge;
 uniform vec3 uRimColor;
 uniform float uRimWide;
 uniform vec3 uRimDir;
+uniform vec3 uGlareW;
+uniform vec3 uGlareGate;
 uniform vec2 uRimWidth;
 uniform mat3 uBodyToWorld;
 uniform vec3 uCenter;
@@ -140,13 +143,14 @@ void main() {
   float t = -b - sqrt(max(h, 0.0));
   vec3 n = normalize(oc + ray * t);
   float out1 = max(s - 1.0, 0.0);
+  float toward = smoothstep(uGlareGate.x, uGlareGate.y, dot(ray, uGlareW));
   float ndlRim = dot(n, uSunW);
   vec3 rim = vec3(0.0);
   vec3 d = spinY(n * uBodyToWorld, uSpin);
   if (c > 0.0 && b < 0.0 && cov < 1.0) {
     vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim);
     float fall = exp(-out1 / uRimWidth.x) + uRimWide * exp(-out1 / uRimWidth.y);
-    rim = uRimColor * lit * fall * (1.0 - cov);
+    rim = uRimColor * lit * fall * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
   }
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
@@ -180,7 +184,7 @@ ${PATCH_LEVELS}
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
-  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * limbAt(mu) * (1.0 + lift);
+  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu), toward) * (1.0 + lift);
   vec3 ground = inverseFilmic(albedo);
   vec3 col = (ground * lit + mix(vec3(uNightFlat.x), ground, uNightFlat.y) * uNight * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -244,7 +248,7 @@ export class Globe {
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
-        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
+        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -267,6 +271,7 @@ export class Globe {
     this.center.setFromMatrixPosition(this.mesh.matrixWorld)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
     const axis = this.axis.copy(this.center).normalize()
+    ;(u.uGlareW!.value as THREE.Vector3).copy(glare).normalize()
     const dir = u.uRimDir!.value as THREE.Vector3
     dir.copy(glare).addScaledVector(axis, -glare.dot(axis))
     if (dir.lengthSq() < 1e-6) dir.copy(sun).addScaledVector(axis, -sun.dot(axis))

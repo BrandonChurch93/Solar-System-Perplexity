@@ -20,6 +20,10 @@ UNIT = 0.5
 RADIUS = 2439400.0
 STEEP = 2.5
 SOFT = 0.05
+WIDE = 60
+KEEP = 0.35
+TINT = 0.6
+RING = 0.14
 
 
 def wrapblur(a, s):
@@ -46,6 +50,9 @@ lum = np.log(np.maximum(cl @ geo.LUMA, 1e-3))
 crg = wrapblur(np.log(np.maximum(cl[..., 0], 1e-3) / np.maximum(cl[..., 1], 1e-3)), 7)
 cbg = wrapblur(np.log(np.maximum(cl[..., 2], 1e-3) / np.maximum(cl[..., 1], 1e-3)), 7)
 low = wrapblur(lum, 7)
+low -= (1 - KEEP) * wrapblur(low, WIDE)
+crg -= (1 - KEEP) * wrapblur(crg, WIDE)
+cbg -= (1 - KEEP) * wrapblur(cbg, WIDE)
 lat4 = (0.5 - (np.arange(2048) + 0.5) / 2048) * 180
 band = np.abs(lat4) < 60
 polar = geo.smooth(58, 74, np.abs(lat4))[:, None]
@@ -56,8 +63,8 @@ def graded(a, mean, std):
     return cv2.resize(a * (1 - polar) + mean * polar, (W, H), interpolation=cv2.INTER_CUBIC)
 
 
-crg = graded(crg, rg.mean(), rg.std())
-cbg = graded(cbg, bg.mean(), bg.std())
+crg = graded(crg, rg.mean(), rg.std() * TINT)
+cbg = graded(cbg, bg.mean(), bg.std() * TINT)
 low = graded(low, 0.0, ll.std() * LOW)
 
 dem_cache = 'out/work/mercury/dem-8192.npy'
@@ -97,8 +104,12 @@ lit = (elev - (ge * se + gn * sn) / flat * ce) / np.sqrt(1 + ge * ge + gn * gn)
 ratio = np.clip((np.maximum(lit, 0) + SOFT) / (elev + SOFT), 0.12, 2.6)
 slope = np.log(ratio) * geo.smooth(0.0, 0.3, flat)
 print('slope 90th percentile', float(np.percentile(np.hypot(ge, gn)[H // 6: -H // 6], 90)) / STEEP)
-del d, east, north, pad, ge, gn, lit, ratio
-mix = ll.mean() + low + MARK * mark + slope
+gmag = np.hypot(ge, gn)
+ring = np.clip(gmag / float(np.percentile(gmag[H // 6: -H // 6], 90)), 0, 3)
+ring -= wrapblur(ring, 8)
+high = geo.smooth(0.45, 0.85, up)
+del d, east, north, pad, ge, gn, lit, ratio, gmag
+mix = ll.mean() + low + MARK * mark * (1 - 0.6 * high) + slope + RING * ring * high
 mix += ll.mean() - mix[H // 6: -H // 6].mean()
 y = np.exp(mix)
 gch = y / (0.2126 * np.exp(crg) + 0.7152 + 0.0722 * np.exp(cbg))
