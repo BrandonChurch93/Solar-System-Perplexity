@@ -1,6 +1,6 @@
 # Engine requests from the Mercury stop
 
-## 1. `terrain.rollDeg` in `MoveParams` (`src/director/moves.ts`)
+## 1. `terrain.rollDeg` in `MoveParams` (`src/director/moves.ts`) (on main since batch 1)
 
 Patch: `assets-src/mercury/engine.patch` (against `origin/main` b4ae65c, one file, 8 lines added, 5 removed).
 
@@ -20,7 +20,7 @@ Checked:
 - Effect with the patch on (`out/work/mercury/check-roll.ts`, the up vector of the ground in camera space just before and just after each cover center, Mercury plan with `rollDeg: 11.27`, `horizonDeg: 19.8`, `dipDeg: 10.25`): dive orbit side tilt 11.27 degrees, terrain side 11.75; rise terrain side 10.59, orbit side 11.27. Without the patch: 0.00 against 11.73.
 - `npx tsc --noEmit -p .` passes.
 
-## 2. `tests/motion.test.ts`: let a plan set `coverHides` (batch 15 follow up)
+## 2. `tests/motion.test.ts`: let a plan set `coverHides` (batch 15 follow up) (on main at bf74284, 16:10 UTC; local copy dropped)
 
 Patch: `assets-src/mercury/engine.patch` (against `origin/main` 03e3b51, one file, one line).
 
