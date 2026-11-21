@@ -1,9 +1,63 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T02:45:25.416Z",
- "head": "e9218073d785e03a096609473ebe4e76e56861bd",
- "note": "start: stand-in hold and terrain beside the approved images",
+ "pushed": "2026-11-21T02:59:25.660Z",
+ "head": "3d656fd5177b7c88f3a2629f40230a401cfaacf4",
+ "note": "Jupiter orbit view: hero delit, Io painted out, wrap map in work",
  "looks": [
+  {
+   "time": "2026-11-21T02:59:25.063Z",
+   "file": "20261121025925063-note-iomaps.jpg",
+   "source": "out/work/view/iomaps.jpg",
+   "kind": "note",
+   "label": "Io wrap map takes: left rejected (repeats), right kept",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T02:59:24.508Z",
+   "file": "20261121025924508-note-eq4k.jpg",
+   "source": "out/work/view/eq4k.jpg",
+   "kind": "note",
+   "label": "Hero pixels unprojected onto the wrap map",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T02:59:23.984Z",
+   "file": "20261121025923984-note-hero_pred.jpg",
+   "source": "out/work/view/hero_pred.jpg",
+   "kind": "note",
+   "label": "Zonal profile times measured light curve: the model the far side is painted on",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T02:59:23.413Z",
+   "file": "20261121025923413-note-hero_albedo.jpg",
+   "source": "out/work/view/hero_albedo.jpg",
+   "kind": "note",
+   "label": "Hero with the measured light divided out",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T02:59:22.867Z",
+   "file": "20261121025922867-note-ioremove_cmp.jpg",
+   "source": "out/work/view/ioremove_cmp.jpg",
+   "kind": "note",
+   "label": "Io and shadow painted out of the hero crop: source, take kept (top right), rejected take",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T02:50:59.778Z",
+   "file": "20261121025059778-still-f03296-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03296-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T02:45:00.734Z",
    "file": "20261121024500734-compare-compare-jupiter-terrain-view.jpg",
@@ -19,39 +73,11 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:44:59.745Z",
-   "file": "20261121024459745-still-f03150-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03150-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
    "time": "2026-11-21T02:44:44.789Z",
    "file": "20261121024444789-compare-compare-jupiter-hold-view.jpg",
    "source": "out/work/compare/compare-jupiter-hold-view.jpg",
    "kind": "compare",
    "label": "jupiter.hold: approved image left, film frame right, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:43.475Z",
-   "file": "20261121024443475-still-f02895-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02895-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, draft tier",
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
