@@ -50,6 +50,7 @@ export interface GlobeOptions {
   spot: SpotShape
   wisp: WispParams
   patches?: PatchSet
+  limbLit: [number, number, number]
   edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number] }
   segments?: number
 }
@@ -104,6 +105,7 @@ uniform vec3 uNight;
 uniform vec4 uNightRef;
 uniform float uLimbAmount;
 uniform vec2 uLimbSoft;
+uniform vec3 uLimbLit;
 uniform vec2 uShadeKnee;
 uniform vec4 uMoon;
 uniform vec3 uShadow;
@@ -236,7 +238,7 @@ ${PATCH_LEVELS}
   float shade2 = textureGrad(uWisp, wuv + toSun, wdx * uWispShadow.z, wdy * uWispShadow.z).r;
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
   lin *= max(1.0 + wisp * (1.0 - soft), 0.0);
-  vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount);
+  vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
   vec3 col = (lin * knee(direct) * (1.0 - moonShadow(n)) + uNight * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
   vec3 at;
   float tau = hazeDepth(dir, true, at);
@@ -292,7 +294,7 @@ export class Globe {
         uLimb: { value: o.limb.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
-        uLimbAmount: { value: 1 }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
+        uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
         uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },

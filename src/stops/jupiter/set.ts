@@ -63,7 +63,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
-    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze, edge: look.edge,
+    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },

@@ -52,4 +52,5 @@ export const io = {
 }
 
 export const descent = { high: 0.7, low: 0.05 }
+export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
 export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.15, 0.004, 0, 0.02] as [number, number, number, number], soft: [0.3, 128] as [number, number] }

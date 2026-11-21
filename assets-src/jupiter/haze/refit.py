@@ -34,7 +34,7 @@ gl = np.ones((LIMB_KNOTS, 3))
 for i, k in enumerate(knots):
     if k > 0.5:
         continue
-    s = ok & open_ & (ndl > 0.15) & (np.abs(mu - k) < half * 0.6) & (mu > 0.1)
+    s = ok & open_ & (ndl > 0.45) & (np.abs(mu - k) < half * 0.6) & (mu > 0.1)
     if s.sum() >= 200:
         gl[i] = np.clip(np.median(ratio[s], axis=0), 0.7, 1.5) ** (1.0 if k <= 0.25 else 0.5)
 print('limb gain by knot', np.round(gl[:10], 3).tolist())

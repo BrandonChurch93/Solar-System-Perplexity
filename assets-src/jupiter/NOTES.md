@@ -80,10 +80,27 @@ Dive and rise
 - Sky patch: `sky/patch.py` (Mars pattern), fill image `gen/skyfill_sd5.png` (seedream_5 keeps the hero stars aligned; gpt_image_2_6_flare reinvented the whole sky, rejected). The engine aims the patch from the plan. `sky.json` gain 2. To do: fill gain is measured in a ring that holds glow (R 1.9), measure it farther out.
 - Engine facts learned: GLSL reserves the word `cast`. Review tier stills are 1920 x 1080 as well (4 samples), about 27 s.
 
+- 03:45 to 04:10. Io: position and radius from a fit of the hero shadow (`io/shadowfit.py`), light (`io/lightfit.py`), map (`io/build.py`). Night side and terminator refit. Hold sheet: band flow, spot swirl, wisps and Io crossing all move. Merged main b4ae65c (engine batch 1). Builder tip: the software rasterizer computes both sides of an `if` but skips a `for` body, so expensive conditional work goes in `for (int k = 0; k < (cond ? 1 : 0); k++)` with `textureGrad` or `textureLod` inside.
+- 04:10 to 04:40. A dark line along the lit limb came from the post sharpen on a hard alpha edge plus a broken limb table. Fix: the globe is transparent with a soft edge (`uEdge`: one pixel wide, inset 0.0015) and a short air tail outside the disc (`uAir`, one exponential, rim 0.03, capped luminance). Limb table repaired and refit only on unsaturated pixels. Limb streaks and blown white ovals: albedo fades to a coarse mip (lod of 128 px width) for mu under 0.3 (`uLimbSoft`), wisp fades with it. Merged main 9f78a4e (engine batch 2, hash 05c29d3a1588e95f).
+- 04:40 to 04:57. Sky patch: a kaleidoscope at the frame sides (mirrored margin seen when the sky shifts +-155 px) and a ghost arc left of the planet (the patch stored hero minus film glow, including the air tail cutoff). Fix: side margins painted (seedream_5, one take per side), patch rebuilt with a trust and own split (`sky/patch.py`), shells refit against a body only render (`/tmp/refit.sh`: shells off and sky gain 0, body only still, `haze/glow.py`, `fitglow.py`, `write.py 0.92`, halo only still, patch rebuild, sky gain back to 2). Commit 6a6c610.
+- 04:57 to 05:10. Limb gain weighted by ndl (`uLimbLit`, look.limbLit [0.35, 0.1, 0.45]) because the limb brightening of the hero belongs to the lit side; ground night haze depth 0.012; refit. Table of hero/film luminance by mu and ndl is within 0.85 to 1.17 for mu 0.1 to 0.55, ndl -0.4 to 0.6. The row mu 0.05 to 0.1 is off (0.42 to 1.1) because the hero disc is slightly oblate (ellipse a 708.4, b 701.8 px at 2816): accepted, the Builder said to drop outline fits of a few pixels. North cap of the wrap was teal against the hero's tan: `wrap/write.py` pulls its chroma to that of lat 56 to 62. Merged main 3523b45 (engine batch 3, hash e44fa21a5a599a98, sky aim per stop: an orbit aim is ignored for Jupiter, the hold sky follows from Mars and my plan; do not paint anything against the sky behind the rise).
+- 05:10. Orbit milestone sent. Builder's time check: motion first, move to the terrain view now, limb and sky refinements wait for the rounds.
+
+## Orbit view: known weak points (for the rounds)
+
+- Lower left glow at 225 deg slightly weak (film 19/17/17 against hero 33/29/23 x1000 at r 1.03). Glow at 135 deg: film G and B about 20 percent high at r 1.03.
+- A few white ovals near the lower left limb slightly hot. Faint painted detail visible on the night side near the terminator.
+- Hero disc is oblate, limb offsets of up to 3 px.
+- Render time: a transparent globe costs about 1 s per review frame in the hold and 6 s in the dive (12.4 against 13.3 s, 24.7 against 31 s). Deferred: split the globe into an opaque core (discard where inside < 1) and a transparent camera facing ring for the edge and the air tail.
+- Shells do not yet fade with altitude in the dive (`look.descent` unused).
+- Travel and FarPoint, rise: not yet checked with the transparent globe.
+
+## Temp tools (in /tmp, recreate if lost)
+
+`/tmp/refit.sh N`, `/tmp/limb2d.py STILL` (hero/film by mu and ndl), `/tmp/limbrgb.py STILL [angles]`, `/tmp/pair.py STILL top bot ll left ur term io grs` (pairs in `out/work/view/pair_*.jpg`, hero left).
+
 ## Next
 
-- Io: more orange and mottled like the hero, darker right rim. Shadow: hero ellipse is about 190 x 120 px, ours is longer and softer; limit the grazing stretch.
-- Terminator: tile content shows in the twilight (a blue white band at lat -25). Check after the Io work.
-- Check the hold sheet for motion: band flow, spot swirl, wisps, Io crossing. Flow diag view.
-- Sky patch fill gain. Then RECIPE.md for wrap, caps, Io map, sky fill, wisp. Commit binaries at the orbit milestone and message /root.
-- Then terrain view (relief of jupiter-close with flow), then dive and rise (patch levels).
+- Terrain view: read `src/terrain/relief.ts` and `assets-src/mars/relief/RECIPE.md`. Relief of `jupiter-close.jpg` with flow (storm rotates, cloud walls have depth, small vortices turn), seeded lightning in the dark clouds, aprons past every edge, ammonia haze cover, terrain sky patch. `standin-close.jpg` is still what the terrain shows.
+- Dive and rise: patch levels at most 2x apart centred on the GRS (lon -17.5, lat -10), for example 4096 px at 90, 45, 22.5, 11.25 deg; `assets-src/mars/patches/RECIPE.md`; `patches.levels` in `assets.ts` is empty. Shells fade with altitude.
+- Self check: measure, compare final, sheets, crops, budget. Then READY.
