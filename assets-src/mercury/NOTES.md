@@ -27,14 +27,29 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 - Sky: low-pass luminance ratio film/hero median 1.018 (10th to 90th percentile 0.969 to 1.057).
 - Hero Sun: center (2690.65, 175.88) hero px, radius 564 px (9.4 degrees).
 
+## Session 2 (03:47 to 04:15 UTC): what changed
+
+- Registration: the Sun plate and the sky patch are fixed to `plan.hold(holdMid - hold.start).quaternion x drift(plan.holdMid)` (`drift` from `director/rig`). The film's disc sits (2.11, -1.41) px at 1080p off the hero's from the engine's camera drift; accepted.
+- Lens ghost in `near` (`lens.ts`, `look.lens`). It was about (-7.3, -5.7) px at 1080p from the hero's: nudge left.
+- Night side: the map's night side is the painted guide times a scalar level (0.88), not hero pixels (the hero night side is smooth and carries lens artifacts). Shader: `col = (ground * lit + mix(vec3(nightFlat), ground, nightDetail) * night * (1 + nightVeil * smoothstep(nightVeilFrom, 1, mu))) * tint`. Night ratio film/hero by radius 1.05, 1.07, 1.00, 1.07, 1.07, 1.01; day by ndl band 1.00 to 1.04; rim glow outside the limb at 1.006 to 1.012 radii 0.77 to 0.93 (a little low), good farther out.
+- Guide v3 (`wrap/guide.py`): color and low-frequency albedo from the real color mosaic (blur 7 px at 4096, graded to hero statistics, polar fade 58 to 74 degrees), crater structure from the real DEM at 8192 with light baked for the film's Sun direction (the hero carries its relief the same way), `MARK 0.22`, `STEEP 2.5`, `SOFT 0.05`, `UNIT 0.5`, `LOW 0.6`. v1 (mosaic only) kept the seams and blocks of the mosaic; v2 (non-directional marks only) gave blobby "lichen" takes.
+- Tiles (`wrap/tiles.py cut|build`): 38 gnomonic tiles of 2048 px (e0 to e9, n0 to n7, s0 to s7, np0 to np4, sp0 to sp4, np, sp). Each is repainted by the image model with `style.jpg` (hero day region) as the style reference, prompt `wrap/prompts/tile.txt` (`tile-pole.txt` for np, sp), checked with `wrap/flowcheck.py`, low frequencies locked to the input at sigma 24 px, splat back. Takes so far: `a1` nano on all 38 (old guide), `b1` seedream on e7, n6, np, e2, `t1`/`t2` old; round on guide v3: `c1` seedream and `d1` nano on all 38 (running at 04:11).
+- Height map (`wrap/height.py`): real DEM at 4096x2048, flattened to its 40 px low-pass where the hero day pixels are kept (the hero carries its own shading). `wrap-height.bin` uint16, `assets.ts` `wrap.height: true`, shader relief by normal perturbation, mild.
+- Merged `origin/main` b4ae65c (engine hash 434d0a5e367a62fd): stills before it are stale. Shader tip from the Builder: expensive conditional work goes in `for (int k = 0; k < (cond ? 1 : 0); k++)` with `textureGrad`/`textureLod`.
+- Terrain inputs: `out/work/mercury/close-2x.png` passes `checkmoved` (p99 under 1.5 px). Depth: `out/work/mercury/close-depth.raw` (float32 2816x1584, near = 1). Camera fit `relief/camfit.py` -> `relief/camera-fit.json`: vfov 60 assumed, pitch down -30.05 (camera looks down 30 degrees... sign as Mars: see file), roll -11.27 degrees, dip 10.25 degrees, planet radius 61.7 camera heights, horizon distance 11.15 heights, rms 0.022 degrees.
+
+## Terrain plan
+
+- Engine class `Relief.load(ctx, base, def, motion)` in a `terrain` group as `src/stops/mars/set.ts`; `ReliefDef` {imageSize, vfovDeg, layers [{color, alpha?, dist, box, distSize, tint}], masks, maskBox, mistDir}; dist files raw float32 at half the layer size; masks black (no mist, no dust on Mercury).
+- Distance = fit of 1 / (a x depth^g + b) to a sphere ground model from the camera fit. One layer first; a cut layer only if a sweep shows stretching. Margins outpainted about 12 percent left, right, bottom. Sky cut by alpha at the horizon.
+- Terrain sky patch from the close image's sky (stars, Sun bloom at top left near x 730, y 10 of 2816x1584, glow along the horizon). `skyAim: { terrain: [...] }` in `plan.ts`.
+
 ## Still to do, in order
 
-1. Lens ghost in `near` (hero position (455, 1257) native, soft white-orange oval, red fringe), breathing veil.
-2. Painted far side (gnomonic tiles repainted by the image model; lon 55 to 115 and poles first). The guide is flat grey past latitude 85 and has dark blobs near the north pole.
-3. Height map: real DEM on the far side, shape from shading on the hero side. Then `wrap.height: true`.
-4. Rise azimuth positive (about +15 to +40) so the Sun leaves the frame.
-5. Dive patches (5 levels), terrain relief from `out/work/mercury/close-2x.png` (run `tools/ml/checkmoved.py` first), terrain sky patch with the Sun blob, plan values, glare cover in `near`.
-6. Checks: `npm run measure -- --stop mercury`, compares at final, sheets at review, crops.
+1. Choose tile takes (`takes.json`), `tiles.py build`, `match.py`; look at the far side from the rise angle. Re-render the hold compare, re-measure with `tools/probe.py ... align`, tune relief strengths, nudge the lens ghost, sheet of the hold, check the travel to Venus for a pop.
+2. `sky/RECIPE.md`, `wrap/RECIPE.md`. Orbit milestone message (merge main first, commit binaries).
+3. Terrain view (plan above), then dive patches (5 levels, at most 2x apart), dive and rise (azimuth positive +15 to +40, glare cover in `near`).
+4. Checks: `npm run measure -- --stop mercury`, compares at final, sheets at review, crops. `READY`.
 
 ## Decisions
 
