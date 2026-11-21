@@ -28,6 +28,7 @@ uniform vec3 uCamL;
 uniform vec3 uSkimL;
 uniform mat4 uSkimM;
 uniform float uSkimW;
+uniform vec4 uApron;
 uniform vec3 uShadowL;
 uniform float uPolar;
 uniform vec2 uView;
@@ -87,8 +88,8 @@ void main() {
   float reach = 1.0 - smoothstep(uReach.x, uReach.y, d);
   vec4 sc = uSkimM * vec4(p, 1.0);
   vec2 su = sc.xy / max(sc.w, 1e-4) * 0.5 + 0.5;
-  vec2 se = min(su, 1.0 - su);
-  float baked = uSkimW * (sc.w > 1e-3 ? smoothstep(0.0, 0.05, min(se.x, se.y)) : 0.0) * (1.0 - smoothstep(uBaked.x, uBaked.y, length(p - uSkimL)));
+  vec2 se = (su - uApron.xy) * uApron.zw;
+  float baked = uSkimW * (sc.w > 1e-3 ? smoothstep(0.0, 0.05, min(min(se.x, 1.0 - se.x), se.y)) : 0.0) * (1.0 - smoothstep(uBaked.x, uBaked.y, length(p - uSkimL)));
   float energy = uEnergy.x + uEnergy.y * pow(h1, uEnergy.z);
   float flux = min(want / R, 1.0);
   float area = abs(a.x * b.y - a.y * b.x) / sqrt(det);
@@ -140,7 +141,7 @@ export class Ice {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...ring, uJunction: { value: 5 }, uLod: { value: look.lod },
-        uCamL: { value: new THREE.Vector3() }, uSkimL: { value: new THREE.Vector3() }, uSkimM: { value: skim }, uSkimW: skimW, uShadowL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
+        uCamL: { value: new THREE.Vector3() }, uSkimL: { value: new THREE.Vector3() }, uSkimM: { value: skim }, uSkimW: skimW, uApron: { value: new THREE.Vector4(0, 0, 1, 1) }, uShadowL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uView: { value: new THREE.Vector2(1920, 1080) }, uBox: { value: look.box }, uLift: { value: look.lift }, uSize: { value: new THREE.Vector2().fromArray(look.size) },
         uRadius: { value: new THREE.Vector2().fromArray(look.radius) }, uFloor: { value: look.floor }, uReach: { value: new THREE.Vector2().fromArray(look.reach) },
         uEnergy: { value: new THREE.Vector3().fromArray(look.energy) }, uTint: { value: new THREE.Vector3().fromArray(look.tint) }, uBaked: { value: new THREE.Vector2().fromArray(look.baked) }, uGain: { value: 1 }, uDiag: diagUniform,

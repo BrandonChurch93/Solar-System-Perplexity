@@ -95,6 +95,9 @@ export const rings: RingLook = {
   skimFoot: 0.7,
   skimDensity: [0.8, 1.05],
   skimShow: 1,
+  apronEdge: [0.03, 0.02, 0.08],
+  apronAway: [0.3, 0.5],
+  apronShow: 1,
   reach: 3.6,
 }
 
@@ -151,8 +154,14 @@ export const polarShow = 1
 export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
+export const skimJoin: [number, number] = [1383 / 2816, 718 / 1584]
+export const skimSwing: [number, number] = [1.0, 2.2]
+export const skimGrow: [number, number] = [0.0057, 0.0003]
+export const skimLimb: [number, number] = [1.6, 1]
+export const skimUnder: [number, number, number, number] = [-0.005, -0.002, 0.009, 0.015]
 export const shellSkim: [number, number, number] = [0.958, 1.273, 1.826]
 export const shellSkimDepth: [number, number] = [0.03, 0.018]
+export const shellRange: [number, number] = [0.35, 3]
 export const shellReach = 0.054
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

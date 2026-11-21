@@ -49,6 +49,9 @@ export interface RingLook {
   skimFoot: number
   skimDensity: [number, number]
   skimShow: number
+  apronEdge: [number, number, number]
+  apronAway: [number, number]
+  apronShow: number
   reach: number
 }
 
@@ -145,7 +148,15 @@ uniform float uSkimW;
 uniform vec4 uSkimFit;
 uniform float uReach;
 uniform float uSkimNear;
+uniform float uSkimPart;
+uniform vec4 uSkimUnder;
+uniform vec2 uGlobe;
 uniform vec3 uSkimCam;
+uniform sampler2D uApronMap;
+uniform sampler2D uApronMask;
+uniform vec4 uApron;
+uniform vec2 uApronSize;
+uniform vec4 uApronFit;
 uniform sampler2D uPolarMap;
 uniform highp sampler2D uPolarWarp;
 uniform vec2 uPolarSpan;
@@ -200,16 +211,33 @@ void main() {
   vec2 kgx = dFdx(kv);
   vec2 kgy = dFdy(kv);
   vec2 ke = min(kv, 1.0 - kv);
-  float wS = uSkimW * (inS > 0.0 || min(ke.x, ke.y) > -0.004 ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y) + 0.004) : 0.0);
+  float wI = (inS > 0.0 || min(ke.x, ke.y) > -0.004) ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y) + 0.004) : 0.0;
+  vec2 av = (kv - uApron.xy) * uApron.zw;
+  vec2 agx = kgx * uApron.zw;
+  vec2 agy = kgy * uApron.zw;
+  float wA = (uSkimM * vec4(vLocal, 1.0)).w > 1e-3 ? uApronFit.w * smoothstep(0.0, uApronFit.x, av.x) * smoothstep(0.0, uApronFit.y, 1.0 - av.x) * smoothstep(0.0, uApronFit.z, av.y) : 0.0;
+  float wT = wI + (1.0 - wI) * wA;
+  float wK = wI / max(wT, 1e-5);
+  float wS = uSkimW * wT;
   vec4 km = vec4(0.0);
   float behind = 0.0;
+  float skimTexels = 0.0;
   for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
-    km = textureGrad(uSkimMask, kv, kgx * uSkimFit.w, kgy * uSkimFit.w);
     vec2 tx = kgx * uSkimSize;
     vec2 ty = kgy * uSkimSize;
-    wS *= km.g * smoothstep(uSkimFit.y, uSkimFit.z, sqrt(min(dot(tx, tx), dot(ty, ty))));
-    vec3 sc = vec3(uSkimCam.x, uSkimCam.y / uPolar, uSkimCam.z);
-    vec3 sd = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - sc;
+    float dense = sqrt(min(dot(tx, tx), dot(ty, ty)));
+    skimTexels = sqrt(max(dot(tx, tx), dot(ty, ty)));
+    for (int j = 0; j < (wK > 0.0 ? 1 : 0); j++) km = textureGrad(uSkimMask, kv, kgx * uSkimFit.w, kgy * uSkimFit.w);
+    for (int j = 0; j < (wK < 1.0 ? 1 : 0); j++) {
+      vec2 ax = agx * uApronSize;
+      vec2 ay = agy * uApronSize;
+      km = mix(textureGrad(uApronMask, av, agx * uSkimFit.w, agy * uSkimFit.w), km, wK);
+      dense = mix(sqrt(min(dot(ax, ax), dot(ay, ay))), dense, wK);
+      skimTexels = mix(sqrt(max(dot(ax, ax), dot(ay, ay))), skimTexels, wK);
+    }
+    wS *= min(km.g * 2.0, 1.0) * (1.0 - km.b * uSkimPart) * smoothstep(uSkimFit.y, uSkimFit.z, dense);
+    vec3 sc = uSkimCam / uGlobe.xyx;
+    vec3 sd = vLocal / uGlobe.xyx - sc;
     float sa = dot(sd, sd);
     float sb = dot(sc, sd);
     behind = (sb < 0.0 && -sb < sa) ? smoothstep(-0.006, 0.0, (sb * sb - sa * (dot(sc, sc) - 1.0)) / sa) : 0.0;
@@ -233,14 +261,17 @@ void main() {
   vec3 V = toCam / dist;
   float nearest = dot(uCamL, V);
   bool hidden = false;
+  float rim = 1.0;
   for (int k = 0; k < ((uClose > 0.0 && !disc && (layoutOver > 0.0 || wS * km.r > 0.0)) ? 1 : 0); k++) {
-    vec3 c = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
-    vec3 d = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - c;
+    vec3 c = uCamL / uGlobe.xyx;
+    vec3 d = vLocal / uGlobe.xyx - c;
     float qa = dot(d, d);
     float qb = dot(c, d);
     float qd = qb * qb - qa * (dot(c, c) - 1.0);
     hidden = qd > 0.0 && -qb - sqrt(max(qd, 0.0)) > 0.0 && -qb - sqrt(max(qd, 0.0)) < qa;
+    rim = qd / qa;
   }
+  wS *= mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim) * (hidden ? 1.0 - smoothstep(uSkimUnder.z, uSkimUnder.w, rim) : 1.0), 1.0 - smoothstep(0.55, 0.95, km.g));
   if (!hidden && !disc) wS *= mix(1.0 - behind, 1.0, km.r);
   bool top = disc || hidden;
   if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
@@ -364,13 +395,14 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
-    vec2 kq = (kv - 0.5) * vec2(uAspect, 1.0);
-    vec3 img = inverseFilmic(textureGrad(uSkimMap, kv, kgx * uSkimFit.w, kgy * uSkimFit.w).rgb) * vig / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette);
+    vec2 kq = (clamp(kv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
+    vec3 pix = vec3(0.0);
+    for (int j = 0; j < (wK > 0.0 ? 1 : 0); j++) pix = textureGrad(uSkimMap, kv, kgx * uSkimFit.w, kgy * uSkimFit.w).rgb;
+    for (int j = 0; j < (wK < 1.0 ? 1 : 0); j++) pix = mix(textureGrad(uApronMap, av, agx * uSkimFit.w, agy * uSkimFit.w).rgb, pix, wK);
+    vec3 img = inverseFilmic(pix) * vig / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette);
     col = mix(col, img * km.r, wS);
     alpha = mix(alpha, km.r, wS);
-    vec2 tx = kgx * uSkimSize;
-    vec2 ty = kgy * uSkimSize;
-    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wS);
+    texels = mix(texels, skimTexels, wS);
   }
   col *= uGain * uWeight / vig;
   if (uDiag >= 2 && alpha * cut < 0.5) discard;
@@ -414,7 +446,7 @@ export class Rings {
       ...profile,
       ...layout,
       ...shots,
-      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimCam: { value: new THREE.Vector3() },
+      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimPart: { value: 0 }, uSkimUnder: { value: new THREE.Vector4(-0.005, -0.002, 0.009, 0.015) }, uGlobe: { value: new THREE.Vector2(1, polar) }, uSkimCam: { value: new THREE.Vector3() },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },

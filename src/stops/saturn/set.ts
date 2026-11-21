@@ -9,6 +9,7 @@ import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
 import { shotMatrix, shotUniforms } from './shot'
+import apronJson from './apron.json'
 import closeGlobe from './closeGlobe.json'
 import holdLight from './hold-light.json'
 import skimLight from './skim-light.json'
@@ -55,6 +56,10 @@ export const createSet: SetFactory = async (ctx) => {
   const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
   const skimM = shotMatrix(skimL, toTilt.clone().multiply(plan.skimQuaternion), plan.p.terrain.vfov, 16 / 9)
   const skimW = { value: 0 }
+  const skimRay = new THREE.Vector3((look.skimJoin[0] - 0.5) * 2 * (16 / 9), (0.5 - look.skimJoin[1]) * 2, -1 / Math.tan(rad(plan.p.terrain.vfov) / 2)).applyQuaternion(toTilt.clone().multiply(plan.skimQuaternion))
+  const skimJoin = skimL.clone().addScaledVector(skimRay, -skimL.y / skimRay.y)
+  const joinA = new THREE.Vector3()
+  const joinB = new THREE.Vector3()
   const lights = {
     hold: { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: poseW },
     skim: { texture: await ctx.dataTexture(base + skimLight.file, skimLight.width, skimLight.height, 4), matrix: skimM, camera: skimL, weight: skimW },
@@ -80,10 +85,14 @@ export const createSet: SetFactory = async (ctx) => {
   polarWarp.needsUpdate = true
   const polarSize = polarJson.sets[key] as [number, number]
   const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uPolarW: polarW, uPolarShape: poseW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
-  const rings = new Rings(profile, layout, { ...skimShot, ...ringMap }, look.rings, polar)
+  const apronSize = apronJson.sets[key] as [number, number]
+  const apronBox = new THREE.Vector4(-apronJson.left, -apronJson.below, 1 / (1 + apronJson.left + apronJson.right), 1 / (1 + apronJson.below))
+  const apron = { uApronMap: { value: await ctx.texture(base + apronJson.file, { srgb: true, anisotropy: 16 }) }, uApronMask: { value: await ctx.texture(base + apronJson.mask, { srgb: false, anisotropy: 16 }) }, uApron: { value: apronBox }, uApronSize: { value: new THREE.Vector2(apronSize[0], apronSize[1]) }, uApronFit: { value: new THREE.Vector4(look.rings.apronEdge[0], look.rings.apronEdge[1], look.rings.apronEdge[2], 0) } }
+  const rings = new Rings(profile, layout, { ...skimShot, ...ringMap, ...apron }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
   const ice = new Ice(look.ice, polar, { ...profile, ...layout }, skimM, skimShow)
   ;(ice.material.uniforms.uSkimL!.value as THREE.Vector3).copy(skimL)
+  ;(ice.material.uniforms.uApron!.value as THREE.Vector4).copy(apronBox)
   tilt.add(ice.mesh)
 
   const streak = new Streak(look.streak)
@@ -160,7 +169,12 @@ export const createSet: SetFactory = async (ctx) => {
       const el = THREE.MathUtils.lerp(Math.asin(THREE.MathUtils.clamp(sunL.y, -1, 1)), closeEl, close.value)
       lightL.set(sunL.x, 0, sunL.z).normalize().applyAxisAngle(UP, closeTurn * close.value).multiplyScalar(Math.cos(el))
       lightL.y = Math.sin(el)
-      camS.set(camL.x, camL.y / polar, camL.z)
+      const wide = 1 + look.skimGrow[0] * skimW.value
+      const tall = polar * (1 + look.skimGrow[1] * skimW.value)
+      globe.mesh.scale.set(wide, tall, wide)
+      shell.mesh.scale.set(wide, tall, wide)
+      camS.set(camL.x / wide, camL.y / tall, camL.z / wide)
+      ;(rings.uniforms.uGlobe!.value as THREE.Vector2).set(wide, tall)
       sunS.set(lightL.x, lightL.y / polar, lightL.z).normalize()
       const gain = 1 / shot.post.exposure
       const elapsed = state.time - plan.holdMid
@@ -169,6 +183,8 @@ export const createSet: SetFactory = async (ctx) => {
       const gu = globe.material.uniforms
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
+      gu.uEdgePx!.value = THREE.MathUtils.lerp(look.globe.edgePx, look.skimLimb[0], skimW.value)
+      gu.uEdgeLin!.value = look.skimLimb[1] * skimW.value
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(gu.uLightL!.value as THREE.Vector3).copy(lightL)
@@ -196,15 +212,20 @@ export const createSet: SetFactory = async (ctx) => {
       ru.uVignette!.value = shot.post.vignette
       ru.uAspect!.value = aspect
       ;(ru.uSkimFit!.value as THREE.Vector4).w = Math.max(ru.uGrad!.value as number, look.rings.skimFoot)
-      ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - skimW.value)
-      ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shell.day).multiply(dayTone.set(1, 1, 1).lerp(shellSkim, skimW.value))
-      su.uHazeH!.value = THREE.MathUtils.lerp(look.shell.scaleHeight, look.shellSkimDepth[0], skimW.value)
-      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shell.depth, look.shellSkimDepth[1], skimW.value)
-      ;(gu.uRimNight!.value as THREE.Vector4).fromArray(look.globe.rimNight).multiplyScalar(1 - skimW.value).setW(look.globe.rimNight[3])
+      const hazeW = 1 - smooth((away - look.shellRange[0]) / (look.shellRange[1] - look.shellRange[0]))
+      ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - hazeW)
+      ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shell.day).multiply(dayTone.set(1, 1, 1).lerp(shellSkim, hazeW))
+      su.uHazeH!.value = THREE.MathUtils.lerp(look.shell.scaleHeight, look.shellSkimDepth[0], hazeW)
+      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shell.depth, look.shellSkimDepth[1], hazeW)
+      ;(gu.uRimNight!.value as THREE.Vector4).fromArray(look.globe.rimNight).multiplyScalar(1 - hazeW).setW(look.globe.rimNight[3])
       const parted = smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0]))
       ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], parted)
       ru.uSkimNear!.value = 1 - parted
+      ;(ru.uApronFit!.value as THREE.Vector4).w = look.rings.apronShow * (1 - smooth((away - look.rings.apronAway[0]) / (look.rings.apronAway[1] - look.rings.apronAway[0])))
       ;(ru.uSkimCam!.value as THREE.Vector3).copy(skimL)
+      const swing = THREE.MathUtils.radToDeg(joinA.copy(skimJoin).sub(skimL).angleTo(joinB.copy(skimJoin).sub(camL)))
+      ru.uSkimPart!.value = smooth((swing - look.skimSwing[0]) / (look.skimSwing[1] - look.skimSwing[0]))
+      ;(ru.uSkimUnder!.value as THREE.Vector4).fromArray(look.skimUnder)
 
       const iu = ice.material.uniforms
       const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))

@@ -85,6 +85,7 @@ uniform mat4 uSkimM;
 uniform vec3 uSkimCam;
 uniform float uSkimW;
 uniform float uEdgePx;
+uniform float uEdgeLin;
 in vec3 vLocal;
 in vec3 vView;
 in vec3 vClip;
@@ -176,7 +177,7 @@ void main() {
   float along = -dot(uCam, dirS);
   float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * cover, cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -203,7 +204,7 @@ export class Globe {
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
-        uEdgePx: { value: look.edgePx },
+        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
         uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },

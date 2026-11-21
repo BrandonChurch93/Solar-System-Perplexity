@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [-14, 153, -7.3] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -141,6 +141,14 @@ export class SaturnPlan extends StopPlan {
     const x = this.riseX((time - seg.start) / (seg.end - seg.start))
     const pose = this.join(this.skimAt(time), this.after(time), x, skim.riseBow)
     return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
+  }
+
+  override skyGain(time: number): number {
+    const d = this.seg.dive!
+    const r = this.seg.rise
+    if (time < d.start || time >= r.end) return 1
+    const near = time < d.end ? smooth(this.diveX((time - d.start) / (d.end - d.start))) : time < r.start ? 1 : 1 - smooth(this.riseX((time - r.start) / (r.end - r.start)))
+    return mix(1, skim.skyNear, near)
   }
 
   patchWeight(time: number, view: ViewKind): number {

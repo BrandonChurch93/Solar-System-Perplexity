@@ -1,26 +1,28 @@
-diff --git a/src/core/engine.ts b/src/core/engine.ts
-index f189de5..ee387b7 100644
---- a/src/core/engine.ts
-+++ b/src/core/engine.ts
-@@ -191,7 +191,8 @@ export class Engine {
-           if (patch.view !== state.view) continue
-           const kind = shot.segment.kind
-           const arriving = kind === 'travel' && state.id !== shot.segment.stop
--          const weight = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
-+          const base = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
-+          const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
-           if (weight <= 0) continue
-           const aim = aims?.patches[state.id]?.[patch.view]
-           if (aim) patch.aim.copy(aim)
-diff --git a/src/core/types.ts b/src/core/types.ts
-index 631cd75..a972f2e 100644
---- a/src/core/types.ts
-+++ b/src/core/types.ts
-@@ -83,6 +83,7 @@ export interface SkyPatch {
-   add: boolean
-   ring: [number, number, number, number]
-   edge: number
-+  weight?: (time: number, view: ViewKind) => number
- }
+diff --git a/src/director/film.ts b/src/director/film.ts
+index 7a4e2aa..001343e 100644
+--- a/src/director/film.ts
++++ b/src/director/film.ts
+@@ -619,6 +619,8 @@ export class FilmDirector implements Director {
+         const low = p.p.light.skyLow
+         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
+       }
++      const gain = p.skyGain(time)
++      if (gain !== 1) light = { ...light, sky: light.sky * gain }
+     }
  
- export interface StopSet {
+     pose.quaternion.multiply(drift(time))
+diff --git a/src/director/moves.ts b/src/director/moves.ts
+index b25ab07..54ee84d 100644
+--- a/src/director/moves.ts
++++ b/src/director/moves.ts
+@@ -247,6 +247,10 @@ export class StopPlan {
+     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+   }
+ 
++  skyGain(_time: number): number {
++    return 1
++  }
++
+   coverAmount(seg: Segment, time: number): number {
+     const w = coverWindow(seg)
+     if (!w) return 0
