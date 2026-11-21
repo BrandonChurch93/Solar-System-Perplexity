@@ -47,6 +47,8 @@ float ringShadowAt(vec3 P, vec3 sunL, vec3 soft, float grad) {
 
 export const RING_LAYOUT_GLSL = /* glsl */ `
 uniform highp sampler2D uLayout;
+uniform highp sampler2D uLayoutEven;
+uniform float uGate;
 uniform mat4 uLayoutM;
 uniform vec2 uLayoutSize;
 uniform vec4 uWarpH;
@@ -79,6 +81,9 @@ float familyAt(vec3 p, float t) {
   float a = first ? r1 - b * uWarpC.y : r2 - b * uWarpC.z;
   return circleAt(q, c1, a, b);
 }
+uniform sampler2D uLayoutTone;
+uniform float uToneW;
+vec3 layoutTone = vec3(1.0);
 float layoutCut = 1.0;
 float layoutOver = 0.0;
 float layoutDist = 4000.0;
@@ -97,6 +102,8 @@ vec3 ringLayout(vec3 p, float r) {
       ivec2 n = min(i + 1, ivec2(uLayoutSize) - 1);
       vec2 w = f - vec2(i);
       t = mix(mix(texelFetch(uLayout, i, 0), texelFetch(uLayout, ivec2(n.x, i.y), 0), w.x), mix(texelFetch(uLayout, ivec2(i.x, n.y), 0), texelFetch(uLayout, n, 0), w.x), w.y);
+      for (int g = 0; g < (uGate < 1.0 ? 1 : 0); g++) t.g = mix(mix(mix(texelFetch(uLayoutEven, i, 0).r, texelFetch(uLayoutEven, ivec2(n.x, i.y), 0).r, w.x), mix(texelFetch(uLayoutEven, ivec2(i.x, n.y), 0).r, texelFetch(uLayoutEven, n, 0).r, w.x), w.y), t.g, uGate);
+      for (int g = 0; g < (uToneW > 0.0 ? 1 : 0); g++) layoutTone = mix(vec3(1.0), mix(mix(texelFetch(uLayoutTone, i, 0).rgb, texelFetch(uLayoutTone, ivec2(n.x, i.y), 0).rgb, w.x), mix(texelFetch(uLayoutTone, ivec2(i.x, n.y), 0).rgb, texelFetch(uLayoutTone, n, 0).rgb, w.x), w.y), uToneW);
       layoutCut = mix(1.0, smoothstep(-uJunction, uJunction, t.a), inside);
       layoutOver = inside * smoothstep(-uJunction, uJunction, t.a);
       layoutDist = t.a;
@@ -123,13 +130,17 @@ export function profileUniforms(texture: THREE.DataTexture, key: 'full' | 'web',
   }
 }
 
-export function layoutUniforms(texture: THREE.DataTexture, matrix: THREE.Matrix4, width: number, height: number, along: THREE.Vector3, across: THREE.Vector3): Record<string, THREE.IUniform> {
+export function layoutUniforms(texture: THREE.DataTexture, even: THREE.DataTexture, tone: THREE.DataTexture, toneW: THREE.IUniform<number>, gate: THREE.IUniform<number>, matrix: THREE.Matrix4, width: number, height: number, along: THREE.Vector3, across: THREE.Vector3): Record<string, THREE.IUniform> {
   return {
     uModelC: { value: new THREE.Vector4(model.c0[0]!, model.c0[1]!, model.c1[0]!, model.c1[1]!) },
     uModelR: { value: new THREE.Vector2(model.R[0]!, model.R[1]!) },
     uModelB: { value: new THREE.Vector4(along.x, along.z, across.x, across.z) },
     uSettle: { value: new THREE.Vector2(model.settle[0]!, model.settle[1]!) },
     uLayout: { value: texture },
+    uLayoutEven: { value: even },
+    uLayoutTone: { value: tone },
+    uToneW: toneW,
+    uGate: gate,
     uLayoutM: { value: matrix },
     uLayoutSize: { value: new THREE.Vector2(width, height) },
     uWarpH: { value: new THREE.Vector4().fromArray(rings.warpHero) },

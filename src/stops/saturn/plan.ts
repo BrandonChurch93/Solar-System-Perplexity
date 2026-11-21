@@ -10,7 +10,7 @@ export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [-0.2, 1, 0.1], push: -0.03 },
   spot: { x: 0.256, y: 0.856, on: 'rings' },
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
-  terrain: { vfov: close.vfov, forward: 0.3, rise: -0.018, side: -0.036, yawDeg: -2.4, pitchDeg: 0, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6 },
+  terrain: { vfov: close.vfov, forward: 0.5, rise: -0.12, side: -0.04, yawDeg: -3, pitchDeg: 1.5, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0.27 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
   travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [34.43338, 66.84025, 41.06902] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0, riseEnd: 0.96 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -87,6 +87,14 @@ export class SaturnPlan extends StopPlan {
     return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
   }
 
+  private diveX(u: number): number {
+    return Math.pow(Math.min(Math.max(u, 0), 1), skim.divePower)
+  }
+
+  private riseX(u: number): number {
+    return 1 - Math.pow(1 - Math.min(Math.max(u / skim.riseEnd, 0), 1), skim.risePower)
+  }
+
   override terrain(tRel: number): Pose {
     return this.local(this.skimAt(this.seg.terrain.start + tRel))
   }
@@ -97,26 +105,26 @@ export class SaturnPlan extends StopPlan {
 
   override dive(time: number): OrbitShot {
     const seg = this.seg.dive!
-    const u = (time - seg.start) / (seg.end - seg.start)
-    const pose = this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), u, skim.diveBow)
-    return u < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
+    const x = this.diveX((time - seg.start) / (seg.end - seg.start))
+    const pose = this.join(this.hold(time - this.seg.hold.start), this.skimAt(time), x, skim.diveBow)
+    return x < skim.diveSwitch ? { pose, view: 'orbit' } : { pose: this.local(pose), view: 'terrain' }
   }
 
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
-    const u = (time - seg.start) / (seg.end - seg.start)
-    const pose = this.join(this.skimAt(time), this.after(time), Math.min(u / skim.riseEnd, 1), skim.riseBow)
-    return u < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
+    const x = this.riseX((time - seg.start) / (seg.end - seg.start))
+    const pose = this.join(this.skimAt(time), this.after(time), x, skim.riseBow)
+    return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
   }
 
   patchWeight(time: number, view: ViewKind): number {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time >= d.start && time < d.end) {
-      const u = (time - d.start) / (d.end - d.start)
-      return view === 'orbit' ? 1 - smooth(ramp(0, skim.diveSwitch - 0.05, u)) : smooth(ramp(skim.diveSwitch + 0.05, 1, u))
+      const x = this.diveX((time - d.start) / (d.end - d.start))
+      return view === 'orbit' ? 1 - smooth(ramp(0, skim.diveSwitch - 0.05, x)) : smooth(ramp(skim.diveSwitch + 0.05, 1, x))
     }
-    if (time >= r.start && time < r.end && view === 'terrain') return 1 - smooth(ramp(0, skim.riseSwitch - 0.05, (time - r.start) / (r.end - r.start)))
+    if (time >= r.start && time < r.end && view === 'terrain') return 1 - smooth(ramp(0, skim.riseSwitch - 0.05, this.riseX((time - r.start) / (r.end - r.start))))
     return 1
   }
 }

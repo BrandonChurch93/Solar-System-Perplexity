@@ -22,19 +22,42 @@ export interface GroundLook {
   drift: [number, number]
   fold: number
   shimmer: [number, number, number, number]
+  lock: [number, number]
 }
 
 const VERT = /* glsl */ `
+uniform vec3 uEye;
+uniform vec4 uSea;
+uniform vec2 uLock;
 in vec2 aImage;
 out vec2 vImage;
 out vec2 vUv;
 out vec3 vView;
 out vec3 vClip;
 out vec3 vLocal;
+vec3 place(vec3 p) {
+  float reach = length(p);
+  vec3 d = p / reach;
+  float c0 = length(uSea.xyz);
+  vec3 n0 = uSea.xyz / c0;
+  float up0 = acos(clamp(dot(d, n0), -1.0, 1.0));
+  float lift = up0 - asin(uSea.w / c0);
+  vec3 to = uSea.xyz - uEye;
+  float c1 = length(to);
+  vec3 n1 = to / c1;
+  vec3 v = d * max(reach, sqrt(c0 * c0 - uSea.w * uSea.w)) - uEye;
+  float far = length(v);
+  vec3 w = v / far;
+  float along = clamp(dot(w, n1), -1.0, 1.0);
+  float turn = asin(min(uSea.w / c1, 1.0)) - asin(uSea.w / c0) + up0 - acos(along);
+  vec3 side = normalize(w * along - n1);
+  vec3 q = uEye + (cos(turn) * w + sin(turn) * side) * far;
+  return mix(p, q, smoothstep(uLock.x, uLock.y, lift));
+}
 void main() {
   vImage = aImage;
   vUv = uv;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vec4 mv = modelViewMatrix * vec4(place(position), 1.0);
   vView = mv.xyz;
   vLocal = position;
   gl_Position = projectionMatrix * mv;
@@ -202,7 +225,8 @@ export class Ground {
           uColor: { value: color }, uMasks: { value: masks }, uSize: { value: new THREE.Vector2(size.width, size.height) },
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, ...extra,
+          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform,
+          uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
@@ -253,10 +277,11 @@ export class Ground {
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, view: RenderView): void {
+  update(dt: number, gain: number, vignette: number, view: RenderView, eye: THREE.Vector3): void {
     const k = this.look
     for (const l of this.layers) {
       const u = l.material.uniforms
+      ;(u.uEye!.value as THREE.Vector3).copy(eye)
       ;(u.uDrift!.value as THREE.Vector2).set(k.drift[0] * dt, k.drift[1] * dt)
       if (u.uShimmer) (u.uShimmer.value as THREE.Vector4).z = k.shimmer[2] * dt
       u.uGain!.value = gain
