@@ -153,7 +153,32 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
   - 2772: fastest pan. far3 leaving top left, far1 right, the dark top of the hero just entering at the bottom edge. Far rocks do not streak (smear 0, like the stars); the dust does.
   - 2796: Jupiter r 62 px in the middle, far2 lower left with a lit cratered face, the hero leaving through the top left corner.
 
-## Still weak
+- 08:22 review sheet with the final layout: `out/work/belt/r2/sheet.jpg`. Seconds per frame in one session: 34.8 (2745, asset load), 17.1, 18.2, 18.2, 15.6, 14.9, 13.5, 10.8, 10.8, 10.8 (2772), 13.2, 15.9, 16.8, 15.9, 16.4, 18.0 (2790), 15.3, 14.0, 13.2, 13.2, 12.2, 11.6, 10.5, 10.3, 10.4 (2817). Frames with only far rocks cost what empty sky costs (10.8); with the hero and the near rock in frame 13 to 18 s, so the belt adds 3 to 7 s per frame at review there.
+- 08:27 byte proof at the draft tier (`out/work/belt/p5/proof/`), three states: plain main 558e3a5 in a separate worktree (`/tmp/mainwt`, own build), the branch as committed (dust patch reversed), the branch with the dust patch applied. All three states give the same sha256 per frame:
+  - 2325: fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2580: 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2212 (middle of earth.travel, dust on, no belt): 42e37b819356cf0c7b4a4e054a1eaaf1ec8bf62b44d50a85d6b3f0e3dc0482b5
+- Dust order checked at final 2782 with and without the patch (`out/work/belt/p5/dust-order-2782.png`, left without, right with): 512 pixels differ by more than 2 of 255; motes behind the near rock are gone from its face, motes in front of it stay. 81 of those pixels were over far1: the first margin of the sphere test (2.5 radii) reached far1, and the single mask then hid motes that are in front of far1. Margin cut to 1.25 radii, patch file regenerated, finals and sheet rendered again (`g*.png`, `r3`).
+
+- 08:31 finals again with the 1.25 margin, patch applied (`out/work/belt/p5/g*.png`), looked at whole and at native size:
+  - 2772: e000f94b937d431b0294a9d69579af0c1e8a010e84d26dfd79833141da4cf945 (same bytes as with the first margin)
+  - 2782: a09f04992e2b2bfa203f55923da465793421c4b53f936078fec5a03cfd51ede1 (39 pixels over far1 differ by more than 2 from the first margin: its motes are back)
+  - 2796: 88c4582a3831a96deea45b3ce42606ab95cd7b1582d1d1076a0dbd208dc987c9 (same bytes as with the first margin)
+  - 2782 on the branch as committed, without the patch: 54ac7b032848cce37004ee07096520c02ee24874cfc899c1814659d700032003. Against the patched frame 473 pixels differ by more than 2: all on the near rock except 42 on the hero (one mote behind it).
+
+## Still weak (after task 2)
+- No rock before 2754 or after 2802. The pan is under a degree per frame there, so a rock could only cross with a speed of its own (`approach` exists in the model but is 0 for all rocks).
+- The rocks' lit faces are a light grey, lighter than Phobos in the approved Mars hero. `light.gain` 0.36 was kept from task 1.
+- The far rocks carry no pan blur (smear 0, the rule of the stars), so in the fastest pan (2760 to 2775) they are crisp while the dust streaks. The hero carries a tenth of its motion as blur, the near rock three tenths.
+- The hero enters at the bottom edge with its dark side first (2770 to 2773), where it reads only by the fill.
+- The near rock is soft from focus (circle of confusion 8 px at 2782, up to 12 px at 2790) plus a short smear; its craters read at native size, its fine regolith does not.
+- Dust order needs `dust.patch` in two shared files. Without it every mote draws over the near rock. With it one mask serves all rocks (see ENGINE-REQUESTS.md, Limits).
+- The belt adds 3 to 7 s per frame at review where the hero and the near rock are in frame.
+- About 92 MB of half float render targets at 1080p while the segment is prepared, on top of 36.7 MB of textures.
+- The web set was not rendered again in task 2 (assets unchanged).
+- The belt test is outside `tests/`; `npm run looks -- --push --folder belt` does not accept `belt`.
+
+## Still weak (task 1, kept for the record)
 - Rocks are in frame only from 2767 to 2801 (hero 2769 to 2798, near 2770 to 2787, far1 2767 to 2801, far2 2774 to 2791). No rock while Mars is in frame, none over the grown Jupiter.
 - The near rock is a soft pale shape with a dark side that barely separates from the sky; it reads as a near rock in the whole frame, less so in a tight crop.
 - far2 is a dark shape with a thin lit edge at any tilt (it sits on the Sun side of the frame).

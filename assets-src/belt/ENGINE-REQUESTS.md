@@ -14,14 +14,14 @@ The dust is drawn after the belt, additive, without a depth test, so every mote 
 2. `src/space/dust.ts`:
    - `Dust.render` takes an optional last argument `cover: DustCover | null = null`.
    - A second material `masked` with the same shader source and `defines: { OCCLUDE: 1 }`, sharing the uniform objects of the first, plus `uMask` and `uRock[5]`. The mesh uses it only when `cover` is not null.
-   - Under `#ifdef OCCLUDE` the vertex shader sets `vBehind = 1` for a mote whose distance along its ray is past the front of a rock sphere and whose ray passes within 2.5 radii of the centre. The fragment shader multiplies the colour of such a mote by `1 - alpha` of the belt layer at the pixel (read inside a one pass `for` loop with `textureLod`, so fragments of motes in front pay nothing in the software rasterizer).
+   - Under `#ifdef OCCLUDE` the vertex shader sets `vBehind = 1` for a mote whose distance along its ray is past the front of a rock sphere and whose ray passes within 1.25 radii of the centre (the margin covers the focus blur and the smear of the near rock). The fragment shader multiplies the colour of such a mote by `1 - alpha` of the belt layer at the pixel (read inside a one pass `for` loop with `textureLod`, so fragments of motes in front pay nothing in the software rasterizer).
    - So a mote behind a rock is hidden where the rock covers it and fades across the rock's soft edge; a mote in front of every rock draws as before.
 
 ### Why other frames keep their bytes
 With `cover === null` the mesh uses the first material, whose shader source without the define is the text main has now, so the program is the same and so are the pixels. Measured on this VM at the draft tier, plain main against the branch with the patch: see `NOTES.md` (frames 2325 and 2580, and 2212, the middle of earth.travel, as a travel frame with dust and without the belt).
 
 ### Limits
-- One mask for all rocks: a mote between two rocks that overlap on screen is hidden by the alpha of both. The far rocks are at 11 to 15 units, past all dust, so this can only happen between the near rock and the hero, which do not overlap.
+- One mask for all rocks: a mote that is behind the near rock by the sphere test is hidden by the alpha of whatever rock is at its pixel. With the first margin of 2.5 radii this hid 81 pixels of motes over far1 in the final 2782 (far1 is at 11 units, past all dust, so those motes are in front of it). The margin is now 1.25 radii, so it can only happen in the few frames where far1 passes right beside the near rock (2784 to 2787).
 - A rock is tested as a sphere of its largest radius; the edge is exact because the mask is the drawn alpha.
 - The streak of a mote is tested as a whole at the middle of the shutter.
 
