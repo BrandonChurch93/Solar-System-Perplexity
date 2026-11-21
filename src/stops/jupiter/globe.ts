@@ -49,6 +49,7 @@ export interface GlobeOptions {
   nightAlbedo: [number, number, number, number]
   shadow: [number, number, number]
   shadowFade: [number, number]
+  nightRim: { glow: [number, number, number]; power: number; air: number; from: number; to: number }
   haze: HazeParams
   spot: SpotShape
   wisp: WispParams
@@ -120,6 +121,9 @@ uniform vec2 uShadeKnee;
 uniform vec4 uMoon;
 uniform vec3 uShadow;
 uniform vec2 uShadowFade;
+uniform vec4 uShadowAt;
+uniform vec4 uNightRim;
+uniform vec3 uNightAir;
 uniform vec3 uShadowSun;
 uniform vec3 uSunMap;
 uniform float uFlowT;
@@ -193,7 +197,8 @@ float moonShadow(vec3 p, float ndl) {
   vec3 m = uMoon.xyz - p;
   float t = dot(m, uShadowSun);
   if (t <= 0.0 || uMoon.w <= 0.0) return 0.0;
-  float off = length(m - uShadowSun * t);
+  float far = dot(p - uShadowAt.xyz, uShadowSun) * uShadowAt.w;
+  float off = length(vec2(length(m - uShadowSun * t), far));
   return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z * smoothstep(uShadowFade.x, uShadowFade.y, ndl);
 }
 void main() {
@@ -204,9 +209,10 @@ void main() {
   float over = rt - 1.0 + uEdge.y;
   float inside = 1.0 - smoothstep(-uEdge.x, uEdge.x, over / max(fwidth(rt), 1e-7));
   float beyond = max(over, 0.0);
-  float air = (uAir.x * exp(-beyond / uAir.y) + uAir.z * exp(-beyond / uAir.w)) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
   if (uDiag >= 2 && inside < 0.5) discard;
   vec3 n = normalize(rt < 1.0 ? uCam + dir * (along - sqrt(max(1.0 - rt * rt, 0.0))) : nearest);
+  float dusk = 1.0 - smoothstep(uNightAir.x, uNightAir.y, dot(n, uSunW));
+  float air = (uAir.x * exp(-beyond / uAir.y) + uAir.z * exp(-beyond / mix(uAir.w, uNightAir.z, dusk))) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
   vec3 d = spinY(uToBody * n, uSpin);
   vec3 fl;
   vec3 df = flowed(d, fl);
@@ -265,6 +271,7 @@ ${PATCH_LEVELS}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  col += uNightRim.rgb * dusk * pow(1.0 - mu, uNightRim.w);
   float cover = inside + (1.0 - inside) * air;
   col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -329,7 +336,7 @@ export class Globe {
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
         uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
-        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
+        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },
         uWispShape: { value: new THREE.Vector4(w.repeats, w.latScale, w.amount, 1) },

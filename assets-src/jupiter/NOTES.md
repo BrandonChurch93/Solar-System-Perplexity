@@ -274,18 +274,25 @@ What is built (all in the stop folder):
 - Plan: `coverSea` (deck sphere, `edge [0.955, 0.972]`): the engine cover on the terrain side stays 9 deg under the true horizon, inside the morphed limb at both cuts and in the frame corners; the band up to the limb is the pall's (same colour and pattern, alpha 1 at the cut). The sky above the limb is open on both sides; its brightness is the engine's `(1 - amount)^2` (0 at the cut, back over 8 frames on each side).
 - Strips: `strip_cut0.jpg` (before), `strip_cut1_dive.jpg`, `strip_cut1_rise.jpg` (pall in the deck shader, limb not yet morphed), `strip_cut2.jpg` (morphed limb).
 
-### Items 4 and 5 in the tree (not yet rendered)
+### Cover handover, second pass (10:45 UTC)
 
-- `io.ts` rewritten: analytic sphere on a mesh 1.12 times the radius, no depth test, render order 6, alpha from a `fwidth` feather (`look.io.feather` 1 px), hidden behind the planet analytically (`uPlanet`), map read with a gradient clamped at the limb (`look.io.blur` 0.2) so the lowest mip cannot darken the edge.
-- Shadow: `moonShadow(n, ndl)` fades with `smoothstep(0.02, 0.2, ndl)` (`look.shadowFade`), so it closes before the terminator instead of running into the night side as a column. At the hold the shadow sits at ndl 0.28: unchanged there.
-- Limb: `look.edge.air` from [0.15, 0.004, 0, 0.02] to [0.45, 0.0025, 0.4, 0.007]: alpha 0.85 at the edge, falling over about 0.007 radii (3 px at the hold), in the limb's own colour. The approved hero has a hard night limb (`out/work/view/nightlimb_ref_vs_draft.png`), so this is kept short.
+`strip_cut2.jpg`, `strip_cut2b.jpg`: limb continuous over both cuts (3023 to 3024 and 3269 to 3270), morph to the straight horizon done by 3030, haze pattern carried to about 3030, deck through by 3038. Two faults left and their fixes:
+- The orbit side showed a thin bright yellow line on the limb (the additive haze shells outside the cover shell) that the terrain side did not have. Shell gain now times `(1 - pall amount)^2` (`clearing` in `set.ts`), so the rim comes back with the haze clearing (15 frames after the rise cut).
+- Stars: the engine brings the sky back over 8 frames. `light.skyLow [0.045, 1.0, 0]` (a plan value the engine already reads, orbit view outside the hold): sky exposure follows the camera's altitude, 0 at the cut height (0.045 radii) and full at 1 radius, that is frame 3281 in the rise and from 3016 down in the dive. Frame 2997 is at 2.56 radii: unchanged.
+- Spans: `pall.clear 0.8`, `pall.gather 0.6`, `deck.haze.clear/gather 0.7`.
+
+### Items 4 to 8, in the tree (10:50 UTC), checked on final frames 2997 and 3296 rendered before these edits
+
+- Final tier 2997 costs 96 s, 3296 89 s.
+- Item 4. At 3296 the night side is [3.5, 7.4, 10.9] and the sky right outside it is [26, 32, 42] (Milky Way): a darker disc cut out of a brighter sky over 8 px. No stair steps left on the lit limb at 2997 (crop T) with `edge.air [0.45, 0.0025, 0.4, 0.007]`. Added `look.nightRim`: on the night side (`dusk`, ndl from -0.05 to 0.2 at the limb point) the outer air falloff widens from 0.007 to 0.014 radii and a faint blue grey glow `[0.0035, 0.005, 0.0075] * (1 - mu)^3` lies on the limb, so stars dim through a falloff instead of stopping on an arc.
+- Item 5. Io is now an analytic sphere: smooth feathered edge, no dark fringe (crop `f2997_io.png`). The streaks in its map at 3296 are the engine's stepped time samples (also on Jupiter's clouds there). Shadow: `out/work/jupiter/tools/shadow.ts` prints Io, the shadow axis and the sun height at the shadow centre per frame. Hold: ndl 0.51 at 2820, 0.39 at 2895, 0.23 at 2969; dive: 0.14 at 2997, axis off the planet from 3013; rise (old): axis off the planet (1.06 radii), so the "column" was the penumbra grazing the terminator. Fixes: (a) the stretch along the surface is capped: `off = length(vec2(true off axis distance, stretch * dot(p - centre, sun)))`, `stretch = 0.35 * (1 - smooth((ndl_centre - 0.12) / 0.24))`, zero at the judged hold frame (ndl 0.39), so the shadow closes into an ellipse of at most about 3.3 to 1; `uShadowAt` is computed in `set.ts` from the Sun direction and Io's position; (b) `shadowFade [0, 0.1]`; (c) Io's place in the rise is its own closed form: `io.riseDeg` at the rise's middle plus `moonDegPerSecond * (t - riseMid)` (the terrain view hides the change). First try 0.4 (2 deg at 3296): Io sat on the Great Red Spot and the shadow, seen from straight above, was a 3 to 1 column (ndl 0.33). Any place with a compact shadow (ndl over 0.5) puts Io or the shadow on the storm. Now `riseDeg 20.4` (22 deg at 3296): Io lit over the dusk zone at (1259, 358), away from the storm and off the disc centre; the shadow axis passes 1.05 radii from the centre, so no shadow falls on the planet in the rise.
+- Item 6. The patch is minified (1.56 texels per pixel at 2997, 1.47 at the hold) and was read without mips: aliasing, stars as hard single pixels. Sky patches now load with mips (the engine reads them with `textureGrad`).
+- Item 7. `terrain.side -0.5` (edge.ts: no border in frame at -0.55), storm `degPerSecond 9`, wisps 18 with a collar (`deck.collar [0.12, 0.45, 2.0]`: the turn reaches to 2 storm radii, hero pixels 0.12, wisps 0.45), wisp amount 0.2.
+- Item 8. Final 3150 against approved, means over thirds: middle third -0.9 -1.5 -1.6, lower third -0.8 -1.1 -1.2 (darker by about one level; not less warm by the numbers). `deck.tone [1.03, 1.05, 1.055]` on the dark range (weight 1 below linear 0.08, 0 above 0.4).
 
 ### Still to do
 
-- Item 6: `mips: true` for the sky patches (patch is minified 1.56 texels per pixel at 2997).
-- Item 7: more sideways travel, flow round the storm. Item 8: terrain lower two thirds one to two levels up and warmer.
-- Final tier native crops T (456,866,456,214) and V (1368,866,456,214) of 2997 and of 3296 for the stair steps.
-- Commit the four sky binaries once; mirrorcheck on final frames; merge main; measure; gates; READY.
+- Look at strip r3, final frames, mirrorcheck on final frames, commit the four sky binaries once; merge main; measure; gates; READY.
 
 ## Next
 

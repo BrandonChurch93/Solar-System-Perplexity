@@ -13,7 +13,9 @@ export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 
 
 export const shadeKnee: [number, number] = [2.4, 3.4]
 export const shadow: [number, number, number] = [0.798, 1.098, 0.985]
-export const shadowFade: [number, number] = [0.02, 0.2]
+export const shadowFade: [number, number] = [0.0, 0.1]
+export const shadowCap = { stretch: 0.35, from: 0.12, to: 0.36 }
+export const nightRim = { glow: [0.0035, 0.005, 0.0075] as [number, number, number], power: 3, air: 0.014, from: -0.05, to: 0.2 }
 export const moonSun: [number, number, number] = [-0.713344, 0.254075, 0.653136]
 
 export const haze = hazeJson.ground as HazeParams
@@ -53,6 +55,7 @@ export const io = {
   spinDegPerSecond: 0.6,
   feather: 1,
   blur: 0.2,
+  riseDeg: 20.4,
 }
 
 export const descent = { high: 0.7, low: 0.05 }
@@ -64,13 +67,15 @@ export const deck: DeckLook = {
   edgePixels: 1.2,
   settle: 6,
   vortices: [
-    { px: [1132, 552], axes: [1.12, 2.18], degPerSecond: 7, wispDegPerSecond: 12 },
+    { px: [1132, 552], axes: [1.12, 2.18], degPerSecond: 9, wispDegPerSecond: 18 },
     { px: [-618, 924], axes: [0.36, 0.36], degPerSecond: -9, wispDegPerSecond: -14 },
     { px: [-558, 1524], axes: [0.3, 0.3], degPerSecond: 10, wispDegPerSecond: 16 },
     { px: [912, 1284], axes: [0.3, 0.3], degPerSecond: -8, wispDegPerSecond: -13 },
     { px: [1512, 1914], axes: [0.28, 0.28], degPerSecond: 9, wispDegPerSecond: 14 },
   ],
-  wisp: { tile: 3.2, amount: 0.16, shadow: 0.12, shadowLength: 0.02, fine: 0.5, drift: [0.05, -0.02], fade: [7, 14], sun: [-0.6, 0.8] },
+  collar: [0.12, 0.45, 2.0],
+  tone: [1.03, 1.05, 1.055, 0.08, 0.4],
+  wisp: { tile: 3.2, amount: 0.2, shadow: 0.12, shadowLength: 0.02, fine: 0.5, drift: [0.05, -0.02], fade: [7, 14], sun: [-0.6, 0.8] },
   flashes: [
     { px: [1662, 1449], sizePx: 70, period: 3.1, phase: 0.43, gain: 0.5 },
     { px: [1812, 1149], sizePx: 55, period: 4.3, phase: 0.71, gain: 0.35 },
@@ -81,8 +86,8 @@ export const deck: DeckLook = {
     { px: [2400, 1250], sizePx: 60, period: 4.7, phase: 0.62, gain: 0.3 },
     { px: [1850, 1900], sizePx: 110, period: 3.9, phase: 0.2, gain: 0.4 },
   ],
-  haze: { color: [0.2, 0.17, 0.135], density: 8, tile: 9, layer: 0.45, height: 1.2, clear: 0.8, gather: 0.8, power: 2.5 },
-  pall: { clear: 0.6, gather: 0.5, orbitClear: 0.5, orbitGather: 0.35, shell: [1.0, 1.004], morph: 0.234 },
+  haze: { color: [0.2, 0.17, 0.135], density: 8, tile: 9, layer: 0.45, height: 1.2, clear: 0.7, gather: 0.7, power: 2.5 },
+  pall: { clear: 0.8, gather: 0.6, orbitClear: 0.5, orbitGather: 0.35, shell: [1.0, 1.004], morph: 0.234 },
   flashColor: [0.45, 0.7, 1.0],
   flashBody: [0.25, 6],
   beyond: [0.6, 0.004, 300],

@@ -17,6 +17,8 @@ export interface DeckLook {
   skyRimDeg: number
   edgePixels: number
   vortices: Vortex[]
+  collar: [number, number, number]
+  tone: [number, number, number, number, number]
   settle: number
   wisp: { tile: number; amount: number; shadow: number; shadowLength: number; fine: number; drift: [number, number]; fade: [number, number]; sun: [number, number] }
   haze: { color: [number, number, number]; density: number; tile: number; layer: number; height: number; clear: number; gather: number; power: number }
@@ -71,6 +73,9 @@ uniform vec3 uEy;
 uniform vec3 uEn;
 uniform vec4 uVortex[${VORTICES}];
 uniform vec2 uTurn[${VORTICES}];
+uniform vec3 uCollar;
+uniform vec3 uTone;
+uniform vec2 uToneRange;
 uniform vec4 uWispShape;
 uniform vec4 uWispMove;
 uniform vec4 uWispSun;
@@ -104,7 +109,8 @@ vec2 swirl(vec2 g, int k) {
   for (int i = 0; i < ${VORTICES}; i++) {
     vec2 q = (g - uVortex[i].xy) / uVortex[i].zw;
     float r2 = dot(q, q);
-    float a = -uTurn[i][k] / (1.0 + r2 * r2);
+    float wide = r2 / (uCollar.z * uCollar.z);
+    float a = -uTurn[i][k] * (1.0 / (1.0 + r2 * r2) + (i == 0 ? uCollar[k] : 0.0) / (1.0 + wide * wide));
     float c = cos(a);
     float s = sin(a);
     d += (vec2(c * q.x - s * q.y, s * q.x + c * q.y) - q) * uVortex[i].zw;
@@ -148,6 +154,7 @@ void main() {
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = inverseFilmic(texel);
   float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col *= mix(uTone, vec3(1.0), smoothstep(uToneRange.x, uToneRange.y, lum));
   col = mix(col, lum * uBeyond.x + vec3(uBeyond.y), off);
   for (int k = 0; k < (nearby * alpha > 0.0 ? 1 : 0); k++) {
     vec2 wuv = (wispG - uWispMove.xy) * uWispShape.x;
@@ -309,7 +316,8 @@ export class Deck {
         uWideSize: { value: new THREE.Vector2().fromArray(sizes.wide) }, uCoreSize: { value: new THREE.Vector2().fromArray(sizes.core) },
         uFocal: { value: f }, uCentre: { value: centre }, uRadius: { value: meta.radius }, uEdge: { value: look.edgePixels },
         uS: { value: s }, uEx: { value: ex }, uEy: { value: ey }, uEn: { value: en },
-        uVortex: { value: vortex },
+        uVortex: { value: vortex }, uCollar: { value: new THREE.Vector3().fromArray(look.collar) },
+        uTone: { value: new THREE.Vector3(look.tone[0], look.tone[1], look.tone[2]) }, uToneRange: { value: new THREE.Vector2(look.tone[3], look.tone[4]) },
         uWispShape: { value: new THREE.Vector4(1 / w.tile, w.amount, w.shadow, w.shadowLength) },
         uWispMove: { value: new THREE.Vector4(0, 0, w.fade[0], w.fade[1]) },
         uWispSun: { value: new THREE.Vector4(w.sun[0] / sunLen, w.sun[1] / sunLen, w.fine, 0) },
