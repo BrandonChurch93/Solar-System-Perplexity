@@ -132,7 +132,7 @@ uniform vec3 uFarEast;
 uniform vec4 uFarEdge;
 uniform vec3 uGold;
 uniform vec3 uNightLand;
-uniform vec2 uLandAt;
+uniform vec4 uLandAt;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vView;
@@ -229,7 +229,8 @@ ${PATCH_LEVELS}
   }
   float deep = uAway * ramp(uNightFlat.xy, ndl) * past;
   vec3 lin = inverseFilmic(albedo);
-  vec3 nightLin = inverseFilmic(mix(uNightTone, uNightLand, smoothstep(uLandAt.x, uLandAt.y, lin.r / max(lin.b, 0.002))));
+  float relief = clamp(1.0 + uLandAt.w * (dot(albedo, vec3(1.0 / 3.0)) / uLandAt.z - 1.0), 0.55, 1.7);
+  vec3 nightLin = inverseFilmic(mix(uNightTone, uNightLand * relief, smoothstep(uLandAt.x, uLandAt.y, lin.r / max(lin.b, 0.002))));
   lin = mix(lin, nightLin, deep);
   float dim = 1.0 - uNightFlat.w * uAway * ramp(uNightFlat.xy, ndl) * fade;
   float live = uCloudOn * (1.0 - baked);
@@ -348,7 +349,7 @@ export class Globe {
         uFarLight: { value: new THREE.Vector4(l.away.far.light[0], l.away.far.light[1], Math.cos(rad(l.away.far.cap[4]!)), Math.cos(rad(l.away.far.cap[3]!))) },
         uFarCap: { value: new THREE.Vector4(...direction(l.away.far.cap[0]!, l.away.far.cap[1]!).toArray(), l.away.far.cap[2]) },
         uFarRim: { value: new THREE.Vector2(l.away.far.rim[0], l.away.far.rim[1]) }, uFarZone: { value: new THREE.Vector2(l.away.far.zone[0], l.away.far.zone[1]) }, uFarEast: { value: direction(l.away.far.east[0]! + 90, 0) }, uFarEdge: { value: new THREE.Vector4(l.away.far.east[1], l.away.far.east[2], l.away.far.east[3], l.away.far.east[4]) }, uGold: { value: new THREE.Vector3().fromArray(l.away.far.gold) },
-        uNightLand: { value: new THREE.Vector3().fromArray(l.away.land) }, uLandAt: { value: new THREE.Vector2(l.away.landAt[0], l.away.landAt[1]) },
+        uNightLand: { value: new THREE.Vector3().fromArray(l.away.land) }, uLandAt: { value: new THREE.Vector4().fromArray(l.away.landAt) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
