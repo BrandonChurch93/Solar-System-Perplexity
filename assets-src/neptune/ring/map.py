@@ -18,11 +18,54 @@ FLOOR = 0.0008
 STRAND = 2.2
 BROAD = 36
 TINT = [0.5, 0.85, 1.0]
+STEER = (640, 1260)
+SLOPES = [-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2]
+LINE = 0.5
 
 
 def step(v, lo, hi):
     t = np.clip((v - lo) / (hi - lo), 0, 1)
     return t * t * (3 - 2 * t)
+
+
+def slide(x, k, dr):
+    y = np.roll(x, -k, axis=1)
+    rows = np.clip(np.arange(x.shape[0]) + dr, 0, x.shape[0] - 1)
+    i0 = np.floor(rows).astype(int)
+    i1 = np.minimum(i0 + 1, x.shape[0] - 1)
+    f = (rows - i0).reshape((-1,) + (1,) * (x.ndim - 1))
+    return y[i0] * (1 - f) + y[i1] * f
+
+
+def slanted(D, valid, slope):
+    med = np.median(np.stack([slide(D, k, slope * k) for k in range(-3, 4)]), axis=0)
+    num = np.zeros_like(D)
+    den = np.zeros_like(valid)
+    mv = med * valid[..., None]
+    for k in range(-3 * AZ, 3 * AZ + 1):
+        g = np.exp(-0.5 * (k / AZ) ** 2)
+        num += g * slide(mv, k, slope * k)
+        den += g * slide(valid, k, slope * k)
+    along = num / np.maximum(den, 1e-3)[..., None]
+    return med * (1 - LINE) + along * LINE
+
+
+def steered(D, valid):
+    takes = [slanted(D, valid, s) for s in SLOPES]
+    power = []
+    for t in takes:
+        m = t.mean(-1)
+        power.append(ndi.gaussian_filter((m - ndi.gaussian_filter1d(m, 4, axis=0)) ** 2, (5, 20), mode=('nearest', 'wrap')))
+    power = np.stack(power)
+    weight = (power / np.maximum(power.max(0), 1e-12)) ** 6 + 1e-9
+    weight = weight / weight.sum(0)
+    best = np.array(SLOPES)[power.argmax(0)]
+    top = power.max(0)
+    strong = top > np.percentile(top[:, int(STEER[0]):int(STEER[1])], 90)
+    strong[:, :int(STEER[0])] = False
+    strong[:, int(STEER[1]):] = False
+    print('steer: slope p10 p50 p90 where the strands are strong', np.percentile(best[strong], [10, 50, 90]))
+    return sum(w[..., None] * t for w, t in zip(weight, takes))
 
 
 def main():
@@ -48,6 +91,9 @@ def main():
     den = ndi.gaussian_filter(valid, (0, AZ), mode='wrap')
     along = num / np.maximum(den, 1e-3)[..., None]
     fine = med * 0.5 + along * 0.5
+    cols = (np.arange(measure.NA) + 0.5)
+    window = (step(cols, STEER[0], STEER[0] + 80) * (1 - step(cols, STEER[1] - 80, STEER[1])))[None, :, None]
+    fine = fine * (1 - window) + steered(D, valid) * window
     bnum = ndi.gaussian_filter(med * valid[..., None], (6, BROAD, 0), mode=('nearest', 'wrap', 'nearest'))
     bden = ndi.gaussian_filter(valid, (6, BROAD), mode=('nearest', 'wrap'))
     broad = bnum / np.maximum(bden, 1e-3)[..., None]

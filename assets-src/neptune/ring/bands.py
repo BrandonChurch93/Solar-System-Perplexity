@@ -45,7 +45,12 @@ BODIES = [
     (1.628, 1.662, 0.005, 0.0125),
     (1.690, 1.790, 0.016, 0.0036),
 ]
-BODY_GRAIN = (140, 0.55)
+BODY_GRAIN = (140, 0.25)
+BODY_EDGE = 0.0016
+RINGLET = (0.006, 0.02, 0.0009)
+GAP = (0.003, 0.007, 0.1, 0.4)
+RINGLET_LEVEL = (0.6, 1.45)
+BODY_ALONG = 0.16
 SHEET = (1.44, 1.76, 0.0045)
 GRAIN = (90, 0.7)
 SPARKS = (900, 0.05, 0.3)
@@ -109,10 +114,21 @@ def main(out):
         fine += rng.uniform(-1, 1) * np.exp(-((r - rng.uniform(R0, R1)) / rng.uniform(0.0015, 0.006)) ** 2)
     fine = fine / np.abs(fine).max()
     for lo_b, hi_b, soft, gain in BODIES:
-        shape = step(r, lo_b - soft, lo_b + soft) * (1 - step(r, hi_b - soft, hi_b + soft))
+        edge = min(soft, BODY_EDGE)
+        shape = step(r, lo_b - edge, lo_b + edge) * (1 - step(r, hi_b - edge, hi_b + edge))
         tilt = 0.8 + 0.4 * rng.uniform(0, 1) * (r - lo_b) / (hi_b - lo_b)
-        m = 1 + 0.35 * wave(rng, NA, [(1, 0.6), (2, 0.5), (5, 0.5), (11, 0.4), (29, 0.3), (67, 0.2)]) / 1.3
-        bodies += gain * (shape * tilt * (1 + BODY_GRAIN[1] * fine))[:, None] * np.maximum(m, 0.2)[None]
+        m = 1 + BODY_ALONG * wave(rng, NA, [(1, 0.6), (2, 0.5), (5, 0.5), (11, 0.4)]) / 1.3
+        stack = np.zeros(NR)
+        at = lo_b
+        e = RINGLET[2]
+        while at < hi_b:
+            w = rng.uniform(RINGLET[0], RINGLET[1])
+            stack += rng.uniform(*RINGLET_LEVEL) * step(r, at - e, at + e) * (1 - step(r, at + w - e, at + w + e))
+            at += w
+            g = rng.uniform(GAP[0], GAP[1])
+            stack += rng.uniform(GAP[2], GAP[3]) * step(r, at - e, at + e) * (1 - step(r, at + g - e, at + g + e))
+            at += g
+        bodies += gain * (shape * tilt * stack * (1 + BODY_GRAIN[1] * fine))[:, None] * np.maximum(m, 0.2)[None]
     taper = (step(r, R0, R0 + 0.04) * (1 - step(r, R1 - 0.04, R1)))[:, None]
     bodies = np.maximum(bodies * taper, 0)
     img = np.maximum(img * taper, 0)
