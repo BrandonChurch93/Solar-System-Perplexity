@@ -1,9 +1,33 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T02:45:05.987Z",
- "head": "9602acaf65c78e325792388b3af374422aad9b20",
- "note": "first looks: stand-in hold and terrain beside the approved images; reading the brief and Mars pattern",
+ "pushed": "2026-11-21T03:08:06.933Z",
+ "head": "63df59ffa99493e3a0967a618720a770240b77b3",
+ "note": "fitting the Sun, ring plane and close camera from the approved images before building rings and globe",
  "looks": [
+  {
+   "time": "2026-11-21T03:08:06.380Z",
+   "file": "20261121030806380-note-hero-polar-small.jpg",
+   "source": "out/work/saturn/hero-polar-small.jpg",
+   "kind": "note",
+   "label": "fit work: hero-polar-small.jpg",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T03:08:05.855Z",
+   "file": "20261121030805855-note-hero-topdown.jpg",
+   "source": "out/work/saturn/hero-topdown.jpg",
+   "kind": "note",
+   "label": "fit work: hero-topdown.jpg",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T03:08:05.317Z",
+   "file": "20261121030805317-note-hero-shadow-overlay--20.jpg",
+   "source": "out/work/saturn/hero-shadow-overlay--20.jpg",
+   "kind": "note",
+   "label": "fit work: hero-shadow-overlay--20.jpg",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-21T02:44:57.741Z",
    "file": "20261121024457741-compare-compare-saturn-terrain-view.jpg",
