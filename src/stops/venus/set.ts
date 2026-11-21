@@ -3,10 +3,11 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
-import { patches, wrap } from './assets'
+import { patches, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { plan } from './plan'
+import { CloudRelief } from './relief'
 import { LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
 
@@ -46,6 +47,10 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(globe.mesh, rim.mesh, far.points)
 
+  const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
+  terrain.add(ground.group)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const light = new THREE.Vector3()
   const limbS = new THREE.Vector3()
@@ -68,7 +73,10 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      if (!inOrbit) return
+      if (!inOrbit) {
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
+        return
+      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
@@ -100,6 +108,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.dispose()
       rim.dispose()
       far.dispose()
+      ground.dispose()
     },
   }
 }

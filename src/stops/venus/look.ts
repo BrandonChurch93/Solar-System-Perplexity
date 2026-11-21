@@ -69,3 +69,14 @@ export function flash(c: Cell, time: number): number {
   const again = 0.55 * Math.exp(-Math.pow((s - 0.66 - 0.07 * seeded(c.seed + 9)) / 0.045, 2))
   return c.gain * (step(0, 0.07, s) * body + again)
 }
+
+export const relief = {
+  cell: 16,
+  hazeDir: [-0.94, 0.34] as [number, number],
+  hazeSpeed: 0.0025,
+  flowSeconds: 3.3,
+  swayRad: 0.005,
+  swayPerSecond: 0.9,
+  edgeDeg: 0.06,
+  air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5] as [number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1 },
+}
