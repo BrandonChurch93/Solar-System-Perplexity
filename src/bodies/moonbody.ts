@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
+import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 
 export interface MoonBodyOptions {
@@ -147,7 +148,7 @@ export class MoonBody {
         uSunB: { value: new THREE.Vector3(1, 0, 0) }, uBounceB: { value: new THREE.Vector3(0, 0, -1) },
         uShape: { value: new THREE.Vector3(o.bump ?? 1, o.power ?? 1, o.rim ?? 0) },
         uLit: { value: o.lit?.map ?? o.map }, uLitMask: { value: o.lit?.mask ?? o.map }, uLitOn: { value: o.lit ? 1 : 0 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-        uDiag: diagUniform, uGrad: gradUniform,
+        uDiag: diagUniform, uGrad: gradUniform, uImplicit: implicitUniform,
       },
     })
     this.mesh = new THREE.Mesh(geo, this.material)

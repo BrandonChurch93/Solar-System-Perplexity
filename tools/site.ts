@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { join } from 'node:path'
 import { DIST, WORK, args, loadConfig } from './lib/common'
@@ -13,6 +13,7 @@ rmSync(site, { recursive: true, force: true })
 mkdirSync(cache, { recursive: true })
 const full = new RegExp('/assets/(' + cfg.stopIds.join('|') + ')/full(/|$)')
 cpSync(DIST, site, { recursive: true, filter: (src) => full.test(src.split('\\').join('/')) === false })
+writeFileSync(join(site, 'site.json'), JSON.stringify({ sets: Object.keys(cfg.raw.assetSets).filter((s) => s !== 'full') }) + '\n')
 
 function small(name: string): void {
   const src = join(DIST, 'review', name)
