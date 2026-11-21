@@ -138,6 +138,7 @@ uniform vec3 uWeaveCam;
 uniform vec4 uWeaveRing;
 uniform vec4 uWeave;
 uniform float uWeaveLit;
+uniform vec4 uWeaveRise;
 uniform sampler2D uHold;
 uniform vec3 uHoldR;
 uniform vec3 uHoldU;
@@ -301,11 +302,23 @@ ${TAP_LEVELS}
     float seen = dot(dc, normalize(uWeaveCam - dc));
     float ring = (1.0 - smoothstep(uWeaveRing.x, uWeaveRing.y, seen)) * smoothstep(uWeaveRing.z, uWeaveRing.w, seen);
     for (int inner = 0; inner < (ring > 0.0 ? 1 : 0); inner++) {
-      vec3 from = normalize(dc - uWeave.x * normalize(uWeaveCam));
+      vec3 axis = normalize(uWeaveCam);
+      vec3 from = normalize(dc - uWeave.x * axis);
+      for (int fold = 0; fold < (uWeaveRise.x > 0.0 ? 1 : 0); fold++) {
+        float along = dot(dc, axis);
+        float to = uWeaveRise.x - acos(clamp(along, -1.0, 1.0));
+        from = axis * cos(to) + normalize(dc - axis * along) * sin(to);
+      }
       vec3 narrow = equirect(uMap, from).rgb;
       vec3 wide = textureLod(uMap, lonLat(from), uWeave.z).rgb;
       float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
-      col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near) / uSmear);
+      vec3 tone = mix(vec3(ratio), narrow * narrow / max(wide * wide, vec3(1e-4)), uWeaveRise.z);
+      float amount = uLimbFar * ring * (1.0 - near) / uSmear;
+      col *= pow(clamp(tone, vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeave.y * amount * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl))));
+      for (int calm = 0; calm < (uWeaveRise.w > 0.0 ? 1 : 0); calm++) {
+        vec3 own = textureLod(uMap, lonLat(dc), uWeaveRise.y).rgb;
+        col *= pow(clamp(own * own / max(albedo * albedo, vec3(1e-4)), vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeaveRise.w * amount));
+      }
     }
   }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
@@ -412,7 +425,7 @@ export class Globe {
         uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
-        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.lod, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
+        uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.lod, o.weave.cap) }, uWeaveLit: { value: o.weave.lit }, uWeaveRise: { value: new THREE.Vector4(0, 0, 0, 0) },
         ...o.rim.uniforms,
         uHold: { value: o.hold.map }, uHoldR: { value: o.hold.right }, uHoldU: { value: o.hold.up }, uHoldF: { value: o.hold.forward },
         uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) }, uHoldFar: { value: new THREE.Vector4((o.hold.map.image as unknown as { width: number }).width, o.hold.far.inner[0], o.hold.far.inner[1], o.hold.far.dense) }, uHoldLow: { value: new THREE.Vector2(o.hold.far.lod, 2 * o.hold.margin) },

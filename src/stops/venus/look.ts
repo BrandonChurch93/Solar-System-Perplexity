@@ -75,7 +75,7 @@ export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, nu
 
 export const swirl = { lon: -13, lat: 19, deg: 130, wideDeg: 12 }
 
-export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, base: 128, cap: 2.5 }
+export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, base: 128, cap: 2.5, rise: { lit: 1, flat: 1, foldDeg: 95, own: 48, tone: 0.4 } }
 
 export const veil = {
   file: veilJson.file,

@@ -8,7 +8,7 @@ LUMA = np.array([0.2126, 0.7152, 0.0722])
 MEDIAN, SIGMA = 9, 2.0
 NIGHT = (0.12, 0.5)
 REF_PX = 543.0
-SHAPE = (0.45, 2.5, 0.55, 18.0)
+SHAPE = (0.3, 6.0, 0.7, 45.0)
 VEIL = 0.5
 
 
@@ -33,7 +33,7 @@ def build(hold):
     px = (np.maximum(s, 0) / (HALF - 1)) ** 2 * INSIDE * REF_PX
     fall = SHAPE[0] * np.exp(-px / SHAPE[1]) + SHAPE[2] * np.exp(-px / SHAPE[3])
     inside = rgb[:HALF]
-    model = edge[None] * fall[:, None, None]
+    model = rgb[HALF][None] * fall[:, None, None]
     inside = inside + (model - inside) * night[None, :, None]
     lum = inside @ LUMA
     low = np.minimum.accumulate(lum[::-1], axis=0)[::-1]

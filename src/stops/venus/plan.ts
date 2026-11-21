@@ -32,7 +32,7 @@ export const params: MoveParams = {
   ...({ coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } } } as object),
 }
 
-export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1 } }
+export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
 
 export const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 

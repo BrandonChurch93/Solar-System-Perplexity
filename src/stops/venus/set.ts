@@ -45,7 +45,7 @@ interface Swap { at: number; turn: THREE.Quaternion; up: THREE.Vector3; upTerrai
 function swapOf(kind: 'dive' | 'rise', sunTerrain: THREE.Vector3, fwd: THREE.Vector3, right: THREE.Vector3): Swap {
   const at = plan.coverCenter(kind === 'dive' ? plan.seg.dive! : plan.seg.rise)
   const tiny = 1e-6
-  const dt = 0.125 / config.fps
+  const dt = timing[kind].span / config.fps
   const shot = (t: number): Pose => (kind === 'dive' ? plan.dive(t) : plan.rise(t)).pose
   const o = shot(kind === 'dive' ? at - tiny : at)
   const g = shot(kind === 'dive' ? at : at - tiny)
@@ -193,6 +193,9 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uCarryOn!.value = 1 - released
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
+      gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit
+      if (state.time > terrainMid) (gu.uWeaveRise!.value as THREE.Vector4).set(THREE.MathUtils.degToRad(2 * look.weave.rise.foldDeg), Math.log2(wrap.sets[key].color[0] / look.weave.rise.own), look.weave.rise.tone, look.weave.rise.flat)
+      else (gu.uWeaveRise!.value as THREE.Vector4).set(0, 0, 0, 0)
       if (thick > 0 || released < 1) {
         centre.copy(localP).negate().applyQuaternion(localBack)
         sunCam.copy(sw.sun).applyQuaternion(localBack)
