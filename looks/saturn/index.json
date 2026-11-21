@@ -1,57 +1,73 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T21:42:21.273Z",
- "head": "5608524248316749d59f6ff331cdd0d1d66b5be9",
- "note": "polish items 2 and 3: the notch where the rings meet the lit limb, mask wedge fix, limb handover to the model in the rise",
+ "pushed": "2026-11-21T22:20:22.396Z",
+ "head": "734a950ffb6bb973742fec05966219ba0ec6317e",
+ "note": "Polish items 1 to 3 in work: limb fit and junction (b6), sky gain hook across dive and rise, slower shell handover",
  "looks": [
   {
-   "time": "2026-11-21T21:42:20.613Z",
-   "file": "20261121214220613-note-limb-b.jpg",
-   "source": "../../../../tmp/limb-b.png",
+   "time": "2026-11-21T22:20:10.536Z",
+   "file": "20261121222010536-note-d-b5.jpg",
+   "source": "../../../../tmp/d-b5.png",
    "kind": "note",
-   "label": "3720 lit limb at 6x: build b2 with the wedge fix (left), kept build 00c1f81 with the hard step (right)",
+   "label": "Item 2, dive 3567 to 3618 with the sky gain (draft)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T21:42:20.058Z",
-   "file": "20261121214220058-note-limb-a.jpg",
-   "source": "../../../../tmp/limb-a.png",
+   "time": "2026-11-21T22:20:09.865Z",
+   "file": "20261121222009865-note-s-b.jpg",
+   "source": "../../../../tmp/s-b.png",
    "kind": "note",
-   "label": "3720 lit limb at 6x: approved (left), build b3 with ring colours carried past the limb (right): the surplus draws over the globe, rejected",
+   "label": "Item 2, limb junction at 3813 and 3816, build b6 (draft, 3x), no white streak, model in the gap",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T21:37:43.533Z",
-   "file": "20261121213743533-frame-b3-3624.jpg",
-   "source": "out/work/saturn/b3-3624.png",
+   "time": "2026-11-21T22:20:09.302Z",
+   "file": "20261121222009302-note-rise-b5.jpg",
+   "source": "../../../../tmp/rise-b5.png",
+   "kind": "note",
+   "label": "Item 2, rise 3813 to 3846 with the sky gain hook and the slower shell handover (draft)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T22:20:08.727Z",
+   "file": "20261121222008727-note-s-a.jpg",
+   "source": "../../../../tmp/s-a.png",
+   "kind": "note",
+   "label": "Item 3, ring and limb junction at 3720, approved above, build b6 below (draft, 3x)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T22:16:01.064Z",
+   "file": "20261121221601064-frame-b6-3606.jpg",
+   "source": "out/work/saturn/b6-3606.png",
    "kind": "frame",
-   "label": "saturn.dive frame 3624, draft tier",
+   "label": "saturn.dive frame 3606, draft tier",
    "stop": "saturn",
    "segment": "saturn.dive",
-   "frame": 3624,
+   "frame": 3606,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "23ba4262d6d5e87d"
   },
   {
-   "time": "2026-11-21T21:36:21.579Z",
-   "file": "20261121213621579-frame-b3-3831.jpg",
-   "source": "out/work/saturn/b3-3831.png",
+   "time": "2026-11-21T22:14:57.769Z",
+   "file": "20261121221457769-frame-b6-3822.jpg",
+   "source": "out/work/saturn/b6-3822.png",
    "kind": "frame",
-   "label": "saturn.rise frame 3831, draft tier",
+   "label": "saturn.rise frame 3822, draft tier",
    "stop": "saturn",
    "segment": "saturn.rise",
-   "frame": 3831,
+   "frame": 3822,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "23ba4262d6d5e87d"
   },
   {
-   "time": "2026-11-21T21:33:52.862Z",
-   "file": "20261121213352862-frame-b3-3809.jpg",
-   "source": "out/work/saturn/b3-3809.png",
+   "time": "2026-11-21T22:13:33.745Z",
+   "file": "20261121221333745-frame-b6-3809.jpg",
+   "source": "out/work/saturn/b6-3809.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3809, draft tier",
    "stop": "saturn",
@@ -60,20 +76,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "23ba4262d6d5e87d"
   },
   {
-   "time": "2026-11-21T21:18:16.103Z",
-   "file": "20261121211816103-note-b1-3822-notch.jpg",
-   "source": "out/work/saturn/b1-3822-notch.png",
-   "kind": "note",
-   "label": "item 2 open: notch where the rings meet the lit limb at 3822, native crop",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T18:36:35.433Z",
-   "file": "20261121183635433-frame-m6-3465.jpg",
-   "source": "out/work/saturn/m6-3465.png",
+   "time": "2026-11-21T22:03:30.421Z",
+   "file": "20261121220330421-frame-b5-3465.jpg",
+   "source": "out/work/saturn/b5-3465.png",
    "kind": "frame",
    "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
@@ -82,21 +90,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T18:14:34.941Z",
-   "file": "20261121181434941-compare-compare-saturn-hold-view.jpg",
-   "source": "out/work/compare/compare-saturn-hold-view.jpg",
-   "kind": "compare",
-   "label": "saturn.hold: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "23ba4262d6d5e87d"
   }
  ]
 }
