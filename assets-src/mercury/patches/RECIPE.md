@@ -18,6 +18,8 @@ The patches are unlit colour in the same sense as the wrap: they carry the wrap'
 
 ## Steps
 
+The wrap the shipped patches were cut from is the wrap of commit 085dae7 (md5 6ebf15b48692), from before the terminator rework of the wrap. Get it with `git show 085dae7:public/assets/mercury/full/wrap-color.jpg > out/work/mercury/wrap-parent.jpg` and run every `levels.py` step with `PATCH_WRAP=out/work/mercury/wrap-parent.jpg` in the environment. Why the old wrap: see "Parent wrap" under Checks.
+
 For level N from 1 to 4:
 
 1. `python3 assets-src/mercury/patches/levels.py cut N`. The parent of level 1 is `public/assets/mercury/full/wrap-color.jpg` resampled to a 76 degree patch at 4096 and cleaned with a 7 px median (the wrap's dotted noise along the terminator otherwise comes back as dots). The parent of level N is level N-1's exact subpatch. Five overlapping 2240 px tiles are cut and written at 2048: four corners (`tl tr bl br`) and one centre tile (`c`) so no seam crosses the middle. The level 4 centre tile is moved onto the crater (`centre: [0.62, 0.55]`).
@@ -72,6 +74,8 @@ The large crater just right of the centre of image 1 is a complex impact crater.
 The level 3 centre take `a1` (`patch.txt` and `crater.txt`, image 3) drew the terraced crater with the right character but 2.3 times too large (flow p99 22.7 px). `python3 assets-src/mercury/patches/levels.py crater 3` scales that crater into the ellipse of the ring crater in the level 3 centre input and writes `out/work/mercury/patches/L3-in2-c.jpg` (`patches.json` `crater.3`: source centre and half axes `[1172, 1078, 552, 518]`, target `[1388, 1153, 245, 200]`, in 2048 px; feathered from 1.02 to 1.32 of the target ellipse). Take `a2` is generated from that input with `patch.txt` alone and is built with `"c": "a2@in2"`, which registers and locks it against `L3-in2-c.jpg` instead of the parent. Level 4 is cut from the finished level 3, so its centre tile already holds the crater at the right size and `crater.txt` only adds detail.
 
 ## Checks
+
+- Parent wrap. The current wrap codes the sunlit rims of the terminator band as colour above 1, which the shader's dusk term turns back into the hero's pixel. Two rebuilds of the four levels from the current wrap with the stored takes were rendered at frame 731 (draft) beside the shipped set and beside the wrap alone (`out/work/mercury/j5/f731-three-a.jpg`): locked in the colour domain the rims came out saturated orange and red; locked in the shown domain (colour as the shader shows it from the hero's side) they came out dimmer and still orange. The shipped set, cut from the wrap of 085dae7, shows thin pale gold rims as the approved orbit image does at the spot (`out/work/mercury/j5/hero-spot-a.jpg`), so it stays. Outside the terminator band both wraps are the same picture.
 
 - Disk after `finish`: `public/assets/mercury/full` 88 MB, `public/assets/mercury/web` 26 MB.
 - The patches show only where the wrap is magnified: about frames 726 to 741 of the dive and 994 to 1004 of the rise at 1080p.
