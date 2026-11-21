@@ -27,7 +27,7 @@ export const corona: CoronaLook = {
   edge: 0.004,
   wave: { amount: 1.8, scale: 5, speed: 0.55, sway: 0.0024 },
   drift: 0.0008,
-  hide: { from: 0.012, to: 0.07, amount: 0.92 },
+  hide: { from: 0.3, to: 0.9, amount: 0.92 },
 }
 
 export const prominence: ProminenceLook = {
