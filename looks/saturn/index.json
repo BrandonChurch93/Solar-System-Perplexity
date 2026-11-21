@@ -1,42 +1,40 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T06:28:31.987Z",
- "head": "4ec04a07cd33c877eac037b9c28084b15b3ebbe6",
- "note": "06:26 close layout: smooth extension of the layout difference outside the approved frame; next the dive morph as exact nested circles",
+ "pushed": "2026-11-21T06:48:55.505Z",
+ "head": "e935013fd2af64e1248aac7a90ab9095798c82ab",
+ "note": "dive and rise: rings stay one plane (inner disc fades in late and softly, no hook, no hard shadow box); terrain junction cleaner",
  "looks": [
   {
-   "time": "2026-11-21T06:28:31.435Z",
-   "file": "20261121062831435-note-three-d4.jpg",
-   "source": "out/work/saturn/three-d4.jpg",
-   "kind": "note",
-   "label": "terrain frames 3630, 3720, 3809 draft: junction hole closed, outer edge lumps at 3630 still open (being replaced by an exact circle family)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T06:20:06.600Z",
-   "file": "20261121062006600-frame-t-d4-3809.jpg",
-   "source": "out/work/saturn/t-d4-3809.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3809, draft tier",
+   "time": "2026-11-21T06:48:54.773Z",
+   "file": "20261121064854773-compare-compare-saturn-terrain-view.jpg",
+   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
+   "kind": "compare",
+   "label": "saturn.terrain: approved image left, film frame right, draft tier",
    "stop": "saturn",
    "segment": "saturn.terrain",
-   "frame": 3809,
+   "frame": 3720,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "e6143083c024f4b9"
   },
   {
-   "time": "2026-11-21T06:05:28.694Z",
-   "file": "20261121060528694-note-t-c1-3630.jpg",
-   "source": "out/work/saturn/t-c1-3630.png",
-   "kind": "note",
-   "label": "terrain first frame 3630, draft: layout field outside the approved frame is wrong (outer edge wanders at left, seam at the bottom); being replaced by a global ring model",
-   "stop": "saturn"
+   "time": "2026-11-21T06:48:53.749Z",
+   "file": "20261121064853749-still-f03720-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03720-16x9-draft-full.png",
+   "kind": "still",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e6143083c024f4b9"
   },
   {
-   "time": "2026-11-21T05:50:16.772Z",
-   "file": "20261121055016772-sheet-saturn.rise-16x9-draft.jpg",
+   "time": "2026-11-21T06:48:39.253Z",
+   "file": "20261121064839253-sheet-saturn.rise-16x9-draft.jpg",
    "source": "out/work/sheets/saturn.rise-16x9-draft.png",
    "kind": "sheet",
    "label": "Contact sheet saturn.rise, draft tier",
@@ -47,12 +45,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "e6143083c024f4b9"
   },
   {
-   "time": "2026-11-21T05:49:49.725Z",
-   "file": "20261121054949725-frame-f03810-draft.jpg",
-   "source": "out/work/sheets/.frames-FznfAi/f03810-draft.png",
+   "time": "2026-11-21T06:48:14.885Z",
+   "file": "20261121064814885-frame-f03810-draft.jpg",
+   "source": "out/work/sheets/.frames-wvG1L3/f03810-draft.png",
    "kind": "frame",
    "label": "saturn.rise frame 3810, draft tier",
    "stop": "saturn",
@@ -61,7 +59,36 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "e6143083c024f4b9"
+  },
+  {
+   "time": "2026-11-21T06:47:59.866Z",
+   "file": "20261121064759866-sheet-saturn.dive-16x9-draft.jpg",
+   "source": "out/work/sheets/saturn.dive-16x9-draft.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.dive, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "first": 3540,
+   "last": 3629,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e6143083c024f4b9"
+  },
+  {
+   "time": "2026-11-21T06:47:34.038Z",
+   "file": "20261121064734038-frame-f03540-draft.jpg",
+   "source": "out/work/sheets/.frames-cVAL1y/f03540-draft.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3540, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e6143083c024f4b9"
   },
   {
    "time": "2026-11-21T05:47:47.369Z",
@@ -76,20 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:28:36.200Z",
-   "file": "20261121052836200-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
   },
   {
    "time": "2026-11-21T04:37:20.126Z",
