@@ -1,9 +1,69 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T11:22:07.530Z",
- "head": "16a8fecd2d09263f3793c7da62860bd4fec09552",
- "note": "terrain flight: seam between the projected approved rings and the ring profile outside the approved frame",
+ "pushed": "2026-11-21T11:54:57.774Z",
+ "head": "46e45b9e33917731c705eac9d1771a3dbafcd362",
+ "note": "round 2: shadow continuity in the dive, ring ice, terrain flight sheet, arrival check",
  "looks": [
+  {
+   "time": "2026-11-21T11:54:57.216Z",
+   "file": "20261121115457216-note-a1.jpg",
+   "source": "../../../../tmp/a1.jpg",
+   "kind": "note",
+   "label": "arrival 3362 and 3369 at review, checked for strokes left of Saturn",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:54:56.642Z",
+   "file": "20261121115456642-note-d2.jpg",
+   "source": "../../../../tmp/d2.jpg",
+   "kind": "note",
+   "label": "dive 3570 to 3620 at draft, globe shadow on the rings kept through the dive",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:54:56.083Z",
+   "file": "20261121115456083-note-i6.jpg",
+   "source": "../../../../tmp/i6.jpg",
+   "kind": "note",
+   "label": "ring ice take 6 at review, frames 3660 and 3790 with native crops",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:54:55.493Z",
+   "file": "20261121115455493-note-t15.jpg",
+   "source": "../../../../tmp/t15.jpg",
+   "kind": "note",
+   "label": "terrain every 15th frame at draft, new flight across the bands with ring ice",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T11:52:00.299Z",
+   "file": "20261121115200299-frame-t15-3809.jpg",
+   "source": "out/work/saturn/t15-3809.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:41:22.832Z",
+   "file": "20261121114122832-frame-d2-3620.jpg",
+   "source": "out/work/saturn/d2-3620.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3620, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3620,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T11:22:04.550Z",
    "file": "20261121112204550-note-f6.jpg",
@@ -11,66 +71,6 @@
    "kind": "note",
    "label": "terrain 3630 and 3675 draft, lower part: ring image inside the approved footprint, toned profile outside",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T11:21:49.818Z",
-   "file": "20261121112149818-frame-f6-3675.jpg",
-   "source": "out/work/saturn/f6-3675.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3675, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3675,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a9de32c960e5de06"
-  },
-  {
-   "time": "2026-11-21T11:04:19.747Z",
-   "file": "20261121110419747-note-f1-strip.jpg",
-   "source": "out/work/saturn/f1-strip.jpg",
-   "kind": "note",
-   "label": "terrain flight draft: frames 3630 3675 3720 3765 3809, new path across the bands toward the globe",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T11:04:19.078Z",
-   "file": "20261121110419078-note-pair-terrain-q2.jpg",
-   "source": "out/work/saturn/pair-terrain-q2.jpg",
-   "kind": "note",
-   "label": "terrain 3720 final: approved close image projected on the ring plane, light map on the globe (approved above, film below)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T10:40:45.752Z",
-   "file": "20261121104045752-note-hz9.jpg",
-   "source": "out/work/saturn/hz9.png",
-   "kind": "note",
-   "label": "hold 3465 lower left limb 7x, approved left, film right",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T10:40:45.183Z",
-   "file": "20261121104045183-note-pair-hold-p8.jpg",
-   "source": "out/work/saturn/pair-hold-p8.jpg",
-   "kind": "note",
-   "label": "hold 3465 final, approved above, film below: hero rings and light map, ring edge over the globe from the hero",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T10:40:16.708Z",
-   "file": "20261121104016708-frame-h-p8-3567.jpg",
-   "source": "out/work/saturn/h-p8-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, review tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
   },
   {
    "time": "2026-11-21T10:39:33.553Z",
