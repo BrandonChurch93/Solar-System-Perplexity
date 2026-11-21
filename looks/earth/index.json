@@ -1,31 +1,55 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T02:59:38.443Z",
- "head": "535a41272add2e8df23974279e3d123d9b85cd83",
- "note": "Orbit view: splitting the hero into a surface map and a cloud layer",
+ "pushed": "2026-11-21T03:22:12.471Z",
+ "head": "6dd24969f66492939e68f4e84f6b8a38397522ee",
+ "note": "splitting the hero into surface, cloud, shadow, city light and aurora layers; recompose error mean 0.2 code values",
  "looks": [
   {
-   "time": "2026-11-21T02:59:37.834Z",
-   "file": "20261121025937834-note-limb-check.jpg",
-   "source": "out/work/assets/earth/limb-check.jpg",
+   "time": "2026-11-21T03:22:11.883Z",
+   "file": "20261121032211883-note-split-crop-brazil.jpg",
+   "source": "out/work/earth/view/split-crop-brazil.jpg",
    "kind": "note",
-   "label": "Limb check of the hero fit, twelve places round the disc",
+   "label": "layer split of the hero: split-crop-brazil (hero, surface, recomposed, cloud alpha, emissive)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T02:59:37.277Z",
-   "file": "20261121025937277-note-decloud-cmp-carib.jpg",
-   "source": "out/work/earth/view/decloud-cmp-carib.jpg",
+   "time": "2026-11-21T03:22:11.281Z",
+   "file": "20261121032211281-note-split-crop-aurora.jpg",
+   "source": "out/work/earth/view/split-crop-aurora.jpg",
    "kind": "note",
-   "label": "Caribbean at native size: hero, cloud-free take A, cloud-free take B",
+   "label": "layer split of the hero: split-crop-aurora (hero, surface, recomposed, cloud alpha, emissive)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T02:59:36.709Z",
-   "file": "20261121025936709-note-decloud-sd-small.jpg",
-   "source": "out/work/earth/view/decloud-sd-small.jpg",
+   "time": "2026-11-21T03:22:10.729Z",
+   "file": "20261121032210729-note-split-crop-carib.jpg",
+   "source": "out/work/earth/view/split-crop-carib.jpg",
    "kind": "note",
-   "label": "Hero with clouds removed by the image tool, take 1: source for the surface under the cloud layer",
+   "label": "layer split of the hero: split-crop-carib (hero, surface, recomposed, cloud alpha, emissive)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T03:22:10.183Z",
+   "file": "20261121032210183-note-split-crop-storm.jpg",
+   "source": "out/work/earth/view/split-crop-storm.jpg",
+   "kind": "note",
+   "label": "layer split of the hero: split-crop-storm (hero, surface, recomposed, cloud alpha, emissive)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T03:22:09.650Z",
+   "file": "20261121032209650-note-split-err-sheet.jpg",
+   "source": "out/work/earth/view/split-err-sheet.jpg",
+   "kind": "note",
+   "label": "layer split of the hero: split-err-sheet (hero, surface, recomposed, cloud alpha, emissive)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T03:22:08.956Z",
+   "file": "20261121032208956-note-split-sheet.jpg",
+   "source": "out/work/earth/view/split-sheet.jpg",
+   "kind": "note",
+   "label": "layer split of the hero: split-sheet (hero, surface, recomposed, cloud alpha, emissive)",
    "stop": "earth"
   },
   {
@@ -43,39 +67,11 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:45:09.730Z",
-   "file": "20261121024509730-still-f02010-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02010-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, draft tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
    "time": "2026-11-21T02:44:54.309Z",
    "file": "20261121024454309-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:53.033Z",
-   "file": "20261121024453033-still-f01755-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01755-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, draft tier",
    "stop": "earth",
    "segment": "earth.hold",
    "frame": 1755,
