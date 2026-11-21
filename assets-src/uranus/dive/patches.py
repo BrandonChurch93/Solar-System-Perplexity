@@ -15,11 +15,15 @@ LEVELS = [('patch-1.jpg', 76.0), ('patch-2.jpg', 42.0), ('patch-3.jpg', 22.0), (
 SIZE = 4096
 LAMBDA0 = 0.284
 OCTAVES = 6
-AMP = 0.05
-FALL = 0.82
-STRETCH = 7.0
-DECK_ANGLE = np.radians(51.0)
+AMP = 0.045
+FALL = 0.66
+STRETCH = 14.0
+BEND = 0.5
+CURL = 0.18
+WISP = 0.22
+WISP_TINT = np.array([1.12, 1.0, 0.97], np.float32)
 TILE = 2048
+PREVIEW = len(sys.argv) > 1 and sys.argv[1] == 'preview'
 
 
 def smooth(a, b, x):
@@ -27,15 +31,22 @@ def smooth(a, b, x):
     return t * t * (3 - 2 * t)
 
 
-def noise_tile(seed, octave=5.0, n=TILE):
+TILES = {}
+
+
+def noise_tile(seed, octave=5.0, wide=0.55, n=TILE):
+    if (seed, octave, wide) in TILES:
+        return TILES[(seed, octave, wide)]
     rng = np.random.default_rng(seed)
     f = np.fft.fft2(rng.standard_normal((n, n)))
     kx = np.fft.fftfreq(n)[None, :] * n
     ky = np.fft.fftfreq(n)[:, None] * n
     k = np.hypot(kx, ky) * (1024.0 / n)
-    band = np.exp(-((np.log2(np.maximum(k, 0.5)) - octave) ** 2) / (2 * 0.55 ** 2))
+    band = np.exp(-((np.log2(np.maximum(k, 0.5)) - octave) ** 2) / (2 * wide ** 2))
     t = np.real(np.fft.ifft2(f * band))
-    return (t / t.std()).astype(np.float32)
+    t = (t / t.std()).astype(np.float32)
+    TILES[(seed, octave, wide)] = t
+    return t
 
 
 def sample(tile, u, v):
@@ -45,21 +56,26 @@ def sample(tile, u, v):
 
 def detail(along, across, texel):
     out = np.zeros(along.shape, np.float32)
+    wisp = np.zeros(along.shape, np.float32)
+    bend = BEND * LAMBDA0 * sample(noise_tile(300, 3.0), along / (LAMBDA0 * 30.0) * 128.0 + 5.0, across / (LAMBDA0 * 8.0) * 128.0 + 9.0)
     for o in range(OCTAVES):
         lam = LAMBDA0 * 0.5 ** o
         w = float(smooth(1.8, 2.6, lam / texel))
         if w <= 0:
             continue
-        turn = DECK_ANGLE * float(smooth(0.0, 1.0, (o - 1) / 3.0))
-        a = along * np.cos(turn) + across * np.sin(turn)
-        c = -along * np.sin(turn) + across * np.cos(turn)
-        warp = 0.45 * lam * np.sin(a / (lam * 11.0) + 1.7 * o) + 0.3 * lam * np.sin(c / (lam * 5.0) + 0.9 * o)
-        patch = sample(noise_tile(900 + o, 3.0), a / (lam * 40.0) * 32.0 + 13.0 * o, c / (lam * 24.0) * 32.0 + 7.0 * o)
-        gain = 0.55 + 0.45 * np.tanh(patch * 1.2)
-        streak = sample(noise_tile(500 + o), a / (lam * STRETCH) * 32.0 + 37.0 * o, (c + warp) / lam * 32.0 + 91.0 * o)
-        billow = sample(noise_tile(700 + o), a / (lam * 2.2) * 32.0 + 53.0 * o, (c + warp) / (lam * 1.3) * 32.0 + 29.0 * o)
-        out += AMP * FALL ** o * w * (0.5 + gain) * (streak + 0.45 * billow)
-    return out
+        a = along
+        c = across + bend
+        curl = sample(noise_tile(400 + o, 4.0), a / (lam * 14.0) * 64.0 + 3.0 * o, c / (lam * 5.0) * 64.0 + 17.0 * o)
+        c = c + CURL * lam * curl
+        patch = sample(noise_tile(900 + o, 3.0), a / (lam * 40.0) * 128.0 + 13.0 * o, c / (lam * 16.0) * 128.0 + 7.0 * o)
+        gain = 0.6 + 0.4 * np.tanh(patch * 1.2)
+        streak = sample(noise_tile(500 + o, 5.0, 1.0), a / (lam * STRETCH) * 32.0 + 37.0 * o, c / lam * 32.0 + 91.0 * o)
+        billow = sample(noise_tile(700 + o, 5.0, 1.0), a / (lam * 2.4) * 32.0 + 53.0 * o, c / (lam * 1.2) * 32.0 + 29.0 * o)
+        out += AMP * FALL ** o * w * (0.4 + gain) * (0.85 * streak + 0.4 * billow)
+        if 1 <= o <= 4:
+            fil = sample(noise_tile(600 + o, 5.0, 0.8), a / (lam * 36.0) * 32.0 + 71.0 * o, c / (lam * 1.3) * 32.0 + 23.0 * o)
+            wisp += w * 0.6 ** (o - 1) * np.clip(0.8 * (fil - 0.9), 0, 1) * np.clip(patch * 0.8 - 0.1, 0, 1)
+    return out, wisp
 
 
 def main():
@@ -94,15 +110,21 @@ def main():
         across = ((lat - lat0) / unit).astype(np.float32)
         del lon, lat
         texel = 2 * half / SIZE / unit
-        dl = detail(along, across, texel)
-        out = np.clip(base * np.exp(dl)[..., None], 0.1, 1.8)
+        dl, wisp = detail(along, across, texel)
+        out = np.clip(base * np.exp(dl + WISP * wisp)[..., None] * (1 + (WISP_TINT - 1) * np.clip(wisp, 0, 1)[..., None]), 0.1, 1.8)
         img = Image.fromarray((np.clip(geo.display(out), 0, 1) * 255 + 0.5).astype(np.uint8))
+        if PREVIEW:
+            img.crop((SIZE // 2 - 512, SIZE // 2 - 512, SIZE // 2 + 512, SIZE // 2 + 512)).save(OUT + name.replace('.jpg', '-crop.png'))
+            print(name, 'detail rms', float(dl.std()), 'wisp mean', float(wisp.mean()), 'max', float(wisp.max()))
+            continue
         img.save(PUB + 'full/' + name, quality=93, subsampling=0)
         img.resize((SIZE // 2, SIZE // 2), Image.LANCZOS).save(PUB + 'web/' + name, quality=92, subsampling=0)
         img.resize((1024, 1024), Image.LANCZOS).save(OUT + name.replace('.jpg', '-v.jpg'), quality=88)
         img.crop((SIZE // 2 - 512, SIZE // 2 - 512, SIZE // 2 + 512, SIZE // 2 + 512)).save(OUT + name.replace('.jpg', '-crop.png'))
         rows.append({'file': name, 'widthDeg': width})
         print(name, 'width', width, 'texel units', round(texel, 5), 'density over the wrap', round(SIZE / (2 * half) / (W / (2 * np.pi)), 2), 'detail rms', float(dl.std()), 'albedo median', np.median(base.reshape(-1, 3), 0).round(3))
+    if PREVIEW:
+        return
     json.dump({'spot': spot['spot'], 'levels': rows, 'feather': 0.12, 'fade': [1.02, 1.5]}, open('src/stops/uranus/patches.json', 'w'), indent=1)
 
 

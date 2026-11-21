@@ -167,3 +167,33 @@ Terrain view is built and matches the close image at frame 4290. Next: terrain s
 - Limb glow above the horizon on the left is thinner and sharper than in the image (limb refinements wait for the rounds).
 - The soft ring band is in the sky patch, the lines are 3D: they shift against each other by up to about 27 px over the segment.
 - Dark foreground has little streak detail; cloud height 0.07 gives modest parallax.
+
+## State at 06:40 UTC (read this first after a compaction)
+
+Terrain milestone was sent 06:18 (commit ad8fe46). Now on dive and rise. Looks pushed 06:25.
+
+### Mail since 06:10
+- Batch 5 is on main (9d33905): merge it at the next commit. Optional `gradTexel` in `src/core/texel.ts`; the world pin (my `light.sunDir`, travel values and exit poses are mine to set); G11 is now only about my own folder.
+- Preflight by `/root` at c4d49f1: build and tests green, G12 PASS, G15 PASS (web 178 MB, full 689 MB), G11 failed on the file list. Fixed 06:33: RECIPE.md has a "Files" list, one line per file as `public/assets/uranus/<set>/NAME`; `npm run -s gate -- --phase 4 --only G11` passes here. Keep the list current when files are added.
+- READY needs: build and tests green on main merged, G11, G12, G15 results in the message, stand-ins removed, looks pushed.
+
+### Dive patches (built)
+- `dive/spot.ts` writes `dive/spot.json` (spot in the wrap frame `[0.302697, -0.613113, 0.729703]`, lat -37.815, lon 22.53, unit 0.0151344 R). The spot turns with the globe (`plan.turn`), so it is fixed in the wrap frame as long as the band drift is zero at its latitude: `look.globe.bandRate[3] = 1.584` does that (`sin(2.4 lat + 1.584) = 0` at lat -0.66).
+- `dive/patches.py` (take 3 kept, see RECIPE): four gnomonic levels 76, 42, 22, 11 deg, 4096 px full, 2048 web, table `src/stops/uranus/patches.json` (feather 0.12, fade 1.02 to 1.5 parent texels per pixel).
+- `globe.ts`: patch block as Mars (`uPatch0..3`, weights by parent density, inside a `for` guarded by `dn > 0.3 && texels < fade.y`), diag texels from the active level.
+- Tools: `npx tsx assets-src/uranus/dive/predict.ts dive|rise` (zoom needed over the wrap), `npx tsx assets-src/uranus/dive/softfit.ts dive|rise '{"rise":{...}}'` (soft fraction per frame with the patch table, end pose framing, Sun, ring normal and band axis in view; overrides of the plan as JSON).
+- Measured at draft with the texels view, frames 4129, 4137, 4146, 4154: soft 0.
+- Seen: take 1 read as brushed fabric, take 2 as short curled strokes. The patch area shows more fine structure than the wrap around it, so the detail must stay low in contrast.
+
+### Rise
+- First sheet (no `level`): after the cover the limb stood vertical at the left edge (horizon not carried), soft globe, the globe left the frame at 4434 and came back. With the wrap alone the rise needed 2x out to 52 deg from the spot, more than patch 1 covers.
+- Now `rise { ..., ahead 0.03, hug 1.7, settle 5, level true, pan 0.3 }` as Mars: softfit predicts soft 0 on every frame outside the cover (window 4402 to 4417), altitude 0.52 R at 4418, 5.4 R at the judged 4436, end pose globe centre ndc (0.305, -0.074), radius 0.28 of the frame height, phase 42 deg.
+
+### Cover
+- Scene values measured at draft: orbit 4150 sky `[0.004, 0.011, 0.013]`, under the limb `[0.004, 0.04, 0.053]`; terrain 4175 sky `[0.006, 0.012, 0.018]`, under the limb `[0.08, 0.31, 0.42]`, middle `[0.02, 0.09, 0.13]`, low `[0.002, 0.014, 0.022]`.
+- Plan: `cover [0.14, 0.38, 0.45]`, `coverLow [0.02, 0.1, 0.14]`, `coverTerrain [0.16, 0.5, 0.62]`, `coverLowTerrain [0.012, 0.06, 0.09]`, `coverTop [0.12, 0.06]`, `coverEdge [0.2, 0.45]`, `coverEdgeRise [0.4, 0.45]`, `coverShell [1.04, 1.14]`, `coverRush` as Mars. First sheets with these are rendering.
+
+### Still to check in the rise
+- Miranda read as a flat white disc in the first rise sheet (its own fitted light saturates from this side).
+- The wrap albedo has pink rings round the south pole (seen in `out/work/u/dive/patch-1-v.jpg`, bottom): check whether the rise shows them lit.
+- Cloud flecks inside the patch area are soft (the cloud layer is 8192 wide): idea, modulate cloud alpha by the patch detail (`patch / wrap - 1`).

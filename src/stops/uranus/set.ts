@@ -9,6 +9,7 @@ import { Globe } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
 import { Moon } from './moons'
+import patchJson from './patches.json'
 import { plan } from './plan'
 import { hairLines, parseLines, ringGeometry, Rings } from './rings'
 import skyJson from './sky.json'
@@ -39,7 +40,10 @@ export const createSet: SetFactory = async (ctx) => {
   const light = await ctx.dataTexture(base + 'light.bin', look.globe.lightSize[0], look.globe.lightSize[1], 4)
   const shade = await ctx.dataTexture(base + 'shade.bin', look.globe.shadeSize[0], look.globe.shadeSize[1], 4)
   const haloLut = await ctx.dataTexture(base + 'halo.bin', look.halo.size[0], look.halo.size[1], 4)
-  const globe = new Globe({ map, cloud, light, shade, ...look.globe })
+  const patchTextures: THREE.Texture[] = []
+  for (const level of patchJson.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const patches = { textures: patchTextures, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
+  const globe = new Globe({ map, cloud, light, shade, patches, ...look.globe })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range)
   const shape = new THREE.Group()

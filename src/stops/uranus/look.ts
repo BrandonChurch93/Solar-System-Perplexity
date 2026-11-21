@@ -6,8 +6,9 @@ export const globe = {
   shadeSize: [512, 256] as [number, number],
   cloudWhite: 3.0878,
   shadowTint: [1.655, 0.957, 0.841] as [number, number, number],
-  bandRate: [0, 0.0042, 2.4, 0.5] as [number, number, number, number],
+  bandRate: [0, 0.0042, 2.4, 1.584] as [number, number, number, number],
   cloudRate: [0.006, 0.004, 3.1, 1.2] as [number, number, number, number],
+  cloudFine: 4,
 }
 
 export const shape = {

@@ -89,3 +89,40 @@ Input made once for several assets: `out/work/u/hero-2x.png`, the approved hero 
 - Tool: `bash assets-src/uranus/sky/terrain.sh` (renders the film's own glow on a black sky to `out/work/u/sky/t/glow.png` and the one sky alone to `out/work/u/sky/t/sky.png`, then restores the stop files), then `python3 assets-src/uranus/sky/terrain.py references/approved/uranus-close.jpg out/work/u/sky/t/glow.png out/work/u/sky/t/sky.png public/assets/uranus`. No model, no prompt.
 - What it does: close image minus the film's glow in scene values; the thin ring lines are removed in the unwrap of the fitted ring plane (thin part across radius, coherent along the ring); from 12 to 46 px above the fitted horizon upward the image's sky is kept, below that the one sky plus the image's veil round the Sun; a mirrored margin of 12.5 percent.
 - Checks: the compare above; `check/arcs.py`.
+
+## patch-1.jpg to patch-4.jpg
+
+- Output: `public/assets/uranus/<set>/patch-1.jpg` to `patch-4.jpg`, 4096 px square in `full`, 2048 px in `web`, and the table `src/stops/uranus/patches.json`.
+- Tool: `npx tsx assets-src/uranus/dive/spot.ts` (writes `assets-src/uranus/dive/spot.json`: the dive spot in the frame of the wrap, its latitude, the heading, the unit of the terrain view), then `python3 assets-src/uranus/dive/patches.py` (`preview` as first argument writes only centre crops to `out/work/u/dive/`). No model, no prompt.
+- Inputs: `out/work/u/wrap/wrap-albedo.npy` (the float albedo of the wrap, written by `wrap/stage_c.py`), `assets-src/uranus/dive/spot.json`.
+- What it does: four nested gnomonic patches centred on the dive spot, 76, 42, 22 and 11 degrees wide (2.0, 4.1, 8.1 and 16.3 times the density of the 8192 px wrap, so no level is more than twice its parent). Each is the wrap albedo resampled (bicubic) times `exp(detail)`: six octaves of streak and billow noise stretched along the parallels, from a wavelength of 0.284 terrain units down, each octave present only where it is at least two texels wide so a level low-passed equals its parent, plus sparse pale streak wisps. Coded with the film curve like the wrap.
+- Designed with `npx tsx assets-src/uranus/dive/predict.ts dive|rise` (zoom needed over the wrap per frame) and checked with `npx tsx assets-src/uranus/dive/softfit.ts dive|rise` (soft fraction per frame with the patch table).
+- Takes: 1 (grain of one band, stretch 7, finer octaves turned 51 degrees) rejected, it read as brushed fabric; 2 (ridged wisps) rejected, short curled strokes; 3 kept: stretch 14, curl 0.18, wisps 36 to 1.3 at weight 0.22.
+- Checks: the texels view at frames 4129, 4137, 4146 and 4154 shows no soft pixel; `npm run measure -- --stop uranus --only G13`.
+
+## Files
+
+Every file the set loads, in both sets (`<set>` is `full` or `web`), with the section above that makes it.
+
+- `public/assets/uranus/<set>/ariel-color.jpg`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
+- `public/assets/uranus/<set>/ariel-height.bin`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
+- `public/assets/uranus/<set>/deck-color.jpg`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-far.jpg`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-halo.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-height.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-light.bin`: section "deck-color.jpg, deck-far.jpg, deck-height.bin, deck-light.bin, deck-halo.bin"
+- `public/assets/uranus/<set>/deck-rings.bin`: section "deck-rings.bin"
+- `public/assets/uranus/<set>/halo.bin`: section "halo.bin"
+- `public/assets/uranus/<set>/light.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/miranda-color.jpg`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
+- `public/assets/uranus/<set>/miranda-height.bin`: section "miranda-color.jpg, miranda-height.bin, ariel-color.jpg, ariel-height.bin"
+- `public/assets/uranus/<set>/patch-1.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/patch-2.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/patch-3.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/patch-4.jpg`: section "patch-1.jpg to patch-4.jpg"
+- `public/assets/uranus/<set>/rings.bin`: section "rings.bin"
+- `public/assets/uranus/<set>/shade.bin`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/sky-hold.webp`: section "sky-hold.webp"
+- `public/assets/uranus/<set>/sky-terrain.webp`: section "sky-terrain.webp"
+- `public/assets/uranus/<set>/wrap-cloud.png`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
+- `public/assets/uranus/<set>/wrap-color.jpg`: section "wrap-color.jpg, wrap-cloud.png, light.bin, shade.bin"
