@@ -1,9 +1,52 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T19:26:39.968Z",
+ "pushed": "2026-11-21T19:53:18.052Z",
  "head": "de1f6043648a2b9b2a45f18341f40a009803087c",
- "note": "Saturn's new sky: hold patch margin refitted with an irregular star fade, veil fades in the dive; final chain (measure, four sheets) running on the merged tree",
+ "note": "dive sheet at review on the merged tree with Saturn's new sky (clean), full measure running, three more sheets to come",
  "looks": [
+  {
+   "time": "2026-11-21T19:44:31.470Z",
+   "file": "20261121194431470-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T19:44:07.790Z",
+   "file": "20261121194407790-sheet-uranus.dive-16x9-review.jpg",
+   "source": "out/work/sheets/uranus.dive-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet uranus.dive, review tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4110,
+   "last": 4199,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T19:44:05.966Z",
+   "file": "20261121194405966-frame-f04199-review.jpg",
+   "source": "out/work/sheets/.frames-ccg2HY/f04199-review.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4199, review tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T19:26:36.281Z",
    "file": "20261121192636281-compare-compare-uranus-hold-view.jpg",
@@ -38,30 +81,6 @@
    "source": "../../../../tmp/c-all.png",
    "kind": "note",
    "label": "before the cure: veil blocks between the ring arcs at 4128, 4131, 4137 and the straight star edge at 4124",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:26:31.577Z",
-   "file": "20261121192631577-note-sc-4145.jpg",
-   "source": "out/work/u/r4/sc-4145.png",
-   "kind": "note",
-   "label": "4145 draft: the live band of the new shared sky above the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:26:30.534Z",
-   "file": "20261121192630534-note-sc-4137.jpg",
-   "source": "out/work/u/r4/sc-4137.png",
-   "kind": "note",
-   "label": "4137 draft: veil faded in the dive, clean rings on the new dark sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T19:26:29.515Z",
-   "file": "20261121192629515-note-sc-4124.jpg",
-   "source": "out/work/u/r4/sc-4124.png",
-   "kind": "note",
-   "label": "4124 draft: margin refitted to Saturn's new sky, irregular outline of the star fade",
    "stop": "uranus"
   },
   {
