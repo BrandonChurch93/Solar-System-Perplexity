@@ -1,34 +1,42 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T04:06:19.193Z",
- "head": "d71d18647dfa96128549957b58abe8571030196b",
- "note": "motion edge check at native size, milestone commit, review sheet next",
+ "pushed": "2026-11-21T04:26:17.947Z",
+ "head": "5bf9e3b5af584f23c35f57d3f4ed0a2469d3ba38",
+ "note": "final 2782, review sheet with belt on merged main, far rock tilt tests; rendering final again",
  "looks": [
   {
-   "time": "2026-11-21T04:06:12.556Z",
-   "file": "20261121040612556-note-strip.jpg",
-   "source": "out/work/belt/s2/strip.jpg",
+   "time": "2026-11-21T04:25:52.303Z",
+   "file": "20261121042552303-note-ft.jpg",
+   "source": "../view/ft.jpg",
    "kind": "note",
-   "label": "draft strip 2772 2782 2796, aperture 250, detail 0.9, motion edge check",
+   "label": "far rock tilt tests at 2782 draft (first column is the old tilt), top far1, bottom far2; far1 column 3 kept",
    "stop": "mars"
   },
   {
-   "time": "2026-11-21T04:04:35.977Z",
-   "file": "20261121040435977-frame-2796.jpg",
-   "source": "out/work/belt/s2/2796.png",
+   "time": "2026-11-21T04:25:30.327Z",
+   "file": "20261121042530327-frame-ft4.jpg",
+   "source": "out/work/belt/ft4.png",
    "kind": "frame",
-   "label": "mars.travel frame 2796, draft tier",
+   "label": "mars.travel frame 2782, draft tier",
    "stop": "mars",
    "segment": "mars.travel",
-   "frame": 2796,
+   "frame": 2782,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6461e0c529238628"
+   "engine": "9731a8a5030910bd"
   },
   {
-   "time": "2026-11-21T03:59:30.651Z",
-   "file": "20261121035930651-sheet-mars.travel-16x9-review.jpg",
+   "time": "2026-11-21T04:23:36.942Z",
+   "file": "20261121042336942-note-mars.travel-16x9-review.jpg",
+   "source": "out/work/belt/sheet2/mars.travel-16x9-review.png",
+   "kind": "note",
+   "label": "Contact sheet mars.travel review tier WITH the belt, merged main (the 04:23 sheet without rocks is the cost run with the hook reversed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T04:23:07.723Z",
+   "file": "20261121042307723-sheet-mars.travel-16x9-review.jpg",
    "source": "out/work/sheets/mars.travel-16x9-review.png",
    "kind": "sheet",
    "label": "Contact sheet mars.travel, review tier",
@@ -39,47 +47,63 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e5081e84fa871744"
+   "engine": "737dd9e204c8e41e"
   },
   {
-   "time": "2026-11-21T03:46:11.943Z",
-   "file": "20261121034611943-note-tilt.jpg",
-   "source": "out/work/belt/tilt.jpg",
-   "kind": "note",
-   "label": "belt near rock, four tilt tests at frame 2780 draft",
-   "stop": "mars"
+   "time": "2026-11-21T04:19:09.825Z",
+   "file": "20261121041909825-frame-2726.jpg",
+   "source": "out/work/belt/proof/2726.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2726, final tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2726,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6ec52800c697524e"
   },
   {
-   "time": "2026-11-21T03:46:11.395Z",
-   "file": "20261121034611395-note-strip.jpg",
-   "source": "out/work/belt/s1/strip.jpg",
-   "kind": "note",
-   "label": "belt draft strip, frames 2767 to 2800 step 3, take 3 rocks",
-   "stop": "mars"
+   "time": "2026-11-21T04:17:37.354Z",
+   "file": "20261121041737354-frame-2580.jpg",
+   "source": "out/work/belt/proof/2580.png",
+   "kind": "frame",
+   "label": "mars.terrain frame 2580, final tier",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2580,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6ec52800c697524e"
   },
   {
-   "time": "2026-11-21T03:26:24.965Z",
-   "file": "20261121032624965-note-view-c.jpg",
-   "source": "out/work/belt/bake/take2/view-c.png",
-   "kind": "note",
-   "label": "belt rock c, bake take 2, offline preview of the baked maps",
-   "stop": "mars"
+   "time": "2026-11-21T04:16:33.295Z",
+   "file": "20261121041633295-frame-2427.jpg",
+   "source": "out/work/belt/proof/2427.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2427, final tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2427,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6ec52800c697524e"
   },
   {
-   "time": "2026-11-21T03:26:24.458Z",
-   "file": "20261121032624458-note-view-b.jpg",
-   "source": "out/work/belt/bake/take2/view-b.png",
-   "kind": "note",
-   "label": "belt rock b, bake take 2, offline preview of the baked maps",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T03:26:23.946Z",
-   "file": "20261121032623946-note-view-a.jpg",
-   "source": "out/work/belt/bake/take2/view-a.png",
-   "kind": "note",
-   "label": "belt rock a, bake take 2, offline preview of the baked maps",
-   "stop": "mars"
+   "time": "2026-11-21T04:13:31.963Z",
+   "file": "20261121041331963-frame-2325.jpg",
+   "source": "out/work/belt/proof/2325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6ec52800c697524e"
   }
  ]
 }
