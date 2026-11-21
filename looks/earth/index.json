@@ -1,36 +1,36 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T03:51:45.278Z",
+ "pushed": "2026-11-21T04:06:20.905Z",
  "head": "89586025d0875b63cb1b916da68e00843c151472",
- "note": "limb work: the hero disc is an ellipse (1.6 percent), fitting the globe shape, glow layers and the blue limb line to it",
+ "note": "orbit view: ellipsoid body, fitted limb glow with rim, Moon body, first sky patch; off-limb aurora next",
  "looks": [
   {
-   "time": "2026-11-21T03:42:42.683Z",
-   "file": "20261121034242683-note-fill-t1-view.jpg",
-   "source": "out/work/earth/sky/fill-t1-view.jpg",
+   "time": "2026-11-21T04:06:20.351Z",
+   "file": "20261121040620351-note-moon-maps.jpg",
+   "source": "out/work/earth/view/moon-maps.jpg",
    "kind": "note",
-   "label": "sky fill take 1 (hero above, planet, moon, aurora and glow removed below): used only behind the globe and near the limb",
+   "label": "earth moon maps: painted albedo and hero lit overlay",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T03:36:54.829Z",
-   "file": "20261121033654829-note-reg-check-crop.jpg",
-   "source": "out/work/earth/view/reg-check-crop.jpg",
+   "time": "2026-11-21T04:06:19.754Z",
+   "file": "20261121040619754-note-air-ratio.jpg",
+   "source": "out/work/earth/view/air-ratio.jpg",
    "kind": "note",
-   "label": "wrap map first pass: reg-check-crop",
+   "label": "earth limb glow ratio map against the fitted layers",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T03:36:54.178Z",
-   "file": "20261121033654178-note-wrap-comp-small.jpg",
-   "source": "out/work/earth/view/wrap-comp-small.jpg",
+   "time": "2026-11-21T04:06:19.219Z",
+   "file": "20261121040619219-note-sky-hold.jpg",
+   "source": "out/work/earth/view/sky-hold.jpg",
    "kind": "note",
-   "label": "wrap map first pass: wrap-comp-small",
+   "label": "earth hold sky patch first pass (fill behind the globe, seam to fix)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T03:36:31.775Z",
-   "file": "20261121033631775-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-21T04:06:07.974Z",
+   "file": "20261121040607974-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, draft tier",
@@ -43,8 +43,8 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:36:30.529Z",
-   "file": "20261121033630529-still-f01755-16x9-draft-full.jpg",
+   "time": "2026-11-21T04:06:06.874Z",
+   "file": "20261121040606874-still-f01755-16x9-draft-full.jpg",
    "source": "out/work/stills/f01755-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, draft tier",
@@ -57,19 +57,25 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:22:11.883Z",
-   "file": "20261121032211883-note-split-crop-brazil.jpg",
-   "source": "out/work/earth/view/split-crop-brazil.jpg",
-   "kind": "note",
-   "label": "layer split of the hero: split-crop-brazil (hero, surface, recomposed, cloud alpha, emissive)",
-   "stop": "earth"
+   "time": "2026-11-21T04:04:50.767Z",
+   "file": "20261121040450767-frame-hold-nosky.jpg",
+   "source": "out/work/earth/still/hold-nosky.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T03:22:11.281Z",
-   "file": "20261121032211281-note-split-crop-aurora.jpg",
-   "source": "out/work/earth/view/split-crop-aurora.jpg",
+   "time": "2026-11-21T03:42:42.683Z",
+   "file": "20261121034242683-note-fill-t1-view.jpg",
+   "source": "out/work/earth/sky/fill-t1-view.jpg",
    "kind": "note",
-   "label": "layer split of the hero: split-crop-aurora (hero, surface, recomposed, cloud alpha, emissive)",
+   "label": "sky fill take 1 (hero above, planet, moon, aurora and glow removed below): used only behind the globe and near the limb",
    "stop": "earth"
   },
   {
