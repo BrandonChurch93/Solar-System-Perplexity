@@ -54,7 +54,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur, term: look.io.term, dusk: look.io.dusk, crisp: look.io.crisp })
+  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur, term: look.io.term, dusk: look.io.dusk, crisp: look.io.crisp, night: look.io.night })
   orbit.add(io.mesh)
   const ioHome = new THREE.Vector3().fromArray(look.io.home)
 

@@ -62,11 +62,12 @@ export const io = {
   term: [0.3, 1.5] as [number, number],
   dusk: [1.33, 0.964, 0.386, 0.9] as [number, number, number, number],
   crisp: 0.6,
+  night: { fill: [0.02, 0.025, 0.03] as [number, number, number], phase: [0.2, 0.6] as [number, number] },
 }
 
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number], low: { sun: [-0.05, 0.1, 0.4, 0.75] as [number, number, number, number], pixels: 1.3, air: 0.15, scale: 0.014 } }
 
 export const deck: DeckLook = {
   skyRimDeg: 5.2,
