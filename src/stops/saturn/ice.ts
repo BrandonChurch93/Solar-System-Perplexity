@@ -79,7 +79,7 @@ void main() {
   float syy = a.y * a.y + b.y * b.y + uFloor * uFloor;
   float det = max(sxx * syy - sxy * sxy, 1e-8);
   vInv = vec3(syy, -sxy, sxx) / det;
-  float half = 2.6 * sqrt(max(sxx, syy)) + 0.5;
+  float ext = 2.6 * sqrt(max(sxx, syy)) + 0.5;
   vec3 ss = normalize(vec3(uShadowL.x, uShadowL.y / uPolar, uShadowL.z));
   float along = dot(p, ss);
   float lit = along > 0.0 ? 1.0 : smoothstep(0.97, 1.03, length(p - ss * along));
@@ -94,9 +94,9 @@ void main() {
   float area = abs(a.x * b.y - a.y * b.x) / sqrt(det);
   vec3 band = reach * edge > 0.0 ? bandAt(vec3(p.x, 0.0, p.z)) : vec3(0.0);
   vCol = band * uTint * mix(vec3(1.06, 1.0, 0.92), vec3(0.9, 0.98, 1.1), h2) * (uGain * energy * flux * flux * mix(0.45, 1.0, clamp(area, 0.0, 1.0)) * lit * edge * reach * (1.0 - baked));
-  vQ = position.xy * half;
+  vQ = position.xy * ext;
   gl_Position = c0;
-  gl_Position.xy += position.xy * half * 2.0 / uView * gl_Position.w;
+  gl_Position.xy += position.xy * ext * 2.0 / uView * gl_Position.w;
   if (mv.z > -0.004 || dot(vCol, vec3(1.0)) < 1e-5) gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
 }`
 
