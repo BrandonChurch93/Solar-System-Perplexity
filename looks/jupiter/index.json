@@ -1,9 +1,46 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T16:19:44.886Z",
- "head": "3e7bf0c5768ec4f078f0fe31427b8442e1dd53ea",
- "note": "rise sheet at review tier on merged tree; rise cover, dive, dive cover, terrain sheets rendering",
+ "pushed": "2026-11-21T16:42:46.686Z",
+ "head": "33da33133367ec14617b3ad07de81cbf2b121856",
+ "note": "rise and rise cover sheets at review tier looked at; dive, dive cover, terrain sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-21T16:42:46.059Z",
+   "file": "20261121164246059-note-jupiter.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
+   "kind": "note",
+   "label": "rise cover sheet 3265 to 3276 at review tier on the merged tree",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T16:42:32.430Z",
+   "file": "20261121164232430-sheet-jupiter.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.rise, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3265,
+   "last": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T16:42:30.689Z",
+   "file": "20261121164230689-frame-f03276-review.jpg",
+   "source": "out/work/sheets/.frames-oNNXf5/f03276-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3276, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T16:19:43.664Z",
    "file": "20261121161943664-note-jupiter.rise-16x9-review.jpg",
@@ -23,42 +60,6 @@
    "first": 3240,
    "last": 3314,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:18:40.443Z",
-   "file": "20261121161840443-frame-f03307-review.jpg",
-   "source": "out/work/sheets/.frames-pxCCo9/f03307-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3307, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3307,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:03:58.469Z",
-   "file": "20261121160358469-note-strip_rise_r3i.jpg",
-   "source": "out/work/view/strip_rise_r3i.jpg",
-   "kind": "note",
-   "label": "rise 3274 to 3290 with the roll taken out (climbOut.turn 12), merged tree, drafts",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T16:02:04.905Z",
-   "file": "20261121160204905-still-f03290-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03290-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3290, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3290,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
