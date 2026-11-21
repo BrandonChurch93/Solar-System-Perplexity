@@ -1,59 +1,35 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T07:02:12.016Z",
- "head": "384baabe703b74143942e665e00b98cca3b1f07f",
- "note": "dive and rise: rise strip on engine batch 6, tuning the haze shell",
+ "pushed": "2026-11-21T07:30:41.250Z",
+ "head": "a098240edf71306e99413d213539c9888cd21543",
+ "note": "dive and rise: smooth motion blur on the fast frames (blur inside each sample, jitter taken out of the cloud lookup)",
  "looks": [
   {
-   "time": "2026-11-21T07:02:11.364Z",
-   "file": "20261121070211364-note-rise1-1586.jpg",
-   "source": "out/work/venus/strip/rise1-1586.png",
+   "time": "2026-11-21T07:30:40.653Z",
+   "file": "20261121073040653-note-crop-1305-zz4.jpg",
+   "source": "out/work/venus/strip/crop-1305-zz4.png",
    "kind": "note",
-   "label": "judged rise frame 1586 at review",
+   "label": "dive 1305 night side, 5x crop, gain 2, review tier: before (top) and after taking the per sample jitter out of the blurred cloud lookup (bottom): continuous streaks",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T07:02:10.829Z",
-   "file": "20261121070210829-note-rise1.jpg",
-   "source": "out/work/venus/strip/rise1.jpg",
-   "kind": "note",
-   "label": "rise strip at review, frames 1546 to 1595, engine batch 6: haze cover with a 14 frame tail",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T07:00:49.953Z",
-   "file": "20261121070049953-frame-rise1-1595.jpg",
-   "source": "out/work/venus/strip/rise1-1595.png",
+   "time": "2026-11-21T07:30:32.848Z",
+   "file": "20261121073032848-frame-jit-1305.jpg",
+   "source": "out/work/venus/ab/jit-1305.png",
    "kind": "frame",
-   "label": "venus.rise frame 1595, review tier",
+   "label": "venus.dive frame 1305, draft tier",
    "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1595,
-   "tier": "review",
+   "segment": "venus.dive",
+   "frame": 1305,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:46:38.923Z",
-   "file": "20261121064638923-note-view-a-1024.jpg",
-   "source": "out/work/venus/patches/view-a-1024.jpg",
-   "kind": "note",
-   "label": "dive patch level A (90 deg about the spot), albedo encoding",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T06:46:37.964Z",
-   "file": "20261121064637964-note-d-view.jpg",
-   "source": "out/work/venus/patches/d-view.jpg",
-   "kind": "note",
-   "label": "dive patch level D: canvas (left) and generated detail (right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T06:44:45.151Z",
-   "file": "20261121064445151-frame-b-1185.jpg",
-   "source": "out/work/venus/ab/b-1185.png",
+   "time": "2026-11-21T07:30:11.358Z",
+   "file": "20261121073011358-frame-jit-1185.jpg",
+   "source": "out/work/venus/ab/jit-1185.png",
    "kind": "frame",
    "label": "venus.hold frame 1185, draft tier",
    "stop": "venus",
@@ -62,7 +38,37 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "704d5d55f51b7b15"
+  },
+  {
+   "time": "2026-11-21T07:28:08.023Z",
+   "file": "20261121072808023-note-crop-1305-zz3.jpg",
+   "source": "out/work/venus/strip/crop-1305-zz3.png",
+   "kind": "note",
+   "label": "dive 1305 night side, 5x crop, gain 2: review 16 samples with blur inside each sample (top, ladder rungs from the per sample jitter) against one sample blurred over the whole shutter (bottom)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T07:17:11.088Z",
+   "file": "20261121071711088-frame-t-1570.jpg",
+   "source": "out/work/venus/strip/t-1570.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1570, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1570,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "704d5d55f51b7b15"
+  },
+  {
+   "time": "2026-11-21T07:02:11.364Z",
+   "file": "20261121070211364-note-rise1-1586.jpg",
+   "source": "out/work/venus/strip/rise1-1586.png",
+   "kind": "note",
+   "label": "judged rise frame 1586 at review",
+   "stop": "venus"
   },
   {
    "time": "2026-11-21T05:59:55.451Z",
