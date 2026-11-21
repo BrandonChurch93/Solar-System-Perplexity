@@ -558,3 +558,7 @@ Beyond the ten frames: a hash over the shots of all 5400 frames at the three shu
 `npx tsc --noEmit` clean, `npx vitest run` 14 files and 69 tests (5 new in `tests/cover.test.ts`: the default, more seconds about the same centre, a moved centre and the clamp to the segment, bad numbers, the plan field through amount, view switch and film shots), `npm run build` clean.
 
 Not done: no frame was rendered with a longer window (the demonstration is numbers from the director); no stop file, `kit/` file or `tools/animatic.py` was touched, so `kit/03-METHOD.md` line 113, `kit/05-ARCHITECTURE.md` line 47 and the animatic still speak of the film wide window only; Venus and Uranus need their own shape numbers to lengthen their covers.
+
+## Task 6: engine batch 16
+
+Working notes and proof are in `assets-src/shared/BATCH16.md` on the branch `agent/engine-batch16` (read that file after a compaction).
