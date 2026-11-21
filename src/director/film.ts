@@ -485,14 +485,15 @@ export class FilmDirector implements Director {
       const p = this.plans[i]!
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
-      const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
+      const arrived = segment.kind === 'retreat' ? smooth(ramp(OPEN.retreatGlare, 1, u)) : 1
       light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
         const b = look(time)
-        const w = smoother(ramp(0, 1, u))
-        const wp = easeInOut(u)
+        const lead = u + OPEN.retreatLead * Math.pow(Math.sin(Math.PI * u), 2)
+        const w = smoother(ramp(0, 1, lead))
+        const wp = easeInOut(lead)
         const dir = slerpDir(a.position.clone().normalize(), b.position.clone().normalize(), wp)
         const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
         const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
