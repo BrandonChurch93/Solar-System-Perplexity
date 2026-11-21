@@ -1,53 +1,61 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T07:33:53.902Z",
- "head": "0ffff90619f7e62aebe493c41a4e54f39cfbc91d",
- "note": "frame 0 foreground: cause found (the wide take is low resolution and not true to the ground); fix in work: a second painted plate projected from the frame 0 camera",
+ "pushed": "2026-11-21T07:51:52.460Z",
+ "head": "5d7e84dbd8f73f34d7ae31d4e708a366c1a64ea0",
+ "note": "apron plate for the near ground of frame 0; READY checks next",
  "looks": [
   {
-   "time": "2026-11-21T07:33:53.334Z",
-   "file": "20261121073353334-note-td-near.jpg",
-   "source": "out/work/sun/td-near.jpg",
+   "time": "2026-11-21T07:51:51.926Z",
+   "file": "20261121075151926-note-f60-c01-centre.jpg",
+   "source": "out/work/sun/f60-c01-centre.jpg",
    "kind": "note",
-   "label": "the plate seen from straight above, near field (cyan: the approved frame): cells are round inside it, soft and stretched in the generated sides; this is what smears the corners of frame 0",
+   "label": "frame 60 bottom centre, native crop: the lowest strip is apron ground, softer than the approved plate above",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T07:27:13.005Z",
-   "file": "20261121072713005-frame-f0-noboil.jpg",
-   "source": "out/work/sun/f0-noboil.png",
+   "time": "2026-11-21T07:51:51.392Z",
+   "file": "20261121075151392-note-f60-apron.jpg",
+   "source": "out/work/sun/f60-apron.jpg",
+   "kind": "note",
+   "label": "frame 60 with the apron, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T07:51:50.877Z",
+   "file": "20261121075150877-note-f0-apron-corners.jpg",
+   "source": "out/work/sun/f0-apron-corners.jpg",
+   "kind": "note",
+   "label": "frame 0 lower corners with the apron, native crops",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T07:51:50.335Z",
+   "file": "20261121075150335-note-f0-apron.jpg",
+   "source": "out/work/sun/f0-apron.jpg",
+   "kind": "note",
+   "label": "frame 0 with the new apron plate for the near ground, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T07:49:13.552Z",
+   "file": "20261121074913552-frame-f60-noboil.jpg",
+   "source": "out/work/sun/f60-noboil.png",
    "kind": "frame",
-   "label": "sun.terrain frame 0, draft tier",
+   "label": "sun.terrain frame 60, draft tier",
    "stop": "sun",
    "segment": "sun.terrain",
-   "frame": 0,
+   "frame": 60,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T07:19:19.827Z",
-   "file": "20261121071919827-note-f0-ll.jpg",
-   "source": "out/work/sun/f0-ll.jpg",
+   "time": "2026-11-21T07:33:53.334Z",
+   "file": "20261121073353334-note-td-near.jpg",
+   "source": "out/work/sun/td-near.jpg",
    "kind": "note",
-   "label": "frame 0 lower left at native size: stretched cells from the folded ground, in work",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T07:19:19.296Z",
-   "file": "20261121071919296-note-h-phone.jpg",
-   "source": "out/work/sun/h-phone.jpg",
-   "kind": "note",
-   "label": "hold at phone size after the straighter corona: 270 306 342 378 414 449",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T07:19:18.757Z",
-   "file": "20261121071918757-note-c-l4.jpg",
-   "source": "out/work/sun/c-l4.jpg",
-   "kind": "note",
-   "label": "left limb after wrap take 3: hero, film 270, 360, 449 (review)",
+   "label": "the plate seen from straight above, near field (cyan: the approved frame): cells are round inside it, soft and stretched in the generated sides; this is what smears the corners of frame 0",
    "stop": "sun"
   },
   {
@@ -73,20 +81,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T06:02:44.215Z",
-   "file": "20261121060244215-compare-compare-sun-terrain-view.jpg",
-   "source": "out/work/compare/compare-sun-terrain-view.jpg",
-   "kind": "compare",
-   "label": "sun.terrain: approved image left, film frame right, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
