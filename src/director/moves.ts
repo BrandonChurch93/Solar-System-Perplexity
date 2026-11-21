@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { CoverHorizon, Pose } from '../core/types'
-import { coverWindow } from './timeline'
+import { coverWindow, setCoverWindow, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -35,6 +35,7 @@ export interface MoveParams {
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
   coverHides?: number
+  coverWindow?: CoverTimings
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
@@ -129,6 +130,7 @@ export class StopPlan {
     this.id = id
     this.fit = fit
     this.p = p
+    setCoverWindow(id, p.coverWindow)
     const find = (kind: string): Segment | undefined => config.segments.find((s) => s.stop === id && s.kind === kind)
     const hold = find('hold')
     const terrain = find('terrain')
