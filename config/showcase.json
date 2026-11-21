@@ -47,8 +47,8 @@
   },
   "tiers": {
     "draft": {"samplesPerFrame": 1, "fastSamplesPerFrame": 1, "maxSamplesPerFrame": 1},
-    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16, "maxSamplesPerFrame": 64},
-    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64, "maxSamplesPerFrame": 128}
+    "review": {"samplesPerFrame": 4, "fastSamplesPerFrame": 16, "maxSamplesPerFrame": 128},
+    "final": {"samplesPerFrame": 16, "fastSamplesPerFrame": 64, "maxSamplesPerFrame": 256}
   },
   "motion": {
     "fastKinds": [
