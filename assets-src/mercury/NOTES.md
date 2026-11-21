@@ -90,3 +90,20 @@ Read `assets-src/shared/STOP-AGENT.md` first, then this file.
 ## Generated inputs kept (scratch, `out/work/mercury/gen/`)
 
 - `sky-fill-take1.png` (planet and ghost removed), `sky-wide-take1.png` (hero extended past its edges), `sun-full-take1.png` (Sun completed as a whole disc). Prompts are in `sky/RECIPE.md`.
+
+## Session 5 (05:06 to 05:40 UTC): what changed
+
+- Main merged at 2d2161b (engine batch 4) in ce617d6. Before `READY`: `npm run -s gate -- --phase 4 --only G11` (every file under `public/assets/mercury/` must be named in a `RECIPE.md` as `public/assets/mercury/<set>/NAME`), then `npm run -s gate -- --phase 4 --only G12,G15 --g15-stops mars,mercury`; the three results go in the `READY` message.
+- Relief rebuilt from the deblocked 2x close image; wrap rebuilt from the deblocked hero 2x (`wrap/match.py ... out/work/mercury/hero-db-2x.png`; old wrap backup `out/work/mercury/wrap-color-before-db.jpg`).
+- Terrain sky patch wired (`sky.json` terrain entry: vfov 60, margin 0.22727, feather 0.1, gain 4) and fixed twice with `sky/terrain.py fix FILM`.
+- Relief lens fix (`relief/lens.py FILM [--fresh]`): measures approved over film on the ground in scene values and writes `out/work/mercury/relief/lens-fix.npy`, which `relief/build.py` multiplies into the relief color. The film's bloom (mix 0.08) lifts the shadows; before the fix ground 1.027, shadows 1.16.
+- Frame 870 at review, film over approved (`out/work/mercury/tprobe.py out/work/mercury/t870-fix2.png`): sky median 1.000 (p10 0.957, p90 1.025), near the Sun 1.000, dark sky right 1.001, ground 0.994 (p10 0.943, p90 1.041), under the Sun 0.998, shadows 1.007, bright ground 0.995. Laplacian rms film over approved: ground 1.138, sky 1.271.
+- Terrain plan: `side -0.1, yawDeg 3, entryBack 0.25` (was side 0.15, yaw -3, entryBack 0.3, which showed a black wedge at the lower left of frame 752: canvas x down to -1067 against the apron limit -640). Check: `TERRAIN='{...}' FRAMES=744,752,781 npx tsx out/work/mercury/check-apron.ts`. Now frame 744 sees x -583..3443, ymax under 1859. Frames 744 to 780 are the terrain pose extended backwards (`diveTerrain`).
+- Engine cover (`src/terrain/cover.ts`) is a noise cloud; with cover color `[1.7, 1.35, 0.95]` it reads as a tan dust storm at frame 748: wrong for Mercury.
+- Spot (`patches/spot.json`, from `out/work/mercury/dump-spot.ts`): lon 16.23496085, lat -14.51785112, normal [0.27065, -0.25068, 0.92947], heading [0.96034, 0.13756, -0.24254] (about east), light elevation 6.01 degrees. Camera height 0.0162 radii, 1 height = 0.93 degrees.
+- `patches/close.py WIDTH_DEG SIZE SRC OUT`: the extended close canvas rectified into a north-up gnomonic patch about the spot (`OUT` and `OUT-mask.png`). It covers 0.26 of a 19 degree patch and 0.355 of a 9.5 degree patch (a wedge east of the spot). The terraced crater sits 1.65 degrees east, 0.4 degrees south of the spot, about 1.75 degrees wide. The rectified pixels carry long baked shadows, so they are a layout guide only.
+
+## Decisions (session 5)
+
+- Cover: a stop-local full-screen glare in `near`, additive, alpha factors zero/one, centred on the Sun's screen position (orbit side: the drawn Sun; terrain side: the approved Sun at (745, -40) px of 2816x1584), white for about frames 741 to 747 and 987 to 993, thinning over ten frames or more on each side, with streaks. The engine cover is hidden inside it (`coverEdge: [1, 1]`, cover color far above white). No engine request.
+- Dive patches: four levels, 76, 38, 19, 9.5 degrees at 4096 (web 2048), generated in quadrants with seedream, low frequencies locked to the parent, nested bottom up. Levels 3 and 4 carry the terraced crater at its rectified place. Level 1 keeps the wrap's low frequencies.
