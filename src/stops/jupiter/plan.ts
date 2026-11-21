@@ -21,7 +21,7 @@ export const params: MoveParams = {
   coverShell: [1.0, 1.015],
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.45, 0.3] },
   spinDegPerSecond: 1.6,
-  moonDegPerSecond: 0.9,
+  moonDegPerSecond: 2.6,
   tint: [0.9, 0.75, 0.55],
 }
 

@@ -223,6 +223,17 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - `strip_cut4.jpg` checked: centre brightness (R) 3021 162, 3023 152, 3024 148, 3025 144, 3026 140, 3027 137, 3028 135, 3030 131, 3033 128; exit 3262 132, 3266 137, 3268 144, 3269 149, 3270 156, 3271 160, 3273 184. No dip any more, top right 0 on both sides of both cuts. Committed f505575.
 - With the dip gone the strip over the limb stood out as a bright cream band next to the fog at 3028 to 3035 (it was as bright as the far deck). Third and last take of the fill: `canvas.py` multiplies the haze by 0.3, so the strip is always dimmer than the deck under it. `strip_band4.jpg`, `band4_3060_crops.jpg`: a dim warm glow over the limb at 3028 to 3100 that fades up; stars begin at its top (about 3 deg over the limb at 3060). Kept; binaries of this take are the ones to commit for this round (`deck-wide.jpg`, `deck-core.jpg`, `sky-terrain.webp`, both sets).
 
+## Round 8 running (from 08:57 UTC, judged at b3bc1be)
+
+- Builder's mail 08:57: round 8 (first of three) renders from `agent/jupiter` at b3bc1be on twelve machines; everything pushed after b3bc1be (cover tone f505575, dimmed strip 0877121, Io below) is judged in the next round. Scorecard expected 10:00 to 10:30 UTC.
+- Review sheets after the cover fix: `jupiter.rise-16x9-review.png` (3240 to 3253 exit with fog gathering, 3267 cover, 3274 bright veil, 3280 rush with blur, 3287 to 3314 planet lit from the top, dark lower half against the next stop's Milky Way, Io beside the storm with a long shadow streak), `jupiter.hold-16x9-review.png` (planet nearly static on screen, stars slide).
+- Hold motion measured with `out/work/jupiter/tools/io.ts` (screen positions of the disc, the storm and Io per frame, in disc radii from the disc centre, 1920 wide): storm 2820 (-0.40, 0.25) to 2969 (-0.36, 0.23), 19 px; Io at `moonDegPerSecond 0.9` (0.19, 0.31) to (0.16, 0.28), 10 px. Cause: the camera orbits 1.2 deg/s the same way the planet spins 1.6 deg/s and Io turned 0.9 deg/s, so Io stood still on screen. Io does not cross the disc.
+- Io rates tried in the tool (hold start to hold end, then judged rise 3296): 2 gives (0.12, 0.31) to (0.22, 0.28), 51 px, rise (-0.03, -0.18); 2.4 gives 0.10 to 0.25, rise (-0.01, -0.07); 2.8 gives 0.08 to 0.27, 95 px, rise (0.01, 0.05). Storm at 3296 is at (-0.13, -0.71), so every faster rate moves Io away from it. 2895 does not change (Io is anchored at the hold mid).
+- `strip_io_rate2.jpg` (rate 2): Io leaves the frame before 3281 (it was 92 px wide at the disc centre there), enters from the bottom at 3283 and sits on the terminator from 3290 on, lit, its shadow falls on the night side. Io past 17 deg behind the terminator would be in Jupiter's shadow (the set computes that eclipse), so rates above about 3 would hide it in the rise.
+- Chosen `moonDegPerSecond 2.6` (about 0.18 radii, 85 px across the hold).
+- Band flow and storm turn in the hold seen on 2820 against 2969 (`out/work/view/hold_pairs.jpg`, `hold_diff.jpg`): the storm arms turn about 22 deg, band edges shear against each other, the wisp layer drifts. Small by design (closed form, settles within a segment).
+- The second full measure was stopped at 220 of 463 to change Io; it runs again at the new head before any gate claim.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
