@@ -1,12 +1,28 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T03:49:50.867Z",
- "head": "37a41d9a2a1bd8e38396017916455d327ac8f09b",
- "note": "Globe wrap from the hero's pixels and measured light curve in; next: ring tone, limb haze fit, sky patches",
+ "pushed": "2026-11-21T04:13:47.718Z",
+ "head": "ef3c74eb013185a7f68355b277edb12d266f7fcd",
+ "note": "orbit view: light table by latitude, opaque rings in front of the globe, hold sky patch; ring edges still off by up to 24 hero px at the left ansa",
  "looks": [
   {
-   "time": "2026-11-21T03:48:41.800Z",
-   "file": "20261121034841800-frame-hold.jpg",
+   "time": "2026-11-21T04:13:45.384Z",
+   "file": "20261121041345384-note-sky-hold-preview.jpg",
+   "source": "out/work/saturn/sky-hold-preview.jpg",
+   "kind": "note",
+   "label": "hold sky patch from the hero with generated fill behind the body",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T04:13:44.852Z",
+   "file": "20261121041344852-note-ratio.jpg",
+   "source": "out/work/saturn/ratio.jpg",
+   "kind": "note",
+   "label": "hold: film against hero, log ratio of luminance (red film brighter, blue film darker)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T04:12:06.841Z",
+   "file": "20261121041206841-frame-hold.jpg",
    "source": "out/work/saturn/hold.png",
    "kind": "frame",
    "label": "saturn.hold frame 3465, draft tier",
@@ -16,11 +32,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "8186370b5c106d3c"
+   "engine": "434d0a5e367a62fd"
   },
   {
-   "time": "2026-11-21T03:47:49.845Z",
-   "file": "20261121034749845-compare-compare-saturn-hold-view.jpg",
+   "time": "2026-11-21T04:11:53.298Z",
+   "file": "20261121041153298-compare-compare-saturn-hold-view.jpg",
    "source": "out/work/compare/compare-saturn-hold-view.jpg",
    "kind": "compare",
    "label": "saturn.hold: approved image left, film frame right, draft tier",
@@ -30,11 +46,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "8186370b5c106d3c"
+   "engine": "434d0a5e367a62fd"
   },
   {
-   "time": "2026-11-21T03:47:48.701Z",
-   "file": "20261121034748701-still-f03465-16x9-draft-full.jpg",
+   "time": "2026-11-21T04:11:52.282Z",
+   "file": "20261121041152282-still-f03465-16x9-draft-full.jpg",
    "source": "out/work/stills/f03465-16x9-draft-full.png",
    "kind": "still",
    "label": "saturn.hold frame 3465, draft tier",
@@ -44,7 +60,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "8186370b5c106d3c"
+   "engine": "434d0a5e367a62fd"
   },
   {
    "time": "2026-11-21T03:36:07.800Z",
@@ -81,22 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "8186370b5c106d3c"
-  },
-  {
-   "time": "2026-11-21T03:22:49.377Z",
-   "file": "20261121032249377-note-close-polar.jpg",
-   "source": "out/work/saturn/close-polar.jpg",
-   "kind": "note",
-   "label": "Approved close image unprojected to ring polar coordinates with the fitted camera",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T03:22:48.799Z",
-   "file": "20261121032248799-note-profiles.jpg",
-   "source": "out/work/saturn/profiles.jpg",
-   "kind": "note",
-   "label": "Ring radial profiles: hero (top), close image A-ring window, close image B-ring window",
-   "stop": "saturn"
   }
  ]
 }
