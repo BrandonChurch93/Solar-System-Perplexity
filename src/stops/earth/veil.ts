@@ -27,7 +27,6 @@ uniform vec3 uCentre;
 uniform vec2 uShell;
 uniform vec4 uSun;
 uniform vec4 uNadir;
-uniform float uWhole;
 uniform int uDiag;
 in vec2 vUv;
 out vec4 outColor;
@@ -70,20 +69,19 @@ void main() {
   float wisp = fbm(q * vec2(4.0, 13.0) + uFlow * 2.3 + 5.0) - 0.47;
   float billow = uContrast.x * rush(p, uBillow);
   float fine = uContrast.y * rush(p, uStreak);
-  float open = 1.0 - uWhole;
-  float band = smoothstep(-uSoft, uSoft, s + 0.12 * streak + 0.2 * billow) * open;
+  float band = smoothstep(-uSoft, uSoft, s + 0.12 * streak + 0.2 * billow);
   vec3 col = mix(uLow, uColor, band) * (1.0 + 0.5 * streak + 0.22 * wisp) * max(1.0 + billow + fine, 0.15);
-  col *= mix(1.0, uTop, smoothstep(0.0, 0.22, s) * open) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
+  col *= mix(1.0, uTop, smoothstep(0.0, 0.22, s)) * mix(1.0, 0.7, smoothstep(0.0, -0.6, s));
   float a = smoothstep(0.0, 1.0, uAmount * (1.1 + 1.1 * streak + 0.5 * wisp + 1.6 * billow + 1.2 * fine) - 0.22 * (1.0 - uAmount));
   vec3 ray = normalize(vec3(p, -1.0));
   float reach = dot(uCentre, ray);
   float miss = reach > 0.0 ? sqrt(max(dot(uCentre, uCentre) - reach * reach, 0.0)) : length(uCentre);
-  a *= 1.0 - smoothstep(uShell.x, uShell.y, miss) * open;
+  a *= 1.0 - smoothstep(uShell.x, uShell.y, miss);
   vec3 hit = ray * (reach - sqrt(max(1.0 - miss * miss, 0.0))) - uCentre;
   col *= mix(1.0, mix(0.03, 1.0, smoothstep(-0.1, 0.3, dot(normalize(hit), uSun.xyz))), uSun.w);
   float above = acos(clamp(dot(ray, uNadir.xyz), -1.0, 1.0)) - uNadir.w;
-  a *= 1.0 - smoothstep(-0.05, -0.012, above) * open;
-  outColor = vec4(col, mix(a, 1.0, uWhole));
+  a *= 1.0 - smoothstep(-0.05, -0.012, above);
+  outColor = vec4(col, a);
 }`
 
 const OPEN = 1e9
@@ -102,7 +100,7 @@ export class Veil {
         uFlow: { value: new THREE.Vector2() }, uTan: { value: new THREE.Vector2(1, 1) }, uTop: { value: 0.3 },
         uFocus: { value: new THREE.Vector3() }, uBillow: { value: new THREE.Vector3(1, 1, 1) }, uStreak: { value: new THREE.Vector3(1, 1, 1) }, uContrast: { value: new THREE.Vector2() },
         uCentre: { value: new THREE.Vector3() }, uShell: { value: new THREE.Vector2(OPEN, 2 * OPEN) },
-        uSun: { value: new THREE.Vector4(0, 0, 1, 0) }, uNadir: { value: new THREE.Vector4(0, -1, 0, 10) }, uWhole: { value: 0 },
+        uSun: { value: new THREE.Vector4(0, 0, 1, 0) }, uNadir: { value: new THREE.Vector4(0, -1, 0, 10) },
         uDiag: diag,
       },
       transparent: true,
@@ -120,11 +118,10 @@ export class Veil {
     this.mesh.visible = false
   }
 
-  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, sea: { nadir: THREE.Vector3; alpha: number } | null, rim: [number, number], whole = 0): void {
+  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, sea: { nadir: THREE.Vector3; alpha: number } | null, rim: [number, number]): void {
     this.mesh.visible = amount > 0 && cover.low !== undefined
     if (!this.mesh.visible) return
     const u = this.material.uniforms
-    u.uWhole!.value = whole
     ;(u.uColor!.value as THREE.Vector3).fromArray(cover.color).multiplyScalar(1 / exposure)
     ;(u.uLow!.value as THREE.Vector3).fromArray(cover.low ?? cover.color).multiplyScalar(1 / exposure)
     u.uAmount!.value = amount

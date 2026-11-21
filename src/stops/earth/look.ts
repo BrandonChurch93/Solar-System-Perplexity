@@ -33,11 +33,11 @@ export const air: AirLook = airJson
 
 export const shape: number[][] = shapeJson.matrix
 
-export const descent = { high: 0.7, low: 0.05 }
+export const descent = { high: 0.7, low: 0.05, air: 0.25, glow: { dive: [0.15, 1.1, 1.15] as [number, number, number], rise: [0.6, 2.4, 2] as [number, number, number] } }
 
 export const moon: MoonLook = moonJson
 export const aurora: AuroraLook = auroraJson
 
 export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0], fold: 110, lock: [-0.014, -0.003] }
 
-export const veil = { lead: 0.5, tail: [0.85, 0.5] as [number, number], peak: 0.6, rim: [0.985, 1.003] as [number, number], whole: [0.78, 0.97, 0.62] as [number, number, number] }
+export const veil = { lead: 0.5, tail: [0.85, 0.5] as [number, number], peak: 0.6, rim: [0.985, 1.003] as [number, number] }

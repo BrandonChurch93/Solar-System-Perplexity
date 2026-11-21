@@ -81,6 +81,7 @@ export const createSet: SetFactory = async (ctx) => {
   const back = new THREE.Quaternion()
   const sunLocal = new THREE.Vector3()
   const sunView = new THREE.Vector3()
+  const airTint = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
   const sea = { nadir: new THREE.Vector3(), alpha: 0 }
@@ -102,29 +103,26 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const seg = state.segment
       let thin = 0
-      let whole = 0
       if (seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')) {
         const w = coverWindow(seg)!
         const centre = w.centerFrame / config.fps
         const from = w.firstFrame / config.fps - look.veil.lead
         const to = (w.lastFrame + 1) / config.fps + look.veil.tail[seg.kind === 'dive' ? 0 : 1]
         thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
-        const lo = look.veil.whole[state.time < centre ? 0 : 2]
-        if (seg.kind === 'rise') whole = smooth((shot.cover.amount - lo) / (look.veil.whole[1] - lo))
       }
       if (!inOrbit) {
         back.copy(state.rotation).invert()
         sea.nadir.copy(world.position).applyQuaternion(back).add(seaCentre)
         sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
         sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
-        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim, whole)
+        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye.copy(world.position).applyQuaternion(back).negate())
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
-      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim, whole)
+      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim)
       camera.copy(world.position).negate()
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
@@ -144,6 +142,11 @@ export const createSet: SetFactory = async (ctx) => {
       ;(au.uGlowDir!.value as THREE.Vector3).copy(light).applyQuaternion(back).multiplyScalar(Math.max(low, lit)).addScaledVector(glowHome, 1 - Math.max(low, lit)).normalize()
       au.uGain!.value = gain * state.weight
       au.uWide!.value = 1 - low
+      const thinAir = 1 + (d.air - 1) * low
+      ;(au.uHeight!.value as THREE.Vector4).set(look.air.heights[0]! * thinAir, look.air.heights[1]! * thinAir, look.air.heights[2]!, look.air.heights[3]!)
+      const layers = au.uColor!.value as THREE.Vector3[]
+      const tint = seg.kind === 'rise' ? d.glow.rise : d.glow.dive
+      for (let i = 0; i < 2; i++) layers[i]!.fromArray(look.air.colors[i]!).multiply(airTint.set(1 + (tint[0] - 1) * low, 1 + (tint[1] - 1) * low, 1 + (tint[2] - 1) * low))
       au.uPhysical!.value = state.time >= plan.seg.terrain.start ? 1 : Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
