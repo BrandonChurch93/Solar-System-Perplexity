@@ -1,9 +1,53 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T04:45:31.068Z",
- "head": "da674e48b67cea3b9ea6452f0f1f4424126dd9f2",
- "note": "hold: globe shadow on rings fitted to the hero (open wedge, near black, stars hidden); terrain: joint-fit camera, ring layout warp, close sky patch; terminator and junction next",
+ "pushed": "2026-11-21T05:11:04.263Z",
+ "head": "8547e2900f6c89060992646494cf04ff5bde83cf",
+ "note": "terrain view: ring layout of the approved close image under the globe (bands are not concentric there), close light and shadow next",
  "looks": [
+  {
+   "time": "2026-11-21T05:11:03.640Z",
+   "file": "20261121051103640-note-close-plan.jpg",
+   "source": "out/work/saturn/close-plan.jpg",
+   "kind": "note",
+   "label": "approved close image projected onto the fitted ring plane (plan view, camera at the magenta dot, hero ring radii as circles): bands are not circles about the globe",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T05:11:03.103Z",
+   "file": "20261121051103103-note-pair-terrain.jpg",
+   "source": "out/work/saturn/pair-terrain.jpg",
+   "kind": "note",
+   "label": "terrain 3720 draft under the approved close image: inner ring disc drawn over the globe, light and shadow not fitted yet",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T05:02:53.639Z",
+   "file": "20261121050253639-frame-hold.jpg",
+   "source": "out/work/saturn/hold.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T04:58:17.712Z",
+   "file": "20261121045817712-frame-terrain.jpg",
+   "source": "out/work/saturn/terrain.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
   {
    "time": "2026-11-21T04:45:30.453Z",
    "file": "20261121044530453-note-side-shadow.jpg",
@@ -53,62 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:37:19.093Z",
-   "file": "20261121043719093-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:36:39.514Z",
-   "file": "20261121043639514-frame-hold.jpg",
-   "source": "out/work/saturn/hold.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:28:33.326Z",
-   "file": "20261121042833326-frame-terrain-az15.jpg",
-   "source": "out/work/saturn/terrain-az15.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:18:32.932Z",
-   "file": "20261121041832932-job-frame-03465.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.hold frame 3465, review tier, nograin view, from the running measure job",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
