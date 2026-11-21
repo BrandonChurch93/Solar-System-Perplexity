@@ -1,48 +1,12 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T05:29:36.577Z",
- "head": "0ac38d495faaa80ef5e542a245f21297e037df8e",
- "note": "Terrain: ground layer in motion (first, judged, last, rise), Sun placed above the glint; towers, flow and sky patch next",
+ "pushed": "2026-11-21T05:47:33.946Z",
+ "head": "03b6cb7045b411f1f7b3b14239c67fbd3ce45c03",
+ "note": "terrain: towers layer with lift over a clean plate, judged frame beside the close image; sky patch for the terrain is next",
  "looks": [
   {
-   "time": "2026-11-21T05:29:35.992Z",
-   "file": "20261121052935992-note-t-four.jpg",
-   "source": "out/work/earth/view/t-four.jpg",
-   "kind": "note",
-   "label": "earth.terrain frames 1920, 2010, 2099 and rise frame 2120: ground layer only, the Sun now sits above the top edge over the glint and enters in the rise; sky still the engine sky",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T05:29:14.856Z",
-   "file": "20261121052914856-frame-t-2120.jpg",
-   "source": "out/work/earth/still/t-2120.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2120, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2120,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:28:56.849Z",
-   "file": "20261121052856849-frame-t-2099.jpg",
-   "source": "out/work/earth/still/t-2099.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2099, draft tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2099,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:19:44.087Z",
-   "file": "20261121051944087-compare-compare-earth-terrain-view.jpg",
+   "time": "2026-11-21T05:46:48.346Z",
+   "file": "20261121054648346-compare-compare-earth-terrain-view.jpg",
    "source": "out/work/compare/compare-earth-terrain-view.jpg",
    "kind": "compare",
    "label": "earth.terrain: approved image left, film frame right, draft tier",
@@ -52,11 +16,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:19:43.029Z",
-   "file": "20261121051943029-still-f02010-16x9-draft-full.jpg",
+   "time": "2026-11-21T05:46:47.353Z",
+   "file": "20261121054647353-still-f02010-16x9-draft-full.jpg",
    "source": "out/work/stills/f02010-16x9-draft-full.png",
    "kind": "still",
    "label": "earth.terrain frame 2010, draft tier",
@@ -66,22 +30,46 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
+   "engine": "a7e2e4a9a2b7be97"
   },
   {
-   "time": "2026-11-21T05:12:33.180Z",
-   "file": "20261121051233180-note-edge-corners-all.jpg",
-   "source": "out/work/earth/view/edge-corners-all.jpg",
+   "time": "2026-11-21T05:46:32.782Z",
+   "file": "20261121054632782-note-relief-under.jpg",
+   "source": "out/work/earth/view/relief-under.jpg",
    "kind": "note",
-   "label": "terrain relief: canvas with the three margins, corner take (aligned)",
+   "label": "terrain ground under the towers: clean plate with membrane fill, shadows kept",
    "stop": "earth"
   },
   {
-   "time": "2026-11-21T05:04:22.584Z",
-   "file": "20261121050422584-note-edge-takes.jpg",
-   "source": "out/work/earth/view/edge-takes.jpg",
+   "time": "2026-11-21T05:46:32.226Z",
+   "file": "20261121054632226-note-relief-lift.jpg",
+   "source": "out/work/earth/view/relief-lift.jpg",
    "kind": "note",
-   "label": "terrain relief: margin takes for the left, right and bottom edges (aligned)",
+   "label": "terrain towers: matte and lift field over the approved close image",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:37:56.547Z",
+   "file": "20261121053756547-note-matte-a.jpg",
+   "source": "out/work/earth/view/matte-a.jpg",
+   "kind": "note",
+   "label": "terrain relief: tower matte take 1 outlined on the close image (foreground crop)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:37:55.945Z",
+   "file": "20261121053755945-note-plate-t1.jpg",
+   "source": "out/work/earth/view/plate-t1.jpg",
+   "kind": "note",
+   "label": "terrain relief: plate take 1, towers and their shadows painted out (used only beneath the towers)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T05:29:35.992Z",
+   "file": "20261121052935992-note-t-four.jpg",
+   "source": "out/work/earth/view/t-four.jpg",
+   "kind": "note",
+   "label": "earth.terrain frames 1920, 2010, 2099 and rise frame 2120: ground layer only, the Sun now sits above the top edge over the glint and enters in the rise; sky still the engine sky",
    "stop": "earth"
   },
   {
