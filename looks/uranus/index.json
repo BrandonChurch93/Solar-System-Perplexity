@@ -1,90 +1,90 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T11:10:48.359Z",
- "head": "fd27cc161693df8e45f6018bdb4cda235e981fd4",
- "note": "round 2: covers rebuilt so both sides are one move; engine sky ray bug found and requested",
+ "pushed": "2026-11-21T11:46:38.457Z",
+ "head": "1951b7bd887e8f83144f4917a12bd57ae9310679",
+ "note": "round 2: covers now one move on both sides, near grade, ring fade; next the plate edge and sky margin",
  "looks": [
   {
-   "time": "2026-11-21T11:10:47.738Z",
-   "file": "20261121111047738-note-uranus-4412-before-after.jpg",
-   "source": "out/work/u/eng/uranus-4412-before-after.jpg",
+   "time": "2026-11-21T11:46:37.891Z",
+   "file": "20261121114637891-note-look-n-sheet.jpg",
+   "source": "out/work/u/r4/look-n-sheet.jpg",
    "kind": "note",
-   "label": "4412 cover off, before and after engine request 1 (sky ray): Sun disc back",
+   "label": "terrain 4175 4200 4216 4260 4330 4379 draft, plate edge at lower right still open",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T11:10:47.219Z",
-   "file": "20261121111047219-note-f-sheet.jpg",
-   "source": "../../../../tmp/f-sheet.jpg",
+   "time": "2026-11-21T11:46:37.375Z",
+   "file": "20261121114637375-note-look-l-sheet.jpg",
+   "source": "out/work/u/r4/look-l-sheet.jpg",
    "kind": "note",
-   "label": "rise 4409 to 4417, cover switched off: both sides of the cover now share pose, horizon, arcs; Sun and band missing 4411 to 4415 (engine sky ray, request 1)",
+   "label": "dive 4138 to 4150, globe to deck by altitude (before ring fade)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T11:10:01.102Z",
-   "file": "20261121111001102-frame-h-4412.jpg",
-   "source": "out/work/u/r4/h-4412.png",
+   "time": "2026-11-21T11:46:36.838Z",
+   "file": "20261121114636838-note-look-m-sheet.jpg",
+   "source": "out/work/u/r4/look-m-sheet.jpg",
+   "kind": "note",
+   "label": "rise 4416 to 4424 and dive 4144 to 4148 with the near grade and ring fade by altitude",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:46:36.307Z",
+   "file": "20261121114636307-note-look-k-sheet.jpg",
+   "source": "out/work/u/r4/look-k-sheet.jpg",
+   "kind": "note",
+   "label": "rise cover 4400 to 4422 step 2, draft, before the near grade",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:46:35.756Z",
+   "file": "20261121114635756-note-look-j-sheet.jpg",
+   "source": "out/work/u/r4/look-j-sheet.jpg",
+   "kind": "note",
+   "label": "dive cover 4150 to 4176 step 2, draft, cover on: both sides one shot",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:45:53.483Z",
+   "file": "20261121114553483-frame-n-4175-layers.jpg",
+   "source": "out/work/u/r4/n-4175-layers.png",
    "kind": "frame",
-   "label": "uranus.rise frame 4412, draft tier",
+   "label": "uranus.dive frame 4175, draft tier, layers view",
    "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4412,
+   "segment": "uranus.dive",
+   "frame": 4175,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:41:29.190Z",
+   "file": "20261121114129190-frame-n-4379.jpg",
+   "source": "out/work/u/r4/n-4379.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4379, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4379,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
   },
   {
-   "time": "2026-11-21T10:56:45.658Z",
-   "file": "20261121105645658-frame-d-4160.jpg",
-   "source": "out/work/u/r4/d-4160.png",
+   "time": "2026-11-21T11:35:56.855Z",
+   "file": "20261121113556855-frame-m-4424.jpg",
+   "source": "out/work/u/r4/m-4424.png",
    "kind": "frame",
-   "label": "uranus.dive frame 4160, draft tier",
+   "label": "uranus.rise frame 4424, draft tier",
    "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4160,
+   "segment": "uranus.rise",
+   "frame": 4424,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T10:44:50.682Z",
-   "file": "20261121104450682-note-b-rise.jpg",
-   "source": "out/work/u/r4/b-rise.jpg",
-   "kind": "note",
-   "label": "rise, new path draft: view follows the climb; halo cut line at 4416 found (fixed next)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:44:49.720Z",
-   "file": "20261121104449720-note-b-dive.jpg",
-   "source": "out/work/u/r4/b-dive.jpg",
-   "kind": "note",
-   "label": "dive, two beat path draft: 4137 calm over the lit side, pose and horizon continuous across the cover; colour, Sun and rings not yet",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:29:01.288Z",
-   "file": "20261121102901288-note-a-rise.jpg",
-   "source": "out/work/u/r4/a-rise.jpg",
-   "kind": "note",
-   "label": "rise, new camera path, first draft (work in progress: globe leaves the frame at 4424, to fix)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T09:53:12.870Z",
-   "file": "20261121095312870-frame-a-4035.jpg",
-   "source": "out/work/u/r3/a-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, review tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
