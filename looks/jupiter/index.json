@@ -1,9 +1,83 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T05:05:07.938Z",
+ "pushed": "2026-11-21T05:31:57.956Z",
  "head": "75fa88a0bfa2829e4167fe2987b627535b7cb64b",
- "note": "orbit view milestone: hold beside the hero at review tier, moving to the terrain view",
+ "note": "terrain view first build: aprons, relief mesh, sky patch",
  "looks": [
+  {
+   "time": "2026-11-21T05:31:57.376Z",
+   "file": "20261121053157376-note-compare-jupiter-terrain-view.jpg",
+   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
+   "kind": "note",
+   "label": "terrain view, first build: relief mesh from the approved close image, judged frame 3150 beside the approved picture (draft tier)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T05:31:42.895Z",
+   "file": "20261121053142895-compare-compare-jupiter-terrain-view.jpg",
+   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.terrain: approved image left, film frame right, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:31:41.894Z",
+   "file": "20261121053141894-still-f03150-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03150-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:23:40.234Z",
+   "file": "20261121052340234-note-deck_canvas.jpg",
+   "source": "out/work/view/deck_canvas.jpg",
+   "kind": "note",
+   "label": "terrain aprons: approved close image in the middle, generated tiles left, below and right, pixel aligned (top left still to fill)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T05:15:21.749Z",
+   "file": "20261121051521749-note-close_fit.jpg",
+   "source": "out/work/view/close_fit.jpg",
+   "kind": "note",
+   "label": "terrain camera fit: horizon of the close image (dip 4.4 deg, roll 17 deg at vfov 64)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T05:15:21.124Z",
+   "file": "20261121051521124-note-wide_sd5_b.jpg",
+   "source": "out/work/view/wide_sd5_b.jpg",
+   "kind": "note",
+   "label": "terrain apron trial: one wide outpaint, rejected (the model redrew the picture at another size)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T05:05:38.151Z",
+   "file": "20261121050538151-still-f02895-16x9-review-full.jpg",
+   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
   {
    "time": "2026-11-21T05:03:43.872Z",
    "file": "20261121050343872-compare-compare-jupiter-hold-view.jpg",
@@ -17,86 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T05:03:42.815Z",
-   "file": "20261121050342815-still-f02895-16x9-review-full.jpg",
-   "source": "out/work/stills/f02895-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T04:56:55.531Z",
-   "file": "20261121045655531-note-boost_pair.jpg",
-   "source": "out/work/view/boost_pair.jpg",
-   "kind": "note",
-   "label": "x3 exposure check: 2820, 2969 on top, approved image and 2895 below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:56:55.013Z",
-   "file": "20261121045655013-note-edges.jpg",
-   "source": "out/work/view/edges.jpg",
-   "kind": "note",
-   "label": "frame edges at 2820 (right edge) and 2969 (left edge): margin is new sky, no mirror",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:56:54.484Z",
-   "file": "20261121045654484-note-f2895_e.jpg",
-   "source": "out/work/view/f2895_e.jpg",
-   "kind": "note",
-   "label": "hold 2895: no ghost arc, tail and shells refit, sky margin painted, not mirrored",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:56:21.135Z",
-   "file": "20261121045621135-still-f02969-16x9-review-full.jpg",
-   "source": "out/work/stills/f02969-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2969, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2969,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:56:01.997Z",
-   "file": "20261121045601997-still-f02820-16x9-review-full.jpg",
-   "source": "out/work/stills/f02820-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2820, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:46:13.078Z",
-   "file": "20261121044613078-still-f02997-16x9-review-full.jpg",
-   "source": "out/work/stills/f02997-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
   }
  ]
 }
