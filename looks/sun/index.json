@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T02:45:41.026Z",
+ "pushed": "2026-11-21T02:49:12.839Z",
  "head": "da23ff5f4a48ce5e9e8432d2cd2f4d4a0e059e0f",
- "note": "stand-in hold and terrain beside the approved images, before any work",
+ "note": "reading the engine and the approved images; designing the globe, corona, prominences and the loop stage",
  "looks": [
+  {
+   "time": "2026-11-21T02:49:12.286Z",
+   "file": "20261121024912286-note-close-crops-a.jpg",
+   "source": "out/work/sun/close-crops-a.jpg",
+   "kind": "note",
+   "label": "approved close image at native size, four crops (study, no film pixels yet)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T02:49:11.745Z",
+   "file": "20261121024911745-note-hero-crops-a.jpg",
+   "source": "out/work/sun/hero-crops-a.jpg",
+   "kind": "note",
+   "label": "approved hero at native size, four crops (study, no film pixels yet)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T02:45:00.700Z",
    "file": "20261121024500700-compare-compare-sun-terrain-view.jpg",
