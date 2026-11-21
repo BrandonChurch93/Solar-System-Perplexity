@@ -25,7 +25,7 @@ export interface GlobeLook {
   bloomPre: [number, number, number]
   ripple: [number, number, number]
   dusk: { zone: number[]; fade: number; centre: number[] }
-  away: { tone: number[]; land: number[]; landAt: number[]; flat: number[]; soft: number; dim: number; gate: number[]; far: { light: number[]; cap: number[]; rim: number[]; gold: number[] } }
+  away: { tone: number[]; land: number[]; landAt: number[]; flat: number[]; soft: number; dim: number; gate: number[]; fine: number[]; far: { light: number[]; cap: number[]; rim: number[]; gold: number[]; ring: number[] } }
 }
 
 export interface GlobeOptions {
@@ -117,6 +117,8 @@ uniform vec4 uDuskZone;
 uniform float uDuskFade;
 uniform float uAway;
 uniform float uRise;
+uniform vec4 uFine;
+uniform vec3 uFarRing;
 uniform sampler2D uFarCloud;
 uniform vec3 uNightTone;
 uniform vec4 uNightFlat;
@@ -192,8 +194,9 @@ void main() {
     vec4 far = equirectGrad(uFar, d, uGrad);
     bad = uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held - uFarCap.w * smoothstep(uFarLight.z, uFarLight.w, dot(d, uFarCap.xyz))));
     rim = uAway * (1.0 - smoothstep(uFarRim.x, uFarRim.y, dot(d, uCentreHold)));
-    swap = max(bad, rim * uRise);
-    drift = max(uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held)), rim * uRise);
+    float ring = uRise * (1.0 - smoothstep(uFarRing.x, uFarRing.y, dot(d, uCentreHold)));
+    swap = max(bad, ring);
+    drift = max(uAway * (1.0 - smoothstep(uFarLight.x, uFarLight.y, held)), ring);
     albedo = mix(albedo, far.rgb, swap);
     farLights = far.a * far.a;
   }
@@ -221,13 +224,18 @@ ${PATCH_LEVELS}
   vec3 q = cloudDir(d);
   vec4 cloud = equirectGrad(uCloud, q, uGrad * (1.0 + uNightFlat.z * bad));
   cloud.rgb = mix(cloud.rgb, vec3(dot(cloud.rgb, vec3(1.0 / 3.0))), bad);
-  for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) cloud = mix(cloud, equirectGrad(uFarCloud, q, uGrad), drift);
+  for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) {
+    vec4 fc = equirectGrad(uFarCloud, q, uGrad);
+    float fine = fc.a - textureLod(uFarCloud, lonLat(q), uFine.y).a;
+    cloud *= 1.0 + uAway * uFine.x * fine * (1.0 - drift);
+    cloud = mix(cloud, fc, drift);
+  }
   float a = cloud.a * live;
   vec3 sunM = spinY(uSunW * uBodyToWorld, uSpin);
   vec3 toward = sunM - d * ndl;
   vec3 p = normalize(d + toward * (uShadow.x / max(ndl, uShadow.w)));
-  float thrown = textureLod(uCloud, lonLat(cloudDir(p)), uShadow.z).a * (1.0 - drift);
-  float shadow = 1.0 - uShadow.y * thrown * smoothstep(-0.05, 0.1, ndl) * live;
+  float thrown = textureLod(uCloud, lonLat(cloudDir(p)), uShadow.z - uFine.w * uAway).a * (1.0 - drift);
+  float shadow = 1.0 - mix(uShadow.y, uFine.z, uAway) * thrown * smoothstep(-0.05, 0.1, ndl) * live;
   vec3 shade = curveAt(ndl);
   vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * live * dim) * shade * uTint;
   vec3 wide = vec3(0.0);
@@ -252,7 +260,7 @@ ${PATCH_LEVELS}
   float phase = 6.2831853 * noise(uv * vec2(2.0, 1.0) * uTwinkle.z);
   float twinkle = 1.0 + uTwinkle.x * (sin(uTwinkle.y * uClock + phase) - sin(phase));
   float zone = smoothstep(uDuskZone.x, uDuskZone.y, held) * smoothstep(uDuskZone.z, uDuskZone.w, dot(d, uCentreHold));
-  e.rgb = mix(e.rgb, uGold * farLights, max(rim, zone * uAway));
+  e.rgb = mix(e.rgb, uGold * farLights, max(rim, zone * uAway)) * mix(1.0, exp(-uFarRing.z * (1.0 / max(mu, 0.04) - 1.0)), uAway);
   float dusk = clamp(1.0 + (ndl - held) / uDuskFade, 0.0, 1.0);
   float gate = mix(ramp(uNight, ndl), ramp(uNightGate, ndl), uAway);
   col += e.rgb * (uPeak * mix(gate * twinkle * uTwinkle.w, dusk, zone * (1.0 - uAway)));
@@ -301,7 +309,7 @@ export class Globe {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map }, uCloud: { value: o.cloud }, uEmissive: { value: o.emissive }, uFar: { value: o.far }, uFarCloud: { value: o.farCloud }, uRise: { value: 0 },
+        uMap: { value: o.map }, uCloud: { value: o.cloud }, uEmissive: { value: o.emissive }, uFar: { value: o.far }, uFarCloud: { value: o.farCloud }, uRise: { value: 0 }, uFine: { value: new THREE.Vector4().fromArray(l.away.fine) }, uFarRing: { value: new THREE.Vector3().fromArray(l.away.far.ring) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },

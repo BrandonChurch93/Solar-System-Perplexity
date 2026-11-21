@@ -504,3 +504,24 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Aurora ribbon: `look.aurora.tail` [0.78, 0.86] fades the last part of the ribbon times `away` (from the rise camera its end stood in front of the disc at the lower right limb).
 - `uRise` (1 from the start of the terrain segment): the lit ring past the hero's limb is swapped only in the rise.
 - `flat` is back to [0.1, -0.08].
+
+### Engine batch 11 merged (11:02 UTC, 190969e), request 3 is on main
+
+- `src/director/moves.ts` local copy dropped, `origin/main` e5c57ba merged (never rebase). Build passes, 59 of 59 tests. `engine.patch` stays as a record and is not applied again. `cut.ts` gives the same numbers as before the merge (2129 limb 14.14 degrees, 2130 14.20; 1883 15.51, 1884 15.46).
+- Batch 11: sample count follows the screen motion (draft stays 1, final up to 128). `npm run -s samples -- --tier final --frames ...`: 1755 16, 1857 64, 1875 91, 2010 16, 2136 93, 2140 72, 2156 64. A raised frame costs up to four times as long. Stepped copies are the engine's cure, soft or blocky texture under motion stays mine.
+- G15 with both far maps (far cloud at 4096): earth/full 1341 MB, earth/web 337 MB. Far cloud is now 5632 wide (about 21 MB more in full, 5 in web): measure again before READY.
+
+### Outside the hold, second pass (11:03 to 11:10 UTC, p30)
+
+- `look.globe.away.fine` [0.6, 4, 0.6, 1.2]: gain of the far cloud map's fine structure on the hero clouds (map minus its level 4 low pass), cast shadow strength 0.6 (hold 0.4) and 1.2 levels crisper, all times `away`. 1857 before and after `/tmp/fine-a.png`, `/tmp/fine-b.png`: a little more structure in the hurricane and the cloud fields, shadows deeper.
+- `look.globe.away.far.ring` [0.5, 0.66, 0.2]: the rise ring (cosine from the hero centre) and the dimming of city lights toward the limb (`exp(-0.2 (1 / mu - 1))`, the lights at the east limb were a bright crust).
+- p30 2156: South America is a dark neutral silhouette on a deep blue night sea, lights as points on its coasts, no green on the disc, the aurora a band outside the limb with a soft red glow. 1755 same bytes as before.
+
+### Rise strip 2120 to 2140 at draft, after the merge of batch 11 (11:09 to 11:22 UTC, `out/work/earth/p31/`)
+
+- Every frame looked at (`/tmp/s1.jpg`, `/tmp/s2.jpg`, strips of 8): 2120 to 2129 the limb stays 0.2 from the frame top, the ground sinks, the deck grows from 2122 and is whole below the limb at 2129; the sky above the limb stays open and black, no Sun in frame. 2129 to 2130 (the switch): same limb line and curve, same deck streaks, same blue line. 2131, 2132: the globe shows through the thinning deck.
+- Draft has one time sample, so the blur ramp is not in these frames. Predicted: 11.5, 47, 66 px at 2130 to 2132.
+- Tried and dropped: fine land detail from the far map on the hero's land (offline test `/tmp/det-am.png`, `/tmp/det-na.png`): the Blue Marble through the colour table has no visible fine structure at the frame's scale; the hero's own land has more. Not built.
+- The far cloud map has a swirl of stretched bands near the hero's hurricane (lon -125 to -112, lat 14 to 32: the hero registration is wild there). It is used there only as fine structure on the hero's clouds; at 1857 it reads as a little more structure in the spiral arms. Watch it at final.
+- Batch 12 (11:14 UTC, main 759b70f): the sky pass dropped out for single frames low over a planet; hit in my stop: 1883, 2130, 2131. Merge before the next renders.
+- Plan: `look.away` to [0, 0.85] so the whole hold is the approved picture and the change of the night side happens inside the first 26 frames of the dive (full at 1856).

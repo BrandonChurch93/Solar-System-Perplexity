@@ -207,6 +207,7 @@ FAR_TRUST = (0.25, 0.4, 0.1, 0.3)
 FAR_REACH = ((6.0, 0.05, 0.5), (20.0, 0.02, 0.3), (45.0, 0.0, 0.05))
 FAR_END = (80.0, 172.0)
 FAR_SOUTH = (-63.0, -50.0)
+FAR_CLOUD_W = 5632
 FAR_ICE = (0.7, 0.86, 0.93)
 ICE = np.array([0.74, 0.78, 0.83])
 
@@ -328,7 +329,7 @@ def main(width, only):
         far_map(width)
         return
     if only == "farcloud":
-        far_cloud_map(width // 2)
+        far_cloud_map(FAR_CLOUD_W)
         return
     if only == "emissive":
         emissive_map(width, register(np.load(SPLIT / "surface.npy").astype(np.float32)))

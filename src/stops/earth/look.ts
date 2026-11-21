@@ -27,12 +27,12 @@ export const globe: GlobeLook = {
   bloomPre: [3, 4, 0.5],
   ripple: [0.3, 1.7, 14],
   dusk: { zone: wrap.dusk, fade: 0.15, centre: wrap.heroCentre },
-  away: { tone: [0.04, 0.15, 0.27], land: [0.17, 0.166, 0.16], landAt: [0.4, 1], flat: [0.1, -0.08], soft: 0, dim: 0.65, gate: [-0.03, -0.16], far: { light: [0.05, 0.3], cap: [-25, 52, 0.4, 22, 38], rim: [0.3, 0.55], gold: [1, 0.72, 0.36] } },
+  away: { tone: [0.04, 0.15, 0.27], land: [0.17, 0.166, 0.16], landAt: [0.4, 1], flat: [0.1, -0.08], soft: 0, dim: 0.65, gate: [-0.03, -0.16], fine: [0.6, 4, 0.6, 1.2], far: { light: [0.05, 0.3], cap: [-25, 52, 0.4, 22, 38], rim: [0.3, 0.55], gold: [1, 0.72, 0.36], ring: [0.5, 0.66, 0.2] } },
 }
 
 export const air: AirLook = { ...airJson, lineAway: [2, 0.6] }
 
-export const away = [1, 0.7]
+export const away = [0, 0.85]
 
 export const shape: number[][] = shapeJson.matrix
 
