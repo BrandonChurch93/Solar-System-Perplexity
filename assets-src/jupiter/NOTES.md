@@ -550,7 +550,24 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - 17:50: main had moved to e4bda2a (harness retry on a lost drawing context, Neptune files). Binary commit 0ae6205 (full/sky-hold.webp, full/sky-terrain.webp, web/sky-terrain.webp), merge 633b7e2. After the merge: build green, vitest 62 of 62, final 2895 and draft 3060 byte identical to before the merge (same file hash), gates G5 G13 G17 G11 G12 G15 PASS, mirrorcheck clean again on the nine frames.
 - READY round 3 sent to /root.
 
+### 17:54 to 18:30 UTC: mail 23, cover hides only while the cover is partly open
+
+- MAIL 23 (17:54, from /root): READY ebf222e received. Weak point a to be cured before the round, the way Neptune's plan does it: `coverHides` set per frame only while the cover is partly open (0 there, so the raw motion counts), unset where the cover is closed. Stills of 3021, 3022 and two or three partly open rise cover frames at review tier, looked at native size; tsc, vitest, build, gates, merge, push, READY again with two lines. No new measure run needed (the round's measure job runs it). Cutoff 18:30 UTC, else READY ebf222e stands.
+- Done in `src/stops/jupiter/plan.ts`: `veil = { hides: 0, closed: 0.98 }`, `JupiterPlan.coverAmount` sets `this.p.coverHides = amount < veil.closed ? veil.hides : undefined`. `cover.hides` is read only by `seenShare` in `src/core/motion.ts`, so only sample counts change.
+- Samples at review tier, before then after: dive 3020 115 to 128, 3021 64 to 128, 3022 23 to 128, 3023 16 to 100 (amount 0.975), 3024 to 3031 stay 16 (6.9 px of motion). Rise 3263 to 3269 from 38, 34, 27, 19, 16, 16, 16 to 41 to 43 (25 px), 3270 stays 16 (closed), 3271 24 to 128, 3272 50 to 128, 3273 90 to 128, 3274 on unchanged at the cap.
+- tsc clean, vitest 62 of 62, build green. Gates G11, G12, G15 PASS. Gates G5, G13, G17 answer `stale` (the measure file is from stop hash a96b282b0f0fdfc1, the plan file changed); G13 runs at draft tier and skips the cover windows, G5 and G17 use the four judged frames, none of them in a cover window, so the measured pixels do not change with this number.
+- Main moved to 1259820 (Venus round 3 merged, round 23 started). Code commit 3f167e0, merge 3f9f64d (outside Venus and my plan file nothing under src, tests, tools, config changed). tsc clean, vitest 62 of 62 on the merged tree.
+- Stills at review tier, before (the frames of the cover sheets, `out/work/view/rev3/`) beside after at native size (`out/work/view/hides_<frame>.png`, pushed to looks):
+  - 3021 (64 to 128 samples, 332 s): nearly the same picture. The streaks on the Red Spot stay: they are the storm's bright specks drawn out along the 138 px of shutter motion, the blur itself, not stepped copies. High pass std of red minus blue in the box (sigma 1 / 2): 0.62 / 0.93 before, 0.56 / 0.87 after.
+  - 3022 (23 to 128 samples, 308 s): the fine parallel lines in the red patch are gone, it is a smooth soft smear now. 0.41 / 0.52 before, 0.37 / 0.47 after.
+  - 3272 (50 to 128 samples, 297 s): the same picture, mean absolute difference 0.004 of 255, max 1. Smooth limb before and after.
+  - 3271 (24 to 128 samples, 328 s): the same picture, mean absolute difference 0.007 of 255, max 1. Smooth limb before and after (under the cover the limb slides along itself).
+  - 3273 not rendered (cutoff 18:30); it went from 90 to 128 samples.
+- After the stills: build green, draft 3060 byte identical to before the merge and the change (same file hash), gates G11, G12, G15 PASS, G5 G13 G17 `stale` until the round's measure job has run.
+- Verdict: the change is safe and small. It cures the fine lines at 3022. At 3021 the streaks on the Red Spot remain, they are motion blur of the storm seen through a cover that is 73 percent closed, not a sampling fault. Said so in READY; the Builder decides between this commit and ebf222e.
+- READY round 3 sent again to /root at 18:2x UTC.
+
 ## Next
 
 - Wait for the round 3 result from /root. Do not stop until the Builder says the stop is finished. Keep notes and looks pushed.
-- If the Builder asks for `coverHides`: set it in `src/stops/jupiter/plan.ts`, render both cover sheets at review tier again, look at every frame, run measure and gates.
+- If time allows before the result: full measure on the new head so the local gates G5, G13, G17 read fresh.
