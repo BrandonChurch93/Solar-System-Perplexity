@@ -59,12 +59,12 @@
   },
   "rings": {
     "normal": [
-      0.200721,
-      0.864154,
-      0.461464
+      0.19599,
+      0.881152,
+      0.430301
     ],
     "inner": 1.2458,
-    "outer": 2.3088,
+    "outer": 2.3394,
     "edges": {
       "outer": {
         "radius": 2.3088,
@@ -94,9 +94,9 @@
     "poleToRingNormalDeg": 0.0
   },
   "sunDir": [
-    -0.862579,
-    0.4711,
-    0.184451
+    -0.789623,
+    0.580852,
+    -0.197751
   ],
   "sunFit": {
     "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
@@ -126,16 +126,16 @@
   ],
   "globe": {
     "quaternion": [
-      0.2340572,
-      -0.0435615,
-      -0.1146307,
-      0.9644581
+      0.2171781,
+      -0.0427061,
+      -0.1107142,
+      0.9688923
     ],
     "meshQuaternionForThreeSphereGeometry": [
-      0.0844473,
-      -0.7127775,
-      -0.2465596,
-      0.6511722
+      0.0752813,
+      -0.715308,
+      -0.2318549,
+      0.6549125
     ],
     "scale": [
       1.0,
@@ -143,9 +143,9 @@
       1.0
     ],
     "northPole": [
-      0.200721,
-      0.864154,
-      0.461464
+      0.19599,
+      0.881152,
+      0.430301
     ],
     "subCameraLonDeg": 0.0,
     "subCameraLatDeg": 29.15,
@@ -161,5 +161,25 @@
     "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
     "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
     "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+  },
+  "refit": {
+    "sunDirBefore": [
+      -0.862579,
+      0.4711,
+      0.184451
+    ],
+    "normalBefore": [
+      0.200721,
+      0.864154,
+      0.461464
+    ],
+    "globeQuaternionBefore": [
+      0.2340572,
+      -0.0435615,
+      -0.1146307,
+      0.9644581
+    ],
+    "sun": "grid search of the globe's shadow on the rings against the hero (assets-src/saturn/rings/fit_sun.py): overlap 0.79, was 0.48 with the Sun fitted on the terminator alone",
+    "normal": "ring edges straightest in the polar view (assets-src/saturn/rings/fit_plane.py): edge wander 0.038 radii rms, was 0.060"
   }
 }

@@ -31,7 +31,7 @@ const SUN_BOW_REACH = 90
 const SUN_HIDDEN = 0.14
 const SUN_HALO = 1.2
 const SUN_GLOW_FROM = 0.06
-const RETREAT_DUST = 0.18
+const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
@@ -507,6 +507,11 @@ export class FilmDirector implements Director {
           if (shell && view === 'orbit') {
             const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
             cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
+          }
+          const sea = p.p.coverSea
+          if (sea && view === 'terrain') {
+            const c = new THREE.Vector3().fromArray(sea.centre).sub(local.position).divideScalar(sea.radius).applyQuaternion(local.quaternion.clone().invert())
+            cover.shell = { centre: [c.x, c.y, c.z], inner: sea.edge[0], outer: sea.edge[1] }
           }
           const dt = time - p.coverCenter(segment)
           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]

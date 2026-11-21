@@ -1,0 +1,32 @@
+{
+ "encoding": "albedo = top * v * v, v = the linear value of the sRGB texel",
+ "top": 24.0,
+ "projection": "equirectangular, u = lon/360 + 0.5, north at top, direction of (lon, lat) = (cos lat sin lon, sin lat, cos lat cos lon)",
+ "color": {
+  "full": [
+   8192,
+   4096
+  ],
+  "web": [
+   4096,
+   2048
+  ]
+ },
+ "flow": {
+  "full": [
+   4096,
+   2048
+  ],
+  "web": [
+   2048,
+   1024
+  ]
+ },
+ "bolt": {
+  "lon": 15.5,
+  "lat": 16.5,
+  "widthDeg": 30.0,
+  "full": 1024,
+  "web": 512
+ }
+}
