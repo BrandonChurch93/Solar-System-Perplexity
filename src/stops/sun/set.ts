@@ -38,7 +38,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
-  const ground = new Ground(plate, look.ground)
+  const ground = new Ground(plate, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), look.ground)
   const fringe = new Fringe(plate, look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)

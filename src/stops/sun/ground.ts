@@ -9,6 +9,7 @@ export interface GroundLook {
   sectors: number
   cell: number
   band: [number, number]
+  glow: [number, number]
   boil: { reach: number; period: number; step: number; max: number }
   twinkle: { amount: number; rate: number; spread: number }
   inflow: { amount: number; waves: number; rate: number; inner: number; outer: number }
@@ -29,6 +30,9 @@ void main() {
 const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uPlate;
+uniform sampler2D uGlow;
+uniform vec4 uBox;
+uniform float uGlowBeat;
 uniform vec2 uSize;
 uniform float uGrad;
 uniform float uGain;
@@ -101,6 +105,9 @@ void main() {
     vec2 at2 = stPlate(stImage(stLimbDir(ray, c1, el)));
     col = mix(col, inverseFilmic(textureLod(uPlate, at2, uLod).rgb), limb);
   }
+  vec2 gb = stImage(vStage);
+  gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
+  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col += inverseFilmic(textureLod(uGlow, gb, 0.0).rgb) * uGlowBeat;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.5, 0.1), push * swing * 4.0, length(vView));
@@ -109,9 +116,11 @@ void main() {
 export class Ground {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  private readonly pulse: [number, number]
 
-  constructor(plate: THREE.Texture, look: GroundLook) {
+  constructor(plate: THREE.Texture, glow: THREE.Texture, look: GroundLook) {
     const img = plate.image as unknown as { width: number; height: number }
+    this.pulse = look.glow
     const up = stage.down.clone().negate()
     const e1 = new THREE.Vector3(1, 0, 0).addScaledVector(up, -up.x).normalize()
     const e2 = up.clone().cross(e1)
@@ -126,7 +135,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uPlate: { value: plate }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uPlate: { value: plate }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
@@ -173,6 +182,7 @@ export class Ground {
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
+    u.uGlowBeat!.value = 1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83))
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect

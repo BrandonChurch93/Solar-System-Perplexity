@@ -8,6 +8,7 @@ export interface LoopsLook {
   lean: { outerDeg: number; innerDeg: number; from: number; to: number }
   gain: number
   far: number
+  pin: { from: number; soft: number; lowDeg: number; highDeg: number }
   flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number }
 }
 
@@ -113,6 +114,8 @@ export class Loops {
     const positions = new Float32Array((nx + 1) * (ny + 1) * 3)
     const lineDir = tb.clone().sub(ta).normalize()
     const lineNormal = new THREE.Vector2(-lineDir.y, lineDir.x)
+    const feetApart = ta.distanceTo(tb)
+    const horizon = Math.sqrt((stage.radius + 1) ** 2 - stage.radius ** 2)
     const smooth = (x: number, lo: number, hi: number): number => {
       const t = Math.min(Math.max((x - lo) / (hi - lo), 0), 1)
       return t * t * (3 - 2 * t)
@@ -138,7 +141,11 @@ export class Loops {
         if (!(t > 0.3)) t = tGround
         t = Math.min(t, hit > 0 ? tGround * 1.15 : tGround)
         const under = smooth(-(p.clone().sub(ta).dot(lineNormal)), 0.0, 0.05)
-        const k = t + (tGround - t) * under
+        const span = p.clone().sub(ta).dot(lineDir) / feetApart
+        const above = THREE.MathUtils.radToDeg(Math.acos(Math.min(Math.max(r.clone().normalize().dot(stage.down), -1), 1)) - stage.alpha)
+        const pin = smooth(span, look.pin.from, look.pin.from + look.pin.soft) * (1 - smooth(span, 1 - look.pin.from - look.pin.soft, 1 - look.pin.from)) * (1 - smooth(above, look.pin.lowDeg, look.pin.highDeg))
+        const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
+        const k = held + (tGround - held) * under
         r.multiplyScalar(k).toArray(positions, (j * (nx + 1) + i) * 3)
       }
     }

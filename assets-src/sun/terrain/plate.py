@@ -2,7 +2,9 @@ import sys
 import numpy as np
 import cv2
 from scipy import ndimage as ndi
-from common import WORK, LOOPS_BOX, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, read, write, take_to_grid, step, scene, display, fit
+from scipy.optimize import curve_fit
+import json
+from common import WORK, LOOPS_BOX, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, FEET, read, write, take_to_grid, step, scene, display, fit
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/sun'
 LUM = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
@@ -10,6 +12,11 @@ FEATHER = 90
 FEATHER_SKY = 380
 WIDEN = 49
 GLOW = (1.6, 4.2)
+RISE = 0.25
+FAN = (380, 560)
+UNDER = 0.88
+CUT = (5.0, 7.0)
+NEAR = (0.9, 1.8)
 
 
 def elevation(w, h):
@@ -65,11 +72,17 @@ def main():
     glow = np.maximum(cv2.GaussianBlur(a - c, (0, 0), 14), 0)
     glow = np.minimum(glow, glow[..., :1] * np.array([1, 1, 0.9], dtype=np.float32))
     strands = step(cv2.GaussianBlur(lift, (0, 0), 1.2), 0.22, 0.45)
+    X2 = np.arange(5632, dtype=np.float32)
+    Y2 = np.arange(3168, dtype=np.float32)
+    for fx, fy in FEET:
+        fan = step(fy * 3168 - Y2, -16, 40)[:, None] * (1 - step(np.abs(X2 - fx * 5632), FAN[0], FAN[1]))[None, :]
+        strands = np.maximum(strands, fan.astype(np.float32))
     sky = step(cv2.resize(elevation(2816, 1584), (5632, 3168), interpolation=cv2.INTER_LINEAR), -0.25, 0.25)
     del c, soft, lift
-    on_ground = glow + (d - glow) * strands[..., None]
+    on_ground = d * strands[..., None]
     on_sky = d * warm[..., None]
     loops = np.minimum((on_ground + (on_sky - on_ground) * sky[..., None]) * m[..., None], a * 0.98)
+    baked = glow * ((1 - strands) * (1 - sky) * m)[..., None]
     del on_ground, on_sky, glow, d, warm, strands, sky, a
     wide_m = cv2.dilate((m > 0.02).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (WIDEN, WIDEN)))
     wide_m = np.clip(cv2.GaussianBlur(wide_m, (0, 0), WIDEN / 4) * 1.5 - 0.25, 0, 1)
@@ -80,7 +93,11 @@ def main():
     del da, dc, wide_m, ring
     x0, y0, x1, y1 = LOOPS_BOX
     crop = display(loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
-    del loops
+    spill = display(baked[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
+    del loops, baked
+    write(f'{OUT}/full/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 4, spill.shape[0] // 4), interpolation=cv2.INTER_AREA))
+    write(f'{OUT}/web/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 8, spill.shape[0] // 8), interpolation=cv2.INTER_AREA))
+    del spill
     print('loops crop', crop.shape)
     write(f'{OUT}/full/loops.webp', crop, 92)
     write(f'{OUT}/web/loops.webp', cv2.resize(crop, (crop.shape[1] // 2, crop.shape[0] // 2), interpolation=cv2.INTER_AREA), 90)
@@ -151,14 +168,53 @@ def main():
     kg = float(np.median(g[sel] / r[sel]))
     kb = float(np.median(b[sel] / r[sel]))
     print('glow colour', 1, round(kg, 3), round(kb, 3))
+    colour = np.array([1, kg, kb], dtype=np.float32)
     amount = np.clip((s[..., 0] - s[..., 2]) / (1 - kb), 0, None)
-    fade = (1 - step(above, GLOW[0], GLOW[1])).astype(np.float32)
-    orange = np.minimum(amount[..., None] * np.array([1, kg, kb], dtype=np.float32), s) * fade[..., None]
+    mask_c = cv2.warpAffine(m, inv, CANVAS, flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP)
+    sel = (inside > 0.98) & (mask_c < 0.01) & (ground < 0.01) & (above > 0.05) & (above < 7)
+    del mask_c
+    el = above[sel][::5]
+    am = amount[sel][::5]
+    del sel
+    bins = np.arange(0.05, 7.0, 0.1)
+    idx = np.digitize(el, bins)
+    mid = (bins[:-1] + bins[1:]) / 2
+    prof = np.array([np.percentile(am[idx == i], 10) if (idx == i).sum() > 50 else np.nan for i in range(1, len(bins))])
+    ok = ~np.isnan(prof)
+
+    def two(e, a1, s1, a2, s2):
+        return a1 * np.exp(-e / s1) + a2 * np.exp(-e / s2)
+
+    par, _ = curve_fit(two, mid[ok], prof[ok], p0=(0.05, 0.4, 0.04, 1.6), sigma=prof[ok] * 0.1 + 0.0005, maxfev=20000)
+    print('glow profile', [round(float(v), 5) for v in par], 'rms', float(np.sqrt(np.mean((two(mid[ok], *par) - prof[ok]) ** 2))))
+    for e in (0.1, 0.5, 1, 2, 3, 4, 5):
+        print('  el', e, 'p10', round(float(np.interp(e, mid[ok], prof[ok])), 4), 'fit', round(float(two(e, *par)), 4))
+    par = par * np.array([UNDER, 1, UNDER, 1])
+    json.dump({'colour': [1, round(kg, 4), round(kb, 4)], 'a': [round(float(par[0]), 5), round(float(par[2]), 5)], 's': [round(float(par[1]), 4), round(float(par[3]), 4)], 'riseDeg': RISE, 'cutDeg': list(CUT), 'nearDeg': list(NEAR)}, open('assets-src/sun/terrain/glow.json', 'w'), indent=2)
+    del el, am, idx
+    veil = (two(np.maximum(above, 0), *par) * step(above, 0, RISE) * (1 - step(above, CUT[0], CUT[1]))).astype(np.float32)
+    rem = s - np.minimum(veil[..., None] * colour, s)
+    del s, veil, amount
+    amount = np.clip((rem[..., 0] - rem[..., 2]) / (1 - kb), 0, None)
+    orange = np.minimum(amount[..., None] * colour, rem)
     del amount
-    plate = orange + (s - orange) * ground[..., None]
-    del orange
-    sky = np.maximum(s - plate, 0)
-    del s
+    rows = int(edge.max()) + 40
+    part = orange[:rows]
+    opened = cv2.morphologyEx(part, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13)))
+    part += (opened - part) * step(above[:rows], 0.3, 0.7)[..., None]
+    del opened
+    closed = cv2.morphologyEx(part, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)))
+    part[:] = np.minimum(closed, rem[:rows])
+    del closed, part
+    near = (1 - step(above, NEAR[0], NEAR[1])).astype(np.float32)
+    fade = (1 - step(above, GLOW[0], GLOW[1])).astype(np.float32)
+    flames = orange * near[..., None]
+    sky = rem - flames
+    sky += (np.minimum(orange * (near - fade)[..., None], 0)) * (1 - inside)[..., None]
+    del orange, near, fade
+    sky = np.maximum(sky, 0) * (1 - ground)[..., None]
+    plate = flames + (rem - flames) * ground[..., None]
+    del flames, rem
     top = PLATE_TOP
     print('fringe energy above plate top', float(plate[:top].max()))
     img = display(plate[top:])

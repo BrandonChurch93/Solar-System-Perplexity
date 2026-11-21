@@ -45,6 +45,7 @@ void main() {
   vec3 c1 = to / dist;
   float el = (acos(clamp(dot(d, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / dist, 0.0, 1.0))) * sqrt(max(dist * dist - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
   vec3 col = vec3(0.0);
+  for (int k = 0; k < ((el > 0.0 && el < ST_GLOW_CUT) ? 1 : 0); k++) col = stGlow(el);
   for (int k = 0; k < ((el > -0.006 && el < uReach) ? 1 : 0); k++) {
     vec3 ref = vec3(0.0, 0.0, -1.0);
     vec3 e1 = normalize(ref - c1 * dot(ref, c1));
@@ -58,7 +59,7 @@ void main() {
     float keep = step(0.02, -d0.z) * step(0.0, uv.y) * step(uv.y, 1.0);
     float phase2 = az * 113.0 + 2.5 * sin(az * 29.0) + el * 260.0;
     float beat = 1.0 + uFlicker.x * (sin(t * 1.9 + phase2) - sin(phase2)) * smoothstep(0.0, 0.004, el);
-    col = inverseFilmic(textureLod(uPlate, uv, uLod + log2(max(uGrad, 1e-3))).rgb) * keep * max(beat, 0.0);
+    col += inverseFilmic(textureLod(uPlate, uv, uLod + log2(max(uGrad, 1e-3))).rgb) * keep * max(beat, 0.0);
   }
   vec2 vq = vScreen * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);

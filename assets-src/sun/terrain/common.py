@@ -11,6 +11,7 @@ LEFT, TOP, SPAN = -0.25, -0.205, 1.5
 CANVAS = (8192, 4608)
 PLATE_TOP = 1728
 LOOPS_BOX = (0.22, 0.08, 0.86, 0.66)
+FEET = ((0.3757, 0.5139), (0.7141, 0.5455))
 
 
 def to_linear(a):

@@ -5,6 +5,7 @@ const ty = Math.tan(THREE.MathUtils.degToRad(data.vfovDeg) / 2)
 const tx = (ty * 16) / 9
 const down = new THREE.Vector3().fromArray(data.down).normalize()
 const c = data.canvas
+const g = data.glow
 
 function ray(ax: number, ay: number): THREE.Vector3 {
   return new THREE.Vector3((ax - 0.5) * 2 * tx, (0.5 - ay) * 2 * ty, -1)
@@ -78,6 +79,7 @@ export const stage = {
   umbra: data.umbra as [number, number],
   skyCentre: [((c.left + c.span / 2) - 0.5) * 2 * tx, (0.5 - (c.top + c.span / 2)) * 2 * ty] as [number, number],
   fold: folded,
+  glowCutDeg: data.glow.cutDeg[1]!,
   ray,
   onGround,
   groundDistance,
@@ -97,6 +99,7 @@ const float ST_ROWS = ${f(stage.plateRows / c.height)};
 const vec3 ST_RIGHT = ${v3(right)};
 const vec3 ST_FWD = ${v3(fwd)};
 const vec4 ST_FOLD = vec4(${f(folded.near)}, ${f(folded.apex[0])}, ${f(folded.apex[1])}, ${f(folded.far)});
+const float ST_GLOW_CUT = ${f(THREE.MathUtils.degToRad(g.cutDeg[1]!))};
 const vec2 ST_PHI = vec2(${f(folded.phi[0])}, ${f(folded.phi[1])});
 vec3 stFold(vec3 p) {
   vec3 rel = p - ST_DOWN;
@@ -124,6 +127,11 @@ vec3 stLimbDir(vec3 d, vec3 c1, float el) {
   float az = atan(dot(d, e2), dot(d, e1));
   float g0 = ST_ALPHA + el;
   return ST_DOWN * cos(g0) + sin(g0) * (ST_FWD * cos(az) + cross(ST_DOWN, ST_FWD) * sin(az));
+}
+vec3 stGlow(float el) {
+  float e = degrees(el);
+  float k = ${f(g.a[0]!)} * exp(-e / ${f(g.s[0]!)}) + ${f(g.a[1]!)} * exp(-e / ${f(g.s[1]!)});
+  return vec3(${f(g.colour[0]!)}, ${f(g.colour[1]!)}, ${f(g.colour[2]!)}) * k * smoothstep(0.0, ${f(g.riseDeg)}, e) * (1.0 - smoothstep(${f(g.cutDeg[0]!)}, ${f(g.cutDeg[1]!)}, e));
 }
 vec2 stImage(vec3 p) {
   vec2 q = p.xy / max(-p.z, 0.02);
