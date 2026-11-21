@@ -83,5 +83,6 @@ export const titan: TitanLook = {
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]
+export const detailRange: [number, number] = [0.2, 0.5]
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

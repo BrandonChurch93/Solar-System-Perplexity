@@ -52,7 +52,9 @@ export const createSet: SetFactory = async (ctx) => {
   const along = plan.skimPosition.clone().addScaledVector(plan.ringNormal, -plan.skimPosition.dot(plan.ringNormal)).normalize()
   const across = new THREE.Vector3().crossVectors(plan.ringNormal, along).applyQuaternion(toTilt)
   along.applyQuaternion(toTilt)
-  const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), layoutMatrix, layoutJson.width, layoutJson.height, along, across)
+  const gate = { value: 1 }
+  const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
+  const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), await ctx.dataTexture(base + layoutJson.even, layoutJson.width, layoutJson.height, 1), gate, layoutMatrix, layoutJson.width, layoutJson.height, along, across)
   const rings = new Rings(profile, layout, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
 
@@ -115,6 +117,7 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
+      gate.value = 1 - smooth((camL.distanceTo(skimL) - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
       const el = THREE.MathUtils.lerp(Math.asin(THREE.MathUtils.clamp(sunL.y, -1, 1)), closeEl, close.value)
       lightL.set(sunL.x, 0, sunL.z).normalize().applyAxisAngle(UP, closeTurn * close.value).multiplyScalar(Math.cos(el))
       lightL.y = Math.sin(el)

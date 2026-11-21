@@ -251,12 +251,20 @@ _, near_j = cKDTree(np.stack([along[src], jd[src] * 0.15], -1)).query(np.stack([
 filled[band] = val[src][near_j]
 filled = np.where(good, val, cv2.GaussianBlur(filled, (0, 0), 2.0))
 dist = cv2.distanceTransform((~good).astype(np.uint8), cv2.DIST_L2, 5)
+EVEN = float(sys.argv[12]) if len(sys.argv) > 12 else 22.0
+calm = cv2.GaussianBlur(filled, (0, 0), 6.0)
+lit_part = np.clip((calm - 0.3) / 0.2, 0, 1)
+lit_part = lit_part * lit_part * (3 - 2 * lit_part)
+even = cv2.GaussianBlur(filled * lit_part, (0, 0), EVEN) / np.maximum(cv2.GaussianBlur(lit_part, (0, 0), EVEN), 1e-3)
+even = (calm + lit_part * (even - calm)).astype(np.float32)
 reach_cells = 0.22 * W * k
 wgt = np.clip(1 - dist / reach_cells, 0, 1)
 wgt = wgt * wgt * (3 - 2 * wgt)
 frame = live & (ax > 0) & (ax < W - 1) & (ay > 0) & (ay < H - 1)
 near_frame = np.clip(1 - cv2.distanceTransform((~frame).astype(np.uint8), cv2.DIST_L2, 5) / reach_cells, 0, 1)
 wgt = np.maximum(wgt, near_frame * near_frame * (3 - 2 * near_frame))
+under = np.clip((cv2.GaussianBlur(np.maximum.accumulate(good, axis=0).astype(np.float32), (0, 0), 10.0) - 0.5) / 0.45, 0, 1)
+wgt = np.maximum(wgt, under * under * (3 - 2 * under))
 out = np.zeros((GH, GW, 4), np.float32)
 out[..., 0] = diff_out
 out[..., 1] = filled
@@ -277,6 +285,7 @@ if "--trace" in sys.argv:
         print("sdf r", lo, hi, int(m.sum()), np.round(np.percentile(out[..., 3][m], [0, 5, 25, 50, 75, 95, 100]), 0) if m.any() else "")
 for name in ("full", "web"):
     out.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout.bin")
+    even.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout-even.bin")
 np.save(WORK / "layout-shade.npy", filled)
 print("shade in frame: percentiles", np.percentile(shade[known], [1, 10, 50, 90, 99]).round(3))
 check = np.clip(rec * shade[..., None], 0, None)
