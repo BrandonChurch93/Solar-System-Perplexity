@@ -1,9 +1,73 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T15:00:14.951Z",
- "head": "8202f4738f325e2c415ef066e5ed10da8b9a5d92",
- "note": "round 3: tracing severe items 1 to 3 to the image-space hero ring projection; testing one polar lookup",
+ "pushed": "2026-11-21T15:27:01.947Z",
+ "head": "90f1a41153df29a463e5360e43b1f66b0c2837bc",
+ "note": "round 3: severe items removed by taking out the hero image projection; now sky aim, sky patch clean-up, ice, streak",
  "looks": [
+  {
+   "time": "2026-11-21T15:27:01.177Z",
+   "file": "20261121152701177-note-sk3.jpg",
+   "source": "../../../../tmp/sk3.png",
+   "kind": "note",
+   "label": "sky aim trial: approved, aim a1, aim a2, current sky (patch off, lifted x4)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T15:25:07.411Z",
+   "file": "20261121152507411-frame-a2-3465.jpg",
+   "source": "out/work/saturn/a2-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T15:22:29.032Z",
+   "file": "20261121152229032-frame-h6-3875.jpg",
+   "source": "out/work/saturn/h6-3875.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3875, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3875,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T15:21:53.023Z",
+   "file": "20261121152153023-frame-h6-3597.jpg",
+   "source": "out/work/saturn/h6-3597.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3597, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3597,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
+  {
+   "time": "2026-11-21T15:18:45.999Z",
+   "file": "20261121151845999-frame-h6-3720.jpg",
+   "source": "out/work/saturn/h6-3720.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6728b99fa98fbd73"
+  },
   {
    "time": "2026-11-21T15:00:14.340Z",
    "file": "20261121150014340-note-t1.jpg",
@@ -21,34 +85,6 @@
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T14:59:35.058Z",
-   "file": "20261121145935058-frame-h2-3567.jpg",
-   "source": "out/work/saturn/h2-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T14:59:15.331Z",
-   "file": "20261121145915331-frame-h2-3465.jpg",
-   "source": "out/work/saturn/h2-3465.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
    "time": "2026-11-21T14:45:31.468Z",
    "file": "20261121144531468-job-frame-03720.jpg",
    "source": "memory",
@@ -61,48 +97,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-21T14:35:14.584Z",
-   "file": "20261121143514584-job-frame-03390.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.hold frame 3390, draft tier, texels view, from the running measure job",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3390,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T14:34:41.691Z",
-   "file": "20261121143441691-frame-p4r-3866.jpg",
-   "source": "out/work/saturn/p4r-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
-  },
-  {
-   "time": "2026-11-21T13:03:48.035Z",
-   "file": "20261121130348035-frame-f03760-review.jpg",
-   "source": "out/work/sheets/.frames-WgdRzD/f03760-review.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3760, review tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3760,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   }
  ]
 }
