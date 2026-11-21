@@ -1,45 +1,67 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T10:20:52.552Z",
- "head": "95aaeb0d7158b786a16ec5859591c48dfb2dc764",
- "note": "round 8 work: dive and rise as one move through the covers, flare ghosts from the approved image, terrain sky and sparkle fixes in work",
+ "pushed": "2026-11-21T10:46:13.351Z",
+ "head": "e47229071e799d437816d148bac089c327b86123",
+ "note": "round 8: dive and rise covers as one move, flare from the approved pixels, terrain sky and relief cleaned; review sheets rendering",
  "looks": [
   {
-   "time": "2026-11-21T10:20:51.918Z",
-   "file": "20261121102051918-note-speck-test-0-c.jpg",
-   "source": "out/work/mercury/r8/k1/speck-test-0-c.png",
+   "time": "2026-11-21T10:46:13.031Z",
+   "file": "20261121104613031-frame-f00706-review.jpg",
+   "source": "out/work/sheets/.frames-ICJcCi/f00706-review.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 706, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 706,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
+  {
+   "time": "2026-11-21T10:46:12.785Z",
+   "file": "20261121104612785-note-night-amp-a.jpg",
+   "source": "out/work/mercury/r8/p3/night-amp-a.jpg",
    "kind": "note",
-   "label": "relief color despeckle test: before left, after right",
+   "label": "hold 615 night side at 6 times gain: approved left, film right (ghost plate cut from the approved pixels)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T10:20:51.371Z",
-   "file": "20261121102051371-note-f870-vs-close-a.jpg",
-   "source": "out/work/mercury/r8/k1/f870-vs-close-a.png",
+   "time": "2026-11-21T10:46:11.952Z",
+   "file": "20261121104611952-note-sky-trio-c.jpg",
+   "source": "out/work/mercury/r8/n1/sky-trio-c.png",
    "kind": "note",
-   "label": "terrain 870: approved left, film right; sparkles on rock and star moats",
+   "label": "terrain 870 sky at 2x: approved, round 7 (dark ring around the bright star), now",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T10:20:50.825Z",
-   "file": "20261121102050825-note-night-a.jpg",
-   "source": "out/work/mercury/r8/k1/night-a.jpg",
+   "time": "2026-11-21T10:46:10.862Z",
+   "file": "20261121104610862-note-f870-r3-small.jpg",
+   "source": "out/work/mercury/r8/n1/f870-r3-small.jpg",
    "kind": "note",
-   "label": "hold night side at 6x: approved (top), film with the ghost plate (bottom)",
+   "label": "terrain 870 review after the calmed sky fix, the relief despeckle and the wide lens fix",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T10:20:50.279Z",
-   "file": "20261121102050279-note-h1-grid-a.jpg",
-   "source": "out/work/mercury/r8/h1-grid-a.jpg",
+   "time": "2026-11-21T10:46:09.787Z",
+   "file": "20261121104609787-note-sun-717-721-a.jpg",
+   "source": "out/work/mercury/r8/p3/sun-717-721-a.png",
    "kind": "note",
-   "label": "rise 973 to 1016 at draft with the eased launch",
+   "label": "dive 717 and 721 draft: the lens streak slides with the Sun, the red arc and the second Sun edge in the sky patch margin are gone",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T10:09:30.344Z",
-   "file": "20261121100930344-frame-f615-noflare.jpg",
-   "source": "out/work/mercury/r8/k1/f615-noflare.png",
+   "time": "2026-11-21T10:46:08.854Z",
+   "file": "20261121104608854-note-hold-pair-a.jpg",
+   "source": "out/work/mercury/r8/p2/hold-pair-a.jpg",
+   "kind": "note",
+   "label": "hold 615 draft, round 8 work: approved left, film right (soft streak as a lens part, graded Sun limb, veiled night side)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T10:41:08.867Z",
+   "file": "20261121104108867-frame-f615.jpg",
+   "source": "out/work/mercury/r8/p2/f615.png",
    "kind": "frame",
    "label": "mercury.hold frame 615, draft tier",
    "stop": "mercury",
@@ -51,46 +73,18 @@
    "engine": "e96a669c7c94eb54"
   },
   {
-   "time": "2026-11-21T09:27:09.378Z",
-   "file": "20261121092709378-compare-compare-mercury-terrain-view.jpg",
-   "source": "out/work/compare/compare-mercury-terrain-view.jpg",
-   "kind": "compare",
-   "label": "mercury.terrain: approved image left, film frame right, final tier",
+   "time": "2026-11-21T10:33:26.100Z",
+   "file": "20261121103326100-frame-f870-r3.jpg",
+   "source": "out/work/mercury/r8/n1/f870-r3.png",
+   "kind": "frame",
+   "label": "mercury.terrain frame 870, review tier",
    "stop": "mercury",
    "segment": "mercury.terrain",
    "frame": 870,
-   "tier": "final",
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:27:07.779Z",
-   "file": "20261121092707779-still-f00870-16x9-final-full.jpg",
-   "source": "out/work/stills/f00870-16x9-final-full.png",
-   "kind": "still",
-   "label": "mercury.terrain frame 870, final tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T09:16:36.423Z",
-   "file": "20261121091636423-compare-compare-mercury-hold-view.jpg",
-   "source": "out/work/compare/compare-mercury-hold-view.jpg",
-   "kind": "compare",
-   "label": "mercury.hold: approved image left, film frame right, final tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
+   "engine": "e96a669c7c94eb54"
   }
  ]
 }
