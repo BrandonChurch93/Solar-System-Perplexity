@@ -11,6 +11,7 @@ export const params: MoveParams = {
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
   cover: [1.7, 1.35, 0.95],
+  skyAim: { orbit: [77.38414, 172.96308, -53.87859], terrain: [12.8819, -127.45635, -55] },
   spinDegPerSecond: 0.6,
   moonDegPerSecond: 0,
   tint: [0.62, 0.56, 0.5],

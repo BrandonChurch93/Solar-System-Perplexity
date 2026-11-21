@@ -7,7 +7,7 @@ sys.path.insert(0, 'assets-src/mercury/relief')
 import geom
 
 WORK = 'out/work/mercury/relief/'
-CLOSE2 = 'out/work/mercury/close-2x.png'
+CLOSE2 = 'out/work/mercury/close-db-2x.png'
 OV = 64
 ML, MB, W, H, CW, CH = geom.ML, geom.MB, geom.W, geom.H, geom.CW, geom.CH
 STRIPS = {'left': (0, 0, ML + OV, CH), 'right': (ML + W - OV, 0, CW, CH), 'bottom': (ML, H - OV, ML + W, CH)}

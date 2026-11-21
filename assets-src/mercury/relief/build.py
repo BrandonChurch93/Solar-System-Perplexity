@@ -14,6 +14,7 @@ OUT = 'public/assets/mercury/'
 GAIN = float(os.environ.get('RELIEF_GAIN', '1.6'))
 WIDE = 300
 NEAR, FARFADE = 3.5, 7.0
+LIFT = 2.5
 DIST_SCALE = 0.25
 W, H, ML, MB, CW, CH = geom.W, geom.H, geom.ML, geom.MB, geom.CW, geom.CH
 
@@ -88,7 +89,7 @@ def main():
     hy2 = np.interp((np.arange(CW * 2) + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop)
     y2 = (np.arange(CH * 2)[:, None] + 0.5) / 2
     slope = np.gradient(hy2) * 2
-    alpha = smooth(-0.9, 0.9, (y2 - hy2[None, :]) / np.sqrt(1 + slope[None, :] ** 2))
+    alpha = smooth(-0.9, 0.9, (y2 - hy2[None, :] + LIFT) / np.sqrt(1 + slope[None, :] ** 2))
     alpha8 = (alpha * 255 + 0.5).astype(np.uint8)
     for name, s in (('full', 1.0), ('web', 0.5)):
         os.makedirs(OUT + name, exist_ok=True)

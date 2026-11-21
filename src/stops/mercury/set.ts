@@ -13,7 +13,7 @@ import skyJson from './sky.json'
 import { SunPlate } from './sunplate'
 import sunJson from './sunplate.json'
 
-interface SkyDef { file: string; vfovDeg: number; margin: number; gain: number; add: boolean; ring: number[] }
+interface SkyDef { file: string; vfovDeg: number; margin: number; feather?: number; gain: number; add: boolean; ring: number[] }
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -75,7 +75,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson as Record<string, SkyDef>)) {
     const wide = 1 + 2 * def.margin
     const tan = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: (def.feather ?? def.margin) / wide })
   }
 
   return {
