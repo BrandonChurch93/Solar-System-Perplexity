@@ -1,0 +1,9 @@
+{
+ "source": "assets-src/saturn/close/layout.py and profile.py, band layout and soft shade of the approved close image on the ring plane, seen from a camera behind the fitted close camera",
+ "file": "layout.bin",
+ "width": 640,
+ "height": 480,
+ "vfovDeg": 104.0,
+ "back": 0.35,
+ "refAzDeg": -14.0
+}
