@@ -87,7 +87,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.feather / wide })
   }
 
   return {
@@ -140,9 +140,9 @@ export const createSet: SetFactory = async (ctx) => {
         }
       }
       globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
-      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
+      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02))
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       rim.mesh.visible = visible

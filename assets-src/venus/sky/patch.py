@@ -8,7 +8,10 @@ Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 WEB = (1408, 792)
 MARGIN = 0.125
+HOLD_MARGIN = 0.25
+LIVE_SHADE = 0.85
 RIM = (1.008, 1.02)
+DARK = (0.010, 0.022, 7, 0.004)
 
 
 def save(lin, name, out, ext=None):
@@ -41,6 +44,74 @@ def save(lin, name, out, ext=None):
     for key, k in (('full', 1), ('web', 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
         im.save(f'{out}/{key}/{name}', lossless=True, quality=90, method=6)
+
+
+def soft(v, sigma, cap=0.05):
+    import cv2
+    return cv2.GaussianBlur(np.minimum(v, cap).astype(np.float32), (0, 0), sigma)
+
+
+def calm(gen, goal):
+    import cv2
+    lum = luma(gen).astype(np.float32)
+    base = cv2.GaussianBlur(cv2.medianBlur(lum, 5), (0, 0), DARK[2])
+    star = np.maximum(lum - base - DARK[3], 0)
+    tint = gen / np.maximum(lum, 1e-6)[..., None]
+    quiet = base[..., None] * goal / np.maximum(luma(goal), 1e-6)[..., None] + star[..., None] * (0.5 + 0.5 * tint)
+    dark = 1 - step(cv2.GaussianBlur(np.minimum(lum, 0.05), (0, 0), 20), DARK[0], DARK[1])
+    return gen + (quiet - gen) * dark[..., None]
+
+
+def save_hold(lin, out, ext, live, cal):
+    import cv2
+    w0, h0 = FULL
+    px, py = round(w0 * HOLD_MARGIN), round(h0 * HOLD_MARGIN)
+    gx, gy = round(w0 * MARGIN), round(h0 * MARGIN)
+    size = (w0 + 2 * px, h0 + 2 * py)
+    mid = (w0 + 2 * gx, h0 + 2 * gy)
+    e = np.clip(deblock(np.asarray(Image.open(ext).convert('RGB')).astype(np.float32) / 255), 0, 1)
+    e = np.clip(cv2.resize(e, mid, interpolation=cv2.INTER_LANCZOS4), 0, 1)
+    e = unfilm(to_linear(e))
+    padded = np.pad(lin, ((gy, gy), (gx, gx), (0, 0)), mode='symmetric')
+    core = np.zeros(padded.shape[:2], np.float32)
+    core[gy:-gy, gx:-gx] = 1
+    small = lambda v: cv2.resize(cv2.GaussianBlur(np.minimum(luma(v), 0.2).astype(np.float32), (0, 0), 8), None, fx=0.25, fy=0.25, interpolation=cv2.INTER_AREA)
+    warp = np.eye(2, 3, dtype=np.float32)
+    mask = (cv2.resize(core, None, fx=0.25, fy=0.25) > 0.99).astype(np.uint8)
+    cc, warp = cv2.findTransformECC(small(padded), small(e), warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 300, 1e-7), mask, 5)
+    print('margin fit', round(float(cc), 4), warp.round(4).tolist())
+    warp[:, 2] *= 4
+    e = cv2.warpAffine(e.astype(np.float32), warp, mid, flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
+    plate = to_linear(np.asarray(Image.open(live).convert('RGB')).astype(np.float32) / 255)
+    plate = np.maximum(cv2.resize(plate.astype(np.float32), size, interpolation=cv2.INTER_CUBIC), 0) * (LIVE_SHADE / cal)
+    ox, oy = px - gx, py - gy
+    gen = plate.copy()
+    gen[oy:oy + mid[1], ox:ox + mid[0]] = e
+    wide = cv2.copyMakeBorder(lin.astype(np.float32), py, py, px, px, cv2.BORDER_REPLICATE)
+    yy, xx = np.mgrid[0:size[1], 0:size[0]].astype(np.float32)
+    dx = np.maximum(np.maximum(px - xx, xx - (px + w0 - 1)), 0) / gx
+    dy = np.maximum(np.maximum(py - yy, yy - (py + h0 - 1)), 0) / gy
+    d = np.hypot(dx, dy)
+    ramp = step(d, 0.1, 0.9)[..., None]
+    sigma = 40
+    low_h = np.stack([soft(wide[..., i], sigma) for i in range(3)], -1)
+    low_l = np.stack([soft(plate[..., i], sigma) for i in range(3)], -1)
+    low_e = np.stack([soft(gen[..., i], sigma) for i in range(3)], -1)
+    goal = low_h * (1 - ramp) + low_l * ramp
+    gen = calm(gen * np.clip(goal / np.maximum(low_e, 1e-5), 0.2, 5), goal)
+    rng = np.random.default_rng(7)
+    noise = cv2.GaussianBlur(rng.standard_normal((size[1] // 8, size[0] // 8)).astype(np.float32), (0, 0), 7)
+    noise = cv2.resize(noise / np.abs(noise).max(), size, interpolation=cv2.INTER_CUBIC)
+    m = np.maximum(step(d * (1 + 0.3 * noise), 0.3, 0.85), step(d, 0.88, 1.0))[..., None]
+    inner = np.zeros(size[::-1], np.float32)
+    inner[py:py + h0, px:px + w0] = 1
+    w = np.clip((ndi.gaussian_filter(inner, 14) - 0.5) * 2, 0, 1)[..., None]
+    wide = wide * w + (gen * (1 - m) + plate * m) * (1 - w)
+    img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
+    img.resize((size[0] // 4, size[1] // 4), Image.LANCZOS).save('out/work/venus/sky-hold-view.png')
+    for key, k in (('full', 1), ('web', 2)):
+        im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
+        im.save(f'{out}/{key}/sky-hold.webp', lossless=True, quality=90, method=6)
 
 
 def to_linear(a):
@@ -83,7 +154,7 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
-def hold(hero, fill, glow, out, ext=None):
+def hold(hero, fill, glow, out, ext=None, live=None, cal=1.0):
     geom = json.load(open('out/work/venus/limb-geom.json'))
     cx, cy, ra, rb = geom['hero'][:4]
     dev = np.array(geom['dev'])
@@ -129,7 +200,10 @@ def hold(hero, fill, glow, out, ext=None):
     canvas = Image.new('RGB', wide, (255, 0, 255))
     canvas.paste(core, (round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)))
     canvas.resize((3072, 1728), Image.LANCZOS).save('out/work/venus/sky-ext-in.jpg', quality=96)
-    save(lin, 'sky-hold.webp', out, ext)
+    if live:
+        save_hold(lin, out, ext, live, cal)
+    else:
+        save(lin, 'sky-hold.webp', out, ext)
 
 
 def terrain(close, glow, out, seen=None):
@@ -158,6 +232,6 @@ def terrain(close, glow, out, seen=None):
 if __name__ == '__main__':
     kind = sys.argv[1]
     if kind == 'hold':
-        hold(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6] if len(sys.argv) > 6 else None)
+        hold(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6] if len(sys.argv) > 6 else None, sys.argv[7] if len(sys.argv) > 7 else None, float(sys.argv[8]) if len(sys.argv) > 8 else 1.0)
     else:
         terrain(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5] if len(sys.argv) > 5 else None)

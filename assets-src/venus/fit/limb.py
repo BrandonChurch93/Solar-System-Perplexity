@@ -6,10 +6,18 @@ from scipy import ndimage as ndi
 sys.path.insert(0, 'assets-src/venus')
 from geo import CAM, SUN, DISC, ROOT, WORK, encode, scene
 
-NA, HALF, INSIDE, OUTSIDE = 64, 128, 0.3, 0.6
+NA, HALF, INSIDE, OUTSIDE = 64, 128, 0.3, 1.5
 SUB = 24
 HOLD = 0.002
 HOLD_FILM = 0.005
+HOLD_OUT = 0.008
+EDGE = (0.0035, 0.0008)
+EDGE_AT = 0.003
+BAND = (0.0706, 640.1, 300.0)
+LONG = (0.03, 0.09, 0.27)
+ORDER = 3
+NEAR = (0.03, 0.06)
+CAP = 0.0015
 SA, SB, VEIL = 1.2, 2.5, 0.8
 LUMA = np.array([0.2126, 0.7152, 0.0722])
 D = float(np.linalg.norm(CAM))
@@ -100,8 +108,7 @@ def radius(geom, dev, th):
     return r0 + dev[i % n] * (1 - (f - i)) + dev[(i + 1) % n] * (f - i)
 
 
-def polar(img, geom, dev, bs):
-    k = img.shape[1] / 2816
+def polar_xy(geom, dev, bs):
     cx, cy = geom[:2]
     phi = -np.pi + 2 * np.pi * (np.arange(NA * SUB) + 0.5 - SUB / 2) / (NA * SUB)
     pp, bb = np.meshgrid(phi, bs)
@@ -109,10 +116,49 @@ def polar(img, geom, dev, bs):
     th = SUN_AZ - pp
     th = (th + np.pi) % (2 * np.pi) - np.pi
     r = radius(geom, dev, th) * rho
-    x = (cx + r * np.cos(th)) * k
-    y = (cy - r * np.sin(th)) * k
-    out = cv2.remap(img, (x - 0.5).astype(np.float32), (y - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    return cx + r * np.cos(th), cy - r * np.sin(th)
+
+
+def polar(img, geom, dev, bs):
+    k = img.shape[1] / 2816
+    x, y = polar_xy(geom, dev, bs)
+    out = cv2.remap(img, (x * k - 0.5).astype(np.float32), (y * k - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     return out.reshape(len(bs), NA, SUB, 3)
+
+
+def framed(geom, dev, bs):
+    x, y = polar_xy(geom, dev, bs)
+    inside = (x > 4) & (x < 2812) & (y > 4) & (y < 1580)
+    off = np.abs(y - (BAND[0] * x + BAND[1])) / np.hypot(1, BAND[0]) > BAND[2]
+    ok = inside.reshape(len(bs), NA, SUB).mean(-1) > 0.9
+    return ok, ok & (off.reshape(len(bs), NA, SUB).mean(-1) > 0.9)
+
+
+def target(hero, gh, dev):
+    _, b = rows()
+    ok, clear = framed(gh, dev, b)
+    low = np.percentile(polar(hero, gh, dev, b), 25, axis=2)
+    bg = np.median(low[clear & (b[:, None] > 1.9)], axis=0)
+    h = low - bg
+    x = (b - 1)[:, None] * np.ones((1, NA))
+    phi = -np.pi + 2 * np.pi * np.arange(NA) / NA
+    four = np.stack([np.ones(NA)] + [f(k * phi) for k in range(1, ORDER + 1) for f in (np.cos, np.sin)], -1)
+    basis = np.stack([np.exp(-x / length) * four[None, :, j] for length in LONG for j in range(four.shape[1])], -1)
+    use = clear & (x > NEAR[0])
+    far = np.zeros_like(h)
+    for c in range(3):
+        w = 1 / (np.abs(smooth(h[..., c], 1.0, 2.0)[use]) + 0.004)
+        coef = np.linalg.lstsq(basis[use] * w[:, None], h[..., c][use] * w, rcond=None)[0]
+        far[..., c] = basis @ coef
+    far = np.maximum(far, 0)
+    err = (h - far)[use]
+    print('background', bg.round(5), 'long fit rms', np.sqrt((err ** 2).mean(0)).round(5), 'cells', int(use.sum()))
+    near = np.where(ok[..., None], h - far, 0) * (1 - step(x, NEAR[0], NEAR[1]))[..., None]
+    t = far + smooth(held(near, b, False, HOLD), SA, SB)
+    cap = np.where(ok[..., None], smooth(held(h, b, False, HOLD), 2.0, 3.0) + CAP, np.inf)
+    t = np.minimum.accumulate(np.clip(t, 0, cap), axis=0) * taper()[..., None]
+    np.savez(WORK + '/limb-target.npz', t=t, h=h, far=far, ok=ok, clear=clear, bg=bg)
+    return t, ok
 
 
 def smooth(a, sa, sb):
@@ -177,15 +223,17 @@ def outside(glow):
     return np.minimum.accumulate(glow * cap[..., None], axis=0) * taper()[..., None]
 
 
-def write(rgb_in, alpha, rgb_out):
+def write(rgb_in, alpha, rgb_out, edge):
+    b_in, _ = rows()
+    w = step(b_in, 1 - EDGE[0], 1 - EDGE[1])[:, None]
     lut = np.zeros((2 * HALF, NA + 1, 4), np.float32)
-    lut[:HALF, :NA, :3] = rgb_in[::-1]
-    lut[:HALF, :NA, 3] = alpha[::-1]
+    lut[:HALF, :NA, :3] = (rgb_in * (1 - w[..., None]) + edge[None] * w[..., None])[::-1]
+    lut[:HALF, :NA, 3] = (alpha * (1 - w) + w)[::-1]
     lut[HALF:, :NA, :3] = rgb_out
     lut[:, NA] = lut[:, 0]
     for key in ('full', 'web'):
         lut.tofile(ROOT + '/public/assets/venus/' + key + '/limb.bin')
-    np.savez(WORK + '/limb-lut.npz', rgb_in=rgb_in, alpha=alpha, rgb_out=rgb_out)
+    np.savez(WORK + '/limb-lut.npz', rgb_in=rgb_in, alpha=alpha, rgb_out=rgb_out, edge=edge)
     view = np.concatenate([encode(np.maximum(lut[..., :3], 0)), np.repeat(lut[..., 3:], 3, -1)], 1)
     cv2.imwrite(WORK + '/limb-lut.png', (view[..., ::-1] * 255).astype(np.uint8).repeat(3, 0).repeat(8, 1))
     b_in, b_out = rows()
@@ -198,20 +246,20 @@ if __name__ == '__main__':
     hero = load(ROOT + '/references/approved/venus-hero.png')
     film = load(film_path)
     gh = fit_ellipse(edge_points(hero), 0.3)
-    gf = coverage(sys.argv[3]) if mode == 'build' else json.load(open(WORK + '/limb-geom.json'))['film']
+    gf = json.load(open(WORK + '/limb-geom.json'))['film']
     dev = edge_dev(hero, gh)
     print('hero disc', np.round(gh, 3), 'film disc', np.round(gf, 3), 'hero edge past the ellipse, px', dev.min().round(2), dev.max().round(2))
     json.dump({'hero': gh, 'film': gf, 'dev': dev.round(3).tolist()}, open(WORK + '/limb-geom.json', 'w'))
-    h_in, f_in, h_out, f_out = profiles(hero, film, gh, gf, dev, HOLD if mode == 'build' else HOLD_FILM, HOLD_FILM)
-    if mode == 'build':
-        write(*build(h_in, f_in, h_out, f_out))
+    b_in, b_out = rows()
+    old = np.load(WORK + '/limb-lut.npz')
+    edge = smooth(np.median(polar(hero, gh, dev, np.array([1 - EDGE_AT])), axis=2), SA, 0)[0]
+    goal, ok = target(hero, gh, dev)
+    f_out = smooth(held(np.median(polar(film, gf, None, b_out), axis=2), b_out, False, HOLD_OUT), SA, SB)
+    seen = smooth(ok.astype(np.float32), SA, SB)[..., None]
+    if mode == 'glow':
+        write(old['rgb_in'], old['alpha'], np.minimum.accumulate(np.maximum(goal - f_out * seen, 0), axis=0) * taper()[..., None], edge)
     else:
-        old = np.load(WORK + '/limb-lut.npz')
         gain = float(sys.argv[3]) if len(sys.argv) > 3 else 0.8
-        d_in = (h_in - f_in) * taper()[..., None]
-        d_out = (h_out - f_out) * taper()[..., None]
-        print('residual in rms %.4f out rms %.4f' % (np.sqrt((d_in ** 2).mean()), np.sqrt((d_out ** 2).mean())))
-        rgb_in = old['rgb_in'] + d_in * gain
-        over = np.maximum(-rgb_in, 0).max(axis=-1) / np.maximum(f_in.max(axis=-1), 1e-3)
-        alpha = np.clip(old['alpha'] + smooth(over, SA, SB) * (1 - old['alpha']), 0, 0.97)
-        write(np.maximum(rgb_in, 0), alpha, outside(old['rgb_out'] + d_out * gain))
+        d_out = (smooth(held(goal, b_out, False, HOLD_OUT), SA, SB) - f_out) * seen * taper()[..., None]
+        print('residual out rms %.4f worst %.4f' % (np.sqrt((d_out ** 2).mean()), np.abs(d_out).max()))
+        write(old['rgb_in'], old['alpha'], np.minimum.accumulate(np.maximum(old['rgb_out'] + d_out * gain, 0), axis=0), edge)
