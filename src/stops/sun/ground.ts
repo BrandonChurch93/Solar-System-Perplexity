@@ -210,12 +210,12 @@ export class Ground {
     this.mesh.frustumCulled = false
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number): void {
     const u = this.material.uniforms
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
-    u.uGlowBeat!.value = stage.litMax * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
+    u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
