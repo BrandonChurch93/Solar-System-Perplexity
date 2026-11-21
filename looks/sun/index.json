@@ -1,42 +1,60 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T10:33:22.702Z",
+ "pushed": "2026-11-21T10:57:27.090Z",
  "head": "1f200dac73de2da92ffceb8f1720a94c3685529a",
- "note": "round 10 fixes: rise rebuilt as one camera path, flare as one gold veil, grade LUT against approved",
+ "note": "Round 10 corrections: rise as one path with a longer flare veil, loop flow mesh gone, sky cards on the sky clock, grade pass 2 in check",
  "looks": [
   {
-   "time": "2026-11-21T10:33:21.599Z",
-   "file": "20261121103321599-note-i4-arch-gr1.jpg",
-   "source": "out/work/sun/i4-arch-gr1.png",
+   "time": "2026-11-21T10:57:26.477Z",
+   "file": "20261121105726477-note-i6-247-bottom-native.jpg",
+   "source": "out/work/sun/i6-247-bottom-native.png",
    "kind": "note",
-   "label": "terrain 90 arch, film with grade LUT pass 1 (left) beside approved (right)",
+   "label": "Frame 247 at review, lower corona at native size",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:33:20.788Z",
-   "file": "20261121103320788-note-fl7-b.jpg",
-   "source": "out/work/sun/fl7-b.jpg",
+   "time": "2026-11-21T10:57:25.871Z",
+   "file": "20261121105725871-note-i6-stars-lock.jpg",
+   "source": "out/work/sun/i6-stars-lock.png",
    "kind": "note",
-   "label": "rise 180 to 228 at draft, one path on both sides of the switch at 216, gold flare veil (work in progress)",
+   "label": "Frame 247 at review, sky card on the sky clock: lower left, upper left, lower right stars are points",
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:32:57.662Z",
-   "file": "20261121103257662-frame-f00190.jpg",
-   "source": "out/work/seq/176-272/f00190.png",
-   "kind": "frame",
-   "label": "sun.rise frame 190, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 190,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "time": "2026-11-21T10:57:25.188Z",
+   "file": "20261121105725188-note-i5-mesh-f.jpg",
+   "source": "out/work/sun/i5-mesh-f.png",
+   "kind": "note",
+   "label": "Arch interior after the loop flow fix: frames 150, 60, 0 (no scan lines or dotted tracks)",
+   "stop": "sun"
   },
   {
-   "time": "2026-11-21T10:32:10.458Z",
-   "file": "20261121103210458-frame-f00176.jpg",
+   "time": "2026-11-21T10:57:24.632Z",
+   "file": "20261121105724632-note-cover1.jpg",
+   "source": "out/work/sun/cover1.jpg",
+   "kind": "note",
+   "label": "Rise cover 206 to 228 with the longer veil (rises over 12 frames, thins over 13)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:57:24.074Z",
+   "file": "20261121105724074-note-rise9-b.jpg",
+   "source": "out/work/sun/rise9-b.jpg",
+   "kind": "note",
+   "label": "Rise 215 to 269 at draft, one path",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:57:23.493Z",
+   "file": "20261121105723493-note-rise9-a.jpg",
+   "source": "out/work/sun/rise9-a.jpg",
+   "kind": "note",
+   "label": "Rise 176 to 214 at draft, one path, new terrain speed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T10:45:54.554Z",
+   "file": "20261121104554554-frame-f00176.jpg",
    "source": "out/work/seq/176-272/f00176.png",
    "kind": "frame",
    "label": "sun.terrain frame 176, draft tier",
@@ -47,22 +65,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T10:05:52.557Z",
-   "file": "20261121100552557-note-raw1-b.jpg",
-   "source": "out/work/sun/raw1-b.jpg",
-   "kind": "note",
-   "label": "rise as one path, flare off, 216 to 269: orbit side takes over at the same limb height",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T10:05:51.957Z",
-   "file": "20261121100551957-note-raw1-a.jpg",
-   "source": "out/work/sun/raw1-a.jpg",
-   "kind": "note",
-   "label": "rise as one path, flare off, 184 to 215: the terrain camera climbs and the limb curves",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T09:50:52.781Z",
@@ -77,20 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a3d211c425dc0406"
-  },
-  {
-   "time": "2026-11-21T08:03:58.788Z",
-   "file": "20261121080358788-compare-compare-sun-hold-view.jpg",
-   "source": "out/work/compare/compare-sun-hold-view.jpg",
-   "kind": "compare",
-   "label": "sun.hold: approved image left, film frame right, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
   }
  ]
 }
