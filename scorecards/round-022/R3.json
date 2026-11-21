@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crop W, lower-right planetary limb",
+      "what": "A thin cyan arc sits outside a broad dark trough at the edge of the globe, making the atmosphere read as a detached second outline. The same double edge is visible in image-04.png.",
+      "fix": "Blend the cyan rim into the globe with a continuous atmospheric falloff and remove the dark gap between the surface and the outer glow."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops P and Q, blue cloud field below and around the storm eye",
+      "what": "Broad blue bands look smeared into smooth, parallel curves, with little fine structure compared with the much sharper white cloud streaks on top.",
+      "fix": "Reduce the directional stretch in the blue texture and add finer, irregular cloud structure that follows the storm flow."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crop J, moon's illuminated face",
+      "what": "The pale surface reads as soft, fairly uniform grain rather than resolved craters and ridges. The fully visible moon in image-03.png shows the same softness.",
+      "fix": "Replace some of the uniform grain with distinct crater rims and relief at several scales, while keeping the limb and terminator soft."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crop S, stars in the blue background haze",
+      "what": "Several ordinary stars are soft cyan or pink blobs rather than compact points.",
+      "fix": "Tighten the star cores and reserve wider bloom for the brightest sources."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "rings, whole arc (crops A, D, K, N, P, S, T)",
+      "what": "the rings are bundles of soft, smeared strokes that look like long-exposure light trails or brush marks, not a sheet of particles; the strands blur and fray, with no fine radial structure or gaps, and the look gives away how they were made",
+      "fix": "render the rings as a thin banded disc with crisp ringlets and gaps, consistent opacity, and lighting from the sun, including the planet's shadow across the rings"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "planet surface, lit hemisphere and terminator (crops B, G, J, O)",
+      "what": "the cloud features are flat white scratches and slashes stamped on a smooth airbrushed blue base; they look pasted on, with no volume, no shadow and no flow continuity, and the base is plastic",
+      "fix": "use banded, flow-aligned cloud streaks with soft volume and shading, and add subtle low-contrast band texture to the base layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "dark sky, right half and lower rows (crops E, Q, U, V, R, W)",
+      "what": "faint regular vertical column striping is visible in the black sky at native size, which reads as a render or compression pattern",
+      "fix": "remove the column pattern by dithering the sky gradient and adding fine noise before quantizing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon at right (crops C, L)",
+      "what": "the moon is soft and smooth, like a plastic ball, with a smudgy dark halo spreading past its unlit side",
+      "fix": "sharpen the moon, add cratered and albedo detail, and give it a clean edge on the night side with no halo"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper right sky (crop L top)",
+      "what": "a hazy grey smudge stands out in otherwise black space",
+      "fix": "remove the smudge or make it a deliberate faint nebula with structure"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "storm eye, centre (crops A, O)",
+      "what": "the eye is a smooth dark oval pit with an airbrushed inner wall and no eyewall cloud structure; it reads as a hole painted into the ocean",
+      "fix": "build the eye from a bright eyewall cloud ring with spiral feeder bands, and let the ocean show through only a small clear centre"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "right-side cloud band and its shadow (crop P)",
+      "what": "the cast shadow is a hard, uniform black ribbon that is offset and thicker than the cloud casting it, so it looks like a separate layer",
+      "fix": "match the shadow's shape and width to its cloud, soften its edges, and lower its opacity to fit the sun angle"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "lower left and bottom edge, dark ocean (crops D, M, R, S, T)",
+      "what": "large mushy, low-detail areas with blotchy dark smears and faint noise; the surface goes soft and muddy at native size",
+      "fix": "add ocean and sunglint detail, or night-side texture, and clean up the blotches"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "main cloud band (crops E, H, N)",
+      "what": "the cloud tufts repeat similar curl motifs along the band and look slightly painterly or smeared rather than convective",
+      "fix": "vary the cloud cell scale and shape along the band and add crisp cumulus tops with self-shadowing"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bottom right (crops U, V)",
+      "what": "the ocean has directional streak or motion-blur texture, like a stretched texture",
+      "fix": "replace the streaks with isotropic ocean detail or proper cloud texture"
+     }
+    ]
+   }
+  }
+ ]
+}

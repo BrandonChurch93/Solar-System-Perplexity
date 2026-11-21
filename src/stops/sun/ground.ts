@@ -11,7 +11,7 @@ export interface GroundLook {
   rings: number
   sectors: number
   cell: number
-  apron: { amount: number; cell: number; calm: number }
+  apron: { amount: number; cell: number; calm: number; out: [number, number] }
   band: [number, number]
   glow: [number, number]
   boil: { reach: number; period: number; step: number; max: number }
@@ -37,6 +37,7 @@ uniform sampler2D uPlate;
 uniform sampler2D uApron;
 uniform vec2 uApronSize;
 uniform float uApronOn;
+uniform float uApronOut;
 uniform vec2 uApronCell;
 uniform sampler2D uGlow;
 uniform vec4 uBox;
@@ -58,6 +59,8 @@ uniform float uLod;
 uniform vec3 uSpot;
 uniform vec3 uSpotE;
 uniform vec3 uSpotN;
+uniform vec4 uShow;
+uniform float uMixed;
 in vec3 vStage;
 in vec3 vView;
 in vec3 vClip;
@@ -149,18 +152,26 @@ void main() {
   for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * uGlowBeat;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.5, 0.1), moved * 4.0, length(vView));
+  float shown = 1.0;
+  for (int k = 0; k < (uMixed > 0.5 ? 1 : 0); k++) {
+    float ring = length(vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD)));
+    float real = 1.0 - uShow.w * smoothstep(ST_FOLD.w - 1.1, ST_FOLD.w, ring);
+    shown = uShow.z * real * (1.0 - smoothstep(uShow.x - uShow.y, uShow.x, length(vStage - uSpot))) * step(0.0, dot(normal, uCam - vStage));
+  }
+  outColor = diagOut(vec4(col, shown), texels, 1.0, vec3(0.9, 0.5, 0.1), moved * 4.0, length(vView));
 }`
 
 export class Ground {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly pulse: [number, number]
+  private readonly out: [number, number]
 
   constructor(plate: THREE.Texture, apron: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
     this.pulse = look.glow
+    this.out = look.apron.out
     const up = stage.down.clone().negate()
     const e1 = new THREE.Vector3(1, 0, 0).addScaledVector(up, -up.x).normalize()
     const e2 = up.clone().cross(e1)
@@ -175,14 +186,14 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
         uTwinkle: { value: new THREE.Vector3(look.twinkle.amount, look.twinkle.rate, look.twinkle.spread) },
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
-        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN },
+        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector4(1, 1, 1, 0) }, uMixed: { value: 0 },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -213,8 +224,24 @@ export class Ground {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setIndex(index)
     this.material.side = THREE.DoubleSide
+    this.material.blendEquation = THREE.AddEquation
+    this.material.blendSrc = THREE.SrcAlphaFactor
+    this.material.blendDst = THREE.OneMinusSrcAlphaFactor
+    this.material.blendSrcAlpha = THREE.OneFactor
+    this.material.blendDstAlpha = THREE.OneMinusSrcAlphaFactor
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.frustumCulled = false
+  }
+
+  show(mixed: boolean, reach: number, feather: number, weight: number, fold: number): void {
+    const m = this.material
+    m.transparent = mixed
+    m.blending = mixed ? THREE.CustomBlending : THREE.NormalBlending
+    m.depthTest = !mixed
+    m.depthWrite = !mixed
+    ;(m.uniforms.uShow!.value as THREE.Vector4).set(reach, feather, weight, fold)
+    m.uniforms.uMixed!.value = mixed ? 1 : 0
+    this.mesh.visible = !mixed || weight > 0
   }
 
   update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number): void {
@@ -222,6 +249,7 @@ export class Ground {
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
+    u.uApronOut!.value = THREE.MathUtils.smoothstep(time, this.out[0], this.out[1])
     u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
     u.uGain!.value = gain
     u.uVignette!.value = vignette
