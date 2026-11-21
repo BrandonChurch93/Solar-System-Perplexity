@@ -118,7 +118,7 @@ export class Veil {
     this.mesh.visible = false
   }
 
-  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, dip: number, rim: [number, number]): void {
+  update(cover: CoverState, amount: number, exposure: number, vfov: number, aspect: number, sun: THREE.Vector3 | null, sea: { nadir: THREE.Vector3; alpha: number } | null, rim: [number, number]): void {
     this.mesh.visible = amount > 0 && cover.low !== undefined
     if (!this.mesh.visible) return
     const u = this.material.uniforms
@@ -127,7 +127,17 @@ export class Veil {
     u.uAmount!.value = amount
     u.uTop!.value = cover.top ?? 0.3
     const h = cover.horizon
-    ;(u.uHorizon!.value as THREE.Vector3).set(h ? h.normal[0] : 0, h ? h.normal[1] : 1, h ? h.offset : 0)
+    const nadir = u.uNadir!.value as THREE.Vector4
+    if (sea) {
+      const n = sea.nadir
+      const len = Math.hypot(n.x, n.y)
+      const gap = Math.min(Math.max(Math.acos(Math.min(Math.max(-n.z, -1), 1)) - sea.alpha, -1.4), 1.4)
+      ;(u.uHorizon!.value as THREE.Vector3).set(len > 1e-5 ? -n.x / len : 0, len > 1e-5 ? -n.y / len : 1, Math.tan(gap))
+      nadir.set(n.x, n.y, n.z, sea.alpha)
+    } else {
+      ;(u.uHorizon!.value as THREE.Vector3).set(h ? h.normal[0] : 0, h ? h.normal[1] : 1, h ? h.offset : 0)
+      nadir.set(0, -1, 0, 10)
+    }
     u.uSoft!.value = h ? h.soft : 4
     ;(u.uFlow!.value as THREE.Vector2).set(cover.flow?.[0] ?? 0, cover.flow?.[1] ?? 0)
     const k = cover.rush
@@ -143,12 +153,6 @@ export class Veil {
     const sunAt = u.uSun!.value as THREE.Vector4
     if (sun) sunAt.set(sun.x, sun.y, sun.z, 1)
     else sunAt.w = 0
-    const nadir = u.uNadir!.value as THREE.Vector4
-    if (!shell && h) {
-      const alpha = Math.PI / 2 - dip
-      const theta = Math.atan(h.offset) + alpha
-      nadir.set(-h.normal[0] * Math.sin(theta), -h.normal[1] * Math.sin(theta), -Math.cos(theta), alpha)
-    } else nadir.set(0, -1, 0, 10)
     const t = Math.tan(THREE.MathUtils.degToRad(vfov) / 2)
     ;(u.uTan!.value as THREE.Vector2).set(t * aspect, t)
   }

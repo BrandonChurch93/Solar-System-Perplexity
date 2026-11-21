@@ -82,7 +82,8 @@ export const createSet: SetFactory = async (ctx) => {
   const sunLocal = new THREE.Vector3()
   const sunView = new THREE.Vector3()
   const turn = new THREE.Quaternion()
-  const dip = THREE.MathUtils.degToRad(plan.p.terrain.dipDeg ?? 2)
+  const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
+  const sea = { nadir: new THREE.Vector3(), alpha: 0 }
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const ease = look.globe.drift.ease
 
@@ -105,14 +106,18 @@ export const createSet: SetFactory = async (ctx) => {
         thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
       }
       if (!inOrbit) {
-        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, dip, look.veil.rim)
+        back.copy(state.rotation).invert()
+        sea.nadir.copy(world.position).applyQuaternion(back).add(seaCentre)
+        sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
+        sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
+        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
-      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), dip, look.veil.rim)
+      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim)
       camera.copy(world.position).negate()
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))

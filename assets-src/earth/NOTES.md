@@ -305,9 +305,15 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - 06:46. Level 96 upscale done (360 s). `python3 assets-src/earth/patches/ship.py` wrote `patch-96.jpg`, `patch-48.jpg`, `patch-24.jpg`, `patch-12.jpg` in both sets (full 6.2 to 7.0 MB each, 4096; web 2048). Disk now full 85 MB, web 23 MB. `assets.ts` `patches.levels` set coarse to fine: 96, 48, 24, 12.
 - Looks pushed 06:46 (cover sheets, veil stills).
 
-## Next (current)
+- 06:47 to 06:53. Patches in: texel stills 1866, 1872, 1875, 2138, 2142, 2148 all 0 soft (min density 1.41, 1.26, 1.26, 1.08, 1.26, 1.94). Hold 1755 unchanged against the 05:58 still (max 1 code value in 0.18 percent of pixels). Commit 6285358 (code and the eight patch files), merge of main 45d1651 (engine batch 6: travel cameras) as 7a0b0c0, build and 35 tests green, pushed. `npx tsx assets-src/travel/probe.ts`: venus.travel joins my hold at 1680 with step 0.000 in turn and speed 1.16e-1 to 1.15e-1; earth.travel joins my rise at 2175 with turn 0.002 to 0.003 and speed 7.96e-2 to 8.00e-2. Do not edit `src/space/travel` or `film.ts`.
+- 06:55. Dive and rise sheets at draft: the approach holds, the veil and cover read as one cloud layer, the terrain entry decays fast (1903 to 1919 nearly alike; the entry is at the canvas limit). Rise: at 2120 a grey band sat above the limb. Cause: the engine's cover horizon uses the fixed `dipDeg`, but at the exit the camera is 0.56 heights higher (dip 17.4 against 14.0 degrees), so my veil's horizon cut sat about 80 px above the true horizon. Fix in `set.ts` and `veil.ts`: the veil takes the true horizon from the sea sphere (`reliefJson.nadir`, `radius`) and the camera's place in the terrain group; 2120 is clean.
+- 06:58. `coverTop` terrain side 0.04 to 0.012: the engine cover above the horizon was a lighter blue than the sky, so its streaks drew a comb of vertical lines in the sky at 1889 and 1890 and dark and light blotches at 1886 to 1888 and 2125 to 2128.
+- Looked at and left: the top of 1893 at gain 3 (a faint row of soft dots and a gradient of 2 code values over 60 rows; the Sun's glow column at the top centre is in the sky patch and belongs there). The aurora off the limb in the rise is the same comb with red above as in the approved hero.
 
-1. Cover = thin veil of high cloud in white (`cover`, `coverLow`, `coverTerrain`, `coverLowTerrain`, `coverTop`, `coverEdge`, `coverEdgeRise`, `coverShell`, `coverRush`), larger terrain entry and exit, stills of the join with and without the cover.
-2. Patch chain 96, 48, 24 (12 as margin), `patches.levels` in `assets.ts`, recipe, G13 over the dive and rise.
-3. Descent grade, rise sheet (far side, poles, terminator), milestone message with numbers. Merge `origin/main` first.
-4. `for` loop advice in `globe.ts` and `air.ts`, bloom pre-emphasis for the relief limb, far-side polish, own checks, gates G11, G12, G15, `READY`.
+## Next (current, from 07:05 UTC)
+
+1. Dive and rise milestone message: commit, G13 numbers (`out/work/earth/g13-e3.log`, every third frame), blur at the judged frames (predictor: 1857 median 2.7 px, p90 3.9; 2156 median 2.6, p90 4.2), weak points.
+2. Travel before the hold and after the rise at draft (`npm run -s sheet -- --segment venus.travel --tier draft`, `earth.travel`): free of pops, FarPoint to globe.
+3. Own checks: `npm run measure -- --stop earth` (full, G13 every frame takes about 35 minutes), compare both views at `final`, sheets of hold and terrain at `review`, dive and rise at draft plus review stills of 1857 and 2156, `npm run crops`.
+4. Gates: `npm run -s gate -- --phase 4 --only G11` (PASS at 07:03 with the patches), `--only G12,G15 --g15-stops mars,earth`. Stand-ins removed. Merge `origin/main`. `READY` with the three results.
+5. If time: `for` loop advice in `globe.ts` and `air.ts`, bloom pre-emphasis for the relief limb, delete `assets-src/earth/relief/towers.py`.
