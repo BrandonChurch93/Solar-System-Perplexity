@@ -7,6 +7,7 @@ import { StopPlan, easeInOut } from './moves'
 import { arc, drift, ease, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
+import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
 
 const NO_TURN = new THREE.Quaternion()
@@ -50,6 +51,7 @@ export class FilmDirector implements Director {
     this.reach.push(0)
     this.begin.push(0)
     for (let i = 0; i + 1 < plans.length; i++) this.place(i)
+    this.pin()
     const last = plans.length - 1
     const n = this.plans[last]!
     const s = n.sunDir.clone()
@@ -228,6 +230,25 @@ export class FilmDirector implements Director {
     const origin = at.sub(this.approachLocal(i + 1, 0, startAt).position.applyQuaternion(best))
     this.frames.push({ rotation: best, origin })
     this.approach.push(dLocal.clone().applyQuaternion(best))
+  }
+
+  private pin(): void {
+    const m = this.plans.findIndex((p) => p.id === world.stop)
+    const at = this.frames[m]
+    if (!at) return
+    const rotation = new THREE.Quaternion().fromArray(world.rotation)
+    const origin = new THREE.Vector3().fromArray(world.origin)
+    const turn = rotation.clone().multiply(at.rotation.clone().invert())
+    const base = at.origin.clone()
+    this.frames.forEach((f, i) => {
+      if (i === m) return
+      f.origin.sub(base).applyQuaternion(turn).add(origin)
+      f.rotation.premultiply(turn).normalize()
+    })
+    at.rotation.copy(rotation)
+    at.origin.copy(origin)
+    for (const a of this.approach) a.applyQuaternion(turn)
+    this.sunWorld.fromArray(world.sun)
   }
 
   beginOf(i: number): number {
