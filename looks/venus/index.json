@@ -1,9 +1,53 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T07:30:41.250Z",
- "head": "a098240edf71306e99413d213539c9888cd21543",
- "note": "dive and rise: smooth motion blur on the fast frames (blur inside each sample, jitter taken out of the cloud lookup)",
+ "pushed": "2026-11-21T08:00:43.431Z",
+ "head": "bbe0ac6cfc0ee3f70fba577e0fe420fcb1c9afc9",
+ "note": "dive and rise strips at review tier, smooth blur, haze hugs the planet",
  "looks": [
+  {
+   "time": "2026-11-21T08:00:42.838Z",
+   "file": "20261121080042838-note-rise2.jpg",
+   "source": "out/work/venus/strip/rise2.jpg",
+   "kind": "note",
+   "label": "rise strip at review tier with the smooth blur and the tighter haze shell: cover 1558 to 1572, globe from 1575, 1586 judged",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T08:00:33.743Z",
+   "file": "20261121080033743-frame-rise2-1600.jpg",
+   "source": "out/work/venus/strip/rise2-1600.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1600, review tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1600,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6d4f67865f286916"
+  },
+  {
+   "time": "2026-11-21T07:48:56.279Z",
+   "file": "20261121074856279-note-dive2.jpg",
+   "source": "out/work/venus/strip/dive2.jpg",
+   "kind": "note",
+   "label": "dive strip at review tier with the smooth blur: 1287 judged, 1296 to 1305 approach, haze 1308 to 1321, terrain from 1323",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T07:48:25.030Z",
+   "file": "20261121074825030-frame-dive2-1335.jpg",
+   "source": "out/work/venus/strip/dive2-1335.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1335, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1335,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "704d5d55f51b7b15"
+  },
   {
    "time": "2026-11-21T07:30:40.653Z",
    "file": "20261121073040653-note-crop-1305-zz4.jpg",
@@ -11,20 +55,6 @@
    "kind": "note",
    "label": "dive 1305 night side, 5x crop, gain 2, review tier: before (top) and after taking the per sample jitter out of the blurred cloud lookup (bottom): continuous streaks",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T07:30:32.848Z",
-   "file": "20261121073032848-frame-jit-1305.jpg",
-   "source": "out/work/venus/ab/jit-1305.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1305, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1305,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
   },
   {
    "time": "2026-11-21T07:30:11.358Z",
@@ -49,54 +79,12 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T07:17:11.088Z",
-   "file": "20261121071711088-frame-t-1570.jpg",
-   "source": "out/work/venus/strip/t-1570.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1570, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1570,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
-  },
-  {
    "time": "2026-11-21T07:02:11.364Z",
    "file": "20261121070211364-note-rise1-1586.jpg",
    "source": "out/work/venus/strip/rise1-1586.png",
    "kind": "note",
    "label": "judged rise frame 1586 at review",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T05:59:55.451Z",
-   "file": "20261121055955451-compare-compare-venus-terrain-view.jpg",
-   "source": "out/work/compare/compare-venus-terrain-view.jpg",
-   "kind": "compare",
-   "label": "venus.terrain: approved image left, film frame right, review tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:59:54.489Z",
-   "file": "20261121055954489-still-f01440-16x9-review-full.jpg",
-   "source": "out/work/stills/f01440-16x9-review-full.png",
-   "kind": "still",
-   "label": "venus.terrain frame 1440, review tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
   }
  ]
 }
