@@ -74,7 +74,9 @@ function caption(l: Look): string {
 const pics: Pic[] = []
 const used = new Set<string>()
 const all = gather()
-const max = rule.maxPictures
+const extra = a.pic && a.pic !== 'true' ? a.pic : ''
+if (extra && !existsSync(extra)) throw new Error('no such picture ' + extra)
+const max = rule.maxPictures - (extra ? 1 : 0)
 const fresh = (l: Look): boolean => a.all === 'true' || last.shown.includes(l.file) === false
 
 function keyPicture(stop: string): Pic | null {
@@ -185,6 +187,8 @@ if (pics.length === 0) {
   const newest = readdirSync(stills).filter((f) => /\.(jpg|png)$/.test(f)).map((f) => ({ f, t: statSync(join(stills, f)).mtimeMs })).sort((x, y) => y.t - x.t).slice(0, max)
   for (const n of newest) pics.push({ path: join(stills, n.f), caption: 'Newest kept still: ' + basename(n.f).replace(/\.[a-z]+$/, '').split('-').join(' '), name: basename(n.f, '.jpg'), kept: true })
 }
+
+if (extra) pics.splice(Math.min(a.board ? 2 : 1, pics.length), 0, { path: extra, caption: a['pic-caption'] && a['pic-caption'] !== 'true' ? a['pic-caption'] : basename(extra), name: 'extra-' + basename(extra).replace(/\.[a-z0-9]+$/i, '').replace(/[^a-z0-9-]+/gi, '-').toLowerCase() })
 
 const made: string[] = []
 const packed: { caption: string; src: string; wide?: boolean }[] = []

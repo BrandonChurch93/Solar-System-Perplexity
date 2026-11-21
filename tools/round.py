@@ -11,6 +11,7 @@ JURY = ['claude_opus_5_5', 'gpt_6_2_sol', 'gemini_4_carbon', 'kimi_k3', 'grok_4_
 NAMERS = ['claude_sonnet_5_5', 'gpt_6_2_sol', 'gemini_4_carbon']
 JSON_CRITICS = ['R1', 'R3-part1', 'R3-part2', 'R4', 'R5', 'R6', 'R7']
 NAMES = {'sun': ['sun'], 'mercury': ['mercury'], 'venus': ['venus'], 'earth': ['earth'], 'mars': ['mars'], 'jupiter': ['jupiter'], 'saturn': ['saturn'], 'uranus': ['uranus'], 'neptune': ['neptune']}
+BODIES = set(sum(NAMES.values(), [])) | set('moon luna phobos deimos io europa ganymede callisto amalthea titan enceladus mimas rhea dione tethys iapetus hyperion miranda ariel umbriel titania oberon triton nereid pluto charon ceres vesta eris asteroid comet exoplanet'.split())
 
 
 def sh(cmd, check=True, cwd=ROOT):
@@ -334,8 +335,10 @@ def letter(t):
 
 
 def named(t, stop):
-    head = ' '.join(re.sub(r'[^a-z ]', ' ', t.lower()).split()[:3])
-    return any(x in head.split() for x in NAMES[stop])
+    for w in re.sub(r'[^a-z ]', ' ', t.lower()).split():
+        if w in BODIES:
+            return w in NAMES[stop]
+    return False
 
 
 def read_answer(n, name, wants_json):
