@@ -16,6 +16,10 @@ CRISP = 1.0
 CRISP_MAX = 0.6
 SEAM_STRIP = 28
 SEAM_REACH = 900
+KNIT_IN = 16
+KNIT_OUT = 10
+KNIT_STRIP = 6
+KNIT_REACH = 700
 LIMB_TOP, LIMB_FULL, LIMB_END = -24, 150, 320
 LIMB_ALONG, LIMB_REACH, LIMB_IN = 50, 700, 14
 
@@ -217,7 +221,35 @@ def split(app, clean_n, a, sh):
 
 
 deckW, cloudW = split(wide, cleanN, alpha, s)
-check = deckW * s[..., None] * (1 - alpha[..., None]) + cloudW * alpha[..., None]
+
+
+def knit_deck(deck, a, cloud, sh):
+    inside = np.zeros((WH, WW), np.float32)
+    inside[:bh - KNIT_IN, bx + KNIT_IN:bx + bw - KNIT_IN] = 1
+    outside = np.ones((WH, WW), np.float32)
+    outside[:bh, bx:bx + bw] = 0
+    lx = np.log(np.maximum(lum(deck), 1e-4))
+    m_in = blur(lx * inside * belowf, KNIT_STRIP) / np.maximum(blur(inside * belowf, KNIT_STRIP), 1e-3)
+    m_out = blur(lx * outside * belowf, KNIT_STRIP) / np.maximum(blur(outside * belowf, KNIT_STRIP), 1e-3)
+    yy, xx = np.mgrid[0:WH, 0:WW]
+    ny = np.clip(yy, 0, bh - 1 - KNIT_IN)
+    nx = np.clip(xx, bx + KNIT_IN, bx + bw - 1 - KNIT_IN)
+    oy = np.where(yy > ny, bh - 1 + KNIT_OUT, ny)
+    ox = np.where(xx < nx, bx - KNIT_OUT, np.where(xx > nx, bx + bw - 1 + KNIT_OUT, nx))
+    edge_out = m_out[np.clip(oy, 0, WH - 1), np.clip(ox, 0, WW - 1)]
+    step = blur(np.clip(m_in[ny, nx] - edge_out, -1.2, 1.2), 24)
+    dist = np.hypot(yy - ny, xx - nx).astype(np.float32)
+    k = np.clip(dist / KNIT_IN, 0, 1) * np.exp(-np.maximum(dist - KNIT_IN, 0) / KNIT_REACH)
+    out = deck * np.exp(step * k)[..., None]
+    print('deck knit step p5 p50 p95 %.3f %.3f %.3f' % tuple(np.percentile(step[(dist > KNIT_IN) & (dist < KNIT_IN + 40) & below], [5, 50, 95])))
+    comp = deck * sh[..., None] * (1 - a[..., None]) + cloud * a[..., None]
+    under = lum(out * sh[..., None])
+    a2 = np.clip((lum(comp) - under) / np.maximum(lum(cloud) - under, 0.02), a, 1)
+    return np.clip(out, 0, 1).astype(np.float32), np.where(a > 0.03, a2, a).astype(np.float32)
+
+
+deckW, alphaW = knit_deck(deckW, alpha, cloudW, s)
+check = deckW * s[..., None] * (1 - alphaW[..., None]) + cloudW * alphaW[..., None]
 err = np.abs(enc(check).astype(np.int32) - enc(wide).astype(np.int32))[below]
 print('wide recomposite error mean %.2f p99 %.0f' % (err.mean(), np.percentile(err, 99)))
 
@@ -271,7 +303,7 @@ kW = reach(WW, WH, None)
 save('close-deck.webp', deckC, None, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-cloud.webp', cloudC, alphaC, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-deck-wide.webp', deckW, None, (WW // 2, WH // 2), bw / 1920, kW)
-save('close-cloud-wide.webp', cloudW, alpha, (WW // 2, WH // 2), bw / 1920, kW)
+save('close-cloud-wide.webp', cloudW, alphaW, (WW // 2, WH // 2), bw / 1920, kW)
 cv2.imwrite(OUT + '/full/close-height.png', hmap)
 cv2.imwrite(OUT + '/web/close-height.png', cv2.resize(hmap, (HW // 2, HH // 2), interpolation=cv2.INTER_AREA))
 cv2.imwrite(WORK + 'wide.png', enc(wide))
