@@ -1,0 +1,64 @@
+{
+ "folder": "sun",
+ "pushed": "2026-11-21T02:45:41.026Z",
+ "head": "da23ff5f4a48ce5e9e8432d2cd2f4d4a0e059e0f",
+ "note": "stand-in hold and terrain beside the approved images, before any work",
+ "looks": [
+  {
+   "time": "2026-11-21T02:45:00.700Z",
+   "file": "20261121024500700-compare-compare-sun-terrain-view.jpg",
+   "source": "out/work/compare/compare-sun-terrain-view.jpg",
+   "kind": "compare",
+   "label": "sun.terrain: approved image left, film frame right, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:59.728Z",
+   "file": "20261121024459728-still-f00090-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00090-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:45.209Z",
+   "file": "20261121024445209-compare-compare-sun-hold-view.jpg",
+   "source": "out/work/compare/compare-sun-hold-view.jpg",
+   "kind": "compare",
+   "label": "sun.hold: approved image left, film frame right, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T02:44:43.932Z",
+   "file": "20261121024443932-still-f00360-16x9-draft-full.jpg",
+   "source": "out/work/stills/f00360-16x9-draft-full.png",
+   "kind": "still",
+   "label": "sun.hold frame 360, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
