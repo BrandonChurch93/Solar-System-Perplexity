@@ -15,6 +15,9 @@ export interface IoOptions {
   rim: number
   feather: number
   blur: number
+  term: [number, number]
+  dusk: [number, number, number, number]
+  crisp: number
 }
 
 const VERT = /* glsl */ `
@@ -42,13 +45,15 @@ uniform vec3 uSun;
 uniform vec3 uAmbient;
 uniform vec3 uBounce;
 uniform vec3 uShape;
+uniform vec2 uTerm;
+uniform vec4 uDusk;
 uniform float uEclipse;
 uniform float uVignette;
 uniform float uAspect;
 uniform vec4 uBall;
 uniform vec4 uPlanet;
 uniform mat3 uToLocal;
-uniform vec2 uFeather;
+uniform vec3 uFeather;
 in vec3 vPos;
 in vec3 vView;
 in vec3 vClip;
@@ -73,11 +78,14 @@ void main() {
   vec3 d = uToLocal * n;
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  float lit = pow(clamp((ndl + uShape.x) / (1.0 + uShape.x), 0.0, 1.0), uShape.y) * mix(1.0, pow(mu, 0.5), uShape.z);
+  float lit = pow(clamp((ndl + uShape.x) / (1.0 + uShape.x), 0.0, 1.0), uShape.y);
+  float day = smoothstep(0.0, uDusk.a, lit);
+  lit *= pow(min(lit / uTerm.x, 1.0), uTerm.y) * mix(1.0, pow(mu, 0.5), uShape.z);
   float u = atan(d.x, d.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
-  float foot = min(px / uBall.w, uFeather.y) / PI * uGrad;
+  float foot = min(px / uBall.w, uFeather.y) / PI * uGrad * uFeather.z;
   vec3 albedo = inverseFilmic(textureGrad(uMap, vec2(u, v), vec2(foot * 0.5, 0.0), vec2(0.0, foot)).rgb);
+  albedo = mix(dot(albedo, vec3(0.2126, 0.7152, 0.0722)) * uDusk.rgb, albedo, day);
   vec3 shade = uSun * lit * (1.0 - uEclipse) + uAmbient + uBounce * max(dot(n, uPlanetW), 0.0);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = albedo * shade * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -99,8 +107,8 @@ export class Io {
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uGain: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uPlanetW: { value: new THREE.Vector3(0, 0, -1) },
         uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) }, uBounce: { value: new THREE.Vector3().fromArray(o.bounce) },
-        uShape: { value: new THREE.Vector3(o.wrap, o.power, o.rim) }, uEclipse: { value: 0 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-        uBall: { value: new THREE.Vector4(0, 0, -1, o.radius) }, uPlanet: { value: new THREE.Vector4(0, 0, -1, 1) }, uToLocal: { value: this.toLocal }, uFeather: { value: new THREE.Vector2(o.feather, o.blur) },
+        uShape: { value: new THREE.Vector3(o.wrap, o.power, o.rim) }, uTerm: { value: new THREE.Vector2(Math.max(o.term[0], 1e-4), o.term[1]) }, uEclipse: { value: 0 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uBall: { value: new THREE.Vector4(0, 0, -1, o.radius) }, uPlanet: { value: new THREE.Vector4(0, 0, -1, 1) }, uToLocal: { value: this.toLocal }, uFeather: { value: new THREE.Vector3(o.feather, o.blur, o.crisp) }, uDusk: { value: new THREE.Vector4().fromArray(o.dusk) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
       transparent: true,

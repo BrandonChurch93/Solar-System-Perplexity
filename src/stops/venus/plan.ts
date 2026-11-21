@@ -4,46 +4,45 @@ import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../direc
 import { coverWindow } from '../../director/timeline'
 import type { CoverHorizon, Pose } from '../../core/types'
 import fit from './fit.json'
+import reliefJson from './relief.json'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 8, axis: [-0.3, 1, 0], push: -0.03 },
   spot: { x: 0.6222, y: 0.4356 },
   dive: { headingDeg: 98.25, altitude: 0.0267, back: 0.07, ahead: 0.14, bow: -0.25, rollDeg: -7, swoop: true, surge: { glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] } },
-  terrain: { vfov: 60, horizonDeg: 10.57, dipDeg: 10.91, forward: 0.85, rise: 0.12, side: -0.1, yawDeg: -3, pitchDeg: 1, entryHeight: 0.7, entryBack: 0.7, entryPitchDeg: 5, entryRollDeg: -30, exitHeight: 1.6, exitForward: -0.25, exitPitchDeg: 10 },
+  terrain: { vfov: 60, horizonDeg: 10.57, dipDeg: 10.91, forward: 0.85, rise: 0.12, side: -1, yawDeg: -3, pitchDeg: 1, entryHeight: 0.7, entryBack: 0.3, entryPitchDeg: 0, entryRollDeg: -30, exitHeight: 1.6, exitForward: -0.25, exitPitchDeg: 2.2, exitDipDeg: 4.65 },
   rise: { azimuthDeg: 18, elevationDeg: 12, distance: 5.4, offset: [-0.3, 0.12], driftSpeed: 0.08, rollDeg: 6, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 92, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -24, axis: [1, 0.25, 0], offset: [-0.45, 0.25] },
   light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
-  cover: [1.25, 1.02, 0.62],
-  coverLow: [0.95, 0.7, 0.36],
-  coverTerrain: [1.3, 1.0, 0.56],
-  coverLowTerrain: [0.3, 0.19, 0.085],
-  coverTop: [0.04, 0.12],
+  cover: [1.0, 0.82, 0.5],
+  coverLow: [0.6, 0.45, 0.24],
+  coverTerrain: [0.9, 0.7, 0.4],
+  coverLowTerrain: [0.36, 0.26, 0.13],
+  coverTop: [1, 1],
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
-  coverShell: [1.015, 1.07],
-  coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.5, 0.35] },
+  coverShell: [0.99, 1.01],
+  coverHides: 0.7,
+  coverRush: { speed: 5, reach: 1.0, billow: [3.5, 3.5, 1.0], streak: [9, 6, 1.6], contrast: [1.7, 1.2] },
   skyAim: { orbit: [-160, -4, -1], terrain: [70.88563, -102.57248, -13.65] },
-  spinDegPerSecond: -0.5,
+  spinDegPerSecond: -1,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
 }
 
-export const haze = { dive: { lead: 3.5, hold: 1, tail: 16 }, rise: { lead: 10, hold: 1.5, tail: 16 } }
+export const veil = { peak: 0.94, inside: 0.006, outside: 0.02, dive: { lead: 6, before: 1, after: 0.5, tail: 10 }, rise: { lead: 5, before: 0.5, after: 0.5, tail: 8 } }
 
-export const shell = { thin: [0.985, 1.045], near: [1, 1.18], fade: [0.2, 0.5] }
+const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 
 const ease = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
   return t * t * (3 - 2 * t)
 }
 
-const shellAt = (height: number): [number, number] => {
-  const k = ease((height - shell.fade[0]!) / (shell.fade[1]! - shell.fade[0]!))
-  return [shell.near[0]! + (shell.thin[0]! - shell.near[0]!) * k, shell.near[1]! + (shell.thin[1]! - shell.near[1]!) * k]
-}
-
 export const bank = { roll: 1288, pitch: 1302 }
+
+export const drift = { bend: -0.6 }
 
 const hermite = (x: number, a: number, da: number, b: number, db: number): number => {
   const t = Math.min(Math.max(x, 0), 1)
@@ -58,7 +57,7 @@ class VenusPlan extends StopPlan {
   private ends: { roll: [number, number]; pitch: [number, number]; end: [number, number, number, number] } | null = null
 
   private limb(shot: OrbitShot): Limb {
-    const h = super.horizon(shot.view, shot.pose)
+    const h = this.horizon(shot.view, shot.pose)
     return { tilt: Math.atan2(h.normal[0], h.normal[1]), gap: h.offset / Math.tan(THREE.MathUtils.degToRad(shot.pose.vfov) / 2) }
   }
 
@@ -101,19 +100,31 @@ class VenusPlan extends StopPlan {
     return { pose: { position: pose.position, quaternion: pose.quaternion.clone().multiply(fix.invert()), vfov: pose.vfov }, view: 'orbit' }
   }
 
+  override terrain(tRel: number): Pose {
+    const pose = super.terrain(tRel)
+    const u = tRel / (this.seg.terrain.end - this.seg.terrain.start) - 0.5
+    pose.position.x += drift.bend * u * u
+    return pose
+  }
+
   override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
-    if (view === 'orbit') this.p.coverShell = shellAt(local.position.length() - 1)
-    return super.horizon(view, local)
+    const rel = view === 'orbit' ? local.position : local.position.clone().sub(deck.centre).divideScalar(deck.radius)
+    const d = rel.length()
+    const w = Math.tan(THREE.MathUtils.degToRad(local.vfov) / 2) * Math.sqrt(Math.max(d * d - 1, 1e-6))
+    const edge: [number, number] = [1 - veil.inside * w, 1 + veil.outside * w]
+    if (view === 'orbit') this.p.coverShell = edge
+    else this.p.coverSea = { centre: [deck.centre.x, deck.centre.y, deck.centre.z], radius: deck.radius, edge }
+    return super.horizon('orbit', { position: rel, quaternion: local.quaternion, vfov: local.vfov })
   }
 
   override coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 0
-    const h = haze[seg.kind]
+    const h = veil[seg.kind]
     const f = time * config.fps - w.centerFrame
-    const before = seg.kind === 'dive' ? (f + (w.centerFrame - w.firstFrame)) / h.lead : (f + h.hold + h.lead) / h.lead
-    const after = (h.hold + h.tail - f) / h.tail
-    return Math.min(ease(before), Math.min(Math.max(after, 0), 1))
+    const before = (f + h.before + h.lead) / h.lead
+    const after = (h.after + h.tail - f) / h.tail
+    return veil.peak * Math.min(ease(before), Math.min(Math.max(after, 0), 1))
   }
 }
 
