@@ -1,0 +1,111 @@
+{
+ "stop": "mercury",
+ "spot": {
+  "lonDeg": 16.23496085426928,
+  "latDeg": -14.517851118144417,
+  "heroFrame": [
+   0.523,
+   0.66
+  ],
+  "direction": [
+   0.2706499980239542,
+   -0.25068162873791044,
+   0.9294661367447493
+  ]
+ },
+ "sun": {
+  "bodyDir": [
+   0.8358209047433897,
+   0.5487300726485159,
+   0.017283586330185365
+  ],
+  "elevationDeg": 6.011201085156786
+ },
+ "featherFraction": 0.12,
+ "patches": [
+  {
+   "id": "patch-1",
+   "level": 1,
+   "widthDeg": 76.0,
+   "halfTan": 0.78128563,
+   "featherFraction": 0.12,
+   "files": {
+    "full": "mercury/full/patch-1.jpg",
+    "web": "mercury/web/patch-1.jpg"
+   },
+   "sizes": {
+    "full": [
+     4096,
+     4096
+    ],
+    "web": [
+     2048,
+     2048
+    ]
+   }
+  },
+  {
+   "id": "patch-2",
+   "level": 2,
+   "widthDeg": 38.0,
+   "halfTan": 0.34432761,
+   "featherFraction": 0.12,
+   "files": {
+    "full": "mercury/full/patch-2.jpg",
+    "web": "mercury/web/patch-2.jpg"
+   },
+   "sizes": {
+    "full": [
+     4096,
+     4096
+    ],
+    "web": [
+     2048,
+     2048
+    ]
+   }
+  },
+  {
+   "id": "patch-3",
+   "level": 3,
+   "widthDeg": 19.0,
+   "halfTan": 0.16734261,
+   "featherFraction": 0.12,
+   "files": {
+    "full": "mercury/full/patch-3.jpg",
+    "web": "mercury/web/patch-3.jpg"
+   },
+   "sizes": {
+    "full": [
+     4096,
+     4096
+    ],
+    "web": [
+     2048,
+     2048
+    ]
+   }
+  },
+  {
+   "id": "patch-4",
+   "level": 4,
+   "widthDeg": 9.5,
+   "halfTan": 0.08309359,
+   "featherFraction": 0.12,
+   "files": {
+    "full": "mercury/full/patch-4.jpg",
+    "web": "mercury/web/patch-4.jpg"
+   },
+   "sizes": {
+    "full": [
+     4096,
+     4096
+    ],
+    "web": [
+     2048,
+     2048
+    ]
+   }
+  }
+ ]
+}

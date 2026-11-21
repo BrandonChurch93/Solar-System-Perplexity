@@ -64,12 +64,24 @@ def base():
     model = np.stack([np.interp(r, mids, meds[:, c]).astype(np.float32) for c in range(3)], -1)
     resid = np.where(sky[..., None], img - model, 0)
     top = MT * S
-    src = resid[top:2 * top][::-1]
-    ok = sky[top:2 * top][::-1]
-    alt = src[:, ::-1]
-    alt_ok = ok[:, ::-1]
-    fill = np.where(ok[..., None], src, np.where(alt_ok[..., None], alt, 0))
-    img[:top] = np.clip(model[:top] + fill, 0, 1)
+    q = 4
+    wq = cv2.resize(sky.astype(np.float32), (CW // q, ROWS // q), interpolation=cv2.INTER_AREA)
+    rq = cv2.resize(resid, (CW // q, ROWS // q), interpolation=cv2.INTER_AREA)
+    low = cv2.GaussianBlur(rq, (0, 0), 14) / np.maximum(cv2.GaussianBlur(wq, (0, 0), 14), 1e-3)[..., None]
+    low = cv2.resize(low[top // q:2 * top // q], (CW, top), interpolation=cv2.INTER_CUBIC)
+    band = slice(top, 2 * top)
+    clear = geo.smooth(24 * S, 90 * S, (keep - yy)[band])[..., None]
+    high = np.where(sky[band][..., None], resid[band] - low, 0) * clear
+    del resid
+    seen = sky[top + 4]
+    cols = np.arange(CW)
+    edge = np.stack([np.interp(cols, cols[seen], low[4, seen, c]) for c in range(3)], -1)
+    edge = cv2.GaussianBlur(edge.reshape(1, CW, 3), (0, 0), 6 * S).reshape(1, CW, 3)
+    fall = np.exp(-(top - yy[:top]) / (240.0 * S))[..., None]
+    src = high[::-1]
+    fill = src + (1 - clear[::-1]) * src[:, ::-1]
+    img[:top] = np.clip(model[:top] + edge * fall + fill, 0, 1)
+    del model, high, src, fill, low
     k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
     calm = cv2.morphologyEx(img, cv2.MORPH_OPEN, k)
     m = ((yy < keep - 3 * S) & True).astype(np.float32)
@@ -78,7 +90,7 @@ def base():
     calm = num / np.maximum(den, 1e-3)[..., None]
     ys = np.clip(np.floor(keep - 8).astype(int), 0, ROWS - 1)
     under = calm[ys, np.arange(CW)]
-    under = cv2.GaussianBlur(under.reshape(1, CW, 3), (0, 0), 8).reshape(CW, 3)
+    under = cv2.GaussianBlur(under.reshape(1, CW, 3), (0, 0), 20).reshape(CW, 3)
     t = geo.smooth(-8, -2, yy - keep)[..., None]
     img = img * (1 - t) + under[None, :, :] * t
     np.save(WORK + 'terrain-base.npy', img.astype(np.float16))

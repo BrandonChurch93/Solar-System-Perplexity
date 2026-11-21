@@ -42,6 +42,33 @@ def horizon():
     return np.maximum(med * (1 - inside), 0)
 
 
+def lens(color, fix):
+    sys.path.insert(0, 'assets-src/mercury/wrap')
+    import geo
+    fh, fw = fix.shape[:2]
+    px, py = int(round(ML * fw / W)), int(round(MB * fh / H))
+    wide = np.pad(fix, ((0, py), (px, px), (0, 0)), mode='edge')
+    soft = cv2.GaussianBlur(wide, (0, 0), 30.0 * fw / 1920)
+    xs = (np.arange(wide.shape[1]) + 0.5 - px) / fw
+    ys = (np.arange(wide.shape[0]) + 0.5) / fh
+    out = np.maximum(np.maximum(-xs, xs - 1)[None, :], (ys - 1)[:, None])
+    t = smooth(0.0, 0.04, out)[..., None]
+    wide = wide * (1 - t) + soft * t
+    img = np.asarray(color)
+    res = np.empty_like(img)
+    step = 256
+    for y in range(0, img.shape[0], step):
+        y0, y1 = y / img.shape[0] * wide.shape[0], min(y + step, img.shape[0]) / img.shape[0] * wide.shape[0]
+        rows = np.linspace(y0, y1, min(y + step, img.shape[0]) - y, endpoint=False) + 0.5 * wide.shape[0] / img.shape[0] - 0.5
+        cols = (np.arange(img.shape[1]) + 0.5) * wide.shape[1] / img.shape[1] - 0.5
+        mx, my = np.meshgrid(cols.astype(np.float32), rows.astype(np.float32))
+        f = cv2.remap(wide, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        lin = geo.unfilm(geo.to_linear(img[y:y + step].astype(np.float32) / 255)) * f
+        res[y:y + step] = (np.clip(geo.to_srgb(geo.film(lin)), 0, 1) * 255 + 0.5).astype(np.uint8)
+    print('lens fix applied')
+    return Image.fromarray(res)
+
+
 def main():
     drop = horizon()
     print('horizon drop in the margins, px at 2816: left max %.1f right max %.1f' % (drop[:ML].max(), drop[ML + W:].max()))
@@ -86,6 +113,8 @@ def main():
     Image.fromarray((vis * 255).astype(np.uint8)).save(WORK + 'relief-detail.png')
     color = Image.open(WORK + 'ext-2x.png').convert('RGB')
     assert color.size == (CW * 2, CH * 2), color.size
+    if os.path.exists(WORK + 'lens-fix.npy'):
+        color = lens(color, np.load(WORK + 'lens-fix.npy'))
     hy2 = np.interp((np.arange(CW * 2) + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop)
     y2 = (np.arange(CH * 2)[:, None] + 0.5) / 2
     slope = np.gradient(hy2) * 2
