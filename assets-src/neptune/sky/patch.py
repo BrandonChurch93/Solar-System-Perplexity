@@ -25,6 +25,10 @@ SUN_STARS = 0.45
 OUTWARD = ((6, 0, 10), (18, 6, 40), (48, 30, 110))
 MOON = (337, 407, 95)
 RING = dict(normal=[0.1681, 0.9779, 0.1244], centre=[0.0533, 0.0532, -0.4902], inner=1.36, outer=1.86)
+SPECK = (0.001, 14)
+STRAND = (0.004, 22)
+LIMB = (0.99, 1.0, 1.04, 1.06)
+STRANDS = (1.3, 1.92)
 
 
 def sunless(lin):
@@ -129,7 +133,18 @@ def compact(a):
     return np.maximum(a - best, 0)
 
 
-def ring_mask():
+def specks(hs, zone, rule):
+    lab, n = ndi.label(luma(hs) > rule[0], structure=np.ones((3, 3)))
+    size = np.array([max(s[0].stop - s[0].start, s[1].stop - s[1].start) for s in ndi.find_objects(lab)])
+    long = (size > rule[1])[lab - 1] & (lab > 0)
+    cut = ndi.gaussian_filter(ndi.binary_dilation(long, iterations=2).astype(np.float32), 1) * zone
+    print('lines taken out of the stars: px', int((cut > 0.5).sum()))
+    return hs * (1 - np.clip(cut, 0, 1))[..., None]
+
+
+def ring_mask(inner=None, outer=None):
+    inner = RING['inner'] if inner is None else inner
+    outer = RING['outer'] if outer is None else outer
     n = np.array(RING['normal'], float)
     n /= np.linalg.norm(n)
     c = np.array(RING['centre'], float)
@@ -139,7 +154,7 @@ def ring_mask():
     t = ((c - geo.CAM) @ n) / (d @ n)
     p = geo.CAM + d * t[..., None] - c
     r = np.linalg.norm(p, axis=-1)
-    m = step(r, RING['inner'] - 0.06, RING['inner']) * (1 - step(r, RING['outer'], RING['outer'] + 0.06)) * (t > 0)
+    m = step(r, inner - 0.06, inner) * (1 - step(r, outer, outer + 0.06)) * (t > 0)
     return m.astype(np.float32)
 
 
@@ -171,6 +186,8 @@ def hold(hero, fill, glow, out):
     hs, fs = compact(a), compact(f)
     k = float(luma(hs)[zone].mean() / max(luma(fs)[zone].mean(), 1e-6))
     print('fill star gain', round(k, 3))
+    hs = specks(hs, step(d, LIMB[0], LIMB[1]) * (1 - step(d, LIMB[2], LIMB[3])), SPECK)
+    hs = specks(hs, ring_mask(*STRANDS), STRAND)
     outside = (step(d, EDGE[0], EDGE[1]) * moon)[..., None]
     behind = (1 - step(d, BEHIND[0], BEHIND[1]))[..., None]
     f = f - fs + fs * k * behind + hs * outside

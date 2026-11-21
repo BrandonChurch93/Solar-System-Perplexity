@@ -66,6 +66,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonSpin = new THREE.Quaternion()
   const moonAim = new THREE.Vector3().fromArray(look.triton.aim)
   const moonLight = new THREE.Vector3()
+  const moonSun = new THREE.Vector3()
 
   const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }), bands: await ctx.texture(base + ringBands.file, { srgb: false, anisotropy: 16, repeat: true }) })
   orbit.add(ring.mesh)
@@ -137,12 +138,21 @@ export const createSet: SetFactory = async (ctx) => {
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
+      const grade = rising ? look.near.rise : look.near
+      ;(pu.uNear!.value as THREE.Vector4).z = grade.power
+      ;(pu.uNear!.value as THREE.Vector4).w = grade.saturation
+      ;(pu.uNearTint!.value as THREE.Vector4).set(grade.tint[0]!, grade.tint[1]!, grade.tint[2]!, grade.pivot)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       triton.mesh.position.copy(state.time < terrainMid ? moonHome : moonStage).applyQuaternion(turn)
       triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
-      triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize(), gain * state.weight)
+      const staged = state.time >= terrainMid
+      const moonLook = staged ? look.triton.rise : look.triton
+      triton.shape(moonLook.terminator, moonLook.power, moonLook.ambient, look.triton.gain, moonLook.bump)
+      moonSun.copy(light)
+      if (staged) moonSun.lerp(shot.sun.dir, look.triton.rise.sun).normalize()
+      triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(moonSun).normalize(), gain * state.weight)
       ring.update(light, state.rotation, THREE.MathUtils.degToRad(look.ring.degPerSecond) * elapsed, home, gain * state.weight)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
