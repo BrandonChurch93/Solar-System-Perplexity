@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T20:09:36.026Z",
+ "pushed": "2026-11-21T20:29:51.422Z",
  "head": "a68edba4963aef5fe65e0a67b7f5ecbe8ada83ce",
- "note": "Phase 6 item 1 (covers): own veil keeps sky and Sun; replacing noise sheets by a cloud tile",
+ "note": "Phase 6 item 1 (covers): own veil with cloud tile sheets and fog base, sky and Sun carried through both swaps; tuning the thinning",
  "looks": [
+  {
+   "time": "2026-11-21T20:29:31.742Z",
+   "file": "20261121202931742-note-c2r.jpg",
+   "source": "../view/c2r.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover draft take c2 (rejected: brown wrinkled surface, pale cut outs)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T20:29:30.826Z",
+   "file": "20261121202930826-note-c3d.jpg",
+   "source": "../view/c3d.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, dive cover draft take c3 (frames 1303 to 1326)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T20:29:29.635Z",
+   "file": "20261121202929635-note-c3r.jpg",
+   "source": "../view/c3r.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover draft take c3 (0.8 s window, frames 1549 to 1572): cloud tile sheets, fog base, sky and Sun carried",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T20:09:35.428Z",
    "file": "20261121200935428-note-veil-tiled-2x2.jpg",
@@ -26,30 +50,6 @@
    "source": "../view/dc-a.png",
    "kind": "note",
    "label": "Phase 6 item 1, dive cover draft take a: own veil, sky kept",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:09:33.375Z",
-   "file": "20261121200933375-note-rc-a.jpg",
-   "source": "../view/rc-a.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover draft take a: own veil, sky and Sun kept, veil still a pale wash",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T19:50:16.830Z",
-   "file": "20261121195016830-note-venus.dive-cover-preview-review.jpg",
-   "source": "out/work/sheets/venus.dive-cover-preview-review.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, before: dive cover sheet of the judged build",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T19:50:16.181Z",
-   "file": "20261121195016181-note-venus.rise-cover-preview-review.jpg",
-   "source": "out/work/sheets/venus.rise-cover-preview-review.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, before: rise cover sheet of the judged build (sky black 1558 to 1562, red Sun)",
    "stop": "venus"
   },
   {
