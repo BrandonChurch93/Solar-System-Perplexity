@@ -1,8 +1,8 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T20:17:52.817Z",
- "head": "1e00af882a291300d6f8b9ad837e61d51305554a",
- "note": "READY round 3: measures green at the READY hash, checks done on the merged tree",
+ "pushed": "2026-11-21T22:59:28.783Z",
+ "head": "440ac883801c552da89c2f7d3ba213c7f579369f",
+ "note": "Phase 6 polish: dive handover, rise cover and dive cover measured and designed; code next",
  "looks": [
   {
    "time": "2026-11-21T20:10:40.209Z",
