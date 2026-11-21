@@ -1,9 +1,53 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T04:16:33.030Z",
- "head": "1815dfab14088ec7923fe8c3e26f16a8c3844cb2",
- "note": "orbit view: limb terms against the hero, hold sky patch with hero stars, right limb too bright in this take",
+ "pushed": "2026-11-21T04:38:28.711Z",
+ "head": "cd7400902a6d7d68a40f8c05a042e2dd15c710d2",
+ "note": "orbit view: limb field, ring map from the hero, new Triton map",
  "looks": [
+  {
+   "time": "2026-11-21T04:38:28.163Z",
+   "file": "20261121043828163-note-ring-both.jpg",
+   "source": "out/work/nep/ring-both.jpg",
+   "kind": "note",
+   "label": "ring, approved left, film right, brightened",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T04:38:27.648Z",
+   "file": "20261121043827648-note-triton-cmp.jpg",
+   "source": "out/work/nep/triton-cmp.jpg",
+   "kind": "note",
+   "label": "Triton, approved left, film right, 4x",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T04:38:25.214Z",
+   "file": "20261121043825214-compare-compare-neptune-hold-view.jpg",
+   "source": "out/work/compare/compare-neptune-hold-view.jpg",
+   "kind": "compare",
+   "label": "neptune.hold: approved image left, film frame right, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
+  {
+   "time": "2026-11-21T04:38:24.112Z",
+   "file": "20261121043824112-still-f04605-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04605-16x9-draft-full.png",
+   "kind": "still",
+   "label": "neptune.hold frame 4605, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "05c29d3a1588e95f"
+  },
   {
    "time": "2026-11-21T04:16:32.458Z",
    "file": "20261121041632458-note-patch-view.jpg",
@@ -21,55 +65,11 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T04:14:59.536Z",
-   "file": "20261121041459536-compare-compare-neptune-hold-view.jpg",
-   "source": "out/work/compare/compare-neptune-hold-view.jpg",
-   "kind": "compare",
-   "label": "neptune.hold: approved image left, film frame right, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
-   "time": "2026-11-21T04:14:58.474Z",
-   "file": "20261121041458474-still-f04605-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04605-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
-  },
-  {
    "time": "2026-11-21T03:54:51.974Z",
    "file": "20261121035451974-note-ringfit3-off.jpg",
    "source": "out/work/nep/ringfit3-off.jpg",
    "kind": "note",
    "label": "Ring fit on the approved hero (brightened six times): one strand, normal, radius and centre fitted",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T03:34:13.899Z",
-   "file": "20261121033413899-note-triton-preview.jpg",
-   "source": "out/work/nep/triton-preview.jpg",
-   "kind": "note",
-   "label": "Triton map",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T03:34:13.385Z",
-   "file": "20261121033413385-note-ringfit.jpg",
-   "source": "out/work/nep/ringfit.jpg",
-   "kind": "note",
-   "label": "Ring fit overlay on the hero (work in progress)",
    "stop": "neptune"
   },
   {
