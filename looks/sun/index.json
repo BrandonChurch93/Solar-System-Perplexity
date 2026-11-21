@@ -1,9 +1,49 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T21:39:41.623Z",
+ "pushed": "2026-11-21T22:00:42.030Z",
  "head": "c63a012aea92af691dfb4269edfd619baf80a736",
- "note": "Polish item 3: reflected fill replaced by a quilted granulation field; item 1 next",
+ "note": "Phase 6 polish: rise cover (item 1) in work, field (item 3) built",
  "looks": [
+  {
+   "time": "2026-11-21T22:00:40.971Z",
+   "file": "20261121220040971-note-i173-q4-211-top.jpg",
+   "source": "out/work/sun/i173-q4-211-top.jpg",
+   "kind": "note",
+   "label": "Polish item 1, draft 211 native: the straight line through the loop feet and the glow column are gone",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:00:40.314Z",
+   "file": "20261121220040314-note-i172-q4-b.jpg",
+   "source": "out/work/sun/i172-q4-b.jpg",
+   "kind": "note",
+   "label": "Polish item 1, draft: 216 to 223 (and terrain 150), relief patch still too visible at 216 to 218",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:00:39.094Z",
+   "file": "20261121220039094-note-i172-q4-a.jpg",
+   "source": "out/work/sun/i172-q4-a.jpg",
+   "kind": "note",
+   "label": "Polish item 1, draft: 204 to 215 with two world fixed zones, field tone evened from above",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:00:36.894Z",
+   "file": "20261121220036894-note-i168-site-same-scale.jpg",
+   "source": "out/work/sun/i168-site-same-scale.jpg",
+   "kind": "note",
+   "label": "Polish item 1: the sunspot at one world scale (3.2 units a side), frames 208 212 214 216 / 218 220 222 224: relief and hero sunspot are one size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T22:00:33.118Z",
+   "file": "20261121220033118-note-i166-q3-a.jpg",
+   "source": "out/work/sun/i166-q3-a.jpg",
+   "kind": "note",
+   "label": "Polish item 1, draft: rise 204 to 212, uniform ground weight, arch leans back late, surge cut",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T21:39:40.993Z",
    "file": "20261121213940993-note-i163-f60-limbstrip-old-new-x4.jpg",
@@ -77,28 +117,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T17:56:02.952Z",
-   "file": "20261121175602952-note-i147-f0-60-90-final-approved.jpg",
-   "source": "out/work/sun/i147-f0-60-90-final-approved.jpg",
-   "kind": "note",
-   "label": "sun terrain frames 0, 60, 90 at final tier on the READY tree, approved close image at lower right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:50:19.473Z",
-   "file": "20261121175019473-frame-chk-460.jpg",
-   "source": "out/work/sun/chk-460.png",
-   "kind": "frame",
-   "label": "sun.travel frame 460, draft tier",
-   "stop": "sun",
-   "segment": "sun.travel",
-   "frame": 460,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T17:49:49.561Z",
    "file": "20261121174949561-frame-chk-360.jpg",
    "source": "out/work/sun/chk-360.png",
@@ -107,20 +125,6 @@
    "stop": "sun",
    "segment": "sun.hold",
    "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:49:29.730Z",
-   "file": "20261121174929730-frame-chk-247.jpg",
-   "source": "out/work/sun/chk-247.png",
-   "kind": "frame",
-   "label": "sun.rise frame 247, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 247,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -139,28 +143,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:35:32.801Z",
-   "file": "20261121173532801-note-i145-f247-final-right-x3.jpg",
-   "source": "out/work/sun/i145-f247-final-right-x3.png",
-   "kind": "note",
-   "label": "sun rise frame 247 at final tier, right sky x 1500 to 1920 at 3 times gain after the seam pass: no straight edge",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T17:35:30.213Z",
-   "file": "20261121173530213-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
