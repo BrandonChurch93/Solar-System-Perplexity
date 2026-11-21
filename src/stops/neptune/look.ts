@@ -24,6 +24,7 @@ export const lineFade: [number, number] = [0.6, 0.15]
 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
+  stage: [8.608, -10.036, -4.601] as [number, number, number],
   aim: [0.2445, -0.4561, 0.1475] as [number, number, number],
   gain: 1.75,
   bump: 0.008,
@@ -44,8 +45,9 @@ export const ring = {
   gain: 1,
   forward: 2.5,
   forwardPower: 5,
-  sheet: [1.42, 1.78, 0.08, 0.008] as [number, number, number, number],
-  strands: [[1.52, 0.005, 0.04], [1.4, 0.004, 0.016], [1.7, 0.012, 0.0096]],
+  bandUnit: [0.16, 1] as [number, number],
+  bandHold: [0.1, 0.1] as [number, number],
+  bandAway: [0.9, 0.2] as [number, number],
   mapScale: 0.25,
   degPerSecond: 0.8,
 }

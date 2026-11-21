@@ -31,7 +31,7 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 - Tool: `python3 assets-src/neptune/sky/patch.py hold references/approved/neptune-hero.png out/work/nep/sky/fill-t1.png out/work/nep/sky/glow-only.png public/assets/neptune`.
 - Inputs: the hero; `out/work/nep/sky/glow-only.png`, a review still of frame 4605 rendered with `sky.json` gain 0 (the film's own glow, ring off); the generated fill `out/work/nep/sky/fill-t1.png`.
 - Fill: image tool model `gpt_image_2_6_flare`, input the hero, prompt in `prompts/sky-fill.js`. Take 1 of 6, kept: it continues the band behind the globe and keeps the hero's stars in place outside it.
-- What the script does: sky = hero minus the film's glow. The hero's own sky is used from 1.07 radii out, except under Triton, the ring and the film's glow. Elsewhere the fill, with its low frequencies matched to the hero. Outside the disc the hero's own stars replace the fill's. The margin is a mirrored sky with the Sun removed.
+- What the script does: sky = hero minus the film's glow. The hero's own sky is used from 1.07 radii out, except under Triton, the ring and the film's glow. Elsewhere the fill, with its low frequencies matched to the hero. Outside the disc the hero's own stars replace the fill's. The margin is not a mirror: the star free sky at the hero's edge is carried outward and blurred more with distance (6, 18 and 48 pixels), with the Sun removed, so no star or cloud of the hero appears twice.
 - Checks: the radial blue medians round the Sun equal the hero's at the review tier; no rim where the patch meets the one sky at the fixed sky aim.
 
 ## public/assets/neptune/<set>/ring.png
@@ -40,7 +40,15 @@ Every file exists in `public/assets/neptune/full/` and `public/assets/neptune/we
 - Tool: `python3 assets-src/neptune/ring/map.py out/work/nep/ring/noring.png public/assets/neptune out/work/nep/ring/withring.png`.
 - Inputs: the hero; a review still of frame 4605 with the ring off (`noring.png`); a second still rendered with the first pass map (`withring.png`) for the residual pass. The ring is turned off for the first still by setting `look.ring.gain` to 0 for that render only. Measured again at 08:30 after `ring.ts` stopped shading the ring with the planet's shadow in the hold view (the approved image shows the ring lit in front of the night side).
 - What the script does: hero minus the film without the ring, unwrapped into the fitted ring plane (`look.ring.normal`, `centre`), stars removed, strands kept with gain 2.2. Where the hero does not show the ring (behind the globe, outside the frame) the map continues the measured azimuth profile.
-- Checks: ring annulus medians within 5 percent of the hero by azimuth. Shimmer is checked in the hold sheet at the review tier; the map is filtered with mipmaps and the sheet term is analytic.
+- Checks: ring annulus medians within 5 percent of the hero by azimuth. Shimmer is checked in the hold sheet at the review tier; the map is filtered with mipmaps.
+
+## public/assets/neptune/<set>/ring-bands.png
+
+- What: the ring's fine structure in ring coordinates (radius 1.28 to 1.92 by azimuth), 4096x512 (`web` 2048x256), designed, not generated and not measured. Red: 16 ringlets and a grainy sheet (square root coded, 1 = 0.16). Green: the bright arcs and sparse glints (square root coded, 1 = 1.0).
+- Tool: `python3 assets-src/neptune/ring/bands.py` (seed 20261121, no image tool, no take).
+- Why designed: the hero's dark side is heavily block coded, so its crisp ringlets cannot be measured; `ring.png` keeps only the broad glow. The ringlet radii follow the hero's strand peaks (1.51 to 1.53, 1.60 to 1.62, 1.65 to 1.69, 1.77, 1.377) and the two bright arcs sit at the hero's clumps (radius 1.641 at ring azimuth -117.0 degrees, radius 1.512 at -121.3), with five fainter ones.
+- Use: `ring.ts` adds it to `ring.png` in the hold (`look.ring.bandHold`) and draws it alone away from the hold (`look.ring.bandAway`), where the three analytic strands and the flat sheet used to be.
+- Checks: boosted crop of the lower left dark side at frame 4605 against the hero (`out/work/nep/ring-ll-boost2.jpg`); frame 5006 shows many bands of differing brightness instead of three outlines. Read with `textureGrad` and mipmaps, anisotropy 16.
 
 ## public/assets/neptune/<set>/close-deck.webp, close-cloud.webp, close-deck-wide.webp, close-cloud-wide.webp, close-height.png
 
@@ -66,7 +74,7 @@ The five maps are `public/assets/neptune/<set>/close-deck.webp`, `public/assets/
 
 - What: `close-glow.png` 512x64 is the blue glow above the horizon of the approved close image, unwrapped by azimuth about the nadir (80 degrees wide) and by height above the horizon (0 to 0.012 radii), stars removed. `sky-terrain.webp` 3520x1980 lossless (`web` 1760x990) is the sky of the approved close image without that glow, with margin 0.125.
 - Tool: `python3 assets-src/neptune/sky/terrain.py` (no generation). Inputs: the approved close image and `src/stops/neptune/close.json`.
-- What the script does: block grid removed, scene values, glow = smooth part above the far sky level, 30th percentile along azimuth so no star or cloud of the Milky Way gets into it. Sky = image minus glow; within 0.3 of the glow height the smooth part is taken from higher up so no line stays at the horizon. Below the horizon the sky is mirrored about the horizon, because the planet's turn moves the stars against the horizon by a few degrees during the view.
+- What the script does: block grid removed, scene values, glow = smooth part above the far sky level, 45th percentile over 41 map columns along azimuth, then a 5 column blur, so no star gets into it (round 2: the 30th percentile over 141 columns left the glow at 0.76 to 0.83 of the approved image in the left and middle of the frame; now 0.99 to 1.08 in every fifth of the width). Sky = image minus glow; within 0.3 of the glow height the smooth part is taken from higher up so no line stays at the horizon. Below the horizon the sky is not a mirror: it is the sky from 6 degrees higher, turned 14 degrees about the nadir, or the median sky level where that falls outside the image. The planet's turn moves the stars against the horizon by a few degrees during the view, so this part can come into sight. The margin is the star free sky carried outward as in the hold patch.
 - Checks: frames 4770 and 4949 at the review tier show no line in the sky where the horizon was.
 
 ## public/assets/neptune/<set>/patch-96.webp, patch-64.webp, patch-40.webp, patch-26.webp, patch-16.webp, patch-10.webp

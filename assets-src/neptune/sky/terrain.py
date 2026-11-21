@@ -19,6 +19,7 @@ AZIMUTH = np.radians(80)
 MAP = (512, 64)
 CUT = 0.06
 BELOW = (6.0, 14.0)
+GLOW_SMOOTH = (45, 41, 5)
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/neptune'
 
 
@@ -66,7 +67,7 @@ for c in range(3):
     g = ndi.gaussian_filter(g * wgt, (0.7, 3)) / np.maximum(ndi.gaussian_filter(wgt, (0.7, 3)), 1e-4)
     g[:, :first + 4] = g[:, first + 4:first + 5]
     g[:, last - 3:] = g[:, last - 4:last - 3]
-    g = ndi.gaussian_filter(ndi.percentile_filter(g, 30, size=(1, 141), mode='nearest'), (0.5, 14), mode='nearest')
+    g = ndi.gaussian_filter(ndi.percentile_filter(g, GLOW_SMOOTH[0], size=(1, GLOW_SMOOTH[1]), mode='nearest'), (0.5, GLOW_SMOOTH[2]), mode='nearest')
     gmap[..., c] = g
 png = (to_srgb(film(gmap)) * 255 + 0.5).astype(np.uint8)
 for key in ('full', 'web'):
@@ -77,6 +78,10 @@ mu = np.clip(u * MAP[0] - 0.5, 0, MAP[0] - 1).astype(np.float32)
 mv = np.clip(v * MAP[1] - 0.5, 0, MAP[1] - 1).astype(np.float32)
 glow = cv2.remap(back.astype(np.float32), mu, mv, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
 glow *= ((v >= 0) & (v < 1))[..., None] * (1 - step(v, 0.8, 1.0))[..., None]
+for lo_u, hi_u in ((0.0, 0.2), (0.2, 0.4), (0.4, 0.6), (0.6, 0.8), (0.8, 1.0)):
+    m = above & (v > 0.03) & (v < 0.25) & (xs >= lo_u * w) & (xs < hi_u * w)
+    if m.any():
+        print('glow against the image, columns', lo_u, hi_u, 'ratio', float((glow[m][:, 2] + base[2]).mean() / smooth[m][:, 2].mean()))
 sky = np.maximum(a - glow, 0)
 flat = np.stack([low(sky[..., c], 3) for c in range(3)], -1)
 stars = np.maximum(sky - flat, 0) * step(v, 0.0, 0.05)[..., None]
