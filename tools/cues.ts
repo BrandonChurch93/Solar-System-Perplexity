@@ -181,7 +181,14 @@ function shotsRows(text: string): string[] {
   return bad
 }
 
-const { text, missing } = build()
+const { text, missing } = (() => {
+  try {
+    return build()
+  } catch (e) {
+    console.log('FAIL ' + (e as Error).message)
+    process.exit(1)
+  }
+})()
 if (process.argv.includes('--check')) {
   const fails: string[] = []
   if (!existsSync(CUES)) fails.push('cut/CUES.md does not exist')
