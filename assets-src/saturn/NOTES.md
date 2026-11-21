@@ -140,3 +140,11 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - Shade: in dark parts (scene luminance under 0.04) the shade is the smaller of the blurred ratio and a ratio against the brightest profile value within 15 px, so a bright profile line cannot glow in the dark lanes; cells without a shade value near the junction take it from the nearest cell along the junction normal.
 - Column check at final tier, display values approved | film: x 1100 y 550 to 660 within 20; x 1300 y 590 to 640 within 45 (stripe positions differ by a few px); x 1500 y 600 to 620 film 75 to 82 against 58 to 28 (globe just above the junction near the terminator, the light table has no rows under latitude 8); x 1700 within 16.
 - Still open in this zone: a faint dashed line on the night-side junction (grid of the layout, 9.5 approved px per cell), the limb glow over the far rings left of the limb (lighter box with a straight lower edge where the near half of the rings begins).
+
+## Rise and dive overlay, self-check (07:57 to 08:30)
+
+- Rise frame 3837 showed a smudge on the lower globe: the disc was swept by radius from its centre while the hidden far fragments faded, and both turned half transparent. Now one rule for all top fragments: they stay opaque while they are there and leave by an edge parallel to the junction, `lift = smoothstep(-J, J, layoutDist + 2J - sweep * (1 - veil))` with `veil [0.55, 1]` of `uClose` and `sweep` 700 approved px (`look.ts`). `layout.bin` channel 3 is kept to 4000 instead of 400 for this (spread by ring radius with `profile.py --trace`: under r 1 up to 425 px, r 1 to 1.25 up to 660 px). Frames 3828 to 3843 read as the globe lifting out of the rings; frame 3720 at final tier is byte identical to the round before.
+- Hold re-check at 3465 final after the close work: pair with the hero unchanged (open wedge of the globe's shadow, near black shadowed rings). Titan at 3465 sits at (1675, 166) of 1920 against the hero's (1684, 172); across the hold it moves from (1584, 192) to (1756, 138).
+- G13 self-check, every 5th frame, before the sweep: 0 of 99 frames over 2 percent soft, worst frame 3835 at 0.01 percent.
+- Engine batch 8 (1e19796) merged at 08:08.
+- `npm run budget` renders and reads the memory of every chrome process: never run it beside a measure.
