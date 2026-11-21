@@ -90,9 +90,9 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(streak.mesh)
 
   const moonFit = fit.moons![0]!
-  const titan = new Titan(moonFit.radius, look.titan)
+  const titan = new Titan(moonFit.radius * look.titan.size, look.titan)
   body.add(titan.mesh)
-  const moonHome = new THREE.Vector3().fromArray(moonFit.position)
+  const moonHome = new THREE.Vector3().fromArray(look.titan.home)
   const far = new FarPoint()
   body.add(far.points)
 

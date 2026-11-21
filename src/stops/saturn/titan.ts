@@ -9,6 +9,8 @@ export interface TitanLook {
   haloHeight: number
   terminator: [number, number]
   limb: number
+  home: [number, number, number]
+  size: number
 }
 
 const VERT = /* glsl */ `

@@ -54,11 +54,19 @@ export const shell: HazeParams = {
 
 export const rings: RingLook = {
   shadowFloor: [0.0075, 0.0095, 0.0125],
+  floorHold: [0.0073, 0.0099, 0.0127],
+  floorTone: [0.95, 0.4],
   shadowClose: [30, 0],
   shadowLift: 0.15,
   floorAlpha: 0.93,
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
+  penumbraFar: [1.5, 0.05],
+  inner: [112, 128, 0.01, 0.03],
+  over: [0.03, 1.38, 0.985, 1.46],
+  strand: [1.5, 2.0, 1.5],
+  overTone: [0.4, 0.8, 1.12, 102],
+  shadowThin: [1.85, 2.08, 0.85],
   unlit: 0.12,
   lodBias: 1.2,
   lodBiasClose: 1.2,
@@ -104,21 +112,27 @@ export const ice: IceLook = {
 export const titan: TitanLook = {
   day: [0.7, 0.245, 0.085],
   rim: [1.4, 0.72, 0.3],
-  night: [0.0022, 0.0026, 0.0027],
+  night: [0.0082, 0.009, 0.0105],
   halo: [0.06, 0.035, 0.024],
   haloHeight: 0.035,
-  terminator: [0.02, 0.5],
+  terminator: [0.05, 0.7],
   limb: 0.3,
+  home: [8.167601, 4.265027, -17.74795],
+  size: 0.956,
 }
 
 export const streak: StreakLook = {
   gain: 1,
-  upper: [0.775, 0.849, 0.0045, 0.006],
-  lower: [0.89, 0.8925, 0.0035, 0.004],
-  smudge: [0.823, 0.842, 0.012, 0.012],
-  warm: [1, 0.78, 0.62],
-  cool: [0.55, 0.75, 1],
-  blue: [0.08, 0.3, 1],
+  upper: [0.785, 0.8505, 0.0058],
+  lower: [0.885, 0.8915, 0.0032],
+  smudge: [0.821, 0.8415, 0.009],
+  halo: [0.87, 0.868, 0.024],
+  left: [0.008, 0.0105, 0.011],
+  mid: [0.0012, 0.004, 0.0065],
+  right: [0.03, 0.0245, 0.019],
+  second: [0.007, 0.0078, 0.0085],
+  blue: [0.0005, 0.0075, 0.021],
+  wash: [0, 0.0028, 0.006],
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]
