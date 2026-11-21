@@ -14,7 +14,8 @@ const state = join(WORK, 'status')
 const lastFile = join(state, 'last.json')
 mkdirSync(out, { recursive: true })
 mkdirSync(state, { recursive: true })
-const last = existsSync(lastFile) ? (JSON.parse(readFileSync(lastFile, 'utf8')) as { time: string; count: number; shown: string[] }) : { time: '', count: 0, shown: [] }
+const last = existsSync(lastFile) ? (JSON.parse(readFileSync(lastFile, 'utf8')) as { time: string; count: number; shown: string[]; large?: Record<string, number> }) : { time: '', count: 0, shown: [] }
+const large: Record<string, number> = { ...(last.large ?? {}) }
 const sinceMinutes = last.time ? (Date.now() - Date.parse(last.time)) / 60000 : Infinity
 
 if (a.due) {
@@ -50,7 +51,7 @@ if (a.render) {
   } else run('sheet.ts', ['--film', '--format', 'preview', '--tier', tier])
 }
 
-interface Pic { path: string; caption: string; name: string; kept?: boolean }
+interface Pic { path: string; caption: string; name: string; kept?: boolean; edge?: number }
 const nameOf = (id: string): string => cfg.stops.find((s) => s.id === id)?.name ?? id
 const ago = (time: string): string => {
   const m = Math.round((Date.now() - Date.parse(time)) / 60000)
@@ -102,7 +103,52 @@ function keyPicture(stop: string): Pic | null {
   return null
 }
 
-if (stops.length) {
+function boards(list: string[]): void {
+  for (const view of ['hold', 'terrain'] as const) {
+    const tiles = list.map((stop) => {
+      const def = cfg.stops.find((s) => s.id === stop)!
+      const frame = all.find((l) => l.stop === stop && l.frame !== undefined && l.segment === stop + '.' + view && (!l.diag || l.diag === 'beauty') && (l.kind === 'still' || l.kind === 'frame' || l.kind === 'job'))
+      const done = finished.has(stop)
+      const keptName = done ? readdirSync(join(ROOT, 'out/stills')).filter((f) => new RegExp('^f\\d+-' + stop + '\\.' + view + '\\.jpg$').test(f)).sort().pop() : undefined
+      const kept = keptName ? join(ROOT, 'out/stills', keptName) : undefined
+      const useKept = kept !== undefined && (!frame || Date.parse(frame.time) < statSync(kept).mtimeMs)
+      const right = useKept ? kept! : frame ? frame.path : null
+      const sub = useKept ? 'kept frame of the build it was finished on' : frame ? 'frame ' + frame.frame + (frame.tier ? ', ' + frame.tier + ' tier' : '') + ', ' + ago(frame.time) + (frame.from ? '' : ', Builder') : ''
+      return { label: def.name + (done ? ' (finished)' : ''), sub, left: join(ROOT, view === 'hold' ? def.hero : def.close), right, empty: 'no ' + (view === 'hold' ? 'orbit' : 'terrain') + ' frame from this stop yet' }
+    })
+    const to = join(state, 'board-' + view + '.jpg')
+    const job = join(state, 'board-' + view + '.json')
+    const title = (view === 'hold' ? 'Orbit views' : 'Terrain views') + ': approved image left, newest film frame right'
+    writeFileSync(job, JSON.stringify({ output: to, title, tiles, columns: 2, imageWidth: 464 }))
+    const r = spawnSync('python3', ['tools/img/board.py', job], { cwd: ROOT, encoding: 'utf8' })
+    if (r.status !== 0) throw new Error('board failed: ' + r.stderr.slice(-400))
+    const names = list.map(nameOf)
+    const half = Math.ceil(names.length / 2)
+    pics.push({ path: to, caption: title + '. Left column, top to bottom: ' + names.slice(0, half).join(', ') + '. Right column: ' + names.slice(half).join(', ') + '.', name: 'board-' + (view === 'hold' ? 'orbit' : 'terrain'), edge: 1920 })
+  }
+  const order = [...list].sort((x, y) => (large[x] ?? 0) - (large[y] ?? 0))
+  const rank = (k: string): number => (k === 'note' ? 0 : k === 'crops' ? 1 : k === 'sheet' ? 2 : k === 'compare' ? 3 : 4)
+  const cands = order.map((stop) => {
+    const mine = all.filter((l) => l.stop === stop && fresh(l))
+    if (mine.length === 0) return null
+    const newest = Date.parse(mine[0]!.time)
+    const near = mine.filter((l) => newest - Date.parse(l.time) < 20 * 60000).sort((x, y) => rank(x.kind) - rank(y.kind) || (x.time < y.time ? 1 : -1))
+    return near[0]!
+  }).filter((l): l is Look & { path: string } => l !== null)
+  for (const l of cands) {
+    if (pics.length >= max) break
+    large[l.stop!] = (large[l.stop!] ?? 0) + 1
+    used.add(l.path)
+    pics.push({ path: l.path, caption: caption(l), name: l.stop + '-look-1' })
+  }
+}
+
+const finished = new Set<string>()
+for (const m of readFileSync(join(ROOT, 'kit/PROGRESS.md'), 'utf8').matchAll(/^\| ([a-z]+) \| finished/gm)) finished.add(m[1]!)
+
+if (a.board) {
+  boards(stops.length ? stops : (cfg.raw as unknown as { buildOrderAfterLookLock: string[] }).buildOrderAfterLookLock)
+} else if (stops.length) {
   for (const s of stops) {
     if (pics.length >= max) break
     const k = keyPicture(s)
@@ -128,7 +174,7 @@ if (stops.length) {
 if (pics.length < max) {
   const stills = join(ROOT, 'out/stills')
   const sheets = readdirSync(stills).filter((f) => /^sheet-film-\d+\.jpg$/.test(f)).sort()
-  const want = stops.length ? [] : sheets.map((_, i) => sheets[(last.count + i) % sheets.length]!)
+  const want = stops.length || a.board ? [] : sheets.map((_, i) => sheets[(last.count + i) % sheets.length]!)
   for (const f of want) {
     if (pics.length >= max) break
     pics.push({ path: join(stills, f), caption: 'Whole film contact sheet, part ' + Number(/(\d+)/.exec(f)![1]) + ' of ' + sheets.length + ' (kept ' + ago(statSync(join(stills, f)).mtime.toISOString()) + ')', name: basename(f, '.jpg'), kept: true })
@@ -141,17 +187,17 @@ if (pics.length === 0) {
 }
 
 const made: string[] = []
-const packed: { caption: string; src: string }[] = []
+const packed: { caption: string; src: string; wide?: boolean }[] = []
 for (const p of pics) {
   let shown = p.path
   if (!p.kept) {
     shown = join(out, p.name + '.jpg')
-    jpg(p.path, shown, 1200, 5)
+    jpg(p.path, shown, p.edge ?? 1200, 5)
   }
   made.push(shown)
   const small = join(state, 'inline-' + made.length + '.jpg')
-  jpg(shown, small, 900, 6)
-  packed.push({ caption: p.caption, src: 'data:image/jpeg;base64,' + readFileSync(small).toString('base64') })
+  jpg(shown, small, p.edge ? 1600 : 1100, 6)
+  packed.push({ caption: p.caption, src: 'data:image/jpeg;base64,' + readFileSync(small).toString('base64'), ...(p.edge || (stops.length > 0 && made.length === 1) ? { wide: true } : {}) })
 }
 
 const progressFile = join(ROOT, 'kit/PROGRESS.md')
@@ -165,7 +211,7 @@ if (a['no-log'] !== 'true' && lines.length) {
   const rel = (f: string): string => f.slice(ROOT.length + 1)
   appendFileSync(progressFile, (progress.endsWith('\n') ? '' : '\n') + '  - Status, ' + now.slice(0, 16).replace('T', ' ') + ' UTC. ' + lines.join(' ') + ' Pictures shown inline: ' + pics.map((p, i) => p.caption + ' (`' + rel(made[i]!) + '`)').join('; ') + '.\n')
 }
-if (a['no-log'] !== 'true') writeFileSync(lastFile, JSON.stringify({ time: now, count: last.count + 1, shown: pics.filter((p) => !p.kept).map((p) => basename(p.path)) }))
+if (a['no-log'] !== 'true') writeFileSync(lastFile, JSON.stringify({ time: now, count: last.count + 1, shown: pics.filter((p) => !p.kept).map((p) => basename(p.path)), large }))
 if (existsSync(join(ROOT, 'dist/index.html'))) spawnSync('npx', ['tsx', 'tools/review.ts', '--no-build'], { cwd: ROOT, encoding: 'utf8' })
 if (a.push) {
   const git = (argv: string[]): number => spawnSync('git', argv, { cwd: ROOT, encoding: 'utf8' }).status ?? 1
