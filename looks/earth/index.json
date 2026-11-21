@@ -1,9 +1,83 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T10:11:46.648Z",
+ "pushed": "2026-11-21T10:42:18.868Z",
  "head": "3d76305515afc8a6267e0f71e0a4c26d419b1f10",
- "note": "round 11 corrections: rise handover and dive cover moves, engine request 3",
+ "note": "round 11 corrections: night side, aurora, far map for the dark side, dive cover",
  "looks": [
+  {
+   "time": "2026-11-21T10:42:18.292Z",
+   "file": "20261121104218292-note-sky-edges.jpg",
+   "source": "../../../../tmp/sky-edges.png",
+   "kind": "note",
+   "label": "bad: starless strip at the left frame edge in the dive (sky patch margin), in work",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:42:17.745Z",
+   "file": "20261121104217745-note-wrap-far.jpg",
+   "source": "out/work/earth/view/wrap-far.jpg",
+   "kind": "note",
+   "label": "new far map: Blue Marble painted through the hero colours with a gentle registration, used outside the hold where the hero was dark",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:42:17.136Z",
+   "file": "20261121104217136-note-dive-strip.jpg",
+   "source": "out/work/earth/p24/dive-strip.jpg",
+   "kind": "note",
+   "label": "dive cover 1876 to 1896 at draft: limb rolls and pitches into frame over the cover",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:42:16.560Z",
+   "file": "20261121104216560-note-sheet.jpg",
+   "source": "out/work/earth/p25/sheet.jpg",
+   "kind": "note",
+   "label": "draft 1829, 1840, 2144, 2156 with the night side made opaque outside the hold (work in progress: green left on the disc at 2156)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T10:26:30.493Z",
+   "file": "20261121102630493-frame-f-2144.jpg",
+   "source": "out/work/earth/p25/f-2144.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2144, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2144,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
+  {
+   "time": "2026-11-21T10:26:05.123Z",
+   "file": "20261121102605123-frame-f-1829.jpg",
+   "source": "out/work/earth/p25/f-1829.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1829, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1829,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
+  {
+   "time": "2026-11-21T10:25:41.294Z",
+   "file": "20261121102541294-frame-f-1840.jpg",
+   "source": "out/work/earth/p25/f-1840.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1840, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1840,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d0860205d08936f"
+  },
   {
    "time": "2026-11-21T10:11:46.083Z",
    "file": "20261121101146083-note-d-aur.jpg",
@@ -11,80 +85,6 @@
    "kind": "note",
    "label": "round 11 frame 1857, aurora crop x2: ribbon in front of the disc, bad",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:11:45.544Z",
-   "file": "20261121101145544-note-sa-2156.jpg",
-   "source": "out/work/earth/p23/sa-2156.jpg",
-   "kind": "note",
-   "label": "round 11 frame 2156, South America crop x3: lights smeared by motion blur (settle 5), bad",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:11:45.023Z",
-   "file": "20261121101145023-note-cut-native.jpg",
-   "source": "out/work/earth/p20/cut-native.jpg",
-   "kind": "note",
-   "label": "rise cut limb strips at native size, 2128 to 2133",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:11:44.482Z",
-   "file": "20261121101144482-note-strip-a.jpg",
-   "source": "out/work/earth/p23/strip-a.jpg",
-   "kind": "note",
-   "label": "rise handover strip 2128 to 2138, draft, with the requested gentle start (no whole frame veil, limb carried)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T10:11:31.993Z",
-   "file": "20261121101131993-frame-f-1876.jpg",
-   "source": "out/work/earth/p24/f-1876.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1876, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1876,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d0860205d08936f"
-  },
-  {
-   "time": "2026-11-21T10:04:50.787Z",
-   "file": "20261121100450787-frame-f-2156.jpg",
-   "source": "out/work/earth/p23/f-2156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "b24a7f2676171f28"
-  },
-  {
-   "time": "2026-11-21T09:41:37.436Z",
-   "file": "20261121094137436-note-aur-2156.jpg",
-   "source": "out/work/earth/p19/aur-2156.jpg",
-   "kind": "note",
-   "label": "aurora at the judged rise frame 2156, final tier crop (before settle 7)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T09:19:02.520Z",
-   "file": "20261121091902520-frame-f-2099.jpg",
-   "source": "out/work/earth/p17/f-2099.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2099, draft tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2099,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   }
  ]
 }
