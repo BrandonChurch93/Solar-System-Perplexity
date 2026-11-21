@@ -1,45 +1,39 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T15:14:50.488Z",
+ "pushed": "2026-11-21T15:22:25.249Z",
  "head": "4bb60bca5a78de5e28ab2f834bfb56870365cd99",
- "note": "Round 3: veil removed, one Sun through the dive, glare as one object; fixing sky plate and uncovered residual",
+ "note": "round 3: dive is one continuous view with one Sun and a glare, no veil; working on the limb strip at the swap and the rise",
  "looks": [
   {
-   "time": "2026-11-21T15:14:49.910Z",
-   "file": "20261121151449910-note-c730.jpg",
-   "source": "out/work/mercury/r11/p2/c730.jpg",
+   "time": "2026-11-21T15:22:24.693Z",
+   "file": "20261121152224693-note-limbs.jpg",
+   "source": "out/work/mercury/r11/p3/limbs.png",
    "kind": "note",
-   "label": "Fault found at 730: noisy block under the shrinking Sun is the hold sky patch residual, uncovered when the Sun plate shrinks; being cured with a hole at the hero Sun",
+   "label": "dive swap limb crops at five columns, 743 above 744: horizon strip of 743 is smeared painted ground, to be replaced by the close canvas",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T15:14:49.333Z",
-   "file": "20261121151449333-note-g2.jpg",
-   "source": "out/work/mercury/r11/p2/g2.jpg",
+   "time": "2026-11-21T15:22:24.156Z",
+   "file": "20261121152224156-note-c743-744.jpg",
+   "source": "out/work/mercury/r11/p3/c743-744.jpg",
    "kind": "note",
-   "label": "Round 3 dive draft 734 to 745: veil gone, one Sun slides along the top and shrinks, glare as one object (sky plate not yet drawing, found and fixed after this take)",
+   "label": "round 3 dive swap, 743 above 744 at draft: same sky, Sun and ground; limb strip still differs",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T15:14:46.311Z",
-   "file": "20261121151446311-frame-f730.jpg",
-   "source": "out/work/mercury/r11/p3/f730.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 730, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 730,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6728b99fa98fbd73"
+   "time": "2026-11-21T15:22:23.611Z",
+   "file": "20261121152223611-note-g2.jpg",
+   "source": "out/work/mercury/r11/p3/g2.jpg",
+   "kind": "note",
+   "label": "round 3 dive drafts take 3, frames 738 to 744 across the swap",
+   "stop": "mercury"
   },
   {
-   "time": "2026-11-21T14:50:46.480Z",
-   "file": "20261121145046480-note-grid-rise.jpg",
-   "source": "out/work/mercury/r11/p1/grid-rise.jpg",
+   "time": "2026-11-21T15:22:23.034Z",
+   "file": "20261121152223034-note-g1.jpg",
+   "source": "out/work/mercury/r11/p3/g1.jpg",
    "kind": "note",
-   "label": "r3 wip: rise with new pace, bare 990 994 998 1004 1010 1016",
+   "label": "round 3 dive drafts take 3, frames 720 to 739: one Sun slides along the top and shrinks, no veil",
    "stop": "mercury"
   },
   {
