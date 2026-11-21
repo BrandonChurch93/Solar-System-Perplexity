@@ -457,6 +457,11 @@ export class Sky {
     u.uSky!.value = this.texture
     u.uBand!.value = this.band
     ;(u.uInvProj!.value as THREE.Matrix4).copy(camera.projectionMatrixInverse)
+    const inv = (u.uInvProj!.value as THREE.Matrix4).elements
+    if (Math.fround(Math.fround(inv[11]!) + Math.fround(inv[15]!)) === 0) {
+      inv[11] = 0
+      inv[15] = 1
+    }
     this.rot.setFromMatrix4(this.m4.makeRotationFromQuaternion(skyQuaternion))
     u.uExposure!.value = exposure
     u.uGlow!.value = glow
