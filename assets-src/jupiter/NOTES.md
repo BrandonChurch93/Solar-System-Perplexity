@@ -214,6 +214,13 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - Render cost seen in the measure: texels view at draft 1 to 2 s per frame once the page is loaded; a final tier frame about 60 s. The 14 s of a draft still is mostly page load and shader compile.
 - 08:16 UTC: `/tmp/after.sh` renders the review sheets (terrain, dive, rise, hold, then dive and rise with `--cover`) and the flow view at 3100, log `out/work/jupiter/after.log`.
 
+## After READY (08:17 to 08:30 UTC)
+
+- Builder's mail 08:17: main holds engine batches 8 and 9 (terrain shield, trim of haze shell triangles) and all eight stops; round 8 starts from the head of `agent/jupiter` and the head is mirrored again at each round start. Merged main 7919c31 (head 32c240d; NOTES conflict resolved to mine). Draft frames before and after the merge: 2895, 2997, 3150 byte identical; 3296 differs only by the sky behind the rise (now the next stop's sky with the Milky Way; inside the disc 2 percent of pixels by 1 code value). No opt out needed: my deck is not the shared `Relief` (no shield), and the trim on `HazeShell` changes nothing. Told the Builder.
+- Review sheets rendered before the change below: `out/work/sheets/jupiter.terrain-16x9-review.png` (storm grows from a quarter to half of the frame width, foreground towers leave the frame bottom left, glow strip over the limb until about 3109) and `jupiter.dive-16x9-review.png` (slow push until 3010, rush 3010 to 3024, 3027 dark smoky cover, 3035 beige fog with the bright strip over the limb).
+- The quick first step of the cover is a brightness dip, measured on draft stills (mean of the frame centre, R of 255): 3021 160, 3023 137, 3024 124, 3026 88, 3028 107, 3030 131, 3033 127; exit 3258 122, 3262 132, 3266 97, 3269 118, 3270 137, 3273 183. Cause: below the horizon the engine cover uses `coverLow` blended to `coverLowTerrain`, and `coverLowTerrain [0.075, 0.064, 0.055]` was far darker than my deck fog (131, 119, 103 on screen). Fitted from 3024 and 3026 (display is about cover color to the power 0.63 to 0.72): the fog tone needs `coverLowTerrain [0.205, 0.173, 0.138]`. Set that, `coverTerrain [0.21, 0.177, 0.14]`, and `coverTop [0, 0]` (sky under the terrain side cover black like the orbit side at the cut: top right 0.4 at 3023 against 45 at 3024 before). Check: `strip_cut4.jpg` (batch9).
+- The strip of glow over the limb (3024 to about 3109) cannot be removed in my folder: the sky does not turn with the planet, so the patch horizon stands above the limb before 3150. Lowering `spinDegPerSecond` would shrink it but changes hold, dive and rise. Left for the round.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
