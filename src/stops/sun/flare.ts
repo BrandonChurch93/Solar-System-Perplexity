@@ -4,10 +4,9 @@ import { diagUniform } from '../../diagnostics/diag'
 export interface FlareLook {
   hot: [number, number, number]
   warm: [number, number, number]
-  core: { radius: [number, number]; gain: number; power: number }
-  halo: { radius: [number, number]; gain: number; power: number }
+  core: { radius: number; gain: number; power: number }
+  halo: { radius: number; gain: number; power: number }
   veil: number
-  cover: { rise: [number, number]; fall: [number, number]; power: number }
   before: number
   after: number
   powerIn: number
@@ -39,8 +38,8 @@ void main() {
   float rr = dot(p, p);
   float core = pow(1.0 / (1.0 + rr / (uSize.x * uSize.x)), uSize.z);
   float halo = pow(1.0 / (1.0 + rr / (uSize.y * uSize.y)), uSize.w);
-  float cover = clamp(uLevel.w * (uLevel.w + (2.0 - uLevel.w) * halo), 0.0, 1.0);
-  vec3 col = uWarm * (uLevel.z * cover + uLevel.y * halo) + uHot * (uLevel.x * core);
+  float cover = uLevel.z * halo;
+  vec3 col = uWarm * (uLevel.y * halo) + uHot * (uLevel.x * core);
   outColor = vec4(col * uGain, cover);
 }`
 
@@ -86,13 +85,7 @@ export class Flare {
     return Math.pow(s, since < 0 ? k.powerIn : k.powerOut)
   }
 
-  cover(since: number): number {
-    const k = this.look.cover
-    const share = (a: number, b: number): number => Math.pow(Math.min(Math.max((since - a) / (b - a), 0), 1), k.power)
-    return share(k.rise[0], k.rise[1]) * share(k.fall[1], k.fall[0])
-  }
-
-  update(anchor: THREE.Vector3, world: THREE.Object3D, camera: THREE.PerspectiveCamera, amount: number, cover: number, gain: number, aspect: number): void {
+  update(anchor: THREE.Vector3, world: THREE.Object3D, camera: THREE.PerspectiveCamera, amount: number, unit: number, gain: number, aspect: number): void {
     const at = this.at.copy(anchor).applyQuaternion(world.quaternion).add(world.position).applyQuaternion(this.turn.copy(camera.quaternion).invert())
     this.mesh.visible = amount > 0 && at.z < -1e-4
     if (!this.mesh.visible) return
@@ -102,9 +95,9 @@ export class Flare {
     ;(u.uAt!.value as THREE.Vector2).set(at.x / -at.z / (t * aspect), at.y / -at.z / t)
     u.uAspect!.value = aspect
     u.uGain!.value = gain
-    const grow = amount * amount * amount
-    ;(u.uSize!.value as THREE.Vector4).set(k.core.radius[0] + (k.core.radius[1] - k.core.radius[0]) * grow, k.halo.radius[0] + (k.halo.radius[1] - k.halo.radius[0]) * grow, k.core.power, k.halo.power)
-    ;(u.uLevel!.value as THREE.Vector4).set(k.core.gain * grow, k.halo.gain * amount, k.veil, cover)
+    const size = unit / (-at.z * t)
+    ;(u.uSize!.value as THREE.Vector4).set(k.core.radius * size, k.halo.radius * size, k.core.power, k.halo.power)
+    ;(u.uLevel!.value as THREE.Vector4).set(k.core.gain * amount, k.halo.gain * amount, k.veil * amount, 0)
   }
 
   dispose(): void {
