@@ -1,9 +1,81 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T11:47:04.046Z",
+ "pushed": "2026-11-21T12:13:20.230Z",
  "head": "1951b7bd887e8f83144f4917a12bd57ae9310679",
- "note": "round 2: covers one move on both sides, near grade, ring fade; next plate edge and sky margin",
+ "note": "round 2 work: terrain plate edge closed (4175 before and after), terrain sky margin without mirrored stars",
  "looks": [
+  {
+   "time": "2026-11-21T12:13:01.690Z",
+   "file": "20261121121301690-frame-u-4436.jpg",
+   "source": "out/work/u/r4/u-4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:12:38.369Z",
+   "file": "20261121121238369-frame-u-4137.jpg",
+   "source": "out/work/u/r4/u-4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:06:02.382Z",
+   "file": "20261121120602382-frame-t-4035.jpg",
+   "source": "out/work/u/r4/t-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:53:46.349Z",
+   "file": "20261121115346349-note-p-4175-sky.jpg",
+   "source": "../../../../tmp/p-4175-sky.jpg",
+   "kind": "note",
+   "label": "uranus 4175 draft, sky top left x2 lifted: mirrored margin before (top), generated margin after (bottom)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:53:45.806Z",
+   "file": "20261121115345806-note-p-4175-ab.jpg",
+   "source": "../../../../tmp/p-4175-ab.jpg",
+   "kind": "note",
+   "label": "uranus 4175 draft, plate edge: before (top) and after (bottom) the far map carries the real picture to the plate edge",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:52:48.964Z",
+   "file": "20261121115248964-frame-p-4290.jpg",
+   "source": "out/work/u/r4/p-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T11:46:37.891Z",
    "file": "20261121114637891-note-look-n-sheet.jpg",
@@ -19,72 +91,6 @@
    "kind": "note",
    "label": "dive 4138 to 4150, globe to deck by altitude (before ring fade)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T11:46:36.838Z",
-   "file": "20261121114636838-note-look-m-sheet.jpg",
-   "source": "out/work/u/r4/look-m-sheet.jpg",
-   "kind": "note",
-   "label": "rise 4416 to 4424 and dive 4144 to 4148 with the near grade and ring fade by altitude",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T11:46:36.307Z",
-   "file": "20261121114636307-note-look-k-sheet.jpg",
-   "source": "out/work/u/r4/look-k-sheet.jpg",
-   "kind": "note",
-   "label": "rise cover 4400 to 4422 step 2, draft, before the near grade",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T11:46:35.756Z",
-   "file": "20261121114635756-note-look-j-sheet.jpg",
-   "source": "out/work/u/r4/look-j-sheet.jpg",
-   "kind": "note",
-   "label": "dive cover 4150 to 4176 step 2, draft, cover on: both sides one shot",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T11:45:53.483Z",
-   "file": "20261121114553483-frame-n-4175-layers.jpg",
-   "source": "out/work/u/r4/n-4175-layers.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4175, draft tier, layers view",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4175,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:41:29.190Z",
-   "file": "20261121114129190-frame-n-4379.jpg",
-   "source": "out/work/u/r4/n-4379.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4379, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4379,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:35:56.855Z",
-   "file": "20261121113556855-frame-m-4424.jpg",
-   "source": "out/work/u/r4/m-4424.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4424, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4424,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   }
  ]
 }
