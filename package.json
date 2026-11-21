@@ -14,6 +14,7 @@
     "determinism": "tsx tools/determinism.ts",
     "gate": "tsx tools/gate.ts",
     "review": "tsx tools/review.ts",
+    "site": "tsx tools/site.ts",
     "status": "tsx tools/status.ts",
     "looks": "tsx tools/looks.ts",
     "caps": "tsx tools/caps.ts",
