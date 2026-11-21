@@ -71,7 +71,7 @@ export const bloom = { hide: [0.12, 0.6, 0.9] as [number, number, number] }
 
 export const mauve = { from: 0.98, to: 1.1, rest: 0.9 }
 
-export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, number], weight: 1, near: [0.03, 0.06] as [number, number] }
+export const hold = { ...holdMap, base: 512, back: [-0.15, -0.03] as [number, number], weight: 1, near: [0.03, 0.06] as [number, number], far: { inner: [0.86, 0.94] as [number, number], dense: 1.25, lod: 5 } }
 
 export const weave = { ring: [0.26, 0.44, -0.2, -0.02] as [number, number, number, number], shift: 0.8, gain: 1, lit: 0.5, grad: 16, cap: 2.5 }
 
@@ -91,6 +91,9 @@ export const veil = {
   sun: [0.5071, 0.2105] as [number, number],
   grade: { keep: 0.7, gamma: 1.3, pivot: 0.3, gain: 0.45, tint: [1, 0.93, 0.8] as [number, number, number] },
   sunFade: 2,
+  sunSoft: 6,
+  sunTint: [1.15, 0.97, 0.75] as [number, number, number],
+  sunLift: 0.4,
 }
 
 export const motion = { from: 1, step: 6, most: 8, hidden: 0.95, smear: { from: 20, share: 0.4, most: 120 } }

@@ -9,7 +9,7 @@ from scipy.ndimage import median_filter
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 WORK = ROOT + '/out/work/venus/hold'
-SIZE = {'full': 1536, 'web': 768}
+SIZE = {'full': 2048, 'web': 1024}
 MARGIN = 1.016
 STOPS = 4.0
 INSIDE = 0.998

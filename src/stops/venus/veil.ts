@@ -16,7 +16,7 @@ export interface VeilLook {
   edgePx: number
 }
 
-export interface AirCarry { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number }
+export interface AirCarry { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number; soft: number; tint: [number, number, number] }
 
 const COUNT = 4
 
@@ -69,6 +69,8 @@ uniform vec3 uAirRight;
 uniform vec3 uSpan;
 uniform vec3 uCut;
 uniform float uAirGain;
+uniform float uAirSoft;
+uniform vec3 uAirTint;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
@@ -149,6 +151,9 @@ void main() {
     float az = atan(dot(along, uAirRight), dot(along, uAirFwd));
     vec2 uv = vec2(clamp(az / uSpan.x * 0.5 + 0.5, 0.0, 1.0), pow(clamp(elev / uSpan.y, 0.0, 1.0), uSpan.z));
     vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
+    float lum = dot(glow, vec3(0.2126, 0.7152, 0.0722));
+    float kept = 1.0 / (1.0 + uAirSoft * (1.0 - uAirW) * lum);
+    glow = mix(lum * uAirTint, glow, kept) * kept;
     float cut = uCut.z * smoothstep(uCut.x, uCut.y, dot(glow, vec3(0.3, 0.5, 0.2)));
     float w = uAirW * (1.0 - mask);
     col += glow * uAirGain * w;
@@ -177,7 +182,7 @@ export class Veil {
         uClouds: { value: clouds }, uUp: { value: new THREE.Vector3(0, 1, 0) }, uE1: { value: new THREE.Vector3(1, 0, 0) }, uE2: { value: new THREE.Vector3(0, 0, 1) }, uLight: { value: new THREE.Vector4(look.light[0], look.light[1], s.shift[0], s.shift[1]) }, uMean: { value: new THREE.Vector3().fromArray(look.mean) },
         uSunCam: { value: new THREE.Vector3(0, 0, -1) }, uSunward: { value: new THREE.Vector2().fromArray(s.sunward) },
         uLit: { value: new THREE.Vector3() }, uHaze: { value: new THREE.Vector3() }, uGain: { value: 1 },
-        uAir: { value: air.map }, uAirW: { value: 0 }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uSpan: { value: air.span }, uCut: { value: air.cut }, uAirGain: { value: air.gain },
+        uAir: { value: air.map }, uAirW: { value: 0 }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uSpan: { value: air.span }, uCut: { value: air.cut }, uAirGain: { value: air.gain }, uAirSoft: { value: air.soft }, uAirTint: { value: new THREE.Vector3().fromArray(air.tint) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag,
       },
     })

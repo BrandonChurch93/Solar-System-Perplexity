@@ -103,7 +103,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
-  const carry = ground.carry!
+  const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
   const clouds = await ctx.texture(base + look.veil.file, { srgb: true, anisotropy: 1, repeat: true })
   const veil = new Veil(look.veil, clouds, carry, diagUniform)
   const sunTerrain = new THREE.Vector3(look.veil.sun[0], look.veil.sun[1], -1).normalize()
@@ -190,6 +190,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
       gu.uCarryOn!.value = 1 - released
+      ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       if (thick > 0 || released < 1) {
         centre.copy(localP).negate().applyQuaternion(localBack)
         sunCam.copy(sw.sun).applyQuaternion(localBack)
@@ -199,7 +200,8 @@ export const createSet: SetFactory = async (ctx) => {
         const low = sw.height * Math.pow(high / sw.height, timing.slow)
         const after = Math.max((kind === 'dive' ? plan.dive(state.time + config.shutterFraction / config.fps) : plan.rise(state.time + config.shutterFraction / config.fps)).pose.position.length() - 1, 1e-6)
         eye.copy(localP).normalize().multiplyScalar(1 + low)
-        veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, Math.pow(1 - released, look.veil.sunFade), airFwd, airRight, gain, gain * look.relief.air.gain, vignette)
+        const air = Math.pow(1 - released, look.veil.sunFade)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette)
       } else veil.hide()
       const aspect = view.format.width / view.format.height
       limbFrame(camera, light, limbS, limbT)

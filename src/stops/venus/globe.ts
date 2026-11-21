@@ -49,7 +49,7 @@ export interface GlobeOptions {
   mauve: { from: number; to: number; rest: number }
   weave: { camera: THREE.Vector3; ring: [number, number, number, number]; shift: number; gain: number; lit: number; grad: number; cap: number }
   rim: HoldRim
-  hold: { map: THREE.Texture; right: THREE.Vector3; up: THREE.Vector3; forward: THREE.Vector3; centre: [number, number]; half: number; lod: number; stops: number; back: [number, number]; weight: number }
+  hold: { map: THREE.Texture; right: THREE.Vector3; up: THREE.Vector3; forward: THREE.Vector3; centre: [number, number]; half: number; lod: number; stops: number; back: [number, number]; weight: number; margin: number; far: { inner: [number, number]; dense: number; lod: number } }
   segments?: number
 }
 
@@ -143,6 +143,8 @@ uniform vec3 uHoldU;
 uniform vec3 uHoldF;
 uniform vec4 uHoldMap;
 uniform vec4 uHoldLook;
+uniform vec4 uHoldFar;
+uniform vec2 uHoldLow;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -252,11 +254,16 @@ ${TAP_LEVELS}
   vec2 hq = (vec2(dot(hv, uHoldR), dot(hv, uHoldU)) / max(dot(hv, uHoldF), 1e-3) - uHoldMap.xy) * uHoldMap.z + 0.5;
   vec2 hx = dFdx(hq);
   vec2 hy = dFdy(hq);
-  float held = uHoldLook.x * (1.0 - uLimbFar) * smoothstep(uHoldLook.z, uHoldLook.w, dot(dc, normalize(-hv)));
+  float dense = sqrt(max(dot(hx, hx), dot(hy, hy))) * uHoldFar.x;
+  float away = (1.0 - smoothstep(uHoldFar.y, uHoldFar.z, length(hq - 0.5) * uHoldLow.y)) * smoothstep(1.0, uHoldFar.w, dense) * (uTaps == 0 ? 1.0 / uSmear : 0.0);
+  float held = uHoldLook.x * mix(1.0, away, uLimbFar) * smoothstep(uHoldLook.z, uHoldLook.w, dot(dc, normalize(-hv)));
   vec3 fine = vec3(1.0);
   for (int pass = 0; pass < (held > 0.0 ? 1 : 0); pass++) {
     albedo = mix(albedo, textureLod(uMap, lonLat(dc), uHoldMap.w).rgb, held);
-    fine = exp2((textureGrad(uHold, hq, hx, hy).rgb - ${(128 / 255).toFixed(6)}) * uHoldLook.y * held);
+    vec3 level = vec3(${(128 / 255).toFixed(6)});
+    for (int more = 0; more < (uLimbFar > 0.0 ? 1 : 0); more++) level = mix(level, textureLod(uHold, hq, uHoldLow.x).rgb, uLimbFar);
+    fine = exp2((textureGrad(uHold, hq, hx, hy).rgb - level) * uHoldLook.y * held);
+    texels = mix(texels, dense, held);
   }
   vec3 lin = albedo * albedo * ${wrap.top.toFixed(1)};
   float k = uFlowLook.x * (1.0 - near);
@@ -396,7 +403,7 @@ export class Globe {
         uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
         ...o.rim.uniforms,
         uHold: { value: o.hold.map }, uHoldR: { value: o.hold.right }, uHoldU: { value: o.hold.up }, uHoldF: { value: o.hold.forward },
-        uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) },
+        uHoldMap: { value: new THREE.Vector4(o.hold.centre[0], o.hold.centre[1], 0.5 / o.hold.half, o.hold.lod) }, uHoldLook: { value: new THREE.Vector4(o.hold.weight, o.hold.stops, o.hold.back[0], o.hold.back[1]) }, uHoldFar: { value: new THREE.Vector4((o.hold.map.image as unknown as { width: number }).width, o.hold.far.inner[0], o.hold.far.inner[1], o.hold.far.dense) }, uHoldLow: { value: new THREE.Vector2(o.hold.far.lod, 2 * o.hold.margin) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })

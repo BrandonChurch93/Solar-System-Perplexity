@@ -14,7 +14,7 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 18, elevationDeg: 12, distance: 5.4, offset: [-0.3, 0.12], driftSpeed: 0.08, rollDeg: 6, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 92, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -24, axis: [1, 0.25, 0], offset: [-0.45, 0.25] },
-  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, skyLow: [0.03, 2, 0.75], sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
+  light: { exposure: 1, skyExposure: 0.4, terrainSkyGlow: 0.25, skyLow: [0.03, 2.4, 0.6], sunRadiusDeg: 0.9, sunGlare: 0.9, flare: 0.6 },
   cover: [1.0, 0.82, 0.5],
   coverLow: [0.6, 0.45, 0.24],
   coverTerrain: [0.9, 0.7, 0.4],
