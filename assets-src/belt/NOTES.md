@@ -175,12 +175,32 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
   - Seen at native size: the hero's dark side (upper right, about 150 x 120 px) is still a clean black shape, its outline carried by the stars it hides (roughly one star per 12 x 12 px around it). The near rock's dark side is a soft black hole about 250 px wide beside the warm streak; it reads. far1 and far2 read by their lit halves; their dark halves are too small to count as holes.
   - What does not hold: there is no rim on the dark limb. `rim` is a grazing term times `smoothstep(-0.25, 0.35, dot(normal, sun))`, so it lights only the Sun side of the limb. The dark side reads by hidden stars alone. At a quarter of the stars or with a soft dark band behind it the hero would read as a half rock (lit face with a straight terminator), which is how Phobos reads in the approved hero, but its full outline would be gone.
   - Not changed now: a rim that wraps onto the dark limb is a shader change and needs its own look (rim 1.5 gave a bright contour line at 16:43). Knob if wanted: the lower edge of that smoothstep, or `fill` (0.016, 0.018, 0.024 now).
+- 17:08 review sheet with the drift path: `out/work/belt/t3sheet/sheet.jpg` (25 frames, every third from 2745 to 2817). To save ten minutes it is put together from three runs of the same build of the belt: 2757 to 2802 rendered new (`out/work/belt/t3r4/`, the 16 frames in which the hero can be in frame), 2745 to 2754 from the run of 16:52 (`t3r3/`, layout of 2011164, hero not yet in frame), 2805 to 2817 from the run of 16:43 (`t3r2/`, no rock in frame under any layout). Seconds per frame of the new run (samples): 84.4 (2757, with the asset load, 62), 79.1 (84), 84.4 (104), 78.2 (2766, 105), 13.4 (2769, 16), 13.8, 15.6, 17.2 (2778), 16.6, 16.6 (2784), 14.8, 15.2, 15.2, 16.1 (2796), 27.3 (23), 36.4 (2802, 29).
+  - Read: the hero comes in at the top right at 2757, crosses down and left through every row and leaves at the bottom at 2802; it shows a different face in each cell. The near rock crosses in front of it on the right from 2778 to 2784. The mid rock leads from 2748 to 2775, far1 and far2 are small above and below.
+- 17:11 finals of the drift layout, one session (`out/work/belt/t3f2/`, 64 samples each, 77.2 s with the asset load, then 53.1 and 53.5 s):
+  - 2782: 32fe32c8404880cfea462225f74c1b11e045f66ea36b9ad575de6d4cc4e76d53
+  - 2783 (near rock at its nearest while whole in frame): 75bb19cb4f20ac74c137cd0630870ba8a73c00c2ffed7eb7420c7d0e6bb0637e
+  - 2784: 563e74c67ba035a22014d0162a469844a9320cd0642e8a07a2922d819072e3a8
+  - The finals of 16:47 (`t3f/`) are stale.
+  - Read at native size: the hero now carries 10 px of blur along its path at 2782 (20 px per frame), so its craters and the ridge are softer than in the finals of 16:47 (4.5 px); they still read, the grain of the regolith does not. Stars and motes show through the outer part of the near rock's streak, as they should for a blurred edge.
+- Tone of the drift finals: hero lit face, final 2782, rectangle 90 x 85 at (598,528), wholly on the lit face: mean sRGB 95.2, 82.7, 68.2 (luma 84.3, p95 123.3). Final 2783 at (590,535): 94.3, 80.9, 66.0. Near rock, final 2783, 150 x 150 at (1280,190): 61.6, 52.8, 43.5. Phobos: 133.6, 106.2, 87.6 (luma 110.7, p95 177.0). The hero shows a different face than at 16:47 (83.4, 71.1, 57.6), same light.
+- 17:13 byte proof, draft tier, branch 5a66b15 against a worktree of origin/main bf74284 with its own build (`/tmp/proof.sh`, `out/work/belt/t3proof-branch/`, `out/work/belt/t3proof-main/`). All six pairs equal:
+  - 2325: fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427: 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580: 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726: d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2745: 3fae3f66c3ab5cb527a2e784023fbfff5419047fb9a9553c16fe1bb8982d46bd
+  - 2819: 22e950adb924e2c9d090cec87d7c9aaa98cc1d7adb77b82428e893a9b3834960
+- tsc clean, 13 repo test files green, 9 belt tests green (17:01).
+- 17:15 check of the reused sheet frames: 2754 and 2805 rendered new at review on 5a66b15 (`out/work/belt/t3r5/`, 64.8 s with the asset load and 44.1 s): 2754 is byte equal to the frame of 16:52 (a95cd6dd65b578f1...), 2805 is byte equal to the frame of 16:43 (39b0e56198bfd8b1...). So the sheet is what one run of 5a66b15 gives.
+- 17:17 pushed, looks pushed, DONE sent. Next if the Builder wants it: a hero that drifts slower through 2782 (12 px per frame gives 6 px of blur and 700 px of travel in x) for a crisper judged frame; a rim that wraps onto the dark limb for the sparse sky; the web set.
 
 ## Still weak (after task 3)
 - The near rock is in frame for 11 frames (2776 to 2786) and stays in the upper right quarter; it does not cross the middle of the frame. Its face is not readable, by design (65 to 85 px of streak, 9 to 17 px circle of confusion): it reads as a soft warm streak with a black side.
 - The middle rocks ride with the camera (`hold` 1) and their own path is slow at the anchor and faster at the ends (`ease`, a cubic in time). That is a made path, not an orbit. Since 17:00 the hero drifts (never under 20 px per frame, 1080 px in x over its 48 frames), but the sky still whips past behind it at about 100 px per frame in the fast pan while it moves at 30 to 70.
 - Far rocks carry 30 to 50 px of streak in the fastest pan (2766 to 2778): at native size they are smears there, shapes again from 2781.
-- Tone: the hero's lit face is under Phobos (83, 71, 58 against 134, 106, 88) and warm, but with the Sun nearly behind the camera (2758 to 2772) the face is flat lit and reads lighter (about 90, 80, 65).
+- Tone: the hero's lit face is under Phobos (95, 83, 68 against 134, 106, 88) and warm, but with the Sun nearly behind the camera (2758 to 2772) the face is flat lit and reads lighter.
+- The hero is no longer crisp in the judged frame: the drift the Builder asked for costs 10 px of blur along the path at 2782 (it was 4.5 px while it hung).
 - The dark side is black (fill 0.016, 0.018, 0.024). It was judged against the dense star sky of bf74284. Against the new flight sky with sparse stars there is less to hide; the rim is only on the Sun side of the limb, so the dark limb has no line of its own.
 - Dust: motes in front of the hero (it is at 3.5 units, the motes live within 3.5) draw on its face, which is right but busy. Behind the near rock the outer part of its streak does not dim the motes (sphere margin 1.25 radii).
 - The middle rock and the near rock share asset b.
