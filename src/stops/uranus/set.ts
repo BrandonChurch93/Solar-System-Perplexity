@@ -90,6 +90,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const deck = new Deck({
     color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
+    near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
     far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4),
@@ -148,7 +149,8 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       if (!inOrbit) {
         place()
-        ground(state.time, shot.sun.dir, gain, shot.post.vignette, aspect)
+        const clear = 1 - look.haze.dim * smooth(ramp(look.haze.span[0], look.haze.span[1], shot.cover.amount))
+        ground(state.time, shot.sun.dir, gain * clear, shot.post.vignette, aspect)
         return
       }
       const kind = shot.segment.kind

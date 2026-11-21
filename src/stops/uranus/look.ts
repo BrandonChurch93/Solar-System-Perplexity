@@ -99,6 +99,9 @@ export const deck: DeckLook = {
   lift: 1,
   sharp: 0.3,
   detail: { tone: 0.2, relief: 0.4, fleck: 0.3, scale: 1.0, stretch: [0.3, 0.8] },
+  near: [1.0, 1.25],
 }
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
+
+export const haze = { dim: 0.9, span: [0.645, 0.86] as [number, number] }
