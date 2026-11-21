@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T21:07:27.818Z",
- "head": "c92450cd7b2b9a57db3b5d33b869c25acd62b27c",
- "note": "Phase 6 items 1 and 5: cover veil with form in every frame, star double found in the terrain sky patch",
+ "pushed": "2026-11-21T21:31:08.760Z",
+ "head": "50d8faaf609dc6f6dd79e62a18b843519d95c895",
+ "note": "Phase 6: rise cover at review tier seen; veil pass cost found (anisotropic lookups), hold detail layer in work",
  "looks": [
+  {
+   "time": "2026-11-21T21:31:07.212Z",
+   "file": "20261121213107212-note-c8rr.jpg",
+   "source": "../view/c8rr.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, rise cover at the review tier (preview format), frames 1550 to 1572: sky, Sun and horizon carried, veil with streak form, no flat wash",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T21:07:27.026Z",
    "file": "20261121210727026-note-c8d.jpg",
@@ -42,14 +50,6 @@
    "source": "../view/c2r.jpg",
    "kind": "note",
    "label": "Phase 6 item 1, rise cover draft take c2 (rejected: brown wrinkled surface, pale cut outs)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T20:29:30.826Z",
-   "file": "20261121202930826-note-c3d.jpg",
-   "source": "../view/c3d.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 1, dive cover draft take c3 (frames 1303 to 1326)",
    "stop": "venus"
   },
   {
