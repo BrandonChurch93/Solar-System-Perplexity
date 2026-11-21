@@ -20,6 +20,7 @@ export interface GroundLook {
   mesh: number
   towerMesh: number
   drift: [number, number]
+  fold: number
   shimmer: [number, number, number, number]
 }
 
@@ -77,6 +78,7 @@ ${HEAD}
 uniform float uHorizon[9];
 uniform vec2 uHorizonSpan;
 uniform vec2 uTop;
+uniform float uFold;
 uniform vec4 uShimmer;
 void main() {
   float hx = (vImage.x - uHorizonSpan.x) / uHorizonSpan.y;
@@ -86,8 +88,9 @@ void main() {
   vec3 m = masks();
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
-  float wide = uGrad * (1.0 + 3.0 * max(uTop.x + 24.0 - vImage.y, 0.0));
-  vec3 texel = textureGrad(uColor, uv, dFdx(vUv) * wide, dFdy(vUv) * wide).rgb;
+  float over = max(uTop.x - vImage.y, 0.0);
+  float fold = uFold * (1.0 - exp(-over / uFold));
+  vec3 texel = textureGrad(uColor, uv - vec2(0.0, (over + fold) / uBox.w), dFdx(vUv) * uGrad + vec2(min(0.3 * over, 40.0) / uBox.z, 0.0), dFdy(vUv) * uGrad).rgb;
   vec3 col = inverseFilmic(texel) * exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
   vec2 g = vLocal.xz * uShimmer.y;
   float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)));
@@ -220,7 +223,7 @@ export class Ground {
     const groundMap = await ctx.texture(base + g.file, { srgb: true, anisotropy: 8 })
     add(build(g.box, g.top, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 0, true, {
       uHorizon: { value: g.horizon.slice(0, 9) }, uHorizonSpan: { value: new THREE.Vector2().fromArray(g.horizonSpan) },
-      uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
+      uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
     })
 
     const t = def.towers

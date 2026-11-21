@@ -280,15 +280,30 @@ The older "Terrain" design above (spot at lon -81, lat 19, patches with baked cl
 - 06:24. Engine batch 5 (main 9d33905) merged as c6ca1e1: world pin (sunDir, travel and exit poses are mine to set), `gradTexel` from `src/core/texel.ts` optional, G11 is about my folder only. Builder preflight of adc492d: build and 35 tests green, G12 PASS, G15 PASS (web 184 MB, full 728 MB), G11 FAIL on `moon-lit.webp` not named by its full path: fixed in `RECIPE.md` (each file needs `public/assets/earth/<set>/NAME` written out).
 - 06:25. Own veil `src/stops/earth/veil.ts` (class `Veil`, in the set's `world`, drawn last): the engine cover's fragment shader on a full-screen mesh, fed from `shot.cover` in `set.update`, amount = `look.veil.peak` x smooth ramp from `lead` seconds before the window's first frame to its centre and down to `tail` seconds after its last frame (`look.ts`: `veil = { lead, tail, peak }`). It lets the veil thin over more than ten frames on each side and drifts over the sky and the Sun too. It discards in diagnostic views. It must be 0 at 1857 and 2156.
 
+- 06:30 to 06:40, seen in stills and cover sheets, fixed:
+  - Veil over black space read as smoke: the veil is now cut above the terrain horizon (exact cone from `terrain.dipDeg` and the cover's horizon line), held inside `look.veil.rim` [0.985, 1.003] radii of the view ray's closest pass in the orbit view, and darkened on the night side (Sun in view space).
+  - A fat white halo outside the limb in the rise (2132 to 2136): `coverShell` [1.02, 1.08] to [1, 1.015].
+  - Vertical streaks in the sky above the top of the ground canvas at the terrain entry and exit (clamped top row): the ground lookup widens its footprint sideways above the canvas top (`relief.ts`, up to 160 image px, in image units so every tier matches). A first try with scaled screen gradients hit the smallest mip and drew a grey band; do not scale gradients without a cap.
+  - `coverEdge` [0.25, 0.5] to [0.4, 0.5], `coverEdgeRise` [0.45, 0.5] to [0.5, 0.5], `look.veil = { lead 0.5, tail 0.5, peak 0.6 }`: thin wisps from about frame 1866, thick by 1878, full 1882 to 1885, wisps over the terrain to about 1897; rise the same mirrored.
+  - `coverRush.reach` 2.5 to 1: the rise cover looked like a still horizontal band (Mars open item 6); with the focus just outside the frame the streaks fan across it.
+- Open: stars fade in at the top of the frame at 2116 to 2122 (feather of the terrain sky patch, exit pitch 11 degrees); level 96 is now the wrap at 2048 through the upscaler (no take).
+
 ### Patch chain as made (`assets-src/earth/patches/`, work in `out/work/earth/patches/`)
 
 - `base.py composite(width_deg, size)`: filmic coded surface x shadow x (1 - a) + premultiplied cloud from the shipped full maps at cloud state 0, Sun at bake time 67.0 s (on the patch: azimuth -54 degrees from north, elevation 9.1; shadows fall to the lower right). `chain.py lock TAKE REF SIGMA OUT`, `chain.py sub PARENT PDEG CDEG SIZE OUT`, `chain.py nest PARENT CHILD PDEG CDEG OUT`. `shiftcheck.py A B`: block phase correlation plus low-frequency difference (`tools/ml/checkmoved.py` fails on repainted land).
-- Level 96: `p96-src-4096.png`, direct resample of the wrap (already as fine), no take.
+- Level 96: `p96-src-2048.png` = `base.composite(96, 2048)` (as fine as the wrap), through the upscaler to `p96-up-4096.png`, no take.
 - Level 48: input `p48-in-1024.jpg`, `prompt-48.txt`, take 1 kept: shift median 0.21 px at 1024, p90 0.49, max 1.90; low-frequency difference mean 19 code values before the lock (sigma 24 against `p48-src-2048.png`).
 - Level 24: input `p24-in-1024.jpg` (centre of the locked 48), `prompt-24.txt`, take 1 kept: shift median 0.12, p90 0.25, max 0.50; low-frequency mean 2.71.
 - Level 12: input `p12-in-1024.jpg` (centre of the locked 24), `prompt-12.txt`, take 1 kept: shift median 0.17, p90 0.31, max 0.57; low-frequency mean 5.42. It painted long soft cloud shadows toward the lower right (longer than a 9 degree Sun gives for small cumulus); kept, weak point.
 - Takes this round: patch 48: 1, patch 24: 1, patch 12: 1.
 - Each locked 2048 goes to 4096 with `python3 tools/ml/upscale.py --in A --out B --width 4096` (5.6 minutes alone, one at a time), then `chain.py nest` 12 into 24, 24 into 48, 48 into 96, then JPEG q94 4:4:4 to `full/patch-NN.jpg` and Lanczos 2048 to `web/`.
+
+### Log, continued
+
+- 06:40 to 06:46. `plan.ts`: `coverShell` [1, 1.015] to [1, 1.035] and `coverTop` [0.3, 0.12] to [0.06, 0.04] (frames 2129 to 2130 popped from a blue-grey band to a crisp black horizon; now the rise cover sheet reads as one move). `cover` and `coverTerrain` [0.5, 0.68, 1] to [0.22, 0.34, 0.6] (step between 1883, orbit side with a dark top, and 1884, terrain side with a light top: the cover's sky colour is its top colour within 0.22 of the horizon).
+- 06:46. `relief.ts`: above the canvas top the ground lookup folds back into the canvas (`look.ground.fold` 110 px: mirror that saturates) instead of clamping to the top row, with a small sideways footprint (up to 40 px). The clamped row drew a lighter vertical column at the top centre of 1890 to 1893 (the close image's Sun glow at the canvas top).
+- 06:46. Level 96 upscale done (360 s). `python3 assets-src/earth/patches/ship.py` wrote `patch-96.jpg`, `patch-48.jpg`, `patch-24.jpg`, `patch-12.jpg` in both sets (full 6.2 to 7.0 MB each, 4096; web 2048). Disk now full 85 MB, web 23 MB. `assets.ts` `patches.levels` set coarse to fine: 96, 48, 24, 12.
+- Looks pushed 06:46 (cover sheets, veil stills).
 
 ## Next (current)
 
