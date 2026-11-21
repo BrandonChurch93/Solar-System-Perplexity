@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 3028–3029, upper-right sky and diagonal horizon",
+   "what": "The blurred cloud field gives way in one frame to a flat tan veil, a distinctly sharper atmospheric rim and much clearer stars. The horizon position mostly holds, but the change in sharpness and contrast exposes the cover.",
+   "fix": "Match the atmospheric rim and starfield blur across both sides of the cover and carry the moving haze into the terrain view for several more frames."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 3269–3274, horizon and sky during the ascent cover",
+   "what": "The broad blurred haze gives way to a clean curved limb and nearly black sky around 3270; bright rim detail and stars then return within a few frames. The switch in atmosphere and exposure interrupts the sense of one pullback.",
+   "fix": "Align the limb geometry on both sides of the cover and blend the haze, rim brightness and star visibility continuously while keeping the camera roll and pullback on the same eased path."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 3060–3239, near cloud ridges and vortex against the horizon",
+   "what": "The dominant change is a steady enlargement of the vortex and surrounding cloud field. Relative motion between the near ridges and horizon is subtle, and the storm shows little independently traceable flow at the sampled frames.",
+   "fix": "Add modest lateral camera translation and depth-separated cloud motion so the nearest ridges cross the frame faster than the horizon and the vortex bands visibly advect."
+  }
+ ]
+}
