@@ -749,8 +749,11 @@ def film_pack(a):
     found = [(m.group(1), m.group(2) or '', int(m.group(3) or 0), d.name) for d in P.iterdir() for m in [FOLDER.match(d.name)] if d.is_dir() and m]
     order = {'R1': 0, 'R5': 1, 'R6': 2, 'R7': 3, 'R3': 4, 'R4': 5}
     told = sorted([f for f in found if f[0] in order], key=lambda f: (0 if f[1] else 1, stops.index(f[1]) if f[1] else 0, order[f[0]], f[2]))
-    for i, f in enumerate(told):
-        add(f[3], SLOTS[(i + n) % 4], [f[3] + '/' + x for x in names(f[3])], lead(f[0]), True)
+    seat = {}
+    for f in told:
+        i = seat.get(f[1], 0)
+        seat[f[1]] = i + 1
+        add(f[3], SLOTS[(i + n + (stops.index(f[1]) + 1 if f[1] else 0)) % 4], [f[3] + '/' + x for x in names(f[3])], lead(f[0]), True)
     for role, panel in (('R2', JURY), ('R8', NAMERS)):
         for f in sorted([f for f in found if f[0] == role], key=lambda f: f[2]):
             for x in names(f[3]):
@@ -934,7 +937,7 @@ def film_close(a):
     md.append('\nThe whole film pass bar asks R5, R6, R7, R3 and R4 for %d with no severe or major issue open, R2 to pass on its whole film list, and the machine checks green. It %s.\n' % (bar, 'holds' if film_holds else 'does not hold'))
     md.append('R2 votes on the whole film list (a = film or game cinematic). Controls: share %d of %d. Judged: share %d of %d. %s: the judged share may be at most %s under the control share.\n' % (film_r2['control'][0], film_r2['control'][1], film_r2['judged'][0], film_r2['judged'][1], 'Pass' if film_r2['pass'] else 'Fail', gap))
     md.append('- Controls: %s.\n- Judged: %s.\n' % (seq(r2c), seq(r2j)))
-    lowest = lambda r: min([(board[st]['cards'][r]['score'], st) for st in stops if board[st]['cards'][r]] + ([(film[r]['score'], 'whole film')] if film.get(r) else []), default=None)
+    lowest = lambda r: min([(board[st]['cards'][r]['score'], st) for st in stops if board[st]['cards'][r]] + ([(film[r]['score'], 'whole film')] if film.get(r) else []), key=lambda x: x[0], default=None)
     final = ''
     if stops:
         md.append('## R2 and R8 by stop\n')
