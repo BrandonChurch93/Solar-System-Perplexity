@@ -111,7 +111,7 @@ export const createSet: SetFactory = async (ctx) => {
   return {
     id: plan.id,
     world,
-    sky,
+    sky: look.show.sky ? sky : [],
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
@@ -145,8 +145,8 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
-      globe.mesh.visible = visible
-      halo.mesh.visible = visible
+      globe.mesh.visible = visible && look.show.globe
+      halo.mesh.visible = visible && look.show.globe
       rings.mesh.visible = visible && look.show.rings
       for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)

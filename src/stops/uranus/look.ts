@@ -40,7 +40,7 @@ export const deckRings: RingLook = {
   hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
 }
 
-export const show = { rings: true, moons: true, deck: true }
+export const show = { rings: true, moons: true, deck: true, globe: true, sky: true }
 
 export const halo = {
   size: [64, 64] as [number, number],

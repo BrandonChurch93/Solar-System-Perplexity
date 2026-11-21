@@ -197,3 +197,33 @@ Terrain milestone was sent 06:18 (commit ad8fe46). Now on dive and rise. Looks p
 - Miranda read as a flat white disc in the first rise sheet (its own fitted light saturates from this side).
 - The wrap albedo has pink rings round the south pole (seen in `out/work/u/dive/patch-1-v.jpg`, bottom): check whether the rise shows them lit.
 - Cloud flecks inside the patch area are soft (the cloud layer is 8192 wide): idea, modulate cloud alpha by the patch detail (`patch / wrap - 1`).
+
+## State at 06:55 UTC (read this first after a compaction)
+
+Commits pushed: 46cef58 (patches in the shader, cover, level rise), 25e04aa (merge of main with batches 5 and 6), cd3a263 (patch binaries). Looks pushed 06:50.
+
+### Mail since 06:40
+- Batch 6 is on main (45d1651): travel cameras, dust, sky lock for far bodies, the ending. Do not edit `src/space/travel` or `film.ts`. `npx tsx assets-src/travel/probe.ts` prints turn rate and speed per travel: the rise must reach its last frame at the speed and turn rate the travel starts with, the hold must begin where the travel ends.
+- Probe at cd3a263: `uranus.travel` join in (4455) turn 0.002 to 0.001 deg/frame (step 0.003, neighbours 0.069), speed 7.96e-2 to 8.00e-2; `saturn.travel` join out (3960) turn 0.042 to 0.042 (step 0.000), speed 1.27e-1 to 1.25e-1. Same order as the Mars rows (join in step 0.001, neighbours 0.030). Peak turn in my travel 4.40 deg/frame at 4476 (Mars 3.69, Mercury 3.93): highest of all stops, it follows from my rise end pose.
+
+### Since 06:40
+- Cover colours raised about 40 percent (first values read as dark teal mist): `cover [0.2, 0.5, 0.58]`, `coverLow [0.035, 0.15, 0.2]`, `coverTerrain [0.2, 0.58, 0.7]`, `coverLowTerrain [0.02, 0.09, 0.13]`.
+- `look.globe.cloudFine 4`: cloud alpha times `1 + cloudFine x (patch / wrap - 1)`, exactly 1 where no patch is active.
+- Review stills 4137, 4152, 4420, 4436 seen (`out/work/u/dive/v-sheet.jpg`): patch area reads as fine streaked haze, no seam; the rise end frame holds the globe right of centre with vertical bands, flecks and thin rings; no pink bands visible; Miranda and Ariel are white discs from this side; rings faint; at review the limb shows 1 px steps (check at final).
+- Disk: full 42 MB, web 18 MB.
+
+## State at 07:25 UTC (read this first after a compaction)
+
+Saturn's exit is final (mail 06:55, agent/saturn 16a4b5f: rise az -14, el 6, distance 6.6, offset [-0.28, -0.12], roll 0; travel turnDeg 88, side -1, turnEnd 0.5). The hold sky patch rim is fitted to the shared sky. Still owed: dive and rise milestone message, self checks, gates, READY. Looks pushed 07:18.
+
+### Shared sky and the rim fit
+- Main does not carry Saturn's final plan yet. The shared aim was read on a throwaway worktree (`/tmp/fit`, HEAD plus `src/stops/saturn` of agent/saturn 16a4b5f): `npm run -s aim -- --stop uranus` printed `orbit [145.41987, -22.38676, 20.05787]`. `plan.ts` pins `skyAim.orbit` to that, so my branch shows the sky main will show once Saturn is merged (then the pin is ignored and `aim` should print the same).
+- The one sky there: grey pink band at the top and right of the frame. The hero's warm band runs through the planet at about 31 degrees. They cannot be aimed onto each other (one free angle only), so the patch carries the hero's sky over into the one sky across a wide margin.
+- `sky.json` orbit margin 0.375, patch 4928 x 2772 full, 2464 x 1386 web. `patch.py`: `widen()` carries the hero's broad sky along the band, crosses to the smooth one sky (`out/work/u/sky2/one-wide375.png`: frame 4035 at final with `look.show` rings, moons, globe, sky false and `vfovDeg 50.244803` in `fit.json` for that render only) between the frame edge and 0.6 of the margin; fine detail from a copy shifted 700 px along the band, fading between 0.3 and 0.85. `rim ONE OUT` rebuilds only the margin (40 s), `hold ...` rebuilds all.
+- Checked at review: 3948 (Saturn travel), 3960, 4109, 4118 show no rim; 4035 unchanged within 3 levels.
+- `look.show` has `globe` and `sky` flags now (all true at commit).
+
+### Ring zone of the hold patch
+- The hero's ring residue (broad faint ring bands, dark grooves where lines were removed) stays in the patch. The camera orbits 6 degrees in the hold, so the residue slides about 108 px to each side against the true 3D rings: at 3960 and 4109 a faint second set of arcs shows left or right of the rings (`out/work/u/sky2/c-ringzone.jpg`, right half).
+- Variant tried: ring zone (ring plane radius under 1.9 to 2.02) from the generated fill, `min(f, low(f)) + hero stars` (`RING_FILL 1`). No residue, but blobby soft stars and a blurrier band there, and the faint haze of the rings is lost at the judged frame. Not kept (`RING_FILL 0`); backups of both in `out/work/u/sky2/`.
+- Better idea, to do while the critics are out: in the unwrap of the ring plane take the band part too (opening across radius far wider than `THIN`, then a long median along the ring so nebula clouds stay), subtract it from the hero, floor at the envelope, and give the faint haze to the 3D rings.
