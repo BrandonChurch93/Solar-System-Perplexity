@@ -1,76 +1,76 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T04:43:36.094Z",
- "head": "6d9a4aeb501772b5decd8122e2c39cf88f76a0c5",
- "note": "orbit view: globe outline fitted as an ellipsoid, limb profile measured against the hero",
+ "pushed": "2026-11-21T05:05:09.715Z",
+ "head": "2fd342b58cec9926cf19648d84b8172d48461755",
+ "note": "orbit view at final beside the hero; terrain fit started",
  "looks": [
   {
-   "time": "2026-11-21T04:43:35.557Z",
-   "file": "20261121044335557-note-cmp-limb-ul.jpg",
+   "time": "2026-11-21T05:05:09.176Z",
+   "file": "20261121050509176-note-fit-horizon.jpg",
+   "source": "out/work/u/t/fit-horizon.jpg",
+   "kind": "note",
+   "label": "terrain: horizon fit on the close image",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:05:08.665Z",
+   "file": "20261121050508665-note-cmp-limb-night.jpg",
+   "source": "out/work/u/cmp-limb-night.jpg",
+   "kind": "note",
+   "label": "hold final, hero left film right: limb-night",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:05:08.155Z",
+   "file": "20261121050508155-note-cmp-limb-ul.jpg",
    "source": "out/work/u/cmp-limb-ul.jpg",
    "kind": "note",
-   "label": "hold lit limb x3 after the outline fix: hero left, film right",
+   "label": "hold final, hero left film right: limb-ul",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T04:43:34.972Z",
-   "file": "20261121044334972-note-cmp-globe.jpg",
-   "source": "out/work/u/cmp-globe.jpg",
+   "time": "2026-11-21T05:05:07.648Z",
+   "file": "20261121050507648-note-cmp-miranda.jpg",
+   "source": "out/work/u/cmp-miranda.jpg",
    "kind": "note",
-   "label": "hold review tier, globe: hero left, film right. Globe is now the hero's slightly flattened ellipsoid; night side still flatter than the hero, next fix",
+   "label": "hold final, hero left film right: miranda",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T04:41:42.518Z",
-   "file": "20261121044142518-frame-hold-review.jpg",
-   "source": "out/work/u/hold-review.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, review tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:30:37.340Z",
-   "file": "20261121043037340-note-cmp-limb-night3.jpg",
-   "source": "out/work/u/cmp-limb-night3.jpg",
-   "kind": "note",
-   "label": "hold night limb x3 at 3x brightness: hero left, film right. Dotted edge from the light table, being fixed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T04:30:36.810Z",
-   "file": "20261121043036810-note-cmp-limb-ul.jpg",
-   "source": "out/work/u/cmp-limb-ul.jpg",
-   "kind": "note",
-   "label": "hold lit limb x3: hero left, film right. Film shows a dotted bright edge and a dark gap, being fixed",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T04:30:36.123Z",
-   "file": "20261121043036123-note-cmp-ul.jpg",
+   "time": "2026-11-21T05:05:07.110Z",
+   "file": "20261121050507110-note-cmp-ul.jpg",
    "source": "out/work/u/cmp-ul.jpg",
    "kind": "note",
-   "label": "hold review tier, upper left: hero left, film right (sky patch v3, traced rings, Miranda)",
+   "label": "hold final, hero left film right: ul",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T04:12:13.162Z",
-   "file": "20261121041213162-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, draft tier",
+   "time": "2026-11-21T05:04:35.784Z",
+   "file": "20261121050435784-frame-hold-final.jpg",
+   "source": "out/work/u/hold-final.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
    "stop": "uranus",
    "segment": "uranus.hold",
    "frame": 4035,
-   "tier": "draft",
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "434d0a5e367a62fd"
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:03:55.327Z",
+   "file": "20261121050355327-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
   },
   {
    "time": "2026-11-21T02:45:31.326Z",
