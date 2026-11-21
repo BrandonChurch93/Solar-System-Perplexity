@@ -1,40 +1,48 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T07:57:45.279Z",
- "head": "b79ad18c9b683e64def120314a011820a9a3fe3e",
- "note": "after READY: hold and terrain at final beside the approved images, crops of 615 and 870, hold and terrain sheets at review",
+ "pushed": "2026-11-21T08:04:42.523Z",
+ "head": "ce594ff19dd8d96178bf193c954d0b0bf369915f",
+ "note": "final tier look at 730 and 1007, dive strip 722 to 733; next: blur along the motion inside each sample",
  "looks": [
   {
-   "time": "2026-11-21T07:57:44.066Z",
-   "file": "20261121075744066-note-f540-sun-a.jpg",
-   "source": "out/work/mercury/j5/f540-sun-a.jpg",
+   "time": "2026-11-21T08:04:41.944Z",
+   "file": "20261121080441944-note-f1007-term-a.jpg",
+   "source": "out/work/mercury/f1/f1007-term-a.png",
    "kind": "note",
-   "label": "frame 540, Sun side: no plate edge at the join from the Sun travel",
+   "label": "Frame 1007 at the final tier, 2x crop: fine dotted comb left in the smears",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T07:56:36.439Z",
-   "file": "20261121075636439-crops-f00870-16x9-final-01.jpg",
-   "source": "out/work/crops/f00870-16x9-final-01.png",
-   "kind": "crops",
-   "label": "Native crops of frame 870 (mercury.terrain), final tier",
+   "time": "2026-11-21T08:04:41.404Z",
+   "file": "20261121080441404-note-term-strip-a.jpg",
+   "source": "out/work/mercury/j6/term-strip-a.jpg",
+   "kind": "note",
+   "label": "Dive 722 to 733 at draft, centre crops: rims at the terminator brighten as patch level 1 blends in (known weak point)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T08:03:05.472Z",
+   "file": "20261121080305472-frame-f733.jpg",
+   "source": "out/work/mercury/j6/f733.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 733, draft tier",
    "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "final",
+   "segment": "mercury.dive",
+   "frame": 733,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "6d4f67865f286916"
   },
   {
-   "time": "2026-11-21T07:56:34.098Z",
-   "file": "20261121075634098-crops-f00615-16x9-final-01.jpg",
-   "source": "out/work/crops/f00615-16x9-final-01.png",
-   "kind": "crops",
-   "label": "Native crops of frame 615 (mercury.hold), final tier",
+   "time": "2026-11-21T07:59:50.795Z",
+   "file": "20261121075950795-frame-f1007.jpg",
+   "source": "out/work/mercury/f1/f1007.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1007, final tier",
    "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
+   "segment": "mercury.rise",
+   "frame": 1007,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -95,14 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6d4f67865f286916"
-  },
-  {
-   "time": "2026-11-21T07:55:13.696Z",
-   "file": "20261121075513696-note-f540-sun-a.jpg",
-   "source": "out/work/mercury/j5/f540-sun-a.jpg",
-   "kind": "note",
-   "label": "Frame 540, first frame of the hold, the Sun side at native size (draft)",
-   "stop": "mercury"
   }
  ]
 }
