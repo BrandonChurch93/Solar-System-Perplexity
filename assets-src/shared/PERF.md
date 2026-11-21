@@ -52,7 +52,9 @@ Inside the sky map pass (draft tier, hold / terrain, by removing parts of the sh
 | without any band or patch tap | 0.46 | 0.39 |
 
 How SwiftShader behaves, measured here:
-- An `if` block is not skipped. Both sides run for every pixel and the result is masked. A `for` loop is a real branch: its body does not run when no pixel of the 2 x 2 quad needs it. So `for (int k = 0; k < (cond ? 1 : 0); k++) { ... }` skips work that `if (cond) { ... }` does not. Derivatives are taken outside the loop.
+- Control flow does not skip arithmetic (first measured, later read in `src/Pipeline/SpirvShaderControlFlow.cpp`). `if`, `switch` and loops only set a mask per lane of the 2 x 2 quad; both sides of an `if` run for every pixel, and a loop is emitted as do-while, so its body runs at least once whatever the condition says. What is skipped is a texture sample when no lane of the quad is active (`If(AnyTrue(activeLaneMask()))` in `EmitImageSample`). Measured: taps inside `for (int k = 0; k < (cond ? 1 : 0); k++) { ... }` are skipped, the same taps inside a plain `if (cond)` were not. So the loop form pays only for texture taps, never for arithmetic; derivatives are taken outside the loop.
+- `discard` is a demote to a helper lane: the rest of the shader still runs for that pixel. A shader that is mostly arithmetic costs quads shaded times instructions, and the only levers are fewer quads (do not send the geometry, scissor) or a leaner shader variant by `#define`.
+- A 2 x 2 quad is shaded once per triangle that touches it, so triangles of about one pixel multiply the fragment cost (see the mesh density note under "Tried").
 - `mix(x, y, a)` is `a * (y - x) + x`. With `a` exactly 0 the result is exactly `x`, so a term with zero weight can be skipped without changing a bit. With `a` exactly 1 the result can differ from `y` by one unit in the last place, so that case is not exact to skip.
 
 ## Changes
@@ -151,3 +153,156 @@ What was measured on the frames: all four frames are byte identical to the basel
 | 2726 rise | 79.2 | 73.8 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
 
 Sky pass per sample (draft): 0.85 to 0.32 s (hold), 0.89 to 0.56 s (terrain), 0.62 to 0.25 s (dive), 0.38 to 0.27 s (rise). Whole sample: 1.95 to 1.45 s (26 %), 3.00 to 2.55 s (15 %), 1.73 to 1.34 s (23 %), 1.20 to 1.14 s. Build, vitest and determinism pass. To drop it: `git revert 9e72ac2` (one block of the sky shader).
+
+### 8. Capture: one sampler call instead of four where explicit gradients cannot change the texel (`5a24d88`)
+
+What SwiftShader does (read in its sampler source, `src/Pipeline/SamplerCore.cpp` and `SpirvShaderSampling.cpp`, and confirmed by timing): `textureGrad` is sampled once per pixel of a 2 x 2 quad, each pixel with its own gradients, so four full sampler runs per quad. `texture()` with or without a bias is sampled once per quad; its gradients are lane 1 minus lane 0 and lane 2 minus lane 0, the same numbers as `dFdx` and `dFdy`. The equirect fetch (`equirectGrad` in `src/space/sky.ts`) is used by the sky pass, the planet map, the storm mask, the moon, the globe and the stand in, always with `textureGrad`, because the gradients are scaled by `uGrad` and corrected at the seam.
+
+New `src/core/texel.ts`: `gradTexel(tex, uv, dx, dy)`. `textureGrad` stays the default. When `uImplicit` is 1 (set per sample in `engine.ts` from `sky.cull`, so in capture only) a quad uses `texture()` when one of these holds for all four pixels:
+
+- (a) the gradients given are exactly `dFdx(uv)` and `dFdy(uv)` (compared as floats, bit equal), so the implicit call computes the same level and the same taps;
+- (b) both the given and the implicit gradients are under one texel (`m < 0.9` in texels) and nearly isotropic (`m < 1.4 |det|`, implicit major squared under 1e8). Then both calls read level 0 with one tap: the level of detail clamps to 0, where the second mip has weight 0, the anisotropy `major² / |det|` rounds to one tap, and with one tap the tap sits exactly on the coordinate. The call is `texture(tex, uv, -15.0)`, the bias clamp of the sampler, which pins the level to 0 whatever the implicit gradients are.
+
+Every other quad (minified, anisotropic, the seam column, the limb of a planet) stays on `textureGrad`. Live and export keep `textureGrad` everywhere. `SetLoader.load` hands the shared `uImplicit` uniform to every material of a set whose fragment shader declares it, so a stop material that includes `EQUIRECT_GLSL` needs no edit. This relies on how SwiftShader samples, which is why it is off outside capture.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 38.0 | 34.5 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 53.8 | 51.8 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 90.6 | 83.4 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 73.8 | 68.2 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Travel frame 2782 (64 samples, `tools/perf.ts`, render only): 35.6 to 30.1 s, sha256 the same before and after. Sky pass per sample there 0.373 to 0.289 s; planet at the hold 0.455 to 0.422 s. Build, vitest (8 files, 31 tests, `tests/texel.test.ts` is new) and determinism pass. Then main `14ef8ca` (engine batch 4) was merged into the branch (`186f1f8`).
+
+### 9. Capture: terrain shield, hidden relief cells are not drawn and nothing is shaded under opaque terrain (`b8b53cb`)
+
+Where the terrain sample went after change 8 (2580, 2.2 s per sample at `final`): the three relief layers 1.39 s, sky pass 0.51 s, stars 0.30 s, air 0.09 s. The layers are transparent meshes (blend `One, OneMinusSrcAlpha`, depth test and depth write on) of 1,034,838, 417,300 and 1,707,888 indices at `mesh: 420`, so triangles of about one pixel; every layer is shaded over its whole mesh, also where a nearer layer hides it and where its alpha is 0 (17 to 24 % of the alpha texels), and because the layers are transparent the engine could not use them to cover the sky (change 4 needs opaque materials).
+
+What the change does, per sample, only in capture (`sky.cull`), only when exactly one `Relief` is visible and no other visible material writes depth or stencil (else the old path runs unchanged):
+
+1. Once per set: the alpha texture of each layer is read back and every cell of the base grid gets two flags, "all texels 255" and "all texels 0" (`uniformCells`), then the distance in cells to the nearest cell without the flag (`reach`). A layer without an alpha texture and all apron cells count as unknown.
+2. `Relief.screen`: the grid vertices are projected on the CPU. Cells off screen (1 px pad) are dropped. A cell is certainly transparent or certainly opaque when its flag reaches further than the texture footprint can: `reachNeeded` takes the texels per pixel from the screen Jacobian of the cell (upper bound `max(du, dv) * |J|_F / det`) and asks for `ceil((6 t + 2) / min(du, dv)) + 1` cells, which covers trilinear filtering (two levels, bilinear), the 4 tap anisotropy and the cell to texel rounding. Certainly transparent cells are dropped: the shader discards there (`alpha < 0.004`).
+3. `Relief.mark`: the remaining cells are drawn into the sample target with the same vertex shader and a flat fragment shader, no blending, depth test and write: first the certainly opaque cells of every layer, writing alpha = layer number, then all other cells writing alpha = 0. Depth function is less or equal, so on a depth tie the unknown cell wins. After this pass a pixel carries the number of layer k only if the nearest relief fragment there is from a certainly opaque cell of k.
+4. `marksIn` reads the target back and gives every 32 px tile the set of marks of its pixels. `Relief.hide` swaps in an index buffer (original cell order) without the cells of layer j whose padded screen box lies only on tiles where every pixel is marked by another layer. The sky pass and the star filter of changes 4 and 5 get the tiles where every pixel is marked as covered. The target is cleared, the frame is drawn as before, `Relief.show` swaps the full index back.
+
+Why the pixels are the same: at a marked pixel the fragment F of layer k is the nearest of all relief fragments and its alpha is exactly 1.0. In the real pass F passes the depth test whatever was drawn before (only relief layers write depth), and `src * 1 + dst * (1 - 1)` replaces everything under it, sky, stars, air and farther layers; every later relief fragment there is farther and fails the depth test (or is another opaque fragment of a later layer at the same depth, which the mark pass resolves the same way, last wins). So dropping fragments of other layers at marked pixels, and not shading sky and stars there, cannot change the value, and the depth buffer ends the same. Two assumptions: the mark pass and the real pass give a vertex the same clip position (same vertex shader source, same matrices), and `dst` is finite (an Inf under opaque terrain would turn into NaN in the old path). Order of the kept cells is unchanged.
+
+Checks beyond the four frames:
+- A debug build wrote `alpha == 1.0 ? 0 : 1` from the real shader and compared it with the marks: 129 samples at frames 2488, 2490, 2500, 2540, 2580, 2620, 2660, 2669 and 2672, about 1.38 million marked pixels each, not one marked pixel with alpha other than exactly 1.0. About 165,000 opaque pixels per sample stay unmarked (the safety margin).
+- `review` tier, eleven frames from the end of the dive to the start of the rise, sha256 of the PNG equal with and without the change at every frame:
+
+| Frame | Samples | Before, s | After, s | sha256 (same before and after) |
+| --- | --- | --- | --- | --- |
+| 2470 | 16 | 40.4 | 32.5 | a6e6c8cfc5b620539d72511075c698c8ea2f9509298935d831781f87355abfaf |
+| 2488 | 16 | 42.4 | 31.6 | dbe3c504d56e41f79e2cfb248e9a498f978eeecd217e70d50b5d5ef2552e1bf3 |
+| 2490 | 4 | 10.7 | 8.1 | 71303fbc722c83ca20f71a3b8a0f806066192e30d15e00272dfcc505c61e7122 |
+| 2500 | 4 | 10.3 | 7.7 | e106bd0bace9dae2f380f8a21368c3116781987efbc8c2b28409cd86bdf955ae |
+| 2540 | 4 | 9.9 | 6.8 | 75b4772c1d66a51169e83fd419bc7f16ecb49031223e29807af4df0d401948ef |
+| 2580 | 4 | 9.6 | 6.6 | d1b275360421c28e08069f8f8501b42f92228c5109e24d8326c994d0350e5dc3 |
+| 2620 | 4 | 9.6 | 6.3 | e1cf1a26d7f005f39803a09dea2be54d65f52ddd6796218c47c8850f186fce9e |
+| 2660 | 4 | 9.4 | 5.9 | 10522cdca0f3922b9256de4de2cb884334c47918d85d4bb1c1863ffa1b46bb37 |
+| 2669 | 4 | 10.1 | 6.0 | 1e3ff45c99b8fc048e35afe54c9ee38fc3c752fa5e9aa86cf655f05fa8d05ebb |
+| 2672 | 16 | 38.5 | 23.2 | e951252d07647b64a30034fa895ab5e5dd8a77240d290f5541d2c4366051482a |
+| 2690 | 16 | 36.2 | 24.0 | 7d7d05929f25d377b21ce16f2ca983b9cd880c070738dad1bf3fc69ef322e1c3 |
+
+`final` tier, `tools/still.ts` (about 16 s of each figure is start and set load). 2470 (end of the dive) and 2690 (start of the rise) are not judged frames; they are here because the terrain is on screen there for 64 samples, which makes them the most expensive frames of the stop.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 34.5 | 34.0 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 51.8 | 40.4 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 83.4 | 82.6 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 68.2 | 68.9 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+| 2470 dive, terrain on screen (64 samples) | 175.7 | 143.8 | 269738a1d8b633e93b05cac5d616d9b6ca64a7a0ef339a156d99f434cee68a06 (same before and after) |
+| 2690 rise, terrain on screen (64 samples) | 155.6 | 111.5 | 8db9bae092a6399e10164c5af097f3c699dfa0341811880c357894d7b6059aae (same before and after) |
+
+Per sample at 2580 (`review`): layers 1.37 to 0.80 s (indices drawn 3,160,026 to 703,602), sky pass 0.49 to 0.22 s, stars 0.32 to 0.19 s, plus the mark pass 0.09 s and a second clear 0.03 s; the sample 2.4 to 1.6 s. New `tests/shield.test.ts`. Build, vitest and determinism pass.
+
+### 10. Capture: haze shell triangles that the shader discards are not drawn (`397cd04`)
+
+A `HazeShell` (`src/bodies/haze.ts`) is a back side sphere of 160 x 80 segments around the planet, additive, three of them on Mars. Its fragment shader discards every pixel whose view ray meets the planet (`b > 0.0 && rt2 < 0.99`), so only the thin ring between the planet disc and the top of the shell is ever written, but the whole far half of the sphere is shaded first: a discarded pixel pays for the whole shader, and the depth test does not stop it either. Cost 0.17 s per sample at the hold and the dive.
+
+The discard region is a cone around the direction from the camera to the planet centre, which is convex, so a triangle whose three vertices lie inside it lies inside it entirely. New `src/bodies/trim.ts`: `hazeHidden` evaluates the shader's own test per vertex on the CPU, in double precision with a margin (`b` above the limit by `1e-3 * (1 + r)`), and `keepTriangles` writes the index without the triangles whose three vertices are hidden, order unchanged, so the additive sum per pixel has the same terms in the same order. `HazeShell` implements `Trim { hide(); show() }` and hangs itself on `mesh.userData.trim`; `engine.ts` calls `hide()` on every visible object with that field before a sample is drawn and `show()` after it, in capture only (`sky.cull`). Any other body whose shader discards a convex region can use the same hook.
+
+In the same commit, a guard in change 9: a relief layer whose mesh is hidden is left out of the mark pass.
+
+| Frame | Before | After | sha256 after |
+| --- | --- | --- | --- |
+| 2325 hold | 34.0 | 33.0 | 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d (same) |
+| 2580 terrain | 40.4 | 40.7 | a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8 (same) |
+| 2427 dive | 82.6 | 76.7 | 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814 (same) |
+| 2726 rise | 68.9 | 63.7 | 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05 (same) |
+
+Haze shells per sample (`draft`): hold 0.168 to 0.063 s, dive 0.17 to 0.046 s, rise 0.044 s after. Without the 16 s of start and load the dive render is 9 to 11 % shorter (a second run gave 75.2 s), the rise 10 %, the hold 6 %. New `tests/trim.test.ts` (the dropped triangles are sampled and checked against the shader test in float arithmetic). Build, vitest (11 files) and determinism pass.
+
+Then main `e23c58a` (engine batch 7) was merged into the branch (`a2a50dd`); on the merged tree the four frames again have the baseline sha256 (75.3, 64.7, 33.6 and 40.7 s for dive, rise, hold and terrain), build and vitest pass.
+
+## All steps, `final` tier, seconds per frame on this VM
+
+| Frame | Samples | Baseline | 1 | 2 and 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Now / baseline |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2325 hold | 16 | 72.2 | 59.6 | 57.0 | 46.7 | 45.1 | 44.1 | 38.0 | 34.5 | 34.0 | 33.0 | 46 % |
+| 2580 terrain | 16 | 92.5 | 80.8 | 58.9 | 59.2 | 59.2 | 60.8 | 53.8 | 51.8 | 40.4 | 40.7 | 44 % |
+| 2427 dive | 64 | 236.5 | 190.1 | 179.7 | 125.3 | 115.4 | 115.5 | 90.6 | 83.4 | 82.6 | 76.7 | 32 % |
+| 2726 rise | 64 | 250.0 | 207.5 | 87.5 | 79.5 | 81.0 | 79.2 | 73.8 | 68.2 | 68.9 | 63.7 | 25 % |
+
+About 16 s of each figure is the browser start and the set load, which a film render pays once per worker and not per frame. Without it the render itself is 30 % (hold), 32 % (terrain), 28 % (dive) and 20 % (rise) of what it was. The sha256 of all four frames equals the baseline at every step; change 7 is the one step that is not provably identical on other content.
+
+## Other kinds of frame
+
+### Travel frame 2782 (`final`, 64 samples)
+
+`tools/perf.ts`, render only (no browser start): 35.6 s before change 8, 30.1 s after, sha256 `453c2129c026490da2e66a46a7d4e596bc55a57115409a5bc5426c56cdf0a288` both times (tree before the merge of engine batch 4).
+
+| Part | Seconds per sample | Share of the sample |
+| --- | --- | --- |
+| sky map pass (full screen, nothing covers it) | 0.289 (0.373 before change 8) | 62 % |
+| belt layer, full screen `over` pass | 0.034 | 7 % |
+| clear | 0.028 | 6 % |
+| accumulator | 0.022 | 5 % |
+| star points (18,621 drawn of 3,465,000) | 0.012 | 3 % |
+| dust | 0.010 | 2 % |
+| the rest (stand in, small passes, script) | about 0.07 | 15 % |
+| all of a sample | about 0.47 | |
+
+Once per frame: the belt build about 1.9 s (48 draws into scratch targets; the two rocks with 128 segment meshes are 589,824 indices each and cost about 0.09 s per draw in vertex work, 12 such draws, 12 more at about 0.035 s, 24 small ones under 0.01 s, plus the clears), lens chain 0.24 s (final pass to the canvas 0.13 s), PNG 0.25 to 0.28 s. At 64 samples the belt is about 13 % of the frame, at 16 samples it would be about 30 %. The belt module (`src/space/belt`) is not mine and was not touched.
+
+### Saturn hold 3465 (`final`, 16 samples)
+
+Measured in a local merge of `origin/agent/saturn` at `7cd6b55` with main (never pushed), `tools/perf.ts`, render only. sha256 `a5b3aa1fc30f91a90de114adcd34dfcb84ea1fa5935884c019063eee79d75854` in every exact variant below (before change 8, with it off and on, after engine batches 4 and 5). Change 8 off 27.0 s, on 25.4 s (sky pass 0.369 to 0.284 s per sample, globe unchanged).
+
+| Part | Seconds per sample | Share of the sample |
+| --- | --- | --- |
+| rings, two passes of 25,920 indices each | 0.79 | 53 % |
+| globe (440,064 indices) | 0.35 | 23 % |
+| sky map pass, 27 rectangles around the globe | 0.28 | 19 % |
+| accumulator | 0.025 | 2 % |
+| star points | 0.01 | 1 % |
+| all of a sample | about 1.5 | |
+
+The transparent layers behave as on Mars as far as the engine goes: the globe is opaque and covers sky and stars (changes 4 and 5), the rings are transparent and cover nothing. What is new is the ring shader: it is almost pure arithmetic, and each of its two passes shades the whole ring mesh and discards the half that belongs to the other pass (in front of or behind the globe). A discarded pixel still pays for the whole shader (see the SwiftShader notes above). Taken apart by edits (two passes together 0.786 s): raster and header 0.125, sparkle block 0.197, noise 0.107, profile fetch 0.096, azimuth gain 0.075, grain 0.074, layout 0.069.
+
+Recipe for the Saturn agent, proven locally with the same sha256: `assets-src/shared/saturn-rings-cull.patch` (against `src/stops/saturn/rings.ts` at `7cd6b55`; `src/stops` is not mine, so it is a patch and not a commit). `Rings.cull(camL)` builds one index list per pass on the CPU, per sample, and leaves out the triangles that lie wholly in the region that pass discards: pass 0 drops triangles with all three vertices inside the circle whose diameter runs from the ring centre to the camera (in the ring plane) or inside r < 1; pass 1 drops triangles farther than the radius plus a margin from that circle centre and farther than 1 from the origin. The order of the kept triangles is unchanged. It is called in `set.ts` right after `uCamL` is set. Rings 0.79 to 0.45 s per sample, frame 25.4 to 20.5 s (19 %). More could be dropped in pass 1 (the disc region r < 1 with x out of range). Wrapping the ring shading in a loop on the discard condition made it slower (0.79 to 0.98 s): a loop body always runs once.
+
+## Tried, did not help or not kept
+
+- Loops around arithmetic to skip it per quad, in the planet shader, the relief shader and the patch blend math (the "exact cut of the patch blend math"): no gain. Explained later by the SwiftShader source: control flow masks lanes, it never skips arithmetic; only texture taps are skipped.
+- Stencil or depth test alone, without scissor rectangles, to keep the sky pass off covered pixels: no gain. The shader runs for a quad before the stencil result is applied and early depth is not used for these shaders. Tried again inside change 9 (the mark pass wrote stencil 1 at marked pixels; sky, stars and the relief air tested it): same sha256, same seconds, taken out. Scissor rectangles are the tool that works.
+- 16 px tiles instead of 32 px for the cover map: more rectangles, no gain.
+- `textureGrad` forms for the sky patch taps in capture: slower (four sampler runs per quad).
+- `gradTexel` (change 8) on the six planet patch fetches (0.466 against 0.422 s) and on the relief colour fetch (no gain at `final`): left on `textureGrad`.
+- A tolerance instead of bit equality in the seam test of change 8: 91 to 195 pixels differ at `draft`, 1 to 7 code values, PSNR 90 to 96 dB. Not exact, not kept.
+- `texture()` with a level of detail bias in place of scaled gradients: 11 to 14 % but not exact, not kept.
+- Coarser meshes (`draft`, not identical, not kept, under the one fifth threshold): planet segments 320 to 160 to 96 and moon 448 to 224 to 112 give planet 0.383 to 0.333 to 0.292 s and moon 0.107 to 0.066 to 0.046 s, a hold sample 1.32 to 1.26 to 1.17 s (11 % at most). The cause is that a 2 x 2 quad is shaded once per triangle that touches it; the Mars relief at `mesh: 420` and the moon at 448 segments are in that regime. This is a look setting of the stops, so it is only reported here.
+- An alpha prepass of the relief with the shader logic duplicated: replaced by the cell flags of change 9, which need no second copy of the shader.
+- Marks per tile as a set (change 9 keeps this form) against "one winner per tile": same seconds within noise.
+
+## What is left in a sample
+
+No exact change found after change 10 takes a tenth off any of the four frames. The goal of a tenth of the first cost per part was reached for the star points (0.9 to about 0.1 s per sample) and nearly for the sky pass (1.65 to about 0.3 s at the hold); the planet, moon and relief shaders are where they were per shaded pixel, only the pixels and triangles that cannot show were taken away.
+
+Planet shader at the hold (`final`, 0.42 s per sample): map fetch 0.173, storm 0.087, patch levels 0.047, height fetches 0.045, haze 0.015, grazing 0.015, curve 0.010, inverse filmic 0.003, rest 0.06. Moon 0.13. These are fragment arithmetic and texture fetches on visible pixels; nothing exact was found that removes a tenth of a frame there.
+
+Terrain after change 9 (2580, `review`, 1.6 s per sample): relief layers 0.80 (703,602 indices drawn of 3,160,026), sky pass 0.22 in about 120 rectangles, stars 0.19 (372,180 points), mark pass 0.09, air 0.08, two clears 0.06, accumulator 0.02. About a third of the pixels stay unmarked: the sky itself (8 %), the bands along the ridge lines (the safety margin, 8 %) and the apron cells, which change 9 treats as unknown. Flags for the apron atlas would shrink that, at the price of mirroring the apron mapping on the CPU; not done.
+
+Once per frame: lens chain 0.24 s, PNG and base64 0.25 to 0.3 s, belt build in travel about 1.9 s (see above).

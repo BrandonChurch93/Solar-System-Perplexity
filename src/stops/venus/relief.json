@@ -1,0 +1,100 @@
+{
+ "source": "references/approved/venus-close.jpg",
+ "imageSize": {
+  "full": [
+   5632,
+   3168
+  ],
+  "web": [
+   2816,
+   1584
+  ]
+ },
+ "boxUnits": "full-set pixels, origin top-left of the close image",
+ "camera": {
+  "vfovDeg": 60.0,
+  "pitchDeg": -21.48,
+  "rollDeg": -1.03,
+  "up": [
+   0.01672741330229255,
+   0.9303950868629735,
+   0.36617642740276773
+  ],
+  "dipDeg": 10.907956815069824,
+  "radius": 54.34782608695652,
+  "horizonDistance": 10.473569218461918,
+  "sun": [
+   0.7470170454545454,
+   0.31767676767676767
+  ]
+ },
+ "depthFit": {
+  "a": 1.3896497532480863,
+  "g": 0.9013618545944007,
+  "b": 0.0954784352059549
+ },
+ "drawOrder": [
+  "L0",
+  "L1"
+ ],
+ "layers": {
+  "L1": {
+   "box": [
+    2620,
+    1520,
+    1540,
+    580
+   ],
+   "distSize": {
+    "full": [
+     770,
+     290
+    ],
+    "web": [
+     385,
+     145
+    ]
+   },
+   "alpha": true,
+   "dist": [
+    1.943136510338335,
+    3.9101053796150604
+   ]
+  },
+  "L0": {
+   "box": [
+    -704,
+    1010,
+    7040,
+    3742
+   ],
+   "distSize": {
+    "full": [
+     1760,
+     935
+    ],
+    "web": [
+     880,
+     467
+    ]
+   },
+   "alpha": false,
+   "dist": [
+    1.008513222679223,
+    10.473569218461918
+   ]
+  }
+ },
+ "masks": {
+  "box": [
+   -704,
+   1010,
+   7040,
+   3742
+  ],
+  "channels": {
+   "g": "light shafts, sway about the Sun",
+   "r": "haze between the towers, drifts"
+  }
+ }
+}

@@ -13,6 +13,9 @@ One row per third-party file that the app ships or that fed a generated asset. T
 | `references/cache/mars/megt90n000eb.img`, `.lbl` | MOLA MEGDR global topography, 16 pixels per degree | https://pds-geosciences.wustl.edu/mgs/mgs-m-mola-5-megdr-l3-v1/mgsl_300x/meg016/megt90n000eb.img (USGS page https://astrogeology.usgs.gov/search/map/mars_mgs_mola_dem_463m) | Public domain (NASA PDS; USGS page: CC0) | NASA / MGS MOLA Science Team | 2026-11-20 |
 
 Pinned download URLs and hashes for both are in `tools/ml/MODELS.md`.
+| `messenger-color-4096.png` | MESSENGER MDIS global color mosaic, 4096x2048, layout guide for the far side color | https://planetarymaps.usgs.gov/cgi-bin/mapserv?map=/maps/mercury/mercury_simp_cyl.map&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:4326&styles=&format=image/png&bbox=-180,-90,180,90&width=4096&height=2048&layers=MESSENGER_Color | Public domain (NASA and USGS) | NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington; USGS Astrogeology | 2026-11-21 |
+| `messenger-mono-8192.png` | MESSENGER MDIS global monochrome mosaic (May 2016), 8192x4096, layout guide for far side detail | https://planetarymaps.usgs.gov/cgi-bin/mapserv?map=/maps/mercury/mercury_simp_cyl.map&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:4326&styles=&format=image/png&bbox=-180,-90,180,90&width=8192&height=4096&layers=MESSENGER | Public domain (NASA and USGS) | NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington; USGS Astrogeology | 2026-11-21 |
+| `Mercury_Messenger_USGS_DEM_Global_665m_v2.tif` | MESSENGER global DEM, 665 m, 23040x11520, 16 bit, guide for far side height | https://planetarymaps.usgs.gov/mosaic/Mercury_Messenger_USGS_DEM_Global_665m_v2.tif | Public domain (NASA and USGS) | NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington; USGS Astrogeology | 2026-11-21 |
 
 ## Not third-party
 

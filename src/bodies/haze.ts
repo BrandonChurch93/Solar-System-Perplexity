@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { hazeHidden, keepTriangles, type Trim } from './trim'
 
 interface HazeCore {
   scaleHeight: number
@@ -128,9 +129,12 @@ export function hazeUniforms(p: HazeParams): Record<string, THREE.IUniform> {
   }
 }
 
-export class HazeShell {
+export class HazeShell implements Trim {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  private readonly full: THREE.BufferGeometry
+  private readonly lean = new THREE.BufferGeometry()
+  private readonly hidden: Uint8Array
 
   constructor(p: HazeParams, diag: THREE.IUniform<number>) {
     this.material = new THREE.ShaderMaterial({
@@ -150,12 +154,38 @@ export class HazeShell {
       transparent: true,
       depthWrite: false,
     })
-    this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 + p.top * p.scaleHeight, 160, 80), this.material)
+    this.full = new THREE.SphereGeometry(1 + p.top * p.scaleHeight, 160, 80)
+    for (const name of Object.keys(this.full.attributes)) this.lean.setAttribute(name, this.full.getAttribute(name))
+    const own = this.full.getIndex()!.clone()
+    own.setUsage(THREE.DynamicDrawUsage)
+    this.lean.setIndex(own)
+    this.hidden = new Uint8Array(this.full.getAttribute('position').count)
+    this.mesh = new THREE.Mesh(this.full, this.material)
     this.mesh.renderOrder = 5
+    this.mesh.userData.trim = this
+  }
+
+  hide(): void {
+    const mesh = this.mesh
+    mesh.updateWorldMatrix(true, false)
+    const cam = this.material.uniforms.uCam!.value as THREE.Vector3
+    hazeHidden(this.full.getAttribute('position').array, mesh.matrixWorld.elements, cam.x, cam.y, cam.z, this.hidden)
+    const index = this.lean.getIndex()!
+    const n = keepTriangles(this.full.getIndex()!.array, this.hidden, index.array as Uint16Array | Uint32Array)
+    index.clearUpdateRanges()
+    index.addUpdateRange(0, n)
+    index.needsUpdate = true
+    this.lean.setDrawRange(0, n)
+    mesh.geometry = this.lean
+  }
+
+  show(): void {
+    this.mesh.geometry = this.full
   }
 
   dispose(): void {
-    this.mesh.geometry.dispose()
+    this.full.dispose()
+    this.lean.dispose()
     this.material.dispose()
   }
 }

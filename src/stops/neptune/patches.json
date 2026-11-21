@@ -1,0 +1,37 @@
+{
+ "spot": {
+  "lon": 0.2304,
+  "lat": -20.1669
+ },
+ "levels": [
+  {
+   "file": "patch-96.webp",
+   "widthDeg": 96
+  },
+  {
+   "file": "patch-64.webp",
+   "widthDeg": 64
+  },
+  {
+   "file": "patch-40.webp",
+   "widthDeg": 40
+  },
+  {
+   "file": "patch-26.webp",
+   "widthDeg": 26
+  },
+  {
+   "file": "patch-16.webp",
+   "widthDeg": 16
+  },
+  {
+   "file": "patch-10.webp",
+   "widthDeg": 10
+  }
+ ],
+ "feather": 0.12,
+ "fade": [
+  1.1,
+  1.6
+ ]
+}

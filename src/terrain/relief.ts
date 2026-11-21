@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import type { RenderView, SetContext } from '../core/types'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
+import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
 
 export interface ReliefLayerDef {
   color: string
@@ -233,20 +234,242 @@ void main() {
   outColor = diagOut(vec4(col * alpha, alpha), diagTexels(uv * uSize), 1.0, uLayer, shift * 60.0, length(vView));
 }`
 
-interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
+const MARK_FRAG = /* glsl */ `
+precision highp float;
+uniform float uMark;
+out vec4 outColor;
+void main() {
+  outColor = vec4(0.0, 0.0, 0.0, uMark);
+}`
+
+interface Grid {
+  cols: number
+  rows: number
+  left: number
+  nx: number
+  ny: number
+  position: Float32Array
+  index: Uint32Array
+  alpha: THREE.Texture | null
+  one: Uint8Array
+  zero: Uint8Array
+  du: number
+  dv: number
+  full: THREE.BufferGeometry
+  lean: THREE.BufferGeometry
+  probe: THREE.Mesh
+  veil: THREE.Mesh
+  sx: Float64Array
+  sy: Float64Array
+  cells: Uint32Array
+  solid: Uint8Array
+  box: Int16Array
+  kept: number
+}
+
+interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid }
+
+const scratch = new THREE.Matrix4()
+
+function marker(id: number): THREE.ShaderMaterial {
+  return new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: MARK_FRAG, uniforms: { uMark: { value: id } }, side: THREE.DoubleSide, blending: THREE.NoBlending })
+}
 
 const rad = THREE.MathUtils.degToRad
 
 export class Relief {
   readonly group = new THREE.Group()
   private readonly layers: Layer[] = []
-  private air: Layer | null = null
+  private air: { mesh: THREE.Mesh; material: THREE.ShaderMaterial } | null = null
   private readonly def: ReliefDef
   private readonly motion: ReliefMotion
+  private readonly probes = new THREE.Scene()
+  private readonly soft = marker(0)
+  private readonly none = new THREE.MeshBasicMaterial({ visible: false })
+  private state: 'new' | 'ready' | 'off' = 'new'
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
     this.motion = motion
+    this.group.userData.shield = this
+    this.probes.matrixWorldAutoUpdate = false
+  }
+
+  owns(o: THREE.Object3D): boolean {
+    return this.layers.some((l) => l.mesh === o)
+  }
+
+  private ready(renderer: THREE.WebGLRenderer): boolean {
+    if (this.state !== 'new') return this.state === 'ready'
+    this.state = 'off'
+    if (this.layers.length === 0 || this.layers.length > MAX_MARK) return false
+    const gl = renderer.getContext()
+    for (const l of this.layers) {
+      const g = l.grid
+      const flags = { one: new Uint8Array(g.nx * g.ny), zero: new Uint8Array(g.nx * g.ny) }
+      if (g.alpha) {
+        const size = g.alpha.image as { width: number; height: number }
+        renderer.initTexture(g.alpha)
+        const handle = (renderer.properties.get(g.alpha) as { __webglTexture?: WebGLTexture }).__webglTexture
+        if (!handle) return false
+        const rgba = new Uint8Array(size.width * size.height * 4)
+        const fb = gl.createFramebuffer()
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fb)
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, handle, 0)
+        const complete = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE
+        if (complete) gl.readPixels(0, 0, size.width, size.height, gl.RGBA, gl.UNSIGNED_BYTE, rgba)
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null)
+        gl.deleteFramebuffer(fb)
+        renderer.resetState()
+        if (!complete) return false
+        Object.assign(flags, uniformCells(rgba, size.width, size.height, g.nx, g.ny))
+        g.du = size.width / g.nx
+        g.dv = size.height / g.ny
+      }
+      g.one = reach(flags.one, g.nx, g.ny)
+      g.zero = reach(flags.zero, g.nx, g.ny)
+    }
+    this.state = 'ready'
+    return true
+  }
+
+  screen(renderer: THREE.WebGLRenderer, camera: THREE.Camera, width: number, height: number, tile: number): boolean {
+    if (!this.ready(renderer)) return false
+    this.group.updateWorldMatrix(true, true)
+    const tc = Math.ceil(width / tile) - 1
+    const tr = Math.ceil(height / tile) - 1
+    for (const l of this.layers) {
+      const g = l.grid
+      const e = scratch.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse).multiply(l.mesh.matrixWorld).elements
+      const p = g.position
+      const { sx, sy, cols } = g
+      for (let n = 0, q = 0; n < sx.length; n++, q += 3) {
+        const x = p[q]!
+        const y = p[q + 1]!
+        const z = p[q + 2]!
+        const w = e[3]! * x + e[7]! * y + e[11]! * z + e[15]!
+        const ok = w > 1e-6
+        sx[n] = ok ? ((e[0]! * x + e[4]! * y + e[8]! * z + e[12]!) / w * 0.5 + 0.5) * width : NaN
+        sy[n] = ok ? ((e[1]! * x + e[5]! * y + e[9]! * z + e[13]!) / w * 0.5 + 0.5) * height : NaN
+      }
+      const probe = (g.probe.geometry.getIndex()!.array as Uint32Array)
+      const all = g.index
+      let kept = 0
+      let soft = 0
+      for (let cj = 0; cj < g.rows - 1; cj++) {
+        for (let ci = 0; ci < cols - 1; ci++) {
+          const a = cj * cols + ci
+          const ax = sx[a]!
+          const ay = sy[a]!
+          const bx = sx[a + 1]!
+          const by = sy[a + 1]!
+          const cx = sx[a + cols]!
+          const cy = sy[a + cols]!
+          const dx = sx[a + cols + 1]!
+          const dy = sy[a + cols + 1]!
+          const cell = cj * (cols - 1) + ci
+          let solid = 0
+          let x0 = 0
+          let x1 = tc
+          let y0 = 0
+          let y1 = tr
+          if (ax + bx + cx + dx + ay + by + cy + dy === ax + bx + cx + dx + ay + by + cy + dy) {
+            const minX = Math.min(ax, bx, cx, dx) - 1
+            const maxX = Math.max(ax, bx, cx, dx) + 1
+            const minY = Math.min(ay, by, cy, dy) - 1
+            const maxY = Math.max(ay, by, cy, dy) + 1
+            if (maxX < 0 || minX > width || maxY < 0 || minY > height) continue
+            const bi = ci - g.left
+            if (bi >= 0 && bi < g.nx && cj < g.ny) {
+              const base = cj * g.nx + bi
+              const one = g.one[base]!
+              const zero = g.zero[base]!
+              if (one > 1 || zero > 1) {
+                const need = Math.max(reachNeeded(ax, ay, bx, by, cx, cy, g.du, g.dv), reachNeeded(dx, dy, cx, cy, bx, by, g.du, g.dv))
+                if (zero >= need) continue
+                if (one >= need) solid = 1
+              }
+            }
+            x0 = Math.min(tc, Math.max(0, Math.floor(minX / tile)))
+            x1 = Math.min(tc, Math.max(0, Math.floor(maxX / tile)))
+            y0 = Math.min(tr, Math.max(0, Math.floor(minY / tile)))
+            y1 = Math.min(tr, Math.max(0, Math.floor(maxY / tile)))
+          }
+          g.cells[kept] = cell
+          g.solid[kept] = solid
+          g.box[kept * 4] = x0
+          g.box[kept * 4 + 1] = x1
+          g.box[kept * 4 + 2] = y0
+          g.box[kept * 4 + 3] = y1
+          kept++
+          if (!solid) {
+            probe.set(all.subarray(cell * 6, cell * 6 + 6), soft)
+            soft += 6
+          }
+        }
+      }
+      g.kept = kept
+      let end = soft
+      for (let k = 0; k < kept; k++) {
+        if (!g.solid[k]) continue
+        const cell = g.cells[k]!
+        probe.set(all.subarray(cell * 6, cell * 6 + 6), end)
+        end += 6
+      }
+      const geo = g.probe.geometry
+      const index = geo.getIndex()!
+      geo.clearGroups()
+      geo.addGroup(0, soft, 0)
+      geo.addGroup(soft, end - soft, 1)
+      index.addUpdateRange(0, end)
+      index.needsUpdate = true
+      for (const m of [g.probe, g.veil]) {
+        m.visible = end > 0 && l.mesh.visible
+        m.matrixWorld.copy(l.mesh.matrixWorld)
+      }
+    }
+    return true
+  }
+
+  mark(renderer: THREE.WebGLRenderer, camera: THREE.Camera): void {
+    renderer.render(this.probes, camera)
+  }
+
+  hide(marks: Uint16Array, tileCols: number): void {
+    this.layers.forEach((l, id) => {
+      const g = l.grid
+      const lean = g.lean.getIndex()!
+      const out = lean.array as Uint32Array
+      const all = g.index
+      const self = 1 | (2 << id)
+      let n = 0
+      for (let k = 0; k < g.kept; k++) {
+        const x0 = g.box[k * 4]!
+        const x1 = g.box[k * 4 + 1]!
+        const y1 = g.box[k * 4 + 3]!
+        let hidden = true
+        for (let y = g.box[k * 4 + 2]!; hidden && y <= y1; y++) {
+          for (let x = x0; x <= x1; x++) {
+            if (marks[y * tileCols + x]! & self) {
+              hidden = false
+              break
+            }
+          }
+        }
+        if (hidden) continue
+        const cell = g.cells[k]!
+        out.set(all.subarray(cell * 6, cell * 6 + 6), n)
+        n += 6
+      }
+      g.lean.setDrawRange(0, n)
+      lean.addUpdateRange(0, n)
+      lean.needsUpdate = true
+      l.mesh.geometry = g.lean
+    })
+  }
+
+  show(): void {
+    for (const l of this.layers) l.mesh.geometry = l.grid.full
   }
 
   static async load(ctx: SetContext, base: string, def: ReliefDef, motion: ReliefMotion): Promise<Relief> {
@@ -431,7 +654,29 @@ export class Relief {
       mesh.frustumCulled = false
       mesh.renderOrder = k
       r.group.add(mesh)
-      r.layers.push({ mesh, material })
+      const part = (): THREE.BufferGeometry => {
+        const copy = new THREE.BufferGeometry()
+        for (const name of ['position', 'uv', 'aImage']) copy.setAttribute(name, geo.getAttribute(name))
+        const own = new THREE.BufferAttribute(new Uint32Array(index.length), 1)
+        own.setUsage(THREE.DynamicDrawUsage)
+        copy.setIndex(own)
+        return copy
+      }
+      const probe = new THREE.Mesh(part(), [r.none, marker(k + 1)])
+      const veil = new THREE.Mesh(probe.geometry, [r.soft, r.none])
+      probe.renderOrder = k
+      veil.renderOrder = def.layers.length + k
+      for (const m of [probe, veil]) {
+        m.frustumCulled = false
+        m.matrixAutoUpdate = false
+        m.matrixWorldAutoUpdate = false
+        r.probes.add(m)
+      }
+      const cellCount = (cols - 1) * (rows - 1)
+      r.layers.push({ mesh, material, grid: {
+        cols, rows, left: nl, nx, ny, position, index, alpha, one: new Uint8Array(0), zero: new Uint8Array(0), du: 1, dv: 1, full: geo, lean: part(), probe, veil,
+        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0,
+      } })
     }
     return r
   }
@@ -470,8 +715,13 @@ export class Relief {
       this.air.mesh.geometry.dispose()
       this.air.material.dispose()
     }
+    this.soft.dispose()
+    this.none.dispose()
     for (const l of this.layers) {
-      l.mesh.geometry.dispose()
+      l.grid.full.dispose()
+      l.grid.lean.dispose()
+      l.grid.probe.geometry.dispose()
+      ;(l.grid.probe.material as THREE.Material[])[1]!.dispose()
       l.material.dispose()
     }
   }
