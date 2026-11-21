@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T04:14:48.444Z",
+ "pushed": "2026-11-21T04:25:56.915Z",
  "head": "22a720a38b48137f60ebeec01bb79c01f4d15ad0",
- "note": "Orbit view: limb edge and sky patch behind the planet in work, hold motion checked",
+ "note": "Orbit view: soft disc edge with an air tail, limb table repaired, sky patch fill rebuilt",
  "looks": [
+  {
+   "time": "2026-11-21T04:25:56.363Z",
+   "file": "20261121042556363-note-patch_new.jpg",
+   "source": "out/work/view/patch_new.jpg",
+   "kind": "note",
+   "label": "Hold sky patch boosted, rebuilt: the fill behind the planet now continues the Milky Way with no arc",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:25:55.796Z",
+   "file": "20261121042555796-note-limb_zoom.jpg",
+   "source": "out/work/view/limb_zoom.png",
+   "kind": "note",
+   "label": "Limb at x8 after the soft edge (hero left, film right): lit limb, upper left, top, night limb, lower left. Top limb still too dark, in work",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T04:25:26.392Z",
+   "file": "20261121042526392-still-f02895-16x9-review-full.jpg",
+   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "434d0a5e367a62fd"
+  },
   {
    "time": "2026-11-21T04:14:47.899Z",
    "file": "20261121041447899-note-f2969_small.jpg",
@@ -27,49 +57,6 @@
    "kind": "note",
    "label": "Limb at x8, hero left, film right: film has a dark line from the sharpen on a hard edge, to fix with a soft edge",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T04:08:14.319Z",
-   "file": "20261121040814319-still-f02969-16x9-draft-full-flow.jpg",
-   "source": "out/work/stills/f02969-16x9-draft-full-flow.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2969, draft tier, flow view",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2969,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "flow",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T04:06:02.599Z",
-   "file": "20261121040602599-sheet-jupiter.hold-16x9-draft.jpg",
-   "source": "out/work/sheets/jupiter.hold-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.hold, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "first": 2820,
-   "last": 2969,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T04:05:50.023Z",
-   "file": "20261121040550023-frame-f02942-draft.jpg",
-   "source": "out/work/sheets/.frames-aM7g6o/f02942-draft.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2942, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2942,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   },
   {
    "time": "2026-11-21T04:04:06.989Z",
