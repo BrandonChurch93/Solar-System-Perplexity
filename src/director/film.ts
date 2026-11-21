@@ -484,7 +484,7 @@ export class FilmDirector implements Director {
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
       const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: mix(p.p.light.skyExposure, LOOKBACK.skyExposure, segment.kind === 'retreat' ? smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u)) : 1) }
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
@@ -516,7 +516,7 @@ export class FilmDirector implements Director {
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       const open = this.openOf(index, time)
-      light.sky = mix(light.sky, Math.max(light.sky, OPEN.openExposure), open)
+      light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
       const span = this.patchSpanOf(index)
       skyPatch = smoother(ramp(span[0], span[1], u))

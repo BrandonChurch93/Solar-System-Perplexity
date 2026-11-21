@@ -246,6 +246,8 @@ export class Sky {
   private readonly pass: Pass
   private readonly stars: THREE.Points
   private readonly starScene = new THREE.Scene()
+  private readonly flight: THREE.Points
+  private flightLevel = 0
   private readonly rot = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
@@ -349,14 +351,48 @@ export class Sky {
     this.stars = new THREE.Points(geo, mat)
     this.stars.frustumCulled = false
     this.starScene.add(this.stars)
+    const fm = mat.clone()
+    for (const name of ['uPatchM', 'uPatchLens', 'uPatchRing', 'uPatchMode']) fm.uniforms[name] = mat.uniforms[name]!
+    this.flight = new THREE.Points(new THREE.BufferGeometry(), fm)
+    this.flight.frustumCulled = false
+    this.flight.visible = false
+    this.stars.add(this.flight)
+  }
+
+  setFlightStars(def: { count: number; brightness: number; slope: number; max: number; color: number }): void {
+    const rnd = stream('flight stars')
+    const pos = new Float32Array(def.count * 3)
+    const star = new Float32Array(def.count * 4)
+    const col = new Float32Array(def.count * 3)
+    const warm = new THREE.Color(1.0, 0.58, 0.34)
+    const cool = new THREE.Color(0.5, 0.7, 1.0)
+    const white = new THREE.Color(1, 1, 1)
+    const c = new THREE.Color()
+    for (let i = 0; i < def.count; i++) {
+      const z = rnd.range(-1, 1)
+      const a = rnd.range(0, Math.PI * 2)
+      const r = Math.sqrt(1 - z * z)
+      pos.set([r * Math.cos(a), z, r * Math.sin(a)], i * 3)
+      const bright = Math.min(def.brightness * Math.pow(Math.max(rnd.next(), 1e-6), -def.slope), def.max)
+      star.set([Math.min(2.6 + 2.2 * Math.log2(1 + bright), STAR_MAX_SIZE), bright, 1, 0], i * 4)
+      const temp = rnd.next()
+      if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
+      else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
+      col.set([Math.max(1 + (c.r - 1) * def.color, 0.05), Math.max(1 + (c.g - 1) * def.color, 0.05), Math.max(1 + (c.b - 1) * def.color, 0.05)], i * 3)
+    }
+    const geo = this.flight.geometry
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+    geo.setAttribute('aStar', new THREE.BufferAttribute(star, 4))
+    geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3))
   }
 
   setFrame(q: THREE.Quaternion): void {
     this.frame.copy(q)
   }
 
-  setStarLift(amount: number, floor: number): void {
+  setStarLift(amount: number, floor: number, flight: number): void {
     ;((this.stars.material as THREE.ShaderMaterial).uniforms.uStarLift!.value as THREE.Vector2).set(amount, floor)
+    this.flightLevel = amount * flight
   }
 
   setPatches(list: { patch: SkyPatch; weight: number }[]): void {
@@ -508,6 +544,12 @@ export class Sky {
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
     this.stars.geometry = this.cull ? this.starCulled : this.starPlain
+    const fu = (this.flight.material as THREE.ShaderMaterial).uniforms
+    fu.uPixel!.value = height / 1080
+    fu.uExposure!.value = this.flightLevel
+    fu.uPatchA!.value = this.patchTex[0]
+    fu.uPatchB!.value = this.patchTex[1]
+    this.flight.visible = this.flightLevel > 0 && this.flight.geometry.hasAttribute('position')
     const some = !rects || rects.length > 0
     if (this.cull && some) this.orderStars(camera, height, aspect, open)
     renderer.setRenderTarget(target)

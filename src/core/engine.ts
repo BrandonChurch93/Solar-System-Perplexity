@@ -84,6 +84,7 @@ export class Engine {
     for (const e of OPTIONAL_EXTENSIONS) gl.getExtension(e)
     this.sets = new SetLoader(this.renderer, () => this.format, this.renderer.capabilities.getMaxAnisotropy())
     this.sky = new Sky(STAR_COUNT)
+    this.sky.setFlightStars(config.raw.travel.sky.flightStars)
     this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(format.width, format.height)
     this.applySize()
@@ -219,7 +220,7 @@ export class Engine {
       }
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
-      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3))
+      this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)

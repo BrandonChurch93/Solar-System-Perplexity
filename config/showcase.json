@@ -141,7 +141,7 @@
     {"id": "ending.fade", "stop": "ending", "kind": "fade", "start": 177.5, "end": 180}
   ],
   "travel": {
-    "sky": {"openExposure": 0.65, "starLevel": 1.9, "brightShare": 0.12, "window": 0.3, "patchSettleDeg": 6, "patchSpan": 0.12, "patchDone": 0.96, "retreat": [0, 1], "retreatOpen": [0, 0.55], "retreatClose": [0.62, 1]}
+    "sky": {"openExposure": 0.45, "starLevel": 1.9, "flightStars": {"count": 600000, "brightness": 0.018, "slope": 1, "max": 8, "color": 0.7, "level": 1.9}, "brightShare": 0.12, "window": 0.3, "patchSettleDeg": 6, "patchSpan": 0.12, "patchDone": 0.96, "retreat": [0.5, 0.5], "retreatGlow": 0.25, "retreatOpen": [0, 0.55], "retreatClose": [0.62, 1]}
   },
   "cover": {
     "seconds": 0.5,
