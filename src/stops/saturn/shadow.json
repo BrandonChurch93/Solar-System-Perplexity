@@ -1,0 +1,12 @@
+{
+ "source": "assets-src/saturn/rings/shadow_fit.py, direction of the globe's shadow on the rings in the ring frame, fitted to the hero",
+ "local": [
+  -0.903132,
+  0.224951,
+  -0.365717
+ ],
+ "azimuthOffsetDeg": 3.0,
+ "elevationDeg": 13.0,
+ "widen": -0.0125,
+ "score": 0.9972
+}
