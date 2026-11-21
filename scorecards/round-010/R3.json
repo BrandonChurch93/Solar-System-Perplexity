@@ -1,0 +1,145 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "nearest surface, crops S–W",
+      "what": "The foreground granules dissolve into soft amber blobs and smeared highlights across the bottom of the frame. The dark channels are blurred along with the bright cells.",
+      "fix": "Preserve fine granulation in the near field and reduce foreground defocus or texture filtering, especially toward the corners."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "nearest surface, especially crops U–W",
+      "what": "The cells stretch into diagonal streaks and tightly curled whorls. The smooth, glossy ridges read like marbled molten metal rather than resolved solar granulation.",
+      "fix": "Reduce directional texture stretching at grazing angles and replace the broad glossy highlights with finer, irregular emissive structure."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A, surface around the central dark spot",
+      "what": "The granulation pulls into a conspicuous radial pinch around a nearly featureless black oval, giving the spot the appearance of a cutout with a warped rim.",
+      "fix": "Break up the radial warp, add low-contrast structure within the dark core, and blend the rim into the surrounding cells with irregular penumbral filaments."
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop H, interior of the main plasma arch",
+      "what": "Evenly spaced dotted tracks and crosswise marks form a visible mesh inside the otherwise fine strands.",
+      "fix": "Remove the regular streak spacing and improve subpixel sampling; vary strand opacity, spacing, and length so the interior does not read as a grid."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crops N and Q–R, solar limb away from the loop",
+      "what": "A near-continuous bright outline and similarly spaced thin spikes make the limb look like a uniform fringe.",
+      "fix": "Vary the local density, height, and brightness of the spicules, and blend the base glow into the surface with a less uniform falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crops J–L, brighter stars in the sky",
+      "what": "Some brighter stars render as soft round dots and tiny colored blobs rather than crisp points.",
+      "fix": "Use a tighter, brightness-dependent star profile and reserve noticeable bloom for the brightest stars."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "bottom strip of the terrain view, near foreground (crops S-W, y 866-1080), worst at the lower left and lower right corners",
+      "what": "the near granulation goes soft and smeared, with directional streaks that pull out toward the corners like a stretched or radially warped texture. It does not hold up at native size and looks like a lens-warp or upscale artifact, not depth of field",
+      "fix": "render the foreground at full resolution with a proper close-up granulation texture; remove the radial stretch, or use a real, consistent depth-of-field falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sky in the lower left, lower right and left side (crops H, O, T, W, X)",
+      "what": "the stars are short diagonal dashes and smears, not points, while the stars in the upper sky are sharp points. This mixed motion blur gives away a compositing or generation artifact",
+      "fix": "replace the starfield with one consistent set of sharp point stars, or apply the same motion blur across the whole frame"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "corona below the lower limb (crops U, V, W)",
+      "what": "the corona under the disk is a brushy, smudged mass of vertical strokes with a plastic, airbrushed look that ends in a muddy grey haze, unlike the finer streamers at the top",
+      "fix": "regenerate the lower corona as fine radial streamers that match the upper limb, with a smooth falloff into the sky"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "granulation across the middle ground (crops D, E, N, O, P)",
+      "what": "the granules read as glossy, wet, plastic blobs with specular highlights, like a molten metal or honeycomb material, not plasma. The cells also repeat in size and shape",
+      "fix": "reduce the specular sheen, add more variation in cell size, and give the surface an emissive look rather than a reflective one"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "the arching loops over the sunspot (crops A, C, G, K, L)",
+      "what": "the loops are made of thin, separate spark trails that look like a steel-wool long-exposure photo, with stray strands hanging loose at the ends, not glowing plasma tubes",
+      "fix": "merge the strands into coherent, softly glowing flux tubes with a continuous emission falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "prominences at the left and right limb (crops D, C, M, O)",
+      "what": "the red prominence ribbons have hard, painted-looking edges and a saturated red that sits on top of the corona like a separate layer, with a faint halo where they cross the white glow",
+      "fix": "blend the prominences into the corona with softer, emissive edges and a hue that matches the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "limb at the left and right horizon (crops H, I, N)",
+      "what": "the spicule fringe along the horizon is uniform and comb-like, with a slightly doubled glow band just above the surface",
+      "fix": "vary the spicule height and density, and soften the glow into a single falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "solar disk, overall (crops A, F, L, P, Q)",
+      "what": "the surface detail is a dense, uniform mesh of repeating swirl and loop motifs that looks over-sharpened and texture-tiled rather than physically varied",
+      "fix": "vary the scale of the surface structure, with quieter regions between active ones, and reduce the sharpening halos"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "photosphere, dark rosettes and the fibrils between them",
+      "what": "the disk is sharp at native size, but the long curling fibrils and similar rosette centers read as one curl-noise motif rather than irregular convective cells",
+      "fix": "vary the active-region shapes and mix in irregular bright cells with dark lanes so the surface does not share one swirl"
+     }
+    ]
+   }
+  }
+ ]
+}

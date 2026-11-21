@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "rise cover, frames 1561–1562, upper third",
+   "what": "A diffuse, warm cloud ceiling gives way in one frame to nearly black space bounded by a curved planetary limb. The arc and exposure change read as a reveal cut rather than continuous ascent.",
+   "fix": "Carry a trace of the same limb through the haze, then open the sky over more frames with matched camera motion, curvature, and exposure."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "dive cover, frames 1312–1314, upper left through center",
+   "what": "The diagonal limb and dark sky wedge disappear between 1312 and 1313 as a nearly horizontal haze band takes over. No trackable edge carries the camera's turn through the swap.",
+   "fix": "Ease the pitch change across more frames and use moving foreground cloud to occlude a continuously moving limb before the terrain horizon resolves."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain pass, frames 1350–1529, central cloud towers and lower foreground",
+   "what": "The foreground cloud banks and central towers change little in spacing as the horizon drifts. The pass reads more like a gentle tilt over a fixed view than forward travel through layers of cloud.",
+   "fix": "Add a small translational component and let the nearest cloud banks cross the frame faster than the distant towers and horizon."
+  }
+ ]
+}

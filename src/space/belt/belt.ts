@@ -81,7 +81,7 @@ const RAD = Math.PI / 180
 const blend = (dst: THREE.BlendingDstFactor): Partial<THREE.ShaderMaterialParameters> => ({ transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: dst, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: dst })
 
 interface Seen { x: number; y: number; r: number; dist: number; depth: number; out: boolean }
-interface Item { mesh: THREE.Mesh; material: THREE.ShaderMaterial; radius: number; spin: number }
+interface Item { mesh: THREE.Mesh; material: THREE.ShaderMaterial; radius: number; spin: number; share: number; gain: number }
 
 export class Belt {
   private store: BeltStore | null = null
@@ -104,8 +104,11 @@ export class Belt {
   private readonly pose: RockPose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() }
   private readonly inv = new THREE.Quaternion()
   private readonly v = new THREE.Vector3()
+  private readonly eye = new THREE.Quaternion()
   private readonly first: number
   private readonly end: number
+  private readonly spheres: THREE.Vector4[] = []
+  private coverFrame = -1
 
   constructor() {
     const s = beltSegment()
@@ -145,7 +148,8 @@ export class Belt {
           mesh.frustumCulled = false
           mesh.visible = false
           this.scene.add(mesh)
-          this.items.push({ mesh, material, radius: r.radius, spin: r.spin })
+          ;(material.uniforms.uFill!.value as THREE.Vector3).multiplyScalar(r.fill)
+          this.items.push({ mesh, material, radius: r.radius, spin: r.spin, share: r.hold + r.smear * (1 - r.hold), gain: r.gain })
         }
         this.loading = null
       })
@@ -186,9 +190,13 @@ export class Belt {
     }
   }
 
-  private see(index: number, shot: Shot, focal: number, cx: number, cy: number, scale: number): Seen {
+  private look(index: number, shot: Shot, mid: Shot): THREE.Quaternion {
+    return this.eye.copy(mid.camera.quaternion).slerp(shot.camera.quaternion, this.items[index]!.share)
+  }
+
+  private see(index: number, shot: Shot, mid: Shot, focal: number, cx: number, cy: number, scale: number): Seen {
     this.motion!.pose(index, shot, this.pose)
-    const c = this.v.copy(this.pose.position).applyQuaternion(this.inv.copy(shot.camera.quaternion).invert())
+    const c = this.v.copy(this.pose.position).applyQuaternion(this.inv.copy(this.look(index, shot, mid)).invert())
     const dist = c.length()
     const depth = -c.z
     const radius = this.items[index]!.radius
@@ -210,17 +218,17 @@ export class Belt {
     this.inv.copy(this.pose.quaternion).invert()
     ;(u.uSunB!.value as THREE.Vector3).copy(shot.sun.dir).applyQuaternion(this.inv).normalize()
     ;(u.uEyeB!.value as THREE.Vector3).copy(this.pose.position).multiplyScalar(-1 / it.radius).applyQuaternion(this.inv)
-    const k = shot.sun.intensity * beltSpec.light.gain
+    const k = shot.sun.intensity * beltSpec.light.gain * it.gain
     ;(u.uSunTint!.value as THREE.Vector3).set(shot.sun.color.r * k, shot.sun.color.g * k, shot.sun.color.b * k)
     u.uGain!.value = 1 / shot.post.exposure
   }
 
-  private aim(shot: Shot, aspect: number): void {
+  private aim(quaternion: THREE.Quaternion, vfov: number, aspect: number): void {
     const cam = this.camera
-    cam.fov = shot.camera.vfov
+    cam.fov = vfov
     cam.aspect = aspect
     cam.position.set(0, 0, 0)
-    cam.quaternion.copy(shot.camera.quaternion)
+    cam.quaternion.copy(quaternion)
   }
 
   private coc(dist: number, scale: number): number {
@@ -245,13 +253,18 @@ export class Belt {
     r.setRenderTarget(target)
   }
 
+  cover(shot: Shot): { mask: THREE.Texture; rocks: THREE.Vector4[] } | null {
+    if (shot.segment.id !== beltSpec.segment || !this.drawn || !this.layer || this.coverFrame !== shot.frame) return null
+    return { mask: this.layer.texture, rocks: this.spheres }
+  }
+
   private direct(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, shot: Shot, view: RenderView): void {
     const { width, height } = view.format
     const scale = height / 1080
     const focal = height / 2 / Math.tan((shot.camera.vfov * RAD) / 2)
     let any = false
     this.items.forEach((it, i) => {
-      const s = this.see(i, shot, focal, width / 2, height / 2, scale)
+      const s = this.see(i, shot, shot, focal, width / 2, height / 2, scale)
       it.mesh.visible = !s.out
       if (!it.mesh.visible) return
       any = true
@@ -259,7 +272,7 @@ export class Belt {
       it.material.uniforms.uCounted!.value = this.coc(s.dist, scale) < beltSpec.blur.countedCoc ? 1 : 0
     })
     if (!any) return
-    this.aim(shot, width / height)
+    this.aim(shot.camera.quaternion, shot.camera.vfov, width / height)
     const jitter = view.camera.view
     this.camera.setViewOffset(width, height, jitter?.offsetX ?? 0, jitter?.offsetY ?? 0, width, height)
     this.camera.updateMatrixWorld(true)
@@ -291,9 +304,9 @@ export class Belt {
     const cy = pad + height / 2
     const plan: { index: number; depth: number; coc: number; steps: number; shift: [number, number]; box: [number, number, number, number]; level: number }[] = []
     this.items.forEach((it, i) => {
-      const s0 = this.see(i, open, focal, cx, cy, scale)
-      const s1 = this.see(i, close, focal, cx, cy, scale)
-      const sm = this.see(i, mid, focal, cx, cy, scale)
+      const s0 = this.see(i, open, mid, focal, cx, cy, scale)
+      const s1 = this.see(i, close, mid, focal, cx, cy, scale)
+      const sm = this.see(i, mid, mid, focal, cx, cy, scale)
       if (s0.out && s1.out && sm.out) return
       const coc = this.coc(sm.dist, scale)
       const huge = Math.max(s0.r, s1.r, sm.r) > 1e5
@@ -320,6 +333,14 @@ export class Belt {
     })
     plan.sort((p, q) => q.depth - p.depth)
     this.drawn = plan.length > 0
+    this.coverFrame = shot.frame
+    this.spheres.length = 0
+    this.inv.copy(mid.camera.quaternion).invert()
+    for (const p of plan) {
+      this.motion!.pose(p.index, mid, this.pose)
+      this.v.copy(this.pose.position).applyQuaternion(this.inv)
+      this.spheres.push(new THREE.Vector4(this.v.x, this.v.y, this.v.z, this.items[p.index]!.radius))
+    }
     if (!this.drawn) return
     layer.scissorTest = false
     layer.viewport.set(0, 0, width, height)
@@ -354,7 +375,7 @@ export class Belt {
       for (let k = 0; k < p.steps; k++) {
         const at = director.shotAt(frame, t0 + (span * (k + 0.5)) / p.steps)
         this.place(p.index, at)
-        this.aim(at, width / height)
+        this.aim(this.look(p.index, at, mid), at.camera.vfov, width / height)
         const n = k + 1 + p.index * 7
         const jx = ((0.5 + n / G) % 1) - 0.5
         const jy = ((0.5 + n / (G * G)) % 1) - 0.5
