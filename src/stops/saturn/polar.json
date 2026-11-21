@@ -1,0 +1,24 @@
+{
+ "source": "assets-src/saturn/shot/polar_rings.py, the hero's ring pixels on the ring plane (azimuth by radius), bands straightened and gaps filled",
+ "file": "polar-rings.jpg",
+ "warp": {
+  "file": "polar-warp.bin",
+  "width": 512,
+  "height": 64
+ },
+ "span": [
+  1.42,
+  2.48
+ ],
+ "edge": 2.3356,
+ "sets": {
+  "full": [
+   8192,
+   1024
+  ],
+  "web": [
+   4096,
+   512
+  ]
+ }
+}
