@@ -35,7 +35,7 @@ export const triton = {
   terminator: [-0.02, 0.18] as [number, number],
   power: 0.7,
   spinDegPerSecond: 0.4,
-  rise: { sun: 0.4, ambient: [0.007, 0.017, 0.027] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.004 },
+  rise: { sun: 0.4, ambient: [0.0057, 0.0142, 0.021] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.012 },
 }
 
 export const ring = {
@@ -49,7 +49,7 @@ export const ring = {
   forwardPower: 5,
   bandUnit: [0.16, 1, 0.05] as [number, number, number],
   bandHold: [0.1, 0.1, 0] as [number, number, number],
-  bandAway: [0.45, 0.2, 1.6] as [number, number, number],
+  bandAway: [0.45, 0.2, 2.2] as [number, number, number],
   mapScale: 0.25,
   degPerSecond: 0.8,
 }
