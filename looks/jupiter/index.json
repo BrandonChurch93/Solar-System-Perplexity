@@ -1,9 +1,52 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T21:41:11.006Z",
+ "pushed": "2026-11-21T21:56:28.629Z",
  "head": "db50040caf1d89b50c2fc40abc5dd5ae3427e359",
- "note": "Polish (mail 24): rise cover sheet and stills 3278, 3282, 3284 at review tier; rise, dive and terrain sheets rendering",
+ "note": "Polish (mail 24): rise sheet at review tier (new path, settle to 3304); dive sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-21T21:56:14.123Z",
+   "file": "20261121215614123-frame-f02970-review.jpg",
+   "source": "out/work/sheets/.frames-ahfrp2/f02970-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2970, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2970,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:55:29.362Z",
+   "file": "20261121215529362-sheet-jupiter.rise-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.rise, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3240,
+   "last": 3314,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T21:55:13.271Z",
+   "file": "20261121215513271-frame-f03307-review.jpg",
+   "source": "out/work/sheets/.frames-xt5udP/f03307-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3307, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3307,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T21:40:39.231Z",
    "file": "20261121214039231-still-f03284-16x9-review-full.jpg",
@@ -60,36 +103,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:32:20.626Z",
-   "file": "20261121213220626-frame-f03276-review.jpg",
-   "source": "out/work/sheets/.frames-E17OWd/f03276-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3276, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3276,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:13:07.860Z",
-   "file": "20261121211307860-note-pol_rise_3268_3271.jpg",
-   "source": "out/work/view/pol_rise_3268_3271.jpg",
-   "kind": "note",
-   "label": "polish item 1, review tier: rise frames 3268, 3269 (terrain side), 3270, 3271 (orbit side): the limb is one arc across the cut",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T20:52:05.819Z",
-   "file": "20261121205205819-note-strip_rise_p3.jpg",
-   "source": "out/work/view/strip_rise_p3.jpg",
-   "kind": "note",
-   "label": "polish items 1 and 3: rise draft strip 3270 to 3286 with lens 2 and the pall lit by the sun (night side dark from the start)",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T20:44:42.314Z",
