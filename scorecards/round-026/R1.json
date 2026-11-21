@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "crop A, inner rings at the sunlit limb",
+   "what": "the rings end in a hard vertical step and a dark notch a few pixels wide; the target fades continuously into the limb glow",
+   "fix": "remove the rectangular cutoff and carry the rings into a soft limb glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "sunlit limb, from the upper right down to the ring junction",
+   "what": "the atmosphere rises late and stops in a hard edge, leaving a dark sliver where the target is already bright",
+   "fix": "widen and soften the limb falloff so the bright edge starts where the target's does"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "ring plane, especially the far left",
+   "what": "fine grooves are softer, about 30 percent less edge energy on the left, and the rings are brighter and flatter",
+   "fix": "restore groove contrast and drop the ring exposure to the target"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "ring crops D, F, G, and I",
+   "what": "the same loss, worst in crop G, where fine grooves fall to about 70 percent of the target and the bands run brighter",
+   "fix": "sharpen the ringlets back to the target and lower the brightness"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "crop G, rings crossing the globe",
+   "what": "the faint translucent streak over the rings is gone, and the limb is brighter and softer than the target",
+   "fix": "restore the veil and pull the limb back to the sharper, darker edge"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "ring crops B, D, and F",
+   "what": "divisions sit off the target radii, and the bands are warmer and brighter",
+   "fix": "cool the rings and seat the gaps on the target edges"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "left and lower rings",
+   "what": "the rings are slightly warmer and brighter; fine detail is otherwise held, and Titan still sits in the upper right",
+   "fix": "cool and darken the rings a little to match the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit upper-left limb",
+   "what": "the edge does not fall on the same pixels as the target, though the mean brightness matches",
+   "fix": "match the limb radius and the softness of the falloff"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sky",
+   "what": "blacks are lifted; the sky sits near 7, 10, 13 instead of the target's 3, 6, 10",
+   "fix": "drop the sky back to the target black"
+  }
+ ]
+}
