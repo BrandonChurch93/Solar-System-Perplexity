@@ -1,44 +1,36 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T08:57:25.222Z",
+ "pushed": "2026-11-21T09:26:18.771Z",
  "head": "4db27b39a9e842f8ce09d1e962fa47f42b9037aa",
- "note": "Round 1 work at 4db27b3: right limb soft and stripe free, thin rim back; next the hard cirrus edges",
+ "note": "Round 1 work, not yet committed: cirrus opacity split redone (soft wisps), twilight fleck colour; G13 0 of 47, G17 4605 median 1.037",
  "looks": [
   {
-   "time": "2026-11-21T08:57:12.531Z",
-   "file": "20261121085712531-note-cirrus-wide-final.jpg",
-   "source": "out/work/nep/cirrus-wide-final.jpg",
+   "time": "2026-11-21T09:26:18.223Z",
+   "file": "20261121092618223-note-chk-0915.jpg",
+   "source": "out/work/nep/chk-0915.jpg",
    "kind": "note",
-   "label": "Open weak point, hold 4605 final 2x: cirrus harder edged in the film (right) than approved (left)",
+   "label": "Round 1 work, draft stills 4690 4707 4722 4990 5006 5200 with the rebuilt wrap and patches",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T08:57:11.981Z",
-   "file": "20261121085711981-note-chk-0856.jpg",
-   "source": "out/work/nep/chk-0856.jpg",
+   "time": "2026-11-21T09:26:17.623Z",
+   "file": "20261121092617623-note-storm-red2.jpg",
+   "source": "out/work/nep/storm-red2.jpg",
    "kind": "note",
-   "label": "Round 1 work, draft stills 4690 4707 4722 4990 5006 5200 5235 after the limb change",
+   "label": "Round 1 work, hold 4605 review 2x: approved left, film right, twilight flecks warm grey again (field no longer cuts red in the dark)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T08:57:11.450Z",
-   "file": "20261121085711450-note-limb-final-melt.jpg",
-   "source": "out/work/nep/limb-final-melt.jpg",
+   "time": "2026-11-21T09:26:17.103Z",
+   "file": "20261121092617103-note-cirrus-rg.jpg",
+   "source": "out/work/nep/cirrus-rg.jpg",
    "kind": "note",
-   "label": "Round 1 work, hold 4605 final tier: limb at angles 60, 30, 5, -15, approved left, film right in each pair",
+   "label": "Round 1 work, hold 4605 final 2x: approved, film before, film after the cirrus opacity fix (blue channel left out of the split)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T08:57:10.936Z",
-   "file": "20261121085710936-note-right-flat3.jpg",
-   "source": "out/work/nep/right-flat3.jpg",
-   "kind": "note",
-   "label": "Round 1 work, hold 4605 review: right half, approved left, film right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T08:54:48.066Z",
-   "file": "20261121085448066-still-f04605-16x9-review-full.jpg",
+   "time": "2026-11-21T09:25:49.582Z",
+   "file": "20261121092549582-still-f04605-16x9-review-full.jpg",
    "source": "out/work/stills/f04605-16x9-review-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, review tier",
@@ -51,8 +43,22 @@
    "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T08:53:47.459Z",
-   "file": "20261121085347459-compare-compare-neptune-hold-view.jpg",
+   "time": "2026-11-21T09:16:02.815Z",
+   "file": "20261121091602815-job-frame-04530.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T09:12:32.171Z",
+   "file": "20261121091232171-compare-compare-neptune-hold-view.jpg",
    "source": "out/work/compare/compare-neptune-hold-view.jpg",
    "kind": "compare",
    "label": "neptune.hold: approved image left, film frame right, final tier",
