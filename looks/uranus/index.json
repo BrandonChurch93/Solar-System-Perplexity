@@ -1,9 +1,53 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T10:44:51.431Z",
- "head": "34f3bed900f9d50a4724c0deb7404ebf7f30f1b8",
- "note": "round 1 corrections: cover continuity (pose done, deck cross-fade in the orbit view in work)",
+ "pushed": "2026-11-21T11:10:48.359Z",
+ "head": "fd27cc161693df8e45f6018bdb4cda235e981fd4",
+ "note": "round 2: covers rebuilt so both sides are one move; engine sky ray bug found and requested",
  "looks": [
+  {
+   "time": "2026-11-21T11:10:47.738Z",
+   "file": "20261121111047738-note-uranus-4412-before-after.jpg",
+   "source": "out/work/u/eng/uranus-4412-before-after.jpg",
+   "kind": "note",
+   "label": "4412 cover off, before and after engine request 1 (sky ray): Sun disc back",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:10:47.219Z",
+   "file": "20261121111047219-note-f-sheet.jpg",
+   "source": "../../../../tmp/f-sheet.jpg",
+   "kind": "note",
+   "label": "rise 4409 to 4417, cover switched off: both sides of the cover now share pose, horizon, arcs; Sun and band missing 4411 to 4415 (engine sky ray, request 1)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T11:10:01.102Z",
+   "file": "20261121111001102-frame-h-4412.jpg",
+   "source": "out/work/u/r4/h-4412.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4412, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4412,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T10:56:45.658Z",
+   "file": "20261121105645658-frame-d-4160.jpg",
+   "source": "out/work/u/r4/d-4160.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4160, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4160,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e96a669c7c94eb54"
+  },
   {
    "time": "2026-11-21T10:44:50.682Z",
    "file": "20261121104450682-note-b-rise.jpg",
@@ -21,47 +65,11 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T10:44:26.088Z",
-   "file": "20261121104426088-frame-c-4146.jpg",
-   "source": "out/work/u/r4/c-4146.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4146, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4146,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T10:40:58.846Z",
-   "file": "20261121104058846-frame-b-4436.jpg",
-   "source": "out/work/u/r4/b-4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
-  },
-  {
    "time": "2026-11-21T10:29:01.288Z",
    "file": "20261121102901288-note-a-rise.jpg",
    "source": "out/work/u/r4/a-rise.jpg",
    "kind": "note",
    "label": "rise, new camera path, first draft (work in progress: globe leaves the frame at 4424, to fix)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T10:29:00.699Z",
-   "file": "20261121102900699-note-a-dive.jpg",
-   "source": "out/work/u/r4/a-dive.jpg",
-   "kind": "note",
-   "label": "dive, new camera path, first draft (work in progress: pose now continuous across the cover, too fast at 4137)",
    "stop": "uranus"
   },
   {
@@ -77,20 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e96a669c7c94eb54"
-  },
-  {
-   "time": "2026-11-21T09:03:29.749Z",
-   "file": "20261121090329749-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a3d211c425dc0406"
   }
  ]
 }
