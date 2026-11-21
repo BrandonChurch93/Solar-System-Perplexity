@@ -32,6 +32,7 @@ export interface SetState {
   u: number
   weight: number
   view: ViewKind
+  ground?: number
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
