@@ -306,3 +306,25 @@ Planet shader at the hold (`final`, 0.42 s per sample): map fetch 0.173, storm 0
 Terrain after change 9 (2580, `review`, 1.6 s per sample): relief layers 0.80 (703,602 indices drawn of 3,160,026), sky pass 0.22 in about 120 rectangles, stars 0.19 (372,180 points), mark pass 0.09, air 0.08, two clears 0.06, accumulator 0.02. About a third of the pixels stay unmarked: the sky itself (8 %), the bands along the ridge lines (the safety margin, 8 %) and the apron cells, which change 9 treats as unknown. Flags for the apron atlas would shrink that, at the price of mirroring the apron mapping on the CPU; not done.
 
 Once per frame: lens chain 0.24 s, PNG and base64 0.25 to 0.3 s, belt build in travel about 1.9 s (see above).
+
+## Second task: stepping in fast frames (sample count, not a clock)
+
+Working notes, kept current while the task runs.
+
+### Finding (Part 1)
+
+Measured with `tools/clocks.ts` (`npx tsx tools/clocks.ts --tier review --frames a,b`: per shader program, the distinct values of every uniform over the samples of a frame, and how far probe vertices move on screen from the first sample to the last). Every world layer of every stop has one view matrix and one time value per sample. The only layer on the mid shutter clock is the engine sky (`src/core/engine.ts`, the sky is drawn with `mid.skyQuaternion`, `mid.skyTurn`, `mid.camera.vfov`), and that is by design (kit/04-LOOK.md section 7: stars stay points). The stepping is too few samples for the screen motion: with 16 samples, a body that moves 40 to 130 px in the shutter is drawn as 16 copies 2.5 to 8 px apart.
+
+Motion first to last sample (px at 1920 wide, review, 16 samples): Neptune 4984 globe 117; Uranus 4420 globe 70, rings 66, halo 133; Uranus 4126 globe 39, rings 66, moon 22; Saturn 3598 globe 8.2, rings median 5.1, p90 11.2, max 34.6; Saturn 3835 globe 19.5, rings p90 12.7, max 51.9; Mars 2427 globe 3.8; Sun 247 globe 4.1. The Sun's dashes at 247 are its own sky card (`src/stops/sun/skycard.ts`), a world mesh that moves 3.6 px while the engine stars behind it stand still.
+
+### The rule (Part 2)
+
+- `config/showcase.json`: `motion.maxStepPx` (1.5, px at the master format), `motion.probeGrid` ([17, 9]), `motion.bodyReach` (2.5 radii, used for stops with `rings: true`), `motion.minBodyPx` (2), and per tier `maxSamplesPerFrame` (draft 1, review 64, final 128).
+- `src/core/motion.ts`: `shutterMotion(open, mid, close)` is the largest screen distance any probe point travels between the two ends of the shutter. Probes: rays of the probe grid at mid shutter that hit a visible body (unit sphere of the set in orbit view, or within `bodyReach` radii for a ringed stop) or the ground plane of a terrain view (`y = -ground` in the set frame, `ground` from the plan field `terrain.ground`, default 1 stage unit, which is the director's own convention for the terrain stage), plus the body centre. Each point is fixed in its set and projected with the open and close shots. The result is scaled by `1 - cover.amount`. The sky has no probes (it stands on the mid clock), nor have the belt and the dust (they build their own blur once per frame).
+- `samplesNeeded(base, cap, motion)`: `ceil(motion / maxStepPx)`; if that is not above today's count the frame keeps today's count, and with it today's pattern from `samplesFor`, so it is byte identical. Otherwise the smaller of the need and the cap.
+- `frameSamples(source, frame, tier)` is what the engine calls in `renderFrame`; `showcase.samples()` and the frame record (`extra.samples`) carry the count used.
+- `userData.skyClock = true` on a mesh or group under a set's `world`: the engine draws that object, in every sample, where the mid shutter view shows it (camera pose, set pose and field of view of mid shutter; `src/core/held.ts`). Default off. For a stop's own sky card.
+
+### The tools (Part 3)
+
+`tools/lib/samples.ts` (`samplesOf(frame, tier)`, `samplesOfSpan`, `stressSpan`) is the one source; `npm run samples` (`tools/samples.ts`) is its command line: `--tier T --frames a,b` or `--range a-b`, `--out file.json` (every frame, every tier), `--report [frames]`, `--stress [ids]`. Switched over: `tools/pack.ts` `plan()` (the film jobs of `tools/round.py` read that plan), the stress split of `tools/round.py`, `tools/budget.ts`, `tools/stress.ts` (shares the window). `tools/film.ts` has no estimate by samples and there is no `tools/master.py`.
