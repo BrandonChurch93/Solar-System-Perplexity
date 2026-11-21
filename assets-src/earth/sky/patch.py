@@ -19,6 +19,7 @@ AURORA = (6.0, 86.0, 1.3)
 MOON = (1.35, 1.8)
 DISC = (1.06, 1.2)
 TINT = 1.25
+CALM = 12.0
 HERO = geo.HERO
 FILL = geo.WORK / "sky" / "fill-t1.png"
 OUT = geo.ROOT / "public" / "assets" / "earth"
@@ -43,9 +44,22 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
-def save(lin, name):
+def save(lin, name, calm=0.0):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
     wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode="symmetric")
+    if calm:
+        soft = np.stack([ndi.gaussian_filter(np.minimum(wide[..., i], ndi.gaussian_filter(wide[..., i], calm)), calm) for i in range(3)], -1)
+        points = np.maximum(wide - soft, 0)
+        turned = points[::-1].copy()
+        turned[:py] = points[:py, ::-1]
+        turned[-py:] = points[-py:, ::-1]
+        turned[:py, :px] = points[::-1, ::-1][:py, :px]
+        turned[:py, -px:] = points[::-1, ::-1][:py, -px:]
+        turned[-py:, :px] = points[::-1, ::-1][-py:, :px]
+        turned[-py:, -px:] = points[::-1, ::-1][-py:, -px:]
+        soft += turned
+        soft[py:py + FULL[1], px:px + FULL[0]] = lin
+        wide = soft
     img = Image.fromarray((np.clip(geo.encode(wide.astype(np.float64)), 0, 1) * 255 + 0.5).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -96,7 +110,7 @@ def hold(film=None):
     keep = ((1 - curtain) * (1 - disc))[..., None]
     f = f * (1 - rim) + (low(f) + stars * (1 - glow) * keep) * rim
     lin = sky * own[..., None] + f * (1 - own[..., None])
-    save(lin, "sky-hold.webp")
+    save(lin, "sky-hold.webp", CALM)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 
