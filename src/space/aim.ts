@@ -38,4 +38,6 @@ export interface SkyAims {
   patches: Record<string, { orbit: THREE.Quaternion; terrain: THREE.Quaternion }>
   fitted: { frame: number; terrainFrame: number }
   anchor: string
+  follows: Record<string, string>
+  open: Record<string, boolean>
 }
