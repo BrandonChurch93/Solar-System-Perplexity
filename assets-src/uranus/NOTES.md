@@ -233,3 +233,18 @@ Saturn's exit is final (mail 06:55, agent/saturn 16a4b5f: rise az -14, el 6, dis
 - Fix: `terrain/build.py` designs the far map at 4096 x 2048 as before (`FAR_BASE`) and writes it at 8192 x 4096 (web 4096 x 2048) with the plate sampled again and the streak octaves continued to 0.003 (`FAR_FINE`). Every other deck file came out byte identical. Frame 4231: soft 0, beauty differs by at most 2 levels.
 - Band removal for the ring residue (`band()` in `sky/patch.py`, long median along the ring of the part that is narrow across radius) removed almost nothing: the hero's rings are not in one plane, so over 40 degrees they leave their row. It is switched off (`BAND[0] = 0`). Next try: cache the unwrap of `along()` and take a wider opening across radius on the sheared short median.
 - Seen in the unwrap (`out/work/u/sky/along-polar.npy`, written by `along()`; preview `out/work/u/sky3/polar.jpg`): the hero's rings wander by up to 200 rows of 1520 (S curves, slopes to 0.7 rows per column), lines and faint bands together. So no fixed row filter can take the bands. Plan for after READY: straighten the unwrap with the ridge tracks of `rings/trace.py` (each track onto its mean row, offsets interpolated across radius), take the long median along the ring of the radial high-pass there (signed, so bands and grooves both go), map it back and subtract it from the hero's sky. Then the faint ring haze belongs in the 3D rings.
+
+## State at 07:50 UTC (read this first after a compaction)
+
+Branch head 11884d7 (main 558e3a5 merged, engine batch 7: dust only). Dive and rise milestone sent 07:25 (8a67180). `/root` at 07:40: do not hold READY back for polish, the rounds name what matters.
+
+### Measured at 11884d7 (assets as committed in 9b0d054)
+- `npm run measure -- --stop uranus` (every frame, 626 s): G13 PASS, 0 of 463 frames over 0.02 soft, worst 4393 0.57 percent; G5 PASS (hold coverage 0.196, dive 0.812, terrain 0.519, rise 0.159, invalid 0); G17 PASS (4035 median 1.178, p25 1.046 over 70 tiles; 4290 median 1.035, p25 0.775 over 59 tiles).
+- `npm run budget -- --stop uranus`: full 1208 MB one set (1277 with Neptune's stand-in), web 308 MB (332). Disk: full 47 MB, web 19 MB.
+- Gates: G11 PASS, G12 PASS (1108 tracked files, 0.86 GB), G15 PASS (uranus/web 308 MB, uranus/full 1208 MB). Build green, 35 tests pass.
+
+### After READY, in this order (while the critics are out)
+1. Sheets at review for hold, dive, terrain, rise; `npm run crops`; read R1, R3, R4 against them.
+2. Ring residue in the hold sky patch (straighten the unwrap with the traced tracks, see above).
+3. Moons: soft knee so they do not read as white discs from the rise side (the hold must not change).
+4. Cover clearing frame 4167 (patchy at the top for one frame).
