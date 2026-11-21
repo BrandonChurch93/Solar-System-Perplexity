@@ -163,3 +163,10 @@ Sky card, infinity only (Builder note 2):
 - Test passed: with the base itself as the apron, frame 0 came back in place.
 - Known weak: at frame 60 the lowest 140 rows show apron ground that frame 0 has at rows 733 to 800, enlarged about 2 times. Texel rate there is 1.6 per pixel (G13 fine) but the painted cells are fibrous at that size, softer than the approved plate above them. A fix would be a third plate for that band or an unsharp pass in `apron.py build`.
 - Never `git checkout src/stops/sun/look.ts` for temporary edits; edit back by hand.
+
+## READY sent (08:12 UTC), head 417dfcd, main 558e3a5 (batch 7) merged
+
+- Build green, 35 tests. Gate G11, G12, G15 pass (sun/web 148 MB, sun/full 593 MB of texture memory). G5 pass (coverage 0 0.571, 60 0.528, 90 0.511, 247 0.366, 360 0.309). G17 pass at final: 0 1.003 (p25 0.732), 60 1.284, 90 1.027, 360 0.993.
+- G13 not run at every frame. Texel check on 0, 20, 40, 60, 80 with the apron: 0 soft, lowest rate 1.41 at frame 80.
+- Named as weak in the READY message: frame 60 lowest 140 rows (apron enlarged 2 times), flare core reads as a ball at 196 to 204 and the cover centre is flat gold 212 to 220, corona under the big prominences, star trim not verified at final, clean-take sky at the upper left of the terrain view, travel in and out only checked for jumps.
+- While the critics are out: flare first, then the frame 60 strip.
