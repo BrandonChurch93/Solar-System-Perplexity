@@ -1,9 +1,81 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T12:00:15.297Z",
- "head": "290c041ccf996c946f21edbfe69b7956e68bb952",
- "note": "round 2 build: night land relief, fine aurora rays; final checks running",
+ "pushed": "2026-11-21T12:24:20.707Z",
+ "head": "675e53abc47610062d825831d621a3a835da02cb",
+ "note": "round 2 checks: finals of 1857 and 2156, handover strips at review; measure running",
  "looks": [
+  {
+   "time": "2026-11-21T12:23:56.656Z",
+   "file": "20261121122356656-frame-t-2142.jpg",
+   "source": "out/work/earth/q1/t-2142.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2142, draft tier, texels view",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2142,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:22:53.172Z",
+   "file": "20261121122253172-frame-t-1875.jpg",
+   "source": "out/work/earth/q1/t-1875.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1875, draft tier, texels view",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1875,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:18:58.661Z",
+   "file": "20261121121858661-note-rd.jpg",
+   "source": "../../../../tmp/rd.jpg",
+   "kind": "note",
+   "label": "dive cover 1883, 1884 at the review tier: same limb line across the switch",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T12:18:58.077Z",
+   "file": "20261121121858077-note-rr.jpg",
+   "source": "../../../../tmp/rr.jpg",
+   "kind": "note",
+   "label": "rise handover 2129, 2130, 2131 at the review tier (top to bottom): same limb line, same deck",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-21T12:09:14.856Z",
+   "file": "20261121120914856-compare-compare-earth-hold-view.jpg",
+   "source": "out/work/compare/compare-earth-hold-view.jpg",
+   "kind": "compare",
+   "label": "earth.hold: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:09:13.689Z",
+   "file": "20261121120913689-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T11:59:51.872Z",
    "file": "20261121115951872-note-l2156.jpg",
@@ -18,78 +90,6 @@
    "source": "../../../../tmp/a2156.png",
    "kind": "note",
    "label": "rise 2156 aurora at the right limb, 1.6x: fine rays (left) beside before (right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:59:50.726Z",
-   "file": "20261121115950726-note-a1857.jpg",
-   "source": "../../../../tmp/a1857.png",
-   "kind": "note",
-   "label": "dive 1857 aurora at native size: fine rays (left) beside before (right)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T11:59:13.484Z",
-   "file": "20261121115913484-frame-f-1755.jpg",
-   "source": "out/work/earth/p37/f-1755.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:58:44.484Z",
-   "file": "20261121115844484-frame-f-1857.jpg",
-   "source": "out/work/earth/p37/f-1857.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:58:13.985Z",
-   "file": "20261121115813985-frame-f-2156.jpg",
-   "source": "out/work/earth/p37/f-2156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:48:51.713Z",
-   "file": "20261121114851713-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T11:44:25.928Z",
-   "file": "20261121114425928-note-n1857.jpg",
-   "source": "../../../../tmp/n1857.jpg",
-   "kind": "note",
-   "label": "dive 1857 night side at native size: meridian zone with matched night tone (left) against the first try with a visible edge (right)",
    "stop": "earth"
   }
  ]
