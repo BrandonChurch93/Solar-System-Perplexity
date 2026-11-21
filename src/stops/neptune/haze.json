@@ -1,0 +1,6 @@
+{
+ "ground": { "scaleHeight": 0.006, "depth": 0.05, "day": [0.35, 0.75, 1.35], "twilight": [0.02, 0.05, 0.12], "night": [0.0012, 0.0035, 0.01], "strength": 1, "extinction": 0.6, "forward": 1.5, "top": 10, "dayFrom": -0.1, "dayTo": 0.5 },
+ "shell": { "scaleHeight": 0.004, "depth": 0.4, "day": [0.6, 1.1, 1.7], "twilight": [0.03, 0.08, 0.2], "night": [0.001, 0.003, 0.008], "strength": 1, "extinction": 1, "forward": 3, "top": 8, "dayFrom": -0.15, "dayTo": 0.45 },
+ "halo": { "scaleHeight": 0.024, "depth": 0.02, "day": [0.45, 0.9, 1.5], "twilight": [0.01, 0.03, 0.08], "night": [0, 0, 0], "strength": 1, "extinction": 1, "forward": 2, "top": 5, "dayFrom": -0.1, "dayTo": 0.6 },
+ "limb": { "rim": [0.5, 0.9, 1.4], "rimWidth": 0.05, "rimFrom": -0.05, "rimTo": 0.3, "dark": 0, "darkWidth": 0.2, "forward": [0.3, 0.7, 1.5], "forwardWidth": 0.25, "forwardPower": 4 }
+}

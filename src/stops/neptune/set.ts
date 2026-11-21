@@ -1,5 +1,120 @@
-import { createStandinSet } from '../../bodies/standin'
+import * as THREE from 'three'
+import { FarPoint } from '../../bodies/farpoint'
+import { HazeShell } from '../../bodies/haze'
 import type { SetFactory } from '../../core/types'
+import { diagUniform } from '../../diagnostics/diag'
+import { smooth } from '../../director/rig'
+import { moon as moonAsset, plate as plateAsset, wrap } from './assets'
+import * as look from './look'
 import { plan } from './plan'
+import { NeptunePlanet } from './planet'
+import { Plate } from './plate'
+import { Ring } from './ring'
+import { Triton } from './triton'
 
-export const createSet: SetFactory = (ctx) => createStandinSet(ctx, plan)
+function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
+  const lon = THREE.MathUtils.degToRad(lonDeg)
+  const lat = THREE.MathUtils.degToRad(latDeg)
+  return new THREE.Vector3(Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon))
+}
+
+export const createSet: SetFactory = async (ctx) => {
+  const base = 'neptune/' + ctx.assets + '/'
+  const fit = plan.fit
+  const world = new THREE.Group()
+  const orbit = new THREE.Group()
+  const terrain = new THREE.Group()
+  world.add(orbit, terrain)
+
+  const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
+  const planet = new NeptunePlanet({
+    map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, haze: look.ground, limb: look.limb, clouds: look.clouds,
+    storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
+  })
+  planet.mesh.quaternion.fromArray(fit.globe.quaternion)
+  planet.mesh.scale.fromArray(fit.globe.scale)
+  const shell = new HazeShell(look.shell, diagUniform)
+  const halo = new HazeShell(look.halo, diagUniform)
+  halo.mesh.renderOrder = 4
+  orbit.add(planet.mesh, shell.mesh, halo.mesh)
+
+  const tritonFit = fit.moons![0]!
+  const moonMap = await ctx.texture(base + moonAsset.file, { srgb: true, anisotropy: 16, repeat: true })
+  const triton = new Triton({ map: moonMap, mapWidth: (moonMap.image as unknown as { width: number }).width, radius: tritonFit.radius, gain: look.triton.gain, sun: look.triton.sun, ambient: look.triton.ambient, terminator: look.triton.terminator, power: look.triton.power })
+  orbit.add(triton.mesh)
+  const moonHome = new THREE.Vector3().fromArray(tritonFit.position)
+  const moonUp = new THREE.Vector3().fromArray(look.triton.up).normalize()
+  const moonHold = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), moonUp)
+  const moonSpin = new THREE.Quaternion()
+
+  const ring = new Ring(look.ring)
+  orbit.add(ring.mesh)
+
+  const far = new FarPoint()
+  orbit.add(far.points)
+
+  const plate = new Plate(await ctx.texture(base + plateAsset.file, { srgb: true, anisotropy: 8, mirror: true }), plan.p.terrain)
+  terrain.add(plate.mesh)
+
+  const light = new THREE.Vector3()
+  const camera = new THREE.Vector3()
+  const turn = new THREE.Quaternion()
+  const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
+  const holdDirection = new THREE.Vector3()
+
+  return {
+    id: plan.id,
+    world,
+    update: (state, shot, view) => {
+      const inOrbit = state.view === 'orbit'
+      orbit.visible = inOrbit && state.weight > 0
+      terrain.visible = !inOrbit
+      const gain = 1 / shot.post.exposure
+      if (!inOrbit) {
+        plate.material.uniforms.uGain!.value = gain
+        return
+      }
+      const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
+      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
+      camera.copy(world.position).negate()
+      const elapsed = state.time - plan.holdMid
+      const bounded = Math.min(Math.max(elapsed, -12), 12)
+      const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
+      const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
+      const pu = planet.material.uniforms
+      planet.update(camera, light, plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
+      pu.uVignette!.value = shot.post.vignette * home
+      pu.uAspect!.value = view.format.width / view.format.height
+      for (const h of [shell, halo]) {
+        const u = h.material.uniforms
+        ;(u.uCam!.value as THREE.Vector3).copy(camera)
+        ;(u.uSunW!.value as THREE.Vector3).copy(light)
+        u.uGain!.value = gain * state.weight
+      }
+      turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
+      triton.mesh.position.copy(moonHome).applyQuaternion(turn)
+      triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
+      triton.update(light, gain * state.weight)
+      ring.update(light, state.rotation, THREE.MathUtils.degToRad(look.ring.degPerSecond) * elapsed, gain * state.weight)
+      const distance = world.position.length()
+      const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
+      const visible = radiusPx > 0.6
+      planet.mesh.visible = visible
+      shell.mesh.visible = visible
+      halo.mesh.visible = visible
+      triton.mesh.visible = visible
+      ring.mesh.visible = visible
+      far.update(radiusPx, view, plan.p.tint, gain)
+    },
+    dispose: () => {
+      planet.dispose()
+      shell.dispose()
+      halo.dispose()
+      triton.dispose()
+      ring.dispose()
+      far.dispose()
+      plate.dispose()
+    },
+  }
+}
