@@ -23,7 +23,7 @@ export interface GlobeLook {
   probe: number
 }
 
-export interface GlobePatch { texture: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
+export interface GlobePatch { texture: THREE.Texture; table: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
@@ -64,6 +64,7 @@ uniform float uRimPower;
 uniform float uNightBlur;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
+uniform sampler2D uTableC;
 uniform float uNightFloor;
 uniform int uProbe;
 uniform sampler2D uPatch;
@@ -94,7 +95,7 @@ vec3 curveCloseAt(float ndl) {
   int i = int(min(floor(x), 31.0));
   return mix(uCurveC[i], uCurveC[i + 1], x - float(i));
 }
-vec3 tableAt(float ndl, float lat) {
+vec3 tableAt(sampler2D uTable, float ndl, float lat) {
   ivec2 size = textureSize(uTable, 0);
   vec2 q = vec2(clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * float(size.x - 1), clamp(lat / 3.14159265 + 0.5, 0.0, 1.0) * float(size.y - 1));
   ivec2 i = min(ivec2(floor(q)), size - 2);
@@ -132,7 +133,7 @@ void main() {
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
-  vec3 light = mix(curveAt(ndl) * tableAt(ndl, lat), curveCloseAt(ndl), uClose);
+  vec3 light = mix(curveAt(ndl) * tableAt(uTable, ndl, lat), curveCloseAt(ndl) * tableAt(uTableC, ndl, lat), uClose);
   vec3 night = min(light, vec3(uNightFloor));
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
@@ -167,7 +168,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...profile,
-        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uTableC: { value: patch.table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uCurveC: { value: curveUniform(look.closeCurve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },

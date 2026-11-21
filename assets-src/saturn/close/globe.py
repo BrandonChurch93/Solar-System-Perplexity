@@ -18,6 +18,7 @@ FLAT = 0.6
 RESET = "--reset" in sys.argv
 META = ROOT / "src/stops/saturn/closeGlobe.json"
 NAME = "close-globe.jpg"
+LIGHT = "close-light.bin"
 
 
 def filmic(x):
@@ -69,12 +70,57 @@ idx = np.arange(33)
 for c in range(3):
     step[:, c] = np.interp(idx, idx[have], step[have, c])
 step = gaussian_filter1d(step, 0.6, axis=0, mode="nearest")
+if old:
+    step = np.ones((33, 3))
 gain = gain * step
 print("knots with data", int(have.sum()), "from", int(idx[have].min()), "to", int(idx[have].max()))
 print("curve gain step, every second knot with data:", " ".join(f"{i}:{step[i].round(2).tolist()}" for i in idx[have][::2]))
 
 cg = np.stack([np.interp(x, idx, step[:, c]) for c in range(3)], -1).astype(np.float32)
-light = L * cg
+lat = (v - 0.5) * 180.0
+TW, TH = 33, 91
+tables = [ROOT / "public/assets/saturn" / name / LIGHT for name in ("full", "web")]
+table = np.fromfile(tables[0], "<f4").reshape(TH, TW, 4)[..., :3].astype(np.float64) if old and tables[0].exists() else np.ones((TH, TW, 3))
+ratio = (A - F0) / (L * cg)
+use = mask & (mu > 0.3) & (lum(L) > 0.004)
+bx = np.clip(np.round(x), 0, 32).astype(np.int64)
+by = np.clip(np.round((lat + 90.0) / 2.0), 0, TH - 1).astype(np.int64)
+key = (by * TW + bx)[use]
+vals = ratio[use]
+order = np.argsort(key, kind="stable")
+key, vals = key[order], vals[order]
+cuts = np.nonzero(np.diff(key))[0] + 1
+M = np.full((TH * TW, 3), np.nan)
+for seg_key, seg in zip(key[np.concatenate([[0], cuts])], np.split(vals, cuts)):
+    if len(seg) >= 300:
+        M[seg_key] = np.median(seg, 0)
+M = M.reshape(TH, TW, 3)
+ref = np.full((TH, 3), np.nan)
+for j in range(TH):
+    okc = np.nonzero(np.isfinite(M[j, :, 0]) & (idx >= 20))[0]
+    if len(okc) >= 3:
+        ref[j] = np.median(M[j, okc[-5:]], 0)
+rows_ok = np.isfinite(ref[:, 0])
+tstep = M / ref[:, None]
+row_idx = np.arange(TH)
+for j in row_idx[rows_ok]:
+    okc = np.isfinite(tstep[j, :, 0])
+    for c in range(3):
+        tstep[j, :, c] = np.interp(idx, idx[okc], tstep[j, okc, c])
+near_row = row_idx[rows_ok][np.abs(row_idx[rows_ok][None] - row_idx[:, None]).argmin(1)]
+tstep = tstep[near_row]
+from scipy.ndimage import gaussian_filter
+tstep = np.clip(np.stack([gaussian_filter(tstep[..., c], (1.0, 0.7), mode="nearest") for c in range(3)], -1), 0.2, 3.0)
+fade = np.clip((row_idx - 43) / 3.0, 0, 1)[:, None, None]
+tstep = 1 + (tstep - 1) * fade
+table = np.clip(table * tstep, 0.05, 6.0)
+print("light table rows with data", int(rows_ok.sum()), "lat", (row_idx[rows_ok].min() * 2 - 90), "to", (row_idx[rows_ok].max() * 2 - 90), "step percentiles", np.percentile(tstep[rows_ok], [1, 25, 50, 75, 99]).round(3))
+fy = np.clip((lat + 90.0) / 2.0, 0, TH - 1.001)
+fx = np.clip(x, 0, 31.999)
+tl = cv2.remap(tstep.astype(np.float32), fx.astype(np.float32), fy.astype(np.float32), cv2.INTER_LINEAR)
+light = L * cg * tl
+for t in tables:
+    np.concatenate([table, np.ones((TH, TW, 1))], -1).astype("<f4").tofile(t)
 P = np.clip((A - F0) / light, 0, 4)
 wrap = np.clip((F - F0) / L, 0, 4)
 rel = mask & (mu > 0.32) & (lum(light) > 0.05)
@@ -82,7 +128,6 @@ rel = cv2.erode(rel.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
 print("pixels used", int(rel.sum()), "of the globe", int(mask.sum()), "albedo median approved", np.median(P[rel], 0).round(3), "wrap as rendered", np.median(wrap[rel], 0).round(3))
 
 lon = us * 360.0
-lat = (v - 0.5) * 180.0
 lo0, lo1 = np.percentile(lon[rel], [0.05, 99.95])
 la0, la1 = np.percentile(lat[rel], [0.05, 99.95])
 box = [lo0 - 30, lo1 + 30, max(la0 - 6, -89), min(la1 + 14, 89)]
@@ -138,7 +183,7 @@ for name, scale in (("full", 1), ("web", 2)):
     im = out if scale == 1 else cv2.resize(out, (PW // scale, PH // scale), interpolation=cv2.INTER_AREA)
     cv2.imwrite(str(ROOT / "public/assets/saturn" / name / NAME), im, [cv2.IMWRITE_JPEG_QUALITY, 93])
 centre = (0.5 * (box[0] + box[1]) / 360.0 + med - 1.0) * 360.0
-meta = {"file": NAME, "lonCentreDeg": round(float(centre), 5), "lonHalfDeg": round(float(0.5 * (box[1] - box[0])), 5), "latDeg": [round(float(box[2]), 5), round(float(box[3]), 5)], "sets": {"full": [PW, PH], "web": [PW // 2, PH // 2]}, "curveGain": gain.round(5).tolist()}
+meta = {"file": NAME, "lonCentreDeg": round(float(centre), 5), "lonHalfDeg": round(float(0.5 * (box[1] - box[0])), 5), "latDeg": [round(float(box[2]), 5), round(float(box[3]), 5)], "sets": {"full": [PW, PH], "web": [PW // 2, PH // 2]}, "light": {"file": LIGHT, "width": TW, "height": TH}, "curveGain": gain.round(5).tolist()}
 META.write_text(json.dumps(meta, indent=1) + "\n")
 view = np.zeros_like(out)
 view[sure] = out[sure]

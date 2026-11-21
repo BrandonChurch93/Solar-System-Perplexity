@@ -19,6 +19,8 @@ from lightcurve import inverse_filmic
 
 L0, L1, NL = -1.05, 2.60, 20000
 DETAIL = float(sys.argv[6]) if len(sys.argv) > 6 else 8.0
+GM = int(sys.argv[7]) if len(sys.argv) > 7 else 9
+CHROMA = float(sys.argv[10]) if len(sys.argv) > 10 else 0.25
 img = cv2.imread(str(ROOT / "references/approved/saturn-close.jpg"))[..., ::-1].astype(np.float32) / 255
 H, W = img.shape[:2]
 lay = json.loads((ROOT / "src/stops/saturn/layout.json").read_text())
@@ -31,7 +33,7 @@ junction = np.array([[1500, 768], [1700, 815], [1900, 858], [2100, 895], [2300, 
 poly = np.concatenate([limb, junction, [[W, 0], [limb[0, 0], 0]]]).astype(np.int32)
 gmask = np.zeros((H, W), np.uint8)
 cv2.fillPoly(gmask, [poly], 1)
-gmask = cv2.dilate(gmask, np.ones((25, 25), np.uint8)) > 0
+gmask = cv2.dilate(gmask, np.ones((GM, GM), np.uint8)) > 0
 gx, gy = np.meshgrid(np.arange(GW) + 0.5, np.arange(GH) + 0.5)
 ax, ay, _ = g2a(gx, gy)
 ax, ay = (ax - 0.5).astype(np.float32), (ay - 0.5).astype(np.float32)
@@ -123,7 +125,9 @@ def family(A, B, offs, reach, name):
         base_t = np.stack([np.interp(lc, axis[good], prof[good, k]) for k in range(3)], -1)
         lo_b = gaussian_filter1d(base_t, sg, axis=0, mode="nearest")
         lo_m = gaussian_filter1d(med, sg, axis=0, mode="nearest")
-        new_t = lo_b * np.clip(med / np.maximum(lo_m, 1e-5), 0.2, 4.0)
+        per = np.clip(med / np.maximum(lo_m, 1e-5), 0.2, 4.0)
+        grey = np.clip(lum(med) / np.maximum(lum(lo_m), 1e-5), 0.2, 4.0)[:, None]
+        new_t = lo_b * (grey + CHROMA * (per - grey))
         sel = ok_t & (lc > axis[good].min()) & (lc < axis[good].max())
         fresh = np.stack([np.interp(axis, lc[sel], new_t[sel, k]) for k in range(3)], -1)
         span = good & (axis > lc[sel].min()) & (axis < lc[sel].max())
@@ -170,7 +174,7 @@ ix = np.clip(((lam - L0) / (L1 - L0) * NL).astype(int), 0, NL - 1)
 rec = pp[ix]
 ring = (lam > L0) & (lam < json.loads((ROOT / "src/stops/saturn/rings.json").read_text())["warpClose"][3]) & have[ix]
 ring &= ~gmask
-SIG = 24.0
+SIG = float(sys.argv[8]) if len(sys.argv) > 8 else 12.0
 m = ring.astype(np.float32)
 num = cv2.GaussianBlur(lum(scene) * m, (0, 0), SIG)
 den = cv2.GaussianBlur(lum(rec) * m, (0, 0), SIG)
@@ -181,7 +185,7 @@ sm = cv2.remap(cv2.GaussianBlur(np.where(known, shade, 0).astype(np.float32), (0
 km = cv2.remap(cv2.GaussianBlur(known.astype(np.float32), (0, 0), 0.5 / k), ax, ay, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
 good = km > 0.6
 val = np.where(good, sm / np.maximum(km, 1e-4), 0)
-LS = 800.0
+LS = float(sys.argv[9]) if len(sys.argv) > 9 else 150.0
 tree = cKDTree(np.stack([gx[good], gy[good], np.clip(field[good], -3, 4) * LS], -1))
 _, near = tree.query(np.stack([gx[~good], gy[~good], np.clip(field[~good], -3, 4) * LS], -1))
 filled = val.copy()
@@ -198,6 +202,15 @@ out = np.zeros((GH, GW, 4), np.float32)
 out[..., 0] = diff_out
 out[..., 1] = filled
 out[..., 2] = wgt
+Q = 4
+last = junction[-1] + (junction[-1] - junction[-2]) / (junction[-1, 0] - junction[-2, 0]) * 2 * W
+wide = np.concatenate([limb, junction, [last, [3 * W, -2 * H], [limb[0, 0], -2 * H]]])
+canvas = np.zeros((5 * H // Q, 5 * W // Q), np.uint8)
+cv2.fillPoly(canvas, [np.round((wide + [2 * W, 2 * H]) / Q).astype(np.int32)], 1)
+sdf = (cv2.distanceTransform(1 - canvas, cv2.DIST_L2, 5) - cv2.distanceTransform(canvas, cv2.DIST_L2, 5)) * Q
+sdf = cv2.GaussianBlur(sdf, (0, 0), 1.5)
+out[..., 3] = np.clip(cv2.remap(sdf.astype(np.float32), (ax + 2 * W) / Q, (ay + 2 * H) / Q, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), -400, 400)
+out[..., 3] = np.where(live, out[..., 3], 400)
 for name in ("full", "web"):
     out.astype("<f4").tofile(ROOT / "public/assets/saturn" / name / "layout.bin")
 np.save(WORK / "layout-shade.npy", filled)

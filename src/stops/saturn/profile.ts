@@ -55,6 +55,7 @@ uniform vec4 uModelC;
 uniform vec2 uModelR;
 uniform vec4 uModelB;
 uniform vec2 uSettle;
+uniform float uJunction;
 float warpSeg(float l, float c0, float c1, float h0, float h1) {
   return h0 + (l - c0) * (h1 - h0) / (c1 - c0);
 }
@@ -78,8 +79,9 @@ float familyAt(vec3 p, float t) {
   float a = first ? r1 - b * uWarpC.y : r2 - b * uWarpC.z;
   return circleAt(q, c1, a, b);
 }
+float layoutCut = 1.0;
 vec3 ringLayout(vec3 p, float r) {
-  vec3 t = vec3(0.0, 1.0, 0.0);
+  vec4 t = vec4(0.0, 1.0, 0.0, 400.0);
   float rho = r;
   float inside = 0.0;
   for (int k = 0; k < (uClose > 0.0 ? 1 : 0); k++) {
@@ -92,7 +94,8 @@ vec3 ringLayout(vec3 p, float r) {
       ivec2 i = ivec2(floor(f));
       ivec2 n = min(i + 1, ivec2(uLayoutSize) - 1);
       vec2 w = f - vec2(i);
-      t = mix(mix(texelFetch(uLayout, i, 0).rgb, texelFetch(uLayout, ivec2(n.x, i.y), 0).rgb, w.x), mix(texelFetch(uLayout, ivec2(i.x, n.y), 0).rgb, texelFetch(uLayout, n, 0).rgb, w.x), w.y);
+      t = mix(mix(texelFetch(uLayout, i, 0), texelFetch(uLayout, ivec2(n.x, i.y), 0), w.x), mix(texelFetch(uLayout, ivec2(i.x, n.y), 0), texelFetch(uLayout, n, 0), w.x), w.y);
+      layoutCut = mix(1.0, smoothstep(-uJunction, uJunction, t.a), inside);
     }
     rho = warpTo(familyAt(p, uClose) + inside * t.r * smoothstep(uSettle.x, uSettle.y, uClose));
   }

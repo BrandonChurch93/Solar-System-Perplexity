@@ -1,10 +1,10 @@
 {
  "file": "close-globe.jpg",
- "lonCentreDeg": 145.90995,
- "lonHalfDeg": 53.54376,
+ "lonCentreDeg": 145.53274,
+ "lonHalfDeg": 53.90517,
  "latDeg": [
-  0.62587,
-  65.98827
+  0.6478,
+  66.13448
  ],
  "sets": {
   "full": [
@@ -15,6 +15,11 @@
    1280,
    800
   ]
+ },
+ "light": {
+  "file": "close-light.bin",
+  "width": 33,
+  "height": 91
  },
  "curveGain": [
   [

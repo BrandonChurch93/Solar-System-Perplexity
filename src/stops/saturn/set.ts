@@ -36,6 +36,7 @@ export const createSet: SetFactory = async (ctx) => {
   const patchSize = closeGlobe.sets[key] as [number, number]
   const patch = {
     texture: await ctx.texture(base + closeGlobe.file, { srgb: true, anisotropy: 16 }),
+    table: await ctx.dataTexture(base + closeGlobe.light.file, closeGlobe.light.width, closeGlobe.light.height, 4),
     box: new THREE.Vector4(-rad(closeGlobe.lonCentreDeg), rad(closeGlobe.lonHalfDeg), rad(closeGlobe.latDeg[0]!), rad(closeGlobe.latDeg[1]!)),
     size: new THREE.Vector2(patchSize[0], patchSize[1]),
   }
