@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T02:45:16.249Z",
- "head": "e9218073d785e03a096609473ebe4e76e56861bd",
- "note": "start: stand-in hold and terrain beside the approved images",
+ "pushed": "2026-11-21T03:07:46.653Z",
+ "head": "fe800cdae3bb2b86dd3ded2907b58e712898abe3",
+ "note": "wrap map in work: light curve measured from the hero, real mosaic graded as the far side guide, hero pixels next",
  "looks": [
+  {
+   "time": "2026-11-21T03:07:45.996Z",
+   "file": "20261121030745996-note-hero-2x-flow.jpg",
+   "source": "out/work/mercury/hero-2x-flow.jpg",
+   "kind": "note",
+   "label": "hero 2x upscale check: flow heat map against the approved hero (PASS, max 0.36 px)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T03:07:44.944Z",
+   "file": "20261121030744944-note-guide-8192-small.jpg",
+   "source": "out/work/mercury/guide-8192-small.jpg",
+   "kind": "note",
+   "label": "wrap guide v0: real MESSENGER mosaic graded to the hero albedo stats (input for the far side repaint, not shipped)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-21T02:45:05.822Z",
    "file": "20261121024505822-compare-compare-mercury-terrain-view.jpg",
