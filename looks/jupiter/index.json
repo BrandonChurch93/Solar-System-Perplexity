@@ -1,9 +1,45 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T03:28:48.985Z",
- "head": "c4645912998242ee9587432184e16ab728baa191",
- "note": "first real orbit render: hero pixels plus painted far side and poles, curve light, Io sphere with computed shadow",
+ "pushed": "2026-11-21T03:43:41.233Z",
+ "head": "3ca2830e293a13c18f661f34c723b74aae111d51",
+ "note": "orbit view: light and limb glow fitted in a closed loop against the hero, hero sky as a patch; next Io look and shadow shape",
  "looks": [
+  {
+   "time": "2026-11-21T03:43:40.629Z",
+   "file": "20261121034340629-note-skyfill.jpg",
+   "source": "out/work/view/skyfill.jpg",
+   "kind": "note",
+   "label": "sky fill takes: hero, flare take (rejected, sky reinvented), seedream take (kept, stars aligned)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-21T03:43:08.652Z",
+   "file": "20261121034308652-compare-compare-jupiter-hold-view.jpg",
+   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.hold: approved image left, film frame right, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:43:07.516Z",
+   "file": "20261121034307516-still-f02895-16x9-review-full.jpg",
+   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
   {
    "time": "2026-11-21T03:28:48.395Z",
    "file": "20261121032848395-note-wisp.jpg",
@@ -35,36 +71,6 @@
    "kind": "note",
    "label": "polar caps: inputs (left) and painted takes (right), north on top",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:46.185Z",
-   "file": "20261121032846185-note-t13_out.jpg",
-   "source": "out/work/view/t13_out.jpg",
-   "kind": "note",
-   "label": "far side tiles T1 and T3 painted from stripe guides with hero pixels at one edge",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:45.600Z",
-   "file": "20261121032845600-note-trials2.jpg",
-   "source": "out/work/view/trials2.jpg",
-   "kind": "note",
-   "label": "far side trial tiles round 2 (quilt and stripe guides, two models)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-21T03:28:29.106Z",
-   "file": "20261121032829106-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   },
   {
    "time": "2026-11-21T02:45:00.734Z",
