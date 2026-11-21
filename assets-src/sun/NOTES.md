@@ -276,3 +276,12 @@ Engine facts read for the rise (src/director/moves.ts): cover window fixed by co
   3. `sky.py` `STARS` 0.4: the card's stars are taken down to 0.4 where the floor is taken down (near the limb), since the approved stars there are drowned in the glow.
 - Order when the sky card changes stays: `sky.py`, loops gain 0, build, frame 90 at review into `base90.jpg`, gain 1, `plate.py`, `sky.py`, build (`out/work/sun/chain.sh`).
 - `npm run measure -- --stop sun` takes about 25 min here (G13 on 434 frames, 3.5 s each).
+
+## READY for round 2 sent (11:58 UTC), head 294ef64
+
+- Stop commit e6cbf02, then origin/main c57f694 merged (Neptune, scorecards, status only; engine hash 020740ac07ff27f7 and stop hash ade92bf31ecceede unchanged).
+- Measures at e6cbf02 (`--every 2`, 631 s): G13 0 of 217 frames soft; G5 coverage 0.571, 0.520, 0.511, 0.312, 0.309; G17 median/p25 1.452/1.111 (0), 1.153/1.023 (60), 1.089/0.994 (90), 1.014/0.910 (360). Tests 59 of 59. G11, G12 (1765 files, 1.36 GB), G15 (sun/web 148 MB, sun/full 593 MB) pass. On disk web 12 MB, full 35 MB.
+- Frame 90 at final (`out/work/sun/r9`): ground percentiles within 1 of approved; loops red within 1, blue 7/5, 10/10, 12/12, 17/15, 27/24, 42/43, 73/78, 100/105. Globe at 360 (`gr2`): red 89/93 at p1, else within 2.
+- Leaving at draft, 440 to 490: neighbour difference 1.1 across 449 to 450, smooth to 16.7 at 464, 1.2 at 478. At twice exposure a horizontal edge in the sky at 484 to 490, moving with the sky; my cards are at weight 0 there. Reported to the Builder as seen, origin not confirmed.
+- Weak points told to the Builder: flat gold 214 to 218; apron cells soft and glossy at 0 and 60; faint edge 0.5 deg above the limb at x 330 to 440 of frame 90; sky left of the left foot 4 to 6 levels under approved; stars within 4 deg of the limb are not the approved stars; hold card structure at 5 times exposure; comb fringe, curl motif, prominence edges untouched.
+- The rounds mirror the head of `agent/sun` when a round starts: push only work that is verified. Keep experiments in the working tree.
