@@ -16,6 +16,13 @@ ENVELOPE = (1.25, 1.42)
 SMOOTH = 0.03
 CLOSE = 72
 POWER_BAND = (1.12, 1.26)
+FAR_BLEND = 0.18
+RIM = (0.02, 0.006)
+THIN = (0.35, 0.004)
+THIN_AREA = 40
+THIN_PAD = 0.1
+THIN_SPAN = 3.0
+THIN_OPEN = 31
 
 
 def interp_rows(img, hole):
@@ -92,7 +99,22 @@ def main():
     clean = np.stack([ndi.grey_opening(bg[..., c], size=(7, 7)) for c in range(3)], -1)
     keep_raw = (1 - step(b, 1.03, 1.07))[..., None]
     cor = bg * keep_raw + clean * (1 - keep_raw)
-    del clean
+    star, _ = unwrap(np.load(WORK + '/hero-starmask.npy').astype(np.float32))
+    star = np.clip(ndi.maximum_filter(star, size=3) * 1.5, 0, 1)[..., None]
+    fine = np.maximum(bg - clean, 0) * (1 - star) * (1 - keep_raw)
+    print('fine detail kept, mean luma', float(luma(fine)[inside].mean().round(5)), 'star share', float((star > 0.5)[inside].mean().round(4)))
+    wide = luma(np.stack([ndi.grey_opening(bg[..., c], size=(THIN_OPEN, THIN_OPEN)) for c in range(3)], -1))
+    thin = (raw > 0.5) & (star[..., 0] < 0.3) & (luma(bg) - wide > THIN[0] * wide + THIN[1]) & (b > 1.05) & (b < 1.9) & ~matte
+    del wide
+    lab2, n2 = ndi.label(thin, structure=np.ones((3, 3)))
+    size = ndi.sum(thin, lab2, np.arange(1, n2 + 1))
+    big = np.zeros(n2 + 1, bool)
+    big[1:] = size >= THIN_AREA
+    thin = big[lab2]
+    strand_top = np.where(thin, b, 0).max(0)
+    print('thin strands outside the matte', int(big.sum()), 'columns', int((strand_top > 0).sum()), 'highest', float(strand_top.max().round(3)))
+    cv2.imwrite(WORK + '/thin-debug.png', ((cv2.resize(thin.astype(np.float32), (2048, 512), interpolation=cv2.INTER_AREA) > 0.01) * 255).astype(np.uint8)[::-1])
+    del clean, star, lab2, thin
 
     edge = frame_edge()
     sky, _ = unwrap(fill_floor(fill_scene()))
@@ -101,6 +123,9 @@ def main():
     reach = np.where(doubt.any(0), rr[np.argmax(doubt, 0)], DATA_END)
     reach = ndi.minimum_filter1d(reach, 81, mode='wrap')
     reach = ndi.gaussian_filter1d(reach, 60, mode='wrap')
+    lift = ndi.maximum_filter1d(np.where(strand_top > 0, strand_top + THIN_PAD, 0), int(PW * THIN_SPAN / 360), mode='wrap')
+    reach = ndi.gaussian_filter1d(np.maximum(reach, ndi.maximum_filter1d(lift, 61, mode='wrap')), 20, mode='wrap')
+    reach = np.maximum(reach, lift)
     print('trusted reach', float(reach.min().round(3)), float(np.median(reach).round(3)), float(reach.max().round(3)))
     cor = np.maximum(cor - sky, 0)
     del sky, share, doubt
@@ -134,7 +159,13 @@ def main():
     t = step(b, ENVELOPE[0], ENVELOPE[1])[..., None]
     cor = cor * (1 - t) + smooth * t
     del smooth
+    far = step((b - reach[None, :]) / FAR_BLEND, 0, 1)
+    rim = 1 - step(b, edge[None, :] - RIM[0], edge[None, :] - RIM[1])
+    cor += fine * ((1 - far) * rim * inside)[..., None]
+    del fine
     cor *= (1 - step(b, 2.4, 3.0))[..., None]
+    np.save(WORK + '/polar-reach.npy', reach.astype(np.float32))
+    np.save(WORK + '/polar-soft.npy', soft.astype(np.float16))
     np.save(WORK + '/polar-prom.npy', np.concatenate([prom, alpha[..., None]], -1).astype(np.float16))
     np.save(WORK + '/polar-corona.npy', cor.astype(np.float16))
 

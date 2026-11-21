@@ -15,10 +15,11 @@ import unproject
 
 WORK = os.path.join(geo.ROOT, 'out/work/nep/wrap')
 CLOUD_KNOTS = np.array([-1, -0.2, -0.08, -0.03, 0.0, 0.03, 0.06, 0.125, 0.19, 0.25, 0.31, 0.375, 0.44, 0.5, 0.56, 0.69, 1.0])
-CLOUD_VALUES = np.array([0.02, 0.02, 0.025, 0.095, 0.08, 0.085, 0.15, 0.35, 0.77, 1.26, 1.7, 2.0, 2.3, 2.5, 2.7, 3.0, 3.2])
-TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 1.0])
-TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.39, 1], [0.30, 0.39, 1]])
+CLOUD_VALUES = np.array([0.02, 0.02, 0.025, 0.095, 0.08, 0.085, 0.165, 0.40, 0.92, 1.58, 2.1, 2.5, 2.9, 3.1, 3.4, 3.75, 4.0])
+TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 0.6, 1.0])
+TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.43, 1], [0.30, 0.48, 1], [0.30, 0.50, 1]])
 CURVE = os.path.join(geo.ROOT, 'src/stops/neptune/curve.json')
+FIT = np.array([0.5, 0.5, 0.0], np.float32)
 
 
 def cloud_curve():
@@ -98,8 +99,8 @@ def main():
     tex = np.tile(tile, (a.shape[0] // 768 + 1, a.shape[1] // 768 + 1))[:a.shape[0], :a.shape[1]]
     fill = fill * (1 + tex)[..., None]
     deck = a * (1 - m[..., None]) + fill * m[..., None]
-    ld = deck @ separate.LUM
-    alpha = np.clip(((a @ separate.LUM) - ld) / np.maximum(wc @ separate.LUM - ld, 1e-4), 0, 1)
+    rise = wc - deck
+    alpha = np.clip((((a - deck) * rise) @ FIT) / np.maximum((rise * rise) @ FIT, 1e-6), 0, 1)
     alpha *= separate.smoothstep(0.0, 0.5, m)
     alpha = np.where(seen, alpha, 0)
     weight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(0.06, 0.2, ndl)
