@@ -19,10 +19,11 @@ HUE = (48, 1.5)
 CROP = 640
 APRON_OUT = (5504, 1548)
 APRON_CROP = 688
-APRON_FIT = (0.46, 0.8, 0.2, 0.8)
-APRON_TONE = 420
+APRON_FIT = (0.36, 0.6, 0.1, 0.9)
+APRON_TONE = 600
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
+APRON_CANVAS = (1920, 1080)
 
 
 def band(a, lo, hi):
@@ -164,11 +165,12 @@ def compose(out_full, out_web, check):
 
 def front():
     from field import A, CENTRE, RADIUS, quat
-    w, h = 1920, 1080
+    w, h = APRON_CANVAS
+    wide = A.get('wide', 1.0)
     eye = np.array(A['position'], dtype=np.float64)
     q = A['quaternion']
     X, Y = np.meshgrid((np.arange(w) + 0.5) / w, (np.arange(h) + 0.5) / h)
-    d = np.stack([(X - 0.5) * 2 * TX, (0.5 - Y) * 2 * TY, -np.ones_like(X)], -1).reshape(-1, 3)
+    d = np.stack([(X - 0.5) * 2 * TX / wide, (0.5 - Y) * 2 * TY / wide, -np.ones_like(X)], -1).reshape(-1, 3)
     u = np.array(q[:3])
     d = d + 2 * np.cross(u, np.cross(u, d) + q[3] * d)
     d /= np.linalg.norm(d, axis=1, keepdims=True)
@@ -183,23 +185,28 @@ def front():
     ay = (0.5 - p[:, 1] / z / (2 * TY)).reshape(h, w)
     f = A['front']
     line = f['side'] + (f['centre'] - f['side']) * (1 - step(np.abs(ax - f['at']), f['span'][0], f['span'][1]))
-    return ax.astype(np.float32), ay.astype(np.float32), line.astype(np.float32), hit.reshape(h, w), f
+    inner = (np.abs(X - 0.5) < 0.5 * wide) & (np.abs(Y - 0.5) < 0.5 * wide)
+    return ax.astype(np.float32), ay.astype(np.float32), line.astype(np.float32), hit.reshape(h, w), inner, wide
 
 
 def apron_grey(base):
-    ax, ay, line, hit, f = front()
-    img = read(base)
-    grey = hit & (ay > line)
+    ax, ay, line, hit, inner, wide = front()
+    w, h = APRON_CANVAS
+    src = read(base)
+    k = wide * w / src.shape[1]
+    m = np.array([[k, 0, 0.5 * (w - k * src.shape[1]) + 0.5 * k - 0.5], [0, k, 0.5 * (h - k * src.shape[0]) + 0.5 * k - 0.5]])
+    img = cv2.warpAffine(src, m, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    grey = (hit & (ay > line)) | ~inner
     out = img.copy()
     out[grey] = 128
     write(f'{DIR}/apron-base.png', img)
     write(f'{DIR}/apron-input.png', out)
     write(f'{DIR}/apron-grey.png', np.repeat((grey * 255).astype(np.uint8)[..., None], 3, -1))
-    ys = np.where(grey.any(1))[0]
+    ys = np.where((grey & inner).any(1))[0]
     inside = (ax > 0) & (ax < 1) & (ay > 0) & (ay < 1)
     cols = np.where(inside.any(0))[0]
     rows = np.where(inside.any(1))[0]
-    print('grey share', round(float(grey.mean()), 3), 'first grey row', int(ys.min()), 'approved frame in this picture: columns', int(cols.min()), int(cols.max()), 'rows', int(rows.min()), int(rows.max()))
+    print('wide', wide, 'grey share', round(float(grey.mean()), 3), 'first grey row inside the picture', int(ys.min()), 'approved frame in this picture: columns', int(cols.min()), int(cols.max()), 'rows', int(rows.min()), int(rows.max()))
 
 
 def apron_place(take):
@@ -210,6 +217,7 @@ def apron_place(take):
     small = lambda a: cv2.resize(cv2.cvtColor(a, cv2.COLOR_RGB2GRAY), (w // k, h // k), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
     keep = np.zeros((h // k, w // k), np.uint8)
     keep[int(APRON_FIT[0] * h / k):int(APRON_FIT[1] * h / k), int(APRON_FIT[2] * w / k):int(APRON_FIT[3] * w / k)] = 255
+    keep[cv2.resize(cv2.cvtColor(read(f'{DIR}/apron-grey.png'), cv2.COLOR_RGB2GRAY), (w // k, h // k), interpolation=cv2.INTER_AREA) > 0] = 0
     warp = np.eye(2, 3, dtype=np.float32)
     cc, warp = cv2.findTransformECC(small(base), small(new), warp, cv2.MOTION_AFFINE, (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 400, 1e-7), keep, 5)
     warp[:, 2] *= k
