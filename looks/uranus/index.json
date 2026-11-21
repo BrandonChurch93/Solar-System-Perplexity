@@ -1,63 +1,56 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T06:50:14.250Z",
- "head": "25e04aad8d25b13714638bf2adab7b0968854ca4",
- "note": "dive and rise with patches, cover colour, level rise",
+ "pushed": "2026-11-21T07:18:35.206Z",
+ "head": "cd3a26383b9a149a8f17bf83766b9d771e8b5f0d",
+ "note": "sky rim fitted to Saturn's sky, dive with paler cover",
  "looks": [
   {
-   "time": "2026-11-21T06:50:13.625Z",
-   "file": "20261121065013625-note-v-sheet.jpg",
-   "source": "out/work/u/dive/v-sheet.jpg",
+   "time": "2026-11-21T07:18:34.548Z",
+   "file": "20261121071834548-note-uranus.dive-16x9-review.jpg",
+   "source": "out/work/sheets/uranus.dive-16x9-review.png",
    "kind": "note",
-   "label": "review stills 4137 4152 4420 4436, patches take 3, level rise",
+   "label": "dive sheet, paler cover",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T06:49:56.765Z",
-   "file": "20261121064956765-frame-v-4436.jpg",
-   "source": "out/work/u/dive/v-4436.png",
+   "time": "2026-11-21T07:18:33.985Z",
+   "file": "20261121071833985-note-sheet4.jpg",
+   "source": "out/work/u/sky2/sheet4.jpg",
+   "kind": "note",
+   "label": "hold first and last frame 3960 4109, sky patch rim fitted to the sky shared with Saturn",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T07:16:50.577Z",
+   "file": "20261121071650577-frame-t-3960.jpg",
+   "source": "out/work/u/sky2/t-3960.png",
    "kind": "frame",
-   "label": "uranus.rise frame 4436, review tier",
+   "label": "uranus.hold frame 3960, review tier",
    "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
+   "segment": "uranus.hold",
+   "frame": 3960,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:48:47.456Z",
-   "file": "20261121064847456-frame-v-4152.jpg",
-   "source": "out/work/u/dive/v-4152.png",
+   "time": "2026-11-21T07:09:17.325Z",
+   "file": "20261121070917325-frame-r-4118.jpg",
+   "source": "out/work/u/sky2/r-4118.png",
    "kind": "frame",
-   "label": "uranus.dive frame 4152, review tier",
+   "label": "uranus.dive frame 4118, review tier",
    "stop": "uranus",
    "segment": "uranus.dive",
-   "frame": 4152,
+   "frame": 4118,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "704d5d55f51b7b15"
   },
   {
-   "time": "2026-11-21T06:46:44.623Z",
-   "file": "20261121064644623-sheet-uranus.rise-16x9-review.jpg",
-   "source": "out/work/sheets/uranus.rise-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet uranus.rise, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4454,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T06:43:02.975Z",
-   "file": "20261121064302975-sheet-uranus.dive-16x9-review.jpg",
+   "time": "2026-11-21T06:55:03.998Z",
+   "file": "20261121065503998-sheet-uranus.dive-16x9-review.jpg",
    "source": "out/work/sheets/uranus.dive-16x9-review.png",
    "kind": "sheet",
    "label": "Contact sheet uranus.dive, review tier",
@@ -68,7 +61,15 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "a7e2e4a9a2b7be97"
+   "engine": "704d5d55f51b7b15"
+  },
+  {
+   "time": "2026-11-21T06:50:13.625Z",
+   "file": "20261121065013625-note-v-sheet.jpg",
+   "source": "out/work/u/dive/v-sheet.jpg",
+   "kind": "note",
+   "label": "review stills 4137 4152 4420 4436, patches take 3, level rise",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-21T06:17:22.500Z",
@@ -97,20 +98,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "a7e2e4a9a2b7be97"
-  },
-  {
-   "time": "2026-11-21T05:04:35.784Z",
-   "file": "20261121050435784-frame-hold-final.jpg",
-   "source": "out/work/u/hold-final.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
   }
  ]
 }
