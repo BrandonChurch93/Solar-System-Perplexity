@@ -1,0 +1,70 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "rise, frames 4416 to 4434",
+   "what": "the rise does not continue the move that comes out of the cover. At 4416 the sun and ring arcs are upper right over a limb at the bottom. At 4420 the sun and rings are gone, the limb is lit from above and a Milky Way field appears. At 4427 the planet jumps to the right half with rings on a new side, and by 4434 it has shrunk to a small disc on almost black sky. These are three changes of direction and background in about 18 frames",
+   "fix": "drive the whole rise as one eased pull back on a single spline from the terrain pose. Keep the sun, rings and star field fixed in world space so they fall away continuously, with no reframing cut between 4416 and 4434"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "end of rise, 4434 to 4454, compared with hold in sheet-01",
+   "what": "the camera does not return to the place it left. The hold shows a diagonally banded globe with its lower right half in shadow over a dense Milky Way. The end of the rise shows the same planet fully lit, bands nearly vertical, rings at a different tilt and an empty black sky. The sun direction and the sky contradict each other between the two",
+   "fix": "use one world light direction and one sky environment for the whole stop, and end the rise on or near the hold's framing and orientation so the outbound and return views match"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive, 4142 to 4150",
+   "what": "the move jumps in position and direction just before the cover. A bright sun pops in upper right, the thin ring streaks on the upper right become large arcs on the upper left, the limb flattens and darkens, and the Milky Way drops out, all within 8 frames",
+   "fix": "keep the dive on one continuous approach path. Let the sun rise into view gradually from behind the limb, and let the ring geometry sweep across the frame instead of reappearing on the other side"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive, 4118 to 4134",
+   "what": "the speed jumps. The disc roughly doubles in size between 4118 and 4126 and fills the frame by 4134, after a near static hold. This reads as a step change in speed or field of view, not an eased start",
+   "fix": "ease the dive in over a longer ramp (an ease in curve over 30 or more frames). Keep the field of view constant, or change it slowly, while the dolly carries the approach"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "rise cover exit, 4413 to 4416, ring arcs and sun",
+   "what": "fast motion breaks into ghost copies. The sun shows as two separate blobs at 4415 and 4416, and the ring arcs and the upper right streaks at 4413 are drawn as parallel double lines, not a smooth smear",
+   "fix": "use more motion blur subsamples or a true shutter integration for the cover frames. Do not blend two discrete frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "dive cover, 4159 to 4161, limb glow streaks",
+   "what": "the bright limb and ring edges break into stacked parallel copies (several offset bright slivers centre right) instead of one continuous blur",
+   "fix": "raise the motion blur sample count so the limb highlight smears continuously through the cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "dive cover exit, 4167 to 4170",
+   "what": "the cover ends too fast. Within 3 frames the sun goes from absent to full flare and the ring arcs go from invisible to crisp, so the clearing reads as a pop",
+   "fix": "stretch the cloud exit to 10 to 15 frames, and fade the sun flare and ring opacity in with the thinning fog density"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain, ground versus horizon, 4200 to 4379",
+   "what": "the near cloud deck and the horizon move together as one plane: the whole limb drifts slowly down and rotates, with little motion of the near ground against it. The view has weak depth",
+   "fix": "add forward travel or a lower altitude so near cloud features slide past faster than the limb, and add a layer of cloud nearer the camera to strengthen parallax"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold, globe surface 3960 to 4109",
+   "what": "the planet's rotation and cloud drift are barely visible over about 150 frames, so the globe reads as almost static",
+   "fix": "add a slow, visible band drift or rotation so the hold shows life without looking sped up"
+  }
+ ]
+}
