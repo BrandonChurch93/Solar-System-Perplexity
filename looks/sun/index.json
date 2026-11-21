@@ -1,9 +1,23 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T12:37:46.251Z",
+ "pushed": "2026-11-21T12:38:23.715Z",
  "head": "00c51dc27e45a12c4a91c2ade3da4ba3accee75f",
  "note": "apron repainted (matte cells), frame 90 edges now approved pixels; verifying before commit",
  "looks": [
+  {
+   "time": "2026-11-21T12:37:50.324Z",
+   "file": "20261121123750324-frame-f00056.jpg",
+   "source": "out/work/seq/56-100/f00056.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 56, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 56,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T12:37:45.188Z",
    "file": "20261121123745188-note-i52-f150.jpg",
@@ -49,20 +63,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-21T12:23:21.911Z",
-   "file": "20261121122321911-frame-f00084.jpg",
-   "source": "out/work/seq/0-96/f00084.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 84, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 84,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T12:13:26.996Z",
