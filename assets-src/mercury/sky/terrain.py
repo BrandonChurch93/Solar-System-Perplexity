@@ -154,10 +154,26 @@ def fix(film_path):
     print('sky ratio approved/film before this fix: median %.3f p10 %.3f p90 %.3f' % tuple(np.percentile(lum(ratio)[sky > 0.5], [50, 10, 90])))
 
 
+def calm():
+    path = WORK + 'terrain-fix.npy'
+    f = np.load(path)
+    h, w = f.shape[:2]
+    lum = f @ geo.LUMA
+    tint = np.clip(cv2.GaussianBlur(f / lum[..., None], (0, 0), 40), 0.9, 1.1)
+    small = cv2.resize(lum.astype(np.float32), (w // 4, h // 4), interpolation=cv2.INTER_AREA)
+    codes = np.clip(small * 100 + 0.5, 0, 255).astype(np.uint8)
+    flat = cv2.medianBlur(codes, 21).astype(np.float32) / 100
+    flat = cv2.GaussianBlur(cv2.resize(flat, (w, h), interpolation=cv2.INTER_CUBIC), (0, 0), 8)
+    np.save(path, (flat[..., None] * tint).astype(np.float32))
+    print('fix calmed: luminance p1 %.3f p50 %.3f p99 %.3f' % tuple(np.percentile(flat, [1, 50, 99])))
+
+
 if __name__ == '__main__':
     if sys.argv[1] == 'base':
         base()
     elif sys.argv[1] == 'write':
         write()
+    elif sys.argv[1] == 'calm':
+        calm()
     else:
         fix(sys.argv[2])
