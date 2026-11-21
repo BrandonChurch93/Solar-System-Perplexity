@@ -25,7 +25,7 @@ export interface Director {
 export interface Sanity { invalid: number; coverage: number }
 
 const STAR_COUNT = 900000
-const DUST_COUNT = 2600
+const DUST_COUNT = 4500
 const GRAD_FLOOR = 0.5
 
 export class Engine {
@@ -199,7 +199,7 @@ export class Engine {
           if (patch.view !== state.view) continue
           const kind = shot.segment.kind
           const arriving = kind === 'travel' && state.id !== shot.segment.stop
-          const base = kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+          const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
           const weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           if (weight <= 0) continue
           const aim = aims?.patches[state.id]?.[patch.view]
@@ -254,7 +254,7 @@ export class Engine {
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, cam, shot.dustOffset, shot.dust, height)
+    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view)
     if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 

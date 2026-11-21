@@ -1,0 +1,77 @@
+== sun.travel frames 450 to 539
+  join in  (450): turn 0.035 to 0.035 deg/frame (step 0.000, neighbours 0.007), fov 30.000 to 30.000, speed 8.19e-2 to 8.15e-2, ln rate 0.0002 to -0.0000
+  join out (540): turn 0.045 to 0.046 deg/frame (step 0.002, neighbours 0.006), fov 30.000 to 30.000, speed 1.62e-1 to 1.11e-1, ln rate 0.0009 to 0.0003
+  peak turn 1.92 deg/frame at 470; largest change of turn between frames 0.182 at 470; largest fov change 0.000 at 0; largest ln rate change 0.3717 at 488
+  departing body in view: 38 frames, 450 to 487
+  next body: in frame from 450, radius passes 1 px at 493, 10 px at 501, 100 px at 513
+  roll against the Sun line -118.3 to -59.4, exposure 1.00 to 1.00, sun radius 5.00 to 8.80
+== mercury.travel frames 1035 to 1109
+  join in  (1035): turn 0.002 to 0.003 deg/frame (step 0.002, neighbours 0.053), fov 30.000 to 30.000, speed 8.14e-2 to 8.00e-2, ln rate -0.0005 to 0.0000
+  join out (1110): turn 0.055 to 0.054 deg/frame (step 0.005, neighbours 0.023), fov 30.000 to 30.000, speed 1.58e-1 to 1.31e-1, ln rate 0.0007 to 0.0002
+  peak turn 10.57 deg/frame at 1052; largest change of turn between frames 1.182 at 1053; largest fov change 0.001 at 1030; largest ln rate change 0.3341 at 1051
+  departing body in view: 14 frames, 1035 to 1048
+  next body: in frame from 1059, radius passes 1 px at 1057, 10 px at 1066, 100 px at 1080
+  roll against the Sun line 8.3 to 64.3, exposure 1.00 to 1.00, sun radius 8.80 to 3.00
+== venus.travel frames 1605 to 1679
+  join in  (1605): turn 0.002 to 0.003 deg/frame (step 0.001, neighbours 0.032), fov 30.000 to 30.000, speed 8.12e-2 to 8.00e-2, ln rate -0.0005 to 0.0000
+  join out (1680): turn 0.045 to 0.050 deg/frame (step 0.004, neighbours 0.019), fov 30.000 to 30.000, speed 1.43e-1 to 1.15e-1, ln rate 0.0007 to 0.0002
+  peak turn 7.15 deg/frame at 1623; largest change of turn between frames 0.765 at 1625; largest fov change 0.001 at 1600; largest ln rate change 0.3398 at 1623
+  departing body in view: 17 frames, 1605 to 1621
+  next body: in frame from 1628, radius passes 1 px at 1629, 10 px at 1638, 100 px at 1651
+  roll against the Sun line 63.3 to 56.4, exposure 1.00 to 1.00, sun radius 3.00 to 1.80
+== earth.travel frames 2175 to 2249
+  join in  (2175): turn 0.002 to 0.005 deg/frame (step 0.003, neighbours 0.065), fov 30.000 to 30.000, speed 8.12e-2 to 8.00e-2, ln rate -0.0005 to -0.0000
+  join out (2250): turn 0.049 to 0.056 deg/frame (step 0.008, neighbours 0.034), fov 30.000 to 30.000, speed 1.18e-1 to 1.03e-1, ln rate 0.0007 to 0.0003
+  peak turn 9.96 deg/frame at 2190; largest change of turn between frames 1.268 at 2192; largest fov change 0.001 at 2170; largest ln rate change 0.3320 at 2191
+  departing body in view: 16 frames, 2175 to 2190
+  next body: in frame from 2195, radius passes 1 px at 2196, 10 px at 2205, 100 px at 2218
+  roll against the Sun line 70.5 to 48.1, exposure 1.00 to 1.00, sun radius 1.80 to 1.10
+== mars.travel frames 2745 to 2819
+  join in  (2745): turn 0.003 to 0.003 deg/frame (step 0.002, neighbours 0.035), fov 30.000 to 30.000, speed 7.96e-2 to 8.00e-2, ln rate -0.0006 to -0.0000
+  join out (2820): turn 0.025 to 0.041 deg/frame (step 0.017, neighbours 0.069), fov 30.000 to 30.000, speed 7.22e-2 to 9.51e-2, ln rate 0.0003 to 0.0002
+  peak turn 8.67 deg/frame at 2764; largest change of turn between frames 0.876 at 2764; largest fov change 0.000 at 2740; largest ln rate change 0.4318 at 2767
+  departing body in view: 16 frames, 2745 to 2760
+  next body: in frame from 2769, radius passes 1 px at 2772, 10 px at 2779, 100 px at 2790
+  roll against the Sun line 168.2 to 79.6, exposure 1.00 to 1.00, sun radius 1.10 to 0.50
+== jupiter.travel frames 3315 to 3389
+  join in  (3315): turn 0.005 to 0.006 deg/frame (step 0.002, neighbours 0.037), fov 30.000 to 30.000, speed 8.12e-2 to 8.00e-2, ln rate -0.0005 to -0.0000
+  join out (3390): turn 0.049 to 0.044 deg/frame (step 0.007, neighbours 0.030), fov 30.000 to 30.000, speed 1.53e-1 to 1.41e-1, ln rate 0.0003 to 0.0002
+  peak turn 7.37 deg/frame at 3332; largest change of turn between frames 0.827 at 3332; largest fov change 0.001 at 3310; largest ln rate change 0.3942 at 3332
+  departing body in view: 15 frames, 3315 to 3329
+  next body: in frame from 3335, radius passes 1 px at 3337, 10 px at 3345, 100 px at 3358
+  roll against the Sun line 42.7 to 61.2, exposure 1.00 to 1.00, sun radius 0.50 to 0.32
+== saturn.travel frames 3885 to 3959
+  join in  (3885): turn 0.003 to 0.004 deg/frame (step 0.001, neighbours 0.030), fov 30.000 to 30.000, speed 8.21e-2 to 8.00e-2, ln rate -0.0004 to -0.0000
+  join out (3960): turn 0.044 to 0.042 deg/frame (step 0.002, neighbours 0.008), fov 30.000 to 30.000, speed 2.02e-1 to 1.25e-1, ln rate 0.0009 to 0.0002
+  peak turn 6.61 deg/frame at 3903; largest change of turn between frames 0.710 at 3905; largest fov change 0.001 at 3880; largest ln rate change 0.3918 at 3911
+  departing body in view: 16 frames, 3885 to 3900
+  next body: in frame from 3905, radius passes 1 px at 3916, 10 px at 3924, 100 px at 3937
+  roll against the Sun line 54.9 to 34.2, exposure 1.00 to 1.00, sun radius 0.32 to 0.20
+== uranus.travel frames 4455 to 4529
+  join in  (4455): turn 0.002 to 0.003 deg/frame (step 0.002, neighbours 0.056), fov 30.000 to 30.000, speed 8.17e-2 to 8.00e-2, ln rate -0.0004 to 0.0000
+  join out (4530): turn 0.051 to 0.046 deg/frame (step 0.005, neighbours 0.022), fov 30.000 to 30.000, speed 1.09e-1 to 8.02e-2, ln rate 0.0007 to 0.0002
+  peak turn 11.10 deg/frame at 4472; largest change of turn between frames 1.241 at 4472; largest fov change 0.001 at 4450; largest ln rate change 0.3257 at 4470
+  departing body in view: 13 frames, 4455 to 4467
+  next body: in frame from 4477, radius passes 1 px at 4475, 10 px at 4484, 100 px at 4497
+  roll against the Sun line 28.4 to -60.9, exposure 1.00 to 1.00, sun radius 0.20 to 0.14
+== ending.retreat frames 5025 to 5144
+  join in  (5025): turn 0.002 to 0.002 deg/frame (step 0.000, neighbours 0.003), fov 30.000 to 30.000, speed 1.01e-1 to 1.00e-1, ln rate -0.0006 to -0.0006
+  join out (5145): turn 0.025 to 0.025 deg/frame (step 0.001, neighbours 0.004), fov 34.000 to 34.000, speed 1.32e-1 to 1.33e-1, ln rate -0.0004 to -0.0004
+  peak turn 1.58 deg/frame at 5085; largest change of turn between frames 0.048 at 5115; largest fov change 0.062 at 5085; largest ln rate change 0.0013 at 5020
+  departing body in view: 0 frames
+  next body: in frame from never, radius passes 1 px at 5025, 10 px at 5025, 100 px at 5025
+  roll against the Sun line -54.5 to -103.0, exposure 1.00 to 1.00, sun radius 0.14 to 0.14
+== ending.lookback frames 5145 to 5324
+  join in  (5145): turn 0.025 to 0.025 deg/frame (step 0.001, neighbours 0.004), fov 34.000 to 34.000, speed 1.32e-1 to 1.33e-1, ln rate -0.0004 to -0.0004
+  join out (5325): turn 0.010 to 0.010 deg/frame (step 0.000, neighbours 0.000), fov 34.000 to 34.000, speed 1.13e-1 to 1.13e-1, ln rate -0.0004 to -0.0004
+  peak turn 0.03 deg/frame at 5145; largest change of turn between frames 0.016 at 5140; largest fov change 0.002 at 5140; largest ln rate change 0.0000 at 5140
+  departing body in view: 0 frames
+  next body: in frame from never, radius passes 1 px at 5145, 10 px at 5145, 100 px at 5145
+  roll against the Sun line -103.0 to -102.7, exposure 1.00 to 1.00, sun radius 0.14 to 0.14
+== ending.fade frames 5325 to 5399
+  join in  (5325): turn 0.010 to 0.010 deg/frame (step 0.000, neighbours 0.000), fov 34.000 to 34.000, speed 1.13e-1 to 1.13e-1, ln rate -0.0004 to -0.0004
+  join out (5400): n/a
+  peak turn 0.01 deg/frame at 5325; largest change of turn between frames 0.000 at 5399; largest fov change 0.000 at 0; largest ln rate change 0.0000 at 5320
+  departing body in view: 0 frames
+  next body: in frame from never, radius passes 1 px at 5325, 10 px at 5325, 100 px at 5325
+  roll against the Sun line -102.7 to -103.3, exposure 1.00 to 1.00, sun radius 0.14 to 0.14
