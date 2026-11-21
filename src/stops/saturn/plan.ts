@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [34.43338, 66.84025, 41.06902] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0, riseEnd: 0.96 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -105,7 +105,7 @@ export class SaturnPlan extends StopPlan {
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
     const u = (time - seg.start) / (seg.end - seg.start)
-    const pose = this.join(this.skimAt(time), this.after(time), u, skim.riseBow)
+    const pose = this.join(this.skimAt(time), this.after(time), Math.min(u / skim.riseEnd, 1), skim.riseBow)
     return u < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
   }
 
