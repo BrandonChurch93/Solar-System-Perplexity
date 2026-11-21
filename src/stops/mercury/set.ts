@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
+import { samplesFor } from '../../core/sampler'
 import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { drift, ramp, smooth } from '../../director/rig'
@@ -124,6 +125,14 @@ export const createSet: SetFactory = async (ctx) => {
       const offAxis = THREE.MathUtils.radToDeg(shot.sun.dir.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
       globe.update(light, shot.sun.dir, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), plan.spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, view.format.width / view.format.height)
       globe.mesh.visible = radiusPx > 0.6
+      const kind = state.segment.kind
+      const fast = view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise')
+      const at = (t: number) => (kind === 'dive' ? plan.dive(t) : plan.rise(t))
+      const now = fast ? at(state.time) : null
+      const before = fast ? at(state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      const moving = now?.view === 'orbit' && before?.view === 'orbit'
+      const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
+      globe.smear(view.camera, moving ? now.pose : null, moving ? before.pose : null, look.smear, jitter?.jitterX ?? 0, jitter?.jitterY ?? 0, view.samples)
       far.update(radiusPx, view, plan.p.tint, gain)
       const travel = state.segment.kind === 'travel' ? smooth(ramp(0.25, 0.8, state.u)) : 1
       const shown = state.segment.kind === 'travel' && state.segment.stop === plan.id ? 1 - travel : travel
