@@ -1,169 +1,58 @@
 {
-  "stop": "uranus",
-  "imageSize": [
-    2816,
-    1584
-  ],
   "vfovDeg": 30.0,
   "aspect": 1.7777777777777777,
-  "circle": {
-    "cx": 1460.3,
-    "cy": 858.74,
-    "r": 528.64
-  },
-  "silhouette": {
-    "model": "perspective sphere fitted on limb rays",
-    "bodyCenterPx": [
-      1458.9,
-      857.37
-    ],
-    "angularRadiusDeg": 10.13579,
-    "distance": 5.682407,
-    "limbPoints": 1072,
-    "residualRmsPx": 4.01,
-    "residualMedianAbsPx": 3.621,
-    "sectorMedianResidualPx": {
-      "0": -7.07,
-      "30": -4.42,
-      "60": 2.81,
-      "90": 3.02,
-      "120": 0.68,
-      "150": -3.89,
-      "180": -4.04,
-      "210": -0.44,
-      "240": 4.24,
-      "270": 5.63,
-      "300": -2.52,
-      "330": 19.35
-    },
-    "note": ""
-  },
   "camera": {
     "position": [
       -0.097815,
       0.125613,
       5.680177
-    ],
-    "quaternion": [
-      0,
-      0,
-      0,
-      1
-    ],
-    "up": [
-      0,
-      1,
-      0
-    ],
-    "note": "three.js PerspectiveCamera, looks down local -Z; identity rotation, so world axes are the camera axes and world +Y is image up"
-  },
-  "rings": {
-    "normal": [
-      -0.110925,
-      0.133303,
-      0.984848
-    ],
-    "inner": 1.4118,
-    "outer": 1.5395,
-    "edges": {
-      "outer": {
-        "radius": 1.5395,
-        "std": 0.08554,
-        "points": 13
-      },
-      "inner": {
-        "radius": 1.4118,
-        "std": 0.03931,
-        "points": 9
-      }
-    },
-    "normalMethod": "perspective circle",
-    "ellipse": null,
-    "note": "faint rings, edges picked by hand on the display copy",
-    "poleToRingNormalDeg": 0.035
+    ]
   },
   "sunDir": [
-    -0.519344,
-    0.736074,
-    0.43414
+    -0.543611,
+    0.795381,
+    0.26806
   ],
-  "sunFit": {
-    "model": "luminance = ambient + gain * max(0, n.s), soft L1, plus n.s = 0 on the detected terminator",
-    "shadingRms": 0.07862,
-    "terminatorRmsDeg": 14.87664,
-    "terminatorSamples": 863,
-    "discSamples": 49816,
-    "gain": 0.89556,
-    "ambient": 0.14991
-  },
   "moons": [
     {
       "id": "miranda",
-      "cx": 671.71,
-      "cy": 343.89,
-      "r": 29.06,
-      "depthFrom": "orbit radius 5.1 body radii, front side",
       "position": [
-        -0.244936,
-        0.215152,
-        5.089569
+        -1.42237,
+        0.93171,
+        0.36292
       ],
-      "radius": 0.005651,
-      "distanceFromCamera": 0.61521,
-      "distanceFromBody": 5.1
+      "radius": 0.05228
     },
     {
       "id": "ariel",
-      "cx": 2425.46,
-      "cy": 444.2,
-      "r": 24.01,
-      "depthFrom": "orbit radius 7.5 body radii, back side",
       "position": [
-        3.981787,
-        1.520128,
-        -6.171271
+        1.5367,
+        0.68432,
+        0.93198
       ],
-      "radius": 0.090856,
-      "distanceFromCamera": 12.61129,
-      "distanceFromBody": 7.5
+      "radius": 0.03855
     }
   ],
+  "rings": {
+    "normal": [
+      -0.198901,
+      -0.604204,
+      0.771606
+    ],
+    "inner": 1.25,
+    "outer": 1.6
+  },
   "globe": {
     "quaternion": [
-      0.6037428,
-      0.220878,
-      0.26238,
-      0.7196278
-    ],
-    "meshQuaternionForThreeSphereGeometry": [
-      0.6124413,
-      -0.3526694,
-      -0.24138,
-      0.6650381
+      -0.2313692,
+      0.0370392,
+      -0.2055664,
+      0.9501783
     ],
     "scale": [
       1.0,
       1.0,
       1.0
-    ],
-    "northPole": [
-      -0.110925,
-      0.133303,
-      0.984848
-    ],
-    "subCameraLonDeg": 0.0,
-    "subCameraLatDeg": 81.618,
-    "method": "pole from ring normal",
-    "note": "pole on the ring normal",
-    "subSolarLonDeg": 174.585,
-    "subSolarLatDeg": 35.682
-  },
-  "unproject": {
-    "fill": "zonal"
-  },
-  "conventions": {
-    "globeLocal": "direction of (lon, lat) is (cos(lat) sin(lon), sin(lat), cos(lat) cos(lon)); lon 0 lat 0 is local +Z; world = quaternion * (scale * local)",
-    "map": "equirectangular, u = lon/360 + 0.5, v = lat/180 + 0.5, north at the top",
-    "threeSphereGeometry": "SphereGeometry puts u at (-cos(2 pi u) sin(theta), cos(theta), sin(2 pi u) sin(theta)): u = 0.5 is +X and east runs counterclockwise about +Y seen from the north, the same handedness as the local frame above. The map is not mirrored and needs no flip; it is only turned 90 degrees about Y, so on a SphereGeometry mesh use meshQuaternionForThreeSphereGeometry (globe.quaternion times a -90 degree turn about Y) and globe.scale"
+    ]
   }
 }
