@@ -45,7 +45,7 @@ void main() {
   float area = mix(1.428 * r * r + 1.195 * r * len, 2.6 * r * r + 1.8 * r * len, soft);
   float cosSun = dot(normalize(w0), uSun);
   float lobe = 0.5 + 0.5 * cosSun;
-  float phase = 0.32 + 0.5 * pow(lobe, 3.0) + 1.3 * pow(lobe, 22.0);
+  float phase = 0.32 + 0.4 * pow(lobe, 3.0) + 0.5 * pow(lobe, 22.0);
   float fade = smoothstep(uSpan * 0.5, uSpan * 0.34, d) * smoothstep(0.1, 0.28, d);
   float energy = uGain * phase * fade * (0.1 + 0.9 * aSeed.y * aSeed.y * aSeed.y) / pow(max(d, 0.3), 1.3);
   bool ok = v0.z < -0.05 && v1.z < -0.05 && energy > 0.0;
