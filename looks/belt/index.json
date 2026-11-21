@@ -1,22 +1,54 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T17:16:01.402Z",
- "head": "4e8aadea1990909c5c6688523e6d7f2f7c287663",
- "note": "task 3 done: hero drifts across, review sheet, finals 2782 to 2784, half star draft",
+ "pushed": "2026-11-21T23:28:53.819Z",
+ "head": "d68846508bc43f20069f426e46367cad7f9a510f",
+ "note": "task 4: night side and rim, relief, clean limbs, hero sharp at 2782, near rock 15 frames (drafts; review sheet rendering)",
  "looks": [
   {
-   "time": "2026-11-21T17:15:01.189Z",
-   "file": "20261121171501189-frame-f02754.jpg",
-   "source": "out/work/belt/t3r5/f02754.png",
+   "time": "2026-11-21T23:28:52.970Z",
+   "file": "20261121232852970-note-d2hero3x.jpg",
+   "source": "out/work/belt/t4/d2hero3x.png",
+   "kind": "note",
+   "label": "task 4 draft 2782, hero at three times native: clean limb, night side with relief",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:28:52.420Z",
+   "file": "20261121232852420-note-t3-limb-fault-3x.jpg",
+   "source": "out/work/belt/t4/t3-limb-fault-3x.png",
+   "kind": "note",
+   "label": "task 3 fault found in task 4, three times native: hatch strokes and dotted second contour on the lit limb (final 2782, review 2763)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:28:51.817Z",
+   "file": "20261121232851817-note-d2rocks.jpg",
+   "source": "out/work/belt/t4/d2rocks.png",
+   "kind": "note",
+   "label": "task 4 draft, rocks at twice native: hero and mid 2763, 2769, hero 2775, far1 2775, hero 2778, 2782, far1 and far2 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:28:51.058Z",
+   "file": "20261121232851058-note-sheet.jpg",
+   "source": "out/work/belt/t4/d1/sheet.jpg",
+   "kind": "note",
+   "label": "task 4 draft sheet: hero sharp near 2782 and fast at both ends, near rock 15 frames, night side with fill",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:27:30.121Z",
+   "file": "20261121232730121-frame-f02763.jpg",
+   "source": "out/work/belt/t4/d2/f02763.png",
    "kind": "frame",
-   "label": "mars.travel frame 2754, review tier",
+   "label": "mars.travel frame 2763, draft tier",
    "stop": "mars",
    "segment": "mars.travel",
-   "frame": 2754,
-   "tier": "review",
+   "frame": 2763,
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "9db8e7cac0634236"
+   "engine": "d914815b15cda576"
   },
   {
    "time": "2026-11-21T17:12:30.222Z",
@@ -40,44 +72,6 @@
    "source": "out/work/belt/t3f2/f02782.png",
    "kind": "note",
    "label": "task 3 final 2782, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T17:12:16.068Z",
-   "file": "20261121171216068-frame-f02325.jpg",
-   "source": "out/work/belt/t3proof-branch/f02325.png",
-   "kind": "frame",
-   "label": "mars.hold frame 2325, draft tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "9db8e7cac0634236"
-  },
-  {
-   "time": "2026-11-21T17:08:48.726Z",
-   "file": "20261121170848726-note-sheet.jpg",
-   "source": "out/work/belt/t3sheet/sheet.jpg",
-   "kind": "note",
-   "label": "task 3 review sheet of mars.travel, every third frame 2745 to 2817, hero on its drift path",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T17:01:53.058Z",
-   "file": "20261121170153058-note-half2782.jpg",
-   "source": "out/work/belt/t3/half2782.png",
-   "kind": "note",
-   "label": "task 3 draft 2782 with half the flight stars (400000), hero on its new drift path: dark sides read by hidden stars",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T16:43:15.418Z",
-   "file": "20261121164315418-note-sheet.jpg",
-   "source": "out/work/belt/t3r2/sheet.jpg",
-   "kind": "note",
-   "label": "belt task 3: review sheet every third frame 2745 to 2817, close pass 2776 to 2786, all rocks with their own motion blur (unfinished: rim and mid rock still to fix)",
    "stop": "mars"
   }
  ]
