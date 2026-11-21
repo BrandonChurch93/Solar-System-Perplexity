@@ -93,10 +93,36 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
 - Faint thin streaks near the hero in 2782 are the film's dust motes, not the belt.
 - 04:26 chain started (`/tmp/run3.sh`): final 2782 again, review sheet again (`out/work/belt/sheet3/`), review stills of 2772 and 2796.
 
-## Next
-1. Look at the final 2782, the sheet and the two fast frames; native crops with `npm run crops`.
-2. DONE message: commit, eight hashes, cost table, weak points.
-
 - 04:31 final 2782 with the new far1 tilt, review sheet (`out/work/belt/sheet3/`), review stills of 2772 and 2796 at native size: hero streaks smooth, no copies of an edge. Dotted short trails of bright points near the rocks and in open sky at review are the film's dust motes (16 samples), not the belt. Crop pages of 2782 at final made with `npm run crops` (`out/work/crops/`): hero, far1, far2, Jupiter, near rock, sky hold up.
 - 04:33 the Builder says main moved to 9f78a4e (engine batch 2: sky and stars not shaded under opaque objects in capture, engine hash 05c29d3a1588e95f). Merged, hook applied again without conflict, patch regenerated, build ok, vitest 28 green, belt test 4 green. The hook still sits after the near scene, so the belt layer goes over the finished sample.
 - 04:34 chain started again on the new main (`/tmp/run4.sh`, log `/tmp/run4.log`): review sheet with the belt (`sheet4`), four proof frames at final, final 2782, then hook reversed, review sheet without (`sheet5`), hook applied again and build.
+- 04:41 byte proof again on main 9f78a4e with the hook and the module (`out/work/belt/proof2/`): 2325, 2427, 2580, 2726 at final give the same four sha256 as the baseline on plain 2cbceef (listed above). So: four baseline hashes, four hook hashes, pairwise equal, checked on b4ae65c and on 9f78a4e.
+- 04:42 final 2782 on 9f78a4e: `out/work/belt/f2782.png`, 55.0 s, sha256 453c2129c026490da2e66a46a7d4e596bc55a57115409a5bc5426c56cdf0a288. The review sheet with the belt has the same bytes before and after the batch 2 merge.
+- 04:45 cost at review on 9f78a4e, sheet frames, seconds per frame (`sheet4` with, `sheet5` hook reversed; engine hash with the hook bf9e533c3bea77c1, reversed cdec05916ee737d7; the record of 2819 was not caught by my copy loop):
+
+| Frame | With belt | Without |
+| --- | --- | --- |
+| 2745 (first, asset load) | 32.4 | 32.3 |
+| 2752 | 16.2 | 16.3 |
+| 2758 | 13.8 | 13.6 |
+| 2765 | 9.9 | 10.0 |
+| 2772 | 14.0 | 8.7 |
+| 2779 | 11.6 | 8.9 |
+| 2785 | 11.8 | 8.9 |
+| 2792 | 11.8 | 8.3 |
+| 2799 | 11.8 | 9.0 |
+| 2806 | 10.3 | 10.3 |
+| 2812 | 9.9 | 9.9 |
+
+  - Mean of the ten frames 2752 to 2812: 12.10 s with, 10.40 s without. Mean of the five frames with rocks: 12.18 s with, 8.78 s without (plus 3.4 s; plus 5.3 s at 2772). Frames without rocks cost the same.
+- 04:47 DONE sent to the Builder.
+
+## Still weak
+- Rocks are in frame only from 2767 to 2801 (hero 2769 to 2798, near 2770 to 2787, far1 2767 to 2801, far2 2774 to 2791). No rock while Mars is in frame, none over the grown Jupiter.
+- The near rock is a soft pale shape with a dark side that barely separates from the sky; it reads as a near rock in the whole frame, less so in a tight crop.
+- far2 is a dark shape with a thin lit edge at any tilt (it sits on the Sun side of the frame).
+- The belt adds about 3.4 s per frame at review where rocks are in frame (hero: up to 64 draws with a 26 step shadow march).
+- Dust motes are drawn after the belt, so far motes show in front of rocks. At review the motes leave dotted trails in the pan (engine, not belt).
+- About 92 MB of half float render targets at 1080p while the segment is prepared, on top of 36.7 MB of textures.
+- The web set is softer (half size maps); only a draft still was checked with it.
+- The belt test is outside `tests/`; `npm run looks -- --push --folder belt` does not accept `belt`.
