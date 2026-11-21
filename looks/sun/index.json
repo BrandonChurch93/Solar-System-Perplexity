@@ -1,9 +1,69 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T12:13:27.596Z",
+ "pushed": "2026-11-21T12:37:46.251Z",
  "head": "00c51dc27e45a12c4a91c2ade3da4ba3accee75f",
- "note": "READY for round 2 sent at 294ef64; now painting the foreground apron again (soft glossy cells at frames 0 and 60)",
+ "note": "apron repainted (matte cells), frame 90 edges now approved pixels; verifying before commit",
  "looks": [
+  {
+   "time": "2026-11-21T12:37:45.188Z",
+   "file": "20261121123745188-note-i52-f150.jpg",
+   "source": "out/work/sun/i52-f150.jpg",
+   "kind": "note",
+   "label": "frame 150 with the repainted apron",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:37:44.601Z",
+   "file": "20261121123744601-note-i51-f90-BL-approved-ap6-ap7.jpg",
+   "source": "out/work/sun/i51-f90-BL-approved-ap6-ap7.png",
+   "kind": "note",
+   "label": "frame 90 bottom left: approved, film before, film with the apron feather moved outside the approved frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:37:43.991Z",
+   "file": "20261121123743991-note-i50-f60-r10-vs-new.jpg",
+   "source": "out/work/sun/i50-f60-r10-vs-new.jpg",
+   "kind": "note",
+   "label": "frame 60, round 10 apron above, repainted apron below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:37:43.371Z",
+   "file": "20261121123743371-note-i50-f0-r10-vs-new.jpg",
+   "source": "out/work/sun/i50-f0-r10-vs-new.jpg",
+   "kind": "note",
+   "label": "frame 0, round 10 apron above, repainted apron below (final, no grain)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T12:29:04.763Z",
+   "file": "20261121122904763-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-21T12:23:21.911Z",
+   "file": "20261121122321911-frame-f00084.jpg",
+   "source": "out/work/seq/0-96/f00084.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 84, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 84,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T12:13:26.996Z",
    "file": "20261121121326996-note-i36-f0-corners.jpg",
@@ -11,58 +71,6 @@
    "kind": "note",
    "label": "Frame 0 bottom corners at native size: round 10 apron above, round 11 apron below",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:13:26.451Z",
-   "file": "20261121121326451-note-i35-ap4-f60.jpg",
-   "source": "out/work/sun/i35-ap4-f60.jpg",
-   "kind": "note",
-   "label": "Frame 60 at final with the round 11 apron; not committed yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T12:13:25.885Z",
-   "file": "20261121121325885-note-i35-ap4-f0.jpg",
-   "source": "out/work/sun/i35-ap4-f0.jpg",
-   "kind": "note",
-   "label": "Frame 0 at final, apron painted again in round 11 (matte pillow cells, cut along a least difference path between tiles); not committed yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:55:19.544Z",
-   "file": "20261121115519544-job-frame-00360.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.hold frame 360, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T11:46:03.547Z",
-   "file": "20261121114603547-note-leave3.jpg",
-   "source": "out/work/sun/leave3.jpg",
-   "kind": "note",
-   "label": "Leaving at draft, frames 444 to 488 after the merges: no jump at 449 to 450, the Sun leaves over the top by 472",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T11:45:02.140Z",
-   "file": "20261121114502140-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-21T11:42:50.210Z",
@@ -74,20 +82,6 @@
    "segment": "sun.hold",
    "frame": 440,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:31:11.392Z",
-   "file": "20261121113111392-frame-base90.jpg",
-   "source": "out/work/sun/base90.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "020740ac07ff27f7"
