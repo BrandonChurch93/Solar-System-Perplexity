@@ -94,7 +94,7 @@ def hold(film=None):
 
 
 CLOSE = geo.ROOT / "references" / "approved" / "earth-close.jpg"
-TERRAIN_MARGIN = 0.25
+TERRAIN_MARGIN = 0.5
 SUN_AT = (-0.083, 1.251)
 HELD = (40.0, 100.0, 70)
 GLOW = (120.0, 700.0, 3.0)
@@ -117,7 +117,8 @@ def terrain(film):
     w = step(above, HELD[0], HELD[1])[..., None]
     lin = d * w + held[None] * (1 - w)
     px, py = round(W * TERRAIN_MARGIN), round(H * TERRAIN_MARGIN)
-    wide = np.pad(lin, ((0, 0), (px, px), (0, 0)), mode="symmetric")
+    half = px // 2
+    wide = np.pad(np.pad(lin, ((0, 0), (half, half), (0, 0)), mode="symmetric"), ((0, 0), (px - half, px - half), (0, 0)), mode="symmetric")
     sx, sy = W / 2 * (1 + SUN_AT[0]), H / 2 * (1 - SUN_AT[1])
     xs = np.arange(-px, W + px) + 0.5
     top = np.stack([ndi.gaussian_filter1d(wide[0:12, :, i].mean(0), 24, mode="nearest") for i in range(3)], -1)

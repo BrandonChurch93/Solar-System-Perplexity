@@ -71,7 +71,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const tan = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [tan * 16 / 9, tan], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.edge })
   }
 
   const light = new THREE.Vector3()
