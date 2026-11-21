@@ -1,0 +1,50 @@
+{
+ "folder": "belt",
+ "pushed": "2026-11-21T03:08:29.655Z",
+ "head": "843378a532f0c57e5790ed0c6d12efe968f2f29a",
+ "note": "baseline final stills on plain main before any belt code",
+ "looks": [
+  {
+   "time": "2026-11-21T03:07:53.635Z",
+   "file": "20261121030753635-frame-f2580.jpg",
+   "source": "out/work/belt/base/f2580.png",
+   "kind": "frame",
+   "label": "mars.terrain frame 2580, final tier",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2580,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:06:11.134Z",
+   "file": "20261121030611134-frame-f2427.jpg",
+   "source": "out/work/belt/base/f2427.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2427, final tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2427,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  },
+  {
+   "time": "2026-11-21T03:02:19.688Z",
+   "file": "20261121030219688-frame-f2325.jpg",
+   "source": "out/work/belt/base/f2325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "cae3193a3821716c"
+  }
+ ]
+}
