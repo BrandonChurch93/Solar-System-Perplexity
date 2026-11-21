@@ -41,7 +41,7 @@ export class FilmDirector implements Director {
   private lookbackSun = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
-  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 } }
+  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '' }
 
   constructor(plans: StopPlan[]) {
     this.plans = plans
@@ -75,19 +75,31 @@ export class FilmDirector implements Director {
     const anchor = aimAt(a.along, a.tilt, a.lift)
     const frame = judged(a.stop + '.hold')!
     const f = anchor.clone().multiply(cam(frame).invert())
-    const out: SkyAims = { frame: round(f), turns: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! } }
+    const out: SkyAims = { frame: round(f), turns: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop }
     for (const p of this.plans) {
       const hold = judged(p.id + '.hold')
       const terrain = judged(p.id + '.terrain')
       const want = p.id === a.tstop ? [a.talong, a.ttilt, a.tlift] : p.p.skyAim?.terrain
-      const orbit = p.id === a.stop || hold === null ? anchor.clone() : f.clone().multiply(cam(hold))
+      const own = p.id === a.stop || hold === null ? undefined : p.p.skyAim?.orbit
+      let orbit: THREE.Quaternion
+      let mine = f
+      if (own && hold !== null) {
+        orbit = aimAt(own[0], own[1], own[2])
+        const held = cam(hold)
+        out.orbits[p.id] = round(held.clone().multiply(orbit.clone().invert()).multiply(f))
+        mine = orbit.clone().multiply(held.invert())
+      } else orbit = p.id === a.stop || hold === null ? anchor.clone() : f.clone().multiply(cam(hold))
       let low = orbit
       if (terrain !== null) {
         const tcam = cam(terrain)
         if (want) {
           low = aimAt(want[0]!, want[1]!, want[2]!)
           out.turns[p.id] = round(tcam.clone().multiply(low.clone().invert()).multiply(f))
-        } else low = f.clone().multiply(tcam)
+        } else {
+          low = mine.clone().multiply(tcam)
+          const t = out.orbits[p.id]
+          if (t) out.turns[p.id] = t
+        }
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     }
@@ -271,6 +283,8 @@ export class FilmDirector implements Director {
       }
       sets = [s]
       near = 0.2
+      const t = this.sky.orbits[p.id]
+      if (t) skyTurn = t
     } else if (segment.kind === 'travel' && index + 1 < this.plans.length) {
       const a = this.plans[index]!
       const b = this.plans[index + 1]!
@@ -298,6 +312,9 @@ export class FilmDirector implements Director {
       dust = Math.sin(Math.PI * smooth(u))
       dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
+      const ta = this.sky.orbits[a.id]
+      const tb = this.sky.orbits[b.id]
+      if (ta || tb) skyTurn = (ta ?? NO_TURN).clone().slerp(tb ?? NO_TURN, easeInOut(ramp(0, this.turnEnd(index), u)))
     } else {
       const p = this.plans[index]!
       light = this.sunFor(index)
@@ -346,6 +363,9 @@ export class FilmDirector implements Director {
       if (view === 'terrain') {
         skyGlow = p.p.light.terrainSkyGlow ?? 1
         const t = this.sky.turns[p.id]
+        if (t) skyTurn = t
+      } else {
+        const t = this.sky.orbits[p.id]
         if (t) skyTurn = t
       }
       pose = inSet(s, local)
