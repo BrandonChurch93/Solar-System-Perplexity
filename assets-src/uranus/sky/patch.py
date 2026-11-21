@@ -15,9 +15,13 @@ from deblock import deblock
 FULL = (2816, 1584)
 MARGIN = 0.375
 FADE = 0.6
+WOBBLE = 0.35
+WAVES = ((260, 0.75), (90, 0.25))
+WOBBLE_SEED = (11, 12)
 BAND_DEG = 31.0
 WIDE_LOW = 20
-DETAIL = (0.3, 0.85)
+DETAIL = (0.25, 0.65)
+MOTTLE = (0.08, 0.45)
 SHIFT = 700
 SEAM = 28
 RING_ZONE = (1.9, 2.02)
@@ -204,6 +208,16 @@ def shifted(v, px, py):
     return out
 
 
+def wobble(shape, seed):
+    rng = np.random.default_rng(seed)
+    out = np.zeros(shape, np.float32)
+    for sigma, gain in WAVES:
+        f = ndi.gaussian_filter(rng.standard_normal((shape[0] // 8 + 1, shape[1] // 8 + 1)).astype(np.float32), sigma / 8)
+        f = cv2.resize(f, (shape[1], shape[0]), interpolation=cv2.INTER_CUBIC)
+        out += gain * f / f.std()
+    return np.clip(out / 1.2, -1, 1)
+
+
 def widen(lin, one):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
     broad = np.stack([ndi.gaussian_filter(low(lin)[..., i], WIDE_LOW) for i in range(3)], -1)
@@ -213,13 +227,14 @@ def widen(lin, one):
     ox = np.maximum(np.maximum(-xx, xx - (FULL[0] - 1)), 0)
     oy = np.maximum(np.maximum(-yy, yy - (FULL[1] - 1)), 0)
     m = np.hypot(ox / px, oy / py)
-    w = step(m, 0, FADE)[..., None]
+    thin = m * (1 + WOBBLE * wobble(m.shape, WOBBLE_SEED[1]))
+    w = step(m * (1 + WOBBLE * wobble(m.shape, WOBBLE_SEED[0])), 0, FADE)[..., None]
     sky = one_sky(one, (FULL[0] + 2 * px, FULL[1] + 2 * py))
     inside = ((ox == 0) & (oy == 0))[..., None]
     edge = lambda v: np.pad(v, ((py, py), (px, px), (0, 0)), mode='edge')
     floor = low(lin)
     t = step(np.hypot(ox, oy), 0, SEAM)[..., None]
-    detail = (edge(floor - broad) * (1 - t) + shifted(floor - broad, px, py) * t + shifted(lin - floor, px, py)) * (1 - step(m, DETAIL[0], DETAIL[1]))[..., None]
+    detail = (edge(floor - broad) * (1 - t) + shifted(floor - broad, px, py) * t * (1 - step(thin, MOTTLE[0], MOTTLE[1]))[..., None] + shifted(lin - floor, px, py)) * (1 - step(thin, DETAIL[0], DETAIL[1]))[..., None]
     detail = np.where(inside, edge(lin - broad), detail)
     held = np.where(inside, edge(broad), far)
     return np.maximum(detail + held * (1 - w) + sky * w, 0), w[..., 0], sky

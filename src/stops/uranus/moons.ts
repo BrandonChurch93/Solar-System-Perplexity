@@ -49,11 +49,11 @@ void main() {
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
   vec3 north = cross(d, east);
-  float e = uStep;
+  float e = max(uStep, 1.5 * max(length(dFdx(d)), length(dFdy(d))));
   float hE = heightAt(normalize(d + east * e)) - heightAt(normalize(d - east * e));
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = uBodyToWorld * ((east * hE + north * hN) / (2.0 * e));
-  vec3 np = normalize(n - slope * uBump);
+  vec3 np = normalize(n - slope * (uBump * min(sqrt(e / uStep), 4.0)));
   float base = dot(n, uSunW);
   float ndl = mix(dot(np, uSunW), base, uWrap);
   float soft = smoothstep(-0.06, 0.12, base);
