@@ -615,6 +615,11 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - Samples at review with lens 2: 3290 17.9 px, 3291 14.8 (soft 0.65), 3292 12.7 (0.26), 3293 9.5 (0), 3296 5.3, 3300 4.8, 3304 3.2, 3306 2.1. Before: 3290 25.7, 3293 14.4, 3294 11.9, 3296 7.8, 3300 2.9.
 - 20:44: job 3 running (log `/tmp/job3.log`): review still of 3150 with the new core, then draft strip `rise_p3` (3270 to 3286) with lens 2 and the lit pall.
 
+- 20:45: review still of 3150 with the new core (5 samples at review, 16 at final): crops D and E beside the round 25 final (`out/work/view/polish_folds_D_film.jpg`, `polish_folds_E_film.jpg`): every broad fold now carries fine wisps, puffs and filaments, the forms, the tone and the sunlit tips are in place, the dark folds stay dark (thin paler fibres on them). Whole frame: the approved picture's composition, nothing new in the storm, far bands, horizon or sky. Crop U (blue glow) nearly unchanged.
+- 20:50: draft strip `rise_p3` (lens 2, lit pall): the night side is dark from the moment it comes into view (3278 on), no pale haze over it and no one frame change at 3283. 3274 at native size: the banded map at low contrast under soft streaming haze, the limb a soft hazy rim.
+- 20:51: main had moved to cb86bfe (Earth round 3, Venus clip; nothing under src outside other stops, no engine, tools or config change). Code commit ec5444e, merge 93d80a0. tsc clean, build green, vitest 62 of 62. Binaries (`deck-core.jpg` full and web) not committed yet (once, at POLISH READY).
+- 20:52: review chain started (`/tmp/chain_p.sh`, log `/tmp/chain_p.log`, ends with "ALL done"; frames copied to `out/work/view/pol/`): rise cover sheet, review stills 3278 3282 3284, rise sheet, dive sheet, dive cover sheet, terrain sheet. About 90 min. NO src edits and no asset writes while it runs. After it: full measure, gates, finals 2895 2997 3150 3296, compare hold and terrain at final tier, commit binaries, POLISH READY.
+
 ## Next
 
 - Polish items 1, 3, 4 (then 5), see the list above. Then `POLISH READY <commit>` to /root.
