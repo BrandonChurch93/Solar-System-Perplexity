@@ -1,9 +1,23 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T18:29:27.998Z",
+ "pushed": "2026-11-21T18:54:16.968Z",
  "head": "b66d19e580b86fec99dc2ef78e3216b4bae01675",
- "note": "round 3 verification: rise sheet at review done; rise cover sheet rendering (2132 to 2136 at the sample cap)",
+ "note": "round 3 verification: rise cover sheet at review, frames 2127 to 2134 so far",
  "looks": [
+  {
+   "time": "2026-11-21T18:47:20.093Z",
+   "file": "20261121184720093-frame-f02134-review.jpg",
+   "source": "out/work/sheets/.frames-PnEKwW/f02134-review.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2134, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2134,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T18:29:26.560Z",
    "file": "20261121182926560-note-rc-2127-2130.jpg",
@@ -11,20 +25,6 @@
    "kind": "note",
    "label": "rise cover at review tier: 2127, 2128, 2129, 2130 (the handover, limb in place)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T18:20:47.058Z",
-   "file": "20261121182047058-frame-f02131-review.jpg",
-   "source": "out/work/sheets/.frames-PnEKwW/f02131-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2131, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2131,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T18:10:37.425Z",
