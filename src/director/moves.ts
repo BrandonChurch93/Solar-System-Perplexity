@@ -249,6 +249,10 @@ export class StopPlan {
     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
   }
 
+  skyGain(_time: number): number {
+    return 1
+  }
+
   coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w) return 0

@@ -623,6 +623,8 @@ export class FilmDirector implements Director {
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
       }
+      const gain = p.skyGain(time)
+      if (gain !== 1) light = { ...light, sky: light.sky * gain }
     }
 
     pose.quaternion.multiply(drift(time))
