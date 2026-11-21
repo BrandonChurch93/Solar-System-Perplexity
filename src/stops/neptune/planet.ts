@@ -35,6 +35,10 @@ export interface LimbParams {
   veilAmount: number
   veilMu: [number, number]
   veilSun: [number, number, number]
+  veilAim: [number, number, number]
+  twilight: [number, number, number]
+  twilightSun: [number, number, number, number]
+  shade: [number, number, number]
   forward: [number, number, number]
   forwardWidth: number
   forwardPower: number
@@ -125,6 +129,10 @@ uniform vec3 uRim;
 uniform vec3 uRimShape;
 uniform vec3 uRimDir;
 uniform vec3 uLimbDark;
+uniform vec3 uVeilDir;
+uniform vec3 uTwi;
+uniform vec4 uTwiSun;
+uniform vec4 uAirShade;
 uniform vec2 uDarkEdge;
 uniform vec3 uDarkDir;
 uniform vec4 uVeil;
@@ -217,12 +225,16 @@ void main() {
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha) * uTint;
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
-  col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, ndl), uVeilSun.z));
-  col *= 1.0 - uLimbDark.x * (1.0 - smoothstep(uLimbDark.y, uLimbDark.z, mu)) * smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
+  col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
+  col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
   col += uRim * exp(-mu / uRimShape.x) * smoothstep(uRimShape.y, uRimShape.z, dot(n, uRimDir));
   col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
   vec4 sky = air(dir, true);
+  sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
   col = col * exp(-sky.a * uExtinction) + sky.rgb;
+  float dw = smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
+  float dm = 0.6 + 0.4 * dw;
+  col *= 1.0 - uLimbDark.x * pow(dw, 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
@@ -274,7 +286,8 @@ export class NeptunePlanet {
         uExtinction: { value: o.air.extinction },
         uRim: { value: new THREE.Vector3().fromArray(l.rim) }, uRimShape: { value: new THREE.Vector3(l.rimWidth, l.rimFrom, l.rimTo) }, uRimDir: { value: new THREE.Vector3(1, 0, 0) },
         uLimbDark: { value: new THREE.Vector3(l.dark, l.darkMu[0], l.darkMu[1]) }, uDarkEdge: { value: new THREE.Vector2(l.darkFrom, l.darkTo) }, uDarkDir: { value: new THREE.Vector3(1, 0, 0) },
-        uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) },
+        uVeil: { value: new THREE.Vector4(l.veil[0], l.veil[1], l.veil[2], l.veilAmount) }, uVeilMu: { value: new THREE.Vector2().fromArray(l.veilMu) }, uVeilSun: { value: new THREE.Vector3().fromArray(l.veilSun) }, uVeilDir: { value: new THREE.Vector3(1, 0, 0) },
+        uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,

@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import curves
 import geo
 import separate
+import unproject
 
 WORK = os.path.join(geo.ROOT, 'out/work/nep/wrap')
 CLOUD_KNOTS = np.array([-1, -0.2, 0.0, 0.06, 0.125, 0.19, 0.25, 0.31, 0.375, 0.44, 0.5, 0.56, 0.69, 1.0])
@@ -47,7 +48,15 @@ def main():
     sc = geo.decode(img).astype(np.float32)
     limb = json.load(open(os.path.join(geo.ROOT, 'src/stops/neptune/haze.json')))['limb']
     vs = limb['veilSun']
-    w = limb['veilAmount'] * (1 - separate.smoothstep(limb['veilMu'][0], limb['veilMu'][1], mu)) * separate.smoothstep(vs[0], vs[1], ndl) ** vs[2]
+    aim = geo.SUN + np.array(limb['veilAim'])
+    aim /= np.linalg.norm(aim)
+    x0, y0, x1, y1 = g['window']
+    q = np.zeros_like(mu)
+    for ya in range(y0, y1, 256):
+        yb = min(ya + 256, y1)
+        lon, lat = unproject.grid(x0, ya, x1, yb)
+        q[ya - y0:yb - y0] = geo.lonlat_to_world(lon, lat) @ aim
+    w = limb['veilAmount'] * (1 - separate.smoothstep(limb['veilMu'][0], limb['veilMu'][1], mu)) * separate.smoothstep(vs[0], vs[1], q) ** vs[2]
     sc = np.maximum((sc - np.array(limb['veil'], np.float32) * w[..., None]) / (1 - w[..., None]), sc * 0.3).astype(np.float32)
     valid = (mu > 0.22) & (ndl > 0.06)
     alb = np.where(valid[..., None], sc / shade, curves.A0).astype(np.float32)

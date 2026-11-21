@@ -39,6 +39,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(planet.mesh, air.mesh)
   const rimAim = new THREE.Vector3().fromArray(look.limb.rimAim)
   const darkAim = new THREE.Vector3().fromArray(look.limb.darkAim)
+  const veilAim = new THREE.Vector3().fromArray(look.limb.veilAim)
 
   const tritonFit = fit.moons![0]!
   const moonMap = await ctx.texture(base + moonAsset.file, { srgb: true, anisotropy: 16, repeat: true })
@@ -98,6 +99,9 @@ export const createSet: SetFactory = async (ctx) => {
       air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uDarkDir!.value as THREE.Vector3).copy(darkAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
+      ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home
+      ;(pu.uAirShade!.value as THREE.Vector4).w = home
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * elapsed, THREE.MathUtils.degToRad(look.storm.degPerSecond) * bounded, gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * home
       pu.uAspect!.value = view.format.width / view.format.height

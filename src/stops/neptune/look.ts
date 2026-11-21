@@ -4,7 +4,12 @@ import hazeJson from './haze.json'
 import type { CloudParams, LimbParams } from './planet'
 
 export const code = curve.code
-export const deck = curve.deck
+export const nightGain = 1.2
+export const deck = curve.deck.map((k, i) => {
+  const t = Math.min(Math.max((i / 16 - 1 + 0.1) / 0.15, 0), 1)
+  const g = 1 + (nightGain - 1) * (1 - t * t * (3 - 2 * t))
+  return k.map((v) => v * g)
+})
 export const cloud = curve.cloud
 export const air = hazeJson.air as AirParams
 export const limb = hazeJson.limb as LimbParams
@@ -17,8 +22,8 @@ export const lineFade: [number, number] = [0.6, 0.15]
 
 export const triton = {
   up: [-0.2, 0.9, 0.35] as [number, number, number],
-  aim: [0, 0, 0.5] as [number, number, number],
-  gain: 4,
+  aim: [0.25, -0.25, 0.55] as [number, number, number],
+  gain: 2.6,
   sun: [1, 0.98, 0.96] as [number, number, number],
   ambient: [0.004, 0.007, 0.014] as [number, number, number],
   terminator: [-0.04, 0.3] as [number, number],

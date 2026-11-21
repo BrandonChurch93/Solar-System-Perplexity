@@ -2,6 +2,7 @@ import json
 import os
 import sys
 
+import cv2
 import numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
@@ -14,7 +15,8 @@ from deblock import deblock
 Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 MARGIN = 0.125
-RIM = (1.008, 1.02)
+EDGE = (1.004, 1.014)
+LINE = 23
 SUN = (2514, 227, 330)
 SUN_FROM = (-150, 900)
 SUN_OUT = 520
@@ -101,6 +103,18 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
+def compact(a):
+    a = a.astype(np.float32)
+    best = np.zeros_like(a)
+    for ang in range(0, 180, 15):
+        t = np.radians(ang)
+        k = np.zeros((LINE, LINE), np.uint8)
+        c = LINE // 2
+        cv2.line(k, (int(round(c - c * np.cos(t))), int(round(c - c * np.sin(t)))), (int(round(c + c * np.cos(t))), int(round(c + c * np.sin(t)))), 1, 1)
+        best = np.maximum(best, cv2.morphologyEx(a, cv2.MORPH_OPEN, k))
+    return np.maximum(a - best, 0)
+
+
 def ring_mask():
     n = np.array(RING['normal'], float)
     n /= np.linalg.norm(n)
@@ -139,10 +153,12 @@ def hold(hero, fill, glow, out):
     reach = (soft(near) > 0.02)[..., None] * step(d, 0.72, 1.04)[..., None]
     scale = gain * (1 - reach) + np.clip(local, gain * 0.35, gain * 2.5) * reach
     print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)))
-    low = lambda v: np.stack([ndi.gaussian_filter(np.minimum(v[..., i], ndi.gaussian_filter(v[..., i], 4)), 4) for i in range(3)], -1)
-    rim = step(d, RIM[0], RIM[1])[..., None]
     f = f * scale
-    f = f * (1 - rim) + (low(f) + np.maximum(a - low(a), 0)) * rim * (own[..., None] > 0.5) + f * rim * (own[..., None] <= 0.5)
+    hs, fs = compact(a), compact(f)
+    k = float(luma(hs)[zone].mean() / max(luma(fs)[zone].mean(), 1e-6))
+    print('fill star gain', round(k, 3))
+    outside = (step(d, EDGE[0], EDGE[1]) * moon)[..., None]
+    f = f - fs + fs * k * (1 - outside) + hs * outside
     lin = sky * own[..., None] + f * (1 - own[..., None])
     save(lin, 'sky-hold.webp', out)
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((1408, 792)).save(os.path.join(geo.ROOT, 'out/work/nep/sky/own.png'))
