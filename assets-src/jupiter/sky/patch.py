@@ -8,7 +8,8 @@ Image.MAX_IMAGE_PIXELS = None
 FULL = (2816, 1584)
 WEB = (1408, 792)
 MARGIN = 0.125
-RIM = (1.008, 1.02)
+RIM = (1.012, 1.03)
+SCALES = (24, 48, 96, 192, 384, 768)
 
 
 def save(lin, name, out):
@@ -60,7 +61,7 @@ def luma(a):
     return a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
 
-def hold(hero, fill, glow, out, fix=None):
+def hold(hero, fill, glow, out):
     fit = json.load(open('assets-src/jupiter/fit.json'))
     c = fit['circle']
     w, h = fit['imageSize']
@@ -73,23 +74,28 @@ def hold(hero, fill, glow, out, fix=None):
     sky = np.maximum(a - g, 0)
     la = ndi.gaussian_filter(luma(a), 10)
     lg = ndi.gaussian_filter(luma(g), 10)
-    own = step(d, 1.03, 1.07) * (1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85))
-    own = ndi.gaussian_filter(own, 3)
-    ring = (d > 1.1) & (d < 1.45) & (own > 0.98)
-    gain = np.array([np.median(sky[..., i][ring]) / max(np.median(f[..., i][ring]), 1e-6) for i in range(3)])
+    calm = 1 - step(lg / np.maximum(la, 1e-5), 0.6, 0.85)
+    own = ndi.gaussian_filter(step(d, 1.03, 1.07) * calm, 3)
     near = (own > 0.98).astype(np.float32)
-    soft = lambda v: ndi.gaussian_filter(v, 48)
-    local = np.stack([soft(np.minimum(sky[..., i], 0.2) * near) / np.maximum(soft(np.minimum(f[..., i], 0.2) * near), 1e-6) for i in range(3)], -1)
-    reach = (soft(near) > 0.02)[..., None] * step(d, 0.72, 1.04)[..., None]
-    scale = gain * (1 - reach) + np.clip(local, gain * 0.35, gain * 2.5) * reach
-    print('fill gain', gain.round(3), 'own share', float(own.mean().round(3)))
     low = lambda v: np.stack([ndi.gaussian_filter(np.minimum(v[..., i], ndi.gaussian_filter(v[..., i], 4)), 4) for i in range(3)], -1)
-    rim = step(d, RIM[0], RIM[1])[..., None]
-    f = f * scale
-    f = f * (1 - rim) + (low(f) + np.maximum(a - low(a), 0)) * rim
-    lin = sky * own[..., None] + f * (1 - own[..., None])
-    if fix:
-        lin = np.maximum(lin + scene(fix[0], Image.LANCZOS) - scene(fix[1], Image.BICUBIC), 0) * own[..., None] + lin * (1 - own[..., None])
+    ls, lf = low(sky), low(f)
+    ratio = None
+    sure = None
+    for sigma in SCALES:
+        n = ndi.gaussian_filter(near, sigma)
+        r = np.stack([ndi.gaussian_filter(ls[..., i] * near, sigma) / np.maximum(ndi.gaussian_filter(lf[..., i] * near, sigma), 1e-9) for i in range(3)], -1)
+        m = step(n, 0.04, 0.3)[..., None] if sigma != SCALES[-1] else np.ones_like(n)[..., None]
+        if ratio is None:
+            ratio, sure = r, m
+        else:
+            ratio = ratio * sure + r * (1 - sure)
+            sure = np.maximum(sure, m)
+    ratio = np.clip(ratio, 0.2, 8)
+    print('ratio at the disc centre', ratio[int(c['cy'] * k), int(c['cx'] * k)].round(3), 'own share', float(own.mean().round(3)))
+    back = lf * ratio + (f - lf) * luma(ratio)[..., None]
+    stars = np.maximum(a - low(a), 0) * (step(d, RIM[0], RIM[1]) * calm)[..., None]
+    back = back * (1 - (step(d, RIM[0], RIM[1]) * calm)[..., None]) + (lf * ratio + stars) * (step(d, RIM[0], RIM[1]) * calm)[..., None]
+    lin = sky * own[..., None] + back * (1 - own[..., None])
     save(lin, 'sky-hold.webp', out)
 
 

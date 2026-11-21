@@ -50,18 +50,15 @@ export interface GlobeOptions {
   spot: SpotShape
   wisp: WispParams
   patches?: PatchSet
+  edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number] }
   segments?: number
 }
 
 const VERT = /* glsl */ `
-out vec3 vLocal;
-out vec3 vWorldN;
 out vec3 vPos;
 out vec3 vView;
 out vec3 vClip;
 void main() {
-  vLocal = position;
-  vWorldN = normalize(mat3(modelMatrix) * position);
   vec4 wp = modelMatrix * vec4(position, 1.0);
   vPos = wp.xyz;
   vec4 mv = viewMatrix * wp;
@@ -118,11 +115,12 @@ uniform vec4 uWispShape;
 uniform vec4 uWispShadow;
 uniform vec2 uWispPolar;
 uniform float uExtinction;
+uniform mat3 uToBody;
+uniform vec4 uEdge;
+uniform vec4 uAir;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vClip;
-in vec3 vLocal;
-in vec3 vWorldN;
 in vec3 vPos;
 in vec3 vView;
 out vec4 outColor;
@@ -184,11 +182,19 @@ float moonShadow(vec3 p) {
   return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z;
 }
 void main() {
-  vec3 d = spinY(normalize(vLocal), uSpin);
+  vec3 dir = normalize(vPos);
+  float along = -dot(uCam, dir);
+  vec3 nearest = uCam + dir * along;
+  float rt = length(nearest);
+  float over = rt - 1.0 + uEdge.y;
+  float inside = 1.0 - smoothstep(-uEdge.x, uEdge.x, over / max(fwidth(rt), 1e-7));
+  float beyond = max(over, 0.0);
+  float air = (uAir.x * exp(-beyond / uAir.y) + uAir.z * exp(-beyond / uAir.w)) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
+  if (uDiag >= 2 && inside < 0.5) discard;
+  vec3 n = normalize(rt < 1.0 ? uCam + dir * (along - sqrt(max(1.0 - rt * rt, 0.0))) : nearest);
+  vec3 d = spinY(uToBody * n, uSpin);
   vec3 fl;
   vec3 df = flowed(d, fl);
-  vec3 n = normalize(vWorldN);
-  vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   vec3 albedo = equirectGrad(uMap, df, uGrad).rgb;
@@ -233,15 +239,19 @@ ${PATCH_LEVELS}
   vec3 at;
   float tau = hazeDepth(dir, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(n, dir) * (1.0 - exp(-tau));
+  float cover = inside + (1.0 - inside) * air;
+  col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
+  outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
 }`
 
 export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly bodyToWorld = new THREE.Matrix3()
+  private readonly toBody = new THREE.Matrix3()
+  private readonly rim: number
   private readonly m4 = new THREE.Matrix4()
   private readonly sunMap = new THREE.Vector3()
 
@@ -288,12 +298,16 @@ export class Globe {
         uWispShadow: { value: new THREE.Vector4(w.shadow, w.shadowLength, w.shadowBlur, w.fine) },
         uWispPolar: { value: new THREE.Vector2(rad(w.polarFrom), rad(w.polarTo)) },
         uExtinction: { value: o.haze.extinction },
+        uToBody: { value: this.toBody }, uEdge: { value: new THREE.Vector4(o.edge.pixels, o.edge.inset, o.edge.rim, o.edge.cap) }, uAir: { value: new THREE.Vector4().fromArray(o.edge.air) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
+      transparent: true,
+      depthWrite: false,
     })
     const peak = o.jet.reduce((m, v) => Math.max(m, Math.abs(v)), 1e-6)
     ;(this.material.uniforms.uWispShape!.value as THREE.Vector4).w = 2.2 / peak
     const seg = o.segments ?? 320
+    this.rim = o.edge.rim
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
@@ -304,9 +318,13 @@ export class Globe {
     u.uSpin!.value = spin
     u.uGain!.value = gain
     u.uWeight!.value = weight
+    const rim = Math.max(Math.min(this.rim, 0.4 * (camera.length() - 1)), 0)
+    ;(u.uEdge!.value as THREE.Vector4).z = Math.max(rim, 1e-5)
+    this.mesh.scale.setScalar(1 + rim)
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
-    const s = this.sunMap.copy(sun).applyMatrix3(this.bodyToWorld.clone().transpose())
+    this.toBody.copy(this.bodyToWorld).transpose()
+    const s = this.sunMap.copy(sun).applyMatrix3(this.toBody)
     const c = Math.cos(spin)
     const k = Math.sin(spin)
     s.set(c * s.x - k * s.z, s.y, k * s.x + c * s.z)

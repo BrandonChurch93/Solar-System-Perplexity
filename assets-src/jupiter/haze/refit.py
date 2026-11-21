@@ -21,6 +21,7 @@ moon = moon_mask(w, h, 30) > 0
 mu, ndl = g['mu'], g['ndl']
 ok = g['hit'] & ~moon & (film.min(-1) > 1e-4)
 ratio = hero / np.maximum(film, 1e-5)
+open_ = (hero8.max(-1) < 225) & (f8.max(-1) < 225)
 
 cpath, lpath = 'src/stops/jupiter/curve.json', 'src/stops/jupiter/limb.json'
 cj, lj = json.load(open(cpath)), json.load(open(lpath))
@@ -33,10 +34,9 @@ gl = np.ones((LIMB_KNOTS, 3))
 for i, k in enumerate(knots):
     if k > 0.5:
         continue
-    s = ok & (ndl > 0.3) & (np.abs(mu - k) < half * 0.6) & (mu > 0.03)
+    s = ok & open_ & (ndl > 0.15) & (np.abs(mu - k) < half * 0.6) & (mu > 0.1)
     if s.sum() >= 200:
-        gl[i] = np.median(ratio[s], axis=0)
-gl[0] = gl[1]
+        gl[i] = np.clip(np.median(ratio[s], axis=0), 0.7, 1.5) ** (1.0 if k <= 0.25 else 0.5)
 print('limb gain by knot', np.round(gl[:10], 3).tolist())
 
 deep = ok & (ndl < -0.27) & (mu > 0.22)
@@ -62,7 +62,8 @@ for i, k in enumerate(ck):
         print(f'  ndl {k:6.3f}', np.round(gc[i], 3).tolist(), 'C', np.round(C[i], 4).tolist())
 
 if write:
-    L2 = L * gl
+    L2 = np.minimum(L * gl, 12)
+    L2[0] = L2[1] = L2[2]
     C2 = C * gc
     if not (np.isfinite(C2).all() and np.isfinite(L2).all() and np.isfinite(nh / nf).all()):
         raise SystemExit('not finite, nothing written')

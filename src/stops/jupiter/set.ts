@@ -63,13 +63,12 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
-    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze,
+    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, haze: look.haze, edge: look.edge,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
-  globe.mesh.scale.fromArray(fit.globe.scale)
   const shells = look.shells.map((p) => new HazeShell(p, diagUniform))
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
