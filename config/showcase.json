@@ -57,7 +57,7 @@
       "travel",
       "retreat"
     ],
-    "maxStepPx": 1.5,
+    "maxStepPx": 0.6,
     "probeGrid": [17, 9],
     "bodyReach": 2.5,
     "minBodyPx": 2,
