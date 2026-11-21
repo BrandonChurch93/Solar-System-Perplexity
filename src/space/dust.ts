@@ -17,6 +17,7 @@ uniform float uPixel;
 uniform float uGain;
 uniform vec4 uLens;
 uniform float uLong;
+uniform float uCap;
 in vec3 aBase;
 in vec4 aSeed;
 out vec2 vAt;
@@ -51,7 +52,8 @@ void main() {
   bool ok = v0.z < -0.05 && v1.z < -0.05 && energy > 0.0;
   vAt = q;
   vShape = vec3(len, r, soft);
-  vColor = uTint * mix(vec3(1.0, 0.9, 0.78), vec3(0.92, 0.95, 1.0), aSeed.z * aSeed.z) * energy * uPixel * uPixel / (area * (1.0 + len / (uLong * uPixel)));
+  float peak = energy * uPixel * uPixel / (area * (1.0 + len / (uLong * uPixel)));
+  vColor = uTint * mix(vec3(1.0, 0.9, 0.78), vec3(0.92, 0.95, 1.0), aSeed.z * aSeed.z) * peak / (1.0 + peak / uCap);
   gl_Position = ok ? vec4(px / (0.5 * uView), 0.0, 1.0) : vec4(2.0, 2.0, 2.0, 1.0);
 }`
 
@@ -69,7 +71,7 @@ void main() {
   outColor = vec4(vColor * mix(point, disc, vShape.z), 0.0);
 }`
 
-export const DUST = { span: 7, gain: 55, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 0.9, long: 24, tint: [1, 0.93, 0.82] }
+export const DUST = { span: 7, gain: 55, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 0.9, long: 24, cap: 0.1, tint: [1, 0.93, 0.82] }
 
 export class Dust {
   private readonly mesh: THREE.Mesh
@@ -114,6 +116,7 @@ export class Dust {
         uPixel: { value: 1 },
         uGain: { value: 0 },
         uLong: { value: DUST.long },
+        uCap: { value: DUST.cap },
         uLens: { value: new THREE.Vector4(DUST.bokeh, DUST.focus, DUST.core, DUST.coreSpread) },
       },
       blending: THREE.AdditiveBlending,
