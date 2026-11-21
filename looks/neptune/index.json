@@ -1,9 +1,54 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T19:57:03.488Z",
+ "pushed": "2026-11-21T20:23:33.798Z",
  "head": "612a5aea8c7c00acd569a425e847ed9f40a35845",
- "note": "Phase 6 item 22: eased dive curve; checking the hold sky patch through the dive",
+ "note": "Phase 6: dive eased curve sheet, hold sky patch wide margin simulation",
  "looks": [
+  {
+   "time": "2026-11-21T20:21:04.559Z",
+   "file": "20261121202104559-note-sheet-dive-after.jpg",
+   "source": "out/work/nep/p6/sheet-dive-after.png",
+   "kind": "note",
+   "label": "Dive review sheet with the eased dive curve (item 22)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T20:21:03.661Z",
+   "file": "20261121202103661-note-sim-c-x4.jpg",
+   "source": "out/work/nep/p6/try/sim-c-x4.jpg",
+   "kind": "note",
+   "label": "Hold sky patch with a three times wider margin over the live sky, raised 4 times (simulation over 1.75 fields): the handover to the teal shared sky is wide and has no band",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T20:11:57.080Z",
+   "file": "20261121201157080-frame-f04729-review.jpg",
+   "source": "out/work/sheets/.frames-O8TSWg/f04729-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4729, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4729,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T20:10:31.947Z",
+   "file": "20261121201031947-sheet-neptune.dive-16x9-review.jpg",
+   "source": "out/work/sheets/neptune.dive-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet neptune.dive, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "first": 4680,
+   "last": 4769,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T19:56:55.992Z",
    "file": "20261121195655992-note-dive-sky-after-x4.jpg",
@@ -21,20 +66,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T19:56:18.176Z",
-   "file": "20261121195618176-frame-f04680-review.jpg",
-   "source": "out/work/sheets/.frames-9iWVYn/f04680-review.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4680, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4680,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-21T19:46:15.936Z",
    "file": "20261121194615936-frame-after-4860.jpg",
    "source": "out/work/nep/p6/after-4860.png",
@@ -47,37 +78,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T19:41:51.836Z",
-   "file": "20261121194151836-sheet-neptune.dive-16x9-review.jpg",
-   "source": "out/work/sheets/neptune.dive-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet neptune.dive, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4680,
-   "last": 4769,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T19:34:35.336Z",
-   "file": "20261121193435336-note-sheet-hold-x4.jpg",
-   "source": "out/work/nep/p6/sheet-hold-x4.png",
-   "kind": "note",
-   "label": "phase 6 item 21: hold review sheet with the new sky patch, raised 4 times",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T19:34:34.211Z",
-   "file": "20261121193434211-note-hold-sky-4679-before-after-x4.jpg",
-   "source": "out/work/nep/p6/hold-sky-4679-before-after-x4.jpg",
-   "kind": "note",
-   "label": "phase 6 item 21: hold frame 4679 raised 4 times, before (top) and after (bottom): the left edge of the sky patch is gone",
-   "stop": "neptune"
   },
   {
    "time": "2026-11-21T19:28:15.918Z",
