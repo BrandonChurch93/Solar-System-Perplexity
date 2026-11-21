@@ -69,6 +69,7 @@ uniform vec3 uSun;
 uniform vec2 uSunHide;
 uniform vec3 uCut;
 uniform float uGain;
+uniform float uThrough;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
@@ -95,7 +96,7 @@ void main() {
   glow = mix(glow, uBelow.rgb, smoothstep(-uHold, -uHold - uBelow.w, elev));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
-  outColor = vec4(glow * uGain * vig, cut);
+  outColor = vec4(glow * pow(vec3(uThrough), vec3(1.0, 1.5, 2.4)) * uGain * vig, cut);
 }`
 
 const VERT = /* glsl */ `
@@ -202,7 +203,7 @@ export class CloudRelief {
       uniforms: {
         uAir: { value: airMap }, uUp: { value: up }, uFwd: { value: fwd }, uRight: { value: right }, uRadius: { value: def.radius },
         uSpan: { value: new THREE.Vector3(rad(a.azDeg), rad(a.elevDeg), a.power) }, uBelow: { value: new THREE.Vector4(a.below[0], a.below[1], a.below[2], rad(a.belowDeg)) }, uHold: { value: rad(a.holdDeg) }, uSun: { value: new THREE.Vector3(0, 0, 1) }, uSunHide: { value: new THREE.Vector2(rad(a.sunHideDeg[0]), rad(a.sunHideDeg[1])) },
-        uCut: { value: new THREE.Vector3().fromArray(a.cut) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uCut: { value: new THREE.Vector3().fromArray(a.cut) }, uGain: { value: 1 }, uThrough: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
       },
       ...BLEND,
       side: THREE.BackSide,
@@ -298,13 +299,14 @@ export class CloudRelief {
     return r
   }
 
-  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3): void {
+  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, sky = 1): void {
     const m = this.motion
     const dt = Math.min(Math.max(time, -m.flowSeconds), m.flowSeconds)
     const aspect = view.format.width / view.format.height
     if (this.air) {
       const u = this.air.material.uniforms
       u.uGain!.value = gain * m.air.gain
+      u.uThrough!.value = sky
       ;(u.uSun!.value as THREE.Vector3).copy(sun)
       u.uVignette!.value = vignette
       u.uAspect!.value = aspect

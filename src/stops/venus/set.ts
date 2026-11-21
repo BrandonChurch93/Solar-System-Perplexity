@@ -53,12 +53,12 @@ export const createSet: SetFactory = async (ctx) => {
   const boltMap = await ctx.texture(base + 'bolt.jpg', { srgb: true })
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
-  const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 2, 4)
+  const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
-    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift,
+    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift, shade: look.shade,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
@@ -101,7 +101,7 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir, Math.pow(1 - plan.coverAmount(state.segment, state.time), 2))
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -112,7 +112,8 @@ export const createSet: SetFactory = async (ctx) => {
       const flowing = state.time > terrainMid ? Math.min(Math.max(state.time - riseAt, look.drift.from), look.drift.to) : elapsed
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
-      for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time)
+      const left = ending ? 0 : smooth((state.time - plan.seg.dive!.start) / look.leave.seconds)
+      for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time) * (1 - left)
       const gu = globe.material.uniforms
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
@@ -121,6 +122,7 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
       gu.uLimbK!.value = look.limb.gain * (1 - low)
+      gu.uLimbFar!.value = left
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
@@ -144,7 +146,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02))
+      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible
       rim.mesh.visible = visible

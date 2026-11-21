@@ -7,10 +7,11 @@ export const LIMB_GLSL = /* glsl */ `
 uniform sampler2D uLimb;
 uniform vec3 uLimbS;
 uniform vec3 uLimbT;
+uniform float uLimbFar;
 vec4 limbAt(vec3 at, float row) {
   float phi = atan(dot(at, uLimbT), dot(at, uLimbS));
   float u = ((phi / 6.2831853 + 0.5) * ${LIMB.azimuth}.0 + 0.5) / ${LIMB.azimuth + 1}.0;
-  return textureLod(uLimb, vec2(u, row / ${LIMB.half * 2}.0), 0.0);
+  return mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
 }
 vec4 limbGlow(vec3 at, float b) {
   float x = b - 1.0;
@@ -90,7 +91,7 @@ export class Rim {
       fragmentShader: FRAG,
       uniforms: {
         uCam: { value: new THREE.Vector3(0, 0, 3) }, uLimb: { value: lut }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uDiag: diag,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uDiag: diag,
       },
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending,
@@ -103,7 +104,7 @@ export class Rim {
     this.mesh.renderOrder = 6
   }
 
-  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number): void {
+  update(camera: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3, gain: number, vignette: number, aspect: number, edge: number, far: number): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uLimbS!.value as THREE.Vector3).copy(s)
@@ -112,6 +113,7 @@ export class Rim {
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
     u.uEdge!.value = edge
+    u.uLimbFar!.value = far
   }
 
   dispose(): void {

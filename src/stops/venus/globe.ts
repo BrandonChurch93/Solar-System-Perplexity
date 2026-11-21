@@ -44,6 +44,7 @@ export interface GlobeOptions {
   limb: THREE.Texture
   graze: { most: number; from: number; to: number }
   lift: { floor: number; stops: number; from: number; to: number }
+  shade: { far: number; grad: number; cap: number }
   segments?: number
 }
 
@@ -121,6 +122,7 @@ uniform mat3 uNextRot;
 uniform vec2 uJitter;
 uniform vec3 uGraze;
 uniform vec4 uLift;
+uniform vec3 uShade;
 in vec3 vClip;
 in vec3 vLocal;
 in vec3 vWorldN;
@@ -236,6 +238,11 @@ ${TAP_LEVELS}
   float s1 = equirect(uFlow, normalize(df - lean)).r;
   float veil = (1.0 + k * f1) / (1.0 + k * f0) * (1.0 - uFlowLook.y * (1.0 - near) * s1) / (1.0 - uFlowLook.y * (1.0 - near) * s0);
   vec3 col = lin * curveAt(ndl) * veil * uTint;
+  for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
+    vec3 wide = equirectGrad(uMap, dc, uShade.y).rgb;
+    float ratio = dot(albedo * albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
+    col *= pow(clamp(ratio, 1.0 / uShade.z, uShade.z), uShade.x * uLimbFar * (1.0 - smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
+  }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
     float night = 1.0 - smoothstep(-0.05, 0.3, ndl);
     float lum = dot(lin, vec3(0.2126, 0.7152, 0.0722));
@@ -330,10 +337,10 @@ export class Globe {
         uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
-        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 },
+        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
         uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
-        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) },
+        uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
