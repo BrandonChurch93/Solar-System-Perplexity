@@ -13,6 +13,7 @@ import closeGlobe from './closeGlobe.json'
 import holdLight from './hold-light.json'
 import skimLight from './skim-light.json'
 import layoutJson from './layout.json'
+import polarJson from './polar.json'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
 import shadowJson from './shadow.json'
@@ -49,6 +50,7 @@ export const createSet: SetFactory = async (ctx) => {
   const heroL = heroPose.position.clone().applyQuaternion(toTilt)
   const heroM = shotMatrix(heroL, toTilt.clone().multiply(heroPose.quaternion), heroPose.vfov, 16 / 9)
   const heroW = { value: 0 }
+  const polarW = { value: 0 }
   const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
   const skimM = shotMatrix(skimL, toTilt.clone().multiply(plan.skimQuaternion), plan.p.terrain.vfov, 16 / 9)
   const skimW = { value: 0 }
@@ -72,7 +74,13 @@ export const createSet: SetFactory = async (ctx) => {
   const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), await ctx.dataTexture(base + layoutJson.even, layoutJson.width, layoutJson.height, 1), await ctx.dataTexture(base + 'layout-tone.bin', layoutJson.width, layoutJson.height, 4), skimW, gate, layoutMatrix, layoutJson.width, layoutJson.height, along, across)
   const hero = shotUniforms('Hero', { map: await ctx.texture(base + 'hero-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'hero-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: heroM, weight: heroW })
   const skimShot = shotUniforms('Skim', { map: await ctx.texture(base + 'skim-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'skim-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: skimM, weight: skimShow })
-  const rings = new Rings(profile, layout, { ...hero, ...skimShot }, look.rings, polar)
+  const polarMap = await ctx.texture(base + polarJson.file, { srgb: true, anisotropy: 16, repeat: true })
+  const polarWarp = await ctx.dataTexture(base + polarJson.warp.file, polarJson.warp.width, polarJson.warp.height, 1)
+  polarWarp.wrapS = THREE.RepeatWrapping
+  polarWarp.needsUpdate = true
+  const polarSize = polarJson.sets[key] as [number, number]
+  const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uPolarW: polarW, uPolarShape: heroW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
+  const rings = new Rings(profile, layout, { ...hero, ...skimShot, ...ringMap }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
   const ice = new Ice(look.ice, polar, { ...profile, ...layout })
   ;(ice.material.uniforms.uSkimL!.value as THREE.Vector3).copy(skimL)
@@ -141,6 +149,7 @@ export const createSet: SetFactory = async (ctx) => {
       sunL.copy(light).applyQuaternion(toRing)
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
       heroW.value = 1 - smooth((camL.distanceTo(heroL) - look.heroRange[0]) / (look.heroRange[1] - look.heroRange[0]))
+      polarW.value = Math.max(smooth((Math.abs(camL.y) - look.polarHeight[0]) / (look.polarHeight[1] - look.polarHeight[0])), smooth((camL.length() - look.polarFar[0]) / (look.polarFar[1] - look.polarFar[0]))) * look.polarShow
       const away = camL.distanceTo(skimL)
       gate.value = 1 - smooth((away - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
       skimW.value = 1 - smooth((away - look.skimRange[0]) / (look.skimRange[1] - look.skimRange[0]))

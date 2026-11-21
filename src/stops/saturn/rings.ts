@@ -134,6 +134,14 @@ uniform vec4 uSkimFit;
 uniform float uReach;
 uniform float uSkimNear;
 uniform vec3 uSkimCam;
+uniform sampler2D uPolarMap;
+uniform highp sampler2D uPolarWarp;
+uniform vec2 uPolarSpan;
+uniform vec2 uPolarSize;
+uniform vec4 uPolarFit;
+uniform float uPolarW;
+uniform float uPolarShape;
+uniform vec2 uPolarOuter;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
@@ -258,6 +266,19 @@ void main() {
     mottle += ga * 2.0 * gr / length(wg);
   }
   col *= mottle;
+  float wP = far || disc ? 0.0 : uPolarW * smoothstep(uPolarFit.x, uPolarFit.y, rp) * (1.0 - smoothstep(uPolarOuter.x, uPolarOuter.y, rp));
+  for (int k = 0; k < (wP > 0.0 ? 1 : 0); k++) {
+    float pa = phi / 6.283185307 + 0.5;
+    float pv = (rp - uPolarSpan.x) * uPolarSpan.y;
+    float pr = clamp(pv - uPolarShape * texture(uPolarWarp, vec2(pa, pv)).r * uPolarSpan.y, 0.5 / uPolarSize.y, 1.0 - 0.5 / uPolarSize.y);
+    vec2 pgx = vec2((vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x)) / (6.283185307 * r * r), dFdx(rp) * uPolarSpan.y);
+    vec2 pgy = vec2((vLocal.x * dFdy(vLocal.z) - vLocal.z * dFdy(vLocal.x)) / (6.283185307 * r * r), dFdy(rp) * uPolarSpan.y);
+    vec2 tx = pgx * uPolarSize;
+    vec2 ty = pgy * uPolarSize;
+    float w = wP * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    col = mix(col, inverseFilmic(textureGrad(uPolarMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb) * mix(1.0, turning, uHeroFit.w), w);
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
+  }
 
   float cell = uSparkleCell;
   float det = qx.x * qy.y - qx.y * qy.x;
