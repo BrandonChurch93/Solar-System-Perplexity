@@ -84,4 +84,4 @@ export const deck: DeckLook = {
   beyond: [0.6, 0.004, 300],
 }
 
-export const veil = { color: [0.85, 0.8, 0.7] as [number, number, number], amount: 0.9, from: 1.5, to: 0.35, height: 0.012, repeats: 1, drift: 0.004 }
+export const veil = { color: [0.85, 0.8, 0.7] as [number, number, number], amount: 0.9, from: 2.2, to: 0.35, height: 0.012, repeats: 1, drift: 0.004 }

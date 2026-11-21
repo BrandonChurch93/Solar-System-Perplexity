@@ -140,6 +140,13 @@ Dive and rise
 - `wisp.png` is loaded with repeat in u only (engine `ctx.texture`); `set.ts` sets `wrapT` to repeat on it. Before that the deck wisps and the veil were stretched into streaks wherever v left 0 to 1.
 - The deck writes its color unpremultiplied (the pixels above the horizon add the approved picture's rim glow onto the sky); leave it so, the judged frame matches.
 
+## Dive and rise: camera (06:40 UTC)
+
+- The legacy dive path left the horizon 33 deg off and the lens 11 deg narrower at the cut (orbit 3023 horizon normal 106 deg, offset -0.23, vfov 53; terrain 3024 normal 72.6 deg, offset -0.37, vfov 64). Now the Mars pattern: `dive.swoop: true` with Mars's surge (`glide 0.14, rise 60, fall 2, swell [0.3, 9, 1.2]`): at 3023 normal 77.6 deg, offset -0.39, vfov 62.3, altitude 0.06. The plunge happens inside the cover: altitude 2.56 at 2997, 1.70 at 3010, 1.13 at 3015, 0.78 at 3018, 0.13 at 3022.
+- Rise: Mars pattern `ahead 0.03, hug 1.7, settle 5, level true, pan 0.3`: the camera keeps the terrain heading, horizon and roll through the cover (3270 normal 72.9 deg, offset -0.22 against terrain 3269 73.2 deg, -0.28), then pans to the rise framing. Altitude 0.41 at 3277, 0.67 at 3279, 1.44 at 3283, 2.2 at 3286, 4.29 at 3296.
+- Predictor with these moves and the built patches: no frame over 0.02 soft outside the cover, lowest min 1.26 texels per pixel (3011 and 3278). Env `DIVE`, `RISE`, `TERRAIN` (JSON) override plan values in the predictor.
+- `out/work/jupiter/tools/try.ts` and `tryrise.ts` print horizon, lens, altitude and camera space velocity per frame.
+
 ## Next
 
 - Cover: view the strips (`/tmp/strip.sh NAME frames...` writes `out/work/view/strip_NAME.jpg`), tune veil, fog and `cover*` colors so color and exposure carry across; exit pose (`exitHeight 2.6, exitForward 1.2, exitPitchDeg 9` are stand-ins) and the dark corner bottom left at 3024 to 3028 (deck edge in view at the entry pose).
