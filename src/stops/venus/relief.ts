@@ -33,7 +33,7 @@ export interface CloudMotion {
   swayRad: number
   swayPerSecond: number
   edgeDeg: number
-  air: { azDeg: number; elevDeg: number; power: number; below: [number, number, number]; belowDeg: number; holdDeg: number; sunHideDeg: [number, number]; cut: [number, number, number]; gain: number; deck: [number, number, number][]; deckSpanDeg: number; deckHigh: [number, number]; rimDeg: number }
+  air: { azDeg: number; elevDeg: number; power: number; below: [number, number, number]; belowDeg: number; holdDeg: number; sunHideDeg: [number, number, number]; cut: [number, number, number]; gain: number; deck: [number, number, number][]; deckSpanDeg: number; deckHigh: [number, number]; rimDeg: number }
 }
 
 const AIR_VERT = /* glsl */ `
@@ -68,7 +68,7 @@ uniform vec3 uSpan;
 uniform vec4 uBelow;
 uniform float uHold;
 uniform vec3 uSun;
-uniform vec2 uSunHide;
+uniform vec3 uSunHide;
 uniform vec3 uCut;
 uniform float uGain;
 uniform float uThrough;
@@ -96,7 +96,9 @@ void main() {
   vec2 uv = vec2(clamp(az / uSpan.x * 0.5 + 0.5, 0.0, 1.0), pow(clamp(elev / uSpan.y, 0.0, 1.0), uSpan.z));
   vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
   float cut = uCut.z * smoothstep(uCut.x, uCut.y, dot(glow, vec3(0.3, 0.5, 0.2)));
-  cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, acos(clamp(dot(normalize(vWorld), uSun), -1.0, 1.0))));
+  float off = acos(clamp(dot(normalize(vWorld), uSun), -1.0, 1.0));
+  cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, off));
+  cut = max(cut, (1.0 - uThrough) * (1.0 - smoothstep(uSunHide.y, uSunHide.z, off)));
   cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));
   glow *= pow(vec3(uThrough), vec3(1.0, 1.5, 2.4));
   float far = smoothstep(uDeckFit.y, uDeckFit.z, vHigh) * smoothstep(0.0004, -0.0004, elev);
@@ -220,7 +222,7 @@ export class CloudRelief {
       fragmentShader: AIR_FRAG,
       uniforms: {
         uAir: { value: airMap }, uUp: { value: up }, uFwd: { value: fwd }, uRight: { value: right }, uRadius: { value: def.radius },
-        uSpan: { value: new THREE.Vector3(rad(a.azDeg), rad(a.elevDeg), a.power) }, uBelow: { value: new THREE.Vector4(a.below[0], a.below[1], a.below[2], rad(a.belowDeg)) }, uHold: { value: rad(a.holdDeg) }, uSun: { value: new THREE.Vector3(0, 0, 1) }, uSunHide: { value: new THREE.Vector2(rad(a.sunHideDeg[0]), rad(a.sunHideDeg[1])) },
+        uSpan: { value: new THREE.Vector3(rad(a.azDeg), rad(a.elevDeg), a.power) }, uBelow: { value: new THREE.Vector4(a.below[0], a.below[1], a.below[2], rad(a.belowDeg)) }, uHold: { value: rad(a.holdDeg) }, uSun: { value: new THREE.Vector3(0, 0, 1) }, uSunHide: { value: new THREE.Vector3(rad(a.sunHideDeg[0]), rad(a.sunHideDeg[1]), rad(a.sunHideDeg[2])) },
         uCut: { value: new THREE.Vector3().fromArray(a.cut) }, uGain: { value: 1 }, uThrough: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
         uDeck: { value: a.deck.map((c) => new THREE.Vector3(Math.pow(c[0] / 255, 2.2), Math.pow(c[1] / 255, 2.2), Math.pow(c[2] / 255, 2.2))) }, uDeckFit: { value: new THREE.Vector3(rad(a.deckSpanDeg), a.deckHigh[0], a.deckHigh[1]) },
       },

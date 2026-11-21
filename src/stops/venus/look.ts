@@ -95,5 +95,5 @@ export const relief = {
   swayRad: 0.005,
   swayPerSecond: 0.9,
   edgeDeg: 0.06,
-  air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5] as [number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1, deck: [[130, 103, 69], [194, 168, 125], [208, 183, 141], [232, 209, 168], [243, 222, 180], [247, 231, 199], [249, 237, 211], [251, 247, 231], [249, 237, 212], [237, 214, 172]] as [number, number, number][], deckSpanDeg: 45, deckHigh: [0.15, 0.4] as [number, number], rimDeg: 0.3 },
+  air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5, 15] as [number, number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1, deck: [[130, 103, 69], [194, 168, 125], [208, 183, 141], [232, 209, 168], [243, 222, 180], [247, 231, 199], [249, 237, 211], [251, 247, 231], [249, 237, 212], [237, 214, 172]] as [number, number, number][], deckSpanDeg: 45, deckHigh: [0.15, 0.4] as [number, number], rimDeg: 0.3 },
 }
