@@ -193,3 +193,24 @@ After a compaction: read `assets-src/shared/TRAVEL-AGENT.md` first, then this fi
 - Mote peaks, luminance of the still minus the same still without dust, local maxima 61 px apart (`/tmp/motes.py`): 3915 before 0.582 0.579 0.533 0.525 0.498 (median mote 0.125, 26 percent over 0.25), after 0.156 0.148 0.146 0.141 0.141 (median 0.055, none over 0.25). 1640 before 0.561 0.544 0.508 0.497 0.485 (median 0.120, 28 percent over 0.25), after 0.162 0.145 0.144 0.142 0.142 (median 0.050, none over 0.25).
 - Item 4 with `leave.by` 0.3 (draft, before the last haze change; final numbers in the DONE list below): mars box 1100,620,1900,1060: rise 2744 261 / 71 / 17, travel 0: 253 / 71 / 17, 3: 278 / 77 / 14, 6: 443 / 102 / 34, 9: 673 / 165 / 54, 12: 1,043 / 239 / 91, 20: 1,795 / 315 / 99. uranus box 0,60,650,1000: rise 4454 286 / 74 / 26, 0: 285 / 74 / 26, 3: 331 / 92 / 28, 6: 473 / 116 / 34, 9: 797 / 175 / 61, 12: 1,373 / 277 / 103, 20: 2,714 / 520 / 175.
 - Engine files touched in task 4: `src/space/sky.ts` (uniforms uFlightOff, uFlightDust, uFlightLight, uFlightBand, uFlightHaze, uFlightBandWidth; all inside `if (uFlightGlow.w > 0.0)`), `src/director/film.ts` (one line, the dust level), `config/showcase.json` (`travel.sky`, `travel.dust`).
+- 17:15 byte finding: on clean main the first frame of every travel carries lift 5.26e-5 at the mid shutter sample (5144: 4.3e-5), and the dust is drawn at its tiny end level, so the first try changed all 18 end frames (max 1 to 2 at first frames, 4 to 17 at last frames from the new dust look). Cure: `leave.from` 0.014, `retreatOpen` [0.01, 0.55], `retreatClose` [0.62, 0.99] make the lift exactly 0 across the shutter of the first and last frame (`ends.ts` prints lift and dust at +0, +0.25, +0.5 of each end frame); `Shot.dustLook` (0 at the ends, 1 in the middle, `travel.dust.span`) blends the dust look from main's values (`DUST` first entries) to the new ones, so the ends keep main's dust. Test: 2819, 539, 4529 identical to main; 2745 max 1 in 1,486 px, 5144 max 1 in 4,731 px (main's own lift of the old field). The Builder accepted this at 17:22: what must stay identical is every hold, dive, terrain and rise frame (his proof: Mars 2325 2427 2580 2726 at final, 2744 and 2820 at draft).
+- Statistics, final state, draft stills `out/work/travel/t4s/` (median; >0.06 / >0.25 / >0.5 per megapixel):
+
+| Segment | Frame | Box | Result |
+| --- | --- | --- | --- |
+| sun.travel | 495 | 100,500,1300,1000 | 0.034; 2,692 / 480 / 157 |
+| mercury.travel | 1055 | 700,300,1820,1000 | 0.020; 2,536 / 506 / 180 |
+| mercury.travel | 1072 | 60,700,800,1060 (beside the band) | 0.024; 3,502 / 683 / 274 |
+| venus.travel | 1642 | 100,100,1820,980 | 0.020; 2,709 / 511 / 209 |
+| earth.travel | 2212 | 100,820,1820,1060 (under the band) | 0.026; 2,827 / 555 / 242 |
+| earth.travel | 2212 | 300,150,1700,450 (in the band) | 0.116; 26,886 / 6,393 / 2,283 |
+| mars.travel | 2782 | 60,100,520,1000 | 0.020; 2,215 / 360 / 128 |
+| jupiter.travel | 3352 | 100,100,1820,980 | 0.020; 2,777 / 526 / 202 |
+| saturn.travel | 3922 | 100,100,1820,980 | 0.017; 2,702 / 525 / 230 |
+| uranus.travel | 4478 | 100,100,1820,980 | 0.029; 2,826 / 505 / 194 |
+| uranus.travel | 4492 | 1300,750,1900,1060 (under the band) | 0.044; 2,188 / 446 / 167 |
+| ending.retreat | 5085 | 1100,700,1900,1060 | 0.013; 2,542 / 441 / 181 |
+| ending.retreat | 5060 | 1300,700,1900,1060 (lift 0.59) | 0.012; 1,296 / 250 / 102 |
+
+- Item 4, final state (draft): mars.travel box 1100,620,1900,1060: rise 2744 261 / 71 / 17; travel frame 0: 253 / 71 / 17; 3: 273 / 74 / 14; 6: 375 / 94 / 34; 9: 582 / 148 / 48; 12: 909 / 219 / 88; 20: 1,577 / 310 / 99. uranus.travel box 0,60,650,1000: rise 4454 286 / 74 / 26; 0: 285 / 74 / 26; 3: 316 / 88 / 28; 6: 398 / 108 / 28; 9: 692 / 152 / 56; 12: 1,254 / 262 / 100; 20: 2,401 / 470 / 173. Median 0.012 to 0.014 (mars), 0.013 to 0.024 (uranus).
+- Pairs (native 960 by 540 travel crop, left; approved hero at 1920 wide, right) in `out/work/travel/t4/`: saturn 3922 with the Earth sky, venus 1642 with the Uranus sky, earth 2212 band with the Jupiter band, uranus 4478 with the Neptune sky.
