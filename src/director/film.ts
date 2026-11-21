@@ -495,11 +495,7 @@ export class FilmDirector implements Director {
         const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
         const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
         pose = inSet(s, local)
-        const to = s.origin.clone().sub(pose.position)
-        const master = config.formats[config.formatKeys.master]!
-        const lit = 0.5 - 0.5 * this.sunWorld.dot(to.clone().normalize())
-        const share = discShare(to.clone().applyQuaternion(pose.quaternion.clone().invert()), Math.min(1 / to.length(), 1), pose.vfov, master.width / master.height)
-        skyStars = openSky(share * lit, OPEN.brightShare) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
+        skyStars = smoother(ramp(OPEN.retreatOpen[0], OPEN.retreatOpen[1], u)) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
       } else {
@@ -520,7 +516,7 @@ export class FilmDirector implements Director {
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       const open = this.openOf(index, time)
-      light.sky = mix(light.sky, OPEN.openExposure, open)
+      light.sky = mix(light.sky, Math.max(light.sky, OPEN.openExposure), open)
       skyStars = open
       const span = this.patchSpanOf(index)
       skyPatch = smoother(ramp(span[0], span[1], u))
