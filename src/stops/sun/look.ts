@@ -48,6 +48,7 @@ export const ground: GroundLook = {
   rings: 168,
   sectors: 288,
   cell: 0.16,
+  apron: { amount: 1, cell: 0.1, calm: 0 },
   band: [2.2, 1.2],
   glow: [0.22, 4.3],
   boil: { reach: 0.5, period: 2.6, step: 0.3, max: 0.14 },
@@ -68,7 +69,7 @@ export const loops: LoopsLook = {
 
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05 }
 
-export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png' }
+export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png' }
 
 export const flare: FlareLook & { lift: number } = {
   hot: [1, 0.9, 0.66],
