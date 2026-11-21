@@ -33,7 +33,7 @@ export interface CloudMotion {
   swayRad: number
   swayPerSecond: number
   edgeDeg: number
-  air: { azDeg: number; elevDeg: number; power: number; below: [number, number, number]; belowDeg: number; holdDeg: number; sunHideDeg: [number, number]; cut: [number, number, number]; gain: number }
+  air: { azDeg: number; elevDeg: number; power: number; below: [number, number, number]; belowDeg: number; holdDeg: number; sunHideDeg: [number, number, number]; cut: [number, number, number]; gain: number; deck: [number, number, number][]; deckSpanDeg: number; deckHigh: [number, number]; rimDeg: number }
 }
 
 const AIR_VERT = /* glsl */ `
@@ -44,6 +44,7 @@ out vec3 vClip;
 out vec3 vUp;
 out vec3 vWorld;
 out float vDip;
+out float vHigh;
 void main() {
   vDir = position;
   vWorld = mat3(modelMatrix) * position;
@@ -51,6 +52,7 @@ void main() {
   float r = max(length(eye), uRadius + 0.02);
   vUp = eye / r;
   vDip = acos(uRadius / r);
+  vHigh = r - uRadius - 1.0;
   gl_Position = projectionMatrix * vec4(mat3(modelViewMatrix) * position, 1.0);
   vClip = gl_Position.xyw;
   gl_Position.z = gl_Position.w * 0.9999;
@@ -66,9 +68,12 @@ uniform vec3 uSpan;
 uniform vec4 uBelow;
 uniform float uHold;
 uniform vec3 uSun;
-uniform vec2 uSunHide;
+uniform vec3 uSunHide;
 uniform vec3 uCut;
 uniform float uGain;
+uniform float uThrough;
+uniform vec3 uDeck[10];
+uniform vec3 uDeckFit;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
@@ -77,6 +82,7 @@ in vec3 vClip;
 in vec3 vUp;
 in vec3 vWorld;
 in float vDip;
+in float vHigh;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
@@ -90,8 +96,17 @@ void main() {
   vec2 uv = vec2(clamp(az / uSpan.x * 0.5 + 0.5, 0.0, 1.0), pow(clamp(elev / uSpan.y, 0.0, 1.0), uSpan.z));
   vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
   float cut = uCut.z * smoothstep(uCut.x, uCut.y, dot(glow, vec3(0.3, 0.5, 0.2)));
-  cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, acos(clamp(dot(normalize(vWorld), uSun), -1.0, 1.0))));
+  float off = acos(clamp(dot(normalize(vWorld), uSun), -1.0, 1.0));
+  cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, off));
+  cut = max(cut, (1.0 - uThrough) * (1.0 - smoothstep(uSunHide.y, uSunHide.z, off)));
   cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));
+  glow *= pow(vec3(uThrough), vec3(1.0, 1.5, 2.4));
+  float far = smoothstep(uDeckFit.y, uDeckFit.z, vHigh) * smoothstep(0.0004, -0.0004, elev);
+  for (int k = 0; k < (far > 0.0 ? 1 : 0); k++) {
+    float at = (1.0 - abs(mod(az / uDeckFit.x * 0.5 + 0.5, 2.0) - 1.0)) * 9.0;
+    int i = int(min(floor(at), 8.0));
+    glow = mix(glow, inverseFilmic(mix(uDeck[i], uDeck[i + 1], at - float(i))), far);
+  }
   glow = mix(glow, uBelow.rgb, smoothstep(-uHold, -uHold - uBelow.w, elev));
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -100,11 +115,16 @@ void main() {
 
 const VERT = /* glsl */ `
 in vec2 aImage;
+uniform vec3 uUp;
+uniform vec4 uRim;
 out vec2 vImage;
 out vec2 vUv;
 out vec3 vView;
 out vec3 vClip;
+out float vRim;
 void main() {
+  vec3 eye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz + uUp * (uRim.x + 1.0);
+  vRim = uRim.w * smoothstep(uRim.y, uRim.z, length(eye) - uRim.x - 1.0);
   vImage = aImage;
   vUv = uv;
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
@@ -136,6 +156,7 @@ in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
 in vec3 vClip;
+in float vRim;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
@@ -149,7 +170,7 @@ void main() {
   float alpha = texture(uAlpha, vUv).r;
   if (uHasAlpha < 0.5) {
     vec3 ray = normalize(vec3((2.0 * vImage.x - 1.0) * uLens.x, (1.0 - 2.0 * vImage.y) * uLens.y, -1.0));
-    alpha = smoothstep(0.0, -uLens.w, asin(clamp(dot(ray, uUp), -1.0, 1.0)) + uLens.z);
+    alpha = smoothstep(0.0, -uLens.w - vRim, asin(clamp(dot(ray, uUp), -1.0, 1.0)) + uLens.z);
   }
   alpha *= smoothstep(0.0, uEdge.x, vUv.x) * smoothstep(0.0, uEdge.y, 1.0 - vUv.x);
   if (alpha < 0.004) discard;
@@ -201,8 +222,9 @@ export class CloudRelief {
       fragmentShader: AIR_FRAG,
       uniforms: {
         uAir: { value: airMap }, uUp: { value: up }, uFwd: { value: fwd }, uRight: { value: right }, uRadius: { value: def.radius },
-        uSpan: { value: new THREE.Vector3(rad(a.azDeg), rad(a.elevDeg), a.power) }, uBelow: { value: new THREE.Vector4(a.below[0], a.below[1], a.below[2], rad(a.belowDeg)) }, uHold: { value: rad(a.holdDeg) }, uSun: { value: new THREE.Vector3(0, 0, 1) }, uSunHide: { value: new THREE.Vector2(rad(a.sunHideDeg[0]), rad(a.sunHideDeg[1])) },
-        uCut: { value: new THREE.Vector3().fromArray(a.cut) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uSpan: { value: new THREE.Vector3(rad(a.azDeg), rad(a.elevDeg), a.power) }, uBelow: { value: new THREE.Vector4(a.below[0], a.below[1], a.below[2], rad(a.belowDeg)) }, uHold: { value: rad(a.holdDeg) }, uSun: { value: new THREE.Vector3(0, 0, 1) }, uSunHide: { value: new THREE.Vector3(rad(a.sunHideDeg[0]), rad(a.sunHideDeg[1]), rad(a.sunHideDeg[2])) },
+        uCut: { value: new THREE.Vector3().fromArray(a.cut) }, uGain: { value: 1 }, uThrough: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uDeck: { value: a.deck.map((c) => new THREE.Vector3(Math.pow(c[0] / 255, 2.2), Math.pow(c[1] / 255, 2.2), Math.pow(c[2] / 255, 2.2))) }, uDeckFit: { value: new THREE.Vector3(rad(a.deckSpanDeg), a.deckHigh[0], a.deckHigh[1]) },
       },
       ...BLEND,
       side: THREE.BackSide,
@@ -281,7 +303,7 @@ export class CloudRelief {
         uniforms: {
           uColor: { value: color }, uAlpha: { value: alpha ?? masks }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
           uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) }, uEdge: { value: new THREE.Vector2(Math.max(l.edge?.[0] ?? 0, 1e-6), Math.max(l.edge?.[1] ?? 0, 1e-6)) },
-          uHaze: { value: new THREE.Vector2() }, uSway: { value: new THREE.Vector4(def.sun[0], def.sun[1], aspect, 0) }, uLens: { value: new THREE.Vector4(th * aspect, th, dip, rad(motion.edgeDeg)) }, uUp: { value: up },
+          uHaze: { value: new THREE.Vector2() }, uSway: { value: new THREE.Vector4(def.sun[0], def.sun[1], aspect, 0) }, uLens: { value: new THREE.Vector4(th * aspect, th, dip, rad(motion.edgeDeg)) }, uUp: { value: up }, uRim: { value: new THREE.Vector4(def.radius, a.deckHigh[0], a.deckHigh[1], rad(a.rimDeg)) },
           uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform,
         },
         ...BLEND,
@@ -298,13 +320,14 @@ export class CloudRelief {
     return r
   }
 
-  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3): void {
+  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, sky = 1): void {
     const m = this.motion
     const dt = Math.min(Math.max(time, -m.flowSeconds), m.flowSeconds)
     const aspect = view.format.width / view.format.height
     if (this.air) {
       const u = this.air.material.uniforms
       u.uGain!.value = gain * m.air.gain
+      u.uThrough!.value = sky
       ;(u.uSun!.value as THREE.Vector3).copy(sun)
       u.uVignette!.value = vignette
       u.uAspect!.value = aspect
