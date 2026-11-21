@@ -24,7 +24,8 @@ if (a.add) {
   const folder = a.folder
   if (!folder || /^[a-z][a-z0-9-]*$/.test(folder) === false) throw new Error('expected --folder NAME')
   const max = Number(a.max ?? 8)
-  const chosen = pick(readLooks().filter((l) => !l.stop || l.stop === folder), max, folder)
+  const isStop = cfg.stops.includes(folder)
+  const chosen = pick(readLooks().filter((l) => !isStop || !l.stop || l.stop === folder), max, folder)
   if (chosen.length === 0) {
     console.log('no looks yet: render a still, a comparison or a sheet first, or add a picture with --add')
     process.exit(0)

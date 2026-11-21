@@ -192,6 +192,8 @@ export function pickLooks(all: Look[], max: number, stop?: string): Look[] {
   if (stop) for (const view of ['hold', 'terrain']) {
     const c = all.find((l) => l.kind === 'compare' && l.segment === stop + '.' + view)
     if (c) take(c)
+    const f = all.find((l) => (l.kind === 'still' || l.kind === 'frame' || l.kind === 'job') && l.frame !== undefined && l.segment === stop + '.' + view && (!l.diag || l.diag === 'beauty'))
+    if (f) take(f)
   }
   for (const l of all) take(l)
   return out.sort((x, y) => (x.time < y.time ? 1 : -1))
