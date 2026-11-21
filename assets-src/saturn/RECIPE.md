@@ -72,7 +72,7 @@ Every file under `public/assets/saturn/` and how it is made. All scripts run fro
 - Take kept: take 1 of 1.
 - Checks: judged frame 3720, top left sky: median 7 against 7 in the approved image, the same stars in the same places; share of star pixels own sky 0.0056, filled part 0.0040.
 
-## `public/assets/saturn/<set>/hero-rings.jpg` and `hero-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
+## `public/assets/saturn/<set>/hero-rings.jpg` and `public/assets/saturn/<set>/hero-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
 
 - Tool: `python3 assets-src/saturn/shot/hero_rings.py full web`. No generation.
 - Inputs: `references/approved/saturn-hero.png`, its x2 upscale `out/work/saturn/hero-x2.png` (`python3 tools/ml/upscale.py`), `src/stops/saturn/fit.json`.
@@ -85,7 +85,7 @@ Every file under `public/assets/saturn/` and how it is made. All scripts run fro
 - Inputs: the hero and a film frame 3465 at final rendered with the map set to ones.
 - What it does: ratio approved over film in scene light on the globe, shift compensated, carried outward past the limb. The globe shader multiplies by it, projected from the hero camera, with the weight of the hero pose. Median ratio [0.958, 0.986, 0.989], p5 [0.763, 0.868, 0.893], p95 [1.075, 1.09, 1.131].
 
-## `public/assets/saturn/<set>/skim-rings.jpg` and `skim-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
+## `public/assets/saturn/<set>/skim-rings.jpg` and `public/assets/saturn/<set>/skim-rings-mask.png` (full 5632 x 3168 from the x2 upscale, web 2816 x 1584)
 
 - Tool: `python3 assets-src/saturn/shot/skim_rings.py`. No generation.
 - Inputs: `references/approved/saturn-close.jpg`, its x2 upscale `out/work/saturn/close-x2.png` (`python3 tools/ml/upscale.py`), the traced limb `out/work/saturn/close-limb.npy`, the fitted close camera (`src/stops/saturn/close.json`).
