@@ -369,3 +369,11 @@ Item 8, terrain motion: the old time warp had a swoop (corner speed 10.6 px a fr
 - Rise after it (`flowq.ts`, `motion.ts`): acceleration 0.05 (180), 0.58 (192), 4.75 (207), 5.95 (215), 2.5 (224); distance 1.0380 (180), 1.0375 (188), then monotone; limb top 0.4768, 0.3676 (204), 0.2079 (212), 0.1064 (220), 0.0821 (236), 0.0836 from 260.
 
 Item 9, hold turn: measured at draft, features at the disc centre moved 36 px across the hold (net turn about 4.6 degrees, spin 9.6 minus orbit 6). `spinDegPerSecond` 3.4.
+
+## Round 3, last stretch (14:00 to 14:25 UTC), checkpoint a9b90c6 pushed
+
+- Checkpoint a9b90c6 on agent/sun holds everything of round 3 so far (rise dissolve, terrain path, hold turn, hold sky margins, moat, card floor, plate cap). origin/main moved to 5cfb8dc (earth and saturn folders only, no engine change): merge it before READY, not during a render.
+- Review tier cost: a fast rise frame takes 64 samples, about 220 s (208: 225 s, 212: 221 s); orbit frames 25 to 35 s; hold frames 6 s. The harness rise sheet is 180, 188, 196, 204, 212, 220, 229, 237, 245, 253, 261, 269 and the cover sheet 211 to 222 (`out/work/sun/sheetlist.ts`). They are being rendered at review into `out/work/sun/rv` (job `rv2.sh`, log `rv2.log`); every frame 200 to 235 was looked at at draft.
+- 208 and 212 at review: limb readable, no whiteout (`i99-rv208.jpg`, `i100-rv212.jpg`).
+- Tests 59 of 59, tsc clean, G11 pass, web 12 MB, full 38 MB (before the merge).
+- Still to do before READY: finish the review frames and look at each; `npm run measure -- --stop sun --every 2`; draft sequences 262 to 272 and 444 to 456 with `jump.py`; gate G12, G15; merge origin/main; build; tests; commit; push; looks; READY mail in the format of mail 19.
