@@ -25,7 +25,7 @@ export interface Director {
 export interface Sanity { invalid: number; coverage: number }
 
 const STAR_COUNT = 900000
-const DUST_COUNT = 4500
+const DUST_COUNT = 12000
 const GRAD_FLOOR = 0.5
 
 export class Engine {
