@@ -51,9 +51,27 @@ def step(v, lo, hi):
     return t * t * (3 - 2 * t)
 
 
+def margin(lin, px, py):
+    h, w = lin.shape[:2]
+    low, stars, noise = layers(lin)
+    stars = stars * step(stars @ LW, 8 * noise, 16 * noise)[..., None]
+    crowd = ndi.gaussian_filter(((stars @ LW) > 0).astype(np.float32), 30)
+    stars = stars * (1 - step(crowd, 1.3 * float(np.median(crowd)), 2.2 * float(np.median(crowd))))[..., None]
+    pad = ((py, py), (px, px), (0, 0))
+    base = np.pad(low, pad, mode="edge")
+    soft = np.stack([ndi.gaussian_filter(base[..., i], 70) for i in range(3)], -1)
+    inside = np.zeros(base.shape[:2], bool)
+    inside[py:py + h, px:px + w] = True
+    k = step(ndi.distance_transform_edt(~inside), 0, 110)[..., None]
+    far = np.pad(np.roll(stars, (h // 2, w // 2), axis=(0, 1)), pad, mode="wrap")
+    wide = base * (1 - k) + soft * k + far
+    wide[py:py + h, px:px + w] = lin
+    return wide.astype(np.float32)
+
+
 def save(lin, name):
     px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
-    wide = np.pad(lin, ((py, py), (px, px), (0, 0)), mode="symmetric")
+    wide = margin(lin, px, py)
     img = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
@@ -169,8 +187,17 @@ def terrain(close, fill, glow):
     compose(a, f, g, body, "sky-terrain.webp")
 
 
+def again(name):
+    img = np.asarray(Image.open(ROOT / "public/assets/saturn/full" / name).convert("RGB")).astype(np.float32) / 255
+    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
+    save(unfilm(to_linear(img[py:py + FULL[1], px:px + FULL[0]])).astype(np.float32), name)
+
+
 if __name__ == "__main__":
     kind = sys.argv[1]
+    if kind == "margin":
+        again(sys.argv[2])
+        sys.exit(0)
     args = [None if v == "none" else v for v in sys.argv[2:]]
     if kind == "hold":
         hold(*args)

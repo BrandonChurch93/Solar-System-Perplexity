@@ -52,7 +52,8 @@ export const shell: HazeParams = {
 
 export const rings: RingLook = {
   shadowFloor: [0.0075, 0.0095, 0.0125],
-  shadowClose: [28, 0],
+  shadowClose: [30, 0],
+  shadowLift: 0.15,
   floorAlpha: 0.93,
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
@@ -86,34 +87,34 @@ export const rings: RingLook = {
 }
 
 export const ice: IceLook = {
-  count: 12000,
+  count: 20000,
   box: [1.3, 0.34, 0.004],
   heightPower: 1.6,
-  blur: 1,
-  radius: [1.1, 46],
+  blur: 1.2,
+  radius: [0.85, 46],
   near: [0.012, 0.035],
-  energy: 5,
-  dim: [1.8, 1.2],
-  energyPower: 3,
-  tint: [1, 0.94, 0.86],
+  energy: 16,
+  dim: [0.85, 1.5],
+  energyPower: 5,
+  tint: [1, 0.93, 0.82],
   glint: [3, 8],
   drift: 0.004,
-  thin: 0.25,
+  thin: 0.3,
   thinRange: [0.1, 0.45],
   heightRange: [0.5, 1],
   dense: [0.04, 0.15],
-  eye: [0.03, 0.09],
+  eye: [0.14, 0.22],
   lod: 16,
 }
 
 export const titan: TitanLook = {
-  day: [0.62, 0.3, 0.1],
-  rim: [0.25, 0.14, 0.06],
-  night: [0.004, 0.003, 0.003],
-  halo: [0.1, 0.07, 0.05],
-  haloHeight: 0.05,
-  terminator: [-0.3, 0.75],
-  limb: 0.5,
+  day: [0.7, 0.245, 0.085],
+  rim: [1.4, 0.72, 0.3],
+  night: [0.0008, 0.0006, 0.0006],
+  halo: [0.02, 0.011, 0.007],
+  haloHeight: 0.03,
+  terminator: [0.02, 0.5],
+  limb: 0.3,
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]

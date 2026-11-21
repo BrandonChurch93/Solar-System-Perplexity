@@ -9,6 +9,7 @@ import { SHOT_GLSL } from './shot'
 export interface RingLook {
   shadowFloor: [number, number, number]
   shadowClose: [number, number]
+  shadowLift: number
   floorAlpha: number
   penumbra: [number, number, number]
   unlit: number
@@ -97,6 +98,7 @@ uniform float uSpinRate;
 uniform float uGrad;
 uniform vec2 uLodBias;
 uniform vec3 uShadowFloor;
+uniform float uShadowLift;
 uniform vec3 uPenumbra;
 uniform float uAzGain[25];
 uniform float uAzRadii[5];
@@ -275,7 +277,7 @@ void main() {
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss)));
   float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0), miss));
-  col = mix(uShadowFloor * (0.6 + 0.9 * smoothstep(0.0, 0.6, dot(col, vec3(0.2126, 0.7152, 0.0722)))) * body, col, lit) * lay.y * mix(vec3(1.0), layoutTone, lay.z);
+  col = mix(uShadowFloor * (0.6 + 0.9 * smoothstep(0.0, 0.6, dot(col, vec3(0.2126, 0.7152, 0.0722)))) * body, col, mix(lit, 1.0, uShadowLift * uClose)) * lay.y * mix(vec3(1.0), layoutTone, lay.z);
   col = mix(vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))) * uShadeTint, col, mix(1.0, smoothstep(uShadeGrey.x, uShadeGrey.y, lay.y), lay.z));
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   float inH;
@@ -350,7 +352,7 @@ export class Rings {
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
       uGrad: gradUniform, uDiag: diagUniform, uLodBias: { value: new THREE.Vector2(look.lodBias, look.lodBiasClose) },
-      uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uPenumbra: { value: new THREE.Vector3().fromArray(look.penumbra) }, uAzGain: { value: azimuth.coeffs.flat() }, uAzRadii: { value: azimuth.radii },
+      uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uShadowLift: { value: look.shadowLift }, uPenumbra: { value: new THREE.Vector3().fromArray(look.penumbra) }, uAzGain: { value: azimuth.coeffs.flat() }, uAzRadii: { value: azimuth.radii },
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },

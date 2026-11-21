@@ -78,14 +78,14 @@ void main() {
   float edge = 1.0 - smoothstep(0.34 * uBox.x, 0.47 * uBox.x, max(abs(rel.x), abs(rel.z)));
   float close = smoothstep(uNear.x, uNear.y, d);
   float thin = mix(uThin, 1.0, smoothstep(uThinRange.x, uThinRange.y, length(p - uSkimL)));
-  float below = smoothstep(uEye.x, uEye.y, uCamL.y - p.y);
+  float below = smoothstep(uEye.x, uEye.y, (uCamL.y - p.y) / max(d, 1e-4));
   vec3 behind = uCamL + (p - uCamL) * (uCamL.y / max(uCamL.y - p.y, 1e-4));
   float dense = below > 0.0 ? ringAt(vec3(p.x, 0.0, p.z)) * ringAt(vec3(behind.x, 0.0, behind.z)) : 0.0;
   float tw = pow(0.5 + 0.5 * sin(6.2832 * h3 + uTime * (1.5 + 6.0 * h4)), uGlint.y);
   float energy = uEnergy.x * pow(h1, uEnergy.y) * (1.0 + uGlint.x * tw);
   float flux = min(want / R, 1.0) * pow(min(uDim.x / R, 1.0), 0.5 * uDim.y);
   vCol = uTint * mix(vec3(1.0), vec3(0.82, 0.92, 1.1), h2 * h2) * (uGain * energy * flux * flux * lit * edge * close * thin * below * dense);
-  vSoft = smoothstep(2.0, 6.0, R);
+  vSoft = smoothstep(2.5, 7.0, R);
   vQ = position.xy;
   gl_Position = projectionMatrix * mv;
   gl_Position.xy += position.xy * R * 2.0 / uView * gl_Position.w;
