@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T14:06:45.587Z",
- "head": "5710e9f5e707ba253606f029b9e9068b9d639809",
- "note": "task 3 first looks: worst leaving frames of seven travels at review on the old path, new flight field previews, open sky from frame 1 drafts",
+ "pushed": "2026-11-21T14:34:45.321Z",
+ "head": "809ef6a4d6d9f55fa3d9707ad3588343678e11c9",
+ "note": "task 3: 22 frames byte identical on merged state, review sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-21T14:15:28.040Z",
+   "file": "20261121141528040-note-f471-review.jpg",
+   "source": "out/work/travel/t3c/f471-review.png",
+   "kind": "note",
+   "label": "t3c: f471-review",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-21T14:15:27.381Z",
+   "file": "20261121141527381-note-f1618-review.jpg",
+   "source": "out/work/travel/t3c/f1618-review.png",
+   "kind": "note",
+   "label": "t3c: f1618-review",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-21T14:08:42.132Z",
+   "file": "20261121140842132-note-f1626-review.jpg",
+   "source": "out/work/travel/t3b/f1626-review.png",
+   "kind": "note",
+   "label": "t3b: f1626-review",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-21T14:08:41.468Z",
+   "file": "20261121140841468-note-f1618-review.jpg",
+   "source": "out/work/travel/t3b/f1618-review.png",
+   "kind": "note",
+   "label": "t3b: f1618-review",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-21T14:06:44.838Z",
    "file": "20261121140644838-note-crops471-4469.jpg",
@@ -31,38 +63,6 @@
    "source": "out/work/travel/t3v/leave6.png",
    "kind": "note",
    "label": "task 3 leave6"
-  },
-  {
-   "time": "2026-11-21T14:06:25.887Z",
-   "file": "20261121140625887-note-f4460-draft.jpg",
-   "source": "out/work/travel/t3b/f4460-draft.png",
-   "kind": "note",
-   "label": "t3b: f4460-draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T14:06:25.203Z",
-   "file": "20261121140625203-note-f3922-draft.jpg",
-   "source": "out/work/travel/t3b/f3922-draft.png",
-   "kind": "note",
-   "label": "t3b: f3922-draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T14:06:24.496Z",
-   "file": "20261121140624496-note-f3352-draft.jpg",
-   "source": "out/work/travel/t3b/f3352-draft.png",
-   "kind": "note",
-   "label": "t3b: f3352-draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T14:06:23.812Z",
-   "file": "20261121140623812-note-f2752-draft.jpg",
-   "source": "out/work/travel/t3b/f2752-draft.png",
-   "kind": "note",
-   "label": "t3b: f2752-draft",
-   "stop": "travel"
   }
  ]
 }
