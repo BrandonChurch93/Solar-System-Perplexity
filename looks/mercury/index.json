@@ -1,9 +1,75 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T11:37:14.566Z",
+ "pushed": "2026-11-21T11:57:45.577Z",
  "head": "8c4fee2b6a67fe14f6765e7fcf34183b21087578",
- "note": "round 2 work: both cover swaps are one move now (pose, brightness and horizon matched; veil keeps ground and horizon readable)",
+ "note": "round 8: dive and rise sheets at review after the pose match; 994 and 739 ground bars under the veil in work",
  "looks": [
+  {
+   "time": "2026-11-21T11:57:45.034Z",
+   "file": "20261121115745034-note-r994-half-a.jpg",
+   "source": "out/work/mercury/r8/s1/r994-half-a.jpg",
+   "kind": "note",
+   "label": "rise 994 at review, 64 samples: lifted globe ground smears into bars, in work",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T11:57:17.392Z",
+   "file": "20261121115717392-sheet-mercury.rise-16x9-review.jpg",
+   "source": "out/work/sheets/mercury.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.rise, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 960,
+   "last": 1034,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:57:15.615Z",
+   "file": "20261121115715615-frame-f01034-review.jpg",
+   "source": "out/work/sheets/.frames-5s9OHW/f01034-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1034, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1034,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:47:16.918Z",
+   "file": "20261121114716918-sheet-mercury.dive-16x9-review.jpg",
+   "source": "out/work/sheets/mercury.dive-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.dive, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 690,
+   "last": 779,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T11:46:43.989Z",
+   "file": "20261121114643989-frame-f00763-review.jpg",
+   "source": "out/work/sheets/.frames-jsFN3h/f00763-review.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 763, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 763,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
+  },
   {
    "time": "2026-11-21T11:37:07.304Z",
    "file": "20261121113707304-note-hz-teeth-b.jpg",
@@ -11,52 +77,6 @@
    "kind": "note",
    "label": "r8 terrain horizon at 744, 747, 751 after the far distance fix: no sawtooth",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:37:06.276Z",
-   "file": "20261121113706276-note-pair-rise-a.jpg",
-   "source": "out/work/mercury/r8/q5/pair-rise-a.png",
-   "kind": "note",
-   "label": "r8 raw swap, glare off: terrain 989 over globe 990 after the pose and brightness match",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:37:05.159Z",
-   "file": "20261121113705159-note-pair-dive-a.jpg",
-   "source": "out/work/mercury/r8/q5/pair-dive-a.png",
-   "kind": "note",
-   "label": "r8 raw swap, glare off: globe 743 over terrain 744 after the pose and brightness match",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:37:04.093Z",
-   "file": "20261121113704093-note-rise-a.jpg",
-   "source": "out/work/mercury/r8/q8/rise-a.jpg",
-   "kind": "note",
-   "label": "r8 rise cover 987 to 992 at draft: horizon readable, the rise starts over the same crater",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:37:03.239Z",
-   "file": "20261121113703239-note-dive-a.jpg",
-   "source": "out/work/mercury/r8/q8/dive-a.jpg",
-   "kind": "note",
-   "label": "r8 dive cover 741 to 746 at draft: ground and horizon stay readable, same crater on both sides of the swap",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T11:36:59.683Z",
-   "file": "20261121113659683-frame-f00690-review.jpg",
-   "source": "out/work/sheets/.frames-jsFN3h/f00690-review.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 690, review tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 690,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
   },
   {
    "time": "2026-11-21T10:41:08.867Z",
