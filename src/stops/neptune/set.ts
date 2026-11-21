@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import type { SetFactory } from '../../core/types'
+import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
@@ -10,6 +10,7 @@ import { plan } from './plan'
 import { NeptunePlanet } from './planet'
 import { Plate } from './plate'
 import { Ring } from './ring'
+import skyJson from './sky.json'
 import { Triton } from './triton'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -47,6 +48,8 @@ export const createSet: SetFactory = async (ctx) => {
   const moonUp = new THREE.Vector3().fromArray(look.triton.up).normalize()
   const moonHold = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), moonUp)
   const moonSpin = new THREE.Quaternion()
+  const moonAim = new THREE.Vector3().fromArray(look.triton.aim)
+  const moonLight = new THREE.Vector3()
 
   const ring = new Ring(look.ring)
   orbit.add(ring.mesh)
@@ -63,9 +66,17 @@ export const createSet: SetFactory = async (ctx) => {
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const holdDirection = new THREE.Vector3()
 
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const wide = 1 + 2 * def.margin
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  }
+
   return {
     id: plan.id,
     world,
+    sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       orbit.visible = inOrbit && state.weight > 0
@@ -93,7 +104,7 @@ export const createSet: SetFactory = async (ctx) => {
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       triton.mesh.position.copy(moonHome).applyQuaternion(turn)
       triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
-      triton.update(light, gain * state.weight)
+      triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize(), gain * state.weight)
       ring.update(light, state.rotation, THREE.MathUtils.degToRad(look.ring.degPerSecond) * elapsed, home, gain * state.weight)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
