@@ -13,6 +13,12 @@ from lightcurve import inverse_filmic  # noqa: E402
 
 FIT = load_json(HERE / "fit.json")
 KNOTS = 33
+TERM = (0.085, 0.55, 0.97)
+
+
+def term_shift(sin_lat):
+    t = np.clip((sin_lat - TERM[1]) / (TERM[2] - TERM[1]), 0, 1)
+    return TERM[0] * t * t * (3 - 2 * t)
 
 
 def filmic(x):
@@ -48,7 +54,7 @@ def hero_geometry(scale=1):
     nl /= np.linalg.norm(nl, axis=-1, keepdims=True)
     dl = d @ M
     sl = sun_local()
-    ndl = nl @ sl
+    ndl = nl @ sl - term_shift(p[..., 1])
     mu = -(nl * dl).sum(-1)
     tr, pr = plane_hit(cam.pos, d, n)
     rr = np.linalg.norm(pr, axis=-1)
@@ -67,3 +73,20 @@ def curve_at(curve, ndl):
 
 def hero_image():
     return cv2.imread(str(ROOT / "references/approved/saturn-hero.png"))[..., ::-1].astype(np.float32) / 255
+
+
+TABLE = (48, 41)
+
+
+def table_at(table, ndl, sin_lat):
+    nx, ny = TABLE
+    x = np.clip(ndl * 0.5 + 0.5, 0, 1) * (nx - 1)
+    y = (np.arcsin(np.clip(sin_lat, -1, 1)) / np.pi + 0.5) * (ny - 1)
+    x0 = np.clip(np.floor(x).astype(int), 0, nx - 2)
+    y0 = np.clip(np.floor(y).astype(int), 0, ny - 2)
+    fx, fy = (x - x0)[..., None], (y - y0)[..., None]
+    return (table[y0, x0] * (1 - fx) + table[y0, x0 + 1] * fx) * (1 - fy) + (table[y0 + 1, x0] * (1 - fx) + table[y0 + 1, x0 + 1] * fx) * fy
+
+
+def light_at(curve, table, ndl, sin_lat):
+    return curve_at(curve, ndl) * table_at(table, ndl, sin_lat)

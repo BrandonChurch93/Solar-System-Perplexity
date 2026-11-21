@@ -41,7 +41,7 @@ def noise(rng, sigma):
 
 def fine(rng, amount):
     out = np.zeros(N)
-    for sigma, a in ((14, 1.0), (7, 0.9), (3.5, 0.75), (1.8, 0.55)):
+    for sigma, a in ((30, 1.1), (15, 1.0), (7, 0.85), (3.5, 0.65), (1.8, 0.5)):
         out += a * noise(rng, sigma)
     out /= out.std()
     gaps = np.ones(N)
@@ -57,6 +57,25 @@ def fine(rng, amount):
         d = rng.uniform(0.1, 0.45)
         lines *= 1 + d * np.exp(-0.5 * ((axis - c) / w) ** 2)
     return np.exp(amount * out) * gaps * lines
+
+
+def filmic(x):
+    x = np.clip(x, 0, None)
+    return np.clip(x * (2.51 * x + 0.03) / (x * (2.43 * x + 0.59) + 0.14), 0, 1)
+
+
+def scene_lum(display):
+    d = np.clip(lum(display), 0, 0.985)
+    lo, hi = np.zeros_like(d), np.full_like(d, 12.0)
+    for _ in range(40):
+        mid = 0.5 * (lo + hi)
+        low = filmic(mid) < d
+        lo, hi = np.where(low, mid, lo), np.where(low, hi, mid)
+    return 0.5 * (lo + hi)
+
+
+def unit_mean(m):
+    return m / np.maximum(blur(m, 0.003), 1e-4)
 
 
 def pyramid(rgba):
@@ -117,22 +136,19 @@ def main():
     detail_c = lum(close) / np.maximum(blur(lum(close), 0.004), 1e-4)
     detail_c = np.clip(detail_c, 0.4, 2.2)
     keep = smoothstep(0.02, 0.06, blur(lum(hero), 0.004))
-    hero_fine = hero * (1 + (detail_c[:, None] - 1) * 0.8 * keep[:, None])
-
-    f1 = fine(rng, 0.13)
-    f2 = fine(rng, 0.13)
-    hero_fine *= f1[:, None]
-    close_fine = close * (0.5 * f1 + 0.5 * f2)[:, None]
+    f1 = fine(rng, 0.2)
+    f2 = fine(rng, 0.2)
+    hero_fine = filmic(hero) * unit_mean((1 + (detail_c - 1) * 0.5 * keep) * f1)[:, None]
+    close_fine = filmic(close) * unit_mean(0.5 * f1 + 0.5 * f2)[:, None]
 
     edge_h = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
     edge_c = smoothstep(1.208, 1.214, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
-    line = 0.02 * np.exp(-0.5 * ((axis - 2.42) / 0.004) ** 2)
-    hero_fine = hero_fine * edge_h[:, None] + line[:, None] * np.array([0.9, 0.85, 0.8])
-    close_fine = close_fine * edge_c[:, None] + 0.6 * line[:, None] * np.array([0.9, 0.85, 0.8])
+    line = 0.05 * np.exp(-0.5 * ((axis - 2.42) / 0.004) ** 2)
+    hero_fine = np.clip(hero_fine * edge_h[:, None] + line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
+    close_fine = np.clip(close_fine * edge_c[:, None] + 0.6 * line[:, None] * np.array([0.9, 0.85, 0.8]), 0, 0.985)
 
-    thin = 1 - 0.5 * (1 - smoothstep(1.47, 1.53, axis))
-    alpha_h = (1 - np.exp(-lum(hero_fine) / 0.12)) * thin
-    alpha_c = 1 - np.exp(-lum(close_fine) / 0.07)
+    alpha_h = 1 - np.exp(-scene_lum(hero_fine) / 0.04)
+    alpha_c = 1 - np.exp(-scene_lum(close_fine) / 0.07)
     out = [np.concatenate([hero_fine, alpha_h[:, None]], -1), np.concatenate([close_fine, alpha_c[:, None]], -1)]
 
     sets = {}
@@ -162,7 +178,7 @@ def main():
     cv2.imwrite(str(WORK / "ring-profiles.jpg"), np.vstack(strips), [cv2.IMWRITE_JPEG_QUALITY, 92])
     for nm, lo, hi in (("C", 1.26, 1.45), ("B", 1.55, 1.9), ("Cassini", 1.965, 2.02), ("A", 2.05, 2.3)):
         m = (axis > lo) & (axis < hi)
-        print(nm, "hero", np.round(out[0][m].mean(0), 3), "close", np.round(out[1][m].mean(0), 3))
+        print(nm, "display values, hero", np.round(out[0][m].mean(0), 3), "close", np.round(out[1][m].mean(0), 3))
 
 
 if __name__ == "__main__":

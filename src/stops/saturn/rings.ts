@@ -1,11 +1,13 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
+import azimuth from './azimuth.json'
 import { RING_PROFILE_GLSL } from './profile'
 import ringsJson from './rings.json'
 
 export interface RingLook {
   shadowFloor: [number, number, number]
-  penumbra: [number, number]
+  penumbra: [number, number, number]
   unlit: number
   lodBias: number
   spokes: number
@@ -71,7 +73,9 @@ uniform float uSpinRate;
 uniform float uGrad;
 uniform float uLodBias;
 uniform vec3 uShadowFloor;
-uniform vec2 uPenumbra;
+uniform vec3 uPenumbra;
+uniform float uAzGain[25];
+uniform float uAzRadii[5];
 uniform float uUnlit;
 uniform vec4 uAzimuth;
 uniform vec3 uSparkleTint;
@@ -85,6 +89,17 @@ out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
 ${HASH_GLSL}
+${INVERSE_FILMIC_GLSL}
+float azRow(int i, vec4 h) {
+  return uAzGain[i * 5] + uAzGain[i * 5 + 1] * h.x + uAzGain[i * 5 + 2] * h.y + uAzGain[i * 5 + 3] * h.z + uAzGain[i * 5 + 4] * h.w;
+}
+float azGain(float r, float phi) {
+  int i = 0;
+  for (int k = 1; k < 4; k++) if (r >= uAzRadii[k]) i = k;
+  float t = clamp((r - uAzRadii[i]) / (uAzRadii[i + 1] - uAzRadii[i]), 0.0, 1.0);
+  vec4 h = vec4(cos(phi), sin(phi), cos(2.0 * phi), sin(2.0 * phi));
+  return clamp(mix(azRow(i, h), azRow(i + 1, h), t), 0.4, 1.7);
+}
 float rowNoise(float tu, int row, float cellA, float cellR) {
   int per = max(int(floor(6.283185307 * (float(row) + 0.5) * cellR / cellA)), 1);
   float p = tu * float(per);
@@ -115,7 +130,7 @@ void main() {
   vec4 s = profAt(x, texels * uGrad * uLodBias);
   float mu = abs(V.y);
   float alpha = 1.0 - pow(1.0 - min(s.a, 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
-  vec3 col = s.rgb * mix(uHeroTone, uCloseTone, uClose);
+  vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
   float th = atan(vLocal.z, vLocal.x) + uSpinRate * pow(r / 1.86, -1.5) * uTime;
   float tu = th / 6.283185307;
@@ -154,8 +169,7 @@ void main() {
   vec3 ss = normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z));
   float along = dot(vLocal, ss);
   float miss = length(vLocal - ss * along);
-  float w = uPenumbra.x + uPenumbra.y * max(-along, 0.0);
-  float lit = along > 0.0 ? 1.0 : smoothstep(1.0 - w, 1.0 + w, miss);
+  float lit = along > 0.0 ? 1.0 : smoothstep(uPenumbra.x, uPenumbra.y + uPenumbra.z * max(-along, 0.0), miss);
   col = mix(dot(col, vec3(0.2126, 0.7152, 0.0722)) * uShadowFloor, col, lit);
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -197,7 +211,7 @@ export class Rings {
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
       uGrad: gradUniform, uDiag: diagUniform, uLodBias: { value: look.lodBias },
-      uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uPenumbra: { value: new THREE.Vector2().fromArray(look.penumbra) },
+      uShadowFloor: { value: new THREE.Vector3().fromArray(look.shadowFloor) }, uPenumbra: { value: new THREE.Vector3().fromArray(look.penumbra) }, uAzGain: { value: azimuth.coeffs.flat() }, uAzRadii: { value: azimuth.radii },
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },

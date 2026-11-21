@@ -10,36 +10,43 @@ export const globe: GlobeLook = {
   ringShadow: 0.94,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
-  drift: 0.5,
-  ringShine: [0, 0, 0],
+  drift: 0.2,
+  nightFloor: 0.012,
   hazeShadow: 0.8,
+  rim: [3.1, 3.4, 1.8, 0.15],
+  rimPower: 3,
+  rimNight: [0.004, 0.012, 0.025, 0.06],
+  nightBlur: 16,
+  termShift: [0.085, 0.55, 0.97],
 }
 
 export const haze: HazeParams = {
   scaleHeight: 0.006,
-  depth: 0.05,
-  day: [0.9, 0.78, 0.55],
-  twilight: [0.05, 0.045, 0.04],
-  strength: 1,
-  extinction: 0.5,
-  forward: 0,
-  top: 7,
-}
-
-export const shell: HazeParams = {
-  scaleHeight: 0.005,
-  depth: 0.18,
-  day: [0.9, 0.74, 0.5],
-  twilight: [0.04, 0.035, 0.03],
+  depth: 0.01,
+  day: [0.9, 0.8, 0.6],
+  twilight: [0, 0, 0],
   strength: 1,
   extinction: 0,
   forward: 0,
   top: 7,
 }
 
+export const shell: HazeParams = {
+  scaleHeight: 0.034,
+  depth: 0.018,
+  day: [0.5, 0.42, 0.33],
+  twilight: [0.02, 0.03, 0.04],
+  dayFrom: -0.05,
+  dayTo: 0.5,
+  strength: 1,
+  extinction: 0,
+  forward: 0,
+  top: 5,
+}
+
 export const rings: RingLook = {
-  shadowFloor: [0.03, 0.032, 0.04],
-  penumbra: [0.004, 0.012],
+  shadowFloor: [0.004, 0.005, 0.006],
+  penumbra: [0.99, 1.1, 0.02],
   unlit: 0.12,
   lodBias: 1.2,
   spokes: 0.1,

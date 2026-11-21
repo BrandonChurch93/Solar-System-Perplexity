@@ -3,7 +3,7 @@ import sys
 import cv2
 import numpy as np
 
-from geo import FIT, POLAR, ROOT, WORK, curve_at, filmic, hero_camera, hero_image, ring_frame, scene, sun_local
+from geo import FIT, POLAR, ROOT, WORK, curve_at, filmic, hero_camera, hero_image, light_at, ring_frame, scene, sun_local, term_shift
 
 sys.path.insert(0, str(ROOT / "assets-src" / "saturn"))
 from lib import linear_to_srgb  # noqa: E402
@@ -35,10 +35,13 @@ def main():
     sl = sun_local()
     cam_l = cam.pos @ M
     curve = np.load(WORK / "curve.npy")
+    table = np.load(WORK / "light-table.npy")
     src = hero_scene_2x()
     inner, outer = FIT["rings"]["inner"], FIT["rings"]["outer"]
     albedo = np.zeros((H, W, 3), dtype=np.float32)
     weight = np.zeros((H, W), dtype=np.float32)
+    keep = np.zeros((H, W), dtype=np.float32)
+    core = np.zeros((H, W), dtype=np.float32)
     lon = ((np.arange(W) + 0.5) / W - 0.5) * 2 * np.pi
     for r0 in range(0, H, 256):
         rows = np.arange(r0, min(r0 + 256, H))
@@ -52,24 +55,24 @@ def main():
         dist = np.linalg.norm(v, axis=-1, keepdims=True)
         v /= dist
         mu = (nl * v).sum(-1)
-        ndl = nl @ sl
+        ndl = nl @ sl - term_shift(p[..., 1])
         px, py, _ = cam.project(P @ M.T)
         mx = ((px - CROP[0]) * 2 - 0.5).astype(np.float32)
         my = ((py - CROP[1]) * 2 - 0.5).astype(np.float32)
         seen = cv2.remap(src, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
         tc = -P[..., 1] / np.where(np.abs(v[..., 1]) > 1e-6, v[..., 1], 1e-6)
         rc = np.linalg.norm(P[..., [0, 2]] + v[..., [0, 2]] * tc[..., None], axis=-1)
-        cover = np.where(tc > 0, smoothstep(inner - 0.05, inner - 0.015, rc) * (1 - smoothstep(outer + 0.015, outer + 0.05, rc)), 0)
+        cover = np.where(tc > 0, smoothstep(inner - 0.11, inner - 0.05, rc) * (1 - smoothstep(outer + 0.015, outer + 0.05, rc)), 0)
         ts = -P[..., 1] / sl[1]
         rs = np.linalg.norm(P[..., [0, 2]] + sl[[0, 2]] * ts[..., None], axis=-1)
-        shadow = np.where(ts > 0, smoothstep(inner - 0.06, inner - 0.02, rs) * (1 - smoothstep(outer + 0.02, outer + 0.06, rs)), 0)
+        shadow = np.where(ts > 0, smoothstep(inner - 0.12, inner - 0.06, rs) * (1 - smoothstep(outer + 0.02, outer + 0.06, rs)), 0)
         inside = (mx > 2) & (my > 2) & (mx < src.shape[1] - 3) & (my < src.shape[0] - 3)
-        w = smoothstep(0.18, 0.4, mu) * smoothstep(0.08, 0.26, ndl) * (1 - cover) * (1 - shadow) * inside
-        albedo[rows] = (seen / np.maximum(curve_at(curve, ndl), 1e-3)).astype(np.float32)
-        weight[rows] = w.astype(np.float32)
+        free = (1 - cover) * (1 - shadow) * inside
+        albedo[rows] = (seen / np.maximum(light_at(curve, table, ndl, p[..., 1]), 1e-3)).astype(np.float32)
+        weight[rows] = (smoothstep(0.18, 0.4, mu) * smoothstep(0.08, 0.26, ndl) * free).astype(np.float32)
+        keep[rows] = (smoothstep(0.18, 0.4, mu) * smoothstep(0.2, 0.42, ndl) * free).astype(np.float32)
+        core[rows] = (smoothstep(0.4, 0.62, mu) * smoothstep(0.35, 0.6, ndl)).astype(np.float32)
     albedo[weight <= 0] = 0
-    np.save(WORK / "wrap-hero-albedo.npy", albedo)
-    np.save(WORK / "wrap-hero-weight.npy", weight)
 
     w2 = weight ** 2
     num = (albedo * w2[..., None]).sum(1)
@@ -91,13 +94,17 @@ def main():
     sigma = W * 5.0 / 360
     low = cv2.GaussianBlur(albedo * w2[..., None], (0, 0), sigmaX=sigma, sigmaY=0.01)
     lw = cv2.GaussianBlur(w2, (0, 0), sigmaX=sigma, sigmaY=0.01)
-    detail = np.where(lw[..., None] > 1e-3, albedo / np.maximum(low / np.maximum(lw[..., None], 1e-6), 1e-4), 1).astype(np.float32)
+    low = low / np.maximum(lw[..., None], 1e-6)
+    have = lw > 1e-3
+    detail = np.where(have, (albedo @ LW) / np.maximum(low @ LW, 1e-4), 1).astype(np.float32)
     detail[weight <= 0] = 1
-    del low
+    flat = np.where(have[..., None], zonal[:, None, :] / np.maximum(low, 1e-4), 1).astype(np.float32)
+    albedo *= np.clip(flat, 0.5, 2.0) ** (1 - core[..., None])
+    del low, flat
     period = W / PERIODS
     shift = int(period // 2)
     eps = 0.004
-    num = np.zeros((H, W, 3), dtype=np.float32)
+    num = np.zeros((H, W), dtype=np.float32)
     den = np.zeros((H, W), dtype=np.float32)
     den2 = np.zeros((H, W), dtype=np.float32)
     xm, ym = np.meshgrid(np.arange(W, dtype=np.float32), np.arange(H, dtype=np.float32))
@@ -105,19 +112,19 @@ def main():
         xk = np.mod(xm + np.float32(k * period), W).astype(np.float32)
         dk = cv2.remap(detail, xk, ym, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
         wk = cv2.remap(w2, xk, ym, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
-        num += dk * wk[..., None]
+        num += dk * wk
         den += wk
         den2 += wk * wk
     del xm, ym, xk, dk, wk
-    fill = (num + eps) / (den[..., None] + eps)
+    fill = (num + eps) / (den + eps)
     spread = np.sqrt(den2) / np.maximum(den, 1e-6)
-    fill = 1 + (fill - 1) / np.clip(spread, 0.6, 1)[..., None]
+    fill = 1 + (fill - 1) / np.clip(spread, 0.6, 1)
     del num, den, den2, spread
     fill_m = np.roll(fill[mirror], shift, axis=1)
-    fill = (fill * blend[:, None, None] + fill_m * (1 - blend[:, None, None])) * zonal_full[:, None, :]
+    fill = (fill * blend[:, None] + fill_m * (1 - blend[:, None]))[..., None] * zonal_full[:, None, :]
     cap = (1 - smoothstep(76, 86, np.abs(lat_deg))).astype(np.float32)
     fill = fill * cap[:, None, None] + zonal_full[:, None, :] * (1 - cap[:, None, None])
-    out = albedo * weight[..., None] + fill * (1 - weight[..., None])
+    out = albedo * keep[..., None] + fill * (1 - keep[..., None])
     np.save(WORK / "wrap-zonal.npy", zonal_full)
     print("albedo luminance percentiles", np.percentile(out @ LW, [1, 50, 99, 99.9]))
 
@@ -129,7 +136,7 @@ def main():
     cv2.imwrite(str(full), img, q)
     cv2.imwrite(str(web), cv2.resize(img, (W // 2, H // 2), interpolation=cv2.INTER_AREA), q)
     cv2.imwrite(str(WORK / "wrap-preview.jpg"), cv2.resize(img, (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
-    wv = np.clip(weight * 255, 0, 255).astype(np.uint8)
+    wv = np.clip(keep * 255, 0, 255).astype(np.uint8)
     cv2.imwrite(str(WORK / "wrap-weight.jpg"), cv2.resize(wv, (2048, 1024), interpolation=cv2.INTER_AREA))
 
 

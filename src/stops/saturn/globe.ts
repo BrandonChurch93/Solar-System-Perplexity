@@ -12,8 +12,13 @@ export interface GlobeLook {
   ringSoft: [number, number]
   ringSlant: number
   drift: number
-  ringShine: [number, number, number]
+  nightFloor: number
   hazeShadow: number
+  rim: [number, number, number, number]
+  rimPower: number
+  rimNight: [number, number, number, number]
+  termShift: [number, number, number]
+  nightBlur: number
 }
 
 const VERT = /* glsl */ `
@@ -46,8 +51,14 @@ uniform vec3 uTint;
 uniform float uExtinction;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
-uniform vec3 uRingShine;
 uniform float uHazeShadow;
+uniform vec4 uRim;
+uniform vec4 uRimNight;
+uniform float uRimPower;
+uniform float uNightBlur;
+uniform vec3 uTerm;
+uniform sampler2D uTable;
+uniform float uNightFloor;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vLocal;
@@ -68,6 +79,13 @@ vec3 curveAt(float ndl) {
   int i = int(min(floor(x), 31.0));
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
 }
+vec3 tableAt(float ndl, float lat) {
+  ivec2 size = textureSize(uTable, 0);
+  vec2 q = vec2(clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * float(size.x - 1), clamp(lat / 3.14159265 + 0.5, 0.0, 1.0) * float(size.y - 1));
+  ivec2 i = min(ivec2(floor(q)), size - 2);
+  vec2 f = q - vec2(i);
+  return mix(mix(texelFetch(uTable, i, 0).rgb, texelFetch(uTable, i + ivec2(1, 0), 0).rgb, f.x), mix(texelFetch(uTable, i + ivec2(0, 1), 0).rgb, texelFetch(uTable, i + ivec2(1, 1), 0).rgb, f.x), f.y);
+}
 float zonal(float lat) {
   return 0.55 * sin(lat * 7.0 + 0.4) + 0.3 * sin(lat * 17.0 + 1.9) + 0.15 * sin(lat * 31.0 + 0.6);
 }
@@ -77,19 +95,22 @@ void main() {
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
-  float ndl = dot(nL, uSunL);
+  float ndl = dot(nL, uSunL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   float drift = uDrift * zonal(lat);
   vec3 d = spinY(p, uSpin + drift);
-  vec3 albedo = equirectGrad(uMap, d, uGrad).rgb;
+  vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
+  vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
-  vec3 night = uCurve[0];
-  vec3 shade = max(curveAt(ndl) - night, vec3(0.0)) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
-  shade += uRingShine * smoothstep(0.0, -0.5, ndl) * smoothstep(0.0, 0.35, abs(p.y)) * (1.0 - smoothstep(0.35, 0.9, abs(p.y)));
-  vec3 col = inverseFilmic(albedo) * shade * uTint;
+  vec3 light = curveAt(ndl) * tableAt(ndl, lat);
+  vec3 night = min(light, vec3(uNightFloor));
+  vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
+  vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
+  col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
+  col += uRimNight.rgb * exp(-mu / uRimNight.w);
   vec3 at;
   float tau = hazeDepth(dirS, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
@@ -107,17 +128,19 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...profile,
-        uMap: { value: map }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
-        uRingShine: { value: new THREE.Vector3().fromArray(look.ringShine) }, uHazeShadow: { value: look.hazeShadow },
+        uHazeShadow: { value: look.hazeShadow },
+        uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
+        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
     })

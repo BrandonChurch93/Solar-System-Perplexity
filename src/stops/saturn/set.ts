@@ -1,13 +1,15 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import type { SetFactory } from '../../core/types'
+import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { Globe, Shell } from './globe'
 import * as look from './look'
 import { plan } from './plan'
 import { profileUniforms } from './profile'
 import { Rings } from './rings'
+import lightJson from './light.json'
 import ringsJson from './rings.json'
+import skyJson from './sky.json'
 import { Titan } from './titan'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -26,7 +28,8 @@ export const createSet: SetFactory = async (ctx) => {
   const sizes = ringsJson.sets[key]
   const profile = profileUniforms(await ctx.dataTexture(base + 'rings.bin', sizes.width, sizes.height, 4), key, close)
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const globe = new Globe(map, (map.image as unknown as { width: number }).width, look.globe, look.haze, profile, polar)
+  const table = await ctx.dataTexture(base + lightJson.file, lightJson.width, lightJson.height, 4)
+  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, look.globe, look.haze, profile, polar)
   const shell = new Shell(look.shell, look.globe, profile, polar)
   const rings = new Rings(profile, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
@@ -37,6 +40,13 @@ export const createSet: SetFactory = async (ctx) => {
   const moonHome = new THREE.Vector3().fromArray(moonFit.position)
   const far = new FarPoint()
   body.add(far.points)
+
+  const sky: SkyPatch[] = []
+  for (const [view, def] of Object.entries(skyJson)) {
+    const wide = 1 + 2 * def.margin
+    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time, v) => plan.patchWeight(time, v) })
+  }
 
   const toTerrain = plan.terrainFrame.clone().invert()
   const terrainOffset = plan.spot.clone().negate().applyQuaternion(toTerrain)
@@ -57,6 +67,7 @@ export const createSet: SetFactory = async (ctx) => {
   return {
     id: plan.id,
     world,
+    sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
       if (inOrbit) {
