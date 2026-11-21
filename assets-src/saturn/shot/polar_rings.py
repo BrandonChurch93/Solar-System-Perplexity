@@ -24,6 +24,7 @@ EDGE = 24
 GRAIN = 8
 OVER_END = 1.56
 WARP = (512, 64)
+TIP = ((44.0, 2.285), (50.0, 2.32))
 
 
 def project(m, p):
@@ -92,6 +93,9 @@ def register(y, ok, r, key, alpha):
     first = np.argmax((alpha > 0.5) & (r[:, None] > 2.15), axis=0)
     seen = ok[np.minimum(first + 8, h - 1), np.arange(w)] & ok[np.maximum(first - 8, 0), np.arange(w)]
     D[:, -1] = np.nanmedian(np.where(seen, r[first], np.nan).reshape(BLOCKS, bw), axis=1) - KNOTS[-1]
+    baz = ((np.arange(BLOCKS) + 0.5) / BLOCKS - 0.5) * 360
+    tip = (baz >= TIP[0][0]) & (baz <= TIP[-1][0])
+    D[tip, -1] = np.interp(baz[tip], [t[0] for t in TIP], [t[1] for t in TIP]) - KNOTS[-1]
     for k, c in enumerate(KNOTS[:-1]):
         i = int(round((SPAN[1] - c) / (SPAN[1] - SPAN[0]) * h - 0.5))
         half = int(HALF * rows_per)

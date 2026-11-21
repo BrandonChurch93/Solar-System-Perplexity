@@ -24,6 +24,7 @@ export const globe: GlobeLook = {
   nightBlur: 16,
   termShift: [0.085, 0.55, 0.97],
   probe: 0,
+  edgePx: 2,
 }
 
 export const haze: HazeParams = {
@@ -75,10 +76,8 @@ export const rings: RingLook = {
   veil: [0.55, 1],
   sweep: 700,
   heroTone: [1, 1, 1],
-  heroEdge: 0.012,
-  heroDensity: [0.95, 1.2],
-  heroOver: [0.4, 0.5],
   heroTurn: 0.5,
+  shapeFit: [1.75, 1.92],
   skimEdge: [0, 0.14],
   skimFoot: 0.7,
   skimDensity: [0.8, 1.05],

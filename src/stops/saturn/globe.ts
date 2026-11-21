@@ -22,6 +22,7 @@ export interface GlobeLook {
   termShift: [number, number, number]
   nightBlur: number
   probe: number
+  edgePx: number
 }
 
 export interface GlobePatch { texture: THREE.Texture; table: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
@@ -83,6 +84,7 @@ uniform sampler2D uSkimLight;
 uniform mat4 uSkimM;
 uniform vec3 uSkimCam;
 uniform float uSkimW;
+uniform float uEdgePx;
 in vec3 vLocal;
 in vec3 vView;
 in vec3 vClip;
@@ -171,7 +173,10 @@ void main() {
     float hi = min(floor(val * 255.0), 254.0);
     layer = vec3(hi / 255.0, val * 255.0 - hi, 1.0);
   }
-  outColor = diagOut(vec4(col, 1.0), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  float along = -dot(uCam, dirS);
+  float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
+  float cover = uDiag >= 2 ? 1.0 : clamp((1.0 - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
+  outColor = diagOut(vec4(col * cover, cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -198,12 +203,16 @@ export class Globe {
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
+        uEdgePx: { value: look.edgePx },
         uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
+      transparent: true, premultipliedAlpha: true,
+      blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)
     this.mesh.scale.set(1, polar, 1)
+    this.mesh.renderOrder = 3
   }
 
   dispose(): void {
@@ -222,7 +231,6 @@ uniform vec3 uSunL;
 uniform float uPolar;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
-uniform float uGap;
 out vec4 outColor;
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
@@ -236,9 +244,7 @@ void main() {
   vec3 at;
   float tau = hazeDepth(dir, false, at);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
-  float tg = -Pa.y / (abs(uSunL.y) > 1e-4 ? uSunL.y : 1e-4);
-  float gap = uGap * smoothstep(0.0, 0.3, tg) * (1.0 - smoothstep(1.3, 1.55, length(Pa.xz + uSunL.xz * tg)));
-  float shadow = 1.0 - uRingShadow * max(ringShadowAt(Pa, uSunL, uRingSoft, 1.0), gap);
+  float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
   outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
 }`
 
@@ -250,14 +256,14 @@ export class Shell {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: SHELL_FRAG,
       uniforms: {
-        ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar }, uGap: { value: 0 },
+        ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
       },
-      side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false,
+      side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 + haze.top * haze.scaleHeight, 192, 96), this.material)
     this.mesh.scale.set(1, polar, 1)
-    this.mesh.renderOrder = 4
+    this.mesh.renderOrder = 1
   }
 
   dispose(): void {
