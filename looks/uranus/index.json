@@ -1,9 +1,67 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T05:05:23.732Z",
+ "pushed": "2026-11-21T05:27:04.363Z",
  "head": "2fd342b58cec9926cf19648d84b8172d48461755",
- "note": "orbit view at final beside the hero; terrain fit started",
+ "note": "terrain view: first render of the 3D haze deck with forward motion; apron and rings next",
  "looks": [
+  {
+   "time": "2026-11-21T05:27:03.749Z",
+   "file": "20261121052703749-note-albedo-v.jpg",
+   "source": "out/work/u/t/albedo-v.jpg",
+   "kind": "note",
+   "label": "terrain: close image divided by the fitted light table (albedo for the deck)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:27:03.202Z",
+   "file": "20261121052703202-note-t-firstlast.jpg",
+   "source": "out/work/u/t/t-firstlast.jpg",
+   "kind": "note",
+   "label": "terrain first render, frames 4200 and 4379 at draft: 3D haze deck, forward move, apron and light extrapolation still wrong",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T05:24:31.891Z",
+   "file": "20261121052431891-frame-t-4379.jpg",
+   "source": "out/work/u/t/t-4379.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4379, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4379,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:24:01.298Z",
+   "file": "20261121052401298-compare-compare-uranus-terrain-view.jpg",
+   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "uranus.terrain: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:24:00.214Z",
+   "file": "20261121052400214-still-f04290-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04290-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.terrain frame 4290, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
   {
    "time": "2026-11-21T05:05:09.176Z",
    "file": "20261121050509176-note-fit-horizon.jpg",
@@ -21,44 +79,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-21T05:05:08.155Z",
-   "file": "20261121050508155-note-cmp-limb-ul.jpg",
-   "source": "out/work/u/cmp-limb-ul.jpg",
-   "kind": "note",
-   "label": "hold final, hero left film right: limb-ul",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:05:07.648Z",
-   "file": "20261121050507648-note-cmp-miranda.jpg",
-   "source": "out/work/u/cmp-miranda.jpg",
-   "kind": "note",
-   "label": "hold final, hero left film right: miranda",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:05:07.110Z",
-   "file": "20261121050507110-note-cmp-ul.jpg",
-   "source": "out/work/u/cmp-ul.jpg",
-   "kind": "note",
-   "label": "hold final, hero left film right: ul",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T05:04:35.784Z",
-   "file": "20261121050435784-frame-hold-final.jpg",
-   "source": "out/work/u/hold-final.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
    "time": "2026-11-21T05:03:55.327Z",
    "file": "20261121050355327-compare-compare-uranus-hold-view.jpg",
    "source": "out/work/compare/compare-uranus-hold-view.jpg",
@@ -71,20 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e44fa21a5a599a98"
-  },
-  {
-   "time": "2026-11-21T02:45:31.326Z",
-   "file": "20261121024531326-compare-compare-uranus-terrain-view.jpg",
-   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
-   "kind": "compare",
-   "label": "uranus.terrain: approved image left, film frame right, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
