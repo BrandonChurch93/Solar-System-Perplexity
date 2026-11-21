@@ -202,6 +202,15 @@ Done so far (not yet verified by picture, batch5 renders `strip_cover3.jpg`, `st
 - Committed and pushed 1864a85 (code and notes, binaries of the first take not committed).
 - Second take checked (`band3_four.jpg`, `band3_3060_crop.jpg`): the strip over the limb at 3030 to 3100 is a soft glow that fades into the stars, no hard top, no black line. Kept. `canvas.py` peaks near 7 GB even with the 4x reduced background pass: run it with nothing else on the VM.
 
+## Own checks at head 6ac52de (main 558e3a5 merged, 08:00 UTC)
+
+- `npm run build` green, `npx vitest run` 35 of 35.
+- G11 PASS (every asset has a row or a recipe). G12 PASS (1076 tracked files, 0.85 GB). G15 PASS (at most 2 sets per frame; jupiter/web 194 MB of 450, jupiter/full 777 MB of 1400).
+- `npm run measure -- --stop jupiter --every 10` (281 s; the texels view at draft takes about 2.5 s per frame, so the full run is about 25 min): G5 PASS (invalid 0 on the four judged frames; coverage hold 0.350, dive 0.459, terrain 0.754, rise 0.233). G17 PASS (2895 median 1.222, p25 0.963 over 81 tiles; 3150 median 1.026, p25 0.988 over 80 tiles). G13 PASS on the sample: 0 of 47 frames over 0.02 soft; lowest mean texels per pixel dive 1.74 at 3010, terrain 1.94 at 3236, rise 1.78 at 3282, hold 2.0.
+- `npm run compare` at final tier, both views: 2895 and 3150 read like the approved pictures (`out/work/compare/compare-jupiter-hold-view.jpg`, `compare-jupiter-terrain-view.jpg`).
+- READY sent at 08:02 UTC. The full measure (`--every 1`, log `out/work/jupiter/measure1.log`) runs after it; then review sheets with and without cover, crops, flow view, budget, travel frames.
+- Logs: `out/work/jupiter/gate-g11.log`, `gate-g12-g15.log`, `measure10.log`, `compare-hold-final.log`, `compare-terrain-final.log`.
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
