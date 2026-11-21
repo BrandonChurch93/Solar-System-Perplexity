@@ -10,6 +10,7 @@ export interface GlobeLook {
   closeCurve: number[][]
   limb: [number, number]
   ringShadow: number
+  ringShadowHero: number
   ringSoft: [number, number]
   ringSlant: number
   drift: number
@@ -24,6 +25,8 @@ export interface GlobeLook {
 }
 
 export interface GlobePatch { texture: THREE.Texture; table: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
+
+export interface ShotLight { texture: THREE.Texture; matrix: THREE.Matrix4; camera: THREE.Vector3; weight: THREE.IUniform<number> }
 
 const VERT = /* glsl */ `
 out vec3 vLocal;
@@ -72,6 +75,14 @@ uniform vec4 uPatchBox;
 uniform vec2 uPatchSize;
 uniform float uVignette;
 uniform float uAspect;
+uniform sampler2D uHoldLight;
+uniform mat4 uHoldM;
+uniform vec3 uHoldCam;
+uniform float uHoldW;
+uniform sampler2D uSkimLight;
+uniform mat4 uSkimM;
+uniform vec3 uSkimCam;
+uniform float uSkimW;
 in vec3 vLocal;
 in vec3 vView;
 in vec3 vClip;
@@ -81,6 +92,13 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
+vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
+  vec4 c = m * vec4(P, 1.0);
+  vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
+  vec2 e = min(uv, 1.0 - uv);
+  float k = w * (c.w > 1e-3 ? smoothstep(0.0, 0.03, min(e.x, e.y)) : 0.0) * smoothstep(0.03, 0.2, dot(n, normalize(cam - P)));
+  return mix(vec3(1.0), texture(tex, uv).rgb, k);
+}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -143,6 +161,8 @@ void main() {
   float tau = hazeDepth(dirS, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
   col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
+  for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
+  for (int k = 0; k < (uSkimW > 0.0 ? 1 : 0); k++) col *= shotLight(uSkimLight, uSkimM, uSkimCam, uSkimW, P, nL);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   vec3 layer = vec3(0.15, 0.45, 0.9);
@@ -163,7 +183,7 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, lights: { hold: ShotLight; skim: ShotLight }, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
@@ -178,6 +198,8 @@ export class Globe {
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
+        uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
+        uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)

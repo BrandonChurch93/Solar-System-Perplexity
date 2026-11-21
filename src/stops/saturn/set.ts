@@ -7,7 +7,10 @@ import * as look from './look'
 import { plan } from './plan'
 import { layoutUniforms, profileUniforms } from './profile'
 import { Rings } from './rings'
+import { shotMatrix, shotUniforms } from './shot'
 import closeGlobe from './closeGlobe.json'
+import holdLight from './hold-light.json'
+import skimLight from './skim-light.json'
 import layoutJson from './layout.json'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
@@ -40,9 +43,20 @@ export const createSet: SetFactory = async (ctx) => {
     box: new THREE.Vector4(-rad(closeGlobe.lonCentreDeg), rad(closeGlobe.lonHalfDeg), rad(closeGlobe.latDeg[0]!), rad(closeGlobe.latDeg[1]!)),
     size: new THREE.Vector2(patchSize[0], patchSize[1]),
   }
-  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, look.globe, look.haze, profile, polar)
-  const shell = new Shell(look.shell, look.globe, profile, polar)
   const toTilt = tilt.quaternion.clone().invert()
+  const heroPose = plan.hold(plan.holdMid - plan.seg.hold.start)
+  const heroL = heroPose.position.clone().applyQuaternion(toTilt)
+  const heroM = shotMatrix(heroL, toTilt.clone().multiply(heroPose.quaternion), heroPose.vfov, 16 / 9)
+  const heroW = { value: 0 }
+  const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
+  const skimM = shotMatrix(skimL, toTilt.clone().multiply(plan.skimQuaternion), plan.p.terrain.vfov, 16 / 9)
+  const skimW = { value: 0 }
+  const lights = {
+    hold: { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: heroW },
+    skim: { texture: await ctx.dataTexture(base + skimLight.file, skimLight.width, skimLight.height, 4), matrix: skimM, camera: skimL, weight: skimW },
+  }
+  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, lights, look.globe, look.haze, profile, polar)
+  const shell = new Shell(look.shell, look.globe, profile, polar)
   const layoutCamera = new THREE.PerspectiveCamera(layoutJson.vfovDeg, layoutJson.width / layoutJson.height, 0.01, 100)
   layoutCamera.position.copy(plan.skimPosition).addScaledVector(plan.skimForward, -layoutJson.back).applyQuaternion(toTilt)
   layoutCamera.quaternion.copy(toTilt).multiply(plan.skimQuaternion)
@@ -53,9 +67,9 @@ export const createSet: SetFactory = async (ctx) => {
   const across = new THREE.Vector3().crossVectors(plan.ringNormal, along).applyQuaternion(toTilt)
   along.applyQuaternion(toTilt)
   const gate = { value: 1 }
-  const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
   const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), await ctx.dataTexture(base + layoutJson.even, layoutJson.width, layoutJson.height, 1), gate, layoutMatrix, layoutJson.width, layoutJson.height, along, across)
-  const rings = new Rings(profile, layout, look.rings, polar)
+  const hero = shotUniforms('Hero', { map: await ctx.texture(base + 'hero-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'hero-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: heroM, weight: heroW })
+  const rings = new Rings(profile, layout, hero, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
 
   const moonFit = fit.moons![0]!
@@ -117,6 +131,7 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
+      heroW.value = 1 - smooth((camL.distanceTo(heroL) - look.heroRange[0]) / (look.heroRange[1] - look.heroRange[0]))
       gate.value = 1 - smooth((camL.distanceTo(skimL) - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
       const el = THREE.MathUtils.lerp(Math.asin(THREE.MathUtils.clamp(sunL.y, -1, 1)), closeEl, close.value)
       lightL.set(sunL.x, 0, sunL.z).normalize().applyAxisAngle(UP, closeTurn * close.value).multiplyScalar(Math.cos(el))
@@ -128,17 +143,19 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
 
       const gu = globe.material.uniforms
+      const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(gu.uLightL!.value as THREE.Vector3).copy(lightL)
       gu.uSpin!.value = plan.spin(state.time)
+      gu.uRingShadow!.value = look.globe.ringShadow * THREE.MathUtils.lerp(1, look.globe.ringShadowHero, heroW.value)
+      su.uRingShadow!.value = gu.uRingShadow!.value
       gu.uDrift!.value = THREE.MathUtils.degToRad(look.globe.drift) * elapsed
       gu.uGain!.value = gain
       gu.uWeight!.value = state.weight
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = aspect
-      const su = shell.material.uniforms
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)

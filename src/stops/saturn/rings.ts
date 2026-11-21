@@ -4,6 +4,7 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import azimuth from './azimuth.json'
 import { RING_LAYOUT_GLSL, RING_PROFILE_GLSL } from './profile'
 import ringsJson from './rings.json'
+import { SHOT_GLSL } from './shot'
 
 export interface RingLook {
   shadowFloor: [number, number, number]
@@ -28,6 +29,10 @@ export interface RingLook {
   shadeTint: [number, number, number]
   shadeGrey: [number, number]
   heroTone: [number, number, number]
+  heroEdge: number
+  heroDensity: [number, number]
+  heroOver: [number, number]
+  heroTurn: number
 }
 
 const VERT = /* glsl */ `
@@ -105,12 +110,20 @@ uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
 uniform float uPass;
+uniform sampler2D uHeroMap;
+uniform sampler2D uHeroMask;
+uniform mat4 uHeroM;
+uniform vec2 uHeroSize;
+uniform float uHeroW;
+uniform vec4 uHeroFit;
+uniform vec3 uHeroOver;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
 ${RING_LAYOUT_GLSL}
 ${HASH_GLSL}
 ${INVERSE_FILMIC_GLSL}
+${SHOT_GLSL}
 float azRow(int i, vec4 h) {
   return uAzGain[i * 5] + uAzGain[i * 5 + 1] * h.x + uAzGain[i * 5 + 2] * h.y + uAzGain[i * 5 + 3] * h.z + uAzGain[i * 5 + 4] * h.w;
 }
@@ -144,7 +157,8 @@ void main() {
   bool disc = r < 1.0;
   float rp = disc ? max(lay.x, mix(r, uEdge.x + 0.006, lay.z)) : lay.x;
   float x = ringRadius(rp);
-  if (x <= 0.0 || x >= 1.0) discard;
+  bool span = x > 0.0 && x < 1.0;
+  if (!span && (uHeroW <= 0.0 || r < 1.0)) discard;
   vec3 toCam = uCamL - vLocal;
   float dist = length(toCam);
   vec3 V = toCam / dist;
@@ -170,7 +184,7 @@ void main() {
   if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
   float fr = length(vec2(dFdx(rp), dFdy(rp)));
   float texels = ringTexels(fr);
-  vec4 s = profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose));
+  vec4 s = span ? profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose)) : vec4(0.0);
   float mu = abs(V.y);
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rp) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rp));
   float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rp), over * (1.0 - uClose))), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
@@ -187,6 +201,7 @@ void main() {
   float n1 = vnoise(vec2(tu * 36.0, r * 3.0), 36);
   float n2 = vnoise(vec2(tu * 640.0, r * 70.0), 640);
   float mottle = 1.0 - uAzimuth.x * inB * smoothstep(0.55, 0.9, n1) + uAzimuth.y * (n2 - 0.5);
+  float turning = mottle;
   vec2 q = vec2(tu * 6.283185307 * r, r);
   vec2 qx = dFdx(q);
   vec2 qy = dFdy(q);
@@ -234,6 +249,20 @@ void main() {
   col = mix(uShadowFloor * (0.6 + 0.9 * smoothstep(0.0, 0.6, dot(col, vec3(0.2126, 0.7152, 0.0722)))) * body, col, mix(lit, 1.0, lay.z)) * lay.y;
   col = mix(vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))) * uShadeTint, col, mix(1.0, smoothstep(uShadeGrey.x, uShadeGrey.y, lay.y), lay.z));
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
+  float inH;
+  vec2 hv = shotUv(uHeroM, vLocal, uHeroFit.x, inH);
+  vec2 hgx = dFdx(hv);
+  vec2 hgy = dFdy(hv);
+  float wH = uHeroW * inH * (1.0 - over * (1.0 - smoothstep(uHeroOver.x, uHeroOver.y, rp)));
+  for (int k = 0; k < (wH > 0.0 ? 1 : 0); k++) {
+    vec4 m = textureGrad(uHeroMask, hv, hgx * uGrad, hgy * uGrad);
+    vec2 tx = hgx * uHeroSize;
+    vec2 ty = hgy * uHeroSize;
+    float w = wH * m.g * smoothstep(uHeroFit.y, uHeroFit.z, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    col = mix(col, inverseFilmic(textureGrad(uHeroMap, hv, hgx * uGrad, hgy * uGrad).rgb) * m.r * mix(1.0, turning, uHeroFit.w), w);
+    alpha = mix(alpha, m.r, w);
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   if (uDiag >= 2 && alpha * cut < 0.5) discard;
@@ -248,7 +277,7 @@ export class Rings {
   private pos: Float32Array = new Float32Array(0)
   private all: number[] = []
 
-  constructor(profile: Record<string, THREE.IUniform>, layout: Record<string, THREE.IUniform>, look: RingLook, polar: number) {
+  constructor(profile: Record<string, THREE.IUniform>, layout: Record<string, THREE.IUniform>, shots: Record<string, THREE.IUniform>, look: RingLook, polar: number) {
     const [r0, r1] = ringsJson.span as [number, number]
     const seg = 720
     const bands = 6
@@ -276,6 +305,8 @@ export class Rings {
     const shared = {
       ...profile,
       ...layout,
+      ...shots,
+      uHeroFit: { value: new THREE.Vector4(look.heroEdge, look.heroDensity[0], look.heroDensity[1], look.heroTurn) }, uHeroOver: { value: new THREE.Vector3(look.heroOver[0], look.heroOver[1], 0) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
@@ -301,7 +332,7 @@ export class Rings {
       this.parts.push(g)
       const mesh = new THREE.Mesh(g, material)
       mesh.frustumCulled = false
-      mesh.renderOrder = pass === 0 ? 2 : 6
+      mesh.renderOrder = pass === 0 ? 5 : 6
       this.materials.push(material)
       this.group.add(mesh)
     }

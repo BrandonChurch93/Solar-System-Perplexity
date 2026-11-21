@@ -11,6 +11,7 @@ export const globe: GlobeLook = {
   closeCurve: closeFitted.curve.map((c, i) => c.map((v, k) => v * closeGlobe.curveGain[i]![k]!)),
   limb: [0, 0.3],
   ringShadow: 0.94,
+  ringShadowHero: 0.25,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
   drift: 0.2,
@@ -71,6 +72,10 @@ export const rings: RingLook = {
   veil: [0.55, 1],
   sweep: 700,
   heroTone: [1, 1, 1],
+  heroEdge: 0.012,
+  heroDensity: [0.95, 1.2],
+  heroOver: [0.4, 0.5],
+  heroTurn: 0.5,
 }
 
 export const titan: TitanLook = {
@@ -85,5 +90,6 @@ export const titan: TitanLook = {
 
 export const closeRange: [number, number] = [0.35, 1.6]
 export const detailRange: [number, number] = [0.2, 0.5]
+export const heroRange: [number, number] = [0.6, 2.2]
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }
