@@ -1,9 +1,45 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T05:08:01.641Z",
+ "pushed": "2026-11-21T05:21:18.606Z",
  "head": "126c3f48cf2e15d4a4206b696874db3f3e301aa7",
- "note": "terrain relief: margin takes for the left, right and bottom edges register with the close image; building the layers",
+ "note": "Terrain: ground layer of the relief built from the close image with painted margins, judged frame beside the approved image; no towers, no flow, engine Sun still at the right edge",
  "looks": [
+  {
+   "time": "2026-11-21T05:19:44.087Z",
+   "file": "20261121051944087-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, draft tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:19:43.029Z",
+   "file": "20261121051943029-still-f02010-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02010-16x9-draft-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, draft tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:12:33.180Z",
+   "file": "20261121051233180-note-edge-corners-all.jpg",
+   "source": "out/work/earth/view/edge-corners-all.jpg",
+   "kind": "note",
+   "label": "terrain relief: canvas with the three margins, corner take (aligned)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-21T05:04:22.584Z",
    "file": "20261121050422584-note-edge-takes.jpg",
@@ -55,42 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:50:36.228Z",
-   "file": "20261121045036228-still-f01755-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01755-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:47:07.765Z",
-   "file": "20261121044707765-note-lights-crop.jpg",
-   "source": "out/work/earth/view/lights-crop.jpg",
-   "kind": "note",
-   "label": "city lights, hero left, film right (before the lights gain)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T02:45:10.763Z",
-   "file": "20261121024510763-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, draft tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
