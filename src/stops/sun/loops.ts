@@ -10,6 +10,7 @@ export interface LoopsLook {
   far: number
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
   flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number }
+  swell: { amount: number; speed: number; width: number; lanes: number; calm: number }
 }
 
 const VERT = /* glsl */ `
@@ -35,6 +36,8 @@ uniform vec4 uBox;
 uniform vec4 uFeet;
 uniform vec4 uFlow;
 uniform vec2 uFlowMore;
+uniform vec4 uSwell;
+uniform float uCalm;
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -62,7 +65,10 @@ void main() {
   float along = la / max(la + lb, 1e-6);
   vec2 q = vec2(along * uFlow.z, arc * uFlow.y);
   float run = packets(q, uTime) - packets(q, 0.0);
-  lin *= max(1.0 + uFlow.x * run, uFlowMore.y);
+  float lane = textureLod(uNoise, vec2(arc * uSwell.w, 0.37), 0.0).r;
+  float ds = fract(along - uTime * uSwell.y * (0.75 + 0.5 * lane) - lane * 3.0) - 0.5;
+  float swell = exp(-ds * ds / (uSwell.z * uSwell.z)) * smoothstep(0.0, 0.14, along) * (1.0 - smoothstep(0.86, 1.0, along)) * (1.0 - exp(-uTime * uTime / (uCalm * uCalm)));
+  lin *= max(1.0 + uFlow.x * run + uSwell.x * swell, uFlowMore.y);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   lin *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(lin, 0.0);
@@ -170,6 +176,7 @@ export class Loops {
         uFeet: { value: new THREE.Vector4(ta.x, ta.y, tb.x, tb.y) },
         uFlow: { value: new THREE.Vector4(look.flow.amount, look.flow.lanes, look.flow.along, look.flow.speed) },
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
+        uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,

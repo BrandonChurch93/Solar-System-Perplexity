@@ -62,6 +62,7 @@ export const loops: LoopsLook = {
   gain: 1,
   far: 9, pin: { from: 0.1, soft: 0.2, lowDeg: 0.2, highDeg: 3 },
   flow: { amount: 0.55, lanes: 0.3, along: 1.5, speed: 0.12, back: 0.07, floor: 0.2 },
+  swell: { amount: 1.6, speed: 0.42, width: 0.075, lanes: 0.5, calm: 0.45 },
 }
 
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05 }
@@ -71,10 +72,10 @@ export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence
 export const flare: FlareLook & { lift: number } = {
   hot: [1, 0.9, 0.66],
   warm: [1, 0.62, 0.2],
-  core: { radius: [0.02, 0.5], gain: 40 },
+  core: { radius: [0.03, 0.42], gain: 14 },
   halo: { radius: [0.05, 3.2], gain: [1.2, 2.6], power: 1 },
   rays: { amount: 0.9, reach: 3, turn: 0.5 },
-  streak: { amount: 1.5, height: 0.012, reach: 0.9 },
+  streak: { amount: 1.0, height: 0.022, reach: 0.4 },
   before: 0.95,
   after: 1.0,
   powerIn: 2.6,

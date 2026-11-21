@@ -102,3 +102,19 @@ Web set is every file at half size: about 220 MB (limit 450).
 - Shader trap: a second `float band` in the ground shader made the whole ground vanish without any message. A missing layer means a compile error first.
 - Camera now: frame 0 is 1.45 behind and 0.52 above the approved pose, frame 180 is 0.48 ahead and 0.17 below. Frame 0 reads as the whole arcade over the spot on a strongly curved limb (radius 20.6 camera heights).
 - Merged main 9f78a4e (engine batch 2, engine hash 05c29d3a1588e95f).
+
+## Terrain view, second pass (04:45 to 05:45 UTC)
+
+- Merged main 3523b45 (batch 3, sky aim) and 2d2161b (batch 4). `skyAim` in `plan.ts` holds the values printed by `npm run -s aim -- --stop sun`. The Sun's hold shares its sky with Mercury's arrival, so Mercury's aim decides it later; a hold sky patch must fade out with its own weight before the hold ends (the engine drops it at the first travel frame).
+- Light of the loops on the ground is a gain, not an added layer: `loops-glow.png` holds clip(blur(approved) / blur(clean), 1, 12) - 1 inside the loop mask, off in the sky and in the columns above the feet. The ground shader multiplies the plate by 1 + map * beat. An added glow gave red smears and then a milky haze; the gain is crisp. Frame 90 means after it: left of the spot film 191/114/53 against approved 183/112/54, under the left foot 248/235/181 against 249/234/179.
+- The loops layer is a hue-preserving residual (approved * clip((lum approved - lum clean) / lum approved)). Plain differences left coloured specks.
+- Limb between the feet: the fitted limb sits about 1 deg above the approved bright limb line there and the mirrored sky fill was greyer than the approved. Fix: the sky card is dimmed inside the loop mask near the limb (`DIM` in `sky.py`) and the sky part of the loops layer is computed against the film's own frame 90 without loops (`assets-src/sun/terrain/base90.jpg`, review tier, `look.loops.gain` 0). Order of a full asset run: `plate.py`, `sky.py`, `export.py`, build, render frame 90 at review with loops gain 0 into `base90.jpg`, `plate.py` again.
+- Dark specks in the sky under the arcade: the warm filter that keeps the approved stars out of the loops layer left holes at each approved star. The holes are now filled with the opened residual (`HOLES` 13 px). Stars of the film's own frame are opened out of `base90` above 2 deg (`STARS`), so they sit on top of the glow.
+- The upper left sky inside the widened loop mask is the clean take's sky, not the approved sky. Same style, different stars. Accepted.
+- G13 at every 15th frame of the terrain segment: 0 percent soft on every frame.
+- Motion: the loops carry small packets (`flow`) and large swells that run from the left foot to the right in about 2.4 s (`swell`, off within 0.45 s of the judged frame so frame 90 stays the approved picture).
+
+## Rise (from 05:30 UTC)
+
+- `src/stops/sun/flare.ts`: one full-screen additive layer anchored on a world point (in the terrain view a point between the feet lifted toward the crown, in the orbit view the plan spot). Core, halo with rays, a thin streak. Amount rises over `before` seconds to the cover centre and falls over `after` seconds, so the judged frame 247 is clean. The loops surge with it.
+- Engine cover colour set to gold, `coverTop [1, 1]`. `dive.altitude` 1.0 so the orbit part starts one radius up: with 0.05 frame 226 was 100 percent soft in G13.

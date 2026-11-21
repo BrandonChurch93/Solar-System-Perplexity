@@ -42,7 +42,7 @@ void main() {
   vec2 p = (vScreen - uAt) * vec2(uAspect, 1.0);
   float r = length(p);
   float ang = atan(p.y, p.x);
-  float core = exp(-r * r / (uSize.x * uSize.x));
+  float core = pow(1.0 / (1.0 + r * r / (uSize.x * uSize.x)), 2.2);
   float halo = pow(1.0 / (1.0 + r * r / (uSize.y * uSize.y)), uSize.z);
   float turn = uTime * uRays.z;
   float n = 0.5 + 0.5 * (0.45 * sin(ang * 5.0 + 0.6 + turn) + 0.3 * sin(ang * 11.0 - 1.1 - turn * 1.7) + 0.25 * sin(ang * 23.0 + 2.3 + turn * 2.9));

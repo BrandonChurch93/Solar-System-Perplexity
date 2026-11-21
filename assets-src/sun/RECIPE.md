@@ -2,27 +2,21 @@
 
 Every file under `public/assets/sun/`. The `web` file is always derived from the `full` file by the same script. Scripts are run from the repository root unless a line says otherwise. Work files live in `out/work/sun/` and are not committed.
 
-## Stand-ins
+## Files
 
-Stand-ins from the Phase 2 blockout. They are removed when the terrain view is built.
+| File | Section |
+|---|---|
+| `public/assets/sun/<set>/wrap-color.jpg` | Orbit view |
+| `public/assets/sun/<set>/corona.webp` | Orbit view |
+| `public/assets/sun/<set>/prominence.png` | Orbit view |
+| `public/assets/sun/<set>/prominence-flow.png` | Orbit view |
+| `public/assets/sun/<set>/sky-hold.webp` | Orbit view |
+| `public/assets/sun/<set>/plate.jpg` | Terrain view |
+| `public/assets/sun/<set>/loops.webp` | Terrain view |
+| `public/assets/sun/<set>/loops-glow.png` | Terrain view |
+| `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
 
-## public/assets/sun/full/standin-wrap.jpg and public/assets/sun/web/standin-wrap.jpg
-
-- Tool: `python3 tools/assets/standin.py sun` (numpy and OpenCV, no model).
-- Inputs: `references/approved/sun-hero.png`, `assets-src/sun/fit.json`.
-- Prompt: none.
-- What it does: unprojects the approved hero image onto the fitted sphere as an equirectangular map, 4096 wide for `full` and 2048 wide for `web`. The part of the globe the image does not show is filled by mirroring the visible part about a circle at 0.9 of the limb angle. No cleanup: the light, the limb glow and anything in front of the globe stay baked in.
-- Take kept: the only one.
-- Checks: the judged `hold` frame lines up with the approved hero image in `npm run compare`.
-
-## public/assets/sun/full/standin-close.jpg and public/assets/sun/web/standin-close.jpg
-
-- Tool: `python3 tools/assets/standin.py sun`.
-- Input: `references/approved/sun-close.jpg`.
-- Prompt: none.
-- What it does: the approved close image, re-encoded at its own size for `full` and resized to 2048 wide for `web`. Nothing is redrawn.
-- Take kept: the only one.
-- Checks: the judged `terrain` frame lines up with the approved close image in `npm run compare`.
+`<set>` is `full` or `web`.
 
 ## Orbit view
 
@@ -32,7 +26,7 @@ Shared inputs:
 - `assets-src/sun/fit.json`, the fitted sphere and camera of the hero.
 - `assets-src/sun/orbit/geo.py` holds the shared geometry and the film tone curve (`scene` decodes approved pixels to scene values, `code` encodes them back).
 
-### public/assets/sun/full/wrap-color.jpg and public/assets/sun/web/wrap-color.jpg
+### public/assets/sun/<set>/wrap-color.jpg
 
 - Output: 8192 x 4096 and 4096 x 2048, JPEG quality 94, 4:4:4.
 - Tool: `cd assets-src/sun/orbit && python3 wrap.py ../../../public/assets/sun/full/wrap-color.jpg ../../../public/assets/sun/web/wrap-color.jpg` (numpy, OpenCV; no model, no prompt).
@@ -40,7 +34,7 @@ Shared inputs:
 - Take kept: the only one.
 - Checks: hold compare, the film disc lands on the hero disc with the same texture and colour.
 
-### public/assets/sun/full/corona.webp and public/assets/sun/web/corona.webp
+### public/assets/sun/<set>/corona.webp
 
 - Output: 8192 x 1024 and 4096 x 512, lossless WebP. Columns are the angle around the disc centre (counterclockwise from image right), rows are the distance from the centre on a log scale from 1 to 3 radii, bottom row at the limb.
 - Tool: `cd assets-src/sun/orbit && python3 halo.py && python3 card.py ../../../public/assets/sun corona` (numpy, scipy, OpenCV; no model, no prompt).
@@ -48,7 +42,7 @@ Shared inputs:
 - Take kept: the fifth version of the split. Earlier versions left streaks (row interpolation) or dark strands (blue channel alone).
 - Checks: hold compare, frames 270 and 449 for rays that slide against the disc.
 
-### public/assets/sun/full/prominence.png and public/assets/sun/web/prominence.png
+### public/assets/sun/<set>/prominence.png
 
 - Output: 4096 x 4096 and 2048 x 2048, PNG, straight RGBA. RGB is the prominence light in the film's tone curve, A is how much of the corona behind it is hidden. The card spans 1.56 radii each way from the disc centre in the plane z = 1 / 4.574 of the fitted sphere, which is the plane of the limb as the hero camera sees it.
 - Tool: `cd assets-src/sun/orbit && python3 halo.py && python3 card.py ../../../public/assets/sun card` (no model, no prompt).
@@ -56,14 +50,14 @@ Shared inputs:
 - Take kept: the same run as the corona.
 - Checks: hold compare, crops of the limb at frames 330 to 375.
 
-### public/assets/sun/full/prominence-flow.png and public/assets/sun/web/prominence-flow.png
+### public/assets/sun/<set>/prominence-flow.png
 
 - Output: 1024 x 1024 and 512 x 512, PNG, RGBA, not colour. R and G are the direction of flow along the strands (0.5 is zero), B is how much of a prominence is there, A is the position along the strand as an angle about the point where the prominence stands on the limb.
 - Tool: `cd assets-src/sun/orbit && python3 card.py ../../../public/assets/sun card flow` (no model, no prompt).
 - Steps: structure tensor of the card (5 pixel window) gives the strand direction. Each connected prominence gets one sense of circulation about its limb point, alternating from one prominence to the next.
 - Take kept: the only one.
 
-### public/assets/sun/full/sky-hold.webp and public/assets/sun/web/sky-hold.webp
+### public/assets/sun/<set>/sky-hold.webp
 
 - Output: 3520 x 1980 and 1760 x 990, lossless WebP. The middle 2816 x 1584 is the picture, the rest is a mirrored margin of one eighth on each side, the same layout as the Mars sky patches. It holds the stars and Milky Way of the approved hero without the Sun.
 - Tool: `bash assets-src/sun/orbit/sky.sh` (renders frame 360 at the review tier with the card black, then runs `assets-src/sun/orbit/sky.py hold references/approved/sun-hero.png out/work/sun/sky-fill-take1.png out/work/sun/halo-only.png public/assets/sun`). `deblock.py` is a copy of `assets-src/mars/sky/deblock.py`.
@@ -100,20 +94,28 @@ Shared inputs:
 - Take kept: take 1 of 6. The horizon continues on the fitted circle within 0.4 deg, the cells grow toward the bottom, no second spot, no seam at the pasted frame.
 - Use: only outside the approved frame, histogram matched to the centre (ground and sky separately), feathered 90 px on the ground and 380 px in the sky.
 
-### public/assets/sun/full/plate.jpg, loops.webp and the web copies
+### public/assets/sun/<set>/plate.jpg, public/assets/sun/<set>/loops.webp, public/assets/sun/<set>/loops-glow.png
 
-- Output: `plate.jpg` 8192 x 2880 (canvas rows 1728 to 4608) and 4096 x 1440, JPEG 92 and 88, 4:4:4. `loops.webp` 3605 x 1838 (image box 0.22, 0.08, 0.86, 0.66 of the approved frame) and half size, WebP 92 and 90.
+- Output: `plate.jpg` 8192 x 2880 (canvas rows 1728 to 4608) and 4096 x 1440, JPEG 92 and 88, 4:4:4. `loops.webp` 3605 x 1838 (image box 0.22, 0.08, 0.86, 0.66 of the approved frame) and half size, WebP 92 and 90. `loops-glow.png` 901 x 459 and 450 x 229, PNG.
 - Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/plate.py` (numpy, OpenCV, scipy; no model, no prompt).
-- Inputs: `out/work/sun/close-x2.png`, `out/work/sun/close-clean-x.png`, `out/work/sun/close-wide-x.png`, `out/work/sun/register.json`, `assets-src/sun/terrain/fit.json`.
-- Steps: loop mask from the difference approved minus clean take. Loops layer in scene values: above the limb the warm or bright part of the difference (stars stay in the sky), on the ground a blurred glow plus the sharp strands. Clean centre: the clean take inside the widened mask, the approved pixels elsewhere. Canvas: the wide take outside the approved frame, matched and feathered. Plate: the canvas below the detected horizon, and above it only the orange glow and flames (split by colour, fading from 1.6 to 4.2 deg above the limb) on black.
-- Checks: `out/work/sun/canvas-check.jpg`, `plate-check.jpg`, `loops-mask.png`; frame 90 beside the approved close image in `npm run compare -- --stop sun --view terrain`.
+- Inputs: `out/work/sun/close-x2.png`, `out/work/sun/close-clean-x.png`, `out/work/sun/close-wide-x.png`, `out/work/sun/register.json`, `assets-src/sun/terrain/fit.json`, `assets-src/sun/terrain/base90.jpg`.
+- Steps:
+  - Loop mask from the difference approved minus clean take.
+  - `loops-glow.png`: how much the loops light the ground, as a gain: clip(blur(approved) / blur(clean), 1, 12) - 1 with a 24 px blur, inside the mask, off above the limb and in the columns above the two feet, blurred 10 px, stored as the sRGB code of the value over 12. The ground shader multiplies the plate by one plus this map.
+  - Clean centre: the clean take inside the widened mask, the approved pixels elsewhere, times one plus the gain map. Above the limb the film's own frame 90 without loops (`base90.jpg`, stars opened out above 2 deg) takes its place, so sky card plus loops gives the approved picture back.
+  - `loops.webp`, scene values: approved times clip((lum approved - lum clean) / lum approved), which keeps the hue of the approved pixel. On the ground only the sharp strands, the fountain columns above the feet and the band within about 1 deg of the limb pass. Above the limb only the warm or bright part passes, so the approved stars stay out of the layer, and the hole each star leaves is filled with the 13 px opening of the same residual.
+  - Canvas: the wide take outside the approved frame, matched and feathered.
+  - `plate.jpg`: the canvas below the detected horizon, and above it only the orange glow and flames (split by colour, fading from 1.6 to 4.2 deg above the limb) on black. The smooth part of the glow is fitted as a function of elevation and written to `assets-src/sun/terrain/glow.json` for the shader.
+- `assets-src/sun/terrain/base90.jpg`: frame 90 of the film at the review tier with `look.loops.gain` set to 0 (`npm run still -- --frame 90 --tier review --out out/work/sun/base90.png`, saved as JPEG 95). Order of a full run: `plate.py`, `sky.py`, `export.py`, `npm run build`, render `base90`, `plate.py` again.
+- Take kept: the run of 05:40 UTC. Earlier runs: an added ground glow (red smears, then haze), plain differences (coloured specks), no fill of the star holes (dark specks under the arcade).
+- Checks: `out/work/sun/canvas-check.jpg`, `loops-mask.png`; frame 90 beside the approved close image in `npm run compare -- --stop sun --view terrain`; crops of the limb between the feet and of the sky under the arcade against the approved image.
 
-### public/assets/sun/full/sky-terrain.webp and the web copy
+### public/assets/sun/<set>/sky-terrain.webp
 
 - Output: 4096 x 2304 and 2048 x 1152, WebP 95 and 92.
 - Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/sky.py` after `plate.py` (no model, no prompt).
-- Steps: the canvas minus the plate (what is left above the horizon is stars and the Milky Way), mirrored below the horizon so the card has no edge behind the limb.
-- Check: `out/work/sun/sky-terrain-check.jpg`.
+- Steps: the canvas minus the plate (what is left above the horizon is stars and the Milky Way), mirrored about a line 2.1 deg (centre) to 4.6 deg (sides) above the limb so the card has no edge behind the limb, and dimmed by up to 0.55 inside the loop mask within 3 deg of the limb, where the mirrored fill was brighter than the approved sky.
+- Check: `out/work/sun/sky-terrain-check.jpg`, the limb crop of frame 90.
 
 ### src/stops/sun/terrain.json
 
