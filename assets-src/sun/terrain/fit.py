@@ -48,6 +48,11 @@ def main():
         return np.arccos(np.clip(d @ centre(q), -1, 1)) - q[2]
 
     fit = least_squares(res, [np.radians(80), 0.0, np.radians(76)], loss='soft_l1', f_scale=0.002)
+    for _ in range(3):
+        ok = np.abs(res(fit.x)) < np.radians(0.6)
+        d, p = d[ok], p[ok]
+        fit = least_squares(res, fit.x, loss='soft_l1', f_scale=0.002)
+    print('residual percentiles deg', np.degrees(np.percentile(res(fit.x), [2, 10, 50, 90, 98])).round(3))
     pitch, yaw, alpha = fit.x
     r = np.sin(alpha) / (1 - np.sin(alpha))
     c = centre(fit.x)

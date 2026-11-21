@@ -1,8 +1,12 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
+import { config } from '../../config'
 import { Corona } from './corona'
+import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
+import { Ground } from './ground'
+import { Loops } from './loops'
 import * as look from './look'
 import { plan } from './plan'
 import { Prominences } from './prominence'
@@ -33,6 +37,17 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
+  const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
+  const ground = new Ground(plate, look.ground)
+  const fringe = new Fringe(plate, look.fringe)
+  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
+  const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
+  terrain.add(ground.mesh, fringe.mesh, loops.mesh)
+  world.add(backdropTerrain.mesh)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
+  const eye = new THREE.Vector3()
+  const turn = new THREE.Quaternion()
+
   return {
     id: plan.id,
     world,
@@ -46,7 +61,15 @@ export const createSet: SetFactory = async (ctx) => {
       const kind = state.segment.kind
       const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : 1
       backdrop.update(shown, gain, vignette, aspect)
-      if (!inOrbit) return
+      backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect)
+      if (!inOrbit) {
+        const t = state.time - terrainMid
+        eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
+        ground.update(t, gain, vignette, aspect)
+        fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height)
+        loops.update(t, gain, vignette, aspect)
+        return
+      }
       const elapsed = state.time - plan.holdMid
       const spin = plan.spin(state.time)
       globe.update(elapsed, spin, gain, state.weight, vignette, aspect)
@@ -66,6 +89,10 @@ export const createSet: SetFactory = async (ctx) => {
       prominences.dispose()
       far.dispose()
       backdrop.dispose()
+      backdropTerrain.dispose()
+      ground.dispose()
+      fringe.dispose()
+      loops.dispose()
     },
   }
 }

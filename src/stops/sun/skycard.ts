@@ -4,11 +4,12 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 
 const VERT = /* glsl */ `
 uniform vec2 uTan;
+uniform vec2 uShift;
 out vec2 vUv;
 out vec2 vScreen;
 void main() {
   vUv = uv;
-  vec3 d = mat3(viewMatrix) * mat3(modelMatrix) * vec3(position.xy * uTan, -1.0);
+  vec3 d = mat3(viewMatrix) * mat3(modelMatrix) * vec3(position.xy * uTan + uShift, -1.0);
   gl_Position = projectionMatrix * vec4(d, 1.0);
   gl_Position.z = gl_Position.w * 0.999999;
   vScreen = gl_Position.xy / gl_Position.w;
@@ -39,7 +40,7 @@ void main() {
   outColor = vec4(col, inside * uWeight);
 }`
 
-export interface SkyCardDef { file: string; vfovDeg: number; margin: number; gain: number }
+export interface SkyCardDef { file: string; vfovDeg: number; margin: number; gain: number; centre?: [number, number]; edge?: number }
 
 export class SkyCard {
   readonly mesh: THREE.Mesh
@@ -55,8 +56,8 @@ export class SkyCard {
       vertexShader: VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: map }, uDiag: diagUniform, uTan: { value: new THREE.Vector2((t * 16) / 9, t) },
-        uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.margin / wide }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uMap: { value: map }, uDiag: diagUniform, uTan: { value: new THREE.Vector2((t * 16) / 9, t) }, uShift: { value: new THREE.Vector2(def.centre?.[0] ?? 0, def.centre?.[1] ?? 0) },
+        uGain: { value: 1 }, uWeight: { value: 1 }, uEdge: { value: def.edge ?? def.margin / wide }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
