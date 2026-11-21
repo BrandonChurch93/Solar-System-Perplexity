@@ -18,13 +18,15 @@ uniform float uGain;
 uniform vec4 uLens;
 uniform float uLong;
 uniform float uCap;
+uniform vec2 uNear;
 in vec3 aBase;
 in vec4 aSeed;
 out vec2 vAt;
 out vec3 vColor;
 out vec3 vShape;
 void main() {
-  vec3 w0 = (fract(aBase - uFlow0 / uSpan) - 0.5) * uSpan;
+  float span = aSeed.w < uNear.x ? uNear.y : uSpan;
+  vec3 w0 = (fract(aBase - uFlow0 / span) - 0.5) * span;
   vec3 w1 = w0 - (uFlow1 - uFlow0);
   vec3 v0 = uRot0 * w0;
   vec3 v1 = uRot1 * w1;
@@ -39,7 +41,7 @@ void main() {
   float coc = uPixel * uLens.x * max(1.0 / d - 1.0 / uLens.y, 0.0);
   float core = uPixel * (uLens.z + uLens.w * aSeed.x);
   float r = sqrt(core * core + coc * coc);
-  float soft = smoothstep(2.5, 7.0, r / uPixel);
+  float soft = smoothstep(6.0, 14.0, r / uPixel);
   float pad = r * mix(1.7, 1.06, soft) + 1.0;
   vec2 q = vec2(position.x * len + (position.x * 2.0 - 1.0) * pad, position.y * pad);
   vec2 px = s0 + dir * q.x + vec2(-dir.y, dir.x) * q.y;
@@ -47,7 +49,7 @@ void main() {
   float cosSun = dot(normalize(w0), uSun);
   float lobe = 0.5 + 0.5 * cosSun;
   float phase = 0.32 + 0.4 * pow(lobe, 3.0) + 0.5 * pow(lobe, 22.0);
-  float fade = smoothstep(uSpan * 0.5, uSpan * 0.34, d) * smoothstep(0.1, 0.28, d);
+  float fade = smoothstep(span * 0.5, span * 0.34, d) * smoothstep(0.06, 0.2, d);
   float energy = uGain * phase * fade * (0.1 + 0.9 * aSeed.y * aSeed.y * aSeed.y) / pow(max(d, 0.3), 1.3);
   bool ok = v0.z < -0.05 && v1.z < -0.05 && energy > 0.0;
   vAt = q;
@@ -67,11 +69,13 @@ void main() {
   float dx = vAt.x - clamp(vAt.x, 0.0, vShape.x);
   float q = length(vec2(dx, vAt.y)) / vShape.y;
   float point = exp(-2.2 * q * q);
-  float disc = (1.0 - smoothstep(0.82, 1.0, q)) * (0.78 + 0.3 * smoothstep(0.5, 0.95, q));
-  outColor = vec4(vColor * mix(point, disc, vShape.z), 0.0);
+  float disc = 1.0 - smoothstep(0.45, 1.0, q);
+  float t = clamp(vAt.x / max(vShape.x, 1e-4), 0.0, 1.0) * 2.0 - 1.0;
+  float taper = mix(1.0, 1.5 * (1.0 - t * t), smoothstep(1.0, 4.0, vShape.x / vShape.y));
+  outColor = vec4(vColor * taper * mix(point, disc, vShape.z), 0.0);
 }`
 
-export const DUST = { span: 7, gain: 55, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 0.9, long: 24, cap: 0.1, tint: [1, 0.93, 0.82] }
+export const DUST = { span: 7, near: 0.35, nearSpan: 2.4, pan: 0.3, gain: 150, bokeh: 6.5, focus: 1.5, core: 0.85, coreSpread: 1.6, long: 40, cap: 0.4, tint: [1, 0.93, 0.82] }
 
 export class Dust {
   private readonly mesh: THREE.Mesh
@@ -80,6 +84,7 @@ export class Dust {
   private flow: Flow | null = null
   private owner: FlowDirector | null = null
   private readonly inverse = new THREE.Quaternion()
+  private readonly held = new THREE.Quaternion()
   private readonly m4 = new THREE.Matrix4()
 
   constructor(count: number) {
@@ -117,6 +122,7 @@ export class Dust {
         uGain: { value: 0 },
         uLong: { value: DUST.long },
         uCap: { value: DUST.cap },
+        uNear: { value: new THREE.Vector2(DUST.near, DUST.nearSpan) },
         uLens: { value: new THREE.Vector4(DUST.bokeh, DUST.focus, DUST.core, DUST.coreSpread) },
       },
       blending: THREE.AdditiveBlending,
@@ -145,10 +151,11 @@ export class Dust {
     const frame = Math.min(Math.max(shot.frame, seg.firstFrame), seg.endFrame - 1)
     const live = !FLOW.kinds.includes(seg.kind)
     const t0 = frame / config.fps
+    const mid = live ? shot : director.shotAt(frame, t0 + (0.5 * config.shutterFraction) / config.fps)
     const open = live ? shot : director.shotAt(frame, t0)
     const close = live ? shot : director.shotAt(frame, t0 + config.shutterFraction / config.fps)
-    this.turn(open.camera.quaternion, u.uRot0!.value as THREE.Matrix3)
-    this.turn(close.camera.quaternion, u.uRot1!.value as THREE.Matrix3)
+    this.turn(this.held.copy(mid.camera.quaternion).slerp(open.camera.quaternion, DUST.pan), u.uRot0!.value as THREE.Matrix3)
+    this.turn(this.held.copy(mid.camera.quaternion).slerp(close.camera.quaternion, DUST.pan), u.uRot1!.value as THREE.Matrix3)
     this.flow!.at(seg, frame, 0, u.uFlow0!.value as THREE.Vector3)
     this.flow!.at(seg, frame, Math.round(config.shutterFraction * FLOW.stepsPerFrame), u.uFlow1!.value as THREE.Vector3)
     ;(u.uSun!.value as THREE.Vector3).copy(shot.sun.dir)
