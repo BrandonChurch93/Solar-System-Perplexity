@@ -220,6 +220,7 @@ function bandMap(): THREE.Vector4 {
 }
 
 export class Sky {
+  cull = false
   private readonly pass: Pass
   private readonly stars: THREE.Points
   private readonly starScene = new THREE.Scene()
@@ -237,6 +238,8 @@ export class Sky {
   private readonly patchTex: THREE.Texture[] = [this.blank, this.blank]
   private readonly starPos: Float32Array
   private readonly starOrder: THREE.BufferAttribute
+  private readonly starPlain: THREE.BufferGeometry
+  private readonly starCulled: THREE.BufferGeometry
   private readonly starView = new THREE.Matrix3()
   private readonly starKey = new Float64Array(13).fill(NaN)
 
@@ -300,8 +303,12 @@ export class Sky {
     this.starPos = pos
     this.starOrder = new THREE.BufferAttribute(new Uint32Array(count), 1)
     this.starOrder.setUsage(THREE.DynamicDrawUsage)
-    geo.setIndex(this.starOrder)
-    geo.setDrawRange(0, 0)
+    const culled = new THREE.BufferGeometry()
+    for (const name of ['position', 'aStar', 'aColor']) culled.setAttribute(name, geo.getAttribute(name))
+    culled.setIndex(this.starOrder)
+    culled.setDrawRange(0, 0)
+    this.starPlain = geo
+    this.starCulled = culled
     const mat = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
@@ -336,7 +343,7 @@ export class Sky {
     }
   }
 
-  private cullStars(camera: THREE.PerspectiveCamera, height: number, aspect: number): void {
+  private orderStars(camera: THREE.PerspectiveCamera, height: number, aspect: number): void {
     const m = this.starView.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(camera.quaternion).invert().multiply(this.stars.quaternion))).elements
     const p = camera.projectionMatrix.elements
     const half = STAR_MAX_SIZE * 0.5 * height / 1080 + STAR_CULL_PAD_PX
@@ -370,7 +377,7 @@ export class Sky {
     this.starOrder.clearUpdateRanges()
     this.starOrder.addUpdateRange(0, n)
     this.starOrder.needsUpdate = true
-    this.stars.geometry.setDrawRange(0, n)
+    this.starCulled.setDrawRange(0, n)
   }
 
   setTexture(t: THREE.Texture, band: THREE.Texture): void {
@@ -411,7 +418,8 @@ export class Sky {
     su.uGlow!.value = glow
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
-    this.cullStars(camera, height, aspect)
+    this.stars.geometry = this.cull ? this.starCulled : this.starPlain
+    if (this.cull) this.orderStars(camera, height, aspect)
     renderer.setRenderTarget(target)
     renderer.render(this.starScene, camera)
     camera.quaternion.copy(saved)

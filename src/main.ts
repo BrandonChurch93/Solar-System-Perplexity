@@ -21,6 +21,7 @@ const engine = new Engine(formatId, assets)
 engine.diag = params.get('diag') ?? 'beauty'
 const director = new FilmDirector(plans)
 engine.director = director
+engine.sky.cull = mode === 'capture'
 for (const id of config.stopIds) engine.sets.register(id, factories[id]!)
 document.getElementById('stage')!.appendChild(engine.canvas)
 const ui = document.getElementById('ui')!
