@@ -127,6 +127,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
       let taps = 0
+      let smear = 1
       const kind = state.segment.kind
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && plan.coverAmount(state.segment, state.time) < look.motion.hidden) {
         const dt = config.shutterFraction / (view.samples * config.fps)
@@ -135,6 +136,8 @@ export const createSet: SetFactory = async (ctx) => {
         if (a.view === 'orbit' && b.view === 'orbit') {
           const px = slide(a.pose, b.pose, view.format.width, view.format.height)
           if (px > look.motion.from) taps = Math.min(Math.ceil(px / look.motion.step), look.motion.most)
+          const scale = view.format.height / config.formats[config.formatKeys.master]!.height
+          smear = 1 + Math.min(Math.max((px * view.samples / scale - look.motion.smear.from) * look.motion.smear.share, 0), look.motion.smear.most) * scale
           if (taps > 0) {
             turnBack.copy(a.pose.quaternion).invert()
             shift.copy(b.pose.position).sub(a.pose.position).applyQuaternion(turnBack)
@@ -143,7 +146,7 @@ export const createSet: SetFactory = async (ctx) => {
           }
         }
       }
-      globe.motion(taps, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
+      globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)

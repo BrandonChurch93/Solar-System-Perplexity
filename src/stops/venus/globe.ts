@@ -118,6 +118,7 @@ uniform vec2 uCellAmp[${MAX_CELLS}];
 uniform float uCellCount;
 uniform float uLimbK;
 uniform int uTaps;
+uniform float uSmear;
 uniform vec3 uCamObj;
 uniform vec3 uNextCam;
 uniform mat3 uNextRot;
@@ -180,7 +181,7 @@ void main() {
   vec3 dir = normalize(vPos);
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  float grad = uGrad * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
+  float grad = uGrad * uSmear * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
   vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(dc, uSpotN);
@@ -250,7 +251,7 @@ ${TAP_LEVELS}
   }
   vec3 col = lin * curveAt(ndl) * veil * uTint;
   for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
-    vec3 wide = equirectGrad(uMap, dc, uShade.y).rgb;
+    vec3 wide = equirectGrad(uMap, dc, max(uShade.y, grad)).rgb;
     float ratio = dot(albedo * albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
     col *= pow(clamp(ratio, 1.0 / uShade.z, uShade.z), uShade.x * uLimbFar * (1.0 - smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
   }
@@ -262,7 +263,7 @@ ${TAP_LEVELS}
       vec3 narrow = equirect(uMap, from).rgb;
       vec3 wide = equirectGrad(uMap, from, uWeave.z).rgb;
       float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
-      col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near));
+      col *= pow(clamp(ratio, 1.0 / uWeave.w, uWeave.w), uWeave.y * uLimbFar * ring * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl)) * (1.0 - near) / uSmear);
     }
   }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
@@ -360,7 +361,7 @@ export class Globe {
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
         uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
-        uTaps: { value: 0 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
+        uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
         uWeaveCam: { value: o.weave.camera }, uWeaveRing: { value: new THREE.Vector4().fromArray(o.weave.ring) }, uWeave: { value: new THREE.Vector4(o.weave.shift, o.weave.gain, o.weave.grad, o.weave.cap) }, uWeaveLit: { value: o.weave.lit },
@@ -394,9 +395,10 @@ export class Globe {
     u.uWeight!.value = weight
   }
 
-  motion(taps: number, camera: THREE.Vector3, view: THREE.Quaternion, shift: THREE.Vector3, turn: THREE.Quaternion, zoom: number, jitterX: number, jitterY: number): void {
+  motion(taps: number, smear: number, camera: THREE.Vector3, view: THREE.Quaternion, shift: THREE.Vector3, turn: THREE.Quaternion, zoom: number, jitterX: number, jitterY: number): void {
     const u = this.material.uniforms
     u.uTaps!.value = taps
+    u.uSmear!.value = smear
     ;(u.uJitter!.value as THREE.Vector2).set(jitterX, jitterY)
     const from = (u.uCamObj!.value as THREE.Vector3).copy(camera).applyQuaternion(this.inverse)
     if (taps === 0) return
