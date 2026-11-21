@@ -35,6 +35,7 @@ print("outer edge error", float(np.abs(e[-len(Po):]).mean()), "error in band coo
 for lv in (-1.0, 0.0, 1.0, 1.746, 2.12):
     print(" level", lv, "centre", (p[0] + p[2] * lv).round(3), (p[1] + p[3] * lv).round(3), "radius", round(float(p[4] + p[5] * lv), 3))
 out = pack([float(x) for x in p])
+out["settle"] = json.loads(MODEL.read_text()).get("settle", [0.5, 0.95])
 out["source"] = "assets-src/saturn/close/model.py, nested circles fitted to the band layout of the approved close image; plane coordinates along the camera foot direction and across it"
 MODEL.write_text(json.dumps(out, indent=1) + "\n")
 S, cx, cy = 170, 560, 430

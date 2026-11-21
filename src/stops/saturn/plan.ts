@@ -11,7 +11,7 @@ export const params: MoveParams = {
   spot: { x: 0.256, y: 0.856, on: 'rings' },
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
   terrain: { vfov: close.vfov, forward: 0.5, rise: -0.03, side: -0.06, yawDeg: -4, pitchDeg: 0, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6 },
-  rise: { azimuthDeg: 36, elevationDeg: 22, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 4 },
+  rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
   travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
   light: { exposure: 1, skyExposure: 0.55, sunRadiusDeg: 0.32, sunGlare: 0.7, flare: 0.1 },
@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [34.43338, 66.84025, 41.06902] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0.2 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3

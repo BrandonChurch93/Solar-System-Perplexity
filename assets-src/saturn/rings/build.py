@@ -131,7 +131,8 @@ def main():
     f1 = fine(rng, 0.2)
     f2 = fine(rng, 0.2)
     hero_fine = filmic(hero) * unit_mean((1 + (detail_c - 1) * 0.5 * keep) * f1)[:, None]
-    close_fine = filmic(close) * unit_mean(0.5 * f1 + 0.5 * f2)[:, None]
+    quiet = smoothstep(0.30, 0.60, x)
+    close_fine = filmic(close) * (1 + (unit_mean(0.5 * f1 + 0.5 * f2) - 1) * quiet)[:, None]
 
     edge_h = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))
     edge_c = smoothstep(INNER - 0.004, INNER + 0.004, axis) * (1 - smoothstep(OUTER - 0.002, OUTER + 0.002, axis))

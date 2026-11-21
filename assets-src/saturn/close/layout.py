@@ -35,6 +35,7 @@ live &= np.linalg.norm(X, axis=-1) < 40
 foot = np.maximum(np.hypot(np.gradient(pu, axis=1), np.gradient(pv, axis=1)), np.hypot(np.gradient(pu, axis=0), np.gradient(pv, axis=0)))
 foot = np.clip(foot, 1e-4, 5)
 MODEL_ON = len(sys.argv) > 7 and sys.argv[7] == "model"
+AWAY = float(sys.argv[8]) if len(sys.argv) > 8 else 100.0
 prior = model_lambda(pu, pv) if MODEL_ON else unwarp(r)
 
 ax, ay, seen = g2a(gx, gy)
@@ -130,13 +131,13 @@ zero = np.zeros(GH * GW)
 ft = f(foot)
 add([(xp, 0.5 * f(tx)), (xm, -0.5 * f(tx)), (yp, 0.5 * f(ty)), (ym, -0.5 * f(ty))], zero, TW * np.sqrt(f(wt)) / ft)
 SM = float(sys.argv[2]) if len(sys.argv) > 2 else 0.25
-loose = (outside | globe) if MODEL_ON else np.zeros_like(outside)
+loose = outside if MODEL_ON else np.zeros_like(outside)
 bend = lambda axis: f(np.where(loose, np.roll(prior, 1, axis) + np.roll(prior, -1, axis) - 2 * prior, 0.0))
 add([(xp, 1.0), (xm, 1.0), (c0, -2.0)], bend(1), SM / ft)
 add([(yp, 1.0), (ym, 1.0), (c0, -2.0)], bend(0), SM / ft)
 hidden = live & (pu < 0) & (r > 1.0) & (miss < 1.0)
 PW = float(sys.argv[3]) if len(sys.argv) > 3 else 0.001
-away = np.clip((dist - 8.0) / 60.0, 0, 1)
+away = np.clip((distance_transform_edt(~(inframe & live)) - 4.0) / AWAY, 0, 1)
 pw = PW + 0.3 * away * away * (3 - 2 * away) if MODEL_ON else np.where(hidden, 1.0, PW)
 add([(c0, 1.0)], f(prior), f(pw) / ft)
 a = np.radians(REF_AZ)
@@ -158,6 +159,21 @@ x0, y0 = np.floor(ox - 0.5).astype(int), np.floor(oy - 0.5).astype(int)
 fx, fy = ox - 0.5 - x0, oy - 0.5 - y0
 ent = [(idx[y0, x0], (1 - fx) * (1 - fy)), (idx[y0, x0 + 1], fx * (1 - fy)), (idx[y0 + 1, x0], (1 - fx) * fy), (idx[y0 + 1, x0 + 1], fx * fy)]
 add(ent, np.full(len(ox), AC[3]), 3.0 / foot[y0, x0])
+
+if MODEL_ON:
+    th = np.radians(np.arange(90.0, 270.0, 0.25))
+    Q = C + np.cos(th)[:, None] * hc[None] + np.sin(th)[:, None] * side[None]
+    jx, jy, jz = cam2g(Q)
+    qa = Q[:, 2] < -0.02
+    px_a = np.where(qa, Q[:, 0] / np.where(qa, -Q[:, 2], 1.0) * fa + W / 2, -1.0)
+    py_a = np.where(qa, H / 2 - Q[:, 1] / np.where(qa, -Q[:, 2], 1.0) * fa, -1.0)
+    keep = qa & (px_a > 0) & (px_a < W) & (py_a > 0) & (py_a < H) & (jz > 0.05) & (jx > 1) & (jx < GW - 2) & (jy > 1) & (jy < GH - 2)
+    jx, jy = jx[keep], jy[keep]
+    x0, y0 = np.floor(jx - 0.5).astype(int), np.floor(jy - 0.5).astype(int)
+    fx, fy = jx - 0.5 - x0, jy - 0.5 - y0
+    ent = [(idx[y0, x0], (1 - fx) * (1 - fy)), (idx[y0, x0 + 1], fx * (1 - fy)), (idx[y0 + 1, x0], (1 - fx) * fy), (idx[y0 + 1, x0 + 1], fx * fy)]
+    add(ent, np.full(len(jx), AC[0]), 3.0 / foot[y0, x0])
+    print("far arc of the equator pinned at", AC[0], "points", len(jx))
 
 
 def solve():

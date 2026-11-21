@@ -54,28 +54,39 @@ uniform vec4 uWarpC;
 uniform vec4 uModelC;
 uniform vec2 uModelR;
 uniform vec4 uModelB;
+uniform vec2 uSettle;
 float warpSeg(float l, float c0, float c1, float h0, float h1) {
   return h0 + (l - c0) * (h1 - h0) / (c1 - c0);
 }
 float warpTo(float l) {
   return l < uWarpC.y ? warpSeg(l, uWarpC.x, uWarpC.y, uWarpH.x, uWarpH.y) : (l < uWarpC.z ? warpSeg(l, uWarpC.y, uWarpC.z, uWarpH.y, uWarpH.z) : warpSeg(l, uWarpC.z, uWarpC.w, uWarpH.z, uWarpH.w));
 }
-float modelAt(vec3 p) {
-  vec2 q = vec2(dot(p.xz, uModelB.xy), dot(p.xz, uModelB.zw)) - uModelC.xy;
-  float a = dot(uModelC.zw, uModelC.zw) - uModelR.y * uModelR.y;
-  float b = dot(q, uModelC.zw) + uModelR.x * uModelR.y;
-  return (b - sqrt(max(b * b - a * (dot(q, q) - uModelR.x * uModelR.x), 0.0))) / a;
+float circleAt(vec2 q, vec2 c1, float a, float b) {
+  float A = dot(c1, c1) - b * b;
+  float B = dot(q, c1) + a * b;
+  return (B - sqrt(max(B * B - A * (dot(q, q) - a * a), 0.0))) / A;
+}
+float familyAt(vec3 p, float t) {
+  vec2 c1 = uModelC.zw * t;
+  vec2 q = vec2(dot(p.xz, uModelB.xy), dot(p.xz, uModelB.zw)) - uModelC.xy * t;
+  vec3 slope = (uWarpH.yzw - uWarpH.xyz) / (uWarpC.yzw - uWarpC.xyz);
+  float r1 = mix(uWarpH.y, uModelR.x + uModelR.y * uWarpC.y, t);
+  float r2 = mix(uWarpH.z, uModelR.x + uModelR.y * uWarpC.z, t);
+  bool first = length(q - c1 * uWarpC.y) < r1;
+  bool second = length(q - c1 * uWarpC.z) < r2;
+  float b = mix(first ? slope.x : (second ? slope.y : slope.z), uModelR.y, t);
+  float a = first ? r1 - b * uWarpC.y : r2 - b * uWarpC.z;
+  return circleAt(q, c1, a, b);
 }
 vec3 ringLayout(vec3 p, float r) {
   vec3 t = vec3(0.0, 1.0, 0.0);
-  float lam = 0.0;
+  float rho = r;
   float inside = 0.0;
   for (int k = 0; k < (uClose > 0.0 ? 1 : 0); k++) {
     vec4 c = uLayoutM * vec4(p, 1.0);
     vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
     vec2 e = min(uv, 1.0 - uv);
     inside = c.w > 1e-3 ? smoothstep(0.0, 0.04, min(e.x, e.y)) : 0.0;
-    lam = modelAt(p);
     for (int j = 0; j < (inside > 0.0 ? 1 : 0); j++) {
       vec2 f = clamp(uv * uLayoutSize - 0.5, vec2(0.0), uLayoutSize - 1.0);
       ivec2 i = ivec2(floor(f));
@@ -83,10 +94,10 @@ vec3 ringLayout(vec3 p, float r) {
       vec2 w = f - vec2(i);
       t = mix(mix(texelFetch(uLayout, i, 0).rgb, texelFetch(uLayout, ivec2(n.x, i.y), 0).rgb, w.x), mix(texelFetch(uLayout, ivec2(i.x, n.y), 0).rgb, texelFetch(uLayout, n, 0).rgb, w.x), w.y);
     }
-    lam += inside * t.r;
+    rho = warpTo(familyAt(p, uClose) + inside * t.r * smoothstep(uSettle.x, uSettle.y, uClose));
   }
   float k = inside * uClose * t.b;
-  return vec3(mix(r, warpTo(lam), uClose), mix(1.0, t.g, k), k);
+  return vec3(rho, mix(1.0, t.g, k), k);
 }`
 
 export interface RingProfile { texture: THREE.DataTexture; uniforms: Record<string, THREE.IUniform>; close: THREE.IUniform<number> }
@@ -110,6 +121,7 @@ export function layoutUniforms(texture: THREE.DataTexture, matrix: THREE.Matrix4
     uModelC: { value: new THREE.Vector4(model.c0[0]!, model.c0[1]!, model.c1[0]!, model.c1[1]!) },
     uModelR: { value: new THREE.Vector2(model.R[0]!, model.R[1]!) },
     uModelB: { value: new THREE.Vector4(along.x, along.z, across.x, across.z) },
+    uSettle: { value: new THREE.Vector2(model.settle[0]!, model.settle[1]!) },
     uLayout: { value: texture },
     uLayoutM: { value: matrix },
     uLayoutSize: { value: new THREE.Vector2(width, height) },

@@ -11,5 +11,9 @@
   0.8804265371215274,
   0.9482543617855232
  ],
- "source": "assets-src/saturn/close/model.py, nested circles fitted to the band layout of the approved close image; plane coordinates along the camera foot direction and across it"
+ "source": "assets-src/saturn/close/model.py, nested circles fitted to the band layout of the approved close image; plane coordinates along the camera foot direction and across it",
+ "settle": [
+  0.5,
+  0.95
+ ]
 }

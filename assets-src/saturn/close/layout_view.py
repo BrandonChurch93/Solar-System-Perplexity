@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib import WORK
 from layoutgeo import GW, GH, W, H, fa, fl, nc, fh, height, OL, close
 
-field = np.load(WORK / "layout.npy")
+field = np.load(WORK / (sys.argv[6] if len(sys.argv) > 6 else "layout-total.npy"))
 Z = 4
 x0, x1, y0, y1 = (int(v) for v in (sys.argv[2:6] if len(sys.argv) > 5 else (0, GW, 0, GH)))
 big = cv2.resize(np.clip(field, -3, 4)[y0:y1, x0:x1].astype(np.float32), None, fx=Z, fy=Z, interpolation=cv2.INTER_LINEAR)
