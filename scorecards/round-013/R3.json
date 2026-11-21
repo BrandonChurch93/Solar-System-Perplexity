@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "sunlit cloud bands and blue north polar hood",
+      "what": "the atmosphere is soft and airbrushed, with horizontal smear instead of fine turbulence, so the globe reads as painted",
+      "fix": "rebuild the cloud and polar textures to the native detail of the other frame and remove the directional smear"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "panel A cloud deck and panel C terminator",
+      "what": "at native size the cloud bands are smeared and plastic, and the eddies in the other frame's matching crops are gone",
+      "fix": "restore high-frequency cloud structure here and keep the terminator falloff soft without smearing the lit bands"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "panel L, north polar hood and high-latitude bands",
+      "what": "the polar gradient is a smooth horizontally streaked wash, with stretched texture and no fine structure",
+      "fix": "replace the smeared hood with a stable, unsmeared vortex texture and stop the horizontal stretch"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "panel B and panel D ring arcs",
+      "what": "the ringlets are soft, and the fine divisions in the other frame's native ring crops are lost",
+      "fix": "sharpen these ring arcs to the same native ringlet detail without adding stair-steps"
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "panel M, Titan against the starfield",
+      "what": "the moon is a soft featureless disk, blurrier than the pinpoint stars beside it",
+      "fix": "match the moon limb to the starfield and keep only a thin hazy falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "left narrow ring strip, panel S",
+      "what": "the ring bands are smeared along the diagonal, unlike the sharper ring crops on the same sheet",
+      "fix": "remove the directional smear so this strip matches the sharp ringlet crops beside it"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop A, lower tip of the bright limb where it crosses the rings",
+      "what": "A straight, translucent wedge extends the limb down into the ring texture, leaving a visible compositing seam.",
+      "fix": "Rebuild the globe and ring occlusion with a shared depth pass and stop limb scattering from leaking over the foreground ring."
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crop P, lower-left limb above the foreground rings",
+      "what": "A rust-colored strip with an abrupt vertical end sits outside the smooth bright limb and reads as a separate patch.",
+      "fix": "Align the limb, ring overlap and shadow mattes so the strip follows the sphere and its shading blends into the surrounding clouds."
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "crops T through W, foreground rings",
+      "what": "The dense parallel lines run uninterrupted along the ring arcs, with much more detail across each band than along it. At native size the rings look stretched and combed.",
+      "fix": "Keep the large radial divisions but vary particle density and fine clumping along the arcs, then filter the narrowest lines for the viewing angle."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops A and I, lit cloud belts and blue polar cap",
+      "what": "The cloud belts blur into broad pastel bands and the polar cap is a smooth patch with little internal structure, giving the globe an airbrushed finish.",
+      "fix": "Retain smaller cloud structures through the highlights and across the polar cap, and reduce the broad surface softening."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crop V, bright bands just below the cast shadow",
+      "what": "Fine repeated crosshatching is visible where the narrowest ring lines bunch together.",
+      "fix": "Increase render sampling and use anisotropic filtering on the shallow-angle ring texture."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crop I, moon above the polar cap",
+      "what": "The moon has a fuzzy golden limb and an almost featureless lit face compared with the pinpoint stars nearby.",
+      "fix": "Tighten the moon's edge response and add faint albedo variation without over-sharpening the small disc."
+     }
+    ]
+   }
+  }
+ ]
+}

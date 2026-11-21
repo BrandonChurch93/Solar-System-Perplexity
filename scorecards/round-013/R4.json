@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 3572 to 3580, rings right of the planet",
+   "what": "the planet's shadow on the rings vanishes as the dive goes close, and the moon drops out in the same step. The lighting changes in one jump, not along the move. The shadow comes back just as suddenly on the way out (sheet-05.png, 3844 to 3850)",
+   "fix": "keep the planet-on-ring shadow on through the dive and terrain views, at every level of detail, so the shadow stays put while the camera moves"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "whole terrain segment, frames 3630 to 3809",
+   "what": "for about 180 frames the view barely changes. The near ring bands and the planet horizon hardly move against each other, so the view reads as a held still, not a low flight with depth",
+   "fix": "add slow forward or sideways travel over the rings so the near bands pass clearly faster than the planet limb, and let the ring particles or bands drift in their orbit"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "outer ring, lower left, frames 3596 to 3600 (also sheet-02.png 3597 to 3613)",
+   "what": "the motion blur on the outer ring breaks up into dark lumpy smudges and repeated band edges. It does not read as one smooth streak",
+   "fix": "take more motion-blur samples, or blur along the true screen-space velocity, during the fast part of the dive"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "outer ring, lower left, frames 3835 to 3838",
+   "what": "the same blotchy, doubled blur on the outer ring comes back at the start of the rise cover",
+   "fix": "use the same blur sampling fix as in the dive"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "background, frames 3830 to 3850",
+   "what": "the Milky Way and starfield fade quickly toward black as the camera pulls out, so the background exposure seems to shift. It also does not match the hold, where the background stays bright",
+   "fix": "lock exposure for the background through the rise, or ease any exposure change over a longer stretch"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "fine ring bands across the frame",
+   "what": "the dense, thin concentric ring lines are very likely to shimmer or crawl in motion. A sampled sheet cannot rule that out",
+   "fix": "pre-filter or mip the ring band texture, and check a run of consecutive frames for aliasing"
+  }
+ ]
+}

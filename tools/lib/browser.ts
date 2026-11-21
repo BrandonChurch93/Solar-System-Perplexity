@@ -66,12 +66,12 @@ export async function openCapture(opts: { dist: string; format: string; assets: 
   }
 }
 
-export async function renderPng(page: Page, frame: number, tier: string): Promise<{ png: Buffer; seconds: number }> {
+export async function renderPng(page: Page, frame: number, tier: string): Promise<{ png: Buffer; seconds: number; samples: number }> {
   const t0 = Date.now()
-  const b64 = await page.evaluate(async ([f, t]) => {
-    const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void>; png(): Promise<string> } }).showcase
+  const [b64, samples] = await page.evaluate(async ([f, t]) => {
+    const s = (window as unknown as { showcase: { renderFrame(f: number, t: string): Promise<void>; png(): Promise<string>; samples(): number } }).showcase
     await s.renderFrame(f as number, t as string)
-    return s.png()
+    return [await s.png(), s.samples()] as const
   }, [frame, tier] as const)
-  return { png: Buffer.from(b64, 'base64'), seconds: (Date.now() - t0) / 1000 }
+  return { png: Buffer.from(b64, 'base64'), seconds: (Date.now() - t0) / 1000, samples }
 }
