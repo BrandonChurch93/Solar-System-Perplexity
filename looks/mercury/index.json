@@ -1,9 +1,41 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T04:05:39.131Z",
- "head": "c965e950ea611df7f80c6770207ae978978c1994",
- "note": "Far side: guide rebuilt from the real height data, first repaint takes; night side flattened to the hero",
+ "pushed": "2026-11-21T04:22:48.188Z",
+ "head": "9dcb05033d32b86641e990b15b4d732c9f8534f4",
+ "note": "far side repaint in tiles on the height-lit guide; terrain depth and camera fit done; engine request for a tilted terrain horizon sent",
  "looks": [
+  {
+   "time": "2026-11-21T04:22:47.633Z",
+   "file": "20261121042247633-note-close-depth.jpg",
+   "source": "out/work/mercury/close-depth.jpg",
+   "kind": "note",
+   "label": "terrain: depth of the approved close image",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T04:22:47.086Z",
+   "file": "20261121042247086-note-look-tiles-v3-crop.jpg",
+   "source": "out/work/mercury/look-tiles-v3-crop.jpg",
+   "kind": "note",
+   "label": "far side tiles e2 and n6 at native size: guide, take c1, take d1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T04:22:46.538Z",
+   "file": "20261121042246538-note-look-tiles-v3.jpg",
+   "source": "out/work/mercury/look-tiles-v3.jpg",
+   "kind": "note",
+   "label": "far side tiles e2 e7 n6 s3: guide (top), repaint take c1 (middle), take d1 (bottom)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-21T04:22:45.999Z",
+   "file": "20261121042245999-note-look-guide-v3.jpg",
+   "source": "out/work/mercury/look-guide-v3.jpg",
+   "kind": "note",
+   "label": "far side guide v3: real height data lit by the film's Sun, real color, before repaint",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-21T04:05:38.567Z",
    "file": "20261121040538567-note-look-night.jpg",
@@ -33,50 +65,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T04:04:26.741Z",
-   "file": "20261121040426741-still-f00615-16x9-review-full.jpg",
-   "source": "out/work/stills/f00615-16x9-review-full.png",
-   "kind": "still",
-   "label": "mercury.hold frame 615, review tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:47:23.384Z",
-   "file": "20261121034723384-frame-base-615.jpg",
-   "source": "out/work/mercury/base-615.png",
-   "kind": "frame",
-   "label": "mercury.hold frame 615, review tier, nograin view",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "nograin",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:27:09.092Z",
-   "file": "20261121032709092-note-sbs-a-s.jpg",
-   "source": "out/work/mercury/sbs-a-s.jpg",
-   "kind": "note",
-   "label": "hold x4 exposure: hero left, film right (night side and rim glow to fix)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T03:27:08.534Z",
-   "file": "20261121032708534-note-compare-mercury-hold-view.jpg",
-   "source": "out/work/compare/compare-mercury-hold-view.jpg",
-   "kind": "note",
-   "label": "hold: stop-local Sun plate in place, sky patch still black (review tier)",
-   "stop": "mercury"
   },
   {
    "time": "2026-11-21T02:45:05.822Z",
