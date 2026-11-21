@@ -19,6 +19,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 1.4,
   moonDegPerSecond: 0.3,
   tint: [0.92, 0.82, 0.6],
+  skyAim: { orbit: [34.43338, 66.84025, 41.06902] },
 }
 
 export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.45, riseBow: 0.2 }
