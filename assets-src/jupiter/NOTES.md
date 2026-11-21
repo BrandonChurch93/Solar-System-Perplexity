@@ -313,9 +313,16 @@ What is built (all in the stop folder):
 - Fix: `nightRim.out 0.0105`, `bulge 3`: on the night side (`dusk`) the limb moves out by `out * (1 - axial^2)^3` (axial is the normal along the planet's axis). `nightRim.glow [0.0015, 0.0027, 0.003]`, `air 0.011`. `nightAlbedo` weight 0.2 with `nightGain 0.86` so the mean level stays.
 - After (draft 2895): limb mid point equal to the hero's within 1 px at all eight angles (-50 to 55 deg), night level 7.4 to 12.0 against 7.1 to 11.9, inside the limb within 1.5 levels per channel. The 80 percent point lies 1 to 7 px further out than the hero's (the air falloff the motion and native critics asked for).
 
-### Still to do
+### Still to do (state at 11:32 UTC)
 
-- Look at strip r3, final frames, mirrorcheck on final frames, commit the four sky binaries once; merge main; measure; gates; READY.
+- Running: `npm run -s measure -- --stop jupiter` at 2b1a504 (log `/tmp/measure.log`). Then: final stills 2895, 2997, 3150, 3296, drafts 3059 3060 3239 3240 (no pop at the segment joins with `side -0.5`), mirrorcheck on those and on 2985, 3013, 3286, 3304, 3352, `compare` both views at the final tier, gates (`--only G5,G13,G17 --stop jupiter`, `--only G11` already PASS at 2b1a504, `--only G12,G15 --g15-stops mars,jupiter`), `npx vitest run`, merge main if it moved, looks, then READY.
+- READY content: commit; per item 1 to 8 what changed; measures; weak list (relief stretched at the end of the terrain view; Io has no shadow in the rise because the shadow axis misses the planet there; Io's near side is the hero's own pixels, soft at 1.5 times in the dive; hold stars a little softer than the hero since the sky patch has mips; sky margins hold fewer stars than the inside; night limb falloff reaches 1 to 7 px further than the hero's; terrain upper third +1.5 levels; mirrorcheck reports on 3296 and others are single bright stars of the shared star field on the test axis, with `axis.py` numbers; stepped copies in the fastest frames are the engine's).
+
+### Round 8, sixth pass (11:45 to 12:00 UTC): full measure at 2b1a504 and the exit
+
+- Full measure at 2b1a504 (923 s): G5 PASS (coverage hold 0.355, dive 0.464, terrain 0.754, rise 0.235), G17 PASS (2895 median 0.954 p25 0.900 over 81 tiles, before 1.222 and 0.963: the sky tiles are no longer aliased since the patch has mips; 3150 median 0.995 p25 0.957), **G13 FAIL: 12 of 463 frames over 0.02 soft, 3250 to 3261, worst 3259 4.40 percent** (before the round 0.91 percent at 3260).
+- Cause (`/tmp/tex.sh`, `out/work/view/tex3258_soft.png`, `tex3251_layers3258.png`): one patch of near ground at the bottom left of the exit frames, all inside the core map, at 0.92 to 1.0 texels per pixel. The deck is the approved picture projected from the judged camera, so ground the camera flies up to is magnified. `terrain.side -0.5` took the camera 0.047 units lower over the deck in the exit than `side -0.24` did (the deck's up direction has an x part of 0.27): altitude over the deck sphere (`out/work/jupiter/tools/alt.ts`) 3250 0.817 against 0.864, 3258 1.051 against 1.102.
+- Fix: `terrain.rise 0.12 to 0.2` gives exactly the altitude profile of the passing build with the wider sideways travel (3060 1.147, 3239 0.795), and the exit climbs a little sooner and pushes a little less: `exitHeight 2.6 to 3.0`, `exitForward 1.2 to 1.0` (3250 0.887, 3258 1.185, 3269 1.975). The judged frame 3150 is the pivot of the move and does not change.
 
 ## Next
 
