@@ -1,8 +1,8 @@
 diff --git a/src/core/engine.ts b/src/core/engine.ts
-index 447d20c..b0b666e 100644
+index ba2f846..f0f1b31 100644
 --- a/src/core/engine.ts
 +++ b/src/core/engine.ts
-@@ -254,7 +254,7 @@ export class Engine {
+@@ -297,7 +297,7 @@ export class Engine {
      }
      this.belt.render(r, this.sampleTarget, this.director!, shot, view)
      if (raw) return
