@@ -1,28 +1,52 @@
-diff --git a/src/director/film.ts b/src/director/film.ts
-index e270072..55aaa8b 100644
---- a/src/director/film.ts
-+++ b/src/director/film.ts
-@@ -508,6 +508,11 @@ export class FilmDirector implements Director {
-             const c = local.position.clone().negate().applyQuaternion(local.quaternion.clone().invert())
-             cover.shell = { centre: [c.x, c.y, c.z], inner: shell[0], outer: shell[1] }
-           }
-+          const sea = p.p.coverSea
-+          if (sea && view === 'terrain') {
-+            const c = new THREE.Vector3().fromArray(sea.centre).sub(local.position).divideScalar(sea.radius).applyQuaternion(local.quaternion.clone().invert())
-+            cover.shell = { centre: [c.x, c.y, c.z], inner: sea.edge[0], outer: sea.edge[1] }
-+          }
-           const dt = time - p.coverCenter(segment)
-           cover.flow = [0.7 * dt, (segment.kind === 'dive' ? -3 : 3) * dt]
-           const k = p.p.coverRush
 diff --git a/src/director/moves.ts b/src/director/moves.ts
-index 99868af..af3b93c 100644
+index b180ffb..b85de46 100644
 --- a/src/director/moves.ts
 +++ b/src/director/moves.ts
-@@ -35,6 +35,7 @@ export interface MoveParams {
-   coverEdge?: [number, number]
-   coverEdgeRise?: [number, number]
-   coverShell?: [number, number]
-+  coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
-   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
-   spinDegPerSecond: number
-   moonDegPerSecond: number
+@@ -21,9 +21,9 @@ export interface Surge { glide: number; rise: number; fall: number; swell?: [num
+ export interface MoveParams {
+   hold: { orbitDeg: number; axis: [number, number, number]; push: number }
+   spot: { x: number; y: number; on?: 'globe' | 'rings' }
+-  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge }
+-  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
+-  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number }
++  dive: { headingDeg: number; altitude: number; back: number; ahead: number; bow: number; rollDeg: number; swoop?: boolean; surge?: Surge; level?: number }
++  terrain: { vfov: number; gather?: number; forward: number; rise: number; side: number; yawDeg: number; pitchDeg: number; entryHeight: number; entryBack: number; entryPitchDeg: number; entryYawDeg?: number; entryRollDeg?: number; entryDipDeg?: number; exitHeight: number; exitForward: number; exitPitchDeg: number; exitDipDeg?: number; horizonDeg?: number; dipDeg?: number; rollDeg?: number }
++  rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
+   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
+   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
+   light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+@@ -356,9 +356,9 @@ export class StopPlan {
+     const toTarget = target.sub(position).normalize()
+     const level = heading.clone().addScaledVector(ground, -heading.dot(ground)).normalize().applyAxisAngle(ground, thetaC + thetaRate * tau * b)
+     const dip = Math.acos(1 / (1 + h))
+-    const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g)
++    const pitch = dip + THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + t.entryPitchDeg * at.g + (t.entryDipDeg ?? 0))
+     const final = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(ground, -Math.sin(pitch))
+-    const w = smoother(ramp(0, 0.97, x))
++    const w = smoother(ramp(0, d.level ?? 0.97, x))
+     const aim = slerpDir(toTarget, final, w)
+     const up = slerpDir(up0, ground.clone().add(level).normalize(), smooth(x))
+     const roll = ((t.entryRollDeg ?? 0) * at.g + (t.rollDeg ?? 0)) * smooth(ramp(0.3, 0.92, x)) + d.rollDeg * Math.sin(Math.PI * Math.min(x * 1.15, 1))
+@@ -410,7 +410,8 @@ export class StopPlan {
+       return { pose, view: 'terrain' }
+     }
+     const settle = this.p.rise.settle
+-    const e = settle ? 1 - Math.pow(1 - ramp(f.center, 1, u), settle) : easeRise(ramp(f.first, 1, u))
++    const x = ramp(f.center, 1, u)
++    const e = settle ? 1 - Math.pow(1 - x, settle) * (this.p.rise.gentle ? 1 + settle * x : 1) : easeRise(ramp(f.first, 1, u))
+     const d = this.p.dive
+     const end = this.after(seg.end)
+     const tq = this.turn(time)
+@@ -418,9 +419,10 @@ export class StopPlan {
+     const normal = this.normal.clone().applyQuaternion(tq)
+     const heading = this.heading.clone().applyQuaternion(tq)
+     const ahead = this.p.rise.ahead ?? d.ahead
+-    const from = spot.clone().addScaledVector(normal, d.altitude).addScaledVector(heading, ahead)
++    const low = this.p.rise.from ?? d.altitude
++    const from = spot.clone().addScaledVector(normal, low).addScaledVector(heading, ahead)
+     const span = end.position.clone().sub(from)
+-    const ratio = span.length() / d.altitude
++    const ratio = span.length() / low
+     const m = (Math.pow(ratio, e) - 1) / (ratio - 1)
+     const up1 = span.dot(normal)
+     const across = span.clone().addScaledVector(normal, -up1)

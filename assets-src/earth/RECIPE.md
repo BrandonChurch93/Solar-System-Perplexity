@@ -73,6 +73,21 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 - Coding: RGB = city lights (sRGB, divided by the peak 5), A = square root of the aurora on the disc.
 - Hero lights where the hero was night. Elsewhere the Black Marble guide through the registration, base map removed (red minus 0.7 blue), sharpened and given a soft glow, tinted with the hero's gold (1, 0.72, 0.36). Light that the hero shows on terrain just past the terminator (the Andes) is kept in the same map and drawn as dusk light: full at the middle of the hold, fading as the terminator moves on.
 
+### `public/assets/earth/<set>/wrap-far.webp` (8192 x 4096 and 4096 x 2048, RGBA)
+
+- Files: `public/assets/earth/full/wrap-far.webp`, `public/assets/earth/web/wrap-far.webp`.
+- Tool: `wrap.py` (`python3 assets-src/earth/wrap.py 8192 far`, 80 s). No image model output is in this file.
+- Coding: RGB = cloud-free albedo, coded with the film tone curve. A = square root of the city lights.
+- What it is for: outside the hold (the dive from frame 1800 on and the rise) the camera sees the hero's night side, its twilight and the land past its limb from other angles. There the hero map is amplified dark pixels and the registration flow of `wrap-surface.jpg` falls to zero within about 6 degrees past the hero's limb, which stretched land and lights. This map is the July Blue Marble through the same colour table (`lut.npy`), with ice laid as a pale blue white under the guide's own shading (the colour table gives ice a flat grey), placed with a gentle flow (`far_flow()`: the hero registration where the hero is lit and faces the camera, a smooth extension of it elsewhere, zero at 172 degrees from the hero centre; stretch outside the trusted zone -0.07 to 0.06 along x, -0.17 to 0.09 along y). Lights are the Black Marble guide through the same flow, base map removed, glow 2.2 px, so they are points along coasts.
+- The shader (`globe.ts`) mixes to it only where the hero's light is low or past the hero's limb, times `away` (0 in the hold up to frame 1800). The hold frame 1755 is the same bytes with and without it.
+
+### `public/assets/earth/<set>/wrap-far-cloud.webp` (5632 x 2816 and 2816 x 1408, RGBA)
+
+- Files: `public/assets/earth/full/wrap-far-cloud.webp`, `public/assets/earth/web/wrap-far-cloud.webp`.
+- Tool: `wrap.py` (`python3 assets-src/earth/wrap.py 8192 farcloud`, 60 s). No image model output is in this file.
+- Coding: as `wrap-cloud.webp` (RGB = cloud colour times alpha, tone coded, A = cloud alpha).
+- The whiteness of the VIIRS guide (`far_cloud()`, the same rule as the far side of `wrap-cloud.webp`), recoloured to the hero's cloud tone, placed with the gentle flow of `wrap-far.webp`. No cloud south of 63 degrees, where the guide ends with a hard edge. Used only outside the hold: on the hero's night side (the hero's own cloud there is amplified dark pixels) and, in the rise, on the ring past the hero's view where the first cloud map is stretched. Its fine structure (the map minus its own low pass) also modulates the hero's clouds outside the hold, so they carry detail finer than the hero resolves.
+
 ### `public/assets/earth/<set>/air-glow.png` (180 x 72)
 
 - Tool: `air.py`. Rows 0 to 63: ratio of the hero's glow off the limb to the fitted layers, per position angle and height. Rows 64 to 71: colour of the hero's rim per position angle. Input: hero and the sky fill.
@@ -83,12 +98,12 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 
 ### `public/assets/earth/<set>/aurora.webp` (2048 x 384 and 1024 x 192)
 
-- Tool: `aurora.py`. The hero's curtains above the limb between position angles 2 and 92, unrolled along the limb: hero minus the smoothed sky fill minus the fitted glow, stars removed by opening and closing, gated on green or red chroma, faded at the ends and the top.
+- Tool: `aurora.py`. The hero's curtains above the limb between position angles 2 and 92, unrolled along the limb: hero minus the smoothed sky fill minus the fitted glow, stars removed by opening and closing, gated on green or red chroma, faded at the ends and the top. Where the residue is red (red over green above `RED`, 0.9 to 1.8) only its smooth part is kept (opening of `CALM` 25 px, then a blur), so the red glow carries no star points and no blotches.
 
 ### `public/assets/earth/<set>/sky-hold.webp` (3520 x 1980 and 1760 x 990, lossless)
 
 - Tool: `sky/patch.py` (`sky/deblock.py` is a copy of the Mars script). Inputs: hero, `out/work/earth/sky/fill-t1.png`, and a still of the film at frame 1755 with a black sky (`sky.json` gain set to 0 for that one render, review tier: `out/work/earth/still/hold-nosky.png`).
-- The patch is the hero minus the film's own planet, glow, aurora and Moon, so the film adds back to the hero. Behind the planet, under the Moon and inside the bright glow the fill is used, scaled per channel (gain 1.576, 1.44, 1.015) and locally near the join; outside 1.03 radii the fill gives only its smooth part and the hero's own star points stay, also in the aurora sector (position angle 6 to 86 degrees, out to 1.3 radii) and around the Moon. There the points whose green or red stands 1.25 times above the other channels (what the fitted curtain leaves of the hero's aurora) are dropped, and so are the points on the Moon's disc (to 1.2 Moon radii). 12.5 percent mirrored margin for the camera's move in the hold.
+- The patch is the hero minus the film's own planet, glow, aurora and Moon, so the film adds back to the hero. Behind the planet, under the Moon and inside the bright glow the fill is used, scaled per channel (gain 1.579, 1.438, 1.015) and locally near the join; outside 1.03 radii the fill gives only its smooth part and the hero's own star points stay, also in the aurora sector (position angle 6 to 86 degrees, out to 1.3 radii) and around the Moon. There the points whose green or red stands 1.25 times above the other channels (what the fitted curtain leaves of the hero's aurora) are dropped, and so are the points on the Moon's disc (to 1.2 Moon radii). 12.5 percent margin for the camera's move in the hold and the start of the dive: outside the approved border the margin is the low pass of the mirrored padding (12 px) plus star points of the approved sky taken from the strip right inside the border and moved outward by one margin width (side margins along the row, top and bottom margins along the column, corners both). The points are the image minus its 4 px low envelope; a star whose peak stands above 0.08 linear is scaled down to that within 8 px, so the margin holds only faint stars and no bright pattern is seen twice; the points fade in over 4 px from the border. The engine fades the patch out across the margin, so the shared sky takes over toward the outer edge. Takes of the margin this round: 1 (clipped points became flat blobs, dropped), 2 (source strip 0.8 margins inside, peak 0.2: a dense cloud of stars with a vertical edge beside the sparse corner at frame 1857, dropped), 3 kept (share of pixels over 30 code values: margin 0.215, approved sky beside it 0.198; the take before this round, with points flipped from the far end of the image, left a starless strip at frame 1857). Inside the approved border nothing changes (0 pixels differ from the file before).
 
 ### Terrain relief and its sky
 
