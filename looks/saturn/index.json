@@ -1,9 +1,25 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T03:08:06.933Z",
- "head": "63df59ffa99493e3a0967a618720a770240b77b3",
- "note": "fitting the Sun, ring plane and close camera from the approved images before building rings and globe",
+ "pushed": "2026-11-21T03:22:51.147Z",
+ "head": "93a6e05df70697aa90f3b681b28c8e9ca796981a",
+ "note": "Ring profiles measured from both approved images; shaders for rings and globe next",
  "looks": [
+  {
+   "time": "2026-11-21T03:22:49.377Z",
+   "file": "20261121032249377-note-close-polar.jpg",
+   "source": "out/work/saturn/close-polar.jpg",
+   "kind": "note",
+   "label": "Approved close image unprojected to ring polar coordinates with the fitted camera",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T03:22:48.799Z",
+   "file": "20261121032248799-note-profiles.jpg",
+   "source": "out/work/saturn/profiles.jpg",
+   "kind": "note",
+   "label": "Ring radial profiles: hero (top), close image A-ring window, close image B-ring window",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-21T03:08:06.380Z",
    "file": "20261121030806380-note-hero-polar-small.jpg",
@@ -62,20 +78,6 @@
    "source": "out/work/compare/compare-saturn-hold-view.jpg",
    "kind": "compare",
    "label": "saturn.hold: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:40.388Z",
-   "file": "20261121024440388-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
    "segment": "saturn.hold",
    "frame": 3465,
