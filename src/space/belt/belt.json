@@ -1,7 +1,7 @@
 {
   "segment": "mars.travel",
   "focus": 170,
-  "aperture": 320,
+  "aperture": 250,
   "flow": -1,
   "near": 0.05,
   "far": 6000,
@@ -15,7 +15,7 @@
     "contrast": 1.7,
     "lift": 1.5,
     "bump": 1.25,
-    "detail": 0.7,
+    "detail": 0.9,
     "shadow": 1,
     "tile": [1.1, 4.3]
   },

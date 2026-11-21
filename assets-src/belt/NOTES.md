@@ -68,3 +68,7 @@ After a compaction: read `BRIEF.md` first, then this file from the top.
 1. Review tier sheet of the segment, native crops, fix what R3 and R4 would raise (hero crispness, streak edges).
 2. Web set (`python3 assets-src/belt/web.py`), check a still with `--assets web` if the harness has it.
 3. Commit binaries once (milestone), byte identity proof at final (2325, 2427, 2580, 2726), final 2782, review cost with and without, vitest, DONE message.
+
+- 04:02 review still of 2782 (`out/work/belt/r2782.png`, 75.3 s): hero, two far rocks, Jupiter clear, near rock soft with lit crescent. Native crops of all five checked, no defect seen.
+- 04:08 aperture 320 to 250 (near rock keeps a little more shape, circle of confusion 37 px at 2782) and detail 0.7 to 0.9. Draft frames 2772 and 2796 at native size (`out/work/belt/s2/`): hero streak is continuous. Planner speed 112 px per frame at 2772, shutter half a frame, 39 time steps, 1.5 px apart. The serrated limb where the edge is oblique to the motion is the bumpy limb smeared along the motion, not copies; lines inside the streak run along the motion.
+- 04:10 milestone commit of the binaries (take 3 full 28 MB, web 6.9 MB). Then: review sheet again with the final values, byte proof at final, final 2782, review sheet without the hook for the cost.
