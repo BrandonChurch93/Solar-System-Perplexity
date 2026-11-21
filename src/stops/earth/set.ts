@@ -1,43 +1,19 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
-import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
+import { config } from '../../config'
+import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
-import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { Air } from './air'
 import { Aurora } from './aurora'
 import { patches } from './assets'
 import { Globe, direction } from './globe'
 import { Moon } from './moon'
+import { Ground, type GroundDef } from './relief'
+import reliefJson from './relief.json'
 import * as look from './look'
 import { plan } from './plan'
 import skyJson from './sky.json'
-
-const PLATE_VERT = /* glsl */ `
-out vec2 vUv;
-out vec3 vView;
-void main() {
-  vUv = uv;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vView = mv.xyz;
-  gl_Position = projectionMatrix * mv;
-}`
-
-const PLATE_FRAG = /* glsl */ `
-precision highp float;
-uniform sampler2D uMap;
-uniform vec2 uMapSize;
-uniform float uGain;
-in vec2 vUv;
-in vec3 vView;
-out vec4 outColor;
-${INVERSE_FILMIC_GLSL}
-${DIAG_GLSL}
-void main() {
-  vec2 uv = vUv * 3.0 - 1.0;
-  vec3 col = inverseFilmic(texture(uMap, uv).rgb) * uGain;
-  outColor = diagOut(vec4(col, 1.0), diagTexels(uv * uMapSize), 1.0, vec3(0.85, 0.3, 0.25), vec2(0.0), length(vView));
-}`
 
 export const createSet: SetFactory = async (ctx) => {
   const base = 'earth/' + ctx.assets + '/'
@@ -82,15 +58,9 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const close = await ctx.texture(base + 'standin-close.jpg', { srgb: true, anisotropy: 8, mirror: true })
-  const closeSize = close.image as unknown as { width: number; height: number }
-  const plateMat = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: PLATE_VERT, fragmentShader: PLATE_FRAG, uniforms: { uMap: { value: close }, uMapSize: { value: new THREE.Vector2(closeSize.width, closeSize.height) }, uGain: { value: 1 }, uDiag: diagUniform } })
-  const t = plan.p.terrain
-  const overscan = 1 + (0.5 * t.forward + 0.5 * Math.abs(t.side) + 0.5 * Math.abs(t.rise)) / 10 + Math.tan(THREE.MathUtils.degToRad(0.5 * Math.max(Math.abs(t.yawDeg), Math.abs(t.pitchDeg))))
-  const h = 20 * Math.tan(THREE.MathUtils.degToRad(t.vfov) / 2) * overscan
-  const plate = new THREE.Mesh(new THREE.PlaneGeometry(h * (closeSize.width / closeSize.height) * 3, h * 3), plateMat)
-  plate.position.set(0, 0, -10)
-  terrain.add(plate)
+  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground)
+  terrain.add(ground.group)
+  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
 
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
@@ -117,8 +87,10 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
-      plateMat.uniforms.uGain!.value = gain
-      if (!inOrbit) return
+      if (!inOrbit) {
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        return
+      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
@@ -163,8 +135,7 @@ export const createSet: SetFactory = async (ctx) => {
       moon.dispose()
       curtain.dispose()
       far.dispose()
-      plateMat.dispose()
-      plate.geometry.dispose()
+      ground.dispose()
     },
   }
 }

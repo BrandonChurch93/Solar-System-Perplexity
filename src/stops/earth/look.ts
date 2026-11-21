@@ -8,6 +8,7 @@ import auroraJson from './aurora.json'
 import type { MoonLook } from './moon'
 import moonJson from './moon.json'
 import motion from './motion.json'
+import type { GroundLook } from './relief'
 import shapeJson from './shape.json'
 import trim from './trim.json'
 import wrap from './wrap.json'
@@ -36,3 +37,5 @@ export const descent = { high: 0.7, low: 0.05 }
 
 export const moon: MoonLook = moonJson
 export const aurora: AuroraLook = auroraJson
+
+export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0] }

@@ -4,8 +4,8 @@ import fit from './fit.json'
 export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [0.1, 1, 0], push: -0.035 },
   spot: { x: 0.51, y: 0.42 },
-  dive: { headingDeg: 95, altitude: 0.03, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 5 },
-  terrain: { vfov: 58, forward: 1.3, rise: 0.1, side: 0.2, yawDeg: 3, pitchDeg: -1, entryHeight: 1.08, entryBack: 1.21, entryPitchDeg: 5.4, exitHeight: 2.3, exitForward: 1.4, exitPitchDeg: 11 },
+  dive: { headingDeg: 95, altitude: 0.030751, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 5 },
+  terrain: { vfov: 45, gather: 0.8, forward: 0.44, rise: 0.237, side: -0.008, yawDeg: 0, pitchDeg: 0, entryHeight: 0.3, entryBack: 0.3, entryPitchDeg: 0, exitHeight: 2.3, exitForward: 1.4, exitPitchDeg: 11, horizonDeg: 14.3175, dipDeg: 14.0305, rollDeg: -2.0044 },
   rise: { azimuthDeg: 10, elevationDeg: 8, distance: 5.3, offset: [0.3, 0.15], driftSpeed: 0.08, rollDeg: -4 },
   travel: { turnDeg: 70, side: 1, turnEnd: 0.42 },
   arrive: { swingDeg: 20, axis: [0.15, 1, 0], from: 0.2, offset: [0.4, 0.3] },
