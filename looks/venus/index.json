@@ -1,55 +1,55 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T23:31:18.750Z",
- "head": "b6042badd46697b8aa82094590a3ffc343d44354",
- "note": "Phase 6 polish: final proof stills; dark cracks under the hold's lightning found and being cured; hold detail in the dive measured softer and dropped",
+ "pushed": "2026-11-21T23:44:07.384Z",
+ "head": "830a506c10b8bcc89eccb58713b509151099deb6",
+ "note": "Phase 6 final tier proof stills f2 on 830a506: 1185, 1287, 1586 against round 23",
  "looks": [
   {
-   "time": "2026-11-21T23:31:18.124Z",
-   "file": "20261121233118124-note-b2-bolts.jpg",
-   "source": "../view/b2-bolts.png",
+   "time": "2026-11-21T23:44:06.541Z",
+   "file": "20261121234406541-note-f2-1586-night.jpg",
+   "source": "../view/f2-1586-night.png",
    "kind": "note",
-   "label": "Phase 6 lightning cure, pass 1: flash off with the old map, wrap alone, mask; approved, 1185 now, 1150 now (faint lines left)",
+   "label": "P6 f2 rise 1586 night limb native: round 23, now",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:31:17.556Z",
-   "file": "20261121233117556-note-h8-bolts.jpg",
-   "source": "../view/h8-bolts.png",
+   "time": "2026-11-21T23:44:05.710Z",
+   "file": "20261121234405710-note-f2-1586-lr.jpg",
+   "source": "../view/f2-1586-lr.png",
    "kind": "note",
-   "label": "Phase 6 fault found: dark cracks under the lightning in hold frames 1150 and 1230 (hold detail map fitted with the flash on), cure in work",
+   "label": "P6 f2 rise 1586 lower right limb native: round 23, now",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:31:16.995Z",
-   "file": "20261121233116995-note-k1-1287-night.jpg",
-   "source": "../view/k1-1287-night.png",
+   "time": "2026-11-21T23:44:04.945Z",
+   "file": "20261121234404945-note-f2-1586-top.jpg",
+   "source": "../view/f2-1586-top.png",
    "kind": "note",
-   "label": "Phase 6 item 3, dive 1287 night side at native size: round 23, hold detail carried (softer, dropped), carried with the wrap's finest band",
+   "label": "P6 f2 rise 1586 plume native: round 23, now",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:31:16.395Z",
-   "file": "20261121233116395-note-f1-1586-pair.jpg",
-   "source": "../view/f1-1586-pair.jpg",
+   "time": "2026-11-21T23:44:04.221Z",
+   "file": "20261121234404221-note-f2-1586-pair.jpg",
+   "source": "../view/f2-1586-pair.jpg",
    "kind": "note",
-   "label": "Phase 6 final tier, rise 1586: round 23 (top) against now (curled plume, rewoven ring, night limb one falloff)",
+   "label": "P6 f2 rise 1586 final tier: round 23 above, now below",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:07:05.121Z",
-   "file": "20261121230705121-note-i4a-1287-pair.jpg",
-   "source": "../view/i4a-1287-pair.jpg",
+   "time": "2026-11-21T23:44:03.378Z",
+   "file": "20261121234403378-note-f2-1287-night.jpg",
+   "source": "../view/f2-1287-night.png",
    "kind": "note",
-   "label": "Phase 6 item 3 draft, dive 1287: round 23 against hold detail carried as a high pass",
+   "label": "P6 f2 dive 1287 night limb native: round 23, now",
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:07:04.193Z",
-   "file": "20261121230704193-note-r9.jpg",
-   "source": "../view/r9.jpg",
+   "time": "2026-11-21T23:44:02.596Z",
+   "file": "20261121234402596-note-f2-1287-pair.jpg",
+   "source": "../view/f2-1287-pair.jpg",
    "kind": "note",
-   "label": "Phase 6 draft strip, rise 1560 to 1590: veil thins, curled plume, rewoven ring",
+   "label": "P6 f2 dive 1287 final tier: round 23 above, now below",
    "stop": "venus"
   },
   {
