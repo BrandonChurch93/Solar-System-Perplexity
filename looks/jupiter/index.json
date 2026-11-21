@@ -1,9 +1,37 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-21T04:56:56.082Z",
- "head": "bf7b62f4ad05b42f14acd5e25bcc17fe5a088bc9",
- "note": "sky patch: glow zone uses the fill's low frequencies and the hero's stars, margins painted by seedream instead of mirrored; air tail short, shells carry the wide glow",
+ "pushed": "2026-11-21T05:05:07.938Z",
+ "head": "75fa88a0bfa2829e4167fe2987b627535b7cb64b",
+ "note": "orbit view milestone: hold beside the hero at review tier, moving to the terrain view",
  "looks": [
+  {
+   "time": "2026-11-21T05:03:43.872Z",
+   "file": "20261121050343872-compare-compare-jupiter-hold-view.jpg",
+   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.hold: approved image left, film frame right, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
+  {
+   "time": "2026-11-21T05:03:42.815Z",
+   "file": "20261121050342815-still-f02895-16x9-review-full.jpg",
+   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
   {
    "time": "2026-11-21T04:56:55.531Z",
    "file": "20261121045655531-note-boost_pair.jpg",
@@ -57,46 +85,18 @@
    "engine": "05c29d3a1588e95f"
   },
   {
-   "time": "2026-11-21T04:55:42.555Z",
-   "file": "20261121045542555-still-f02895-16x9-review-full.jpg",
-   "source": "out/work/stills/f02895-16x9-review-full.png",
+   "time": "2026-11-21T04:46:13.078Z",
+   "file": "20261121044613078-still-f02997-16x9-review-full.jpg",
+   "source": "out/work/stills/f02997-16x9-review-full.png",
    "kind": "still",
-   "label": "jupiter.hold frame 2895, review tier",
+   "label": "jupiter.dive frame 2997, review tier",
    "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
+   "segment": "jupiter.dive",
+   "frame": 2997,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "05c29d3a1588e95f"
-  },
-  {
-   "time": "2026-11-21T04:04:06.989Z",
-   "file": "20261121040406989-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:45:00.734Z",
-   "file": "20261121024500734-compare-compare-jupiter-terrain-view.jpg",
-   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.terrain: approved image left, film frame right, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
   }
  ]
 }
