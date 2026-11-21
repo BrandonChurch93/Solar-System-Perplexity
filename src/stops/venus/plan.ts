@@ -18,7 +18,7 @@ export const params: MoveParams = {
   coverLow: [0.95, 0.7, 0.36],
   coverTerrain: [1.3, 1.0, 0.56],
   coverLowTerrain: [0.3, 0.19, 0.085],
-  coverTop: [0.1, 0.12],
+  coverTop: [0.04, 0.12],
   coverEdge: [0.2, 0.4],
   coverEdgeRise: [0.4, 0.45],
   coverShell: [1.015, 1.07],

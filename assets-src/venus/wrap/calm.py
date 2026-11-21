@@ -6,7 +6,7 @@ import numpy as np
 sys.path.insert(0, 'assets-src/venus')
 from geo import *
 
-HUE = dict(bright=(0.5, 0.7), view=(0.1, 0.25), gain=(1.0, 1.0), soft=1.2)
+HUE = dict(bright=(0.5, 0.7), view=(0.1, 0.25), gain=(1.0, 5.0), soft=0.7, spots=((1866, 338), (1874, 329)), radius=(8, 16))
 RING = dict(inner=(0.26, 0.44), outer=(-0.2, -0.02), keep=0.15, wrapSigmaDeg=1.0, bak=WORK + '/r2/bak')
 SPOT = json.load(open('assets-src/venus/patches/spot.json'))['spot']
 N, E, U = (np.array(SPOT[k]) for k in ('direction', 'east', 'north'))
@@ -36,7 +36,10 @@ def hue_gain():
     shown = np.clip(encode(alb * curve_at(n @ SUN)), 0, 1)
     a, b = np.maximum(scene(shown), 1e-4), np.maximum(scene(cv2.GaussianBlur(hero, (0, 0), 0.8)), 1e-4)
     ratio = np.clip((b[..., 1:] / b[..., :1]) / (a[..., 1:] / a[..., :1]), HUE['gain'][0], HUE['gain'][1])
-    m = smoothstep(HUE['bright'][0], HUE['bright'][1], shown.max(-1)) * smoothstep(HUE['view'][0], HUE['view'][1], mu) * ok
+    near = np.zeros((hh, hw), np.float32)
+    for sx, sy in HUE['spots']:
+        near = np.maximum(near, 1 - smoothstep(HUE['radius'][0], HUE['radius'][1], np.hypot(xs - sx, ys - sy)))
+    m = smoothstep(HUE['bright'][0], HUE['bright'][1], shown.max(-1)) * smoothstep(HUE['view'][0], HUE['view'][1], mu) * ok * near
     gain = np.exp(cv2.GaussianBlur((np.log(ratio) * m[..., None]).astype(np.float32), (0, 0), HUE['soft']))
     print('hue gain: share of hero pixels over 1.1', float((gain[..., 0] > 1.1).mean()), 'most', float(gain.max()), 'least', float(gain.min()))
     cv2.imwrite(WORK + '/wrap/hue-gain.png', (np.clip((gain[..., 0] - 0.5) / 4.5, 0, 1) * 255).astype(np.uint8))

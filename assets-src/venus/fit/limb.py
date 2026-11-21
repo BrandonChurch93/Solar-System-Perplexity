@@ -13,6 +13,9 @@ HOLD_FILM = 0.005
 HOLD_OUT = 0.008
 EDGE = (0.0035, 0.0008)
 EDGE_AT = 0.003
+MONO = 0.0035
+MONO_IN = 0.02
+EDGE_SA = 0.6
 BAND = (0.0706, 640.1, 300.0)
 LONG = (0.03, 0.09, 0.27)
 ORDER = 3
@@ -241,7 +244,31 @@ def write(rgb_in, alpha, rgb_out, edge):
         print(name, 'in', ' '.join('%.2f/%.2f@%.3f' % (rgb_in[j, col, 1], alpha[j, col], b_in[j]) for j in (2, 14, 20, 30, 45, 60, 80, 100)), '| out', ' '.join('%.3f@%.3f' % (rgb_out[j, col, 1], b_out[j]) for j in (2, 14, 20, 30, 45, 60, 80, 110)))
 
 
+def mono():
+    old = np.load(WORK + '/r2/bak/limb-lut-pre-mono.npz')
+    b_in, _ = rows()
+    n = int(np.argmax(1 - b_in >= MONO))
+    geom = json.load(open(WORK + '/limb-geom.json'))
+    hero = load(ROOT + '/references/approved/venus-hero.png')
+    med = np.median(polar(hero, geom['hero'], np.array(geom['dev']), np.array([1 - EDGE_AT])), axis=2)
+    edge = smooth(np.sqrt(np.maximum(med, 0)), EDGE_SA, 0)[0] ** 2
+    ratio = np.minimum((edge @ LUMA) / np.maximum(old['edge'] @ LUMA, 1e-5), 1)
+    fall = step(b_in, 1 - MONO_IN, 1 - MONO)[:, None]
+    rgb = old['rgb_in'] * (1 + (ratio[None] - 1) * fall)[..., None]
+    lum = rgb @ LUMA
+    low = lum.copy()
+    low[n:] = np.minimum.accumulate(lum[n:], axis=0)
+    rgb = rgb * (low / np.maximum(lum, 1e-6))[..., None]
+    d = (old['rgb_in'] - rgb) @ LUMA
+    print('mono: cells lowered', int((d > 1e-4).sum()), 'of', d.size, 'most', float(d.max()), 'night columns most', float(d[:, (old['edge'] @ LUMA) < 0.5].max()))
+    print('edge luma, old then new:', ' '.join('%.2f>%.2f' % (a, b) for a, b in zip(old['edge'] @ LUMA, edge @ LUMA)))
+    write(rgb, old['alpha'], old['rgb_out'], edge)
+
+
 if __name__ == '__main__':
+    if sys.argv[1] == 'mono':
+        mono()
+        sys.exit()
     mode, film_path = sys.argv[1], sys.argv[2]
     hero = load(ROOT + '/references/approved/venus-hero.png')
     film = load(film_path)
