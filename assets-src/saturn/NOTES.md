@@ -148,3 +148,11 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - G13 self-check, every 5th frame, before the sweep: 0 of 99 frames over 2 percent soft, worst frame 3835 at 0.01 percent.
 - Engine batch 8 (1e19796) merged at 08:08.
 - `npm run budget` renders and reads the memory of every chrome process: never run it beside a measure.
+
+## Self-check for READY (08:11 to 08:45)
+
+- Measure at 94ed405 plus engine batch 8, `npm run measure -- --stop saturn --no-cover saturn --every 3`: G13 0 of 165 frames over 2 percent soft (worst frame 3834, 0.00 percent); G5 pass, coverage 0.552 (3465), 0.553 (3567), 0.731 (3720), 0.406 (3866), invalid 0; G17 3465 median 1.167 (p25 0.709, 71 tiles), 3720 median 1.289 (p25 0.927, 62 tiles).
+- Main at 48a2bfc merged at 08:22 (batches 8 and 9 and the real folders of the other stops). Add/add conflicts in my three folders taken from my side, nothing else touched. Against my renders from before that merge: 3866 byte identical; 3390, 3720 and 3837 differ by 1 to 3 levels on 220 to 1806 pixels, 3592 on 5218 pixels with 15 over 4 levels (star points moved by a fraction of a pixel). The stop has no relief shield and no trimmed shell, so neither opt-out applies.
+- Profiler patch `assets-src/shared/saturn-rings-cull.patch` applied with one change: the far half is only culled from the pass without depth test while `uClose` is 0, because that pass now also draws the far fragments the globe hides. Byte identical on 3390, 3592, 3837, 3866 (draft) and 3720 (final); 3720 final 44.8 to 38.2 s.
+- Gates at 52c68d7: G11 pass, G12 pass (1646 tracked files, 1.36 GB), G15 pass (saturn/web 73 MB, saturn/full 267 MB). Tests 46 of 46. Budget: texture memory full 266.8 MB, web 73.3 MB; disk full 22 MB, web 11 MB. Seconds per frame at final tier: hold 24.0, dive 98.6 (frame 3562), terrain 30.8, rise 125.8 (frame 3828); review tier 6.1, 25.3, 7.9, 30.9; draft 1.6 to 2.2. The dive and rise take four times the samples at review and final (`fastSamplesPerFrame` 16 and 64 in `config/showcase.json`), which is the whole difference.
+- Travel probe at the head: 8.00e-2 on 3882 to 3885, turn 0.003 to 0.004 deg per frame. Exit pose and travel values unchanged since EXIT FINAL (16a4b5f).
