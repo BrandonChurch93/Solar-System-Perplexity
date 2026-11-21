@@ -67,9 +67,10 @@ export const createSet: SetFactory = async (ctx) => {
   const across = new THREE.Vector3().crossVectors(plan.ringNormal, along).applyQuaternion(toTilt)
   along.applyQuaternion(toTilt)
   const gate = { value: 1 }
-  const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), await ctx.dataTexture(base + layoutJson.even, layoutJson.width, layoutJson.height, 1), gate, layoutMatrix, layoutJson.width, layoutJson.height, along, across)
+  const skimShow = { value: 0 }
+  const layout = layoutUniforms(await ctx.dataTexture(base + layoutJson.file, layoutJson.width, layoutJson.height, 4), await ctx.dataTexture(base + layoutJson.even, layoutJson.width, layoutJson.height, 1), await ctx.dataTexture(base + 'layout-tone.bin', layoutJson.width, layoutJson.height, 4), skimW, gate, layoutMatrix, layoutJson.width, layoutJson.height, along, across)
   const hero = shotUniforms('Hero', { map: await ctx.texture(base + 'hero-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'hero-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: heroM, weight: heroW })
-  const skimShot = shotUniforms('Skim', { map: await ctx.texture(base + 'skim-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'skim-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: skimM, weight: skimW })
+  const skimShot = shotUniforms('Skim', { map: await ctx.texture(base + 'skim-rings.jpg', { srgb: true, anisotropy: 16 }), mask: await ctx.texture(base + 'skim-rings-mask.png', { srgb: false, anisotropy: 16 }), matrix: skimM, weight: skimShow })
   const rings = new Rings(profile, layout, { ...hero, ...skimShot }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
 
@@ -138,6 +139,7 @@ export const createSet: SetFactory = async (ctx) => {
       const away = camL.distanceTo(skimL)
       gate.value = 1 - smooth((away - look.detailRange[0]) / (look.detailRange[1] - look.detailRange[0]))
       skimW.value = 1 - smooth((away - look.skimRange[0]) / (look.skimRange[1] - look.skimRange[0]))
+      skimShow.value = skimW.value * look.rings.skimShow
       const el = THREE.MathUtils.lerp(Math.asin(THREE.MathUtils.clamp(sunL.y, -1, 1)), closeEl, close.value)
       lightL.set(sunL.x, 0, sunL.z).normalize().applyAxisAngle(UP, closeTurn * close.value).multiplyScalar(Math.cos(el))
       lightL.y = Math.sin(el)
@@ -180,7 +182,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - skimW.value)
       ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shell.day).multiply(dayTone.set(1, 1, 1).lerp(shellSkim, skimW.value))
       ;(gu.uRimNight!.value as THREE.Vector4).fromArray(look.globe.rimNight).multiplyScalar(1 - skimW.value).setW(look.globe.rimNight[3])
-      ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0])))
+      const parted = smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0]))
+      ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], parted)
+      ru.uSkimNear!.value = 1 - parted
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       titan.mesh.position.copy(moonHome).applyQuaternion(turn)

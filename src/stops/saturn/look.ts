@@ -76,9 +76,10 @@ export const rings: RingLook = {
   heroDensity: [0.95, 1.2],
   heroOver: [0.4, 0.5],
   heroTurn: 0.5,
-  skimEdge: [0, 0.08],
+  skimEdge: [0, 0.14],
   skimFoot: 0.7,
   skimDensity: [0.8, 1.05],
+  skimShow: 1,
   reach: 3.6,
 }
 
@@ -93,7 +94,7 @@ export const titan: TitanLook = {
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]
-export const detailRange: [number, number] = [0.2, 0.5]
+export const detailRange: [number, number] = [0.5, 1.1]
 export const heroRange: [number, number] = [0.6, 2.2]
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
