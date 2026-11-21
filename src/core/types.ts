@@ -51,6 +51,8 @@ export interface Shot {
   skyExposure: number
   skyGlow: number
   skyTurn: THREE.Quaternion
+  skyStars?: number
+  skyPatch?: number
   near: number
   far: number
   sun: SunState
