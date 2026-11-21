@@ -15,7 +15,6 @@ HERO = sys.argv[3] if len(sys.argv) > 3 else 'out/work/mercury/hero-2x.png'
 LIMB = (0.2, 0.42)
 NIGHT = (-0.14, -0.03)
 TONE = 40.0
-SOFT = 7.0
 
 seen = geo.scene(HERO)
 h, w, _ = seen.shape
@@ -31,12 +30,15 @@ limb = geo.smooth(LIMB[0], LIMB[1], g['mu']).astype(np.float32) * hit
 day = geo.smooth(NIGHT[0], NIGHT[1], g['ndl']).astype(np.float32)
 m3 = hit[..., None]
 ratio_wide = geo.blur(alb * m3, TONE) / np.maximum(geo.blur(base * m3, TONE), 1e-4)
-soft = np.clip(geo.blur(alb * m3, SOFT) / np.maximum(geo.blur(base * m3, SOFT), 1e-4), 0.3, 3.0)
-night = base * soft
+dark = g['hit'] & (g['ndl'] < -0.25) & (g['mu'] > 0.3)
+level = float(np.median(alb[dark] @ geo.LUMA) / np.median(base[dark] @ geo.LUMA))
+print('night level of the hero against the guide', round(level, 3))
+night = base * level
 mixed = alb * day[..., None] + night * (1 - day[..., None])
-tone = np.clip(ratio_wide, 0.4, 2.5).astype(np.float32)
+wide = geo.blur(day, 24)[..., None]
+tone = (np.clip(ratio_wide, 0.4, 2.5) * wide + level * (1 - wide)).astype(np.float32)
 code = geo.to_srgb(geo.film(mixed))
-del seen, lit, alb, base, night, mixed, soft, ratio_wide
+del seen, lit, alb, base, night, mixed, ratio_wide
 out = np.zeros((H8, W8, 3), np.uint8)
 wsum = 0.0
 for y0 in range(0, H8, 256):

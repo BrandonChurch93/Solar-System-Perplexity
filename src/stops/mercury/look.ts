@@ -12,6 +12,10 @@ export const light: GlobeLight = {
   reliefNear: 0.012,
   reliefDay: 0.008,
   reliefRange: [0.1, 0.45],
+  nightFlat: 0.2,
+  nightDetail: 0.3,
+  nightVeil: 0.4,
+  nightVeilFrom: 0.75,
   edge: 1.2,
   rim: { color: [0.0169, 0.0144, 0.0113], width: 0.012, wide: 0.05, wideGain: 1.67 },
 }

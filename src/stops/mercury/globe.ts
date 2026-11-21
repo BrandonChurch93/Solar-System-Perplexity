@@ -13,6 +13,10 @@ export interface GlobeLight {
   reliefNear: number
   reliefDay: number
   reliefRange: [number, number]
+  nightFlat: number
+  nightDetail: number
+  nightVeil: number
+  nightVeilFrom: number
   edge: number
   rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
 }
@@ -86,6 +90,7 @@ uniform vec3 uLimb[17];
 uniform float uLimbTo;
 uniform vec3 uNight;
 uniform vec4 uRelief;
+uniform vec4 uNightFlat;
 uniform vec2 uReliefRange;
 uniform float uEdge;
 uniform vec3 uRimColor;
@@ -175,8 +180,9 @@ ${PATCH_LEVELS}
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
-  vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * limbAt(mu) * (1.0 + lift) + uNight;
-  vec3 col = inverseFilmic(albedo) * shade * uTint;
+  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * limbAt(mu) * (1.0 + lift);
+  vec3 ground = inverseFilmic(albedo);
+  vec3 col = (ground * lit + mix(vec3(uNightFlat.x), ground, uNightFlat.y) * uNight * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   vec4 beauty = vec4((col * cov + rim) * k, cov);
@@ -235,7 +241,7 @@ export class Globe {
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) },
-        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
+        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },

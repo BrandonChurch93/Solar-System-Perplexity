@@ -1,7 +1,7 @@
 import wrapJson from './wrap.json'
 
 export const wrap = {
-  height: false,
+  height: true,
   sets: {
     full: { color: wrapJson.color.full as [number, number], height: wrapJson.height.full as [number, number] },
     web: { color: wrapJson.color.web as [number, number], height: wrapJson.height.web as [number, number] },
