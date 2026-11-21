@@ -134,7 +134,7 @@ Shared inputs:
 
 - Output: 4096 x 2304 and 2048 x 1152, WebP 95 and 92.
 - Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/sky.py` after `plate.py` (no model, no prompt).
-- Steps: the canvas minus the plate (what is left above the horizon is stars and the Milky Way), mirrored about a line 2.1 deg (centre) to 4.6 deg (sides) above the limb so the card has no edge behind the limb, and dimmed by up to 0.55 inside the loop mask within 3 deg of the limb, where the mirrored fill was brighter than the approved sky.
+- Steps: the canvas minus the plate (what is left above the horizon is stars and the Milky Way). Below a line 2.1 deg (centre) to 4.6 deg (sides) above the limb the card is filled so it has no edge behind the limb: the low-pass (Gaussian, 24 px) is mirrored about the line and the fine detail (stars) is taken from 160 px to the side, so no star is mirrored. The whole card is then multiplied by a near limb factor (0 below 0.5 deg, 0.9 at 1.7 deg, 1 from 4.5 deg up) and by 1 minus 0.25 of the loop mask, because the set's own glow and flames already carry the light near the limb (measured on frame 90 against the approved in bands of elevation, `out/work/sun/skyband.py`).
 - Check: `out/work/sun/sky-terrain-check.jpg`, the limb crop of frame 90.
 
 ### src/stops/sun/terrain.json

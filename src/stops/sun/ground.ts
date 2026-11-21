@@ -142,7 +142,7 @@ void main() {
   vec2 gb = stImage(vStage);
   for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
     vec2 far = stImage(stLimbDir(ray, c1, el));
-    col = mix(col, inverseFilmic(grade(textureLod(uPlate, stPlate(far), uLod).rgb, 0.0)), limb);
+    col = mix(col, inverseFilmic(textureLod(uPlate, stPlate(far), uLod).rgb), limb);
     gb = mix(gb, far, limb);
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));

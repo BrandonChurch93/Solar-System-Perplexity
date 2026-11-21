@@ -160,14 +160,6 @@ export class SunPlan extends StopPlan {
     return time < this.switchTime ? { pose: this.local(path), view: 'terrain' } : { pose: path, view: 'orbit' }
   }
 
-  seen(kind: string, time: number): Pose | null {
-    const seg = this.seg
-    if (kind === 'rise') return this.path((time - seg.rise.start) / (seg.rise.end - seg.rise.start))
-    if (kind === 'hold') return this.hold(time - seg.hold.start)
-    if (kind === 'terrain') return this.terrain(time - seg.terrain.start)
-    return null
-  }
-
   override coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w) return 0

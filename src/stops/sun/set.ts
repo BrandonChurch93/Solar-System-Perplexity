@@ -57,9 +57,6 @@ export const createSet: SetFactory = async (ctx) => {
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
   const turn = new THREE.Quaternion()
-  const lock = new THREE.Matrix4()
-  const held = new THREE.Quaternion()
-  const half = (deg: number): number => Math.tan(THREE.MathUtils.degToRad(deg) / 2)
 
   return {
     id: plan.id,
@@ -73,15 +70,8 @@ export const createSet: SetFactory = async (ctx) => {
       const vignette = shot.post.vignette
       const kind = state.segment.kind
       const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : 1
-      const mid = (shot.frame + config.shutterFraction / 2) / config.fps
-      const now = view.samples > 1 && Math.abs(state.time - mid) > 1e-9 ? plan.seen(kind, state.time) : null
-      const then = now ? plan.seen(kind, mid) : null
-      held.identity()
-      if (now && then) held.copy(then.quaternion).invert().multiply(now.quaternion)
-      lock.makeRotationFromQuaternion(held)
-      const zoom = now && then ? half(now.vfov) / half(then.vfov) : 1
-      backdrop.update(shown, gain, vignette, aspect, lock, zoom)
-      backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect, lock, zoom)
+      backdrop.update(shown, gain, vignette, aspect)
+      backdropTerrain.update(inOrbit ? 0 : 1, gain, vignette, aspect)
       const burst = kind === 'rise' ? flare.amount(state.time - coverAt) : 0
       flare.update(inOrbit ? spotAt.copy(kernelBody).applyQuaternion(plan.turn(state.time)) : kernel, world, view.camera, burst, kind === 'rise' ? flare.cover(state.time - coverAt) : 0, gain, aspect)
       if (!inOrbit) {
