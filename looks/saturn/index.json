@@ -1,9 +1,31 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T05:28:38.143Z",
+ "pushed": "2026-11-21T05:41:00.562Z",
  "head": "97921950476bd2b57e13fbc773114ab8c119f07f",
- "note": "Saturn terrain view: ring band layout taken from the approved close image as a field on the ring plane, close light curve fitted; edges of the field and the globe colours still in work",
+ "note": "terrain view in progress: ring layout taken from the approved close image (field on the ring plane), soft shade map, close light curve; known: swirl at upper left being fixed, globe too orange, hooks at right edge",
  "looks": [
+  {
+   "time": "2026-11-21T05:40:59.908Z",
+   "file": "20261121054059908-note-pair-terrain-a7.jpg",
+   "source": "out/work/saturn/pair-terrain-a7.jpg",
+   "kind": "note",
+   "label": "terrain 3720 draft, approved above, film below: ring layout from the approved image as a field, close light curve fitted",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T05:39:59.800Z",
+   "file": "20261121053959800-frame-terrain.jpg",
+   "source": "out/work/saturn/terrain.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e44fa21a5a599a98"
+  },
   {
    "time": "2026-11-21T05:28:37.597Z",
    "file": "20261121052837597-note-profile-check-4.jpg",
@@ -49,33 +71,11 @@
    "engine": "e44fa21a5a599a98"
   },
   {
-   "time": "2026-11-21T05:27:14.089Z",
-   "file": "20261121052714089-frame-terrain.jpg",
-   "source": "out/work/saturn/terrain.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e44fa21a5a599a98"
-  },
-  {
    "time": "2026-11-21T05:11:03.640Z",
    "file": "20261121051103640-note-close-plan.jpg",
    "source": "out/work/saturn/close-plan.jpg",
    "kind": "note",
    "label": "approved close image projected onto the fitted ring plane (plan view, camera at the magenta dot, hero ring radii as circles): bands are not circles about the globe",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T05:11:03.103Z",
-   "file": "20261121051103103-note-pair-terrain.jpg",
-   "source": "out/work/saturn/pair-terrain.jpg",
-   "kind": "note",
-   "label": "terrain 3720 draft under the approved close image: inner ring disc drawn over the globe, light and shadow not fitted yet",
    "stop": "saturn"
   },
   {
