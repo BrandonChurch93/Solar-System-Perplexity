@@ -18,6 +18,7 @@ import lightJson from './light.json'
 import ringsJson from './rings.json'
 import shadowJson from './shadow.json'
 import skyJson from './sky.json'
+import { Streak } from './streak'
 import { Titan } from './titan'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -81,9 +82,12 @@ export const createSet: SetFactory = async (ctx) => {
   const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uPolarW: polarW, uPolarShape: poseW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
   const rings = new Rings(profile, layout, { ...skimShot, ...ringMap }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
-  const ice = new Ice(look.ice, polar, { ...profile, ...layout })
+  const ice = new Ice(look.ice, polar, { ...profile, ...layout }, skimM, skimShow)
   ;(ice.material.uniforms.uSkimL!.value as THREE.Vector3).copy(skimL)
   tilt.add(ice.mesh)
+
+  const streak = new Streak(look.streak)
+  world.add(streak.mesh)
 
   const moonFit = fit.moons![0]!
   const titan = new Titan(moonFit.radius, look.titan)
@@ -96,7 +100,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const [view, def] of Object.entries(skyJson)) {
     const wide = 1 + 2 * def.margin
     const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time, v) => plan.patchWeight(time, v) })
+    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide, weight: (time, v) => plan.patchWeight(time, v) * look.patchShow })
   }
 
   const toTerrain = plan.terrainFrame.clone().invert()
@@ -206,8 +210,13 @@ export const createSet: SetFactory = async (ctx) => {
       ;(iu.uCamL!.value as THREE.Vector3).copy(camL)
       ;(iu.uShadowL!.value as THREE.Vector3).copy(shadowL)
       ;(iu.uView!.value as THREE.Vector2).set(view.format.width, view.format.height)
-      iu.uTime!.value = elapsed
       iu.uGain!.value = gain * state.weight * iceW
+
+      const ku = streak.material.uniforms
+      const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
+      ;(ku.uTan!.value as THREE.Vector2).set(half * view.format.width / view.format.height, half)
+      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain
+      streak.mesh.visible = inOrbit && poseW.value > 0
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       titan.mesh.position.copy(moonHome).applyQuaternion(turn)
@@ -230,6 +239,7 @@ export const createSet: SetFactory = async (ctx) => {
       rings.dispose()
       ice.dispose()
       titan.dispose()
+      streak.dispose()
       far.dispose()
     },
   }

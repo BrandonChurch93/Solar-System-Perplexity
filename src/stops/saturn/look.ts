@@ -5,6 +5,7 @@ import fitted from './curve.json'
 import type { GlobeLook } from './globe'
 import type { IceLook } from './ice'
 import type { RingLook } from './rings'
+import type { StreakLook } from './streak'
 import type { TitanLook } from './titan'
 
 export const globe: GlobeLook = {
@@ -86,34 +87,38 @@ export const rings: RingLook = {
 }
 
 export const ice: IceLook = {
-  count: 20000,
-  box: [1.3, 0.34, 0.004],
-  heightPower: 1.6,
-  blur: 1.2,
-  radius: [0.85, 46],
-  near: [0.012, 0.035],
-  energy: 16,
-  dim: [0.85, 1.5],
-  energyPower: 5,
-  tint: [1, 0.93, 0.82],
-  glint: [3, 8],
-  drift: 0.004,
-  thin: 0.3,
-  thinRange: [0.1, 0.45],
+  count: 9000,
+  box: 2.4,
+  lift: 0.0004,
+  size: [0.00012, 0.00042],
+  radius: [0.45, 1.15],
+  floor: 0.42,
+  reach: [0.66, 1.0],
+  energy: [0.4, 9, 4],
+  tint: [1, 0.97, 0.93],
+  baked: [0.78, 0.98],
   heightRange: [0.5, 1],
-  dense: [0.04, 0.15],
-  eye: [0.14, 0.22],
   lod: 16,
 }
 
 export const titan: TitanLook = {
   day: [0.7, 0.245, 0.085],
   rim: [1.4, 0.72, 0.3],
-  night: [0.0008, 0.0006, 0.0006],
-  halo: [0.02, 0.011, 0.007],
-  haloHeight: 0.03,
+  night: [0.0022, 0.0026, 0.0027],
+  halo: [0.06, 0.035, 0.024],
+  haloHeight: 0.035,
   terminator: [0.02, 0.5],
   limb: 0.3,
+}
+
+export const streak: StreakLook = {
+  gain: 1,
+  upper: [0.775, 0.849, 0.0045, 0.006],
+  lower: [0.89, 0.8925, 0.0035, 0.004],
+  smudge: [0.823, 0.842, 0.012, 0.012],
+  warm: [1, 0.78, 0.62],
+  cool: [0.55, 0.75, 1],
+  blue: [0.08, 0.3, 1],
 }
 
 export const closeRange: [number, number] = [0.35, 1.6]
@@ -125,6 +130,7 @@ export const polarEdge: [number, number] = [1.46, 1.54]
 export const polarDensity: [number, number] = [1.0, 1.3]
 export const polarOuter: [number, number] = [0.012, 0.002]
 export const polarShow = 1
+export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
 export const shellSkim: [number, number, number] = [0.92, 0.86, 0.74]
