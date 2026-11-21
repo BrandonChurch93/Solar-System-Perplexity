@@ -1,9 +1,33 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T03:03:30.661Z",
- "head": "32bcacd6404b5e94ea20bb30152a870e738f8319",
- "note": "Neptune: studying the close image horizon and the hero, design of the cloud layer written to notes",
+ "pushed": "2026-11-21T03:15:51.700Z",
+ "head": "0a88dec6c186777ca92f0a9a83d2e6471262a19a",
+ "note": "orbit view: hero unprojected to the map, deck and cirrus separated; far side generation next",
  "looks": [
+  {
+   "time": "2026-11-21T03:15:29.619Z",
+   "file": "20261121031529619-note-sep_storm.jpg",
+   "source": "out/work/nep/wrap/sep_storm.jpg",
+   "kind": "note",
+   "label": "separation test in hero space at the storm",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T03:15:29.114Z",
+   "file": "20261121031529114-note-sepmap-all.jpg",
+   "source": "out/work/nep/wrap/sepmap-all.jpg",
+   "kind": "note",
+   "label": "map-space separation: hero map, cloud-free deck albedo, cirrus alpha",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T03:15:28.533Z",
+   "file": "20261121031528533-note-hero-map-small.jpg",
+   "source": "out/work/nep/wrap/hero-map-small.jpg",
+   "kind": "note",
+   "label": "hero unprojected to the band-aligned map window (2x hero)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-21T02:59:47.699Z",
    "file": "20261121025947699-note-hz_right.jpg",
@@ -29,14 +53,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-21T02:51:34.180Z",
-   "file": "20261121025134180-note-h_storm.jpg",
-   "source": "out/work/nep/h_storm.jpg",
-   "kind": "note",
-   "label": "approved hero, storm crop at native size x2 (study)",
-   "stop": "neptune"
-  },
-  {
    "time": "2026-11-21T02:45:05.435Z",
    "file": "20261121024505435-compare-compare-neptune-terrain-view.jpg",
    "source": "out/work/compare/compare-neptune-terrain-view.jpg",
@@ -51,39 +67,11 @@
    "engine": "cae3193a3821716c"
   },
   {
-   "time": "2026-11-21T02:45:04.320Z",
-   "file": "20261121024504320-still-f04860-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04860-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.terrain frame 4860, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
    "time": "2026-11-21T02:44:49.982Z",
    "file": "20261121024449982-compare-compare-neptune-hold-view.jpg",
    "source": "out/work/compare/compare-neptune-hold-view.jpg",
    "kind": "compare",
    "label": "neptune.hold: approved image left, film frame right, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T02:44:48.687Z",
-   "file": "20261121024448687-still-f04605-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04605-16x9-draft-full.png",
-   "kind": "still",
-   "label": "neptune.hold frame 4605, draft tier",
    "stop": "neptune",
    "segment": "neptune.hold",
    "frame": 4605,
