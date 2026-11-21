@@ -58,7 +58,7 @@ export const createSet: SetFactory = async (ctx) => {
   const spotBody = plan.spot.clone().applyQuaternion(globeTurn.clone().invert())
 
   const globe = new Globe({
-    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap,
+    map, mapWidth: wrap.sets[key].color[0], curve: look.curve, haze: look.haze, limb: limbMap, graze: look.graze, lift: look.lift,
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
@@ -72,6 +72,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ground = await CloudRelief.load(ctx, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const riseAt = plan.seg.rise.start + look.drift.riseAt * (plan.seg.rise.end - plan.seg.rise.start)
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
   const light = new THREE.Vector3()
@@ -108,6 +109,7 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = Math.min(Math.max(state.time - plan.holdMid, look.drift.from), look.drift.to)
+      const flowing = state.time > terrainMid ? Math.min(Math.max(state.time - riseAt, look.drift.from), look.drift.to) : elapsed
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
       for (let i = 0; i < amps.length; i++) amps[i] = ending ? 0 : look.flash(look.cells[i]!, state.time)
@@ -121,7 +123,7 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uLimbK!.value = look.limb.gain * (1 - low)
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
-      globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * elapsed, amps, gain, state.weight)
+      globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)
       let taps = 0
       const kind = state.segment.kind
       if (view.samples > 1 && state.segment.stop === plan.id && (kind === 'dive' || kind === 'rise') && plan.coverAmount(state.segment, state.time) < look.motion.hidden) {

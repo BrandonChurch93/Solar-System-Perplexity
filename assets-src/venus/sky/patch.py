@@ -11,7 +11,8 @@ MARGIN = 0.125
 HOLD_MARGIN = 0.25
 LIVE_SHADE = 0.85
 RIM = (1.008, 1.02)
-DARK = (0.010, 0.022, 7, 0.004)
+DARK = (0.006, 0.014, 7, 0.004)
+FAR = (0.2, 1.9, 160)
 
 
 def save(lin, name, out, ext=None):
@@ -94,6 +95,9 @@ def save_hold(lin, out, ext, live, cal):
     d = np.hypot(dx, dy)
     ramp = step(d, 0.1, 0.9)[..., None]
     sigma = 40
+    far = step(d, FAR[0], FAR[1])[..., None]
+    wash = np.stack([soft(wide[..., i], FAR[2]) / np.maximum(soft(plate[..., i], FAR[2]), 1e-5) for i in range(3)], -1)
+    plate = plate * np.clip(wash, 0.33, 3) ** (1 - far)
     low_h = np.stack([soft(wide[..., i], sigma) for i in range(3)], -1)
     low_l = np.stack([soft(plate[..., i], sigma) for i in range(3)], -1)
     low_e = np.stack([soft(gen[..., i], sigma) for i in range(3)], -1)
