@@ -12,6 +12,8 @@ PA = (2.0, 92.0)
 TOP = 0.27
 W, H = 2048, 384
 FLOOR = 0.004
+RED = (0.9, 1.8)
+CALM = 25
 
 
 def glow(look, h, at, turn):
@@ -74,6 +76,11 @@ def main():
     A = np.maximum(A, closed * 0.92)
     opened = np.stack([cv2.GaussianBlur(cv2.morphologyEx(A[..., i].astype(np.float32), cv2.MORPH_OPEN, k), (0, 0), 1.5) for i in range(3)], -1)
     A = np.minimum(A, opened * 1.1)
+    wide = cv2.GaussianBlur(A.astype(np.float32), (0, 0), 6.0)
+    glowing = 1 - geo.smooth(*RED, wide[..., 1] / np.maximum(wide[..., 0], 1e-5))
+    k3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (CALM, CALM))
+    calm = np.stack([cv2.GaussianBlur(cv2.morphologyEx(A[..., i].astype(np.float32), cv2.MORPH_OPEN, k3), (0, 0), CALM / 4) for i in range(3)], -1)
+    A = A * (1 - glowing[..., None]) + calm * glowing[..., None]
     soft = cv2.GaussianBlur(A.astype(np.float32), (0, 0), 2.5)
     r, gch, b = soft[..., 0], soft[..., 1], soft[..., 2]
     warm = np.maximum(gch, r * geo.smooth(0.02, 0.07, v)[:, None])

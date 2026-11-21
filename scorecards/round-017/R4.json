@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "rise, frames 3280 to 3287",
+   "what": "the globe pops to a different planet pose between these frames. At 3280 the bands run roughly horizontal, the globe is lit across its whole face and the limb is low-left. By 3287 the bands run vertical, the lower half sits in deep night shadow, and Io has jumped from near the spot's right side to below it. The rise does not reverse the dive, and the end of the stop does not match the hold it left (sheet-01: horizontal bands, lit face, Io to the right of the spot)",
+   "fix": "make the rise one continuous camera path that pulls back out to the hold framing, or keep the new end framing but carry the globe's orientation, the terminator and Io's position through the cover with no cut"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive, frames 3010 to 3019",
+   "what": "the speed jumps. The globe grows smoothly through 2986 to 3010, then fills the frame in 9 frames, so the approach goes from a slow push to a sudden lunge with no easing",
+   "fix": "ease the dive's acceleration across 2994 to 3019 so the scale change per frame rises gradually"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "cover exit into terrain, frames 3035 to 3043",
+   "what": "color and exposure break. The cover ends in a flat warm tan haze, and the terrain opens dark, high-contrast and blue-shadowed with a bright warm horizon glow, so the change in tone reads as a cut",
+   "fix": "carry the tan haze into the opening terrain frames and fade it out over 10 to 15 frames, or grade the cover's last frames toward the terrain's palette"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "terrain, frames 3060 to 3239, whole frame",
+   "what": "the terrain reads as a flat push-in on a single image. The vortex, the near cloud tops and the horizon arc all scale and slide together with no visible parallax between foreground and horizon, so the view has little depth",
+   "fix": "build the terrain in layers (near cloud tops, mid vortex, far limb) or as 3D geometry, and move the camera so near features sweep past faster than the horizon"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "terrain to rise cover, frames 3240 to 3253",
+   "what": "exposure climbs fast. The terrain brightens and lifts toward pale tan over about 13 frames before the blur starts, which looks like a fade-to-white crossfade rather than the camera climbing through cloud",
+   "fix": "tie the haze and exposure ramp to camera altitude and spread it over a longer stretch"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "vortex flow, frames 3060 to 3239",
+   "what": "the vortex barely rotates. Its spiral arms keep the same arrangement for about 180 frames and only scale up, so the storm reads as frozen",
+   "fix": "add a slow, steady counter-clockwise rotation and a gentle flow advection to the storm bands"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold, Great Red Spot and bands, frames 2820 to 2969",
+   "what": "the globe shows no visible rotation. The Great Red Spot and the band details stay fixed for 150 frames while Io moves, so the globe looks painted on",
+   "fix": "rotate the globe at a slow but visible rate so the spot drifts a few pixels across the hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "dive cover, frames 3019 to 3022",
+   "what": "the limb swings from the left edge to an arc across the top in about 3 frames, a quick flip in the camera's direction inside the blur",
+   "fix": "smooth the camera's roll and pitch through the cover so the limb's angle rotates progressively"
+  }
+ ]
+}
