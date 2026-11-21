@@ -20,10 +20,11 @@ CROP = 640
 APRON_OUT = (5504, 1548)
 APRON_CROP = 688
 APRON_FIT = (0.36, 0.6, 0.1, 0.9)
-APRON_TONE = 600
+APRON_LANES = (6, 0.8, 0.5, (0.85, 1.05, 1.25), 4, 0.6, 16)
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
 APRON_CANVAS = (1920, 1080)
+APRON_NET = (5.5, 9.0, 640, 1.6, 2.0, 2)
 
 
 def band(a, lo, hi):
@@ -209,6 +210,35 @@ def apron_grey(base):
     print('wide', wide, 'grey share', round(float(grey.mean()), 3), 'first grey row inside the picture', int(ys.min()), 'approved frame in this picture: columns', int(cols.min()), int(cols.max()), 'rows', int(rows.min()), int(rows.max()))
 
 
+def apron_net(img):
+    from skimage.segmentation import watershed, find_boundaries
+    from skimage.feature import peak_local_max
+    h, w = img.shape[:2]
+    lum = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255
+    top, bottom, row, apart, fine, width = APRON_NET
+    t = np.clip((np.arange(h) - row) / (h - row), 0, 1)[:, None].astype(np.float32)
+    lv = [cv2.GaussianBlur(lum, (0, 0), s) for s in (top, (top + bottom) / 2, bottom)]
+    x = np.where(t < 0.5, lv[0] + (lv[1] - lv[0]) * t * 2, lv[1] + (lv[2] - lv[1]) * (t * 2 - 1))
+    peaks = peak_local_max(x, min_distance=int(top * apart), exclude_border=False)
+    marks = np.zeros((h, w), np.int32)
+    marks[peaks[:, 0], peaks[:, 1]] = np.arange(len(peaks)) + 1
+    cells = watershed(-(0.5 * x + 0.5 * cv2.GaussianBlur(lum, (0, 0), fine)), marks)
+    lines = find_boundaries(cells, mode='inner')
+    return cv2.dilate(lines.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (width, width))) > 0, cells
+
+
+def apron_sketch(base):
+    apron_grey(base)
+    img = read(f'{DIR}/apron-base.png')
+    grey = cv2.cvtColor(read(f'{DIR}/apron-grey.png'), cv2.COLOR_RGB2GRAY) > 0
+    lines, cells = apron_net(img)
+    out = read(f'{DIR}/apron-input.png')
+    out[grey & lines] = 25
+    write(f'{DIR}/apron-input.png', out)
+    write(f'{DIR}/apron-lines.png', np.repeat(((grey & lines) * 255).astype(np.uint8)[..., None], 3, -1))
+    print('cells in the grey area', len(np.unique(cells[grey])), 'across the bottom row', len(np.unique(cells[-3])))
+
+
 def apron_place(take):
     base = read(f'{DIR}/apron-base.png')
     h, w = base.shape[:2]
@@ -238,7 +268,6 @@ def apron_build(out_full, out_web, check):
     base = read(f'{DIR}/apron-base.png')
     h, w = base.shape[:2]
     info = json.load(open(f'{DIR}/apron-place.json'))
-    tw, th = cv2.imread(info['take']).shape[1::-1]
     up = read(f'{DIR}/apron-take-low-x2.png')
     ow, oh = APRON_OUT
     s = ow / w
@@ -247,17 +276,34 @@ def apron_build(out_full, out_web, check):
     sx, sy = up.shape[1] / w, (up.shape[0] + 2 * APRON_CROP) / h
     u = np.array([[sx, 0, 0.5 * sx - 0.5], [0, sy, 0.5 * sy - 0.5 - 2 * APRON_CROP], [0, 0, 1]])
     full = (u @ m @ a)[:2]
-    print('apron px a take px', round(float(1 / full[0, 0]), 4), round(float(1 / full[1, 1]), 4), 'take size', tw, th)
+    print('apron px a take px', round(float(1 / full[0, 0]), 4), round(float(1 / full[1, 1]), 4))
     take = cv2.warpAffine(up, full, (ow, oh), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT_101).astype(np.float32) / 255
     del up
-    b = cv2.warpAffine(base, a[:2], (ow, oh), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE).astype(np.float32) / 255
+    b = read(f'{DIR}/apron-base-low-x.png').astype(np.float32) / 255
+    assert b.shape[:2] == (oh, ow)
+    grey = cv2.cvtColor(read(f'{DIR}/apron-grey.png'), cv2.COLOR_RGB2GRAY).astype(np.float32) / 255
+    grey = cv2.warpAffine(grey, a[:2], (ow, oh), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
+    sigma, gain, crown, tint, soft, lift, tone = APRON_LANES
+    grey = np.clip(cv2.GaussianBlur(grey, (0, 0), soft * s) * 2 - 1, 0, 1)
+    key = np.array([0.299, 0.587, 0.114], np.float32)
 
     def low(x, sig):
-        q = 8
+        q = 4
         small = cv2.resize(x, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
         return cv2.resize(cv2.GaussianBlur(small, (0, 0), sig / q), (ow, oh), interpolation=cv2.INTER_CUBIC)
 
-    out = take * (low(b, APRON_TONE) + FLOOR) / (low(take, APRON_TONE) + FLOOR)
+    lt = take @ key
+    e = np.log((lt + FLOOR) / (low(lt, sigma * s) + FLOOR))
+    del take, lt
+    lb = b @ key
+    band = low(lb, 2.5 * s) - low(lb, 10 * s)
+    band /= np.sqrt(low(band * band, 30 * s)) + 1e-4
+    e *= gain * grey * np.where(e < 0, 1 - crown * np.clip(band / 1.2, 0, 1), lift)
+    del band, lb
+    out = b * np.exp(e[..., None] * np.where(e[..., None] < 0, np.array(tint, np.float32), 1))
+    del e
+    for ch in range(3):
+        out[..., ch] *= (low(b[..., ch], tone * s) + FLOOR) / (low(out[..., ch], tone * s) + FLOOR)
     q = 4
     small = cv2.resize(b, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
     top = cv2.dilate(small, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (APRON_PEAK[0] // q, APRON_PEAK[0] // q)))
@@ -265,22 +311,6 @@ def apron_build(out_full, out_web, check):
     out -= np.maximum(out - top, 0) * APRON_PEAK[1]
     del top, small
     np.clip(out, 0, 1, out=out)
-    ref = b[int(0.12 * oh)::3, ::3].reshape(-1, 3)
-    bins = np.linspace(0, 1, HUE[0] + 1)
-    mid = (bins[:-1] + bins[1:]) / 2
-    idx = np.clip(np.digitize(ref[:, 0], bins) - 1, 0, HUE[0] - 1)
-    red = out[..., 0]
-    for ch in (1, 2):
-        lo_, hi_ = np.full(HUE[0], np.nan), np.full(HUE[0], np.nan)
-        for i in range(HUE[0]):
-            sel = ref[idx == i]
-            if len(sel) > 200:
-                rr = sel[:, ch] / np.maximum(sel[:, 0], 1e-3)
-                lo_[i], hi_[i] = np.percentile(rr, HUE[1]), np.percentile(rr, 100 - HUE[1])
-        ok = ~np.isnan(lo_)
-        lo_ = np.interp(mid, mid[ok], lo_[ok])
-        hi_ = np.interp(mid, mid[ok], hi_[ok])
-        out[..., ch] = np.clip(out[..., ch], red * np.interp(red, mid, lo_).astype(np.float32), red * np.interp(red, mid, hi_).astype(np.float32))
     sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
     res = b + (out - b) * sky
     write(out_full, res, 92)
@@ -299,6 +329,8 @@ if __name__ == '__main__':
         compose(*sys.argv[2:5])
     if cmd == 'apron-grey':
         apron_grey(sys.argv[2])
+    if cmd == 'apron-sketch':
+        apron_sketch(sys.argv[2])
     if cmd == 'apron-place':
         apron_place(sys.argv[2])
     if cmd == 'apron-build':
