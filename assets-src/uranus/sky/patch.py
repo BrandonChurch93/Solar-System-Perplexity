@@ -22,6 +22,7 @@ SHIFT = 700
 SEAM = 28
 RING_ZONE = (1.9, 2.02)
 RING_FILL = 0.0
+BAND = (0, 1800, 1.04, 2.05, 81, 201)
 RIM = (1.008, 1.02)
 MOONS = [(671.7, 343.9, 29.06), (2425.5, 444.2, 24.0)]
 LUMA = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
@@ -94,6 +95,7 @@ def along(img):
         best[better] = meds[0][better]
         for c in range(3):
             out[..., c][better] = meds[c + 1][better]
+    np.save('out/work/u/sky/along-polar.npy', out)
     thin = np.stack([out[..., c] - ndi.grey_opening(out[..., c], size=(THIN, 1)) for c in range(3)], -1)
     rays = geo.rays()
     t = -(geo.CAM @ n) / (rays @ n)
@@ -108,6 +110,34 @@ def along(img):
     ok = (t > 0) & (r > R0) & (r < R1)
     line[~ok] = 0
     return back, np.maximum(line, 0), ok
+
+
+def band(img, own):
+    nr, nt, r0, r1, across, around = BAND
+    n, e1, e2 = basis()
+    th = (np.arange(nt) + 0.5) / nt * 2 * np.pi
+    rr = r0 + (np.arange(nr) + 0.5) / nr * (r1 - r0)
+    A, TH = np.meshgrid(rr, th, indexing='ij')
+    P = A[..., None] * (np.cos(TH)[..., None] * e1 + np.sin(TH)[..., None] * e2)
+    px, py = geo.project(P)
+    px, py = px.astype(np.float32), py.astype(np.float32)
+    seen = cv2.remap(own.astype(np.float32), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) > 0.98
+    D = np.zeros((nr, nt, 3), np.float32)
+    for c in range(3):
+        v = cv2.remap(np.ascontiguousarray(img[..., c]), px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        smooth = ndi.gaussian_filter(ndi.median_filter(v, size=(across, 1), mode='nearest'), (across / 8, 0))
+        D[..., c] = ndi.gaussian_filter(ndi.median_filter((v - smooth) * seen, size=(1, around), mode='wrap'), (0, 4), mode='wrap')
+    rays = geo.rays()
+    t = -(geo.CAM @ n) / (rays @ n)
+    Q = geo.CAM + rays * t[..., None]
+    r = np.linalg.norm(Q, axis=-1)
+    ang = np.mod(np.arctan2(Q @ e2, Q @ e1), 2 * np.pi)
+    row = ((r - r0) / (r1 - r0) * nr - 0.5).astype(np.float32)
+    col = (ang / (2 * np.pi) * nt - 0.5 + 2).astype(np.float32)
+    wrap = np.concatenate([D[:, -2:], D, D[:, :2]], 1)
+    out = cv2.remap(wrap, col, row, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT)
+    out[~((t > 0) & (r > r0) & (r < r1))] = 0
+    return out * own[..., None]
 
 
 def low(v):
@@ -219,6 +249,10 @@ def hold(hero, fill, glow, out):
     for mx, my, mr in MOONS:
         moon *= step(np.hypot(xx - mx, yy - my), mr + 5, mr + 12)
     own = ndi.gaussian_filter(own * moon, 3)
+    if BAND[0] > 0:
+        b = band(sky, own)
+        np.save('out/work/u/sky/band.npy', b)
+        sky = np.maximum(sky - b, 0)
     ring = (d > 1.1) & (d < 1.9) & (own > 0.98)
     gain = np.array([np.minimum(sky[..., i], 0.2)[ring].mean() / max(np.minimum(f[..., i], 0.2)[ring].mean(), 1e-6) for i in range(3)])
     near = (own > 0.98).astype(np.float32)

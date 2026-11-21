@@ -14,7 +14,9 @@ import tgeo as T
 
 WORK = 'out/work/u/t/'
 PUB = 'public/assets/uranus/'
-FAR = {'full': (4096, 2048), 'web': (2048, 1024)}
+FAR = {'full': (8192, 4096), 'web': (4096, 2048)}
+FAR_BASE = (4096, 2048)
+FAR_FINE = 0.003
 HEIGHT = (1024, 512)
 CLOUD_HEIGHT = 0.07
 WIDE_SMALL = WORK + 'plate/wide-canvas.png'
@@ -122,7 +124,7 @@ def noise_tile(seed, n=1024):
     return (t / t.std()).astype(np.float32)
 
 
-def streaks(x, z, angle, seed):
+def streaks(x, z, angle, seed, finest=0.012):
     ca, sa = np.cos(angle), np.sin(angle)
     along = x * ca + z * sa
     across = -x * sa + z * ca
@@ -131,7 +133,7 @@ def streaks(x, z, angle, seed):
     amp = 1.0
     total = 0.0
     k = 0
-    while lam > 0.012:
+    while lam > finest:
         tile = noise_tile(seed + k)
         n = tile.shape[0]
         warp = 0.35 * lam * np.sin(along / (lam * 9.0) + 1.7 * k)
@@ -191,7 +193,7 @@ def main():
     full.resize((sky_fill.shape[1] // 2, sky_fill.shape[0] // 2), Image.LANCZOS).save(PUB + 'web/deck-color.jpg', quality=91, subsampling=0)
     full.resize((1408, 792), Image.LANCZOS).save(WORK + 'deck-color-v.jpg', quality=88)
 
-    fw, fh = FAR['full']
+    fw, fh = FAR_BASE
     jj, ii = np.meshgrid((np.arange(fw) + 0.5) / fw, (np.arange(fh) + 0.5) / fh)
     spsi = (jj * 2 - 1) * T.PSI_MAX
     s = T.S0 * np.exp(ii * np.log(T.S1 / T.S0))
@@ -243,8 +245,28 @@ def main():
     far = real * w + syn_rgb * (1 - w)
     print('synth amount', amount, 'real fraction', float(inside.mean()))
 
-    enc = np.sqrt(np.clip(far / A_MAX, 0, 1))
-    img = Image.fromarray((enc * 255 + 0.5).astype(np.uint8)[::-1])
+    gw, gh = FAR['full']
+    enc = np.zeros((gh, gw, 3), np.uint8)
+    rows = 256
+    for r0 in range(0, gh, rows):
+        r1 = min(r0 + rows, gh)
+        jf, kf = np.meshgrid((np.arange(gw) + 0.5) / gw, (np.arange(r0, r1) + 0.5) / gh)
+        psf = (jf * 2 - 1) * T.PSI_MAX
+        sf = T.S0 * np.exp(kf * np.log(T.S1 / T.S0))
+        spf = T.surface(psf, sf)[0]
+        pxf, pyf, _ = T.project_wide(spf, AW, AH)
+        realf = cv2.remap(a_img.astype(np.float32), (pxf - 0.5).astype(np.float32), (pyf - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        xf, zf = sf * np.sin(psf), sf * np.cos(psf)
+        mu = (jf * fw - 0.5).astype(np.float32)
+        mv = (kf * fh - 0.5).astype(np.float32)
+        up = lambda v: cv2.remap(np.ascontiguousarray(v.astype(np.float32)), mu, mv, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+        lf = up(base) + amount * streaks(xf, zf, angle, 11, FAR_FINE)
+        tf = streaks(xf, zf, angle, 301, FAR_FINE)
+        synf = np.stack([np.exp(line[c][1] + line[c][0] * lf) * (1 + (0.03, 0.01, -0.01)[c] * tf) for c in range(3)], -1)
+        wf = np.clip(up(w[..., 0]), 0, 1)[..., None]
+        fine = realf * wf + synf * (1 - wf)
+        enc[r0:r1] = (np.sqrt(np.clip(fine / A_MAX, 0, 1)) * 255 + 0.5).astype(np.uint8)
+    img = Image.fromarray(enc[::-1])
     img.save(PUB + 'full/deck-far.jpg', quality=93, subsampling=0)
     img.resize(FAR['web'], Image.LANCZOS).save(PUB + 'web/deck-far.jpg', quality=92, subsampling=0)
     img.resize((2048, 1024), Image.LANCZOS).save(WORK + 'deck-far-view.jpg', quality=88)
