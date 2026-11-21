@@ -523,6 +523,13 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - `samples` at review tier on the merged tree, turn 12. Dive: 17.7 px at 3005, 58 at 3010, at the cap (128) 3011 to 3019, peak 204.9 px at 3016 (1.6 px per step), 3020 115 samples, 3023 16. Rise: under the cover 309 px at 3270 (in view 0.9), at the cap 3274 to 3283 (154 px to 83 px, 1.2 to 0.65 px per step), 3287 45 px, 3290 26, 3294 11.9 (soft 0.14), 3296 7.8 (soft 0), 3300 2.9. At final tier (cap 154 px) only dive 3014 to 3018 sit at the cap (0.65 to 0.8 px per step).
 - 16:03: chain of review sheets started on the merged tree (`/tmp/sheets.sh`, log `/tmp/sheets.log`): rise, rise cover, dive, dive cover, terrain. No src edits while it runs.
 
+### 16:05 to 16:35 UTC: review sheets on the merged tree, frame by frame
+
+- Mail (16:08, from /root, low): main is at bf74284, engine hash unchanged f854c8146f64c7e4; only `tests/motion.test.ts` changed (a plan may now set `coverHides`). Merged at once (3e7bf0c, no src change, renders unaffected).
+- Costs at review tier after batch 15: about 55 s for a 16 sample frame of the terrain set, 4 min for a 128 sample globe frame. Rise sheet 16 min, rise cover sheet about 23 min. A copier (`/tmp/copier.sh`) saves every frame of the sheets at 1920 x 1080 to `out/work/view/rev3/`.
+- Rise sheet (`jupiter.rise-16x9-review.png`, pushed to looks 16:19): 3240 to 3260 a climb into haze with the storm fading (no lift to white), 3267 tan cover with a soft warm glow on the left horizon (native crop: soft, no edge), 3274 smooth tan limb under the cover (no stepped copies), 3280 the globe with the Red Spot, bands near level, 3287 the whole disc with Io and the terminator, 3294 to 3314 settled. The sky goes dark under the cover 3266 to 3273 exactly as in the round 2 sheet (the engine's, `before/rise-cover-review-r2.png`).
+- Rise cover frames 3265 to 3274: the storm shows through the haze with streaks at 3265, tan from 3267. The limb silhouette turns under the cover: planet axis on screen 82 deg at 3270, 60, 43, 30, 20, 12, 6, 1.6 at 3277, -1.7 at 3278 (22 deg per frame falling to 3). With `turn 8` the turn would be spread (15 deg per frame falling to 5) but 8 deg would be left at 3278 and 1.3 at 3280. Kept `turn 12`: the roll belongs under the cover, the clear frames are within 7 deg of the final tilt.
+
 ## Next
 
 - Look at every frame of the five review sheets (`out/work/sheets/jupiter.<seg>[-cover]-16x9-review.png`); `coverHides` only if a cover shows stepped copies through it.
