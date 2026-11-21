@@ -51,6 +51,7 @@ export const shell: HazeParams = {
 export const rings: RingLook = {
   shadowFloor: [0.0075, 0.0095, 0.0125],
   floorAlpha: 0.93,
+  floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
   unlit: 0.12,
   lodBias: 1.2,

@@ -184,3 +184,33 @@ One world, true 3D, for all four segments. Nothing switches between the orbit vi
 - G17 at this state: 3465 median 1.134 (p25 0.705, 71 tiles), 3720 median 1.015 (p25 0.804, 62 tiles). Pass. (Before: 1.167 and 1.289.)
 - Still different in the near left A ring (x 20 to 400, y 640 to 1080 of 1920): the approved image has crisper, darker grooves and pin-point sparkles; the film is softer there (shutter, 3 to 4 px per frame) and its sparkles are larger blobs.
 - Hold, lower-left limb (x 600 to 840, y 480 to 670 of 1920): the film has an orange-brown wedge about 30 px wide inside the limb with a sharp inner edge where the hero is cream to the limb with a thin darker rim; since the sky rebuild there is a lighter box left of the limb with a straight lower edge at y 512; stars in the gap between the C ring and the globe are brighter than in the hero. Next.
+
+## C ring over the globe in the hold (09:41 to 09:56)
+
+- Cause of the orange brown wedge inside the lower-left limb of the hold: the C ring was opaque (alpha 0.95 from the hero profile plus the floor 0.93), so its shadow on the globe was a hard dark band and the globe did not show through it. The lighter box left of the limb was the haze shell cut by the same sharp shadow.
+- Fix: `rings/build.py` arguments 2 and 3 (`C_THIN` 0.22, `C_END` 1.5): the hero alpha is scaled from 0.22 at the inner edge to 1 at radius 1.5. In the shader the alpha floor stays over the sky (stars hidden) and ramps from the inner edge to 1.5 where the view ray hits the globe (`floorRamp` in `look.ts`, `over` in `rings.ts`), faded out by `uClose`. Frame 3465 final: wedge gone, globe and limb show through the C ring; frame 3720 final byte identical.
+- `check/radial.py FILM [TURN_DEG] [OUT.jpg]`: radial cut at the left ansa of hero and film. The hero's rings are not concentric: outer edge (display 60) at -50, -25, 0, 25, 50 degrees from the left ansa 2.29, 2.324, 2.364, 2.378, 2.392 against the film's 2.328 to 2.344; B outer edge 1.968 to 1.94 against 1.946 to 1.964.
+- Engine batch 10 (811fbca) merged at 09:52: frames 3465 and 3720 at final byte identical before and after.
+
+## Round 13 result (09:57): R1 4, R3 6, R4 6, R2 fail 0 of 10 against 5 of 10, R8 pass
+
+Scorecard `scorecards/round-013/SUMMARY.md` on main. Two rounds left. Corrections, worst first:
+1. R2: both views read as real time or stock; rings perfectly regular lines without grain.
+2. R4 major: terrain 3630 to 3809 barely changes. Cross the bands toward the planet, globe grows, true 3D ice near the lens with depth of field. Sheet of every 15th frame: neighbours clearly differ.
+3. R1 severe, terrain junction: C ring and shadow band smeared, wavy black gap against the night side; R3: straight translucent wedge extends the limb into the rings.
+4. R1 severe, terrain terminator straighter and upright, night side re-lit, cyan grey night limb, doubled storm ovals, green yellow dots above the limb.
+5. R1 severe, hold: dark brown wedge at the lower-left limb, detached rim line (fixed above, to be judged).
+6. R1 major, hold framing: ring system too large, lower arc clipped more than the hero.
+7. Rings in every view: combed, no grain along the arcs, A ring too warm and bright, no Encke gap, F ring coloured dots, stripes too bright in the globe's shadow. Builder's advice: 2D maps unprojected from the approved images.
+8. Terrain: wide golden green glow off the lit limb.
+9. R3: globe in dive and rise airbrushed, polar hood without hexagon, vortex, spots; rust strip outside the limb at 3866.
+10. R4: dive 3572 to 3580 the globe's shadow on the rings vanishes in one step and Titan drops out; back at 3844 to 3850.
+11. Titan lit past half (hero: crescent about 38 percent), soft.
+12. Minors: lens streak of the hero missing, left ring horizon in the terrain view, F ring, Milky Way fades 3830 to 3850, crawl check on neighbouring frames.
+Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
+- Builder, 10:00: `kit/02-STOPS.md` fallback (relief for far and middle, true 3D ice near the lens, cover) must be prepared in parallel behind one flag in the plan; if R1 on 3720 is under 9 after round 2, round 3 runs on it. Say in READY how far it is.
+
+## Plan for round 2 (10:05)
+
+- Decision: both approved images become projected maps on the true geometry. Rings: the approved pixels projected from the fitted camera onto the ring plane (colour and a ring mask), at full strength where the image holds at least one texel per pixel, the 1D profile with grain everywhere else. Globe: a light map (approved image divided by the albedo, projected from the same camera, fixed in space) so the terminator and the night side are the approved ones; the table light stays outside the approved view.
+- Then: terrain flight across the bands toward the globe with 3D ice near the lens; dive shadow continuity; Titan phase.

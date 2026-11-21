@@ -23,6 +23,7 @@ export interface RingLook {
   sweep: number
   grainHero: number
   grainCell: [number, number]
+  floorRamp: [number, number]
   junction: number
   shadeTint: [number, number, number]
   shadeGrey: [number, number]
@@ -97,6 +98,7 @@ uniform vec2 uVeil;
 uniform float uSweep;
 uniform vec2 uGrain;
 uniform vec2 uGrainCell;
+uniform vec2 uFloorRamp;
 uniform vec3 uShadeTint;
 uniform vec2 uShadeGrey;
 uniform vec3 uHeroTone;
@@ -157,13 +159,21 @@ void main() {
     hidden = qd > 0.0 && -qb - sqrt(max(qd, 0.0)) > 0.0 && -qb - sqrt(max(qd, 0.0)) < qa;
   }
   bool top = disc || hidden;
+  float over = 0.0;
+  for (int k = 0; k < (uClose < 1.0 ? 1 : 0); k++) {
+    vec3 c = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
+    vec3 d = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - c;
+    float qa = dot(d, d);
+    float qb = dot(c, d);
+    over = qb < 0.0 ? smoothstep(0.0, 0.006, (qb * qb - qa * (dot(c, c) - 1.0)) / qa) : 0.0;
+  }
   if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
   float fr = length(vec2(dFdx(rp), dFdy(rp)));
   float texels = ringTexels(fr);
   vec4 s = profAt(x, texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose));
   float mu = abs(V.y);
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rp) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rp));
-  float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
+  float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rp), over * (1.0 - uClose))), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
   float swept = (1.0 - smoothstep(uVeil.x, uVeil.y, uClose)) * uSweep;
   float lift = smoothstep(-uJunction, uJunction, layoutDist + 2.0 * uJunction - swept);
   alpha = top ? 0.999 : alpha;
@@ -274,7 +284,7 @@ export class Rings {
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({
