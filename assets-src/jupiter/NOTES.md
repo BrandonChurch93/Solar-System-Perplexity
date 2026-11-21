@@ -429,6 +429,23 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - The deck's relief is tiny: heights of the displaced mesh are -0.05 to +0.05 units (std 0.015) with the camera 1 unit up. One plane moves as a homography, which is exactly "a flat picture". Rung 1 was never really climbed.
 - Plan: (a) `look.deck.depth`: scale the relief at load (`dist = hit * (dist/hit)^k`, judged frame unchanged by construction), try k 3 to 5 and look for stretch at the tower silhouettes; (b) a wider sideways arc with counter yaw in an own `terrain()` so the foreground, the storm and the horizon slide against each other; (c) faster storm rotation; (d) haze between layers only if (a) to (c) leave time.
 
+### Items 5 and 7, covers; item 6, terrain depth: first take (13:40 to 13:58)
+
+- Strips of the READY head state: `strip_exit_r3a.jpg` (3024 to 3060: flat tan to 3033, half open at 3036, clear by 3042, so the whole reveal is 8 frames and the bright cloud tips poke through first) and `strip_gather_r3a.jpg` (3249 clean, 3252 pale, 3258 thick, 3264 flat tan: 12 frames, and it lifts the blacks, which is the fade to white the critic names).
+- Deck haze now follows altitude, not time (`set.ts`): `fall = (alt - alt(3060)) / (alt(dive cut) - alt(3060))`, density `haze.clear[0] * fall^clear[1]` (2.3, 1.8); on the way out `climb = (alt - alt(3240)) / (alt(rise cut) - alt(3240))`, density `gather[0] * climb^gather[1]` (1.4, 1.0). Altitudes: 3024 1.497, 3030 1.389, 3036 1.303, 3042 1.236, 3048 1.190, 3060 1.147; 3239 0.795, 3248 0.845, 3254 1.009, 3260 1.295, 3266 1.714, 3269 1.975 (before the new terrain path).
+- Haze colour takes the scene's own masses (`haze.tone [6, 0.6, 1.0]`: level 6 of the wide map through the inverse tone curve, weight 0.6 against the tan), so the haze keeps the warm bright horizon and the dark blue lower right while the detail goes: no lift to pale tan.
+- Pall `clear 0.8` to `0.6`: the screen pall is gone by 3036 and the altitude haze carries the thinning to about 3052. `coverRush.contrast [0.45, 0.3]` to `[0.8, 0.5]` (more billow structure inside both covers).
+- Item 6 (a): `look.deck.depth 3`: relief exaggerated along the judged camera's rays (`dist = hit * (dist / hit)^3`), judged frame unchanged by construction.
+- Item 6 (b): terrain path `forward 1.0, rise 0.22, side -1.0, yawDeg -9, pitchDeg -5` (was 1.05, 0.2, -0.5, 3, -3) plus `glide.bankDeg 7` (roll `7 * u` in an own `terrain()`; the swoop gets the same roll over its last 0.8 s through an own `dive()`, conjugated with the entry turn so the cut is exact; the rise adds `lean(c)`). Horizon line at the cuts (`out/work/jupiter/tools/cut.ts`): dive 13.20 against 13.43 deg, rise -9.53 against -9.17 deg. Mesh border never in frame 3024 to 3269 (`relief/edge.ts`). Screen positions 3060 / 3150 / 3239 (`par.ts`): storm (758, 429) (772, 377) (831, 305), far horizon centre (1039, 334) (1023, 287) (1010, 213), near centre (790, 897) (959, 1022) (1611, 1493); before: storm 731 to 839, far 989 to 1073 (both drifting right together), near 832 to 1424. Altitude 1.189 to 0.738 (was 1.147 to 0.795): texels at the exit to be checked.
+- Item 6 (c): Red Spot `degPerSecond 9` to `14`, wisp 18 to 23.
+- Strip `strip_mix_r3a.jpg` (24 drafts 3021 to 3272) rendering.
+
+### Item 2, Io and its shadow: measured against the hero (13:50)
+
+- Io along 0 deg at x/R 0.5, 0.6, 0.7, 0.8: hero (168 128 65) (105 76 34) (47 39 21) (9 8 4); WIP (141 85 26) (96 48 15) (54 15 5) (28 8 4). The levels are close, the hue is not: our terminator zone stays saturated red orange (G/R 0.6 falling to 0.28) where the hero goes olive brown (G/R 0.76 to 0.83), and the night limb keeps R 28 against 9. That is the "reddish orange band".
+- Shadow edge, vertical cuts at x 1075 to 1135: the hero falls from 88 to 18 inside 3 px; ours takes 6 to 9 px. Edge position within 2 px.
+- Patch ready (`/tmp/patch_io.py`): `io.dusk [1.626, 0.894, 0.211, 0.6]` (albedo goes to its luminance times an olive tint as the light falls below 0.6), `io.ambient 0.003`, `io.term [0.3, 1.5]`, `io.crisp 0.6` (texture footprint factor: the 2048 map is sampled near level 3.2 at the hold, 0.6 brings it to about 2.5), `shadow [0.91, 0.99, 1.0]` (edge 0.08 of Io's radius, about 3 px).
+
 ## Next
 
 - Milestone message dive and rise after `strip_entry.jpg` and the texels views at 3060 and 3239 are checked.
