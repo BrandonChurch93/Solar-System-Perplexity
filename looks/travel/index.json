@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-21T05:36:17.962Z",
- "head": "8a4921b93a58d8ec00043471b87d411436501975",
- "note": "new travel camera, first draft sheets of all eight (turn spread over the segment, approach from zero rate)",
+ "pushed": "2026-11-21T05:49:05.046Z",
+ "head": "870dc6c79a80333472494f1837ec3d4ddc9e0d70",
+ "note": "ending: lookback with own sky aim, draft sheets of retreat, lookback, fade; review sheets of two travels",
  "looks": [
   {
-   "time": "2026-11-21T05:34:51.995Z",
-   "file": "20261121053451995-note-uranus.travel-draft.jpg",
-   "source": "out/work/travel/cam1/uranus.travel-draft.png",
+   "time": "2026-11-21T05:47:49.276Z",
+   "file": "20261121054749276-note-ending.fade-draft.jpg",
+   "source": "out/work/travel/end2/ending.fade-draft.png",
    "kind": "note",
-   "label": "cam1: contact sheet uranus.travel, draft tier",
+   "label": "end2: contact sheet ending.fade, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:34:22.900Z",
-   "file": "20261121053422900-note-saturn.travel-draft.jpg",
-   "source": "out/work/travel/cam1/saturn.travel-draft.png",
+   "time": "2026-11-21T05:47:18.942Z",
+   "file": "20261121054718942-note-ending.lookback-draft.jpg",
+   "source": "out/work/travel/end2/ending.lookback-draft.png",
    "kind": "note",
-   "label": "cam1: contact sheet saturn.travel, draft tier",
+   "label": "end2: contact sheet ending.lookback, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:33:53.770Z",
-   "file": "20261121053353770-note-earth.travel-draft.jpg",
-   "source": "out/work/travel/cam1/earth.travel-draft.png",
+   "time": "2026-11-21T05:46:47.550Z",
+   "file": "20261121054647550-note-ending.retreat-draft.jpg",
+   "source": "out/work/travel/end2/ending.retreat-draft.png",
    "kind": "note",
-   "label": "cam1: contact sheet earth.travel, draft tier",
+   "label": "end2: contact sheet ending.retreat, draft tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:33:11.180Z",
-   "file": "20261121053311180-note-venus.travel-draft.jpg",
-   "source": "out/work/travel/cam1/venus.travel-draft.png",
+   "time": "2026-11-21T05:46:19.227Z",
+   "file": "20261121054619227-note-end2-f5324.jpg",
+   "source": "out/work/travel/end2-f5324.png",
    "kind": "note",
-   "label": "cam1: contact sheet venus.travel, draft tier",
+   "label": "end2: lookback frame 5324, draft, own sky aim",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:32:43.189Z",
-   "file": "20261121053243189-note-sun.travel-draft.jpg",
-   "source": "out/work/travel/cam1/sun.travel-draft.png",
+   "time": "2026-11-21T05:46:18.575Z",
+   "file": "20261121054618575-note-end2-f5235.jpg",
+   "source": "out/work/travel/end2-f5235.png",
    "kind": "note",
-   "label": "cam1: contact sheet sun.travel, draft tier",
+   "label": "end2: lookback frame 5235, draft, own sky aim",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:31:47.237Z",
-   "file": "20261121053147237-note-jupiter.travel-draft.jpg",
-   "source": "out/work/travel/cam1/jupiter.travel-draft.png",
+   "time": "2026-11-21T05:46:17.911Z",
+   "file": "20261121054617911-note-end2-f5145.jpg",
+   "source": "out/work/travel/end2-f5145.png",
    "kind": "note",
-   "label": "cam1: contact sheet jupiter.travel, draft tier",
+   "label": "end2: lookback frame 5145, draft, own sky aim",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:31:17.533Z",
-   "file": "20261121053117533-note-mars.travel-draft.jpg",
-   "source": "out/work/travel/cam1/mars.travel-draft.png",
+   "time": "2026-11-21T05:41:49.057Z",
+   "file": "20261121054149057-note-saturn.travel-review.jpg",
+   "source": "out/work/travel/cam2/saturn.travel-review.png",
    "kind": "note",
-   "label": "cam1: contact sheet mars.travel, draft tier",
+   "label": "cam2: contact sheet saturn.travel, review tier",
    "stop": "travel"
   },
   {
-   "time": "2026-11-21T05:30:25.689Z",
-   "file": "20261121053025689-note-mercury.travel-draft.jpg",
-   "source": "out/work/travel/cam1/mercury.travel-draft.png",
+   "time": "2026-11-21T05:39:08.314Z",
+   "file": "20261121053908314-note-mercury.travel-review.jpg",
+   "source": "out/work/travel/cam2/mercury.travel-review.png",
    "kind": "note",
-   "label": "cam1: contact sheet mercury.travel, draft tier",
+   "label": "cam2: contact sheet mercury.travel, review tier",
    "stop": "travel"
   }
  ]
