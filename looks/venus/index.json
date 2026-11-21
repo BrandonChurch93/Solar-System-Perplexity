@@ -1,9 +1,73 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T08:00:43.431Z",
- "head": "bbe0ac6cfc0ee3f70fba577e0fe420fcb1c9afc9",
- "note": "dive and rise strips at review tier, smooth blur, haze hugs the planet",
+ "pushed": "2026-11-21T08:25:56.467Z",
+ "head": "31ae68f233015ed6dd8b96577b25f78e6cbbc9b4",
+ "note": "haze tail thins over twelve frames; checks for READY running",
  "looks": [
+  {
+   "time": "2026-11-21T08:25:55.879Z",
+   "file": "20261121082555879-note-tail3.jpg",
+   "source": "out/work/venus/strip/tail3.jpg",
+   "kind": "note",
+   "label": "haze tail at draft, every frame: dive 1315 to 1332 and rise 1561 to 1578, linear tail of 16 frames",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T08:23:56.179Z",
+   "file": "20261121082356179-frame-draft-1578.jpg",
+   "source": "out/work/venus/post/draft-1578.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1578, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1578,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:23:34.960Z",
+   "file": "20261121082334960-frame-draft-1332.jpg",
+   "source": "out/work/venus/post/draft-1332.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1332, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1332,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:22:50.492Z",
+   "file": "20261121082250492-frame-draft-1185.jpg",
+   "source": "out/work/venus/post/draft-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
+  },
+  {
+   "time": "2026-11-21T08:05:33.574Z",
+   "file": "20261121080533574-job-frame-01110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.hold frame 1110, draft tier, texels view, from the running measure job",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-21T08:00:42.838Z",
    "file": "20261121080042838-note-rise2.jpg",
@@ -11,20 +75,6 @@
    "kind": "note",
    "label": "rise strip at review tier with the smooth blur and the tighter haze shell: cover 1558 to 1572, globe from 1575, 1586 judged",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T08:00:33.743Z",
-   "file": "20261121080033743-frame-rise2-1600.jpg",
-   "source": "out/work/venus/strip/rise2-1600.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1600, review tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1600,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6d4f67865f286916"
   },
   {
    "time": "2026-11-21T07:48:56.279Z",
@@ -35,55 +85,11 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T07:48:25.030Z",
-   "file": "20261121074825030-frame-dive2-1335.jpg",
-   "source": "out/work/venus/strip/dive2-1335.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1335, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1335,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
-  },
-  {
    "time": "2026-11-21T07:30:40.653Z",
    "file": "20261121073040653-note-crop-1305-zz4.jpg",
    "source": "out/work/venus/strip/crop-1305-zz4.png",
    "kind": "note",
    "label": "dive 1305 night side, 5x crop, gain 2, review tier: before (top) and after taking the per sample jitter out of the blurred cloud lookup (bottom): continuous streaks",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T07:30:11.358Z",
-   "file": "20261121073011358-frame-jit-1185.jpg",
-   "source": "out/work/venus/ab/jit-1185.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "704d5d55f51b7b15"
-  },
-  {
-   "time": "2026-11-21T07:28:08.023Z",
-   "file": "20261121072808023-note-crop-1305-zz3.jpg",
-   "source": "out/work/venus/strip/crop-1305-zz3.png",
-   "kind": "note",
-   "label": "dive 1305 night side, 5x crop, gain 2: review 16 samples with blur inside each sample (top, ladder rungs from the per sample jitter) against one sample blurred over the whole shutter (bottom)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T07:02:11.364Z",
-   "file": "20261121070211364-note-rise1-1586.jpg",
-   "source": "out/work/venus/strip/rise1-1586.png",
-   "kind": "note",
-   "label": "judged rise frame 1586 at review",
    "stop": "venus"
   }
  ]
