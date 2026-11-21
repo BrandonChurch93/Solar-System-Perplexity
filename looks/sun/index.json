@@ -1,9 +1,17 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T16:36:58.689Z",
+ "pushed": "2026-11-21T17:01:31.927Z",
  "head": "d42947ffb1e3d49f7730a218fb7db386afe8e94a",
- "note": "round 3: final rise path verified at draft, review tier rise and cover frames rendering on the merged tree",
+ "note": "sun round 3: review tier rise frames on the final path, checks before READY",
  "looks": [
+  {
+   "time": "2026-11-21T17:01:30.801Z",
+   "file": "20261121170130801-note-i136-cover-211-215-review-preview.jpg",
+   "source": "out/work/sun/i136-cover-211-215-review-preview.jpg",
+   "kind": "note",
+   "label": "sun rise 211, 213, 214, 215 at review tier (960 px format), final path of round 3",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T16:36:57.535Z",
    "file": "20261121163657535-note-i133-rv216.jpg",
@@ -49,14 +57,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:05:55.415Z",
-   "file": "20261121160555415-note-i130-slow-b.jpg",
-   "source": "out/work/sun/i130-slow-b.jpg",
-   "kind": "note",
-   "label": "rise 218 to 235 at draft after engine batch 15",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T16:04:49.260Z",
