@@ -1,61 +1,61 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T16:05:56.381Z",
- "head": "68635874646aa4d2d786300791b1ae9696495c23",
- "note": "round 3: engine batches 14 and 15 merged, rise peak slowed under the review sample cap, measures running",
+ "pushed": "2026-11-21T16:36:58.689Z",
+ "head": "d42947ffb1e3d49f7730a218fb7db386afe8e94a",
+ "note": "round 3: final rise path verified at draft, review tier rise and cover frames rendering on the merged tree",
  "looks": [
+  {
+   "time": "2026-11-21T16:36:57.535Z",
+   "file": "20261121163657535-note-i133-rv216.jpg",
+   "source": "out/work/sun/i133-rv216.jpg",
+   "kind": "note",
+   "label": "rise frame 216 at review after engine batch 15, 127 samples, limb readable, smooth blur",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:04.698Z",
+   "file": "20261121162204698-note-i132-c1-big.jpg",
+   "source": "out/work/sun/i132-c1-big.jpg",
+   "kind": "note",
+   "label": "rise 209, 211, 213, 215 at draft, relief dissolving into the globe",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:04.101Z",
+   "file": "20261121162204101-note-i131-c1-b.jpg",
+   "source": "out/work/sun/i131-c1-b.jpg",
+   "kind": "note",
+   "label": "rise 218 to 235 at draft, final path of round 3",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:22:03.527Z",
+   "file": "20261121162203527-note-i131-c1-a.jpg",
+   "source": "out/work/sun/i131-c1-a.jpg",
+   "kind": "note",
+   "label": "rise 200 to 217 at draft, final path of round 3 (peak earlier and wider, no frame at the review sample cap)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-21T16:20:33.777Z",
+   "file": "20261121162033777-frame-f00220.jpg",
+   "source": "out/work/seq/198-236/f00220.png",
+   "kind": "frame",
+   "label": "sun.rise frame 220, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 220,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T16:05:55.415Z",
    "file": "20261121160555415-note-i130-slow-b.jpg",
    "source": "out/work/sun/i130-slow-b.jpg",
    "kind": "note",
    "label": "rise 218 to 235 at draft after engine batch 15",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:05:54.345Z",
-   "file": "20261121160554345-note-i130-slow-a.jpg",
-   "source": "out/work/sun/i130-slow-a.jpg",
-   "kind": "note",
-   "label": "rise 200 to 217 at draft after engine batch 15, peak slowed under the sample cap",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:05:53.329Z",
-   "file": "20261121160553329-note-i129-f247-final.jpg",
-   "source": "out/work/sun/i129-f247-final.jpg",
-   "kind": "note",
-   "label": "frame 247 at final, right and left sky at 3 times gain (two crops side by side)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:05:52.672Z",
-   "file": "20261121160552672-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T16:05:52.489Z",
-   "file": "20261121160552489-note-i126-rv213-new.jpg",
-   "source": "out/work/sun/i126-rv213-new.jpg",
-   "kind": "note",
-   "label": "rise frame 213 at review, relief sunspot on the hero sunspot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T16:05:51.600Z",
-   "file": "20261121160551600-note-i127-hold-sheet-review.jpg",
-   "source": "out/work/sun/i127-hold-sheet-review.jpg",
-   "kind": "note",
-   "label": "hold sheet at review tier, round 3",
    "stop": "sun"
   },
   {
