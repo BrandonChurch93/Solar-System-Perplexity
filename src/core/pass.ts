@@ -41,12 +41,12 @@ export class Pass {
   }
 }
 
-export function floatTarget(width: number, height: number, type: THREE.TextureDataType, depth = false): THREE.WebGLRenderTarget {
+export function floatTarget(width: number, height: number, type: THREE.TextureDataType, depth = false, stencil = false): THREE.WebGLRenderTarget {
   const t = new THREE.WebGLRenderTarget(width, height, {
     type,
     format: THREE.RGBAFormat,
     depthBuffer: depth,
-    stencilBuffer: false,
+    stencilBuffer: stencil,
     minFilter: THREE.LinearFilter,
     magFilter: THREE.LinearFilter,
     generateMipmaps: false,
