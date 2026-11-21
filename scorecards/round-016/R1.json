@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night side and right limb of the planet (right third, crops C, E, H)",
+   "what": "the shadowed hemisphere is slightly lifted (about +1.3 mean level) and its cloud texture is a little smoother than in -a, so the terminator falls off less deeply and the thin rim light along the right limb reads a touch flatter",
+   "fix": "pull the shadow side down slightly toward -a's black depth and restore the fine banding texture inside the dark hemisphere"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "whole frame grade",
+   "what": "overall exposure sits marginally higher than -a (about +1 level per channel), with blacks in the upper-right sky a hair lifted",
+   "fix": "lower exposure by roughly 1 level, keeping the warm gold balance as it is"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sun glare and lit cloud deck in the center and right (crops A, C, E)",
+   "what": "midtones and low end on the sunlit cloud deck are slightly lifted (shadow floor about 1-2 levels higher), so the crepuscular shadow lanes behind the cumulus towers have a bit less contrast than in -a",
+   "fix": "deepen the shadow lanes slightly to match -a's contrast; leave the glare size and position unchanged"
+  }
+ ]
+}
