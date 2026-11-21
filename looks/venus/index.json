@@ -1,55 +1,55 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T22:47:13.904Z",
- "head": "417dfdb7769b31503d834892925e96d7d5c73b3b",
- "note": "Phase 6 polish: covers at review tier (take c12), item 3 map rebuild and item 4 studies in work",
+ "pushed": "2026-11-21T23:00:58.389Z",
+ "head": "483ae219050ba8f8156b298cc4c89e5600a2210b",
+ "note": "Phase 6 polish: item 4 rise 1586 at draft (swirl, night limb, rewoven ring), dive cover streams past the swap",
  "looks": [
+  {
+   "time": "2026-11-21T22:59:25.055Z",
+   "file": "20261121225925055-note-c12-dc.jpg",
+   "source": "../view/c12-dc.png",
+   "kind": "note",
+   "label": "Phase 6 item 1, dive cover sheet at review tier, take c12 (terrain side veil stood still, cured in d13)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:59:24.423Z",
+   "file": "20261121225924423-note-r23-1586-lr.jpg",
+   "source": "../view/r23-1586-lr.png",
+   "kind": "note",
+   "label": "Round 23 build, rise 1586 lower right at twice native, for comparison",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:59:23.851Z",
+   "file": "20261121225923851-note-i4c-1586-lr.jpg",
+   "source": "../view/i4c-1586-lr.png",
+   "kind": "note",
+   "label": "Phase 6 item 4, rise 1586 lower right at twice native, take i4c (round 23 had soft stretched arcs here)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:59:23.317Z",
+   "file": "20261121225923317-note-i4c-1586-half.jpg",
+   "source": "../view/i4c-1586-half.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 4, rise 1586 at draft, take i4c: plume curled by the swirl, night limb one falloff, lower right ring rewoven from the far side",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T22:59:22.584Z",
+   "file": "20261121225922584-note-d13.jpg",
+   "source": "../view/d13.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1, dive cover at draft, take d13: the veil now streams on past the swap (1314 to 1322) instead of standing still",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T22:47:12.941Z",
    "file": "20261121224712941-note-c12-1559.jpg",
    "source": "../view/c12-1559.jpg",
    "kind": "note",
    "label": "Phase 6 item 1, draft strip of the rise swap, take c12",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:47:12.044Z",
-   "file": "20261121224712044-note-wrap-all.jpg",
-   "source": "../view/wrap-all.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 4, wrap and its fine detail energy: the dark U is the calmed ring",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:47:11.111Z",
-   "file": "20261121224711111-note-bv-ring.jpg",
-   "source": "../view/bv-ring.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 4, offline study: the soft ring of the wrap (red) that the rise sees face on at 1586",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:47:10.170Z",
-   "file": "20261121224710170-note-bv-apex2.jpg",
-   "source": "../view/bv-apex2.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 4, offline study: the plume's V turned into a curl by a swirl of the lookup (six settings)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:47:09.149Z",
-   "file": "20261121224709149-note-c12-rc.jpg",
-   "source": "../view/c12-rc.png",
-   "kind": "note",
-   "label": "Phase 6 item 1, rise cover sheet at review tier, take c12: sky and Sun kept through the veil, one horizon",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T22:17:04.866Z",
-   "file": "20261121221704866-note-st5-three.jpg",
-   "source": "../view/st5-three.png",
-   "kind": "note",
-   "label": "Terrain 1440, left limb: approved, old sky patch (twin stars), new sky patch",
    "stop": "venus"
   },
   {
