@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import type { Segment, StopDef } from '../src/config'
 import { judgedFrames } from '../src/director/timeline'
@@ -38,6 +38,8 @@ const key: Record<string, Record<string, unknown>> = {}
 const outputDirs = new Set<string>()
 const stopKinds = new Set(['hold', 'dive', 'terrain', 'rise'])
 const only = a.only ? new Set(a.only.split(',')) : null
+const stressTier = a['stress-tier'] ?? cfg.raw.quality.stress.tier
+const started = Date.now()
 
 function renderSegment(segment: Segment, fallback: string): Promise<Source> {
   return renderSource(judged(cfg, segment), fallback, true)
@@ -121,10 +123,11 @@ function divided(groups: Art[][]): Art[][] {
   return parts
 }
 
-function publish(critic: Critic, groups: Art[][], pattern = 'image'): void {
+function publish(critic: Critic, groups: Art[][], pattern = 'image', scope?: string): void {
   const parts = divided(groups)
+  const base = scope ? critic + '-' + scope : critic
   for (const [i, files] of parts.entries()) {
-    const name = parts.length === 1 ? critic : critic + '-part' + (i + 1)
+    const name = parts.length === 1 ? base : base + '-part' + (i + 1)
     const dir = outputFolder(join(roundDir, name))
     outputDirs.add(name)
     const manifest: string[] = []
@@ -164,7 +167,7 @@ async function blockout(): Promise<void> {
   publish('R4', singles(list), 'sheet')
 }
 
-async function stopPacks(stops: StopDef[]): Promise<void> {
+async function stopImages(stops: StopDef[]): Promise<{ match: Art[][]; jury: Art[]; recognition: Art[] }> {
   const match: Art[][] = []
   const recognition: Art[] = []
   const jury: Art[] = []
@@ -188,12 +191,30 @@ async function stopPacks(stops: StopDef[]): Promise<void> {
       }
     }
   }
+  return { match, jury, recognition }
+}
+
+async function stopPacks(stops: StopDef[]): Promise<void> {
+  const { match, jury, recognition } = await stopImages(stops)
   publish('R1', match)
   if (jury.length > 0) publish('R2', singles(shuffle(jury)))
   publish('R8', singles(shuffle(recognition)))
 }
 
-async function detail(segments: Segment[]): Promise<void> {
+async function recordPacks(stops: StopDef[]): Promise<void> {
+  const recognition: Art[] = []
+  for (const stop of stops) {
+    const images = await stopImages([stop])
+    publish('R1', images.match, 'image', stop.id)
+    recognition.push(...images.recognition)
+    const segments = cfg.segments.filter((s) => s.stop === stop.id && stopKinds.has(s.kind))
+    await detail(segments, stop.id)
+    await motion(segments, stop.id)
+  }
+  publish('R8', singles(shuffle(recognition)))
+}
+
+async function detail(segments: Segment[], scope?: string): Promise<void> {
   const groups: Art[][] = []
   const ids = new Set(segments.map((s) => s.id))
   for (const j of judgedFrames().filter((x) => ids.has(x.segment))) {
@@ -201,10 +222,10 @@ async function detail(segments: Segment[]): Promise<void> {
     const items = [simple(film, 'detail-' + j.frame), ...pages('crops', 'detail-crop-' + j.frame, [film], { cover: true })]
     groups.push(...chunk(items, maxImages))
   }
-  publish('R3', groups)
+  publish('R3', groups, 'image', scope)
 }
 
-async function motion(segments: Segment[]): Promise<void> {
+async function motion(segments: Segment[], scope?: string): Promise<void> {
   const list: Art[] = []
   for (const s of segments) {
     if (only === null || only.has(s.id)) list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
@@ -212,7 +233,7 @@ async function motion(segments: Segment[]): Promise<void> {
       list.push(await contact('motion-' + s.id + '-cover', sheetFrames(cfg, s, true), motionTier, { kind: 'cover', segment: s.id }))
     }
   }
-  if (only === null) publish('R4', singles(list), 'sheet')
+  if (only === null) publish('R4', singles(list), 'sheet', scope)
 }
 
 async function part(segments: Segment[]): Promise<void> {
@@ -235,24 +256,89 @@ async function wholeJury(): Promise<void> {
   publish('R2', singles(shuffle(items)))
 }
 
-async function continuity(): Promise<void> {
+const hookFrames = (): number[] => spread(0, Math.min(cfg.hookFrame, cfg.frameCount - 1), Math.min(contactSheetFrames, maxImages))
+
+function finalFrames(): number[] {
+  const frames = new Set([...judgedFrames().map((j) => j.frame), ...filmSheets(cfg, true).flat().map((f) => f.frame), ...hookFrames()])
+  return [...frames].sort((x, y) => x - y)
+}
+
+function filmSheet(i: number, frames: FrameSpec[]): Promise<Art> {
+  return contact('whole-film-' + i, frames, tier, { kind: 'film', part: i + 1 })
+}
+
+async function holdSheets(): Promise<Art[]> {
   const list: Art[] = []
-  for (const [i, frames] of filmSheets(cfg, true).entries()) list.push(await contact('whole-film-' + i, frames, tier, { kind: 'film', part: i + 1 }))
   const holds = cfg.segments.filter((s) => s.kind === 'hold').map((s) => {
     const frame = judged(cfg, s)
     return { frame, label: String(frame) }
   })
   for (const [i, frames] of chunk(holds, contactSheetFrames).entries()) list.push(await contact('whole-holds-' + i, frames, tier, { kind: 'hold', part: i + 1 }))
+  return list
+}
+
+async function continuity(): Promise<void> {
+  const list: Art[] = []
+  for (const [i, frames] of filmSheets(cfg, true).entries()) list.push(await filmSheet(i, frames))
+  list.push(...await holdSheets())
   publish('R5', singles(list), 'sheet')
 }
 
-async function hook(): Promise<void> {
+async function hook(): Promise<Art[]> {
   const list: Art[] = []
-  for (const frame of spread(0, Math.min(cfg.hookFrame, cfg.frameCount - 1), Math.min(contactSheetFrames, maxImages))) {
-    const source = await renderSource(frame, tier, frame === 0 || frame === cfg.hookFrame)
-    list.push(simple(source, 'hook-' + frame, { width: phonePreviewWidthPx }))
+  for (const frame of hookFrames()) list.push(simple(await renderSource(frame, tier, true), 'hook-' + frame, { width: phonePreviewWidthPx }))
+  return list
+}
+
+function plan(): object {
+  const count = (frame: number, quality: string): number => {
+    const kind = cfg.segments.find((s) => frame >= s.firstFrame && frame < s.endFrame)!.kind
+    return cfg.fastKinds.includes(kind) ? cfg.tiers[quality].fastSamplesPerFrame : cfg.tiers[quality].samplesPerFrame
   }
-  publish('R6', singles(list))
+  const cost = (frames: FrameSpec[]): number => frames.reduce((sum, f) => sum + count(f.frame, motionTier), 0)
+  const sheets: { part: string; stop: string | null; samples: number }[] = []
+  for (const s of cfg.segments) {
+    const between = s.kind === 'travel' || s.stop === cfg.endingId
+    if (between === false && (phase !== 6 || stopKinds.has(s.kind) === false)) continue
+    sheets.push({ part: s.id, stop: between ? null : s.stop, samples: cost(sheetFrames(cfg, s, false)) })
+    if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true)) })
+  }
+  return {
+    tier, motionTier, sheets,
+    finals: finalFrames().map((frame) => ({ frame, samples: count(frame, tier) })),
+    composites: [
+      ...filmSheets(cfg, true).map((frames, i) => ({ part: 'film-' + (i + 1), frames: frames.map((f) => f.frame) })),
+      { part: 'holds', frames: cfg.segments.filter((s) => s.kind === 'hold').map((s) => judged(cfg, s)) },
+      { part: 'hook', frames: hookFrames() },
+    ],
+  }
+}
+
+async function wholePart(): Promise<void> {
+  const left = new Set(only)
+  const ranges: [number, number][] = []
+  for (const token of left) {
+    const range = /^stills:(\d+)-(\d+)$/.exec(token)
+    if (range && left.delete(token)) ranges.push([Number(range[1]), Number(range[2])])
+  }
+  const sheets = filmSheets(cfg, true).map((frames, i) => ({ frames, i, wanted: left.delete('film-' + (i + 1)) }))
+  const holds = left.delete('holds')
+  const opening = left.delete('hook')
+  const segments = cfg.segments.filter((s) => phase === 6 || s.kind === 'travel' || s.stop === cfg.endingId)
+  for (const s of segments) {
+    left.delete(s.id)
+    if (s.kind === 'dive' || s.kind === 'rise') left.delete(s.id + '-cover')
+  }
+  if (left.size > 0) throw new Error('unknown part: ' + [...left].join(', '))
+  for (const frame of finalFrames()) if (ranges.some(([first, last]) => frame >= first && frame <= last)) console.log((await renderSource(frame, tier, true)).path)
+  for (const sheet of sheets) if (sheet.wanted) console.log((await filmSheet(sheet.i, sheet.frames)).path)
+  if (holds) for (const art of await holdSheets()) console.log(art.path)
+  if (opening) for (const art of await hook()) console.log(art.path)
+  await motion(segments)
+}
+
+function stressRecord(segment: string): OutputRecord | null {
+  try { return JSON.parse(readFileSync(join(WORK, 'stress', segment + '.json'), 'utf8')) as OutputRecord } catch { return null }
 }
 
 function compression(): void {
@@ -270,7 +356,12 @@ function compression(): void {
       const original = safeRecord(before)
       const deps = stopDependencies([frame])
       if (original && (original.engineHash === capture.hashes.engine && deps.every((s) => original.stopHashes[s] === capture.hashes.stops[s])) === false) continue
-      const record = original ?? { ...capture.record(cfg.raw.quality.stress.tier, [frame]), format: cfg.formatKeys.master }
+      const made = stressRecord(segment)
+      if (original === null && (made === null || made.engineHash !== capture.hashes.engine || made.tier !== stressTier || made.format !== capture.format || deps.some((s) => made.stopHashes[s] !== capture.hashes.stops[s]))) {
+        console.log('R7: ' + file + ' is not from this build at the ' + stressTier + ' tier, left out')
+        continue
+      }
+      const record = original ?? { ...capture.record(stressTier, [frame]), format: cfg.formatKeys.master }
       const inputs: Source[] = [
         { path: before, key: { segment, frame, kind: 'before' }, record },
         { path: after, key: { segment, frame, kind: 'after' }, record: safeRecord(after) ?? record },
@@ -282,34 +373,44 @@ function compression(): void {
   else publish('R7', groups)
 }
 
+let rendered = false
 try {
-  if (only) {
-    const stops = selectedStop ? [selectedStop] : cfg.stops
-    await part(cfg.segments.filter((s) => stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind)))
+  if (a.plan) console.log('PLAN ' + JSON.stringify(plan()))
+  else if (only) {
+    if (whole && selectedStop === undefined) await wholePart()
+    else {
+      const stops = selectedStop ? [selectedStop] : cfg.stops
+      await part(cfg.segments.filter((s) => stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind)))
+    }
   } else if (phase === 2) await blockout()
   else {
     const stops = selectedStop ? [selectedStop] : cfg.stops
-    if (whole === false || phase === 6) await stopPacks(stops)
-    if (whole) {
+    if (whole === false) {
+      await stopPacks(stops)
+      const segments = cfg.segments.filter((s) => stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind))
+      await detail(segments)
+      await motion(segments)
+    } else {
+      if (phase === 6) await recordPacks(stops)
       compression()
-      await hook()
+      publish('R6', singles(await hook()))
       await wholeJury()
       await continuity()
+      const between = cfg.segments.filter((s) => s.kind === 'travel' || s.stop === cfg.endingId)
+      await detail(between)
+      await motion(between)
     }
-    const segments = cfg.segments.filter((s) => (
-      (whole && (s.kind === 'travel' || s.stop === cfg.endingId)) || ((whole === false || phase === 6) && stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind))
-    ))
-    await detail(segments)
-    await motion(segments)
   }
-  if (only === null) {
+  if (only === null && a.plan === undefined) {
     for (const entry of readdirSync(roundDir, { withFileTypes: true })) {
-      if (entry.isDirectory() && /^R[1-8](?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
+      if (entry.isDirectory() && /^R[1-8](?:-[a-z]+)?(?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
     }
     const keyFile = join(privateDir, roundId + '.json')
     json(keyFile, { phase, round, files: key })
     writeRecord(keyFile, { ...capture.record(tier, []), stopHashes: capture.hashes.stops, extra: { phase, round } })
   }
+  rendered = (capture as unknown as { session?: object }).session !== undefined
 } finally {
   try { await capture.close() } finally { rmSync(temp, { recursive: true, force: true }) }
 }
+console.log('pack ' + roundId + (only ? ' part ' + [...only].join(',') : '') + ': ' + (rendered ? 'frames were rendered' : 'nothing was rendered, no render session was opened') + ', ' + ((Date.now() - started) / 1000).toFixed(1) + ' s')
