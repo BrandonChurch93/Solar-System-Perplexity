@@ -90,7 +90,7 @@ def main():
         im.save(geo.ROOT / "public" / "assets" / "earth" / key / "aurora.webp", quality=95, method=6)
     Image.fromarray(img).save(geo.WORK / "view" / "aurora-map.jpg", quality=92)
     Image.fromarray(np.clip(geo.encode(np.maximum(seen - back - offset, 0).astype(np.float64))[::-1] * 255, 0, 255).astype(np.uint8)).save(geo.WORK / "view" / "aurora-seen.jpg", quality=92)
-    out = {"pa": list(PA), "top": TOP, "eye": [round(float(x), 6) for x in o], "size": {"full": [W, H], "web": [W // 2, H // 2]}, "sway": [0.004, 9.0, 1.3], "wave": [0.3, 17.0, 2.1], "stretch": [0.08, 6.0, 0.9]}
+    out = {"pa": list(PA), "top": TOP, "eye": [round(float(x), 6) for x in o], "size": {"full": [W, H], "web": [W // 2, H // 2]}, "sway": [0.004, 9.0, 1.3], "wave": [0.3, 17.0, 2.1], "stretch": [0.08, 6.0, 0.9], "fade": [1.0, 1.7]}
     (LOOK / "aurora.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out))
 

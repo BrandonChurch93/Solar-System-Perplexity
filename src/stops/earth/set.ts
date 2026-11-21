@@ -85,6 +85,10 @@ export const createSet: SetFactory = async (ctx) => {
   const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
   const sea = { nadir: new THREE.Vector3(), alpha: 0 }
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
+  const auroraHome = new THREE.Vector3().fromArray(look.aurora.eye).normalize()
+  const stand = new THREE.Vector3()
+  const eyeDir = new THREE.Vector3()
+  const lean = new THREE.Quaternion()
   const ease = look.globe.drift.ease
 
   return {
@@ -102,7 +106,7 @@ export const createSet: SetFactory = async (ctx) => {
         const w = coverWindow(seg)!
         const centre = w.centerFrame / config.fps
         const from = w.firstFrame / config.fps - look.veil.lead
-        const to = (w.lastFrame + 1) / config.fps + look.veil.tail
+        const to = (w.lastFrame + 1) / config.fps + look.veil.tail[seg.kind === 'dive' ? 0 : 1]
         thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
       }
       if (!inOrbit) {
@@ -141,7 +145,10 @@ export const createSet: SetFactory = async (ctx) => {
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
       curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
-      curtain.update(state.time - plan.holdMid, gain * state.weight, shot.post.vignette * (1 - low), aspect)
+      stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
+      curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
+      const near = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
+      curtain.update(state.time - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect)
       sunLocal.copy(light).applyQuaternion(back)
       moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (state.time - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()

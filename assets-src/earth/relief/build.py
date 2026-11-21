@@ -274,7 +274,7 @@ def main():
     fit = geom.FIT
     out = {
         'imageSize': [W, H], 'vfovDeg': fit['vfovDeg'], 'nadir': fit['nadir'], 'radius': fit['radius'],
-        'ground': {'file': 'relief-ground.webp', 'box': [-ML, 0, CW, CH], 'top': 420, 'fade': 150,
+        'ground': {'file': 'relief-ground.webp', 'box': [-ML, 0, CW, CH], 'top': 420, 'fade': 150, 'under': 140, 'skip': 24,
                    'horizon': [round(float(v), 4) for v in coef], 'horizonSpan': [W / 2, CW / 2]},
         'towers': {'file': 'relief-towers.webp', 'dist': 'relief-lift.bin', 'box': [x0, y0, x1 - x0, y1 - y0], 'distSize': [int(dist.shape[1]), int(dist.shape[0])]},
         'masks': {'file': 'relief-masks.png', 'box': [-ML, 0, CW, CH]},

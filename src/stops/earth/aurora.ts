@@ -8,6 +8,7 @@ export interface AuroraLook {
   sway: number[]
   wave: number[]
   stretch: number[]
+  fade: number[]
 }
 
 const VERT = /* glsl */ `

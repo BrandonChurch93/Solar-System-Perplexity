@@ -11,7 +11,7 @@ export interface GroundDef {
   vfovDeg: number
   nadir: [number, number, number]
   radius: number
-  ground: { file: string; box: Box; top: number; fade: number; horizon: number[]; horizonSpan: [number, number] }
+  ground: { file: string; box: Box; top: number; fade: number; under?: number; skip?: number; horizon: number[]; horizonSpan: [number, number] }
   towers?: { file: string; dist: string; box: Box; distSize: [number, number] }
   masks?: { file: string; box: Box }
 }
@@ -79,6 +79,7 @@ uniform float uHorizon[9];
 uniform vec2 uHorizonSpan;
 uniform vec2 uTop;
 uniform float uFold;
+uniform float uUnder;
 uniform vec4 uShimmer;
 void main() {
   float hx = (vImage.x - uHorizonSpan.x) / uHorizonSpan.y;
@@ -88,6 +89,7 @@ void main() {
   vec3 m = masks();
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
+  uv.y += 2.0 * max(vImage.y - uUnder, 0.0) / uBox.w;
   float over = max(uTop.x - vImage.y, 0.0);
   float fold = uFold * (1.0 - exp(-over / uFold));
   vec3 texel = textureGrad(uColor, uv - vec2(0.0, (over + fold) / uBox.w), dFdx(vUv) * uGrad + vec2(min(0.3 * over, 40.0) / uBox.z, 0.0), dFdy(vUv) * uGrad).rgb;
@@ -144,10 +146,10 @@ export class Ground {
     const masks = def.masks ? await ctx.texture(base + def.masks.file, { srgb: false, mips: false }) : r.blank
     const maskBox = def.masks?.box ?? [0, 0, W, H]
 
-    const build = (box: Box, top: number, cells: number, distance: (x: number, y: number, d: THREE.Vector3) => number): THREE.BufferGeometry => {
+    const build = (box: Box, top: number, under: number, cells: number, distance: (x: number, y: number, d: THREE.Vector3) => number): THREE.BufferGeometry => {
       const [x0, y0, bw, bh] = box
       const nx = Math.max(2, Math.round(cells))
-      const ny = Math.max(2, Math.round((cells * (bh + top)) / bw))
+      const ny = Math.max(2, Math.round((cells * (bh + top + under)) / bw))
       const cols = nx + 1
       const rows = ny + 1
       const position = new Float32Array(cols * rows * 3)
@@ -157,7 +159,7 @@ export class Ground {
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols; i++) {
           const x = x0 + (i / nx) * bw
-          const y = y0 - top + (j / ny) * (bh + top)
+          const y = y0 - top + (j / ny) * (bh + top + under)
           const d = ray(x, y)
           const t = distance(x, y, d)
           position[n * 3] = d.x * t
@@ -221,9 +223,9 @@ export class Ground {
 
     const g = def.ground
     const groundMap = await ctx.texture(base + g.file, { srgb: true, anisotropy: 8 })
-    add(build(g.box, g.top, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 0, true, {
+    add(build(g.box, g.top, g.under ?? 0, look.mesh, (_x, _y, d) => sea(d)), groundMap, g.box, GROUND_FRAG, [0.25, 0.45, 0.85], 0, true, {
       uHorizon: { value: g.horizon.slice(0, 9) }, uHorizonSpan: { value: new THREE.Vector2().fromArray(g.horizonSpan) },
-      uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
+      uTop: { value: new THREE.Vector2(g.box[1], g.fade) }, uFold: { value: look.fold }, uUnder: { value: g.box[1] + g.box[3] - (g.skip ?? 0) }, uShimmer: { value: new THREE.Vector4(look.shimmer[0], look.shimmer[1], 0, 0) },
     })
 
     const t = def.towers
@@ -246,7 +248,7 @@ export class Ground {
         const e = lift[(iy + 1) * dw + ix + 1]!
         return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + e * tx) * ty
       }
-      add(build(t.box, 0, look.towerMesh, (x, y, d) => sea(d) * (1 - sample(x, y))), map, t.box, TOWER_FRAG, [0.95, 0.9, 0.8], 1, false, {})
+      add(build(t.box, 0, 0, look.towerMesh, (x, y, d) => sea(d) * (1 - sample(x, y))), map, t.box, TOWER_FRAG, [0.95, 0.9, 0.8], 1, false, {})
     }
     return r
   }
