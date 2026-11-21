@@ -1,90 +1,84 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-21T11:54:57.774Z",
- "head": "46e45b9e33917731c705eac9d1771a3dbafcd362",
- "note": "round 2: shadow continuity in the dive, ring ice, terrain flight sheet, arrival check",
+ "pushed": "2026-11-21T12:21:07.338Z",
+ "head": "0bfa699ae7422fdce28a8778500e558468a42050",
+ "note": "round 2: ice near the lens final values, globe check in dive and rise, sky margins, Titan crescent",
  "looks": [
   {
-   "time": "2026-11-21T11:54:57.216Z",
-   "file": "20261121115457216-note-a1.jpg",
-   "source": "../../../../tmp/a1.jpg",
+   "time": "2026-11-21T12:21:06.762Z",
+   "file": "20261121122106762-note-g1.jpg",
+   "source": "../../../../tmp/g1.jpg",
    "kind": "note",
-   "label": "arrival 3362 and 3369 at review, checked for strokes left of Saturn",
+   "label": "globe in dive 3567 and rise 3866 review",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T11:54:56.642Z",
-   "file": "20261121115456642-note-d2.jpg",
-   "source": "../../../../tmp/d2.jpg",
+   "time": "2026-11-21T12:21:06.233Z",
+   "file": "20261121122106233-note-pair-hold-q4.jpg",
+   "source": "out/work/saturn/pair-hold-q4.jpg",
    "kind": "note",
-   "label": "dive 3570 to 3620 at draft, globe shadow on the rings kept through the dive",
+   "label": "hold 3465 final beside approved",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T11:54:56.083Z",
-   "file": "20261121115456083-note-i6.jpg",
-   "source": "../../../../tmp/i6.jpg",
+   "time": "2026-11-21T12:21:05.704Z",
+   "file": "20261121122105704-note-pair-terrain-q4.jpg",
+   "source": "out/work/saturn/pair-terrain-q4.jpg",
    "kind": "note",
-   "label": "ring ice take 6 at review, frames 3660 and 3790 with native crops",
+   "label": "terrain 3720 final beside approved",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T11:54:55.493Z",
-   "file": "20261121115455493-note-t15.jpg",
-   "source": "../../../../tmp/t15.jpg",
+   "time": "2026-11-21T12:21:05.100Z",
+   "file": "20261121122105100-note-r1.jpg",
+   "source": "../../../../tmp/r1.jpg",
    "kind": "note",
-   "label": "terrain every 15th frame at draft, new flight across the bands with ring ice",
+   "label": "rise draft 3812 to 3880 shadow stays",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-21T11:52:00.299Z",
-   "file": "20261121115200299-frame-t15-3809.jpg",
-   "source": "out/work/saturn/t15-3809.png",
+   "time": "2026-11-21T12:21:04.586Z",
+   "file": "20261121122104586-note-sky-hold-new.jpg",
+   "source": "../../../../tmp/sky-hold-new.jpg",
+   "kind": "note",
+   "label": "hold sky patch new margin",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T12:21:04.067Z",
+   "file": "20261121122104067-note-titan-pair.jpg",
+   "source": "../../../../tmp/titan-pair.png",
+   "kind": "note",
+   "label": "Titan hero and film",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-21T12:19:20.123Z",
+   "file": "20261121121920123-frame-i9-3760.jpg",
+   "source": "out/work/saturn/i9-3760.png",
    "kind": "frame",
-   "label": "saturn.terrain frame 3809, draft tier",
+   "label": "saturn.terrain frame 3760, review tier",
    "stop": "saturn",
    "segment": "saturn.terrain",
-   "frame": 3809,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:41:22.832Z",
-   "file": "20261121114122832-frame-d2-3620.jpg",
-   "source": "out/work/saturn/d2-3620.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3620, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3620,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "020740ac07ff27f7"
-  },
-  {
-   "time": "2026-11-21T11:22:04.550Z",
-   "file": "20261121112204550-note-f6.jpg",
-   "source": "../../../../tmp/f6.jpg",
-   "kind": "note",
-   "label": "terrain 3630 and 3675 draft, lower part: ring image inside the approved footprint, toned profile outside",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-21T10:39:33.553Z",
-   "file": "20261121103933553-frame-h-p8-3539.jpg",
-   "source": "out/work/saturn/h-p8-3539.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3539, review tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3539,
+   "frame": 3760,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "e96a669c7c94eb54"
+   "engine": "020740ac07ff27f7"
+  },
+  {
+   "time": "2026-11-21T12:06:07.121Z",
+   "file": "20261121120607121-frame-h-q4-3465.jpg",
+   "source": "out/work/saturn/h-q4-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, final tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "020740ac07ff27f7"
   }
  ]
 }
