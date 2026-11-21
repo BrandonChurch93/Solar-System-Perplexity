@@ -1,9 +1,67 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-21T03:55:45.792Z",
- "head": "2097bdd30287f3f119400577dd815567cbecb930",
- "note": "uranus orbit view: rings traced from the hero as true 3D lines; next the hold sky patch and moons",
+ "pushed": "2026-11-21T04:12:27.181Z",
+ "head": "5a416e09c4ed27df5c6d2b48c257820d4aff0d5a",
+ "note": "Sky patch wired in; Miranda still dark, top ring glint too strong, left ring bundles too faint: next",
  "looks": [
+  {
+   "time": "2026-11-21T04:12:26.639Z",
+   "file": "20261121041226639-note-sky-hold-preview.jpg",
+   "source": "out/work/u/sky/sky-hold-preview.jpg",
+   "kind": "note",
+   "label": "Sky patch for the hold: planet, moons and ring lines removed, stars kept from the approved image",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:12:26.075Z",
+   "file": "20261121041226075-note-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "note",
+   "label": "Hold with the sky patch in (draft tier): approved left, film right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-21T04:12:13.162Z",
+   "file": "20261121041213162-compare-compare-uranus-hold-view.jpg",
+   "source": "out/work/compare/compare-uranus-hold-view.jpg",
+   "kind": "compare",
+   "label": "uranus.hold: approved image left, film frame right, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "434d0a5e367a62fd"
+  },
+  {
+   "time": "2026-11-21T04:12:12.107Z",
+   "file": "20261121041212107-still-f04035-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04035-16x9-draft-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "434d0a5e367a62fd"
+  },
+  {
+   "time": "2026-11-21T04:09:25.335Z",
+   "file": "20261121040925335-frame-glow-rings.jpg",
+   "source": "out/work/u/sky/glow-rings.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, review tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "434d0a5e367a62fd"
+  },
   {
    "time": "2026-11-21T03:55:44.012Z",
    "file": "20261121035544012-note-cmp-ul.jpg",
@@ -18,58 +76,6 @@
    "source": "out/work/u/rings2/overlay.jpg",
    "kind": "note",
    "label": "uranus rings: traced 3D curves projected back over the hero (bottom), hero brightened (top)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:55:42.928Z",
-   "file": "20261121035542928-note-tracks.jpg",
-   "source": "out/work/u/rings2/tracks.jpg",
-   "kind": "note",
-   "label": "uranus rings: hero lines traced in the ring plane unwrap (azimuth across, radius down)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:54:40.059Z",
-   "file": "20261121035440059-compare-compare-uranus-hold-view.jpg",
-   "source": "out/work/compare/compare-uranus-hold-view.jpg",
-   "kind": "compare",
-   "label": "uranus.hold: approved image left, film frame right, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:54:38.956Z",
-   "file": "20261121035438956-still-f04035-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04035-16x9-draft-full.png",
-   "kind": "still",
-   "label": "uranus.hold frame 4035, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cae3193a3821716c"
-  },
-  {
-   "time": "2026-11-21T03:44:07.635Z",
-   "file": "20261121034407635-note-overlay.jpg",
-   "source": "out/work/u/rings/overlay.jpg",
-   "kind": "note",
-   "label": "uranus rings: 16 fitted circles over the hero (right)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-21T03:37:26.939Z",
-   "file": "20261121033726939-note-light-model.jpg",
-   "source": "out/work/u/wrap/light-model.jpg",
-   "kind": "note",
-   "label": "light table fitted from the hero (right) beside the hero",
    "stop": "uranus"
   },
   {
