@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain sky above and to the right of the main plasma arch (pair-04-b.png, crops C and H)",
+   "what": "A scalloped dark seam follows the outside of the arch, separating the warm haze from the black sky. In the target the haze fades continuously into the star field.",
+   "fix": "Remove the dark contour and feather the warm haze into a continuous sky while retaining the fine outer filaments."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "solar disk limb, especially the lower arc and both shoulders (pair-02-b.png, crops B–G)",
+   "what": "A thin, nearly continuous yellow-orange outline makes the limb look smoother and more sharply traced than the target's ragged, textured transition into the corona.",
+   "fix": "Dim and break up the outline, carry the photospheric texture closer to the edge, and blend it into the coronal rays."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "photosphere just inside the limb, especially the sides and lower arc (pair-02-b.png, crops B–G)",
+   "what": "A smooth amber veil flattens the contrast in the outer surface granules. The target keeps distinct dark channels and sharp glowing ridges nearly to the edge.",
+   "fix": "Reduce the inner amber veil and restore local contrast in the outer granulation without sharpening the silhouette."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "outer hold-frame sky and galactic dust band (pair-02-b.png, crops H and I)",
+   "what": "Foreground stars are brighter and more conspicuous, pulling attention away from the target's subtle blue and rust dust structure.",
+   "fix": "Tone down the bright star points and retain the diffuse blue and rust mottling at the target's contrast."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "terrain horizon and both plasma footpoints (pair-04-b.png, crops A, F, G and I)",
+   "what": "The footpoints cast broader yellow pools across the surface, and the horizon reads more like a continuous bright strip. The target has tighter white-hot roots and a more finely broken fringe of upright strands.",
+   "fix": "Tighten and whiten the roots, reduce lateral spill onto the granules, and restore variation in the horizon glow and fringe."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "main arch, particularly the crest and descending right bundle (pair-04-b.png, crops C, G and H)",
+   "what": "The arch reads more uniformly orange, with stronger emphasis on the dense main bundle and less separation between the pale hot strands and faint outer threads.",
+   "fix": "Restore the pale gold highlights on the hottest strands and separate the fine outer threads without increasing the surrounding haze."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "central sunspot interior and inner rim (pair-04-b.png, crop A)",
+   "what": "The left interior has a distinct slanted dark patch and less of the target's subtle mottling, making the black core look unevenly masked.",
+   "fix": "Blend the patch into the deep core and restore faint warm mottling and irregular inner-edge detail."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "terrain star field, including the upper-left galactic band, inside the arch, and far-right sky (pair-04-b.png, crops A–C and H–I)",
+   "what": "More stars read as large, high-contrast white or blue points. The target has finer stars and more breathing room for the diffuse dust and arc light.",
+   "fix": "Reduce the star peaks and apparent point size across the terrain sky while preserving the diffuse dust texture."
+  }
+ ]
+}

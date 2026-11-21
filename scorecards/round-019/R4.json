@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frame 1870, South America city lights and west coast",
+   "what": "the dive is already at full speed eight frames after a sharp hold, and the blur breaks into three to five ghost copies of each edge instead of one smear",
+   "fix": "ease scale and speed in over a longer ramp, and render the dive as a continuous shutter smear"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2140 to 2174",
+   "what": "the globe shrinks by about two fifths and the blur collapses in seven frames, then the hold freezes on a different view than the departure: moon gone, globe shifted right, terminator and aurora moved",
+   "fix": "stretch the rise ease-out so field of view and blur decay together, and land on the same orbital frame, moon included"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "upper right, frames 1680 to 1829",
+   "what": "the moon slides about two diameters right across a locked starfield while the globe barely moves",
+   "fix": "hold the moon with the stars, or move it only as far as real orbital parallax would in that time"
+  }
+ ]
+}

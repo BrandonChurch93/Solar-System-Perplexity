@@ -18,15 +18,18 @@ W, H, ML = geom.W, geom.H, geom.ML
 
 def tidy(fix):
     k = fix.shape[1] / 1920
+    h, w = fix.shape[:2]
     lum = fix @ geo.LUMA
     tint = np.clip(cv2.GaussianBlur(fix / lum[..., None], (0, 0), 40 * k), 0.94, 1.06)
-    size = 2 * int(round(3 * k)) + 1
-    calm = cv2.GaussianBlur(cv2.medianBlur(lum.astype(np.float32), min(size, 5)), (0, 0), 1.5 * k)
+    small = cv2.resize(lum.astype(np.float32), (w // 4, h // 4), interpolation=cv2.INTER_AREA)
+    codes = np.clip(small * 150 + 0.5, 0, 255).astype(np.uint8)
+    calm = cv2.medianBlur(codes, 2 * int(round(5 * k)) + 1).astype(np.float32) / 150
+    calm = cv2.GaussianBlur(cv2.resize(calm, (w, h), interpolation=cv2.INTER_CUBIC), (0, 0), 6 * k)
     return (np.clip(calm, 0.4, 1.6)[..., None] * tint).astype(np.float32)
 
 
 if sys.argv[1] == '--tidy':
-    np.save(FIX, tidy(np.load(FIX)))
+    np.save(FIX, tidy(np.load(sys.argv[2] if len(sys.argv) > 2 else FIX)))
     sys.exit(0)
 film = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(np.float32) / 255
 fh, fw = film.shape[:2]

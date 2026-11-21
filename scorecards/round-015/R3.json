@@ -1,0 +1,173 @@
+{
+ "critic": "R3",
+ "score": 3,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops S, V and W, bottom of frame 2 (image-05), nearest foreground, mostly the lower right",
+      "what": "the near granulation breaks down into smeared, streaky shapes that look like brush strokes and are stretched diagonally; cell edges dissolve and the surface reads as a warped AI texture, not as structure",
+      "fix": "regenerate or upscale the near foreground with crisp cell boundaries and no directional smearing, and keep cell shapes consistent with the middle ground"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "whole photosphere, both frames (crops D, E, P, Q, T, U)",
+      "what": "the granules have glossy specular highlights, like wet liquid gold or hammered metal, so the surface reads as plastic or chrome and not as glowing plasma; the light seems to come from outside instead of the surface glowing on its own",
+      "fix": "remove the specular reflections and the shading by an outside light; make the granules evenly emissive, with bright centres and dark, narrow intergranular lanes"
+     },
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crops S to W, bottom strip of frame 1",
+      "what": "the foreground is soft and slightly blurry next to the sharper middle ground, with mushy highlights and a muddy brown between the cells",
+      "fix": "sharpen the foreground detail or apply depth of field on purpose and evenly; avoid a texture that only looks low resolution"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "sky just above the limb, left and right (crops I, N, Q, R)",
+      "what": "a dark, smoky band lies between the limb glow and the starfield and reads as a cut-out halo or a hazy layer edge, as if the sun were pasted over the sky plate",
+      "fix": "blend the limb glow smoothly into the sky, with no dark ring in between"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "loop arcade, crops H and C in image-06",
+      "what": "the loop filaments look like sparks or steel wool and end in scattered bright specks, with a few dangling strands that hang straight down, so they look like particle sparks and not plasma",
+      "fix": "make the loops continuous, smooth flux tubes, with fewer scattered spark particles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "limb spicule fringe, crops N and I",
+      "what": "the spicules along the limb look like hair, all one length, with a slightly repeated, comb-like pattern",
+      "fix": "vary the length, density and brightness of the spicules along the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "middle-distance granulation (crops E, G)",
+      "what": "cell size and shape repeat evenly across the middle band, with little large-scale variation, so the surface reads as a tiled pattern",
+      "fix": "add variation at large scale (mesogranular brightness changes, plage near the spot)"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-09.png",
+      "where": "far photosphere just below the limb (image-10.png crops A, F, G, I; image-11.png crops N, O, P, Q)",
+      "what": "horizontal and vertical mirror seams create symmetrical kaleidoscope reflections across the distant granulation right behind the sunspot",
+      "fix": "replace mirrored UV tiling near the horizon with continuous 3D procedural granulation or non-mirrored spherical projection"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "right-side Milky Way sky (image-14.png crop I; image-15.png crops M, R)",
+      "what": "a ruler-straight vertical tile seam cuts top-to-bottom through the nebula with an abrupt drop in brightness and dust color",
+      "fix": "project a seamless equirectangular starfield skybox or blend and feather the background sky boundary seamlessly"
+     },
+     {
+      "severity": "severe",
+      "file": "image-09.png",
+      "where": "upper sky around the coronal arch and Milky Way dust (image-10.png crops B, C, H; image-11.png crops K, L)",
+      "what": "a jagged, posterized black moat outlines the outer edge of the warm glow patch before transitioning to the surrounding starfield",
+      "fix": "composite the coronal glow and nebula layers additively in linear 16/32-bit float with a smooth, unthresholded falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "white coronal streamers around the limb (image-14.png crops B, C, D, E, G; image-15.png crops K, L; image-16.png crops U, V)",
+      "what": "dozens of dark gray circular and polygonal blotches pepper the bright coronal rays like negative matte or star-removal holes",
+      "fix": "render the coronal streamers on a clean volumetric/additive pass without dark dust-spot or star-subtraction artifacts"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "near foreground solar surface along the bottom (image-12.png crops S, T, U, V, W; image-10.png crops D, E)",
+      "what": "foreground granules are heavily blurred and radially stretched toward the bottom corners, failing to hold up at native crop size",
+      "fix": "disable shallow depth-of-field blur and maintain crisp, undistorted high-frequency granulation into the near foreground"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "mid-ground photosphere granulation (image-10.png crops D, E, F, G; image-11.png crops N, O, P, Q)",
+      "what": "granules look like glossy embossed metallic or plastic pillows with hard pinpoint specular glints inside dark intergranular lanes",
+      "fix": "remove specular/glossy reflection lobes and shade the photosphere purely as self-luminous plasma with realistic temperature emission"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "chromosphere above the bright left coronal-loop footpoint (image-10.png crops A, F; image-11.png crop O)",
+      "what": "an artificial ruler-straight horizontal bright streak cuts across the vertical plasma spicules and loop base",
+      "fix": "remove the horizontal anamorphic flare line and use natural isotropic bloom around bright footpoints"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "left-side starfield (image-10.png crop I; image-11.png crop J)",
+      "what": "stars near the left frame edge are smeared into elongated coma blobs and doubled smudges",
+      "fix": "render background stars as crisp, radially symmetric point spread functions without edge coma distortion"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "solar globe limb curve (image-14.png crops B, C, F, G; image-15.png crops K, L)",
+      "what": "a sharp bright hairline rim with a thin dark gap traces the geometric sphere edge beneath the chromospheric spicules",
+      "fix": "feather the photosphere limb into the chromosphere optically so spicules integrate without a hard doubled disc edge"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-20.png",
+      "where": "crops U and V, lower limb and corona",
+      "what": "Long, nearly parallel strands have the same soft blur and taper, making the corona look like a radial-blur layer.",
+      "fix": "Break up the strands with finer, locally curved filaments and vary their length, spacing, and falloff around the limb."
+     },
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "crops A and F, active regions on the disk",
+      "what": "Several active regions share the same tight rosette shape: a dark pinched center ringed by evenly curled bright filaments.",
+      "fix": "Vary the shape and scale of the active regions, and interrupt the radial curls with asymmetric filament bundles and irregular spot clusters."
+     },
+     {
+      "severity": "minor",
+      "file": "image-19.png",
+      "where": "crops K and L, upper limb",
+      "what": "The thin, almost uniformly bright yellow rim reads as a traced outline against the softer corona.",
+      "fix": "Vary the rim's brightness and width locally, and feather it into the finer emission just above the disk."
+     }
+    ]
+   }
+  }
+ ]
+}

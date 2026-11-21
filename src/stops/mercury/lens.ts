@@ -1,9 +1,8 @@
 import * as THREE from 'three'
+import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 
-export interface LensLook {
-  ghost: { at: number; turnDeg: number; tiltDeg: number; size: [number, number]; taper: number; edge: [number, number]; blend: [number, number, number, number]; head: [number, number, number]; core: [number, number, number]; tail: [number, number, number]; fringe: [number, number, number]; halo: [number, number, number]; haloSize: number }
-  fade: [number, number]
-}
+export interface LensLook { gain: number; fade: [number, number] }
+export interface LensFit { file: string; rect: number[]; sun: number[]; boost: number }
 
 const VERT = /* glsl */ `
 out vec2 vNdc;
@@ -14,47 +13,31 @@ void main() {
 
 const FRAG = /* glsl */ `
 precision highp float;
+uniform sampler2D uMap;
 uniform vec2 uSun;
+uniform vec2 uHome;
+uniform vec4 uRect;
 uniform float uAmount;
 uniform float uGain;
 uniform float uAspect;
 uniform float uVignette;
-uniform float uAt;
-uniform vec2 uSize;
-uniform float uTaper;
-uniform vec2 uEdge;
-uniform vec4 uBlend;
-uniform vec3 uHead;
-uniform vec3 uCore;
-uniform vec3 uTail;
-uniform vec3 uFringe;
-uniform vec3 uHalo;
-uniform float uHaloSize;
-uniform vec2 uTilt;
-uniform vec2 uTurn;
+uniform float uSlide;
 uniform int uDiag;
 in vec2 vNdc;
 out vec4 outColor;
+${INVERSE_FILMIC_GLSL}
 void main() {
   if (uDiag >= 2 || uAmount <= 0.0) discard;
   vec2 p = vNdc * vec2(uAspect, 1.0);
-  float far = length(uSun);
-  vec2 a = far > 1e-4 ? uSun / far : vec2(1.0, 0.0);
-  a = vec2(a.x * uTilt.x - a.y * uTilt.y, a.x * uTilt.y + a.y * uTilt.x);
-  vec2 b = vec2(-a.y, a.x);
-  vec2 q = p + vec2(uSun.x * uTurn.x - uSun.y * uTurn.y, uSun.x * uTurn.y + uSun.y * uTurn.x) * uAt;
-  vec2 e = vec2(dot(q, a) / uSize.x, 0.0);
-  e.y = dot(q, b) / (uSize.y * (1.0 - uTaper * clamp(e.x, -1.0, 1.0)));
-  float r = length(e);
-  float body = 1.0 - smoothstep(uEdge.x, uEdge.y, r);
-  float head = clamp((e.x - uBlend.x) / (uBlend.y - uBlend.x), 0.0, 1.0);
-  float tail = 1.0 - clamp((e.x - uBlend.z) / (uBlend.w - uBlend.z), 0.0, 1.0);
-  vec3 col = mix(mix(uHead, uCore, head * head), uTail, 1.0 - tail * tail) * body;
-  col += uFringe * smoothstep(0.2, 1.0, e.x) * (1.0 - smoothstep(0.9, 1.7, r)) * smoothstep(0.5, 1.0, r);
-  col += uHalo * exp(-length(q) / uHaloSize);
+  float d = dot(uSun, uSun);
+  if (d < 1e-4) discard;
+  vec2 k = vec2(dot(uHome, uSun), uHome.y * uSun.x - uHome.x * uSun.y) / d;
+  vec2 g = mix(vec2(p.x * k.x - p.y * k.y, p.x * k.y + p.y * k.x), p - uSun + uHome, uSlide);
+  vec2 uv = (g - uRect.xy) / uRect.zw;
+  if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
   vec2 v = vNdc * 0.5 * vec2(uAspect, 1.0);
-  float k = uGain * uAmount / mix(1.0, 1.0 / pow(1.0 + dot(v, v) * 0.9, 2.0), uVignette);
-  outColor = vec4(col * k, 0.0);
+  float gain = uGain * uAmount / mix(1.0, 1.0 / pow(1.0 + dot(v, v) * 0.9, 2.0), uVignette);
+  outColor = vec4(inverseFilmic(texture(uMap, uv).rgb) * gain, 0.0);
 }`
 
 export class Lens {
@@ -62,18 +45,15 @@ export class Lens {
   readonly material: THREE.ShaderMaterial
   private readonly v = new THREE.Vector3()
   private readonly q = new THREE.Quaternion()
-  private readonly fade: [number, number]
 
-  constructor(l: LensLook, diag: THREE.IUniform<number>) {
-    this.fade = l.fade
+  constructor(map: THREE.Texture, private readonly fit: LensFit, private readonly look: LensLook, diag: THREE.IUniform<number>, slide = false) {
+    const r = fit.rect
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
-        uSun: { value: new THREE.Vector2() }, uAmount: { value: 0 }, uGain: { value: 1 }, uAspect: { value: 16 / 9 }, uVignette: { value: 0 },
-        uAt: { value: l.ghost.at }, uSize: { value: new THREE.Vector2().fromArray(l.ghost.size) }, uTaper: { value: l.ghost.taper }, uEdge: { value: new THREE.Vector2().fromArray(l.ghost.edge) }, uBlend: { value: new THREE.Vector4().fromArray(l.ghost.blend) }, uHead: { value: new THREE.Vector3().fromArray(l.ghost.head) }, uCore: { value: new THREE.Vector3().fromArray(l.ghost.core) }, uTail: { value: new THREE.Vector3().fromArray(l.ghost.tail) },
-        uFringe: { value: new THREE.Vector3().fromArray(l.ghost.fringe) }, uHalo: { value: new THREE.Vector3().fromArray(l.ghost.halo) }, uHaloSize: { value: l.ghost.haloSize },
-        uTilt: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(l.ghost.tiltDeg)), Math.sin(THREE.MathUtils.degToRad(l.ghost.tiltDeg))) }, uTurn: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(l.ghost.turnDeg)), Math.sin(THREE.MathUtils.degToRad(l.ghost.turnDeg))) }, uDiag: diag,
+        uMap: { value: map }, uSun: { value: new THREE.Vector2() }, uHome: { value: new THREE.Vector2(fit.sun[0], fit.sun[1]) }, uRect: { value: new THREE.Vector4(r[0], r[1], r[2]! - r[0]!, r[3]! - r[1]!) },
+        uAmount: { value: 0 }, uGain: { value: 1 }, uAspect: { value: 16 / 9 }, uVignette: { value: 0 }, uSlide: { value: slide ? 1 : 0 }, uDiag: diag,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
@@ -90,9 +70,9 @@ export class Lens {
       const y = v.y / -v.z / tan
       ;(u.uSun!.value as THREE.Vector2).set(x, y)
       const out = Math.max(Math.abs(x) / aspect, Math.abs(y))
-      seen = 1 - THREE.MathUtils.smoothstep(out, this.fade[0], this.fade[1])
+      seen = 1 - THREE.MathUtils.smoothstep(out, this.look.fade[0], this.look.fade[1])
     }
-    u.uAmount!.value = amount * seen
+    u.uAmount!.value = (amount * seen * this.look.gain) / this.fit.boost
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect

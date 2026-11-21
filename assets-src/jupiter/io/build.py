@@ -73,6 +73,9 @@ mean_g = (gen * area).sum((0, 1)) / area.sum()
 std_g = np.sqrt((((gen - mean_g) ** 2) * area).sum((0, 1)) / area.sum())
 print('hero albedo mean', mean_a.round(3), 'std', std_a.round(3), 'generated mean', mean_g.round(3), 'std', std_g.round(3))
 graded = np.clip((gen - mean_g) * (std_a / std_g) + mean_a, 0, 1)
+seam = np.minimum(np.arange(MW) + 0.5, MW - 0.5 - np.arange(MW))
+over = step(1 - seam / 140, 0, 1)[None, :, None]
+graded = graded * (1 - over) + np.roll(graded, MW // 2, axis=1) * over
 S = 40
 low = wrapblur((albedo - graded) * w, S) / np.maximum(wrapblur(w, S), 1e-3)
 reach = step(wrapblur(w, S), 0.0, 0.25)
