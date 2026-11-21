@@ -144,7 +144,7 @@ ${PATCH_LEVELS}
   float along = -dot(vRing, uRingN) / (abs(sn) > 1e-4 ? sn : 1e-4);
   float ru = (length(vRing + along * uRingSun) - uRingShade.y) / (uRingShade.z - uRingShade.y);
   vec2 rg = vec2(dFdx(ru), dFdy(ru));
-  for (int k = 0; k < (uRingShade.x > 0.0 && along > 0.0 && ru > 0.0 && ru < 1.0 ? 1 : 0); k++) col *= 1.0 - uRingShade.x * textureGrad(uRingProfile, vec2(ru, 0.5), vec2(rg.x, 0.0), vec2(rg.y, 0.0)).r;
+  for (int k = 0; k < (uRingShade.x > 0.0 && along > 0.0 && ru > 0.0 && ru < 1.0 ? 1 : 0); k++) col *= 1.0 - uRingShade.x * lit * textureGrad(uRingProfile, vec2(ru, 0.5), vec2(rg.x, 0.0), vec2(rg.y, 0.0)).r;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uNear * uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));

@@ -1,0 +1,35 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 211–216, dark sunspot and surrounding filaments",
+   "what": "The sunspot and its immediate rim tighten and streak toward a single point faster than the surrounding surface recedes, making the cover read as a radial warp rather than a camera pullback.",
+   "fix": "Match the spot and neighboring filaments in world space across the cover, then use the eased camera motion to drive the blur instead of compressing the detail toward the spot."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 196–212, main prominence and horizon",
+   "what": "The tall arch is still fully visible and bright at frame 204 but is already gone as a distinct silhouette when the consecutive sheet starts at 211. The samples skip the interval that would establish how the arch, horizon and exposure carry through.",
+   "fix": "Extend the consecutive sheet to start before frame 204 and keep it running through frame 222. Track the arch footpoints and limb through those frames so neither disappears or changes brightness abruptly."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "review pack coverage",
+   "what": "The supplied sheets show the terrain, rise, cover and final hold, but no separately reviewable dive. Arrival easing and continuity into the terrain pass cannot be verified.",
+   "fix": "Add a review-tier dive sheet from the departure from orbit through the arrival at terrain, with consecutive frames around any covered handoff."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 0–98, main prominence above the horizon",
+   "what": "The arch retains nearly the same filament pattern during the slow approach, so it reads more like a static structure than moving plasma.",
+   "fix": "Keep both footpoints anchored and animate subtle, continuous brightness and strand motion along the arch."
+  }
+ ]
+}
