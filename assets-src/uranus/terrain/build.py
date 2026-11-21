@@ -17,7 +17,10 @@ PUB = 'public/assets/uranus/'
 FAR = {'full': (4096, 2048), 'web': (2048, 1024)}
 HEIGHT = (1024, 512)
 CLOUD_HEIGHT = 0.07
+WIDE_SMALL = WORK + 'plate/wide-canvas.png'
+WIDE_BIG = WORK + 'plate/wide.png'
 A_MAX = 4.0
+EPS = 0.005
 
 
 def smooth(a, b, x):
@@ -31,8 +34,27 @@ def fill(table, weight, sig):
     for k in range(table.shape[-1]):
         out[..., k] = ndi.gaussian_filter(table[..., k] * weight, sig, mode='nearest') / np.maximum(wsum, 1e-9)
     bad = wsum < 0.02
-    idx = ndi.distance_transform_edt(bad, return_distances=False, return_indices=True)
-    return out[idx[0], idx[1]], ~bad
+    ext = out.copy()
+    empty = []
+    n = out.shape[1]
+    for r in range(out.shape[0]):
+        ok = np.flatnonzero(~bad[r])
+        if len(ok) < 8:
+            empty.append(r)
+            continue
+        lo, hi = ok[0], ok[-1]
+        vl = out[r, lo:lo + 4].mean(0)
+        vr = out[r, hi - 3:hi + 1].mean(0)
+        gap = (n - 1 - hi) + lo + 1
+        cols = np.concatenate([np.arange(hi + 1, n), np.arange(0, lo)])
+        g = smooth(0, 1, (np.arange(len(cols)) + 1) / gap)[:, None]
+        ext[r, cols] = vr * (1 - g) + vl * g
+    full = np.array([r for r in range(out.shape[0]) if r not in set(empty)])
+    for r in empty:
+        ext[r] = ext[full[np.argmin(np.abs(full - r))]]
+    soft = np.stack([ndi.gaussian_filter(ext[..., k], (3, 4), mode=('nearest', 'wrap')) for k in range(3)], -1)
+    wb = ndi.gaussian_filter(bad.astype(np.float64), 2, mode='nearest')[..., None]
+    return ext * (1 - wb) + soft * wb, ~bad
 
 
 def lookup(table, u, v):
@@ -82,7 +104,11 @@ def halo_table(lin, d, hit):
     near, _ = fill(table, w, (0.8, 6))
     wide, _ = fill(table, w, (2.5, 12))
     rows = (np.arange(ny) / (ny - 1))[:, None, None]
-    return near + (wide - near) * smooth(0.1, 0.35, rows)
+    out = near + (wide - near) * smooth(0.1, 0.35, rows)
+    deg = np.degrees((np.arange(ny) / (ny - 1)) ** 2 * T.EPS_MAX)
+    back = np.median(out[(deg > 6) & (deg < 12)], 0)
+    back = np.stack([ndi.gaussian_filter1d(back[:, k], 6, mode='wrap') for k in range(3)], -1)
+    return np.maximum(out - back[None], 0) * (1 - smooth(3.0, 7.0, deg))[:, None, None]
 
 
 def noise_tile(seed, n=1024):
@@ -120,10 +146,10 @@ def streaks(x, z, angle, seed):
 
 
 def main():
-    src = sys.argv[1] if len(sys.argv) > 1 else 'references/approved/uranus-close.jpg'
-    im = np.asarray(Image.open('references/approved/uranus-close.jpg').convert('RGB')).astype(np.float32) / 255
+    im = np.asarray(Image.open(WIDE_SMALL).convert('RGB')).astype(np.float32) / 255
+    AH, AW = im.shape[:2]
     lin = geo.scene(im).astype(np.float64)
-    d = T.rays()
+    d = T.rays_wide(AW, AH)
     p, n, mu, hit = T.ground(d)
     med = np.stack([ndi.median_filter(lin[..., k], 9) for k in range(3)], -1)
     light = light_table(med, d, mu, hit)
@@ -134,7 +160,7 @@ def main():
         ref = lookup(light, lu, lv)
         light = light_table(med, d, mu, hit, clip=ref)
     ref = lookup(light, lu, lv)
-    a_img = lin / np.maximum(ref, 1e-4)
+    a_img = (lin + EPS) / (ref + EPS)
     a_img[~hit] = 1.0
     halo = halo_table(lin, d, hit)
 
@@ -150,16 +176,20 @@ def main():
     print('A stats on ground: median', np.median(lum[hit]), 'p1', np.percentile(lum[hit], 1), 'p99', np.percentile(lum[hit], 99), 'max', lum[hit].max())
     Image.fromarray((np.clip(a_img / 2.5, 0, 1) ** 0.5 * 255).astype(np.uint8)).save(WORK + 'albedo.png')
 
-    big = Image.open(src).convert('RGB')
+    big = Image.open(WIDE_BIG).convert('RGB')
     sky_fill = np.asarray(big).copy()
-    k = sky_fill.shape[1] / T.W
-    hit_big = cv2.resize(hit.astype(np.uint8), (sky_fill.shape[1], sky_fill.shape[0]), interpolation=cv2.INTER_NEAREST) > 0
-    solid = ndi.binary_erosion(hit_big, iterations=int(3 * k))
-    idx = ndi.distance_transform_edt(~solid, return_distances=False, return_indices=True)
-    sky_fill = sky_fill[idx[0], idx[1]]
+    k = sky_fill.shape[1] / AW
+    solid_small = ndi.binary_erosion(hit, iterations=4)
+    idx = ndi.distance_transform_edt(~solid_small, return_distances=False, return_indices=True)
+    need = cv2.resize((~solid_small).astype(np.uint8), (sky_fill.shape[1], sky_fill.shape[0]), interpolation=cv2.INTER_NEAREST) > 0
+    sy = cv2.resize(idx[0].astype(np.float32), (sky_fill.shape[1], sky_fill.shape[0]), interpolation=cv2.INTER_LINEAR)
+    sx = cv2.resize(idx[1].astype(np.float32), (sky_fill.shape[1], sky_fill.shape[0]), interpolation=cv2.INTER_LINEAR)
+    moved = cv2.remap(sky_fill, (sx + 0.5) * k - 0.5, (sy + 0.5) * k - 0.5, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    sky_fill[need] = moved[need]
     full = Image.fromarray(sky_fill)
-    full.save(PUB + 'full/deck-color.jpg', quality=95, subsampling=0)
-    full.resize((T.W, T.H), Image.LANCZOS).save(PUB + 'web/deck-color.jpg', quality=92, subsampling=0)
+    full.save(PUB + 'full/deck-color.jpg', quality=93, subsampling=0)
+    full.resize((sky_fill.shape[1] // 2, sky_fill.shape[0] // 2), Image.LANCZOS).save(PUB + 'web/deck-color.jpg', quality=91, subsampling=0)
+    full.resize((1408, 792), Image.LANCZOS).save(WORK + 'deck-color-v.jpg', quality=88)
 
     fw, fh = FAR['full']
     jj, ii = np.meshgrid((np.arange(fw) + 0.5) / fw, (np.arange(fh) + 0.5) / fh)
@@ -169,8 +199,8 @@ def main():
     dist = np.linalg.norm(sp, axis=-1)
     sd = sp / dist[..., None]
     smu = -np.sum(sn * sd, -1)
-    px, py, front = T.project(sp)
-    inside = front & (px > 6) & (px < T.W - 6) & (py > 6) & (py < T.H - 6) & (smu > 0.03)
+    px, py, front = T.project_wide(sp, AW, AH)
+    inside = front & (px > 6) & (px < AW - 6) & (py > 6) & (py < AH - 6) & (smu > 0.03)
     real = cv2.remap(a_img.astype(np.float32), (px - 0.5).astype(np.float32), (py - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     x = s * np.sin(spsi)
     z = s * np.cos(spsi)
@@ -194,9 +224,22 @@ def main():
     syn = streaks(x, z, angle, 11)
     tone = streaks(x, z, angle, 301)
     amount = target * 1.6
-    syn_rgb = np.exp(amount * syn)[..., None] * np.array([1 + 0.05 * tone, 1 + 0.015 * tone, 1 - 0.01 * tone]).transpose(1, 2, 0)
-    w = ndi.gaussian_filter(ndi.binary_erosion(inside, iterations=36).astype(np.float32), 12)
+    core = ndi.binary_erosion(inside, iterations=70)
+    rlum = np.maximum(real.mean(-1), 1e-3)
+    lit = core & (lookup(light, (spsi / T.PSI_MAX * 0.5 + 0.5).astype(np.float32), T.light_row(smu).astype(np.float32)).mean(-1) > 0.06)
+    ll = np.log(rlum[lit])
+    line = [np.polyfit(ll, np.log(np.maximum(real[..., c][lit], 1e-3)), 1) for c in range(3)]
+    low = ndi.gaussian_filter(np.where(core, np.log(rlum), 0), 40) / np.maximum(ndi.gaussian_filter(core.astype(np.float32), 40), 1e-3)
+    idx = ndi.distance_transform_edt(~core, return_distances=False, return_indices=True)
+    dist = ndi.distance_transform_edt(~core)
+    base = ndi.gaussian_filter(low[idx[0], idx[1]], 50)
+    glob = float(np.median(ll))
+    base = base + (glob - base) * smooth(60, 700, dist)
+    lsyn = base + amount * syn
+    syn_rgb = np.stack([np.exp(line[c][1] + line[c][0] * lsyn) * (1 + (0.03, 0.01, -0.01)[c] * tone) for c in range(3)], -1)
+    w = ndi.gaussian_filter(core.astype(np.float32), 28)
     w = smooth(0.05, 0.95, w)[..., None]
+    print('albedo colour line slope per channel', [round(float(l[0]), 3) for l in line], 'median', float(np.exp(glob)))
     far = real * w + syn_rgb * (1 - w)
     print('synth amount', amount, 'real fraction', float(inside.mean()))
 
@@ -220,8 +263,8 @@ def main():
     json.dump({
         'centre': T.CENTRE.tolist(), 'radius': T.R, 'up': T.UP.tolist(), 'f0': T.F0.tolist(), 'r0': T.R0.tolist(), 'sun': T.SUN.tolist(),
         'psiMax': T.PSI_MAX, 's0': T.S0, 's1': T.S1, 'epsMax': T.EPS_MAX, 'lightSize': list(T.LIGHT), 'haloSize': list(T.HALO),
-        'heightSize': list(HEIGHT), 'farSize': {k: list(v) for k, v in FAR.items()}, 'aMax': A_MAX, 'flowAngle': float(angle),
-        'imageSize': {'full': [sky_fill.shape[1], sky_fill.shape[0]], 'web': [T.W, T.H]}, 'vfovDeg': T.VFOV,
+        'heightSize': list(HEIGHT), 'farSize': {k: list(v) for k, v in FAR.items()}, 'aMax': A_MAX, 'eps': EPS, 'flowAngle': float(angle),
+        'imageSize': {'full': [sky_fill.shape[1], sky_fill.shape[0]], 'web': [sky_fill.shape[1] // 2, sky_fill.shape[0] // 2]}, 'vfovDeg': T.VFOV, 'window': list(T.WIDE),
     }, open('src/stops/uranus/deck.json', 'w'), indent=1)
 
 

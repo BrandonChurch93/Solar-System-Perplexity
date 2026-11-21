@@ -138,3 +138,32 @@ Orbit milestone was sent to `/root` at 05:05 with commit 2fd342b (binaries commi
 - `terrain/tgeo.py` (geometry), `terrain/build.py [2x image]` (light table L(mu, psi), halo table, `deck-color.jpg`, `deck-far.jpg` log-polar albedo, `deck-height.bin`, `src/stops/uranus/deck.json`), `src/stops/uranus/deck.ts` (log-polar mesh displaced along the image ray by cloud height, colour = mix(far albedo, image / L(image view)) x L(current view), shear flow, halo sphere).
 - First render 05:25: the judged frame reproduces the image; forward 1.2 gives strong motion; but at frame 4200 the image footprint is a trapezoid in the middle and the synthesized surround is far too bright and smooth, with a hard edge. Decision: paint a wider plate of the close image (same camera, wider field, original pixels in the middle) with the image model, fit the light table on the plate, keep the synthesized map only beyond the plate.
 - Still to do in the terrain view: plate, rings (second `Rings` instance fitted to the close image's arch, in terrain-local space), terrain sky patch and `skyAim.terrain`, cover, G13 check.
+
+## State at 06:10 UTC (read this first after a compaction)
+
+Terrain view is built and matches the close image at frame 4290. Next: terrain sheet review, G13 texels, terrain milestone message, then dive and rise (cover, patches on the globe), self checks, gates G11, G12, G15, READY. Looks pushed 06:03 (push at least every 30 minutes).
+
+### Plan now
+- `terrain { vfov 60, forward 2.0, rise 0.43, side 0.15, yawDeg 1.5, pitchDeg -0.5, entryHeight 1.14, entryBack 1.26, entryPitchDeg 6, exitHeight 2.4, exitForward 1.3, exitPitchDeg 10, horizonDeg 2.874, dipDeg 9.9055, rollDeg 14.03 }`. Forward was 1.2: too gentle on the sheet. Level flight needs `side x 0.2364 + rise x 0.9462 - forward x 0.2212 = 0`.
+- `skyAim.terrain` pinned at `[22.60603, 20.42393, -46.69144]` (the value `aim` printed, 47 deg off the band, a dark sky).
+- `npx tsx assets-src/uranus/terrain/predict.ts`: dive cover centre frame 4164, g 0.6431, cover frames about 4157 to 4171.
+
+### Deck
+- `terrain/tgeo.py`: wide plate window `WIDE = (-1.8 TX, -2.6 TY, 1.8 TX, 1.0 TY)`, `rays_wide`, `project_wide`, full circle (`PSI_MAX = pi`; a hole showed behind the pole before), light table 384 x 256, halo 384 x 128.
+- `terrain/plate.py`: outpaint take 3 (seedream_5) tone matched, limb warped onto the fitted horizon, original pixels in the centre, dark areas one fixed teal chroma `[0.103, 1, 1.590]` with floor 0.012 (noise in near-black had turned into pink and cyan mottle through the albedo division).
+- `terrain/build.py`: albedo `(img + 0.005) / (L + 0.005)` (eps in `deck.json`), halo = thin limb glow only (the old table had baked the image's sky veil into the deck's glow), `deck-far.jpg` 360 degrees log-polar.
+- `deck.ts`: `uWin`, `uEps`, far map with `textureGrad` and seam-safe gradients. `look.deck = { flow [0, 0.01, 0.9, 0.4], limb [0.02, 0.06], edge 0.05, lift 1 }`. `look.show.deck` gates the deck for the sky render.
+
+### Ring arcs
+- `terrain/ringfit.py`: centre `[-8.5202, -28.6297, -52.036]`, normal `[-0.16339, -0.30177, 0.93928]`, radius 49.934 (terrain units), rms 1.26 px. `terrain/rings.py`: 36 lines, 21,503 samples, scale 33.289.
+- `look.deckRings`: sigma 0.0004, gain 1.6, glint `[0.6, 24]`. `check/arcs.py STILL`: energy film / image 1.11 (sixths 1.28, 1.18, 0.74, 0.83, 0.93, 0.89), width 3 rows in both. History: sigma 0.0008 gain 3 gave 2.25x; sigma 0.0004 gain 2.7 with the first sky patch gave 1.80x.
+- In `set.ts` the arcs sit in the terrain group and turn with the sky (`skyTurn`), so they get real parallax from the camera move.
+
+### Terrain sky patch
+- `sky/terrain.sh` then `sky/terrain.py` (see RECIPE). In line regions the whole thin part across radius is removed (the first version left dark dotted specks along the bright arcs). The soft ring band stays in the patch. `sky.json` terrain: vfov 60, margin 0.125, gain 1.6667.
+- Rebuild the patch after any change of the deck halo, the Sun settings or the terrain camera at 4290.
+
+### Known weak points of the terrain view
+- Limb glow above the horizon on the left is thinner and sharper than in the image (limb refinements wait for the rounds).
+- The soft ring band is in the sky patch, the lines are 3D: they shift against each other by up to about 27 px over the segment.
+- Dark foreground has little streak detail; cloud height 0.07 gives modest parallax.

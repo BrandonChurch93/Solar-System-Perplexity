@@ -18,11 +18,11 @@ F0 = F0 / np.linalg.norm(F0)
 R0 = np.cross(F0, UP)
 SUN = np.array(FIT['sun'])
 
-PSI_MAX = np.radians(120.0)
+PSI_MAX = np.pi
 S0, S1 = 0.2, 40.0
 EPS_MAX = np.radians(30.0)
-LIGHT = (256, 256)
-HALO = (256, 128)
+LIGHT = (384, 256)
+HALO = (384, 128)
 
 
 def rays(w=W, h=H):
@@ -30,6 +30,24 @@ def rays(w=W, h=H):
     k = W / w
     d = np.stack([(x * k - W / 2) / F, (H / 2 - y * k) / F, -np.ones_like(x)], -1)
     return d / np.linalg.norm(d, axis=-1, keepdims=True)
+
+
+TX = np.tan(np.radians(VFOV) / 2) * 16 / 9
+TY = np.tan(np.radians(VFOV) / 2)
+WIDE = (-1.8 * TX, -2.6 * TY, 1.8 * TX, 1.0 * TY)
+
+
+def rays_wide(w, h):
+    x, y = np.meshgrid((np.arange(w) + 0.5) / w, (np.arange(h) + 0.5) / h)
+    d = np.stack([WIDE[0] + x * (WIDE[2] - WIDE[0]), WIDE[3] - y * (WIDE[3] - WIDE[1]), -np.ones_like(x)], -1)
+    return d / np.linalg.norm(d, axis=-1, keepdims=True)
+
+
+def project_wide(p, w, h):
+    z = -p[..., 2]
+    ok = z > 1e-6
+    zz = np.where(ok, z, 1.0)
+    return (p[..., 0] / zz - WIDE[0]) / (WIDE[2] - WIDE[0]) * w, (WIDE[3] - p[..., 1] / zz) / (WIDE[3] - WIDE[1]) * h, ok
 
 
 def ground(d):

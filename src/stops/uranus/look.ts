@@ -28,7 +28,18 @@ export const rings: RingLook = {
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
 
-export const show = { rings: true, moons: true }
+export const deckRings: RingLook = {
+  color: [0.943, 1.013, 1.039],
+  sigma: 0.0004,
+  halfWidth: 0.02,
+  gain: 1.6,
+  glint: [0.6, 24],
+  forward: [0, 6],
+  shadowFloor: 1,
+  hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
+}
+
+export const show = { rings: true, moons: true, deck: true }
 
 export const halo = {
   size: [64, 64] as [number, number],
@@ -52,6 +63,6 @@ export const moons = {
 export const deck: DeckLook = {
   flow: [0, 0.01, 0.9, 0.4],
   limb: [0.02, 0.06],
-  edge: 0.02,
+  edge: 0.05,
   lift: 1,
 }

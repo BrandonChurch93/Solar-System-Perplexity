@@ -75,11 +75,12 @@ uniform sampler2D uColor;
 uniform sampler2D uFar;
 uniform vec2 uColorSize;
 uniform vec2 uFarSize;
-uniform vec2 uTan;
+uniform vec4 uWin;
 uniform vec3 uCamL;
 uniform vec2 uLimb;
 uniform float uEdge;
 uniform float uAMax;
+uniform float uEps;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
@@ -100,7 +101,7 @@ void main() {
   float muI = dot(na, -di);
   float psiI = atan(dot(di, uR0), dot(di, uF0));
   float z = max(-pa.z, 1e-4);
-  vec2 uvT = vec2(pa.x / (z * uTan.x), pa.y / (z * uTan.y)) * 0.5 + 0.5;
+  vec2 uvT = (pa.xy / z - uWin.xy) / (uWin.zw - uWin.xy);
   vec2 e = min(uvT, 1.0 - uvT);
   float wT = step(0.0, -pa.z) * smoothstep(0.0, uEdge, min(e.x, e.y)) * smoothstep(uLimb.x, uLimb.y, muI);
   vec2 uvS = polar(pa);
@@ -109,13 +110,17 @@ void main() {
   float psi = atan(dot(dv, uR0), dot(dv, uF0));
   vec3 lNow = deckLight(mu, psi);
   vec3 lImg = deckLight(muI, psiI);
-  vec3 aT = inverseFilmic(texture(uColor, clamp(uvT, 0.0, 1.0)).rgb) / max(lImg, vec3(1e-4));
-  vec3 s = texture(uFar, clamp(uvS, 0.0, 1.0)).rgb;
+  vec3 aT = (inverseFilmic(texture(uColor, clamp(uvT, 0.0, 1.0)).rgb) + uEps) / (lImg + uEps);
+  uvS.y = clamp(uvS.y, 0.002, 0.998);
+  float ua = fract(uvS.x + 0.5) - 0.5;
+  vec2 gx = vec2(abs(dFdx(uvS.x)) < abs(dFdx(ua)) ? dFdx(uvS.x) : dFdx(ua), dFdx(uvS.y));
+  vec2 gy = vec2(abs(dFdy(uvS.x)) < abs(dFdy(ua)) ? dFdy(uvS.x) : dFdy(ua), dFdy(uvS.y));
+  vec3 s = textureGrad(uFar, uvS, gx, gy).rgb;
   vec3 aS = s * s * uAMax;
   vec3 col = mix(aS, aT, wT) * lNow;
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  float texels = max(diagTexels(uvT * uColorSize) * wT, diagTexels(uvS * uFarSize));
+  float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), diagTexels(uvT * uColorSize), wT);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
 }`
 
@@ -175,7 +180,6 @@ export class Deck {
     const up = new THREE.Vector3().fromArray(j.up)
     const f0 = new THREE.Vector3().fromArray(j.f0)
     const r0 = new THREE.Vector3().fromArray(j.r0)
-    const th = Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2)
     const polar = new THREE.Vector4(j.psiMax, j.s0, Math.log(j.s1 / j.s0), 0)
     const flowDir = new THREE.Vector2(Math.cos(j.flowAngle), Math.sin(j.flowAngle))
     const shared = {
@@ -190,7 +194,7 @@ export class Deck {
         ...shared,
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uFar: { value: t.far }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
-        uTan: { value: new THREE.Vector2(th * 16 / 9, th) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uAMax: { value: j.aMax },
+        uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
       },
     })

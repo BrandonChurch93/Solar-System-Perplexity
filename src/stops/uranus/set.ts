@@ -4,6 +4,7 @@ import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/type
 import { smooth } from '../../director/rig'
 import { Deck } from './deck'
 import deckJson from './deck.json'
+import deckRingsJson from './deck-rings.json'
 import { Globe } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
@@ -75,13 +76,21 @@ export const createSet: SetFactory = async (ctx) => {
 
   const deck = new Deck({
     color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
-    far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16 }),
+    far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4),
     halo: await ctx.dataTexture(base + 'deck-halo.bin', deckJson.haloSize[0]!, deckJson.haloSize[1]!, 4),
   }, key, look.deck)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const arcGeo = ringGeometry(look.deckRings, parseLines(await ctx.buffer(base + 'deck-rings.bin')))
+  const arcCentre = new THREE.Vector3().fromArray(deckRingsJson.centre)
+  const arcs = new Rings(arcGeo, look.deckRings, arcCentre.clone().multiplyScalar(-1 / deckRingsJson.scale))
+  arcs.mesh.scale.setScalar(deckRingsJson.scale)
+  terrain.add(arcs.mesh)
+  const frameInverse = plan.terrainFrame.clone().invert()
+  const turnMid = plan.turn(terrainMid)
+  const skyTurn = new THREE.Quaternion()
 
   const sun = new THREE.Vector3()
   const turn = new THREE.Quaternion()
@@ -106,6 +115,12 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
         deck.update(world, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height)
+        skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(state.time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
+        arcs.mesh.quaternion.copy(skyTurn)
+        arcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn)
+        arcs.update(shot.sun.dir, gain)
+        arcs.mesh.visible = look.show.rings
+        deck.group.visible = look.show.deck
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -140,6 +155,8 @@ export const createSet: SetFactory = async (ctx) => {
       for (const m of moons) m.body.dispose()
       far.dispose()
       deck.dispose()
+      arcs.dispose()
+      arcGeo.dispose()
     },
   }
 }
