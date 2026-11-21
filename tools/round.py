@@ -154,7 +154,7 @@ def start(a):
         rows = merge_rows(stop)
         state(n, {'agentHead': head, 'ledgerRows': rows})
     sh('npm run -s build')
-    t = sh('npx vitest run 2>&1 | tail -6', check=False)
+    t = sh('npx vitest run 2>&1 | tail -12', check=False)
     if 'failed' in t or 'passed' not in t:
         sys.exit('tests:\n' + t)
     done = sorted(set(finished(PROG.read_text()) + [stop]))
