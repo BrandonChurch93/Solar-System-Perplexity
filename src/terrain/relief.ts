@@ -424,7 +424,7 @@ export class Relief {
       index.addUpdateRange(0, end)
       index.needsUpdate = true
       for (const m of [g.probe, g.veil]) {
-        m.visible = end > 0
+        m.visible = end > 0 && l.mesh.visible
         m.matrixWorld.copy(l.mesh.matrixWorld)
       }
     }
