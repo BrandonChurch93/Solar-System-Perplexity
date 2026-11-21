@@ -1,26 +1,44 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T08:11:54.688Z",
- "head": "cf266dab075d94702ff9088a1aef7dad3a54b7d5",
- "note": "READY on cf266da (main 1e19796 merged). Final compares of hold and terrain, crops, right limb and Triton beside the approved image. G5, G13, G17, G11, G12, G15 pass.",
+ "pushed": "2026-11-21T08:33:54.588Z",
+ "head": "212fd01f6577e11e05109f5cc8c8d87609e894b7",
+ "note": "212fd01: one teal line at the lower right limb, Triton light turned 19 degrees and map detail halved, ring lit in front of the night side, map measured again",
  "looks": [
   {
-   "time": "2026-11-21T08:11:46.740Z",
-   "file": "20261121081146740-still-f04860-16x9-final-full.jpg",
-   "source": "out/work/stills/f04860-16x9-final-full.png",
-   "kind": "still",
-   "label": "neptune.terrain frame 4860, final tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4ecae4b55139b1e6"
+   "time": "2026-11-21T08:33:54.059Z",
+   "file": "20261121083354059-note-chk-0833.jpg",
+   "source": "out/work/nep/chk-0833.jpg",
+   "kind": "note",
+   "label": "draft 4707, 4722, 5006, 5200, 5235 after the changes",
+   "stop": "neptune"
   },
   {
-   "time": "2026-11-21T08:10:45.509Z",
-   "file": "20261121081045509-still-f04605-16x9-draft-full.jpg",
+   "time": "2026-11-21T08:33:53.548Z",
+   "file": "20261121083353548-note-ansa-cmp3.jpg",
+   "source": "out/work/nep/ansa-cmp3.jpg",
+   "kind": "note",
+   "label": "left ansa boosted 3x gain, approved left, film right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T08:33:53.039Z",
+   "file": "20261121083353039-note-triton-cmp3.jpg",
+   "source": "out/work/nep/triton-cmp3.jpg",
+   "kind": "note",
+   "label": "Triton 3x, approved left, film right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T08:33:52.540Z",
+   "file": "20261121083352540-note-lc-c.jpg",
+   "source": "out/work/nep/lc-c.jpg",
+   "kind": "note",
+   "label": "right limb 4x, approved left, film right, angle 30 and -15",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T08:32:52.068Z",
+   "file": "20261121083252068-still-f04605-16x9-draft-full.jpg",
    "source": "out/work/stills/f04605-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.hold frame 4605, draft tier",
@@ -30,45 +48,21 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "4ecae4b55139b1e6"
+   "engine": "a3d211c425dc0406"
   },
   {
-   "time": "2026-11-21T07:53:27.954Z",
-   "file": "20261121075327954-job-frame-04851.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.terrain frame 4851, draft tier, texels view, from the running measure job",
+   "time": "2026-11-21T08:21:33.178Z",
+   "file": "20261121082133178-still-f04860-16x9-draft-full.jpg",
+   "source": "out/work/stills/f04860-16x9-draft-full.png",
+   "kind": "still",
+   "label": "neptune.terrain frame 4860, draft tier",
    "stop": "neptune",
    "segment": "neptune.terrain",
-   "frame": 4851,
+   "frame": 4860,
    "tier": "draft",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-21T07:46:21.281Z",
-   "file": "20261121074621281-note-triton-cmp.jpg",
-   "source": "out/work/nep/triton-cmp.jpg",
-   "kind": "note",
-   "label": "hold 4605 final, Triton, approved left, film right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T07:46:20.252Z",
-   "file": "20261121074620252-note-limbH.jpg",
-   "source": "out/work/nep/limbH.jpg",
-   "kind": "note",
-   "label": "hold 4605 final, lower right limb, approved left, film right (stripes, fix in work)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T07:46:19.311Z",
-   "file": "20261121074619311-note-left-after2.jpg",
-   "source": "out/work/nep/left-after2.jpg",
-   "kind": "note",
-   "label": "dive 4742 4746 4755 at draft after the border knit",
-   "stop": "neptune"
+   "diag": "beauty",
+   "engine": "a3d211c425dc0406"
   },
   {
    "time": "2026-11-21T07:42:59.106Z",
