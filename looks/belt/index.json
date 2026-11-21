@@ -1,9 +1,69 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T23:28:53.819Z",
- "head": "d68846508bc43f20069f426e46367cad7f9a510f",
- "note": "task 4: night side and rim, relief, clean limbs, hero sharp at 2782, near rock 15 frames (drafts; review sheet rendering)",
+ "pushed": "2026-11-21T23:47:29.759Z",
+ "head": "67fe289de76fed5bb349bc92e1583ef09e194a29",
+ "note": "task 4 done: review sheet, final 2782 and 2783, native crops of each rock",
  "looks": [
+  {
+   "time": "2026-11-21T23:45:20.603Z",
+   "file": "20261121234520603-frame-f02325.jpg",
+   "source": "out/work/belt/t4proof-branch/f02325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, draft tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d914815b15cda576"
+  },
+  {
+   "time": "2026-11-21T23:45:17.689Z",
+   "file": "20261121234517689-note-crops-2782.jpg",
+   "source": "out/work/belt/t4/f1/crops-2782.png",
+   "kind": "note",
+   "label": "task 4 final 2782, native crops of each rock: hero (400 px, and its middle), near (600 px), far1 and far2 (240 px)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:45:16.897Z",
+   "file": "20261121234516897-note-f02783.jpg",
+   "source": "out/work/belt/t4/f1/f02783.png",
+   "kind": "note",
+   "label": "task 4 final 2783, near rock at its nearest while whole in frame",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:45:16.172Z",
+   "file": "20261121234516172-note-f02782.jpg",
+   "source": "out/work/belt/t4/f1/f02782.png",
+   "kind": "note",
+   "label": "task 4 final 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:45:15.350Z",
+   "file": "20261121234515350-note-sheet.jpg",
+   "source": "out/work/belt/t4/r1/sheet.jpg",
+   "kind": "note",
+   "label": "task 4 review sheet of mars.travel, every third frame 2745 to 2817, one run",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-21T23:44:51.847Z",
+   "file": "20261121234451847-frame-f02783.jpg",
+   "source": "out/work/belt/t4/f1/f02783.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2783, final tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2783,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d914815b15cda576"
+  },
   {
    "time": "2026-11-21T23:28:52.970Z",
    "file": "20261121232852970-note-d2hero3x.jpg",
@@ -18,60 +78,6 @@
    "source": "out/work/belt/t4/t3-limb-fault-3x.png",
    "kind": "note",
    "label": "task 3 fault found in task 4, three times native: hatch strokes and dotted second contour on the lit limb (final 2782, review 2763)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:28:51.817Z",
-   "file": "20261121232851817-note-d2rocks.jpg",
-   "source": "out/work/belt/t4/d2rocks.png",
-   "kind": "note",
-   "label": "task 4 draft, rocks at twice native: hero and mid 2763, 2769, hero 2775, far1 2775, hero 2778, 2782, far1 and far2 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:28:51.058Z",
-   "file": "20261121232851058-note-sheet.jpg",
-   "source": "out/work/belt/t4/d1/sheet.jpg",
-   "kind": "note",
-   "label": "task 4 draft sheet: hero sharp near 2782 and fast at both ends, near rock 15 frames, night side with fill",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:27:30.121Z",
-   "file": "20261121232730121-frame-f02763.jpg",
-   "source": "out/work/belt/t4/d2/f02763.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2763, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2763,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d914815b15cda576"
-  },
-  {
-   "time": "2026-11-21T17:12:30.222Z",
-   "file": "20261121171230222-note-f02784.jpg",
-   "source": "out/work/belt/t3f2/f02784.png",
-   "kind": "note",
-   "label": "task 3 final 2784, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T17:12:29.543Z",
-   "file": "20261121171229543-note-f02783.jpg",
-   "source": "out/work/belt/t3f2/f02783.png",
-   "kind": "note",
-   "label": "task 3 final 2783, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T17:12:28.698Z",
-   "file": "20261121171228698-note-f02782.jpg",
-   "source": "out/work/belt/t3f2/f02782.png",
-   "kind": "note",
-   "label": "task 3 final 2782, hero on its drift path, near rock passing (nearest whole in frame at 2783)",
    "stop": "mars"
   }
  ]
