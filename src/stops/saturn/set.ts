@@ -191,6 +191,7 @@ export const createSet: SetFactory = async (ctx) => {
       const parted = smooth((away - look.skimAway[0]) / (look.skimAway[1] - look.skimAway[0]))
       ;(ru.uSkimFit!.value as THREE.Vector4).x = THREE.MathUtils.lerp(look.rings.skimEdge[0], look.rings.skimEdge[1], parted)
       ru.uSkimNear!.value = 1 - parted
+      ;(ru.uSkimCam!.value as THREE.Vector3).copy(skimL)
 
       const iu = ice.material.uniforms
       const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))

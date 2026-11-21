@@ -133,6 +133,7 @@ uniform float uSkimW;
 uniform vec4 uSkimFit;
 uniform float uReach;
 uniform float uSkimNear;
+uniform vec3 uSkimCam;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
@@ -176,11 +177,17 @@ void main() {
   vec2 ke = min(kv, 1.0 - kv);
   float wS = uSkimW * (inS > 0.0 || min(ke.x, ke.y) > -0.004 ? smoothstep(0.0, max(uSkimFit.x, 1e-5), min(ke.x, ke.y) + 0.004) : 0.0);
   vec4 km = vec4(0.0);
+  float behind = 0.0;
   for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
     km = textureGrad(uSkimMask, kv, kgx * uSkimFit.w, kgy * uSkimFit.w);
     vec2 tx = kgx * uSkimSize;
     vec2 ty = kgy * uSkimSize;
     wS *= km.g * smoothstep(uSkimFit.y, uSkimFit.z, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    vec3 sc = vec3(uSkimCam.x, uSkimCam.y / uPolar, uSkimCam.z);
+    vec3 sd = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - sc;
+    float sa = dot(sd, sd);
+    float sb = dot(sc, sd);
+    behind = (sb < 0.0 && -sb < sa) ? smoothstep(-0.006, 0.0, (sb * sb - sa * (dot(sc, sc) - 1.0)) / sa) : 0.0;
   }
   bool far = r > uReach;
   vec3 lay = far ? vec3(r, 1.0, 0.0) : ringLayout(vLocal, r);
@@ -203,6 +210,7 @@ void main() {
     float qd = qb * qb - qa * (dot(c, c) - 1.0);
     hidden = qd > 0.0 && -qb - sqrt(max(qd, 0.0)) > 0.0 && -qb - sqrt(max(qd, 0.0)) < qa;
   }
+  if (!hidden && !disc) wS *= mix(1.0 - behind, 1.0, km.r);
   bool top = disc || hidden;
   float over = 0.0;
   for (int k = 0; k < (uClose < 1.0 ? 1 : 0); k++) {
@@ -347,7 +355,7 @@ export class Rings {
       ...profile,
       ...layout,
       ...shots,
-      uHeroFit: { value: new THREE.Vector4(look.heroEdge, look.heroDensity[0], look.heroDensity[1], look.heroTurn) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uHeroOver: { value: new THREE.Vector3(look.heroOver[0], look.heroOver[1], 0) },
+      uHeroFit: { value: new THREE.Vector4(look.heroEdge, look.heroDensity[0], look.heroDensity[1], look.heroTurn) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimCam: { value: new THREE.Vector3() }, uHeroOver: { value: new THREE.Vector3(look.heroOver[0], look.heroOver[1], 0) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },
