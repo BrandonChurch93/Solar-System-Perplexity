@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise, frames 994–1014, globe and sun",
+   "what": "The globe pulls back rapidly and then nearly locks into its final framing, while the sun grows from a small isolated disk to a large cropped disk. The opposite scale changes make the return read as a handoff between views rather than a single camera move.",
+   "fix": "Match the sun's angular size and sky orientation through the cover, then lengthen the rise's deceleration so the globe settles without a sudden loss of speed."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "dive cover, frames 739–745, central crater and right horizon",
+   "what": "The horizon swings and the crater shifts substantially over the first few frames, then the image is nearly settled by frame 745. The handoff feels like a short whip followed by a brake rather than an eased descent.",
+   "fix": "Match camera velocity and angular velocity across the cover and spread the deceleration over more frames."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "rise cover, frames 993–996, foreground crater rims",
+   "what": "High-contrast crater rims flare into a radial smear while the skyline remains relatively crisp, making the ground look stretched during the fastest part of the rise.",
+   "fix": "Use more temporal samples of the moving 3D camera instead of relying on radial blur, and reduce the peak shutter length."
+  }
+ ]
+}

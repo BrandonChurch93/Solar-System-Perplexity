@@ -1,0 +1,174 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop C, bright face of the disk",
+      "what": "granulation is soft and low-contrast, and the hottest patches flatten to a smooth yellow-white with smeared cells. The same face is in image-03 crop M",
+      "fix": "hold detail in the highlights and sharpen the granule edges so the surface is not airbrushed"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "upper-right limb and the prominences along the lower edge",
+      "what": "the loops and radial shafts are cloudy and plastic, and the disk edge is a fuzzy blown glow with no filament structure. The same edge is in image-02 crops A, E, H and I, and image-03 crops L, Q and R",
+      "fix": "break the loops into thin filaments and keep a defined limb under the glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "a few of the brightest stars",
+      "what": "saturated stars bloom into small round skirts instead of tight points. The rest of the starfield crops hold up",
+      "fix": "tighten the brightest stars so they stay pinpoints with only a small glow"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crop W, lower-right ochre dust in the judged frame",
+      "what": "The brightest parts of the dust resolve into soft, rounded patches. The fine star speckle stays sharp over them, making the diffuse structure look slightly airbrushed by comparison.",
+      "fix": "Add subtle filament detail and vary the edge softness of the dust while keeping its broad glow."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crop V, bright white star near the left edge",
+      "what": "The star has a conspicuously broad round glow compared with its tiny core and the surrounding pinpoints.",
+      "fix": "Tighten the bright-star glow and taper it more gradually so the core stays distinct without looking like a soft blob."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "asteroid, lit lower-left face (crops C, F, H, P)",
+      "what": "the surface detail is a uniform, evenly sized grain with many small craters of the same size; it reads as procedural noise rather than regolith, boulders and a range of crater sizes, and the dark upper-right half goes soft and a little airbrushed",
+      "fix": "add a range of crater sizes, a few boulders and ejecta, and stronger large-scale shape variation; raise detail and contrast in the shadowed half"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png / image-21.png",
+      "where": "faint background stars across all sky crops",
+      "what": "the faintest stars are single hard-edged pixels, some saturated red, blue or orange, which look like colour noise or hot pixels at native size rather than point sources",
+      "fix": "draw faint stars as small soft PSFs at sub-pixel positions and tone down the colour saturation of the dimmest stars"
+     },
+     {
+      "severity": "minor",
+      "file": "image-21.png",
+      "where": "small star clumps (crop I lower right, R upper right, B centre)",
+      "what": "several tight clusters with the same look and density appear in the field and read as stamped copies",
+      "fix": "vary the size, density and brightness of the clusters, or place fewer of them"
+     },
+     {
+      "severity": "minor",
+      "file": "image-21.png",
+      "where": "upper centre to upper right sky (crops C, H, L)",
+      "what": "the faint bluish Milky Way glow is a smooth airbrushed haze with no dust lanes or structure",
+      "fix": "add mottled structure and dark lanes to the glow, or remove it"
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-30.png",
+      "where": "crops A, B, C, F, G, H, and I (and matching Milky Way band in image-29.png and image-31.png crops J, K, L, M)",
+      "what": "the diffuse Milky Way cloud and dust-lane texture is visibly upscaled, soft, and blurry at native size while overlaid foreground stars are crisp 1-2 px points, exposing a two-layer sharp-dots-over-blurry-backdrop mismatch",
+      "fix": "use a higher-resolution galactic diffuse/extinction map (16K-32K) or add multi-scale filamentary dust detail and dense unresolved faint stars (mag 11-16) so the cloud backdrop matches native pixel sharpness at narrow FOV"
+     },
+     {
+      "severity": "major",
+      "file": "image-30.png",
+      "where": "crop A upper right, crop F upper right and lower right, crop I lower left (and image-31.png crop L lower center and upper left)",
+      "what": "bright star clusters and galactic knots baked into the background map appear as smeared 15-40 px blurry glow blobs with only a few sharp foreground stars scattered over them",
+      "fix": "remove baked cluster blobs from the diffuse sky map and render those clusters as resolved individual stars across a continuous magnitude distribution"
+     },
+     {
+      "severity": "major",
+      "file": "image-27.png",
+      "where": "crop O center and upper left (also visible in image-26.png crop H lower center and mid-left, crop D upper left, and image-25.png left Milky Way band)",
+      "what": "bright pink/magenta and blue-white objects render as soft 10-16 px circular Gaussian cotton-ball blobs with flat clipped white cores, especially the conspicuous twin pink blobs in crop O",
+      "fix": "replace wide uniform Gaussian glow stamps with compact stellar cores plus physically steep Airy/glare falloff, and use resolved nebula geometry rather than round pink radial blobs for HII regions"
+     },
+     {
+      "severity": "minor",
+      "file": "image-30.png",
+      "where": "crops B, C, and G (and isolated patches in image-26.png crop D center and crop H lower margin)",
+      "what": "peripheral Milky Way clouds and faint nebulae break into smooth, rounded 40-90 px airbrushed brown smudges with soft circular patch edges beneath sharp point stars",
+      "fix": "sculpt peripheral clouds with fine-scale dark dust filaments and resolve their edges into faint star density gradients instead of smooth airbrushed patches"
+     },
+     {
+      "severity": "minor",
+      "file": "image-26.png",
+      "where": "crops E, F, and G (and image-28.png crops U and V; plus upper-right dark sky across image-25.png and image-27.png crops K, L, M, Q, R)",
+      "what": "the Sagittarius bulge clouds in the wider frame still look slightly soft and airbrushed relative to the overlaid point stars, and a faint broad circular bluish skyglow patch is perceptible in the upper-right sky",
+      "fix": "increase fine dust and faint-star detail in the bulge map and even out the localized circular background glow in the upper-right sky"
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-34.png",
+      "where": "cell H, lit cloud deck",
+      "what": "the bands are smeared along latitude and look airbrushed, with no small-scale turbulence; the same smear is in image-35.png cell O and on the lit disk of image-33.png",
+      "fix": "break the latitudinal smear and add finer convective detail so the deck does not read as a painted texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-36.png",
+      "where": "cell S, thin outer ring arcs",
+      "what": "the high-contrast edges stair-step slightly against the sky; the same stepping shows on the outer arcs in image-33.png",
+      "fix": "antialias the thin ring edges so the arcs stay smooth"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tile D (lower-left shadowed planet foreground in pair-03-b.png)",
+   "what": "faint blotchy dark-cyan mottling and cellular cloud artifacts appear in the deep shadow where the target fades smoothly into clean dark navy-black",
+   "fix": "suppress the patchy cyan texture in the lower-left shadow so the atmosphere grades smoothly into deep dark navy"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles C, F, G, H (concentric rings, sun flare, and Milky Way sky in pair-03-b.png)",
+   "what": "closely spaced multi-strand ringlets and pinpoint background stars in the Milky Way behind the rings are slightly softer, with a slightly wider sun bloom veil",
+   "fix": "sharpen the fine individual ring strands and pinpoint star clusters in the Milky Way and slightly tighten the sun flare haze"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tiles E, F, H (Milky Way band on the right of pair-01-b.png)",
+   "what": "fine pinpoint star clusters and crisp dark dust filaments inside the bright Milky Way core are slightly softened into smoother haze",
+   "fix": "restore high-frequency star sharpness and dark dust lane micro-contrast in the Milky Way core"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tiles A, C, G (white convective clouds on the sunlit planet disc in pair-01-b.png)",
+   "what": "the bright white cumuliform cloud clusters are slightly blurred and lack the crisp frothy internal texture of the target",
+   "fix": "increase fine high-frequency detail and crispness on the white cloud tops"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tiles B, C, G (moons and upper-left outer ring arc in pair-01-b.png)",
+   "what": "the small moons lose subtle crater mottling with a slightly harder terminator edge, and the upper-left outermost ring line is slightly heavier white while faint inner ringlets soften",
+   "fix": "restore subtle rocky texture and a softer terminator falloff on the moons, slightly ease brightness on the upper-left outer ring line, and sharpen the faint inner ringlets"
+  }
+ ]
+}
