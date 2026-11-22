@@ -767,3 +767,6 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - "Every READY and every picture you send names the main commit your tree holds. Pictures from a tree without today's main do not count." So the kept before sheets of the terrain view and the covers (made on 8f45917) are remade on the merged tree without the layer before they are sent.
 - Expected by the Builder: Jupiter 2997 changes by at most 4 levels, 3296 "now have stars round the globe where there was an empty field". A second step raises the rise lift (0.74 at the judged rise frame where batch 17 has 0.44).
 - "Nothing goes onto main from a stop before Phase 6. Keep working your items, motion first."
+- 02:22, merged tree 6d4b4ef without the tier code (stashed): final 2895 sha256 c34e30ce2c61de16 and final 3150 sha256 59bb10ef93d6ea42, the same bytes as before the merge (kept under `out/work/jupiter/fg/kept/*-b17-nolayer.png`). tsc 0, build ok, vitest 70 of 70.
+- Before pictures on the merged tree, layer stashed: finals 2997 and 3296 (`kept/f0N-final-b17-nolayer.png`), the review sheet of the terrain view (`kept/terrain-sheet-before-b17.png`). Then `git stash pop` and the draft sweep again.
+
