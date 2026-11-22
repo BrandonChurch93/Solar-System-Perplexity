@@ -1,8 +1,8 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T15:46:10.374Z",
- "head": "5d36d0ccefd385d759aedc4e29d27a4831840b36",
- "note": "CUT34 proof running: rise release over 24 frames (e30dd702) on veil change A (539534e0), tree holds main 64fff6f; G13 0 of 433",
+ "pushed": "2026-11-22T16:04:39.249Z",
+ "head": "b57d9fab2d0580831b3915a0d8d5ecda89eb8f93",
+ "note": "CUT34 sent: READY a135f6b8 (holds main 6460b4a), veil change and rise release over 24 frames; night side and hold rim tests left out",
  "looks": [
   {
    "time": "2026-11-22T15:37:32.088Z",
