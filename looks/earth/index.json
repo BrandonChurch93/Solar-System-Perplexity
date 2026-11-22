@@ -1,35 +1,12 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T17:48:32.241Z",
- "head": "d840bb1463872bc35abc1e2feb78e91d7bd57f50",
- "note": "CUT35 on main 3dad4447: new rise cover sheet with the rise law; old sheets of main render now; lights fade in the flight committed (d840bb14), drafts next",
+ "pushed": "2026-11-22T17:59:37.226Z",
+ "head": "8a395ad4f36d1a58be260d496e8f449871273a4f",
+ "note": "CUT35 on head 8a395ad4 (main b22a7927): rise sheets round 34 above the new arc; lights fade at 1642, 1650, 1660 at the draft tier; final 1755 keeps 143b0a53",
  "looks": [
   {
-   "time": "2026-11-22T17:48:31.228Z",
-   "file": "20261122174831228-note-new-cover-sheet.jpg",
-   "source": "out/work/earth/pb/c35/new-cover-sheet.png",
-   "kind": "note",
-   "label": "CUT35 rise law: new cover sheet 2125 to 2136 at review, head 5879f9ac code (main 3dad4447): the horizon stays in the frame and curls into the limb",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T17:46:29.625Z",
-   "file": "20261122174629625-sheet-earth.rise-cover-preview-review.jpg",
-   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.rise, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2125,
-   "last": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:03:33.374Z",
-   "file": "20261122170333374-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-22T17:58:30.517Z",
+   "file": "20261122175830517-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, final tier",
@@ -42,8 +19,8 @@
    "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T17:03:32.227Z",
-   "file": "20261122170332227-still-f01755-16x9-final-full.jpg",
+   "time": "2026-11-22T17:58:29.413Z",
+   "file": "20261122175829413-still-f01755-16x9-final-full.jpg",
    "source": "out/work/stills/f01755-16x9-final-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, final tier",
@@ -54,6 +31,22 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:58:21.471Z",
+   "file": "20261122175821471-note-pair-lights-1650-1660.jpg",
+   "source": "out/work/earth/pb/c35/pair-lights-1650-1660.png",
+   "kind": "note",
+   "label": "CUT35 lights fade (d840bb14): drafts 1650 (2 times) and 1660, main left, fade right: the lights come up as the globe nears (factor 0.13 at 1650, 0.72 at 1660, 1 from 1672)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T17:58:20.302Z",
+   "file": "20261122175820302-note-pair-1642-draft.jpg",
+   "source": "out/work/earth/pb/c35/pair-1642-draft.png",
+   "kind": "note",
+   "label": "CUT35 lights fade (d840bb14, main b22a7927): judged travel frame 1642 at the draft tier, 4 times native: main left, lights faded with distance right",
+   "stop": "earth"
   },
   {
    "time": "2026-11-22T17:02:16.777Z",
