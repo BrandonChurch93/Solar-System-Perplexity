@@ -279,6 +279,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.wash(close > 0 ? look.close.haze.wash.amount * (1 - THREE.MathUtils.smoothstep(high, look.close.haze.wash.height[0], look.close.haze.wash.height[1])) : 0, look.close.haze.wash.cap)
       const reach = wideFar(high)
       globe.reach(reach - look.close.wide.soft, reach, wideFeather(high), look.close.wide.over)
+      globe.cap(rising ? THREE.MathUtils.smoothstep(high, look.close.wide.cap.height[0], look.close.wide.cap.height[1]) : 0, look.close.wide.cap.reach[0], look.close.wide.cap.reach[1], look.close.wide.cap.over, look.close.wide.cap.span)
       globe.carry(mix(look.carry.gain, look.carry.lift, grade), look.carry.knee, look.carry.grey * grade)
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
