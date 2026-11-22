@@ -73,7 +73,7 @@ describe('belt motion', () => {
     })
   })
 
-  it('shows the hero whole and one streak apart from it in the judged frame', () => {
+  it('shows the hero alone in the judged frame: whole, 80 px clear, a third in from the right, 360 px or more across, under 2 px of blur', () => {
     const judged = beltJudgedFrame()
     const seen: { id: string; s: Seen; blur: number }[] = []
     motion.rocks.forEach((rock, i) => {
@@ -82,18 +82,17 @@ describe('belt motion', () => {
       if (!a.inside && !b.inside) return
       seen.push({ id: rock.id, s: a, blur: Math.hypot(b.x - a.x, b.y - a.y) })
     })
-    const hero = seen.find((v) => v.id === 'hero')!
-    expect(hero.blur).toBeGreaterThanOrEqual(7)
-    expect(hero.blur).toBeLessThanOrEqual(12)
-    expect(2 * hero.s.radius).toBeGreaterThanOrEqual(220)
-    expect(2 * hero.s.radius).toBeLessThanOrEqual(320)
+    expect(seen.map((v) => v.id)).toEqual(['hero'])
+    const hero = seen[0]!
+    expect(hero.blur).toBeLessThan(2)
+    expect(2 * hero.s.radius).toBeGreaterThanOrEqual(360)
     expect(Math.min(hero.s.x, format.width - hero.s.x, hero.s.y, format.height - hero.s.y) - hero.s.radius).toBeGreaterThanOrEqual(80)
-    const others = seen.filter((v) => v.id !== 'hero')
-    expect(others.length).toBeGreaterThanOrEqual(1)
-    for (const o of others) {
-      expect(o.blur, o.id + ' blur').toBeGreaterThan(60)
-      expect(Math.hypot(o.s.x - hero.s.x, o.s.y - hero.s.y) - o.s.radius - hero.s.radius - o.blur, o.id + ' apart').toBeGreaterThan(100)
-    }
+    expect(hero.s.x / format.width).toBeGreaterThan(0.6)
+    expect(hero.s.x / format.width).toBeLessThan(0.72)
+    const rock = motion.rocks.find((r) => r.id === 'hero')!
+    const turn = THREE.MathUtils.degToRad(Math.abs(rock.spin)) * hero.s.radius * (0.5 / config.fps)
+    expect(turn).toBeLessThan(1.5)
+    expect(Math.abs(rock.spin)).toBeGreaterThanOrEqual(10)
   })
 
   it('keeps every rock off the discs of Mars and Jupiter, out of the lens and under a fifth of the frame', () => {
@@ -129,76 +128,66 @@ describe('belt motion', () => {
     })
   })
 
-  it('lets no rock stay within 100 px of one place for more than ten frames', () => {
+  it('lets no rock pass as a bar: the blur of one shutter stays under half the width of the rock', () => {
     motion.rocks.forEach((rock, i) => {
-      for (let f = segment.firstFrame; f < segment.endFrame - 10; f++) {
+      let seen = 0
+      for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
         const a = look(motion, i, (f + 0.25) / config.fps, f)
-        const b = look(motion, i, (f + 10.25) / config.fps, f + 10)
-        if (a.inside && b.inside) expect(Math.hypot(b.x - a.x, b.y - a.y), rock.id + ' from frame ' + f).toBeGreaterThan(200)
+        const b = look(motion, i, (f + 0.75) / config.fps, f)
+        if (!a.inside) continue
+        seen++
+        expect(Math.hypot(b.x - a.x, b.y - a.y), rock.id + ' blur at frame ' + f).toBeLessThan(a.radius)
       }
+      expect(seen, rock.id).toBeGreaterThanOrEqual(8)
     })
   })
 
-  it('passes the near rock as a long streak with firm sides: blur over its own width, focus blur under 3 px', () => {
+  it('passes the near rock out of focus by 8 px or more and takes it out four frames or more before the judged frame', () => {
     const i = motion.rocks.findIndex((r) => r.id === 'near')
-    let seen = 0
+    let last = 0
     for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
-      const a = look(motion, i, (f + 0.25) / config.fps, f)
-      const b = look(motion, i, (f + 0.75) / config.fps, f)
-      if (!a.inside) continue
-      seen++
-      const blur = Math.hypot(b.x - a.x, b.y - a.y)
-      expect(blur, 'blur at frame ' + f).toBeGreaterThan(2 * a.radius)
-      expect(blur, 'blur at frame ' + f).toBeGreaterThan(60)
+      const time = (f + 0.25) / config.fps
+      if (!look(motion, i, time, f).inside) continue
+      last = f
+      const shot = director.shotAt(f, time)
       const pose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() }
-      motion.pose(i, director.shotAt(f, (f + 0.25) / config.fps), pose)
-      const shot = director.shotAt(f, (f + 0.25) / config.fps)
+      motion.pose(i, shot, pose)
       const dist = pose.position.clone().sub(shot.camera.position).length()
-      expect(beltSpec.aperture * Math.max(0, 1 / Math.min(dist, pose.position.length()) - 1 / beltSpec.focus)).toBeLessThan(3)
+      expect(beltSpec.aperture * Math.max(0, 1 / Math.min(dist, pose.position.length()) - 1 / beltSpec.focus), 'focus blur at frame ' + f).toBeGreaterThanOrEqual(8)
     }
-    expect(seen).toBeGreaterThanOrEqual(4)
+    expect(last).toBeLessThanOrEqual(beltJudgedFrame() - 4)
   })
 
-  it('passes the hero through at one even pace of 14 to 24 px per frame, whole for twelve frames or more around the judged frame', () => {
+  it('holds the hero whole and 80 px clear of every edge for six frames each side of the judged frame, and passes it in and out at 40 px per frame or more', () => {
     const i = motion.rocks.findIndex((r) => r.id === 'hero')
-    let slow = 1e9
-    let fast = 0
-    const whole: number[] = []
+    const speeds: number[] = []
     for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
       const a = look(motion, i, (f + 0.25) / config.fps, f)
       const b = look(motion, i, (f + 1.25) / config.fps, f + 1)
       if (!a.inside) continue
-      const speed = Math.hypot(b.x - a.x, b.y - a.y)
-      slow = Math.min(slow, speed)
-      fast = Math.max(fast, speed)
-      if (Math.min(a.x, format.width - a.x, a.y, format.height - a.y) >= a.radius) whole.push(f)
+      speeds.push(Math.hypot(b.x - a.x, b.y - a.y))
+      if (Math.abs(f - beltJudgedFrame()) <= 6) {
+        for (const k of [0.25, 0.75]) {
+          const s = look(motion, i, (f + k) / config.fps, f)
+          expect(Math.min(s.x, format.width - s.x, s.y, format.height - s.y) - s.radius, 'clear at frame ' + f).toBeGreaterThanOrEqual(80)
+        }
+      }
     }
-    expect(slow).toBeGreaterThanOrEqual(14)
-    expect(fast).toBeLessThanOrEqual(24)
-    expect(fast / slow).toBeLessThan(1.1)
-    expect(whole.length).toBeGreaterThanOrEqual(12)
-    expect(whole[0]!).toBeLessThanOrEqual(beltJudgedFrame() - 5)
-    expect(whole[whole.length - 1]!).toBeGreaterThanOrEqual(beltJudgedFrame() + 5)
-    expect(whole[whole.length - 1]! - whole[0]! + 1).toBe(whole.length)
+    expect(speeds[0]!).toBeGreaterThanOrEqual(40)
+    expect(speeds[speeds.length - 1]!).toBeGreaterThanOrEqual(40)
+    expect(Math.min(...speeds)).toBeLessThan(4)
   })
 
-  it('brings the hero in lit: the part that shows first, between the way into the frame and the lens, faces the Sun', () => {
+  it('lights the hero from the side at the judged frame so the terminator crosses its face', () => {
     const i = motion.rocks.findIndex((r) => r.id === 'hero')
-    let seen = 0
-    for (let f = segment.firstFrame; f < segment.endFrame - 1 && seen < 12; f++) {
-      const a = look(motion, i, (f + 0.25) / config.fps, f)
-      if (!a.inside) continue
-      seen++
-      const into = new THREE.Vector3(Math.min(Math.max(a.x, 0), format.width) - a.x, a.y - Math.min(Math.max(a.y, 0), format.height), 0)
-      if (into.length() < 1) continue
-      const part = into.normalize().add(new THREE.Vector3(0, 0, 1)).normalize()
-      expect(part.dot(a.sun), 'frame ' + f + ' sun ' + a.sun.toArray().map((v) => v.toFixed(2)).join(' ')).toBeGreaterThan(0.2)
-    }
-    expect(seen).toBe(12)
-  })
-
-  it('turns the hero by 40 degrees or more between 2772 and 2792', () => {
-    const hero = motion.rocks.find((r) => r.id === 'hero')!
-    expect((Math.abs(hero.spin) * 20) / config.fps).toBeGreaterThanOrEqual(40)
+    const judged = beltJudgedFrame()
+    const time = (judged + 0.25) / config.fps
+    const shot = director.shotAt(judged, time)
+    const pose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() }
+    motion.pose(i, shot, pose)
+    const toLens = shot.camera.position.clone().sub(pose.position).normalize()
+    const phase = THREE.MathUtils.radToDeg(toLens.angleTo(shot.sun.dir))
+    expect(phase).toBeGreaterThan(55)
+    expect(phase).toBeLessThan(110)
   })
 })
