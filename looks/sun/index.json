@@ -1,9 +1,70 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T15:47:31.131Z",
+ "pushed": "2026-11-22T16:06:03.021Z",
  "head": "3e2909ace592a8595d72bf0fd5b4dd02503aae16",
- "note": "sun: CUT34 sent (589ee05f), review frames of the leave, main 4f4c4f7e",
+ "note": "sun: the lower right corner of frame 90 back on the approved lanes (take W-1), own lane and fibre takes for it, on drafts",
  "looks": [
+  {
+   "time": "2026-11-22T16:06:02.371Z",
+   "file": "20261122160602371-note-c6-takes-A6-A7-A8-corner.jpg",
+   "source": "out/work/sun/cn/c6-takes-A6-A7-A8-corner.jpg",
+   "kind": "note",
+   "label": "sun apron takes in the corner: A-6 (old), A-7 (lanes, soft), A-8 (fibres); agent/sun 3e2909ac, main 4f4c4f7e",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:06:01.727Z",
+   "file": "20261122160601727-note-c5-sketch-A7.jpg",
+   "source": "out/work/sun/cn/c5-sketch-A7.jpg",
+   "kind": "note",
+   "label": "sun apron input A-7: lane network of the approved cells drawn into the corner; agent/sun 3e2909ac, main 4f4c4f7e",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:06:01.120Z",
+   "file": "20261122160601120-note-c2-plate-corner-base-W3-W1.jpg",
+   "source": "out/work/sun/cn/c2-plate-corner-base-W3-W1.jpg",
+   "kind": "note",
+   "label": "sun terrain plate, lower right corner at half size: approved base, today's take W-3, take W-1 (approved layout); agent/sun 3e2909ac, main 4f4c4f7e",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:06:00.502Z",
+   "file": "20261122160600502-note-c4-d90-corner.jpg",
+   "source": "out/work/sun/cn/c4-d90-corner.jpg",
+   "kind": "note",
+   "label": "sun frame 90 lower right corner at native size, draft: approved, round 24, today (W-3 corner), W-1 corner first build under the old layers (softer, not kept as is); agent/sun 3e2909ac, main 4f4c4f7e",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T15:56:05.484Z",
+   "file": "20261122155605484-sheet-sun.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/sun.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet sun.terrain, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "first": 0,
+   "last": 179,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T15:56:03.261Z",
+   "file": "20261122155603261-frame-f00179-review.jpg",
+   "source": "out/work/sheets/.frames-fhMZBm/f00179-review.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 179, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 179,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T15:47:30.575Z",
    "file": "20261122154730575-note-c36-rv-470-490.jpg",
@@ -19,66 +80,6 @@
    "kind": "note",
    "label": "finals 360 beside the approved hero and 247 pair, limb cure. measure PASS, repeat clean. agent/sun bdbef6de, main a60c5ffd",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:24:50.808Z",
-   "file": "20261122152450808-job-frame-00090.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:15:49.617Z",
-   "file": "20261122151549617-note-c36-leave-limb-b-x3.jpg",
-   "source": "out/work/sun/hk3/c36-leave-limb-b-x3.jpg",
-   "kind": "note",
-   "label": "leave 456, 464, 472 lower limb x3, d8ec4ddf against bdbef6de (drafts), main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:15:48.426Z",
-   "file": "20261122151548426-note-c36-gap-390.jpg",
-   "source": "out/work/sun/hk3/c36-gap-390.jpg",
-   "kind": "note",
-   "label": "hook take 3 at 390 px wide, frames 36 to 50, shell and arch (drafts), agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:10:25.491Z",
-   "file": "20261122151025491-note-c36-final-360-247-pairs.jpg",
-   "source": "out/work/sun/hk3/c36-final-360-247-pairs.jpg",
-   "kind": "note",
-   "label": "Sun 360 final beside the approved hero, 247 final main and limb cure. agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:10:24.901Z",
-   "file": "20261122151024901-note-c36-final-247-limb-x3.jpg",
-   "source": "out/work/sun/hk3/c36-final-247-limb-x3.jpg",
-   "kind": "note",
-   "label": "Sun rise 247 final, limb at 3 times, main and limb cure. agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:09:03.565Z",
-   "file": "20261122120903565-frame-f00114-review.jpg",
-   "source": "out/work/sheets/.frames-KcTRKo/f00114-review.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 114, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 114,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   }
  ]
 }
