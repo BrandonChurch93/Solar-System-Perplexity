@@ -1,9 +1,49 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T01:45:19.891Z",
- "head": "1720146c8204daacfad23bf5226a6de9d11b921a",
- "note": "Sun polish: review sheet 200 to 224 rendering; opening at phone size prototyped offline (knots along the arch); item 4 limb haze layer in study",
+ "pushed": "2026-11-22T02:08:51.403Z",
+ "head": "3ef854c856d2d69ae254bb99b23b40b0a9c3f5fd",
+ "note": "sun: review sheet of every frame 200 to 224 done; item 4 offline assets; next the opening switch",
  "looks": [
+  {
+   "time": "2026-11-22T02:08:50.821Z",
+   "file": "20261122020850821-note-i286-review-212-224-larger.jpg",
+   "source": "out/work/sun/i286-review-212-224-larger.jpg",
+   "kind": "note",
+   "label": "sun item 1: review frames 212 to 224, larger",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:08:50.266Z",
+   "file": "20261122020850266-note-i286-review-200-211-larger.jpg",
+   "source": "out/work/sun/i286-review-200-211-larger.jpg",
+   "kind": "note",
+   "label": "sun item 1: review frames 200 to 211, larger",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:08:49.703Z",
+   "file": "20261122020849703-note-i286-review-sheet-200-224-every-frame.jpg",
+   "source": "out/work/sun/i286-review-sheet-200-224-every-frame.jpg",
+   "kind": "note",
+   "label": "sun item 1: review tier sheet of every frame 200 to 224 (rise cover), tree 6177d82",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:56:48.505Z",
+   "file": "20261122015648505-note-i285-item4-limb-haze-texture-gain3.jpg",
+   "source": "out/work/sun/haze/i285-item4-limb-haze-texture-gain3.jpg",
+   "kind": "note",
+   "label": "item 4 offline: the limb haze as its own layer in limb coordinates (azimuth by 0 to 8 degrees), 3 times gain",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:56:47.433Z",
+   "file": "20261122015647433-note-i285-item4-old-card-over-new-card-gain3.jpg",
+   "source": "out/work/sun/haze/i285-item4-old-card-over-new-card-gain3.jpg",
+   "kind": "note",
+   "label": "item 4 offline: terrain sky card, old over new, 3 times gain (the dark band along the limb is gone from the card)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T01:44:06.768Z",
    "file": "20261122014406768-note-i284-opening-arch-lanes-contours.jpg",
@@ -85,44 +125,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T01:14:43.104Z",
-   "file": "20261122011443104-note-i275-f90-approved-over-now-upper-gain3.jpg",
-   "source": "out/work/sun/i275-f90-approved-over-now-upper-gain3.jpg",
-   "kind": "note",
-   "label": "item 4 study: frame 90 upper half, approved over now, 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:42.203Z",
-   "file": "20261122011442203-note-i274-f60-upper-gain3-half.jpg",
-   "source": "out/work/sun/i274-f60-upper-gain3-half.jpg",
-   "kind": "note",
-   "label": "item 4 study: frame 60 upper half at 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:41.155Z",
-   "file": "20261122011441155-note-i274-f0-upper-gain3-half.jpg",
-   "source": "out/work/sun/i274-f0-upper-gain3-half.jpg",
-   "kind": "note",
-   "label": "item 4 study: frame 0 upper half at 3 times gain (build P3)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:05:00.058Z",
-   "file": "20261122010500058-job-frame-00247.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 247,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-22T00:46:54.452Z",
    "file": "20261122004654452-frame-f00060.jpg",
    "source": "out/work/sun/rf12/f00060.png",
@@ -132,20 +134,6 @@
    "segment": "sun.terrain",
    "frame": 60,
    "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T17:49:49.561Z",
-   "file": "20261121174949561-frame-chk-360.jpg",
-   "source": "out/work/sun/chk-360.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
