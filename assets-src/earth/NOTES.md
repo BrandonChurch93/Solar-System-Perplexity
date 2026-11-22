@@ -1143,3 +1143,16 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
   - 45, R4 minor, venus.travel sheet, frames 1666 to 1679, Earth upper right limb: "a green band with a red edge sits on the limb. It reads as chromatic fringing or a stuck effect, not an aurora" (the kept build's curtain; to look at on this branch: review stills 1668 and 1676 queued after the terrain sheet, `pb/f/p-1668.png`, `p-1676.png`).
   - 28, R7 minor, 1748 after the stress encode: red aurora fringe blotchy (encode).
   - R2 juror on earth.hold: "the stair-stepped pixel aliasing along the Moon's silhouette and Earth's limb cutting visibly beneath the additive aurora shader" (kept build; item 7's smooth Moon edge and item 5's shell emission are the cures on this branch).
+
+### MAIL 80 from the Builder (06:12 UTC), binding, verbatim
+
+"For your Phase 6 polish list on `agent/earth` (no new branch; nothing goes onto main before Phase 6). Whole film round 30 is closed; one minor names Earth as it arrives. Motion critic, venus.travel frames 1666 to 1679, Earth's upper right limb: "a green band with a red edge sits on the limb. It reads as chromatic fringing or a stuck effect, not an aurora". Fix it names: "limit the aurora to the poles with soft falloff and remove the red fringe". What I ask: look at Earth in those fourteen frames at the review tier (small on screen, growing), find what draws the green band with the red edge at that size (the aurora at a distance, or the air's limb term), and cure it there without moving your judged frames 1755, 1857, 2010; the hold's aurora is in the approved image and stays. A strip of 1666 to 1679 before and after with your next report. The engine agent's step 4 on your head 3afb552 came back clean (one faint move at 1642 through your rebuilt hold sky patch, taken as part of the merge). No answer needed now."
+
+- Owed: strip of 1666 to 1679 at the review tier, before (kept build on main) and after (this branch, then with the cure), in the next report. Judged 1755, 1857, 2010 must not move.
+
+### Measure on the batch 19 tree (05:41:55 to 06:07:50 UTC, about 1555 s, head bd93b1f, code 3b3819e)
+
+- PASS G13 earth: 0 of 463 frames over 0.02 soft.
+- PASS G5 earth: 1755 hold invalid 0 coverage 0.329; 1857 dive invalid 0 coverage 0.452; 2010 terrain invalid 0 coverage 0.780; 2156 rise invalid 0 coverage 0.386.
+- PASS G17 earth: 1755 median 1.198 p25 1.138 over 72 tiles; 2010 median 1.165 p25 1.132 over 78 tiles.
+- The same numbers as on batch 18. Log `out/work/earth/pb/g/measure.log`.
