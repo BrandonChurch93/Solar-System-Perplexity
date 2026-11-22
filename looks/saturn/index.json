@@ -1,9 +1,38 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T17:25:38.658Z",
- "head": "db6bf888c76945aa8eda5144c63566551459163c",
- "note": "CUT35 trial: fitted tone field for the near lanes at 3720, pairs against the approved image; a one sample bar found at draft 3776; main ff158d90 in the tree",
+ "pushed": "2026-11-22T17:31:43.304Z",
+ "head": "f39fba5f91c00172d94149e860447a14f82c8c68",
+ "note": "CUT35 candidate: tone field for the near lanes at 3720, terrain review sheet with it on; tree holds main 179ebec6",
  "looks": [
+  {
+   "time": "2026-11-22T17:30:33.239Z",
+   "file": "20261122173033239-sheet-saturn.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.terrain, review tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "first": 3630,
+   "last": 3809,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:30:31.353Z",
+   "file": "20261122173031353-frame-f03809-review.jpg",
+   "source": "out/work/sheets/.frames-pNQQYA/f03809-review.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, review tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T17:25:38.005Z",
    "file": "20261122172538005-note-bar-n.jpg",
@@ -43,28 +72,6 @@
    "kind": "note",
    "label": "trial for CUT35, draft 3630 below the approved frame's lower border at native size: kept above, new below (main ff158d90 in the tree)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T17:25:34.972Z",
-   "file": "20261122172534972-note-t-a.jpg",
-   "source": "../../../../tmp/c34/t-a.png",
-   "kind": "note",
-   "label": "trial for CUT35, 3720 final near lanes at native size: approved | kept | new (main ff158d90 in the tree)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T17:24:36.494Z",
-   "file": "20261122172436494-frame-B1R-3776.jpg",
-   "source": "out/work/saturn/B1R-3776.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3776, review tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3776,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
   },
   {
    "time": "2026-11-22T17:03:27.141Z",
