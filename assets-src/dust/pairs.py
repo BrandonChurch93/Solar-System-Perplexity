@@ -5,7 +5,7 @@ from scipy import ndimage
 
 frame, before, after, bare, out = sys.argv[1:6]
 places = [tuple(int(v) for v in p.split(',')) for p in sys.argv[6:]]
-W, H, GAP, BAR, UP, FINE = 640, 300, 8, 16, 8, 25
+W, H, GAP, BAR, UP, FINE = 640, 300, 8, 16, 8, 40
 b = Image.open(before).convert('RGB')
 a = Image.open(after).convert('RGB')
 n = Image.open(bare).convert('RGB')

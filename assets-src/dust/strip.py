@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 data = json.loads(sys.stdin.read())
 withdir, baredir, out = sys.argv[1:4]
 W, H = int(sys.argv[4]), int(sys.argv[5])
-GAP, BAR, UP, COLS = 4, 16, 25, 4
+GAP, BAR, UP, COLS = 4, 16, 40, 4
 frames = data['frames']
 bands = (len(frames) + COLS - 1) // COLS
 sheet = Image.new('RGB', (COLS * W + (COLS - 1) * GAP, bands * 2 * (H + BAR) + (bands * 2 - 1) * GAP), (24, 24, 24))
