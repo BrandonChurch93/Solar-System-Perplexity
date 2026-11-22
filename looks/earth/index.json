@@ -1,9 +1,33 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T06:10:48.604Z",
+ "pushed": "2026-11-22T06:11:24.608Z",
  "head": "9f49c8b3dafabe73cee92f5ddf643a79f246743f",
  "note": "Earth POLISH READY 2 set on engine batch 19: judged frames at the final tier, terrain sheet, cover sheets, proofs of items 4 to 8. Next: the arrival 1666 to 1679 (mail 80).",
  "looks": [
+  {
+   "time": "2026-11-22T06:11:24.024Z",
+   "file": "20261122061124024-note-city-2156-b19.jpg",
+   "source": "out/work/earth/pb/g/city-2156-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:11:23.413Z",
+   "file": "20261122061123413-note-cloud-1857.jpg",
+   "source": "out/work/earth/pb/f/cloud-1857.png",
+   "kind": "note",
+   "label": "Item 8, clouds near the limb at 1857 at 3 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:11:22.800Z",
+   "file": "20261122061122800-note-sky-2010.jpg",
+   "source": "out/work/earth/pb/f/sky-2010.png",
+   "kind": "note",
+   "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-22T06:10:37.373Z",
    "file": "20261122061037373-note-sheet-terrain-b19.jpg",
@@ -227,6 +251,14 @@
    "source": "out/work/earth/pb/g/city-1755-b19.png",
    "kind": "note",
    "label": "Item 8, city lights at 1755 at 3 times: approved image, new, before (clipped cores). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:55.856Z",
+   "file": "20261122054355856-note-city-2156-b19.jpg",
+   "source": "out/work/earth/pb/g/city-2156-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
   },
   {
