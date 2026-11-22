@@ -511,6 +511,8 @@ export class NeptunePlanet {
     ;(u.uEndBreak!.value as THREE.Vector3).set(e.breakUp, e.detail, e.breakCloud)
     ;(u.uEndLimb!.value as THREE.Vector2).set(e.limbDark[0]!, e.limbDark[1]!)
     ;(u.uEndBoost!.value as THREE.Vector2).set(e.deckBoost, e.cloudGain)
+    const melt = u.uMelt!.value as THREE.Vector2
+    melt.x += (e.melt - melt.x) * end
     ;(u.uRim!.value as THREE.Vector3).fromArray(limb.rim).multiplyScalar(1 - end)
     ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
     ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))
