@@ -1,9 +1,49 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T06:56:19.698Z",
- "head": "5540b7929876029451e24979e5296ba459de020e",
- "note": "round 31 D2 and D3 trials, drafts, unfinished",
+ "pushed": "2026-11-22T07:20:48.760Z",
+ "head": "61f3eddcc238d59d0fde4b12cff5a8664b37c35e",
+ "note": "round 31 D: sun.travel one Sun, fly past departures, Sun in uranus.travel; drafts and two review stills",
  "looks": [
+  {
+   "time": "2026-11-22T07:20:48.167Z",
+   "file": "20261122072048167-note-rv1-3330.jpg",
+   "source": "../../../../tmp/v/rv1-3330.jpg",
+   "kind": "note",
+   "label": "jupiter.travel 3330 review: Jupiter blurred along its slide, stars sharp",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:20:47.596Z",
+   "file": "20261122072047596-note-rv1-2186.jpg",
+   "source": "../../../../tmp/v/rv1-2186.jpg",
+   "kind": "note",
+   "label": "earth.travel 2186 review: Earth leaves by parallax, stars sharp",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:20:46.998Z",
+   "file": "20261122072046998-note-p2-ura.jpg",
+   "source": "../../../../tmp/v/p2-ura.jpg",
+   "kind": "note",
+   "label": "uranus.travel Sun in view 4502 4506 4512, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:20:46.299Z",
+   "file": "20261122072046299-note-p2-vms.jpg",
+   "source": "../../../../tmp/v/p2-vms.jpg",
+   "kind": "note",
+   "label": "venus, mars, saturn travel on the fly past path, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:20:45.668Z",
+   "file": "20261122072045668-note-s3-sun.jpg",
+   "source": "../../../../tmp/v/s3-sun.jpg",
+   "kind": "note",
+   "label": "sun.travel trial 3 (61f3edd): one Sun, globe to 0.55 then Mercury's plate, sky disc at Mercury's level; draft 482 to 530",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T06:56:17.283Z",
    "file": "20261122065617283-note-p2-mer.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/p1-earth.jpg",
    "kind": "note",
    "label": "earth.travel fly past trial, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:15.013Z",
-   "file": "20261122065615013-note-s2-sun.jpg",
-   "source": "../../../../tmp/v/s2-sun.jpg",
-   "kind": "note",
-   "label": "sun.travel trial 2, camera stays to 0.55, globe fades under Mercury's plate, step left at 497 to 500",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:14.505Z",
-   "file": "20261122065614505-note-s1-sun.jpg",
-   "source": "../../../../tmp/v/s1-sun.jpg",
-   "kind": "note",
-   "label": "sun.travel trial 1, swap in place 0.3 to 0.42, white disc pops at 488 (bad)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:13.950Z",
-   "file": "20261122065613950-note-s0-sun.jpg",
-   "source": "../../../../tmp/v/s0-sun.jpg",
-   "kind": "note",
-   "label": "sun.travel before, draft 470 to 500 step 3 (e00750e)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T05:29:35.085Z",
-   "file": "20261122052935085-note-i5-earth-three.jpg",
-   "source": "../../../../tmp/v/i5-earth-three.jpg",
-   "kind": "note",
-   "label": "item 5 earth.travel trials: rows head, B look follows patch, E even over travel; columns 2195 2202 2208 2215 2222 2230",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T05:20:49.811Z",
-   "file": "20261122052049811-note-i5c-uranus.jpg",
-   "source": "../../../../tmp/v/i5c-uranus.jpg",
-   "kind": "note",
-   "label": "item 5 trial: Neptune's patch starts at 4500 after the warm band has left, 4495 4502 4509 4516 4524",
    "stop": "travel"
   }
  ]
