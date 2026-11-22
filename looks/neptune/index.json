@@ -1,9 +1,47 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T12:23:47.381Z",
- "head": "655e9cc7d9edcd47b24223d1155f4ecda23517dd",
- "note": "take 6 of the terrain's left border kept and committed (655e9cc); proofs running; next the ending jobs of MAIL 149",
+ "pushed": "2026-11-22T13:00:28.575Z",
+ "head": "66d8782d58f8a1468cc1f6b55320ef764b7e6774",
+ "note": "jobs of MAIL 149: night side of 5235 with belts, calm pole, limb darkening; job 3 the crescent in work",
  "looks": [
+  {
+   "time": "2026-11-22T13:00:27.988Z",
+   "file": "20261122130027988-note-d-night-native-c-d.jpg",
+   "source": "out/work/nep/end34/j2/d-night-native-c-d.png",
+   "kind": "note",
+   "label": "job 2 take d, j2/d-night-native-c-d.png (main left or take c left)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:00:27.397Z",
+   "file": "20261122130027397-note-d-globe.jpg",
+   "source": "out/work/nep/end34/j2/d-globe.png",
+   "kind": "note",
+   "label": "job 2 take d, j2/d-globe.png (main left or take c left)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:00:26.816Z",
+   "file": "20261122130026816-note-d-night-lift4.jpg",
+   "source": "out/work/nep/end34/j2/d-night-lift4.png",
+   "kind": "note",
+   "label": "job 2 take d, j2/d-night-lift4.png (main left or take c left)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T12:25:08.587Z",
+   "file": "20261122122508587-job-frame-05006.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T12:23:46.182Z",
    "file": "20261122122346182-note-5235-main-night-x8.jpg",
@@ -19,56 +57,6 @@
    "kind": "note",
    "label": "rise cover side 4975 native, take 4 left, take 6 right: no seam, no bars",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T12:23:44.162Z",
-   "file": "20261122122344162-note-terrain-sheet-take-6-review.jpg",
-   "source": "out/work/nep/p6/knit/send3/terrain-sheet-take-6-review.jpg",
-   "kind": "note",
-   "label": "terrain sheet at review with take 6 of the left border (the frame mirrored along the streak lines)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T12:14:41.628Z",
-   "file": "20261122121441628-job-frame-04530.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T12:14:11.966Z",
-   "file": "20261122121411966-frame-f04976-review.jpg",
-   "source": "out/work/nep/p6/knit/rev6/f04976-review.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4976, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4976,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T12:11:41.397Z",
-   "file": "20261122121141397-frame-f04749-review.jpg",
-   "source": "out/work/nep/p6/knit/rev6/f04749-review.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4749, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4749,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   },
   {
    "time": "2026-11-22T12:07:38.015Z",
