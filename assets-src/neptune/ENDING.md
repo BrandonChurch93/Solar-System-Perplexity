@@ -126,3 +126,9 @@ Order: `agent/ending` 41e144e (holds main 7717f95) is the ending agent's deliver
 - `npm run build` green (2.5 s). `npx vitest run`: 15 files, 79 tests passed. `python3 tools/shaderaudit.py`: 32 lines, the same text as on main 2858db4 (`diff` empty).
 - `git merge-tree --write-tree` with the polish head dd7f0f7 and with `agent/ending` 41e144e: no conflict.
 - `DONE` sent after this.
+
+## After DONE
+
+- `DONE` sent 07:30 (head 6f9cf31) with the native crop of 5105 and a review still of 5350; the other twenty pictures went with the two `PART` messages of 07:25 and 07:26.
+- MAIL 95 (07:32): DONE accepted, `agent/neptune-ending` 6f9cf31 goes into engine batch 20. The warm white dots are the old travel dust drawn over the body; the dust agent's new dust is held out behind bodies (0 changed pixels inside the dark disc at 5085 in its proof) and goes with the same batch. The Builder checks 5080, 5085 and 5105 on the merged tree. Nothing more is asked of this branch; if it is opened again, start from the weak points above and prove on the tree the Builder names.
+- The scratch branch `scratch/neptune-ending-proof` (7c1dfff) is local only and can be deleted; its pictures are in `out/work/end/n/` and `out/work/end/send/`, and in looks.
