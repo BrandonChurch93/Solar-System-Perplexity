@@ -1,18 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T09:08:34.988Z",
+ "pushed": "2026-11-22T09:32:22.616Z",
  "head": "fd5e910ac38f1e69163393b6c8b04ee941ad9bc2",
- "note": "agent/jupiter 2687a17 on main f24046b: rise cover review frames 3265 to 3271 are the same bytes as on main c92f97c",
+ "note": "agent/jupiter 2687a17 on main f24046b: rise cover review sheet on the merged tree",
  "looks": [
   {
-   "time": "2026-11-22T09:08:09.659Z",
-   "file": "20261122090809659-frame-f03271-review.jpg",
-   "source": "out/work/sheets/.frames-C7zXU6/f03271-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3271, review tier",
+   "time": "2026-11-22T09:32:21.952Z",
+   "file": "20261122093221952-note-rise-cover-b20.jpg",
+   "source": "out/work/jupiter/fg/kept/rise-cover-b20.png",
+   "kind": "note",
+   "label": "Rise cover review sheet, every frame 3265 to 3276, agent/jupiter 2687a17 on main f24046b (engine batch 20): the same bytes as the sheet of 8909c1d on main c92f97c. Sky black on the cut frame 3270 only, back by the same law, pale column on the disc gone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T09:32:08.500Z",
+   "file": "20261122093208500-sheet-jupiter.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.rise, review tier",
    "stop": "jupiter",
    "segment": "jupiter.rise",
-   "frame": 3271,
+   "first": 3265,
+   "last": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:32:06.645Z",
+   "file": "20261122093206645-frame-f03276-review.jpg",
+   "source": "out/work/sheets/.frames-C7zXU6/f03276-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3276, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3276,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -97,21 +120,6 @@
    "kind": "note",
    "label": "Rise cover review sheet, every frame 3265 to 3276, agent/jupiter 8909c1d on main c92f97c (the three cover fixes): the sky fades to black on the cut frame 3270 only and returns by the same law, the pale column on the disc is gone",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T08:30:25.374Z",
-   "file": "20261122083025374-sheet-jupiter.rise-cover-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.rise, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "first": 3265,
-   "last": 3276,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T08:22:11.086Z",
@@ -284,14 +292,6 @@
    "source": "out/work/view/sky/d3023_24.jpg",
    "kind": "note",
    "label": "Jupiter dive cover, review tier, frames 3023 (last of the orbit side) and 3024 (first of the terrain side), agent/jupiter a06d2ae on main 2621f00",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T05:54:19.701Z",
-   "file": "20261122055419701-note-d3021_22.jpg",
-   "source": "out/work/view/sky/d3021_22.jpg",
-   "kind": "note",
-   "label": "Jupiter dive cover, review tier, frames 3021 and 3022 (orbit side, before the cut at 3024), agent/jupiter a06d2ae on main 2621f00: the storm goes under the haze as a red smear with speed lines, sky black",
    "stop": "jupiter"
   }
  ]
