@@ -1390,3 +1390,9 @@ All with dusk in the working tree over round 34's code, render copy on main 9d20
 - Repeat, 3 fresh sessions, 2 runs each: one hash per frame. 1575 8c72cf2c1613b2f5, 1586 7e9e9587f3192b9c, 1600 688ad5a6b5f1a5ab.
 - Not measured with dusk: G17 (its frames 1185 and 1440 keep their bytes at final, so it cannot move), G11, G12, G15 (no asset changed; the shader gains one uniform and a gated loop).
 - Still running: the rise cover sheet at review with dusk (`view/d3-rc.png`), about 18 minutes.
+
+## State at 20:06 (22 Nov): the rise cover sheet with dusk; main moved twice with no Venus change (read this first after a compaction)
+
+- Rise cover sheet at review with dusk, `view/d3-rc.png` (main 9d20d3dd), against round 34's `view/c26-rc.png` (`cellcmp.py`, 12 cells of 456 by 256): cells 1555 to 1563 are the same pixels (0 changed). 1564: 28 pixels, 1 level. 1565: 197, 1 level. 1566: 1,011 pixels, 79 of them over 1 level, largest 3. Read frame by frame: it is round 34's sheet.
+- Main moved to 9e0a31e2 (Neptune's ring, Earth's trim, status) and then to 70d5cb90 (scorecards only). Merged 9e0a31e2 as d1763adc (`--no-ff`); 70d5cb90 is merged before the next report. Neither touches a Venus folder. PROGRESS at 19:12 UTC: the Builder renders Venus's sheets and measures on round 35's build itself ("Their folders did not change, so round 35's critics are not asked about them"), and at 19:38 UTC: "The measures of Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn and Uranus are green on this build (G5, G13, G17)".
+- q47 runs (`/tmp/q47.log`): 22 draft frames outside the rise (arrival 1072 and 1100, hold, dive, both sides of the dive cover, terrain, the terrain side of the rise, 1640 and 1660 after Venus has left) with dusk and with main's code, a `cmp` each. Expected: the same bytes everywhere, since dusk is 0 until the middle of the terrain view.
