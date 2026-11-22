@@ -33,6 +33,7 @@ APRON_KEEP = 0.85
 APRON_WARM = (0.5, 1.0, 2.2)
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
+APRON_CURVE = (0.85, 1.2, 6, 10)
 APRON_CANVAS = (1920, 1080)
 APRON_NET = (5.5, 9.0, 640, 1.6, 2.0, 2)
 
@@ -347,6 +348,11 @@ def apron_build(out_full, out_web, check):
         out *= 1 + (t - 1) * np.where(t > 1, 1 - APRON_HOLD[2] * step(out.max(2), APRON_HOLD[0], APRON_HOLD[1])[..., None], 1)
         del t
     np.clip(out, 0, 1, out=out)
+    if os.path.exists(f'{DIR}/apron-curve.npy'):
+        c = np.load(f'{DIR}/apron-curve.npy')
+        for ch in range(3):
+            out[..., ch] *= 1 + (np.interp(out[..., ch] * 255, np.arange(256), c[:, ch]).astype(np.float32) - 1) * grey
+        np.clip(out, 0, 1, out=out)
     sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
     res = b + (out - b) * sky
     write(out_full, res, 92)
@@ -379,6 +385,31 @@ def apron_tone(frame):
     print('tone factor in the front zone, mean r g b', t[zone].mean(0).round(4).tolist(), 'range', round(float(t[zone].min()), 3), round(float(t[zone].max()), 3))
 
 
+def apron_curve(frame):
+    from field import A
+    film = read(frame).astype(np.float32)
+    h, w = film.shape[:2]
+    ref = cv2.resize(read(APPROVED), (w, h), interpolation=cv2.INTER_LANCZOS4).astype(np.float32)
+    f = A['front']
+    X, Y = np.meshgrid((np.arange(w) + 0.5) / w, (np.arange(h) + 0.5) / h)
+    zone = Y > f['side'] + (f['centre'] - f['side']) * (1 - step(np.abs(X - f['at']), f['span'][0], f['span'][1]))
+    lo, hi, soft, floor = APRON_CURVE
+    at = np.linspace(0.5, 99.5, 100)
+    v = np.arange(256, dtype=np.float64)
+    path = f'{DIR}/apron-curve.npy'
+    old = np.load(path) if os.path.exists(path) else np.ones((256, 3))
+    new = np.ones((256, 3))
+    for ch in range(3):
+        a = np.percentile(film[zone][:, ch], at)
+        b = np.percentile(ref[zone][:, ch], at)
+        g = np.interp(v, a, b / np.maximum(a, 1.0))
+        g = np.where(v < floor, 1 + (g - 1) * v / floor, g)
+        g = np.clip(cv2.GaussianBlur(g.reshape(-1, 1), (0, 0), soft, borderType=cv2.BORDER_REPLICATE).ravel(), lo, hi)
+        new[:, ch] = old[:, ch] * np.interp(v * old[:, ch], v, g)
+        print('rgb'[ch], 'film', a[[4, 24, 49, 74, 89, 94, 98]].round(0).tolist(), 'approved', b[[4, 24, 49, 74, 89, 94, 98]].round(0).tolist(), 'curve at 40 80 120 160 200 240', new[[40, 80, 120, 160, 200, 240], ch].round(3).tolist())
+    np.save(path, new)
+
+
 def apron_base(frame):
     src = read(frame)
     ow, oh = APRON_OUT
@@ -403,6 +434,8 @@ if __name__ == '__main__':
         apron_place(sys.argv[2])
     if cmd == 'apron-tone':
         apron_tone(sys.argv[2])
+    if cmd == 'apron-curve':
+        apron_curve(sys.argv[2])
     if cmd == 'apron-base':
         apron_base(sys.argv[2])
     if cmd == 'apron-build':
