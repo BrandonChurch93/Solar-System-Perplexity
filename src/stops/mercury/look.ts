@@ -1,8 +1,8 @@
 import fitted from './curve.json'
 import type { GlareLook } from './glare'
 import type { GlobeLight } from './globe'
-import type { LensLook } from './lens'
-import type { SunLimb, SunSmall } from './sunplate'
+import type { LensCore, LensLook } from './lens'
+import type { SunLimb, SunSmall, SunSurface } from './sunplate'
 
 export const light: GlobeLight = {
   curve: fitted.curve,
@@ -29,12 +29,13 @@ export const light: GlobeLight = {
   shoulder: { from: 0.6, strength: 0.4, frames: [4, 14] },
 }
 
-export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; lift: { frames: [number, number]; floor: number; plate: [number, number]; ghost: [number, number]; grow: [number, number] }; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
+export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; ghostIn: number; lift: { frames: [number, number]; floor: number; plate: [number, number]; ghost: [number, number]; grow: [number, number] }; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
   gain: 1, breathe: 0.03, rate: 1.9, limb: { dark: [0.08, 0.16, 0.2], edge: [1.0, 1.06] },
   small: { to: 0.14, pale: [1, 0.97, 0.9], lift: 3, white: [0.25, 0.85], feather: 0.06 },
   slide: { leave: [-24, -15], lock: [-1.5, -0.1], track: [[-22, 1.04, 0.19], [-18, 0.965, 0.18], [-14, 0.865, 0.15], [-10, 0.745, 0.075], [-8.75, 0.699, 0.058], [-7.75, 0.651, 0.048], [-6.75, 0.59, 0.041], [-5.75, 0.518, 0.035], [-4.75, 0.443, 0.03], [-3.75, 0.372, 0.026], [-2.75, 0.323, 0.022], [-1.75, 0.295, 0.019], [-0.75, 0.282, 0.0175], [0, 0.279, 0.02]] },
   hand: [-3.5, -0.5],
   ghost: [-14, -5],
+  ghostIn: 4,
   lift: { frames: [0.25, 10], floor: 9, plate: [0.5, 3.5], ghost: [5, 14], grow: [6, 22] },
   hole: { dive: [-26.5, -23.5], rise: [13, 16], radius: { dive: [1.5, 2.4], rise: [1.0, 1.6] } },
 }
@@ -46,6 +47,8 @@ export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
+export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0.6, dive: [0, 0.2], disc: [0.0176, 0.0207, 0.2506], limb: [0.3, 0.42, 0.55], corona: { depth: 0.45, reach: [1.22, 0.5], soft: 0.17 } }
+export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
 export const glare: GlareLook = {
   peak: 1, fall: { dive: 8, rise: 7 }, span: { dive: 24, rise: 22 }, height: 1.5, color: [1, 0.84, 0.6],

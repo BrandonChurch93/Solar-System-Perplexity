@@ -71,12 +71,12 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
-  const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform)
+  const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
   const sunAim = new THREE.Quaternion()
   const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
   const lens = new Lens(await ctx.texture(base + lensJson.file, { srgb: true, anisotropy: 1 }), lensJson, look.lens, diagUniform)
-  const streak = new Lens(await ctx.texture(base + streakJson.file, { srgb: true, anisotropy: 1 }), streakJson, look.streak, diagUniform, true)
+  const streak = new Lens(await ctx.texture(base + streakJson.file, { srgb: true, anisotropy: 1 }), streakJson, look.streak, diagUniform, true, look.streakCore)
   const near = new THREE.Group()
   const glare = new Glare(look.glare, diagUniform)
   near.add(lens.mesh, streak.mesh, glare.mesh)
@@ -110,6 +110,9 @@ export const createSet: SetFactory = async (ctx) => {
   const rimSun = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
   const toCamera = new THREE.Quaternion()
+  const plateBack = new THREE.Quaternion()
+  const limbRay = new THREE.Vector3()
+  const sunRect = sunJson.rect as [number, number, number, number]
   const inCamera = new THREE.Vector3()
   const seen = (dir: THREE.Vector3, tan: number): [number, number] | null => {
     inCamera.copy(dir).applyQuaternion(toCamera)
@@ -284,13 +287,39 @@ export const createSet: SetFactory = async (ctx) => {
       const shown = kind === 'travel' && mine ? 1 - travel : travel
       const tau = state.time - plan.holdMid
       const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink)
+      const arriving = kind === 'travel' && !mine
+      const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
+      const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
+      let limbLeft = 1
+      let limbRight = 1
+      if (whole > 0) {
+        plateBack.copy(sunAim).invert()
+        const at = limbRay.copy(sunShown).applyQuaternion(toCamera)
+        const sx = at.x / -at.z
+        const sy = at.y / -at.z + look.streakCore.row * tanHalf
+        const edge = (sign: number): number => {
+          let lo = 0
+          let hi = 3
+          for (let i = 0; i < 24; i++) {
+            const mid = (lo + hi) / 2
+            limbRay.set(sx + sign * mid * tanHalf, sy, -1).applyQuaternion(view.camera.quaternion).applyQuaternion(plateBack)
+            const u = (limbRay.x / -limbRay.z - sunRect[0]) / (sunRect[2] - sunRect[0]) - 0.5
+            const v = (limbRay.y / -limbRay.z - sunRect[1]) / (sunRect[3] - sunRect[1]) - 0.5
+            if (limbRay.z < 0 && Math.hypot(u, v) < sunJson.disc) lo = mid
+            else hi = mid
+          }
+          return lo
+        }
+        limbLeft = edge(-1)
+        limbRight = edge(1)
+      }
       const sep = sunShown.angleTo(world.position)
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
       const ghost = shown * clear * state.weight * (1 + 2 * (breath - 1)) * ghosts
-      lens.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect)
-      streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect)
+      lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
+      streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
     dispose: () => {
       globe.dispose()

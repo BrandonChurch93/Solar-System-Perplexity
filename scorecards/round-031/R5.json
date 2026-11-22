@@ -1,0 +1,35 @@
+{
+ "critic": "R5",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "hold grid, especially 615, 1185–4035, and 4605",
+   "what": "The Sun goes from a huge clipped source at Mercury to no identifiable source across the middle holds, then returns as a bright point beside Neptune. The individual terminators mostly make sense, but the cut sequence does not let the viewer track the Sun shrinking or connect the lighting changes to one source.",
+   "fix": "Keep the Sun's apparent core and glare on a consistent distance-driven progression, and show it at a few intermediate points, preferably during departures, with the rim light and shadows aligned to its screen direction."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "2895–4436, from Jupiter through the Uranus departure on sheet-04.png",
+   "what": "The views vary in subject, especially Saturn's ring skim, but the stops repeat the same large reveal, approach, close pass, pullback, and sky-only handoff already established in the inner planets. That predictability flattens the build.",
+   "fix": "Break the pattern with a lateral moon or ring pass that carries directly into the next reveal, and save the longest pullback for Neptune."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "4436–4605, Uranus departure into Neptune arrival",
+   "what": "The black levels and blue limb lighting feel related, but the Milky Way flips from a steep ribbon behind Uranus to a bright horizontal band in the sky-only beat and then a diagonal behind Neptune. The sheets do not show an obvious visual anchor for that reorientation.",
+   "fix": "Carry one recognizable dust-lane feature through the departure and arrival so the change in sky angle reads as camera roll rather than a fresh backdrop."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "5006–5362, Neptune's final pullback and fade",
+   "what": "The retreat to a thin blue crescent is a strong visual ending, but the bright galactic band competes with the crescent and tiny Sun in the last wide view. The fade then buries the remaining planet detail.",
+   "fix": "Lower the band contrast in the final wide and hold the crescent and solar point readable together for a beat before fading."
+  }
+ ]
+}
