@@ -1,32 +1,82 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T13:28:22.848Z",
+ "pushed": "2026-11-22T13:37:11.495Z",
  "head": "4f284be8799177662efe02394780598608936f46",
- "note": "4290 cured: approved filaments kept in the plate, near cloud layer adds no light; proofs running on main 5e3462bd",
+ "note": "4290 for round 34: four way crops against approved, kept build and round 33 build; measure running",
  "looks": [
   {
-   "time": "2026-11-22T13:28:16.449Z",
-   "file": "20261122132816449-note-B-br.jpg",
-   "source": "../../../../tmp/B-br.png",
+   "time": "2026-11-22T13:37:10.403Z",
+   "file": "20261122133710403-note-f-4290.jpg",
+   "source": "out/work/u/r9/f-4290.png",
    "kind": "note",
-   "label": "4290 final, lower right at native size: main's stop, new plate with the layer's old light, with its light at 0.6 (main 5e3462bd, head 4f284be8)",
+   "label": "4290 final, whole frame, new for round 34 (main 5e3462bd, head 4f284be8)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T13:28:15.388Z",
-   "file": "20261122132815388-note-B-ll2.jpg",
-   "source": "../../../../tmp/B-ll2.png",
+   "time": "2026-11-22T13:37:09.570Z",
+   "file": "20261122133709570-note-F-br.jpg",
+   "source": "../../../../tmp/F-br.png",
    "kind": "note",
-   "label": "4290 final, lower left at twice the exposure: main's stop, new plate with the layer's old light, with its light at 0.6 (strokes gone; main 5e3462bd, head 4f284be8)",
+   "label": "4290 final, lower right at native size: approved, kept build, round 33 build, new for round 34 (main 5e3462bd, head 4f284be8)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T13:28:14.373Z",
-   "file": "20261122132814373-note-A-wisps.jpg",
-   "source": "../../../../tmp/A-wisps.png",
+   "time": "2026-11-22T13:37:08.797Z",
+   "file": "20261122133708797-note-F-ll2.jpg",
+   "source": "../../../../tmp/F-ll2.png",
    "kind": "note",
-   "label": "4290 final, wisps at native size: approved, main's stop, new plate that keeps the approved fine band (main 5e3462bd, head 4f284be8)",
+   "label": "4290 final, lower left at twice the exposure: approved, kept build of round 28, round 33 build, new for round 34 (main 5e3462bd, head 4f284be8)",
    "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T13:37:07.983Z",
+   "file": "20261122133707983-note-F-wisps.jpg",
+   "source": "../../../../tmp/F-wisps.png",
+   "kind": "note",
+   "label": "4290 final, wisps at native size: approved, kept build of round 28, round 33 build, new for round 34 (main 5e3462bd, head 4f284be8)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T13:36:51.675Z",
+   "file": "20261122133651675-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T13:36:22.718Z",
+   "file": "20261122133622718-still-f04436-16x9-final-full.jpg",
+   "source": "out/work/stills/f04436-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T13:32:49.146Z",
+   "file": "20261122133249146-still-f04035-16x9-final-full.jpg",
+   "source": "out/work/stills/f04035-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T13:26:34.435Z",
@@ -41,38 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T13:21:18.135Z",
-   "file": "20261122132118135-note-v1-ll.jpg",
-   "source": "../../../../tmp/v1-ll.png",
-   "kind": "note",
-   "label": "4290 lower left at twice the exposure: main's stop, mine with the near cloud layer off, mine at CUT33 (the layer draws the soft strokes; main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:21:17.463Z",
-   "file": "20261122132117463-note-p3-left.jpg",
-   "source": "../../../../tmp/p3-left.png",
-   "kind": "note",
-   "label": "terrain plate dark near field at twice the exposure: approved, round 33, new (detail kept in the wash; main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:21:16.838Z",
-   "file": "20261122132116838-note-p3-right.jpg",
-   "source": "../../../../tmp/p3-right.png",
-   "kind": "note",
-   "label": "terrain plate lit deck: approved, round 33, new (main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:21:16.218Z",
-   "file": "20261122132116218-note-p3-wisps.jpg",
-   "source": "../../../../tmp/p3-wisps.png",
-   "kind": "note",
-   "label": "terrain plate wisps: approved plate, round 33 plate, new plate that keeps the approved fine band where it has one (main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
   }
  ]
 }
