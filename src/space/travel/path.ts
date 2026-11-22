@@ -20,16 +20,17 @@ export interface TravelLook {
   growRun: [number, number, number]
   pin: [number, number]
   pinEase: [number, number]
+  glide: [number, number]
   turnRun: [number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], glide: [0, 0], turnRun: [0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
   mercury: { bowDeg: 9, growRun: [0.4, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
   venus: { bowDeg: -12, growRun: [0.45, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
-  earth: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.03, passBy: 0.26, pin: [0, 1], pinEase: [2, 5], turnRun: [0.15, 0.65], panSpan: [0, 1] },
+  earth: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.03, passBy: 0.26, pin: [0, 1], glide: [0.25, 14], turnRun: [0.15, 0.65], panSpan: [0, 1] },
   mars: { bowDeg: 10, grow: [2, 3] },
   jupiter: { bowDeg: -10, grow: [3, 4] },
   saturn: { bowDeg: 8, growRun: [0.4, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
@@ -138,8 +139,14 @@ export class TravelShape {
     return low
   }
 
-  pinned(u: number): number {
-    return this.look.pin[1] > 0 ? this.pinEase(span(this.look.pin, span([this.from, this.until], u))) : 0
+  rayLeft(u: number, angle: number): number {
+    if (this.look.pin[1] <= 0) return angle
+    const s = span(this.look.pin, span([this.from, this.until], u))
+    const [knee, deg] = this.look.glide
+    if (knee <= 0) return angle * (1 - this.pinEase(s))
+    const w = this.settleEase(span([0, knee], s))
+    const rest = (1 - s) / (1 - knee)
+    return angle * (1 - w) + THREE.MathUtils.degToRad(deg) * rest * rest * w
   }
 
   spin(qa: THREE.Quaternion, qb: THREE.Quaternion, u: number): THREE.Quaternion {

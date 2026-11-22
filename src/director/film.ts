@@ -385,11 +385,7 @@ export class FilmDirector implements Director {
       const free = body.clone().sub(position).normalize()
       const hero = body.clone().sub(hold.position).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(quaternion)
       const angle = free.angleTo(hero)
-      const g = shape.pinned(u)
-      if (g > 0 && angle > 1e-9) {
-        const axis = new THREE.Vector3().crossVectors(free, hero).normalize()
-        free.applyAxisAngle(axis, angle * g)
-      }
+      if (angle > 1e-9) free.applyAxisAngle(new THREE.Vector3().crossVectors(free, hero).normalize(), angle - shape.rayLeft(u, angle))
       return { position: body.clone().addScaledVector(free, -reach), quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
     }
     return { position, quaternion: shape.turn(from.quaternion, aim, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
