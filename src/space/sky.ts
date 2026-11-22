@@ -157,7 +157,13 @@ void main() {
     vec2 fm = textureLod(uFlightMap, vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5), 0.0).rg;
     col += uFlightHaze.rgb * (uFlightGlow.w * (uFlightHaze.w + (1.0 - uFlightHaze.w) * exp(-pow(asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth, 2.0)))) + uFlightGlow.rgb * (uFlightGlow.w * fm.r);
     vec2 vq = (vUv - 0.5) * vec2(uLens.y, 1.0);
-    col += mix(uFlightVeil.rgb, uFlightVeilWarm.rgb, smoothstep(0.7, 1.5, fm.g)) * (uFlightGlow.w * fm.g * (1.0 + uFlightVeil.w * (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5)) / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uLens.x * uFlightVeilWarm.w));
+    highp uint h = uint(gl_FragCoord.x) * 0x9E3779B1u ^ uint(gl_FragCoord.y) * 0x85EBCA77u;
+    h ^= h >> 15;
+    h *= 0x2C1B3C6Du;
+    h ^= h >> 12;
+    h *= 0x297A2D39u;
+    h ^= h >> 15;
+    col += mix(uFlightVeil.rgb, uFlightVeilWarm.rgb, smoothstep(0.7, 1.5, fm.g)) * (uFlightGlow.w * fm.g * (1.0 + uFlightVeil.w * (float(h >> 8) * (1.0 / 16777216.0) - 0.5)) / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uLens.x * uFlightVeilWarm.w));
   }
   vec3 pa = patchCoord(0, sd);
   vec3 pb = patchCoord(1, sd);

@@ -364,3 +364,15 @@ Send DONE when 1 to 3 are in and you have looked at 1625 and 3912 at 456 and at 
 - Cost: finals now 66.7 66.4 71.9 67.8 s against 68.9 69.4 73.2 70.7 s before the task (2 to 4 percent faster, the view list also thins the first flight set).
 - Draft bytes of the t7g tree: eight of nine equal the 3d48581 list; 3465 is 703aa40f17b90e2a (main moved between batch 17 and 18; main 76825c7 rendering to compare).
 - Tests 79 of 79, tsc clean, build ok.
+- 04:00 draft bytes: t7g tree (= 94b008d) against a tree from `git archive origin/main` (76825c7), all nine equal: 360 fcbfbf2f25bffb63, 615 87bc2833573448d9, 1185 b822d8d044bbeb28, 2325 fd128b1a999f76fa, 2427 5636a9764d87cc2e, 2580 7322ef9576f06ffb, 2726 d408b434a0b12d9f, 3465 703aa40f17b90e2a, 4605 0b621fa06e44c52c.
+
+## 04:00 UTC MAIL 67 (binding parts verbatim)
+
+"The veil dither is `fract(sin(dot(gl_FragCoord.xy, ...)) * 43758.5453)`. The last bit of the GPU's `sin` of a number near 1e5 decides its value, so it is the same on one machine every time but need not be the same on a worker with another CPU type or another browser build ... Replace it with an integer hash of the pixel, which gives the same bits everywhere, for example:
+highp uint h = uint(gl_FragCoord.x) * 0x9E3779B1u ^ uint(gl_FragCoord.y) * 0x85EBCA77u;
+h ^= h >> 15; h *= 0x2C1B3C6Du; h ^= h >> 12; h *= 0x297A2D39u; h ^= h >> 15;
+float d = float(h >> 8) * (1.0 / 16777216.0);
+(or the engine's own integer hash if the shared shader code already has one; say which you used). Still fixed to the screen, no frame number, same amplitude as now. The pattern changes, the look must not: render 1625 at the final tier once more after it and look at the darkest box at native size for any visible pattern (lines, a lattice, a diagonal weave). If this costs more than ten minutes, send the DONE first with what you have and say when the dither follows; I build the candidate only when both are in.
+In the DONE, as asked in mail 64: the commit, the box numbers of 1625, 3912, 482 and 2772, where the pictures are (456 and 1920), the venus.travel sheet at review, how the points come up with the lift, the proof that hold, dive and terrain frames keep their bytes against today's main, and what your view list does at the frame edge (a bright point just outside the frame whose glow reaches into it must still be drawn)."
+- 04:03 dither changed to the integer hash of mail 67 (the Builder's own lines; the engine's only integer hash sits in a stop folder, not shared). 1625 final again: boxes 14.4/943 17.0/1263 12.8/874 | 10.5/575 11.5/590 10.4/462 (same within 3 pixels). Darkest box at native size and at 8 times gain: even fine grain, no lines, no lattice, no weave. Seen at that gain: a dark pixel beside bright points, from the post sharpen, as with the first set.
+- Lift between 1605 and 1625 is 1.000 on every frame (8d14197: the travel starts on full lift). The new layers come up in the RISE (venus.rise: 0.74 at 1586, 1.0 by 1603, largest step 0.053 per frame), outside the stop's sky patch only. To show the Builder: rise stills.
