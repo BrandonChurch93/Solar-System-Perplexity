@@ -120,8 +120,8 @@ export const createSet: SetFactory = async (ctx) => {
       const match = 1 - share(x, d.match)
       const dim = 1 + (d.glow - 1) * match
       globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match))
-      corona.update(world.position, state.rotation, elapsed, gain * state.weight * dim, vignette, aspect, look.corona, glow)
-      prominences.update(elapsed, spin, gain * state.weight * dim, vignette, aspect, glow)
+      corona.update(world.position, state.rotation, elapsed, gain * dim, vignette, aspect, look.corona, glow * state.weight)
+      prominences.update(elapsed, spin, gain * dim, vignette, aspect, glow * state.weight)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
