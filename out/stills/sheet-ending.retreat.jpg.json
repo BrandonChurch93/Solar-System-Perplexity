@@ -1,0 +1,34 @@
+{
+ "engineHash": "be043ade04a7ab6e",
+ "stopHashes": {
+  "neptune": "03454a5062615c25"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 5025,
+ "last": 5144,
+ "extra": {
+  "frames": [
+   5025,
+   5036,
+   5047,
+   5057,
+   5068,
+   5079,
+   5090,
+   5101,
+   5112,
+   5122,
+   5133,
+   5144
+  ],
+  "kind": "sheet",
+  "segment": "ending.retreat",
+  "signature": "[\"52796e68a504da6ac54a026d79fe92c2a94ea252ce1a13fc6436a5887b2e20e3\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}
