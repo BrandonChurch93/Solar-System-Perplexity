@@ -1,9 +1,47 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T13:21:31.202Z",
- "head": "a52c9463ea9efe7b0e95ea26c82e48b78174a4d1",
- "note": "4290: the approved wisps' fine band was replaced by generated detail; plate rebuilt to keep it, proofs follow",
+ "pushed": "2026-11-22T13:28:17.495Z",
+ "head": "4f284be8799177662efe02394780598608936f46",
+ "note": "4290 cured: approved filaments kept in the plate, near cloud layer adds no light; proofs running on main 5e3462bd",
  "looks": [
+  {
+   "time": "2026-11-22T13:28:16.449Z",
+   "file": "20261122132816449-note-B-br.jpg",
+   "source": "../../../../tmp/B-br.png",
+   "kind": "note",
+   "label": "4290 final, lower right at native size: main's stop, new plate with the layer's old light, with its light at 0.6 (main 5e3462bd, head 4f284be8)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T13:28:15.388Z",
+   "file": "20261122132815388-note-B-ll2.jpg",
+   "source": "../../../../tmp/B-ll2.png",
+   "kind": "note",
+   "label": "4290 final, lower left at twice the exposure: main's stop, new plate with the layer's old light, with its light at 0.6 (strokes gone; main 5e3462bd, head 4f284be8)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T13:28:14.373Z",
+   "file": "20261122132814373-note-A-wisps.jpg",
+   "source": "../../../../tmp/A-wisps.png",
+   "kind": "note",
+   "label": "4290 final, wisps at native size: approved, main's stop, new plate that keeps the approved fine band (main 5e3462bd, head 4f284be8)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T13:26:34.435Z",
+   "file": "20261122132634435-still-f04290-16x9-final-full.jpg",
+   "source": "out/work/stills/f04290-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T13:21:18.135Z",
    "file": "20261122132118135-note-v1-ll.jpg",
@@ -35,50 +73,6 @@
    "kind": "note",
    "label": "terrain plate wisps: approved plate, round 33 plate, new plate that keeps the approved fine band where it has one (main 5e3462bd, head a52c9463)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:21:15.603Z",
-   "file": "20261122132115603-note-plate-pair.jpg",
-   "source": "../../../../tmp/plate-pair.png",
-   "kind": "note",
-   "label": "terrain plate, wisps: approved plate beside the round 33 plate with generated detail in place of the approved fine band (the cause; main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:21:14.939Z",
-   "file": "20261122132114939-note-c4290-mid3.jpg",
-   "source": "../../../../tmp/c4290-mid3.png",
-   "kind": "note",
-   "label": "4290 wisps at native size: approved, main's stop, mine at CUT33: mine lost the approved filaments (found by measure, cure under way; main 5e3462bd, head a52c9463)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T13:16:31.749Z",
-   "file": "20261122131631749-still-f04404-16x9-review-full.jpg",
-   "source": "out/work/stills/f04404-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4404, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4404,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T13:14:10.917Z",
-   "file": "20261122131410917-still-f04403-16x9-review-full.jpg",
-   "source": "out/work/stills/f04403-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4403, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4403,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   }
  ]
 }
