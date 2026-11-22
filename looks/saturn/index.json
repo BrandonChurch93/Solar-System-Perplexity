@@ -1,9 +1,46 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T05:20:17.484Z",
+ "pushed": "2026-11-22T05:42:42.340Z",
  "head": "68ae940302485898749921529af41be6e59009b3",
- "note": "e8e4984 on main 2621f00 (batch 19): measure green (G13 0 of 165, G5 0.514 0.548 0.743 0.379, G17 1.055 and 0.951); review sheets rendering",
+ "note": "e8e4984 on main 2621f00 (batch 19): dive cover sheet at the review tier beside the kept build; rise cover sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-22T05:42:34.033Z",
+   "file": "20261122054234033-note-item2-dive-cover-kept-now.jpg",
+   "source": "out/work/saturn/polish/item2-dive-cover-kept-now.png",
+   "kind": "note",
+   "label": "Item 2 dive, frames 3589 to 3600 at the review tier: kept build (left), e8e4984 on main 2621f00 batch 19 (right). The body stays in the middle of the frame through the view switch",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T05:41:39.353Z",
+   "file": "20261122054139353-sheet-saturn.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.dive, review tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "first": 3589,
+   "last": 3600,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:41:37.507Z",
+   "file": "20261122054137507-frame-f03600-review.jpg",
+   "source": "out/work/sheets/.frames-ykRSDt/f03600-review.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3600, review tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3600,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T05:10:42.782Z",
    "file": "20261122051042782-job-frame-03465.jpg",
@@ -32,30 +69,6 @@
    "source": "../../../../tmp/r3866-three.png",
    "kind": "note",
    "label": "Rise 3866, final tier: kept build (top), c5a7fa2 on main 36d7b64 batch 18 (middle), e8e4984 on main 2621f00 (batch 19 7a880ac6) (bottom, with the flight stars)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T05:00:54.354Z",
-   "file": "20261122050054354-note-item6-globe.jpg",
-   "source": "out/work/saturn/polish/item6-globe.png",
-   "kind": "note",
-   "label": "Item 6 globe, final tier, e8e4984 on main 2621f00 (batch 19 7a880ac6). Top: 3567 at 2x, kept build, now. Bottom: 3866 at 2x, kept build, now",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T05:00:53.225Z",
-   "file": "20261122050053225-note-item5-specks.jpg",
-   "source": "out/work/saturn/polish/item5-specks.png",
-   "kind": "note",
-   "label": "Item 5 specks, final tier, e8e4984 on main 2621f00 (batch 19 7a880ac6). Top: 3720 lower left at 2x, approved, kept build, now. Bottom: 3866 rings at 2x, kept build, now",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T05:00:52.366Z",
-   "file": "20261122050052366-note-item4-hold-3465.jpg",
-   "source": "out/work/saturn/polish/item4-hold-3465.png",
-   "kind": "note",
-   "label": "Item 4 hold 3465, final tier, e8e4984 on main 2621f00 (batch 19 7a880ac6): hero, kept build, now. Top: rings crossing the globe. Bottom: globe detail at 2.7x",
    "stop": "saturn"
   },
   {
