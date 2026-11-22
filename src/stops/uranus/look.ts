@@ -124,7 +124,7 @@ export const deck: DeckLook = {
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
-export const haze = { line: 0.07, chord: 0.6 }
+export const haze = { line: 0.14, chord: 0.6 }
 
 export const mist: MistLook = {
   glow: [0.2, 0.58, 0.7],
