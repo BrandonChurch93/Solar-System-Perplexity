@@ -66,4 +66,5 @@ export const ring = {
   mapScale: 0.25,
   degPerSecond: 0.8,
   grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
+  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], rise: [0.6134, 0.7333], near: [0.58, 0.82] as [number, number] },
 }
