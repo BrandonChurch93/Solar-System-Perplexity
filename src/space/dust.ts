@@ -178,7 +178,7 @@ export class Dust {
   render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, director: FlowDirector, shot: Shot, view: RenderView, cover: DustCover | null = null): void {
     if (this.owner !== director) {
       this.owner = director
-      this.flow = new Flow(director)
+      this.flow = new Flow(director, FLOW.ease)
     }
     const u = this.material.uniforms
     const seg = shot.segment
