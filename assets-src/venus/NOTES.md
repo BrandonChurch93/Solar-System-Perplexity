@@ -1203,3 +1203,10 @@ The structure numbers above showed three flat fog frames on each side with g5 (t
 5. G5 and G17 (`/tmp/c4-g5.log`) last; if the clock does not allow it, the message says they were not run again and that the four judged finals keep their bytes.
 
 Send `CUT35 venus` by 18:15 VM time. If a judged final differs or the review sheets do not read clearly better: `git revert 90cc5b23`, push, and the message says the round 34 state stands.
+
+## State at 16:56 (22 Nov): main moved (round 34 is built on it), merged; the proof is split over two engines (read this first after a compaction)
+
+- `origin/main` is ff158d90 (round 34 as built, engine merges up to 89ced51b). Merged with `--no-ff`: head 877b0fdb. `git diff origin/main HEAD` is NOTES and the three files of the cure (`look.ts`, `relief.ts`, `set.ts`); main's Venus code equals a135f6b8.
+- Main's engine against 84b0ea4 (where r2 stood): `config/showcase.json` (flight strip keys), `src/director/film.ts` (the Sun's hand over in travel, `light.skyLiftFrom`), `src/director/moves.ts` (the type of `skyLiftFrom`), `src/space/sky.ts`, `src/space/travel/field.ts`, `path.ts`, the belt. `skyLiftFrom` is not set in my plan (MAIL 185: do not set it unless a pair shows it better than the carry of 24).
+- What ran on engine 84b0ea4 with the cure: the draft checks, the four finals `f28-F.png` (same bytes as round 34's `f26-F.png`, 16:52), the two review cover sheets `view/c28-rc.png`, `view/c28-dc.png` (running, done about 17:26). The round 34 sheets beside them (`c25`, `c26`) are from the same engine, so the pairs are clean.
+- Queue q41 (`/tmp/q41.log`) waits for the sheets, then moves r2 to `origin/main` plus my folders and runs, on the tree that is delivered: 34 draft frames of the two windows `m9-F.png` against `v9-F.png` (does main's engine move my cover frames), the four finals `f29-F.png` against `f26-F.png`, G13 every frame, audit, vitest, gates G11, G12, G15, repeat (1185, 1287, 1440, 1586, 1320, 1553), review frames of the cure `h6-F.png` (1321, 1322, 1324, 1551, 1553, 1554), then round 34 code on the new main: draft `m34-F.png` and review `r34-F.png` of the same six, then G5 and G17.
