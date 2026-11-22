@@ -70,4 +70,4 @@ Mine: in `src/director/film.ts` the ending only (`LOOKBACK`, `lookback()`, the e
 ## Notice 08:03 UTC
 
 - Engine batch 20 is on main (b784153): it holds my tidy up (d755c65) and the flight sky's strip with dark veins. Round 31 runs on it. My reply `stands` is taken. The ring arc off the left edge at 5235 stays for round 31; the Builder sends words for batch 21 if a critic names it.
-- Branch fast forwarded to main b784153. Base anything for batch 21 on origin/main (merge, never rebase). Nothing is asked now.
+- Branch fast forwarded to main 07aabf5 (round 31 start, one commit after b784153). Base anything for batch 21 on origin/main (merge, never rebase). Nothing is asked now.
