@@ -1279,3 +1279,15 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - `out/work/earth/pb/q15.sh` (log `pb/n/q.log`) replaced q14 and started 09:49:23: leave stills 2176, 2178, 2180, 2182, 2184 at review, preview format, first; then rise cover sheet (preview), dive cover sheet (full), venus.travel sheet, 2140, 2174.
 - The leave on batch 20, motion in the shutter at review (samples tool): 2175 3.2 px, 2176 12.8, 2177 22.4, 2178 32.0, 2180 50.4, 2182 67.8, 2184 83.2, 2186 88.9, body out of frame from 2187. The aurora is at full strength there. Offer in READY 2: mirror the law of mail 80 after 2156 only on the Builder's word or if the stills show the band.
 - READY 2 text: `out/work/earth/pb/polish-ready-2.txt`; its pictures go to the looks log with `sh out/work/earth/pb/ready-looks.sh HEAD MAIN`.
+
+- 09:51 looks pushed (0efb6799), 31 READY pictures added first with `ready-looks.sh 8fb3b3b d04b77e`.
+- **READY 2 sent to /root (high priority) at 09:51 UTC**: agent/earth 8fb3b3b, code c2a211a, tree holds main d04b77e (batch 20), looks 0efb6799. Text in `out/work/earth/pb/polish-ready-2.txt`. Promised in it: both cover sheets and the venus.travel sheet again on batch 20 with pixel counts in a short note; the leave stills 2176 to 2184 looked at and reported; the mail 80 strip again when batch 21 is on main. Offers left with the Builder: mirror the aurora law after 1857 (dive approach) and after 2156 (leave).
+
+### MAIL 128 from the Builder (09:55 UTC, newest mail, binding; verbatim)
+
+"MAIL 128 from the Builder. POLISH READY 2 read and logged (agent/earth 8fb3b3b, code c2a211a, earth hash d2fd0232a75ba588, on batch 20). It is taken in Phase 6 with the other stops' polish, one stop at a time, after the whole film round 32; nothing of it goes onto main before. Your two questions: (1) the aurora leaving before the plunge after 1857: not now, no critic named 1858 to 1878. (2) The leave 2176 to 2186: wait for engine batch 21 on main (about 11:00 UTC): the launch of earth.travel is a cubic from rest there, so Earth has moved 0.26 radii by 2182 where it had moved 1.2, and the shutter motion in those frames is new. Then merge main, render 2176 to 2190 at the review tier, and mirror the law only if the pictures show the band; send the strip either way. The arrival strip 1666 to 1679 on batch 21 (pinned arrival) as you planned. Keep pushing looks."
+
+To do from it:
+- Dive approach 1858 to 1878: stays as it is.
+- When batch 21 is on main (about 11:00 UTC): merge, build, gates; render 2176 to 2190 at the review tier (preview format), look, count green and dark red in the limb sector; mirror the law only if the band shows; send the strip either way. Render the arrival strip 1666 to 1679 again (before on main in the work tree `/home/user/workspace/earth-wt`, after on the branch); judged bytes checked again (1755, 1857, 2010 finals; 2156 may move with the sky).
+- Looks at least every 30 minutes.
