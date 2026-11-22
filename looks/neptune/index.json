@@ -1,9 +1,67 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T00:01:08.717Z",
- "head": "5644062b0eefea3d111b51f49b8e89c564bf82e0",
- "note": "item 24 terrain, coarse bloom levels inverted in the relief",
+ "pushed": "2026-11-22T00:15:34.532Z",
+ "head": "086f33d731d2baf9429f850d3af9bb582f8eb99a",
+ "note": "item 24 terrain bloom cure committed 086f33d; item 5 started: flow detail map preview",
  "looks": [
+  {
+   "time": "2026-11-22T00:15:33.971Z",
+   "file": "20261122001533971-note-pv-b.jpg",
+   "source": "out/work/nep/flow/pv-b.jpg",
+   "kind": "note",
+   "label": "item 25 and 26 in work: flow detail map take 2, second pair and a wide view of the map",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T00:15:33.430Z",
+   "file": "20261122001533430-note-pv-a.jpg",
+   "source": "out/work/nep/flow/pv-a.jpg",
+   "kind": "note",
+   "label": "item 25 and 26 in work: flow detail map take 2 on the wrap deck, without left, with right at 0.45 (offline preview at the 4707 scale)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T00:05:04.757Z",
+   "file": "20261122000504757-job-frame-04530.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T00:03:13.289Z",
+   "file": "20261122000313289-frame-q-4745.jpg",
+   "source": "out/work/nep/p6/b1/q-4745.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4745, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4745,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-22T00:02:01.522Z",
+   "file": "20261122000201522-frame-q-5006.jpg",
+   "source": "out/work/nep/p6/b1/q-5006.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 5006, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-22T00:01:06.639Z",
    "file": "20261122000106639-frame-q-4605.jpg",
@@ -27,22 +85,6 @@
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T00:01:01.354Z",
-   "file": "20261122000101354-note-f-4860.jpg",
-   "source": "out/work/nep/p6/b1/f-4860.png",
-   "kind": "note",
-   "label": "00:02 4860 review now, item 24: median luma 59.1 to 58.0 (approved 57.1), low pass error rms 1.42 to 1.11",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T00:01:00.248Z",
-   "file": "20261122000100248-note-terrain-approved-before-now-2.jpg",
-   "source": "out/work/nep/p6/b1/terrain-approved-before-now-2.png",
-   "kind": "note",
-   "label": "00:02 4860 crops x2: approved / 73b4427 / now (the bloom's three coarse levels taken out in the relief). Mean abs diff 2.1961 to 2.0306 with grain, 1.8845 to 1.6742 without; G17 median 0.917 to 1.029",
-   "stop": "neptune"
-  },
-  {
    "time": "2026-11-21T23:59:21.582Z",
    "file": "20261121235921582-frame-f-4860.jpg",
    "source": "out/work/nep/p6/b1/f-4860.png",
@@ -55,36 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:41:29.842Z",
-   "file": "20261121234129842-note-b-4860.jpg",
-   "source": "out/work/nep/p6/b1/b-4860.png",
-   "kind": "note",
-   "label": "4860 review, trial: bloom inverse in the relief from a baked spill map; mean abs diff 2.196 to 2.048",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:41:29.245Z",
-   "file": "20261121234129245-note-terrain-approved-before-now.jpg",
-   "source": "out/work/nep/p6/b1/terrain-approved-before-now.png",
-   "kind": "note",
-   "label": "4860 crops x2, approved / 73b4427 / trial with the bloom's spill taken out in the relief (full inverse, fine contrast overshoots, being split)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:17:34.179Z",
-   "file": "20261121231734179-job-frame-04530.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
