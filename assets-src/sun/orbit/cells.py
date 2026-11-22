@@ -9,8 +9,11 @@ CAPS = (0.6, 0.8)
 CURVE = (0.33, 0.36)
 HIGH = 12.0
 PLAIN = {'wide': 20.0, 'level': (0.12, 0.90), 'rough': (0.90,), 'grow': 22, 'soft': 4.0, 'shifts': ((163, 41), (-127, 131), (61, -173), (-211, -67), (233, 151), (-89, 263), (307, -113), (-283, 199), (97, 337), (-353, -41))}
-REACH = (0.5, 0.78)
+REACH = (0.4, 0.62)
 LIMIT = 0.7
+GAIN = 0.8
+CAP = 0.3
+DARK = {'wide': 10.0, 'from': -1.3, 'to': -0.8}
 
 
 def limb_curve(mu):
@@ -112,26 +115,47 @@ def layer(d, src, cs):
     return acc / np.maximum(wsum, 1e-6)[..., None]
 
 
-def reach(mu):
-    return (1 - step(mu, REACH[0], REACH[1])).astype(np.float32)
+def rows(y0, y1, mw, mh):
+    v = (np.arange(y0, y1) + 0.5) / mh
+    u = (np.arange(mw) + 0.5) / mw
+    lon = (u - 0.5) * 2 * np.pi
+    lat = (0.5 - v) * np.pi
+    cl = np.cos(lat)[:, None]
+    return np.stack([cl * np.sin(lon)[None, :], np.repeat(np.sin(lat)[:, None], mw, 1), cl * np.cos(lon)[None, :]], -1)
 
 
-def build(path, mw=8192, mh=4096):
+def build(mw=8192, mh=4096):
     src, _ = source()
     cs = centres()
     out = np.zeros((mh, mw, 3), dtype=np.float16)
     ch = 256
     for y0 in range(0, mh, ch):
-        v = (np.arange(y0, min(y0 + ch, mh)) + 0.5) / mh
-        u = (np.arange(mw) + 0.5) / mw
-        lon = (u - 0.5) * 2 * np.pi
-        lat = (0.5 - v) * np.pi
-        cl = np.cos(lat)[:, None]
-        d = np.stack([cl * np.sin(lon)[None, :], np.repeat(np.sin(lat)[:, None], mw, 1), cl * np.cos(lon)[None, :]], -1)
-        out[y0:y0 + ch] = layer(d, src, cs)
-        print('rows', y0, flush=True)
-    np.save(path, out)
+        out[y0:y0 + ch] = layer(rows(y0, min(y0 + ch, mh), mw, mh), src, cs)
+        print('cells rows', y0, flush=True)
+    return out
+
+
+def apply(out, fine=None):
+    mh, mw = out.shape[:2]
+    fine = np.minimum((build(mw, mh) if fine is None else fine).astype(np.float32), CAP)
+    w = np.zeros((mh, mw), dtype=np.float32)
+    ch = 512
+    for y0 in range(0, mh, ch):
+        w[y0:y0 + ch] = 1 - step(project(rows(y0, min(y0 + ch, mh), mw, mh))[2], REACH[0], REACH[1])
+    lin = scene(np.clip(out, 0, 1)).astype(np.float32)
+    pad = int(4 * DARK['wide'])
+    lum = np.log(np.maximum(luma(lin), 1e-3)).astype(np.float32)
+    wide = cv2.GaussianBlur(np.concatenate([lum[:, -pad:], lum, lum[:, :pad]], 1), (0, 0), DARK['wide'])[:, pad:-pad]
+    wide = wide - np.median(wide[mh // 4:3 * mh // 4:8, ::8])
+    e = (GAIN * w * step(wide, DARK['from'], DARK['to'])).astype(np.float32)
+    part = fine[mh // 8:7 * mh // 8:6, ::6].mean(-1).ravel()
+    grid = np.linspace(0, GAIN, 17)
+    table = np.array([np.log(np.mean(np.exp(x * part))) for x in grid])
+    mean = np.interp(e.ravel(), grid, table).reshape(e.shape).astype(np.float32)
+    got = code(lin * np.exp(e[..., None] * fine - mean[..., None])).astype(np.float32)
+    print('cells: share of the map above half weight', float((e > 0.5 * GAIN).mean()), 'mean change in levels', float(np.abs(got - out).mean() * 255), 'mean correction at full gain', float(table[-1]), flush=True)
+    return got
 
 
 if __name__ == '__main__':
-    build(sys.argv[1])
+    np.save(sys.argv[1], build())

@@ -950,3 +950,18 @@ Item 6, what was found:
 - Pictures: `out/work/sun/stream/t1-470-480-before-after-gain3.jpg`, `t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg`, `s123-topfan-before-s1-s2-s3-gain4-native.jpg`.
 - Weak points: seen only as drafts and only on my local merge with the travel code; the change is faint at gain 1; nothing changes at 360.
 - How to look at travel frames with the travel code without committing: copy uncommitted files that differ between the branches aside, `git show HEAD:path > path`, `git checkout scratch/t92` (uncommitted files that are equal in both heads carry over), render, `git checkout agent/sun`, copy back. `scratch/t92` is now ec6e564 (hook c890ef0 merged in), local only.
+
+## Item 5b (finer cells toward the limb) built into the map (08:04 to 08:20 UTC Nov 22, main 681d8da, on agent/sun after 9c49418)
+
+- `cells.py` builds the layer (the hero's own fine structure at two thirds size, spots masked, 40 caps) and `apply()` adds it in log scene values; `wrap.py` calls `cells.apply(out, ...)` before the files are written, so the map is coded once. A third argument to `wrap.py` is a saved layer (`python3 cells.py FILE`, about 1 minute), for trials. `wrap.py` with the layer takes about 2 minutes.
+- Takes of the map this round: 1 = gain 0.5, cap 0.25; 2 = gain 0.8, cap 0.3 (kept). Reach (0.4, 0.62) by the hero's view cosine, dark mask -1.3 to -0.8.
+- Measure that chose the gain (`python3 out/work/sun/cells/ring.py FRAME.png ...`: rms of luminance minus its 1.5 px blur, by quadrant right, top, left, bottom, in rings of r/R; drafts of 360 at 1920):
+  - 0.88 to 0.94: approved 12.8, 14.2, 12.8, 14.6; before 11.8, 13.4, 11.5, 13.8; take 1 12.2, 13.9, 11.9, 14.2; take 2 12.9, 14.6, 12.7, 14.7.
+  - 0.94 to 0.985: approved 11.6, 12.5, 12.4, 12.6; before 8.1, 8.7, 7.9, 8.4; take 1 8.7, 9.3, 8.5, 9.0; take 2 9.7, 10.3, 9.4, 9.9.
+  - 0.70 to 0.80: 13.0, 12.9, 12.5, 12.7 before and after (approved 13.9, 13.9, 13.4, 13.5).
+  - So take 2 reaches the hero's fine contrast at 0.88 to 0.94 and closes about a third of the gap in the outermost ring. More gain would overshoot the inner ring; the outermost ring is short because the cells there are under a pixel across the limb. Left as it is.
+- Frame means, before, after take 2 (R, G, B): 360: 96.37 68.13 42.73, 96.14 68.09 42.91 (hero 96.81 67.84 42.58); 247: 98.13 69.76 43.82, 97.85 69.67 43.99. Share of the frame changed: 360 13.8 percent, 247 26.7, 236 30.0, 224 45.0, 220 52.1, 216 45.9; mean absolute change 0.55, 0.92, 1.03, 1.27, 1.21, 0.61 levels.
+- By eye, native and 3 times zoom (`out/work/sun/cells/f360-zoom3-top-left-r2.jpg`, `f360-approved-before-after-r2.jpg`, `f236-...-r2.jpg`, `f224-...`, `f220-...`): the smooth combed band at the limb now carries small cells with dark lanes, closer to the hero; the centre is equal; no grain face on at 216 to 236.
+- Trap: the saved layer `fine.npy` of 05:42 differs from today's build in 662 pixels of row 0 (the pole). The map that is committed was made with the layer of today's code (`fine-check.npy`), which is what the recipe line builds by itself.
+- Sizes: full map 15.5 to 19.3 MB, web 5.2 to 6.2 MB; `public/assets/sun/web` 17 MB, `full` 53 MB (limits 35 and 150). Same pixel size, so the texture memory of the set is as it was.
+- Proof on the map as committed (drafts): 0, 90, 150, 208 byte equal to `out/work/sun/b20`; 216, 224, 236, 247, 360 byte equal to the trial with the saved layer (`out/work/sun/cells/d2`). Two builds of the layer today are byte equal.
