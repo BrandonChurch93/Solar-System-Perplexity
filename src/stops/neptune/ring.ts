@@ -18,7 +18,6 @@ export interface RingParams {
   bandHold: [number, number, number]
   bandAway: [number, number, number]
   grain?: { map: THREE.Texture; repeat: [number, number]; fine: number; amount: number; top: number }
-  solid?: { amount: number; density: number; ground: [number, number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -55,8 +54,6 @@ uniform float uHome;
 uniform sampler2D uGrain;
 uniform vec4 uGrainShape;
 uniform float uGrainTop;
-uniform vec2 uSolid;
-uniform vec3 uSolidGround;
 in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
@@ -90,8 +87,7 @@ void main() {
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
-  float solid = uSolid.x * (1.0 - exp(-max(strands.r, max(strands.g, strands.b)) * edge * uSolid.y));
-  outColor = vec4((strands * edge + solid * uSolidGround) * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, solid);
+  outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
   if (uDiag >= 2) discard;
 }`
 
@@ -107,7 +103,6 @@ export class Ring {
   private readonly centre: THREE.Vector3
   private readonly untilt = new THREE.Quaternion()
   private readonly grain: number
-  private readonly solidAmount: number
 
   constructor(p: RingParams) {
     this.gain = p.gain
@@ -128,12 +123,8 @@ export class Ring {
         uGrain: { value: p.grain?.map ?? p.bands }, uGrainShape: { value: new THREE.Vector4(p.grain?.repeat[0] ?? 1, p.grain?.repeat[1] ?? 1, p.grain?.fine ?? 1, 0) }, uGrainTop: { value: p.grain?.top ?? 1 },
       },
       side: THREE.DoubleSide,
-      blending: THREE.CustomBlending,
-      blendEquation: THREE.AddEquation,
-      blendSrc: THREE.OneFactor,
-      blendDst: THREE.OneMinusSrcAlphaFactor,
-      blendSrcAlpha: THREE.ZeroFactor,
-      blendDstAlpha: THREE.OneFactor,
+      blending: THREE.AdditiveBlending,
+      premultipliedAlpha: true,
       transparent: true,
       depthWrite: false,
     })
@@ -147,13 +138,6 @@ export class Ring {
     this.material.uniforms.uEndShade = { value: new THREE.Vector3(0.985, 1.025, 0.006) }
     this.material.uniforms.uEndCrisp = { value: new THREE.Vector2(1, 1) }
     this.material.uniforms.uEndFoot = { value: 1 }
-    this.material.uniforms.uSolid = { value: new THREE.Vector2(0, p.solid?.density ?? 0) }
-    this.material.uniforms.uSolidGround = { value: new THREE.Vector3().fromArray(p.solid?.ground ?? [0, 0, 0]) }
-    this.solidAmount = p.solid?.amount ?? 0
-  }
-
-  solid(weight: number): void {
-    ;(this.material.uniforms.uSolid!.value as THREE.Vector2).x = this.solidAmount * weight
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {

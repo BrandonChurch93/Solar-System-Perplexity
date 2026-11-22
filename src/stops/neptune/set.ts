@@ -189,7 +189,6 @@ export const createSet: SetFactory = async (ctx) => {
       const behind = smooth((THREE.MathUtils.radToDeg(camera.angleTo(light)) - endLook.limb.shinePhase[0]!) / (endLook.limb.shinePhase[1]! - endLook.limb.shinePhase[0]!))
       planet.ending(end, look.limb, look.cloud, look.deck, look.night, ringLit, endLook.limb.shineNear + (1 - endLook.limb.shineNear) * behind, endLook.limb, crescent)
       ring.ending(end, camera, endLook.ring)
-      ring.solid(rising ? 1 : ending ? 1 - end : 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
