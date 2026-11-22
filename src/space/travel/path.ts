@@ -26,7 +26,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
   mercury: { bowDeg: 9, grow: [3, 3] },
   venus: { bowDeg: -12, grow: [3, 3] },
-  earth: { bowDeg: -7, grow: [3, 4] },
+  earth: { bowDeg: -7, growRun: [0.45, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
   mars: { bowDeg: 10, grow: [2, 3] },
   jupiter: { bowDeg: -10, grow: [3, 4] },
   saturn: { bowDeg: 8, grow: [2, 3] },
