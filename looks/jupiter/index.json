@@ -1,9 +1,54 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T06:33:13.055Z",
- "head": "7cc958e3e504a42e38e486821992405998dc8d78",
- "note": "Jupiter: dive cover sheet of the READY tree a06d2ae (main 2621f00) done and looked at; rise cover sheet rendering, 3265 to 3270 looked at",
+ "pushed": "2026-11-22T07:02:23.127Z",
+ "head": "45d6d6ccdcbb3015bdfcf336bc95e42c196fd10b",
+ "note": "Jupiter: both cover sheets of the READY tree a06d2ae (main 2621f00) done and looked at; drafts of two small cover fixes rendering",
  "looks": [
+  {
+   "time": "2026-11-22T07:01:38.241Z",
+   "file": "20261122070138241-note-r3274.jpg",
+   "source": "out/work/view/sky/r3274.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover frame 3274, review tier, agent/jupiter a06d2ae on main 2621f00: the pale upright column in the thinning haze right of the middle (62 to 75 percent of the width)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T07:01:37.004Z",
+   "file": "20261122070137004-note-rise-cover-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/rise-cover-b19.png",
+   "kind": "note",
+   "label": "Jupiter rise cover, review sheet, every frame 3265 to 3276 (cut at 3270), agent/jupiter a06d2ae on main 2621f00 (engine batch 19). Colour and horizon carry across the cut; the sky is black from 3268 to 3273 (open item 2); a pale upright column stands in the haze right of the middle in 3273 to 3276 (my own weak point, cure in work)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T07:00:53.029Z",
+   "file": "20261122070053029-sheet-jupiter.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.rise, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3265,
+   "last": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:00:51.259Z",
+   "file": "20261122070051259-frame-f03276-review.jpg",
+   "source": "out/work/sheets/.frames-w0t5S8/f03276-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3276, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3276,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:33:12.163Z",
    "file": "20261122063312163-note-r3269_70.jpg",
@@ -19,20 +64,6 @@
    "kind": "note",
    "label": "Jupiter rise cover, review tier, frames 3265 to 3267 (terrain side, the haze closes over the storm), agent/jupiter a06d2ae on main 2621f00",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:32:58.900Z",
-   "file": "20261122063258900-frame-f03270-review.jpg",
-   "source": "out/work/sheets/.frames-w0t5S8/f03270-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3270, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3270,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T06:15:03.455Z",
@@ -259,49 +290,6 @@
    "segment": "jupiter.terrain",
    "frame": 3071,
    "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:04:03.938Z",
-   "file": "20261122050403938-still-f03069-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03069-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3069, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3069,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:03:34.783Z",
-   "file": "20261122050334783-sheet-jupiter.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.terrain, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "first": 3060,
-   "last": 3239,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:03:32.888Z",
-   "file": "20261122050332888-frame-f03239-review.jpg",
-   "source": "out/work/sheets/.frames-IHQS4g/f03239-review.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
