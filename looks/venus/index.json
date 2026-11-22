@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T20:05:08.289Z",
- "head": "d1763adcdaeca13bc126976ab316836f22192c32",
- "note": "the rise cover sheet of the night limb test is rendering at review; Venus in the film is round 34's folders, unchanged",
+ "pushed": "2026-11-22T20:10:00.016Z",
+ "head": "95399402f7e166fe1cf85f01dd6613ec31e84c48",
+ "note": "night limb test measured whole and put away as a patch; Venus in the film is round 34's folders; waiting for the Builder",
  "looks": [
+  {
+   "time": "2026-11-22T20:09:38.644Z",
+   "file": "20261122200938644-note-d3-rc.jpg",
+   "source": "../view/d3-rc.png",
+   "kind": "note",
+   "label": "TEST, NOT in the branch and not in round 35: rise cover sheet 1555 to 1566 at review with the rise only night limb (dusk); 9 of 12 cells are round 34's pixels, 1564 to 1566 change by at most 3 levels; rendered on main 9d20d3d, tree holds main 3f8d424",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T19:31:29.618Z",
    "file": "20261122193129618-note-dr-pairs-c.jpg",
@@ -154,14 +162,6 @@
    "source": "../view/c28-rise-pairs.jpg",
    "kind": "note",
    "label": "venus rise cover at review, cells 1555 to 1558: round 34 (left of each pair) beside the gate cure 90cc5b2 (right); cells 1558 to 1566 are the same pixels as round 34; rendered on engine 84b0ea4, tree now holds main ff158d9",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T16:46:55.558Z",
-   "file": "20261122164655558-note-v78-rise.jpg",
-   "source": "../view/v78-rise.jpg",
-   "kind": "note",
-   "label": "venus rise in 1551 to 1556, draft, the variants tried: round 34 (top), g5 (dropped), v8, the cure kept (v7, bottom); tree holds main 6460b4a",
    "stop": "venus"
   },
   {
