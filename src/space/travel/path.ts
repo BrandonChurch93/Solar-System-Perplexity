@@ -16,9 +16,11 @@ export interface TravelLook {
   passPower: number
   cruise: number
   early: number
+  point: number
+  growRun: [number, number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06 }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
@@ -69,6 +71,15 @@ export function cruiseEase(share: number): (t: number) => number {
   }
 }
 
+export function runEase(lead: number, tail: number): (t: number) => number {
+  const up = (x: number): number => x * x * x * (1 - x / 2)
+  const total = 1 - lead / 2 - tail / 2
+  return (t) => {
+    const x = Math.min(Math.max(t, 0), 1)
+    return (x < lead ? lead * up(x / lead) : x > 1 - tail ? total - tail * up((1 - x) / tail) : x - lead / 2) / total
+  }
+}
+
 const span = (r: [number, number], t: number): number => Math.min(Math.max((t - r[0]) / (r[1] - r[0]), 0), 1)
 
 export class TravelShape {
@@ -81,22 +92,26 @@ export class TravelShape {
   private readonly leadEase = betaEase(2, 2)
 
   from = 0
+  until = 0
 
   constructor(id: string, over: Partial<TravelLook> = {}) {
     this.look = { ...travelLook(id), ...over }
     this.panEase = this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.pan[0], this.look.pan[1])
     this.rollEase = this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.roll[0], this.look.roll[1])
-    this.growEase = betaEase(this.look.grow[0], this.look.grow[1])
+    const run = this.look.growRun
+    const beta = betaEase(this.look.grow[0], this.look.grow[1])
+    const ease = runEase(run[1], run[2])
+    this.growEase = run[1] > 0 ? (x) => ease(span([run[0], 1], x)) : beta
   }
 
   pan(u: number): number {
-    const main = this.panEase(span([Math.max(this.look.panSpan[0], this.from - this.look.early), this.look.panSpan[1]], u))
+    const main = this.panEase(span([Math.max(this.look.panSpan[0], this.from - this.look.early), this.until > 0 ? Math.min(this.until, this.look.panSpan[1]) : this.look.panSpan[1]], u))
     const share = this.look.lead[0]
     return share > 0 ? share * this.leadEase(span([0, this.look.lead[1]], u)) + (1 - share) * main : main
   }
 
   roll(u: number): number {
-    return this.rollEase(span([Math.max(this.look.rollSpan[0], this.from - this.look.early), this.look.rollSpan[1]], u))
+    return this.rollEase(span([Math.max(this.look.rollSpan[0], this.from - this.look.early), this.until > 0 ? Math.min(this.until, this.look.rollSpan[1]) : this.look.rollSpan[1]], u))
   }
 
   pass(u: number): number {
@@ -105,6 +120,17 @@ export class TravelShape {
 
   grow(x: number): number {
     return this.growEase(x)
+  }
+
+  grown(e: number): number {
+    let low = 0
+    let high = 1
+    for (let k = 0; k < 40; k++) {
+      const mid = (low + high) / 2
+      if (this.growEase(mid) < e) low = mid
+      else high = mid
+    }
+    return low
   }
 
   swingLeft(x: number): number {

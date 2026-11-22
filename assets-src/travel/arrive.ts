@@ -2,6 +2,9 @@ import * as THREE from 'three'
 import { config } from '../../src/config'
 import { FilmDirector } from '../../src/director/film'
 import { plans } from '../../src/director/plans'
+import { TRAVEL } from '../../src/space/travel/path'
+
+if (process.env.OVER) for (const [k, v] of Object.entries(JSON.parse(process.env.OVER) as Record<string, object>)) TRAVEL[k] = { ...TRAVEL[k], ...v }
 
 const d = new FilmDirector(plans)
 const fmt = config.formats[config.formatKeys.master]!
@@ -55,7 +58,7 @@ plans.slice(0, -1).forEach((p, i) => {
       if (px > LIMIT && g > grow) { grow = g; growAt = f }
     }
     prev = px
-    if (mode === 'frames') rows.push(`${f} r ${px.toFixed(2)} px grow ${g.toFixed(1)}% at ${inside ? Math.round(sx) + ',' + Math.round(sy) : 'out'} turn ${full.toFixed(2)} w ${set.weight.toFixed(2)}`)
+    if (mode === 'frames') rows.push(`${f} r ${px.toFixed(2)} px grow ${g.toFixed(1)}% at ${inside ? Math.round(sx) + ',' + Math.round(sy) : 'out'} turn ${full.toFixed(2)} off ${(to.angleTo(new THREE.Vector3(0, 0, -1).applyQuaternion(s.camera.quaternion)) * DEG).toFixed(1)} w ${set.weight.toFixed(2)}`)
   }
   if (mode === 'frames') console.log(p.id + '\n' + rows.join('\n'))
   else console.log(`${p.id}.travel | enters ${enter} at ${enterAt} r ${enterPx.toFixed(2)} px | over ${LIMIT.toFixed(2)} px from ${over}, over ${GONE.toFixed(1)} px from ${gone} | peak turn while over the limit ${peak.toFixed(2)} at ${peakAt} (disc over ${GONE.toFixed(1)} px: ${peakGone.toFixed(2)}) | peak turn before ${before.toFixed(2)}, whole ${whole.toFixed(2)} at ${wholeAt} | largest growth ${grow.toFixed(1)}% at ${growAt}`)

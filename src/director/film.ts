@@ -98,6 +98,13 @@ export class FilmDirector implements Director {
         slide = high
         clear = this.clearOf(i, shape, slide)
         shape.from = clear
+        if (shape.look.point > 0) {
+          const b = plans[i + 1]!
+          const hold = b.hold(0)
+          const dh = hold.position.length()
+          const far = 1 / (2 * shape.look.point * Math.tan(THREE.MathUtils.degToRad(hold.vfov) / 2))
+          shape.until = clear + (1 - clear) * shape.grown(1 - Math.log(Math.max(far / dh, 1)) / Math.log(this.reach[i + 1]! / dh))
+        }
       }
       this.slide.push(slide)
       this.shapes.push(shape)
