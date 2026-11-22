@@ -1,9 +1,69 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T14:13:13.551Z",
+ "pushed": "2026-11-22T14:28:00.395Z",
  "head": "825e3374356d4f33762d218785f2b73f6cf22272",
- "note": "round 33 build (main 4d5f610): final of the rise frame 3866 and draft sheets looked at; review sheets of the rise render; waiting for the critics",
+ "note": "round 34: trial of the tone handover in the rise 3826 to 3840 (inner zone), main 4d5f610 in the tree",
  "looks": [
+  {
+   "time": "2026-11-22T14:27:59.789Z",
+   "file": "20261122142759789-note-dbg-3832.jpg",
+   "source": "../../../../tmp/dbg-3832.png",
+   "kind": "note",
+   "label": "trial T5 mask at 3832 (red ring radius, green close weight, blue in front of the globe), a failed take kept for the record",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T14:27:59.176Z",
+   "file": "20261122142759176-note-t5h-3836.jpg",
+   "source": "../../../../tmp/t5h-3836.png",
+   "kind": "note",
+   "label": "trial T5 rise 3836 left half, kept above, trial below",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T14:27:58.574Z",
+   "file": "20261122142758574-note-t5v-2.jpg",
+   "source": "../../../../tmp/t5v-2.png",
+   "kind": "note",
+   "label": "trial T5 rise 3832 and 3836, kept above, trial below",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T14:27:57.978Z",
+   "file": "20261122142757978-note-t5v-1.jpg",
+   "source": "../../../../tmp/t5v-1.png",
+   "kind": "note",
+   "label": "trial T5 rise 3826 and 3829, kept above, trial below (inner zone darker while the even shade takes over)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T14:24:16.720Z",
+   "file": "20261122142416720-frame-DBG-3829.jpg",
+   "source": "out/work/saturn/DBG-3829.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3829, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3829,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T14:22:06.194Z",
+   "file": "20261122142206194-frame-T5-3720.jpg",
+   "source": "out/work/saturn/T5-3720.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T14:13:12.367Z",
    "file": "20261122141312367-note-d3866-f34.jpg",
@@ -11,86 +71,6 @@
    "kind": "note",
    "label": "final 3866 on main 4d5f610 against the final of the cut build on the old engine, difference times 8: sky points only, black on globe and rings",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T14:13:11.127Z",
-   "file": "20261122141311127-note-f3866-shadow.jpg",
-   "source": "../../../../tmp/f3866-shadow.png",
-   "kind": "note",
-   "label": "final 3866 on main 4d5f610 (round 33 sky), shadow side at native size: the band through the gap and the C ring, faint points through the shadowed rings",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T14:12:19.034Z",
-   "file": "20261122141219034-frame-P34-3866.jpg",
-   "source": "out/work/saturn/P34-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, final tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T14:07:25.092Z",
-   "file": "20261122140725092-sheet-saturn.terrain-16x9-draft.jpg",
-   "source": "out/work/sheets/saturn.terrain-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.terrain, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "first": 3630,
-   "last": 3809,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T14:07:12.448Z",
-   "file": "20261122140712448-frame-f03776-draft.jpg",
-   "source": "out/work/sheets/.frames-I4QUTo/f03776-draft.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3776, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3776,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T14:05:55.716Z",
-   "file": "20261122140555716-sheet-saturn.dive-cover-16x9-draft.jpg",
-   "source": "out/work/sheets/saturn.dive-cover-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.dive, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "first": 3589,
-   "last": 3600,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T14:05:37.963Z",
-   "file": "20261122140537963-frame-f03597-draft.jpg",
-   "source": "out/work/sheets/.frames-YzJmE3/f03597-draft.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3597, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3597,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T13:53:16.121Z",
