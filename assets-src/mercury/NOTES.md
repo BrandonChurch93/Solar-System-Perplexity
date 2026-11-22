@@ -1026,3 +1026,5 @@ R4-part1, score 4:
   - tsc clean, vitest 87 passed, shader audit no line in mercury. Motion changed: dive 690 to 708 (the ghosts in the sky fade out; before they stayed to the cover).
   - Worse or new, in my own words: the lens now flares in the hold and not from a fifth into the dive, as it already does not in the rise; a viewer who watches the ghost in the hold sees it go over 18 frames while the camera starts to move. Take out: revert c8e4a1dd alone; d76c0195 stays whole without it.
 - 18:11 main moved to 55319c5a (status only, `kit/PROGRESS.md` and status stills): merged plain (c35d462d).
+- 18:12 `CUT35 mercury, addition` sent to `/root` (high): READY 4a323009e9ded6b2a99653127c92adf42b445c2e (main 55319c5a merged; film tree = main with 36424325, the bars cure, and c8e4a1dd, the ghost fade, two separable commits). d76c0195 stays valid without the second. Repeat at draft on the pushed head: 717 the same bytes as `p6/g35z` (sha256 767976c24c937d70), 615 the same bytes as `p6/c35` (02f179d090292851). Looks pushed 18:12.
+- Left for after the cut, none started: the list of round 34 above without the ghost at 717.
