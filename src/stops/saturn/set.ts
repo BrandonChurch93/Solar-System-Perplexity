@@ -249,6 +249,10 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uSkimUnder!.value as THREE.Vector4).fromArray(look.skimUnder)
       ru.uSkimGap!.value = smooth((swing - look.skimGap[0]) / (look.skimGap[1] - look.skimGap[0]))
       ;(ru.uSkimFill!.value as THREE.Vector3).fromArray(look.skimFill)
+      ;(layout.uLayCam!.value as THREE.Vector4).set(skimL.x / wide, skimL.y / tall, skimL.z / wide, 1 / wide)
+      ;(layout.uLayEye!.value as THREE.Vector4).set(camS.x, camS.y, camS.z, skimL.x * skimJoin.z - skimL.z * skimJoin.x < 0 ? -1 : 1)
+      ;(layout.uLayEdge!.value as THREE.Vector2).fromArray(look.layEdge)
+      ;(layout.uLayFill!.value as THREE.Vector4).set(ru.uSkimGap!.value * look.layFill[0], 1 - look.layFill[1], look.layFill[2], look.layFill[3])
 
       const iu = ice.material.uniforms
       const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))
