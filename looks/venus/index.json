@@ -1,9 +1,81 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T10:36:36.939Z",
- "head": "a017f7cc2b19324648eddbb874368d53b8148686",
- "note": "veil at full amount: fine lines and soft rectangles traced, candidate take F5 being checked on six more frames in the render copy",
+ "pushed": "2026-11-22T10:56:49.296Z",
+ "head": "4b12149c57656f61eaed3c39094314519a485ed1",
+ "note": "batches 21 and 22 merged, judged draft frames keep their bytes; veil take F5 at full veil in proof on main d5b851f",
  "looks": [
+  {
+   "time": "2026-11-22T10:56:48.723Z",
+   "file": "20261122105648723-note-p5-1563-a.jpg",
+   "source": "../view/p5-1563-a.jpg",
+   "kind": "note",
+   "label": "experiment, not committed: rise 1563 native crop, left the present veil, right candidate take F5 (branch 2ce04c2, rendered on main c479536, engine batch 20)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T10:56:48.158Z",
+   "file": "20261122105648158-note-p5-1563-full.jpg",
+   "source": "../view/p5-1563-full.jpg",
+   "kind": "note",
+   "label": "experiment, not committed: rise 1563 review tier, left the present veil, right candidate take F5 (coarser cloud read and wider fibre at full rush): stepped bright bits and fine straight streaks gone (branch 2ce04c2, rendered on main c479536, engine batch 20)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T10:54:52.344Z",
+   "file": "20261122105452344-frame-d22-1586.jpg",
+   "source": "out/work/venus/p6/d22-1586.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1586, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1586,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T10:54:27.959Z",
+   "file": "20261122105427959-frame-d22-1440.jpg",
+   "source": "out/work/venus/p6/d22-1440.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1440, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T10:54:03.967Z",
+   "file": "20261122105403967-frame-d22-1287.jpg",
+   "source": "out/work/venus/p6/d22-1287.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1287, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1287,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T10:53:39.002Z",
+   "file": "20261122105339002-frame-d22-1185.jpg",
+   "source": "out/work/venus/p6/d22-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
   {
    "time": "2026-11-22T10:36:35.746Z",
    "file": "20261122103635746-note-x5b-1558-quad.jpg",
@@ -130,54 +202,6 @@
    "source": "../view/col-1319-pair2.jpg",
    "kind": "note",
    "label": "dive 1319 review tier native crop: left take F3, right take F4 (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:10:28.428Z",
-   "file": "20261122081028428-note-nv2-pair.jpg",
-   "source": "../view/nv2-pair.jpg",
-   "kind": "note",
-   "label": "dive 1321 and 1325 draft: left veil switched off (test only), right with veil: the streaks and the column are the veil's near sheets (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:10:27.823Z",
-   "file": "20261122081027823-note-f3-r.jpg",
-   "source": "../view/f3-r.jpg",
-   "kind": "note",
-   "label": "rise entry 1546 to 1556 draft, take F3 (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:10:27.233Z",
-   "file": "20261122081027233-note-f3-d.jpg",
-   "source": "../view/f3-d.jpg",
-   "kind": "note",
-   "label": "dive tail 1317 to 1327 draft, take F3 (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:10:26.642Z",
-   "file": "20261122081026642-note-col-1321-pair.jpg",
-   "source": "../view/col-1321-pair.jpg",
-   "kind": "note",
-   "label": "dive 1321 review tier native crop: left take E3d with pale columns, right take F3 (near sheets lifted while the veil is thin): columns gone (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:44:43.945Z",
-   "file": "20261122074443945-note-e3t-pair.jpg",
-   "source": "../view/e3t-pair.jpg",
-   "kind": "note",
-   "label": "dive 1321 and 1323 crop, veil take E3d: two pale columns at the foot still weak (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:44:42.893Z",
-   "file": "20261122074442893-note-e3t.jpg",
-   "source": "../view/e3t.jpg",
-   "kind": "note",
-   "label": "dive tail 1321 1323 1325 1327 review tier, veil take E3d (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
    "stop": "venus"
   }
  ]
