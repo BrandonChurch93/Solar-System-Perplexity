@@ -1,9 +1,63 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T05:32:35.011Z",
- "head": "a06d2ae6f78e0cf877625097aaf556315b813807",
- "note": "Jupiter POLISH READY: foreground tiers, before and after terrain sheet, four judged finals, terrain review sheet, all on main 2621f00",
+ "pushed": "2026-11-22T05:49:05.815Z",
+ "head": "4bfe0c9d0a62a5be8da845b746f0d37cff07b89f",
+ "note": "Jupiter: cover sheets of the READY tree a06d2ae (main 2621f00) rendering; analysis of the sky and the haze under the covers",
  "looks": [
+  {
+   "time": "2026-11-22T05:49:02.667Z",
+   "file": "20261122054902667-note-pallsim_val.jpg",
+   "source": "out/work/view/sky/pallsim_val.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover 3273 to 3275, review frames of 21:32 (older main) beside the simulated haze transmittance and the frame's fine detail: the column of the simulation sits where the pale column of the frame is",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T05:49:01.700Z",
+   "file": "20261122054901700-note-pallsim_fade_b2.jpg",
+   "source": "out/work/view/sky/pallsim_fade_b2.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover, analysis only (no render): transmittance of my own haze by its formula, frames 3275 to 3281 (white = clear). Top row as on agent/jupiter a06d2ae (main 2621f00): vertical columns at the right, the paler column I named as weak. Bottom row: candidate with the fine ray term faded out in the thin phase",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T05:48:47.972Z",
+   "file": "20261122054847972-frame-f03021-review.jpg",
+   "source": "out/work/sheets/.frames-Y37tSp/f03021-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3021, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3021,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:43:59.828Z",
+   "file": "20261122054359828-note-f3019_now.jpg",
+   "source": "out/work/view/sky/f3019_now.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover 3019 review tier on main 2621f00 (agent/jupiter a06d2ae), first frame of the cover sheet that is rendering",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T05:43:58.761Z",
+   "file": "20261122054358761-note-roll3239_layers.jpg",
+   "source": "out/work/view/m19/roll3239_layers.jpg",
+   "kind": "note",
+   "label": "Jupiter terrain 3239 draft, main 2621f00: top left without the layer, top right with it, below the layers view (orange base deck, purple painted in deck behind the terrace, green terrace 1) and the layers over the frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T05:43:57.822Z",
+   "file": "20261122054357822-note-roll3239_rev_pair.jpg",
+   "source": "out/work/view/m19/roll3239_rev_pair.jpg",
+   "kind": "note",
+   "label": "Jupiter terrain 3239 review tier, lower middle: left before the foreground layer (main 0622510, same bytes on main 2621f00), right with the layer on main 2621f00 (agent/jupiter a06d2ae). Weak point named in POLISH READY: the roll stands nearer, its ridges read as upright columns, the lightning glow is covered",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-22T05:32:14.262Z",
    "file": "20261122053214262-job-frame-02820.jpg",
@@ -266,20 +320,6 @@
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T04:51:52.532Z",
-   "file": "20261122045152532-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T04:50:03.067Z",
    "file": "20261122045003067-compare-compare-jupiter-hold-view.jpg",
    "source": "out/work/compare/compare-jupiter-hold-view.jpg",
@@ -306,70 +346,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:46:57.794Z",
-   "file": "20261122044657794-still-f03239-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03239-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3239, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:46:29.326Z",
-   "file": "20261122044629326-still-f03204-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03204-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3204, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3204,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:46:01.160Z",
-   "file": "20261122044601160-still-f03060-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03060-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:32:19.764Z",
-   "file": "20261122043219764-job-frame-03213.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3213, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3213,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T04:32:12.566Z",
-   "file": "20261122043212566-note-terrain-sheet-after.jpg",
-   "source": "out/work/jupiter/fg/kept/terrain-sheet-after.png",
-   "kind": "note",
-   "label": "jupiter.terrain review sheet WITH the foreground layer, rendered on the tree that holds main 0622510",
-   "stop": "jupiter"
   }
  ]
 }
