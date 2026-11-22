@@ -1,9 +1,55 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T10:23:18.901Z",
- "head": "0e607e83de41ab5e19710b8e5d2b2cb8302be194",
- "note": "polish branch 0e607e8 (main 75d2f72) now carries the leave branch; next the grain's weave",
+ "pushed": "2026-11-22T10:48:29.794Z",
+ "head": "122b573073ee0c294104dc2c1ba44766f3b980e2",
+ "note": "polish tree with main d5b851f: crater walls at 870, grain without the weave",
  "looks": [
+  {
+   "time": "2026-11-22T10:48:24.950Z",
+   "file": "20261122104824950-note-shadow-gain8-approved-before-after.jpg",
+   "source": "out/work/mercury/p6/i8/shadow-gain8-approved-before-after.png",
+   "kind": "note",
+   "label": "Mercury 870 final, crater shadow at gain 8: approved, polish READY 9604703, tree 05e91da (main d5b851f) with shade: the JPEG's teal and purple blocks are gone, the relief stays",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T10:48:24.390Z",
+   "file": "20261122104824390-note-wallB-approved-before-after.jpg",
+   "source": "out/work/mercury/p6/i8/wallB-approved-before-after.png",
+   "kind": "note",
+   "label": "Mercury 870 final, far wall and shadow edge at 1.5x: approved, polish READY 9604703, tree 05e91da (main d5b851f) with the wall layer",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T10:48:23.822Z",
+   "file": "20261122104823822-note-wallA-approved-before-after.jpg",
+   "source": "out/work/mercury/p6/i8/wallA-approved-before-after.png",
+   "kind": "note",
+   "label": "Mercury 870 final, crater wall at 1.5x: approved, polish READY 9604703, tree 05e91da (main d5b851f) with the wall layer: the ribbons resolve into fluted rock",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T10:36:39.921Z",
+   "file": "20261122103639921-job-frame-00615.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T10:27:04.749Z",
+   "file": "20261122102704749-note-weave-half-495.jpg",
+   "source": "out/work/mercury/p6/g2/weave-half-495.png",
+   "kind": "note",
+   "label": "Sun plate grain at 495 at half size: left the leave head 7c21dbf (final), right the polish tree after 0e607e8 (main 75d2f72) with fully jittered cells (draft): the woven lattice is gone",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T10:23:18.342Z",
    "file": "20261122102318342-note-merged-494-540-615-717.jpg",
@@ -42,14 +88,6 @@
    "source": "out/work/mercury/leave/proof/rightlimb-495-native.png",
    "kind": "note",
    "label": "MAIL 110 items 2 and 3, 495 final, the right limb at native size (grain and limb darkening on the painted disc): main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:09:30.432Z",
-   "file": "20261122100930432-note-limb-495-native.jpg",
-   "source": "out/work/mercury/leave/proof/limb-495-native.png",
-   "kind": "note",
-   "label": "MAIL 110 item 3, 495 final, loops and spikes at the lower limb at native size: main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
    "stop": "mercury"
   },
   {
