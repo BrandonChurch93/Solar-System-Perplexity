@@ -1371,3 +1371,12 @@ q45 (render copy on main 9d20d3dd, round 35's tree; dusk in the working tree ove
 - Pictures: `view/d2-switch.jpg` (12 pairs 1563 to 1584).
 
 q46 runs (`/home/user/workspace/q46.sh`, log `/tmp/q46.log`, started 18:54): review stills in pairs at 15 frames (`dr-F.png` dusk, `hr-F.png` main's code), shader audit, vitest, `measure --only G5,G13` (`/tmp/d3-measure.log`), repeat on 1575, 1586, 1600 (`/tmp/d3-rep.log`), the rise cover sheet at review with dusk (`view/d3-rc.png`). It syncs from the repo's working tree three times, the last time at the sheet: do not touch `src/stops/venus` in the repo until "q46 done".
+
+## State at 19:33 (22 Nov): review pairs of dusk read; the rest of q46 runs (read this first after a compaction)
+
+Review tier, preview format (960 by 540), main's Venus folders `hr-F.png` beside dusk `dr-F.png`, both on main 9d20d3dd. Changed pixels, largest change, mean level:
+
+- 1563: 0. 1564: 65 px, 1 level. 1565: 596, 1. 1566: 3,825, 3. So of the rise cover sheet's frames only 1564, 1565, 1566 change, by at most 3 levels.
+- 1570: 19,408, 18, 95.50 to 95.42. 1573: 61,273, 88, 74.21 to 73.44. 1575: 101,992, 160, 60.28 to 58.11. 1578: 156,702, 166, 44.89 to 42.19. 1582: 178,962, 175, 35.19 to 32.80. 1586: 182,218, 183, 32.63 to 30.51. 1595: 182,384, 183, 34.00 to 32.01. 1604: 182,377, 182, 34.33 to 32.35. 1612: 188,286, 151, 34.23 to 32.22. 1618: 117,555, 66, 20.50 to 19.44. 1622: 56,367, 72, 13.20 to 12.70.
+- Read (pictures `view/dr-pairs-a.jpg`, `-b.jpg`, `-c.jpg`): on main the glow wraps the whole disc from 1573 on and the unlit side stands in a ring of light; with dusk the glow runs round the lit half and ends near the terminator, and the unlit limb goes into black. From 1570 to 1575 the two are hard to tell apart (the unlit limb is still out of frame or under the veil). No frame of the 15 shows a step, a line or a new edge. The stars that the glow covered show next to the dark limb (that is the largest change, about 180 levels on single star pixels). The lit limb, the clouds and the night side's shading are the same pixels in kind: dusk answers only the first two majors of round 34's surface critic (halo round the unlit limb, doubled edge lower right), not the other two and not the minors.
+- Cost of these stills: 2 to 2.5 minutes each at 1563 to 1566, 17 to 18 minutes for the 15.
