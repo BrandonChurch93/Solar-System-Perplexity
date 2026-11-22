@@ -1,9 +1,25 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T10:29:43.514Z",
- "head": "b4edbdb044b367593f165f25ba6fe3e9547d795a",
- "note": "grow b4edbdb finals 2228 and 4508: stars points, no ghosts, surface of the pinned body smeared by the shutter",
+ "pushed": "2026-11-22T11:10:13.886Z",
+ "head": "217a588cd3a2cacc1a26df5794221386bdbcc451",
+ "note": "Phase 6 job 1: mars.travel pinned, Jupiter a point from 2773",
  "looks": [
+  {
+   "time": "2026-11-22T11:10:13.169Z",
+   "file": "20261122111013169-note-p1-pt.jpg",
+   "source": "../../../../tmp/v/p1-pt.jpg",
+   "kind": "note",
+   "label": "polish job 1 Jupiter place native crops 2770 to 2793",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:10:12.472Z",
+   "file": "20261122111012472-note-p1-a.jpg",
+   "source": "../../../../tmp/v/p1-a.jpg",
+   "kind": "note",
+   "label": "polish job 1 mars.travel draft strip 2760 to 2819 at 217a588",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T10:29:42.920Z",
    "file": "20261122102942920-note-g1-4508-final-crops.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/g1-jupiter.jpg",
    "kind": "note",
    "label": "grow window 33 jupiter.travel 3354 to 3389 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:12:57.454Z",
-   "file": "20261122101257454-note-g1-venus.jpg",
-   "source": "../../../../tmp/v/g1-venus.jpg",
-   "kind": "note",
-   "label": "grow window 33 venus.travel 1644 to 1679 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:12:56.844Z",
-   "file": "20261122101256844-note-g1-mercury.jpg",
-   "source": "../../../../tmp/v/g1-mercury.jpg",
-   "kind": "note",
-   "label": "grow window 33 mercury.travel 1074 to 1109 draft",
    "stop": "travel"
   }
  ]
