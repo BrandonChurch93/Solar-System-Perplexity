@@ -1,9 +1,63 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T15:30:55.531Z",
- "head": "d655ecc045ab26658b660de8e1743009df01df5e",
- "note": "cut 34 offer: shutter weight, near rock night, hero shade",
+ "pushed": "2026-11-22T17:53:00.878Z",
+ "head": "3eaf84ae1c8e53a43a2da06c7340fe3cba1dbcb2",
+ "note": "cut 35: take out of round 34's three belt commits",
  "looks": [
+  {
+   "time": "2026-11-22T17:52:59.793Z",
+   "file": "20261122175259793-note-c35-6-final-2782-whole-takeout.jpg",
+   "source": "../send/c35-6-final-2782-whole-takeout.jpg",
+   "kind": "note",
+   "label": "mars.travel 2782 final with the take out",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T17:52:59.179Z",
+   "file": "20261122175259179-note-c35-4-final-2782-shade-3x-main-left-takeout-right.jpg",
+   "source": "../send/c35-4-final-2782-shade-3x-main-left-takeout-right.jpg",
+   "kind": "note",
+   "label": "belt hero shade 2782 final 3x of 1280,170 to 1480,370: main left, take out right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T17:52:58.565Z",
+   "file": "20261122175258565-note-c35-3-final-2782-terminator-3x-main-left-takeout-right.jpg",
+   "source": "../send/c35-3-final-2782-terminator-3x-main-left-takeout-right.jpg",
+   "kind": "note",
+   "label": "belt hero terminator 2782 final 3x of 1200,230 to 1400,430: main left, take out right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T17:52:57.789Z",
+   "file": "20261122175257789-note-c35-2-final-2782-left-limb-3x-main-left-takeout-right.jpg",
+   "source": "../send/c35-2-final-2782-left-limb-3x-main-left-takeout-right.jpg",
+   "kind": "note",
+   "label": "belt hero lit limb 2782 final 3x of 1080,300 to 1280,500: main left, take out right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T17:52:56.143Z",
+   "file": "20261122175256143-note-c35-1-final-2782-hero-native-main-left-takeout-right.jpg",
+   "source": "../send/c35-1-final-2782-hero-native-main-left-takeout-right.jpg",
+   "kind": "note",
+   "label": "belt hero 2782 final native: main (round 34) left, take out right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T17:48:43.240Z",
+   "file": "20261122174843240-frame-f02772.jpg",
+   "source": "out/work/belt/t15/md/f02772.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2772, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2772,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T15:30:54.540Z",
    "file": "20261122153054540-note-c34-9-final-2782-whole-all.jpg",
@@ -19,60 +73,6 @@
    "kind": "note",
    "label": "belt hero lit face 2782 final, 3x nearest of 1120,360 to 1320,560: main left, all three commits right",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:53.497Z",
-   "file": "20261122153053497-note-c34-7-final-2782-shade-3x-main-left-all-right.jpg",
-   "source": "../send/c34-7-final-2782-shade-3x-main-left-all-right.jpg",
-   "kind": "note",
-   "label": "belt hero shade 2782 final, 3x nearest of 1280,170 to 1480,370: main left, all three commits right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:52.979Z",
-   "file": "20261122153052979-note-c34-5-final-2782-hero-native-main-shutter-all.jpg",
-   "source": "../send/c34-5-final-2782-hero-native-main-shutter-all.jpg",
-   "kind": "note",
-   "label": "belt hero 2782 final native: main, shutter weight alone, all three commits",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:52.448Z",
-   "file": "20261122153052448-note-c34-4-near-2772-native-main-left-cut-right.jpg",
-   "source": "../send/c34-4-near-2772-native-main-left-cut-right.jpg",
-   "kind": "note",
-   "label": "belt near rock 2772 draft native: main left, cut 34 offer right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:51.826Z",
-   "file": "20261122153051826-note-c34-3-hero-2765-native-main-left-cut-right.jpg",
-   "source": "../send/c34-3-hero-2765-native-main-left-cut-right.jpg",
-   "kind": "note",
-   "label": "belt hero 2765 draft native: main left, cut 34 offer right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:30:50.202Z",
-   "file": "20261122153050202-note-c34-1-sheet-2765-2772-main-top-cut-bottom.jpg",
-   "source": "../send/c34-1-sheet-2765-2772-main-top-cut-bottom.jpg",
-   "kind": "note",
-   "label": "belt 2765 and 2772 draft, half size: main top, cut 34 offer bottom",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T15:27:43.175Z",
-   "file": "20261122152743175-frame-f02772.jpg",
-   "source": "out/work/belt/t13/b/f02772.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2772, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2772,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "efe5cfbdb2b54e94"
   }
  ]
 }
