@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T17:53:03.006Z",
- "head": "8d0d8f529e3f8291e70e5f326aa2ebda3842f646",
- "note": "venus: gate cure 90cc5b23, review frames outside the cover sheets beside round 34; tree holds main b22a792",
+ "pushed": "2026-11-22T18:17:03.279Z",
+ "head": "a452a6c0a694f602952f3d6d283eeef0c834cebb",
+ "note": "venus: after CUT35 (READY d2a59775): night limb test at 1586 and 1287, not in the branch; tree holds main 55319c5",
  "looks": [
+  {
+   "time": "2026-11-22T18:17:02.748Z",
+   "file": "20261122181702748-note-n1-1287.jpg",
+   "source": "../view/n1-1287.jpg",
+   "kind": "note",
+   "label": "venus 1287 final, test only, NOT in the branch: round 34 (left) beside night glow 0 in the far rows (right): the judged dive frame moves too, the lit halo ends abruptly at the terminator and the dark limb cuts hard against the band; this is why the test is not offered for round 35; main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T18:17:02.223Z",
+   "file": "20261122181702223-note-n2-crops.jpg",
+   "source": "../view/n2-crops.jpg",
+   "kind": "note",
+   "label": "venus 1586 final, native crops at 2x, test only, NOT in the branch: round 34 (top), night glow 0 (middle), night glow 0 and the limb veil at full strength on the night side (bottom: the dark limb falls into black); main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T18:17:01.707Z",
+   "file": "20261122181701707-note-n1-whole.jpg",
+   "source": "../view/n1-whole.jpg",
+   "kind": "note",
+   "label": "venus 1586 final, test only, NOT in the branch: round 34 (left) beside the far rows of limb.bin with the night side's glow set to 0 (right); the halo round the unlit limb is gone, the dark limb is a harder cut; on main ff158d9, tree holds main 55319c5",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T17:53:02.409Z",
    "file": "20261122175302409-note-h6-big.jpg",
@@ -138,30 +162,6 @@
    "source": "../view/k24-pair.jpg",
    "kind": "note",
    "label": "rise 1567 and 1573 draft at native preview size: release over 12 frames (left) and 24 frames (right, commit e30dd702, tree holds main 64fff6f)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:21:14.202Z",
-   "file": "20261122152114202-note-e-1287-rlimb.jpg",
-   "source": "../view/e-1287-rlimb.jpg",
-   "kind": "note",
-   "label": "1287 right dark limb, same four states: no clear gain from the dim and dusk terms",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:21:13.185Z",
-   "file": "20261122152113185-note-e-1586-night2.jpg",
-   "source": "../view/e-1586-night2.jpg",
-   "kind": "note",
-   "label": "1586 night side at 2x, same four states: every test softens what the 1586 critic calls soft and muddy",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:21:12.180Z",
-   "file": "20261122152112180-note-e-1287-night2.jpg",
-   "source": "../view/e-1287-night2.jpg",
-   "kind": "note",
-   "label": "1287 night side at 2x: main shade 0.8, tests shade 0.35, mid band, 0.5 with dark limb dim: the crunch drops, left out because 1586 gets softer",
    "stop": "venus"
   },
   {
