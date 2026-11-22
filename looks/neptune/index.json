@@ -1,9 +1,47 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T01:54:17.741Z",
- "head": "ea88a1ac903da10167636b1cab65380bb62ee157",
- "note": "Neptune: cover window of the dive, limb band and edge line cured at the draft tier, review stills and cover sheets next",
+ "pushed": "2026-11-22T02:13:28.231Z",
+ "head": "b19bc27c3bb963b88d6eea6a0a84f85417ae9174",
+ "note": "Neptune: dive cover window at the review tier is rendering (first frame in), cirrus and Triton cures prepared offline",
  "looks": [
+  {
+   "time": "2026-11-22T02:13:27.171Z",
+   "file": "20261122021327171-note-fit-preview.jpg",
+   "source": "out/work/nep/p6/tri/fit-preview.jpg",
+   "kind": "note",
+   "label": "Triton at the judged hold 4605, 4 times: approved hero, film now, and an offline prediction of the film with the light law fitted to the hero (wider terminator, light reaching round the lower limb). Prediction only, not rendered yet",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T02:13:25.794Z",
+   "file": "20261122021325794-note-f04738-review.jpg",
+   "source": "out/work/nep/p6/h1/rev/f04738-review.png",
+   "kind": "note",
+   "label": "Dive cover at the review tier, frame 4738 (cover 0.77, 128 samples): the limb is a soft pale horizon under the closing veil, no bright band, no stepped copies. First frame of the cover sheet, the rest is rendering",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T02:06:11.399Z",
+   "file": "20261122020611399-frame-f04738-review.jpg",
+   "source": "out/work/sheets/.frames-4a3k9Q/f04738-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4738, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4738,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T02:04:18.016Z",
+   "file": "20261122020418016-note-pv-a.jpg",
+   "source": "out/work/nep/cirrus/t4/pv-a.jpg",
+   "kind": "note",
+   "label": "Cirrus on the generated side, offline preview in map space at the scale of frame 5006: top the wrap's cloud alpha as it is, bottom with the far side map take 4 (long chains cut into clumps, thin strokes turned to soft wisps). Not rendered yet",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T01:54:07.737Z",
    "file": "20261122015407737-frame-s-4605.jpg",
@@ -33,44 +71,6 @@
    "kind": "note",
    "label": "Dive 4747 to 4751, upper right at native size: sky under the cover, base law (left) against the linear law on the terrain side (right)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:53:32.178Z",
-   "file": "20261122015332178-note-d2-open.jpg",
-   "source": "out/work/nep/p6/h1/d2-open.png",
-   "kind": "note",
-   "label": "Dive 4742 to 4757 at the draft tier: full cover 4742 to 4745, terrain comes out, stars show in the gap from 4747",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:53:31.411Z",
-   "file": "20261122015331411-note-d3-close.jpg",
-   "source": "out/work/nep/p6/h1/d3-close.png",
-   "kind": "note",
-   "label": "Dive 4718 to 4740 at the draft tier with the cover window: limb to horizon, the veil closes from 4733",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:53:30.748Z",
-   "file": "20261122015330748-note-d3-limb-pairs.jpg",
-   "source": "out/work/nep/p6/h1/d3-limb-pairs.jpg",
-   "kind": "note",
-   "label": "Dive 4720 to 4732, right limb, draft tier, before and now: the grey green band and the wide bright line are gone (the hold's fitted field and edge line now leave by camera height)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:52:20.894Z",
-   "file": "20261122015220894-frame-f04736.jpg",
-   "source": "out/work/seq/4714-4742/f04736.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4736, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4736,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
   },
   {
    "time": "2026-11-22T01:02:50.979Z",
