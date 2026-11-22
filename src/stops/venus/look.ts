@@ -81,7 +81,7 @@ export const veil = {
   file: veilJson.file,
   pad: veilJson.pad,
   mean: veilJson.mean as [number, number, number],
-  sheets: { lowest: 1e-5, step: 2.5, size: 3, near: [0.3, 1.1, 3] as [number, number, number], gamma: 1.6, top: veilJson.top, holes: [1.2, 0.5] as [number, number], deep: 0.85, edge: [0.65, 0.25] as [number, number], thin: 0.9, ramp: 1, fan: [12, 1.6, 2.7, 14] as [number, number, number, number], fray: [2.5, 0.4, 0.2, 2] as [number, number, number, number], pole: [0.12, 0.45] as [number, number], push: [0.4, 0.2] as [number, number], mist: [1, 0.85, 1, 16, 0, 0.7] as [number, number, number, number, number, number], wait: [0.5, 0.95] as [number, number], wave: 0.2, haze: 0.8, sunward: [3, 4] as [number, number], shift: [0.37, 0.61] as [number, number], dense: 0.8, ceiling: [0.05, 0.1] as [number, number], solid: [0.55, 1] as [number, number] },
+  sheets: { lowest: 1e-5, step: 2.5, size: 3, near: [0.3, 1.1, 3] as [number, number, number], gamma: 1.6, top: veilJson.top, holes: [1.2, 0.5] as [number, number], deep: 0.85, edge: [0.65, 0.25] as [number, number], thin: 0.9, ramp: 1, fan: [12, 1.6, 2.7, 14] as [number, number, number, number], fray: [2.5, 0.4, 0.2, 2] as [number, number, number, number], pole: [0.12, 0.45] as [number, number], push: [0.4, 0.2] as [number, number], mist: [1, 0.85, 1, 16, 1, 0.7] as [number, number, number, number, number, number], wait: [0.5, 0.95] as [number, number], wave: 0.2, haze: 0.8, sunward: [3, 4] as [number, number], shift: [0.37, 0.61] as [number, number], dense: 0.8, ceiling: [0.05, 0.1] as [number, number], solid: [0.55, 1] as [number, number] },
   fog: [0.12, 2.6, 4] as [number, number, number],
   fogOrbit: [0.8, 0.4, 5] as [number, number, number],
   light: [-0.94, 0.34] as [number, number],
@@ -96,7 +96,6 @@ export const veil = {
   sunSoft: 6,
   sunTint: [1.15, 0.97, 0.75] as [number, number, number],
   sunLift: 0.4,
-  slip: 0.3,
 }
 
 export const motion = { from: 1, step: 6, most: 8, hidden: 0.95, smear: { from: 20, share: 0.4, most: 120 } }
@@ -125,6 +124,5 @@ export const relief = {
   swayRad: 0.005,
   swayPerSecond: 0.9,
   edgeDeg: 0.06,
-  slipTaps: 12,
   air: { azDeg: 80, elevDeg: 80, power: 0.5, below: [0.02, 0.013, 0.007] as [number, number, number], belowDeg: 2.5, holdDeg: 2, sunHideDeg: [2, 5, 15] as [number, number, number], cut: [0.015, 0.2, 0.92] as [number, number, number], gain: 1, deck: [[130, 103, 69], [194, 168, 125], [208, 183, 141], [232, 209, 168], [243, 222, 180], [247, 231, 199], [249, 237, 211], [251, 247, 231], [249, 237, 212], [237, 214, 172]] as [number, number, number][], deckSpanDeg: 45, deckHigh: [0.15, 0.4] as [number, number], rimDeg: 0.3 },
 }

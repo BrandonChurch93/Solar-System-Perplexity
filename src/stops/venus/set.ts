@@ -117,9 +117,7 @@ export const createSet: SetFactory = async (ctx) => {
   const localP = new THREE.Vector3()
   const centre = new THREE.Vector3()
   const eye = new THREE.Vector3()
-  const slip = new THREE.Vector3()
   const veilTurn = new THREE.Quaternion()
-  const veilBack = new THREE.Quaternion()
   const sunCam = new THREE.Vector3()
   const airFwd = new THREE.Vector3()
   const airRight = new THREE.Vector3()
@@ -163,8 +161,8 @@ export const createSet: SetFactory = async (ctx) => {
       localBack.copy(localQ).invert()
       localP.copy(shot.camera.position).sub(state.origin).applyQuaternion(back)
       if (!inOrbit) {
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
         if (thick <= 0) {
-          ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir)
           veil.hide()
           return
         }
@@ -172,12 +170,9 @@ export const createSet: SetFactory = async (ctx) => {
         centre.copy(localP).negate().applyQuaternion(localBack)
         eye.copy(localP).normalize().sub(sw.upTerrain).applyQuaternion(sw.turn).add(sw.up).normalize()
         const fall = plan.drop(state.segment, state.time)
-        const fell = Math.abs(plan.drop(state.segment, state.time + config.shutterFraction / config.fps) - fall)
-        const rush = Math.min(Math.abs(sw.rate * fell) / timing.rush, 1)
-        veilTurn.copy(sw.turn).multiply(localQ)
-        slip.copy(eye).negate().applyQuaternion(veilBack.copy(veilTurn).invert()).multiplyScalar(look.veil.slip * fell * config.fps / config.shutterFraction * (localP.length() - 1) * deck.radius)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, shot.sun.dir, 1, slip)
+        const rush = Math.min(Math.abs(sw.rate * (plan.drop(state.segment, state.time + config.shutterFraction / config.fps) - fall)) / timing.rush, 1)
         eye.multiplyScalar(1 + sw.height * Math.exp(timing.slow * sw.rate * fall))
+        veilTurn.copy(sw.turn).multiply(localQ)
         sunCam.copy(sunTerrain).applyQuaternion(localBack)
         veil.update(view.camera, view.format.width, view.format.height, centre, eye, rush, 1, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette, 1)
         return
