@@ -192,6 +192,24 @@ Only `tools/round.py` changed. For polish rounds and the record round; whole fil
 
 The last line of a pack ("frames were rendered" or "nothing was rendered, no render session was opened") looked for the render session in `capture.session`. Since main's 5c16a2cc (2026-11-21 17:39) `tools/lib/render.ts` keeps it in `capture.held.session`, so from then on the line said "nothing was rendered" every time. Seen here: the pack of round 941 rendered frames 615 and 870 at review (the two stills have its time) and printed "nothing was rendered". Fixed: the line reads both places. What this touches in older proofs: the byte comparisons of part 1 (2026-11-21 05:46, before that change) stand; the line quoted for scratch round 931 today proves nothing by itself. What does prove it there, checked after the fact: no draft still and no motion sheet of round 931 has a file time after `place` (the last sheet 13:04:54, placed 13:05:03, pack after that).
 
+## MAIL 162 (2026-11-22 13:36 UTC): a long sheet split by frames
+
+Changed: `tools/pack.ts`, `tools/round.py`. Nothing under `tools/lib/`.
+
+### Decisions
+
+1. A motion sheet was already put together from one still per frame by `Capture.sheet` of `tools/lib/render.ts`, which takes a still from the pack's temp folder when its record matches. So a tile is that still, kept: `npm run pack -- --phase P --round N [--stop ID] --only <part> --frames A-B` renders the frames of that sheet whose number lies in A to B into `out/work/packs/.cache/round-NNN/tiles/<part>/f<frame>-<tier>.png`, each with its record (engine hash, stop hashes, tier, frame). `--frames` goes with `--only` and one sheet.
+2. The join: when a sheet is not in the cache and its tiles folder is there, the pack checks every tile's record against this build; when all match it copies them into the temp folder and calls the same `Capture.sheet`, which then composes and renders nothing. When one is missing or from another build the pack stops with "sheet <part>: no tile of this build for frames ...; nothing rendered". With no tiles folder the pack behaves as before.
+3. `--join` (no `--only`): joins every split sheet whose tiles are complete, prints "sheet <part>: joined from 12 tiles" or "sheet <part>: not joined, no tile of this build for frames ...", publishes nothing and writes no key. `round.py place` calls it after unpacking when the cache has a tiles folder, so `touched` finds the joined sheet under its usual name.
+4. `--plan` gives each sheet its tiles as `[frame, samples]`. `round.py jobs` (whole film, record and polish rounds; not the stop rounds of Phase 4) cuts a job of one sheet whose estimate is over `--job-minutes` into runs of frames under it, named `<name>-a`, `-b`, and so on, same command plus `--frames A-B`, same tar. A single frame over the minutes stays one job.
+5. `place` checks the tiles' records too in its "records from another build" line.
+
+### Proofs
+
+- Review tier, `mars.dive-cover` (12 frames 2449 to 2460, 192 samples): one job into the cache of scratch round 951 (405.6 s, "frames were rendered"); two halves `--frames 2449-2454` and `--frames 2455-2460` as two processes into round 952 (178.5 s and 260.3 s), then `--join` ("joined from 12 tiles", "nothing was rendered", 1.8 s). Both sheets: pixel hash 912a8d38b48270fb, file sha256 1910a59ca3c03ea7, 1400 by 1156, and equal records.
+- One tile moved away: `--join` said "frames 2457" and rendered nothing in 0.0 s; the pack with `--only mars.dive-cover` stopped with the error line. One tile's record given another engine hash: named the same way.
+- Real tiers, plan only (state of a polish round, `jobs --workers 40`): 192 jobs in place of 77, longest job 20.0 min (a stop's measure, a fixed estimate), longest render job 17.2 min (the stress clips, `r34-film-stress02`), longest sheet job 15.0 min, 48 to 54 min per worker in place of 43 to 97. The Sun's rise cover is 11 jobs of 5.9 to 13.8 min. With `--job-minutes 20`: 138 jobs; with 30: 103 jobs, longest 30.0.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
