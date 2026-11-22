@@ -1,9 +1,47 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T13:32:19.382Z",
+ "pushed": "2026-11-22T13:52:26.824Z",
  "head": "3f315d14b6209eab7eb153f121829de82b76fe3f",
- "note": "dive trial d96263f: measure green (G13 0 of 463); the dive cover review sheet renders, first two frames beside the READY head",
+ "note": "Jupiter dive trial d96263f (code main 3a09527): dive cover sheet frames beside the READY head; the proof moves to the round 33 build (main 84b0ea4a) at about 14:05",
  "looks": [
+  {
+   "time": "2026-11-22T13:52:18.514Z",
+   "file": "20261122135218514-note-cov_cut.jpg",
+   "source": "out/work/view/trial/v/cov_cut.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover, the cut 3023 to 3024 at review: READY 6dac95f above, trial d96263f below (code main 3a09527)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T13:52:17.603Z",
+   "file": "20261122135217603-note-cov_b.jpg",
+   "source": "out/work/view/trial/v/cov_b.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover 3021 to 3023 at review: READY 6dac95f above, trial d96263f below (code main 3a09527)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T13:52:16.532Z",
+   "file": "20261122135216532-note-cov_a.jpg",
+   "source": "out/work/view/trial/v/cov_a.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover 3019, 3020 at review: READY 6dac95f above, trial d96263f below (code main 3a09527)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T13:51:58.529Z",
+   "file": "20261122135158529-frame-f03025-review.jpg",
+   "source": "out/work/sheets/.frames-5oe4Jz/f03025-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3025, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3025,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
   {
    "time": "2026-11-22T13:32:18.418Z",
    "file": "20261122133218418-note-cov_a.jpg",
@@ -11,20 +49,6 @@
    "kind": "note",
    "label": "dive trial d96263f (code main 3a09527, tree holds main 8cd0877): dive cover review frames 3019, 3020, READY above, trial below",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T13:31:58.193Z",
-   "file": "20261122133158193-frame-f03020-review.jpg",
-   "source": "out/work/sheets/.frames-5oe4Jz/f03020-review.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3020, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3020,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   },
   {
    "time": "2026-11-22T13:21:35.548Z",
@@ -76,30 +100,6 @@
    "source": "out/work/view/trial/v/rs_native_3002_3010.png",
    "kind": "note",
    "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): 3010 and 3002 review at native size, READY left, trial right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:51:10.806Z",
-   "file": "20261122125110806-note-rs_c.jpg",
-   "source": "out/work/view/trial/v/rs_c.jpg",
-   "kind": "note",
-   "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): review frames 3019 (changed) and 3027 (same bytes), READY above, trial below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:51:10.068Z",
-   "file": "20261122125110068-note-rs_b.jpg",
-   "source": "out/work/view/trial/v/rs_b.jpg",
-   "kind": "note",
-   "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): review frames 2994, 3002, 3010, READY above, trial below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:51:09.295Z",
-   "file": "20261122125109295-note-rs_a.jpg",
-   "source": "out/work/view/trial/v/rs_a.jpg",
-   "kind": "note",
-   "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): review frames 2970, 2978, 2986, READY above, trial below",
    "stop": "jupiter"
   },
   {
