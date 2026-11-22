@@ -1,0 +1,70 @@
+diff --git a/src/stops/venus/globe.ts b/src/stops/venus/globe.ts
+index b4927f99..878b1704 100644
+--- a/src/stops/venus/globe.ts
++++ b/src/stops/venus/globe.ts
+@@ -416,7 +416,7 @@ export class Globe {
+         uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
+         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
+         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
+-        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
++        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 }, uLimbDusk: { value: new THREE.Vector4(0, 0, 1, 1) },
+         uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
+         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
+         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
+diff --git a/src/stops/venus/look.ts b/src/stops/venus/look.ts
+index 5eca34b0..c285405e 100644
+--- a/src/stops/venus/look.ts
++++ b/src/stops/venus/look.ts
+@@ -7,6 +7,7 @@ import veilJson from './veil.json'
+ export const curve = fitted.curve
+ export const haze = hazeJson.ground as HazeParams
+ export const limb = hazeJson.limb
++export const dusk = { amount: 1, from: -0.35, to: 0.25, veil: 2 }
+ 
+ export const drift = {
+   bandDegPerSecond: -0.55,
+diff --git a/src/stops/venus/rim.ts b/src/stops/venus/rim.ts
+index f89babf7..b0147547 100644
+--- a/src/stops/venus/rim.ts
++++ b/src/stops/venus/rim.ts
+@@ -9,10 +9,16 @@ uniform sampler2D uLimb;
+ uniform vec3 uLimbS;
+ uniform vec3 uLimbT;
+ uniform float uLimbFar;
++uniform vec4 uLimbDusk;
+ vec4 limbAt(vec3 at, float row) {
+   float phi = atan(dot(at, uLimbT), dot(at, uLimbS));
+   float u = ((phi / 6.2831853 + 0.5) * ${LIMB.azimuth}.0 + 0.5) / ${LIMB.azimuth + 1}.0;
+-  return mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
++  vec4 v = mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
++  for (int k = 0; k < (uLimbDusk.x > 0.0 ? 1 : 0); k++) {
++    float lit = smoothstep(uLimbDusk.y, uLimbDusk.z, cos(phi));
++    v *= mix(vec4(1.0), vec4(vec3(lit), mix(uLimbDusk.w, 1.0, lit)), uLimbDusk.x);
++  }
++  return v;
+ }
+ vec4 limbGlow(vec3 at, float b) {
+   float x = b - 1.0;
+@@ -140,7 +146,7 @@ export class Rim {
+       fragmentShader: FRAG,
+       uniforms: {
+         uCam: { value: new THREE.Vector3(0, 0, 3) }, uLimb: { value: lut }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) },
+-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
++        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uLimbDusk: { value: new THREE.Vector4(0, 0, 1, 1) }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
+         ...hold.uniforms,
+       },
+       side: THREE.BackSide,
+diff --git a/src/stops/venus/set.ts b/src/stops/venus/set.ts
+index 4a161fc6..0ebf1ad3 100644
+--- a/src/stops/venus/set.ts
++++ b/src/stops/venus/set.ts
+@@ -219,6 +219,9 @@ export const createSet: SetFactory = async (ctx) => {
+       gu.uAspect!.value = aspect
+       gu.uLimbK!.value = look.limb.gain * (1 - low)
+       gu.uLimbFar!.value = left
++      const dusk = !ending && state.time > terrainMid ? look.dusk.amount : 0
++      ;(gu.uLimbDusk!.value as THREE.Vector4).set(dusk, look.dusk.from, look.dusk.to, look.dusk.veil)
++      ;(rim.material.uniforms.uLimbDusk!.value as THREE.Vector4).set(dusk, look.dusk.from, look.dusk.to, look.dusk.veil)
+       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
+       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
+       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)

@@ -1296,3 +1296,17 @@ Sent to `/root`, high priority: READY d2a59775ca32569fff6439fa80a49538ee807a9c (
 - Promise made: the night limb of the far rows (1586) comes as a pair for the Builder to look at and is kept OUT of the branch head until the Builder asks. So: no code or binary commit on `agent/venus` past d2a59775 unless the Builder says so; only NOTES and a patch file. If the Builder refuses the cure, round 34's folders stand (revert 90cc5b23).
 
 The full text is in `/home/user/workspace/cut35.txt` on the VM.
+
+## State at 18:20 (22 Nov): after CUT35: the night limb at 1586, first tests, a rise only version is in test (read this first after a compaction)
+
+Head a452a6c0 plus this note. READY for CUT35 stays d2a59775 (the gate cure 90cc5b23 is its only change). Nothing below is committed as code: the working tree holds the test, the patch is `assets-src/venus/fit/dusk.patch` (apply with `git apply`), and it stays out of the branch head until the Builder asks (promise in the CUT35 message).
+
+What round 34's R3 critic faults at 1586 (MAIL 191): the halo that wraps the unlit limb, the doubled edge lower right. Numbers of the far rows of `limb.bin` on the night azimuths: edge 0.04 linear inside and outside (about level 45 on screen against a sky of 5 to 10), still 0.03 five pixels out and 0.005 sixty pixels out; inside the disc the fitted model adds 0.02 to 0.04 over the last 20 pixels. That is the halo and the inner arc.
+
+Test 1 (18:06 to 18:15, variant of `fit/far.py` kept as `/home/user/workspace/view/far2.py`, the far rows' colour times 0 where the hero's edge is night; `limb.bin` in the render copy only, restored after):
+- 1586 final (`n1-1586.png`): the halo round the unlit limb and the outer rim line lower right are gone; the dark limb is a harder cut. With the veil of the limb at full strength on the night side as well (`n2-1586.png`) the dark limb falls into black over its last pixels: reads as a real night limb. Looks: `view/n1-whole.jpg`, `view/n2-crops.jpg`.
+- 1287 final MOVES with it (740,964 pixels, max 92): the far rows are in use from half a second into the dive. There the lit halo ends abruptly at the terminator and the dark limb cuts hard against the bright band of the sky (`view/n1-1287.jpg`). So a change of the far rows themselves is not a thing for round 35 and was not offered.
+
+Test 2, in work (queue `q43.sh`, log `/tmp/q43.log`): the same idea in the shader and in the rise only, so that the dive and 1287 keep their bytes. `rim.ts` `limbAt`: uniform `uLimbDusk` (amount, from, to, veil); when the amount is above 0 the table's colour is multiplied by `smoothstep(from, to, cos(phi))`, phi the azimuth from the Sun's side of the disc, and its alpha by `mix(veil, 1, that)`. `set.ts` sets the amount to `look.dusk.amount` after the terrain view (the rise and the departure), else 0. `look.ts`: `dusk = { amount: 1, from: -0.35, to: 0.25, veil: 2 }` (glow gone 20 degrees past the terminator, full 15 degrees before it; veil 2 gives the hold's alpha on the night side). q43 renders: final 1586 (`d1-1586.png`), finals 1287, 1185, 1440 with `cmp` against `f29-F.png`, draft frames of the rise and the departure 1562 to 1645 with the test (`d1-F.png`) and with the head's code (`h0-F.png`), the shader audit.
+
+If it holds: a pair of 1586 and of the rise and departure frames goes to the Builder as an offer outside round 35, with what is proved and what is not. The frames it moves: the rise's orbit side (1560 to 1604, judged 1586) and the first frames of `venus.travel`.
