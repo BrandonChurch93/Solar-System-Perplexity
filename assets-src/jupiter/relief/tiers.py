@@ -15,7 +15,7 @@ W, H = 2816, 1584
 CELL = 8
 WX0, WY0, WX1, WY1 = SPEC['window']
 BX0, BY0, BX1, BY1 = SPEC['box']
-GROW, GAP, UNDER = SPEC['grow'], SPEC['gap'], SPEC['under']
+GROW = SPEC['grow']
 PLATES = {'a1': (1408, 1500, 2), 'a2': (2500, 1500, 2), 'b': (1344, 1584, 1)}
 
 
@@ -81,7 +81,7 @@ def layers():
         feather = soft[2] + (soft[3] - soft[2]) * smooth(soft[0], soft[1], xs) if soft else 2.0
         taper = 1 - smooth(t['taper'][0], t['taper'][1], xs)
         matte = smooth(0, 1, (sd + GROW + feather) / feather) * smooth(0, 0.02, taper)
-        under = np.clip((sd + GROW - GAP) / UNDER, 0, 1) * (1 - smooth(t['band'][0], t['band'][1], sd)) * smooth(0.02, 0.1, taper) * smooth(OX, OX + 32, xs)
+        under = matte * (1 - smooth(t['band'][0], t['band'][1], sd)) * smooth(OX, OX + 32, xs)
         out.append((sd, matte.astype(np.float32), under.astype(np.float32)))
     return out
 
@@ -92,23 +92,10 @@ def mattes():
     m2, u2 = lay[1][1], lay[1][2]
     both = np.minimum(u1, u2).max()
     print('overlap of the two plate bands', float(both))
-    print('plate where a matte is not full', float((u1 * (m1 < 0.999)).max()), float((u2 * (m2 < 0.999)).max()))
+    print('plate above its matte', float((u1 - m1).max()), float((u2 - m2).max()))
     rgb = np.stack([m1, m2, np.maximum(u1, u2)], 2)[BY0:BY1, BX0:BX1]
     cv2.imwrite(f'{FG}/deck-tiers.png', np.round(rgb[..., ::-1] * 255).astype(np.uint8))
     np.save(f'{FG}/sd.npy', np.stack([lay[0][0], lay[1][0]]).astype(np.float32))
-    full = np.pad(rgb, ((BY0, CH - BY1), (BX0, CW - BX1), (0, 0)), mode='edge')
-    gw, gh = CW // CELL + 1, CH // CELL + 1
-    flags = np.zeros((gh, gw), np.uint8)
-    for k in range(2):
-        on = (full[..., k] > 0).astype(np.uint8)
-        on = cv2.dilate(on, np.ones((2 * 48 + 1, 2 * 48 + 1), np.uint8))
-        grid = np.zeros((gh, gw), np.uint8)
-        grid[:CH // CELL, :CW // CELL] = cv2.resize(on, (CW // CELL, CH // CELL), interpolation=cv2.INTER_AREA) > 0
-        grid[-1] = grid[-2]
-        grid[:, -1] = grid[:, -2]
-        flags |= (cv2.dilate(grid, np.ones((3, 3), np.uint8)) << k).astype(np.uint8)
-    flags.tofile(f'{FG}/deck-tiers.bin')
-    print('grid vertices in tier 1', int((flags & 1).sum()), 'in tier 2', int((flags >> 1).sum()), 'of', gw * gh)
     view = np.clip(np.asarray(np.load(f'{WORK}/canvas-final.npy', mmap_mode='r')[BY0:BY1, BX0:BX1]), 0, 255)[..., ::-1] / 255.0
     view = view ** 0.6
     view[..., 1] = np.maximum(view[..., 1], rgb[..., 0] * 0.35)
@@ -217,7 +204,7 @@ def jpeg(path, img, q):
 
 
 def ship():
-    json.dump({'box': SPEC['box'], 'rise': SPEC['rise'], 'layers': [{'lift': t['lift'], 'taper': t['taper']} for t in SPEC['tiers']]}, open('src/stops/jupiter/tiers.json', 'w'), indent=1)
+    json.dump({'box': SPEC['box'], 'rise': SPEC['rise'], 'top': SPEC['top'], 'layers': [{'lift': t['lift'], 'taper': t['taper']} for t in SPEC['tiers']]}, open('src/stops/jupiter/tiers.json', 'w'), indent=1)
     if len(sys.argv) > 2:
         return
     plate = np.load(f'{FG}/under.npy')
@@ -225,7 +212,6 @@ def ship():
     jpeg(f'{OUT}/web/deck-under.jpg', cv2.resize(plate, (plate.shape[1] // 2, plate.shape[0] // 2), interpolation=cv2.INTER_AREA), 88)
     for s in ('full', 'web'):
         cv2.imwrite(f'{OUT}/{s}/deck-tiers.png', cv2.imread(f'{FG}/deck-tiers.png'))
-        open(f'{OUT}/{s}/deck-tiers.bin', 'wb').write(open(f'{FG}/deck-tiers.bin', 'rb').read())
 
 
 if __name__ == '__main__':
