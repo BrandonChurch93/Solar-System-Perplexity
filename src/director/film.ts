@@ -546,7 +546,7 @@ export class FilmDirector implements Director {
       const lens = this.openOf(index, time)
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
       const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
-      skyLook = mix(bandLook(a.id), bandLook(b.id), smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
+      skyLook = mix(bandLook(a.id), bandLook(b.id), bandLook(b.id) < bandLook(a.id) ? skyPatch : smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
