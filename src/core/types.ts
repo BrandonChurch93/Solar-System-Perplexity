@@ -61,8 +61,7 @@ export interface Shot {
   post: PostParams
   cover: CoverState
   dust: number
-  dustLook?: number
-  dustOffset: THREE.Vector3
+  farLight?: number
 }
 
 export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
@@ -77,7 +76,7 @@ export interface SetContext {
   floatTexture(data: Float32Array, width: number, height: number, repeat?: boolean): THREE.DataTexture
 }
 
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3 }
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number }
 
 export interface SkyPatch {
   view: ViewKind
