@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T02:55:36.511Z",
- "head": "edea3c96ebfdac808276e99d0a4401c5771ea2e5",
- "note": "merged tree: finals 3922 4492 495 with the new timing",
+ "pushed": "2026-11-22T03:58:05.805Z",
+ "head": "94b008d8df8a8df8544630fb8dc34eefa1662a7b",
+ "note": "task 7: open sky in flight, second pass (94b008d)",
  "looks": [
   {
-   "time": "2026-11-22T02:53:20.668Z",
-   "file": "20261122025320668-note-f495-final.jpg",
-   "source": "out/work/travel/m2/f495-final.png",
+   "time": "2026-11-22T03:58:04.948Z",
+   "file": "20261122035804948-note-f2772-final.jpg",
+   "source": "out/work/travel/t7g/f2772-final.png",
    "kind": "note",
-   "label": "m2: f495-final",
+   "label": "t7g: frame 2772 final, open sky second pass",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:53:20.029Z",
-   "file": "20261122025320029-note-f4492-final.jpg",
-   "source": "out/work/travel/m2/f4492-final.png",
+   "time": "2026-11-22T03:58:04.202Z",
+   "file": "20261122035804202-note-f482-final.jpg",
+   "source": "out/work/travel/t7g/f482-final.png",
    "kind": "note",
-   "label": "m2: f4492-final",
+   "label": "t7g: frame 482 final, open sky second pass",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:53:19.389Z",
-   "file": "20261122025319389-note-f3922-final.jpg",
-   "source": "out/work/travel/m2/f3922-final.png",
+   "time": "2026-11-22T03:58:03.461Z",
+   "file": "20261122035803461-note-f3912-final.jpg",
+   "source": "out/work/travel/t7g/f3912-final.png",
    "kind": "note",
-   "label": "m2: f3922-final",
+   "label": "t7g: frame 3912 final, open sky second pass",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:48:55.465Z",
-   "file": "20261122024855465-note-f3328-review.jpg",
-   "source": "out/work/travel/m2/f3328-review.png",
+   "time": "2026-11-22T03:58:02.777Z",
+   "file": "20261122035802777-note-f1625-final.jpg",
+   "source": "out/work/travel/t7g/f1625-final.png",
    "kind": "note",
-   "label": "m2: f3328-review",
+   "label": "t7g: frame 1625 final, open sky second pass",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:48:54.830Z",
-   "file": "20261122024854830-note-f3322-review.jpg",
-   "source": "out/work/travel/m2/f3322-review.png",
+   "time": "2026-11-22T03:07:07.903Z",
+   "file": "20261122030707903-note-f2726-final.jpg",
+   "source": "out/work/travel/m2m/f2726-final.png",
    "kind": "note",
-   "label": "m2: f3322-review",
+   "label": "m2m: f2726-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:48:54.189Z",
-   "file": "20261122024854189-note-f3316-review.jpg",
-   "source": "out/work/travel/m2/f3316-review.png",
+   "time": "2026-11-22T03:07:07.239Z",
+   "file": "20261122030707239-note-f2580-final.jpg",
+   "source": "out/work/travel/m2m/f2580-final.png",
    "kind": "note",
-   "label": "m2: f3316-review",
+   "label": "m2m: f2580-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:48:53.543Z",
-   "file": "20261122024853543-note-f1625-review.jpg",
-   "source": "out/work/travel/m2/f1625-review.png",
+   "time": "2026-11-22T03:07:06.598Z",
+   "file": "20261122030706598-note-f2427-final.jpg",
+   "source": "out/work/travel/m2m/f2427-final.png",
    "kind": "note",
-   "label": "m2: f1625-review",
+   "label": "m2m: f2427-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:48:52.895Z",
-   "file": "20261122024852895-note-f1615-review.jpg",
-   "source": "out/work/travel/m2/f1615-review.png",
+   "time": "2026-11-22T03:07:05.904Z",
+   "file": "20261122030705904-note-f2325-final.jpg",
+   "source": "out/work/travel/m2m/f2325-final.png",
    "kind": "note",
-   "label": "m2: f1615-review",
+   "label": "m2m: f2325-final",
    "stop": "travel"
   }
  ]
