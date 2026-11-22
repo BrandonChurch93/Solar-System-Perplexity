@@ -1,9 +1,65 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T05:38:15.471Z",
- "head": "b8d0f888c6bc02d5baa0e37ee65ec03b3b9a843b",
- "note": "Sun: item 5a built (boil push no longer pinches cells at 247), proof chain rendering (every frame 200 to 224, sheets, measures); item 5b studied offline. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+ "pushed": "2026-11-22T05:56:01.742Z",
+ "head": "235c2e3926c8c3238332bb71fc1f8f312a00110e",
+ "note": "Sun polish: proof chain renders every frame 200 to 224 at review; offline: item 5b layer views, feet bloom at 90 traced (grade row and gain). main edbf7b8, batch 19",
  "looks": [
+  {
+   "time": "2026-11-22T05:56:00.740Z",
+   "file": "20261122055600740-note-z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
+   "source": "out/work/sun/h1p/z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
+   "kind": "note",
+   "label": "Item 7, frame 90 lower right quadrant at native size: approved left, film final right (the generated near detail of item 2). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:59.875Z",
+   "file": "20261122055559875-note-y8-f247-final-5a-two-thirds.jpg",
+   "source": "out/work/sun/h1p/y8-f247-final-5a-two-thirds.jpg",
+   "kind": "note",
+   "label": "Final 247 on the item 5a tree, two thirds size. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:58.799Z",
+   "file": "20261122055558799-note-y6-left-limb-zone-approved-map-layer035-layer050cap-zoom4.jpg",
+   "source": "out/work/sun/h1p/y6-left-limb-zone-approved-map-layer035-layer050cap-zoom4.png",
+   "kind": "note",
+   "label": "Item 5b offline, hold camera, left limb zone at 4 times zoom: approved, map now, layer 0.35, layer 0.5 with cap (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:57.830Z",
+   "file": "20261122055557830-note-y7u-centre-hd.jpg",
+   "source": "out/work/sun/h1p/y7u-centre-hd.png",
+   "kind": "note",
+   "label": "Item 5b offline, map seen face on at turn 1.7 rad: map now, layer 0.45, layer 0.45 with bright cap 0.2 (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:57.004Z",
+   "file": "20261122055557004-note-y7t-centre-hd.jpg",
+   "source": "out/work/sun/h1p/y7t-centre-hd.png",
+   "kind": "note",
+   "label": "Item 5b offline, map seen face on at turn 1.0 rad: map now, finer layer at 0.35 and 0.6 (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:56.061Z",
+   "file": "20261122055556061-note-z10-f90-right-foot-approved-film-ungraded-model-zoom3.jpg",
+   "source": "out/work/sun/h1p/z10-f90-right-foot-approved-film-ungraded-model-zoom3.png",
+   "kind": "note",
+   "label": "Item 7, right foot at frame 90, 3 times zoom: approved, film final (item 4 tree), offline model without the loops grade row. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:55:54.907Z",
+   "file": "20261122055554907-note-z10-f90-left-foot-approved-film-ungraded-model-zoom3.jpg",
+   "source": "out/work/sun/h1p/z10-f90-left-foot-approved-film-ungraded-model-zoom3.png",
+   "kind": "note",
+   "label": "Item 7, left foot at frame 90, 3 times zoom: approved, film final (item 4 tree), offline model without the loops grade row. The approved bloom veils the cells, the film has crisp yellow cells. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T05:38:14.467Z",
    "file": "20261122053814467-note-z4-f0-right-of-arch-film-gain3.jpg",
@@ -66,62 +122,6 @@
    "source": "out/work/sun/h1p/x2-f247-final-upper-before-left-now-right-zoom4.png",
    "kind": "note",
    "label": "Item 5a, frame 247 final tier at 4 times zoom, upper: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:36.575Z",
-   "file": "20261122053036575-note-x2-f247-final-pore-before-left-now-right-zoom4.jpg",
-   "source": "out/work/sun/h1p/x2-f247-final-pore-before-left-now-right-zoom4.png",
-   "kind": "note",
-   "label": "Item 5a, frame 247 final tier at 4 times zoom, pore: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:07.529Z",
-   "file": "20261122051807529-note-u5-f247-centre-push-now-masked-off-zoom3.jpg",
-   "source": "out/work/sun/h1p/u5-f247-centre-push-now-masked-off-zoom3.png",
-   "kind": "note",
-   "label": "Item 5, frame 247 draft at 3 times zoom: the boil push as it is (left), a first masked try (middle), push off (right). The push is what makes the cells read as poured fluid. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:06.867Z",
-   "file": "20261122051806867-note-f00360.jpg",
-   "source": "out/work/sun/rf16/f00360.png",
-   "kind": "note",
-   "label": "Final tier still, frame 360. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:06.163Z",
-   "file": "20261122051806163-note-f00247.jpg",
-   "source": "out/work/sun/rf16/f00247.png",
-   "kind": "note",
-   "label": "Final tier still, frame 247. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:05.400Z",
-   "file": "20261122051805400-note-f00090.jpg",
-   "source": "out/work/sun/rf16/f00090.png",
-   "kind": "note",
-   "label": "Final tier still, frame 90. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:04.643Z",
-   "file": "20261122051804643-note-f00060.jpg",
-   "source": "out/work/sun/rf16/f00060.png",
-   "kind": "note",
-   "label": "Final tier still, frame 60. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:03.969Z",
-   "file": "20261122051803969-note-f00000.jpg",
-   "source": "out/work/sun/rf16/f00000.png",
-   "kind": "note",
-   "label": "Final tier still, frame 0. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
    "stop": "sun"
   },
   {
