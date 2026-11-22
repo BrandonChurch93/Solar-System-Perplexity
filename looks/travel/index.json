@@ -1,9 +1,17 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T05:20:50.446Z",
- "head": "1a815c8c872f054b4403546a2e9554d4bb868b4b",
- "note": "item 5 causes and trial stills, nothing built on the branch yet",
+ "pushed": "2026-11-22T05:29:35.639Z",
+ "head": "7c93ee1ca319957c4fa46304c180345eeb64b60d",
+ "note": "item 5 proposal sent, three row comparison for earth.travel",
  "looks": [
+  {
+   "time": "2026-11-22T05:29:35.085Z",
+   "file": "20261122052935085-note-i5-earth-three.jpg",
+   "source": "../../../../tmp/v/i5-earth-three.jpg",
+   "kind": "note",
+   "label": "item 5 earth.travel trials: rows head, B look follows patch, E even over travel; columns 2195 2202 2208 2215 2222 2230",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T05:20:49.811Z",
    "file": "20261122052049811-note-i5c-uranus.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/i5-earth.jpg",
    "kind": "note",
    "label": "item 5 earth.travel head 1a815c8 draft 2195 2202 2208 2215 2222 2230: tint drift is the look weight ramp",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:58:04.948Z",
-   "file": "20261122035804948-note-f2772-final.jpg",
-   "source": "out/work/travel/t7g/f2772-final.png",
-   "kind": "note",
-   "label": "t7g: frame 2772 final, open sky second pass",
    "stop": "travel"
   }
  ]
