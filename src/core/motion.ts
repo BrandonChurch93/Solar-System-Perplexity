@@ -64,7 +64,7 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
 }
 
 export function seenShare(mid: Shot): number {
-  return Math.max(1 - mid.cover.amount * (mid.cover.hides ?? 1), 0)
+  return Math.max(1 - (mid.cover.hidden ?? mid.cover.amount * (mid.cover.hides ?? 1)), 0)
 }
 
 export function shutterMotion(open: Shot, mid: Shot, close: Shot): number {
