@@ -120,3 +120,7 @@ which. No answer needed before the hook is done.
 - 06:59 to 07:01 on that tree: final 60 = bf1840b9..., final 0 = 7cd40c50... (main's bytes), the thirteen draft
   frames equal to main, drafts 23 and 30 equal to the 6e33a5d drafts; build, tsc clean, vitest 15 files 79 tests.
   The pictures of the 6e33a5d set therefore stand for this commit.
+- 07:03 DONE sent to /root for 739ae28 with ten attachments (both strips, finals of 0 and 60, native crops).
+  Main had moved to a87578e by then (progress notes and status stills only, no code), so no merge was made.
+  Weak points named in the message: clipped feet, the front as a line of constant arch coordinate, the crest clump
+  at 23, the veil as a blurred card, frames 61 to 77 also changed, no review tier and no motion gate run.
