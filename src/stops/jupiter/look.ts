@@ -97,7 +97,7 @@ export const deck: DeckLook = {
   haze: { color: [0.2, 0.17, 0.135], tile: 9, layer: 0.45, height: 0.5, clear: [2.8, 1.5], gather: [1.4, 0.75], tone: [6, 0.6, 1.0, 160] },
   depth: 3,
   depthBorder: 400,
-  pall: { clear: 0.45, gather: 0.6, orbitClear: 0.567, orbitGather: 0.35, orbitThin: 0.73, lit: [-0.1, 0.3, 0.05], shell: [1.0, 1.004], morph: 0.234 },
+  pall: { clear: 0.45, gather: 0.6, orbitClear: 0.567, orbitGather: 0.5, orbitThin: 0.73, lit: [-0.1, 0.3, 0.05], shell: [1.0, 1.004], morph: 0.234 },
   flashColor: [0.45, 0.7, 1.0],
   flashBody: [0.25, 6],
   beyond: [0.6, 0.004, 300],
