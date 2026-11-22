@@ -1,9 +1,38 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T15:51:57.897Z",
- "head": "4e3529d10a8d564c67f8e0cdc5c98f18feb02341",
- "note": "CUT34 proofs: mercury watch on the head, Neptune swing 0 on top of the branch, Sun at the corner",
+ "pushed": "2026-11-22T16:41:59.655Z",
+ "head": "351b1641e0b4a3c8a8e83172464424e7cf56fcc3",
+ "note": "check of the travels on round 34 main: sun.travel leave, Sun at the corner, uranus with swing 0",
  "looks": [
+  {
+   "time": "2026-11-22T16:41:58.503Z",
+   "file": "20261122164158503-note-r34-ura.jpg",
+   "source": "../../../../tmp/v/r34-ura.jpg",
+   "kind": "note",
+   "label": "round 34 main, uranus.travel review 4492 4500 4508 with Neptune swing 0"
+  },
+  {
+   "time": "2026-11-22T16:41:57.655Z",
+   "file": "20261122164157655-note-r34-merc.jpg",
+   "source": "../../../../tmp/v/r34-merc.jpg",
+   "kind": "note",
+   "label": "round 34 main, mercury.travel review 1056 1060 1064 1068: the Sun keeps its plate to the edge"
+  },
+  {
+   "time": "2026-11-22T16:41:56.371Z",
+   "file": "20261122164156371-note-r34-sun.jpg",
+   "source": "../../../../tmp/v/r34-sun.jpg",
+   "kind": "note",
+   "label": "round 34 main, sun.travel review 474 478 482 486: the Sun agent's longer leave, no step (item 88)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:13:16.292Z",
+   "file": "20261122161316292-note-w88-a.jpg",
+   "source": "../../../../tmp/v/w88-a.jpg",
+   "kind": "note",
+   "label": "sun.travel on main, review 474 476 478 480: the wash to white (item 88), cause is the Sun's leave look"
+  },
   {
    "time": "2026-11-22T15:51:57.352Z",
    "file": "20261122155157352-note-c34-mercury-ab2.jpg",
@@ -32,34 +61,6 @@
    "source": "../../../../tmp/v/w-merc34-a.jpg",
    "kind": "note",
    "label": "mercury.travel watch on the head, review, every frame 1073 to 1082 (turn 4.23 a frame)"
-  },
-  {
-   "time": "2026-11-22T15:34:30.257Z",
-   "file": "20261122153430257-note-sw-crops.jpg",
-   "source": "../../../../tmp/v/sw-crops.jpg",
-   "kind": "note",
-   "label": "swing 0 crops native: 4470 bottom right, 4492 Triton, 4492 Neptune and band, 4512 Triton"
-  },
-  {
-   "time": "2026-11-22T15:34:29.313Z",
-   "file": "20261122153429313-note-sw-row.jpg",
-   "source": "../../../../tmp/v/sw-row.jpg",
-   "kind": "note",
-   "label": "branch plus Neptune swing 0, review: 4436 4470 4484 4492 / 4496 4500 4506 4512"
-  },
-  {
-   "time": "2026-11-22T15:34:28.319Z",
-   "file": "20261122153428319-note-c34-swing-ab.jpg",
-   "source": "../../../../tmp/v/c34-swing-ab.jpg",
-   "kind": "note",
-   "label": "uranus.travel review: branch (top) against branch plus Neptune swing 0 (bottom), 4484 4492 4496 4506"
-  },
-  {
-   "time": "2026-11-22T15:22:45.279Z",
-   "file": "20261122152245279-note-c34-finals-a.jpg",
-   "source": "../../../../tmp/v/c34-finals-a.jpg",
-   "kind": "note",
-   "label": "finals on the branch with the Sun fix: 1072 1642 2212"
   }
  ]
 }
