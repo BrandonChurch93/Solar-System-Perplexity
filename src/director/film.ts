@@ -118,7 +118,7 @@ export class FilmDirector implements Director {
       let small = 0
       if (shape.look.window > 0) {
         const seg = plans[i]!.seg.travel!
-        const settled = i > 0 && shape.look.pin[1] > 0 ? Math.min(clear + PIN_FRAMES / ((seg.end - seg.start) * config.fps), 1) : clear
+        const settled = i > 0 && shape.look.pin[1] > 0 ? Math.min(clear + shape.look.pinFrames / ((seg.end - seg.start) * config.fps), 1) : clear
         const open = Math.max(1 - shape.look.window / ((seg.end - seg.start) * config.fps), settled)
         if (i > 0 && shape.look.pin[1] > 0) shape.until = settled
         shape.open = open
