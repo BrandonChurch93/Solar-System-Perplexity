@@ -3,6 +3,7 @@ import { diagUniform } from '../../diagnostics/diag'
 
 export interface StreakLook {
   gain: number
+  fade: number
   upper: [number, number, number]
   lower: [number, number, number]
   smudge: [number, number, number]
@@ -44,7 +45,6 @@ float line(float y, float at, float width) {
   return exp(-0.5 * t * t) + 0.25 * exp(-0.5 * t * t / 9.0);
 }
 void main() {
-  if (uDiag != 0) discard;
   float x = vAt.x;
   float end = smoothstep(0.93, 1.0, x);
   vec3 along = uLeft * (smoothstep(uUpper.x - 0.02, uUpper.x, x) * exp(-max(x - uUpper.x, 0.0) / 0.035)) + uMid * smoothstep(uUpper.x + 0.015, uUpper.x + 0.075, x) + uRight * pow(end, 1.5);
@@ -55,6 +55,7 @@ void main() {
   float hy = (vAt.y - uHalo.y) / (uHalo.z * (1.0 + 1.6 * smoothstep(0.955, 1.0, x)));
   col += uWash * (smoothstep(uHalo.x, uHalo.x + 0.045, x) * exp(-0.5 * hy * hy));
   outColor = vec4(col * uGain, 0.0);
+  if (uDiag != 0) discard;
 }`
 
 export class Streak {
