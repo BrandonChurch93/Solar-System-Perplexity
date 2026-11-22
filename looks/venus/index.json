@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T17:11:37.439Z",
+ "pushed": "2026-11-22T17:27:56.797Z",
  "head": "5bd77c011f3b09d811b016afdbde4369d195fb79",
- "note": "venus: gate cure 90cc5b2 in proof for CUT35, rise cover at review beside round 34 (tree holds main ff158d9)",
+ "note": "venus: gate cure 90cc5b2 in proof for CUT35, both cover sheets at review beside round 34 (tree holds main ff158d9)",
  "looks": [
+  {
+   "time": "2026-11-22T17:27:48.143Z",
+   "file": "20261122172748143-note-c28-rise-big.jpg",
+   "source": "../view/c28-rise-big.jpg",
+   "kind": "note",
+   "label": "venus rise 1555 and 1556 at review, enlarged from the cover sheets: round 34 (left) beside the gate cure 90cc5b2 (right); engine 84b0ea4, tree holds main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T17:27:47.173Z",
+   "file": "20261122172747173-note-c28-dive-big.jpg",
+   "source": "../view/c28-dive-big.jpg",
+   "kind": "note",
+   "label": "venus dive 1319 and 1320 at review, enlarged from the cover sheets: round 34 (left) beside the gate cure 90cc5b2 (right); engine 84b0ea4, tree holds main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T17:27:46.263Z",
+   "file": "20261122172746263-note-c28-dc.jpg",
+   "source": "../view/c28-dc.png",
+   "kind": "note",
+   "label": "venus dive cover sheet 1309 to 1320 at review with the gate cure 90cc5b2; rendered on engine 84b0ea4, tree holds main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T17:27:45.423Z",
+   "file": "20261122172745423-note-c28-dive-pairs.jpg",
+   "source": "../view/c28-dive-pairs.jpg",
+   "kind": "note",
+   "label": "venus dive cover at review, cells 1317 to 1320: round 34 (left of each pair) beside the gate cure 90cc5b2 (right); cells 1309 to 1315 are the same pixels as round 34, 1316 differs by one level in 1909 pixels; rendered on engine 84b0ea4, tree holds main ff158d9",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T17:11:36.490Z",
    "file": "20261122171136490-note-c28-rc.jpg",
@@ -130,38 +162,6 @@
    "source": "../view/k24-n.jpg",
    "kind": "note",
    "label": "rise 1565, 1567, 1569, 1571 at native preview size, release over 24 frames",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:24.701Z",
-   "file": "20261122150624701-note-k24-b.jpg",
-   "source": "../view/k24-b.jpg",
-   "kind": "note",
-   "label": "rise 1576 to 1591 draft, same test, release ends at 1584, 1586 unchanged",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:23.632Z",
-   "file": "20261122150623632-note-k24-a.jpg",
-   "source": "../view/k24-a.jpg",
-   "kind": "note",
-   "label": "rise 1560 to 1575 draft, test: carried terrain look released over 24 frames instead of 12, Sun and sky fade over 1562 to 1572",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:22.614Z",
-   "file": "20261122150622614-note-qd-rise-all.jpg",
-   "source": "../view/qd-rise-all.jpg",
-   "kind": "note",
-   "label": "rise 1560 to 1575 draft, change A only: Sun and blue sky gone within 1562 to 1566 (round 33 R4 major)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:21.623Z",
-   "file": "20261122150621623-note-m-rise-in.jpg",
-   "source": "../view/m-rise-in.jpg",
-   "kind": "note",
-   "label": "rise in 1551 to 1558 as it is on main 84b0ea4 (round 33 R4 smear), left for now",
    "stop": "venus"
   },
   {
