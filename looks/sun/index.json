@@ -1,9 +1,39 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T02:57:45.258Z",
- "head": "09125da95d4ff7630e20065221523b7f9b96fe2d",
- "note": "sun: POLISH READY 5dee843 (opening switch); harness sheets terrain and rise at review on main 3d48581; next item 4 (limb haze layer)",
+ "pushed": "2026-11-22T03:26:18.614Z",
+ "head": "d39a2d1c8da3ee27c5bd271b4d724166e6121f6c",
+ "note": "item 4 trace of the dark rim at the limb, main 0622510 (batch 18)",
  "looks": [
+  {
+   "time": "2026-11-22T03:26:18.026Z",
+   "file": "20261122032618026-note-i291-f90-limb-approved-over-film.jpg",
+   "source": "out/work/sun/h1p/i291-f90-limb-approved-over-film.png",
+   "kind": "note",
+   "label": "item 4 trace, approved over film frame 90 over film frame 0, left limb, gain 3 x3, draft. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T03:26:17.467Z",
+   "file": "20261122032617467-note-i291-f0-limb-unwrapped-layers.jpg",
+   "source": "out/work/sun/h1p/i291-f0-limb-unwrapped-layers.png",
+   "kind": "note",
+   "label": "item 4 trace, frame 0 draft, limb unwrapped x 200 to 560, gain 3, x4: both, plate only, haze only. Dark rim sits where the plate has fallen and the haze not yet risen. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T03:00:39.620Z",
+   "file": "20261122030039620-frame-base90-item4.jpg",
+   "source": "out/work/sun/base90-item4.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:57:44.547Z",
    "file": "20261122025744547-note-i290-sheet-rise-review-main-3d48581.jpg",
@@ -59,20 +89,6 @@
    "segment": "sun.terrain",
    "first": 0,
    "last": 179,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:48:44.499Z",
-   "file": "20261122024844499-frame-f00114-review.jpg",
-   "source": "out/work/sheets/.frames-c4iB0f/f00114-review.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 114, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 114,
    "tier": "review",
    "format": "preview",
    "diag": "beauty",
@@ -140,22 +156,6 @@
    "source": "out/work/sun/i287-opening-nine-R6-frames-at-400-switch-on.png",
    "kind": "note",
    "label": "sun opening: the nine R6 frames at 400 px, switch ON (draft, same bytes on main 3d48581)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:53.903Z",
-   "file": "20261122024753903-note-i287-opening-nine-R6-frames-at-400-switch-off.jpg",
-   "source": "out/work/sun/i287-opening-nine-R6-frames-at-400-switch-off.png",
-   "kind": "note",
-   "label": "sun opening: the nine R6 frames at 400 px, switch OFF (draft, same bytes on main 3d48581)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:52.828Z",
-   "file": "20261122024752828-note-i289-opening-strip-400-switch-on.jpg",
-   "source": "out/work/sun/i289-opening-strip-400-switch-on.png",
-   "kind": "note",
-   "label": "sun opening: strip 0, 15, 30, 45, 60 at 400 px, switch ON (draft tier, main 3d48581)",
    "stop": "sun"
   }
  ]
