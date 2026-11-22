@@ -1,0 +1,3393 @@
+{
+  "phase": 5,
+  "round": 30,
+  "files": {
+    "R7-part1/image-01.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 83,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 83,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part1/image-02.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 83,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 83,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          636,
+          225,
+          212
+        ],
+        [
+          784,
+          530,
+          225,
+          212
+        ],
+        [
+          1120,
+          106,
+          225,
+          212
+        ],
+        [
+          896,
+          636,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part1/image-03.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 90,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 90,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part1/image-04.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 90,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 90,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          636,
+          225,
+          212
+        ],
+        [
+          784,
+          530,
+          225,
+          212
+        ],
+        [
+          896,
+          636,
+          225,
+          212
+        ],
+        [
+          1120,
+          106,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part1/image-05.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 97,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 97,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part1/image-06.png": {
+      "sources": [
+        {
+          "segment": "sun.terrain",
+          "frame": 97,
+          "kind": "before"
+        },
+        {
+          "segment": "sun.terrain",
+          "frame": 97,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          636,
+          225,
+          212
+        ],
+        [
+          784,
+          530,
+          225,
+          212
+        ],
+        [
+          896,
+          636,
+          225,
+          212
+        ],
+        [
+          1120,
+          106,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part1/image-07.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1748,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1748,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part1/image-08.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1748,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1748,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          672,
+          530,
+          225,
+          212
+        ],
+        [
+          560,
+          424,
+          225,
+          212
+        ],
+        [
+          672,
+          868,
+          225,
+          212
+        ],
+        [
+          1008,
+          742,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part2/image-09.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1755,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1755,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part2/image-10.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1755,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1755,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          672,
+          530,
+          225,
+          212
+        ],
+        [
+          560,
+          424,
+          225,
+          212
+        ],
+        [
+          672,
+          868,
+          225,
+          212
+        ],
+        [
+          1008,
+          742,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part2/image-11.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1762,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1762,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part2/image-12.png": {
+      "sources": [
+        {
+          "segment": "earth.hold",
+          "frame": 1762,
+          "kind": "before"
+        },
+        {
+          "segment": "earth.hold",
+          "frame": 1762,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          672,
+          530,
+          225,
+          212
+        ],
+        [
+          560,
+          424,
+          225,
+          212
+        ],
+        [
+          672,
+          868,
+          225,
+          212
+        ],
+        [
+          1008,
+          742,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part2/image-13.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2420,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2420,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part2/image-14.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2420,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2420,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          530,
+          225,
+          212
+        ],
+        [
+          1008,
+          424,
+          225,
+          212
+        ],
+        [
+          112,
+          636,
+          225,
+          212
+        ],
+        [
+          224,
+          848,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part2/image-15.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2427,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2427,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part2/image-16.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2427,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2427,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          530,
+          225,
+          212
+        ],
+        [
+          560,
+          636,
+          225,
+          212
+        ],
+        [
+          1344,
+          424,
+          225,
+          212
+        ],
+        [
+          224,
+          106,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part3/image-17.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2434,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2434,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part3/image-18.png": {
+      "sources": [
+        {
+          "segment": "mars.dive",
+          "frame": 2434,
+          "kind": "before"
+        },
+        {
+          "segment": "mars.dive",
+          "frame": 2434,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          1120,
+          530,
+          225,
+          212
+        ],
+        [
+          560,
+          636,
+          225,
+          212
+        ],
+        [
+          0,
+          318,
+          225,
+          212
+        ],
+        [
+          0,
+          530,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part3/image-19.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5228,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5228,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part3/image-20.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5228,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5228,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          560,
+          742,
+          225,
+          212
+        ],
+        [
+          448,
+          848,
+          225,
+          212
+        ],
+        [
+          1680,
+          0,
+          225,
+          212
+        ],
+        [
+          784,
+          636,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part3/image-21.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5235,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5235,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part3/image-22.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5235,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5235,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          448,
+          848,
+          225,
+          212
+        ],
+        [
+          560,
+          742,
+          225,
+          212
+        ],
+        [
+          1680,
+          0,
+          225,
+          212
+        ],
+        [
+          784,
+          636,
+          225,
+          212
+        ]
+      ]
+    },
+    "R7-part3/image-23.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5242,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5242,
+          "kind": "after"
+        }
+      ],
+      "rectangles": []
+    },
+    "R7-part3/image-24.png": {
+      "sources": [
+        {
+          "segment": "ending.lookback",
+          "frame": 5242,
+          "kind": "before"
+        },
+        {
+          "segment": "ending.lookback",
+          "frame": 5242,
+          "kind": "after"
+        }
+      ],
+      "rectangles": [
+        [
+          848,
+          434,
+          225,
+          212
+        ],
+        [
+          368,
+          164,
+          225,
+          212
+        ],
+        [
+          1328,
+          164,
+          225,
+          212
+        ],
+        [
+          368,
+          704,
+          225,
+          212
+        ],
+        [
+          1328,
+          704,
+          225,
+          212
+        ],
+        [
+          448,
+          848,
+          225,
+          212
+        ],
+        [
+          560,
+          742,
+          225,
+          212
+        ],
+        [
+          1680,
+          0,
+          225,
+          212
+        ],
+        [
+          224,
+          868,
+          225,
+          212
+        ]
+      ]
+    },
+    "R6/image-01.png": {
+      "kind": "frame",
+      "frame": 0,
+      "segment": "sun.terrain"
+    },
+    "R6/image-02.png": {
+      "kind": "frame",
+      "frame": 8,
+      "segment": "sun.terrain"
+    },
+    "R6/image-03.png": {
+      "kind": "frame",
+      "frame": 15,
+      "segment": "sun.terrain"
+    },
+    "R6/image-04.png": {
+      "kind": "frame",
+      "frame": 23,
+      "segment": "sun.terrain"
+    },
+    "R6/image-05.png": {
+      "kind": "frame",
+      "frame": 30,
+      "segment": "sun.terrain"
+    },
+    "R6/image-06.png": {
+      "kind": "frame",
+      "frame": 38,
+      "segment": "sun.terrain"
+    },
+    "R6/image-07.png": {
+      "kind": "frame",
+      "frame": 45,
+      "segment": "sun.terrain"
+    },
+    "R6/image-08.png": {
+      "kind": "frame",
+      "frame": 53,
+      "segment": "sun.terrain"
+    },
+    "R6/image-09.png": {
+      "kind": "frame",
+      "frame": 60,
+      "segment": "sun.terrain"
+    },
+    "R2-part1/image-01.png": {
+      "kind": "approved",
+      "stop": "uranus",
+      "view": "terrain",
+      "asset": "references/approved/uranus-close.jpg"
+    },
+    "R2-part1/image-02.png": {
+      "kind": "frame",
+      "frame": 2325,
+      "segment": "mars.hold"
+    },
+    "R2-part1/image-03.png": {
+      "kind": "approved",
+      "stop": "mercury",
+      "view": "terrain",
+      "asset": "references/approved/mercury-close.jpg"
+    },
+    "R2-part1/image-04.png": {
+      "kind": "approved",
+      "stop": "venus",
+      "view": "terrain",
+      "asset": "references/approved/venus-close.jpg"
+    },
+    "R2-part1/image-05.png": {
+      "kind": "approved",
+      "stop": "jupiter",
+      "view": "terrain",
+      "asset": "references/approved/jupiter-close.jpg"
+    },
+    "R2-part1/image-06.png": {
+      "kind": "approved",
+      "stop": "earth",
+      "view": "terrain",
+      "asset": "references/approved/earth-close.jpg"
+    },
+    "R2-part1/image-07.png": {
+      "kind": "frame",
+      "frame": 1440,
+      "segment": "venus.terrain"
+    },
+    "R2-part1/image-08.png": {
+      "kind": "approved",
+      "stop": "saturn",
+      "view": "hold",
+      "asset": "references/approved/saturn-hero.png"
+    },
+    "R2-part1/image-09.png": {
+      "kind": "frame",
+      "frame": 870,
+      "segment": "mercury.terrain"
+    },
+    "R2-part2/image-10.png": {
+      "kind": "frame",
+      "frame": 615,
+      "segment": "mercury.hold"
+    },
+    "R2-part2/image-11.png": {
+      "kind": "approved",
+      "stop": "saturn",
+      "view": "terrain",
+      "asset": "references/approved/saturn-close.jpg"
+    },
+    "R2-part2/image-12.png": {
+      "kind": "frame",
+      "frame": 2895,
+      "segment": "jupiter.hold"
+    },
+    "R2-part2/image-13.png": {
+      "kind": "frame",
+      "frame": 1642,
+      "segment": "venus.travel"
+    },
+    "R2-part2/image-14.png": {
+      "kind": "approved",
+      "stop": "sun",
+      "view": "hold",
+      "asset": "references/approved/sun-hero.png"
+    },
+    "R2-part2/image-15.png": {
+      "kind": "approved",
+      "stop": "neptune",
+      "view": "hold",
+      "asset": "references/approved/neptune-hero.png"
+    },
+    "R2-part2/image-16.png": {
+      "kind": "frame",
+      "frame": 4605,
+      "segment": "neptune.hold"
+    },
+    "R2-part2/image-17.png": {
+      "kind": "frame",
+      "frame": 4860,
+      "segment": "neptune.terrain"
+    },
+    "R2-part2/image-18.png": {
+      "kind": "approved",
+      "stop": "sun",
+      "view": "terrain",
+      "asset": "references/approved/sun-close.jpg"
+    },
+    "R2-part3/image-19.png": {
+      "kind": "frame",
+      "frame": 2782,
+      "segment": "mars.travel"
+    },
+    "R2-part3/image-20.png": {
+      "kind": "frame",
+      "frame": 1185,
+      "segment": "venus.hold"
+    },
+    "R2-part3/image-21.png": {
+      "kind": "frame",
+      "frame": 1755,
+      "segment": "earth.hold"
+    },
+    "R2-part3/image-22.png": {
+      "kind": "frame",
+      "frame": 3352,
+      "segment": "jupiter.travel"
+    },
+    "R2-part3/image-23.png": {
+      "kind": "frame",
+      "frame": 2212,
+      "segment": "earth.travel"
+    },
+    "R2-part3/image-24.png": {
+      "kind": "frame",
+      "frame": 4290,
+      "segment": "uranus.terrain"
+    },
+    "R2-part3/image-25.png": {
+      "kind": "frame",
+      "frame": 5235,
+      "segment": "ending.lookback"
+    },
+    "R2-part3/image-26.png": {
+      "kind": "frame",
+      "frame": 3465,
+      "segment": "saturn.hold"
+    },
+    "R2-part3/image-27.png": {
+      "kind": "approved",
+      "stop": "earth",
+      "view": "hold",
+      "asset": "references/approved/earth-hero.png"
+    },
+    "R2-part4/image-28.png": {
+      "kind": "frame",
+      "frame": 4035,
+      "segment": "uranus.hold"
+    },
+    "R2-part4/image-29.png": {
+      "kind": "frame",
+      "frame": 90,
+      "segment": "sun.terrain"
+    },
+    "R2-part4/image-30.png": {
+      "kind": "frame",
+      "frame": 1072,
+      "segment": "mercury.travel"
+    },
+    "R2-part4/image-31.png": {
+      "kind": "frame",
+      "frame": 3150,
+      "segment": "jupiter.terrain"
+    },
+    "R2-part4/image-32.png": {
+      "kind": "frame",
+      "frame": 2010,
+      "segment": "earth.terrain"
+    },
+    "R2-part4/image-33.png": {
+      "kind": "frame",
+      "frame": 4492,
+      "segment": "uranus.travel"
+    },
+    "R2-part4/image-34.png": {
+      "kind": "frame",
+      "frame": 495,
+      "segment": "sun.travel"
+    },
+    "R2-part4/image-35.png": {
+      "kind": "approved",
+      "stop": "jupiter",
+      "view": "hold",
+      "asset": "references/approved/jupiter-hero.png"
+    },
+    "R2-part4/image-36.png": {
+      "kind": "frame",
+      "frame": 360,
+      "segment": "sun.hold"
+    },
+    "R2-part5/image-37.png": {
+      "kind": "approved",
+      "stop": "mars",
+      "view": "terrain",
+      "asset": "references/approved/mars-close.jpg"
+    },
+    "R2-part5/image-38.png": {
+      "kind": "approved",
+      "stop": "venus",
+      "view": "hold",
+      "asset": "references/approved/venus-hero.png"
+    },
+    "R2-part5/image-39.png": {
+      "kind": "approved",
+      "stop": "neptune",
+      "view": "terrain",
+      "asset": "references/approved/neptune-close.jpg"
+    },
+    "R2-part5/image-40.png": {
+      "kind": "approved",
+      "stop": "uranus",
+      "view": "hold",
+      "asset": "references/approved/uranus-hero.png"
+    },
+    "R2-part5/image-41.png": {
+      "kind": "approved",
+      "stop": "mars",
+      "view": "hold",
+      "asset": "references/approved/mars-hero.png"
+    },
+    "R2-part5/image-42.png": {
+      "kind": "frame",
+      "frame": 3720,
+      "segment": "saturn.terrain"
+    },
+    "R2-part5/image-43.png": {
+      "kind": "approved",
+      "stop": "mercury",
+      "view": "hold",
+      "asset": "references/approved/mercury-hero.png"
+    },
+    "R2-part5/image-44.png": {
+      "kind": "frame",
+      "frame": 3922,
+      "segment": "saturn.travel"
+    },
+    "R2-part5/image-45.png": {
+      "kind": "frame",
+      "frame": 2580,
+      "segment": "mars.terrain"
+    },
+    "R5/sheet-01.png": {
+      "kind": "film",
+      "part": 1,
+      "frames": [
+        90,
+        247,
+        360,
+        495,
+        615,
+        717,
+        870,
+        1016,
+        1072,
+        1185,
+        1287,
+        1440
+      ]
+    },
+    "R5/sheet-02.png": {
+      "kind": "film",
+      "part": 2,
+      "frames": [
+        1586,
+        1642,
+        1755,
+        1857,
+        2010,
+        2156,
+        2212,
+        2325,
+        2427,
+        2580,
+        2726,
+        2782
+      ]
+    },
+    "R5/sheet-03.png": {
+      "kind": "film",
+      "part": 3,
+      "frames": [
+        2895,
+        2997,
+        3150,
+        3296,
+        3352,
+        3465,
+        3567,
+        3720,
+        3866,
+        3922,
+        4035,
+        4137
+      ]
+    },
+    "R5/sheet-04.png": {
+      "kind": "film",
+      "part": 4,
+      "frames": [
+        4290,
+        4436,
+        4492,
+        4605,
+        4707,
+        4860,
+        5006,
+        5085,
+        5235,
+        5362
+      ]
+    },
+    "R5/sheet-05.png": {
+      "kind": "hold",
+      "part": 1,
+      "frames": [
+        360,
+        615,
+        1185,
+        1755,
+        2325,
+        2895,
+        3465,
+        4035,
+        4605
+      ]
+    },
+    "R3-part1/image-01.png": {
+      "kind": "frame",
+      "frame": 495,
+      "segment": "sun.travel"
+    },
+    "R3-part1/image-02.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 495,
+          "segment": "sun.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          684,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          432,
+          456,
+          433
+        ],
+        [
+          1464,
+          216,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part1/image-03.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 495,
+          "segment": "sun.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part1/image-04.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 495,
+          "segment": "sun.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part1/image-05.png": {
+      "kind": "frame",
+      "frame": 1072,
+      "segment": "mercury.travel"
+    },
+    "R3-part1/image-06.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1072,
+          "segment": "mercury.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          684,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          647,
+          456,
+          433
+        ],
+        [
+          1464,
+          432,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part1/image-07.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1072,
+          "segment": "mercury.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part1/image-08.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1072,
+          "segment": "mercury.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part2/image-09.png": {
+      "kind": "frame",
+      "frame": 1642,
+      "segment": "venus.travel"
+    },
+    "R3-part2/image-10.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1642,
+          "segment": "venus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          912,
+          647,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1464,
+          216,
+          456,
+          433
+        ],
+        [
+          1368,
+          432,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part2/image-11.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1642,
+          "segment": "venus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ],
+        [
+          1824,
+          433,
+          96,
+          433
+        ]
+      ]
+    },
+    "R3-part2/image-12.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 1642,
+          "segment": "venus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part2/image-13.png": {
+      "kind": "frame",
+      "frame": 2212,
+      "segment": "earth.travel"
+    },
+    "R3-part2/image-14.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2212,
+          "segment": "earth.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          684,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          0,
+          647,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part2/image-15.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2212,
+          "segment": "earth.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ],
+        [
+          1824,
+          433,
+          96,
+          433
+        ]
+      ]
+    },
+    "R3-part2/image-16.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2212,
+          "segment": "earth.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part3/image-17.png": {
+      "kind": "frame",
+      "frame": 2782,
+      "segment": "mars.travel"
+    },
+    "R3-part3/image-18.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2782,
+          "segment": "mars.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          1368,
+          216,
+          456,
+          433
+        ],
+        [
+          1464,
+          0,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part3/image-19.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2782,
+          "segment": "mars.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ],
+        [
+          1824,
+          433,
+          96,
+          433
+        ]
+      ]
+    },
+    "R3-part3/image-20.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 2782,
+          "segment": "mars.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part3/image-21.png": {
+      "kind": "frame",
+      "frame": 3352,
+      "segment": "jupiter.travel"
+    },
+    "R3-part3/image-22.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3352,
+          "segment": "jupiter.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          912,
+          647,
+          456,
+          433
+        ],
+        [
+          0,
+          647,
+          456,
+          433
+        ],
+        [
+          1464,
+          647,
+          456,
+          433
+        ],
+        [
+          1368,
+          432,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part3/image-23.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3352,
+          "segment": "jupiter.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part3/image-24.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3352,
+          "segment": "jupiter.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part4/image-25.png": {
+      "kind": "frame",
+      "frame": 3922,
+      "segment": "saturn.travel"
+    },
+    "R3-part4/image-26.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3922,
+          "segment": "saturn.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          684,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          1368,
+          432,
+          456,
+          433
+        ],
+        [
+          1464,
+          647,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part4/image-27.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3922,
+          "segment": "saturn.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part4/image-28.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 3922,
+          "segment": "saturn.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part4/image-29.png": {
+      "kind": "frame",
+      "frame": 4492,
+      "segment": "uranus.travel"
+    },
+    "R3-part4/image-30.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 4492,
+          "segment": "uranus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          912,
+          647,
+          456,
+          433
+        ],
+        [
+          1464,
+          647,
+          456,
+          433
+        ],
+        [
+          1368,
+          432,
+          456,
+          433
+        ],
+        [
+          456,
+          432,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part4/image-31.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 4492,
+          "segment": "uranus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part4/image-32.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 4492,
+          "segment": "uranus.travel"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part5/image-33.png": {
+      "kind": "frame",
+      "frame": 5085,
+      "segment": "ending.retreat"
+    },
+    "R3-part5/image-34.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5085,
+          "segment": "ending.retreat"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          0,
+          432,
+          456,
+          433
+        ],
+        [
+          456,
+          216,
+          456,
+          433
+        ],
+        [
+          1368,
+          216,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part5/image-35.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5085,
+          "segment": "ending.retreat"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ],
+        [
+          1824,
+          433,
+          96,
+          433
+        ]
+      ]
+    },
+    "R3-part5/image-36.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5085,
+          "segment": "ending.retreat"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R3-part5/image-37.png": {
+      "kind": "frame",
+      "frame": 5235,
+      "segment": "ending.lookback"
+    },
+    "R3-part5/image-38.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5235,
+          "segment": "ending.lookback"
+        }
+      ],
+      "rectangles": [
+        [
+          732,
+          324,
+          456,
+          433
+        ],
+        [
+          252,
+          54,
+          456,
+          433
+        ],
+        [
+          1212,
+          54,
+          456,
+          433
+        ],
+        [
+          252,
+          594,
+          456,
+          433
+        ],
+        [
+          1212,
+          594,
+          456,
+          433
+        ],
+        [
+          684,
+          647,
+          456,
+          433
+        ],
+        [
+          1464,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          432,
+          456,
+          433
+        ],
+        [
+          0,
+          647,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part5/image-39.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5235,
+          "segment": "ending.lookback"
+        }
+      ],
+      "rectangles": [
+        [
+          0,
+          0,
+          456,
+          433
+        ],
+        [
+          456,
+          0,
+          456,
+          433
+        ],
+        [
+          912,
+          0,
+          456,
+          433
+        ],
+        [
+          1368,
+          0,
+          456,
+          433
+        ],
+        [
+          1824,
+          0,
+          96,
+          433
+        ],
+        [
+          0,
+          433,
+          456,
+          433
+        ],
+        [
+          456,
+          433,
+          456,
+          433
+        ],
+        [
+          912,
+          433,
+          456,
+          433
+        ],
+        [
+          1368,
+          433,
+          456,
+          433
+        ]
+      ]
+    },
+    "R3-part5/image-40.png": {
+      "sources": [
+        {
+          "kind": "frame",
+          "frame": 5235,
+          "segment": "ending.lookback"
+        }
+      ],
+      "rectangles": [
+        [
+          1824,
+          433,
+          96,
+          433
+        ],
+        [
+          0,
+          866,
+          456,
+          214
+        ],
+        [
+          456,
+          866,
+          456,
+          214
+        ],
+        [
+          912,
+          866,
+          456,
+          214
+        ],
+        [
+          1368,
+          866,
+          456,
+          214
+        ],
+        [
+          1824,
+          866,
+          96,
+          214
+        ]
+      ]
+    },
+    "R4-part1/sheet-01.png": {
+      "kind": "sheet",
+      "segment": "sun.travel",
+      "frames": [
+        450,
+        458,
+        466,
+        474,
+        482,
+        490,
+        499,
+        507,
+        515,
+        523,
+        531,
+        539
+      ]
+    },
+    "R4-part1/sheet-02.png": {
+      "kind": "sheet",
+      "segment": "mercury.travel",
+      "frames": [
+        1035,
+        1042,
+        1048,
+        1055,
+        1062,
+        1069,
+        1075,
+        1082,
+        1089,
+        1096,
+        1102,
+        1109
+      ]
+    },
+    "R4-part1/sheet-03.png": {
+      "kind": "sheet",
+      "segment": "venus.travel",
+      "frames": [
+        1605,
+        1612,
+        1618,
+        1625,
+        1632,
+        1639,
+        1645,
+        1652,
+        1659,
+        1666,
+        1672,
+        1679
+      ]
+    },
+    "R4-part1/sheet-04.png": {
+      "kind": "sheet",
+      "segment": "earth.travel",
+      "frames": [
+        2175,
+        2182,
+        2188,
+        2195,
+        2202,
+        2209,
+        2215,
+        2222,
+        2229,
+        2236,
+        2242,
+        2249
+      ]
+    },
+    "R4-part1/sheet-05.png": {
+      "kind": "sheet",
+      "segment": "mars.travel",
+      "frames": [
+        2745,
+        2752,
+        2758,
+        2765,
+        2772,
+        2779,
+        2785,
+        2792,
+        2799,
+        2806,
+        2812,
+        2819
+      ]
+    },
+    "R4-part1/sheet-06.png": {
+      "kind": "sheet",
+      "segment": "jupiter.travel",
+      "frames": [
+        3315,
+        3322,
+        3328,
+        3335,
+        3342,
+        3349,
+        3355,
+        3362,
+        3369,
+        3376,
+        3382,
+        3389
+      ]
+    },
+    "R4-part1/sheet-07.png": {
+      "kind": "sheet",
+      "segment": "saturn.travel",
+      "frames": [
+        3885,
+        3892,
+        3898,
+        3905,
+        3912,
+        3919,
+        3925,
+        3932,
+        3939,
+        3946,
+        3952,
+        3959
+      ]
+    },
+    "R4-part1/sheet-08.png": {
+      "kind": "sheet",
+      "segment": "uranus.travel",
+      "frames": [
+        4455,
+        4462,
+        4468,
+        4475,
+        4482,
+        4489,
+        4495,
+        4502,
+        4509,
+        4516,
+        4522,
+        4529
+      ]
+    },
+    "R4-part1/sheet-09.png": {
+      "kind": "sheet",
+      "segment": "ending.retreat",
+      "frames": [
+        5025,
+        5036,
+        5047,
+        5057,
+        5068,
+        5079,
+        5090,
+        5101,
+        5112,
+        5122,
+        5133,
+        5144
+      ]
+    },
+    "R4-part2/sheet-10.png": {
+      "kind": "sheet",
+      "segment": "ending.lookback",
+      "frames": [
+        5145,
+        5161,
+        5178,
+        5194,
+        5210,
+        5226,
+        5243,
+        5259,
+        5275,
+        5291,
+        5308,
+        5324
+      ]
+    },
+    "R4-part2/sheet-11.png": {
+      "kind": "sheet",
+      "segment": "ending.fade",
+      "frames": [
+        5325,
+        5332,
+        5338,
+        5345,
+        5352,
+        5359,
+        5365,
+        5372,
+        5379,
+        5386,
+        5392,
+        5399
+      ]
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+ "critic": "R4",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R4",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "sheet-09.png",
+      "where": "frames 5057 to 5079, Neptune and its rings",
+      "what": "in 11 frames Neptune goes from lit on its upper face to almost fully dark with a thin rim light. Its screen size barely changes and there is no motion blur, so the camera seems to swing more than 90 degrees around the planet in one step. The ring also loses its shape: a full tilted ellipse at 5057 becomes a thin streak across the disc plus a small coil at lower left at 5068, then only a tiny spiral at 5079. It reads as a cut or a solver jump, not one move",
+      "fix": "spread the orbit to the night side over many more frames with an eased angular speed. Keep the ring a single rigid ellipse that follows the camera's projection, and add camera motion blur if the swing stays fast"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-09.png",
+      "where": "frames 5057 to 5068, background",
+      "what": "the Milky Way band appears at upper left at 5068. It is nowhere in 5025 to 5057, and the star density and exposure change at the same moment, so the background pops instead of sweeping in",
+      "fix": "make the sky a fixed world-space environment that rotates only with the camera, and let the band enter from a frame edge across several frames"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-04.png",
+      "where": "frame 2188, Earth exiting top",
+      "what": "Earth is heavily smeared while the stars and the Milky Way right next to it stay pin-sharp. The blur also streaks the surface texture inside a fairly crisp limb. Blur on only one layer reads as a 2D effect, not camera motion",
+      "fix": "derive motion blur from camera velocity for every layer, including stars as short streaks, and blur the disc silhouette and its texture together"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-06.png",
+      "where": "frames 3328 to 3335",
+      "what": "at 3328 Jupiter sits at lower right against plain stars with no galactic band anywhere. By 3335 a thick, bright Milky Way band with haze fills the upper left. The background changes between these frames without any visible pan, so it pops",
+      "fix": "check the camera path and skybox orientation here. Either show the pan that brings the band in, or keep the band visible at the frame edge as Jupiter leaves"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-01.png",
+      "where": "frames 474 to 499, the Sun",
+      "what": "the Sun leaves at the top as an orange, textured disc with prominences. It comes back at upper right as a blown-out white disc with a different corona. Its look and exposure change as if it were another object, and its position jumps from top center (490 glow) to upper right (499)",
+      "fix": "keep the Sun's shading and exposure response the same throughout the travel, or blend exposure gradually. Make the yaw that brings it to upper right continuous through 482 to 499"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-08.png",
+      "where": "frames 4495 to 4502, Milky Way",
+      "what": "the band changes from bright and warm-golden at the bottom (4495) to dim and cold blue-grey at upper left (4502) in 7 frames. The exposure and color jump",
+      "fix": "use one sky and one exposure curve. If a dimmer, outer-system look is wanted, ramp it over the whole travel"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-04.png",
+      "where": "frame 2215, upper half",
+      "what": "the Milky Way bends into a strong arc, as if seen through a fisheye, while the other frames show it straight or gently curved. This suggests a field-of-view spike mid-travel",
+      "fix": "keep the field of view constant, or ease it smoothly, through the travel"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-07.png",
+      "where": "frames 3939 to 3959, around Uranus",
+      "what": "faint concentric ring arcs show as fine thin lines over the star field, and a bright arc pops in above the planet at 3952. Thin lines like these tend to shimmer and crawl in motion",
+      "fix": "make the ring geometry a little thicker or add supersampling and temporal filtering, and fade the ring brightness in gradually"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-08.png",
+      "where": "frames 4455 to 4468, Uranus",
+      "what": "on departure Uranus is evenly lit with no rings and no strong terminator. On arrival (sheet-07, 3959) it had rings and a hard shadow on its lower right. Across the stop it reads as a different body",
+      "fix": "keep Uranus's rings and its light direction the same across arrival, hold and departure"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-03.png",
+      "where": "frames 1666 to 1679, Earth upper right limb",
+      "what": "a green band with a red edge sits on the limb. It reads as chromatic fringing or a stuck effect, not an aurora",
+      "fix": "limit the aurora to the poles with soft falloff and remove the red fringe"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R4",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  }
+ ]
+}

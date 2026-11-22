@@ -1,0 +1,63 @@
+{
+ "critic": "R5",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "holds 360, 615, 1185, 1755, 4035, 4605",
+   "what": "The Sun does not shrink from stop to stop, and the light does not stay with it. It is a full disk, still a huge glaring disk at Mercury's upper right, then absent through Venus, Earth, Mars, Jupiter, Saturn, and Uranus, then a pinpoint at Neptune's upper right. Key light flips from Mercury's right to the left for the middle holds, then back to the right at Neptune. Uranus and Neptune are exposed as bright as Earth, so distance never reads in the light. The same break starts earlier: sheet-01 frame 615 is keyed from the upper right, 1016 from the upper left with the Sun gone, and 1440 puts a large solar disk on the Venus horizon again.",
+   "fix": "Set one solar scale and one key direction, shrink the disk at each outward stop, and let exposure fall with it."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 1755, 1857, and 2156",
+   "what": "Earth is the same plate three times: same clouds, aurora, terminator, and Moon. The orbit shot at 2010 is sandwiched between copies, then the cut returns to the frozen hero, so the journey loops.",
+   "fix": "Use one Earth hero, then leave. Do not cut back to a frozen plate."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "Jupiter 2895 and 2997; Saturn 3465, 3567, and 3866",
+   "what": "Feature skims exist, but every stop feels the same: centered hero, near-duplicate push, one skim, then a Milky Way spacer. Jupiter barely advances between 2895 and 2997. Saturn's wide is repeated three times around the ring skim, and Titan jumps from the upper right to top center on the repeat. The sheet-05 holds are the same poster scale, dead center, stop after stop.",
+   "fix": "Give each stop one distinct camera idea and cut the duplicate heroes."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 1642, 2212, and 2782",
+   "what": "It is not one sky. The spacer at 1642 is a vertical Milky Way, 2212 is a diagonal band, and 2782 drops the Milky Way for a sparse field and a faint galaxy. The same reset happens inside stops: Jupiter 3296 loses the Milky Way of 2895, and Uranus 4137 loses the band behind 4035.",
+   "fix": "Lock one star plate and one Milky Way orientation and carry them through every stop."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frame 5362, last populated cell",
+   "what": "The ending does not land. Neptune is a clipped sliver on the left edge, and the frame is the same galactic spacer used between worlds at 4492, 5085, and 5235. The trip stops on an interstitial instead of resolving.",
+   "fix": "End on a composed last image that is not another spacer, held long enough to read as the close."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2325 and 2427",
+   "what": "Phobos sits in the foreground of the Mars hero, then is gone in the next frame at the same scale, lighting, and orientation. The stop does not keep one continuous body.",
+   "fix": "Keep Phobos, or cut to a new angle that explains its absence."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 4290 and 4436",
+   "what": "Uranus rings jump from a broad bright arc over the limb to a faint edge-on trace, with no connecting move.",
+   "fix": "Keep ring tilt and brightness consistent unless a camera move earns the change."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 247 and 360",
+   "what": "The first two full-Sun holds are the same disk at the same size. The shrink the journey depends on does not even start.",
+   "fix": "Move the camera or reduce the solar disk between these holds."
+  }
+ ]
+}
