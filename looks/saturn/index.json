@@ -1,9 +1,59 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T02:29:57.059Z",
- "head": "2cb2f2b364f49ace7b81fc67277035e855e723c4",
- "note": "item 6 done: globe fine structure; main 3d48581 merged",
+ "pushed": "2026-11-22T03:01:52.445Z",
+ "head": "de74ab8c4445d57fa55614b199e0a75ec934c960",
+ "note": "Item 8 on main 3d48581: dive and rise frames now give the same bytes on every run (cause: a derivative taken after discard in the haze shell); sweep of the whole stop running",
  "looks": [
+  {
+   "time": "2026-11-22T03:01:51.834Z",
+   "file": "20261122030151834-note-item8-3866-limb.jpg",
+   "source": "out/work/saturn/item8-3866-limb.png",
+   "kind": "note",
+   "label": "Item 8, main 3d48581: frame 3866 draft, lit limb x 352 to 416, y 596 to 660 at 6x; left before (two pixels of the limb edge took a different value on every run), right after the fix (same bytes on every run)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T02:37:00.989Z",
+   "file": "20261122023700989-frame-rep-3866-3.jpg",
+   "source": "out/work/saturn/rep-3866-3.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3866, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:35:58.877Z",
+   "file": "20261122023558877-frame-rep-3594-3.jpg",
+   "source": "out/work/saturn/rep-3594-3.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3594, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3594,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:31:04.884Z",
+   "file": "20261122023104884-frame-H1-3809.jpg",
+   "source": "out/work/saturn/H1-3809.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:29:56.521Z",
    "file": "20261122022956521-note-G4_3567n.jpg",
@@ -41,56 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:28:46.571Z",
-   "file": "20261122022846571-frame-G5-3567.jpg",
-   "source": "out/work/saturn/G5-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:28:25.162Z",
-   "file": "20261122022825162-frame-G5-3852.jpg",
-   "source": "out/work/saturn/G5-3852.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3852, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3852,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:14:01.000Z",
-   "file": "20261122021401000-frame-G3-3720.jpg",
-   "source": "out/work/saturn/G3-3720.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:01:56.507Z",
-   "file": "20261122020156507-note-F5_3465t2.jpg",
-   "source": "../../../../tmp/F5_3465t2.png",
-   "kind": "note",
-   "label": "3465 lower terminator at 2x: hero, before, F5",
-   "stop": "saturn"
   }
  ]
 }
