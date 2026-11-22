@@ -701,3 +701,13 @@ The full notes of the polish are on `agent/sun` (22dc89c), those of the hook on 
 - The plate's texture returns at 494 to 502 (Mercury's picture at weight 0.4 to 0.7): the disc is flat white at 482 to 492 and patterned again after. A white on white hand over needs the plate's own level higher earlier, which is Mercury's.
 - A few thin red specks left of the burnt prominence at 490 (native x 1555 to 1620, y 520 to 555).
 - `leave.json` and `look.leave.plate`, `gone`, `pale` copy Mercury's picture, rect, aim, ramp and level and the travel's swap. They must follow if those change.
+
+### State at 10:12 UTC
+
+- Code commit bec8e3f on `agent/sun-leave`, pushed. DONE of B sent to `/root` at 10:07 with seven pictures (`out/work/sun/lv/leave-*.jpg`), then a short mail with the final tier byte check. Looks pushed at 10:04 and 10:07.
+- Finals of bec8e3f (`out/work/sun/lv/fin`): 482 e7c97c8f8bc449a8, 490 0fa41db9263749e6, 495 93cbde73bc0f2b4d. Final tier 470: 633875cb3d43af86, equal to main 8f13066.
+- The red specks beside the right limb at 482 and 490 (native x 1640 to 1700, y 330 to 370 at 482) are faint debris in my prominence card, in main too but dimmer; the opened exposure lifts them. Cure when asked: a floor under the card's light before the burn (`l = max(l - floor, 0)` in `prominence.ts`), frames 450 to 470 keep their bytes as long as it sits inside the conditional loop.
+- `/root/mercury_builder` has the stated against painted disc numbers. If the plate's picture, rect or aim moves, run `disc.py` and `fit.py` again and refit.
+- Tools of this branch (not committed, in `out/work/sun/lv/`): `strip.py DIR LABEL`, `ell.py` (ellipse of a clean disc by threshold), `sheets.py` (the pictures of the DONE mail), `sunpx.json` (engine Sun px per frame). To see my globe alone: hide `sunPlate`, `lens`, `streak`, `glare` in Mercury's `set.ts` after `streak.update(...)` for the render only and `git checkout` the file after.
+- A render that needs main's code now needs `git checkout --detach origin/main` and back, since the work is committed (a stash does nothing).
+- Next: wait for the Builder's word on B; then carry this section into the notes on `agent/sun` and resume polish item 7 there (state in that branch's notes, section "09:00 UTC Nov 22").
