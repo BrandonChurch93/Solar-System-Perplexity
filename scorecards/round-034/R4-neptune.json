@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "top half, frames 4982 to 4983",
+   "what": "the streak veil is replaced by black space and a sharp limb in one frame, and a second bright rim sits under that limb for that frame only; top exposure falls from about 128 to 15",
+   "fix": "ease the veil out over several frames so the limb, the second rim, and black space carry instead of popping"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "top half, frames 4976 to 4977",
+   "what": "black space and the limb are replaced by full-frame haze in one frame; top exposure jumps from about 54 to 126",
+   "fix": "spread the loss of black space and the growth of blur across more frames so the sky does not pop"
+  }
+ ]
+}
