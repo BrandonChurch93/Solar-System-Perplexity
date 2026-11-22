@@ -536,3 +536,20 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Tried and dropped (a0fbd7a, turn with a knee and a glide so the sky slows behind the growing body): at 20 percent steady growth mercury and jupiter met every limit, venus 1.06, uranus 1.07, earth 1.14 times the limits. The firm limits (peak turn, 0.4 while the leaving body is in frame, change of rate 0.35) with total turns of earth 153, venus 145, uranus 150 degrees leave no room; the turn is as at f4472a3 and the sky sweeps behind the growing body (earth 4.45 degrees a frame at 60 px radius, 3.34 at 250).
 - Tools: `npx tsx assets-src/travel/grow.ts table|probe [id]` with `OVER='{"earth":{"window":24}}'`; `npx tsx assets-src/travel/grow.ts doc > assets-src/travel/GROW-TABLE.md` writes the probe table.
 - Open for Phase 6: mars.travel (Jupiter enters at the bottom edge at 119 px), Sun between stops, the sky sweep behind the body in earth, venus, uranus (needs a shorter total turn, that is a change of `turnDeg` or of the hold's first direction, both locked).
+
+## 10:21 UTC: GROW DONE sent, head b4edbdb
+
+- Pushed agent/travel-grow = b4edbdb (f4472a3, a0fbd7a, b4edbdb). vitest 79, build green, shaderaudit equal. Looks pushed 10:17 (draft strips of the last 36 frames of seven travels, label g1).
+- Proofs at draft: all windows 0 gives 5400 equal shot hashes and equal bytes at 2215, 2230, 2245, 1650, 3940 (label hw0 against e1). Committed windows: holds 540, 1110, 1680, 2250, 3960, 4530 equal; 3390 differed in one pixel by one level at (677, 605), the known unstable pixel (see 09:05), shot equal.
+- Shots change only in 500 to 539, 1059 to 1109, 1626 to 1679, 2199 to 2249, 3339 to 3389, 3917 to 3959, 4472 to 4529. Judged travel frames inside: 2212 (Mars point at 74 percent light), 2238 (Mars 835 px across), 3352 (Saturn's point at 66 percent light).
+- saturn.travel: point lit from 3922, 31 percent light when the window opens at 3927; a window of 30 would give the point 8 frames alone.
+- Strips read: body in place, even growth, clean hand over; the sky sweeps behind and the view of the body turns with the camera (Neptune comes in from its night side).
+- Running: chain12 (holds at window 24 and 40, labels hw24, hw40, script /tmp/holdsvar.sh W LABEL frames), chain13 (finals 2228 and 4508 on b4edbdb into out/work/travel/g1/). Follow up line to /root when they are in.
+
+## 10:31 UTC: owed line sent, MAIL 139
+
+- Holds at window 24: 540, 1110, 1680, 2250, 3390, 3960, 4530 all equal to f4472a3 (3390 = d711fed97ef85910 again); at window 40: 540, 2250, 3960 equal.
+- Finals on b4edbdb, 2228 and 4508 (`out/work/travel/g1/`): stars points, no doubled star or band edge, Phobos one smooth smear. New at the final tier: the pinned body itself takes the shutter, because the camera goes round it at the turn rate; surface streaked, limb soft, smooth, no copies. Sent with crops 10:30. Looks pushed 10:29.
+- Correction sent: sun.travel Mercury's largest step while growing is 18.1 px at 500.
+- MAIL 139 (10:28): trial builder/b22-pre 2627d023 = batch 21 trial plus b4edbdb; he decides from worker sheets at about 10:50 his clock. Phase 6, on a new branch agent/travel-polish from main once he writes that batch 22 is on main: 1 mars.travel, Jupiter comes in over the bottom edge at 2799 already a disc; retime the turn with the belt rock so Jupiter is a point first (talk to /root/belt_builder, one of us owns each line). 2 the sky patch of Mercury's hold in sun.travel (blue nebula coming up at 507 to 523 while the camera is nearly still): give patchSpanOf a per stop end so it ends with the turn. 3 saturn.travel: the point lit only from 3922. Proofs as before. Do not start before his word.
+- Idea for the smear, if he asks: the smear comes from the camera going round the body; it ends when the turn ends. Only a shorter total turn (locked) or a later window removes it.
