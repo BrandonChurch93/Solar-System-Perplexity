@@ -1,9 +1,23 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T00:01:03.830Z",
+ "pushed": "2026-11-22T00:01:08.717Z",
  "head": "5644062b0eefea3d111b51f49b8e89c564bf82e0",
  "note": "item 24 terrain, coarse bloom levels inverted in the relief",
  "looks": [
+  {
+   "time": "2026-11-22T00:01:06.639Z",
+   "file": "20261122000106639-frame-q-4605.jpg",
+   "source": "out/work/nep/p6/b1/q-4605.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4605, review tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-22T00:01:02.468Z",
    "file": "20261122000102468-note-away-e.jpg",
@@ -57,20 +71,6 @@
    "kind": "note",
    "label": "4860 crops x2, approved / 73b4427 / trial with the bloom's spill taken out in the relief (full inverse, fine contrast overshoots, being split)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:29:28.726Z",
-   "file": "20261121232928726-frame-m-4605.jpg",
-   "source": "out/work/nep/p6/s1/m-4605.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, review tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T23:17:34.179Z",
