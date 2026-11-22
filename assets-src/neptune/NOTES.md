@@ -1513,3 +1513,10 @@ If the far arc cannot be kept without a new edge, or you see any other cost, sen
 
 - Head and commit named: 0f4839059c57e54b265ac85469785f63d63595cd. All six proofs with the numbers above. Costs named: none new; the stars behind the near half's dense bands stay dimmed (2628 px at draft 5006). Not done: no review tier, no sheet, G17 not run, the retreat not at final, 5009 to 5024 not rendered on this commit.
 - From here: no edit under `src/`, `public/` or `config/`.
+
+### After the READY of 19:33: the rest of the rise, 19:35 to 19:37 VM
+
+- 19:35, low to the Builder: the head moved to fd5628ed (0f483905 plus a notes commit); the commit to take is still 0f483905.
+- Drafts 5012, 5018, 5024 on 0f483905 into `solid/near/` (36 s). Main's are in `solid/base/`, cc55835f's (the same code as c588ee73 at weight 1) in `solid/new/`. frame | hash | far arc region main before, c588ee73, new | share of c588ee73's lift over the dark disc that new keeps (px) | px darker than main by more than 8: c588ee73, new | new darker than c588ee73 by more than 8: 5012 | bf45fa7185fc8bc7 | 39.81, 30.89, 39.27 | 1.000 (27395) | 48198, 3412 | 0; 5018 | 40c6fff6c173afd9 | 39.24, 30.69, 38.75 | 1.000 (27259) | 49212, 3526 | 0; 5024 | a5ac13903fdcdf4d | 38.71, 30.42, 38.26 | 1.000 (27153) | 48890, 3441 | 0.
+- `solid/near-05` (drafts 5018 and 5025, native, brightness times 4, x 924 to 1624, y 102 to 552, c588ee73 left, new right), looked at: no edge in the right stretch in either frame; toward the far side the bands of new are brighter and the stars show through. Sent low at 19:37 VM with the table and that picture.
+- Open in my words if 0f483905 is taken: no review tier, no sheet, G17 not run on it, the retreat not at final; the stars behind the near half's dense bands stay dimmed (about 2600 to 3500 px darker than main by more than 8 at draft through the rise); the air's thin night limb line still crosses the near arc; B (the block at 4984) not built.
