@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T13:23:48.787Z",
- "head": "d568386095021c5104cffb0ab83147ac64a0e0fb",
- "note": "mercury round 34: the leave at 1059 cured (plate kept and smeared, no ladder at review); next the star mask",
+ "pushed": "2026-11-22T13:45:28.604Z",
+ "head": "3fb355a0ef415f72c62415cf5d0d2c63a0a05b9f",
+ "note": "13:45 UTC star mask and the ring at the limb, tree 3fb355a plus uncommitted, main 84b0ea4",
  "looks": [
+  {
+   "time": "2026-11-22T13:45:28.040Z",
+   "file": "20261122134528040-note-s3-native.jpg",
+   "source": "../../../../tmp/s3-native.jpg",
+   "kind": "note",
+   "label": "13:44 UTC, working tree on 3fb355a (merge of main 84b0ea4) plus the Sun agent's 4f72047, drafts 490 495 495 500 at twice size: top the star mask alone, bottom with the mask's inside law carried out to 1.06 radii so the leaving globe's edge is hidden as my plate takes over. Stars no longer show through corona, loops or disc",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T13:45:27.287Z",
+   "file": "20261122134527287-note-sc-native.jpg",
+   "source": "../../../../tmp/sc-native.jpg",
+   "kind": "note",
+   "label": "13:40 UTC, diagnosis, not a build: drafts 495 (left) and 490 with the Sun agent's branch 4f72047 laid over main 84b0ea4 and my plate replaced by a green line on its painted limb. The Sun globe's edge sits 10 to 17 px outside my limb on the left: that annulus is the ring of critic D at 495",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T13:23:09.369Z",
    "file": "20261122132309369-note-lv2-sheet.jpg",
@@ -72,22 +88,6 @@
    "source": "../../../../tmp/m4d-sheet.jpg",
    "kind": "note",
    "label": "sun.travel drafts, tree 2c85dde plus the star mask patch (not in the cut): 486 as main | 486 with the mask on my plate: the Sun's globe under it is taken away | 490 as main",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:11.625Z",
-   "file": "20261122123911625-note-c33d-leave.jpg",
-   "source": "../../../../tmp/c33d-leave.jpg",
-   "kind": "note",
-   "label": "mercury.travel drafts 1056 1058 1059 1062 1066 1072 on 2c85dde (main da02e63): the travel cure is out, the Sun plate goes with the globe at 1059 as on main, 1072 is sky only",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:10.457Z",
-   "file": "20261122123910457-note-c33-1016.jpg",
-   "source": "../../../../tmp/c33-1016.jpg",
-   "kind": "note",
-   "label": "frame 1016 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
    "stop": "mercury"
   },
   {
