@@ -1,72 +1,78 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T10:07:33.156Z",
- "head": "bec8e3f0e06d940a096be440a14df981702cd875",
- "note": "leave DONE sent: agent/sun-leave bec8e3f on main 8f13066, finals 482 490 495; final 470 byte check running",
+ "pushed": "2026-11-22T10:21:19.645Z",
+ "head": "835f43e43a4b550bc22983505599f4366c17c1d5",
+ "note": "polish branch agent/sun 835f43e holds main 8f13066 plus hook2 and the leave; draft proofs of the merge",
  "looks": [
   {
-   "time": "2026-11-22T10:07:32.254Z",
-   "file": "20261122100732254-note-leave-crops-490-482.jpg",
-   "source": "out/work/sun/lv/leave-crops-490-482.jpg",
+   "time": "2026-11-22T10:21:19.106Z",
+   "file": "20261122102119106-note-leave-main-vs-polish.jpg",
+   "source": "out/work/sun/m21/leave-main-vs-polish.jpg",
    "kind": "note",
-   "label": "leave native crops at 490 and 482: main 8f13066 draft against agent/sun-leave bec8e3f final",
+   "label": "Leave 476 to 495: leave branch, polish branch with it merged, difference times 8 (drafts)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:07:31.291Z",
-   "file": "20261122100731291-note-leave-finals.jpg",
-   "source": "out/work/sun/lv/leave-finals.jpg",
+   "time": "2026-11-22T10:21:18.607Z",
+   "file": "20261122102118607-note-f53-right-foot.jpg",
+   "source": "out/work/sun/m21/f53-right-foot.jpg",
    "kind": "note",
-   "label": "leave finals 482, 490, 495 of agent/sun-leave bec8e3f beside main 8f13066 draft 495",
+   "label": "Frame 53 right foot, native: main's assets, polish branch (draft)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:55.449Z",
-   "file": "20261122100355449-note-strip-a2.jpg",
-   "source": "out/work/sun/lv/strip-a2.jpg",
+   "time": "2026-11-22T10:21:18.100Z",
+   "file": "20261122102118100-note-f53-left-foot.jpg",
+   "source": "out/work/sun/m21/f53-left-foot.jpg",
    "kind": "note",
-   "label": "leave, FAILED take 2 (globe fitted to the stated limb, second limb at the lower left), draft, main 8f13066",
+   "label": "Frame 53 left foot, native: main's assets, polish branch (draft)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:54.735Z",
-   "file": "20261122100354735-note-leave-plate-outline-495.jpg",
-   "source": "out/work/sun/lv/leave-plate-outline-495.jpg",
+   "time": "2026-11-22T10:21:17.488Z",
+   "file": "20261122102117488-note-hook-strip-main-vs-polish.jpg",
+   "source": "out/work/sun/m21/hook-strip-main-vs-polish.jpg",
    "kind": "note",
-   "label": "leave f495, Mercury's plate alone (main 8f13066): limb stated by sunplate.json against limb fitted to the painted disc",
+   "label": "Hook on main's assets (rows 1, 3) against the hook merged into the polish branch (rows 2, 4), drafts at 400 px",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:53.830Z",
-   "file": "20261122100353830-note-leave-crops-495-disc-streak.jpg",
-   "source": "out/work/sun/lv/leave-crops-495-disc-streak.jpg",
+   "time": "2026-11-22T09:21:42.063Z",
+   "file": "20261122092142063-note-a4-f60-arch-native.jpg",
+   "source": "out/work/sun/h2/a4-f60-arch-native.jpg",
    "kind": "note",
-   "label": "leave f495 native crops, photosphere and the streak (Mercury's layer): main 8f13066 draft against agent/sun-leave bec8e3f final",
+   "label": "Sun hook second take, take 4, frame 60 arch at native size, draft, main 8f13066, agent/sun-hook2 b9fb48c",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:52.893Z",
-   "file": "20261122100352893-note-leave-crops-495-limbs.jpg",
-   "source": "out/work/sun/lv/leave-crops-495-limbs.jpg",
+   "time": "2026-11-22T09:21:40.720Z",
+   "file": "20261122092140720-note-strip-a3-after.jpg",
+   "source": "out/work/sun/h2/strip-a3-after.jpg",
    "kind": "note",
-   "label": "leave f495 native crops, left limb and upper right limb: main 8f13066 draft against agent/sun-leave bec8e3f final",
+   "label": "Sun hook second take, take 3, draft strip of 0 to 60 at 400 px, main 8f13066, agent/sun-hook2 cc8d869",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:52.024Z",
-   "file": "20261122100352024-note-leave-strip-after.jpg",
-   "source": "out/work/sun/lv/leave-strip-after.jpg",
+   "time": "2026-11-22T08:38:24.010Z",
+   "file": "20261122083824010-note-c1-f90-right-foot-zoom3.jpg",
+   "source": "out/work/sun/feet/c1-f90-right-foot-zoom3.jpg",
    "kind": "note",
-   "label": "leave, AFTER take 3: agent/sun-leave bec8e3f on main 8f13066, draft strip 474 to 502 every second frame",
+   "label": "sun polish item 7a trial 1, right loop foot at frame 90, draft, 3 times zoom: approved, before, after, main 07aabf5, agent/sun 8eaae3b plus uncommitted work",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T10:03:50.867Z",
-   "file": "20261122100350867-note-leave-strip-before.jpg",
-   "source": "out/work/sun/lv/leave-strip-before.jpg",
-   "kind": "note",
-   "label": "leave, BEFORE: main 8f13066 draft strip 474 to 502 every second frame",
-   "stop": "sun"
+   "time": "2026-11-22T08:30:16.544Z",
+   "file": "20261122083016544-frame-base90-still.jpg",
+   "source": "out/work/sun/feet/c1/base90-still.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
   }
  ]
 }
