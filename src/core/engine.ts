@@ -25,6 +25,7 @@ import { setsForFrame } from '../director/timeline'
 export interface Director {
   shotAt(frame: number, time: number): Shot
   glareOf?(shot: Shot): THREE.Vector3 | null
+  bandOf?(shot: Shot): number
   readonly sky?: SkyAims
 }
 
@@ -324,6 +325,7 @@ export class Engine {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
       const glare = this.director?.glareOf?.(mid)
+      this.sky.setBandGain(this.director?.bandOf?.(mid) ?? 1)
       this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, glare ? { ...shot.sun, dir: glare } : shot.sun, shot.post.vignette, width / height, open)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()

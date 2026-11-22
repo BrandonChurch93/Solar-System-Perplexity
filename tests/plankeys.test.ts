@@ -18,6 +18,7 @@ const bare = (): MoveParams => {
   const p: MoveParams = { ...params, light: { ...params.light } }
   delete p.skyTurnEase
   delete p.light.glareCarry
+  delete p.light.bandLow
   return p
 }
 const base = new StopPlan('mars', fit as Fit, bare())
@@ -186,6 +187,54 @@ describe('Sun glare carried through the swap', () => {
       const past = c + sign * (span + 1 / config.fps)
       expect(film.glareOf(film.shotAt(Math.floor(past * config.fps), past))).toBeNull()
     }
+  })
+})
+
+describe('band only factor of the sky', () => {
+  it('is 1 in the base plan on every frame of the stop', () => {
+    for (const kind of ['hold', 'dive', 'terrain', 'rise']) {
+      const s = seg('mars', kind)
+      for (let f = s.firstFrame; f < s.endFrame; f++) {
+        expect(base.skyBand(s, f / config.fps)).toBe(1)
+        expect(plain.bandOf(at(plain, f))).toBe(1)
+      }
+    }
+    const t = seg('mars', 'travel')
+    expect(plain.bandOf(at(plain, t.firstFrame + 5))).toBe(1)
+  })
+  it('rises with altitude from the given level to 1 on the orbit side of a dive or rise, and changes nothing else of a shot', () => {
+    const p = bare()
+    const rise = seg('mars', 'rise')
+    const far = Math.abs(base.rise(rise.end - 1e-6).pose.position.length() - 1)
+    p.light.bandLow = [0, far, 0.4]
+    const low = new StopPlan('mars', fit as Fit, p)
+    const film = withMars(low)
+    for (const kind of moves) {
+      const s = seg('mars', kind)
+      const c = low.coverCenter(s)
+      let last = kind === 'rise' ? 0 : 2
+      let least = 2
+      for (let f = s.firstFrame; f < s.endFrame; f++) {
+        const shot = at(film, f)
+        expect(shot).toEqual(at(plain, f))
+        const band = film.bandOf(shot)
+        const orbit = kind === 'rise' ? f / config.fps >= c : f / config.fps < c
+        if (!orbit) expect(band).toBe(1)
+        else {
+          expect(band).toBeGreaterThanOrEqual(0.4)
+          expect(band).toBeLessThanOrEqual(1)
+          if (kind === 'rise') expect(band).toBeGreaterThanOrEqual(last - 1e-9)
+          else expect(band).toBeLessThanOrEqual(last + 1e-9)
+          last = band
+          least = Math.min(least, band)
+        }
+      }
+      expect(least).toBeLessThan(0.7)
+    }
+    expect(low.skyBand(rise, rise.end - 1e-6)).toBeCloseTo(1, 9)
+    const hold = seg('mars', 'hold')
+    expect(film.bandOf(at(film, hold.firstFrame + 9))).toBe(1)
+    expect(film.bandOf(at(film, seg('mars', 'terrain').firstFrame + 9))).toBe(1)
   })
 })
 

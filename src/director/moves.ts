@@ -26,7 +26,7 @@ export interface MoveParams {
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number } }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number }; bandLow?: [number, number, number] }
   cover: [number, number, number]
   coverLow?: [number, number, number]
   coverTerrain?: [number, number, number]
@@ -275,6 +275,14 @@ export class StopPlan {
     if (!span || !coverWindow(seg)) return 0
     const since = seg.kind === 'dive' ? this.coverCenter(seg) - time : time - this.coverCenter(seg)
     return 1 - smoother(ramp(0, span, since))
+  }
+
+  skyBand(seg: Segment, time: number): number {
+    const low = this.p.light.bandLow
+    if (!low || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 1
+    const r = seg.kind === 'dive' ? this.dive(time) : this.rise(time)
+    if (r.view !== 'orbit') return 1
+    return mix(low[2], 1, smooth(ramp(low[0], low[1], Math.abs(r.pose.position.length() - 1))))
   }
 
   coverAmount(seg: Segment, time: number): number {

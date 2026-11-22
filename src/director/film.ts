@@ -468,6 +468,11 @@ export class FilmDirector implements Director {
     return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
   }
 
+  bandOf(shot: Shot): number {
+    const p = this.plans[config.stopIds.indexOf(shot.segment.stop)]
+    return p && shot.sets[0]?.view === 'orbit' ? p.skyBand(shot.segment, shot.time) : 1
+  }
+
   shotAt(frame: number, time: number): Shot {
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
