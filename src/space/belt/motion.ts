@@ -3,11 +3,12 @@ import { config, type Segment } from '../../config'
 import type { Shot } from '../../core/types'
 import { shutterMid } from '../../core/sampler'
 import { Flow, FLOW } from '../travel/flow'
+import type { RockLook } from './rock'
 import spec from './belt.json'
 
 export interface BeltDirector { shotAt(frame: number, time: number): Shot }
 
-export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; flow: number; approach: number; velocity: number[]; ease: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number }
+export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; flow: number; approach: number; velocity: number[]; ease: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number; follow?: number; look?: RockLook }
 
 export interface RockPose { position: THREE.Vector3; quaternion: THREE.Quaternion }
 
@@ -42,6 +43,7 @@ export class BeltMotion {
   private readonly spinQ = new THREE.Quaternion()
   private readonly pan = new THREE.Quaternion()
   private readonly unit = new THREE.Quaternion()
+  private readonly lead = new THREE.Quaternion()
   private readonly a = new THREE.Vector3()
   private readonly b = new THREE.Vector3()
   private readonly c = new THREE.Vector3()
@@ -79,10 +81,12 @@ export class BeltMotion {
     const r = this.rocks[index]!
     const dt = shot.time - this.times[index]!
     this.pan.copy(shot.camera.quaternion).multiply(this.from[index]!)
+    if (r.follow) this.lead.identity().slerp(this.pan, r.follow)
     this.pan.copy(this.unit.identity().slerp(this.pan, r.hold))
     out.position.copy(this.base[index]!).addScaledVector(this.own[index]!, dt * (1 + r.ease * dt * dt)).applyQuaternion(this.pan).multiplyScalar(Math.max(1 + (r.approach * dt) / r.distance, 0.05))
     out.position.addScaledVector(this.drift(shot.time, this.c).sub(this.flow0[index]!), -r.flow)
     this.spinQ.setFromAxisAngle(this.axis[index]!, r.spin * RAD * dt)
     out.quaternion.copy(this.turn[index]!).multiply(this.spinQ)
+    if (r.follow) out.quaternion.premultiply(this.lead)
   }
 }

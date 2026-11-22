@@ -28,6 +28,8 @@ uniform int uDiag;
 uniform float uGrad;
 uniform float uGain;
 uniform float uShow;
+uniform vec4 uBurn;
+uniform vec3 uHot;
 uniform float uTime;
 uniform vec3 uMove;
 uniform float uVignette;
@@ -58,6 +60,11 @@ void main() {
   float s = f.a * 6.283185307179586;
   float run = 0.55 * (sin(s * 9.0 - uTime * 1.7) - sin(s * 9.0)) + 0.3 * (sin(s * 23.0 - uTime * 3.1) - sin(s * 23.0)) + 0.25 * (sin(s * 14.0 + uTime * 1.1) - sin(s * 14.0));
   c.rgb *= exp2(uMove.z * f.b * run);
+  for (int k = 0; k < (uBurn.x > 0.0 ? 1 : 0); k++) {
+    vec4 w = textureGrad(uMap, vUv, dx * uBurn.y, dy * uBurn.y);
+    float l = dot(inverseFilmic(w.rgb), vec3(0.2126, 0.7152, 0.0722));
+    c = mix(c, vec4(uHot * l * uBurn.z, c.a * uBurn.w), uBurn.x);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = c.rgb * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, c.a) * uShow;
@@ -74,7 +81,7 @@ export class Prominences {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: map }, uFlow: { value: flow }, uDiag: diagUniform, uGrad: gradUniform,
-        uGain: { value: 1 }, uShow: { value: 1 }, uTime: { value: 0 }, uMove: { value: new THREE.Vector3(look.speed, look.period, look.surge) },
+        uGain: { value: 1 }, uShow: { value: 1 }, uBurn: { value: new THREE.Vector4(0, 1, 1, 0) }, uHot: { value: new THREE.Vector3(1, 1, 1) }, uTime: { value: 0 }, uMove: { value: new THREE.Vector3(look.speed, look.period, look.surge) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       side: THREE.DoubleSide,
@@ -93,8 +100,11 @@ export class Prominences {
     this.mesh.renderOrder = 7
   }
 
-  update(time: number, spin: number, gain: number, vignette: number, aspect: number, shown = 1): void {
+  update(time: number, spin: number, gain: number, vignette: number, aspect: number, shown = 1, burn?: THREE.Vector4, hot?: THREE.Vector3): void {
     const u = this.material.uniforms
+    if (burn) (u.uBurn!.value as THREE.Vector4).copy(burn)
+    else (u.uBurn!.value as THREE.Vector4).set(0, 1, 1, 0)
+    if (hot) (u.uHot!.value as THREE.Vector3).copy(hot)
     u.uTime!.value = time
     u.uGain!.value = gain
     u.uShow!.value = shown
