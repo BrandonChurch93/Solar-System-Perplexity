@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T18:29:49.722Z",
- "head": "cb2b149d43e54461a6488ef23f20fb2a73e2e209",
- "note": "round 35 is cut without a Venus change; finishing the measurements of the night limb test, which stays out of the branch",
+ "pushed": "2026-11-22T18:54:46.095Z",
+ "head": "533ba8cf118322b56431c5fbfb36348519947466",
+ "note": "measuring the night limb test for the record; Venus in the film is round 34's folders",
  "looks": [
+  {
+   "time": "2026-11-22T18:54:45.454Z",
+   "file": "20261122185445454-note-d2-switch.jpg",
+   "source": "../view/d2-switch.jpg",
+   "kind": "note",
+   "label": "TEST, NOT in the branch and not in round 35: rise 1563 to 1584 at draft, main's Venus folders beside the rise only night limb (dusk); rendered on main 9d20d3d, which the tree holds",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T18:29:48.503Z",
    "file": "20261122182948503-note-d1-rise.jpg",
@@ -154,14 +162,6 @@
    "source": "../view/v9-dive.jpg",
    "kind": "note",
    "label": "venus dive out 1316 to 1326, draft: round 34 state (left of each pair) beside the gate cure 90cc5b2 in proof (right); tree holds main 6460b4a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T16:29:37.541Z",
-   "file": "20261122162937541-note-g5-rise.jpg",
-   "source": "../view/g5-rise.jpg",
-   "kind": "note",
-   "label": "venus rise in 1549 to 1558, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
    "stop": "venus"
   },
   {
