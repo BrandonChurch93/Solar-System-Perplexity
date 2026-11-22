@@ -1,9 +1,24 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T17:38:12.873Z",
- "head": "10b2c2da36ff9b520f050f9b964f7b58a86329de",
- "note": "round 34 words: causes measured for the CUT35 message (jupiter leave, venus turn, ending turn)",
+ "pushed": "2026-11-22T17:43:01.199Z",
+ "head": "df4337f19839e0de6d439b569d77650794e37eef",
+ "note": "round 34 words: the band rows of venus.travel and ending.retreat, every second frame",
  "looks": [
+  {
+   "time": "2026-11-22T17:42:35.557Z",
+   "file": "20261122174235557-note-r34-end-band.jpg",
+   "source": "../../../../tmp/v/r34-end-band.jpg",
+   "kind": "note",
+   "label": "round 34 main, draft, ending.retreat 5106 to 5124 every second: the band slides in over the top with the camera turn"
+  },
+  {
+   "time": "2026-11-22T17:42:33.276Z",
+   "file": "20261122174233276-note-r34-venus-band.jpg",
+   "source": "../../../../tmp/v/r34-venus-band.jpg",
+   "kind": "note",
+   "label": "round 34 main, draft, venus.travel 1650 to 1668 every second: the band slides in from the upper right with the camera turn, Earth pinned",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T17:38:08.009Z",
    "file": "20261122173808009-note-r34-jup-leave.jpg",
@@ -47,21 +62,6 @@
    "source": "../../../../tmp/v/w88-a.jpg",
    "kind": "note",
    "label": "sun.travel on main, review 474 476 478 480: the wash to white (item 88), cause is the Sun's leave look"
-  },
-  {
-   "time": "2026-11-22T15:51:57.352Z",
-   "file": "20261122155157352-note-c34-mercury-ab2.jpg",
-   "source": "../../../../tmp/v/c34-mercury-ab2.jpg",
-   "kind": "note",
-   "label": "mercury.travel review: main (top) against the head with the Sun fix (bottom), 1066 1072 1080",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:51:56.692Z",
-   "file": "20261122155156692-note-w-sw.jpg",
-   "source": "../../../../tmp/v/w-sw.jpg",
-   "kind": "note",
-   "label": "branch plus Neptune swing 0, review every second frame 4492 to 4512: Triton leaves over the top at 4496 and is back at 4508"
   }
  ]
 }
