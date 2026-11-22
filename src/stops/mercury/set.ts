@@ -65,7 +65,7 @@ export const createSet: SetFactory = async (ctx) => {
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
-  const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform)
+  const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
   const sunAim = new THREE.Quaternion()
   const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
@@ -240,8 +240,10 @@ export const createSet: SetFactory = async (ctx) => {
       const shown = kind === 'travel' && mine ? 1 - travel : travel
       const tau = state.time - plan.holdMid
       const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink)
-      const whole = kind === 'travel' && !mine ? 1 - (shot.skyPatch ?? 1) : 0
+      const arriving = kind === 'travel' && !mine
+      const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
+      const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
       let limbLeft = 1
       let limbRight = 1
       if (whole > 0) {
@@ -269,7 +271,7 @@ export const createSet: SetFactory = async (ctx) => {
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
       const ghost = shown * clear * state.weight * (1 + 2 * (breath - 1)) * ghosts
-      lens.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect)
+      lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
     dispose: () => {
