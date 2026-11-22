@@ -566,3 +566,7 @@ Working notes and proof are in `assets-src/shared/BATCH16.md` on the branch `age
 ## Task 7: engine batch 18
 
 Working notes and proof are in `assets-src/shared/BATCH18.md` on the branch `agent/engine-batch18` (read that file after a compaction).
+
+## Engine batch 19
+
+Frames that do not repeat (cause, audit, fixes, check). Working notes and results are in `assets-src/shared/BATCH19.md` on the branch `agent/engine-batch19` (read that file after a compaction).

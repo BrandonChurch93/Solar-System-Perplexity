@@ -20,15 +20,19 @@ bool quadFlat(vec2 a, vec2 b, float cap) {
   float m = max(dot(a, a), dot(b, b));
   return m < cap && m < 1.4 * abs(a.x * b.y - a.y * b.x);
 }
-vec4 gradTexel(sampler2D tex, vec2 uv, vec2 dx, vec2 dy) {
+vec2 texelPlan(sampler2D tex, vec2 uv, vec2 dx, vec2 dy) {
   vec2 size = vec2(textureSize(tex, 0));
   vec2 ix = dFdx(uv);
   vec2 iy = dFdy(uv);
   bool mag = quadFlat(dx * size, dy * size, 0.9) && quadFlat(ix * size, iy * size, 1e8);
   bool plain = uImplicit > 0.5 && (mag || (dx == ix && dy == iy));
+  return vec2(plain ? 1.0 : 0.0, mag ? -15.0 : 0.0);
+}
+vec4 gradTexel(sampler2D tex, vec2 uv, vec2 dx, vec2 dy) {
+  vec2 plan = texelPlan(tex, uv, dx, dy);
   vec4 r = vec4(0.0);
-  for (int k = 0; k < (plain ? 1 : 0); k++) r = texture(tex, uv, mag ? -15.0 : 0.0);
-  for (int k = 0; k < (plain ? 0 : 1); k++) r = textureGrad(tex, uv, dx, dy);
+  for (int k = 0; k < (plan.x > 0.5 ? 1 : 0); k++) r = texture(tex, uv, plan.y);
+  for (int k = 0; k < (plan.x > 0.5 ? 0 : 1); k++) r = textureGrad(tex, uv, dx, dy);
   return r;
 }
 #endif
