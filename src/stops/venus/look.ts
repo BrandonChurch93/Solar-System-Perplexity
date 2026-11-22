@@ -81,7 +81,7 @@ export const veil = {
   file: veilJson.file,
   pad: veilJson.pad,
   mean: veilJson.mean as [number, number, number],
-  sheets: { lowest: 1e-5, step: 2.5, size: 3, near: [0.3, 1.1, 3] as [number, number, number], gamma: 1.6, top: veilJson.top, holes: [1.2, 0.5] as [number, number], deep: 0.85, edge: [0.65, 0.25] as [number, number], thin: 0.9, ramp: 1, fan: [12, 1.6, 2.7, 5] as [number, number, number, number], fray: [6, 0.6, 0.25, 2] as [number, number, number, number], mist: [1, 0.85, 1, 16, 1, 0.7] as [number, number, number, number, number, number], wait: [0.5, 0.95] as [number, number], wave: 0.2, haze: 0.8, sunward: [3, 4] as [number, number], shift: [0.37, 0.61] as [number, number], dense: 0.8, ceiling: [0.05, 0.1] as [number, number], solid: [0.55, 1] as [number, number] },
+  sheets: { lowest: 1e-5, step: 2.5, size: 3, near: [0.3, 1.1, 3] as [number, number, number], gamma: 1.6, top: veilJson.top, holes: [1.2, 0.5] as [number, number], deep: 0.85, edge: [0.65, 0.25] as [number, number], thin: 0.9, ramp: 1, fan: [12, 1.6, 2.7, 14] as [number, number, number, number], fray: [2.5, 0.4, 0.2, 2] as [number, number, number, number], mist: [1, 0.85, 1, 16, 1, 0.7] as [number, number, number, number, number, number], wait: [0.5, 0.95] as [number, number], wave: 0.2, haze: 0.8, sunward: [3, 4] as [number, number], shift: [0.37, 0.61] as [number, number], dense: 0.8, ceiling: [0.05, 0.1] as [number, number], solid: [0.55, 1] as [number, number] },
   fog: [0.12, 2.6, 4] as [number, number, number],
   fogOrbit: [0.8, 0.4, 5] as [number, number, number],
   light: [-0.94, 0.34] as [number, number],
