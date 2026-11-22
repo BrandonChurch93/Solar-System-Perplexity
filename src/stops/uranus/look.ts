@@ -85,6 +85,8 @@ export const show = { rings: true, moons: true, deck: true, globe: true, sky: tr
 export const halo = {
   size: [64, 64] as [number, number],
   range: [1.0, 1.3] as [number, number],
+  rim: [0.75, 0.0045, 0.15, 3] as [number, number, number, number],
+  rimSun: [-0.25, 0] as [number, number],
 }
 
 type Rgb = [number, number, number]

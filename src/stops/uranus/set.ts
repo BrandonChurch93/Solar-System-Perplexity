@@ -49,7 +49,7 @@ export const createSet: SetFactory = async (ctx) => {
   const face = { map: await ctx.texture(base + 'face.jpg', { srgb: false, anisotropy: 16 }), ...look.face }
   const globe = new Globe({ map, cloud, light, shade, patches, face, ...look.globe })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
-  const halo = new Halo(haloLut, look.halo.size, look.halo.range)
+  const halo = new Halo(haloLut, look.halo.size, look.halo.range, { map, light, shade, lightSize: look.globe.lightSize, bandRate: look.globe.bandRate, turn: globe.mesh.quaternion, rim: look.halo.rim, rimSun: look.halo.rimSun })
   const shape = new THREE.Group()
   shape.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), new THREE.Vector3().fromArray(look.shape.axis).normalize())
   shape.scale.set(look.shape.polar, look.shape.equator, look.shape.equator)
@@ -188,7 +188,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
       globe.face(left ? look.face.weight : 0)
-      halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near))
+      halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near), plan.spin(state.time), elapsed)
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
       rings.update(sun, gain * state.weight * settling)
       const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
