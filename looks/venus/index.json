@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T12:06:13.547Z",
- "head": "c9d1af77355ed9d86a03a881c0b4a40641f71719",
- "note": "veil take F5 committed d9b5c7c and proved on main d5b851f (finals same bytes, chain green); terrain, dive and rise review sheets rendering",
+ "pushed": "2026-11-22T12:21:31.503Z",
+ "head": "39c8280ff993b253de0c00c2516033a86ed5e25e",
+ "note": "whole dive, rise and terrain review sheets on engine batches 21 and 22 with veil take F5; CUT33 proof running (main's own judged finals for the pixel comparison)",
  "looks": [
+  {
+   "time": "2026-11-22T12:21:30.779Z",
+   "file": "20261122122130779-note-s28-terrain.jpg",
+   "source": "../view/s28-terrain.png",
+   "kind": "note",
+   "label": "terrain view 1350 to 1529, review tier (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22): every pixel the same as on batch 19",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T12:21:30.097Z",
+   "file": "20261122122130097-note-s28-rise.jpg",
+   "source": "../view/s28-rise.png",
+   "kind": "note",
+   "label": "whole rise 1530 to 1604, review tier, veil take F5 (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22); the sky right of the globe is near black at 1570 and 1577 and the flight stars come up by 1584",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T12:21:29.427Z",
+   "file": "20261122122129427-note-s28-dive.jpg",
+   "source": "../view/s28-dive.png",
+   "kind": "note",
+   "label": "whole dive 1260 to 1349, review tier, veil take F5 (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T11:49:52.357Z",
    "file": "20261122114952357-note-p5-1566-a.jpg",
@@ -178,30 +202,6 @@
    "source": "../view/s23-rise.png",
    "kind": "note",
    "label": "venus.rise full sheet 1530 to 1604 review tier (branch 08b2e2c, main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:01:48.389Z",
-   "file": "20261122100148389-note-g4u.jpg",
-   "source": "../view/g4u.jpg",
-   "kind": "note",
-   "label": "rise entry 1546 to 1556 review tier (branch 052ba8b, main c479536, engine batch 20; the same bytes as on batch 19): the mist thickens evenly over a terrain that stays whole",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:01:47.736Z",
-   "file": "20261122100147736-note-g4t.jpg",
-   "source": "../view/g4t.jpg",
-   "kind": "note",
-   "label": "dive tail 1319 to 1328 review tier (branch 052ba8b, main c479536, engine batch 20; the same bytes as on batch 19): the mist thins evenly, no pale column",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T09:56:46.146Z",
-   "file": "20261122095646146-note-c22-dc.jpg",
-   "source": "../view/c22-dc.png",
-   "kind": "note",
-   "label": "dive cover 1309 to 1320 review tier on engine batch 20 (branch 052ba8b, rendered on main 8f13066): every cell the same bytes as on batch 19; 1317 to 1320 even mist, no column",
    "stop": "venus"
   }
  ]
