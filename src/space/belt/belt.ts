@@ -4,7 +4,7 @@ import { Pass, floatTarget } from '../../core/pass'
 import { hash01 } from '../../core/random'
 import type { RenderView, Shot } from '../../core/types'
 import { isRaw } from '../../diagnostics/diag'
-import { BeltMotion, beltSegment, beltSpec, type BeltDirector, type RockPose } from './motion'
+import { BeltMotion, beltSegment, beltSpec, type BeltDirector, type RockPose, type RockSpec } from './motion'
 import { rockMaterial } from './rock'
 import { BeltStore, rockGeometry } from './store'
 
@@ -143,7 +143,7 @@ export class Belt {
         for (const r of beltSpec.rocks) {
           const asset = store.rocks.get(r.asset)
           if (!asset) throw new Error('belt rock asset missing: ' + r.asset)
-          const material = rockMaterial(asset, store.detail!)
+          const material = rockMaterial(asset, store.detail!, (r as RockSpec).look)
           const mesh = new THREE.Mesh(rockGeometry(r.mesh, asset.radii, asset.aux), material)
           mesh.frustumCulled = false
           mesh.visible = false
