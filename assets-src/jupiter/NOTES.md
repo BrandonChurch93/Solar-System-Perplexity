@@ -1127,3 +1127,14 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - `git fetch` at 11:29: origin/main 6e46f06 (status 94, round 32 machine checks green; `kit/PROGRESS.md` and status pictures only, `git diff --name-only 3a09527..origin/main` lists nothing under src, public, config, tools). Merged as `04c26ec`, pushed. The code main my tree holds is still 3a09527 (engine hash be043ade04a7ab6e); the running chain is not touched.
 - Chain R: full measure running since 11:18:32 (about 30 min), then gates, repeat, build, vitest, du, "end R" about 12:00; then the trial's "before" (drafts 2970 to 3023, dive review sheet), "end Q" about 13:00.
 - READY message is drafted in my head as the summary lists it: three cover fixes, byte statement, which main each sheet was rendered on, measures, weak points, the trial next.
+
+### 11:40 to 11:57 UTC: chain R ended green on the tree that holds main 3a09527 (engine hash be043ade04a7ab6e, stop hash 02fedb3bb7c19edb)
+
+- Full measure (every frame, 1845 s, `out/work/measure/jupiter-b22-full.json`):
+  - G13 PASS: 0 of 463 frames over 0.02 soft; worst 3253 0.95 percent, 3254 0.78 percent, 3261 0.71 percent (the last rise frames before the cover). Dive 2970 to 3014: 0 soft pixels, 2.0 to 1.68 texels a pixel.
+  - G5 PASS: 2895 coverage 0.352, 2997 0.460, 3150 0.754, 3296 0.280; invalid 0.
+  - G17 PASS: 2895 median 1.039 p25 0.949 over 81 tiles; 3150 median 1.023 p25 0.963 over 80 tiles. The same numbers as a06d2ae.
+- Gates: G5, G13, G17 pass; G11 pass; G12 pass (2,424 tracked files, 1.85 GB); G15 pass, texture memory jupiter/full 852 MB, jupiter/web 237 MB.
+- Repeat (`out/work/repeat/jupiter-b22.json`): 2895, 2997, 3150, 3296, 3026, 3267, 3272, 3274, 3280, 3 fresh sessions, 2 runs each: one hash per frame, not repeatable: none (2895 4d858b36e4255db8, 2997 89bf9565675073b4, 3150 a0a02bf05239a412, 3296 4dc7f91d4b39996d).
+- Build green, vitest 83 of 83, disk full 46.8 MB, web 13.6 MB.
+- The chain now renders the trial's "before" on the READY head: drafts 2970 to 3023, then the dive review sheet (`kept/dive-sheet-b22.png`), "end Q" about 13:00. No edit under `src/` until then.
