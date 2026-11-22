@@ -540,7 +540,7 @@ export class FilmDirector implements Director {
         pose = inSet(s, local)
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
-        dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
+        dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * smoother(u))
       } else {
         pose = inSet(s, look(time))
         if (segment.kind === 'fade') post.fade = frame >= config.frameCount - 1 ? 0 : 1 - smooth(ramp(segment.start, segment.end - 2 / config.fps, time))
