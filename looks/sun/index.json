@@ -1,9 +1,49 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T16:20:53.667Z",
+ "pushed": "2026-11-22T16:43:48.254Z",
  "head": "bd12ce2ac64afedcd58c82c67a62c610784ff783",
- "note": "corner for CUT35 on drafts: W-1 cells on the approved lanes with own lane and fibre layers, three tone passes; proof chain next",
+ "note": "corner for CUT35: highlights of the corner put back on the approved levels (corner curve), proof chain running since 16:43",
  "looks": [
+  {
+   "time": "2026-11-22T16:43:47.667Z",
+   "file": "20261122164347667-note-c15-rise-190-200-210-215-today-new.jpg",
+   "source": "out/work/sun/cn/c15-rise-190-200-210-215-today-new.jpg",
+   "kind": "note",
+   "label": "frames 190, 200, 210, 215 lower right, today left, new right (drafts, build T3), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:43:47.101Z",
+   "file": "20261122164347101-note-c14-rise-120-150-179-today-new.jpg",
+   "source": "out/work/sun/cn/c14-rise-120-150-179-today-new.jpg",
+   "kind": "note",
+   "label": "frames 120, 150, 179 lower right, today left, new right (drafts, build T3), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:43:46.523Z",
+   "file": "20261122164346523-note-d8-f90-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d8-f90-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 90 corner at 1 to 1, today over new (draft, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:43:45.894Z",
+   "file": "20261122164345894-note-d8-f60-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d8-f60-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 60 corner at 1 to 1, today over new (draft, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:43:45.263Z",
+   "file": "20261122164345263-note-d8-f0-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d8-f0-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 0 corner at 1 to 1, today over new (draft; corner highlights back on the approved levels, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T16:20:53.118Z",
    "file": "20261122162053118-note-c12-f90-approved-r24-new.jpg",
@@ -18,46 +58,6 @@
    "source": "out/work/sun/cn/d4-f90-corner-1to1-today-over-new.jpg",
    "kind": "note",
    "label": "frame 90 corner at 1 to 1, today over new (draft, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:20:51.918Z",
-   "file": "20261122162051918-note-d4-f60-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d4-f60-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 60 corner at 1 to 1, today over new (draft, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:20:51.353Z",
-   "file": "20261122162051353-note-d4-f0-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d4-f0-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 0 corner at 1 to 1, today over new (draft, W-1 corner with its own layers, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:06:02.371Z",
-   "file": "20261122160602371-note-c6-takes-A6-A7-A8-corner.jpg",
-   "source": "out/work/sun/cn/c6-takes-A6-A7-A8-corner.jpg",
-   "kind": "note",
-   "label": "sun apron takes in the corner: A-6 (old), A-7 (lanes, soft), A-8 (fibres); agent/sun 3e2909ac, main 4f4c4f7e",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:06:01.727Z",
-   "file": "20261122160601727-note-c5-sketch-A7.jpg",
-   "source": "out/work/sun/cn/c5-sketch-A7.jpg",
-   "kind": "note",
-   "label": "sun apron input A-7: lane network of the approved cells drawn into the corner; agent/sun 3e2909ac, main 4f4c4f7e",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:06:01.120Z",
-   "file": "20261122160601120-note-c2-plate-corner-base-W3-W1.jpg",
-   "source": "out/work/sun/cn/c2-plate-corner-base-W3-W1.jpg",
-   "kind": "note",
-   "label": "sun terrain plate, lower right corner at half size: approved base, today's take W-3, take W-1 (approved layout); agent/sun 3e2909ac, main 4f4c4f7e",
    "stop": "sun"
   },
   {
