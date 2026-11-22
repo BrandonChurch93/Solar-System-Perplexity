@@ -310,3 +310,8 @@ Saved verbatim in `assets-src/belt/TASK4.md` (after a compaction read BRIEF.md, 
 - The night side (23, 24, 27 in sRGB) was judged against the dense sky of 4e8aade. On the sparse, darker sky of batch 16 it may read as a grey fill; the knob is `light.fill`. The Sun rim past the terminator is faint; the dark limb has no bright line.
 - The clean limb needs a multisampled half float target. It works in this renderer (the pictures differ and are clean); not tried on another GPU.
 - Motes in front of the hero draw on its face. mid and near share asset b. The web set was not rendered. Belt test outside `tests/`.
+
+## Task 5, Nov 21 from about 23:55 UTC
+
+Saved verbatim in `assets-src/belt/TASK5.md` (after a compaction read BRIEF.md, TASK5.md, then this). First merge origin/agent/engine-batch16 (dba3ebc). Then: (1) near rock sharp with a firm edge or a clean long streak, never a soft blob, nothing showing through; (2) far1 and far2 at 2782 under 6 px of blur or a streak over 60 px; (3) hero at one even pace, say why it is sharp at 2782; (4) relief inside the hero's entry streak or a later entry; (5) night side judged on the sparse sky. Proof as in task 4 plus final 2782 with native crops and the review sheet as attachments. Only `src/space/belt` and `assets-src/belt`. DONE or PART at 01:15 UTC.
+
