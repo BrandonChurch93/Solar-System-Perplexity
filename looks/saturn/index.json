@@ -1,29 +1,61 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T07:16:19.803Z",
- "head": "1123929529deb208c50850560a39930904d21d69",
- "note": "e8e4984 on main 2621f00 (batch 19): compares at the final tier, gates green, byte check 3720 equal and 3465 one pixel by one level; the cure's pixel counts at the final tier rendering",
+ "pushed": "2026-11-22T07:49:31.549Z",
+ "head": "794daecbaa9b3989567d032cbabc0b6f7dddfa41",
+ "note": "POLISH READY a1b10aa on main 681d8da (batch 19): finals, measure, five review sheets beside the kept build, before and after per item",
  "looks": [
+  {
+   "time": "2026-11-22T07:49:30.975Z",
+   "file": "20261122074930975-note-rv-junction.jpg",
+   "source": "../../../../tmp/rv-junction.png",
+   "kind": "note",
+   "label": "Weak: limb handover at the review tier, 3810, 3817, 3823 at 2x, a1b10aa on main 681d8da. Pale step at 3817, smeared dark zone at 3823",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T07:46:27.658Z",
+   "file": "20261122074627658-note-item8-3866-limb.jpg",
+   "source": "out/work/saturn/item8-3866-limb.png",
+   "kind": "note",
+   "label": "Item 8, 3866 lit limb: the pixels that were not repeatable before the cure",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T07:46:27.125Z",
+   "file": "20261122074627125-note-item7-streak-3567.jpg",
+   "source": "out/work/saturn/item7-streak-3567.png",
+   "kind": "note",
+   "label": "Item 7 streak at 3567, kept build and e8e4984 on main 2621f00 (batch 19 7a880ac6): the hero's lens streak fades over the first 18 frames of the dive",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T07:46:26.581Z",
+   "file": "20261122074626581-note-titan-T5.jpg",
+   "source": "../../../../tmp/titan-T5.png",
+   "kind": "note",
+   "label": "Item 7 Titan after, e8e4984 on main 2621f00 (batch 19 7a880ac6): hero, 3465, 3866",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T07:45:40.384Z",
+   "file": "20261122074540384-frame-N-3744.jpg",
+   "source": "out/work/saturn/N-3744.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3744, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3744,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T07:11:47.000Z",
    "file": "20261122071147000-compare-compare-saturn-terrain-view.jpg",
    "source": "out/work/compare/compare-saturn-terrain-view.jpg",
    "kind": "compare",
    "label": "saturn.terrain: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:11:45.947Z",
-   "file": "20261122071145947-still-f03720-16x9-final-full.jpg",
-   "source": "out/work/stills/f03720-16x9-final-full.png",
-   "kind": "still",
-   "label": "saturn.terrain frame 3720, final tier",
    "stop": "saturn",
    "segment": "saturn.terrain",
    "frame": 3720,
@@ -59,51 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:08:59.297Z",
-   "file": "20261122070859297-note-item2-rise-kept-now.jpg",
-   "source": "out/work/saturn/polish/item2-rise-kept-now.png",
-   "kind": "note",
-   "label": "Item 2 rise 3810 to 3884 at the review tier: kept build (left), e8e4984 on main 2621f00 batch 19 (right, with the flight sky of batch 19 from the second third on)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T07:08:50.730Z",
-   "file": "20261122070850730-sheet-saturn.rise-16x9-review.jpg",
-   "source": "out/work/sheets/saturn.rise-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.rise, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "first": 3810,
-   "last": 3884,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:08:48.842Z",
-   "file": "20261122070848842-frame-f03884-review.jpg",
-   "source": "out/work/sheets/.frames-wbwtNI/f03884-review.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3884, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3884,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:42:49.598Z",
-   "file": "20261122064249598-note-item2-dive-kept-now.jpg",
-   "source": "out/work/saturn/polish/item2-dive-kept-now.png",
-   "kind": "note",
-   "label": "Item 2 dive 3540 to 3629 at the review tier: kept build (left), e8e4984 on main 2621f00 batch 19 (right)",
-   "stop": "saturn"
   }
  ]
 }
