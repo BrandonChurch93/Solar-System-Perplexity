@@ -1,9 +1,81 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T02:47:56.934Z",
- "head": "58c8cdfc4e26b0842e8b0eb521340214f97d3232",
- "note": "Mail 50: wrap repaint, hold refit, star cure, dim sky pass committed (58c8cdf on main 3d48581); review cover sheets and terrain sheet rendering",
+ "pushed": "2026-11-22T03:31:58.321Z",
+ "head": "47d7c6bcdcae197a73698b0a0cf10d22327a4c28",
+ "note": "Batch 18 merged (main 0622510), shader fix of mail 63, sky gain at the rise swap; review cover sheets, terrain sheet and measures running",
  "looks": [
+  {
+   "time": "2026-11-22T03:31:57.694Z",
+   "file": "20261122033157694-note-g1-top.jpg",
+   "source": "../view/g1-top.jpg",
+   "kind": "note",
+   "label": "Rise 1558 to 1563, sky crop, draft, branch 47d7c6b on main 0622510: with the sky gain the band no longer pops at 1560",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:57.161Z",
+   "file": "20261122033157161-note-g1.jpg",
+   "source": "../view/g1.jpg",
+   "kind": "note",
+   "label": "Rise 1556 to 1569, draft, branch 47d7c6b on main 0622510: sky gain 0.36 on the orbit side of the swap, easing to 1 by 1568",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:56.560Z",
+   "file": "20261122033156560-note-c16-dc.jpg",
+   "source": "../view/c16-dc.png",
+   "kind": "note",
+   "label": "Dive cover sheet 1309 to 1320, review tier, branch 58c8cdf on main 3d48581 (repainted wrap)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:55.967Z",
+   "file": "20261122033155967-note-c16-rc.jpg",
+   "source": "../view/c16-rc.png",
+   "kind": "note",
+   "label": "Rise cover sheet 1555 to 1566, review tier, branch 58c8cdf on main 3d48581: before the sky gain, the shared band pops at the swap 1560",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:55.435Z",
+   "file": "20261122033155435-note-f12-1586-pair.jpg",
+   "source": "../view/f12-1586-pair.jpg",
+   "kind": "note",
+   "label": "1586 final tier, same branch state on main 3d48581 (batch 17, left) and main 0622510 (batch 18, right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:54.845Z",
+   "file": "20261122033154845-note-f13-1586.jpg",
+   "source": "../view/f13-1586.jpg",
+   "kind": "note",
+   "label": "1586 final tier, branch 47d7c6b on main 0622510 (batch 18): sky lift of batch 18; 28 pixels by one level from the shader fix of mail 63",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:54.262Z",
+   "file": "20261122033154262-note-f13-1440.jpg",
+   "source": "../view/f13-1440.jpg",
+   "kind": "note",
+   "label": "1440 final tier, branch 47d7c6b on main 0622510 (batch 18): same bytes as on batch 17",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:53.652Z",
+   "file": "20261122033153652-note-f13-1287.jpg",
+   "source": "../view/f13-1287.jpg",
+   "kind": "note",
+   "label": "1287 final tier, branch 47d7c6b on main 0622510 (batch 18): repainted wrap; 18 pixels by one level from the shader fix of mail 63",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T03:31:53.036Z",
+   "file": "20261122033153036-note-f13-1185.jpg",
+   "source": "../view/f13-1185.jpg",
+   "kind": "note",
+   "label": "1185 final tier, branch 47d7c6b on main 0622510 (batch 18): same bytes as on batch 17",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T02:47:56.039Z",
    "file": "20261122024756039-note-s1-sky.jpg",
@@ -104,78 +176,6 @@
    "source": "../view/capfull-t.jpg",
    "kind": "note",
    "label": "Wrap repaint, canvas T (90 deg about lon -20, lat 0): the wrap (left) and the kept take locked to it (right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:51:51.354Z",
-   "file": "20261122015151354-note-sim1287b-crop.jpg",
-   "source": "../view/sim1287b-crop.jpg",
-   "kind": "note",
-   "label": "Wrap repaint, offline view of the night side at the pose of frame 1287, albedo only: the wrap before (left) and with the detail of patch A and three new canvases (right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:51:50.738Z",
-   "file": "20261122015150738-note-c15-rc.jpg",
-   "source": "../view/c15-rc.png",
-   "kind": "note",
-   "label": "Rise cover sheet at the review tier on the merged tree, frames 1555 to 1566, swap at 1560",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:51:50.122Z",
-   "file": "20261122015150122-note-c15-dc.jpg",
-   "source": "../view/c15-dc.png",
-   "kind": "note",
-   "label": "Dive cover sheet at the review tier on the merged tree (engine batch 16), frames 1309 to 1320, old wrap",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:36:25.269Z",
-   "file": "20261122013625269-note-look-seam.jpg",
-   "source": "../../../../tmp/look-seam.jpg",
-   "kind": "note",
-   "label": "Terrain star layer at the seam above the approved horizon, four times the level: before (warm band, dark wedge), after",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:36:24.397Z",
-   "file": "20261122013624397-note-look-wrap.jpg",
-   "source": "../../../../tmp/look-wrap.jpg",
-   "kind": "note",
-   "label": "Wrap repaint, map crop lon 35 to 66 lat 41 to 52 (night side at 1287): before, after (patch A's detail laid into the wrap, low frequencies locked)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:36:23.545Z",
-   "file": "20261122013623545-note-look-pop.jpg",
-   "source": "../../../../tmp/look-pop.jpg",
-   "kind": "note",
-   "label": "Rise 1558 to 1569 on the merged chain (batch 16), draft, top half at twice the level: the shared band comes in at 1560 at 1.9 to 2.6 times the terrain sky",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:51:45.148Z",
-   "file": "20261122005145148-note-c14-rc.jpg",
-   "source": "../view/c14-rc.png",
-   "kind": "note",
-   "label": "P6 rise cover sheet 1555 to 1566, review tier, window 1.0 s, code 0b35992 on engine 837adbb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:51:44.558Z",
-   "file": "20261122005144558-note-c14-dc.jpg",
-   "source": "../view/c14-dc.png",
-   "kind": "note",
-   "label": "P6 dive cover sheet 1309 to 1320, review tier, window 1.0 s, code 0b35992 on engine 837adbb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:10:25.385Z",
-   "file": "20261122001025385-note-f2-1440-pair.jpg",
-   "source": "../view/f2-1440-pair.jpg",
-   "kind": "note",
-   "label": "P6 f2 terrain 1440 final tier: round 23 above, now below",
    "stop": "venus"
   },
   {
