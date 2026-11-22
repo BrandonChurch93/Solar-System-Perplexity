@@ -1,9 +1,68 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T11:35:35.480Z",
- "head": "f82118f7191f107d73a25a3a2d6abf0704ff403a",
- "note": "Sun polish proof chain on head 89ca8d5 (main e9fc2a9): gates and repeat green; review frames 200 to 224 rendering (8 of 25)",
+ "pushed": "2026-11-22T12:12:38.019Z",
+ "head": "1a022857030258bb70693ea99a4bb2038aaa3a98",
+ "note": "Sun polish proof on head 1a02285 (code 89ca8d5, main e9fc2a9): rise 200 to 224 every frame at review tier, terrain review sheet. Mail 147 in work: hook take 3 next.",
  "looks": [
+  {
+   "time": "2026-11-22T12:12:36.879Z",
+   "file": "20261122121236879-note-sheet-terrain-89ca8d5.jpg",
+   "source": "out/work/sun/p1/sheet-terrain-89ca8d5.jpg",
+   "kind": "note",
+   "label": "Sun terrain review sheet (harness), head 1a02285 (code 89ca8d5), main e9fc2a9",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T12:12:35.877Z",
+   "file": "20261122121235877-note-rv11-200-224-89ca8d5.jpg",
+   "source": "out/work/sun/p1/rv11-200-224-89ca8d5.jpg",
+   "kind": "note",
+   "label": "Sun rise, review tier, every frame 200 to 224, head 1a02285 (code 89ca8d5), main e9fc2a9",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T12:11:50.067Z",
+   "file": "20261122121150067-frame-f00204-review.jpg",
+   "source": "out/work/sheets/.frames-oySi7a/f00204-review.png",
+   "kind": "frame",
+   "label": "sun.rise frame 204, review tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 204,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T12:09:36.696Z",
+   "file": "20261122120936696-sheet-sun.terrain-preview-review.jpg",
+   "source": "out/work/sheets/sun.terrain-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet sun.terrain, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "first": 0,
+   "last": 179,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T12:09:03.565Z",
+   "file": "20261122120903565-frame-f00114-review.jpg",
+   "source": "out/work/sheets/.frames-KcTRKo/f00114-review.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 114, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 114,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
   {
    "time": "2026-11-22T11:35:34.500Z",
    "file": "20261122113534500-note-rv11-partial-8.jpg",
@@ -33,52 +92,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T11:01:24.729Z",
-   "file": "20261122110124729-note-f247-spot-main-polish.jpg",
-   "source": "out/work/sun/p1/f247-spot-main-polish.jpg",
-   "kind": "note",
-   "label": "Sun 247 final x2: main beside polish (item 5a, flow kept out of the pores)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T11:01:23.843Z",
-   "file": "20261122110123843-note-f360-limb-upper-left-hero-main-polish.jpg",
-   "source": "out/work/sun/p1/f360-limb-upper-left-hero-main-polish.jpg",
-   "kind": "note",
-   "label": "Sun 360 final, upper left limb x2: approved hero, main, polish (item 5b finer cells)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T11:01:22.676Z",
-   "file": "20261122110122676-note-final-247-89ca8d5.jpg",
-   "source": "out/work/sun/p1/final-247-89ca8d5.jpg",
-   "kind": "note",
-   "label": "Sun rise 247, final tier, polish head 89ca8d5 (main e9fc2a9)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T11:01:21.593Z",
-   "file": "20261122110121593-note-final-360-89ca8d5.jpg",
-   "source": "out/work/sun/p1/final-360-89ca8d5.jpg",
-   "kind": "note",
-   "label": "Sun hold 360, final tier, polish head 89ca8d5 (main e9fc2a9)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T08:30:16.544Z",
-   "file": "20261122083016544-frame-base90-still.jpg",
-   "source": "out/work/sun/feet/c1/base90-still.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   }
  ]
 }
