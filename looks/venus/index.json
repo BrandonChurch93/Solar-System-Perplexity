@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T14:17:20.390Z",
- "head": "5840785ca6818074dfd1570d41398e147ec69cd6",
- "note": "Venus round 34: ladder at 1310 cured by a near fade pushed out with the rush on the orbit side, full proof running on main 84b0ea4 (tree holds main a60c5ff)",
+ "pushed": "2026-11-22T14:26:22.565Z",
+ "head": "0af6f182efcf5913f054863afef93261862b5a35",
+ "note": "Venus round 34 proof: finals same bytes as main 84b0ea4, draft strips of both covers read, spokes and ladder gone; repeat, cover sheets and chain running",
  "looks": [
+  {
+   "time": "2026-11-22T14:26:21.387Z",
+   "file": "20261122142621387-note-qd-rise-c.jpg",
+   "source": "../view/qd-rise-c.jpg",
+   "kind": "note",
+   "label": "Venus cover strip rise-c: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:26:20.349Z",
+   "file": "20261122142620349-note-qd-rise-b.jpg",
+   "source": "../view/qd-rise-b.jpg",
+   "kind": "note",
+   "label": "Venus cover strip rise-b: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:26:19.155Z",
+   "file": "20261122142619155-note-qd-rise-a.jpg",
+   "source": "../view/qd-rise-a.jpg",
+   "kind": "note",
+   "label": "Venus cover strip rise-a: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:26:18.423Z",
+   "file": "20261122142618423-note-qd-dive-c.jpg",
+   "source": "../view/qd-dive-c.jpg",
+   "kind": "note",
+   "label": "Venus cover strip dive-c: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:26:17.535Z",
+   "file": "20261122142617535-note-qd-dive-b.jpg",
+   "source": "../view/qd-dive-b.jpg",
+   "kind": "note",
+   "label": "Venus cover strip dive-b: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:26:16.481Z",
+   "file": "20261122142616481-note-qd-dive-a.jpg",
+   "source": "../view/qd-dive-a.jpg",
+   "kind": "note",
+   "label": "Venus cover strip dive-a: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T14:17:19.797Z",
    "file": "20261122141719797-note-n1-1316.jpg",
@@ -114,54 +162,6 @@
    "source": "../view/q1-1307.jpg",
    "kind": "note",
    "label": "venus q1-1307: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:37:39.200Z",
-   "file": "20261122133739200-note-q1-1305.jpg",
-   "source": "../view/q1-1305.jpg",
-   "kind": "note",
-   "label": "venus q1-1305: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:58:20.334Z",
-   "file": "20261122125820334-note-rs-1572-pair.jpg",
-   "source": "../view/rs-1572-pair.jpg",
-   "kind": "note",
-   "label": "Rise 1572 at draft: main's venus folders left, agent/venus right (1fb1d97, main 481d2b8). On the branch pale spokes of the leaving veil radiate from the bottom centre over the night side: found 12:50, cure in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:58:19.677Z",
-   "file": "20261122125819677-note-lad-1310.jpg",
-   "source": "../view/lad-1310.jpg",
-   "kind": "note",
-   "label": "Experiment in the render copy, not committed: the faint ladder at the bottom centre of dive frame 1310, native crops at 3x. b6 the present look (review), v5 the same at draft (one sample), v1 veil not drawn, v2 lines term off, v3 cloud texture out of the density. Branch 1fb1d97, tree holds main 481d2b8",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:38:44.780Z",
-   "file": "20261122123844780-note-rs-main-branch.jpg",
-   "source": "../view/rs-main-branch.jpg",
-   "kind": "note",
-   "label": "Rise 1560 to 1604 every fourth frame, draft tier: main's venus folders above the pink line, agent/venus 3ac0821 below (tree holds main da02e63, engine be043ade04a7ab6e). The sky right of the globe is near black on the branch at 1572 to 1580: the flight lift starts after the cover window",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:34:22.732Z",
-   "file": "20261122123422732-note-cut33-1287-night.jpg",
-   "source": "../view/cut33-1287-night.jpg",
-   "kind": "note",
-   "label": "1287 final tier, night side, native crop: left main da02e63 (the kept build), right agent/venus 3ac0821 (both on engine be043ade04a7ab6e): cloud structure in place of the brush smear",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:34:22.177Z",
-   "file": "20261122123422177-note-cut33-1586-a.jpg",
-   "source": "../view/cut33-1586-a.jpg",
-   "kind": "note",
-   "label": "1586 final tier, native crop: left main da02e63 (the kept build), right agent/venus 3ac0821 (both on engine be043ade04a7ab6e): the plume curls without the V pinch, the night limb is one falloff",
    "stop": "venus"
   },
   {
