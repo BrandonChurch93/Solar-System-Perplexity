@@ -1,9 +1,23 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T11:19:18.105Z",
- "head": "023c50773ad38b715ffa03828d737754bc1299b8",
- "note": "Jupiter: cover pairs before and after the three cover fixes; full measure on main 3a09527 running",
+ "pushed": "2026-11-22T11:37:56.396Z",
+ "head": "6847d3412c636b05bf0bbe4ad645f6deeea56026",
+ "note": "Jupiter polish: full measure of the cover fixes on main 3a09527 running, READY about 12:00, then the dive trial",
  "looks": [
+  {
+   "time": "2026-11-22T11:29:00.128Z",
+   "file": "20261122112900128-job-frame-03093.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3093, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3093,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T11:19:17.103Z",
    "file": "20261122111917103-note-dive_3024_3029.jpg",
@@ -123,20 +137,6 @@
    "segment": "jupiter.dive",
    "frame": 3026,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:53:39.354Z",
-   "file": "20261122105339354-still-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
