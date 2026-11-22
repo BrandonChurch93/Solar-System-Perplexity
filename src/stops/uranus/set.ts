@@ -46,7 +46,8 @@ export const createSet: SetFactory = async (ctx) => {
   const patchTextures: THREE.Texture[] = []
   for (const level of patchJson.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
   const patches = { textures: patchTextures, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
-  const globe = new Globe({ map, cloud, light, shade, patches, ...look.globe })
+  const face = { map: await ctx.texture(base + 'face.jpg', { srgb: false, anisotropy: 16 }), ...look.face }
+  const globe = new Globe({ map, cloud, light, shade, patches, face, ...look.globe })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range)
   const shape = new THREE.Group()
@@ -186,6 +187,7 @@ export const createSet: SetFactory = async (ctx) => {
       const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
+      globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near))
       rings.update(sun, gain * state.weight)
       farRings.update(sun, gain * state.weight)

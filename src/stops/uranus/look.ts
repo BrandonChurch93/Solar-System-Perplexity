@@ -19,6 +19,14 @@ export const globe = {
   awayShade: 0.3,
 }
 
+export const face = {
+  centre: [0.9263, 0.153, 0.3445] as [number, number, number],
+  reachDeg: 100,
+  fadeDeg: [78, 94] as [number, number],
+  gain: 4,
+  weight: 1,
+}
+
 export const shape = {
   axis: [0.99885, -0.04789, 0] as [number, number, number],
   polar: 0.9833,

@@ -70,6 +70,12 @@ uniform vec2 uSharp;
 uniform float uWrapSoft;
 uniform float uShadeMix;
 uniform float uVignette;
+uniform sampler2D uFaceMap;
+uniform vec4 uFace;
+uniform float uFaceGain;
+uniform vec3 uFaceN;
+uniform vec3 uFaceE;
+uniform vec3 uFaceU;
 uniform float uAspect;
 uniform vec3 uSunW;
 uniform vec3 uCloudWhite;
@@ -138,6 +144,13 @@ ${PATCH_LEVELS}
   vec3 albedo = inverseFilmic(enc);
   vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg;
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
+  vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
+  vec2 fx = dFdx(fq) * (uFace.y * uGrad);
+  vec2 fy = dFdy(fq) * (uFace.y * uGrad);
+  for (int k = 0; k < (uFace.x > 0.0 ? 1 : 0); k++) {
+    float w = uFace.x * (1.0 - smoothstep(uFace.z, uFace.w, length(fq))) * smoothstep(uPatchFade.x, uPatchFade.y, texels * lean);
+    albedo *= exp2((textureGrad(uFaceMap, fq * uFace.y + 0.5, fx, fy).rgb - 128.0 / 255.0) * (uFaceGain * w));
+  }
   vec3 light = lightAt(ndl, mu);
   for (int k = 0; k < (uSoft > 0.0 ? 1 : 0); k++) {
     light = vec3(0.0);
@@ -172,6 +185,7 @@ export interface GlobeOptions {
   sharp: [number, number]
   wrapSoft: number
   patches: { textures: THREE.Texture[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
+  face: { map: THREE.Texture; centre: [number, number, number]; reachDeg: number; fadeDeg: [number, number]; gain: number }
 }
 
 export class Globe {
@@ -184,6 +198,9 @@ export class Globe {
     const spot = p.spot.clone().normalize()
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const faceN = new THREE.Vector3().fromArray(o.face.centre).normalize()
+    const faceE = new THREE.Vector3(0, 1, 0).cross(faceN).normalize()
+    const lambert = (deg: number): number => 2 * Math.sin(THREE.MathUtils.degToRad(deg) / 2)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: SPHERE_VERT,
@@ -203,6 +220,8 @@ export class Globe {
         uBandRate: { value: new THREE.Vector4().fromArray(o.bandRate) },
         uCloudRate: { value: new THREE.Vector4().fromArray(o.cloudRate) },
         uCloudFine: { value: o.cloudFine },
+        uFaceMap: { value: o.face.map }, uFace: { value: new THREE.Vector4(0, 0.5 / lambert(o.face.reachDeg), lambert(o.face.fadeDeg[0]), lambert(o.face.fadeDeg[1])) }, uFaceGain: { value: o.face.gain },
+        uFaceN: { value: faceN }, uFaceE: { value: faceE }, uFaceU: { value: faceN.clone().cross(faceE) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -238,6 +257,10 @@ export class Globe {
     this.mesh.updateWorldMatrix(true, false)
     ;(u.uToRing!.value as THREE.Matrix4).copy(ring.matrixWorld).invert().multiply(this.mesh.matrixWorld)
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
+  }
+
+  face(weight: number): void {
+    ;(this.material.uniforms.uFace!.value as THREE.Vector4).x = weight
   }
 
   near(tint: [number, number, number], amount: number): void {
