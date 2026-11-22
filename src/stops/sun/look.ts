@@ -96,6 +96,7 @@ export const opening: KnotsLook & { fade: [number, number]; seethe: SeetheLook }
   knots: { amount: 5, speed: 0.5, every: 0.9, width: 0.05, jitter: 0.25, white: 0.4, inside: [1.9, 2.2], lanes: [4, 1.7], lead: 0.2, pick: [0.25, 0.4, 0.75, 0.2], ends: [0.02, 0.1] },
   feet: { amount: 1.2, reach: 0.1, over: 0.14, lane: 1.5, ground: 1.2 },
   surge: { from: 0.05 * hook, land: 0.75 * hook, lead: 0.1, rise: 0.1 * hook, fade: 0.47 * hook, amount: 5.5, width: 0.07, tail: 0.2, ragged: 0.08, white: 0.35, halo: 0.24, level: 5, lanes: [0.6, 0.45, 1.1], glow: [1, 0.55, 0.2], core: [0.3, 0.05], inner: [1.8, 2.3, 0.75], crest: [0.45, 1.35], launch: 0.7, flare: 6, peak: 0.09 * hook, early: 0.05 * hook, end: 1.4 * hook, settle: 0.25 * hook, ground: 1.6, reach: 0.5, knee: 1, bloom: 0.08, veil: [0.1, 0.06, 0.022], keep: 0.18 * hook, hold: [0.22, 0.25, 0.3], ends: [0.03, 0.2], grow: [0.22, 0.83 * hook], kick: 4 },
+  erupt: { from: 0.45 * hook, top: 0.3, time: 0.14 * hook, lean: 0.7, far: 0.08, lanes: 2.5, pick: [1, 1.16], outer: [1.47, 1.65, 1], gate: [1.24, 1.36, 1.84, 1.98], gain: [0.9, 1.6], erode: 0.9, thin: 2, fade: [0.2, 0.36], tear: [0.3, 0.5, 0.07], flash: { at: 0.42 * hook, peak: 0.05 * hook, amount: 8, width: 0.13, white: 0.6, wide: 0.5, haze: 0.9, level: 7.5, lane: [1.7, 0.22], tint: [1, 0.82, 0.55], ground: 1.6, veil: 0.12, span: 0.8 } },
   seethe: { amount: 1, rate: 2, spread: 4, near: [2.2, 4.5], far: 0.3, crown: [0.85, 1.25] },
 }
 

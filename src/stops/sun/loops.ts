@@ -19,6 +19,7 @@ export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
   surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: [number, number, number]; ends: [number, number]; grow: [number, number]; kick: number }
+  erupt: { from: number; top: number; time: number; lean: number; far: number; lanes: number; pick: [number, number]; outer: [number, number, number]; gate: [number, number, number, number]; gain: [number, number]; erode: number; thin: number; fade: [number, number]; tear: [number, number, number]; flash: { at: number; peak: number; amount: number; width: number; white: number; wide: number; haze: number; level: number; lane: [number, number]; tint: [number, number, number]; ground: number; veil: number; span: number } }
 }
 
 const VERT = /* glsl */ `
@@ -26,11 +27,12 @@ in vec3 aLate;
 in vec3 aGrow;
 uniform float uLate;
 uniform float uGrow;
+uniform float uShear;
 out vec3 vStage;
 out vec3 vClip;
 void main() {
   vStage = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate) + aGrow * uGrow, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate) + aGrow * uGrow + vec3(aGrow.y, -aGrow.x, 0.0) * uShear, 1.0);
   vClip = gl_Position.xyw;
 }`
 
@@ -69,7 +71,15 @@ uniform vec2 uSurgeCrest;
 uniform vec2 uFoot;
 uniform vec4 uFlare;
 uniform vec3 uHold;
-uniform vec2 uHoldEnds;` : ''}
+uniform vec2 uHoldEnds;
+uniform vec4 uFlash;
+uniform vec4 uFlashGlow;
+uniform vec3 uFlashTint;
+uniform vec2 uPeel;
+uniform vec3 uPeelPick;
+uniform vec3 uPeelOuter;
+uniform vec4 uPeelGate;
+uniform vec3 uPeelTear;` : ''}
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -122,7 +132,7 @@ void main() {
     float knot = uKnot.x * pick * exp(-ds * ds / (uKnot.w * uKnot.w)) * smoothstep(uKnotEnds.x, uKnotEnds.y, s) * (1.0 - smoothstep(1.0 - uKnotEnds.y, 1.0 - uKnotEnds.x, s)) * (1.0 - smoothstep(uKnotLane.x, uKnotLane.y, arc)) * seen;
     knot += seen * (uFoot.x * exp(-s / uKnotMore.w) + uFoot.y * exp(-(1.0 - s) / uKnotMore.w));
     lin = lin * (1.0 + knot) + shine * knot * uKnotMore.z * vec3(1.0, 0.9, 0.66);
-    for (int j = 0; j < (uSurge.y + uFlare.x + uFlare.y > 0.0 ? 1 : 0); j++) {
+    for (int j = 0; j < (uSurge.y + uFlare.x + uFlare.y + uFlash.x > 0.0 ? 1 : 0); j++) {
       float strandLag = textureLod(uNoise, vec2(arc * uSurgeLane.x, 0.83), 0.0).r;
       float lead = s - uSurge.x + uSurgeMore.x * (bundle + strandLag - 1.0);
       float ahead = max(lead, 0.0);
@@ -141,13 +151,22 @@ void main() {
       float flared = seen * foot;
       flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
       lin = lin * (1.0 + flared) + shine * flared * uKnotMore.z * vec3(1.0, 0.9, 0.66) + wide * uFlare.w * uSurgeGlow * foot;
+      float crest = uFlash.x * exp(-(s - 0.5) * (s - 0.5) / (uFlash.y * uFlash.y));
+      float burnt = seen * crest;
+      burnt /= 1.0 + uFlare.z * burnt * dot(lin, vec3(0.3, 0.5, 0.2));
+      float haze = dot(inverseFilmic(grade(textureLod(uMap, uv, uFlashGlow.y).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
+      lin = lin * (1.0 + burnt) + shine * burnt * uFlash.z * vec3(1.0, 0.9, 0.66) + (wide * uFlash.w + haze * uFlashGlow.x) * uFlashTint * (crest * above * exp(-(arc - uFlashGlow.z) * (arc - uFlashGlow.z) / (uFlashGlow.w * uFlashGlow.w)));
     }
   }` : ''}
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
   for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0);
   float lit = uBurst.x * uBurst.y * (uBurst.w + (1.0 - uBurst.w) * min(climb, 1.0)) * smoothstep(uBurstMore.z, uBurstMore.z * 6.0, glow);
-  lin = lin * (1.0 + lit) + glow * lit * uBurstMore.y * vec3(1.0, 0.9, 0.66);
+  lin = lin * (1.0 + lit) + glow * lit * uBurstMore.y * vec3(1.0, 0.9, 0.66);${knots ? `
+  for (int k = 0; k < (uPeel.y != 0.0 ? 1 : 0); k++) {
+    float band = textureLod(uNoise, vec2(arc * uPeelPick.z, 0.59), 0.0).r + uPeelOuter.z * (1.0 - smoothstep(uPeelOuter.x, uPeelOuter.y, arc)) + uPeelTear.x * (textureLod(uNoise, vec2(along * uPeelTear.y, 0.31 + arc * uPeelTear.z), 0.0).r - 0.5);
+    lin *= uPeel.x + uPeel.y * smoothstep(uPeelPick.x, uPeelPick.y, band) * smoothstep(uPeelGate.x, uPeelGate.y, arc) * (1.0 - smoothstep(uPeelGate.z, uPeelGate.w, arc));
+  }` : ''}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   lin *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(lin, 0.0);
@@ -183,6 +202,8 @@ export class Loops {
   private readonly reach: [number, number]
   private readonly knots: KnotsLook | undefined
   private readonly across: number
+  private readonly peel: THREE.Mesh | undefined
+  private readonly shed: THREE.ShaderMaterial | undefined
 
   constructor(map: THREE.Texture, grade: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook, knots?: KnotsLook) {
     this.gain = look.gain
@@ -311,6 +332,26 @@ export class Loops {
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.renderOrder = 5
     this.mesh.frustumCulled = false
+    if (knots) {
+      const e = knots.erupt
+      const u = this.material.uniforms
+      u.uShear = { value: 0 }
+      u.uFlash = { value: new THREE.Vector4(0, e.flash.width, e.flash.white, e.flash.wide) }
+      u.uFlashGlow = { value: new THREE.Vector4(e.flash.haze, e.flash.level, e.flash.lane[0], e.flash.lane[1]) }
+      u.uFlashTint = { value: new THREE.Vector3(...e.flash.tint) }
+      u.uPeel = { value: new THREE.Vector2(1, 0) }
+      u.uPeelPick = { value: new THREE.Vector3(e.pick[0], e.pick[1], e.lanes) }
+      u.uPeelOuter = { value: new THREE.Vector3(...e.outer) }
+      u.uPeelGate = { value: new THREE.Vector4(...e.gate) }
+      u.uPeelTear = { value: new THREE.Vector3(...e.tear) }
+      this.shed = this.material.clone()
+      this.shed.uniforms = { ...u, uGrow: { value: 0 }, uShear: { value: 0 }, uPeel: { value: new THREE.Vector2(0, 0) }, uPeelPick: { value: new THREE.Vector3(e.pick[0], e.pick[1], e.lanes) } }
+      this.peel = new THREE.Mesh(geometry, this.shed)
+      this.peel.renderOrder = 5
+      this.peel.frustumCulled = false
+      this.peel.visible = false
+      this.mesh.add(this.peel)
+    }
   }
 
   pulse(since: number): [number, number] {
@@ -339,6 +380,19 @@ export class Loops {
     return [head, amount * gone, g.launch * bump(since - g.from) * gone, g.flare * bump(since - g.land + g.early) * gone, grow]
   }
 
+  erupt(since: number, open: number): [number, number, number] {
+    const e = this.knots?.erupt
+    const g = this.knots?.surge
+    if (!e || !g || open <= 0 || since >= g.end) return [0, 0, 0]
+    const x = Math.min(Math.max((since - g.end + g.settle) / g.settle, 0), 1)
+    const gone = open * (1 - x * x * (3 - 2 * x))
+    const after = since - e.from
+    const thrown = Math.max(after, 0) / e.time
+    const lifted = e.top * (1 - Math.exp(-thrown * thrown / (1 + thrown)))
+    const t = since - e.flash.at
+    return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * gone : 0]
+  }
+
   update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0): void {
     const u = this.material.uniforms
     if (this.knots) {
@@ -355,6 +409,17 @@ export class Loops {
       const v = u.uSurge!.value as THREE.Vector4
       v.x = head
       v.y = amount
+      const [lifted, shown, flash] = this.erupt(since, open)
+      ;(u.uFlash!.value as THREE.Vector4).x = k.erupt.flash.amount * flash
+      ;(u.uPeel!.value as THREE.Vector2).set(1, -k.erupt.erode * shown)
+      if (this.peel && this.shed) {
+        const w = this.shed.uniforms
+        this.peel.visible = shown > 0
+        w.uGrow!.value = grow + lifted
+        w.uShear!.value = k.erupt.lean * lifted
+        ;(w.uPeel!.value as THREE.Vector2).set(0, shown * (k.erupt.gain[0] + (k.erupt.gain[1] - k.erupt.gain[0]) * Math.min(lifted / k.erupt.far, 1)) * (1 - THREE.MathUtils.smoothstep(lifted, k.erupt.fade[0], k.erupt.fade[1])))
+        ;(w.uPeelPick!.value as THREE.Vector3).set(k.erupt.pick[0] + k.erupt.thin * lifted, k.erupt.pick[1] + k.erupt.thin * lifted, k.erupt.lanes)
+      }
     }
     const lit = u.uBurst!.value as THREE.Vector4
     lit.x = burst
@@ -370,5 +435,6 @@ export class Loops {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+    this.shed?.dispose()
   }
 }
