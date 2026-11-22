@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T07:20:48.760Z",
- "head": "61f3eddcc238d59d0fde4b12cff5a8664b37c35e",
- "note": "round 31 D: sun.travel one Sun, fly past departures, Sun in uranus.travel; drafts and two review stills",
+ "pushed": "2026-11-22T07:52:41.946Z",
+ "head": "ff635a0a5d72f02f72b80b55b7519fd6eab00f48",
+ "note": "sun.travel 480 to 510: dark limb cured by two lines in the Sun set; finals 493 to 499",
  "looks": [
+  {
+   "time": "2026-11-22T07:52:41.288Z",
+   "file": "20261122075241288-note-x1-limb.jpg",
+   "source": "../../../../tmp/v/x1-limb.jpg",
+   "kind": "note",
+   "label": "sun.travel 495 and 497 draft limb, without and with the cure",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:52:40.731Z",
+   "file": "20261122075240731-note-x2-limb3.jpg",
+   "source": "../../../../tmp/v/x2-limb3.jpg",
+   "kind": "note",
+   "label": "sun.travel 493 495 497 final, native left limb",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:52:40.165Z",
+   "file": "20261122075240165-note-x2-495-final.jpg",
+   "source": "../../../../tmp/v/x2-495-final.jpg",
+   "kind": "note",
+   "label": "sun.travel 495 final, dark limb line and wisps cured",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T07:52:39.583Z",
+   "file": "20261122075239583-note-x2-sun-strip.jpg",
+   "source": "../../../../tmp/v/x2-sun-strip.jpg",
+   "kind": "note",
+   "label": "sun.travel 480 to 510 draft, every second frame, with the Sun set's two lines (weight into shown)",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T07:20:48.167Z",
    "file": "20261122072048167-note-rv1-3330.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/p2-vms.jpg",
    "kind": "note",
    "label": "venus, mars, saturn travel on the fly past path, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:20:45.668Z",
-   "file": "20261122072045668-note-s3-sun.jpg",
-   "source": "../../../../tmp/v/s3-sun.jpg",
-   "kind": "note",
-   "label": "sun.travel trial 3 (61f3edd): one Sun, globe to 0.55 then Mercury's plate, sky disc at Mercury's level; draft 482 to 530",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:17.283Z",
-   "file": "20261122065617283-note-p2-mer.jpg",
-   "source": "../../../../tmp/v/p2-mer.jpg",
-   "kind": "note",
-   "label": "mercury.travel fly past trial, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:16.075Z",
-   "file": "20261122065616075-note-p1-jup.jpg",
-   "source": "../../../../tmp/v/p1-jup.jpg",
-   "kind": "note",
-   "label": "jupiter.travel fly past trial, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T06:56:15.550Z",
-   "file": "20261122065615550-note-p1-earth.jpg",
-   "source": "../../../../tmp/v/p1-earth.jpg",
-   "kind": "note",
-   "label": "earth.travel fly past trial, draft",
    "stop": "travel"
   }
  ]
