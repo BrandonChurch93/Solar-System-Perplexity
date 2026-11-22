@@ -54,3 +54,37 @@ which. No answer needed before the hook is done.
   where every strand converges, clip less than before.
 - 06:25 after renders started with `crest: [0.45, 1.35]`, `launch: 0.7` (`before.sh after`).
 - Shader audit (`python3 tools/shaderaudit.py`, HEAD export against the work tree, line numbers ignored): same 32 lines.
+- 06:28 after drafts done: all 13 draft sha256 equal before and after (90, 247, 360 and 2325, 2427, 2580, 615,
+  1440, 2010, 3150, 3720, 4290, 4860). Frame 0 at the final tier: byte equal before and after
+  (sha256 7cd40c50cd2343864b2700d6a7e2a9ad30ed044020f59e4807c6c369172a7916).
+
+## Draft hashes of the judged Sun frames (draft tier, sha256, before = main 2b50ee2, after = this branch)
+| frame | before | after |
+| 90 | bf614a99e8524fbe4d45abb1a35235dc69e8d60115a3eda4bda9f170413cf3fe | the same |
+| 247 | 88c6f79c3b1fff8d36700ad4081ac1d90110f0fbd0dca35c61a399fa1663ad3e | the same |
+| 360 | fcbfbf2f25bffb63875e7bd975102d2d2e8373b449786b00f3256c62953fe402 | the same |
+
+## First full after run (commit 96cf078), 06:25 to 06:36
+- Final tier, after minus before at 400 px wide (pixels brighter by more than 16 levels):
+  frame 0: none, bytes equal. 8: 1.08 percent of the frame, centroid x 158. 15: 3.77, x 175. 23: 5.75, x 203.
+  30: 6.58, x 228. 38: 5.63, x 253. 45: 4.55, x 266. 53: 3.87, x 270. 60: 1.65, x 279.
+  (Left foot stands at x 150, right foot at x 286 of 400.) Never more than 6.6 percent of the frame: no frame flash.
+- Cost at the final tier: 55.1 to 56.5 s per frame against 53.6 to 54.5 s before (about 3 percent more while the
+  surge runs, nothing once `uSurge.y` is 0 because the block sits in a uniform loop).
+- At native size: frame 23 had a milky clump at the crest (core 0.5 times crest 1.8 times amount 5.5), frame 30 a
+  beige veil outside the outer strands. Cut: `core: [0.3, 0.05]`, `halo: 0.24`. At 400 px the read is the same
+  (`out/work/sun/hook/v-d7-23-400.jpg`: before, first run, cut).
+- 06:38 second full after run started on commit 6e33a5d. The first run is kept in `after1-draft`, `after1-final`.
+- `npx vitest run`: 15 files, 79 tests passed. Shader audit: the same 32 lines as main.
+- Only `src/stops/sun/{ground,look,loops,set}.ts` and the two notes files differ from main 2b50ee2.
+
+## Weak points I know of
+- The feet clip to white while the surge leaves (frame 8) and lands (45 to 53): every strand converges there and
+  the card was near white before; the clipped core grows from about 40 px to about 90 px wide at 1920.
+- The front is a line of constant arch coordinate; only the per strand lag (`ragged`, `lanes`) breaks it up.
+- The veil is a blurred copy of the loops card (mip 5), not a bloom of the picture.
+- The ground flare is a radial lift of the existing glow map around the right foot, no new light on the cells.
+- Times are seconds in `look.opening.surge` (lands at 1.5 s, hook is `film.hookSeconds` = 2 s); they are not
+  derived from the config value. If the hook length changes, `land`, `end` have to follow by hand.
+- Frames 61 to 77 also differ from main (the flare dies away until 2.6 s); from frame 78 the picture is main's.
+- Only draft and final tiers rendered, no review tier, no motion gate rerun (the change moves no geometry).
