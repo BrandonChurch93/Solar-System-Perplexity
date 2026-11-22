@@ -23,6 +23,10 @@ CROP = (928, 200, 2080, 1352)
 RING = (0.17, 0.11)
 VIEW = (0.18, 0.36)
 LIT = (0.02, 0.12)
+VIEW3 = (0.2, 0.4)
+DARK = (5.0, 10.0)
+CHROMA = (0.03, 0.1)
+FW, FH = 1920, 1080
 
 
 def smoothstep(a, b, x):
@@ -138,6 +142,86 @@ def hero(sigma, clip):
     print("hero zone share of the map", round(float((zone > 0.5).mean()), 4), "detail std in the zone", round(float(out[zone > 0.5].std()), 4))
 
 
+def points(cam, cam_l):
+    hw, hh = W // SCALE, H // SCALE
+    inner, outer = FIT["rings"]["inner"], FIT["rings"]["outer"]
+    M = ring_frame()
+    sl = sun_local()
+    lon = ((np.arange(hw) + 0.5) / hw - 0.5) * 2 * np.pi
+    for r0 in range(0, hh, 256):
+        rows = np.arange(r0, min(r0 + 256, hh))
+        lat = (0.5 - (rows + 0.5) / hh) * np.pi
+        cl, sn = np.cos(lat)[:, None], np.sin(lat)[:, None]
+        q = np.stack([cl * np.sin(lon)[None], np.broadcast_to(sn, (len(rows), hw)), cl * np.cos(lon)[None]], -1)
+        P = q * np.array([1, POLAR, 1])
+        nl = q * np.array([1, 1 / POLAR, 1])
+        nl /= np.linalg.norm(nl, axis=-1, keepdims=True)
+        vw = cam_l - P
+        vw /= np.linalg.norm(vw, axis=-1, keepdims=True)
+        mu = (nl * vw).sum(-1)
+        px, py, _ = cam.project(P @ M.T)
+        tc = -P[..., 1] / np.where(np.abs(vw[..., 1]) > 1e-6, vw[..., 1], 1e-6)
+        rc = np.linalg.norm(P[..., [0, 2]] + vw[..., [0, 2]] * tc[..., None], axis=-1)
+        cover = np.where(tc > 0, smoothstep(inner - RING[0], inner - RING[1], rc) * (1 - smoothstep(outer + 0.015, outer + 0.05, rc)), 0)
+        yield rows, mu, cover, px, py, nl @ sl - term_shift(q[..., 1])
+
+
+def film(still, sigma, clip, add, gain):
+    k = FW / 2816
+    ref = cv2.resize(hero_image(), (FW, FH), interpolation=cv2.INTER_AREA)
+    img = cv2.imread(still)[..., ::-1].astype(np.float32) / 255
+    g = hero_geometry(1)
+    cam = hero_camera(FIT)
+    M = ring_frame()
+    cam_l = cam.pos @ M
+    inner, outer = FIT["rings"]["inner"], FIT["rings"]["outer"]
+    P1 = g["p"] * np.array([1, POLAR, 1])
+    v1 = cam_l - P1
+    v1 /= np.maximum(np.linalg.norm(v1, axis=-1, keepdims=True), 1e-9)
+    t1 = -P1[..., 1] / np.where(np.abs(v1[..., 1]) > 1e-6, v1[..., 1], 1e-6)
+    r1 = np.linalg.norm(P1[..., [0, 2]] + v1[..., [0, 2]] * t1[..., None], axis=-1)
+    under = (t1 > 0) & (r1 > inner - RING[0]) & (r1 < outer + 0.05)
+    valid = cv2.resize((g["hit"] & ~under & (g["mu"] > 0.1)).astype(np.float32), (FW, FH), interpolation=cv2.INTER_AREA)
+    m = cv2.erode((valid > 0.99).astype(np.uint8), np.ones((5, 5), np.uint8)).astype(np.float32)
+    grey = lambda a: np.float32(a @ LW[::-1])
+    ys, xs = np.nonzero(m)
+    box = (slice(ys.min(), ys.max()), slice(xs.min(), xs.max()))
+    a, b = np.ascontiguousarray(grey(ref)[box]), np.ascontiguousarray(grey(img)[box])
+    (dx, dy), resp = cv2.phaseCorrelate(a, b, cv2.createHanningWindow(a.shape[::-1], cv2.CV_32F))
+    print("film offset", round(dx, 2), round(dy, 2), "response", round(resp, 2))
+    A, F = scene(ref).astype(np.float32), scene(img).astype(np.float32)
+    d = high(np.log(np.maximum(A, 2e-3)), m, sigma) - high(np.log(np.maximum(F, 2e-3)), m, sigma)
+    dl = d @ LW[::-1]
+    soft = cv2.GaussianBlur(grey(ref), (0, 0), 4)
+    seen = smoothstep(DARK[0] / 255, DARK[1] / 255, soft)
+    tint = smoothstep(CHROMA[0], CHROMA[1], cv2.GaussianBlur(grey(A), (0, 0), 4))
+    d = dl[..., None] + (d - dl[..., None]) * tint[..., None]
+    d = clip * np.tanh(d / clip) * m[..., None]
+    ndl = cv2.resize(g["ndl"].astype(np.float32), (FW, FH), interpolation=cv2.INTER_AREA)
+    for lo, hi in ((-1.0, -0.3), (-0.3, -0.1), (-0.1, 0.0), (0.0, 0.1), (0.1, 0.2), (0.2, 0.42), (0.42, 1.0)):
+        sel = (ndl >= lo) & (ndl < hi) & (m > 0)
+        print("ndl", lo, hi, "px", int(sel.sum()), "residual detail std", round(float(dl[sel].std()), 4), "seen", round(float(seen[sel].mean()), 3))
+    show = lambda a: np.clip(a[..., ::-1] * 255 * 1.5 + 127, 0, 255).astype(np.uint8)
+    cv2.imwrite(str(GEN / "film-detail-img.png"), show(d)[box])
+    hw, hh = W // SCALE, H // SCALE
+    keep = cv2.resize(cv2.imread(str(WORK / "wrap-weight.jpg"), 0), (hw, hh), interpolation=cv2.INTER_LINEAR).astype(np.float32) / 255
+    out = np.zeros((hh, hw, 3), dtype=np.float32)
+    zone = np.zeros((hh, hw), dtype=np.float32)
+    for rows, mu, cover, px, py, _ in points(cam, cam_l):
+        mx, my = (px * k - 0.5).astype(np.float32), (py * k - 0.5).astype(np.float32)
+        inside = (mx > 2) & (my > 2) & (mx < FW - 3) & (my < FH - 3) & (mu > 0)
+        w = smoothstep(VIEW3[0], VIEW3[1], mu) * (1 - cover) * inside * cv2.remap(seen * m, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+        zone[rows] = w
+        out[rows] = cv2.remap(d, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT, borderValue=0) * (gain * w * (1 - keep[rows]))[..., None]
+    path = GEN / "film-detail-half.npy"
+    if add and path.exists():
+        out += np.load(path).astype(np.float32)
+    np.save(path, out.astype(np.float16))
+    np.save(GEN / "film-zone-half.npy", zone.astype(np.float16))
+    cv2.imwrite(str(GEN / "film-zone-half.jpg"), (zone * 255).astype(np.uint8))
+    print("film zone share of the map", round(float((zone > 0.5).mean()), 4), "detail std in the zone", round(float(out[zone > 0.5].std()), 4))
+
+
 def luma(img):
     return np.maximum(scene(np.minimum(img.astype(np.float32) / 255, TOP)) @ LW, 1e-3).astype(np.float32)
 
@@ -153,6 +237,9 @@ def place(takes, sigma_near, sigma_far, gain_near, gain_far, up, down):
     half = cv2.resize(full, (hw, H // SCALE), interpolation=cv2.INTER_AREA)
     keep = np.load(GEN / "hero-zone-half.npy").astype(np.float32)
     own = np.load(GEN / "hero-detail-half.npy").astype(np.float32)
+    if (GEN / "film-zone-half.npy").exists():
+        keep = np.maximum(keep, np.load(GEN / "film-zone-half.npy").astype(np.float32))
+        own = own + np.load(GEN / "film-detail-half.npy").astype(np.float32)
     acc = np.zeros((H // SCALE, hw, 2), dtype=np.float32)
     wsum = np.zeros((H // SCALE, hw), dtype=np.float32)
     over = TW - hw // len(X0)
@@ -212,5 +299,7 @@ if __name__ == "__main__":
         place(sys.argv[2:2 + n], *[float(v) for v in sys.argv[2 + n:8 + n]])
     elif cmd == "hero":
         hero(*[float(v) for v in sys.argv[2:4]])
+    elif cmd == "film":
+        film(sys.argv[2], float(sys.argv[3]), float(sys.argv[4]), sys.argv[5] == "add", float(sys.argv[6]))
     elif cmd == "ship":
         ship()

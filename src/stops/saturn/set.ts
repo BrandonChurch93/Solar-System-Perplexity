@@ -200,6 +200,7 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uEdgeLin!.value = look.skimLimb[1] * skimW.value
       gu.uLimbW!.value = poseW.value * look.limbShow
       ;(gu.uFine!.value as THREE.Vector4).w = (1 - poseW.value) * (1 - close.value)
+      gu.uNightBlur!.value = look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close.value
       su.uLimbW!.value = gu.uLimbW!.value
       gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)

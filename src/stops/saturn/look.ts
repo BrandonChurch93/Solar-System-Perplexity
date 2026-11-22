@@ -23,6 +23,7 @@ export const globe: GlobeLook = {
   rimPower: 3,
   rimNight: [0.004, 0.012, 0.025, 0.06],
   nightBlur: 16,
+  nightBlurFar: 1.5,
   fine: [8, 0.3, 3],
   fineTop: 1.1,
   termShift: [0.085, 0.55, 0.97],

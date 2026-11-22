@@ -21,6 +21,7 @@ export interface GlobeLook {
   rimNight: [number, number, number, number]
   termShift: [number, number, number]
   nightBlur: number
+  nightBlurFar: number
   fine: [number, number, number]
   fineTop: number
   probe: number
