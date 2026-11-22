@@ -1,36 +1,36 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T07:20:39.117Z",
+ "pushed": "2026-11-22T07:37:58.134Z",
  "head": "6f0568efa70824c392f7b3c0c48956902d1c8e71",
- "note": "Mercury polish: hand over at the rise limb cured (far band carried to the limb, map washed near both swaps), review cover sheets rendering on 6f0568e",
+ "note": "Mercury polish: rise cover at review on 6f0568e (main 2858db4) holds across the swap, dive cover sheet rendering",
  "looks": [
   {
-   "time": "2026-11-22T07:20:38.472Z",
-   "file": "20261122072038472-note-sheet-n-dive.jpg",
-   "source": "out/work/mercury/p6/b1/sheet-n-dive.jpg",
+   "time": "2026-11-22T07:37:56.991Z",
+   "file": "20261122073756991-note-rise-988-993.jpg",
+   "source": "out/work/mercury/p6/ready/rise-988-993.jpg",
    "kind": "note",
-   "label": "Dive 738 to 745, draft, tree 6f0568e (main 2858db4): same cure on the dive side",
+   "label": "Rise 988 to 993 at review across the swap at 990, tree 6f0568e (main 2858db4): the pale far band carries to the limb",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T07:20:37.897Z",
-   "file": "20261122072037897-note-sheet-n-rise.jpg",
-   "source": "out/work/mercury/p6/b1/sheet-n-rise.jpg",
+   "time": "2026-11-22T07:37:56.121Z",
+   "file": "20261122073756121-note-rise-992-996.jpg",
+   "source": "out/work/mercury/p6/ready/rise-992-996.jpg",
    "kind": "note",
-   "label": "Rise 989 to 996, draft, tree 6f0568e (main 2858db4): far band carried to the limb and the map washed like the ground pictures near the swap",
+   "label": "Rise 992 to 996 at review, tree 6f0568e (main 2858db4), last cell: 994 before the cure (tree 1a18e50) with the grey far zone",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T07:20:37.237Z",
-   "file": "20261122072037237-note-rise-cover-cure.jpg",
-   "source": "out/work/mercury/p6/b1/rise-cover-cure.png",
+   "time": "2026-11-22T07:37:55.220Z",
+   "file": "20261122073755220-note-rise-985-996.jpg",
+   "source": "out/work/mercury/p6/ready/rise-985-996.jpg",
    "kind": "note",
-   "label": "Rise cover 985 to 996 at review, tree 00800b7 (main a87578e), cure of the far band alone: 990 to 992 clean, 994 far zone still steps to grey",
+   "label": "Rise 985 to 996 at review with the Sun's place and the mean ground colour per frame, tree 6f0568e (main 2858db4)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T07:06:38.983Z",
-   "file": "20261122070638983-sheet-mercury.rise-cover-preview-review.jpg",
+   "time": "2026-11-22T07:35:32.576Z",
+   "file": "20261122073532576-sheet-mercury.rise-cover-preview-review.jpg",
    "source": "out/work/sheets/mercury.rise-cover-preview-review.png",
    "kind": "sheet",
    "label": "Contact sheet mercury.rise, review tier",
@@ -44,9 +44,9 @@
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T07:06:38.130Z",
-   "file": "20261122070638130-frame-f00996-review.jpg",
-   "source": "out/work/sheets/.frames-2lJ16q/f00996-review.png",
+   "time": "2026-11-22T07:35:31.741Z",
+   "file": "20261122073531741-frame-f00996-review.jpg",
+   "source": "out/work/sheets/.frames-7EsMIC/f00996-review.png",
    "kind": "frame",
    "label": "mercury.rise frame 996, review tier",
    "stop": "mercury",
@@ -58,11 +58,11 @@
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T06:54:48.841Z",
-   "file": "20261122065448841-note-far-b-dive.jpg",
-   "source": "out/work/mercury/p6/b1/far-b-dive.jpg",
+   "time": "2026-11-22T07:20:38.472Z",
+   "file": "20261122072038472-note-sheet-n-dive.jpg",
+   "source": "out/work/mercury/p6/b1/sheet-n-dive.jpg",
    "kind": "note",
-   "label": "Mercury dive swap, horizon at 4x, frames 739 to 744, draft, after the cure. Tree 81e8ef9 on main a87578e",
+   "label": "Dive 738 to 745, draft, tree 6f0568e (main 2858db4): same cure on the dive side",
    "stop": "mercury"
   },
   {
