@@ -742,3 +742,8 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Row main above head, `/tmp/v/c34-mercury-ab2.jpg` (1066, 1072, 1080): at 1066 main has a dim glow at the top right, the head has the Sun's bright corona and a smeared prominence in the corner; plain sky by 1068.
 - Swing watch (label sw, every second frame 4492 to 4512, `/tmp/v/w-sw.jpg`): Neptune grows low centre, the band slides out at the right by 4504, Triton leaves over the top at about x 310 (4496 to 4498) and is back at the top left at about x 110 from 4508. Calm; the moon's bob over the top edge is what stays of the critic's reversal.
 - Looks pushed 15:52. Next: send `CUT34 travel`.
+
+## 16:03 UTC: ending finals equal, main merged, CUT34 mail
+- Finals of the ending on the head tree (label g9) and on main (gm), file hashes equal: 5085 06acc9e5e7c35ba5, 5235 4da14b38897c4c44, 5362 83950e4755786454. So all six judged frames that are not meant to move keep main's bytes (495, 2782, 3922, 5085, 5235, 5362).
+- origin/main 6460b4a5 merged before the mail. The `CUT34 travel` mail names the head after this entry; attachments c34-finals-a, g8-finals-b, c34-mercury-ab2, c34-venus-ab, c34-earth-ab, c34-jupiter-ab, c34-uranus-ab, c34-suncorner-ab, w-merc34-b, c34-swing-all (all in `/tmp/v/`).
+- After the mail: nothing is in work. Round 35 takes only small proven things and take outs. Open on my side: mercury.travel turn 4.23 against 3 (REQUESTS.md 3), item 88 (sun.travel 474 to 482 wash to white, not looked at this round), the still disc over fast sky in five travels.
