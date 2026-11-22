@@ -1,9 +1,17 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T07:23:59.517Z",
- "head": "7c1dfff0c21f1ec30f33aaab3748d33e61b8e32d",
- "note": "Neptune in the ending proved on the new camera path of agent/ending: sheets of retreat and lookback, finals 5085 and 5235, native pairs against main's Neptune",
+ "pushed": "2026-11-22T07:30:31.477Z",
+ "head": "6f9cf31580b4284a17eab3a6ea530d2fe549ba62",
+ "note": "Neptune in the ending: DONE sent, proof on the new camera path; the polish chain renders the final stills",
  "looks": [
+  {
+   "time": "2026-11-22T07:30:03.661Z",
+   "file": "20261122073003661-note-new-path-5350-fade-review.jpg",
+   "source": "out/work/end/send/new-path-5350-fade-review.jpg",
+   "kind": "note",
+   "label": "Neptune ending on the new camera path, 5350 (fade) at review, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T07:23:58.968Z",
    "file": "20261122072358968-note-new-path-5105-ring-edge-on-native-crop.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/end/send/new-path-final-5085-native-crop.jpg",
    "kind": "note",
    "label": "Neptune ending on the new camera path, final tier, new-path-final-5085-native-crop, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T07:17:45.850Z",
-   "file": "20261122071745850-note-new-path-final-5085.jpg",
-   "source": "out/work/end/send/new-path-final-5085.jpg",
-   "kind": "note",
-   "label": "Neptune ending on the new camera path, final tier, new-path-final-5085, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   }
  ]
