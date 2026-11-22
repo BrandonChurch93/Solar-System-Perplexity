@@ -1,0 +1,209 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "left of the star's limb, about x 600-720, y 225-240 (crops H and L)",
+      "what": "a faint greenish-grey horizontal streak floats in empty space, detached from the corona; it looks like a stray sprite or lens-flare leftover",
+      "fix": "remove the streak, or if it is meant to be a flare, tie it to the light source with a matching hue and falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "left limb (x 760-800, y 300-410) and upper-right limb (crops A, N, Q)",
+      "what": "red prominences are thin, saturated red squiggles laid over the glow; they have no emission glow, no thickness and a different colour from the corona, so they read as painted strokes on a separate layer",
+      "fix": "give the prominences volume, an emissive falloff and an orange-to-white gradient where they meet the limb, and blend them into the corona"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "disc surface (crops C, M, R)",
+      "what": "the photosphere is a soft, airbrushed swirl of noise; at native size there is no crisp granulation or sunspot detail and the texture looks smeared, like a blurred procedural layer",
+      "fix": "add a sharper granulation layer at small scale, with some limb darkening and a few defined active regions"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lower limb and the left limb's coronal spikes (crops E, H, Q, R)",
+      "what": "the coronal loops and radial spikes look like repeated brush-stroke sprites of similar size spaced evenly round the limb",
+      "fix": "vary the loops' scale, brightness and spacing, and soften the spike ends into the glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "whole sky except the lower-left corner (crops A-E, G-L, O-W)",
+      "what": "the stars are spread at a near-uniform random density with similar sizes everywhere, with no clustering or gradient towards the Milky Way band, so the field reads as procedural noise",
+      "fix": "change the star density with galactic latitude, add faint unresolved background glow and dust lanes near the band, and widen the range of star brightness"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "lower-left Milky Way patch (crops F, N, S)",
+      "what": "the Milky Way stops abruptly in the corner, with a fairly hard edge to the brown dust cloud, so it looks like a pasted patch",
+      "fix": "feather the edge of the nebula layer and carry a faint band of it further into the frame"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "two small galaxy smudges (x 435, y 530; crops D, G, P)",
+      "what": "the galaxies are tiny orange blurred ellipses that are softer than the stars around them, like upscaled sprites",
+      "fix": "render them at native resolution with a bright core and a faint disc"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "Milky Way clouds and outer greenish-grey dust transitions in crops A, B, D, F, G, H (also visible in image-13.png, image-15.png crops K, L, O, P, and image-16.png crops T, U)",
+      "what": "visible pixel-level RGB chroma speckle and gritty sharpening noise in the diffuse Milky Way background texture at native 1:1 resolution",
+      "fix": "apply gentle chroma denoising to the diffuse Milky Way map prior to star compositing or use a cleaner unsharpened high-bit-depth source map"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "around bright and medium stars embedded in Milky Way nebulosity in crops B, D, F (and image-15.png crops K, O, P; fainter trace around bright stars in image-10.png)",
+      "what": "1-to-2-pixel dark negative-lobe ringing halos surround stars where bicubic/Lanczos resampling or unsharp masking depresses the adjacent cloud brightness",
+      "fix": "resample the sky map without unsharp masking or negative-lobe ringing (clamp filter undershoot) and composite catalog stars additively over the smooth nebulosity"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "lit face, top-right crop and middle-right crop",
+      "what": "parallel combed furrows run across the sunlit slope, and the grain looks stretched along the grade",
+      "fix": "remove the directional stretch and break the furrows with finer, isotropic grain"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "sunlit slope of the body, upper right",
+      "what": "the rock looks waxy and airbrushed, with soft rounded crater lips and a repeated dimple pattern",
+      "fix": "vary crater size and shape, and replace the smooth highlight with hard micro-shadows"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "shadowed upper right of the body",
+      "what": "the night side is muddy and nearly empty, with only soft low-frequency bumps",
+      "fix": "keep the hard terminator, but hold faint high-frequency relief in the shade"
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-30.png",
+      "where": "crops A and F, bright gold knots in the galactic band",
+      "what": "The brightest knots lose individual star cores in a broad, soft glow, making them look blurred next to the crisp surrounding stars.",
+      "fix": "Reduce bloom in the brightest knots and preserve the separate cores of the brightest stars."
+     },
+     {
+      "severity": "minor",
+      "file": "image-32.png",
+      "where": "crops S through V, dark sky between bright stars",
+      "what": "The faintest points merge into a fine blue-gray grain at native size instead of reading as separate stars.",
+      "fix": "Reduce the density and contrast of the faintest points while keeping the brighter stars sharp."
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-33.png",
+      "where": "rings, especially the near arc over the lower right of the disc and the far arc upper right (crops A, D, F, H, P, T, U)",
+      "what": "the rings read as soft smeared brush strokes, like motion blur, with no sharp ringlet edges or gaps at native size; where the near arc crosses the night side it turns into a hazy ghost streak",
+      "fix": "render the rings from a high-resolution radial profile with crisp ringlet boundaries and gaps, and give the arc in front of the disc proper opacity and lighting instead of a blurred overlay"
+     },
+     {
+      "severity": "major",
+      "file": "image-33.png",
+      "where": "lit upper part of the globe (crops B, H, I, P)",
+      "what": "the day side is a smooth airbrushed blue with only a few faint cloud wisps, and the terminator is an even, mechanical band across the disc; the surface looks plastic",
+      "fix": "add banded cloud structure at several scales and storm features, and break up the terminator with altitude and haze variation"
+     },
+     {
+      "severity": "major",
+      "file": "image-37.png",
+      "where": "globe disc (crops D, M)",
+      "what": "the disc is a flat, featureless black cutout behind a thin blue rim; it has no night-side texture, ringshine or limb darkening, so it looks like a flat mask",
+      "fix": "add faint ringshine and starlight shading, gradual limb darkening and a softer inner edge to the rim light"
+     },
+     {
+      "severity": "major",
+      "file": "image-37.png",
+      "where": "lower edge of the Milky Way band, about y 250-300 across the full width (crops A, I, J, O)",
+      "what": "the galaxy texture ends along an almost straight horizontal line, with a strip of different star density under it, which looks like the edge of a texture patch",
+      "fix": "map the Milky Way on the full sky sphere with a feathered, irregular falloff into the background star field"
+     },
+     {
+      "severity": "minor",
+      "file": "image-37.png",
+      "where": "Milky Way dust clouds (crops C, I, J, K)",
+      "what": "the nebulosity is a little soft and upscaled compared with the sharp stars on top of it, and crop C shows faint circular ripple shapes in the lower left",
+      "fix": "use a higher-resolution galaxy source, or add detail at native scale, and remove the ripple artifacts"
+     },
+     {
+      "severity": "minor",
+      "file": "image-37.png",
+      "where": "ring arc in front of the dark disc (crop M)",
+      "what": "the ring strands crossing the unlit disc are as bright as the parts outside it, and the planet casts no shadow on them, so the ring looks pasted on top",
+      "fix": "apply the planet's shadow to the ring and dim the segment that crosses the night side"
+     },
+     {
+      "severity": "minor",
+      "file": "image-37.png",
+      "where": "bright star near the centre (crops C, F)",
+      "what": "the bright star is a soft round blob with no diffraction or point core",
+      "fix": "render it as a sharp point source with a tight bloom"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+ "critic": "R4",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R4",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "sheet-04.png",
+      "where": "frames 2182 (Earth exiting top) and 2236 (Mars and Phobos entering bottom-left), and across fast pans in sheet-01.png through sheet-08.png",
+      "what": "fast motion breaks into 4 discrete ghost copies instead of a smooth blur: South American city lights, clouds, and Earth's limb split into 4 stepped copies in 2182, and Mars's polar cap, limb, and Phobos split into 4 overlapping discs in 2236",
+      "fix": "replace the ~4-tap temporal accumulation with 16-32 jittered sub-frame shutter samples (or continuous directional velocity blur) across all travel renders so fast-moving edges blend into a single smooth streak"
+     },
+     {
+      "severity": "severe",
+      "file": "sheet-01.png",
+      "where": "frames 482 and 490, upper solar limb and prominences",
+      "what": "as the camera accelerates away from the Sun, the upper solar limb and red prominences split into a detached semi-transparent ghost crescent above the main disc",
+      "fix": "increase sub-frame shutter sampling during solar departure so the bright limb and prominences blur smoothly without double-edge ghosting"
+     },
+     {
+      "severity": "severe",
+      "file": "sheet-05.png",
+      "where": "frames 2752-2772 (Mars exit and passing asteroids) and frame 2806 (Jupiter entry)",
+      "what": "Mars's polar cap, foreground asteroid silhouettes, and Jupiter's limb, cloud bands, Great Red Spot, and Io shadow each break into 4 separate stepped ghost copies",
+      "fix": "render fast planetary and asteroid flybys with dense jittered temporal sub-sampling so high-contrast features smear continuously"
+     },
+     {
+      "severity": "severe",
+      "file": "sheet-07.png",
+      "where": "frame 3892 (Saturn rings at bottom-left) and frame 3946 (Uranus and inner moon at upper-center)",
+      "what": "Saturn's ring edges and Cassini division split into 4 stepped ghost bands on exit, and Uranus's inner moon and bright storm spots break into 4 discrete bead-like copies on entry",
+      "fix": "increase shutter sample count across ring and moon flybys to eliminate stroboscopic ghost copies"
+     },
+     {
+      "severity": "severe",
+      "file": "sheet-03.png",
+      "where": "frames 1612-1618 (Venus exit) and frame 1666 (Earth entry), and similarly in sheet-02.png (1042, 1096), sheet-06.png (3376), and sheet-08.png (4462, 4516)",
+      "what": "planetary limbs, cloud bands, auroras, rings, and moons split into 4 stepped ghost edges during peak travel velocity",
+      "fix": "apply dense jittered sub-frame motion blur uniformly across every travel segment"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-04.png",
+      "where": "frames 2242 and 2249, left background starfield and nebula strip (roughly x = 28-42 px from left edge)",
+      "what": "a vertical mirror-wrap seam in the sky background enters frame beside Mars, creating a symmetric Rorschach reflection of stars and nebula wisps",
+      "fix": "replace mirrored UV wrapping on the sky texture with seamless 360-degree spherical/cubemap mapping so no texture wrap or reflection seam enters frame during camera pans"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-01.png",
+      "where": "frames 474-539 across the Sun-to-Mercury travel",
+      "what": "the move splits into two disjoint phases with exposure and background pops: the Sun blows out from textured orange granulation to flat white while its orange Milky Way backdrop vanishes (474-499), camera rotation stops by 507 while a blue nebula cross-fades in over stationary stars (507-523), and Mercury rockets from a 1-px speck (515) to full-frame (531-539) in 16 frames with almost no radial blur",
+      "fix": "use one continuous 3D skybox without mid-move opacity cross-fades, smooth the solar exposure roll-off across the whole move, and overlap camera rotation with an exponential approach curve so Mercury grows progressively with matching motion blur"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-07.png",
+      "where": "departure frames 3885-3892 and arrival frames 3939-3952 (and similarly departures in sheet-04.png 2175-2182 and arrivals across sheet-02.png through sheet-08.png)",
+      "what": "departures snap immediately into high whip velocity without ease-in (throwing Saturn and Earth halfway off-screen in the first 7 frames), while arrivals keep the destination planet invisible for ~75% of the travel before exploding from a speck to full-frame in ~13 frames",
+      "fix": "lengthen rotational and translational ease-in on departure so the camera accelerates with mass, and switch interplanetary approach distance to a logarithmic/exponential curve so destination planets appear earlier and scale smoothly into hold"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-05.png",
+      "where": "frames 2765-2799, hero asteroid in upper-right quadrant",
+      "what": "midway between Mars and Jupiter the camera abruptly decelerates to nearly hover on a single asteroid (2772-2785) that spins roughly 90 degrees in under a second before whipping fast a second time into Jupiter",
+      "fix": "keep a single smooth velocity profile through the asteroid belt without stalling mid-flight, and slow the asteroid's spin rate to a believable drift"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R4",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "sheet-10.png",
+      "where": "planet limb against the starfield, frames 5145-5324",
+      "what": "The hold never settles. The starfield slides left at a steady speed, about 11 px for an upper-left star and about 8 px left and 3 px up for a mid-right star, with no ease-off. The planet's lit limb slides the other way, about 5-8 px right. The globe and the sky are not one camera, and the stars do not hold still.",
+      "fix": "Ease the camera to a full stop before the fade, and move the planet with the starfield so the two cannot slide in opposite directions."
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-11.png",
+      "where": "starfield through the fade, frames 5325-5359",
+      "what": "The same leftward starfield slide continues at the same speed across the 5324/5325 cover and through the visible fade. The cover does not pop, and the fade to black is a smooth neutral ease, but the move never stops.",
+      "fix": "Keep the stopped camera locked through the fade so only exposure changes."
+     }
+    ]
+   }
+  }
+ ]
+}
