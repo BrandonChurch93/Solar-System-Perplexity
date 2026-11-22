@@ -63,3 +63,13 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
 - The deep set's long tail is set in the shader by `flightStrip.deep`, not on config line 147.
 - Band points use the catalog core (about 1.4 px wide at half height), so few are truly under 1 px.
 - Ten check frames at draft (2325, 2427, 2580, 615, 1440, 2010, 3150, 3720, 4290, 4860): sha256 equal to main, checked again with look 2 at 07:15 UTC.
+
+## Mail after PART (07:29 UTC, commit f8edc6e accepted into the trial merge)
+
+- MAIL 96: the Builder takes `src/bodies/farpoint.ts` line 20 and `skyBytesFor` himself. Request: one trial of a sharper star free strip (keep lane edges and filaments, full size allowed), finals of 3352 and 1072, native crops beside the current after, by 08:05 UTC. Commit only if clearly better, asset and recipe only; report texture memory and file size.
+- Trial: `make.py --detail amount blur kernel cap --size full web`. Kernel 7 (grey opening) brought disc shaped blobs back: rejected at strip level. Kernel 1 (`--detail 1 0.9 1 1.0 --size 8192 2048`): the starless luminance is pulled down to the lightly blurred source where the source is darker than the median, color stays that of the median, the fill follows the same ratio. Dark veins return. Full map 8192 x 2048 (67 MB on the GPU, PNG 10.3 MB).
+- MAIL 104, batch 21, due 09:00 UTC, on `agent/flightsky` based on `builder/b20` (head a514fd37), picture byte for byte, proved with final stills of 4492 and 5235:
+  1. `travel.sky.flightStars.deep.core` and `deep.halo` in `config/showcase.json` have no reader: remove the keys (or read them).
+  2. The deep set uploads four floats per star (`field.ts` 209), the shader reads one (`aStar.y`, `sky.ts` 318 to 324): upload what is read.
+  - Also: the ending now holds the lift at 1 through the lookback and the fade (`film.ts` 526), so 5235 and 5362 draw the strip band at sky exposure 0.36 on `builder/b20`; my lift 0 statement for those two is out of date.
+- Trial result (07:56 UTC): finals of 3352 and 1072 with the kernel 1 map. Dark veins and lane edges return inside the gold clouds, clearest at 1072; at three times no star blob, no block, no chroma speckle. Render time unchanged (3352 102.3 s, 1072 116.6 s against 119.1 s). Judged clearly better at 1072, modest at 3352. Committed as an asset and recipe change: full map 8192 x 2048 (67.1 MB on the GPU, 50.3 MB more than before; PNG 10.3 MB, 8.0 MB more), web map 2048 x 512 as before (4.2 MB; PNG 1.0 MB). `skybandstars.bin` is byte equal. Draft sha256 of 2325, 615, 4860 equal to main. The previous maps are the ones of commit a5e819c.
