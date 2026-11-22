@@ -454,6 +454,23 @@ export class FilmDirector implements Director {
     return span
   }
 
+  glareOf(shot: Shot): THREE.Vector3 | null {
+    const seg = shot.segment
+    const index = config.stopIds.indexOf(seg.stop)
+    const p = this.plans[index]
+    if (!p || (seg.kind !== 'dive' && seg.kind !== 'rise') || shot.sets[0]?.view !== 'orbit') return null
+    const share = Math.min(p.glareCarry(seg, shot.time), 1)
+    if (!(share > 0)) return null
+    const c = p.coverCenter(seg)
+    const at = seg.kind === 'dive' ? c : c - 1e-6
+    const low = seg.kind === 'dive' ? p.dive(at) : p.rise(at)
+    if (low.view !== 'terrain') return null
+    const q = this.frames[index]!.rotation.clone().multiply(p.turn(at)).multiply(p.terrainFrame).multiply(low.pose.quaternion).multiply(drift(at))
+    const place = this.sunWorld.clone().applyQuaternion(q.invert())
+    const own = shot.sun.dir.clone().applyQuaternion(shot.camera.quaternion.clone().invert())
+    return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
+  }
+
   shotAt(frame: number, time: number): Shot {
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
@@ -577,6 +594,8 @@ export class FilmDirector implements Director {
         view = r.view
         cover.amount = p.coverAmount(segment, time)
         if (p.p.coverHides !== undefined) cover.hides = p.p.coverHides
+        const hidden = p.coverHidden(segment, time)
+        if (hidden !== undefined) cover.hidden = hidden
         const side = p.coverSide(segment, time)
         const blend = (x: [number, number, number], y?: [number, number, number]): [number, number, number] => (y ? [x[0] + (y[0] - x[0]) * side, x[1] + (y[1] - x[1]) * side, x[2] + (y[2] - x[2]) * side] : x)
         cover.color = blend(p.p.cover, p.p.coverTerrain)
@@ -621,6 +640,14 @@ export class FilmDirector implements Director {
       }
       pose = inSet(s, local)
       sets = [s]
+      if (segment.kind === 'dive' || segment.kind === 'rise') {
+        const share = p.skyTurnShare(segment, time)
+        if (share !== null) {
+          const high = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id] ?? NO_TURN
+          const low = this.sky.turns[p.id] ?? NO_TURN
+          skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
+        }
+      }
       if (view === 'terrain') {
         near = 0.01
         far = 4000
