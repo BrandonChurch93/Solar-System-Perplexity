@@ -806,3 +806,21 @@ Head 08b2e2c and this note; code 1d3704c; main c479536. Nothing uncommitted in `
 - Rush on the terrain side (`out/work/venus/scratch/rush.ts`): 1 from 1311 to 1320 and 1555 to 1560, 0.85 at 1321, 0.51 at 1323, 0.25 at 1325; 0.11 at 1548, 0.54 at 1552, 0.87 at 1554. Eye height in the veil's frame: 0.0267 at the dive swap, 0.0271 at the rise swap.
 - What the fine lines and small soft rectangles at 1558 are (read from `veil.ts` with rush 1): the fibre noise (72 cells per radian, about 25 px at master size) shifts the log radius of the rush lattice by up to 0.3 (`fray[1]` 0.6), half a cell of the first octave, so along every lattice edge neighbouring fibres stand at different radii: teeth 25 px wide with firm sides and soft ends. `fray[2]` adds the fibre itself to the pattern.
 - Experiments running in the render copy only (`q24.sh`, log `/tmp/q24.log`, review tier, master size, frame 1558; `look.ts` of r2 is restored at the end): xa `fray [6, 0, 0, 2]` (no fibre), xb `fan[3]` 14 (texture read coarser at full rush), xc `fray[3]` 4 (wider band), xd `fray [6, 0.3, 0.1, 3]`. Pictures `view/xa-1558.jpg` to `view/xd-1558.jpg`, compare with `view/e2b-1558.jpg` (the present look at 1558).
+
+## State at 10:28 (22 Nov): fine lines and soft rectangles at full veil traced, candidate take F5 (read this first after a compaction)
+
+Head b506dc3 and this note; code 1d3704c; main c479536. Nothing uncommitted in `src/stops/venus`; every experiment below ran in the render copy only (`look.ts` of r2 changed by `sed`, restored by `sync2.sh` at the end of each queue).
+
+Frame 1558 (amount 1, rush 1) at review tier, master size, one change at a time against the present look (`view/e2b-1558.jpg`; quads `view/x5-1558-quad.jpg`, `view/x5b-1558-quad.jpg`, slot crop `view/x5-1558-slot.jpg`):
+- xa `fray [6, 0, 0, 2]` (no fibre): the fine vertical lines are gone, the small pale rectangle with firm sides stays. So the lines are the fibre term.
+- xb `fan[3]` 14 (the cloud texture read 15 times coarser at full rush, 6 times now): the pale rectangles and blobs become soft cloud, the fine lines stay. So the rectangles are compact bright bits of the cloud texture, smeared a short way by the shutter.
+- xc `fray[3]` 4, xd `fray [6, 0.3, 0.1, 3]`: little change.
+- xe `fan[3]` 14 with no fibre: clean but only broad soft bands.
+- xf `fan[3]` 14 with `fray [2.5, 0.4, 0.2, 2]` (fibre 30 cells per radian in place of 72, lower shift and share): soft streaked cloud, broad forms, no firm line, no rectangle. The best of the set.
+- xg `fan[3]` 10 with `fray [3, 0.5, 0.2, 3]`: close to xf, a little more line.
+
+Candidate take F5 = xf: `sheets.fan [12, 1.6, 2.7, 14]`, `sheets.fray [2.5, 0.4, 0.2, 2]` in `look.ts`, nothing else. It acts wherever the rush is above 0, on both sides of both swaps; with rush 0 or amount 0 nothing changes (the judged frames).
+Running (`q26.sh`, log `/tmp/q26.log`, about 10:38): the present look at 1563, 1566, 1311 (`view/now-F.jpg`) and xf at 1314, 1563, 1566, 1311, 1557, 1317 (`view/xf-F.jpg`), review tier, master size, in the render copy.
+If xf holds on those: put the two values into `look.ts` of the repo, then the proof as for F4 (`q22.sh` pattern: finals with `cmp` against f16 and f22-1586, audit, repeat, both cover sheets against c22, chain), commit, looks, note to the Builder.
+
+Note 10:37: the frames with the fastest motion take long at review tier and master size (1563 took 7 minutes 44 seconds), so `q26.sh` ends about 11:25, not 10:38. Its nine stills come in this order: now 1563, 1566, 1311; xf 1314, 1563, 1566, 1311, 1557, 1317. The png of each still lies in `r2/out/work/venus/p6/` as soon as it is done (the jpgs in `view/` only at the end of each group).
