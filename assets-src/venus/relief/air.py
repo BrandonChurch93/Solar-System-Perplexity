@@ -19,8 +19,11 @@ LINE = 25
 SEAM = 1.0
 CLEAN = (30, 390, 100, 1300)
 DONOR = 0.7
-LANE = (8.0, 64.0)
+LANE = (0.0, 8.0)
 SHIFT = (300, 137)
+AMP = 1.4
+LUMA = np.array([0.3, 0.5, 0.2])
+PALE = (0.12, 0.35)
 
 
 def to_linear(a):
@@ -123,7 +126,7 @@ def main(base=None, sky_gain=10.0):
         cv2.imwrite(f'{OUT}{key}/relief-air.png', img[..., ::-1])
     cv2.imwrite(W + 'air-preview.png', img[..., ::-1])
 
-    lum = air @ np.array([0.3, 0.5, 0.2])
+    lum = air @ LUMA
     cut = CUT[2] * smooth(CUT[0], CUT[1], lum)
     raw = np.maximum(A - As, 0)
     gate = (1 - smooth(0.55, 0.9, cut / CUT[2]))[..., None]
@@ -133,17 +136,21 @@ def main(base=None, sky_gain=10.0):
     tile = np.concatenate([tile, tile[:, ::-1]], 1)
     tile = np.concatenate([tile[::-1], tile], 0)
     donor = np.tile(tile, (AH // tile.shape[0] + 2, AW // tile.shape[1] + 2, 1))[70:70 + AH, 500:500 + AW]
-    stars = raw * np.minimum(1 / (1 - cut), 3)[..., None] * gate + donor * (1 - gate) * DONOR
+    tint = raw[y0:y1, x0:x1].mean((0, 1))
+    tint = tint / (tint @ LUMA)
+    pale = smooth(PALE[0], PALE[1], cut)[..., None]
+    raw = raw * (1 - pale) + (raw @ LUMA)[..., None] * tint * pale
+    stars = raw * np.minimum(1 / (1 - cut), AMP)[..., None] * gate + donor * (1 - gate) * DONOR
     line = np.maximum((el > SEAM).sum(0) - 1, 0)[None, :]
     under = yy.astype(np.int64) - line
     depth = under.astype(np.float32)
-    below = stars[np.abs(yy.astype(np.int64) - SHIFT[0]), np.abs(cols - SHIFT[1])] * smooth(LANE[0], LANE[1], depth)[..., None]
-    stars = np.where(under[..., None] > 0, below, stars) * (1 - smooth(MIRROR * 0.5, MIRROR, depth))[..., None]
+    moved = stars[np.abs(yy.astype(np.int64) - SHIFT[0]), np.abs(cols - SHIFT[1])]
+    lane = np.maximum(smooth(LANE[0], LANE[1], depth)[..., None], 1 - gate)
+    stars = (stars * (1 - lane) + moved * lane) * (1 - smooth(MIRROR * 0.5, MIRROR, depth))[..., None]
     px_, py_ = round(AW * MARGIN), round(AH * MARGIN)
     wide = np.pad(stars, ((py_, py_), (px_, px_), (0, 0)), mode='symmetric')
     im = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
-    im.save(f'{OUT}full/sky-terrain.webp', lossless=True, quality=90, method=6)
-    im.resize((im.size[0] // 2, im.size[1] // 2), Image.LANCZOS).save(f'{OUT}web/sky-terrain.webp', lossless=True, quality=90, method=6)
+    im.save('assets-src/venus/sky/uncorrected/sky-terrain.webp', lossless=True, quality=90, method=6)
     recon = film(air + stars * (el > 0)[..., None] * (1 - cut[..., None]) + B)
     cv2.imwrite(W + 'stars-preview.jpg', cv2.resize((to_srgb(film(stars * 10 * 0.4))[..., ::-1] * 255).astype(np.uint8), (AW // 2, AH // 2), interpolation=cv2.INTER_AREA))
     cv2.imwrite(W + 'air-recon.jpg', cv2.resize((to_srgb(recon)[..., ::-1] * 255).astype(np.uint8), (AW // 2, AH // 2), interpolation=cv2.INTER_AREA))
