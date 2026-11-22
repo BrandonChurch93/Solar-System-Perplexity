@@ -1,9 +1,154 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T07:35:55.280Z",
- "head": "3645e1d0c3baf97ac6d3de1d25788f76e12ea819",
- "note": "Earth, mail 80: the four judged frames at the final tier keep their bytes with the arrival cure (1755 da369901, 1857 b87e7ec9, 2010 6abe0501, 2156 fcde160f); hold sheet with the aurora's rise; repeat clean on 8 frames. Measure running.",
+ "pushed": "2026-11-22T08:12:34.610Z",
+ "head": "b4b77d474ec1a3af163c2f6558b2831a382fdd34",
+ "note": "Earth POLISH READY 2 set: arrival strips of mail 80 before and after, the aurora's rise, four judged frames at final (same bytes), hold, terrain and both cover sheets. Code c2a211a on main 45004ec, measure passes.",
  "looks": [
+  {
+   "time": "2026-11-22T08:12:33.867Z",
+   "file": "20261122081233867-note-sheet-rise-cover-preview-b19.jpg",
+   "source": "out/work/earth/pb/f/sheet-rise-cover-preview-b19.png",
+   "kind": "note",
+   "label": "Rise cover sheet, harness, review tier, preview format, frames 2125 to 2136, code 3b3819e on batch 19; frame 2133 rendered again on c2a211a is the same bytes (8fe0c619). agent/earth b4b77d4 (code c2a211a, earth hash d2fd0232), tree holds main 45004ec, engine batch 19 7a880ac6, engine hash 7553966a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:12:33.198Z",
+   "file": "20261122081233198-note-sheet-dive-cover-full-3b3819e.jpg",
+   "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
+   "kind": "note",
+   "label": "Dive cover sheet, harness, review tier, full format, frames 1879 to 1890, code 3b3819e; frames 1884 and 1888 rendered again on c2a211a are the same bytes (df7781a9, 85fa77b6). agent/earth b4b77d4 (code c2a211a, earth hash d2fd0232), tree holds main 45004ec, engine batch 19 7a880ac6, engine hash 7553966a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:12:32.535Z",
+   "file": "20261122081232535-note-sheet-hold.jpg",
+   "source": "out/work/earth/pb/j/sheet-hold.png",
+   "kind": "note",
+   "label": "Hold sheet, harness, review tier, frames 1680 to 1829: the aurora rises in the first 36 frames (mail 80), from 1721 as before. agent/earth b4b77d4 (code c2a211a, earth hash d2fd0232), tree holds main 45004ec, engine batch 19 7a880ac6, engine hash 7553966a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:12:31.848Z",
+   "file": "20261122081231848-note-sheet-terrain.jpg",
+   "source": "out/work/earth/pb/j/sheet-terrain.png",
+   "kind": "note",
+   "label": "Terrain sheet, harness, review tier, full format, frames 1920 to 2099, rendered on code c2a211a: 0 pixels differ from the sheet of code 3b3819e. agent/earth b4b77d4 (code c2a211a, earth hash d2fd0232), tree holds main 45004ec, engine batch 19 7a880ac6, engine hash 7553966a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:12:01.638Z",
+   "file": "20261122081201638-frame-f-1755-final.jpg",
+   "source": "out/work/earth/pb/k/f-1755-final.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T08:09:15.188Z",
+   "file": "20261122080915188-frame-r-2133.jpg",
+   "source": "out/work/earth/pb/j/r-2133.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2133, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2133,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T08:06:27.429Z",
+   "file": "20261122080627429-frame-r-1888.jpg",
+   "source": "out/work/earth/pb/j/r-1888.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1888, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1888,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T08:04:04.201Z",
+   "file": "20261122080404201-sheet-earth.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/earth.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.terrain, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "first": 1920,
+   "last": 2099,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T08:03:20.644Z",
+   "file": "20261122080320644-frame-f02018-review.jpg",
+   "source": "out/work/sheets/.frames-giuM44/f02018-review.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2018, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2018,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:57:07.805Z",
+   "file": "20261122075707805-job-frame-01857.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T07:46:06.059Z",
+   "file": "20261122074606059-job-frame-01967.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1967, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1967,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T07:36:06.023Z",
+   "file": "20261122073606023-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T07:30:58.296Z",
    "file": "20261122073058296-note-f-2156-final.jpg",
@@ -37,34 +182,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T07:30:36.570Z",
-   "file": "20261122073036570-frame-f-2156-final.jpg",
-   "source": "out/work/earth/pb/j/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:25:59.274Z",
-   "file": "20261122072559274-frame-f-1857-final.jpg",
-   "source": "out/work/earth/pb/j/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T07:20:53.488Z",
    "file": "20261122072053488-sheet-earth.hold-16x9-review.jpg",
    "source": "out/work/sheets/earth.hold-16x9-review.png",
@@ -74,20 +191,6 @@
    "segment": "earth.hold",
    "first": 1680,
    "last": 1829,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:20:41.006Z",
-   "file": "20261122072041006-frame-f01815-review.jpg",
-   "source": "out/work/sheets/.frames-5N0zi2/f01815-review.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1815, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1815,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -259,159 +362,6 @@
    "source": "out/work/earth/pb/f/sky-2010.png",
    "kind": "note",
    "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:37.373Z",
-   "file": "20261122061037373-note-sheet-terrain-b19.jpg",
-   "source": "out/work/earth/pb/g/sheet-terrain-b19.png",
-   "kind": "note",
-   "label": "Terrain sheet, harness, review tier, full format, frames 1920 to 2099: 0 pixels differ from the sheet on engine batch 18. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:36.506Z",
-   "file": "20261122061036506-note-f-2156-final.jpg",
-   "source": "out/work/earth/pb/f/f-2156-final.png",
-   "kind": "note",
-   "label": "Judged rise frame 2156 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:35.625Z",
-   "file": "20261122061035625-note-f-2010-final.jpg",
-   "source": "out/work/earth/pb/f/f-2010-final.png",
-   "kind": "note",
-   "label": "Judged terrain frame 2010 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:34.825Z",
-   "file": "20261122061034825-note-f-1857-final.jpg",
-   "source": "out/work/earth/pb/f/f-1857-final.png",
-   "kind": "note",
-   "label": "Judged dive frame 1857 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:34.064Z",
-   "file": "20261122061034064-note-f-1755-final.jpg",
-   "source": "out/work/earth/pb/f/f-1755-final.png",
-   "kind": "note",
-   "label": "Judged hold frame 1755 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:10:04.334Z",
-   "file": "20261122061004334-sheet-earth.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/earth.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.terrain, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "first": 1920,
-   "last": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:09:20.459Z",
-   "file": "20261122060920459-frame-f02018-review.jpg",
-   "source": "out/work/sheets/.frames-528SAe/f02018-review.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2018, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2018,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:03:15.747Z",
-   "file": "20261122060315747-job-frame-01857.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T05:52:25.884Z",
-   "file": "20261122055225884-job-frame-01970.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.terrain frame 1970, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 1970,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T05:44:33.157Z",
-   "file": "20261122054433157-note-pair-2156-b18-b19.jpg",
-   "source": "out/work/earth/pb/f/pair-2156-b18-b19.png",
-   "kind": "note",
-   "label": "Rise 2156 at the final tier: my still on engine batch 18 and on batch 19 (flight sky lift 0.74). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:32.036Z",
-   "file": "20261122054432036-note-cmp-hold-b19.jpg",
-   "source": "out/work/earth/pb/f/cmp-hold-b19.jpg",
-   "kind": "note",
-   "label": "Hold 1755 beside the approved hero, harness compare, final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:31.127Z",
-   "file": "20261122054431127-note-cmp-terrain-b19.jpg",
-   "source": "out/work/earth/pb/f/cmp-terrain-b19.jpg",
-   "kind": "note",
-   "label": "Terrain 2010 beside the approved close image, harness compare, final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:30.012Z",
-   "file": "20261122054430012-note-sheet-rise-cover-preview-b19.jpg",
-   "source": "out/work/earth/pb/f/sheet-rise-cover-preview-b19.png",
-   "kind": "note",
-   "label": "Rise cover sheet, harness, review tier, preview format, frames 2125 to 2136. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:29.181Z",
-   "file": "20261122054429181-note-sheet-dive-cover-full-3b3819e.jpg",
-   "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
-   "kind": "note",
-   "label": "Dive cover sheet, harness, review tier, full format, frames 1879 to 1890. Rendered with agent/earth code 3b3819e on main b0dd302 (engine batch 18); on main 2621f00 (engine batch 19, engine hash 7553966a) frames 1884 and 1888 at the review tier are the same bytes (sha256 df7781a9, 85fa77b6).",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:20.553Z",
-   "file": "20261122054420553-note-dive-approach-b19.jpg",
-   "source": "out/work/earth/pb/f/dive-approach-b19.png",
-   "kind": "note",
-   "label": "Dive handover 1872 and 1876, review tier, preview format: first READY above, now below. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:44:19.472Z",
-   "file": "20261122054419472-note-aur-1872-draft-review.jpg",
-   "source": "out/work/earth/pb/g/aur-1872-draft-review.png",
-   "kind": "note",
-   "label": "Dive 1872, aurora by the Moon: draft still with 1 sample (no shutter) and review still with 49 samples. The rays are crisp; the 29 px of motion in the shutter draw them out to parallelograms. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
   }
  ]
