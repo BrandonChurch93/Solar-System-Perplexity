@@ -12,7 +12,7 @@ index b4927f99..878b1704 100644
          uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
          uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
 diff --git a/src/stops/venus/look.ts b/src/stops/venus/look.ts
-index 5eca34b0..c285405e 100644
+index 3271df0f..a028df0e 100644
 --- a/src/stops/venus/look.ts
 +++ b/src/stops/venus/look.ts
 @@ -7,6 +7,7 @@ import veilJson from './veil.json'
@@ -55,10 +55,10 @@ index f89babf7..b0147547 100644
        },
        side: THREE.BackSide,
 diff --git a/src/stops/venus/set.ts b/src/stops/venus/set.ts
-index 4a161fc6..0ebf1ad3 100644
+index 88f05345..369cbb18 100644
 --- a/src/stops/venus/set.ts
 +++ b/src/stops/venus/set.ts
-@@ -219,6 +219,9 @@ export const createSet: SetFactory = async (ctx) => {
+@@ -214,6 +214,9 @@ export const createSet: SetFactory = async (ctx) => {
        gu.uAspect!.value = aspect
        gu.uLimbK!.value = look.limb.gain * (1 - low)
        gu.uLimbFar!.value = left
