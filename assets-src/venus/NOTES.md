@@ -1091,3 +1091,20 @@ Tested and left out, with the numbers:
 - C4, hold rim refit (`detail.py edge`, kept as `/home/user/workspace/keep/detail-edge.py`; tables `keep/hold-rim-e1.bin`, `keep/hold-rim-e2.bin`, float states `keep/rim-e1.npy`, `keep/rim-e2.npy`; the committed table is `keep/hold-rim-full.bin`, float `keep/rim-0220.npy`). At the judged frame, final tier, 1920 wide, it cures the double rim line: film less hero along the top limb (azimuth 60 to 120, offsets -3 to +2 px in steps of 0.5) main 0 0 1 6 14 20 26 24 15 4 -1, pass 1: 0 0 -1 0 1 3 5 5 0 -4 -2, pass 2: 0 0 0 0 0 1 2 2 -1 -3 -1; zones whole 2.25 to 2.24, halo 3.16 to 3.10, disc 1.23, ring 0.92, sky 2.63 the same. But at the preview size (960 wide), draft and review, the refit table puts a dark hairline inside the bright rim at hold frames off the fit frame: profile across the top limb at 1160 draft main 209 192 185 185 183 176 162, refit 209 188 171 167 172 174 162; at 1185 review main 203 188 185 186 184 174 154, refit 203 179 166 170 176 174 155, hero 204 184 170 159 152 145 137. Cause: the strip is fitted at 0.25 px of radius at 1920 wide; when the limb is drawn with fewer pixels (the preview size, or a smaller disc earlier in the hold) the film's own edge ramp is wider than the gain structure. The double line of main is also there at the preview size, in main too (`view/hold-rim-cmp.jpg`). Not taken: a cure at the judged frame that costs the hold in motion. A proper cure fits the strip against the edge ramp width, or widens the strip's rows with the pixel size; not provable before CUT34.
 
 Left and said in the CUT34 message: dive out 1314 to 1322 dissolve, rise in 1551 to 1558 smear (veil gates), terrain parallax (the move is not to be touched), 1586 carved ridges (painted far side), 1185 dark limb hairline (the approved hero's own), 1440 red +0.86, 1185 fine detail.
+
+## State at 16:00 (22 Nov): CUT34 proof done on the two commits, message going out (read this first after a compaction)
+
+State proved: veil change A (539534e0) plus the rise release over 24 frames (e30dd702), on the render copy r2 (engine of main 84b0ea4a; `git diff 84b0ea4a origin/main -- src config public package.json` is empty at main 732a67d3, so it is main's engine as it stands). Head holds main 732a67d3 through merge 2579b781.
+
+Proof (queue `q37.sh`, log `/tmp/q37.log`), all on the cumulative state:
+- Finals 1185, 1287, 1440, 1586 (`f26-*.png`): each the same bytes as main's own final (`f25-*.png`, which were compared with main's at 14:33).
+- G13: 0 of 433 frames over 0.02 soft (the frames 1576 to 1583, which now carry the release outside the cover window, pass).
+- Shader audit clean, vitest 87 of 87, G11, G12, G15 pass.
+- Repeat, six frames, three sessions, two runs: one hash each; 1185 1cb37f56f94478ec, 1287 267438642d6a031c, 1440 dca2f98d69a0cded, 1586 77f333178b7f48e1 (the hashes of main), 1566 8db214288fd065d8, 1580 550ee6696c384850.
+- Draft strip of the dive 1296 to 1330: every frame the same bytes as with the veil change alone, so the release change does not reach the dive.
+- Rise cover sheet at review (`view/c26-rc.png`), read frame by frame: 1555 to 1559 the same bytes as main, 1560 to 1566 the Sun and the blue sky carry on and dim step by step, the arch grows frame by frame, no new fault seen. Mean level per frame 86, 86, 83, 83, 83, 79, 76, 77, 79, 82, 85, 90.
+- Draft strip of the rise 1556 to 1591 (`k24`): frames 1560 to 1584 differ from the state with the veil change alone, 1556 to 1559 the same bytes.
+
+What is new with the release change, seen and said: at 1568 to 1575 a faint pillar of the carried Sun's glow stands beside the limb where the Sun was, and the sky right of the globe is a little lifted and blue until about 1583; the globe is slightly paler at 1568 to 1580 (the carry grade lasts longer).
+
+Not in CUT34: night side shade and the hold rim refit (section before). The working tree is clean but for this file. For CUT35 only small proven things: a rim strip refit that also holds at the preview size and off the fit frame would be one, if it can be proved over the whole hold.
