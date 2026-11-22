@@ -1,9 +1,49 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T14:03:51.109Z",
- "head": "3fb355a0ef415f72c62415cf5d0d2c63a0a05b9f",
- "note": "round 34: star mask, sum lift and rim cure at the Sun hand over, proofs rendering (tree 3fb355a plus uncommitted, main 84b0ea4)",
+ "pushed": "2026-11-22T14:37:59.558Z",
+ "head": "2c5d787fe60c089c8ac32f643ab112a3e85213f4",
+ "note": "round 34: Sun plate hand over proved on tree 2c5d787 (main ca78dda); next the flare ghosts over the night side named by the surface critics",
  "looks": [
+  {
+   "time": "2026-11-22T14:37:58.799Z",
+   "file": "20261122143758799-note-c13.jpg",
+   "source": "../../../../tmp/c13.jpg",
+   "kind": "note",
+   "label": "dropped variant out [1, 1.12, 1] at 495 (orange outline), tree 3fb355a plus uncommitted, main 84b0ea4",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:37:57.541Z",
+   "file": "20261122143757541-note-615-night-g3.jpg",
+   "source": "../../../../tmp/615-night-g3.jpg",
+   "kind": "note",
+   "label": "615 night side at gain 3: approved hero left, film final right (tree 3fb355a, main 84b0ea4): the flare streak and ghosts the surface critic names are in the approved hero",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:37:56.423Z",
+   "file": "20261122143756423-note-c14m.jpg",
+   "source": "../../../../tmp/c14m.jpg",
+   "kind": "note",
+   "label": "the same crops on main's Sun (tree 0547144, main a60c5ff)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:37:55.444Z",
+   "file": "20261122143755444-note-c14.jpg",
+   "source": "../../../../tmp/c14.jpg",
+   "kind": "note",
+   "label": "native 2x crops of the limb at 490 495 500, tree 0547144 with the Sun agent's d8ec4dd files: no white ring, a thin broken orange line left at 495",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:37:54.720Z",
+   "file": "20261122143754720-note-s14a.jpg",
+   "source": "../../../../tmp/s14a.jpg",
+   "kind": "note",
+   "label": "sun.travel 490 495 500 drafts, tree 0547144 (main a60c5ff): top with the Sun agent's d8ec4dd files laid over, bottom on main's Sun; limb darkening with a floor, stars masked, travel look on its own law",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T14:03:50.397Z",
    "file": "20261122140350397-note-c8-h0.jpg",
@@ -43,52 +83,6 @@
    "kind": "note",
    "label": "13:44 UTC, working tree on 3fb355a (merge of main 84b0ea4) plus the Sun agent's 4f72047, drafts 490 495 495 500 at twice size: top the star mask alone, bottom with the mask's inside law carried out to 1.06 radii so the leaving globe's edge is hidden as my plate takes over. Stars no longer show through corona, loops or disc",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:45:27.287Z",
-   "file": "20261122134527287-note-sc-native.jpg",
-   "source": "../../../../tmp/sc-native.jpg",
-   "kind": "note",
-   "label": "13:40 UTC, diagnosis, not a build: drafts 495 (left) and 490 with the Sun agent's branch 4f72047 laid over main 84b0ea4 and my plate replaced by a green line on its painted limb. The Sun globe's edge sits 10 to 17 px outside my limb on the left: that annulus is the ring of critic D at 495",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:23:09.369Z",
-   "file": "20261122132309369-note-lv2-sheet.jpg",
-   "source": "../../../../tmp/lv2-sheet.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1058 to 1068 at review, the Sun plate kept through the leave (working tree on d7e468a, main 8cd0877)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:23:08.837Z",
-   "file": "20261122132308837-note-lv2-native.jpg",
-   "source": "../../../../tmp/lv2-native.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1062 1064 1066 at review, 4x native: top cure in without smear (ladder), bottom with taps along the plate's motion (working tree on d7e468a, main 8cd0877)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:23:08.294Z",
-   "file": "20261122132308294-note-lv3-native.jpg",
-   "source": "../../../../tmp/lv3-native.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1062 1064 1066 at review, 16 samples, 4x native: top the plate's smear with taps only, bottom taps and a softer footprint (working tree on d7e468a, main 8cd0877): no ladder",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:04:33.680Z",
-   "file": "20261122130433680-job-frame-00615.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T08:27:22.479Z",
