@@ -969,3 +969,27 @@ The ladder at 1310, second reading (the first reading in "State at 13:42" was ha
 Cure in test (`push.py ROOT k0 k1`, on top of the pole fade): look key `sheets.push: [k0, k1]`; in `Veil.update` the near fade of the sheets moves out with the rush, `uFade.x = near[0] + thin * mist[5] + fast * push[0]`, `uFade.y` the same with `push[1]`, `fast` being the value of `uRush`. With rush 0 nothing changes. Queue `q33.sh` (log `/tmp/q33.log`, about 14:22, review tier, preview size, render copy on main 84b0ea4): n1 = push [0.4, 0.2] at 1310, 1312, 1563, 1316, 1558, 1566, 1309; pp = pole fade alone at 1312, 1563, 1316, 1558, 1566 (`r2/out/work/venus/p6/n1-F.png`, `pp-F.png`; `b6-1309.png`, `b6-1310.png`, `v9-1310.png` are the present look there).
 
 Plan: decide on the near fade by about 14:25; put the kept state into the repo; ONE full proof queue on it (finals with `cmp` against `f24b`, draft strips against `bd`, audit, repeat, both cover sheets read frame by frame, chain), about 65 minutes; commit; `CUT34 venus` when the cut time is named (about 16:15). The critics' words of round 33 (14:40 to 15:30) are answered in the time left or in round 35 if low risk.
+
+## State at 14:18 (22 Nov): near fade push decided (orbit side only), ONE full proof q34 running for CUT34 (read this first after a compaction)
+
+Head 5840785 (merge of main a60c5ff: status 103 and 104, `scorecards/round-033/select.json`; records only, no source, config or tool change since 84b0ea4) and this note. The render copy r2 stays on main 84b0ea4. Working tree of the repo: `veil.ts` and `look.ts` carry the pole fade `sheets.pole [0.12, 0.45]` AND the push `sheets.push [0.4, 0.2]`, NOT committed until q34 is read.
+
+Near fade push, test q33 (review tier, preview size, r2 on main 84b0ea4; left pole fade alone, right pole fade and push on both sides; pairs in the looks 14:17):
+- 1310 (`view/n1-1310.jpg`, `view/n1-1310-crop.jpg`): the ladder of pale rungs at the bottom centre is gone, soft cloud forms in its place.
+- 1309 (`view/n1-1309.jpg`, `view/n1-1309-crop.jpg`): the fine dark hair lines in the lower centre are gone, broad soft streaks stay.
+- 1312, 1563, 1566 (`view/n1-1312.jpg`, `view/n1-1563.jpg`, `view/n1-1566.jpg`): a little softer, no new fault.
+- 1316, terrain side (`view/n1-1316.jpg`): 329,334 pixels change, mean 4.2, max 32: the large pale forms with their streaks go flat. That is a loss against item 28 (form the eye can follow). 1558, terrain side: max 7 levels, nearly the same.
+- Decision: the push acts on the orbit side only. `Veil.update` gets `mist` 0 from the orbit side and 1 from the terrain side, so the term is `fast * (1 - mist) * push[k]`: `uFade.x = near[0] + thin * mist[5] + fast * (1 - mist) * push[0]`, `uFade.y` the same with `push[1]`. Terrain side frames keep the bytes of the pole fade state (which keeps the bytes of main there). `push.py` writes this form now.
+
+Proof queue `q34.sh` (log `/tmp/q34.log`, started 14:17, ends "queue34 done" about 15:27), r2 on main 84b0ea4 with the repo's three folders:
+1. `tsc` (passes), finals `r2/out/work/venus/p6/f25-F.png` with `cmp` against main's own finals `f24b-F.png`;
+2. draft strip at preview size `qd-F.png` (1296 to 1330, 1543 to 1578) against main's `bd-F.png`, list of changed frames (expected: orbit side frames with rush above 0 only, 1299 to 1313 and 1560 to 1575);
+3. audit and repeat (`/tmp/q34-audit.log`, `/tmp/q34-rep.log`, 14 frames);
+4. review cover sheets c25 (`view/c25-rc.png`, `view/c25-dc.png`): read every frame; `python3 cellcmp.py view/c23-dc.png view/c25-dc.png 1309`, the rise against `view/c23-rc.png` from 1555 (sky rows differ through main's flight sky);
+5. review stills `r25-{1304,1307,1569,1572}.png`;
+6. chain (`/tmp/chain25.log`, `/tmp/c2-*.log`).
+While it runs: no change to `src/stops/venus` or `public/assets/venus` in the repo; commit this file alone.
+
+After it: commit the code, push, looks, and when the cut time is named `CUT34 venus`: READY with the full hash; judged frames differing from main: none if `cmp` holds; motion changed in venus.dive, venus.dive-cover, venus.rise, venus.rise-cover (orbit side frames under the veil); item 28; worse or new: fewer fine speed lines and a slightly thinner veil over the globe at 1309 to 1311. If a sheet shows a fault: `git checkout src/stops/venus/veil.ts src/stops/venus/look.ts` and say that the round 33 hash stands; the pole fade alone would then go to CUT35 with its own proof.
+
+Round 33: Venus measures green on the Builder's workers (status 104); the film jury R2 is asked for Venus (open item 32); critics' words between about 14:40 and 15:30.
