@@ -225,6 +225,7 @@ export class Engine {
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
+      this.sky.setBandLook(shot.skyLook ?? 0)
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
