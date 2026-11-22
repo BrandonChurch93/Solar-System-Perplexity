@@ -1,9 +1,33 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T03:19:02.047Z",
+ "pushed": "2026-11-22T03:38:36.524Z",
  "head": "dccb4e63477467c4c7a48ede16e35302caea783a",
- "note": "Phase 6 polish: dive cover drafts, items 2, 4, 6 in work",
+ "note": "Phase 6 polish in progress on main a67c9c34: rise rebuilt (items 3, 4), dive drafts earlier; island under the cover is the open fault",
  "looks": [
+  {
+   "time": "2026-11-22T03:38:35.499Z",
+   "file": "20261122033835499-note-look-994-996.jpg",
+   "source": "out/work/mercury/p6/s3/look-994-996.jpg",
+   "kind": "note",
+   "label": "Rise 994 and 996 at 128 samples: blur smooth, pale island of the ground picture still to cure (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T03:38:34.529Z",
+   "file": "20261122033834529-note-pair-615-1016.jpg",
+   "source": "out/work/mercury/p6/s1/pair-615-1016.jpg",
+   "kind": "note",
+   "label": "Hold 615 beside rise 1016, 1034, 1002 drafts: the rise now ends on the hold's lit face (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T03:38:33.387Z",
+   "file": "20261122033833387-note-sheet-a.jpg",
+   "source": "out/work/mercury/p6/s2/sheet-a.jpg",
+   "kind": "note",
+   "label": "Rise drafts 988 to 1016, new pullback line with the Sun kept in frame (tree on main a67c9c34, work in progress, uncommitted)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T03:18:50.189Z",
    "file": "20261122031850189-note-look.jpg",
@@ -26,36 +50,6 @@
    "source": "out/work/mercury/p6/d3/proof.jpg",
    "kind": "note",
    "label": "dive cover 722 to 746 draft, every frame, Sun place and ground colour (tree on main 3d48581, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T02:53:09.029Z",
-   "file": "20261122025309029-frame-f726.jpg",
-   "source": "out/work/mercury/p6/d2/f726.png",
-   "kind": "frame",
-   "label": "mercury.dive frame 726, draft tier",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 726,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:48:56.860Z",
-   "file": "20261122024856860-note-sheet-b.jpg",
-   "source": "out/work/mercury/p6/d1/sheet-b.jpg",
-   "kind": "note",
-   "label": "p6 item 2 BEFORE, drafts 741 to 746 on main 3d48581: swap at 744, left crater copy and brightness do not match",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T02:48:56.282Z",
-   "file": "20261122024856282-note-sheet-a.jpg",
-   "source": "out/work/mercury/p6/d1/sheet-a.jpg",
-   "kind": "note",
-   "label": "p6 item 2 BEFORE, drafts 726 730 734 737 739 740 (1 sample, no blur) on main 3d48581: globe pops to the grey picture at 739, crater copies at the sides",
    "stop": "mercury"
   },
   {
