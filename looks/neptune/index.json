@@ -1,70 +1,70 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T08:51:08.160Z",
- "head": "4cbeec290e3ff750c4646b3c0166fae0f15a9f80",
- "note": "Neptune polish: take 3 of the border cure tore under the base (blocky steps, lifted), take 4 in proof",
+ "pushed": "2026-11-22T08:54:11.683Z",
+ "head": "5bce1b06b47d2d2839dcb842da2da1337b086e5b",
+ "note": "Neptune polish: take 4 of the core border cure, review stills 4770, 4786, 4803 before and after; proof chain running",
  "looks": [
   {
-   "time": "2026-11-22T08:51:06.188Z",
-   "file": "20261122085106188-frame-r-4770.jpg",
-   "source": "out/work/nep/p6/knit/after4/r-4770.png",
+   "time": "2026-11-22T08:53:35.139Z",
+   "file": "20261122085335139-note-final-5006-batch19-batch20.jpg",
+   "source": "out/work/nep/p6/knit/final-5006-batch19-batch20.jpg",
+   "kind": "note",
+   "label": "rise 5006 final: engine batch 19 left, batch 20 right (only the sky differs)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:34.593Z",
+   "file": "20261122085334593-note-border4-4770-base-native.jpg",
+   "source": "out/work/nep/p6/knit/border4-4770-base-native.jpg",
+   "kind": "note",
+   "label": "terrain 4770 review, base border right half, native: committed above, take 4 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:34.062Z",
+   "file": "20261122085334062-note-border4-4803-base-r-native.jpg",
+   "source": "out/work/nep/p6/knit/border4-4803-base-r-native.jpg",
+   "kind": "note",
+   "label": "terrain 4803 review, base border right half, native: committed above, take 4 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:33.522Z",
+   "file": "20261122085333522-note-border4-4803-base-l-lifted.jpg",
+   "source": "out/work/nep/p6/knit/border4-4803-base-l-lifted.jpg",
+   "kind": "note",
+   "label": "terrain 4803 review, base border left half, native, lifted (gamma 0.6): committed above, take 4 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:32.968Z",
+   "file": "20261122085332968-note-border4-4803-foot-x3.jpg",
+   "source": "out/work/nep/p6/knit/border4-4803-foot-x3.jpg",
+   "kind": "note",
+   "label": "terrain 4803 review, foot of the right border and box corner, raised 3 times: committed left, take 4 right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:32.376Z",
+   "file": "20261122085332376-note-border4-4803-native.jpg",
+   "source": "out/work/nep/p6/knit/border4-4803-native.jpg",
+   "kind": "note",
+   "label": "terrain 4803 review, right core border, native: committed maps left, take 4 right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T08:53:23.221Z",
+   "file": "20261122085323221-frame-final-4860.jpg",
+   "source": "out/work/nep/p6/knit/after4/final-4860.png",
    "kind": "frame",
-   "label": "neptune.terrain frame 4770, review tier",
+   "label": "neptune.terrain frame 4860, final tier",
    "stop": "neptune",
    "segment": "neptune.terrain",
-   "frame": 4770,
-   "tier": "review",
+   "frame": 4860,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:48:06.338Z",
-   "file": "20261122084806338-note-t3-final-4860-left-edge-x5.jpg",
-   "source": "out/work/nep/p6/knit/t3-final-4860-left-edge-x5.jpg",
-   "kind": "note",
-   "label": "final 4860 left frame edge raised 5 times: committed, take 3, committed, take 3 (column 0 fringe gone)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T08:48:05.644Z",
-   "file": "20261122084805644-note-t4-proto-right-border-mapscale.jpg",
-   "source": "out/work/nep/p6/knit/t4-proto-right-border-mapscale.jpg",
-   "kind": "note",
-   "label": "take 4 prototype, right border of the core frame, map scale: committed left, take 4 right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T08:48:04.892Z",
-   "file": "20261122084804892-note-t4-proto-corner-right-mapscale.jpg",
-   "source": "out/work/nep/p6/knit/t4-proto-corner-right-mapscale.jpg",
-   "kind": "note",
-   "label": "take 4 prototype, lower right corner of the core frame, map scale: committed left, take 4 right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T08:48:04.119Z",
-   "file": "20261122084804119-note-t4-proto-base-right-mapscale-lifted.jpg",
-   "source": "out/work/nep/p6/knit/t4-proto-base-right-mapscale-lifted.jpg",
-   "kind": "note",
-   "label": "take 4 prototype, map composite under the base, right third, lifted: committed above, take 4 below",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T08:48:03.449Z",
-   "file": "20261122084803449-note-t4-proto-base-left-mapscale-lifted.jpg",
-   "source": "out/work/nep/p6/knit/t4-proto-base-left-mapscale-lifted.jpg",
-   "kind": "note",
-   "label": "take 4 prototype, map composite under the base, left third, lifted: committed above, take 4 below, no steps",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T08:48:02.629Z",
-   "file": "20261122084802629-note-t3-fault-base-left-mapscale-lifted.jpg",
-   "source": "out/work/nep/p6/knit/t3-fault-base-left-mapscale-lifted.jpg",
-   "kind": "note",
-   "label": "take 3 fault, map composite under the base, left third, lifted (gamma 3): committed above, take 3 below with blocky steps",
-   "stop": "neptune"
   },
   {
    "time": "2026-11-22T08:36:07.743Z",
