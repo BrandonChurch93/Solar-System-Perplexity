@@ -637,10 +637,12 @@ export class FilmDirector implements Director {
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
       }
+      const gain = p.skyGain(time)
+      if (gain !== 1) light = { ...light, sky: light.sky * gain }
     }
 
     pose.quaternion.multiply(drift(time))
-    if (cover.amount > 0) light = { ...light, sky: light.sky * Math.pow(1 - cover.amount, 2) }
+    if (cover.amount > 0) light = { ...light, sky: light.sky * this.plans[index]!.skyUnderCover(cover.amount, time) }
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }

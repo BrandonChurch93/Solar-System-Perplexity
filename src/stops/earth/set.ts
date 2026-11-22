@@ -93,6 +93,7 @@ export const createSet: SetFactory = async (ctx) => {
   const eyeDir = new THREE.Vector3()
   const lean = new THREE.Quaternion()
   const ease = look.globe.drift.ease
+  const home = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.length()
 
   return {
     id: plan.id,
@@ -134,9 +135,13 @@ export const createSet: SetFactory = async (ctx) => {
       back.copy(state.rotation).invert()
       eye.copy(camera).applyQuaternion(back).applyMatrix3(unshape)
       eyeWorld.copy(eye).applyQuaternion(state.rotation)
-      const away = smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
-      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, state.time - plan.holdMid, away, state.time >= plan.seg.terrain.start ? 1 : 0)
+      const near = Math.sqrt((home * home - 1) / Math.max(camera.lengthSq() - 1, 1e-6))
+      const away = plan.clock(state.time) !== state.time ? smooth((near - look.back[0]!) / (look.back[1]! - look.back[0]!)) : smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
+      const pace = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise') ? plan.pace(seg.kind, state.time) : 0
+      const lights = 1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))
+      globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
+      gu.uLights!.value = lights
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
       gu.uAspect!.value = aspect
@@ -146,21 +151,22 @@ export const createSet: SetFactory = async (ctx) => {
       au.uGain!.value = gain * state.weight
       au.uWide!.value = 1 - low
       au.uAway!.value = away
+      au.uFree!.value = plan.clock(state.time) !== state.time ? 1 : away
       const thinAir = 1 + (d.air - 1) * low
       ;(au.uHeight!.value as THREE.Vector4).set(look.air.heights[0]! * thinAir, look.air.heights[1]! * thinAir, look.air.heights[2]!, look.air.heights[3]!)
       const layers = au.uColor!.value as THREE.Vector3[]
       const tint = seg.kind === 'rise' ? d.glow.rise : d.glow.dive
       for (let i = 0; i < 2; i++) layers[i]!.fromArray(look.air.colors[i]!).multiply(airTint.set(1 + (tint[0] - 1) * low, 1 + (tint[1] - 1) * low, 1 + (tint[2] - 1) * low))
-      au.uPhysical!.value = state.time >= plan.seg.terrain.start ? 1 : Math.max(low, lit)
+      au.uPhysical!.value = Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
       curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
       stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
       curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
-      const near = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
-      curtain.update(state.time - plan.holdMid, gain * state.weight * near, shot.post.vignette * (1 - low), aspect, away)
+      const high = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
       sunLocal.copy(light).applyQuaternion(back)
-      moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (state.time - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
+      curtain.update(plan.clock(state.time) - plan.holdMid, gain * state.weight * high, shot.post.vignette * (1 - low), aspect, away, sunLocal)
+      moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (plan.clock(state.time) - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

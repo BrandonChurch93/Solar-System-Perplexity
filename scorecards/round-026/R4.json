@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-04.png",
+   "where": "bottom border and upper-left outer ring limb (frames 3663-3744)",
+   "what": "the bottom edge of the warped terrain source picture enters the frame as a sloped seam with clamped, smeared ring stripes below it, and the upper-left outer ring edge tears horizontally into space",
+   "fix": "extend or overscan the terrain plate beyond the frustum and clean up the ring depth-warp mask so no source border, edge clamping or mesh tearing enters the frame"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive trajectory and background sky across frames 3564-3629",
+   "what": "instead of one unbroken dive, the camera swings Saturn upper-right and shrinks it until stalling near frame 3600, then reverses screen direction down-left while zooming in, fading out the Milky Way band and adding a bright left-limb halo on the globe",
+   "fix": "route the 3D dive camera along a continuous approach vector that matches the terrain camera's incoming velocity, FOV, globe shading and Milky Way background exposure"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise pullback, globe left limb and sky across frames 3817-3857",
+   "what": "the camera pulls straight back pushing Saturn rightward from 3817 to 3830—showing a warp notch at the lit left limb in 3823 while the Milky Way pops back in from black space and the limb glow vanishes—then whips Saturn sharply leftward from 3830 to 3857 without continuing to recede",
+   "fix": "blend the terrain pullback into a single continuous 3D departure curve with matched sky exposure, consistent limb lighting and smooth monotonic recession"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "Saturn globe and ring motion across frames 3597-3600",
+   "what": "rightward screen motion decelerates to a halt at frame 3599 and begins reversing leftward at frame 3600 instead of carrying continuously across the cover",
+   "fix": "match the pre-cover 3D velocity and focal length to the post-cover terrain motion so speed and direction carry across without stalling or reversing"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "Saturn framing and apparent scale across frames 3835-3846",
+   "what": "leftward pan speed accelerates abruptly after frame 3837 while Saturn slightly grows in screen area instead of continuing its outward pullback across the cover",
+   "fix": "ease the angular pan velocity smoothly across the cover window and keep camera distance increasing monotonically throughout the rise"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "Saturn cloud bands, twin storm ovals near the terminator and lower-left lit limb (frames 3630-3809)",
+   "what": "unlike the rotating globe in hold, Saturn's clouds and storm ovals remain frozen on the 2D terrain plate across all 180 frames, and a faint vertical warp smear appears outside the lower-left lit limb by frame 3809",
+   "fix": "animate subtle globe rotation and ring flow in the terrain segment and tighten the foreground-to-globe depth matte along the lower-left limb"
+  }
+ ]
+}

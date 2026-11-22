@@ -31,6 +31,7 @@ export interface AirLine {
   tail: [number, number, number]
   tailEdge: [number, number]
   fade: [number, number, number]
+  crest: { width: number; density: number; glow: number; share: number; light: [number, number, number]; aim: [number, number, number]; edge: [number, number]; bulge: [number, number]; lift: number; fall: [number, number]; gap: number; head: [number, number, number, number]; headEdge: [number, number]; spread: number }
 }
 
 export interface AirParams {
@@ -61,6 +62,14 @@ uniform float uLineLift;
 uniform vec3 uLineTail;
 uniform vec2 uLineTailEdge;
 uniform vec3 uLineFade;
+uniform vec4 uCrest;
+uniform vec3 uCrestLight;
+uniform vec3 uCrestAim;
+uniform vec4 uCrestEdge;
+uniform vec3 uCrestFall;
+uniform float uCrestGap;
+uniform vec4 uCrestHead;
+uniform vec3 uCrestHeadEdge;
 uniform vec2 uAirForward;
 uniform vec4 uAirNear;
 vec3 airLight(vec3 day, vec3 twilight, vec3 night, vec2 edge, vec3 sun, vec3 at, float fwd) {
@@ -83,7 +92,12 @@ vec4 air(vec3 dir, bool ground) {
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
   vec3 tp = normalize(uCam + dir * b);
-  float bulge = uLineBulge.w * smoothstep(0.8, 0.99, dot(tp, uLineBulge.xyz));
+  float sector = smoothstep(uCrestEdge.z, uCrestEdge.w, dot(tp, uLineBulge.xyz));
+  float bulge = uLineBulge.w * sector;
+  float on = smoothstep(uCrestEdge.x, uCrestEdge.y, dot(tp, uCrestAim)) * step(1e-5, uCrestLight.b);
+  float rc = 1.0 + uCrestFall.x * step(1e-5, uCrestLight.b) + bulge;
+  float rt = sqrt(max(rt2, 0.0));
+  sum *= 1.0 - (ground ? 0.0 : uCrestGap) * on * (1.0 - smoothstep(rc - 0.003, rc + 0.001, rt));
   float r1 = uLineShape.x + bulge + uLineLift * smoothstep(0.0, 0.4, dot(tp, uSunW));
   float r2 = uLineShape.y + bulge;
   if (b > 0.0 && rt2 < r2 * r2 && r > r2) {
@@ -91,7 +105,15 @@ vec4 air(vec3 dir, bool ground) {
     float near = sqrt(max(r1 * r1 - rt2, 0.0));
     float path = (far - near) * (ground ? 1.0 : 2.0);
     float tau = uLineShape.z * path;
-    sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w * (1.0 - uLineFade.z * smoothstep(uLineFade.x, uLineFade.y, dot(tp, uSunW)));
+    sum += (airLight(uLineDay, uLineTwilight, uLineNight, uLineEdge, uLineSun, at, fwd) + uLineTail * smoothstep(uLineTailEdge.x, uLineTailEdge.y, dot(tp, uSunW))) * (1.0 - exp(-tau)) * uLineShape.w * (1.0 - uLineFade.z * smoothstep(uLineFade.x, uLineFade.y, dot(tp, uSunW))) * (1.0 - on);
+  }
+  float crest = on * (1.0 - uCrestFall.y * pow(sector, uCrestFall.z)) * (1.0 + uCrestHead.w * smoothstep(uCrestHeadEdge.x, uCrestHeadEdge.y, dot(tp, uCrestHead.xyz)));
+  for (int k = 0; k < (crest > 0.0 && b > 0.0 ? 1 : 0); k++) {
+    float ro = rc + uCrest.x;
+    float thin = (sqrt(max(ro * ro - rt2, 0.0)) - sqrt(max(rc * rc - rt2, 0.0))) * (ground ? 1.0 : 2.0);
+    float x = rt - rc;
+    float glow = x > 0.0 ? exp(-x / uCrest.z) : 0.5 * exp(x / (0.35 * uCrest.z));
+    sum += uCrestLight * (crest * (1.0 - exp(-uCrest.y * thin * smoothstep(-0.9 * uCrest.z, -0.25 * uCrest.z, x))) + mix(crest, on, uCrestHeadEdge.z) * uCrest.w * glow);
   }
   return vec4(sum * mix(vec3(1.0), uAirNear.rgb, uAirNear.w), total);
 }`
@@ -146,6 +168,14 @@ export function airUniforms(p: AirParams): Record<string, THREE.IUniform> {
     uLineTail: { value: new THREE.Vector3() },
     uLineTailEdge: { value: new THREE.Vector2(p.line.tailEdge[0], p.line.tailEdge[1]) },
     uLineFade: { value: new THREE.Vector3(p.line.fade[0], p.line.fade[1], 0) },
+    uCrest: { value: new THREE.Vector4(p.line.crest.width, p.line.crest.density, p.line.crest.glow, p.line.crest.share) },
+    uCrestLight: { value: new THREE.Vector3() },
+    uCrestAim: { value: new THREE.Vector3(1, 0, 0) },
+    uCrestFall: { value: new THREE.Vector3(p.line.crest.lift, p.line.crest.fall[0], p.line.crest.fall[1]) },
+    uCrestGap: { value: 0 },
+    uCrestHead: { value: new THREE.Vector4(1, 0, 0, p.line.crest.head[3]) },
+    uCrestHeadEdge: { value: new THREE.Vector3(p.line.crest.headEdge[0], p.line.crest.headEdge[1], p.line.crest.spread) },
+    uCrestEdge: { value: new THREE.Vector4(p.line.crest.edge[0], p.line.crest.edge[1], p.line.crest.bulge[0], p.line.crest.bulge[1]) },
     uAirForward: { value: new THREE.Vector2(p.forward, p.forwardPower) },
     uAirNear: { value: new THREE.Vector4(p.near[0], p.near[1], p.near[2], 0) },
   }
@@ -206,6 +236,11 @@ export class Air {
       ;(u.uLineFade!.value as THREE.Vector3).z = ln.fade[2] * home
       this.work.set(ln.bulge[0], ln.bulge[1], ln.bulge[2]).applyQuaternion(rotation).normalize()
       ;(u.uLineBulge!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.bulge[3] * home)
+      ;(u.uCrestLight!.value as THREE.Vector3).fromArray(ln.crest.light).multiplyScalar(home)
+      u.uCrestGap!.value = ln.crest.gap * home
+      this.work.set(ln.crest.head[0], ln.crest.head[1], ln.crest.head[2]).applyQuaternion(rotation).normalize()
+      ;(u.uCrestHead!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.crest.head[3])
+      ;(u.uCrestAim!.value as THREE.Vector3).fromArray(ln.crest.aim).applyQuaternion(rotation).normalize()
     }
     this.material.uniforms.uGain!.value = gain
   }

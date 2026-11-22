@@ -5,6 +5,7 @@ import { ROOT, WORK, args, ensureBuild, loadConfig, machineId, requireDisk } fro
 import { decodePng, openSource } from './lib/frames'
 import { countTexels } from './measure/texels'
 import { coverWindow, judgedFrames, stopSegments } from '../src/director/timeline'
+import '../src/director/plans' // each plan sets its stop's cover window
 
 const cfg = loadConfig()
 const a = args()

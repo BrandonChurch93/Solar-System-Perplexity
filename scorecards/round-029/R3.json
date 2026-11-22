@@ -1,0 +1,78 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "mid sunlit terrain, just right of center",
+      "what": "a narrow cyan streak cuts across crater rims instead of following the ground; the same mark is in the native crop on image-06.png",
+      "fix": "remove the streak and repaint that patch with the surrounding gray-brown regolith"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "night side, left of the terminator",
+      "what": "faint rectangular flare ghosts sit on the dark disk",
+      "fix": "hide the flare behind the planet, or soften the ghosts so they do not read as geometry"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "night side, left of the terminator",
+      "what": "the same faint segmented flare ghosts show on the dark face",
+      "fix": "hide the flare behind the planet, or soften the ghosts so they do not read as geometry"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops E, F and H, sunlit walls and foreground rim of the large crater",
+      "what": "Fine surface relief on the crater walls smears into long, parallel ribbons, while the crater floor and some of the adjacent rock stay much sharper.",
+      "fix": "Restore slope-aware, multiscale rock detail on the walls and rim so fine relief retains its shape and stays consistent with the crater floor."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B and F, sunlit upper globe around the dominant white ray crater",
+      "what": "Broad milky patches wash out the small craters, and several soft white spots look like glows painted over the sharper rocky surface.",
+      "fix": "Reduce the white bloom and integrate the bright ejecta into the surface texture, preserving small crater rims and grain through the bright patches."
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "sky immediately outside the upper-left and top limb",
+      "what": "A narrow, continuous warm halo follows the bright edge of the otherwise sharply bounded rocky globe.",
+      "fix": "Keep the warm edge light on the surface and reduce the spill into space; if optical bloom is intended, tie it to the brightest parts of the limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crops T and U, lower foreground plains between the small craters",
+      "what": "Scattered near-white pinpricks read as glitter against the soft, dark ground rather than as lit pieces of rock.",
+      "fix": "Reduce the isolated peaks and tie any remaining bright flecks to discernible, consistently lit rock facets."
+     }
+    ]
+   }
+  }
+ ]
+}

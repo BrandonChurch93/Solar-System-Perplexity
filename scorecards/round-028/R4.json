@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 4168–4170, diagonal horizon and right-hand ring arcs",
+   "what": "The crisp cyan limb and long ring arcs arrive almost together between consecutive frames while the original broad cloud band remains visible. The two layers briefly read as a reveal rather than one continuous camera move.",
+   "fix": "Align the outgoing and incoming horizon trajectories and let the limb and rings emerge progressively through the moving cloud cover."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4414–4416, lower third",
+   "what": "A distinct curved limb becomes visible beneath the still-diagonal atmospheric streak. The change in horizon geometry is visible before the cover clears.",
+   "fix": "Keep the outgoing horizon tilt and curvature through the reveal, then ease into the pullback once the new limb has cleared the cloud band."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 3960–4109, bright cloud knots on the globe",
+   "what": "The globe's cloud landmarks barely shift relative to its limb as the moons drift, making the planet look nearly static during the hold.",
+   "fix": "Add subtle continuous globe rotation or cloud drift without moving the star field independently of the camera."
+  }
+ ]
+}

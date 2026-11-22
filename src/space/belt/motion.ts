@@ -7,7 +7,7 @@ import spec from './belt.json'
 
 export interface BeltDirector { shotAt(frame: number, time: number): Shot }
 
-export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; smear: number; approach: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number }
+export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; flow: number; approach: number; velocity: number[]; ease: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number }
 
 export interface RockPose { position: THREE.Vector3; quaternion: THREE.Quaternion }
 
@@ -36,6 +36,7 @@ export class BeltMotion {
   private readonly base: THREE.Vector3[] = []
   private readonly from: THREE.Quaternion[] = []
   private readonly flow0: THREE.Vector3[] = []
+  private readonly own: THREE.Vector3[] = []
   private readonly turn: THREE.Quaternion[] = []
   private readonly axis: THREE.Vector3[] = []
   private readonly spinQ = new THREE.Quaternion()
@@ -58,6 +59,7 @@ export class BeltMotion {
       this.times.push(time)
       this.base.push(dir.multiplyScalar(r.distance).applyQuaternion(q))
       this.from.push(q.clone().invert())
+      this.own.push(new THREE.Vector3().fromArray(r.velocity).applyQuaternion(q))
       this.flow0.push(this.drift(time, new THREE.Vector3()))
       this.turn.push(q.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(r.tilt[0]! * RAD, r.tilt[1]! * RAD, r.tilt[2]! * RAD))))
       this.axis.push(new THREE.Vector3().fromArray(r.axis).normalize())
@@ -78,8 +80,8 @@ export class BeltMotion {
     const dt = shot.time - this.times[index]!
     this.pan.copy(shot.camera.quaternion).multiply(this.from[index]!)
     this.pan.copy(this.unit.identity().slerp(this.pan, r.hold))
-    out.position.copy(this.base[index]!).applyQuaternion(this.pan).multiplyScalar(Math.max(1 + (r.approach * dt) / r.distance, 0.05))
-    out.position.sub(this.drift(shot.time, this.c)).add(this.flow0[index]!)
+    out.position.copy(this.base[index]!).addScaledVector(this.own[index]!, dt * (1 + r.ease * dt * dt)).applyQuaternion(this.pan).multiplyScalar(Math.max(1 + (r.approach * dt) / r.distance, 0.05))
+    out.position.addScaledVector(this.drift(shot.time, this.c).sub(this.flow0[index]!), -r.flow)
     this.spinQ.setFromAxisAngle(this.axis[index]!, r.spin * RAD * dt)
     out.quaternion.copy(this.turn[index]!).multiply(this.spinQ)
   }

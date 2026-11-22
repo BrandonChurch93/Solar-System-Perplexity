@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 3,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "full frame across rise cover (frames 4975-4986, and sheet-05.png frames 4970-5024)",
+   "what": "the frames before and after the cover belong to two incompatible shots rather than one unbroken flight: a wide low-orbit horizon lit from above-right with a Milky Way sky cross-dissolves in a few frames to a small distant full globe whose sunlight direction flips to upper-left, rings tilt steeply to ~45 degrees, moon jumps from upper-left to a half-lit crescent on the far right, and Milky Way starfield disappears",
+   "fix": "render the rise pullback from the exact same 3D planet, ring tilt, moon orbit, sun angle, and starfield used in hold and dive, matching camera FOV, altitude, and horizon curvature continuously through the cloud layer"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "horizon and storm vortex across dive cover (frames 4729-4740, and sheet-02.png frames 4720-4745)",
+   "what": "camera position, pitch, and horizon geometry jump inside the cover: entering at 4720-4731 the camera zooms straight into the globe face with the limb plunging ~45 degrees down the right side, while exiting at 4735-4740 reveals a shallow ~15-degree horizon spanning the full frame width and a grazing foreshortened vortex",
+   "fix": "drive dive with a true 3D camera pitch-and-descent path so the globe limb continuously flattens and rotates into the low-orbit horizon angle across frames 4720-4745 instead of cross-fading two mismatched views"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "upper sky and space around planet limb (frames 4975-4977 and 4981-4985, and sheet-03.png frames 4735-4739)",
+   "what": "the cloud cover is a flat semi-transparent 2D radial-streak overlay that extends across black outer space, stars, and planetary rings well above the atmospheric limb",
+   "fix": "confine volumetric cloud pass-through strictly within the 3D atmospheric shell below the limb so clouds never composite in front of empty space or distant planetary rings"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "planet disc, right-side storm clouds, and rings (frames 4982-4986, sheet-05.png frames 4984-4990, and sheet-02.png frame 4720)",
+   "what": "fast motion uses a 2D radial zoom smear anchored near the bottom-left while the globe translates upward, breaking bright cloud highlights on the right side of the storm into stepped double-ghost ticks and leaving a faint ghost halo of the ring and limb",
+   "fix": "replace the 2D radial post-blur with true sub-frame 3D shutter motion blur integrated along the actual camera trajectory with enough temporal samples to eliminate stepped ghost copies"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "upper-right sky around and to the right of the bright star (frames 4530-4665)",
+   "what": "the hard rectangular top and right edges of the background starfield image sit inside the frame and slide rightward across a flat dark blue-teal backing",
+   "fix": "map the starfield and Milky Way onto a full 360-degree environment sphere or overscan the background plate well beyond the camera frustum throughout the pan"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "start of dive (frames 4680-4696) and dive-to-terrain handoff (frames 4745-4769 into sheet-04.png frame 4770)",
+   "what": "camera speed and vertical pitch lack continuous inertia: the dive barely zooms from 4680 to 4688 before lurching forward at 4696, and after settling upward at 4761-4769 the horizon immediately reverses into a steady downward drift across terrain (4770-4949)",
+   "fix": "ease camera acceleration smoothly out of hold at 4680 and unify the spline across dive, terrain, and rise so vertical pitch does not stall or reverse direction at segment boundaries"
+  }
+ ]
+}

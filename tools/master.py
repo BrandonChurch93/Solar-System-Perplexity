@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, datetime, json, math, pathlib, re, shutil, subprocess, sys
+import argparse, datetime, json, math, os, pathlib, re, shutil, subprocess, sys, tarfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 WORK = ROOT / 'out' / 'work'
@@ -9,6 +9,7 @@ ASSETS = 'full'
 FACTOR = {'master': 1.0, 'preview': 0.45, 'uhd': 3.5}
 SPAN = re.compile(r'^([a-z]+\.[a-z]+)\.span(\d+)-(\d+)\.mp4$')
 PART = re.compile(r'^([a-z]+\.[a-z]+)\.(?:span\d+-\d+|part\d+)\.mp4$')
+PIECE = re.compile(r'^(film-.+)\.tar\.(\d+)$')
 
 
 def sh(cmd, check=True):
@@ -174,6 +175,83 @@ def key_of(sp):
     return '%s.span%d-%d' % (sp['segment'], sp['first'], sp['last'])
 
 
+class Pieces:
+    def __init__(self, files):
+        self.files, self.f = list(files), None
+
+    def read(self, n=-1):
+        out = b''
+        while n < 0 or len(out) < n:
+            if self.f is None:
+                if not self.files:
+                    break
+                self.f = open(self.files.pop(0), 'rb')
+            b = self.f.read(-1 if n < 0 else n - len(out))
+            if not b:
+                self.f.close()
+                self.f = None
+            out += b
+        return out
+
+
+def end(f):
+    with open(f, 'rb') as h:
+        h.seek(max(0, f.stat().st_size - 1024))
+        return h.read()
+
+
+def suffix(i):
+    return '%02d' % i if i < 90 else '9%03d' % (i - 90)
+
+
+def tars(p, placed):
+    names = {j['name'] for j in p['jobs']}
+    found = {}
+    for f in ATT.rglob('film-*.tar.*'):
+        m = PIECE.match(f.name)
+        if m and f.is_file() and re.sub(r'-again\d+$', '', m.group(1)) in names:
+            have = found.setdefault(m.group(1), {})
+            if m.group(2) not in have or f.stat().st_mtime > have[m.group(2)].stat().st_mtime:
+                have[m.group(2)] = f
+    home = HOME / p['name'] / 'tars'
+    out = {'dirs': [], 'waiting': [], 'bad': []}
+    for name, have in sorted(found.items()):
+        files = [have[suffix(i)] for i in range(len(have)) if suffix(i) in have]
+        dest, mark = home / name, home / name / 'pieces.json'
+        sig = [[str(f), f.stat().st_size, int(f.stat().st_mtime)] for f in files]
+        old = json.loads(mark.read_text()) if mark.exists() else None
+        if old and old['pieces'] == sig and all((dest / n).exists() or n.split('.mp4')[0] in placed for n in old['members']):
+            out['dirs'].append(dest)
+            continue
+        tail = b''.join(end(f) for f in files[-2:])[-1024:]
+        if len(files) != len(have) or len(tail) < 1024 or tail.strip(b'\0'):
+            out['waiting'].append('%s (%d piece%s here)' % (name, len(have), '' if len(have) == 1 else 's'))
+            continue
+        tmp = home / (name + '.new')
+        shutil.rmtree(tmp, ignore_errors=True)
+        tmp.mkdir(parents=True)
+        members, when = [], max(f.stat().st_mtime for f in files)
+        try:
+            with tarfile.open(fileobj=Pieces(files), mode='r|') as t:
+                for m in t:
+                    base = pathlib.PurePosixPath(m.name).name
+                    if not m.isfile() or not SPAN.match(base[:-5] if base.endswith('.json') else base):
+                        continue
+                    with open(tmp / base, 'wb') as o:
+                        shutil.copyfileobj(t.extractfile(m), o)
+                    os.utime(tmp / base, (when, when))
+                    members.append(base)
+        except (tarfile.TarError, EOFError, OSError) as e:
+            shutil.rmtree(tmp, ignore_errors=True)
+            out['bad'].append((name, 'the tar cannot be read: %s' % e))
+            continue
+        (tmp / 'pieces.json').write_text(json.dumps({'pieces': sig, 'members': members}, indent=1))
+        shutil.rmtree(dest, ignore_errors=True)
+        tmp.rename(dest)
+        out['dirs'].append(dest)
+    return out
+
+
 def scan(c, p, attachments=True):
     segs = {s['id']: s for s in segments(c)}
     d = chunk_dir(p)
@@ -204,10 +282,13 @@ def scan(c, p, attachments=True):
                 res['loose'].append(rel(f))
     if attachments and ATT.exists():
         mp4, js = {}, {}
-        for f in ATT.rglob('*.mp4'):
+        got = tars(p, set(res['where']))
+        res['waiting'] = got['waiting']
+        res['other'] += [(n + '.tar', why) for n, why in got['bad']]
+        for f in [f for root in [ATT] + got['dirs'] for f in root.rglob('*.mp4')]:
             if SPAN.match(f.name):
                 mp4.setdefault(f.name[:-4], []).append(f)
-        for f in ATT.rglob('*.mp4.json'):
+        for f in [f for root in [ATT] + got['dirs'] for f in root.rglob('*.mp4.json')]:
             if SPAN.match(f.name[:-5]):
                 js.setdefault(f.name[:-9], []).append(f)
         newest = lambda fs: sorted(fs, key=lambda f: -f.stat().st_mtime)
@@ -379,7 +460,8 @@ def message(p, name, spans):
     files = []
     for sp in spans:
         files += ['`%s%s.mp4`' % (d, key_of(sp)), '`%s%s.mp4.json`' % (d, key_of(sp))]
-    return 'JOB %s. Commit %s. Command%s: %s. When %s finished, send these %d files as attachments, at most 10 per message, and nothing else: %s.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), ', '.join(files)), [f.strip('`') for f in files]
+    tar = '/tmp/%s.tar' % name
+    return 'JOB %s. Commit %s. Command%s: %s. A command that ends with exit code 3 has lost its drawing context: run the same command again until it ends with 0, it goes on where it stopped. When %s finished, pack the %d files of this job into one tar from the repo root: `tar -cf %s %s`, then `split -b 40m -d %s %s.` and send the pieces (`%s.00`, `%s.01` and so on) as attachments, at most 10 per message, with the single line of text `JOB %s done` and nothing else.' % (name, p['commit'], 's, one after the other' if len(cmds) > 1 else '', '; '.join(cmds), 'they have' if len(cmds) > 1 else 'it has', len(files), tar, ' '.join(f.strip('`') for f in files), tar, tar, tar, tar, name), [f.strip('`') for f in files]
 
 
 def jobs(a):
@@ -430,9 +512,10 @@ def do_place(c, p, quiet=False):
     d.mkdir(parents=True, exist_ok=True)
     new = 0
     for k, (v, j) in sorted(res['pairs'].items()):
-        shutil.copyfile(v, d / (k + '.mp4'))
-        shutil.copyfile(j, d / (k + '.mp4.json'))
         s['arrived'][k] = iso(datetime.datetime.fromtimestamp(v.stat().st_mtime, datetime.timezone.utc))
+        put = shutil.move if HOME in v.parents and HOME in j.parents else shutil.copyfile
+        put(v, d / (k + '.mp4'))
+        put(j, d / (k + '.mp4.json'))
         res['where'][k] = 'placed'
         new += 1
     for k, w in res['where'].items():
@@ -456,6 +539,8 @@ def do_place(c, p, quiet=False):
             print('other files that were not used:')
             for f, why in res['other']:
                 print('  %s: %s' % (f, why))
+        if res.get('waiting'):
+            print('tars whose pieces are not all here yet: ' + ', '.join(res['waiting']))
         if res['loose']:
             print('span or part files of this build in the chunk folder that the plan does not have (the join stops on them): ' + ', '.join(res['loose']))
         if res['stray']:
@@ -495,10 +580,12 @@ def join(a):
     c = cfg()
     p = load(a.name)
     h = hashes()
-    if h['engine'] != p['engineHash'] or h['stops'] != p['stopHashes']:
-        sys.exit('this tree is another build than the plan (engine %s here, %s in the plan, commit %s); nothing was joined, because the join commands remove chunks of another build' % (h['engine'], p['engineHash'], p['commit'][:7]))
-    res = do_place(c, p, quiet=True)
     segs = {s['id']: s for s in segments(c)}
+    need = sorted(set(s for i in p['segments'] for s in stops_of(c, segs[i])))
+    moved = [s for s in need if h['stops'].get(s) != p['stopHashes'].get(s)]
+    if h['engine'] != p['engineHash'] or moved:
+        sys.exit('this tree is another build than the plan (engine %s here, %s in the plan, commit %s%s); nothing was joined, because the join commands remove chunks of another build' % (h['engine'], p['engineHash'], p['commit'][:7], ', changed since: ' + ', '.join(moved) if moved else ''))
+    res = do_place(c, p, quiet=True)
     loose = set(PART.match(pathlib.Path(f).name).group(1) for f in res['loose'])
     state_of = {}
     for i in p['segments']:

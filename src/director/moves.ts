@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { CoverHorizon, Pose } from '../core/types'
-import { coverWindow } from './timeline'
+import { coverWindow, setCoverWindow, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -35,6 +35,7 @@ export interface MoveParams {
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
   coverHides?: number
+  coverWindow?: CoverTimings
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
@@ -129,6 +130,7 @@ export class StopPlan {
     this.id = id
     this.fit = fit
     this.p = p
+    setCoverWindow(id, p.coverWindow)
     const find = (kind: string): Segment | undefined => config.segments.find((s) => s.stop === id && s.kind === kind)
     const hold = find('hold')
     const terrain = find('terrain')
@@ -245,6 +247,14 @@ export class StopPlan {
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
     const w = coverWindow(seg)!
     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+  }
+
+  skyGain(_time: number): number {
+    return 1
+  }
+
+  skyUnderCover(amount: number, _time: number): number {
+    return Math.pow(1 - amount, 2)
   }
 
   coverAmount(seg: Segment, time: number): number {

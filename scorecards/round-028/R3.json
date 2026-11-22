@@ -1,0 +1,106 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-08.png",
+      "where": "globe surface and white clouds across crops S, T, U, V (also image-05.png globe, image-06.png crops A, D, E, H, and image-07.png crops N, O, P)",
+      "what": "the close-up planet texture is heavily stretched and blurry with directional smearing across the cyan bands, and the white clouds break apart into visible horizontal rectangular pixel blocks and stepped streaks in crop U",
+      "fix": "replace the low-resolution spherical planet and cloud maps with higher-resolution pole-free textures or 3D procedural volumetric cloud detail that stays sharp at close camera distance"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "inner and outer ring arcs in crops A, F, and G (also image-05.png upper-center rings and image-07.png crop P)",
+      "what": "the thin inner ringlets pinch together, wobble, and fold in wavy ripples rather than smooth concentric ellipses, while the brighter upper-left ring band in crop A shows diagonal ribbed pixelation",
+      "fix": "render the rings from true concentric 3D ring geometry with anti-aliased radial opacity/albedo sampling instead of a warped 2D layer or undersampled radial shader"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "bright right planetary limb in crop V (also image-05.png lower-right limb and image-06.png crops A, E, and I)",
+      "what": "regular horizontal scanline-like ribs and jagged pixel steps cut into both the outer horizon edge and the bright cyan-white limb gradient",
+      "fix": "increase sphere tessellation, atmospheric raymarch step count, and anti-aliasing along the limb so the rim falloff and silhouette curve smoothly"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "Milky Way dust bands in crops E, F, and H (also image-01.png right sky and image-03.png crop Q)",
+      "what": "the background Milky Way nebula texture looks soft and slightly blocky at native size compared with the crisp single-pixel foreground stars and sharp rings",
+      "fix": "use a higher-resolution skybox plate or sharper procedural dust and unresolved starfield detail to match the foreground rendering resolution"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "sunlit globe in crop A and dark right/bottom limb in crop E (also image-03.png crop P and image-04.png crops T and U)",
+      "what": "isolated single-pixel white noise speckles dot the smooth cyan atmosphere in crop A, and the nightside limb meets the starfield along a slightly jagged 1-pixel stair-stepped edge",
+      "fix": "remove bright firefly/star-bleed pixels from the sunlit globe shader and soften/anti-alias the dark limb silhouette and thin nightside rim line"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "lower-left starfield in crops S and T (also image-02.png crop D lower-left)",
+      "what": "stars near the lower-left corner stretch into soft diagonal oval blobs and faint isolated rainbow lens smudges appear in empty dark sky",
+      "fix": "reduce corner coma/chromatic distortion on the starfield and remove stray low-opacity chromatic flare patches"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "tiles A, E, and I, sunlit cloud decks",
+      "what": "clouds are diagonally stretched and airbrushed, soft smeared bands rather than sharp filaments or cells",
+      "fix": "add multi-scale turbulence and remove the directional smear so native crops resolve cloud edges"
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "tiles U and V, lower sunlit atmosphere",
+      "what": "the near surface is a blurred wash, one faint smudge over a flat gradient, with no structural detail",
+      "fix": "carry fine cloud structure into the lower frame instead of a soft directional smear"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tiles C, E, F, and I, pole through lower disk",
+      "what": "the disk is vertically brushed and nearly featureless beside sharp ring shadows, so the surface looks painted; polar wisps are softer than those shadows",
+      "fix": "break the vertical streaks into smaller cloud structure across the disk, and sharpen polar turbulence to match the ring shadows"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "tile Q, central disk",
+      "what": "the body stays a low-frequency airbrushed gradient with only faint longitudinal streaks",
+      "fix": "add interior cloud relief on the central disk so it is not a smooth fill"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "tiles S and T, lower-left nightside",
+      "what": "flat near-black fill with almost no cloud relief",
+      "fix": "keep the shadow dark but add faint structure so it is not a flat fill"
+     }
+    ]
+   }
+  }
+ ]
+}

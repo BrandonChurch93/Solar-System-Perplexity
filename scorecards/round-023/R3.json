@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "night side, lower right of disc (crops C, E, H, I, Q)",
+      "what": "the dark-side cloud texture goes smeary and painted, with soft swirled strokes and no real cloud structure; it reads as an airbrushed shade over the image, not clouds in shadow",
+      "fix": "keep the same cloud detail across the terminator and darken it with lighting, rather than blurring or painting it over"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night side and lower limb (crops C, E, G, I, V)",
+      "what": "same smeared, muddy brush texture on the dark hemisphere; the near-limb bands look stretched and swirled, and detail is soft at native size",
+      "fix": "carry high-frequency cloud detail into the shadowed side and limit the stretching near the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "lit left limb (crops B, D, K, P)",
+      "what": "the bright limb blows out to a flat cream band with no texture and a thick glow round it; it looks plastic and haloed",
+      "fix": "pull back the highlight and the limb brightening so cloud detail survives to the edge, and narrow the atmospheric glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "lit left limb (crops B, D, K, U)",
+      "what": "a broad, overexposed, featureless limb with a heavy halo against the sky",
+      "fix": "reduce the exposure at the limb and soften the halo falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark sky corners (crops J, T, W)",
+      "what": "a faint square block pattern or grid is visible in the near-black sky, like compression or tiling",
+      "fix": "dither the dark background, or export without block compression"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "dark sky (crops J, O, T)",
+      "what": "the same faint block or grid pattern in the near-black areas",
+      "fix": "dither the dark background and avoid compressing the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "feathered cloud streaks, centre of disc (crops A, P)",
+      "what": "the fine streaks look brushed and repetitive, more like painting than fluid flow",
+      "fix": "add varied, turbulent small-scale structure so the strokes don't repeat"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper-center polar crown (crop B in image-14.png, crop K in image-15.png)",
+      "what": "fibrous cloud ridges converge sharply into a V-shaped polar pinch vertex, giving away spherical UV mapping",
+      "fix": "use a seamless cube-map or triplanar spherical projection and blend cloud structures smoothly across the pole without radial pinching"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "shadowed lower-left and bottom limb (crops D, H, I in image-14.png; crops O, P in image-15.png)",
+      "what": "a bright tan rim line separated from the dark interior by a dark trough creates an unnatural doubled-edge halo all along the unlit night-side limb",
+      "fix": "remove the uniform 360-degree rim outline on the shadowed side and attenuate atmospheric scattering smoothly to darkness past the terminator"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower and lower-right grazing limb below the spiral vortex (crops A, I in image-14.png; crops P, Q in image-15.png)",
+      "what": "cloud bands become blurry, smeared, and concentrically stretched compared to the crisp high-relief ridges on the upper disc",
+      "fix": "preserve consistent multi-scale cloud detail and proper foreshortening out to the limb without texture stretching or localized blur"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "sky immediately above the left atmospheric limb (crop H in image-10.png, crop J in image-11.png)",
+      "what": "three evenly spaced vertical double-dot pixel artifacts repeat in a row along the top of the limb glow, and bright stars sit directly on the dense limb edge",
+      "fix": "remove the repeated double-dot artifacts in the sky layer and properly occlude background stars behind the optically thick atmospheric limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bottom foreground cloud deck (crop I in image-10.png; crops T, V, W, X in image-12.png)",
+      "what": "near-field clouds along the lower frame edge lose fine vapor texture and look soft and directionally smeared",
+      "fix": "render foreground cloud tops with crisp native-resolution detail matching the mid-ground cloud towers"
+     }
+    ]
+   }
+  }
+ ]
+}
