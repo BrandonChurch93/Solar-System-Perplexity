@@ -47,6 +47,7 @@ export interface StripDef {
   offLevel: number
   patchHold: number
   deep: { gain: number; tail: number; ref: number }
+  dust: { span: number[]; lane: number[]; cloud: number[]; keep: number[]; red: number[]; strip: number[] }
   stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
 }
 
@@ -307,6 +308,8 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
     const lat = x * frame.latSpan
     const level = Math.min(st.gain * Math.pow(flux, st.power), st.max)
     const base = Math.pow(Math.max(bg, 1e-5), 1 - st.lane) * Math.pow(st.ref, st.lane)
+    const ds = def.dust.strip
+    const lane = (1 - THREE.MathUtils.smoothstep(bg, ds[0]!, ds[1]!)) * (1 - THREE.MathUtils.smoothstep(level, ds[4]!, ds[5]!)) * (1 - THREE.MathUtils.smoothstep(Math.abs(x), def.dust.span[0]!, def.dust.span[1]!))
     const cr = view.getUint8(at + 6) / 63.75
     const cg = view.getUint8(at + 7) / 63.75
     const cb = view.getUint8(at + 8) / 63.75
@@ -324,9 +327,9 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
       const veil = field.veil[cell]!
       const reach = Math.abs(x) * (1 + fe.reach * Math.min(Math.max((field.veilHigh - veil) * span, 0), 1))
       const fade = THREE.MathUtils.smoothstep(1 - THREE.MathUtils.smoothstep(reach + fe.rough * field.rough[cell]! * THREE.MathUtils.smoothstep(reach, 0, 0.5 * edgeFrom!) + edgeNoise! * (veil - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!), low, 1)
-      if (fade <= 0 || pick > Math.pow(fade, fe.thin)) continue
+      if (fade <= 0 || pick > Math.pow(fade, fe.thin) * (1 - ds[2]! * lane)) continue
       position.set([px, py, pz], n * 3)
-      star.set([level * Math.pow(fade, fe.dim), base], n * 2)
+      star.set([level * Math.pow(fade, fe.dim) * (1 - ds[3]! * lane), base], n * 2)
       color.set([cr, cg, cb], n * 3)
       n++
     }
