@@ -213,3 +213,19 @@ Item 5 (sent 08:42) on b7841530, same source as main 07aabf5e: shared set full 3
 Vertex and index bytes nobody counts (probe `out/scratch/verts2.ts`, copy into a tree root, `npx tsx verts2.ts 900000`): plain sky stars 3465000 points at 40 bytes plus index 152.5 MB (I had left this set out before), flight 22.0, deep 33.4: 207.9 MB on old main; plus strip 64.6: 272.5 MB on main 07aabf5e; agent/flightsky 6b40894a deep 24.3 and strip 52.9: 251.7 MB. Still dead there: `aStar.w` of the plain and flight stars, 15.9 MB.
 
 Tools of this audit, untracked in `out/scratch/`: `a2time.ts` (load, draft, final seconds and the loader's memory per frame), `a2peak.ts` (a span in one session, maxima of sets, sky and Chrome memory), `a2pass.ts` and `a2pass2.ts` (cost per mesh and per engine pass; they need one scratch line in src/capture/frame.ts that puts the engine on window, and `globalThis.__name` set in the page), `verts2.ts`. Copy into `tools/` of the scratch tree to run. Scratch tree is at b7841530, built, clean. For batch 21: base on origin/main by merge, never rebase.
+
+## Mail 120 and 130: AUDIT 3, frame 3390 not pixel identical across loads (09:27 to 10:30 UTC)
+
+Cause: `src/stops/saturn/globe.ts` 243, the haze shell's `if (b > 0.0 && rt2 < 0.99) discard;` stood before `ringShadowAt(Pa, ...)`, which takes `dFdx(rho), dFdy(rho)` (`src/stops/saturn/profile.ts` 41). Derivatives after a discard that only part of a 2 x 2 block takes are undefined; in SwiftShader the discarded pixel keeps stale memory, so the ring shadow on the haze changes by a hair from render to render at a few limb pixels and an 8 bit tie flips. Not load order, not timing: it varies between repeats inside one session.
+
+How it was found: fresh probe hashing the float scene target (differs in every run, 2 to 10 pixels, rgb only) and each bloom level (they follow the scene); in one session, hide each mesh in turn (only hiding the shell gives 0 of 5); shell alone with shader variants (no discard: stable; ring shadow 1: stable; constant colour: stable; no blending: still varies).
+
+Cure: branch `agent/determinism` bedc589 on main c479536, one file, the discard line moved below the shadow line. A file under `src/stops/`, done by the Builder's order in mail 130, and the commit says so.
+
+Before (main 4ec654e6, same source as c479536), draft, master, full, fresh processes: 3390 `npm run still` 3 runs 3 hashes (3268ff8b, d711fed9, e7908578), probe 6 runs d711fed9 x3, d7f4c976 x2, 09f56279 x1; 3465 3 runs 703aa40f x1, 9a5e9f2f x2; 3352 b45f9127faeb; 2325 fd128b1a999f. In session float repeats as is: 3390, 3420, 3480, 3540, 3870 5 of 5 differ, 3600 3 of 5, 3700, 3800, 3930, 3352, 3300, 2325, 0 none.
+
+After (bedc589), 5 fresh runs each: 3390 d4dca268b894 (float 37e1451cb2ce), 3420 61fcc905fabd (float 43ab43773250), 3465 32d8da2eff9f (float a2257c264b40). 3465 changes in 4 pixels by one step against 9a5e9f2f (664,555 672,596 684,636 686,640), 3 against 703aa40f; 3390 in 4 pixels against d711fed9 (659,547 668,561 678,605 698,656).
+
+Same pattern by reading, not changed: `saturn/rings.ts` discards at 230 and 246, then derivatives of values first written after them (`q` 289 to 291, `miss` 345 to 346) and `texture(uPolarWarp)` with implicit lod at 257 and 258; `mercury/sunplate.ts` 33 then `texture(uMap, uv)` at 40. `mercury/skyplate.ts` 39 then 43 and `mercury/lens.ts` 37 then 40 take derivatives of values written before the discard.
+
+Tools, untracked in the scratch tree `tools/`: `a3probe.ts` (fresh browser per run; PNG, float target and bloom level hashes; `--fix 1` swaps the shader source at compile time), `a3in.ts` (one session, hide each mesh), `a3sh.ts` (shell variants), `a3scan.ts` (one session, repeats per frame, with and without the swap). They need one scratch line in `src/capture/frame.ts` that puts the engine on `window`.
