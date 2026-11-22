@@ -3,7 +3,7 @@
 R="$(cd "$(dirname "$0")/../.." && pwd)"
 W=${RT:-/tmp/base}
 K=$1; shift
-rsync -a --delete "$R/src" "$R/config" "$R/assets-src" "$R/tools" "$W/"
+rsync -a --delete "$R/src" "$R/config" "$R/assets-src" "$R/tools" "$R/public" "$R/tests" "$W/"
 cp "$R/index.html" "$R/package.json" "$R/vite.config.ts" "$R/tsconfig.json" "$W/"
 (cd "$W" && bash assets-src/travel/$K.sh "$@")
 if [ "$K" != bytes ]; then
