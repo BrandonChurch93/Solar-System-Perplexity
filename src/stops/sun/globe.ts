@@ -77,6 +77,8 @@ uniform float uGrad;
 uniform float uSpin;
 uniform float uGain;
 uniform float uWeight;
+uniform float uOpen;
+uniform vec4 uWash;
 uniform vec3 uTint;
 uniform vec4 uCalm;
 uniform float uVignette;
@@ -169,6 +171,9 @@ void main() {
   float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
   col += uRimColor * pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
+  for (int k = 0; k < (uWash.w > 0.0 ? 1 : 0); k++) {
+    col = mix(col * uOpen, uWash.xyz, uWash.w);
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.95, 0.55, 0.1), push.xy * 200.0, length(vView));
@@ -204,7 +209,7 @@ export class SunGlobe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth },
-        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uCalm: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
+        uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uOpen: { value: 1 }, uWash: { value: new THREE.Vector4(1, 1, 1, 0) }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uCalm: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uLimb: { value: new THREE.Vector2(l.limb[0], l.limb[1]) },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimShape: { value: new THREE.Vector2(l.rim.width, l.rim.power) },
@@ -219,8 +224,11 @@ export class SunGlobe {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
   }
 
-  update(time: number, spin: number, gain: number, weight: number, vignette: number, aspect: number, tint?: THREE.Vector3, calm?: THREE.Vector4): void {
+  update(time: number, spin: number, gain: number, weight: number, vignette: number, aspect: number, tint?: THREE.Vector3, calm?: THREE.Vector4, open = 1, wash?: THREE.Vector4): void {
     const u = this.material.uniforms
+    u.uOpen!.value = open
+    if (wash) (u.uWash!.value as THREE.Vector4).copy(wash)
+    else (u.uWash!.value as THREE.Vector4).set(1, 1, 1, 0)
     if (calm) (u.uCalm!.value as THREE.Vector4).copy(calm)
     else (u.uCalm!.value as THREE.Vector4).set(1, 1, 1, 0)
     u.uTime!.value = time
