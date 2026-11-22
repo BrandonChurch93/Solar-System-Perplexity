@@ -161,7 +161,8 @@ export const createSet: SetFactory = async (ctx) => {
       const lights = 1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
-      const born = smooth((state.time - plan.seg.hold.start - look.onset[0]!) / (look.onset[1]! - look.onset[0]!))
+      const gone = ending ? 0 : smooth((state.time - plan.seg.rise.end - look.ebb[0]!) / (look.ebb[1]! - look.ebb[0]!))
+      const born = smooth((state.time - plan.seg.hold.start - look.onset[0]!) / (look.onset[1]! - look.onset[0]!)) * (1 - gone)
       ;(gu.uAuroraColor!.value as THREE.Vector3).fromArray(look.globe.auroraColor).multiplyScalar(born)
       gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights

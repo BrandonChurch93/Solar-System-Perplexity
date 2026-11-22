@@ -38,6 +38,7 @@ export const air: AirLook = { ...airJson, lineAway: [2, 0.6], inner: 0.007, inne
 
 export const away = [0, 0.85]
 export const onset = [-0.1334, 1.2, 0.6]
+export const ebb = [0, 0.3]
 export const back = [1.03, 1.35]
 export const lights = [0.025, 0.065, 0.9]
 
