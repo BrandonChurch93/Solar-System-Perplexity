@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, farMap, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
+import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { ending as endLook } from './ending'
 import { limbField } from './field'
@@ -40,6 +40,7 @@ export const createSet: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
   const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
+  const mendMap = await ctx.texture(base + mended.file, { srgb: true, anisotropy: 16 })
   const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
   const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
@@ -49,6 +50,7 @@ export const createSet: SetFactory = async (ctx) => {
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
+    mend: { map: mendMap, box: look.mended.box },
     flow,
     far: farSide,
   })

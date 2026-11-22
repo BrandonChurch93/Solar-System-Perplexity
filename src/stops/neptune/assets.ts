@@ -1,5 +1,6 @@
 export const wrap = { file: 'wrap.webp' }
 export const held = { file: 'hold.webp' }
+export const mended = { file: 'wrap-mend.webp' }
 export const flowMap = { file: 'flow.webp' }
 export const farMap = { file: 'far.png' }
 export const moon = { file: 'triton.jpg' }

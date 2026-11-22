@@ -78,6 +78,7 @@ export interface NeptuneOptions {
   night: { flat: number; edge: [number, number]; texels: number }
   patches?: PatchSet
   hold?: { map: THREE.Texture; box: number[]; head: number }
+  mend?: { map: THREE.Texture; box: number[] }
   flow?: THREE.Texture
   far?: THREE.Texture
   segments?: number
@@ -171,6 +172,8 @@ uniform vec4 uAirShade;
 uniform sampler2D uHoldMap;
 uniform vec4 uHoldBox;
 uniform vec2 uHold;
+uniform sampler2D uMendMap;
+uniform vec4 uMendBox;
 uniform sampler2D uFlowMap;
 uniform float uFlow;
 uniform sampler2D uFarMap;
@@ -283,6 +286,11 @@ ${FETCHES}
       vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
       base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
     }
+    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
+      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
+      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
+      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
+    }
     c += rest * base;
   }
   return c;
@@ -350,6 +358,9 @@ void main() {
   for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
     vec2 muv = vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5);
     vec4 mid = textureLod(uMap, muv, uEndNight.y);
+    vec2 mq = (muv - uMendBox.xy) * uMendBox.zw;
+    vec4 mend = textureLod(uMendMap, mq, uEndNight.y);
+    mid.rgb = mix(mid.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
     vec3 wide = textureLod(uMap, muv, uEndNight.z).rgb;
     vec3 lum = vec3(0.2, 0.5, 0.3);
     float rel = dot(mid.rgb, lum) / max(dot(wide, lum), 1e-4);
@@ -456,6 +467,7 @@ export class NeptunePlanet {
         ...airUniforms(o.air),
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
         uHoldMap: { value: o.hold?.map ?? o.map }, uHoldBox: { value: o.hold ? new THREE.Vector4(o.hold.box[0], o.hold.box[1], 1 / (o.hold.box[2]! - o.hold.box[0]!), 1 / (o.hold.box[3]! - o.hold.box[1]!)) : new THREE.Vector4(0, 0, 1, 1) }, uHold: { value: new THREE.Vector2(0, o.hold?.head ?? 1) },
+        uMendMap: { value: o.mend?.map ?? o.map }, uMendBox: { value: o.mend ? new THREE.Vector4(o.mend.box[0], o.mend.box[1], 1 / (o.mend.box[2]! - o.mend.box[0]!), 1 / (o.mend.box[3]! - o.mend.box[1]!)) : new THREE.Vector4(2, 2, 1, 1) },
         uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
         uFarMap: { value: o.far ?? o.map }, uCirrus: { value: new THREE.Vector4(0, 0, 0, 1) }, uClump: { value: new THREE.Vector3(0, 0.5, 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
