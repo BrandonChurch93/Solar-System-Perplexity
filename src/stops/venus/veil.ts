@@ -3,7 +3,7 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 
 export interface VeilLook {
-  sheets: { lowest: number; step: number; size: number; near: [number, number, number]; gamma: number; top: number; holes: [number, number]; deep: number; edge: [number, number]; thin: number; ramp: number; fan: [number, number, number, number]; fray: [number, number, number, number]; pole: [number, number]; push: [number, number]; mist: [number, number, number, number, number, number]; wait: [number, number]; wave: number; haze: number; sunward: [number, number]; shift: [number, number]; dense: number; ceiling: [number, number]; solid: [number, number]; solidTerrain: [number, number] }
+  sheets: { lowest: number; step: number; size: number; near: [number, number, number]; gamma: number; top: number; holes: [number, number]; deep: number; edge: [number, number]; thin: number; ramp: number; fan: [number, number, number, number]; fray: [number, number, number, number]; pole: [number, number]; push: [number, number]; mist: [number, number, number, number, number, number]; wait: [number, number]; wave: number; haze: number; sunward: [number, number]; shift: [number, number]; dense: number; ceiling: [number, number]; solid: [number, number] }
   fog: [number, number, number]
   fogOrbit: [number, number, number]
   pad: number
@@ -64,7 +64,7 @@ uniform float uGamma;
 uniform float uPad;
 uniform float uDense;
 uniform vec2 uCeil;
-uniform vec3 uSolid;
+uniform vec2 uSolid;
 uniform vec3 uFog;
 uniform float uTall;
 uniform sampler2D uAir;
@@ -112,7 +112,7 @@ void main() {
     vec3 fog = uHaze * (uFog.x + uFog.y * pow(toSun, uFog.z));
     float horizon = sqrt(max(c2 - 1.0, 1e-8));
     float bar = uForm.x - uForm.z * pow(uAmount, uRamp);
-    float open = smoothstep(0.0, uSolid.z, uAmount);
+    float open = smoothstep(0.0, uSolid.x, uAmount);
     vec3 below = normalize(uCam);
     vec2 foot0 = vec2(dot(below, uE1), dot(below, uE2)) * 2.0 / (1.0 + max(dot(below, uUp), -0.5));
     for (int j = 0; j < ${COUNT}; j++) {
@@ -188,7 +188,7 @@ export class Veil {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
         uInvProj: { value: new THREE.Matrix4() }, uRot: { value: new THREE.Matrix3() }, uCam: { value: new THREE.Vector3(0, 0, 2) }, uRush: { value: 0 }, uFan: { value: new THREE.Vector4().fromArray(s.fan) }, uFray: { value: new THREE.Vector4().fromArray(s.fray) }, uPole: { value: new THREE.Vector2().fromArray(s.pole) }, uSoft: { value: 0 }, uWait: { value: 0 }, uBlur: { value: 0 }, uWave: { value: s.wave }, uBend: { value: 1 }, uRamp: { value: s.ramp }, uCentre: { value: new THREE.Vector3(0, 0, -2) }, uPx: { value: 0.001 }, uAmount: { value: 0 },
-        uSheet: { value: new THREE.Vector4(s.lowest, s.step, s.size, 0) }, uFade: { value: new THREE.Vector3().fromArray(s.near) }, uForm: { value: new THREE.Vector4(s.edge[0], s.edge[1], s.thin, s.holes[1]) }, uTone: { value: new THREE.Vector4(s.holes[0], s.top, s.deep, s.haze) }, uGamma: { value: s.gamma }, uDense: { value: s.dense }, uCeil: { value: new THREE.Vector2().fromArray(s.ceiling) }, uSolid: { value: new THREE.Vector3(s.solid[0], s.solid[1], s.solid[0]) }, uFog: { value: new THREE.Vector3() }, uPad: { value: look.pad }, uTall: { value: 1 / (1 + 2 * look.pad) },
+        uSheet: { value: new THREE.Vector4(s.lowest, s.step, s.size, 0) }, uFade: { value: new THREE.Vector3().fromArray(s.near) }, uForm: { value: new THREE.Vector4(s.edge[0], s.edge[1], s.thin, s.holes[1]) }, uTone: { value: new THREE.Vector4(s.holes[0], s.top, s.deep, s.haze) }, uGamma: { value: s.gamma }, uDense: { value: s.dense }, uCeil: { value: new THREE.Vector2().fromArray(s.ceiling) }, uSolid: { value: new THREE.Vector2().fromArray(s.solid) }, uFog: { value: new THREE.Vector3() }, uPad: { value: look.pad }, uTall: { value: 1 / (1 + 2 * look.pad) },
         uClouds: { value: clouds }, uUp: { value: new THREE.Vector3(0, 1, 0) }, uE1: { value: new THREE.Vector3(1, 0, 0) }, uE2: { value: new THREE.Vector3(0, 0, 1) }, uLight: { value: new THREE.Vector4(look.light[0], look.light[1], s.shift[0], s.shift[1]) }, uMean: { value: new THREE.Vector3().fromArray(look.mean) },
         uSunCam: { value: new THREE.Vector3(0, 0, -1) }, uSunward: { value: new THREE.Vector2().fromArray(s.sunward) },
         uLit: { value: new THREE.Vector3() }, uHaze: { value: new THREE.Vector3() }, uGain: { value: 1 },
@@ -224,7 +224,6 @@ export class Veil {
     u.uSoft!.value = thin * l.sheets.mist[0]
     ;(u.uFade!.value as THREE.Vector3).set(l.sheets.near[0] + thin * l.sheets.mist[5] + fast * (1 - mist) * l.sheets.push[0], l.sheets.near[1] + thin * l.sheets.mist[5] + fast * (1 - mist) * l.sheets.push[1], l.sheets.near[2])
     u.uBlur!.value = thin * l.sheets.mist[3]
-    ;(u.uSolid!.value as THREE.Vector3).set(l.sheets.solid[0] + mist * (l.sheets.solidTerrain[0] - l.sheets.solid[0]), l.sheets.solid[1] + mist * (l.sheets.solidTerrain[1] - l.sheets.solid[1]), l.sheets.solid[0])
     u.uWait!.value = mist * (1 - THREE.MathUtils.smoothstep(amount, l.sheets.wait[0], l.sheets.wait[1]))
     ;(u.uUp!.value as THREE.Vector3).copy(frame.up)
     ;(u.uE1!.value as THREE.Vector3).copy(frame.e1)
