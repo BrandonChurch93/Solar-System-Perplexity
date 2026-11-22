@@ -3,7 +3,7 @@ import { Pass } from '../core/pass'
 import { stream } from '../core/random'
 import { tileRects, type Tiles } from '../core/tiles'
 import type { SkyPatch, SunState } from '../core/types'
-import { flightField, type FlightDef } from './travel/field'
+import { FLIGHT_SIZE, SIZE, bandField, flightField, type FlightDef, type FlightField, type StripDef } from './travel/field'
 import { TEXEL_GLSL, implicitUniform } from '../core/texel'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import skyFrame from './skyframe.json'
@@ -92,6 +92,9 @@ uniform vec4 uFlightBand;
 uniform vec2 uFlightLook;
 uniform vec4 uFlightVeil;
 uniform vec4 uFlightVeilWarm;
+uniform sampler2D uBandGlow;
+uniform vec4 uFlightStrip;
+uniform vec3 uFlightEdge;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -110,6 +113,22 @@ vec3 patchTexel(sampler2D s, vec3 p) {
   for (int k = 0; k < (p.z > 0.0 ? 1 : 0); k++) t = 0.25 * (textureGrad(s, p.xy + dx + dy, gx, gy).rgb + textureGrad(s, p.xy - dx + dy, gx, gy).rgb + textureGrad(s, p.xy + dx - dy, gx, gy).rgb + textureGrad(s, p.xy - dx - dy, gx, gy).rgb);
 #endif
   return t;
+}
+vec3 smoothLod(sampler2D s, vec2 uv, float lod) {
+  vec2 size = vec2(textureSize(s, int(lod)));
+  vec2 st = uv * size - 0.5;
+  vec2 i = floor(st);
+  vec2 f = st - i;
+  vec2 f2 = f * f;
+  vec2 f3 = f2 * f;
+  vec2 w0 = (1.0 - 3.0 * f + 3.0 * f2 - f3) / 6.0;
+  vec2 w1 = (4.0 - 6.0 * f2 + 3.0 * f3) / 6.0;
+  vec2 w3 = f3 / 6.0;
+  vec2 g0 = w0 + w1;
+  vec2 g1 = 1.0 - g0;
+  vec2 h0 = (i - 0.5 + w1 / g0) / size;
+  vec2 h1 = (i + 1.5 + w3 / g1) / size;
+  return g0.y * (g0.x * textureLod(s, vec2(h0.x, h0.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h0.y), lod).rgb) + g1.y * (g0.x * textureLod(s, vec2(h0.x, h1.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h1.y), lod).rgb);
 }
 vec3 patched(vec3 col, vec3 p, vec3 t, int i, float k) {
   vec3 c = (uPatchMode[i].y > 0.5 ? t : inverseFilmic(t)) * uPatchLens[i].z * k;
@@ -148,6 +167,34 @@ void main() {
     float bl = dot(band, vec3(0.3, 0.5, 0.2));
     band = mix(vec3(bl), band, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(bl, 1e-5) / 0.05, uBandGrade.y - 1.0);
   }
+  float bz = bc.z;
+  for (int k = 0; k < (uFlightStrip.x > 0.0 ? 1 : 0); k++) {
+    vec2 fuv = vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5);
+    float ax = abs(asin(clamp((uGal * sd).z, -1.0, 1.0))) / uBandMap.z;
+    float fz = 1.0 - smoothstep(uFlightEdge.x, uFlightEdge.y, ax + uFlightEdge.z * (textureLod(uFlightMap, fuv, 0.0).g - 1.0));
+    highp uint hs = uint(gl_FragCoord.x) * 0x85EBCA77u ^ uint(gl_FragCoord.y) * 0xC2B2AE3Du;
+    hs ^= hs >> 15;
+    hs *= 0x2C1B3C6Du;
+    hs ^= hs >> 12;
+    hs *= 0x297A2D39u;
+    hs ^= hs >> 15;
+    float grain = 1.0 + uFlightStrip.y * (float(hs >> 8) * (1.0 / 16777216.0) - 0.5);
+    vec3 soft = smoothLod(uSky, fuv, max(log2(float(textureSize(uSky, 0).x)) - uFlightStrip.z, 0.0));
+    soft = mix(vec3(dot(soft, vec3(0.3, 0.5, 0.2))), soft, 0.6);
+    off = mix(off, pow(max(soft * uBandGrade.w, vec3(0.0)), vec3(uGamma)) * uTint * grain, uFlightStrip.x);
+    vec3 glow = vec3(0.0);
+    for (int j = 0; j < (fz > 0.0 ? 1 : 0); j++) {
+      vec3 sq = smoothLod(uBandGlow, bc.xy, 0.0);
+      glow = inverseFilmic(sq * sq) * grain;
+      vec3 pd = bandPlane(sd);
+      vec2 puv = vec2(atan(pd.x, pd.z) / (2.0 * PI) + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / PI + 0.5);
+      float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
+      float gl = dot(glow, vec3(0.3, 0.5, 0.2));
+      glow = mix(vec3(gl), glow, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(gl, 1e-5) / 0.05, uBandGrade.y - 1.0);
+    }
+    band = mix(band, glow, uFlightStrip.x);
+    bz = mix(bc.z, fz, uFlightStrip.x);
+  }
   if (uGlow < 0.999) band *= uTerrainBand;
   if (uFlightGlow.w > 0.0 || uFlightLook.x > 0.0) {
     float ol = dot(uFlightOff, vec3(0.3, 0.5, 0.2));
@@ -155,7 +202,7 @@ void main() {
     float fl = max(dot(band, vec3(0.3, 0.5, 0.2)), 1e-5);
     band = mix(band, band * mix(uFlightDust, uFlightLight, smoothstep(uFlightBand.x, uFlightBand.y, fl)) * uFlightLook.y * pow(fl / uFlightBand.y, uFlightBand.z), uFlightLook.x) * mix(1.0, uFlightBand.w / uFlightLook.y, uFlightGlow.w);
   }
-  col = (mix(off, band, bc.z) + uFloor) * uGlow * uExposure;
+  col = (mix(off, band, bz) + uFloor) * uGlow * uExposure;
   if (uFlightGlow.w > 0.0) {
     vec2 fm = textureLod(uFlightMap, vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5), 0.0).rg;
     col += uFlightHaze.rgb * (uFlightGlow.w * (uFlightHaze.w + (1.0 - uFlightHaze.w) * exp(-pow(asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth, 2.0)))) + uFlightGlow.rgb * (uFlightGlow.w * fm.r);
@@ -243,12 +290,13 @@ precision highp float;
 in vec3 vColor;
 in float vSize;
 uniform float uCore;
+uniform float uHalo;
 out vec4 outColor;
 void main() {
   vec2 p = (gl_PointCoord - 0.5) * vSize;
   float r2 = dot(p, p);
   float core = exp(-r2 / uCore);
-  float glow = 0.012 * exp(-r2 / (0.035 * vSize * vSize));
+  float glow = uHalo * exp(-r2 / (0.035 * vSize * vSize));
   outColor = vec4(vColor * (core + glow), 0.0);
 }`
 
@@ -256,32 +304,64 @@ const DEEP_VERT = /* glsl */ `
 uniform float uPixel;
 uniform float uExposure;
 uniform vec3 uLens;
+uniform vec4 uDeepLaw;
+uniform vec3 uDeepSize;
 in vec4 aStar;
 in vec3 aColor;
 out vec3 vColor;
-out vec3 vShape;
+out float vSize;
 ${SKY_PATCH_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
   vec2 lq = gl_Position.xy / gl_Position.w * 0.5 * vec2(uLens.y, 1.0);
   gl_Position.z = 0.0;
-  float size = aStar.x * uPixel;
+  float b = uDeepLaw.x * aStar.y * pow(aStar.y / uDeepLaw.z, uDeepLaw.y);
+  float size = min(uDeepSize.x + uDeepSize.y * log2(1.0 + b), uDeepSize.z) * uPixel;
   gl_PointSize = size;
-  vShape = vec3(size, size * aStar.z, aStar.w);
+  vSize = size;
   vec3 d = normalize(position);
-  vColor = aColor * (aStar.y * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
+  vColor = aColor * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
 }`
 
-const DEEP_FRAG = /* glsl */ `
-precision highp float;
-in vec3 vColor;
-in vec3 vShape;
-out vec4 outColor;
+const STRIP_VERT = /* glsl */ `
+uniform float uPixel;
+uniform float uExposure;
+uniform float uLift;
+uniform sampler2D uSky;
+uniform mat3 uGal;
+uniform vec4 uBandGrade;
+uniform vec4 uBandTint;
+uniform vec3 uFlightDust;
+uniform vec3 uFlightLight;
+uniform vec4 uFlightBand;
+uniform vec2 uFlightLook;
+uniform vec4 uStripStar;
+uniform vec3 uStripSize;
+in vec4 aStar;
+in vec3 aColor;
+out vec3 vColor;
+out float vSize;
+${SKY_PATCH_GLSL}
 void main() {
-  vec2 p = (gl_PointCoord - 0.5) * vShape.x;
-  float x = dot(p, p) / (vShape.y * vShape.y);
-  outColor = vec4(vColor * (exp(-x) + vShape.z * exp(-x * 0.25)), 0.0);
+  vec4 mv = modelViewMatrix * vec4(position, 0.0);
+  gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
+  gl_Position.z = 0.0;
+  vec3 d = normalize(position);
+  vec3 g = uGal * d;
+  vec3 pd = transpose(uGal) * vec3(normalize(g.xy + vec2(1e-6, 0.0)), 0.0);
+  vec2 puv = vec2(atan(pd.x, pd.z) / 6.283185307179586 + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+  float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
+  float k = uBandGrade.x * region * pow(aStar.y / 0.05, uBandGrade.y - 1.0);
+  float fl = max(aStar.y * dot(uBandTint.rgb, vec3(0.3, 0.5, 0.2)) * k, 1e-5);
+  vec3 look = mix(uFlightDust, uFlightLight, smoothstep(uFlightBand.x, uFlightBand.y, fl * uStripStar.y)) * uFlightLook.y * pow(fl / uFlightBand.y, uFlightBand.z);
+  look = mix(vec3(dot(look, vec3(0.3, 0.5, 0.2))), look, uStripStar.x);
+  vec3 c = mix(vec3(1.0), aColor, uBandTint.w) * uBandTint.rgb * mix(vec3(1.0), look, uFlightLook.x);
+  c *= k * mix(1.0, uFlightBand.w / uFlightLook.y, uLift) * aStar.x * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w);
+  vColor = c;
+  float size = min(uStripSize.x + uStripSize.y * log2(1.0 + max(c.r, max(c.g, c.b))), uStripSize.z) * uPixel;
+  gl_PointSize = size;
+  vSize = size;
 }`
 
 const BEHIND = { stencilWrite: true, stencilFunc: THREE.EqualStencilFunc, stencilRef: 0, stencilFuncMask: 0xff, stencilWriteMask: 0 } as const
@@ -289,6 +369,7 @@ const BEHIND = { stencilWrite: true, stencilFunc: THREE.EqualStencilFunc, stenci
 const POLE = [0.45, 0.82, 0.35] as const
 const GAMMA_TURN = 0.28
 const STAR_MAX_SIZE = 11
+const STAR_HALO = 0.012
 const STAR_CULL_PAD_PX = 4
 const NO_TILES = new Uint8Array(0)
 
@@ -315,6 +396,11 @@ export class Sky {
   private readonly deep: THREE.Points
   private deepLevel = 0
   private deepLens = 0
+  private readonly strip: THREE.Points
+  private stripGlow: THREE.Texture | null = null
+  private stripBytes: ArrayBuffer | null = null
+  private stripDef: StripDef | null = null
+  private field: FlightField | null = null
   private readonly inView: { points: THREE.Points; pos: Float32Array; order: THREE.BufferAttribute; key: Float64Array }[] = []
   private readonly ahead = new THREE.Vector3()
   private flightLevel = 0
@@ -332,6 +418,8 @@ export class Sky {
   private readonly patchRing = [new THREE.Vector4(0, 0, 0, 1), new THREE.Vector4(0, 0, 0, 1)]
   private readonly patchMode = [new THREE.Vector3(0, 0, 0.05), new THREE.Vector3(0, 0, 0.05)]
   private readonly patchTex: THREE.Texture[] = [this.blank, this.blank]
+  private readonly patchRaw = [0, 0]
+  private readonly flightHalo = { value: STAR_HALO }
   private readonly starPos: Float32Array
   private readonly starOrder: THREE.BufferAttribute
   private readonly starPlain: THREE.BufferGeometry
@@ -350,6 +438,7 @@ export class Sky {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
+      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector4() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
     const rnd = stream('stars')
@@ -413,7 +502,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: STAR_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uStarLift: { value: new THREE.Vector2(0, 1) }, uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
+      uniforms: { uStarLift: { value: new THREE.Vector2(0, 1) }, uPixel: { value: 1 }, uExposure: { value: 1 }, uGlow: { value: 1 }, uSky: { value: null }, uHasSky: { value: 0 }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uCrowd: { value: new THREE.Vector2(skyFrame.band.crowdRef, skyFrame.band.crowdLod) }, uTerrainStars: { value: new THREE.Vector4(st.terrainGain, st.terrainCrowd, st.terrainCore, st.terrainCap) }, uCrowdShape: { value: new THREE.Vector2(skyFrame.band.crowdPow, skyFrame.band.crowdMin) }, uCore: { value: skyFrame.stars.core }, uHalo: { value: STAR_HALO }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -426,6 +515,7 @@ export class Sky {
     this.starScene.add(this.stars)
     const fm = mat.clone()
     for (const name of ['uPatchM', 'uPatchLens', 'uPatchRing', 'uPatchMode']) fm.uniforms[name] = mat.uniforms[name]!
+    fm.uniforms.uHalo = this.flightHalo
     this.flight = new THREE.Points(new THREE.BufferGeometry(), fm)
     this.flight.frustumCulled = false
     this.flight.visible = false
@@ -433,8 +523,8 @@ export class Sky {
     const dm = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: DEEP_VERT,
-      fragmentShader: DEEP_FRAG,
-      uniforms: { uPixel: { value: 1 }, uExposure: { value: 0 }, uLens: { value: new THREE.Vector3(0, 16 / 9, 0) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
+      fragmentShader: STAR_FRAG,
+      uniforms: { uCore: mat.uniforms.uCore!, uHalo: this.flightHalo, uPixel: { value: 1 }, uExposure: { value: 0 }, uLens: { value: new THREE.Vector3(0, 16 / 9, 0) }, uDeepLaw: { value: new THREE.Vector4(1, 0, 1, 0) }, uDeepSize: { value: new THREE.Vector3(SIZE[0], SIZE[1], FLIGHT_SIZE) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -446,10 +536,59 @@ export class Sky {
     this.deep.frustumCulled = false
     this.deep.visible = false
     this.stars.add(this.deep)
+    const pu = this.pass.material.uniforms
+    const sm = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: STRIP_VERT,
+      fragmentShader: STAR_FRAG,
+      uniforms: { uCore: mat.uniforms.uCore!, uHalo: this.flightHalo, uPixel: { value: 1 }, uExposure: { value: 0 }, uLift: { value: 0 }, uSky: { value: null }, uGal: pu.uGal!, uBandGrade: pu.uBandGrade!, uBandTint: pu.uBandTint!, uFlightDust: pu.uFlightDust!, uFlightLight: pu.uFlightLight!, uFlightBand: pu.uFlightBand!, uFlightLook: pu.uFlightLook!, uStripStar: { value: new THREE.Vector4(1, 1, 0, 0) }, uStripSize: { value: new THREE.Vector3(SIZE[0], SIZE[1], FLIGHT_SIZE) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode } },
+      blending: THREE.AdditiveBlending,
+      premultipliedAlpha: true,
+      depthTest: false,
+      depthWrite: false,
+      transparent: true,
+      ...BEHIND,
+    })
+    this.strip = new THREE.Points(new THREE.BufferGeometry(), sm)
+    this.strip.frustumCulled = false
+    this.strip.visible = false
+    this.stars.add(this.strip)
+  }
+
+  setFlightBand(glow: THREE.Texture, stars: ArrayBuffer, def: StripDef): void {
+    this.stripGlow = glow
+    this.stripBytes = stars
+    this.stripDef = def
+    const u = this.pass.material.uniforms
+    u.uBandGlow!.value = glow
+    ;(u.uFlightStrip!.value as THREE.Vector4).set(0, def.dither, def.offLevel, 0)
+    ;(u.uFlightEdge!.value as THREE.Vector3).fromArray(def.edge)
+    ;((this.strip.material as THREE.ShaderMaterial).uniforms.uStripStar!.value as THREE.Vector4).set(def.stars.tint, def.stars.warm, 0, 0)
+    this.flightHalo.value = def.stars.halo
+    ;((this.deep.material as THREE.ShaderMaterial).uniforms.uDeepLaw!.value as THREE.Vector4).set(def.deep.gain, def.deep.tail, def.deep.ref, 0)
+    this.buildStrip()
+  }
+
+  private buildStrip(): void {
+    const def = this.stripDef
+    if (!def || !this.stripBytes || !this.field) return
+    const b = skyFrame.band
+    const set = bandField(this.stripBytes, { repeats: b.repeats, offset: b.offsetDeg / 360 * b.repeats, latSpan: THREE.MathUtils.degToRad(b.latSpanDeg), widen: b.widen, gal: galactic().elements }, def, this.field)
+    const geo = this.strip.geometry
+    geo.setAttribute('position', new THREE.BufferAttribute(set.position, 3))
+    geo.setAttribute('aStar', new THREE.BufferAttribute(set.star, 4))
+    geo.setAttribute('aColor', new THREE.BufferAttribute(set.color, 3))
+    const order = new THREE.BufferAttribute(new Uint32Array(set.position.length / 3), 1)
+    order.setUsage(THREE.DynamicDrawUsage)
+    geo.setIndex(order)
+    geo.setDrawRange(0, 0)
+    for (let i = this.inView.length - 1; i >= 0; i--) if (this.inView[i]!.points === this.strip) this.inView.splice(i, 1)
+    this.inView.push({ points: this.strip, pos: set.position, order, key: new Float64Array(4).fill(NaN) })
   }
 
   setFlightStars(def: FlightDef): void {
     const field = flightField(def)
+    this.field = field
     const geo = this.flight.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(field.position, 3))
     geo.setAttribute('aStar', new THREE.BufferAttribute(field.star, 4))
@@ -468,6 +607,7 @@ export class Sky {
       points.geometry.setDrawRange(0, 0)
       this.inView.push({ points, pos, order, key: new Float64Array(4).fill(NaN) })
     }
+    this.buildStrip()
     const half = new Uint16Array(field.glow.length * 2)
     for (let i = 0; i < field.glow.length; i++) {
       half[i * 2] = THREE.DataUtils.toHalfFloat(field.glow[i]!)
@@ -510,6 +650,7 @@ export class Sky {
     for (let i = 0; i < 2; i++) {
       const e = list[i]
       this.patchMode[i]!.x = e ? e.weight : 0
+      this.patchRaw[i] = e ? e.weight : 0
       this.patchTex[i] = e ? e.patch.texture : this.blank
       if (!e) continue
       const p = e.patch
@@ -644,6 +785,9 @@ export class Sky {
     u.uPatchA!.value = this.patchTex[0]
     u.uPatchB!.value = this.patchTex[1]
     ;(u.uFlightGlow!.value as THREE.Vector4).set(this.flightGlow.x, this.flightGlow.y, this.flightGlow.z, this.flightLift)
+    const swap = this.stripGlow && this.stripDef ? THREE.MathUtils.smoothstep(this.flightLift, 0, this.stripDef.swap) : 0
+    ;(u.uFlightStrip!.value as THREE.Vector4).x = swap
+    for (let i = 0; i < 2; i++) this.patchMode[i]!.x = swap > 0 ? Math.pow(this.patchRaw[i]!, 1 + this.stripDef!.patchHold * this.flightLift) : this.patchRaw[i]!
     this.q.copy(turn).invert().premultiply(this.frame)
     ;(u.uFrame!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q))
     this.stars.quaternion.copy(this.q).invert()
@@ -675,6 +819,7 @@ export class Sky {
     su.uPixel!.value = height / 1080
     su.uExposure!.value = exposure
     su.uGlow!.value = glow
+    su.uHalo!.value = swap > 0 ? STAR_HALO + (this.flightHalo.value - STAR_HALO) * swap : STAR_HALO
     su.uPatchA!.value = this.patchTex[0]
     su.uPatchB!.value = this.patchTex[1]
     this.stars.geometry = this.cull ? this.starCulled : this.starPlain
@@ -691,7 +836,15 @@ export class Sky {
     du.uPatchA!.value = this.patchTex[0]
     du.uPatchB!.value = this.patchTex[1]
     this.deep.visible = this.flightLift > 0 && this.deepLevel > 0 && this.deep.geometry.hasAttribute('position')
-    if (this.flight.visible || this.deep.visible) this.viewStars(camera)
+    const tu = (this.strip.material as THREE.ShaderMaterial).uniforms
+    tu.uPixel!.value = height / 1080
+    tu.uExposure!.value = exposure * glow * swap
+    tu.uLift!.value = this.flightLift
+    tu.uSky!.value = this.texture
+    tu.uPatchA!.value = this.patchTex[0]
+    tu.uPatchB!.value = this.patchTex[1]
+    this.strip.visible = swap > 0 && this.texture !== null && this.strip.geometry.hasAttribute('position')
+    if (this.flight.visible || this.deep.visible || this.strip.visible) this.viewStars(camera)
     const some = !rects || rects.length > 0
     if (this.cull && some) this.orderStars(camera, height, aspect, open)
     renderer.setRenderTarget(target)
