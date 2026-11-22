@@ -1,9 +1,67 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T01:44:54.018Z",
- "head": "56cc980cda0e92e91646c76f132973858ef80d5d",
- "note": "Phase 6: measure of the merged tree running; 1857 cloud fringes traced to the fine cloud term (fix coded off tree); items 4, 5, 7 wait for the render slot",
+ "pushed": "2026-11-22T02:05:29.324Z",
+ "head": "2851cd9f763542fa38d5d9c67481bab4299a6f22",
+ "note": "Phase 6: final stills of the judged frames on version c equal the kept build byte for byte; terrain sheet rendering; then POLISH READY for items 1 to 3",
  "looks": [
+  {
+   "time": "2026-11-22T02:05:28.209Z",
+   "file": "20261122020528209-note-f-2156-final.jpg",
+   "source": "out/work/earth/p6/qa/f-2156-final.png",
+   "kind": "note",
+   "label": "final 2156 on version c: byte equal to the kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:05:27.191Z",
+   "file": "20261122020527191-note-f-1857-final.jpg",
+   "source": "out/work/earth/p6/qa/f-1857-final.png",
+   "kind": "note",
+   "label": "final 1857 on version c: byte equal to the kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:04:47.023Z",
+   "file": "20261122020447023-frame-f-2156-final.jpg",
+   "source": "out/work/earth/p6/qa/f-2156-final.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T02:00:15.650Z",
+   "file": "20261122020015650-frame-f-1857-final.jpg",
+   "source": "out/work/earth/p6/qa/f-1857-final.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T01:49:08.376Z",
+   "file": "20261122014908376-job-frame-01857.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T01:42:24.721Z",
    "file": "20261122014224721-note-limb1857-nn.jpg",
@@ -33,64 +91,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T01:28:06.299Z",
-   "file": "20261122012806299-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T01:27:29.073Z",
-   "file": "20261122012729073-frame-p-2134.jpg",
-   "source": "out/work/earth/p6/eq/p-2134.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2134, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2134,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T01:23:46.362Z",
-   "file": "20261122012346362-frame-p-1877.jpg",
-   "source": "out/work/earth/p6/eq/p-1877.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1877, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1877,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T01:21:30.686Z",
-   "file": "20261122012130686-note-sheet-rise-c.jpg",
-   "source": "out/work/earth/p6/sheet-rise-c.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 2: rise 2135 to 2140 larger, review tier at preview format",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:21:30.094Z",
-   "file": "20261122012130094-note-sheet-rise-2122-2140.jpg",
-   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 2 proof: rise cover, every frame 2122 to 2140, review tier at preview format, version c",
-   "stop": "earth"
   }
  ]
 }
