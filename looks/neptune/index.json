@@ -1,9 +1,41 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T17:49:19.355Z",
- "head": "b128991d045852e27328351d2ba1c7cc2b52bf0e",
- "note": "Neptune: the rise with the new pace at review beside round 34's sheet; cover frames, final 5006 and G13 rendering",
+ "pushed": "2026-11-22T18:02:18.609Z",
+ "head": "55ac76f1a7fec0f68d1f0f9075feb4684e029df8",
+ "note": "CUT35 proofs: the rise with the new pace at review (4982, 4984, 4990, 4997, 5004), final 5006 the same bytes, G13 over the rise passes; 4983 at review renders",
  "looks": [
+  {
+   "time": "2026-11-22T18:02:17.386Z",
+   "file": "20261122180217386-note-09-5006-final-round-34-left-new-right.jpg",
+   "source": "out/work/nep/end35/cut/09-5006-final-round-34-left-new-right.jpg",
+   "kind": "note",
+   "label": "Neptune rise 5006 final, round 34 left, with the new pace right: the same bytes",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:02:16.368Z",
+   "file": "20261122180216368-note-view-4982-new-review-native-limb.jpg",
+   "source": "out/work/nep/end35/view-4982-new-review-native-limb.jpg",
+   "kind": "note",
+   "label": "Neptune rise 4982 at review with the new pace, the right limb at native size",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:02:15.490Z",
+   "file": "20261122180215490-note-view-4982-new-review-whole.jpg",
+   "source": "out/work/nep/end35/view-4982-new-review-whole.jpg",
+   "kind": "note",
+   "label": "Neptune rise 4982 at review with the new pace, whole frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:02:14.434Z",
+   "file": "20261122180214434-note-08-rise-cover-review-frames-new-82a6f3c.jpg",
+   "source": "out/work/nep/end35/cut/08-rise-cover-review-frames-new-82a6f3c.jpg",
+   "kind": "note",
+   "label": "Neptune rise cover, review frames 4982 and 4984 with the new pace (82a6f3c)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T17:49:18.159Z",
    "file": "20261122174918159-note-04-rise-review-frames-new-82a6f3c-4984-4990-4997-5004.jpg",
@@ -26,38 +58,6 @@
    "source": "out/work/nep/end35/r34-rise-sheet.png",
    "kind": "note",
    "label": "neptune.rise review sheet, round 34 state (19a4c767), for the pair with the new pace",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:56:05.035Z",
-   "file": "20261122165605035-note-rise-every-frame-old-C-E-part-4.jpg",
-   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-4.jpg",
-   "kind": "note",
-   "label": "rise drafts, every frame 4980 to 5006, part 4: old pace, trial C, trial E (chosen)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:56:04.011Z",
-   "file": "20261122165604011-note-rise-every-frame-old-C-E-part-3.jpg",
-   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-3.jpg",
-   "kind": "note",
-   "label": "rise drafts, every frame 4980 to 5006, part 3: old pace, trial C, trial E (chosen)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:56:03.005Z",
-   "file": "20261122165603005-note-rise-every-frame-old-C-E-part-2.jpg",
-   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-2.jpg",
-   "kind": "note",
-   "label": "rise drafts, every frame 4980 to 5006, part 2: old pace, trial C, trial E (chosen)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:56:01.919Z",
-   "file": "20261122165601919-note-rise-every-frame-old-C-E-part-1.jpg",
-   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-1.jpg",
-   "kind": "note",
-   "label": "rise drafts, every frame 4980 to 5006, part 1: old pace, trial C, trial E (chosen)",
    "stop": "neptune"
   },
   {
