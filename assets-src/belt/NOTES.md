@@ -533,3 +533,4 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
 - Checks: `npx tsc --noEmit` clean, `npx vitest run --reporter=tap` 15 files ok, belt tests 12 ok (new: turn on screen 30 deg/s or less, 3 px or more between every frame pair), `python3 tools/shaderaudit.py` equal to main line for line (32 lines, the one old belt line).
 - Slip, no effect: at 09:33 I ran `git stash` by mistake while the after final rendered and popped it within seconds; renders read `dist` (its own copy of the assets, built 09:32) and the stash is back in full (checked by status and by the md5 of rock-a in public, dist and take6).
 - Takes: 6 of 6 used. Full set 26,847,664 bytes, web 6,712,238 bytes (unchanged sizes).
+- 09:44 DONE sent to /root at 3e22629 with eight attachments. Open with the Builder: a floor in px per frame for the hero at 2782 (path unchanged, 608 px from 2765 to 2795), and the shade level.
