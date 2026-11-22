@@ -1,57 +1,71 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T11:44:06.532Z",
+ "pushed": "2026-11-22T12:01:42.486Z",
  "head": "3ad2c7f9d236fb92bdddc1971e604d64bfb5723a",
- "note": "Saturn polish hand-in chain on main 3a09527: finals and junction review stills done, measure and sheets running",
+ "note": "Saturn polish hand-in chain on main 3a09527: measure running, sheets next",
  "looks": [
   {
-   "time": "2026-11-22T11:44:05.337Z",
-   "file": "20261122114405337-note-l5-early.jpg",
-   "source": "../../../../tmp/l5-early.png",
+   "time": "2026-11-22T12:01:41.329Z",
+   "file": "20261122120141329-note-l22-b.jpg",
+   "source": "../../../../tmp/l22-b.png",
    "kind": "note",
-   "label": "3813 to 3819 at 3x, kept code against layout fill, draft",
+   "label": "draft 3832, 3836 at 2x at the junction, 35f7016 on main 3a09527: the dark sheet hands over to the model's tan",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T11:44:04.337Z",
-   "file": "20261122114404337-note-r22-a.jpg",
-   "source": "../../../../tmp/r22-a.png",
+   "time": "2026-11-22T12:01:40.384Z",
+   "file": "20261122120140384-note-l22-a.jpg",
+   "source": "../../../../tmp/l22-a.png",
    "kind": "note",
-   "label": "review tier 3821 and 3823 at 3x at the junction, 35f7016 on main 3a09527: no cream crescent",
+   "label": "draft 3826, 3829 at 2x at the junction, 35f7016 on main 3a09527",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T11:44:03.454Z",
-   "file": "20261122114403454-note-d3866-22.jpg",
-   "source": "../../../../tmp/d3866-22.png",
-   "kind": "note",
-   "label": "final 3866, batch 19 against 35f7016 on main 3a09527, difference map: sky only",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T11:41:37.846Z",
-   "file": "20261122114137846-frame-R22-3826.jpg",
-   "source": "out/work/saturn/R22-3826.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3826, review tier",
+   "time": "2026-11-22T11:57:23.433Z",
+   "file": "20261122115723433-job-frame-03879.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "saturn.rise frame 3879, draft tier, texels view, from the running measure job",
    "stop": "saturn",
    "segment": "saturn.rise",
-   "frame": 3826,
-   "tier": "review",
+   "frame": 3879,
+   "tier": "draft",
    "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
+   "diag": "texels",
+   "job": "measure"
   },
   {
-   "time": "2026-11-22T11:19:56.744Z",
-   "file": "20261122111956744-frame-P22-3540.jpg",
-   "source": "out/work/saturn/P22-3540.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3540, final tier",
+   "time": "2026-11-22T11:47:26.575Z",
+   "file": "20261122114726575-note-r22-b.jpg",
+   "source": "../../../../tmp/r22-b.png",
+   "kind": "note",
+   "label": "review tier 3826 and 3829 at 3x at the junction, 35f7016 on main 3a09527: lanes turn at the limb, grey zone inside, no cream crescent",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T11:47:21.444Z",
+   "file": "20261122114721444-job-frame-03390.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "saturn.hold frame 3390, draft tier, texels view, from the running measure job",
    "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3540,
-   "tier": "final",
+   "segment": "saturn.hold",
+   "frame": 3390,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T11:46:59.048Z",
+   "file": "20261122114659048-frame-R22-3829.jpg",
+   "source": "out/work/saturn/R22-3829.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3829, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3829,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
@@ -83,14 +97,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:48:16.453Z",
-   "file": "20261122104816453-note-m-3866.jpg",
-   "source": "../../../../tmp/m-3866.png",
-   "kind": "note",
-   "label": "Rise 3866 draft: main f25fcbc, main 3a09527, agent/saturn 35f7016 (holds main 3a09527): the sky band behind the body moved with batch 21",
-   "stop": "saturn"
   }
  ]
 }
