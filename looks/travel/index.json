@@ -1,9 +1,49 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T08:25:51.097Z",
+ "pushed": "2026-11-22T08:40:12.640Z",
  "head": "b49114448853c606a3e822fb30e21f7b3bb37283",
- "note": "earth.travel arrival: committed pattern sheet, pinned variant rendering",
+ "note": "earth.travel pinned arrival, every frame 2195 to 2250 at draft",
  "looks": [
+  {
+   "time": "2026-11-22T08:40:11.671Z",
+   "file": "20261122084011671-note-pn-crops.jpg",
+   "source": "../../../../tmp/v/pn-crops.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, draft: pn-crops",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:40:10.996Z",
+   "file": "20261122084010996-note-pn-2243-2250.jpg",
+   "source": "../../../../tmp/v/pn-2243-2250.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, draft: pn-2243-2250",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:40:10.268Z",
+   "file": "20261122084010268-note-pn-2227-2242.jpg",
+   "source": "../../../../tmp/v/pn-2227-2242.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, draft: pn-2227-2242",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:40:09.344Z",
+   "file": "20261122084009344-note-pn-2211-2226.jpg",
+   "source": "../../../../tmp/v/pn-2211-2226.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, draft: pn-2211-2226",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:40:08.307Z",
+   "file": "20261122084008307-note-pn-2195-2210.jpg",
+   "source": "../../../../tmp/v/pn-2195-2210.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, draft: pn-2195-2210",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T08:25:49.903Z",
    "file": "20261122082549903-note-a1-2212-final.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/x2-486-500.jpg",
    "kind": "note",
    "label": "sun.travel 486 to 500 draft, every frame",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:05:24.304Z",
-   "file": "20261122080524304-note-x2-470-485.jpg",
-   "source": "../../../../tmp/v/x2-470-485.jpg",
-   "kind": "note",
-   "label": "sun.travel 470 to 485 draft, every frame",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:52:41.288Z",
-   "file": "20261122075241288-note-x1-limb.jpg",
-   "source": "../../../../tmp/v/x1-limb.jpg",
-   "kind": "note",
-   "label": "sun.travel 495 and 497 draft limb, without and with the cure",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:52:40.731Z",
-   "file": "20261122075240731-note-x2-limb3.jpg",
-   "source": "../../../../tmp/v/x2-limb3.jpg",
-   "kind": "note",
-   "label": "sun.travel 493 495 497 final, native left limb",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:52:40.165Z",
-   "file": "20261122075240165-note-x2-495-final.jpg",
-   "source": "../../../../tmp/v/x2-495-final.jpg",
-   "kind": "note",
-   "label": "sun.travel 495 final, dark limb line and wisps cured",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:52:39.583Z",
-   "file": "20261122075239583-note-x2-sun-strip.jpg",
-   "source": "../../../../tmp/v/x2-sun-strip.jpg",
-   "kind": "note",
-   "label": "sun.travel 480 to 510 draft, every second frame, with the Sun set's two lines (weight into shown)",
    "stop": "travel"
   }
  ]
