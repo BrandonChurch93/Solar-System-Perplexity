@@ -42,7 +42,7 @@ export const FLIGHT_SIZE = 16
 export interface StripDef {
   swap: number
   edge: number[]
-  feather: { reach: number; rough: number; follow: number; mean: number; thin: number; dim: number }
+  feather: { reach: number; rough: number; follow: number; mean: number; thin: number; dim: number; shade: number }
   dither: number
   offLevel: number
   patchHold: number
