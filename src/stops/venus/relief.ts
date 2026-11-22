@@ -86,7 +86,6 @@ in float vHigh;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 d = normalize(vDir);
   vec3 up = normalize(vUp);
   float s = clamp(dot(d, up), -1.0, 1.0);
@@ -111,6 +110,7 @@ void main() {
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   outColor = vec4(glow * uGain * vig, cut);
+  if (uDiag >= 2) discard;
 }`
 
 const VERT = /* glsl */ `
@@ -173,12 +173,12 @@ void main() {
     alpha = smoothstep(0.0, -uLens.w - vRim, asin(clamp(dot(ray, uUp), -1.0, 1.0)) + uLens.z);
   }
   alpha *= smoothstep(0.0, uEdge.x, vUv.x) * smoothstep(0.0, uEdge.y, 1.0 - vUv.x);
-  if (alpha < 0.004) discard;
+  float texels = diagTexels(uv * uSize);
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = inverseFilmic(texel.rgb) * uGain * vig;
-  if (uDiag >= 2 && alpha < 0.5) discard;
-  outColor = diagOut(vec4(col * alpha, alpha), diagTexels(uv * uSize), 1.0, uLayer, shift * 60.0, length(vView));
+  outColor = diagOut(vec4(col * alpha, alpha), texels, 1.0, uLayer, shift * 60.0, length(vView));
+  if (alpha < 0.004 || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }
@@ -199,6 +199,7 @@ export class CloudRelief {
   private readonly layers: Layer[] = []
   private air: Layer | null = null
   private readonly motion: CloudMotion
+  carry: { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number } | null = null
 
   private constructor(motion: CloudMotion) {
     this.motion = motion
@@ -236,6 +237,7 @@ export class CloudRelief {
     dome.renderOrder = -1
     r.group.add(dome)
     r.air = { mesh: dome, material: airMaterial }
+    r.carry = { map: airMap, fwd, right, span: airMaterial.uniforms.uSpan!.value as THREE.Vector3, cut: airMaterial.uniforms.uCut!.value as THREE.Vector3, gain: a.gain }
 
     for (let k = 0; k < def.layers.length; k++) {
       const l = def.layers[k]!
