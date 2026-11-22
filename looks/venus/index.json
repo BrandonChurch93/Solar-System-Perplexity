@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T16:30:13.005Z",
- "head": "6caa272097d33ce401b9d45ab9f4239a0d54aa6d",
- "note": "venus: the veil's two gates on the terrain side, cure in proof for CUT35 (draft pairs beside the round 34 state)",
+ "pushed": "2026-11-22T16:46:56.191Z",
+ "head": "90cc5b23c02518385458424ddefd8eb3833281f4",
+ "note": "venus: the veil's two gates on the terrain side, cure 90cc5b2 in proof for CUT35 (draft pairs beside the round 34 state; tree holds main 6460b4a)",
  "looks": [
+  {
+   "time": "2026-11-22T16:46:55.558Z",
+   "file": "20261122164655558-note-v78-rise.jpg",
+   "source": "../view/v78-rise.jpg",
+   "kind": "note",
+   "label": "venus rise in 1551 to 1556, draft, the variants tried: round 34 (top), g5 (dropped), v8, the cure kept (v7, bottom); tree holds main 6460b4a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T16:46:54.976Z",
+   "file": "20261122164654976-note-v78-dive.jpg",
+   "source": "../view/v78-dive.jpg",
+   "kind": "note",
+   "label": "venus dive out 1317 to 1322, draft, the variants tried: round 34 (top), fog fill opened over nine frames (g5, dropped: three flat fog frames), middle (v8), the cure kept (v7, bottom: round 34's fill, smear 0.3); tree holds main 6460b4a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T16:46:54.356Z",
+   "file": "20261122164654356-note-v9-rise.jpg",
+   "source": "../view/v9-rise.jpg",
+   "kind": "note",
+   "label": "venus rise in 1548 to 1558, draft: round 34 state (left of each pair) beside the gate cure 90cc5b2 in proof (right); tree holds main 6460b4a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T16:46:53.710Z",
+   "file": "20261122164653710-note-v9-dive.jpg",
+   "source": "../view/v9-dive.jpg",
+   "kind": "note",
+   "label": "venus dive out 1316 to 1326, draft: round 34 state (left of each pair) beside the gate cure 90cc5b2 in proof (right); tree holds main 6460b4a",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T16:29:37.541Z",
    "file": "20261122162937541-note-g5-rise.jpg",
@@ -130,38 +162,6 @@
    "source": "../view/c25-dc.png",
    "kind": "note",
    "label": "dive cover sheet 1309 to 1320 at review, change A, tree holds main 64fff6f; 1309 to 1313 changed, 1314 to 1320 same bytes as main",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:18.797Z",
-   "file": "20261122150618797-note-c25-rc.jpg",
-   "source": "../view/c25-rc.png",
-   "kind": "note",
-   "label": "rise cover sheet 1555 to 1566 at review, change A (veil pole fade and near fade push), tree holds main 64fff6f",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:21.388Z",
-   "file": "20261122144721388-note-k-1185-ring.jpg",
-   "source": "../view/k-1185-ring.png",
-   "kind": "note",
-   "label": "1185 unwrapped limb ring: approved hero, film (main 84b0ea4), difference times 4",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:20.411Z",
-   "file": "20261122144720411-note-k-1185-ur.jpg",
-   "source": "../view/k-1185-ur.jpg",
-   "kind": "note",
-   "label": "1185 final, main 84b0ea4: upper right dark limb, hairline and gold glint are the approved hero's own",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:19.423Z",
-   "file": "20261122144719423-note-k-1185-top.jpg",
-   "source": "../view/k-1185-top.jpg",
-   "kind": "note",
-   "label": "1185 final, main 84b0ea4: top sunlit limb, round 33 R3 minor, double rim line",
    "stop": "venus"
   },
   {
