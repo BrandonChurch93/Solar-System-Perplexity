@@ -1,9 +1,33 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T12:41:21.516Z",
- "head": "969a8a6f53065c69cec9881b8ba30523fd9adc5e",
- "note": "CUT33 head 969a8a6 (main da02e63): 495 final, rise sheet; hook take 3 draft a4",
+ "pushed": "2026-11-22T13:11:40.552Z",
+ "head": "b34f94632fa1e30fb1b423edb9f56e84259ae972",
+ "note": "hook take 3 b13 and the leave ramp, drafts",
  "looks": [
+  {
+   "time": "2026-11-22T13:11:40.001Z",
+   "file": "20261122131140001-note-l1-sheet.jpg",
+   "source": "out/work/sun/hk3/l1-sheet.jpg",
+   "kind": "note",
+   "label": "sun.travel 450 to 495, drafts: exposure and wash ramped over the whole pan (uncommitted on b34f946, main 8cd0877)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:11:39.333Z",
+   "file": "20261122131139333-note-b13-pairs2.jpg",
+   "source": "out/work/sun/hk3/b13-pairs2.jpg",
+   "kind": "note",
+   "label": "hook take 3, drafts 45, 53, 60, 66: second strand with sky between; agent/sun b34f946 on main 8cd0877",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:11:38.752Z",
+   "file": "20261122131138752-note-b13-pairs1.jpg",
+   "source": "out/work/sun/hk3/b13-pairs1.jpg",
+   "kind": "note",
+   "label": "hook take 3 (today's camera), drafts 30, 34, 38, 40: flash and the outer strands leaving; agent/sun b34f946 on main 8cd0877",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T12:41:20.906Z",
    "file": "20261122124120906-note-strip-a4.jpg",
@@ -42,36 +66,6 @@
    "format": "preview",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T12:17:44.811Z",
-   "file": "20261122121744811-frame-f00261-review.jpg",
-   "source": "out/work/sheets/.frames-oySi7a/f00261-review.png",
-   "kind": "frame",
-   "label": "sun.rise frame 261, review tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 261,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T12:12:36.879Z",
-   "file": "20261122121236879-note-sheet-terrain-89ca8d5.jpg",
-   "source": "out/work/sun/p1/sheet-terrain-89ca8d5.jpg",
-   "kind": "note",
-   "label": "Sun terrain review sheet (harness), head 1a02285 (code 89ca8d5), main e9fc2a9",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:12:35.877Z",
-   "file": "20261122121235877-note-rv11-200-224-89ca8d5.jpg",
-   "source": "out/work/sun/p1/rv11-200-224-89ca8d5.jpg",
-   "kind": "note",
-   "label": "Sun rise, review tier, every frame 200 to 224, head 1a02285 (code 89ca8d5), main e9fc2a9",
-   "stop": "sun"
   },
   {
    "time": "2026-11-22T12:09:03.565Z",
