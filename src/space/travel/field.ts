@@ -16,7 +16,7 @@ export interface FlightDef {
   glow: number
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
-  band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number }
+  band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
 }
 
 export interface FlightField {

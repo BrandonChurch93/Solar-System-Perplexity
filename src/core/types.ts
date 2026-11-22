@@ -53,6 +53,7 @@ export interface Shot {
   skyTurn: THREE.Quaternion
   skyStars?: number
   skyPatch?: number
+  skyLook?: number
   near: number
   far: number
   sun: SunState

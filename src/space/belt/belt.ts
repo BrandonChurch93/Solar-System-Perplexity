@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { config } from '../../config'
 import { Pass, floatTarget } from '../../core/pass'
+import { hash01 } from '../../core/random'
 import type { RenderView, Shot } from '../../core/types'
 import { isRaw } from '../../diagnostics/diag'
 import { BeltMotion, beltSegment, beltSpec, type BeltDirector, type RockPose } from './motion'
@@ -11,9 +12,10 @@ const ADD = /* glsl */ `
 precision highp float;
 uniform sampler2D uSrc;
 uniform float uWeight;
+uniform vec2 uShift;
 out vec4 outColor;
 void main() {
-  outColor = texelFetch(uSrc, ivec2(gl_FragCoord.xy), 0) * uWeight;
+  outColor = texelFetch(uSrc, ivec2(gl_FragCoord.xy - uShift), 0) * uWeight;
 }`
 
 const STREAK = /* glsl */ `
@@ -92,6 +94,7 @@ export class Belt {
   private readonly scene = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(30, 16 / 9, beltSpec.near, beltSpec.far)
   private scratch: THREE.WebGLRenderTarget | null = null
+  private fine: THREE.WebGLRenderTarget | null = null
   private acc: THREE.WebGLRenderTarget | null = null
   private tmp: THREE.WebGLRenderTarget | null = null
   private layer: THREE.WebGLRenderTarget | null = null
@@ -166,22 +169,24 @@ export class Belt {
     this.store?.dispose()
     this.store = null
     this.storeAssets = ''
-    for (const t of [this.scratch, this.acc, this.tmp, this.layer]) t?.dispose()
-    this.scratch = this.acc = this.tmp = this.layer = null
+    for (const t of [this.scratch, this.fine, this.acc, this.tmp, this.layer]) t?.dispose()
+    this.scratch = this.fine = this.acc = this.tmp = this.layer = null
   }
 
   private targets(width: number, height: number, pad: number): void {
     const w = width + 2 * pad
     const h = height + 2 * pad
     if (this.layer && this.layer.width === width && this.layer.height === height && this.acc!.width === w) return
-    for (const t of [this.scratch, this.acc, this.tmp, this.layer]) t?.dispose()
+    for (const t of [this.scratch, this.fine, this.acc, this.tmp, this.layer]) t?.dispose()
     this.scratch = floatTarget(w, h, THREE.HalfFloatType, true)
+    this.fine = floatTarget(Math.min(w, Math.ceil((beltSpec.blur.fineSize * height) / 1080)), Math.min(h, Math.ceil((beltSpec.blur.fineSize * height) / 1080)), THREE.HalfFloatType, true)
+    this.fine.samples = beltSpec.blur.msaa
     this.acc = floatTarget(w, h, THREE.HalfFloatType)
     this.tmp = floatTarget(w, h, THREE.HalfFloatType)
     this.layer = floatTarget(width, height, THREE.HalfFloatType)
     if (!this.add) {
       const size = (): THREE.IUniform => ({ value: new THREE.Vector2() })
-      this.add = new Pass(ADD, { uSrc: { value: null }, uWeight: { value: 1 } }, blend(THREE.OneFactor))
+      this.add = new Pass(ADD, { uSrc: { value: null }, uWeight: { value: 1 }, uShift: { value: new THREE.Vector2() } }, blend(THREE.OneFactor))
       this.streak = new Pass(STREAK, { uSrc: { value: null }, uSize: size(), uDir: { value: new THREE.Vector2() } })
       this.bokeh = new Pass(BOKEH, { uSrc: { value: null }, uSize: size(), uRadius: { value: 1 } })
       this.soft = new Pass(SOFT, { uSrc: { value: null }, uSize: size(), uRadius: { value: 1 } })
@@ -282,7 +287,7 @@ export class Belt {
     const scale = height / 1080
     const pad = Math.ceil(beltSpec.blur.pad * scale)
     this.targets(width, height, pad)
-    const scratch = this.scratch!
+    const coarse = this.scratch!
     let a = this.acc!
     let b = this.tmp!
     const layer = this.layer!
@@ -350,7 +355,9 @@ export class Belt {
       const by = Math.max(0, Math.floor(p.box[1] * s) - 1)
       const bw = Math.min(vw, Math.ceil(p.box[2] * s) + 1) - bx
       const bh = Math.min(vh, Math.ceil(p.box[3] * s) + 1) - by
-      for (const t of [scratch, a, b]) {
+      const small = p.coc < beltSpec.blur.fineCoc * scale && p.steps <= beltSpec.blur.fineSteps && bw <= this.fine!.width && bh <= this.fine!.height
+      const scratch = small ? this.fine! : coarse
+      for (const t of [coarse, a, b]) {
         t.viewport.set(0, 0, vw, vh)
         t.scissorTest = false
       }
@@ -358,23 +365,29 @@ export class Belt {
       r.clear(true, false, false)
       r.setRenderTarget(b)
       r.clear(true, false, false)
-      for (const t of [scratch, a, b]) {
+      for (const t of [coarse, a, b]) {
         t.scissor.set(bx, by, bw, bh)
         t.scissorTest = true
       }
+      this.fine!.viewport.set(0, 0, bw, bh)
+      this.fine!.scissor.set(0, 0, bw, bh)
+      this.fine!.scissorTest = true
       it.mesh.visible = true
       it.material.uniforms.uCounted!.value = 1
       const add = this.add!.material.uniforms
       add.uSrc!.value = scratch.texture
       add.uWeight!.value = 1 / p.steps
+      ;(add.uShift!.value as THREE.Vector2).set(small ? bx : 0, small ? by : 0)
+      const order = Array.from({ length: p.steps }, (_, k) => k).sort((x, y) => hash01(x, p.index, p.steps) - hash01(y, p.index, p.steps))
       for (let k = 0; k < p.steps; k++) {
         const at = director.shotAt(frame, t0 + (span * (k + 0.5)) / p.steps)
         this.place(p.index, at)
         this.aim(at.camera.quaternion, at.camera.vfov, width / height)
-        const n = k + 1 + p.index * 7
+        const n = order[k]! + 1 + p.index * 7
         const jx = ((0.5 + n / G) % 1) - 0.5
         const jy = ((0.5 + n / (G * G)) % 1) - 0.5
-        this.camera.setViewOffset(width * s, height * s, -pad * s + jx, -pad * s + jy, vw, vh)
+        if (small) this.camera.setViewOffset(width * s, height * s, -pad * s + jx + bx, -pad * s + jy + vh - by - bh, bw, bh)
+        else this.camera.setViewOffset(width * s, height * s, -pad * s + jx, -pad * s + jy, vw, vh)
         this.camera.updateMatrixWorld(true)
         r.setRenderTarget(scratch)
         r.clear(true, true, false)
@@ -420,7 +433,7 @@ export class Belt {
       if (layer.scissor.z > 0 && layer.scissor.w > 0) this.over!.render(r, layer)
       layer.scissorTest = false
     }
-    for (const t of [scratch, a, b]) t.scissorTest = false
+    for (const t of [coarse, this.fine!, a, b]) t.scissorTest = false
     this.acc = a
     this.tmp = b
   }
