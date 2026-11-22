@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T06:49:41.636Z",
- "head": "d2aa70436afa51df0026a5907bcca7ac4c63eb31",
- "note": "venus polish on main 6267259 (batch 19): veil decals and planks under both covers traced to my veil pass, soft mist and soft streaks in test",
+ "pushed": "2026-11-22T07:07:42.927Z",
+ "head": "d998482e9961c5f799d9b5e7a4e5736babd3b486",
+ "note": "venus polish on main a87578e (batch 19): veil take E3d, soft mist and soft streaks under both covers; judged frames same bytes; cover sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T07:07:42.381Z",
+   "file": "20261122070742381-note-e3r-orbit.jpg",
+   "source": "../view/e3r-orbit.jpg",
+   "kind": "note",
+   "label": "venus rise 1560 to 1566 review tier, veil take E3d not committed yet (branch d998482 plus working tree, on main a87578e): the orbit side after the swap, soft streaks, no blades",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T07:07:41.833Z",
+   "file": "20261122070741833-note-e3r-part.jpg",
+   "source": "../view/e3r-part.jpg",
+   "kind": "note",
+   "label": "venus rise 1549 to 1559 review tier, veil take E3d not committed yet (branch d998482 plus working tree, on main a87578e, batch 19): mist thickens over a terrain that stays whole, then soft streaks; no planks, no decals",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T06:49:40.834Z",
    "file": "20261122064940834-note-e2b-1314.jpg",
@@ -162,22 +178,6 @@
    "source": "../view/f16-1586-pair.jpg",
    "kind": "note",
    "label": "Venus judged rise frame 1586, final tier, branch 42b9111: left on main 0622510 (batch 18), right on main a45a07b (batch 19, flight sky)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:07.845Z",
-   "file": "20261122052207845-note-a1-rejected.jpg",
-   "source": "../view/a1-rejected.jpg",
-   "kind": "note",
-   "label": "Venus, rejected take: sky patches faded out toward the swaps (lower rows) against the head (upper rows), draft, dive 1314 and 1315, rise 1557 and 1559, on main a45a07b: the shared sky of the terrain view is four times as loud as the patch, taken out",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:01:42.050Z",
-   "file": "20261122050142050-note-swap-rise.jpg",
-   "source": "../view/swap-rise.jpg",
-   "kind": "note",
-   "label": "Venus rise swap, draft frames 1559 and 1560, top of frame: the star field changes at the swap (engine item b, reported as weak)",
    "stop": "venus"
   }
  ]
