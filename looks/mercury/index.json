@@ -1,9 +1,33 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T11:55:42.756Z",
- "head": "7f4c06074318e47a44be21cffdca0642691a997f",
- "note": "Mercury polish 10a and 10c: limb line, local crest, near glow, rim halved in the rise; tree 7f4c060 on main d5b851f",
+ "pushed": "2026-11-22T12:27:00.672Z",
+ "head": "22270943bea624394cc1de33292e7881aca94c10",
+ "note": "MAIL 148: sun.travel 495 at the final tier, main beside head (weave lattice gone); star mask and limb darkening of the Sun plate under test",
  "looks": [
+  {
+   "time": "2026-11-22T12:25:37.662Z",
+   "file": "20261122122537662-note-m2d-495-whole.jpg",
+   "source": "../../../../tmp/m2d-495-whole.jpg",
+   "kind": "note",
+   "label": "sun.travel 495: head 5b33a4d final over a draft with the plate's limb darkened (tree 5b33a4d plus patch, on main da02e63): the Sun globe's own ring and hatch at weight 0.3 show once my limb is darker; not taken for round 33",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:25:37.095Z",
+   "file": "20261122122537095-note-495-c-main-head.jpg",
+   "source": "../../../../tmp/495-c-main-head.jpg",
+   "kind": "note",
+   "label": "sun.travel 495 final, centre of the disc at native size: main c5c4248 | head 5b33a4d; bottom high pass gain 5",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:25:36.493Z",
+   "file": "20261122122536493-note-495-ur-main-head.jpg",
+   "source": "../../../../tmp/495-ur-main-head.jpg",
+   "kind": "note",
+   "label": "sun.travel 495 final, upper right of the disc at native size: top main c5c4248 (same engine as 9f5ad80) | head 5b33a4d on that main; bottom the same at high pass gain 5: main carries the hatched lattice, the head an irregular cell network",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T11:55:35.257Z",
    "file": "20261122115535257-note-l6-sheet.jpg",
@@ -26,30 +50,6 @@
    "source": "../../../../tmp/l6-lr.jpg",
    "kind": "note",
    "label": "limb at 35 degrees 2x, drafts 520 540 689 700 717 1007 1034 1050, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:33.704Z",
-   "file": "20261122115533704-note-p1016-6.jpg",
-   "source": "../../../../tmp/p1016-6.jpg",
-   "kind": "note",
-   "label": "1016 limb at 3x, before (final, 2426a2e) | limb law (draft): slabs gone, halo halved, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:33.192Z",
-   "file": "20261122115533192-note-pair-m35.jpg",
-   "source": "../../../../tmp/pair-m35.jpg",
-   "kind": "note",
-   "label": "615 final limb at -38 degrees 3x: approved | before | limb law (near glow still too white), tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:32.688Z",
-   "file": "20261122115532688-note-pair-m8.jpg",
-   "source": "../../../../tmp/pair-m8.jpg",
-   "kind": "note",
-   "label": "615 final limb at -8 degrees 3x: approved | before (2426a2e) | limb law, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
