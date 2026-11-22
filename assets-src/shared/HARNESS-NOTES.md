@@ -294,6 +294,8 @@ Step 13 of the kit (a QA fix under `src/`, `public/` or `config/`): a second rec
 
 Round 34 on base33 (item 2 of the same mail, sent 15:55 UTC, paper only): nothing found that trips. Told the Builder: the row becomes "round 2 of 3"; base33.json must be whole before the first round 34 tar is placed, because `place` overwrites the stills and stress stills in place; `--row-only` before any stress tar, so `stress-base.json` holds round 33; `touched` compares only what is on disk, so "missing: none" and no "not joined" first; a name with no hash in the base counts as changed (pack made names excepted); `place` with a `tiles` folder calls the build check, so not during `start --checks`; R2 is a hand edit of select.json; controls come from the stops' first rounds.
 
+State at 18:00 UTC on 2026-11-22: the clock of MAIL 143 is done (ticks 14:52 to 17:52, then TICKS DONE). MAIL 178 items 2 and 3 are sent (15:55 and 16:05 UTC). Nothing is open. Not pushed: this paragraph.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
