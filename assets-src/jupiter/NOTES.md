@@ -822,3 +822,12 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
   - Next: a1 take 1 with a2 take 2 (tag t3) at 3204, 3220, 3236, 3239.
 - 03:30: tag t3 (a1 take 1, a2 take 2) rendered at 3204, 3220, 3236, 3239 and looked at beside g and t2 (`tk3204_700_640.jpg`, `tk3220_560_520.jpg`, `tk3236_620_620.jpg`, `tk3239_760_560.jpg`): the outline at 3204 is gone, the folds right of the roll and in the valley stay. DECIDED: plate = a1 take 1 + a2 take 2 + b take 1. Shipped `deck-under.jpg` full 1,497,250 bytes, web 312,204 bytes; copies in `out/work/jupiter/fg/t3/`. Takes used this round: a1 2, a2 2, b 1 (of 6).
 - 03:30:52 chain B2 started (`/tmp/chainB2.sh`, log `/tmp/chainB2.log`, review frames copied to `out/work/view/aft18/`): drafts tag h, finals of the four judged frames, terrain sheet, both cover sheets, compares, mirrorcheck, measure, gates, build, vitest, du. Nothing under `src/` or `public/assets/jupiter/` is touched while it runs.
+
+### 03:31 to 03:38 UTC: chain B2, drafts of the final tree (tag h, tree holds main 0622510, discard fix in, plate a1 take 1 + a2 take 2)
+
+- Layers views: red after the 3 x 3 erosion 0 at 3060, 3108, 3204, 3239 (raw red 161, 39, 0, 0 px, the same counts as tag g). Shares: tier 1 16.1 / 21.1 / 10.1 / 6.8 percent, tier 2 3.3 / 2.4 / 0 / 0, plate on the base 0.1 / 0.0 / 5.2 / 3.0 percent.
+- Texels views: 3253 0.95 percent soft (15,140 of 1,600,603, x 253 to 583, y 940 to 1079), 3239 0.05 percent (903 px). The same as before the layer.
+- Repeat across fresh page loads: draft 3239 rendered three times (tags t3, h, h2) and draft 3204 twice (t3, h): the same bytes each time.
+- Final 2895 with the layer and the discard fix: sha256 c34e30ce2c61de16, the same bytes as without the layer on main 0622510 and as before batches 17 and 18.
+- `/tmp/chainC.sh` waits behind chain B2: drafts tag h (beauty and layers) at every eighth frame not yet rendered on this tree (3068 to 3236).
+- RECIPE step 12: take 2 prompts, fits and the take decision written; the checks line still holds the placeholder until the chain ends.
