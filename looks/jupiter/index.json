@@ -1,9 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T07:02:23.127Z",
- "head": "45d6d6ccdcbb3015bdfcf336bc95e42c196fd10b",
- "note": "Jupiter: both cover sheets of the READY tree a06d2ae (main 2621f00) done and looked at; drafts of two small cover fixes rendering",
+ "pushed": "2026-11-22T07:14:20.376Z",
+ "head": "ae307f3c8cb58d8ee67f183ef49a820d7280b6b8",
+ "note": "Jupiter: two small cover fixes in drafts (stars back sooner under the cover, the upright column in the rise haze gone), review sheets rendering on ae307f3 (main 2621f00)",
  "looks": [
+  {
+   "time": "2026-11-22T07:14:19.645Z",
+   "file": "20261122071419645-note-rise_o_b.jpg",
+   "source": "out/work/view/e12/rise_o_b.jpg",
+   "kind": "note",
+   "label": "Jupiter rise, drafts, frames 3275 to 3278: left a06d2ae (column in the haze at the right), right ae307f3 (column gone), both on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T07:14:19.010Z",
+   "file": "20261122071419010-note-rise_o_a.jpg",
+   "source": "out/work/view/e12/rise_o_a.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover, drafts, frames 3271 to 3274 (orbit side): left a06d2ae with the pale upright column in the haze, right ae307f3 (the fine ray term of the haze fades out over five frames after the cut), both on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T07:14:18.408Z",
+   "file": "20261122071418408-note-rise_t_b.jpg",
+   "source": "out/work/view/e12/rise_t_b.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover, drafts, frames 3267 to 3270 (cut at 3270): left a06d2ae, right ae307f3, both on main 2621f00. The terrain sky stays to 3268 instead of 3266; black at the cut on both sides",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T07:14:17.747Z",
+   "file": "20261122071417747-note-dive_a.jpg",
+   "source": "out/work/view/e12/dive_a.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover, drafts (one sample), frames 3024 to 3027: left agent/jupiter a06d2ae, right ae307f3 (sky under the cover on the terrain side by the power 0.75), both on main 2621f00. Stars come back from 3025 instead of 3027",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-22T07:01:38.241Z",
    "file": "20261122070138241-note-r3274.jpg",
@@ -233,62 +265,6 @@
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3231,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:05:56.445Z",
-   "file": "20261122050556445-still-f03229-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03229-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3229, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3229,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:05:28.463Z",
-   "file": "20261122050528463-still-f03151-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03151-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3151, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3151,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:05:00.999Z",
-   "file": "20261122050500999-still-f03149-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03149-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3149, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3149,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:04:32.875Z",
-   "file": "20261122050432875-still-f03071-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03071-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3071, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3071,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
