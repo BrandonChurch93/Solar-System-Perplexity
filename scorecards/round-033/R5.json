@@ -1,0 +1,63 @@
+{
+ "critic": "R5",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-04.png",
+   "where": "frames 4290 and 4605 vs sheet-01.png frames 615, 870, 1440",
+   "what": "the Sun does not shrink consistently from stop to stop; at Uranus (4290) and Neptune (4605) it still blazes as a wide solar orb comparable to Venus (1440) and larger than on Mercury's horizon (870)",
+   "fix": "scale the Sun down monotonically by inverse distance at each planet so by Saturn, Uranus, and Neptune it reads as an intense pinpoint star rather than a broad disk"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "hold frames 615 to 4605, plus sheet-01.png 1185-1586 and sheet-04.png 4605-5006",
+   "what": "sunlight direction and intensity break continuity across and within stops: lighting flips from right-lit at Mercury (615) to left-lit at Venus-Uranus (1185-4035) and back to right-lit at Neptune (4605), flips 180 degrees mid-stop on Venus (1185 vs 1440-1586) and Neptune (4605 vs 5006), and leaves outer ice giants (4035, 4605) brighter than Mercury (615) and Mars (2325)",
+   "fix": "lock one consistent sun vector relative to the outbound trajectory and progressively dim key-light exposure and contrast falloff toward the outer solar system"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "all nine holds (360-4605) and every 570-frame planet cycle across sheet-01.png to sheet-04.png",
+   "what": "every planet repeats the exact same five-beat camera template and dead-center ~75%-height portrait framing regardless of real scale, then snaps backward from low-orbit skims to wide full-globe views (such as 870 to 1016 and 2010 to 2156) before cutting to empty stars, breaking forward motion",
+   "fix": "vary shot choreography, framing scale, and flyby geometry per world (for example fast grazing passes on small inner rocky planets vs towering wide-to-close reveals on gas giants) and maintain continuous forward travel past each limb instead of resetting back to the approach angle"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 4605-5006 vs frames 5085-5362",
+   "what": "Neptune changes design and grade mid-stop, dropping Triton and its bright cobalt storm deck while suddenly sprouting bright, sharp Saturn-like concentric rings in 5085-5362",
+   "fix": "keep one consistent Neptune asset, ring opacity, moon placement, and color grade from approach (4605) through departure (5362)"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 1642, 1755, 2156, 2212 (and transitions across sheet-01.png 495-1072, sheet-03.png 3352, sheet-04.png 4492-5362)",
+   "what": "the background sky breaks into mismatched plates: the Milky Way vanishes into flat dot starfields on transitions (495, 1072, 1642, 2212, 3352, 5085), rotates behind an unmoving Earth and Moon (1755 vs 2156) or pops in behind Mercury (615 vs 1016), and turns into a blotchy brown top strip in 4492, 5235, and 5362",
+   "fix": "project a single persistent 360-degree celestial sphere behind the entire camera path so starfields and the Milky Way parallax smoothly and match across every cut and camera turn"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 5085, 5235, 5362 (and uniform 570-frame pacing across sheet-01.png to sheet-04.png)",
+   "what": "metronomic equal-length stops prevent the film from building momentum, and the ending (5362) fails to land, leaving a dark ringed planet awkwardly clipped at the lower-left edge under a heavy brown Milky Way band with no clear look-back read on the distant Sun",
+   "fix": "modulate stop durations to build scale toward the outer worlds and recompose the final outbound drift into a deliberate look-back frame where Neptune silhouettes cleanly against deep space and the distant Sun reads unmistakably as the tiny bright point of origin"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 247, 360 vs frames 495, 615",
+   "what": "the Sun shifts abruptly in grade and texture from high-contrast orange granulation with radial hair-like streamers (247, 360) to a smooth blown-out cream-yellow disk as soon as it moves off-center (495, 615)",
+   "fix": "transition solar exposure and bloom smoothly as the camera pulls back so surface detail and corona falloff evolve continuously rather than swapping styles"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frame 2580 vs orbital horizon skims in sheet-01.png 870 and sheet-03.png 3150, 3720",
+   "what": "the Mars close-up drops low inside a hazy canyon like a wide-angle terrestrial drone shot, breaking the consistent orbital space-lens perspective used on every other world",
+   "fix": "raise the Mars pass to a high-altitude orbital skim above Valles Marineris and the curved planetary limb to match the focal length and space perspective of the rest of the journey"
+  }
+ ]
+}

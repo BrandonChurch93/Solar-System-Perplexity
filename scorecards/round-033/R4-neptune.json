@@ -1,0 +1,35 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 4975-4986, upper sky and horizon across the exit cover",
+   "what": "the cloud cover slams in over two frames (4975-4977) and pops off to black space in a single frame (4982-4983), while the flat forward-moving terrain horizon in 4975 jumps to a strongly arched backward-moving globe limb in 4981-4983 and a warm orange starfield begins fading into empty black space in 4984-4986",
+   "fix": "extend the entry and exit cloud dissolves across 6-8 frames each with an opaque middle hold, and match the horizon curvature, storm position, camera direction and sky exposure on both sides of the cover"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 4984-5004, planet globe, terminator and background sky",
+   "what": "the camera stalls near the limb from 4984 to 4990 while planet exposure and a bright orange nebula pop in, then whips backward violently between 4990 and 5004 as the orange nebula vanishes into a cold dark starfield and a hard night-side shadow appears across the lower half of the globe that was sunlit in 4990",
+   "fix": "spread the pullback smoothly across the rise with continuous eased acceleration and deceleration, and keep one consistent starfield and sun/terminator lighting orientation throughout the move"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 5004-5024, concentric planetary rings",
+   "what": "fine ring arcs break into sparse single-pixel bright dots whose intensity shimmers from frame to frame as the camera settles",
+   "fix": "supersample or prefilter the thin ring texture so the rings render as smooth, stable translucent bands like those in sheet-01.png"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 4720-4729, upper-right sky above the planet limb",
+   "what": "the bright star and Milky Way band behind the upper-right limb fade out to dark empty sky between 4720 and 4729 before the dive cover starts, then reappear after the cover in 4753",
+   "fix": "keep the background starfield locked to the camera orientation with consistent exposure all the way into the dive cover"
+  }
+ ]
+}

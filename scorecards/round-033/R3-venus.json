@@ -1,0 +1,92 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "upper-right, right, and bottom dark limb (crops C, E, F, H, I; also image-01.png, image-03.png crop R, image-04.png crop V)",
+      "what": "a detached thin hairline halo runs parallel to the entire dark-side limb with a dark gap between the planet edge and outer arc, plus an isolated orange flare bleeding across the shell in crop C",
+      "fix": "remove the secondary outer rim layer and blend atmospheric scatter continuously from the planet limb into space without a dark separation gap"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "night-side hemisphere past the terminator (crop P; also image-05.png, image-06.png crop E, image-08.png crop U)",
+      "what": "gaseous cloud texture abruptly turns into harsh, crunchy, stippled cellular noise that resembles crusty rock or coral rather than clouds",
+      "fix": "shade the dark hemisphere from the same smooth volumetric cloud field as the lit side and suppress high-frequency bump or upscaler noise in shadow"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "right and lower-right dark limb haze (crops C, E, G, I; also image-05.png, image-07.png crops L, Q)",
+      "what": "a muddy brownish-grey atmospheric band extends outside the dark limb with concentric banded ridges in crop C and crisp, unattenuated stars sitting directly on top of the haze right up to the hard limb edge",
+      "fix": "composite stars behind the atmospheric shell with realistic optical extinction near the limb and smooth out the multi-band ridges in the limb haze"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "upper bright limb and outer atmospheric glow (crops K, L; also image-01.png)",
+      "what": "the sunlit top limb has a terraced double-rim line (bright inner edge, dark trough, sharp orange outer line) and a faint concentric step arc roughly 30 pixels outside the limb",
+      "fix": "use a single monotonic radial scattering falloff across the sunlit limb so no secondary rim line or outer step ring forms"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "grazing curved cloud bands near upper-right limb and night-side lightning in set 1 (crops C, F; image-02.png crop I; image-03.png crop L)",
+      "what": "diagonal dark cloud bands near the upper-right limb show aliased pixel stair-stepping at native scale, and the purple lightning strokes in image-02.png crop I have jagged 1-pixel magenta fringes sitting on top of the clouds",
+      "fix": "supersample grazing-angle limb cloud textures and render lightning as soft subsurface volumetric illumination inside the clouds rather than sharp surface lines"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "lit globe, center tile and upper vortex",
+      "what": "cloud ridges read as carved, viscous displacement: fibrous relief stays solid instead of scattering like gas",
+      "fix": "cut displacement amplitude, lay a finer translucent haze over the ridges, and break the uniform filament direction"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "unlit limb, middle-row nightside tile",
+      "what": "the terminator and nightside lose cloud structure and go soft and muddy",
+      "fix": "keep a faint high-frequency cloud signal through the shadow and soften the day-night falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "near shadow deck, tiles T and V",
+      "what": "the darkest foreground clouds flatten; small-scale vapor disappears into a murky mass",
+      "fix": "lift the shadow floor slightly and retain fine cloud detail in the darks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "Milky Way sky, lower-left tile",
+      "what": "brighter stars are soft round discs about 5 to 8 pixels wide, not points",
+      "fix": "keep a 1 to 2 pixel core and replace the round halo with a tighter, irregular wing"
+     }
+    ]
+   }
+  }
+ ]
+}
