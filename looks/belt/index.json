@@ -1,9 +1,39 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T12:45:39.735Z",
- "head": "36294939e0fb38dfff1a48fb28fab2bcbdc98040",
- "note": "belt: shade streaks at 2782 (open item 99), before and after at the final tier",
+ "pushed": "2026-11-22T13:12:24.327Z",
+ "head": "d33ff9d9c7d686fd5799201dbc3d2331f13f36e3",
+ "note": "belt: the cut 33 hash on the retimed travel, final 2782 and a draft strip",
  "looks": [
+  {
+   "time": "2026-11-22T13:12:23.421Z",
+   "file": "20261122131223421-note-belt-t11-merged-strip.jpg",
+   "source": "../send/belt-t11-merged-strip.jpg",
+   "kind": "note",
+   "label": "belt on the retimed travel, draft strip 2764 to 2800 every sixth frame (scratch merge)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T13:12:22.186Z",
+   "file": "20261122131222186-note-belt-t11-merged-travel-2782.jpg",
+   "source": "../send/belt-t11-merged-travel-2782.jpg",
+   "kind": "note",
+   "label": "belt on the retimed travel (scratch merge of travel-polish a0a13eb and belt-polish d33ff9d), final 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T13:03:55.719Z",
+   "file": "20261122130355719-frame-f02782.jpg",
+   "source": "out/work/belt/t10/n-smooth1/f02782.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2782, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "fe17bcc914fb0f4c"
+  },
   {
    "time": "2026-11-22T12:45:37.386Z",
    "file": "20261122124537386-note-belt-t11-shade-before-after-3x.jpg",
@@ -29,20 +59,6 @@
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T12:44:37.381Z",
-   "file": "20261122124437381-frame-f02750.jpg",
-   "source": "out/work/belt/t11/hash/f02750.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2750, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2750,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "74b6e871dece2a26"
-  },
-  {
    "time": "2026-11-22T09:42:40.357Z",
    "file": "20261122094240357-note-sheet.jpg",
    "source": "out/work/belt/t9/strip/sheet.jpg",
@@ -57,28 +73,6 @@
    "kind": "note",
    "label": "belt hero 2782 native crop, before left, after right",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T09:42:38.926Z",
-   "file": "20261122094238926-note-f02782.jpg",
-   "source": "out/work/belt/t9/after/f02782.png",
-   "kind": "note",
-   "label": "belt hero after round 31 words: take 6 surface, final 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:56:56.074Z",
-   "file": "20261122075656074-still-f02769-16x9-final-full.jpg",
-   "source": "out/work/stills/f02769-16x9-final-full.png",
-   "kind": "still",
-   "label": "mars.travel frame 2769, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2769,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6de1641714a14974"
   }
  ]
 }
