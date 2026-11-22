@@ -1,9 +1,39 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T04:21:12.725Z",
- "head": "26137889efb991f966c4cca780a4671e49387d76",
- "note": "Triton light kept; final chain running on 2613788 (main 1138eb2): rise cover sheet, dive cover sheet, measure, terrain sheet, final stills",
+ "pushed": "2026-11-22T04:32:38.937Z",
+ "head": "68ad29dea4b074997e461a2e9b90878fb052e92f",
+ "note": "final chain on 2613788 (main 1138eb2): rise cover frames 4975 to 4982 in, switch step 4.00",
  "looks": [
+  {
+   "time": "2026-11-22T04:32:30.519Z",
+   "file": "20261122043230519-note-rise-4979-4982.jpg",
+   "source": "out/work/nep/p6/final/rise-4979-4982.jpg",
+   "kind": "note",
+   "label": "rise cover at review, frames 4979 to 4982, the view switch is between 4979 and 4980: frame to frame mean abs 4.00 (12.25 before the cure, neighbours 4.12 and 4.59); tree 2613788, main 1138eb2 (engine batch 18)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T04:32:24.007Z",
+   "file": "20261122043224007-note-rise-4975-4978.jpg",
+   "source": "out/work/nep/p6/final/rise-4975-4978.jpg",
+   "kind": "note",
+   "label": "rise cover at review, frames 4975 to 4978 (terrain side, with the cover's horizon on the sphere's own limb); tree 2613788, main 1138eb2 (engine batch 18)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T04:30:51.107Z",
+   "file": "20261122043051107-frame-f04982-review.jpg",
+   "source": "out/work/sheets/.frames-AwnAbx/f04982-review.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 4982, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4982,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T04:21:05.291Z",
    "file": "20261122042105291-note-t3-4605.jpg",
@@ -27,42 +57,6 @@
    "kind": "note",
    "label": "Triton at 4605 review: hero, before, after (bump 0.008); main b0dd302 (batch 18)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:21:01.990Z",
-   "file": "20261122042101990-note-four.jpg",
-   "source": "out/work/nep/p6/t3/four.png",
-   "kind": "note",
-   "label": "Triton at 4605 review: hero, then the new light law with bump 0.008, 0.018 (kept), 0.03; disc mean abs against the hero 23.29 before, 12.33 kept; tree d2166f0, main b0dd302 (batch 18)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:18:44.375Z",
-   "file": "20261122041844375-frame-c-4707.jpg",
-   "source": "out/work/nep/p6/t3/c-4707.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4707, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:17:13.294Z",
-   "file": "20261122041713294-frame-c-5006.jpg",
-   "source": "out/work/nep/p6/t3/c-5006.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 5006, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
   },
   {
    "time": "2026-11-22T04:15:57.281Z",
