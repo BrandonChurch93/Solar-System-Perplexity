@@ -1,63 +1,69 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T16:43:48.254Z",
- "head": "bd12ce2ac64afedcd58c82c67a62c610784ff783",
- "note": "corner for CUT35: highlights of the corner put back on the approved levels (corner curve), proof chain running since 16:43",
+ "pushed": "2026-11-22T17:04:29.383Z",
+ "head": "997883b8ca120674ea4a61b4ac3204910a8f5679",
+ "note": "sun: the lower right corner back on the approved lanes (open item 101), finals of 0, 60, 90 beside main; proofs running",
  "looks": [
+  {
+   "time": "2026-11-22T17:04:28.760Z",
+   "file": "20261122170428760-note-cut35-f0-full-main-over-new.jpg",
+   "source": "out/work/sun/cn/cut35-f0-full-main-over-new.jpg",
+   "kind": "note",
+   "label": "sun frame 0 final, whole frame: main (round 34) above, new corner below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:04:28.192Z",
+   "file": "20261122170428192-note-cut35-f90-corner-approved-r24-new.jpg",
+   "source": "out/work/sun/cn/cut35-f90-corner-approved-r24-new.jpg",
+   "kind": "note",
+   "label": "sun frame 90 final, lower right corner at 1 to 1: approved, round 24, new corner (build C3), not committed yet; agent/sun 997883b8, main ff158d90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:04:27.549Z",
+   "file": "20261122170427549-note-cut35-f90-corner-1to1-main-over-new.jpg",
+   "source": "out/work/sun/cn/cut35-f90-corner-1to1-main-over-new.jpg",
+   "kind": "note",
+   "label": "sun frame 90 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:04:26.850Z",
+   "file": "20261122170426850-note-cut35-f60-corner-1to1-main-over-new.jpg",
+   "source": "out/work/sun/cn/cut35-f60-corner-1to1-main-over-new.jpg",
+   "kind": "note",
+   "label": "sun frame 60 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:04:26.230Z",
+   "file": "20261122170426230-note-cut35-f0-corner-1to1-main-over-new.jpg",
+   "source": "out/work/sun/cn/cut35-f0-corner-1to1-main-over-new.jpg",
+   "kind": "note",
+   "label": "sun frame 0 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:49:59.116Z",
+   "file": "20261122164959116-frame-f00204-review.jpg",
+   "source": "out/work/sheets/.frames-VFWXji/f00204-review.png",
+   "kind": "frame",
+   "label": "sun.rise frame 204, review tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 204,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T16:43:47.667Z",
    "file": "20261122164347667-note-c15-rise-190-200-210-215-today-new.jpg",
    "source": "out/work/sun/cn/c15-rise-190-200-210-215-today-new.jpg",
    "kind": "note",
    "label": "frames 190, 200, 210, 215 lower right, today left, new right (drafts, build T3), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:43:47.101Z",
-   "file": "20261122164347101-note-c14-rise-120-150-179-today-new.jpg",
-   "source": "out/work/sun/cn/c14-rise-120-150-179-today-new.jpg",
-   "kind": "note",
-   "label": "frames 120, 150, 179 lower right, today left, new right (drafts, build T3), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:43:46.523Z",
-   "file": "20261122164346523-note-d8-f90-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d8-f90-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 90 corner at 1 to 1, today over new (draft, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:43:45.894Z",
-   "file": "20261122164345894-note-d8-f60-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d8-f60-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 60 corner at 1 to 1, today over new (draft, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:43:45.263Z",
-   "file": "20261122164345263-note-d8-f0-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d8-f0-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 0 corner at 1 to 1, today over new (draft; corner highlights back on the approved levels, build C3, not committed), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:20:53.118Z",
-   "file": "20261122162053118-note-c12-f90-approved-r24-new.jpg",
-   "source": "out/work/sun/cn/c12-f90-approved-r24-new.jpg",
-   "kind": "note",
-   "label": "frame 90 corner: approved, round 24 final, new draft, agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:20:52.576Z",
-   "file": "20261122162052576-note-d4-f90-corner-1to1-today-over-new.jpg",
-   "source": "out/work/sun/cn/d4-f90-corner-1to1-today-over-new.jpg",
-   "kind": "note",
-   "label": "frame 90 corner at 1 to 1, today over new (draft, not committed), agent/sun bd12ce2a, main 94482a8c",
    "stop": "sun"
   },
   {
