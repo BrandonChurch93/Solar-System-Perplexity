@@ -883,3 +883,35 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - `python3 tools/shaderaudit.py . src/stops/jupiter`: no line for the Jupiter folder. By hand: `rg "\?.*(dFdx|dFdy|fwidth|texture\()"` finds only globe.ts 259 and 260, where the ternary picks between two locals taken above (`lud`, `l2d`) and `dFdx(lat)` stands outside it. The four discards (deck 262, io 98, globe 303, pall 97) are the last statement of their shader.
 - Chain G on the merged tree (`/tmp/chainG.sh`, log `/tmp/chainG.log`, started 04:45:28): drafts 3060, 3204, 3239 = the same bytes as before batch 19 (tag h). `npx tsx tools/repeat.ts --stop jupiter --sessions 3 --runs 2`: frames 2895, 3015, 3150, 3277 (the middle of each segment), one hash each in 6 renders (4d858b36e4255db8, 8302abcb52ebeb82, a0a02bf05239a412, 961182881c4b65b6), 137 s, not repeatable: none. Then compares and the four finals, the terrain review sheet (frames copied to `out/work/view/m19/`), six drafts and flow tag m.
 - A draft still costs about 30 s of wall time through `npm run still` (page load each time), so the sweep goes through `tools/repeat.ts --frames LIST --keep DIR` (one page, about 6 s per frame) in chain H (`/tmp/chainH.sh`, log `/tmp/chainH.log`, started by `/tmp/swapG.sh` when chain G says "flow done"): beauty sweep at 31 frames over two fresh sessions (also a repeat check of the layer), layers views, `count.py m`, repeat of the judged frames 2895, 2997, 3150, 3296 (3 sessions, 2 runs), quick measure (every 10), full measure, gates, dive cover sheet, rise cover sheet (`kept/*-b19.png`).
+
+### 04:50 to 05:10 UTC: on the merged tree (branch d28870b and 46d808a, main 2621f00, engine batch 19)
+
+- Finals: 2895 c34e30ce2c61de16, 2997 0a35fc826196a462, 3150 173790897f041964 = the same bytes as before batch 19 (`kept/f0N-final-fix.png`) and, for 2895 and 2997, as before the layer. 3296 bcd7b416628a62c1, new by batch 19 (flight sky): 73.2 percent of the pixels differ from batch 18, mean 3.53 of 255, 1,311,768 px brighter, 310 darker; inside the disc (radius 420 px round 1313, 467) 15,523 px move by 1 level and none by more. Looked at half size and at native size on both limbs (`out/work/view/m19/f3296_pair.jpg`, `f3296_night_limb_g.jpg`, `f3296_lit_limb.jpg`): the new stars stop at the limb, none inside the disc, none on the night side, Io untouched. Nothing to tell the Builder about the stars round the body at 3296. A look pushed at 04:56 says "the disc keeps its bytes": wrong by those 1 level pixels, corrected in the next look.
+- Compares hold and terrain at the final tier ran (they made the finals of 2895 and 3150).
+- Terrain review sheet on the merged tree (`kept/terrain-sheet-b19.png`): all twelve frames the same bytes as with the layer on main 0622510 (`out/work/view/aft18/`), and the sheet file itself the same bytes as `kept/terrain-sheet-after.png`. So the looking at the twelve frames of 03:50 stands for today's main.
+- Before and after sheet with labels that name the commits: `kept/terrain-before-after-b19.jpg`.
+- No layer pass on today's main (chain H start: worktree of `src/stops/jupiter` and `public/assets/jupiter` set to 28ed05f with `git restore --source`, rendered through `tools/repeat.ts --keep`, restored, `git status` clean): review 3060 and 3239 without the layer = the same bytes on batch 19 as on batch 18 (`out/work/view/b18/`), so the before sheet of 03:23 stands for today's main too. Drafts without the layer in `out/work/view/fgd/f0N-n.png` (3060, 3069, 3071, 3149, 3150, 3151, 3229, 3231, 3239), review 3060, 3150, 3239 in `out/work/view/nolayer19r/`.
+- Review 3150 without the layer against with the layer: 190,204 px differ (9.17 percent), mean 0.086 of 255, more than 4 levels 6,933 px, more than 16 levels 243 px, max 45, rows 639 to 1079. Draft 3150 without the layer 979520cbd4d2e308, with the layer a0a02bf05239a412: they differ, the pair is counted when chain I has kept the draft with the layer.
+- Motion on the merged tree, px per frame at 1920 wide, measured by template match between the frames before and after (`flow.py`), with the layer (tag m) and without it at the same screen places (tag n):
+
+| Frame | Point | With the layer | Without |
+| --- | --- | --- | --- |
+| 3070 | roll (near, tier 1) | 5.43 | 3.70 |
+| 3070 | crest (tier 1) | 3.64 | 3.04 |
+| 3070 | tower (tier 2) | 6.14 | 4.40 |
+| 3070 | dome (tier 2) | 8.50 | 5.56 |
+| 3070 | mid | 2.70 | 2.70 |
+| 3070 | rim | 2.34 | 2.34 |
+| 3070 | far | 0.70 | 0.70 |
+| 3150 | roll | 6.74 | 5.67 |
+| 3150 | crest | 6.67 | 5.71 |
+| 3150 | mid | 4.62 | 4.62 |
+| 3150 | rim | 2.13 | 2.13 |
+| 3150 | far | 0.72 | 0.72 |
+| 3230 | roll | 5.58 | 4.44 |
+| 3230 | mid | 3.84 | 3.84 |
+| 3230 | rim | 1.46 | 1.46 |
+| 3230 | far | 0.50 | 0.50 |
+
+- The same numbers as on main 3d48581 (tag g), as they must be: the terrain view is byte equal across batches 18 and 19.
+- Running: chain H (sweep through `tools/repeat.ts`, layers views, count, repeat of the judged frames, quick measure), then `/tmp/swapH.sh` stops it and starts chain I (`/tmp/chainI.sh`, log `/tmp/chainI.log`): draft 3150 with the layer kept, full measure, gates, dive cover sheet, rise cover sheet.
