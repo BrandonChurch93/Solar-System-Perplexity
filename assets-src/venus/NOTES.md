@@ -568,3 +568,20 @@ Tree: branch head holds main 3d48581 (batch 17, merge 2907bb0). Render copy r2 s
 - Draft strip d1 (dive 1259 to 1303, every fourth frame, new wrap): no texture swap, the hold layers are gone by 1275 without a step on the night side (`view/d1.jpg`, `view/d1-night.png`). Draft strip s1 (1552 to 1559): no seam, lane or wedge above the horizon (`view/s1.jpg`, `view/s1-sky.png` at 2.5 times).
 - Render queue started 02:44 (`queue.sh`): review cover sheets c16 (both), terrain review sheet, then `chain2r.sh` (vitest, G11, G12, G15, G5, G17, G13). Logs `/tmp/q-*.log`, `/tmp/chain.log`.
 - Still to do: read c16 (every frame), the terrain sheet, the chain; `mirrorcheck.py` on f7-1185 and f11-1440; send POLISH READY (head, main 3d48581, G5, G13, G17, four final stills f7-1185, f7-1287, f7-1586, f11-1440, both cover sheets, terrain sheet). Then item 4 (rise ring softness at 1586) only if time is left.
+
+## Mail 63 and the rise sky gain, state at 03:22 (22 Nov) (read this first after a compaction)
+
+Mail 63 (03:10): engine batch 18 is on main (a67c9c34; main head 0622510 holds it). Merged into the branch (0ac8a2f, not pushed yet at this line). Render copy r2 sits on main 0622510. Rule from the Saturn agent's finding: no `discard` before the last statement of a fragment shader, no derivative or implicit level `texture()` on a value first assigned inside a per pixel branch; say in the next READY which frames changed and by how many pixels.
+
+- Review cover sheets c16 on main 3d48581 with the committed head 58c8cdf, every frame looked at (`view/c16-rc.png`, `view/c16-dc.png`). Dive 1309 to 1320: horizon rows 176 to 124 without a jump, sky without glare 0.0185 to 0.0132, never black, Sun carried. Rise 1555 to 1566: no seam above the horizon on the terrain side; the sky pops at the swap: top twelfth 0.0074 at 1559, then 0.0180, 0.0214, 0.0254, 0.0171, 0.0123, 0.0099, 0.0087 (the shared band in view on the orbit side for three frames).
+- Cure in my folder (`plan.ts`): `skyGain(time)` (the plan method of batch 16) returns `veil.band[0]` (0.36) from the rise's swap frame for `veil.band[1]` (2) frames, then eases to 1 over `veil.band[2]` (6) frames; exactly 1 everywhere else, so no other frame changes. Not yet looked at: draft strip g1 (1556 to 1569) is next. If it does not read better, take it out.
+- Bytes across the batch 18 merge, same branch state (58c8cdf plus the gain), final tier (f12 on 0622510 against f7 and f11 on 3d48581): 1185 same bytes, 1440 same bytes, 1287 two pixels by one level (x 1439, y 415; x 1558, y 572), 1586 changed by the engine's higher sky lift (more stars, globe the same; `view/f12-1586-pair.jpg`).
+- Shader audit for mail 63 (edits in the working tree, kept in `/home/user/workspace/shaderfix/` too):
+  - `veil.ts`: the sheet loop ran only where `mask > 0` and took `dFdx(uv)` inside: now it runs for every pixel when `uAmount > 0` (the result is multiplied by the mask as before); the `uDiag` discard is the last statement.
+  - `globe.ts`: the weave ran `equirect(uMap, from)` (derivatives inside) only where `ring > 0`: now for every pixel (the power is 0 where the ring is 0); the silhouette discard is the last statement.
+  - `relief.ts`: both shaders discard as the last statement; `diagTexels` is taken before.
+  - `rim.ts`: discard as the last statement.
+  - Everything else in the folder samples with `textureLod` or `textureGrad` on gradients taken outside the branches.
+- Running: final stills f13 with the shader fixes (four frames), then 1287 and 1586 a second time (f13b) to test that a frame repeats from one fresh page to the next. `tools/pixdiff.py A B` counts changed pixels.
+- Then: draft strip g1, review cover sheets c17 (both), terrain review sheet, `chain2r.sh`, commit, push, looks, POLISH READY naming main 0622510.
+- Item 4 (rise ring softness): the wrap repaint lifted it already: lower right box at 1586 fine detail 2.69 (2.23 before, round 23 2.38), night box 3.83 (2.00, 2.16). No further work planned.
