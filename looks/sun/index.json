@@ -1,9 +1,33 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T01:30:26.685Z",
- "head": "35cc331f2dcc34402507518c5cd825beddd8d123",
- "note": "Review sheet 200 to 224 rendering (6 of 25); opening switch being written offline; today's opening at 400 px",
+ "pushed": "2026-11-22T01:44:25.364Z",
+ "head": "1720146c8204daacfad23bf5226a6de9d11b921a",
+ "note": "Sun polish: review sheet 200 to 224 rendering; opening at phone size prototyped offline (knots along the arch); item 4 limb haze layer in study",
  "looks": [
+  {
+   "time": "2026-11-22T01:44:06.768Z",
+   "file": "20261122014406768-note-i284-opening-arch-lanes-contours.jpg",
+   "source": "out/work/sun/open/i284-opening-arch-lanes-contours.jpg",
+   "kind": "note",
+   "label": "Opening: lanes and arc length the knots run along",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:44:05.155Z",
+   "file": "20261122014405155-note-i284-opening-prototype-knots-native.jpg",
+   "source": "out/work/sun/open/i284-opening-prototype-knots-native.jpg",
+   "kind": "note",
+   "label": "Opening, offline prototype: knots at native size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:44:03.080Z",
+   "file": "20261122014403080-note-i284-opening-prototype-knots-strip-400.jpg",
+   "source": "out/work/sun/open/i284-opening-prototype-knots-strip-400.png",
+   "kind": "note",
+   "label": "Opening, offline prototype on the approved image: bright knots along the arch, five moments at 400 px",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T01:30:25.262Z",
    "file": "20261122013025262-note-i283-strip-0-30-60-90-at-400-today.jpg",
@@ -97,36 +121,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T00:54:22.378Z",
-   "file": "20261122005422378-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T00:53:28.316Z",
-   "file": "20261122005328316-note-i273-draft-sheet-200-224.jpg",
-   "source": "out/work/sun/i273-draft-sheet-200-224.jpg",
-   "kind": "note",
-   "label": "sun polish proof (build P3): draft sheet 200 224, round 24 beside now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:53:27.788Z",
-   "file": "20261122005327788-note-i272-f60-under-the-limb-x2.jpg",
-   "source": "out/work/sun/i272-f60-under-the-limb-x2.png",
-   "kind": "note",
-   "label": "sun polish proof (build P3): f60 under the limb x2, round 24 beside now",
-   "stop": "sun"
   },
   {
    "time": "2026-11-22T00:46:54.452Z",
