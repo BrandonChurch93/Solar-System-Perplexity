@@ -62,3 +62,4 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
 - The vertex data of the band points is large.
 - The deep set's long tail is set in the shader by `flightStrip.deep`, not on config line 147.
 - Band points use the catalog core (about 1.4 px wide at half height), so few are truly under 1 px.
+- Ten check frames at draft (2325, 2427, 2580, 615, 1440, 2010, 3150, 3720, 4290, 4860): sha256 equal to main, checked again with look 2 at 07:15 UTC.
