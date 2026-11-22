@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T19:25:31.087Z",
- "head": "8cf4b97a6fbf858f7808f426a4b5f530fe5d8dc8",
- "note": "review pairs of the night limb test are rendering; nothing of it is in the film",
+ "pushed": "2026-11-22T19:31:32.680Z",
+ "head": "2b3be6b351722ac1c44bf26653b0a82bba03b98a",
+ "note": "review pairs of the night limb test along the rise; nothing of it is in the film",
  "looks": [
+  {
+   "time": "2026-11-22T19:31:29.618Z",
+   "file": "20261122193129618-note-dr-pairs-c.jpg",
+   "source": "../view/dr-pairs-c.jpg",
+   "kind": "note",
+   "label": "TEST, NOT in the branch and not in round 35: rise and departure at review (1586 to 1622), main's Venus folders beside the rise only night limb (dusk); rendered on main 9d20d3d, which the tree holds",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T19:31:28.799Z",
+   "file": "20261122193128799-note-dr-pairs-b.jpg",
+   "source": "../view/dr-pairs-b.jpg",
+   "kind": "note",
+   "label": "TEST, NOT in the branch and not in round 35: rise and departure at review (1570 to 1582), main's Venus folders beside the rise only night limb (dusk); rendered on main 9d20d3d, which the tree holds",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T19:25:29.969Z",
    "file": "20261122192529969-note-dr-pairs-a.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/v78-rise.jpg",
    "kind": "note",
    "label": "venus rise in 1551 to 1556, draft, the variants tried: round 34 (top), g5 (dropped), v8, the cure kept (v7, bottom); tree holds main 6460b4a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T16:46:54.976Z",
-   "file": "20261122164654976-note-v78-dive.jpg",
-   "source": "../view/v78-dive.jpg",
-   "kind": "note",
-   "label": "venus dive out 1317 to 1322, draft, the variants tried: round 34 (top), fog fill opened over nine frames (g5, dropped: three flat fog frames), middle (v8), the cure kept (v7, bottom: round 34's fill, smear 0.3); tree holds main 6460b4a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T16:46:54.356Z",
-   "file": "20261122164654356-note-v9-rise.jpg",
-   "source": "../view/v9-rise.jpg",
-   "kind": "note",
-   "label": "venus rise in 1548 to 1558, draft: round 34 state (left of each pair) beside the gate cure 90cc5b2 in proof (right); tree holds main 6460b4a",
    "stop": "venus"
   },
   {
