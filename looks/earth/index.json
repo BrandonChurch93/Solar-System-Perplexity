@@ -1,9 +1,86 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T10:07:51.673Z",
- "head": "954d0d65bc1b688635ce2afede9cb2ffc11744af",
- "note": "Earth: READY 2 sent on batch 20; waiting for engine batch 21 for the leave 2176 to 2190; terrain sky margin measured (twin star top left 2075 to 2125, shaft cut at the top border); cover sheets rendering again on batch 20. Tree holds main b3a741c.",
+ "pushed": "2026-11-22T10:29:37.662Z",
+ "head": "a4100eeefa1175683e8178b34bb555629d8c8e33",
+ "note": "Earth: rise cover sheet on batch 20 equals batch 19 to the pixel; terrain sky margin cure prepared in scratch (not applied) while the dive cover sheet renders; waiting for batch 21 (flag unfold, leave strip). Head a4100ee holds main 8c23dc2",
  "looks": [
+  {
+   "time": "2026-11-22T10:29:36.480Z",
+   "file": "20261122102936480-note-w-right-border.jpg",
+   "source": "out/work/earth/pb/t/w-right-border.png",
+   "kind": "note",
+   "label": "Right border of the terrain sky patch at gain 3, zoom 4: shipped above, prepared below. agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:29:35.245Z",
+   "file": "20261122102935245-note-w-left-border.jpg",
+   "source": "out/work/earth/pb/t/w-left-border.png",
+   "kind": "note",
+   "label": "Left border of the terrain sky patch at gain 3, zoom 4 (red tick: the approved border): shipped above with the mirrored twin of the star, prepared below (499 points taken out of the mirrored margins, the image's points put in translated 704 px or more). agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:29:34.180Z",
+   "file": "20261122102934180-note-w-top-dark-g4.jpg",
+   "source": "out/work/earth/pb/t/w-top-dark-g4.png",
+   "kind": "note",
+   "label": "Top border in the dark sky at gain 4, zoom 2: shipped above (margin without grain), prepared below (grain fitted by level: 1.13 against 1.15 code values at level 10 to 20). The hair line at the border is the approved image's own darker first row. agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:29:33.169Z",
+   "file": "20261122102933169-note-w-top-ray-g2.jpg",
+   "source": "out/work/earth/pb/t/w-top-ray-g2.png",
+   "kind": "note",
+   "label": "The same top border at gain 2, zoom 2: shipped above (the ray ends at a line, the glow above has no grain), prepared below. agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:29:32.006Z",
+   "file": "20261122102932006-note-w-top-ray.jpg",
+   "source": "out/work/earth/pb/t/w-top-ray.png",
+   "kind": "note",
+   "label": "Earth terrain sky patch, top border under the Sun, native patch pixels: shipped above, prepared below. The ray is carried up into the glare as a cone and the margin has the image's grain; the red ticks mark the approved border, inside it 0 pixels differ. agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:23:06.100Z",
+   "file": "20261122102306100-note-sheet-rise-cover-preview-b20.jpg",
+   "source": "out/work/earth/pb/n/sheet-rise-cover-preview-b20.png",
+   "kind": "note",
+   "label": "Rise cover sheet 2125 to 2136, review tier, preview format, rendered on BATCH 20 (1141 s): 0 pixels differ from the sheet on batch 19. agent/earth 954d0d6 (code c2a211a), tree holds main b3a741c (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:21:29.589Z",
+   "file": "20261122102129589-sheet-earth.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.rise, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2125,
+   "last": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T10:21:28.731Z",
+   "file": "20261122102128731-frame-f02136-review.jpg",
+   "source": "out/work/sheets/.frames-KqVIHo/f02136-review.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2136, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T10:07:45.850Z",
    "file": "20261122100745850-note-p-2182.jpg",
@@ -51,20 +128,6 @@
    "kind": "note",
    "label": "Seen, not changed: top border of Earth's terrain sky patch. 2010 final, 2060, 2099 at 2 times (x 700 to 1100, rows 0 to 200): the shaft under the Sun ends in a faint horizontal cut where the patch margin begins (row 50 at 2060, row 85 at 2099). agent/earth 954d0d6 (code c2a211a), tree holds main b3a741c (engine batch 20, engine hash 8c3819aa)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T10:05:25.780Z",
-   "file": "20261122100525780-frame-f02130-review.jpg",
-   "source": "out/work/sheets/.frames-KqVIHo/f02130-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2130, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2130,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   },
   {
    "time": "2026-11-22T09:59:50.454Z",
@@ -268,62 +331,6 @@
    "source": "out/work/earth/pb/m/night-1755.png",
    "kind": "note",
    "label": "Item 4, night limb at 1755: approved, kept, new, native at 3 times and at 3 times gain (batch 20 still). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:32.764Z",
-   "file": "20261122095032764-note-aur-1755.jpg",
-   "source": "out/work/earth/pb/m/aur-1755.png",
-   "kind": "note",
-   "label": "Item 5, aurora at 1755: approved, new, kept (batch 20 still, same bytes as batch 18). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:32.164Z",
-   "file": "20261122095032164-note-aur-1857-n.jpg",
-   "source": "out/work/earth/pb/f/aur-1857-n.png",
-   "kind": "note",
-   "label": "Item 5, aurora at 1857: kept, new (1857 is the same bytes on batches 18, 19, 20). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:31.569Z",
-   "file": "20261122095031569-note-moon-1755.jpg",
-   "source": "out/work/earth/pb/m/moon-1755.png",
-   "kind": "note",
-   "label": "Item 7, the Moon at 1755 at 4 times: approved, kept, new (batch 20 still, same bytes as batch 18). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:30.862Z",
-   "file": "20261122095030862-note-moon-2156.jpg",
-   "source": "out/work/earth/pb/m/moon-2156.png",
-   "kind": "note",
-   "label": "Item 7, the Moon at 2156 at 4 times: kept, new (batch 20 still). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:30.200Z",
-   "file": "20261122095030200-note-cloud-1857.jpg",
-   "source": "out/work/earth/pb/m/cloud-1857.png",
-   "kind": "note",
-   "label": "Item 8, 1857 cloud fringes: kept, new (batch 20 still, same bytes as batch 18). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:29.236Z",
-   "file": "20261122095029236-note-sky-2010.jpg",
-   "source": "out/work/earth/pb/m/sky-2010.png",
-   "kind": "note",
-   "label": "Item 8, sky stepping at 2010 at 10 times gain: approved, new, kept (batch 20 still, same bytes as batch 18). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:28.405Z",
-   "file": "20261122095028405-note-city-1755-c.jpg",
-   "source": "out/work/earth/pb/e/city-1755-c.png",
-   "kind": "note",
-   "label": "Item 8, city lights at 1755 against the approved image (1755 is the same bytes on batches 18, 19, 20). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
    "stop": "earth"
   },
   {
