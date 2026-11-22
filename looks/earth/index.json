@@ -1,9 +1,161 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T02:33:46.515Z",
- "head": "b0bfbb76643de6938e79ef174d8d1eff2e20f528",
- "note": "Phase 6 items 4, 5, 7, 8 in work on main 3d48581 (batch 17): night limb fill measured from the approved image, aurora inside the air shell",
+ "pushed": "2026-11-22T02:56:02.461Z",
+ "head": "86c80d74382d0682783ca9bfd1d213dc4f89ca33",
+ "note": "Phase B (items 4, 5, 7, 8) final stills and proofs, code not yet committed; tree holds main 88a6a7e (engine batch 17, 3d48581)",
  "looks": [
+  {
+   "time": "2026-11-22T02:55:57.641Z",
+   "file": "20261122025557641-note-t-1857.jpg",
+   "source": "out/work/earth/pb/fin/t-1857.png",
+   "kind": "note",
+   "label": "Earth 1857 whole frame: kept, Phase B on batch 17 (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:57.043Z",
+   "file": "20261122025557043-note-t-2156.jpg",
+   "source": "out/work/earth/pb/fin/t-2156.png",
+   "kind": "note",
+   "label": "Earth 2156 whole frame: kept (old main), Phase B on batch 17 (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:56.308Z",
+   "file": "20261122025556308-note-band-2010.jpg",
+   "source": "out/work/earth/pb/fin/band-2010.png",
+   "kind": "note",
+   "label": "Earth item 8, 2010 horizon band x2: close image, Phase B (bloom taken out), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:55.713Z",
+   "file": "20261122025555713-note-sky-2010.jpg",
+   "source": "out/work/earth/pb/fin/sky-2010.png",
+   "kind": "note",
+   "label": "Earth item 8, sky at 2010 at 10 times gain: close image, Phase B (deband), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:55.120Z",
+   "file": "20261122025555120-note-cloud-1857.jpg",
+   "source": "out/work/earth/pb/fin/cloud-1857.png",
+   "kind": "note",
+   "label": "Earth item 8, 1857 clouds near the limb x3: kept, Phase B (fringes gone) (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:54.532Z",
+   "file": "20261122025554532-note-moon-2156.jpg",
+   "source": "out/work/earth/pb/fin/moon-2156.png",
+   "kind": "note",
+   "label": "Earth item 7, Moon at 2156 x4: kept, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:53.945Z",
+   "file": "20261122025553945-note-moon-1755.jpg",
+   "source": "out/work/earth/pb/fin/moon-1755.png",
+   "kind": "note",
+   "label": "Earth item 7, Moon at 1755 x4: hero, kept, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:53.861Z",
+   "file": "20261122025553861-frame-r-1720.jpg",
+   "source": "out/work/earth/pb/hold/r-1720.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1720, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1720,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:55:53.206Z",
+   "file": "20261122025553206-note-aur-1755.jpg",
+   "source": "out/work/earth/pb/fin/aur-1755.png",
+   "kind": "note",
+   "label": "Earth item 5, aurora at 1755: hero, Phase B (emitted inside the air shell), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:52.277Z",
+   "file": "20261122025552277-note-limb70-g3.jpg",
+   "source": "out/work/earth/pb/fin/limb70-g3.png",
+   "kind": "note",
+   "label": "Earth 1755 limb at PA 60 to 80, x4 at gain 3: hero, Phase B, kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:50.994Z",
+   "file": "20261122025550994-note-night-1755.jpg",
+   "source": "out/work/earth/pb/fin/night-1755.png",
+   "kind": "note",
+   "label": "Earth item 4 at 1755: approved hero, kept build, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:49.824Z",
+   "file": "20261122025549824-note-night-kept.jpg",
+   "source": "out/work/earth/pb/fin/night-kept.png",
+   "kind": "note",
+   "label": "Earth item 4, the same crops on the kept build (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:55:48.953Z",
+   "file": "20261122025548953-note-night-new.jpg",
+   "source": "out/work/earth/pb/fin/night-new.png",
+   "kind": "note",
+   "label": "Earth item 4, night limb at 1755, 1857, 2156, PA 95, 125, 150, native x3 and x3 gain: Phase B final stills (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:54:19.840Z",
+   "file": "20261122025419840-frame-f-2156-final.jpg",
+   "source": "out/work/earth/pb/fin/f-2156-final.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:49:39.095Z",
+   "file": "20261122024939095-frame-f-1857-final.jpg",
+   "source": "out/work/earth/pb/fin/f-1857-final.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:44:27.494Z",
+   "file": "20261122024427494-frame-f-2010-final.jpg",
+   "source": "out/work/earth/pb/fin/f-2010-final.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:33:34.330Z",
    "file": "20261122023334330-note-limb70.jpg",
@@ -27,62 +179,6 @@
    "kind": "note",
    "label": "Earth 1755 night limb at PA 95, 125, 150, native x3 and gain 3: approved hero, kept build, Phase B in work (main 3d48581)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:32:51.323Z",
-   "file": "20261122023251323-frame-r-1755.jpg",
-   "source": "out/work/earth/pb/r2/r-1755.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:23:17.141Z",
-   "file": "20261122022317141-frame-f-2010-final.jpg",
-   "source": "out/work/earth/pb/m17/f-2010-final.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:16:32.388Z",
-   "file": "20261122021632388-frame-r-2156.jpg",
-   "source": "out/work/earth/pb/r1/r-2156.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:15:02.785Z",
-   "file": "20261122021502785-frame-r-1857.jpg",
-   "source": "out/work/earth/pb/r1/r-1857.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
   },
   {
    "time": "2026-11-22T02:09:00.436Z",
@@ -129,120 +225,6 @@
    "source": "out/work/earth/p6/qa/f-1755-final.png",
    "kind": "note",
    "label": "final 1755 on version c: byte equal to the kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:07:38.396Z",
-   "file": "20261122020738396-note-f-2010-final.jpg",
-   "source": "out/work/earth/p6/qa/f-2010-final.png",
-   "kind": "note",
-   "label": "final 2010 on version c: byte equal to the kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:05:28.209Z",
-   "file": "20261122020528209-note-f-2156-final.jpg",
-   "source": "out/work/earth/p6/qa/f-2156-final.png",
-   "kind": "note",
-   "label": "final 2156 on version c: byte equal to the kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:05:27.191Z",
-   "file": "20261122020527191-note-f-1857-final.jpg",
-   "source": "out/work/earth/p6/qa/f-1857-final.png",
-   "kind": "note",
-   "label": "final 1857 on version c: byte equal to the kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:49:08.376Z",
-   "file": "20261122014908376-job-frame-01857.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T01:42:24.721Z",
-   "file": "20261122014224721-note-limb1857-nn.jpg",
-   "source": "out/work/earth/p6/limb1857-nn.png",
-   "kind": "note",
-   "label": "kept 1857 final at 10 times nearest: the cloud fringes are 2 to 3 px white, cyan and pink blocks",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:42:23.714Z",
-   "file": "20261122014223714-note-limb1857-hero-film.jpg",
-   "source": "out/work/earth/p6/limb1857-hero-film.png",
-   "kind": "note",
-   "label": "kept 1857 final, south west limb at 4 times: hero above, film below; coloured square fringes on the clouds (cause found in the fine cloud term, fix coded, not rendered yet)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:38:07.513Z",
-   "file": "20261122013807513-job-frame-01954.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.terrain frame 1954, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 1954,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T01:28:06.299Z",
-   "file": "20261122012806299-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T01:21:30.686Z",
-   "file": "20261122012130686-note-sheet-rise-c.jpg",
-   "source": "out/work/earth/p6/sheet-rise-c.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 2: rise 2135 to 2140 larger, review tier at preview format",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:21:30.094Z",
-   "file": "20261122012130094-note-sheet-rise-2122-2140.jpg",
-   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 2 proof: rise cover, every frame 2122 to 2140, review tier at preview format, version c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:08:39.347Z",
-   "file": "20261122010839347-note-night-low2.jpg",
-   "source": "out/work/earth/p6/night-low2.png",
-   "kind": "note",
-   "label": "Item 8: isolated green streak PA 140 to 146, hero over kept film, then both at 2.5 times gain",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:08:38.428Z",
-   "file": "20261122010838428-note-clip-sky.jpg",
-   "source": "out/work/earth/p6/clip-sky.jpg",
-   "kind": "note",
-   "label": "Item 6: kept clip frames 2147, 2156, 2165, 2174: the shared band stands upright behind the globe",
    "stop": "earth"
   }
  ]
