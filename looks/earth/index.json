@@ -1,9 +1,155 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T11:11:30.406Z",
- "head": "6e54c4728a8e152f1f44c1d2c66cd0e0950e7dcd",
- "note": "Earth polish on main b7aa857 (batches 21 and 22), head 6e54c47: the leave 2176 to 2190 before; the band shows at 2184 and 2185, an ebb of the aurora over the launch is next",
+ "pushed": "2026-11-22T11:32:15.536Z",
+ "head": "1dd74ae9f16321e71b20abd6c6da37bf8f5b19b4",
+ "note": "Earth polish on main 6e46f06 (batches 21 and 22), head 1dd74ae: terrain sky margin rebuilt in the asset, proofs 2060, 2099, 2112, 2125, 1921; the unfold flag measured: 0 bytes change; the leave strip with the aurora ebb is rendering",
  "looks": [
+  {
+   "time": "2026-11-22T11:32:14.893Z",
+   "file": "20261122113214893-note-twin-patch.jpg",
+   "source": "out/work/earth/pb/w/twin-patch.png",
+   "kind": "note",
+   "label": "The patch itself at the left border, gain 3, 5 times: shipped above (mirrored twin), rebuilt below (twin taken out; the faint points are the approved image's own points moved 704 px, not mirrored). agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:32:14.296Z",
+   "file": "20261122113214296-note-proof-1921.jpg",
+   "source": "out/work/earth/pb/w/proof-1921.png",
+   "kind": "note",
+   "label": "Terrain sky margin, frame 1921, right edge, before beside after: 164 pixels differ; the faint mirrored point at the right border is gone. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:32:13.727Z",
+   "file": "20261122113213727-note-proof-2125.jpg",
+   "source": "out/work/earth/pb/w/proof-2125.png",
+   "kind": "note",
+   "label": "Terrain sky margin, frame 2125 (top margin out of view, sky dim under the cover), before beside after: 221 pixels differ, at most 3 levels, in the left 48 px. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:32:13.162Z",
+   "file": "20261122113213162-note-proof-2060.jpg",
+   "source": "out/work/earth/pb/w/proof-2060.png",
+   "kind": "note",
+   "label": "Terrain sky margin, frame 2060, before beside after: the cut through the ray at row 50 is closed. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:32:12.464Z",
+   "file": "20261122113212464-note-proof-2112.jpg",
+   "source": "out/work/earth/pb/w/proof-2112.png",
+   "kind": "note",
+   "label": "Terrain sky margin, frame 2112, before beside after: twin gone, ray carried up into the glare. Inside the approved border 3,905 pixels move by 1 level. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:32:11.876Z",
+   "file": "20261122113211876-note-proof-2099.jpg",
+   "source": "out/work/earth/pb/w/proof-2099.png",
+   "kind": "note",
+   "label": "Terrain sky margin, frame 2099 at the review tier, before beside after at native size and enlarged: the twin star at the left border is gone, the ray under the Sun no longer ends in a line at the top border. Inside the approved border 4,319 pixels move by 1 level, none by more. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T11:31:56.687Z",
+   "file": "20261122113156687-frame-p-2180.jpg",
+   "source": "out/work/earth/pb/w/p-2180.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2180, review tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2180,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:30:22.808Z",
+   "file": "20261122113022808-frame-t-1921-after.jpg",
+   "source": "out/work/earth/pb/w/t-1921-after.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 1921, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1921,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:29:45.997Z",
+   "file": "20261122112945997-frame-t-2112-after.jpg",
+   "source": "out/work/earth/pb/w/t-2112-after.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2112, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2112,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:19:47.060Z",
+   "file": "20261122111947060-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:19:45.904Z",
+   "file": "20261122111945904-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:18:43.617Z",
+   "file": "20261122111843617-compare-compare-earth-hold-view.jpg",
+   "source": "out/work/compare/compare-earth-hold-view.jpg",
+   "kind": "compare",
+   "label": "earth.hold: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T11:18:42.459Z",
+   "file": "20261122111842459-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
   {
    "time": "2026-11-22T11:11:29.395Z",
    "file": "20261122111129395-note-limb-b20-b22-a.jpg",
@@ -11,118 +157,6 @@
    "kind": "note",
    "label": "Leave: batch 20 frame 2180 (50 px in the shutter) beside batch 22 frame 2184 (48 px): the same green smear, four frames later. head 6e54c47, code c2a211a, main b7aa857 (engine batches 21 and 22, engine hash be043ade)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:11:28.382Z",
-   "file": "20261122111128382-note-limb4-before-1.jpg",
-   "source": "out/work/earth/pb/v/limb4-before-1.png",
-   "kind": "note",
-   "label": "Leave before, limb at 4 times, 2184 to 2186: the band shows at 2184 and 2185. head 6e54c47, code c2a211a, main b7aa857 (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:11:27.591Z",
-   "file": "20261122111127591-note-limb4-before-0.jpg",
-   "source": "out/work/earth/pb/v/limb4-before-0.png",
-   "kind": "note",
-   "label": "Leave before, limb at 4 times, 2181 to 2183. head 6e54c47, code c2a211a, main b7aa857 (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:11:26.666Z",
-   "file": "20261122111126666-note-leave-limb-before.jpg",
-   "source": "out/work/earth/pb/v/leave-limb-before.png",
-   "kind": "note",
-   "label": "Leave before, upper right limb at 2 times, x 520 to 780, y 0 to 240 of 960 by 540. Rays read up to 2182; 2183 to 2185 a green smear with no ray shapes at the top edge; gone from 2186. head 6e54c47, code c2a211a, main b7aa857 (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:11:25.729Z",
-   "file": "20261122111125729-note-leave-frames-before.jpg",
-   "source": "out/work/earth/pb/v/leave-frames-before.png",
-   "kind": "note",
-   "label": "Leave 2176 to 2190 before, review tier, preview format, whole frames (2187 and 2189 still rendering). head 6e54c47, code c2a211a, main b7aa857 (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:10:41.298Z",
-   "file": "20261122111041298-frame-p-2185.jpg",
-   "source": "out/work/earth/pb/v/p-2185.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2185, review tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2185,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:56:26.534Z",
-   "file": "20261122105626534-note-d-2156-pair.jpg",
-   "source": "out/work/earth/pb/u/d-2156-pair.png",
-   "kind": "note",
-   "label": "Judged rise frame 2156, draft: batch 20 left (71d96936), batches 21 and 22 right (c3e4e0c5). Only the sky moved (the band behind Earth, the flight sky of batch 21); on the disc 6,735 of 636,101 pixels differ by exactly 1 level. Hold 1755, dive 1857 and terrain 2010 keep their draft bytes. agent/earth 0164392 (code c2a211a), tree holds main d5b851f (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T10:56:25.850Z",
-   "file": "20261122105625850-note-leave4.jpg",
-   "source": "out/work/earth/pb/v/leave4.png",
-   "kind": "note",
-   "label": "The leave on batches 21 and 22, first four frames back (review tier, preview format): 2178, 2180 above, 2182, 2184 below. The launch starts from rest; shutter motion 6.8, 16.5, 30.5, 48.5 px. The aurora still reads as rays at 2180 and softens to a green glow at 2182 and 2184. Frames 2178, 2180, 2182 are byte equal on batch 21 and batch 22. agent/earth 0164392 (code c2a211a), tree holds main d5b851f (engine batches 21 and 22, engine hash be043ade)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T10:46:13.855Z",
-   "file": "20261122104613855-frame-d-2156-b22.jpg",
-   "source": "out/work/earth/pb/u/d-2156-b22.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:30:59.000Z",
-   "file": "20261122103059000-frame-f01879-review.jpg",
-   "source": "out/work/sheets/.frames-ZOFhKu/f01879-review.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1879, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1879,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T10:29:36.480Z",
-   "file": "20261122102936480-note-w-right-border.jpg",
-   "source": "out/work/earth/pb/t/w-right-border.png",
-   "kind": "note",
-   "label": "Right border of the terrain sky patch at gain 3, zoom 4: shipped above, prepared below. agent/earth a4100ee (code c2a211a), tree holds main 8c23dc2 (engine batch 20, engine hash 8c3819aa). PREPARED IN SCRATCH, NOT APPLIED: nothing in the tree is changed",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:59:50.454Z",
-   "file": "20261122095950454-frame-t-2099.jpg",
-   "source": "out/work/earth/pb/n/t-2099.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2099, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   }
  ]
 }
