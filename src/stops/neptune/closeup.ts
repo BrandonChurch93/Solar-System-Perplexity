@@ -45,6 +45,8 @@ uniform float uVignette;
 uniform float uAspect;
 uniform sampler2D uBloomWide;
 uniform vec3 uBloomPre;
+uniform sampler2D uFineMap;
+uniform vec2 uFine;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -121,6 +123,10 @@ void main() {
     vec2 uc = coreUv(xy);
     float w = coreWeight(uc);
     vec3 deck = mix(textureGrad(uDeckWide, wideUv(xy), wgx, wgy).rgb, textureGrad(uDeck, uc, cgx, cgy).rgb, w);
+    for (int j = 0; j < (w > 0.0 && uFine.x + uFine.y > 0.0 ? 1 : 0); j++) {
+      vec2 fine = textureGrad(uFineMap, uc, cgx, cgy).rg * (255.0 / 127.0);
+      deck *= pow(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y), 2.2);
+    }
     float shade = textureGrad(uHeight, wideUv(planeOf(cloudSource(q))), wgx, wgy).g;
     col = deck * shade;
     alpha = 1.0;
@@ -186,7 +192,7 @@ function unproject(px: number, py: number, radius: number, centre: THREE.Vector3
   return d.multiplyScalar(t).sub(centre)
 }
 
-export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture; bloom: THREE.Texture }
+export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture; bloom: THREE.Texture; fine: THREE.Texture }
 
 export class Closeup {
   readonly mesh: THREE.Mesh
@@ -233,7 +239,8 @@ export class Closeup {
         uBandAxis: { value: bandAxis }, uStream: { value: new THREE.Vector3(0, look.streamShear, 0) },
         uStorm: { value: new THREE.Vector4(storm.x, storm.y, storm.z, look.stormRadius / radius) }, uStormAngle: { value: 0 },
         uNorth: { value: north }, uEast: { value: east }, uGlowMap: { value: new THREE.Vector3(THREE.MathUtils.degToRad(look.glowAzimuthDeg), look.glowTop, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) }, uDiag: diagUniform,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) },
+        uFineMap: { value: maps.fine }, uFine: { value: new THREE.Vector2(look.fine[0], look.fine[1]) }, uDiag: diagUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * (1 + look.glowTop), 96, 64), this.material)

@@ -86,6 +86,7 @@ export const createSet: SetFactory = async (ctx) => {
     height: await ctx.texture(base + close.height, { srgb: false, anisotropy: 4, mirror: true }),
     glow: await ctx.texture(base + close.glow, { srgb: true, mips: false, anisotropy: 1 }),
     bloom: await ctx.texture(base + close.bloom, { srgb: true, mips: false, anisotropy: 1 }),
+    fine: await ctx.texture(base + close.fine, { srgb: false, anisotropy: 16 }),
   })
   terrain.add(closeup.mesh)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
