@@ -1,9 +1,39 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T13:52:15.174Z",
- "head": "094ed960e6830dd23d62fafe56874d17b2e3f1e5",
- "note": "belt: 2782 on main as round 33 sees it",
+ "pushed": "2026-11-22T14:46:12.635Z",
+ "head": "9e055743be17ac409243795744a5944e1b2603bd",
+ "note": "task 13: shutter weight trial for round 33's stepped silhouettes",
  "looks": [
+  {
+   "time": "2026-11-22T14:46:07.479Z",
+   "file": "20261122144607479-note-t13-s-hero2765-box-hann.jpg",
+   "source": "../send/t13-s-hero2765-box-hann.jpg",
+   "kind": "note",
+   "label": "belt hero 2765 native, even shutter against raised cosine, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T14:46:03.795Z",
+   "file": "20261122144603795-note-t13-s-sheet-box-hann.jpg",
+   "source": "../send/t13-s-sheet-box-hann.jpg",
+   "kind": "note",
+   "label": "belt 2765 2772 at sheet size, even shutter against raised cosine, draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T14:42:09.535Z",
+   "file": "20261122144209535-frame-f02765.jpg",
+   "source": "out/work/belt/t13/w1/f02765.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2765, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2765,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "63007c907f1f997a"
+  },
   {
    "time": "2026-11-22T13:52:11.865Z",
    "file": "20261122135211865-note-belt-t12-main-2782.jpg",
@@ -11,20 +41,6 @@
    "kind": "note",
    "label": "mars.travel 2782 at the final tier on main 4d5f610a (round 33 state: cured shade, retimed travel), my own render",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T13:51:40.854Z",
-   "file": "20261122135140854-frame-f02782.jpg",
-   "source": "out/work/belt/t12/main/f02782.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2782, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T13:12:23.421Z",
@@ -56,22 +72,6 @@
    "source": "../send/belt-t11-shade-before-after-native.jpg",
    "kind": "note",
    "label": "belt hero shade at 2782, native crop 1230,160 to 1500,400, before (3e22629) left, after (3629493) right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T12:45:33.123Z",
-   "file": "20261122124533123-note-belt-t11-after-2782.jpg",
-   "source": "../send/belt-t11-after-2782.jpg",
-   "kind": "note",
-   "label": "belt hero at 2782, final tier, shade relief coarser (3629493), not yet accepted",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T09:42:40.357Z",
-   "file": "20261122094240357-note-sheet.jpg",
-   "source": "out/work/belt/t9/strip/sheet.jpg",
-   "kind": "note",
-   "label": "belt draft strip 2762 to 2795 every third frame, hero follows the camera turn",
    "stop": "mars"
   }
  ]
