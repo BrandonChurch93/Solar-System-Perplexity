@@ -1,9 +1,17 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T10:15:57.702Z",
- "head": "36c5b121a6019001262ff9f8691cd4c573691b2a",
- "note": "MAIL 110 DONE on agent/mercury-leave 7c21dbf (main c479536): finals 495 and 615 before and after, native crops, draft strip of the head",
+ "pushed": "2026-11-22T10:23:18.901Z",
+ "head": "0e607e83de41ab5e19710b8e5d2b2cb8302be194",
+ "note": "polish branch 0e607e8 (main 75d2f72) now carries the leave branch; next the grain's weave",
  "looks": [
+  {
+   "time": "2026-11-22T10:23:18.342Z",
+   "file": "20261122102318342-note-merged-494-540-615-717.jpg",
+   "source": "out/work/mercury/p6/c21/merged-494-540-615-717.jpg",
+   "kind": "note",
+   "label": "Mercury polish branch with agent/mercury-leave carried in, tree 0e607e8 (main 75d2f72): drafts 494, 540, 615, 717 at 960 x 540; against the polish drafts only the hold changes (grain, at most 4 codes) and 700 (2 codes)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T10:15:54.506Z",
    "file": "20261122101554506-note-strip-474-539.jpg",
@@ -42,46 +50,6 @@
    "source": "out/work/mercury/leave/proof/limb-495-native.png",
    "kind": "note",
    "label": "MAIL 110 item 3, 495 final, loops and spikes at the lower limb at native size: main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:09:29.200Z",
-   "file": "20261122100929200-note-smudge-495-2x.jpg",
-   "source": "out/work/mercury/leave/proof/smudge-495-2x.png",
-   "kind": "note",
-   "label": "MAIL 110 item 4, 495 final, the orange smudge (Mercury's lens ghost) at twice native size: main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:09:28.080Z",
-   "file": "20261122100928080-note-corner-615-heroscale.jpg",
-   "source": "out/work/mercury/leave/proof/corner-615-heroscale.png",
-   "kind": "note",
-   "label": "MAIL 110 item 2, 615 final, the Sun's corner at the hero's scale: approved hero | main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:09:27.260Z",
-   "file": "20261122100927260-note-corner-615-native.jpg",
-   "source": "out/work/mercury/leave/proof/corner-615-native.png",
-   "kind": "note",
-   "label": "MAIL 110 item 2, 615 final, the Sun's corner at native size: approved hero | main 616695b | agent/mercury-leave 7c21dbf (main c479536)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:09:26.227Z",
-   "file": "20261122100926227-note-f615-before-after.jpg",
-   "source": "out/work/mercury/leave/proof/f615-before-after.jpg",
-   "kind": "note",
-   "label": "MAIL 110, 615 final: main 616695b | agent/mercury-leave 7c21dbf (main c479536) (126644 pixels change, 3031 over 2 codes, at most 4)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:58:30.919Z",
-   "file": "20261122095830919-note-f495-before-after.jpg",
-   "source": "out/work/mercury/leave/proof/f495-before-after.jpg",
-   "kind": "note",
-   "label": "MAIL 110, 495 final: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
    "stop": "mercury"
   },
   {
