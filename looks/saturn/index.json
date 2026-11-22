@@ -1,9 +1,23 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T18:33:39.776Z",
- "head": "f467b8e1177b2da9d3988c60562fa905bd88a2f0",
- "note": "saturn: dive cover review sheet on the CUT35 tree, every tile; the rise cover sheet renders",
+ "pushed": "2026-11-22T18:59:54.413Z",
+ "head": "88caa51e0e9cf86d91afe1072accd5636418f127",
+ "note": "saturn: the tone field is in round 35; the rise cover review sheet renders (owed), then merge of the round 35 main and the drafts again",
  "looks": [
+  {
+   "time": "2026-11-22T18:56:23.072Z",
+   "file": "20261122185623072-frame-f03840-review.jpg",
+   "source": "out/work/sheets/.frames-gW4ZJ2/f03840-review.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3840, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3840,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T18:33:36.317Z",
    "file": "20261122183336317-note-titan-dc.jpg",
@@ -42,14 +56,6 @@
    "source": "../../../../tmp/c35/dct-2.png",
    "kind": "note",
    "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3593 and 3594 at native size",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:33:31.303Z",
-   "file": "20261122183331303-note-dct-1.jpg",
-   "source": "../../../../tmp/c35/dct-1.png",
-   "kind": "note",
-   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3591 and 3592 at native size",
    "stop": "saturn"
   },
   {
