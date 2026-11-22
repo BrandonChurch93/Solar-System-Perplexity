@@ -1,9 +1,49 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T06:30:43.289Z",
- "head": "2b50ee2d30a2f441476793a51a11fece82e9ece8",
- "note": "ending branch: backlit Neptune take 1 (one air glow, ring as ellipse), main 2b50ee2",
+ "pushed": "2026-11-22T06:45:05.060Z",
+ "head": "703c4d7e4981361f528f61574be0e6b9fa902d89",
+ "note": "ending branch 703c4d7: backlit Neptune take 5, proof renders running, main 2b50ee2",
  "looks": [
+  {
+   "time": "2026-11-22T06:45:04.440Z",
+   "file": "20261122064504440-note-s3-strip.jpg",
+   "source": "../../../../tmp/s3-strip.jpg",
+   "kind": "note",
+   "label": "ending take 3 strip through the retreat and the lookback, draft, branch 703c4d7, main 2b50ee2",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T06:45:03.747Z",
+   "file": "20261122064503747-note-t5-high.jpg",
+   "source": "../../../../tmp/t5-high.jpg",
+   "kind": "note",
+   "label": "ending take 5 native crops: limb at 150, 165, 172 degrees, draft, branch 703c4d7, main 2b50ee2",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T06:45:03.069Z",
+   "file": "20261122064503069-note-t5-5235.jpg",
+   "source": "../../../../tmp/t5-5235.jpg",
+   "kind": "note",
+   "label": "ending take 5 native crops: limb at 5235 and the globe at 120 degrees, draft, branch 703c4d7, main 2b50ee2",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T06:45:02.472Z",
+   "file": "20261122064502472-note-t5-path.jpg",
+   "source": "../../../../tmp/t5-path.jpg",
+   "kind": "note",
+   "label": "ending take 5 path 5057 5068 5079 5085 5235, before left, after right, draft, branch 703c4d7, main 2b50ee2",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T06:45:01.824Z",
+   "file": "20261122064501824-note-t5-probe.jpg",
+   "source": "../../../../tmp/t5-probe.jpg",
+   "kind": "note",
+   "label": "ending take 5 probe: phases 90 120 150 165 172 60 136 and 150 from farther, draft, branch 703c4d7, main 2b50ee2",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T06:30:42.347Z",
    "file": "20261122063042347-note-t1-5235-limb.jpg",
