@@ -49,6 +49,8 @@ export interface GlobeOptions {
   nightAlbedo: [number, number, number, number]
   shadow: [number, number, number]
   shadowFade: [number, number]
+  shadowTip?: [number, number, number, number]
+  shadowToe?: [number, number, number]
   shadowHaze: [number, number]
   nightRim: { glow: [number, number, number]; power: number; air: number; from: number; to: number; out: number; bulge: number }
   litEdge: [number, number, number, number]
@@ -123,6 +125,9 @@ uniform vec2 uShadeKnee;
 uniform vec4 uMoon;
 uniform vec3 uShadow;
 uniform vec2 uShadowFade;
+uniform vec4 uShadowTip;
+uniform vec3 uShadowToe;
+uniform float uShadowTipScale;
 uniform vec2 uShadowHaze;
 uniform vec4 uShadowAt;
 uniform vec4 uNightRim;
@@ -204,9 +209,13 @@ float moonShadow(vec3 p, float ndl) {
   vec3 m = uMoon.xyz - p;
   float t = dot(m, uShadowSun);
   if (t <= 0.0 || uMoon.w <= 0.0) return 0.0;
-  float far = dot(p - uShadowAt.xyz, uShadowSun) * uShadowAt.w;
+  float deep = dot(p - uShadowAt.xyz, uShadowSun);
+  float far = deep * uShadowAt.w;
   float off = length(vec2(length(m - uShadowSun * t), far));
-  return (1.0 - smoothstep(uMoon.w * uShadow.x, uMoon.w * uShadow.y, off)) * uShadow.z * smoothstep(uShadowFade.x, uShadowFade.y, ndl);
+  float along = -deep * uShadowTipScale;
+  float tip = smoothstep(uShadowTip.z, uShadowTip.w, along);
+  float toe = 1.0 - uShadowToe.z * smoothstep(uShadowToe.x, uShadowToe.y, along);
+  return (1.0 - smoothstep(uMoon.w * mix(uShadow.x, uShadowTip.x, tip), uMoon.w * mix(uShadow.y, uShadowTip.y, tip), off)) * toe * uShadow.z * smoothstep(uShadowFade.x, uShadowFade.y, ndl);
 }
 void main() {
   vec3 dir = normalize(vPos);
@@ -353,7 +362,7 @@ export class Globe {
         uJet: { value: o.jet.slice() },
         uNight: { value: new THREE.Vector3().fromArray(o.night) }, uNightRef: { value: new THREE.Vector4().fromArray(o.nightAlbedo) },
         uLimbAmount: { value: 1 }, uLimbLit: { value: new THREE.Vector3().fromArray(o.limbLit) }, uLimbSoft: { value: new THREE.Vector2(o.edge.soft[0], Math.max(Math.log2(Math.max(o.mapWidth, 1) / o.edge.soft[1]), 0)) }, uShadeKnee: { value: new THREE.Vector2().fromArray(o.shadeKnee) },
-        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowHaze: { value: new THREE.Vector2().fromArray(o.shadowHaze) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uNightOut: { value: new THREE.Vector2(o.nightRim.out, o.nightRim.bulge) }, uLitEdge: { value: new THREE.Vector4().fromArray(o.litEdge) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
+        uMoon: { value: new THREE.Vector4(0, 0, 0, 0) }, uShadow: { value: new THREE.Vector3().fromArray(o.shadow) }, uShadowFade: { value: new THREE.Vector2().fromArray(o.shadowFade) }, uShadowTip: { value: new THREE.Vector4().fromArray(o.shadowTip ?? [o.shadow[0], o.shadow[1], 1, 2]) }, uShadowToe: { value: new THREE.Vector3().fromArray(o.shadowToe ?? [1, 2, 0]) }, uShadowTipScale: { value: 0 }, uShadowHaze: { value: new THREE.Vector2().fromArray(o.shadowHaze) }, uShadowAt: { value: new THREE.Vector4(0, 0, 0, 0) }, uNightRim: { value: new THREE.Vector4(o.nightRim.glow[0], o.nightRim.glow[1], o.nightRim.glow[2], o.nightRim.power) }, uNightAir: { value: new THREE.Vector3(o.nightRim.from, o.nightRim.to, o.nightRim.air) }, uNightOut: { value: new THREE.Vector2(o.nightRim.out, o.nightRim.bulge) }, uLitEdge: { value: new THREE.Vector4().fromArray(o.litEdge) }, uShadowSun: { value: new THREE.Vector3(1, 0, 0) },
         uSunMap: { value: this.sunMap },
         uFlowT: { value: 0 }, uSwirlT: { value: 0 }, uWispT: { value: 0 },
         uWispShape: { value: new THREE.Vector4(w.repeats, w.latScale, w.amount, 1) },
