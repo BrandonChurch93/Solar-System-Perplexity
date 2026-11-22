@@ -1,9 +1,33 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T07:12:45.171Z",
- "head": "28f37c7295e6cde479d1e4309ee34d9e9b1b5b06",
- "note": "hook accepted at agent/sun-hook 739ae28 (main 2b50ee2); mail 81: the arc at 495 is not the sun globe",
+ "pushed": "2026-11-22T07:39:36.954Z",
+ "head": "6ca7e2623c6c8400767bb8fc7d24d3e64d0c997d",
+ "note": "mail 92 travel leave cure (agent/sun-hook df3458c); items 8a and 8b drafts (agent/sun f38765a); main c92f97c",
  "looks": [
+  {
+   "time": "2026-11-22T07:39:36.405Z",
+   "file": "20261122073936405-note-crest-k4.jpg",
+   "source": "out/work/sun/mh/crest-k4.jpg",
+   "kind": "note",
+   "label": "item 8b crest 23 and landing 60, draft native, top merged hook 6f466c1, bottom knee and veil f38765a, main c92f97c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T07:39:35.832Z",
+   "file": "20261122073935832-note-feet-k4.jpg",
+   "source": "out/work/sun/mh/feet-k4.jpg",
+   "kind": "note",
+   "label": "item 8a feet, draft native 8 45 53, top merged hook 6f466c1, bottom knee and veil f38765a, main c92f97c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T07:39:35.190Z",
+   "file": "20261122073935190-note-t92-limb-before-after-495-497-499-native.jpg",
+   "source": "out/work/sun/t92/t92-limb-before-after-495-497-499-native.jpg",
+   "kind": "note",
+   "label": "mail 92 travel leave, left limb native 495 497 499 draft, top without, bottom with the two lines; local merge of agent/sun-hook df3458c with agent/travel a3c388b, main 2b50ee2",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T07:12:43.938Z",
    "file": "20261122071243938-note-v495-limb-x3-stretch.jpg",
@@ -98,30 +122,6 @@
    "source": "out/work/sun/h1p/z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
    "kind": "note",
    "label": "Item 7, frame 90 lower right quadrant at native size: approved left, film final right (the generated near detail of item 2). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:59.875Z",
-   "file": "20261122055559875-note-y8-f247-final-5a-two-thirds.jpg",
-   "source": "out/work/sun/h1p/y8-f247-final-5a-two-thirds.jpg",
-   "kind": "note",
-   "label": "Final 247 on the item 5a tree, two thirds size. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:58.799Z",
-   "file": "20261122055558799-note-y6-left-limb-zone-approved-map-layer035-layer050cap-zoom4.jpg",
-   "source": "out/work/sun/h1p/y6-left-limb-zone-approved-map-layer035-layer050cap-zoom4.png",
-   "kind": "note",
-   "label": "Item 5b offline, hold camera, left limb zone at 4 times zoom: approved, map now, layer 0.35, layer 0.5 with cap (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:57.830Z",
-   "file": "20261122055557830-note-y7u-centre-hd.jpg",
-   "source": "out/work/sun/h1p/y7u-centre-hd.png",
-   "kind": "note",
-   "label": "Item 5b offline, map seen face on at turn 1.7 rad: map now, layer 0.45, layer 0.45 with bright cap 0.2 (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
    "stop": "sun"
   },
   {
