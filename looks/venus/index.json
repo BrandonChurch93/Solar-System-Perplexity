@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T08:10:29.181Z",
- "head": "34c061bc04d75a11f7b5083575c30b7d767ba15c",
- "note": "08:11 UTC: pale columns at the dive tail traced to the veil's near sheets, cure in test",
+ "pushed": "2026-11-22T08:16:28.418Z",
+ "head": "66e98683b1eb8bbd2507085cde143a62c77d1076",
+ "note": "08:18 UTC: veil take F4, columns at the dive tail gone, proof queue running",
  "looks": [
+  {
+   "time": "2026-11-22T08:16:27.442Z",
+   "file": "20261122081627442-note-rc-56-57-pair.jpg",
+   "source": "../view/rc-56-57-pair.jpg",
+   "kind": "note",
+   "label": "rise 1556 and 1557 review tier: left take E3d (c20 cells), right take F4; 1557 keeps a dark vertical slot under the limb (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:16:26.317Z",
+   "file": "20261122081626317-note-dc-17-18-pair.jpg",
+   "source": "../view/dc-17-18-pair.jpg",
+   "kind": "note",
+   "label": "dive 1317 and 1318 review tier: left take E3d (c20 cells), right take F4: no fine vertical lines under the limb (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:16:25.411Z",
+   "file": "20261122081625411-note-col-1319-pair2.jpg",
+   "source": "../view/col-1319-pair2.jpg",
+   "kind": "note",
+   "label": "dive 1319 review tier native crop: left take F3, right take F4 (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T08:10:28.428Z",
    "file": "20261122081028428-note-nv2-pair.jpg",
@@ -154,30 +178,6 @@
    "source": "../view/rl1314-full.jpg",
    "kind": "note",
    "label": "venus dive 1314 review tier native size, branch 3731a3f on main 89715a1: the same bars one frame after the swap, in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:35:13.637Z",
-   "file": "20261122063513637-note-rl1558-full.jpg",
-   "source": "../view/rl1558-full.jpg",
-   "kind": "note",
-   "label": "venus rise 1558 review tier native size, branch 3731a3f on main 89715a1 (batch 19): the veil draws straight pale bars and soft rectangles under the cover (lattice noise in fan coordinates), in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:18:22.267Z",
-   "file": "20261122061822267-note-crawl-t-tower.jpg",
-   "source": "../view/crawl-t-tower.jpg",
-   "kind": "note",
-   "label": "Venus terrain stability: tower rim of finals 1440, 1441, 1442 at 3x, pair differences x4 below (main 89715a1, batch 19): edges move, no crawl",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:18:21.123Z",
-   "file": "20261122061821123-note-crawl-h-sky.jpg",
-   "source": "../view/crawl-h-sky.jpg",
-   "kind": "note",
-   "label": "Venus hold stability: sky box of finals 1185, 1186, 1187 at 3x, pair differences x4 below (main 89715a1, batch 19): the sky drifts 2 px a frame, stars keep their shape",
    "stop": "venus"
   }
  ]
