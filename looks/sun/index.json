@@ -1,9 +1,87 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T00:21:44.605Z",
- "head": "abaeecbb6f7f5cbe9ce33a1c0ac0d343c8e9b514",
- "note": "sun polish item 2: nearest ground, lane and grain layer over the approved cells, tone matched at frame 90",
+ "pushed": "2026-11-22T00:37:55.723Z",
+ "head": "1de9aa228885e4646490e79267438311294c495e",
+ "note": "sun polish items 2 and 3: proof crops at the final tier, bottom strip beside middle ground at 0, 60, 90; critic's box at 60",
  "looks": [
+  {
+   "time": "2026-11-22T00:37:55.038Z",
+   "file": "20261122003755038-note-i267-d12-sheet-0-212.jpg",
+   "source": "out/work/sun/i267-d12-sheet-0-212.jpg",
+   "kind": "note",
+   "label": "sun polish proof: d12 sheet 0 212.jpg, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:54.443Z",
+   "file": "20261122003754443-note-i265-f90-final-N6-bottom-centre-native.jpg",
+   "source": "out/work/sun/i265-f90-final-N6-bottom-centre-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f90 final N6 bottom centre native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:53.805Z",
+   "file": "20261122003753805-note-i265-f90-final-N6-bottom-left-native.jpg",
+   "source": "out/work/sun/i265-f90-final-N6-bottom-left-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f90 final N6 bottom left native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:53.224Z",
+   "file": "20261122003753224-note-i266-f60-under-the-limb-x2.jpg",
+   "source": "out/work/sun/i266-f60-under-the-limb-x2.png",
+   "kind": "note",
+   "label": "sun polish proof: f60 under the limb x2, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:52.586Z",
+   "file": "20261122003752586-note-i266-f60-critic-box-native.jpg",
+   "source": "out/work/sun/i266-f60-critic-box-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f60 critic box native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:51.950Z",
+   "file": "20261122003751950-note-i266-f90-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i266-f90-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f90 bottom and middle native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:51.328Z",
+   "file": "20261122003751328-note-i266-f60-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i266-f60-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f60 bottom and middle native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:37:50.535Z",
+   "file": "20261122003750535-note-i266-f0-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i266-f0-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof: f0 bottom and middle native, round 24 beside now, final tier",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:33:23.907Z",
+   "file": "20261122003323907-frame-f00060.jpg",
+   "source": "out/work/sun/rf11/f00060.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, final tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-22T00:21:43.967Z",
    "file": "20261122002143967-note-i262-v2-f90-bottom-right-native.jpg",
@@ -45,89 +123,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T00:16:11.001Z",
-   "file": "20261122001611001-frame-f00090.jpg",
-   "source": "out/work/sun/rf9/f00090.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
    "time": "2026-11-22T00:02:23.602Z",
    "file": "20261122000223602-note-i252-f0-lower-r24-over-now.jpg",
    "source": "out/work/sun/i252-f0-lower-r24-over-now.jpg",
    "kind": "note",
    "label": "Frame 0, lower part: round 24 over now. Fault: bottom left corner too bright, in work",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:23.014Z",
-   "file": "20261122000223014-note-i250-f0-lower-r24-over-now.jpg",
-   "source": "out/work/sun/i250-f0-lower-r24-over-now.jpg",
-   "kind": "note",
-   "label": "Frame 0, lower part: round 24 over the film with the lane layer (first build)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:22.387Z",
-   "file": "20261122000222387-note-i248-f90-lower-approved-over-now.jpg",
-   "source": "out/work/sun/i248-f90-lower-approved-over-now.jpg",
-   "kind": "note",
-   "label": "Frame 90 draft, lower part: approved image over the film with the generated lane and point layer",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:21.698Z",
-   "file": "20261122000221698-note-i238-b-centre.jpg",
-   "source": "out/work/sun/i238-b-centre.png",
-   "kind": "note",
-   "label": "Prototype: approved cells, lanes of A-6, fine veins of A-5",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:21.043Z",
-   "file": "20261122000221043-note-i233-A-6-mix-c-centre.jpg",
-   "source": "out/work/sun/i233-A-6-mix-c-centre.png",
-   "kind": "note",
-   "label": "Prototype: approved cells with only the lanes and bright points of take A-6",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:20.497Z",
-   "file": "20261122000220497-note-i231-apron-take-A-6.jpg",
-   "source": "out/work/sun/i231-apron-take-A-6.jpg",
-   "kind": "note",
-   "label": "Take A-6 of the foreground from the lane sketch: crisp lanes, but flat glossy tiles",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:19.957Z",
-   "file": "20261122000219957-note-i227-apron-take-A-5.jpg",
-   "source": "out/work/sun/i227-apron-take-A-5.jpg",
-   "kind": "note",
-   "label": "Take A-5 of the foreground from the lane sketch: right cell size, but furry",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:18.860Z",
-   "file": "20261122000218860-note-i226-apron-input-A-5.jpg",
-   "source": "out/work/sun/i226-apron-input-A-5.png",
-   "kind": "note",
-   "label": "Input of takes A-5 and A-6: frame 0 with the foreground as grey with the approved lane network drawn in",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:07.489Z",
-   "file": "20261121232207489-note-i221-f90-lower-approved-over-now.jpg",
-   "source": "out/work/sun/i221-f90-lower-approved-over-now.jpg",
-   "kind": "note",
-   "label": "Frame 90 lower part: approved image over take A-3. Not good enough: cells too large and glossy, a new take follows",
    "stop": "sun"
   },
   {
