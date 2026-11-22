@@ -1,39 +1,87 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T09:54:36.240Z",
- "head": "3bd6b41959b572a40a9f10e5319b6e6a7becd380",
- "note": "MAIL 110 items 2 to 4 in work on agent/mercury-leave: granulation, limb darkening, active regions, varied corona, ghosts out of the travel; finals of the head rendering",
+ "pushed": "2026-11-22T09:58:34.927Z",
+ "head": "1962bf30d919f615007dd08ce144849802cd484b",
+ "note": "MAIL 110 items 1 to 4 on agent/mercury-leave 1962bf3 (main 616695b): finals of 495 and 615 before and after, native crops, draft strip",
  "looks": [
+  {
+   "time": "2026-11-22T09:58:30.919Z",
+   "file": "20261122095830919-note-f495-before-after.jpg",
+   "source": "out/work/mercury/leave/proof/f495-before-after.jpg",
+   "kind": "note",
+   "label": "MAIL 110, 495 final: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:30.130Z",
+   "file": "20261122095830130-note-streak-495-native.jpg",
+   "source": "out/work/mercury/leave/streak-495-native.png",
+   "kind": "note",
+   "label": "MAIL 110 item 1, 495 final, the streak at native size: main 616695b | agent/mercury-leave 3bd6b41 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:29.000Z",
+   "file": "20261122095829000-note-disc-495-native.jpg",
+   "source": "out/work/mercury/leave/proof/disc-495-native.png",
+   "kind": "note",
+   "label": "MAIL 110 item 2, 495 final, disc surface at native size: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:28.037Z",
+   "file": "20261122095828037-note-limb-495-native.jpg",
+   "source": "out/work/mercury/leave/proof/limb-495-native.png",
+   "kind": "note",
+   "label": "MAIL 110 item 3, 495 final, loops and spikes at the lower limb at native size: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:27.114Z",
+   "file": "20261122095827114-note-smudge-495-2x.jpg",
+   "source": "out/work/mercury/leave/proof/smudge-495-2x.png",
+   "kind": "note",
+   "label": "MAIL 110 item 4, 495 final, the orange smudge (Mercury's lens ghost) at twice native size: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:26.147Z",
+   "file": "20261122095826147-note-corner-615-heroscale.jpg",
+   "source": "out/work/mercury/leave/proof/corner-615-heroscale.png",
+   "kind": "note",
+   "label": "MAIL 110 item 2, 615 final, the Sun's corner at the hero's scale: approved hero | main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:25.033Z",
+   "file": "20261122095825033-note-corner-615-native.jpg",
+   "source": "out/work/mercury/leave/proof/corner-615-native.png",
+   "kind": "note",
+   "label": "MAIL 110 item 2, 615 final, the Sun's corner at native size: approved hero | main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:24.003Z",
+   "file": "20261122095824003-note-f615-before-after.jpg",
+   "source": "out/work/mercury/leave/proof/f615-before-after.jpg",
+   "kind": "note",
+   "label": "MAIL 110, 615 final: main 616695b | agent/mercury-leave 1962bf3 (main 616695b) (127962 pixels change, 3028 over 2 codes, at most 4)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:58:23.023Z",
+   "file": "20261122095823023-note-strip-474-539.jpg",
+   "source": "out/work/mercury/leave/proof/strip-474-539.jpg",
+   "kind": "note",
+   "label": "MAIL 110, draft strip 474 to 539 every fifth frame, preview, web set: main 616695b (top two rows) against agent/mercury-leave 1962bf3 (main 616695b) (bottom two rows)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T09:54:35.171Z",
    "file": "20261122095435171-note-disc-495-native.jpg",
    "source": "out/work/mercury/leave/proof/disc-495-native.png",
    "kind": "note",
    "label": "MAIL 110 item 2, 495 final, disc surface at native size: before (main 616695b) | interim state of agent/mercury-leave working tree on 3bd6b41 (main 616695b), one tuning step before the head",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:54:34.148Z",
-   "file": "20261122095434148-note-strip-474-539.jpg",
-   "source": "out/work/mercury/leave/proof/strip-474-539.jpg",
-   "kind": "note",
-   "label": "MAIL 110 items 2 to 4, draft strip 474 to 539 every fifth frame, preview, web set: main 616695b (top two rows) against agent/mercury-leave working tree on 3bd6b41 (main 616695b) (bottom two rows)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:25:52.423Z",
-   "file": "20261122092552423-note-f495-final-streak.jpg",
-   "source": "out/work/mercury/leave/f495-final-streak.png",
-   "kind": "note",
-   "label": "Frame 495 at the final tier with the streak cure, tree agent/mercury-leave 3bd6b41 (main 616695b)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:25:51.777Z",
-   "file": "20261122092551777-note-f495-final-before.jpg",
-   "source": "out/work/mercury/leave/f495-final-before.png",
-   "kind": "note",
-   "label": "Frame 495 at the final tier before the streak cure, main 616695b",
    "stop": "mercury"
   },
   {
