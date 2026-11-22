@@ -1,78 +1,78 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T15:07:19.937Z",
- "head": "c775a4ffe9f8bca261651bb0ac2d29d3dc28c4ae",
- "note": "task 13: shade, near rock night and step gap trials",
+ "pushed": "2026-11-22T15:30:55.531Z",
+ "head": "d655ecc045ab26658b660de8e1743009df01df5e",
+ "note": "cut 34 offer: shutter weight, near rock night, hero shade",
  "looks": [
   {
-   "time": "2026-11-22T15:07:16.616Z",
-   "file": "20261122150716616-note-t13-hero2765-gap15-vs-gap10.jpg",
-   "source": "../send/t13-hero2765-gap15-vs-gap10.jpg",
+   "time": "2026-11-22T15:30:54.540Z",
+   "file": "20261122153054540-note-c34-9-final-2782-whole-all.jpg",
+   "source": "../send/c34-9-final-2782-whole-all.jpg",
    "kind": "note",
-   "label": "belt hero 2765 draft native, steps 1.5 px apart left, 1.0 px apart right (worse, comb; not taken)",
+   "label": "mars.travel 2782 final, all three commits",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T15:07:13.929Z",
-   "file": "20261122150713929-note-t13-near2772-limb-vs-even.jpg",
-   "source": "../send/t13-near2772-limb-vs-even.jpg",
+   "time": "2026-11-22T15:30:54.017Z",
+   "file": "20261122153054017-note-c34-8-final-2782-lit-3x-main-left-all-right.jpg",
+   "source": "../send/c34-8-final-2782-lit-3x-main-left-all-right.jpg",
    "kind": "note",
-   "label": "belt near rock 2772 draft native, night look with bright limb left, even night right",
+   "label": "belt hero lit face 2782 final, 3x nearest of 1120,360 to 1320,560: main left, all three commits right",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T15:07:11.298Z",
-   "file": "20261122150711298-note-t13-hero2782-before-after-shade.jpg",
-   "source": "../send/t13-hero2782-before-after-shade.jpg",
+   "time": "2026-11-22T15:30:53.497Z",
+   "file": "20261122153053497-note-c34-7-final-2782-shade-3x-main-left-all-right.jpg",
+   "source": "../send/c34-7-final-2782-shade-3x-main-left-all-right.jpg",
    "kind": "note",
-   "label": "belt hero 2782 draft native, window 1 with main's look left, pits 1.7 and side fill 1.4 right",
+   "label": "belt hero shade 2782 final, 3x nearest of 1280,170 to 1480,370: main left, all three commits right",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T15:07:08.153Z",
-   "file": "20261122150708153-note-t13-shade3x-main-look-vs-pits-fill.jpg",
-   "source": "../send/t13-shade3x-main-look-vs-pits-fill.jpg",
+   "time": "2026-11-22T15:30:52.979Z",
+   "file": "20261122153052979-note-c34-5-final-2782-hero-native-main-shutter-all.jpg",
+   "source": "../send/c34-5-final-2782-hero-native-main-shutter-all.jpg",
    "kind": "note",
-   "label": "belt hero shade 2782 draft, 3x nearest of 1280,170 to 1480,370, window 1 with main's look left, pits 1.7 and side fill 1.4 right",
+   "label": "belt hero 2782 final native: main, shutter weight alone, all three commits",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T15:05:35.792Z",
-   "file": "20261122150535792-frame-f02765.jpg",
-   "source": "out/work/belt/t13/t5/f02765.png",
+   "time": "2026-11-22T15:30:52.448Z",
+   "file": "20261122153052448-note-c34-4-near-2772-native-main-left-cut-right.jpg",
+   "source": "../send/c34-4-near-2772-native-main-left-cut-right.jpg",
+   "kind": "note",
+   "label": "belt near rock 2772 draft native: main left, cut 34 offer right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:30:51.826Z",
+   "file": "20261122153051826-note-c34-3-hero-2765-native-main-left-cut-right.jpg",
+   "source": "../send/c34-3-hero-2765-native-main-left-cut-right.jpg",
+   "kind": "note",
+   "label": "belt hero 2765 draft native: main left, cut 34 offer right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:30:50.202Z",
+   "file": "20261122153050202-note-c34-1-sheet-2765-2772-main-top-cut-bottom.jpg",
+   "source": "../send/c34-1-sheet-2765-2772-main-top-cut-bottom.jpg",
+   "kind": "note",
+   "label": "belt 2765 and 2772 draft, half size: main top, cut 34 offer bottom",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:27:43.175Z",
+   "file": "20261122152743175-frame-f02772.jpg",
+   "source": "out/work/belt/t13/b/f02772.png",
    "kind": "frame",
-   "label": "mars.travel frame 2765, draft tier",
+   "label": "mars.travel frame 2772, draft tier",
    "stop": "mars",
    "segment": "mars.travel",
-   "frame": 2765,
+   "frame": 2772,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "d2bd01700b050f0e"
-  },
-  {
-   "time": "2026-11-22T14:46:07.479Z",
-   "file": "20261122144607479-note-t13-s-hero2765-box-hann.jpg",
-   "source": "../send/t13-s-hero2765-box-hann.jpg",
-   "kind": "note",
-   "label": "belt hero 2765 native, even shutter against raised cosine, draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T14:46:03.795Z",
-   "file": "20261122144603795-note-t13-s-sheet-box-hann.jpg",
-   "source": "../send/t13-s-sheet-box-hann.jpg",
-   "kind": "note",
-   "label": "belt 2765 2772 at sheet size, even shutter against raised cosine, draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T13:52:11.865Z",
-   "file": "20261122135211865-note-belt-t12-main-2782.jpg",
-   "source": "../send/belt-t12-main-2782.jpg",
-   "kind": "note",
-   "label": "mars.travel 2782 at the final tier on main 4d5f610a (round 33 state: cured shade, retimed travel), my own render",
-   "stop": "mars"
+   "engine": "efe5cfbdb2b54e94"
   }
  ]
 }
