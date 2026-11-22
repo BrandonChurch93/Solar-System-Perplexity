@@ -1,84 +1,72 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T08:54:11.683Z",
- "head": "5bce1b06b47d2d2839dcb842da2da1337b086e5b",
- "note": "Neptune polish: take 4 of the core border cure, review stills 4770, 4786, 4803 before and after; proof chain running",
+ "pushed": "2026-11-22T09:35:59.631Z",
+ "head": "f1df57994a3fd80a30f1b3a034cd94ed35467b6e",
+ "note": "MAIL 112: ending 5235 and 5085, ring shadow, night side, day side, before and after at final",
  "looks": [
   {
-   "time": "2026-11-22T08:53:35.139Z",
-   "file": "20261122085335139-note-final-5006-batch19-batch20.jpg",
-   "source": "out/work/nep/p6/knit/final-5006-batch19-batch20.jpg",
+   "time": "2026-11-22T09:35:58.588Z",
+   "file": "20261122093558588-note-5235-sun-before-after.jpg",
+   "source": "out/work/end/m112/send/5235-sun-before-after.jpg",
    "kind": "note",
-   "label": "rise 5006 final: engine batch 19 left, batch 20 right (only the sky differs)",
+   "label": "MAIL 112 final 5235-sun, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:34.593Z",
-   "file": "20261122085334593-note-border4-4770-base-native.jpg",
-   "source": "out/work/nep/p6/knit/border4-4770-base-native.jpg",
+   "time": "2026-11-22T09:35:57.654Z",
+   "file": "20261122093557654-note-5085-day-side-before-after.jpg",
+   "source": "out/work/end/m112/send/5085-day-side-before-after.jpg",
    "kind": "note",
-   "label": "terrain 4770 review, base border right half, native: committed above, take 4 below",
+   "label": "MAIL 112 final 5085-day-side, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:34.062Z",
-   "file": "20261122085334062-note-border4-4803-base-r-native.jpg",
-   "source": "out/work/nep/p6/knit/border4-4803-base-r-native.jpg",
+   "time": "2026-11-22T09:35:56.565Z",
+   "file": "20261122093556565-note-5085-far-arc-before-after.jpg",
+   "source": "out/work/end/m112/send/5085-far-arc-before-after.jpg",
    "kind": "note",
-   "label": "terrain 4803 review, base border right half, native: committed above, take 4 below",
+   "label": "MAIL 112 final 5085-far-arc, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:33.522Z",
-   "file": "20261122085333522-note-border4-4803-base-l-lifted.jpg",
-   "source": "out/work/nep/p6/knit/border4-4803-base-l-lifted.jpg",
+   "time": "2026-11-22T09:35:55.419Z",
+   "file": "20261122093555419-note-5085-near-arc-on-disc-before-after.jpg",
+   "source": "out/work/end/m112/send/5085-near-arc-on-disc-before-after.jpg",
    "kind": "note",
-   "label": "terrain 4803 review, base border left half, native, lifted (gamma 0.6): committed above, take 4 below",
+   "label": "MAIL 112 final 5085-near-arc-on-disc, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:32.968Z",
-   "file": "20261122085332968-note-border4-4803-foot-x3.jpg",
-   "source": "out/work/nep/p6/knit/border4-4803-foot-x3.jpg",
+   "time": "2026-11-22T09:35:54.282Z",
+   "file": "20261122093554282-note-5235-far-arc-rim-before-after.jpg",
+   "source": "out/work/end/m112/send/5235-far-arc-rim-before-after.jpg",
    "kind": "note",
-   "label": "terrain 4803 review, foot of the right border and box corner, raised 3 times: committed left, take 4 right",
+   "label": "MAIL 112 final 5235-far-arc-rim, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:32.376Z",
-   "file": "20261122085332376-note-border4-4803-native.jpg",
-   "source": "out/work/nep/p6/knit/border4-4803-native.jpg",
+   "time": "2026-11-22T09:35:53.163Z",
+   "file": "20261122093553163-note-5235-near-arc-night-side-before-after.jpg",
+   "source": "out/work/end/m112/send/5235-near-arc-night-side-before-after.jpg",
    "kind": "note",
-   "label": "terrain 4803 review, right core border, native: committed maps left, take 4 right",
+   "label": "MAIL 112 final 5235-near-arc-night-side, before and after (f1df579)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:53:23.221Z",
-   "file": "20261122085323221-frame-final-4860.jpg",
-   "source": "out/work/nep/p6/knit/after4/final-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, final tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
+   "time": "2026-11-22T07:30:03.661Z",
+   "file": "20261122073003661-note-new-path-5350-fade-review.jpg",
+   "source": "out/work/end/send/new-path-5350-fade-review.jpg",
+   "kind": "note",
+   "label": "Neptune ending on the new camera path, 5350 (fade) at review, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
+   "stop": "neptune"
   },
   {
-   "time": "2026-11-22T08:36:07.743Z",
-   "file": "20261122083607743-frame-final-4605.jpg",
-   "source": "out/work/nep/p6/knit/after3/final-4605.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, final tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
+   "time": "2026-11-22T07:23:58.968Z",
+   "file": "20261122072358968-note-new-path-5105-ring-edge-on-native-crop.jpg",
+   "source": "out/work/end/send/new-path-5105-ring-edge-on-native-crop.jpg",
+   "kind": "note",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5105-ring-edge-on-native-crop (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
+   "stop": "neptune"
   }
  ]
 }
