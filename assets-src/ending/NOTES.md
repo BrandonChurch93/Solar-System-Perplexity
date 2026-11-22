@@ -66,3 +66,8 @@ Mine: in `src/director/film.ts` the ending only (`LOOKBACK`, `lookback()`, the e
 - Seen there: the ring is brighter now and its outer arc on the left runs off the frame edge at about y 590 in 5235. Holding the whole ring would need Neptune about 150 px further right, away from the left edge, with the Sun moved or the crescent thinner. Left for batch 21 if wanted.
 - Tidy up, bytes unchanged: the dust line reads `smoother(u)` now, so `wp` is folded into the one line that used it; `glide.turnFrom`, `glide.aimFrom` and `azimuthPerSecond` were all 0 and are gone (`ramp(0, 1, u)` is u). The table is the same to the digit.
 - Proof of the tidy up: 5085, 5235, 5362 final on builder/b20 before and after are byte equal (sha256 starts 32af559c7f74e495, aebc99d7f3f7ec0d, d1386397c15a4495). Build, vitest 79 of 79, shader audit same lines as builder/b20. Replied `stands` to mail 103.
+
+## Notice 08:03 UTC
+
+- Engine batch 20 is on main (b784153): it holds my tidy up (d755c65) and the flight sky's strip with dark veins. Round 31 runs on it. My reply `stands` is taken. The ring arc off the left edge at 5235 stays for round 31; the Builder sends words for batch 21 if a critic names it.
+- Branch fast forwarded to main b784153. Base anything for batch 21 on origin/main (merge, never rebase). Nothing is asked now.
