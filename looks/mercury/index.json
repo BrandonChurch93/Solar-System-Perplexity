@@ -1,9 +1,60 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T08:55:20.549Z",
- "head": "3ca75a3f6c26e094e8d1890d55bd4ad7ca1e2ea6",
- "note": "tree f269a9b (main 07aabf5, engine batch 20): proofs for POLISH READY, sheets and tables with labels naming both trees; measure and repeat running",
+ "pushed": "2026-11-22T09:09:14.045Z",
+ "head": "9604703162cd206d964e7c7ca43b65293271fd26",
+ "note": "POLISH READY proofs for 9604703 (main 616695b): finals 615 717 870 1016 780 959, both cover sheets, terrain sheet, rise segment sheet, item 1 to 3 tables",
  "looks": [
+  {
+   "time": "2026-11-22T09:08:46.816Z",
+   "file": "20261122090846816-note-rise-seg-sheet.jpg",
+   "source": "out/work/mercury/p6/ready2/rise-seg-sheet.png",
+   "kind": "note",
+   "label": "Rise segment sheet at review, tree f269a9b (main 07aabf5, engine batch 20)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:08:09.813Z",
+   "file": "20261122090809813-sheet-mercury.rise-preview-review.jpg",
+   "source": "out/work/sheets/mercury.rise-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.rise, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 960,
+   "last": 1034,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:08:08.931Z",
+   "file": "20261122090808931-frame-f01034-review.jpg",
+   "source": "out/work/sheets/.frames-67yrA8/f01034-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 1034, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1034,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:56:50.487Z",
+   "file": "20261122085650487-job-frame-01016.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.rise frame 1016, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 1016,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T08:46:40.942Z",
    "file": "20261122084640942-job-frame-00869.jpg",
@@ -65,6 +116,22 @@
    "stop": "mercury"
   },
   {
+   "time": "2026-11-22T08:36:30.183Z",
+   "file": "20261122083630183-note-rise-cover-sheet.jpg",
+   "source": "out/work/mercury/p6/ready/rise-cover-sheet.png",
+   "kind": "note",
+   "label": "Rise cover sheet 985 to 996 at review, rendered on 6f0568e (main 2858db4); on f269a9b (main 07aabf5, engine batch 20) the review frames 990, 993, 995 are the same bytes",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T08:36:29.475Z",
+   "file": "20261122083629475-note-dive-cover-sheet.jpg",
+   "source": "out/work/mercury/p6/ready/dive-cover-sheet.png",
+   "kind": "note",
+   "label": "Dive cover sheet 739 to 750 at review, rendered on 6f0568e (main 2858db4); on f269a9b (main 07aabf5, engine batch 20) the review frames 741 and 746 are the same bytes",
+   "stop": "mercury"
+  },
+  {
    "time": "2026-11-22T08:27:22.479Z",
    "file": "20261122082722479-frame-f959-final.jpg",
    "source": "out/work/mercury/p6/ready2/f959-final.png",
@@ -73,6 +140,20 @@
    "stop": "mercury",
    "segment": "mercury.terrain",
    "frame": 959,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:21:17.634Z",
+   "file": "20261122082117634-frame-f717-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f717-final.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 717, final tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 717,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -91,6 +172,99 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T07:51:34.924Z",
+   "file": "20261122075134924-sheet-mercury.terrain-preview-review.jpg",
+   "source": "out/work/sheets/mercury.terrain-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.terrain, review tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "first": 780,
+   "last": 959,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:50:19.656Z",
+   "file": "20261122075019656-sheet-mercury.dive-cover-preview-review.jpg",
+   "source": "out/work/sheets/mercury.dive-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.dive, review tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 739,
+   "last": 750,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:49:27.939Z",
+   "file": "20261122074927939-note-dive-739-744.jpg",
+   "source": "out/work/mercury/p6/ready/dive-739-744.jpg",
+   "kind": "note",
+   "label": "Dive 739 to 744 at review across the swap at 744, tree 6f0568e (main 2858db4)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:49:27.258Z",
+   "file": "20261122074927258-note-dive-726-746.jpg",
+   "source": "out/work/mercury/p6/ready/dive-726-746.jpg",
+   "kind": "note",
+   "label": "Dive 726 to 746 at review with the Sun's place and the mean ground colour per frame, tree 6f0568e (main 2858db4); 726 to 738 rendered on 1a18e50 and the same bytes at draft on 6f0568e",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:37:56.991Z",
+   "file": "20261122073756991-note-rise-988-993.jpg",
+   "source": "out/work/mercury/p6/ready/rise-988-993.jpg",
+   "kind": "note",
+   "label": "Rise 988 to 993 at review across the swap at 990, tree 6f0568e (main 2858db4): the pale far band carries to the limb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:37:56.121Z",
+   "file": "20261122073756121-note-rise-992-996.jpg",
+   "source": "out/work/mercury/p6/ready/rise-992-996.jpg",
+   "kind": "note",
+   "label": "Rise 992 to 996 at review, tree 6f0568e (main 2858db4), last cell: 994 before the cure (tree 1a18e50) with the grey far zone",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:37:55.220Z",
+   "file": "20261122073755220-note-rise-985-996.jpg",
+   "source": "out/work/mercury/p6/ready/rise-985-996.jpg",
+   "kind": "note",
+   "label": "Rise 985 to 996 at review with the Sun's place and the mean ground colour per frame, tree 6f0568e (main 2858db4)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:35:32.576Z",
+   "file": "20261122073532576-sheet-mercury.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/mercury.rise-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.rise, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 985,
+   "last": 996,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:20:38.472Z",
+   "file": "20261122072038472-note-sheet-n-dive.jpg",
+   "source": "out/work/mercury/p6/b1/sheet-n-dive.jpg",
+   "kind": "note",
+   "label": "Dive 738 to 745, draft, tree 6f0568e (main 2858db4): same cure on the dive side",
+   "stop": "mercury"
   }
  ]
 }
