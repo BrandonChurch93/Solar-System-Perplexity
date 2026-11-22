@@ -1,9 +1,37 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T17:47:11.987Z",
- "head": "589540969bf0b7c606789a404ed48c6bfaf40873",
- "note": "CUT35: review 4408 (A2) and 4412 (swing 0, B); tree 58954096 holds main 884da0d9",
+ "pushed": "2026-11-22T18:30:19.433Z",
+ "head": "3f22464dcaf299c06bae6f6f9195002cff262190",
+ "note": "CUT35 sent: READY 3f22464d holds main 55319c5a; rise sheet at review renders",
  "looks": [
+  {
+   "time": "2026-11-22T18:29:22.521Z",
+   "file": "20261122182922521-frame-f04434-review.jpg",
+   "source": "out/work/sheets/.frames-rDKoPN/f04434-review.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4434, review tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4434,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:54:39.032Z",
+   "file": "20261122175439032-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T17:47:00.664Z",
    "file": "20261122174700664-note-a-4412r.jpg",
@@ -19,34 +47,6 @@
    "kind": "note",
    "label": "4408 review, rise cover with A2 (haze.line 0.14): the haze band lies along the limb; tree 58954096 holds main 884da0d9",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T17:46:25.726Z",
-   "file": "20261122174625726-still-f04412-16x9-review-full.jpg",
-   "source": "out/work/stills/f04412-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4412, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4412,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:42:57.087Z",
-   "file": "20261122174257087-still-f04408-16x9-review-full.jpg",
-   "source": "out/work/stills/f04408-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4408, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4408,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
   },
   {
    "time": "2026-11-22T17:38:28.459Z",
