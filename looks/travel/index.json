@@ -1,9 +1,25 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T08:05:25.546Z",
- "head": "ababebf867807b1b966b5f23870f2579939831a0",
- "note": "sun.travel 470 to 500 every frame at draft",
+ "pushed": "2026-11-22T08:25:51.097Z",
+ "head": "b49114448853c606a3e822fb30e21f7b3bb37283",
+ "note": "earth.travel arrival: committed pattern sheet, pinned variant rendering",
  "looks": [
+  {
+   "time": "2026-11-22T08:25:49.903Z",
+   "file": "20261122082549903-note-a1-2212-final.jpg",
+   "source": "../../../../tmp/v/a1-2212-final.jpg",
+   "kind": "note",
+   "label": "a1: frame 2212 final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:25:48.440Z",
+   "file": "20261122082548440-note-a1-earth-sheet.jpg",
+   "source": "../../../../tmp/v/a1-earth-sheet.jpg",
+   "kind": "note",
+   "label": "a1: earth.travel review sheet, arrival by approach as committed",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T08:05:24.951Z",
    "file": "20261122080524951-note-x2-486-500.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/x2-sun-strip.jpg",
    "kind": "note",
    "label": "sun.travel 480 to 510 draft, every second frame, with the Sun set's two lines (weight into shown)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:20:48.167Z",
-   "file": "20261122072048167-note-rv1-3330.jpg",
-   "source": "../../../../tmp/v/rv1-3330.jpg",
-   "kind": "note",
-   "label": "jupiter.travel 3330 review: Jupiter blurred along its slide, stars sharp",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:20:47.596Z",
-   "file": "20261122072047596-note-rv1-2186.jpg",
-   "source": "../../../../tmp/v/rv1-2186.jpg",
-   "kind": "note",
-   "label": "earth.travel 2186 review: Earth leaves by parallax, stars sharp",
    "stop": "travel"
   }
  ]
