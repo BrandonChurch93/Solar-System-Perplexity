@@ -1,9 +1,57 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T12:27:00.672Z",
- "head": "22270943bea624394cc1de33292e7881aca94c10",
- "note": "MAIL 148: sun.travel 495 at the final tier, main beside head (weave lattice gone); star mask and limb darkening of the Sun plate under test",
+ "pushed": "2026-11-22T12:39:13.807Z",
+ "head": "2c85dde2160b1cb721145415032b8ace5b26fb9f",
+ "note": "CUT33: finals of 615, 717, 870, 1016 on 2c85dde beside main; 495 lattice proof; why the star mask and the limb darkening of the Sun plate wait for round 34",
  "looks": [
+  {
+   "time": "2026-11-22T12:39:12.529Z",
+   "file": "20261122123912529-note-m4d-sheet.jpg",
+   "source": "../../../../tmp/m4d-sheet.jpg",
+   "kind": "note",
+   "label": "sun.travel drafts, tree 2c85dde plus the star mask patch (not in the cut): 486 as main | 486 with the mask on my plate: the Sun's globe under it is taken away | 490 as main",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:39:11.625Z",
+   "file": "20261122123911625-note-c33d-leave.jpg",
+   "source": "../../../../tmp/c33d-leave.jpg",
+   "kind": "note",
+   "label": "mercury.travel drafts 1056 1058 1059 1062 1066 1072 on 2c85dde (main da02e63): the travel cure is out, the Sun plate goes with the globe at 1059 as on main, 1072 is sky only",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:39:10.457Z",
+   "file": "20261122123910457-note-c33-1016.jpg",
+   "source": "../../../../tmp/c33-1016.jpg",
+   "kind": "note",
+   "label": "frame 1016 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:39:09.526Z",
+   "file": "20261122123909526-note-c33-870.jpg",
+   "source": "../../../../tmp/c33-870.jpg",
+   "kind": "note",
+   "label": "frame 870 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:39:08.647Z",
+   "file": "20261122123908647-note-c33-717.jpg",
+   "source": "../../../../tmp/c33-717.jpg",
+   "kind": "note",
+   "label": "frame 717 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:39:07.385Z",
+   "file": "20261122123907385-note-c33-615.jpg",
+   "source": "../../../../tmp/c33-615.jpg",
+   "kind": "note",
+   "label": "frame 615 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T12:25:37.662Z",
    "file": "20261122122537662-note-m2d-495-whole.jpg",
@@ -34,22 +82,6 @@
    "source": "../../../../tmp/l6-sheet.jpg",
    "kind": "note",
    "label": "drafts 495 to 1050 of the limb law, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:34.743Z",
-   "file": "20261122115534743-note-l6-ur.jpg",
-   "source": "../../../../tmp/l6-ur.jpg",
-   "kind": "note",
-   "label": "limb at -45 degrees 2x, drafts 520 to 1050, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:34.221Z",
-   "file": "20261122115534221-note-l6-lr.jpg",
-   "source": "../../../../tmp/l6-lr.jpg",
-   "kind": "note",
-   "label": "limb at 35 degrees 2x, drafts 520 540 689 700 717 1007 1034 1050, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
