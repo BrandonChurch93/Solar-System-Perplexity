@@ -1,9 +1,23 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T06:42:50.427Z",
- "head": "beebb30d8723d544086bc233242ab359ec8c3774",
- "note": "e8e4984 on main 2621f00 (batch 19): terrain and dive sheets at the review tier beside the kept build; rise sheet rendering",
+ "pushed": "2026-11-22T07:02:34.321Z",
+ "head": "c94318d8c09cd7a03cb27da38552ff4bda83e17c",
+ "note": "e8e4984 on main 2621f00 (batch 19): rise sheet at the review tier rendering since 06:42; compares, gates and the pixel counts of the cure follow",
  "looks": [
+  {
+   "time": "2026-11-22T07:02:28.611Z",
+   "file": "20261122070228611-frame-f03844-review.jpg",
+   "source": "out/work/sheets/.frames-wbwtNI/f03844-review.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3844, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3844,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:42:49.598Z",
    "file": "20261122064249598-note-item2-dive-kept-now.jpg",
@@ -77,14 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:21:52.795Z",
-   "file": "20261122062152795-note-item2-rise-cover-kept-now.jpg",
-   "source": "out/work/saturn/polish/item2-rise-cover-kept-now.png",
-   "kind": "note",
-   "label": "Item 2 rise, frames 3835 to 3846 at the review tier: kept build (left), e8e4984 on main 2621f00 batch 19 (right)",
-   "stop": "saturn"
   },
   {
    "time": "2026-11-22T04:49:48.002Z",
