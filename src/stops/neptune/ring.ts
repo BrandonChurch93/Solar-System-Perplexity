@@ -18,7 +18,7 @@ export interface RingParams {
   bandHold: [number, number, number]
   bandAway: [number, number, number]
   grain?: { map: THREE.Texture; repeat: [number, number]; fine: number; amount: number; top: number }
-  solid?: { amount: number; density: number; ground: [number, number, number] }
+  solid?: { amount: number; density: number; ground: [number, number, number]; near: [number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -57,6 +57,7 @@ uniform vec4 uGrainShape;
 uniform float uGrainTop;
 uniform vec2 uSolid;
 uniform vec3 uSolidGround;
+uniform vec2 uSolidNear;
 in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
@@ -90,7 +91,7 @@ void main() {
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
-  float solid = uSolid.x * (1.0 - exp(-max(strands.r, max(strands.g, strands.b)) * edge * uSolid.y));
+  float solid = uSolid.x * smoothstep(uSolidNear.x, uSolidNear.y, dot(vLocal.xy, uCamL.xy) / max(r * length(uCamL.xy), 1e-4)) * (1.0 - exp(-max(strands.r, max(strands.g, strands.b)) * edge * uSolid.y));
   outColor = vec4((strands * edge + solid * uSolidGround) * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, solid);
   if (uDiag >= 2) discard;
 }`
@@ -149,6 +150,7 @@ export class Ring {
     this.material.uniforms.uEndFoot = { value: 1 }
     this.material.uniforms.uSolid = { value: new THREE.Vector2(0, p.solid?.density ?? 0) }
     this.material.uniforms.uSolidGround = { value: new THREE.Vector3().fromArray(p.solid?.ground ?? [0, 0, 0]) }
+    this.material.uniforms.uSolidNear = { value: new THREE.Vector2().fromArray(p.solid?.near ?? [-3, -2]) }
     this.solidAmount = p.solid?.amount ?? 0
   }
 
