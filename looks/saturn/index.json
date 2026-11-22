@@ -1,9 +1,31 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T09:06:45.933Z",
- "head": "3cb24939869a7deedb0b69589f810ee7d5e01b3c",
- "note": "Limb handover in the rise: review tier stills of the kept code and of trial F4 (fill behind the limb) rendering",
+ "pushed": "2026-11-22T09:31:15.618Z",
+ "head": "952617ea8c008f70891fb8d346aa0b46db499ea3",
+ "note": "Limb handover cure a5ffabb at the review tier beside the kept code; batch 20 merged (4204ad0 on main bd46e04), hand-in chain running",
  "looks": [
+  {
+   "time": "2026-11-22T09:29:06.637Z",
+   "file": "20261122092906637-note-limb-handover-review-kept-f4.jpg",
+   "source": "out/work/saturn/polish/limb-handover-review-kept-f4.png",
+   "kind": "note",
+   "label": "Limb handover in the rise, review tier, 3x at the junction, 3813 to 3820: kept code 16b64e9 (left of each pair) and trial F4 (right): ring lanes carried on behind the picture's limb, pale sliver and vertical edge gone",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T09:28:43.408Z",
+   "file": "20261122092843408-frame-RVF4-3820.jpg",
+   "source": "out/work/saturn/RVF4-3820.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3820, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3820,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T09:06:44.478Z",
    "file": "20261122090644478-note-rvk.jpg",
@@ -27,20 +49,6 @@
    "kind": "note",
    "label": "Limb handover in the rise, draft, 3x: kept code left, trial F4 right (ring lanes carried on behind the picture's limb above the junction radius; not committed; tree 3cb2493 on main 45004ec)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T08:44:27.997Z",
-   "file": "20261122084427997-frame-F4-3832.jpg",
-   "source": "out/work/saturn/F4-3832.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3832, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3832,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T08:42:59.703Z",
@@ -69,14 +77,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T08:22:49.990Z",
-   "file": "20261122082249990-note-m0-pair.jpg",
-   "source": "../../../../tmp/m0-pair.png",
-   "kind": "note",
-   "label": "Limb handover: film left, the model alone right (picture switched off), draft 3809 to 3821, tree c18b4fd on main 45004ec",
-   "stop": "saturn"
   },
   {
    "time": "2026-11-22T07:11:47.000Z",
