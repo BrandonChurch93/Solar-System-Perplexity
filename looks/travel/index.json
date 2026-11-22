@@ -1,9 +1,25 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T07:52:41.946Z",
- "head": "ff635a0a5d72f02f72b80b55b7519fd6eab00f48",
- "note": "sun.travel 480 to 510: dark limb cured by two lines in the Sun set; finals 493 to 499",
+ "pushed": "2026-11-22T08:05:25.546Z",
+ "head": "ababebf867807b1b966b5f23870f2579939831a0",
+ "note": "sun.travel 470 to 500 every frame at draft",
  "looks": [
+  {
+   "time": "2026-11-22T08:05:24.951Z",
+   "file": "20261122080524951-note-x2-486-500.jpg",
+   "source": "../../../../tmp/v/x2-486-500.jpg",
+   "kind": "note",
+   "label": "sun.travel 486 to 500 draft, every frame",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T08:05:24.304Z",
+   "file": "20261122080524304-note-x2-470-485.jpg",
+   "source": "../../../../tmp/v/x2-470-485.jpg",
+   "kind": "note",
+   "label": "sun.travel 470 to 485 draft, every frame",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T07:52:41.288Z",
    "file": "20261122075241288-note-x1-limb.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/rv1-2186.jpg",
    "kind": "note",
    "label": "earth.travel 2186 review: Earth leaves by parallax, stars sharp",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:20:46.998Z",
-   "file": "20261122072046998-note-p2-ura.jpg",
-   "source": "../../../../tmp/v/p2-ura.jpg",
-   "kind": "note",
-   "label": "uranus.travel Sun in view 4502 4506 4512, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T07:20:46.299Z",
-   "file": "20261122072046299-note-p2-vms.jpg",
-   "source": "../../../../tmp/v/p2-vms.jpg",
-   "kind": "note",
-   "label": "venus, mars, saturn travel on the fly past path, draft",
    "stop": "travel"
   }
  ]
