@@ -68,6 +68,7 @@ export const createSet: SetFactory = async (ctx) => {
   const calm = new THREE.Vector4()
   const wash = new THREE.Vector4()
   const burn = new THREE.Vector4()
+  const pale = new THREE.Vector4()
   const hot = new THREE.Vector3().fromArray(look.leave.burn.hot)
   const toCam = new THREE.Quaternion()
   const inCam = new THREE.Vector3()
@@ -82,6 +83,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.matrixAutoUpdate = false
   const d = look.dissolve
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
+  const even = (x: number, r: [number, number]): number => 0.5 * (share(x, r) + THREE.MathUtils.clamp((x - r[0]) / (r[1] - r[0]), 0, 1))
 
   return {
     id: plan.id,
@@ -138,11 +140,12 @@ export const createSet: SetFactory = async (ctx) => {
       const match = 1 - share(x, d.match)
       const dim = 1 + (d.glow - 1) * match
       const leaving = kind === 'travel'
-      const going = leaving ? share(state.u, look.leave.over) : 0
-      const open = 1 + (look.leave.open - 1) * going
-      const flat = leaving ? share(state.u, look.leave.wash) : 0
+      const going = leaving ? even(state.u, look.leave.over) : 0
+      const open = Math.pow(look.leave.open, going)
+      const flat = leaving ? even(state.u, look.leave.wash) : 0
       const burnt = leaving ? share(state.u, look.leave.burn.over) : 0
       const fitted = leaving ? share(state.u, look.leave.fit) : 0
+      const tucked = leaving ? share(state.u, look.leave.tuck) : 0
       const plateEnd = share(look.leave.gone, look.leave.plate)
       const level = going > 0 ? Math.min(Math.max(plateEnd - share(state.u, look.leave.plate), 0) / Math.max(state.weight, 1e-4), plateEnd * look.leave.cap) : 0
       centre.copy(world.position)
@@ -200,8 +203,8 @@ export const createSet: SetFactory = async (ctx) => {
         orbit.matrix.copy(mWorld).invert().multiply(mCam).multiply(mFit).multiply(mBack.copy(mCam).invert()).multiply(mWorld)
         centre.set(l00 * inCam.x + l01 * inCam.y + tx, l10 * inCam.x + l11 * inCam.y + ty, inCam.z).applyQuaternion(view.camera.quaternion).divideScalar(Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11 - Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11) ** 2 - 4 * (l00 * l11 - l01 * l10) ** 2, 0))) / 2, 1e-9)))
       } else orbit.matrix.identity()
-      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match), open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0))
-      corona.update(centre, state.rotation, elapsed, gain * dim * (1 + (look.leave.corona - 1) * going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge + (look.leave.edge - look.corona.edge) * fitted)
+      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match), open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
+      corona.update(centre, state.rotation, elapsed, gain * dim * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
       prominences.update(elapsed, spin, gain * dim * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

@@ -36,6 +36,8 @@ uniform float uTime;
 uniform vec4 uWave;
 uniform float uDrift;
 uniform vec3 uHide;
+uniform vec3 uVeil;
+uniform vec4 uPale;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vPos;
@@ -81,6 +83,7 @@ void main() {
   float turn = uDrift * uTime * grow;
   vec2 uv = vec2(u + sway + turn, clamp(v, 0.0, 1.0));
   vec3 col = ray(uv, dx, dy);
+  vec3 raw = col;
   float glare = uHide.z * smoothstep(uHide.x, uHide.y, dot(col, vec3(0.2126, 0.7152, 0.0722)));
   float lr = log(max(b, 1.0));
   float flick = stream(u, lr, uTime * uWave.z) - stream(u, lr, 0.0);
@@ -89,7 +92,17 @@ void main() {
   float out0 = 1.0 - smoothstep(0.92, 1.0, v);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * inside * out0 / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, glare * inside * out0) * uShow;
+  float cover = glare * inside * out0;
+  for (int k = 0; k < (uVeil.x > 0.0 ? 1 : 0); k++) {
+    float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+    float red = clamp(1.0 - col.g / max(uPale.y * col.r, 1e-6), 0.0, 1.0);
+    float soft = dot(ray(uv, dx * uVeil.z, dy * uVeil.z), vec3(0.2126, 0.7152, 0.0722)) * lum / max(dot(raw, vec3(0.2126, 0.7152, 0.0722)), 1e-6);
+    col = mix(col, uPale.xyz * (min(lum, soft) / dot(uPale.xyz, vec3(0.2126, 0.7152, 0.0722))), uPale.w * smoothstep(0.0, 0.4, red));
+    lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+    col *= mix(1.0, 1.0 / sqrt(1.0 + lum * lum / (uVeil.y * uVeil.y)), uPale.w);
+    cover = max(cover, 1.0 - exp(-uVeil.x * dot(col, vec3(0.2126, 0.7152, 0.0722))));
+  }
+  outColor = vec4(col, cover) * uShow;
 }`
 
 export class Corona {
@@ -110,7 +123,7 @@ export class Corona {
         uRange: { value: new THREE.Vector2(look.inner, look.outer) },
         uGain: { value: look.gain }, uShow: { value: 1 }, uEdge: { value: look.edge }, uTime: { value: 0 },
         uWave: { value: new THREE.Vector4(look.wave.amount, look.wave.scale, look.wave.speed, look.wave.sway) },
-        uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVeil: { value: new THREE.Vector3(0, 0, 1) }, uPale: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       side: THREE.BackSide,
       blending: THREE.CustomBlending,
@@ -128,9 +141,13 @@ export class Corona {
     this.mesh.frustumCulled = false
   }
 
-  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1, edge = look.edge): void {
+  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1, edge = look.edge, veil = 0, ceil = 1, pale?: THREE.Vector4, behind = false, soft = 1): void {
     const u = this.material.uniforms
-    u.uEdge!.value = edge
+    ;(u.uVeil!.value as THREE.Vector3).set(veil, Math.max(ceil, 1e-6), soft)
+    this.material.depthTest = behind
+    if (pale) (u.uPale!.value as THREE.Vector4).copy(pale)
+    else (u.uPale!.value as THREE.Vector4).set(1, 1, 1, 0)
+    u.uEdge!.value = Math.max(edge, 1e-6)
     ;(u.uCenter!.value as THREE.Vector3).copy(center)
     this.toSet.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(rotation).invert()))
     u.uTime!.value = time
