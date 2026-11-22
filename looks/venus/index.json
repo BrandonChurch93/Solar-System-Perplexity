@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T12:21:31.503Z",
- "head": "39c8280ff993b253de0c00c2516033a86ed5e25e",
- "note": "whole dive, rise and terrain review sheets on engine batches 21 and 22 with veil take F5; CUT33 proof running (main's own judged finals for the pixel comparison)",
+ "pushed": "2026-11-22T12:34:23.273Z",
+ "head": "3ac082193dcddf8901cd65aeb046193efe25f2a7",
+ "note": "CUT33 sent: agent/venus 3ac0821 READY for round 33; pairs against the kept build at 1586 and 1287",
  "looks": [
+  {
+   "time": "2026-11-22T12:34:22.732Z",
+   "file": "20261122123422732-note-cut33-1287-night.jpg",
+   "source": "../view/cut33-1287-night.jpg",
+   "kind": "note",
+   "label": "1287 final tier, night side, native crop: left main da02e63 (the kept build), right agent/venus 3ac0821 (both on engine be043ade04a7ab6e): cloud structure in place of the brush smear",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T12:34:22.177Z",
+   "file": "20261122123422177-note-cut33-1586-a.jpg",
+   "source": "../view/cut33-1586-a.jpg",
+   "kind": "note",
+   "label": "1586 final tier, native crop: left main da02e63 (the kept build), right agent/venus 3ac0821 (both on engine be043ade04a7ab6e): the plume curls without the V pinch, the night limb is one falloff",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T12:21:30.779Z",
    "file": "20261122122130779-note-s28-terrain.jpg",
@@ -186,22 +202,6 @@
    "source": "../view/x5-1558-quad.jpg",
    "kind": "note",
    "label": "experiment in the render copy, not committed: rise 1558 review tier, veil at full amount, four variants of the fibre term (branch b506dc3, main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:14:26.725Z",
-   "file": "20261122101426725-note-s23-dive.jpg",
-   "source": "../view/s23-dive.png",
-   "kind": "note",
-   "label": "venus.dive full sheet 1260 to 1349 review tier (branch 08b2e2c, main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:14:26.139Z",
-   "file": "20261122101426139-note-s23-rise.jpg",
-   "source": "../view/s23-rise.png",
-   "kind": "note",
-   "label": "venus.rise full sheet 1530 to 1604 review tier (branch 08b2e2c, main c479536, engine batch 20)",
    "stop": "venus"
   }
  ]
