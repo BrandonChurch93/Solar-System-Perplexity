@@ -1,9 +1,61 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T15:10:32.841Z",
- "head": "f0477dcab3c3e1f957f17f23d8f4c702e1936a64",
- "note": "Mercury round 34: the rise's slowing spread over 997 to 1016 (05cc394 on main 64fff6f); measures running for CUT34",
+ "pushed": "2026-11-22T15:21:55.597Z",
+ "head": "a5e5207154f9cece25390c150aed882d8e702c09",
+ "note": "Mercury round 34: rise pace taken (a5e5207 on main 64fff6f), G5, G17, G13 running for CUT34",
  "looks": [
+  {
+   "time": "2026-11-22T15:21:54.288Z",
+   "file": "20261122152154288-note-r6-speck.jpg",
+   "source": "../../../../tmp/r6-speck.jpg",
+   "kind": "note",
+   "label": "Mercury rise cover 993, 994, 995 at draft, crop x 1400 y 560 500 by 340: a patch of bright bars with green and red fringes on the ground at 993 and 994 (top a5e5207, bottom 05cc394; main 64fff6f), found today, not from the pace, left for the next cut",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T15:21:53.361Z",
+   "file": "20261122152153361-note-r6-a.jpg",
+   "source": "../../../../tmp/r6-a.jpg",
+   "kind": "note",
+   "label": "Mercury rise cover 990 to 998 at draft, tree a5e5207 on main 64fff6f",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T15:21:52.544Z",
+   "file": "20261122152152544-note-r6-sheet.jpg",
+   "source": "../../../../tmp/r6-sheet.jpg",
+   "kind": "note",
+   "label": "Mercury rise 992 to 1015 at draft, every frame, tree a5e5207 on main 64fff6f: the taken pace (slowing from 1001 to 1016, cover frames near their old speed)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T15:21:48.820Z",
+   "file": "20261122152148820-job-frame-00615.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T15:19:52.752Z",
+   "file": "20261122151952752-job-frame-00998.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.rise frame 998, draft tier, texels view, from the running g13 job",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 998,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
   {
    "time": "2026-11-22T15:10:32.264Z",
    "file": "20261122151032264-note-r1-b.jpg",
@@ -27,20 +79,6 @@
    "kind": "note",
    "label": "Mercury rise 992 to 1015 at draft, every frame, tree 05cc394 on main 64fff6f: the slowing spread over 997 to 1016 (try R1), flare off, rim 0.2",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:02:47.394Z",
-   "file": "20261122150247394-job-frame-00998.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.rise frame 998, draft tier, texels view, from the running g13 job",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 998,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
   },
   {
    "time": "2026-11-22T14:57:35.807Z",
@@ -72,38 +110,6 @@
    "source": "../../../../tmp/fl1-sheet.jpg",
    "kind": "note",
    "label": "615, 717, 1016 drafts: main's own tree (columns 1 and 3, 3 at gain 2.5) against the flare change (2 and 4), main ca78dda",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:57:33.631Z",
-   "file": "20261122145733631-note-1016-flare.jpg",
-   "source": "../../../../tmp/1016-flare.jpg",
-   "kind": "note",
-   "label": "1016 final: left tree 2c5d787 (hand over head), right tree with the flare and rim commits on top (main ca78dda): no ghosts on the night side, no blob, no level band, thinner warm line at the lit limb",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:37:58.799Z",
-   "file": "20261122143758799-note-c13.jpg",
-   "source": "../../../../tmp/c13.jpg",
-   "kind": "note",
-   "label": "dropped variant out [1, 1.12, 1] at 495 (orange outline), tree 3fb355a plus uncommitted, main 84b0ea4",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:37:57.541Z",
-   "file": "20261122143757541-note-615-night-g3.jpg",
-   "source": "../../../../tmp/615-night-g3.jpg",
-   "kind": "note",
-   "label": "615 night side at gain 3: approved hero left, film final right (tree 3fb355a, main 84b0ea4): the flare streak and ghosts the surface critic names are in the approved hero",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:37:56.423Z",
-   "file": "20261122143756423-note-c14m.jpg",
-   "source": "../../../../tmp/c14m.jpg",
-   "kind": "note",
-   "label": "the same crops on main's Sun (tree 0547144, main a60c5ff)",
    "stop": "mercury"
   }
  ]
