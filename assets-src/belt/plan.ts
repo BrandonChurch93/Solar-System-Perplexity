@@ -43,7 +43,7 @@ for (let f = seg.firstFrame; f < seg.endFrame; f++) {
       let flag = ''
       if (inside) {
         (seen[r.id] ??= []).push(f)
-        const blur = speed * config.shutterFraction * (r.hold < 1 ? Math.abs(r.smear) : 0)
+        const blur = speed * config.shutterFraction
         const x0 = Math.max(0, x - reach), x1 = Math.min(fmt.width, x + reach), y0 = Math.max(0, y - reach), y1 = Math.min(fmt.height, y + reach)
         const area = (Math.min(Math.PI * reach * reach, (x1 - x0) * (y1 - y0)) + 2 * reach * blur) / (fmt.width * fmt.height)
         w.area = Math.max(w.area, area)
