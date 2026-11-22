@@ -247,6 +247,8 @@ export const createSet: SetFactory = async (ctx) => {
       const swing = THREE.MathUtils.radToDeg(joinA.copy(skimJoin).sub(skimL).angleTo(joinB.copy(skimJoin).sub(camL)))
       ru.uSkimPart!.value = smooth((swing - look.skimSwing[0]) / (look.skimSwing[1] - look.skimSwing[0]))
       ;(ru.uSkimUnder!.value as THREE.Vector4).fromArray(look.skimUnder)
+      ru.uSkimGap!.value = smooth((swing - look.skimGap[0]) / (look.skimGap[1] - look.skimGap[0]))
+      ;(ru.uSkimFill!.value as THREE.Vector3).fromArray(look.skimFill)
 
       const iu = ice.material.uniforms
       const iceW = 1 - smooth((Math.abs(camL.y) - look.ice.heightRange[0]) / (look.ice.heightRange[1] - look.ice.heightRange[0]))

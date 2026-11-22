@@ -172,6 +172,8 @@ uniform float uReach;
 uniform float uSkimNear;
 uniform float uSkimPart;
 uniform vec4 uSkimUnder;
+uniform float uSkimGap;
+uniform vec3 uSkimFill;
 uniform vec2 uGlobe;
 uniform vec3 uSkimCam;
 uniform sampler2D uApronMap;
@@ -232,6 +234,15 @@ vec3 evenInverse(vec3 fine, vec3 wide) {
   vec3 lo = max(wide - 0.004, 0.0);
   return max(inverseFilmic(wide) + (inverseFilmic(hi) - inverseFilmic(lo)) / max(hi - lo, 1e-4) * (min(fine, 0.985) - min(wide, 0.985)), 0.0);
 }
+vec3 skimFill(vec2 uv, vec2 gx, vec2 gy) {
+  vec3 fine = textureGrad(uSkimMap, uv, gx * uSkimFit.w, gy * uSkimFit.w).rgb;
+  vec3 wide = textureGrad(uSkimMap, uv, gx * uSkimFit.w * uSkimHigh.w, gy * uSkimFit.w * uSkimHigh.w).rgb;
+  vec3 lin = inverseFilmic(fine - uSkimHigh.z * max(fine - wide, 0.0) * smoothstep(uSkimHigh.x, uSkimHigh.y, max(fine.r, max(fine.g, fine.b))));
+  for (int j = 0; j < ((uEven > 0.0 && uSkimFit.w < 1.0) ? 1 : 0); j++) lin = max(lin + uEven * (evenInverse(fine, textureGrad(uSkimMap, uv, gx, gy).rgb) - inverseFilmic(fine)), 0.0);
+  vec2 q = (clamp(uv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
+  vec3 glow = textureLod(uBloomMap, clamp((uv - uApron.xy) * uApron.zw, 0.0, 1.0), 0.0).rgb;
+  return max(lin / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x);
+}
 float azGain(float r, float phi) {
   int i = 0;
   for (int k = 1; k < 4; k++) if (r >= uAzRadii[k]) i = k;
@@ -279,6 +290,9 @@ void main() {
   vec4 km = vec4(0.0);
   float behind = 0.0;
   float skimTexels = 0.0;
+  vec2 kvF = kv;
+  vec4 kmF = vec4(0.0);
+  float wF = 0.0;
   for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
     vec2 tx = kgx * uSkimSize;
     vec2 ty = kgy * uSkimSize;
@@ -298,6 +312,23 @@ void main() {
     float sa = dot(sd, sd);
     float sb = dot(sc, sd);
     behind = (sb < 0.0 && -sb < sa) ? smoothstep(-0.006, 0.0, (sb * sb - sa * (dot(sc, sc) - 1.0)) / sa) : 0.0;
+    vec2 sq = vLocal.xz / uGlobe.x;
+    float rr = dot(sq, sq);
+    float cc = dot(sc, sc);
+    float bq = 1.0 - uSkimFill.x;
+    float root = bq * bq - cc * cc + (cc - bq) * (rr + cc);
+    float ut = bq - sqrt(max(root, 0.0));
+    float rho = length(sc.xz);
+    float ct = ut / max(rho * sqrt(rr), 1e-5);
+    for (int j = 0; j < ((uSkimGap > 0.0 && wI > 0.0 && root > 0.0 && dot(sc.xz, sq) < ut && abs(ct) < 1.0) ? 1 : 0); j++) {
+      vec2 ch = sc.xz / rho;
+      vec2 ph = vec2(-ch.y, ch.x);
+      vec2 src = sqrt(rr) * uGlobe.x * (ch * ct + ph * (dot(sq, ph) < 0.0 ? -1.0 : 1.0) * sqrt(1.0 - ct * ct));
+      float inF;
+      kvF = shotUv(uSkimM, vec3(src.x, vLocal.y, src.y), 1.0, inF);
+      kmF = textureGrad(uSkimMask, kvF, kgx * uSkimFit.w, kgy * uSkimFit.w);
+      wF = uSkimGap * uSkimW * wI * (inF > 0.0 ? 1.0 : 0.0) * min(kmF.g * 2.0, 1.0) * (1.0 - kmF.b * uSkimPart) * smoothstep(uSkimFit.y, uSkimFit.z, dense) * smoothstep(uSkimFill.y, uSkimFill.z, r);
+    }
   }
   bool far = r > uReach;
   vec3 lay = far ? vec3(r, 1.0, 0.0) : ringLayout(vLocal, r);
@@ -312,6 +343,7 @@ void main() {
   float x = far ? -1.0 : ringRadius(rq);
   bool span = x > 0.0 && x < 1.0;
   wS *= span ? 1.0 : uSkimNear;
+  wF *= span ? 1.0 : uSkimNear;
   float wC = (far || disc) ? 0.0 : uPolarW * (1.0 - smoothstep(uPolarFit.x, uPolarFit.y, rp)) * smoothstep(uInnerSpan.x, uInnerSpan.x + 0.012, rs);
   bool gone = !span && wS <= 0.0 && wC <= 0.0 && (far || disc || uPolarShape * uPolarW <= 0.0);
   vec3 toCam = uCamL - vLocal;
@@ -331,6 +363,9 @@ void main() {
   }
   wS *= mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim) * (hidden ? 1.0 - smoothstep(uSkimUnder.z, uSkimUnder.w, rim) : 1.0), 1.0 - smoothstep(0.55, 0.95, km.g));
   if (!hidden && !disc) wS *= mix(1.0 - behind, 1.0, km.r);
+  float held = (hidden || disc) ? 1.0 : mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim), uSkimGap * behind * smoothstep(uSkimFill.y, uSkimFill.z, r));
+  wS *= held;
+  wF *= (hidden || disc) ? 0.0 : 1.0 - mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim), 1.0 - smoothstep(0.55, 0.95, km.g)) * mix(1.0 - behind, 1.0, km.r) * held;
   bool top = disc || hidden;
   gone = gone || (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top));
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
@@ -364,7 +399,7 @@ void main() {
   float swept = (1.0 - smoothstep(uVeil.x, uVeil.y, uClose)) * uSweep;
   float lift = max(smoothstep(-uJunction, uJunction, layoutDist + 2.0 * uJunction - swept), wS * (1.0 - smoothstep(0.0, 1.0, swept)));
   alpha = top ? 0.999 : alpha;
-  float cut = mix(1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rq), 1.0, wS) * (top ? mix(hidden ? layoutOver : layoutCut, 1.0, wS) * lift : 1.0);
+  float cut = mix(1.0 - uClose * smoothstep(uEdge.y - 0.002, uEdge.y + 0.004, rq), 1.0, wS + wF) * (top ? mix(hidden ? layoutOver : layoutCut, 1.0, wS) * lift : 1.0);
   vec3 col = inverseFilmic(s.rgb) * mix(uHeroTone * azGain(r, atan(vLocal.z, vLocal.x)), uCloseTone, uClose);
 
   float kepler = uSpinRate * pow(max(rp, 1.0) / 1.86, -1.5);
@@ -493,6 +528,9 @@ void main() {
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 base = col;
+  float baseA = alpha;
+  float baseT = texels;
   for (int k = 0; k < (wS > 0.0 && !gone ? 1 : 0); k++) {
     vec2 kq = (clamp(kv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
     vec3 pix = vec3(0.0);
@@ -513,7 +551,12 @@ void main() {
     alpha = mix(alpha, km.r, wS);
     texels = mix(texels, skimTexels, wS);
   }
-  col = (col + (wedge + shine * alpha + halo * lit) * (1.0 - wS)) * uGain * uWeight / vig;
+  for (int k = 0; k < (wF > 0.0 && !gone ? 1 : 0); k++) {
+    col += (skimFill(kvF, kgx, kgy) * vig * kmF.r - base) * wF;
+    alpha += (kmF.r - baseA) * wF;
+    texels += (skimTexels - baseT) * wF;
+  }
+  col = (col + (wedge + shine * alpha + halo * lit) * (1.0 - wS - wF)) * uGain * uWeight / vig;
   outColor = diagOut(vec4(col, alpha * uWeight) * cut, texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
   if (gone || (uDiag >= 2 && alpha * cut < 0.5)) discard;
 }`
@@ -559,7 +602,7 @@ export class Rings {
       ...profile,
       ...layout,
       ...shots,
-      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimPart: { value: 0 }, uSkimUnder: { value: new THREE.Vector4(-0.005, -0.002, 0.009, 0.015) }, uGlobe: { value: new THREE.Vector2(1, polar) }, uSkimCam: { value: new THREE.Vector3() },
+      uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimPart: { value: 0 }, uSkimUnder: { value: new THREE.Vector4(-0.005, -0.002, 0.009, 0.015) }, uSkimGap: { value: 0 }, uSkimFill: { value: new THREE.Vector3(-0.009, 0, 0.001) }, uGlobe: { value: new THREE.Vector2(1, polar) }, uSkimCam: { value: new THREE.Vector3() },
       uSheetR: { value: look.sheetRadii }, uSheetT: { value: look.sheetThrough }, uWedgeG: { value: look.wedgeGain }, uWedge: { value: new THREE.Vector4().fromArray(look.wedge) }, uWedgeIn: { value: new THREE.Vector2().fromArray(look.wedgeIn) }, uSheetGlow: { value: new THREE.Vector4().fromArray(look.sheetGlow) }, uSheetFit: { value: new THREE.Vector4().fromArray(look.sheetFit) }, uShine: { value: new THREE.Vector4().fromArray(look.shine) }, uShineWide: { value: new THREE.Vector4().fromArray(look.shineWide) }, uShineBack: { value: look.shineBack }, uEven: { value: look.even }, uPolarHigh: { value: new THREE.Vector4().fromArray(look.polarHigh) }, uRimNear: { value: new THREE.Vector4().fromArray(look.rimNear) }, uRimEdge: { value: new THREE.Vector4().fromArray(look.rimEdge) }, uRimFar: { value: new THREE.Vector3().fromArray(look.rimFar) }, uRimHalo: { value: new THREE.Vector4().fromArray(look.rimHalo) }, uRimAz: { value: new THREE.Vector4().fromArray(look.rimAz) }, uFillet: { value: new THREE.Vector4().fromArray(look.fillet) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
