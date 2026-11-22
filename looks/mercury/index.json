@@ -1,13 +1,13 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T07:59:46.162Z",
- "head": "3bcd6b68e37a75a1e5197cbe31a189988bf6c1c3",
- "note": "tree 6f0568e (main 2858db4, code identical on head 3bcd6b6, main 681d8da): final stills 615, 717, 870, 1016 same bytes as on 1a18e50; dive 726 to 746 table sheet and dive 739 to 744 natives",
+ "pushed": "2026-11-22T08:25:30.739Z",
+ "head": "ba98260dfd740c7b4e18d18190621ad53474aa2e",
+ "note": "tree f269a9b (main 07aabf5, engine batch 20): final stills 615, 717, 870 same bytes as before the merge, 1016 with the new flight sky",
  "looks": [
   {
-   "time": "2026-11-22T07:58:58.110Z",
-   "file": "20261122075858110-frame-f1016-final.jpg",
-   "source": "out/work/mercury/p6/ready/f1016-final.png",
+   "time": "2026-11-22T08:25:19.462Z",
+   "file": "20261122082519462-frame-f1016-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f1016-final.png",
    "kind": "frame",
    "label": "mercury.rise frame 1016, final tier",
    "stop": "mercury",
@@ -16,12 +16,12 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "engine": "8c3819aa56f46da4"
   },
   {
-   "time": "2026-11-22T07:56:22.547Z",
-   "file": "20261122075622547-frame-f870-final.jpg",
-   "source": "out/work/mercury/p6/ready/f870-final.png",
+   "time": "2026-11-22T08:22:17.625Z",
+   "file": "20261122082217625-frame-f870-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f870-final.png",
    "kind": "frame",
    "label": "mercury.terrain frame 870, final tier",
    "stop": "mercury",
@@ -30,12 +30,12 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "engine": "8c3819aa56f46da4"
   },
   {
-   "time": "2026-11-22T07:55:24.197Z",
-   "file": "20261122075524197-frame-f717-final.jpg",
-   "source": "out/work/mercury/p6/ready/f717-final.png",
+   "time": "2026-11-22T08:21:17.634Z",
+   "file": "20261122082117634-frame-f717-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f717-final.png",
    "kind": "frame",
    "label": "mercury.dive frame 717, final tier",
    "stop": "mercury",
@@ -44,12 +44,12 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "engine": "8c3819aa56f46da4"
   },
   {
-   "time": "2026-11-22T07:52:34.265Z",
-   "file": "20261122075234265-frame-f615-final.jpg",
-   "source": "out/work/mercury/p6/ready/f615-final.png",
+   "time": "2026-11-22T08:18:25.855Z",
+   "file": "20261122081825855-frame-f615-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f615-final.png",
    "kind": "frame",
    "label": "mercury.hold frame 615, final tier",
    "stop": "mercury",
@@ -58,7 +58,21 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:01:28.635Z",
+   "file": "20261122080128635-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
    "time": "2026-11-22T07:51:34.924Z",
@@ -96,14 +110,6 @@
    "source": "out/work/mercury/p6/ready/dive-739-744.jpg",
    "kind": "note",
    "label": "Dive 739 to 744 at review across the swap at 744, tree 6f0568e (main 2858db4)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T07:49:27.258Z",
-   "file": "20261122074927258-note-dive-726-746.jpg",
-   "source": "out/work/mercury/p6/ready/dive-726-746.jpg",
-   "kind": "note",
-   "label": "Dive 726 to 746 at review with the Sun's place and the mean ground colour per frame, tree 6f0568e (main 2858db4); 726 to 738 rendered on 1a18e50 and the same bytes at draft on 6f0568e",
    "stop": "mercury"
   }
  ]
