@@ -4,7 +4,7 @@ import type { Segment, StopDef } from '../src/config'
 import { judgedFrames } from '../src/director/timeline'
 import { samplesOf } from './lib/samples'
 import { polishBuilds, type Selection } from './select'
-import { args, loadConfig, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
+import { args, loadConfig, recordMatches, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
 import { Capture, cached, chunk, filmSheets, fingerprint, image, imageRevision, json, judged, outputFolder, padFrame, padImage, safeRecord, sheetFrames, spread, stopDependencies, type FrameSpec, type Rect } from './lib/render'
 
 type Critic = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'R7' | 'R8'
@@ -41,6 +41,8 @@ const outputDirs = new Set<string>()
 const stopKinds = new Set(['hold', 'dive', 'terrain', 'rise'])
 const only = a.only ? new Set(a.only.split(',')) : null
 const stressTier = a['stress-tier'] ?? cfg.raw.quality.stress.tier
+const span = a.frames ? /^(\d+)-(\d+)$/.exec(a.frames) : null
+if (a.frames && (span === null || only === null || only.size !== 1)) throw new Error('--frames A-B goes with --only and one sheet')
 const started = Date.now()
 
 function renderSegment(segment: Segment, fallback: string): Promise<Source> {
@@ -230,6 +232,42 @@ async function detail(segments: Segment[], scope?: string, frames?: Set<number>)
   publish('R3', groups, 'image', scope)
 }
 
+const tile = (part: string, frame: number): string => join(stage, 'tiles', part, 'f' + padFrame(frame) + '-' + motionTier + '.png')
+
+function tiles(part: string, specs: FrameSpec[], info: Record<string, unknown>): number[] | null {
+  if (existsSync(join(stage, 'tiles', part)) === false) return null
+  const frames = specs.map((s) => s.frame)
+  if (cached(join(stage, 'motion-' + part + '.png'), capture.record(motionTier, frames), stopDependencies(frames), JSON.stringify([specs, info, limit, revision]))) return null
+  const missing = frames.filter((frame) => {
+    const record = safeRecord(tile(part, frame))
+    return (record?.frame === frame && recordMatches(record, capture.record(motionTier, [frame]), stopDependencies([frame]))) === false
+  })
+  if (missing.length > 0) return missing
+  for (const frame of frames) {
+    const home = join(temp, 'f' + padFrame(frame) + '-' + motionTier + '.png')
+    copyFileSync(tile(part, frame), home)
+    copyFileSync(tile(part, frame) + '.json', home + '.json')
+  }
+  return []
+}
+
+async function sheet(part: string, specs: FrameSpec[], info: Record<string, unknown>): Promise<Art | null> {
+  if (span) {
+    for (const s of specs) if (s.frame >= Number(span[1]) && s.frame <= Number(span[2])) console.log((await capture.still(s.frame, motionTier, tile(part, s.frame))).file)
+    return null
+  }
+  const missing = tiles(part, specs, info)
+  if (missing && missing.length > 0) {
+    if (a.join === undefined) throw new Error('sheet ' + part + ': no tile of this build for frames ' + missing.join(', ') + '; nothing rendered')
+    console.log('sheet ' + part + ': not joined, no tile of this build for frames ' + missing.join(', '))
+    return null
+  }
+  if (a.join && missing === null) return null
+  const art = await contact('motion-' + part, specs, motionTier, info)
+  if (a.join) console.log('sheet ' + part + ': joined from ' + specs.length + ' tiles')
+  return art
+}
+
 async function motion(segments: Segment[], scope?: string, sheets?: Set<string>): Promise<void> {
   const list: Art[] = []
   const pick = sheets ?? only
@@ -237,12 +275,16 @@ async function motion(segments: Segment[], scope?: string, sheets?: Set<string>)
   const strangers = [...(sheets ?? [])].filter((id) => known.includes(id) === false)
   if (strangers.length > 0) throw new Error('select: not a sheet of ' + (scope ?? 'the travels and the ending') + ': ' + strangers.join(', '))
   for (const s of segments) {
-    if (pick === null || pick.has(s.id)) list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
+    if (pick === null || pick.has(s.id)) {
+      const art = await sheet(s.id, sheetFrames(cfg, s, false), { kind: 'sheet', segment: s.id })
+      if (art) list.push(art)
+    }
     if ((s.kind === 'dive' || s.kind === 'rise') && (pick === null || pick.has(s.id + '-cover'))) {
-      list.push(await contact('motion-' + s.id + '-cover', sheetFrames(cfg, s, true), motionTier, { kind: 'cover', segment: s.id }))
+      const art = await sheet(s.id + '-cover', sheetFrames(cfg, s, true), { kind: 'cover', segment: s.id })
+      if (art) list.push(art)
     }
   }
-  if (only === null) publish('R4', singles(list), 'sheet', scope)
+  if (only === null && a.join === undefined) publish('R4', singles(list), 'sheet', scope)
 }
 
 async function part(segments: Segment[]): Promise<void> {
@@ -301,12 +343,13 @@ async function hook(): Promise<Art[]> {
 
 function plan(): object {
   const cost = (frames: FrameSpec[]): number => frames.reduce((sum, f) => sum + samplesOf(f.frame, motionTier), 0)
-  const sheets: { part: string; stop: string | null; samples: number }[] = []
+  const sheets: { part: string; stop: string | null; samples: number; tiles: number[][] }[] = []
   for (const s of cfg.segments) {
     const between = s.kind === 'travel' || s.stop === cfg.endingId
     if (between === false && (phase !== 6 || stopKinds.has(s.kind) === false)) continue
-    sheets.push({ part: s.id, stop: between ? null : s.stop, samples: cost(sheetFrames(cfg, s, false)) })
-    if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true)) })
+    const each = (frames: FrameSpec[]): number[][] => frames.map((f) => [f.frame, samplesOf(f.frame, motionTier)])
+    sheets.push({ part: s.id, stop: between ? null : s.stop, samples: cost(sheetFrames(cfg, s, false)), tiles: each(sheetFrames(cfg, s, false)) })
+    if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true)), tiles: each(sheetFrames(cfg, s, true)) })
   }
   const frames = a.judged ? { judged: judgedFrames().map((j) => ({ frame: j.frame, segment: j.segment, stop: j.stop, kind: cfg.segments.find((s) => s.id === j.segment)?.kind, why: j.why })) } : {}
   return {
@@ -410,7 +453,10 @@ async function polish(): Promise<void> {
 let rendered = false
 try {
   if (a.plan) console.log('PLAN ' + JSON.stringify(plan()))
-  else if (only) {
+  else if (a.join) {
+    if (phase < 4 || only) throw new Error('--join goes without --only, from phase 4 on')
+    await motion(cfg.segments.filter((s) => (selectedStop === undefined || s.stop === selectedStop.id) && (stopKinds.has(s.kind) ? phase !== 5 : whole && (s.kind === 'travel' || s.stop === cfg.endingId))))
+  } else if (only) {
     if (whole && selectedStop === undefined) await wholePart()
     else {
       const stops = selectedStop ? [selectedStop] : cfg.stops
@@ -438,7 +484,7 @@ try {
       await motion(between)
     }
   }
-  if (only === null && a.plan === undefined) {
+  if (only === null && a.plan === undefined && a.join === undefined) {
     for (const entry of readdirSync(roundDir, { withFileTypes: true })) {
       if (entry.isDirectory() && /^R[1-8](?:-[a-z]+)?(?:-part\d+)?$/.test(entry.name) && outputDirs.has(entry.name) === false) rmSync(join(roundDir, entry.name), { recursive: true })
     }

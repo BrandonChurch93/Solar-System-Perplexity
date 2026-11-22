@@ -805,8 +805,17 @@ def film_jobs(a):
         have = set(x['frame'] for x in g)
         whole = [x['part'] for x in plan['composites'] if set(x['frames']) <= have]
         add('r%d-film-stills%02d' % (n, k), cmd(['stills:%d-%d' % (g[0]['frame'], g[-1]['frame'])] + whole), [cache, stills], weigh(g), pre)
+    tiles = {x['part']: x['tiles'] for x in plan['sheets']}
+
+    def sheets(name, parts, samples, stop=''):
+        cut = groups([{'frame': f, 'samples': v} for f, v in tiles[parts[0]]]) if len(parts) == 1 and samples * per > cap else []
+        if len(cut) < 2:
+            return add(name, cmd(parts, stop), [cache], samples, pre)
+        for k, g in enumerate(cut):
+            add('%s-%s' % (name, chr(97 + k)), cmd(parts, stop) + ' --frames %d-%d' % (g[0]['frame'], g[-1]['frame']), [cache], weigh(g), pre)
+
     for k, g in enumerate(groups([x for x in plan['sheets'] if x['stop'] is None]), 1):
-        add('r%d-film-motion%02d' % (n, k), cmd([x['part'] for x in g]), [cache], weigh(g), pre)
+        sheets('r%d-film-motion%02d' % (n, k), [x['part'] for x in g], weigh(g))
     q = c['quality']['stress']
     true = json.loads(sh('npm run -s samples -- --stress --tier %s' % (s.get('tier') or q['tier'])).strip().split('\n')[-1])
     for k, g in enumerate(groups([{'id': i, 'samples': true[i]} for i in q['segments'] if not (polish and a.no_stress)]), 1):
@@ -819,7 +828,7 @@ def film_jobs(a):
             out.append({'name': name, 'worker': 0, 'minutes': a.measure_minutes, 'message': 'JOB %s. Commit %s. Command: `npm run measure -- --stop %s%s`. %s' % (name, sha, stop, tiers(s, 'measure'), TAR % (name, 'out/work/measure/%s.json' % stop, name, name))})
             for label, only in parts_of(stop):
                 if label != 'stills':
-                    add('r%d-%s-%s' % (n, stop, label), cmd(only, stop), [cache], sum(cost[x] for x in only), pre)
+                    sheets('r%d-%s-%s' % (n, stop, label), only, sum(cost[x] for x in only), stop)
     load = [0.0] * a.workers
     for j in sorted(out, key=lambda j: -j['minutes']):
         w = load.index(min(load))
@@ -840,8 +849,12 @@ def film_place(a):
     want = [j['name'] for j in json.loads((rdir(n) / 'jobs.json').read_text())]
     missing = [w for w in want if w not in done]
     print('missing: ' + (', '.join(missing) or 'none'))
+    cache = WORK / 'packs' / '.cache' / rid(n)
+    if (cache / 'tiles').exists():
+        out = subprocess.run('npm run -s pack -- --phase %d --round %d --join%s' % (s['phase'], n, tiers(s, 'pack')), shell=True, cwd=ROOT, capture_output=True, text=True)
+        print('\n'.join(l for l in (out.stdout + out.stderr).split('\n') if l.startswith(('sheet ', 'pack '))) or (out.stdout + out.stderr)[-600:])
     stale = []
-    files = list((WORK / 'packs' / '.cache' / rid(n)).glob('*.json')) + list((WORK / 'stills').glob('f*-16x9-%s-full.png.json' % still_tier(s)))
+    files = list(cache.glob('*.json')) + list(cache.glob('tiles/*/*.json')) + list((WORK / 'stills').glob('f*-16x9-%s-full.png.json' % still_tier(s)))
     files += [WORK / 'stress' / (i + '.json') for i in cfg()['quality']['stress']['segments']]
     if s['mode'] in ('record', 'polish'):
         files += [WORK / 'measure' / (i + '.json') for i in s['stopHashes']]
