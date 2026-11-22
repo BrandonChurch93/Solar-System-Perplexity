@@ -95,6 +95,8 @@ uniform vec4 uFlightVeilWarm;
 uniform sampler2D uBandGlow;
 uniform vec3 uFlightStrip;
 uniform vec3 uFlightEdge;
+uniform vec4 uFlightFeather;
+uniform float uFlightRough;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -171,7 +173,9 @@ void main() {
   for (int k = 0; k < (uFlightStrip.x > 0.0 ? 1 : 0); k++) {
     vec2 fuv = vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5);
     float ax = abs(asin(clamp((uGal * sd).z, -1.0, 1.0))) / uBandMap.z;
-    float fz = 1.0 - smoothstep(uFlightEdge.x, uFlightEdge.y, ax + uFlightEdge.z * (textureLod(uFlightMap, fuv, 0.0).g - 1.0));
+    vec2 fv = textureLod(uFlightMap, fuv, 0.0).gb;
+    float ar = ax * (1.0 + uFlightFeather.x * clamp((uFlightFeather.y - fv.x) * uFlightFeather.z, 0.0, 1.0));
+    float fz = 1.0 - smoothstep(uFlightEdge.x, uFlightEdge.y, ar + uFlightRough * fv.y * smoothstep(0.0, 0.5 * uFlightEdge.x, ar) + uFlightEdge.z * (fv.x - 1.0));
     highp uint hs = uint(gl_FragCoord.x) * 0x85EBCA77u ^ uint(gl_FragCoord.y) * 0xC2B2AE3Du;
     hs ^= hs >> 15;
     hs *= 0x2C1B3C6Du;
@@ -186,6 +190,7 @@ void main() {
     for (int j = 0; j < (fz > 0.0 ? 1 : 0); j++) {
       vec3 sq = smoothLod(uBandGlow, bc.xy, 0.0);
       glow = inverseFilmic(sq * sq) * grain;
+      fz = smoothstep(uFlightFeather.w * (1.0 - dot(sq, vec3(0.3, 0.5, 0.2))), 1.0, fz);
       vec3 pd = bandPlane(sd);
       vec2 puv = vec2(atan(pd.x, pd.z) / (2.0 * PI) + 0.5, asin(clamp(pd.y, -1.0, 1.0)) / PI + 0.5);
       float region = clamp(sqrt(dot(textureLod(uSky, puv, log2(float(textureSize(uSky, 0).x)) - 6.0).rgb, vec3(0.3, 0.5, 0.2)) / uBandGrade.z), 0.7, 1.4);
@@ -453,7 +458,7 @@ export class Sky {
   private stripGlow: THREE.Texture | null = null
   private stripBytes: ArrayBuffer | null = null
   private stripDef: StripDef | null = null
-  private field: Pick<FlightField, 'veil' | 'width' | 'height'> | null = null
+  private field: Pick<FlightField, 'veil' | 'veilLow' | 'veilHigh' | 'rough' | 'width' | 'height'> | null = null
   private flightDef: FlightDef | null = null
   private base = 0
   private canvas: HTMLCanvasElement | null = null
@@ -493,7 +498,7 @@ export class Sky {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode },
-      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) },
+      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: 0 },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
     const { pos, star, col } = catalog(base)
@@ -586,6 +591,8 @@ export class Sky {
     const def = this.stripDef
     if (!def || !this.stripBytes || !this.field) return
     const b = skyFrame.band
+    ;(this.pass.material.uniforms.uFlightFeather!.value as THREE.Vector4).set(def.feather.reach, this.field.veilHigh, 1 / (this.field.veilHigh - this.field.veilLow), def.feather.follow)
+    this.pass.material.uniforms.uFlightRough!.value = def.feather.rough
     const set = bandField(this.stripBytes, { repeats: b.repeats, offset: b.offsetDeg / 360 * b.repeats, latSpan: THREE.MathUtils.degToRad(b.latSpanDeg), widen: b.widen, gal: galactic().elements }, def, this.field)
     const geo = this.strip.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(set.position, 3))
@@ -613,7 +620,7 @@ export class Sky {
   setFlightStars(def: FlightDef): void {
     const field = flightField(def)
     this.flightDef = def
-    this.field = { veil: field.veil, width: field.width, height: field.height }
+    this.field = { veil: field.veil, veilLow: field.veilLow, veilHigh: field.veilHigh, rough: field.rough, width: field.width, height: field.height }
     const geo = this.flight.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(field.position, 3))
     geo.setAttribute('aStar', shed(new THREE.BufferAttribute(field.star, 4)))
@@ -633,12 +640,13 @@ export class Sky {
       this.inView.push({ points, pos, order, key: new Float64Array(4).fill(NaN) })
     }
     this.buildStrip()
-    const half = new Uint16Array(field.glow.length * 2)
+    const half = new Uint16Array(field.glow.length * 4)
     for (let i = 0; i < field.glow.length; i++) {
-      half[i * 2] = THREE.DataUtils.toHalfFloat(field.glow[i]!)
-      half[i * 2 + 1] = THREE.DataUtils.toHalfFloat(field.veil[i]!)
+      half[i * 4] = THREE.DataUtils.toHalfFloat(field.glow[i]!)
+      half[i * 4 + 1] = THREE.DataUtils.toHalfFloat(field.veil[i]!)
+      half[i * 4 + 2] = THREE.DataUtils.toHalfFloat(field.rough[i]!)
     }
-    const map = new THREE.DataTexture(half, field.width, field.height, THREE.RGFormat, THREE.HalfFloatType)
+    const map = new THREE.DataTexture(half, field.width, field.height, THREE.RGBAFormat, THREE.HalfFloatType)
     map.wrapS = THREE.RepeatWrapping
     map.magFilter = THREE.LinearFilter
     map.minFilter = THREE.LinearFilter

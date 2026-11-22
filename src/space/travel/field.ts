@@ -18,7 +18,7 @@ export interface FlightDef {
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
   deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
-  veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number }
+  veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number; rough: number }
 }
 
 export interface FlightField {
@@ -27,6 +27,9 @@ export interface FlightField {
   color: Float32Array
   glow: Float32Array
   veil: Float32Array
+  veilLow: number
+  veilHigh: number
+  rough: Float32Array
   deep: { position: Float32Array; star: Float32Array; color: Float32Array }
   width: number
   height: number
@@ -39,6 +42,7 @@ export const FLIGHT_SIZE = 16
 export interface StripDef {
   swap: number
   edge: number[]
+  feather: { reach: number; rough: number; follow: number; mean: number; thin: number; dim: number }
   dither: number
   offLevel: number
   patchHold: number
@@ -46,7 +50,7 @@ export interface StripDef {
   stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
 }
 
-function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => number {
+function clouds(def: FlightDef['veil']): [(x: number, y: number, z: number) => number, (x: number, y: number, z: number, f: number) => number] {
   const seed = stream('flight veil').int(1 << 20)
   const ease = (t: number): number => t * t * (3 - 2 * t)
   const noise = (x: number, y: number, z: number): number => {
@@ -70,7 +74,7 @@ function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => nu
     return sum / total
   }
   const [depth, width, scale] = def.lanes
-  return (x, y, z) => THREE.MathUtils.smoothstep(fbm(x, y, z, def.scale, 4, 0), def.span[0]!, def.span[1]!) * (depth! + (1 - depth!) * THREE.MathUtils.smoothstep(Math.abs(2 * fbm(x, y, z, def.scale * scale!, 2, 211.3) - 1), 0, width!))
+  return [(x, y, z) => THREE.MathUtils.smoothstep(fbm(x, y, z, def.scale, 4, 0), def.span[0]!, def.span[1]!) * (depth! + (1 - depth!) * THREE.MathUtils.smoothstep(Math.abs(2 * fbm(x, y, z, def.scale * scale!, 2, 211.3) - 1), 0, width!)), (x, y, z, f) => THREE.MathUtils.smoothstep(fbm(x, y, z, f, 3, 97.3), 0.3, 0.7)]
 }
 
 export function flightField(def: FlightDef): FlightField {
@@ -167,7 +171,8 @@ export function flightField(def: FlightDef): FlightField {
   const [width, height] = MAP
   const glow = new Float32Array(width * height)
   const veil = new Float32Array(width * height)
-  const cloud = clouds(def.veil)
+  const [cloud, coarse] = clouds(def.veil)
+  const rough = new Float32Array(width * height)
   let veilSum = 0
   let veilArea = 0
   for (let j = 0; j < height; j++) {
@@ -185,6 +190,7 @@ export function flightField(def: FlightDef): FlightField {
       glow[j * width + i] = sum
       const w = def.veil.floor + (1 - def.veil.floor) * cloud(x, y, z)
       veil[j * width + i] = w
+      rough[j * width + i] = coarse(x, y, z, def.veil.rough)
       veilSum += w * Math.cos(lat)
       veilArea += Math.cos(lat)
     }
@@ -249,7 +255,7 @@ export function flightField(def: FlightDef): FlightField {
     const [x, y, z] = any()
     place(x, y, z, 1)
   }
-  return { position, star, color, glow, veil, deep, width, height }
+  return { position, star, color, glow, veil, veilLow, veilHigh, rough, deep, width, height }
 }
 
 export interface BandFrame {
@@ -266,15 +272,19 @@ export interface BandField {
   color: Float32Array
 }
 
-export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, field: Pick<FlightField, 'veil' | 'width' | 'height'>): BandField {
+export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, field: Pick<FlightField, 'veil' | 'veilLow' | 'veilHigh' | 'rough' | 'width' | 'height'>): BandField {
   const view = new DataView(bytes)
   if (view.getUint32(0, true) !== 0x52545342) throw new Error('band stars: bad file')
   const total = view.getUint32(8, true)
   const st = def.stars
   const [edgeFrom, edgeTo, edgeNoise] = def.edge
+  const fe = def.feather
+  const low = fe.follow * (1 - fe.mean)
+  const span = 1 / (field.veilHigh - field.veilLow)
   const w = 1 / frame.widen
   const g = frame.gal
   const rnd = stream('flight band')
+  const thin = stream('flight band thin')
   const count = total * frame.repeats
   const position = new Float32Array(count * 3)
   const star = new Float32Array(count * 2)
@@ -305,10 +315,13 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
       const py = g[3]! * gx + g[4]! * gy + g[5]! * gz
       const pz = g[6]! * gx + g[7]! * gy + g[8]! * gz
       const cell = Math.min(Math.floor((Math.asin(Math.max(Math.min(py, 1), -1)) / Math.PI + 0.5) * field.height), field.height - 1) * field.width + Math.min(Math.floor((Math.atan2(px, pz) / (2 * Math.PI) + 0.5) * field.width), field.width - 1)
-      const fade = 1 - THREE.MathUtils.smoothstep(Math.abs(x) + edgeNoise! * (field.veil[cell]! - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!)
-      if (fade <= 0) continue
+      const pick = thin.next()
+      const veil = field.veil[cell]!
+      const reach = Math.abs(x) * (1 + fe.reach * Math.min(Math.max((field.veilHigh - veil) * span, 0), 1))
+      const fade = THREE.MathUtils.smoothstep(1 - THREE.MathUtils.smoothstep(reach + fe.rough * field.rough[cell]! * THREE.MathUtils.smoothstep(reach, 0, 0.5 * edgeFrom!) + edgeNoise! * (veil - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!), low, 1)
+      if (fade <= 0 || pick > Math.pow(fade, fe.thin)) continue
       position.set([px, py, pz], n * 3)
-      star.set([level * fade, base], n * 2)
+      star.set([level * Math.pow(fade, fe.dim), base], n * 2)
       color.set([cr, cg, cb], n * 3)
       n++
     }
