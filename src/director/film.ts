@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -39,11 +39,15 @@ const glide = (u: number, e: number): number => {
 const OFFSET_FROM = 0.15
 const PASS_REACH = 60
 const SUN_LEAVE = 0.55
-const SUN_SWAP: [number, number] = [0.42, 0.55]
+const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
 const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
+const PLACE_TIE = 1e-6
+type CameraPose = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+const PIN_FRAMES = 8
+const FAR_LIGHT = { within: 3, frames: 12, power: 1.5 }
 const Y = new THREE.Vector3(0, 1, 0)
 const OPEN = config.raw.travel.sky
 const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number>)[id] ?? 0
@@ -64,6 +68,8 @@ export class FilmDirector implements Director {
   private readonly clear: number[] = [0]
   private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
+  private readonly lit: number[] = []
+  private readonly small: number[] = []
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
@@ -98,10 +104,46 @@ export class FilmDirector implements Director {
         slide = high
         clear = this.clearOf(i, shape, slide)
         shape.from = clear
+        if (shape.look.point > 0) {
+          const b = plans[i + 1]!
+          const hold = b.hold(0)
+          const dh = hold.position.length()
+          const far = 1 / (2 * shape.look.point * Math.tan(THREE.MathUtils.degToRad(hold.vfov) / 2))
+          shape.until = clear + (1 - clear) * shape.grown(1 - Math.log(Math.max(far / dh, 1)) / Math.log(this.reach[i + 1]! / dh))
+        }
       }
       this.slide.push(slide)
       this.shapes.push(shape)
       this.clear.push(clear)
+      let small = 0
+      if (shape.look.window > 0) {
+        const seg = plans[i]!.seg.travel!
+        const settled = i > 0 && shape.look.pin[1] > 0 ? Math.min(clear + PIN_FRAMES / ((seg.end - seg.start) * config.fps), 1) : clear
+        const open = Math.max(1 - shape.look.window / ((seg.end - seg.start) * config.fps), settled)
+        if (i > 0 && shape.look.pin[1] > 0) shape.until = settled
+        shape.open = open
+        small = this.sizeOf(i, this.travelPath(i, seg.start + open * (seg.end - seg.start)))
+      }
+      this.small.push(small)
+      let lit = 1
+      if (i > 0 && shape.look.pin[1] > 0) {
+        const seg = plans[i]!.seg.travel!
+        const body = this.frames[i + 1]!.origin
+        const seen = (pose: CameraPose): THREE.Vector2 => {
+          const v = body.clone().sub(pose.position).applyQuaternion(pose.quaternion.clone().invert())
+          return new THREE.Vector2(v.x, v.y).multiplyScalar(540 / (Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2) * Math.max(-v.z, 1e-9)))
+        }
+        const drifted = (pose: CameraPose, time: number): CameraPose => ({ ...pose, quaternion: pose.quaternion.clone().multiply(drift(time)) })
+        const home = seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(0)), seg.end))
+        const steps = Math.round((seg.end - seg.start) * config.fps) * 8
+        for (let k = steps; k >= 0; k--) {
+          const time = seg.start + (k / steps) * (seg.end - seg.start)
+          const place = shape.look.follow > 0 || shape.look.window > 0 ? seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(time - seg.end)), time)) : home
+          if (seen(drifted(this.travelCamera(i, time), time)).distanceTo(place) > FAR_LIGHT.within) break
+          lit = k / steps
+        }
+      }
+      this.lit.push(lit)
     }
     const last = plans.length - 1
     const n = this.plans[last]!
@@ -183,11 +225,16 @@ export class FilmDirector implements Director {
     return this.frames[this.plans.length - 1]!.rotation.clone().multiply(local).multiply(drift(frame / config.fps))
   }
 
-  private lookbackPlace(t: number): { phase: number; azimuth: number; distance: number; s: number } {
+  private lookbackPlace(t: number): { phase: number; azimuth: number; distance: number; s: number; hand: number } {
     const lb = config.segments.find((x) => x.kind === 'lookback')!
-    const s = t - (lb.start + lb.end) / 2
+    const rest = (at: number): number => {
+      const x = Math.min(Math.max((at - lb.start) / LOOKBACK.settle, 0), 1)
+      return Math.min(at - lb.start, 0) + (LOOKBACK.settle * (1 - (1 - x) * (1 - x) * (1 - x))) / 3
+    }
     const rad = THREE.MathUtils.degToRad
-    return { phase: rad(LOOKBACK.phaseDeg + LOOKBACK.phasePerSecond * s), azimuth: rad(LOOKBACK.azimuthDeg), distance: LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s), s }
+    const mid = (lb.start + lb.end) / 2
+    const s = rest(t) - rest(mid)
+    return { phase: rad(LOOKBACK.phaseDeg), azimuth: rad(LOOKBACK.azimuthDeg), distance: LOOKBACK.distance, s, hand: mid + mix(s, t - mid, LOOKBACK.hand) }
   }
 
   private nightSide(phase: number, azimuth: number, distance: number, sun = this.lookbackSun): THREE.Vector3 {
@@ -203,9 +250,9 @@ export class FilmDirector implements Director {
     const tan = Math.tan(rad(LOOKBACK.vfov) / 2)
     const sx = (LOOKBACK.sun[0] + LOOKBACK.sunPerSecond[0] * s) * tan
     const sy = (LOOKBACK.sun[1] + LOOKBACK.sunPerSecond[1] * s) * tan
-    const line = rad(LOOKBACK.lineDeg + LOOKBACK.linePerSecond * s)
+    const line = rad(LOOKBACK.lineDeg)
     const seen = basis(new THREE.Vector3(sx, sy, -1), new THREE.Vector3(sx + Math.cos(line), sy + Math.sin(line), -1))
-    return { position, quaternion: basis(this.lookbackSun, position.clone().negate()).multiply(seen.invert()), vfov: LOOKBACK.vfov }
+    return { position, quaternion: basis(this.lookbackSun, position.clone().negate()).multiply(seen.invert()).multiply(drift(at.hand)).multiply(drift(t).invert()), vfov: LOOKBACK.vfov }
   }
 
   private turnEnd(i: number): number {
@@ -326,9 +373,8 @@ export class FilmDirector implements Director {
     const r0 = arc(b.sunDir, this.sunWorld)
     const fr = forward(from.quaternion)
     const camUp = Y.clone().applyQuaternion(from.quaternion)
-    let best = new THREE.Quaternion()
-    let bestCost = Infinity
     const want = THREE.MathUtils.degToRad(a.p.travel.turnDeg)
+    const tries: { r: THREE.Quaternion; cost: number }[] = []
     for (let k = 0; k < 720; k++) {
       const r = new THREE.Quaternion().setFromAxisAngle(this.sunWorld, (k / 720) * Math.PI * 2).multiply(r0)
       const d = dLocal.clone().applyQuaternion(r)
@@ -338,21 +384,55 @@ export class FilmDirector implements Director {
         const side = new THREE.Vector3().crossVectors(fr, d).dot(camUp)
         cost = Math.abs(fr.angleTo(d) - want) + (side * a.p.travel.side < 0 ? 0.6 : 0)
       }
-      if (cost < bestCost) {
-        bestCost = cost
-        best = r
-      }
+      tries.push({ r, cost })
     }
-    const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best, seg)
+    let best = tries[0]!
+    for (const t of tries) if (t.cost < best.cost) best = t
+    const least = best.cost
+    const last = this.frames[i]!.rotation
+    for (let k = 0; i > 0 && least >= 0.6 && k < 720; k++) {
+      const t = tries[k]!
+      if (t.cost > least + PLACE_TIE || t.cost > tries[(k + 719) % 720]!.cost || t.cost >= tries[(k + 1) % 720]!.cost) continue
+      if (t.r.angleTo(last) < best.r.angleTo(last)) best = t
+    }
+    const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best.r, seg)
     this.begin.push(begin)
     const startAt = seg.start + begin * dur
     const at = i === 0 ? this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunSwap) : this.toWorld(i, this.leaving(i, startAt)).position
-    const origin = at.sub(this.approachLocal(i + 1, 0, startAt).position.applyQuaternion(best))
-    this.frames.push({ rotation: best, origin })
-    this.approach.push(dLocal.clone().applyQuaternion(best))
+    const origin = at.sub(this.approachLocal(i + 1, 0, startAt).position.applyQuaternion(best.r))
+    this.frames.push({ rotation: best.r, origin })
+    this.approach.push(dLocal.clone().applyQuaternion(best.r))
+  }
+
+  private sizeOf(index: number, pose: Pose): number {
+    const d = this.frames[index + 1]!.origin.distanceTo(pose.position)
+    return 1 / (Math.sqrt(Math.max(d * d - 1, 1e-12)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2))
   }
 
   private travelCamera(index: number, time: number): Pose {
+    const pose = this.travelPath(index, time)
+    const shape = this.shapes[index]!
+    if (shape.look.window <= 0) return pose
+    const seg = this.plans[index]!.seg.travel!
+    const t = ramp(shape.open, 1, (time - seg.start) / (seg.end - seg.start))
+    if (t <= 0) return pose
+    const b = this.plans[index + 1]!
+    const body = this.frames[index + 1]!.origin
+    const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
+    const full = this.sizeOf(index, hold)
+    const small = this.small[index]!
+    const want = (small + (full - small) * t * t * (3 - 2 * t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const ray = pose.position.clone().sub(body).normalize()
+    if (shape.look.pin[1] <= 0) {
+      const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
+      const angle = ray.angleTo(hero)
+      const g = smooth(ramp(0, (PIN_FRAMES * 1.5) / ((seg.end - seg.start) * config.fps * (1 - shape.open)), t))
+      if (angle > 1e-9) ray.applyAxisAngle(new THREE.Vector3().crossVectors(ray, hero).normalize(), angle * g)
+    }
+    return { ...pose, position: body.clone().addScaledVector(ray, Math.sqrt(1 + 1 / (want * want))) }
+  }
+
+  private travelPath(index: number, time: number): Pose {
     const seg = this.plans[index]!.seg.travel!
     const u = (time - seg.start) / (seg.end - seg.start)
     const from = this.toWorld(index, this.leaving(index, time))
@@ -369,6 +449,19 @@ export class FilmDirector implements Director {
     const slide = this.slide[index] ?? 0
     if (slide > 0) position.addScaledVector(this.approach[index + 1]!, slide * shape.pass(u) * shape.settleLeft(x))
     const aim = index === 0 ? this.toWorld(1, this.approachLocal(1, ramp(SUN_APPROACH_START, 1, u), time, shape)).quaternion : to.quaternion
+    if (index > 0 && shape.look.pin[1] > 0) {
+      const b = this.plans[index + 1]!
+      const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
+      const body = this.frames[index + 1]!.origin
+      const quaternion = shape.spin(from.quaternion, hold.quaternion, u)
+      const reach = body.distanceTo(position)
+      const free = body.clone().sub(position).normalize()
+      const hero = body.clone().sub(hold.position).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(quaternion)
+      const angle = free.angleTo(hero)
+      const g = shape.pinned(u)
+      if (g > 0 && angle > 1e-9) free.applyAxisAngle(new THREE.Vector3().crossVectors(free, hero).normalize(), angle * g)
+      return { position: body.clone().addScaledVector(free, -reach), quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
+    }
     return { position, quaternion: shape.turn(from.quaternion, aim, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
   }
 
@@ -493,8 +586,8 @@ export class FilmDirector implements Director {
     let near = 0.01
     let far = 80000
     let dust = 0
+    let farLight: number | undefined
     let dustLook = 0
-    const dustOffset = new THREE.Vector3()
     let light = this.sunFor(0)
     let sunWeight = 1
     let flare = 0
@@ -539,7 +632,6 @@ export class FilmDirector implements Director {
         pose = inSet(s, local)
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
-        dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * smoother(u))
       } else {
         pose = inSet(s, look(time))
         if (segment.kind === 'fade') post.fade = frame >= config.frameCount - 1 ? 0 : 1 - smooth(ramp(segment.start, segment.end - 2 / config.fps, time))
@@ -573,6 +665,7 @@ export class FilmDirector implements Director {
       const leaveWeight = this.leaveWeight(index, u)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
+      if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
       const midTime = (frame + config.shutterFraction * 0.5) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
@@ -594,7 +687,6 @@ export class FilmDirector implements Director {
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
       dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
       dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * dustLook)
-      dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
       const t = this.sky.orbits[b.id]
       if (t) skyTurn = t
@@ -694,7 +786,7 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, dustLook, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

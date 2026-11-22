@@ -182,6 +182,13 @@ uniform vec4 uFieldSide;
 uniform vec2 uDarkEdge;
 uniform vec3 uEnd;
 uniform vec2 uEndCloud;
+uniform vec4 uEndNight;
+uniform vec4 uEndShine;
+uniform vec3 uEndRingN;
+uniform vec4 uEndDusk;
+uniform vec3 uEndBreak;
+uniform vec2 uEndLimb;
+uniform vec2 uEndBoost;
 uniform vec3 uDarkDir;
 uniform vec4 uVeil;
 uniform vec2 uVeilMu;
@@ -324,7 +331,25 @@ void main() {
   for (int k = 0; k < (flatten > 0.0 ? 1 : 0); k++) {
     albedo = mix(albedo, textureLod(uMap, vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5), uNight.w).rgb / uCode, flatten);
   }
-  vec3 deck = albedo * knot(uDeck, ndl) * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
+  float ndd = ndl;
+  float shade = 1.0;
+  float detail = 1.0;
+  for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
+    vec2 muv = vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5);
+    vec4 mid = textureLod(uMap, muv, uEndNight.y);
+    vec3 wide = textureLod(uMap, muv, uEndNight.z).rgb;
+    vec3 lum = vec3(0.2, 0.5, 0.3);
+    float rel = dot(mid.rgb, lum) / max(dot(wide, lum), 1e-4);
+    ndd = ndl + uEnd.x * uEndBreak.x * (rel - 1.0 + uEndBreak.z * mid.a);
+    float dark = uEnd.x * (1.0 - smoothstep(uNight.y, uNight.z, ndd));
+    albedo *= mix(1.0, mix(1.0, rel, uEndNight.x), dark);
+    shade = mix(1.0, (uEndShine.x + uEndShine.y * smoothstep(uEndShine.z, uEndShine.w, dot(n, uEndRingN))) * pow(mu, uEndNight.w), dark);
+    float own = clamp(dot(deckTexel.rgb, lum) / max(dot(wide, lum), 1e-4), 0.4, 1.8);
+    detail = mix(1.0, own, uEnd.x * uEndBreak.y);
+    albedo *= mix(1.0, pow(own, uEndBoost.x), uEnd.x - dark);
+    alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
+  }
+  vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
   float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
@@ -336,10 +361,12 @@ void main() {
   float fwd = pow(max(dot(dir, uSunW), 0.0), uForwardShape.y);
   float graze = exp(-mu / uForwardShape.x);
   col = mix(col, mix(deck * uTint, col, smoothstep(uEndCloud.x, uEndCloud.y, mu)), uEnd.x);
+  col += uEnd.x * uEndDusk.rgb * detail * exp(min(ndd, 0.0) / uEndDusk.w) * (1.0 - smoothstep(0.0, 0.3, ndd));
   col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
   col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
-  col += uForward * graze * fwd * mix(smoothstep(-0.25, 0.1, ndl), smoothstep(uEnd.y, uEnd.z, ndl), uEnd.x);
+  col += uForward * graze * fwd * mix(smoothstep(-0.25, 0.1, ndl), smoothstep(uEnd.y, uEnd.z, ndd) * detail, uEnd.x);
+  col *= 1.0 - uEnd.x * uEndLimb.x * (1.0 - smoothstep(0.0, uEndLimb.y, mu));
   vec4 sky = air(dir, true);
   sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
   col = col * exp(-sky.a * uExtinction) + sky.rgb;
@@ -442,6 +469,13 @@ export class NeptunePlanet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
     this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 0, 0.2) }
     this.material.uniforms.uEndCloud = { value: new THREE.Vector2(0.2, 0.5) }
+    this.material.uniforms.uEndNight = { value: new THREE.Vector4(0, 0, 0, 1) }
+    this.material.uniforms.uEndShine = { value: new THREE.Vector4(1, 0, 0, 1) }
+    this.material.uniforms.uEndRingN = { value: new THREE.Vector3(0, 1, 0) }
+    this.material.uniforms.uEndDusk = { value: new THREE.Vector4(0, 0, 0, 1) }
+    this.material.uniforms.uEndBreak = { value: new THREE.Vector3(0, 0, 0) }
+    this.material.uniforms.uEndLimb = { value: new THREE.Vector2(0, 1) }
+    this.material.uniforms.uEndBoost = { value: new THREE.Vector2(0, 1) }
   }
 
   update(spin: number, stream: number, storm: number, gain: number, weight: number, near = 0, nearGain = 1): void {
@@ -462,10 +496,21 @@ export class NeptunePlanet {
     this.material.dispose()
   }
 
-  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], texels: number, e: Ending['limb']): void {
+  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb']): void {
     const u = this.material.uniforms
     const width = u.uMapWidth!.value as number
-    ;(u.uNight!.value as THREE.Vector4).w = Math.log2(width / texels) + (Math.log2(width / e.night) - Math.log2(width / texels)) * end
+    const texels = night.texels
+    const dim = u.uNight!.value as THREE.Vector4
+    dim.w = Math.log2(width / texels) + (Math.log2(width / e.night) - Math.log2(width / texels)) * end
+    dim.y = night.edge[0] + (e.nightEdge[0]! - night.edge[0]) * end
+    dim.z = night.edge[1] + (e.nightEdge[1]! - night.edge[1]) * end
+    ;(u.uEndNight!.value as THREE.Vector4).set(e.nightDetail, Math.log2(width / e.nightMid), Math.log2(width / e.night), e.nightLimb)
+    ;(u.uEndShine!.value as THREE.Vector4).set(e.shine[0]! * shine, e.shine[1]! * shine, e.shine[2]!, e.shine[3]!)
+    ;(u.uEndRingN!.value as THREE.Vector3).copy(ringLit)
+    ;(u.uEndDusk!.value as THREE.Vector4).set(e.dusk[0]!, e.dusk[1]!, e.dusk[2]!, e.duskWidth)
+    ;(u.uEndBreak!.value as THREE.Vector3).set(e.breakUp, e.detail, e.breakCloud)
+    ;(u.uEndLimb!.value as THREE.Vector2).set(e.limbDark[0]!, e.limbDark[1]!)
+    ;(u.uEndBoost!.value as THREE.Vector2).set(e.deckBoost, e.cloudGain)
     ;(u.uRim!.value as THREE.Vector3).fromArray(limb.rim).multiplyScalar(1 - end)
     ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
     ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))

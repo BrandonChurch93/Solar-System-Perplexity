@@ -45,6 +45,7 @@ uniform vec2 uForward;
 uniform vec3 uEnd;
 uniform vec3 uCamL;
 uniform vec3 uEndShade;
+uniform vec2 uEndCrisp;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
@@ -63,7 +64,8 @@ void main() {
   vec2 gx = vec2(dot(dFdx(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdx(r) / (uRange.y - uRange.x));
   vec2 gy = vec2(dot(dFdy(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdy(r) / (uRange.y - uRange.x));
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
-  vec3 band = textureGrad(uBands, uv, gx, gy).rgb;
+  vec2 fine = mix(vec2(1.0), uEndCrisp, uEnd.x);
+  vec3 band = textureGrad(uBands, uv, gx * fine, gy * fine).rgb;
   band = mix(band, sqrt(band), uEnd.x);
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
   for (int k = 0; k < (uGrainShape.w > 0.0 ? 1 : 0); k++) {
@@ -129,6 +131,7 @@ export class Ring {
     this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 1, 1) }
     this.material.uniforms.uCamL = { value: new THREE.Vector3(0, 0, 1) }
     this.material.uniforms.uEndShade = { value: new THREE.Vector3(0.985, 1.025, 0.006) }
+    this.material.uniforms.uEndCrisp = { value: new THREE.Vector2(1, 1) }
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {
@@ -158,5 +161,6 @@ export class Ring {
     ;(u.uCamL!.value as THREE.Vector3).copy(camera).sub(this.mesh.position).applyQuaternion(this.inverse)
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
     ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
+    ;(u.uEndCrisp!.value as THREE.Vector2).set(e.crisp[0]!, e.crisp[1]!)
   }
 }
