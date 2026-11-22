@@ -1,38 +1,54 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T05:04:38.243Z",
- "head": "ed0365245d077b47abd7424e9edb1807c31fdb8e",
- "note": "item 6 committed (8d48b37) on engine batch 19; hold, dive, terrain finals byte equal to batch 18; repeat and measure running",
+ "pushed": "2026-11-22T05:08:30.602Z",
+ "head": "edba01b9b8b7249f2142004539f28a60186d4c3d",
+ "note": "batch 19 proof run: measure running, item 3 and 4 pages of 4137; repeat check clean",
  "looks": [
   {
-   "time": "2026-11-22T05:04:37.601Z",
-   "file": "20261122050437601-note-d-4436-full-pair.jpg",
-   "source": "../../../../tmp/d-4436-full-pair.jpg",
+   "time": "2026-11-22T05:08:29.583Z",
+   "file": "20261122050829583-note-d-item4-4137.jpg",
+   "source": "../../../../tmp/d-item4-4137.png",
    "kind": "note",
-   "label": "4436 final: batch 18 (top), batch 19 with item 6 (bottom) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
+   "label": "item 4 proof: 4137 final limb and rings at 2x, round 3 left, now right (main 6043658, engine batch 19 7a880ac6, head ed03652)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T05:04:36.856Z",
-   "file": "20261122050436856-note-d-4436-pair2x.jpg",
-   "source": "../../../../tmp/d-4436-pair2x.png",
+   "time": "2026-11-22T05:08:28.456Z",
+   "file": "20261122050828456-note-d-item3-4137.jpg",
+   "source": "../../../../tmp/d-item3-4137.png",
    "kind": "note",
-   "label": "Item 6: judged rise frame 4436 final, disc at 2x: batch 18 without the layer (left), batch 19 with the face detail layer (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
+   "label": "item 3 proof: 4137 final surface at 2x, round 3 left, now right (main 6043658, engine batch 19 7a880ac6, head ed03652)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T05:03:47.269Z",
-   "file": "20261122050347269-still-f04436-16x9-final-full.jpg",
-   "source": "out/work/stills/f04436-16x9-final-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4436, final tier",
+   "time": "2026-11-22T05:08:27.274Z",
+   "file": "20261122050827274-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
    "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
    "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T05:05:39.019Z",
+   "file": "20261122050539019-note-d-item4-4137.jpg",
+   "source": "../../../../tmp/d-item4-4137.png",
+   "kind": "note",
+   "label": "Item 4 proof: 4137 final, limb and rings at 2x, round 3 (left) and now (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T05:05:38.121Z",
+   "file": "20261122050538121-note-d-item3-4137.jpg",
+   "source": "../../../../tmp/d-item3-4137.png",
+   "kind": "note",
+   "label": "Item 3 proof: judged dive frame 4137 final, surface at 2x, round 3 (left) and now (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-22T05:02:29.868Z",
@@ -43,20 +59,6 @@
    "stop": "uranus",
    "segment": "uranus.terrain",
    "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:01:43.147Z",
-   "file": "20261122050143147-still-f04137-16x9-final-full.jpg",
-   "source": "out/work/stills/f04137-16x9-final-full.png",
-   "kind": "still",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -75,14 +77,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:00:07.408Z",
-   "file": "20261122050007408-note-f6c-pair2x.jpg",
-   "source": "../../../../tmp/f6c-pair2x.png",
-   "kind": "note",
-   "label": "Item 6: 4436 final disc at 2x, before (left) and with the face layer (right), dev tree on main 0622510 batch 18",
-   "stop": "uranus"
   },
   {
    "time": "2026-11-22T03:12:46.712Z",
