@@ -1442,3 +1442,12 @@ My reading: the missing dive is open item 52 again (the film opens on the surfac
 - Review frames 470 to 490 every second (`hk3/rv6`, sheet `hk3/c36-rv-470-490.jpg`): change per two frames at 390 px 10.18, 10.29, 10.40, 10.44, 10.51, 10.79, 11.11, 11.54, 12.00, 12.38 (472 to 490): no step between 474 and 482, no px over 250 at 390 px. mirrorcheck clean on 470, 480, 490.
 - MAIL 177, travel over the ground, measured on drafts (Farneback flow, px a frame at 1920): bottom 80 rows 1.64 (0 to 8), 1.80 (30 to 34), 3.09 (60 to 64), 3.14 (84 to 90); rows 520 to 560 (horizon) 0.23, 0.27, 0.60, 0.60. Take 3 does not change the camera path, so it gives no more travel. Said so in CUT34.
 - Frame 90 lower right (R1 severe twice, MAIL 169 and 177: "still yours to answer"): not cured by 16:15. Route named in CUT34: rebuild the terrain plate with the approved layout in that corner (take W-1, `out/work/sun/detail/plate-take-W-1.png`: the approved image sharpened, same layout, cells still long), then the apron tone match and the loops card chain; one commit of its own for CUT35, a take-out of round 11's corner. Start right after the CUT message.
+
+## 15:47 UTC Nov 22: CUT34 sun SENT
+
+- Text in `assets-src/sun/CUT34.md` (as sent). READY 589ee05fdd204b82145b2f3c1c8bdf4ea1101ea6 (holds main 4f4c4f7e). Separable: 7a324607 hook take 3 (plus the `opening.flash.ease` line in 392425b6), 9c0244d4 and 392425b6 the leave (with Mercury's 0547144 hand over law), bdbef6de the limb (without it the head is d8ec4ddf).
+- Differ at the final tier: 60, 247, 360, 495. Main's bytes: 0 and 90 (proved by finals of main's source and of the head). Motion changed: sun.terrain 25 to 84, sun.travel 450 to 500.
+- Extra proof 15:45 (`hk3/dmain2.sh`): drafts 86, 100, 120, 150, 179, 182, 190, 200 of the head are main's bytes.
+- Named as left: frame 90 lower right (R1 severe twice), travel over the ground (MAIL 177), R6 at 0, R3 words on the close image and the hero, the 247 map patch.
+- Promised in the CUT: I start the frame 90 lower right corner as one commit of its own for CUT35 (take W-1 in the corner: the approved layout with crisp lanes), full proof, the Builder takes or leaves it.
+- Ten pictures sent: `hk3/c35-finals-0-30-60-90.jpg`, `c35-strip9.jpg`, `speed-0-90.jpg`, `c36-gap-390.jpg`, `c35-final-60-pair.jpg`, `c36-rv-470-490.jpg`, `c35-final-495-pair.jpg`, `c35-final-495-limb-x3.jpg`, `c36-final-360-limb-x3.jpg`, `c36-final-360-247-pairs.jpg`.
