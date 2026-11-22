@@ -13,9 +13,10 @@ CORE = (2816, 1584)
 FOOT = 0.8
 QUANT = [30, 50, 70, 85, 92, 96, 98, 99, 99.5, 99.8, 99.9, 99.95, 99.99]
 LIMIT = (0.4, 1.1)
+RING = (1.1, 1.25)
 LUMA = np.array([0.299, 0.587, 0.114], np.float32)
 VIEWS = {
-    'hold': dict(file='sky-hold.webp', ref='references/approved/venus-hero.png', over=120),
+    'hold': dict(file='sky-hold.webp', ref='references/approved/venus-hero.png', over=120, disc=(1481, 787, 670)),
     'terrain': dict(file='sky-terrain.webp', ref='references/approved/venus-close.jpg', over=100),
 }
 
@@ -83,6 +84,9 @@ def build(view):
     out_y = np.maximum(np.maximum(y0 - yy, yy - (y0 + CORE[1] - 1)), 0) / max(y0, 1)
     fade = v.get('fade', state().get('fade', 0.5))
     weight = 1 - smooth(0, fade, np.maximum(out_x, out_y))
+    if 'disc' in v:
+        cx, cy, r = v['disc']
+        weight = weight * smooth(RING[0] * r, RING[1] * r, np.hypot(xx - x0 - cx, yy - y0 - cy))
     gain = 1 + (gain - 1) * weight
     lin = unfilm(to_linear(src.astype(np.float32) / 255)) * gain[..., None]
     res = (to_srgb(film(lin)) * 255 + 0.5).astype(np.uint8)
