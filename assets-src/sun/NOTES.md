@@ -1,5 +1,8 @@
 # Sun stop notes
 
+On branch `agent/sun-hook` this file is the copy from main. The hook surge is noted in `HOOK-NOTES.md` next to it;
+the polish notebook (mail 34 list) lives on branch `agent/sun`.
+
 Lab notebook of the agent that builds the `sun` stop. Branch `agent/sun`, looks on `agent/sun-looks`.
 
 ## Standing facts
