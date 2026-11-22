@@ -1,6 +1,6 @@
 # The Sun in the travels (round 31, D6)
 
-Made by `npx tsx assets-src/travel/turn.ts sun` and `npx tsx assets-src/travel/sunarc.ts` on the path of this commit. Every stop's world is placed so that its own Sun direction lies on the one world direction `sunWorld`, so the leaving stop's Sun and the arriving stop's Sun are the same direction in every travel frame and the table has one angle column. Radius and glare are the values the frame is drawn with (mixed from the leaving stop's to the arriving stop's over 0.25 to 0.8 of the travel); the heading of each block gives both stops' own values. Half field of view: 15.0 vertical, 25.5 horizontal, 28.7 to the corner, the same in every frame.
+Made by `npx tsx assets-src/travel/turn.ts sun` and `npx tsx assets-src/travel/sunarc.ts` on the path of this commit. Every stop's world is placed so that its own Sun direction lies on the one world direction `sunWorld`, so the leaving stop's Sun and the arriving stop's Sun are the same direction in every travel frame and the table has one angle column. Radius and glare are the values the frame is drawn with; the heading of each block gives both stops' own values. Half field of view: 15.0 vertical, 25.5 horizontal, 28.7 to the corner, the same in every frame.
 
 ## Per travel
 
