@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -187,7 +187,7 @@ export class FilmDirector implements Director {
     const lb = config.segments.find((x) => x.kind === 'lookback')!
     const rest = (at: number): number => {
       const x = Math.min(Math.max((at - lb.start) / LOOKBACK.settle, 0), 1)
-      return Math.min(at - lb.start, 0) + LOOKBACK.settle * (x - x * x * x + (x * x * x * x) / 2)
+      return Math.min(at - lb.start, 0) + (LOOKBACK.settle * (1 - (1 - x) * (1 - x) * (1 - x))) / 3
     }
     const rad = THREE.MathUtils.degToRad
     const mid = (lb.start + lb.end) / 2
