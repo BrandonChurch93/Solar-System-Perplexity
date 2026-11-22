@@ -1177,3 +1177,12 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - Onset on drafts (first variant, `pb/i/v-onset-2.png`): 1686 faint short rays, 1692 to 1704 rays grow and brighten, 1710 nearly full, 1716 full.
 - Files changed: `src/stops/earth/{set.ts, aurora.ts, globe.ts, look.ts}`. No asset changed.
 - 06:54 queue `out/work/earth/pb/q10.sh` (log `pb/j/q.log`): build, audit, G12, G15, vitest, G11; compares hold and terrain at final (bytes of 1755 and 2010 against da369901 and 6abe0501); the after strip 1666 to 1679 (review, preview format, `pb/j/c-F.png`); the onset 1680 to 1720 every fourth frame (review, full format, `pb/j/o-F.png`); hold sheet; finals 1857 and 2156 (b87e7ec9, fcde160f); repeat with 1670 and 1696 added; measure. About 70 min.
+
+### Queue `q10.sh`: gates and the first byte checks with the cure (06:54 to 07:00 UTC)
+
+- Tree: c457e9c plus the four changed files (not yet committed), main 89715a1, engine hash 7553966a0ffa4014, **earth stop hash now d2fd0232a75ba588** (was 190ce8a4e763f64f).
+- Build passes; `python3 tools/shaderaudit.py . src/stops/earth`: no line in my folder; PASS G12; PASS G15 earth/web 353 MB, earth/full 1391 MB; vitest 79 of 79; PASS G11.
+- Harness compares at the final tier (`pb/j/cmp-hold.jpg`, `cmp-terrain.jpg`); their stills: **1755 da369901, 2010 6abe0501: byte for byte the stills before the cure**, with the new globe shader source. 1857 and 2156 follow at the end of the queue.
+- 06:57 low priority note to the Builder: READY 2 at about 08:15 UTC, with the cause and the cure in short.
+- 06:56 looks pushed (4f493533): the before strips of main and of the branch, the 1679 draft with the cure beside 1722, the first onset drafts.
+- `out/work/earth/pb/ba.py frames|limb` builds the before and after strips (rows: main kept Earth `pb/h/b-F.png`, branch before `pb/h/a-F.png`, branch with the cure `pb/j/c-F.png`) into `pb/j/v-arrival-*.png`.
