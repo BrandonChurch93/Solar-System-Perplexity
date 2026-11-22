@@ -140,6 +140,69 @@ def ratio_map(p, line_ratio):
     print("ratio median", np.median(ratio[known], axis=0).round(3), "p5", np.percentile(ratio[known], 5).round(3), "p95", np.percentile(ratio[known], 95).round(3))
 
 
+SECTOR = (2.0, 92.0)
+TINT = (0.2, 1.0, 0.25)
+OVER = 1.08
+ENDS = (0.58, 0.64)
+FAINT = (0.004, 0.03)
+GONE = 0.44
+
+
+def under(out=None):
+    look = json.loads((OUT / "air.json").read_text())
+    hero, fill, h, at, pa, keep = fields()
+    tint = np.asarray(TINT)
+    extra = np.maximum(hero[..., 1] - OVER * np.maximum(hero[..., 0], hero[..., 2]), 0) / (1 - OVER * tint[2])
+    hero = hero - (extra * ((pa >= SECTOR[0]) & (pa < SECTOR[1]) & (np.abs(h) < 0.05)))[..., None] * tint
+    dirv, lo = np.asarray(look["dir"]), look["dayFrom"]
+    ratio = []
+    for a0 in range(0, 360, 4):
+        sect = (pa >= a0) & (pa < a0 + 4)
+        prof = []
+        for r0 in np.arange(-0.012, 0.0081, 0.00075):
+            m = sect & (h >= r0) & (h < r0 + 0.00075)
+            prof.append((r0 + 0.000375, *np.median(hero[m], axis=0), *at[m].mean(0)) if m.sum() > 8 else (r0, 0, 0, 0, 0, 0, 1))
+        prof = np.array(prof)
+        k = (prof[:, 0] > -0.005) & (prof[:, 0] < 0.002)
+        i = np.flatnonzero(k)[np.argmax(prof[k, 2])]
+        inner = prof[(prof[:, 0] > -0.011) & (prof[:, 0] < -0.006), 2].mean()
+        outer = prof[(prof[:, 0] > 0.0035) & (prof[:, 0] < 0.006), 2].mean()
+        x = float(day_factor(prof[i, 4:7], dirv, lo))
+        want = look["line"][1] * x ** look["linePower"]
+        ratio.append((a0 + 2, x, np.clip(max(prof[i, 2] - 0.5 * (inner + outer), 0) / max(want, 1e-6), FAINT[1], 3.0) if want > FAINT[0] else 1.0))
+    ratio = np.array(ratio)
+    lg = np.log(ratio[:, 2])
+    lg = 0.25 * np.roll(lg, 1) + 0.5 * lg + 0.25 * np.roll(lg, -1)
+    path = geo.ROOT / "public" / "assets" / "earth" / "full" / "air-glow.png"
+    img = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+    cols = (np.arange(MAP_W) + 0.5) * 360 / MAP_W
+    was = img[0, :, 3].astype(np.float64) / 255 * 4
+    now = np.interp(cols, ratio[:, 0], np.exp(lg), period=360)
+    lit = np.interp(cols, ratio[:, 0], ratio[:, 1], period=360)
+    now = np.where(lit < GONE, np.minimum(now, 1.0), now)
+    night = 1 - geo.smooth(ENDS[0], ENDS[1], lit)
+    alpha = was * (1 - night) + now * night
+    img[:MAP_H, :, 3] = np.clip(alpha / 4 * 255 + 0.5, 0, 255).astype(np.uint8)[None, :]
+    ic = np.floor((np.degrees(np.arctan2(at @ geo.CAM.R[:, 0], at @ geo.CAM.R[:, 1])) % 360) / 360 * MAP_W).astype(int) % MAP_W
+    band = (h > RIM_BAND[0]) & (h < RIM_BAND[1])
+    rim = np.zeros((MAP_W, 3))
+    for c in range(MAP_W):
+        rim[c] = np.median(hero[band & (ic == c)], axis=0)
+    inside = (cols >= SECTOR[0]) & (cols < SECTOR[1])
+    calm = np.median(np.stack([np.roll(rim, 1, 0), rim, np.roll(rim, -1, 0)]), axis=0)
+    rim = np.where(inside[:, None], calm, rim)
+    pad = np.concatenate([rim[-8:], rim, rim[:8]], 0)
+    rim = cv2.GaussianBlur(pad[None].astype(np.float64), (0, 0), sigmaX=1.2, sigmaY=0.01)[0, 8:-8]
+    row = np.clip(np.sqrt(np.clip(rim / 4, 0, 1)) * 255 + 0.5, 0, 255).astype(np.uint8)
+    old_row = img[MAP_H, :, [2, 1, 0]].T.copy()
+    img[MAP_H:, :, 2], img[MAP_H:, :, 1], img[MAP_H:, :, 0] = row[None, :, 0], row[None, :, 1], row[None, :, 2]
+    for key in ("full", "web"):
+        cv2.imwrite(str((out / (key + "-air-glow.png")) if out else (geo.ROOT / "public" / "assets" / "earth" / key / "air-glow.png")), img)
+    print("line share, was and now, and rim (code values, was and now) every 8 deg")
+    for c in range(1, MAP_W, 4):
+        print(f"  pa {cols[c]:5.0f} x {np.interp(cols[c], ratio[:, 0], ratio[:, 1], period=360):.2f} line {was[c]:.2f} {alpha[c]:.2f} rim {old_row[c]} {row[c]}")
+
+
 def day_factor(AT, dirv, lo):
     return np.clip((AT @ dirv - lo) / (1 - lo), 0, 1)
 
@@ -237,4 +300,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--under" in sys.argv:
+        from pathlib import Path
+
+        under(Path(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv else None)
+    else:
+        main()
