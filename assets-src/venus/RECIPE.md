@@ -81,6 +81,7 @@ Checks, take h3 (the 2048 map, same zones; it had the dark cracks under the ligh
 
 Checks, take b5 (kept):
 - nograin: 1.92, 0.65, 0.26, 2.94, 2.41.
+- with grain, as judged (still f2, commit 830a506): 2.29, 1.28, 0.95, 3.17, 2.68. Round 23 build: 4.80, 8.53, 5.95, 5.14, 2.73.
 - High pass luma against the hero: correlation 0.997 to 0.999 in four boxes, 0.845 in the bottom box, which holds the lightning region (there the cloud under the strokes is the wrap's, as in round 23; mean difference from the hero in that region 2.43 levels, round 23 build 7.92).
 - Hold frames 1150 and 1230, final tier: no dark lines under the strokes (`view/b5-bolts.png`).
 - Radial profile across the limb at eight azimuths within 3 levels of the hero except the one pixel on the silhouette at the top (177 against 163) and at -45 deg, 1.006 radii (56 against 67).
