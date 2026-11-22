@@ -1,9 +1,123 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T02:56:02.461Z",
- "head": "86c80d74382d0682783ca9bfd1d213dc4f89ca33",
- "note": "Phase B (items 4, 5, 7, 8) final stills and proofs, code not yet committed; tree holds main 88a6a7e (engine batch 17, 3d48581)",
+ "pushed": "2026-11-22T03:20:44.585Z",
+ "head": "40f2b71402b833966125bbe0511ec8bccd2a108f",
+ "note": "Earth: engine batch 18 merged, discards moved behind the last statement, city lights map being softened (item 8); full proof queue restarts after this",
  "looks": [
+  {
+   "time": "2026-11-22T03:20:43.906Z",
+   "file": "20261122032043906-note-knot-1755.jpg",
+   "source": "out/work/earth/pb/d/knot-1755.png",
+   "kind": "note",
+   "label": "Earth 1755 night limb knot at PA 83 to 88 at 4 times: approved, Phase B, kept build (main a1cffed, engine batch 17)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:20:43.286Z",
+   "file": "20261122032043286-note-city-1755.jpg",
+   "source": "out/work/earth/pb/l1/city-1755.png",
+   "kind": "note",
+   "label": "Earth 1755 city lights at 4 times: approved, first try of the softer lights map, before (work in progress; tree holds main 0622510, engine batch 18)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:19:06.189Z",
+   "file": "20261122031906189-frame-f-1755-final.jpg",
+   "source": "out/work/earth/pb/l2/f-1755-final.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:07:21.964Z",
+   "file": "20261122030721964-frame-f-2010-final.jpg",
+   "source": "out/work/earth/pb/d/f-2010-final.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T03:01:33.491Z",
+   "file": "20261122030133491-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T02:59:17.132Z",
+   "file": "20261122025917132-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:59:16.148Z",
+   "file": "20261122025916148-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:58:17.483Z",
+   "file": "20261122025817483-compare-compare-earth-hold-view.jpg",
+   "source": "out/work/compare/compare-earth-hold-view.jpg",
+   "kind": "compare",
+   "label": "earth.hold: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:58:16.373Z",
+   "file": "20261122025816373-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:55:57.641Z",
    "file": "20261122025557641-note-t-1857.jpg",
@@ -59,20 +173,6 @@
    "kind": "note",
    "label": "Earth item 7, Moon at 1755 x4: hero, kept, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:53.861Z",
-   "file": "20261122025553861-frame-r-1720.jpg",
-   "source": "out/work/earth/pb/hold/r-1720.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1720, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1720,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-22T02:55:53.206Z",
@@ -143,88 +243,11 @@
    "engine": "1e61fa4049d34863"
   },
   {
-   "time": "2026-11-22T02:44:27.494Z",
-   "file": "20261122024427494-frame-f-2010-final.jpg",
-   "source": "out/work/earth/pb/fin/f-2010-final.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
    "time": "2026-11-22T02:33:34.330Z",
    "file": "20261122023334330-note-limb70.jpg",
    "source": "out/work/earth/pb/r1/limb70.png",
    "kind": "note",
    "label": "Earth 1755 limb at PA 60 to 80, x4 at gain 3: approved hero, Phase B in work, kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:33:33.731Z",
-   "file": "20261122023333731-note-aurA.jpg",
-   "source": "out/work/earth/pb/r1/aurA.png",
-   "kind": "note",
-   "label": "Earth 1755 aurora, x2: approved hero, Phase B in work (aurora inside the air shell), kept build",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:33:33.019Z",
-   "file": "20261122023333019-note-night-1755.jpg",
-   "source": "out/work/earth/pb/r2/night-1755.png",
-   "kind": "note",
-   "label": "Earth 1755 night limb at PA 95, 125, 150, native x3 and gain 3: approved hero, kept build, Phase B in work (main 3d48581)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:09:00.436Z",
-   "file": "20261122020900436-sheet-earth.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/earth.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.terrain, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "first": 1920,
-   "last": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:07:41.947Z",
-   "file": "20261122020741947-note-sheet-rise-2122-2140.jpg",
-   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
-   "kind": "note",
-   "label": "item 2 proof: rise, every frame 2122 to 2140, review tier, preview format, version c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:07:41.143Z",
-   "file": "20261122020741143-note-sheet-dive-1884-1892.jpg",
-   "source": "out/work/earth/p6/sheet-dive-1884-1892.jpg",
-   "kind": "note",
-   "label": "item 3 proof: dive cover, every frame 1884 to 1892, review tier, preview format, version c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:07:40.318Z",
-   "file": "20261122020740318-note-sheet-dive-1868-1884.jpg",
-   "source": "out/work/earth/p6/sheet-dive-1868-1884.jpg",
-   "kind": "note",
-   "label": "item 1 proof: dive, every frame 1868 to 1884, review tier, preview format, version c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:07:39.241Z",
-   "file": "20261122020739241-note-f-1755-final.jpg",
-   "source": "out/work/earth/p6/qa/f-1755-final.png",
-   "kind": "note",
-   "label": "final 1755 on version c: byte equal to the kept build",
    "stop": "earth"
   }
  ]
