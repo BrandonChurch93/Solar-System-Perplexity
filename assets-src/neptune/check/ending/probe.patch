@@ -1,0 +1,24 @@
+diff --git a/src/director/film.ts b/src/director/film.ts
+index 6e4fb8c..52f7ca6 100644
+--- a/src/director/film.ts
++++ b/src/director/film.ts
+@@ -26,6 +26,7 @@ const SUN_PULL_FROM = 0.2
+ const SUN_PULL_END = 0.42
+ const SUN_APPROACH_START = 0.42
+ const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
++const PROBE: number[][] = [[90, 5.6, 0], [120, 5.6, 0], [150, 5.6, 0], [165, 5.6, 0], [172, 5.6, 0], [60, 5.6, 0], [136, 5.6, 0], [150, 9, 0]]
+ const OFFSET_FROM = 0.15
+ const BOW_REACH = 24
+ const SUN_SWAP: [number, number] = [0.3, 0.42]
+@@ -167,6 +168,11 @@ export class FilmDirector implements Director {
+     const s = t - (lb.start + lb.end) / 2
+     const rad = THREE.MathUtils.degToRad
+     const up = this.lookbackUp
++    const probe = Math.floor((t - lb.start) * config.fps / 10 + 1e-6)
++    if (probe >= 0 && probe < PROBE.length) {
++      const at = this.lookbackSun.clone().applyAxisAngle(up, rad(180 - PROBE[probe]![0]!)).multiplyScalar(-PROBE[probe]![1]!)
++      return { position: at, quaternion: lookAt(at, new THREE.Vector3(), up, PROBE[probe]![2]!), vfov: LOOKBACK.vfov }
++    }
+     const position = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.neptuneDeg + LOOKBACK.neptunePerSecond * s)).multiplyScalar(-LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s))
+     const flat = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.aimDeg + LOOKBACK.aimPerSecond * s))
+     const aim = flat.clone().applyAxisAngle(new THREE.Vector3().crossVectors(flat, up).normalize(), rad(LOOKBACK.liftDeg))

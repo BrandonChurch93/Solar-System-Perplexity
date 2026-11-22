@@ -6,6 +6,7 @@ import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { close, farMap, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
+import { ending as endLook } from './ending'
 import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
@@ -126,6 +127,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      const end = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * endLook.blend) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
@@ -177,6 +179,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (staged) moonSun.lerp(shot.sun.dir, look.triton.rise.sun).normalize()
       triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(moonSun).normalize(), gain * state.weight)
       ring.update(light, state.rotation, THREE.MathUtils.degToRad(look.ring.degPerSecond) * elapsed, home, gain * state.weight)
+      air.ending(end, Math.sin(Math.PI - camera.angleTo(light) - Math.asin(Math.min(1 / camera.length(), 1))), endLook.air)
+      planet.ending(end, look.limb, look.cloud, look.deck, look.night.texels, endLook.limb)
+      ring.ending(end, camera, endLook.ring)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
