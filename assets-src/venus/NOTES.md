@@ -1396,3 +1396,23 @@ All with dusk in the working tree over round 34's code, render copy on main 9d20
 - Rise cover sheet at review with dusk, `view/d3-rc.png` (main 9d20d3dd), against round 34's `view/c26-rc.png` (`cellcmp.py`, 12 cells of 456 by 256): cells 1555 to 1563 are the same pixels (0 changed). 1564: 28 pixels, 1 level. 1565: 197, 1 level. 1566: 1,011 pixels, 79 of them over 1 level, largest 3. Read frame by frame: it is round 34's sheet.
 - Main moved to 9e0a31e2 (Neptune's ring, Earth's trim, status) and then to 70d5cb90 (scorecards only). Merged 9e0a31e2 as d1763adc (`--no-ff`); 70d5cb90 is merged before the next report. Neither touches a Venus folder. PROGRESS at 19:12 UTC: the Builder renders Venus's sheets and measures on round 35's build itself ("Their folders did not change, so round 35's critics are not asked about them"), and at 19:38 UTC: "The measures of Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn and Uranus are green on this build (G5, G13, G17)".
 - q47 runs (`/tmp/q47.log`): 22 draft frames outside the rise (arrival 1072 and 1100, hold, dive, both sides of the dive cover, terrain, the terrain side of the rise, 1640 and 1660 after Venus has left) with dusk and with main's code, a `cmp` each. Expected: the same bytes everywhere, since dusk is 0 until the middle of the terrain view.
+
+## State at 20:12 (22 Nov): dusk is measured whole and put away as a patch; the branch equals main; waiting for mail (read this first after a compaction)
+
+- q47: 22 draft frames outside the rise, dusk against main's code on main 9d20d3dd: 1072, 1100, 1110, 1150, 1259, 1262, 1280, 1300, 1310, 1313, 1314, 1320, 1340, 1400, 1500, 1529, 1530, 1540, 1550, 1557, 1640, 1660 are each the same bytes. With 1558 to 1562 and 1626 to 1632 from q45 that is 31 frames outside 1563 to 1624 with the same bytes. Dusk moves the rise's orbit side and the first 20 frames of `venus.travel`, nothing else.
+- The working tree is clean again: the four files went back to the head with `git checkout --` after a `cmp` showed the working diff and `assets-src/venus/fit/dusk.patch` to be the same bytes. The patch applies clean to the head (`git apply --check`). 4 files, 13 lines added, 3 removed. The render copy r2 holds the head's folders again (main 9d20d3dd under them).
+- Merge 62f4994a holds main 3f8d424a (scorecards and status only). I had written 70d5cb90 into the merge's message while main moved under the fetch; the commit was not pushed yet, so I set the message right with `--amend` before the push. No force was needed and none was used.
+- Branch state: `agent/venus` 62f4994a plus this note. `git diff --name-only origin/main HEAD` is `assets-src/venus/NOTES.md` and `assets-src/venus/fit/dusk.patch`. `src/stops/venus` and `public/assets/venus` are main's bytes, round 34's folders.
+- `agent/venus-dusk` (b0f208d7) is untouched. It sits on the cure's base, which is refused, so if dusk is ever wanted the patch is the thing to take, not that branch. Still the Builder's call whether I delete it.
+
+The whole record of dusk, in one place (rendered on main 9d20d3dd, beside main's own Venus folders):
+
+1. Finals: 1185, 1287, 1440 the same bytes. 1586: 676,360 of 2,073,600 pixels change, largest 184 levels, mean level 31.23 to 29.12 (`d2f-1586.png` beside `m35-1586.png`).
+2. Draft, 48 frames 1558 to 1632: first change at 1563 (2 pixels, 1 level), grows with the picture, largest one frame step of the mean difference 0.69 levels (1573 to 1574), last change at 1624.
+3. Review, 15 pairs 1563 to 1622: read, no step, line or new edge.
+4. Rise cover sheet at review: 9 of 12 cells are round 34's pixels; 1564, 1565, 1566 change by at most 1, 1, 3 levels.
+5. G13 PASS 0 of 433. G5 PASS 0.316, 0.446, 0.685, 0.245. Repeat 1575, 1586, 1600: one hash each. Audit exit 0. Vitest 87 of 87. tsc exit 0.
+6. What it answers: the first two majors of round 34's surface critic on 1586 (the halo round the unlit limb, the doubled edge lower right). What it does not: the clouds read as paint, the smeared night side, the clipped lit limb, the stars, the far Venus at 1072.
+7. What I do not know: how a critic reads the unlit limb without any glow. It is now a dark edge that goes into black, with stars right beside it.
+
+Next: nothing of mine is in round 35 and nothing new goes into the frozen build (PROGRESS 18:26 UTC). I wait for the Builder's mail. On a mail: write it into this file word for word first, merge main if it moved, then do what it says. Do not start new cures on my own; do not touch `agent/venus-dusk`.
