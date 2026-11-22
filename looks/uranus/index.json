@@ -1,96 +1,90 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T03:04:06.365Z",
- "head": "af6eea2f94703d83c62bc4900b0eee2d92e44606",
- "note": "Uranus polish: proofs rendering on main 3d48581 (batch 17), items 1 to 5 frozen at 68c551e",
+ "pushed": "2026-11-22T03:24:16.836Z",
+ "head": "19b03e1c65a7a414311de56052ae819a6a8a041c",
+ "note": "Uranus polish: batch 18 merged (main 0622510), discard rule applied with no frame changed, measure and proofs rendering again",
  "looks": [
   {
-   "time": "2026-11-22T02:48:41.487Z",
-   "file": "20261122024841487-job-frame-04287.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.terrain frame 4287, draft tier, texels view, from the running measure job",
+   "time": "2026-11-22T03:24:15.930Z",
+   "file": "20261122032415930-note-pair-4137.jpg",
+   "source": "../../../../tmp/pair-4137.png",
+   "kind": "note",
+   "label": "4137 final: left before the batch 17 merge, right merged (main 3d48581; same bytes on main 0622510)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T03:24:15.059Z",
+   "file": "20261122032415059-note-t5-proof-R.jpg",
+   "source": "../../../../tmp/t5-proof-R.png",
+   "kind": "note",
+   "label": "Item 5 proof R, 4290 final at native size: round 3 left, new right (rendered on main 3d48581, same bytes on main 0622510)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T03:24:14.259Z",
+   "file": "20261122032414259-note-t5-proof-M.jpg",
+   "source": "../../../../tmp/t5-proof-M.png",
+   "kind": "note",
+   "label": "Item 5 proof M, 4290 final at native size: round 3 left, new right (rendered on main 3d48581, same bytes on main 0622510)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T03:24:13.485Z",
+   "file": "20261122032413485-note-t5-proof-L.jpg",
+   "source": "../../../../tmp/t5-proof-L.png",
+   "kind": "note",
+   "label": "Item 5 proof L, 4290 final at native size: round 3 left, new right (rendered on main 3d48581, same bytes on main 0622510)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T03:24:12.518Z",
+   "file": "20261122032412518-note-pair18-4436.jpg",
+   "source": "../../../../tmp/pair18-4436.png",
+   "kind": "note",
+   "label": "4436 final: left before the batch 17 merge, right on main 0622510 (batch 18, rise lift 0.74), head 19b03e1",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T03:21:55.550Z",
+   "file": "20261122032155550-still-f04290-16x9-final-full.jpg",
+   "source": "out/work/stills/f04290-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.terrain frame 4290, final tier",
    "stop": "uranus",
    "segment": "uranus.terrain",
-   "frame": 4287,
-   "tier": "draft",
+   "frame": 4290,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
   },
   {
-   "time": "2026-11-22T02:40:05.495Z",
-   "file": "20261122024005495-note-t5h-sheet.jpg",
-   "source": "../../../../tmp/t5h-sheet.png",
-   "kind": "note",
-   "label": "uranus item 5: drafts 4172 to 4400 with plate detail and near shell",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T02:40:04.610Z",
-   "file": "20261122024004610-note-t5k-br2x.jpg",
-   "source": "../../../../tmp/t5k-br2x.png",
-   "kind": "note",
-   "label": "uranus item 5: 4290 review, lower right at 2 times native",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T02:40:03.871Z",
-   "file": "20261122024003871-note-t5k-bl2x.jpg",
-   "source": "../../../../tmp/t5k-bl2x.png",
-   "kind": "note",
-   "label": "uranus item 5: 4290 review, lower left at 2 times native: cell fields and streaks of the near shell in the dark",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T02:40:02.748Z",
-   "file": "20261122024002748-note-u5-4290-review-dev.jpg",
-   "source": "../../../../tmp/u5-4290-review-dev.png",
-   "kind": "note",
-   "label": "uranus item 5: 4290 at review with plate detail and the near cloud shell (dev tree on main 968cd65 base, before the batch 17 merge)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T02:38:39.693Z",
-   "file": "20261122023839693-job-frame-03960.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "time": "2026-11-22T03:19:49.827Z",
+   "file": "20261122031949827-still-f04035-16x9-final-full.jpg",
+   "source": "out/work/stills/f04035-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.hold frame 4035, final tier",
    "stop": "uranus",
    "segment": "uranus.hold",
-   "frame": 3960,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T02:20:55.651Z",
-   "file": "20261122022055651-still-f04414-16x9-review-full.jpg",
-   "source": "out/work/stills/f04414-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4414, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4414,
-   "tier": "review",
+   "frame": 4035,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "engine": "7cd5ba493f97ac9f"
   },
   {
-   "time": "2026-11-22T02:16:04.400Z",
-   "file": "20261122021604400-still-f04413-16x9-review-full.jpg",
-   "source": "out/work/stills/f04413-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4413, review tier",
+   "time": "2026-11-22T03:12:46.712Z",
+   "file": "20261122031246712-compare-compare-uranus-terrain-view.jpg",
+   "source": "out/work/compare/compare-uranus-terrain-view.jpg",
+   "kind": "compare",
+   "label": "uranus.terrain: approved image left, film frame right, final tier",
    "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4413,
-   "tier": "review",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "engine": "1e61fa4049d34863"
   }
  ]
 }
