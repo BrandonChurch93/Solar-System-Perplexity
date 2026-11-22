@@ -1270,3 +1270,14 @@ Head 8d0d8f52 (merge of main b22a7927) plus this note; the cure is 90cc5b23, the
 - Review frames outside the cover sheets, round 34 code beside the cure (`view/h6-pairs.jpg`, `view/h6-big.jpg`): 1321 changed in 343,689 of 518,400 pixels (max 89, mean 5.35), 1323 (max 87, mean 4.44), 1551 (max 142, mean 2.82), 1553 (max 122, mean 4.07). Mean level 81.0 to 79.5, 76.1 to 74.9, 82.2 to 81.9, 85.7 to 85.2. Read: the deck's clouds are smeared straight down the frame under the veil's streaks, clean, no stepped copies at the size of the frame; the horizon and the Sun keep their edge; round 34 shows the crisp terrain picture under the same streaks.
 - Cost: the four cure frames took 172 s with the build, round 34's four took 99 s. So the 24 frames of the two gates render about 1.6 times slower; nothing else changes.
 - Still running: G11, G12, G15, the repeat on six frames, G5 and G17.
+
+## State at 18:04 (22 Nov): proof of the gate cure is whole (q42 done); CUT35 message goes out now (read this first after a compaction)
+
+The cure is 90cc5b23, the only change over round 34's folders. All of this with the cure on main ff158d90 (same code as round 34's build 89ced51b and as main b22a7927 and 55319c5a, which add scorecards, progress and status stills only):
+
+- G13 PASS 0 of 433. G5 PASS: 1185 0.316, 1287 0.446, 1440 0.685, 1586 0.245 (round 34's numbers). G17 PASS: 1185 median 0.959 (p25 0.844, 77 tiles), 1440 median 0.936 (p25 0.804, 76 tiles).
+- Shader audit clean. Vitest 87 of 87. G11, G12, G15 pass (venus full 1002 MB, web 253 MB).
+- Repeat, six frames, three sessions, two runs: one hash each. 1185 1cb37f56f94478ec, 1287 267438642d6a031c, 1440 dca2f98d69a0cded (as in CUT34), 1586 c901e3c4b3aae6c3 (was 77f333178b7f48e1 on the old engine: main's sky), 1320 fb21f024b1548f0f, 1553 cd1daf0af8132f5b.
+- The message text is kept at `/home/user/workspace/cut35.txt` on the VM and summed up in the next section once sent.
+
+After the message: do not stop. Next is the night limb of the far rows of `limb.bin` (1586: halo round the night side, doubled edge lower right), as a pair for the Builder, kept out of the branch head until asked for; then the far Venus of the arrival (1072).
