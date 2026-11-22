@@ -1,9 +1,39 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T08:13:58.729Z",
- "head": "9c494180a817a102afd4b986226b092dd6c46b1c",
- "note": "sun: item 6 (streamers outside the approved frame) committed; item 5b (finer cells toward the limb) on trial, take 2 beside the approved hero",
+ "pushed": "2026-11-22T08:38:24.593Z",
+ "head": "8eaae3bb420ea65a80c80f8e3e1b86030000260d",
+ "note": "sun polish item 7: feet bloom and the loops grade at frame 90, trials; main 07aabf5, agent/sun 8eaae3b",
  "looks": [
+  {
+   "time": "2026-11-22T08:38:24.010Z",
+   "file": "20261122083824010-note-c1-f90-right-foot-zoom3.jpg",
+   "source": "out/work/sun/feet/c1-f90-right-foot-zoom3.jpg",
+   "kind": "note",
+   "label": "sun polish item 7a trial 1, right loop foot at frame 90, draft, 3 times zoom: approved, before, after, main 07aabf5, agent/sun 8eaae3b plus uncommitted work",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:38:23.329Z",
+   "file": "20261122083823329-note-c1-f90-left-foot-zoom3.jpg",
+   "source": "out/work/sun/feet/c1-f90-left-foot-zoom3.jpg",
+   "kind": "note",
+   "label": "sun polish item 7a trial 1, left loop foot at frame 90, draft, 3 times zoom: approved, before, after (gain cut 0.8 in the foot zone, veil in the loops card), main 07aabf5, agent/sun 8eaae3b plus uncommitted work",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:30:16.544Z",
+   "file": "20261122083016544-frame-base90-still.jpg",
+   "source": "out/work/sun/feet/c1/base90-still.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T08:13:57.573Z",
    "file": "20261122081357573-note-f236-approved-before-after-r2.jpg",
@@ -107,36 +137,6 @@
    "kind": "note",
    "label": "Mail 81, frame 495 final tier, lower limb at 3 times with levels stretched: the pale band inside the limb. main 2b50ee2, agent/sun-hook 739ae28",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:12:42.757Z",
-   "file": "20261122071242757-note-arc495-who-draws-it-main-2b50ee2.jpg",
-   "source": "out/work/sun/arc/arc495-who-draws-it-main-2b50ee2.jpg",
-   "kind": "note",
-   "label": "Mail 81, frame 495 of sun.travel: with the whole Sun body of the sun set hidden the frame is byte equal, so the pale arc is not the sun globe (it is the sky disc plus Mercury's sun plate). main 2b50ee2, agent/sun-hook 739ae28",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:42.416Z",
-   "file": "20261122065042416-note-hook-native-arch-f00045.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00045.jpg",
-   "kind": "note",
-   "label": "Hook surge, frame 45, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T04:03:59.630Z",
-   "file": "20261122040359630-frame-base90-item4c.jpg",
-   "source": "out/work/sun/base90-item4c.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
   }
  ]
 }
