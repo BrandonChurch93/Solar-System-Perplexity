@@ -1,9 +1,76 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T06:01:04.011Z",
- "head": "4bfe0c9d0a62a5be8da845b746f0d37cff07b89f",
- "note": "Jupiter: dive cover sheet of the READY tree a06d2ae (main 2621f00) rendering, frames 3019 to 3024 looked at",
+ "pushed": "2026-11-22T06:33:13.055Z",
+ "head": "7cc958e3e504a42e38e486821992405998dc8d78",
+ "note": "Jupiter: dive cover sheet of the READY tree a06d2ae (main 2621f00) done and looked at; rise cover sheet rendering, 3265 to 3270 looked at",
  "looks": [
+  {
+   "time": "2026-11-22T06:33:12.163Z",
+   "file": "20261122063312163-note-r3269_70.jpg",
+   "source": "out/work/view/sky/r3269_70.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover, review tier, frames 3269 (last of the terrain side) and 3270 (first of the orbit side), agent/jupiter a06d2ae on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T06:33:11.382Z",
+   "file": "20261122063311382-note-r3265_67.jpg",
+   "source": "out/work/view/sky/r3265_67.jpg",
+   "kind": "note",
+   "label": "Jupiter rise cover, review tier, frames 3265 to 3267 (terrain side, the haze closes over the storm), agent/jupiter a06d2ae on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T06:32:58.900Z",
+   "file": "20261122063258900-frame-f03270-review.jpg",
+   "source": "out/work/sheets/.frames-w0t5S8/f03270-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3270, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3270,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:15:03.455Z",
+   "file": "20261122061503455-note-dive-cover-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/dive-cover-b19.png",
+   "kind": "note",
+   "label": "Jupiter dive cover, review sheet, every frame 3019 to 3030 (cut at 3024), agent/jupiter a06d2ae on main 2621f00 (engine batch 19). Colour, horizon and direction carry across the cut; the storm goes under at 3021 and comes back at 3027; the sky is black from 3019 to 3026 (open item 2)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T06:14:19.056Z",
+   "file": "20261122061419056-sheet-jupiter.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.dive, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "first": 3019,
+   "last": 3030,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:14:17.353Z",
+   "file": "20261122061417353-frame-f03030-review.jpg",
+   "source": "out/work/sheets/.frames-Y37tSp/f03030-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3030, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3030,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:01:02.741Z",
    "file": "20261122060102741-note-d3023_24.jpg",
@@ -11,20 +78,6 @@
    "kind": "note",
    "label": "Jupiter dive cover, review tier, frames 3023 (last of the orbit side) and 3024 (first of the terrain side), agent/jupiter a06d2ae on main 2621f00",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:00:53.131Z",
-   "file": "20261122060053131-frame-f03024-review.jpg",
-   "source": "out/work/sheets/.frames-Y37tSp/f03024-review.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3024, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3024,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T05:54:19.701Z",
@@ -252,46 +305,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:56:07.101Z",
-   "file": "20261122045607101-note-f3296_pair.jpg",
-   "source": "out/work/view/m19/f3296_pair.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3296 final at half size: left main 0622510 (batch 18), right main 2621f00 (batch 19 flight sky). No star inside the disc, none on the night side",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:56:05.908Z",
-   "file": "20261122045605908-note-f03296-final-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/f03296-final-b19.png",
-   "kind": "note",
-   "label": "Jupiter rise 3296 final, branch d28870b holding main 2621f00: sha bcd7b416628a62c1, new by batch 19 (flight sky); the disc of the planet and Io keep their bytes",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:56:04.709Z",
-   "file": "20261122045604709-note-f03150-final-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/f03150-final-b19.png",
-   "kind": "note",
-   "label": "Jupiter terrain 3150 final with the foreground tiers, branch d28870b holding main 2621f00: sha 173790897f041964, same bytes as on main 0622510 with the layer",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:56:03.793Z",
-   "file": "20261122045603793-note-f02997-final-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/f02997-final-b19.png",
-   "kind": "note",
-   "label": "Jupiter dive 2997 final, branch d28870b holding main 2621f00: sha 0a35fc826196a462, same bytes as before the layer and before batch 19",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:56:02.646Z",
-   "file": "20261122045602646-note-f02895-final-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/f02895-final-b19.png",
-   "kind": "note",
-   "label": "Jupiter hold 2895 final, branch d28870b holding main 2621f00 (batch 19): sha c34e30ce2c61de16, same bytes as before the layer and before batch 19",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-22T04:51:53.571Z",
