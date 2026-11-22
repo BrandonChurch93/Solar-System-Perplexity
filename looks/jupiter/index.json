@@ -1,9 +1,95 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T15:39:04.727Z",
- "head": "c8ecfe0a5e5a5cb82042a3035180ece13ea22314",
- "note": "Cut 34 tree on main ca78dda5: full measure running; Io's shadow tip measured against the hero",
+ "pushed": "2026-11-22T16:09:03.465Z",
+ "head": "8e28a0852561ba20259432a3ed3d255ff61ca962",
+ "note": "16:09 UTC. CUT34 taken whole (MAIL 182). Seam notch left out: with the fill the final 2895 moves at its right edge. Io shadow toe trial at the draft tier, pictures at 3x beside the approved image. Tree holds main 732a67d3",
  "looks": [
+  {
+   "time": "2026-11-22T16:08:59.098Z",
+   "file": "20261122160859098-note-v2997_kept_E.jpg",
+   "source": "out/work/view/c34/sh/v2997_kept_E.jpg",
+   "kind": "note",
+   "label": "Io shadow at 2997, 3x, draft tier: kept film, toe trial take E. Tree holds main 732a67d3",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T16:08:58.465Z",
+   "file": "20261122160858465-note-v2895_kept_E.jpg",
+   "source": "out/work/view/c34/sh/v2895_kept_E.jpg",
+   "kind": "note",
+   "label": "Io shadow at 2895, 3x, draft tier: approved, kept film, toe trial take E (amount 0.2, a little too light, not offered yet). Tree holds main 732a67d3",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T16:03:09.657Z",
+   "file": "20261122160309657-still-f02895-16x9-final-full.jpg",
+   "source": "out/work/stills/f02895-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:02:20.439Z",
+   "file": "20261122160220439-still-f02997-16x9-final-full.jpg",
+   "source": "out/work/stills/f02997-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T15:53:46.202Z",
+   "file": "20261122155346202-still-f03296-16x9-final-full.jpg",
+   "source": "out/work/stills/f03296-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T15:51:49.781Z",
+   "file": "20261122155149781-still-f03150-16x9-final-full.jpg",
+   "source": "out/work/stills/f03150-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T15:44:58.468Z",
+   "file": "20261122154458468-job-frame-03296.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:39:03.645Z",
    "file": "20261122153903645-note-v2997_kept.jpg",
@@ -49,74 +135,6 @@
    "kind": "note",
    "label": "Hold sky patch at 7x, right margin seam: dark notch as shipped (left), filled offline (right), not in the tree yet. Tree holds main ca78dda5",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:39.596Z",
-   "file": "20261122151939596-note-hold_ends_right.jpg",
-   "source": "out/work/view/c34/hold_ends_right.jpg",
-   "kind": "note",
-   "label": "Right edge of the frame at the ends of the hold (2816, 2969), drafts of the cut 34 tree. Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:38.809Z",
-   "file": "20261122151938809-note-dive_limb_pairs.jpg",
-   "source": "out/work/view/c34/dive_limb_pairs.jpg",
-   "kind": "note",
-   "label": "Dive drafts, limb of main beside the cut 34 tree. Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:37.835Z",
-   "file": "20261122151937835-note-limb_03296_0.jpg",
-   "source": "out/work/view/c34/limb_03296_0.jpg",
-   "kind": "note",
-   "label": "3296 final at 3x, lower limb: main with the bright rim line, cut 34 tree without. Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:36.884Z",
-   "file": "20261122151936884-note-diff3296.jpg",
-   "source": "out/work/view/c34/diff3296.jpg",
-   "kind": "note",
-   "label": "3296 final, cut 34 tree against main: where pixels differ (limb arcs only). Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:35.958Z",
-   "file": "20261122151935958-note-diff2997.jpg",
-   "source": "out/work/view/c34/diff2997.jpg",
-   "kind": "note",
-   "label": "2997 final, cut 34 tree against main: where pixels differ (limb arcs and the two discs). Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:03:45.304Z",
-   "file": "20261122150345304-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:02:40.336Z",
-   "file": "20261122150240336-frame-f03239-review.jpg",
-   "source": "out/work/sheets/.frames-6TxDFE/f03239-review.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3239, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   }
  ]
 }
