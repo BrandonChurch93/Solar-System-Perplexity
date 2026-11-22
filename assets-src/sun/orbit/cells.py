@@ -3,12 +3,12 @@ import numpy as np
 import cv2
 from geo import *
 
-ZOOM = 2.0
-COUNT = 64
+ZOOM = 1.5
+COUNT = 40
 CAPS = (0.6, 0.8)
 CURVE = (0.33, 0.36)
 HIGH = 12.0
-PLAIN = {'wide': 20.0, 'level': (0.10, 0.22, 0.80, 0.93), 'rough': (0.80, 0.95)}
+PLAIN = {'wide': 20.0, 'level': (0.12, 0.90), 'rough': (0.90,), 'grow': 22, 'soft': 4.0, 'shifts': ((163, 41), (-127, 131), (61, -173), (-211, -67), (233, 151), (-89, 263), (307, -113), (-283, 199), (97, 337), (-353, -41))}
 REACH = (0.5, 0.78)
 LIMIT = 0.7
 
@@ -51,16 +51,28 @@ def source():
     lin = scene(np.clip(hero, 0, 1)) / limb_curve(mu)[..., None]
     lg = np.log(np.maximum(lin, 1e-3)).astype(np.float32)
     high = lg - cv2.GaussianBlur(lg, (0, 0), HIGH)
-    lum = luma(lg)
-    wide = cv2.GaussianBlur(lum, (0, 0), PLAIN['wide'])
+    wide = cv2.GaussianBlur(luma(lg), (0, 0), PLAIN['wide'])
     rough = np.sqrt(cv2.GaussianBlur(luma(high) ** 2, (0, 0), PLAIN['wide']))
     cap = mu > CAPS[1]
     q = np.quantile(wide[cap], PLAIN['level'])
     r = np.quantile(rough[cap], PLAIN['rough'])
-    plain = step(wide, q[0], q[1]) * (1 - step(wide, q[2], q[3])) * (1 - step(rough, r[0], r[1]))
+    odd = (wide < q[0]) | (wide > q[1]) | (rough > r[0]) | (mu < CAPS[0] - 0.05)
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * PLAIN['grow'] + 1, 2 * PLAIN['grow'] + 1))
+    odd = cv2.dilate(odd.astype(np.uint8), k)
+    plain = 1 - cv2.GaussianBlur(odd.astype(np.float32), (0, 0), PLAIN['soft'])
+    plain = step(plain, 0.5, 0.95).astype(np.float32)
     high = np.clip(high, -LIMIT, LIMIT)
-    print('source: plain share in the cap', float(plain[cap].mean()), 'rms of the fine part', float(np.sqrt((luma(high)[cap] ** 2).mean())), flush=True)
-    return np.concatenate([high * plain[..., None], plain[..., None]], -1).astype(np.float32)
+    acc = high * plain[..., None]
+    have = plain.copy()
+    for dx, dy in PLAIN['shifts']:
+        m = np.float32([[1, 0, dx], [0, 1, dy]])
+        other = cv2.warpAffine(high, m, (high.shape[1], high.shape[0]), flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT)
+        ok = cv2.warpAffine(plain, m, (high.shape[1], high.shape[0]), flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT)
+        take = (1 - have) * ok
+        acc += other * take[..., None]
+        have += take
+    print('source: plain share in the cap', float(plain[cap].mean()), 'after the fills', float(have[cap].mean()), 'least', float(have[mu > CAPS[0]].min()), 'rms of the fine part', float(np.sqrt((luma(high)[cap] ** 2).mean())), flush=True)
+    return (acc / np.maximum(have, 0.5)[..., None]).astype(np.float32), plain
 
 
 def wobble(d, seed, freq):
@@ -72,8 +84,8 @@ def wobble(d, seed, freq):
 
 def layer(d, src, cs):
     front = CAM / np.linalg.norm(CAM)
-    near = np.cos(np.radians(40.0) / ZOOM * 1.02)
-    acc = np.zeros(d.shape[:-1] + (4,), dtype=np.float32)
+    near = np.cos(np.arccos(CAPS[0]) / ZOOM)
+    acc = np.zeros(d.shape[:-1] + (3,), dtype=np.float32)
     wsum = np.zeros(d.shape[:-1], dtype=np.float32)
     flat = d.reshape(-1, 3)
     for c, m, seed, freq in cs:
@@ -94,11 +106,10 @@ def layer(d, src, cs):
         fill = (-pick.size) % side
         mx = np.concatenate([qx - 0.5, np.zeros(fill)]).astype(np.float32).reshape(-1, side)
         my = np.concatenate([qy - 0.5, np.zeros(fill)]).astype(np.float32).reshape(-1, side)
-        got = cv2.remap(src, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT).reshape(-1, 4)[:pick.size]
-        acc.reshape(-1, 4)[pick] += got * w[:, None]
+        got = cv2.remap(src, mx, my, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT).reshape(-1, 3)[:pick.size]
+        acc.reshape(-1, 3)[pick] += got * w[:, None]
         wsum.reshape(-1)[pick] += w
-    out = acc / np.maximum(wsum, 1e-6)[..., None]
-    return out[..., :3] / np.maximum(out[..., 3:4], 0.35) * step(out[..., 3:4], 0.05, 0.35)
+    return acc / np.maximum(wsum, 1e-6)[..., None]
 
 
 def reach(mu):
@@ -106,7 +117,7 @@ def reach(mu):
 
 
 def build(path, mw=8192, mh=4096):
-    src = source()
+    src, _ = source()
     cs = centres()
     out = np.zeros((mh, mw, 3), dtype=np.float16)
     ch = 256
