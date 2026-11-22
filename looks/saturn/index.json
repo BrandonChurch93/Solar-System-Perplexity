@@ -1,9 +1,52 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T04:25:29.595Z",
- "head": "c5a7fa21f84036b6e0b0cabd8f4719a73e2dbe40",
- "note": "Hand-in at c5a7fa2 on main 36d7b64: before and after pictures of items 3 to 6 at the final tier; measure and review sheets running",
+ "pushed": "2026-11-22T04:47:34.227Z",
+ "head": "ea1e8443ebcc97f513bebd7cae712d3c36b1b452",
+ "note": "e8e4984 on main 2621f00 (batch 19 7a880ac6): hand-in chain running, tools/repeat.ts 4 middle frames 3 sessions by 2 runs all repeatable; finals, measure and review sheets to come",
  "looks": [
+  {
+   "time": "2026-11-22T04:41:16.523Z",
+   "file": "20261122044116523-frame-f03580-review.jpg",
+   "source": "out/work/sheets/.frames-o99YxF/f03580-review.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3580, review tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3580,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T04:34:45.631Z",
+   "file": "20261122043445631-sheet-saturn.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.terrain, review tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "first": 3630,
+   "last": 3809,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T04:34:05.290Z",
+   "file": "20261122043405290-frame-f03776-review.jpg",
+   "source": "out/work/sheets/.frames-EbznTu/f03776-review.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3776, review tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3776,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T04:21:25.900Z",
    "file": "20261122042125900-job-frame-03465.jpg",
@@ -41,42 +84,6 @@
    "kind": "note",
    "label": "Item 4 hold 3465, final tier, c5a7fa2 on main 36d7b64: hero, kept build, now. Top: rings crossing the globe. Bottom: globe detail at 2.7x",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T04:12:09.879Z",
-   "file": "20261122041209879-note-item3-terrain-3720.jpg",
-   "source": "out/work/saturn/polish/item3-terrain-3720.png",
-   "kind": "note",
-   "label": "Item 3 terrain 3720, final tier, c5a7fa2 on main 36d7b64: approved, kept build, now. Top: ring horizon at the lit limb at 2.7x. Bottom: rings lower left",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T04:10:38.740Z",
-   "file": "20261122041038740-frame-P-3866.jpg",
-   "source": "out/work/saturn/P-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, final tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:06:32.009Z",
-   "file": "20261122040632009-frame-P-3720.jpg",
-   "source": "out/work/saturn/P-3720.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
   },
   {
    "time": "2026-11-22T04:00:32.980Z",
