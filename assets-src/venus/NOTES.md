@@ -868,3 +868,19 @@ Head 5ebfa54 and this note; main d5b851f (engine batches 21 and 22); take F5 sti
 - Mean level of the changed cells drops by 0.4 to 0.9 of about 85 (the coarser read takes the brightest bits down), no visible step at the joins 1318 to 1319 and 1555 to 1556 in the sheets.
 - Old frame dumps deleted from `r2/out/work/venus/p6` (strips of takes before F4), disk 4.9 GB free. Kept: f16, f20 to f23, f4n, f4t, f4u, g4t, g4u, e2b, now, xf, f5n, d20 and the small sets.
 - q27 goes on: stills of 1314 and 1566 at master size, then the chain; "queue27 done" about 12:13.
+
+## State at 12:07 (22 Nov): take F5 committed and proved on engine batches 21 and 22, round 32 read (read this first after a compaction)
+
+Head e597ca0 (merge of main 9f5ad80: round 32 records only, no source, config or tool change since d5b851f) and this note; code commit d9b5c7c (veil take F5, `look.ts` only: `sheets.fan [12, 1.6, 2.7, 14]`, `sheets.fray [2.5, 0.4, 0.2, 2]`). r2 sits on main d5b851f.
+
+Proof of d9b5c7c on main d5b851f (queue q27, done 12:04):
+- Finals f23: 1185, 1287, 1440 the same bytes as f16, 1586 the same bytes as f22. Copies for the Builder in `/home/user/workspace/send/venus-F-final-main-d5b851f.png`.
+- Audit: no line of my folder. Repeat: one hash each for 12 frames (values at 11:43).
+- Cover sheets c23 read (11:43). Stills at master size: 1314 (`view/p5-1314-full.jpg`) and 1566 (`view/p5-1566-full.jpg`, `view/p5-1566-a.jpg`): the stepped rectangles, torn bright bits and scratch lines are soft streaked cloud now.
+- Chain: vitest 83 passed; G11, G12, G15 pass (venus web 253 MB, full 1002 MB); G5 pass (invalid 0; coverage 0.316, 0.446, 0.685, 0.245); G17 pass (1185 median 0.959, p25 0.844 over 77 tiles; 1440 median 0.936, p25 0.804 over 76 tiles); G13 pass (0 of 433 frames over 0.02). The same numbers as on batch 20.
+
+Round 32, the third and last whole film round (`scorecards/round-032/SUMMARY.md`, main 4365a0f with engine batches 21 and 22; my folders there are the round 23 state): R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6. One item names Venus: item 25, R5 minor, frames 1185 and 1287: "Venus is graded much warmer and more golden than the rest of the film, so it sits slightly outside the shared look", fix named "Pull the saturation and the gold glow on the limb down a little toward the neutral space grade". That is the approved hero's own colour; the approved image wins in the hold frame, so nothing is changed without an order from the Builder. No R3 or R4 item names a frame of my four segments; round 31's item on the Venus exit 1612 to 1618 is not reported again. R2: venus.hold a a d d d, venus.terrain b d d b d.
+
+Running since 12:05 (`q28.sh`, log `/tmp/q28.log`, about 45 minutes): review sheets on main d5b851f with d9b5c7c: terrain view (`view/s28-terrain.png`; the one of 05:54 on batch 19 is `view/s19-terrain.png`), full dive (`view/s28-dive.png`), full rise (`view/s28-rise.png`); prints "queue28 done". Do not change `src/stops/venus` or `public/assets/venus` in the repo before the first line of `/tmp/q28.log` is there (it syncs once at the start; that is done).
+
+Next: POLISH READY note to the Builder now; read the three sheets when they land, looks; then the faint ladder left at the bottom centre of 1310 and the radial lines at 1309 (find out whether they are the veil's or the globe's: render 1310 with the veil switched off in the render copy only).
