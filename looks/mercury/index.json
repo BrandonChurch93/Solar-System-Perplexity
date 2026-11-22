@@ -1,9 +1,49 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T14:37:59.558Z",
- "head": "2c5d787fe60c089c8ac32f643ab112a3e85213f4",
- "note": "round 34: Sun plate hand over proved on tree 2c5d787 (main ca78dda); next the flare ghosts over the night side named by the surface critics",
+ "pushed": "2026-11-22T14:57:36.352Z",
+ "head": "d697e4c3d0c9805fd2f1aee8230497bba2b05447",
+ "note": "round 34: flare off the night side and thinner rim glow in the rise, committed; next the measures and the motion critic's words",
  "looks": [
+  {
+   "time": "2026-11-22T14:57:35.807Z",
+   "file": "20261122145735807-note-495-limb3.jpg",
+   "source": "../../../../tmp/495-limb3.jpg",
+   "kind": "note",
+   "label": "495 limb native 2x: main final, head final on main's Sun, head draft on the Sun agent's d8ec4dd files (tree 2c5d787, main ca78dda)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:57:35.274Z",
+   "file": "20261122145735274-note-615-flare3.jpg",
+   "source": "../../../../tmp/615-flare3.jpg",
+   "kind": "note",
+   "label": "615 night side, plain and gain 3: approved hero, main final, final with the flare change (keep 0.35 on the disc), main ca78dda",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:57:34.750Z",
+   "file": "20261122145734750-note-fl1-730.jpg",
+   "source": "../../../../tmp/fl1-730.jpg",
+   "kind": "note",
+   "label": "730 draft: main left, flare change right: the bright ghost dot on the terrain is gone (main ca78dda)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:57:34.204Z",
+   "file": "20261122145734204-note-fl1-sheet.jpg",
+   "source": "../../../../tmp/fl1-sheet.jpg",
+   "kind": "note",
+   "label": "615, 717, 1016 drafts: main's own tree (columns 1 and 3, 3 at gain 2.5) against the flare change (2 and 4), main ca78dda",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:57:33.631Z",
+   "file": "20261122145733631-note-1016-flare.jpg",
+   "source": "../../../../tmp/1016-flare.jpg",
+   "kind": "note",
+   "label": "1016 final: left tree 2c5d787 (hand over head), right tree with the flare and rim commits on top (main ca78dda): no ghosts on the night side, no blob, no level band, thinner warm line at the lit limb",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T14:37:58.799Z",
    "file": "20261122143758799-note-c13.jpg",
@@ -59,58 +99,6 @@
    "kind": "note",
    "label": "495 native 2x, limb left and lower left: Sun agent's files then main's Sun, twice; the arcs outside my limb are the Sun globe's edge (its fit); working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:03:49.191Z",
-   "file": "20261122140349191-note-s8b.jpg",
-   "source": "../../../../tmp/s8b.jpg",
-   "kind": "note",
-   "label": "sun.travel 498 500 505: top row on the Sun agent's 4f72047 files, bottom row on main's Sun; working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:03:48.543Z",
-   "file": "20261122140348543-note-s8a.jpg",
-   "source": "../../../../tmp/s8a.jpg",
-   "kind": "note",
-   "label": "sun.travel 486 490 495: top row on the Sun agent's 4f72047 files, bottom row on main's Sun; working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T13:45:28.040Z",
-   "file": "20261122134528040-note-s3-native.jpg",
-   "source": "../../../../tmp/s3-native.jpg",
-   "kind": "note",
-   "label": "13:44 UTC, working tree on 3fb355a (merge of main 84b0ea4) plus the Sun agent's 4f72047, drafts 490 495 495 500 at twice size: top the star mask alone, bottom with the mask's inside law carried out to 1.06 radii so the leaving globe's edge is hidden as my plate takes over. Stars no longer show through corona, loops or disc",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T08:27:22.479Z",
-   "file": "20261122082722479-frame-f959-final.jpg",
-   "source": "out/work/mercury/p6/ready2/f959-final.png",
-   "kind": "frame",
-   "label": "mercury.terrain frame 959, final tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 959,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:18:25.855Z",
-   "file": "20261122081825855-frame-f615-final.jpg",
-   "source": "out/work/mercury/p6/ready2/f615-final.png",
-   "kind": "frame",
-   "label": "mercury.hold frame 615, final tier",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   }
  ]
 }
