@@ -1,9 +1,47 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-21T23:41:33.999Z",
- "head": "73b4427421706082892c665cb350cfd938384243",
- "note": "item 24 terrain, bloom spill map trial",
+ "pushed": "2026-11-22T00:01:03.830Z",
+ "head": "5644062b0eefea3d111b51f49b8e89c564bf82e0",
+ "note": "item 24 terrain, coarse bloom levels inverted in the relief",
  "looks": [
+  {
+   "time": "2026-11-22T00:01:02.468Z",
+   "file": "20261122000102468-note-away-e.jpg",
+   "source": "out/work/nep/p6/b1/away-e.jpg",
+   "kind": "note",
+   "label": "00:02 terrain away from the judged frame (4775, 4810, 4920, 4945): frame and the change x12; smooth, no seam, no second edge",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T00:01:01.354Z",
+   "file": "20261122000101354-note-f-4860.jpg",
+   "source": "out/work/nep/p6/b1/f-4860.png",
+   "kind": "note",
+   "label": "00:02 4860 review now, item 24: median luma 59.1 to 58.0 (approved 57.1), low pass error rms 1.42 to 1.11",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T00:01:00.248Z",
+   "file": "20261122000100248-note-terrain-approved-before-now-2.jpg",
+   "source": "out/work/nep/p6/b1/terrain-approved-before-now-2.png",
+   "kind": "note",
+   "label": "00:02 4860 crops x2: approved / 73b4427 / now (the bloom's three coarse levels taken out in the relief). Mean abs diff 2.1961 to 2.0306 with grain, 1.8845 to 1.6742 without; G17 median 0.917 to 1.029",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-21T23:59:21.582Z",
+   "file": "20261121235921582-frame-f-4860.jpg",
+   "source": "out/work/nep/p6/b1/f-4860.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, review tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T23:41:29.842Z",
    "file": "20261121234129842-note-b-4860.jpg",
@@ -19,20 +57,6 @@
    "kind": "note",
    "label": "4860 crops x2, approved / 73b4427 / trial with the bloom's spill taken out in the relief (full inverse, fine contrast overshoots, being split)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-21T23:38:57.909Z",
-   "file": "20261121233857909-frame-b-4860.jpg",
-   "source": "out/work/nep/p6/b1/b-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T23:29:28.726Z",
@@ -61,42 +85,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-21T23:17:02.133Z",
-   "file": "20261121231702133-frame-r-5006.jpg",
-   "source": "out/work/nep/p6/s1/r-5006.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 5006, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:16:08.025Z",
-   "file": "20261121231608025-frame-r-4707.jpg",
-   "source": "out/work/nep/p6/s1/r-4707.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4707, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:14:29.206Z",
-   "file": "20261121231429206-note-r-4860.jpg",
-   "source": "out/work/nep/p6/s1/r-4860.png",
-   "kind": "note",
-   "label": "23:15 item 4 terrain 4860 review tier now, camera steadied only: mean abs diff to the approved close 2.1961 (before 4.2702)",
-   "stop": "neptune"
   }
  ]
 }
