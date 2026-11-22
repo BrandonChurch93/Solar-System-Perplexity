@@ -2,11 +2,12 @@ export type Knot = [number, number]
 
 export interface Track { from: number; step: number; value: Float64Array; slope: Float64Array }
 
-export function curve(knots: Knot[]): (t: number) => number {
+export function curve(knots: Knot[], endSlope = 0): (t: number) => number {
   const n = knots.length
   const d: number[] = []
   for (let i = 0; i < n - 1; i++) d.push((knots[i + 1]![1] - knots[i]![1]) / (knots[i + 1]![0] - knots[i]![0]))
   const m: number[] = knots.map((_, i) => (i === 0 || i === n - 1 || d[i - 1]! * d[i]! <= 0 ? 0 : (d[i - 1]! + d[i]!) / 2))
+  m[n - 1] = endSlope
   for (let i = 0; i < n - 1; i++) {
     if (d[i] === 0) {
       m[i] = 0

@@ -1,5 +1,5 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "be043ade04a7ab6e",
  "stopHashes": {
   "uranus": "5afa91dfab8a6bc7"
  },
@@ -11,7 +11,7 @@
  "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "frame": 4035,
  "extra": {
-  "seconds": 41.819,
+  "seconds": 21.916,
   "samples": 16,
   "signature": "[\"4bd56c35768b7bb5a577d07788eec2d46c9865eae199fb368b42b8722234ea5f\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92

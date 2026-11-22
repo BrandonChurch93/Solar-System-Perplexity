@@ -17,7 +17,7 @@ export interface FlightDef {
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
-  deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
+  deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; plane: number[]; clump: number[]; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number; skew: number } }
   veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number; rough: number }
 }
 
@@ -47,6 +47,7 @@ export interface StripDef {
   offLevel: number
   patchHold: number
   deep: { gain: number; tail: number; ref: number }
+  dust: { span: number[]; lane: number[]; cloud: number[]; keep: number[]; red: number[]; strip: number[] }
   stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
 }
 
@@ -77,7 +78,7 @@ function clouds(def: FlightDef['veil']): [(x: number, y: number, z: number) => n
   return [(x, y, z) => THREE.MathUtils.smoothstep(fbm(x, y, z, def.scale, 4, 0), def.span[0]!, def.span[1]!) * (depth! + (1 - depth!) * THREE.MathUtils.smoothstep(Math.abs(2 * fbm(x, y, z, def.scale * scale!, 2, 211.3) - 1), 0, width!)), (x, y, z, f) => THREE.MathUtils.smoothstep(fbm(x, y, z, f, 3, 97.3), 0.3, 0.7)]
 }
 
-export function flightField(def: FlightDef): FlightField {
+export function flightField(def: FlightDef, gal?: number[]): FlightField {
   const rnd = stream('flight stars')
   const uniform = (): THREE.Vector3 => {
     const z = rnd.range(-1, 1)
@@ -224,9 +225,13 @@ export function flightField(def: FlightDef): FlightField {
     deep.color.set([Math.max(1 + (c.r - 1) * dd.color, 0.05), Math.max(1 + (c.g - 1) * dd.color, 0.05), Math.max(1 + (c.b - 1) * dd.color, 0.05)], n * 3)
     n++
   }
+  const pole = gal ? [gal[2]!, gal[5]!, gal[8]!] : [0, 1, 0]
+  const planeGain = gal ? dd.plane[0]! : 0
+  const clump = dd.clump[0]!
+  const planeWidth = THREE.MathUtils.degToRad(dd.plane[1]!)
   const dense = (x: number, y: number, z: number): number => {
     const cell = Math.min(Math.floor((Math.asin(y) / Math.PI + 0.5) * height), height - 1) * width + Math.min(Math.floor((Math.atan2(x, z) / (2 * Math.PI) + 0.5) * width), width - 1)
-    return dd.even + (1 - dd.even) * (veil[cell]! - veilLow) / (veilHigh - veilLow)
+    return (dd.even + (1 - dd.even) * (veil[cell]! - veilLow) / (veilHigh - veilLow)) * (1 + planeGain * Math.exp(-Math.abs(Math.asin(Math.max(Math.min(x * pole[0]! + y * pole[1]! + z * pole[2]!, 1), -1))) / planeWidth)) / (1 + planeGain) * (1 - clump + clump * coarse(x, y, z, dd.clump[1]!))
   }
   const any = (): [number, number, number] => {
     for (;;) {
@@ -241,8 +246,9 @@ export function flightField(def: FlightDef): FlightField {
   const normal = (): number => Math.sqrt(-2 * Math.log(Math.max(dr.next(), 1e-9))) * Math.cos(2 * Math.PI * dr.next())
   for (let g = 0; g < dd.groups.count && n < dd.count; g++) {
     const [gx, gy, gz] = any()
-    const spread = THREE.MathUtils.degToRad(dr.range(dd.groups.radiusDeg[0]!, dd.groups.radiusDeg[1]!))
-    const members = Math.round(dr.range(dd.groups.stars[0]!, dd.groups.stars[1]!))
+    const wide = Math.pow(dr.next(), dd.groups.skew)
+    const spread = THREE.MathUtils.degToRad(dd.groups.radiusDeg[0]! * Math.pow(dd.groups.radiusDeg[1]! / dd.groups.radiusDeg[0]!, wide))
+    const members = Math.round((dd.groups.stars[0]! + (dd.groups.stars[1]! - dd.groups.stars[0]!) * wide) * dr.range(0.6, 1.4))
     for (let m = 0; m < members && n < dd.count; m++) {
       const x = gx + spread * normal()
       const y = gy + spread * normal()
@@ -302,6 +308,8 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
     const lat = x * frame.latSpan
     const level = Math.min(st.gain * Math.pow(flux, st.power), st.max)
     const base = Math.pow(Math.max(bg, 1e-5), 1 - st.lane) * Math.pow(st.ref, st.lane)
+    const ds = def.dust.strip
+    const lane = (1 - THREE.MathUtils.smoothstep(bg, ds[0]!, ds[1]!)) * (1 - THREE.MathUtils.smoothstep(level, ds[4]!, ds[5]!)) * (1 - THREE.MathUtils.smoothstep(Math.abs(x), def.dust.span[0]!, def.dust.span[1]!))
     const cr = view.getUint8(at + 6) / 63.75
     const cg = view.getUint8(at + 7) / 63.75
     const cb = view.getUint8(at + 8) / 63.75
@@ -319,9 +327,9 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
       const veil = field.veil[cell]!
       const reach = Math.abs(x) * (1 + fe.reach * Math.min(Math.max((field.veilHigh - veil) * span, 0), 1))
       const fade = THREE.MathUtils.smoothstep(1 - THREE.MathUtils.smoothstep(reach + fe.rough * field.rough[cell]! * THREE.MathUtils.smoothstep(reach, 0, 0.5 * edgeFrom!) + edgeNoise! * (veil - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!), low, 1)
-      if (fade <= 0 || pick > Math.pow(fade, fe.thin)) continue
+      if (fade <= 0 || pick > Math.pow(fade, fe.thin) * (1 - ds[2]! * lane)) continue
       position.set([px, py, pz], n * 3)
-      star.set([level * Math.pow(fade, fe.dim), base], n * 2)
+      star.set([level * Math.pow(fade, fe.dim) * (1 - ds[3]! * lane), base], n * 2)
       color.set([cr, cg, cb], n * 3)
       n++
     }

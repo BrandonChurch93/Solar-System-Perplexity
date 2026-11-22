@@ -94,6 +94,36 @@ for a, b in zip(ARC[:-1], ARC[1:]):
 flat = cv2.GaussianBlur(cv2.morphologyEx(part, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))), (0, 0), 4)
 m = ((1 - geo.smooth(RED[0] * 0.5, RED[0], near)) * (1 - RED[1] * geo.smooth(-6, 6, ayy)))[..., None]
 sky[MY + ay0:MY + ay1, MX + ax0:MX + ax1] = part - np.maximum(part - flat, 0) * m
+LEFT = (380, 120, 1300, 316)
+LROWS = (186, 250)
+LCUT = (1.07, 1.012)
+LEND = (240, 340)
+LFADE = (470, 560)
+lx0, ly0, lx1, ly1 = LEFT
+lyy, lxx = np.mgrid[ly0:ly1, lx0:lx1].astype(np.float32)
+lr = np.hypot(lxx + 0.5 - c['cx'], lyy + 0.5 - c['cy']) / c['r']
+miss = hero[ly0:ly1, lx0:lx1] - sky[MY + ly0:MY + ly1, MX + lx0:MX + lx1]
+edge = c['cx'] - np.sqrt(np.maximum((c['r'] * LCUT[0]) ** 2 - (lyy[:, 0] + 0.5 - c['cy']) ** 2, 0))
+for j in range(miss.shape[0]):
+    k = int(edge[j]) - lx0
+    miss[j, k:] = np.median(miss[j, k - 60:k], axis=0)
+flat = np.stack([ndi.median_filter(miss[..., i], size=(5, 61)) for i in range(3)], -1)
+flat = np.stack([cv2.GaussianBlur(flat[..., i], (0, 0), sigmaX=8, sigmaY=2) for i in range(3)], -1)
+above = np.median(flat[LROWS[0] - ly0 - 30:LROWS[0] - ly0 - 10], axis=0)
+below = np.median(flat[LROWS[1] - ly0 + 10:LROWS[1] - ly0 + 30], axis=0)
+lt = np.clip((lyy - (LROWS[0] - 20)) / (LROWS[1] - LROWS[0] + 40), 0, 1)[..., None]
+line = above[None] * (1 - lt) + below[None] * lt
+line = np.stack([cv2.GaussianBlur(line[..., i], (0, 0), 12) for i in range(3)], -1)
+rows = geo.smooth(LROWS[0] - 10, LROWS[0], lyy) * (1 - geo.smooth(LROWS[1], LROWS[1] + 10, lyy))
+past = lxx - edge[:, None]
+left = (flat - line) * (rows * geo.smooth(LFADE[0], LFADE[1], lxx) * (1 - geo.smooth(LEND[0], LEND[1], past)))[..., None]
+np.save(f'{WORK}/streak-left.npy', left.astype(np.float32))
+before = sky[MY + ly0:MY + ly1, MX + lx0:MX + lx1].copy()
+sky[MY + ly0:MY + ly1, MX + lx0:MX + lx1] = np.maximum(before + left, before * 0.5)
+lshow = lambda v: geo.coded(v * 4)
+seen = (lr > LCUT[1])[..., None]
+Image.fromarray(np.concatenate([lshow(hero[ly0:ly1, lx0:lx1]), lshow(np.where(seen, before, hero[ly0:ly1, lx0:lx1])), lshow(np.where(seen, sky[MY + ly0:MY + ly1, MX + lx0:MX + lx1], hero[ly0:ly1, lx0:lx1])), lshow(sky[MY + ly0:MY + ly1, MX + lx0:MX + lx1]), lshow(np.abs(left) * 3)], 0)).save(f'{WORK}/streak-left-check.png')
+print('left streak peak', left.max(axis=(0, 1)).round(4), 'lowest', left.min(axis=(0, 1)).round(4))
 if not DRY:
     np.save(f'{WORK}/sky-hold.npy', sky)
     img = Image.fromarray(geo.coded(sky))

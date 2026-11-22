@@ -23,9 +23,19 @@ export const globe: GlobeLook = {
   rimPower: 3,
   rimNight: [0.004, 0.012, 0.025, 0.06],
   nightBlur: 16,
+  nightBlurFar: 1.5,
+  fine: [8, 0.3, 2],
+  fineTop: 1.1,
   termShift: [0.085, 0.55, 0.97],
   probe: 0,
   edgePx: 2.6,
+  limbFit: [0, 0, 0, 0, 0.003, 0.008, 0.0138, 0.0118, 0.0082, 0.0018, -0.0029, -0.006, -0.008, -0.0092, -0.009, -0.0087, -0.0085, -0.0085, -0.0074, -0.0052, -0.001, 0.004, 0.005],
+  limbLat: [-35, 5],
+  limbInflate: 1.02,
+  glowNorth: [35, 48, 0.46, 0.67],
+  glowPole: [60, 72, 0.5, 0],
+  glowWide: [0.109, 0.087, 0.056, 0.049],
+  glowCap: [0.063, 0.062, 0.056],
 }
 
 export const haze: HazeParams = {
@@ -62,7 +72,7 @@ export const rings: RingLook = {
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
   penumbraFar: [1.5, 0.05],
-  inner: [112, 128, 0.01, 0.03],
+  inner: [112, 128, 0, 0],
   over: [0.03, 1.38, 0.985, 1.46],
   strand: [1.5, 2.0, 1.5],
   overTone: [0.4, 0.8, 1.12, 102],
@@ -91,11 +101,35 @@ export const rings: RingLook = {
   gapFit: [0.004, 0.06],
   arc: [2.42, 0.047, 3, 1.3],
   arcAz: [95, 110, -150, -110],
-  skimEdge: [0, 0.14],
-  skimFoot: 0.7,
+  skimEdge: [0.004, 0.14],
+  skimFoot: 0.6,
   skimDensity: [0.8, 1.05],
   skimShow: 1,
+  apronEdge: [0.03, 0.02, 0.08],
+  apronAway: [0.3, 0.5],
+  apronShow: 1,
+  debloom: 0.08,
+  skimHigh: [0.8, 0.94, 0.3, 3],
   reach: 3.6,
+  skimReach: 40,
+  sheetRadii: [1.1, 1.21, 1.24, 1.27, 1.31, 1.345, 1.37, 1.46, 1.56],
+  sheetThrough: [0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015],
+  wedgeGain: [0.62, 0.62, 0.75, 0.82, 1.05, 1, 0.85, 0, 0],
+  wedge: [0.063, 0.043, 0.029, 1.02],
+  wedgeIn: [0.985, 1.003],
+  sheetFit: [1.1, 1.16, 0.9, 0],
+  shine: [0.2, 0.07, 0.035, 0.01],
+  shineWide: [0.11, 0.04, 0.016, 0.045],
+  shineBack: 0.3,
+  even: 1,
+  polarHigh: [0.82, 0.96, 0.25, 3],
+  rimNear: [1.2, 1.9, 2.5, 0.0035],
+  rimEdge: [0.6, 1.5, 3.2, 0.0012],
+  rimFar: [0.95, 0.86, 0.75],
+  rimHalo: [0.0, 0.015, 0.07, 0.0015],
+  rimAz: [98, 112, 158, 172],
+  sheetGlow: [0.03, 0.029, 0.022, 0],
+  fillet: [0.76, 0.336, 29.8, 0.004],
 }
 
 export const ice: IceLook = {
@@ -103,10 +137,10 @@ export const ice: IceLook = {
   box: 2.4,
   lift: 0.0004,
   size: [0.00012, 0.00042],
-  radius: [0.45, 1.15],
-  floor: 0.42,
+  radius: [1.0, 1.8],
+  floor: 0.8,
   reach: [0.66, 1.0],
-  energy: [0.4, 9, 4],
+  energy: [0.1, 0.5, 3],
   tint: [1, 0.97, 0.93],
   baked: [0.78, 0.98],
   heightRange: [0.5, 1],
@@ -114,19 +148,26 @@ export const ice: IceLook = {
 }
 
 export const titan: TitanLook = {
-  day: [0.7, 0.245, 0.085],
-  rim: [1.4, 0.72, 0.3],
+  day: [1.05, 0.37, 0.095],
+  rim: [1.9, 1.15, 0.6],
   night: [0.0082, 0.009, 0.0105],
   halo: [0.06, 0.035, 0.024],
   haloHeight: 0.035,
-  terminator: [0.05, 0.7],
+  terminator: [0.02, 1.0],
   limb: 0.3,
-  home: [8.167601, 4.265027, -17.74795],
-  size: 0.956,
+  edgePx: 0.9,
+  rimPower: 4,
+  bands: [0.11, 7, 19, 2.6],
+  hood: [0.84, 0.74, 0.7],
+  redden: [1, 0.85, 0.72],
+  mottle: [0.14, 3.2],
+  home: [8.191769, 4.235077, -17.74795],
+  size: 0.9766,
 }
 
 export const streak: StreakLook = {
   gain: 1,
+  fade: 0.6,
   upper: [0.785, 0.8505, 0.0058],
   lower: [0.885, 0.8915, 0.0032],
   smudge: [0.821, 0.8415, 0.009],
@@ -148,11 +189,22 @@ export const polarEdge: [number, number] = [1.46, 1.54]
 export const polarDensity: [number, number] = [1.0, 1.3]
 export const polarOuter: [number, number] = [0.012, 0.002]
 export const polarShow = 1
+export const limbShow = 1
 export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
+export const skimJoin: [number, number] = [1383 / 2816, 718 / 1584]
+export const skimSwing: [number, number] = [1.0, 2.2]
+export const skimGrow: [number, number] = [0.0057, 0.0003]
+export const skimLimb: [number, number] = [1.6, 1]
+export const skimUnder: [number, number, number, number] = [-0.005, -0.002, 0.009, 0.015]
+export const skimGap: [number, number] = [0.86, 0.98]
+export const skimFill: [number, number, number] = [-0.009, 1.28, 1.36]
+export const layFill: [number, number, number, number] = [1, -0.03, 0.3, 0.9]
+export const layEdge: [number, number] = [-0.004, 0.002]
 export const shellSkim: [number, number, number] = [0.958, 1.273, 1.826]
 export const shellSkimDepth: [number, number] = [0.03, 0.018]
+export const shellRange: [number, number] = [0.35, 3]
 export const shellReach = 0.054
 
 export const closeLight = { elevationDeg: closeFitted.elevationDeg, turnDeg: closeFitted.turnDeg }

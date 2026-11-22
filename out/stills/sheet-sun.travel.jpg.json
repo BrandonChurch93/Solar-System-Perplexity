@@ -1,0 +1,35 @@
+{
+ "engineHash": "be043ade04a7ab6e",
+ "stopHashes": {
+  "sun": "ad6304ab49e38c96",
+  "mercury": "78fa01ed802d26ad"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 450,
+ "last": 539,
+ "extra": {
+  "frames": [
+   450,
+   458,
+   466,
+   474,
+   482,
+   490,
+   499,
+   507,
+   515,
+   523,
+   531,
+   539
+  ],
+  "kind": "sheet",
+  "segment": "sun.travel",
+  "signature": "[\"537e3baf9cc6a22392444286cce202a86032f7e70d054e7351454b1c1e93ad06\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

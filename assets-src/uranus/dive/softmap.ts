@@ -76,11 +76,16 @@ for (let f = a0!; f <= a1!; f += a2 || 1) {
       const gd = Math.max(Math.hypot(g1[0] - g[0], g1[1] - g[1]), Math.hypot(g2[0] - g[0], g2[1] - g[1]))
       let parent = texels
       let level = 0
-      if (g[2] > 0.3 && texels < patches.fade[1]!) {
+      const ax = bx.clone().sub(a)
+      const ay = cy.clone().sub(a)
+      const aa = ax.lengthSq() + ay.lengthSq()
+      const ad = ax.clone().cross(ay).length()
+      const lean = Math.max((2 * ad) / Math.max(aa + Math.sqrt(Math.max(aa * aa - 4 * ad * ad, 0)), 1e-20), 1 / 16)
+      if (g[2] > 0.3 && texels * lean < patches.fade[1]!) {
         for (let i = 0; i < widths.length; i++) {
           const qx = g[0] * scale[i]!
           const qy = g[1] * scale[i]!
-          const w = smoothstep(0.5, 0.5 - patches.feather, Math.max(Math.abs(qx), Math.abs(qy))) * (1 - smoothstep(patches.fade[0]!, patches.fade[1]!, parent))
+          const w = smoothstep(0.5, 0.5 - patches.feather, Math.max(Math.abs(qx), Math.abs(qy))) * (1 - smoothstep(patches.fade[0]!, patches.fade[1]!, parent * lean))
           parent = gd * scale[i]! * size
           if (w >= 0.5) { texels = parent; level = i + 1 }
         }
