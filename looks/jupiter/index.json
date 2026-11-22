@@ -1,9 +1,31 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T16:49:07.114Z",
- "head": "408cfe87a7a41b2ed91f7452c3cd2c1ce215b815",
- "note": "16:51 UTC. Main 37f67dd4 merged. Shadow toe proof running on it: finals done (2895 moves in the shadow's far end only, 2997, 3150, 3296 keep main's bytes), measure running. Tree holds main 37f67dd4",
+ "pushed": "2026-11-22T17:11:56.451Z",
+ "head": "157eb79905c85f46ed64c9b0272622a95adaf9d6",
+ "note": "CUT35 candidate: Io's shadow far end to the approved image's profile; full measure running on main 37f67dd4",
  "looks": [
+  {
+   "time": "2026-11-22T17:11:55.284Z",
+   "file": "20261122171155284-note-jupiter-2895-shadow-three-3x.jpg",
+   "source": "../../../../tmp/jup-c35/jupiter-2895-shadow-three-3x.jpg",
+   "kind": "note",
+   "label": "Jupiter 2895 at the final tier, Io's shadow at 3x: approved image, main, with the softer far end. Full measure of the candidate still running. Tree holds main 37f67dd4",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T17:09:12.460Z",
+   "file": "20261122170912460-job-frame-03208.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3208, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3208,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T16:49:06.025Z",
    "file": "20261122164906025-note-jupiter-2895-shadow-pair-3x.jpg",
@@ -112,28 +134,6 @@
    "source": "out/work/view/c34/sh/v2895_kept_E.jpg",
    "kind": "note",
    "label": "Io shadow at 2895, 3x, draft tier: approved, kept film, toe trial take E (amount 0.2, a little too light, not offered yet). Tree holds main 732a67d3",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:44:58.468Z",
-   "file": "20261122154458468-job-frame-03296.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:39:03.645Z",
-   "file": "20261122153903645-note-v2997_kept.jpg",
-   "source": "out/work/view/c34/sh/v2997_kept.jpg",
-   "kind": "note",
-   "label": "2997, shadow of Io at the terminator at 3x (below at 3 times the exposure), cut 34 draft: the far end stays a hard oval on the dark limb (R3 round 33). Tree holds main ca78dda5",
    "stop": "jupiter"
   }
  ]
