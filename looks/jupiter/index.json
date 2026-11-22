@@ -1,9 +1,31 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T09:32:22.616Z",
- "head": "fd5e910ac38f1e69163393b6c8b04ee941ad9bc2",
- "note": "agent/jupiter 2687a17 on main f24046b: rise cover review sheet on the merged tree",
+ "pushed": "2026-11-22T10:00:33.411Z",
+ "head": "3ec02be0bb2aa489f1e0681ee2139f3fddf7e12f",
+ "note": "Jupiter: dive cover sheet on the merged tree (2687a17, main f24046b) rendering, 3019 to 3023 same bytes as before E1, 3024 looked at",
  "looks": [
+  {
+   "time": "2026-11-22T10:00:32.169Z",
+   "file": "20261122100032169-note-d3024.jpg",
+   "source": "out/work/view/b20r/v/d3024.jpg",
+   "kind": "note",
+   "label": "dive cover 3024 review, first terrain frame, a06d2ae beside agent/jupiter 2687a17 on main f24046b (E1): same haze, horizon and colour; 3019 to 3023 same bytes as a06d2ae",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T10:00:08.336Z",
+   "file": "20261122100008336-frame-f03024-review.jpg",
+   "source": "out/work/sheets/.frames-LAwiGB/f03024-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3024, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3024,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T09:32:21.952Z",
    "file": "20261122093221952-note-rise-cover-b20.jpg",
@@ -119,179 +141,6 @@
    "source": "out/work/jupiter/fg/kept/rise-cover-e3.png",
    "kind": "note",
    "label": "Rise cover review sheet, every frame 3265 to 3276, agent/jupiter 8909c1d on main c92f97c (the three cover fixes): the sky fades to black on the cut frame 3270 only and returns by the same law, the pale column on the disc is gone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T08:22:11.086Z",
-   "file": "20261122082211086-note-n_3273_3274_mid.jpg",
-   "source": "out/work/view/e3r/v/n_3273_3274_mid.jpg",
-   "kind": "note",
-   "label": "Rise cover, review tier, frames 3273 and 3274, native crop (x 480 to 1440, y 270 to 810): before (a06d2ae on main 2621f00) left with the pale column right of centre, after (agent/jupiter 8909c1d on main c92f97c) right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T08:22:10.003Z",
-   "file": "20261122082210003-note-r_3269_3274.jpg",
-   "source": "out/work/view/e3r/v/r_3269_3274.jpg",
-   "kind": "note",
-   "label": "Rise cover across the cut, review tier, frames 3269 to 3274: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. Black on the cut frame 3270 only, stars and the dust band back from 3271, the pale upright column on the disc at 3273 and 3274 is gone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:55:01.613Z",
-   "file": "20261122075501613-note-n_3267_3268_left.jpg",
-   "source": "out/work/view/e3r/v/n_3267_3268_left.jpg",
-   "kind": "note",
-   "label": "Rise cover, review tier, frames 3267 and 3268, native crop of the upper left (x 0 to 960, y 0 to 400): before (a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:55:00.651Z",
-   "file": "20261122075500651-note-r_3265_3268.jpg",
-   "source": "out/work/view/e3r/v/r_3265_3268.jpg",
-   "kind": "note",
-   "label": "Rise cover, terrain side, review tier, frames 3265 to 3268: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. The sky fades out evenly toward the cut in place of going black at 3267; rows below 410 keep their bytes",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:37:31.656Z",
-   "file": "20261122073731656-note-r3265_66.jpg",
-   "source": "out/work/view/e12r/v/r3265_66.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover 3265 and 3266 at review: before a06d2ae, after ae307f3 (sky stays over the haze), tree holds main c92f97c",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:37:31.106Z",
-   "file": "20261122073731106-note-e3_native_b.jpg",
-   "source": "out/work/view/e12/e3_native_b.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3273 and 3274, drafts at native size, upper left, agent/jupiter 8909c1d on main c92f97c: stars and dust band over the clearing haze",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:37:30.515Z",
-   "file": "20261122073730515-note-e3_b.jpg",
-   "source": "out/work/view/e12/e3_b.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, drafts 3273 to 3276: left agent/jupiter ae307f3, right 8909c1d (sky back sooner on the orbit side), tree holds main c92f97c",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:37:29.894Z",
-   "file": "20261122073729894-note-e3_a.jpg",
-   "source": "out/work/view/e12/e3_a.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, drafts 3269 to 3272: left agent/jupiter ae307f3, right with the sky back by the same law after the cut (8909c1d), tree holds main c92f97c",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:14:19.645Z",
-   "file": "20261122071419645-note-rise_o_b.jpg",
-   "source": "out/work/view/e12/rise_o_b.jpg",
-   "kind": "note",
-   "label": "Jupiter rise, drafts, frames 3275 to 3278: left a06d2ae (column in the haze at the right), right ae307f3 (column gone), both on main 2621f00",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:14:19.010Z",
-   "file": "20261122071419010-note-rise_o_a.jpg",
-   "source": "out/work/view/e12/rise_o_a.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, drafts, frames 3271 to 3274 (orbit side): left a06d2ae with the pale upright column in the haze, right ae307f3 (the fine ray term of the haze fades out over five frames after the cut), both on main 2621f00",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:14:18.408Z",
-   "file": "20261122071418408-note-rise_t_b.jpg",
-   "source": "out/work/view/e12/rise_t_b.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, drafts, frames 3267 to 3270 (cut at 3270): left a06d2ae, right ae307f3, both on main 2621f00. The terrain sky stays to 3268 instead of 3266; black at the cut on both sides",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:14:17.747Z",
-   "file": "20261122071417747-note-dive_a.jpg",
-   "source": "out/work/view/e12/dive_a.jpg",
-   "kind": "note",
-   "label": "Jupiter dive cover, drafts (one sample), frames 3024 to 3027: left agent/jupiter a06d2ae, right ae307f3 (sky under the cover on the terrain side by the power 0.75), both on main 2621f00. Stars come back from 3025 instead of 3027",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:01:38.241Z",
-   "file": "20261122070138241-note-r3274.jpg",
-   "source": "out/work/view/sky/r3274.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover frame 3274, review tier, agent/jupiter a06d2ae on main 2621f00: the pale upright column in the thinning haze right of the middle (62 to 75 percent of the width)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:01:37.004Z",
-   "file": "20261122070137004-note-rise-cover-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/rise-cover-b19.png",
-   "kind": "note",
-   "label": "Jupiter rise cover, review sheet, every frame 3265 to 3276 (cut at 3270), agent/jupiter a06d2ae on main 2621f00 (engine batch 19). Colour and horizon carry across the cut; the sky is black from 3268 to 3273 (open item 2); a pale upright column stands in the haze right of the middle in 3273 to 3276 (my own weak point, cure in work)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:33:12.163Z",
-   "file": "20261122063312163-note-r3269_70.jpg",
-   "source": "out/work/view/sky/r3269_70.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, review tier, frames 3269 (last of the terrain side) and 3270 (first of the orbit side), agent/jupiter a06d2ae on main 2621f00",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:33:11.382Z",
-   "file": "20261122063311382-note-r3265_67.jpg",
-   "source": "out/work/view/sky/r3265_67.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, review tier, frames 3265 to 3267 (terrain side, the haze closes over the storm), agent/jupiter a06d2ae on main 2621f00",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:15:03.455Z",
-   "file": "20261122061503455-note-dive-cover-b19.jpg",
-   "source": "out/work/jupiter/fg/kept/dive-cover-b19.png",
-   "kind": "note",
-   "label": "Jupiter dive cover, review sheet, every frame 3019 to 3030 (cut at 3024), agent/jupiter a06d2ae on main 2621f00 (engine batch 19). Colour, horizon and direction carry across the cut; the storm goes under at 3021 and comes back at 3027; the sky is black from 3019 to 3026 (open item 2)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T06:14:19.056Z",
-   "file": "20261122061419056-sheet-jupiter.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/jupiter.dive-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.dive, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 3019,
-   "last": 3030,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:14:17.353Z",
-   "file": "20261122061417353-frame-f03030-review.jpg",
-   "source": "out/work/sheets/.frames-Y37tSp/f03030-review.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3030, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3030,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:01:02.741Z",
-   "file": "20261122060102741-note-d3023_24.jpg",
-   "source": "out/work/view/sky/d3023_24.jpg",
-   "kind": "note",
-   "label": "Jupiter dive cover, review tier, frames 3023 (last of the orbit side) and 3024 (first of the terrain side), agent/jupiter a06d2ae on main 2621f00",
    "stop": "jupiter"
   }
  ]
