@@ -28,9 +28,11 @@ KNIT_FINE = 2
 KNIT_FRINGE = 10
 TAPER_MIN = 40
 TAPER_MAX = 130
-TAPER_FOOT = 120
 TAPER_STRIP = 40
 TAPER_SEED = 11
+TAPER_SLANT = 0.35
+TAPER_MISS = 30
+TAPER_BASE = 2.7
 LIMB_TOP, LIMB_FULL, LIMB_END = -24, 150, 320
 LIMB_ALONG, LIMB_REACH, LIMB_IN = 50, 700, 14
 
@@ -362,47 +364,75 @@ deckW, cloudK, alphaW = knit(deckW, alpha, cloudW)
 
 def taper(deck, cloud, a, sh):
     ease = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))
+    xl, xr, yb = bx, bx + bw - 1, bh - 1
     L = np.log(np.maximum(lum(deck * sh[..., None] * (1 - a[..., None]) + cloud * a[..., None]), 1e-3)).astype(np.float32)
     gx = cv2.Sobel(L, cv2.CV_32F, 1, 0, ksize=3)
     gy = cv2.Sobel(L, cv2.CV_32F, 0, 1, ksize=3)
-    rows = np.arange(bh, dtype=np.float32)
-    foot = 1 - ease((rows - (bh - TAPER_FOOT)) / (TAPER_FOOT * 0.8))
-    rng = np.random.RandomState(TAPER_SEED)
-    ld = np.log(np.maximum(deck, 1e-3))
+    inside = np.zeros(L.shape, np.float32)
+    inside[:bh, bx:bx + bw] = 1
+    jxx, jyy, jxy = (cv2.GaussianBlur(j * inside, (0, 0), 16) for j in (gx * gx, gy * gy, gx * gy))
+    th = 0.5 * np.arctan2(2 * jxy, jxx - jyy) + np.pi / 2
+    slope = np.where(np.abs(np.cos(th)) < 0.3, 0, np.clip(np.tan(th), -0.8, 0.8)).astype(np.float32)
+    y0, y1, x0, x1 = 0, bh + TAPER_MAX + 1, bx - TAPER_MAX - 1, bx + bw + TAPER_MAX + 1
+    Y, X = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+    dx = np.maximum(np.maximum(xl - X, X - xr), 0)
+    dy = np.maximum(Y - yb, 0)
+    dist = np.hypot(dx, dy)
+    zone = (dist > 0) & (dist <= TAPER_MAX)
+    n = cv2.GaussianBlur(np.random.RandomState(TAPER_SEED).rand(y1 - y0, x1 - x0).astype(np.float32), (0, 0), 22)
+    n = np.clip((n - n[zone].min()) / (n[zone].max() - n[zone].min()), 0, 1)
+    reach = TAPER_MIN + (TAPER_MAX - TAPER_MIN) * n
+    half = TAPER_STRIP // 2
+    m = slope[np.clip(Y, 0, yb - half).astype(np.int32), np.clip(X, xl + half, xr - half).astype(np.int32)]
+    m = np.where(dy > 0, np.where(m < 0, -1, 1) * np.maximum(np.abs(m), TAPER_SLANT), m).astype(np.float32)
+    side = np.where(X > xr, 1.0, -1.0).astype(np.float32)
+    yh = Y - side * m * dx
+    xh = X - dy / np.where(dy > 0, m, 1)
+    hits = (dx > 0) & (yh <= yb)
+    v = np.where(hits, 1.0, 1 - ease(np.maximum(np.maximum(xl - xh, xh - xr), 0) / TAPER_MISS))
+    v = np.where((dx > 0) & (dy == 0), 1 - ease(np.maximum(yh - yb, 0) / TAPER_MISS), v)
+    w = ((1 - ease(dist / reach)) * v * zone).astype(np.float32)
+    ld = np.log(np.maximum(deck, 1e-6))
     pm = cloud * a[..., None]
+    lines = lambda x, sig: cv2.GaussianBlur(np.ascontiguousarray(x, np.float32).reshape(len(x), 1, -1), (0, 0), sigmaX=0.01, sigmaY=sig).reshape(len(x), -1)
+
+    def carried(img, sig):
+        img = img.reshape(img.shape[0], img.shape[1], -1)
+        el = lines(img[:bh, xl:xl + 4].mean(1), sig)
+        er = lines(img[:bh, xr - 3:xr + 1].mean(1), sig)
+        eb = lines(img[yb - 3:yb + 1, xl:xr + 1].mean(0), sig * TAPER_BASE)
+        ys = np.clip(yh, 0, yb)
+        r0 = np.floor(ys).astype(np.int32)
+        r1 = np.minimum(r0 + 1, yb)
+        fr = (ys - r0)[..., None]
+        xs = np.clip(xh, xl, xr) - xl
+        c0 = np.floor(xs).astype(np.int32)
+        c1 = np.minimum(c0 + 1, bw - 1)
+        fc = (xs - c0)[..., None]
+        sides = np.where(side[..., None] > 0, er[r0] * (1 - fr) + er[r1] * fr, el[r0] * (1 - fr) + el[r1] * fr)
+        return np.where(hits[..., None], sides, eb[c0] * (1 - fc) + eb[c1] * fc)
+
     d2, c2, a2 = deck.copy(), cloud.copy(), a.copy()
-    col = lambda x, sig: cv2.GaussianBlur(np.ascontiguousarray(x, np.float32).reshape(bh, 1, -1), (0, 0), sigmaX=0.01, sigmaY=sig).reshape(bh, -1)
-    for side in (-1, 1):
-        cols = slice(bx, bx + TAPER_STRIP) if side < 0 else slice(bx + bw - TAPER_STRIP, bx + bw)
-        jxx = col((gx[:bh, cols] ** 2).mean(1), 16)[:, 0]
-        jyy = col((gy[:bh, cols] ** 2).mean(1), 16)[:, 0]
-        jxy = col((gx[:bh, cols] * gy[:bh, cols]).mean(1), 16)[:, 0]
-        th = 0.5 * np.arctan2(2 * jxy, jxx - jyy) + np.pi / 2
-        slope = np.where(np.abs(np.cos(th)) < 0.3, 0, np.clip(np.tan(th), -0.8, 0.8)).astype(np.float32)
-        n = col(rng.rand(bh).astype(np.float32), 22)[:, 0]
-        reach = TAPER_MIN + (TAPER_MAX - TAPER_MIN) * np.clip((n - n.min()) / (n.max() - n.min()), 0, 1)
-        e = slice(bx, bx + 4) if side < 0 else slice(bx + bw - 4, bx + bw)
-        de = col(ld[:bh, e].mean(1), 1.5)
-        ae = col(a[:bh, e].mean(1), 1.0)[:, 0]
-        pe = col(pm[:bh, e].mean(1), 1.0)
-        print('taper %s slope p10 p50 p90 %.2f %.2f %.2f, reach %.0f to %.0f' % ('left' if side < 0 else 'right', *np.percentile(slope[below[:bh, bx + 4]], [10, 50, 90]), reach.min(), reach.max()))
-        for d in range(1, TAPER_MAX + 1):
-            x = bx - d if side < 0 else bx + bw - 1 + d
-            ys = np.clip(rows - side * slope * d, 0, bh - 1)
-            y0 = np.floor(ys).astype(np.int32)
-            y1 = np.minimum(y0 + 1, bh - 1)
-            fy = (ys - y0)[:, None]
-            t = (1 - (1 - ease(d / reach)) * foot)[:, None]
-            av = (ae[y0, None] * (1 - fy) + ae[y1, None] * fy) * (1 - t) + a[:bh, x, None] * t
-            pv = (pe[y0] * (1 - fy) + pe[y1] * fy) * (1 - t) + pm[:bh, x] * t
-            dv = np.exp((de[y0] * (1 - fy) + de[y1] * fy) * (1 - t) + ld[:bh, x] * t)
-            d2[:bh, x] = np.where(t < 1, dv, deck[:bh, x])
-            a2[:bh, x] = np.where(t < 1, av, a[:bh, x, None])[:, 0]
-            c2[:bh, x] = np.where((t < 1) & (av > 0.004), pv / np.maximum(av, 0.004), cloud[:bh, x])
+    sel = w > 0
+    wz = w[..., None]
+    dv = np.exp(carried(ld, 1.5) * wz + ld[y0:y1, x0:x1] * (1 - wz))
+    av = carried(a, 1.0)[..., 0] * w + a[y0:y1, x0:x1] * (1 - w)
+    pv = carried(pm, 1.0) * wz + pm[y0:y1, x0:x1] * (1 - wz)
+    d2[y0:y1, x0:x1][sel] = dv[sel]
+    a2[y0:y1, x0:x1][sel] = av[sel]
+    ok = sel & (av > 0.004)
+    c2[y0:y1, x0:x1][ok] = (pv / np.maximum(av, 0.004)[..., None])[ok]
+    for name, pick in (('left', (dy == 0) & (X < xl)), ('right', (dy == 0) & (X > xr)), ('base', (dy > 0) & (dx == 0))):
+        print('taper %s: %d texels carried, slope p10 p50 p90 %.2f %.2f %.2f' % (name, (sel & pick).sum(), *np.percentile(m[sel & pick], [10, 50, 90])))
     for name, i0, o0 in (('left', bx + 1, bx - 4), ('right', bx + bw - 4, bx + bw + 1)):
         st = np.abs(a[:bh, i0:i0 + 3].mean(1) - a[:bh, o0:o0 + 3].mean(1))
         st2 = np.abs(a2[:bh, i0:i0 + 3].mean(1) - a2[:bh, o0:o0 + 3].mean(1))
         print('taper %s: rows with an alpha step over 0.2 at the border %d before, %d after; largest %.2f before, %.2f after' % (name, (st > 0.2).sum(), (st2 > 0.2).sum(), st.max(), st2.max()))
+    for name, x in (('deck before', deck), ('deck after', d2)):
+        e = enc(x)
+        gs = np.abs(e[:bh, bx + bw - 4:bx + bw - 1].astype(np.int32).mean((1, 2)) - e[:bh, bx + bw + 1:bx + bw + 4].astype(np.int32).mean((1, 2)))
+        gb = np.abs(e[bh - 4:bh - 1, bx:bx + bw].astype(np.int32).mean((0, 2)) - e[bh + 1:bh + 4, bx:bx + bw].astype(np.int32).mean((0, 2)))
+        print('taper %s: step across the right border mean %.2f p95 %.1f, across the base mean %.2f p95 %.1f' % (name, gs.mean(), np.percentile(gs, 95), gb.mean(), np.percentile(gb, 95)))
     return np.clip(d2, 0, 1).astype(np.float32), np.clip(c2, 0, 1).astype(np.float32), np.clip(a2, 0, 1).astype(np.float32)
 
 
