@@ -1,0 +1,6 @@
+{
+ "source": "assets-src/saturn/shot/skim_bloom.py, the glow the lens chain adds to the approved close image, computed with the chain's own filter",
+ "file": "skim-bloom.png",
+ "scale": 4.0,
+ "levels": 6
+}

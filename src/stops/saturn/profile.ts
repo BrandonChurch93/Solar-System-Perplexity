@@ -83,6 +83,10 @@ float familyAt(vec3 p, float t) {
 }
 uniform sampler2D uLayoutTone;
 uniform float uToneW;
+uniform vec4 uLayCam;
+uniform vec4 uLayEye;
+uniform vec4 uLayFill;
+uniform vec2 uLayEdge;
 vec3 layoutTone = vec3(1.0);
 float layoutCut = 1.0;
 float layoutOver = 0.0;
@@ -107,6 +111,36 @@ vec3 ringLayout(vec3 p, float r) {
       layoutCut = mix(1.0, smoothstep(-uJunction, uJunction, t.a), inside);
       layoutOver = inside * smoothstep(-uJunction, uJunction, t.a);
       layoutDist = t.a;
+      for (int g = 0; g < (uLayFill.x > 0.0 ? 1 : 0); g++) {
+        vec2 sq = p.xz * uLayCam.w;
+        float rr = dot(sq, sq);
+        float cc = dot(uLayCam.xyz, uLayCam.xyz);
+        float root = uLayFill.y * uLayFill.y + cc * rr - uLayFill.y * (rr + cc);
+        float ut = uLayFill.y - sqrt(max(root, 0.0));
+        float span = length(uLayCam.xz);
+        float ct = ut / max(span * sqrt(rr), 1e-5);
+        vec2 ch = uLayCam.xz / span;
+        vec2 ph = vec2(-ch.y, ch.x) * uLayEye.w;
+        for (int h = 0; h < ((root > 0.0 && dot(uLayCam.xz, sq) < ut && abs(ct) < 1.0 && dot(sq, ph) > 0.0) ? 1 : 0); h++) {
+          vec2 src = sqrt(rr) * (ch * ct + ph * sqrt(1.0 - ct * ct));
+          vec4 c2 = uLayoutM * vec4(src.x / uLayCam.w, p.y, src.y / uLayCam.w, 1.0);
+          vec2 uv2 = c2.xy / max(c2.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
+          vec2 e2 = min(uv2, 1.0 - uv2);
+          vec3 d = vec3(sq.x, 0.0, sq.y) - uLayEye.xyz;
+          float lead = dot(uLayEye.xyz, d);
+          float miss = dot(uLayEye.xyz, uLayEye.xyz) - lead * lead / dot(d, d) - 1.0;
+          float sky = lead < 0.0 ? smoothstep(uLayEdge.x, uLayEdge.y, miss) : 1.0;
+          float fw = uLayFill.x * sky * (1.0 - smoothstep(uLayFill.z, uLayFill.w, length(sq - src))) * (c2.w > 1e-3 ? smoothstep(0.0, 0.04, min(e2.x, e2.y)) : 0.0);
+          vec2 f2 = clamp(uv2 * uLayoutSize - 0.5, vec2(0.0), uLayoutSize - 1.0);
+          ivec2 i2 = ivec2(floor(f2));
+          ivec2 n2 = min(i2 + 1, ivec2(uLayoutSize) - 1);
+          vec2 w2 = f2 - vec2(i2);
+          float g2 = mix(mix(texelFetch(uLayout, i2, 0).g, texelFetch(uLayout, ivec2(n2.x, i2.y), 0).g, w2.x), mix(texelFetch(uLayout, ivec2(i2.x, n2.y), 0).g, texelFetch(uLayout, n2, 0).g, w2.x), w2.y);
+          for (int e = 0; e < (uGate < 1.0 ? 1 : 0); e++) g2 = mix(mix(mix(texelFetch(uLayoutEven, i2, 0).r, texelFetch(uLayoutEven, ivec2(n2.x, i2.y), 0).r, w2.x), mix(texelFetch(uLayoutEven, ivec2(i2.x, n2.y), 0).r, texelFetch(uLayoutEven, n2, 0).r, w2.x), w2.y), g2, uGate);
+          t.g = mix(t.g, g2, fw);
+          for (int e = 0; e < (uToneW > 0.0 ? 1 : 0); e++) layoutTone = mix(layoutTone, mix(vec3(1.0), mix(mix(texelFetch(uLayoutTone, i2, 0).rgb, texelFetch(uLayoutTone, ivec2(n2.x, i2.y), 0).rgb, w2.x), mix(texelFetch(uLayoutTone, ivec2(i2.x, n2.y), 0).rgb, texelFetch(uLayoutTone, n2, 0).rgb, w2.x), w2.y), uToneW), fw);
+        }
+      }
     }
     rho = warpTo(familyAt(p, uClose) + inside * t.r * smoothstep(uSettle.x, uSettle.y, uClose));
   }
@@ -143,6 +177,10 @@ export function layoutUniforms(texture: THREE.DataTexture, even: THREE.DataTextu
     uGate: gate,
     uLayoutM: { value: matrix },
     uLayoutSize: { value: new THREE.Vector2(width, height) },
+    uLayCam: { value: new THREE.Vector4(0, 1, 0, 1) },
+    uLayEye: { value: new THREE.Vector4(0, 1, 0, 1) },
+    uLayFill: { value: new THREE.Vector4(0, 1, 0, 1) },
+    uLayEdge: { value: new THREE.Vector2(-1, 0) },
     uWarpH: { value: new THREE.Vector4().fromArray(rings.warpHero) },
     uWarpC: { value: new THREE.Vector4().fromArray(rings.warpClose) },
   }

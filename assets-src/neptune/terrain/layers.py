@@ -26,6 +26,16 @@ KNIT_ALONG = 24
 KNIT_COARSE = 120
 KNIT_FINE = 2
 KNIT_FRINGE = 10
+TAPER_MIN = 40
+TAPER_MAX = 130
+TAPER_STRIP = 40
+TAPER_SEED = 11
+TAPER_SLANT = 0.35
+TAPER_MISS = 30
+TAPER_BASE = 2.7
+TAPER_ALONG = 32
+TAPER_LEFT = 0.3
+TAPER_MIRROR = 1.0
 LIMB_TOP, LIMB_FULL, LIMB_END = -24, 150, 320
 LIMB_ALONG, LIMB_REACH, LIMB_IN = 50, 700, 14
 
@@ -353,7 +363,108 @@ def knit(deck, a, cloud):
 
 
 deckW, cloudK, alphaW = knit(deckW, alpha, cloudW)
-comp = deckW * s[..., None] * (1 - alphaW[..., None]) + cloudK * alphaW[..., None]
+
+
+def taper(deck, cloud, a, sh):
+    ease = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))
+    xl, xr, yb = bx, bx + bw - 1, bh - 1
+    L = np.log(np.maximum(lum(deck * sh[..., None] * (1 - a[..., None]) + cloud * a[..., None]), 1e-3)).astype(np.float32)
+    gx = cv2.Sobel(L, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(L, cv2.CV_32F, 0, 1, ksize=3)
+    inside = np.zeros(L.shape, np.float32)
+    inside[:bh, bx:bx + bw] = 1
+    jxx, jyy, jxy = (cv2.GaussianBlur(j * inside, (0, 0), 16) for j in (gx * gx, gy * gy, gx * gy))
+    th = 0.5 * np.arctan2(2 * jxy, jxx - jyy) + np.pi / 2
+    coh = np.sqrt((jxx - jyy) ** 2 + 4 * jxy ** 2) / np.maximum(jxx + jyy, 1e-12)
+    slope = (np.clip(np.tan(th), -0.8, 0.8) * ease((np.abs(np.cos(th)) - 0.3) / 0.15)).astype(np.float32)
+    y0, y1, x0, x1 = 0, bh + TAPER_MAX + 1, bx - TAPER_MAX - 1, bx + bw + TAPER_MAX + 1
+    Y, X = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+    dx = np.maximum(np.maximum(xl - X, X - xr), 0)
+    dy = np.maximum(Y - yb, 0)
+    dist = np.hypot(dx, dy)
+    zone = (dist > 0) & (dist <= TAPER_MAX)
+    n = cv2.GaussianBlur(np.random.RandomState(TAPER_SEED).rand(y1 - y0, x1 - x0).astype(np.float32), (0, 0), 22)
+    n = np.clip((n - n[zone].min()) / (n[zone].max() - n[zone].min()), 0, 1)
+    reach = TAPER_MIN + (TAPER_MAX - TAPER_MIN) * n
+    half = TAPER_STRIP // 2
+    g1 = lambda x, sig: cv2.GaussianBlur(np.ascontiguousarray(x, np.float32).reshape(-1, 1), (0, 0), sigmaX=0.01, sigmaY=sig, borderType=cv2.BORDER_REPLICATE).ravel()
+    along = lambda i, sig=TAPER_ALONG: g1(slope[i] * coh[i], sig) / np.maximum(g1(coh[i], sig), 1e-6)
+    ml, mr = along(np.s_[:bh, xl + half]), along(np.s_[:bh, xr - half])
+    sl = 1.0 if (ml * coh[:bh, xl + half]).sum() >= 0 else -1.0
+    ml = sl * np.maximum(sl * ml, TAPER_LEFT)
+    base = np.s_[yb - half, xl:xr + 1]
+    mb = along(base, TAPER_ALONG / TAPER_SLANT ** 2)
+    sgn = 1.0 if (mb * coh[base]).sum() >= 0 else -1.0
+    mb = sgn * np.maximum(sgn * mb, TAPER_SLANT)
+    Yi = np.clip(Y, 0, yb).astype(np.int32)
+    ms = np.where(X > xr, mr[Yi], ml[Yi])
+    mB = mb[np.clip(X, xl, xr).astype(np.int32) - xl]
+    foot = ease((Y - (yb - TAPER_MAX)) / TAPER_MAX)
+    m = np.where(dy > 0, mB, np.where(dx > 0, ms * (1 - foot) + mB * foot, ms)).astype(np.float32)
+    side = np.where(X > xr, 1.0, -1.0).astype(np.float32)
+    yh = Y - side * m * dx
+    xh = X - dy / np.where(dy > 0, m, 1)
+    hits = (dx > 0) & (yh <= yb)
+    v = np.where(hits, 1.0, 1 - ease(np.maximum(np.maximum(xl - xh, xh - xr), 0) / TAPER_MISS))
+    v = np.where((dx > 0) & (dy == 0), 1 - ease(np.maximum(yh - yb, 0) / TAPER_MISS), v)
+    w = ((1 - ease(dist / reach)) * v * zone).astype(np.float32)
+    ld = np.log(np.maximum(deck, 1e-6))
+    pm = cloud * a[..., None]
+    lines = lambda x, sig: cv2.GaussianBlur(np.ascontiguousarray(x, np.float32).reshape(len(x), 1, -1), (0, 0), sigmaX=0.01, sigmaY=sig).reshape(len(x), -1)
+
+    def carried(img, sig):
+        img = img.reshape(img.shape[0], img.shape[1], -1)
+        el = lines(img[:bh, xl:xl + 4].mean(1), sig)
+        er = lines(img[:bh, xr - 3:xr + 1].mean(1), sig)
+        eb = lines(img[yb - 3:yb + 1, xl:xr + 1].mean(0), sig * TAPER_BASE)
+        ys = np.clip(yh, 0, yb)
+        r0 = np.floor(ys).astype(np.int32)
+        r1 = np.minimum(r0 + 1, yb)
+        fr = (ys - r0)[..., None]
+        xs = np.clip(xh, xl, xr) - xl
+        c0 = np.floor(xs).astype(np.int32)
+        c1 = np.minimum(c0 + 1, bw - 1)
+        fc = (xs - c0)[..., None]
+        sides = np.where(side[..., None] > 0, er[r0] * (1 - fr) + er[r1] * fr, el[r0] * (1 - fr) + el[r1] * fr)
+        out = np.where((hits | (dy == 0))[..., None], sides, eb[c0] * (1 - fc) + eb[c1] * fc)
+        depth = TAPER_MIRROR * dx
+        mir = cv2.remap(np.ascontiguousarray(img, np.float32), (xl + depth).astype(np.float32), np.clip(yh + m * depth, 0, yb).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        return np.where(((X < xl) & (hits | (dy == 0)))[..., None], mir.reshape(out.shape), out)
+
+    d2, c2, a2 = deck.copy(), cloud.copy(), a.copy()
+    sel = w > 0
+    wz = w[..., None]
+    dv = np.exp(carried(ld, 1.5) * wz + ld[y0:y1, x0:x1] * (1 - wz))
+    av = carried(a, 1.0)[..., 0] * w + a[y0:y1, x0:x1] * (1 - w)
+    pv = carried(pm, 1.0) * wz + pm[y0:y1, x0:x1] * (1 - wz)
+    d2[y0:y1, x0:x1][sel] = dv[sel]
+    a2[y0:y1, x0:x1][sel] = av[sel]
+    ok = sel & (av > 0.004)
+    c2[y0:y1, x0:x1][ok] = (pv / np.maximum(av, 0.004)[..., None])[ok]
+    src = np.where(hits | (dy == 0), np.clip(yh, 0, yb), np.clip(xh, xl, xr))
+    for name, pick, ax in (('left', (dy == 0) & (X < xl), 0), ('right', (dy == 0) & (X > xr), 0), ('base', (dy > 0) & (dx == 0), 1)):
+        print('taper %s: %d texels carried, slope p10 p50 p90 %.2f %.2f %.2f' % (name, (sel & pick).sum(), *np.percentile(m[sel & pick], [10, 50, 90])))
+        cut = lambda q, i: q[1:] if (ax, i) == (0, 0) else q[:-1] if ax == 0 else q[:, 1:] if i == 0 else q[:, :-1]
+        both = cut(pick, 0) & cut(pick, 1) & (np.minimum(cut(w, 0), cut(w, 1)) > 0.1)
+        step = np.abs(np.diff(src, axis=ax))[both]
+        print('taper %s: foot of the line between neighbours along the border, largest step %.1f texels, %d over 3' % (name, step.max(), (step > 3).sum()))
+    print('taper base: lines slant %s, share at the least slant %.2f' % ('right' if sgn > 0 else 'left', (np.abs(mb) <= TAPER_SLANT + 1e-6).mean()))
+    print('taper left: lines slant %s, share at the least slant %.2f' % ('down to the right' if sl > 0 else 'up to the right', (np.abs(ml) <= TAPER_LEFT + 1e-6).mean()))
+    print('taper left: the frame mirrored along the lines, depth inside %.1f times the distance outside, %d texels' % (TAPER_MIRROR, (sel & (X < xl) & (hits | (dy == 0))).sum()))
+    for name, i0, o0 in (('left', bx + 1, bx - 4), ('right', bx + bw - 4, bx + bw + 1)):
+        st = np.abs(a[:bh, i0:i0 + 3].mean(1) - a[:bh, o0:o0 + 3].mean(1))
+        st2 = np.abs(a2[:bh, i0:i0 + 3].mean(1) - a2[:bh, o0:o0 + 3].mean(1))
+        print('taper %s: rows with an alpha step over 0.2 at the border %d before, %d after; largest %.2f before, %.2f after' % (name, (st > 0.2).sum(), (st2 > 0.2).sum(), st.max(), st2.max()))
+    for name, x in (('deck before', deck), ('deck after', d2)):
+        e = enc(x)
+        gs = np.abs(e[:bh, bx + bw - 4:bx + bw - 1].astype(np.int32).mean((1, 2)) - e[:bh, bx + bw + 1:bx + bw + 4].astype(np.int32).mean((1, 2)))
+        gb = np.abs(e[bh - 4:bh - 1, bx:bx + bw].astype(np.int32).mean((0, 2)) - e[bh + 1:bh + 4, bx:bx + bw].astype(np.int32).mean((0, 2)))
+        print('taper %s: step across the right border mean %.2f p95 %.1f, across the base mean %.2f p95 %.1f' % (name, gs.mean(), np.percentile(gs, 95), gb.mean(), np.percentile(gb, 95)))
+    return np.clip(d2, 0, 1).astype(np.float32), np.clip(c2, 0, 1).astype(np.float32), np.clip(a2, 0, 1).astype(np.float32)
+
+
+deckT, cloudT, alphaT = taper(deckW, cloudK, alphaW, s)
+comp = deckT * s[..., None] * (1 - alphaT[..., None]) + cloudT * alphaT[..., None]
 for name, i0, o0 in (('left', bx + 2, bx - 10), ('right', bx + bw - 10, bx + bw + 2)):
     gap = np.abs(enc(blur(comp[:bh, i0:i0 + 8], 4)).astype(np.int32).mean(1) - enc(blur(comp[:bh, o0:o0 + 8], 4)).astype(np.int32).mean(1))[below[:bh, bx + 4]]
     print('%s border composite step mean %.2f p95 %.1f' % (name, gap.mean(), np.percentile(gap, 95)))
@@ -375,16 +486,35 @@ def reach(w, h, box):
     return cv2.resize(k, (w, h), interpolation=cv2.INTER_LINEAR)
 
 
-def save(name, rgb, a, size_web, texels, k):
+def pixels(rgb, a, texels, k):
     img = crisp(enc(rgb)[:, :, ::-1], texels, k)
     if a is not None:
         img = np.dstack([img, crisp(np.clip(a * 255 + 0.5, 0, 255).astype(np.uint8), texels, k * (a > 0.02))])
-    im = Image.fromarray(img)
+    return img
+
+
+def save(name, rgb, a, size_web, texels, k):
+    im = Image.fromarray(pixels(rgb, a, texels, k))
     kw = dict(quality=95, method=4)
     if a is not None:
         kw['exact'] = True
     im.save(OUT + '/full/' + name, **kw)
     im.resize(size_web, Image.LANCZOS).save(OUT + '/web/' + name, **kw)
+
+
+def resave(name, rgb, a, rgb2, a2, size_web, texels, k):
+    p0, p1 = pixels(rgb, a, texels, k), pixels(rgb2, a2, texels, k)
+    keep = np.zeros((WH, WW), np.uint8)
+    keep[:bh, bx:bx + bw] = 255
+    for sub, size in (('/full/', None), ('/web/', size_web)):
+        q0, q1, kp = (p0, p1, keep) if size is None else (np.array(Image.fromarray(x).resize(size, Image.LANCZOS)) for x in (p0, p1, keep))
+        q1 = np.where(kp[..., None] > 0, q0, q1)
+        old = np.array(Image.open(OUT + sub + name)).astype(np.int32)
+        new = np.clip(old + q1.astype(np.int32) - q0.astype(np.int32), 0, 255).astype(np.uint8)
+        Image.fromarray(new).save(OUT + sub + name, lossless=True, quality=80, method=4, exact=True)
+        ch = np.abs(new.astype(np.int32) - old).max(2) > 0
+        ys, xs = np.where(ch)
+        print('%s%s taper: %d texels changed, x %d to %d, y %d to %d' % (sub, name, ch.sum(), xs.min(), xs.max(), ys.min(), ys.max()))
 
 
 kC = reach(CW, CH, True)
@@ -393,6 +523,8 @@ save('close-deck.webp', deckC, None, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-cloud.webp', cloudC, alphaC, (CW // 2, CH // 2), CW / 1920, kC)
 save('close-deck-wide.webp', deckW, None, (WW // 2, WH // 2), bw / 1920, kW)
 save('close-cloud-wide.webp', cloudK, alphaW, (WW // 2, WH // 2), bw / 1920, kW)
+resave('close-deck-wide.webp', deckW, None, deckT, None, (WW // 2, WH // 2), bw / 1920, kW)
+resave('close-cloud-wide.webp', cloudK, alphaW, cloudT, alphaT, (WW // 2, WH // 2), bw / 1920, kW)
 cv2.imwrite(OUT + '/full/close-height.png', hmap)
 cv2.imwrite(OUT + '/web/close-height.png', cv2.resize(hmap, (HW // 2, HH // 2), interpolation=cv2.INTER_AREA))
 cv2.imwrite(WORK + 'wide.png', enc(wide))

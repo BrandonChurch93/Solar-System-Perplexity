@@ -44,10 +44,10 @@ float cells(vec2 x) {
   vec2 f = x - i;
   float a = 8.0;
   float b = 8.0;
-  for (int v = -1; v <= 1; v++) {
-    for (int u = -1; u <= 1; u++) {
+  for (int v = -2; v <= 2; v++) {
+    for (int u = -2; u <= 2; u++) {
       vec2 o = vec2(float(u), float(v));
-      vec2 d = o + 0.15 + 0.7 * hash2(i + o) - f;
+      vec2 d = o + hash2(i + o) - f;
       float s = dot(d, d);
       b = min(b, max(a, s));
       a = min(a, s);
@@ -84,7 +84,7 @@ void main() {
   vec3 glow = inverseFilmic(textureLod(uMap, uv, 5.0).rgb);
   float rr = min(r, 0.999);
   vec2 s = dd * (asin(rr) / max(rr, 1e-4));
-  float fine = smoothstep(0.0, 0.7, cells(s * uGrain.z));
+  float fine = smoothstep(0.0, 0.62, cells(s * uGrain.z));
   float coarse = smoothstep(0.0, 0.5, cells(s * (uGrain.z * 0.23) + 17.0));
   float inside = 1.0 - smoothstep(0.86, 0.985, r);
   float grain = 1.0 + mix(uGrain.x, uGrain.y, uTravel) * inside * ((fine - 0.46) + uGrain.w * (coarse - 0.7));

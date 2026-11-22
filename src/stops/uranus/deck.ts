@@ -3,6 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import deckJson from './deck.json'
 import nearJson from './deck-near.json'
+import cloudJson from './deck-cloud.json'
 
 export interface DeckLook {
   flow: [number, number, number, number]
@@ -13,6 +14,7 @@ export interface DeckLook {
   sharp: number
   detail: { tone: number; relief: number; fleck: number; scale: number; stretch: [number, number] }
   near: [number, number]
+  cloud: { height: number; tile: number; stretch: number; group: number; cover: [number, number]; curve: [number, number]; drift: number; gain: number; shade: number; reach: [number, number]; tint: [number, number, number] }
 }
 
 const COMMON = /* glsl */ `
@@ -99,6 +101,12 @@ uniform vec2 uSunG;
 uniform sampler2D uNear;
 uniform vec4 uNearWin;
 uniform vec3 uNearMix;
+uniform sampler2D uCloud;
+uniform vec4 uCloudA;
+uniform vec4 uCloudB;
+uniform vec4 uCloudC;
+uniform vec4 uCloudD;
+uniform vec3 uCloudTint;
 in vec3 vBase;
 in vec3 vView;
 in vec3 vClip;
@@ -130,6 +138,20 @@ float billow(vec2 g, float fw) {
     a *= 0.5;
   }
   return s;
+}
+vec2 cloudPlace(vec3 q) {
+  vec3 rel = q - uCentre;
+  vec2 g = vec2(dot(rel, uF0) * uFlowDir.y + dot(rel, uR0) * uFlowDir.x + uTime * uCloudA.w, dot(rel, uF0) * uFlowDir.x - dot(rel, uR0) * uFlowDir.y);
+  g.y += 0.1 * sin(g.x * 1.3 + 1.7 * sin(g.y * 0.8 + 0.5));
+  return g;
+}
+float cloudAt(vec2 g, float wide) {
+  vec2 gr = g * uCloudA.z;
+  float group = 0.62 * soft(gr + 0.37) + 0.38 * soft(mat2(0.8, 0.6, -0.6, 0.8) * gr * 2.3 + 7.1);
+  vec2 uv = g * uCloudA.y * vec2(uCloudD.y, 1.0);
+  vec2 fit = vec2(1.0, 1.0 - 2.0 * uCloudD.x);
+  float t = textureGrad(uCloud, vec2(uv.x, uCloudD.x + fract(uv.y) * fit.y), dFdx(uv) * fit * wide, dFdy(uv) * fit * wide).r;
+  return t * smoothstep(uCloudC.z, uCloudC.w, t) * smoothstep(uCloudC.x, uCloudC.y, group);
 }
 void main() {
   vec3 p = onSphere(vBase);
@@ -189,12 +211,28 @@ void main() {
   float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
   float shade = 1.0 + wD * (uDetail.x * 2.0 * c0 + uDetail.y * clamp((c0 - c1) * 5.0, -1.0, 1.0) + uDetail.z * fl);
   vec3 col = mix(aS, aT, wT) * lNow * max(shade, 0.3);
+  vec3 oc = uCamL - uCentre;
+  float rs = uRadius + uCloudA.x;
+  float bq = dot(oc, dv);
+  float disc = bq * bq - dot(oc, oc) + rs * rs;
+  float tq = -bq - sqrt(max(disc, 0.0));
+  vec3 q = uCamL + dv * tq;
+  float muQ = dot(normalize(q - uCentre), -dv);
+  float reach = smoothstep(uCloudB.z, uCloudB.w, muQ) * step(0.0, disc) * step(0.0, tq);
+  vec2 gq = cloudPlace(q);
+  float dq = cloudAt(gq, 1.0) * reach;
+  float veilA = clamp(dq * uCloudB.x, 0.0, 1.0);
+  float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu);
+  col *= 1.0 - uCloudB.y * under;
+  col = col * (1.0 - veilA) + deckLight(muQ, psi) * uCloudTint * dq;
+  float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * float(textureSize(uCloud, 0).x));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), plateT * (1.0 + wN * (float(textureSize(uNear, 0).x) / ((uNearWin.z - uNearWin.x) * uColorSize.x) - 1.0)), wT);
-  if (uDiag >= 2 && uFade < 0.5) discard;
+  texels = mix(texels, min(texels, cloudT), veilA);
   vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
   outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
+  if (uDiag >= 2 && uFade < 0.5) discard;
 }`
 
 const HALO_VERT = /* glsl */ `
@@ -224,10 +262,8 @@ in vec3 vDir;
 in vec3 vClip;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   vec3 d = normalize(vDir);
   float eps = acos(clamp(dot(d, uNadir), -1.0, 1.0)) - uAlpha;
-  if (eps <= 0.0) discard;
   float y = sqrt(clamp(eps / uEpsMax, 0.0, 1.0));
   float psi = atan(dot(d, uR0), dot(d, uF0));
   vec2 uv = vec2((clamp(psi / uPsiMax * 0.5 + 0.5, 0.0, 1.0) * (uHaloSize.x - 1.0) + 0.5) / uHaloSize.x, (y * (uHaloSize.y - 1.0) + 0.5) / uHaloSize.y);
@@ -235,9 +271,10 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, 0.0);
+  if (uDiag >= 2 || eps <= 0.0) discard;
 }`
 
-export interface DeckTextures { color: THREE.Texture; near: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
+export interface DeckTextures { color: THREE.Texture; near: THREE.Texture; cloud: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
 
 export class Deck {
   readonly group = new THREE.Group()
@@ -275,6 +312,9 @@ export class Deck {
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
         uSunG: { value: sunG },
+        uCloud: { value: t.cloud }, uCloudA: { value: new THREE.Vector4(look.cloud.height, 1 / look.cloud.tile, 1 / look.cloud.group, look.cloud.drift) },
+        uCloudB: { value: new THREE.Vector4(look.cloud.gain, look.cloud.shade, look.cloud.reach[0], look.cloud.reach[1]) }, uCloudC: { value: new THREE.Vector4(look.cloud.cover[0], look.cloud.cover[1], look.cloud.curve[0], look.cloud.curve[1]) }, uCloudD: { value: new THREE.Vector4(cloudJson.gutter, 1 / look.cloud.stretch, 0, 0) },
+        uCloudTint: { value: new THREE.Vector3().fromArray(look.cloud.tint) },
         uNear: { value: t.near }, uNearWin: { value: new THREE.Vector4().fromArray(nearJson.window) }, uNearMix: { value: new THREE.Vector3(look.near[0], look.near[1], nearJson.edge) },
       },
     })

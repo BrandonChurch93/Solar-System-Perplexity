@@ -21,21 +21,43 @@ export interface GlobeLook {
   rimNight: [number, number, number, number]
   termShift: [number, number, number]
   nightBlur: number
+  nightBlurFar: number
+  fine: [number, number, number]
+  fineTop: number
   probe: number
   edgePx: number
+  limbFit: number[]
+  limbLat: [number, number]
+  limbInflate: number
+  glowNorth: [number, number, number, number]
+  glowPole: [number, number, number, number]
+  glowWide: [number, number, number, number]
+  glowCap: [number, number, number]
 }
 
 export interface GlobePatch { texture: THREE.Texture; table: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
 
 export interface ShotLight { texture: THREE.Texture; matrix: THREE.Matrix4; camera: THREE.Vector3; weight: THREE.IUniform<number> }
 
+export const LIMB_GLSL = /* glsl */ `
+uniform float uLimbFit[23];
+uniform vec2 uLimbLat;
+uniform float uLimbW;
+float limbAt(vec3 tp, float polar, vec3 sun) {
+  float x = clamp((degrees(asin(clamp(tp.y, -1.0, 1.0))) - uLimbLat.x) / uLimbLat.y, 0.0, 22.0);
+  int i = int(min(floor(x), 21.0));
+  float day = smoothstep(0.0, 0.3, dot(normalize(vec3(tp.x, tp.y / polar, tp.z)), normalize(sun)));
+  return uLimbW * mix(uLimbFit[i], uLimbFit[i + 1], x - float(i)) * day;
+}`
+
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vView;
 out vec3 vClip;
+uniform float uInflate;
 void main() {
-  vLocal = position;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vLocal = position * uInflate;
+  vec4 mv = modelViewMatrix * vec4(vLocal, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
   vClip = gl_Position.xyw;
@@ -66,6 +88,8 @@ uniform vec4 uRim;
 uniform vec4 uRimNight;
 uniform float uRimPower;
 uniform float uNightBlur;
+uniform vec4 uFine;
+uniform float uFineTop;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform sampler2D uTableC;
@@ -85,6 +109,7 @@ uniform mat4 uSkimM;
 uniform vec3 uSkimCam;
 uniform float uSkimW;
 uniform float uEdgePx;
+uniform float uEdgeLin;
 in vec3 vLocal;
 in vec3 vView;
 in vec3 vClip;
@@ -94,6 +119,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
+${LIMB_GLSL}
 vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
   vec4 c = m * vec4(P, 1.0);
   vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
@@ -126,8 +152,10 @@ float zonal(float lat) {
   return 0.55 * sin(lat * 7.0 + 0.4) + 0.3 * sin(lat * 17.0 + 1.9) + 0.15 * sin(lat * 31.0 + 0.6);
 }
 void main() {
-  vec3 p = normalize(vLocal);
   vec3 dirS = normalize(vLocal - uCam);
+  float along = -dot(uCam, dirS);
+  float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
+  vec3 p = normalize(uLimbW > 0.0 ? uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))) : vLocal);
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
@@ -142,9 +170,12 @@ void main() {
   vec2 q = vec2(atan(e.z, e.x) / uPatchBox.y * 0.5 + 0.5, (asin(clamp(e.y, -1.0, 1.0)) - uPatchBox.z) / (uPatchBox.w - uPatchBox.z));
   vec2 qe = min(q, 1.0 - q);
   float pw = e.x > 0.0 ? uClose * smoothstep(0.0, 0.1, qe.x) * smoothstep(0.0, 0.1, qe.y) : 0.0;
+  vec2 qgx = dFdx(q);
+  vec2 qgy = dFdy(q);
+  float patchTexels = diagTexels(q * uPatchSize);
   for (int k = 0; k < (pw > 0.0 ? 1 : 0); k++) {
-    albedo = mix(albedo, inverseFilmic(textureGrad(uPatch, q, dFdx(q) * uGrad, dFdy(q) * uGrad).rgb), pw);
-    texels = mix(texels, diagTexels(q * uPatchSize), pw);
+    albedo = mix(albedo, inverseFilmic(textureGrad(uPatch, q, qgx * uGrad, qgy * uGrad).rgb), pw);
+    texels = mix(texels, patchTexels, pw);
   }
   for (int k = 0; k < (uProbe >= 5 ? 1 : 0); k++) {
     albedo = vec3(uProbe == 5 ? 0.0 : 0.6);
@@ -156,6 +187,13 @@ void main() {
   vec3 light = mix(curveAt(ndl) * tableAt(uTable, ndl, lat), curveCloseAt(ndl) * tableAt(uTableC, ndl, lat), uClose);
   vec3 night = min(light, vec3(uNightFloor));
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
+  for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
+    vec3 mid = inverseFilmic(equirectGrad(uMap, d, uFine.x).rgb);
+    vec3 lw = vec3(0.2126, 0.7152, 0.0722);
+    float lm = max(dot(mid, lw), 1e-3);
+    float power = clamp(uFine.y * pow(1.0 + 5.0 * lm * dot(lit, lw), 1.2), 1.0, uFine.z);
+    albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w * (1.0 - pw));
+  }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
@@ -173,10 +211,10 @@ void main() {
     float hi = min(floor(val * 255.0), 254.0);
     layer = vec3(hi / 255.0, val * 255.0 - hi, 1.0);
   }
-  float along = -dot(uCam, dirS);
-  float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
-  float cover = uDiag >= 2 ? 1.0 : clamp((1.0 - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * cover, cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
+  float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -200,10 +238,11 @@ export class Globe {
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uHazeShadow: { value: look.hazeShadow },
         uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
-        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
+        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
-        uEdgePx: { value: look.edgePx },
+        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
+        uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
         uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
@@ -231,21 +270,38 @@ uniform vec3 uSunL;
 uniform float uPolar;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
+uniform vec4 uGlowNorth;
+uniform vec4 uGlowPole;
+uniform vec4 uGlowWide;
+uniform vec3 uGlowCap;
 out vec4 outColor;
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
+${LIMB_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
+  bool under = b > 0.0 && rt2 < (uLimbW > 0.0 ? 0.96 : 0.99);
+  float rt = sqrt(max(rt2, 0.0));
+  vec3 tp = (uCam + dir * b) / max(rt, 1e-4);
+  float fit = b > 0.0 ? uLimbW : 0.0;
+  float dl = fit > 0.0 ? min(limbAt(tp, uPolar, uSunL), 0.0) : 0.0;
+  float lat = degrees(asin(clamp(tp.y, -1.0, 1.0)));
+  float north = fit * smoothstep(uGlowNorth.x, uGlowNorth.y, lat);
+  float pole = smoothstep(uGlowPole.x, uGlowPole.y, lat);
+  float high = max(rt - 1.0 - dl, 0.0);
+  float hh = uHazeH * mix(1.0, uGlowNorth.w, north);
   vec3 at;
-  float tau = hazeDepth(dir, false, at);
+  float tau = hazeDepthAt(dir, false, hh, at) * exp((max(rt - 1.0, 0.0) - high) / hh);
+  float sunny = smoothstep(uHazeEdge.x, uHazeEdge.y, dot(at, uSunW));
+  vec3 wide = mix(uGlowWide.rgb, uGlowCap, pole) * (north * sunny * sunny * exp(-high / uGlowWide.w));
+  float tight = mix(1.0, uGlowNorth.z, north) * mix(1.0, uGlowPole.z, north * pole);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
-  if (b > 0.0 && rt2 < 0.99) discard;
-  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
+  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
+  if (under || uDiag >= 2) discard;
 }`
 
 export class Shell {
@@ -258,6 +314,8 @@ export class Shell {
       uniforms: {
         ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
+        uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
+        uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
       },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })
