@@ -451,6 +451,23 @@ export class FilmDirector implements Director {
     return span
   }
 
+  glareOf(shot: Shot): THREE.Vector3 | null {
+    const seg = shot.segment
+    const index = config.stopIds.indexOf(seg.stop)
+    const p = this.plans[index]
+    if (!p || (seg.kind !== 'dive' && seg.kind !== 'rise') || shot.sets[0]?.view !== 'orbit') return null
+    const share = Math.min(p.glareCarry(seg, shot.time), 1)
+    if (!(share > 0)) return null
+    const c = p.coverCenter(seg)
+    const at = seg.kind === 'dive' ? c : c - 1e-6
+    const low = seg.kind === 'dive' ? p.dive(at) : p.rise(at)
+    if (low.view !== 'terrain') return null
+    const q = this.frames[index]!.rotation.clone().multiply(p.turn(at)).multiply(p.terrainFrame).multiply(low.pose.quaternion).multiply(drift(at))
+    const place = this.sunWorld.clone().applyQuaternion(q.invert())
+    const own = shot.sun.dir.clone().applyQuaternion(shot.camera.quaternion.clone().invert())
+    return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
+  }
+
   shotAt(frame: number, time: number): Shot {
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
@@ -470,7 +487,6 @@ export class FilmDirector implements Director {
     let skyTurn = NO_TURN
     let skyStars = 0
     let skyPatch = 1
-    let carried: { place: THREE.Vector3; share: number } | null = null
     const index = config.stopIds.indexOf(segment.stop)
     const state = (i: number, view: ViewKind, weight = 1): SetState => {
       const p = this.plans[i]!
@@ -624,15 +640,6 @@ export class FilmDirector implements Director {
           const low = this.sky.turns[p.id] ?? NO_TURN
           skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
         }
-        const carry = view === 'orbit' ? p.glareCarry(segment, time) : 0
-        if (carry > 0) {
-          const c = p.coverCenter(segment)
-          const at = segment.kind === 'dive' ? c : c - 1e-6
-          const low = segment.kind === 'dive' ? p.dive(at) : p.rise(at)
-          const f = this.frames[index]!
-          const q = f.rotation.clone().multiply(p.turn(at)).multiply(p.terrainFrame).multiply(low.pose.quaternion).multiply(drift(at))
-          if (low.view === 'terrain') carried = { place: this.sunWorld.clone().applyQuaternion(q.invert()), share: Math.min(carry, 1) }
-        }
       }
       if (view === 'terrain') {
         near = 0.01
@@ -652,10 +659,6 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    if (carried) {
-      const own = sun.dir.clone().applyQuaternion(pose.quaternion.clone().invert())
-      sun.glareDir = own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, carried.place), carried.share)).applyQuaternion(pose.quaternion).normalize()
-    }
     return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, near, far, sun, sets, post, cover, dust, dustLook, dustOffset }
   }
 

@@ -63,7 +63,7 @@ describe('hidden share of a stop that draws its own cover', () => {
       for (let f = s.firstFrame; f < s.endFrame; f++) {
         const shot = at(plain, f + config.shutterFraction / 2)
         expect(shot.cover.hidden).toBeUndefined()
-        expect(shot.sun.glareDir).toBeUndefined()
+        expect(plain.glareOf(shot)).toBeNull()
         expect(seenShare(shot)).toBe(Math.max(1 - shot.cover.amount * (shot.cover.hides ?? 1), 0))
       }
     }
@@ -159,13 +159,13 @@ describe('Sun glare carried through the swap', () => {
       const sign = kind === 'rise' ? 1 : -1
       const low = film.shotAt(Math.floor((c - sign * 2e-6) * config.fps), kind === 'rise' ? c - 1e-6 : c)
       expect(low.sets[0]!.view).toBe('terrain')
-      expect(low.sun.glareDir).toBeUndefined()
+      expect(film.glareOf(low)).toBeNull()
       const edgeTime = kind === 'rise' ? c : c - 1e-6
       const edge = film.shotAt(Math.floor(edgeTime * config.fps + 1e-9), edgeTime)
       expect(edge.sets[0]!.view).toBe('orbit')
-      expect(edge.sun.glareDir).toBeDefined()
+      expect(film.glareOf(edge)).not.toBeNull()
       const place = inCamera(low, low.sun.dir)
-      expect(inCamera(edge, edge.sun.glareDir!).angleTo(place)).toBeLessThan(1e-4)
+      expect(inCamera(edge, film.glareOf(edge)!).angleTo(place)).toBeLessThan(1e-4)
       expect(inCamera(edge, edge.sun.dir).angleTo(place)).toBeGreaterThan(1e-2)
       for (let k = 0; k <= 20; k++) {
         const time = c + sign * (kind === 'rise' ? 0 : 1e-6) + sign * (k / 20) * span
@@ -173,10 +173,10 @@ describe('Sun glare carried through the swap', () => {
         const share = target.glareCarry(s, time)
         const own = inCamera(shot, shot.sun.dir)
         expect(shot.sun.dir.toArray()).toEqual(low.sun.dir.toArray())
-        expect(shot.post).toEqual(film === plain ? shot.post : plain.shotAt(shot.frame, time).post)
-        if (share <= 0) expect(shot.sun.glareDir).toBeUndefined()
+        expect(shot).toEqual(plain.shotAt(shot.frame, time))
+        if (share <= 0) expect(film.glareOf(shot)).toBeNull()
         else {
-          const glare = inCamera(shot, shot.sun.glareDir!)
+          const glare = inCamera(shot, film.glareOf(shot)!)
           expect(glare.angleTo(own)).toBeCloseTo(share * own.angleTo(place), 4)
           expect(glare.angleTo(place)).toBeCloseTo((1 - share) * own.angleTo(place), 4)
         }
@@ -184,7 +184,7 @@ describe('Sun glare carried through the swap', () => {
       expect(target.glareCarry(s, c + sign * span)).toBe(0)
       expect(target.glareCarry(s, c - sign * 0.1)).toBe(1)
       const past = c + sign * (span + 1 / config.fps)
-      expect(film.shotAt(Math.floor(past * config.fps), past).sun.glareDir).toBeUndefined()
+      expect(film.glareOf(film.shotAt(Math.floor(past * config.fps), past))).toBeNull()
     }
   })
 })

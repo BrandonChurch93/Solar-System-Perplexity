@@ -18,7 +18,7 @@ export interface PostParams {
   sharpen: number
 }
 
-export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number; glareDir?: THREE.Vector3 }
+export interface SunState { dir: THREE.Vector3; color: THREE.Color; intensity: number; angularRadius: number; glare: number }
 
 export type ViewKind = 'orbit' | 'terrain'
 
