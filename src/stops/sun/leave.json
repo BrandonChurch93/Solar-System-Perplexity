@@ -1,10 +1,10 @@
 {
  "source": "cone of world directions through the painted limb of the pale Sun plate of the Mercury stop: picture public/assets/mercury/full/sun-plate.webp (disc by assets-src/sun/leave/disc.py), rect of src/stops/mercury/sunplate.json, the fixed aim of the plate in sun.travel; d Q d = 0 on the limb, Q as xx, xy, xz, yy, yz, zz",
  "aim": [
-  -0.19918990337148848,
-  0.05403382425458473,
-  0.7956002502150117,
-  0.5695822768389948
+  -0.1891262280154618,
+  0.10468355614156852,
+  0.6530252190059835,
+  0.7258310315027776
  ],
  "rect": [
   0.014209,
@@ -17,14 +17,21 @@
    0.51758,
    0.52074
   ],
-  "radius": 0.2506
+  "radius": 0.2506,
+  "conic": [
+   16.15751,
+   0.393,
+   16.15789,
+   -0.557493,
+   -0.674222
+  ]
  },
  "cone": [
+  0.838706116,
+  -0.074789939,
+  -0.051715885,
   1.0,
-  -0.117701161,
-  -0.059555908,
-  0.989409781,
-  0.001938937,
-  -0.028007303
+  0.002897604,
+  -0.025999304
  ]
 }

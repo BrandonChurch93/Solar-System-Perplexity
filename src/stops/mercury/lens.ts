@@ -28,6 +28,7 @@ uniform vec4 uCoreJoin;
 uniform vec3 uWarm;
 uniform vec2 uPeak;
 uniform float uTint;
+uniform vec4 uBody;
 uniform int uDiag;
 in vec2 vNdc;
 out vec4 outColor;
@@ -39,7 +40,8 @@ void main() {
   vec2 g = mix(vec2(p.x * k.x - p.y * k.y, p.x * k.y + p.y * k.x), p - uSun + uHome, uSlide);
   vec2 uv = (g - uRect.xy) / uRect.zw;
   vec2 v = vNdc * 0.5 * vec2(uAspect, 1.0);
-  float gain = uGain * uAmount / mix(1.0, 1.0 / pow(1.0 + dot(v, v) * 0.9, 2.0), uVignette);
+  float onBody = 1.0 - smoothstep(uBody.z * 0.93, uBody.z, length(p - uBody.xy));
+  float gain = uGain * uAmount * (1.0 - uBody.w * onBody) / mix(1.0, 1.0 / pow(1.0 + dot(v, v) * 0.9, 2.0), uVignette);
   bool outside = uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0;
   vec3 plate = inverseFilmic(textureGrad(uMap, uv, dFdx(uv), dFdy(uv)).rgb);
   vec3 peak = inverseFilmic(textureGrad(uMap, uPeak, vec2(0.0), vec2(0.0)).rgb);
@@ -75,7 +77,7 @@ export class Lens {
         uMap: { value: map }, uSun: { value: new THREE.Vector2() }, uHome: { value: new THREE.Vector2(fit.sun[0], fit.sun[1]) }, uRect: { value: new THREE.Vector4(r[0], r[1], r[2]! - r[0]!, r[3]! - r[1]!) },
         uAmount: { value: 0 }, uGain: { value: 1 }, uAspect: { value: 16 / 9 }, uVignette: { value: 0 }, uSlide: { value: slide ? 1 : 0 }, uDiag: diag,
         uCore: { value: new THREE.Vector4(0, 1, 1, core?.power ?? 1) }, uCoreLine: { value: new THREE.Vector4(core?.row ?? 0, core?.sigma ?? 1, core?.rise[0] ?? 0, core?.rise[1] ?? 1) }, uCoreJoin: { value: new THREE.Vector4(core?.join[0] ?? 0, core?.join[1] ?? 1, core?.tail ?? 2, core?.pivot ?? 1) },
-        uWarm: { value: new THREE.Vector3(...(core?.warm ?? [1, 1, 1])) }, uPeak: { value: new THREE.Vector2(...(core?.peak ?? [0.5, 0.5])) }, uTint: { value: 0 },
+        uWarm: { value: new THREE.Vector3(...(core?.warm ?? [1, 1, 1])) }, uPeak: { value: new THREE.Vector2(...(core?.peak ?? [0.5, 0.5])) }, uTint: { value: 0 }, uBody: { value: new THREE.Vector4(0, 0, 1, 0) },
       },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
@@ -102,6 +104,24 @@ export class Lens {
     ;(u.uCore!.value as THREE.Vector4).set(on, limbLeft, limbRight, this.core?.power ?? 1)
     u.uTint!.value = on
     this.mesh.visible = amount * seen > 0
+  }
+
+  shade(body: THREE.Vector3, camera: THREE.PerspectiveCamera, keep: number): void {
+    const u = this.material.uniforms.uBody!.value as THREE.Vector4
+    const v = this.v.copy(body).applyQuaternion(this.q.copy(camera.quaternion).invert())
+    const d = v.length()
+    if (v.z > -1e-3 || d <= 1 || keep >= 1) {
+      u.set(0, 0, 1, 0)
+      return
+    }
+    const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)
+    const off = Math.hypot(v.x, v.y)
+    const theta = Math.atan2(off, -v.z)
+    const alpha = Math.asin(1 / d)
+    const hi = Math.tan(Math.min(theta + alpha, 1.5))
+    const lo = Math.tan(theta - alpha)
+    const k = off > 1e-9 ? (hi + lo) / 2 / off : 0
+    u.set((v.x * k) / tan, (v.y * k) / tan, (hi - lo) / 2 / tan, 1 - keep)
   }
 
   dispose(): void {
