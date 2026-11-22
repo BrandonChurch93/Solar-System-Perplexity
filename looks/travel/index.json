@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T10:17:34.791Z",
+ "pushed": "2026-11-22T10:29:43.514Z",
  "head": "b4edbdb044b367593f165f25ba6fe3e9547d795a",
- "note": "steady growth b4edbdb: draft strips of the last 36 frames of seven travels, window 33 (sun 41)",
+ "note": "grow b4edbdb finals 2228 and 4508: stars points, no ghosts, surface of the pinned body smeared by the shutter",
  "looks": [
+  {
+   "time": "2026-11-22T10:29:42.920Z",
+   "file": "20261122102942920-note-g1-4508-final-crops.jpg",
+   "source": "../../../../tmp/v/g1-4508-final-crops.jpg",
+   "kind": "note",
+   "label": "grow b4edbdb 4508 final crops: Neptune 0.83x, band, stars",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T10:29:42.318Z",
+   "file": "20261122102942318-note-g1-4508-final.jpg",
+   "source": "../../../../tmp/v/g1-4508-final.jpg",
+   "kind": "note",
+   "label": "grow b4edbdb 4508 final, Neptune 179 px radius, turn 3.74",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T10:29:41.637Z",
+   "file": "20261122102941637-note-g1-2228-final-crops.jpg",
+   "source": "../../../../tmp/v/g1-2228-final-crops.jpg",
+   "kind": "note",
+   "label": "grow b4edbdb 2228 final native crops: Mars, Phobos 2x, sky band",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T10:29:41.047Z",
+   "file": "20261122102941047-note-g1-2228-final.jpg",
+   "source": "../../../../tmp/v/g1-2228-final.jpg",
+   "kind": "note",
+   "label": "grow b4edbdb 2228 final, Mars 158 px radius, turn 4.34",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T10:17:34.231Z",
    "file": "20261122101734231-note-g1-uranus.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/g1-mercury.jpg",
    "kind": "note",
    "label": "grow window 33 mercury.travel 1074 to 1109 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:08:45.104Z",
-   "file": "20261122100845104-note-g1-saturn.jpg",
-   "source": "../../../../tmp/v/g1-saturn.jpg",
-   "kind": "note",
-   "label": "grow window 33 saturn.travel 3924 to 3959 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:07:29.710Z",
-   "file": "20261122100729710-note-g1-sun.jpg",
-   "source": "../../../../tmp/v/g1-sun.jpg",
-   "kind": "note",
-   "label": "grow window 41 sun.travel 498 to 538 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:07:29.044Z",
-   "file": "20261122100729044-note-g1-earth-crops.jpg",
-   "source": "../../../../tmp/v/g1-earth-crops.jpg",
-   "kind": "note",
-   "label": "grow window 33 earth.travel native crops at Mars place 2205 to 2228",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:07:28.063Z",
-   "file": "20261122100728063-note-g1-earth.jpg",
-   "source": "../../../../tmp/v/g1-earth.jpg",
-   "kind": "note",
-   "label": "grow window 33 earth.travel 2214 to 2249 draft",
    "stop": "travel"
   }
  ]
