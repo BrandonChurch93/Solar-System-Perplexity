@@ -41,7 +41,9 @@ export const move = {
   riseSwap: -8,
   riseJoin: 0,
   riseAim: [0, 0.95] as [number, number],
-  riseEase: [6, 14, 28] as [number, number, number],
+  riseEase: [6, 14, 26] as [number, number, number],
+  riseLand: [0.08, 10] as [number, number],
+  riseBlend: [0.9, 1] as [number, number],
   coverDive: [-13, -3, 2, 14] as [number, number, number, number],
   coverRise: [-14, -3, 1, 11] as [number, number, number, number],
 }
@@ -215,7 +217,9 @@ export class UranusPlan extends StopPlan {
     const top = end.position.dot(n)
     const log = Math.log((top - 1) / h0)
     const ease = move.riseEase
-    const e = trapeze(ramp(from, from + ease[2] / config.fps, time), ease[0] / ease[2], ease[1] / ease[2], (rate * ease[2]) / config.fps / log)
+    const land = move.riseLand
+    const glide = 1 - ramp(from + land[1] / config.fps, seg.end, time)
+    const e = (1 - land[0]) * trapeze(ramp(from, from + ease[2] / config.fps, time), ease[0] / ease[2], ease[1] / ease[2], (rate * ease[2]) / config.fps / log / (1 - land[0])) + land[0] * (1 - glide * glide)
     const z = time < from ? m.position.length() : 1 + h0 * Math.exp(log * e)
     const across = end.position.clone().addScaledVector(n, -top)
     const dip = (h: number): number => Math.acos(1 / (1 + h))
@@ -225,7 +229,7 @@ export class UranusPlan extends StopPlan {
     const quaternion = this.carried(m, position).slerp(this.framed(position, time), smooth(ramp(move.riseAim[0], move.riseAim[1], e)))
     const path: Pose = { position, quaternion, vfov: mix(m.vfov, end.vfov, smooth(e)) }
     const u = (time - seg.start) / (seg.end - seg.start)
-    return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }
+    return { pose: blendPose(path, this.after(time), smooth(ramp(move.riseBlend[0], move.riseBlend[1], u))), view: 'orbit' }
   }
 
   horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
