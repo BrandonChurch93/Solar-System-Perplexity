@@ -136,7 +136,6 @@ class Gauntlet:
         self.rows = []
         self.gate = None
         self.record_round = self.find_record_round()
-        self.posts_dir = ROOT / 'out/posts' if (ROOT / 'out/posts').is_dir() else ROOT / 'out/work/posts'
         self.clip_frames = {}
 
     def add(self, no, status, text, more=()):
@@ -444,8 +443,9 @@ class Gauntlet:
         if pr is None:
             return self.add(15, 'NOT RUN', 'No export proof at %s on this machine (out/work/ is not committed). Run `npm run proof`, then this again.' % rel(p))
         r = self.rec(p) or {}
-        ok = 'error' not in pr and pr['frames'] > 0 and self.current(r)
-        self.add(15, 'PASS' if ok else 'FAIL', 'Export proof %s: ffprobe says %s; %s; record: codec %s, h264 %s.' % (rel(p), shape(pr), self.build_of(p), (r.get('extra') or {}).get('codec'), (r.get('extra') or {}).get('h264')))
+        x = r.get('extra') or {}
+        ok = 'error' not in pr and pr['frames'] > 0 and self.current(r) and x.get('pass') is True
+        self.add(15, 'PASS' if ok else 'FAIL', 'Export proof %s: ffprobe says %s; %s; record: codec %s, h264 %s; `npm run proof` %s.' % (rel(p), shape(pr), self.build_of(p), x.get('codec'), x.get('h264'), 'passed' if x.get('pass') is True else 'DID NOT PASS: ' + ('; '.join(x.get('errors') or []) or 'its record has no result')))
 
     def item16(self):
         p = ROOT / 'out/work/export/memory.json'
@@ -578,22 +578,24 @@ class Gauntlet:
         self.add(25, 'PASS' if ok else 'FAIL' if remote or status else 'NOT RUN', '`git status --porcelain`: %s. HEAD is %s on %s. `git log origin/%s -1`: %s. `git ls-remote origin %s`: %s.' % ('clean' if not status else '%d paths changed or untracked' % len(status.split('\n')), head[:7], git('rev-parse', '--abbrev-ref', 'HEAD'), branch, local, branch, (remote[:7] + (', the same commit as HEAD' if remote == head else ', NOT the commit of HEAD')) if remote else 'not asked (offline) or no answer'), status.split('\n')[:10] if status else [])
 
     def posts(self):
-        d = self.posts_dir
-        where = rel(d) if d.is_dir() else 'out/posts'
-        note = '' if where == 'out/posts' else ' (out/posts/ does not exist yet, so this reads %s; run `npm run keep -- --posts` in Phase 6)' % where
+        find = lambda name: next((ROOT / d / name for d in ('out/posts', 'out/work/posts') if (ROOT / d / name).is_file()), ROOT / 'out/posts' / name)
+        kept = lambda p: rel(p).startswith('out/posts/')
+        files = [find(n) for s in self.stops for n in ('intro-%s.mp4' % s, s + '.mp4')]
+        work = [p for p in files if p.is_file() and not kept(p)]
+        note = '' if not work else ' (%d of %d files are read from out/work/posts/ because they are not in out/posts/; run `npm run keep -- --posts` in Phase 6)' % (len(work), len(files))
         cfgp = self.raw['posts']
         if (ROOT / 'out/posts/README.md').is_file():
             self.add('P0', 'NEEDS A PERSON', 'out/posts/README.md exists: it says what is missing. If the skill was not there, P1 to P4 go under "Failed QA items" with the reason.')
         recipe = ROOT / 'assets-src/posts/RECIPE.md'
         l1, l2, l3, ok1, ok2, ok3 = [], [], [], True, True, True
         for s in self.stops:
-            intro, post, clip = d / ('intro-%s.mp4' % s), d / (s + '.mp4'), self.clip_file(s)
+            intro, post, clip = find('intro-%s.mp4' % s), find(s + '.mp4'), self.clip_file(s)
             ip, pp, cp = probe(intro), probe(post), probe(clip) if clip else None
             r = self.rec(intro)
             ex = (r or {}).get('extra') or {}
-            good = bool(ip) and 'error' not in ip and r is not None and ip['frames'] / self.fps <= cfgp['introMaxSeconds'] + 1e-9 and ex.get('prompt') == cfgp['prompts'][s] and (where != 'out/posts' or self.is_tracked(intro))
+            good = bool(ip) and 'error' not in ip and r is not None and ip['frames'] / self.fps <= cfgp['introMaxSeconds'] + 1e-9 and ex.get('prompt') == cfgp['prompts'][s] and (not kept(intro) or self.is_tracked(intro))
             ok1 = ok1 and good
-            l1.append('%s: %s%s' % (rel(intro), 'MISSING' if not ip else '%d frames, %.3f s of at most %s s, record %s, prompt in the record %s, hold before the submit %s s of at least %s' % (ip.get('frames', 0), ip.get('frames', 0) / self.fps, cfgp['introMaxSeconds'], 'there' if r else 'MISSING', 'equals the config' if ex.get('prompt') == cfgp['prompts'][s] else 'DIFFERS from the config', ex.get('holdBeforeSubmitSeconds'), cfgp['readHoldSeconds']), '' if good else '  <- FAIL'))
+            l1.append('%s: %s%s' % (rel(intro), 'MISSING' if not ip else '%d frames, %.3f s of at most %s s, record %s, prompt in the record %s, hold before the submit %s s of at least %s' % (ip.get('frames', 0), ip.get('frames', 0) / self.fps, cfgp['introMaxSeconds'], 'there' if r else 'MISSING', 'equals the config' if ex.get('prompt') == cfgp['prompts'][s] else 'DIFFERS from the config', ex.get('holdBeforeSubmitSeconds'), cfgp['readHoldSeconds']) + ('' if not kept(intro) else ', committed' if self.is_tracked(intro) else ', NOT COMMITTED'), '' if good else '  <- FAIL'))
             fine = lambda p: bool(p) and 'error' not in p
             good2 = fine(ip) and fine(pp) and fine(cp) and pp['frames'] == ip['frames'] + cp['frames'] and (pp['width'], pp['height']) == (self.master['width'], self.master['height']) and abs(pp['fps'] - self.fps) < 1e-6
             n = lambda p: '%d frames' % p['frames'] if fine(p) else 'MISSING'
@@ -601,7 +603,7 @@ class Gauntlet:
             same = '' if not made.get('sha256') or not clip else ', the record of the post names this clip file by sha256' if made['sha256'] == hashlib.sha256(clip.read_bytes()).hexdigest() else ', the record of the post names ANOTHER clip file'
             good2 = good2 and 'ANOTHER' not in same
             ok2 = ok2 and good2
-            l2.append('%s: post %s, intro %s, clip %s (%s)%s%s%s%s' % (s, n(pp), n(ip), n(cp), rel(clip) if clip else 'no clip here', ', sum %d' % (ip['frames'] + cp['frames']) if fine(ip) and fine(cp) else '', '; post %dx%d at %g fps, %s, %.1f MB, %s' % (pp['width'], pp['height'], pp['fps'], pp['codec'], pp['mb'], self.build_of(post, [s])) if fine(pp) else '', same, '' if good2 else '  <- FAIL'))
+            l2.append('%s: post %s (%s), intro %s, clip %s (%s)%s%s%s%s' % (s, n(pp), rel(post), n(ip), n(cp), rel(clip) if clip else 'no clip here', ', sum %d' % (ip['frames'] + cp['frames']) if fine(ip) and fine(cp) else '', '; post %dx%d at %g fps, %s, %.1f MB, %s' % (pp['width'], pp['height'], pp['fps'], pp['codec'], pp['mb'], self.build_of(post, [s])) if fine(pp) else '', same, '' if good2 else '  <- FAIL'))
             if fine(ip) and fine(pp) and fine(cp):
                 cut, c0, c1, il = frame(post, ip['frames']), frame(clip, 0), frame(clip, 1), frame(intro, ip['frames'] - 1)
                 a, b, c = psnr(cut, c0), psnr(cut, c1), psnr(cut, il)
