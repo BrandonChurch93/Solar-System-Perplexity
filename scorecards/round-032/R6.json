@@ -1,0 +1,28 @@
+{
+ "critic": "R6",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-09.png",
+   "where": "central coronal arch and overall frame progression",
+   "what": "across image-01.png through image-09.png the arch is already at full height in frame 0 and keeps nearly the same silhouette with negligible camera movement, reading at phone size like a static ambient loop rather than an unfolding event that rewards staying",
+   "fix": "introduce a clear macro change inside the hook window, such as the plasma arch visibly erupting and rising from the footpoints, a bright reconnection flash, or a decisive camera push into the sunspot and loop"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "lower half solar surface vs central focal group",
+   "what": "uniform high-contrast granulation fills over half the frame from edge to edge while the sunspot and coronal loop occupy a relatively small central zone, diluting immediate focal punch at phone width",
+   "fix": "frame tighter on the sunspot and magnetic arch or darken/vignette the foreground granulation slightly so the glowing loop dominates the thumbnail"
+  },
+  {
+   "severity": "minor",
+   "file": "image-06.png",
+   "where": "upper right footpoint and arch apex",
+   "what": "from image-06.png through image-09.png the visual state plateaus with almost no perceptible change between frames at phone preview size, losing momentum mid-hook",
+   "fix": "accelerate the plasma surge or escalate brightness and scale through the end of the hook window so tension builds continuously"
+  }
+ ]
+}

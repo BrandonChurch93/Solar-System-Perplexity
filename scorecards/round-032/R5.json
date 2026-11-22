@@ -1,0 +1,63 @@
+{
+ "critic": "R5",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "615 vs 1185/1755/2895/4605",
+   "what": "The key light changes sides between stops. At Mercury the Sun sits frame right and lights the right limb. Venus, Earth, Jupiter, Saturn and Uranus are lit from the left. At Neptune (4605) the light is back on the right, from a sun in the upper right. The Sun's position does not follow one path through the film.",
+   "fix": "Settle on one direction for the Sun relative to the travel path, such as behind and to the left, and keep the key light on that side at every stop. If it has to switch, show the camera turning so the change has a reason."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "4290 vs 4035",
+   "what": "At Uranus the close pass puts a bright sun with a flare right of centre on the limb. The approach (4035) is lit from the left, so the light flips inside the same stop.",
+   "fix": "Move the sun in 4290 to the side of the key light used in 4035, or light 4035 to match 4290."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "1072, 1642, 2212, 3352, 3922, 4492 (empty starfield frames)",
+   "what": "Every planet runs the same four beats: a wide approach, a push in, a low pass over the surface, a pull out, then an empty starfield. With six nearly identical dead frames between stops, the film feels like a loop instead of one building journey.",
+   "fix": "Vary the transitions. Try a whip pan, a match cut on a limb or a ring, a flyby that passes the next planet in the background, or a look back at the shrinking Sun. Make each stop's move different, for example an orbit around Saturn, a descent at Jupiter and a slide around the terminator at Neptune."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "5085-5362 (ending)",
+   "what": "The film ends on Neptune drifting away as a nearly black disc against the Milky Way. The last frame is under-lit and does not resolve, so the ending fades out instead of landing.",
+   "fix": "Give the end a final beat. Turn back to show the Sun as a single bright star with the planets lined up, or hold on a well-rim-lit Neptune crescent with the faint Sun beside it, then fade."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "1755, 1857, 2156 Earth upper right limb",
+   "what": "A saturated green band sits on Earth's day-side limb like an aurora. It reads as a colour fringe artifact and looks like nothing else in the grade.",
+   "fix": "Remove it, or make it a faint aurora near the pole on the night side."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "2212 lower right corner",
+   "what": "A brown blob hangs in the corner of the transition frame without context.",
+   "fix": "Either remove it or make it read clearly as Phobos or Deimos coming into frame."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "1185/1287 Venus",
+   "what": "Venus is graded much warmer and more golden than the rest of the film, so it sits slightly outside the shared look.",
+   "fix": "Pull the saturation and the gold glow on the limb down a little toward the neutral space grade."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "4035/4137 Uranus rings",
+   "what": "The rings look like thin wire loops floating off the planet rather than lit, dusty rings.",
+   "fix": "Add width and subtle opacity variation to the rings, and let the planet cast a shadow across them."
+  }
+ ]
+}
