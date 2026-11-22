@@ -187,3 +187,30 @@ Jobs from the Builder, one commit each, flight frames only: 1 D and A, stars thi
 - Cost at the final tier, old job 2 to here: 3922 110.6 to 111.9 s, 4492 112.7 to 114.8 s, 5235 47.3 to 46.9 s, 2212 101.4 to 101.2 s.
 - Left open after this job: the gas of the cloud itself (A, C, E: job 2 of this list), the band's lower edge (B: job 3), bright star cores (job 4).
 - Answer owed to the Builder on stars through the corona at 495: the sky can take a mask if the owner of the Sun and Mercury plates hands it a direction, two angular radii and a strength per frame (the star vertex shaders already dim by the patch lens the same way); a mask with the streamers' own shape needs a texture rendered by that owner.
+
+### CUT33 (sent 12:43 UTC)
+- `READY fcfd0dba154332fb3a9eb355df2fc53ad53efb6d`, taken into round 33 (MAIL 155). It holds the old jobs 1 and 2 and round 33 job 1.
+
+### Finding, the blobs at 5235 and 495
+- The "30 px white blob" at 5235 is not baked in the strip and is not a far point: it is the Sun of the lookback at (1278, 378), radius 4.3 px, glare 4, drawn by the Sun block at the end of `SKY_FRAG`. A first note to the Builder blamed `farpoint.ts`; a correction went out the same minute.
+- The "15 px blob" at 495 is Mercury's far point (`src/bodies/farpoint.ts`, 30 px sprite, Gaussian halo of sigma 3 px) at (823, 724). Not my file: lines go as FOREIGN LINES.
+- MAIL 155 grant: the Sun block at the end of `SKY_FRAG` is mine for the small Sun only. Above 6 px of radius and in every hold, dive, terrain and rise frame of every stop it gives today's bytes.
+
+### Round 33 job 2, detail layer on the band's light (commit 8f84206d)
+- `noiseCube(32)` in `sky.ts`: a 32 cube RGBA noise texture (integer hash by `Math.imul`, 128 KB on the GPU, nothing on disk), sampler `uFlightNoise`. `skyNoise(vec3)` reads it with a quintic warped coordinate at level 0.
+- `skyDetail(g, fp)`: one warp sample, five octaves with a rotation between octaves, each octave faded by the pixel footprint `fp`, returns a mottle value and a ridged value. Stretched along the galactic plane by `stretch`.
+- In the band branch, only where `uFlightStrip.x > 0` and `uFlightDetail.x > 0`: a ring of six strip samples at `fill[1]` gives `wide`; `glow = (glow * exp(mottle * min(mot, 0.1)) * (1 - depth * smoothstep(lo, hi, ridge)) + fill * exp(fill[2] * mot)) * grain`; the feather takes `max(sq, wide * fill[3])`, which joins the puffs.
+- First version used a float hash in the shader: marble look at thumbnail size with strong lanes, and 45 to 60 percent more time on the final of 3922. The cube texture version costs 132 s against 111 s there.
+- The strip is not rebuilt at a higher resolution: it has about 1.26 texels per pixel at vfov 30; its softness is content (a median of the photo), not sampling.
+
+### Round 33 job 3, the edge of the band (commit 64fd4698)
+- A second ring of six strip samples at `far[1]` degrees, turned 30 degrees: `rim = clamp(1 - 0.5 lum(wide + far) / lum(sq))` lowers the lane threshold by `rim[0] * rim` and deepens the lanes toward 1 by `rim[1] * rim`, so the cloud edge is eaten by the same multi scale noise; `fill += inverseFilmic(far^2) * far[0]`.
+- A warm additive glow along the galactic plane in the haze block: `col += tint * swap * lift * (1 - under * bz) * exp(-(lat / width)^2) * (1 + vary * (noise - 0.5))`, two low frequency samples of the cube. The band mix is a `min` of two mixes and the feather cuts the strip light outside the clouds, so a fill inside the band branch cannot make a broad glow; this term can.
+- Values: lane [0.62, 1.05, 0.5, 0.6], rim [0.5, 0.8], far [0.12, 4], spread tint [0.03, 0.026, 0.022], width 8 degrees, freq 6, vary 1.4, under 0.7.
+- 4492 draft, median row level (r, g, b) before and after: y 300 (55, 53, 49) to (66, 64, 60); y 350 (29, 34, 38) to (47, 50, 51); y 400 (19, 26, 32) to (35, 39, 42); y 500 (15, 23, 29) to (23, 29, 34); y 600 (13, 21, 29) to (16, 23, 30); y 800 unchanged. The drop of 36 levels in 100 px is now a fall of about 50 levels over 300 px.
+- Tried and dropped: keying the glow off the ring samples instead of `bz` (a dark rim under the clouds).
+
+### Round 33 job 4, bright stars and the far Sun (commit d7ced701)
+- Star law in `STAR_FRAG`, weight `uStarLaw.w = swap` (0 in every stop frame): core times `pow(max(peak / knee, 1), -power)`, wing `gain * edge^2 / (1 + r2)` in place of the Gaussian skirt. Values `flightStrip.stars.law` [2, 0.6, 0.06]. Shared by catalog, flight, deep and strip star materials.
+- Far Sun: `flightStrip.sun` {radiusPx 6, glare [0.7, 1.6], core [2.5, 2.25], wing [0.52, 4], stars [5, 26]}. Weight = (Sun radius under 6 px) times smoothstep(0.7, 1.6, shot glare). Scan of all segments: every stop frame with a small Sun has glare 0.60 to 0.65 (uranus dive, terrain, rise, travel; neptune hold, dive, terrain, rise); ending.retreat ramps 0.6 to 4, lookback and fade 4. So the weight is exactly 0 outside the ending, and today's `col +=` line is kept verbatim with the new term added in a gated loop.
+- Stars fade to zero inside 5 px of the Sun and are full at 26 px (`sunFade` in the star vertex shaders, the catalog one behind `if (uSunHalf.z > 0.0)`).
