@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T13:38:03.552Z",
- "head": "101aee49bfb2e1d47a672bd9311f9614b2e29119",
- "note": "venus: pole fade of the veil's speed lines (spokes at 1305, 1307, 1571 gone) and the ladder at 1310 traced to the nearest sheet; proof on main 84b0ea4 starts now",
+ "pushed": "2026-11-22T13:56:37.239Z",
+ "head": "29d11216a58ac85d77665227556c970226ddfe0c",
+ "note": "venus: pole fade strips on main 84b0ea4 (spokes gone at 1303 to 1308 and 1568 to 1573), near fade in test for the ladder at 1310",
  "looks": [
+  {
+   "time": "2026-11-22T13:56:08.318Z",
+   "file": "20261122135608318-note-pd-rise-b.jpg",
+   "source": "../view/pd-rise-b.jpg",
+   "kind": "note",
+   "label": "venus pd-rise-b: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:56:07.750Z",
+   "file": "20261122135607750-note-pd-rise-a.jpg",
+   "source": "../view/pd-rise-a.jpg",
+   "kind": "note",
+   "label": "venus pd-rise-a: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:56:07.174Z",
+   "file": "20261122135607174-note-pd-dive-b.jpg",
+   "source": "../view/pd-dive-b.jpg",
+   "kind": "note",
+   "label": "venus pd-dive-b: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:56:06.595Z",
+   "file": "20261122135606595-note-pd-dive-a.jpg",
+   "source": "../view/pd-dive-a.jpg",
+   "kind": "note",
+   "label": "venus pd-dive-a: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T13:37:42.154Z",
    "file": "20261122133742154-note-lad8-1310.jpg",
@@ -130,38 +162,6 @@
    "source": "../view/p5-1309-10-pair.jpg",
    "kind": "note",
    "label": "dive 1309 and 1310 review tier, cover sheet cells: left veil take F4, right take F5: the stepped ladders of bright bits were the veil's texture read, now soft cloud (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:41:14.694Z",
-   "file": "20261122114114694-note-c23-dc.jpg",
-   "source": "../view/c23-dc.png",
-   "kind": "note",
-   "label": "dive cover 1309 to 1320 review tier, veil take F5 (not committed yet): 1319 and 1320 the same bytes as take F4; 1309 to 1317 soft streaked cloud, the ladders of bright bits at 1309 and 1310 are gone (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:27:43.245Z",
-   "file": "20261122112743245-note-c23-rc.jpg",
-   "source": "../view/c23-rc.png",
-   "kind": "note",
-   "label": "rise cover 1555 to 1566 review tier, veil take F5 (not committed yet): 1555 the same bytes as take F4, 1557 to 1566 soft streaked cloud without stepped bright bits or fine straight lines; the sky rows unchanged (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:05:27.185Z",
-   "file": "20261122110527185-note-p5-1317-full.jpg",
-   "source": "../view/p5-1317-full.jpg",
-   "kind": "note",
-   "label": "dive 1317 review tier: left veil take F4, right take F5 (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:05:26.220Z",
-   "file": "20261122110526220-note-p5-1557-a.jpg",
-   "source": "../view/p5-1557-a.jpg",
-   "kind": "note",
-   "label": "rise 1557 native crop under the limb: left veil take F4, right take F5 (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
    "stop": "venus"
   },
   {
