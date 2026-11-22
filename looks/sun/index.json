@@ -1,9 +1,55 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T10:53:42.512Z",
- "head": "89ca8d532ddf5eaec456d16ee856c153f1bb5fcf",
- "note": "Sun polish: proof chain running on head 89ca8d5 (main e9fc2a9); leave checked on batches 21 and 22; last small remarks closed",
+ "pushed": "2026-11-22T11:09:02.365Z",
+ "head": "63f5966c2dc9a29269b011d5266adb7bf9e624a5",
+ "note": "Sun polish proof chain on head 89ca8d5 (main e9fc2a9): finals 247 and 360, measures green (G13 0 of 217 soft, G5 invalid 0, G17 1.415 1.329 1.216 1.019); repeat and review frames running",
  "looks": [
+  {
+   "time": "2026-11-22T11:06:47.964Z",
+   "file": "20261122110647964-job-frame-00090.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T11:01:24.729Z",
+   "file": "20261122110124729-note-f247-spot-main-polish.jpg",
+   "source": "out/work/sun/p1/f247-spot-main-polish.jpg",
+   "kind": "note",
+   "label": "Sun 247 final x2: main beside polish (item 5a, flow kept out of the pores)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T11:01:23.843Z",
+   "file": "20261122110123843-note-f360-limb-upper-left-hero-main-polish.jpg",
+   "source": "out/work/sun/p1/f360-limb-upper-left-hero-main-polish.jpg",
+   "kind": "note",
+   "label": "Sun 360 final, upper left limb x2: approved hero, main, polish (item 5b finer cells)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T11:01:22.676Z",
+   "file": "20261122110122676-note-final-247-89ca8d5.jpg",
+   "source": "out/work/sun/p1/final-247-89ca8d5.jpg",
+   "kind": "note",
+   "label": "Sun rise 247, final tier, polish head 89ca8d5 (main e9fc2a9)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T11:01:21.593Z",
+   "file": "20261122110121593-note-final-360-89ca8d5.jpg",
+   "source": "out/work/sun/p1/final-360-89ca8d5.jpg",
+   "kind": "note",
+   "label": "Sun hold 360, final tier, polish head 89ca8d5 (main e9fc2a9)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T10:53:41.420Z",
    "file": "20261122105341420-note-f150-left-edge-zoom4.jpg",
@@ -18,46 +64,6 @@
    "source": "out/work/sun/p1/h30-f53-left.jpg",
    "kind": "note",
    "label": "Sun hook 53 left foot: head beside a trial with more afterglow (rejected, the foot goes white again)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:39.461Z",
-   "file": "20261122105339461-note-f90-jets-right-limb.jpg",
-   "source": "out/work/sun/p1/f90-jets-right-limb.jpg",
-   "kind": "note",
-   "label": "Sun terrain 90 final, jets on the right limb, approved over film, native x2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:38.721Z",
-   "file": "20261122105338721-note-f90-jets-left-limb.jpg",
-   "source": "out/work/sun/p1/f90-jets-left-limb.jpg",
-   "kind": "note",
-   "label": "Sun terrain 90 final, jets on the left limb, approved over film, native x2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:37.969Z",
-   "file": "20261122105337969-note-leave-limb2-495.jpg",
-   "source": "out/work/sun/p1/leave-limb2-495.jpg",
-   "kind": "note",
-   "label": "Sun leave 495, limb at native size beside Mercury's plate, head 9fd6b56",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:37.412Z",
-   "file": "20261122105337412-note-leave-limb2-488.jpg",
-   "source": "out/work/sun/p1/leave-limb2-488.jpg",
-   "kind": "note",
-   "label": "Sun leave 488, limb at native size, one limb, head 9fd6b56",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:36.586Z",
-   "file": "20261122105336586-note-leave-strip-9fd6b56.jpg",
-   "source": "out/work/sun/p1/leave-strip-9fd6b56.jpg",
-   "kind": "note",
-   "label": "Sun leave 460 to 520 on engine batches 21 and 22, drafts, head 9fd6b56",
    "stop": "sun"
   },
   {
