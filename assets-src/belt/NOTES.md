@@ -534,3 +534,4 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
 - Slip, no effect: at 09:33 I ran `git stash` by mistake while the after final rendered and popped it within seconds; renders read `dist` (its own copy of the assets, built 09:32) and the stash is back in full (checked by status and by the md5 of rock-a in public, dist and take6).
 - Takes: 6 of 6 used. Full set 26,847,664 bytes, web 6,712,238 bytes (unchanged sizes).
 - 09:44 DONE sent to /root at 3e22629 with eight attachments. Open with the Builder: a floor in px per frame for the hero at 2782 (path unchanged, 608 px from 2765 to 2795), and the shade level.
+- MAIL 127: accepted. 3e22629 goes into engine batch 21 as it is; the Builder's call on the pace: the path stays, no floor (4 px or more of shutter blur along one axis would read as stretched grain again). Stand by for round 32's words on the rock.
