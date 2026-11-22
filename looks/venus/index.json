@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T08:59:02.016Z",
+ "pushed": "2026-11-22T09:07:13.518Z",
  "head": "e31356d5db5eb929d58c9e5fe622cd60530218ba",
- "note": "09:00 UTC: veil take F4 cover sheets on batch 19; batch 20 merged (main 8f13066), proof on it running",
+ "note": "09:08 UTC: batch 20 merged (main 8f13066): judged 1185, 1287, 1440 same bytes, 1586 changes in the sky only; repeat, cover sheets and chain running",
  "looks": [
+  {
+   "time": "2026-11-22T09:07:12.461Z",
+   "file": "20261122090712461-note-b20-1586-pair.jpg",
+   "source": "../view/b20-1586-pair.jpg",
+   "kind": "note",
+   "label": "judged rise 1586 final tier: left batch 19 (main e4b509e), right batch 20 (branch e31356d plus veil take F4 uncommitted, main 8f13066); the globe keeps its pixels (358 of 504,000 inside the limb move by one level), the flight sky is the travel agent's new one",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T08:59:01.344Z",
    "file": "20261122085901344-note-c21-dc.jpg",
@@ -170,14 +178,6 @@
    "source": "../view/e3c-r.jpg",
    "kind": "note",
    "label": "venus rise 1546 to 1556 draft, experiment E3c not committed (tree on main 6267259): the first veil read coarser, soft mist in place of decals",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:37.625Z",
-   "file": "20261122064937625-note-dn-mid.jpg",
-   "source": "../view/dn-mid.jpg",
-   "kind": "note",
-   "label": "venus rise 1548 to 1553 draft, branch d2aa704 on main 6267259: the veil comes in as flat decals, the cause of the rectangles at 1558",
    "stop": "venus"
   }
  ]
