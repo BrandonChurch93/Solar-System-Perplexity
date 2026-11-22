@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T01:36:26.183Z",
- "head": "b6f54261addd9aa3b4dabcdaf4324c77037da62b",
- "note": "01:37 merged main (batch 16), wrap repaint and seam work in progress, cover sheets rendering",
+ "pushed": "2026-11-22T02:07:12.857Z",
+ "head": "9603a18f53d57b57018395cefc20ab438202c33b",
+ "note": "Mail 50: wrap repaint for the night side at 1287 (first take too harsh, second at 0.3 rendering), star cure pass 2 in both sky patches, cover sheets on the merged tree",
  "looks": [
+  {
+   "time": "2026-11-22T02:07:12.272Z",
+   "file": "20261122020712272-note-f3-1287-night.jpg",
+   "source": "../view/f3-1287-night.jpg",
+   "kind": "note",
+   "label": "Frame 1287, night side, final tier: before (left) and the first repaint at full strength (right). Rejected: fine detail 16.4 against the hero's 3.7 at the hold, it reads as scales, not cloud. Next take lays the same detail in at 0.3 of its contrast",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:51:51.944Z",
+   "file": "20261122015151944-note-capfull-t.jpg",
+   "source": "../view/capfull-t.jpg",
+   "kind": "note",
+   "label": "Wrap repaint, canvas T (90 deg about lon -20, lat 0): the wrap (left) and the kept take locked to it (right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:51:51.354Z",
+   "file": "20261122015151354-note-sim1287b-crop.jpg",
+   "source": "../view/sim1287b-crop.jpg",
+   "kind": "note",
+   "label": "Wrap repaint, offline view of the night side at the pose of frame 1287, albedo only: the wrap before (left) and with the detail of patch A and three new canvases (right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:51:50.738Z",
+   "file": "20261122015150738-note-c15-rc.jpg",
+   "source": "../view/c15-rc.png",
+   "kind": "note",
+   "label": "Rise cover sheet at the review tier on the merged tree, frames 1555 to 1566, swap at 1560",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:51:50.122Z",
+   "file": "20261122015150122-note-c15-dc.jpg",
+   "source": "../view/c15-dc.png",
+   "kind": "note",
+   "label": "Dive cover sheet at the review tier on the merged tree (engine batch 16), frames 1309 to 1320, old wrap",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T01:36:25.269Z",
    "file": "20261122013625269-note-look-seam.jpg",
@@ -133,38 +173,6 @@
    "stop": "venus"
   },
   {
-   "time": "2026-11-21T23:44:04.221Z",
-   "file": "20261121234404221-note-f2-1586-pair.jpg",
-   "source": "../view/f2-1586-pair.jpg",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 final tier: round 23 above, now below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:03.378Z",
-   "file": "20261121234403378-note-f2-1287-night.jpg",
-   "source": "../view/f2-1287-night.png",
-   "kind": "note",
-   "label": "P6 f2 dive 1287 night limb native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:02.596Z",
-   "file": "20261121234402596-note-f2-1287-pair.jpg",
-   "source": "../view/f2-1287-pair.jpg",
-   "kind": "note",
-   "label": "P6 f2 dive 1287 final tier: round 23 above, now below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:01.808Z",
-   "file": "20261121234401808-note-b5-bolts.jpg",
-   "source": "../view/b5-bolts.png",
-   "kind": "note",
-   "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
-   "stop": "venus"
-  },
-  {
    "time": "2026-11-21T17:53:25.009Z",
    "file": "20261121175325009-frame-fn3-1185.jpg",
    "source": "out/work/venus/r3/fn3-1185.png",
@@ -173,20 +181,6 @@
    "stop": "venus",
    "segment": "venus.hold",
    "frame": 1185,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T16:59:56.740Z",
-   "file": "20261121165956740-frame-fn2-1440.jpg",
-   "source": "out/work/venus/r3/fn2-1440.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1440, review tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
