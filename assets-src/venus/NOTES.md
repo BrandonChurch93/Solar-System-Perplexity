@@ -1416,3 +1416,5 @@ The whole record of dusk, in one place (rendered on main 9d20d3dd, beside main's
 7. What I do not know: how a critic reads the unlit limb without any glow. It is now a dark edge that goes into black, with stars right beside it.
 
 Next: nothing of mine is in round 35 and nothing new goes into the frozen build (PROGRESS 18:26 UTC). I wait for the Builder's mail. On a mail: write it into this file word for word first, merge main if it moved, then do what it says. Do not start new cures on my own; do not touch `agent/venus-dusk`.
+
+- 20:11, message to `/root`, low priority, no question in it: branch c8134532 holds main 3f8d424a and equals main in `src` and `public`; dusk is not in the branch and is the patch; its whole record as in the list above; what it answers and what not; the false comparison in my own log named as never sent; `agent/venus-dusk` untouched; I start no new cure and wait for mail.
