@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T14:27:25.818Z",
- "head": "e9058bed8b302d57c87dd23aca63ca256dac12b8",
- "note": "CUT34 work: review rows main above branch for venus, earth, jupiter travel; every frame watch of earth.travel 2212 to 2227",
+ "pushed": "2026-11-22T14:58:30.101Z",
+ "head": "aa28c6148f30ec42928a5e62a3bc1d519145bf15",
+ "note": "CUT34 rows for mercury and uranus on the merge tree, venus watch; Sun corner fix in work",
  "looks": [
+  {
+   "time": "2026-11-22T14:47:13.053Z",
+   "file": "20261122144713053-note-w-venus-b.jpg",
+   "source": "../../../../tmp/v/w-venus-b.jpg",
+   "kind": "note",
+   "label": "venus.travel watch at review, branch, 1651 to 1658 and 1660",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:12.471Z",
+   "file": "20261122144712471-note-w-venus-a.jpg",
+   "source": "../../../../tmp/v/w-venus-a.jpg",
+   "kind": "note",
+   "label": "venus.travel watch at review, branch, 1641 to 1650 every frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:11.949Z",
+   "file": "20261122144711949-note-c34-uranus-ab.jpg",
+   "source": "../../../../tmp/v/c34-uranus-ab.jpg",
+   "kind": "note",
+   "label": "CUT34 uranus.travel review, main above branch: 4484 4492 4496 4506",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T14:47:11.395Z",
+   "file": "20261122144711395-note-c34-mercury-ab.jpg",
+   "source": "../../../../tmp/v/c34-mercury-ab.jpg",
+   "kind": "note",
+   "label": "CUT34 mercury.travel review, main above branch: 1066 1072 1080 1094",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T14:27:25.062Z",
    "file": "20261122142725062-note-w-earth-native.jpg",
@@ -35,37 +67,6 @@
    "kind": "note",
    "label": "jupiter.travel review, main 0ac6d2a0 above, main plus the branch below",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T14:20:37.857Z",
-   "file": "20261122142037857-note-c34-earth-ab.jpg",
-   "source": "../../../../tmp/v/c34-earth-ab.jpg",
-   "kind": "note",
-   "label": "earth.travel review, main 0ac6d2a0 above, main plus the branch below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T14:20:37.290Z",
-   "file": "20261122142037290-note-c34-venus-ab.jpg",
-   "source": "../../../../tmp/v/c34-venus-ab.jpg",
-   "kind": "note",
-   "label": "venus.travel review, main 0ac6d2a0 above, main plus the branch below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:03:58.088Z",
-   "file": "20261122140358088-note-lift-venus-ab.jpg",
-   "source": "../../../../tmp/v/lift-venus-ab.jpg",
-   "kind": "note",
-   "label": "Venus rise at draft, sky lift: unset above, skyLiftFrom 0 below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:03:56.750Z",
-   "file": "20261122140356750-note-g8-finals-b.jpg",
-   "source": "../../../../tmp/v/g8-finals-b.jpg",
-   "kind": "note",
-   "label": "finals 3352, 4492 on main plus the branch, full frame above, native crop below"
   }
  ]
 }
