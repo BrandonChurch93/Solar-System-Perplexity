@@ -1,9 +1,111 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T06:54:56.896Z",
- "head": "c457e9c0bdbbf8219ddd056fa2952ab4858734c9",
- "note": "Earth, mail 80: the arrival 1666 to 1679 before the cure on main and on the branch; first drafts of the cure (the aurora rises after the camera has come to rest). Proof queue running.",
+ "pushed": "2026-11-22T07:11:50.709Z",
+ "head": "3f32bf0c0f442e21bc39f489c87adf524402e29b",
+ "note": "Earth, mail 80: before and after strips of the arrival 1666 to 1679 at the review tier. The green band and the red edge are gone; 1755 and 2010 keep their bytes. Onset frames, finals 1857 and 2156, repeat and measure still running.",
  "looks": [
+  {
+   "time": "2026-11-22T07:11:49.947Z",
+   "file": "20261122071149947-note-v-arrival-frames-2.jpg",
+   "source": "out/work/earth/pb/j/v-arrival-frames-2.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1673 to 1679, whole frames at sheet tile size, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:11:49.298Z",
+   "file": "20261122071149298-note-v-arrival-limb-2.jpg",
+   "source": "out/work/earth/pb/j/v-arrival-limb-2.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1673 to 1679, upper right limb at preview pixels, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Green pixels in this crop: 2505 to 4403 on main, 9 to 120 with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:11:48.590Z",
+   "file": "20261122071148590-note-v-arrival-frames-1.jpg",
+   "source": "out/work/earth/pb/j/v-arrival-frames-1.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1666 to 1672, whole frames at sheet tile size, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:11:48.543Z",
+   "file": "20261122071148543-frame-o-1680.jpg",
+   "source": "out/work/earth/pb/j/o-1680.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1680, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T07:11:47.878Z",
+   "file": "20261122071147878-note-v-arrival-limb-1.jpg",
+   "source": "out/work/earth/pb/j/v-arrival-limb-1.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1666 to 1672, upper right limb at preview pixels, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Green pixels in this crop: 2505 to 4403 on main, 9 to 120 with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:58:01.303Z",
+   "file": "20261122065801303-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:58:00.275Z",
+   "file": "20261122065800275-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:57:01.042Z",
+   "file": "20261122065701042-compare-compare-earth-hold-view.jpg",
+   "source": "out/work/compare/compare-earth-hold-view.jpg",
+   "kind": "compare",
+   "label": "earth.hold: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:56:59.883Z",
+   "file": "20261122065659883-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:54:56.232Z",
    "file": "20261122065456232-note-v-onset-2.jpg",
@@ -35,20 +137,6 @@
    "kind": "note",
    "label": "Mail 80, arrival 1666 to 1672, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure. The green band is on both.",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:47:32.701Z",
-   "file": "20261122064732701-frame-e-1710.jpg",
-   "source": "out/work/earth/pb/i/e-1710.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1710, draft tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1710,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T06:11:24.024Z",
@@ -290,50 +378,6 @@
    "kind": "note",
    "label": "Item 6 and 7, Moon at 2156 at 4 times: kept build, my still on batch 18, on batch 19. The night side lies 1 code value under the lifted sky. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:56.954Z",
-   "file": "20261122054356954-note-city-1755-b19.jpg",
-   "source": "out/work/earth/pb/g/city-1755-b19.png",
-   "kind": "note",
-   "label": "Item 8, city lights at 1755 at 3 times: approved image, new, before (clipped cores). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:55.856Z",
-   "file": "20261122054355856-note-city-2156-b19.jpg",
-   "source": "out/work/earth/pb/g/city-2156-b19.png",
-   "kind": "note",
-   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:52:42.855Z",
-   "file": "20261122045242855-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:51:42.788Z",
-   "file": "20261122045142788-compare-compare-earth-hold-view.jpg",
-   "source": "out/work/compare/compare-earth-hold-view.jpg",
-   "kind": "compare",
-   "label": "earth.hold: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   }
  ]
 }
