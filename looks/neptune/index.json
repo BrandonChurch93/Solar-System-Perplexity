@@ -1,51 +1,65 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T02:13:34.293Z",
- "head": "b19bc27c3bb963b88d6eea6a0a84f85417ae9174",
- "note": "Neptune: dive cover window at the review tier is rendering (first frame in), cirrus and Triton cures prepared offline",
+ "pushed": "2026-11-22T02:30:04.380Z",
+ "head": "170a6b301363ebc19b753396786062413aa4dc49",
+ "note": "main 3d48581 merged (170a6b3); cover sheets rendering again on the merged tree; cirrus trial 2 looked at and not kept",
  "looks": [
   {
-   "time": "2026-11-22T02:13:27.171Z",
-   "file": "20261122021327171-note-fit-preview.jpg",
-   "source": "out/work/nep/p6/tri/fit-preview.jpg",
+   "time": "2026-11-22T02:30:03.152Z",
+   "file": "20261122023003152-note-s-4605.jpg",
+   "source": "out/work/nep/p6/m1/s-4605.png",
    "kind": "note",
-   "label": "Triton at the judged hold 4605, 4 times: approved hero, film now, and an offline prediction of the film with the light law fitted to the hero (wider terminator, light reaching round the lower limb). Prediction only, not rendered yet",
+   "label": "hold 4605 review on 170a6b3 (main 3d48581): one pixel differs by one level from before the merge",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T02:13:25.794Z",
-   "file": "20261122021325794-note-f04738-review.jpg",
-   "source": "out/work/nep/p6/h1/rev/f04738-review.png",
+   "time": "2026-11-22T02:30:01.964Z",
+   "file": "20261122023001964-note-c2-grid.jpg",
+   "source": "../../../../tmp/c2-grid.png",
    "kind": "note",
-   "label": "Dive cover at the review tier, frame 4738 (cover 0.77, 128 samples): the limb is a soft pale horizon under the closing veil, no bright band, no stepped copies. First frame of the cover sheet, the rest is rendering",
+   "label": "cirrus trial 2 at 5006, 2x: off / take 4 streak 0.25 / take 4 streak 0 (main 3d48581; not kept)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T02:06:11.399Z",
-   "file": "20261122020611399-frame-f04738-review.jpg",
-   "source": "out/work/sheets/.frames-4a3k9Q/f04738-review.png",
+   "time": "2026-11-22T02:30:01.082Z",
+   "file": "20261122023001082-note-pair-native.jpg",
+   "source": "out/work/nep/p6/c2/pair-native.png",
+   "kind": "note",
+   "label": "cirrus trial 2 at 5006, review, native crop: before / far map take 4 (tree 170a6b3 with main 3d48581 plus the trial, not kept: the wisps read as smudges)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T02:28:38.743Z",
+   "file": "20261122022838743-frame-s0-5006.jpg",
+   "source": "out/work/nep/p6/c2/s0-5006.png",
    "kind": "frame",
-   "label": "neptune.dive frame 4738, review tier",
+   "label": "neptune.rise frame 5006, review tier",
    "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4738,
+   "segment": "neptune.rise",
+   "frame": 5006,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "engine": "1e61fa4049d34863"
   },
   {
-   "time": "2026-11-22T02:04:18.016Z",
-   "file": "20261122020418016-note-pv-a.jpg",
-   "source": "out/work/nep/cirrus/t4/pv-a.jpg",
-   "kind": "note",
-   "label": "Cirrus on the generated side, offline preview in map space at the scale of frame 5006: top the wrap's cloud alpha as it is, bottom with the far side map take 4 (long chains cut into clumps, thin strokes turned to soft wisps). Not rendered yet",
-   "stop": "neptune"
+   "time": "2026-11-22T02:22:38.161Z",
+   "file": "20261122022238161-frame-s-4860.jpg",
+   "source": "out/work/nep/p6/m1/s-4860.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, review tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
   },
   {
-   "time": "2026-11-22T01:54:07.737Z",
-   "file": "20261122015407737-frame-s-4605.jpg",
-   "source": "out/work/nep/p6/h1/s-4605.png",
+   "time": "2026-11-22T02:22:03.499Z",
+   "file": "20261122022203499-frame-s-4605.jpg",
+   "source": "out/work/nep/p6/m1/s-4605.png",
    "kind": "frame",
    "label": "neptune.hold frame 4605, review tier",
    "stop": "neptune",
@@ -54,37 +68,29 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "engine": "1e61fa4049d34863"
   },
   {
-   "time": "2026-11-22T01:53:33.468Z",
-   "file": "20261122015333468-note-d2-olive2.jpg",
-   "source": "out/work/nep/p6/h1/d2-olive2.jpg",
+   "time": "2026-11-22T02:19:40.553Z",
+   "file": "20261122021940553-note-terr3.jpg",
+   "source": "../../../../tmp/terr3.jpg",
    "kind": "note",
-   "label": "Cause of the grey green band at 4729: one part off at a time; it goes only with the fitted field off (top right)",
+   "label": "terrain review stills 4800, 4860, 4930: the eye moves 163, 140 px, the foreground band grows 1.5 times (motion check, no change)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T01:53:32.829Z",
-   "file": "20261122015332829-note-d2-sky-native.jpg",
-   "source": "out/work/nep/p6/h1/d2-sky-native.jpg",
-   "kind": "note",
-   "label": "Dive 4747 to 4751, upper right at native size: sky under the cover, base law (left) against the linear law on the terrain side (right)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:02:50.979Z",
-   "file": "20261122010250979-frame-c-4930.jpg",
-   "source": "out/work/nep/p6/g1/c-4930.png",
+   "time": "2026-11-22T02:15:28.512Z",
+   "file": "20261122021528512-frame-f04739-review.jpg",
+   "source": "out/work/sheets/.frames-4a3k9Q/f04739-review.png",
    "kind": "frame",
-   "label": "neptune.terrain frame 4930, review tier",
+   "label": "neptune.dive frame 4739, review tier",
    "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4930,
+   "segment": "neptune.dive",
+   "frame": 4739,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "26442750f28b11e0"
   }
  ]
 }
