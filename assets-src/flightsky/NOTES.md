@@ -106,3 +106,29 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
   - A set that is never drawn is never uploaded and keeps its arrays (the flight sets at a hold only render, the catalog never is such a set).
 - Proof on this tree against origin/main 07aabf5e: finals 1072, 3352, 4492, 5235 and drafts 615, 2325, 2427, 4860 byte equal; `tools/restore.ts` at 3352 and at 2325 (draft) all lines pass, the frame after the restored context has the same sha256 as before; vitest green; shader audit the same lines.
 - Considered and left for the risk to the bytes: colors as bytes, positions at half precision, one band copy drawn twice.
+
+## Round 31 critics (MAIL 114, 117, 121; due 10:25 UTC)
+
+Three commits on top of 36d0bd11, each cure its own commit: the band edge, the unfold flag in `sky.ts`, and one commit marked FOREIGN LINES (`src/core/types.ts`, `src/stops/mars/set.ts`, `src/stops/mars/sky.json`) for the Builder to take or drop.
+
+### Cure 1, the band edge (5235 lookback, 1072 corner)
+- Cause: the strip and its stars ended by one law of galactic latitude alone (`flightStrip.edge` 0.14 to 0.46 of the half span, plus 0.1 of veil noise), so the cut ran level; under it the band star carpet went on at full density while the glow had stopped, which read as a strip of other star density.
+- Cure, the same law in the shader (`SKY_FRAG`, flight block) and in `bandField()`:
+  - `ar = |lat| * (1 + reach * (1 - w))`, w the normalized veil: the edge comes in where the veil is thin.
+  - `ar + rough * roughMap * smoothstep(0, 0.5 * edgeFrom, ar)`: a second static cloud map (`rough`, 512 x 256, three octaves from `flightStars.veil.rough` = 6 cells round the sky) pushes the edge in by lobes; one sided, and off in the core.
+  - `fade = smoothstep(follow * (1 - lum), 1, fade)`: dark parts of the glow open first, so the edge follows the cloud shapes of the picture (`mean` stands for lum on the CPU side).
+  - Band stars: a star is kept when its own draw `pick <= fade ^ thin`; `pick` comes from its own stream (`flight band thin`) at build time, so the other draws are those of main and no star blinks. Level is times `fade ^ dim`.
+  - Behind the band: the soft sky under the strip (`off`, the blurred map) is brighter than the graded strip in the core, so a cut showed a grey fog lobe (up to 45 levels over main at 5235). Now `off` is shaded by `1 - shade * (fz0 - fz)` where the new law cuts inside main's footprint (fz0 is main's edge value), and the composite is the per channel minimum of the new mix and main's mix.
+- Never brighter than main (base composite, per channel, by the minimum above): every new term only adds to the edge argument or contracts the fade, `dim` is 1, the star set is a subset of main's with levels at or under main's.
+- No crawl: every term is a function of sky direction (static maps on the sphere), nothing reads the camera or the frame.
+- Config: `flightStrip.feather = {reach 1.2, rough 0.18, follow 0.7, mean 0.45, thin 1.5, dim 1, shade 0.85}`, `flightStars.veil.rough = 6`.
+- Tried and dropped: rough two sided 0.24 (parts brighter than main), one sided 0.22 without the core gate (ate the core of the band on the left of 5235), gate on raw latitude with 0.15 (edge level again: the reach term had already moved the edge inside the gate).
+- The glow is sampled wherever main sampled it (fz0 above 0), so the cost is main's.
+- With both cures the ten check frames at draft keep main's sha256 except 2427 (Mars dive): it moves only in the margin strips of the Mars patch (right of x 1700 and the top rows), which is cure 2 at work.
+
+### Cure 2, the mirror seam beside Mars (2242, 2249)
+- Cause: `public/assets/mars/full/sky-hold.webp` was padded by reflection: exact mirror axes at columns 352 and 3168 and rows 198 and 1782 of 3520 x 1980, the margin 0.1 of the patch per side. The patch fades in across that margin, so the reflected sky shows wherever the margin is in frame. Shared layers have no axis.
+- Where: 2242 axis at x 341; 2249 and 2250 left of x 170 plus a thin strip at the bottom; 2275 left of 115 plus bottom strip; 2325 none; 2399 right of 1750 plus top strip.
+- Cure: `unfolded()` in `SKY_FRAG`. Only in the margin, the texel is taken `unfold[0]` further in (a translation, so no axis) and crossfaded with the mirrored texel over the first 0.35 of the margin. `unfold[1]` moves the start of the patch fade (0 keeps main's fade). Mars hold: `[0.1, 0]`, the margin repeats the strip just inside the axis.
+- Tried and dropped: displacement that grows across the margin (smear line at the ramp), 0.25 with early fade 0.65 (soft vertical step to the flight sky, faint lump), 0.25 full (a bright piece of the Milky Way from behind Mars, cut on a vertical).
+- The same mirror padding is in `mars/sky-terrain.webp`, `venus/sky-terrain.webp`, `earth/sky-terrain.webp`: not checked in frame for lack of time, polish list.
