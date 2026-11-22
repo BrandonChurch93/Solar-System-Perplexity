@@ -23,6 +23,7 @@ THIN_AREA = 40
 THIN_PAD = 0.1
 THIN_SPAN = 3.0
 THIN_OPEN = 31
+STREAM = {'seed': 23, 'clear': 0.006, 'soft': 60, 'fade': 0.3, 'vary': 1.5, 'steep': 4.5, 'least': 3.0, 'bend': 0.12, 'ray': (40, 160), 'group': (6, 24), 'lane': (3, 12), 'lean': (4, 16)}
 
 
 def interp_rows(img, hole):
@@ -41,6 +42,26 @@ def interp_rows(img, hole):
             v = img[y, good, c]
             out[y, h, c] = np.interp(idx[h], xs, np.concatenate([v, v, v]))
     return out
+
+
+def wave(rng, band):
+    k = np.arange(band[0], band[1] + 1)
+    v = (rng.uniform(0.5, 1, k.size)[:, None] * np.sin(k[:, None] * cols()[None, :] + rng.uniform(0, 2 * np.pi, k.size)[:, None])).sum(0)
+    return (v / np.abs(v).max()).astype(np.float32)
+
+
+def streamers(cor, rr, edge, power):
+    rng = np.random.default_rng(STREAM['seed'])
+    x = np.log(np.maximum(rr[:, None] / (edge[None, :] + STREAM['clear']), 1)).astype(np.float32)
+    soft = ndi.gaussian_filter1d(cor, STREAM['soft'], axis=1, mode='wrap')
+    length = STREAM['fade'] * np.exp(STREAM['vary'] * (0.6 * wave(rng, STREAM['group']) + 0.4 * wave(rng, STREAM['ray'])))
+    steep = np.maximum(STREAM['steep'] * wave(rng, STREAM['lane']), STREAM['least'] - power)
+    out = np.maximum(soft * np.exp(-steep[None, :] * x)[..., None] + (cor - soft) * np.exp(-x / length[None, :])[..., None], 0).astype(np.float32)
+    lean = STREAM['bend'] * wave(rng, STREAM['lean']) * PW / (2 * np.pi)
+    mx = ((np.arange(PW, dtype=np.float32)[None, :] - lean[None, :] * x) % PW).astype(np.float32)
+    my = np.repeat(np.arange(cor.shape[0], dtype=np.float32)[:, None], PW, 1)
+    bent = cv2.remap(out, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP)
+    return np.where((x > 0)[..., None], bent, cor)
 
 
 def main():
@@ -159,6 +180,7 @@ def main():
     t = step(b, ENVELOPE[0], ENVELOPE[1])[..., None]
     cor = cor * (1 - t) + smooth * t
     del smooth
+    cor = streamers(cor, rr, edge, p)
     far = step((b - reach[None, :]) / FAR_BLEND, 0, 1)
     rim = 1 - step(b, edge[None, :] - RIM[0], edge[None, :] - RIM[1])
     cor += fine * ((1 - far) * rim * inside)[..., None]
@@ -177,4 +199,5 @@ def main():
     cv2.imwrite(WORK + '/halo-split.jpg', small, [cv2.IMWRITE_JPEG_QUALITY, 88])
 
 
-main()
+if __name__ == '__main__':
+    main()
