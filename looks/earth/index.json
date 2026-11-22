@@ -1,9 +1,183 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T03:20:44.585Z",
- "head": "40f2b71402b833966125bbe0511ec8bccd2a108f",
- "note": "Earth: engine batch 18 merged, discards moved behind the last statement, city lights map being softened (item 8); full proof queue restarts after this",
+ "pushed": "2026-11-22T03:37:55.523Z",
+ "head": "3b3819ec05e0127ccc53ad9a8a7e4217189ba1ec",
+ "note": "Earth polish items 4, 5, 7, 8 on main 0622510 (engine batch 18): final stills and proofs; measure and cover sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T03:37:54.649Z",
+   "file": "20261122033754649-note-sky-2010.jpg",
+   "source": "out/work/earth/pb/e/sky-2010.png",
+   "kind": "note",
+   "label": "Sky at 2010 at 10 times gain: approved close image, new, kept build. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:53.527Z",
+   "file": "20261122033753527-note-cloud-1857.jpg",
+   "source": "out/work/earth/pb/e/cloud-1857.png",
+   "kind": "note",
+   "label": "Clouds near the limb at 1857, 3 times: kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:52.563Z",
+   "file": "20261122033752563-note-aur-1755.jpg",
+   "source": "out/work/earth/pb/e/aur-1755.png",
+   "kind": "note",
+   "label": "Aurora at 1755: approved image, new, kept build. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:51.654Z",
+   "file": "20261122033751654-note-moon-2156.jpg",
+   "source": "out/work/earth/pb/e/moon-2156.png",
+   "kind": "note",
+   "label": "Moon at 2156, 4 times: kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:50.547Z",
+   "file": "20261122033750547-note-moon-1755.jpg",
+   "source": "out/work/earth/pb/e/moon-1755.png",
+   "kind": "note",
+   "label": "Moon at 1755, 4 times: approved image, kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:49.600Z",
+   "file": "20261122033749600-note-night-1755.jpg",
+   "source": "out/work/earth/pb/e/night-1755.png",
+   "kind": "note",
+   "label": "Night limb at 1755: approved image, kept build, new; native at 3 times, then at 3 times gain. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:48.220Z",
+   "file": "20261122033748220-note-night-new.jpg",
+   "source": "out/work/earth/pb/e/night-new.png",
+   "kind": "note",
+   "label": "Night limb at 1755, 1857, 2156: native at 3 times, then at 3 times gain. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:47.229Z",
+   "file": "20261122033747229-note-city-2156.jpg",
+   "source": "out/work/earth/pb/e/city-2156.png",
+   "kind": "note",
+   "label": "City lights at 2156, 3 times: kept build, before, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:46.095Z",
+   "file": "20261122033746095-note-city-1755-c.jpg",
+   "source": "out/work/earth/pb/e/city-1755-c.png",
+   "kind": "note",
+   "label": "City lights at 1755, 3 times: approved image, new, before. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:44.974Z",
+   "file": "20261122033744974-note-f-2156-final.jpg",
+   "source": "out/work/earth/pb/e/f-2156-final.png",
+   "kind": "note",
+   "label": "Earth 2156 rise, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:43.590Z",
+   "file": "20261122033743590-note-f-2010-final.jpg",
+   "source": "out/work/earth/pb/e/f-2010-final.png",
+   "kind": "note",
+   "label": "Earth 2010 terrain, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34 (same bytes as before the discard move and before batch 18)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:42.471Z",
+   "file": "20261122033742471-note-f-1857-final.jpg",
+   "source": "out/work/earth/pb/e/f-1857-final.png",
+   "kind": "note",
+   "label": "Earth 1857 dive, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:41.062Z",
+   "file": "20261122033741062-note-f-1755-final.jpg",
+   "source": "out/work/earth/pb/e/f-1755-final.png",
+   "kind": "note",
+   "label": "Earth 1755 hold, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T03:37:26.342Z",
+   "file": "20261122033726342-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T03:36:56.701Z",
+   "file": "20261122033656701-frame-f-1857-final.jpg",
+   "source": "out/work/earth/pb/e/f-1857-final.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:31:46.333Z",
+   "file": "20261122033146333-frame-f-2156-final.jpg",
+   "source": "out/work/earth/pb/e/f-2156-final.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:27:02.927Z",
+   "file": "20261122032702927-frame-f-2010-final.jpg",
+   "source": "out/work/earth/pb/e/f-2010-final.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:26:00.456Z",
+   "file": "20261122032600456-frame-f-1755-final.jpg",
+   "source": "out/work/earth/pb/e/f-1755-final.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T03:20:43.906Z",
    "file": "20261122032043906-note-knot-1755.jpg",
@@ -19,48 +193,6 @@
    "kind": "note",
    "label": "Earth 1755 city lights at 4 times: approved, first try of the softer lights map, before (work in progress; tree holds main 0622510, engine batch 18)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:19:06.189Z",
-   "file": "20261122031906189-frame-f-1755-final.jpg",
-   "source": "out/work/earth/pb/l2/f-1755-final.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:07:21.964Z",
-   "file": "20261122030721964-frame-f-2010-final.jpg",
-   "source": "out/work/earth/pb/d/f-2010-final.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T03:01:33.491Z",
-   "file": "20261122030133491-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T02:59:17.132Z",
@@ -117,138 +249,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:55:57.641Z",
-   "file": "20261122025557641-note-t-1857.jpg",
-   "source": "out/work/earth/pb/fin/t-1857.png",
-   "kind": "note",
-   "label": "Earth 1857 whole frame: kept, Phase B on batch 17 (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:57.043Z",
-   "file": "20261122025557043-note-t-2156.jpg",
-   "source": "out/work/earth/pb/fin/t-2156.png",
-   "kind": "note",
-   "label": "Earth 2156 whole frame: kept (old main), Phase B on batch 17 (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:56.308Z",
-   "file": "20261122025556308-note-band-2010.jpg",
-   "source": "out/work/earth/pb/fin/band-2010.png",
-   "kind": "note",
-   "label": "Earth item 8, 2010 horizon band x2: close image, Phase B (bloom taken out), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:55.713Z",
-   "file": "20261122025555713-note-sky-2010.jpg",
-   "source": "out/work/earth/pb/fin/sky-2010.png",
-   "kind": "note",
-   "label": "Earth item 8, sky at 2010 at 10 times gain: close image, Phase B (deband), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:55.120Z",
-   "file": "20261122025555120-note-cloud-1857.jpg",
-   "source": "out/work/earth/pb/fin/cloud-1857.png",
-   "kind": "note",
-   "label": "Earth item 8, 1857 clouds near the limb x3: kept, Phase B (fringes gone) (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:54.532Z",
-   "file": "20261122025554532-note-moon-2156.jpg",
-   "source": "out/work/earth/pb/fin/moon-2156.png",
-   "kind": "note",
-   "label": "Earth item 7, Moon at 2156 x4: kept, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:53.945Z",
-   "file": "20261122025553945-note-moon-1755.jpg",
-   "source": "out/work/earth/pb/fin/moon-1755.png",
-   "kind": "note",
-   "label": "Earth item 7, Moon at 1755 x4: hero, kept, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:53.206Z",
-   "file": "20261122025553206-note-aur-1755.jpg",
-   "source": "out/work/earth/pb/fin/aur-1755.png",
-   "kind": "note",
-   "label": "Earth item 5, aurora at 1755: hero, Phase B (emitted inside the air shell), kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:52.277Z",
-   "file": "20261122025552277-note-limb70-g3.jpg",
-   "source": "out/work/earth/pb/fin/limb70-g3.png",
-   "kind": "note",
-   "label": "Earth 1755 limb at PA 60 to 80, x4 at gain 3: hero, Phase B, kept (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:50.994Z",
-   "file": "20261122025550994-note-night-1755.jpg",
-   "source": "out/work/earth/pb/fin/night-1755.png",
-   "kind": "note",
-   "label": "Earth item 4 at 1755: approved hero, kept build, Phase B (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:49.824Z",
-   "file": "20261122025549824-note-night-kept.jpg",
-   "source": "out/work/earth/pb/fin/night-kept.png",
-   "kind": "note",
-   "label": "Earth item 4, the same crops on the kept build (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:55:48.953Z",
-   "file": "20261122025548953-note-night-new.jpg",
-   "source": "out/work/earth/pb/fin/night-new.png",
-   "kind": "note",
-   "label": "Earth item 4, night limb at 1755, 1857, 2156, PA 95, 125, 150, native x3 and x3 gain: Phase B final stills (Phase B uncommitted on 86c80d7, main 3d48581 engine, 88a6a7e merged)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:54:19.840Z",
-   "file": "20261122025419840-frame-f-2156-final.jpg",
-   "source": "out/work/earth/pb/fin/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:49:39.095Z",
-   "file": "20261122024939095-frame-f-1857-final.jpg",
-   "source": "out/work/earth/pb/fin/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:33:34.330Z",
-   "file": "20261122023334330-note-limb70.jpg",
-   "source": "out/work/earth/pb/r1/limb70.png",
-   "kind": "note",
-   "label": "Earth 1755 limb at PA 60 to 80, x4 at gain 3: approved hero, Phase B in work, kept build",
-   "stop": "earth"
   }
  ]
 }
