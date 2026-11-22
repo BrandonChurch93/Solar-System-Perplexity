@@ -49,6 +49,6 @@ export const descent = { high: 0.7, low: 0.05, air: 0.25, glow: { dive: [0.15, 1
 export const moon: MoonLook = { ...moonJson, lift: 1.02 }
 export const aurora: AuroraLook = { ...auroraJson, wave: [0.24, 17, 2.1], tail: [0.78, 0.86], day: [0.02, 0.38] }
 
-export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0], fold: 110, lock: [-0.014, -0.003], bloom: 1 }
+export const ground: GroundLook = { mesh: 480, towerMesh: 640, drift: [-3.2, 0.1], shimmer: [0.3, 220, 1.6, 0], fold: 110, lock: [-0.014, -0.003], bloom: 1, plain: [1, 5] }
 
 export const veil = { lead: 0.5, full: 0.08, tail: [0.85, 0.5] as [number, number], peak: [0.65, 0.6] as [number, number], deck: { grain: [4, 14, 40] as [number, number, number], gain: [1.3, 1, 0.5] as [number, number, number], rush: [0.86, 1.1] as [number, number], lit: [0.55, 1] as [number, number] }, rim: [0.985, 1.003] as [number, number], near: { depth: [0.035, 0.09] as [number, number], grain: [50, 40] as [number, number], gain: [1.3, 1, 0.5] as [number, number, number] } }
