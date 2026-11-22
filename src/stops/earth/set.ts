@@ -41,14 +41,14 @@ export const createSet: SetFactory = async (ctx) => {
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
   const glow = await ctx.texture(base + 'air-glow.png', { srgb: false, mips: false, repeat: true, flipY: false })
-  const air = new Air(look.air, glow, diagUniform)
+  const curtain = new Aurora(look.aurora, await ctx.texture(base + 'aurora.webp', { srgb: true, anisotropy: 4 }))
+  const air = new Air(look.air, glow, diagUniform, curtain)
   const shape = new THREE.Group()
   const m = look.shape
   shape.matrixAutoUpdate = false
   shape.matrix.set(m[0]![0]!, m[0]![1]!, m[0]![2]!, 0, m[1]![0]!, m[1]![1]!, m[1]![2]!, 0, m[2]![0]!, m[2]![1]!, m[2]![2]!, 0, 0, 0, 0, 1)
   const unshape = new THREE.Matrix3().setFromMatrix4(shape.matrix).invert()
-  const curtain = new Aurora(look.aurora, await ctx.texture(base + 'aurora.webp', { srgb: true, anisotropy: 4 }), diagUniform)
-  shape.add(globe.mesh, air.mesh, curtain.mesh)
+  shape.add(globe.mesh, air.mesh)
   orbit.add(shape)
   const tilt = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const untilt = tilt.clone().invert()
@@ -131,7 +131,7 @@ export const createSet: SetFactory = async (ctx) => {
         wisps.eye.copy(eye).applyMatrix4(lay)
         wisps.turn.setFromMatrix4(spin.makeRotationFromQuaternion(turn.copy(back).multiply(shot.camera.quaternion)).premultiply(lay))
         veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim, seg.kind === 'dive' ? wisps : null)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -180,12 +180,12 @@ export const createSet: SetFactory = async (ctx) => {
       au.uPhysical!.value = Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
-      curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
-      stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
-      curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
+      curtain.turn.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
+      stand.copy(auroraHome).applyQuaternion(curtain.turn)
+      curtain.turn.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
       const high = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
       sunLocal.copy(light).applyQuaternion(back)
-      curtain.update(plan.clock(state.time) - plan.holdMid, gain * state.weight * high, shot.post.vignette * (1 - low), aspect, away, sunLocal)
+      curtain.update(plan.clock(state.time) - plan.holdMid, high, sunLocal)
       moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (plan.clock(state.time) - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
@@ -193,14 +193,12 @@ export const createSet: SetFactory = async (ctx) => {
       globe.mesh.visible = visible
       air.mesh.visible = visible
       moon.mesh.visible = visible
-      curtain.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       globe.dispose()
       air.dispose()
       moon.dispose()
-      curtain.dispose()
       far.dispose()
       veil.dispose()
       ground.dispose()

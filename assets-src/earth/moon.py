@@ -9,6 +9,7 @@ import geo
 
 SCALE = 2
 W = 2048
+SETS = (("full", 1536), ("web", 1024))
 FINE = geo.WORK / "moon" / "moon-fine.png"
 FINE_BOX = (2509, 226, 88, 6)
 OUT = geo.ROOT / "src" / "stops" / "earth" / "moon.json"
@@ -110,7 +111,7 @@ def main():
     shade = shade_of(ndl)
     earth = np.median(baked[(ndl < -0.3) & (front > 0.4)], axis=0)
     mask = geo.smooth(MASK[0], MASK[1], front)
-    for key, w in (("full", W), ("web", W // 2)):
+    for key, w in SETS:
         base = out_dir or geo.ROOT / "public" / "assets" / "earth" / key
         tag = (key + "-") if out_dir else ""
         a8 = np.clip(geo.encode(albedo * 0.4) * 255 + 0.5, 0, 255).astype(np.uint8)
@@ -122,7 +123,7 @@ def main():
         from PIL import Image
         Image.fromarray(b8, "RGBA").save(base / (tag + "moon-lit.webp"), lossless=True, exact=True, method=6)
     q = geo.mat_to_quat(frame)
-    out = {"center": [round(float(v), 6) for v in centre], "radius": round(float(radius), 6), "quaternion": [round(float(v), 7) for v in q], "sun": [round(float(v), 4) for v in gain], "earthshine": [round(float(v), 5) for v in earth], "albedoScale": 2.5, "terminator": list(TERM), "power": power, "squeeze": squeeze, "mapWidth": {"full": W, "web": W // 2}}
+    out = {"center": [round(float(v), 6) for v in centre], "radius": round(float(radius), 6), "quaternion": [round(float(v), 7) for v in q], "sun": [round(float(v), 4) for v in gain], "earthshine": [round(float(v), 5) for v in earth], "albedoScale": 2.5, "terminator": list(TERM), "power": power, "squeeze": squeeze, "mapWidth": dict(SETS)}
     (out_dir / "moon.json" if out_dir else OUT).write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out))
     geo.write((out_dir or geo.WORK / "view") / "moon-maps.jpg", np.concatenate([geo.encode(albedo * 0.4), geo.encode(baked) * mask[..., None]], 0))

@@ -14,6 +14,7 @@ export interface GroundDef {
   ground: { file: string; box: Box; top: number; fade: number; under?: number; skip?: number; horizon: number[]; horizonSpan: [number, number] }
   towers?: { file: string; dist: string; box: Box; distSize: [number, number] }
   masks?: { file: string; box: Box }
+  low?: { file: string }
 }
 
 export interface GroundLook {
@@ -23,6 +24,7 @@ export interface GroundLook {
   fold: number
   shimmer: [number, number, number, number]
   lock: [number, number]
+  bloom: number
 }
 
 const VERT = /* glsl */ `
@@ -68,6 +70,8 @@ const HEAD = /* glsl */ `
 precision highp float;
 uniform sampler2D uColor;
 uniform sampler2D uMasks;
+uniform sampler2D uLow;
+uniform float uBloom;
 uniform vec2 uSize;
 uniform vec4 uBox;
 uniform vec4 uMaskBox;
@@ -94,6 +98,11 @@ vec3 masks() {
 float lens() {
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   return 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+}
+vec3 clear(vec3 col, float share) {
+  vec2 q = clamp(vImage / uImage, 0.0, 1.0);
+  vec3 low = inverseFilmic(textureLod(uLow, vec2(q.x, 1.0 - q.y), 0.0).rgb) * uGain;
+  return max(col - uBloom * share * low, 0.0) / (1.0 - uBloom);
 }`
 
 const GROUND_FRAG = /* glsl */ `
@@ -121,7 +130,7 @@ void main() {
   float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)));
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
   col *= 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
-  col *= uGain * lens();
+  col = clear(col * uGain * lens(), 1.0);
   if (uDiag >= 2 && ground < 0.5) discard;
   outColor = diagOut(vec4(col, ground), diagTexels(uv * uSize), step(0.5, ground), uLayer, shift / uImage * 60.0, length(vView));
 }`
@@ -135,7 +144,7 @@ void main() {
   vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
   if (texel.a < 0.004) discard;
   if (uDiag >= 2 && texel.a < 0.5) discard;
-  vec3 col = inverseFilmic(texel.rgb) * uGain * lens();
+  vec3 col = clear(inverseFilmic(texel.rgb) * uGain * lens(), texel.a);
   outColor = diagOut(vec4(col, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
 }`
 
@@ -146,6 +155,7 @@ export class Ground {
   private readonly layers: Layer[] = []
   private readonly look: GroundLook
   private readonly blank: THREE.DataTexture
+  private low = false
 
   private constructor(look: GroundLook) {
     this.look = look
@@ -168,6 +178,8 @@ export class Ground {
     }
     const masks = def.masks ? await ctx.texture(base + def.masks.file, { srgb: false, mips: false }) : r.blank
     const maskBox = def.masks?.box ?? [0, 0, W, H]
+    const low = def.low ? await ctx.texture(base + def.low.file, { srgb: true, mips: false }) : r.blank
+    r.low = def.low !== undefined
 
     const build = (box: Box, top: number, under: number, cells: number, distance: (x: number, y: number, d: THREE.Vector3) => number): THREE.BufferGeometry => {
       const [x0, y0, bw, bh] = box
@@ -222,7 +234,7 @@ export class Ground {
         vertexShader: VERT,
         fragmentShader: fragment,
         uniforms: {
-          uColor: { value: color }, uMasks: { value: masks }, uSize: { value: new THREE.Vector2(size.width, size.height) },
+          uColor: { value: color }, uMasks: { value: masks }, uLow: { value: low }, uBloom: { value: 0 }, uSize: { value: new THREE.Vector2(size.width, size.height) },
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
           uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform,
@@ -277,7 +289,7 @@ export class Ground {
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, view: RenderView, eye: THREE.Vector3): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3): void {
     const k = this.look
     for (const l of this.layers) {
       const u = l.material.uniforms
@@ -286,6 +298,7 @@ export class Ground {
       if (u.uShimmer) (u.uShimmer.value as THREE.Vector4).z = k.shimmer[2] * dt
       u.uGain!.value = gain
       u.uVignette!.value = vignette
+      u.uBloom!.value = this.low ? bloom * k.bloom : 0
       u.uAspect!.value = view.format.width / view.format.height
     }
   }

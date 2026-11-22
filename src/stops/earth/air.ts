@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { AURORA_GLSL, type Aurora } from './aurora'
 
 export interface AirLook {
   top: number
@@ -21,7 +22,8 @@ export interface AirLook {
   nightLine: number[]
   nightGlow: number[]
   nightAt: number[]
-  nightDip: number[]
+  nightSide: number[]
+  lineEnd: number[]
 }
 
 const VERT = /* glsl */ `
@@ -59,15 +61,17 @@ uniform float uGain;
 uniform float uWide;
 uniform float uAway;
 uniform vec2 uLineAway;
-uniform vec4 uNightLine;
+uniform vec2 uNightLine;
 uniform vec4 uNightGlow;
-uniform vec4 uNightAt;
-uniform vec3 uNightDip;
+uniform vec2 uNightAt;
+uniform vec2 uNightSide;
+uniform vec2 uLineEnd;
 uniform float uFree;
 uniform float uVignette;
 uniform float uAspect;
 uniform int uDiag;
 out vec4 outColor;
+${AURORA_GLSL}
 void main() {
   if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
@@ -83,34 +87,32 @@ void main() {
   float rise = sqrt(clamp(h / uTop, 0.0, 1.0));
   vec4 seen = mix(texture(uMap, vec2(turn, clamp(rise, 0.008, 0.992) * uRows.x)) * 4.0, vec4(1.0), uPhysical);
   float lw = (h - uLineShape.z) / (uLineShape.x * (1.0 + uLineAway.x * uAway));
-  vec3 line = uLine.rgb * (pow(x, uLine.w) * exp(-lw * lw) * seen.a * (1.0 - uLineAway.y * uAway));
-  float dusk = 1.0 - smoothstep(uNightDip.y, uNightDip.z, x);
-  float dark = mix(1.0 - smoothstep(uNightLine.z, uNightLine.w, x), dusk, uFree);
+  vec3 line = uLine.rgb * (pow(x, uLine.w) * exp(-lw * lw) * seen.a * (1.0 - uLineAway.y * uAway) * smoothstep(uLineEnd.x, uLineEnd.y, x));
+  vec4 held = texture(uMap, vec2(turn, uRows.y));
+  float dusk = 1.0 - smoothstep(uNightSide.x, uNightSide.y, x);
+  float nd = min(min(h, 0.0) - uNightAt.x, 0.0) / uNightAt.y;
+  float shell = exp(-nd * nd) * (h > 0.0 ? exp(-h / uNightGlow.w) * uFree : 1.0);
+  vec3 night = uNightGlow.rgb * (mix(max(held.a - 0.125, 0.0) * uNightLine.x, uNightLine.y * dusk, uFree) * shell);
+  vec3 curtain = aurora(at, h, uAway);
   if (h < 0.0) {
-    vec3 held = texture(uMap, vec2(turn, uRows.y)).rgb;
-    vec3 rim = mix(held * held * 4.0, mix(uRimNight, uRim, smoothstep(0.42, 0.68, x)), uPhysical);
+    vec3 rim = mix(held.rgb * held.rgb * 4.0, mix(uRimNight, uRim, smoothstep(0.42, 0.68, x)), uPhysical);
     float hw = h / uInnerWide.x;
     float cover = exp(h / uInner.x) * uInner.y + exp(-hw * hw) * uInnerWide.y;
-    float nl = (h - uNightAt.x) / uNightAt.y;
-    float nd = (h - uNightAt.z) / uNightAt.w;
-    rim *= 1.0 - uNightDip.x * dusk * exp(-nd * nd);
-    vec3 thin = uNightGlow.rgb * (uNightLine.x * exp(-nl * nl) * dark);
-    outColor = vec4((rim * cover + line + thin) * lens, cover);
+    outColor = vec4((rim * cover + line + night + curtain) * lens, cover);
     return;
   }
   float up = b > 0.0 ? 1.0 : clamp(1.0 + b / r, 0.0, 1.0);
   vec4 fall = exp(-h / uHeight) * pow(vec4(x), uPower) * vec4(1.0, 1.0, uWide, uWide);
   vec3 glow = uColor[0] * fall.x + uColor[1] * fall.y + uColor[2] * fall.z + uColor[3] * fall.w;
   float edge = 1.0 - smoothstep(0.7 * uTop, 0.98 * uTop, h);
-  vec3 halo = uNightGlow.rgb * (exp(-h / uNightGlow.w) * dark * uFree * uNightLine.y);
-  outColor = vec4((glow * seen.rgb * edge + line + halo) * up * lens, 0.0);
+  outColor = vec4((glow * seen.rgb * edge + line + night + curtain) * up * lens, 0.0);
 }`
 
 export class Air {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(p: AirLook, map: THREE.Texture, diag: THREE.IUniform<number>) {
+  constructor(p: AirLook, map: THREE.Texture, diag: THREE.IUniform<number>, curtain: Aurora) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -133,8 +135,9 @@ export class Air {
         uInner: { value: new THREE.Vector2(p.inner, p.innerStrength) },
         uInnerWide: { value: new THREE.Vector2().fromArray(p.innerWide) },
         uTop: { value: p.top },
-        uGain: { value: 1 }, uWide: { value: 1 }, uAway: { value: 0 }, uFree: { value: 0 }, uNightLine: { value: new THREE.Vector4().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector4().fromArray(p.nightAt) }, uNightDip: { value: new THREE.Vector3().fromArray(p.nightDip) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uGain: { value: 1 }, uWide: { value: 1 }, uAway: { value: 0 }, uFree: { value: 0 }, uNightLine: { value: new THREE.Vector2().fromArray(p.nightLine) }, uNightGlow: { value: new THREE.Vector4().fromArray(p.nightGlow) }, uNightAt: { value: new THREE.Vector2().fromArray(p.nightAt) }, uNightSide: { value: new THREE.Vector2().fromArray(p.nightSide) }, uLineEnd: { value: new THREE.Vector2().fromArray(p.lineEnd) }, uLineAway: { value: new THREE.Vector2(p.lineAway[0], p.lineAway[1]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uDiag: diag,
+        ...curtain.uniforms,
       },
       side: THREE.BackSide,
       blending: THREE.CustomBlending,

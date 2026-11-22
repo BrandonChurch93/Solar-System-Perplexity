@@ -250,13 +250,14 @@ ${PATCH_LEVELS}
   vec3 q = cloudDir(d);
   vec4 cloud = equirectGrad(uCloud, q, uGrad * (1.0 + uNightFlat.z * bad));
   cloud.rgb = mix(cloud.rgb, vec3(dot(cloud.rgb, vec3(1.0 / 3.0))), bad);
+  float more = 1.0;
   for (int k = 0; k < (uAway > 0.0 ? 1 : 0); k++) {
     vec4 fc = equirectGrad(uFarCloud, q, uGrad);
     float fine = fc.a - textureLod(uFarCloud, lonLat(q), uFine.y).a;
-    cloud *= 1.0 + uAway * uFine.x * fine * (1.0 - drift);
     cloud = mix(cloud, fc, drift);
+    more = min(1.0 + uAway * uFine.x * fine * (1.0 - drift), 1.0 / max(cloud.a, 0.001));
   }
-  float a = cloud.a * live;
+  float a = cloud.a * more * live;
   vec3 sunM = spinY(uSunW * uBodyToWorld, uSpin);
   vec3 toward = sunM - d * ndl;
   vec3 p = normalize(d + toward * (uShadow.x / max(ndl, uShadow.w)));
@@ -264,7 +265,7 @@ ${PATCH_LEVELS}
   float shadow = 1.0 - mix(uShadow.y, uFine.z, uAway) * thrown * smoothstep(-0.05, 0.1, ndl) * live;
   float band = (ndl - uTwilightAt.x) / uTwilightAt.y;
   vec3 shade = curveAt(ndl) * (1.0 + uTwilight * exp(-band * band));
-  vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * live * dim) * shade * uTint;
+  vec3 col = (lin * shadow * (1.0 - a) + inverseFilmic(cloud.rgb) * (more * live * dim)) * shade * uTint;
   vec3 wide = vec3(0.0);
   float reach = uBloomPre.y;
   for (int k = 0; k < 3; k++) {
