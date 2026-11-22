@@ -1,55 +1,55 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T11:29:47.377Z",
- "head": "3476ba705caaf37afc08210956a064a82f4d47ce",
- "note": "Mercury polish, tree 2426a2e + notes (holds main d5b851f): left streak in the hold sky, limb profiles for items 10a and 10c",
+ "pushed": "2026-11-22T11:55:35.813Z",
+ "head": "7f4c06074318e47a44be21cffdca0642691a997f",
+ "note": "Mercury polish 10a and 10c: limb line, local crest, near glow, rim halved in the rise; tree 7f4c060 on main d5b851f",
  "looks": [
   {
-   "time": "2026-11-22T11:20:33.596Z",
-   "file": "20261122112033596-note-s11-left.jpg",
-   "source": "../../../../tmp/s11-left.png",
+   "time": "2026-11-22T11:55:35.257Z",
+   "file": "20261122115535257-note-l6-sheet.jpg",
+   "source": "../../../../tmp/l6-sheet.jpg",
    "kind": "note",
-   "label": "mercury.hold 615 upper left at gain 4, draft, tree 2426a2e plus the left streak in sky-hold on main d5b851f: approved, before, after (item 10a, the level streak now runs to the limb)",
+   "label": "drafts 495 to 1050 of the limb law, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T11:16:51.332Z",
-   "file": "20261122111651332-note-f730.jpg",
-   "source": "out/work/mercury/p6/f5/f730.png",
+   "time": "2026-11-22T11:55:34.743Z",
+   "file": "20261122115534743-note-l6-ur.jpg",
+   "source": "../../../../tmp/l6-ur.jpg",
    "kind": "note",
-   "label": "mercury.dive frame 730, final tier (134 samples), tree 2426a2e on main d5b851f: item 5, the zoom blur is smooth, no repeated crater copies",
+   "label": "limb at -45 degrees 2x, drafts 520 to 1050, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T11:06:16.853Z",
-   "file": "20261122110616853-note-t4-limb.jpg",
-   "source": "../../../../tmp/t4-limb.png",
+   "time": "2026-11-22T11:55:34.221Z",
+   "file": "20261122115534221-note-l6-lr.jpg",
+   "source": "../../../../tmp/l6-lr.jpg",
    "kind": "note",
-   "label": "mercury.travel review tier native crops, tree 122b573 plus cure on main d5b851f: 1057 (78 samples, Sun sharp) and 1062 (16 samples, the Sun plate smears with the camera's turn, stars held)",
+   "label": "limb at 35 degrees 2x, drafts 520 540 689 700 717 1007 1034 1050, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T11:06:16.062Z",
-   "file": "20261122110616062-note-travel-sun-before-after.jpg",
-   "source": "out/work/mercury/p6/t3/travel-sun-before-after.png",
+   "time": "2026-11-22T11:55:33.704Z",
+   "file": "20261122115533704-note-p1016-6.jpg",
+   "source": "../../../../tmp/p1016-6.jpg",
    "kind": "note",
-   "label": "mercury.travel 1058 to 1068, draft, tree 122b573 plus the set.ts cure on main d5b851f: top before (the Sun plate cut to the engine's flat disc at 1059), bottom after (the Sun leaves the frame as one object)",
+   "label": "1016 limb at 3x, before (final, 2426a2e) | limb law (draft): slabs gone, halo halved, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T10:48:24.950Z",
-   "file": "20261122104824950-note-shadow-gain8-approved-before-after.jpg",
-   "source": "out/work/mercury/p6/i8/shadow-gain8-approved-before-after.png",
+   "time": "2026-11-22T11:55:33.192Z",
+   "file": "20261122115533192-note-pair-m35.jpg",
+   "source": "../../../../tmp/pair-m35.jpg",
    "kind": "note",
-   "label": "Mercury 870 final, crater shadow at gain 8: approved, polish READY 9604703, tree 05e91da (main d5b851f) with shade: the JPEG's teal and purple blocks are gone, the relief stays",
+   "label": "615 final limb at -38 degrees 3x: approved | before | limb law (near glow still too white), tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T10:48:24.390Z",
-   "file": "20261122104824390-note-wallB-approved-before-after.jpg",
-   "source": "out/work/mercury/p6/i8/wallB-approved-before-after.png",
+   "time": "2026-11-22T11:55:32.688Z",
+   "file": "20261122115532688-note-pair-m8.jpg",
+   "source": "../../../../tmp/pair-m8.jpg",
    "kind": "note",
-   "label": "Mercury 870 final, far wall and shadow edge at 1.5x: approved, polish READY 9604703, tree 05e91da (main d5b851f) with the wall layer",
+   "label": "615 final limb at -8 degrees 3x: approved | before (2426a2e) | limb law, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
