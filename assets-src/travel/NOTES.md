@@ -777,3 +777,8 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
   - mercury.travel: 1052 Mercury's night side as a black disc in front of the Sun with the corona round it; 1056 to 1064 the bright Sun with prominences slides out over the top right; 1068 plain sky with a faint warm glow at the top edge, Venus a small ring; 1072 Venus 120 px. No flat see through disc.
   - uranus.travel 4492, 4500, 4508: as on my swing tree (Neptune low centre, band lower right leaving, Triton upper left, cut by the top edge at 4508).
 - Looks pushed 16:42. Nothing in work; waiting for round 34's words. CUT35 message due 18:30 UTC: take outs and small proven things; commit 1 (a8baf79, mercury window) comes out if the motion critic reads the still disc as worse.
+
+## 16:43 UTC: the take out of commit 1 prepared, in case the motion critic reads mercury.travel worse
+- Branch `agent/travel-mercury-out` = origin/main b95b328a plus ONE commit 6b7c4224320e843cd0398d1cb02ad42c88028802: path.ts mercury back to `window: 33` (no pinFrames, no steady), the exact reverse of a8baf79. tsc clean. Pushed. Not merged into agent/travel-polish.
+- Shot probe, round 34 main (`/tmp/wt-m34`, outputs `/tmp/sub16-r34.txt`, `sub64-r34.txt`) against the take out tree (`/tmp/snap/mo`, `sub16-mo.txt`): 16 samples over all 5400 frames and 64 samples 1000 to 1140: differ only in 1035 to 1109 (75 frames).
+- chain38 running: review on mo 1060, 1064, 1068, 1072, 1080, 1088; final 1072 on mo and on round 34 main; markers MOROW, CHAIN38DONE.
