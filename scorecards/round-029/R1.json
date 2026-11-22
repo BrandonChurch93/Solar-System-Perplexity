@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "lower-right sunlit limb and adjacent terminator (crop G, also visible in pair-01-b.png)",
+   "what": "the crisp cream-white rim highlight along the lower-right sunlit edge is slightly duller and its warm outer limb glow falls off tighter against space, while nearby terminator shadows are slightly steeper and darker",
+   "fix": "restore the brighter specular rim highlight and slightly wider warm bloom along the lower-right limb, and gently lift near-terminator shadow roll-off to match pair-01-a.png"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "upper-left dark limb and adjacent space (crops B and D, also visible in pair-01-b.png)",
+   "what": "the faint horizontal optical flare streak extending left above the upper-left limb and the subtle warm lens-flare veil over the upper-left dark hemisphere are attenuated, leaving a slightly harder dark disc edge",
+   "fix": "bring back the subtle horizontal optical flare band in the upper-left sky and the faint warm veil across the upper-left unlit limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sunlit terraced crater walls and foreground regolith (crops E, F, G, H, also visible in pair-03-b.png)",
+   "what": "sunlit rock midtones shift slightly cooler and ~1–2 levels dimmer in red warmth, with very slight smoothing of the finest sunlit terrace ridges compared to the target",
+   "fix": "nudge sunlit regolith midtones slightly warmer toward golden-tan and preserve full micro-edge crispness on the terraced crater walls"
+  }
+ ]
+}
