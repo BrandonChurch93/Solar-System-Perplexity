@@ -31,7 +31,7 @@ export const params: MoveParams = {
   tint: [0.3, 0.5, 1],
 }
 
-const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.55, full: 0.93 }
+const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.15, full: 0.93 }
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
