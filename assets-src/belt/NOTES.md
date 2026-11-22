@@ -435,3 +435,18 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
   - The cover it hands to the dust: nothing measurable. A build whose `cover()` returns nothing (worktree, not committed): 2781 17.8 s, 2790 16.2 s; with the cover (sheet r3): 17.5 s, 16.1 s.
   - Frames with the hero alone 14.0 to 15.1 s (2775, 2778, 2787); with the hero and the near streak 17.2 to 17.5 s (2781, 2784); with the hero and a far rock 14.2 to 17.0 s (2769, 2772, 2790 to 2796). The same frame 2781 with no rock in frame took 11.2 s in the task 5 test. So roughly 3 s for the hero, 3 s for the near streak (64 time steps over a 300 px box), 1 s or less for a far rock, all in the once per frame build of the layer, not per sample.
   - Against batch 16 (dba3ebc, task 4 cast) on the same nine frames: 0.94.
+- 02:21 second byte list at draft, twelve frames across the film, f33fb07 against 30f31af (`out/work/belt/t6proof2-branch/`, `t6proof2-base/`; `segs.ts` names the segment of a frame). Eleven pairs equal:
+  - 60 (sun.terrain) c6eb2297cd146931348dffc0728b5584299bb6234b3feb50a89dbdc877f00094
+  - 600 (mercury.hold) 974c5e4f78ae5da169d9d85b6df0033b683c2c9d19cf6b60d3bffe230a9efa51
+  - 1200 (venus.hold) 1239d73bc46b416b888808fb66d7824ddfe79c65736aba982927af8d4c649637
+  - 1800 (earth.hold) 71163dde53beecff8772a0645fb00fc2c68416b0398f38e1e2bc3cb86ff03ee0
+  - 2200 (earth.travel) 06ec36118c753965964d56ee1f00bdaeb9c318ecf57df2c5752e69ef586d8e22
+  - 2744 (mars.rise, the frame before the segment) 9a1ba248bfc8ac866b83498b783c9c9e1b0d3c407b8bfd75b790ab8c8cec070a
+  - 2820 (jupiter.hold, the frame after it) cd68b0a3254d8a8b0dcba5e77b5383ea2c1f72062b75e0ef7e4584313bd65154
+  - 2900 (jupiter.hold) dfc77c3a72d219c7b500ef3171f7ae0bad0e60c65307d61b29f2d387a365fdf8
+  - 4000 (uranus.hold) be549c59d32ff9a0a954ed320e317f7f5ceab0f1df951d5b93e35a6628d161b9
+  - 4600 (neptune.hold) 6b68a2c75a13b79665972ce1e4126c82f06b6070b9d1b06c55d33ef9c154fa67
+  - 5300 (ending.lookback) ff48c79d3a9fc717ae669c93df9f77da48c68d71f8f148b279d085db7fc58562
+  One pair NOT equal: 3400 (saturn.hold), branch 1ebdb032d8ac129a5385913d94ea2a23708d4e5fbfb6ddbbb583f152dab20cba, base 9665599f6169949cbfe2ae5240e86dfcbc49984035789e4df9190e7831466d24. The two pictures differ in one pixel, (672,590), by one code value in one channel. The belt returns before it draws anything outside mars.travel and the two trees differ only in `belt.json` and my test, so I take this for a frame of the engine that is not byte stable from session to session; tested below by rendering 3400 twice on each side.
+- 02:20 MAIL 57: the look of the PART is accepted; engine batch 17 is on main (3d48581) with b5ffb8e in it and a new sky in mars.travel (warm flight grade, the warm band comes in from the upper right over 2792 to 2806). Before DONE: merge origin/main, build, tests, final 2782 and the review sheet on that tree, look, cost against batch 17.
+- 02:22 merged origin/main 3d48581 as merge commit 5dfb318 (no rebase), pushed. `git diff origin/main HEAD` is `belt.json` (the hero's place and velocity of f33fb07) and this notebook, nothing else. tsc clean, build passes, 14 repo test files and 12 belt tests green, planner and `sun.ts` give the same windows, Sun and discs as before (the camera path did not move). Chain started (`/tmp/chain9.sh`): review sheet m1, finals mf, cost on a worktree of 3d48581, draft byte list against 3d48581 with 3400 twice on each side, the four Mars finals.
