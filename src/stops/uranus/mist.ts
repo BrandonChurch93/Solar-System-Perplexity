@@ -58,7 +58,6 @@ float rush(vec2 p, vec3 k) {
   return (n - 0.5) * smoothstep(0.03, 0.3, rad);
 }
 void main() {
-  if (uDiag >= 2) discard;
   vec3 ray = normalize(vec3(vP, -1.0));
   float dist = length(vEye);
   float d = acos(clamp(dot(normalize(vDir), -vEye / dist), -1.0, 1.0)) - asin(min(1.0 / dist, 1.0)) + uShape.w;
@@ -72,6 +71,7 @@ void main() {
   col *= 1.0 + uWisp.x * n;
   float a = clamp(uMist + uWisp.y * n * 4.0 * uMist * (1.0 - uMist), 0.0, 1.0);
   outColor = vec4(col * uGain, a);
+  if (uDiag >= 2) discard;
 }`
 
 export class Mist {

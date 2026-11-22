@@ -23,7 +23,6 @@ in vec3 vLocal;
 flat in vec3 vCamL;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - vCamL);
   float t = max(-dot(vCamL, dir), 0.0);
   vec3 pc = vCamL + dir * t;
@@ -33,6 +32,7 @@ void main() {
   vec2 uv = vec2((clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * (uHaloSize.x - 1.0) + 0.5) / uHaloSize.x, (x * (uHaloSize.y - 1.0) + 0.5) / uHaloSize.y);
   vec3 col = textureLod(uHalo, uv, 0.0).rgb * (1.0 - smoothstep(0.9, 1.0, x));
   outColor = vec4(col * uGain, 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Halo {

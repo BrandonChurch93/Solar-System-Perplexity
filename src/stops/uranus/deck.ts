@@ -230,9 +230,9 @@ void main() {
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float texels = mix(sqrt(max(dot(gx * uFarSize, gx * uFarSize), dot(gy * uFarSize, gy * uFarSize))), plateT * (1.0 + wN * (float(textureSize(uNear, 0).x) / ((uNearWin.z - uNearWin.x) * uColorSize.x) - 1.0)), wT);
   texels = mix(texels, min(texels, cloudT), veilA);
-  if (uDiag >= 2 && uFade < 0.5) discard;
   vec4 o = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.2, 0.7, 0.75), vec3(0.85, 0.75, 0.3), wT), (pa - p).xz * 4.0, length(vView));
   outColor = vec4(o.rgb, uDiag >= 2 ? 1.0 : uFade);
+  if (uDiag >= 2 && uFade < 0.5) discard;
 }`
 
 const HALO_VERT = /* glsl */ `
@@ -262,10 +262,8 @@ in vec3 vDir;
 in vec3 vClip;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   vec3 d = normalize(vDir);
   float eps = acos(clamp(dot(d, uNadir), -1.0, 1.0)) - uAlpha;
-  if (eps <= 0.0) discard;
   float y = sqrt(clamp(eps / uEpsMax, 0.0, 1.0));
   float psi = atan(dot(d, uR0), dot(d, uF0));
   vec2 uv = vec2((clamp(psi / uPsiMax * 0.5 + 0.5, 0.0, 1.0) * (uHaloSize.x - 1.0) + 0.5) / uHaloSize.x, (y * (uHaloSize.y - 1.0) + 0.5) / uHaloSize.y);
@@ -273,6 +271,7 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, 0.0);
+  if (uDiag >= 2 || eps <= 0.0) discard;
 }`
 
 export interface DeckTextures { color: THREE.Texture; near: THREE.Texture; cloud: THREE.Texture; far: THREE.Texture; height: THREE.Texture; light: THREE.Texture; halo: THREE.Texture }
