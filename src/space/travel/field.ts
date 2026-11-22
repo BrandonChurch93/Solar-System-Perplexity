@@ -49,7 +49,7 @@ export interface StripDef {
   deep: { gain: number; tail: number; ref: number }
   detail: { freq: number; stretch: number; mottle: number; warp: number; octave: number[]; lane: number[]; fill: number[]; rim: number[]; far: number[]; spread: { tint: number[]; widthDeg: number; freq: number; vary: number; under: number } }
   dust: { span: number[]; lane: number[]; cloud: number[]; keep: number[]; red: number[]; strip: number[] }
-  stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number; law: number[] }
+  stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number; law: number[]; pink: number[] }
   sun: { radiusPx: number; glare: number[]; core: number[]; wing: number[]; stars: number[] }
 }
 
@@ -313,8 +313,10 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
     const ds = def.dust.strip
     const lane = (1 - THREE.MathUtils.smoothstep(bg, ds[0]!, ds[1]!)) * (1 - THREE.MathUtils.smoothstep(level, ds[4]!, ds[5]!)) * (1 - THREE.MathUtils.smoothstep(Math.abs(x), def.dust.span[0]!, def.dust.span[1]!))
     const cr = view.getUint8(at + 6) / 63.75
-    const cg = view.getUint8(at + 7) / 63.75
     const cb = view.getUint8(at + 8) / 63.75
+    const pink = Math.max(Math.min(cr, cb) - view.getUint8(at + 7) / 63.75, 0)
+    const cg = view.getUint8(at + 7) / 63.75 + st.pink[0]! * pink
+    const calm = 1 - st.pink[1]! * Math.min(pink / Math.max(cr, 1e-4), 1)
     for (let r = 0; r < frame.repeats; r++) {
       const jitter = rnd.next()
       const a = ((u + r - frame.offset) / frame.repeats - 0.5) * Math.PI * 2
@@ -331,7 +333,7 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
       const fade = THREE.MathUtils.smoothstep(1 - THREE.MathUtils.smoothstep(reach + fe.rough * field.rough[cell]! * THREE.MathUtils.smoothstep(reach, 0, 0.5 * edgeFrom!) + edgeNoise! * (veil - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!), low, 1)
       if (fade <= 0 || pick > Math.pow(fade, fe.thin) * (1 - ds[2]! * lane)) continue
       position.set([px, py, pz], n * 3)
-      star.set([level * Math.pow(fade, fe.dim) * (1 - ds[3]! * lane), base], n * 2)
+      star.set([level * Math.pow(fade, fe.dim) * (1 - ds[3]! * lane) * calm, base], n * 2)
       color.set([cr, cg, cb], n * 3)
       n++
     }
