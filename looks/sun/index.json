@@ -1,9 +1,83 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T02:48:02.399Z",
- "head": "f31bba94acbb8534e77afecbb4e667aff3d3e2b6",
- "note": "sun: opening switch 5dee843 proofs and judged frames at final tier, main 3d48581; review sheets rendering",
+ "pushed": "2026-11-22T02:57:45.258Z",
+ "head": "09125da95d4ff7630e20065221523b7f9b96fe2d",
+ "note": "sun: POLISH READY 5dee843 (opening switch); harness sheets terrain and rise at review on main 3d48581; next item 4 (limb haze layer)",
  "looks": [
+  {
+   "time": "2026-11-22T02:57:44.547Z",
+   "file": "20261122025744547-note-i290-sheet-rise-review-main-3d48581.jpg",
+   "source": "out/work/sun/i290-sheet-rise-review-main-3d48581.png",
+   "kind": "note",
+   "label": "sun: harness sheet of the rise, review tier, main 3d48581 (batch 17)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:57:43.896Z",
+   "file": "20261122025743896-note-i290-sheet-terrain-review-main-3d48581.jpg",
+   "source": "out/work/sun/i290-sheet-terrain-review-main-3d48581.png",
+   "kind": "note",
+   "label": "sun: harness sheet of the terrain view, review tier, opening switch on, main 3d48581 (batch 17)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:57:25.567Z",
+   "file": "20261122025725567-sheet-sun.rise-preview-review.jpg",
+   "source": "out/work/sheets/sun.rise-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet sun.rise, review tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 180,
+   "last": 269,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:57:17.648Z",
+   "file": "20261122025717648-frame-f00261-review.jpg",
+   "source": "out/work/sheets/.frames-pDTiVC/f00261-review.png",
+   "kind": "frame",
+   "label": "sun.rise frame 261, review tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 261,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:49:15.627Z",
+   "file": "20261122024915627-sheet-sun.terrain-preview-review.jpg",
+   "source": "out/work/sheets/sun.terrain-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet sun.terrain, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "first": 0,
+   "last": 179,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:48:44.499Z",
+   "file": "20261122024844499-frame-f00114-review.jpg",
+   "source": "out/work/sheets/.frames-c4iB0f/f00114-review.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 114, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 114,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:48:01.296Z",
    "file": "20261122024801296-note-i289-draft-sheet-200-224-every-frame-main-3d48581.jpg",
@@ -53,20 +127,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T02:47:55.683Z",
-   "file": "20261122024755683-frame-f00000-review.jpg",
-   "source": "out/work/sheets/.frames-c4iB0f/f00000-review.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 0, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
    "time": "2026-11-22T02:47:55.606Z",
    "file": "20261122024755606-note-i287-opening-arch-native-nine-frames-switch-on.jpg",
    "source": "out/work/sun/i287-opening-arch-native-nine-frames-switch-on.jpg",
@@ -96,116 +156,6 @@
    "source": "out/work/sun/i289-opening-strip-400-switch-on.png",
    "kind": "note",
    "label": "sun opening: strip 0, 15, 30, 45, 60 at 400 px, switch ON (draft tier, main 3d48581)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:51.926Z",
-   "file": "20261122024751926-note-i289-opening-strip-400-switch-off.jpg",
-   "source": "out/work/sun/i289-opening-strip-400-switch-off.png",
-   "kind": "note",
-   "label": "sun opening: strip 0, 15, 30, 45, 60 at 400 px, switch OFF (draft tier, main 3d48581)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:40:37.475Z",
-   "file": "20261122024037475-job-frame-00090.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T02:31:19.205Z",
-   "file": "20261122023119205-note-i288-f247-before-after-batch-17-draft.jpg",
-   "source": "out/work/sun/i288-f247-before-after-batch-17-draft.jpg",
-   "kind": "note",
-   "label": "sun: frame 247 draft before and after engine batch 17 (main 1c7c297 beside 3d48581), same stop code",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:18.161Z",
-   "file": "20261122023118161-note-i288-opening-f60-final-near-ground-native-off-beside-on.jpg",
-   "source": "out/work/sun/i288-opening-f60-final-near-ground-native-off-beside-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 60 final, near ground at native size, switch off beside on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:17.280Z",
-   "file": "20261122023117280-note-i288-opening-f0-final-near-ground-native-off-beside-on.jpg",
-   "source": "out/work/sun/i288-opening-f0-final-near-ground-native-off-beside-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 0 final, near ground at native size, switch off beside on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:16.264Z",
-   "file": "20261122023116264-note-i288-opening-f60-final-arch-native-off-beside-on.jpg",
-   "source": "out/work/sun/i288-opening-f60-final-arch-native-off-beside-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 60 final, arch at native size, switch off beside on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:15.162Z",
-   "file": "20261122023115162-note-i288-opening-f0-final-arch-native-off-beside-on.jpg",
-   "source": "out/work/sun/i288-opening-f0-final-arch-native-off-beside-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 0 final, arch at native size, switch off beside on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:14.319Z",
-   "file": "20261122023114319-note-i288-opening-f90-final-kept-beside-switch-on.jpg",
-   "source": "out/work/sun/i288-opening-f90-final-kept-beside-switch-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 90 final tier, kept clip (round 24) beside switch on (90 keeps its bytes with the switch), main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:13.386Z",
-   "file": "20261122023113386-note-i288-opening-f60-final-kept-beside-switch-on.jpg",
-   "source": "out/work/sun/i288-opening-f60-final-kept-beside-switch-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 60 final tier, kept clip (round 24) beside switch on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:31:12.307Z",
-   "file": "20261122023112307-note-i288-opening-f0-final-kept-beside-switch-on.jpg",
-   "source": "out/work/sun/i288-opening-f0-final-kept-beside-switch-on.jpg",
-   "kind": "note",
-   "label": "sun opening: frame 0 final tier, kept clip (round 24) beside switch on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:08:50.821Z",
-   "file": "20261122020850821-note-i286-review-212-224-larger.jpg",
-   "source": "out/work/sun/i286-review-212-224-larger.jpg",
-   "kind": "note",
-   "label": "sun item 1: review frames 212 to 224, larger",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:08:50.266Z",
-   "file": "20261122020850266-note-i286-review-200-211-larger.jpg",
-   "source": "out/work/sun/i286-review-200-211-larger.jpg",
-   "kind": "note",
-   "label": "sun item 1: review frames 200 to 211, larger",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:08:49.703Z",
-   "file": "20261122020849703-note-i286-review-sheet-200-224-every-frame.jpg",
-   "source": "out/work/sun/i286-review-sheet-200-224-every-frame.jpg",
-   "kind": "note",
-   "label": "sun item 1: review tier sheet of every frame 200 to 224 (rise cover), tree 6177d82",
    "stop": "sun"
   }
  ]
