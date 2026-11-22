@@ -1,9 +1,57 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T07:50:19.733Z",
- "head": "b6bbba7787e7d95405d537d5c384a5085ba3af52",
- "note": "sun: items 8a and 8b (feet and crest of the surge) proved at the final tier; next the granulation layer toward the limb and the streamers outside the approved frame",
+ "pushed": "2026-11-22T08:13:58.729Z",
+ "head": "9c494180a817a102afd4b986226b092dd6c46b1c",
+ "note": "sun: item 6 (streamers outside the approved frame) committed; item 5b (finer cells toward the limb) on trial, take 2 beside the approved hero",
  "looks": [
+  {
+   "time": "2026-11-22T08:13:57.573Z",
+   "file": "20261122081357573-note-f236-approved-before-after-r2.jpg",
+   "source": "out/work/sun/cells/f236-approved-before-after-r2.jpg",
+   "kind": "note",
+   "label": "sun rise 236, item 5b, drafts, native crops; approved hero for reference, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:13:56.501Z",
+   "file": "20261122081356501-note-f360-zoom3-top-left-r2.jpg",
+   "source": "out/work/sun/cells/f360-zoom3-top-left-r2.jpg",
+   "kind": "note",
+   "label": "sun hold 360, item 5b, limb ring at 3 times zoom (nearest): top limb, left limb, lower right sky; approved, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:13:55.591Z",
+   "file": "20261122081355591-note-f360-approved-before-after-r2.jpg",
+   "source": "out/work/sun/cells/f360-approved-before-after-r2.jpg",
+   "kind": "note",
+   "label": "sun hold 360, item 5b (finer cells toward the limb), drafts, native crops: left limb, top limb, lower right limb, centre; approved, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:03:35.521Z",
+   "file": "20261122080335521-note-s123-topfan-before-s1-s2-s3-gain4-native.jpg",
+   "source": "out/work/sun/stream/s123-topfan-before-s1-s2-s3-gain4-native.jpg",
+   "kind": "note",
+   "label": "sun corona card offline, the fan above the disc at 4 times gain: before, trial 1, trial 2, trial 3 (kept); main 681d8da, agent/sun 9c49418",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:03:35.009Z",
+   "file": "20261122080335009-note-t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg",
+   "source": "out/work/sun/stream/t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg",
+   "kind": "note",
+   "label": "sun travel 480, the fan below the disc at native size, before left, after right, gain 1 over gain 3; main 681d8da, agent/sun 9c49418",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T08:03:34.317Z",
+   "file": "20261122080334317-note-t1-470-480-before-after-gain3.jpg",
+   "source": "out/work/sun/stream/t1-470-480-before-after-gain3.jpg",
+   "kind": "note",
+   "label": "sun travel 470 and 480, item 6 (streamers outside the approved frame), drafts at 3 times gain, before left, after right; rendered on a local merge with agent/travel a3c388b; main 681d8da, agent/sun 9c49418",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T07:50:19.198Z",
    "file": "20261122075019198-note-strip-k4f-final-400px.jpg",
@@ -74,54 +122,6 @@
    "source": "out/work/sun/hook/send-hook/hook-native-arch-f00045.jpg",
    "kind": "note",
    "label": "Hook surge, frame 45, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:41.899Z",
-   "file": "20261122065041899-note-hook-native-arch-f00030.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00030.jpg",
-   "kind": "note",
-   "label": "Hook surge, frame 30, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:41.369Z",
-   "file": "20261122065041369-note-hook-native-arch-f00023.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00023.jpg",
-   "kind": "note",
-   "label": "Hook surge, frame 23, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:40.838Z",
-   "file": "20261122065040838-note-hook-native-arch-f00015.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00015.jpg",
-   "kind": "note",
-   "label": "Hook surge, frame 15, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:40.299Z",
-   "file": "20261122065040299-note-hook-final-f00000-fullsize.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-final-f00000-fullsize.jpg",
-   "kind": "note",
-   "label": "Hook surge, final tier still, frame 0, full size: byte equal to main 2b50ee2. agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:39.744Z",
-   "file": "20261122065039744-note-hook-final-f00060-fullsize.jpg",
-   "source": "out/work/sun/hook/send-hook/hook-final-f00060-fullsize.jpg",
-   "kind": "note",
-   "label": "Hook surge, final tier still, frame 60 (end of the hook), full size: the right foot still flares from the landing. main 2b50ee2, agent/sun-hook 6e33a5d",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:50:39.061Z",
-   "file": "20261122065039061-note-hook-after-strip-final-400px-6e33a5d.jpg",
-   "source": "out/work/sun/hook/hook-after-strip-final-400px-6e33a5d.jpg",
-   "kind": "note",
-   "label": "Hook surge (round 31 section F), AFTER: frames 0 8 15 23 30 38 45 53 60, final tier, each 400 px wide. Frame 0 is byte equal to main. main 2b50ee2, agent/sun-hook 6e33a5d (c3c2118 gives the same bytes)",
    "stop": "sun"
   },
   {
