@@ -1,9 +1,63 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T00:02:42.117Z",
- "head": "cc64d1cf558d52676f2eae4bd5463d8089b59c63",
- "note": "Phase 6 items 1 to 3, version c drafts: on the dive's orbit side the mist is now a cloud deck anchored to the globe (grows with it, keeps its roll), levels 81, 104, 138, 159, 178, 191, 202, 208, 213 from 1868 to 1878; rise swing to the nadir done by 2133 under the deck. Review proof rendering.",
+ "pushed": "2026-11-22T00:22:50.591Z",
+ "head": "5782576090390847c4795bacf33363a2f14c93e7",
+ "note": "Phase 6: version c dive review proof running (1876 to 1885 done), item 4 night limb measured on the kept build (doubled edge: halo 7.5, gap 2.8, line 7 at 1857 and 2156), item 5 aurora read",
  "looks": [
+  {
+   "time": "2026-11-22T00:22:46.021Z",
+   "file": "20261122002246021-note-aur-1755-hero-film.jpg",
+   "source": "out/work/earth/p6/aur-1755-hero-film.png",
+   "kind": "note",
+   "label": "Item 5 analysis: aurora at 1755, hero and kept film",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:22:45.360Z",
+   "file": "20261122002245360-note-lsz-1755-a.jpg",
+   "source": "out/work/earth/p6/lsz-1755-a.png",
+   "kind": "note",
+   "label": "Item 4 analysis: night limb unwrapped at 1755 (hero, film, gained)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:22:44.748Z",
+   "file": "20261122002244748-note-lsz-2156-a.jpg",
+   "source": "out/work/earth/p6/lsz-2156-a.png",
+   "kind": "note",
+   "label": "Item 4 analysis: kept night limb unwrapped at 2156",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:22:44.137Z",
+   "file": "20261122002244137-note-lsz-1857-a.jpg",
+   "source": "out/work/earth/p6/lsz-1857-a.png",
+   "kind": "note",
+   "label": "Item 4 analysis: kept night limb unwrapped at 1857 (film, film x gain)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:22:43.444Z",
+   "file": "20261122002243444-note-rc-a.jpg",
+   "source": "out/work/earth/p6/rc-a.jpg",
+   "kind": "note",
+   "label": "Phase 6 c: dive review frames 1876 to 1881 (preview format)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:22:11.721Z",
+   "file": "20261122002211721-frame-p-1885.jpg",
+   "source": "out/work/earth/p6/rc/p-1885.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1885, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1885,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-22T00:02:41.244Z",
    "file": "20261122000241244-note-f-1874.jpg",
@@ -18,66 +72,6 @@
    "source": "out/work/earth/p6/c-rise-a.jpg",
    "kind": "note",
    "label": "p6 version c c-rise-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:02:39.382Z",
-   "file": "20261122000239382-note-c-dive-b.jpg",
-   "source": "out/work/earth/p6/c-dive-b.jpg",
-   "kind": "note",
-   "label": "p6 version c c-dive-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:02:38.783Z",
-   "file": "20261122000238783-note-c-dive-a.jpg",
-   "source": "out/work/earth/p6/c-dive-a.jpg",
-   "kind": "note",
-   "label": "p6 version c c-dive-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:02:38.029Z",
-   "file": "20261122000238029-note-c-dive-c.jpg",
-   "source": "out/work/earth/p6/c-dive-c.jpg",
-   "kind": "note",
-   "label": "p6 version c c-dive-c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:01:28.900Z",
-   "file": "20261122000128900-frame-f-2134.jpg",
-   "source": "out/work/earth/p6/c/f-2134.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2134, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2134,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:59:09.134Z",
-   "file": "20261121235909134-frame-f-1879.jpg",
-   "source": "out/work/earth/p6/c/f-1879.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1879, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1879,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:53:26.141Z",
-   "file": "20261121235326141-note-b-dive-a3.jpg",
-   "source": "out/work/earth/p6/b-dive-a3.jpg",
-   "kind": "note",
-   "label": "p6 version b b-dive-a3",
    "stop": "earth"
   }
  ]
