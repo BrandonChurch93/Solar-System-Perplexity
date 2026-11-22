@@ -125,9 +125,12 @@ void main() {
   vec2 dx = vec2(abs(dFdx(bc.x)) < abs(dFdx(t2)) ? dFdx(bc.x) : dFdx(t2), dFdx(bc.y));
   vec2 dy = vec2(abs(dFdy(bc.x)) < abs(dFdy(t2)) ? dFdy(bc.x) : dFdy(t2), dFdy(bc.y));
   vec3 band = vec3(0.0);
+  vec2 plan = texelPlan(uBand, bc.xy, dx, dy);
   for (int k = 0; k < (bc.z > 0.0 ? 1 : 0); k++) {
     vec2 tx = uBandClean.x / vec2(textureSize(uBand, 0));
-    vec3 b0 = gradTexel(uBand, bc.xy, dx, dy).rgb;
+    vec3 b0 = vec3(0.0);
+    for (int j = 0; j < (plan.x > 0.5 ? 1 : 0); j++) b0 = texture(uBand, bc.xy, plan.y).rgb;
+    for (int j = 0; j < (plan.x > 0.5 ? 0 : 1); j++) b0 = textureGrad(uBand, bc.xy, dx, dy).rgb;
     vec2 gx = dx * uBandClean.z;
     vec2 gy = dy * uBandClean.z;
     vec3 kept = b0;

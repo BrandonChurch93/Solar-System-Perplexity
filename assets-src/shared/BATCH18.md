@@ -57,7 +57,13 @@ Mars on main `3d48581` and on the branch: 2325 `fd128b1a999f76fa`, 2427 `5636a97
 
 Against main `0bfe5690` the new main moved these of the 53 frames: 247, 615, 717, 1016, 1185, 1287, 1314, 1560, 1586, 1857, 2130, 2156, 2895, 2997, 3024, 3150, 3296, 3567, 3594, 3720, 3840, 3866, 4035, 4137, 4436, 4605, 4707, 5006.
 
-Not run again on this tree (they stand on the base `0bfe5690`, next section): the Venus veil frames (they need `agent/venus`, which does not hold main `3d48581`), the review tier frame, a second render of Saturn on main, the ten extra frames where the cover pass is now skipped, the 53 frames of the band branch.
+Saturn rendered a second time on main `3d48581` itself: 3567, 3594, 3840, 3866 differ from the first render of the same tree, so the frames that differ above are within what main does against itself.
+
+The ten extra frames where the cover pass of main is skipped now (212, 1307, 1876, 2122, 2446, 2692, 3016, 4151, 4396, 4726), main `3d48581` against the branch: 10 of 10 byte equal.
+
+The band branch (`a8299d2`, main `3d48581` merged in) against main `3d48581`: 50 of 53 byte equal; the ones that differ are 3594, 3840, 3866.
+
+Not run again on this tree (they stand on the base `0bfe5690`, next section): the Venus veil frames (they need `agent/venus`, which does not hold main `3d48581`), the review tier frame.
 
 ## Earlier proof on the base `0bfe5690`
 
@@ -120,10 +126,11 @@ The band branch `agent/engine-batch18-band` (`ae3c566` on the base `0bfe5690`): 
 8. The 53 frames were proved at draft, as asked; review and final are left to the Builder's chain.
 9. `coverHidden` returns `undefined` by default instead of today's product. The effect is the same (the sample rule falls back), but a caller that wants the number must compute `coverAmount * coverHides` itself.
 10. The tree holds main `3d48581` by a merge (`3f51122`). What was proved again on that tree and what was not is listed under the first proof table. The Venus veil frames and the review tier frame stand on the base `0bfe5690` only; the merge brought no change to `src/terrain/cover.ts` or to the cover line of `engine.ts`, so I expect them to hold, but they were not rendered again.
-11. The band branch: its merge with this branch had one conflict, in `STOP-AGENT.md` (two bullets added at the same place), solved by keeping both. Its frames on the tree with main `3d48581` are in the first proof section if they were rendered in time.
+11. The band branch: its merge with this branch had one conflict, in `STOP-AGENT.md` (two bullets added at the same place), solved by keeping both. Its 53 frames on the tree with main `3d48581` are in the first proof section (50 byte equal, Saturn 3594, 3840, 3866 apart).
 12. Batch 17 moved frames of main itself (247, 615, 717, 1016, 1185, 1287, 1314, 1560, 1586, 1857, 2130, 2156, 2895, 2997, 3024, 3150, 3296, 3567, 3594, 3720, 3840, 3866, 4035, 4137, 4436, 4605, 4707, 5006 differ between main `0bfe5690` and main `3d48581` in my renders, 28 of the 53, Saturn's four among them for their own reason). That is main's own change, not this batch; I name it so that nobody compares this branch against the old hashes.
 
 ## Working notes (read after a compaction)
 
 - Repo `/home/user/workspace/repo` (this branch), `/home/user/workspace/edit` (band branch), `/home/user/workspace/dev` (scratch, `origin/agent/venus` with this branch's engine files overlaid, never committed), `/home/user/workspace/main0` (main, for shot hashes).
-- Hash lists on main `3d48581`: `/tmp/t9-main.txt`, `/tmp/t9-branch.txt`. On the base `0bfe5690`: `/tmp/t8-main.txt`, `/tmp/t8-branch-a.txt` (first pass), `/tmp/t8-branch.txt` (second pass), `/tmp/e-main.txt`, `/tmp/e-branch.txt`, `/tmp/v-a.txt`, `/tmp/v-a2.txt`, `/tmp/v-b.txt`, `/tmp/v-b2.txt`, `/tmp/v-ar.txt`, `/tmp/v-br.txt`, `/tmp/t8-band.txt`. Scratch scripts in `out/scratch/` (untracked): `hashes.ts` (`--tier`), `hh.ts`, `stophash.ts`, `reach.ts`, `reach2.ts`, `glare.ts`.
+- Main stood at `81570a7` at 02:46 UTC: three commits of status and progress files after `3d48581`, no file under `src`, `config`, `public` or `tests`. This tree holds `3d48581`, not those. The rise lift commit of travel was not on main yet. `git merge-tree` of this branch and of the band branch against it is clean.
+- Hash lists on main `3d48581`: `/tmp/t9-main.txt`, `/tmp/t9-branch.txt`, `/tmp/t9-main-sat2.txt`, `/tmp/e9-main.txt`, `/tmp/e9-branch.txt`, `/tmp/t9-band.txt`. On the base `0bfe5690`: `/tmp/t8-main.txt`, `/tmp/t8-branch-a.txt` (first pass), `/tmp/t8-branch.txt` (second pass), `/tmp/e-main.txt`, `/tmp/e-branch.txt`, `/tmp/v-a.txt`, `/tmp/v-a2.txt`, `/tmp/v-b.txt`, `/tmp/v-b2.txt`, `/tmp/v-ar.txt`, `/tmp/v-br.txt`, `/tmp/t8-band.txt`. Scratch scripts in `out/scratch/` (untracked): `hashes.ts` (`--tier`), `hh.ts`, `stophash.ts`, `reach.ts`, `reach2.ts`, `glare.ts`.
