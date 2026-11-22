@@ -1,9 +1,23 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T02:56:22.679Z",
+ "pushed": "2026-11-22T02:56:28.762Z",
  "head": "5433fb67e60f4d4ba5a3c01d4c4a980f9e3487bd",
  "note": "main 3d48581 in the tree: dive cover sheet at review in work, 4738 and 4739 in and clean; rise cover sheet, measure and terrain sheet follow, then the far side cirrus and Triton trials",
  "looks": [
+  {
+   "time": "2026-11-22T02:56:26.303Z",
+   "file": "20261122025626303-frame-f04740-review.jpg",
+   "source": "out/work/sheets/.frames-qWjF9j/f04740-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4740, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4740,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:56:21.430Z",
    "file": "20261122025621430-note-dive-cover-a.jpg",
@@ -11,20 +25,6 @@
    "kind": "note",
    "label": "neptune dive cover at review, frames 4738 and 4739, tree 170a6b3 with main 3d48581: soft limb under the veil, no bright band, no stepped copies, no stars",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T02:47:45.107Z",
-   "file": "20261122024745107-frame-f04739-review.jpg",
-   "source": "out/work/sheets/.frames-qWjF9j/f04739-review.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4739, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4739,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-22T02:38:50.977Z",
