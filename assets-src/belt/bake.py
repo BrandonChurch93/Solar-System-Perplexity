@@ -10,7 +10,7 @@ F = np.float32
 np.seterr(over='ignore')
 
 ROCKS = [
-    dict(id='a', seed=1107, n=832, axes=(1.0, 0.80, 0.68), lumps=0.17, facets=6, craters=72, rmax=0.50, grooves=3, soft=0.12, wobble=0.02, cracks=((4.0, 0.03, 0.007), (9.5, 0.035, 0.0035)), boulders=((5, 0.10), (8, 0.2), (14, 0.25))),
+    dict(id='a', seed=1107, n=832, axes=(1.0, 0.80, 0.68), lumps=0.17, facets=6, craters=72, rmax=0.50, grooves=0, soft=0.12, wobble=0.02, hard=True, streak=0.0, rimtone=0.16, grain=1.0, rough=((13, 0.0032), (41, 0.0024), (97, 0.0012)), craterlets=((6, 0.45), (10, 0.5), (17, 0.55), (29, 0.55), (50, 0.5), (82, 0.4)), sizes=(0.07, 0.44), law=2.0, deep=(0.24, 0.26), boulders=((5, 0.10), (8, 0.2), (14, 0.25), (19, 0.42, 0.14, 0.42), (31, 0.4, 0.14, 0.42))),
     dict(id='b', seed=2311, n=512, axes=(1.0, 0.70, 0.62), lumps=0.22, facets=5, craters=56, rmax=0.42, grooves=2),
     dict(id='c', seed=3709, n=384, axes=(1.0, 0.86, 0.60), lumps=0.20, facets=7, craters=48, rmax=0.46, grooves=1),
 ]
@@ -77,12 +77,14 @@ def fbm(p, seed, octaves, lac=2.03, gain=0.5, ridged=False):
     return out
 
 
-def crater(x, depth, rim, deg):
+def crater(x, depth, rim, deg, hard=False):
     u = np.clip(1 - x * x, 0, 1)
     bowl = -depth * (1 - 0.45 * deg) * u ** F(1 + 0.8 * deg)
-    s = F(0.03 + 0.22 * deg)
+    s = F(0.012 + 0.22 * deg) if hard else F(0.03 + 0.22 * deg)
     xi = np.sqrt((x - 1) ** 2 + s * s) - s
-    lip = rim * (1 - 0.6 * deg) * np.exp(-xi / np.where(x < 1, F(0.14), F(0.36)))
+    inner = F(0.06) + F(0.1) * deg if hard else F(0.14)
+    outer = F(0.2) + F(0.2) * deg if hard else F(0.36)
+    lip = rim * (1 - 0.6 * deg) * np.exp(-xi / np.where(x < 1, inner, outer))
     win = 1 - np.clip((x - 1.6) / 0.6, 0, 1) ** 2
     return (bowl + lip) * win
 
@@ -114,8 +116,9 @@ def build_params(spec):
     return p
 
 
-def cells(d, freq, seed, fill, rlo, rhi, sign):
+def cells(d, freq, seed, fill, rlo, rhi, sign, hard=False, law=3.0, deep=(0.2, 0.22)):
     out = np.zeros(d.shape[0], F)
+    warp = 1 + 0.2 * gnoise(d * F(freq * 1.7) + F(3.1), seed + 977) + 0.1 * gnoise(d * F(freq * 4.1) + F(8.7), seed + 978) if hard else None
     pos = d * F(freq)
     base = np.floor(pos).astype(np.int32)
     for ox in (-1, 0, 1):
@@ -133,18 +136,26 @@ def cells(d, freq, seed, fill, rlo, rhi, sign):
                 qy = (cy + u01(h2)) / F(freq)
                 qz = (cz + u01(h3)) / F(freq)
                 ql = np.sqrt(qx * qx + qy * qy + qz * qz)
-                ok = (np.abs(ql - 1) < 0.25 / freq) & (u01(h4) < fill)
+                dens = fill
+                if hard:
+                    dens = fill * (0.15 + 1.7 * u01(hash3(cx // 3, cy // 3, cz // 3, seed + 31)) ** 1.5)
+                ok = (np.abs(ql - 1) < 0.25 / freq) & (u01(h4) < dens)
                 if not ok.any():
                     continue
                 k = u01(h5)
-                rad = (rlo + (rhi - rlo) * k * k) / freq
+                rad = (rlo * (rhi / rlo) ** (k ** law) if hard else rlo + (rhi - rlo) * k * k) / freq
                 dist = np.sqrt((d[:, 0] - qx / ql) ** 2 + (d[:, 1] - qy / ql) ** 2 + (d[:, 2] - qz / ql) ** 2)
                 x = dist / rad
+                if hard:
+                    x = x * warp
                 near = ok & (x < 2.2)
                 if not near.any():
                     continue
                 deg = u01(h32(h5 ^ np.uint32(0x27D4EB2F)))
-                if sign > 0:
+                if sign > 0 and hard:
+                    k2 = u01(h32(h5 ^ np.uint32(0x165667B1)))[near]
+                    v = crater(x[near], rad[near] * (deep[0] + deep[1] * k2), rad[near] * (0.05 + 0.1 * (1 - k2)), deg[near] ** 2.4, True)
+                elif sign > 0:
                     v = crater(x[near], rad[near] * 0.3, rad[near] * 0.07, deg[near] ** 1.6)
                 else:
                     v = rad[near] * 0.55 * np.clip(1 - x[near] * x[near] * 2.2, 0, 1) ** 1.5
@@ -173,7 +184,7 @@ def radius(d, p):
             continue
         ang = np.arccos(cosang[sel])
         wob = 1 + 0.1 * gnoise(d[sel] * F(2.5 / max(float(rho), 0.08)) + off[2], p['seed'] + 3)
-        r[sel] += crater(ang / (rho * wob), depth, rim, deg)
+        r[sel] += crater(ang / (rho * wob), depth, rim, deg, p.get('hard', False))
     for g in p['gr']:
         phi = d @ g['axis'] + 0.035 * gnoise(d * F(2.6) + off[3], g['seed'])
         q = phi / g['period']
@@ -190,12 +201,16 @@ def radius(d, p):
         pits = 0.62 + 0.38 * np.cos(along * F(38.0) + idx * F(2.4))
         prof = np.clip(1 - v / 0.34, 0, 1)
         r -= F(g['depth']) * amp * mask * pits * prof * prof * (3 - 2 * prof)
-    for i, (freq, fill) in enumerate(((6, 0.45), (10, 0.55), (17, 0.6), (29, 0.62), (50, 0.62), (82, 0.55))):
-        r += cells(d, freq, p['seed'] + 50 + i, fill, 0.13, 0.3, 1)
+    hard = p.get('hard', False)
+    rlo, rhi = p.get('sizes', (0.13, 0.3))
+    for i, (freq, fill) in enumerate(p.get('craterlets', ((6, 0.45), (10, 0.55), (17, 0.6), (29, 0.62), (50, 0.62), (82, 0.55)))):
+        r += cells(d, freq, p['seed'] + 50 + i, fill, rlo, rhi, 1, hard, p.get('law', 3.0), p.get('deep', (0.2, 0.22)))
     r += cells(d, 44, p['seed'] + 90, 0.2, 0.06, 0.16, -1)
     r += cells(d, 90, p['seed'] + 91, 0.25, 0.08, 0.2, -1)
-    for i, (freq, fill) in enumerate(p.get('boulders', ())):
-        r += cells(d, freq, p['seed'] + 120 + i, fill, 0.06, 0.16, -1)
+    for i, b in enumerate(p.get('boulders', ())):
+        r += cells(d, b[0], p['seed'] + 120 + i, b[1], b[2] if len(b) > 2 else 0.06, b[3] if len(b) > 2 else 0.16, -1, len(b) > 2)
+    for i, (freq, amp) in enumerate(p.get('rough', ())):
+        r += F(amp) * fbm(d * F(freq) + off[(i + 2) % 8], p['seed'] + 160 + i, 3, gain=0.55)
     for i, (freq, width, depth) in enumerate(p.get('cracks', ())):
         v = gnoise(d * F(freq) + off[7], p['seed'] + 130 + i)
         where = np.clip(0.2 + 1.4 * gnoise(d * F(1.7) + off[i], p['seed'] + 140 + i), 0, 1)
@@ -248,16 +263,20 @@ def bake_rock(spec, out):
         cav_l = ndimage.gaussian_filter(rr[f], n / 24) - rr[f]
         a = 1 - 16 * np.clip(cav_l, 0, None) - 26 * np.clip(cav_m, 0, None) - 34 * np.clip(cav_s, 0, None) + 10 * np.clip(-cav_m, 0, 0.01)
         flat = d.reshape(-1, 3)
-        axis = p['gr'][0]['axis']
-        e1 = np.cross(axis, np.array([0.3, 0.9, 0.2], F))
-        e1 = e1 / np.linalg.norm(e1)
-        e2 = np.cross(axis, e1)
-        band = np.stack([(flat @ axis) * 34, (flat @ e1) * 2.2, (flat @ e2) * 2.2], -1).astype(F)
-        streak = (gnoise(band + p['off'][5], p['seed'] + 12) + 0.5 * gnoise(band * F(2.3) + p['off'][4], p['seed'] + 13)).reshape(m, m)
+        streak = 0
+        if p.get('streak', 0.13) > 0:
+            axis = p['gr'][0]['axis']
+            e1 = np.cross(axis, np.array([0.3, 0.9, 0.2], F))
+            e1 = e1 / np.linalg.norm(e1)
+            e2 = np.cross(axis, e1)
+            band = np.stack([(flat @ axis) * 34, (flat @ e1) * 2.2, (flat @ e2) * 2.2], -1).astype(F)
+            streak = (gnoise(band + p['off'][5], p['seed'] + 12) + 0.5 * gnoise(band * F(2.3) + p['off'][4], p['seed'] + 13)).reshape(m, m)
         patch = np.clip(0.5 + 1.2 * gnoise(flat * F(1.3) + p['off'][3], p['seed'] + 14).reshape(m, m), 0, 1)
         tone = 0.44 + 0.2 * fbm(flat * F(1.6) + p['off'][6], p['seed'] + 7, 3).reshape(m, m) + 0.1 * fbm(flat * F(8.5) + p['off'][7], p['seed'] + 8, 3).reshape(m, m)
-        tone += 0.13 * streak * patch
-        tone += 0.42 * np.clip((slope - 0.012) / 0.16, 0, 1)
+        tone += p.get('streak', 0.13) * streak * patch
+        if p.get('grain'):
+            tone += p['grain'] * (0.07 * fbm(flat * F(23) + p['off'][1], p['seed'] + 15, 3, gain=0.6).reshape(m, m) + 0.05 * patch * gnoise(flat * F(120) + p['off'][0], p['seed'] + 16).reshape(m, m))
+        tone += p.get('rimtone', 0.42) * np.clip((slope - 0.012) / 0.16, 0, 1)
         tone -= 7.0 * np.clip(cav_m, 0, 0.03)
         tone -= 5.0 * np.clip(cav_s, 0, 0.02)
         tone += 4.0 * np.clip(-cav_s, 0, 0.02)
