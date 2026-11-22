@@ -105,6 +105,29 @@ From this mail on `tools/round.py` and `tools/pack.ts` are the Builder's again: 
 - Test with a scratch plan `tartest` (the 16x9-draft plan under another name, its chunk folder and loose attachments moved aside and put back after): job 005 packed by the message's commands with 5m pieces, two of three pieces there: `place` 0 placed, exit 0, the tar named as not complete; third piece: 2 spans placed; job 001 by the exact commands (one 40m piece) and job 003 as loose files: 2 more placed; the three spans from tars are byte identical to the worker's files; a tar `film-tartest-001-again1` with the pair of the old build: not placed, listed under records from another build (engine a7e2e4a9a2b7be97, the plan has 704d5d55f51b7b15); a tar whose members are named `../../../../../../tmp/escape/...`, an absolute path and two links: nothing written outside, the span placed by its base name, no link; a tar cut in the middle: named as not complete; a tar of another plan's name: not looked at; `place` again: 0 new.
 - Not covered: two different tars of the same job name that arrive mixed (newest file per piece number wins; the record and ffprobe checks then decide); piece numbers above 9899.
 
+## MAIL 93 (2026-11-22): faults found by the Phase 6 rehearsal
+
+Mine from this mail on: `tools/proof.ts`, `tools/review.ts`, `tools/gate.ts` (G9), `package.json` scripts, besides `tools/master.py`, `tools/cues.ts`, `tools/gauntlet.py`. Still not mine: `tools/round.py`, `tools/pack.ts`, `tools/lib/`. A clock job runs beside it: one `TICK HH:MM UTC` to `/root` every 10 minutes through 11:52 UTC, then `TICKS DONE`.
+
+- `tools/proof.ts`, memory rule: the total after the travel is held against the arriving set, which is the peak (both sets) less the set before the travel, with the same 5 percent. When no sample holds both sets the error says so. The PSNR rule is untouched (30 dB; the Builder cures the cause in `src/capture/export.ts`).
+- The proof's record has carried `pass` and `errors` in `extra` since the first proof command; G9 (`tools/gate.ts`) and gauntlet item 15 now read them and go red when the newest proof did not pass. Item 16 already read `pass` of `memory.json`.
+- `tools/review.ts`: order is the nine posts (from `out/work/posts`, then `out/posts`; a smaller copy at the preview size when over `repo.maxFileMb`), the preview film, the nine clips, the comparison images (hold, then terrain), all in stop order with no file time, then the rest newest first as before. The pin of the current stop is gone because the groups hold it.
+- `package.json`: script `shots`. `npm run cues -- --check` names the stale or missing file and the command that remakes it.
+- `tools/cues.ts`: the posts table names the record by file name only, so the sheet is the same before and after `npm run keep -- --posts` moves the intros.
+- `tools/gauntlet.py` P1 to P3: each intro and each post is looked for in `out/posts/`, then `out/work/posts/`, file by file. P1 now says `committed` or `NOT COMMITTED` for an intro in `out/posts/`, which was the hidden reason for its FAIL in the rehearsal.
+- The one 404 of the proof page: `site.json`, asked for by `src/capture/export.ts` line 72 (`hostSets`). The file exists only in the published site folder (`tools/site.ts` line 16); with a 404 the page falls back to every set. Not a tool fault; named to the Builder.
+- `npm run keep -- --posts` said `no current post` in the rehearsal because the posts were joined from clips of another build. That is the rule of `tools/keep.ts`, not a fault.
+
+Proofs of MAIL 93 (draft tier, this clone at engine of main 2026-11-22 07:30 UTC):
+
+- `npm run proof`: exit 1, frame 29 PSNR 27.33 dB under 30 (the engine fault the Builder cures). Then `npm run gate -- --only G9`: FAIL with that error; `npm run gauntlet -- --items 15,16`: 15 FAIL with that error. With `pass` set true by hand in the record: G9 and 15 PASS (record restored).
+- `npm run proof -- --memory`: exit 0, PASS: before 667.8 MB (sun, frame 435), peak 1728.5 MB, after 1060.7 MB (mercury, frame 689). Item 16 PASS; with `pass` false by hand in `memory.json` item 16 FAIL (file restored).
+- The 404: a page with a `response` listener in export mode logged `GET site.json 404`; capture mode logged none.
+- Review order and the smaller copy: run on `scratch/gclone` (stand in posts): posts, preview film, clips, comparison images, rest; with `REVIEW_MAX_FILE_MB=41.02` two posts became 960 x 540 copies of 6 MB with the note.
+- Gauntlet P on `scratch/gclone` with the intros in `out/posts/` and the posts only in `out/work/posts/`: P1, P2, P3 PASS; with one intro taken out of the index P1 FAIL and its line says NOT COMMITTED.
+- Cues: sheet written with the intro records in `out/work/posts/`, records moved to `out/posts/`, `--check` gave no fault for `cut/CUES.md`; it names `cut/SHOTS.md` as stale with `npm run shots` (the file on main is stale at line 9; not remade by me).
+- `npx tsc --noEmit -p .` clean, `npx vitest run` 79 passed, pyflakes clean.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
