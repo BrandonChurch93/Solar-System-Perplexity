@@ -1,9 +1,17 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T19:35:05.859Z",
- "head": "fd5628ed4dd34c4356dc4f950d80015a48dc09f1",
- "note": "Ring opacity on the near half only (0f483905): far arc back, crossing cured, no edge where the factor changes",
+ "pushed": "2026-11-22T19:36:52.541Z",
+ "head": "50abfe276c58b077156c07f26e928c7df60e79ba",
+ "note": "Near half only: the right stretch at 5018 and 5025, no edge",
  "looks": [
+  {
+   "time": "2026-11-22T19:36:50.539Z",
+   "file": "20261122193650539-note-near-05-drafts-5018-5025-native-brightness-times-4-right-str.jpg",
+   "source": "out/work/nep/end35/solid/near-05-drafts-5018-5025-native-brightness-times-4-right-stretch-c588ee73-left-new-right.jpg",
+   "kind": "note",
+   "label": "Near half only: drafts 5018 and 5025, native, brightness times 4, the right stretch, c588ee73 left, new right, no edge",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T19:35:03.270Z",
    "file": "20261122193503270-note-near-04-every-ramp-frame-4996-to-5005-draft-c588ee73-left-ne.jpg",
@@ -57,14 +65,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T19:16:04.675Z",
-   "file": "20261122191604675-note-ramp-04-5006-draft-native-where-falling-px-touch-the-globe-m.jpg",
-   "source": "out/work/nep/end35/solid/ramp-04-5006-draft-native-where-falling-px-touch-the-globe-main-new-marked.jpg",
-   "kind": "note",
-   "label": "Ramp: 5006 draft native where falling px touch the globe's surroundings, main, new, falling px in red",
-   "stop": "neptune"
   },
   {
    "time": "2026-11-22T16:45:00.678Z",
