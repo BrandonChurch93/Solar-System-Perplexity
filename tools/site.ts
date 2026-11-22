@@ -18,7 +18,7 @@ writeFileSync(join(site, 'site.json'), JSON.stringify({ sets: Object.keys(cfg.ra
 function small(name: string): void {
   const src = join(DIST, 'review', name)
   const st = statSync(src)
-  const clip = cfg.stopIds.includes(name.replace('.mp4', ''))
+  const clip = cfg.stopIds.includes(name.replace('.mp4', '').replace(/^post-/, ''))
   const key = name.replace('.mp4', '') + '-' + st.size + '-' + Math.round(st.mtimeMs) + '.mp4'
   const made = join(cache, key)
   if (!existsSync(made)) {
