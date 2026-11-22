@@ -552,3 +552,19 @@ Star cure (`sky/stars.py`, `sky/stars.json`):
 - Pass 1 (f3): 1185 count 2790 against 2848 (0.980), median +0.29. 1440 top left 360 against 334 (1.078), median +0.61.
 - Pass 2 (f5): 1185 count 2785 (0.978), median -0.34 (p30 -0.23): the low knots went too far. 1440 top left 337 against 334 (1.009), median +0.60 (p30 +0.18), top mid 0.970 and +0.23, top right 1.263 and +0.14.
 - The 1440 median does not answer to the patch (the star layer is near zero at the median there). Test next: a final still without grain, the same quantiles.
+
+## Mail 50 and 56 work, state at 02:50 (22 Nov) (read this first after a compaction)
+
+Tree: branch head holds main 3d48581 (batch 17, merge 2907bb0). Render copy r2 sits on main 3d48581 with my three folders copied in. Mail 56 rules: `travel.sky.bandLook` and `travel.sky.riseLift` are the Builder's, do not change them and do not regrade the sky patches against them; every READY and picture names the main commit; hold and terrain frames must keep their bytes across the merge.
+
+- Bytes across the batch 17 merge, same branch state (still f6 on 4a7cad1, f7 on 3d48581, final tier): 1185 one pixel by one level (x 1518, y 318); 1440 one pixel by one level (x 602, y 210).
+- Wrap take 4 kept (`GAIN 0.3`, `CAP 2.5`, `SPECK 0.6`; 29.1 percent of the map changed, mean change 0.63 levels; at the 512 px level mean 0.07, at most 4). Four takes used.
+- Hold refitted on the new wrap (`hold/detail.py refine`, two passes). 1185 final with grain on 3d48581 (f7): zones 2.25, 1.23, 0.92, 3.16, 2.63 (before 2.29, 1.28, 0.95, 3.17, 2.68). Nograin 1.86, 0.53, 0.19, 2.92, 2.37 (before 1.92, 0.65, 0.26, 2.94, 2.41).
+- 1287 (f7): night box fine detail 6.75 (3 px 11.13, 8 px 13.46); before 4.07, round 23 4.13. Lit box 5.64 (3.65), deep night 5.25. Limb dips at 1287 (`tools/limbdip.py`, twelve azimuths): 0.0 to 3.0, no notch.
+- 1586 (f7): lit 8.67 (6.30 before); stars round the globe come from batch 17.
+- Star cure, hold: pass 3 at `relax 0.5`. 1185 pixels over 120: 2794 against 2848 (0.981); dark sky median +0.17. Aim met.
+- Star cure, terrain: two passes, then the dim sky pass of `air.py` (`OVER`, second argument = nograin final still of 1440). 1440 top left (f11): pixels over 100: 337 against 334 (1.009); median +0.33 with grain, +0.19 without; mean +0.04. Median aim 0.3 missed by 0.03 with grain (the approved dark sky lies on whole levels, p50 10.05, p60 11.96). Six air takes used this round: no more.
+- `terrainSkyGlow` is not the cause of the dim sky level. Do not touch it.
+- Draft strip d1 (dive 1259 to 1303, every fourth frame, new wrap): no texture swap, the hold layers are gone by 1275 without a step on the night side (`view/d1.jpg`, `view/d1-night.png`). Draft strip s1 (1552 to 1559): no seam, lane or wedge above the horizon (`view/s1.jpg`, `view/s1-sky.png` at 2.5 times).
+- Render queue started 02:44 (`queue.sh`): review cover sheets c16 (both), terrain review sheet, then `chain2r.sh` (vitest, G11, G12, G15, G5, G17, G13). Logs `/tmp/q-*.log`, `/tmp/chain.log`.
+- Still to do: read c16 (every frame), the terrain sheet, the chain; `mirrorcheck.py` on f7-1185 and f11-1440; send POLISH READY (head, main 3d48581, G5, G13, G17, four final stills f7-1185, f7-1287, f7-1586, f11-1440, both cover sheets, terrain sheet). Then item 4 (rise ring softness at 1586) only if time is left.

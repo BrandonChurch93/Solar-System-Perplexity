@@ -24,6 +24,7 @@ SHIFT = (300, 137)
 AMP = 1.4
 LUMA = np.array([0.3, 0.5, 0.2])
 PALE = (0.12, 0.35)
+OVER = (30.0, 2.0, 5.0, 1.0, 3.0)
 
 
 def to_linear(a):
@@ -77,7 +78,7 @@ def smooth(a, b, x):
     return t * t * (3 - 2 * t)
 
 
-def main(base=None, sky_gain=10.0):
+def main(base=None, seen=None):
     A = scene('references/approved/venus-close.jpg')
     yy, xx = np.mgrid[0:AH, 0:AW].astype(np.float32)
     el = elevation(rays(xx + 0.5 + MX, yy + 0.5))
@@ -100,6 +101,16 @@ def main(base=None, sky_gain=10.0):
         raw = cv2.warpAffine(raw.astype(np.float32), np.float32([[1, 0, -dx], [0, 1, -dy]]), (AW, AH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
         B = calm_limb(raw[rows, cols], hz)
     air = np.maximum(As - B, 0)
+    if seen:
+        got = cv2.warpAffine(scene(seen).astype(np.float32), np.float32([[1, 0, -dx], [0, 1, -dy]]), (AW, AH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        level = lambda v: to_srgb(film(v)) * 255
+        low = lambda v: cv2.GaussianBlur(v.astype(np.float32), (0, 0), OVER[0])
+        over = low(np.clip(level(got[rows, cols]) - level(A_sky), -OVER[4], OVER[4]))
+        w = ((1 - smooth(CUT[0], 2 * CUT[0], air @ LUMA)) * smooth(OVER[1], OVER[2], el))[..., None]
+        goal = unfilm(to_linear(np.clip(level(As) - OVER[3] * over, 0, 255) / 255))
+        air = np.maximum(air - (As - goal) * w, 0)
+        box = (slice(0, AH * 260 // 1080), slice(0, AW * 600 // 1920))
+        print('film over the approved in the dim sky, levels, top left box mean', (over * w)[box].mean((0, 1)).tolist(), 'weight', float(w[box].mean()))
     u = up()
     fwd = np.array([0.0, 0.0, -1.0]) + u * u[2]
     fwd /= np.linalg.norm(fwd)
@@ -157,4 +168,4 @@ def main(base=None, sky_gain=10.0):
     print('air max', float(air.max()), 'stars share', float((stars.sum(-1) > 0.01).mean()))
 
 
-main(sys.argv[1] if len(sys.argv) > 1 else None)
+main(sys.argv[1] if len(sys.argv) > 1 else None, sys.argv[2] if len(sys.argv) > 2 else None)
