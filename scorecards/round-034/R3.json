@@ -1,0 +1,216 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A, upper and right limb of the small globe",
+      "what": "The bright gold rim and its darker inner edge form two distinct contours. The thin orange outline persisting around the shadowed lower limb makes the globe look like a cutout.",
+      "fix": "Blend the inner edge into the surface and fade the atmospheric glow farther into shadow instead of carrying a separate outline around the disk."
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crops M and R, right and lower edge of the Sun",
+      "what": "Fine surface granulation gives way to a broad, smooth yellow strip with a very clean outer edge. The contrast with the soft corona makes the limb look layered on.",
+      "fix": "Carry finer surface structure closer to the limb and blend the brightness falloff into the base of the corona."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crop P, lower-left interior of the globe",
+      "what": "Several near-parallel brown streaks follow the curve of the limb, giving the shadow-side texture a stretched, smeared appearance.",
+      "fix": "Break up the elongated streaks and preserve smaller-scale surface detail near the edge."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops A and F, brightest white star in the overlapping sky area",
+      "what": "One bright star reads as a diffuse white bead without a tight core, unlike the nearby points.",
+      "fix": "Tighten its core and reduce the spread of the bloom."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "Earth globe, lower half and centre (crops A, Q)",
+      "what": "city lights read as a bright gold metallic foil: they sit on the lit side of the disc instead of only on the night side, and they come out as thick glowing worm shapes, not fine networks of points. The whole globe looks airbrushed and plastic, with cloud swirls smeared over land with no real depth",
+      "fix": "mask the night-lights texture to the night side of the terminator with a soft falloff, lower its intensity and use a finer point-based lights map; give the clouds sharper detail, cast shadows and a proper specular/normal response"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Mars globe limb, all round (crops A, I, Q)",
+      "what": "a thin dark outline runs round the disc, like a cut-out halo or doubled edge, so the planet looks pasted on the sky instead of lit within it. The surface is soft and painterly with no crisp crater or relief detail at native size",
+      "fix": "remove the dark matte or edge ring at the limb and blend it with a thin, soft, dusty-orange atmosphere scatter; use a higher-resolution albedo/normal map so the relief holds up at native size"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "bottom right nebula patch (crops F, G, W, X, S)",
+      "what": "a single dense clump of brown nebula is cut off by the frame corner, with a fairly abrupt boundary and a busy, overdense star field inside it. It reads as a pasted photo patch, not part of a continuous Milky Way band, and a faint grey smudge of it shows mid-right (crop H, x≈1340 y≈300)",
+      "fix": "feather the nebula into a continuous low-contrast band across the sky, match its star density to the surroundings and remove the isolated grey smudge, or fade it in smoothly"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "small moon below and right of Earth (≈822,486; crops A, H)",
+      "what": "the moon is an 8 to 10 px grey blob with a mushy outline and no surface detail or clear phase edge, and it looks like a smudge",
+      "fix": "render the moon larger or with a sharp crescent terminator and a clean edge that is consistent with the sun direction"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "small body above Mars (≈740,345; crop A, Q)",
+      "what": "a tiny orange blob moon has no defined shape. It is almost the size of a star but out of focus",
+      "fix": "either make it resolvable with a lit/unlit edge or shrink it to a point"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png / image-13.png",
+      "where": "dark sky everywhere (crops T, J, O)",
+      "what": "dim stars are single blocky pixels with coloured fringes, and the background has a faint, regular, low-level mottling or lattice that you can see in the dark crops. The bright stars are clean, but the field is uniform and there is no density gradient on the Earth frame",
+      "fix": "render stars with a sub-pixel PSF instead of point pixels, add dithered low-frequency variation in place of the pixel-scale noise and add a subtle Milky Way density gradient"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-19.png",
+      "where": "tiles P, Q, and L along the bottom and lower-right limb of the asteroid (from image-17.png)",
+      "what": "rock texture and displacement stretch into blurry smeared streaks along the grazing rim, and the bottom silhouette breaks into straight polygonal segments",
+      "fix": "switch the asteroid material and displacement to seamless 3D procedural or triplanar mapping and increase mesh subdivision along the silhouette"
+     },
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "tiles C, F, and H across the asteroid terminator and shadowed upper-right face (from image-17.png)",
+      "what": "the terminator breaks into noisy single-pixel shadow chatter while the unlit hemisphere turns into a soft, blotchy, airbrushed slate-blue surface lit by flat ambient fill",
+      "fix": "remove the flat bluish ambient light on the airless nightside, increase shadow and displacement sampling across the terminator, and preserve crisp micro-normal detail in grazing light"
+     },
+     {
+      "severity": "major",
+      "file": "image-22.png",
+      "where": "tile A across Saturn's shadowed and inner sunlit B and A rings (also tile Q in image-23.png, from image-21.png)",
+      "what": "background stars shine straight through the optically thick B and A rings inside the planet's shadow and at the lower shadow-limb corner, giving away additive or brightness-coupled ring compositing",
+      "fix": "compute ring alpha from physical optical depth independent of illumination so dense ring bands properly occlude background stars even in umbra"
+     },
+     {
+      "severity": "major",
+      "file": "image-22.png",
+      "where": "tile A on Saturn's sunlit left limb, Cassini Division, outer A-ring edge, and ring-shadow border (also tile Q in image-23.png, from image-21.png)",
+      "what": "high-contrast curved edges show stark 1-pixel stair-stepping with no atmospheric limb softening on the globe and a razor-hard, jagged shadow cutoff on the rings",
+      "fix": "enable higher supersampling and radial ring texture filtering, add subtle atmospheric limb falloff on Saturn's edge, and soften the globe shadow edge with a solar penumbra"
+     },
+     {
+      "severity": "minor",
+      "file": "image-22.png",
+      "where": "tile A at Saturn's north pole and nightside hemisphere (also tile Q in image-23.png, from image-21.png)",
+      "what": "the north polar region looks airbrushed with a small dark bullseye pinch at the pole, and the dark hemisphere shows overly bright, stepped brown banding",
+      "fix": "reproject or cubemap the polar cloud texture to eliminate polar pinching, add finer cloud-band detail, and darken and dither the nightside ringshine gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "tiles A and F along the sunlit left limb of the asteroid (from image-17.png)",
+      "what": "the bright sunlit rock edge steps in visible 1-pixel stairs against black space",
+      "fix": "increase multisample or supersample anti-aliasing with a smooth reconstruction filter on high-contrast silhouettes"
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-30.png",
+      "where": "tile B, lit limb of the moon",
+      "what": "a near-black one-pixel fringe rings the bright limb and is darker than the sky behind it; the same rim is on the moon in image-29.png and image-31.png",
+      "fix": "composite the moon with premultiplied coverage so the limb blends into the sky instead of undershooting to black"
+     },
+     {
+      "severity": "minor",
+      "file": "image-30.png",
+      "where": "tile B, moon disk",
+      "what": "the lit face is a soft mottled shade with no resolved crater rims, so the disk reads as airbrushed",
+      "fix": "sharpen albedo and relief on the lit face so the terminator breaks on crater edges"
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-39.png",
+      "where": "crops N and O, foreground ring crossing the upper globe and the outer arc above the right limb",
+      "what": "The rings read as smooth blue ribbons with ruler-clean grooves. Stars remain nearly as crisp and bright through the denser bands as in the gaps, making the rings look pasted over the starfield.",
+      "fix": "Add finer irregular radial structure and vary ring opacity with density, so the denser bands visibly attenuate background stars."
+     },
+     {
+      "severity": "major",
+      "file": "image-38.png",
+      "where": "crops D and I, illuminated right limb and lower cusp",
+      "what": "A broad, soft cyan rim sits beside a thin parallel blue edge, especially at the lower cusp, giving the crescent a doubled, airbrushed outline.",
+      "fix": "Blend the inner edge into the lit cloud deck and use a continuous atmospheric falloff that thins naturally toward the cusp."
+     },
+     {
+      "severity": "minor",
+      "file": "image-35.png",
+      "where": "crop O, dark oval on the globe and the cloud lanes to its right",
+      "what": "The filaments around the dark oval stretch into long, nearly parallel smears, with very little fine texture between them.",
+      "fix": "Break up the elongated filaments with finer turbulence at varied scales while retaining the broad storm circulation."
+     },
+     {
+      "severity": "minor",
+      "file": "image-38.png",
+      "where": "crops C and F, bright star below the dusty sky band",
+      "what": "The bright star has an oversized, nearly uniform soft halo compared with the crisp neighboring stars, so it reads as a glow blob.",
+      "fix": "Keep a compact bright core and reduce the size and intensity of the outer bloom."
+     }
+    ]
+   }
+  }
+ ]
+}

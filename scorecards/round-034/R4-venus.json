@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "after frame 1349, before sheet-03 frame 1530",
+   "what": "the hold has no sheet, and the terrain stay between the dive and the rise has no sheet, so the visit cannot be checked for parallax, drift, or a held camera",
+   "fix": "add review-tier contact sheets for the hold and for the terrain segment, at the same cadence as the dive and rise"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "settled globe, frames 1591 to 1604",
+   "what": "the globe locks once the camera eases to a stop; the surface does not turn",
+   "fix": "keep a slow continuous rotation on the globe through the hold"
+  }
+ ]
+}
