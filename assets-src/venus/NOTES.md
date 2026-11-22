@@ -789,3 +789,9 @@ Round 31 (whole film, main 07aabf5, my folders there are the round 23 state): no
 Running since 09:56 (`q23.sh`, log `/tmp/q23.log`): the two review strips again on batch 20 (tags g4t, g4u, `cmp` against f4t, f4u of batch 19), then the full review sheets of venus.rise and venus.dive at preview size (`r2/out/work/sheets/`), to read every frame as the critics will. Ends with "queue23 done".
 
 Next: note to the Builder (sent once the strips are in); read both full sheets; then take F5 on the fine straight lines at amount 1 (see 09:12), tried first in the render copy with `./e2n.sh TAG 1557,1558,1314`.
+
+## State at 10:04 (22 Nov): POLISH READY update sent (read this first after a compaction)
+
+- Sent to the Builder at 10:03: head 052ba8b (code 1d3704c), main c479536, the batch 20 proof, the veil change and its frames, the stability numbers, the weak list, six pictures (c22 sheets, g4t, g4u, 1586 pair, column pair). No reply needed.
+- The strips g4t (1319 to 1328) and g4u (1546 to 1556) on batch 20 are the same bytes as f4t and f4u on batch 19, all 16 frames.
+- Running: full review sheets of venus.rise, then venus.dive (`q23.sh`, logs `/tmp/q23-rise.log`, `/tmp/q23-dive.log`; output `r2/out/work/sheets/venus.rise-preview-review.png` or the name the tool prints). Do not change `src/stops/venus` in the repo before "queue23 done" only if a script of the queue still syncs (the two sheet steps do not sync; the tree in r2 is 1d3704c).
