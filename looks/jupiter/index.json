@@ -1,40 +1,54 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T01:13:43.720Z",
- "head": "747718b5a284267fada72d4eb3f8e32e5a5ab963",
- "note": "pall 0.5 review pictures; foreground layer mattes and plate",
+ "pushed": "2026-11-22T01:38:12.627Z",
+ "head": "8f4591722745a43c762835fb4c9845e8a821e248",
+ "note": "fg layer work in progress: batch b drafts, open fault at 3060, model check",
  "looks": [
   {
-   "time": "2026-11-22T01:13:08.596Z",
-   "file": "20261122011308596-note-under_shown.jpg",
-   "source": "out/work/view/under_shown.jpg",
-   "kind": "note",
-   "label": "foreground layer: the deck with the painted plate where the lifted tiers uncover it (lifted tones)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T01:13:08.083Z",
-   "file": "20261122011308083-note-tiers_mattes.jpg",
+   "time": "2026-11-22T01:38:12.097Z",
+   "file": "20261122013812097-note-tiers_mattes.jpg",
    "source": "out/work/view/tiers_mattes.jpg",
    "kind": "note",
-   "label": "foreground layer: mattes of the two tiers (green bank, blue apron cumulus) and plate bands (blue violet) over the canvas",
+   "label": "fg layer: mattes of the two tiers and the plate band",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T01:13:07.556Z",
-   "file": "20261122011307556-note-native_3020_3021.jpg",
-   "source": "out/work/view/pall/native_3020_3021.jpg",
+   "time": "2026-11-22T01:38:11.592Z",
+   "file": "20261122013811592-note-lay3060.jpg",
+   "source": "out/work/view/fgd/lay3060.jpg",
    "kind": "note",
-   "label": "dive pall, native crops at 3020 and 3021: left 0.35, right 0.5",
+   "label": "fg layer: layers view at 3060",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T01:13:06.909Z",
-   "file": "20261122011306909-note-review_compare.jpg",
-   "source": "out/work/view/pall/review_compare.jpg",
+   "time": "2026-11-22T01:38:11.091Z",
+   "file": "20261122013811091-note-cropb3060.jpg",
+   "source": "out/work/view/fgd/cropb3060.jpg",
    "kind": "note",
-   "label": "dive pall, review tier: rows orbitGather 0.35 and 0.5 at 3019 to 3023, bottom row 0.5 at 3012 to 3020",
+   "label": "fg layer batch b: 3060 lower left, flat cut on the pale cumulus (open fault)",
    "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T01:38:10.582Z",
+   "file": "20261122013810582-note-sbs_b_3060.jpg",
+   "source": "out/work/view/fgd/sbs_b_3060.jpg",
+   "kind": "note",
+   "label": "fg layer batch b: 3060 kept beside draft, smear gone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T01:24:31.583Z",
+   "file": "20261122012431583-still-f03125-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03125-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3125, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3125,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T23:41:04.555Z",
@@ -59,20 +73,6 @@
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:39:37.033Z",
-   "file": "20261121233937033-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
