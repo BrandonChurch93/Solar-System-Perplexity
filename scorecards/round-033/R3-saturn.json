@@ -1,0 +1,106 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "shadowed B and A rings (crops E, G, I; also image-05.png, image-07.png crop Q, and point stars in image-02.png crop E)",
+      "what": "background stars and blurry orange skybox nebula patches shine undimmed straight through the optically thick B and A rings inside Saturn's shadow",
+      "fix": "compute ring occlusion from physical optical depth independently of direct sunlight so opaque ring bands block background stars and Milky Way emission even when unlit"
+     },
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "background sky across crops B, E, G, H, I (also image-05.png, image-07.png crops J, K, L, Q, and image-08.png crop W)",
+      "what": "the Milky Way skybox is low-resolution, stretched, and blurry, turning stars and clusters into large smeared orange-white blobs right beside crisp 1-pixel procedural star dots",
+      "fix": "replace the low-resolution equirectangular sky map with a native-resolution starfield and high-resolution deep-sky plate whose point-spread function matches the procedural stars"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "lower-left sunlit limb and inner C/B rings in crop G (also image-03.png crop P, image-07.png crop O, image-01.png, and image-05.png)",
+      "what": "a detached warm glow halo sits outside Saturn's hard stair-stepped limb, and the outer boundary of the atmosphere shell forms a visible curved dark patch edge cutting across the inner rings",
+      "fix": "integrate volumetric atmospheric limb scattering smoothly across the planet boundary with continuous radial falloff to zero so no shell edge overlaps the rings"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "globe silhouette and outer A/F ring edges in crops J, K, L, O (also image-02.png crops B, D, F, G and image-07.png crops J, K, N, O)",
+      "what": "1-pixel stair-stepped aliasing runs along Saturn's sunlit and nightside limbs and the bright outer A-ring rim, the thin F ring breaks into dashed pixels, and steep concentric ringlets shimmer with pixel chatter",
+      "fix": "render with higher supersampling and anisotropic/MIP-filtered ring textures, and anti-alias planet and ring silhouettes before compositing glow"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "upper-right moon in crop M (also image-07.png crop L, image-01.png, and image-05.png)",
+      "what": "the moon has a jagged stair-stepped sunlit edge with a bright 1-pixel doubled rim highlight instead of Titan's soft extended haze, and its surface shows airbrushed diagonal banding",
+      "fix": "anti-alias the moon geometry, replace the hard rim highlight with a multi-pixel scattering haze layer, and use a subtler, noise-dithered atmospheric gradient without linear bands"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "north polar cap in crop L and mid-latitude bands in image-02.png crop A (also image-07.png crop K and image-06.png crop A)",
+      "what": "the blue north pole is soft and circular with noisy UV-pinched speckles at the pole center and lacks Saturn's hexagonal jet, while lower-latitude bands look slightly smooth and airbrushed",
+      "fix": "use a pole-safe spherical or cube-mapped cloud projection with higher polar texel density, include fine zonal cloud grain across all latitudes, and model the north polar hexagon"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "right-hand sky in crops W and X and upper-left sky in image-03.png crop J (also image-01.png)",
+      "what": "artificial horizontal lens-flare streaks exhibit subtle gradient banding and are visibly clipped along a dark diagonal line by unlit outer ring-plane geometry past the sunlit ring tip in crop W",
+      "fix": "apply optical lens flare strictly in post-compositing with 16-bit dithering so unlit scene geometry cannot silhouette against camera-space streaks, or remove the artificial streaks"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right side, planet shadow on the rings",
+      "what": "the lit-to-shadow edge is a hard line only a couple of pixels wide, with almost no penumbra",
+      "fix": "widen and soften the falloff of the planet's shadow across the rings"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "center panel E and lower right panel I, shadow edge",
+      "what": "at native size the boundary is a short ramp of about 2 to 6 pixels and reads as a stencil",
+      "fix": "give the umbra edge a wider solar penumbra so ring brightness falls off gradually"
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "lower left panel P, shadow across the rings",
+      "what": "the shadow edge is still a hard 1 to 2 pixel step at native size",
+      "fix": "soften that same shadow boundary; do not leave a knife edge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "upper right panel U, shadow crossing the ring arc",
+      "what": "the ramp is a little wider here but still only a few pixels, so the edge stays crisp",
+      "fix": "use the same wider penumbra on this stretch of the rings"
+     }
+    ]
+   }
+  }
+ ]
+}

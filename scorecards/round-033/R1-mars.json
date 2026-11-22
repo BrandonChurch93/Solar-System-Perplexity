@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "canyon floor and lower-right shadowed ridges",
+   "what": "the rock is warmer and the shadows are lifted. On the native lower-right crop the darkest fifth of the rock sits about six levels higher than the approved plate, and the central canyon midtones run a few points brighter and redder",
+   "fix": "drop the shadow toe and cool the midtones, pulling red back a few points so the canyon blacks match the approved plate"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "every terrain crop",
+   "what": "the terrain sits one pixel up and one pixel right of the approved plate, so the cliff edges do not lock",
+   "fix": "nudge the frame one pixel down and one pixel left"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sunlit western limb and bright canyon rims",
+   "what": "highlights and microcontrast run a little hot, so the crests are crisper than the approved plate. Limb glow, Phobos, and the starfield still match",
+   "fix": "ease the highlight roll-off and the sharpening on those crests back to the approved plate"
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "near cloud deck, tiles S, T, and U along the bottom of the frame",
+      "what": "foreground clouds are long brush-like smudges with flat light and almost no eddies or self-shadow, so the surface reads as digital paint at native size",
+      "fix": "replace the smudge streaks with smaller turbulent eddies, condensate clumps, and local shadow so the near deck matches a photographic cloud deck"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop D, center and lower-left of the disk",
+      "what": "the lit disk is the same airbrushed smear, fibrous strokes instead of cloud structure; it also shows across the lower-left of image-05.png",
+      "fix": "break up the directional strokes and add high-frequency cloud texture and shading on the lit disk"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop G, faint inner rings right of center, below the bright arc",
+      "what": "one faint ring strand waves and dips instead of staying a smooth concentric arc",
+      "fix": "rebuild that strand on the same smooth curve as the neighboring rings"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "Q, shadowed left side of the globe",
+      "what": "Broad, nested dark arcs pinch around a common point. The almost featureless bands look like a texture wrapped around a pole rather than distinct atmospheric structures.",
+      "fix": "Rebuild the polar mapping in globe space and carry irregular cloud detail across the dark bands."
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "V and W, lower-right foreground",
+      "what": "Fine surface detail collapses into long, parallel diagonal smears, even well away from the grazing-angle horizon.",
+      "fix": "Correct texture sampling and restore local, multidirectional cloud detail in the foreground."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "V and W, lower ring arc across the bright star cloud",
+      "what": "The rings show up as stacked dark strokes over the luminous background, but bright star cores remain largely intact in those strokes, making the arc read like a separate overlay.",
+      "fix": "Apply the same optical-depth mask to the diffuse background and the stars behind the rings, then blend the ring edges with the same sampling as the background."
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "B and H, where the outer ring meets the cyan horizon",
+      "what": "The thin bright outer contour remains nearly uniform right up to a conspicuous endpoint at the haze.",
+      "fix": "Feather the ring contrast through the atmospheric glare before the ring is fully occluded."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "C and I, upper and right illuminated limb",
+      "what": "A narrow clipped-looking white outline sits inside the broader cyan halo, giving the limb a traced edge.",
+      "fix": "Reduce the peak rim intensity and give it a continuous falloff into the surrounding glow."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "J and L, dark sky outside the rings",
+      "what": "Several brighter stars resolve into short colored flecks instead of compact points.",
+      "fix": "Render the bright stars with compact, antialiased cores and keep color confined to the core and immediate bloom."
+     }
+    ]
+   }
+  }
+ ]
+}

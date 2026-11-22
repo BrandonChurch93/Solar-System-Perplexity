@@ -1,0 +1,21 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "cloud bands across the disc and Milky Way star field (crops A, F, G, H)",
+   "what": "fine detail is slightly softer than the target, with about 7% less edge energy, so the feathered cloud filaments and small stars read a little smoother",
+   "fix": "restore fine detail with a light sharpen or less denoise on the disc texture and the star field until it matches -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall grade, most visible in the sunlit haze near the horizon and the sun bloom (crops A, C)",
+   "what": "a touch brighter and warmer than the target (red channel about +0.8 on average), so the haze lifts slightly",
+   "fix": "pull exposure and red/warm gain down a little to match -a; keep the blacks where they are, since they already match"
+  }
+ ]
+}

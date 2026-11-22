@@ -1,0 +1,28 @@
+{
+ "critic": "R6",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-09.png",
+   "where": "coronal loop, upper center",
+   "what": "Across the hook the shot never changes idea. The arch only brightens and thickens (upper-center luminance about +40; hot pixels from 9% to 13%). Same frame, no cut, no scale change, no new subject. At phone width the nine frames read as one still, so staying is not rewarded.",
+   "fix": "Make the last hook frame a different event than the first: push in, let the loop break or leave frame, or bring in a second subject before the hook ends."
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "full frame",
+   "what": "The first frame is a locked wide beauty shot. The sun, dark sunspot, and plasma arch are readable at this size, but nothing is already moving and nothing poses a question, so with the sound off it scrolls past like a still.",
+   "fix": "Open mid-motion, with the arch already whipping or the camera already pushing, so frame 0 is an event at phone width."
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "top third",
+   "what": "About 28% of the first frame is near-black sky, so the hero arch does not fill the phone-width frame until a later glow.",
+   "fix": "Crop tighter on the arch and sunspot so the bright shape owns the width in the first frame."
+  }
+ ]
+}

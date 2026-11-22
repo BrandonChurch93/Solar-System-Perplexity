@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 2408 to 2416 to 2424, moon at lower center",
+   "what": "the moon nearly doubles in size and drops to the bottom edge in 8 frames, then is gone by 2424, while the planet barely changes scale. It reads as a pop and a jump in camera position, not a smooth pass",
+   "fix": "either fly the camera past the moon on one eased path (the moon keeps growing and leaves frame with motion blur over 12 to 20 frames) or keep it in the composition and let it slide out gradually. Do not remove it between samples"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2440 to 2449, start of the dive cover",
+   "what": "the move cuts from a crisp, partly framed planet disk straight to a full-frame tan radial blur. The planet limb sits on the left in 2440 but shows up as a bright arc in the upper right in 2449, so direction and framing do not carry across",
+   "fix": "push in continuously so the same limb grows to fill the frame before the blur. Keep the limb on the same side and ramp the radial blur in over several frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 2457 to 2465, end of the dive cover",
+   "what": "2457 shows a hazy, overcast horizon high in frame with streaks. 2465 is suddenly sharp, with a clear black starry sky and a bright limb at a different height. Exposure, horizon line and atmosphere all pop in one step",
+   "fix": "make the haze thin out and the horizon settle to its final height over 8 to 12 frames, and match sky brightness and haze color across the join"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "terrain frames 2465 to 2489",
+   "what": "the frames are nearly identical. There is hardly any parallax between the near cliff and the far horizon, so the view reads as a still matte, not flight. The foreground cliff also shifts left and right slightly between samples (2465 vs 2473 vs 2481) instead of moving one way",
+   "fix": "give the camera a steady forward or lateral drift so the near cliff clearly slides against the distant rim. Smooth the path so the foreground moves in one direction only"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "terrain frames 2473 to 2489, center and right",
+   "what": "faint vertical light streaks or shafts stand in the haze above the canyon. They look like a rendering artifact, not real atmosphere",
+   "fix": "remove the streaks or soften them into diffuse haze that has a consistent light direction"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold frames 2250 to 2399, moon",
+   "what": "the moon's drift and slow growth are smooth, but its silhouette and crater pattern change between samples in a way that reads closer to a reshape than a tumble",
+   "fix": "use one rigid moon mesh that rotates slowly and steadily about a fixed axis"
+  }
+ ]
+}
