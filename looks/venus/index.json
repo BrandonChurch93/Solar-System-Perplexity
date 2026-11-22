@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T10:56:49.296Z",
- "head": "4b12149c57656f61eaed3c39094314519a485ed1",
- "note": "batches 21 and 22 merged, judged draft frames keep their bytes; veil take F5 at full veil in proof on main d5b851f",
+ "pushed": "2026-11-22T11:05:28.020Z",
+ "head": "5ebfa54a4b02446cafbb6c4bc0664032ca92f094",
+ "note": "veil take F5 at full veil: mist joins hold, four judged finals keep their bytes on main d5b851f; cover sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T11:05:27.185Z",
+   "file": "20261122110527185-note-p5-1317-full.jpg",
+   "source": "../view/p5-1317-full.jpg",
+   "kind": "note",
+   "label": "dive 1317 review tier: left veil take F4, right take F5 (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T11:05:26.220Z",
+   "file": "20261122110526220-note-p5-1557-a.jpg",
+   "source": "../view/p5-1557-a.jpg",
+   "kind": "note",
+   "label": "rise 1557 native crop under the limb: left veil take F4, right take F5 (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T11:05:25.363Z",
+   "file": "20261122110525363-note-p5-1557-full.jpg",
+   "source": "../view/p5-1557-full.jpg",
+   "kind": "note",
+   "label": "rise 1557 review tier: left veil take F4, right take F5 (not committed yet): the dark slot with fine lines under the limb is gone (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T10:56:48.723Z",
    "file": "20261122105648723-note-p5-1563-a.jpg",
@@ -178,30 +202,6 @@
    "source": "../view/f4t.jpg",
    "kind": "note",
    "label": "dive tail 1319 to 1328 review tier, veil take F4: the mist thins evenly, no column (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:16:27.442Z",
-   "file": "20261122081627442-note-rc-56-57-pair.jpg",
-   "source": "../view/rc-56-57-pair.jpg",
-   "kind": "note",
-   "label": "rise 1556 and 1557 review tier: left take E3d (c20 cells), right take F4; 1557 keeps a dark vertical slot under the limb (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:16:26.317Z",
-   "file": "20261122081626317-note-dc-17-18-pair.jpg",
-   "source": "../view/dc-17-18-pair.jpg",
-   "kind": "note",
-   "label": "dive 1317 and 1318 review tier: left take E3d (c20 cells), right take F4: no fine vertical lines under the limb (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:16:25.411Z",
-   "file": "20261122081625411-note-col-1319-pair2.jpg",
-   "source": "../view/col-1319-pair2.jpg",
-   "kind": "note",
-   "label": "dive 1319 review tier native crop: left take F3, right take F4 (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
    "stop": "venus"
   }
  ]
