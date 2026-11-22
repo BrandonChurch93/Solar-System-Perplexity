@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T14:26:22.565Z",
- "head": "0af6f182efcf5913f054863afef93261862b5a35",
- "note": "Venus round 34 proof: finals same bytes as main 84b0ea4, draft strips of both covers read, spokes and ladder gone; repeat, cover sheets and chain running",
+ "pushed": "2026-11-22T14:47:22.414Z",
+ "head": "f489b084959745a449a3fbbc0321996fc81de734",
+ "note": "tree holds main a60c5ff; round 33 critics read, crops of the named regions; change A cover sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T14:47:21.388Z",
+   "file": "20261122144721388-note-k-1185-ring.jpg",
+   "source": "../view/k-1185-ring.png",
+   "kind": "note",
+   "label": "1185 unwrapped limb ring: approved hero, film (main 84b0ea4), difference times 4",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:20.411Z",
+   "file": "20261122144720411-note-k-1185-ur.jpg",
+   "source": "../view/k-1185-ur.jpg",
+   "kind": "note",
+   "label": "1185 final, main 84b0ea4: upper right dark limb, hairline and gold glint are the approved hero's own",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:19.423Z",
+   "file": "20261122144719423-note-k-1185-top.jpg",
+   "source": "../view/k-1185-top.jpg",
+   "kind": "note",
+   "label": "1185 final, main 84b0ea4: top sunlit limb, round 33 R3 minor, double rim line",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:18.430Z",
+   "file": "20261122144718430-note-k-1287-lrlimb.jpg",
+   "source": "../view/k-1287-lrlimb.jpg",
+   "kind": "note",
+   "label": "1287 final, main 84b0ea4: lower right dark limb, grazing bands in the haze",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:17.551Z",
+   "file": "20261122144717551-note-k-1287-rlimb.jpg",
+   "source": "../view/k-1287-rlimb.jpg",
+   "kind": "note",
+   "label": "1287 final, main 84b0ea4: right dark limb, round 33 R3 major, stars at full strength to the edge",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:47:16.668Z",
+   "file": "20261122144716668-note-k-1287-night.jpg",
+   "source": "../view/k-1287-night.jpg",
+   "kind": "note",
+   "label": "1287 final, main 84b0ea4 (tree holds main a60c5ff): night side at native size, round 33 R3 major, crunchy coral texture",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T14:26:21.387Z",
    "file": "20261122142621387-note-qd-rise-c.jpg",
@@ -114,54 +162,6 @@
    "source": "../view/pd-rise-b.jpg",
    "kind": "note",
    "label": "venus pd-rise-b: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:56:07.750Z",
-   "file": "20261122135607750-note-pd-rise-a.jpg",
-   "source": "../view/pd-rise-a.jpg",
-   "kind": "note",
-   "label": "venus pd-rise-a: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:56:07.174Z",
-   "file": "20261122135607174-note-pd-dive-b.jpg",
-   "source": "../view/pd-dive-b.jpg",
-   "kind": "note",
-   "label": "venus pd-dive-b: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:56:06.595Z",
-   "file": "20261122135606595-note-pd-dive-a.jpg",
-   "source": "../view/pd-dive-a.jpg",
-   "kind": "note",
-   "label": "venus pd-dive-a: draft strip at preview size on main 84b0ea4, each pair left the round 33 build, right the pole fade of the veil's speed lines (in proof, not committed; branch 091280b8 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:37:42.154Z",
-   "file": "20261122133742154-note-lad8-1310.jpg",
-   "source": "../view/lad8-1310.jpg",
-   "kind": "note",
-   "label": "venus 1310 ladder trace: 3x crop at the bottom centre, left the present look, right the nearest sheet faded in later (experiment, not committed; branch 101aee49 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:37:41.226Z",
-   "file": "20261122133741226-note-q1-1571.jpg",
-   "source": "../view/q1-1571.jpg",
-   "kind": "note",
-   "label": "venus q1-1571: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T13:37:40.248Z",
-   "file": "20261122133740248-note-q1-1307.jpg",
-   "source": "../view/q1-1307.jpg",
-   "kind": "note",
-   "label": "venus q1-1307: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
    "stop": "venus"
   },
   {
