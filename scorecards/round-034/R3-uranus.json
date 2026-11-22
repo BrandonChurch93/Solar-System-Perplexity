@@ -1,0 +1,42 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-08.png",
+   "where": "crops U and V, outer ring on both lower flanks",
+   "what": "The bright outer strand stops at two visible endpoints against unobstructed sky. The neighboring dark arcs continue past those endpoints, making the bright strand look cut out.",
+   "fix": "Keep the outer ring geometry continuous and taper its illumination gradually into the shadowed arc."
+  },
+  {
+   "severity": "major",
+   "file": "image-07.png",
+   "where": "crop P, lower-left quadrant of the shadowed globe",
+   "what": "Broad cloud bands close into smooth nested ovals near the left limb. The flattened center and tight bend at the lower left read as pinched texture rather than distinct cloud structures.",
+   "fix": "Use pole-safe spherical sampling and vary the cloud structure and band width through the turn."
+  },
+  {
+   "severity": "major",
+   "file": "image-04.png",
+   "where": "crops V and W, lower-right foreground of the horizon view",
+   "what": "The foreground cloud texture smears into long, soft, nearly parallel streaks far below the limb, where foreshortening is less convincing as an explanation.",
+   "fix": "Reduce directional stretching in the surface sampling and restore shorter, multiscale cloud detail in the foreground."
+  },
+  {
+   "severity": "minor",
+   "file": "image-06.png",
+   "where": "crop E, lower blue limb",
+   "what": "A soft blue edge runs parallel to a second darker contour immediately inside it, giving the shadowed limb a doubled outline.",
+   "fix": "Align the atmosphere and surface edge and use one continuous falloff on the night side."
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crop H, bright outer ring endpoint just above the cyan limb",
+   "what": "The bright strand remains a sharp white hairline almost to its tip inside the diffuse atmospheric glow, making the intersection look pasted on.",
+   "fix": "Attenuate and soften ring contrast gradually through the limb haze."
+  }
+ ]
+}
