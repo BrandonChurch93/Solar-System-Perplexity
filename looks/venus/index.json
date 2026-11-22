@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T06:35:16.044Z",
- "head": "3731a3f4ce8a049d9bb6dd91236e609fe9e1569a",
- "note": "venus polish after READY on batch 19 (main 89715a1): stability measured, now the pale bars of the veil under both covers at native size",
+ "pushed": "2026-11-22T06:49:41.636Z",
+ "head": "d2aa70436afa51df0026a5907bcca7ac4c63eb31",
+ "note": "venus polish on main 6267259 (batch 19): veil decals and planks under both covers traced to my veil pass, soft mist and soft streaks in test",
  "looks": [
+  {
+   "time": "2026-11-22T06:49:40.834Z",
+   "file": "20261122064940834-note-e2b-1314.jpg",
+   "source": "../view/e2b-1314.jpg",
+   "kind": "note",
+   "label": "venus dive 1314 review tier native size, experiment E2b not committed (tree on main 6267259)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T06:49:40.084Z",
+   "file": "20261122064940084-note-e2b-1558.jpg",
+   "source": "../view/e2b-1558.jpg",
+   "kind": "note",
+   "label": "venus rise 1558 review tier native size, experiment E2b not committed (tree on main 6267259): the pale planks are soft fine streaks",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T06:49:39.198Z",
+   "file": "20261122064939198-note-e3c-d.jpg",
+   "source": "../view/e3c-d.jpg",
+   "kind": "note",
+   "label": "venus dive 1317 to 1327 draft, experiment E3c not committed (tree on main 6267259): soft mist clearing in place of decals",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T06:49:38.412Z",
+   "file": "20261122064938412-note-e3c-r.jpg",
+   "source": "../view/e3c-r.jpg",
+   "kind": "note",
+   "label": "venus rise 1546 to 1556 draft, experiment E3c not committed (tree on main 6267259): the first veil read coarser, soft mist in place of decals",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T06:49:37.625Z",
+   "file": "20261122064937625-note-dn-mid.jpg",
+   "source": "../view/dn-mid.jpg",
+   "kind": "note",
+   "label": "venus rise 1548 to 1553 draft, branch d2aa704 on main 6267259: the veil comes in as flat decals, the cause of the rectangles at 1558",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T06:49:36.751Z",
+   "file": "20261122064936751-note-nv-1550.jpg",
+   "source": "../view/nv-1550.jpg",
+   "kind": "note",
+   "label": "venus rise 1550 draft, master size crop, branch d2aa704 on main 6267259 (batch 19): top with my veil (flat pale blobs and pink patches on the terrain), bottom with the veil switched off in a test copy: the blobs are the veil's first sheets",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T06:35:15.399Z",
    "file": "20261122063515399-note-e2a-1558-crop.jpg",
@@ -130,54 +178,6 @@
    "source": "../view/swap-rise.jpg",
    "kind": "note",
    "label": "Venus rise swap, draft frames 1559 and 1560, top of frame: the star field changes at the swap (engine item b, reported as weak)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:01:41.342Z",
-   "file": "20261122050141342-note-c18-dc.jpg",
-   "source": "../view/c18-dc.png",
-   "kind": "note",
-   "label": "Venus dive cover sheet c18, review tier, frames 1309 to 1320, branch 42b9111 on main 0622510, before batch 19: terrain star refit, only 1314 to 1320 differ from c17",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:01:40.709Z",
-   "file": "20261122050140709-note-c18-rc.jpg",
-   "source": "../view/c18-rc.png",
-   "kind": "note",
-   "label": "Venus rise cover sheet c18, review tier, frames 1555 to 1566, branch 42b9111 on main 0622510, before batch 19: terrain star refit, only 1555 to 1559 differ from c17",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T04:33:14.481Z",
-   "file": "20261122043314481-note-s2-sky.jpg",
-   "source": "../view/s2-sky.jpg",
-   "kind": "note",
-   "label": "Exit 1555, 1557, 1558 sky at draft, now (42b9111 on main 0622510) beside before: no seam above the horizon",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T04:33:13.691Z",
-   "file": "20261122043313691-note-sky1440-sun-b.jpg",
-   "source": "../view/sky1440-sun-b.jpg",
-   "kind": "note",
-   "label": "1440 sky above the Sun at 2.2 times: approved, now (42b9111), before (4d885b5); main 0622510",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T04:33:12.734Z",
-   "file": "20261122043312734-note-f15-1440.jpg",
-   "source": "../view/f15-1440.jpg",
-   "kind": "note",
-   "label": "Venus terrain 1440, final tier, star cure taken out of the Sun's glow; branch 42b9111 on main 0622510",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T04:03:08.106Z",
-   "file": "20261122040308106-note-venus.terrain-16x9-review.jpg",
-   "source": "../view/venus.terrain-16x9-review.png",
-   "kind": "note",
-   "label": "Venus terrain review sheet, 1350 to 1529, review tier; branch 47d7c6b on main 0622510",
    "stop": "venus"
   }
  ]
