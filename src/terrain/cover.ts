@@ -72,6 +72,41 @@ void main() {
 }`
 
 const OPEN = 1e9
+const NOISE_MOST = 0.47
+const RUSH_MOST = 0.5
+const SLACK = 1e-3
+
+export function coverReaches(cover: CoverState, vfov: number, aspect: number): boolean {
+  const amount = cover.amount
+  if (!(amount > 0)) return false
+  const k = cover.rush
+  const most = 1.1 + (1.1 + 0.5) * NOISE_MOST + RUSH_MOST * (1.6 * Math.abs(k ? k.contrast[0] : 0) + 1.2 * Math.abs(k ? k.contrast[1] : 0))
+  if (amount < 0.86 - SLACK && amount * most - 0.22 * (1 - amount) < -SLACK) return false
+  const shell = cover.shell
+  if (!shell || !(shell.inner < shell.outer)) return true
+  if (shell.outer < 0) return false
+  const [x, y, z] = shell.centre
+  const far = Math.hypot(x, y, z)
+  if (!(far > 0)) return true
+  const ty = Math.tan(THREE.MathUtils.degToRad(vfov) / 2)
+  const tx = ty * aspect
+  if (z < 0 && Math.abs(x) <= -z * tx && Math.abs(y) <= -z * ty) return true
+  const cos = (px: number, py: number): number => (x * px + y * py - z) / Math.hypot(px, py, 1) / far
+  let best = -1
+  for (const px of [-tx, tx]) {
+    for (const py of [-ty, ty]) best = Math.max(best, cos(px, py))
+    const lead = x * px - z
+    const at = lead !== 0 ? (y * (px * px + 1)) / lead : NaN
+    if (Math.abs(at) < ty) best = Math.max(best, cos(px, at))
+  }
+  for (const py of [-ty, ty]) {
+    const lead = y * py - z
+    const at = lead !== 0 ? (x * (py * py + 1)) / lead : NaN
+    if (Math.abs(at) < tx) best = Math.max(best, cos(at, py))
+  }
+  const miss = best > 0 ? far * Math.sqrt(Math.max(1 - best * best, 0)) : far
+  return !(miss > shell.outer + SLACK + (1e-5 * far * far) / Math.max(miss, SLACK))
+}
 
 export class Cover {
   private readonly pass = new Pass(FRAG, {
