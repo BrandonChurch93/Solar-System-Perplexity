@@ -1,9 +1,41 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T16:06:03.021Z",
- "head": "3e2909ace592a8595d72bf0fd5b4dd02503aae16",
- "note": "sun: the lower right corner of frame 90 back on the approved lanes (take W-1), own lane and fibre takes for it, on drafts",
+ "pushed": "2026-11-22T16:20:53.667Z",
+ "head": "bd12ce2ac64afedcd58c82c67a62c610784ff783",
+ "note": "corner for CUT35 on drafts: W-1 cells on the approved lanes with own lane and fibre layers, three tone passes; proof chain next",
  "looks": [
+  {
+   "time": "2026-11-22T16:20:53.118Z",
+   "file": "20261122162053118-note-c12-f90-approved-r24-new.jpg",
+   "source": "out/work/sun/cn/c12-f90-approved-r24-new.jpg",
+   "kind": "note",
+   "label": "frame 90 corner: approved, round 24 final, new draft, agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:20:52.576Z",
+   "file": "20261122162052576-note-d4-f90-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d4-f90-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 90 corner at 1 to 1, today over new (draft, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:20:51.918Z",
+   "file": "20261122162051918-note-d4-f60-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d4-f60-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 60 corner at 1 to 1, today over new (draft, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T16:20:51.353Z",
+   "file": "20261122162051353-note-d4-f0-corner-1to1-today-over-new.jpg",
+   "source": "out/work/sun/cn/d4-f0-corner-1to1-today-over-new.jpg",
+   "kind": "note",
+   "label": "frame 0 corner at 1 to 1, today over new (draft, W-1 corner with its own layers, not committed), agent/sun bd12ce2a, main 94482a8c",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T16:06:02.371Z",
    "file": "20261122160602371-note-c6-takes-A6-A7-A8-corner.jpg",
@@ -29,29 +61,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T16:06:00.502Z",
-   "file": "20261122160600502-note-c4-d90-corner.jpg",
-   "source": "out/work/sun/cn/c4-d90-corner.jpg",
-   "kind": "note",
-   "label": "sun frame 90 lower right corner at native size, draft: approved, round 24, today (W-3 corner), W-1 corner first build under the old layers (softer, not kept as is); agent/sun 3e2909ac, main 4f4c4f7e",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:56:05.484Z",
-   "file": "20261122155605484-sheet-sun.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/sun.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet sun.terrain, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "first": 0,
-   "last": 179,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
    "time": "2026-11-22T15:56:03.261Z",
    "file": "20261122155603261-frame-f00179-review.jpg",
    "source": "out/work/sheets/.frames-fhMZBm/f00179-review.png",
@@ -64,22 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:47:30.575Z",
-   "file": "20261122154730575-note-c36-rv-470-490.jpg",
-   "source": "out/work/sun/hk3/c36-rv-470-490.jpg",
-   "kind": "note",
-   "label": "leave, review frames 470 to 490 every second: no step. CUT34 sent: agent/sun 589ee05f, main 4f4c4f7e",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:36:32.173Z",
-   "file": "20261122153632173-note-c36-final-360-247-pairs.jpg",
-   "source": "out/work/sun/hk3/c36-final-360-247-pairs.jpg",
-   "kind": "note",
-   "label": "finals 360 beside the approved hero and 247 pair, limb cure. measure PASS, repeat clean. agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
   }
  ]
 }
