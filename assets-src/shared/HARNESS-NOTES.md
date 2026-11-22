@@ -118,6 +118,16 @@ Mine from this mail on: `tools/proof.ts`, `tools/review.ts`, `tools/gate.ts` (G9
 - The one 404 of the proof page: `site.json`, asked for by `src/capture/export.ts` line 72 (`hostSets`). The file exists only in the published site folder (`tools/site.ts` line 16); with a 404 the page falls back to every set. Not a tool fault; named to the Builder.
 - `npm run keep -- --posts` said `no current post` in the rehearsal because the posts were joined from clips of another build. That is the rule of `tools/keep.ts`, not a fault.
 
+Proofs of MAIL 93 (draft tier, this clone at engine of main 2026-11-22 07:30 UTC):
+
+- `npm run proof`: exit 1, frame 29 PSNR 27.33 dB under 30 (the engine fault the Builder cures). Then `npm run gate -- --only G9`: FAIL with that error; `npm run gauntlet -- --items 15,16`: 15 FAIL with that error. With `pass` set true by hand in the record: G9 and 15 PASS (record restored).
+- `npm run proof -- --memory`: exit 0, PASS: before 667.8 MB (sun, frame 435), peak 1728.5 MB, after 1060.7 MB (mercury, frame 689). Item 16 PASS; with `pass` false by hand in `memory.json` item 16 FAIL (file restored).
+- The 404: a page with a `response` listener in export mode logged `GET site.json 404`; capture mode logged none.
+- Review order and the smaller copy: run on `scratch/gclone` (stand in posts): posts, preview film, clips, comparison images, rest; with `REVIEW_MAX_FILE_MB=41.02` two posts became 960 x 540 copies of 6 MB with the note.
+- Gauntlet P on `scratch/gclone` with the intros in `out/posts/` and the posts only in `out/work/posts/`: P1, P2, P3 PASS; with one intro taken out of the index P1 FAIL and its line says NOT COMMITTED.
+- Cues: sheet written with the intro records in `out/work/posts/`, records moved to `out/posts/`, `--check` gave no fault for `cut/CUES.md`; it names `cut/SHOTS.md` as stale with `npm run shots` (the file on main is stale at line 9; not remade by me).
+- `npx tsc --noEmit -p .` clean, `npx vitest run` 79 passed, pyflakes clean.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
