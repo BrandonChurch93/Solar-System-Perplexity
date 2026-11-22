@@ -118,3 +118,11 @@ Order: `agent/ending` 41e144e (holds main 7717f95) is the ending agent's deliver
 - The sliver of the lookback is smooth: at phase 148 the lit strip is 24 px wide and lies wholly in the zone where clouds have lost their contrast.
 - The warm white dots on the night side (the engine's, see above) show more on a smooth night side than they did on main's mottled one.
 - Sent at 07:25 and 07:26 as `PART` in two messages (ten section G files, ten new path files).
+
+## Proof on the final head (07:26 to 07:29, `out/work/end/proof4.log`)
+
+- Tree b2057a6 (df8d8c4 with main 2858db4 merged; the commits after it change this notebook only).
+- Draft hashes of 2325, 2427, 2580, 615, 1440, 2010, 3150, 3720, 4290, 4860, 4605, 4707, 5006 (`tools/repeat.ts`, one session, 132 s): all 13 equal the list of before (`diff` against it is empty).
+- `npm run build` green (2.5 s). `npx vitest run`: 15 files, 79 tests passed. `python3 tools/shaderaudit.py`: 32 lines, the same text as on main 2858db4 (`diff` empty).
+- `git merge-tree --write-tree` with the polish head dd7f0f7 and with `agent/ending` 41e144e: no conflict.
+- `DONE` sent after this.
