@@ -1281,3 +1281,18 @@ The cure is 90cc5b23, the only change over round 34's folders. All of this with 
 - The message text is kept at `/home/user/workspace/cut35.txt` on the VM and summed up in the next section once sent.
 
 After the message: do not stop. Next is the night limb of the far rows of `limb.bin` (1586: halo round the night side, doubled edge lower right), as a pair for the Builder, kept out of the branch head until asked for; then the far Venus of the arrival (1072).
+
+## State at 18:06 (22 Nov): CUT35 message sent at 18:04 VM time (read this first after a compaction)
+
+Sent to `/root`, high priority: READY d2a59775ca32569fff6439fa80a49538ee807a9c (holds main 55319c5a). One commit over round 34's folders: 90cc5b23, the gate cure. The message says, in short:
+
+- What the cure does, which files, and that at veil 0 it is the old single tap.
+- Judged frames: 1185, 1287, 1440 keep round 34's bytes on both engines; 1586 keeps them on engine 84b0ea4 and is the same bytes with and without the cure on main ff158d90; against my CUT34 final 1586 moved on main in the sky only (764,091 pixels, mean 0.26 levels, 0 changed pixels in a block of 470,202 pixels that covers the disc), named first as mail 141 asks, and against PROGRESS item 114, which blames the veil and the release.
+- Motion: no move or timing changed; only 1317 to 1328 and 1546 to 1557 change.
+- Proof on review sheets beside round 34's: the cell numbers of both cover sheets, the four review frames outside the sheets, my reading, the draft structure numbers.
+- Said plainly: round 34's R4 critic does not fault the gates; it is a blur in my folder (mail 13 named); the fog frames are flatter; not cured are the one frame step from streaks to fog, the limb line of the veil, two fog frames per side; the gate frames render about 1.6 times slower.
+- Not answered from MAIL 191: R3 on 1586, the far Venus at 1072 (drawn with the HOLD rows of `limb.bin`), the R4 minor on the turn; stars are the sky's; night side shade and rim refit stay out; `light.skyLiftFrom` not set.
+- Gates and measures as in the section before.
+- Promise made: the night limb of the far rows (1586) comes as a pair for the Builder to look at and is kept OUT of the branch head until the Builder asks. So: no code or binary commit on `agent/venus` past d2a59775 unless the Builder says so; only NOTES and a patch file. If the Builder refuses the cure, round 34's folders stand (revert 90cc5b23).
+
+The full text is in `/home/user/workspace/cut35.txt` on the VM.
