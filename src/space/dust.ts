@@ -84,7 +84,7 @@ void main() {
   outColor = vec4(vColor * (uUnit * clear * exp(-vAt.x * vAt.x * vShape.x - vAt.y * vAt.y * vShape.y)), 0.0);
 }`
 
-export const DUST = { span: [2.2, 48], share: 1, core: [0.42, 0.58], taper: 0.27, long: 28, level: [4.4, 5.6, 2.5], side: [0.8, 0.3, 0.3], cap: 10, response: 0.5, glint: [0.18, 2.2], spin: [0.25, 0.9], warm: [1, 0.86, 0.68], cool: [0.86, 0.93, 1], unit: 0.00052, disc: [1.12, 2] }
+export const DUST = { span: [2.2, 48], share: 1, core: [0.42, 0.58], taper: 0.27, long: 28, level: [4.4, 5.6, 2.5], side: [0.8, 0.3, 0.3], cap: 8.5, response: 0.5, glint: [0.18, 2.2], spin: [0.25, 0.9], warm: [1, 0.86, 0.68], cool: [0.86, 0.93, 1], unit: 0.00052, disc: [1.12, 2] }
 
 export interface DustSun { dir: THREE.Vector3; angularRadius: number; glare: number }
 
