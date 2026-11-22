@@ -22,7 +22,7 @@ export const light: GlobeLight = {
   nightSoft: [-0.3, -0.12, 0.25, 24],
   dusk: { from: 1, range: [-0.12, 0, 0.15, 0.35] },
   edge: 1.2,
-  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.01, wide: 0.035, wideGain: 2.7, nearGain: 3.3, nearTint: [1.08, 0.84, 0.76], lobe: [0.9, 0.9, 0.03], toLight: 0.45, after: 0.5 },
+  rim: { color: [0.0169, 0.0144, 0.0113], width: 0.01, wide: 0.035, wideGain: 2.7, nearGain: 3.3, nearTint: [1.08, 0.84, 0.76], lobe: [0.9, 0.9, 0.03], toLight: 0.45, after: 0.2 },
   line: { dir: [0.8175, -0.5743, -0.0432], gain: 1.7, width: [0.001, 0.0092], side: [0.75, 0.95], sun: [0, 0.2, 0.55, 1], dip: 0.22, dipWidth: [0.0164, 0.045], dipSun: [0.3, 0.7], dipTight: [0.8, 0.95, 0.35] },
   glareGate: [0.7, 0.8, 0.06],
   glareLens: [28.8, 36],
