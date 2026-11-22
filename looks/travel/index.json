@@ -1,9 +1,24 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T16:41:59.655Z",
- "head": "351b1641e0b4a3c8a8e83172464424e7cf56fcc3",
- "note": "check of the travels on round 34 main: sun.travel leave, Sun at the corner, uranus with swing 0",
+ "pushed": "2026-11-22T17:38:12.873Z",
+ "head": "10b2c2da36ff9b520f050f9b964f7b58a86329de",
+ "note": "round 34 words: causes measured for the CUT35 message (jupiter leave, venus turn, ending turn)",
  "looks": [
+  {
+   "time": "2026-11-22T17:38:08.009Z",
+   "file": "20261122173808009-note-r34-jup-leave.jpg",
+   "source": "../../../../tmp/v/r34-jup-leave.jpg",
+   "kind": "note",
+   "label": "round 34 main, draft, jupiter.travel 3324 to 3342 every second: the same Jupiter leaves downward, no second body"
+  },
+  {
+   "time": "2026-11-22T16:59:08.707Z",
+   "file": "20261122165908707-note-c35-mercury-out.jpg",
+   "source": "../../../../tmp/v/c35-mercury-out.jpg",
+   "kind": "note",
+   "label": "mercury.travel review: round 34 main (top) against the prepared take out of the earlier window (bottom), 1064 1068 1072 1080 1088",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T16:41:58.503Z",
    "file": "20261122164158503-note-r34-ura.jpg",
@@ -47,20 +62,6 @@
    "source": "../../../../tmp/v/w-sw.jpg",
    "kind": "note",
    "label": "branch plus Neptune swing 0, review every second frame 4492 to 4512: Triton leaves over the top at 4496 and is back at 4508"
-  },
-  {
-   "time": "2026-11-22T15:42:05.549Z",
-   "file": "20261122154205549-note-w-merc34-b.jpg",
-   "source": "../../../../tmp/v/w-merc34-b.jpg",
-   "kind": "note",
-   "label": "mercury.travel watch on the head, review, every frame 1083 to 1090"
-  },
-  {
-   "time": "2026-11-22T15:42:05.010Z",
-   "file": "20261122154205010-note-w-merc34-a.jpg",
-   "source": "../../../../tmp/v/w-merc34-a.jpg",
-   "kind": "note",
-   "label": "mercury.travel watch on the head, review, every frame 1073 to 1082 (turn 4.23 a frame)"
   }
  ]
 }
