@@ -1,0 +1,34 @@
+{
+ "engineHash": "f854c8146f64c7e4",
+ "stopHashes": {
+  "saturn": "a301db93a38deae8"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 3810,
+ "last": 3884,
+ "extra": {
+  "frames": [
+   3810,
+   3817,
+   3823,
+   3830,
+   3837,
+   3844,
+   3850,
+   3857,
+   3864,
+   3871,
+   3877,
+   3884
+  ],
+  "kind": "sheet",
+  "segment": "saturn.rise",
+  "signature": "[\"cb1a89a7e4201c758f991372d4d72aae142e9d18c76ed9b2103938551dc208d1\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "loop footpoints at the horizon (left ~x530,y410 and right ~x1010,y440)",
+   "what": "the white-hot flare where the arcade roots into the surface is a little smaller and dimmer than in -a, so the loop reads less anchored and the brightest point of the frame is weaker",
+   "fix": "raise the intensity and spread of the footpoint bloom back to -a's level"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sky and coronal streamers left and right of the disk (crops D, E, H, I)",
+   "what": "fine detail is about 7% softer than -a: faint stars and the thin streamer filaments are slightly smoothed, Milky Way dust a touch flatter",
+   "fix": "restore fine-scale sharpness in the background and corona; reduce denoise/upscale smoothing outside the disk"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "center band around the umbra and arch base",
+   "what": "grade drifts slightly toward red/less blue-yellow balance (blue channel down ~2 levels) and deepest shadows in the penumbra are marginally darker",
+   "fix": "nudge the midtone balance back toward -a's slightly warmer-gold, lift penumbra blacks by a couple of levels"
+  }
+ ]
+}

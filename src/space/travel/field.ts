@@ -3,10 +3,10 @@ import { stream } from '../../core/random'
 
 export interface FlightDef {
   count: number
-  brightness: number
-  slope: number
+  law: number[][]
   max: number
   color: number
+  warm: number
   pale: number
   vivid: number[]
   level: number
@@ -15,6 +15,8 @@ export interface FlightDef {
   clusters: { count: number; radiusDeg: number[]; stars: number[]; lift: number; cool: number }
   glow: number
   glowTint: number[]
+  haze: { tint: number[]; away: number; widthDeg: number }
+  band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number }
 }
 
 export interface FlightField {
@@ -89,16 +91,26 @@ export function flightField(def: FlightDef): FlightField {
   const cool = new THREE.Color(0.5, 0.7, 1.0)
   const white = new THREE.Color(1, 1, 1)
   const c = new THREE.Color()
+  const law = def.law.map(([b, share]) => [Math.log(b!), Math.log(share!)] as const)
+  const bright = (u: number): number => {
+    const x = Math.log(Math.max(u, 1e-9))
+    let k = 0
+    while (k < law.length - 2 && x < law[k + 1]![1]) k++
+    const a = law[k]!
+    const b = law[k + 1]!
+    return Math.min(Math.exp(a[0] + (b[0] - a[0]) * (a[1] - x) / (a[1] - b[1])), def.max)
+  }
   let at = 0
   const put = (p: THREE.Vector3, lift: number, bias: number): void => {
     if (at >= count) return
     position.set([p.x, p.y, p.z], at * 3)
-    const bright = Math.min(def.brightness * lift * Math.pow(Math.max(rnd.next(), 1e-6), -def.slope), def.max)
-    star.set([Math.min(SIZE[0] + SIZE[1] * Math.log2(1 + bright), SIZE[2]), bright, 1, 0], at * 4)
+    const b = Math.min(bright(rnd.next()) * lift, def.max)
+    star.set([Math.min(SIZE[0] + SIZE[1] * Math.log2(1 + b), SIZE[2]), b, 1, 0], at * 4)
+    const hue = rnd.next()
     const temp = Math.min(Math.max(rnd.next() + bias, 0), 1)
-    if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
-    else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
-    const k = def.color * (def.pale + (1 - def.pale) * THREE.MathUtils.smoothstep(bright, def.vivid[0], def.vivid[1]))
+    if (hue < def.warm) c.copy(warm).lerp(white, Math.pow(temp, 0.6))
+    else c.copy(white).lerp(cool, Math.pow(temp, 1.4))
+    const k = def.color * (def.pale + (1 - def.pale) * THREE.MathUtils.smoothstep(b, def.vivid[0]!, def.vivid[1]!))
     color.set([Math.max(1 + (c.r - 1) * k, 0.05), Math.max(1 + (c.g - 1) * k, 0.05), Math.max(1 + (c.b - 1) * k, 0.05)], at * 3)
     at++
   }

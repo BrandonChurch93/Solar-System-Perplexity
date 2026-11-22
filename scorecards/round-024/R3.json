@@ -1,0 +1,138 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A (732,324,456,433), far photosphere between the sunspot penumbra and the limb (also visible in image-07.png crop P and image-05.png)",
+      "what": "bilateral mirror-symmetric butterfly seams repeat vertically in the solar granulation texture just below the horizon, exposing mirrored UV tiling",
+      "fix": "replace mirrored UV repeat near the horizon with non-repeating procedural noise or seamless stochastic tiling"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crops G (1368,432,456,433) and I (0,216,456,433) along the limb above the spicules (also in image-03.png crops N, Q, R and image-06.png / image-07.png)",
+      "what": "the orange chromospheric glow terminates in a hard, dark-rimmed curved line and doubled shell edge parallel to the limb instead of fading smoothly into space",
+      "fix": "remove the hard outer shell cutoff and feather the chromospheric haze falloff smoothly into the sky background"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop A upper-left and crop B bottom-right just above the spicule layer (also in image-07.png crop O, image-05.png, and fainter in image-02.png crops A and B)",
+      "what": "a ruler-straight horizontal bright line cuts across the base of the left coronal loop footpoint and extends into the sky like an unmasked flare or card edge",
+      "fix": "eliminate or softly mask the horizontal lens-flare streak / planar quad boundary above the horizon"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops S, T, U, V, W along the bottom foreground strip (also bottom of crops D and E in image-06.png and corners S, V, W in image-04.png)",
+      "what": "near-camera solar granulation is visibly soft, blurry, and radially smeared at native 1:1 size compared with the crisp mid-ground surface",
+      "fix": "increase foreground texture/displacement resolution (or add higher-frequency detail octaves) and reduce corner radial stretching and blur"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops C (1212,54,456,433) and H (912,0,456,433) diagonally outside the upper-right coronal loop (also in image-06.png crops C, H and image-03.png / image-07.png crop L)",
+      "what": "a jagged, hard-thresholded pure-black ribbon separates the warm coronal/nebula glow from the outer starfield gradient",
+      "fix": "soften the dust-lane / background black-point transition so low-end sky values grade smoothly without hard clipping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop J (0,0,456,433) upper-left corner and image-02.png crop I left edge (also in image-07.png crop J and image-06.png crop I)",
+      "what": "stars near the outer frame corners stretch into small radial blobs and streaks from wide-angle skybox projection distortion",
+      "fix": "render point stars in screen/spherical space without wide-angle corner stretching so stars remain tight points to the frame edge"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "near foreground granulation, panels S through W",
+      "what": "the closest granules are soft and diagonally smeared, with none of the lane and bright-point detail the midground still has",
+      "fix": "raise near-field texture resolution and remove the grazing-angle smear so the bottom matches the midground"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "disk center and sunspot crops",
+      "what": "granulation reads as glossy poured fluid, and the flow pinches into the pores instead of forming discrete cells",
+      "fix": "break the specular into small turbulent cells with dark lanes, and stop warping the granule field into the spots"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "mid granulation, panels D and E",
+      "what": "cell crowns have a wet, varnished highlight",
+      "fix": "dull the specular and break it into smaller turbulence"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "whole disc (crops A, F, G, P, Q)",
+      "what": "the granulation is one busy, even, painterly noise everywhere, with no change in scale toward the limb. The sunspots all share the same starburst template, and the surface reads as over-sharpened illustration rather than photosphere",
+      "fix": "vary granule scale and contrast with latitude and toward the limb, give each sunspot its own umbra/penumbra shape and size, and reduce the high-frequency sharpening"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "corona all round the limb (crops B, C, D, E, U, V, W)",
+      "what": "the corona is a fan of straight, brush-stroke streaks of near-equal length and spacing all round the disc, airbrushed in texture, and some streaks run in front of the star field like paint",
+      "fix": "replace with a smooth radial falloff with sparse, uneven helmet streamers, and keep the streaks faint and additive so stars show through evenly"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "prominences at left limb and upper and lower right limb (crops C, D, M, O)",
+      "what": "the prominences are flat red-and-orange painted ribbons with hard, sharpened edges, and they sit on top of the corona rather than glowing within it",
+      "fix": "give the loops a soft emissive falloff and plasma filament structure, and blend them additively with the corona"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "limb rim (crops G, K, L, V)",
+      "what": "a thin bright orange outline runs round the disc edge, reading as a halo or stroke rather than limb darkening",
+      "fix": "remove the rim highlight and apply proper limb darkening toward the edge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "Milky Way band, left and right (crops H, I, O, R)",
+      "what": "the Milky Way dust clouds are soft and smudgy, and the stars are slightly blobby and of very similar sizes",
+      "fix": "sharpen the dust lanes with finer structure, and give the stars point-like cores with a wider range of brightness"
+     }
+    ]
+   }
+  }
+ ]
+}

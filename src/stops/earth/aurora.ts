@@ -12,13 +12,18 @@ export interface AuroraLook {
   calm: number[]
   tail: number[]
   rays: number[]
+  uneven: number[]
+  day: number[]
 }
 
 const VERT = /* glsl */ `
+uniform vec3 uSun;
 out vec2 vUv;
 out vec3 vClip;
+out float vDay;
 void main() {
   vUv = uv;
+  vDay = dot(normalize(position), uSun);
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   vClip = gl_Position.xyw;
 }`
@@ -37,8 +42,11 @@ uniform int uDiag;
 uniform float uAway;
 uniform vec2 uTail;
 uniform vec4 uRays;
+uniform vec4 uUneven;
+uniform vec2 uDay;
 in vec2 vUv;
 in vec3 vClip;
+in float vDay;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 float cell(float p) {
@@ -53,15 +61,21 @@ float streak(float x) {
   f = f * f * (3.0 - 2.0 * f);
   return mix(cell(i), cell(i + 1.0), f);
 }
+float wob(float a, float t) {
+  return 0.5 * sin(7.0 * a - 1.3 * t + 1.7 * sin(3.0 * a)) + 0.3 * sin(uWave.y * a - uWave.z * t + 2.3 * sin(5.0 * a + 1.0)) + 0.2 * sin(29.0 * a + 1.7 * t + 1.1 * sin(2.0 * a));
+}
 void main() {
   if (uDiag >= 2) discard;
   float a = vUv.x * 6.2831853;
   float tall = 1.0 + uStretch.x * (sin(uStretch.y * a + uStretch.z * uClock) - sin(uStretch.y * a));
-  float v = vUv.y / tall;
+  float reach = mix(1.0, uUneven.y + uUneven.z * streak(vUv.x * uUneven.x + 5.0), uAway);
+  float v = vUv.y / (tall * reach);
   float u = vUv.x + uSway.x * v * (sin(uSway.y * a + uSway.z * uClock + 4.0 * v) - sin(uSway.y * a + 4.0 * v));
-  float bright = 1.0 + uWave.x * (sin(uWave.y * a - uWave.z * uClock) - sin(uWave.y * a));
-  float rays = smoothstep(0.25, 0.75, 0.6 * streak(u * uRays.x) + 0.4 * streak(u * uRays.y + 17.0));
-  vec3 col = inverseFilmic(texture(uMap, vec2(u, v)).rgb) * bright * step(v, 1.0) * (1.0 - uAway * smoothstep(uTail.x, uTail.y, vUv.x)) * mix(1.0, uRays.z + uRays.w * rays, uAway);
+  float bright = 1.0 + uWave.x * (wob(a, uClock) - wob(a, 0.0));
+  float rays = 0.6 * streak(u * uRays.x) + 0.4 * streak(u * uRays.y + 17.0);
+  float top = 1.0 - uAway * smoothstep(uUneven.w, 1.0, v);
+  float ends = 1.0 - uAway * max(smoothstep(uTail.x, uTail.y, vUv.x), smoothstep(uDay.x, uDay.y, vDay));
+  vec3 col = inverseFilmic(texture(uMap, vec2(u, v)).rgb) * bright * step(v, 1.0) * top * ends * mix(1.0, uRays.z + uRays.w * rays, uAway);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float lens = uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col * lens, 0.0);
@@ -72,6 +86,7 @@ export class Aurora {
   readonly material: THREE.ShaderMaterial
 
   private readonly look: AuroraLook
+  private readonly turn = new THREE.Quaternion()
 
   constructor(p: AuroraLook, map: THREE.Texture, diag: THREE.IUniform<number>) {
     this.look = p
@@ -82,7 +97,7 @@ export class Aurora {
       uniforms: {
         uMap: { value: map }, uClock: { value: 0 }, uGain: { value: 1 },
         uSway: { value: new THREE.Vector3().fromArray(p.sway) }, uWave: { value: new THREE.Vector3().fromArray(p.wave) }, uStretch: { value: new THREE.Vector3().fromArray(p.stretch) },
-        uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag, uAway: { value: 0 }, uTail: { value: new THREE.Vector2().fromArray(p.tail) }, uRays: { value: new THREE.Vector4().fromArray(p.rays) },
+        uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diag, uAway: { value: 0 }, uTail: { value: new THREE.Vector2().fromArray(p.tail) }, uRays: { value: new THREE.Vector4().fromArray(p.rays) }, uUneven: { value: new THREE.Vector4().fromArray(p.uneven) }, uDay: { value: new THREE.Vector2().fromArray(p.day) }, uSun: { value: new THREE.Vector3(0, 0, 1) },
       },
       side: THREE.DoubleSide,
       blending: THREE.CustomBlending,
@@ -138,7 +153,7 @@ export class Aurora {
     this.mesh.renderOrder = 6
   }
 
-  update(clock: number, gain: number, vignette: number, aspect: number, away: number): void {
+  update(clock: number, gain: number, vignette: number, aspect: number, away: number, sun: THREE.Vector3): void {
     const u = this.material.uniforms
     const c = this.look.calm
     const x = Math.min(Math.max((Math.abs(clock) - c[0]!) / (c[1]! - c[0]!), 0), 1)
@@ -151,6 +166,7 @@ export class Aurora {
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
     u.uAway!.value = away
+    ;(u.uSun!.value as THREE.Vector3).copy(sun).applyQuaternion(this.turn.copy(this.mesh.quaternion).invert())
   }
 
   dispose(): void {

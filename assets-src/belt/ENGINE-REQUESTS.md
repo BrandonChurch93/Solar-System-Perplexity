@@ -1,10 +1,16 @@
 # Engine requests from the belt module
 
-The first request (the hook of the belt in `src/core/engine.ts`) is on main since 3523b45 and is closed. One request is open.
+The first request (the hook of the belt in `src/core/engine.ts`) is on main since 3523b45 and is closed. The dust order request is on main since ffe0a2d (engine batch 10). It is written out again below because the travel agent is rebuilding `src/space/dust.ts`: whatever the new dust looks like, the order has to survive.
 
-## Open: dust order against the rocks (`assets-src/belt/dust.patch`)
+## Dust order against the rocks (`assets-src/belt/dust.patch`)
 
-Two shared files, `src/space/dust.ts` and `src/core/engine.ts`. The exact change is `assets-src/belt/dust.patch` (made with `git diff origin/main -- src/core/engine.ts src/space/dust.ts` on main 558e3a5). It is never committed on `agent/belt`; apply it with `git apply assets-src/belt/dust.patch`. The belt module on the branch builds and renders with and without it.
+State on main bf74284 (checked Nov 21, task 3): `git diff origin/main -- src/core/engine.ts src/space/dust.ts` is empty on `agent/belt`, and `git apply --reverse --check assets-src/belt/dust.patch` passes on main. So the exact patch against main bf74284 is empty: nothing to apply today. The belt agent did not touch `src/space/dust.ts` or `src/space/travel` in task 3.
+
+`assets-src/belt/dust.patch` is the change itself with the context lines of bf74284: it applies with `git apply` to main bf74284 with the dust order taken out (made by taking the two files of bf74284, reversing the old patch, and `git diff` back). If the rebuilt dust drops the order, this is what to put back; if the rebuilt file moves the lines, the five parts under "The change" are the whole of it.
+
+What the belt gives and what the dust must do with it, unchanged from task 2:
+- `Belt.cover(shot)` returns `null` or `{ mask, rocks }`. `mask` is the belt layer of this film frame (alpha is the coverage of the rocks, with their motion blur and focus blur). `rocks` holds one sphere per drawn rock (centre in the camera space of the shutter middle, radius in flow units), at most five.
+- New in task 3: every rock now carries the blur of its own screen motion, and the near rock passes at 0.5 to 0.9 units with a streak of 60 to 90 px. Its mask is therefore wide and soft, and the sphere test with a margin of 1.25 radii covers the solid part of it. A mote behind the near rock that sits in the outer part of the streak is not dimmed. Seen at native size this is not visible (the streak there is under a third opaque).
 
 ### What is wrong without it
 The dust is drawn after the belt, additive, without a depth test, so every mote draws over every rock. In the flow space of the travel the motes live within 3.5 units of the camera (the near layer within 1.2). The near rock passes at 1.05 to 0.8 units and the hero at 3.5 to 3.1, so motes that are farther than the near rock (most of them) show on its face.
@@ -26,7 +32,7 @@ With `cover === null` the mesh uses the first material, whose shader source with
 - The streak of a mote is tested as a whole at the middle of the shutter.
 
 ## What the module needs from the engine and the director
-- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 64 per rock). It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample.
+- `director.shotAt(frame, time)`: the belt samples the shutter itself with its own time steps (12 to 64 per rock). It builds its layer once per film frame, at engine sample 0, and composites the same layer in every engine sample. Every time step is drawn with the camera of its own time, so the layer holds each rock's full screen motion as blur.
 - `Flow` from `src/space/travel/flow.ts` (read only): the rocks live in the flow space of the dust, so they shift against the stars with the same travel as the motes.
 - From the shot: `segment`, `camera` (quaternion, vfov), `sun.dir`, `sun.color`, `sun.intensity`, `post.exposure`, `frame`, `time`.
 - From the view: `format`, `sample`, `diag`, `camera.view` (jitter for the raw views).
