@@ -1,9 +1,45 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T11:57:39.712Z",
- "head": "68f0089b81aff7b1b8d138025228d11b7b49ecfd",
- "note": "Phase 6: saturn.travel point from 3919, Triton held still inside the shutter in uranus.travel",
+ "pushed": "2026-11-22T12:24:58.080Z",
+ "head": "0a11e01e05429c544abc6fab24e693ba90d495ff",
+ "note": "mars.travel arrival proof 2799 to 2819; trial of an earlier disc in mercury.travel and uranus.travel rendering",
  "looks": [
+  {
+   "time": "2026-11-22T12:24:57.418Z",
+   "file": "20261122122457418-note-r7-native.jpg",
+   "source": "../../../../tmp/v/r7-native.png",
+   "kind": "note",
+   "label": "mars.travel review native crops of Io and the limb 2799 to 2819"
+  },
+  {
+   "time": "2026-11-22T12:24:56.842Z",
+   "file": "20261122122456842-note-a-2806-ab.jpg",
+   "source": "../../../../tmp/v/a-2806-ab.jpg",
+   "kind": "note",
+   "label": "mars.travel review 2806 and 2812, main against branch"
+  },
+  {
+   "time": "2026-11-22T12:24:56.265Z",
+   "file": "20261122122456265-note-r7-b.jpg",
+   "source": "../../../../tmp/v/r7-b.jpg",
+   "kind": "note",
+   "label": "mars.travel review 2810 to 2819 on agent/travel-polish"
+  },
+  {
+   "time": "2026-11-22T12:24:55.650Z",
+   "file": "20261122122455650-note-r7-a.jpg",
+   "source": "../../../../tmp/v/r7-a.jpg",
+   "kind": "note",
+   "label": "mars.travel review 2799 to 2809 on agent/travel-polish"
+  },
+  {
+   "time": "2026-11-22T12:04:53.340Z",
+   "file": "20261122120453340-note-p6-moons.jpg",
+   "source": "../../../../tmp/v/p6-moons.jpg",
+   "kind": "note",
+   "label": "finals: main against steady 60 to 200, 1650 Moon and Earth, 3362 Titan and Saturn",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T11:57:38.899Z",
    "file": "20261122115738899-note-p5-wide.jpg",
@@ -26,46 +62,6 @@
    "source": "../../../../tmp/v/p4-triton.jpg",
    "kind": "note",
    "label": "uranus.travel finals 3x: Triton and Neptune, main 4502 against steady 0 to 90 (not kept, still a streak)",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:48:43.621Z",
-   "file": "20261122114843621-note-p3-ptab.jpg",
-   "source": "../../../../tmp/v/p3-ptab.jpg",
-   "kind": "note",
-   "label": "saturn.travel point place 3x, main above, job 3 below, 3919 to 3934",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:48:43.024Z",
-   "file": "20261122114843024-note-p3-sat.jpg",
-   "source": "../../../../tmp/v/p3-sat.jpg",
-   "kind": "note",
-   "label": "saturn.travel after job 3, draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:37:22.691Z",
-   "file": "20261122113722691-note-p2-ab.jpg",
-   "source": "../../../../tmp/v/p2-ab.jpg",
-   "kind": "note",
-   "label": "sun.travel main above, patch end 0.7 below",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:37:22.162Z",
-   "file": "20261122113722162-note-p1-ab.jpg",
-   "source": "../../../../tmp/v/p1-ab.jpg",
-   "kind": "note",
-   "label": "mars.travel main above, job 1 below",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:10:13.169Z",
-   "file": "20261122111013169-note-p1-pt.jpg",
-   "source": "../../../../tmp/v/p1-pt.jpg",
-   "kind": "note",
-   "label": "polish job 1 Jupiter place native crops 2770 to 2793",
    "stop": "travel"
   }
  ]
