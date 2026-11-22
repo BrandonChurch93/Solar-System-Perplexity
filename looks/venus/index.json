@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T07:07:42.927Z",
- "head": "d998482e9961c5f799d9b5e7a4e5736babd3b486",
- "note": "venus polish on main a87578e (batch 19): veil take E3d, soft mist and soft streaks under both covers; judged frames same bytes; cover sheets rendering",
+ "pushed": "2026-11-22T07:44:45.132Z",
+ "head": "a57e642e7efc0639cab0e216509bc2610972aca8",
+ "note": "07:45 UTC: veil take E3d cover sheets and dive tail; judged finals same bytes as before; chain running",
  "looks": [
+  {
+   "time": "2026-11-22T07:44:43.945Z",
+   "file": "20261122074443945-note-e3t-pair.jpg",
+   "source": "../view/e3t-pair.jpg",
+   "kind": "note",
+   "label": "dive 1321 and 1323 crop, veil take E3d: two pale columns at the foot still weak (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T07:44:42.893Z",
+   "file": "20261122074442893-note-e3t.jpg",
+   "source": "../view/e3t.jpg",
+   "kind": "note",
+   "label": "dive tail 1321 1323 1325 1327 review tier, veil take E3d (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T07:44:41.873Z",
+   "file": "20261122074441873-note-c20-dc.jpg",
+   "source": "../view/c20-dc.png",
+   "kind": "note",
+   "label": "dive cover 1309 to 1320 review tier, veil take E3d: soft streaks, terrain clear under mist at 1319 and 1320 (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T07:44:40.844Z",
+   "file": "20261122074440844-note-c20-rc.jpg",
+   "source": "../view/c20-rc.png",
+   "kind": "note",
+   "label": "rise cover 1555 to 1566 review tier, veil take E3d: soft streaks, no planks (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T07:07:42.381Z",
    "file": "20261122070742381-note-e3r-orbit.jpg",
@@ -146,38 +178,6 @@
    "source": "../view/f16-1586.jpg",
    "kind": "note",
    "label": "Venus judged rise frame 1586, final tier with grain, branch code b22e4fb (42b9111 merged with main a45a07b, batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:20.438Z",
-   "file": "20261122052220438-note-f16-1440.jpg",
-   "source": "../view/f16-1440.jpg",
-   "kind": "note",
-   "label": "Venus judged terrain frame 1440, final tier with grain, branch code b22e4fb (42b9111 merged with main a45a07b, batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:19.466Z",
-   "file": "20261122052219466-note-f16-1287.jpg",
-   "source": "../view/f16-1287.jpg",
-   "kind": "note",
-   "label": "Venus judged dive frame 1287, final tier with grain, branch code b22e4fb (42b9111 merged with main a45a07b, batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:18.538Z",
-   "file": "20261122052218538-note-f16-1185.jpg",
-   "source": "../view/f16-1185.jpg",
-   "kind": "note",
-   "label": "Venus judged hold frame 1185, final tier with grain, branch code b22e4fb (42b9111 merged with main a45a07b, batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:08.462Z",
-   "file": "20261122052208462-note-f16-1586-pair.jpg",
-   "source": "../view/f16-1586-pair.jpg",
-   "kind": "note",
-   "label": "Venus judged rise frame 1586, final tier, branch 42b9111: left on main 0622510 (batch 18), right on main a45a07b (batch 19, flight sky)",
    "stop": "venus"
   }
  ]
