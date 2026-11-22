@@ -1,9 +1,39 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T15:10:26.081Z",
+ "pushed": "2026-11-22T15:15:50.701Z",
  "head": "bdbef6deee3dbd81327037c8d92c939823492a73",
- "note": "sun: limb cure at the hold and the rise, finals; proof chain on bdbef6de (repeat, measure, review frames of the leave)",
+ "note": "sun: hook gap at 390 px and the limb in the leave, agent/sun bdbef6de, main a60c5ffd",
  "looks": [
+  {
+   "time": "2026-11-22T15:15:49.617Z",
+   "file": "20261122151549617-note-c36-leave-limb-b-x3.jpg",
+   "source": "out/work/sun/hk3/c36-leave-limb-b-x3.jpg",
+   "kind": "note",
+   "label": "leave 456, 464, 472 lower limb x3, d8ec4ddf against bdbef6de (drafts), main a60c5ffd",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T15:15:48.426Z",
+   "file": "20261122151548426-note-c36-gap-390.jpg",
+   "source": "out/work/sun/hk3/c36-gap-390.jpg",
+   "kind": "note",
+   "label": "hook take 3 at 390 px wide, frames 36 to 50, shell and arch (drafts), agent/sun bdbef6de, main a60c5ffd",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T15:14:25.232Z",
+   "file": "20261122151425232-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:10:25.491Z",
    "file": "20261122151025491-note-c36-final-360-247-pairs.jpg",
@@ -34,36 +64,6 @@
    "source": "out/work/sun/hk3/c36-360-limb-draft-x3.jpg",
    "kind": "note",
    "label": "Sun hold 360, limb at 3 times, drafts: approved hero, main, limb cure (rim only where the hero has one, corona edge halved). agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:51:36.723Z",
-   "file": "20261122145136723-job-frame-00090.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T14:40:58.392Z",
-   "file": "20261122144058392-note-c35-final-495-limb-x3.jpg",
-   "source": "out/work/sun/hk3/c35-final-495-limb-x3.jpg",
-   "kind": "note",
-   "label": "Final 495 left limb at 3 times: round 33 head left, new leave right, agent/sun d8ec4ddf (main a60c5ffd)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:40:57.803Z",
-   "file": "20261122144057803-note-c35-final-495-native.jpg",
-   "source": "out/work/sun/hk3/c35-final-495-native.jpg",
-   "kind": "note",
-   "label": "Final 495 native: round 33 head left, new leave right, agent/sun d8ec4ddf (main a60c5ffd)",
    "stop": "sun"
   },
   {
