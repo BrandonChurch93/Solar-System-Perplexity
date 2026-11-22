@@ -181,27 +181,35 @@ def under():
     core = np.load(f'{WORK}/core-final.npy', mmap_mode='r')
     x0, y0 = (OX - BX0) * 2, (BY0 - OY) * 2
     rows = min(bh, core.shape[0] - y0)
-    plate[:rows, x0:x0 + core.shape[1] - 0] = np.asarray(core[y0:y0 + rows, :bw - x0])
+    plate[:rows, x0:] = np.asarray(core[y0:y0 + rows, :bw - x0])
     weight = np.zeros((bh, bw), np.float32)
     total = np.zeros((bh, bw, 3), np.float32)
+    ramp = np.minimum(np.arange(W) + 1, W - np.arange(W)).astype(np.float32)
+    wgt = np.clip(ramp / 300, 0.001, 1)[None, :]
     for name in ('a1', 'a2'):
         x, y, k = PLATES[name]
-        px, py = (x - BX0) * 2, (y - BY0) * 2
-        ramp = np.minimum(np.arange(W) + 1, W - np.arange(W)).astype(np.float32)
-        wgt = np.clip(ramp / 300, 0.001, 1)[None, :].repeat(H, 0)
-        total[py:py + H, px:px + W] += np.load(f'{FG}/under-{name}.npy') * wgt[..., None]
-        weight[py:py + H, px:px + W] += wgt
+        px, skip = (x - BX0) * 2, (BY0 - y) * 2
+        tile = np.load(f'{FG}/under-{name}.npy')[skip:]
+        total[:tile.shape[0], px:px + W] += tile * wgt[..., None]
+        weight[:tile.shape[0], px:px + W] += wgt
     on = weight > 0
     plate[on] = total[on] / weight[on][:, None]
     x, y, k = PLATES['b']
     low = cv2.resize(np.load(f'{FG}/under-b.npy'), (W * 2, H * 2), interpolation=cv2.INTER_CUBIC)
-    px, py = (x - BX0) * 2, (y - BY0) * 2
-    top = (2480 - y) * 2
-    cut = min(H * 2, bh - py)
-    plate[py + top:py + cut, px:px + W * 2] = low[top:cut]
+    px, top = (x - BX0) * 2, (SPEC['seam'] - y) * 2
+    first = (SPEC['seam'] - BY0) * 2
+    plate[first:, px:] = low[top:top + bh - first, :bw - px]
     plate = np.clip(plate, 0, 255)
     np.save(f'{FG}/under.npy', plate)
     cv2.imwrite('out/work/view/under_plate.jpg', cv2.resize(plate[..., ::-1], (1408, 640), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
+    t = cv2.imread(f'{FG}/deck-tiers.png')[..., 0].astype(np.float32) / 255
+    t = cv2.resize(t, (bw, bh), interpolation=cv2.INTER_LINEAR)[..., None]
+    base = cv2.resize(np.asarray(canvas[BY0:BY1, BX0:BX1]).astype(np.float32), (bw, bh), interpolation=cv2.INTER_CUBIC)
+    base[:rows, x0:] = np.asarray(core[y0:y0 + rows, :bw - x0])
+    shown = base * (1 - t) + plate * t
+    lift = lambda a: np.clip(255 * (np.clip(a, 0, 255) / 255.0) ** 0.6, 0, 255)
+    cv2.imwrite('out/work/view/under_shown.jpg', cv2.resize(lift(shown)[..., ::-1], (1408, 640), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
+    np.save(f'{FG}/under-shown.npy', shown.astype(np.float32))
 
 
 def jpeg(path, img, q):
@@ -209,6 +217,9 @@ def jpeg(path, img, q):
 
 
 def ship():
+    json.dump({'box': SPEC['box'], 'rise': SPEC['rise'], 'layers': [{'lift': t['lift'], 'taper': t['taper']} for t in SPEC['tiers']]}, open('src/stops/jupiter/tiers.json', 'w'), indent=1)
+    if len(sys.argv) > 2:
+        return
     plate = np.load(f'{FG}/under.npy')
     jpeg(f'{OUT}/full/deck-under.jpg', plate, 95)
     jpeg(f'{OUT}/web/deck-under.jpg', cv2.resize(plate, (plate.shape[1] // 2, plate.shape[0] // 2), interpolation=cv2.INTER_AREA), 88)
