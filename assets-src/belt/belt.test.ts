@@ -190,4 +190,25 @@ describe('belt motion', () => {
     expect(phase).toBeGreaterThan(55)
     expect(phase).toBeLessThan(110)
   })
+
+  it('turns the hero on screen at 30 degrees a second or less and never holds it still: 3 px or more between every frame pair', () => {
+    const i = motion.rocks.findIndex((r) => r.id === 'hero')
+    const seen = (f: number): { q: THREE.Quaternion; s: Seen } => {
+      const time = (f + 0.25) / config.fps
+      const shot = director.shotAt(f, time)
+      const pose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() }
+      motion.pose(i, shot, pose)
+      return { q: shot.camera.quaternion.clone().invert().multiply(pose.quaternion), s: look(motion, i, time, f) }
+    }
+    let count = 0
+    for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
+      const a = seen(f)
+      const b = seen(f + 1)
+      if (!a.s.inside || !b.s.inside) continue
+      count++
+      expect(THREE.MathUtils.radToDeg(a.q.angleTo(b.q)) * config.fps, 'turn at frame ' + f).toBeLessThanOrEqual(30)
+      expect(Math.hypot(b.s.x - a.s.x, b.s.y - a.s.y), 'step at frame ' + f).toBeGreaterThanOrEqual(3)
+    }
+    expect(count).toBeGreaterThanOrEqual(30)
+  })
 })

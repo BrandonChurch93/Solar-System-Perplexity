@@ -29,6 +29,7 @@ uniform vec2 uTile;
 uniform vec3 uLook;
 uniform vec3 uNight;
 uniform vec3 uRelief;
+uniform vec3 uCrisp;
 uniform float uGain;
 uniform float uMapWidth;
 uniform float uCounted;
@@ -44,7 +45,7 @@ float shade(vec3 p, vec3 l) {
     float len = length(q);
     if (len > 1.02) break;
     float gap = len - textureLod(uHeight, q, 0.0).r;
-    lit = min(lit, clamp(gap / (t * 0.1) + 0.35, 0.0, 1.0));
+    lit = min(lit, clamp(gap / (t * uCrisp.y) + 0.35, 0.0, 1.0));
     t += 0.01 + t * 0.16;
   }
   return lit;
@@ -59,7 +60,7 @@ vec3 lift(vec4 t, vec3 w, vec3 n) {
 }
 void main() {
   vec3 d = normalize(vLocal);
-  vec4 m = texture(uMap, d);
+  vec4 m = texture(uMap, d, uCrisp.x);
   vec3 n = normalize(m.xyz * 2.0 - 1.0);
   vec3 g = normalize(textureLod(uMap, d, 5.0).xyz * 2.0 - 1.0);
   n = normalize(g + (n - g) * uShape.x);
@@ -84,12 +85,15 @@ void main() {
   vec3 albedo = uTint * tone * mix(vec3(0.94, 0.98, 1.05), vec3(1.05, 1.0, 0.93), clamp(tone * 1.4, 0.0, 1.0));
   float pit = texture(uAo, d).r;
   vec3 sun = uSunTint * (body * sh * mix(uRelief.x, 1.0, cavity) * mix(1.0, pit, uRelief.y) + uShape.z * edge * (0.35 + 0.65 * sh));
-  vec3 col = albedo * (sun + uFill * ao * (uNight.x + uNight.y * max(dot(n, v), 0.0) + uNight.z * graze * graze)) * uGain;
+  float side = max(dot(n, normalize(cross(uSunB, v) + 0.6 * v - 0.3 * uSunB)), 0.0);
+  vec3 col = albedo * (sun + uFill * ao * (uNight.x + uNight.y * max(dot(n, v), 0.0) + uNight.z * graze * graze + uCrisp.z * side)) * uGain;
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), uCounted, vec3(0.6, 0.4, 0.8), vec2(0.0), length(vView));
 }`
 
-export function rockMaterial(asset: RockAsset, detail: THREE.Texture): THREE.ShaderMaterial {
-  const l = spec.light
+export type RockLook = Partial<typeof spec.light>
+
+export function rockMaterial(asset: RockAsset, detail: THREE.Texture, look?: RockLook): THREE.ShaderMaterial {
+  const l = { ...spec.light, ...look }
   return new THREE.ShaderMaterial({
     glslVersion: THREE.GLSL3,
     vertexShader: VERT,
@@ -99,7 +103,7 @@ export function rockMaterial(asset: RockAsset, detail: THREE.Texture): THREE.Sha
       uSunB: { value: new THREE.Vector3(1, 0, 0) }, uEyeB: { value: new THREE.Vector3(0, 0, 5) },
       uSunTint: { value: new THREE.Vector3(1, 1, 1) }, uTint: { value: new THREE.Vector3().fromArray(l.tint) }, uFill: { value: new THREE.Vector3().fromArray(l.fill) },
       uShape: { value: new THREE.Vector4(l.bump, l.detail, l.rim, l.shadow) }, uTile: { value: new THREE.Vector2(l.tile[0], l.tile[1]) }, uLook: { value: new THREE.Vector3(l.seeliger, l.contrast, l.lift) },
-      uNight: { value: new THREE.Vector3().fromArray(l.night) }, uRelief: { value: new THREE.Vector3().fromArray(l.relief) },
+      uNight: { value: new THREE.Vector3().fromArray(l.night) }, uRelief: { value: new THREE.Vector3().fromArray(l.relief) }, uCrisp: { value: new THREE.Vector3().fromArray(l.crisp) },
       uGain: { value: 1 }, uMapWidth: { value: asset.size * 4 }, uCounted: { value: 1 }, uDiag: diagUniform,
     },
   })

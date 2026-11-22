@@ -2,7 +2,9 @@ import * as THREE from 'three'
 import { config } from '../../src/config'
 import { FilmDirector } from '../../src/director/film'
 import { plans } from '../../src/director/plans'
-import { inFrame } from '../../src/space/travel/path'
+import { inFrame, TRAVEL } from '../../src/space/travel/path'
+
+if (process.env.OVER) for (const [k, v] of Object.entries(JSON.parse(process.env.OVER) as Record<string, object>)) TRAVEL[k] = { ...TRAVEL[k], ...v }
 
 const d = new FilmDirector(plans)
 const fmt = config.formats[config.formatKeys.master]!
