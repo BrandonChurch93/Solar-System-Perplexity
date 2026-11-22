@@ -339,7 +339,9 @@ export class Engine {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
       const glare = this.director?.glareOf?.(mid)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, glare ? { ...shot.sun, dir: glare } : shot.sun, shot.post.vignette, width / height, open)
+      const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
       r.setRenderTarget(this.sampleTarget)
@@ -355,7 +357,6 @@ export class Engine {
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
     if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 

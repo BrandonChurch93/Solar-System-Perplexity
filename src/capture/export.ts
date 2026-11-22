@@ -78,7 +78,7 @@ function hostSets(): Promise<string[]> {
 
 function skyBytesFor(assets: string): number {
   const w = config.assetSets[assets]!.skyWidth
-  return w * (w / 2) * 4 * (4 / 3)
+  return w * (w / 2) * 4 * (4 / 3) + w * (w / 4) * 4 * (4 / 3) + (w / 2) * (w / 8) * 4
 }
 
 export function mountExport(engine: Engine, params: URLSearchParams): void {
@@ -236,8 +236,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
     if (lastParam !== null && Number.isFinite(Number(lastParam))) last = Math.min(last, Math.floor(Number(lastParam)))
     const key = formatKey(f.id)
     const file = stop ? raw.export.files.clip.split('{stop}').join(stop) : raw.export.files[key]
-    const mbps = f.id === k.preview ? raw.previewFilm.bitrateMbps : raw.export.bitrateMbps
-    return { format: f, tier, assets, stop, first, last, file, spec: { width: f.width, height: f.height, fps: config.fps, bitrate: mbps * 1e6 } }
+    return { format: f, tier, assets, stop, first, last, file, spec: { width: f.width, height: f.height, fps: config.fps, bitrate: raw.export.bitrateMbps * 1e6 } }
   }
 
   let codec: CodecChoice | null = null
