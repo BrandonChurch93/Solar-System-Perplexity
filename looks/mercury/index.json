@@ -1,9 +1,49 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T09:09:21.929Z",
+ "pushed": "2026-11-22T09:09:37.623Z",
  "head": "9604703162cd206d964e7c7ca43b65293271fd26",
- "note": "POLISH READY proofs",
+ "note": "POLISH READY proofs for 9604703 (main 616695b)",
  "looks": [
+  {
+   "time": "2026-11-22T09:09:36.952Z",
+   "file": "20261122090936952-note-f717-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f717-final.png",
+   "kind": "note",
+   "label": "Frame 717 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:09:36.315Z",
+   "file": "20261122090936315-note-f615-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f615-final.png",
+   "kind": "note",
+   "label": "Frame 615 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:09:35.660Z",
+   "file": "20261122090935660-note-f780-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f780-final.png",
+   "kind": "note",
+   "label": "Frame 780 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:09:35.012Z",
+   "file": "20261122090935012-note-f1016-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f1016-final.png",
+   "kind": "note",
+   "label": "Frame 1016 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:09:34.359Z",
+   "file": "20261122090934359-note-f870-final.jpg",
+   "source": "out/work/mercury/p6/ready2/f870-final.png",
+   "kind": "note",
+   "label": "Frame 870 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T09:08:46.816Z",
    "file": "20261122090846816-note-rise-seg-sheet.jpg",
@@ -264,6 +304,14 @@
    "source": "out/work/mercury/p6/b1/sheet-n-dive.jpg",
    "kind": "note",
    "label": "Dive 738 to 745, draft, tree 6f0568e (main 2858db4): same cure on the dive side",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T07:20:37.897Z",
+   "file": "20261122072037897-note-sheet-n-rise.jpg",
+   "source": "out/work/mercury/p6/b1/sheet-n-rise.jpg",
+   "kind": "note",
+   "label": "Rise 989 to 996, draft, tree 6f0568e (main 2858db4): far band carried to the limb and the map washed like the ground pictures near the swap",
    "stop": "mercury"
   }
  ]
