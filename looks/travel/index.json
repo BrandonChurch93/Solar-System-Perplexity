@@ -1,69 +1,65 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T15:22:45.957Z",
- "head": "dda9fe1f0e342a6c8bbd48d5790cb803e60e123f",
- "note": "mercury.travel: the Sun keeps its plate until it has left the frame (main showed a flat see through disc from 1059)",
+ "pushed": "2026-11-22T15:51:57.897Z",
+ "head": "4e3529d10a8d564c67f8e0cdc5c98f18feb02341",
+ "note": "CUT34 proofs: mercury watch on the head, Neptune swing 0 on top of the branch, Sun at the corner",
  "looks": [
+  {
+   "time": "2026-11-22T15:51:57.352Z",
+   "file": "20261122155157352-note-c34-mercury-ab2.jpg",
+   "source": "../../../../tmp/v/c34-mercury-ab2.jpg",
+   "kind": "note",
+   "label": "mercury.travel review: main (top) against the head with the Sun fix (bottom), 1066 1072 1080",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T15:51:56.692Z",
+   "file": "20261122155156692-note-w-sw.jpg",
+   "source": "../../../../tmp/v/w-sw.jpg",
+   "kind": "note",
+   "label": "branch plus Neptune swing 0, review every second frame 4492 to 4512: Triton leaves over the top at 4496 and is back at 4508"
+  },
+  {
+   "time": "2026-11-22T15:42:05.549Z",
+   "file": "20261122154205549-note-w-merc34-b.jpg",
+   "source": "../../../../tmp/v/w-merc34-b.jpg",
+   "kind": "note",
+   "label": "mercury.travel watch on the head, review, every frame 1083 to 1090"
+  },
+  {
+   "time": "2026-11-22T15:42:05.010Z",
+   "file": "20261122154205010-note-w-merc34-a.jpg",
+   "source": "../../../../tmp/v/w-merc34-a.jpg",
+   "kind": "note",
+   "label": "mercury.travel watch on the head, review, every frame 1073 to 1082 (turn 4.23 a frame)"
+  },
+  {
+   "time": "2026-11-22T15:34:30.257Z",
+   "file": "20261122153430257-note-sw-crops.jpg",
+   "source": "../../../../tmp/v/sw-crops.jpg",
+   "kind": "note",
+   "label": "swing 0 crops native: 4470 bottom right, 4492 Triton, 4492 Neptune and band, 4512 Triton"
+  },
+  {
+   "time": "2026-11-22T15:34:29.313Z",
+   "file": "20261122153429313-note-sw-row.jpg",
+   "source": "../../../../tmp/v/sw-row.jpg",
+   "kind": "note",
+   "label": "branch plus Neptune swing 0, review: 4436 4470 4484 4492 / 4496 4500 4506 4512"
+  },
+  {
+   "time": "2026-11-22T15:34:28.319Z",
+   "file": "20261122153428319-note-c34-swing-ab.jpg",
+   "source": "../../../../tmp/v/c34-swing-ab.jpg",
+   "kind": "note",
+   "label": "uranus.travel review: branch (top) against branch plus Neptune swing 0 (bottom), 4484 4492 4496 4506"
+  },
   {
    "time": "2026-11-22T15:22:45.279Z",
    "file": "20261122152245279-note-c34-finals-a.jpg",
    "source": "../../../../tmp/v/c34-finals-a.jpg",
    "kind": "note",
    "label": "finals on the branch with the Sun fix: 1072 1642 2212"
-  },
-  {
-   "time": "2026-11-22T15:22:44.720Z",
-   "file": "20261122152244720-note-sc-fix-full.jpg",
-   "source": "../../../../tmp/v/sc-fix-full.jpg",
-   "kind": "note",
-   "label": "the fix at review, full frames 1059 1060 1062 1064 1066 1069"
-  },
-  {
-   "time": "2026-11-22T15:22:44.066Z",
-   "file": "20261122152244066-note-sc-ab.jpg",
-   "source": "../../../../tmp/v/sc-ab.jpg",
-   "kind": "note",
-   "label": "Sun corner at half size (x 1220 to 1920, y 0 to 420), main above the fix: 1060 1064 1066 1068"
-  },
-  {
-   "time": "2026-11-22T15:22:43.406Z",
-   "file": "20261122152243406-note-c34-suncorner-ab.jpg",
-   "source": "../../../../tmp/v/c34-suncorner-ab.jpg",
-   "kind": "note",
-   "label": "mercury.travel Sun at the corner, review, main above the fix: 1056 1060 1064 1068",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:47:13.053Z",
-   "file": "20261122144713053-note-w-venus-b.jpg",
-   "source": "../../../../tmp/v/w-venus-b.jpg",
-   "kind": "note",
-   "label": "venus.travel watch at review, branch, 1651 to 1658 and 1660",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:12.471Z",
-   "file": "20261122144712471-note-w-venus-a.jpg",
-   "source": "../../../../tmp/v/w-venus-a.jpg",
-   "kind": "note",
-   "label": "venus.travel watch at review, branch, 1641 to 1650 every frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:11.949Z",
-   "file": "20261122144711949-note-c34-uranus-ab.jpg",
-   "source": "../../../../tmp/v/c34-uranus-ab.jpg",
-   "kind": "note",
-   "label": "CUT34 uranus.travel review, main above branch: 4484 4492 4496 4506",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T14:47:11.395Z",
-   "file": "20261122144711395-note-c34-mercury-ab.jpg",
-   "source": "../../../../tmp/v/c34-mercury-ab.jpg",
-   "kind": "note",
-   "label": "CUT34 mercury.travel review, main above branch: 1066 1072 1080 1094",
-   "stop": "mercury"
   }
  ]
 }
