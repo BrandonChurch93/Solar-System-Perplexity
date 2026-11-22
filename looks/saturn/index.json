@@ -1,38 +1,56 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T18:12:22.089Z",
- "head": "a91b3aa2a7510dc9baa174f52f50f7e7b9bde122",
- "note": "saturn: CUT35 message sent (tone field at 3720 offered), the owed cover review sheets render, the draft 3776 bar traced",
+ "pushed": "2026-11-22T18:33:39.776Z",
+ "head": "f467b8e1177b2da9d3988c60562fa905bd88a2f0",
+ "note": "saturn: dive cover review sheet on the CUT35 tree, every tile; the rise cover sheet renders",
  "looks": [
   {
-   "time": "2026-11-22T18:12:19.089Z",
-   "file": "20261122181219089-note-rev3776.jpg",
-   "source": "../../../../tmp/c35/rev3776.png",
+   "time": "2026-11-22T18:33:36.317Z",
+   "file": "20261122183336317-note-titan-dc.jpg",
+   "source": "../../../../tmp/c35/titan-dc.png",
    "kind": "note",
-   "label": "review still 3776, the same place: no bar at 4 samples",
+   "label": "dive cover review sheet, Titan at 3594 to 3598 at 2x: it goes behind the globe's night limb",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T18:12:17.944Z",
-   "file": "20261122181217944-note-bar-dg.jpg",
-   "source": "../../../../tmp/c34/bar-dg.png",
+   "time": "2026-11-22T18:33:35.451Z",
+   "file": "20261122183335451-note-dct-5.jpg",
+   "source": "../../../../tmp/c35/dct-5.png",
    "kind": "note",
-   "label": "draft 3776, the bar at the lower left: beauty, layers, texels, depth (one mesh triangle drawn at the wrong place, draft tier only)",
+   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3599 and 3600 at native size",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T18:11:16.901Z",
-   "file": "20261122181116901-frame-f03590-review.jpg",
-   "source": "out/work/sheets/.frames-kP1de9/f03590-review.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3590, review tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3590,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
+   "time": "2026-11-22T18:33:34.321Z",
+   "file": "20261122183334321-note-dct-4.jpg",
+   "source": "../../../../tmp/c35/dct-4.png",
+   "kind": "note",
+   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3597 and 3598 at native size",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T18:33:33.191Z",
+   "file": "20261122183333191-note-dct-3.jpg",
+   "source": "../../../../tmp/c35/dct-3.png",
+   "kind": "note",
+   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3595 and 3596 at native size",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T18:33:32.146Z",
+   "file": "20261122183332146-note-dct-2.jpg",
+   "source": "../../../../tmp/c35/dct-2.png",
+   "kind": "note",
+   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3593 and 3594 at native size",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T18:33:31.303Z",
+   "file": "20261122183331303-note-dct-1.jpg",
+   "source": "../../../../tmp/c35/dct-1.png",
+   "kind": "note",
+   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3591 and 3592 at native size",
+   "stop": "saturn"
   },
   {
    "time": "2026-11-22T18:05:28.366Z",
@@ -61,42 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:55:28.683Z",
-   "file": "20261122175528683-frame-H5-3922.jpg",
-   "source": "out/work/saturn/H5-3922.png",
-   "kind": "frame",
-   "label": "saturn.travel frame 3922, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3922,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:54:20.906Z",
-   "file": "20261122175420906-frame-H5-3866.jpg",
-   "source": "out/work/saturn/H5-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:47:33.658Z",
-   "file": "20261122174733658-note-tr-b.jpg",
-   "source": "../../../../tmp/c34/tr-b.png",
-   "kind": "note",
-   "label": "trial, not offered: wider shadow edge in the arrival, drafts 3379 and 3382: the edge goes from wide to crisp within six frames while Saturn fills the frame",
-   "stop": "saturn"
   }
  ]
 }
