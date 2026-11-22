@@ -109,8 +109,6 @@ export class Belt {
   private readonly v = new THREE.Vector3()
   private readonly first: number
   private readonly end: number
-  private readonly spheres: THREE.Vector4[] = []
-  private coverFrame = -1
 
   constructor() {
     const s = beltSegment()
@@ -253,11 +251,6 @@ export class Belt {
     r.setRenderTarget(target)
   }
 
-  cover(shot: Shot): { mask: THREE.Texture; rocks: THREE.Vector4[] } | null {
-    if (shot.segment.id !== beltSpec.segment || !this.drawn || !this.layer || this.coverFrame !== shot.frame) return null
-    return { mask: this.layer.texture, rocks: this.spheres }
-  }
-
   private direct(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, shot: Shot, view: RenderView): void {
     const { width, height } = view.format
     const scale = height / 1080
@@ -333,14 +326,6 @@ export class Belt {
     })
     plan.sort((p, q) => q.depth - p.depth)
     this.drawn = plan.length > 0
-    this.coverFrame = shot.frame
-    this.spheres.length = 0
-    this.inv.copy(mid.camera.quaternion).invert()
-    for (const p of plan) {
-      this.motion!.pose(p.index, mid, this.pose)
-      this.v.copy(this.pose.position).applyQuaternion(this.inv)
-      this.spheres.push(new THREE.Vector4(this.v.x, this.v.y, this.v.z, this.items[p.index]!.radius))
-    }
     if (!this.drawn) return
     layer.scissorTest = false
     layer.viewport.set(0, 0, width, height)
