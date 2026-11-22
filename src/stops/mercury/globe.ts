@@ -134,6 +134,9 @@ uniform vec3 uWideLens;
 uniform vec4 uWideBox;
 uniform vec4 uWideFade;
 uniform vec2 uWideOver;
+uniform vec4 uWideDrop;
+uniform vec3 uWideDown;
+uniform vec3 uWideHold;
 uniform vec2 uWideSize;
 uniform float uSink;
 uniform vec3 uHazeSun;
@@ -272,17 +275,24 @@ void main() {
   vec2 axc = dFdx(uvc);
   vec2 ayc = dFdy(uvc);
   float wc = span * step(0.02, qc.z) * step(0.0, qc.y) * smoothstep(0.0, 1.0, min(qc.x, 1.0 - qc.x) / uCloseFade.z) * smoothstep(0.0, 1.0, (1.0 - qc.y) / uCloseFade.w) * clearOf;
-  vec3 dw = uWideCam * d;
-  vec3 wp = uCloseLens.x * dw - uWideEye;
+  float sunk = 1.0 - uWideDrop.x * smoothstep(uWideDrop.y, uWideDrop.z, reach);
+  vec3 ns = normalize(oc + ray * (-b - sqrt(max(h + (sunk * sunk - 1.0), 0.0))));
+  vec3 dw = uWideCam * normalize(d + spinY((ns - n) * uBodyToWorld, uSpin));
+  vec3 wp = uCloseLens.x * sunk * dw - uWideEye;
+  float wal = dot(wp, uWideDown);
+  vec3 wpp = wp - wal * uWideDown;
+  float wpl = max(length(wpp), 1e-6);
+  wp = dot(dw, uWideEye) < uCloseLens.x * sunk || wpl > wal * uWideDrop.w ? uWideDown + wpp * (uWideDrop.w / wpl) : wp;
   vec2 qw = (uWideLens.yz + uWideLens.x * vec2(wp.x, -wp.y) / max(-wp.z, 0.02) - uWideBox.xy) / uWideBox.zw;
   vec2 uvw = vec2(qw.x, 1.0 - qw.y);
   vec2 axw = dFdx(uvw);
   vec2 ayw = dFdy(uvw);
   vec2 fold = step(uWideOver.y, uvw) * 2.0 - 1.0;
-  axw *= fold;
-  ayw *= fold;
+  float held = uWideHold.y * smoothstep(0.0, uWideHold.z, uCloseLens.x * acos(clamp(-dot(dw, uWideDown), -1.0, 1.0)) - uWideHold.x);
+  axw = axw * fold + vec2(held / uWideSize.x, 0.0);
+  ayw = ayw * fold + vec2(0.0, held / uWideSize.y);
   uvw = uWideOver.y + abs(uvw - uWideOver.y);
-  float ww = uCloseW * step(0.02, -wp.z) * step(uCloseLens.x, dot(dw, uWideEye)) * smoothstep(0.0, 1.0, min(min(qw.x + uWideOver.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y + uWideOver.x)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
+  float ww = uCloseW * step(0.02, -wp.z) * smoothstep(0.0, 1.0, min(min(qw.x + uWideOver.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y + uWideOver.x)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
   for (int k = 0; k < (ww > 0.0 ? 1 : 0); k++) ww *= smoothstep(uWideFade.w, 1.0, textureGrad(uWideAlpha, uvw, axw, ayw).r);
   bool bare = max(wc, ww) < 1.0;
   float wu = atan(d.x, d.z) / (2.0 * PI) + 0.5;
@@ -416,7 +426,7 @@ export class Globe {
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
-        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
+        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -441,9 +451,13 @@ export class Globe {
     ;(u.uCloseSize!.value as THREE.Vector2).set(size.width, size.height)
   }
 
-  wide(texture: THREE.Texture, alpha: THREE.Texture, toCamera: THREE.Quaternion, eye: THREE.Vector3, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], feather: number, far: readonly [number, number], solid: number): void {
+  wide(texture: THREE.Texture, alpha: THREE.Texture, toCamera: THREE.Quaternion, eye: THREE.Vector3, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], feather: number, far: readonly [number, number], solid: number, radius: number, sink: number, drop: readonly [number, number], margin: number, blur: readonly [number, number]): void {
     const u = this.material.uniforms
     const size = texture.image as unknown as { width: number; height: number }
+    const cone = Math.asin((radius - sink) / eye.length()) - margin
+    ;(u.uWideDrop!.value as THREE.Vector4).set(sink / radius, drop[0], drop[1], Math.tan(cone))
+    ;(u.uWideHold!.value as THREE.Vector3).set(radius * (Math.asin((eye.length() * Math.sin(cone)) / (radius - sink)) - cone), blur[0], blur[1])
+    ;(u.uWideDown!.value as THREE.Vector3).copy(eye).normalize().negate()
     u.uWide!.value = texture
     u.uWideAlpha!.value = alpha
     ;(u.uWideCam!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(toCamera))

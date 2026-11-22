@@ -150,7 +150,7 @@ export const createSet: SetFactory = async (ctx) => {
     const toWide = under.group.quaternion.clone().invert()
     globe.close(shot, toClose, nearUp, closeRadius, closeImage.focal, closeImage.center, closeImage.box, look.close.far, look.close.feather)
     globe.haze(hazeJson.sun, hazeJson.fromDeg, hazeJson.toDeg, hazeJson.gain, look.close.haze.cut, look.close.haze.calm)
-    globe.wide(around, aroundAlpha, toWide.clone().multiply(toClose), nearUp.clone().multiplyScalar(closeRadius + 1).add(under.group.position).applyQuaternion(toWide), wideImage.focal, wideImage.center, wideImage.box, look.close.wide.feather[0]![1], [0, 1], 0)
+    globe.wide(around, aroundAlpha, toWide.clone().multiply(toClose), nearUp.clone().multiplyScalar(closeRadius + 1).add(under.group.position).applyQuaternion(toWide), wideImage.focal, wideImage.center, wideImage.box, look.close.wide.feather[0]![1], [0, 1], 0, closeRadius, wideImage.sink, look.close.wide.drop, look.close.wide.margin, look.close.wide.blur)
   }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const wideFar = curve(look.close.wide.far)
