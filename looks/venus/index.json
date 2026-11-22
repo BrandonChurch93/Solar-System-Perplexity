@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T04:33:15.320Z",
- "head": "42b9111ce9d0dea7c2d82c23c496f178868dff68",
- "note": "Venus: POLISH READY state, head 42b9111 on main 0622510; review cover sheets on the new terrain patch rendering",
+ "pushed": "2026-11-22T05:01:42.609Z",
+ "head": "4c2f92ed321f8c7f93863456c26a460d48424535",
+ "note": "Venus: batch 19 merged (b22e4fb on main a45a07b); repeat test and final stills running; c18 cover sheets read",
  "looks": [
+  {
+   "time": "2026-11-22T05:01:42.050Z",
+   "file": "20261122050142050-note-swap-rise.jpg",
+   "source": "../view/swap-rise.jpg",
+   "kind": "note",
+   "label": "Venus rise swap, draft frames 1559 and 1560, top of frame: the star field changes at the swap (engine item b, reported as weak)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T05:01:41.342Z",
+   "file": "20261122050141342-note-c18-dc.jpg",
+   "source": "../view/c18-dc.png",
+   "kind": "note",
+   "label": "Venus dive cover sheet c18, review tier, frames 1309 to 1320, branch 42b9111 on main 0622510, before batch 19: terrain star refit, only 1314 to 1320 differ from c17",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T05:01:40.709Z",
+   "file": "20261122050140709-note-c18-rc.jpg",
+   "source": "../view/c18-rc.png",
+   "kind": "note",
+   "label": "Venus rise cover sheet c18, review tier, frames 1555 to 1566, branch 42b9111 on main 0622510, before batch 19: terrain star refit, only 1555 to 1559 differ from c17",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T04:33:14.481Z",
    "file": "20261122043314481-note-s2-sky.jpg",
@@ -146,30 +170,6 @@
    "source": "../view/d1-night.png",
    "kind": "note",
    "label": "Dive 1259 to 1279, night side crop, draft, on main 3d48581: no step where the hold layers leave",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:47:53.607Z",
-   "file": "20261122024753607-note-d1.jpg",
-   "source": "../view/d1.jpg",
-   "kind": "note",
-   "label": "Dive 1259 to 1303 every fourth frame, draft, on main 3d48581, branch 58c8cdf: repainted wrap, hold layers gone by 1275",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:47:52.765Z",
-   "file": "20261122024752765-note-f11-1440.jpg",
-   "source": "../view/f11-1440.jpg",
-   "kind": "note",
-   "label": "1440 final tier on main 3d48581, branch 58c8cdf: star cure of the terrain patch and the dim sky pass",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:37:17.817Z",
-   "file": "20261122023717817-note-f7-1185.jpg",
-   "source": "../view/f7-1185.jpg",
-   "kind": "note",
-   "label": "1185 final tier on main 3d48581, hold refitted on the repainted wrap, star cure pass 3",
    "stop": "venus"
   },
   {
