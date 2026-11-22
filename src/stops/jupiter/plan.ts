@@ -9,7 +9,7 @@ import fit from './fit.json'
 export const climbOut = { lead: 1.4, tail: 0.5, level: -4, fast: [0.24, 0.2, 3] as [number, number, number], settle: 2.9, turn: 0.75, lens: 2 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
 export const plunge = { power: 4 }
-export const veil = { hides: 0, closed: 0.98, lift: 2 }
+export const veil = { hides: 0, closed: 0.98, lift: 2, sky: 0.75 }
 
 export const params: MoveParams = {
   hold: { orbitDeg: 3, axis: [0.25, 1, 0], push: -0.03 },
@@ -45,6 +45,11 @@ export class JupiterPlan extends StopPlan {
     const amount = super.coverAmount(seg, time) * (seg.kind === 'rise' ? 1 - smooth(ramp(c, c + veil.lift / config.fps, time)) : 1)
     this.p.coverHides = amount < veil.closed ? veil.hides : undefined
     return amount
+  }
+
+  override skyUnderCover(amount: number, time: number): number {
+    const low = time >= this.coverCenter(this.seg.dive!) && time < this.coverCenter(this.seg.rise)
+    return Math.pow(1 - amount, low ? veil.sky : 2)
   }
 
   override turn(time: number): THREE.Quaternion {

@@ -6,7 +6,7 @@ import { slerpDir, smooth } from '../../director/rig'
 import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
 import { NOISE_GLSL } from '../../terrain/relief'
 
-export interface PallLook { clear: number; gather: number; orbitClear: number; orbitGather: number; orbitThin?: number; lit?: [number, number, number]; shell: [number, number]; morph: number }
+export interface PallLook { clear: number; gather: number; orbitClear: number; orbitGather: number; orbitThin?: number; orbitRays?: number; lit?: [number, number, number]; shell: [number, number]; morph: number }
 
 export interface PallSeaShape { centre: [number, number, number]; radius: number; orbitShell: [number, number] }
 
@@ -192,7 +192,7 @@ export class Pall {
     ;(u.uPallLow!.value as THREE.Vector3).fromArray(blend(p.p.coverLow ?? p.p.cover, p.p.coverLowTerrain))
     ;(u.uPallBillow!.value as THREE.Vector3).fromArray(k.billow)
     ;(u.uPallStreak!.value as THREE.Vector3).fromArray(k.streak)
-    ;(u.uPallContrast!.value as THREE.Vector2).fromArray(k.contrast)
+    ;(u.uPallContrast!.value as THREE.Vector2).set(k.contrast[0], k.contrast[1] * (view !== 'terrain' && !dive && l.orbitRays !== undefined ? 1 - smooth(Math.min(open / l.orbitRays, 1)) : 1))
     const shell = u.uPallShell!.value as THREE.Vector2
     if (view !== 'terrain') {
       shell.fromArray(this.sea.orbitShell)
