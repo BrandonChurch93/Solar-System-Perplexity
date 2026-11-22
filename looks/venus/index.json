@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T12:34:23.273Z",
+ "pushed": "2026-11-22T12:38:45.320Z",
  "head": "3ac082193dcddf8901cd65aeb046193efe25f2a7",
- "note": "CUT33 sent: agent/venus 3ac0821 READY for round 33; pairs against the kept build at 1586 and 1287",
+ "note": "Venus 12:41: CUT33 sent (3ac0821); the rise sky after the cover, main against branch; next the ladder at 1310",
  "looks": [
+  {
+   "time": "2026-11-22T12:38:44.780Z",
+   "file": "20261122123844780-note-rs-main-branch.jpg",
+   "source": "../view/rs-main-branch.jpg",
+   "kind": "note",
+   "label": "Rise 1560 to 1604 every fourth frame, draft tier: main's venus folders above the pink line, agent/venus 3ac0821 below (tree holds main da02e63, engine be043ade04a7ab6e). The sky right of the globe is near black on the branch at 1572 to 1580: the flight lift starts after the cover window",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T12:34:22.732Z",
    "file": "20261122123422732-note-cut33-1287-night.jpg",
@@ -194,14 +202,6 @@
    "source": "../view/x5b-1558-quad.jpg",
    "kind": "note",
    "label": "experiment in the render copy, not committed: rise 1558 review tier, coarser cloud read at full rush and a wider fibre, candidate take F5 among them (branch b506dc3, main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:36:34.791Z",
-   "file": "20261122103634791-note-x5-1558-quad.jpg",
-   "source": "../view/x5-1558-quad.jpg",
-   "kind": "note",
-   "label": "experiment in the render copy, not committed: rise 1558 review tier, veil at full amount, four variants of the fibre term (branch b506dc3, main c479536, engine batch 20)",
    "stop": "venus"
   }
  ]
