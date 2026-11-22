@@ -1196,3 +1196,11 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - 07:19 code committed **c2a211a** (four files of `src/stops/earth`, no asset), main 2858db4 merged as **ea5cba5** (PROGRESS and status pictures only, nothing under `src` or `public`), pushed. PROGRESS on main: the Builder rendered the judged frames of all eight polish branches at the final tier on its workers at 06:41 (Earth d63e142: \"hold 0.9 percent changed, aurora curtains taller and more structured at 1755, 1857 and 2156, terrain 2.4 percent\", nothing broken).
 - The new shader line has one ternary on a uniform with two constants in its loop bound, no lookup in it; the audit lists nothing.
 - Still running in `q10.sh`: hold sheet, finals 1857 and 2156, repeat (1670 and 1696 added), measure.
+
+### All four judged frames keep their bytes with the cure (07:31 UTC)
+
+- Final stills on the tree with code c2a211a (engine hash 7553966a0ffa4014, earth hash d2fd0232a75ba588), `out/work/earth/pb/j/f-F-final.png`: **1755 da369901, 1857 b87e7ec9 (297 s, 64 samples), 2010 6abe0501, 2156 fcde160f (268 s, 64 samples)**: byte for byte the stills of code 3b3819e on batch 19. The no shader change fallback is not needed.
+- Hold sheet at the review tier (159 s, `pb/j/sheet-hold.png`, frames 1680, 1694, 1707, 1721, 1734, 1748, 1761, 1775, 1788, 1802, 1815, 1829): 1680 no aurora, 1694 short rays, 1707 nearly full, from 1721 as before.
+- `born` by frame (node): 1676 0.000, 1677 0.002, 1679 0.016, 1680 0.028, 1684 0.104, 1696 0.500, 1708 0.896, 1715 0.998, 1716 exactly 1 (x = 1.0000000000000022). The shutter samples of 1716 that lie before the frame time have 0.9995 and more; from 1717 on every sample has every uniform at its old value exactly.
+- `out/work/earth/pb/q11.sh` (log `pb/j/q2.log`) waits for the measure, then proves that the sheets of code 3b3819e stand for the new head: terrain sheet at review again (against `pb/g/sheet-terrain-b19.png`), 1884 and 1888 at review, full format (df7781a9, 85fa77b6), 2133 at review, preview format (8fe0c619).
+- The READY draft `out/work/earth/pb/polish-ready-2.txt` now holds the arrival section and the new code commit; placeholders left: head, main, looks, measure, repeat, terrain.
