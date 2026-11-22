@@ -12,7 +12,7 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
 
 - 3352: the strip's baked stars are tall ovals on blocky mush, under crisp white code stars. Large soft grey discs are the deep set's wide cores.
 - 1642: the gold band ends on a nearly straight edge near x 700 of 1400, with a jump in speckle density. Cause: the strip fades between 0.12 and 0.3 of its latitude span along a pure latitude line, and the flight grade sharpens that ramp.
-- 2782: orange red speckle groups in the dark sky come from `sky.jpg` itself (JPEG chroma noise lifted by the flight grade), not from the band strip.
+- 2782: orange red speckle groups in the dark sky. First read: `sky.jpg` itself. Later found: the arriving stop's sky patch at weight 0.079 (see the tuning log).
 - 2782: the bright object at the lower right (x 1247, y 978 of 1920 x 1080) with a one axis stepped spike is not a star of any set. See "Not mine" below.
 
 ## Decisions
@@ -40,9 +40,25 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
 - Deep set: with the catalog point spread every mid star became the same white dot. `deep.tail` steepens its law in the vertex shader (b times (b / 8) to the power tail), 0.3 was too sparse above the band at 4492, 0.15 kept.
 - Arriving sky patch: at mid travel it sits at weight 0.079 and its JPEG speckle is the "orange red speckle" of 2782. `patchHold` 3: in flight the weight is raised to the power 1 + 3 x lift, so the patch stays out until the lift falls. Weight 1 stays 1, lift 0 stays as on main.
 - Halo: `stars.halo` 0.035 for the flight sets and, with the flight lift, for the catalog stars (0.012 at lift 0, as on main).
+- Look 2 (delivered): the finals of look 1 (fill 0.5, gain 0.8, 500k faint points) cured the defects but read as points on fog. `--fill 0.3 6 0.04`, `--extra 400000`, `stars.gain` 1: more of the light sits in points, less in the smooth map.
 
 ## Not mine, seen while working
 
 - 2782, the bright point with a one axis spike at (1247, 978): it is the next planet's far point, `src/bodies/farpoint.ts` line 20, third term `0.05 * exp(-p.y * p.y / 0.7 - p.x * p.x / (0.06 * uSize * uSize))`. Not a star of any sky set. Proposed line for its owner: `outColor = vec4(uColor * (exp(-r2 / 0.9) + 0.07 * exp(-r2 / (0.02 * uSize * uSize))), 0.0);` (drops the spike; changes every frame where a far point shows, holds included).
 - `src/capture/export.ts` `skyBytesFor()` counts only `sky.jpg`. The band strip was already missing there; the new glow map adds 16.8 MB (full) or 4.2 MB (web).
 - Probe: `npx tsx tools/_probe.ts <frames>` is not committed; it printed lift, patch weight and look weight per frame. Travel mid frames: lift 0.921, patch 0.079 (3922: lift 0.662, patch 0.338). Rise frames: lift 0.74, no patch. 5085: lift 1. 5235 and 5362: lift 0.
+
+## Measured (look 2, the delivered state)
+
+- Render time of a final still on the 4 core VM: 3352 before 75.8 s, after 102.0 s; 1642 before 100.5 s, after 110.8 s.
+- Texture memory the new map adds: 16.8 MB in the full set (4096 x 1024, RGBA, no mipmaps), 4.2 MB in the web set (2048 x 512).
+- Band points: 763 thousand records, drawn for two repeats of the strip, 44 bytes per vertex, about 67 MB of vertex data in each set. `skybandstars.bin` is 7.6 MB and sits in both asset sets.
+- `npx vitest run`: 15 files, 79 tests pass. `python3 tools/shaderaudit.py`: no new line; the two existing `sky.ts` lines moved from 108 to 111 and from 134 to 153.
+
+## Weak points
+
+- The band's smooth light is softer than the old strip; the median that removes the stars also removes fine dust structure.
+- Render time rises, most where the band fills the frame.
+- The vertex data of the band points is large.
+- The deep set's long tail is set in the shader by `flightStrip.deep`, not on config line 147.
+- Band points use the catalog core (about 1.4 px wide at half height), so few are truly under 1 px.
