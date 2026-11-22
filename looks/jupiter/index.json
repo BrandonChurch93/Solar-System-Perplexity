@@ -1,9 +1,47 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T11:18:42.320Z",
+ "pushed": "2026-11-22T11:19:18.105Z",
  "head": "023c50773ad38b715ffa03828d737754bc1299b8",
- "note": "Jupiter: on main 3a09527 the terrain review sheet and four spot cover frames keep their bytes; full measure running, then POLISH READY and the dive trial",
+ "note": "Jupiter: cover pairs before and after the three cover fixes; full measure on main 3a09527 running",
  "looks": [
+  {
+   "time": "2026-11-22T11:19:17.103Z",
+   "file": "20261122111917103-note-dive_3024_3029.jpg",
+   "source": "out/work/view/b20r/v/dive_3024_3029.jpg",
+   "kind": "note",
+   "label": "Dive cover, review tier, 3024 to 3029, terrain side: before (agent/jupiter a06d2ae, main 2621f00) left, after (the three cover fixes, rendered on main f24046b; drafts and spot frame 3026 same bytes on main 3a09527) right. Stars return at 3025 instead of 3027",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T11:19:16.181Z",
+   "file": "20261122111916181-note-rise_3265_3270.jpg",
+   "source": "out/work/view/b20r/v/rise_3265_3270.jpg",
+   "kind": "note",
+   "label": "Rise cover, review tier, 3265 to 3270, terrain side and the cut frame: before (agent/jupiter a06d2ae, main 2621f00) left, after (the three cover fixes, rendered on main f24046b; drafts and spot frame 3267 same bytes on main 3a09527) right. The sky stays in view down to the cut, black on 3270 only",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T11:19:15.316Z",
+   "file": "20261122111915316-note-rise_3271_3276.jpg",
+   "source": "out/work/view/b20r/v/rise_3271_3276.jpg",
+   "kind": "note",
+   "label": "Rise cover, review tier, 3271 to 3276, orbit side: before (agent/jupiter a06d2ae, main 2621f00) left, after (the three cover fixes, rendered on main f24046b; drafts and spot frame 3273 same bytes on main 3a09527) right. The sky returns from the frame after the cut, the pale upright column is gone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T11:18:56.605Z",
+   "file": "20261122111856605-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T11:18:32.586Z",
    "file": "20261122111832586-sheet-jupiter.terrain-16x9-review.jpg",
@@ -104,34 +142,6 @@
    "engine": "be043ade04a7ab6e"
   },
   {
-   "time": "2026-11-22T10:51:48.384Z",
-   "file": "20261122105148384-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:49:57.534Z",
-   "file": "20261122104957534-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
    "time": "2026-11-22T10:47:56.514Z",
    "file": "20261122104756514-still-f02895-16x9-final-full.jpg",
    "source": "out/work/stills/f02895-16x9-final-full.png",
@@ -144,34 +154,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:32:55.431Z",
-   "file": "20261122103255431-job-frame-03094.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3094, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3094,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T10:22:49.997Z",
-   "file": "20261122102249997-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
