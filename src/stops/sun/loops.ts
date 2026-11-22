@@ -18,7 +18,7 @@ export interface LoopsLook {
 export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
-  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: [number, number]; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: number; grow: [number, number]; thick: [number, number]; kick: number }
+  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: [number, number, number]; grow: [number, number]; kick: number }
 }
 
 const VERT = /* glsl */ `
@@ -68,7 +68,7 @@ uniform vec3 uSurgeInner;
 uniform vec2 uSurgeCrest;
 uniform vec2 uFoot;
 uniform vec4 uFlare;
-uniform vec3 uSurgeHold;` : ''}
+uniform vec3 uHold;` : ''}
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -125,15 +125,17 @@ void main() {
       float strandLag = textureLod(uNoise, vec2(arc * uSurgeLane.x, 0.83), 0.0).r;
       float lead = s - uSurge.x + uSurgeMore.x * (bundle + strandLag - 1.0);
       float ahead = max(lead, 0.0);
-      float front = exp(-ahead * ahead / (uSurge.z * uSurge.z)) * (uSurgeHold.x + (1.0 - uSurgeHold.x) * exp(min(lead, 0.0) / uSurge.w)) + uSurgeCore.x * exp(-lead * lead / (uSurgeCore.y * uSurgeCore.y));
-      float carried = uSurge.y * front * above * smoothstep(0.75, 1.0, arc) * (1.0 - uSurgeInner.z * smoothstep(uSurgeInner.x, uSurgeInner.y, arc)) * (uSurgeCrest.x + uSurgeCrest.y * 4.0 * clamp(s * (1.0 - s), 0.0, 0.25));
+      float passed = exp(-ahead * ahead / (uSurge.z * uSurge.z));
+      float trail = exp(min(lead, 0.0) / uSurge.w);
+      float front = passed * trail + uSurgeCore.x * exp(-lead * lead / (uSurgeCore.y * uSurgeCore.y));
+      float held = passed * (1.0 - trail) * uHold.x;
+      float shaped = uSurge.y * above * smoothstep(0.75, 1.0, arc) * (1.0 - uSurgeInner.z * smoothstep(uSurgeInner.x, uSurgeInner.y, arc)) * (uSurgeCrest.x + uSurgeCrest.y * 4.0 * clamp(s * (1.0 - s), 0.0, 0.25));
       float onStrand = smoothstep(uFlowMask.z, uFlowMask.w, shine) * (uSurgeLane.y + uSurgeLane.z * strandLag);
       float wide = dot(inverseFilmic(grade(textureLod(uMap, uv, uSurgeMore.w).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
-      vec2 inside = smoothstep(vec2(0.0), vec2(0.1), uv) * smoothstep(vec2(0.0), vec2(0.1), 1.0 - uv);
-      float thick = inside.x * inside.y * dot(inverseFilmic(grade(textureLod(uMap, uv, uSurgeHold.z).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
-      float pushed = carried * onStrand;
+      float pushed = shaped * front * onStrand;
       pushed /= 1.0 + uFlare.z * pushed * dot(lin, vec3(0.3, 0.5, 0.2));
-      lin = lin * (1.0 + pushed) + shine * pushed * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + (wide * uSurgeMore.z + thick * uSurgeHold.y) * uSurgeGlow * carried;
+      float kept = shaped * held * onStrand;
+      lin = lin * (1.0 + pushed + kept) + shine * (pushed + kept * uHold.z) * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * shaped * (front + held * uHold.y);
       float foot = uFlare.x * exp(-s / uKnotMore.w) + uFlare.y * exp(-(1.0 - s) / uKnotMore.w);
       float flared = seen * foot;
       flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
@@ -293,7 +295,7 @@ export class Loops {
       this.material.uniforms.uKnotPick = { value: new THREE.Vector4(k.pick[0], k.pick[1], k.pick[2], k.pick[3]) }
       this.material.uniforms.uKnotEnds = { value: new THREE.Vector2(k.ends[0], k.ends[1]) }
       this.material.uniforms.uFoot = { value: new THREE.Vector2() }
-      this.material.uniforms.uSurgeHold = { value: new THREE.Vector3(knots.surge.hold, knots.surge.thick[0], knots.surge.thick[1]) }
+      this.material.uniforms.uHold = { value: new THREE.Vector3(...knots.surge.hold) }
       this.material.uniforms.uFlare = { value: new THREE.Vector4(0, 0, knots.surge.knee, knots.surge.bloom) }
       const g = knots.surge
       this.material.uniforms.uSurge = { value: new THREE.Vector4(0, 0, g.width, g.tail) }

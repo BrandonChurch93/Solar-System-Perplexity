@@ -222,7 +222,7 @@ void main() {
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
   for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
-    float landed = uLandOn * exp(-dot((gb - uLand.xy) * uLand.zw, (gb - uLand.xy) * uLand.zw)) + uKickOn * exp(-dot((gb - uKick.xy) * uKick.zw, (gb - uKick.xy) * uKick.zw));
+    float landed = uLandOn * exp(-dot(vStage - uLand.xyz, vStage - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(vStage - uKick.xyz, vStage - uKick.xyz) * uKick.w);
     col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + landed));
     col += uLandVeil * landed;
   }
@@ -327,12 +327,12 @@ export class Ground {
     this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
-  land(reach: [number, number], veil: [number, number, number]): void {
+  land(reach: number, veil: [number, number, number]): void {
     ;(this.material.uniforms.uLandVeil!.value as THREE.Vector3).fromArray(veil)
-    const box = stage.loopsBox
     const feet = stage.feet as [number, number][]
     const at = (foot: [number, number], into: THREE.Vector4): void => {
-      into.set((foot[0] - box[0]) / (box[2] - box[0]), 1 - (foot[1] - box[1]) / (box[3] - box[1]), (box[2] - box[0]) / reach[0], (box[3] - box[1]) / reach[1])
+      const p = stage.onGround(foot[0], foot[1])
+      into.set(p.x, p.y, p.z, 1 / (reach * reach))
     }
     at(feet[1]!, this.material.uniforms.uLand!.value as THREE.Vector4)
     at(feet[0]!, this.material.uniforms.uKick!.value as THREE.Vector4)
