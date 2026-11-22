@@ -68,7 +68,6 @@ float fbm(vec2 p) {
   return s;
 }
 void main() {
-  if (uDiag >= 2) discard;
   vec2 p = (vUv * 2.0 - 1.0) * uTan;
   float s = dot(p, uHorizon.xy) + uHorizon.z;
   vec2 along = vec2(uHorizon.y, -uHorizon.x);
@@ -110,6 +109,7 @@ void main() {
   float above = acos(clamp(dot(ray, uNadir.xyz), -1.0, 1.0)) - uNadir.w;
   a *= 1.0 - smoothstep(-0.05, -0.012, above);
   outColor = vec4(col, a);
+  if (uDiag >= 2) discard;
 }`
 
 const OPEN = 1e9

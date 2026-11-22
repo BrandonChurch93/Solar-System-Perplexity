@@ -73,7 +73,6 @@ uniform int uDiag;
 out vec4 outColor;
 ${AURORA_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
   float r = length(uCam);
   float b = -dot(uCam, dir);
@@ -99,13 +98,14 @@ void main() {
     float hw = h / uInnerWide.x;
     float cover = exp(h / uInner.x) * uInner.y + exp(-hw * hw) * uInnerWide.y;
     outColor = vec4((rim * cover + line + night + curtain) * lens, cover);
-    return;
+  } else {
+    float up = b > 0.0 ? 1.0 : clamp(1.0 + b / r, 0.0, 1.0);
+    vec4 fall = exp(-h / uHeight) * pow(vec4(x), uPower) * vec4(1.0, 1.0, uWide, uWide);
+    vec3 glow = uColor[0] * fall.x + uColor[1] * fall.y + uColor[2] * fall.z + uColor[3] * fall.w;
+    float edge = 1.0 - smoothstep(0.7 * uTop, 0.98 * uTop, h);
+    outColor = vec4((glow * seen.rgb * edge + line + night + curtain) * up * lens, 0.0);
   }
-  float up = b > 0.0 ? 1.0 : clamp(1.0 + b / r, 0.0, 1.0);
-  vec4 fall = exp(-h / uHeight) * pow(vec4(x), uPower) * vec4(1.0, 1.0, uWide, uWide);
-  vec3 glow = uColor[0] * fall.x + uColor[1] * fall.y + uColor[2] * fall.z + uColor[3] * fall.w;
-  float edge = 1.0 - smoothstep(0.7 * uTop, 0.98 * uTop, h);
-  outColor = vec4((glow * seen.rgb * edge + line + night + curtain) * up * lens, 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Air {

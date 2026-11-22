@@ -131,8 +131,8 @@ void main() {
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
   col *= 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
   col = clear(col * uGain * lens(), 1.0);
-  if (uDiag >= 2 && ground < 0.5) discard;
   outColor = diagOut(vec4(col, ground), diagTexels(uv * uSize), step(0.5, ground), uLayer, shift / uImage * 60.0, length(vView));
+  if (uDiag >= 2 && ground < 0.5) discard;
 }`
 
 const TOWER_FRAG = /* glsl */ `
@@ -142,10 +142,9 @@ void main() {
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
   vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
-  if (texel.a < 0.004) discard;
-  if (uDiag >= 2 && texel.a < 0.5) discard;
   vec3 col = clear(inverseFilmic(texel.rgb) * uGain * lens(), texel.a);
   outColor = diagOut(vec4(col, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
+  if (texel.a < 0.004 || (uDiag >= 2 && texel.a < 0.5)) discard;
 }`
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial }

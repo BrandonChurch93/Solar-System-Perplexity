@@ -26,7 +26,7 @@ export const globe: GlobeLook = {
   auroraKeep: [0.5, 0.62],
   calm: [1.02, -33, 8, 7, -38, -35, 11, -9, 14, 13],
   twilight: [0.3, 0.06, -0.1, 0.02, 0.07],
-  twinkle: [0.22, 5.5, 900, 0.7],
+  twinkle: [0.22, 5.5, 900, 1.0],
   bloomPre: [3, 4, 0.5],
   ripple: [0.3, 1.7, 14],
   dusk: { zone: wrap.dusk, fade: 0.15, centre: wrap.heroCentre },

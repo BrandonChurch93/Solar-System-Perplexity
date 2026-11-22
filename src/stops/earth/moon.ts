@@ -74,8 +74,8 @@ void main() {
   col = mix(col, inverseFilmic(lit.rgb), lit.a) * uGain * vig;
   vec4 o = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
   float keep = uDiag == 0 ? cover : step(0.5, cover);
-  if (keep <= 0.0) discard;
   outColor = o * keep;
+  if (keep <= 0.0) discard;
 }`
 
 const PAD = 0.25
