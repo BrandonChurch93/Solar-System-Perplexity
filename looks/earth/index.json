@@ -1,9 +1,47 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T07:11:50.709Z",
- "head": "3f32bf0c0f442e21bc39f489c87adf524402e29b",
- "note": "Earth, mail 80: before and after strips of the arrival 1666 to 1679 at the review tier. The green band and the red edge are gone; 1755 and 2010 keep their bytes. Onset frames, finals 1857 and 2156, repeat and measure still running.",
+ "pushed": "2026-11-22T07:20:05.789Z",
+ "head": "5bc28050af68f24afee7725e294b9fe43960f0ca",
+ "note": "Earth, mail 80: the aurora rising in the first 36 frames of the hold (review tier), after the arrival without band or red edge. Code c2a211a on main 2858db4. Finals 1857 and 2156, repeat and measure still running.",
  "looks": [
+  {
+   "time": "2026-11-22T07:20:02.930Z",
+   "file": "20261122072002930-note-v-1668-3.jpg",
+   "source": "out/work/earth/pb/j/v-1668-3.png",
+   "kind": "note",
+   "label": "Mail 80, frame 1668 at 2 times the preview pixels, review tier: main 89715a1 kept Earth, agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth ea5cba5 (code c2a211a, earth hash d2fd0232), main 2858db4, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:20:01.764Z",
+   "file": "20261122072001764-note-v-onset-3.jpg",
+   "source": "out/work/earth/pb/j/v-onset-3.png",
+   "kind": "note",
+   "label": "Mail 80, the rise of the aurora at 1684, 1692, 1700, review tier, 1.35 times. Tree: agent/earth ea5cba5 (code c2a211a, earth hash d2fd0232), main 2858db4, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:20:00.709Z",
+   "file": "20261122072000709-note-v-onset-review.jpg",
+   "source": "out/work/earth/pb/j/v-onset-review.png",
+   "kind": "note",
+   "label": "Mail 80, the aurora rising in the first 36 frames of the hold: 1680 to 1720 every fourth frame, review tier, native pixels. Full from 1716, as in the approved image. Tree: agent/earth ea5cba5 (code c2a211a, earth hash d2fd0232), main 2858db4, engine batch 19 7a880ac6, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T07:19:45.456Z",
+   "file": "20261122071945456-frame-f01748-review.jpg",
+   "source": "out/work/sheets/.frames-5N0zi2/f01748-review.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1748, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1748,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T07:11:49.947Z",
    "file": "20261122071149947-note-v-arrival-frames-2.jpg",
@@ -27,20 +65,6 @@
    "kind": "note",
    "label": "Mail 80, arrival 1666 to 1672, whole frames at sheet tile size, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T07:11:48.543Z",
-   "file": "20261122071148543-frame-o-1680.jpg",
-   "source": "out/work/earth/pb/j/o-1680.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1680, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T07:11:47.878Z",
@@ -353,30 +377,6 @@
    "source": "out/work/earth/pb/f/aur-1857-n.png",
    "kind": "note",
    "label": "Item 5, aurora at 1857 at 2 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:59.937Z",
-   "file": "20261122054359937-note-moon-1755.jpg",
-   "source": "out/work/earth/pb/f/moon-1755.png",
-   "kind": "note",
-   "label": "Item 7, Moon at 1755 at 4 times: approved image, kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:58.827Z",
-   "file": "20261122054358827-note-moon-2156.jpg",
-   "source": "out/work/earth/pb/f/moon-2156.png",
-   "kind": "note",
-   "label": "Item 7, Moon at 2156 at 4 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:57.947Z",
-   "file": "20261122054357947-note-moon-2156-b19.jpg",
-   "source": "out/work/earth/pb/f/moon-2156-b19.png",
-   "kind": "note",
-   "label": "Item 6 and 7, Moon at 2156 at 4 times: kept build, my still on batch 18, on batch 19. The night side lies 1 code value under the lifted sky. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
   }
  ]
