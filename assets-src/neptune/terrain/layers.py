@@ -33,6 +33,7 @@ TAPER_SEED = 11
 TAPER_SLANT = 0.35
 TAPER_MISS = 30
 TAPER_BASE = 2.7
+TAPER_ALONG = 32
 LIMB_TOP, LIMB_FULL, LIMB_END = -24, 150, 320
 LIMB_ALONG, LIMB_REACH, LIMB_IN = 50, 700, 14
 
@@ -372,7 +373,8 @@ def taper(deck, cloud, a, sh):
     inside[:bh, bx:bx + bw] = 1
     jxx, jyy, jxy = (cv2.GaussianBlur(j * inside, (0, 0), 16) for j in (gx * gx, gy * gy, gx * gy))
     th = 0.5 * np.arctan2(2 * jxy, jxx - jyy) + np.pi / 2
-    slope = np.where(np.abs(np.cos(th)) < 0.3, 0, np.clip(np.tan(th), -0.8, 0.8)).astype(np.float32)
+    coh = np.sqrt((jxx - jyy) ** 2 + 4 * jxy ** 2) / np.maximum(jxx + jyy, 1e-12)
+    slope = (np.clip(np.tan(th), -0.8, 0.8) * ease((np.abs(np.cos(th)) - 0.3) / 0.15)).astype(np.float32)
     y0, y1, x0, x1 = 0, bh + TAPER_MAX + 1, bx - TAPER_MAX - 1, bx + bw + TAPER_MAX + 1
     Y, X = np.mgrid[y0:y1, x0:x1].astype(np.float32)
     dx = np.maximum(np.maximum(xl - X, X - xr), 0)
@@ -383,8 +385,18 @@ def taper(deck, cloud, a, sh):
     n = np.clip((n - n[zone].min()) / (n[zone].max() - n[zone].min()), 0, 1)
     reach = TAPER_MIN + (TAPER_MAX - TAPER_MIN) * n
     half = TAPER_STRIP // 2
-    m = slope[np.clip(Y, 0, yb - half).astype(np.int32), np.clip(X, xl + half, xr - half).astype(np.int32)]
-    m = np.where(dy > 0, np.where(m < 0, -1, 1) * np.maximum(np.abs(m), TAPER_SLANT), m).astype(np.float32)
+    g1 = lambda x, sig: cv2.GaussianBlur(np.ascontiguousarray(x, np.float32).reshape(-1, 1), (0, 0), sigmaX=0.01, sigmaY=sig, borderType=cv2.BORDER_REPLICATE).ravel()
+    along = lambda i, sig=TAPER_ALONG: g1(slope[i] * coh[i], sig) / np.maximum(g1(coh[i], sig), 1e-6)
+    ml, mr = along(np.s_[:bh, xl + half]), along(np.s_[:bh, xr - half])
+    base = np.s_[yb - half, xl:xr + 1]
+    mb = along(base, TAPER_ALONG / TAPER_SLANT ** 2)
+    sgn = 1.0 if (mb * coh[base]).sum() >= 0 else -1.0
+    mb = sgn * np.maximum(sgn * mb, TAPER_SLANT)
+    Yi = np.clip(Y, 0, yb).astype(np.int32)
+    ms = np.where(X > xr, mr[Yi], ml[Yi])
+    mB = mb[np.clip(X, xl, xr).astype(np.int32) - xl]
+    foot = ease((Y - (yb - TAPER_MAX)) / TAPER_MAX)
+    m = np.where(dy > 0, mB, np.where(dx > 0, ms * (1 - foot) + mB * foot, ms)).astype(np.float32)
     side = np.where(X > xr, 1.0, -1.0).astype(np.float32)
     yh = Y - side * m * dx
     xh = X - dy / np.where(dy > 0, m, 1)
@@ -410,7 +422,7 @@ def taper(deck, cloud, a, sh):
         c1 = np.minimum(c0 + 1, bw - 1)
         fc = (xs - c0)[..., None]
         sides = np.where(side[..., None] > 0, er[r0] * (1 - fr) + er[r1] * fr, el[r0] * (1 - fr) + el[r1] * fr)
-        return np.where(hits[..., None], sides, eb[c0] * (1 - fc) + eb[c1] * fc)
+        return np.where((hits | (dy == 0))[..., None], sides, eb[c0] * (1 - fc) + eb[c1] * fc)
 
     d2, c2, a2 = deck.copy(), cloud.copy(), a.copy()
     sel = w > 0
@@ -422,8 +434,14 @@ def taper(deck, cloud, a, sh):
     a2[y0:y1, x0:x1][sel] = av[sel]
     ok = sel & (av > 0.004)
     c2[y0:y1, x0:x1][ok] = (pv / np.maximum(av, 0.004)[..., None])[ok]
-    for name, pick in (('left', (dy == 0) & (X < xl)), ('right', (dy == 0) & (X > xr)), ('base', (dy > 0) & (dx == 0))):
+    src = np.where(hits | (dy == 0), np.clip(yh, 0, yb), np.clip(xh, xl, xr))
+    for name, pick, ax in (('left', (dy == 0) & (X < xl), 0), ('right', (dy == 0) & (X > xr), 0), ('base', (dy > 0) & (dx == 0), 1)):
         print('taper %s: %d texels carried, slope p10 p50 p90 %.2f %.2f %.2f' % (name, (sel & pick).sum(), *np.percentile(m[sel & pick], [10, 50, 90])))
+        cut = lambda q, i: q[1:] if (ax, i) == (0, 0) else q[:-1] if ax == 0 else q[:, 1:] if i == 0 else q[:, :-1]
+        both = cut(pick, 0) & cut(pick, 1) & (np.minimum(cut(w, 0), cut(w, 1)) > 0.1)
+        step = np.abs(np.diff(src, axis=ax))[both]
+        print('taper %s: foot of the line between neighbours along the border, largest step %.1f texels, %d over 3' % (name, step.max(), (step > 3).sum()))
+    print('taper base: lines slant %s, share at the least slant %.2f' % ('right' if sgn > 0 else 'left', (np.abs(mb) <= TAPER_SLANT + 1e-6).mean()))
     for name, i0, o0 in (('left', bx + 1, bx - 4), ('right', bx + bw - 4, bx + bw + 1)):
         st = np.abs(a[:bh, i0:i0 + 3].mean(1) - a[:bh, o0:o0 + 3].mean(1))
         st2 = np.abs(a2[:bh, i0:i0 + 3].mean(1) - a2[:bh, o0:o0 + 3].mean(1))
