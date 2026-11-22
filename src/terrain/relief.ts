@@ -215,6 +215,7 @@ void main() {
     alpha = textureGrad(uApron, apronUV(p), px, py).a;
   }
 #endif
+  float texels = diagTexels(uv * uSize);
   if (alpha < 0.004) discard;
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -231,7 +232,7 @@ void main() {
     col = mix(col, uValleyColor * uGain * vig, f);
   }
   if (uDiag >= 2 && alpha < 0.5) discard;
-  outColor = diagOut(vec4(col * alpha, alpha), diagTexels(uv * uSize), 1.0, uLayer, shift * 60.0, length(vView));
+  outColor = diagOut(vec4(col * alpha, alpha), texels, 1.0, uLayer, shift * 60.0, length(vView));
 }`
 
 const MARK_FRAG = /* glsl */ `
