@@ -490,7 +490,7 @@ export class FilmDirector implements Director {
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
       const arrived = segment.kind === 'retreat' ? smooth(ramp(OPEN.retreatGlare, 1, u)) : 1
-      const lifted = riseLift(p.id) * OPEN.leave.level
+      const lifted = riseLift(p.id)
       light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
@@ -528,7 +528,7 @@ export class FilmDirector implements Director {
       skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
-      const open = mix(lens + (1 - lens) * OPEN.leave.level * mix(smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
+      const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
       skyLook = mix(bandLook(a.id), bandLook(b.id), smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
@@ -629,7 +629,7 @@ export class FilmDirector implements Director {
         near = Math.min(Math.max(0.02 * d, 0.0004), 1)
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
-        const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) * OPEN.leave.level : 0
+        const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
         if (lift > 0) {
           const w = coverWindow(segment)
           const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : segment.start, segment.end, time))
