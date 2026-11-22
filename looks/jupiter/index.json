@@ -1,9 +1,59 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T13:04:54.885Z",
- "head": "cfba8fe8dbd17c6c7779433b5204d3d0d1fa0cba",
- "note": "dive trial d96263f on main da02e63: full measure runs; what is left looked at again (dive cover orbit side sky, terrain end)",
+ "pushed": "2026-11-22T13:32:19.382Z",
+ "head": "3f315d14b6209eab7eb153f121829de82b76fe3f",
+ "note": "dive trial d96263f: measure green (G13 0 of 463); the dive cover review sheet renders, first two frames beside the READY head",
  "looks": [
+  {
+   "time": "2026-11-22T13:32:18.418Z",
+   "file": "20261122133218418-note-cov_a.jpg",
+   "source": "out/work/view/trial/v/cov_a.jpg",
+   "kind": "note",
+   "label": "dive trial d96263f (code main 3a09527, tree holds main 8cd0877): dive cover review frames 3019, 3020, READY above, trial below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T13:31:58.193Z",
+   "file": "20261122133158193-frame-f03020-review.jpg",
+   "source": "out/work/sheets/.frames-5oe4Jz/f03020-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3020, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3020,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T13:21:35.548Z",
+   "file": "20261122132135548-job-frame-03296.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T13:10:57.361Z",
+   "file": "20261122131057361-job-frame-03209.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3209, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3209,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T13:04:53.830Z",
    "file": "20261122130453830-note-ready_terrain_end.jpg",
@@ -19,20 +69,6 @@
    "kind": "note",
    "label": "what is left on READY 6dac95f (main da02e63): dive cover orbit side 3019 to 3024, sky pure black (item 34 remainder)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T13:00:54.654Z",
-   "file": "20261122130054654-job-frame-03092.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3092, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3092,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T12:51:11.635Z",
@@ -65,36 +101,6 @@
    "kind": "note",
    "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): review frames 2970, 2978, 2986, READY above, trial below",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:51:08.207Z",
-   "file": "20261122125108207-note-dive-sheet-b22.jpg",
-   "source": "out/work/jupiter/fg/kept/dive-sheet-b22.png",
-   "kind": "note",
-   "label": "jupiter.dive review sheet, READY head 6dac95f (the trial's before)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:51:07.359Z",
-   "file": "20261122125107359-note-dive-sheet-trial.jpg",
-   "source": "out/work/jupiter/fg/kept/dive-sheet-trial.png",
-   "kind": "note",
-   "label": "dive trial d96263f on READY 6dac95f (main da02e63, code 3a09527): jupiter.dive review sheet, trial",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T12:50:54.616Z",
-   "file": "20261122125054616-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T11:18:30.611Z",
