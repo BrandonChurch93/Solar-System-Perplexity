@@ -1,18 +1,63 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T04:04:17.840Z",
- "head": "924a7b8ab84a13e98cbeb225b6e9739c74eb0adf",
- "note": "Earth polish tree 3b3819e on engine batch 18: measures pass (G13 0 of 463, G5 as kept, G17 1.198 and 1.165); terrain sheet and both cover sheets rendering",
+ "pushed": "2026-11-22T04:32:05.719Z",
+ "head": "4ba10aa798df7f227508aeee6a1793f6ca80056a",
+ "note": "Earth polish tree 3b3819e on engine batch 18: terrain sheet done, dive cover sheet rendering (frames 1879 to 1881 in), rise cover sheet next",
  "looks": [
   {
-   "time": "2026-11-22T04:03:57.784Z",
-   "file": "20261122040357784-frame-f01920-review.jpg",
-   "source": "out/work/sheets/.frames-OOXPod/f01920-review.png",
+   "time": "2026-11-22T04:32:04.462Z",
+   "file": "20261122043204462-note-dive-1879-1881.jpg",
+   "source": "out/work/earth/pb/e/dive-1879-1881.png",
+   "kind": "note",
+   "label": "Dive cover 1879, 1880, 1881 at the review tier, full format, half size; branch 3b3819e, engine batch 18 a67c9c34 (engine hash 7cd5ba49)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:28:44.216Z",
+   "file": "20261122042844216-frame-f01881-review.jpg",
+   "source": "out/work/sheets/.frames-WdQKHM/f01881-review.png",
    "kind": "frame",
-   "label": "earth.terrain frame 1920, review tier",
+   "label": "earth.dive frame 1881, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1881,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T04:06:03.936Z",
+   "file": "20261122040603936-note-sheet-terrain-b18.jpg",
+   "source": "out/work/earth/pb/e/sheet-terrain-b18.png",
+   "kind": "note",
+   "label": "earth.terrain sheet, review tier, branch 3b3819e, main with engine batch 18 a67c9c34",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:05:32.877Z",
+   "file": "20261122040532877-sheet-earth.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/earth.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.terrain, review tier",
    "stop": "earth",
    "segment": "earth.terrain",
-   "frame": 1920,
+   "first": 1920,
+   "last": 2099,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T04:04:50.220Z",
+   "file": "20261122040450220-frame-f02018-review.jpg",
+   "source": "out/work/sheets/.frames-OOXPod/f02018-review.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2018, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2018,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -165,34 +210,6 @@
    "job": "measure"
   },
   {
-   "time": "2026-11-22T03:36:56.701Z",
-   "file": "20261122033656701-frame-f-1857-final.jpg",
-   "source": "out/work/earth/pb/e/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:31:46.333Z",
-   "file": "20261122033146333-frame-f-2156-final.jpg",
-   "source": "out/work/earth/pb/e/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
    "time": "2026-11-22T03:26:00.456Z",
    "file": "20261122032600456-frame-f-1755-final.jpg",
    "source": "out/work/earth/pb/e/f-1755-final.png",
@@ -205,22 +222,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:20:43.906Z",
-   "file": "20261122032043906-note-knot-1755.jpg",
-   "source": "out/work/earth/pb/d/knot-1755.png",
-   "kind": "note",
-   "label": "Earth 1755 night limb knot at PA 83 to 88 at 4 times: approved, Phase B, kept build (main a1cffed, engine batch 17)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:20:43.286Z",
-   "file": "20261122032043286-note-city-1755.jpg",
-   "source": "out/work/earth/pb/l1/city-1755.png",
-   "kind": "note",
-   "label": "Earth 1755 city lights at 4 times: approved, first try of the softer lights map, before (work in progress; tree holds main 0622510, engine batch 18)",
-   "stop": "earth"
   },
   {
    "time": "2026-11-22T02:59:17.132Z",
