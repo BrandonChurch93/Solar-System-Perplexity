@@ -376,3 +376,99 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
 - Planner: hero in frame 2759 to 2801 (a 4 px sliver in the shutter of 2758), whole 2776 to 2787 (12 frames), at 2782 clear 102 px right, 90 px top, 434 px from Jupiter at the nearest; far1 2761 to 2772; near 2779 to 2784 (93 px from Jupiter's point at 2779, outside the window of (d), 300 px and more from 2780); far2 2788 to 2800 (196 px from Jupiter). 2745 to 2757 and 2802 to 2819 hold no rock.
 - Tests rewritten (`belt.test.ts`, 12 green): judged frame (hero 220 to 320 across, 80 px clear, blur 7 to 12 px, one streak over 100 px away), both empty spans, 150 px from Jupiter 2780 to 2799, no rock within 100 px of a place for ten frames, near streak, hero pace 14 to 24 with fastest over slowest under 1.1 and whole for 12 frames or more, lit entry, turn of 40 degrees or more in 20 frames.
 - 01:14 committed and pushed f79f022; 01:18 spin 110 after the second draft (`out/work/belt/t6/c2/`), fe20a45 pushed. Review sheet started 01:18.
+- 01:23 second layout, better on two counts, so the first review run was stopped at its fifth frame. Out over the top needs the height of the place plus the rock's radius in 21 frames, in over the right needs the gap to the right edge plus the rock in 24.5 frames; the two legs of the velocity add to 24 px per frame at most. With a rock of 234 px and 81 px clear on the right, the top leg can carry it from y 283: that is 26 percent in from the top (a third would be 360) and whole for 15 frames instead of 12. So: hero `at` [0.8969, 0.262] at 2782 (1722, 283), radius 0.108 (234 px across its bounding ball), velocity [-0.3737, 0.5449, 0] (23.9 px per frame, 13.5 left and 19.7 up), spin 110. In frame 2759 to 2802, whole 2776 to 2790 by the bounding ball, clear at 2782: 81 px right, 166 px top. 2803 holds nothing (the ball is 14 px past the top edge). Committed and pushed b5ffb8e.
+- The first review run gave the clue for the cost before it was stopped: 2745 40.3 s, 2748 17.1 s, 2751 22.2 s (20 samples), 2754 38.7 s (39 samples), against 70.6, 33.5, 41.0, 71.4 for the same frames in the task 5 run. No rock is near the frame in those frames now; in task 5 the hero stood at or just past the right edge from 2745 on, so the belt was "drawn" and gave the dust its cover. So the doubling was the belt's doing, in every frame where a rock is in or near the frame, and it is paid once per sample (seconds per sample went from about 1.0 to 2.0).
+- 01:29 cost on batch 16 itself, measured today on this machine: a worktree of dba3ebc with its own build, review, one session (`/tmp/chain6.sh`), seconds (samples): 2745 54.2 (16, with the load), 2748 20.6, 2757 61.1 (63), 2766 15.0, 2772 15.1, 2781 17.9, 2790 15.8, 2799 27.6 (22), 2808 34.0 (23), 2817 25.0. These are the task 4 numbers again (2769 15.0, 2817 23.7), with the task 4 cast in frame. So batch 16 did not slow the segment and a drawn belt with its dust cover does not double a frame by itself. The per sample work of the belt is the same code in dba3ebc and in 30f31af (one `over` pass, the cover for the dust), so the task 5 run of 00:17 to 00:40 was slow either through its cast or through the machine in that half hour. Test for that queued at the end of the chain: 30f31af in a worktree, review 2745, 2748, 2766, 2781.
+- 01:44 review sheet of b5ffb8e, one run (`out/work/belt/t6/r2/sheet.jpg`), seconds (samples): 2745 40.7 (16, with the load), 2748 17.1, 2751 24.5 (20), 2754 41.8 (39), 2757 59.6 (63), 2760 77.5 (86), 2763 85.1 (107), 2766 15.4, 2769 16.3, 2772 15.3, 2775 16.3, 2778 16.6, 2781 19.8, 2784 20.0, 2787 17.5, 2790 18.3, 2793 18.8, 2796 19.3, 2799 26.4 (22), 2802 34.7 (28), 2805 40.6 (31), 2808 32.5 (23), 2811 24.2, 2814 24.8, 2817 23.3. Sum 766 s for 25 frames; the task 5 run was 1352 s. On the nine frames measured on dba3ebc (2748, 2757, 2766, 2772, 2781, 2790, 2799, 2808, 2817): 227.8 s against 232.0 s, ratio 0.98; the worst single frame is 2790 at 1.16 (18.3 against 15.8), then 2781 at 1.11.
+  - Read on the sheet: Mars leaves 2745 to 2763; the hero is a sliver at the right edge at 2760, half in at 2763 to 2772, whole 2778 to 2790 in the upper right, cut by the top edge 2793 and 2796, a sliver at 2799, gone at 2802; far1 a small streak 2763 to 2769; the near streak at 2781 and 2784; far2 a small streak low in frame 2790 to 2799. 2745 to 2757 and 2805 to 2817 hold no rock. Jupiter is a point at 2781 to 2790 and a disc from 2793.
+- 01:46 finals of b5ffb8e (`out/work/belt/t6/f1/`, 64 samples, 75.4 s with the load, 50.6 s): 2782 c5db1f09a63626ecbb0dc997305b5f6e4be5d6f08901088f3f4b00694d699fc5, 2783 2d874ee153de180e161cecacce316c52a6607c4b424c18e30c6c4ad9374e6a16.
+  - Measured in that final at 2782: lit part of the hero x 1614 to 1837, y 193 to 378 (224 by 186); with the night side (taken from the colour, the sky is blue and the night side grey) x 1612 to 1845, y 188 to 380, so 234 by 193 and only 74 to 82 px clear of the right edge. Too close to the 80 px line, so the hero moved once more.
+  - Tone: lit face 70 x 70 at (1660,290) 90.4, 77.6, 64.1 (p95 luma 137); night side 36 x 36 at (1770,225) 10.8, 10.2, 11.9; sky 6.5, 12.3, 15.7; near streak lit band 67.7, 58.9, 49.9. The night side is as dark as the sky and reads by its grey against the blue and by the stars it hides.
+- 01:49 third layout, f33fb07: the entry leg a little faster and the exit leg a little slower (still 24 px per frame at most), so the place at 2782 can sit 18 px further in: hero `at` [0.8875, 0.2546] (1704, 275), velocity [-0.3931, 0.533, 0] (14.2 left, 19.3 up), bounding ball 99 px clear of the right edge and 158 px of the top, whole 2775 to 2790 (16 frames), in frame 2759 to 2802, 421 px from Jupiter at the nearest. 12 tests green. Chain started (`/tmp/chain8.sh`): review sheet r3, finals f2, byte proof at draft, the four Mars finals, the task 5 cost test, the cover test.
+- 02:02 review sheet of f33fb07, one run (`out/work/belt/t6/r3/sheet.jpg`), seconds (samples): 2745 38.6 (16, with the load), 2748 16.2, 2751 21.9 (20), 2754 38.4 (39), 2757 57.2 (63), 2760 73.2 (86), 2763 83.5 (107), 2766 14.8, 2769 14.2, 2772 14.4, 2775 14.0, 2778 14.2, 2781 17.5, 2784 17.2, 2787 15.1, 2790 16.1, 2793 16.3, 2796 17.0, 2799 25.6 (22), 2802 34.0 (28), 2805 39.8 (31), 2808 33.3 (23), 2811 24.3, 2814 24.9, 2817 23.5. Sum 722 s. On the nine frames measured on dba3ebc: 218.7 s against 232.0 s, 0.94; worst single frame 2790 at 1.02.
+  - Read on the sheet: as r2, the hero a little further in. Sliver at 2760, half in 2763 to 2772, touching the right edge at 2775, whole 2778 to 2790, cut by the top 2793 and 2796, sliver 2799, gone 2802. far1 2763 to 2769, near 2781 and 2784, far2 2790 to 2799. 2745 to 2757 and 2805 to 2817 empty.
+- 02:04 finals of f33fb07 (`out/work/belt/t6/f2/`, 64 samples, 74.4 s with the load, 49.5 s):
+  - 2782: 86ed6a918ea007cab1c6559d4addd8cd4f6b945f0b21f64ed3b5cf3af177da02
+  - 2783: b6fabe5d1bf7e5175ec0b5ca536d411fab2f6148629d35ce1b5377c295d87b5a
+  - native crops at 2782: `crop-hero-2782.png` (x 1440 to 1920, y 35 to 515), `crop-near-2782.png` (x 470 to 950, y 300 to 780).
+  - Hero at 2782: lit part x 1597 to 1818, y 185 to 370 (222 by 186); with the night side x 1594 to 1827, y 181 to 372 (234 by 192, plus or minus 4 px): 92 px clear right, 181 px top.
+  - Tone: lit face 70 x 70 at (1642,282) 91.5, 78.7, 65.1 (luma 80.5, p95 138.2); night side 36 x 36 at (1752,217) 10.7, 10.2, 12.0; sky 6.5, 12.3, 15.7; near streak lit band 67.7, 58.9, 49.9.
+- 02:05 PART sent to the Builder with the sheet, the final, the crops (JPEG), the table, the cost and the critic list.
+
+### Hero, place and width (planner, f33fb07, bounding ball)
+
+| frame | centre x, y | width px | in frame | edges |
+|---|---|---|---|---|
+| 2757 | 2059, 756 | 234 | outside | - |
+| 2760 | 2016, 698 | 234 | part | cut by the right edge |
+| 2763 | 1973, 640 | 234 | part | cut by the right edge |
+| 2766 | 1931, 583 | 234 | part | cut by the right edge |
+| 2769 | 1888, 525 | 234 | part | cut by the right edge |
+| 2772 | 1846, 467 | 234 | part | cut by the right edge |
+| 2775 | 1803, 410 | 234 | whole | 0 px clear |
+| 2778 | 1761, 352 | 234 | whole | 42 px clear |
+| 2781 | 1718, 294 | 234 | whole | 85 px clear |
+| 2784 | 1676, 237 | 234 | whole | 120 px clear |
+| 2787 | 1633, 179 | 234 | whole | 62 px clear |
+| 2790 | 1591, 121 | 234 | whole | 4 px clear |
+| 2793 | 1548, 63 | 234 | part | cut by the top edge |
+| 2796 | 1505, 6 | 234 | part | cut by the top edge |
+| 2799 | 1463, -52 | 234 | part | cut by the top edge |
+| 2802 | 1420, -110 | 234 | part | 7 px sliver at the top edge |
+- 02:07 byte proof at draft, f33fb07 against a worktree of 30f31af with its own build (`/tmp/chain8.sh`; the two bundles have different names, so the worktree did render its own code), six pairs equal:
+  - 2325 fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726 d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2745 0613d9a29c4aee6a32d86aca2220f5ea9d04ad012040d8d90eb97cc32c67f7b3
+  - 2819 51221b1bd4bd6008fb802afbd734ec6f261c427eca0bcedc1450c558249238a6
+  The same six hashes as in task 5. 2745 and 2819 are inside the segment and hold no rock on either side.
+- 02:13 the four Mars finals, f33fb07 against 30f31af (`out/work/belt/t6fin-branch/`, `t6fin-base/`), four pairs equal:
+  - 2325 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d
+  - 2427 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814
+  - 2580 a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8
+  - 2726 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05
+  Seconds, branch and base: 38.6 and 33.3 (first frame, with the load), 61.1 and 61.5, 26.6 and 26.3, 50.7 and 51.3.
+- 14 repo test files green, 12 belt tests green, tsc clean, at f33fb07.
+- 02:15 the task 5 doubling, tested: 30f31af itself (task 5 code and cast) in a worktree with its own build, review, one session from 2745 as in the slow run: 2745 55.1 s (with the load), 2748 18.3, 2766 15.9, 2781 18.4. The slow run of 00:17 to 00:40 gave 70.6, 33.5, 27.0, 31.9 for the same frames of the same commit. So it does not come back: no draw, no rock and no frame of the belt caused it. That run was 1.7 to 1.8 times slower on every frame alike (also with no rock in frame, at every sample count, from the second frame of the session), which is what a loaded machine looks like. My command log of that half hour shows no second render and no build; what loaded the machine I cannot say. My claim at 01:23 above (that the belt's cover doubled the frames) was wrong; the numbers that suggested it compared a slow run with a normal one.
+- 02:17 what the belt does cost at review, 16 samples, f33fb07:
+  - The cover it hands to the dust: nothing measurable. A build whose `cover()` returns nothing (worktree, not committed): 2781 17.8 s, 2790 16.2 s; with the cover (sheet r3): 17.5 s, 16.1 s.
+  - Frames with the hero alone 14.0 to 15.1 s (2775, 2778, 2787); with the hero and the near streak 17.2 to 17.5 s (2781, 2784); with the hero and a far rock 14.2 to 17.0 s (2769, 2772, 2790 to 2796). The same frame 2781 with no rock in frame took 11.2 s in the task 5 test. So roughly 3 s for the hero, 3 s for the near streak (64 time steps over a 300 px box), 1 s or less for a far rock, all in the once per frame build of the layer, not per sample.
+  - Against batch 16 (dba3ebc, task 4 cast) on the same nine frames: 0.94.
+- 02:21 second byte list at draft, twelve frames across the film, f33fb07 against 30f31af (`out/work/belt/t6proof2-branch/`, `t6proof2-base/`; `segs.ts` names the segment of a frame). Eleven pairs equal:
+  - 60 (sun.terrain) c6eb2297cd146931348dffc0728b5584299bb6234b3feb50a89dbdc877f00094
+  - 600 (mercury.hold) 974c5e4f78ae5da169d9d85b6df0033b683c2c9d19cf6b60d3bffe230a9efa51
+  - 1200 (venus.hold) 1239d73bc46b416b888808fb66d7824ddfe79c65736aba982927af8d4c649637
+  - 1800 (earth.hold) 71163dde53beecff8772a0645fb00fc2c68416b0398f38e1e2bc3cb86ff03ee0
+  - 2200 (earth.travel) 06ec36118c753965964d56ee1f00bdaeb9c318ecf57df2c5752e69ef586d8e22
+  - 2744 (mars.rise, the frame before the segment) 9a1ba248bfc8ac866b83498b783c9c9e1b0d3c407b8bfd75b790ab8c8cec070a
+  - 2820 (jupiter.hold, the frame after it) cd68b0a3254d8a8b0dcba5e77b5383ea2c1f72062b75e0ef7e4584313bd65154
+  - 2900 (jupiter.hold) dfc77c3a72d219c7b500ef3171f7ae0bad0e60c65307d61b29f2d387a365fdf8
+  - 4000 (uranus.hold) be549c59d32ff9a0a954ed320e317f7f5ceab0f1df951d5b93e35a6628d161b9
+  - 4600 (neptune.hold) 6b68a2c75a13b79665972ce1e4126c82f06b6070b9d1b06c55d33ef9c154fa67
+  - 5300 (ending.lookback) ff48c79d3a9fc717ae669c93df9f77da48c68d71f8f148b279d085db7fc58562
+  One pair NOT equal: 3400 (saturn.hold), branch 1ebdb032d8ac129a5385913d94ea2a23708d4e5fbfb6ddbbb583f152dab20cba, base 9665599f6169949cbfe2ae5240e86dfcbc49984035789e4df9190e7831466d24. The two pictures differ in one pixel, (672,590), by one code value in one channel. The belt returns before it draws anything outside mars.travel and the two trees differ only in `belt.json` and my test, so I take this for a frame of the engine that is not byte stable from session to session; tested below by rendering 3400 twice on each side.
+- 02:20 MAIL 57: the look of the PART is accepted; engine batch 17 is on main (3d48581) with b5ffb8e in it and a new sky in mars.travel (warm flight grade, the warm band comes in from the upper right over 2792 to 2806). Before DONE: merge origin/main, build, tests, final 2782 and the review sheet on that tree, look, cost against batch 17.
+- 02:22 merged origin/main 3d48581 as merge commit 5dfb318 (no rebase), pushed. `git diff origin/main HEAD` is `belt.json` (the hero's place and velocity of f33fb07) and this notebook, nothing else. tsc clean, build passes, 14 repo test files and 12 belt tests green, planner and `sun.ts` give the same windows, Sun and discs as before (the camera path did not move). Chain started (`/tmp/chain9.sh`): review sheet m1, finals mf, cost on a worktree of 3d48581, draft byte list against 3d48581 with 3400 twice on each side, the four Mars finals.
+- 02:35 on the merged tree (5dfb318, holds main 3d48581, engine batch 17). Review sheet of mars.travel `out/work/belt/t6/m1/sheet.jpg`, seconds (samples): 2745 38.3 (load), 2748 16.4, 2751 21.8 (20), 2754 38.3 (39), 2757 57.7 (63), 2760 73.5 (86), 2763 84.4 (107), 2766 14.5, 2769 14.2, 2772 14.5, 2775 14.8, 2778 14.9, 2781 18.1, 2784 18.1, 2787 16.2, 2790 17.2, 2793 18.2, 2796 18.8, 2799 26.4 (22), 2802 34.2 (28), 2805 40.1 (31), 2808 34.4 (23), 2811 24.2, 2814 25.0, 2817 23.4; sum 718 s, 28.7 s a frame (before the merge 722 s).
+- 02:37 finals on the merged tree (`out/work/belt/t6/mf/`, 78.3 s with load, 54.3 s, 64 samples): 2782 2970ad1b1a037c1b578efc17eecb916d21ea880f5ba415c2a8a719db3747e72e, 2783 a8e169390910f694eb2c02971ee99f3e75c8380bf1ecbe800f29b3343177ccd6. They differ from the finals of f33fb07 because the sky grade moved, not the rock.
+  - Hero at 2782: lit part x 1597 to 1818, y 185 to 370 (222 by 186), the same as before the merge; with the night side x 1596 to 1828, y 180 to 370 (233 by 191): 91 px clear on the right, 180 px on top, whole.
+  - Tones at 2782, merged against f33fb07: lit face 70x70 at (1607,247) 91.3, 78.8, 65.4 against 91.6, 79.1, 65.7; night side 36x36 at (1734,199) 10.4, 10.1, 12.2 against 10.2, 10.0, 12.1; open sky 200x200 at (800,200) 5.1, 10.3, 13.3 against 5.5, 10.8, 14.0; sky left of the hero 4.7, 8.8, 11.3 against 4.0, 8.0, 10.6; near streak 24x24 at (678,528) 71.8, 62.3, 52.3 against 72.0, 62.5, 52.6.
+  - Jupiter's point at (1246,978), the near streak's centre about (710,540), the hero's ball 421 px away at the nearest: clear.
+- The new sky behind the exit (review frames, mean of the hero's lit part; sky left of it; sky under it):
+  - 2784 lit 83.8, 71.8, 59.5; sky 6.8, 11.2, 13.7; under 5.3, 9.5, 12.1
+  - 2787 lit 84.5, 72.5, 60.3; sky 8.9, 12.9, 15.0; under 6.8, 11.3, 13.9
+  - 2790 lit 90.6, 78.0, 64.9; sky 11.6, 15.3, 17.3; under 16.3, 20.6, 22.9
+  - 2793 lit 97.2, 83.8, 69.5; sky 12.6, 16.4, 18.5; under 22.6, 24.1, 24.3
+  - 2796 lit 102.6, 88.7, 73.6; sky 9.6, 14.0, 16.7; under 23.5, 24.8, 25.3
+  The upper right 400x300 at 2799 went from 1.9, 4.2, 5.3 to 56.3, 48.2, 43.7: the warm band is now there, behind the rock from about 2790 as the band's pale edge and warm from 2796. Looked at 2790 and 2793 at native size (`view/t6/m1-exit-native.png`, logged as a look): the lit face is a warm grey brown four to eight times the band's tone, under Phobos's 133.6, 106.2, 87.6 in every frame; the night side (10, 10, 12) is now darker than the sky behind it (12 to 24), so from 2790 the rock's dark side reads as a silhouette against the band and hides its stars, which is better than before the merge when it sat on a sky of its own tone. No dark or bright fringe on the limb against the band. Decision: `light` in `belt.json` stays as it is; no change to the cast.
+- 02:42 cost against batch 17 (worktree of 3d48581, review, same session pattern), seconds main / branch: 2745 39.0 / 38.3, 2748 17.4 / 16.4, 2757 58.6 / 57.7, 2766 14.9 / 14.5, 2772 16.1 / 14.5, 2781 18.4 / 18.1, 2790 17.5 / 17.2, 2799 26.2 / 26.4, 2808 32.4 / 34.4, 2817 23.4 / 23.4. Nine frames without the load frame: 224.7 s main, 222.6 s branch, ratio 0.99, worst frame 2808 at 1.06 (a frame with no rock in it, so that is the machine). Main holds the second layout, the branch the third, so equal cost is what to expect.
+  - The review frames with no rock are byte equal between the branch's sheet and main: 2745 d4d0f8bfd0abc974a9daed5747800f22bad5d2c4f4d60d101d0de0e5ddb27afd, 2748 f8cd43cda9efbdce716b4db9d8ec7c9882425accc323e6071102704a8db07d32, 2757 a7b90e4031c2502dce0aa564d0baf67b783e3e9f2046300295e218bf18e4cbe3, 2808 f98e3cfc170d233ccd068b7e40bf9a7528b8dc13885ab544826466c4e0b928bf, 2817 cf8b48428b530d0b45c85c8c8af49f8b1925e8baf0fcaf1fd5a03ecc36094f63.
+- 02:45 draft byte list, merged tree against main 3d48581, seven pairs equal:
+  - 2325 fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726 d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2744 9a1ba248bfc8ac866b83498b783c9c9e1b0d3c407b8bfd75b790ab8c8cec070a
+  - 2820 bc80f69cbde97863db651a92da48abeebd790fcc262ad6b0c2326c0001008dd9 (batch 16 gave cd68b0a3..., the engine moved this frame)
+  - 3400 62cbdfe42efe4741b8cb5397aae7e3675bc8f656d2c2bb567e1e555e1d180b5a, and the same again from a second session on each side (four renders, one hash). Batch 17 moved this frame too (neither of the two hashes of 02:21). So on batch 17 I do not see 3400 change from session to session; the one pixel of 02:21 is still open, test running (`/tmp/chain10.sh`: 3400 after 2900 and inside the twelve frame list on the merged tree, and the twelve frame list again on a worktree of f33fb07).
