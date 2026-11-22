@@ -1,97 +1,32 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T06:02:22.455Z",
- "head": "3af6a54cb4c96d40f0ecf932e141e9aa3fdd7441",
- "note": "both cover sheets at review on batch 19 done and looked at; measure running",
+ "pushed": "2026-11-22T06:30:43.289Z",
+ "head": "2b50ee2d30a2f441476793a51a11fece82e9ece8",
+ "note": "ending branch: backlit Neptune take 1 (one air glow, ring as ellipse), main 2b50ee2",
  "looks": [
   {
-   "time": "2026-11-22T06:01:58.010Z",
-   "file": "20261122060158010-note-sheet-dive-cover.jpg",
-   "source": "out/work/nep/p6/final/sheet-dive-cover.png",
+   "time": "2026-11-22T06:30:42.347Z",
+   "file": "20261122063042347-note-t1-5235-limb.jpg",
+   "source": "../../../../tmp/t1-5235-limb.jpg",
    "kind": "note",
-   "label": "dive cover sheet at review, 4738 to 4749, every frame looked at; tree 6c4c455, main a45a07b (engine batch 19)",
+   "label": "ending take 1 5235 limb native crop draft, main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T06:01:52.346Z",
-   "file": "20261122060152346-note-dive-4749.jpg",
-   "source": "out/work/nep/p6/final/dive-4749.jpg",
+   "time": "2026-11-22T06:30:41.645Z",
+   "file": "20261122063041645-note-t1-path.jpg",
+   "source": "../../../../tmp/t1-path.jpg",
    "kind": "note",
-   "label": "dive cover at review, 4749; tree 6c4c455, main a45a07b (engine batch 19)",
+   "label": "ending take 1 path 5057 5068 5079 5085 5235 before left after right, main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T06:01:48.434Z",
-   "file": "20261122060148434-note-dive-4745-4748.jpg",
-   "source": "out/work/nep/p6/final/dive-4745-4748.jpg",
+   "time": "2026-11-22T06:30:40.667Z",
+   "file": "20261122063040667-note-t1-probe.jpg",
+   "source": "../../../../tmp/t1-probe.jpg",
    "kind": "note",
-   "label": "dive cover at review, 4745 to 4748, the terrain side opening; tree 6c4c455, main a45a07b (engine batch 19)",
+   "label": "ending take 1 probe phases 90 120 150 165 172 60 136, before left, draft, main 2b50ee2",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T06:01:42.993Z",
-   "file": "20261122060142993-note-dive-4741-4744.jpg",
-   "source": "out/work/nep/p6/final/dive-4741-4744.jpg",
-   "kind": "note",
-   "label": "dive cover at review, 4741 to 4744, the switch is 4742 to 4743 (step 3.24, neighbours 2.96 and 3.23); tree 6c4c455, main a45a07b (engine batch 19)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T06:01:18.359Z",
-   "file": "20261122060118359-job-frame-04530.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T06:00:49.326Z",
-   "file": "20261122060049326-sheet-neptune.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/neptune.dive-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet neptune.dive, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "first": 4738,
-   "last": 4749,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:40:13.381Z",
-   "file": "20261122044013381-frame-b19-4860.jpg",
-   "source": "out/work/nep/p6/final/b19-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:39:38.244Z",
-   "file": "20261122043938244-frame-b19-4605.jpg",
-   "source": "out/work/nep/p6/final/b19-4605.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, review tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   }
  ]
 }
