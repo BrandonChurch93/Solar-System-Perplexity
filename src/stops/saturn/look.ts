@@ -71,6 +71,7 @@ export const rings: RingLook = {
   floorAlpha: 0.93,
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
+  penumbraAway: [0.95, 1.02, 0.03],
   penumbraFar: [1.5, 0.05],
   inner: [112, 128, 0, 0],
   over: [0.03, 1.38, 0.985, 1.46],

@@ -41,6 +41,7 @@ export interface RingLook {
   shadeGrey: [number, number]
   innerDark: [number, number, number, number]
   shadeSolid: [number, number]
+  penumbraAway: [number, number, number]
   heroTone: [number, number, number]
   heroTurn: number
   shapeFit: [number, number]
