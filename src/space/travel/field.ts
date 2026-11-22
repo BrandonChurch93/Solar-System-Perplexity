@@ -17,7 +17,7 @@ export interface FlightDef {
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
-  deep: { count: number; law: number[][]; max: number; level: number; core: number[]; halo: number[]; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
+  deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
   veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number }
 }
 
@@ -33,8 +33,18 @@ export interface FlightField {
 }
 
 const MAP = [512, 256] as const
-const SIZE = [2.6, 2.2, 11] as const
-export const DEEP_SOFT = [0.2, 0.125] as const
+export const SIZE = [2.6, 2.2, 11] as const
+export const FLIGHT_SIZE = 16
+
+export interface StripDef {
+  swap: number
+  edge: number[]
+  dither: number
+  offLevel: number
+  patchHold: number
+  deep: { gain: number; tail: number; ref: number }
+  stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
+}
 
 function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => number {
   const seed = stream('flight veil').int(1 << 20)
@@ -196,10 +206,7 @@ export function flightField(def: FlightDef): FlightField {
     let k = 0
     while (k < dl.length - 2 && lx < dl[k + 1]![1]) k++
     const b = Math.min(Math.exp(dl[k]![0] + (dl[k + 1]![0] - dl[k]![0]) * (dl[k]![1] - lx) / (dl[k]![1] - dl[k + 1]![1])) * lift, dd.max)
-    const wide = b >= dd.core[1]!
-    const peak = wide ? dd.core[1]! * Math.pow(b / dd.core[1]!, dd.core[2]!) : b
-    const soft = DEEP_SOFT[wide ? 1 : 0]
-    deep.star.set([dd.core[0]! * Math.sqrt(b / peak) / soft, peak, soft, wide ? dd.halo[0]! * THREE.MathUtils.smoothstep(b, dd.core[1]!, dd.halo[1]!) : 0], n * 4)
+    deep.star.set([Math.min(SIZE[0] + SIZE[1] * Math.log2(1 + b), FLIGHT_SIZE), b, 1, 0], n * 4)
     const hue = dr.next()
     const temp = dr.next()
     if (hue < dd.warm) c.copy(warm).lerp(white, Math.pow(temp, 0.6))
@@ -243,4 +250,68 @@ export function flightField(def: FlightDef): FlightField {
     place(x, y, z, 1)
   }
   return { position, star, color, glow, veil, deep, width, height }
+}
+
+export interface BandFrame {
+  repeats: number
+  offset: number
+  latSpan: number
+  widen: number
+  gal: number[]
+}
+
+export interface BandField {
+  position: Float32Array
+  star: Float32Array
+  color: Float32Array
+}
+
+export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, field: FlightField): BandField {
+  const view = new DataView(bytes)
+  if (view.getUint32(0, true) !== 0x52545342) throw new Error('band stars: bad file')
+  const total = view.getUint32(8, true)
+  const st = def.stars
+  const [edgeFrom, edgeTo, edgeNoise] = def.edge
+  const w = 1 / frame.widen
+  const g = frame.gal
+  const rnd = stream('flight band')
+  const count = total * frame.repeats
+  const position = new Float32Array(count * 3)
+  const star = new Float32Array(count * 4)
+  const color = new Float32Array(count * 3)
+  let n = 0
+  for (let i = 0; i < total; i++) {
+    const at = 12 + i * 10
+    const u = view.getUint16(at, true) / 65536
+    const v = view.getUint16(at + 2, true) / 65535
+    const flux = Math.pow(2, view.getUint16(at + 4, true) / 2048 - 16)
+    const bg = Math.pow(2, view.getUint8(at + 9) / 16 - 16)
+    const target = v - 0.5
+    let x = target
+    for (let k = 0; k < 8; k++) x -= (w * x + (1 - w) * 4 * x * x * x - target) / (w + (1 - w) * 12 * x * x)
+    const lat = x * frame.latSpan
+    const level = Math.min(st.gain * Math.pow(flux, st.power), st.max)
+    const base = Math.pow(Math.max(bg, 1e-5), 1 - st.lane) * Math.pow(st.ref, st.lane)
+    const cr = view.getUint8(at + 6) / 63.75
+    const cg = view.getUint8(at + 7) / 63.75
+    const cb = view.getUint8(at + 8) / 63.75
+    for (let r = 0; r < frame.repeats; r++) {
+      const jitter = rnd.next()
+      const a = ((u + r - frame.offset) / frame.repeats - 0.5) * Math.PI * 2
+      const gx = Math.cos(lat) * Math.cos(a)
+      const gy = Math.cos(lat) * Math.sin(a)
+      const gz = Math.sin(lat)
+      const px = g[0]! * gx + g[1]! * gy + g[2]! * gz
+      const py = g[3]! * gx + g[4]! * gy + g[5]! * gz
+      const pz = g[6]! * gx + g[7]! * gy + g[8]! * gz
+      const cell = Math.min(Math.floor((Math.asin(Math.max(Math.min(py, 1), -1)) / Math.PI + 0.5) * field.height), field.height - 1) * field.width + Math.min(Math.floor((Math.atan2(px, pz) / (2 * Math.PI) + 0.5) * field.width), field.width - 1)
+      const fade = 1 - THREE.MathUtils.smoothstep(Math.abs(x) + edgeNoise! * (field.veil[cell]! - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!)
+      if (fade <= 0) continue
+      position.set([px, py, pz], n * 3)
+      star.set([level * fade, base, 0, 0], n * 4)
+      color.set([cr, cg, cb], n * 3)
+      n++
+    }
+  }
+  return { position: position.subarray(0, n * 3), star: star.subarray(0, n * 4), color: color.subarray(0, n * 3) }
 }
