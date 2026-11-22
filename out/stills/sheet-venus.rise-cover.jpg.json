@@ -1,14 +1,14 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "venus": "4a0019eb37f2a74d"
+  "venus": "54d2208ee58b3ad9"
  },
  "format": "16x9",
  "tier": "review",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
- "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "first": 1555,
  "last": 1566,
  "extra": {
@@ -28,7 +28,7 @@
   ],
   "kind": "cover",
   "segment": "venus.rise",
-  "signature": "[\"6cc46f67c5122e3b6cec7baa0de119753ea6ea588910d08ea793f80277b4c687\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"674b0cfaea08e877f6734293e7a799735234e40dd316c882ee4809e96bc7e7b6\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

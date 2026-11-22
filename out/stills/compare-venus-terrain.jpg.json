@@ -1,7 +1,7 @@
 {
- "engineHash": "f854c8146f64c7e4",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "venus": "4a0019eb37f2a74d"
+  "venus": "54d2208ee58b3ad9"
  },
  "format": "16x9",
  "tier": "final",
@@ -11,7 +11,7 @@
  "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "frame": 1440,
  "extra": {
-  "signature": "[\"20bb76fa01f4ac7c96630b92334c0b52bec7b96cfb5cd890b742c2f0dba80122\",\"copy\"]",
+  "signature": "[\"91fcbf3db84ee0b9aad41f1d3462dc00b52a3e9f9fc8f224594bf121446747f6\",\"copy\"]",
   "segment": "venus.terrain",
   "rectangles": [
    [

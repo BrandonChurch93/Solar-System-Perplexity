@@ -1,15 +1,15 @@
 {
- "engineHash": "be043ade04a7ab6e",
+ "engineHash": "247ebad7e038ce06",
  "stopHashes": {
-  "saturn": "fa0de88f607904a5",
-  "uranus": "5afa91dfab8a6bc7"
+  "saturn": "47a787cd7f78408c",
+  "uranus": "a5dd9ab65ef9c8db"
  },
  "format": "16x9",
  "tier": "review",
  "assets": "full",
  "diag": "beauty",
  "browser": "147.0.7727.15",
- "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "first": 3885,
  "last": 3959,
  "extra": {
@@ -29,7 +29,7 @@
   ],
   "kind": "sheet",
   "segment": "saturn.travel",
-  "signature": "[\"bfb90ae218585f2ecaab9292526543ff53d3d57702ad6d4d31ea1288a29c4f39\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"40ca29282087e5de50457915788cc1af310b0671d9021b8e86ee060f2978b0e3\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }

@@ -1,0 +1,34 @@
+{
+ "engineHash": "247ebad7e038ce06",
+ "stopHashes": {
+  "earth": "2b75dbd9c40c8387"
+ },
+ "format": "16x9",
+ "tier": "review",
+ "assets": "full",
+ "diag": "beauty",
+ "browser": "147.0.7727.15",
+ "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "first": 1920,
+ "last": 2099,
+ "extra": {
+  "frames": [
+   1920,
+   1936,
+   1953,
+   1969,
+   1985,
+   2001,
+   2018,
+   2034,
+   2050,
+   2066,
+   2083,
+   2099
+  ],
+  "kind": "sheet",
+  "segment": "earth.terrain",
+  "signature": "[\"612697c6c70d3791c7dc0de2f1be54b4ddf5d35ac13f426684477190a4688a4a\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "quality": 92
+ }
+}
