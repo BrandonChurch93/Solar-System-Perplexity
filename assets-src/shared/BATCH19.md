@@ -156,3 +156,22 @@ The two new shader parts, read by hand:
 Measured on the scratch merge: the eight travel frames over two fresh sessions, one render each, 227 s, one hash per frame (482 `6d20b8c85f00e654`, 495 `6c902577dcb78811`, 1625 `5ec0dae7cd3a0888`, 2772 `7b6281cc532b870c`, 3912 `2a334ee7272dc582`, 4502 `589c5246dcfda7cb`, 5085 `f9e1eb89d9f3a6aa`, 5235 `99cdf5b608e5cb3c`).
 
 One thing that is not about sessions but about machines: the dither multiplies `sin` of a number up to about 1e5 by 43758 and keeps the fraction, so the last bit of the GPU's `sin` decides the value. On one machine that is the same every time. Between machines with another CPU type or another Chrome build it need not be, and no other shader of the film leans on the last bit in that way. An integer hash of `uvec2(gl_FragCoord.xy)` (multiply, shift, xor on `uint`) gives the same bits everywhere. The pattern is also fixed to the screen and equal in every sample and every frame, by design of a dither. I did not render stop frames on the merge.
+
+## Mail 70: the check on the candidate (04:14 to 04:29 UTC)
+
+`builder/b19-pre` 90e5294 (main 45c3e55, this branch at 1a62f85, `agent/travel` 4681511 with the dither as an integer hash). `npx tsx tools/repeat.ts --frames 482,495,1625,2772,3912,4502,5085,5235,3465,1586 --sessions 3 --runs 2`, 807 s, none loose, six renders per frame over three fresh sessions:
+
+| Frame | Pictures | Hash |
+| --- | --- | --- |
+| 482 | 1 of 6 | `baa1a86f77233ac2` |
+| 495 | 1 of 6 | `5427fe2de8c15b0e` |
+| 1625 | 1 of 6 | `87f2dc2b6aab8174` |
+| 2772 | 1 of 6 | `eab741fd766b6df3` |
+| 3912 | 1 of 6 | `d37fb4125effdb8d` |
+| 4502 | 1 of 6 | `ba614dbb7dca7ded` |
+| 5085 | 1 of 6 | `adbae17d86bcf871` |
+| 5235 | 1 of 6 | `99cdf5b608e5cb3c` |
+| 3465 | 1 of 6 | `9a5e9f2fe36a984e` |
+| 1586 | 1 of 6 | `29f813e000c03a5c` |
+
+3465 did not flip in these six renders. Its two pictures `9a5e9f2fe36a984e` and `703aa40f17b90e2a` are the same two that main a67c9c34 gave in the reference sweep before any travel change (2 and 1 of 3), so the flip the travel agent saw is Saturn's stale lane and no new fault. Six equal renders do not clear the frame; it stays loose until Saturn's cure lands.
