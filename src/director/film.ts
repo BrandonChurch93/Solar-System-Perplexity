@@ -28,8 +28,10 @@ const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
 const PASS_REACH = 60
-const SUN_SWAP: [number, number] = [0.3, 0.42]
+const SUN_LEAVE = 0.55
+const SUN_SWAP: [number, number] = [0.42, 0.55]
 const SUN_GLOW_FROM = 0.06
+const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
@@ -72,7 +74,7 @@ export class FilmDirector implements Director {
     for (let i = 0; i + 1 < plans.length; i++) {
       const id = plans[i]!.id
       const shape = new TravelShape(id)
-      let clear = SUN_APPROACH_START
+      let clear = SUN_LEAVE
       let slide = 0
       if (i > 0) {
         let low = 0
@@ -331,7 +333,8 @@ export class FilmDirector implements Director {
     const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
     const slide = this.slide[index] ?? 0
     if (slide > 0) position.addScaledVector(this.approach[index + 1]!, slide * shape.pass(u) * shape.settleLeft(x))
-    return { position, quaternion: shape.turn(from.quaternion, to.quaternion, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
+    const aim = index === 0 ? this.toWorld(1, this.approachLocal(1, ramp(SUN_APPROACH_START, 1, u), time, shape)).quaternion : to.quaternion
+    return { position, quaternion: shape.turn(from.quaternion, aim, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
   }
 
   private pin(): void {
@@ -382,6 +385,17 @@ export class FilmDirector implements Director {
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
     return Math.min(this.leaveWeight(index, u) * body(index) + body(index + 1) + glow * sun, 1)
+  }
+
+  private sunSeen(index: number, time: number): number {
+    const seg = this.plans[index]!.seg.travel!
+    const master = config.formats[config.formatKeys.master]!
+    let sum = 0
+    for (let k = -SUN_DIM.taps; k <= SUN_DIM.taps; k++) {
+      const pose = this.travelCamera(index, Math.min(Math.max(time + (k / SUN_DIM.taps) * SUN_DIM.window, seg.start), seg.end))
+      if (inFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld, 0, 0)) sum++
+    }
+    return sum / (2 * SUN_DIM.taps + 1)
   }
 
   private brightNear(index: number, time: number): number {
@@ -504,7 +518,10 @@ export class FilmDirector implements Director {
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
-      if (index === 0) light.radius = Math.max(lb.radius, Math.asin(Math.min(1 / position.distanceTo(this.frames[0]!.origin), 1)))
+      if (index === 0) {
+        light.radius = u < SUN_LEAVE ? Math.max(lb.radius, Math.asin(Math.min(1 / position.distanceTo(this.frames[0]!.origin), 1))) : lb.radius
+        light.glare = lb.glare
+      }
       const span = this.patchSpanOf(index)
       skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
@@ -512,6 +529,7 @@ export class FilmDirector implements Director {
       const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
       skyLook = mix(bandLook(a.id), bandLook(b.id), bandLook(b.id) < bandLook(a.id) ? skyPatch : smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       light.sky = mix(light.sky, OPEN.openExposure, open)
+      if (index > 0) light.sky *= 1 - SUN_DIM.level * smooth(this.sunSeen(index, time)) * (1 - smoother(ramp(SUN_DIM.back[0], SUN_DIM.back[1], u)))
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))

@@ -7,7 +7,7 @@ const d = new FilmDirector(plans)
 const DEG = 180 / Math.PI
 const seg = config.segments.find((s) => s.id === 'sun.travel')!
 const step = Number(process.argv[2] ?? 3)
-console.log('frame u bodyX bodyY skyX skyY apartDeg bodyRdeg skyRdeg bodyW sunW glare turnDegPerFrame exposure skyExp')
+console.log('frame u bodyX bodyY skyX skyY apartDeg bodyRdeg skyRdeg bodyW sunW glare turnDegPerFrame nextX nextY nextRpx')
 let prev: THREE.Quaternion | null = null
 let prevSky: [number, number] | null = null
 let jump = 0
@@ -28,6 +28,6 @@ for (let f = seg.firstFrame; f <= seg.endFrame; f++) {
   prev = s.camera.quaternion.clone()
   prevSky = k
   const u = (s.time - seg.start) / (seg.end - seg.start)
-  if ((f - seg.firstFrame) % step === 0) console.log(f, u.toFixed(3), b[0].toFixed(2), b[1].toFixed(2), k[0].toFixed(2), k[1].toFixed(2), (to.angleTo(s.sun.dir) * DEG).toFixed(2), (Math.asin(Math.min(1 / to.length(), 1)) * DEG).toFixed(2), (s.sun.angularRadius * DEG).toFixed(2), lead.weight.toFixed(2), s.sun.weight?.toFixed?.(2), s.sun.glare?.toFixed?.(3), rate.toFixed(2), s.exposure?.toFixed?.(2), s.skyExposure?.toFixed?.(2))
+  if ((f - seg.firstFrame) % step === 0) console.log(f, u.toFixed(3), b[0].toFixed(2), b[1].toFixed(2), k[0].toFixed(2), k[1].toFixed(2), (to.angleTo(s.sun.dir) * DEG).toFixed(2), (Math.asin(Math.min(1 / to.length(), 1)) * DEG).toFixed(2), (s.sun.angularRadius * DEG).toFixed(2), lead.weight.toFixed(2), s.sun.weight?.toFixed?.(2), s.sun.glare?.toFixed?.(3), rate.toFixed(2), ...(() => { const n = s.sets[s.sets.length - 1]!.origin.clone().sub(s.camera.position); const q = scr(n); return [q[0].toFixed(2), q[1].toFixed(2), ((Math.asin(Math.min(1 / n.length(), 1)) / ((s.camera.vfov * Math.PI) / 180)) * 1080).toFixed(1)] })())
 }
 console.log('largest step of the sky Sun on screen, half heights per frame', jump.toFixed(3))

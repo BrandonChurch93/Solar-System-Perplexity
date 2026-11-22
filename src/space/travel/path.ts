@@ -28,7 +28,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   mars: { bowDeg: 10, grow: [2, 3] },
   jupiter: { bowDeg: -10, grow: [3, 4] },
   saturn: { bowDeg: 8, grow: [2, 3] },
-  uranus: { bowDeg: -6, grow: [4, 3] },
+  uranus: { bowDeg: -6, grow: [4, 3], passBy: 0.22 },
 }
 
 export function travelLook(id: string): TravelLook {
