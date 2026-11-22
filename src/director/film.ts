@@ -27,11 +27,8 @@ const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
-const BOW_REACH = 24
+const PASS_REACH = 60
 const SUN_SWAP: [number, number] = [0.3, 0.42]
-const SUN_BOW_REACH = 90
-const SUN_HIDDEN = 0.14
-const SUN_HALO = 1.2
 const SUN_GLOW_FROM = 0.06
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
@@ -53,8 +50,9 @@ export class FilmDirector implements Director {
   private readonly reach: number[] = []
   private readonly begin: number[] = []
   private readonly clear: number[] = [0]
+  private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
-  private sunSwapSpan: [number, number] = SUN_SWAP
+  private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
   private lookbackUp = new THREE.Vector3()
@@ -73,25 +71,25 @@ export class FilmDirector implements Director {
     this.pin()
     for (let i = 0; i + 1 < plans.length; i++) {
       const id = plans[i]!.id
-      let shape = new TravelShape(id)
-      let clear = i === 0 ? SUN_APPROACH_START : this.clearOf(i, shape)
-      if (i > 0 && clear > shape.look.clearBy) {
-        const tries: { shape: TravelShape; clear: number; off: number }[] = []
-        for (let b = -BOW_REACH; b <= BOW_REACH; b += 2) {
-          const t = new TravelShape(id, { bowDeg: b })
-          tries.push({ shape: t, clear: this.clearOf(i, t), off: Math.abs(b - shape.look.bowDeg) })
+      const shape = new TravelShape(id)
+      let clear = SUN_APPROACH_START
+      let slide = 0
+      if (i > 0) {
+        let low = 0
+        let high = PASS_REACH
+        for (let k = 0; k < 24; k++) {
+          const mid = (low + high) / 2
+          if (this.passSeen(i, shape, mid, shape.look.passBy)) low = mid
+          else high = mid
         }
-        const limit = Math.max(shape.look.clearBy, Math.min(...tries.map((t) => t.clear)) + 0.02)
-        const pick = tries.filter((t) => t.clear <= limit).sort((p, q) => p.off - q.off)[0]
-        if (pick) {
-          shape = pick.shape
-          clear = pick.clear
-        }
+        slide = high
+        clear = this.clearOf(i, shape, slide)
+        shape.from = clear
       }
+      this.slide.push(slide)
       this.shapes.push(shape)
       this.clear.push(clear)
     }
-    if (plans.length > 1) this.hideSun()
     const last = plans.length - 1
     const n = this.plans[last]!
     const s = n.sunDir.clone()
@@ -225,60 +223,23 @@ export class FilmDirector implements Director {
     return end
   }
 
-  clearOf(i: number, shape: TravelShape): number {
-    const a = this.plans[i]!
-    const seg = a.seg.travel!
-    const dur = seg.end - seg.start
+  private passSeen(i: number, shape: TravelShape, slide: number, u: number): boolean {
+    const seg = this.plans[i]!.seg.travel!
     const master = config.formats[config.formatKeys.master]!
+    const time = seg.start + u * (seg.end - seg.start)
+    const from = this.toWorld(i, this.leaving(i, time))
+    const moved = this.approach[i + 1]!.clone().multiplyScalar(slide * shape.pass(u))
+    return this.leavingThings(i, time).some((t) => inFrame(from.quaternion, from.vfov, master.width / master.height, t.to.sub(moved), t.radius, shape.look.clearDeg))
+  }
+
+  clearOf(i: number, shape: TravelShape, slide: number): number {
     const steps = 600
-    for (let k = 1; k < steps; k++) {
-      const u = k / steps
-      const time = seg.start + u * dur
-      const from = this.toWorld(i, this.leaving(i, time))
-      const to = this.toWorld(i + 1, this.approachLocal(i + 1, 0, time, shape))
-      const q = shape.turn(from.quaternion, to.quaternion, u)
-      if (!this.leavingThings(i, time).some((t) => inFrame(q, from.vfov, master.width / master.height, t.to, t.radius, shape.look.clearDeg))) return u
-    }
-    return 1 - 1 / steps
+    for (let k = Math.round(shape.look.passBy * steps); k > 0; k--) if (this.passSeen(i, shape, slide, (k - 1) / steps)) return k / steps
+    return 0
   }
 
-  private hideSun(): void {
-    const id = this.plans[0]!.id
-    const tries: { shape: TravelShape; span: [number, number]; off: number }[] = []
-    for (let b = -SUN_BOW_REACH; b <= SUN_BOW_REACH; b += 3) {
-      const shape = new TravelShape(id, { bowDeg: b })
-      this.shapes[0] = shape
-      tries.push({ shape, span: this.sunHidden(), off: Math.abs(b) })
-    }
-    const long = tries.filter((t) => t.span[1] - t.span[0] >= SUN_HIDDEN).sort((p, q) => p.off - q.off)[0]
-    if (long) {
-      this.shapes[0] = long.shape
-      const w = long.span[1] - long.span[0]
-      this.sunSwapSpan = [long.span[0] + 0.2 * w, long.span[1] - 0.2 * w]
-    } else this.shapes[0] = new TravelShape(id)
-  }
-
-  private sunHidden(): [number, number] {
-    const seg = this.plans[0]!.seg.travel!
-    const master = config.formats[config.formatKeys.master]!
-    const aspect = master.width / master.height
-    const la = this.sunFor(0).radius
-    const lb = this.sunFor(1).radius
-    const steps = 180
-    let best: [number, number] = [0, 0]
-    let open = -1
-    for (let k = 1; k <= steps; k++) {
-      const u = k / steps
-      const pose = this.travelCamera(0, seg.start + u * (seg.end - seg.start))
-      const disc = Math.sin(Math.min(mix(la, lb, smooth(ramp(0.25, 0.8, u))) * SUN_HALO, 1.5))
-      const seen = k === steps || inFrame(pose.quaternion, pose.vfov, aspect, this.frames[0]!.origin.clone().sub(pose.position), SUN_HALO, 0) || inFrame(pose.quaternion, pose.vfov, aspect, this.sunWorld, disc, 0)
-      if (!seen && open < 0) open = u
-      if (seen && open >= 0) {
-        if (u - open > best[1] - best[0]) best = [open, u]
-        open = -1
-      }
-    }
-    return best
+  slideOf(i: number): number {
+    return this.slide[i] ?? 0
   }
 
   sunSwapOf(): { span: [number, number]; bowDeg: number } {
@@ -368,6 +329,8 @@ export class FilmDirector implements Director {
       from.position.lerp(radial, smooth(u / 0.12))
     }
     const position = to.position.clone().addScaledVector(from.position.clone().sub(start.position), shape.settleLeft(x))
+    const slide = this.slide[index] ?? 0
+    if (slide > 0) position.addScaledVector(this.approach[index + 1]!, slide * shape.pass(u) * shape.settleLeft(x))
     return { position, quaternion: shape.turn(from.quaternion, to.quaternion, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
   }
 
@@ -541,6 +504,7 @@ export class FilmDirector implements Director {
       const lb = this.sunFor(index + 1)
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
+      if (index === 0) light.radius = Math.max(lb.radius, Math.asin(Math.min(1 / position.distanceTo(this.frames[0]!.origin), 1)))
       const span = this.patchSpanOf(index)
       skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
