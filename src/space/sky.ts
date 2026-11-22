@@ -133,15 +133,36 @@ vec3 smoothLod(sampler2D s, vec2 uv, float lod) {
   vec2 h1 = (i + 1.5 + w3 / g1) / size;
   return g0.y * (g0.x * textureLod(s, vec2(h0.x, h0.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h0.y), lod).rgb) + g1.y * (g0.x * textureLod(s, vec2(h0.x, h1.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h1.y), lod).rgb);
 }
+vec3 worn(sampler2D s, vec2 q, vec2 px) {
+  vec3 c0 = textureLod(s, q, 0.0).rgb;
+  vec3 c1 = vec3(1e3);
+  vec3 c2 = vec3(1e3);
+  vec3 l = vec3(dot(c0, vec3(0.3, 0.5, 0.2)), 1e3, 1e3);
+  for (int i = 0; i < 12; i++) {
+    float a = float(i) * 0.5235988;
+    vec3 c = textureLod(s, q + vec2(cos(a), sin(a)) * px * (3.0 + 3.0 * float(i & 1)), 0.0).rgb;
+    float v = dot(c, vec3(0.3, 0.5, 0.2));
+    c2 = v < l.y ? c1 : v < l.z ? c : c2;
+    c1 = v < l.x ? c0 : v < l.y ? c : c1;
+    c0 = v < l.x ? c : c0;
+    l = v < l.x ? vec3(v, l.xy) : v < l.y ? vec3(l.x, v, l.y) : v < l.z ? vec3(l.xy, v) : l;
+  }
+  return c2;
+}
 vec3 unfolded(sampler2D s, vec3 p, vec3 t, vec2 gx, vec2 gy, float m, float shift) {
   vec3 o = t;
   vec2 d = max(max(m - p.xy, p.xy - (1.0 - m)), vec2(0.0));
-  for (int k = 0; k < (p.z > 0.0 && shift > 0.0 && max(d.x, d.y) > 0.0 ? 1 : 0); k++) {
-    vec2 w = smoothstep(vec2(0.0), vec2(m * 0.35), d);
-    vec2 q = p.xy + shift * sign(0.5 - p.xy) * step(vec2(1e-6), d);
+  vec2 px = 1.0 / vec2(textureSize(s, 0));
+  vec2 e = d / px;
+  for (int k = 0; k < (p.z > 0.0 && shift > 0.0 && max(e.x, e.y) > 0.5 ? 1 : 0); k++) {
+    vec2 w = smoothstep(vec2(m * 0.05), vec2(m * 0.4), d);
+    vec2 a = smoothstep(vec2(0.5), vec2(2.5), e);
+    vec2 side = sign(0.5 - p.xy) * step(vec2(1e-6), d);
+    vec2 far = 1.0 - p.xy;
     vec2 dx = gx * 0.25;
     vec2 dy = gy * 0.25;
-    o = mix(t, 0.25 * (textureGrad(s, q + dx + dy, gx, gy).rgb + textureGrad(s, q - dx + dy, gx, gy).rgb + textureGrad(s, q + dx - dy, gx, gy).rgb + textureGrad(s, q - dx - dy, gx, gy).rgb), max(w.x, w.y));
+    vec3 f = 0.25 * (textureGrad(s, far + dx + dy, gx, gy).rgb + textureGrad(s, far - dx + dy, gx, gy).rgb + textureGrad(s, far + dx - dy, gx, gy).rgb + textureGrad(s, far - dx - dy, gx, gy).rgb);
+    o = mix(t, mix(worn(s, p.xy, px), worn(s, p.xy + shift * side, px), max(w.x, w.y)) + max(f - worn(s, far, px), vec3(0.0)), max(a.x, a.y));
   }
   return o;
 }
