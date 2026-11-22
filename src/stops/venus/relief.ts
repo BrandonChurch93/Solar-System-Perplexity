@@ -33,6 +33,7 @@ export interface CloudMotion {
   swayRad: number
   swayPerSecond: number
   edgeDeg: number
+  slipTaps: number
   air: { azDeg: number; elevDeg: number; power: number; below: [number, number, number]; belowDeg: number; holdDeg: number; sunHideDeg: [number, number, number]; cut: [number, number, number]; gain: number; deck: [number, number, number][]; deckSpanDeg: number; deckHigh: [number, number]; rimDeg: number }
 }
 
@@ -152,6 +153,9 @@ uniform float uVignette;
 uniform float uAspect;
 uniform vec3 uLayer;
 uniform float uGrad;
+uniform vec4 uSlip;
+uniform int uTaps;
+uniform int uHeld;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -166,8 +170,19 @@ void main() {
   vec2 arm = (vImage - uSway.xy) * vec2(uSway.z, 1.0);
   vec2 shift = uHaze * m.r + vec2(-arm.y / uSway.z, arm.x) * uSway.w * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) * uToLayer;
-  vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
+  vec3 slid = vView + uSlip.xyz;
+  vec2 slip = (slid.xy / slid.z - vView.xy / vView.z) * uSlip.w;
+  vec2 gx = dFdx(vUv) * uGrad;
+  vec2 gy = dFdy(vUv) * uGrad;
+  vec2 along = gx * slip.x + gy * slip.y;
+  float wide = max(1.0, length(slip) / float(uTaps));
+  vec4 texel = vec4(0.0);
+  for (int k = 0; k < uTaps; k++) texel += textureGrad(uColor, uv + along * ((float(k) + 0.5) / float(uTaps) - 0.5), gx * wide, gy * wide);
+  texel /= float(uTaps);
   float alpha = texture(uAlpha, vUv).r;
+  float held = 0.0;
+  for (int k = 0; k < uHeld; k++) held += textureGrad(uAlpha, vUv + along * ((float(k) + 0.5) / float(uHeld) - 0.5), gx * wide, gy * wide).r;
+  alpha = mix(alpha, held / float(max(uHeld, 1)), float(min(uHeld, 1)));
   if (uHasAlpha < 0.5) {
     vec3 ray = normalize(vec3((2.0 * vImage.x - 1.0) * uLens.x, (1.0 - 2.0 * vImage.y) * uLens.y, -1.0));
     alpha = smoothstep(0.0, -uLens.w - vRim, asin(clamp(dot(ray, uUp), -1.0, 1.0)) + uLens.z);
@@ -306,7 +321,7 @@ export class CloudRelief {
           uColor: { value: color }, uAlpha: { value: alpha ?? masks }, uMasks: { value: masks }, uHasAlpha: { value: alpha ? 1 : 0 },
           uSize: { value: new THREE.Vector2(size.width, size.height) }, uMaskBox: { value: new THREE.Vector4(def.maskBox[0] / W, def.maskBox[1] / H, def.maskBox[2] / W, def.maskBox[3] / H) }, uToLayer: { value: new THREE.Vector2(W / bw, H / bh) }, uEdge: { value: new THREE.Vector2(Math.max(l.edge?.[0] ?? 0, 1e-6), Math.max(l.edge?.[1] ?? 0, 1e-6)) },
           uHaze: { value: new THREE.Vector2() }, uSway: { value: new THREE.Vector4(def.sun[0], def.sun[1], aspect, 0) }, uLens: { value: new THREE.Vector4(th * aspect, th, dip, rad(motion.edgeDeg)) }, uUp: { value: up }, uRim: { value: new THREE.Vector4(def.radius, a.deckHigh[0], a.deckHigh[1], rad(a.rimDeg)) },
-          uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform,
+          uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLayer: { value: new THREE.Vector3().fromArray(l.tint) }, uDiag: diagUniform, uGrad: gradUniform, uSlip: { value: new THREE.Vector4() }, uTaps: { value: 1 }, uHeld: { value: 0 },
         },
         ...BLEND,
         side: THREE.DoubleSide,
@@ -322,7 +337,7 @@ export class CloudRelief {
     return r
   }
 
-  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, sky = 1): void {
+  update(time: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, sky = 1, slip: THREE.Vector3 | null = null): void {
     const m = this.motion
     const dt = Math.min(Math.max(time, -m.flowSeconds), m.flowSeconds)
     const aspect = view.format.width / view.format.height
@@ -335,6 +350,7 @@ export class CloudRelief {
       u.uAspect!.value = aspect
     }
     const sway = m.swayRad * Math.sin(m.swayPerSecond * dt)
+    const perUnit = view.format.height / (2 * Math.tan(rad(view.camera.fov) / 2))
     for (const l of this.layers) {
       const u = l.material.uniforms
       ;(u.uHaze!.value as THREE.Vector2).set(m.hazeDir[0] * m.hazeSpeed * dt, m.hazeDir[1] * m.hazeSpeed * dt)
@@ -342,6 +358,10 @@ export class CloudRelief {
       u.uGain!.value = gain
       u.uVignette!.value = vignette
       u.uAspect!.value = aspect
+      if (slip) (u.uSlip!.value as THREE.Vector4).set(slip.x, slip.y, slip.z, perUnit)
+      else (u.uSlip!.value as THREE.Vector4).set(0, 0, 0, 0)
+      u.uTaps!.value = slip ? m.slipTaps : 1
+      u.uHeld!.value = slip && u.uHasAlpha!.value > 0.5 ? m.slipTaps : 0
     }
   }
 
