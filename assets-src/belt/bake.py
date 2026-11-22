@@ -10,10 +10,9 @@ F = np.float32
 np.seterr(over='ignore')
 
 ROCKS = [
-    dict(id='a', seed=1107, n=640, axes=(1.0, 0.80, 0.68), lumps=0.17, facets=6, craters=72, rmax=0.50, grooves=3),
+    dict(id='a', seed=1107, n=832, axes=(1.0, 0.80, 0.68), lumps=0.17, facets=6, craters=72, rmax=0.50, grooves=3, soft=0.12, wobble=0.02, cracks=((4.0, 0.03, 0.007), (9.5, 0.035, 0.0035)), boulders=((5, 0.10), (8, 0.2), (14, 0.25))),
     dict(id='b', seed=2311, n=512, axes=(1.0, 0.70, 0.62), lumps=0.22, facets=5, craters=56, rmax=0.42, grooves=2),
     dict(id='c', seed=3709, n=384, axes=(1.0, 0.86, 0.60), lumps=0.20, facets=7, craters=48, rmax=0.46, grooves=1),
-    dict(id='d', seed=4127, n=384, axes=(1.0, 0.66, 0.58), lumps=0.24, facets=4, craters=40, rmax=0.38, grooves=2),
 ]
 TILE = 512
 
@@ -160,9 +159,11 @@ def radius(d, p):
     r = r * (1 + p['lumps'] * fbm(d * F(1.15) + off[0], p['seed'] + 1, 3))
     for n, hgt in p['planes']:
         t = hgt / np.maximum(d @ n, 1e-3)
-        k = F(0.07)
+        k = F(p.get('soft', 0.07))
         hh = np.clip(0.5 + 0.5 * (r - t) / k, 0, 1)
         r = r * (1 - hh) + t * hh - k * hh * (1 - hh)
+    if p.get('wobble'):
+        r = r + p['wobble'] * fbm(d * F(5.3) + off[6], p['seed'] + 21, 2)
     base = r.copy()
     r = r + 0.022 * fbm(d * F(2.7) + off[1], p['seed'] + 2, 3, gain=0.42)
     for cdir, rho, depth, rim, deg in p['cr']:
@@ -193,6 +194,13 @@ def radius(d, p):
         r += cells(d, freq, p['seed'] + 50 + i, fill, 0.13, 0.3, 1)
     r += cells(d, 44, p['seed'] + 90, 0.2, 0.06, 0.16, -1)
     r += cells(d, 90, p['seed'] + 91, 0.25, 0.08, 0.2, -1)
+    for i, (freq, fill) in enumerate(p.get('boulders', ())):
+        r += cells(d, freq, p['seed'] + 120 + i, fill, 0.06, 0.16, -1)
+    for i, (freq, width, depth) in enumerate(p.get('cracks', ())):
+        v = gnoise(d * F(freq) + off[7], p['seed'] + 130 + i)
+        where = np.clip(0.2 + 1.4 * gnoise(d * F(1.7) + off[i], p['seed'] + 140 + i), 0, 1)
+        line = np.clip(1 - np.abs(v) / width, 0, 1)
+        r -= F(depth) * where * line * line * (3 - 2 * line)
     r += 0.0016 * fbm(d * F(30) + off[5], p['seed'] + 6, 4)
     return r, base
 

@@ -17,7 +17,7 @@ out vec4 outColor;
 void main() {
   vec2 p = (gl_PointCoord - 0.5) * uSize;
   float r2 = dot(p, p);
-  outColor = vec4(uColor * (exp(-r2 / 0.9) + 0.07 * exp(-r2 / (0.02 * uSize * uSize)) + 0.05 * exp(-p.y * p.y / 0.7 - p.x * p.x / (0.06 * uSize * uSize))), 0.0);
+  outColor = vec4(uColor * (exp(-r2 / 0.9) + 0.07 * exp(-r2 / (0.02 * uSize * uSize))), 0.0);
 }`
 
 export class FarPoint {
