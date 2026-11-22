@@ -1,22 +1,38 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T15:41:30.203Z",
- "head": "d4cb5fc6ca71ec36e3eef219f9a63d792099a492",
- "note": "15:41 UTC, tree holds main ffbef501, head d4cb5fc6 (code as 483cf916). Measure on the head: G13 0 of 463, G5 0.329 0.452 0.780 0.386, G17 1755 1.198 / 1.138, 2010 1.044 / 1.000. Pictures as at 15:12 (Moon near the Earth, Moon shape, terrain fine detail). In work: the dive arc for the first severe of R4 (horizon kept at the top of the frame into the cover), drafts follow.",
+ "pushed": "2026-11-22T15:52:30.966Z",
+ "head": "939680fafe47515002618cf9834e995d073558e7",
+ "note": "15:53 UTC, tree holds main ffbef501. Head 939680fa (local, not yet pushed while its proof runs): the dive arc for the first severe of R4 round 33, on top of the Moon near the Earth, the Moon's shape and the terrain's fine detail. Measured: judged and travel frames keep their draft bytes across the arc; G13 code 0 of 23 soft on 1856 to 1878; measure on the build before the arc G13 0 of 463, G5 0.329 0.452 0.780 0.386, G17 1755 1.198 / 1.138, 2010 1.044 / 1.000. Weak: the picture rolls 47 deg in 20 frames in the open; the rise's severe is not answered; the starless fill beside the Moon at 1845 to 1870.",
  "looks": [
   {
-   "time": "2026-11-22T15:35:24.638Z",
-   "file": "20261122153524638-job-frame-01857.jpg",
+   "time": "2026-11-22T15:49:46.493Z",
+   "file": "20261122154946493-note-strip.jpg",
+   "source": "out/work/earth/pb/r1/arc/strip.png",
+   "kind": "note",
+   "label": "earth.dive with the arc 939680fa, frames 1856 to 1888, draft tier, tree holds main ffbef501: the limb stays at the top and flattens into the terrain side's horizon; Sun on the screen turns from the upper left to the top by 1876",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T15:49:45.555Z",
+   "file": "20261122154945555-note-arc-pairs.jpg",
+   "source": "out/work/earth/pb/r1/arc/arc-pairs.png",
+   "kind": "note",
+   "label": "earth.dive 1860 to 1882, draft tier, tree holds main ffbef501: upper rows as on main and CUT33 (straight down, no horizon from 1862, horizon pops in at 1882), lower rows the dive arc 939680fa (horizon kept at the top into the cover; R4 round 33 severe on the dive)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T15:48:37.978Z",
+   "file": "20261122154837978-job-frame-01856.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "label": "earth.dive frame 1856, draft tier, texels view, from the running g13 job",
    "stop": "earth",
    "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
+   "frame": 1856,
+   "tier": "draft",
    "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
+   "diag": "texels",
+   "job": "g13"
   },
   {
    "time": "2026-11-22T15:22:05.257Z",
