@@ -1,77 +1,77 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T00:46:05.350Z",
- "head": "1843505f372a3156f03bcb6252f809d9e9e401ea",
- "note": "Phase 6: dive proof sheets 1868 to 1892 (items 1 and 3), rise proof rendering, items 4 and 5 coded off tree",
+ "pushed": "2026-11-22T01:00:27.892Z",
+ "head": "b42f39a7d4938593e2554f9b041410399def239c",
+ "note": "Phase 6: rise proof 2122 to 2140 rendering; items 4, 5, 7 prepared off tree",
  "looks": [
   {
-   "time": "2026-11-22T00:45:40.302Z",
-   "file": "20261122004540302-note-sheet-dive-1884-1892.jpg",
-   "source": "out/work/earth/p6/sheet-dive-1884-1892.jpg",
+   "time": "2026-11-22T01:00:26.894Z",
+   "file": "20261122010026894-note-night-streak2.jpg",
+   "source": "out/work/earth/p6/night-streak2.png",
    "kind": "note",
-   "label": "Phase 6 item 3 proof: every frame 1884 to 1892, review tier at preview format, version c (cc64d1c)",
+   "label": "Item 8: night limb streak PA 70 to 130, hero over kept film",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T00:44:51.494Z",
-   "file": "20261122004451494-frame-p-1892.jpg",
-   "source": "out/work/earth/p6/rc/p-1892.png",
+   "time": "2026-11-22T01:00:25.814Z",
+   "file": "20261122010025814-note-sheet-rise-a.jpg",
+   "source": "out/work/earth/p6/sheet-rise-a.jpg",
+   "kind": "note",
+   "label": "Item 2: rise review proof 2122 to 2131, version c (queue running)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:00:24.889Z",
+   "file": "20261122010024889-note-map-full.jpg",
+   "source": "out/work/earth/p6/aur/map-full.png",
+   "kind": "note",
+   "label": "Item 5: new aurora map for the air shell (not in the film yet)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:00:23.701Z",
+   "file": "20261122010023701-note-moon-kept.jpg",
+   "source": "out/work/earth/p6/moon-kept.png",
+   "kind": "note",
+   "label": "Item 7: kept Moon, hero, 1755, 2156 at 4 times",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:00:22.678Z",
+   "file": "20261122010022678-note-moon-sigma-film4x.jpg",
+   "source": "out/work/earth/moon/moon-sigma-film4x.png",
+   "kind": "note",
+   "label": "Item 7: Moon at film scale, 4 times, hero against fine source",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:00:21.610Z",
+   "file": "20261122010021610-note-moon-fine-6x.jpg",
+   "source": "out/work/earth/moon/moon-fine-6x.png",
+   "kind": "note",
+   "label": "Item 7: Moon fine source at 6 times the hero (hero kept, fine detail from take 1)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:59:13.101Z",
+   "file": "20261122005913101-frame-p-2132.jpg",
+   "source": "out/work/earth/p6/rr/p-2132.png",
    "kind": "frame",
-   "label": "earth.dive frame 1892, review tier",
+   "label": "earth.rise frame 2132, review tier",
    "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1892,
+   "segment": "earth.rise",
+   "frame": 2132,
    "tier": "review",
    "format": "preview",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-22T00:43:41.390Z",
-   "file": "20261122004341390-note-sheet-dive-1868-1884.jpg",
-   "source": "out/work/earth/p6/sheet-dive-1868-1884.jpg",
+   "time": "2026-11-22T00:45:40.302Z",
+   "file": "20261122004540302-note-sheet-dive-1884-1892.jpg",
+   "source": "out/work/earth/p6/sheet-dive-1884-1892.jpg",
    "kind": "note",
-   "label": "Phase 6 item 1 proof: every frame 1868 to 1884, review tier at preview format, version c (cc64d1c)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:22:46.021Z",
-   "file": "20261122002246021-note-aur-1755-hero-film.jpg",
-   "source": "out/work/earth/p6/aur-1755-hero-film.png",
-   "kind": "note",
-   "label": "Item 5 analysis: aurora at 1755, hero and kept film",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:22:45.360Z",
-   "file": "20261122002245360-note-lsz-1755-a.jpg",
-   "source": "out/work/earth/p6/lsz-1755-a.png",
-   "kind": "note",
-   "label": "Item 4 analysis: night limb unwrapped at 1755 (hero, film, gained)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:22:44.748Z",
-   "file": "20261122002244748-note-lsz-2156-a.jpg",
-   "source": "out/work/earth/p6/lsz-2156-a.png",
-   "kind": "note",
-   "label": "Item 4 analysis: kept night limb unwrapped at 2156",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:22:44.137Z",
-   "file": "20261122002244137-note-lsz-1857-a.jpg",
-   "source": "out/work/earth/p6/lsz-1857-a.png",
-   "kind": "note",
-   "label": "Item 4 analysis: kept night limb unwrapped at 1857 (film, film x gain)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:22:43.444Z",
-   "file": "20261122002243444-note-rc-a.jpg",
-   "source": "out/work/earth/p6/rc-a.jpg",
-   "kind": "note",
-   "label": "Phase 6 c: dive review frames 1876 to 1881 (preview format)",
+   "label": "Phase 6 item 3 proof: every frame 1884 to 1892, review tier at preview format, version c (cc64d1c)",
    "stop": "earth"
   }
  ]
