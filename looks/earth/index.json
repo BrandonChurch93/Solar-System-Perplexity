@@ -1,9 +1,67 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T10:29:37.662Z",
- "head": "a4100eeefa1175683e8178b34bb555629d8c8e33",
- "note": "Earth: rise cover sheet on batch 20 equals batch 19 to the pixel; terrain sky margin cure prepared in scratch (not applied) while the dive cover sheet renders; waiting for batch 21 (flag unfold, leave strip). Head a4100ee holds main 8c23dc2",
+ "pushed": "2026-11-22T10:56:27.281Z",
+ "head": "01643923d6457e014aa4c703a74d6bfe4e42b40b",
+ "note": "Earth on batches 21 and 22 (head 0164392 holds main d5b851f): judged hold, dive, terrain keep their draft bytes; gates pass; the leave 2176 to 2190 is rendering, then the sky margin proof and the arrival strip",
  "looks": [
+  {
+   "time": "2026-11-22T10:56:26.534Z",
+   "file": "20261122105626534-note-d-2156-pair.jpg",
+   "source": "out/work/earth/pb/u/d-2156-pair.png",
+   "kind": "note",
+   "label": "Judged rise frame 2156, draft: batch 20 left (71d96936), batches 21 and 22 right (c3e4e0c5). Only the sky moved (the band behind Earth, the flight sky of batch 21); on the disc 6,735 of 636,101 pixels differ by exactly 1 level. Hold 1755, dive 1857 and terrain 2010 keep their draft bytes. agent/earth 0164392 (code c2a211a), tree holds main d5b851f (engine batches 21 and 22, engine hash be043ade)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:56:25.850Z",
+   "file": "20261122105625850-note-leave4.jpg",
+   "source": "out/work/earth/pb/v/leave4.png",
+   "kind": "note",
+   "label": "The leave on batches 21 and 22, first four frames back (review tier, preview format): 2178, 2180 above, 2182, 2184 below. The launch starts from rest; shutter motion 6.8, 16.5, 30.5, 48.5 px. The aurora still reads as rays at 2180 and softens to a green glow at 2182 and 2184. Frames 2178, 2180, 2182 are byte equal on batch 21 and batch 22. agent/earth 0164392 (code c2a211a), tree holds main d5b851f (engine batches 21 and 22, engine hash be043ade)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T10:55:51.582Z",
+   "file": "20261122105551582-frame-p-2184.jpg",
+   "source": "out/work/earth/pb/v/p-2184.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2184, review tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2184,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T10:46:13.855Z",
+   "file": "20261122104613855-frame-d-2156-b22.jpg",
+   "source": "out/work/earth/pb/u/d-2156-b22.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
+  {
+   "time": "2026-11-22T10:30:59.000Z",
+   "file": "20261122103059000-frame-f01879-review.jpg",
+   "source": "out/work/sheets/.frames-ZOFhKu/f01879-review.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1879, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1879,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T10:29:36.480Z",
    "file": "20261122102936480-note-w-right-border.jpg",
@@ -68,20 +126,6 @@
    "engine": "8c3819aa56f46da4"
   },
   {
-   "time": "2026-11-22T10:21:28.731Z",
-   "file": "20261122102128731-frame-f02136-review.jpg",
-   "source": "out/work/sheets/.frames-KqVIHo/f02136-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2136, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
    "time": "2026-11-22T10:07:45.850Z",
    "file": "20261122100745850-note-p-2182.jpg",
    "source": "out/work/earth/pb/n/p-2182.png",
@@ -140,20 +184,6 @@
    "frame": 2099,
    "tier": "review",
    "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T09:56:36.496Z",
-   "file": "20261122095636496-frame-p-2182.jpg",
-   "source": "out/work/earth/pb/n/p-2182.png",
-   "kind": "frame",
-   "label": "earth.travel frame 2182, review tier",
-   "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2182,
-   "tier": "review",
-   "format": "preview",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
   },
@@ -318,22 +348,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T09:50:34.184Z",
-   "file": "20261122095034184-note-night-new.jpg",
-   "source": "out/work/earth/pb/m/night-new.png",
-   "kind": "note",
-   "label": "Item 4, night limb at 1755, 1857, 2156 on the batch 20 stills, native at 3 times and at 3 times gain: dips 3, 0, 0 of 11. READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:50:33.433Z",
-   "file": "20261122095033433-note-night-1755.jpg",
-   "source": "out/work/earth/pb/m/night-1755.png",
-   "kind": "note",
-   "label": "Item 4, night limb at 1755: approved, kept, new, native at 3 times and at 3 times gain (batch 20 still). READY 2, agent/earth 8fb3b3b (code c2a211a), tree holds main d04b77e (engine batch 20, engine hash 8c3819aa)",
-   "stop": "earth"
-  },
-  {
    "time": "2026-11-22T09:07:40.233Z",
    "file": "20261122090740233-frame-f01788-review.jpg",
    "source": "out/work/sheets/.frames-O4CMlC/f01788-review.png",
@@ -343,20 +357,6 @@
    "segment": "earth.hold",
    "frame": 1788,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:19:30.168Z",
-   "file": "20261122081930168-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
