@@ -222,7 +222,7 @@ void main() {
   float wide = mix(uEdge.x, uLowEdge.x, low);
   float inside = 1.0 - smoothstep(-wide, wide, over / max(fwidth(rt), 1e-7));
   float beyond = max(over, 0.0);
-  if (uDiag >= 2 && inside < 0.5) discard;
+  bool gone = uDiag >= 2 && inside < 0.5;
   float air = (uAir.x * exp(-beyond / uAir.y) + uLowEdge.y * low * exp(-beyond / uLowEdge.z) + uAir.z * mix(uLitEdge.w, 1.0, dusk) * exp(-beyond / mix(uAir.w, uNightAir.z, dusk))) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
   vec3 d = spinY(uToBody * n, uSpin);
   vec3 fl;
@@ -254,8 +254,10 @@ ${PATCH_LEVELS}
   vec2 wuv = vec2(lon / (2.0 * PI) * uWispShape.x - sign(band) * uWispT * (1.0 - fl.z), lat * uWispShape.y + 0.5);
   float lon2 = fract(lon / (2.0 * PI) + 0.5) - 0.5;
   float lu = lon / (2.0 * PI);
-  vec2 wdx = vec2((abs(dFdx(lu)) < abs(dFdx(lon2)) ? dFdx(lu) : dFdx(lon2)) * uWispShape.x, dFdx(lat) * uWispShape.y);
-  vec2 wdy = vec2((abs(dFdy(lu)) < abs(dFdy(lon2)) ? dFdy(lu) : dFdy(lon2)) * uWispShape.x, dFdy(lat) * uWispShape.y);
+  vec2 lud = vec2(dFdx(lu), dFdy(lu));
+  vec2 l2d = vec2(dFdx(lon2), dFdy(lon2));
+  vec2 wdx = vec2((abs(lud.x) < abs(l2d.x) ? lud.x : l2d.x) * uWispShape.x, dFdx(lat) * uWispShape.y);
+  vec2 wdy = vec2((abs(lud.y) < abs(l2d.y) ? lud.y : l2d.y) * uWispShape.x, dFdy(lat) * uWispShape.y);
   vec3 east = cross(vec3(0.0, 1.0, 0.0), df);
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
@@ -298,6 +300,7 @@ ${PATCH_LEVELS}
     cover = total;
   }
   outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
+  if (gone) discard;
 }`
 
 export class Globe {

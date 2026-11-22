@@ -5,7 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
-import { Deck, type DeckMeta } from './deck'
+import { Deck, type DeckMeta, type DeckTiers } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
 import { Pall, PallSea, pallUniforms } from './pall'
@@ -13,6 +13,7 @@ import * as look from './look'
 import { plan } from './plan'
 import reliefJson from './relief.json'
 import skyJson from './sky.json'
+import tiersJson from './tiers.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -62,7 +63,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const seaUniforms = pallUniforms(look.deck.pall.shell)
-  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, wispMap, seaUniforms)
+  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, tiersJson as DeckTiers, wispMap, seaUniforms)
   terrain.add(ground.group)
   const sea = new PallSea(seaUniforms)
   terrain.add(sea.mesh)

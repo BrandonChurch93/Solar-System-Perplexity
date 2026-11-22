@@ -76,8 +76,9 @@ void main() {
   float toPlanet = dot(uPlanet.xyz, ray);
   float pm = sqrt(max(dot(uPlanet.xyz, uPlanet.xyz) - toPlanet * toPlanet, 0.0));
   float front = toPlanet - sqrt(max(uPlanet.w * uPlanet.w - pm * pm, 0.0));
-  alpha *= front < depth ? smoothstep(-uFeather.x, uFeather.x, (pm - uPlanet.w) / max(fwidth(pm), 1e-7)) : 1.0;
-  if (uDiag >= 2 && alpha < 0.5) discard;
+  float pmw = max(fwidth(pm), 1e-7);
+  alpha *= front < depth ? smoothstep(-uFeather.x, uFeather.x, (pm - uPlanet.w) / pmw) : 1.0;
+  bool gone = uDiag >= 2 && alpha < 0.5;
   vec3 d = uToLocal * n;
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   float ndl = dot(n, uSunW);
@@ -94,6 +95,7 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = (albedo * shade + uNight * tone * (1.0 - day) * (1.0 - smoothstep(uNightPhase.x, uNightPhase.y, dot(uSunW, -ray)))) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, alpha), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.95, 0.85, 0.2), vec2(0.0), length(vView));
+  if (gone) discard;
 }`
 
 export class Io {

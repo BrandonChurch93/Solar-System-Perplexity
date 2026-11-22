@@ -88,13 +88,13 @@ out vec4 outColor;
 ${DIAG_GLSL}
 ${PALL_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec4 cloud = vec4(0.0);
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     cloud = pall(vNdc);
     cloud.a *= pallReach(vNdc);
   }
   outColor = vec4(cloud.rgb * uGain * cloud.a, cloud.a);
+  if (uDiag >= 2) discard;
 }`
 
 export function pallUniforms(shell: [number, number]): Record<string, THREE.IUniform> {
