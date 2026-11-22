@@ -124,3 +124,21 @@ Tree: d96263f, main da02e63 (code 3a09527), engine hash be043ade04a7ab6e, stop h
 - The G13 numbers of the other 417 frames (hold, terrain side of the dive, terrain, rise) are the same to the last digit as the READY head's. Worst frames as before: 3253 0.95 percent, 3254 0.78, 3261 0.71.
 - G5 pass: coverage at 2997 0.544 (READY head 0.460); 2895 0.352, 3150 0.754, 3296 0.280 as before; invalid 0.
 - G17 pass, unchanged: 2895 median 1.039, quarter point 0.949; 3150 median 1.023, quarter point 0.963.
+
+## The dive cover review sheet
+
+- READY head `kept/dive-cover-b20.png`, trial `kept/dive-cover-trial.png` (bc9ddcd176be7f8a); frames 3019 to 3030, every frame.
+- 3024 to 3030 (the cut and the terrain side): the same bytes as the READY head, all seven.
+- 3019 to 3023 (the orbit side) differ. Looked at each beside the READY head at 960 px a frame and at 900 px across the cut (`cov_a.jpg`, `cov_b.jpg`, `cov_cut.jpg` among the looks):
+  - 3019, 3020: the camera is higher (0.249 against 0.204 planet radii at 3019), so the black corner of sky at the upper left is a little larger; the pale smear of the zone sits where the READY head already shows the red smear of the storm.
+  - 3021: the red smear at the lower left, fainter than in the READY head. 3022: a trace of it; the READY head has none. 3023: cream haze, the limb line in the same place.
+  - The cut 3023 to 3024: as small as in the READY head. Color, limb line and direction of the streaks carry across.
+- Screen motion in the shutter under the cover, 3019 to 3023: 163 to 198 px (READY head 142 to 163). The trial's disc is 7 percent smaller than the READY head's at 3019 (radius 1503 against 1619) and 3 percent smaller at 3023 (2435 against 2511).
+
+## The same proof on the round 33 build
+
+Tree: branch head `ddc59b3`, which holds main 677e7286 (code 84b0ea4a, the round 33 build). `git diff origin/main -- src/stops/jupiter public/assets/jupiter` is the two lines of `plan.ts`.
+
+- Drafts 2970 to 3023: 54 of 54 the same bytes as on main 3a09527. So the dive review sheet, the dive cover sheet and the measures above stand for this build.
+- Drafts 2895, 3150, 3024 to 3033, 3261 to 3277: 29 of 29 the same bytes. Draft 3296 moves.
+- Finals: 2895 c34e30ce2c61de16, 2997 645d422007dc1f39, 3150 173790897f041964: the same bytes as on main 3a09527. 3296 2f0f0822aa570c8e moves against main 3a09527 in 570,936 pixels, every one of them in the sky: the difference map is black inside the disc and on Io. That is the flight sky of the round 33 build, not this folder.
