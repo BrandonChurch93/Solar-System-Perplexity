@@ -1,9 +1,39 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T07:15:13.462Z",
- "head": "12b5fc2b64e89b447733010125585a84e4f1c4ae",
- "note": "task 7 done: finals, native crops, review sheet",
+ "pushed": "2026-11-22T07:33:34.381Z",
+ "head": "2ca53e20402ccabcd47791babf90cec71724eadf",
+ "note": "belt placement check on the travel head",
  "looks": [
+  {
+   "time": "2026-11-22T07:33:33.662Z",
+   "file": "20261122073333662-note-belt-t7-travel-a3c388b-draft-strip-2756-2804.jpg",
+   "source": "../send/belt-t7-travel-a3c388b-draft-strip-2756-2804.jpg",
+   "kind": "note",
+   "label": "belt on travel head a3c388b: draft strip",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T07:33:33.137Z",
+   "file": "20261122073333137-note-belt-t7-travel-a3c388b-final-2782.jpg",
+   "source": "../send/belt-t7-travel-a3c388b-final-2782.jpg",
+   "kind": "note",
+   "label": "belt on travel head a3c388b: final 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T07:23:48.952Z",
+   "file": "20261122072348952-frame-f02790.jpg",
+   "source": "out/work/belt/t7/dC/f02790.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2790, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2790,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "323127ba29b6b6d6"
+  },
   {
    "time": "2026-11-22T07:15:12.762Z",
    "file": "20261122071512762-note-belt-t7-final-2787-after.jpg",
@@ -49,36 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "cd28657af7d3b4d0"
-  },
-  {
-   "time": "2026-11-22T07:12:47.177Z",
-   "file": "20261122071247177-frame-f02769.jpg",
-   "source": "out/work/belt/t7/near/f02769.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2769, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2769,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cd28657af7d3b4d0"
-  },
-  {
-   "time": "2026-11-22T06:56:34.428Z",
-   "file": "20261122065634428-note-belt-t7-final-2792-after.jpg",
-   "source": "../send/belt-t7-final-2792-after.jpg",
-   "kind": "note",
-   "label": "task 7 final tier: belt-t7-final-2792-after",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T06:56:33.892Z",
-   "file": "20261122065633892-note-belt-t7-final-2782-after.jpg",
-   "source": "../send/belt-t7-final-2782-after.jpg",
-   "kind": "note",
-   "label": "task 7 final tier: belt-t7-final-2782-after",
-   "stop": "mars"
   }
  ]
 }
