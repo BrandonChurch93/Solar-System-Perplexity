@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -213,11 +213,16 @@ export class FilmDirector implements Director {
     return this.frames[this.plans.length - 1]!.rotation.clone().multiply(local).multiply(drift(frame / config.fps))
   }
 
-  private lookbackPlace(t: number): { phase: number; azimuth: number; distance: number; s: number } {
+  private lookbackPlace(t: number): { phase: number; azimuth: number; distance: number; s: number; hand: number } {
     const lb = config.segments.find((x) => x.kind === 'lookback')!
-    const s = t - (lb.start + lb.end) / 2
+    const rest = (at: number): number => {
+      const x = Math.min(Math.max((at - lb.start) / LOOKBACK.settle, 0), 1)
+      return Math.min(at - lb.start, 0) + (LOOKBACK.settle * (1 - (1 - x) * (1 - x) * (1 - x))) / 3
+    }
     const rad = THREE.MathUtils.degToRad
-    return { phase: rad(LOOKBACK.phaseDeg + LOOKBACK.phasePerSecond * s), azimuth: rad(LOOKBACK.azimuthDeg), distance: LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s), s }
+    const mid = (lb.start + lb.end) / 2
+    const s = rest(t) - rest(mid)
+    return { phase: rad(LOOKBACK.phaseDeg), azimuth: rad(LOOKBACK.azimuthDeg), distance: LOOKBACK.distance, s, hand: mid + mix(s, t - mid, LOOKBACK.hand) }
   }
 
   private nightSide(phase: number, azimuth: number, distance: number, sun = this.lookbackSun): THREE.Vector3 {
@@ -233,9 +238,9 @@ export class FilmDirector implements Director {
     const tan = Math.tan(rad(LOOKBACK.vfov) / 2)
     const sx = (LOOKBACK.sun[0] + LOOKBACK.sunPerSecond[0] * s) * tan
     const sy = (LOOKBACK.sun[1] + LOOKBACK.sunPerSecond[1] * s) * tan
-    const line = rad(LOOKBACK.lineDeg + LOOKBACK.linePerSecond * s)
+    const line = rad(LOOKBACK.lineDeg)
     const seen = basis(new THREE.Vector3(sx, sy, -1), new THREE.Vector3(sx + Math.cos(line), sy + Math.sin(line), -1))
-    return { position, quaternion: basis(this.lookbackSun, position.clone().negate()).multiply(seen.invert()), vfov: LOOKBACK.vfov }
+    return { position, quaternion: basis(this.lookbackSun, position.clone().negate()).multiply(seen.invert()).multiply(drift(at.hand)).multiply(drift(t).invert()), vfov: LOOKBACK.vfov }
   }
 
   private turnEnd(i: number): number {
