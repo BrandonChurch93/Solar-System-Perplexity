@@ -1,0 +1,49 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-06.png",
+   "where": "crop D upper-left and crop B upper limb (also image-07.png crops J and N, image-03.png crops K and O, image-01.png, image-05.png)",
+   "what": "Saturn's outer atmosphere mesh separates from the opaque globe limb as a detached amber halo and intersects the near-side C-ring in a hard straight diagonal crease with doubled internal glow bands",
+   "fix": "integrate atmospheric scattering continuously from the planet surface limb without an air gap, and depth-fade or raymarch the atmosphere volume through the ring plane so no hard mesh-plane intersection line or patch wedge appears"
+  },
+  {
+   "severity": "major",
+   "file": "image-02.png",
+   "where": "crop F outer A-ring edge (also image-03.png crop N, image-04.png crops S and T, image-08.png crop S)",
+   "what": "the outer rim of the A-ring has a clipped white and cyan-blue 2-pixel fringe with stair-stepped aliasing, while the outer F-ring breaks into a faint dotted 1-pixel line",
+   "fix": "remove the bright white/cyan boundary texel at the outer edge of the radial ring texture, soften the outer A-ring alpha roll-off, and render the F-ring with filtered sub-pixel width and multisample antialiasing"
+  },
+  {
+   "severity": "major",
+   "file": "image-08.png",
+   "where": "crop V across the Milky Way skybox and left ring edge (also image-06.png crops A, E, G, H, I and image-02.png crops B and G)",
+   "what": "the Milky Way background map is visibly upscaled and blocky at native resolution with 2x2 to 4x4 square pixel-blob stars, and shows an abrupt curved opacity step at the shadowed ring boundary",
+   "fix": "replace the low-resolution Milky Way environment texture with a higher-resolution map or procedural starfield whose stars are crisp sub-pixel point spreads, and smooth the optical-depth falloff at the outer and inner shadowed ring edges"
+  },
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "crop L moon limb and crop O lower planet limb (also image-07.png crops J and O, image-02.png crops A and C, image-06.png crops A and D)",
+   "what": "Titan's lit limb and Saturn's globe silhouette against space and the rings show raw 1-pixel stair-stepped polygon/sphere aliasing with no atmospheric limb softening on Titan",
+   "fix": "increase geometric/shader antialiasing (MSAA or temporal supersampling) on planet and moon silhouettes and add a soft orange atmospheric haze falloff around Titan's limb"
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crop A mid-latitude cloud bands (also image-03.png crop K north pole, image-06.png crop B, image-07.png crops J and O)",
+   "what": "Saturn's cloud texture is slightly soft at 1:1 with isolated 1-2 pixel bright white noise specks, longitudinal texel pinching/speckle at the north pole, and blown-out flat white highlights near the sunlit equatorial limb",
+   "fix": "clean hot-pixel specks from the cloud albedo map, reproject or blend a dedicated polar cap map to eliminate pole pinching, and apply highlight rolloff on the sunlit limb"
+  },
+  {
+   "severity": "minor",
+   "file": "image-06.png",
+   "where": "crop B foreshortened upper rings and crop F mid-rings (also image-02.png crops B and F)",
+   "what": "high-frequency radial ring noise produces single-pixel grain speckle and slight concentric shimmering along steeply foreshortened ringlets",
+   "fix": "enable anisotropic filtering or mip-filtered radial band integration on the ring shader to suppress single-pixel speckle at grazing angles"
+  }
+ ]
+}
