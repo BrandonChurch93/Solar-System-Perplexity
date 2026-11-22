@@ -1634,3 +1634,10 @@ R5, score 6:
 - Named as prices in the message: G17 at 360 1.032 to 1.030 (25th percentile 0.996 to 0.994), 247 and 495 another face of the same globe, 360 moved by 0.1 px, the boil alone on a still globe in the hold.
 - Open after this cut: the slide of the near ground in the opening (item 111, second half; it is `climb.ease.speed`, the camera's ground speed, and 0, 60, 90 are on their poses), items 110, 128, 129, the seam contrast and near field focus at 90 (109).
 - Next: wait for the Builder's word. If he takes only the corner, the plan file goes back to 3.4 only on his word (it is its own commit, 20d06b43).
+
+## 18:27 UTC: 495 at the final tier, a low priority note sent
+
+- Final of 495 with the number (`dr/fin/f00495.png`): 60ae8e7d76be2773, mirrorcheck clean, 238 s.
+- `hk3/fin5/f00495.png` (621a8e5b9e62341f, 14:36) is no fair pair: it is from before the leave changed on main (paler disc, no limb strip) and differs over the whole frame (mean 4.1 levels). The fair pair is the drafts `dr/ref/f00495.png` (3.4) and `dr/c/f00495.png` (1), both on today's tree: difference only in the Sun's box, columns 998 to 1919, rows 0 to 687, mean 0.78.
+- Sent to `/root` as a low priority note at 18:27; READY stays 02e8dbc1. Branch head dd0e7430 and later add only CUT35.md and notes.
+- Working tree: `plan.ts` at 1 (committed in 20d06b43). Round 35 is cut at 18:30. Now waiting for the Builder's word.
