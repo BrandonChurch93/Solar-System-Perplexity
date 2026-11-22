@@ -1,4 +1,4 @@
-import json, sys
+import json, os, sys
 import numpy as np
 import cv2
 from common import WORK, APPROVED, LEFT, TOP, SPAN, CANVAS, PLATE_TOP, TX, TY, read, write, step
@@ -20,7 +20,13 @@ CROP = 640
 APRON_OUT = (5504, 1548)
 APRON_CROP = 688
 APRON_FIT = (0.36, 0.6, 0.1, 0.9)
-APRON_LANES = (6, 0.8, 0.5, (0.85, 1.05, 1.25), 4, 0.6, 16)
+APRON_LANES = ('A-6', 6, 0.95, 0.9, (0.85, 1.05, 1.25), 60, 0.6, 40)
+APRON_UNEVEN = (20261121, 70, 0.45)
+APRON_VEINS = ('A-5', 2.5, 0.4, 0.6)
+APRON_CROWN = (-0.3, 0.9)
+APRON_FLOOR = 0.03
+APRON_MATCH = (40, 0.75, 1.3, 0.1)
+APRON_HOLD = (0.55, 0.9, 0.5)
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
 APRON_CANVAS = (1920, 1080)
@@ -264,11 +270,10 @@ def apron_place(take):
     print('cc', round(float(cc), 4), 'matrix', warp.round(5).tolist(), 'band agreement 2 to 8 px, rows', rows, 'in five columns', out)
 
 
-def apron_build(out_full, out_web, check):
-    base = read(f'{DIR}/apron-base.png')
-    h, w = base.shape[:2]
-    info = json.load(open(f'{DIR}/apron-place.json'))
-    up = read(f'{DIR}/apron-take-low-x2.png')
+def apron_layer(tag, shape, sigma):
+    h, w = shape
+    info = json.load(open(f'{DIR}/apron-place-{tag}.json'))
+    up = read(f'{DIR}/apron-take-low-x2-{tag}.png')
     ow, oh = APRON_OUT
     s = ow / w
     a = np.array([[1 / s, 0, 0.5 / s - 0.5], [0, 1 / s, 0.5 / s - 0.5 + h * 0.5], [0, 0, 1]])
@@ -276,40 +281,57 @@ def apron_build(out_full, out_web, check):
     sx, sy = up.shape[1] / w, (up.shape[0] + 2 * APRON_CROP) / h
     u = np.array([[sx, 0, 0.5 * sx - 0.5], [0, sy, 0.5 * sy - 0.5 - 2 * APRON_CROP], [0, 0, 1]])
     full = (u @ m @ a)[:2]
-    print('apron px a take px', round(float(1 / full[0, 0]), 4), round(float(1 / full[1, 1]), 4))
     take = cv2.warpAffine(up, full, (ow, oh), flags=cv2.INTER_CUBIC | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT_101).astype(np.float32) / 255
-    del up
+    lt = np.log(take @ np.array([0.299, 0.587, 0.114], np.float32) + APRON_FLOOR)
+    return lt - cv2.GaussianBlur(lt, (0, 0), sigma * s), a
+
+
+def apron_build(out_full, out_web, check):
+    h, w = read(f'{DIR}/apron-base.png').shape[:2]
+    ow, oh = APRON_OUT
+    s = ow / w
     b = read(f'{DIR}/apron-base-low-x.png').astype(np.float32) / 255
     assert b.shape[:2] == (oh, ow)
+    key = np.array([0.299, 0.587, 0.114], np.float32)
+    tag, sigma, gain, crown, tint, soft, lift, tone = APRON_LANES
+    e, a = apron_layer(tag, (h, w), sigma)
     grey = cv2.cvtColor(read(f'{DIR}/apron-grey.png'), cv2.COLOR_RGB2GRAY).astype(np.float32) / 255
     grey = cv2.warpAffine(grey, a[:2], (ow, oh), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REPLICATE)
-    sigma, gain, crown, tint, soft, lift, tone = APRON_LANES
-    grey = np.clip(cv2.GaussianBlur(grey, (0, 0), soft * s) * 2 - 1, 0, 1)
-    key = np.array([0.299, 0.587, 0.114], np.float32)
+    grey = step(cv2.distanceTransform((grey > 0.5).astype(np.uint8), cv2.DIST_L2, 5), 0, soft * s)
 
     def low(x, sig):
         q = 4
         small = cv2.resize(x, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
         return cv2.resize(cv2.GaussianBlur(small, (0, 0), sig / q), (ow, oh), interpolation=cv2.INTER_CUBIC)
 
-    lt = take @ key
-    e = np.log((lt + FLOOR) / (low(lt, sigma * s) + FLOOR))
-    del take, lt
     lb = b @ key
     band = low(lb, 2.5 * s) - low(lb, 10 * s)
     band /= np.sqrt(low(band * band, 30 * s)) + 1e-4
-    e *= gain * grey * np.where(e < 0, 1 - crown * np.clip(band / 1.2, 0, 1), lift)
+    rng = np.random.default_rng(APRON_UNEVEN[0])
+    vary = cv2.resize(rng.random((oh // int(APRON_UNEVEN[1] * s) + 2, ow // int(APRON_UNEVEN[1] * s) + 2), dtype=np.float32), (ow, oh), interpolation=cv2.INTER_CUBIC)
+    vary = APRON_UNEVEN[2] + (1 - APRON_UNEVEN[2]) * step(vary, 0.25, 0.75)
+    e *= np.where(e < 0, gain * vary * (1 - crown * step(band, APRON_CROWN[0], APRON_CROWN[1])), lift)
+    del vary
     del band, lb
+    tag, sigma, gain, up = APRON_VEINS
+    v, _ = apron_layer(tag, (h, w), sigma)
+    e += v * np.where(v < 0, gain, gain * up)
+    del v
+    e *= grey
     out = b * np.exp(e[..., None] * np.where(e[..., None] < 0, np.array(tint, np.float32), 1))
     del e
-    for ch in range(3):
-        out[..., ch] *= (low(b[..., ch], tone * s) + FLOOR) / (low(out[..., ch], tone * s) + FLOOR)
     q = 4
     small = cv2.resize(b, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
     top = cv2.dilate(small, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (APRON_PEAK[0] // q, APRON_PEAK[0] // q)))
     top = cv2.resize(cv2.GaussianBlur(top, (0, 0), APRON_PEAK[0] / q / 3), (ow, oh), interpolation=cv2.INTER_LINEAR)
     out -= np.maximum(out - top, 0) * APRON_PEAK[1]
     del top, small
+    for ch in range(3):
+        out[..., ch] *= (low(b[..., ch], tone * s) + APRON_FLOOR) / (low(out[..., ch], tone * s) + APRON_FLOOR)
+    if os.path.exists(f'{DIR}/apron-tone.npy'):
+        t = cv2.resize(np.load(f'{DIR}/apron-tone.npy'), (ow, oh), interpolation=cv2.INTER_CUBIC)
+        out *= 1 + (t - 1) * np.where(t > 1, 1 - APRON_HOLD[2] * step(out.max(2), APRON_HOLD[0], APRON_HOLD[1])[..., None], 1)
+        del t
     np.clip(out, 0, 1, out=out)
     sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
     res = b + (out - b) * sky
@@ -317,6 +339,37 @@ def apron_build(out_full, out_web, check):
     write(out_web, cv2.resize(res, (ow // 2, oh // 2), interpolation=cv2.INTER_AREA), 88)
     write(check, np.concatenate([cv2.resize(b, (w, h // 2), interpolation=cv2.INTER_AREA), cv2.resize(res, (w, h // 2), interpolation=cv2.INTER_AREA)], 0), 92)
     print('mean before', (b[oh // 4:].mean((0, 1)) * 255).round(2).tolist(), 'after', (res[oh // 4:].mean((0, 1)) * 255).round(2).tolist())
+
+
+def apron_tone(frame):
+    ax, ay, line, hit, inner, wide = front()
+    w, h = APRON_CANVAS
+    film = read(frame).astype(np.float32) / 255
+    ref = cv2.resize(read(APPROVED), (film.shape[1], film.shape[0]), interpolation=cv2.INTER_LANCZOS4).astype(np.float32) / 255
+    sigma, lo, hi = APRON_MATCH[:3]
+    ratio = (cv2.GaussianBlur(ref, (0, 0), sigma) + APRON_FLOOR) / (cv2.GaussianBlur(film, (0, 0), sigma) + APRON_FLOOR)
+    ratio = np.clip(ratio, lo, hi)
+    mx = np.clip(ax, 0, 1) * film.shape[1] - 0.5
+    my = np.clip(ay, 0, 1) * film.shape[0] - 0.5
+    t = cv2.remap(ratio, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    away = np.maximum(np.maximum(-ax, ax - 1), np.maximum(-ay, ay - 1))
+    t = 1 + (t - 1) * (1 - step(away, 0, APRON_MATCH[3]))[..., None]
+    t[~hit] = 1
+    t = t[h // 2:]
+    path = f'{DIR}/apron-tone.npy'
+    if os.path.exists(path):
+        t = t * np.load(path)
+    np.save(path, t.astype(np.float32))
+    zone = (hit & (ay > line) & (ay < 1) & (ax > 0) & (ax < 1))[h // 2:]
+    print('tone factor in the front zone, mean r g b', t[zone].mean(0).round(4).tolist(), 'range', round(float(t[zone].min()), 3), round(float(t[zone].max()), 3))
+
+
+def apron_base(frame):
+    src = read(frame)
+    ow, oh = APRON_OUT
+    low = src[src.shape[0] // 2:]
+    write(f'{DIR}/apron-base-low-x.png', cv2.resize(low, (ow, oh), interpolation=cv2.INTER_LANCZOS4))
+    print('base', src.shape, 'lower half to', (ow, oh))
 
 
 if __name__ == '__main__':
@@ -333,5 +386,9 @@ if __name__ == '__main__':
         apron_sketch(sys.argv[2])
     if cmd == 'apron-place':
         apron_place(sys.argv[2])
+    if cmd == 'apron-tone':
+        apron_tone(sys.argv[2])
+    if cmd == 'apron-base':
+        apron_base(sys.argv[2])
     if cmd == 'apron-build':
         apron_build(*sys.argv[2:5])

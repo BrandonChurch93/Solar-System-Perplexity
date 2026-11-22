@@ -48,7 +48,7 @@ export const ground: GroundLook = {
   rings: 252,
   sectors: 288,
   cell: 0.16,
-  apron: { amount: 1, cell: 0.1, calm: 0, out: [-1, -0.1] },
+  apron: { amount: 1, cell: 0.1, calm: 0, out: [-1, -0.1], edge: [0.4, 2] },
   band: [3.4, 2.6],
   own: { ring: [3.6, 4], side: 0.1, near: 0.3, up: [3, 3.9], rough: [0.35, 1.3] },
   lift: [0.1, 0.4],
