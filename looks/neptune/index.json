@@ -1,18 +1,26 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T02:40:36.678Z",
+ "pushed": "2026-11-22T02:56:22.679Z",
  "head": "5433fb67e60f4d4ba5a3c01d4c4a980f9e3487bd",
- "note": "main 3d48581 in the tree (170a6b3): dive cover sheet rendering at review, 4738 in and clean; far side cirrus take 5 and Triton light prepared offline",
+ "note": "main 3d48581 in the tree: dive cover sheet at review in work, 4738 and 4739 in and clean; rise cover sheet, measure and terrain sheet follow, then the far side cirrus and Triton trials",
  "looks": [
   {
-   "time": "2026-11-22T02:38:57.717Z",
-   "file": "20261122023857717-frame-f04738-review.jpg",
-   "source": "out/work/sheets/.frames-qWjF9j/f04738-review.png",
+   "time": "2026-11-22T02:56:21.430Z",
+   "file": "20261122025621430-note-dive-cover-a.jpg",
+   "source": "../../../../tmp/dive-cover-a.png",
+   "kind": "note",
+   "label": "neptune dive cover at review, frames 4738 and 4739, tree 170a6b3 with main 3d48581: soft limb under the veil, no bright band, no stepped copies, no stars",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T02:47:45.107Z",
+   "file": "20261122024745107-frame-f04739-review.jpg",
+   "source": "out/work/sheets/.frames-qWjF9j/f04739-review.png",
    "kind": "frame",
-   "label": "neptune.dive frame 4738, review tier",
+   "label": "neptune.dive frame 4739, review tier",
    "stop": "neptune",
    "segment": "neptune.dive",
-   "frame": 4738,
+   "frame": 4739,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -49,20 +57,6 @@
    "kind": "note",
    "label": "cirrus trial 2 at 5006, review, native crop: before / far map take 4 (tree 170a6b3 with main 3d48581 plus the trial, not kept: the wisps read as smudges)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T02:28:38.743Z",
-   "file": "20261122022838743-frame-s0-5006.jpg",
-   "source": "out/work/nep/p6/c2/s0-5006.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 5006, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-22T02:22:38.161Z",
