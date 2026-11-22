@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T02:09:31.019Z",
- "head": "7e0680bcfbbe9840efbcdf0ddfb92398b84e6376",
- "note": "task 6 commit 2: finals of the judged travel frames",
+ "pushed": "2026-11-22T02:50:16.354Z",
+ "head": "cfe7fff26ab07d8be99d808aeb942d735e445770",
+ "note": "merged tree (main 3d48581): judged rise frames, travel heads, 3922 and 4492 with the new timing",
  "looks": [
   {
-   "time": "2026-11-22T02:08:34.964Z",
-   "file": "20261122020834964-note-f495-final.jpg",
-   "source": "out/work/travel/t6/f495-final.png",
+   "time": "2026-11-22T02:48:55.465Z",
+   "file": "20261122024855465-note-f3328-review.jpg",
+   "source": "out/work/travel/m2/f3328-review.png",
    "kind": "note",
-   "label": "t6: f495-final",
+   "label": "m2: f3328-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:08:34.310Z",
-   "file": "20261122020834310-note-f3352-final.jpg",
-   "source": "out/work/travel/t6/f3352-final.png",
+   "time": "2026-11-22T02:48:54.830Z",
+   "file": "20261122024854830-note-f3322-review.jpg",
+   "source": "out/work/travel/m2/f3322-review.png",
    "kind": "note",
-   "label": "t6: f3352-final",
+   "label": "m2: f3322-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:08:33.673Z",
-   "file": "20261122020833673-note-f2782-final.jpg",
-   "source": "out/work/travel/t6/f2782-final.png",
+   "time": "2026-11-22T02:48:54.189Z",
+   "file": "20261122024854189-note-f3316-review.jpg",
+   "source": "out/work/travel/m2/f3316-review.png",
    "kind": "note",
-   "label": "t6: f2782-final",
+   "label": "m2: f3316-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:08:33.014Z",
-   "file": "20261122020833014-note-f2212-final.jpg",
-   "source": "out/work/travel/t6/f2212-final.png",
+   "time": "2026-11-22T02:48:53.543Z",
+   "file": "20261122024853543-note-f1625-review.jpg",
+   "source": "out/work/travel/m2/f1625-review.png",
    "kind": "note",
-   "label": "t6: f2212-final",
+   "label": "m2: f1625-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:08:32.269Z",
-   "file": "20261122020832269-note-f1072-final.jpg",
-   "source": "out/work/travel/t6/f1072-final.png",
+   "time": "2026-11-22T02:48:52.895Z",
+   "file": "20261122024852895-note-f1615-review.jpg",
+   "source": "out/work/travel/m2/f1615-review.png",
    "kind": "note",
-   "label": "t6: f1072-final",
+   "label": "m2: f1615-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:01:09.000Z",
-   "file": "20261122020109000-note-f5006-review.jpg",
-   "source": "out/work/travel/t6/f5006-review.png",
+   "time": "2026-11-22T02:48:52.244Z",
+   "file": "20261122024852244-note-f1606-review.jpg",
+   "source": "out/work/travel/m2/f1606-review.png",
    "kind": "note",
-   "label": "t6: f5006-review",
+   "label": "m2: f1606-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:01:08.364Z",
-   "file": "20261122020108364-note-f4436-review.jpg",
-   "source": "out/work/travel/t6/f4436-review.png",
+   "time": "2026-11-22T02:48:51.597Z",
+   "file": "20261122024851597-note-f1048-review.jpg",
+   "source": "out/work/travel/m2/f1048-review.png",
    "kind": "note",
-   "label": "t6: f4436-review",
+   "label": "m2: f1048-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T02:01:07.712Z",
-   "file": "20261122020107712-note-f3866-review.jpg",
-   "source": "out/work/travel/t6/f3866-review.png",
+   "time": "2026-11-22T02:48:50.954Z",
+   "file": "20261122024850954-note-f1042-review.jpg",
+   "source": "out/work/travel/m2/f1042-review.png",
    "kind": "note",
-   "label": "t6: f3866-review",
+   "label": "m2: f1042-review",
    "stop": "travel"
   }
  ]
