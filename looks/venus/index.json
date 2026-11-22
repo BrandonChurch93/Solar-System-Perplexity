@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T03:31:58.321Z",
- "head": "47d7c6bcdcae197a73698b0a0cf10d22327a4c28",
- "note": "Batch 18 merged (main 0622510), shader fix of mail 63, sky gain at the rise swap; review cover sheets, terrain sheet and measures running",
+ "pushed": "2026-11-22T04:00:58.348Z",
+ "head": "97b2155bb7928cd5ebfe14af627d8bb8d7ff4463",
+ "note": "Venus: review cover sheets on main 0622510 (batch 18), terrain sheet and the measure chain running, then POLISH READY",
  "looks": [
+  {
+   "time": "2026-11-22T04:00:57.601Z",
+   "file": "20261122040057601-note-c17-dc.jpg",
+   "source": "../view/c17-dc.png",
+   "kind": "note",
+   "label": "Venus dive cover sheet, review tier, every frame 1309 to 1320; branch 47d7c6b on main 0622510",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T04:00:56.975Z",
+   "file": "20261122040056975-note-c17-rc.jpg",
+   "source": "../view/c17-rc.png",
+   "kind": "note",
+   "label": "Venus rise cover sheet, review tier, every frame 1555 to 1566, with the sky gain at the swap; branch 47d7c6b on main 0622510",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T03:31:57.694Z",
    "file": "20261122033157694-note-g1-top.jpg",
@@ -161,22 +177,6 @@
    "format": "16x9",
    "diag": "nograin",
    "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:07:12.272Z",
-   "file": "20261122020712272-note-f3-1287-night.jpg",
-   "source": "../view/f3-1287-night.jpg",
-   "kind": "note",
-   "label": "Frame 1287, night side, final tier: before (left) and the first repaint at full strength (right). Rejected: fine detail 16.4 against the hero's 3.7 at the hold, it reads as scales, not cloud. Next take lays the same detail in at 0.3 of its contrast",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T01:51:51.944Z",
-   "file": "20261122015151944-note-capfull-t.jpg",
-   "source": "../view/capfull-t.jpg",
-   "kind": "note",
-   "label": "Wrap repaint, canvas T (90 deg about lon -20, lat 0): the wrap (left) and the kept take locked to it (right)",
-   "stop": "venus"
   },
   {
    "time": "2026-11-21T17:53:25.009Z",
