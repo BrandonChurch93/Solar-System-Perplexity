@@ -1,9 +1,45 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T04:54:00.683Z",
- "head": "dccb4e63477467c4c7a48ede16e35302caea783a",
- "note": "Phase 6 polish: item 7, the blue streak at 717 traced to the approved image's own mark and taken out of the dive (tree on main a67c9c34)",
+ "pushed": "2026-11-22T05:22:57.645Z",
+ "head": "ff0c7f20a48cadd3264fa5d441b16acb9f0baf72",
+ "note": "Mercury polish: measures green on ff0c7f2, left edge of the dive cover in work (main 2621f00)",
  "looks": [
+  {
+   "time": "2026-11-22T05:22:57.031Z",
+   "file": "20261122052257031-note-left-736-743.jpg",
+   "source": "out/work/mercury/p6/m2/left-736-743.jpg",
+   "kind": "note",
+   "label": "Dive cover, left frame edge 736 to 743 at draft: top the map beyond the wide picture's border, bottom the picture continued by its mirror image (tree on main 2621f00, batch 19 7a880ac6 in)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T05:10:43.743Z",
+   "file": "20261122051043743-job-frame-00924.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.terrain frame 924, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 924,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T05:00:43.102Z",
+   "file": "20261122050043102-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T04:54:00.125Z",
    "file": "20261122045400125-note-z717-3.jpg",
@@ -26,30 +62,6 @@
    "source": "out/work/mercury/p6/i7/blue-before-after2.jpg",
    "kind": "note",
    "label": "Mercury item 7: the blue streak in dive patches 1, 2, 3 at native size, top before, bottom after the repair (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:28:14.883Z",
-   "file": "20261122042814883-note-proof-rise.jpg",
-   "source": "out/work/mercury/p6/c1/proof-rise.jpg",
-   "kind": "note",
-   "label": "Mercury rise 988 to 1006 at draft with the chroma calm, Sun place and mean ground colour per frame (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:28:14.315Z",
-   "file": "20261122042814315-note-proof-dive.jpg",
-   "source": "out/work/mercury/p6/c1/proof-dive.jpg",
-   "kind": "note",
-   "label": "Mercury dive cover 722 to 746 at draft with the chroma calm, Sun place and mean ground colour per frame (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:28:13.749Z",
-   "file": "20261122042813749-note-sheet-review.jpg",
-   "source": "out/work/mercury/p6/v1/sheet-review.jpg",
-   "kind": "note",
-   "label": "Mercury covers at review, 128 samples, 960 x 540: dive 735 737 739 741 743, rise 994 995 996 998 1000, before the chroma calm (tree on main a67c9c34, work in progress)",
    "stop": "mercury"
   },
   {
