@@ -1,9 +1,55 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T02:07:12.857Z",
- "head": "9603a18f53d57b57018395cefc20ab438202c33b",
- "note": "Mail 50: wrap repaint for the night side at 1287 (first take too harsh, second at 0.3 rendering), star cure pass 2 in both sky patches, cover sheets on the merged tree",
+ "pushed": "2026-11-22T02:37:18.405Z",
+ "head": "2907bb0c050db8530cd1db06e8cc2a843393382d",
+ "note": "mail 50: wrap repaint at 0.3 strength with the hold refitted, star cure, on main 3d48581",
  "looks": [
+  {
+   "time": "2026-11-22T02:37:17.817Z",
+   "file": "20261122023717817-note-f7-1185.jpg",
+   "source": "../view/f7-1185.jpg",
+   "kind": "note",
+   "label": "1185 final tier on main 3d48581, hold refitted on the repainted wrap, star cure pass 3",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:37:17.190Z",
+   "file": "20261122023717190-note-f7-1586.jpg",
+   "source": "../view/f7-1586.jpg",
+   "kind": "note",
+   "label": "1586 final tier on main 3d48581",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:37:16.625Z",
+   "file": "20261122023716625-note-f7-1287.jpg",
+   "source": "../view/f7-1287.jpg",
+   "kind": "note",
+   "label": "1287 final tier on main 3d48581, wrap repaint at 0.3",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:37:16.046Z",
+   "file": "20261122023716046-note-f5-night.jpg",
+   "source": "../view/f5-night.png",
+   "kind": "note",
+   "label": "1287 night side crop, final tier: before the wrap repaint, repaint at 0.3 strength (taken), full strength (rejected)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:33:02.095Z",
+   "file": "20261122023302095-frame-base.jpg",
+   "source": "out/work/venus/relief/base.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1440, review tier, nograin view",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T02:07:12.272Z",
    "file": "20261122020712272-note-f3-1287-night.jpg",
@@ -130,46 +176,6 @@
    "source": "../view/f2-1185-lit.png",
    "kind": "note",
    "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:53.739Z",
-   "file": "20261122000353739-note-f2-1185-night.jpg",
-   "source": "../view/f2-1185-night.png",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 night limb native: approved, now, round 23",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:53.169Z",
-   "file": "20261122000353169-note-f2-1185-trio.jpg",
-   "source": "../view/f2-1185-trio.jpg",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 final tier with grain: approved, now (830a506), round 23",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:06.541Z",
-   "file": "20261121234406541-note-f2-1586-night.jpg",
-   "source": "../view/f2-1586-night.png",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 night limb native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:05.710Z",
-   "file": "20261121234405710-note-f2-1586-lr.jpg",
-   "source": "../view/f2-1586-lr.png",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 lower right limb native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:04.945Z",
-   "file": "20261121234404945-note-f2-1586-top.jpg",
-   "source": "../view/f2-1586-top.png",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 plume native: round 23, now",
    "stop": "venus"
   },
   {
