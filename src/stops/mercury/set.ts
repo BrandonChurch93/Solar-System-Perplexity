@@ -185,7 +185,8 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      const body = state.weight
+      const leaving = state.segment.stop === plan.id && state.segment.kind === 'travel'
+      const body = leaving ? 1 : state.weight
       orbit.visible = inOrbit && body > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
