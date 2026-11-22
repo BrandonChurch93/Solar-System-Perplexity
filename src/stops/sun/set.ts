@@ -8,6 +8,7 @@ import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
 import { Ground } from './ground'
 import { Loops } from './loops'
+import leaveFit from './leave.json'
 import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
@@ -64,6 +65,20 @@ export const createSet: SetFactory = async (ctx) => {
   const tint = new THREE.Vector3()
   const tint2 = new THREE.Vector3().fromArray(look.dissolve.tint)
   const calm = new THREE.Vector4()
+  const wash = new THREE.Vector4()
+  const burn = new THREE.Vector4()
+  const hot = new THREE.Vector3().fromArray(look.leave.burn.hot)
+  const toCam = new THREE.Quaternion()
+  const inCam = new THREE.Vector3()
+  const centre = new THREE.Vector3()
+  const mWorld = new THREE.Matrix4()
+  const mCam = new THREE.Matrix4()
+  const mFit = new THREE.Matrix4()
+  const mBack = new THREE.Matrix4()
+  const cone = new THREE.Matrix3().set(leaveFit.cone[0]!, leaveFit.cone[1]!, leaveFit.cone[2]!, leaveFit.cone[1]!, leaveFit.cone[3]!, leaveFit.cone[4]!, leaveFit.cone[2]!, leaveFit.cone[4]!, leaveFit.cone[5]!)
+  const mTurn = new THREE.Matrix3()
+  const mCone = new THREE.Matrix3()
+  orbit.matrixAutoUpdate = false
   const d = look.dissolve
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
 
@@ -119,9 +134,72 @@ export const createSet: SetFactory = async (ctx) => {
       const glow = share(x, d.corona)
       const match = 1 - share(x, d.match)
       const dim = 1 + (d.glow - 1) * match
-      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match))
-      corona.update(world.position, state.rotation, elapsed, gain * dim, vignette, aspect, look.corona, glow * state.weight)
-      prominences.update(elapsed, spin, gain * dim, vignette, aspect, glow * state.weight)
+      const leaving = kind === 'travel'
+      const going = leaving ? share(state.u, look.leave.over) : 0
+      const open = 1 + (look.leave.open - 1) * going
+      const flat = leaving ? share(state.u, look.leave.wash) : 0
+      const burnt = leaving ? share(state.u, look.leave.burn.over) : 0
+      const fitted = leaving ? share(state.u, look.leave.fit) : 0
+      const plateEnd = share(look.leave.gone, look.leave.plate)
+      const level = going > 0 ? Math.min(Math.max(plateEnd - share(state.u, look.leave.plate), 0) / Math.max(state.weight, 1e-4), plateEnd * look.leave.cap) : 0
+      centre.copy(world.position)
+      if (fitted > 0) {
+        toCam.copy(view.camera.quaternion).invert()
+        inCam.copy(world.position).applyQuaternion(toCam)
+        const depth = -inCam.z
+        mCam.makeRotationFromQuaternion(view.camera.quaternion)
+        mTurn.setFromMatrix4(mCam)
+        mCone.copy(mTurn).transpose().multiply(cone).multiply(mTurn)
+        const q = mCone.elements
+        const det = q[0]! * q[4]! - q[3]! * q[3]!
+        const px = (q[4]! * q[6]! - q[3]! * q[7]!) / det
+        const py = (q[0]! * q[7]! - q[3]! * q[6]!) / det
+        const k = q[6]! * px + q[7]! * py - q[8]!
+        const m00 = q[0]! / k
+        const m01 = q[3]! / k
+        const m11 = q[4]! / k
+        const root = Math.sqrt(m00 * m11 - m01 * m01)
+        const t = Math.sqrt(m00 + m11 + 2 * root)
+        const below = (m00 + root) * (m11 + root) - m01 * m01
+        const s00 = t * (m11 + root) / below
+        const s01 = -t * m01 / below
+        const s11 = t * (m00 + root) / below
+        const alpha = Math.asin(Math.min(1 / inCam.length(), 1))
+        const rho = Math.hypot(inCam.x, inCam.y)
+        const theta = Math.atan2(rho, depth)
+        const ex = rho > 1e-9 ? inCam.x / rho : 1
+        const ey = rho > 1e-9 ? inCam.y / rho : 0
+        const hi = Math.tan(theta + alpha)
+        const lo = Math.tan(theta - alpha)
+        const mid = (hi + lo) / 2
+        const along = (hi - lo) / 2
+        const across = Math.sqrt(Math.max((mid * Math.sin(theta) + Math.cos(theta)) ** 2 / Math.cos(alpha) ** 2 - mid * mid - 1, 1e-12))
+        const i00 = ex * ex / along + ey * ey / across
+        const i01 = ex * ey / along - ex * ey / across
+        const i11 = ey * ey / along + ex * ex / across
+        const b00 = s00 * i00 + s01 * i01
+        const b01 = s00 * i01 + s01 * i11
+        const b10 = s01 * i00 + s11 * i01
+        const b11 = s01 * i01 + s11 * i11
+        const near = 1 + Math.sin(alpha) ** 2
+        const mx = mid * ex
+        const my = mid * ey
+        const nx = (px - (b00 * mx + b01 * my)) / near + (b00 * inCam.x + b01 * inCam.y) / depth
+        const ny = (py - (b10 * mx + b11 * my)) / near + (b10 * inCam.x + b11 * inCam.y) / depth
+        const l00 = 1 + fitted * (b00 - 1)
+        const l01 = fitted * b01
+        const l10 = fitted * b10
+        const l11 = 1 + fitted * (b11 - 1)
+        const tx = fitted * (nx * depth - (b00 * inCam.x + b01 * inCam.y))
+        const ty = fitted * (ny * depth - (b10 * inCam.x + b11 * inCam.y))
+        mFit.set(l00, l01, 0, tx, l10, l11, 0, ty, 0, 0, 1, 0, 0, 0, 0, 1)
+        mWorld.compose(world.position, world.quaternion, world.scale)
+        orbit.matrix.copy(mWorld).invert().multiply(mCam).multiply(mFit).multiply(mBack.copy(mCam).invert()).multiply(mWorld)
+        centre.set(l00 * inCam.x + l01 * inCam.y + tx, l10 * inCam.x + l11 * inCam.y + ty, inCam.z).applyQuaternion(view.camera.quaternion).divideScalar(Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11 - Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11) ** 2 - 4 * (l00 * l11 - l01 * l10) ** 2, 0))) / 2, 1e-9)))
+      } else orbit.matrix.identity()
+      globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match), open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0))
+      corona.update(centre, state.rotation, elapsed, gain * dim * (1 + (look.leave.corona - 1) * going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge + (look.leave.edge - look.corona.edge) * fitted)
+      prominences.update(elapsed, spin, gain * dim * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

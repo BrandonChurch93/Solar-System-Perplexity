@@ -224,3 +224,12 @@ Apron (`apron.jpg`), 6 of 6 takes:
 - Inputs: `references/approved/sun-close.jpg` against frame 90 for ground (0 1 40) and loops (10 30 40), `references/approved/sun-hero.png` against frame 360 for the globe (0 1 40, `SUN_DISC=960,540,454.6`).
 - Kept: the table after two passes. Check: `python3 out/work/sun/gradecheck.py REGION FILM APPROVED` prints the percentiles of both.
 
+
+## Leave
+
+### src/stops/sun/leave.json
+
+- Output: the cone of world directions through the painted limb of the pale Sun plate of the Mercury stop, a symmetric 3 by 3 form Q with d Q d = 0 on the limb. `src/stops/sun/set.ts` turns it into the ellipse of that limb in the camera's picture plane at every frame of `sun.travel` and fits the stop's own globe to it.
+- Tool: `python3 assets-src/sun/leave/disc.py` (no model, no prompt) fits the painted disc in `public/assets/mercury/full/sun-plate.webp` (steepest fall of the blue channel along 1440 rays, rays where the glow hides the limb left out, sector weighted) and writes `assets-src/sun/leave/disc.json`; then `python3 assets-src/sun/leave/fit.py - src/stops/sun/leave.json` carries it through the rect of `src/stops/mercury/sunplate.json` and the plate's fixed aim (`AIM` in the script, the quaternion Mercury's set passes to `sunPlate.update` in `sun.travel`, read from a logged draft render) into world space.
+- Check: `python3 assets-src/sun/leave/fit.py LOG -` with a log that holds the camera quaternion and the engine's Sun per frame prints the limb of the painted disc and of the disc `sunplate.json` states, in px from the engine's Sun; the stated one gives the plate owner's table back to 0.1 px.
+- It copies Mercury's picture, rect and aim. If any of them changes, run both scripts again.
