@@ -1,9 +1,63 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T01:00:27.892Z",
- "head": "b42f39a7d4938593e2554f9b041410399def239c",
- "note": "Phase 6: rise proof 2122 to 2140 rendering; items 4, 5, 7 prepared off tree",
+ "pushed": "2026-11-22T01:22:21.079Z",
+ "head": "11f13c171b3d26d23829b1b26ab701f554af801d",
+ "note": "Phase 6 items 1 to 3, version c: rise cover proof sheet every frame 2122 to 2140 (review tier, preview format). Horizon leaves the top at 39 to 48 px per frame over 2125 to 2130 while the deck closes; top third 79 to 211; no still frame, no black top. Main merged with engine batch 16; measures running.",
  "looks": [
+  {
+   "time": "2026-11-22T01:21:30.686Z",
+   "file": "20261122012130686-note-sheet-rise-c.jpg",
+   "source": "out/work/earth/p6/sheet-rise-c.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 2: rise 2135 to 2140 larger, review tier at preview format",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:21:30.094Z",
+   "file": "20261122012130094-note-sheet-rise-2122-2140.jpg",
+   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 2 proof: rise cover, every frame 2122 to 2140, review tier at preview format, version c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:21:02.720Z",
+   "file": "20261122012102720-frame-p-2140.jpg",
+   "source": "out/work/earth/p6/rr/p-2140.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2140, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2140,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-22T01:08:39.347Z",
+   "file": "20261122010839347-note-night-low2.jpg",
+   "source": "out/work/earth/p6/night-low2.png",
+   "kind": "note",
+   "label": "Item 8: isolated green streak PA 140 to 146, hero over kept film, then both at 2.5 times gain",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:08:38.428Z",
+   "file": "20261122010838428-note-clip-sky.jpg",
+   "source": "out/work/earth/p6/clip-sky.jpg",
+   "kind": "note",
+   "label": "Item 6: kept clip frames 2147, 2156, 2165, 2174: the shared band stands upright behind the globe",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:08:37.224Z",
+   "file": "20261122010837224-note-sky2156m-band3.jpg",
+   "source": "out/work/earth/p6/sky2156m-band3.png",
+   "kind": "note",
+   "label": "Item 6: kept 2156 on main, the shared band behind the globe at 3 times (upper left and bottom): band map texels as blobs, point stars sharp",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-22T01:00:26.894Z",
    "file": "20261122010026894-note-night-streak2.jpg",
@@ -18,60 +72,6 @@
    "source": "out/work/earth/p6/sheet-rise-a.jpg",
    "kind": "note",
    "label": "Item 2: rise review proof 2122 to 2131, version c (queue running)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:24.889Z",
-   "file": "20261122010024889-note-map-full.jpg",
-   "source": "out/work/earth/p6/aur/map-full.png",
-   "kind": "note",
-   "label": "Item 5: new aurora map for the air shell (not in the film yet)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:23.701Z",
-   "file": "20261122010023701-note-moon-kept.jpg",
-   "source": "out/work/earth/p6/moon-kept.png",
-   "kind": "note",
-   "label": "Item 7: kept Moon, hero, 1755, 2156 at 4 times",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:22.678Z",
-   "file": "20261122010022678-note-moon-sigma-film4x.jpg",
-   "source": "out/work/earth/moon/moon-sigma-film4x.png",
-   "kind": "note",
-   "label": "Item 7: Moon at film scale, 4 times, hero against fine source",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:21.610Z",
-   "file": "20261122010021610-note-moon-fine-6x.jpg",
-   "source": "out/work/earth/moon/moon-fine-6x.png",
-   "kind": "note",
-   "label": "Item 7: Moon fine source at 6 times the hero (hero kept, fine detail from take 1)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T00:59:13.101Z",
-   "file": "20261122005913101-frame-p-2132.jpg",
-   "source": "out/work/earth/p6/rr/p-2132.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2132, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2132,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-22T00:45:40.302Z",
-   "file": "20261122004540302-note-sheet-dive-1884-1892.jpg",
-   "source": "out/work/earth/p6/sheet-dive-1884-1892.jpg",
-   "kind": "note",
-   "label": "Phase 6 item 3 proof: every frame 1884 to 1892, review tier at preview format, version c (cc64d1c)",
    "stop": "earth"
   }
  ]
