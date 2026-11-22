@@ -1,4 +1,5 @@
 import type { DeckLook } from './deck'
+import type { MistLook } from './mist'
 import type { RingLook } from './rings'
 import type { VeilLook } from './veil'
 
@@ -11,10 +12,19 @@ export const globe = {
   cloudRate: [0.006, 0.004, 3.1, 1.2] as [number, number, number, number],
   cloudFine: 4,
   sharp: [0.3, 0.8] as [number, number],
-  soft: 0.22,
+  wrapSoft: 2.2,
+  soft: 0,
   diveSoft: [0.16, 2.3, 4.55] as [number, number, number],
-  away: 0.85,
-  awayShade: 0.3,
+  away: 1,
+  awayShade: 1,
+}
+
+export const face = {
+  centre: [0.9263, 0.153, 0.3445] as [number, number, number],
+  reachDeg: 100,
+  fadeDeg: [78, 94] as [number, number],
+  gain: 4,
+  weight: 1,
 }
 
 export const shape = {
@@ -36,12 +46,16 @@ export const rings: RingLook = {
   shadowFloor: 0.05,
   flat: true,
   vary: 0.35,
-  far: 0.5,
+  far: 1.5,
   near: [0.45, 120],
   shade: [0.55, 0.004],
   air: [1.0, 1.04],
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
+
+export const arrival = { rings: [-18, 10] as [number, number] }
+
+export const departing = { rings: [0.3, 5.5, 0.25] as [number, number, number] }
 
 export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04, dive: [0.05, 0.17] }
 
@@ -71,6 +85,8 @@ export const show = { rings: true, moons: true, deck: true, globe: true, sky: tr
 export const halo = {
   size: [64, 64] as [number, number],
   range: [1.0, 1.3] as [number, number],
+  rim: [0.75, 0.0045, 0.15, 3] as [number, number, number, number],
+  rimSun: [-0.25, 0] as [number, number],
 }
 
 type Rgb = [number, number, number]
@@ -100,8 +116,39 @@ export const deck: DeckLook = {
   sharp: 0.3,
   detail: { tone: 0.2, relief: 0.4, fleck: 0.3, scale: 1.0, stretch: [0.3, 0.8] },
   near: [1.0, 1.25],
+  cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [3.6, 3.2, 3.0] },
 }
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
-export const haze = { dim: 0.9, span: [0.645, 0.86] as [number, number] }
+export const haze = { line: 0.07, chord: 0.6 }
+
+export const mist: MistLook = {
+  glow: [0.2, 0.58, 0.7],
+  deep: [0.03, 0.12, 0.17],
+  high: [0.012, 0.04, 0.05],
+  up: [0.0257, 0.087],
+  down: [0.14, 0.14],
+  peak: 0.017,
+  sun: [0.12, 0.96],
+  wisp: [0.35, 0.3],
+}
+
+export const air: MistLook = {
+  glow: [0.2, 0.5, 0.58],
+  deep: [0.035, 0.15, 0.2],
+  high: [0.012, 0.04, 0.05],
+  up: [0.0257, 0.087],
+  down: [0.14, 0.14],
+  peak: 0.017,
+  sun: [0.12, 0.96],
+  wisp: [0.35, 0.3],
+}
+
+export const clearing = { mist: [4, 30] as [number, number], arcs: [12, 30] as [number, number] }
+
+export const closing = { mist: [-22, -3] as [number, number], arcs: [-22, -8] as [number, number] }
+
+export const lifting = { mist: [1, 13] as [number, number] }
+
+export const sinking = { mist: [-13, -4] as [number, number] }

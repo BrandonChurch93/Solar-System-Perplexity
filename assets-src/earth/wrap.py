@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -28,6 +29,7 @@ AZ = geo.gnomonic_frame(*CENTRE)
 FADE = (0.2, 0.42)
 CLOUD = np.array([0.86, 0.88, 0.9], dtype=np.float32)
 GOLD = np.array([1.0, 0.72, 0.36], dtype=np.float32)
+CITY_SOFT = 1.3
 DUSK = (-0.24, -0.2, 0.45, 0.6)
 RIM = (0.1, 0.2, 0.2, 0.42)
 LUT_N = 32
@@ -173,6 +175,8 @@ def save_rgba(path, rgba, quality):
 def emissive_map(width, flow):
     ew = width // 2
     city = np.load(SPLIT / "city.npy").astype(np.float32)
+    soft = float(os.environ.get("CITY_SOFT", CITY_SOFT))
+    city = geo.decode(np.clip(cv2.GaussianBlur(geo.encode(np.maximum(city, 0)).astype(np.float32), (0, 0), soft), 0, 1)).astype(np.float32)
     aur = np.load(SPLIT / "aurora.npy").astype(np.float32)
     y = geo.map_dirs(ew)
     c, cosv, ndl = hero_at(city, y, cv2.INTER_LINEAR)
@@ -191,7 +195,7 @@ def emissive_map(width, flow):
         d = PUBLIC / key
         d.mkdir(parents=True, exist_ok=True)
         em = emissive if k == 1 else cv2.resize(emissive, (ew // k, ew // k // 2), interpolation=cv2.INTER_AREA)
-        save_rgba(d / "wrap-emissive.webp", em, 92 if k == 1 else 86)
+        Image.fromarray(to8(em), "RGBA").save(d / "wrap-emissive.webp", "WEBP", lossless=True, exact=True, method=4)
     geo.write(VIEW / "wrap-emissive-small.jpg", np.clip(emissive[::2, ::2, :3] + emissive[::2, ::2, 3:] * np.array([0.3, 1.0, 0.45]), 0, 1), 90)
 
 

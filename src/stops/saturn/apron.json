@@ -1,0 +1,18 @@
+{
+ "source": "assets-src/saturn/shot/skim_apron.py, the approved close image carried past its left, right and lower borders on a wider canvas from the same camera",
+ "file": "skim-apron.jpg",
+ "mask": "skim-apron-mask.png",
+ "left": 0.75,
+ "right": 0.25,
+ "below": 1.0,
+ "sets": {
+  "full": [
+   5632,
+   3168
+  ],
+  "web": [
+   4096,
+   2304
+  ]
+ }
+}

@@ -10,5 +10,5 @@ npm run still -- --frame 1440 --tier review --diag nograin --out out/work/venus/
 cp out/work/venus/plan.keep src/stops/venus/plan.ts
 cp out/work/venus/look.keep src/stops/venus/look.ts
 cp out/work/venus/sky.keep src/stops/venus/sky.json
-python3 assets-src/venus/relief/air.py out/work/venus/relief/base.png
+python3 assets-src/venus/relief/air.py out/work/venus/relief/base.png $1
 npm run build > /dev/null

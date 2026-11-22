@@ -78,7 +78,6 @@ float away(vec3 v) {
   return pow(max(dot(v, uSunL), 0.0), uBack.y);
 }
 void main() {
-  if (uDiag >= 2) discard;
   float fw = length(vec2(dFdx(vS), dFdy(vS)));
   float sig = sqrt(uSigma * uSigma + fw * fw * uFilter);
   float line = exp(-0.5 * vS * vS / (sig * sig)) * uSigma / sig;
@@ -101,6 +100,7 @@ void main() {
     cut = uNearArc.x * exp(-0.5 * vS * vS / (sig * sig)) * min(2.5 * uSigma / sig, 1.0) * clamp(vAmp * uNearArc.y, 0.0, 1.0);
   }
   outColor = vec4(uColor * (vAmp * line * glint * forward * shadow * uGain * air), cut);
+  if (uDiag >= 2) discard;
 }`
 
 export function parseLines(buffer: ArrayBuffer): RingLine[] {
