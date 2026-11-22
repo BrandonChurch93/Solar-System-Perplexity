@@ -1,9 +1,55 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T14:46:12.635Z",
- "head": "9e055743be17ac409243795744a5944e1b2603bd",
- "note": "task 13: shutter weight trial for round 33's stepped silhouettes",
+ "pushed": "2026-11-22T15:07:19.937Z",
+ "head": "c775a4ffe9f8bca261651bb0ac2d29d3dc28c4ae",
+ "note": "task 13: shade, near rock night and step gap trials",
  "looks": [
+  {
+   "time": "2026-11-22T15:07:16.616Z",
+   "file": "20261122150716616-note-t13-hero2765-gap15-vs-gap10.jpg",
+   "source": "../send/t13-hero2765-gap15-vs-gap10.jpg",
+   "kind": "note",
+   "label": "belt hero 2765 draft native, steps 1.5 px apart left, 1.0 px apart right (worse, comb; not taken)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:07:13.929Z",
+   "file": "20261122150713929-note-t13-near2772-limb-vs-even.jpg",
+   "source": "../send/t13-near2772-limb-vs-even.jpg",
+   "kind": "note",
+   "label": "belt near rock 2772 draft native, night look with bright limb left, even night right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:07:11.298Z",
+   "file": "20261122150711298-note-t13-hero2782-before-after-shade.jpg",
+   "source": "../send/t13-hero2782-before-after-shade.jpg",
+   "kind": "note",
+   "label": "belt hero 2782 draft native, window 1 with main's look left, pits 1.7 and side fill 1.4 right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:07:08.153Z",
+   "file": "20261122150708153-note-t13-shade3x-main-look-vs-pits-fill.jpg",
+   "source": "../send/t13-shade3x-main-look-vs-pits-fill.jpg",
+   "kind": "note",
+   "label": "belt hero shade 2782 draft, 3x nearest of 1280,170 to 1480,370, window 1 with main's look left, pits 1.7 and side fill 1.4 right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T15:05:35.792Z",
+   "file": "20261122150535792-frame-f02765.jpg",
+   "source": "out/work/belt/t13/t5/f02765.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2765, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2765,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d2bd01700b050f0e"
+  },
   {
    "time": "2026-11-22T14:46:07.479Z",
    "file": "20261122144607479-note-t13-s-hero2765-box-hann.jpg",
@@ -21,57 +67,11 @@
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T14:42:09.535Z",
-   "file": "20261122144209535-frame-f02765.jpg",
-   "source": "out/work/belt/t13/w1/f02765.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2765, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2765,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "63007c907f1f997a"
-  },
-  {
    "time": "2026-11-22T13:52:11.865Z",
    "file": "20261122135211865-note-belt-t12-main-2782.jpg",
    "source": "../send/belt-t12-main-2782.jpg",
    "kind": "note",
    "label": "mars.travel 2782 at the final tier on main 4d5f610a (round 33 state: cured shade, retimed travel), my own render",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T13:12:23.421Z",
-   "file": "20261122131223421-note-belt-t11-merged-strip.jpg",
-   "source": "../send/belt-t11-merged-strip.jpg",
-   "kind": "note",
-   "label": "belt on the retimed travel, draft strip 2764 to 2800 every sixth frame (scratch merge)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T13:12:22.186Z",
-   "file": "20261122131222186-note-belt-t11-merged-travel-2782.jpg",
-   "source": "../send/belt-t11-merged-travel-2782.jpg",
-   "kind": "note",
-   "label": "belt on the retimed travel (scratch merge of travel-polish a0a13eb and belt-polish d33ff9d), final 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T12:45:37.386Z",
-   "file": "20261122124537386-note-belt-t11-shade-before-after-3x.jpg",
-   "source": "../send/belt-t11-shade-before-after-3x.jpg",
-   "kind": "note",
-   "label": "belt hero shade at 2782, 3x nearest of 1300,200 to 1440,350, before left, after right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T12:45:35.269Z",
-   "file": "20261122124535269-note-belt-t11-shade-before-after-native.jpg",
-   "source": "../send/belt-t11-shade-before-after-native.jpg",
-   "kind": "note",
-   "label": "belt hero shade at 2782, native crop 1230,160 to 1500,400, before (3e22629) left, after (3629493) right",
    "stop": "mars"
   }
  ]
