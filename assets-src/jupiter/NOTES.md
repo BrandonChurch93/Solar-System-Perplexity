@@ -1396,3 +1396,16 @@ R3-jupiter-part2, reviewer_1154, score 5:
 - Drafts with the toe against main's on this tree (`out/work/view/c35/n/` against `c35/m/`): same bytes 2997, 3150, 3296; differ 2816 (959 px, 523 over 1 level, 243 over 4, max 32, columns 1055 to 1094, rows 690 to 730), 2895 (1,899 px, 1,118 over 1, 551 over 4, max 17, columns 1142 to 1207, rows 700 to 747), 2969 (29 px), 2970 (25), 2971 (11), 2972 (7), 2973 (5), 2974 (2), none of the last six by more than one level; 2975 and 2976 are cut 34's bytes.
 - Pictures for the cut in `/tmp/jup-c35/`: `jupiter-2895-shadow-pair-3x.jpg` (approved, toe), `jupiter-2895-shadow-three-3x.jpg` (approved, main, toe), `jupiter-hold-shadow-strip-3x.jpg`.
 - Measure started 16:48:40. Looks pushed 16:30 and 16:49.
+
+### 16:50 to 17:30 UTC: T9 green on main 37f67dd4 with the toe; the toe committed as one commit; CUT35 message next
+
+- Re-read `assets-src/shared/STOP-AGENT.md` and these notes after a compaction (16:55).
+- 16:52: low priority note to /root with the pair and the three at 3x (final tier) and the bytes; no answer needed.
+- Disk was at 3.1 GB free (every render command refuses under 3 GB): removed `out/work/view/trial`, `m19`, `b20r` (old draft dumps), 4.3 GB free.
+- origin/main moved to ff158d90db0a554344abbfdcb770df930125f866: against 37f67dd4 only `kit/PROGRESS.md` and four status pictures. Open items of jupiter are still 33 to 37.
+- T9 (`out/work/jupiter/chainT9.log`, tree = main 37f67dd4 + the toe), measure done 17:20:30 (1,895 s), `out/work/measure/jupiter-c35-full.json`: PASS G13, 0 of 463 frames over 0.02 soft, worst 3253 0.95 percent, 3254 0.78, 3261 0.71; PASS G5, invalid 0, coverage 0.352, 0.460, 0.754, 0.280; PASS G17, 2895 median 1.042 p25 0.951 over 81 tiles, 3150 median 0.973 p25 0.902 over 80 tiles. All the same numbers as cut 34's.
+- Repeat on 2895, 2997, 3150, 3296, 3005, 3012, 3019, 3023, 3 fresh sessions, 2 runs each, 213 s, not repeatable: none. Draft hashes: 2895 cc833d236d0ae435, 2997 6d616edfdf5f1008, 3150 3d28c295ed06e650, 3296 00f4ddd8b66baf8e, 3005 32dbf41f88caaf89, 3012 d0475be7bdb8ba4f, 3019 e674e0593da7ec5c, 3023 8344527810d80313.
+- PASS G11; PASS G12 (2,698 tracked files, 1.95 GB); PASS G15 (jupiter web 237 MB, full 852 MB). vitest 17 files, 87 tests. On disk 45 MB full, 13 MB web. "end T9" 17:25:35.
+- Commit `8d1a3c19e5f2d6c4e70bb8e690c302abe4cb9039`: `src/stops/jupiter/{globe,look,set}.ts`, the toe alone (take I: `shadowTip [0.845, 1.03, 0.6, 1.1]`, `shadowToe [0.92, 1.12, 0.1]`). Separable: without it the jupiter folders are main's.
+- Looks pushed 17:12.
+- NEXT: merge origin/main (docs only), tsc, build, drafts 2895, 2997, 3150, 3296 again (must be cc833d236d0ae435, 6d616edfdf5f1008, 3d28c295ed06e650, 00f4ddd8b66baf8e), push, send `CUT35 jupiter` with the three pictures in `/tmp/jup-c35/`. Then round 34's words when they come: small proven things and take outs only.
