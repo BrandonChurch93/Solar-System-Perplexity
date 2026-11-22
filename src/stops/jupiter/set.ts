@@ -5,7 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
-import { Deck, type DeckMeta } from './deck'
+import { Deck, type DeckMeta, type DeckTiers } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
 import { Pall, PallSea, pallUniforms } from './pall'
@@ -13,6 +13,7 @@ import * as look from './look'
 import { plan } from './plan'
 import reliefJson from './relief.json'
 import skyJson from './sky.json'
+import tiersJson from './tiers.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -54,7 +55,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(globe.mesh, ...shells.map((s) => s.mesh))
 
   const ioMap = await ctx.texture(base + 'io-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur, term: look.io.term, dusk: look.io.dusk, crisp: look.io.crisp })
+  const io = new Io({ map: ioMap, mapWidth: (ioMap.image as unknown as { width: number }).width, radius: look.io.radius, sun: look.io.sun, ambient: look.io.ambient, bounce: look.io.bounce, wrap: look.io.wrap, power: look.io.power, rim: look.io.rim, feather: look.io.feather, blur: look.io.blur, term: look.io.term, dusk: look.io.dusk, crisp: look.io.crisp, night: look.io.night })
   orbit.add(io.mesh)
   const ioHome = new THREE.Vector3().fromArray(look.io.home)
 
@@ -62,7 +63,7 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const seaUniforms = pallUniforms(look.deck.pall.shell)
-  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, wispMap, seaUniforms)
+  const ground = await Deck.load(ctx, base, reliefJson as DeckMeta, look.deck, tiersJson as DeckTiers, wispMap, seaUniforms)
   terrain.add(ground.group)
   const sea = new PallSea(seaUniforms)
   terrain.add(sea.mesh)
@@ -163,7 +164,7 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const distance = world.position.length()
       const veil = gu.uVeil!.value as THREE.Vector4
-      veil.x = look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
+      veil.x = (state.time < riseCover ? 1 : look.veil.rise) * look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
       veil.w = look.veil.drift * elapsed
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6

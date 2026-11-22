@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, datetime, json, pathlib, re, shutil, subprocess, sys, tarfile
+import argparse, datetime, hashlib, json, pathlib, re, shutil, subprocess, sys, tarfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PROG = ROOT / 'kit' / 'PROGRESS.md'
@@ -632,17 +632,42 @@ def close(a):
 
 
 MACHINE = 'G1,G2,G3,G4,G6,G7,G10,G11,G12,G14,G15'
-FILM = {'whole': (5, 'whole film', 'round', 'wholeFilmMaxRounds'), 'record': (6, 'record round', 'run', 'recordRoundMaxRuns')}
+FILM = {'whole': (5, 'whole film', 'round', 'wholeFilmMaxRounds'), 'record': (6, 'record round', 'run', 'recordRoundMaxRuns'), 'polish': (6, 'polish', 'round', 'polishMaxRounds')}
 FOLDER = re.compile(r'^(R[1-8])(?:-(?!part\d)([a-z]+))?(?:-part(\d+))?$')
 TAR = 'When the commands have finished: `tar -cf /tmp/%s.tar %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.'
 
 
+def pix(p):
+    from PIL import Image
+    return hashlib.sha256(Image.open(p).convert('RGB').tobytes()).hexdigest()[:16]
+
+
+def stress_base(n):
+    f = rdir(n) / 'stress-base.json'
+    if not f.exists():
+        f.write_text(json.dumps({p.name: pix(p) for p in sorted((WORK / 'stress').glob('*-before-*.png'))}, indent=1))
+    return json.loads(f.read_text())
+
+
+def film_plan(n, s):
+    f = rdir(n) / 'plan.json'
+    if f.exists() and 'judged' in json.loads(f.read_text()):
+        return json.loads(f.read_text())
+    lines = sh('npm run -s pack -- --phase %d --round %d --plan --judged%s' % (s['phase'], n, tiers(s, 'pack'))).split('\n')
+    plan = json.loads([l for l in lines if l.startswith('PLAN ')][-1][5:])
+    f.write_text(json.dumps(plan, indent=1))
+    return plan
+
+
 def film_start(a):
     n = a.round
-    mode = 'record' if a.record else 'whole'
+    mode = 'polish' if a.polish else 'record' if a.record else 'whole'
     phase, label, word, limit_key = FILM[mode]
     c = cfg()
-    if not SCRATCH:
+    again = mode == 'polish' and any(l.startswith('- Round %d,' % n) for l in round_lines(PROG.read_text()))
+    if a.row_only and (mode != 'polish' or again):
+        sys.exit('--row-only is for the first start of a polish round' if mode != 'polish' else 'round %d has its row already; start it again without --row-only to run the machine checks' % n)
+    if not SCRATCH and not again:
         if sh('git status --porcelain').strip():
             sys.exit('the tree is not clean')
         sh('git fetch -q origin main && git merge -q --no-edit origin/main')
@@ -659,6 +684,11 @@ def film_start(a):
         PROG.write_text(set_status(text))
         commit('Round %d starts: Phase %d, %s, %s %d of %d' % (n, phase, label, word, k, limit))
         state(n, {'round': n, 'mode': mode, 'phase': phase, 'k': k, 'limit': limit, 'tier': a.tier, 'every': a.every})
+    if mode == 'polish':
+        stress_base(n)
+    if a.row_only:
+        print('round %d polish, round %d of %d: the row is written; merge the batch, then start again without --row-only' % (n, state(n)['k'], state(n)['limit']))
+        return
     green, build = checks(n, '--phase %d --only %s' % (phase, MACHINE), a.allow_red)
     sha = commit('Round %d: %s, machine checks %s' % (n, label, 'green' if green else 'not green'))
     full = sh('git rev-parse HEAD').strip()
@@ -671,7 +701,16 @@ def film_jobs(a):
     s = state(n)
     c = cfg()
     sha, r, st = s['commit'], rid(n), still_tier(s)
-    lines = sh('npm run -s pack -- --phase %d --round %d --plan%s' % (s['phase'], n, tiers(s, 'pack'))).split('\n')
+    polish = s['mode'] == 'polish'
+    named = [x['id'] for x in c['stops']]
+    if polish and a.stops:
+        named = [x for x in named if x in a.stops.split(',')]
+        odd = [x for x in a.stops.split(',') if x not in named]
+        if odd:
+            sys.exit('--stops: unknown stop ' + ', '.join(odd))
+    elif a.stops or a.no_stress:
+        sys.exit('--stops and --no-stress are for polish rounds')
+    lines = sh('npm run -s pack -- --phase %d --round %d --plan%s%s' % (s['phase'], n, ' --judged' if polish else '', tiers(s, 'pack'))).split('\n')
     plan = json.loads([l for l in lines if l.startswith('PLAN ')][-1][5:])
     (rdir(n) / 'plan.json').write_text(json.dumps(plan, indent=1))
     per, cap = a.sample_seconds, a.job_minutes * 60
@@ -703,12 +742,12 @@ def film_jobs(a):
         add('r%d-film-motion%02d' % (n, k), cmd([x['part'] for x in g]), [cache], weigh(g), pre)
     q = c['quality']['stress']
     true = json.loads(sh('npm run -s samples -- --stress --tier %s' % (s.get('tier') or q['tier'])).strip().split('\n')[-1])
-    for k, g in enumerate(groups([{'id': i, 'samples': true[i]} for i in q['segments']]), 1):
+    for k, g in enumerate(groups([{'id': i, 'samples': true[i]} for i in q['segments'] if not (polish and a.no_stress)]), 1):
         ids = [x['id'] for x in g]
         add('r%d-film-stress%02d' % (n, k), 'npm run stress -- --segment %s%s' % (','.join(ids), tiers(s, 'stress')), ['out/work/stress/%s-before-*.png out/work/stress/%s-after-*.png out/work/stress/%s.json' % (i, i, i) for i in ids], weigh(g))
-    if s['mode'] == 'record':
+    if s['mode'] == 'record' or polish:
         cost = {x['part']: x['samples'] for x in plan['sheets']}
-        for stop in [x['id'] for x in c['stops']]:
+        for stop in named:
             name = 'r%d-%s-measure' % (n, stop)
             out.append({'name': name, 'worker': 0, 'minutes': a.measure_minutes, 'message': 'JOB %s. Commit %s. Command: `npm run measure -- --stop %s%s`. %s' % (name, sha, stop, tiers(s, 'measure'), TAR % (name, 'out/work/measure/%s.json' % stop, name, name))})
             for label, only in parts_of(stop):
@@ -728,6 +767,8 @@ def film_jobs(a):
 def film_place(a):
     n = a.round
     s = state(n)
+    if s['mode'] == 'polish':
+        stress_base(n)
     done = receive(n, s, '*/r%d-*.tar.*' % n, r'(r\d+-[a-z]+-[a-z0-9-]+)\.tar\.(\d+)$')
     want = [j['name'] for j in json.loads((rdir(n) / 'jobs.json').read_text())]
     missing = [w for w in want if w not in done]
@@ -735,7 +776,7 @@ def film_place(a):
     stale = []
     files = list((WORK / 'packs' / '.cache' / rid(n)).glob('*.json')) + list((WORK / 'stills').glob('f*-16x9-%s-full.png.json' % still_tier(s)))
     files += [WORK / 'stress' / (i + '.json') for i in cfg()['quality']['stress']['segments']]
-    if s['mode'] == 'record':
+    if s['mode'] in ('record', 'polish'):
         files += [WORK / 'measure' / (i + '.json') for i in s['stopHashes']]
     for f in files:
         if not f.exists():
@@ -751,11 +792,119 @@ def film_place(a):
     print('records from another build: ' + (', '.join(stale[:6]) or 'none'))
 
 
+STOP_KINDS = ('hold', 'dive', 'terrain', 'rise')
+
+
+def film_touched(a):
+    n = a.round
+    s = state(n)
+    if s.get('mode') != 'polish':
+        sys.exit('touched is a step of a polish round')
+    if not a.base:
+        sys.exit('touched takes --base FILE')
+    base = json.loads(pathlib.Path(a.base).read_text())
+    plan = film_plan(n, s)
+    c = cfg()
+    stops = [x['id'] for x in c['stops']]
+    unknown = []
+
+    def changed(group, f):
+        want = (base.get(group) or {}).get(f.name)
+        if want is None:
+            unknown.append(f.name)
+            return None
+        return pix(f) != want
+
+    def record_of(f):
+        try:
+            r = json.loads(pathlib.Path(str(f) + '.json').read_text())
+        except Exception:
+            return None
+        return r['engineHash'] == s['engineHash'] and all(s['stopHashes'].get(k) == v for k, v in (r.get('stopHashes') or {}).items())
+
+    stills = sorted((WORK / 'stills').glob('f*-16x9-%s-full.png' % still_tier(s)))
+    images = [f for f in sorted((WORK / 'packs' / '.cache' / rid(n)).glob('*.png')) if not f.name.startswith('compression-')]
+    wanted = set(x['frame'] for x in plan['finals'])
+    here = set(int(f.name[1:6]) for f in stills)
+    stale = [f.name for f in stills + images if record_of(f) is False]
+    frames = set(int(f.name[1:6]) for f in stills if changed('stills', f) is not False)
+    judged = {j['frame']: j for j in plan['judged']}
+    sheet_stop = {x['part']: x['stop'] for x in plan['sheets']}
+    sel = {st: {'frames': set(), 'sheets': set(), 'R1': False, 'R8': False, 'R2': False} for st in stops}
+    film = {'frames': set(), 'sheets': set(), 'R5': False, 'R6': False, 'R7': [], 'R2': False}
+
+    def frame_hit(f):
+        j = judged.get(f)
+        if not j:
+            return
+        if j['stop'] in sel and j['kind'] in STOP_KINDS:
+            sel[j['stop']]['frames'].add(f)
+            if j['why'] in ('hold', 'terrain'):
+                sel[j['stop']]['R1'] = sel[j['stop']]['R8'] = True
+        else:
+            film['frames'].add(f)
+
+    for f in frames:
+        frame_hit(f)
+    for x in plan['composites']:
+        if frames & set(x['frames']):
+            film['R6' if x['part'] == 'hook' else 'R5'] = True
+    moved = 0
+    for f in images:
+        made = re.match(r'(detail|match|jury|whole-jury|whole-control)-', f.name)
+        hit = changed('cache', f)
+        if hit is False or (hit is None and made):
+            continue
+        moved += 1
+        name = f.name[:-4]
+        m = re.match(r'motion-(.+)$', name)
+        if m and m.group(1) in sheet_stop:
+            (sel[sheet_stop[m.group(1)]] if sheet_stop[m.group(1)] else film)['sheets'].add(m.group(1))
+        elif re.match(r'whole-(film|holds)-', name):
+            film['R5'] = True
+        elif name.startswith('hook-'):
+            film['R6'] = True
+        elif re.match(r'detail(-crop)?-(\d+)', name):
+            frame_hit(int(re.match(r'detail(-crop)?-(\d+)', name).group(2)))
+        elif re.match(r'(match|jury)-([a-z]+)\.(hold|terrain)', name):
+            m = re.match(r'(match|jury)-([a-z]+)\.(hold|terrain)', name)
+            if m.group(2) in sel:
+                sel[m.group(2)]['R1' if m.group(1) == 'match' else 'R8'] = True
+    kept = base.get('stress') or stress_base(n)
+    for seg in c['quality']['stress']['segments']:
+        mine = sorted((WORK / 'stress').glob(seg + '-before-*.png'))
+        if mine and (not all(f.name in kept for f in mine) or any(pix(f) != kept[f.name] for f in mine)):
+            film['R7'].append(seg)
+    order = [x['part'] for x in plan['sheets']]
+    out = {'base': a.base, 'stops': {st: dict(v, frames=sorted(v['frames']), sheets=sorted(v['sheets'], key=order.index)) for st, v in sel.items()}, 'film': dict(film, frames=sorted(film['frames']), sheets=sorted(film['sheets'], key=order.index)), 'unknown': sorted(set(unknown))}
+    (SC / rid(n)).mkdir(parents=True, exist_ok=True)
+    f = SC / rid(n) / 'select.json'
+    f.write_text(json.dumps(out, indent=1) + '\n')
+    yn = lambda x: 'yes' if x else 'no'
+    some = lambda xs: ', '.join(str(x) for x in xs) or 'none'
+    for st in stops:
+        v = out['stops'][st]
+        print('%-8s frames %s; sheets %s; R1 %s, R8 %s, R2 %s' % (st, some(v['frames']), some(v['sheets']), yn(v['R1']), yn(v['R8']), yn(v['R2'])))
+    v = out['film']
+    print('%-8s frames %s; sheets %s; R5 %s, R6 %s, R2 %s; R7 %s' % ('film', some(v['frames']), some(v['sheets']), yn(v['R5']), yn(v['R6']), yn(v['R2']), some(v['R7'])))
+    print('compared %d stills and %d cache images with %s: %d stills and %d images differ or have no hash there; unknown: %s' % (len(stills), len(images), a.base, len(frames), moved, some(out['unknown'][:8]) + (' and %d more' % (len(out['unknown']) - 8) if len(out['unknown']) > 8 else '')))
+    if wanted - here:
+        print('final stills not placed yet: ' + some(sorted(wanted - here)))
+    if stale:
+        print('not from this build (the pack would render them again): ' + some(stale[:8]) + (' and %d more' % (len(stale) - 8) if len(stale) > 8 else ''))
+    print('written to %s' % f)
+
+
 def film_pack(a):
     n = a.round
     s = state(n)
     c = cfg()
     extra = tiers(s, 'pack') + (' --stress-tier ' + s['tier'] if s.get('tier') else '')
+    if s['mode'] == 'polish':
+        chosen = SC / rid(n) / 'select.json'
+        if not chosen.exists():
+            sys.exit('no %s: run touched --round %d --base FILE first' % (chosen, n))
+        extra += ' --select ' + str(chosen)
     out = subprocess.run('npm run -s pack -- --phase %d --round %d%s' % (s['phase'], n, extra), shell=True, cwd=ROOT, capture_output=True, text=True)
     print((out.stdout + out.stderr)[-1500:])
     if out.returncode != 0:
@@ -766,7 +915,7 @@ def film_pack(a):
     text = PROG.read_text()
     num = int(re.search(r'^- Next critic name: reviewer_(\d+)', text, re.M).group(1))
     source = None
-    if s['mode'] == 'record':
+    if s['mode'] in ('record', 'polish'):
         source = a.controls_from
     elif s['k'] > 1 and not a.controls:
         source = min(int(re.match(r'- Round (\d+),', l).group(1)) for l in round_lines(text) if re.match(r'- Round \d+, Phase %d, whole film,' % s['phase'], l))
@@ -803,6 +952,9 @@ def film_pack(a):
     (rdir(n) / 'critics.json').write_text(json.dumps(jobs, indent=1))
     PROG.write_text(re.sub(r'^- Next critic name: reviewer_\d+', '- Next critic name: reviewer_%d' % num, text, count=1, flags=re.M))
     state(n, {'controlsFrom': source or n})
+    if not jobs:
+        print('0 critics: nothing is selected in %s' % (SC / rid(n) / 'select.json'))
+        return
     roles = {}
     for j in jobs:
         roles[j['role'] if not j['file'] else j['role'].split('-')[0]] = roles.get(j['role'] if not j['file'] else j['role'].split('-')[0], 0) + 1
@@ -832,6 +984,158 @@ def told_of(e, f):
         say = lambda x: 'approved %s %s image' % (x.get('stop'), x.get('view')) if x.get('kind') == 'approved' else '%s frame %s %s the stress encode' % (x.get('segment'), x.get('frame'), x['kind']) if x.get('kind') in ('before', 'after') else '%s frame %s' % (x.get('segment'), x.get('frame'))
         return ' and '.join(say(x) for x in src)
     return f
+
+
+def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing, groups, vote, yes, jury, own, source, over):
+    r2c, r2j, r8c, r8j = groups
+    sel = json.loads((sc / 'select.json').read_text())
+    plan = film_plan(n, s)
+    stops = [x['id'] for x in c['stops']]
+    gap = c['quality']['jury']['maxShareGap']
+    chosen = {st: (sel.get('stops') or {}).get(st) or {} for st in stops}
+    film = sel.get('film') or {}
+    all_frames = {st: [j['frame'] for j in plan['judged'] if j['stop'] == st and j['kind'] in STOP_KINDS] for st in stops}
+    between = [j['frame'] for j in plan['judged'] if not (j['stop'] in stops and j['kind'] in STOP_KINDS)]
+    all_sheets = {st: [x['part'] for x in plan['sheets'] if x['stop'] == st] for st in stops}
+    travels = [x['part'] for x in plan['sheets'] if x['stop'] is None]
+    sheet = lambda x: x[:-6] + ' cover' if x.endswith('-cover') else x
+    some = lambda xs: ', '.join(str(x) for x in xs)
+
+    def words(pick, flags, frames, sheets, stress=None):
+        did, kept = [], []
+        for r in flags:
+            (did if pick.get(r) else kept).append(r)
+        for name, full, show in (('R3 on frame', frames, str), ('R4 on sheet', sheets, sheet)):
+            mine = [x for x in full if x in (pick.get('frames' if show is str else 'sheets') or [])]
+            rest = [x for x in full if x not in mine]
+            for to, xs in ((did, mine), (kept, rest)):
+                if xs:
+                    to.append('%s%s %s' % (name, 's' if len(xs) > 1 else '', some(show(x) for x in xs)))
+        if stress is not None:
+            mine = [x for x in stress if x in (pick.get('R7') or [])]
+            for to, xs in ((did, mine), (kept, [x for x in stress if x not in mine])):
+                if xs:
+                    to.append('R7 on %s' % some(xs))
+        return did, kept
+
+    said = {st: words(chosen[st], ('R1', 'R2', 'R8'), all_frames[st], all_sheets[st]) for st in stops}
+    said_film = words(film, ('R5', 'R6', 'R2'), between, travels, c['quality']['stress']['segments'])
+    measured = {}
+    for st in stops:
+        m = WORK / 'measure' / (st + '.json')
+        meas = json.loads(m.read_text()) if m.exists() else {}
+        if meas and meas.get('engineHash') == s['engineHash'] and (meas.get('stopHashes') or {}).get(st, meas.get('stopHash')) == s['stopHashes'].get(st):
+            shutil.copy(m, sc / ('measures-%s.json' % st))
+            how = [x for x in ('every %dth frame' % meas.get('every', 1) if meas.get('every', 1) != 1 else '', ', '.join(sorted(set('%s tier' % (meas.get(k) or {}).get('tier') for k in ('G5', 'G17') if (meas.get(k) or {}).get('tier') not in (None, 'final'))))) if x]
+            measured[st] = ({k: (meas.get(k) or {}).get('pass') for k in ('G5', 'G13', 'G17')}, how)
+    (sc / 'jurors.txt').write_text('\n'.join(lines) + '\n')
+    (sc / 'agents.json').write_text(json.dumps([{k: j[k] for k in ('name', 'role', 'model', 'files')} for j in jobs_], indent=1) + '\n')
+    man = {d.name: {'files': sorted(x.name for x in d.glob('*.png'))} for d in sorted((WORK / 'packs' / rid(n)).iterdir()) if d.is_dir()}
+    (sc / 'pack-manifest.json').write_text(json.dumps(man, indent=1) + '\n')
+    if not missing:
+        shutil.copy(WORK / 'packs' / 'keys' / (rid(n) + '.json'), sc / 'key.json')
+    r2_film = jury(lambda k: True) if film.get('R2') else None
+    for f in sc.glob('R*.json'):
+        m = re.match(r'(R[1-8])(?:-([a-z]+))?\.json$', f.name)
+        if m and (m.group(1), m.group(2) or '') not in cards:
+            f.unlink()
+    r2 = {st: jury(own(st)) for st in stops if chosen[st].get('R2')}
+    r8 = {}
+    for st in stops:
+        if chosen[st].get('R8'):
+            j8, c8 = r8j.get(st + '.hold', []), r8c.get(st + ' hold', [])
+            r8[st] = {'judged': [sum(1 for v in j8 if yes(v, st)), len(j8)], 'control': [sum(1 for v in c8 if yes(v, st)), len(c8)]}
+            r8[st]['pass'] = r8[st]['judged'][1] > 0 and r8[st]['judged'][0] >= r8[st]['control'][0]
+    rows = sorted(asked, key=lambda k: (0, stops.index(k[1]), k[0]) if k[1] else (1, ['R5', 'R6', 'R7', 'R3', 'R4'].index(k[0]), ''))
+    title = lambda k: k[0] + (' ' + k[1] if k[1] else ' whole film' if k[0] in ('R3', 'R4') else '')
+    gate = (rdir(n) / 'gate.txt').read_text().split('\n')
+    md = ['# Round %d · Phase %d · polish · round %d of %d\n' % (n, s['phase'], s['k'], s['limit'])]
+    md.append('- Build: main at %s (engine hash %s), master format, %s tier for stills and whole film sheets, %s tier for motion sheets, full asset set. Every returned record was checked against the hashes of this build.' % (s['commit'][:7], s['engineHash'], still_tier(s), s.get('tier') or 'review'))
+    md.append('- Machine checks before the pack: %s.' % ('green (' + ' '.join(l.split()[1] for l in gate if l.startswith('PASS')) + ')' if s.get('gateGreen') else 'not green: ' + '; '.join(l[5:160] for l in gate if l.startswith('FAIL'))))
+    md.append('- The stills, the sheets and the measures were rendered on supporting agents\' VMs at this commit and assembled on the Builder\'s VM with no rendering. Every final still and every sheet was compared, pixel for pixel, with the kept build before the round (%s); the selection is in `select.json`.' % pathlib.Path(str(sel.get('base'))).name)
+    md.append('- Critics: every critic was a fresh agent on its own VM with attachments only and its rubric word for word.%s%s' % (' R2 %d jurors per image: %s. Controls: %s.' % (len(JURY), ', '.join(JURY), 'judged in this round' if source == n else 'reused from round %d' % source) if r2 or r2_film else '', ' R8 %d jurors per image: %s.' % (len(NAMERS), ', '.join(NAMERS)) if r8 else ''))
+    md.append('\nA polish round judges only what its batch touched. It gives no pass for the whole bar; the record round does.\n')
+    md.append('## Judged in this round\n')
+    md += ['- %s: %s.' % (st, '; '.join(said[st][0])) for st in stops if said[st][0]]
+    md += ['- Whole film: %s.' % '; '.join(said_film[0])] if said_film[0] else []
+    if not said_film[0] and not any(said[st][0] for st in stops):
+        md.append('Nothing.')
+    md.append('\n## Not judged, because it kept its bytes\n')
+    quiet = [st for st in stops if not said[st][0]]
+    if quiet:
+        md.append('- Every critic of %s.' % some(quiet))
+    md += ['- %s: %s.' % (st, '; '.join(said[st][1])) for st in stops if said[st][0] and said[st][1]]
+    md += ['- Whole film: %s.' % '; '.join(said_film[1])] if said_film[1] else []
+    if sel.get('unknown'):
+        md.append('\nNames with no hash in the kept build\'s list, taken as changed: %s.' % some(sel['unknown']))
+    if measured:
+        md.append('\n## Measures\n')
+        md.append('| Stop | G5 | G13 | G17 | How |\n| --- | --- | --- | --- | --- |')
+        md += ['| %s | %s | %s |' % (st, ' | '.join('not measured' if g[k] is None else 'pass' if g[k] else 'fail' for k in ('G5', 'G13', 'G17')), ', '.join(how) or 'every frame, final tier') for st, (g, how) in measured.items()]
+    md.append('\n## Scores\n')
+    md.append('| Critic | Score | Pass | Severe | Major | Minor | Families |\n| --- | --- | --- | --- | --- | --- | --- |')
+    for k in rows:
+        x = cards.get(k)
+        md.append('| %s | %s | %s | %d | %d | %d | %s |' % (title(k), x['shown'], 'yes' if x['pass'] else 'no', x['tally']['severe'], x['tally']['major'], x['tally']['minor'], x['families']) if x else '| %s | no answer | no | | | | |' % title(k))
+    if not rows:
+        md.append('| none | | | | | | |')
+    md.append('\nA score row passes with %d and no severe or major issue. That is the row alone, not the pass bar.\n' % c['quality']['passScore'])
+    seq = lambda grp, keep=lambda k: True: '; '.join('%s %s' % (k, ' '.join(vote(v) for v in vs)) for k, vs in sorted(grp.items()) if keep(k))
+    if r2_film or r2:
+        md.append('## R2\n')
+        md.append('| Scope | Controls (a) | Judged (a) | R2 |\n| --- | --- | --- | --- |')
+        for name, x in ([('whole film list', r2_film)] if r2_film else []) + list(r2.items()):
+            md.append('| %s | %d of %d | %d of %d | %s |' % (name, x['control'][0], x['control'][1], x['judged'][0], x['judged'][1], 'pass' if x['pass'] else 'fail'))
+        keep = (lambda k: True) if r2_film else (lambda k: any(own(st)(k) for st in r2))
+        md.append('\nVotes (a = film or game cinematic); the judged share may be at most %s under the control share.\n\n- Controls: %s.\n- Judged: %s.\n' % (gap, seq(r2c, keep), seq(r2j, keep)))
+    if r8:
+        md.append('## R8\n')
+        md.append('| Stop | Control named | Judged named | R8 |\n| --- | --- | --- | --- |')
+        md += ['| %s | %d of %d | %d of %d | %s |' % (st, x['control'][0], x['control'][1], x['judged'][0], x['judged'][1], 'pass' if x['pass'] else 'fail') for st, x in r8.items()]
+        md.append('')
+    md.append('## Issues, worst first\n')
+    for k, (critic, scope, folder, i) in enumerate(issues, 1):
+        f = str(i.get('file'))
+        md.append('%d. %s%s, %s, %s (%s), %s: "%s" Fix named by the critic: "%s"' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), i.get('where'), str(i.get('what')).replace('"', "'"), str(i.get('fix')).replace('"', "'")))
+    if r2_film or r2 or r8:
+        md.append('\n## What the jurors wrote about the judged frames\n')
+        asked_r2 = (lambda k: True) if r2_film else (lambda k: any(own(st)(k) for st in r2))
+        for grp, keep in ((r2j, asked_r2), (r8j, lambda k: k.split('.')[0] in r8)):
+            for k, vs in sorted(grp.items()):
+                if keep(k):
+                    md += ['- %s, %s: %s' % (k, v[1], v[2][:400]) for v in vs]
+    md.append('\n## What changes next\n')
+    md.append(a.next or 'To be written.')
+    (sc / 'SUMMARY.md').write_text(('\n'.join(md) + '\n').replace('\u2014', ',').replace('\u2013', ' to ').replace('!', '.'))
+    juries = ([('R2', r2_film)] if r2_film else []) + [('R2 ' + st, x) for st, x in r2.items()]
+    sev = sum(x['tally']['severe'] for x in cards.values())
+    maj = sum(x['tally']['major'] for x in cards.values()) + sum(1 for nm, x in juries if not x['pass'])
+    scores = ', '.join(['%s %s' % (title(k), cards[k]['shown'].split(' ')[0] if k in cards else 'no answer') for k in rows] + ['%s %s' % (nm, 'pass' if x['pass'] else 'fail') for nm, x in juries + [('R8 ' + st, x) for st, x in r8.items()]]) or 'nothing was judged'
+    state(n, {'scores': {(k[0] + ('-' + k[1] if k[1] else '')): v['score'] for k, v in cards.items()}, 'R2': {nm: x['pass'] for nm, x in juries}, 'R8': {st: x['pass'] for st, x in r8.items()}, 'severe': sev, 'major': maj, 'closed': not missing})
+    if not missing:
+        text = PROG.read_text()
+        nxt = 'Next: ' + (a.next or 'see the summary') + ('' if (a.next or '.').endswith('.') else '.')
+        tail = ' Judged on main at %s, only what the batch touched. %s. %d severe, %d major. %s `scorecards/%s/`.' % (s['commit'][:7], scores, sev, maj, nxt, rid(n))
+        PROG.write_text(set_status('\n'.join(l + tail if l.startswith('- Round %d,' % n) and 'scorecards/round-' not in l else l for l in text.split('\n'))))
+    print('round %d polish: %s; %d severe, %d major; no pass bar is computed in a polish round' % (n, scores, sev, maj))
+    for st, (g, how) in measured.items():
+        print('  %-8s measures %s%s' % (st, ' '.join('%s %s' % (k, 'not measured' if g[k] is None else 'pass' if g[k] else 'fail') for k in ('G5', 'G13', 'G17')), ' (' + ', '.join(how) + ')' if how else ''))
+    for nm, x in juries:
+        print('  %s %s (%d/%d vs %d/%d)' % (nm, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
+    for st, x in r8.items():
+        print('  R8 %s %s (%d/%d vs %d/%d)' % (st, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
+    short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
+    if short:
+        print('  images without a full panel: ' + ', '.join('%s %s has %d' % x for x in short))
+    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
+    if loose:
+        print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
+        for x in loose:
+            print('    %s read as %s <%s>' % x)
+    for k, (critic, scope, folder, i) in enumerate(issues, 1):
+        if i.get('severity') != 'minor' or a.all:
+            f = str(i.get('file'))
+            print('  %d. %s%s %s %s [%s] %s: %s' % (k, critic, ' ' + scope if scope else '', i.get('severity'), f, told_of(kf.get(folder + '/' + f), f), str(i.get('where'))[:40], str(i.get('what'))[:150]))
 
 
 def film_close(a):
@@ -917,6 +1221,8 @@ def film_close(a):
     own = lambda stop: lambda k: k in (stop + ' hold', stop + ' terrain', stop + '.hold', stop + '.terrain')
     film_r2 = jury(lambda k: True)
     yes = lambda v, stop: over.get(v[0], 'y' if named(v[2], stop) else 'n') == 'y'
+    if mode == 'polish':
+        return polish_close(a, n, s, c, sc, cards, sorted(asked), issues, kf, lines, jobs_, missing, (r2c, r2j, r8c, r8j), vote, yes, jury, own, source, over)
     board = {}
     for stop in stops:
         m = WORK / 'measure' / (stop + '.json')
@@ -1039,7 +1345,7 @@ def film_close(a):
 
 p = argparse.ArgumentParser()
 sub = p.add_subparsers(dest='cmd', required=True)
-STEPS = {'start': (start, film_start), 'jobs': (jobs, film_jobs), 'place': (place, film_place), 'pack': (pack, film_pack), 'votes': (votes, votes), 'close': (close, film_close)}
+STEPS = {'start': (start, film_start), 'jobs': (jobs, film_jobs), 'place': (place, film_place), 'touched': (None, film_touched), 'pack': (pack, film_pack), 'votes': (votes, votes), 'close': (close, film_close)}
 for name in STEPS:
     q = sub.add_parser(name)
     q.add_argument('--round', type=int, required=True)
@@ -1047,6 +1353,11 @@ for name in STEPS:
     q.add_argument('--phase', type=int, default=4)
     q.add_argument('--whole', action='store_true')
     q.add_argument('--record', action='store_true')
+    q.add_argument('--polish', action='store_true')
+    q.add_argument('--stops')
+    q.add_argument('--no-stress', action='store_true')
+    q.add_argument('--row-only', action='store_true')
+    q.add_argument('--base')
     q.add_argument('--controls-from', type=int)
     q.add_argument('--workers', type=int, default=8)
     q.add_argument('--job-minutes', type=float, default=15)
@@ -1078,9 +1389,11 @@ if a.scratch:
     if not (home / 'PROGRESS.md').exists():
         shutil.copy(PROG, home / 'PROGRESS.md')
     PROG = home / 'PROGRESS.md'
-film = a.whole or a.record or state(a.round).get('mode') in FILM
+film = a.whole or a.record or a.polish or state(a.round).get('mode') in FILM
 if film and a.stop:
     sys.exit('a whole film round and the record round take no --stop')
 if a.cmd == 'start' and not film and not a.stop:
-    sys.exit('a stop round takes --stop; a whole film round takes --whole, the record round --record')
+    sys.exit('a stop round takes --stop; a whole film round takes --whole, the record round --record, a polish round --polish')
+if a.cmd == 'touched' and not film:
+    sys.exit('touched is a step of a polish round')
 STEPS[a.cmd][1 if film else 0](a)

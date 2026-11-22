@@ -8,8 +8,9 @@ LUMA = np.array([0.2126, 0.7152, 0.0722])
 MEDIAN, SIGMA = 9, 2.0
 NIGHT = (0.12, 0.5)
 REF_PX = 543.0
-SHAPE = (0.45, 2.5, 0.55, 18.0)
+SHAPE = (0.3, 6.0, 0.7, 45.0)
 VEIL = 0.5
+LIT = (0.9, 0.85, 0.85)
 
 
 def step(v, lo, hi):
@@ -33,7 +34,7 @@ def build(hold):
     px = (np.maximum(s, 0) / (HALF - 1)) ** 2 * INSIDE * REF_PX
     fall = SHAPE[0] * np.exp(-px / SHAPE[1]) + SHAPE[2] * np.exp(-px / SHAPE[3])
     inside = rgb[:HALF]
-    model = edge[None] * fall[:, None, None]
+    model = rgb[HALF][None] * fall[:, None, None]
     inside = inside + (model - inside) * night[None, :, None]
     lum = inside @ LUMA
     low = np.minimum.accumulate(lum[::-1], axis=0)[::-1]
@@ -43,9 +44,10 @@ def build(hold):
     low = np.minimum.accumulate(lum, axis=0)
     out = out * (low / np.maximum(lum, 1e-9))[..., None]
     far = np.zeros((2 * HALF, NA + 1, 4), np.float32)
-    far[:HALF, :NA, :3] = inside
-    far[HALF:, :NA, :3] = out
-    far[:HALF, :NA, 3] = alpha[:HALF] * (1 + (VEIL - 1) * night[None])
+    lit = 1 - night[None, :, None]
+    far[:HALF, :NA, :3] = inside * (1 + (LIT[0] - 1) * lit)
+    far[HALF:, :NA, :3] = out * (1 + (LIT[2] - 1) * lit)
+    far[:HALF, :NA, 3] = alpha[:HALF] * (1 + (VEIL - 1) * night[None]) * (1 + (LIT[1] - 1) * lit[..., 0])
     far[:, NA] = far[:, 0]
     return far
 

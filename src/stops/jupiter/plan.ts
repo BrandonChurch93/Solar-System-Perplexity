@@ -1,14 +1,15 @@
 import * as THREE from 'three'
-import type { Segment } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { lookAt, mix, ramp, smooth } from '../../director/rig'
+import { lookAt, mix, ramp, smooth, smoother } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
 import fit from './fit.json'
 
-export const climbOut = { bankDeg: -32, bankLead: 1.0, bankPower: 2.2, climb: 5, turn: 12, lens: 4 }
+export const climbOut = { lead: 1.4, tail: 0.5, level: -4, fast: [0.24, 0.2, 3] as [number, number, number], settle: 2.9, turn: 0.75, lens: 2 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
-export const veil = { hides: 0, closed: 0.98 }
+export const plunge = { power: 4 }
+export const veil = { hides: 0, closed: 0.98, lift: 2, sky: 0.75 }
 
 export const params: MoveParams = {
   hold: { orbitDeg: 3, axis: [0.25, 1, 0], push: -0.03 },
@@ -40,9 +41,24 @@ const Y = new THREE.Vector3(0, 1, 0)
 
 export class JupiterPlan extends StopPlan {
   override coverAmount(seg: Segment, time: number): number {
-    const amount = super.coverAmount(seg, time)
+    const c = this.coverCenter(seg)
+    const amount = super.coverAmount(seg, time) * (seg.kind === 'rise' ? 1 - smooth(ramp(c, c + veil.lift / config.fps, time)) : 1)
     this.p.coverHides = amount < veil.closed ? veil.hides : undefined
     return amount
+  }
+
+  override skyUnderCover(amount: number, time: number): number {
+    if (time >= this.coverCenter(this.seg.rise)) return 1
+    return Math.pow(1 - amount, time >= this.coverCenter(this.seg.dive!) ? veil.sky : 2)
+  }
+
+  override skyGain(time: number): number {
+    const seg = this.seg.rise
+    const low = this.p.light.skyLow
+    if (!low || time < this.coverCenter(seg) || time >= seg.end) return 1
+    const now = mix(low[2], 1, smooth(ramp(low[0], low[1], Math.abs(this.rise(time).pose.position.length() - 1))))
+    const want = Math.max(now, Math.pow(1 - super.coverAmount(seg, time), veil.sky))
+    return now > 0 ? want / now : 1
   }
 
   override turn(time: number): THREE.Quaternion {
@@ -54,6 +70,12 @@ export class JupiterPlan extends StopPlan {
     return glide.bankDeg * super.terrain(time - this.seg.terrain.start).position.z / -this.p.terrain.forward
   }
 
+  private bank(time: number): number {
+    const c = this.coverCenter(this.seg.rise)
+    const k = climbOut
+    return (k.level - (this.p.terrain.rollDeg ?? 0) - this.lean(c)) * smooth(ramp(c - k.lead, c + k.tail, time))
+  }
+
   override terrain(tRel: number): Pose {
     const pose = super.terrain(tRel)
     const u = pose.position.z / -this.p.terrain.forward
@@ -62,14 +84,39 @@ export class JupiterPlan extends StopPlan {
     const tilt = THREE.MathUtils.degToRad((t.horizonDeg ?? 0) + (t.dipDeg ?? 0))
     const axis = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt)).applyAxisAngle(Z, -THREE.MathUtils.degToRad(t.rollDeg ?? 0))
     pose.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(axis, THREE.MathUtils.degToRad(glide.swingDeg) * Math.max(u, 0) ** 2))
-    pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(Z, THREE.MathUtils.degToRad(this.lean(tRel + this.seg.terrain.start))))
+    const time = tRel + this.seg.terrain.start
+    pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(Z, THREE.MathUtils.degToRad(this.lean(time) + this.bank(time))))
     return pose
   }
 
+  private sized(time: number): number {
+    const pose = super.dive(time).pose
+    return -0.5 * Math.log(pose.position.lengthSq() - 1) - Math.log(Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2))
+  }
+
+  private paced(time: number): number {
+    const seg = this.seg.dive!
+    const c = this.coverCenter(seg) - 1e-6
+    const h = 0.25 / config.fps
+    const s0 = this.sized(seg.start)
+    const s1 = this.sized(c)
+    const u = ramp(seg.start, c, time)
+    const m0 = ((this.sized(seg.start + h) - s0) / h) * (c - seg.start) / (s1 - s0)
+    const want = s0 + (s1 - s0) * (m0 * u + (1 - m0) * Math.pow(u, plunge.power))
+    let lo = seg.start
+    let hi = c
+    for (let i = 0; i < 40; i++) {
+      const mid = 0.5 * (lo + hi)
+      if (this.sized(mid) < want) lo = mid
+      else hi = mid
+    }
+    return 0.5 * (lo + hi)
+  }
+
   override dive(time: number): OrbitShot {
-    const shot = super.dive(time)
     const c = this.coverCenter(this.seg.dive!)
-    if (time >= c) return shot
+    if (time >= c) return super.dive(time)
+    const shot = super.dive(time > this.seg.dive!.start ? this.paced(time) : time)
     const lean = THREE.MathUtils.degToRad(this.lean(c))
     const entry = this.terrain(c - this.seg.terrain.start).quaternion.invert().multiply(super.dive(c).pose.quaternion)
     const roll = new THREE.Quaternion().setFromAxisAngle(Z, lean * smooth(ramp(c - glide.lead, c, time)))
@@ -80,17 +127,11 @@ export class JupiterPlan extends StopPlan {
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
     const c = this.coverCenter(seg)
+    if (time < c) return super.rise(time)
     const k = climbOut
-    const bank = THREE.MathUtils.degToRad(k.bankDeg)
-    if (time < c) {
-      const shot = super.rise(time)
-      shot.pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(Z, bank * Math.pow(ramp(c - k.bankLead, c, time), k.bankPower)))
-      return shot
-    }
     const t = this.p.terrain
     const r = this.p.rise
     const x = ramp(c, seg.end, time)
-    const e = 1 - Math.pow(1 - x, k.climb)
     const end = this.after(time)
     const tq = this.turn(time)
     const spot = this.spot.clone().applyQuaternion(tq)
@@ -99,21 +140,34 @@ export class JupiterPlan extends StopPlan {
     const low = r.from ?? this.p.dive.altitude
     const from = spot.clone().addScaledVector(normal, low).addScaledVector(heading, r.ahead ?? this.p.dive.ahead)
     const span = end.position.clone().sub(from)
-    const ratio = span.length() / low
-    const m = (Math.pow(ratio, e) - 1) / (ratio - 1)
     const up1 = span.dot(normal)
     const across = span.clone().addScaledVector(normal, -up1)
-    const position = from.clone().addScaledVector(normal, up1 * m).addScaledVector(across, Math.pow(m, r.hug ?? 1))
+    const size = (d: number, vfov: number): number => -0.5 * Math.log(d * d - 1) - Math.log(Math.tan(THREE.MathUtils.degToRad(vfov) / 2))
+    const [share, reach, power] = k.fast
+    const left = (1 - share) * Math.pow(1 - x, k.settle) + share * Math.pow(1 - ramp(0, reach, x), power)
+    const vfov = mix(t.vfov, end.vfov, smooth(1 - Math.pow(1 - x, k.lens)))
+    const sized = mix(size(end.position.length(), end.vfov), size(from.length(), t.vfov), left)
+    const far = Math.sqrt(1 + Math.exp(-2 * (sized + Math.log(Math.tan(THREE.MathUtils.degToRad(vfov) / 2)))))
+    const at = (m: number): THREE.Vector3 => from.clone().addScaledVector(normal, up1 * m).addScaledVector(across, Math.pow(m, r.hug ?? 1))
+    let lo = 0
+    let hi = 1
+    for (let i = 0; i < 48; i++) {
+      const mid = 0.5 * (lo + hi)
+      if (at(mid).length() < far) lo = mid
+      else hi = mid
+    }
+    const position = at(0.5 * (lo + hi))
     const w = coverWindow(seg)!
     const carried = (t.horizonDeg ?? 0) - t.exitPitchDeg * Math.pow(ramp(0, w.lastFrame + 1 - seg.firstFrame, w.centerFrame - seg.firstFrame), 2.2) - (t.exitDipDeg ?? 0)
     const out = position.clone().normalize()
-    const level = heading.clone().addScaledVector(out, -heading.dot(out)).normalize()
+    const top = Y.clone().applyQuaternion(end.quaternion)
+    const level = top.clone().addScaledVector(out, -top.dot(out)).normalize()
     const pitch = Math.acos(Math.min(1 / position.length(), 1)) + THREE.MathUtils.degToRad(carried)
     const aim = level.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(out, -Math.sin(pitch))
-    const low0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), (t.rollDeg ?? 0) + this.lean(c) + k.bankDeg)
+    const low0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), (t.rollDeg ?? 0) + this.lean(c) + this.bank(time))
     const target = end.position.clone().addScaledVector(new THREE.Vector3(0, 0, -1).applyQuaternion(end.quaternion), end.position.length())
-    const high = lookAt(position, target, Y.clone().applyQuaternion(end.quaternion))
-    return { pose: { position, quaternion: low0.slerp(high, 1 - Math.pow(1 - x, k.turn)), vfov: mix(t.vfov, end.vfov, smooth(1 - Math.pow(1 - x, k.lens))) }, view: 'orbit' }
+    const high = lookAt(position, target, top)
+    return { pose: { position, quaternion: low0.slerp(high, smoother(ramp(0, k.turn, x))), vfov }, view: 'orbit' }
   }
 }
 

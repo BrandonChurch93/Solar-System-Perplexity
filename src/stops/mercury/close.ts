@@ -1,15 +1,13 @@
 import * as THREE from 'three'
 import reliefJson from './relief.json'
+import wideJson from './wide.json'
 
 export const closeRadius = reliefJson.camera.planetRadius
 export const closeUp = new THREE.Vector3().fromArray(reliefJson.camera.up)
 
-const ahead = new THREE.Vector3(0, 0, -1).addScaledVector(closeUp, closeUp.z).normalize()
-const side = new THREE.Vector3().crossVectors(ahead, closeUp)
-export const closeLevel = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(side, closeUp, ahead.clone().negate())).invert()
-
-const reachDown = (closeRadius + 1) * closeUp.y
-export const closePivot = closeUp.clone().multiplyScalar(closeRadius + 1).add(new THREE.Vector3(0, -(reachDown - Math.sqrt(reachDown * reachDown - 2 * closeRadius - 1)), 0)).normalize()
+export const closeAhead = new THREE.Vector3(0, 0, -1).addScaledVector(closeUp, closeUp.z).normalize()
+const side = new THREE.Vector3().crossVectors(closeAhead, closeUp)
+export const closeLevel = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(side, closeUp, closeAhead.clone().negate())).invert()
 
 export interface Anchor { origin: THREE.Vector3; frame: THREE.Quaternion }
 
@@ -27,4 +25,11 @@ export const closeImage = {
   focal: reliefJson.imageSize.web[1] / 2 / Math.tan(THREE.MathUtils.degToRad(reliefJson.vfovDeg) / 2),
   center: [reliefJson.imageSize.web[0] / 2, reliefJson.imageSize.web[1] / 2] as [number, number],
   box: reliefJson.box.web as [number, number, number, number],
+}
+
+export const wideImage = {
+  focal: wideJson.imageSize.web[1] / 2 / Math.tan(THREE.MathUtils.degToRad(wideJson.vfovDeg) / 2),
+  center: [wideJson.imageSize.web[0] / 2, wideJson.imageSize.web[1] / 2] as [number, number],
+  box: wideJson.box.web as [number, number, number, number],
+  sink: wideJson.sink,
 }

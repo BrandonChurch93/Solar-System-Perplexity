@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { config } from '../../config'
-import { smooth } from '../../director/rig'
+import type { Pose } from '../../core/types'
+import { ramp, smooth, smoother } from '../../director/rig'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import fit from './fit.json'
 
@@ -32,14 +33,29 @@ export const params: MoveParams = {
 
 export interface Approach { ease: number; cruise: number; swell: [number, number, number]; cap: [number, number]; until: number }
 export interface Retreat { lead: number; peak: number; tail: [number, number]; turn: [number, number, number] }
-export interface Tune { dive: Approach | null; rise: Retreat | null }
+export interface Entry { free: [number, number]; hide: [number, number]; drop: [number, number, number]; bend: number; lean: number }
+export interface Leave { from: number; ramp: number; rate: number; gain: number; soft: number }
+export interface Tune { dive: Approach | null; rise: Retreat | null; entry: Entry | null; leave: Leave | null }
 
 export const timing: Tune = {
   dive: { ease: 12, cruise: 0.6, swell: [16, 30, 0.12], cap: [7.3, 8], until: 47.5 },
   rise: { lead: 2.5, peak: 30, tail: [0.4, 4], turn: [0.75, 1.3, 1.5] },
+  entry: { free: [26, 14], hide: [5.5, 4], drop: [0.111, -1.33, 0.75], bend: 0.0556, lean: 0.4 },
+  leave: { from: 6.5, ramp: 3, rate: 0.085, gain: 0.17, soft: 1 },
 }
 
 const STEPS = 16
+const Z = new THREE.Vector3(0, 0, 1)
+
+interface Skyline { nadir: THREE.Vector3; height: number; tilt: number }
+interface Seen { shot: OrbitShot; down: THREE.Vector3; ahead: THREE.Vector3; head: number; alpha: number }
+interface Join { land: Skyline; pitch: [number, number]; tilt: [number, number, number, number] }
+
+function hermite(s: number, v0: number, m0: number, v1: number, m1: number): number {
+  const s2 = s * s
+  const s3 = s2 * s
+  return (2 * s3 - 3 * s2 + 1) * v0 + (s3 - 2 * s2 + s) * m0 + (3 * s2 - 2 * s3) * v1 + (s3 - s2) * m1
+}
 
 function retime(size: Float64Array, rate: (frames: number) => number, until: number): Float64Array {
   const n = size.length - 1
@@ -74,7 +90,8 @@ function size(pose: OrbitShot['pose']): number {
 export class Plan extends StopPlan {
   private warps: { dive?: Float64Array; rise?: Float64Array } = {}
   private span: [number, number] = [0, 0]
-  private handover = { quaternion: new THREE.Quaternion(), out: new THREE.Vector3(), off: 0, under: 0 }
+  private handover = { quaternion: new THREE.Quaternion(), out: new THREE.Vector3(), off: 0, under: 0, height: 0 }
+  private join: Join | null = null
 
   constructor(p: MoveParams = params, readonly tune: Tune = timing) {
     super('earth', fit as Fit, p)
@@ -165,7 +182,7 @@ export class Plan extends StopPlan {
     const first = super.rise(centre).pose
     const out = first.position.clone().normalize()
     const off = Math.acos(THREE.MathUtils.clamp(-out.dot(new THREE.Vector3(0, 0, -1).applyQuaternion(first.quaternion)), -1, 1))
-    this.handover = { quaternion: first.quaternion.clone(), out, off, under: Math.asin(Math.min(1 / first.position.length(), 1)) - off }
+    this.handover = { quaternion: first.quaternion.clone(), out, off, under: Math.asin(Math.min(1 / first.position.length(), 1)) - off, height: this.skyline(this.rise(centre - 1e-7).pose).height }
     return this.warps.rise
   }
 
@@ -176,18 +193,103 @@ export class Plan extends StopPlan {
     return from + ((table[i]! + (table[i + 1]! - table[i]!) * (x - i)) / n) * (to - from)
   }
 
+  private skyline(pose: Pose): Skyline {
+    const sea = this.p.coverSea!
+    const to = new THREE.Vector3().fromArray(sea.centre).sub(pose.position)
+    const alpha = Math.asin(Math.min(sea.radius / to.length(), 1))
+    const nadir = to.normalize().applyQuaternion(pose.quaternion.clone().invert())
+    const under = alpha - Math.acos(THREE.MathUtils.clamp(-nadir.z, -1, 1))
+    return { nadir, height: Math.tan(under) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2), tilt: Math.atan2(nadir.x, -nadir.y) }
+  }
+
+  private lower(pose: Pose, more: number, roll: number): void {
+    const s = this.skyline(pose)
+    const th = Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const len = Math.hypot(s.nadir.x, s.nadir.y)
+    pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(s.nadir.y / len, -s.nadir.x / len, 0), Math.atan((s.height + more) * th) - Math.atan(s.height * th)))
+    if (roll !== 0) pose.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(Z, -roll))
+  }
+
+  private approach(time: number): Seen {
+    const seg = this.seg.dive!
+    const centre = this.coverCenter(seg)
+    const at = this.tune.dive ? Math.min(this.look(this.diveTable(this.tune.dive), seg.start, centre, time), centre - 1e-9) : time
+    const shot = super.dive(at)
+    const down = shot.pose.position.clone().normalize().negate()
+    const ahead = this.heading.clone().applyQuaternion(this.turn(at))
+    ahead.addScaledVector(down, -ahead.dot(down)).normalize()
+    const h = ahead.clone().applyQuaternion(shot.pose.quaternion.clone().invert())
+    return { shot, down, ahead, head: Math.atan2(h.x, h.y), alpha: Math.asin(Math.min(1 / shot.pose.position.length(), 1)) }
+  }
+
+  private landing(e: Entry, land: Skyline, seen: Seen, x: number): [number, number] {
+    const a = -Math.log(e.drop[2])
+    const th = Math.tan(THREE.MathUtils.degToRad(seen.shot.pose.vfov) / 2)
+    return [seen.alpha - Math.atan((land.height + e.drop[0] * Math.exp(a * x + e.bend * x * x)) * th), land.tilt + THREE.MathUtils.degToRad(e.drop[1]) * Math.exp(a * x)]
+  }
+
+  private entryJoin(e: Entry): Join {
+    if (this.join) return this.join
+    const centre = this.coverCenter(this.seg.dive!)
+    const land = this.skyline(super.dive(centre).pose)
+    const d = 1 / STEPS
+    const span = e.hide[0] - e.hide[1]
+    const at = (x: number): Seen => this.approach(centre - x / config.fps)
+    const from = at(e.hide[0])
+    const to = this.landing(e, land, at(e.hide[1]), e.hide[1])
+    const next = this.landing(e, land, at(e.hide[1] - d), e.hide[1] - d)
+    this.join = { land, pitch: [to[0], ((next[0] - to[0]) / d) * span], tilt: [-from.head, (-(at(e.hide[0] - d).head - from.head) / d) * span, to[1], ((next[1] - to[1]) / d) * span] }
+    return this.join
+  }
+
   override dive(time: number): OrbitShot {
     const seg = this.seg.dive!
     const centre = this.coverCenter(seg)
-    if (!this.tune.dive || time <= seg.start || time >= centre) return super.dive(time)
-    return super.dive(Math.min(this.look(this.diveTable(this.tune.dive), seg.start, centre, time), centre - 1e-9))
+    const e = this.tune.entry
+    if (time >= centre) {
+      const shot = super.dive(time)
+      if (e) {
+        const k = Math.pow(e.drop[2], (time - centre) * config.fps)
+        this.lower(shot.pose, e.drop[0] * k, THREE.MathUtils.degToRad(e.drop[1]) * k)
+      }
+      return shot
+    }
+    if (time <= seg.start) return super.dive(time)
+    const seen = this.approach(time)
+    const x = (centre - time) * config.fps
+    if (!e || x >= e.free[0]) return seen.shot
+    const j = this.entryJoin(e)
+    const lean = THREE.MathUtils.degToRad(e.lean)
+    let pitch = lean
+    let tilt = -seen.head
+    if (x <= e.hide[1]) [pitch, tilt] = this.landing(e, j.land, seen, x)
+    else if (x < e.hide[0]) {
+      const s = (e.hide[0] - x) / (e.hide[0] - e.hide[1])
+      pitch = hermite(s, lean, 0, j.pitch[0], j.pitch[1])
+      tilt = hermite(s, j.tilt[0], j.tilt[1], j.tilt[2], j.tilt[3])
+    }
+    const axis = seen.down.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(seen.ahead, Math.sin(pitch))
+    const up = seen.ahead.clone().multiplyScalar(Math.cos(pitch)).addScaledVector(seen.down, -Math.sin(pitch))
+    const aimed = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(axis, up), up, axis.clone().negate()))
+    aimed.multiply(new THREE.Quaternion().setFromAxisAngle(Z, -tilt))
+    seen.shot.pose.quaternion.slerp(aimed, smoother(ramp(e.free[0], e.free[1], x)))
+    return seen.shot
   }
 
   override rise(time: number): OrbitShot {
     const seg = this.seg.rise
     const centre = this.coverCenter(seg)
     const t = this.tune.rise
-    if (!t || time < centre) return super.rise(time)
+    const l = this.tune.leave
+    if (!t || time < centre) {
+      const shot = super.rise(time)
+      const f = l ? l.from - (centre - time) * config.fps : 0
+      if (l && f > 0) {
+        const u = Math.min(f / l.ramp, 1)
+        this.lower(shot.pose, l.rate * (l.ramp * (u * u * u - 0.5 * u * u * u * u) + Math.max(f - l.ramp, 0)), 0)
+      }
+      return shot
+    }
     const table = this.riseTable(t)
     const at = time >= seg.end ? time : Math.max(this.look(table, centre, seg.end, time), centre)
     const shot = super.rise(at)
@@ -200,7 +302,14 @@ export class Plan extends StopPlan {
     shot.pose.position.applyQuaternion(glue)
     const out = shot.pose.position.clone().normalize()
     const level = new THREE.Quaternion().setFromUnitVectors(from.out.clone().applyQuaternion(carry), out).multiply(carry).multiply(from.quaternion)
-    const off = (1 - w) * (Math.asin(Math.min(1 / shot.pose.position.length(), 1)) - from.under)
+    const alpha = Math.asin(Math.min(1 / shot.pose.position.length(), 1))
+    let off = (1 - w) * (alpha - from.under)
+    if (l) {
+      const x = (time - centre) * config.fps
+      const d = alpha - Math.atan((from.height + l.rate * x + l.gain * x * x * x) * Math.tan(THREE.MathUtils.degToRad(shot.pose.vfov) / 2))
+      const soft = THREE.MathUtils.degToRad(l.soft)
+      off = 0.5 * (d + Math.sqrt(d * d + soft * soft))
+    }
     const X = new THREE.Vector3(1, 0, 0)
     const top = new THREE.Vector3(0, 1, 0).applyQuaternion(level.clone().multiply(new THREE.Quaternion().setFromAxisAngle(X, -from.off)))
     const north = new THREE.Vector3(0, 1, 0).applyQuaternion(end)
