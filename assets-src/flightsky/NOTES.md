@@ -254,3 +254,7 @@ Jobs from the Builder, one commit each, flight frames only: 1 D and A, stars thi
 ### CUT34 (sent about 15:30 UTC on the VM clock)
 - READY on the merge of this notebook commit with origin/main. Separable commits: 8f84206d, 64fd4698, d7ced701, 84ad5ea2, aa1e700e, c6782b81, 6eb06cef.
 - Not in it: the far point lines for `src/bodies/farpoint.ts` (FOREIGN LINES in a message), anything for the Saturn plates, anything for the stop flares.
+
+### After CUT34 (15:25 UTC on the VM clock)
+- CUT34 sent: READY 38786b4da7313fac35053e8574fc196c9806b4d7, ten pictures from `scratch/r7/cut/`. A second message carried the far point lines as FOREIGN LINES (proved at 495 draft only; every stop builds a far point with the halo on, so stop frames would move; advice was not to take it blind) and the two trial pictures (Saturn plate, Sun gate).
+- For CUT35 only small proven things and take-outs. Candidates: none started. If a critic of round 34 names the lanes as marble, the levers are `detail.lane` (depth, third value) and `detail.rim`.
