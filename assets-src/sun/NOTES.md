@@ -695,3 +695,50 @@ Then B (the leave on agent/sun-leave) as mailed. Times as in MAIL 109: PART of B
 Mercury's Sun plate at 488 to 499 (1920 x 1080, mid shutter), centre is the engine's Sun: 488 1313,362; 490 1351,342; 492 1390,322; 494 1429,301; 495 1449,290; 496 1469,280; 498 1506,259; 499 1524,249. Disc radius on screen about 370 px at 495 (0.685 half heights; angular radius about 0.16 rad). The plate is additive with weight smoothstep of (u - 0.25) / 0.55 over the travel: 0.24 at 488, 0.44 at 495, 0.55 at 499, 1 from 524. At full weight the disc is the approved hero's Sun, near white (about 250 245 225 sRGB in the centre). Exact limb radii per frame follow with its DONE at about 10:25.
 On its side, on `agent/mercury-leave` 3bd6b41: the streak at 495 now reaches the limb and takes the glare's warm white while the hold's sky patch is out, and the orange lens ghosts stay out of the travel until the hero's sky is in. So on your side the stop's own Sun has to hand over to that plate without a second disc or a second limb in 482 to 499: one centre, one radius, one limb at every frame.
 The hook comes first (MAIL 116); DONE for both by 10:25, batch 21 is cut at about 10:30. If the leave cannot be proved by then, send the hook alone and say what is open on the leave."
+## The leave, branch agent/sun-leave from main 8f13066 (Nov 22, 09:30 to 10:10 UTC)
+
+The full notes of the polish are on `agent/sun` (22dc89c), those of the hook on `agent/sun-hook2` (bff4907, code b9fb48c, accepted for engine batch 21 by MAIL 123). This section is the memory of the leave only.
+
+### Mails
+
+- MAIL 109 B: frame 495 at 6 of 10. Majors: thin saturated red prominences with no glow, a soft airbrushed photosphere, a faint greenish grey streak detached from the corona. Cure wanted: an exposure change of ONE Sun; globe, corona and prominences rise in level together until the disc clips to the pale white of Mercury's plate, the granulation washes out, the prominences burn out pale, wide and hot, and only then the plate takes over. 450 to 470 and 540 on keep their bytes. Wanted: draft strip 474 to 502 every second frame, finals of 482, 490, 495, native crops before and after, owners of the three majors.
+- MAIL 122: the plate's centre is the engine's Sun; one centre, one radius, one limb at every frame of 482 to 499. DONE or PART by 10:25 (the Builder's clock runs about 5 minutes ahead of this VM).
+- MAIL 123: hook accepted as it is (b9fb48c into batch 21); the flash line is meant against main at the same frame; the three weak points go on the polish list; go on with the leave; the draft recheck of 0, 90, 247, 360 with it.
+- Mail of `/root/mercury_builder` (plate on `agent/mercury-leave`): a table of the plate's disc at 1920 by 1080, mid shutter t = (f + 0.25) / 30. Limb px from the engine's Sun, left, right, up, down: 488: 345.9, 312.9, 339.1, 356.1; 495: 352.7, 325.9, 348.3, 361.4; 498: 356.6, 332.5, 353.0, 364.3. Weight of the plate = smoothstep of (u - 0.25) / 0.55, u = (f - 450) / 90: 0.239 at 488, 0.440 at 495, 0.560 at 499. The plate is additive (One, One), no alpha, fixed in Mercury's hold camera frame. At weight 1 its disc inside 0.8 radii reads 249 239 208. Its new head adds limb darkening about the stated disc.
+
+### What the layers are at 495 (owners of the three majors)
+
+- Red prominences: mine (`prominence.ts`, drawn at the set's weight 0.33). Cured here by the burn.
+- Soft swirl photosphere: Mercury's `sunPlate` (picture `sun-plate.webp`, weight 0.44 at 495) added over my dimmed globe. My part under it is now a flat pale disc, so what texture is left at 494 to 502 is the plate's.
+- The greenish grey streak: Mercury's `streak` layer (`lens-streak.webp`). It is in main's 495 and in mine at the same place (native x 860 to 960, y 300 to 312 at 1920 wide).
+- Minor: the loops along the lower limb are painted in the plate; the grey white rays are my corona.
+- The travel's weights: my set falls over u 0.42 to 0.55 (`SUN_SWAP` in `film.ts`), the plate rises over u 0.25 to 0.8. Where my set is gone the plate stands at 0.57 and its disc reads about 242 227 185, pale, not white.
+
+### The finding that cost the time: the plate's stated disc is not its painted disc
+
+- `src/stops/mercury/sunplate.json` states the disc at the picture's centre with radius 0.227585 of the picture. The painted disc in `sun-plate.webp` has its centre at 0.5176, 0.5207 and radius 0.2506 (`assets-src/sun/leave/disc.py`, 405 of 1440 rays, median residual 0.67 px of 2048; the left edge of the picture is hidden by white glow, so the fit is good to a few px, and the painted disc is not a perfect circle: on screen it stands about 10 px inside the fit at the lower left).
+- On screen at 495, limb px from the engine's Sun, left, right, up, down, lower left, lower right: stated 352.7, 325.9, 348.3, 361.4, 352.0, 350.1; painted 358.9, 381.4, 413.9, 363.0, 343.4, 382.5. So the table of the plate's owner (which my script gives back to 0.1 px from the stated disc) is up to 65 px away from the limb one sees (55 on the right). Take 2 fitted my globe to the table and showed a second limb, a 28 px band at the lower left. Mercury's limb darkening is centred on the stated disc too, so it is off centre on the painted one.
+- The plate is `uv = (p.xy / -p.z - rect.xy) / rect.zw` with `p` the view ray in the plate's own frame; in `sun.travel` that frame is fixed in the world (quaternion -0.19919, 0.05403, 0.79560, 0.56958, logged from Mercury's set), `shrink` is 0. So the painted limb is a fixed cone of world directions, and its ellipse on screen follows from the camera's rotation alone, with no table and no knots.
+
+### What is built (all in `src/stops/sun/`, numbers in `look.leave`)
+
+- `globe.ts`: `uOpen` (exposure factor) and `uWash` (flat colour, amount), inside a conditional loop before the gain line: `col = mix(col * uOpen, uWash.xyz, uWash.w)`.
+- `prominence.ts`: `uBurn` (amount, wide, level, cover) and `uHot`; a wide `textureGrad` sample, then the card goes to the hot colour times its own light.
+- `corona.ts`: `update` takes the edge width.
+- `leave.json` (recipe in RECIPE.md, section Leave): the cone.
+- `set.ts`, for `kind === 'travel'` only: `going` opens the exposure by 4 over u 0.228 to 0.4, `flat` washes the granulation out over u 0.26 to 0.4, `burnt` burns the prominences over u 0.228 to 0.36, `fitted` over u 0.228 to 0.378 moves the globe's outline onto the painted limb of the plate: an affine map in camera space (`orbit.matrix`, `matrixAutoUpdate` off) that carries the ellipse of my globe's limb onto the ellipse of the cone. The flat colour is `pale` times a level that keeps my disc plus the plate at the plate's final level while my weight falls. The corona's centre follows and its inner circle is set to the short axis.
+- TRAP: draft frames render at mid shutter, t = (f + 0.25) / 30, and the final tier samples up to u 0.2278 at frame 470. Every ramp of the leave starts at u 0.228 so frame 470 keeps its bytes.
+
+### Measured (draft tier, 1920 by 1080)
+
+- Bytes equal to main 8f13066: 450 c69ccebcf3e4e33c, 460 2774a4074ce3ebb9, 470 4b277a95f2af3d79, 540 23691a51b96d7520, 560 c5ffb11d09ac1a2c, and the holds 0 0679ccde53820e23, 90 bf614a99e8524fbe, 247 88c6f79c3b1fff8d, 360 fcbfbf2f25bffb63.
+- My limb alone (plate and corona hidden) against the painted limb, px from the engine's Sun, left, right, up, down, lower left, lower right, upper left, upper right: 488 mine 351.5, 364.3, 403.1, 357.1, 336.0, 372.8, 395.7, 373.2 against 351.8, 365.6, 402.6, 357.6, 336.3, 374.0, 395.4, 373.7; 492 mine 354.9, 372.5, 409.1, 359.9, 339.4, 377.3, 398.7, 382.3 against 355.4, 374.0, 408.6, 360.4, 339.9, 378.5, 398.5, 383.0; 495 mine 358.3, 379.6, 414.4, 362.6, 342.8, 381.1, 401.5, 390.3 against 358.9, 381.4, 413.9, 363.0, 343.4, 382.5, 401.4, 391.1; 498 (disc partly out of frame) mine 360.7, 385.9, 418.2, 363.9, 345.2, 383.9, 403.1, 397.3 against 363.0, 389.3, 419.5, 366.0, 347.4, 386.7, 404.6, 399.9. Within 1.8 px at 488 to 495, 3.4 at 498.
+- Disc mean inside 200 px of the Sun's centre, every second frame 474 to 502: 204 133 65, 226 179 107, 237 207 143, 241 219 165, 242 225 176, 242 226 181, 242 227 182, 242 227 183, 242 227 184, 242 227 184, 242 227 185, 242 227 185, 241 227 184, 243 230 193, 244 232 198. It rises or holds; one step of 1 level down in red at 498. Main went 184 108 48 to 244 232 198 with the texture at standard deviation 39 falling to 20; mine falls to 6 at 484 and comes back to 16 as the plate's texture arrives.
+
+### Weak points, open
+
+- The fit moves and grows my disc by about 10 percent over 470 to 484 (the painted disc is that much larger than the engine's Sun at this distance). It reads as part of the opening exposure, but it is a size change.
+- The painted disc is not a circle; at the lower left my limb stands about 10 px outside it.
+- The plate's texture returns at 494 to 502 (Mercury's picture at weight 0.4 to 0.7): the disc is flat white at 482 to 492 and patterned again after. A white on white hand over needs the plate's own level higher earlier, which is Mercury's.
+- A few thin red specks left of the burnt prominence at 490 (native x 1555 to 1620, y 520 to 555).
+- `leave.json` and `look.leave.plate`, `gone`, `pale` copy Mercury's picture, rect, aim, ramp and level and the travel's swap. They must follow if those change.
