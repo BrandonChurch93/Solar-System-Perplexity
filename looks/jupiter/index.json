@@ -1,9 +1,62 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T10:00:33.411Z",
+ "pushed": "2026-11-22T10:14:38.370Z",
  "head": "3ec02be0bb2aa489f1e0681ee2139f3fddf7e12f",
- "note": "Jupiter: dive cover sheet on the merged tree (2687a17, main f24046b) rendering, 3019 to 3023 same bytes as before E1, 3024 looked at",
+ "note": "Jupiter: dive cover sheet on the merged tree (2687a17, main f24046b) done and looked at frame by frame; terrain review sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-22T10:14:37.293Z",
+   "file": "20261122101437293-note-d3029_30.jpg",
+   "source": "out/work/view/b20r/v/d3029_30.jpg",
+   "kind": "note",
+   "label": "Dive cover, review tier, frames 3029 and 3030: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 2687a17 on main f24046b) right. Sky at full level two frames earlier, nothing else moves",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T10:14:36.089Z",
+   "file": "20261122101436089-note-dive-cover-b20.jpg",
+   "source": "out/work/jupiter/fg/kept/dive-cover-b20.png",
+   "kind": "note",
+   "label": "Dive cover review sheet, every frame 3019 to 3030, agent/jupiter 2687a17 on main f24046b (engine batch 20, the three cover fixes): 3019 to 3023 same bytes as a06d2ae, the sky returns from 3025 instead of 3027",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T10:14:00.609Z",
+   "file": "20261122101400609-sheet-jupiter.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.dive, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "first": 3019,
+   "last": 3030,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T10:13:58.864Z",
+   "file": "20261122101358864-frame-f03030-review.jpg",
+   "source": "out/work/sheets/.frames-LAwiGB/f03030-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3030, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3030,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T10:09:41.120Z",
+   "file": "20261122100941120-note-d3025_28.jpg",
+   "source": "out/work/view/b20r/v/d3025_28.jpg",
+   "kind": "note",
+   "label": "Dive cover, review tier, frames 3025 to 3028: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 2687a17 on main f24046b) right. The sky returns from the first frame after the cut instead of staying black to 3026",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-22T10:00:32.169Z",
    "file": "20261122100032169-note-d3024.jpg",
@@ -11,20 +64,6 @@
    "kind": "note",
    "label": "dive cover 3024 review, first terrain frame, a06d2ae beside agent/jupiter 2687a17 on main f24046b (E1): same haze, horizon and colour; 3019 to 3023 same bytes as a06d2ae",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T10:00:08.336Z",
-   "file": "20261122100008336-frame-f03024-review.jpg",
-   "source": "out/work/sheets/.frames-LAwiGB/f03024-review.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3024, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3024,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   },
   {
    "time": "2026-11-22T09:32:21.952Z",
@@ -72,20 +111,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T08:43:09.560Z",
-   "file": "20261122084309560-still-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
    "time": "2026-11-22T08:41:19.856Z",
    "file": "20261122084119856-still-f03150-16x9-final-full.jpg",
    "source": "out/work/stills/f03150-16x9-final-full.png",
@@ -94,20 +119,6 @@
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:39:28.804Z",
-   "file": "20261122083928804-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -126,22 +137,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:30:44.397Z",
-   "file": "20261122083044397-note-r_3275_3276.jpg",
-   "source": "out/work/view/e3r/v/r_3275_3276.jpg",
-   "kind": "note",
-   "label": "Rise cover, review tier, frames 3275 and 3276: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. The pale upright column right of centre is gone, the sky is back at two thirds of its full level",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T08:30:43.742Z",
-   "file": "20261122083043742-note-rise-cover-e3.jpg",
-   "source": "out/work/jupiter/fg/kept/rise-cover-e3.png",
-   "kind": "note",
-   "label": "Rise cover review sheet, every frame 3265 to 3276, agent/jupiter 8909c1d on main c92f97c (the three cover fixes): the sky fades to black on the cut frame 3270 only and returns by the same law, the pale column on the disc is gone",
-   "stop": "jupiter"
   }
  ]
 }
