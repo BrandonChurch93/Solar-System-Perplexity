@@ -1,9 +1,41 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T10:23:02.271Z",
- "head": "f984c1abd33fdb77e8903cea4caa6f9aeaf5863c",
- "note": "take 4 of the border taper committed and proven (f984c1a); prototype of a take 5 for the left border",
+ "pushed": "2026-11-22T10:54:35.145Z",
+ "head": "1b6f16e20702c805c25193ed9235898d66d2a280",
+ "note": "main with batches 21 and 22 merged into agent/neptune (1b6f16e): 5085 and 5235 the same bytes as main, judged finals rendering",
  "looks": [
+  {
+   "time": "2026-11-22T10:54:34.427Z",
+   "file": "20261122105434427-note-trans-sheet.jpg",
+   "source": "../../../../tmp/trans-sheet.png",
+   "kind": "note",
+   "label": "hand over from the rise to the retreat on the merge trial with the fix, drafts 5015 to 5060",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T10:33:32.246Z",
+   "file": "20261122103332246-note-m5085-day.jpg",
+   "source": "../../../../tmp/m5085-day.png",
+   "kind": "note",
+   "label": "merge trial at 5085 day side, native: the ending left, merged right (cirrus and flow of the polish branch dim the white cloud)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T10:33:31.289Z",
+   "file": "20261122103331289-note-m5085-ring.jpg",
+   "source": "../../../../tmp/m5085-ring.png",
+   "kind": "note",
+   "label": "merge trial at 5085, native: the ending left, merged right (ring grain as streaks)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T10:33:30.159Z",
+   "file": "20261122103330159-note-m5235-upper.jpg",
+   "source": "../../../../tmp/m5235-upper.png",
+   "kind": "note",
+   "label": "merge trial at 5235, native: the ending as accepted left, merged with the polish branch right (ring grain shows as speckle)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T10:23:01.702Z",
    "file": "20261122102301702-note-cmp6-l.jpg",
@@ -18,44 +50,6 @@
    "source": "../../../../tmp/cmp6-l-x3-b.png",
    "kind": "note",
    "label": "left border at map scale raised 3 times: take 4 left, prototype of take 5 (least slant 0.3) right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T10:23:00.585Z",
-   "file": "20261122102300585-note-t4-terrain-sheet-review.jpg",
-   "source": "out/work/nep/p6/knit/send/t4-terrain-sheet-review.jpg",
-   "kind": "note",
-   "label": "terrain sheet at review with take 4 of the border taper",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T10:17:53.477Z",
-   "file": "20261122101753477-job-frame-05006.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T10:11:22.743Z",
-   "file": "20261122101122743-note-t4-terrain-sheet-review.jpg",
-   "source": "out/work/nep/p6/knit/send/t4-terrain-sheet-review.jpg",
-   "kind": "note",
-   "label": "Terrain sheet at review with take 4 of the border taper",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T10:11:21.543Z",
-   "file": "20261122101121543-note-t4-4933-left-x3-before-after.jpg",
-   "source": "out/work/nep/p6/knit/send/t4-4933-left-x3-before-after.jpg",
-   "kind": "note",
-   "label": "Terrain 4933 review, left border raised 3 times, before left, take 4 right",
    "stop": "neptune"
   },
   {
