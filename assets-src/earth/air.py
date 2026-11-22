@@ -146,6 +146,10 @@ OVER = 1.08
 ENDS = (0.58, 0.64)
 FAINT = (0.004, 0.03)
 GONE = 0.44
+GAP = (-0.03, -0.012, -0.001, 0.0075)
+GAP_STEP = 0.0015
+GAP_TOP = 0.04
+GAP_LIT = (0.1, 0.14)
 
 
 def under(out=None):
@@ -194,13 +198,27 @@ def under(out=None):
     pad = np.concatenate([rim[-8:], rim, rim[:8]], 0)
     rim = cv2.GaussianBlur(pad[None].astype(np.float64), (0, 0), sigmaX=1.2, sigmaY=0.01)[0, 8:-8]
     row = np.clip(np.sqrt(np.clip(rim / 4, 0, 1)) * 255 + 0.5, 0, 255).astype(np.uint8)
+    edges = GAP[0] + GAP_STEP * np.arange(int(round((GAP[3] - GAP[0]) / GAP_STEP)) + 1)
+    mid = 0.5 * (edges[:-1] + edges[1:])
+    near = (h > GAP[0]) & (h < GAP[3])
+    prof = np.zeros((MAP_W, len(mid)))
+    for c in range(MAP_W):
+        m = near & (ic == c)
+        k = np.clip(np.floor((h[m] - GAP[0]) / GAP_STEP).astype(int), 0, len(mid) - 1)
+        v = hero[m][:, 2]
+        prof[c] = [np.median(v[k == j]) if (k == j).any() else 0.0 for j in range(len(mid))]
+    prof = np.median(np.stack([np.roll(prof, r, 0) for r in range(-2, 3)]), axis=0)
+    deep = np.maximum(np.minimum(prof[:, mid < GAP[1]].max(1), prof[:, mid > GAP[2]].max(1)) - prof[:, (mid > GAP[1]) & (mid < GAP[2])].min(1), 0)
+    deep = 0.25 * np.roll(deep, 1) + 0.5 * deep + 0.25 * np.roll(deep, -1)
+    deep = np.minimum(deep, GAP_TOP) * (1 - geo.smooth(GAP_LIT[0], GAP_LIT[1], lit))
+    img[MAP_H:, :, 3] = np.clip((0.125 + 0.875 * deep / GAP_TOP) * 255 + 0.5, 0, 255).astype(np.uint8)[None, :]
     old_row = img[MAP_H, :, [2, 1, 0]].T.copy()
     img[MAP_H:, :, 2], img[MAP_H:, :, 1], img[MAP_H:, :, 0] = row[None, :, 0], row[None, :, 1], row[None, :, 2]
     for key in ("full", "web"):
         cv2.imwrite(str((out / (key + "-air-glow.png")) if out else (geo.ROOT / "public" / "assets" / "earth" / key / "air-glow.png")), img)
     print("line share, was and now, and rim (code values, was and now) every 8 deg")
     for c in range(1, MAP_W, 4):
-        print(f"  pa {cols[c]:5.0f} x {np.interp(cols[c], ratio[:, 0], ratio[:, 1], period=360):.2f} line {was[c]:.2f} {alpha[c]:.2f} rim {old_row[c]} {row[c]}")
+        print(f"  pa {cols[c]:5.0f} x {np.interp(cols[c], ratio[:, 0], ratio[:, 1], period=360):.2f} line {was[c]:.2f} {alpha[c]:.2f} rim {old_row[c]} {row[c]} gap {deep[c] * 255:.2f}")
 
 
 def day_factor(AT, dirv, lo):
