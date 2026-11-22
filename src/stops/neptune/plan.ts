@@ -31,14 +31,14 @@ export const params: MoveParams = {
   tint: [0.3, 0.5, 1],
 }
 
-const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.55, full: 0.93 }
+const veil: { air: [number, number]; sea: [number, number]; clear: number; full: number } = { air: [1.005, 1.03], sea: [1.002, 1.012], clear: 0.15, full: 0.93 }
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
 const emerge = 1
 export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4732, place: [0, 0.1] as [number, number], placeOver: 14, clear: { to: 4726, pace: 0.014174, height: 0.6722, speed: 0.10947 }, under: { ramp: 7, ease: 5 } }
-export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.04, ramp: 5, hold: 16, rest: 26, late: 0.006 } }
+export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.22, ramp: 8, hold: 14, rest: 26, late: 0.006 } }
 export const steady = { hold: 0.5, terrain: 1 }
 const smooth = (x: number): number => {
   const t = Math.min(Math.max(x, 0), 1)

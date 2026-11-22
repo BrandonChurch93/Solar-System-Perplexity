@@ -60,11 +60,13 @@ def web(img):
     return np.asarray(img.resize((img.size[0] // 2, img.size[1] // 2), Image.LANCZOS)).astype(np.float64)
 
 
-def place(shipped, before, after, out):
+def place(shipped, before, after, out, kept):
     src = np.asarray(Image.open(shipped).convert('RGB'))
     old = src.astype(np.float64)
     rebuilt = int((np.abs((before + 0.5).astype(np.uint8).astype(int) - src.astype(int)).max(axis=2) > 0).sum())
-    new = (np.clip(old + after - before, 0, 255) + 0.5).astype(np.uint8)
+    delta = after - before
+    delta[:, :int(np.ceil(kept * src.shape[1] - 1e-9))] = 0
+    new = (np.clip(old + delta, 0, 255) + 0.5).astype(np.uint8)
     Image.fromarray(new).save(out, lossless=True, quality=90, method=6)
     back = np.asarray(Image.open(out).convert('RGB'))
     changed = np.abs(back.astype(int) - src.astype(int)).max(axis=2) > 0
@@ -72,7 +74,7 @@ def place(shipped, before, after, out):
     print(out, 'pixels where the shipped file is not the rebuilt master', rebuilt, 'changed pixels', int(changed.sum()), 'columns', int(xs.min()), 'to', int(xs.max()), 'rows', int(ys.min()), 'to', int(ys.max()))
 
 
-def main(name, master, shipped, out, gain, knee):
+def main(name, master, shipped, out, gain, knee, first):
     spots = SETS[name]
     img = Image.open(master).convert('RGB')
     a = np.asarray(img).astype(np.float64).copy()
@@ -80,8 +82,9 @@ def main(name, master, shipped, out, gain, knee):
         fix(a, spots, i)
     fixed = Image.fromarray((a + 0.5).astype(np.uint8))
     fixed.save(f'{out}/sky-hold-3520-{name}.webp', lossless=True, quality=90, method=6)
-    place(f'{shipped}/full/sky-hold.webp', full(img, gain, knee), full(fixed, gain, knee), f'{out}/full/sky-hold.webp')
-    place(f'{shipped}/web/sky-hold.webp', web(img), web(fixed), f'{out}/web/sky-hold.webp')
+    kept = first / Image.open(f'{shipped}/full/sky-hold.webp').size[0]
+    place(f'{shipped}/full/sky-hold.webp', full(img, gain, knee), full(fixed, gain, knee), f'{out}/full/sky-hold.webp', kept)
+    place(f'{shipped}/web/sky-hold.webp', web(img), web(fixed), f'{out}/web/sky-hold.webp', kept)
 
 
-main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]), float(sys.argv[6]))
+main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], float(sys.argv[5]), float(sys.argv[6]), int(sys.argv[7]) if len(sys.argv) > 7 else 0)
