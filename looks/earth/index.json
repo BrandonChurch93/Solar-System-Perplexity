@@ -1,9 +1,141 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T09:06:53.085Z",
- "head": "82fabb4ff4e9abf74c577c9e19dff6c00b84b17e",
- "note": "Earth READY 2 re-proof on engine batch 20: mail 80 strips before and after done; finals 1755, 1857, 2010 byte equal, 2156 new sky only; sheets, cover frames, repeat, measure running",
+ "pushed": "2026-11-22T09:27:04.339Z",
+ "head": "c5615ec3de4f3382929599d5af05839eb1d7dc9c",
+ "note": "Earth READY 2 re-proof on engine batch 20: hold and terrain sheets 0 pixels from batch 19, cover frames 1884, 1888, 2133 byte equal, repeat clean, rise sky looked at; measure running, READY when it ends",
  "looks": [
+  {
+   "time": "2026-11-22T09:25:57.217Z",
+   "file": "20261122092557217-note-sheet-terrain.jpg",
+   "source": "out/work/earth/pb/m/sheet-terrain.png",
+   "kind": "note",
+   "label": "Terrain sheet at review on batch 20 (1920 to 2099): 0 pixels differ from batch 19. agent/earth c5615ec (code c2a211a), tree holds main 616695b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:25:56.074Z",
+   "file": "20261122092556074-note-sheet-hold.jpg",
+   "source": "out/work/earth/pb/m/sheet-hold.png",
+   "kind": "note",
+   "label": "Hold sheet at review on batch 20 (1680 to 1829): 0 pixels differ from batch 19. The aurora rises 1680 to 1716. agent/earth c5615ec (code c2a211a), tree holds main 616695b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:25:54.871Z",
+   "file": "20261122092554871-note-v-rise-sky-b20.jpg",
+   "source": "out/work/earth/pb/m/v-rise-sky-b20.png",
+   "kind": "note",
+   "label": "Rise sky on batch 20, places for the Builder (mail 71): the Moon at 2145 and 2165 at 6 times (night side a starless dark cap, 1 code value under its sky), night limb at 3 times (two points show through the aurora at 2145, outside the body), batch 19 Moon right. agent/earth c5615ec (code c2a211a), tree holds main 616695b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:25:53.936Z",
+   "file": "20261122092553936-note-v-2145-2165-b19-b20.jpg",
+   "source": "out/work/earth/pb/m/v-2145-2165-b19-b20.png",
+   "kind": "note",
+   "label": "Rise after the cover, 2145 and 2165 at review, preview format: batch 19 left, batch 20 right. The disc is the same; the sky has batch 20's points, densest at 2165. agent/earth c5615ec (code c2a211a), tree holds main 616695b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:23:18.029Z",
+   "file": "20261122092318029-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T09:17:37.637Z",
+   "file": "20261122091737637-frame-p-2165.jpg",
+   "source": "out/work/earth/pb/m/p-2165.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2165, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2165,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:12:55.654Z",
+   "file": "20261122091255654-frame-r-1888.jpg",
+   "source": "out/work/earth/pb/m/r-1888.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1888, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1888,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:10:29.030Z",
+   "file": "20261122091029030-sheet-earth.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/earth.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.terrain, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "first": 1920,
+   "last": 2099,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:09:44.918Z",
+   "file": "20261122090944918-frame-f02018-review.jpg",
+   "source": "out/work/sheets/.frames-Wy92HA/f02018-review.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2018, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2018,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:08:14.509Z",
+   "file": "20261122090814509-sheet-earth.hold-16x9-review.jpg",
+   "source": "out/work/sheets/earth.hold-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.hold, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "first": 1680,
+   "last": 1829,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:07:40.233Z",
+   "file": "20261122090740233-frame-f01788-review.jpg",
+   "source": "out/work/sheets/.frames-O4CMlC/f01788-review.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1788, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1788,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T09:06:51.994Z",
    "file": "20261122090651994-note-moon-2156.jpg",
@@ -27,48 +159,6 @@
    "kind": "note",
    "label": "2156 at the final tier: batch 19 (fcde160f) left, batch 20 (747dab7f) right. The disc is the same picture (inside 495 px of the centre at most 2 levels); the sky has batch 20's points. Moon night side (8, 15, 22) against its sky (9, 16, 23) on both. agent/earth 82fabb4 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T09:06:07.760Z",
-   "file": "20261122090607760-frame-f01680-review.jpg",
-   "source": "out/work/sheets/.frames-O4CMlC/f01680-review.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1680, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T09:05:27.036Z",
-   "file": "20261122090527036-frame-f-2156-final.jpg",
-   "source": "out/work/earth/pb/m/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T09:00:27.853Z",
-   "file": "20261122090027853-frame-f-1857-final.jpg",
-   "source": "out/work/earth/pb/m/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
   },
   {
    "time": "2026-11-22T08:56:14.512Z",
@@ -343,35 +433,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T08:04:04.201Z",
-   "file": "20261122080404201-sheet-earth.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/earth.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.terrain, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "first": 1920,
-   "last": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T08:03:20.644Z",
-   "file": "20261122080320644-frame-f02018-review.jpg",
-   "source": "out/work/sheets/.frames-giuM44/f02018-review.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2018, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2018,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T07:57:07.805Z",
    "file": "20261122075707805-job-frame-01857.jpg",
    "source": "memory",
@@ -394,20 +455,6 @@
    "stop": "earth",
    "segment": "earth.terrain",
    "frame": 1967,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T07:36:06.023Z",
-   "file": "20261122073606023-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
    "tier": "draft",
    "format": "16x9",
    "diag": "texels",
@@ -446,21 +493,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T07:20:53.488Z",
-   "file": "20261122072053488-sheet-earth.hold-16x9-review.jpg",
-   "source": "out/work/sheets/earth.hold-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.hold, review tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "first": 1680,
-   "last": 1829,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T07:20:02.930Z",
    "file": "20261122072002930-note-v-1668-3.jpg",
    "source": "out/work/earth/pb/j/v-1668-3.png",
@@ -482,38 +514,6 @@
    "source": "out/work/earth/pb/j/v-onset-review.png",
    "kind": "note",
    "label": "Mail 80, the aurora rising in the first 36 frames of the hold: 1680 to 1720 every fourth frame, review tier, native pixels. Full from 1716, as in the approved image. Tree: agent/earth ea5cba5 (code c2a211a, earth hash d2fd0232), main 2858db4, engine batch 19 7a880ac6, engine hash 7553966a.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T07:11:49.947Z",
-   "file": "20261122071149947-note-v-arrival-frames-2.jpg",
-   "source": "out/work/earth/pb/j/v-arrival-frames-2.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1673 to 1679, whole frames at sheet tile size, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T07:11:49.298Z",
-   "file": "20261122071149298-note-v-arrival-limb-2.jpg",
-   "source": "out/work/earth/pb/j/v-arrival-limb-2.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1673 to 1679, upper right limb at preview pixels, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Green pixels in this crop: 2505 to 4403 on main, 9 to 120 with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T07:11:48.590Z",
-   "file": "20261122071148590-note-v-arrival-frames-1.jpg",
-   "source": "out/work/earth/pb/j/v-arrival-frames-1.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1666 to 1672, whole frames at sheet tile size, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T07:11:47.878Z",
-   "file": "20261122071147878-note-v-arrival-limb-1.jpg",
-   "source": "out/work/earth/pb/j/v-arrival-limb-1.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1666 to 1672, upper right limb at preview pixels, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Green pixels in this crop: 2505 to 4403 on main, 9 to 120 with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
    "stop": "earth"
   }
  ]
