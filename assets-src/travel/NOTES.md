@@ -747,3 +747,8 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Finals of the ending on the head tree (label g9) and on main (gm), file hashes equal: 5085 06acc9e5e7c35ba5, 5235 4da14b38897c4c44, 5362 83950e4755786454. So all six judged frames that are not meant to move keep main's bytes (495, 2782, 3922, 5085, 5235, 5362).
 - origin/main 6460b4a5 merged before the mail. The `CUT34 travel` mail names the head after this entry; attachments c34-finals-a, g8-finals-b, c34-mercury-ab2, c34-venus-ab, c34-earth-ab, c34-jupiter-ab, c34-uranus-ab, c34-suncorner-ab, w-merc34-b, c34-swing-all (all in `/tmp/v/`).
 - After the mail: nothing is in work. Round 35 takes only small proven things and take outs. Open on my side: mercury.travel turn 4.23 against 3 (REQUESTS.md 3), item 88 (sun.travel 474 to 482 wash to white, not looked at this round), the still disc over fast sky in five travels.
+
+## 16:03 UTC: CUT34 travel sent
+- Mail `CUT34 travel` sent to the Builder, commit to take b69f88d5da66cfe9ca4be9c0c5b1ec56b60d2dc4 (holds origin/main 6460b4a5). Commits after it on this branch are notebook only.
+- Said in it: seven separable commits (five windows, the Sun fix 385e6ce, the lift 1abd740), five judged finals that differ, six that keep main's bytes, the corrected turn numbers, the watches, the Neptune swing check (nothing worse; Triton dips over the top 4496 to 4508; 4492 and the ending hashes not proved with it), what is left (item 88, 495, 5085, sky strip, mercury turn).
+- Nothing in work. Wait for mail. Round 35 is the last cut: small proven things and take outs only.
