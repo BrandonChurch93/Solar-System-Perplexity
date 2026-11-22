@@ -20,21 +20,20 @@ export interface TravelLook {
   growRun: [number, number, number]
   pin: [number, number]
   pinEase: [number, number]
-  glide: [number, number]
   turnRun: [number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], glide: [0, 0], turnRun: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
-  mercury: { bowDeg: 9, growRun: [0.4, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
-  venus: { bowDeg: -12, growRun: [0.45, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
-  earth: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.03, passBy: 0.26, pin: [0, 1], glide: [0.25, 14], turnRun: [0.15, 0.65], panSpan: [0, 1] },
+  mercury: { growRun: [0.34, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.26, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1] },
+  venus: { growRun: [0.38, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.26, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1] },
+  earth: { growRun: [0.38, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.26, pin: [0, 1], pinEase: [2, 9], turnRun: [0.38, 0.38], panSpan: [0, 1] },
   mars: { bowDeg: 10, grow: [2, 3] },
   jupiter: { bowDeg: -10, grow: [3, 4] },
-  saturn: { bowDeg: 8, growRun: [0.4, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
-  uranus: { bowDeg: -6, growRun: [0.45, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.22 },
+  saturn: { growRun: [0.42, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.26, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1] },
+  uranus: { growRun: [0.4, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.22, pin: [0, 1], pinEase: [2, 9], turnRun: [0.33, 0.37], panSpan: [0, 1] },
 }
 
 export function travelLook(id: string): TravelLook {
@@ -84,6 +83,15 @@ export function runEase(lead: number, tail: number): (t: number) => number {
   }
 }
 
+export function slowEase(lead: number, tail: number): (t: number) => number {
+  const up = (x: number): number => x * x * x * x * (1 - 0.6 * x)
+  const total = 1 - 0.6 * lead - 0.6 * tail
+  return (t) => {
+    const x = Math.min(Math.max(t, 0), 1)
+    return (x < lead ? lead * up(x / lead) : x > 1 - tail ? total - tail * up((1 - x) / tail) : x - 0.6 * lead) / total
+  }
+}
+
 const span = (r: [number, number], t: number): number => Math.min(Math.max((t - r[0]) / (r[1] - r[0]), 0), 1)
 
 export class TravelShape {
@@ -101,7 +109,7 @@ export class TravelShape {
 
   constructor(id: string, over: Partial<TravelLook> = {}) {
     this.look = { ...travelLook(id), ...over }
-    this.panEase = this.look.turnRun[0] > 0 ? runEase(this.look.turnRun[0], this.look.turnRun[1]) : this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.pan[0], this.look.pan[1])
+    this.panEase = this.look.turnRun[0] > 0 ? slowEase(this.look.turnRun[0], this.look.turnRun[1]) : this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.pan[0], this.look.pan[1])
     this.rollEase = this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.roll[0], this.look.roll[1])
     this.pinEase = betaEase(this.look.pinEase[0], this.look.pinEase[1])
     const run = this.look.growRun
@@ -111,13 +119,13 @@ export class TravelShape {
   }
 
   pan(u: number): number {
-    const main = this.panEase(span([Math.max(this.look.panSpan[0], this.from - this.look.early), this.until > 0 && this.look.pin[1] <= 0 ? Math.min(this.until, this.look.panSpan[1]) : this.look.panSpan[1]], u))
+    const main = this.panEase(span([Math.max(this.look.panSpan[0], this.from - this.look.early), this.look.panSpan[1]], u))
     const share = this.look.lead[0]
     return share > 0 ? share * this.leadEase(span([0, this.look.lead[1]], u)) + (1 - share) * main : main
   }
 
   roll(u: number): number {
-    return this.rollEase(span([Math.max(this.look.rollSpan[0], this.from - this.look.early), this.until > 0 ? Math.min(this.until, this.look.rollSpan[1]) : this.look.rollSpan[1]], u))
+    return this.rollEase(span([Math.max(this.look.rollSpan[0], this.from - this.look.early), this.look.rollSpan[1]], u))
   }
 
   pass(u: number): number {
@@ -139,14 +147,8 @@ export class TravelShape {
     return low
   }
 
-  rayLeft(u: number, angle: number): number {
-    if (this.look.pin[1] <= 0) return angle
-    const s = span(this.look.pin, span([this.from, this.until], u))
-    const [knee, deg] = this.look.glide
-    if (knee <= 0) return angle * (1 - this.pinEase(s))
-    const w = this.settleEase(span([0, knee], s))
-    const rest = (1 - s) / (1 - knee)
-    return angle * (1 - w) + THREE.MathUtils.degToRad(deg) * rest * rest * w
+  pinned(u: number): number {
+    return this.look.pin[1] > 0 ? this.pinEase(span(this.look.pin, span([this.from, this.until], u))) : 0
   }
 
   spin(qa: THREE.Quaternion, qb: THREE.Quaternion, u: number): THREE.Quaternion {
