@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R4",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "sheet-05.png",
+      "where": "Jupiter, frames 2806 to 2812",
+      "what": "the arrival whip stops dead: frame 2806 still smears Jupiter and its moon vertically while the stars and Milky Way have already settled, and by 2812 that smear has snapped off with no camera move",
+      "fix": "ease the tilt to a stop and keep blur on the whole view only while the camera is still moving"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-01.png",
+      "where": "solar disk, frame 482",
+      "what": "exposure and color pop from orange granulation to a flat yellow-white disk in one step, while the pan itself continues",
+      "fix": "ramp the bloom across the pan so the disk does not blow out between 474 and 482"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-06.png",
+      "where": "upper right of Saturn, frame 3362",
+      "what": "a short reddish diagonal streak appears for one sample and is gone in the frames on either side",
+      "fix": "remove the one-frame streak, or give it a continuous path into the next frame"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R4",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  }
+ ]
+}
