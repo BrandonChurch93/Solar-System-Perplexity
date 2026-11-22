@@ -34,7 +34,7 @@ const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0, window: 41, patchEnd: 0.7 },
   mercury: { growRun: [0.2818, 0.2, 0.3], point: 0.0015, early: 0.0933, passBy: 0.32, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
-  venus: { growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1], window: 33, steady: [60, 200] },
+  venus: { growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200] },
   earth: { growRun: [0.3351, 0.2, 0.3], point: 0.0015, early: 0.15, passBy: 0.31, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.4, 0.36], panSpan: [0, 1], window: 33 },
   mars: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 33 },
   jupiter: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.32, passPower: 3, passKnee: 0.6, follow: 1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.4], panSpan: [0, 1], window: 33, steady: [60, 200] },
