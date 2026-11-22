@@ -30,6 +30,7 @@ export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 
 export const lineFade: [number, number] = [0.6, 0.15]
 export const diving = { from: 2.06, to: 1.8 }
 export const flow = { amount: 0.6 }
+export const cirrus = { amount: 1, bend: 0.018, shadow: 1.5, floor: 0.7, clump: [0.08, 0.28, 0.7] }
 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],

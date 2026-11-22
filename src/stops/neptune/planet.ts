@@ -78,6 +78,7 @@ export interface NeptuneOptions {
   patches?: PatchSet
   hold?: { map: THREE.Texture; box: number[]; head: number }
   flow?: THREE.Texture
+  far?: THREE.Texture
   segments?: number
 }
 
@@ -171,6 +172,9 @@ uniform vec4 uHoldBox;
 uniform vec2 uHold;
 uniform sampler2D uFlowMap;
 uniform float uFlow;
+uniform sampler2D uFarMap;
+uniform vec4 uCirrus;
+uniform vec3 uClump;
 uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
@@ -220,6 +224,12 @@ vec3 cloudDir(vec3 p) {
   float lat = asin(clamp(p.y, -1.0, 1.0));
   vec3 d = spinY(p, uSpin + uStream * (1.0 + uShear.x * sin(lat * uShear.y)));
   return turnAbout(d, uStormAxis, stormTurn(d));
+}
+vec3 bend(vec3 d, float a) {
+  float c0 = sqrt(max(1.0 - d.y * d.y, 1e-6));
+  float y1 = clamp(d.y + a * c0, -1.0, 1.0);
+  float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
+  return vec3(d.x * s, y1, d.z * s);
 }
 vec4 layerAt(vec3 dd, float soft, out float texels) {
   float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
@@ -274,11 +284,30 @@ void main() {
   vec3 dd = deckDir(p);
   vec3 dcl = cloudDir(pc);
   vec4 deckTexel = layerAt(dd, 1.0, texels);
-  float alpha = layerAt(dcl, uCloudSoft, texelsCloud).a;
   float reach = uCloudHeight / max(ndl, uShadow.z);
-  vec3 ps = normalize(p + sunL * reach);
-  vec3 ps2 = normalize(p + sunL * reach * 1.6);
-  float shadow = 0.6 * min(layerAt(cloudDir(ps), uShadow.y, texelsShadow).a, 1.0) + 0.4 * min(layerAt(cloudDir(ps2), uShadow.y * 1.8, texelsShadow).a, 1.0);
+  vec3 dsa = cloudDir(normalize(p + sunL * reach));
+  vec3 dsb = cloudDir(normalize(p + sunL * reach * 1.6));
+  float keep = 1.0;
+  float deepen = 1.0;
+  vec2 cq = vec2(atan(dcl.x, dcl.z) / (2.0 * PI) + 0.5, asin(clamp(dcl.y, -1.0, 1.0)) / PI + 0.5);
+  float cq2 = fract(cq.x + 0.5) - 0.5;
+  vec2 cx = vec2(abs(dFdx(cq.x)) < abs(dFdx(cq2)) ? dFdx(cq.x) : dFdx(cq2), dFdx(cq.y)) * uGrad;
+  vec2 cy = vec2(abs(dFdy(cq.x)) < abs(dFdy(cq2)) ? dFdy(cq.x) : dFdy(cq2), dFdy(cq.y)) * uGrad;
+  for (int k = 0; k < (uCirrus.x > 0.0 ? 1 : 0); k++) {
+    float turn = uCirrus.x * uCirrus.y * (textureGrad(uFarMap, cq, cx, cy).g * (255.0 / 127.0) - 1.0) * sqrt(max(1.0 - dcl.y * dcl.y, 0.0));
+    dcl = bend(dcl, turn);
+    dsa = bend(dsa, turn);
+    dsb = bend(dsb, turn);
+    vec4 far = textureGrad(uFarMap, cq + vec2(0.0, turn / PI), cx, cy);
+    keep = mix(1.0, far.r * smoothstep(uClump.x, uClump.y, far.b) * mix(uCirrus.w, 1.0, smoothstep(uClump.y, uClump.z, far.b)), uCirrus.x);
+    deepen = 1.0 + uCirrus.x * uCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
+  }
+  float alpha = layerAt(dcl, uCloudSoft, texelsCloud).a;
+  float shadow = 0.6 * min(layerAt(dsa, uShadow.y, texelsShadow).a, 1.0) + 0.4 * min(layerAt(dsb, uShadow.y * 1.8, texelsShadow).a, 1.0);
+  for (int k = 0; k < (uCirrus.x > 0.0 ? 1 : 0); k++) {
+    alpha *= keep;
+    shadow = min(shadow * keep * deepen, 1.0);
+  }
   float lit = smoothstep(0.0, 0.2, ndl);
   vec3 albedo = deckTexel.rgb / uCode;
   vec2 fq = vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5);
@@ -376,6 +405,7 @@ export class NeptunePlanet {
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
         uHoldMap: { value: o.hold?.map ?? o.map }, uHoldBox: { value: o.hold ? new THREE.Vector4(o.hold.box[0], o.hold.box[1], 1 / (o.hold.box[2]! - o.hold.box[0]!), 1 / (o.hold.box[3]! - o.hold.box[1]!)) : new THREE.Vector4(0, 0, 1, 1) }, uHold: { value: new THREE.Vector2(0, o.hold?.head ?? 1) },
         uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
+        uFarMap: { value: o.far ?? o.map }, uCirrus: { value: new THREE.Vector4(0, 0, 0, 1) }, uClump: { value: new THREE.Vector3(0, 0.5, 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },

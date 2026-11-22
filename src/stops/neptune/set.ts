@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
+import { close, farMap, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { limbField } from './field'
 import * as look from './look'
@@ -40,6 +40,7 @@ export const createSet: SetFactory = async (ctx) => {
   const field = limbField()
   const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
   const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
+  const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const planet = new NeptunePlanet({
     field, near: look.near.dive, night: look.night,
@@ -48,6 +49,7 @@ export const createSet: SetFactory = async (ctx) => {
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
     flow,
+    far: farSide,
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
@@ -139,6 +141,8 @@ export const createSet: SetFactory = async (ctx) => {
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep))
+      ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
+      ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
