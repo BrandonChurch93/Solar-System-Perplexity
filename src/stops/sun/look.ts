@@ -14,7 +14,7 @@ const distance = Math.hypot(fit.camera.position[0]!, fit.camera.position[1]!, fi
 export const globe: GlobeLook = {
   limb: [0.33, 0.36],
   rim: { color: [0.9, 0.42, 0.08], width: 0.09, power: 2 },
-  boil: { reach: 0.0018, period: 2.6, step: 0.012, max: 0.006 },
+  boil: { reach: 0.0005, period: 2.6, step: 0.012, max: 0.003, quiet: [0.07, 0.14] as [number, number] },
   hot: { from: 3.2, to: 4.9, boost: 2.2 },
   pulse: { amount: 0.2, rate: 2.3, from: 0.55, to: 0.8 },
   cell: { amount: 0.55, rate: 0.6, scale: 26, fine: 0.7 },

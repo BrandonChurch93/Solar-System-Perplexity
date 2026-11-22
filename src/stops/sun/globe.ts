@@ -8,7 +8,7 @@ import { GRADE_GLSL } from './grade'
 export interface GlobeLook {
   limb: [number, number]
   rim: { color: [number, number, number]; width: number; power: number }
-  boil: { reach: number; period: number; step: number; max: number }
+  boil: { reach: number; period: number; step: number; max: number; quiet: [number, number] }
   hot: { from: number; to: number; boost: number }
   pulse: { amount: number; rate: number; from: number; to: number }
   cell: { amount: number; rate: number; scale: number; fine: number }
@@ -86,6 +86,7 @@ uniform vec2 uLimb;
 uniform vec3 uRimColor;
 uniform vec2 uRimShape;
 uniform vec4 uBoil;
+uniform vec2 uQuiet;
 uniform vec3 uHot;
 uniform vec4 uPulse;
 uniform vec4 uCell;
@@ -148,11 +149,13 @@ void main() {
   mapDy = vec2(abs(dFdy(uv0.x)) < abs(dFdy(uAlt)) ? dFdy(uv0.x) : dFdy(uAlt), dFdy(uv0.y)) * uGrad;
   float e = uBoil.z;
   float lod = log2(uMapWidth / 1024.0);
-  float lE = lumAt(normalize(d + east * e), lod + 1.5) - lumAt(normalize(d - east * e), lod + 1.5);
-  float lN = lumAt(normalize(d + north * e), lod + 1.5) - lumAt(normalize(d - north * e), lod + 1.5);
-  vec3 push = (east * lE + north * lN) * (uBoil.x / (2.0 * e));
+  float lE1 = lumAt(normalize(d + east * e), lod + 1.5);
+  float lE0 = lumAt(normalize(d - east * e), lod + 1.5);
+  float lN1 = lumAt(normalize(d + north * e), lod + 1.5);
+  float lN0 = lumAt(normalize(d - north * e), lod + 1.5);
+  vec3 push = (east * (lE1 - lE0) + north * (lN1 - lN0)) * (uBoil.x / (2.0 * e));
   float pl = length(push);
-  push *= min(1.0, uBoil.w / max(pl, 1e-6));
+  push *= min(1.0, uBoil.w / max(pl, 1e-6)) * smoothstep(uQuiet.x, uQuiet.y, min(min(lE1, lE0), min(lN1, lN0)));
   vec3 dc = normalize(d.zxy + vec3(0.21, -0.13, 0.17));
   float slow = lumAt(dc, lod + 3.0) * 24.0 + lumAt(d, lod + 3.5) * 16.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
@@ -209,6 +212,7 @@ export class SunGlobe {
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimShape: { value: new THREE.Vector2(l.rim.width, l.rim.power) },
         uBoil: { value: new THREE.Vector4(l.boil.reach, l.boil.period, l.boil.step, l.boil.max) },
+        uQuiet: { value: new THREE.Vector2(l.boil.quiet[0], l.boil.quiet[1]) },
         uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
         uPulse: { value: new THREE.Vector4(l.pulse.amount, l.pulse.rate, l.pulse.from, l.pulse.to) },
         uCell: { value: new THREE.Vector4(l.cell.amount, l.cell.rate, l.cell.scale, l.cell.fine) },
