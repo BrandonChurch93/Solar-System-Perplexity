@@ -1,9 +1,17 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T10:09:43.897Z",
- "head": "7c21dbf1cd7b35d1ec27d3568e60e13ef7320ea1",
- "note": "MAIL 110 items 1 to 4 on agent/mercury-leave 7c21dbf (main c479536): finals of 495 and 615 before and after, native crops; 717, 1016, 870 at the head rendering",
+ "pushed": "2026-11-22T10:15:57.702Z",
+ "head": "36c5b121a6019001262ff9f8691cd4c573691b2a",
+ "note": "MAIL 110 DONE on agent/mercury-leave 7c21dbf (main c479536): finals 495 and 615 before and after, native crops, draft strip of the head",
  "looks": [
+  {
+   "time": "2026-11-22T10:15:54.506Z",
+   "file": "20261122101554506-note-strip-474-539.jpg",
+   "source": "out/work/mercury/leave/proof/strip-474-539.jpg",
+   "kind": "note",
+   "label": "MAIL 110, draft strip 474 to 539 every fifth frame, preview, web set: main 616695b (top two rows) against agent/mercury-leave 7c21dbf (main c479536) (bottom two rows)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T10:09:33.743Z",
    "file": "20261122100933743-note-f495-before-after.jpg",
@@ -74,14 +82,6 @@
    "source": "out/work/mercury/leave/proof/f495-before-after.jpg",
    "kind": "note",
    "label": "MAIL 110, 495 final: main 616695b | agent/mercury-leave 1962bf3 (main 616695b)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:58:30.130Z",
-   "file": "20261122095830130-note-streak-495-native.jpg",
-   "source": "out/work/mercury/leave/streak-495-native.png",
-   "kind": "note",
-   "label": "MAIL 110 item 1, 495 final, the streak at native size: main 616695b | agent/mercury-leave 3bd6b41 (main 616695b)",
    "stop": "mercury"
   },
   {
