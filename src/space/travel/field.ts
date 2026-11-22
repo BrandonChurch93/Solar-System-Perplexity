@@ -11,13 +11,13 @@ export interface FlightDef {
   vivid: number[]
   level: number
   floor: number
-  clouds: { count: number; lobes: number; widthDeg: number[]; step: number; gain: number[] }
+  clouds: { count: number; lobes: number; widthDeg: number[]; step: number; gain: number[]; mottle: number[] }
   clusters: { count: number; radiusDeg: number[]; stars: number[]; lift: number; cool: number }
   glow: number
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
-  deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; plane: number[]; clump: number[]; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number; skew: number } }
+  deep: { count: number; law: number[][]; max: number; level: number; color: number; warm: number; vivid: number; even: number; plane: number[]; clump: number[]; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number; vary: number[]; skew: number } }
   veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number; rough: number }
 }
 
@@ -190,7 +190,7 @@ export function flightField(def: FlightDef, gal?: number[]): FlightField {
         const l = lobes[k]!
         sum += amps[k]! * Math.exp((x * l.c.x + y * l.c.y + z * l.c.z - 1) / l.s)
       }
-      glow[j * width + i] = sum
+      glow[j * width + i] = sum * (1 - def.clouds.mottle[0]! + def.clouds.mottle[0]! * 2 * coarse(x, y, z, def.clouds.mottle[1]!) * (0.4 + 0.6 * coarse(z, x, y, def.clouds.mottle[2]!)))
       const w = def.veil.floor + (1 - def.veil.floor) * cloud(x, y, z)
       veil[j * width + i] = w
       rough[j * width + i] = coarse(x, y, z, def.veil.rough)
@@ -250,7 +250,7 @@ export function flightField(def: FlightDef, gal?: number[]): FlightField {
     const [gx, gy, gz] = any()
     const wide = Math.pow(dr.next(), dd.groups.skew)
     const spread = THREE.MathUtils.degToRad(dd.groups.radiusDeg[0]! * Math.pow(dd.groups.radiusDeg[1]! / dd.groups.radiusDeg[0]!, wide))
-    const members = Math.round((dd.groups.stars[0]! + (dd.groups.stars[1]! - dd.groups.stars[0]!) * wide) * dr.range(0.6, 1.4))
+    const members = Math.round((dd.groups.stars[0]! + (dd.groups.stars[1]! - dd.groups.stars[0]!) * wide) * dr.range(dd.groups.vary[0]!, dd.groups.vary[1]!))
     for (let m = 0; m < members && n < dd.count; m++) {
       const x = gx + spread * normal()
       const y = gy + spread * normal()
