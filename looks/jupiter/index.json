@@ -1,9 +1,73 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T08:30:45.011Z",
- "head": "47e7b66fb2388a3c36c8d0cab2edcf17dec1f23e",
- "note": "agent/jupiter 8909c1d on main c92f97c: rise cover review sheet of the three cover fixes",
+ "pushed": "2026-11-22T08:44:11.014Z",
+ "head": "35d32026d83b3cc7399151725757fe6c6fb12e39",
+ "note": "agent/jupiter 2687a17 on main f24046b: 3296 final before and after the merge of engine batch 20",
  "looks": [
+  {
+   "time": "2026-11-22T08:44:09.895Z",
+   "file": "20261122084409895-note-f3296_final_pair.jpg",
+   "source": "out/work/view/b20/f3296_final_pair.jpg",
+   "kind": "note",
+   "label": "Rise judged frame 3296 at the final tier: agent/jupiter 8909c1d on main c92f97c left, agent/jupiter 2687a17 on main f24046b (engine batch 20) right. The flight sky changes by design of the batch; on the disc 526 pixels move by 1 level, none by more",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T08:43:09.560Z",
+   "file": "20261122084309560-still-f03296-16x9-final-full.jpg",
+   "source": "out/work/stills/f03296-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:41:19.856Z",
+   "file": "20261122084119856-still-f03150-16x9-final-full.jpg",
+   "source": "out/work/stills/f03150-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:39:28.804Z",
+   "file": "20261122083928804-still-f02997-16x9-final-full.jpg",
+   "source": "out/work/stills/f02997-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:37:28.991Z",
+   "file": "20261122083728991-still-f02895-16x9-final-full.jpg",
+   "source": "out/work/stills/f02895-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T08:30:44.397Z",
    "file": "20261122083044397-note-r_3275_3276.jpg",
@@ -80,62 +144,6 @@
    "kind": "note",
    "label": "Rise cover, terrain side, review tier, frames 3265 to 3268: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. The sky fades out evenly toward the cut in place of going black at 3267; rows below 410 keep their bytes",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:43:09.384Z",
-   "file": "20261122074309384-still-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:41:38.629Z",
-   "file": "20261122074138629-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:39:50.128Z",
-   "file": "20261122073950128-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:37:56.727Z",
-   "file": "20261122073756727-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T07:37:31.656Z",
@@ -279,32 +287,12 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T04:51:53.571Z",
-   "file": "20261122045153571-compare-compare-jupiter-terrain-view.jpg",
-   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.terrain: approved image left, film frame right, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:50:03.067Z",
-   "file": "20261122045003067-compare-compare-jupiter-hold-view.jpg",
-   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
-   "kind": "compare",
-   "label": "jupiter.hold: approved image left, film frame right, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
+   "time": "2026-11-22T05:54:19.701Z",
+   "file": "20261122055419701-note-d3021_22.jpg",
+   "source": "out/work/view/sky/d3021_22.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover, review tier, frames 3021 and 3022 (orbit side, before the cut at 3024), agent/jupiter a06d2ae on main 2621f00: the storm goes under the haze as a red smear with speed lines, sky black",
+   "stop": "jupiter"
   }
  ]
 }
