@@ -12,6 +12,7 @@ export interface DeckLook {
   inset: [number, number]
   lift: number
   sharp: number
+  bloom: number
   detail: { tone: number; relief: number; fleck: number; scale: number; stretch: [number, number] }
   near: [number, number]
   cloud: { height: number; tile: number; stretch: number; group: number; cover: [number, number]; curve: [number, number]; drift: number; gain: number; shade: number; reach: [number, number]; tint: [number, number, number] }
@@ -95,6 +96,7 @@ uniform float uAspect;
 uniform float uFade;
 uniform float uGrad;
 uniform float uSharp;
+uniform float uBloom;
 uniform vec4 uDetail;
 uniform vec4 uBase;
 uniform vec2 uSunG;
@@ -187,7 +189,14 @@ void main() {
     fine = max(fine + uSharp * (fine - textureGrad(uNear, uvN, nx * 4.0, ny * 4.0).rgb), vec3(0.0));
     enc = mix(enc, fine, wN);
   }
-  vec3 aT = (inverseFilmic(enc) + uEps) / (lImg + uEps);
+  vec3 wide = vec3(0.0);
+  for (int k = 2; k < 8; k++) {
+    float span = exp2(float(k));
+    wide += textureGrad(uColor, uvC, cx * span, cy * span).rgb;
+  }
+  vec3 lin = inverseFilmic(enc);
+  lin = max(lin + uBloom * (lin - inverseFilmic(wide / 6.0)), vec3(0.0));
+  vec3 aT = (lin + uEps) / (lImg + uEps);
   uvS.y = clamp(uvS.y, 0.002, 0.998);
   float ua = fract(uvS.x + 0.5) - 0.5;
   vec2 gx = vec2(abs(dFdx(uvS.x)) < abs(dFdx(ua)) ? dFdx(uvS.x) : dFdx(ua), dFdx(uvS.y));
@@ -285,8 +294,10 @@ export class Deck {
   readonly overlayMaterial: THREE.ShaderMaterial
   readonly hazeMaterial: THREE.ShaderMaterial
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
+  private readonly unbloom: number
 
   constructor(t: DeckTextures, key: 'full' | 'web', look: DeckLook) {
+    this.unbloom = look.bloom
     const j = deckJson
     const up = new THREE.Vector3().fromArray(j.up)
     const f0 = new THREE.Vector3().fromArray(j.f0)
@@ -308,7 +319,7 @@ export class Deck {
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uFar: { value: t.far }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize[key]) }, uFarSize: { value: new THREE.Vector2().fromArray(j.farSize[key]) },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uSharp: { value: look.sharp },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
         uSunG: { value: sunG },
@@ -394,8 +405,9 @@ export class Deck {
     this.group.add(this.mesh, this.overlay, this.haze)
   }
 
-  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1): void {
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, fade = 1, bloom = 0): void {
     const u = this.material.uniforms
+    u.uBloom!.value = this.unbloom * bloom / (1 - bloom)
     ;(u.uCamL!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = elapsed
     u.uGain!.value = gain
