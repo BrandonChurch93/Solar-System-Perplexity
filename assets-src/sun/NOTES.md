@@ -1154,7 +1154,7 @@ The full notes of the polish are on `agent/sun` (22dc89c), those of the hook on 
 - `repo-leave/dist` deleted for disk space (build output, rebuilt by `npm run build` there if ever needed). 2.7 GB free.
 - Proof chain: `out/work/sun/p1/proof3.sh`, log `out/work/sun/p1/proof3.log` (ends with `finished`). Order: finals 247, 360 into `p1/fin`; shader audit; vitest; measure (`p1/measure.log`); repeat (`p1/repeat.log`); gates (`p1/gate.log`); review tier, preview format, every frame 200 to 224 into `out/work/sun/rv11`; harness sheets terrain, rise, rise cover. UNTIL IT ENDS: no build, no change under `src/` or `public/`, no branch switch in this tree.
 
-## 10:53 to 11:06 UTC Nov 22: proof chain on head 89ca8d5 (main e9fc2a9, engine batches 21 and 22), first results
+## 10:53 to 11:01 UTC Nov 22: proof chain on head 89ca8d5 (main e9fc2a9, engine batches 21 and 22), first results
 
 - Head 89ca8d5 = af8fe2b (notes) plus git merge of origin/main e9fc2a9 (status rows and status stills only, nothing under `src`, `public`, `config`, `tools`). Pushed 10:53.
 - TRAP met again: the measure refuses to start under `sandbox.minFreeDiskGb` 3 (decimal GB, `tools/lib/common.ts requireDisk`; compare, crops, clip, film and determinism check it too). 2.7 GiB were free. Deleted, all superseded and rebuildable: `out/work/sun/cells/fine.npy` and `fine-z2.npy` (saved layers of item 5b; `python3 cells.py FILE` builds one in a minute), `out/work/sun/feet/c1` to `c4` (feet card takes before c6), `repo-leave/out/work/sun/lv/{a1,a2,b0,q1,q2,m1,m3}` (leave takes before the kept one), `repo-leave/dist`. 3.5 GiB free at 10:55.
@@ -1166,3 +1166,7 @@ The full notes of the polish are on `agent/sun` (22dc89c), those of the hook on 
 - mirrorcheck clean: finals 0, 60, 90, 247, 360 and `sky-terrain.webp` (full, web), `sky-hold.webp` (full, web), `apron.jpg`, `plate.jpg`, `field.jpg`, `wrap-color.jpg`, `corona.webp` (full).
 - On disk: web 17 MB, full 53 MB (limits 35 and 150).
 - Waiting: measure (started 10:55:48), then repeat, gates, review 200 to 224 into `out/work/sun/rv11`, three harness sheets; then `p1/after3.sh` renders finals 0, 60, 90 into `p1/fin2` (expected equal to `p1/fin`: 0 9e0e80dc7c66e3a1, 90 1d600f276fa17332).
+- Measure on 89ca8d5 (`out/work/sun/p1/measure.log`, `--every 2`, 774 s): PASS G13 0 of 217 frames over 0.02 soft; PASS G5 invalid 0, coverage 0.532 (0), 0.520 (60), 0.511 (90), 0.313 (247), 0.309 (360); PASS G17 median / p25 1.415 / 1.173 (0), 1.329 / 1.077 (60), 1.216 / 1.086 (90), 1.019 / 0.964 (360). (Item 4 tree: 1.395/1.127, 1.288/1.091, 1.175/1.065, 1.014/0.911; round 24: 1.243/1.010, 1.114/1.024, 1.097/1.031, 1.014/0.911.)
+- Repeat on 89ca8d5 (`npx tsx tools/repeat.ts --stop sun --sessions 3 --runs 2`, draft, 102 s): 90 a47c91ba7ee73c22 x6, 225 d813684672187684 x6, 360 f5a8c25e59af06ba x6; not repeatable: none. The tool picks the middle of each segment (90, 225, 360); the judged frames 0, 60, 90, 247, 360 run after the chain (`p1/after4.sh`, log `p1/repeat-judged.log`).
+- Gates on 89ca8d5 (`p1/gate.log`): PASS G11 (every asset has a row or a recipe), PASS G12 (2419 tracked files, 1.85 GB), PASS G15 (at most 2 sets per frame; sun/web 177 MB, sun/full 706 MB of texture memory; mars 414 and 1386).
+- 11:11:46 the review frames 200 to 224 started (`out/work/sun/rv11`, about an hour), then the three harness sheets.
