@@ -407,6 +407,40 @@ def named(t, stop):
     return False
 
 
+def r8_first(stop, skip):
+    found = {}
+    for home in (SC, ROOT / 'scorecards'):
+        for d in home.glob('round-*'):
+            m = re.match(r'round-(\d+)$', d.name)
+            if m and (d / 'key.json').exists() and (d / 'jurors.txt').exists():
+                found[int(m.group(1))] = d
+    for r in sorted(found):
+        if r == skip:
+            continue
+        files = json.loads((found[r] / 'key.json').read_text()).get('files', {})
+        ids = set(p.split('/')[1] for p, e in files.items() if p.split('/')[0].split('-')[0] == 'R8' and e.get('kind') == 'approved' and e.get('stop') == stop)
+        got = [p for p in (l.split('|', 4) for l in (found[r] / 'jurors.txt').read_text().split('\n')) if len(p) == 5 and p[1] == 'R8' and p[2] in ids]
+        if got:
+            sf = WORK / 'rounds' / rid(r) / 'state.json'
+            votes = json.loads(sf.read_text()).get('votes', {}) if sf.exists() else {}
+            return r, [('%s@%d' % (p[0], r), p[3], p[4]) for p in got], {'%s@%d' % (p[0], r): votes[p[0]] for p in got if p[0] in votes}
+    sys.exit('no R8 control votes for %s' % stop)
+
+
+def r8_fill(r8c, stops, over, skip, key=lambda st: st + ' hold'):
+    came = {}
+    for st in stops:
+        if not r8c.get(key(st)):
+            came[st], r8c[key(st)], fix = r8_first(st, skip)
+            for k, v in fix.items():
+                over.setdefault(k, v)
+    return came
+
+
+def r8_from(came):
+    return 'R8 controls: the stop\'s first round (%s)' % ', '.join('%s %d' % x for x in came.items())
+
+
 def read_answer(n, name, wants_json):
     d = rdir(n) / 'answers'
     d.mkdir(exist_ok=True)
@@ -500,6 +534,7 @@ def close(a):
     r2c, r2j = collect('R2', clines, ckey, 'approved'), collect('R2', lines, kf, 'frame')
     r8c, r8j = collect('R8', clines, ckey, 'approved'), collect('R8', lines, kf, 'frame')
     over = dict(x.split('=') for x in (a.vote or []))
+    came = r8_fill(r8c, [stop], over, n, lambda st: 'hold')
     vote = lambda v: over.get(v[0], letter(v[2]))
     share = lambda g: (sum(1 for vs in g.values() for v in vs if vote(v) == 'a'), sum(len(vs) for vs in g.values()))
     ca, cn = share(r2c)
@@ -592,7 +627,7 @@ def close(a):
     md += rows
     md.append('\nThe pass bar asks R1, R3 and R4 for %d with no severe or major issue open, R2 and R8 to pass, and the measures and machine checks green. It %s.\n' % (bar, 'holds' if holds else 'does not hold'))
     md.append('R2 votes (a = film or game cinematic). Controls: %s, share %d of %d. Judged: %s, share %d of %d. %s.\n' % (seq(r2c), ca, cn, seq(r2j), ja, jn, 'Pass' if r2pass else 'Fail'))
-    md.append('R8: judged hold named correctly by %d of %d, control by %d of %d. %s.\n' % (j8, j8n, c8, c8n, 'Pass' if r8pass else 'Fail'))
+    md.append('R8: judged hold named correctly by %d of %d, control by %d of %d. %s.%s\n' % (j8, j8n, c8, c8n, 'Pass' if r8pass else 'Fail', ' %s.' % r8_from(came) if came else ''))
     md.append('## Issues, worst first\n')
     for k, (role, d, i) in enumerate(issues, 1):
         md.append('%d. %s, %s, %s (%s), %s: "%s" Fix named by the critic: "%s"' % (k, role, i.get('severity'), i.get('file'), what(str(i.get('file')), d), i.get('where'), str(i.get('what')).replace('"', "'"), str(i.get('fix')).replace('"', "'")))
@@ -623,6 +658,8 @@ def close(a):
         text = set_row(text, stop, {4: scores['R1'], 5: 'pass' if r2pass else 'fail', 6: scores['R3'], 7: scores['R4'], 8: 'pass' if r8pass else 'fail'})
         PROG.write_text(text)
     print('round %d %s: R1 %s R3 %s R4 %s, R2 %s (%d/%d vs %d/%d), R8 %s (%d/%d vs %d/%d), measures %s%s, pass bar %s' % (n, stop, scores['R1'], scores['R3'], scores['R4'], 'pass' if r2pass else 'fail', ja, jn, ca, cn, 'pass' if r8pass else 'fail', j8, j8n, c8, c8n, g, '' if fresh else ' STALE', 'HOLDS' if holds else 'does not hold'))
+    if came:
+        print('  ' + r8_from(came))
     for grp, nm in ((r2c, 'R2 control'), (r2j, 'R2 judged'), (r8c, 'R8 control'), (r8j, 'R8 judged')):
         for k, vs in sorted(grp.items()):
             print('  %s %s: %s' % (nm, k, ' | '.join((vote(v) if nm.startswith('R2') else over.get(v[0], 'y' if named(v[2], stop) else 'n')) + ' <' + v[2][:28] + '>' for v in vs)))
@@ -1041,6 +1078,7 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
             f.unlink()
     r2 = {st: jury(own(st)) for st in stops if chosen[st].get('R2')}
     r8 = {}
+    came = r8_fill(r8c, [st for st in stops if chosen[st].get('R8')], over, n)
     for st in stops:
         if chosen[st].get('R8'):
             j8, c8 = r8j.get(st + '.hold', []), r8c.get(st + ' hold', [])
@@ -1092,7 +1130,7 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         md.append('## R8\n')
         md.append('| Stop | Control named | Judged named | R8 |\n| --- | --- | --- | --- |')
         md += ['| %s | %d of %d | %d of %d | %s |' % (st, x['control'][0], x['control'][1], x['judged'][0], x['judged'][1], 'pass' if x['pass'] else 'fail') for st, x in r8.items()]
-        md.append('')
+        md.append('\n%s.\n' % r8_from(came) if came else '')
     md.append('## Issues, worst first\n')
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
         f = str(i.get('file'))
@@ -1124,6 +1162,8 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         print('  %s %s (%d/%d vs %d/%d)' % (nm, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
     for st, x in r8.items():
         print('  R8 %s %s (%d/%d vs %d/%d)' % (st, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
+    if came:
+        print('  ' + r8_from(came))
     short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
     if short:
         print('  images without a full panel: ' + ', '.join('%s %s has %d' % x for x in short))
@@ -1224,6 +1264,7 @@ def film_close(a):
     if mode == 'polish':
         return polish_close(a, n, s, c, sc, cards, sorted(asked), issues, kf, lines, jobs_, missing, (r2c, r2j, r8c, r8j), vote, yes, jury, own, source, over)
     board = {}
+    came = r8_fill(r8c, stops, over, n)
     for stop in stops:
         m = WORK / 'measure' / (stop + '.json')
         meas = json.loads(m.read_text()) if m.exists() else {}
@@ -1291,6 +1332,8 @@ def film_close(a):
         final = 'Final scores: ' + ', '.join(['R1 ' + ('%s %g' % (low['R1'][1], low['R1'][0]) if low['R1'] else 'no answer'), 'R2 ' + ('pass' if film_r2['pass'] and all(board[st]['R2']['pass'] for st in stops) else 'fail')] + ['%s %s' % (r, '%s %g' % (low[r][1], low[r][0]) if low[r] else 'no answer') for r in ('R3', 'R4')] + ['%s %s' % (r, cell(film[r]).split(' ')[0] if film[r] else 'no answer') for r in ('R5', 'R6', 'R7')] + ['R8 ' + ('pass' if all(board[st]['R8']['pass'] for st in stops) else 'fail')])
         md.append('\n' + final + '\n')
         md.append('R1, R3 and R4 name the lowest stop; R3 and R4 count the whole film critics too. R2 is pass when the whole film list and every stop pass. R8 is pass when every stop passes.\n')
+        if came:
+            md.append(r8_from(came) + '.\n')
     md.append('## Issues, worst first\n')
     for k, (critic, scope, folder, i) in enumerate(issues, 1):
         f = str(i.get('file'))
@@ -1329,6 +1372,8 @@ def film_close(a):
         print('  %-8s measures %s%s R1 %s R3 %s R4 %s R2 %s (%d/%d vs %d/%d) R8 %s (%d/%d vs %d/%d) pass bar %s' % (st, ''.join('?' if b['measures'][k] is None else 'y' if b['measures'][k] else 'n' for k in ('G5', 'G13', 'G17')), '' if b['fresh'] else ' STALE', cell(b['cards']['R1']), cell(b['cards']['R3']), cell(b['cards']['R4']), 'pass' if b['R2']['pass'] else 'fail', b['R2']['judged'][0], b['R2']['judged'][1], b['R2']['control'][0], b['R2']['control'][1], 'pass' if b['R8']['pass'] else 'fail', b['R8']['judged'][0], b['R8']['judged'][1], b['R8']['control'][0], b['R8']['control'][1], 'HOLDS' if b['holds'] else 'does not hold'))
     if final:
         print(final)
+    if came:
+        print('  ' + r8_from(came))
     short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
     if short:
         print('  images without a full panel: ' + ', '.join('%s %s has %d' % x for x in short))
