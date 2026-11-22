@@ -73,3 +73,16 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
   2. The deep set uploads four floats per star (`field.ts` 209), the shader reads one (`aStar.y`, `sky.ts` 318 to 324): upload what is read.
   - Also: the ending now holds the lift at 1 through the lookback and the fade (`film.ts` 526), so 5235 and 5362 draw the strip band at sky exposure 0.36 on `builder/b20`; my lift 0 statement for those two is out of date.
 - Trial result (07:56 UTC): finals of 3352 and 1072 with the kernel 1 map. Dark veins and lane edges return inside the gold clouds, clearest at 1072; at three times no star blob, no block, no chroma speckle. Render time unchanged (3352 102.3 s, 1072 116.6 s against 119.1 s). Judged clearly better at 1072, modest at 3352. Committed as an asset and recipe change: full map 8192 x 2048 (67.1 MB on the GPU, 50.3 MB more than before; PNG 10.3 MB, 8.0 MB more), web map 2048 x 512 as before (4.2 MB; PNG 1.0 MB). `skybandstars.bin` is byte equal. Draft sha256 of 2325, 615, 4860 equal to main. The previous maps are the ones of commit a5e819c.
+
+## Batch 21 (MAIL 104 and the notice of 08:03 UTC)
+
+- 08:03 UTC: engine batch 20 is on main (b784153), with 7ec8107 (the strip with dark veins) taken as is. Base is `origin/main` from now on (merge, never rebase). The clone was shallow and gave false merge conflicts; `git fetch --unshallow origin` cured that.
+- Changes, picture byte for byte:
+  1. `config/showcase.json` line 147: `flightStars.deep.core` and `deep.halo` removed (no reader since the deep set draws with the star shader).
+  2. Deep set: `aStar` is one float per star (the level), was four. `field.ts` writes `deep.star[n] = b`, `sky.ts` `in float aStar`, attribute size 1. Saves 9.1 MB of vertex data.
+  3. Band points: `aStar` is two floats per star (level, starless luminance), was four. Saves up to 12 MB.
+  4. Uniforms cut to what is read: `uFlightStrip` vec3, `uDeepLaw` vec3, `uStripStar` vec2.
+- Not mine: `assets-src/travel/veil.ts` line 8 reads `f.deep.star[i * 4 + 1]`. With one float per star the line is `const b = Array.from(f.deep.star)`.
+- Proof 1 (steps 1 to 3 on the merge with builder/b20 9a3ec26): final sha256 before and after equal, 4492 b154b5e6..., 5235 8db8e994....
+- Proof 2 (all four steps on the merge with origin/main 07aabf5), final sha256 on main and on the branch equal: 1072 d5216671..., 3352 91c9c5bb..., 5235 8db8e994..., 4492 b154b5e6.... Build green, vitest 79 of 79, shaderaudit prints the same lines as main.
+- Render time at final on main at 08:10 UTC, machine idle: 1072 88.4 s, 3352 79.8 s, 4492 119.1 s; on the branch 84.4 s, 78.7 s, 118.7 s. The 102 s for 3352 reported at 07:29 was measured before batch 20; the figures are not comparable across code states.
