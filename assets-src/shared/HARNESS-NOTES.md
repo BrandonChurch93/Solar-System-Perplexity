@@ -231,6 +231,32 @@ Proofs (all scratch, draft): round 944 polish, select with R8 for mercury and ma
 
 Not proven: a real close of round 33, and a first round whose state has vote overrides (none is in this clone).
 
+## MAIL 176 (2026-11-22 15:30 UTC): R2 controls of a stop, a second close, the record round
+
+Cause: in a polish round `jury(own(stop))` compared a stop's judged R2 votes with the votes round 30 (a whole film round) gave that stop's two approved images. The kit keeps a stop's control votes from the stop's own rounds.
+
+The change, `tools/round.py` only:
+
+- `first_controls(role, stop, skip)` replaces `r8_first`: the earliest `scorecards/round-NNN` (not the round being closed) whose `key.json` has approved images of that role and stop and whose `jurors.txt` has lines on every one of them. It returns the round, the lines grouped as `<stop> hold` and `<stop> terrain`, and that round's vote overrides from its state file when there is one. None anywhere: "no R2 control votes for <stop>".
+- `r2_stops(stops, over, skip)` builds the stop control group `r2s`. `jury(keep, ctl)` takes it. Polish: every stop whose select has R2. Record: all nine stops. The whole film R2 keeps the `controlsFrom` round. A stop round and a whole film round are unchanged.
+- Unlike R8 (taken from the first round only when the source has no line), a stop's R2 control ALWAYS comes from the stop's first round in polish and record, also when the round judged its own controls.
+- Lines are named `reviewer_N@R` as for R8. They are in the "votes not read from the start" list and in the panel check ("R2 stop control"). Correct one with `--vote reviewer_15@3=a`.
+- Summary: "R2 controls: the stop's first round (venus 12, saturn 13)" under the R2 table (polish) and under "R2 and R8 by stop" (record); the vote lists have a bullet "Controls of the stops". The tables show the new control counts.
+- `put_tail(text, n, tail)`: close replaces the line of its round in PROGRESS.md from " Judged on main at" on, in all three closes, so a second close corrects the line. SUMMARY.md and the state scores were already rewritten by a second close.
+
+What main's scorecards give for R2 (a of 10, beside what round 30 gave): sun 10: 2 (2); mercury 7: 7 (4); venus 12: 5 (4); earth 11: 2 (1); mars 3: 4 (1); jupiter 8: 2 (1); saturn 13: 5 (2); uranus 6: 1 (1); neptune 9: 3 (2). Five lines on hold and five on terrain for every stop. Mars: reviewer_15@3 ("Independent vote: a, 82/100") is read as "?", so 4 of 10; round 3's own summary counted 5 of 10 by hand. When mars R2 is judged pass `--vote reviewer_15@3=a`.
+
+Record round with no approved image shown again:
+
+1. `python3 tools/round.py pack --round N --controls-from 30`: no juror gets an approved image (R2 or R8).
+2. `python3 tools/round.py close --round N --next "..."`: whole film R2 against round 30's control votes, each stop's R2 and R8 against the stop's first round. The summary names the rounds.
+
+A second close of a closed round: the same `close --round N --next "..."` once more; `--vote` corrections of the first close are kept in the state, the `--next` text is not and must be given again.
+
+Proofs (scratch, draft): round 945 polish, select with R2 for venus and saturn and R8 for mars, `pack --controls-from 30` (R2 8 images, 20 jurors; R8 3 jurors: no approved image went out). Before: "R2 venus pass (5/10 vs 4/10)", "R2 saturn pass (5/10 vs 2/10)". After: "vs 5/10" for both and both lines of origin. Closed again with four saturn votes turned to b: "R2 saturn fail (1/10 vs 5/10)", 1 major, and the PROGRESS line of round 945 replaced, one " Judged on main at" in it. Round 921 (record) closed with controls pointed at round 30: whole film "R2 67/135 vs 18/90" as before, per stop controls from the first rounds, mercury now fails (4/10 vs 7/10).
+
+Not proven: round 33 itself (its scorecard, state, key and /tmp/votes33.txt are not in this clone or on origin/main); a record pack with `--controls-from` (the pack folder of scratch round 921 is gone; the skip is the same line as in polish). Round 945's gate was not run, `gateGreen` copied from round 943 as for 944.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.

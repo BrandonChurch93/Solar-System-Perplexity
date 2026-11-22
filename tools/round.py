@@ -439,7 +439,7 @@ def named(t, stop):
     return False
 
 
-def r8_first(stop, skip):
+def first_controls(role, stop, skip):
     found = {}
     for home in (SC, ROOT / 'scorecards'):
         for d in home.glob('round-*'):
@@ -450,27 +450,54 @@ def r8_first(stop, skip):
         if r == skip:
             continue
         files = json.loads((found[r] / 'key.json').read_text()).get('files', {})
-        ids = set(p.split('/')[1] for p, e in files.items() if p.split('/')[0].split('-')[0] == 'R8' and e.get('kind') == 'approved' and e.get('stop') == stop)
-        got = [p for p in (l.split('|', 4) for l in (found[r] / 'jurors.txt').read_text().split('\n')) if len(p) == 5 and p[1] == 'R8' and p[2] in ids]
-        if got:
+        ids = {p.split('/')[1]: e.get('view', 'hold') for p, e in files.items() if p.split('/')[0].split('-')[0] == role and e.get('kind') == 'approved' and e.get('stop') == stop}
+        got = [p for p in (l.split('|', 4) for l in (found[r] / 'jurors.txt').read_text().split('\n')) if len(p) == 5 and p[1] == role and p[2] in ids]
+        if got and all(any(p[2] == x for p in got) for x in ids):
             sf = WORK / 'rounds' / rid(r) / 'state.json'
             votes = json.loads(sf.read_text()).get('votes', {}) if sf.exists() else {}
-            return r, [('%s@%d' % (p[0], r), p[3], p[4]) for p in got], {'%s@%d' % (p[0], r): votes[p[0]] for p in got if p[0] in votes}
-    sys.exit('no R8 control votes for %s' % stop)
+            grp = {}
+            for p in got:
+                grp.setdefault(stop + ' ' + ids[p[2]], []).append(('%s@%d' % (p[0], r), p[3], p[4]))
+            return r, grp, {'%s@%d' % (p[0], r): votes[p[0]] for p in got if p[0] in votes}
+    sys.exit('no %s control votes for %s' % (role, stop))
 
 
 def r8_fill(r8c, stops, over, skip, key=lambda st: st + ' hold'):
     came = {}
     for st in stops:
         if not r8c.get(key(st)):
-            came[st], r8c[key(st)], fix = r8_first(st, skip)
+            came[st], grp, fix = first_controls('R8', st, skip)
+            r8c[key(st)] = grp[st + ' hold']
             for k, v in fix.items():
                 over.setdefault(k, v)
     return came
 
 
+def r2_stops(stops, over, skip):
+    came, r2s = {}, {}
+    for st in stops:
+        came[st], grp, fix = first_controls('R2', st, skip)
+        r2s.update(grp)
+        for k, v in fix.items():
+            over.setdefault(k, v)
+    return came, r2s
+
+
+def ctl_from(role, came):
+    return '%s controls: the stop\'s first round (%s)' % (role, ', '.join('%s %d' % x for x in came.items()))
+
+
 def r8_from(came):
-    return 'R8 controls: the stop\'s first round (%s)' % ', '.join('%s %d' % x for x in came.items())
+    return ctl_from('R8', came)
+
+
+def put_tail(text, n, tail):
+    out = []
+    for l in text.split('\n'):
+        if l.startswith('- Round %d,' % n):
+            l = (l[:l.index(' Judged on main at')] if ' Judged on main at' in l else l) + tail
+        out.append(l)
+    return '\n'.join(out)
 
 
 def read_answer(n, name, wants_json):
@@ -681,12 +708,7 @@ def close(a):
         sev = sum(x['severe'] for x in t.values())
         maj = sum(x['major'] for x in t.values())
         tail = ' Judged on main at %s. Measures %s. R1 %s, R2 %s, R3 %s, R4 %s, R8 %s. %d severe, %d major. %s `scorecards/%s/`.' % (s['commit'][:7], 'green' if measures_ok else 'not green', scores['R1'], 'pass' if r2pass else 'fail', scores['R3'], scores['R4'], 'pass' if r8pass else 'fail', sev, maj, ('The pass bar holds.' if holds else 'Next: ' + (a.next or 'see the summary') + ('' if (a.next or '.').endswith('.') else '.')), rid(n))
-        out = []
-        for l in text.split('\n'):
-            if l.startswith('- Round %d,' % n) and 'scorecards/round-' not in l:
-                l = l + tail
-            out.append(l)
-        text = set_status('\n'.join(out))
+        text = set_status(put_tail(text, n, tail))
         text = set_row(text, stop, {4: scores['R1'], 5: 'pass' if r2pass else 'fail', 6: scores['R3'], 7: scores['R4'], 8: 'pass' if r8pass else 'fail'})
         PROG.write_text(text)
     print('round %d %s: R1 %s R3 %s R4 %s, R2 %s (%d/%d vs %d/%d), R8 %s (%d/%d vs %d/%d), measures %s%s, pass bar %s' % (n, stop, scores['R1'], scores['R3'], scores['R4'], 'pass' if r2pass else 'fail', ja, jn, ca, cn, 'pass' if r8pass else 'fail', j8, j8n, c8, c8n, g, '' if fresh else ' STALE', 'HOLDS' if holds else 'does not hold'))
@@ -1162,7 +1184,8 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         m = re.match(r'(R[1-8])(?:-([a-z]+))?\.json$', f.name)
         if m and (m.group(1), m.group(2) or '') not in cards:
             f.unlink()
-    r2 = {st: jury(own(st)) for st in stops if chosen[st].get('R2')}
+    came2, r2s = r2_stops([st for st in stops if chosen[st].get('R2')], over, n)
+    r2 = {st: jury(own(st), r2s) for st in stops if chosen[st].get('R2')}
     r8 = {}
     came = r8_fill(r8c, [st for st in stops if chosen[st].get('R8')], over, n)
     for st in stops:
@@ -1211,7 +1234,9 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         for name, x in ([('whole film list', r2_film)] if r2_film else []) + list(r2.items()):
             md.append('| %s | %d of %d | %d of %d | %s |' % (name, x['control'][0], x['control'][1], x['judged'][0], x['judged'][1], 'pass' if x['pass'] else 'fail'))
         keep = (lambda k: True) if r2_film else (lambda k: any(own(st)(k) for st in r2))
-        md.append('\nVotes (a = film or game cinematic); the judged share may be at most %s under the control share.\n\n- Controls: %s.\n- Judged: %s.\n' % (gap, seq(r2c, keep), seq(r2j, keep)))
+        if came2:
+            md.append('\n%s.' % ctl_from('R2', came2))
+        md.append('\nVotes (a = film or game cinematic); the judged share may be at most %s under the control share.\n\n%s%s- Judged: %s.\n' % (gap, '- Controls of the whole film list: %s.\n' % seq(r2c) if r2_film else '', '- Controls of the stops: %s.\n' % seq(r2s) if r2s else '', seq(r2j, keep)))
     if r8:
         md.append('## R8\n')
         md.append('| Stop | Control named | Judged named | R8 |\n| --- | --- | --- | --- |')
@@ -1240,7 +1265,7 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         text = PROG.read_text()
         nxt = 'Next: ' + (a.next or 'see the summary') + ('' if (a.next or '.').endswith('.') else '.')
         tail = ' Judged on main at %s, only what the batch touched. %s. %d severe, %d major. %s `scorecards/%s/`.' % (s['commit'][:7], scores, sev, maj, nxt, rid(n))
-        PROG.write_text(set_status('\n'.join(l + tail if l.startswith('- Round %d,' % n) and 'scorecards/round-' not in l else l for l in text.split('\n'))))
+        PROG.write_text(set_status(put_tail(text, n, tail)))
     print('round %d polish: %s; %d severe, %d major; no pass bar is computed in a polish round' % (n, scores, sev, maj))
     for st, (g, how) in measured.items():
         print('  %-8s measures %s%s' % (st, ' '.join('%s %s' % (k, 'not measured' if g[k] is None else 'pass' if g[k] else 'fail') for k in ('G5', 'G13', 'G17')), ' (' + ', '.join(how) + ')' if how else ''))
@@ -1248,12 +1273,14 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
         print('  %s %s (%d/%d vs %d/%d)' % (nm, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
     for st, x in r8.items():
         print('  R8 %s %s (%d/%d vs %d/%d)' % (st, 'pass' if x['pass'] else 'fail', x['judged'][0], x['judged'][1], x['control'][0], x['control'][1]))
+    if came2:
+        print('  ' + ctl_from('R2', came2))
     if came:
         print('  ' + r8_from(came))
-    short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
+    short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 stop control', r2s, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
     if short:
         print('  images without a full panel: ' + ', '.join('%s %s has %d' % x for x in short))
-    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
+    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2s, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
     if loose:
         print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
         for x in loose:
@@ -1340,8 +1367,8 @@ def film_close(a):
     vote = lambda v: over.get(v[0], letter(v[2]))
     gap = c['quality']['jury']['maxShareGap']
 
-    def jury(keep):
-        ca, cn, ja, jn = [f(v) for g in (r2c, r2j) for f in (lambda x: sum(1 for y in x if vote(y) == 'a'), len) for v in [[y for k, vs in sorted(g.items()) if keep(k) for y in vs]]]
+    def jury(keep, ctl=None):
+        ca, cn, ja, jn = [f(v) for g in (r2c if ctl is None else ctl, r2j) for f in (lambda x: sum(1 for y in x if vote(y) == 'a'), len) for v in [[y for k, vs in sorted(g.items()) if keep(k) for y in vs]]]
         return {'pass': jn > 0 and cn > 0 and ja / jn >= ca / cn - gap - 1e-9, 'control': [ca, cn], 'judged': [ja, jn]}
 
     own = lambda stop: lambda k: k in (stop + ' hold', stop + ' terrain', stop + '.hold', stop + '.terrain')
@@ -1351,6 +1378,7 @@ def film_close(a):
         return polish_close(a, n, s, c, sc, cards, sorted(asked), issues, kf, lines, jobs_, missing, (r2c, r2j, r8c, r8j), vote, yes, jury, own, source, over)
     board = {}
     came = r8_fill(r8c, stops, over, n)
+    came2, r2s = r2_stops(stops, over, n)
     for stop in stops:
         m = WORK / 'measure' / (stop + '.json')
         meas = json.loads(m.read_text()) if m.exists() else {}
@@ -1363,7 +1391,7 @@ def film_close(a):
         r8 = {'judged': [sum(1 for v in j8 if yes(v, stop)), len(j8)], 'control': [sum(1 for v in c8 if yes(v, stop)), len(c8)]}
         r8['pass'] = r8['judged'][1] > 0 and r8['judged'][0] >= r8['control'][0]
         mine = {r: cards.get((r, stop)) for r in ('R1', 'R3', 'R4')}
-        r2 = jury(own(stop))
+        r2 = jury(own(stop), r2s)
         t = {k: sum(x['tally'][k] for x in mine.values() if x) for k in ('severe', 'major', 'minor')}
         holds = bool(s.get('gateGreen')) and fresh and all(g.values()) and all(x and x['pass'] for x in mine.values()) and r2['pass'] and r8['pass']
         board[stop] = {'measures': g, 'fresh': fresh, 'how': how, 'cards': mine, 'R2': r2, 'R8': r8, 'tally': t, 'holds': holds}
@@ -1405,7 +1433,7 @@ def film_close(a):
     md += [row(r, film[r]) for r in ('R5', 'R6', 'R7')] + ['| R2 | | %s | | | |' % ('yes' if film_r2['pass'] else 'no')] + [row(r, film[r]) for r in ('R3', 'R4')]
     md.append('\nThe whole film pass bar asks R5, R6, R7, R3 and R4 for %d with no severe or major issue open, R2 to pass on its whole film list, and the machine checks green. It %s.\n' % (bar, 'holds' if film_holds else 'does not hold'))
     md.append('R2 votes on the whole film list (a = film or game cinematic). Controls: share %d of %d. Judged: share %d of %d. %s: the judged share may be at most %s under the control share.\n' % (film_r2['control'][0], film_r2['control'][1], film_r2['judged'][0], film_r2['judged'][1], 'Pass' if film_r2['pass'] else 'Fail', gap))
-    md.append('- Controls: %s.\n- Judged: %s.\n' % (seq(r2c), seq(r2j)))
+    md.append('- Controls: %s.\n%s- Judged: %s.\n' % (seq(r2c), '- Controls of the stops: %s.\n' % seq(r2s) if r2s else '', seq(r2j)))
     lowest = lambda r: min([(board[st]['cards'][r]['score'], st) for st in stops if board[st]['cards'][r]] + ([(film[r]['score'], 'whole film')] if film.get(r) else []), key=lambda x: x[0], default=None)
     final = ''
     if stops:
@@ -1418,6 +1446,8 @@ def film_close(a):
         final = 'Final scores: ' + ', '.join(['R1 ' + ('%s %g' % (low['R1'][1], low['R1'][0]) if low['R1'] else 'no answer'), 'R2 ' + ('pass' if film_r2['pass'] and all(board[st]['R2']['pass'] for st in stops) else 'fail')] + ['%s %s' % (r, '%s %g' % (low[r][1], low[r][0]) if low[r] else 'no answer') for r in ('R3', 'R4')] + ['%s %s' % (r, cell(film[r]).split(' ')[0] if film[r] else 'no answer') for r in ('R5', 'R6', 'R7')] + ['R8 ' + ('pass' if all(board[st]['R8']['pass'] for st in stops) else 'fail')])
         md.append('\n' + final + '\n')
         md.append('R1, R3 and R4 name the lowest stop; R3 and R4 count the whole film critics too. R2 is pass when the whole film list and every stop pass. R8 is pass when every stop passes.\n')
+        if came2:
+            md.append(ctl_from('R2', came2) + '.\n')
         if came:
             md.append(r8_from(came) + '.\n')
     md.append('## Issues, worst first\n')
@@ -1445,7 +1475,7 @@ def film_close(a):
             tail = ' Judged on main at %s. A stop\'s pass bar holds for %d of %d stops%s. Whole film: %s; its pass bar %s. %d severe, %d major. The scores are under "Final scores". `scorecards/%s/`.' % (s['commit'][:7], len(good), len(stops), ' (' + ', '.join(good) + ')' if good else '', scores, 'holds' if film_holds else 'does not hold', sev, maj, rid(n))
         else:
             tail = ' Judged on main at %s. %s. %d severe, %d major. %s `scorecards/%s/`.' % (s['commit'][:7], scores, sev, maj, 'The whole film pass bar holds.' if film_holds else nxt, rid(n))
-        text = set_status('\n'.join(l + tail if l.startswith('- Round %d,' % n) and 'scorecards/round-' not in l else l for l in text.split('\n')))
+        text = set_status(put_tail(text, n, tail))
         if stops:
             i, j = section(text, 'Final scores')
             at = text_md.index('## Stops\n')
@@ -1458,12 +1488,14 @@ def film_close(a):
         print('  %-8s measures %s%s R1 %s R3 %s R4 %s R2 %s (%d/%d vs %d/%d) R8 %s (%d/%d vs %d/%d) pass bar %s' % (st, ''.join('?' if b['measures'][k] is None else 'y' if b['measures'][k] else 'n' for k in ('G5', 'G13', 'G17')), '' if b['fresh'] else ' STALE', cell(b['cards']['R1']), cell(b['cards']['R3']), cell(b['cards']['R4']), 'pass' if b['R2']['pass'] else 'fail', b['R2']['judged'][0], b['R2']['judged'][1], b['R2']['control'][0], b['R2']['control'][1], 'pass' if b['R8']['pass'] else 'fail', b['R8']['judged'][0], b['R8']['judged'][1], b['R8']['control'][0], b['R8']['control'][1], 'HOLDS' if b['holds'] else 'does not hold'))
     if final:
         print(final)
+    if came2:
+        print('  ' + ctl_from('R2', came2))
     if came:
         print('  ' + r8_from(came))
-    short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
+    short = [(nm, k, len(vs)) for nm, grp, want in (('R2 control', r2c, len(JURY)), ('R2 stop control', r2s, len(JURY)), ('R2 judged', r2j, len(JURY)), ('R8 control', r8c, len(NAMERS)), ('R8 judged', r8j, len(NAMERS))) for k, vs in sorted(grp.items()) if len(vs) != want]
     if short:
         print('  images without a full panel: ' + ', '.join('%s %s has %d' % x for x in short))
-    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
+    loose = [(v[0], vote(v), v[2][:60]) for grp in (r2c, r2s, r2j) for vs in grp.values() for v in vs if v[0] not in over and letter_how(v[2])[1] != 'start']
     if loose:
         print('  votes not read from the start of the answer; check them and correct with --vote NAME=LETTER:')
         for x in loose:
