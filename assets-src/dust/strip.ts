@@ -40,4 +40,5 @@ for (const g of sets[centre]!.values()) {
 }
 rows.sort((p, q) => q.inside - p.inside || q.low - p.low)
 if (pick === undefined) for (const r of rows.slice(0, 12)) console.log(r.i, 'lowest nominal peak', r.low.toFixed(1), 'grains that stay in the window', r.inside, 'window start', r.win[0]!.map((v) => v.toFixed(0)).join(','), 'end', r.win[r.win.length - 1]!.map((v) => v.toFixed(0)).join(','), 'drift px', Math.hypot(r.path[r.path.length - 1]![0]! - r.path[0]![0]! - (r.win[r.win.length - 1]![0]! - r.win[0]![0]!), r.path[r.path.length - 1]![1]! - r.path[0]![1]! - (r.win[r.win.length - 1]![1]! - r.win[0]![1]!)).toFixed(1))
+else if (pick === -1) console.log(JSON.stringify({ frames, grains: rows.filter((r) => r.low >= 3).map((r) => ({ i: r.i, path: r.path })) }))
 else { const r = rows.find((x) => x.i === pick)!; console.log(JSON.stringify({ frames, win: r.win, path: r.path })) }

@@ -27,13 +27,13 @@ Brief: `assets-src/shared/ROUND31-FIXES.md` section A. After a compaction read t
 ### Decisions
 
 1. Grain: one Gaussian core, sigma 0.40 to 0.56 px at 1080 (full width at half height 1.2 to 1.5 px after the pixel filter), own size, level and tint per mote. No focus disc at all.
-2. Streak: an anisotropic Gaussian, sigma along the path = sqrt(core^2 + (0.27 x length)^2). It has no end cap and no flat part, it fades to nothing at both ends, and its peak falls as core / length (same energy). One more factor 1 / (1 + (length / 36 px)^2) puts it under one level past 20 px.
+2. Streak: an anisotropic Gaussian, sigma along the path = sqrt(core^2 + (0.27 x length)^2). It has no end cap and no flat part, it fades to nothing at both ends, and its peak falls as core / length (same energy). One more factor 1 / (1 + (length / 28 px)^2) puts it under one level past 20 px.
 3. No share of the camera's turn in the streak (was 0.3). Reason: the stars carry none (the kit draws the sky at mid shutter), the travels turn 50 to 70 px across the shutter, so a true share makes every mote an invisible 60 px line for the whole middle of a travel, and a part share makes the field of parallel dashes. A mote now turns with the sky like a star and streaks only along the stream, out of the point of flight, with a length that depends on its depth.
 4. Many depths: each mote has its own wrap cube, span log-uniform from 2.2 to 48 units (was two cubes, 2.4 and 7). The stream moves up to 0.0147 units across the shutter (about 30 px at one unit of depth): near motes are long faint hairlines, motes at 5 to 20 units are grains that drift 3 to 12 px a frame. At a slow place the near ones drift and the far ones stand with the stars.
 5. Hold-out by drawing order: the dust call moved in `engine.ts` to right after the sky, inside the sky block (same lens, same mid shutter turn as the stars), with the sky's stencil rule (drawn only where the stencil is 0). Solid bodies either were drawn before the sky and marked the stencil (capture path) or are drawn after the dust and cover it (live path). Transparent things (air, rings) and the belt layer are drawn after it and dim it as they dim a star. The Sun's disc is drawn by the sky itself, so the dust shader cuts a disc of 1.12 x the Sun's radius plus 2 px round the sky's Sun direction (per pixel). The belt's own mask for the dust (`belt.cover`) is no longer read by the engine.
-6. Level in levels of 255: `DUST.level` [base, spread, power], soft cap `DUST.cap` 10, `DUST.unit` = linear value per level (measured). Brighter toward the Sun with the old phase curve. Amount: `(shot.dust / travel.dust.level) ^ 0.5`, so the travel windows stay and the retreat (amount 0.045) keeps a quarter of the level.
+6. Level in levels of 255: `DUST.level` [base, spread, power], soft cap `DUST.cap` 10, `DUST.unit` = linear value per level (measured). Brighter toward the Sun: `DUST.side` [0.8, 0.3, 0.3], 0.8 away from the Sun and 1.4 at it (the first build kept the old curve, see the calibration). Amount: `(shot.dust / travel.dust.level) ^ 0.5`, so the travel windows stay and the retreat (amount 0.045) keeps a quarter of the level.
 7. Glint: 18 percent of the motes swing between 0.55 and 2.75 of their level with a period of 1.1 to 4 s (cos^8 lobe, at least 6 frames wide); the others breathe 0.8 to 1.2. The clock is the film time at mid shutter.
-8. `src/director/film.ts` not touched. `config/showcase.json` not touched.
+8. `config/showcase.json` not touched. `src/director/film.ts`: one line, see MAIL 84 below.
 
 ### Calibration (frame 1642, still minus the same still without dust, `motes.py`)
 
@@ -46,3 +46,10 @@ Brief: `assets-src/shared/ROUND31-FIXES.md` section A. After a compaction read t
 - Streak lengths of the drawn grains at 1642 (nominal 1 or more): 60 under 2 px, 41 at 2 to 5 px, 7 at 5 to 10 px, none longer (longer ones are under one level). The grains that show sit 0.6 to 16 units deep, median 6.
 - Ten draft hashes after the change: all equal to the base list above (run on the first build; the later value changes are in `DUST` only).
 - `npx vitest run` 79 passed. `python3 tools/shaderaudit.py` prints the same lines as on the base.
+
+### MAIL 84 from the Builder (06:49 UTC)
+
+- The retreat's `dustOffset` line read `wp`, a local of the ending block that the ending agent redefines. Now `dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * smoother(u))`: `u` is the segment's own progress, zero slope at 5025 and at 5144, rising all the way. The three dust lines stay together under the ending's block; only that one line changed.
+- Fact for the Builder: `shot.dustOffset` is read by no code (`rg dustOffset src` finds only `film.ts` and `types.ts`). The grains move by `src/space/travel/flow.ts`, which integrates the camera's real travel (direction times a logarithmic function of the real speed) and is cached per segment. So the retreat's grains follow the ending agent's new camera path by themselves.
+- Trial merge of `origin/agent/ending` (c185994) into this branch in a scratch worktree: clean. `npx tsx assets-src/dust/rates.ts 8 ending.retreat` there gives the stream's step across the shutter, in units: 5033 0.0013, 5041 0.0019, 5049 0.0024, 5057 0.0028, 5065 to 5105 0.0029 to 0.0032, 5113 0.0029, 5121 0.0024, 5129 0.0017, 5137 0.0009. No stall, no jump; the amount is zero at both ends. On this branch alone: 0.0004 at 5033, 0.0032 at 5073 to 5081, 0.0003 at 5137.
+- Asked to check the hold-out in the belt travel (2782) and at 5085 and 5235. See the results below.
