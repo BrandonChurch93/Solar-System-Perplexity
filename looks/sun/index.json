@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T14:13:04.288Z",
- "head": "62a5fe7b09a27a328efd92982d4d53f70effd060",
- "note": "leave: refit of the globe to the plate's limb at today's aim, corona warped with the fit, burn filtered bicubic",
+ "pushed": "2026-11-22T14:29:37.875Z",
+ "head": "d8ec4ddf25e485d0fe8df62f25c8791117493105",
+ "note": "Sun: final proof chain for CUT34 on agent/sun d8ec4ddf (main a60c5ffd); hook take 3 strip, flash onset",
  "looks": [
+  {
+   "time": "2026-11-22T14:29:36.570Z",
+   "file": "20261122142936570-note-c35-flash-onset.jpg",
+   "source": "out/work/sun/hk3/c35-flash-onset.jpg",
+   "kind": "note",
+   "label": "Hook flash onset, drafts 25 to 28, agent/sun d8ec4ddf (main a60c5ffd)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T14:29:35.267Z",
+   "file": "20261122142935267-note-c35-strip9.jpg",
+   "source": "out/work/sun/hk3/c35-strip9.jpg",
+   "kind": "note",
+   "label": "Hook take 3, nine frames at 390 px, rows: round 33 head 969a8a6 above, agent/sun d8ec4ddf (main a60c5ffd) below, drafts",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T14:13:03.625Z",
    "file": "20261122141303625-note-m1-486-full-x3.jpg",
@@ -48,22 +64,6 @@
    "source": "out/work/sun/hk3/c34-final-60-native.jpg",
    "kind": "note",
    "label": "final 60 native crop, the outer strand with sky between, agent/sun 4f72047d on main 5e3462bd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T13:48:22.871Z",
-   "file": "20261122134822871-note-c34-final-30-native.jpg",
-   "source": "out/work/sun/hk3/c34-final-30-native.jpg",
-   "kind": "note",
-   "label": "final 30 native crop, the flash, agent/sun 4f72047d on main 5e3462bd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T13:48:21.850Z",
-   "file": "20261122134821850-note-c34-final-495-native.jpg",
-   "source": "out/work/sun/hk3/c34-final-495-native.jpg",
-   "kind": "note",
-   "label": "final 495 native crop at the left limb, head 969a8a6 left, new leave right, agent/sun 4f72047d on main 5e3462bd: stars masked by radiance, red lines gone; the burnt loops' stepped edges are open",
    "stop": "sun"
   },
   {
