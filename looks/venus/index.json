@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T17:47:58.013Z",
- "head": "4338763a42a9f5588c98b1bc004834cf95897c03",
- "note": "venus: gate cure 90cc5b23 proof on main ff158d9; judged frames keep bytes, 1586 moves in main's sky only",
+ "pushed": "2026-11-22T17:53:03.006Z",
+ "head": "8d0d8f529e3f8291e70e5f326aa2ebda3842f646",
+ "note": "venus: gate cure 90cc5b23, review frames outside the cover sheets beside round 34; tree holds main b22a792",
  "looks": [
+  {
+   "time": "2026-11-22T17:53:02.409Z",
+   "file": "20261122175302409-note-h6-big.jpg",
+   "source": "../view/h6-big.jpg",
+   "kind": "note",
+   "label": "venus 1321 (top) and 1553 (bottom) at review, enlarged, on main ff158d9: round 34 code (left) beside the gate cure 90cc5b2 (right): the deck is blurred along the veil's fall while the veil thins or closes; tree holds main b22a792",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T17:53:01.869Z",
+   "file": "20261122175301869-note-h6-pairs.jpg",
+   "source": "../view/h6-pairs.jpg",
+   "kind": "note",
+   "label": "venus gate frames outside the cover sheets, review tier, on main ff158d9: 1321, 1323 (dive out) and 1551, 1553 (rise in), round 34 code (left of each pair) beside the gate cure 90cc5b2 (right); tree holds main b22a792",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T17:47:42.993Z",
    "file": "20261122174742993-note-f29-1586-diff.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/e-1287-night2.jpg",
    "kind": "note",
    "label": "1287 night side at 2x: main shade 0.8, tests shade 0.35, mid band, 0.5 with dark limb dim: the crunch drops, left out because 1586 gets softer",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:21:11.443Z",
-   "file": "20261122152111443-note-hold-rim-cmp.jpg",
-   "source": "../view/hold-rim-cmp.jpg",
-   "kind": "note",
-   "label": "hold top limb at preview size, draft and review, main table left, refit table right: the refit puts a dark hairline inside the rim at frames off 1185, so it is left out of CUT34",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:21:10.402Z",
-   "file": "20261122152110402-note-rim-top.jpg",
-   "source": "../view/rim-top.jpg",
-   "kind": "note",
-   "label": "1185 final top limb: approved hero, main 84b0ea4, rim strip refit with a clamp of 4 stops (test, not shipped): the double rim line goes at the judged frame",
    "stop": "venus"
   },
   {
