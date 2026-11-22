@@ -3,98 +3,70 @@
  "stops": {
   "sun": {
    "frames": [],
-   "sheets": [],
+   "sheets": [
+    "sun.terrain",
+    "sun.rise",
+    "sun.rise-cover",
+    "sun.hold"
+   ],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "mercury": {
    "frames": [],
-   "sheets": [
-    "mercury.hold",
-    "mercury.dive",
-    "mercury.dive-cover",
-    "mercury.terrain",
-    "mercury.rise",
-    "mercury.rise-cover"
-   ],
+   "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "venus": {
    "frames": [],
-   "sheets": [
-    "venus.hold",
-    "venus.dive",
-    "venus.dive-cover",
-    "venus.terrain",
-    "venus.rise",
-    "venus.rise-cover"
-   ],
+   "sheets": [],
    "R1": false,
-   "R8": true,
-   "R2": true
+   "R8": false,
+   "R2": false
   },
   "earth": {
    "frames": [],
-   "sheets": [
-    "earth.hold",
-    "earth.dive",
-    "earth.dive-cover",
-    "earth.terrain",
-    "earth.rise",
-    "earth.rise-cover"
-   ],
+   "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "mars": {
    "frames": [],
    "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "jupiter": {
    "frames": [],
    "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "saturn": {
-   "frames": [
-    3465,
-    3567,
-    3720,
-    3866
-   ],
-   "sheets": [
-    "saturn.hold",
-    "saturn.dive",
-    "saturn.dive-cover",
-    "saturn.terrain",
-    "saturn.rise",
-    "saturn.rise-cover"
-   ],
-   "R1": true,
-   "R8": true,
-   "R2": true
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
   },
   "uranus": {
    "frames": [],
    "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "neptune": {
    "frames": [],
    "sheets": [],
    "R1": false,
-   "R8": true,
+   "R8": false,
    "R2": false
   }
  },
@@ -124,7 +96,11 @@
   "detail-2997.png",
   "detail-3150.png",
   "detail-3296.png",
+  "detail-3465.png",
+  "detail-3567.png",
   "detail-360.png",
+  "detail-3720.png",
+  "detail-3866.png",
   "detail-4035.png",
   "detail-4137.png",
   "detail-4290.png",
@@ -189,9 +165,21 @@
   "detail-crop-3296-01.png",
   "detail-crop-3296-02.png",
   "detail-crop-3296-03.png",
+  "detail-crop-3465-01.png",
+  "detail-crop-3465-02.png",
+  "detail-crop-3465-03.png",
+  "detail-crop-3567-01.png",
+  "detail-crop-3567-02.png",
+  "detail-crop-3567-03.png",
   "detail-crop-360-01.png",
   "detail-crop-360-02.png",
   "detail-crop-360-03.png",
+  "detail-crop-3720-01.png",
+  "detail-crop-3720-02.png",
+  "detail-crop-3720-03.png",
+  "detail-crop-3866-01.png",
+  "detail-crop-3866-02.png",
+  "detail-crop-3866-03.png",
   "detail-crop-4035-01.png",
   "detail-crop-4035-02.png",
   "detail-crop-4035-03.png",
@@ -241,12 +229,18 @@
   "jury-mercury.hold-1.png",
   "jury-neptune.hold-0.png",
   "jury-neptune.hold-1.png",
+  "jury-saturn.hold-0.png",
+  "jury-saturn.hold-1.png",
+  "jury-saturn.terrain-0.png",
+  "jury-saturn.terrain-1.png",
   "jury-sun.hold-0.png",
   "jury-sun.hold-1.png",
   "jury-uranus.hold-0.png",
   "jury-uranus.hold-1.png",
   "jury-venus.hold-0.png",
   "jury-venus.hold-1.png",
+  "jury-venus.terrain-0.png",
+  "jury-venus.terrain-1.png",
   "match-earth.hold-01-a.png",
   "match-earth.hold-01-b.png",
   "match-earth.hold-a.png",
@@ -287,6 +281,14 @@
   "match-neptune.terrain-01-b.png",
   "match-neptune.terrain-a.png",
   "match-neptune.terrain-b.png",
+  "match-saturn.hold-01-a.png",
+  "match-saturn.hold-01-b.png",
+  "match-saturn.hold-a.png",
+  "match-saturn.hold-b.png",
+  "match-saturn.terrain-01-a.png",
+  "match-saturn.terrain-01-b.png",
+  "match-saturn.terrain-a.png",
+  "match-saturn.terrain-b.png",
   "match-sun.hold-01-a.png",
   "match-sun.hold-01-b.png",
   "match-sun.hold-a.png",
@@ -311,6 +313,7 @@
   "match-venus.terrain-01-b.png",
   "match-venus.terrain-a.png",
   "match-venus.terrain-b.png",
-  "motion-neptune.rise-cover.png"
+  "motion-neptune.rise-cover.png",
+  "motion-sun.rise-cover.png"
  ]
 }
