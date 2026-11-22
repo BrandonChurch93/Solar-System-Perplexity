@@ -315,3 +315,53 @@ Saved verbatim in `assets-src/belt/TASK4.md` (after a compaction read BRIEF.md, 
 
 Saved verbatim in `assets-src/belt/TASK5.md` (after a compaction read BRIEF.md, TASK5.md, then this). First merge origin/agent/engine-batch16 (dba3ebc). Then: (1) near rock sharp with a firm edge or a clean long streak, never a soft blob, nothing showing through; (2) far1 and far2 at 2782 under 6 px of blur or a streak over 60 px; (3) hero at one even pace, say why it is sharp at 2782; (4) relief inside the hero's entry streak or a later entry; (5) night side judged on the sparse sky. Proof as in task 4 plus final 2782 with native crops and the review sheet as attachments. Only `src/space/belt` and `assets-src/belt`. DONE or PART at 01:15 UTC.
 
+
+- 23:52 merged origin/agent/engine-batch16 (dba3ebc) as merge commit 2261ff0 (no rebase); `git diff origin/agent/engine-batch16 HEAD` showed only my six task 4 files. `npm ci`, tsc, build pass.
+- 23:55 draft 2782 on the new sky (`out/work/belt/t5/b0/`): the sky is sparse and dark, few stars, faint motes. The hero's night side (23, 24, 27) reads there as dark rock, not as a grey fill, so `light.fill` stays. The near rock was the soft blob with the dark hollow.
+- Geometry, why the cast changed. A world fixed rock cannot be sharp at 2782: the pan there is about 72 px per frame (36 px of blur) whatever its distance, because a pan is a rotation. So a sharp rock at 2782 is one the camera tracks (`hold` 1). One even pace that is sharp (under 6 px of blur is under 12 px per frame) covers at most about 860 px in the 73 frames between the empty first and last frame, so such a rock cannot cross the middle of a 1920 px frame; it can only cut a corner. The upper right corner is free of Mars (left, until 2766) and of the grown Jupiter (centre, late), and the part of a rock that shows there is its lower left, which is the lit part (Sun lower left at 2782).
+- The flow term broke the even pace: `motion.ts` moved every rock by the travel's flow, so a tracked rock with a constant own velocity ran 13 to 40 px per frame. New per rock number `flow` (share of the flow it takes): hero 0, the others 1. With it the planner shows the hero at 11 px per frame in every frame.
+- Why the near rock had a dark hollow: stopped at draft (`out/work/belt/t5/c5/`), asset b at tilt 10, 40, 0 shows a deep shadowed concavity to the lens with a lit rim around it. Tried three faces stopped (`view/t5/c6z.png`): asset a at the hero's tilt, asset b at 10, 160, 0 and at 100, 40, 0. Took asset b at 100, 40, 0: a whole lit half without the hollow.
+- The near rock is now the clean long streak, not a sharp rock: tracked by the camera with its own speed of about 250 px per frame, heading up and left along the terminator (perpendicular to the Sun in the frame), so the streak is one lit band with a firm lower left side and one dark band; at distance 1.5 the focus blur is 2 px (focus 2.0), so the sides are firm. `gain` 1.5 on this rock only (stopped, its lit face would sit between the hero's and Phobos's; as a streak it is far under both).
+- far1 and far2: half the size and each with its own speed along the pan, so they are streaks longer than their own width wherever they show, and neither is in frame at 2782. far2 moved to a low lane: on the upper lane it entered the frame behind the hero and would have come out of it.
+- The hero enters lit. With a tracked rock the Sun turns in the frame through the pan: at the entry it stands below (camera space -0.20, -0.97, 0.12), at 2782 lower left (-0.79, -0.61, 0.09). First try (in at the right edge, heading up and left) brought the dark top in first, the test caught it. Now it comes in at the top edge heading down and right, the lit underside first, and leaves at the right edge.
+- Cast (planner, 1920 x 1080, speeds in px per frame, blur is half of it):
+
+| rock | asset | in frame | radius px | speed | at 2782 |
+|---|---|---|---|---|---|
+| hero | a | 2748 to 2814 (67), in at the top (1558,-169), out at the right (2094,368) | 176 | 11 in every frame (5.5 px of blur) | centre (1834,108), cut by the top and right edge, sharp |
+| near | b | 2779 to 2784 (6) | 57 to 63 | 239 to 271 (120 to 136 px of blur, over its width) | (710,540), 128 px streak, focus blur 2 px |
+| far1 | c | 2761 to 2772 (12) | 31 to 36 | 168 to 209 (84 to 105 px) | not in frame |
+| far2 | c | 2790 to 2803 (14) | 30 to 32 | 140 to 174 (70 to 87 px) | not in frame |
+
+  Smallest gaps: hero to Jupiter 430 px (2813), near to Jupiter's point 93 px (2779), far2 to Jupiter 199 px (2795), far1 to Mars 906 px. First and last frame empty; the hero is in frame as a sliver at the right edge until 2814, 430 px from Jupiter's disc.
+- Tests rewritten for the new cast (`belt.test.ts`, 10 green): judged frame holds the hero and one more rock and each is under 6 px of blur or over 60; first and last frame empty; every rock 150 px or more from the grown Jupiter in the last twelve frames; near rock blur over its own width and over 60 px in every frame, focus blur under 3 px; hero fastest over slowest under 1.15, under 6 px of blur in every frame, over a quarter of the width; the part of the hero that enters first faces the Sun in its first twelve frames.
+- 00:17 committed and pushed a9da36c; review sheet started (one run).
+- 00:40 review sheet, one run of a9da36c: `out/work/belt/t5/r1/sheet.jpg` (25 frames, every third 2745 to 2817). Seconds (samples): 2745 70.6 (16, with the load), 2748 33.5, 2751 41.0 (20), 2754 71.4 (39), 2757 107.0 (63), 2760 134.4 (86), 2763 154.9 (107), 2766 27.0 (16), 2769 26.4, 2772 29.0, 2775 26.9, 2778 26.1, 2781 31.9, 2784 32.4, 2787 28.0, 2790 28.7, 2793 28.9, 2796 31.3, 2799 47.5 (22), 2802 66.1 (28), 2805 77.1 (31), 2808 65.6 (23), 2811 49.4 (16), 2814 49.8, 2817 46.5. The whole run is about twice as slow as the task 4 sheet, also where no rock is in frame (2817: 46.5 s against 23.7 s), so that is the batch or the machine in a long run, not the belt.
+  - Read on the sheet: hero in at the top right from 2754, slides down and right at one pace, at the right edge from 2790, a sliver until 2814; far1 a small streak at 2763, 2766, 2769; near streak at 2781 and 2784; far2 a small streak low in frame 2793 to 2802. Nothing in 2745 and 2817.
+- 00:42 finals, one session (`out/work/belt/t5/f1/`, 64 samples, 75.9 s with the load, 50.7 s):
+  - 2782: d63e60cb80d010131f1a9eea0f368d16cf473dc0f4e5345d604f5b53f63d5afc
+  - 2783: caa519ddfc7dc6447d823f0dd14a8fd2123e95bc25957be609a0e4ed42161e8a
+  - native crops at 2782: `out/work/belt/t5/f1/crops-2782.png` (hero x 1440 to 1920, y 0 to 480; near x 470 to 950, y 300 to 780). far1 and far2 are not in that frame.
+  - Tone, final 2782: hero lit face 80 x 80 at (1700,150): mean sRGB 80.8, 72.3, 61.7 (luma 73.3, p95 160.0). Near streak, lit band 24 x 24 at (690,540): 67.7, 58.9, 49.9; its dark band 20 x 20 at (735,515): 9.1, 12.3, 15.5, the same as the sky beside it (200 x 200 at (900,300): 6.5, 12.3, 15.7), so the dark band reads only by the stars it hides.
+  - Review 2796, hero lit face 80 x 80 at (1830,150): 116.8, 100.7, 82.8. The Sun stands more behind the lens there, the face is paler and flatter than at 2782; still under Phobos (133.6, 106.2, 87.6).
+- Night side on the sparse sky: judged on the task 4 cast at draft on the new sky (`out/work/belt/t5/b0/`), where the hero's night side at 23, 24, 27 reads as dark rock against a sky near 6, 12, 16, so `light.fill` is unchanged. In the new cast little night side is in frame: the hero's dark part is past the top and right edge at 2782 (the dark corner at (1870,20) measures 32.8, 27.8, 24.2 mixed with lit ground), and from 2790 the rock is lit nearly full on.
+- 00:44 byte proof at draft, a9da36c against a worktree of dba3ebc with its own build (`/tmp/proof5.sh`), six pairs equal:
+  - 2325 fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726 d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2745 0613d9a29c4aee6a32d86aca2220f5ea9d04ad012040d8d90eb97cc32c67f7b3
+  - 2819 51221b1bd4bd6008fb802afbd734ec6f261c427eca0bcedc1450c558249238a6
+  The four Mars frames are the same bytes as before the merge; 2745 and 2819 changed with the batch's sky and are equal with and without my change.
+- 00:47 cost of the belt at review, measured in two short sessions of three frames: with the hero and the near rock moved out of frame 2781 took 11.2 s; with the cast 2781 took 18.2 s (hero and near streak) and 2790 16.4 s (hero and far2). So the belt adds about 5 to 7 s per frame at review. In the long sheet run the same frame took 31.9 s; I did not find out why the long run is slower.
+- tsc clean, 14 repo test files green, 10 belt tests green.
+
+## What a critic would still write (after task 5), worst first
+- The only crisp rock sits in the upper right corner and is never whole in frame: cut by the top edge, then by the right edge. That follows from the pace rule (under 12 px per frame for 73 frames is at most 860 px), but it is a corner, not a place in the picture.
+- The hero is sharp because the camera tracks it through a whip pan, not because it is far. It drifts 536 px across in 67 frames and tumbles, yet it can still read as riding with the lens while stars and the other rocks streak.
+- From about 2790 the hero is lit nearly full on and its face is paler and flatter (116.8, 100.7, 82.8) than at 2782; relief is low there.
+- The near rock is only a streak, in frame for 6 frames (2779 to 2784); nobody sees its face. Its ends fade and stars show through the ends and faintly through the middle (the streak is a little longer than the rock is wide). It carries `gain` 1.5.
+- far1 and far2 are small streaks for 12 and 14 frames; there is no rock at middle distance whose tumble reads.
+- The night side is hardly in the picture any more, so the task 4 work on it is judged on little.
+- 5.5 px of blur on the hero is under the 6 px line but not zero; at native size its craters are a touch soft along the heading.
+- Asset b is used only for the streak. The clean limb needs a multisampled half float target, tried only on this renderer. Motes in front of rocks draw on them. The web set was not rendered. Belt test outside `tests/`.
