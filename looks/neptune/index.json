@@ -1,9 +1,31 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T05:21:06.018Z",
+ "pushed": "2026-11-22T05:48:48.243Z",
  "head": "21edb3b811ac58890c1b1d12f1ae5ce11e950f4a",
- "note": "rise cover sheet at review on batch 19 done; dive cover sheet rendering",
+ "note": "dive cover sheet at review on batch 19 rendering, frames looked at as they come",
  "looks": [
+  {
+   "time": "2026-11-22T05:48:40.145Z",
+   "file": "20261122054840145-note-dive-4738-4740.jpg",
+   "source": "out/work/nep/p6/final/dive-4738-4740.jpg",
+   "kind": "note",
+   "label": "dive cover at review, 4738 to 4740 (same file bytes as before the horizon cure, the cirrus, Triton and batches 18 and 19); tree 6c4c455, main a45a07b (engine batch 19)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T05:48:13.591Z",
+   "file": "20261122054813591-frame-f04740-review.jpg",
+   "source": "out/work/sheets/.frames-EXQvfw/f04740-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4740, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4740,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T05:20:42.070Z",
    "file": "20261122052042070-note-sheet-rise-cover.jpg",
@@ -42,28 +64,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:19:45.216Z",
-   "file": "20261122051945216-frame-f04986-review.jpg",
-   "source": "out/work/sheets/.frames-0zLmiD/f04986-review.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4986, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4986,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:46:19.765Z",
-   "file": "20261122044619765-note-b19-5006-x3.jpg",
-   "source": "out/work/nep/p6/final/b19-5006-x3.jpg",
-   "kind": "note",
-   "label": "5006 review on engine batch 19 raised 3 times: no new point on the night side or on Triton, points show through the ring's gaps; tree 6c4c455, main a45a07b",
-   "stop": "neptune"
   },
   {
    "time": "2026-11-22T04:40:13.381Z",
