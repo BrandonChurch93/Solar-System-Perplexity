@@ -1,141 +1,55 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T09:21:43.278Z",
- "head": "ddcbc746383b149dd321086560007a41ad419cc5",
- "note": "Sun hook second take: take 3 strip and take 4 arch crop, main 8f13066, agent/sun-hook2 b9fb48c",
+ "pushed": "2026-11-22T10:04:53.528Z",
+ "head": "bec8e3f0e06d940a096be440a14df981702cd875",
+ "note": "leave on agent/sun-leave bec8e3f (main 8f13066): one Sun opening up into Mercury's plate, take 3, finals rendering",
  "looks": [
   {
-   "time": "2026-11-22T09:21:42.063Z",
-   "file": "20261122092142063-note-a4-f60-arch-native.jpg",
-   "source": "out/work/sun/h2/a4-f60-arch-native.jpg",
+   "time": "2026-11-22T10:03:55.449Z",
+   "file": "20261122100355449-note-strip-a2.jpg",
+   "source": "out/work/sun/lv/strip-a2.jpg",
    "kind": "note",
-   "label": "Sun hook second take, take 4, frame 60 arch at native size, draft, main 8f13066, agent/sun-hook2 b9fb48c",
+   "label": "leave, FAILED take 2 (globe fitted to the stated limb, second limb at the lower left), draft, main 8f13066",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T09:21:40.720Z",
-   "file": "20261122092140720-note-strip-a3-after.jpg",
-   "source": "out/work/sun/h2/strip-a3-after.jpg",
+   "time": "2026-11-22T10:03:54.735Z",
+   "file": "20261122100354735-note-leave-plate-outline-495.jpg",
+   "source": "out/work/sun/lv/leave-plate-outline-495.jpg",
    "kind": "note",
-   "label": "Sun hook second take, take 3, draft strip of 0 to 60 at 400 px, main 8f13066, agent/sun-hook2 cc8d869",
+   "label": "leave f495, Mercury's plate alone (main 8f13066): limb stated by sunplate.json against limb fitted to the painted disc",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T08:38:24.010Z",
-   "file": "20261122083824010-note-c1-f90-right-foot-zoom3.jpg",
-   "source": "out/work/sun/feet/c1-f90-right-foot-zoom3.jpg",
+   "time": "2026-11-22T10:03:53.830Z",
+   "file": "20261122100353830-note-leave-crops-495-disc-streak.jpg",
+   "source": "out/work/sun/lv/leave-crops-495-disc-streak.jpg",
    "kind": "note",
-   "label": "sun polish item 7a trial 1, right loop foot at frame 90, draft, 3 times zoom: approved, before, after, main 07aabf5, agent/sun 8eaae3b plus uncommitted work",
+   "label": "leave f495 native crops, photosphere and the streak (Mercury's layer): main 8f13066 draft against agent/sun-leave bec8e3f final",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T08:38:23.329Z",
-   "file": "20261122083823329-note-c1-f90-left-foot-zoom3.jpg",
-   "source": "out/work/sun/feet/c1-f90-left-foot-zoom3.jpg",
+   "time": "2026-11-22T10:03:52.893Z",
+   "file": "20261122100352893-note-leave-crops-495-limbs.jpg",
+   "source": "out/work/sun/lv/leave-crops-495-limbs.jpg",
    "kind": "note",
-   "label": "sun polish item 7a trial 1, left loop foot at frame 90, draft, 3 times zoom: approved, before, after (gain cut 0.8 in the foot zone, veil in the loops card), main 07aabf5, agent/sun 8eaae3b plus uncommitted work",
+   "label": "leave f495 native crops, left limb and upper right limb: main 8f13066 draft against agent/sun-leave bec8e3f final",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T08:30:16.544Z",
-   "file": "20261122083016544-frame-base90-still.jpg",
-   "source": "out/work/sun/feet/c1/base90-still.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:13:57.573Z",
-   "file": "20261122081357573-note-f236-approved-before-after-r2.jpg",
-   "source": "out/work/sun/cells/f236-approved-before-after-r2.jpg",
+   "time": "2026-11-22T10:03:52.024Z",
+   "file": "20261122100352024-note-leave-strip-after.jpg",
+   "source": "out/work/sun/lv/leave-strip-after.jpg",
    "kind": "note",
-   "label": "sun rise 236, item 5b, drafts, native crops; approved hero for reference, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
+   "label": "leave, AFTER take 3: agent/sun-leave bec8e3f on main 8f13066, draft strip 474 to 502 every second frame",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T08:13:56.501Z",
-   "file": "20261122081356501-note-f360-zoom3-top-left-r2.jpg",
-   "source": "out/work/sun/cells/f360-zoom3-top-left-r2.jpg",
+   "time": "2026-11-22T10:03:50.867Z",
+   "file": "20261122100350867-note-leave-strip-before.jpg",
+   "source": "out/work/sun/lv/leave-strip-before.jpg",
    "kind": "note",
-   "label": "sun hold 360, item 5b, limb ring at 3 times zoom (nearest): top limb, left limb, lower right sky; approved, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T08:13:55.591Z",
-   "file": "20261122081355591-note-f360-approved-before-after-r2.jpg",
-   "source": "out/work/sun/cells/f360-approved-before-after-r2.jpg",
-   "kind": "note",
-   "label": "sun hold 360, item 5b (finer cells toward the limb), drafts, native crops: left limb, top limb, lower right limb, centre; approved, before, after; main 681d8da, agent/sun 9c49418 plus the uncommitted map of item 5b (take 2)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T08:03:35.521Z",
-   "file": "20261122080335521-note-s123-topfan-before-s1-s2-s3-gain4-native.jpg",
-   "source": "out/work/sun/stream/s123-topfan-before-s1-s2-s3-gain4-native.jpg",
-   "kind": "note",
-   "label": "sun corona card offline, the fan above the disc at 4 times gain: before, trial 1, trial 2, trial 3 (kept); main 681d8da, agent/sun 9c49418",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T08:03:35.009Z",
-   "file": "20261122080335009-note-t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg",
-   "source": "out/work/sun/stream/t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg",
-   "kind": "note",
-   "label": "sun travel 480, the fan below the disc at native size, before left, after right, gain 1 over gain 3; main 681d8da, agent/sun 9c49418",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T08:03:34.317Z",
-   "file": "20261122080334317-note-t1-470-480-before-after-gain3.jpg",
-   "source": "out/work/sun/stream/t1-470-480-before-after-gain3.jpg",
-   "kind": "note",
-   "label": "sun travel 470 and 480, item 6 (streamers outside the approved frame), drafts at 3 times gain, before left, after right; rendered on a local merge with agent/travel a3c388b; main 681d8da, agent/sun 9c49418",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:50:19.198Z",
-   "file": "20261122075019198-note-strip-k4f-final-400px.jpg",
-   "source": "out/work/sun/mh/strip-k4f-final-400px.jpg",
-   "kind": "note",
-   "label": "sun opening, nine final frames 0 to 60 with items 8a 8b; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:50:18.668Z",
-   "file": "20261122075018668-note-crest-k4f.jpg",
-   "source": "out/work/sun/mh/crest-k4f.jpg",
-   "kind": "note",
-   "label": "sun opening, item 8b at the final tier: the crest at f23 and the landing at f60, native crops; top the hook as accepted, bottom with the knee; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:50:17.986Z",
-   "file": "20261122075017986-note-feet-k4f.jpg",
-   "source": "out/work/sun/mh/feet-k4f.jpg",
-   "kind": "note",
-   "label": "sun opening, items 8a 8b at the final tier: launch foot f8, landing foot f45 and f53, 400 by 300 native crops; top the hook as accepted (739ae28), bottom with the knee; white count and longest run printed; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:39:36.405Z",
-   "file": "20261122073936405-note-crest-k4.jpg",
-   "source": "out/work/sun/mh/crest-k4.jpg",
-   "kind": "note",
-   "label": "item 8b crest 23 and landing 60, draft native, top merged hook 6f466c1, bottom knee and veil f38765a, main c92f97c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:39:35.832Z",
-   "file": "20261122073935832-note-feet-k4.jpg",
-   "source": "out/work/sun/mh/feet-k4.jpg",
-   "kind": "note",
-   "label": "item 8a feet, draft native 8 45 53, top merged hook 6f466c1, bottom knee and veil f38765a, main c92f97c",
+   "label": "leave, BEFORE: main 8f13066 draft strip 474 to 502 every second frame",
    "stop": "sun"
   }
  ]
