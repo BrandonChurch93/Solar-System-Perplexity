@@ -10,7 +10,7 @@ import geo
 
 OUT = 'out/work/u/dive/'
 PUB = 'public/assets/uranus/'
-WRAP = 'out/work/u/wrap/wrap-albedo.npy'
+WRAP = 'out/work/u/wrap/wrap-albedo-f.npy'
 LEVELS = [('patch-1.jpg', 80.0), ('patch-2.jpg', 46.0), ('patch-3.jpg', 24.0), ('patch-4.jpg', 12.2)]
 SIZE = 4096
 LAMBDA0 = 0.284
@@ -18,8 +18,8 @@ OCTAVES = 6
 AMP = 0.045
 FALL = 0.66
 STRETCH = 5.0
-PROC = (0.3, 0.45, 0.7, 1.0, 1.0, 1.0)
-GEN = 'out/work/u/gen/dive-take1-2x.png'
+PROC = (0.0, 0.0, 0.25, 1.0, 1.0, 1.0)
+GEN = 'out/work/u/gen/dive-take1-r.png'
 GEN_WIDTH = 80.0
 GEN_SIGMA = 260.0
 GEN_EDGE = 0.12
@@ -30,6 +30,8 @@ GEN_CEIL = 0.42
 BEND = 0.5
 CURL = 0.18
 WISP = 0.12
+SOFT = 1.6
+FADE = [1.6, 2.6]
 WISP_TINT = np.array([1.12, 1.0, 0.97], np.float32)
 TILE = 2048
 PREVIEW = len(sys.argv) > 1 and sys.argv[1] == 'preview'
@@ -81,7 +83,7 @@ def detail(along, across, texel):
         streak = sample(noise_tile(500 + o, 5.0, 1.0), a / (lam * STRETCH) * 32.0 + 37.0 * o, c / lam * 32.0 + 91.0 * o)
         billow = sample(noise_tile(700 + o, 5.0, 1.0), a / (lam * 2.4) * 32.0 + 53.0 * o, c / (lam * 1.2) * 32.0 + 29.0 * o)
         out += AMP * PROC[o] * FALL ** o * w * (0.4 + gain) * (0.85 * streak + 0.4 * billow)
-        if 1 <= o <= 4:
+        if 3 <= o <= 4:
             fil = sample(noise_tile(600 + o, 5.0, 0.8), a / (lam * 10.0) * 32.0 + 71.0 * o, c / (lam * 1.3) * 32.0 + 23.0 * o)
             wisp += w * 0.6 ** (o - 1) * np.clip(0.8 * (fil - 0.9), 0, 1) * np.clip(patch * 0.8 - 0.1, 0, 1)
     return out, wisp
@@ -133,6 +135,7 @@ def main():
         src = np.ascontiguousarray(np.take(wrap[r0:r1], np.arange(c0, c1) % W, axis=1)).astype(np.float32)
         base = cv2.remap(src, (col - c0).astype(np.float32), (row - r0).astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
         del src, col, row
+        base = cv2.GaussianBlur(base, (0, 0), SOFT * SIZE / (2 * half) / (W / (2 * np.pi)))
         along = ((lon - lon0) * np.cos(lat) / unit).astype(np.float32)
         across = ((lat - lat0) / unit).astype(np.float32)
         del lon, lat
@@ -154,7 +157,7 @@ def main():
         print(name, 'width', width, 'texel units', round(texel, 5), 'density over the wrap', round(SIZE / (2 * half) / (W / (2 * np.pi)), 2), 'detail rms', float(dl.std()), 'albedo median', np.median(base.reshape(-1, 3), 0).round(3))
     if PREVIEW:
         return
-    json.dump({'spot': spot['spot'], 'levels': rows, 'feather': 0.12, 'fade': [1.02, 1.5]}, open('src/stops/uranus/patches.json', 'w'), indent=1)
+    json.dump({'spot': spot['spot'], 'levels': rows, 'feather': 0.12, 'fade': FADE}, open('src/stops/uranus/patches.json', 'w'), indent=1)
 
 
 main()

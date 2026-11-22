@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import { config } from '../../config'
 import { ramp, smoother } from '../../director/rig'
+import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { anchor, closeRadius, type Anchor } from './close'
+import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
 import fit from './fit.json'
-import { close, pace, spinRest } from './look'
+import { close, flight, pace, spinRest } from './look'
 import { curve, hermite, integrate, last, read, sampled, solve, type Knot, type Track } from './pace'
 
 export const params: MoveParams = {
@@ -12,7 +13,7 @@ export const params: MoveParams = {
   spot: { x: 0.5144, y: 0.65436 },
   dive: { headingDeg: 278, altitude: 0.03234, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 6, swoop: true, surge: { glide: 0.1, rise: 16, fall: 2, swell: [0.35, 5, 2] } },
   terrain: { vfov: 60, gather: 0.2, forward: 0.5, rise: 0.05, side: -0.1, yawDeg: 3, pitchDeg: 0.5, entryHeight: 1, entryBack: 0.6, entryPitchDeg: -4, entryDipDeg: -4.07, horizonDeg: 19.8, dipDeg: 10.25, rollDeg: 11.27, exitHeight: 0.3, exitForward: 0.25, exitPitchDeg: 1.5, exitDipDeg: 1.54 },
-  rise: { azimuthDeg: 12, elevationDeg: 14, distance: 4.8, offset: [-0.3, -0.06], driftSpeed: 0.08, rollDeg: 0, ahead: 0.01174, from: 0.02085, hug: 1.7, settle: 8, level: true, pan: 0.3 },
+  rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.8, offset: [-0.002, -0.189], driftSpeed: 0.08, rollDeg: 80, ahead: 0.01174, from: 0.02085, hug: 1.7, settle: 8, level: true, pan: 0.3 },
   travel: { turnDeg: 78, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
@@ -40,8 +41,32 @@ export class Plan extends StopPlan {
   private diving: DivePace | null = null
   private rising: RisePace | null = null
 
-  constructor(p: MoveParams = params, private readonly tune = meet, private readonly near = close, private readonly tempo = pace) {
+  constructor(p: MoveParams = params, private readonly tune = meet, private readonly near = close, private readonly tempo = pace, private readonly fly = flight) {
     super('mercury', fit as Fit, p)
+  }
+
+  low(time: number): Pose {
+    const fps = config.fps
+    const f = time * fps
+    const seg = this.seg.terrain
+    const pivot = seg.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).terrain! * seg.frames + 1e-9) + config.shutterFraction / 2
+    const e = this.fly.entry
+    const x = this.fly.exit
+    const a = Math.pow(Math.max(1 - (f - this.coverCenter(this.seg.dive!) * fps) / e.frames, 0), e.power)
+    const b = Math.pow(Math.max(1 - (this.coverCenter(this.seg.rise) * fps - f) / x.frames, 0), x.power)
+    const u = (2 * (f - pivot)) / seg.frames
+    const along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3) - e.back * a + x.forward * b
+    const position = closeAhead.clone().multiplyScalar(along).addScaledVector(closeUp, this.fly.swoop * u * u + e.height * a + x.height * b)
+    const quaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(e.pitchDeg * a + x.pitchDeg * b), 0, THREE.MathUtils.degToRad(e.rollDeg * a), 'YXZ'))
+    return { position, quaternion, vfov: this.p.terrain.vfov }
+  }
+
+  override terrain(tRel: number): Pose {
+    return this.low(tRel + this.seg.terrain.start)
+  }
+
+  private lowShot(time: number): OrbitShot {
+    return { pose: this.low(time), view: 'terrain' }
   }
 
   get anchor(): Anchor {
@@ -58,7 +83,7 @@ export class Plan extends StopPlan {
     const kept = this.fixes[side]
     if (kept) return kept
     const centre = this.coverCenter(side === 'dive' ? this.seg.dive! : this.seg.rise)
-    const low = (side === 'dive' ? super.dive(centre) : super.rise(centre - 1e-6)).pose
+    const low = this.low(side === 'dive' ? centre : centre - 1e-6)
     const high = (side === 'dive' ? this.diveRaw(centre - 1e-6, centre - 1e-6) : this.riseRaw(centre, centre)).pose
     const a = this.anchor
     const turn = this.drawn(centre)
@@ -175,7 +200,7 @@ export class Plan extends StopPlan {
     const span = config.shutterFraction
     const per = config.shutterFraction / span
     const m = sampled((w) => per * this.motion((s) => this.diveAt(s, s), Math.min(w, end - span / 2 - 0.005) / fps, span / fps), still - 0.5, end, 0.125)
-    const shape = curve(t.shape.map(([x, y]) => [still + x, y] as Knot))
+    const shape = curve(t.shape.map(([x, y]) => [still + x, y] as Knot), t.slope)
     const base = curve([[still, t.still], [still + t.shape[t.shape.length - 2]![0], t.still], [end, t.end]])
     const run = (top: number): Track => integrate((x, w) => (base(x) + top * shape(x)) / Math.max(m(w), 0.5), still, still, end, 1 / 16)
     const top = solve((x) => last(run(x)).value - end, 10, 600)
@@ -231,7 +256,7 @@ export class Plan extends StopPlan {
     const h = 0.05 / config.fps
     const e = 1e-7
     const sky = (time: number): Local => this.local(side === 'dive' ? this.diveAt(time, this.paced('dive', time)) : this.riseAt(time, this.paced('rise', time)), time)
-    const ground = (time: number): Local => this.local(side === 'dive' ? super.dive(time) : super.rise(time), time)
+    const ground = (time: number): Local => this.local(this.lowShot(time), time)
     const rate = (a: Local, b: Local): Gap => {
       const d = b.q.clone().multiply(a.q.clone().invert())
       if (d.w < 0) d.set(-d.x, -d.y, -d.z, -d.w)
@@ -275,13 +300,13 @@ export class Plan extends StopPlan {
   }
 
   override dive(time: number): OrbitShot {
-    if (time >= this.coverCenter(this.seg.dive!)) return super.dive(time)
+    if (time >= this.coverCenter(this.seg.dive!)) return this.lowShot(time)
     const t = this.shut(time)
     return this.flow('dive', this.diveAt(t, this.paced('dive', t)), t)
   }
 
   override rise(time: number): OrbitShot {
-    if (time < this.coverCenter(this.seg.rise)) return super.rise(time)
+    if (time < this.coverCenter(this.seg.rise)) return this.lowShot(time)
     const t = this.shut(time)
     return this.flow('rise', this.riseAt(t, this.paced('rise', t)), t)
   }
