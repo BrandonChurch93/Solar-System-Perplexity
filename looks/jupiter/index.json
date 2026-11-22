@@ -1,80 +1,86 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T04:32:13.655Z",
- "head": "79fb6ebf28715b2ceb717d5d25c4a5f3317a4afc",
- "note": "foreground layer: four judged finals and the terrain review sheet on main 0622510; measure running",
+ "pushed": "2026-11-22T04:56:08.278Z",
+ "head": "46d808aa903ed7aa9fb2aebbed07bd48d856cb5e",
+ "note": "Jupiter: four judged finals on the branch with batch 19 merged (main 2621f00)",
  "looks": [
   {
-   "time": "2026-11-22T04:32:12.566Z",
-   "file": "20261122043212566-note-terrain-sheet-after.jpg",
-   "source": "out/work/jupiter/fg/kept/terrain-sheet-after.png",
+   "time": "2026-11-22T04:56:07.101Z",
+   "file": "20261122045607101-note-f3296_pair.jpg",
+   "source": "out/work/view/m19/f3296_pair.jpg",
    "kind": "note",
-   "label": "jupiter.terrain review sheet WITH the foreground layer, rendered on the tree that holds main 0622510",
+   "label": "Jupiter rise 3296 final at half size: left main 0622510 (batch 18), right main 2621f00 (batch 19 flight sky). No star inside the disc, none on the night side",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T04:32:11.175Z",
-   "file": "20261122043211175-note-f03296-final-fix.jpg",
-   "source": "out/work/jupiter/fg/kept/f03296-final-fix.png",
+   "time": "2026-11-22T04:56:05.908Z",
+   "file": "20261122045605908-note-f03296-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f03296-final-b19.png",
    "kind": "note",
-   "label": "jupiter judged rise 3296, final tier, branch with the foreground layer, rendered on the tree that holds main 0622510; same bytes as without the layer (sha256 fd2b990ca6d568f9)",
+   "label": "Jupiter rise 3296 final, branch d28870b holding main 2621f00: sha bcd7b416628a62c1, new by batch 19 (flight sky); the disc of the planet and Io keep their bytes",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T04:32:09.569Z",
-   "file": "20261122043209569-note-f03150-final-fix.jpg",
-   "source": "out/work/jupiter/fg/kept/f03150-final-fix.png",
+   "time": "2026-11-22T04:56:04.709Z",
+   "file": "20261122045604709-note-f03150-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f03150-final-b19.png",
    "kind": "note",
-   "label": "jupiter judged terrain 3150, final tier, WITH the foreground layer, rendered on the tree that holds main 0622510 (sha256 173790897f041964; before the layer 59bb10ef93d6ea42)",
+   "label": "Jupiter terrain 3150 final with the foreground tiers, branch d28870b holding main 2621f00: sha 173790897f041964, same bytes as on main 0622510 with the layer",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T04:32:08.367Z",
-   "file": "20261122043208367-note-f02997-final-fix.jpg",
-   "source": "out/work/jupiter/fg/kept/f02997-final-fix.png",
+   "time": "2026-11-22T04:56:03.793Z",
+   "file": "20261122045603793-note-f02997-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f02997-final-b19.png",
    "kind": "note",
-   "label": "jupiter judged dive 2997, final tier, branch with the foreground layer, rendered on the tree that holds main 0622510; same bytes as without the layer (sha256 0a35fc826196a462)",
+   "label": "Jupiter dive 2997 final, branch d28870b holding main 2621f00: sha 0a35fc826196a462, same bytes as before the layer and before batch 19",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T04:32:07.130Z",
-   "file": "20261122043207130-note-f02895-final-fix.jpg",
-   "source": "out/work/jupiter/fg/kept/f02895-final-fix.png",
-   "kind": "note",
-   "label": "jupiter judged hold 2895, final tier, branch with the foreground layer, rendered on the tree that holds main 0622510; same bytes as before the layer and before batches 17 and 18 (sha256 c34e30ce2c61de16)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:22:16.726Z",
-   "file": "20261122042216726-job-frame-03094.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3094, draft tier, texels view, from the running measure job",
+   "time": "2026-11-22T04:51:53.571Z",
+   "file": "20261122045153571-compare-compare-jupiter-terrain-view.jpg",
+   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.terrain: approved image left, film frame right, final tier",
    "stop": "jupiter",
    "segment": "jupiter.terrain",
-   "frame": 3094,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T04:04:12.055Z",
-   "file": "20261122040412055-still-f03239-16x9-review-full.jpg",
-   "source": "out/work/stills/f03239-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3239, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3239,
-   "tier": "review",
+   "frame": 3150,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
+   "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T03:57:01.163Z",
-   "file": "20261122035701163-still-f02895-16x9-final-full.jpg",
+   "time": "2026-11-22T04:51:52.532Z",
+   "file": "20261122045152532-still-f03150-16x9-final-full.jpg",
+   "source": "out/work/stills/f03150-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:50:03.067Z",
+   "file": "20261122045003067-compare-compare-jupiter-hold-view.jpg",
+   "source": "out/work/compare/compare-jupiter-hold-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.hold: approved image left, film frame right, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:50:01.932Z",
+   "file": "20261122045001932-still-f02895-16x9-final-full.jpg",
    "source": "out/work/stills/f02895-16x9-final-full.png",
    "kind": "still",
    "label": "jupiter.hold frame 2895, final tier",
@@ -84,7 +90,7 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
+   "engine": "7553966a0ffa4014"
   }
  ]
 }
