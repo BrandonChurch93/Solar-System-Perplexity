@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { stream } from '../../core/random'
+import { hash01, stream } from '../../core/random'
 
 export interface FlightDef {
   count: number
@@ -17,6 +17,8 @@ export interface FlightDef {
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
+  deep: { count: number; law: number[][]; max: number; level: number; core: number[]; halo: number[]; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
+  veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number }
 }
 
 export interface FlightField {
@@ -24,12 +26,42 @@ export interface FlightField {
   star: Float32Array
   color: Float32Array
   glow: Float32Array
+  veil: Float32Array
+  deep: { position: Float32Array; star: Float32Array; color: Float32Array }
   width: number
   height: number
 }
 
 const MAP = [512, 256] as const
 const SIZE = [2.6, 2.2, 11] as const
+export const DEEP_SOFT = [0.2, 0.125] as const
+
+function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => number {
+  const seed = stream('flight veil').int(1 << 20)
+  const ease = (t: number): number => t * t * (3 - 2 * t)
+  const noise = (x: number, y: number, z: number): number => {
+    const ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z)
+    const fx = ease(x - ix), fy = ease(y - iy), fz = ease(z - iz)
+    const at = (a: number, b: number, c: number): number => hash01(ix + a + seed, iy + b, iz + c)
+    const lo = (at(0, 0, 0) * (1 - fx) + at(1, 0, 0) * fx) * (1 - fy) + (at(0, 1, 0) * (1 - fx) + at(1, 1, 0) * fx) * fy
+    const hi = (at(0, 0, 1) * (1 - fx) + at(1, 0, 1) * fx) * (1 - fy) + (at(0, 1, 1) * (1 - fx) + at(1, 1, 1) * fx) * fy
+    return lo * (1 - fz) + hi * fz
+  }
+  const fbm = (x: number, y: number, z: number, f: number, octaves: number, shift: number): number => {
+    let sum = 0
+    let amp = 1
+    let total = 0
+    for (let o = 0; o < octaves; o++) {
+      sum += amp * noise(x * f + 31.7 * o + shift, y * f + 11.3 * o - shift, z * f + 57.1 * o + shift)
+      total += amp
+      amp *= 0.5
+      f *= 2.03
+    }
+    return sum / total
+  }
+  const [depth, width, scale] = def.lanes
+  return (x, y, z) => THREE.MathUtils.smoothstep(fbm(x, y, z, def.scale, 4, 0), def.span[0]!, def.span[1]!) * (depth! + (1 - depth!) * THREE.MathUtils.smoothstep(Math.abs(2 * fbm(x, y, z, def.scale * scale!, 2, 211.3) - 1), 0, width!))
+}
 
 export function flightField(def: FlightDef): FlightField {
   const rnd = stream('flight stars')
@@ -124,6 +156,10 @@ export function flightField(def: FlightDef): FlightField {
   const amps = lobes.map((l, i) => (2 * inLobes * (weights[i]! / total)) / (l.s * count))
   const [width, height] = MAP
   const glow = new Float32Array(width * height)
+  const veil = new Float32Array(width * height)
+  const cloud = clouds(def.veil)
+  let veilSum = 0
+  let veilArea = 0
   for (let j = 0; j < height; j++) {
     const lat = ((j + 0.5) / height - 0.5) * Math.PI
     for (let i = 0; i < width; i++) {
@@ -137,7 +173,74 @@ export function flightField(def: FlightDef): FlightField {
         sum += amps[k]! * Math.exp((x * l.c.x + y * l.c.y + z * l.c.z - 1) / l.s)
       }
       glow[j * width + i] = sum
+      const w = def.veil.floor + (1 - def.veil.floor) * cloud(x, y, z)
+      veil[j * width + i] = w
+      veilSum += w * Math.cos(lat)
+      veilArea += Math.cos(lat)
     }
   }
-  return { position, star, color, glow, width, height }
+  for (let i = 0; i < veil.length; i++) veil[i] = veil[i]! * veilArea / veilSum
+  const veilLow = def.veil.floor * veilArea / veilSum
+  const veilHigh = Math.max(veilArea / veilSum, veilLow + 1e-6)
+  const dr = stream('flight deep')
+  const dd = def.deep
+  const deep = { position: new Float32Array(dd.count * 3), star: new Float32Array(dd.count * 4), color: new Float32Array(dd.count * 3) }
+  const dl = dd.law.map(([b, share]) => [Math.log(b!), Math.log(share!)] as const)
+  const rose = new THREE.Color(1.0, 0.42, 0.5)
+  const amber = new THREE.Color(1.0, 0.62, 0.25)
+  const azure = new THREE.Color(0.38, 0.6, 1.0)
+  let n = 0
+  const place = (x: number, y: number, z: number, lift: number): void => {
+    deep.position.set([x, y, z], n * 3)
+    const lx = Math.log(Math.max(dr.next(), 1e-9))
+    let k = 0
+    while (k < dl.length - 2 && lx < dl[k + 1]![1]) k++
+    const b = Math.min(Math.exp(dl[k]![0] + (dl[k + 1]![0] - dl[k]![0]) * (dl[k]![1] - lx) / (dl[k]![1] - dl[k + 1]![1])) * lift, dd.max)
+    const wide = b >= dd.core[1]!
+    const peak = wide ? dd.core[1]! * Math.pow(b / dd.core[1]!, dd.core[2]!) : b
+    const soft = DEEP_SOFT[wide ? 1 : 0]
+    deep.star.set([dd.core[0]! * Math.sqrt(b / peak) / soft, peak, soft, wide ? dd.halo[0]! * THREE.MathUtils.smoothstep(b, dd.core[1]!, dd.halo[1]!) : 0], n * 4)
+    const hue = dr.next()
+    const temp = dr.next()
+    if (hue < dd.warm) c.copy(warm).lerp(white, Math.pow(temp, 0.6))
+    else c.copy(white).lerp(cool, Math.pow(temp, 1.4))
+    const vivid = dr.next()
+    if (vivid < 0.35 * dd.vivid) c.copy(rose)
+    else if (vivid < 0.65 * dd.vivid) c.copy(amber)
+    else if (vivid < dd.vivid) c.copy(azure)
+    deep.color.set([Math.max(1 + (c.r - 1) * dd.color, 0.05), Math.max(1 + (c.g - 1) * dd.color, 0.05), Math.max(1 + (c.b - 1) * dd.color, 0.05)], n * 3)
+    n++
+  }
+  const dense = (x: number, y: number, z: number): number => {
+    const cell = Math.min(Math.floor((Math.asin(y) / Math.PI + 0.5) * height), height - 1) * width + Math.min(Math.floor((Math.atan2(x, z) / (2 * Math.PI) + 0.5) * width), width - 1)
+    return dd.even + (1 - dd.even) * (veil[cell]! - veilLow) / (veilHigh - veilLow)
+  }
+  const any = (): [number, number, number] => {
+    for (;;) {
+      const y = dr.range(-1, 1)
+      const a = dr.range(0, Math.PI * 2)
+      const r = Math.sqrt(1 - y * y)
+      const x = r * Math.cos(a)
+      const z = r * Math.sin(a)
+      if (dr.next() <= dense(x, y, z)) return [x, y, z]
+    }
+  }
+  const normal = (): number => Math.sqrt(-2 * Math.log(Math.max(dr.next(), 1e-9))) * Math.cos(2 * Math.PI * dr.next())
+  for (let g = 0; g < dd.groups.count && n < dd.count; g++) {
+    const [gx, gy, gz] = any()
+    const spread = THREE.MathUtils.degToRad(dr.range(dd.groups.radiusDeg[0]!, dd.groups.radiusDeg[1]!))
+    const members = Math.round(dr.range(dd.groups.stars[0]!, dd.groups.stars[1]!))
+    for (let m = 0; m < members && n < dd.count; m++) {
+      const x = gx + spread * normal()
+      const y = gy + spread * normal()
+      const z = gz + spread * normal()
+      const l = Math.hypot(x, y, z)
+      place(x / l, y / l, z / l, dd.groups.lift)
+    }
+  }
+  while (n < dd.count) {
+    const [x, y, z] = any()
+    place(x, y, z, 1)
+  }
+  return { position, star, color, glow, veil, deep, width, height }
 }
