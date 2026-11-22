@@ -1,5 +1,8 @@
 # Sun stop notes
 
+On branch `agent/sun-hook` this file is the copy from main. The hook surge is noted in `HOOK-NOTES.md` next to it;
+the polish notebook (mail 34 list) lives on branch `agent/sun`.
+
 Lab notebook of the agent that builds the `sun` stop. Branch `agent/sun`, looks on `agent/sun-looks`.
 
 ## Standing facts
@@ -904,3 +907,10 @@ New polish items from mail 85 (they concern the surge, so they can only be built
 - 8b. The white clump at the crest at frame 23 (the core of the head is widest where the strands bunch): let the core follow the strand's own light instead of adding a constant, or cut `core[0]` at the crest.
 
 Disk, 07:06: `git gc --prune=now` ran out of space (it needs about 2 GB of temp for 1.9 GB of packs; 2.3 GB were free) and left `.git/objects/pack/tmp_pack_A5WoEh` (2.25 GB), which I removed; repo intact. `git prune-packed` and `git prune --expire=now` gained 0.1 GB. Next: delete my own scratch under `out/work/sun` by name (what is already on agent/sun-looks or can be made again), then gc again.
+
+## The hook merged into the polish branch (07:14 to 07:16 UTC Nov 22, main c92f97c, no code on main since edbf7b8)
+
+- Decided: `agent/sun-hook` (739ae28, head 1a563c2) is merged into `agent/sun` now, so the polish items 8a and 8b can be built and the later merge of main (which will carry the same commits) is trivial. One conflict, set.ts (the `Fringe` line: kept the polish line with the haze texture, plus `ground.land(...)`).
+- Proof: draft 0, 90, 150, 208, 247, 360 on the merged tree byte equal to the drafts of the polish tree before the merge (`out/work/sun/b20`, tree 30594b7): 39afbf5f..., d6ffbf86..., 56cd6f7c..., ce108f4c..., 2d3373f5..., c97845ad.... tsc clean. Shader audit on the merged tree: 31 lines, none in `src/stops/sun`.
+- The review frames in `out/work/sun/rv10` (206 to 222, ten frames) stay valid: source of those frames unchanged, engine unchanged.
+- Disk: the twenty sequence folders under `out/work/seq` (my own harness runs of Nov 21, every range found in my session history) deleted by name, 3.2 GB; `git gc --prune=now` done; 5.4 GB free, `.git` 2.3 GB.
