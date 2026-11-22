@@ -1,9 +1,76 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T04:53:13.616Z",
- "head": "ff29eb212b755b4f2c60a576e9f69039f3ec4cf7",
- "note": "Earth second polish READY in work on engine batch 19: 2156 with the new flight sky, hold and terrain compares (1755 and 2010 byte equal to batch 18), dive cover sheet",
+ "pushed": "2026-11-22T05:20:55.385Z",
+ "head": "8ba25f6a908d2aed8b56fe18159616184f0210ec",
+ "note": "Earth polish: rise cover sheet on engine batch 19; dive frames 1884 and 1888, approach stills and isolation stills rendering; READY 2 about 06:00 UTC",
  "looks": [
+  {
+   "time": "2026-11-22T05:20:54.487Z",
+   "file": "20261122052054487-note-rise-a.jpg",
+   "source": "out/work/earth/pb/f/rise-a.png",
+   "kind": "note",
+   "label": "Rise 2125 to 2127 under the growing cover, first READY above, now below. branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:20:53.252Z",
+   "file": "20261122052053252-note-rise-c.jpg",
+   "source": "out/work/earth/pb/f/rise-c.png",
+   "kind": "note",
+   "label": "Rise cover 2134 to 2136, first READY above, now below: same picture, the coloured fringes of the cloud dashes are gone (globe.ts fix of item 8). branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:20:52.417Z",
+   "file": "20261122052052417-note-sheet-rise-cover-preview-b19.jpg",
+   "source": "out/work/earth/pb/f/sheet-rise-cover-preview-b19.png",
+   "kind": "note",
+   "label": "Rise cover sheet, harness, review tier, preview format, frames 2125 to 2136. branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:19:40.180Z",
+   "file": "20261122051940180-sheet-earth.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.rise, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2125,
+   "last": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:19:39.413Z",
+   "file": "20261122051939413-frame-f02136-review.jpg",
+   "source": "out/work/sheets/.frames-Qn5U7S/f02136-review.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2136, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:57:48.688Z",
+   "file": "20261122045748688-frame-f-1857-final.jpg",
+   "source": "out/work/earth/pb/f/f-1857-final.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T04:53:12.420Z",
    "file": "20261122045312420-note-f-2156-final.jpg",
@@ -85,20 +152,6 @@
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T04:50:32.731Z",
-   "file": "20261122045032731-frame-f-2156-final.jpg",
-   "source": "out/work/earth/pb/f/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T04:44:49.268Z",
    "file": "20261122044449268-note-sheet-dive-cover-full-3b3819e.jpg",
    "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
@@ -116,20 +169,6 @@
    "segment": "earth.dive",
    "first": 1879,
    "last": 1890,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:43:29.650Z",
-   "file": "20261122044329650-frame-f01889-review.jpg",
-   "source": "out/work/sheets/.frames-WdQKHM/f01889-review.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1889, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1889,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -230,38 +269,6 @@
    "source": "out/work/earth/pb/e/aur-1755.png",
    "kind": "note",
    "label": "Aurora at 1755: approved image, new, kept build. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:51.654Z",
-   "file": "20261122033751654-note-moon-2156.jpg",
-   "source": "out/work/earth/pb/e/moon-2156.png",
-   "kind": "note",
-   "label": "Moon at 2156, 4 times: kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:50.547Z",
-   "file": "20261122033750547-note-moon-1755.jpg",
-   "source": "out/work/earth/pb/e/moon-1755.png",
-   "kind": "note",
-   "label": "Moon at 1755, 4 times: approved image, kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:49.600Z",
-   "file": "20261122033749600-note-night-1755.jpg",
-   "source": "out/work/earth/pb/e/night-1755.png",
-   "kind": "note",
-   "label": "Night limb at 1755: approved image, kept build, new; native at 3 times, then at 3 times gain. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:48.220Z",
-   "file": "20261122033748220-note-night-new.jpg",
-   "source": "out/work/earth/pb/e/night-new.png",
-   "kind": "note",
-   "label": "Night limb at 1755, 1857, 2156: native at 3 times, then at 3 times gain. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
    "stop": "earth"
   }
  ]
