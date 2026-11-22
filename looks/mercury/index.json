@@ -1,9 +1,41 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T04:02:48.191Z",
+ "pushed": "2026-11-22T04:28:16.004Z",
  "head": "dccb4e63477467c4c7a48ede16e35302caea783a",
- "note": "Phase 6 polish on main a67c9c34: the pale island under both covers is cured at draft; review frames rendering",
+ "note": "Phase 6 polish: both covers at review tier, chroma calm, blue streak of frame 717 repaired in the patches (tree on main a67c9c34)",
  "looks": [
+  {
+   "time": "2026-11-22T04:28:15.436Z",
+   "file": "20261122042815436-note-blue-before-after2.jpg",
+   "source": "out/work/mercury/p6/i7/blue-before-after2.jpg",
+   "kind": "note",
+   "label": "Mercury item 7: the blue streak in dive patches 1, 2, 3 at native size, top before, bottom after the repair (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T04:28:14.883Z",
+   "file": "20261122042814883-note-proof-rise.jpg",
+   "source": "out/work/mercury/p6/c1/proof-rise.jpg",
+   "kind": "note",
+   "label": "Mercury rise 988 to 1006 at draft with the chroma calm, Sun place and mean ground colour per frame (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T04:28:14.315Z",
+   "file": "20261122042814315-note-proof-dive.jpg",
+   "source": "out/work/mercury/p6/c1/proof-dive.jpg",
+   "kind": "note",
+   "label": "Mercury dive cover 722 to 746 at draft with the chroma calm, Sun place and mean ground colour per frame (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T04:28:13.749Z",
+   "file": "20261122042813749-note-sheet-review.jpg",
+   "source": "out/work/mercury/p6/v1/sheet-review.jpg",
+   "kind": "note",
+   "label": "Mercury covers at review, 128 samples, 960 x 540: dive 735 737 739 741 743, rise 994 995 996 998 1000, before the chroma calm (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T04:02:47.039Z",
    "file": "20261122040247039-note-n-743-744.jpg",
@@ -18,38 +50,6 @@
    "source": "out/work/mercury/p6/h7/proof-rise.jpg",
    "kind": "note",
    "label": "Rise cover 988 to 1004 at draft, every frame, Sun place and mean ground colour (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:02:45.231Z",
-   "file": "20261122040245231-note-proof-dive.jpg",
-   "source": "out/work/mercury/p6/h7/proof-dive.jpg",
-   "kind": "note",
-   "label": "Dive cover 722 to 744 at draft, every frame, Sun place and mean ground colour: glare island cured, one grade (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:38:35.499Z",
-   "file": "20261122033835499-note-look-994-996.jpg",
-   "source": "out/work/mercury/p6/s3/look-994-996.jpg",
-   "kind": "note",
-   "label": "Rise 994 and 996 at 128 samples: blur smooth, pale island of the ground picture still to cure (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:38:34.529Z",
-   "file": "20261122033834529-note-pair-615-1016.jpg",
-   "source": "out/work/mercury/p6/s1/pair-615-1016.jpg",
-   "kind": "note",
-   "label": "Hold 615 beside rise 1016, 1034, 1002 drafts: the rise now ends on the hold's lit face (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:38:33.387Z",
-   "file": "20261122033833387-note-sheet-a.jpg",
-   "source": "out/work/mercury/p6/s2/sheet-a.jpg",
-   "kind": "note",
-   "label": "Rise drafts 988 to 1016, new pullback line with the Sun kept in frame (tree on main a67c9c34, work in progress, uncommitted)",
    "stop": "mercury"
   },
   {
