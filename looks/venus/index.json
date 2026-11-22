@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-21T23:44:34.156Z",
- "head": "830a506c10b8bcc89eccb58713b509151099deb6",
- "note": "Phase 6 final tier proof stills f2 on 830a506: 1185, 1287, 1586 against round 23",
+ "pushed": "2026-11-22T00:03:58.297Z",
+ "head": "246312a7a8196d6b1e73ad1a4df4ad38d5d5e479",
+ "note": "Phase 6 proof: final tier stills f2 (1185, 1287, 1586) and review cover sheets c13 on 830a506",
  "looks": [
+  {
+   "time": "2026-11-22T00:03:56.159Z",
+   "file": "20261122000356159-note-c13-rc.jpg",
+   "source": "../view/c13-rc.png",
+   "kind": "note",
+   "label": "P6 rise cover sheet 1555 to 1566, review tier, window 1.0 s (830a506 on engine 837adbb)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:03:55.518Z",
+   "file": "20261122000355518-note-c13-dc.jpg",
+   "source": "../view/c13-dc.png",
+   "kind": "note",
+   "label": "P6 dive cover sheet 1309 to 1320, review tier, window 1.0 s (830a506 on engine 837adbb)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:03:54.881Z",
+   "file": "20261122000354881-note-b5-bolts.jpg",
+   "source": "../view/b5-bolts.png",
+   "kind": "note",
+   "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:03:54.298Z",
+   "file": "20261122000354298-note-f2-1185-lit.jpg",
+   "source": "../view/f2-1185-lit.png",
+   "kind": "note",
+   "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:03:53.739Z",
+   "file": "20261122000353739-note-f2-1185-night.jpg",
+   "source": "../view/f2-1185-night.png",
+   "kind": "note",
+   "label": "P6 f2 hold 1185 night limb native: approved, now, round 23",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:03:53.169Z",
+   "file": "20261122000353169-note-f2-1185-trio.jpg",
+   "source": "../view/f2-1185-trio.jpg",
+   "kind": "note",
+   "label": "P6 f2 hold 1185 final tier with grain: approved, now (830a506), round 23",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-21T23:44:06.541Z",
    "file": "20261121234406541-note-f2-1586-night.jpg",
@@ -50,6 +98,22 @@
    "source": "../view/f2-1287-pair.jpg",
    "kind": "note",
    "label": "P6 f2 dive 1287 final tier: round 23 above, now below",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:44:01.808Z",
+   "file": "20261121234401808-note-b5-bolts.jpg",
+   "source": "../view/b5-bolts.png",
+   "kind": "note",
+   "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-21T23:44:00.973Z",
+   "file": "20261121234400973-note-f2-1185-lit.jpg",
+   "source": "../view/f2-1185-lit.png",
+   "kind": "note",
+   "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
    "stop": "venus"
   },
   {
