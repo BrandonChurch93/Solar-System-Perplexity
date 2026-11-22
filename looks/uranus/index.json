@@ -1,9 +1,39 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T08:57:32.456Z",
+ "pushed": "2026-11-22T09:07:24.834Z",
  "head": "650818eacbf4abb2721344c9c5d31597a84ab3c8",
- "note": "Uranus proof run on engine batch 20: finals of the judged frames, new rise end, byte proofs",
+ "note": "Uranus: night limb edge of the hold, the cause found (the limb glow table cannot follow the disc's own rim), cure in test",
  "looks": [
+  {
+   "time": "2026-11-22T09:07:24.168Z",
+   "file": "20261122090724168-note-k-litlimb2.jpg",
+   "source": "../../../../tmp/k-litlimb2.png",
+   "kind": "note",
+   "label": "uranus hold 4035 final, lit limb and right limb at 6 times native: approved, head 650818e, with the rim glow (dev) (main 8f13066, engine batch 20)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T09:07:23.564Z",
+   "file": "20261122090723564-note-k-nightlimb2.jpg",
+   "source": "../../../../tmp/k-nightlimb2.png",
+   "kind": "note",
+   "label": "uranus hold 4035 final, night limb at 6 times native: approved (left), head 650818e (middle), with the rim glow that follows the disc's own edge (right, dev) (main 8f13066, engine batch 20)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T09:01:54.595Z",
+   "file": "20261122090154595-job-frame-03960.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 3960, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 3960,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T08:55:52.334Z",
    "file": "20261122085552334-note-b20-4035.jpg",
@@ -26,30 +56,6 @@
    "source": "out/work/u/r7/b20-4137.png",
    "kind": "note",
    "label": "uranus dive 4137 final (main 8f13066, engine batch 20, head 00aa077)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T08:55:49.133Z",
-   "file": "20261122085549133-note-k-4035-pair.jpg",
-   "source": "../../../../tmp/k-4035-pair.jpg",
-   "kind": "note",
-   "label": "uranus hold 4035 final beside the approved hero (left approved, right film; main 8f13066, engine batch 20, head 00aa077)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T08:54:40.824Z",
-   "file": "20261122085440824-note-k-4436-pair.jpg",
-   "source": "../../../../tmp/k-4436-pair.jpg",
-   "kind": "note",
-   "label": "uranus rise 4436 final, the disc at native size: batch 19 frozen build (left), head 00aa077 (right) (main 8f13066, engine batch 20)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T08:54:39.929Z",
-   "file": "20261122085439929-note-b20-4436.jpg",
-   "source": "out/work/u/r7/b20-4436.png",
-   "kind": "note",
-   "label": "uranus rise 4436 final, new end pose: rings open, the hold's light (main 8f13066, engine batch 20, head 00aa077)",
    "stop": "uranus"
   },
   {
