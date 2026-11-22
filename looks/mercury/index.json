@@ -1,9 +1,39 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-21T22:19:47.390Z",
- "head": "f2477b4ab983478c2c971f0d32ec8a8d63fc78ef",
- "note": "Round 3: all 34 review frames of the second pass looked at, four sheets built; READY follows",
+ "pushed": "2026-11-22T00:23:36.186Z",
+ "head": "5ba7f451c01162a5393a31c3765572beb9b12473",
+ "note": "Phase 6 start: item 1 experiments",
  "looks": [
+  {
+   "time": "2026-11-22T00:23:35.606Z",
+   "file": "20261122002335606-note-t780-959.jpg",
+   "source": "../../../../tmp/t780-959.jpg",
+   "kind": "note",
+   "label": "round 29 build: terrain 780 beside 959, the slow pan the critics named",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T00:23:34.992Z",
+   "file": "20261122002334992-note-sheet.jpg",
+   "source": "out/work/mercury/p6/e1/sheet.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 1 experiment, draft: level forward flight of 1.6 camera heights through 870 on the single relief layer (780 810 840 870 900 930 959); the ground ends at 780 to 840, to be painted",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T00:19:32.901Z",
+   "file": "20261122001932901-frame-f959.jpg",
+   "source": "out/work/mercury/p6/e1/f959.png",
+   "kind": "frame",
+   "label": "mercury.terrain frame 959, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 959,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T22:19:32.535Z",
    "file": "20261121221932535-note-sheet-risecover.jpg",
@@ -21,41 +51,11 @@
    "stop": "mercury"
   },
   {
-   "time": "2026-11-21T22:19:31.403Z",
-   "file": "20261121221931403-note-sheet-divecover.jpg",
-   "source": "out/work/mercury/rr2/looks/sheet-divecover.jpg",
-   "kind": "note",
-   "label": "dive cover at review: 739 to 750",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T22:19:30.699Z",
-   "file": "20261121221930699-note-sheet-dive.jpg",
-   "source": "out/work/mercury/rr2/looks/sheet-dive.jpg",
-   "kind": "note",
-   "label": "dive sheet at review, 4192f38 build: 690 698 706 714 722 730 739 747 755 763 771 779",
-   "stop": "mercury"
-  },
-  {
    "time": "2026-11-21T21:06:10.069Z",
    "file": "20261121210610069-compare-compare-mercury-terrain-view.jpg",
    "source": "out/work/compare/compare-mercury-terrain-view.jpg",
    "kind": "compare",
    "label": "mercury.terrain: approved image left, film frame right, final tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T21:06:09.074Z",
-   "file": "20261121210609074-still-f00870-16x9-final-full.jpg",
-   "source": "out/work/stills/f00870-16x9-final-full.png",
-   "kind": "still",
-   "label": "mercury.terrain frame 870, final tier",
    "stop": "mercury",
    "segment": "mercury.terrain",
    "frame": 870,
