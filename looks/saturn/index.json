@@ -1,90 +1,102 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T18:59:54.413Z",
- "head": "88caa51e0e9cf86d91afe1072accd5636418f127",
- "note": "saturn: the tone field is in round 35; the rise cover review sheet renders (owed), then merge of the round 35 main and the drafts again",
+ "pushed": "2026-11-22T19:23:22.697Z",
+ "head": "642317928fc1636c4b24ff0117e840762aeb2dcd",
+ "note": "saturn: rise cover review sheet on the CUT35 tree, every tile; round 35 main merged, six drafts hold their bytes",
  "looks": [
   {
-   "time": "2026-11-22T18:56:23.072Z",
-   "file": "20261122185623072-frame-f03840-review.jpg",
-   "source": "out/work/sheets/.frames-gW4ZJ2/f03840-review.png",
+   "time": "2026-11-22T19:22:57.037Z",
+   "file": "20261122192257037-frame-R35-3922.jpg",
+   "source": "out/work/saturn/R35-3922.png",
    "kind": "frame",
-   "label": "saturn.rise frame 3840, review tier",
+   "label": "saturn.travel frame 3922, draft tier",
    "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3840,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T18:33:36.317Z",
-   "file": "20261122183336317-note-titan-dc.jpg",
-   "source": "../../../../tmp/c35/titan-dc.png",
-   "kind": "note",
-   "label": "dive cover review sheet, Titan at 3594 to 3598 at 2x: it goes behind the globe's night limb",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:33:35.451Z",
-   "file": "20261122183335451-note-dct-5.jpg",
-   "source": "../../../../tmp/c35/dct-5.png",
-   "kind": "note",
-   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3599 and 3600 at native size",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:33:34.321Z",
-   "file": "20261122183334321-note-dct-4.jpg",
-   "source": "../../../../tmp/c35/dct-4.png",
-   "kind": "note",
-   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3597 and 3598 at native size",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:33:33.191Z",
-   "file": "20261122183333191-note-dct-3.jpg",
-   "source": "../../../../tmp/c35/dct-3.png",
-   "kind": "note",
-   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3595 and 3596 at native size",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:33:32.146Z",
-   "file": "20261122183332146-note-dct-2.jpg",
-   "source": "../../../../tmp/c35/dct-2.png",
-   "kind": "note",
-   "label": "dive cover review sheet on 646d0785 (main 55319c5a), tiles 3593 and 3594 at native size",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T18:05:28.366Z",
-   "file": "20261122180528366-frame-DG-beauty-3776.jpg",
-   "source": "out/work/saturn/DG-beauty-3776.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3776, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3776,
+   "segment": "saturn.travel",
+   "frame": 3922,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "096721f26986d35a"
+   "engine": "247ebad7e038ce06"
   },
   {
-   "time": "2026-11-22T17:58:49.424Z",
-   "file": "20261122175849424-frame-H5F-3465.jpg",
-   "source": "out/work/saturn/H5F-3465.png",
+   "time": "2026-11-22T19:21:50.231Z",
+   "file": "20261122192150231-frame-R35-3866.jpg",
+   "source": "out/work/saturn/R35-3866.png",
    "kind": "frame",
-   "label": "saturn.hold frame 3465, final tier",
+   "label": "saturn.rise frame 3866, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-22T19:21:24.415Z",
+   "file": "20261122192124415-frame-R35-3720.jpg",
+   "source": "out/work/saturn/R35-3720.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-22T19:20:58.455Z",
+   "file": "20261122192058455-frame-R35-3567.jpg",
+   "source": "out/work/saturn/R35-3567.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3567, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3567,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-22T19:20:33.485Z",
+   "file": "20261122192033485-frame-R35-3465.jpg",
+   "source": "out/work/saturn/R35-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
    "segment": "saturn.hold",
    "frame": 3465,
-   "tier": "final",
+   "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "096721f26986d35a"
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-22T19:20:16.783Z",
+   "file": "20261122192016783-note-rc-shadow.jpg",
+   "source": "../../../../tmp/c35/rc-shadow.png",
+   "kind": "note",
+   "label": "rise cover review sheet, the shadow on the rings right of the globe, 3839 to 3846: it grows evenly, the sky shows in the gap from 3843",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T19:20:16.189Z",
+   "file": "20261122192016189-note-rct-5.jpg",
+   "source": "../../../../tmp/c35/rct-5.png",
+   "kind": "note",
+   "label": "rise cover review sheet on 646d0785 (main 55319c5a), tiles 3845 and 3846 at native size",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T19:20:15.626Z",
+   "file": "20261122192015626-note-rct-4.jpg",
+   "source": "../../../../tmp/c35/rct-4.png",
+   "kind": "note",
+   "label": "rise cover review sheet on 646d0785 (main 55319c5a), tiles 3843 and 3844 at native size",
+   "stop": "saturn"
   }
  ]
 }
