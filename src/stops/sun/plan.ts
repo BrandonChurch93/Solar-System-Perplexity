@@ -36,6 +36,8 @@ export const climb = {
   ease: { over: 1.3, speed: 0.095 },
 }
 
+export const opening = { on: true, level: 0.9, until: 2 }
+
 interface Reading { out: THREE.Vector3; height: number; level: THREE.Vector3; limb: number; vfov: number; rest: THREE.Quaternion }
 
 export class SunPlan extends StopPlan {
@@ -133,10 +135,20 @@ export class SunPlan extends StopPlan {
 
   private run(t: number): number {
     const k = climb.ease
+    if (opening.on && t < opening.until) return this.push(t)
     if (t <= 0) return 0
     if (t >= k.over) return t - k.over / 2
     const x = t / k.over
     return k.over * x * x * x * x * (x * (x - 3) + 2.5)
+  }
+
+  private push(t: number): number {
+    const o = opening
+    const lead = config.shutterFraction / (2 * config.fps)
+    const tail = (o.until - o.level) / 2
+    const speed = (o.until - climb.ease.over / 2 - tail) / (o.until - lead - tail)
+    const x = Math.min(Math.max((t - o.level) / (o.until - o.level), 0), 1)
+    return speed * (t - lead) + (1 - speed) * 2 * tail * x * x * x * (1 - x / 2)
   }
 
   override terrain(tRel: number): Pose {

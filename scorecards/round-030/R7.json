@@ -1,0 +1,74 @@
+{
+ "critic": "R7",
+ "score": 8.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop C, dark sky haze beside the loop strands (encoded side)",
+      "what": "the faint red-brown haze behind the stars breaks into soft blotchy blocks, and the colored tints on the stars (blue, orange) are washed to plain white; the dimmest stars are gone",
+      "fix": "raise the bitrate or lower the CRF for dark low-texture regions (for example with aq-mode 3 or a higher aq-strength) so the haze gets enough bits; keep 4:2:0 chroma from flattening star color by making stars slightly larger or more saturated"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crop C, red aurora fringe and dark sky to its right (encoded side)",
+      "what": "the red curtain fades into a slightly blotchy wash with faint macroblock edges, and the small stars near it lose contrast",
+      "fix": "apply adaptive quantization tuned for dark areas, or add a little dither/grain before encoding so the smooth dark gradient does not get flattened into blocks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops B and C, star field (encoded side)",
+      "what": "the faintest background stars drop out and the Milky Way dust looks a little smeared, though the bright stars hold",
+      "fix": "give the background more bits, or brighten the faintest stars slightly so they survive quantization"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop G, umbra edge (encoded side)",
+      "what": "the inner penumbra filaments soften slightly and the dark umbra floor goes a bit flat, with no visible banding",
+      "fix": "acceptable at this bitrate; a small bump in bitrate or psy-rd would keep the filament edges crisper"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  },
+  {
+   "part": 3,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "tile I (0,530), right side, on the bright gradient",
+      "what": "sharp stars and highlights are flattened into the glow; peaks 40 to 70 above the local background on the source are gone in the encode",
+      "fix": "ease denoise and AQ on isolated peaks that sit on a gradient so stars against the glow are not erased"
+     }
+    ]
+   }
+  }
+ ]
+}
