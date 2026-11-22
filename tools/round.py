@@ -144,12 +144,14 @@ def moved(s, h):
 
 def on_origin(full):
     if SCRATCH:
-        return
+        return True
     there = lambda: subprocess.run('git fetch -q origin main && git merge-base --is-ancestor %s origin/main' % full, shell=True, cwd=ROOT, capture_output=True).returncode == 0
     if not there():
         subprocess.run('git merge -q --no-edit origin/main && git push -q origin HEAD:main', shell=True, cwd=ROOT, capture_output=True)
         if not there():
             print('commit %s of the state is not on origin/main: push it before the jobs go out' % full[:8])
+            return False
+    return True
 
 
 def checks(n, gate_args, allow_red, expect=None):
@@ -749,9 +751,9 @@ def film_start(a):
         s.update({'commit': full, **h})
         (rdir(n) / 'state.json').write_text(json.dumps(s, indent=1))
         print('round %d %s build: commit %s engine %s stops %s' % (n, label, full, h['engineHash'], ' '.join('%s=%s' % x for x in h['stopHashes'].items())))
-        on_origin(full)
+        pushed = on_origin(full)
     if a.build_only:
-        print('round %d %s: jobs can go out; the machine checks follow with start --round %d --checks' % (n, label, n))
+        print('round %d %s: %s; the machine checks follow with start --round %d --checks' % (n, label, 'jobs can go out' if pushed else 'no jobs before the push', n))
         return
     s = state(n)
     green, made = checks(n, '--phase %d --only %s' % (phase, MACHINE), a.allow_red, s)
