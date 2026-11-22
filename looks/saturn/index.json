@@ -1,9 +1,80 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T15:39:26.871Z",
- "head": "33bf7242513405d7314e3a6c38801c8aec5c9a89",
- "note": "CUT34 build 017ca62 on main 64fff6f: finals of 3567 and 3866, draft sheets of dive cover and rise cover; rise review sheet renders",
+ "pushed": "2026-11-22T16:06:18.576Z",
+ "head": "349343bae729e6a9bc53e4ca9f7cd3dbc80d5b93",
+ "note": "CUT34 saturn sent (branch head 349343b, main 5f3b566d in the tree): rise review sheet on the CUT34 build, texel check of the unlit rings; switch proofs next",
  "looks": [
+  {
+   "time": "2026-11-22T16:05:27.491Z",
+   "file": "20261122160527491-frame-F-3866.jpg",
+   "source": "out/work/saturn/F-3866.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3866, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3866,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:05:03.193Z",
+   "file": "20261122160503193-frame-F-3567.jpg",
+   "source": "out/work/saturn/F-3567.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3567, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3567,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:04:38.614Z",
+   "file": "20261122160438614-frame-F-3720.jpg",
+   "source": "out/work/saturn/F-3720.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3720, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3720,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:04:13.253Z",
+   "file": "20261122160413253-frame-F-3465.jpg",
+   "source": "out/work/saturn/F-3465.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3465, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:02:40.146Z",
+   "file": "20261122160240146-sheet-saturn.rise-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.rise-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.rise, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "first": 3810,
+   "last": 3884,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T15:39:25.659Z",
    "file": "20261122153925659-note-P7-3567.jpg",
@@ -21,70 +92,12 @@
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T15:36:42.441Z",
-   "file": "20261122153642441-frame-f03817-review.jpg",
-   "source": "out/work/sheets/.frames-j2MtX3/f03817-review.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3817, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3817,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
    "time": "2026-11-22T15:34:01.963Z",
    "file": "20261122153401963-note-fade.jpg",
    "source": "../../../../tmp/c34/fade.png",
    "kind": "note",
    "label": "dive 3545, 3552, 3567 drafts, shadow side: the unlit ring body comes up over 0.6 s after the hold",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T15:34:00.915Z",
-   "file": "20261122153400915-note-saturn.dive-cover-16x9-draft.jpg",
-   "source": "out/work/saturn/t7/saturn.dive-cover-16x9-draft.png",
-   "kind": "note",
-   "label": "dive cover draft sheet on the CUT34 build",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T15:33:59.813Z",
-   "file": "20261122153359813-note-saturn.rise-cover-16x9-draft.jpg",
-   "source": "out/work/saturn/t7/saturn.rise-cover-16x9-draft.png",
-   "kind": "note",
-   "label": "rise cover draft sheet on the CUT34 build",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T15:28:34.186Z",
-   "file": "20261122152834186-frame-G-3720.jpg",
-   "source": "out/work/saturn/G-3720.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3720, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:28:07.940Z",
-   "file": "20261122152807940-frame-G-3465.jpg",
-   "source": "out/work/saturn/G-3465.png",
-   "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   }
  ]
 }
