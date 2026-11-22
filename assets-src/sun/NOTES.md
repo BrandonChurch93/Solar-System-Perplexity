@@ -727,3 +727,25 @@ From here: merge main into agent/sun (`git fetch origin main`, `git merge origin
 - Looks pushed 04:28: final 0, 60, 90 limb at 3 times gain before over after, draft 30, the left foot, the card, the rise cover pairs, final stills 0, 60, 90.
 - 04:28 measure started (`out/work/sun/measure-item4.log`).
 - Disk: 97 percent full at 04:23 (the worktree `../pre4` took 2.6 GB); worktree removed, `streak-half.npy` and two test arrays in `out/work/sun/haze/` deleted; 3.8 GB free.
+
+## MAIL 71 (Builder, 04:37 UTC Nov 22, low priority, no reply needed), verbatim
+
+"Engine batch 19 is on main: 7a880ac6 (engine hash 7553966a0ffa4014). No reply needed. Merge main into agent/sun at your next natural break; do not stop a running render for it.
+
+What it changes round your stop:
+1. The flight sky. From the second third of your rise on, the frame carries the new flight stars and the dust glow outside your own sky patch (lift 0 in the first third of the rise, 0.74 at your judged rise frame, 1.0 at the first frame of the travel). Hold, dive and terrain are not touched: every judged hold, dive and terrain frame of every stop came back byte equal at the final tier on this build (Saturn's hold one pixel by one level). Your judged rise frame is not byte equal to batch 18 by design. Do not grade anything against the new points and do not mask them yourself: `travel.sky` belongs to the travel agent; if they sit wrong round your body in a rise frame, tell me the frame and the place.
+2. The cause of frames that do not repeat, and the rule (assets-src/shared/BATCH19.md): never call a derivative, an implicit level `texture()` or one of the helpers `equirect`, `equirectGrad`, `gradTexel`, `texelPlan`, `diagTexels`, `diagTexelsDir`, `patchTexel` inside a per pixel branch or after a per pixel discard. Take the value before, keep it, gate the result, discard last.
+3. Two tools. `python3 tools/shaderaudit.py` lists such lines. On main today it lists for your folder: src/stops/sun/ground.ts:206 (`surface` inside a per pixel loop). `npx tsx tools/repeat.ts --stop sun --sessions 3 --runs 2` renders your judged frames in fresh sessions and says which do not repeat.
+
+What I want in your next POLISH READY, beside what you already send: the audit lines left in your folder with a word on each (fixed, or class F or D and why it stays), and the repeat result for your judged frames on your branch with batch 19 merged. A fix of this kind must not change a picture; say how many pixels moved in your judged frames at the final tier.
+
+Nothing goes onto main before Phase 6, as before. The whole film round 30 starts now on main 7a880ac6 with your stop as it stands there."
+
+- To do from it: merge origin/main (batch 19) when the measure is done; `python3 tools/shaderaudit.py`; fix `ground.ts:206` without changing a picture (count the pixels that move in final 0, 60, 90, 247, 360); `npx tsx tools/repeat.ts --stop sun --sessions 3 --runs 2`; look at the flight stars round the Sun in the rise frames from 210 on.
+
+## Item 4 close-out (04:30 to 04:40 UTC)
+
+- Frames 105 to 192: the change is in the limb band only (rows 420 to 600 of 1080: mean -0.4 to -2.5 levels, the straight line and the old shell); from row 660 down 0 pixels change by more than 3 levels (the earlier note said "bottom third", it was the middle third). Looked at 150 and 179 at gain 1 and 3 (`h1p/r5-*`): the straight bar left of the foot is gone, the glow fades smoothly.
+- Frame 0 final at gain 1 and 3 (`h1p/s2-*`): the second shell line and the dark ribbon between glow and haze are gone on both sides; the sky above the limb at left is 9 to 13 levels with few stars (not pure black, not jagged).
+- mirrorcheck clean on draft 204, 206 to 211 (`h8`).
+- OPEN, rise cover 207 to 209 at 3 times gain (`h1p/r6-*`, `r7-*`): a faint vertical edge in the sky at frame x about 830 (left of it smooth, right of it mottled). It is in the new card (now minus before shows it). The card below the limb line of frame 90 holds `back` plus 0.4 of a reflected, shifted fill of the sky's fine detail (dark blobs at gain 3), and the arch factor (25 percent darker inside the wide loops mask, edge about 25 card px). To trace with a marked card, then cure in `sky.py`.
