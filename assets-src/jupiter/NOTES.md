@@ -659,6 +659,24 @@ Order: motion first (3, 4, 5, 7, 6), then 1, 2, 8, then the minors. Mail 20 (13:
 - 00:05 to 00:10, DIVE OPTION `pall.orbitGather 0.35` to `0.5` (the pall on the orbit side of the dive gathers over 15 frames instead of 10.5), working tree only, NOT committed. Amount by its law (smooth(1 - |dt| / span)): 3010 .02, 3012 .12, 3014 .28, 3016 .47, 3018 .68, 3020 .84, 3021 .91, 3022 .96, 3023 .99 (now: 3016 .14, 3018 .39, 3020 .68, 3021 .80, 3022 .91, 3023 .98). Zero before 3009, so 2997 cannot change (sha of the final before: 3c3610070f61461a, to be checked). Drafts side by side (`out/work/view/pall/compare.jpg`, `compare2.jpg`, pushed 00:09): with 0.5 a thin even haze lies over the storm at 3016, billows cover most of the globe at 3018 with the storm's red in the gaps, 3020 is closed but for a tint at the lower left; with 0.35 the globe is clear at 3016, lightly veiled at 3018 and the red streak shows at 3020. Reads as entering a cloud layer over 7 frames instead of 4; the last clear look at the storm is 3014 instead of 3016.
 - 00:10: review job started (`/tmp/pallrev.sh`, log `/tmp/pallrev.log`, ends "ALL done", about 65 min): review stills 3016 3018 3020 3014 3012 3019 3021 3022 3023 with 0.5 (copies in `out/work/view/pall/f0N-review-g050.png`; the 0.35 review frames 3010, 3019 to 3023 are in `out/work/view/pol/`), final 2997 and its sha, measure, gates G5 G13 G17. NO src edits while it runs. Notes commits meanwhile with `git add assets-src/jupiter` only (look.ts carries the uncommitted 0.5).
 
+### MAIL 45 (00:17 UTC, 2026-11-22, from /root), answer to POLISH MINORS 1964691, verbatim core
+
+"Received: south limb and Io night side done, 3150 unchanged, measures green. Thank you.
+
+Your question: yes. Build the true foreground layer for parallax in the terrain view. Brandon's order for every stop puts motion first, and the terrain view "has to show clear forward movement and depth across its whole length". The ladder in kit/04-LOOK.md section 9, "A terrain view reads as a flat picture being zoomed", is the path: rung 2 (split more layers and paint in what they hide), rung 3 (independent motion: drifting haze in front of and between layers, moving shadows, flow), rung 4 (the foreground third of the view rebuilt in true 3D, the relief kept for the middle and far distance). Start at the rung you are on and go down as far as the pictures need.
+
+Rules for it:
+1. Inside your three folders only. If it needs an engine hook, write it as an engine request in assets-src/jupiter/ENGINE-REQUESTS.md and tell me; do not touch shared files.
+2. Frame 3150 stays the fitted pose of the approved close image. Check it against the kept still: the match with the approved image must not get worse (your own mean difference and G17 at 3150 both reported before and after).
+3. What the new layer uncovers behind it is painted in. No stretched edge, no doubled edge, no hole at any frame of 3060 to 3239. Look at every eighth frame of the terrain view at the draft tier, then at the review tier at the two ends and the middle.
+4. The foreground must move against the middle distance by an amount a viewer sees at once across the whole length of the view, not only at one end. Give me the numbers: screen motion in pixels per frame of a near point and of a far point at 3070, 3150 and 3230.
+5. The recipe of every new generated or painted asset is committed beside it (kit/06-ASSETS.md).
+6. Nothing goes onto main before Phase 6. It is judged in the Phase 6 polish rounds by pictures beside the kept ones.
+
+The dive pall gathering 4 frames earlier (orbitGather 0.35 to 0.5): go on with the drafts and send the report with pictures as planned.
+
+Report with a message that starts POLISH READY and names the commit on agent/jupiter, with a contact sheet of the terrain view before and after."
+
 ## Next
 
-- POLISH READY f406b2b and POLISH MINORS 1964691 are sent. Now: the dive pall option (orbitGather 0.5) at review tier, measured; if it holds, commit it as its own commit and send /root both hashes with pictures (the Builder chooses). If /root answers first, follow the mail.
+- POLISH READY f406b2b and POLISH MINORS 1964691 are sent. MAIL 45 (above) is the task now: (a) finish the dive pall option at review tier and report it with pictures; (b) build the true foreground layer for parallax in the terrain view (ladder of kit/04-LOOK.md section 9), keep 3150 matched, paint what is uncovered, numbers at 3070, 3150, 3230, before and after contact sheet, then a message starting POLISH READY with the commit.
