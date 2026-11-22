@@ -1,56 +1,34 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T15:52:30.966Z",
- "head": "939680fafe47515002618cf9834e995d073558e7",
- "note": "15:53 UTC, tree holds main ffbef501. Head 939680fa (local, not yet pushed while its proof runs): the dive arc for the first severe of R4 round 33, on top of the Moon near the Earth, the Moon's shape and the terrain's fine detail. Measured: judged and travel frames keep their draft bytes across the arc; G13 code 0 of 23 soft on 1856 to 1878; measure on the build before the arc G13 0 of 463, G5 0.329 0.452 0.780 0.386, G17 1755 1.198 / 1.138, 2010 1.044 / 1.000. Weak: the picture rolls 47 deg in 20 frames in the open; the rise's severe is not answered; the starless fill beside the Moon at 1845 to 1870.",
+ "pushed": "2026-11-22T16:19:36.268Z",
+ "head": "173aae25a61674d7106a37c8631094ce761d1df9",
+ "note": "earth CUT35: CUT34 a401b201 taken whole; full measure on it running; rise arc on paper (limb held under the top edge 2130 to 2151), star fill under the Moon in work",
  "looks": [
   {
-   "time": "2026-11-22T15:49:46.493Z",
-   "file": "20261122154946493-note-strip.jpg",
-   "source": "out/work/earth/pb/r1/arc/strip.png",
+   "time": "2026-11-22T16:19:35.330Z",
+   "file": "20261122161935330-note-patch-moon-g6.jpg",
+   "source": "out/work/earth/pb/s/patch-moon-g6.png",
    "kind": "note",
-   "label": "earth.dive with the arc 939680fa, frames 1856 to 1888, draft tier, tree holds main ffbef501: the limb stays at the top and flattens into the terrain side's horizon; Sun on the screen turns from the upper left to the top by 1876",
+   "label": "CUT35 work: the hold sky patch under the Moon at 6 times gain, twice the size: the starless fill (radius 90 px of the patch, 61 px on the screen) that shows beside the Moon at 1845 to 1870",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T15:49:45.555Z",
-   "file": "20261122154945555-note-arc-pairs.jpg",
-   "source": "out/work/earth/pb/r1/arc/arc-pairs.png",
-   "kind": "note",
-   "label": "earth.dive 1860 to 1882, draft tier, tree holds main ffbef501: upper rows as on main and CUT33 (straight down, no horizon from 1862, horizon pops in at 1882), lower rows the dive arc 939680fa (horizon kept at the top into the cover; R4 round 33 severe on the dive)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T15:48:37.978Z",
-   "file": "20261122154837978-job-frame-01856.jpg",
+   "time": "2026-11-22T16:18:57.623Z",
+   "file": "20261122161857623-job-frame-01937.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "earth.dive frame 1856, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1856,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-22T15:22:05.257Z",
-   "file": "20261122152205257-job-frame-01942.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.terrain frame 1942, draft tier, texels view, from the running measure job",
+   "label": "earth.terrain frame 1937, draft tier, texels view, from the running measure job",
    "stop": "earth",
    "segment": "earth.terrain",
-   "frame": 1942,
+   "frame": 1937,
    "tier": "draft",
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
   },
   {
-   "time": "2026-11-22T15:11:31.993Z",
-   "file": "20261122151131993-compare-compare-earth-terrain-view.jpg",
+   "time": "2026-11-22T15:54:46.181Z",
+   "file": "20261122155446181-compare-compare-earth-terrain-view.jpg",
    "source": "out/work/compare/compare-earth-terrain-view.jpg",
    "kind": "compare",
    "label": "earth.terrain: approved image left, film frame right, final tier",
@@ -63,8 +41,8 @@
    "engine": "f92fd0ddfc332543"
   },
   {
-   "time": "2026-11-22T15:11:30.892Z",
-   "file": "20261122151130892-still-f02010-16x9-final-full.jpg",
+   "time": "2026-11-22T15:54:45.019Z",
+   "file": "20261122155445019-still-f02010-16x9-final-full.jpg",
    "source": "out/work/stills/f02010-16x9-final-full.png",
    "kind": "still",
    "label": "earth.terrain frame 2010, final tier",
@@ -77,8 +55,8 @@
    "engine": "f92fd0ddfc332543"
   },
   {
-   "time": "2026-11-22T15:10:17.008Z",
-   "file": "20261122151017008-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-22T15:53:30.624Z",
+   "file": "20261122155330624-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, final tier",
@@ -91,8 +69,8 @@
    "engine": "f92fd0ddfc332543"
   },
   {
-   "time": "2026-11-22T15:10:15.831Z",
-   "file": "20261122151015831-still-f01755-16x9-final-full.jpg",
+   "time": "2026-11-22T15:53:29.345Z",
+   "file": "20261122155329345-still-f01755-16x9-final-full.jpg",
    "source": "out/work/stills/f01755-16x9-final-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, final tier",
