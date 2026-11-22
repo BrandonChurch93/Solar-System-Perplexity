@@ -79,10 +79,6 @@ void main() {
 }`
 
 const G = 1.32471795724474602596
-
-function shutter(k: number, n: number): number {
-  return (1 - beltSpec.steps.window * Math.cos((2 * Math.PI * (k + 0.5)) / n)) / n
-}
 const RAD = Math.PI / 180
 const blend = (dst: THREE.BlendingDstFactor): Partial<THREE.ShaderMaterialParameters> => ({ transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: dst, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: dst })
 
@@ -372,7 +368,6 @@ export class Belt {
         const at = director.shotAt(frame, t0 + (span * (k + 0.5)) / p.steps)
         this.place(p.index, at)
         this.aim(at.camera.quaternion, at.camera.vfov, width / height)
-        add.uWeight!.value = shutter(k, p.steps)
         const n = order[k]! + 1 + p.index * 7
         const jx = ((0.5 + n / G) % 1) - 0.5
         const jy = ((0.5 + n / (G * G)) % 1) - 0.5

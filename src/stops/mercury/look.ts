@@ -52,7 +52,7 @@ export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
-export const flare: { onBody: [number, number]; dive: [number, number]; after: number } = { onBody: [1, 0.1], dive: [0, 0.2], after: 0 }
+export const flare: { onBody: [number, number]; offBody: number; dive: [number, number]; after: number } = { onBody: [1, 0.1], offBody: 0, dive: [0, 0.2], after: 0 }
 export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0.6, dive: [0, 0.2], disc: [0.0176, 0.0207, 0.2506], limb: [0.42, 0.56, 0.7], rim: [0.8, 0.94, 0.75, 0.85], out: [1.0, 1.12, 0.35], hideEdge: [1.1, 1.3], corona: { depth: 0.45, reach: [1.22, 0.5], soft: 0.17 } }
 export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
@@ -63,7 +63,7 @@ export const glare: GlareLook = {
 }
 export const carry = { gain: 1, lift: 1.12, knee: 2.9, grey: 0.85, tint: [1.102, 0.983, 0.871] as [number, number, number], dive: [-22, -6] as [number, number], rise: [3, 24] as [number, number] }
 
-export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.06, 0.3] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], haze: { amount: 1, level: { dive: 1, rise: 1.7 }, height: [2.4, 7] as [number, number], cut: [8, 13] as [number, number], calm: [0.3, 0.62] as [number, number], calmHeight: [2.4, 3.6] as [number, number], wash: { amount: 1, cap: 2.5, height: [2.4, 7] as [number, number] } }, lift: { cap: [-0.35, 0.35] as [number, number], knee: { dive: [0.16, 3] as [number, number], rise: [0.3, 1.2] as [number, number] }, height: [14, 40] as [number, number] }, wide: { feather: [[2.4, 0.02], [3.4, 0.06], [4.6, 0.14]] as [number, number][], over: [0.42, 0.02] as [number, number], drop: [9, 12] as [number, number], margin: 0.001, blur: [48, 3] as [number, number], soft: 4, far: [[2.4, 23], [3.4, 15], [4.3, 11.5], [5.9, 9.5], [10.4, 8], [16, 6]] as [number, number][] } }
+export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.06, 0.3] as [number, number], far: [7, 10] as [number, number], feather: [0.22, 0.12] as [number, number], haze: { amount: 1, level: { dive: 1, rise: 1.7 }, height: [2.4, 7] as [number, number], cut: [8, 13] as [number, number], calm: [0.3, 0.62] as [number, number], calmHeight: [2.4, 3.6] as [number, number], wash: { amount: 1, cap: 2.5, height: [2.4, 7] as [number, number] } }, lift: { cap: [-0.35, 0.35] as [number, number], knee: { dive: [0.16, 3] as [number, number], rise: [0.3, 1.2] as [number, number] }, height: [14, 40] as [number, number] }, wide: { feather: [[2.4, 0.02], [3.4, 0.06], [4.6, 0.14]] as [number, number][], over: [0.42, 0.02] as [number, number], drop: [9, 12] as [number, number], margin: 0.001, blur: [48, 3] as [number, number], soft: 4, cap: { over: 1.3, span: 0.03125, height: [2.3, 2.7] as [number, number], reach: [6, 8.5] as [number, number] }, far: [[2.4, 23], [3.4, 15], [4.3, 11.5], [5.9, 9.5], [10.4, 8], [16, 6]] as [number, number][] } }
 
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 

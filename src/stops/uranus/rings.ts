@@ -26,6 +26,7 @@ export interface RingLook {
   near: [number, number]
   shade: [number, number]
   air: [number, number]
+  cutSky: number
   hair: { normal: [number, number, number]; count: number; from: number; to: number; amp: [number, number]; tiltDeg: number }
 }
 
@@ -60,6 +61,7 @@ uniform float uGain;
 uniform float uFilter;
 uniform vec2 uNearArc;
 uniform vec2 uAir;
+uniform float uCutSky;
 uniform int uDiag;
 in float vS;
 in float vAmp;
@@ -97,7 +99,8 @@ void main() {
     float span = length(rd);
     rd /= span;
     air = smoothstep(uAir.x, uAir.y, length(uCamL + rd * clamp(-dot(uCamL, rd), 0.0, span)));
-    cut = uNearArc.x * exp(-0.5 * vS * vS / (sig * sig)) * min(2.5 * uSigma / sig, 1.0) * clamp(vAmp * uNearArc.y, 0.0, 1.0);
+    float behind = length(uCamL + rd * max(-dot(uCamL, rd), span));
+    cut = uNearArc.x * exp(-0.5 * vS * vS / (sig * sig)) * min(2.5 * uSigma / sig, 1.0) * clamp(vAmp * uNearArc.y, 0.0, 1.0) * mix(uCutSky, 1.0, 1.0 - smoothstep(uAir.x, uAir.y, behind));
   }
   outColor = vec4(uColor * (vAmp * line * glint * forward * shadow * uGain * air), cut);
   if (uDiag >= 2) discard;
@@ -294,7 +297,7 @@ export class Rings {
         uSunL: { value: new THREE.Vector3(1, 0, 0) }, uCamL: { value: new THREE.Vector3(0, 0, 5) }, uHoldCamL: { value: holdCamera.clone() },
         uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) }, uBack: { value: new THREE.Vector2().fromArray(look.back) },
         uShadowFloor: { value: look.shadowFloor }, uGain: { value: 1 }, uDiag: diagUniform, uFilter: { value: look.filter },
-        uNearArc: { value: new THREE.Vector2().fromArray(far ? look.near : [0, 0]) }, uAir: { value: new THREE.Vector2().fromArray(look.air) },
+        uNearArc: { value: new THREE.Vector2().fromArray(far ? look.near : [0, 0]) }, uAir: { value: new THREE.Vector2().fromArray(look.air) }, uCutSky: { value: look.cutSky },
       },
       side: THREE.DoubleSide,
       blending: far ? THREE.CustomBlending : THREE.AdditiveBlending,
