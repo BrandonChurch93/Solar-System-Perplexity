@@ -1408,3 +1408,59 @@ One thing I still want from you, as a message only, no commit: in two or three s
 - Read: the wedge on the lit globe runs 4987 to 4993 (seven frames, worst 4990); from 4994 on the last column is level, which is stars behind dense bands going dim (largest fall 158 to 178). 4986 here counts only px over 8 (the 1822 px named before are any difference). Sent low to the Builder at 19:01 with the table. The `wedge.py` column for the body's alpha is of no use (the saved frames are opaque) and was left out.
 - 19:02, looks: `late-06`, `late-07`, `late-08` added and pushed.
 - State: the Builder took cc55835f into main as e39ae05a (round 35 build 31e1f290) before it had my report of the wedge. Whether it stays or is reverted is the Builder's word. I change nothing under `src/`, `public/`, `config/`.
+
+### MAIL 210 from the Builder, 19:04 UTC by the Builder's clock (high), word for word
+
+"MAIL 210, from the Builder, 19:04 UTC by my clock. Thank you for reporting the fault yourself. That report decided it.
+
+DONE: cc55835f is taken back. Main is ad8c10b21625812de488ccd8f6b70edb725e5948 (a revert commit of cc55835f only); engine 247ebad7e038ce06, neptune c782f39940e2e6cf, the bytes of 6e4733ce again. Round 35 runs on that.
+
+ONE MORE TRY, because the fault at 5006 is the one severe the surface critic of round 34 left on Neptune ("a sharp circular silhouette edge of the planet cuts and dims the ring bands in a hard step while the rings simultaneously continue across the dark disk"). This is the last round, so it is now or never. The window for this one thing is extended to 19:25 UTC by my clock. One try, no second.
+
+What I take if it arrives by 19:25 with the proof below:
+- `git fetch origin main` and merge it into agent/neptune first (it holds the revert). Then ONE new commit that brings the ring opacity back with a weight that is exactly 0 for every frame up to at least 4995, comes in smoothly somewhere inside 4996 to 5005, and is exactly 1 at 5006. From 5006 on it behaves as cc55835f did (1 to the end of the rise, falling over 5025 to 5054, 0 elsewhere). Nothing else changes. Only files under src/stops/neptune.
+
+Proof I need in the READY message (numbers for every frame, pictures for the ones named; draft unless said):
+1. 4986 to the last frame with weight 0: byte equal to main ad8c10b2 at draft (say the hashes match, list any that do not).
+2. Every frame of the ramp and 5006: px darker by more than 8 levels, and px at level 60 or more on main that fall by more than 8 and by more than 20 (your three columns), plus the mean level of the changed px before and after. I want to see that the lit globe and the limb glow are not touched: say for each ramp frame whether any of the falling px lie on the lit globe or its glow, or whether all are sky and stars behind the ring.
+3. One picture: every ramp frame, main left and new right, whole frame small is fine, plus a native crop of the globe's right limb for the first three ramp frames.
+4. 5006 at final: its sha256 equal to the sha256 of cc55835f's final 5006 (the one in your late-01 picture). If it differs, say by how much and why.
+5. The frame to frame change of the mean level over the ring region (or the whole frame) for 4994 to 5008, main and new, so I can see there is no step when the weight comes in.
+6. tsc clean, vitest count, G5 at draft for 5006.
+
+If you cannot give all six by 19:25, send nothing under src and tell me so; the film then keeps Neptune as it is and the severe at 5006 stays an open item in your words and mine. Do not render the retreat at final. Do not touch anything else. Send READY with the head hash of agent/neptune and the commit hash."
+
+- STANDING from this mail: this one commit is the only exception to "no more edits under src/, public/ or config/". After it, nothing under those again. Do not render the retreat at final.
+
+### The ring's opacity with a ramp in the rise, built and proved inside the window of MAIL 210 (19:04 to 19:15 VM)
+
+- 19:04, chain19 (retreat drafts, head and new) stopped half way; `solid/base` keeps head drafts 5026 to 5054 from it (27 frames, 116 s), no new ones were made. The retreat stays unproved frame by frame.
+- 19:05, merged main 054b9227 (it holds the revert ad8c10b2) as b73b192f. Then ONE commit, c588ee733874c1b78b8e987c6da83fb50aa88a17, pushed: cc55835f's three files plus the weight in the rise. `look.ts`: `solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108], rise: [0.6134, 0.7333] }`. `set.ts`: `ring.solid(rising ? smooth((state.u - look.ring.solid.rise[0]) / (look.ring.solid.rise[1] - look.ring.solid.rise[0])) : ending ? 1 - end : 0)`. `ring.ts` as in cc55835f. With u = (frame - 4950) / 75 the weight is 0 up to frame 4996.005 and 1 from 5004.9975; at the frame times 4997 to 5004: 0.034, 0.126, 0.259, 0.417, 0.583, 0.741, 0.874, 0.966. The commit holds only `look.ts` (1 line), `ring.ts`, `set.ts`. tsc clean, vitest 87 of 87 (17 files).
+- chain20 (`end35/chain20.sh`, 19:05 to 19:12:50): drafts 4986 to 5008 on c588ee73 into `solid/ramp/` (23 frames, 119 s); main's code (second tree, 5c973fc1) drafts 5001, 5003, 5005, 5007, 5008 into `solid/base/` (42 s); final 5006 on c588ee73 into `solid/rampfinal/` (207 s); G5 at draft. chain21 (19:13:14 to 19:14:10): drafts 4605, 4707, 4860, 5024, 5025, 5055, 5085, 5235 on c588ee73 into `solid/rampjudged/` (54 s). All 1 session, 1 run, not repeatable: none.
+- Proof 1, weight 0: drafts 4986 to 4995 have the same bytes as main's code: 938a4d05f89cb14f, c88f0fa46c24d24a, eb8622658a0bea0a, 5f173c3f4db2a23b, 4ccde8272fd224bd, 3eef245ce0fe2980, 60ae794ac38f3ca1, 4e9b11ad2a5991e5, 6cdd81e173326285, bd689a4c751fcfb1. So the wedge frames 4987 to 4993 are untouched. 4996 differs (2fae81188b8f5ac9 to cc173753ff511f8a): 10007 px, none over 8 levels; the weight at its frame time is 0 and starts inside its shutter. Also the same bytes as main: 4605 5ae1813832a77f85, 4707 74036cbb0e4ab83f, 4860 6bb5af454ee10ebd, 5055 291391140f96af18, 5085 ea3d9fe1d6a91f65, 5235 48028d691123b45f. The same bytes as cc55835f: 5006 c958b9a005c8afc2, 5024 1275163718c10a85, 5025 644033b38264f01c.
+- Proof 2 (`end35/ramp.py`), drafts, main against new, largest channel. frame | weight | px that differ | px darker by more than 8 | px at 60 or more on main falling by more than 8 | by more than 20 | mean of the darker px main to new | falling px on the globe or its glow (mask: level 40 or more on main, opened by 21 px, the largest piece) | within 15 px outside the mask:
+  - 4996 | 0.000 | 10007 | 0 | 0 | 0 | none | 0 | 0
+  - 4997 | 0.034 | 144497 | 0 | 0 | 0 | none | 0 | 0
+  - 4998 | 0.126 | 239666 | 217 | 217 | 0 | 142.5 to 132.6 | 5 | 4
+  - 4999 | 0.259 | 281048 | 1148 | 1119 | 97 | 106.7 to 93.3 | 46 | 14
+  - 5000 | 0.417 | 299853 | 2768 | 1690 | 581 | 83.2 to 67.7 | 86 | 23
+  - 5001 | 0.583 | 307063 | 16152 | 2460 | 1137 | 52.8 to 41.0 | 211 | 207
+  - 5002 | 0.741 | 328918 | 29728 | 3831 | 1643 | 48.8 to 36.2 | 1438 | 946
+  - 5003 | 0.874 | 354345 | 36853 | 4748 | 1971 | 47.6 to 33.7 | 2220 | 1138
+  - 5004 | 0.966 | 365856 | 41119 | 5329 | 2140 | 47.3 to 32.5 | 2515 | 1151
+  - 5005 | 1.000 | 369680 | 43023 | 5476 | 2233 | 47.1 to 32.2 | 2672 | 1155
+  - 5006 | 1.000 | 370560 | 43922 | 5672 | 2345 | 47.1 to 32.1 | 2652 | 1168
+  - 5007: 44937 darker, 5008: 45652. Px brighter by more than 8: 0 until 5002, then 17 to 28.
+  - Where the last two columns lie: 4998 to 5001 in a box x 900 to 1070, y 60 to 165, the upper right, where the ring's far arc runs into the limb's glow; from 5002 on the same place plus stars behind the ring at the left limb (61 px at 5006). Looked at in `solid/ramp-04` (falling px in red): none on the lit disc itself; the glow reads the same; what falls there is the ring's own arc over the glow's skirt. The mask is from the picture, not from geometry.
+- Proof 4: final 5006 on c588ee73, sha256 5b08f8faa5e303cb391773cc3ddf377783d34649ff6eea05e8fca2dc83cc18a9, the same as cc55835f's final (`solid/final/5006-5b08f8faa5e303cb.png`), checked with sha256sum on both files.
+- Proof 5, whole frame mean of the largest channel, frame | main | new | new minus main: 4994 80.519 80.519 0.000; 4995 72.525 72.525 0.000; 4996 64.925 64.924 -0.002; 4997 58.389 58.358 -0.030; 4998 53.388 53.314 -0.074; 4999 49.646 49.522 -0.124; 5000 46.977 46.796 -0.181; 5001 45.074 44.824 -0.250; 5002 43.767 43.440 -0.327; 5003 42.917 42.510 -0.406; 5004 42.425 41.959 -0.466; 5005 42.196 41.696 -0.500; 5006 42.077 41.556 -0.521; 5007 41.962 41.419 -0.543; 5008 41.846 41.281 -0.565. The step of (new minus main) per frame is at most 0.079 (5002 to 5003).
+- Proof 6: tsc clean, vitest 87 of 87; G5 at draft on c588ee73: "PASS G5 neptune: 4605 hold invalid 0 coverage 0.527; 4707 dive invalid 0 coverage 0.669; 4860 terrain invalid 0 coverage 0.757; 5006 rise invalid 0 coverage 0.276".
+- THE COST, which the first READY under-described as "a little dimmer as a whole": the ring's far arc at the upper right (region x over 640, y under 420, 87312 px at 5006) lies over a lifted sky. With the ring switched off that region stands at 31.3 (B G R 31.2 22.1 13.0, `end35/ring/5006-beauty-noring.png`, a diagnostic draft of 18:34); main with the ring 40.6; new 31.35. So at full weight the far arc sinks to the level of the sky behind it and reads faint; its 3489 brightest px go 79.3 to 58.9. Cause: the dense bands hide the lifted sky and show `ground`, which is lower than that sky. It is in 5006 exactly as cc55835f had it (the same bytes); I did not name it then. Over the ramp the arc fades while in view; the region's mean, main | new: 4994 68.93 68.93; 4995 59.51 59.51; 4996 51.12 51.11; 4997 45.89 45.60; 4998 42.63 41.66; 4999 41.40 39.29; 5000 40.63 37.15; 5001 40.16 35.22; 5002 39.88 33.47; 5003 39.96 32.17; 5004 40.22 31.43; 5005 40.57 31.39; 5006 40.60 31.35; 5007 40.52 31.25; 5008 40.32 31.10. No single step; a fade of 9 levels over about 7 frames while main's arc holds level.
+- Pictures (all looked at): `solid/ramp-01` (every ramp frame 4996 to 5005, main left, new right), `ramp-02` (native right limb, 4996, 4997, 4998: no wedge, no difference seen at the limb), `ramp-03` (native upper right arc, 5002, 5004, 5006: the arc fainter in new), `ramp-04` (5006 native where falling px touch the globe's surroundings, main, new, marked).
+
+### "CUT35 neptune ring READY c588ee73..." SENT, 19:15 VM, high, four pictures (`ramp-01` to `ramp-04`)
+
+- Head and commit named: c588ee733874c1b78b8e987c6da83fb50aa88a17. All six proofs with the numbers above, and the cost in the first paragraph ("READ THIS FIRST"), with my reading: the hard step at the silhouette is gone and nothing has a hard edge, the price is a fainter far arc; I am not sure a critic weighs it that way; the Builder's to weigh; the commit reverts alone.
+- Said as not done: nothing at review, no sheet, G17 not run, the retreat not at final; the classification of falling px is by a mask from the picture.
+- One thing the message said loosely: "Diff to main: ring.ts, look.ts, set.ts, nothing else". That holds for the commit c588ee73 and for everything under `src/`, `public/`, `config/`; the branch also differs from main in this notebook (`assets-src/neptune/NOTES.md`).
+- From here: no edit under `src/`, `public/` or `config/`. Notes and looks only, and renders if the Builder asks.
