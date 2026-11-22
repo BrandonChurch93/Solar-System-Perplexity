@@ -1,9 +1,55 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T06:11:24.608Z",
- "head": "9f49c8b3dafabe73cee92f5ddf643a79f246743f",
- "note": "Earth POLISH READY 2 set on engine batch 19: judged frames at the final tier, terrain sheet, cover sheets, proofs of items 4 to 8. Next: the arrival 1666 to 1679 (mail 80).",
+ "pushed": "2026-11-22T06:54:56.896Z",
+ "head": "c457e9c0bdbbf8219ddd056fa2952ab4858734c9",
+ "note": "Earth, mail 80: the arrival 1666 to 1679 before the cure on main and on the branch; first drafts of the cure (the aurora rises after the camera has come to rest). Proof queue running.",
  "looks": [
+  {
+   "time": "2026-11-22T06:54:56.232Z",
+   "file": "20261122065456232-note-v-onset-2.jpg",
+   "source": "out/work/earth/pb/i/v-onset-2.png",
+   "kind": "note",
+   "label": "Mail 80, the aurora rising after the arrival, draft stills 1670, 1679, 1686, 1692, 1698, 1704, 1710, 1716 (first variant of the disc mask). agent/earth c457e9c plus the uncommitted onset change, tree holds main 89715a1 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:54:55.568Z",
+   "file": "20261122065455568-note-v-bed-2.jpg",
+   "source": "out/work/earth/pb/i/v-bed-2.png",
+   "kind": "note",
+   "label": "Mail 80, draft stills at 2 times: 1679 with the cure (aurora not yet risen, the baked green of the disc held back) and 1722 (full aurora, as before). agent/earth c457e9c plus the uncommitted onset change, tree holds main 89715a1 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:54:54.924Z",
+   "file": "20261122065454924-note-v-ba-2.jpg",
+   "source": "out/work/earth/pb/h/v-ba-2.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1673 to 1679, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:54:54.306Z",
+   "file": "20261122065454306-note-v-ba-1.jpg",
+   "source": "out/work/earth/pb/h/v-ba-1.png",
+   "kind": "note",
+   "label": "Mail 80, arrival 1666 to 1672, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure. The green band is on both.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:47:32.701Z",
+   "file": "20261122064732701-frame-e-1710.jpg",
+   "source": "out/work/earth/pb/i/e-1710.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1710, draft tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1710,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:11:24.024Z",
    "file": "20261122061124024-note-city-2156-b19.jpg",
@@ -281,20 +327,6 @@
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:51:41.750Z",
-   "file": "20261122045141750-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
    "stop": "earth",
    "segment": "earth.hold",
    "frame": 1755,
