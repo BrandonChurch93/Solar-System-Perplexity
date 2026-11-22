@@ -5,8 +5,10 @@ import sys
 import cv2
 import numpy as np
 from PIL import Image
+from scipy.special import ndtr
 
 Image.MAX_IMAGE_PIXELS = None
+cv2.setNumThreads(1)
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'public/assets/neptune'
 WRAP = 'public/assets/neptune/full/wrap.webp'
 LAYERS = 'out/work/nep/wrap/hero-layers.npz'
@@ -14,13 +16,10 @@ W, H = 8192, 4096
 SIZE = {'full': (2048, 1024), 'web': (1024, 512)}
 SEED = 5006
 HERO_SOFT = 24.0
-OPEN = 4
-THICK = 0.25
-NEAR = (60.0, 160.0)
-CLUMP = (8, 26.0, 9.0, -1.1, 0.1)
-STREAK = (16.0, 6.0, 2.0)
-PATCHY = (4, 9.0, 3.0, 0.55, 0.6)
-CODE = 4.0
+LONE = (3.0, 12.0, 1.9, 2.8, 0.02, 0.06, 9, 3.0, 1.3)
+CLUMP = (8, 26.0, 9.0)
+BEND = (8, 9.0, 3.5, 3.0)
+TOP = 0.9
 
 
 def wrap_x(f, a, pad=320):
@@ -51,35 +50,32 @@ def build():
     full[y0:y1, x0:x1] = hero
     far = 1 - cv2.GaussianBlur(full, (0, 0), HERO_SOFT)
     rng = np.random.default_rng(SEED)
-    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * OPEN + 1, 2 * OPEN + 1))
-    core = wrap_x(lambda a: cv2.morphologyEx(a, cv2.MORPH_OPEN, k), alpha)
-    thick = (core > THICK).astype(np.uint8)
-    dist = wrap_x(lambda a: cv2.distanceTransform(1 - a, cv2.DIST_L2, 3), thick)
-    near = 1 - step(dist, NEAR[0], NEAR[1])
-    clump = step(noise(rng, CLUMP[0], CLUMP[1], CLUMP[2]), CLUMP[3], CLUMP[4])
-    keep = near * clump
-    thin = alpha * (1 - near)
-    streak = wrap_x(lambda a: cv2.GaussianBlur(a, (0, 0), sigmaX=STREAK[0], sigmaY=STREAK[1]), thin) * STREAK[2]
-    streak *= np.clip(PATCHY[3] + PATCHY[4] * noise(rng, PATCHY[0], PATCHY[1], PATCHY[2]), 0, 1.3)
-    red = 1 - far * (1 - keep)
-    green = np.clip(far * streak * CODE, 0, 1)
-    print('generated share %.3f, thick share %.4f, alpha mean %.5f, kept %.5f, streak %.5f, after %.5f, streak p99.9 %.3f, coded over 1: %.5f' % (
-        float((far > 0.5).mean()), float(thick.mean()), float(alpha.mean()), float((alpha * red).mean()), float((far * streak).mean()),
-        float((alpha * red + far * streak).mean()), float(np.percentile(streak, 99.9)), float((far * streak * CODE > 1).mean())))
-    return alpha, red, green, far
+    fine = wrap_x(lambda a: cv2.GaussianBlur(a, (0, 0), LONE[0]), alpha)
+    wide = wrap_x(lambda a: cv2.GaussianBlur(a, (0, 0), LONE[1]), alpha)
+    lone = step(fine / (wide + 0.02), LONE[2], LONE[3]) * step(fine, LONE[4], LONE[5])
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (LONE[6], LONE[6]))
+    lone = wrap_x(lambda a: cv2.GaussianBlur(cv2.dilate(a, k), (0, 0), LONE[7]), lone)
+    red = 1 - far * np.clip(lone * LONE[8], 0, 1)
+    bend = np.clip(noise(rng, BEND[0], BEND[1], BEND[2]) / BEND[3], -1, 1)
+    green = (127 + 127 * far * bend) / 255
+    clump = ndtr(noise(rng, CLUMP[0], CLUMP[1], CLUMP[2])).astype(np.float32)
+    blue = far * TOP * clump + (1 - far)
+    print('generated share %.3f, alpha mean %.5f, without the lone strokes %.5f (%.3f of it), bend clipped %.4f, clump mean %.3f' % (
+        float((far > 0.5).mean()), float(alpha.mean()), float((alpha * red).mean()), float((alpha * red).mean() / alpha.mean()),
+        float((np.abs(bend) >= 1).mean()), float(clump.mean())))
+    return alpha, red, green, blue
 
 
 def main():
-    alpha, red, green, far = build()
+    alpha, red, green, blue = build()
     for name, size in SIZE.items():
-        r = cv2.resize(red, size, interpolation=cv2.INTER_AREA)
-        g = cv2.resize(green, size, interpolation=cv2.INTER_AREA)
-        img = np.stack([r, g, cv2.resize(far, size, interpolation=cv2.INTER_AREA)], -1)
+        img = np.stack([cv2.resize(c, size, interpolation=cv2.INTER_AREA) for c in (red, green, blue)], -1)
         path = os.path.join(OUT, name, 'far.png')
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         Image.fromarray((np.clip(img, 0, 1) * 255 + 0.5).astype(np.uint8)).save(path, optimize=True)
         print(path, size, os.path.getsize(path))
     if len(sys.argv) > 2:
-        np.savez(sys.argv[2], alpha=(alpha * 255 + 0.5).astype(np.uint8), red=(red * 255 + 0.5).astype(np.uint8), green=(green * 255 + 0.5).astype(np.uint8))
+        np.savez(sys.argv[2], alpha=(alpha * 255 + 0.5).astype(np.uint8))
 
 
 main()
