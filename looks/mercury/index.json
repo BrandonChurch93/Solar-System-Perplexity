@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T17:54:54.437Z",
- "head": "d76c01951cebde628d5793f591c21a8a50d32f3c",
- "note": "mercury CUT35: the bars cure proved at review; pairs for MAIL 190 (round 33 main, round 34, pace out); tree 36424325 on main b22a7927",
+ "pushed": "2026-11-22T18:11:34.021Z",
+ "head": "4a323009e9ded6b2a99653127c92adf42b445c2e",
+ "note": "18:12 UTC mercury, tree 4a323009 on main 55319c5a: CUT35 addition c8e4a1dd, the flare ghost on the dark limb at 717 fades out as the dive starts (final pair 717; other judged frames 0 px at draft)",
  "looks": [
+  {
+   "time": "2026-11-22T18:11:25.199Z",
+   "file": "20261122181125199-note-dive-690-724-ghost-fade.jpg",
+   "source": "out/work/mercury/p6/r35/dive-690-724-ghost-fade.jpg",
+   "kind": "note",
+   "label": "dive 690 694 698 702 / 706 710 717 724 draft, tree c8e4a1dd on main 55319c5a: the lens ghosts fade out over the first fifth of the dive",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T18:11:24.550Z",
+   "file": "20261122181124550-note-dive-717-ghost-pair-final.jpg",
+   "source": "out/work/mercury/p6/r35/dive-717-ghost-pair-final.jpg",
+   "kind": "note",
+   "label": "717 final, flare ghost on the dark limb: left c35d462d without c8e4a1dd (main 55319c5a + bars cure), right tree c8e4a1dd on main 55319c5a; below the lower left at full size",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T17:54:53.865Z",
    "file": "20261122175453865-note-rise-1000-review-r33-r34.jpg",
@@ -95,22 +111,6 @@
    "source": "out/work/mercury/p6/bars/looks/rise-993-review-whole-before-after.jpg",
    "kind": "note",
    "label": "mercury rise 993 at the review tier, whole frame: left the round 33 tree, right the cap, tree 36424325 on main a265db97",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T17:08:02.046Z",
-   "file": "20261122170802046-note-bars-993-review-before-after.jpg",
-   "source": "out/work/mercury/p6/bars/looks/bars-993-review-before-after.jpg",
-   "kind": "note",
-   "label": "mercury rise 993 at the review tier, the bars' place at 2x: left the round 33 tree (960 wide frame, scaled up), right the cap, tree 36424325 on main a265db97",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:52:16.197Z",
-   "file": "20261122165216197-note-rise-991-994-cap.jpg",
-   "source": "out/work/mercury/p6/bars/looks/rise-991-994-cap.jpg",
-   "kind": "note",
-   "label": "Rise 991 to 994 at draft, whole frames, with the cure of the bright bars: tree a95b6d76 on main 9957a0b7",
    "stop": "mercury"
   }
  ]
