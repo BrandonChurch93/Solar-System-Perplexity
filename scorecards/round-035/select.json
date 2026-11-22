@@ -1,0 +1,137 @@
+{
+ "base": "/home/user/workspace/work/p6/base34.json",
+ "stops": {
+  "sun": {
+   "frames": [
+    0,
+    60,
+    90,
+    247,
+    360
+   ],
+   "sheets": [
+    "sun.terrain",
+    "sun.rise",
+    "sun.rise-cover",
+    "sun.hold"
+   ],
+   "R1": true,
+   "R8": true,
+   "R2": false
+  },
+  "mercury": {
+   "frames": [
+    717
+   ],
+   "sheets": [
+    "mercury.dive",
+    "mercury.rise",
+    "mercury.rise-cover"
+   ],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "venus": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "earth": {
+   "frames": [
+    1755,
+    1857,
+    2156
+   ],
+   "sheets": [
+    "earth.hold",
+    "earth.dive",
+    "earth.dive-cover",
+    "earth.rise-cover"
+   ],
+   "R1": true,
+   "R8": true,
+   "R2": false
+  },
+  "mars": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "jupiter": {
+   "frames": [
+    2895,
+    2997
+   ],
+   "sheets": [
+    "jupiter.hold",
+    "jupiter.dive"
+   ],
+   "R1": true,
+   "R8": true,
+   "R2": false
+  },
+  "saturn": {
+   "frames": [
+    3720
+   ],
+   "sheets": [
+    "saturn.terrain",
+    "saturn.rise"
+   ],
+   "R1": true,
+   "R8": true,
+   "R2": false
+  },
+  "uranus": {
+   "frames": [
+    4436
+   ],
+   "sheets": [
+    "uranus.dive",
+    "uranus.dive-cover",
+    "uranus.rise-cover"
+   ],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "neptune": {
+   "frames": [
+    4605
+   ],
+   "sheets": [
+    "neptune.hold"
+   ],
+   "R1": true,
+   "R8": true,
+   "R2": false
+  }
+ },
+ "film": {
+  "frames": [
+   495,
+   1642,
+   2782
+  ],
+  "sheets": [
+   "sun.travel",
+   "venus.travel",
+   "earth.travel",
+   "mars.travel",
+   "uranus.travel"
+  ],
+  "R5": true,
+  "R6": true,
+  "R7": [
+   "sun.terrain",
+   "earth.hold"
+  ],
+  "R2": false
+ },
+ "unknown": []
+}
