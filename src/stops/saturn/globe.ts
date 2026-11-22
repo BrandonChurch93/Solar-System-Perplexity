@@ -240,11 +240,11 @@ void main() {
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
-  if (b > 0.0 && rt2 < 0.99) discard;
   vec3 at;
   float tau = hazeDepth(dir, false, at);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
+  if (b > 0.0 && rt2 < 0.99) discard;
   outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
 }`
 
