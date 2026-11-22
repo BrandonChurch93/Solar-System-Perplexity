@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T17:27:56.797Z",
- "head": "5bd77c011f3b09d811b016afdbde4369d195fb79",
- "note": "venus: gate cure 90cc5b2 in proof for CUT35, both cover sheets at review beside round 34 (tree holds main ff158d9)",
+ "pushed": "2026-11-22T17:47:43.613Z",
+ "head": "4338763a42a9f5588c98b1bc004834cf95897c03",
+ "note": "venus: gate cure 90cc5b23 proof on main ff158d9; judged frames keep bytes, 1586 moves in main's sky only",
  "looks": [
+  {
+   "time": "2026-11-22T17:47:42.993Z",
+   "file": "20261122174742993-note-f29-1586-diff.jpg",
+   "source": "../view/f29-1586-diff.png",
+   "kind": "note",
+   "label": "venus 1586 final, main ff158d9 against round 34 final (engine 84b0ea4): the difference, sky only, the disc is unchanged; same bytes with and without the gate cure",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T17:27:48.143Z",
    "file": "20261122172748143-note-c28-rise-big.jpg",
@@ -154,14 +162,6 @@
    "source": "../view/rim-top.jpg",
    "kind": "note",
    "label": "1185 final top limb: approved hero, main 84b0ea4, rim strip refit with a clamp of 4 stops (test, not shipped): the double rim line goes at the judged frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:25.889Z",
-   "file": "20261122150625889-note-k24-n.jpg",
-   "source": "../view/k24-n.jpg",
-   "kind": "note",
-   "label": "rise 1565, 1567, 1569, 1571 at native preview size, release over 24 frames",
    "stop": "venus"
   },
   {
