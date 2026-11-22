@@ -808,3 +808,16 @@ Not mine: stepped blur on the outer ring 3596 to 3600, 3835 to 3838 (engine).
   - Draft 3826, 3829, 3832, 3836 at 2x (`/tmp/l22-a.png`, `/tmp/l22-b.png`, looks): the dark sheet of the close picture hands over to the model's tan C ring between 3829 and 3832; at 3832 and 3836 the foot of the limb is clean, the rings run in front of the globe with no notch.
   - Measure (1298 s, 0 bad lines): PASS G13 0 of 165 frames over 0.02 soft (worst 3612 0.00 percent). PASS G5 hold 0.514, dive 0.548, terrain 0.743, rise 0.379, invalid 0. PASS G17 3465 median 1.055, p25 0.919, 71 tiles; 3720 median 0.951, p25 0.884, 62 tiles. The same values as on batch 19.
 - 11:52: main moved to 8780b3c (round 32 started on batches 21 and 22, status 93 to 95; `kit/PROGRESS.md` and status pictures only, no file under `src`, `config`, `tools`). To merge after the chain ends, not while it renders.
+
+## CUT33 (mail 151, 12:21): round 33 is cut at 13:10, rounds 34 and 35 at about 15:10 and 17:10, then frozen
+
+- Mail 151 wants by 13:05 one message `CUT33 saturn`: READY with the full hash or NOT READY; the judged frames that differ from main at the final tier with a clause each, and those that are the same bytes; the segments whose motion changed; the open items answered and anything made worse.
+- 12:38: rise review sheet of chain 5 done (0 bad lines), looked at tile by tile (`out/work/saturn/b22/`): 3810 to 3884 one move, no cream crescent at 3817 and 3823, nothing broken. Chain 5 stopped there to make the cut; main 481d2b8 merged as 4d07e86 (round 32 closed, open items 79 to 100, status, scorecards; no file under `src`, `config`, `tools`), build green.
+- Short chain `/tmp/cut33.sh` (log `/tmp/cut33.log`) on 4d07e86:
+  - Drafts after the merge: 3465 342bc5667acea0b2, 3567 7d3094c7aa7fd13d, 3720 52d0bf3f4b2ffadd, 3866 dfdfa138c03e0412, the same bytes as before it.
+  - Travel frames at draft, this branch against main (`../wt-pre`, 3a09527, the same engine): 3352 cbf510ce45f74ca5 both, 3922 b020d78e8788638a both.
+  - Terrain review sheet: 0 pixels against the batch 19 sheet (`out/work/saturn/b19/`), which was looked at tile by tile.
+  - Gates: G11 pass; G12 pass (2496 tracked files, 1.87 GB); G15 pass (Saturn web 228 MB, full 585 MB).
+  - Exit probe against main on this engine (`/tmp/exit-main22.json`, `/tmp/exit-now22.json`): sky frame and orbit aim identical; 3465 identical; 3885, 3886, 3900, 3930, 3959, 3960, 4000 identical; 3540 within 1e-14; 3883, 3884 within 4.6e-14; 3880 1.9e-5.
+  - Then draft sheets of dive, dive cover, rise cover; then the review sheets of the three, the compares and main's finals (`M22F-N`), ends `ALLDONE`.
+- Round 32 on Saturn (kept build): jury hold b b e d b, terrain b e e a b; one juror on the terrain frame: "the abrupt, nearly vertical cutoff in the far-side rings just left of Saturn's limb" (the globe's limb in front of the far rings; the approved close image has the same edge, pair `/tmp/t3720-limb.png`); R4 minor at 3362 in jupiter.travel: "a short reddish diagonal streak appears for one sample" upper right of Saturn (Titan in the arrival's shutter; the travel's). Open items 79 to 100 name no fault inside Saturn's four segments.
