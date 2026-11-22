@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T01:31:16.559Z",
- "head": "f4d0bd61cf54ec20070d904ca4d17d3b70b2caac",
- "note": "task 6: band look weights, calibration stills",
+ "pushed": "2026-11-22T02:09:20.815Z",
+ "head": "7e0680bcfbbe9840efbcdf0ddfb92398b84e6376",
+ "note": "task 6 commit 2: finals of the judged travel frames 495 1072 2212 2782 3352",
  "looks": [
   {
-   "time": "2026-11-22T00:50:30.222Z",
-   "file": "20261122005030222-note-uranus.travel-review.jpg",
-   "source": "out/work/travel/t5/uranus.travel-review.png",
+   "time": "2026-11-22T02:08:34.964Z",
+   "file": "20261122020834964-note-f495-final.jpg",
+   "source": "out/work/travel/t6/f495-final.png",
    "kind": "note",
-   "label": "t5: uranus.travel-review",
+   "label": "t6: f495-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:50:29.620Z",
-   "file": "20261122005029620-note-jupiter.travel-review.jpg",
-   "source": "out/work/travel/t5/jupiter.travel-review.png",
+   "time": "2026-11-22T02:08:34.310Z",
+   "file": "20261122020834310-note-f3352-final.jpg",
+   "source": "out/work/travel/t6/f3352-final.png",
    "kind": "note",
-   "label": "t5: jupiter.travel-review",
+   "label": "t6: f3352-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:50:28.981Z",
-   "file": "20261122005028981-note-earth.travel-review.jpg",
-   "source": "out/work/travel/t5/earth.travel-review.png",
+   "time": "2026-11-22T02:08:33.673Z",
+   "file": "20261122020833673-note-f2782-final.jpg",
+   "source": "out/work/travel/t6/f2782-final.png",
    "kind": "note",
-   "label": "t5: earth.travel-review",
+   "label": "t6: f2782-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:11:58.263Z",
-   "file": "20261122001158263-note-f2726-final.jpg",
-   "source": "out/work/travel/t5m/f2726-final.png",
+   "time": "2026-11-22T02:08:33.014Z",
+   "file": "20261122020833014-note-f2212-final.jpg",
+   "source": "out/work/travel/t6/f2212-final.png",
    "kind": "note",
-   "label": "t5m: f2726-final",
+   "label": "t6: f2212-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:11:57.604Z",
-   "file": "20261122001157604-note-f2580-final.jpg",
-   "source": "out/work/travel/t5m/f2580-final.png",
+   "time": "2026-11-22T02:08:32.269Z",
+   "file": "20261122020832269-note-f1072-final.jpg",
+   "source": "out/work/travel/t6/f1072-final.png",
    "kind": "note",
-   "label": "t5m: f2580-final",
+   "label": "t6: f1072-final",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:11:56.949Z",
-   "file": "20261122001156949-note-f2427-final.jpg",
-   "source": "out/work/travel/t5m/f2427-final.png",
+   "time": "2026-11-22T02:01:09.000Z",
+   "file": "20261122020109000-note-f5006-review.jpg",
+   "source": "out/work/travel/t6/f5006-review.png",
    "kind": "note",
-   "label": "t5m: f2427-final",
+   "label": "t6: f5006-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:11:56.264Z",
-   "file": "20261122001156264-note-f2325-final.jpg",
-   "source": "out/work/travel/t5m/f2325-final.png",
+   "time": "2026-11-22T02:01:08.364Z",
+   "file": "20261122020108364-note-f4436-review.jpg",
+   "source": "out/work/travel/t6/f4436-review.png",
    "kind": "note",
-   "label": "t5m: f2325-final",
+   "label": "t6: f4436-review",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T00:07:35.169Z",
-   "file": "20261122000735169-note-sun.travel-review.jpg",
-   "source": "out/work/travel/t5/sun.travel-review.png",
+   "time": "2026-11-22T02:01:07.712Z",
+   "file": "20261122020107712-note-f3866-review.jpg",
+   "source": "out/work/travel/t6/f3866-review.png",
    "kind": "note",
-   "label": "t5: sun.travel-review",
+   "label": "t6: f3866-review",
    "stop": "travel"
   }
  ]
