@@ -7,7 +7,7 @@ import spec from './belt.json'
 
 export interface BeltDirector { shotAt(frame: number, time: number): Shot }
 
-export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; approach: number; velocity: number[]; ease: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number }
+export interface RockSpec { id: string; asset: string; frame: number; at: number[]; distance: number; radius: number; hold: number; flow: number; approach: number; velocity: number[]; ease: number; tilt: number[]; axis: number[]; spin: number; mesh: number; gain: number; fill: number }
 
 export interface RockPose { position: THREE.Vector3; quaternion: THREE.Quaternion }
 
@@ -81,7 +81,7 @@ export class BeltMotion {
     this.pan.copy(shot.camera.quaternion).multiply(this.from[index]!)
     this.pan.copy(this.unit.identity().slerp(this.pan, r.hold))
     out.position.copy(this.base[index]!).addScaledVector(this.own[index]!, dt * (1 + r.ease * dt * dt)).applyQuaternion(this.pan).multiplyScalar(Math.max(1 + (r.approach * dt) / r.distance, 0.05))
-    out.position.sub(this.drift(shot.time, this.c)).add(this.flow0[index]!)
+    out.position.addScaledVector(this.drift(shot.time, this.c).sub(this.flow0[index]!), -r.flow)
     this.spinQ.setFromAxisAngle(this.axis[index]!, r.spin * RAD * dt)
     out.quaternion.copy(this.turn[index]!).multiply(this.spinQ)
   }
