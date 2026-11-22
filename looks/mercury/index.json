@@ -1,9 +1,45 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T15:39:45.260Z",
- "head": "cc67a53a2f1eabdbac8fe48207ffde7353acd93d",
- "note": "CUT34 proofs: full G13 running on tree a5e5207 (rise pace r6, flare, hand over, leave) on main 22cfb06; no new picture since 15:22",
+ "pushed": "2026-11-22T16:04:42.737Z",
+ "head": "64e20ee82a6a0e5e23917d2f41e59c0df81c6838",
+ "note": "CUT34 taken with the hold's ghosts back (READY 0a08b493); now the bright bars at 993 and 994 for CUT35",
  "looks": [
+  {
+   "time": "2026-11-22T16:04:42.154Z",
+   "file": "20261122160442154-note-bars-993-look.jpg",
+   "source": "../../../../tmp/bars-993-look.jpg",
+   "kind": "note",
+   "label": "Rise 993 draft, tree a5e5207 on main 6460b4a: bright bars with pink and green edges below the horizon at the right (top: box 1440 560 400 300 at 3x; bottom: whole frame). Open, first thing for CUT35",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T15:59:52.633Z",
+   "file": "20261122155952633-frame-f994-layers.jpg",
+   "source": "out/work/mercury/p6/bars/f994-layers.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 994, draft tier, layers view",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 994,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T15:47:09.605Z",
+   "file": "20261122154709605-job-frame-00822.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.terrain frame 822, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.terrain",
+   "frame": 822,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:37:08.403Z",
    "file": "20261122153708403-job-frame-00540.jpg",
@@ -86,30 +122,6 @@
    "source": "../../../../tmp/495-limb3.jpg",
    "kind": "note",
    "label": "495 limb native 2x: main final, head final on main's Sun, head draft on the Sun agent's d8ec4dd files (tree 2c5d787, main ca78dda)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:57:35.274Z",
-   "file": "20261122145735274-note-615-flare3.jpg",
-   "source": "../../../../tmp/615-flare3.jpg",
-   "kind": "note",
-   "label": "615 night side, plain and gain 3: approved hero, main final, final with the flare change (keep 0.35 on the disc), main ca78dda",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:57:34.750Z",
-   "file": "20261122145734750-note-fl1-730.jpg",
-   "source": "../../../../tmp/fl1-730.jpg",
-   "kind": "note",
-   "label": "730 draft: main left, flare change right: the bright ghost dot on the terrain is gone (main ca78dda)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:57:34.204Z",
-   "file": "20261122145734204-note-fl1-sheet.jpg",
-   "source": "../../../../tmp/fl1-sheet.jpg",
-   "kind": "note",
-   "label": "615, 717, 1016 drafts: main's own tree (columns 1 and 3, 3 at gain 2.5) against the flare change (2 and 4), main ca78dda",
    "stop": "mercury"
   }
  ]
