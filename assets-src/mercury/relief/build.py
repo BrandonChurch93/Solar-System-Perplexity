@@ -11,7 +11,7 @@ import geom
 
 WORK = 'out/work/mercury/relief/'
 OUT = 'public/assets/mercury/'
-GAIN = float(os.environ.get('RELIEF_GAIN', '1.6'))
+GAIN = float(os.environ.get('RELIEF_GAIN', '2.6'))
 WIDE = 300
 NEAR, FARFADE = 3.5, 7.0
 LIFT = 2.5
@@ -19,6 +19,9 @@ DIST_SCALE = 0.25
 SPECK = (5.0, 8.0)
 GLINT = 0.7
 EDGE = (8.0, 10.0)
+FEATHER = (320.0, 170.0, 24.0)
+RIM = (16, 4, 10.0, 2.0, 160)
+GLOW = (14, 2, 1024, 2048, 31, 6.0)
 W, H, ML, MB, CW, CH = geom.W, geom.H, geom.ML, geom.MB, geom.CW, geom.CH
 
 
@@ -59,6 +62,96 @@ def distances(dist):
         dm = np.exp(cv2.resize(np.log(dist), (dw, dh), interpolation=cv2.INTER_AREA)).astype('<f4')
         dm.tofile(OUT + name + '/relief-dist.bin')
         print(name, 'dist', (dw, dh))
+
+
+def rim(color, drop):
+    lum = cv2.GaussianBlur(np.asarray(color).astype(np.float32).mean(2), (0, 0), 1.0)
+    n = CW * 2
+    hy2 = np.interp((np.arange(n) + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop) * 2
+    cols = np.arange(n)
+    reach, half, least, sigma, _ = RIM
+    rows = np.clip(np.round(hy2).astype(int)[None, :] + np.arange(-reach, reach + 1)[:, None], 2, CH * 2 - 3)
+    step = lum[rows + 2, cols[None, :]] - lum[rows - 2, cols[None, :]]
+    best = rows[np.argmax(step, axis=0), cols]
+    seen = step.max(axis=0) > least
+    near = np.clip(best[None, :] + np.arange(-half, half + 1)[:, None], 0, CH * 2 - 2)
+    g = np.maximum(lum[near + 1, cols[None, :]] - lum[near, cols[None, :]], 0)
+    edge = (g * (near + 1)).sum(0) / np.maximum(g.sum(0), 1e-3)
+    edge = np.interp(cols, cols[seen], edge[seen]).astype(np.float32)
+    edge = cv2.GaussianBlur(cv2.medianBlur(edge.reshape(1, n), 5), (0, 0), sigma).reshape(n)
+    off = edge - hy2
+    print('rim: seen %.4f of the columns; true edge under the model horizon, rows of %d: median %.2f p1 %.2f p99 %.2f' % (float(seen.mean()), CH * 2, float(np.median(off)), float(np.percentile(off, 1)), float(np.percentile(off, 99))))
+    return edge
+
+
+def bleed(color, edge):
+    img = np.asarray(color).copy()
+    n = img.shape[1]
+    cols = np.arange(n)
+    src = np.clip(np.ceil(edge).astype(int) + 3, 0, img.shape[0] - 1)
+    held = img[src, cols]
+    for k in range(-RIM[4], 3):
+        r = np.clip(src - 3 + k, 0, img.shape[0] - 1)
+        img[r, cols] = held
+    return Image.fromarray(img)
+
+
+def alphas(edge):
+    y2 = np.arange(CH * 2)[:, None] + 0.5
+    x2 = (np.arange(CW * 2)[None, :] + 0.5) / 2
+    slope = np.gradient(edge)
+    alpha = smooth(-1.0, 1.0, (y2 - edge[None, :]) / np.sqrt(1 + slope[None, :] ** 2))
+    side, low, rim = FEATHER
+    alpha = alpha * smooth(rim, side, x2) * smooth(rim, side, CW - x2) * smooth(rim, low, CH - y2 / 2)
+    alpha8 = (alpha * 255 + 0.5).astype(np.uint8)
+    for name, s in (('full', 1.0), ('web', 0.5)):
+        cw, ch = int(CW * 2 * s), int(CH * 2 * s)
+        al = Image.fromarray(alpha8)
+        (al if s == 1 else al.resize((cw, ch), Image.BOX)).save(OUT + name + '/relief-alpha.png', optimize=True)
+        print(name, 'alpha', (cw, ch))
+
+
+def fringe(color, edge, drop, dist):
+    sys.path.insert(0, 'assets-src/mercury/wrap')
+    import geo
+    from scipy.ndimage import median_filter
+    img = np.asarray(color).astype(np.float32)
+    n = CW * 2
+    cols = np.arange(n)
+    up, down, segs, tw, calm, soft = GLOW
+    cut = np.interp((cols + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop) * 2 - 2 * LIFT
+    lin = lambda v: geo.unfilm(geo.to_linear(np.clip(v, 0, 255) / 255))
+    above = np.clip(np.round(cut).astype(int)[None, :] + np.arange(-8, -2)[:, None], 0, CH * 2 - 1)
+    sky = np.median(img[above, cols[None, :]], axis=0)
+    sky = cv2.GaussianBlur(median_filter(sky, size=(calm, 1), mode='nearest').reshape(1, n, 3), (0, 0), soft).reshape(n, 3)
+    y = (edge - up)[None, :] + np.arange(up + down, dtype=np.float32)[:, None] + 0.5
+    strip = cv2.remap(img, np.broadcast_to(cols.astype(np.float32)[None, :], y.shape).copy(), (y - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    was = smooth(-1.8, 1.8, y - cut[None, :])
+    now = smooth(-1.0, 1.0, y - edge[None, :])
+    glow = np.maximum(lin(strip) - lin(sky)[None, :, :], 0) * was[..., None]
+    free = now < 0.02
+    last = np.maximum(free.shape[0] - 1 - np.argmax(free[::-1], axis=0), 0)
+    glow = np.where(free[..., None], glow, glow[last, cols][None, :, :])
+    glow = cv2.GaussianBlur(median_filter(glow, size=(1, 15, 1), mode='nearest'), (0, 0), sigmaX=4, sigmaY=0.01)
+    small = cv2.resize(glow, (tw, up + down), interpolation=cv2.INTER_AREA)
+    rng = np.random.default_rng(11)
+    code = np.clip(geo.to_srgb(geo.film(small)) * 255 + rng.random(small.shape[:2])[..., None] + rng.random(small.shape[:2])[..., None] - 0.5, 0, 255).astype(np.uint8)
+    code[small.max(-1) <= 0] = 0
+    xs = np.arange(segs + 1) * n / segs
+    ex = np.interp(xs, cols + 0.5, edge)
+    ix = np.clip(xs / 2, 0, CW - 1).astype(np.float32)
+    iy = np.clip((ex + 2) / 2, 0, CH - 1).astype(np.float32)
+    d = cv2.remap(dist, (ix - 0.5).reshape(1, -1), (iy - 0.5).reshape(1, -1), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE).ravel()
+    pos = np.empty((segs + 1, 2, 3), np.float32)
+    for k, off in enumerate((-up, down)):
+        r = np.stack([(xs / 2 - ML - W / 2) / geom.F, (H / 2 - (ex + off) / 2) / geom.F, -np.ones_like(xs)], -1)
+        pos[:, k] = r / np.linalg.norm(r, axis=-1, keepdims=True) * d[:, None]
+    for name in ('full', 'web'):
+        Image.fromarray(code).save(OUT + name + '/relief-rim.png', optimize=True)
+        pos.astype('<f4').tofile(OUT + name + '/relief-rim.bin')
+    json.dump({'file': 'relief-rim.png', 'mesh': 'relief-rim.bin', 'columns': segs + 1}, open('src/stops/mercury/rim.json', 'w'), indent=1)
+    peak = code.reshape(-1, 3).max(0)
+    print('fringe: sky under the cut, median code %.1f; glow rows %d, peak codes %d %d %d, median of the row above the edge %.1f %.1f %.1f' % ((float(np.median(sky)), up + down) + tuple(int(v) for v in peak) + tuple(float(v) for v in np.median(code[up - 2], axis=0))))
 
 
 def only():
@@ -161,20 +254,17 @@ def main():
     color = specks(color)
     if os.path.exists(WORK + 'lens-fix.npy'):
         color = lens(color, np.load(WORK + 'lens-fix.npy'))
-    hy2 = np.interp((np.arange(CW * 2) + 0.5) / 2, np.arange(CW) + 0.5, geom.horizon_y() + drop)
-    y2 = (np.arange(CH * 2)[:, None] + 0.5) / 2
-    slope = np.gradient(hy2) * 2
-    alpha = smooth(-0.9, 0.9, (y2 - hy2[None, :] + LIFT) / np.sqrt(1 + slope[None, :] ** 2))
-    alpha8 = (alpha * 255 + 0.5).astype(np.uint8)
+    edge = rim(color, drop)
+    fringe(color, edge, drop, dist)
+    color = bleed(color, edge)
     for name, s in (('full', 1.0), ('web', 0.5)):
         os.makedirs(OUT + name, exist_ok=True)
         cw, ch = int(CW * 2 * s), int(CH * 2 * s)
         c = color if s == 1 else color.resize((cw, ch), Image.BOX)
         c.save(OUT + name + '/relief-color.jpg', quality=93 if s == 1 else 90, subsampling=0)
-        al = Image.fromarray(alpha8)
-        (al if s == 1 else al.resize((cw, ch), Image.BOX)).save(OUT + name + '/relief-alpha.png', optimize=True)
         Image.new('RGB', (16, 16), (0, 0, 0)).save(OUT + name + '/relief-masks.png')
         print(name, 'color', (cw, ch))
+    alphas(edge)
     distances(dist)
     dw, dh = int(CW * 2 * DIST_SCALE), int(CH * 2 * DIST_SCALE)
     out = {
@@ -189,4 +279,7 @@ def main():
 
 
 if __name__ == '__main__':
-    only() if sys.argv[1:] == ['dist'] else main()
+    if sys.argv[1:] == ['dist']:
+        only()
+    else:
+        main()

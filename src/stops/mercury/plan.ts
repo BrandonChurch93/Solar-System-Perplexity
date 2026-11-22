@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import { config } from '../../config'
 import { ramp, smoother } from '../../director/rig'
+import type { Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { anchor, closeRadius, type Anchor } from './close'
+import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
 import fit from './fit.json'
-import { close, pace, spinRest } from './look'
+import { close, flight, pace, spinRest } from './look'
 import { curve, hermite, integrate, last, read, sampled, solve, type Knot, type Track } from './pace'
 
 export const params: MoveParams = {
@@ -40,8 +41,32 @@ export class Plan extends StopPlan {
   private diving: DivePace | null = null
   private rising: RisePace | null = null
 
-  constructor(p: MoveParams = params, private readonly tune = meet, private readonly near = close, private readonly tempo = pace) {
+  constructor(p: MoveParams = params, private readonly tune = meet, private readonly near = close, private readonly tempo = pace, private readonly fly = flight) {
     super('mercury', fit as Fit, p)
+  }
+
+  low(time: number): Pose {
+    const fps = config.fps
+    const f = time * fps
+    const seg = this.seg.terrain
+    const pivot = seg.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).terrain! * seg.frames + 1e-9) + config.shutterFraction / 2
+    const e = this.fly.entry
+    const x = this.fly.exit
+    const a = Math.pow(Math.max(1 - (f - this.coverCenter(this.seg.dive!) * fps) / e.frames, 0), e.power)
+    const b = Math.pow(Math.max(1 - (this.coverCenter(this.seg.rise) * fps - f) / x.frames, 0), x.power)
+    const u = (2 * (f - pivot)) / seg.frames
+    const along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3) - e.back * a + x.forward * b
+    const position = closeAhead.clone().multiplyScalar(along).addScaledVector(closeUp, this.fly.swoop * u * u + e.height * a + x.height * b)
+    const quaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(e.pitchDeg * a + x.pitchDeg * b), 0, THREE.MathUtils.degToRad(e.rollDeg * a), 'YXZ'))
+    return { position, quaternion, vfov: this.p.terrain.vfov }
+  }
+
+  override terrain(tRel: number): Pose {
+    return this.low(tRel + this.seg.terrain.start)
+  }
+
+  private lowShot(time: number): OrbitShot {
+    return { pose: this.low(time), view: 'terrain' }
   }
 
   get anchor(): Anchor {
@@ -58,7 +83,7 @@ export class Plan extends StopPlan {
     const kept = this.fixes[side]
     if (kept) return kept
     const centre = this.coverCenter(side === 'dive' ? this.seg.dive! : this.seg.rise)
-    const low = (side === 'dive' ? super.dive(centre) : super.rise(centre - 1e-6)).pose
+    const low = this.low(side === 'dive' ? centre : centre - 1e-6)
     const high = (side === 'dive' ? this.diveRaw(centre - 1e-6, centre - 1e-6) : this.riseRaw(centre, centre)).pose
     const a = this.anchor
     const turn = this.drawn(centre)
@@ -231,7 +256,7 @@ export class Plan extends StopPlan {
     const h = 0.05 / config.fps
     const e = 1e-7
     const sky = (time: number): Local => this.local(side === 'dive' ? this.diveAt(time, this.paced('dive', time)) : this.riseAt(time, this.paced('rise', time)), time)
-    const ground = (time: number): Local => this.local(side === 'dive' ? super.dive(time) : super.rise(time), time)
+    const ground = (time: number): Local => this.local(this.lowShot(time), time)
     const rate = (a: Local, b: Local): Gap => {
       const d = b.q.clone().multiply(a.q.clone().invert())
       if (d.w < 0) d.set(-d.x, -d.y, -d.z, -d.w)
@@ -275,13 +300,13 @@ export class Plan extends StopPlan {
   }
 
   override dive(time: number): OrbitShot {
-    if (time >= this.coverCenter(this.seg.dive!)) return super.dive(time)
+    if (time >= this.coverCenter(this.seg.dive!)) return this.lowShot(time)
     const t = this.shut(time)
     return this.flow('dive', this.diveAt(t, this.paced('dive', t)), t)
   }
 
   override rise(time: number): OrbitShot {
-    if (time < this.coverCenter(this.seg.rise)) return super.rise(time)
+    if (time < this.coverCenter(this.seg.rise)) return this.lowShot(time)
     const t = this.shut(time)
     return this.flow('rise', this.riseAt(t, this.paced('rise', t)), t)
   }

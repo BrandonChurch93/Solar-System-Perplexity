@@ -58,6 +58,14 @@ export const haze = { color: [0.3, 0.275, 0.23] as [number, number, number], pea
 
 export const close = { meet: true, shift: [0.49, 0.17] as [number, number], frames: [24, 22] as [number, number], height: [0.07, 0.19] as [number, number], far: [7, 10] as [number, number], plain: { tint: [1.2, 0.972, 0.78] as [number, number, number], until: [0.7, 1] as [number, number] }, feather: [0.22, 0.12] as [number, number], soft: 2.2, haze: 0.5, turn: [78, 1, 0.8] as [number, number, number] }
 
+export const flight = {
+  travel: 1.2,
+  gather: 1,
+  swoop: 0.3,
+  entry: { frames: 26, height: 0.6, back: 0.4, power: 4, pitchDeg: 0, rollDeg: 0 },
+  exit: { frames: 16, height: 0.7, forward: 0.1, power: 3, pitchDeg: 0 },
+}
+
 export const edge = 10.1
 export const relief = { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0] as [number, number], mesh: 640 }
 

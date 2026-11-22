@@ -4,9 +4,9 @@ import reliefJson from './relief.json'
 export const closeRadius = reliefJson.camera.planetRadius
 export const closeUp = new THREE.Vector3().fromArray(reliefJson.camera.up)
 
-const ahead = new THREE.Vector3(0, 0, -1).addScaledVector(closeUp, closeUp.z).normalize()
-const side = new THREE.Vector3().crossVectors(ahead, closeUp)
-export const closeLevel = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(side, closeUp, ahead.clone().negate())).invert()
+export const closeAhead = new THREE.Vector3(0, 0, -1).addScaledVector(closeUp, closeUp.z).normalize()
+const side = new THREE.Vector3().crossVectors(closeAhead, closeUp)
+export const closeLevel = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(side, closeUp, closeAhead.clone().negate())).invert()
 
 const reachDown = (closeRadius + 1) * closeUp.y
 export const closePivot = closeUp.clone().multiplyScalar(closeRadius + 1).add(new THREE.Vector3(0, -(reachDown - Math.sqrt(reachDown * reachDown - 2 * closeRadius - 1)), 0)).normalize()

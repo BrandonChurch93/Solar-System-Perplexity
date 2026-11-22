@@ -5,18 +5,22 @@ import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/type
 import { diagUniform } from '../../diagnostics/diag'
 import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
-import { closeImage, closePivot, closeRadius, closeUp as nearUp } from './close'
+import { closeAhead, closeImage, closePivot, closeRadius, closeUp as nearUp } from './close'
 import { config } from '../../config'
-import { patches, relief, wrap } from './assets'
+import { patches, relief, wide, wrap } from './assets'
 import { Glare, type GlareSide } from './glare'
 import { Globe } from './globe'
 import { Lens } from './lens'
 import lensJson from './lens.json'
+import { Limb } from './limb'
+import limbJson from './limb.json'
 import streakJson from './streak.json'
 import * as look from './look'
 import { plan } from './plan'
 import { curve } from './pace'
 import reliefJson from './relief.json'
+import { Rim } from './rim'
+import rimJson from './rim.json'
 import skyJson from './sky.json'
 import { SkyPlate } from './skyplate'
 import { SunPlate } from './sunplate'
@@ -109,6 +113,22 @@ export const createSet: SetFactory = async (ctx) => {
   }
 
   const ground = await Relief.load(ctx, base, relief[key], look.relief)
+  const under = await Relief.load(ctx, base, wide[key], look.relief)
+  under.group.position.fromArray(wide.position)
+  under.group.quaternion.fromArray(wide.quaternion)
+  delete under.group.userData.shield
+  under.group.traverse((o) => {
+    if ((o as THREE.Mesh).material) o.renderOrder = -1
+  })
+  const wipe = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({ vertexShader: 'void main() { gl_Position = vec4(position.xy, 1.0, 1.0); }', fragmentShader: 'void main() { gl_FragColor = vec4(0.0); }', transparent: true, colorWrite: false, depthFunc: THREE.AlwaysDepth, depthWrite: true }))
+  wipe.frustumCulled = false
+  wipe.renderOrder = -0.5
+  const limb = new Limb(await ctx.texture(base + limbJson.file, { srgb: true, mips: false, anisotropy: 1 }), nearUp.clone().multiplyScalar(-(closeRadius + 1)), closeRadius, closeAhead, new THREE.Vector3().crossVectors(closeAhead, nearUp), limbJson.az as [number, number], limbJson.el as [number, number], diagUniform)
+  const rim = new Rim(await ctx.texture(base + rimJson.file, { srgb: true, mips: false, anisotropy: 1 }), new Float32Array(await ctx.buffer(base + rimJson.mesh)), rimJson.columns, diagUniform)
+  terrain.add(limb.mesh)
+  terrain.add(rim.mesh)
+  terrain.add(under.group)
+  terrain.add(wipe)
   terrain.add(ground.group)
   const shots: THREE.Texture[] = []
   ground.group.traverse((o) => {
@@ -161,6 +181,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (!inOrbit) {
         glare.update(first ? fromDive : fromRise, side, on, lowSunAt(state.time, state.rotation, false), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        under.update(state.time - terrainMid, gain, shot.post.vignette, view)
+        limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)
+        rim.update(gain, shot.post.vignette, aspect)
         return
       }
       const diving = mine && kind === 'dive'
@@ -254,6 +277,11 @@ export const createSet: SetFactory = async (ctx) => {
       glare.dispose()
       far.dispose()
       ground.dispose()
+      under.dispose()
+      limb.dispose()
+      rim.dispose()
+      wipe.geometry.dispose()
+      wipe.material.dispose()
     },
   }
 }
