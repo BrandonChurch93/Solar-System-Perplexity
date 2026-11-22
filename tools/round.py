@@ -967,6 +967,10 @@ def film_pack(a):
     extra = tiers(s, 'pack') + (' --stress-tier ' + s['tier'] if s.get('tier') else '')
     if 'gateGreen' not in s:
         sys.exit('round %d: no pack before the machine checks; run start --round %d --checks first' % (n, n))
+    if s['mode'] != 'whole':
+        diff = moved(s, hashes())
+        if diff:
+            sys.exit('round %d: the tree moved since the build at %s: %s. No pack; run start --round %d --build-only again' % (n, s['commit'][:8], diff, n))
     if s['mode'] == 'polish':
         chosen = SC / rid(n) / 'select.json'
         if not chosen.exists():
