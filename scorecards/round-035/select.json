@@ -86,8 +86,8 @@
     "saturn.rise"
    ],
    "R1": true,
-   "R8": true,
-   "R2": false
+   "R8": false,
+   "R2": true
   },
   "uranus": {
    "frames": [
@@ -105,10 +105,15 @@
   },
   "neptune": {
    "frames": [
-    4605
+    4605,
+    5006
    ],
    "sheets": [
-    "neptune.hold"
+    "neptune.hold",
+    "neptune.dive",
+    "neptune.dive-cover",
+    "neptune.rise",
+    "neptune.rise-cover"
    ],
    "R1": true,
    "R8": true,
