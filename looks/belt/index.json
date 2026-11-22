@@ -1,9 +1,53 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T00:48:21.971Z",
- "head": "30f31afdcd210c7d1a456205da791eb48865fe78",
- "note": "task 5: review sheet, final 2782, crops, tried faces",
+ "pushed": "2026-11-22T01:50:00.261Z",
+ "head": "f33fb073b1508ce5d8d7f2f28d75142383b0d484",
+ "note": "belt task 6: review sheet of the second layout (b5ffb8e) and the tumble at draft",
  "looks": [
+  {
+   "time": "2026-11-22T01:47:17.856Z",
+   "file": "20261122014717856-frame-f02325.jpg",
+   "source": "out/work/belt/t6proof-branch/f02325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, draft tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "20dd0eb48b52d72b"
+  },
+  {
+   "time": "2026-11-22T01:46:31.411Z",
+   "file": "20261122014631411-frame-f02783.jpg",
+   "source": "out/work/belt/t6/f1/f02783.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2783, final tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2783,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "20dd0eb48b52d72b"
+  },
+  {
+   "time": "2026-11-22T01:44:11.491Z",
+   "file": "20261122014411491-note-c2tumble.jpg",
+   "source": "../view/t6/c2tumble.jpg",
+   "kind": "note",
+   "label": "belt task 6 draft, first layout: hero at 2772, 2782, 2792, spin 110",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T01:44:09.809Z",
+   "file": "20261122014409809-note-sheet.jpg",
+   "source": "out/work/belt/t6/r2/sheet.jpg",
+   "kind": "note",
+   "label": "belt task 6 review sheet b5ffb8e: hero passes through the upper right whole at 23.9 px per frame, streaks kept",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-22T00:48:13.642Z",
    "file": "20261122004813642-note-b0full.jpg",
@@ -34,50 +78,6 @@
    "source": "../send/belt-t5-final-2782.jpg",
    "kind": "note",
    "label": "belt task 5 final 2782, a9da36c",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T00:48:11.453Z",
-   "file": "20261122004811453-note-sheet.jpg",
-   "source": "out/work/belt/t5/r1/sheet.jpg",
-   "kind": "note",
-   "label": "belt task 5 review sheet, every third frame 2745 to 2817, a9da36c",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T00:46:52.540Z",
-   "file": "20261122004652540-frame-f02772.jpg",
-   "source": "out/work/belt/t5/cost/f02772.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2772, review tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2772,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "0e87733079fe0f1d"
-  },
-  {
-   "time": "2026-11-22T00:43:20.720Z",
-   "file": "20261122004320720-frame-f02325.jpg",
-   "source": "out/work/belt/t5proof-branch/f02325.png",
-   "kind": "frame",
-   "label": "mars.hold frame 2325, draft tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "0e87733079fe0f1d"
-  },
-  {
-   "time": "2026-11-21T23:45:17.689Z",
-   "file": "20261121234517689-note-crops-2782.jpg",
-   "source": "out/work/belt/t4/f1/crops-2782.png",
-   "kind": "note",
-   "label": "task 4 final 2782, native crops of each rock: hero (400 px, and its middle), near (600 px), far1 and far2 (240 px)",
    "stop": "mars"
   }
  ]
