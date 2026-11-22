@@ -705,3 +705,14 @@ Experiments (terrain side frames at draft master size `./e3.sh TAG` gives `view/
 - All of E3 is terrain side only (`mist` argument of `Veil.update`, 1 from the terrain branch of `set.ts`, 0 from the orbit branch), E2 acts wherever the rush is above 0.
 - The judged frames must not move: 1185, 1440 have no veil; 1287 and 1586 have amount 0 (check with `./fin.sh TAG` and `cmp` against `f16-*.png` before any commit).
 - Not the engine's: the soft squares are smeared veil islands, not coarse mips (`uGrad` never goes above 1).
+
+## State at 07:10 (22 Nov): veil take E3d chosen, proof queue q20 running (read this first after a compaction)
+
+Working tree of `repo` holds the veil change, NOT committed until the queue is read: `veil.ts` (uniforms `uFray`, `uSoft`, `uWait`, `uBlur`; last argument `mist` of `Veil.update`), `look.ts` (`sheets.fray [6, 0.6, 0.25, 2]`, `sheets.mist [1, 0.7, 1, 16]`, `sheets.wait [0.5, 0.95]`), `set.ts` (terrain branch passes 1, orbit branch 0). The GLSL variable is `fibre` (not `strand`: the audit tool lists a helper of that name in another stop). Render copy r2 moved to main a87578e (docs only since a45a07b, no file under src, config, tools, public changed).
+
+- Take E3d at review tier, preview size (`view/e3r-part.jpg` 1549 to 1559, `view/e3r-orbit.jpg` 1560 to 1566): 1549 to 1553 the terrain stays whole under a mist that thickens, 1555 thick haze, 1556 to 1559 soft streaks along the pull back, 1560 to 1566 the same soft streaks over the globe; no plank, no decal, no blade. Both sides of the swap have the same character.
+- Judged frames with the change, final tier (`r2/out/work/venus/p6/f20-*.png` against `f16-*.png`): 1185, 1287, 1440, 1586 the same bytes, all four. (Rendered before the rename to `fibre`; render them once more after the queue.)
+- Audit on the working tree: no line of my folder.
+- Queue `q20.sh` (log `/tmp/q20.log`, started 07:01): finals done 07:07; review cover sheets c20 (`view/c20-rc.png`, `view/c20-dc.png`, about 07:35); review strip of the dive's tail 1321 to 1327 (`view/e3t.jpg`); chain (`/tmp/chain20.log`, `/tmp/c2-*.log`); prints "queue20 done". Do not change `src/stops/venus` or `public/assets/venus` in the repo until then.
+- After it: read every frame of both sheets against c19; finals of the four judged frames once more (`./fin.sh f21`, `cmp` against f16); `npx tsx tools/repeat.ts --stop venus --sessions 3 --runs 2` and with `--frames 1185,1287,1440,1586,1300,1307,1310,1563,1556,1320`; merge origin/main; commit code; looks; short note to the Builder (frames changed: only inside both cover windows, judged frames same bytes; numbers; sheets).
+- If the sheets show a fault: tune at most two more takes (`mist`, `wait`, `fray`), else `git checkout src/stops/venus` and write why.
