@@ -1,9 +1,41 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T14:29:37.875Z",
+ "pushed": "2026-11-22T14:40:58.971Z",
  "head": "d8ec4ddf25e485d0fe8df62f25c8791117493105",
- "note": "Sun: final proof chain for CUT34 on agent/sun d8ec4ddf (main a60c5ffd); hook take 3 strip, flash onset",
+ "note": "Sun: finals of the CUT34 proof on agent/sun d8ec4ddf (main a60c5ffd): hook take 3 and the leave at 495",
  "looks": [
+  {
+   "time": "2026-11-22T14:40:58.392Z",
+   "file": "20261122144058392-note-c35-final-495-limb-x3.jpg",
+   "source": "out/work/sun/hk3/c35-final-495-limb-x3.jpg",
+   "kind": "note",
+   "label": "Final 495 left limb at 3 times: round 33 head left, new leave right, agent/sun d8ec4ddf (main a60c5ffd)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T14:40:57.803Z",
+   "file": "20261122144057803-note-c35-final-495-native.jpg",
+   "source": "out/work/sun/hk3/c35-final-495-native.jpg",
+   "kind": "note",
+   "label": "Final 495 native: round 33 head left, new leave right, agent/sun d8ec4ddf (main a60c5ffd)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T14:40:57.224Z",
+   "file": "20261122144057224-note-r33-60-arch-pair.jpg",
+   "source": "out/work/sun/hk3/r33-60-arch-pair.jpg",
+   "kind": "note",
+   "label": "Final 60 native, the arch: round 33 head 969a8a6 left, take 3 right, agent/sun d8ec4ddf (main a60c5ffd)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T14:40:56.604Z",
+   "file": "20261122144056604-note-c35-finals-0-30-60-90.jpg",
+   "source": "out/work/sun/hk3/c35-finals-0-30-60-90.jpg",
+   "kind": "note",
+   "label": "Hook take 3, finals 0, 30, 60, 90, agent/sun d8ec4ddf (main a60c5ffd)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T14:29:36.570Z",
    "file": "20261122142936570-note-c35-flash-onset.jpg",
@@ -26,44 +58,6 @@
    "source": "out/work/sun/hk3/m1-486-full-x3.jpg",
    "kind": "note",
    "label": "Sun leave 486 left limb at 3 times, draft: before (4f72047d) and after the refit. Working tree on agent/sun 400cba54 with main 677e7286",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:13:02.943Z",
-   "file": "20261122141302943-note-m1-495-full-x3.jpg",
-   "source": "out/work/sun/hk3/m1-495-full-x3.jpg",
-   "kind": "note",
-   "label": "Sun leave 495 left limb at 3 times, draft: before (4f72047d) and after the refit: the band outside the plate's limb is gone, the burnt loops have no steps. Working tree on agent/sun 400cba54 with main 677e7286",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:13:02.301Z",
-   "file": "20261122141302301-note-m1-sheet.jpg",
-   "source": "out/work/sun/hk3/m1-sheet.jpg",
-   "kind": "note",
-   "label": "Sun leave 486, 490, 495, drafts: plate off before and after, full before and after. The plate's aim had turned 25 degrees since my fit; refit to the cone of today's aim, exact linear fit, corona warped with it. Working tree on agent/sun 400cba54 with main 677e7286, uncommitted",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T13:56:46.490Z",
-   "file": "20261122135646490-job-frame-00090.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T13:48:24.054Z",
-   "file": "20261122134824054-note-c34-final-60-native.jpg",
-   "source": "out/work/sun/hk3/c34-final-60-native.jpg",
-   "kind": "note",
-   "label": "final 60 native crop, the outer strand with sky between, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
