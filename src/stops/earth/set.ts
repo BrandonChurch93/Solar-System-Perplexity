@@ -8,7 +8,7 @@ import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { Aurora } from './aurora'
 import { patches } from './assets'
-import { Veil } from './veil'
+import { Veil, type Deck } from './veil'
 import { Globe, direction } from './globe'
 import { Moon } from './moon'
 import { Ground, type GroundDef } from './relief'
@@ -41,14 +41,14 @@ export const createSet: SetFactory = async (ctx) => {
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
   const glow = await ctx.texture(base + 'air-glow.png', { srgb: false, mips: false, repeat: true, flipY: false })
-  const air = new Air(look.air, glow, diagUniform)
+  const curtain = new Aurora(look.aurora, await ctx.texture(base + 'aurora.webp', { srgb: true, anisotropy: 4 }))
+  const air = new Air(look.air, glow, diagUniform, curtain)
   const shape = new THREE.Group()
   const m = look.shape
   shape.matrixAutoUpdate = false
   shape.matrix.set(m[0]![0]!, m[0]![1]!, m[0]![2]!, 0, m[1]![0]!, m[1]![1]!, m[1]![2]!, 0, m[2]![0]!, m[2]![1]!, m[2]![2]!, 0, 0, 0, 0, 1)
   const unshape = new THREE.Matrix3().setFromMatrix4(shape.matrix).invert()
-  const curtain = new Aurora(look.aurora, await ctx.texture(base + 'aurora.webp', { srgb: true, anisotropy: 4 }), diagUniform)
-  shape.add(globe.mesh, air.mesh, curtain.mesh)
+  shape.add(globe.mesh, air.mesh)
   orbit.add(shape)
   const tilt = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const untilt = tilt.clone().invert()
@@ -87,6 +87,12 @@ export const createSet: SetFactory = async (ctx) => {
   const turn = new THREE.Quaternion()
   const seaCentre = new THREE.Vector3().fromArray(reliefJson.nadir).normalize().multiplyScalar(reliefJson.radius + 1)
   const sea = { nadir: new THREE.Vector3(), alpha: 0 }
+  const upAt = seaCentre.clone().normalize().negate()
+  const east = new THREE.Vector3().crossVectors(upAt, new THREE.Vector3(0, 0, 1)).normalize()
+  const lay = new THREE.Matrix4().makeBasis(east, new THREE.Vector3().crossVectors(upAt, east), upAt).transpose()
+  const wisps = { ...look.veil.near, eye: new THREE.Vector3(), turn: new THREE.Matrix3() }
+  const spin = new THREE.Matrix4()
+  const layer: Deck = { grain: look.veil.deck.grain, gain: look.veil.deck.gain, rush: 0, shade: 1, turn: new THREE.Matrix3() }
   const glowHome = new THREE.Vector3().fromArray(look.air.dir).normalize()
   const auroraHome = new THREE.Vector3().fromArray(look.aurora.eye).normalize()
   const stand = new THREE.Vector3()
@@ -106,26 +112,40 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const seg = state.segment
       let thin = 0
+      let grow = 0
       if (seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')) {
         const w = coverWindow(seg)!
         const centre = w.centerFrame / config.fps
         const from = w.firstFrame / config.fps - look.veil.lead
         const to = (w.lastFrame + 1) / config.fps + look.veil.tail[seg.kind === 'dive' ? 0 : 1]
-        thin = look.veil.peak * (state.time < centre ? smooth((state.time - from) / (centre - from)) : smooth((to - state.time) / (to - centre)))
+        const full = seg.kind === 'dive' ? (w.firstFrame + look.veil.full * (w.lastFrame + 1 - w.firstFrame)) / config.fps : centre
+        grow = (state.time - from) / (full - from)
+        thin = look.veil.peak[seg.kind === 'dive' ? 0 : 1] * (state.time < centre ? smooth((state.time - from) / (full - from)) : smooth((to - state.time) / (to - centre)))
       }
       if (!inOrbit) {
         back.copy(state.rotation).invert()
         sea.nadir.copy(world.position).applyQuaternion(back).add(seaCentre)
         sea.alpha = Math.asin(Math.min(reliefJson.radius / sea.nadir.length(), 1))
         sea.nadir.normalize().applyQuaternion(state.rotation).applyQuaternion(turn.copy(shot.camera.quaternion).invert())
-        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim)
-        ground.update(state.time - terrainMid, gain, shot.post.vignette, view, eye.copy(world.position).applyQuaternion(back).negate())
+        eye.copy(world.position).applyQuaternion(back).negate()
+        wisps.eye.copy(eye).applyMatrix4(lay)
+        wisps.turn.setFromMatrix4(spin.makeRotationFromQuaternion(turn.copy(back).multiply(shot.camera.quaternion)).premultiply(lay))
+        veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, null, sea, look.veil.rim, seg.kind === 'dive' ? wisps : null)
+        ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eye)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
-      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim)
+      let deck: Deck | null = null
+      if (seg.stop === plan.id && seg.kind === 'dive') {
+        const k = look.veil.deck
+        layer.rush = smooth((grow - k.rush[0]) / (k.rush[1] - k.rush[0]))
+        layer.shade = 1 - smooth((grow - k.lit[0]) / (k.lit[1] - k.lit[0]))
+        layer.turn.setFromMatrix4(spin.makeRotationFromQuaternion(lean.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt).invert().multiply(back.copy(state.rotation).invert()).multiply(shot.camera.quaternion)))
+        deck = layer
+      }
+      veil.update(shot.cover, thin, shot.post.exposure, shot.camera.vfov, view.format.width / view.format.height, sunView.copy(light).applyQuaternion(turn.copy(shot.camera.quaternion).invert()), null, look.veil.rim, null, deck)
       camera.copy(world.position).negate()
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
@@ -141,6 +161,10 @@ export const createSet: SetFactory = async (ctx) => {
       const lights = 1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
+      const gone = ending ? 0 : smooth((state.time - plan.seg.rise.end - look.ebb[0]!) / (look.ebb[1]! - look.ebb[0]!))
+      const born = smooth((state.time - plan.seg.hold.start - look.onset[0]!) / (look.onset[1]! - look.onset[0]!)) * (1 - gone)
+      ;(gu.uAuroraColor!.value as THREE.Vector3).fromArray(look.globe.auroraColor).multiplyScalar(born)
+      gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
@@ -160,12 +184,12 @@ export const createSet: SetFactory = async (ctx) => {
       au.uPhysical!.value = Math.max(low, lit)
       au.uVignette!.value = shot.post.vignette * (1 - low)
       au.uAspect!.value = aspect
-      curtain.mesh.quaternion.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
-      stand.copy(auroraHome).applyQuaternion(curtain.mesh.quaternion)
-      curtain.mesh.quaternion.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
+      curtain.turn.setFromAxisAngle(upAxis, plan.spin(state.time)).premultiply(tilt).multiply(untilt)
+      stand.copy(auroraHome).applyQuaternion(curtain.turn)
+      curtain.turn.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
       const high = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
       sunLocal.copy(light).applyQuaternion(back)
-      curtain.update(plan.clock(state.time) - plan.holdMid, gain * state.weight * high, shot.post.vignette * (1 - low), aspect, away, sunLocal)
+      curtain.update(plan.clock(state.time) - plan.holdMid, high * born, sunLocal, 1 - (1 - look.onset[2]!) * (1 - born))
       moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (plan.clock(state.time) - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
@@ -173,14 +197,12 @@ export const createSet: SetFactory = async (ctx) => {
       globe.mesh.visible = visible
       air.mesh.visible = visible
       moon.mesh.visible = visible
-      curtain.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
       globe.dispose()
       air.dispose()
       moon.dispose()
-      curtain.dispose()
       far.dispose()
       veil.dispose()
       ground.dispose()

@@ -1,18 +1,21 @@
 import * as THREE from 'three'
 import { config } from '../../../src/config'
-import { StopPlan, type Fit, type MoveParams } from '../../../src/director/moves'
-import fit from '../../../src/stops/earth/fit.json'
-import { params } from '../../../src/stops/earth/plan'
+import type { MoveParams } from '../../../src/director/moves'
+import type { Tune } from '../../../src/stops/earth/plan'
 import relief from '../../../src/stops/earth/relief.json'
 
 const arg = (name: string, d: string): string => {
   const i = process.argv.indexOf('--' + name)
   return i >= 0 ? process.argv[i + 1]! : d
 }
+const { Plan, timing, params } = (await import(process.env.EARTH_PLAN ?? '../../../src/stops/earth/plan')) as typeof import('../../../src/stops/earth/plan')
 const over = JSON.parse(arg('set', '{}')) as Record<string, Record<string, unknown>>
 const merged = { ...params } as unknown as Record<string, unknown>
-for (const [k, v] of Object.entries(over)) merged[k] = typeof v === 'object' && !Array.isArray(v) ? { ...(merged[k] as object), ...v } : v
-const plan = new StopPlan('earth', fit as Fit, merged as unknown as MoveParams)
+for (const [k, v] of Object.entries(over)) merged[k] = v !== null && typeof v === 'object' && !Array.isArray(v) ? { ...(merged[k] as object), ...v } : v
+const tune = { ...timing } as unknown as Record<string, unknown>
+for (const [k, v] of Object.entries((over.tune ?? {}) as Record<string, object | null>)) tune[k] = v === null ? null : { ...(tune[k] as object), ...v }
+delete merged.tune
+const plan = new Plan(merged as unknown as MoveParams, tune as unknown as Tune)
 const frames = arg('frames', '').split(',').filter(Boolean).map(Number)
 const W = 1920
 const H = 1080

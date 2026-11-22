@@ -24,11 +24,14 @@ FILL = 27
 MEND = 8
 WHITE = (0.2, 0.5, 0.1, 0.4)
 BASE = 'assets-src/sun/terrain/base90.jpg'
+FILM = 'assets-src/sun/terrain/film90.jpg'
 NATIVE = 'references/approved/sun-close.jpg'
 PEAK = 5
 UNDER = 0.88
 CUT = (5.0, 7.0)
 NEAR = (0.9, 1.8)
+BLOOM = dict(share=0.8, half=(330, 140), drop=10, soft=0.35, sigma=12, pad=40, top=0.985)
+STREAK = dict(row=1154, half=36, band=(80, 68), edge=10, line=121, share=50, box=41, most=0.9, left=(790, 850), right=(1040, 1100))
 
 
 def elevation(w, h):
@@ -66,6 +69,27 @@ def loop_mask(a2, c2):
     return cv2.resize(m, (a2.shape[1], a2.shape[0]), interpolation=cv2.INTER_LINEAR)
 
 
+def streak(part, look=STREAK):
+    C, H, B = look['row'], look['half'], look['band']
+    r0, r1 = C - B[0], C + B[1]
+    L = part[r0:r1]
+    lum = L @ LUM
+    even = ndi.percentile_filter(lum, look['share'], size=(1, look['line']), mode='nearest')
+    rows = np.arange(r0, r1, dtype=np.float32) - C
+    out = np.abs(rows) >= H
+    fit = np.polyfit(rows[out] / B[0], even[out], 2)
+    x = (rows / B[0])[:, None]
+    base = fit[0][None, :] * x * x + fit[1][None, :] * x + fit[2][None, :]
+    win = 0.5 + 0.5 * np.cos(np.clip((np.abs(rows) - H + look['edge']) / look['edge'], 0, 1) * np.pi)[:, None]
+    st = cv2.GaussianBlur(cv2.blur(np.maximum(even - base, 0) * win, (look['box'], 1)), (0, 0), 2)
+    cols = np.arange(L.shape[1], dtype=np.float32)[None, :]
+    st *= np.maximum(1 - np.clip((cols - look['left'][0]) / (look['left'][1] - look['left'][0]), 0, 1), np.clip((cols - look['right'][0]) / (look['right'][1] - look['right'][0]), 0, 1))
+    taken = np.zeros_like(part)
+    taken[r0:r1] = L * np.minimum(st / np.maximum(lum, 1e-5), look['most'])[..., None]
+    part[r0:r1] = L - taken[r0:r1]
+    return taken
+
+
 def boxed(shape):
     h, w = shape
     box = np.zeros((h, w), dtype=np.float32)
@@ -97,13 +121,23 @@ def main():
     for fx, fy in FEET:
         fan = step(fy * 3168 - Y2, -16, 40)[:, None] * (1 - step(np.abs(X2 - fx * 5632), FAN[0], FAN[1]))[None, :]
         fans = np.maximum(fans, fan.astype(np.float32))
+    bloom = np.zeros((3168, 5632), dtype=np.float32)
+    for fx, fy in FEET:
+        r = np.hypot((X2[None, :] - fx * 5632) / BLOOM['half'][0], (Y2[:, None] - fy * 3168 - BLOOM['drop']) / BLOOM['half'][1])
+        bloom = np.maximum(bloom, (1 - step(r, BLOOM['soft'], 1.0)).astype(np.float32))
+    by, bx = np.nonzero(bloom)
+    box = np.s_[max(by.min() - BLOOM['pad'], 0):by.max() + BLOOM['pad'], max(bx.min() - BLOOM['pad'], 0):bx.max() + BLOOM['pad']]
+    del by, bx
     lit = np.clip(cv2.GaussianBlur(a, (0, 0), LIT[0]) / (cv2.GaussianBlur(c, (0, 0), LIT[0]) + 0.02), 1, LIT[1]) - 1
     lit = cv2.GaussianBlur(lit * ((1 - step(el, LIT[2], LIT[3])) * (1 - fans) * m)[..., None], (0, 0), 10)
+    lit *= (1 - BLOOM['share'] * bloom)[..., None]
     lit = to_linear(np.round(to_srgb(lit / LIT[1]) * 255) / 255).astype(np.float32) * LIT[1]
     c *= 1 + lit
+    ground = None
     if os.path.exists(BASE):
         base = read(BASE)
         drawn = scene(cv2.resize(base, (5632, 3168), interpolation=cv2.INTER_CUBIC).astype(np.float32) / 255)
+        ground = drawn[box].copy()
         opened = cv2.morphologyEx(base, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (STARS[0], STARS[0])))
         spark = cv2.GaussianBlur(np.maximum(base.astype(np.float32) - opened, 0) / 255, (0, 0), 1)
         white = 1 - step((spark[..., 0] - spark[..., 2]) / (spark[..., 0] + 0.02), WHITE[0], WHITE[1])
@@ -131,15 +165,31 @@ def main():
     wide_m = cv2.dilate((m > 0.02).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (WIDEN, WIDEN)))
     wide_m = np.clip(cv2.GaussianBlur(wide_m, (0, 0), WIDEN / 4) * 1.5 - 0.25, 0, 1) * boxed(wide_m.shape)
     loops = np.minimum(on_ground * (m * (1 - sky))[..., None] + on_sky * (np.maximum(m, wide_m) * sky)[..., None], a * 0.98)
+    if ground is not None:
+        veil = cv2.GaussianBlur(a[box] - ground - loops[box], (0, 0), BLOOM['sigma']) * bloom[box][..., None]
+        print('bloom veil at the feet, scene mean in the zone', (veil[bloom[box] > 0.5].mean(0)).round(3).tolist(), 'added', (np.maximum(veil, 0)[bloom[box] > 0.5].mean(0)).round(3).tolist(), 'taken', (np.minimum(veil, 0)[bloom[box] > 0.5].mean(0)).round(3).tolist(), 'peak', round(float(veil.max()), 3), round(float(veil.min()), 3))
+        loops[box] = np.clip(loops[box] + veil, 0, np.maximum(loops[box], a[box] * 0.98))
+        if os.path.exists(FILM):
+            seen = cv2.resize(read(FILM), (5632, 3168), interpolation=cv2.INTER_CUBIC)[box].astype(np.float32) / 255
+            miss = cv2.GaussianBlur(da[box] - seen, (0, 0), BLOOM['sigma']) * bloom[box][..., None]
+            now = display(ground + loops[box])
+            print('film at the feet, approved minus film in the zone, levels', (miss[bloom[box] > 0.5].mean(0) * 255).round(2).tolist(), 'mean abs', (np.abs(miss)[bloom[box] > 0.5].mean(0) * 255).round(2).tolist())
+            loops[box] = np.clip(loops[box] + scene(np.clip(now + miss, 0, np.maximum(now, BLOOM['top']))) - scene(now), 0, np.maximum(loops[box], a[box] * 0.98))
+            del seen, miss, now
+        del veil, ground
     baked = lit
-    del on_ground, on_sky, d, warm, strands, sky, a
+    del on_ground, on_sky, d, warm, strands, sky, a, bloom
     ring = (wide_m > 0.05) & (wide_m < 0.6)
     print('clean take against approved in the ring', [round(float(dc[..., k][ring].mean() / da[..., k][ring].mean()), 3) for k in range(3)])
     clean = da + (dc - da) * wide_m[..., None]
     cv2.imwrite(f'{WORK}/loops-mask-wide.png', (wide_m * 255).astype(np.uint8))
     del da, dc, wide_m, ring
     x0, y0, x1, y1 = LOOPS_BOX
-    crop = display(loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
+    part = loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)]
+    taken = streak(part)
+    print('streak taken out of the loops card, scene peak', float(taken.max()), 'sum', float(taken.sum()))
+    del taken
+    crop = display(part)
     spill = to_srgb(baked[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)] / LIT[1]).astype(np.float32)
     del loops, baked
     write(f'{OUT}/full/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 4, spill.shape[0] // 4), interpolation=cv2.INTER_AREA))
@@ -215,6 +265,7 @@ def main():
     ground = step(Y[:, None] - edge[None, :], -14, 4).astype(np.float32)
     np.save(f'{WORK}/canvas-edge.npy', edge)
     s = scene(canvas)
+    np.save(f'{WORK}/clean-half.npy', cv2.resize(s, (w // 2, h // 2), interpolation=cv2.INTER_AREA))
     del canvas, lum, body, hit
     band = (above > 0.8) & (above < 2.0) & (ground < 0.01)
     r, g, b = s[..., 0][band], s[..., 1][band], s[..., 2][band]

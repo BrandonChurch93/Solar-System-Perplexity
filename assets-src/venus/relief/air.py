@@ -19,6 +19,12 @@ LINE = 25
 SEAM = 1.0
 CLEAN = (30, 390, 100, 1300)
 DONOR = 0.7
+LANE = (0.0, 8.0)
+SHIFT = (300, 137)
+AMP = 1.4
+LUMA = np.array([0.3, 0.5, 0.2])
+PALE = (0.12, 0.35)
+OVER = (30.0, 2.0, 5.0, 1.0, 3.0)
 
 
 def to_linear(a):
@@ -72,7 +78,7 @@ def smooth(a, b, x):
     return t * t * (3 - 2 * t)
 
 
-def main(base=None, sky_gain=10.0):
+def main(base=None, seen=None):
     A = scene('references/approved/venus-close.jpg')
     yy, xx = np.mgrid[0:AH, 0:AW].astype(np.float32)
     el = elevation(rays(xx + 0.5 + MX, yy + 0.5))
@@ -95,6 +101,16 @@ def main(base=None, sky_gain=10.0):
         raw = cv2.warpAffine(raw.astype(np.float32), np.float32([[1, 0, -dx], [0, 1, -dy]]), (AW, AH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
         B = calm_limb(raw[rows, cols], hz)
     air = np.maximum(As - B, 0)
+    if seen:
+        got = cv2.warpAffine(scene(seen).astype(np.float32), np.float32([[1, 0, -dx], [0, 1, -dy]]), (AW, AH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        level = lambda v: to_srgb(film(v)) * 255
+        low = lambda v: cv2.GaussianBlur(v.astype(np.float32), (0, 0), OVER[0])
+        over = low(np.clip(level(got[rows, cols]) - level(A_sky), -OVER[4], OVER[4]))
+        w = ((1 - smooth(CUT[0], 2 * CUT[0], air @ LUMA)) * smooth(OVER[1], OVER[2], el))[..., None]
+        goal = unfilm(to_linear(np.clip(level(As) - OVER[3] * over, 0, 255) / 255))
+        air = np.maximum(air - (As - goal) * w, 0)
+        box = (slice(0, AH * 260 // 1080), slice(0, AW * 600 // 1920))
+        print('film over the approved in the dim sky, levels, top left box mean', (over * w)[box].mean((0, 1)).tolist(), 'weight', float(w[box].mean()))
     u = up()
     fwd = np.array([0.0, 0.0, -1.0]) + u * u[2]
     fwd /= np.linalg.norm(fwd)
@@ -121,7 +137,7 @@ def main(base=None, sky_gain=10.0):
         cv2.imwrite(f'{OUT}{key}/relief-air.png', img[..., ::-1])
     cv2.imwrite(W + 'air-preview.png', img[..., ::-1])
 
-    lum = air @ np.array([0.3, 0.5, 0.2])
+    lum = air @ LUMA
     cut = CUT[2] * smooth(CUT[0], CUT[1], lum)
     raw = np.maximum(A - As, 0)
     gate = (1 - smooth(0.55, 0.9, cut / CUT[2]))[..., None]
@@ -131,20 +147,25 @@ def main(base=None, sky_gain=10.0):
     tile = np.concatenate([tile, tile[:, ::-1]], 1)
     tile = np.concatenate([tile[::-1], tile], 0)
     donor = np.tile(tile, (AH // tile.shape[0] + 2, AW // tile.shape[1] + 2, 1))[70:70 + AH, 500:500 + AW]
-    stars = raw * np.minimum(1 / (1 - cut), 3)[..., None] * gate + donor * (1 - gate) * DONOR
+    tint = raw[y0:y1, x0:x1].mean((0, 1))
+    tint = tint / (tint @ LUMA)
+    pale = smooth(PALE[0], PALE[1], cut)[..., None]
+    raw = raw * (1 - pale) + (raw @ LUMA)[..., None] * tint * pale
+    stars = raw * np.minimum(1 / (1 - cut), AMP)[..., None] * gate + donor * (1 - gate) * DONOR
     line = np.maximum((el > SEAM).sum(0) - 1, 0)[None, :]
     under = yy.astype(np.int64) - line
-    src = np.clip(np.where(under > 0, line - under, yy.astype(np.int64)), 0, AH - 1)
-    stars = stars[src, cols] * (1 - smooth(MIRROR * 0.5, MIRROR, under.astype(np.float32)))[..., None]
+    depth = under.astype(np.float32)
+    moved = stars[np.abs(yy.astype(np.int64) - SHIFT[0]), np.abs(cols - SHIFT[1])]
+    lane = np.maximum(smooth(LANE[0], LANE[1], depth)[..., None], 1 - gate)
+    stars = (stars * (1 - lane) + moved * lane) * (1 - smooth(MIRROR * 0.5, MIRROR, depth))[..., None]
     px_, py_ = round(AW * MARGIN), round(AH * MARGIN)
     wide = np.pad(stars, ((py_, py_), (px_, px_), (0, 0)), mode='symmetric')
     im = Image.fromarray((to_srgb(film(wide)) * 255 + 0.5).astype(np.uint8))
-    im.save(f'{OUT}full/sky-terrain.webp', lossless=True, quality=90, method=6)
-    im.resize((im.size[0] // 2, im.size[1] // 2), Image.LANCZOS).save(f'{OUT}web/sky-terrain.webp', lossless=True, quality=90, method=6)
+    im.save('assets-src/venus/sky/uncorrected/sky-terrain.webp', lossless=True, quality=90, method=6)
     recon = film(air + stars * (el > 0)[..., None] * (1 - cut[..., None]) + B)
     cv2.imwrite(W + 'stars-preview.jpg', cv2.resize((to_srgb(film(stars * 10 * 0.4))[..., ::-1] * 255).astype(np.uint8), (AW // 2, AH // 2), interpolation=cv2.INTER_AREA))
     cv2.imwrite(W + 'air-recon.jpg', cv2.resize((to_srgb(recon)[..., ::-1] * 255).astype(np.uint8), (AW // 2, AH // 2), interpolation=cv2.INTER_AREA))
     print('air max', float(air.max()), 'stars share', float((stars.sum(-1) > 0.01).mean()))
 
 
-main(sys.argv[1] if len(sys.argv) > 1 else None)
+main(sys.argv[1] if len(sys.argv) > 1 else None, sys.argv[2] if len(sys.argv) > 2 else None)

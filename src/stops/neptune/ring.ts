@@ -17,6 +17,7 @@ export interface RingParams {
   bandUnit: [number, number, number]
   bandHold: [number, number, number]
   bandAway: [number, number, number]
+  grain?: { map: THREE.Texture; repeat: [number, number]; fine: number; amount: number; top: number }
 }
 
 const VERT = /* glsl */ `
@@ -49,11 +50,13 @@ uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
 uniform float uHome;
+uniform sampler2D uGrain;
+uniform vec4 uGrainShape;
+uniform float uGrainTop;
 in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   float r = length(vLocal.xy);
   float az = atan(vLocal.y, vLocal.x) - uTurn;
   vec2 uv = vec2(az / 6.283185307 + 0.5, (r - uRange.x) / (uRange.y - uRange.x));
@@ -65,6 +68,12 @@ void main() {
   vec3 band = textureGrad(uBands, uv, gx * fine, gy * fine).rgb;
   band = mix(band, sqrt(band), uEnd.x);
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
+  for (int k = 0; k < (uGrainShape.w > 0.0 ? 1 : 0); k++) {
+    vec2 coarse = uGrainShape.xy;
+    vec2 fine = coarse * uGrainShape.z;
+    float g = textureGrad(uGrain, uv * coarse, gx * coarse, gy * coarse).r * textureGrad(uGrain, uv * fine + 0.37, gx * fine, gy * fine).r * uGrainTop * uGrainTop;
+    strands *= mix(1.0, g, uGrainShape.w);
+  }
   float edge = smoothstep(uRange.x, uRange.x + 0.03, r) * (1.0 - smoothstep(uRange.y - 0.03, uRange.y, r));
   vec3 q = vLocal + uCentre;
   float b = dot(q, uSunL);
@@ -74,6 +83,7 @@ void main() {
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
   outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Ring {
@@ -87,9 +97,11 @@ export class Ring {
   private readonly bandAway: [number, number, number]
   private readonly centre: THREE.Vector3
   private readonly untilt = new THREE.Quaternion()
+  private readonly grain: number
 
   constructor(p: RingParams) {
     this.gain = p.gain
+    this.grain = p.grain?.amount ?? 0
     this.bandUnit = p.bandUnit
     this.bandHold = p.bandHold
     this.bandAway = p.bandAway
@@ -103,6 +115,7 @@ export class Ring {
         uColor: { value: new THREE.Vector3().fromArray(p.color) }, uGain: { value: 1 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uForward: { value: new THREE.Vector2(p.forward, p.forwardPower) }, uTurn: { value: 0 }, uRange: { value: new THREE.Vector2(p.inner, p.outer) }, uCentre: { value: new THREE.Vector3() },
         uHome: { value: 1 },
+        uGrain: { value: p.grain?.map ?? p.bands }, uGrainShape: { value: new THREE.Vector4(p.grain?.repeat[0] ?? 1, p.grain?.repeat[1] ?? 1, p.grain?.fine ?? 1, 0) }, uGrainTop: { value: p.grain?.top ?? 1 },
       },
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending,
@@ -132,6 +145,7 @@ export class Ring {
     const bands = u.uBandGain!.value as THREE.Vector3
     for (let k = 0; k < 3; k++) bands.setComponent(k, this.bandUnit[k]! * (this.bandAway[k]! + (this.bandHold[k]! - this.bandAway[k]!) * home))
     u.uHome!.value = home
+    ;(u.uGrainShape!.value as THREE.Vector4).w = this.grain * (1 - home)
     u.uGain!.value = gain * this.gain
   }
 
@@ -148,5 +162,6 @@ export class Ring {
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
     ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
     ;(u.uEndCrisp!.value as THREE.Vector2).set(e.crisp[0]!, e.crisp[1]!)
+    ;(u.uGrainShape!.value as THREE.Vector4).w *= 1 - end
   }
 }

@@ -87,3 +87,34 @@ def pixel_grid(w, h, step=1):
     xs = np.arange(step / 2, w, step)
     ys = np.arange(step / 2, h, step)
     return np.meshgrid(xs, ys)
+
+
+def band_tangent(img, k):
+    import cv2
+    y = cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32), (0, 0), 1.5 * k)
+    gx = cv2.Sobel(y, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(y, cv2.CV_32F, 0, 1, ksize=3)
+    jxx, jxy, jyy = (cv2.GaussianBlur(v, (0, 0), 8.0 * k) for v in (gx * gx, gx * gy, gy * gy))
+    ang = 0.5 * np.arctan2(2 * jxy, jxx - jyy)
+    return -np.sin(ang), np.cos(ang)
+
+
+def calm(img, where, k=1.0, steps=(1.5, 3, 4.5, 6, 8, 10), knee=(16.0, 34.0), wide=0.75, gain=1.9, room=4.0, grey=0.7, near=5.0):
+    import cv2
+    h, w = img.shape[:2]
+    tx, ty = band_tangent(img, k)
+    f = img.astype(np.float32)
+    xs, ys = np.meshgrid(np.arange(w, dtype=np.float32), np.arange(h, dtype=np.float32))
+    med = np.median(np.stack([cv2.remap(f, xs + g * s * k * tx, ys + g * s * k * ty, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for s in steps for g in (-1, 1)]), axis=0)
+    lw = np.array([0.0722, 0.7152, 0.2126], np.float32)
+    e = f - med
+    el = e @ lw
+    ml = med @ lw
+    n = int(round(near * k)) * 2 + 1
+    cap = np.maximum(cv2.dilate(cv2.GaussianBlur(ml, (0, 0), 0.8 * k), np.ones((n, n), np.uint8)) - ml, 0) + room
+    t = np.clip((el - knee[0]) / (knee[1] - knee[0]), 0, 1)
+    wgt = t * t * (3 - 2 * t) * where
+    e = e * (1 - grey) + el[..., None] * grey
+    spread = cv2.GaussianBlur(e * wgt[..., None], (0, 0), wide * k) * gain
+    out = f - (f - med) * wgt[..., None] + spread * np.minimum(1.0, cap / np.maximum(spread @ lw, 1e-3))[..., None]
+    return np.clip(out, 0, 255), float((wgt > 0.5).sum() / max(float((where > 0.5).sum()), 1.0))
