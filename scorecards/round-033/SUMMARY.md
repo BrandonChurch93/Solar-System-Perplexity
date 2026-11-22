@@ -90,12 +90,14 @@ A score row passes with 9 and no severe or major issue. That is the row alone, n
 
 | Scope | Controls (a) | Judged (a) | R2 |
 | --- | --- | --- | --- |
-| venus | 4 of 10 | 4 of 10 | pass |
-| saturn | 2 of 10 | 1 of 10 | pass |
+| venus | 5 of 10 | 4 of 10 | pass |
+| saturn | 5 of 10 | 1 of 10 | fail |
+
+R2 controls: the stop's first round (venus 12, saturn 13).
 
 Votes (a = film or game cinematic); the judged share may be at most 0.2 under the control share.
 
-- Controls: saturn hold b b e d b; saturn terrain a a e b b; venus hold a a d a d; venus terrain a d d d d.
+- Controls of the stops: saturn hold b a e a b; saturn terrain a a e a b; venus hold a a d a d; venus terrain a a d d b.
 - Judged: saturn.hold b b e d b; saturn.terrain b a e b b; venus.hold b a d a d; venus.terrain a d d d a.
 
 ## R8
