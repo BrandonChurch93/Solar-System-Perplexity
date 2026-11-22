@@ -1,9 +1,47 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T12:39:13.807Z",
- "head": "2c85dde2160b1cb721145415032b8ace5b26fb9f",
- "note": "CUT33: finals of 615, 717, 870, 1016 on 2c85dde beside main; 495 lattice proof; why the star mask and the limb darkening of the Sun plate wait for round 34",
+ "pushed": "2026-11-22T12:58:05.991Z",
+ "head": "a782331d4e074bee7b4602cb9990656b06e0274f",
+ "note": "mercury after the cut of round 33: the leave at 1059 (swap against ladder), cure with the plate's own smear in work",
  "looks": [
+  {
+   "time": "2026-11-22T12:58:03.301Z",
+   "file": "20261122125803301-note-lv-step.jpg",
+   "source": "../../../../tmp/lv-step.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1058 1060 1062 at review, cure in (f76082f on main da02e63): the Sun leaves as one object",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:58:02.394Z",
+   "file": "20261122125802394-note-lv-native.jpg",
+   "source": "../../../../tmp/lv-native.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1064 and 1066 at review, 16 samples, 4x native, cure in (f76082f on main da02e63): small corona parts stand as a ladder of copies",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:58:01.148Z",
+   "file": "20261122125801148-note-c33d-leave.jpg",
+   "source": "../../../../tmp/c33d-leave.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1056 1058 1059 1062 1066 1072, draft, cut tree f189d77 (main da02e63): the Sun plate goes at 1059, the engine's flat sky Sun stands in its place to 1066",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T12:56:16.702Z",
+   "file": "20261122125616702-job-frame-00615.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T12:39:12.529Z",
    "file": "20261122123912529-note-m4d-sheet.jpg",
@@ -50,38 +88,6 @@
    "source": "../../../../tmp/c33-615.jpg",
    "kind": "note",
    "label": "frame 615 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:25:37.662Z",
-   "file": "20261122122537662-note-m2d-495-whole.jpg",
-   "source": "../../../../tmp/m2d-495-whole.jpg",
-   "kind": "note",
-   "label": "sun.travel 495: head 5b33a4d final over a draft with the plate's limb darkened (tree 5b33a4d plus patch, on main da02e63): the Sun globe's own ring and hatch at weight 0.3 show once my limb is darker; not taken for round 33",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:25:37.095Z",
-   "file": "20261122122537095-note-495-c-main-head.jpg",
-   "source": "../../../../tmp/495-c-main-head.jpg",
-   "kind": "note",
-   "label": "sun.travel 495 final, centre of the disc at native size: main c5c4248 | head 5b33a4d; bottom high pass gain 5",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:25:36.493Z",
-   "file": "20261122122536493-note-495-ur-main-head.jpg",
-   "source": "../../../../tmp/495-ur-main-head.jpg",
-   "kind": "note",
-   "label": "sun.travel 495 final, upper right of the disc at native size: top main c5c4248 (same engine as 9f5ad80) | head 5b33a4d on that main; bottom the same at high pass gain 5: main carries the hatched lattice, the head an irregular cell network",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T11:55:35.257Z",
-   "file": "20261122115535257-note-l6-sheet.jpg",
-   "source": "../../../../tmp/l6-sheet.jpg",
-   "kind": "note",
-   "label": "drafts 495 to 1050 of the limb law, tree 7f4c060 with the uncommitted left streak plate, main d5b851f",
    "stop": "mercury"
   },
   {
