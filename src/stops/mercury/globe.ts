@@ -133,6 +133,7 @@ uniform vec3 uWideEye;
 uniform vec3 uWideLens;
 uniform vec4 uWideBox;
 uniform vec4 uWideFade;
+uniform vec2 uWideOver;
 uniform vec2 uWideSize;
 uniform float uSink;
 uniform vec3 uHazeSun;
@@ -277,7 +278,11 @@ void main() {
   vec2 uvw = vec2(qw.x, 1.0 - qw.y);
   vec2 axw = dFdx(uvw);
   vec2 ayw = dFdy(uvw);
-  float ww = uCloseW * step(0.02, -wp.z) * step(uCloseLens.x, dot(dw, uWideEye)) * smoothstep(0.0, 1.0, min(min(qw.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
+  vec2 fold = step(uWideOver.y, uvw) * 2.0 - 1.0;
+  axw *= fold;
+  ayw *= fold;
+  uvw = uWideOver.y + abs(uvw - uWideOver.y);
+  float ww = uCloseW * step(0.02, -wp.z) * step(uCloseLens.x, dot(dw, uWideEye)) * smoothstep(0.0, 1.0, min(min(qw.x + uWideOver.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y + uWideOver.x)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
   for (int k = 0; k < (ww > 0.0 ? 1 : 0); k++) ww *= smoothstep(uWideFade.w, 1.0, textureGrad(uWideAlpha, uvw, axw, ayw).r);
   bool bare = max(wc, ww) < 1.0;
   float wu = atan(d.x, d.z) / (2.0 * PI) + 0.5;
@@ -411,7 +416,7 @@ export class Globe {
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
-        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
+        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -449,7 +454,8 @@ export class Globe {
     ;(u.uWideSize!.value as THREE.Vector2).set(size.width, size.height)
   }
 
-  reach(from: number, to: number, feather: number): void {
+  reach(from: number, to: number, feather: number, over: readonly [number, number]): void {
+    ;(this.material.uniforms.uWideOver!.value as THREE.Vector2).set(over[0], over[1])
     const fade = this.material.uniforms.uWideFade!.value as THREE.Vector4
     fade.x = feather
     fade.y = from
