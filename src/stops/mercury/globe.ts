@@ -14,7 +14,7 @@ export interface GlobeLight {
   reliefNear: number
   reliefDay: number
   reliefRange: [number, number]
-  silhouette: { amp: number; floor: number; taps: number; fade: [number, number] }
+  silhouette: { amp: number; floor: number; taps: number; fade: [number, number]; wide: [number, number] }
   nightFlat: number
   nightDetail: number
   nightVeil: number
@@ -22,7 +22,8 @@ export interface GlobeLight {
   nightSoft: [number, number, number, number]
   dusk: { from: number; range: [number, number, number, number] }
   edge: number
-  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
+  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number; nearGain: number; toLight: number; after: number }
+  line: { dir: [number, number, number]; gain: number; width: [number, number]; side: [number, number]; sun: [number, number, number, number]; dip: number; dipWidth: [number, number]; dipSun: [number, number]; dipTight: [number, number, number] }
   glareGate: [number, number, number]
   glareLens: [number, number]
   nightAfter: number
@@ -151,15 +152,23 @@ uniform vec4 uDusk;
 uniform float uDuskFrom;
 uniform vec2 uReliefRange;
 uniform vec3 uSil;
+uniform vec2 uSilWide;
 uniform vec3 uPlain;
 uniform float uEdge;
 uniform vec3 uRimColor;
-uniform float uRimWide;
+uniform vec2 uRimWide;
+uniform float uRimSpill;
 uniform vec3 uRimDir;
 uniform vec3 uGlareW;
 uniform vec3 uGlareGate;
 uniform float uGlareLens;
 uniform vec2 uRimWidth;
+uniform vec4 uLine;
+uniform vec4 uLineDip;
+uniform vec3 uLineW;
+uniform vec2 uLineSide;
+uniform vec4 uLineSun;
+uniform vec3 uLineTight;
 uniform mat3 uBodyToWorld;
 uniform vec3 uCenter;
 uniform vec3 uSunW;
@@ -229,7 +238,9 @@ void main() {
     float w = max(uSil.z * px, uHeightStep);
     float hh = 0.0;
     for (int i = -2; i <= 2; i++) hh += heightAt(normalize(dl + tl * (w * float(i))));
-    crest = uSil.x * max(hh / 5.0 - uSil.y, 0.0);
+    float wide = 0.0;
+    for (int i = 1; i <= 4; i++) wide += heightAt(normalize(dl + tl * (w * uSilWide.x * float(i)))) + heightAt(normalize(dl - tl * (w * uSilWide.x * float(i))));
+    crest = uSil.x * max(hh / 5.0 - mix(uSil.y, wide / 8.0, uSilWide.y), 0.0);
   }
   float cov = c > 0.0 ? clamp(0.5 + (1.0 - uSink + crest - s) / (px * uEdge), 0.0, 1.0) : 1.0;
   if (c > 0.0 && b > 0.0) cov = 0.0;
@@ -243,8 +254,8 @@ void main() {
   vec3 d = spinY(n * uBodyToWorld, uSpin);
   if (c > 0.0 && b < 0.0 && cov < 1.0) {
     vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim);
-    float fall = exp(-out1 / uRimWidth.x) + uRimWide * exp(-out1 / uRimWidth.y);
-    rim = uRimColor * lit * fall * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
+    float fall = uRimWide.x * exp(-out1 / uRimWidth.x) + uRimWide.y * exp(-out1 / uRimWidth.y);
+    rim = uRimColor * lit * fall * uRimSpill * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
   }
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   vec2 ndc = vClip.xy / vClip.z;
@@ -348,7 +359,12 @@ ${PATCH_LEVELS}
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), uLift.x, uLift.y);
-  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu), toward) * (1.0 + lift);
+  float inn = c > 0.0 ? max(1.0 - uSink + crest - s, 0.0) : 1.0;
+  float side = smoothstep(uLineSide.x, uLineSide.y, dot(n, uLineW)) * smoothstep(uLineSun.x, uLineSun.y, ndl0);
+  float kick = side * (1.0 - smoothstep(uLineSun.z, uLineSun.w, ndl0));
+  float tight = mix(1.0, uLineTight.z, smoothstep(uLineTight.x, uLineTight.y, ndl0));
+  float brim = (1.0 - uLine.w * max(smoothstep(uLineDip.z, uLineDip.w, ndl0), side) * (1.0 - smoothstep(uLineDip.x * tight, uLineDip.y * tight, inn))) * (1.0 + uLine.x * kick * (1.0 - smoothstep(uLine.y, uLine.z, inn)));
+  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu) * brim, toward) * (1.0 + lift);
   vec3 ground = inverseFilmic(albedo);
   float band = smoothstep(uDusk.x, uDusk.y, ndl0) * (1.0 - smoothstep(uDusk.z, uDusk.w, ndl0));
   vec3 calm = ground;
@@ -379,6 +395,9 @@ export class Globe {
   private readonly center = new THREE.Vector3()
   private readonly edge: number
   private readonly rim: [number, number]
+  private readonly toLight: number
+  private readonly lit = new THREE.Vector3()
+  private readonly line: [number, number, number, number]
   private readonly axis = new THREE.Vector3()
   private readonly q = new THREE.Quaternion()
 
@@ -387,6 +406,8 @@ export class Globe {
     const l = o.light
     this.edge = l.edge
     this.rim = [l.rim.width, l.rim.wide]
+    this.toLight = l.rim.toLight
+    this.line = [l.line.width[0], l.line.width[1], l.line.dipWidth[0], l.line.dipWidth[1]]
     if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
     const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
     const scale = (i: number): number => {
@@ -423,10 +444,10 @@ export class Globe {
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
-        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) },
+        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
-        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
+        uRimWide: { value: new THREE.Vector2(l.rim.nearGain, l.rim.wideGain) }, uRimSpill: { value: 1 }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) }, uLine: { value: new THREE.Vector4(l.line.gain, l.line.width[0], l.line.width[1], l.line.dip) }, uLineDip: { value: new THREE.Vector4(l.line.dipWidth[0], l.line.dipWidth[1], l.line.dipSun[0], l.line.dipSun[1]) }, uLineW: { value: new THREE.Vector3(1, 0, 0) }, uLineSide: { value: new THREE.Vector2().fromArray(l.line.side) }, uLineSun: { value: new THREE.Vector4().fromArray(l.line.sun) }, uLineTight: { value: new THREE.Vector3().fromArray(l.line.dipTight) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
@@ -517,6 +538,10 @@ export class Globe {
     ;(u.uKnee!.value as THREE.Vector2).set(knee[0], knee[1])
   }
 
+  spill(amount: number): void {
+    this.material.uniforms.uRimSpill!.value = amount
+  }
+
   night(dim: number, shoulder: number): void {
     this.material.uniforms.uNightDim!.value = dim
     ;(this.material.uniforms.uShoulder!.value as THREE.Vector2).y = shoulder
@@ -537,6 +562,12 @@ export class Globe {
     u.uGain!.value = gain
     u.uWeight!.value = weight
     ;(u.uRimWidth!.value as THREE.Vector2).set(this.rim[0] * rim, this.rim[1] * rim)
+    const line = u.uLine!.value as THREE.Vector4
+    line.y = this.line[0] * rim
+    line.z = this.line[1] * rim
+    const dip = u.uLineDip!.value as THREE.Vector4
+    dip.x = this.line[2] * rim
+    dip.y = this.line[3] * rim
     u.uEdge!.value = this.edge * Math.max(gradUniform.value, 0.35)
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
@@ -547,9 +578,15 @@ export class Globe {
     ;(u.uGlareW!.value as THREE.Vector3).copy(glare).normalize()
     u.uGlareLens!.value = lens
     const dir = u.uRimDir!.value as THREE.Vector3
+    const lit = this.lit.copy(sun).addScaledVector(axis, -sun.dot(axis))
     dir.copy(glare).addScaledVector(axis, -glare.dot(axis))
-    if (dir.lengthSq() < 1e-6) dir.copy(sun).addScaledVector(axis, -sun.dot(axis))
+    if (dir.lengthSq() < 1e-6) dir.copy(lit)
     dir.normalize()
+    if (lit.lengthSq() > 1e-6) dir.lerp(lit.normalize(), this.toLight).normalize()
+  }
+
+  kick(dir: THREE.Vector3): void {
+    ;(this.material.uniforms.uLineW!.value as THREE.Vector3).copy(dir)
   }
 
   smear(camera: THREE.PerspectiveCamera, now: Pose | null, before: Pose | null, strength: number, jitterX: number, jitterY: number, samples: number): void {

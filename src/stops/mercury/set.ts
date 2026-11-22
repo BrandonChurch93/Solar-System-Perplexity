@@ -108,6 +108,7 @@ export const createSet: SetFactory = async (ctx) => {
   const held = clearance(lowSunAt(covers[1]!, new THREE.Quaternion(), true).clone(), swap.pose.position.clone().negate(), swap.pose.position.length())
   const sunShown = new THREE.Vector3()
   const rimSun = new THREE.Vector3()
+  const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
   const toCamera = new THREE.Quaternion()
   const plateBack = new THREE.Quaternion()
@@ -275,6 +276,8 @@ export const createSet: SetFactory = async (ctx) => {
       globe.carry(mix(look.carry.gain, look.carry.lift, grade), look.carry.knee, look.carry.grey * grade)
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
+      globe.kick(kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation))
+      globe.spill(state.time > covers[0]! ? look.light.rim.after : 1)
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const fast = view.samples > 1 && (diving || rising)
