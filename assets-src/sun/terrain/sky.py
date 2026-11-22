@@ -22,6 +22,7 @@ SEED = 20261122
 TOWARD = {'from': (0.03, 0.1), 'to': (1.2, 2.2), 'window': 2.0, 'share': 50, 'az': 0.3, 'el': (0.05, 0.25), 'grow': (0.3, 0.9), 'hold': 6.0}
 PLATE = 'public/assets/sun/full/plate.jpg'
 UNDER = {'amount': 0.02, 'over': (0.15, 0.5)}
+BELOW = {'over': (0.35, 1.35), 'point': 9, 'star': (0.02, 0.06), 'even': 160, 'full': (2.0, 6.0), 'band': (0.0, 1.5), 'wide': 240, 'grain': (1.0, 1.0, 2.0, 1.5, 3.0)}
 
 where = [v for v in sys.argv[1:] if not v.startswith('--')]
 OUT = where[0] if where else 'public/assets/sun'
@@ -51,6 +52,14 @@ inv = np.array([[k, 0, LEFT * mask.shape[1] + 0.5 * k - 0.5], [0, k, TOP * mask.
 mask = np.clip(cv2.GaussianBlur(cv2.warpAffine(mask, inv, (w, h), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP), (0, 0), 20) * 2 - 1, 0, 1)
 arch = (1 - ARCH * mask)[..., None]
 floor = cv2.GaussianBlur(out, (0, 0), SOFT)
+under = step(-above, *BELOW['over'])[..., None]
+smooth_line = cv2.GaussianBlur(line[None, :], (0, 0), BELOW['even'], borderType=cv2.BORDER_REPLICATE)[0]
+lum = np.array([0.2126, 0.7152, 0.0722], np.float32)
+peak = sky - cv2.morphologyEx(sky, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (BELOW['point'], BELOW['point'])))
+peak = np.maximum(peak, 0) * step(cv2.GaussianBlur(peak @ lum, (0, 0), 1.0), *BELOW['star'])[..., None]
+turned = np.roll(smooth_line, SHIFT)[None, :] - (rows - smooth_line[None, :])
+point = cv2.remap(np.roll(peak, SHIFT, axis=1), src_x, np.clip(turned, 0, h - 1).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) * step(turned, 0, DEEP)[..., None]
+del peak
 
 free = (1 - ground)[..., None]
 plain = cv2.GaussianBlur(sky, (0, 0), SOFT)
@@ -86,6 +95,10 @@ back = large(back * (1 + (dark - 1) * seen_s))
 weight = (1 - step(above, HAZE[0], HAZE[1]))[..., None]
 stars = (STARS + (1 - STARS) * step(above, NEAR[0], NEAR[1]))[..., None]
 card = np.maximum(back + (1 - weight) * (floor - back) + (out - floor) * stars, 0) * arch
+band = (step(above, BELOW['band'][0] - 0.01, BELOW['band'][0]) * (1 - step(above, BELOW['band'][1] - 0.3, BELOW['band'][1]))).astype(np.float32)[..., None]
+held = cv2.GaussianBlur((back * arch * band).sum(0)[None], (0, 0), BELOW['wide'], borderType=cv2.BORDER_REPLICATE) / np.maximum(cv2.GaussianBlur(band.sum(0)[None], (0, 0), BELOW['wide'], borderType=cv2.BORDER_REPLICATE)[..., None], 1e-3)
+plain_card = card
+card = card * (1 - under) + (held + point * (STARS + (1 - STARS) * step(-above, *BELOW['full']))[..., None]) * under
 rest = weight * (plain - back) * arch
 
 f = fit()
@@ -120,7 +133,7 @@ def toward(level):
     want[PLATE_TOP // 2:] -= cv2.resize(pl, (w, h - PLATE_TOP // 2), interpolation=cv2.INTER_AREA)
     del pl
     n = int(TOWARD['to'][1] / EL * SIZE[1]) + 1
-    need = cv2.remap(want - (card + rest) / arch, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)[:n] - veil[:n, :, None] * np.array(g['colour'], np.float32)
+    need = cv2.remap(want - (plain_card + rest) / arch, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)[:n] - veil[:n, :, None] * np.array(g['colour'], np.float32)
     ok = seen[:n]
     per = SIZE[0] / (2 * AZ)
     cols = np.arange(SIZE[0], dtype=np.float32)
@@ -173,6 +186,12 @@ half = cv2.resize(img, (SIZE[0] // 2, SIZE[1] // 2), interpolation=cv2.INTER_ARE
 write(f'{OUT}/web/haze.png', np.where(half * 255 < 0.25, 0, np.clip(np.floor(half * 255 + rng.rand(*half.shape) + rng.rand(*half.shape) - 0.5), 0, 255)).astype(np.uint8)[::-1])
 json.dump({'azDeg': AZ, 'elDeg': EL, 'gain': GAIN, 'size': list(SIZE), 'riseDeg': g['riseDeg'], 'under': UNDER['amount'], 'underDeg': list(UNDER['over'])}, open(NOTE, 'w'), indent=2)
 cimg = display(card)
+dust = np.random.RandomState(SEED + 1)
+speck = dust.randn(h, w).astype(np.float32)
+cloud = cv2.GaussianBlur(dust.randn(h, w).astype(np.float32), (0, 0), BELOW['grain'][2])
+tint = cv2.GaussianBlur(dust.randn(h, w, 3).astype(np.float32), (0, 0), BELOW['grain'][4])
+tint = (tint - tint.mean(2, keepdims=True)) / tint.std()
+cimg = np.clip(cimg + under * ((BELOW['grain'][0] * speck + BELOW['grain'][1] * cloud / cloud.std())[..., None] + BELOW['grain'][3] * tint) / 255, 0, 1)
 bl = display(back)
 for e in (-2, -1, -0.5, 0, 0.5, 1, 2, 3, 5):
     sel = (np.abs(above - e) < 0.1) & (np.abs(cols[None, :] - 0.5) < 0.5)
