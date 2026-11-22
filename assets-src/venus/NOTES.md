@@ -585,3 +585,14 @@ Mail 63 (03:10): engine batch 18 is on main (a67c9c34; main head 0622510 holds i
 - Running: final stills f13 with the shader fixes (four frames), then 1287 and 1586 a second time (f13b) to test that a frame repeats from one fresh page to the next. `tools/pixdiff.py A B` counts changed pixels.
 - Then: draft strip g1, review cover sheets c17 (both), terrain review sheet, `chain2r.sh`, commit, push, looks, POLISH READY naming main 0622510.
 - Item 4 (rise ring softness): the wrap repaint lifted it already: lower right box at 1586 fine detail 2.69 (2.23 before, round 23 2.38), night box 3.83 (2.00, 2.16). No further work planned.
+
+## State at 03:35 (22 Nov) (read this first after a compaction)
+
+Head 47d7c6b (pushed) on main 0622510 (holds batch 18, a67c9c34). It carries the sky gain at the rise swap (`veil.band` in `plan.ts`) and the shader fix of mail 63.
+
+- Shader fix, final tier on main 0622510, before (f12) against after (f13): 1185 no pixel, 1440 no pixel, 1287 18 pixels by one level, 1586 28 pixels by one level. Repeat on a fresh page (f13 against f13b): 1287 and 1586 the same bytes.
+- Sky gain, draft strip g1 (1556 to 1569), top twelfth: 0.0078 at 1559, then 0.0099, 0.0105, 0.0125, 0.0110, 0.0104, 0.0094, 0.0086, 0.0076, 0.0068, 0.0066 (before, review sheet c16: 0.0074, then 0.0180, 0.0214, 0.0254, 0.0171, 0.0123, 0.0099, 0.0087). By eye the band no longer pops (`view/g1-top.jpg`). Kept at 0.36, 2, 6. The star field itself still changes at the swap (engine).
+- Proof stills for the READY: `r2/out/work/venus/p6/f13-1185.png`, `f13-1287.png`, `f13-1440.png`, `f13-1586.png` (final tier, with grain, head 47d7c6b on main 0622510). Measured on them: 1185 zones 2.25, 1.23, 0.92, 3.16, 2.63; 1287 night box 6.75 (lit 5.64, deep 5.25); stars 1185 2793 against 2848 (0.981), median +0.17; 1440 top left 337 against 334 (1.009), median +0.33; top mid 0.968, +0.11; top right 1.263, +0.10; 1586 lower right box 2.69, night box 3.83, limb dips at most 7.4 levels; `mirrorcheck` clean on 1185 and 1440. Disk: full 66 MB, web 21 MB.
+- Running since 03:31 (`queue3.sh`, log `/tmp/queue3.log`): review cover sheets c17 (`view/c17-rc.png`, `view/c17-dc.png`), terrain review sheet (`view/venus.terrain*review*.png`), `chain2r.sh` (`/tmp/chain.log`, `/tmp/c2-*.log`), then `rep.sh` (`/tmp/rep.log`: frames 1310, 1563, 1300, 1572 twice at the review tier, bytes compared).
+- Then: look at every frame of c17 and of the terrain sheet, read the chain, looks push, POLISH READY to `/root` naming main 0622510.
+- Looks pushed 03:32; next push due 04:02.
