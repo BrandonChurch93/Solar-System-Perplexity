@@ -296,6 +296,8 @@ Round 34 on base33 (item 2 of the same mail, sent 15:55 UTC, paper only): nothin
 
 State at 18:00 UTC on 2026-11-22: the clock of MAIL 143 is done (ticks 14:52 to 17:52, then TICKS DONE). MAIL 178 items 2 and 3 are sent (15:55 and 16:05 UTC). Nothing is open. Not pushed: this paragraph.
 
+MAIL 202 (18:00 UTC): the clock goes on with no end time. One mail `TICK HH:MM` (nothing else, no UTC word) to /root every 10 minutes, at minutes 02, 12, 22, 32, 42, 52, until the Builder writes "TICKS STOP". Never stop it on my own, also with nothing else to do. Same method: a short wait loop that is polled, never one long sleep. After a compaction: run `date -u`, send the tick that is due, go on.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
