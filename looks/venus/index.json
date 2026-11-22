@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T07:44:45.132Z",
- "head": "a57e642e7efc0639cab0e216509bc2610972aca8",
- "note": "07:45 UTC: veil take E3d cover sheets and dive tail; judged finals same bytes as before; chain running",
+ "pushed": "2026-11-22T08:10:29.181Z",
+ "head": "34c061bc04d75a11f7b5083575c30b7d767ba15c",
+ "note": "08:11 UTC: pale columns at the dive tail traced to the veil's near sheets, cure in test",
  "looks": [
+  {
+   "time": "2026-11-22T08:10:28.428Z",
+   "file": "20261122081028428-note-nv2-pair.jpg",
+   "source": "../view/nv2-pair.jpg",
+   "kind": "note",
+   "label": "dive 1321 and 1325 draft: left veil switched off (test only), right with veil: the streaks and the column are the veil's near sheets (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:10:27.823Z",
+   "file": "20261122081027823-note-f3-r.jpg",
+   "source": "../view/f3-r.jpg",
+   "kind": "note",
+   "label": "rise entry 1546 to 1556 draft, take F3 (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:10:27.233Z",
+   "file": "20261122081027233-note-f3-d.jpg",
+   "source": "../view/f3-d.jpg",
+   "kind": "note",
+   "label": "dive tail 1317 to 1327 draft, take F3 (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:10:26.642Z",
+   "file": "20261122081026642-note-col-1321-pair.jpg",
+   "source": "../view/col-1321-pair.jpg",
+   "kind": "note",
+   "label": "dive 1321 review tier native crop: left take E3d with pale columns, right take F3 (near sheets lifted while the veil is thin): columns gone (branch 34c061b plus veil work uncommitted, main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T07:44:43.945Z",
    "file": "20261122074443945-note-e3t-pair.jpg",
@@ -146,38 +178,6 @@
    "source": "../view/crawl-h-sky.jpg",
    "kind": "note",
    "label": "Venus hold stability: sky box of finals 1185, 1186, 1187 at 3x, pair differences x4 below (main 89715a1, batch 19): the sky drifts 2 px a frame, stars keep their shape",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:10:17.357Z",
-   "file": "20261122061017357-note-venus.terrain-16x9-review.jpg",
-   "source": "../view/venus.terrain-16x9-review.png",
-   "kind": "note",
-   "label": "Venus terrain sheet, review tier, branch code b22e4fb on main a45a07b (batch 19): Sun 0.761 to 0.730 of width, towers 0.559 to 0.818, near bank out by 1431",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:52:46.311Z",
-   "file": "20261122055246311-note-c19-rc.jpg",
-   "source": "../view/c19-rc.png",
-   "kind": "note",
-   "label": "Venus rise cover sheet c19, review tier, branch code b22e4fb on main a45a07b (batch 19 7a880ac6): same bytes as c18, the flight sky lift starts at 1575 after the window",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:52:45.507Z",
-   "file": "20261122055245507-note-c19-dc.jpg",
-   "source": "../view/c19-dc.png",
-   "kind": "note",
-   "label": "Venus dive cover sheet c19, review tier, branch code b22e4fb on main a45a07b (batch 19 7a880ac6): same bytes as c18 on batch 18, every frame read",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T05:22:21.517Z",
-   "file": "20261122052221517-note-f16-1586.jpg",
-   "source": "../view/f16-1586.jpg",
-   "kind": "note",
-   "label": "Venus judged rise frame 1586, final tier with grain, branch code b22e4fb (42b9111 merged with main a45a07b, batch 19)",
    "stop": "venus"
   }
  ]
