@@ -1,0 +1,35 @@
+{
+ "critic": "R6",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-01.png → image-09.png",
+   "where": "whole frame across the hook window",
+   "what": "almost nothing changes across the hook: the loop arch, sunspot, horizon and camera framing look nearly the same from frame 0 to the last frame. The only changes are a slight flicker in the footpoint glow and small strand shifts, so nothing rewards staying past the first second",
+   "fix": "add a clear event inside the hook seconds, such as a visible camera push toward the sunspot, a flare brightening or the loop erupting, or the arch rising and snapping, so the last frame clearly differs from frame 0"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "upper third, loop arch",
+   "what": "at phone-preview width in a 16:9 frame, the arch takes up only about a third of the width and its fine filaments become thin, busy lines. The darkest, emptiest area is the starfield, which fills the top 40% of the frame",
+   "fix": "frame tighter on the arch and sunspot, or use a vertical or square crop, so the loop fills more of the frame and reads as one bold shape at small size"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "lower half, granulation surface",
+   "what": "the granulation texture across the bottom is almost as bright and high-contrast as the arch, so it competes for attention and the subject's figure-ground separation is weaker at small size",
+   "fix": "darken or slightly defocus the foreground surface and the edges of the frame (a vignette) so the hot footpoints and the arch are clearly the brightest point of focus"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "center, sunspot",
+   "what": "the sunspot is small and lower in contrast than the arch, so it reads as a dark smudge at phone size rather than a second focal point",
+   "fix": "enlarge it or add a stronger penumbra edge if it is meant to be part of the hook"
+  }
+ ]
+}
