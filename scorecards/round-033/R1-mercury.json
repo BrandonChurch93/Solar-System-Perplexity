@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet silhouette, especially the lower limb",
+   "what": "The planet is slightly enlarged vertically: the crown sits a little higher and the lower edge hangs lower, reducing the gap at the bottom.",
+   "fix": "Reduce the globe scale slightly around its current center and restore the target's bottom clearance."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "upper and lower-right limbs (C, E, F, G)",
+   "what": "The limb sits slightly out of registration against the fixed sky. On the lower-right curve the warm edge also reads a little broader than the target's thin, bright rim.",
+   "fix": "Match the target's silhouette first, then tighten the warm spill at the lower-right edge."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "central and lower terminator and shadowed hemisphere (A, B, D, G, I)",
+   "what": "Deep shadow is slightly more closed and the faint crater relief is less distinct just inside the terminator, giving the dark side a flatter read.",
+   "fix": "Recover a little cool near-black separation and local crater relief without lifting the entire shadow."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "left sky, right star field, and lower-left flare (B, D, E, H)",
+   "what": "Some small stellar points stand out more strongly against the dust, and the colored fringe around the lower-left flare is a little more conspicuous.",
+   "fix": "Pull back the brightest small stars and the green-blue flare fringe slightly while retaining the target's diffuse dust texture."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "lower foreground and the large crater's rim and floor",
+   "what": "The framing and lighting match, but the smallest ridges and pit rims are a touch softer, especially down near the frame edge.",
+   "fix": "Restore a small amount of native microcontrast in the terrain without sharpening the sun or the sky."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "pitted left foreground, right crater wall, and shadowed ridges (D, E, F, G, H)",
+   "what": "Fine grain, small pit lips, and narrow bright crests are slightly smoothed. A few shadow-adjacent rock faces lose some of the target's crisp separation.",
+   "fix": "Bring back fine texture and localized edge contrast on the illuminated terrain while preserving the deep crater blacks."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "right-hand sky above the horizon (C, I)",
+   "what": "Several stars read a little brighter or harder than in the target, making the sky slightly more speckled.",
+   "fix": "Reduce pinpoint star contrast slightly and keep the faint blue dust and dark sky floor intact."
+  }
+ ]
+}

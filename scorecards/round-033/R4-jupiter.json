@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "last row, frames 3301-3314",
+   "what": "the pullback eases but has not arrived at a held rest: the planet is still slowly shrinking on the last samples",
+   "fix": "extend the ease so the wide view is still, matching the locked hold at the start of the stop"
+  }
+ ]
+}
