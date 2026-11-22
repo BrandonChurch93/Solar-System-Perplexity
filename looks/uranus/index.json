@@ -1,73 +1,55 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T06:39:47.892Z",
+ "pushed": "2026-11-22T07:02:21.989Z",
  "head": "b0ff7ff94212eb121d517890903c5fee3c98f43e",
- "note": "Proof run on batch 19 (disk ran low at 06:37, skipped frames queued again); Mail 79: new end of the rise in drafts; item 7: speck cure in test",
+ "note": "Proof run going on (finals 4135 to 4139 next); Mail 79: three end poses of the rise in drafts, 30/-30 keeps the band in view; item 7 speck finals queued",
  "looks": [
   {
-   "time": "2026-11-22T06:39:47.005Z",
-   "file": "20261122063947005-note-ra-crop.jpg",
-   "source": "../../../../tmp/ra-crop.jpg",
+   "time": "2026-11-22T07:02:21.025Z",
+   "file": "20261122070221025-note-sun-4159.jpg",
+   "source": "../../../../tmp/sun-4159.jpg",
    "kind": "note",
-   "label": "Mail 79: hold 4035 (final) beside the draft end of the rise at azimuth 20 elevation -15, the globe at the same size (main 784fc52, engine batch 19 7a880ac6, head b0ff7ff)",
+   "label": "Known weak point: the Sun point and the last cover holes at 4159 are gone at 4160 (review, main tree, main 784fc52, engine batch 19 7a880ac6)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T06:37:36.416Z",
-   "file": "20261122063736416-still-f04416-16x9-review-full.jpg",
-   "source": "out/work/stills/f04416-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4416, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4416,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:33:55.129Z",
-   "file": "20261122063355129-still-f04415-16x9-review-full.jpg",
-   "source": "out/work/stills/f04415-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4415, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4415,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:30:13.720Z",
-   "file": "20261122063013720-still-f04414-16x9-review-full.jpg",
-   "source": "out/work/stills/f04414-16x9-review-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4414, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4414,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:29:08.245Z",
-   "file": "20261122062908245-note-i-rings-4035.jpg",
-   "source": "../../../../tmp/i-rings-4035.png",
+   "time": "2026-11-22T07:02:20.044Z",
+   "file": "20261122070220044-note-ev-rise-a.jpg",
+   "source": "../../../../tmp/ev-rise-a.jpg",
    "kind": "note",
-   "label": "Rings of the 4035 final at 3x: no straight segment (main 784fc52, engine batch 19 7a880ac6, head 2b8b9b8)",
+   "label": "Proof run: every frame 4405 to 4416 at review (main tree, frozen stop aa820081c087b496, main 784fc52, engine batch 19 7a880ac6)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T06:29:07.454Z",
-   "file": "20261122062907454-note-k-clump.jpg",
-   "source": "../../../../tmp/k-clump.png",
+   "time": "2026-11-22T07:02:19.075Z",
+   "file": "20261122070219075-note-ev-dive-a.jpg",
+   "source": "../../../../tmp/ev-dive-a.jpg",
    "kind": "note",
-   "label": "Item 7: white clump of 4035 at 4x, approved, film, prototype (main 784fc52, engine batch 19 7a880ac6, head 2b8b9b8)",
+   "label": "Proof run: every frame 4159 to 4170 at review (main 784fc52, engine batch 19 7a880ac6, head b0ff7ff, dev drafts are not in it: main tree 2b8b9b8 frozen stop, main 784fc52, engine batch 19)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T07:02:18.115Z",
+   "file": "20261122070218115-note-rd-sheet.jpg",
+   "source": "../../../../tmp/rd-sheet.jpg",
+   "kind": "note",
+   "label": "Mail 79 draft: rise ending at azimuth 35 elevation -25 (main 784fc52, engine batch 19 7a880ac6, head b0ff7ff, dev drafts)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T07:02:17.222Z",
+   "file": "20261122070217222-note-rc-sheet.jpg",
+   "source": "../../../../tmp/rc-sheet.jpg",
+   "kind": "note",
+   "label": "Mail 79 draft: rise ending at azimuth 30 elevation -30, the band stays in view through the rise (main 784fc52, engine batch 19 7a880ac6, head b0ff7ff, dev drafts)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T07:02:16.295Z",
+   "file": "20261122070216295-note-rb-sheet.jpg",
+   "source": "../../../../tmp/rb-sheet.jpg",
+   "kind": "note",
+   "label": "Mail 79 draft: rise ending at azimuth 25 elevation -25, frames 4418 4424 4430 4436 4454 4464 (main 784fc52, engine batch 19 7a880ac6, head b0ff7ff, dev drafts)",
    "stop": "uranus"
   },
   {
