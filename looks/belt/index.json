@@ -1,51 +1,53 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T06:38:43.491Z",
- "head": "afc615a9fc047d73a9835782450a20fcb6b08a00",
- "note": "task 7: slow larger hero with take 4 asset, drafts",
+ "pushed": "2026-11-22T06:56:35.332Z",
+ "head": "be465b10634c0927d0e025d0c3a4de748657a4e4",
+ "note": "task 7: finals of the new cast, native crops before and after",
  "looks": [
   {
-   "time": "2026-11-22T06:38:42.739Z",
-   "file": "20261122063842739-note-s1-sheet.jpg",
-   "source": "../view/t7/s1-sheet.jpg",
+   "time": "2026-11-22T06:56:34.428Z",
+   "file": "20261122065634428-note-belt-t7-final-2792-after.jpg",
+   "source": "../send/belt-t7-final-2792-after.jpg",
    "kind": "note",
-   "label": "task 7 draft strip of the new cast",
+   "label": "task 7 final tier: belt-t7-final-2792-after",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T06:38:42.199Z",
-   "file": "20261122063842199-note-b1-hero.jpg",
-   "source": "../view/t7/b1-hero.png",
+   "time": "2026-11-22T06:56:33.892Z",
+   "file": "20261122065633892-note-belt-t7-final-2782-after.jpg",
+   "source": "../send/belt-t7-final-2782-after.jpg",
    "kind": "note",
-   "label": "task 7 draft 2782 hero crop b1-hero",
+   "label": "task 7 final tier: belt-t7-final-2782-after",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T06:38:41.509Z",
-   "file": "20261122063841509-note-l2-hero.jpg",
-   "source": "../view/t7/l2-hero.png",
+   "time": "2026-11-22T06:56:33.356Z",
+   "file": "20261122065633356-note-belt-t7-final-2772-after.jpg",
+   "source": "../send/belt-t7-final-2772-after.jpg",
    "kind": "note",
-   "label": "task 7 draft 2782 hero crop l2-hero",
+   "label": "task 7 final tier: belt-t7-final-2772-after",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T06:36:42.299Z",
-   "file": "20261122063642299-frame-f02772.jpg",
-   "source": "out/work/belt/t7/b1/f02772.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2772, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2772,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "3526104c081971f0"
+   "time": "2026-11-22T06:56:32.782Z",
+   "file": "20261122065632782-note-belt-t7-near-native-before-2782-after-2772.jpg",
+   "source": "../send/belt-t7-near-native-before-2782-after-2772.jpg",
+   "kind": "note",
+   "label": "task 7 final tier: belt-t7-near-native-before-2782-after-2772",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-22T06:15:07.783Z",
-   "file": "20261122061507783-frame-f04860.jpg",
-   "source": "out/work/belt/t7/proof-before/f04860.png",
+   "time": "2026-11-22T06:56:32.125Z",
+   "file": "20261122065632125-note-belt-t7-hero-2782-native-before-after.jpg",
+   "source": "../send/belt-t7-hero-2782-native-before-after.jpg",
+   "kind": "note",
+   "label": "task 7 final tier: belt-t7-hero-2782-native-before-after",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T06:56:13.430Z",
+   "file": "20261122065613430-frame-f04860.jpg",
+   "source": "out/work/belt/t7/proof-after/f04860.png",
    "kind": "frame",
    "label": "neptune.terrain frame 4860, draft tier",
    "stop": "neptune",
@@ -54,12 +56,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "fe6ba940dacca774"
+   "engine": "cd28657af7d3b4d0"
   },
   {
-   "time": "2026-11-22T06:14:17.125Z",
-   "file": "20261122061417125-frame-f02010.jpg",
-   "source": "out/work/belt/t7/proof-before/f02010.png",
+   "time": "2026-11-22T06:55:24.854Z",
+   "file": "20261122065524854-frame-f02010.jpg",
+   "source": "out/work/belt/t7/proof-after/f02010.png",
    "kind": "frame",
    "label": "earth.terrain frame 2010, draft tier",
    "stop": "earth",
@@ -68,12 +70,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "fe6ba940dacca774"
+   "engine": "cd28657af7d3b4d0"
   },
   {
-   "time": "2026-11-22T06:13:18.060Z",
-   "file": "20261122061318060-frame-f02325.jpg",
-   "source": "out/work/belt/t7/proof-before/f02325.png",
+   "time": "2026-11-22T06:54:36.719Z",
+   "file": "20261122065436719-frame-f02325.jpg",
+   "source": "out/work/belt/t7/proof-after/f02325.png",
    "kind": "frame",
    "label": "mars.hold frame 2325, draft tier",
    "stop": "mars",
@@ -82,15 +84,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "fe6ba940dacca774"
-  },
-  {
-   "time": "2026-11-22T02:57:09.034Z",
-   "file": "20261122025709034-note-belt-t6-exit-2790-2793.jpg",
-   "source": "../send/belt-t6-exit-2790-2793.jpg",
-   "kind": "note",
-   "label": "belt task 6 on batch 17: hero leaving against the warm band, 2790 and 2793 native",
-   "stop": "mars"
+   "engine": "cd28657af7d3b4d0"
   }
  ]
 }
