@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T09:40:49.921Z",
+ "pushed": "2026-11-22T09:52:32.338Z",
  "head": "f4472a3e81fcc979b8e5f7dad9d372ce47a4f1a4",
- "note": "Departure ease: Earth and Saturn leave on a cubic from rest",
+ "note": "DONE proofs: draft sheets and strips of jupiter, venus, mercury, uranus, saturn at f4472a3; steady growth design started",
  "looks": [
   {
-   "time": "2026-11-22T09:40:49.160Z",
-   "file": "20261122094049160-note-e1-saturn-sheet12.jpg",
-   "source": "../../../../tmp/v/e1-saturn-sheet12.jpg",
+   "time": "2026-11-22T09:52:31.326Z",
+   "file": "20261122095231326-note-e1-saturn-last24.jpg",
+   "source": "../../../../tmp/v/e1-saturn-last24.jpg",
    "kind": "note",
-   "label": "saturn.travel with departure ease, 12 frames, draft",
+   "label": "draft at f4472a3: e1-saturn-last24",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:40:48.301Z",
-   "file": "20261122094048301-note-e1-saturn-first24.jpg",
-   "source": "../../../../tmp/v/e1-saturn-first24.jpg",
+   "time": "2026-11-22T09:52:30.338Z",
+   "file": "20261122095230338-note-e1-uranus-last24.jpg",
+   "source": "../../../../tmp/v/e1-uranus-last24.jpg",
    "kind": "note",
-   "label": "saturn.travel departure ease, first 24 frames, draft",
+   "label": "draft at f4472a3: e1-uranus-last24",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:40:47.556Z",
-   "file": "20261122094047556-note-e1-earth-first24.jpg",
-   "source": "../../../../tmp/v/e1-earth-first24.jpg",
+   "time": "2026-11-22T09:52:29.292Z",
+   "file": "20261122095229292-note-e1-uranus-first24.jpg",
+   "source": "../../../../tmp/v/e1-uranus-first24.jpg",
    "kind": "note",
-   "label": "earth.travel departure ease, first 24 frames, draft",
+   "label": "draft at f4472a3: e1-uranus-first24",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:40:46.895Z",
-   "file": "20261122094046895-note-e1-earth-sheet12.jpg",
-   "source": "../../../../tmp/v/e1-earth-sheet12.jpg",
+   "time": "2026-11-22T09:52:28.407Z",
+   "file": "20261122095228407-note-e1-uranus-sheet12.jpg",
+   "source": "../../../../tmp/v/e1-uranus-sheet12.jpg",
    "kind": "note",
-   "label": "earth.travel with departure ease, 12 frames, draft",
+   "label": "draft at f4472a3: e1-uranus-sheet12",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:19:21.205Z",
-   "file": "20261122091921205-note-q2-earth-last24.jpg",
-   "source": "../../../../tmp/v/q2-earth-last24.jpg",
+   "time": "2026-11-22T09:52:27.447Z",
+   "file": "20261122095227447-note-e1-mercury-last24.jpg",
+   "source": "../../../../tmp/v/e1-mercury-last24.jpg",
    "kind": "note",
-   "label": "earth.travel pinned, last 24 frames, draft",
+   "label": "draft at f4472a3: e1-mercury-last24",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:19:20.630Z",
-   "file": "20261122091920630-note-q3-four-crops.jpg",
-   "source": "../../../../tmp/v/q3-four-crops.jpg",
+   "time": "2026-11-22T09:52:26.516Z",
+   "file": "20261122095226516-note-e1-mercury-first24.jpg",
+   "source": "../../../../tmp/v/e1-mercury-first24.jpg",
    "kind": "note",
-   "label": "pinned arrivals of mercury, venus, saturn, uranus, native crops",
+   "label": "draft at f4472a3: e1-mercury-first24",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:19:19.975Z",
-   "file": "20261122091919975-note-q5-crops.jpg",
-   "source": "../../../../tmp/v/q5-crops.jpg",
+   "time": "2026-11-22T09:52:25.434Z",
+   "file": "20261122095225434-note-e1-mercury-sheet12.jpg",
+   "source": "../../../../tmp/v/e1-mercury-sheet12.jpg",
    "kind": "note",
-   "label": "earth.travel pinned, committed hand over, native crops 2212 to 2236",
+   "label": "draft at f4472a3: e1-mercury-sheet12",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T08:40:11.671Z",
-   "file": "20261122084011671-note-pn-crops.jpg",
-   "source": "../../../../tmp/v/pn-crops.jpg",
+   "time": "2026-11-22T09:52:24.459Z",
+   "file": "20261122095224459-note-e1-venus-last24.jpg",
+   "source": "../../../../tmp/v/e1-venus-last24.jpg",
    "kind": "note",
-   "label": "earth.travel pinned, draft: pn-crops",
+   "label": "draft at f4472a3: e1-venus-last24",
    "stop": "travel"
   }
  ]
