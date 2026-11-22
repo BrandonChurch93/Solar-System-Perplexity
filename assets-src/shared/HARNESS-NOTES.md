@@ -130,6 +130,8 @@ Proofs of MAIL 93 (draft tier, this clone at engine of main 2026-11-22 07:30 UTC
 
 MAIL 106 (2026-11-22 08:03 UTC): `tools/site.ts` treats `post-<stop>.mp4` as a clip (1280 wide, crf 24, maxrate 2800k), by the Builder's decision. The rehearsal clone is not on this disk, so the sizes I can measure are from stand in intros joined to the clips of main.
 
+MAIL 119 (2026-11-22 09:24 UTC): gauntlet item 12 clones with `git clone --shared` in place of `--depth 1 file://`. Checked before taking it: with an untracked file, a staged change and an unstaged change in the repo, the shared clone held exactly the 2389 files of `git ls-tree -r HEAD`, `git status` clean, same HEAD, `.git` of 343 KB with `objects/info/alternates` pointing here; no LFS, no submodules. So only committed files reach the clone, as with a real one. (If the repo itself were a shallow clone git would fall back to copying the objects: still right, only larger.) The item now measures what it needs before it starts (files of HEAD, node_modules, dist, `sandbox.minFreeDiskGb`, 0.2 GB to spare; 6.2 GB today) and says NOT RUN with that figure when the disk has less. Ran at draft: PASS, identical hashes; lowest free space while it ran 3.0 GB under the start.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
