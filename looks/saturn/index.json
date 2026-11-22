@@ -1,49 +1,59 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T03:01:52.445Z",
- "head": "de74ab8c4445d57fa55614b199e0a75ec934c960",
- "note": "Item 8 on main 3d48581: dive and rise frames now give the same bytes on every run (cause: a derivative taken after discard in the haze shell); sweep of the whole stop running",
+ "pushed": "2026-11-22T03:32:07.675Z",
+ "head": "b813ab65fe339feb5f722fcf63eb0a3dfeef7c85",
+ "note": "Polish item 7: Titan fitted to the hero, streak fade into the dive, handover trial rejected; main 0622510",
  "looks": [
   {
-   "time": "2026-11-22T03:01:51.834Z",
-   "file": "20261122030151834-note-item8-3866-limb.jpg",
-   "source": "out/work/saturn/item8-3866-limb.png",
+   "time": "2026-11-22T03:32:07.086Z",
+   "file": "20261122033207086-note-l1-limb.jpg",
+   "source": "../../../../tmp/l1-limb.png",
    "kind": "note",
-   "label": "Item 8, main 3d48581: frame 3866 draft, lit limb x 352 to 416, y 596 to 660 at 6x; left before (two pixels of the limb edge took a different value on every run), right after the fix (same bytes on every run)",
+   "label": "Item 2 handover 3809, 3816, 3819, 3822, main 0622510: pairs kept (upper) and dark limb trial (lower), trial rejected",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T02:37:00.989Z",
-   "file": "20261122023700989-frame-rep-3866-3.jpg",
-   "source": "out/work/saturn/rep-3866-3.png",
+   "time": "2026-11-22T03:32:06.549Z",
+   "file": "20261122033206549-note-item7-streak-3567.jpg",
+   "source": "out/work/saturn/item7-streak-3567.png",
+   "kind": "note",
+   "label": "Item 7 streak at 3567, main 0622510: top before, bottom after (lens streak fades over the first 18 frames of the dive)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T03:32:05.982Z",
+   "file": "20261122033205982-note-titan-3465.jpg",
+   "source": "../../../../tmp/titan-3465.png",
+   "kind": "note",
+   "label": "Item 7 Titan before: hero left, kept build 3465 right",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T03:32:05.405Z",
+   "file": "20261122033205405-note-titan-T5.jpg",
+   "source": "../../../../tmp/titan-T5.png",
+   "kind": "note",
+   "label": "Item 7 Titan after, main 0622510: hero left, film 3465 right, film 3866 below (draft)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T03:30:43.997Z",
+   "file": "20261122033043997-frame-L1-3822.jpg",
+   "source": "out/work/saturn/L1-3822.png",
    "kind": "frame",
-   "label": "saturn.rise frame 3866, draft tier",
+   "label": "saturn.rise frame 3822, draft tier",
    "stop": "saturn",
    "segment": "saturn.rise",
-   "frame": 3866,
+   "frame": 3822,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "1e61fa4049d34863"
+   "engine": "7cd5ba493f97ac9f"
   },
   {
-   "time": "2026-11-22T02:35:58.877Z",
-   "file": "20261122023558877-frame-rep-3594-3.jpg",
-   "source": "out/work/saturn/rep-3594-3.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3594, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3594,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:31:04.884Z",
-   "file": "20261122023104884-frame-H1-3809.jpg",
-   "source": "out/work/saturn/H1-3809.png",
+   "time": "2026-11-22T03:29:35.875Z",
+   "file": "20261122032935875-frame-L1-3809.jpg",
+   "source": "out/work/saturn/L1-3809.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3809, draft tier",
    "stop": "saturn",
@@ -52,45 +62,35 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "1e61fa4049d34863"
+   "engine": "7cd5ba493f97ac9f"
   },
   {
-   "time": "2026-11-22T02:29:56.521Z",
-   "file": "20261122022956521-note-G4_3567n.jpg",
-   "source": "../../../../tmp/G4_3567n.png",
-   "kind": "note",
-   "label": "3567 final nograin, globe with the hero detail carried past the terminator",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T02:29:55.965Z",
-   "file": "20261122022955965-note-G5_3866z1.jpg",
-   "source": "../../../../tmp/G5_3866z1.png",
-   "kind": "note",
-   "label": "3866 upper left at 2x, draft: first gain above, kept build below (main 3d48581)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T02:29:55.411Z",
-   "file": "20261122022955411-note-G4_t1.jpg",
-   "source": "../../../../tmp/G4_t1.png",
-   "kind": "note",
-   "label": "3465 terminator at 2x, final: hero, before, after item 6 (main 3d48581 not yet merged)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T02:29:07.137Z",
-   "file": "20261122022907137-frame-G5-3465.jpg",
-   "source": "out/work/saturn/G5-3465.png",
+   "time": "2026-11-22T03:21:21.387Z",
+   "file": "20261122032121387-frame-S1-3567.jpg",
+   "source": "out/work/saturn/S1-3567.png",
    "kind": "frame",
-   "label": "saturn.hold frame 3465, draft tier",
+   "label": "saturn.dive frame 3567, draft tier",
    "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
+   "segment": "saturn.dive",
+   "frame": 3567,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "1e61fa4049d34863"
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:20:38.798Z",
+   "file": "20261122032038798-frame-S1-3539.jpg",
+   "source": "out/work/saturn/S1-3539.png",
+   "kind": "frame",
+   "label": "saturn.hold frame 3539, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3539,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
   }
  ]
 }
