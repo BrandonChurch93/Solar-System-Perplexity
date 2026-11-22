@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T17:11:56.451Z",
- "head": "157eb79905c85f46ed64c9b0272622a95adaf9d6",
- "note": "CUT35 candidate: Io's shadow far end to the approved image's profile; full measure running on main 37f67dd4",
+ "pushed": "2026-11-22T17:29:08.205Z",
+ "head": "42357398f6aea91f3ae275617b672bf154cfd19f",
+ "note": "CUT35 sent: Io's shadow far end, one commit, measures green; tree holds main 179ebec6",
  "looks": [
+  {
+   "time": "2026-11-22T17:29:07.641Z",
+   "file": "20261122172907641-note-jupiter-2895-shadow-pair-3x.jpg",
+   "source": "../../../../tmp/jup-c35/jupiter-2895-shadow-pair-3x.jpg",
+   "kind": "note",
+   "label": "Jupiter 2895 at the final tier, Io's shadow at 3x: approved image left, CUT35 offer right. Tree holds main 179ebec6",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T17:29:06.949Z",
+   "file": "20261122172906949-note-jupiter-hold-shadow-strip-3x.jpg",
+   "source": "../../../../tmp/jup-c35/jupiter-hold-shadow-strip-3x.jpg",
+   "kind": "note",
+   "label": "Jupiter hold, Io's shadow at 3x, draft tier: 2816 and 2895 main beside the offer, then 2850, 2870, 2930, 2969 of the offer. Tree holds main 179ebec6",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T17:20:25.289Z",
+   "file": "20261122172025289-job-frame-03296.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T17:11:55.284Z",
    "file": "20261122171155284-note-jupiter-2895-shadow-three-3x.jpg",
@@ -110,30 +140,6 @@
    "source": "../../../../tmp/jup-c35/jupiter-hold-shadow-strip-3x.jpg",
    "kind": "note",
    "label": "Hold, shadow of Io with the toe at 3x, draft tier, frames 2816 2830 2850 2870 2895 2910 2930 2950 (middle row lifted 3 times, bottom row cut 34 at 2816 and 2895). Tree holds main 732a67d3",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T16:30:06.960Z",
-   "file": "20261122163006960-note-jupiter-2895-shadow-three-3x.jpg",
-   "source": "../../../../tmp/jup-c35/jupiter-2895-shadow-three-3x.jpg",
-   "kind": "note",
-   "label": "2895 final, shadow of Io at 3x (below lifted 3 times): approved image, cut 34 (kept bytes), shadow toe trial (tip 10 to 90 percent in 20.5 px from 62.0 px, approved 20.2 from 62.8, cut 34 9.5 from 74.0). Tree holds main 732a67d3",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T16:08:59.098Z",
-   "file": "20261122160859098-note-v2997_kept_E.jpg",
-   "source": "out/work/view/c34/sh/v2997_kept_E.jpg",
-   "kind": "note",
-   "label": "Io shadow at 2997, 3x, draft tier: kept film, toe trial take E. Tree holds main 732a67d3",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T16:08:58.465Z",
-   "file": "20261122160858465-note-v2895_kept_E.jpg",
-   "source": "out/work/view/c34/sh/v2895_kept_E.jpg",
-   "kind": "note",
-   "label": "Io shadow at 2895, 3x, draft tier: approved, kept film, toe trial take E (amount 0.2, a little too light, not offered yet). Tree holds main 732a67d3",
    "stop": "jupiter"
   }
  ]
