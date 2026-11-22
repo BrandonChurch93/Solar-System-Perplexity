@@ -1,71 +1,71 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T07:01:56.911Z",
- "head": "46484cbb501a96390cec41e7775e70ad86187667",
- "note": "Neptune in the ending: take 7, soft ring shadow and clouds fading to the limb, proof running",
+ "pushed": "2026-11-22T07:13:36.746Z",
+ "head": "7c1dfff0c21f1ec30f33aaab3748d33e61b8e32d",
+ "note": "Neptune in the ending: take 7 proved on main's path (crops, probe), now on the new camera path of agent/ending",
  "looks": [
   {
-   "time": "2026-11-22T07:01:56.044Z",
-   "file": "20261122070156044-note-c-5079.jpg",
-   "source": "../../../../tmp/c-5079.jpg",
+   "time": "2026-11-22T07:13:36.080Z",
+   "file": "20261122071336080-note-new-path-lookback-sheet-review.jpg",
+   "source": "out/work/end/send/new-path-lookback-sheet-review.jpg",
    "kind": "note",
-   "label": "Neptune ending, take 5 review: 5079 before and after, limb and ring, branch 46484cb, main 2b50ee2",
+   "label": "Neptune ending on the new camera path, review sheet of ending.lookback, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:01:55.204Z",
-   "file": "20261122070155204-note-t7-limb-x6.jpg",
-   "source": "../../../../tmp/t7-limb-x6.jpg",
+   "time": "2026-11-22T07:13:00.668Z",
+   "file": "20261122071300668-note-lb-5226-crop.jpg",
+   "source": "../../../../tmp/lb-5226-crop.jpg",
    "kind": "note",
-   "label": "Neptune ending, take 7 draft: limb at 5235 six times, branch 46484cb, main 2b50ee2",
+   "label": "Neptune ending on the new camera path, 5226 review native crop, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:01:54.330Z",
-   "file": "20261122070154330-note-t6-ring-a.jpg",
-   "source": "../../../../tmp/t6-ring-a.jpg",
+   "time": "2026-11-22T07:13:00.105Z",
+   "file": "20261122071300105-note-probe-172-degrees.jpg",
+   "source": "out/work/end/send/probe-172-degrees.jpg",
    "kind": "note",
-   "label": "Neptune ending, take 6 draft: ring at 5068 and 5079 with the soft shadow, native, branch 46484cb, main 2b50ee2",
+   "label": "Neptune ending, review, probe-172-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:01:53.789Z",
-   "file": "20261122070153789-note-t7-probe.jpg",
-   "source": "../../../../tmp/t7-probe.jpg",
+   "time": "2026-11-22T07:12:59.505Z",
+   "file": "20261122071259505-note-probe-165-degrees.jpg",
+   "source": "out/work/end/send/probe-165-degrees.jpg",
    "kind": "note",
-   "label": "Neptune ending, take 7 draft: probe 90 and 120 degrees native, branch 46484cb, main 2b50ee2",
+   "label": "Neptune ending, review, probe-165-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:01:53.182Z",
-   "file": "20261122070153182-note-t7-5235.jpg",
-   "source": "../../../../tmp/t7-5235.jpg",
+   "time": "2026-11-22T07:12:58.932Z",
+   "file": "20261122071258932-note-probe-150-degrees.jpg",
+   "source": "out/work/end/send/probe-150-degrees.jpg",
    "kind": "note",
-   "label": "Neptune ending, take 7 draft: limb 5235 and 5057 native, branch 46484cb, main 2b50ee2",
+   "label": "Neptune ending, review, probe-150-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T06:45:04.440Z",
-   "file": "20261122064504440-note-s3-strip.jpg",
-   "source": "../../../../tmp/s3-strip.jpg",
+   "time": "2026-11-22T07:12:58.339Z",
+   "file": "20261122071258339-note-probe-120-degrees.jpg",
+   "source": "out/work/end/send/probe-120-degrees.jpg",
    "kind": "note",
-   "label": "ending take 3 strip through the retreat and the lookback, draft, branch 703c4d7, main 2b50ee2",
+   "label": "Neptune ending, review, probe-120-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T06:45:03.747Z",
-   "file": "20261122064503747-note-t5-high.jpg",
-   "source": "../../../../tmp/t5-high.jpg",
+   "time": "2026-11-22T07:12:57.769Z",
+   "file": "20261122071257769-note-probe-90-degrees.jpg",
+   "source": "out/work/end/send/probe-90-degrees.jpg",
    "kind": "note",
-   "label": "ending take 5 native crops: limb at 150, 165, 172 degrees, draft, branch 703c4d7, main 2b50ee2",
+   "label": "Neptune ending, review, probe-90-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T06:45:03.069Z",
-   "file": "20261122064503069-note-t5-5235.jpg",
-   "source": "../../../../tmp/t5-5235.jpg",
+   "time": "2026-11-22T07:12:57.204Z",
+   "file": "20261122071257204-note-crops-5085-before-after.jpg",
+   "source": "out/work/end/send/crops-5085-before-after.jpg",
    "kind": "note",
-   "label": "ending take 5 native crops: limb at 5235 and the globe at 120 degrees, draft, branch 703c4d7, main 2b50ee2",
+   "label": "Neptune ending, review, crops-5085-before-after, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
    "stop": "neptune"
   }
  ]
