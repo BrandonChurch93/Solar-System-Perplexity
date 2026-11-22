@@ -1,9 +1,23 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T03:24:40.122Z",
+ "pushed": "2026-11-22T03:24:45.294Z",
  "head": "0bb9eb5a274623795056314299daeaaa6e143228",
  "note": "main 3d48581 in the tree: dive cover sheet at review done and looked at frame by frame (4738 to 4749) plus closing still 4731; next merge of main a67c9c34, then rise cover sheet, measure, terrain sheet",
  "looks": [
+  {
+   "time": "2026-11-22T03:24:43.682Z",
+   "file": "20261122032443682-frame-f04735-review.jpg",
+   "source": "out/work/nep/p6/h1/rev/f04735-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4735, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4735,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
   {
    "time": "2026-11-22T03:24:38.988Z",
    "file": "20261122032438988-note-insp-4731-s.jpg",
@@ -11,20 +25,6 @@
    "kind": "note",
    "label": "neptune dive 4731 at review (cover 0.13, closing side), tree 170a6b3 with main 3d48581: thin limb line, no wide whitish band, no grey green belt, smooth shutter blur",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T03:16:19.128Z",
-   "file": "20261122031619128-frame-f04731-review.jpg",
-   "source": "out/work/nep/p6/h1/rev/f04731-review.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4731, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4731,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-22T03:10:59.372Z",
