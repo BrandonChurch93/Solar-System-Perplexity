@@ -1,0 +1,209 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "entire frame and all crops A-W in image-06.png, image-07.png, and image-08.png",
+      "what": "the second judged frame renders no solar surface, limb, or corona at all, showing only empty background starfield where the close-up or terrain view should be",
+      "fix": "place the close-up camera outside the photosphere with valid near/far clip planes or render a dedicated surface/chromosphere geometry pass so the solar surface fills the view instead of culling to empty sky"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop C upper-right solar interior (and matching left-center region of crop M in image-03.png)",
+      "what": "sharp rectilinear horizontal and vertical patch borders cut straight across the solar granulation texture on the globe",
+      "fix": "use a seamless photosphere texture or continuous 3D procedural granulation shader on the sphere so no rectangular tile or patch seams appear"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "solar photosphere disk across crops L, M, Q, and R (and crop C in image-02.png)",
+      "what": "the globe surface texture is soft and upscaled at native size with visible ~8-12 px rectangular compression macroblocks",
+      "fix": "replace the compressed low-resolution solar map with an uncompressed high-resolution map or per-pixel procedural granulation detail"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "corona and prominence loops around the limb (crops A, E, H, I in image-02.png; crops L, M, N, Q, R in image-03.png; crop S in image-04.png)",
+      "what": "crisp 1-2 px background stars shine unattenuated straight through bright coronal streamers and dense prominence loops right up to the solar limb, giving away an additive layer composite",
+      "fix": "suppress background star visibility inside solar glare according to coronal radiance and occlude stars behind optically dense prominence plasma"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "solar limb edge in crops L, M, Q, and R (and crops E and I in image-02.png)",
+      "what": "a bright white Fresnel-like rim ring outlines the circular edge of the sphere before dropping into the darker amber corona instead of showing smooth limb darkening",
+      "fix": "apply physical solar limb darkening toward the disk edge and blend the chromosphere/corona across the limb without an artificial white rim halo"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "lower-left sky in crops A, F, and G (and crop P in image-03.png)",
+      "what": "one bright sky object renders as a soft ~15 px diffuse Gaussian blob while surrounding stars are sharp 1-3 px points",
+      "fix": "render bright stars or unresolved planets with a tight 1-3 px core and consistent point-spread falloff rather than a wide blurry smudge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "outer corona left of the upper-left limb in crop I (and left side of crop L in image-03.png)",
+      "what": "two isolated reddish-orange parallel double-line streaks float detached in dark space amidst the stars",
+      "fix": "clean up stray brush or texture fragments in the outer corona mask so detached line artifacts do not float in empty space"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower right dust cloud; same cloud in the native crops on image-14.png (middle-right tile) and image-16.png (bottom-right tiles and lower left strip)",
+      "what": "the gas is a soft airbrushed mass: at native size it is a smooth mottled glow plus grain, with no filaments or sharp lanes, and stars sit on it as the same tight points used in empty sky",
+      "fix": "break the cloud into fine dark lanes and thin filaments, and dim or redden stars inside the dense dust"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop C, shadowed upper-right slope of the asteroid",
+      "what": "Fine surface detail forms short parallel streaks on the shadowed slope, giving the rock a stretched, brushed look compared with the distinct pits on the lit face.",
+      "fix": "Break up the directional streaks with irregular, isotropic microrelief and retain a little more definition in the shadowed pits."
+     },
+     {
+      "severity": "minor",
+      "file": "image-24.png",
+      "where": "crops S and U, brighter stars in the lower sky",
+      "what": "A handful of bright stars read as soft white or colored blobs beside the sharper faint points.",
+      "fix": "Tighten the bright stars' cores and reduce the colored halo radius while retaining the range of brightness."
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-29.png",
+      "where": "lower edge of the Milky Way band across the top third (crops B, C, F, G, J, K, L in image-30/31)",
+      "what": "the galactic band ends in a scalloped, fairly hard lower boundary over almost empty sky, like the edge of a pasted patch; star density does not ramp down with it",
+      "fix": "add a broad, low-contrast diffuse glow and an unresolved-star density gradient that fades over several hundred pixels beyond the bright clouds, and break the edge with noise at several scales"
+     },
+     {
+      "severity": "major",
+      "file": "image-25.png",
+      "where": "bright cloud lobes lower centre and lower right (crops E, F, G, P, U, V in image-26/27/28)",
+      "what": "the star clouds are separate rounded cotton-wool puffs with soft airbrushed edges and the same blob size; they read as procedural noise blobs, not a continuous band with filamentary structure",
+      "fix": "use a band-shaped mask with fractal/ridged noise, add fine filaments and thin dark lanes, and vary lobe scale so the clouds join into one band"
+     },
+     {
+      "severity": "major",
+      "file": "image-25.png",
+      "where": "dark lanes inside the clouds (crops F, V, G)",
+      "what": "the dark dust lanes have about the same bright foreground star density as the glowing clouds, so the stars look sprinkled over a flat backdrop and the dust reads as dark paint",
+      "fix": "use the dust mask to reduce faint star density and brightness in the lanes, keeping only a few bright foreground stars"
+     },
+     {
+      "severity": "minor",
+      "file": "image-29.png",
+      "where": "bright cores at upper middle-right (crop C/L in image-30/31, about x 1010, y 150)",
+      "what": "the brightest cores are flat-topped warm-white smudges that look clipped and plasticky",
+      "fix": "tone-map highlights with a softer shoulder and resolve the cores into dense star fields"
+     },
+     {
+      "severity": "minor",
+      "file": "image-25.png",
+      "where": "dark diagonal region running from the upper left through the centre",
+      "what": "a broad, smooth dark smear in the background with no structure that looks like an airbrushed overlay",
+      "fix": "give the absorption region texture and tie it to the band geometry, or reduce its opacity"
+     },
+     {
+      "severity": "minor",
+      "file": "image-25.png",
+      "where": "isolated pink/red nebula dots (around x 185, y 450, and crop O in image-27)",
+      "what": "small saturated magenta knots with hard round edges look like stamped sprites",
+      "fix": "lower saturation and add irregular soft structure to the emission knots"
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-38.png",
+      "where": "Milky Way band across tiles B, C, F, G, H (especially the large white blob in tiles C and F, and image-39.png tiles J, K)",
+      "what": "Sharp 1-2 px procedural stars sit over a soft, blurry, low-resolution Milky Way background map containing baked-in fuzzy star blobs, including an ~30 px blurry white blob in tiles C/F with crisp foreground stars rendered directly across its glow",
+      "fix": "Replace the Milky Way backdrop with a higher-resolution starless dust/nebula map or procedural volumetric Milky Way free of baked-in star and planet blobs"
+     },
+     {
+      "severity": "major",
+      "file": "image-39.png",
+      "where": "planetary rings in tiles M and N, and upper-globe ring shadow cutoff in tile M (also image-38.png tile B and image-37.png)",
+      "what": "Thin concentric ringlets break into jagged 1-px stair-steps along their arcs at native scale, and the ring segment crossing the upper face of the globe in tile M terminates in an aliased, dead-horizontal knife-edge line",
+      "fix": "Prefilter or supersample radial ring detail using screen-space derivatives/MIP filtering and soften the planet's ring-shadow boundary with a physically smooth solar penumbra"
+     },
+     {
+      "severity": "major",
+      "file": "image-38.png",
+      "where": "lower-right crescent limb in tile D and upper limb in tile B (also image-39.png tiles M and N)",
+      "what": "The atmospheric rim separates into a doubled edge—a stair-stepped 1-2 px bright blue outer outline detached from the inner limb shading by a darker trough",
+      "fix": "Integrate atmospheric scattering continuously across the limb with antialiased silhouette coverage so the outer shell merges smoothly into the globe without a separate rim line"
+     },
+     {
+      "severity": "major",
+      "file": "image-34.png",
+      "where": "globe cloud deck and central dark storm in tiles D and H (also image-35.png tiles O and P, and image-33.png)",
+      "what": "At native 1:1 crop resolution the cloud bands and central dark vortex look soft, blurry, and airbrushed next to the crisp starfield, with smeared texture swirling into the dark oval pit",
+      "fix": "Increase planetary surface texture resolution or add high-frequency procedural cloud-top detail and filamentary storm structure that holds up at 1:1 native pixel scale"
+     },
+     {
+      "severity": "minor",
+      "file": "image-39.png",
+      "where": "dark nightside hemisphere of the globe in tile M (lower-left to center of disc)",
+      "what": "Faint concentric target-like rings and dark-blue gradient stepping ripple around the tilted south pole across the dimly lit nightside",
+      "fix": "Perturb purely zonal latitude bands near the pole with 3D atmospheric turbulence and apply blue-noise dithering prior to 8-bit quantization in near-black nightside shading"
+     }
+    ]
+   }
+  }
+ ]
+}

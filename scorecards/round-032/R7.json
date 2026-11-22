@@ -1,0 +1,81 @@
+{
+ "critic": "R7",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R7",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crop I, lower-right shadowed Martian terrain",
+      "what": "The encoded half slightly flattens low-contrast crater and ridge texture near the shadow edge. The major landforms remain distinct, and there is no obvious contour banding.",
+      "fix": "Preserve a little more local contrast in the shadowed terrain, then rerun the same stress encode to verify the relief survives."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-24.png",
+      "where": "crop D, right (encoded) half, night side of the ringed planet next to the blue limb",
+      "what": "the dark gradient on the unlit hemisphere breaks into flat macroblock tiles and vertical streaks. The source is smooth fine noise there. The streaks show as faint vertical bands in the full frame too (image-19/21/23, planet left of the limb). The same thing happens in image-20 and image-22, crop D",
+      "fix": "give dark flat areas more bits: lower CRF or raise the bitrate, use aq-mode 3 or a higher aq-strength, encode in 10-bit, and add a little dither or grain before encoding so near-black gradients don't collapse into blocks"
+     },
+     {
+      "severity": "major",
+      "file": "image-24.png",
+      "where": "crops A and E, right (encoded) half, empty dark sky",
+      "what": "the fine background noise becomes low-frequency blue-green blotches with visible block edges, and many of the faintest stars and their small colour specks are gone. The empty sky reads as mottled, not clean. The same happens in image-20 and image-22 (crops A and E)",
+      "fix": "turn off psy/deblock smoothing in dark areas (tune grain or lower deblock), raise the bit budget for low-luma areas, and make the faintest star sprites at least 2 px or a little brighter so they get through quantisation"
+     },
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "crop E, right half, dark shadowed terrain, lower right toward the terminator",
+      "what": "the deep shadow near the terminator breaks into blocky reddish and blue chroma patches. Shadows on the Mars surface show chroma blocking",
+      "fix": "encode 4:4:4 or at 10-bit, or lower chroma QP offset (e.g. --chroma-qp-offset negative / cb/cr offset) so dark chroma isn't coarsely quantised"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crops B, C, D, F, left vs right halves",
+      "what": "the two halves of the Mars pack don't match the way a source/encode pair should. One side has smeared, directional streaks (crop C and the haze in B look motion-blurred and mushy). The other side has crisp crater detail and grain. Either the halves are swapped or the stills come from different frames, so surface loss can't be judged reliably. Whichever side is the encode, the streaky side turns the surface to mush",
+      "fix": "pull both stills from the exact same frame index (check the -ss / frame-accurate seek in npm run stress), label the source and encode halves, and regenerate the pack"
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "crops B, C, F, right half, Milky Way haze",
+      "what": "the haze between stars is a little smoothed and flatter, and faint colour variation in the dust lanes drops out. No hard blocking, and the large structure and bright stars hold up",
+      "fix": "a small bitrate increase or aq tuning will be enough. It is mostly acceptable fine-grain loss"
+     }
+    ]
+   }
+  }
+ ]
+}
