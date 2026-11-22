@@ -1,9 +1,67 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T09:31:15.618Z",
- "head": "952617ea8c008f70891fb8d346aa0b46db499ea3",
- "note": "Limb handover cure a5ffabb at the review tier beside the kept code; batch 20 merged (4204ad0 on main bd46e04), hand-in chain running",
+ "pushed": "2026-11-22T09:55:55.400Z",
+ "head": "22d250722b538886c6a31ac0c595655caa7f26bf",
+ "note": "Saturn: frame 3390 repeat check done (main 5 hashes of 20, agent/saturn 1 of 20); crescent at the limb in the rise, cause found, shader trial next",
  "looks": [
+  {
+   "time": "2026-11-22T09:55:54.737Z",
+   "file": "20261122095554737-note-lay-gain.jpg",
+   "source": "../../../../tmp/lay-gain.png",
+   "kind": "note",
+   "label": "Layout map gain and even gain near the junction (red: behind the skim camera's globe): the dark zone ends at the picture's limb",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T09:55:54.113Z",
+   "file": "20261122095554113-note-F4-3823-wide.jpg",
+   "source": "../../../../tmp/F4-3823-wide.png",
+   "kind": "note",
+   "label": "Rise 3823 draft at 3x (4204ad0, main bd46e04): cream crescent at the limb above the ring junction, the fault in work",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T09:46:50.603Z",
+   "file": "20261122094650603-frame-B20-3832.jpg",
+   "source": "out/work/saturn/B20-3832.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3832, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3832,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:43:40.694Z",
+   "file": "20261122094340694-frame-B20-3809.jpg",
+   "source": "out/work/saturn/B20-3809.png",
+   "kind": "frame",
+   "label": "saturn.terrain frame 3809, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.terrain",
+   "frame": 3809,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:42:04.496Z",
+   "file": "20261122094204496-frame-B20-3628.jpg",
+   "source": "out/work/saturn/B20-3628.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3628, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3628,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T09:29:06.637Z",
    "file": "20261122092906637-note-limb-handover-review-kept-f4.jpg",
@@ -11,20 +69,6 @@
    "kind": "note",
    "label": "Limb handover in the rise, review tier, 3x at the junction, 3813 to 3820: kept code 16b64e9 (left of each pair) and trial F4 (right): ring lanes carried on behind the picture's limb, pale sliver and vertical edge gone",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T09:28:43.408Z",
-   "file": "20261122092843408-frame-RVF4-3820.jpg",
-   "source": "out/work/saturn/RVF4-3820.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3820, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3820,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T09:06:44.478Z",
@@ -41,56 +85,6 @@
    "kind": "note",
    "label": "Limb handover trial F4, draft 3813 to 3820 at 1.5x (tree 3cb2493 on main 45004ec, not committed)",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T08:49:47.824Z",
-   "file": "20261122084947824-note-look-f4.jpg",
-   "source": "../../../../tmp/look-f4.png",
-   "kind": "note",
-   "label": "Limb handover in the rise, draft, 3x: kept code left, trial F4 right (ring lanes carried on behind the picture's limb above the junction radius; not committed; tree 3cb2493 on main 45004ec)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T08:42:59.703Z",
-   "file": "20261122084259703-frame-F4-3800.jpg",
-   "source": "out/work/saturn/F4-3800.png",
-   "kind": "frame",
-   "label": "saturn.terrain frame 3800, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3800,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T08:41:52.164Z",
-   "file": "20261122084152164-frame-F4-3628.jpg",
-   "source": "out/work/saturn/F4-3628.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3628, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3628,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:11:47.000Z",
-   "file": "20261122071147000-compare-compare-saturn-terrain-view.jpg",
-   "source": "out/work/compare/compare-saturn-terrain-view.jpg",
-   "kind": "compare",
-   "label": "saturn.terrain: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   }
  ]
 }
