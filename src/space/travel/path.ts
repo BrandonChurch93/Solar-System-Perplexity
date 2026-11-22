@@ -25,7 +25,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   mars: { pan: [2, 4], bowDeg: 10, roll: [2, 2], rollSpan: [0.02, 0.98], grow: [2, 3] },
   jupiter: { pan: [2, 5], bowDeg: -10, rollSpan: [0.08, 0.9], grow: [3, 4] },
   saturn: { pan: [2, 3], panSpan: [0, 0.76], bowDeg: 8, rollSpan: [0.05, 0.85], grow: [2, 3] },
-  uranus: { pan: [1, 2], panSpan: [0, 0.66], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
+  uranus: { pan: [1, 2], panSpan: [0, 0.8], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
 }
 
 export function travelLook(id: string): TravelLook {
