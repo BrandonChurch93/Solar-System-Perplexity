@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "whole terrain segment, frames 3630-3809",
+   "what": "the ring-surface view barely moves for about 180 frames; the near ring bands and the planet horizon hold almost the same layout, so there is little parallax and the view reads as a held still rather than flight over a surface with depth",
+   "fix": "add steady forward/lateral travel low over the rings so the near bands sweep past clearly faster than the planet limb, and add visible flow (particles, clumps, wakes) in the near ring material"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "start of rise, frames 3809-3830",
+   "what": "the camera goes from almost still at the end of terrain (3809) to fast motion with heavy ring blur by 3817-3823, and the framing swings hard by 3830; the speed ramp looks abrupt, with no sense of mass",
+   "fix": "ease out of the terrain hold over a longer ramp (roughly 20-30 frames) before the climb reaches full speed, and smooth the pitch/yaw change between 3823 and 3830"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "near ring bands, lower left and center, all frames",
+   "what": "very fine, high-contrast radial lines in the ring texture are likely to crawl or shimmer during slow camera drift",
+   "fix": "prefilter/mip the ring band texture and add a small amount of temporal antialiasing or motion blur so the fine lines stay stable"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "background upper left, frames 3556-3564 and 3580-3589",
+   "what": "the Milky Way dust band brightens noticeably over a few sampled frames while the camera moves only a little, which may read as an exposure change rather than motion",
+   "fix": "keep background exposure constant through the dive and let the band enter only by camera rotation"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "rings, frames 3817-3830",
+   "what": "the motion blur on the rings is strong and looks smeared, not like a clean directional blur; check the full-rate frames for stepped ghost copies of the ring gaps",
+   "fix": "raise the motion-blur sample count for the rise so ring gaps blur smoothly"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "bottom row, first two frames, lower left",
+   "what": "a haze veil fades out in place while the ground and the horizon stay still",
+   "fix": "clear the veil during the dive, before the terrain view holds"
+  }
+ ]
+}

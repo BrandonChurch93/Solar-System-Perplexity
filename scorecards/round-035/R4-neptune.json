@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4983 to 4984, sky above the limb",
+   "what": "the vertical atmospheric rays vanish and a dense warm starfield pops in within one frame while the planet and horizon stay put, so color and exposure do not carry across the cover",
+   "fix": "crossfade the haze and starfield over the decelerating frames so the sky eases instead of swapping plates"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4975 to 4976, whole frame",
+   "what": "the sharp terrain skim becomes heavy radial blur in a single frame, so the rise has no eased start",
+   "fix": "ramp camera speed and shutter blur over several frames before the whiteout"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 4986 to 4990, planet surface",
+   "what": "the cover has already gone sharp by 4986, then directional smear is back on the clouds at 4990, so rise speed is not one falling curve",
+   "fix": "hold a single ease-out through the pull-back so blur falls off and stays off"
+  }
+ ]
+}

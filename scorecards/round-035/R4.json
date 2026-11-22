@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-01.png",
+   "where": "after frame 539 (gap before sheet-02.png frame 1605)",
+   "what": "the Mercury-to-Venus travel segment contact sheet (~frames 1035-1110) is missing from the whole-film motion pack",
+   "fix": "include a review-tier contact sheet covering the full Mercury-to-Venus travel segment"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-04.png",
+   "where": "after frame 2819 (gap before sheet-05.png frame 4455)",
+   "what": "both the Jupiter-to-Saturn and Saturn-to-Uranus travel segment contact sheets (~frames 3315-3960) are missing from the whole-film motion pack",
+   "fix": "include review-tier contact sheets for the Jupiter-to-Saturn and Saturn-to-Uranus travel segments so every travel segment is represented"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 458-507, solar disc and left background sky",
+   "what": "the Sun's dark-orange granulation and crimson prominences bleach into a washed-out cream disc at 474-482 before granulation returns in pale yellow-white at 499, and the left Milky Way sky doubles in brightness between 499 and 507",
+   "fix": "keep solar surface exposure, color balance and background sky brightness continuous from the Sun hold across the entire travel move"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 2222-2249, Mars disc and foreground moon Phobos",
+   "what": "Mars whips through roughly 60 degrees of rotation between 2222 and 2236 then stops abruptly, while Phobos streaks vertically across the full disc in 13 frames and snaps from heavy motion blur at 2242 to sharp and slow at 2249",
+   "fix": "reduce Phobos's transit speed to a believable orbital rate and ease both Mars's apparent rotation and the camera's arrival arc smoothly into the hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 4489-4516, upper-left corner (Triton)",
+   "what": "Triton exits upward past the top frame border between 4495 and 4502 and then reverses vertical screen motion to drop back into frame at 4509",
+   "fix": "smooth the approach pitch and framing curve so Triton stays continuously inside the frame or enters cleanly once"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 2799-2812, Milky Way band behind Jupiter",
+   "what": "the Milky Way already positioned behind Jupiter brightens roughly threefold in place over 13 frames instead of carrying a steady sky exposure across travel",
+   "fix": "maintain consistent background Milky Way exposure throughout travel into the Jupiter hold"
+  }
+ ]
+}
