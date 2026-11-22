@@ -1,23 +1,23 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T14:02:50.152Z",
- "head": "1143f731d8f6f94678591bfe6d8715e9fde450ad",
- "note": "Round 34: the rise's start eased over nine frames (strip 2119 to 2130, tree holds main 5e3462bd); the covers' rays candidates render now",
+ "pushed": "2026-11-22T14:25:08.095Z",
+ "head": "77e134af6d5ae2408e41f9700f7336177e106e20",
+ "note": "Round 34: the covers' rays, four speeds at draft (tree holds main 5e3462bd); the rise start is committed as 02e7ea52, measure still to run",
  "looks": [
   {
-   "time": "2026-11-22T14:02:49.221Z",
-   "file": "20261122140249221-note-quad-leave.jpg",
-   "source": "out/work/earth/pb/k3/quad-leave.png",
+   "time": "2026-11-22T14:25:07.328Z",
+   "file": "20261122142507328-note-strip-dive-high.jpg",
+   "source": "out/work/earth/pb/k4/strip-dive-high.png",
    "kind": "note",
-   "label": "Rise start candidate: 2121, 2123, 2124, 2125 at review (preview format) with the new law, tree holds main 5e3462bd. Looked at for the bottom apron and steps: none found",
+   "label": "Covers' rays, trial: dive cover 1880 to 1889 at draft, high pass 40 px times 8, rush speed 2.4, 8, 12, 20 top to bottom. Tree holds main 5e3462bd. At 2.4 the fan of rays at the upper right is the same from 1882 to 1886; at 12 it changes each frame",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T14:02:47.949Z",
-   "file": "20261122140247949-note-strip-leave.jpg",
-   "source": "out/work/earth/pb/k3/strip-leave.png",
+   "time": "2026-11-22T14:25:06.463Z",
+   "file": "20261122142506463-note-strip-rise-frames.jpg",
+   "source": "out/work/earth/pb/k4/strip-rise-frames.png",
    "kind": "note",
-   "label": "Rise start, candidate for round 34 (not committed yet): frames 2119 to 2130 at review with the new lowering law (from 9.5, ramp 9), below it 2125 to 2130 with the law on main. Tree holds main 5e3462bd. Skyline now starts at 2122 and gains 4, 6, 14, 20, 30, 38, 44, 48 px per frame; on main it stands to 2124 and then goes 17, 40, 46, 48, 50",
+   "label": "Covers' rays, trial (nothing committed): rise cover 2127 to 2136 at draft with the rush speed 2.4 (now), 8, 12, 20, top to bottom. Tree holds main 5e3462bd. At 2.4 the holes and rays stand on the screen while the globe falls away; faster, the mist streams and thins evenly",
    "stop": "earth"
   },
   {
