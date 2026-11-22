@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, farMap, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
+import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { ending as endLook } from './ending'
 import { limbField } from './field'
@@ -40,6 +40,7 @@ export const createSet: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
   const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
+  const mendMap = await ctx.texture(base + mended.file, { srgb: true, anisotropy: 16 })
   const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
   const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
@@ -49,6 +50,7 @@ export const createSet: SetFactory = async (ctx) => {
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
+    mend: { map: mendMap, box: look.mended.box },
     flow,
     far: farSide,
   })
@@ -143,7 +145,7 @@ export const createSet: SetFactory = async (ctx) => {
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
-      pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end)
+      pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
@@ -180,11 +182,12 @@ export const createSet: SetFactory = async (ctx) => {
       if (staged) moonSun.lerp(shot.sun.dir, look.triton.rise.sun).normalize()
       triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(moonSun).normalize(), gain * state.weight)
       ring.update(light, state.rotation, THREE.MathUtils.degToRad(look.ring.degPerSecond) * elapsed, home, gain * state.weight)
-      air.ending(end, Math.sin(Math.PI - camera.angleTo(light) - Math.asin(Math.min(1 / camera.length(), 1))), endLook.air)
+      const crescent = smooth((THREE.MathUtils.radToDeg(camera.angleTo(light)) - endLook.limb.crescent.phase[0]!) / (endLook.limb.crescent.phase[1]! - endLook.limb.crescent.phase[0]!))
+      air.ending(end, Math.sin(Math.PI - camera.angleTo(light) - Math.asin(Math.min(1 / camera.length(), 1))), endLook.air, endLook.limb.crescent.bias * crescent)
       ringLit.fromArray(look.ring.normal).normalize().applyQuaternion(state.rotation)
       if (ringLit.dot(light) < 0) ringLit.negate()
       const behind = smooth((THREE.MathUtils.radToDeg(camera.angleTo(light)) - endLook.limb.shinePhase[0]!) / (endLook.limb.shinePhase[1]! - endLook.limb.shinePhase[0]!))
-      planet.ending(end, look.limb, look.cloud, look.deck, look.night, ringLit, endLook.limb.shineNear + (1 - endLook.limb.shineNear) * behind, endLook.limb)
+      planet.ending(end, look.limb, look.cloud, look.deck, look.night, ringLit, endLook.limb.shineNear + (1 - endLook.limb.shineNear) * behind, endLook.limb, crescent)
       ring.ending(end, camera, endLook.ring)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
