@@ -58,3 +58,10 @@ Mine: in `src/director/film.ts` the ending only (`LOOKBACK`, `lookback()`, the e
 - Review sheets, the draft strip and the finals were seen: the terminator closes from cell to cell, the band and the Sun come in at the top edge from about 5108 and are in place by 5135, the lookback holds the whole crescent 49 px clear of the left edge at 5145 and drifts right, the fade ends black (max 0 in the last cell).
 - For the Neptune agent: 5100 to 5140 and the whole lookback, the near arc of the ring crosses the night side as a bright streak that tapers to a point where the planet's shadow takes it; ring plane edge on at 5114. 5075 to 5090: the dark oval reads darker than the night side round it, and the cloud streaks at the terminator stay grey white a little past it.
 - Weak points: turn stays 1.2 to 1.35 degrees a frame from 5065 to 5105 with a corner at 5105 (the set's `smooth` ends there); the band is only in the last quarter of the retreat; Triton is gone by 5065; exposure is a weak lever because the engine holds the star level against it.
+
+## Mail 103 (07:48 UTC): on builder/b20
+
+- Branch fast forwarded to builder/b20 (a514fd3), where all seven branches meet. The flight sky now draws its strip band, strip points and halo wherever `skyStars` is 1, so the whole ending draws them at `LOOKBACK.skyExposure` 0.36.
+- Rendered 5235, 5085, 5362 final on it. Lookback band mean 66.3 of 255 (62.1 on my own branch before), lower sky 12.3 (12.7), the Sun still the brightest point, crescent whole. Answer: stands, no exposure or pose change.
+- Seen there: the ring is brighter now and its outer arc on the left runs off the frame edge at about y 590 in 5235. Holding the whole ring would need Neptune about 150 px further right, away from the left edge, with the Sun moved or the crescent thinner. Left for batch 21 if wanted.
+- Tidy up, bytes unchanged: the dust line reads `smoother(u)` now, so `wp` is folded into the one line that used it; `glide.turnFrom`, `glide.aimFrom` and `azimuthPerSecond` were all 0 and are gone (`ramp(0, 1, u)` is u). The table is the same to the digit.

@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, azimuthPerSecond: 0, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turnFrom: 0, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3, aimFrom: 0 } }
+export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -187,7 +187,7 @@ export class FilmDirector implements Director {
     const lb = config.segments.find((x) => x.kind === 'lookback')!
     const s = t - (lb.start + lb.end) / 2
     const rad = THREE.MathUtils.degToRad
-    return { phase: rad(LOOKBACK.phaseDeg + LOOKBACK.phasePerSecond * s), azimuth: rad(LOOKBACK.azimuthDeg + LOOKBACK.azimuthPerSecond * s), distance: LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s), s }
+    return { phase: rad(LOOKBACK.phaseDeg + LOOKBACK.phasePerSecond * s), azimuth: rad(LOOKBACK.azimuthDeg), distance: LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s), s }
   }
 
   private nightSide(phase: number, azimuth: number, distance: number, sun = this.lookbackSun): THREE.Vector3 {
@@ -529,11 +529,10 @@ export class FilmDirector implements Director {
         const b = look(time)
         const end = this.lookbackPlace(time)
         const g = LOOKBACK.glide
-        const wp = glide(ramp(g.turnFrom, 1, u), g.turn)
-        const w = glide(ramp(g.aimFrom, 1, u), g.aim)
+        const w = glide(u, g.aim)
         const lit = p.lightDir.clone().lerp(this.lookbackSun, smooth(u * g.light)).normalize()
         const phase = mix(a.position.angleTo(p.lightDir), end.phase, glide(u, g.phase))
-        const position = this.nightSide(phase, end.azimuth * wp, a.position.length() * Math.pow(end.distance / a.position.length(), glide(u, g.pull)), lit)
+        const position = this.nightSide(phase, end.azimuth * glide(u, g.turn), a.position.length() * Math.pow(end.distance / a.position.length(), glide(u, g.pull)), lit)
         const track = (x: THREE.Vector3): THREE.Quaternion => lookAt(x, new THREE.Vector3(), this.lookbackSun)
         const held = track(a.position).invert().multiply(a.quaternion)
         const local: Pose = { position, quaternion: track(position).multiply(held.slerp(track(b.position).invert().multiply(b.quaternion), w)), vfov: mix(a.vfov, b.vfov, w) }
