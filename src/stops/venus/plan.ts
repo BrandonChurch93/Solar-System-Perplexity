@@ -32,7 +32,7 @@ export const params: MoveParams = {
   coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } },
 }
 
-export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
+export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, band: [0.36, 2, 6], ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
 
 export const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 
@@ -139,6 +139,15 @@ class VenusPlan extends StopPlan {
     if (!w || x === null) return 0
     const half = (seg.kind === 'rise' ? w.firstFrame - w.centerFrame : w.lastFrame + 1 - w.centerFrame) / config.fps
     return half * (1 - Math.pow(1 - Math.min(Math.abs(x), 1), veil.ease + 1)) / (veil.ease + 1)
+  }
+
+  override skyGain(time: number): number {
+    const w = coverWindow(this.seg.rise)
+    if (!w) return 1
+    const f = time * config.fps - w.centerFrame
+    const [low, hold, span] = veil.band as [number, number, number]
+    if (f < -0.5 || f >= hold + span) return 1
+    return low + (1 - low) * ease((f - hold) / span)
   }
 
   release(seg: Segment, time: number): number {

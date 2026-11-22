@@ -294,24 +294,22 @@ ${TAP_LEVELS}
   for (int pass = 0; pass < (uWeave.y * uLimbFar > 0.0 ? 1 : 0); pass++) {
     float seen = dot(dc, normalize(uWeaveCam - dc));
     float ring = (1.0 - smoothstep(uWeaveRing.x, uWeaveRing.y, seen)) * smoothstep(uWeaveRing.z, uWeaveRing.w, seen);
-    for (int inner = 0; inner < (ring > 0.0 ? 1 : 0); inner++) {
-      vec3 axis = normalize(uWeaveCam);
-      vec3 from = normalize(dc - uWeave.x * axis);
-      for (int fold = 0; fold < (uWeaveRise.x > 0.0 ? 1 : 0); fold++) {
-        float along = dot(dc, axis);
-        float to = uWeaveRise.x - acos(clamp(along, -1.0, 1.0));
-        from = axis * cos(to) + normalize(dc - axis * along) * sin(to);
-      }
-      vec3 narrow = equirect(uMap, from).rgb;
-      vec3 wide = textureLod(uMap, lonLat(from), uWeave.z).rgb;
-      float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
-      vec3 tone = mix(vec3(ratio), narrow * narrow / max(wide * wide, vec3(1e-4)), uWeaveRise.z);
-      float amount = uLimbFar * ring * (1.0 - near) / uSmear;
-      col *= pow(clamp(tone, vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeave.y * amount * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl))));
-      for (int calm = 0; calm < (uWeaveRise.w > 0.0 ? 1 : 0); calm++) {
-        vec3 own = textureLod(uMap, lonLat(dc), uWeaveRise.y).rgb;
-        col *= pow(clamp(own * own / max(albedo * albedo, vec3(1e-4)), vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeaveRise.w * amount));
-      }
+    vec3 axis = normalize(uWeaveCam);
+    vec3 from = normalize(dc - uWeave.x * axis);
+    for (int fold = 0; fold < (uWeaveRise.x > 0.0 ? 1 : 0); fold++) {
+      float along = dot(dc, axis);
+      float to = uWeaveRise.x - acos(clamp(along, -1.0, 1.0));
+      from = axis * cos(to) + normalize(dc - axis * along) * sin(to);
+    }
+    vec3 narrow = equirect(uMap, from).rgb;
+    vec3 wide = textureLod(uMap, lonLat(from), uWeave.z).rgb;
+    float ratio = dot(narrow * narrow, vec3(0.2126, 0.7152, 0.0722)) / max(dot(wide * wide, vec3(0.2126, 0.7152, 0.0722)), 1e-4);
+    vec3 tone = mix(vec3(ratio), narrow * narrow / max(wide * wide, vec3(1e-4)), uWeaveRise.z);
+    float amount = uLimbFar * ring * (1.0 - near) / uSmear;
+    col *= pow(clamp(tone, vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeave.y * amount * mix(1.0, uWeaveLit, smoothstep(-0.05, 0.3, ndl))));
+    for (int calm = 0; calm < (uWeaveRise.w > 0.0 ? 1 : 0); calm++) {
+      vec3 own = textureLod(uMap, lonLat(dc), uWeaveRise.y).rgb;
+      col *= pow(clamp(own * own / max(albedo * albedo, vec3(1e-4)), vec3(1.0 / uWeave.w), vec3(uWeave.w)), vec3(uWeaveRise.w * amount));
     }
   }
   for (int pass = 0; pass < (uCellCount > 0.5 ? 1 : 0); pass++) {
@@ -350,8 +348,8 @@ ${TAP_LEVELS}
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  if (dot(past, past) >= 1.0) discard;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
+  if (dot(past, past) >= 1.0) discard;
 }`
 
 export class Globe {

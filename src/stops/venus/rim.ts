@@ -98,10 +98,8 @@ vec3 shown(vec3 x) {
   return sqrt(clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 0.985));
 }
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vPos);
   float along = -dot(uCam, dir);
-  if (along <= 0.0) discard;
   vec3 p = uCam + dir * along;
   float b = length(p);
   vec3 at = p / b;
@@ -116,6 +114,7 @@ void main() {
   vec3 col = glow * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   for (int pass = 0; pass < (uHoldRimMap.w > 0.0 ? 1 : 0); pass++) col *= holdRim(p, true);
   outColor = vec4(col, uLimbFar * uHide.z * smoothstep(uHide.x, uHide.y, dot(shown(col), vec3(0.3, 0.5, 0.2))));
+  if (uDiag >= 2 || along <= 0.0) discard;
 }`
 
 export function limbFrame(camera: THREE.Vector3, sun: THREE.Vector3, s: THREE.Vector3, t: THREE.Vector3): void {

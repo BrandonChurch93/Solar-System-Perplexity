@@ -79,7 +79,6 @@ out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${NOISE_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec4 far = uInvProj * vec4(vNdc, 0.0, 1.0);
   vec3 ray = normalize(far.xyz / far.w);
   float cc = dot(uCentre, uCentre);
@@ -88,7 +87,7 @@ void main() {
   float mask = clamp((1.0 - miss) / (uPx * sqrt(max(cc - 1.0, 1e-8))) + 0.5, 0.0, 1.0);
   vec3 col = vec3(0.0);
   float alpha = 0.0;
-  for (int pass = 0; pass < (mask > 0.0 && uAmount > 0.0 ? 1 : 0); pass++) {
+  for (int pass = 0; pass < (uAmount > 0.0 ? 1 : 0); pass++) {
     vec3 d = uRot * ray;
     vec3 nadir = -normalize(uCam);
     float cn = clamp(dot(d, nadir), -1.0, 1.0);
@@ -162,6 +161,7 @@ void main() {
   vec2 vq = vNdc * 0.5 * vec2(uAspect, 1.0);
   col /= mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, alpha);
+  if (uDiag >= 2) discard;
 }`
 
 export class Veil {
