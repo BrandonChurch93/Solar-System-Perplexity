@@ -1358,7 +1358,7 @@ Results of q44 that came in (dusk in the working tree over head d2a59775's code,
 - 18:44, message to `/root`, low priority, no question in it: the 18:26 record read and accepted; branch at c42c9d51 holds main 9d20d3dd; the cure reverted as 6f286a67; branch equals main in `src` and `public`; the four finals above; `agent/venus-dusk` untouched and waiting for the Builder's word; dusk measured for the record only, with what is and is not measured.
 - q45 goes on: 48 draft frames with main's code (`h1`), then dusk finals (`d2`), then 48 draft frames with dusk.
 
-## State at 18:58 (22 Nov): q45 results; a false line in its log named; q46 runs (read this first after a compaction)
+## State at 18:54 (22 Nov): q45 results; a false line in its log named; q46 runs (read this first after a compaction)
 
 q45 (render copy on main 9d20d3dd, round 35's tree; dusk in the working tree over round 34's code):
 
@@ -1370,4 +1370,4 @@ q45 (render copy on main 9d20d3dd, round 35's tree; dusk in the working tree ove
 - Of the rise cover sheet's 12 frames (1555 to 1566), 8 keep their bytes at draft and 4 change by at most 1, 1, 1 and 3 levels.
 - Pictures: `view/d2-switch.jpg` (12 pairs 1563 to 1584).
 
-q46 runs (`/home/user/workspace/q46.sh`, log `/tmp/q46.log`, started 18:55): review stills in pairs at 15 frames (`dr-F.png` dusk, `hr-F.png` main's code), shader audit, vitest, `measure --only G5,G13` (`/tmp/d3-measure.log`), repeat on 1575, 1586, 1600 (`/tmp/d3-rep.log`), the rise cover sheet at review with dusk (`view/d3-rc.png`). It syncs from the repo's working tree three times, the last time at the sheet: do not touch `src/stops/venus` in the repo until "q46 done".
+q46 runs (`/home/user/workspace/q46.sh`, log `/tmp/q46.log`, started 18:54): review stills in pairs at 15 frames (`dr-F.png` dusk, `hr-F.png` main's code), shader audit, vitest, `measure --only G5,G13` (`/tmp/d3-measure.log`), repeat on 1575, 1586, 1600 (`/tmp/d3-rep.log`), the rise cover sheet at review with dusk (`view/d3-rc.png`). It syncs from the repo's working tree three times, the last time at the sheet: do not touch `src/stops/venus` in the repo until "q46 done".
