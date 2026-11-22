@@ -12,6 +12,7 @@
     "test": "vitest run",
     "still": "tsx tools/still.ts",
     "determinism": "tsx tools/determinism.ts",
+    "repeat": "tsx tools/repeat.ts",
     "gate": "tsx tools/gate.ts",
     "review": "tsx tools/review.ts",
     "site": "tsx tools/site.ts",
