@@ -16,7 +16,7 @@ import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import type { SkyAims } from '../space/aim'
-import { Cover } from '../terrain/cover'
+import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
 import { marksIn } from '../terrain/shield'
@@ -24,6 +24,7 @@ import { setsForFrame } from '../director/timeline'
 
 export interface Director {
   shotAt(frame: number, time: number): Shot
+  glareOf?(shot: Shot): THREE.Vector3 | null
   readonly sky?: SkyAims
 }
 
@@ -323,7 +324,8 @@ export class Engine {
     if (!raw) {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height, open)
+      const glare = this.director?.glareOf?.(mid)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, glare ? { ...shot.sun, dir: glare } : shot.sun, shot.post.vignette, width / height, open)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
       r.setRenderTarget(this.sampleTarget)
@@ -340,7 +342,7 @@ export class Engine {
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
-    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+    if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
   private hold(shot: Shot, mid: Shot): void {
