@@ -1,9 +1,55 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T15:50:14.533Z",
- "head": "a9de1f45977fc288b302c02ebb5c9fd70deee249",
- "note": "CUT34: the arrival swing proved old against new (finals 4436 and 4492, travel review sheets, drafts); rise review frames rendering",
+ "pushed": "2026-11-22T16:20:59.961Z",
+ "head": "fc69bece1eb487228a8112b2d68c9894947b9695",
+ "note": "CUT35: the 35 points of the hold sky proved on the judged finals, dive and hold sheets rendering; the rise pace designed by numbers",
  "looks": [
+  {
+   "time": "2026-11-22T16:20:58.875Z",
+   "file": "20261122162058875-note-4605-final-x3-hero-before-points-2.jpg",
+   "source": "out/work/nep/end34/pts/4605-final-x3-hero-before-points-2.jpg",
+   "kind": "note",
+   "label": "hold 4605 final, times 3: approved hero, before, with the points (2)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:20:57.910Z",
+   "file": "20261122162057910-note-4605-final-x3-hero-before-points-1.jpg",
+   "source": "out/work/nep/end34/pts/4605-final-x3-hero-before-points-1.jpg",
+   "kind": "note",
+   "label": "hold 4605 final, times 3: approved hero, before, with the points (1)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:20:56.636Z",
+   "file": "20261122162056636-note-4605-final-native-lower-right-hero-before-points.jpg",
+   "source": "out/work/nep/end34/pts/4605-final-native-lower-right-hero-before-points.jpg",
+   "kind": "note",
+   "label": "hold 4605 final, lower right at native: approved hero, before, with the 35 points",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:20:55.530Z",
+   "file": "20261122162055530-note-4605-final-native-lower-left-hero-before-points.jpg",
+   "source": "out/work/nep/end34/pts/4605-final-native-lower-left-hero-before-points.jpg",
+   "kind": "note",
+   "label": "hold 4605 final, lower left at native: approved hero, before, with the 35 points",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:17:50.861Z",
+   "file": "20261122161750861-frame-f04712-review.jpg",
+   "source": "out/work/sheets/.frames-mmyZcy/f04712-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4712, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4712,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T15:50:13.871Z",
    "file": "20261122155013871-note-uranus-travel-sheet-review-swing-0.jpg",
@@ -26,46 +72,6 @@
    "source": "out/work/nep/end34/swing/send/swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
    "kind": "note",
    "label": "swing 0, every second frame 4453 to 4499, drafts raised 4 (looking for sky edges)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:46.099Z",
-   "file": "20261122152646099-note-uranus-travel-4455-4529-draft-old-above-swing-0.jpg",
-   "source": "out/work/nep/end34/swing/send/uranus-travel-4455-4529-draft-old-above-swing-0.jpg",
-   "kind": "note",
-   "label": "uranus.travel drafts: main above, swing 0 below",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:44.997Z",
-   "file": "20261122152644997-note-uranus-rise-4405-4454-draft-old-above-swing-0.jpg",
-   "source": "out/work/nep/end34/swing/send/uranus-rise-4405-4454-draft-old-above-swing-0.jpg",
-   "kind": "note",
-   "label": "uranus.rise after its cover, drafts: main above, swing 0 below",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:43.987Z",
-   "file": "20261122152643987-note-uranus-travel-sheet-review-swing-0.jpg",
-   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-swing-0.jpg",
-   "kind": "note",
-   "label": "uranus.travel review sheet with swing 0",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:43.071Z",
-   "file": "20261122152643071-note-4492-final-old-left-swing-0-right.jpg",
-   "source": "out/work/nep/end34/swing/send/4492-final-old-left-swing-0-right.jpg",
-   "kind": "note",
-   "label": "uranus.travel 4492 final: main left, swing 0 right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:42.097Z",
-   "file": "20261122152642097-note-4436-final-old-left-swing-0-right.jpg",
-   "source": "out/work/nep/end34/swing/send/4436-final-old-left-swing-0-right.jpg",
-   "kind": "note",
-   "label": "uranus.rise 4436 final: main left, Neptune arrival swing 0 right",
    "stop": "neptune"
   }
  ]
