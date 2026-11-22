@@ -143,6 +143,12 @@ describe('belt motion', () => {
     })
   })
 
+  it('weights the shutter steps by a window from 0 (even) to 1 (raised cosine) so no step counts against the picture, and keeps them 1.5 px apart', () => {
+    expect(beltSpec.steps.window).toBeGreaterThanOrEqual(0)
+    expect(beltSpec.steps.window).toBeLessThanOrEqual(1)
+    expect(beltSpec.steps.gap).toBe(1.5)
+  })
+
   it('passes the near rock out of focus by 8 px or more and takes it out four frames or more before the judged frame', () => {
     const i = motion.rocks.findIndex((r) => r.id === 'near')
     let last = 0

@@ -228,6 +228,9 @@ export const createSet: SetFactory = async (ctx) => {
       ru.uGain!.value = gain
       ru.uLimbW!.value = gu.uLimbW!.value
       ru.uWeight!.value = state.weight
+      ;(ru.uSolid!.value as THREE.Vector2).x = smooth((state.time - plan.seg.hold.end) / look.rings.shadeSolid[1])
+      const soft = state.time < plan.seg.hold.end ? 0 : (1 - poseW.value) * (1 - close.value)
+      ;(ru.uPenumbra!.value as THREE.Vector3).set(THREE.MathUtils.lerp(look.rings.penumbra[0], look.rings.penumbraAway[0], soft), THREE.MathUtils.lerp(look.rings.penumbra[1], look.rings.penumbraAway[1], soft), THREE.MathUtils.lerp(look.rings.penumbra[2], look.rings.penumbraAway[2], soft))
       ru.uTime!.value = elapsed
       ru.uSpinRate!.value = spinRate
       ru.uVignette!.value = shot.post.vignette
