@@ -1,9 +1,87 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T02:08:51.403Z",
- "head": "3ef854c856d2d69ae254bb99b23b40b0a9c3f5fd",
- "note": "sun: review sheet of every frame 200 to 224 done; item 4 offline assets; next the opening switch",
+ "pushed": "2026-11-22T02:31:20.365Z",
+ "head": "e51a180206f3b501e40c71efe4fe76610756eda6",
+ "note": "sun: opening switch on, final tier 0, 60, 90 on main 3d48581; measure running",
  "looks": [
+  {
+   "time": "2026-11-22T02:31:19.205Z",
+   "file": "20261122023119205-note-i288-f247-before-after-batch-17-draft.jpg",
+   "source": "out/work/sun/i288-f247-before-after-batch-17-draft.jpg",
+   "kind": "note",
+   "label": "sun: frame 247 draft before and after engine batch 17 (main 1c7c297 beside 3d48581), same stop code",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:18.161Z",
+   "file": "20261122023118161-note-i288-opening-f60-final-near-ground-native-off-beside-on.jpg",
+   "source": "out/work/sun/i288-opening-f60-final-near-ground-native-off-beside-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 60 final, near ground at native size, switch off beside on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:17.280Z",
+   "file": "20261122023117280-note-i288-opening-f0-final-near-ground-native-off-beside-on.jpg",
+   "source": "out/work/sun/i288-opening-f0-final-near-ground-native-off-beside-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 0 final, near ground at native size, switch off beside on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:16.264Z",
+   "file": "20261122023116264-note-i288-opening-f60-final-arch-native-off-beside-on.jpg",
+   "source": "out/work/sun/i288-opening-f60-final-arch-native-off-beside-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 60 final, arch at native size, switch off beside on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:15.162Z",
+   "file": "20261122023115162-note-i288-opening-f0-final-arch-native-off-beside-on.jpg",
+   "source": "out/work/sun/i288-opening-f0-final-arch-native-off-beside-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 0 final, arch at native size, switch off beside on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:14.319Z",
+   "file": "20261122023114319-note-i288-opening-f90-final-kept-beside-switch-on.jpg",
+   "source": "out/work/sun/i288-opening-f90-final-kept-beside-switch-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 90 final tier, kept clip (round 24) beside switch on (90 keeps its bytes with the switch), main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:13.386Z",
+   "file": "20261122023113386-note-i288-opening-f60-final-kept-beside-switch-on.jpg",
+   "source": "out/work/sun/i288-opening-f60-final-kept-beside-switch-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 60 final tier, kept clip (round 24) beside switch on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:31:12.307Z",
+   "file": "20261122023112307-note-i288-opening-f0-final-kept-beside-switch-on.jpg",
+   "source": "out/work/sun/i288-opening-f0-final-kept-beside-switch-on.jpg",
+   "kind": "note",
+   "label": "sun opening: frame 0 final tier, kept clip (round 24) beside switch on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:30:32.619Z",
+   "file": "20261122023032619-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T02:08:50.821Z",
    "file": "20261122020850821-note-i286-review-212-224-larger.jpg",
@@ -50,78 +128,6 @@
    "source": "out/work/sun/open/i284-opening-arch-lanes-contours.jpg",
    "kind": "note",
    "label": "Opening: lanes and arc length the knots run along",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:44:05.155Z",
-   "file": "20261122014405155-note-i284-opening-prototype-knots-native.jpg",
-   "source": "out/work/sun/open/i284-opening-prototype-knots-native.jpg",
-   "kind": "note",
-   "label": "Opening, offline prototype: knots at native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:44:03.080Z",
-   "file": "20261122014403080-note-i284-opening-prototype-knots-strip-400.jpg",
-   "source": "out/work/sun/open/i284-opening-prototype-knots-strip-400.png",
-   "kind": "note",
-   "label": "Opening, offline prototype on the approved image: bright knots along the arch, five moments at 400 px",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:30:25.262Z",
-   "file": "20261122013025262-note-i283-strip-0-30-60-90-at-400-today.jpg",
-   "source": "out/work/sun/i283-strip-0-30-60-90-at-400-today.png",
-   "kind": "note",
-   "label": "Opening today at 400 px wide, frames 0, 30, 60, 90: the four look nearly alike (mail 53, before the switch)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:48.635Z",
-   "file": "20261122011448635-note-i281-limb-right-approved-90-60-0-gain3.jpg",
-   "source": "out/work/sun/i281-limb-right-approved-90-60-0-gain3.png",
-   "kind": "note",
-   "label": "item 4 study: right limb, approved, 90, 60, 0 at 3 times gain (second glow shell at 0)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:47.823Z",
-   "file": "20261122011447823-note-i281-limb-left-approved-90-60-0-gain3.jpg",
-   "source": "out/work/sun/i281-limb-left-approved-90-60-0-gain3.png",
-   "kind": "note",
-   "label": "item 4 study: left limb, approved, 90, 60, 0 at 3 times gain (dark line above the spicules at 60 and 0)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:46.895Z",
-   "file": "20261122011446895-note-i279-sky-terrain-card-gain3.jpg",
-   "source": "out/work/sun/i279-sky-terrain-card-gain3.jpg",
-   "kind": "note",
-   "label": "item 4 study: terrain sky card at 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:46.076Z",
-   "file": "20261122011446076-note-i278-loops-card-left-foot.jpg",
-   "source": "out/work/sun/i278-loops-card-left-foot.png",
-   "kind": "note",
-   "label": "item 4 study: loops card at the left foot, plain and gained (the streak sits in the card)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:45.048Z",
-   "file": "20261122011445048-note-i277-approved-left-foot-gain3.jpg",
-   "source": "out/work/sun/i277-approved-left-foot-gain3.png",
-   "kind": "note",
-   "label": "item 4 study: approved image, left foot at 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:14:44.083Z",
-   "file": "20261122011444083-note-i276-foot-approved-90-60-0-gain3.jpg",
-   "source": "out/work/sun/i276-foot-approved-90-60-0-gain3.png",
-   "kind": "note",
-   "label": "item 4 study: left foot, approved, 90, 60, 0 at 3 times gain (the straight streak is in the approved image)",
    "stop": "sun"
   },
   {
