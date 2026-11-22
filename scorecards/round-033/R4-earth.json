@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 1862-1895 across the dive cover",
+   "what": "camera direction, horizon, and sun angle jump across the cover: 1862-1870 plunges perpendicular into the center of a left-lit globe with no top horizon, while 1887-1895 emerges flying tangentially below a curved top horizon toward a top-center sun",
+   "fix": "arc and pitch the dive camera toward the limb with matching sun direction before entering the cloud cover so pre- and post-cover frames belong to one continuous move"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 2113-2147 across the rise cover",
+   "what": "entering the cover (2113-2127) pushes forward and drives the curved horizon up off the top edge instead of pulling out, then cuts across the cover to a perpendicular pullback from a centered left-lit globe (2140-2147)",
+   "fix": "pull back continuously so the orbital horizon drops and curves into the planetary disk across the cover without switching lighting or view axis"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "entire sheet, frames 1879-1890",
+   "what": "frame 1879 is already in full whiteout at peak brightness, so the sheet only shows exiting the dive cover and omits the consecutive frames entering the cover",
+   "fix": "center the cover contact sheet across the transition (around frames 1874-1885) so consecutive frames both before and after the cover are shown"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2132-2136, lower-left and lower-right corners and left limb",
+   "what": "fast radial blur breaks coastlines, city lights, and the hurricane into 4-5 separate stepped ghost copies and discrete streak taps instead of a smooth blur",
+   "fix": "increase temporal and radial blur substeps with continuous sampling so fast motion blurs smoothly without discrete ghost edges"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "upper right near Moon and limb, frames 1830-1870 (and sheet-05.png frame 2140)",
+   "what": "the Moon stays pinned near the same screen position while Earth doubles in apparent size during the dive, causing Earth's expanding green aurora limb to collide with and overlap the Moon at frame 1870 and again at 2140",
+   "fix": "project the Moon from its true 3D world position so perspective pushes it outward off-frame as the camera approaches Earth"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "background starfield and Milky Way, frames 2147-2174 vs sheet-01.png/sheet-02.png",
+   "what": "the Milky Way jumps ~45 degrees from a top-left-to-bottom-right diagonal before the dive to a nearly vertical band behind Earth after the rise despite returning to the same globe framing",
+   "fix": "lock the starfield skybox in world coordinates across all segments so the background stars and Milky Way do not reorient across the stop"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "cloud field, shadows, and ocean surface across frames 1920-2099",
+   "what": "clouds, cloud shadows, and ocean surface detail are frozen onto static geometry with no cloud drift or water flow, while Earth's globe rotation in sheet-05.png (2147-2174) also stalls relative to its rate in sheet-01.png",
+   "fix": "animate subtle cloud drift and ocean specular flow in the terrain view and advance planetary rotation at a consistent rate across the entire stop"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "upper-right limb aurora, frames 1680-1721",
+   "what": "the green aurora is nearly absent on frame 1680 and ramps in abruptly over frames 1680-1721 before holding steady",
+   "fix": "start the aurora at steady-state intensity at the beginning of hold or evolve its curtains smoothly without an initial fade-in pop"
+  }
+ ]
+}

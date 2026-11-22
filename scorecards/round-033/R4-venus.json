@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "rise cover, frames 1562-1566, whole sky and sun",
+   "what": "in three frames the sky goes from a blue starfield to a dark brown haze, the stars disappear and the sun dims to nothing while the horizon jumps from flat to a strong arch; color, exposure and horizon do not carry across the cover",
+   "fix": "spread the sky and sun change over the whole climb (20+ frames), keep the starfield and the sun's position and brightness locked to the camera, and ease the horizon curvature with altitude"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "dive cover, frames 1318-1320, lower two thirds",
+   "what": "sharp lit cloud tops snap in over the blurred streaks as a cross-dissolve instead of coming out of the motion blur as the camera slows; frames 1309-1310 also show repeated parallel bands on the right, so the blur splits into ghost copies",
+   "fix": "tie blur length to camera speed so detail sharpens as the descent eases, use one continuous cloud layer through the cover instead of a dissolve, and raise the motion-blur sample count"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "terrain segment, frames 1350-1529, foreground clouds vs horizon",
+   "what": "the horizon and sun stay fixed while the near cloud towers change shape in place; there is barely any parallax between near ground and horizon, so the clouds swim instead of passing under the camera. Frames 1333-1349 on sheet-02 are almost frozen",
+   "fix": "give the camera a slow forward drift so near clouds move clearly faster than the far band, and slow the cloud evolution so shapes keep their form as they travel"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "terrain to rise, frames 1550-1557",
+   "what": "detailed clouds turn into a uniform smear in one step while the horizon flattens and drops; the climb starts with a jump in speed instead of an eased start",
+   "fix": "ease the rise speed up from zero over the first frames and let the blur build with it"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "rise segment, frames 1577-1604, planet lighting",
+   "what": "the planet now has its bright limb and lit hemisphere on the right, but in the hold (sheet-01) it was lit from the left; with no orbit around the planet in the move, the light seems to flip",
+   "fix": "keep the sun direction the same in world space and frame the departure so the terminator matches the arrival, or show the camera moving around the planet"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold, frames 1124-1164, Milky Way band left and right of the planet",
+   "what": "the brightness and contrast of the background band change from frame to frame while the camera is nearly still",
+   "fix": "lock the background exposure and turn off adaptive exposure during holds"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold, frames 1110-1259, planet surface",
+   "what": "the cloud bands and the swirl barely rotate over 150 frames, so the globe looks frozen",
+   "fix": "add a slow, visible rotation or flow of the cloud bands during the hold"
+  }
+ ]
+}

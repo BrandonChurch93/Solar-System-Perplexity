@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "lower left foreground rings (pair-04 crops D and G)",
+   "what": "the fine ringlet striations nearest the camera are softer and smeared, with about 20-25% less fine detail than -a, and the region is lifted slightly brighter and flatter",
+   "fix": "restore the high-frequency ringlet detail in the near rings with less smoothing or denoise, and pull the near-ring exposure down about 3 levels to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lit ring arc in front of the planet, lower center and left (pair-02 crops D and G)",
+   "what": "the rings are slightly brighter and warmer (+3 to 5 levels) and the ringlet texture is a little smoother than -a",
+   "fix": "lower the lit-ring exposure slightly and bring back the fine ringlet contrast"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "deep shadows: ring shadow on the right and the sky blacks",
+   "what": "the blacks are crushed a bit deeper than -a (1st percentile 4 vs 6), and faint detail in the ring shadow is weaker",
+   "fix": "lift the black point slightly so the faint ring texture shows inside the planet's shadow as it does in -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet belts, upper left of the disk (pair-02 crop A)",
+   "what": "the festoon and swirl detail in the mid-latitude belt is slightly softer than -a",
+   "fix": "sharpen the cloud-swirl detail in the belts to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sky and planet terminator (pair-04 crops B, C and H)",
+   "what": "the sky shows slightly more grain and noise, and the stars are a touch more prominent than -a",
+   "fix": "reduce the sky noise and grain slightly to match the cleaner -a sky"
+  }
+ ]
+}
