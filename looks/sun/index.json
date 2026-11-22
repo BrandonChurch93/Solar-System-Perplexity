@@ -1,9 +1,47 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T03:26:18.614Z",
- "head": "d39a2d1c8da3ee27c5bd271b4d724166e6121f6c",
- "note": "item 4 trace of the dark rim at the limb, main 0622510 (batch 18)",
+ "pushed": "2026-11-22T03:51:20.918Z",
+ "head": "ce1994c5f0f381d2080ed188e7ab8485d2dbbafc",
+ "note": "sun item 4 (limb and sky): dark rim traced to the plate slab against the haze rise and to the flame stretch; cure in work, main 0622510 (batch 18)",
  "looks": [
+  {
+   "time": "2026-11-22T03:51:20.217Z",
+   "file": "20261122035120217-note-i292-haze-texture-first-try-toward-difference.jpg",
+   "source": "out/work/sun/h1p/i292-haze-texture-first-try-toward-difference.png",
+   "kind": "note",
+   "label": "Item 4 in work, main 0622510: haze texture in limb coordinates, first try, a trial with a wide correction range (dropped), difference times 6",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T03:51:19.650Z",
+   "file": "20261122035119650-note-i292-f90-limb-approved-before-now.jpg",
+   "source": "out/work/sun/h1p/i292-f90-limb-approved-before-now.png",
+   "kind": "note",
+   "label": "Item 4 in work, main 0622510 (batch 18): frame 90 limb unwrapped at 3 times gain: approved, before, now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T03:51:19.058Z",
+   "file": "20261122035119058-note-i292-f0-f60-limb-unwrapped-before-first-now.jpg",
+   "source": "out/work/sun/h1p/i292-f0-f60-limb-unwrapped-before-first-now.png",
+   "kind": "note",
+   "label": "Item 4 in work, main 0622510 (batch 18): limb unwrapped at 3 times gain, frame 0 (top three) and 60: before, first try, now. The dark line above the flames is gone; a thin light line at the limb row remains and is being fixed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T03:43:56.924Z",
+   "file": "20261122034356924-frame-base90-item4b.jpg",
+   "source": "out/work/sun/base90-item4b.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T03:26:18.026Z",
    "file": "20261122032618026-note-i291-f90-limb-approved-over-film.jpg",
@@ -19,20 +57,6 @@
    "kind": "note",
    "label": "item 4 trace, frame 0 draft, limb unwrapped x 200 to 560, gain 3, x4: both, plate only, haze only. Dark rim sits where the plate has fallen and the haze not yet risen. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T03:00:39.620Z",
-   "file": "20261122030039620-frame-base90-item4.jpg",
-   "source": "out/work/sun/base90-item4.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-22T02:57:44.547Z",
@@ -132,30 +156,6 @@
    "source": "out/work/sun/i289-f60-final-switch-on-main-3d48581.jpg",
    "kind": "note",
    "label": "sun: judged frame 60, final tier, opening switch on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:56.557Z",
-   "file": "20261122024756557-note-i289-f0-final-switch-on-main-3d48581.jpg",
-   "source": "out/work/sun/i289-f0-final-switch-on-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun: judged frame 0, final tier, opening switch on, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:55.606Z",
-   "file": "20261122024755606-note-i287-opening-arch-native-nine-frames-switch-on.jpg",
-   "source": "out/work/sun/i287-opening-arch-native-nine-frames-switch-on.jpg",
-   "kind": "note",
-   "label": "sun opening: the arch at native size in the nine R6 frames, switch ON (draft, same bytes on main 3d48581)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:54.821Z",
-   "file": "20261122024754821-note-i287-opening-nine-R6-frames-at-400-switch-on.jpg",
-   "source": "out/work/sun/i287-opening-nine-R6-frames-at-400-switch-on.png",
-   "kind": "note",
-   "label": "sun opening: the nine R6 frames at 400 px, switch ON (draft, same bytes on main 3d48581)",
    "stop": "sun"
   }
  ]
