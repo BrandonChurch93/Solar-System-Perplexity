@@ -104,6 +104,9 @@ uniform vec4 uFlightDetail;
 uniform vec4 uFlightLane;
 uniform vec4 uFlightFill;
 uniform vec3 uFlightOctave;
+uniform vec4 uFlightRim;
+uniform vec4 uFlightWarm;
+uniform vec3 uFlightSpread;
 in vec2 vUv;
 out vec4 outColor;
 ${EQUIRECT_GLSL}
@@ -267,12 +270,17 @@ void main() {
       for (int i = 0; i < (uFlightDetail.x > 0.0 ? 1 : 0); i++) {
         vec2 dt = skyDetail(uGal * sd, PI * length(vec2(dx.x, dy.x)) / uBandMap.x * 2.0);
         vec3 wide = vec3(0.0);
+        vec3 far = vec3(0.0);
         for (int m = 0; m < 6; m++) {
           float an = float(m) * 1.0471976;
-          wide += textureLod(uBandGlow, bc.xy + vec2(cos(an) * uBandMap.x / 6.2831853, sin(an) * uBandWiden / uBandMap.z) * uFlightFill.y, 0.0).rgb / 6.0;
+          vec2 scale = vec2(uBandMap.x / 6.2831853, uBandWiden / uBandMap.z);
+          wide += textureLod(uBandGlow, bc.xy + vec2(cos(an), sin(an)) * scale * uFlightFill.y, 0.0).rgb / 6.0;
+          far += textureLod(uBandGlow, bc.xy + vec2(cos(an + 0.5235988), sin(an + 0.5235988)) * scale * uFlightRim.w, 0.0).rgb / 6.0;
         }
-        vec3 fill = inverseFilmic(wide * wide) * uFlightFill.x;
-        glow = (glow * exp(uFlightDetail.z * min(dt.x, 0.1)) * (1.0 - uFlightLane.z * smoothstep(uFlightLane.x, uFlightLane.y, dt.y)) + fill * exp(uFlightFill.z * dt.x)) * grain;
+        float rim = clamp(1.0 - 0.5 * dot(wide + far, vec3(0.3, 0.5, 0.2)) / max(dot(sq, vec3(0.3, 0.5, 0.2)), 1e-4), 0.0, 1.0);
+        vec3 fill = inverseFilmic(wide * wide) * uFlightFill.x + inverseFilmic(far * far) * uFlightRim.z;
+        glow = (glow * exp(uFlightDetail.z * min(dt.x, 0.1)) * (1.0 - mix(uFlightLane.z, 1.0, uFlightRim.y * rim) * smoothstep(uFlightLane.x - uFlightRim.x * rim, uFlightLane.y - uFlightRim.x * rim, dt.y)) + fill * exp(uFlightFill.z * dt.x)) * grain;
+        wide = max(wide, far);
         sq = max(sq, wide * uFlightFill.w);
       }
       fz = smoothstep(uFlightFeather.w * (1.0 - dot(sq, vec3(0.3, 0.5, 0.2))), 1.0, fz);
@@ -298,6 +306,12 @@ void main() {
   if (uFlightGlow.w > 0.0) {
     vec2 fm = textureLod(uFlightMap, vec2(atan(sd.x, sd.z) / (2.0 * PI) + 0.5, asin(clamp(sd.y, -1.0, 1.0)) / PI + 0.5), 0.0).rg;
     col += uFlightHaze.rgb * (uFlightGlow.w * (uFlightHaze.w + (1.0 - uFlightHaze.w) * exp(-pow(asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth, 2.0)))) + uFlightGlow.rgb * (uFlightGlow.w * fm.r);
+    for (int k = 0; k < (uFlightWarm.w > 0.0 ? 1 : 0); k++) {
+      vec3 gq = uGal * sd;
+      vec3 hq = vec3(gq.xy, gq.z * 2.0) * uFlightSpread.x;
+      float hn = mix(skyNoise(hq).x, skyNoise(hq * 2.7 + 5.0).y, 0.35);
+      col += uFlightWarm.rgb * (uFlightStrip.x * uFlightGlow.w * (1.0 - uFlightSpread.z * bz) * exp(-pow(asin(clamp(gq.z, -1.0, 1.0)) / uFlightWarm.w, 2.0)) * (1.0 + uFlightSpread.y * (hn - 0.5)));
+    }
     vec2 vq = (vUv - 0.5) * vec2(uLens.y, 1.0);
     highp uint h = uint(gl_FragCoord.x) * 0x9E3779B1u ^ uint(gl_FragCoord.y) * 0x85EBCA77u;
     h ^= h >> 15;
@@ -642,7 +656,7 @@ export class Sky {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold },
-      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightNoise: { value: this.noise },
+      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
     const { pos, star, col } = catalog(base)
@@ -730,6 +744,9 @@ export class Sky {
     ;(u.uFlightDetail!.value as THREE.Vector4).set(def.detail.freq, def.detail.stretch, def.detail.mottle, def.detail.warp)
     ;(u.uFlightLane!.value as THREE.Vector4).set(def.detail.lane[0]!, def.detail.lane[1]!, def.detail.lane[2]!, def.detail.lane[3]!)
     ;(u.uFlightOctave!.value as THREE.Vector3).fromArray(def.detail.octave)
+    ;(u.uFlightWarm!.value as THREE.Vector4).set(def.detail.spread.tint[0]!, def.detail.spread.tint[1]!, def.detail.spread.tint[2]!, THREE.MathUtils.degToRad(def.detail.spread.widthDeg))
+    ;(u.uFlightSpread!.value as THREE.Vector3).set(def.detail.spread.freq, def.detail.spread.vary, def.detail.spread.under)
+    ;(u.uFlightRim!.value as THREE.Vector4).set(def.detail.rim[0]!, def.detail.rim[1]!, def.detail.far[0]!, THREE.MathUtils.degToRad(def.detail.far[1]!))
     ;(u.uFlightFill!.value as THREE.Vector4).set(def.detail.fill[0]!, THREE.MathUtils.degToRad(def.detail.fill[1]!), def.detail.fill[2]!, def.detail.fill[3]!)
     ;((this.strip.material as THREE.ShaderMaterial).uniforms.uStripStar!.value as THREE.Vector2).set(def.stars.tint, def.stars.warm)
     this.flightHalo.value = def.stars.halo
