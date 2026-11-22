@@ -1,9 +1,77 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T04:28:15.710Z",
- "head": "255c792ee0a0b0b3828055d776bccc1a44daff00",
- "note": "Item 4 (limb and sky) proof pictures, main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+ "pushed": "2026-11-22T04:54:13.833Z",
+ "head": "21c5e092c85565ffd01778099c6ed883d50496bb",
+ "note": "Sun item 4: the rise cover edge traced to the sky card below the limb, card being rebuilt (main 2621f00, engine batch 19 7a880ac6)",
  "looks": [
+  {
+   "time": "2026-11-22T04:53:44.375Z",
+   "file": "20261122045344375-note-s7-card-rows-850-1800-before-over-new-gain4.jpg",
+   "source": "out/work/sun/h1p/s7-card-rows-850-1800-before-over-new-gain4.jpg",
+   "kind": "note",
+   "label": "Sky card rows 850 to 1800 at 4 times gain, committed over trial 3 (one level per column: 8 bit steps show as vertical bars, rejected, grain is added next)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:53:43.834Z",
+   "file": "20261122045343834-note-s6-card-rows-850-1800-before-over-new-gain4.jpg",
+   "source": "out/work/sun/h1p/s6-card-rows-850-1800-before-over-new-gain4.jpg",
+   "kind": "note",
+   "label": "Sky card rows 850 to 1800 at 4 times gain, committed over trial 2 (smooth level plus star points; black hump where the fill did not reach: rejected)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:53:43.285Z",
+   "file": "20261122045343285-note-s4-card-detail-gain4.jpg",
+   "source": "out/work/sun/h1p/s4-card-detail-gain4.png",
+   "kind": "note",
+   "label": "Sky card of commit 887cbc8 below the frame 90 limb at 4 times gain: reflected cloud texture smears into chevrons, the cause of the edge",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:53:42.638Z",
+   "file": "20261122045342638-note-r8-grid-208-0.jpg",
+   "source": "out/work/sun/h1p/r8-grid-208-0.png",
+   "kind": "note",
+   "label": "Trace with a marked sky card, draft 208 and 0, main 2621f00 (engine batch 19 7a880ac6): the rise cover shows the card 0.8 to 11.5 degrees below the frame 90 limb",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:53:41.828Z",
+   "file": "20261122045341828-note-r6-rise-207-208-vertical-edge-gain3.jpg",
+   "source": "out/work/sun/h1p/r6-rise-207-208-vertical-edge-gain3.png",
+   "kind": "note",
+   "label": "Rise cover 207 and 208 at 3 times gain, item 4 tree 255c792 on main 2bbf0f9 (engine batch 18): the faint vertical edge in the sky at x 830, the fault being cured",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:39:30.961Z",
+   "file": "20261122043930961-job-frame-00247.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T04:28:23.248Z",
+   "file": "20261122042823248-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T04:28:15.023Z",
    "file": "20261122042815023-note-i293-final-f90-item4.jpg",
@@ -69,30 +137,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T04:28:03.731Z",
-   "file": "20261122042803731-note-y1-f90-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/y1-f90-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 90, final tier, limb at 3 times gain, before over after. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T04:28:03.156Z",
-   "file": "20261122042803156-note-y1-f60-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/y1-f60-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 60, final tier, limb at 3 times gain, before over after. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T04:28:02.532Z",
-   "file": "20261122042802532-note-y1-f0-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/y1-f0-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 0, final tier, limb at 3 times gain, before over after: the glow fades into the sky, no shell edge, no dark rim. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
-   "stop": "sun"
-  },
-  {
    "time": "2026-11-22T04:03:59.630Z",
    "file": "20261122040359630-frame-base90-item4c.jpg",
    "source": "out/work/sun/base90-item4c.png",
@@ -105,38 +149,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:51:20.217Z",
-   "file": "20261122035120217-note-i292-haze-texture-first-try-toward-difference.jpg",
-   "source": "out/work/sun/h1p/i292-haze-texture-first-try-toward-difference.png",
-   "kind": "note",
-   "label": "Item 4 in work, main 0622510: haze texture in limb coordinates, first try, a trial with a wide correction range (dropped), difference times 6",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T03:51:19.650Z",
-   "file": "20261122035119650-note-i292-f90-limb-approved-before-now.jpg",
-   "source": "out/work/sun/h1p/i292-f90-limb-approved-before-now.png",
-   "kind": "note",
-   "label": "Item 4 in work, main 0622510 (batch 18): frame 90 limb unwrapped at 3 times gain: approved, before, now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T03:51:19.058Z",
-   "file": "20261122035119058-note-i292-f0-f60-limb-unwrapped-before-first-now.jpg",
-   "source": "out/work/sun/h1p/i292-f0-f60-limb-unwrapped-before-first-now.png",
-   "kind": "note",
-   "label": "Item 4 in work, main 0622510 (batch 18): limb unwrapped at 3 times gain, frame 0 (top three) and 60: before, first try, now. The dark line above the flames is gone; a thin light line at the limb row remains and is being fixed",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T03:26:18.026Z",
-   "file": "20261122032618026-note-i291-f90-limb-approved-over-film.jpg",
-   "source": "out/work/sun/h1p/i291-f90-limb-approved-over-film.png",
-   "kind": "note",
-   "label": "item 4 trace, approved over film frame 90 over film frame 0, left limb, gain 3 x3, draft. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
-   "stop": "sun"
   }
  ]
 }
