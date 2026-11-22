@@ -1,9 +1,65 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T13:56:37.239Z",
- "head": "29d11216a58ac85d77665227556c970226ddfe0c",
- "note": "venus: pole fade strips on main 84b0ea4 (spokes gone at 1303 to 1308 and 1568 to 1573), near fade in test for the ladder at 1310",
+ "pushed": "2026-11-22T14:17:20.390Z",
+ "head": "5840785ca6818074dfd1570d41398e147ec69cd6",
+ "note": "Venus round 34: ladder at 1310 cured by a near fade pushed out with the rush on the orbit side, full proof running on main 84b0ea4 (tree holds main a60c5ff)",
  "looks": [
+  {
+   "time": "2026-11-22T14:17:19.797Z",
+   "file": "20261122141719797-note-n1-1316.jpg",
+   "source": "../view/n1-1316.jpg",
+   "kind": "note",
+   "label": "Venus 1316 terrain side: left pole fade alone, right push on both sides: forms lost, so the push is kept to the orbit side only and this frame keeps the left picture (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:19.156Z",
+   "file": "20261122141719156-note-n1-1566.jpg",
+   "source": "../view/n1-1566.jpg",
+   "kind": "note",
+   "label": "Venus 1566: left pole fade alone, right with the push (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:18.502Z",
+   "file": "20261122141718502-note-n1-1563.jpg",
+   "source": "../view/n1-1563.jpg",
+   "kind": "note",
+   "label": "Venus 1563: left pole fade alone, right with the push (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:17.939Z",
+   "file": "20261122141717939-note-n1-1312.jpg",
+   "source": "../view/n1-1312.jpg",
+   "kind": "note",
+   "label": "Venus 1312: left pole fade alone, right with the push (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:17.309Z",
+   "file": "20261122141717309-note-n1-1309.jpg",
+   "source": "../view/n1-1309.jpg",
+   "kind": "note",
+   "label": "Venus 1309: left pole fade alone (old main sky), right with the push (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:16.688Z",
+   "file": "20261122141716688-note-n1-1310-crop.jpg",
+   "source": "../view/n1-1310-crop.jpg",
+   "kind": "note",
+   "label": "Venus 1310 crop of the ladder place: left pole fade alone, right with the push (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:17:15.998Z",
+   "file": "20261122141715998-note-n1-1310.jpg",
+   "source": "../view/n1-1310.jpg",
+   "kind": "note",
+   "label": "Venus 1310: left pole fade alone, right pole fade and near fade pushed out by the rush [0.4, 0.2]: the ladder is gone (branch 5840785 holding main a60c5ff, working tree, not committed, review tier, preview size)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T13:56:08.318Z",
    "file": "20261122135608318-note-pd-rise-b.jpg",
@@ -106,62 +162,6 @@
    "source": "../view/cut33-1586-a.jpg",
    "kind": "note",
    "label": "1586 final tier, native crop: left main da02e63 (the kept build), right agent/venus 3ac0821 (both on engine be043ade04a7ab6e): the plume curls without the V pinch, the night limb is one falloff",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:21:30.779Z",
-   "file": "20261122122130779-note-s28-terrain.jpg",
-   "source": "../view/s28-terrain.png",
-   "kind": "note",
-   "label": "terrain view 1350 to 1529, review tier (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22): every pixel the same as on batch 19",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:21:30.097Z",
-   "file": "20261122122130097-note-s28-rise.jpg",
-   "source": "../view/s28-rise.png",
-   "kind": "note",
-   "label": "whole rise 1530 to 1604, review tier, veil take F5 (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22); the sky right of the globe is near black at 1570 and 1577 and the flight stars come up by 1584",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T12:21:29.427Z",
-   "file": "20261122122129427-note-s28-dive.jpg",
-   "source": "../view/s28-dive.png",
-   "kind": "note",
-   "label": "whole dive 1260 to 1349, review tier, veil take F5 (agent/venus code d9b5c7c, rendered on main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:49:52.357Z",
-   "file": "20261122114952357-note-p5-1566-a.jpg",
-   "source": "../view/p5-1566-a.jpg",
-   "kind": "note",
-   "label": "rise 1566 native crop: left veil take F4, right take F5 (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:49:51.788Z",
-   "file": "20261122114951788-note-p5-1566-full.jpg",
-   "source": "../view/p5-1566-full.jpg",
-   "kind": "note",
-   "label": "rise 1566 review tier, master size: left veil take F4 (main c479536), right take F5 (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22): torn bright bits and scratch lines become soft streaked cloud",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:49:51.218Z",
-   "file": "20261122114951218-note-p5-1314-full.jpg",
-   "source": "../view/p5-1314-full.jpg",
-   "kind": "note",
-   "label": "dive 1314 review tier, master size: left veil take E3d and F4 (same bytes there), right take F5: stepped rectangles and fine lines gone (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22; the left still was rendered on main e4b509e)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:41:15.335Z",
-   "file": "20261122114115335-note-p5-1309-10-pair.jpg",
-   "source": "../view/p5-1309-10-pair.jpg",
-   "kind": "note",
-   "label": "dive 1309 and 1310 review tier, cover sheet cells: left veil take F4, right take F5: the stepped ladders of bright bits were the veil's texture read, now soft cloud (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
    "stop": "venus"
   },
   {
