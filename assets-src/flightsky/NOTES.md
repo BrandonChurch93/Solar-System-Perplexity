@@ -279,3 +279,4 @@ Round 34 build: main 89ced51b, engine 096721f26986d35a. Round 35 takes only take
 ### CUT35 decision (18:05 UTC)
 - Nothing new is offered: no take out and no plan number of mine cures a word, and the two tried (Uranus `skyLiftFrom`, `clouds.mottle`) do not. READY names the notebook commit only; every judged frame keeps its bytes against main.
 - Numbers that would slow the band's entry are not mine: the travel camera turn of venus.travel and saturn.travel and `LOOKBACK.glide` in `src/director/film.ts`, the Uranus `rise` numbers in `src/stops/uranus/plan.ts`.
+- CUT35 sent at 18:04 UTC: READY 49028c56de6410a5ef1b0b1f5e699af50a6eb14d (notebook only), four pictures (`scratch/r7/seq-venus-r34.jpg`, `seq-ending-r34.jpg`, `ur-pair-cut35.jpg`, `2212-m0-x5.jpg`). Working tree clean, no trial left in `src` or `config`.
