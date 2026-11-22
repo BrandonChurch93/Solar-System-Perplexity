@@ -1906,3 +1906,10 @@ It crossed MAIL 204, so a second high-priority message went out at once, startin
 - **qc done 18:59:35**: on the merged tree (main 31e1f290, engine 247ebad7e038ce06) all nine drafts keep the bytes they had with the trim on main 55319c5a (engine 096721f26986d35a): 1642 626a97c6, 1680 5ae94dc7, 1755 d7d08630, 1829 64c197fb, 1857 298dc974, 2010 511ff09c, 2156 b01c3063, 2174 c6621c33, 2212 560bda92. So the engine change (the belt) does not move Earth's frames at the draft tier; finals were not rendered again on the new engine.
 - Work tree `/home/user/workspace/earth-wt` removed 19:00.
 - **State at 19:00**: nothing running, no edit under `src` or `public` allowed (mail 207), tree equals main 31e1f290 but for this file. Waiting for the Builder's word on round 35 and the freeze. Looks due by 19:16, notes by 19:30.
+
+## 19:00 to 19:15 UTC: finals on the merged tree
+
+- **Queue `c35/qd.sh`** (19:00:12 to 19:13:48, head 9f1a9bd7, tree on main 31e1f290, engine 247ebad7e038ce06, earth 2b75dbd9c40c8387): finals 1755 50bb49bf (78 s), 2010 16af9335 (77 s), 1857 0b8459bc (327 s), 2156 bdac4eea (334 s). All four keep the bytes of the finals rendered with the trim on main 55319c5a (2010 the bytes of CUT34 and CUT35). Files `c35/f-FRAME-final-m35.png`.
+- So the state of Earth in round 35 as I can prove it here: judged finals 1755 50bb49bf, 1857 0b8459bc, 2010 16af9335, 2156 bdac4eea; G5 PASS (coverage 0.329, 0.452, 0.780, 0.386), G17 PASS (1755 1.195 / 1.131, 2010 1.044 / 1.000); G13 with the rise law proved by its own code on 8a395ad4 (0 of 4, 0 of 16, 0 of 21 on the windows named there), not run again with the trim (colour only).
+- Sent 19:00 (low): merge of main, the hashes, the nine drafts. Looks pushed 19:15. Next looks by 19:45, notes by 19:45.
+- **Holding**: no edit under `src` or `public` (mail 207). Waiting for the Builder's word that round 35 is closed and the stop is finished.
