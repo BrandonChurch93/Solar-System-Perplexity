@@ -1206,3 +1206,12 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - The READY draft `out/work/earth/pb/polish-ready-2.txt` now holds the arrival section and the new code commit; placeholders left: head, main, looks, measure, repeat, terrain.
 - **Repeat on c2a211a** (07:30:37 to 07:35:35, `npx tsx tools/repeat.ts --frames 1670,1696,1755,1857,1875,2010,2137,2156 --sessions 3 --runs 2`, draft, 296 s, `pb/j/repeat.log`): one hash per frame in 6 renders each, "not repeatable: none". 1670 214ab06d, 1696 6b029e38; the six others have the hashes they had on ff29eb2 (1755 b1744736, 1857 4c61b8f0, 1875 985a4e3d, 2010 816a4652, 2137 1e4b8cd3, 2156 246eb903), so the middles of the dive and of the rise keep their bytes at the draft tier as well.
 - 07:35:36 measure started on c2a211a (`pb/j/measure.log`).
+
+### Measure on c2a211a (07:35:36 to 08:01:48 UTC, 1573 s, `pb/j/measure.log`)
+
+- PASS G13 earth: 0 of 463 frames over 0.02 soft.
+- PASS G5 earth: 1755 hold invalid 0 coverage 0.329; 1857 dive invalid 0 coverage 0.452; 2010 terrain invalid 0 coverage 0.780; 2156 rise invalid 0 coverage 0.386.
+- PASS G17 earth: 1755 median 1.198 p25 1.138 over 72 tiles; 2010 median 1.165 p25 1.132 over 78 tiles.
+- The same numbers as before the arrival cure.
+- 08:02 merged main 45004ec (harness tools, `package.json`, PROGRESS, status pictures; nothing under `src`, `public` or `config`) as **6998cc5**, pushed.
+- Running: `q11.sh` (terrain sheet, 1884, 1888, 2133 against the frames of code 3b3819e), then `q12b.sh` (log `pb/k/q.log`): build, audit, G12, G15, vitest, G11 and final 1755 on the merged tree, the venus.travel sheet at review (preview format), stills 2140 and 2174, the full format rise cover sheet.
