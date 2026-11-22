@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T11:05:28.020Z",
+ "pushed": "2026-11-22T11:27:44.367Z",
  "head": "5ebfa54a4b02446cafbb6c4bc0664032ca92f094",
- "note": "veil take F5 at full veil: mist joins hold, four judged finals keep their bytes on main d5b851f; cover sheets rendering",
+ "note": "veil take F5: rise cover sheet on main d5b851f read; dive cover sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-22T11:27:43.245Z",
+   "file": "20261122112743245-note-c23-rc.jpg",
+   "source": "../view/c23-rc.png",
+   "kind": "note",
+   "label": "rise cover 1555 to 1566 review tier, veil take F5 (not committed yet): 1555 the same bytes as take F4, 1557 to 1566 soft streaked cloud without stepped bright bits or fine straight lines; the sky rows unchanged (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T11:05:27.185Z",
    "file": "20261122110527185-note-p5-1317-full.jpg",
@@ -194,14 +202,6 @@
    "source": "../view/f4u.jpg",
    "kind": "note",
    "label": "rise entry 1546 to 1556 review tier, veil take F4: the mist thickens evenly, terrain whole (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:27:35.335Z",
-   "file": "20261122082735335-note-f4t.jpg",
-   "source": "../view/f4t.jpg",
-   "kind": "note",
-   "label": "dive tail 1319 to 1328 review tier, veil take F4: the mist thins evenly, no column (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
    "stop": "venus"
   }
  ]
