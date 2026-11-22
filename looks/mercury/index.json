@@ -1,9 +1,62 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T17:20:49.542Z",
- "head": "3c1ea2e805a80bf0af598e91cb232a5be54e1d46",
- "note": "mercury: the coloured bars at 994 gone at the review tier with the cap (36424325 on main a265db97); 995 and 996 of the review sheet still rendering",
+ "pushed": "2026-11-22T17:46:49.166Z",
+ "head": "2b7bb61bd7760540adac46eef72aa49d0dcdd4ae",
+ "note": "mercury: review cover sheet of the rise with the cap, no bars; pairs for MAIL 190 (pace out, flare back) at draft; tree 36424325 on main a265db97",
  "looks": [
+  {
+   "time": "2026-11-22T17:46:48.555Z",
+   "file": "20261122174648555-note-rise-flare-pair.jpg",
+   "source": "out/work/mercury/p6/r35/rise-flare-pair.jpg",
+   "kind": "note",
+   "label": "mercury rise 994 1000 1007 1016 at draft: top round 34 (tree 36424325 on main a265db97, no flare in the rise), bottom flare.after 1 (the flare back, not committed): 1000 differs by 137 px over 8 codes, the burst is the same; the blob is back at 1016",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:46:47.920Z",
+   "file": "20261122174647920-note-rise-pace-pair.jpg",
+   "source": "out/work/mercury/p6/r35/rise-pace-pair.jpg",
+   "kind": "note",
+   "label": "mercury rise 994 997 1000 1003 1007 1010 1014 at draft: top round 34's pace (tree 36424325 on main a265db97), bottom the pace taken out (2a2ef9d6, round 33's shape). The Sun's burst at 1000 is 9709 clipped px on top, 9387 below",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:40:24.338Z",
+   "file": "20261122174024338-note-rise-cover-review-cap.jpg",
+   "source": "out/work/mercury/p6/bars/looks/rise-cover-review-cap.png",
+   "kind": "note",
+   "label": "mercury rise cover 985 to 996 at the review tier with the cap, tree 36424325 on main a265db97: no bars at 993 and 994",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:39:56.488Z",
+   "file": "20261122173956488-sheet-mercury.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/mercury.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet mercury.rise, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 985,
+   "last": 996,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:39:54.557Z",
+   "file": "20261122173954557-frame-f00996-review.jpg",
+   "source": "out/work/sheets/.frames-Eno5Ow/f00996-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 996, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 996,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T17:20:48.151Z",
    "file": "20261122172048151-note-bars-994-draft-same-camera-before-after.jpg",
@@ -19,20 +72,6 @@
    "kind": "note",
    "label": "mercury rise 994 at the review tier, right limb: left the round 33 tree (960 wide frame, scaled up, coloured bars), right the cap, tree 36424325 on main a265db97",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T17:19:54.104Z",
-   "file": "20261122171954104-frame-f00994-review.jpg",
-   "source": "out/work/sheets/.frames-Eno5Ow/f00994-review.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 994, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 994,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
   },
   {
    "time": "2026-11-22T17:08:02.962Z",
@@ -73,50 +112,6 @@
    "kind": "note",
    "label": "Rise 991 (top) and 992 (bottom), draft crops: left tree 64e20ee on main 6460b4a, right the trial cure (uncommitted): the bright wall fades over 991 and is gone at 992",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:27:04.725Z",
-   "file": "20261122162704725-note-bars-993-994-before-after.jpg",
-   "source": "out/work/mercury/p6/bars/looks/bars-993-994-before-after.jpg",
-   "kind": "note",
-   "label": "Rise 993 (top) and 994 (bottom), draft crops: left tree 64e20ee on main 6460b4a with the bright bars, right the trial cure (uncommitted): the wide ground picture's highlights held to 1.3 times their surroundings in the rise",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:04:42.154Z",
-   "file": "20261122160442154-note-bars-993-look.jpg",
-   "source": "../../../../tmp/bars-993-look.jpg",
-   "kind": "note",
-   "label": "Rise 993 draft, tree a5e5207 on main 6460b4a: bright bars with pink and green edges below the horizon at the right (top: box 1440 560 400 300 at 3x; bottom: whole frame). Open, first thing for CUT35",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:47:09.605Z",
-   "file": "20261122154709605-job-frame-00822.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.terrain frame 822, draft tier, texels view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 822,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:37:08.403Z",
-   "file": "20261122153708403-job-frame-00540.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 540,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   }
  ]
 }
