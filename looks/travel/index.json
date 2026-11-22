@@ -1,68 +1,64 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T12:24:58.080Z",
- "head": "0a11e01e05429c544abc6fab24e693ba90d495ff",
- "note": "mars.travel arrival proof 2799 to 2819; trial of an earlier disc in mercury.travel and uranus.travel rendering",
+ "pushed": "2026-11-22T13:11:43.966Z",
+ "head": "a0a13eb08c3780e3a1b2f8102d5d7f3560efe9ce",
+ "note": "trial for items 79 and 80: Venus and Neptune as small discs at 1072 and 4492",
  "looks": [
   {
-   "time": "2026-11-22T12:24:57.418Z",
-   "file": "20261122122457418-note-r7-native.jpg",
-   "source": "../../../../tmp/v/r7-native.png",
+   "time": "2026-11-22T13:11:43.395Z",
+   "file": "20261122131143395-note-2782-final-ab.jpg",
+   "source": "../../../../tmp/v/2782-final-ab.jpg",
    "kind": "note",
-   "label": "mars.travel review native crops of Io and the limb 2799 to 2819"
+   "label": "2782 final main against agent/travel-polish"
   },
   {
-   "time": "2026-11-22T12:24:56.842Z",
-   "file": "20261122122456842-note-a-2806-ab.jpg",
-   "source": "../../../../tmp/v/a-2806-ab.jpg",
+   "time": "2026-11-22T13:11:42.849Z",
+   "file": "20261122131142849-note-t1-native.jpg",
+   "source": "../../../../tmp/v/t1-native.jpg",
    "kind": "note",
-   "label": "mars.travel review 2806 and 2812, main against branch"
+   "label": "trial review native crops of Venus and Neptune"
   },
   {
-   "time": "2026-11-22T12:24:56.265Z",
-   "file": "20261122122456265-note-r7-b.jpg",
-   "source": "../../../../tmp/v/r7-b.jpg",
+   "time": "2026-11-22T13:11:42.302Z",
+   "file": "20261122131142302-note-t1-4492.jpg",
+   "source": "../../../../tmp/v/t1-4492.jpg",
    "kind": "note",
-   "label": "mars.travel review 2810 to 2819 on agent/travel-polish"
+   "label": "trial final 4492"
   },
   {
-   "time": "2026-11-22T12:24:55.650Z",
-   "file": "20261122122455650-note-r7-a.jpg",
-   "source": "../../../../tmp/v/r7-a.jpg",
+   "time": "2026-11-22T13:11:41.682Z",
+   "file": "20261122131141682-note-t1-1072.jpg",
+   "source": "../../../../tmp/v/t1-1072.jpg",
    "kind": "note",
-   "label": "mars.travel review 2799 to 2809 on agent/travel-polish"
+   "label": "trial final 1072"
   },
   {
-   "time": "2026-11-22T12:04:53.340Z",
-   "file": "20261122120453340-note-p6-moons.jpg",
-   "source": "../../../../tmp/v/p6-moons.jpg",
+   "time": "2026-11-22T13:11:41.160Z",
+   "file": "20261122131141160-note-t1-ura-ab.jpg",
+   "source": "../../../../tmp/v/t1-ura-ab.jpg",
    "kind": "note",
-   "label": "finals: main against steady 60 to 200, 1650 Moon and Earth, 3362 Titan and Saturn",
-   "stop": "travel"
+   "label": "uranus.travel review main above trial"
   },
   {
-   "time": "2026-11-22T11:57:38.899Z",
-   "file": "20261122115738899-note-p5-wide.jpg",
-   "source": "../../../../tmp/v/p5-wide.jpg",
+   "time": "2026-11-22T13:11:40.632Z",
+   "file": "20261122131140632-note-t1-merc-ab.jpg",
+   "source": "../../../../tmp/v/t1-merc-ab.jpg",
    "kind": "note",
-   "label": "uranus.travel finals 4502 and 4506 with steady 60 to 200",
-   "stop": "travel"
+   "label": "mercury.travel review main above trial"
   },
   {
-   "time": "2026-11-22T11:57:37.917Z",
-   "file": "20261122115737917-note-p5-triton.jpg",
-   "source": "../../../../tmp/v/p5-triton.jpg",
+   "time": "2026-11-22T13:11:40.099Z",
+   "file": "20261122131140099-note-t1-ura.jpg",
+   "source": "../../../../tmp/v/t1-ura.jpg",
    "kind": "note",
-   "label": "uranus.travel finals 2x: main 4502 against steady 60 to 200 at 4502, 4504, 4506 (Triton above, Neptune below)",
-   "stop": "travel"
+   "label": "trial uranus.travel review, 12 frames, Neptune a disc from 4488"
   },
   {
-   "time": "2026-11-22T11:48:44.146Z",
-   "file": "20261122114844146-note-p4-triton.jpg",
-   "source": "../../../../tmp/v/p4-triton.jpg",
+   "time": "2026-11-22T13:11:39.425Z",
+   "file": "20261122131139425-note-t1-merc.jpg",
+   "source": "../../../../tmp/v/t1-merc.jpg",
    "kind": "note",
-   "label": "uranus.travel finals 3x: Triton and Neptune, main 4502 against steady 0 to 90 (not kept, still a streak)",
-   "stop": "travel"
+   "label": "trial mercury.travel review, 12 frames, Venus a disc from 1066"
   }
  ]
 }
