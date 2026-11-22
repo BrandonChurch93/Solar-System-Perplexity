@@ -1,9 +1,33 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T08:40:12.640Z",
- "head": "b49114448853c606a3e822fb30e21f7b3bb37283",
- "note": "earth.travel pinned arrival, every frame 2195 to 2250 at draft",
+ "pushed": "2026-11-22T09:19:21.859Z",
+ "head": "95a091a2d92ae62fc63f86326dee0ea6453ded9e",
+ "note": "Pinned arrivals for five travels: point brightens in place, glow widens into the disc",
  "looks": [
+  {
+   "time": "2026-11-22T09:19:21.205Z",
+   "file": "20261122091921205-note-q2-earth-last24.jpg",
+   "source": "../../../../tmp/v/q2-earth-last24.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, last 24 frames, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T09:19:20.630Z",
+   "file": "20261122091920630-note-q3-four-crops.jpg",
+   "source": "../../../../tmp/v/q3-four-crops.jpg",
+   "kind": "note",
+   "label": "pinned arrivals of mercury, venus, saturn, uranus, native crops",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T09:19:19.975Z",
+   "file": "20261122091919975-note-q5-crops.jpg",
+   "source": "../../../../tmp/v/q5-crops.jpg",
+   "kind": "note",
+   "label": "earth.travel pinned, committed hand over, native crops 2212 to 2236",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T08:40:11.671Z",
    "file": "20261122084011671-note-pn-crops.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/pn-2195-2210.jpg",
    "kind": "note",
    "label": "earth.travel pinned, draft: pn-2195-2210",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:25:49.903Z",
-   "file": "20261122082549903-note-a1-2212-final.jpg",
-   "source": "../../../../tmp/v/a1-2212-final.jpg",
-   "kind": "note",
-   "label": "a1: frame 2212 final",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:25:48.440Z",
-   "file": "20261122082548440-note-a1-earth-sheet.jpg",
-   "source": "../../../../tmp/v/a1-earth-sheet.jpg",
-   "kind": "note",
-   "label": "a1: earth.travel review sheet, arrival by approach as committed",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:05:24.951Z",
-   "file": "20261122080524951-note-x2-486-500.jpg",
-   "source": "../../../../tmp/v/x2-486-500.jpg",
-   "kind": "note",
-   "label": "sun.travel 486 to 500 draft, every frame",
    "stop": "travel"
   }
  ]
