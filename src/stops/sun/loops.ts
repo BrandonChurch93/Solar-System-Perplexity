@@ -18,7 +18,7 @@ export interface LoopsLook {
 export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
-  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: [number, number] }
+  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: [number, number]; knee: number; bloom: number; veil: [number, number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -64,7 +64,8 @@ uniform vec3 uSurgeGlow;
 uniform vec2 uSurgeCore;
 uniform vec3 uSurgeInner;
 uniform vec2 uSurgeCrest;
-uniform vec2 uFoot;` : ''}
+uniform vec2 uFoot;
+uniform vec4 uFlare;` : ''}
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -117,7 +118,7 @@ void main() {
     float knot = uKnot.x * pick * exp(-ds * ds / (uKnot.w * uKnot.w)) * smoothstep(uKnotEnds.x, uKnotEnds.y, s) * (1.0 - smoothstep(1.0 - uKnotEnds.y, 1.0 - uKnotEnds.x, s)) * (1.0 - smoothstep(uKnotLane.x, uKnotLane.y, arc)) * seen;
     knot += seen * (uFoot.x * exp(-s / uKnotMore.w) + uFoot.y * exp(-(1.0 - s) / uKnotMore.w));
     lin = lin * (1.0 + knot) + shine * knot * uKnotMore.z * vec3(1.0, 0.9, 0.66);
-    for (int j = 0; j < (uSurge.y > 0.0 ? 1 : 0); j++) {
+    for (int j = 0; j < (uSurge.y + uFlare.x + uFlare.y > 0.0 ? 1 : 0); j++) {
       float strandLag = textureLod(uNoise, vec2(arc * uSurgeLane.x, 0.83), 0.0).r;
       float lead = s - uSurge.x + uSurgeMore.x * (bundle + strandLag - 1.0);
       float ahead = max(lead, 0.0);
@@ -125,7 +126,13 @@ void main() {
       float carried = uSurge.y * front * above * smoothstep(0.75, 1.0, arc) * (1.0 - uSurgeInner.z * smoothstep(uSurgeInner.x, uSurgeInner.y, arc)) * (uSurgeCrest.x + uSurgeCrest.y * 4.0 * clamp(s * (1.0 - s), 0.0, 0.25));
       float onStrand = smoothstep(uFlowMask.z, uFlowMask.w, shine) * (uSurgeLane.y + uSurgeLane.z * strandLag);
       float wide = dot(inverseFilmic(grade(textureLod(uMap, uv, uSurgeMore.w).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
-      lin = lin * (1.0 + carried * onStrand) + (shine * onStrand * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow) * carried;
+      float pushed = carried * onStrand;
+      pushed /= 1.0 + uFlare.z * pushed * dot(lin, vec3(0.3, 0.5, 0.2));
+      lin = lin * (1.0 + pushed) + shine * pushed * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * carried;
+      float foot = uFlare.x * exp(-s / uKnotMore.w) + uFlare.y * exp(-(1.0 - s) / uKnotMore.w);
+      float flared = seen * foot;
+      flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
+      lin = lin * (1.0 + flared) + shine * flared * uKnotMore.z * vec3(1.0, 0.9, 0.66) + wide * uFlare.w * uSurgeGlow * foot;
     }
   }` : ''}
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
@@ -276,6 +283,7 @@ export class Loops {
       this.material.uniforms.uKnotPick = { value: new THREE.Vector4(k.pick[0], k.pick[1], k.pick[2], k.pick[3]) }
       this.material.uniforms.uKnotEnds = { value: new THREE.Vector2(k.ends[0], k.ends[1]) }
       this.material.uniforms.uFoot = { value: new THREE.Vector2() }
+      this.material.uniforms.uFlare = { value: new THREE.Vector4(0, 0, knots.surge.knee, knots.surge.bloom) }
       const g = knots.surge
       this.material.uniforms.uSurge = { value: new THREE.Vector4(0, 0, g.width, g.tail) }
       this.material.uniforms.uSurgeMore = { value: new THREE.Vector4(g.ragged, g.white, g.halo, g.level) }
@@ -323,7 +331,10 @@ export class Loops {
       const [head, amount, launch, flare] = this.surge(since, open)
       ;(u.uKnot!.value as THREE.Vector4).x = k.knots.amount * open
       ;(u.uKnotMore!.value as THREE.Vector4).x = since + k.knots.lead
-      ;(u.uFoot!.value as THREE.Vector2).set(k.feet.amount * open * a + launch, k.feet.amount * open * b + flare)
+      ;(u.uFoot!.value as THREE.Vector2).set(k.feet.amount * open * a, k.feet.amount * open * b)
+      const f = u.uFlare!.value as THREE.Vector4
+      f.x = launch
+      f.y = flare
       const v = u.uSurge!.value as THREE.Vector4
       v.x = head
       v.y = amount
