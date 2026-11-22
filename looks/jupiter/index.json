@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T07:55:02.715Z",
- "head": "c68451181f971e97afdb4001a42cb1daa1ae9a47",
- "note": "agent/jupiter 8909c1d on main c92f97c: rise cover review frames 3265 to 3268 beside a06d2ae",
+ "pushed": "2026-11-22T08:22:11.954Z",
+ "head": "47e7b66fb2388a3c36c8d0cab2edcf17dec1f23e",
+ "note": "agent/jupiter 8909c1d on main c92f97c: rise cover review frames 3269 to 3274 beside a06d2ae",
  "looks": [
+  {
+   "time": "2026-11-22T08:22:11.086Z",
+   "file": "20261122082211086-note-n_3273_3274_mid.jpg",
+   "source": "out/work/view/e3r/v/n_3273_3274_mid.jpg",
+   "kind": "note",
+   "label": "Rise cover, review tier, frames 3273 and 3274, native crop (x 480 to 1440, y 270 to 810): before (a06d2ae on main 2621f00) left with the pale column right of centre, after (agent/jupiter 8909c1d on main c92f97c) right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T08:22:10.003Z",
+   "file": "20261122082210003-note-r_3269_3274.jpg",
+   "source": "out/work/view/e3r/v/r_3269_3274.jpg",
+   "kind": "note",
+   "label": "Rise cover across the cut, review tier, frames 3269 to 3274: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. Black on the cut frame 3270 only, stars and the dust band back from 3271, the pale upright column on the disc at 3273 and 3274 is gone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T08:21:44.841Z",
+   "file": "20261122082144841-frame-f03274-review.jpg",
+   "source": "out/work/sheets/.frames-FDNERc/f03274-review.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3274, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3274,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T07:55:01.613Z",
    "file": "20261122075501613-note-n_3267_3268_left.jpg",
@@ -19,20 +49,6 @@
    "kind": "note",
    "label": "Rise cover, terrain side, review tier, frames 3265 to 3268: before (agent/jupiter a06d2ae on main 2621f00) left, after (agent/jupiter 8909c1d on main c92f97c) right. The sky fades out evenly toward the cut in place of going black at 3267; rows below 410 keep their bytes",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T07:54:04.834Z",
-   "file": "20261122075404834-frame-f03268-review.jpg",
-   "source": "out/work/sheets/.frames-FDNERc/f03268-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3268, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3268,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T07:43:09.384Z",
@@ -260,22 +276,6 @@
    "source": "out/work/view/sky/pallsim_val.jpg",
    "kind": "note",
    "label": "Jupiter rise cover 3273 to 3275, review frames of 21:32 (older main) beside the simulated haze transmittance and the frame's fine detail: the column of the simulation sits where the pale column of the frame is",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T05:49:01.700Z",
-   "file": "20261122054901700-note-pallsim_fade_b2.jpg",
-   "source": "out/work/view/sky/pallsim_fade_b2.jpg",
-   "kind": "note",
-   "label": "Jupiter rise cover, analysis only (no render): transmittance of my own haze by its formula, frames 3275 to 3281 (white = clear). Top row as on agent/jupiter a06d2ae (main 2621f00): vertical columns at the right, the paler column I named as weak. Bottom row: candidate with the fine ray term faded out in the thin phase",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T05:43:59.828Z",
-   "file": "20261122054359828-note-f3019_now.jpg",
-   "source": "out/work/view/sky/f3019_now.jpg",
-   "kind": "note",
-   "label": "Jupiter dive cover 3019 review tier on main 2621f00 (agent/jupiter a06d2ae), first frame of the cover sheet that is rendering",
    "stop": "jupiter"
   },
   {
