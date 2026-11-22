@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { mix, ramp, smooth, smoother } from '../../director/rig'
+import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
 
@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [-14, 153, -7.3] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0.35, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5 }
+export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35, seatIn: 0.8 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -84,7 +84,33 @@ export class SaturnPlan extends StopPlan {
     const side = new THREE.Vector3().crossVectors(n, chord)
     const s = Math.sin(Math.PI * w)
     const position = fa.lerp(fb, w).addScaledVector(side, bow * s * s).addScaledVector(n, h)
-    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
+    const ka = this.framing(a)
+    const kb = this.framing(b)
+    const turn = Math.atan2(Math.sin(kb[2] - ka[2]), Math.cos(kb[2] - ka[2]))
+    return this.framed(position, mix(ka[0], kb[0], w), mix(ka[1], kb[1], w), ka[2] + turn * w, ka[3] * Math.pow(kb[3] / ka[3], w))
+  }
+
+  private framing(pose: Pose): [number, number, number, number] {
+    const inv = pose.quaternion.clone().invert()
+    const d = pose.position.clone().negate().normalize().applyQuaternion(inv)
+    const tan = Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const e = this.ringNormal.clone().applyQuaternion(inv)
+    e.addScaledVector(d, -e.dot(d))
+    const px = (e.x * -d.z + d.x * e.z) / (d.z * d.z)
+    const py = (e.y * -d.z + d.y * e.z) / (d.z * d.z)
+    return [d.x / -d.z / tan, d.y / -d.z / tan, Math.atan2(py, px), 1 / (tan * pose.position.length())]
+  }
+
+  private framed(position: THREE.Vector3, sx: number, sy: number, psi: number, size: number): Pose {
+    const tan = 1 / (size * position.length())
+    const dc = new THREE.Vector3(sx * tan, sy * tan, -1).normalize()
+    const ec = new THREE.Vector3(sx * tan + 1e-3 * Math.cos(psi), sy * tan + 1e-3 * Math.sin(psi), -1).normalize()
+    ec.addScaledVector(dc, -ec.dot(dc)).normalize()
+    const dw = position.clone().negate().normalize()
+    const ew = this.ringNormal.clone().addScaledVector(dw, -this.ringNormal.dot(dw)).normalize()
+    const cam = new THREE.Matrix4().makeBasis(dc, ec, new THREE.Vector3().crossVectors(dc, ec))
+    const world = new THREE.Matrix4().makeBasis(dw, ew, new THREE.Vector3().crossVectors(dw, ew))
+    return { position, quaternion: new THREE.Quaternion().setFromRotationMatrix(world.multiply(cam.transpose())), vfov: THREE.MathUtils.radToDeg(2 * Math.atan(tan)) }
   }
 
   private diveX(u: number): number {
@@ -115,6 +141,29 @@ export class SaturnPlan extends StopPlan {
     const x = this.riseX((time - seg.start) / (seg.end - seg.start))
     const pose = this.join(this.skimAt(time), this.after(time), x, skim.riseBow)
     return x < skim.riseSwitch ? { pose: this.local(pose), view: 'terrain' } : { pose, view: 'orbit' }
+  }
+
+  override skyGain(time: number): number {
+    const d = this.seg.dive!
+    const r = this.seg.rise
+    if (time < d.start || time >= r.end) return 1
+    const near = time < d.end ? smooth(this.diveX((time - d.start) / (d.end - d.start))) : time < r.start ? 1 : 1 - smooth(this.riseX((time - r.start) / (r.end - r.start)))
+    return mix(1, skim.skyNear, near)
+  }
+
+  seat(time: number): THREE.Quaternion {
+    const h = this.seg.hold
+    const d = this.seg.dive!
+    const t = this.seg.terrain
+    const r = this.seg.rise
+    const out = new THREE.Quaternion()
+    if (time <= h.start || time >= r.end) return out
+    const fractions = config.raw.judged.fractions as Record<string, number>
+    const at = (s: typeof h): THREE.Quaternion => drift((s.firstFrame + Math.floor((fractions[s.kind] ?? 0.5) * s.frames + 1e-9)) / config.fps)
+    if (time < d.start) return out.slerp(at(h), smooth(ramp(h.start, mix(h.start, this.holdMid, skim.seatIn), time)))
+    if (time < d.end) return at(h).slerp(at(t), smooth(this.diveX((time - d.start) / (d.end - d.start))))
+    if (time < r.start) return at(t)
+    return at(t).slerp(out, smooth(this.riseX((time - r.start) / (r.end - r.start))))
   }
 
   patchWeight(time: number, view: ViewKind): number {

@@ -58,7 +58,7 @@ export interface GlobeOptions {
   patches?: PatchSet
   veil: { color: [number, number, number]; height: number; repeats: number }
   limbLit: [number, number, number]
-  edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number] }
+  edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number]; low?: { sun: [number, number, number, number]; pixels: number; air: number; scale: number } }
   pallShell: [number, number]
   segments?: number
 }
@@ -141,6 +141,8 @@ uniform float uExtinction;
 uniform mat3 uToBody;
 uniform vec4 uEdge;
 uniform vec4 uAir;
+uniform vec4 uLowSun;
+uniform vec3 uLowEdge;
 uniform float uVignette;
 uniform float uAspect;
 in vec3 vClip;
@@ -216,10 +218,12 @@ void main() {
   float axial = (uToBody * n).y;
   float round2 = max(1.0 - axial * axial, 0.0);
   float over = rt - 1.0 + uEdge.y + (1.0 - dusk) * (uLitEdge.x - uLitEdge.y * pow(round2, uLitEdge.z)) - dusk * uNightOut.x * pow(round2, uNightOut.y);
-  float inside = 1.0 - smoothstep(-uEdge.x, uEdge.x, over / max(fwidth(rt), 1e-7));
+  float low = smoothstep(uLowSun.x, uLowSun.y, dot(n, uSunW)) * (1.0 - smoothstep(uLowSun.z, uLowSun.w, dot(n, uSunW)));
+  float wide = mix(uEdge.x, uLowEdge.x, low);
+  float inside = 1.0 - smoothstep(-wide, wide, over / max(fwidth(rt), 1e-7));
   float beyond = max(over, 0.0);
-  if (uDiag >= 2 && inside < 0.5) discard;
-  float air = (uAir.x * exp(-beyond / uAir.y) + uAir.z * mix(uLitEdge.w, 1.0, dusk) * exp(-beyond / mix(uAir.w, uNightAir.z, dusk))) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
+  bool gone = uDiag >= 2 && inside < 0.5;
+  float air = (uAir.x * exp(-beyond / uAir.y) + uLowEdge.y * low * exp(-beyond / uLowEdge.z) + uAir.z * mix(uLitEdge.w, 1.0, dusk) * exp(-beyond / mix(uAir.w, uNightAir.z, dusk))) * (1.0 - smoothstep(0.6 * uEdge.z, uEdge.z, over));
   vec3 d = spinY(uToBody * n, uSpin);
   vec3 fl;
   vec3 df = flowed(d, fl);
@@ -250,8 +254,10 @@ ${PATCH_LEVELS}
   vec2 wuv = vec2(lon / (2.0 * PI) * uWispShape.x - sign(band) * uWispT * (1.0 - fl.z), lat * uWispShape.y + 0.5);
   float lon2 = fract(lon / (2.0 * PI) + 0.5) - 0.5;
   float lu = lon / (2.0 * PI);
-  vec2 wdx = vec2((abs(dFdx(lu)) < abs(dFdx(lon2)) ? dFdx(lu) : dFdx(lon2)) * uWispShape.x, dFdx(lat) * uWispShape.y);
-  vec2 wdy = vec2((abs(dFdy(lu)) < abs(dFdy(lon2)) ? dFdy(lu) : dFdy(lon2)) * uWispShape.x, dFdy(lat) * uWispShape.y);
+  vec2 lud = vec2(dFdx(lu), dFdy(lu));
+  vec2 l2d = vec2(dFdx(lon2), dFdy(lon2));
+  vec2 wdx = vec2((abs(lud.x) < abs(l2d.x) ? lud.x : l2d.x) * uWispShape.x, dFdx(lat) * uWispShape.y);
+  vec2 wdy = vec2((abs(lud.y) < abs(l2d.y) ? lud.y : l2d.y) * uWispShape.x, dFdy(lat) * uWispShape.y);
   vec3 east = cross(vec3(0.0, 1.0, 0.0), df);
   float el = length(east);
   east = el > 1e-4 ? east / el : vec3(1.0, 0.0, 0.0);
@@ -286,6 +292,7 @@ ${PATCH_LEVELS}
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     vec4 cloud = pall(vClip.xy / vClip.z);
+    cloud.rgb *= max(smoothstep(uPallLit.x, uPallLit.y, ndl), uPallLit.z);
     float pa = cloud.a * (1.0 - smoothstep(uPallShell.x, uPallShell.y, rt));
     cover = mix(inside, cover, (1.0 - uPall.x) * (1.0 - uPall.x));
     float total = pa + cover * (1.0 - pa);
@@ -293,6 +300,7 @@ ${PATCH_LEVELS}
     cover = total;
   }
   outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
+  if (gone) discard;
 }`
 
 export class Globe {
@@ -352,7 +360,7 @@ export class Globe {
         uWispShadow: { value: new THREE.Vector4(w.shadow, w.shadowLength, w.shadowBlur, w.fine) },
         uWispPolar: { value: new THREE.Vector2(rad(w.polarFrom), rad(w.polarTo)) },
         uExtinction: { value: o.haze.extinction },
-        uToBody: { value: this.toBody }, uEdge: { value: new THREE.Vector4(o.edge.pixels, o.edge.inset, o.edge.rim, o.edge.cap) }, uAir: { value: new THREE.Vector4().fromArray(o.edge.air) },
+        uToBody: { value: this.toBody }, uEdge: { value: new THREE.Vector4(o.edge.pixels, o.edge.inset, o.edge.rim, o.edge.cap) }, uAir: { value: new THREE.Vector4().fromArray(o.edge.air) }, uLowSun: { value: new THREE.Vector4().fromArray(o.edge.low?.sun ?? [2, 3, 2, 3]) }, uLowEdge: { value: new THREE.Vector3(o.edge.low?.pixels ?? o.edge.pixels, o.edge.low?.air ?? 0, o.edge.low?.scale ?? 1) },
         uDiag: diagUniform, uGrad: gradUniform,
         ...pallUniforms(o.pallShell),
       },

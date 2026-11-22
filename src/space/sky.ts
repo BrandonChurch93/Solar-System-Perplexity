@@ -133,15 +133,36 @@ vec3 smoothLod(sampler2D s, vec2 uv, float lod) {
   vec2 h1 = (i + 1.5 + w3 / g1) / size;
   return g0.y * (g0.x * textureLod(s, vec2(h0.x, h0.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h0.y), lod).rgb) + g1.y * (g0.x * textureLod(s, vec2(h0.x, h1.y), lod).rgb + g1.x * textureLod(s, vec2(h1.x, h1.y), lod).rgb);
 }
+vec3 worn(sampler2D s, vec2 q, vec2 px) {
+  vec3 c0 = textureLod(s, q, 0.0).rgb;
+  vec3 c1 = vec3(1e3);
+  vec3 c2 = vec3(1e3);
+  vec3 l = vec3(dot(c0, vec3(0.3, 0.5, 0.2)), 1e3, 1e3);
+  for (int i = 0; i < 12; i++) {
+    float a = float(i) * 0.5235988;
+    vec3 c = textureLod(s, q + vec2(cos(a), sin(a)) * px * (3.0 + 3.0 * float(i & 1)), 0.0).rgb;
+    float v = dot(c, vec3(0.3, 0.5, 0.2));
+    c2 = v < l.y ? c1 : v < l.z ? c : c2;
+    c1 = v < l.x ? c0 : v < l.y ? c : c1;
+    c0 = v < l.x ? c : c0;
+    l = v < l.x ? vec3(v, l.xy) : v < l.y ? vec3(l.x, v, l.y) : v < l.z ? vec3(l.xy, v) : l;
+  }
+  return c2;
+}
 vec3 unfolded(sampler2D s, vec3 p, vec3 t, vec2 gx, vec2 gy, float m, float shift) {
   vec3 o = t;
   vec2 d = max(max(m - p.xy, p.xy - (1.0 - m)), vec2(0.0));
-  for (int k = 0; k < (p.z > 0.0 && shift > 0.0 && max(d.x, d.y) > 0.0 ? 1 : 0); k++) {
-    vec2 w = smoothstep(vec2(0.0), vec2(m * 0.35), d);
-    vec2 q = p.xy + shift * sign(0.5 - p.xy) * step(vec2(1e-6), d);
+  vec2 px = 1.0 / vec2(textureSize(s, 0));
+  vec2 e = d / px;
+  for (int k = 0; k < (p.z > 0.0 && shift > 0.0 && max(e.x, e.y) > 0.5 ? 1 : 0); k++) {
+    vec2 w = smoothstep(vec2(m * 0.05), vec2(m * 0.4), d);
+    vec2 a = smoothstep(vec2(0.5), vec2(2.5), e);
+    vec2 side = sign(0.5 - p.xy) * step(vec2(1e-6), d);
+    vec2 far = 1.0 - p.xy;
     vec2 dx = gx * 0.25;
     vec2 dy = gy * 0.25;
-    o = mix(t, 0.25 * (textureGrad(s, q + dx + dy, gx, gy).rgb + textureGrad(s, q - dx + dy, gx, gy).rgb + textureGrad(s, q + dx - dy, gx, gy).rgb + textureGrad(s, q - dx - dy, gx, gy).rgb), max(w.x, w.y));
+    vec3 f = 0.25 * (textureGrad(s, far + dx + dy, gx, gy).rgb + textureGrad(s, far - dx + dy, gx, gy).rgb + textureGrad(s, far + dx - dy, gx, gy).rgb + textureGrad(s, far - dx - dy, gx, gy).rgb);
+    o = mix(t, mix(worn(s, p.xy, px), worn(s, p.xy + shift * side, px), max(w.x, w.y)) + max(f - worn(s, far, px), vec3(0.0)), max(a.x, a.y));
   }
   return o;
 }
@@ -268,6 +289,27 @@ void main() {
   outColor = vec4(col, 0.0);
 }`
 
+const SKY_DUST_GLSL = /* glsl */ `
+uniform sampler2D uBandGlow;
+uniform vec4 uDustLane;
+uniform vec4 uDustCloud;
+uniform vec4 uDustKeep;
+uniform vec4 uDustRed;
+vec3 dust(vec3 d, float bright) {
+  float ax = abs(asin(clamp((uGal * d).z, -1.0, 1.0))) / uBandMap.z;
+  float w = (1.0 - smoothstep(uDustKeep.z, uDustKeep.w, ax)) * uDustRed.w * (1.0 - smoothstep(uDustKeep.x, uDustKeep.y, bright));
+  float g = dot(textureLod(uBandGlow, bandCoord(d).xy, 0.0).rgb, vec3(0.3, 0.5, 0.2));
+  float lane = 1.0 - smoothstep(uDustLane.x, uDustLane.y, g);
+  float cloud = smoothstep(uDustCloud.x, uDustCloud.y, g);
+  highp uint h = uint(gl_VertexID) * 0x9E3779B1u;
+  h ^= h >> 15;
+  h *= 0x85EBCA77u;
+  h ^= h >> 13;
+  float keep = step(w * (lane * uDustLane.z + cloud * uDustCloud.z), float(h >> 8) * (1.0 / 16777216.0));
+  return mix(vec3(1.0), uDustRed.rgb, w * cloud) * (keep * (1.0 - w * (lane * uDustLane.w + cloud * uDustCloud.w)));
+}
+`
+
 const STAR_VERT = /* glsl */ `
 uniform float uPixel;
 uniform float uExposure;
@@ -335,7 +377,9 @@ in float aStar;
 in vec3 aColor;
 out vec3 vColor;
 out float vSize;
+${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
+${SKY_DUST_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -346,7 +390,7 @@ void main() {
   gl_PointSize = size;
   vSize = size;
   vec3 d = normalize(position);
-  vColor = aColor * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
+  vColor = aColor * dust(d, aStar) * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
 }`
 
 const STRIP_VERT = /* glsl */ `
@@ -473,6 +517,10 @@ export class Sky {
   private readonly flight: THREE.Points
   private readonly deep: THREE.Points
   private deepLevel = 0
+  private dustLane = new THREE.Vector4()
+  private dustCloud = new THREE.Vector4()
+  private dustKeep = new THREE.Vector4(1, 2, 0, 1)
+  private dustRed = new THREE.Vector4(1, 1, 1, 0)
   private deepLens = 0
   private readonly strip: THREE.Points
   private stripGlow: THREE.Texture | null = null
@@ -553,6 +601,7 @@ export class Sky {
     this.stars.frustumCulled = false
     this.starScene.add(this.stars)
     const fm = mat.clone()
+    fm.vertexShader = STAR_VERT.replace('void main() {', SKY_DUST_GLSL + 'void main() {').replace('vColor = aColor * b * uExposure;', 'vColor = aColor * dust(normalize(position), aStar.y) * b * uExposure;')
     for (const name of ['uPatchM', 'uPatchLens', 'uPatchRing', 'uPatchMode', 'uPatchFold']) fm.uniforms[name] = mat.uniforms[name]!
     fm.uniforms.uHalo = this.flightHalo
     this.flight = new THREE.Points(new THREE.BufferGeometry(), fm)
@@ -576,6 +625,7 @@ export class Sky {
     this.deep.visible = false
     this.stars.add(this.deep)
     const pu = this.pass.material.uniforms
+    for (const m of [fm, dm]) Object.assign(m.uniforms, { uBandGlow: pu.uBandGlow!, uGal: pu.uGal!, uBandMap: mat.uniforms.uBandMap!, uBandWiden: mat.uniforms.uBandWiden!, uBandFadeEnd: mat.uniforms.uBandFadeEnd!, uDustLane: { value: this.dustLane }, uDustCloud: { value: this.dustCloud }, uDustKeep: { value: this.dustKeep }, uDustRed: { value: this.dustRed } })
     const sm = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: STRIP_VERT,
@@ -604,6 +654,10 @@ export class Sky {
     ;(u.uFlightEdge!.value as THREE.Vector3).fromArray(def.edge)
     ;((this.strip.material as THREE.ShaderMaterial).uniforms.uStripStar!.value as THREE.Vector2).set(def.stars.tint, def.stars.warm)
     this.flightHalo.value = def.stars.halo
+    this.dustLane.set(def.dust.lane[0]!, def.dust.lane[1]!, def.dust.lane[2]!, def.dust.lane[3]!)
+    this.dustCloud.set(def.dust.cloud[0]!, def.dust.cloud[1]!, def.dust.cloud[2]!, def.dust.cloud[3]!)
+    this.dustKeep.set(def.dust.keep[0]!, def.dust.keep[1]!, def.dust.span[0]!, def.dust.span[1]!)
+    this.dustRed.set(def.dust.red[0]!, def.dust.red[1]!, def.dust.red[2]!, 0)
     ;((this.deep.material as THREE.ShaderMaterial).uniforms.uDeepLaw!.value as THREE.Vector3).set(def.deep.gain, def.deep.tail, def.deep.ref)
     this.buildStrip()
   }
@@ -639,7 +693,7 @@ export class Sky {
   }
 
   setFlightStars(def: FlightDef): void {
-    const field = flightField(def)
+    const field = flightField(def, galactic().elements)
     this.flightDef = def
     this.field = { veil: field.veil, veilLow: field.veilLow, veilHigh: field.veilHigh, rough: field.rough, width: field.width, height: field.height }
     const geo = this.flight.geometry
@@ -850,6 +904,7 @@ export class Sky {
     ;(u.uFlightGlow!.value as THREE.Vector4).set(this.flightGlow.x, this.flightGlow.y, this.flightGlow.z, this.flightLift)
     const swap = this.stripGlow && this.stripDef ? THREE.MathUtils.smoothstep(this.flightLift, 0, this.stripDef.swap) : 0
     ;(u.uFlightStrip!.value as THREE.Vector3).x = swap
+    this.dustRed.w = swap
     for (let i = 0; i < 2; i++) this.patchMode[i]!.x = swap > 0 ? Math.pow(this.patchRaw[i]!, 1 + this.stripDef!.patchHold * this.flightLift) : this.patchRaw[i]!
     this.q.copy(turn).invert().premultiply(this.frame)
     ;(u.uFrame!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q))

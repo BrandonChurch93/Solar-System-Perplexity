@@ -62,11 +62,12 @@ export const io = {
   term: [0.3, 1.5] as [number, number],
   dusk: [1.33, 0.964, 0.386, 0.9] as [number, number, number, number],
   crisp: 0.6,
+  night: { fill: [0.02, 0.025, 0.03] as [number, number, number], phase: [0.2, 0.6] as [number, number] },
 }
 
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number], low: { sun: [-0.05, 0.1, 0.4, 0.75] as [number, number, number, number], pixels: 1.3, air: 0.15, scale: 0.014 } }
 
 export const deck: DeckLook = {
   skyRimDeg: 5.2,
@@ -96,11 +97,11 @@ export const deck: DeckLook = {
   haze: { color: [0.2, 0.17, 0.135], tile: 9, layer: 0.45, height: 0.5, clear: [2.8, 1.5], gather: [1.4, 0.75], tone: [6, 0.6, 1.0, 160] },
   depth: 3,
   depthBorder: 400,
-  pall: { clear: 0.45, gather: 0.6, orbitClear: 0.5, orbitGather: 0.35, shell: [1.0, 1.004], morph: 0.234 },
+  pall: { clear: 0.45, gather: 0.6, orbitClear: 0.567, orbitGather: 0.5, orbitThin: 0.73, orbitRays: 0.3, lit: [-0.1, 0.3, 0.05], shell: [1.0, 1.004], morph: 0.234 },
   flashColor: [0.45, 0.7, 1.0],
   flashBody: [0.25, 6],
   beyond: [0.6, 0.004, 300],
   detail: [0.3, 0.7, 1.1, 1.9],
 }
 
-export const veil = { color: [0.85, 0.8, 0.7] as [number, number, number], amount: 0.9, from: 2.2, to: 0.35, height: 0.012, repeats: 1, drift: 0.004 }
+export const veil = { color: [0.85, 0.8, 0.7] as [number, number, number], amount: 0.9, from: 2.2, to: 0.35, height: 0.012, repeats: 1, drift: 0.004, rise: 0 }
