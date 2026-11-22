@@ -1,46 +1,40 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T00:56:43.469Z",
- "head": "0010f47e6b2d994c5e501e84013ee483d457838b",
- "note": "foreground layer for terrain parallax: contours traced, hole and uncover analysis; dive pall review job still running",
+ "pushed": "2026-11-22T01:13:09.129Z",
+ "head": "747718b5a284267fada72d4eb3f8e32e5a5ab963",
+ "note": "pall 0.5 review pictures; foreground layer mattes and plate",
  "looks": [
   {
-   "time": "2026-11-22T00:56:42.530Z",
-   "file": "20261122005642530-note-zc_2.jpg",
-   "source": "out/work/view/zc_2.jpg",
+   "time": "2026-11-22T01:13:08.596Z",
+   "file": "20261122011308596-note-under_shown.jpg",
+   "source": "out/work/view/under_shown.jpg",
    "kind": "note",
-   "label": "foreground layer: contour of the apron cumulus at 2x",
+   "label": "foreground layer: the deck with the painted plate where the lifted tiers uncover it (lifted tones)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T00:56:41.841Z",
-   "file": "20261122005641841-note-an_hole2.jpg",
-   "source": "out/work/view/an_hole2.jpg",
+   "time": "2026-11-22T01:13:08.083Z",
+   "file": "20261122011308083-note-tiers_mattes.jpg",
+   "source": "out/work/view/tiers_mattes.jpg",
    "kind": "note",
-   "label": "foreground layer analysis: where a plain terrace would show its own bottom edge (red), cured by a vertical taper",
+   "label": "foreground layer: mattes of the two tiers (green bank, blue apron cumulus) and plate bands (blue violet) over the canvas",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T00:56:41.024Z",
-   "file": "20261122005641024-note-fg_contours.jpg",
-   "source": "out/work/view/fg_contours.jpg",
+   "time": "2026-11-22T01:13:07.556Z",
+   "file": "20261122011307556-note-native_3020_3021.jpg",
+   "source": "out/work/view/pall/native_3020_3021.jpg",
    "kind": "note",
-   "label": "foreground layer: the two contours (green bank, orange cumulus) on the canvas",
+   "label": "dive pall, native crops at 3020 and 3021: left 0.35, right 0.5",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-22T00:56:25.224Z",
-   "file": "20261122005625224-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "time": "2026-11-22T01:13:06.909Z",
+   "file": "20261122011306909-note-review_compare.jpg",
+   "source": "out/work/view/pall/review_compare.jpg",
+   "kind": "note",
+   "label": "dive pall, review tier: rows orbitGather 0.35 and 0.5 at 3019 to 3023, bottom row 0.5 at 3012 to 3020",
+   "stop": "jupiter"
   },
   {
    "time": "2026-11-21T23:41:04.555Z",
