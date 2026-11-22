@@ -129,8 +129,8 @@ export const createSet: SetFactory = async (ctx) => {
     world.updateMatrix()
     eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
-  const ground = (time: number, sunDir: THREE.Vector3, gain: number, lines: number, vignette: number, aspect: number): void => {
-    deck.update(eye, time - terrainMid, gain, vignette, aspect, 1)
+  const ground = (time: number, sunDir: THREE.Vector3, gain: number, lines: number, vignette: number, aspect: number, bloom: number): void => {
+    deck.update(eye, time - terrainMid, gain, vignette, aspect, 1, bloom)
     skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
     arcs.mesh.quaternion.copy(skyTurn)
     arcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn)
@@ -168,7 +168,7 @@ export const createSet: SetFactory = async (ctx) => {
         const since = diving || rising ? (state.time - plan.swap(seg)) * config.fps : 0
         const thick = diving ? 1 - smooth(ramp(look.clearing.mist[0], look.clearing.mist[1], since)) : rising ? smooth(ramp(look.closing.mist[0], look.closing.mist[1], since)) : 0
         const lines = diving ? smooth(ramp(look.clearing.arcs[0], look.clearing.arcs[1], since)) : rising ? 1 - smooth(ramp(look.closing.arcs[0], look.closing.arcs[1], since)) : 1
-        ground(state.time, shot.sun.dir, gain, lines, shot.post.vignette, aspect)
+        ground(state.time, shot.sun.dir, gain, lines, shot.post.vignette, aspect, shot.post.bloomStrength)
         const rush = shot.cover.rush
         mist.update(look.show.cover && rush ? thick : 0, shot.sun.dir, rush ? rush.focus : [0, 0], rush ? rush.phase : 0, rush ? rush.billow : [1, 1, 1], gain)
         return
