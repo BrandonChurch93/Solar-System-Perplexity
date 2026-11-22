@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "foreground ring bands, frames 3630–3809",
+   "what": "The near rings sweep past Saturn faster than the distant background, but the bands remain so uniform along the direction of travel that the skim reads like flight over a flat striped surface.",
+   "fix": "Add sparse, persistent particle clumps or density features at several depths so the closest features pass faster than the more distant ones."
+  }
+ ]
+}
