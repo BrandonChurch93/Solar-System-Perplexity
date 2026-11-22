@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T10:04:53.528Z",
+ "pushed": "2026-11-22T10:07:33.156Z",
  "head": "bec8e3f0e06d940a096be440a14df981702cd875",
- "note": "leave on agent/sun-leave bec8e3f (main 8f13066): one Sun opening up into Mercury's plate, take 3, finals rendering",
+ "note": "leave DONE sent: agent/sun-leave bec8e3f on main 8f13066, finals 482 490 495; final 470 byte check running",
  "looks": [
+  {
+   "time": "2026-11-22T10:07:32.254Z",
+   "file": "20261122100732254-note-leave-crops-490-482.jpg",
+   "source": "out/work/sun/lv/leave-crops-490-482.jpg",
+   "kind": "note",
+   "label": "leave native crops at 490 and 482: main 8f13066 draft against agent/sun-leave bec8e3f final",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T10:07:31.291Z",
+   "file": "20261122100731291-note-leave-finals.jpg",
+   "source": "out/work/sun/lv/leave-finals.jpg",
+   "kind": "note",
+   "label": "leave finals 482, 490, 495 of agent/sun-leave bec8e3f beside main 8f13066 draft 495",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T10:03:55.449Z",
    "file": "20261122100355449-note-strip-a2.jpg",
