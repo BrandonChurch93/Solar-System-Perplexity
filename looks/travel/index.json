@@ -1,9 +1,49 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T11:37:23.259Z",
- "head": "fbb637912189a6697c9bc949957daf49f7a9133a",
- "note": "Phase 6: mars.travel Jupiter as a point first, sun.travel sky patch ends with the turn",
+ "pushed": "2026-11-22T11:57:39.712Z",
+ "head": "68f0089b81aff7b1b8d138025228d11b7b49ecfd",
+ "note": "Phase 6: saturn.travel point from 3919, Triton held still inside the shutter in uranus.travel",
  "looks": [
+  {
+   "time": "2026-11-22T11:57:38.899Z",
+   "file": "20261122115738899-note-p5-wide.jpg",
+   "source": "../../../../tmp/v/p5-wide.jpg",
+   "kind": "note",
+   "label": "uranus.travel finals 4502 and 4506 with steady 60 to 200",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:57:37.917Z",
+   "file": "20261122115737917-note-p5-triton.jpg",
+   "source": "../../../../tmp/v/p5-triton.jpg",
+   "kind": "note",
+   "label": "uranus.travel finals 2x: main 4502 against steady 60 to 200 at 4502, 4504, 4506 (Triton above, Neptune below)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:48:44.146Z",
+   "file": "20261122114844146-note-p4-triton.jpg",
+   "source": "../../../../tmp/v/p4-triton.jpg",
+   "kind": "note",
+   "label": "uranus.travel finals 3x: Triton and Neptune, main 4502 against steady 0 to 90 (not kept, still a streak)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:48:43.621Z",
+   "file": "20261122114843621-note-p3-ptab.jpg",
+   "source": "../../../../tmp/v/p3-ptab.jpg",
+   "kind": "note",
+   "label": "saturn.travel point place 3x, main above, job 3 below, 3919 to 3934",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:48:43.024Z",
+   "file": "20261122114843024-note-p3-sat.jpg",
+   "source": "../../../../tmp/v/p3-sat.jpg",
+   "kind": "note",
+   "label": "saturn.travel after job 3, draft",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T11:37:22.691Z",
    "file": "20261122113722691-note-p2-ab.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/p1-pt.jpg",
    "kind": "note",
    "label": "polish job 1 Jupiter place native crops 2770 to 2793",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T11:10:12.472Z",
-   "file": "20261122111012472-note-p1-a.jpg",
-   "source": "../../../../tmp/v/p1-a.jpg",
-   "kind": "note",
-   "label": "polish job 1 mars.travel draft strip 2760 to 2819 at 217a588",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:29:42.920Z",
-   "file": "20261122102942920-note-g1-4508-final-crops.jpg",
-   "source": "../../../../tmp/v/g1-4508-final-crops.jpg",
-   "kind": "note",
-   "label": "grow b4edbdb 4508 final crops: Neptune 0.83x, band, stars",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:29:42.318Z",
-   "file": "20261122102942318-note-g1-4508-final.jpg",
-   "source": "../../../../tmp/v/g1-4508-final.jpg",
-   "kind": "note",
-   "label": "grow b4edbdb 4508 final, Neptune 179 px radius, turn 3.74",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:29:41.637Z",
-   "file": "20261122102941637-note-g1-2228-final-crops.jpg",
-   "source": "../../../../tmp/v/g1-2228-final-crops.jpg",
-   "kind": "note",
-   "label": "grow b4edbdb 2228 final native crops: Mars, Phobos 2x, sky band",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:29:41.047Z",
-   "file": "20261122102941047-note-g1-2228-final.jpg",
-   "source": "../../../../tmp/v/g1-2228-final.jpg",
-   "kind": "note",
-   "label": "grow b4edbdb 2228 final, Mars 158 px radius, turn 4.34",
    "stop": "travel"
   }
  ]
