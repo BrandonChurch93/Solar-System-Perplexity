@@ -1,58 +1,42 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T05:00:11.396Z",
- "head": "4bfd92432c5721fe12e032032c5c14d33e92b917",
- "note": "batch 19 merged (main 2621f00); item 6 face layer in the tree; chain D renders finals, repeat, measure, proofs",
+ "pushed": "2026-11-22T05:04:38.243Z",
+ "head": "ed0365245d077b47abd7424e9edb1807c31fdb8e",
+ "note": "item 6 committed (8d48b37) on engine batch 19; hold, dive, terrain finals byte equal to batch 18; repeat and measure running",
  "looks": [
   {
-   "time": "2026-11-22T05:00:07.408Z",
-   "file": "20261122050007408-note-f6c-pair2x.jpg",
-   "source": "../../../../tmp/f6c-pair2x.png",
+   "time": "2026-11-22T05:04:37.601Z",
+   "file": "20261122050437601-note-d-4436-full-pair.jpg",
+   "source": "../../../../tmp/d-4436-full-pair.jpg",
    "kind": "note",
-   "label": "Item 6: 4436 final disc at 2x, before (left) and with the face layer (right), dev tree on main 0622510 batch 18",
+   "label": "4436 final: batch 18 (top), batch 19 with item 6 (bottom) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T05:00:06.531Z",
-   "file": "20261122050006531-note-d-4436-crop.jpg",
-   "source": "../../../../tmp/d-4436-crop.jpg",
+   "time": "2026-11-22T05:04:36.856Z",
+   "file": "20261122050436856-note-d-4436-pair2x.jpg",
+   "source": "../../../../tmp/d-4436-pair2x.png",
    "kind": "note",
-   "label": "Item 6: 4436 draft, the disc at 2x with the face detail layer, lone dot damped (main 2621f00, engine batch 19 7a880ac6, tree a4f6fe9 plus item 6 not yet committed)",
+   "label": "Item 6: judged rise frame 4436 final, disc at 2x: batch 18 without the layer (left), batch 19 with the face detail layer (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T05:00:05.408Z",
-   "file": "20261122050005408-note-d-rise-drafts-b.jpg",
-   "source": "../../../../tmp/d-rise-drafts-b.jpg",
-   "kind": "note",
-   "label": "Rise drafts 4434 to 4454 with the item 6 face layer (main 2621f00, engine batch 19 7a880ac6, tree a4f6fe9 plus item 6 not yet committed)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T05:00:04.549Z",
-   "file": "20261122050004549-note-d-rise-drafts-a.jpg",
-   "source": "../../../../tmp/d-rise-drafts-a.jpg",
-   "kind": "note",
-   "label": "Rise drafts 4410 to 4432 with the item 6 face layer (main 2621f00, engine batch 19 7a880ac6, tree a4f6fe9 plus item 6 not yet committed)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T04:59:01.672Z",
-   "file": "20261122045901672-still-f04454-16x9-draft-full.jpg",
-   "source": "out/work/stills/f04454-16x9-draft-full.png",
+   "time": "2026-11-22T05:03:47.269Z",
+   "file": "20261122050347269-still-f04436-16x9-final-full.jpg",
+   "source": "out/work/stills/f04436-16x9-final-full.png",
    "kind": "still",
-   "label": "uranus.rise frame 4454, draft tier",
+   "label": "uranus.rise frame 4436, final tier",
    "stop": "uranus",
    "segment": "uranus.rise",
-   "frame": 4454,
-   "tier": "draft",
+   "frame": 4436,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T03:21:55.550Z",
-   "file": "20261122032155550-still-f04290-16x9-final-full.jpg",
+   "time": "2026-11-22T05:02:29.868Z",
+   "file": "20261122050229868-still-f04290-16x9-final-full.jpg",
    "source": "out/work/stills/f04290-16x9-final-full.png",
    "kind": "still",
    "label": "uranus.terrain frame 4290, final tier",
@@ -62,11 +46,25 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
+   "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T03:19:49.827Z",
-   "file": "20261122031949827-still-f04035-16x9-final-full.jpg",
+   "time": "2026-11-22T05:01:43.147Z",
+   "file": "20261122050143147-still-f04137-16x9-final-full.jpg",
+   "source": "out/work/stills/f04137-16x9-final-full.png",
+   "kind": "still",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:00:26.071Z",
+   "file": "20261122050026071-still-f04035-16x9-final-full.jpg",
    "source": "out/work/stills/f04035-16x9-final-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, final tier",
@@ -76,7 +74,15 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:00:07.408Z",
+   "file": "20261122050007408-note-f6c-pair2x.jpg",
+   "source": "../../../../tmp/f6c-pair2x.png",
+   "kind": "note",
+   "label": "Item 6: 4436 final disc at 2x, before (left) and with the face layer (right), dev tree on main 0622510 batch 18",
+   "stop": "uranus"
   },
   {
    "time": "2026-11-22T03:12:46.712Z",
