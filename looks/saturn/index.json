@@ -1,75 +1,75 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T16:44:20.588Z",
- "head": "52c8ee84e93c16cd3a0c8190b29ea94f42c7639e",
- "note": "after CUT34: dive review sheet looked at, hold edges beside the hero, first tone field for the near lanes at 3720 (trial), main 5f3b566d in the tree",
+ "pushed": "2026-11-22T17:25:38.658Z",
+ "head": "db6bf888c76945aa8eda5144c63566551459163c",
+ "note": "CUT35 trial: fitted tone field for the near lanes at 3720, pairs against the approved image; a one sample bar found at draft 3776; main ff158d90 in the tree",
  "looks": [
   {
-   "time": "2026-11-22T16:44:15.462Z",
-   "file": "20261122164415462-note-skim-tone.jpg",
-   "source": "out/work/saturn/skim-tone.png",
+   "time": "2026-11-22T17:25:38.005Z",
+   "file": "20261122172538005-note-bar-n.jpg",
+   "source": "../../../../tmp/c34/bar-n.png",
    "kind": "note",
-   "label": "trial, not committed: fitted tone field for the close picture at 3720 (grey 0.85 to 1.15, darker is a stronger pull down)",
+   "label": "the same place in drafts 3774, 3775, 3777, 3778 and the review still of 3776: no bar (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:44:14.275Z",
-   "file": "20261122164414275-note-dr-3.jpg",
-   "source": "../../../../tmp/c34/dr-3.png",
+   "time": "2026-11-22T17:25:37.286Z",
+   "file": "20261122172537286-note-nb-3776.jpg",
+   "source": "../../../../tmp/c34/nb-3776.png",
    "kind": "note",
-   "label": "dive review sheet on the CUT34 build, quarter 3 of 4, main 5f3b566d in the tree",
+   "label": "found, in the kept build too: draft tier, frame 3776, a pale bar across the near lanes; kept above, with tone below (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:44:13.199Z",
-   "file": "20261122164413199-note-dr-2.jpg",
-   "source": "../../../../tmp/c34/dr-2.png",
+   "time": "2026-11-22T17:25:36.704Z",
+   "file": "20261122172536704-note-nd-3630.jpg",
+   "source": "../../../../tmp/c34/nd-3630.png",
    "kind": "note",
-   "label": "dive review sheet on the CUT34 build, quarter 2 of 4, main 5f3b566d in the tree",
+   "label": "trial for CUT35, draft 3630: kept minus new, luma times 20 (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:44:12.344Z",
-   "file": "20261122164412344-note-dr-1.jpg",
-   "source": "../../../../tmp/c34/dr-1.png",
+   "time": "2026-11-22T17:25:36.099Z",
+   "file": "20261122172536099-note-nb-3630-0.jpg",
+   "source": "../../../../tmp/c34/nb-3630-0.png",
    "kind": "note",
-   "label": "dive review sheet on the CUT34 build, quarter 1 of 4, main 5f3b566d in the tree",
+   "label": "trial for CUT35, draft 3630 at the approved frame's left border at native size: kept above, new below (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:44:11.271Z",
-   "file": "20261122164411271-note-dr-0.jpg",
-   "source": "../../../../tmp/c34/dr-0.png",
+   "time": "2026-11-22T17:25:35.521Z",
+   "file": "20261122172535521-note-nb-3630-380.jpg",
+   "source": "../../../../tmp/c34/nb-3630-380.png",
    "kind": "note",
-   "label": "dive review sheet on the CUT34 build, quarter 0 of 4, main 5f3b566d in the tree",
+   "label": "trial for CUT35, draft 3630 below the approved frame's lower border at native size: kept above, new below (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:44:10.178Z",
-   "file": "20261122164410178-note-e-right.jpg",
-   "source": "../../../../tmp/c34/e-right.png",
+   "time": "2026-11-22T17:25:34.972Z",
+   "file": "20261122172534972-note-t-a.jpg",
+   "source": "../../../../tmp/c34/t-a.png",
    "kind": "note",
-   "label": "hold 3465 ring edge at 4x, approved hero left, film right (e-right), main 5f3b566d in the tree",
+   "label": "trial for CUT35, 3720 final near lanes at native size: approved | kept | new (main ff158d90 in the tree)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:35:26.476Z",
-   "file": "20261122163526476-frame-X4-3720.jpg",
-   "source": "out/work/saturn/X4-3720.png",
+   "time": "2026-11-22T17:24:36.494Z",
+   "file": "20261122172436494-frame-B1R-3776.jpg",
+   "source": "out/work/saturn/B1R-3776.png",
    "kind": "frame",
-   "label": "saturn.terrain frame 3720, draft tier",
+   "label": "saturn.terrain frame 3776, review tier",
    "stop": "saturn",
    "segment": "saturn.terrain",
-   "frame": 3720,
-   "tier": "draft",
+   "frame": 3776,
+   "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T16:04:13.253Z",
-   "file": "20261122160413253-frame-F-3465.jpg",
-   "source": "out/work/saturn/F-3465.png",
+   "time": "2026-11-22T17:03:27.141Z",
+   "file": "20261122170327141-frame-Z1-3465.jpg",
+   "source": "out/work/saturn/Z1-3465.png",
    "kind": "frame",
    "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
@@ -78,7 +78,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   }
  ]
 }
