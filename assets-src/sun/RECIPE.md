@@ -245,3 +245,12 @@ Apron (`apron.jpg`), 6 of 6 takes:
 - Kept: the table after two passes. Check: `python3 out/work/sun/gradecheck.py REGION FILM APPROVED` prints the percentiles of both.
 - The loops row since Phase 6, item 7a: `python3 assets-src/sun/grade/grade.py card [FILM]` (`CARD`). Without a film frame it fits one gain curve over ten knots of the card's display value so that base plus card gives the approved image (0.875 at 0 rising to 1 at 208). With a final tier `--diag nograin` frame 90 it also fits a depth of that curve and a tint per channel that fades out between card values 144 and 232, on the 30 cell means of the arch box (x 480 to 1440, y 150 to 640 of the frame). Kept: depth 2.24, tint 0.965, 0.9878, 0.9748. Film minus approved in the arch box at 90, final, R G B: +1.91 -1.33 -1.95 before, +0.13 -0.41 +0.24 with the row.
 
+
+## Leave
+
+### src/stops/sun/leave.json
+
+- Output: the cone of world directions through the painted limb of the pale Sun plate of the Mercury stop, a symmetric 3 by 3 form Q with d Q d = 0 on the limb. `src/stops/sun/set.ts` turns it into the ellipse of that limb in the camera's picture plane at every frame of `sun.travel` and fits the stop's own globe to it.
+- Tool: `python3 assets-src/sun/leave/disc.py` (no model, no prompt) fits the painted disc in `public/assets/mercury/full/sun-plate.webp` (steepest fall of the blue channel along 1440 rays, rays where the glow hides the limb left out, sector weighted) and writes `assets-src/sun/leave/disc.json`; then `python3 assets-src/sun/leave/fit.py - src/stops/sun/leave.json` carries it through the rect of `src/stops/mercury/sunplate.json` and the plate's fixed aim (`AIM` in the script, the quaternion Mercury's set passes to `sunPlate.update` in `sun.travel`, read from a logged draft render) into world space.
+- Check: `python3 assets-src/sun/leave/fit.py LOG -` with a log that holds the camera quaternion and the engine's Sun per frame prints the limb of the painted disc and of the disc `sunplate.json` states, in px from the engine's Sun; the stated one gives the plate owner's table back to 0.1 px.
+- It copies Mercury's picture, rect and aim. If any of them changes, run both scripts again.

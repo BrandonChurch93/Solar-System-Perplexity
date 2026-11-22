@@ -44,6 +44,20 @@ export const sky: SkyCardDef = { file: 'sky-hold.webp', vfovDeg: fit.vfovDeg, ma
 
 export const skyFade: [number, number] = [0.02, 0.34]
 
+export const leave = {
+  over: [0.228, 0.4] as [number, number],
+  open: 4,
+  wash: [0.26, 0.4] as [number, number],
+  pale: [2.76, 1.37, 0.52] as [number, number, number],
+  plate: [0.25, 0.8] as [number, number],
+  gone: 0.55,
+  cap: 1.5,
+  corona: 2.2,
+  edge: 0.06,
+  fit: [0.228, 0.378] as [number, number],
+  burn: { over: [0.228, 0.36] as [number, number], wide: 5, level: 3, cover: 0, hot: [1, 0.6, 0.25] as [number, number, number] },
+}
+
 export const ground: GroundLook = {
   cap: 63,
   rings: 252,
