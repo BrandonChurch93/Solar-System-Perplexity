@@ -32,3 +32,8 @@ A small branch from `origin/main` (616695b) that holds only the cure of what rou
 ## The plate for the hand over
 
 - `out/work/mercury/leave/limb.ts` (scratch, not committed) computes the plate's limb per frame through the mapping of `set.ts`. At 1920 x 1080, mid shutter: 488 centre 1296.6, 370.6, mean radius 338.5, weight 0.239; 495 centre 1435.6, 296.9, radius 347.1, weight 0.440; 499 centre 1512.8, 254.6, radius 353.1, weight 0.560; 539 centre 1685.0, 107.8, radius 371.9; hold 615 centre 1834.6, 120.0, radius 384.9. The disc is not quite round in the travel (at 495 the limb is 352.7 px left, 325.9 right, 348.3 up, 361.4 down of the engine's Sun at 1449.0, 290.4), because the plate is flat in the hold camera's frame. The whole table went to sun_builder at 09:37 UTC.
+
+## The painted disc (10:03, from sun_builder's fit)
+
+- The disc `sunplate.json` states (centre of the picture, radius 0.227585) is the hero's disc as fitted in the hold's quarter. The disc painted on the whole plate is larger and off centre: centre uv 0.5176, 0.5207, radius 0.2506 (sun_builder's fit on `sun-plate.webp`, 405 rays, median residual 0.67 px). In the hold's quarter the two limbs agree within about 9 px; on the right and the top, which only the travel shows, the painted limb is 55 and 65 px further out at 495.
+- 1962bf3 laid the grain, the travel's limb darkening and the corona's reach on the stated disc, which left a pale band without grain along the right limb at 495. Now `sunSurface.disc` carries the painted disc and those three are laid on it; the hold's own limb darkening keeps the stated disc, so with the travel weight at 0 the shade is the hold's to the bit.

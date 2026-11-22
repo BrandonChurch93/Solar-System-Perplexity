@@ -26,6 +26,7 @@ uniform vec4 uGrain;
 uniform vec3 uLimbTravel;
 uniform vec4 uCorona;
 uniform float uTravel;
+uniform vec3 uPaint;
 uniform int uDiag;
 in vec3 vRay;
 in vec2 vNdc;
@@ -75,10 +76,10 @@ void main() {
   vec2 uv = ((p.xy / max(-p.z, 1e-3) - uRect.xy) / uRect.zw - 0.5) / uSmall.x + 0.5;
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float k = uGain / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
-  float r = length(uv - 0.5) / uLimb.w;
-  vec2 dd = (uv - 0.5) / uLimb.w;
-  vec3 dark = mix(uLimb.rgb, uLimbTravel, uTravel);
-  vec3 shade = mix(vec3(1.0) - dark * (1.0 - sqrt(max(1.0 - r * r, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, r));
+  float held = length(uv - 0.5) / uLimb.w;
+  vec2 dd = (uv - 0.5 - uPaint.xy) / uPaint.z;
+  float r = length(dd);
+  vec3 shade = mix(mix(vec3(1.0) - uLimb.rgb * (1.0 - sqrt(max(1.0 - held * held, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, held)), mix(vec3(1.0) - uLimbTravel * (1.0 - sqrt(max(1.0 - r * r, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, r)), uTravel);
   vec3 c = inverseFilmic(textureGrad(uMap, uv, dFdx(uv), dFdy(uv)).rgb);
   vec3 glow = inverseFilmic(textureLod(uMap, uv, 5.0).rgb);
   float rr = min(r, 0.999);
@@ -100,7 +101,7 @@ void main() {
   if (uDiag >= 2 || p.z > -1e-3 || uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
 }`
 
-export interface SunSurface { grain: [number, number]; cells: number; coarse: number; dive: [number, number]; limb: [number, number, number]; corona: { depth: number; reach: [number, number]; soft: number } }
+export interface SunSurface { grain: [number, number]; cells: number; coarse: number; dive: [number, number]; disc: [number, number, number]; limb: [number, number, number]; corona: { depth: number; reach: [number, number]; soft: number } }
 export interface SunLimb { dark: [number, number, number]; edge: [number, number] }
 export interface SunSmall { to: number; pale: [number, number, number]; lift: number; white: [number, number]; feather: number }
 
@@ -114,7 +115,7 @@ export class SunPlate {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
-      uniforms: { uGrain: { value: new THREE.Vector4(surface.grain[0], surface.grain[1], surface.cells, surface.coarse) }, uLimbTravel: { value: new THREE.Vector3(...surface.limb) }, uCorona: { value: new THREE.Vector4(surface.corona.depth, surface.corona.reach[0], surface.corona.reach[1], surface.corona.soft) }, uTravel: { value: 0 }, uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLimb: { value: new THREE.Vector4(limb.dark[0], limb.dark[1], limb.dark[2], disc) }, uLimbEdge: { value: new THREE.Vector2(limb.edge[0], limb.edge[1]) }, uSmall: { value: new THREE.Vector4(1, 0, 1, 1e-4) }, uPale: { value: new THREE.Vector3().fromArray(small.pale) }, uDiag: diag },
+      uniforms: { uGrain: { value: new THREE.Vector4(surface.grain[0], surface.grain[1], surface.cells, surface.coarse) }, uLimbTravel: { value: new THREE.Vector3(...surface.limb) }, uCorona: { value: new THREE.Vector4(surface.corona.depth, surface.corona.reach[0], surface.corona.reach[1], surface.corona.soft) }, uTravel: { value: 0 }, uPaint: { value: new THREE.Vector3(...surface.disc) }, uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLimb: { value: new THREE.Vector4(limb.dark[0], limb.dark[1], limb.dark[2], disc) }, uLimbEdge: { value: new THREE.Vector2(limb.edge[0], limb.edge[1]) }, uSmall: { value: new THREE.Vector4(1, 0, 1, 1e-4) }, uPale: { value: new THREE.Vector3().fromArray(small.pale) }, uDiag: diag },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
     this.mesh.frustumCulled = false
