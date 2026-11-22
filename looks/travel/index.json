@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T03:58:05.805Z",
- "head": "94b008d8df8a8df8544630fb8dc34eefa1662a7b",
- "note": "task 7: open sky in flight, second pass (94b008d)",
+ "pushed": "2026-11-22T05:20:50.446Z",
+ "head": "1a815c8c872f054b4403546a2e9554d4bb868b4b",
+ "note": "item 5 causes and trial stills, nothing built on the branch yet",
  "looks": [
+  {
+   "time": "2026-11-22T05:20:49.811Z",
+   "file": "20261122052049811-note-i5c-uranus.jpg",
+   "source": "../../../../tmp/v/i5c-uranus.jpg",
+   "kind": "note",
+   "label": "item 5 trial: Neptune's patch starts at 4500 after the warm band has left, 4495 4502 4509 4516 4524",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:49.186Z",
+   "file": "20261122052049186-note-i5b-uranus.jpg",
+   "source": "../../../../tmp/v/i5b-uranus.jpg",
+   "kind": "note",
+   "label": "item 5 trial only: Neptune's patch off, no cool band (proof)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:48.611Z",
+   "file": "20261122052048611-note-i5-uranus.jpg",
+   "source": "../../../../tmp/v/i5-uranus.jpg",
+   "kind": "note",
+   "label": "item 5 uranus.travel head draft 4488 to 4524: cool band is Neptune's own patch",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:48.020Z",
+   "file": "20261122052048020-note-i5d-earth.jpg",
+   "source": "../../../../tmp/v/i5d-earth.jpg",
+   "kind": "note",
+   "label": "item 5 trial, rejected: look fixed to the sky, blue arrives earlier",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:47.387Z",
+   "file": "20261122052047387-note-i5c-earth.jpg",
+   "source": "../../../../tmp/v/i5c-earth.jpg",
+   "kind": "note",
+   "label": "item 5 trial: look follows the patch, 2208 2215 2222 2230 2240",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:46.733Z",
+   "file": "20261122052046733-note-i5a-earth.jpg",
+   "source": "../../../../tmp/v/i5a-earth.jpg",
+   "kind": "note",
+   "label": "item 5 trial only: Mars weight 1, band stays gold until Mars's picture comes in (proof, not a cure)",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T05:20:46.157Z",
+   "file": "20261122052046157-note-i5-earth.jpg",
+   "source": "../../../../tmp/v/i5-earth.jpg",
+   "kind": "note",
+   "label": "item 5 earth.travel head 1a815c8 draft 2195 2202 2208 2215 2222 2230: tint drift is the look weight ramp",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T03:58:04.948Z",
    "file": "20261122035804948-note-f2772-final.jpg",
    "source": "out/work/travel/t7g/f2772-final.png",
    "kind": "note",
    "label": "t7g: frame 2772 final, open sky second pass",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:58:04.202Z",
-   "file": "20261122035804202-note-f482-final.jpg",
-   "source": "out/work/travel/t7g/f482-final.png",
-   "kind": "note",
-   "label": "t7g: frame 482 final, open sky second pass",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:58:03.461Z",
-   "file": "20261122035803461-note-f3912-final.jpg",
-   "source": "out/work/travel/t7g/f3912-final.png",
-   "kind": "note",
-   "label": "t7g: frame 3912 final, open sky second pass",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:58:02.777Z",
-   "file": "20261122035802777-note-f1625-final.jpg",
-   "source": "out/work/travel/t7g/f1625-final.png",
-   "kind": "note",
-   "label": "t7g: frame 1625 final, open sky second pass",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:07:07.903Z",
-   "file": "20261122030707903-note-f2726-final.jpg",
-   "source": "out/work/travel/m2m/f2726-final.png",
-   "kind": "note",
-   "label": "m2m: f2726-final",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:07:07.239Z",
-   "file": "20261122030707239-note-f2580-final.jpg",
-   "source": "out/work/travel/m2m/f2580-final.png",
-   "kind": "note",
-   "label": "m2m: f2580-final",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:07:06.598Z",
-   "file": "20261122030706598-note-f2427-final.jpg",
-   "source": "out/work/travel/m2m/f2427-final.png",
-   "kind": "note",
-   "label": "m2m: f2427-final",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T03:07:05.904Z",
-   "file": "20261122030705904-note-f2325-final.jpg",
-   "source": "out/work/travel/m2m/f2325-final.png",
-   "kind": "note",
-   "label": "m2m: f2325-final",
    "stop": "travel"
   }
  ]
