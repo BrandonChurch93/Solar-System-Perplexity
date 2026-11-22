@@ -925,3 +925,11 @@ Disk, 07:06: `git gc --prune=now` ran out of space (it needs about 2 GB of temp 
 - The pulse still travels (drafts, against the same tree with surge amount, launch and flare at 0; share of the frame brighter by more than 16 levels at 400 px, centroid x): 8: 0.90 percent, 158; 15: 3.33, 175; 23: 5.09, 202; 30: 5.72, 226; 38: 4.87, 252; 45: 4.51, 266; 53: 3.77, 270; 60: 1.68, 278.
 - Draft 0, 90, 150, 208, 247, 360 byte equal to `out/work/sun/b20` (the polish tree before the hook merge).
 - Scratch `out/work/sun/mh/` (`go.sh TAG frames`, `sheet.py`, runs k0 to k4, `nos` = no surge, `k4f` = finals).
+
+## MAIL 92 (Builder, about 07:27 UTC Nov 22, high priority): the travel leave, cured on agent/sun-hook and merged here (07:27 to 07:40)
+
+- The mail verbatim and the full account are in `assets-src/sun/HOOK-NOTES.md` (sections "MAIL 92" and "The travel leave cured"). Short: the travel agent now keeps my globe in frame until 499 (agent/travel a3c388b); at 495 to 499 a dark broken line at the left limb and dark prominence wisps showed. Cause: set.ts put the leave weight into the gain of corona and prominences while their alpha stayed. Cure: the weight goes into `shown` (two lines in set.ts). Commit df3458c on agent/sun-hook (head c890ef0), final 0 and 60, draft 90, 247, 360 byte equal to 739ae28, audit identical, vitest 79. Answer sent to /root and to /root/travel_builder at 07:39.
+- Merged into agent/sun at 6ca7e26 (clean). The items 8a and 8b are commit f38765a, below it.
+- Open offer, not built into any branch: the globe as a cross fade too (`out/work/sun/t92/globe.ts.new`; takes out a step of about 3.5 levels in blue at 499 to 500). Only if the Builder or the travel agent asks.
+- Local branch `scratch/t92` = agent/sun-hook plus agent/travel a3c388b, for looking at travel frames with the travel code. Never push it.
+- The final render of the nine hook frames for 8a and 8b was stopped at 07:27 for this mail and started again at 07:39 (`out/work/sun/mh/after92.sh`, log `mh/k4f.log`: drafts 0, 90, 150, 208, 247, 360 against `b20` first, then finals into `mh/k4f`).
