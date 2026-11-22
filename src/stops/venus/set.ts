@@ -219,6 +219,9 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uAspect!.value = aspect
       gu.uLimbK!.value = look.limb.gain * (1 - low)
       gu.uLimbFar!.value = left
+      const dusk = !ending && state.time > terrainMid ? look.dusk.amount : 0
+      ;(gu.uLimbDusk!.value as THREE.Vector4).set(dusk, look.dusk.from, look.dusk.to, look.dusk.veil)
+      ;(rim.material.uniforms.uLimbDusk!.value as THREE.Vector4).set(dusk, look.dusk.from, look.dusk.to, look.dusk.veil)
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
       globe.update(camera, light, state.rotation, plan.spin(state.time), THREE.MathUtils.degToRad(look.drift.bandDegPerSecond) * elapsed, THREE.MathUtils.degToRad(look.drift.flowDegPerSecond) * flowing, amps, gain, state.weight)

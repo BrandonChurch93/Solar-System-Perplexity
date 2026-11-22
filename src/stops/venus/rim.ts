@@ -9,10 +9,16 @@ uniform sampler2D uLimb;
 uniform vec3 uLimbS;
 uniform vec3 uLimbT;
 uniform float uLimbFar;
+uniform vec4 uLimbDusk;
 vec4 limbAt(vec3 at, float row) {
   float phi = atan(dot(at, uLimbT), dot(at, uLimbS));
   float u = ((phi / 6.2831853 + 0.5) * ${LIMB.azimuth}.0 + 0.5) / ${LIMB.azimuth + 1}.0;
-  return mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
+  vec4 v = mix(textureLod(uLimb, vec2(u, row / ${LIMB.half * 4}.0), 0.0), textureLod(uLimb, vec2(u, (row + ${LIMB.half * 2}.0) / ${LIMB.half * 4}.0), 0.0), uLimbFar);
+  for (int k = 0; k < (uLimbDusk.x > 0.0 ? 1 : 0); k++) {
+    float lit = smoothstep(uLimbDusk.y, uLimbDusk.z, cos(phi));
+    v *= mix(vec4(1.0), vec4(vec3(lit), mix(uLimbDusk.w, 1.0, lit)), uLimbDusk.x);
+  }
+  return v;
 }
 vec4 limbGlow(vec3 at, float b) {
   float x = b - 1.0;
@@ -140,7 +146,7 @@ export class Rim {
       fragmentShader: FRAG,
       uniforms: {
         uCam: { value: new THREE.Vector3(0, 0, 3) }, uLimb: { value: lut }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uEdge: { value: 0.003 }, uLimbFar: { value: 0 }, uLimbDusk: { value: new THREE.Vector4(0, 0, 1, 1) }, uHide: { value: new THREE.Vector3().fromArray(hide) }, uDiag: diag,
         ...hold.uniforms,
       },
       side: THREE.BackSide,

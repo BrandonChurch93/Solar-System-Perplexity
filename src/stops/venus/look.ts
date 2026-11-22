@@ -7,6 +7,7 @@ import veilJson from './veil.json'
 export const curve = fitted.curve
 export const haze = hazeJson.ground as HazeParams
 export const limb = hazeJson.limb
+export const dusk = { amount: 1, from: -0.35, to: 0.25, veil: 2 }
 
 export const drift = {
   bandDegPerSecond: -0.55,

@@ -416,7 +416,7 @@ export class Globe {
         uBoltLook: { value: new THREE.Vector2(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.bolts.widthDeg) / 2)), o.bolts.gain) },
         uBoltColor: { value: new THREE.Vector3().fromArray(o.bolts.color) },
         uCell: { value: this.cells }, uCellAmp: { value: this.amps }, uCellCount: { value: o.bolts.cells.length },
-        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 },
+        uLimb: { value: o.limb }, uLimbS: { value: new THREE.Vector3(1, 0, 0) }, uLimbT: { value: new THREE.Vector3(0, 1, 0) }, uLimbK: { value: 1 }, uLimbFar: { value: 0 }, uLimbDusk: { value: new THREE.Vector4(0, 0, 1, 1) },
         uTaps: { value: 0 }, uSmear: { value: 1 }, uCamObj: { value: new THREE.Vector3(0, 0, 5) }, uNextCam: { value: new THREE.Vector3(0, 0, 5) }, uNextRot: { value: new THREE.Matrix3() }, uJitter: { value: new THREE.Vector2() },
         uGraze: { value: new THREE.Vector3(o.graze.most, o.graze.from, o.graze.to) },
         uLift: { value: new THREE.Vector4(o.lift.floor, o.lift.stops, o.lift.from, o.lift.to) }, uShade: { value: new THREE.Vector3(o.shade.far, o.shade.grad, o.shade.cap) }, uMauve: { value: new THREE.Vector3(o.mauve.from, o.mauve.to, o.mauve.rest) },
