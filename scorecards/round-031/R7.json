@@ -1,0 +1,68 @@
+{
+ "critic": "R7",
+ "score": 8.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R7",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop A upper chromospheric haze around vertical plasma strands",
+      "what": "mild blocky smudging and mosquito noise appear in the dim reddish haze between thin spicule strands on later motion frames",
+      "fix": "slightly damp the highest-frequency temporal boil and sub-pixel spark flicker so later inter-frames retain enough bitrate for the low-contrast chromospheric haze"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crop E night-side terrain (1328,704), same region in image-13.png",
+      "what": "near-black slate terrain quantizes into an 8x8 chroma block grid with flat color patches and a faint vertical seam; not visible at the delivered exposure, clear once the shadow is lifted, and absent from the source and from the matching night crop in image-16.png",
+      "fix": "give the night side more chroma bits or a stronger deblock so crushed terrain does not lock to a block grid"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crop I, right-hand panel, dark sky beside the atmospheric limb",
+      "what": "The encoded blue-gray haze breaks into faint rectangular patches that are not present in the source. The limb itself stays smooth at full-frame scale.",
+      "fix": "Reduce contrast in the finest background texture around the limb so more of the fixed bitrate goes to the haze gradient."
+     },
+     {
+      "severity": "minor",
+      "file": "image-24.png",
+      "where": "crops D and E, right-hand panel, sparse stars below the blue crescent and across the adjacent dark sky",
+      "what": "Several individually resolved dim stars fade or disappear in the encode, and a few remaining points smear into their surroundings. The brighter stars and ring structure hold up.",
+      "fix": "Give the dim stars that should survive slightly broader luminance cores without lifting the whole starfield."
+     }
+    ]
+   }
+  }
+ ]
+}
