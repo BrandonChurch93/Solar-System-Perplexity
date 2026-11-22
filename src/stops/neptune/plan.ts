@@ -146,7 +146,7 @@ class NeptunePlan extends StopPlan {
     if (flown.view !== 'orbit' || frame <= descent.from) return flown
     const pose = this.placed(flown.pose, time, descent.place, smoother((frame - descent.from) / descent.placeOver), THREE.MathUtils.degToRad(descent.turnDeg) * smoother((frame - descent.from) / (descent.turnTo - descent.from)))
     if (this.entryBank === null) {
-      const n = this.horizon('terrain', super.dive(this.coverCenter(this.seg.dive!)).pose).normal
+      const n = super.horizon('terrain', super.dive(this.coverCenter(this.seg.dive!)).pose).normal
       this.entryBank = Math.atan2(-n[0], n[1])
     }
     const bank = bankOf(pose)
@@ -260,9 +260,16 @@ class NeptunePlan extends StopPlan {
     const tight = view === 'orbit' ? veil.air : veil.sea
     const lift = Math.max(far - tight[0], 0) * w
     const edge: [number, number] = [tight[0] + lift * w, tight[1] + lift]
-    if (view === 'orbit') this.p.coverShell = edge
-    else this.p.coverSea = { centre: [deck.x, deck.y, deck.z], radius: close.radius, edge }
-    return super.horizon(view, local)
+    const base = super.horizon(view, local)
+    if (view === 'orbit') {
+      this.p.coverShell = edge
+      return base
+    }
+    this.p.coverSea = { centre: [deck.x, deck.y, deck.z], radius: close.radius, edge }
+    const nadir = c.clone().normalize()
+    const flat = Math.hypot(nadir.x, nadir.y)
+    const gap = Math.acos(Math.min(Math.max(-nadir.z, -1), 1)) - Math.asin(Math.min(1 / c.length(), 1))
+    return { normal: flat > 1e-5 ? [-nadir.x / flat, -nadir.y / flat] : [0, 1], offset: Math.tan(Math.min(Math.max(gap, -1.4), 1.4)), soft: base.soft }
   }
 }
 

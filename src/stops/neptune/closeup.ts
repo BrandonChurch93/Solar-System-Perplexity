@@ -117,6 +117,11 @@ void main() {
   float counted = 0.0;
   vec3 layer = vec3(0.05, 0.1, 0.3);
   float depth = 4000.0;
+  vec2 xyDeck = planeOf(deckSource(inSight(oc + rd * tDeck)));
+  vec2 ucDeck = coreUv(xyDeck);
+  float deckTexels = mix(diagTexels(wideUv(xyDeck) * uWideSize), diagTexels(ucDeck * uDeckSize), coreWeight(ucDeck));
+  float tHit = -1.0;
+  float cloudAlpha = 0.0;
   for (int k = 0; k < (deckHit ? 1 : 0); k++) {
     vec3 q = inSight(oc + rd * tDeck);
     vec2 xy = planeOf(deckSource(q));
@@ -130,7 +135,7 @@ void main() {
     float shade = textureGrad(uHeight, wideUv(planeOf(cloudSource(q))), wgx, wgy).g;
     col = deck * shade;
     alpha = 1.0;
-    texels = mix(diagTexels(wideUv(xy) * uWideSize), diagTexels(uc * uDeckSize), w);
+    texels = deckTexels;
     counted = 1.0;
     layer = vec3(0.1, 0.3, 0.85);
     depth = tDeck;
@@ -144,7 +149,6 @@ void main() {
     float dt = (tOut - tIn) / float(${STEPS});
     float tPrev = tIn;
     float fPrev = -1.0;
-    float tHit = -1.0;
     for (int i = 0; i <= ${STEPS}; i++) {
       float t = tIn + dt * float(i);
       vec3 q = oc + rd * t;
@@ -165,13 +169,15 @@ void main() {
       vec4 cloud = mix(textureGrad(uCloudWide, wideUv(xy), wgx, wgy), textureGrad(uCloud, uc, cgx, cgy), w);
       col = mix(col, cloud.rgb, cloud.a);
       alpha = max(alpha, cloud.a);
-      float ct = mix(diagTexels(wideUv(xy) * uWideSize), diagTexels(uc * uDeckSize), w);
-      texels = mix(texels, ct, cloud.a);
+      cloudAlpha = cloud.a;
       counted = max(counted, step(0.5, cloud.a));
       layer = mix(layer, vec3(0.95, 0.95, 0.9), cloud.a);
       depth = mix(depth, tHit, step(0.5, cloud.a));
     }
   }
+  vec2 xyCloud = planeOf(cloudSource(oc + rd * (tHit >= 0.0 ? tHit : -b)));
+  vec2 ucCloud = coreUv(xyCloud);
+  texels = mix(texels, mix(diagTexels(wideUv(xyCloud) * uWideSize), diagTexels(ucCloud * uDeckSize), coreWeight(ucCloud)), cloudAlpha);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col = inverseFilmic(col);
   for (int k = 0; k < (deckHit && uBloomPre.x > 0.0 ? 1 : 0); k++) {
