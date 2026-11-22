@@ -1,41 +1,61 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T16:06:18.576Z",
- "head": "349343bae729e6a9bc53e4ca9f7cd3dbc80d5b93",
- "note": "CUT34 saturn sent (branch head 349343b, main 5f3b566d in the tree): rise review sheet on the CUT34 build, texel check of the unlit rings; switch proofs next",
+ "pushed": "2026-11-22T16:44:20.588Z",
+ "head": "52c8ee84e93c16cd3a0c8190b29ea94f42c7639e",
+ "note": "after CUT34: dive review sheet looked at, hold edges beside the hero, first tone field for the near lanes at 3720 (trial), main 5f3b566d in the tree",
  "looks": [
   {
-   "time": "2026-11-22T16:05:27.491Z",
-   "file": "20261122160527491-frame-F-3866.jpg",
-   "source": "out/work/saturn/F-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "time": "2026-11-22T16:44:15.462Z",
+   "file": "20261122164415462-note-skim-tone.jpg",
+   "source": "out/work/saturn/skim-tone.png",
+   "kind": "note",
+   "label": "trial, not committed: fitted tone field for the close picture at 3720 (grey 0.85 to 1.15, darker is a stronger pull down)",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:05:03.193Z",
-   "file": "20261122160503193-frame-F-3567.jpg",
-   "source": "out/work/saturn/F-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "time": "2026-11-22T16:44:14.275Z",
+   "file": "20261122164414275-note-dr-3.jpg",
+   "source": "../../../../tmp/c34/dr-3.png",
+   "kind": "note",
+   "label": "dive review sheet on the CUT34 build, quarter 3 of 4, main 5f3b566d in the tree",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-22T16:04:38.614Z",
-   "file": "20261122160438614-frame-F-3720.jpg",
-   "source": "out/work/saturn/F-3720.png",
+   "time": "2026-11-22T16:44:13.199Z",
+   "file": "20261122164413199-note-dr-2.jpg",
+   "source": "../../../../tmp/c34/dr-2.png",
+   "kind": "note",
+   "label": "dive review sheet on the CUT34 build, quarter 2 of 4, main 5f3b566d in the tree",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T16:44:12.344Z",
+   "file": "20261122164412344-note-dr-1.jpg",
+   "source": "../../../../tmp/c34/dr-1.png",
+   "kind": "note",
+   "label": "dive review sheet on the CUT34 build, quarter 1 of 4, main 5f3b566d in the tree",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T16:44:11.271Z",
+   "file": "20261122164411271-note-dr-0.jpg",
+   "source": "../../../../tmp/c34/dr-0.png",
+   "kind": "note",
+   "label": "dive review sheet on the CUT34 build, quarter 0 of 4, main 5f3b566d in the tree",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T16:44:10.178Z",
+   "file": "20261122164410178-note-e-right.jpg",
+   "source": "../../../../tmp/c34/e-right.png",
+   "kind": "note",
+   "label": "hold 3465 ring edge at 4x, approved hero left, film right (e-right), main 5f3b566d in the tree",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T16:35:26.476Z",
+   "file": "20261122163526476-frame-X4-3720.jpg",
+   "source": "out/work/saturn/X4-3720.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3720, draft tier",
    "stop": "saturn",
@@ -59,45 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T16:02:40.146Z",
-   "file": "20261122160240146-sheet-saturn.rise-16x9-review.jpg",
-   "source": "out/work/sheets/saturn.rise-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet saturn.rise, review tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "first": 3810,
-   "last": 3884,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:39:25.659Z",
-   "file": "20261122153925659-note-P7-3567.jpg",
-   "source": "out/work/saturn/P7-3567.png",
-   "kind": "note",
-   "label": "dive 3567 final on the CUT34 build (no stars through the unlit B and A rings)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T15:39:24.371Z",
-   "file": "20261122153924371-note-P7-3866.jpg",
-   "source": "out/work/saturn/P7-3866.png",
-   "kind": "note",
-   "label": "rise 3866 final on the CUT34 build (unlit rings solid, wider shadow edge)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T15:34:01.963Z",
-   "file": "20261122153401963-note-fade.jpg",
-   "source": "../../../../tmp/c34/fade.png",
-   "kind": "note",
-   "label": "dive 3545, 3552, 3567 drafts, shadow side: the unlit ring body comes up over 0.6 s after the hold",
-   "stop": "saturn"
   }
  ]
 }
