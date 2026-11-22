@@ -89,6 +89,7 @@ export const rings: RingLook = {
   shadeTint: [0.97, 1, 0.94],
   shadeGrey: [0.3, 0.85],
   innerDark: [0.7, 1.45, 1.62, 0.5],
+  shadeSolid: [0.995, 0.6],
   sparkle: 1.6,
   sparkleTint: [1, 0.9, 0.8],
   sparkleCell: 0.005,

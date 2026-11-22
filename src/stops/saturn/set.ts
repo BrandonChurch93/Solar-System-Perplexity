@@ -228,6 +228,7 @@ export const createSet: SetFactory = async (ctx) => {
       ru.uGain!.value = gain
       ru.uLimbW!.value = gu.uLimbW!.value
       ru.uWeight!.value = state.weight
+      ;(ru.uSolid!.value as THREE.Vector2).x = smooth((state.time - plan.seg.hold.end) / look.rings.shadeSolid[1])
       ru.uTime!.value = elapsed
       ru.uSpinRate!.value = spinRate
       ru.uVignette!.value = shot.post.vignette
