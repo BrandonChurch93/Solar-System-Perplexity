@@ -11,5 +11,6 @@
   "cloudThickness": 0.04,
   "glowTop": 0.012,
   "glowAzimuthDeg": 80,
-  "sightMargin": 0.012
+  "sightMargin": 0.012,
+  "bloomPre": [1, 0.5]
 }

@@ -83,6 +83,7 @@ export const createSet: SetFactory = async (ctx) => {
     cloudWide: await ctx.texture(base + close.cloudWide, { srgb: true, anisotropy: 16, mirror: true }),
     height: await ctx.texture(base + close.height, { srgb: false, anisotropy: 4, mirror: true }),
     glow: await ctx.texture(base + close.glow, { srgb: true, mips: false, anisotropy: 1 }),
+    bloom: await ctx.texture(base + close.bloom, { srgb: true, mips: false, anisotropy: 1 }),
   })
   terrain.add(closeup.mesh)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
@@ -115,7 +116,7 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
         camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
-        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height)
+        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height, shot.post.bloomStrength)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'

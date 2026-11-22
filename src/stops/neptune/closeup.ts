@@ -43,6 +43,8 @@ uniform vec3 uGlowMap;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform sampler2D uBloomWide;
+uniform vec3 uBloomPre;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -165,7 +167,14 @@ void main() {
     }
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col = inverseFilmic(col) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  col = inverseFilmic(col);
+  for (int k = 0; k < (deckHit && uBloomPre.x > 0.0 ? 1 : 0); k++) {
+    float mid = uRadius + uSlab.x + 0.5 * uSlab.y;
+    vec3 qm = inSight(oc + rd * max(-b - sqrt(max(mid * mid - rt2, 0.0)), 0.0));
+    vec3 wide = inverseFilmic(textureLod(uBloomWide, wideUv(planeOf(cloudSource(qm))), 0.0).rgb);
+    col = max(col - wide * uBloomPre.x, 0.0) / (1.0 - uBloomPre.x * uBloomPre.y);
+  }
+  col = col * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, alpha), texels, counted, layer, vec2(0.0), depth);
 }`
 
@@ -177,7 +186,7 @@ function unproject(px: number, py: number, radius: number, centre: THREE.Vector3
   return d.multiplyScalar(t).sub(centre)
 }
 
-export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture }
+export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture; bloom: THREE.Texture }
 
 export class Closeup {
   readonly mesh: THREE.Mesh
@@ -224,7 +233,7 @@ export class Closeup {
         uBandAxis: { value: bandAxis }, uStream: { value: new THREE.Vector3(0, look.streamShear, 0) },
         uStorm: { value: new THREE.Vector4(storm.x, storm.y, storm.z, look.stormRadius / radius) }, uStormAngle: { value: 0 },
         uNorth: { value: north }, uEast: { value: east }, uGlowMap: { value: new THREE.Vector3(THREE.MathUtils.degToRad(look.glowAzimuthDeg), look.glowTop, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) }, uDiag: diagUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * (1 + look.glowTop), 96, 64), this.material)
@@ -232,7 +241,7 @@ export class Closeup {
     this.mesh.frustumCulled = false
   }
 
-  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number): void {
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, bloom: number): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uStream!.value as THREE.Vector3).x = (look.streamPerSecond * elapsed) / fit.radius
@@ -240,6 +249,8 @@ export class Closeup {
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+    const pre = u.uBloomPre!.value as THREE.Vector3
+    pre.x = bloom * pre.z
   }
 
   dispose(): void {
