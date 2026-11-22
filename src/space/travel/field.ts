@@ -17,8 +17,8 @@ export interface FlightDef {
   glowTint: number[]
   haze: { tint: number[]; away: number; widthDeg: number }
   band: { off: number[]; dust: number[]; light: number[]; span: number[]; contrast: number; gain: number; level: number }
-  deep: { count: number; law: number[][]; max: number; level: number; core: number[]; color: number; warm: number; vivid: number; even: number }
-  veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; dither: number }
+  deep: { count: number; law: number[][]; max: number; level: number; core: number[]; halo: number[]; color: number; warm: number; vivid: number; even: number; lens: number; groups: { count: number; radiusDeg: number[]; stars: number[]; lift: number } }
+  veil: { cool: number[]; neutral: number[]; level: number; floor: number; scale: number; span: number[]; lanes: number[]; dither: number; lens: number }
 }
 
 export interface FlightField {
@@ -34,7 +34,7 @@ export interface FlightField {
 
 const MAP = [512, 256] as const
 const SIZE = [2.6, 2.2, 11] as const
-export const DEEP_SOFT = 0.2
+export const DEEP_SOFT = [0.2, 0.125] as const
 
 function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => number {
   const seed = stream('flight veil').int(1 << 20)
@@ -47,19 +47,20 @@ function clouds(def: FlightDef['veil']): (x: number, y: number, z: number) => nu
     const hi = (at(0, 0, 1) * (1 - fx) + at(1, 0, 1) * fx) * (1 - fy) + (at(0, 1, 1) * (1 - fx) + at(1, 1, 1) * fx) * fy
     return lo * (1 - fz) + hi * fz
   }
-  return (x, y, z) => {
+  const fbm = (x: number, y: number, z: number, f: number, octaves: number, shift: number): number => {
     let sum = 0
     let amp = 1
-    let f = def.scale
     let total = 0
-    for (let o = 0; o < 4; o++) {
-      sum += amp * noise(x * f + 31.7 * o, y * f + 11.3 * o, z * f + 57.1 * o)
+    for (let o = 0; o < octaves; o++) {
+      sum += amp * noise(x * f + 31.7 * o + shift, y * f + 11.3 * o - shift, z * f + 57.1 * o + shift)
       total += amp
       amp *= 0.5
       f *= 2.03
     }
-    return THREE.MathUtils.smoothstep(sum / total, def.span[0]!, def.span[1]!)
+    return sum / total
   }
+  const [depth, width, scale] = def.lanes
+  return (x, y, z) => THREE.MathUtils.smoothstep(fbm(x, y, z, def.scale, 4, 0), def.span[0]!, def.span[1]!) * (depth! + (1 - depth!) * THREE.MathUtils.smoothstep(Math.abs(2 * fbm(x, y, z, def.scale * scale!, 2, 211.3) - 1), 0, width!))
 }
 
 export function flightField(def: FlightDef): FlightField {
@@ -189,21 +190,16 @@ export function flightField(def: FlightDef): FlightField {
   const amber = new THREE.Color(1.0, 0.62, 0.25)
   const azure = new THREE.Color(0.38, 0.6, 1.0)
   let n = 0
-  while (n < dd.count) {
-    const z = dr.range(-1, 1)
-    const a = dr.range(0, Math.PI * 2)
-    const r = Math.sqrt(1 - z * z)
-    const x = r * Math.cos(a)
-    const y = r * Math.sin(a)
-    const cell = Math.min(Math.floor((Math.asin(z) / Math.PI + 0.5) * height), height - 1) * width + Math.min(Math.floor((Math.atan2(x, y) / (2 * Math.PI) + 0.5) * width), width - 1)
-    if (dr.next() > dd.even + (1 - dd.even) * (veil[cell]! - veilLow) / (veilHigh - veilLow)) continue
-    deep.position.set([x, z, y], n * 3)
+  const place = (x: number, y: number, z: number, lift: number): void => {
+    deep.position.set([x, y, z], n * 3)
     const lx = Math.log(Math.max(dr.next(), 1e-9))
     let k = 0
     while (k < dl.length - 2 && lx < dl[k + 1]![1]) k++
-    const b = Math.min(Math.exp(dl[k]![0] + (dl[k + 1]![0] - dl[k]![0]) * (dl[k]![1] - lx) / (dl[k]![1] - dl[k + 1]![1])), dd.max)
-    const peak = b < dd.core[1]! ? b : dd.core[1]! * Math.pow(b / dd.core[1]!, dd.core[2]!)
-    deep.star.set([dd.core[0]! * Math.sqrt(b / peak) / DEEP_SOFT, peak, 1, 0], n * 4)
+    const b = Math.min(Math.exp(dl[k]![0] + (dl[k + 1]![0] - dl[k]![0]) * (dl[k]![1] - lx) / (dl[k]![1] - dl[k + 1]![1])) * lift, dd.max)
+    const wide = b >= dd.core[1]!
+    const peak = wide ? dd.core[1]! * Math.pow(b / dd.core[1]!, dd.core[2]!) : b
+    const soft = DEEP_SOFT[wide ? 1 : 0]
+    deep.star.set([dd.core[0]! * Math.sqrt(b / peak) / soft, peak, soft, wide ? dd.halo[0]! * THREE.MathUtils.smoothstep(b, dd.core[1]!, dd.halo[1]!) : 0], n * 4)
     const hue = dr.next()
     const temp = dr.next()
     if (hue < dd.warm) c.copy(warm).lerp(white, Math.pow(temp, 0.6))
@@ -214,6 +210,37 @@ export function flightField(def: FlightDef): FlightField {
     else if (vivid < dd.vivid) c.copy(azure)
     deep.color.set([Math.max(1 + (c.r - 1) * dd.color, 0.05), Math.max(1 + (c.g - 1) * dd.color, 0.05), Math.max(1 + (c.b - 1) * dd.color, 0.05)], n * 3)
     n++
+  }
+  const dense = (x: number, y: number, z: number): number => {
+    const cell = Math.min(Math.floor((Math.asin(y) / Math.PI + 0.5) * height), height - 1) * width + Math.min(Math.floor((Math.atan2(x, z) / (2 * Math.PI) + 0.5) * width), width - 1)
+    return dd.even + (1 - dd.even) * (veil[cell]! - veilLow) / (veilHigh - veilLow)
+  }
+  const any = (): [number, number, number] => {
+    for (;;) {
+      const y = dr.range(-1, 1)
+      const a = dr.range(0, Math.PI * 2)
+      const r = Math.sqrt(1 - y * y)
+      const x = r * Math.cos(a)
+      const z = r * Math.sin(a)
+      if (dr.next() <= dense(x, y, z)) return [x, y, z]
+    }
+  }
+  const normal = (): number => Math.sqrt(-2 * Math.log(Math.max(dr.next(), 1e-9))) * Math.cos(2 * Math.PI * dr.next())
+  for (let g = 0; g < dd.groups.count && n < dd.count; g++) {
+    const [gx, gy, gz] = any()
+    const spread = THREE.MathUtils.degToRad(dr.range(dd.groups.radiusDeg[0]!, dd.groups.radiusDeg[1]!))
+    const members = Math.round(dr.range(dd.groups.stars[0]!, dd.groups.stars[1]!))
+    for (let m = 0; m < members && n < dd.count; m++) {
+      const x = gx + spread * normal()
+      const y = gy + spread * normal()
+      const z = gz + spread * normal()
+      const l = Math.hypot(x, y, z)
+      place(x / l, y / l, z / l, dd.groups.lift)
+    }
+  }
+  while (n < dd.count) {
+    const [x, y, z] = any()
+    place(x, y, z, 1)
   }
   return { position, star, color, glow, veil, deep, width, height }
 }
