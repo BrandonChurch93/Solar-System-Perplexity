@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { Ending } from './ending'
 import { diagUniform } from '../../diagnostics/diag'
 
 export interface RingParams {
@@ -40,6 +41,8 @@ uniform float uGain;
 uniform vec3 uSunL;
 uniform vec3 uSunW;
 uniform vec2 uForward;
+uniform vec3 uEnd;
+uniform vec3 uCamL;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
@@ -57,6 +60,7 @@ void main() {
   vec2 gy = vec2(dot(dFdy(vLocal.xy), vec2(-q0.y, q0.x)) / (6.283185307 * r), dFdy(r) / (uRange.y - uRange.x));
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
   vec3 band = textureGrad(uBands, uv, gx, gy).rgb;
+  band = mix(band, sqrt(band), uEnd.x);
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
   float edge = smoothstep(uRange.x, uRange.x + 0.03, r) * (1.0 - smoothstep(uRange.y - 0.03, uRange.y, r));
   vec3 q = vLocal + uCentre;
@@ -65,6 +69,7 @@ void main() {
   float shadow = b < 0.0 ? smoothstep(0.985, 1.025, miss) : 1.0;
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
+  phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
   outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
 }`
 
@@ -107,6 +112,8 @@ export class Ring {
     this.mesh.quaternion.copy(this.tilt)
     this.untilt.copy(this.tilt).invert()
     this.mesh.renderOrder = 3
+    this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 1, 1) }
+    this.material.uniforms.uCamL = { value: new THREE.Vector3(0, 0, 1) }
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {
@@ -126,5 +133,13 @@ export class Ring {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+  }
+
+  ending(end: number, camera: THREE.Vector3, e: Ending['ring']): void {
+    const u = this.material.uniforms
+    const bands = u.uBandGain!.value as THREE.Vector3
+    for (let k = 0; k < 3; k++) bands.setComponent(k, bands.getComponent(k) + (this.bandUnit[k]! * e.band[k]! - bands.getComponent(k)) * end)
+    ;(u.uCamL!.value as THREE.Vector3).copy(camera).sub(this.mesh.position).applyQuaternion(this.inverse)
+    ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
   }
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { HAZE_GLSL } from '../../bodies/haze'
+import type { Ending } from './ending'
 
 export const AIR_LAYERS = 3
 
@@ -248,5 +249,25 @@ export class Air {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+  }
+
+  ending(end: number, top: number, e: Ending['air']): void {
+    const span = 0.5 * (top + Math.sqrt(top * top + 4 * e.span * e.span))
+    const from = top - span * (1 + e.past)
+    for (const u of this.users) {
+      const shapes = u.uAirShape!.value as THREE.Vector4[]
+      const days = u.uAirDay!.value as THREE.Vector3[]
+      const nights = u.uAirNight!.value as THREE.Vector3[]
+      for (let i = 0; i < AIR_LAYERS; i++) {
+        const l = this.params.layers[i]!
+        shapes[i]!.x = l.scaleHeight + (e.scaleHeight[i]! - l.scaleHeight) * end
+        shapes[i]!.z += (from - shapes[i]!.z) * end
+        shapes[i]!.w += (top - shapes[i]!.w) * end
+        days[i]!.lerp(this.work.fromArray(e.day[i]!), end)
+        nights[i]!.fromArray(l.night).multiplyScalar(1 - end)
+      }
+      ;(u.uLineShape!.value as THREE.Vector4).w *= 1 - end
+      ;(u.uLineNight!.value as THREE.Vector3).fromArray(this.params.line.night).multiplyScalar(1 - end)
+    }
   }
 }

@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { Ending } from './ending'
 import type { LimbField } from './field'
 import { AIR_GLSL, airUniforms, type AirParams } from './air'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
@@ -157,6 +158,7 @@ uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
 uniform vec2 uDarkEdge;
+uniform vec3 uEnd;
 uniform vec3 uDarkDir;
 uniform vec4 uVeil;
 uniform vec2 uVeilMu;
@@ -267,7 +269,7 @@ void main() {
   col = mix(col, uVeil.rgb, uVeil.a * (1.0 - smoothstep(uVeilMu.x, uVeilMu.y, mu)) * pow(smoothstep(uVeilSun.x, uVeilSun.y, dot(n, uVeilDir)), uVeilSun.z));
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
   col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
-  col += uForward * graze * fwd * smoothstep(-0.25, 0.1, ndl);
+  col += uForward * graze * fwd * mix(smoothstep(-0.25, 0.1, ndl), smoothstep(uEnd.y, uEnd.z, ndl), uEnd.x);
   vec4 sky = air(dir, true);
   sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
   col = col * exp(-sky.a * uExtinction) + sky.rgb;
@@ -350,6 +352,7 @@ export class NeptunePlanet {
     })
     const seg = o.segments ?? 320
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
+    this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 0, 0.2) }
   }
 
   update(spin: number, stream: number, storm: number, gain: number, weight: number, near = 0, nearGain = 1): void {
@@ -368,5 +371,30 @@ export class NeptunePlanet {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+  }
+
+  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], texels: number, e: Ending['limb']): void {
+    const u = this.material.uniforms
+    const width = u.uMapWidth!.value as number
+    ;(u.uNight!.value as THREE.Vector4).w = Math.log2(width / texels) + (Math.log2(width / e.night) - Math.log2(width / texels)) * end
+    ;(u.uRim!.value as THREE.Vector3).fromArray(limb.rim).multiplyScalar(1 - end)
+    ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
+    ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))
+    ;(u.uEnd!.value as THREE.Vector3).set(end, e.lit[0]!, e.lit[1]!)
+    const knots = u.uCloud!.value as THREE.Vector3[]
+    for (let i = 0; i < KNOTS; i++) {
+      const c = cloud[i]!
+      const d = deck[i]!.map((v, k) => v * e.albedo[k]!)
+      const x = Math.min(Math.max((i / (KNOTS - 1) * 2 - 1) / e.cloudTo, 0), 1)
+      const t = x * x * (3 - 2 * x)
+      const ratio = (c[0]! + c[1]! + c[2]!) / Math.max(d[0]! + d[1]! + d[2]!, 1e-6)
+      const want = Math.min(1 + (e.cloudRatio - 1) * t, ratio)
+      knots[i]!.set(c[0]!, c[1]!, c[2]!)
+      for (let k = 0; k < 3; k++) {
+        const flat = d[k]! * want
+        const own = c[k]! * want / ratio
+        knots[i]!.setComponent(k, c[k]! + (flat + (own - flat) * t - c[k]!) * end)
+      }
+    }
   }
 }
