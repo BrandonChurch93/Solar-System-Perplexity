@@ -1,0 +1,66 @@
+{
+ "critic": "R7",
+ "score": 8.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop B (368,164) and crop C (1328,164), star field",
+      "what": "the encoded side drops a share of the faintest stars and dims others, so the field looks thinner than the source; the bright stars all survive",
+      "fix": "lower the encoder's psy/AQ smoothing on dark flat areas, or add a little bitrate to the dark regions so single-pixel stars are kept"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "crops D (368,704) and E (1328,704), dark space beside the limb",
+      "what": "faint background stars near the planet edge thin out after encoding, and the dark ground is slightly smoothed; no banding or blocking is visible",
+      "fix": "same as above: protect low-luma detail with lower deadzone or a stronger aq-mode in dark areas"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crop C (1328,164) and crop H (1120,106), thin spark streaks",
+      "what": "the finest spark filaments are a bit softer and lower contrast in the encode; the arcs are still clean, with no ringing or blocks",
+      "fix": "acceptable at this bitrate; if needed, give more bits to high-motion bright detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crops D and E, granulation surface",
+      "what": "the darkest intergranular lanes lose slight micro-contrast, but the cells still look detailed and not mushy",
+      "fix": "no change required; this is the expected loss of fine grain"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  },
+  {
+   "part": 3,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  }
+ ]
+}
