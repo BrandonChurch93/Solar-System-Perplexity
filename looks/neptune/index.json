@@ -1,9 +1,57 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T13:21:19.236Z",
+ "pushed": "2026-11-22T13:44:34.055Z",
  "head": "d89df5ef2cc9a34949f704af0bee247b0123a224",
- "note": "jobs 1 to 4 of MAIL 149 committed: rings, limb, night side, crescent, storm detail; stress encode of the lookback running",
+ "note": "round 34: ending sheets, stress encode of the lookback, the dark spot traced to a wedge in the wrap and a corrected window for the ending",
  "looks": [
+  {
+   "time": "2026-11-22T13:44:33.109Z",
+   "file": "20261122134433109-note-v4-native.jpg",
+   "source": "out/work/nep/mend/v4-native.png",
+   "kind": "note",
+   "label": "wrap window mend, native texels: wrap left, corrected window right (take 4)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:44:32.483Z",
+   "file": "20261122134432483-note-wrap-wide-crop.jpg",
+   "source": "out/work/nep/end34/spot/wrap-wide-crop.png",
+   "kind": "note",
+   "label": "the wrap east of the hero's window: the dark wedge that shows as the spot on the crescent at 5235",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:44:31.954Z",
+   "file": "20261122134431954-note-13-stress-5242-night-native-before-after.jpg",
+   "source": "out/work/nep/end34/part/13-stress-5242-night-native-before-after.jpg",
+   "kind": "note",
+   "label": "stress encode of the lookback at 5242, night side native, before left, after right (d89df5e)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:44:31.385Z",
+   "file": "20261122134431385-note-14-stress-5242-night-raised-4-before-after.jpg",
+   "source": "out/work/nep/end34/part/14-stress-5242-night-raised-4-before-after.jpg",
+   "kind": "note",
+   "label": "stress encode of the lookback at 5242, night side raised 4 times, before left, after right (d89df5e)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:44:30.703Z",
+   "file": "20261122134430703-note-12-lookback-sheet-review.jpg",
+   "source": "out/work/nep/end34/part/12-lookback-sheet-review.jpg",
+   "kind": "note",
+   "label": "ending.lookback sheet at review on d89df5e (5145 to 5324)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T13:44:30.067Z",
+   "file": "20261122134430067-note-11-retreat-sheet-review.jpg",
+   "source": "out/work/nep/end34/part/11-retreat-sheet-review.jpg",
+   "kind": "note",
+   "label": "ending.retreat sheet at review on d89df5e (5025 to 5144)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T13:21:18.489Z",
    "file": "20261122132118489-note-01-5235-final-main-left-new-right.jpg",
@@ -11,60 +59,6 @@
    "kind": "note",
    "label": "final 5235, main left, head right",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T13:21:17.471Z",
-   "file": "20261122132117471-note-07-5085-globe-native-main-left-new-right.jpg",
-   "source": "out/work/nep/end34/part/07-5085-globe-native-main-left-new-right.jpg",
-   "kind": "note",
-   "label": "jobs 1 to 4 of MAIL 149, final 5085 globe native, main left, head right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T13:21:16.546Z",
-   "file": "20261122132116546-note-03-5235-globe-native-main-left-new-right.jpg",
-   "source": "out/work/nep/end34/part/03-5235-globe-native-main-left-new-right.jpg",
-   "kind": "note",
-   "label": "jobs 1 to 4 of MAIL 149, final 5235 globe native, main left, head right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T13:00:27.988Z",
-   "file": "20261122130027988-note-d-night-native-c-d.jpg",
-   "source": "out/work/nep/end34/j2/d-night-native-c-d.png",
-   "kind": "note",
-   "label": "job 2 take d, j2/d-night-native-c-d.png (main left or take c left)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T13:00:27.397Z",
-   "file": "20261122130027397-note-d-globe.jpg",
-   "source": "out/work/nep/end34/j2/d-globe.png",
-   "kind": "note",
-   "label": "job 2 take d, j2/d-globe.png (main left or take c left)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T13:00:26.816Z",
-   "file": "20261122130026816-note-d-night-lift4.jpg",
-   "source": "out/work/nep/end34/j2/d-night-lift4.png",
-   "kind": "note",
-   "label": "job 2 take d, j2/d-night-lift4.png (main left or take c left)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T12:25:08.587Z",
-   "file": "20261122122508587-job-frame-05006.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T12:07:38.015Z",
