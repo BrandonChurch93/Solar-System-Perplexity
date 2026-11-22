@@ -15,7 +15,8 @@ const dir = join(WORK, 'belt', name)
 const capture = new Capture(cfg, a.format)
 const files: string[] = []
 try {
-  for (let frame = seg.firstFrame; frame < seg.endFrame; frame += step) {
+  const list = a.frames ? String(a.frames).split(',').map(Number) : Array.from({ length: Math.ceil(seg.frames / step) }, (_, n) => seg.firstFrame + n * step)
+  for (const frame of list) {
     const file = join(dir, 'f' + padFrame(frame) + '.png')
     const out = await capture.still(frame, tier, file)
     files.push(file)
