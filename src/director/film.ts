@@ -46,6 +46,7 @@ const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const PLACE_TIE = 1e-6
 type CameraPose = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+const PIN_FRAMES = 8
 const FAR_LIGHT = { within: 3, frames: 12, power: 1.5 }
 const Y = new THREE.Vector3(0, 1, 0)
 const OPEN = config.raw.travel.sky
@@ -68,6 +69,7 @@ export class FilmDirector implements Director {
   private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
   private readonly lit: number[] = []
+  private readonly small: number[] = []
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
@@ -113,6 +115,16 @@ export class FilmDirector implements Director {
       this.slide.push(slide)
       this.shapes.push(shape)
       this.clear.push(clear)
+      let small = 0
+      if (shape.look.window > 0) {
+        const seg = plans[i]!.seg.travel!
+        const settled = i > 0 && shape.look.pin[1] > 0 ? Math.min(clear + PIN_FRAMES / ((seg.end - seg.start) * config.fps), 1) : clear
+        const open = Math.max(1 - shape.look.window / ((seg.end - seg.start) * config.fps), settled)
+        if (i > 0 && shape.look.pin[1] > 0) shape.until = settled
+        shape.open = open
+        small = this.sizeOf(i, this.travelPath(i, seg.start + open * (seg.end - seg.start)))
+      }
+      this.small.push(small)
       let lit = 1
       if (i > 0 && shape.look.pin[1] > 0) {
         const seg = plans[i]!.seg.travel!
@@ -126,7 +138,7 @@ export class FilmDirector implements Director {
         const steps = Math.round((seg.end - seg.start) * config.fps) * 8
         for (let k = steps; k >= 0; k--) {
           const time = seg.start + (k / steps) * (seg.end - seg.start)
-          const place = shape.look.follow > 0 ? seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(time - seg.end)), time)) : home
+          const place = shape.look.follow > 0 || shape.look.window > 0 ? seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(time - seg.end)), time)) : home
           if (seen(drifted(this.travelCamera(i, time), time)).distanceTo(place) > FAR_LIGHT.within) break
           lit = k / steps
         }
@@ -387,7 +399,35 @@ export class FilmDirector implements Director {
     this.approach.push(dLocal.clone().applyQuaternion(best.r))
   }
 
+  private sizeOf(index: number, pose: Pose): number {
+    const d = this.frames[index + 1]!.origin.distanceTo(pose.position)
+    return 1 / (Math.sqrt(Math.max(d * d - 1, 1e-12)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2))
+  }
+
   private travelCamera(index: number, time: number): Pose {
+    const pose = this.travelPath(index, time)
+    const shape = this.shapes[index]!
+    if (shape.look.window <= 0) return pose
+    const seg = this.plans[index]!.seg.travel!
+    const t = ramp(shape.open, 1, (time - seg.start) / (seg.end - seg.start))
+    if (t <= 0) return pose
+    const b = this.plans[index + 1]!
+    const body = this.frames[index + 1]!.origin
+    const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
+    const full = this.sizeOf(index, hold)
+    const small = this.small[index]!
+    const want = (small + (full - small) * t * t * (3 - 2 * t)) * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    const ray = pose.position.clone().sub(body).normalize()
+    if (shape.look.pin[1] <= 0) {
+      const hero = hold.position.clone().sub(body).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(pose.quaternion)
+      const angle = ray.angleTo(hero)
+      const g = smooth(ramp(0, (PIN_FRAMES * 1.5) / ((seg.end - seg.start) * config.fps * (1 - shape.open)), t))
+      if (angle > 1e-9) ray.applyAxisAngle(new THREE.Vector3().crossVectors(ray, hero).normalize(), angle * g)
+    }
+    return { ...pose, position: body.clone().addScaledVector(ray, Math.sqrt(1 + 1 / (want * want))) }
+  }
+
+  private travelPath(index: number, time: number): Pose {
     const seg = this.plans[index]!.seg.travel!
     const u = (time - seg.start) / (seg.end - seg.start)
     const from = this.toWorld(index, this.leaving(index, time))
