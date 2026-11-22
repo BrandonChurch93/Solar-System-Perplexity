@@ -36,6 +36,7 @@ const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.rad
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
+const emerge = 1
 export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4732, place: [0, 0.1] as [number, number], placeOver: 14, clear: { to: 4726, pace: 0.014174, height: 0.6722, speed: 0.10947 }, under: { ramp: 7, ease: 5 } }
 export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.04, ramp: 5, hold: 16, rest: 26, late: 0.006 } }
 export const steady = { hold: 0.5, terrain: 1 }
@@ -239,6 +240,12 @@ class NeptunePlan extends StopPlan {
     this.amount = amount
     this.p.coverHides = amount < closed ? hides : undefined
     return amount
+  }
+
+  override skyUnderCover(amount: number, time: number): number {
+    const seg = this.seg.dive
+    if (!seg || time < this.coverCenter(seg) || time >= seg.end) return super.skyUnderCover(amount, time)
+    return Math.pow(1 - amount, emerge)
   }
 
   override horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {

@@ -133,9 +133,11 @@ export const createSet: SetFactory = async (ctx) => {
       const rising = state.segment.kind === 'rise'
       const grade = rising ? look.near.rise : look.near.dive
       const high = camera.length() - 1
-      const near = look.near.amount * (1 - smooth((high - grade.altitude[0]!) / (grade.altitude[1]! - grade.altitude[0]!)))
+      const low = 1 - smooth((high - grade.altitude[0]!) / (grade.altitude[1]! - grade.altitude[0]!))
+      const near = look.near.amount * low
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
-      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight, near, grade.air, 1 - deep)
+      const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep))
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
@@ -151,8 +153,8 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uEdgeSun!.value as THREE.Vector3).copy(edgeSun)
       ;(pu.uEdgeSide!.value as THREE.Vector3).copy(side).negate()
       ;(pu.uEdgeWideDir!.value as THREE.Vector3).copy(edgeSun).multiplyScalar(Math.cos(edgeTurn)).addScaledVector(side, -Math.sin(edgeTurn))
-      ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount
-      ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
+      ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount * line
+      ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount * (1 - low))
       ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, grade.gain)
       ;(pu.uNearFall!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(grade.fall[0]!), THREE.MathUtils.degToRad(grade.fall[1]!), 1 - (1 - grade.fall[2]!) * (1 - smooth((high - grade.fallAltitude[0]!) / (grade.fallAltitude[1]! - grade.fallAltitude[0]!))))
