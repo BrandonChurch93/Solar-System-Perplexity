@@ -53,3 +53,29 @@ Brief: `assets-src/shared/ROUND31-FIXES.md` section A. After a compaction read t
 - Fact for the Builder: `shot.dustOffset` is read by no code (`rg dustOffset src` finds only `film.ts` and `types.ts`). The grains move by `src/space/travel/flow.ts`, which integrates the camera's real travel (direction times a logarithmic function of the real speed) and is cached per segment. So the retreat's grains follow the ending agent's new camera path by themselves.
 - Trial merge of `origin/agent/ending` (c185994) into this branch in a scratch worktree: clean. `npx tsx assets-src/dust/rates.ts 8 ending.retreat` there gives the stream's step across the shutter, in units: 5033 0.0013, 5041 0.0019, 5049 0.0024, 5057 0.0028, 5065 to 5105 0.0029 to 0.0032, 5113 0.0029, 5121 0.0024, 5129 0.0017, 5137 0.0009. No stall, no jump; the amount is zero at both ends. On this branch alone: 0.0004 at 5033, 0.0032 at 5073 to 5081, 0.0003 at 5137.
 - Asked to check the hold-out in the belt travel (2782) and at 5085 and 5235. See the results below.
+
+### Results on the cap 10 build (394e3c2), final tier, still minus the same still without dust (`table.py`)
+
+| frame | which | pixels changed | grains at 3 or more | 3 to 5 | 6 to 10 | 11 to 14 | 15 or more | largest | longest mark px |
+|---|---|---|---|---|---|---|---|---|---|
+| 495 | before | 103251 | 217 | 13 | 19 | 19 | 166 | 49 | 59 |
+| 495 | after | 1616 | 57 | 55 | 2 | 0 | 0 | 7 | 3 |
+| 1642 | before | 73997 | 170 | 13 | 17 | 19 | 121 | 56 | 66 |
+| 1642 | after | 1184 | 56 | 44 | 12 | 0 | 0 | 10 | 3 |
+| 2212 | before | 82423 | 172 | 24 | 29 | 23 | 96 | 48 | 91 |
+| 2212 | after | 1320 | 46 | 44 | 2 | 0 | 0 | 8 | 3 |
+| 3352 | before | 77200 | 178 | 14 | 20 | 15 | 129 | 49 | 47 |
+| 3352 | after | 1277 | 47 | 41 | 6 | 0 | 0 | 9 | 4 |
+| 4492 | before | 99405 | 206 | 3 | 14 | 9 | 180 | 62 | 70 |
+| 4492 | after | 1746 | 75 | 56 | 19 | 0 | 0 | 9 | 3 |
+| 5085 | before | 19023 | 91 | 10 | 35 | 12 | 34 | 33 | 34 |
+| 5085 | after | 606 | 7 | 7 | 0 | 0 | 0 | 4 | 2 |
+
+- 1612 and 1670: 10 grains each. 1640 to 1647: 50 to 66 grains a frame, one grain at 11 levels in 1640 (nominal 9.4, on a level 37 sky). So `DUST.cap` 10 became 8.5 (328695c) and every after frame is rendered again with that build (`../dists/g3`, stills in `../shots/g3`).
+- Hairlines, marks of 1 level or more that are 8 px or longer: 2212 10, 4492 31, 495 18. None over 3 levels, the longest 17 px at 1 level.
+- 5085, inside Neptune's dark disc (333,530 px): before 4,458 pixels changed, up to 27 levels. After 0.
+- 495, the Sun's disc and glow over level 200: after 5 pixels changed by 1 level, before 573.
+- `follow.py` on 18 grains through 1640 to 1647: present in every frame at the predicted place, mean change between two frames 1.0 level, largest 5 (grain 10457: 5, 1, 6, it crosses a saturated star in 1643).
+- Sky-tracked strips: `strip.ts <first> <last> <w> <h>` lists windows that turn with the camera and the grains that stay in them, `strip.ts ... <grain>` prints the window, `strip.py` builds the sheet. A bright point that slides through such a window is a planet, not a star.
+- A stray render process survived a `pkill` at 07:23 and ran beside the queue until 07:28 (two renders at once for five minutes). Killed. Its outputs (`../shots/g1/f01620` to `f01622`) are not used.
+- 07:29 PART sent with the pair sheets for 495, 1642, 2212, 3352, 4492, 5085 and the fast strip, all from 394e3c2.
