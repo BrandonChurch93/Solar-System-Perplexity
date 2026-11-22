@@ -1,9 +1,47 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T09:43:44.625Z",
- "head": "3e22629501da876c2c1b8b96f6a1e094049042a1",
- "note": "",
+ "pushed": "2026-11-22T12:45:39.735Z",
+ "head": "36294939e0fb38dfff1a48fb28fab2bcbdc98040",
+ "note": "belt: shade streaks at 2782 (open item 99), before and after at the final tier",
  "looks": [
+  {
+   "time": "2026-11-22T12:45:37.386Z",
+   "file": "20261122124537386-note-belt-t11-shade-before-after-3x.jpg",
+   "source": "../send/belt-t11-shade-before-after-3x.jpg",
+   "kind": "note",
+   "label": "belt hero shade at 2782, 3x nearest of 1300,200 to 1440,350, before left, after right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T12:45:35.269Z",
+   "file": "20261122124535269-note-belt-t11-shade-before-after-native.jpg",
+   "source": "../send/belt-t11-shade-before-after-native.jpg",
+   "kind": "note",
+   "label": "belt hero shade at 2782, native crop 1230,160 to 1500,400, before (3e22629) left, after (3629493) right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T12:45:33.123Z",
+   "file": "20261122124533123-note-belt-t11-after-2782.jpg",
+   "source": "../send/belt-t11-after-2782.jpg",
+   "kind": "note",
+   "label": "belt hero at 2782, final tier, shade relief coarser (3629493), not yet accepted",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T12:44:37.381Z",
+   "file": "20261122124437381-frame-f02750.jpg",
+   "source": "out/work/belt/t11/hash/f02750.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2750, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2750,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "74b6e871dece2a26"
+  },
   {
    "time": "2026-11-22T09:42:40.357Z",
    "file": "20261122094240357-note-sheet.jpg",
@@ -29,20 +67,6 @@
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T09:41:34.462Z",
-   "file": "20261122094134462-frame-f02800.jpg",
-   "source": "out/work/belt/t9/hash/f02800.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2800, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2800,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8ec0e4d8dd9dddfb"
-  },
-  {
    "time": "2026-11-22T07:56:56.074Z",
    "file": "20261122075656074-still-f02769-16x9-final-full.jpg",
    "source": "out/work/stills/f02769-16x9-final-full.png",
@@ -55,36 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "6de1641714a14974"
-  },
-  {
-   "time": "2026-11-22T07:55:04.207Z",
-   "file": "20261122075504207-still-f02782-16x9-final-full.jpg",
-   "source": "out/work/stills/f02782-16x9-final-full.png",
-   "kind": "still",
-   "label": "mars.travel frame 2782, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "6de1641714a14974"
-  },
-  {
-   "time": "2026-11-22T07:33:33.662Z",
-   "file": "20261122073333662-note-belt-t7-travel-a3c388b-draft-strip-2756-2804.jpg",
-   "source": "../send/belt-t7-travel-a3c388b-draft-strip-2756-2804.jpg",
-   "kind": "note",
-   "label": "belt on travel head a3c388b: draft strip",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:33:33.137Z",
-   "file": "20261122073333137-note-belt-t7-travel-a3c388b-final-2782.jpg",
-   "source": "../send/belt-t7-travel-a3c388b-final-2782.jpg",
-   "kind": "note",
-   "label": "belt on travel head a3c388b: final 2782",
-   "stop": "mars"
   }
  ]
 }
