@@ -132,3 +132,10 @@ Three commits on top of 36d0bd11, each cure its own commit: the band edge, the u
 - Cure: `unfolded()` in `SKY_FRAG`. Only in the margin, the texel is taken `unfold[0]` further in (a translation, so no axis) and crossfaded with the mirrored texel over the first 0.35 of the margin. `unfold[1]` moves the start of the patch fade (0 keeps main's fade). Mars hold: `[0.1, 0]`, the margin repeats the strip just inside the axis.
 - Tried and dropped: displacement that grows across the margin (smear line at the ramp), 0.25 with early fade 0.65 (soft vertical step to the flight sky, faint lump), 0.25 full (a bright piece of the Milky Way from behind Mars, cut on a vertical).
 - The same mirror padding is in `mars/sky-terrain.webp`, `venus/sky-terrain.webp`, `earth/sky-terrain.webp`: not checked in frame for lack of time, polish list.
+
+### Round 31 critics, proofs and what is left (DONE sent 10:18 UTC, head ddd8ab24)
+- Cure 1 is two commits (51f71589 and 57239993); cure 2 is 6d7276eb; the foreign lines are 44f0b38f.
+- Finals of 5235 against main: at a 6 px blur no pixel rises by more than 1 level; 0.06 percent of pixels rise by more than 2 in a channel, the most 17. Cost 5235 47.1 s to 45.3 s, 3352 79.0 s to 78.4 s.
+- Draft sha256 on the head: 615, 2325, 3150, 4860 equal to main. 2427 (Mars dive) moves by cure 2 only in the margin strips (196k pixels, right of x 1700 and the top rows).
+- Cure 2 moved pixels: 2249 174k, 2250 172k, 2275 113k, 2399 178k, about 12k each over 8 levels, 2325 none. A star just inside the axis gets a fainter copy about 232 px outward (2275 x 297 y 780, the blue clump in 2249 and 2250).
+- Open: the three sky-terrain patches with mirror padding (mars, venus, earth) not checked in frame; finals of 2242 not rendered; item 5 (Mercury's patch fades in by travel time u 0.4 to 0.96 over a still camera; `travel.sky.patchFrom.sun` can start it with the turn, a per stop end needs `film.ts`); items 3 and 4; saturn.travel 3932 to 3939 dark field (reach: `travel.sky` flight field floor, a cluster on that line of sight, or `patchFrom.saturn`).
