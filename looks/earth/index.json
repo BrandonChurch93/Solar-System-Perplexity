@@ -1,72 +1,44 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T12:18:12.892Z",
- "head": "3f8fdd81cc14bc3a6c0e9abdef94b82f5c2881fe",
- "note": "Earth polish: arrival strip 1666 to 1679 on batches 21 and 22, before on main 90ad0a9 and after on agent/earth 3f8fdd8 (tree holds main 9f5ad80); third take of the terrain sky margin rendering",
+ "pushed": "2026-11-22T12:29:20.108Z",
+ "head": "4589048f817489525ed1d13dee4fd1635c2f4346",
+ "note": "Third take of the terrain sky margin (bec07f3, tree on main 9f5ad80): 2010 and 1755 final are the same bytes as READY 2's stills; the top border shows as a hair line on the Sun's ray at 2060, 2099, 2112 (pairs here), 2125 is covered. I would keep the second take.",
  "looks": [
   {
-   "time": "2026-11-22T12:18:12.132Z",
-   "file": "20261122121812132-note-arrival-frames-2.jpg",
-   "source": "out/work/earth/pb/w/arrival-frames-2.png",
+   "time": "2026-11-22T12:29:18.902Z",
+   "file": "20261122122918902-note-f-2010-final.jpg",
+   "source": "out/work/earth/pb/y/f-2010-final.png",
    "kind": "note",
-   "label": "Arrival 1673 to 1679, whole frames, review tier. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "label": "2010 final tier with the third take of the sky margin (commit bec07f3, main 9f5ad80, engine be043ade): sha 6abe0501, the same bytes as READY 2's still",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T12:18:11.341Z",
-   "file": "20261122121811341-note-arrival-frames-1.jpg",
-   "source": "out/work/earth/pb/w/arrival-frames-1.png",
+   "time": "2026-11-22T12:29:17.761Z",
+   "file": "20261122122917761-note-three-2112-x3.jpg",
+   "source": "out/work/earth/pb/y/three-2112-x3.png",
    "kind": "note",
-   "label": "Arrival 1666 to 1672, whole frames, review tier. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "label": "2112 top border under the Sun at 3 times, first, second, third take (review tier, main 9f5ad80): hair line of the third take at rows 47 and 48",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T12:18:10.656Z",
-   "file": "20261122121810656-note-arrival-limb-2.jpg",
-   "source": "out/work/earth/pb/w/arrival-limb-2.png",
+   "time": "2026-11-22T12:29:16.840Z",
+   "file": "20261122122916840-note-three-2060-x3.jpg",
+   "source": "out/work/earth/pb/y/three-2060-x3.png",
    "kind": "note",
-   "label": "Arrival 1673 to 1679, upper right limb, review tier. Green pixels on batch 22: main 3781 to 4289, with the cure 5 to 22 (the onset starts at 1676). Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "label": "2060 top border under the Sun at 3 times, first, second, third take (review tier, main 9f5ad80): hair line of the third take at rows 35 and 36",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T12:18:09.861Z",
-   "file": "20261122121809861-note-arrival-limb-1.jpg",
-   "source": "out/work/earth/pb/w/arrival-limb-1.png",
+   "time": "2026-11-22T12:29:15.729Z",
+   "file": "20261122122915729-note-three-2099-native.jpg",
+   "source": "out/work/earth/pb/y/three-2099-native.png",
    "kind": "note",
-   "label": "Arrival 1666 to 1672 (mail 80), upper right limb, review tier. Green pixels in the limb sector on batch 22: main 883 to 3644, with the cure 0 to 5. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "label": "2099 top border at native size, first, second, third take (review tier, main 9f5ad80): the hair line of the third take is a faint tick on the ray at row 66",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T11:51:13.036Z",
-   "file": "20261122115113036-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T11:51:11.977Z",
-   "file": "20261122115111977-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T11:50:08.660Z",
-   "file": "20261122115008660-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-22T12:27:28.013Z",
+   "file": "20261122122728013-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, final tier",
@@ -79,8 +51,8 @@
    "engine": "be043ade04a7ab6e"
   },
   {
-   "time": "2026-11-22T11:50:07.402Z",
-   "file": "20261122115007402-still-f01755-16x9-final-full.jpg",
+   "time": "2026-11-22T12:27:26.862Z",
+   "file": "20261122122726862-still-f01755-16x9-final-full.jpg",
    "source": "out/work/stills/f01755-16x9-final-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, final tier",
@@ -93,58 +65,32 @@
    "engine": "be043ade04a7ab6e"
   },
   {
-   "time": "2026-11-22T11:48:29.072Z",
-   "file": "20261122114829072-note-leave-frames-ba-2.jpg",
-   "source": "out/work/earth/pb/w/leave-frames-ba-2.png",
-   "kind": "note",
-   "label": "Leave 2182 to 2186, whole frames, before above, after below. agent/earth a155429 plus the ebb law and the rebuilt margin (to be committed), tree holds main 8780b3c, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:48:28.307Z",
-   "file": "20261122114828307-note-leave-frames-ba-1.jpg",
-   "source": "out/work/earth/pb/w/leave-frames-ba-1.png",
-   "kind": "note",
-   "label": "Leave 2176 to 2181, whole frames, before above, after below. agent/earth a155429 plus the ebb law and the rebuilt margin (to be committed), tree holds main 8780b3c, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:48:27.233Z",
-   "file": "20261122114827233-note-leave-limb-ba-2.jpg",
-   "source": "out/work/earth/pb/w/leave-limb-ba-2.png",
-   "kind": "note",
-   "label": "Leave 2182 to 2186, limb at 2 times: before above (green band without ray shapes at 2184 and 2185), after below (aurora at 0.10 at 2182, 0.02 at 2183, gone from 2184). agent/earth a155429 plus the ebb law and the rebuilt margin (to be committed), tree holds main 8780b3c, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:48:26.356Z",
-   "file": "20261122114826356-note-leave-limb-ba-1.jpg",
-   "source": "out/work/earth/pb/w/leave-limb-ba-1.png",
-   "kind": "note",
-   "label": "Leave 2176 to 2181, upper right limb at 2 times, review tier: before above, after below. After, the aurora ebbs from rest with the launch (share left at the shutter's middle: 2176 0.95, 2178 0.70, 2180 0.38, 2181 0.22). agent/earth a155429 plus the ebb law and the rebuilt margin (to be committed), tree holds main 8780b3c, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:47:46.384Z",
-   "file": "20261122114746384-frame-p-2186.jpg",
-   "source": "out/work/earth/pb/w/p-2186.png",
+   "time": "2026-11-22T12:25:59.007Z",
+   "file": "20261122122559007-frame-t-1921-third.jpg",
+   "source": "out/work/earth/pb/y/t-1921-third.png",
    "kind": "frame",
-   "label": "earth.travel frame 2186, review tier",
+   "label": "earth.terrain frame 1921, review tier",
    "stop": "earth",
-   "segment": "earth.travel",
-   "frame": 2186,
+   "segment": "earth.terrain",
+   "frame": 1921,
    "tier": "review",
-   "format": "preview",
+   "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
   },
   {
-   "time": "2026-11-22T11:32:14.893Z",
-   "file": "20261122113214893-note-twin-patch.jpg",
-   "source": "out/work/earth/pb/w/twin-patch.png",
-   "kind": "note",
-   "label": "The patch itself at the left border, gain 3, 5 times: shipped above (mirrored twin), rebuilt below (twin taken out; the faint points are the approved image's own points moved 704 px, not mirrored). agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
+   "time": "2026-11-22T12:21:10.915Z",
+   "file": "20261122122110915-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
   }
  ]
 }
