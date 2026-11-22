@@ -1,9 +1,37 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T05:08:30.602Z",
- "head": "edba01b9b8b7249f2142004539f28a60186d4c3d",
- "note": "batch 19 proof run: measure running, item 3 and 4 pages of 4137; repeat check clean",
+ "pushed": "2026-11-22T05:29:22.946Z",
+ "head": "3bc66a7e93be1f31efe02f1cae14d4e0ab755a45",
+ "note": "batch 19 with item 6: measure passes (G13 0 of 463, G5 invalid 0, G17 1.177 and 1.104); cover frames rendering at review",
  "looks": [
+  {
+   "time": "2026-11-22T05:28:54.285Z",
+   "file": "20261122052854285-job-frame-04436.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4436, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T05:18:30.035Z",
+   "file": "20261122051830035-job-frame-04274.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.terrain frame 4274, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4274,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T05:08:29.583Z",
    "file": "20261122050829583-note-d-item4-4137.jpg",
@@ -33,22 +61,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T05:05:39.019Z",
-   "file": "20261122050539019-note-d-item4-4137.jpg",
-   "source": "../../../../tmp/d-item4-4137.png",
-   "kind": "note",
-   "label": "Item 4 proof: 4137 final, limb and rings at 2x, round 3 (left) and now (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T05:05:38.121Z",
-   "file": "20261122050538121-note-d-item3-4137.jpg",
-   "source": "../../../../tmp/d-item3-4137.png",
-   "kind": "note",
-   "label": "Item 3 proof: judged dive frame 4137 final, surface at 2x, round 3 (left) and now (right) (main 2621f00, engine batch 19 7a880ac6, head 8d48b37)",
-   "stop": "uranus"
   },
   {
    "time": "2026-11-22T05:02:29.868Z",
