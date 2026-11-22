@@ -4,7 +4,7 @@
   "aperture": 12,
   "near": 0.02,
   "far": 200,
-  "steps": {"min": 16, "max": 96, "gap": 1.5, "window": 1},
+  "steps": {"min": 16, "max": 96, "gap": 1.5},
   "light": {
     "tint": [0.61, 0.54, 0.5],
     "gain": 0.25,
