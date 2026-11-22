@@ -1,9 +1,24 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T13:40:04.199Z",
- "head": "9ced89595809f21cc6dbd623999733811aec6122",
- "note": "CUT34 work: every frame watch of uranus.travel 4492 to 4505, finals of 1072, 1642, 2212",
+ "pushed": "2026-11-22T14:03:59.092Z",
+ "head": "e9058bed8b302d57c87dd23aca63ca256dac12b8",
+ "note": "CUT34 work: finals of 3352 and 4492, the sky lift on Venus's rise",
  "looks": [
+  {
+   "time": "2026-11-22T14:03:58.088Z",
+   "file": "20261122140358088-note-lift-venus-ab.jpg",
+   "source": "../../../../tmp/v/lift-venus-ab.jpg",
+   "kind": "note",
+   "label": "Venus rise at draft, sky lift: unset above, skyLiftFrom 0 below",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T14:03:56.750Z",
+   "file": "20261122140356750-note-g8-finals-b.jpg",
+   "source": "../../../../tmp/v/g8-finals-b.jpg",
+   "kind": "note",
+   "label": "finals 3352, 4492 on main plus the branch, full frame above, native crop below"
+  },
   {
    "time": "2026-11-22T13:40:03.001Z",
    "file": "20261122134003001-note-g8-finals-a.jpg",
@@ -45,20 +60,6 @@
    "source": "../../../../tmp/v/w-merc-b.jpg",
    "kind": "note",
    "label": "mercury.travel review every frame 1082 to 1090"
-  },
-  {
-   "time": "2026-11-22T13:23:37.002Z",
-   "file": "20261122132337002-note-w-merc-a.jpg",
-   "source": "../../../../tmp/v/w-merc-a.jpg",
-   "kind": "note",
-   "label": "mercury.travel review every frame 1073 to 1081, new window (trial tree, same shots as the head)"
-  },
-  {
-   "time": "2026-11-22T13:11:43.395Z",
-   "file": "20261122131143395-note-2782-final-ab.jpg",
-   "source": "../../../../tmp/v/2782-final-ab.jpg",
-   "kind": "note",
-   "label": "2782 final main against agent/travel-polish"
   }
  ]
 }
