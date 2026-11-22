@@ -1,9 +1,33 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T17:23:56.271Z",
- "head": "7bfcd8c2a46c23a5b0cd4052c5fb7ef187545605",
- "note": "Neptune: the rise repaced (open item 104), drafts of every frame round 34 above new; round 34's rise sheet at review still rendering",
+ "pushed": "2026-11-22T17:49:19.355Z",
+ "head": "b128991d045852e27328351d2ba1c7cc2b52bf0e",
+ "note": "Neptune: the rise with the new pace at review beside round 34's sheet; cover frames, final 5006 and G13 rendering",
  "looks": [
+  {
+   "time": "2026-11-22T17:49:18.159Z",
+   "file": "20261122174918159-note-04-rise-review-frames-new-82a6f3c-4984-4990-4997-5004.jpg",
+   "source": "out/work/nep/end35/cut/04-rise-review-frames-new-82a6f3c-4984-4990-4997-5004.jpg",
+   "kind": "note",
+   "label": "neptune.rise at review, new pace (82a6f3c): 4984, 4990, 4997, 5004",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T17:49:17.001Z",
+   "file": "20261122174917001-note-06-rise-review-tiles-4984-4990-4997-5004-round-34-left-new-r.jpg",
+   "source": "out/work/nep/end35/cut/06-rise-review-tiles-4984-4990-4997-5004-round-34-left-new-right.jpg",
+   "kind": "note",
+   "label": "neptune.rise at review, tiles 4984 4990 4997 5004: round 34 sheet tile left, new pace (82a6f3c) right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T17:24:06.463Z",
+   "file": "20261122172406463-note-r34-rise-sheet.jpg",
+   "source": "out/work/nep/end35/r34-rise-sheet.png",
+   "kind": "note",
+   "label": "neptune.rise review sheet, round 34 state (19a4c767), for the pair with the new pace",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T16:56:05.035Z",
    "file": "20261122165605035-note-rise-every-frame-old-C-E-part-4.jpg",
@@ -34,30 +58,6 @@
    "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-1.jpg",
    "kind": "note",
    "label": "rise drafts, every frame 4980 to 5006, part 1: old pace, trial C, trial E (chosen)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:56:00.895Z",
-   "file": "20261122165600895-note-rise-sheet-tiles-old-C-E.jpg",
-   "source": "out/work/nep/end35/rise-sheet-tiles-old-C-E.jpg",
-   "kind": "note",
-   "label": "rise drafts at the critic's tiles 4984, 4990, 4997, 5004: old pace, trial C, trial E (chosen)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:46:46.047Z",
-   "file": "20261122164646047-note-hold-sheet-points.jpg",
-   "source": "out/work/nep/end34/pts/hold-sheet-points.jpg",
-   "kind": "note",
-   "label": "neptune.hold review sheet with the 35 points (fc69bec)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T16:46:44.963Z",
-   "file": "20261122164644963-note-dive-sheet-points.jpg",
-   "source": "out/work/nep/end34/pts/dive-sheet-points.jpg",
-   "kind": "note",
-   "label": "neptune.dive review sheet with the 35 points (fc69bec)",
    "stop": "neptune"
   },
   {
