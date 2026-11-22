@@ -675,3 +675,12 @@ Code b22e4fb (last code commit 42b9111) on main a45a07b (batch 19, 7a880ac6). Pr
 
 - POLISH READY sent to the Builder at 06:13 with head 209bf6d, seven pictures attached. Main moved to 89715a1 (round 30 results, round 31 briefs, no code) and is merged (4328b78). Round 30 names no frame of my four segments except the Sun's size at 1440 (the approved close image). Round 31 work goes to other agents (dust, flight sky, ending, travels, belt, hook, Neptune in the ending); nothing in it is mine.
 - Next: read the stability frames (`/tmp/q19c.log`, `r2/out/work/venus/p6/stf-1185.png` to `stf-1187.png`, `stf-1440.png` to `stf-1442.png`, `python3 tools/stab.py hold|terrain FILES`), look at 3x crops of the three frames for crawl; then the late rise `rl-1566.png` to `rl-1576.png` at native size.
+
+## Stability over consecutive frames (R4), measured 06:15 (22 Nov)
+
+Three consecutive finals of the hold (1185 to 1187) and of the terrain view (1440 to 1442) at master size (`r2/out/work/venus/p6/stf-*.png`; stf-1185 and stf-1440 the same bytes as the judged finals). `tools/stab.py` (in the workspace, not in the repo): phase correlation gives the sky's shift per frame, then every star's peak and its 5 by 5 flux are followed into the next frame.
+
+- Hold: the sky moves 1.97 px right and 0.76 px up per frame, the same in both pairs (the camera drifts, the move is even). 2,746 stars followed: peak ratio median 0.99, half of them change by under 9 percent, a tenth by more than 19 percent; flux half under 2.8 percent, a tenth over 8.5 percent.
+- Terrain: the sky moves 1.00 px left and 0.23 px up per frame, the same in both pairs. 749 stars: peak half under 11 percent, a tenth over 24 percent; flux half under 3.3 percent, a tenth over 10 percent.
+- The flux holds, the peak breathes a little as a small star crosses the pixel grid; grain is in both numbers. By eye in 3x crops of the three frames with the pair differences below (`view/crawl-h-sky.jpg`, `crawl-h-limb.jpg`, `crawl-h-cloud.jpg`, `crawl-t-sky.jpg`, `crawl-t-horizon.jpg`, `crawl-t-tower.jpg`): every star keeps its shape and size from frame to frame, the limb line and the horizon line change by one to three levels, the tower rims and the cloud filaments move as edges and show no crawl or pop. Nothing found to fix.
+- About 1,900 pixels per pair change by more than 6 levels in blue alone, all over the frame: the grain of the lens chain, not mine.
