@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T12:38:45.320Z",
- "head": "3ac082193dcddf8901cd65aeb046193efe25f2a7",
- "note": "Venus 12:41: CUT33 sent (3ac0821); the rise sky after the cover, main against branch; next the ladder at 1310",
+ "pushed": "2026-11-22T12:58:20.909Z",
+ "head": "1fb1d97a2c7f299e35302581fe1b276b2df91266",
+ "note": "Venus 13:03: tracing the ladder at 1310 and the spokes of the leaving veil at 1572 (experiments, not committed)",
  "looks": [
+  {
+   "time": "2026-11-22T12:58:20.334Z",
+   "file": "20261122125820334-note-rs-1572-pair.jpg",
+   "source": "../view/rs-1572-pair.jpg",
+   "kind": "note",
+   "label": "Rise 1572 at draft: main's venus folders left, agent/venus right (1fb1d97, main 481d2b8). On the branch pale spokes of the leaving veil radiate from the bottom centre over the night side: found 12:50, cure in work",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T12:58:19.677Z",
+   "file": "20261122125819677-note-lad-1310.jpg",
+   "source": "../view/lad-1310.jpg",
+   "kind": "note",
+   "label": "Experiment in the render copy, not committed: the faint ladder at the bottom centre of dive frame 1310, native crops at 3x. b6 the present look (review), v5 the same at draft (one sample), v1 veil not drawn, v2 lines term off, v3 cloud texture out of the density. Branch 1fb1d97, tree holds main 481d2b8",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T12:38:44.780Z",
    "file": "20261122123844780-note-rs-main-branch.jpg",
@@ -169,20 +185,6 @@
    "engine": "be043ade04a7ab6e"
   },
   {
-   "time": "2026-11-22T10:54:03.967Z",
-   "file": "20261122105403967-frame-d22-1287.jpg",
-   "source": "out/work/venus/p6/d22-1287.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1287, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1287,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
    "time": "2026-11-22T10:53:39.002Z",
    "file": "20261122105339002-frame-d22-1185.jpg",
    "source": "out/work/venus/p6/d22-1185.png",
@@ -195,14 +197,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:36:35.746Z",
-   "file": "20261122103635746-note-x5b-1558-quad.jpg",
-   "source": "../view/x5b-1558-quad.jpg",
-   "kind": "note",
-   "label": "experiment in the render copy, not committed: rise 1558 review tier, coarser cloud read at full rush and a wider fibre, candidate take F5 among them (branch b506dc3, main c479536, engine batch 20)",
-   "stop": "venus"
   }
  ]
 }
