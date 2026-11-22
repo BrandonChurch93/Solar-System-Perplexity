@@ -974,3 +974,14 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - ORDER CHANGED (06:34), to get E1 and E2 judged an hour earlier: `/tmp/stopJ.sh` (running detached, log `/tmp/stopJ.log`) waits for "rise cover done" in `/tmp/chainJ.log`, stops chain J before its measure and starts `/tmp/chainK.sh` (log `/tmp/chainK.log`): drafts of 3015 to 3033 and 3261 to 3289 on the READY tree (`out/work/view/e12/a/`), then copies `/tmp/e12/{plan,pall,look}.ts` into `src/stops/jupiter/`, tsc, build, the same drafts with E1 and E2 (`e12/b/`), then drafts of 2895, 2997, 3150, 3296, 3016, 3032, 3262, 3288 (`e12/j/`; the four judged drafts must have the hashes 4d858b36e4255db8, 89bf9565675073b4, a0a02bf05239a412, 9f8e388ded584438). "end K" in the log.
 - AFTER CHAIN K THE TREE HOLDS E1 AND E2 UNCOMMITTED. If they are rejected: `git restore src/stops/jupiter`, then the full measure and the gates on a06d2ae. If kept: both cover sheets again at review, finals of the four judged frames by bytes, full measure, gates, repeat, commit, POLISH READY.
 - The second message to the Builder goes out when the rise cover sheet is looked at (both sheets attached); it says the full measure follows on the tree that stands.
+
+### 06:36 to 07:02 UTC: rise cover sheet of the READY tree done and looked at, second message sent
+
+- `kept/rise-cover-b19.png` (07:00:53), frames `out/work/view/m19/f03265-review.png` to `f03276-review.png`. Looked at each (`out/work/view/sky/r32*.jpg`):
+  - 3271 and 3272: orbit side, the globe under the haze, the map shows through as orange patches (top middle, right edge, lower left); faint upright lanes.
+  - 3273: stars faint at the left; the pale upright column at 63 to 67 percent of the width, y 300 to 560 of 720.
+  - 3274: the column at 62 to 75 percent, the clearest frame of the fault (`r3274.jpg`, pushed as a look).
+  - 3275 and 3276: the globe clears from the upper left, haze stays at the right with the column in it; stars and the orange dust band at the upper left end at the limb, none on the disc. Nothing to tell the Builder about the flight stars.
+  - Sky black 3268 to 3273, as the director numbers say.
+- Chain J stopped by `/tmp/stopJ.sh` at 07:01:03 right after the rise cover sheet; `ps` clean; chain K started 07:01:03 (before drafts, E1 and E2 in, after drafts).
+- 07:02: SECOND MESSAGE to /root (high): both cover sheets attached, what I see in each frame range, the two faults of the rise cover (black sky, the column), flight stars fine, E1 and E2 named as in work and not in a06d2ae, the full measure of a06d2ae stopped (every tenth on 2621f00 and full on 0622510 stand), full measure on 2621f00 promised with the tree that stands, about 09:30 UTC.
