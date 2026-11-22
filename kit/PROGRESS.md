@@ -7,7 +7,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Current phase: 5 · The space between
 - Current stop: none. All nine stops are finished and the Phase 4 gate held at 00:52 UTC on 2026-11-22 (machine checks green on main 39a450dc, 18 comparison images, nine clips). Phase 5 steps 1 to 7 are done on engine batches 16 to 19 (the travels, the belt, the ending, the sky grade, the whole film sheets, the stress encode, the render budget). Step 8 runs: whole film round 30, the first of three, on main 2621f005 (engine hash 7553966a0ffa4014)
 - Current round: open: 30 (whole film). The next round is 31. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
-- Next critic name: reviewer_593
+- Next critic name: reviewer_830
 - Blocked: no
 - App URL: https://grand-tour-film.pplx.app (review page: https://grand-tour-film.pplx.app/review.html). Visibility is set to Organization, so it asks for a sign-in. Site id 658cdf8a-abd6-46bd-a3ba-e37d5c3ba5a3. Private preview of the same build: https://www.perplexity.ai/computer/a/grand-tour-.DP5zrWnQuWx5hYYutNNyA
 - Mars review: approved
