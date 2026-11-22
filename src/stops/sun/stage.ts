@@ -102,21 +102,6 @@ const vec3 ST_FWD = ${v3(fwd)};
 const vec4 ST_FOLD = vec4(${f(folded.near)}, ${f(folded.apex[0])}, ${f(folded.apex[1])}, ${f(folded.far)});
 const float ST_GLOW_CUT = ${f(THREE.MathUtils.degToRad(g.cutDeg[1]!))};
 const vec2 ST_PHI = vec2(${f(folded.phi[0])}, ${f(folded.phi[1])});
-vec3 stFold(vec3 p) {
-  vec3 rel = p - ST_DOWN;
-  vec2 g = vec2(dot(rel, ST_RIGHT), dot(rel, ST_FWD));
-  float r = length(g);
-  g *= abs(ST_FOLD.w - abs(r - ST_FOLD.w)) / max(r, 1e-4);
-  for (int i = 0; i < 2; i++) {
-    g.y = ST_FOLD.x + abs(g.y - ST_FOLD.x);
-    vec2 q = g - ST_FOLD.yz;
-    float phi = atan(q.x, q.y);
-    phi = phi > ST_PHI.y ? 2.0 * ST_PHI.y - phi : (phi < ST_PHI.x ? 2.0 * ST_PHI.x - phi : phi);
-    g = ST_FOLD.yz + length(q) * vec2(sin(phi), cos(phi));
-  }
-  float y = sqrt(max(ST_RADIUS * ST_RADIUS - dot(g, g), 0.0)) - ST_RADIUS;
-  return ST_DOWN + ST_RIGHT * g.x + ST_FWD * g.y - ST_DOWN * y;
-}
 float stLimb(float mu) {
   float m = max(mu, 0.1) - 0.1;
   return 0.15 + 0.12 * exp(-m / 0.35) + 0.25 * exp(-m / 0.05);
