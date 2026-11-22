@@ -11,6 +11,7 @@ export class SetLoader {
   private readonly factories = new Map<string, SetFactory>()
   private clock = 0
   peakBytes = 0
+  epoch = 0
 
   constructor(private readonly renderer: THREE.WebGLRenderer, private readonly getFormat: () => FormatDef, private readonly maxAnisotropy: number) {}
 
@@ -91,7 +92,30 @@ export class SetLoader {
     for (const id of [...this.loaded.keys()]) this.free(id)
   }
 
+  reset(): void {
+    this.epoch++
+    this.freeAll()
+  }
+
   private async load(id: string, assets: string): Promise<void> {
+    for (;;) {
+      const epoch = this.epoch
+      let built: Loaded | null = null
+      try {
+        built = await this.build(id, assets)
+      } catch (e) {
+        if (epoch === this.epoch) throw e
+      }
+      if (built && epoch === this.epoch) {
+        this.loaded.set(id, built)
+        this.peakBytes = Math.max(this.peakBytes, this.totalBytes())
+        return
+      }
+      built?.set.dispose()
+    }
+  }
+
+  private async build(id: string, assets: string): Promise<Loaded> {
     const factory = this.factories.get(id)
     if (!factory) throw new Error('no set registered for ' + id)
     let bytes = 0
@@ -167,8 +191,7 @@ export class SetLoader {
       dispose()
       for (const t of textures) t.dispose()
     }
-    this.loaded.set(id, { set, bytes, assets, lastUsed: this.clock })
-    this.peakBytes = Math.max(this.peakBytes, this.totalBytes())
+    return { set, bytes, assets, lastUsed: this.clock }
   }
 }
 

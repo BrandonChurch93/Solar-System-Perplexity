@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { dirname, join } from 'node:path'
 import type { Config, Segment } from '../../src/config'
 import { coverWindow, setsForFrame } from '../../src/director/timeline'
+import '../../src/director/plans' // each plan sets its stop's cover window
 import { openCapture, renderPngFresh, type Session } from './browser'
 import { DIST, ROOT, WORK, ensureBuild, formatId, machineId, readRecord, recordMatches, requireDisk, writeRecord, type OutputRecord } from './common'
 

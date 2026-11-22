@@ -53,6 +53,7 @@ export interface Shot {
   skyTurn: THREE.Quaternion
   skyStars?: number
   skyPatch?: number
+  skyLook?: number
   near: number
   far: number
   sun: SunState
@@ -60,6 +61,7 @@ export interface Shot {
   post: PostParams
   cover: CoverState
   dust: number
+  dustLook?: number
   dustOffset: THREE.Vector3
 }
 
