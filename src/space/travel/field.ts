@@ -194,7 +194,7 @@ export function flightField(def: FlightDef): FlightField {
   const veilHigh = Math.max(veilArea / veilSum, veilLow + 1e-6)
   const dr = stream('flight deep')
   const dd = def.deep
-  const deep = { position: new Float32Array(dd.count * 3), star: new Float32Array(dd.count * 4), color: new Float32Array(dd.count * 3) }
+  const deep = { position: new Float32Array(dd.count * 3), star: new Float32Array(dd.count), color: new Float32Array(dd.count * 3) }
   const dl = dd.law.map(([b, share]) => [Math.log(b!), Math.log(share!)] as const)
   const rose = new THREE.Color(1.0, 0.42, 0.5)
   const amber = new THREE.Color(1.0, 0.62, 0.25)
@@ -206,7 +206,7 @@ export function flightField(def: FlightDef): FlightField {
     let k = 0
     while (k < dl.length - 2 && lx < dl[k + 1]![1]) k++
     const b = Math.min(Math.exp(dl[k]![0] + (dl[k + 1]![0] - dl[k]![0]) * (dl[k]![1] - lx) / (dl[k]![1] - dl[k + 1]![1])) * lift, dd.max)
-    deep.star.set([Math.min(SIZE[0] + SIZE[1] * Math.log2(1 + b), FLIGHT_SIZE), b, 1, 0], n * 4)
+    deep.star[n] = b
     const hue = dr.next()
     const temp = dr.next()
     if (hue < dd.warm) c.copy(warm).lerp(white, Math.pow(temp, 0.6))
@@ -277,7 +277,7 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
   const rnd = stream('flight band')
   const count = total * frame.repeats
   const position = new Float32Array(count * 3)
-  const star = new Float32Array(count * 4)
+  const star = new Float32Array(count * 2)
   const color = new Float32Array(count * 3)
   let n = 0
   for (let i = 0; i < total; i++) {
@@ -308,10 +308,10 @@ export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, f
       const fade = 1 - THREE.MathUtils.smoothstep(Math.abs(x) + edgeNoise! * (field.veil[cell]! - 1) + st.jitter * (jitter - 0.5), edgeFrom!, edgeTo!)
       if (fade <= 0) continue
       position.set([px, py, pz], n * 3)
-      star.set([level * fade, base, 0, 0], n * 4)
+      star.set([level * fade, base], n * 2)
       color.set([cr, cg, cb], n * 3)
       n++
     }
   }
-  return { position: position.subarray(0, n * 3), star: star.subarray(0, n * 4), color: color.subarray(0, n * 3) }
+  return { position: position.subarray(0, n * 3), star: star.subarray(0, n * 2), color: color.subarray(0, n * 3) }
 }

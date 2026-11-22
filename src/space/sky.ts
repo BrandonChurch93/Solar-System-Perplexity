@@ -306,7 +306,7 @@ uniform float uExposure;
 uniform vec3 uLens;
 uniform vec4 uDeepLaw;
 uniform vec3 uDeepSize;
-in vec4 aStar;
+in float aStar;
 in vec3 aColor;
 out vec3 vColor;
 out float vSize;
@@ -316,7 +316,7 @@ void main() {
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
   vec2 lq = gl_Position.xy / gl_Position.w * 0.5 * vec2(uLens.y, 1.0);
   gl_Position.z = 0.0;
-  float b = uDeepLaw.x * aStar.y * pow(aStar.y / uDeepLaw.z, uDeepLaw.y);
+  float b = uDeepLaw.x * aStar * pow(aStar / uDeepLaw.z, uDeepLaw.y);
   float size = min(uDeepSize.x + uDeepSize.y * log2(1.0 + b), uDeepSize.z) * uPixel;
   gl_PointSize = size;
   vSize = size;
@@ -338,7 +338,7 @@ uniform vec4 uFlightBand;
 uniform vec2 uFlightLook;
 uniform vec4 uStripStar;
 uniform vec3 uStripSize;
-in vec4 aStar;
+in vec2 aStar;
 in vec3 aColor;
 out vec3 vColor;
 out float vSize;
@@ -576,7 +576,7 @@ export class Sky {
     const set = bandField(this.stripBytes, { repeats: b.repeats, offset: b.offsetDeg / 360 * b.repeats, latSpan: THREE.MathUtils.degToRad(b.latSpanDeg), widen: b.widen, gal: galactic().elements }, def, this.field)
     const geo = this.strip.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(set.position, 3))
-    geo.setAttribute('aStar', new THREE.BufferAttribute(set.star, 4))
+    geo.setAttribute('aStar', new THREE.BufferAttribute(set.star, 2))
     geo.setAttribute('aColor', new THREE.BufferAttribute(set.color, 3))
     const order = new THREE.BufferAttribute(new Uint32Array(set.position.length / 3), 1)
     order.setUsage(THREE.DynamicDrawUsage)
@@ -595,7 +595,7 @@ export class Sky {
     geo.setAttribute('aColor', new THREE.BufferAttribute(field.color, 3))
     const dg = this.deep.geometry
     dg.setAttribute('position', new THREE.BufferAttribute(field.deep.position, 3))
-    dg.setAttribute('aStar', new THREE.BufferAttribute(field.deep.star, 4))
+    dg.setAttribute('aStar', new THREE.BufferAttribute(field.deep.star, 1))
     dg.setAttribute('aColor', new THREE.BufferAttribute(field.deep.color, 3))
     this.deepLevel = def.deep.level
     this.deepLens = def.deep.lens
