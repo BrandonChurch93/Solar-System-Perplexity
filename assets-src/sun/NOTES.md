@@ -914,3 +914,14 @@ Disk, 07:06: `git gc --prune=now` ran out of space (it needs about 2 GB of temp 
 - Proof: draft 0, 90, 150, 208, 247, 360 on the merged tree byte equal to the drafts of the polish tree before the merge (`out/work/sun/b20`, tree 30594b7): 39afbf5f..., d6ffbf86..., 56cd6f7c..., ce108f4c..., 2d3373f5..., c97845ad.... tsc clean. Shader audit on the merged tree: 31 lines, none in `src/stops/sun`.
 - The review frames in `out/work/sun/rv10` (206 to 222, ten frames) stay valid: source of those frames unchanged, engine unchanged.
 - Disk: the twenty sequence folders under `out/work/seq` (my own harness runs of Nov 21, every range found in my session history) deleted by name, 3.2 GB; `git gc --prune=now` done; 5.4 GB free, `.git` 2.3 GB.
+
+## Items 8a and 8b built (07:16 to 07:26 UTC Nov 22, on agent/sun after 6f466c1)
+
+- What changed. `look.opening.surge` gained `knee`, `bloom`, `veil`; `ground` went from 2 to 1.1.
+  - loops.ts: new uniform `uFlare` (launch, landing flare, knee, bloom). The launch and landing flares left `uFoot` (which now carries only the standing pulse) and sit in the surge block (its gate is now `uSurge.y + uFlare.x + uFlare.y > 0.0`, since the flare outlives the surge amount). Both gains pass a knee: `g /= 1.0 + knee * g * lum(lin)`, so the light a strand gains is capped near 1 / knee in scene values (filmic clips near 3.5): bright strands gain little, dim ones nearly all. The foot also gets a warm veil from the mip 5 card (`bloom`).
+  - ground.ts: `uLandVeil`; the landing raises the glow gain less (ground 1.1, peak 7.6 times instead of 13) and adds a soft warm veil (`veil`, peak 0.26, 0.17, 0.07 in scene values) so the landing reads as a bloom and not as white cells.
+- Values: knee 0.6, bloom 0.08, veil [0.04, 0.026, 0.01], ground 1.1. Tried: knee 0 (baseline, equals the merged look), ground 0.7 with veil [0.1, 0.07, 0.03] (milky, the cells under the landing lose their contrast), bloom 0.15 (a pale wash round the pillar).
+- Measure, drafts, 400 by 300 native crops at the launch foot (8), the crest (23), the landing foot (45, 53, 60): pixels with all channels at least 240, count and longest run in a row. Before (merged hook): 6322 / 74, 9541 / 99, 6137 / 56, 5266 / 60, 2180 / 25. After: 1860 / 19, 1130 / 21, 1909 / 27, 1959 / 32, 1390 / 17.
+- The pulse still travels (drafts, against the same tree with surge amount, launch and flare at 0; share of the frame brighter by more than 16 levels at 400 px, centroid x): 8: 0.90 percent, 158; 15: 3.33, 175; 23: 5.09, 202; 30: 5.72, 226; 38: 4.87, 252; 45: 4.51, 266; 53: 3.77, 270; 60: 1.68, 278.
+- Draft 0, 90, 150, 208, 247, 360 byte equal to `out/work/sun/b20` (the polish tree before the hook merge).
+- Scratch `out/work/sun/mh/` (`go.sh TAG frames`, `sheet.py`, runs k0 to k4, `nos` = no surge, `k4f` = finals).
