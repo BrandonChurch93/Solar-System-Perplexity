@@ -1,9 +1,46 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T10:14:38.370Z",
- "head": "3ec02be0bb2aa489f1e0681ee2139f3fddf7e12f",
- "note": "Jupiter: dive cover sheet on the merged tree (2687a17, main f24046b) done and looked at frame by frame; terrain review sheet rendering",
+ "pushed": "2026-11-22T10:22:43.277Z",
+ "head": "64301dc2961d8d13d469fb9f2870411dcc4c4ed4",
+ "note": "Jupiter: terrain review sheet on the merged tree (same bytes as before the three cover fixes and batch 20); full measure running",
  "looks": [
+  {
+   "time": "2026-11-22T10:22:42.594Z",
+   "file": "20261122102242594-note-terrain-sheet-b20.jpg",
+   "source": "out/work/jupiter/fg/kept/terrain-sheet-b20.png",
+   "kind": "note",
+   "label": "Terrain review sheet, agent/jupiter 2687a17 on main f24046b (engine batch 20): all 12 frames the same bytes as a06d2ae on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T10:22:26.245Z",
+   "file": "20261122102226245-sheet-jupiter.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/jupiter.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet jupiter.terrain, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "first": 3060,
+   "last": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T10:22:24.297Z",
+   "file": "20261122102224297-frame-f03239-review.jpg",
+   "source": "out/work/sheets/.frames-ZZlq23/f03239-review.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
   {
    "time": "2026-11-22T10:14:37.293Z",
    "file": "20261122101437293-note-d3029_30.jpg",
@@ -84,42 +121,6 @@
    "first": 3265,
    "last": 3276,
    "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T09:32:06.645Z",
-   "file": "20261122093206645-frame-f03276-review.jpg",
-   "source": "out/work/sheets/.frames-C7zXU6/f03276-review.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3276, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3276,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8c3819aa56f46da4"
-  },
-  {
-   "time": "2026-11-22T08:44:09.895Z",
-   "file": "20261122084409895-note-f3296_final_pair.jpg",
-   "source": "out/work/view/b20/f3296_final_pair.jpg",
-   "kind": "note",
-   "label": "Rise judged frame 3296 at the final tier: agent/jupiter 8909c1d on main c92f97c left, agent/jupiter 2687a17 on main f24046b (engine batch 20) right. The flight sky changes by design of the batch; on the disc 526 pixels move by 1 level, none by more",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T08:41:19.856Z",
-   "file": "20261122084119856-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "8c3819aa56f46da4"
