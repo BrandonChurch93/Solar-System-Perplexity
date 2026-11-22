@@ -1,78 +1,78 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T16:20:59.961Z",
- "head": "fc69bece1eb487228a8112b2d68c9894947b9695",
- "note": "CUT35: the 35 points of the hold sky proved on the judged finals, dive and hold sheets rendering; the rise pace designed by numbers",
+ "pushed": "2026-11-22T16:56:06.475Z",
+ "head": "57887ee9870106885b46e485538cdfe586e203c4",
+ "note": "CUT35: the rise pace E chosen from drafts (82a6f3c), review sheets rendering; the points' dive and hold sheets",
  "looks": [
   {
-   "time": "2026-11-22T16:20:58.875Z",
-   "file": "20261122162058875-note-4605-final-x3-hero-before-points-2.jpg",
-   "source": "out/work/nep/end34/pts/4605-final-x3-hero-before-points-2.jpg",
+   "time": "2026-11-22T16:56:05.035Z",
+   "file": "20261122165605035-note-rise-every-frame-old-C-E-part-4.jpg",
+   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-4.jpg",
    "kind": "note",
-   "label": "hold 4605 final, times 3: approved hero, before, with the points (2)",
+   "label": "rise drafts, every frame 4980 to 5006, part 4: old pace, trial C, trial E (chosen)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T16:20:57.910Z",
-   "file": "20261122162057910-note-4605-final-x3-hero-before-points-1.jpg",
-   "source": "out/work/nep/end34/pts/4605-final-x3-hero-before-points-1.jpg",
+   "time": "2026-11-22T16:56:04.011Z",
+   "file": "20261122165604011-note-rise-every-frame-old-C-E-part-3.jpg",
+   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-3.jpg",
    "kind": "note",
-   "label": "hold 4605 final, times 3: approved hero, before, with the points (1)",
+   "label": "rise drafts, every frame 4980 to 5006, part 3: old pace, trial C, trial E (chosen)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T16:20:56.636Z",
-   "file": "20261122162056636-note-4605-final-native-lower-right-hero-before-points.jpg",
-   "source": "out/work/nep/end34/pts/4605-final-native-lower-right-hero-before-points.jpg",
+   "time": "2026-11-22T16:56:03.005Z",
+   "file": "20261122165603005-note-rise-every-frame-old-C-E-part-2.jpg",
+   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-2.jpg",
    "kind": "note",
-   "label": "hold 4605 final, lower right at native: approved hero, before, with the 35 points",
+   "label": "rise drafts, every frame 4980 to 5006, part 2: old pace, trial C, trial E (chosen)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T16:20:55.530Z",
-   "file": "20261122162055530-note-4605-final-native-lower-left-hero-before-points.jpg",
-   "source": "out/work/nep/end34/pts/4605-final-native-lower-left-hero-before-points.jpg",
+   "time": "2026-11-22T16:56:01.919Z",
+   "file": "20261122165601919-note-rise-every-frame-old-C-E-part-1.jpg",
+   "source": "out/work/nep/end35/rise-every-frame-old-C-E-part-1.jpg",
    "kind": "note",
-   "label": "hold 4605 final, lower left at native: approved hero, before, with the 35 points",
+   "label": "rise drafts, every frame 4980 to 5006, part 1: old pace, trial C, trial E (chosen)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T16:17:50.861Z",
-   "file": "20261122161750861-frame-f04712-review.jpg",
-   "source": "out/work/sheets/.frames-mmyZcy/f04712-review.png",
+   "time": "2026-11-22T16:56:00.895Z",
+   "file": "20261122165600895-note-rise-sheet-tiles-old-C-E.jpg",
+   "source": "out/work/nep/end35/rise-sheet-tiles-old-C-E.jpg",
+   "kind": "note",
+   "label": "rise drafts at the critic's tiles 4984, 4990, 4997, 5004: old pace, trial C, trial E (chosen)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:46:46.047Z",
+   "file": "20261122164646047-note-hold-sheet-points.jpg",
+   "source": "out/work/nep/end34/pts/hold-sheet-points.jpg",
+   "kind": "note",
+   "label": "neptune.hold review sheet with the 35 points (fc69bec)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:46:44.963Z",
+   "file": "20261122164644963-note-dive-sheet-points.jpg",
+   "source": "out/work/nep/end34/pts/dive-sheet-points.jpg",
+   "kind": "note",
+   "label": "neptune.dive review sheet with the 35 points (fc69bec)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T16:45:00.678Z",
+   "file": "20261122164500678-frame-f04638-review.jpg",
+   "source": "out/work/sheets/.frames-Xtrs4q/f04638-review.png",
    "kind": "frame",
-   "label": "neptune.dive frame 4712, review tier",
+   "label": "neptune.hold frame 4638, review tier",
    "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4712,
+   "segment": "neptune.hold",
+   "frame": 4638,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:50:13.871Z",
-   "file": "20261122155013871-note-uranus-travel-sheet-review-swing-0.jpg",
-   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-swing-0.jpg",
-   "kind": "note",
-   "label": "uranus.travel review sheet with arrive.swingDeg 0 (88e925c): one slide of the band, Triton in frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:50:13.303Z",
-   "file": "20261122155013303-note-uranus-travel-sheet-review-old.jpg",
-   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-old.jpg",
-   "kind": "note",
-   "label": "uranus.travel review sheet on main 652da5b (old, swing -34): the band turns through level at 4489 and 4495, Triton cut by the corner at 4509",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:26:47.403Z",
-   "file": "20261122152647403-note-swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
-   "source": "out/work/nep/end34/swing/send/swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
-   "kind": "note",
-   "label": "swing 0, every second frame 4453 to 4499, drafts raised 4 (looking for sky edges)",
-   "stop": "neptune"
   }
  ]
 }
