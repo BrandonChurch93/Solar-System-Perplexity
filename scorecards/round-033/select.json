@@ -1,0 +1,105 @@
+{
+ "base": "/home/user/workspace/work/p6/base32.json",
+ "stops": {
+  "sun": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "mercury": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "venus": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "earth": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "mars": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "jupiter": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "saturn": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "uranus": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  },
+  "neptune": {
+   "frames": [],
+   "sheets": [],
+   "R1": false,
+   "R8": false,
+   "R2": false
+  }
+ },
+ "film": {
+  "frames": [
+   495,
+   1072,
+   1642,
+   2212,
+   2782,
+   3352,
+   3922,
+   4492,
+   5085,
+   5235
+  ],
+  "sheets": [
+   "sun.travel",
+   "mercury.travel",
+   "venus.travel",
+   "earth.travel",
+   "mars.travel",
+   "jupiter.travel",
+   "saturn.travel",
+   "uranus.travel",
+   "ending.retreat",
+   "ending.lookback",
+   "ending.fade"
+  ],
+  "R5": true,
+  "R6": true,
+  "R7": [
+   "sun.terrain",
+   "earth.hold",
+   "mars.dive",
+   "ending.lookback"
+  ],
+  "R2": false
+ },
+ "unknown": []
+}
