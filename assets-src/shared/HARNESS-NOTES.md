@@ -162,6 +162,30 @@ Proofs (2026-11-22, scratch round 931 at draft, build 8070fc63, engine be043ade0
 - vitest 17 files, 87 tests; `npx tsc --noEmit -p .` clean; `npm run -s build` exit 0; pyflakes clean.
 - Not proven: the real mode (row pushed to main, the second `start` on a merged tree, select.json under `scorecards/`); the final and review tiers; a base file from another build (mine was the same build with hashes changed by hand); `--controls-from` in a polish round.
 
+## MAIL 161 (2026-11-22 13:28 UTC): start builds first, the checks follow
+
+Only `tools/round.py` changed. For polish rounds and the record round; whole film rounds and stop rounds start as before.
+
+### Decisions
+
+1. `start` has two steps. The build step: a dirty tree is committed without a push ("Round N: polish, the tree at the build"), `origin/main` is fetched and merged, `npm run -s build` runs (the same command as G1), the hashes come from `ensureBuild()` of `tools/lib/common.ts` (called, not changed) through one `npx tsx -e` line, the state gets `commit`, `engineHash`, `stopHashes`, they are printed, and the commit is pushed. The checks step: the build once more, the hashes of the tree against the state, the tests, the gate with the full machine list (so `gate.txt` has all eleven lines as before), `gateGreen` into the state.
+2. Which step runs: `--build-only` runs the build step and returns; `--checks` runs the checks step and refuses when the state has no build; a plain call runs the build step when the state has no build and then the checks step, so a plain second call after `--build-only` only checks.
+3. "Moved" is decided by the hashes of the tree, not by the commit: the state's engine hash and stop hashes against what the tree gives now. Commits that touch logs, scorecards, kit files or tools give the same hashes and do not trip it. When it trips, the tool stops in one line and names the hashes; `--build-only` takes the new tree, and when the hashes changed it drops `gateGreen` and `gate.txt`.
+4. `pack` (polish and record) refuses while the state has no `gateGreen`, and refuses when the tree's hashes are not the state's. A red gate with `--allow-red` writes `gateGreen` false and the pack runs, as before.
+5. The state's commit on origin: after the build step and after the checks step the tool fetches, and when the state's commit is not an ancestor of `origin/main` it merges and pushes (no force); if it still is not there it prints "commit X of the state is not on origin/main: push it before the jobs go out", and the last line of `--build-only` then reads "no jobs before the push".
+6. `start` without `--polish` or `--record` takes the mode from the state when the round has one.
+
+### How to run
+
+- `python3 tools/round.py start --round N --polish --row-only`, merge the batch, `start --round N --polish --build-only`, `jobs --round N --workers 40`, `start --round N --checks`, then `place`, `touched`, `pack`, `votes`, `close` as before.
+- One call does both: `start --round N --polish [--allow-red]` prints the build line, then runs the checks; `jobs` can run from a second shell after the build line.
+
+### Proofs
+
+- Real mode in a scratch clone (the second clone with a bare copy of the repo as its origin, `scratch/origin.git`; the gate and `proof` answered by a stand in script on the PATH so one call takes a minute; the build, the hashes and the tests were real). Round 34: `--row-only` wrote the row and pushed; a made up batch commit (one line in `src/stops/mercury/assets.ts`), not pushed; `--build-only` printed commit, engine and nine stop hashes (Mercury's changed), and origin's main was at the state's commit after it; `pack` refused in one line; `jobs --workers 40` gave 77 jobs at once. A commit that touched `kit/PROGRESS.md`, a scorecards file and this notebook, then `--checks`: green, state commit unchanged. A commit in `src/core`: `--checks` and the plain call both stopped with "the tree moved since the build at 3855f411: engine f92f... is now 930c..."; `pack` stopped the same way; `--build-only` took the new commit and dropped `gateGreen` and `gate.txt`; the plain second call checked only. A commit pushed to origin from a third clone while this tree was dirty: the dirty tree was committed, origin merged, built, pushed. Gate red: no `gateGreen`, pack refused; with `--allow-red` `gateGreen` false. Push refused by a hook in the origin: the line "commit ... is not on origin/main" and "no jobs before the push"; the next `--checks` pushed it.
+- Record mode in the same clone: round 36 `--record --build-only` (row, build, state), pack refused, plain second call checked; round 37 `--record` in one call.
+- Refusals: `--build-only` or `--checks` on a whole film round or a stop round, `--checks` with no build, two of the three flags.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
