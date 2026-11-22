@@ -1,9 +1,55 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T06:37:28.019Z",
- "head": "ccfe9db85142eca32bb8e9637e8e64788fc1dc12",
- "note": "Mercury polish: rise cover sheet at review; a grey band on the horizon from the rise swap on is being cured before POLISH READY",
+ "pushed": "2026-11-22T06:54:49.974Z",
+ "head": "00800b7bcde1a1fbca2d5996ad509a9332a60f9a",
+ "note": "Mercury polish: grey band on the limb at the rise swap cured (draft proof), review sheets of both covers rendering again; tree 81e8ef9 on main a87578e",
  "looks": [
+  {
+   "time": "2026-11-22T06:54:48.841Z",
+   "file": "20261122065448841-note-far-b-dive.jpg",
+   "source": "out/work/mercury/p6/b1/far-b-dive.jpg",
+   "kind": "note",
+   "label": "Mercury dive swap, horizon at 4x, frames 739 to 744, draft, after the cure. Tree 81e8ef9 on main a87578e",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T06:54:47.802Z",
+   "file": "20261122065447802-note-sheet-b-dive.jpg",
+   "source": "out/work/mercury/p6/b1/sheet-b-dive.jpg",
+   "kind": "note",
+   "label": "Mercury dive cover 738 to 744 and 736 (last), draft (no blur), after the same cure. Tree 81e8ef9 on main a87578e",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T06:54:46.892Z",
+   "file": "20261122065446892-note-sheet-b-rise.jpg",
+   "source": "out/work/mercury/p6/b1/sheet-b-rise.jpg",
+   "kind": "note",
+   "label": "Mercury rise cover 989 to 996, draft (no blur), after the cure of the grey band on the limb. Tree 81e8ef9 on main a87578e",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T06:54:46.024Z",
+   "file": "20261122065446024-note-far-b.jpg",
+   "source": "out/work/mercury/p6/b1/far-b.jpg",
+   "kind": "note",
+   "label": "Mercury rise swap, horizon at 4x, frames 988 989 (terrain) 990 991 992 993 (globe), draft, after the cure of the grey band on the limb: the far band of the terrain view is carried to the limb. Tree 81e8ef9 on main a87578e",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T06:54:38.192Z",
+   "file": "20261122065438192-frame-f00990-review.jpg",
+   "source": "out/work/sheets/.frames-2lJ16q/f00990-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 990, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 990,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T06:37:27.451Z",
    "file": "20261122063727451-note-dive-horizon-741-745.jpg",
@@ -11,59 +57,6 @@
    "kind": "note",
    "label": "Mercury dive, horizon at 4x, frames 741 to 745 (swap at 744), review, tree 1a18e50 on main 5fce02c (batch 19 in). Same horizon on both sides of the swap",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T06:37:26.907Z",
-   "file": "20261122063726907-note-rise-horizon-987-991.jpg",
-   "source": "out/work/mercury/p6/proof/rise-horizon-987-991.jpg",
-   "kind": "note",
-   "label": "Mercury rise, horizon at 4x, frames 987 to 991 (swap at 990), review, tree 1a18e50 on main 5fce02c (batch 19 in). Terrain side has a pale far band, the globe side a grey striped band: fault, in work",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T06:37:26.376Z",
-   "file": "20261122063726376-note-rise-993-996.jpg",
-   "source": "out/work/mercury/p6/proof/rise-993-996.jpg",
-   "kind": "note",
-   "label": "Mercury rise 993 to 996 at review, native preview size, tree 1a18e50 on main 5fce02c (batch 19 in). Grey band at the limb at 993; level streak through the Sun from 994",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T06:37:25.825Z",
-   "file": "20261122063725825-note-rise-cover-sheet.jpg",
-   "source": "out/work/mercury/p6/proof/rise-cover-sheet.jpg",
-   "kind": "note",
-   "label": "Mercury rise cover sheet 985 to 996, review tier, 960 x 540, tree 1a18e50 on main 5fce02c (batch 19 in). One move; fault seen: a grey band of map on the horizon from the swap 990 on (in work)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T06:35:58.739Z",
-   "file": "20261122063558739-sheet-mercury.rise-cover-preview-review.jpg",
-   "source": "out/work/sheets/mercury.rise-cover-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet mercury.rise, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 985,
-   "last": 996,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T06:35:57.892Z",
-   "file": "20261122063557892-frame-f00996-review.jpg",
-   "source": "out/work/sheets/.frames-Yynkp4/f00996-review.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 996, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 996,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T05:44:58.114Z",
