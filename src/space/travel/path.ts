@@ -15,6 +15,7 @@ export interface TravelLook {
   passBy: number
   passPower: number
   passKnee: number
+  follow: number
   cruise: number
   early: number
   point: number
@@ -24,7 +25,7 @@ export interface TravelLook {
   turnRun: [number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
@@ -32,7 +33,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   venus: { growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1] },
   earth: { growRun: [0.3351, 0.2, 0.3], point: 0.0015, early: 0.15, passBy: 0.31, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.4, 0.36], panSpan: [0, 1] },
   mars: { bowDeg: 10, grow: [2, 3] },
-  jupiter: { bowDeg: -10, grow: [3, 4] },
+  jupiter: { growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.32, passPower: 3, passKnee: 0.6, follow: 1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.4], panSpan: [0, 1] },
   saturn: { growRun: [0.26, 0.2, 0.3], point: 0.0015, early: 0.1, passBy: 0.42, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1] },
   uranus: { growRun: [0.3935, 0.2, 0.3], point: 0.0015, early: 0.1083, passBy: 0.228, passPower: 3, passKnee: 0.6, pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.36], panSpan: [0, 1] },
 }

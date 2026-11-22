@@ -126,7 +126,8 @@ export class FilmDirector implements Director {
         const steps = Math.round((seg.end - seg.start) * config.fps) * 8
         for (let k = steps; k >= 0; k--) {
           const time = seg.start + (k / steps) * (seg.end - seg.start)
-          if (seen(drifted(this.travelCamera(i, time), time)).distanceTo(home) > FAR_LIGHT.within) break
+          const place = shape.look.follow > 0 ? seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(time - seg.end)), time)) : home
+          if (seen(drifted(this.travelCamera(i, time), time)).distanceTo(place) > FAR_LIGHT.within) break
           lit = k / steps
         }
       }
