@@ -56,5 +56,13 @@ for (const s of process.argv.slice(3)) {
   const inside = c.w > 1e-3 && u > 0 && u < 1 && v > 0 && v < 1
   const L = inside ? tex(lay, u, v) : [NaN, NaN, NaN, NaN]
   const T = inside ? tex(tone, u, v) : [NaN, NaN, NaN, NaN]
-  console.log(s, 'r', P.length().toFixed(4), 'film', film, 'skim', sk, 'uv', u.toFixed(3), v.toFixed(3), 'dr', L[0]!.toFixed(4), 'gain', L[1]!.toFixed(3), 'k', L[2]!.toFixed(2), 'sd', L[3]!.toFixed(0), 'tone', T.slice(0, 3).map((q) => q.toFixed(2)).join(' '))
+  const foot = skim.clone().addScaledVector(n, -skim.dot(n))
+  const cs = new THREE.Vector3(foot.x, 0, 0).set(foot.length(), skim.dot(n) / polar, 0)
+  const cc = cs.lengthSq(), rr = P.lengthSq(), bq = 1 - Number(process.env.MARGIN ?? -0.03)
+  const root = bq * bq + cc * rr - bq * (rr + cc)
+  const ut = bq - Math.sqrt(Math.max(root, 0))
+  const uu = foot.dot(P)
+  const ct = ut / (foot.length() * Math.sqrt(rr))
+  const chord = root > 0 && uu < ut && Math.abs(ct) < 1 ? Math.sqrt(rr) * 2 * Math.sin((Math.acos(Math.max(-1, Math.min(1, uu / (foot.length() * Math.sqrt(rr))))) - Math.acos(ct)) / 2) : 0
+  console.log(s, 'chord', chord.toFixed(3), 'r', P.length().toFixed(4), 'film', film, 'skim', sk, 'uv', u.toFixed(3), v.toFixed(3), 'dr', L[0]!.toFixed(4), 'gain', L[1]!.toFixed(3), 'k', L[2]!.toFixed(2), 'sd', L[3]!.toFixed(0), 'tone', T.slice(0, 3).map((q) => q.toFixed(2)).join(' '))
 }
