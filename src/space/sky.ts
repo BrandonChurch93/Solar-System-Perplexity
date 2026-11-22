@@ -81,6 +81,8 @@ uniform vec3 uSunDir;
 uniform vec3 uSunColor;
 uniform float uSunRadius;
 uniform float uSunGlare;
+uniform vec2 uSunSmall;
+uniform vec4 uSunPoint;
 uniform float uTerrainBand;
 uniform vec3 uBandClean;
 uniform vec2 uLens;
@@ -347,6 +349,11 @@ void main() {
     vec3 face = mix(vec3(1.0), 2.6 * pow(vec3(mu + 0.05), vec3(0.22, 0.42, 0.8)), wide);
     corona += wide * (0.5 * exp(-(o - 1.0) * 9.0) + 0.16 * pow(o, -1.4) * exp(-(o - 1.0) * 0.3));
     col += uSunColor * uSunGlare * (disc * (face * limb * 3.6 * big + core) + (1.0 - disc) * corona);
+    for (int j = 0; j < (uSunSmall.x > 0.0 ? 1 : 0); j++) {
+      float p2 = ang * ang * uSunSmall.y * uSunSmall.y;
+      float tight = uSunPoint.x * exp(-p2 / uSunPoint.y) + uSunPoint.z * pow(1.0 + p2 / uSunPoint.w, -0.9);
+      col += uSunSmall.x * uSunColor * uSunGlare * (vec3(tight) - (disc * (face * limb * 3.6 * big + core) + (1.0 - disc) * corona));
+    }
   }
   outColor = vec4(col, 0.0);
 }`
@@ -372,6 +379,14 @@ vec3 dust(vec3 d, float bright) {
 }
 `
 
+const SKY_SUNFADE_GLSL = /* glsl */ `
+uniform vec4 uSunSpot;
+uniform vec3 uSunHalf;
+float sunFade(vec4 clip) {
+  return mix(1.0, smoothstep(uSunSpot.z, uSunSpot.w, length((clip.xy / clip.w - uSunSpot.xy) * uSunHalf.xy)), uSunHalf.z);
+}
+`
+
 const STAR_VERT = /* glsl */ `
 uniform float uPixel;
 uniform float uExposure;
@@ -388,6 +403,7 @@ uniform vec2 uStarLift;
 out float vSize;
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
+${SKY_SUNFADE_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -412,6 +428,7 @@ void main() {
   b *= mix(1.0, max(uStarLift.y / max(crowd, 1e-4), 1.0), uStarLift.x);
   b *= (1.0 - patchCoord(0, normalize(position)).z * uPatchLens[0].w) * (1.0 - patchCoord(1, normalize(position)).z * uPatchLens[1].w);
   vColor = aColor * b * uExposure;
+  if (uSunHalf.z > 0.0) vColor *= sunFade(gl_Position);
 }`
 
 const STAR_FRAG = /* glsl */ `
@@ -420,6 +437,7 @@ in vec3 vColor;
 in float vSize;
 uniform float uCore;
 uniform float uHalo;
+uniform vec4 uStarLaw;
 out vec4 outColor;
 void main() {
   vec2 p = (gl_PointCoord - 0.5) * vSize;
@@ -427,6 +445,11 @@ void main() {
   float core = exp(-r2 / uCore);
   float glow = uHalo * exp(-r2 / (0.035 * vSize * vSize));
   outColor = vec4(vColor * (core + glow), 0.0);
+  for (int k = 0; k < (uStarLaw.w > 0.0 ? 1 : 0); k++) {
+    float over = max(max(vColor.r, max(vColor.g, vColor.b)) / uStarLaw.x, 1.0);
+    float edge = clamp(1.0 - 4.0 * r2 / (vSize * vSize), 0.0, 1.0);
+    outColor.rgb = mix(outColor.rgb, vColor * (core * pow(over, -uStarLaw.y) + uStarLaw.z * edge * edge / (1.0 + r2)), uStarLaw.w);
+  }
 }`
 
 const DEEP_VERT = /* glsl */ `
@@ -442,6 +465,7 @@ out float vSize;
 ${SKY_BAND_GLSL}
 ${SKY_PATCH_GLSL}
 ${SKY_DUST_GLSL}
+${SKY_SUNFADE_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -452,7 +476,7 @@ void main() {
   gl_PointSize = size;
   vSize = size;
   vec3 d = normalize(position);
-  vColor = aColor * dust(d, aStar) * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
+  vColor = aColor * dust(d, aStar) * sunFade(gl_Position) * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
 }`
 
 const STRIP_VERT = /* glsl */ `
@@ -474,6 +498,7 @@ in vec3 aColor;
 out vec3 vColor;
 out float vSize;
 ${SKY_PATCH_GLSL}
+${SKY_SUNFADE_GLSL}
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 0.0);
   gl_Position = projectionMatrix * vec4(mv.xyz, 1.0);
@@ -489,7 +514,7 @@ void main() {
   look = mix(vec3(dot(look, vec3(0.3, 0.5, 0.2))), look, uStripStar.x);
   vec3 c = mix(vec3(1.0), aColor, uBandTint.w) * uBandTint.rgb * mix(vec3(1.0), look, uFlightLook.x);
   c *= k * mix(1.0, uFlightBand.w / uFlightLook.y, uLift) * aStar.x * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w);
-  vColor = c;
+  vColor = c * sunFade(gl_Position);
   float size = min(uStripSize.x + uStripSize.y * log2(1.0 + max(c.r, max(c.g, c.b))), uStripSize.z) * uPixel;
   gl_PointSize = size;
   vSize = size;
@@ -640,6 +665,11 @@ export class Sky {
   private readonly patchTex: THREE.Texture[] = [this.blank, this.blank]
   private readonly patchRaw = [0, 0]
   private readonly flightHalo = { value: STAR_HALO }
+  private readonly v3 = new THREE.Vector3()
+  private readonly q2 = new THREE.Quaternion()
+  private readonly starLaw = { value: new THREE.Vector4(1, 0, 0, 0) }
+  private readonly sunSpot = { value: new THREE.Vector4(0, 0, 0, 1) }
+  private readonly sunHalf = { value: new THREE.Vector3(960, 540, 0) }
   private readonly starPos: Float32Array
   private readonly starOrder: THREE.BufferAttribute
   private readonly starPlain: THREE.BufferGeometry
@@ -654,7 +684,7 @@ export class Sky {
     const st = skyFrame.stars
     this.pass = new Pass(SKY_FRAG, {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
-      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
+      uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold },
       uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
@@ -693,6 +723,7 @@ export class Sky {
     fm.vertexShader = STAR_VERT.replace('void main() {', SKY_DUST_GLSL + 'void main() {').replace('vColor = aColor * b * uExposure;', 'vColor = aColor * dust(normalize(position), aStar.y) * b * uExposure;')
     for (const name of ['uPatchM', 'uPatchLens', 'uPatchRing', 'uPatchMode', 'uPatchFold']) fm.uniforms[name] = mat.uniforms[name]!
     fm.uniforms.uHalo = this.flightHalo
+    for (const m of [mat, fm]) Object.assign(m.uniforms, { uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
     this.flight = new THREE.Points(new THREE.BufferGeometry(), fm)
     this.flight.frustumCulled = false
     this.flight.visible = false
@@ -701,7 +732,7 @@ export class Sky {
       glslVersion: THREE.GLSL3,
       vertexShader: DEEP_VERT,
       fragmentShader: STAR_FRAG,
-      uniforms: { uCore: mat.uniforms.uCore!, uHalo: this.flightHalo, uPixel: { value: 1 }, uExposure: { value: 0 }, uLens: { value: new THREE.Vector3(0, 16 / 9, 0) }, uDeepLaw: { value: new THREE.Vector3(1, 0, 1) }, uDeepSize: { value: new THREE.Vector3(SIZE[0], SIZE[1], FLIGHT_SIZE) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold } },
+      uniforms: { uCore: mat.uniforms.uCore!, uHalo: this.flightHalo, uPixel: { value: 1 }, uExposure: { value: 0 }, uLens: { value: new THREE.Vector3(0, 16 / 9, 0) }, uDeepLaw: { value: new THREE.Vector3(1, 0, 1) }, uDeepSize: { value: new THREE.Vector3(SIZE[0], SIZE[1], FLIGHT_SIZE) }, uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold } },
       blending: THREE.AdditiveBlending,
       premultipliedAlpha: true,
       depthTest: false,
@@ -727,6 +758,7 @@ export class Sky {
       transparent: true,
       ...BEHIND,
     })
+    Object.assign(sm.uniforms, { uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
     this.strip = new THREE.Points(new THREE.BufferGeometry(), sm)
     this.strip.frustumCulled = false
     this.strip.visible = false
@@ -750,6 +782,8 @@ export class Sky {
     ;(u.uFlightFill!.value as THREE.Vector4).set(def.detail.fill[0]!, THREE.MathUtils.degToRad(def.detail.fill[1]!), def.detail.fill[2]!, def.detail.fill[3]!)
     ;((this.strip.material as THREE.ShaderMaterial).uniforms.uStripStar!.value as THREE.Vector2).set(def.stars.tint, def.stars.warm)
     this.flightHalo.value = def.stars.halo
+    this.starLaw.value.set(def.stars.law[0]!, def.stars.law[1]!, def.stars.law[2]!, 0)
+    ;(u.uSunPoint!.value as THREE.Vector4).set(def.sun.core[0]!, def.sun.core[1]!, def.sun.wing[0]!, def.sun.wing[1]!)
     this.dustLane.set(def.dust.lane[0]!, def.dust.lane[1]!, def.dust.lane[2]!, def.dust.lane[3]!)
     this.dustCloud.set(def.dust.cloud[0]!, def.dust.cloud[1]!, def.dust.cloud[2]!, def.dust.cloud[3]!)
     this.dustKeep.set(def.dust.keep[0]!, def.dust.keep[1]!, def.dust.span[0]!, def.dust.span[1]!)
@@ -1009,6 +1043,16 @@ export class Sky {
     ;(u.uSunColor!.value as THREE.Vector3).set(sun.color.r, sun.color.g, sun.color.b)
     u.uSunRadius!.value = sun.angularRadius
     u.uSunGlare!.value = sun.glare
+    const perRad = 540 / Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)
+    const far = this.stripDef
+    const small = far && sun.glare > 0 && sun.angularRadius * perRad < far.sun.radiusPx ? THREE.MathUtils.smoothstep(sun.glare, far.sun.glare[0]!, far.sun.glare[1]!) : 0
+    ;(u.uSunSmall!.value as THREE.Vector2).set(small, perRad)
+    this.v3.copy(sun.dir).applyQuaternion(this.q2.copy(skyQuaternion).invert())
+    const ahead = this.v3.z < 0
+    this.v3.applyMatrix4(camera.projectionMatrix)
+    this.sunSpot.value.set(this.v3.x, this.v3.y, far ? far.sun.stars[0]! : 0, far ? far.sun.stars[1]! : 1)
+    this.sunHalf.value.set(540 * aspect, 540, ahead ? small : 0)
+    this.starLaw.value.w = swap
     const sky = this.pass.material
     if (('PATCH_IMPLICIT' in sky.defines) !== this.cull) {
       if (this.cull) sky.defines.PATCH_IMPLICIT = ''

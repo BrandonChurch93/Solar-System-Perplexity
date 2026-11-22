@@ -49,7 +49,8 @@ export interface StripDef {
   deep: { gain: number; tail: number; ref: number }
   detail: { freq: number; stretch: number; mottle: number; warp: number; octave: number[]; lane: number[]; fill: number[]; rim: number[]; far: number[]; spread: { tint: number[]; widthDeg: number; freq: number; vary: number; under: number } }
   dust: { span: number[]; lane: number[]; cloud: number[]; keep: number[]; red: number[]; strip: number[] }
-  stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
+  stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number; law: number[] }
+  sun: { radiusPx: number; glare: number[]; core: number[]; wing: number[]; stars: number[] }
 }
 
 function clouds(def: FlightDef['veil']): [(x: number, y: number, z: number) => number, (x: number, y: number, z: number, f: number) => number] {
