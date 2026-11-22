@@ -34,14 +34,14 @@ export const params: MoveParams = {
 export interface Approach { ease: number; cruise: number; swell: [number, number, number]; cap: [number, number]; until: number }
 export interface Retreat { lead: number; peak: number; tail: [number, number]; turn: [number, number, number] }
 export interface Entry { free: [number, number]; drop: [number, number, number]; ease: number }
-export interface Leave { from: number; ramp: number; rate: number; gain: number; soft: number }
+export interface Leave { from: number; ramp: number; rate: number; cap: number; join: [number, number]; soft: number }
 export interface Tune { dive: Approach | null; rise: Retreat | null; entry: Entry | null; leave: Leave | null }
 
 export const timing: Tune = {
   dive: { ease: 12, cruise: 0.6, swell: [16, 30, 0.12], cap: [7.3, 8], until: 47.5 },
   rise: { lead: 2.5, peak: 30, tail: [0.4, 4], turn: [0.75, 1.3, 1.5] },
   entry: { free: [26, 6], drop: [0.111, -1.33, 0.75], ease: 2.61 },
-  leave: { from: 9.5, ramp: 9, rate: 0.085, gain: 0.17, soft: 1 },
+  leave: { from: 9.5, ramp: 9, rate: 0.037, cap: 0.92, join: [10, 22], soft: 1 },
 }
 
 const STEPS = 16
@@ -278,11 +278,14 @@ export class Plan extends StopPlan {
     const level = new THREE.Quaternion().setFromUnitVectors(from.out.clone().applyQuaternion(carry), out).multiply(carry).multiply(from.quaternion)
     const alpha = Math.asin(Math.min(1 / shot.pose.position.length(), 1))
     let off = (1 - w) * (alpha - from.under)
+    let home = w * w
     if (l) {
       const x = (time - centre) * config.fps
-      const d = alpha - Math.atan((from.height + l.rate * x + l.gain * x * x * x) * Math.tan(THREE.MathUtils.degToRad(shot.pose.vfov) / 2))
+      const room = l.cap - from.height
+      const d = alpha - Math.atan((l.cap - room * Math.exp((-l.rate * x) / room)) * Math.tan(THREE.MathUtils.degToRad(shot.pose.vfov) / 2))
       const soft = THREE.MathUtils.degToRad(l.soft)
       off = 0.5 * (d + Math.sqrt(d * d + soft * soft))
+      home = smoother(ramp(l.join[0], l.join[1], x))
     }
     const X = new THREE.Vector3(1, 0, 0)
     const top = new THREE.Vector3(0, 1, 0).applyQuaternion(level.clone().multiply(new THREE.Quaternion().setFromAxisAngle(X, -from.off)))
@@ -290,7 +293,7 @@ export class Plan extends StopPlan {
     north.addScaledVector(out, -north.dot(out)).normalize()
     const around = Math.atan2(out.dot(new THREE.Vector3().crossVectors(top, north)), top.dot(north))
     const pitched = level.multiply(new THREE.Quaternion().setFromAxisAngle(X, off - from.off))
-    shot.pose.quaternion.copy(new THREE.Quaternion().setFromAxisAngle(out, around * w).multiply(pitched).slerp(end, w * w))
+    shot.pose.quaternion.copy(new THREE.Quaternion().setFromAxisAngle(out, around * w).multiply(pitched).slerp(end, home))
     return shot
   }
 }

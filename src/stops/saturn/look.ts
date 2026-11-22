@@ -112,6 +112,7 @@ export const rings: RingLook = {
   apronAway: [0.3, 0.5],
   apronShow: 1,
   debloom: 0.08,
+  skimTone: 1,
   skimHigh: [0.8, 0.94, 0.3, 3],
   reach: 3.6,
   skimReach: 40,
