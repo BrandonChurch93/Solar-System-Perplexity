@@ -1320,3 +1320,24 @@ Head 917975bc plus this note. READY for CUT35 stays d2a59775. `agent/venus` hold
 - Disk: the worktree I used to make that commit (`/tmp/wt-dusk`, 1.9 GB) took the disk to 95 percent and the harness refused to start ("refusing to start: 1.5 GB free, need 3"). So in `/tmp/q43.log` the lines "final 1185 DIFFERS", "final 1440 DIFFERS" and "FAIL h0" are NOT results: those renders never ran and `cmp` answered on missing files. Not reported to anyone as results. The worktree's folder is removed (the local branch and the commit stay), old debug arrays of mine under `/tmp` are deleted, 3.7 GB free. Lesson kept: check that a file exists before `cmp`, and never add a worktree on this VM.
 - q43 results that do stand: final 1586 with the test (`d1-1586.png`), final 1287 the same bytes as `f29-1287.png`, 14 draft frames `d1-F.png`, shader audit exit 0.
 - q44 runs now (`/tmp/q44.log`): finals 1185 and 1440 with the test and a `cmp` that names a missing file, the head's code at the same 14 draft frames (`h0-F.png`), G5.
+
+## State at 18:32 (22 Nov): round 35 is cut WITHOUT any Venus change; the Builder's reasons from PROGRESS, word for word (read this first after a compaction)
+
+No mail reached me after MAIL 191. I found this by fetching: main moved from 55319c5a to 9d20d3dd ("Round 35: polish, the tree at the build", 18:26:33 UTC). `git diff d2a59775 origin/main -- src/stops/venus public/assets/venus` shows main WITHOUT 90cc5b23: main's Venus folders are round 34's (b18bf2f4 = a135f6b8). `kit/PROGRESS.md` on main says, word for word:
+
+- "2026-11-22 18:26 UTC, not taken into round 35. Venus `d2a59775` (cure `90cc5b23`, a blur of the deck at the veil gates): round 34's motion critic no longer names the gates, and the frames get softer at the handover, against Brandon's order to keep the picture from going soft there. Venus `b0f208d7` on the branch agent/venus-dusk (the night limb of 1586 in the rise): by the agent's own word not proved (no sheet of the rise, no measure), so it does not meet the rule of the cut."
+- "2026-11-22 18:26 UTC, the rule for after round 35, fixed before its critics answer: each commit is judged by the critics' words on the frames it changed. A new severe or major there that round 34 did not have takes that commit, or that folder, back to its state of round 34. Then the best build of rounds 32 to 35 is chosen and frozen. No change that round 35 did not judge goes into the frozen build."
+- "The Venus agent reports that the globe pixels of 1586 did not change between rounds 33 and 34 (only the sky, by a mean of 0.26 levels), so the lower score of item 114 is the spread between two critics, not a change (not checked by the Builder)."
+
+What follows from it, as I read it (my reading, not an order I was given):
+
+- The gate cure is refused on its substance (softer at the handover). It is over. Do not offer it again.
+- The dusk change was refused because it was not proved, which is what I had said of it. By the last rule nothing that round 35 did not judge goes into the frozen build, so even proved it cannot go into the film unless the Builder opens a window. Do not press for it.
+- Venus in the film is round 34's folders. Nothing of mine is in round 35, so no frame of mine is judged in it.
+- The Builder has NOT answered whether to delete `agent/venus-dusk`. It stays untouched (no push, no delete) until the Builder says.
+- I have not been told the stop is finished, so I carry on: keep the branch truthful, finish the measurements of dusk that I started, report numbers, record every mail.
+
+Results of q44 that came in (dusk in the working tree over head d2a59775's code, engine of main ff158d90):
+
+- final 1185 and final 1440 with dusk: the same bytes as round 34's finals (`f29-1185.png`, `f29-1440.png`). With 1287 from q43 that makes three judged frames untouched; 1586 changes (676,360 pixels at final).
+- 14 draft frames, head's code (`h0-F.png`) beside dusk (`d1-F.png`), changed pixels of 960 by 540 and largest change: 1562 0; 1566 3,688, max 3; 1570 19,007, max 19; 1575 100,570, max 177; 1580 172,584, max 186; 1586 182,656, max 189; 1592 182,089; 1598 183,003; 1604 182,590; 1608 183,530; 1614 183,532; 1622 56,159, max 133 (Venus leaving the frame); 1632 0; 1645 0 (Venus out of frame). Mean level falls by about 2 of 32 while the globe is whole in frame (the glow gone). The change comes in under the veil (0 at 1562, 3 levels at 1566) and no frame of the 14 shows a step. Picture: `view/d1-rise.jpg`.
