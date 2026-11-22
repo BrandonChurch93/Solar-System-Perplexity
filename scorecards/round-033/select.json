@@ -9,12 +9,9 @@
     247,
     360
    ],
-   "sheets": [
-    "sun.terrain",
-    "sun.hold"
-   ],
+   "sheets": [],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "mercury": {
@@ -24,12 +21,9 @@
     870,
     1016
    ],
-   "sheets": [
-    "mercury.hold",
-    "mercury.terrain"
-   ],
+   "sheets": [],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "venus": {
@@ -39,12 +33,9 @@
     1440,
     1586
    ],
-   "sheets": [
-    "venus.hold",
-    "venus.terrain"
-   ],
+   "sheets": [],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "earth": {
@@ -56,7 +47,7 @@
    ],
    "sheets": [],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "mars": {
@@ -64,9 +55,12 @@
     2325,
     2427
    ],
-   "sheets": [],
+   "sheets": [
+    "mars.hold",
+    "mars.dive"
+   ],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "jupiter": {
@@ -76,21 +70,23 @@
     3150,
     3296
    ],
-   "sheets": [],
+   "sheets": [
+    "jupiter.hold",
+    "jupiter.dive",
+    "jupiter.dive-cover",
+    "jupiter.terrain",
+    "jupiter.rise",
+    "jupiter.rise-cover"
+   ],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "saturn": {
-   "frames": [
-    3465,
-    3567,
-    3720,
-    3866
-   ],
+   "frames": [],
    "sheets": [],
-   "R1": true,
-   "R8": true,
+   "R1": false,
+   "R8": false,
    "R2": false
   },
   "uranus": {
@@ -100,9 +96,16 @@
     4290,
     4436
    ],
-   "sheets": [],
+   "sheets": [
+    "uranus.hold",
+    "uranus.dive",
+    "uranus.dive-cover",
+    "uranus.terrain",
+    "uranus.rise",
+    "uranus.rise-cover"
+   ],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   },
   "neptune": {
@@ -114,42 +117,26 @@
    ],
    "sheets": [
     "neptune.hold",
-    "neptune.terrain"
+    "neptune.dive",
+    "neptune.dive-cover",
+    "neptune.terrain",
+    "neptune.rise",
+    "neptune.rise-cover"
    ],
    "R1": true,
-   "R8": true,
+   "R8": false,
    "R2": false
   }
  },
  "film": {
-  "frames": [
-   495,
-   1072,
-   1642,
-   2212,
-   2782,
-   3352,
-   3922,
-   4492,
-   5085,
-   5235
-  ],
-  "sheets": [
-   "sun.travel",
-   "venus.travel",
-   "earth.travel",
-   "mars.travel",
-   "jupiter.travel",
-   "ending.lookback",
-   "ending.fade"
-  ],
-  "R5": true,
-  "R6": true,
-  "R7": [
-   "mars.dive",
-   "ending.lookback"
-  ],
+  "frames": [],
+  "sheets": [],
+  "R5": false,
+  "R6": false,
+  "R7": [],
   "R2": false
  },
- "unknown": []
+ "unknown": [
+  "motion-neptune.rise-cover.png"
+ ]
 }
