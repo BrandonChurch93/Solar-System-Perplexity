@@ -23,19 +23,38 @@ export interface GlobeLook {
   nightBlur: number
   probe: number
   edgePx: number
+  limbFit: number[]
+  limbLat: [number, number]
+  limbInflate: number
+  glowNorth: [number, number, number, number]
+  glowPole: [number, number, number, number]
+  glowWide: [number, number, number, number]
+  glowCap: [number, number, number]
 }
 
 export interface GlobePatch { texture: THREE.Texture; table: THREE.Texture; box: THREE.Vector4; size: THREE.Vector2 }
 
 export interface ShotLight { texture: THREE.Texture; matrix: THREE.Matrix4; camera: THREE.Vector3; weight: THREE.IUniform<number> }
 
+export const LIMB_GLSL = /* glsl */ `
+uniform float uLimbFit[23];
+uniform vec2 uLimbLat;
+uniform float uLimbW;
+float limbAt(vec3 tp, float polar, vec3 sun) {
+  float x = clamp((degrees(asin(clamp(tp.y, -1.0, 1.0))) - uLimbLat.x) / uLimbLat.y, 0.0, 22.0);
+  int i = int(min(floor(x), 21.0));
+  float day = smoothstep(0.0, 0.3, dot(normalize(vec3(tp.x, tp.y / polar, tp.z)), normalize(sun)));
+  return uLimbW * mix(uLimbFit[i], uLimbFit[i + 1], x - float(i)) * day;
+}`
+
 const VERT = /* glsl */ `
 out vec3 vLocal;
 out vec3 vView;
 out vec3 vClip;
+uniform float uInflate;
 void main() {
-  vLocal = position;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
+  vLocal = position * uInflate;
+  vec4 mv = modelViewMatrix * vec4(vLocal, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
   vClip = gl_Position.xyw;
@@ -95,6 +114,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
+${LIMB_GLSL}
 vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
   vec4 c = m * vec4(P, 1.0);
   vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
@@ -127,8 +147,10 @@ float zonal(float lat) {
   return 0.55 * sin(lat * 7.0 + 0.4) + 0.3 * sin(lat * 17.0 + 1.9) + 0.15 * sin(lat * 31.0 + 0.6);
 }
 void main() {
-  vec3 p = normalize(vLocal);
   vec3 dirS = normalize(vLocal - uCam);
+  float along = -dot(uCam, dirS);
+  float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
+  vec3 p = normalize(uLimbW > 0.0 ? uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))) : vLocal);
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
@@ -174,9 +196,9 @@ void main() {
     float hi = min(floor(val * 255.0), 254.0);
     layer = vec3(hi / 255.0, val * 255.0 - hi, 1.0);
   }
-  float along = -dot(uCam, dirS);
-  float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
-  float cover = uDiag >= 2 ? 1.0 : clamp((1.0 - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
+  float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
+  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
+  float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
   outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
 }`
 
@@ -205,6 +227,7 @@ export class Globe {
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
+        uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
         uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
@@ -232,21 +255,38 @@ uniform vec3 uSunL;
 uniform float uPolar;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
+uniform vec4 uGlowNorth;
+uniform vec4 uGlowPole;
+uniform vec4 uGlowWide;
+uniform vec3 uGlowCap;
 out vec4 outColor;
 ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
+${LIMB_GLSL}
 void main() {
   if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
-  if (b > 0.0 && rt2 < 0.99) discard;
+  if (b > 0.0 && rt2 < (uLimbW > 0.0 ? 0.96 : 0.99)) discard;
+  float rt = sqrt(max(rt2, 0.0));
+  vec3 tp = (uCam + dir * b) / max(rt, 1e-4);
+  float fit = b > 0.0 ? uLimbW : 0.0;
+  float dl = fit > 0.0 ? min(limbAt(tp, uPolar, uSunL), 0.0) : 0.0;
+  float lat = degrees(asin(clamp(tp.y, -1.0, 1.0)));
+  float north = fit * smoothstep(uGlowNorth.x, uGlowNorth.y, lat);
+  float pole = smoothstep(uGlowPole.x, uGlowPole.y, lat);
+  float high = max(rt - 1.0 - dl, 0.0);
+  float hh = uHazeH * mix(1.0, uGlowNorth.w, north);
   vec3 at;
-  float tau = hazeDepth(dir, false, at);
+  float tau = hazeDepthAt(dir, false, hh, at) * exp((max(rt - 1.0, 0.0) - high) / hh);
+  float sunny = smoothstep(uHazeEdge.x, uHazeEdge.y, dot(at, uSunW));
+  vec3 wide = mix(uGlowWide.rgb, uGlowCap, pole) * (north * sunny * sunny * exp(-high / uGlowWide.w));
+  float tight = mix(1.0, uGlowNorth.z, north) * mix(1.0, uGlowPole.z, north * pole);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
-  outColor = vec4(hazeLight(at, dir) * (1.0 - exp(-tau)) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
+  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
 }`
 
 export class Shell {
@@ -259,6 +299,8 @@ export class Shell {
       uniforms: {
         ...hazeUniforms(haze), ...profile, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
+        uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
+        uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
       },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })

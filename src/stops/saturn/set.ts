@@ -92,7 +92,8 @@ export const createSet: SetFactory = async (ctx) => {
   const apronSize = apronJson.sets[key] as [number, number]
   const apronBox = new THREE.Vector4(-apronJson.left, -apronJson.below, 1 / (1 + apronJson.left + apronJson.right), 1 / (1 + apronJson.below))
   const apron = { uApronMap: { value: await ctx.texture(base + apronJson.file, { srgb: true, anisotropy: 16 }) }, uApronMask: { value: await ctx.texture(base + apronJson.mask, { srgb: false, anisotropy: 16 }) }, uApron: { value: apronBox }, uApronSize: { value: new THREE.Vector2(apronSize[0], apronSize[1]) }, uApronFit: { value: new THREE.Vector4(look.rings.apronEdge[0], look.rings.apronEdge[1], look.rings.apronEdge[2], 0) }, uBloomMap: { value: await ctx.texture(base + bloomJson.file, { srgb: false }) }, uDebloom: { value: new THREE.Vector2(look.rings.debloom, bloomJson.scale) }, uSkimHigh: { value: new THREE.Vector4().fromArray(look.rings.skimHigh) } }
-  const rings = new Rings(profile, layout, { ...skimShot, ...ringMap, ...apron }, look.rings, polar)
+  const limb = { uLimbFit: { value: look.globe.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.globe.limbLat) }, uLimbW: { value: 0 } }
+  const rings = new Rings(profile, layout, { ...skimShot, ...ringMap, ...apron, ...limb }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)
   const ice = new Ice(look.ice, polar, { ...profile, ...layout }, skimM, skimShow)
   ;(ice.material.uniforms.uSkimL!.value as THREE.Vector3).copy(skimL)
@@ -197,6 +198,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       gu.uEdgePx!.value = THREE.MathUtils.lerp(look.globe.edgePx, look.skimLimb[0], skimW.value)
       gu.uEdgeLin!.value = look.skimLimb[1] * skimW.value
+      gu.uLimbW!.value = poseW.value * look.limbShow
+      su.uLimbW!.value = gu.uLimbW!.value
+      gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(gu.uLightL!.value as THREE.Vector3).copy(lightL)
@@ -218,6 +222,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn).lerp(shadowClose.copy(lightL).applyAxisAngle(UP, THREE.MathUtils.degToRad(look.rings.shadowClose[0])).setY(Math.sin(THREE.MathUtils.degToRad(look.rings.shadowClose[1]))), close.value).normalize())
       ru.uGain!.value = gain
+      ru.uLimbW!.value = gu.uLimbW!.value
       ru.uWeight!.value = state.weight
       ru.uTime!.value = elapsed
       ru.uSpinRate!.value = spinRate

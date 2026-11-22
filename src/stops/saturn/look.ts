@@ -26,6 +26,13 @@ export const globe: GlobeLook = {
   termShift: [0.085, 0.55, 0.97],
   probe: 0,
   edgePx: 2.6,
+  limbFit: [0, 0, 0, 0, 0.003, 0.008, 0.0138, 0.0118, 0.0082, 0.0018, -0.0029, -0.006, -0.008, -0.0092, -0.009, -0.0087, -0.0085, -0.0085, -0.0074, -0.0052, -0.001, 0.004, 0.005],
+  limbLat: [-35, 5],
+  limbInflate: 1.02,
+  glowNorth: [35, 48, 0.46, 0.67],
+  glowPole: [60, 72, 0.5, 0],
+  glowWide: [0.109, 0.087, 0.056, 0.049],
+  glowCap: [0.063, 0.062, 0.056],
 }
 
 export const haze: HazeParams = {
@@ -108,6 +115,9 @@ export const rings: RingLook = {
   wedge: [0.063, 0.043, 0.029, 1.02],
   wedgeIn: [0.985, 1.003],
   sheetFit: [1.1, 1.16, 0.9, 0],
+  shine: [0.2, 0.07, 0.035, 0.01],
+  shineWide: [0.11, 0.04, 0.016, 0.045],
+  shineBack: 0.3,
   sheetGlow: [0.03, 0.029, 0.022, 0],
   fillet: [0.76, 0.336, 29.8, 0.004],
 }
@@ -162,6 +172,7 @@ export const polarEdge: [number, number] = [1.46, 1.54]
 export const polarDensity: [number, number] = [1.0, 1.3]
 export const polarOuter: [number, number] = [0.012, 0.002]
 export const polarShow = 1
+export const limbShow = 1
 export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
