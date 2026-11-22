@@ -1116,3 +1116,40 @@ CUT34 message sent 16:04 VM time: READY a135f6b8742534624b83241849f66ae0d5c05525
 MAIL 185 (16:08), word for word: "CUT34 venus: a135f6b8 taken whole, commits 1 and 2. Your four judged frames keep their bytes, so R1, R3 and the jury are not asked again on this stop; R4 judges the dive, the rise and both covers. The travel agent's field light.skyLiftFrom lands inert in the same cut; do not set it unless a pair at review shows it better than your carry of 24. The rim refit of 1185 stays out, as you decided: right call. CUT35, message by 18:30 UTC: take outs and small proven things; one larger cure is allowed if it is its own commit and proved whole on sheets at review beside round 34's (the two gates of the veil, 1318 to 1320 and 1550 to 1557, if you can prove them). If round 35's critic reads it as worse, your folders go back to their round 34 state for the freeze. I forward round 34's words on your frames as they come."
 
 Plan: the round 34 state of my folders is head a135f6b8 (commits 539534e0 and e30dd702). The Builder's clock runs 2 to 3 minutes ahead: send `CUT35 venus` by 18:20 VM time. Work on the veil's gates on the terrain side (dive out 1314 to 1322, rise in 1550 to 1558) as ONE commit of its own; proof on review sheets beside round 34's (`view/c25-dc.png` is the round 34 dive cover, `view/c26-rc.png` the round 34 rise cover), judged finals must keep their bytes. Latest start of the full proof about 17:00 VM time. If it is not clearly better on the sheets, nothing goes into CUT35 and the message says so.
+
+## State at 16:32 (22 Nov): the gate cure is built (commit 84039da0), full proof q39 is running, CUT35 goes out by 18:20 VM time (read this first after a compaction)
+
+Head 84039da0 (the cure, its own commit, pushed "in proof") on b18bf2f4; tree holds main 6460b4a. The round 34 state of my folders is a135f6b8 (b18bf2f4 adds notes only). r2 on main 84b0ea4 with the repo's three folders copied in.
+
+### What the two gates were (read in the code, draft strips `view/m-dive-out.jpg`, `view/m-rise-in.jpg`)
+
+- On the terrain side the veil's opaque fog fill (`solid = smoothstep(0.55, 1, amount)`) fell from 0.97 to 0 in five frames (1317 to 1322) and rose in the same way (1553 to 1557): the terrain picture came and went in about three frames. That is the "snap in" and the "smear in one step".
+- The veil's streaks died with the amount (`mist[4] = 1`, `thin` 1 below amount 0.85), not with the fall speed: streaks to 1316, flat fog 1317 and 1318, then a sharp terrain. `plan.drop` gives the fall speed (1 minus x, squared): 0.64 at 1317, 0.37 at 1320, 0.18 at 1323, 0.06 at 1326; rise 0.12 at 1550, 0.30 at 1553, 0.56 at 1556. The veil's own rush is clamped at 1 from 1308 to 1320 and 1555 to 1564.
+- The terrain picture under the veil was sharp from its first frame, while the veil said "fast".
+
+### The cure (one commit, four files: `veil.ts`, `relief.ts`, `set.ts`, `look.ts`)
+
+1. `look.veil.sheets.solidTerrain [0.25, 1]`: the fog fill on the terrain side opens over amount 1 to 0.25 (frames 1317 to 1326, rise 1549 to 1557). `uSolid` is now a vec3: x, y the fill's range (mixed by the `mist` argument, 0 on the orbit side), z the sheets' `open` top, which stays 0.55 on both sides. The orbit side gets exactly its old numbers.
+2. `look.veil.sheets.mist[4]` 1 to 0: on the terrain side the mist keeps the streak pattern in its alpha for as long as the fall speed gives a rush, so the streaks soften and shorten with the speed instead of dying in one frame. `mist` values act on the terrain side only (`thin = mist * ...`).
+3. `look.veil.slip 0.15`, `look.relief.slipTaps 12`: under the veil (terrain side, `thick > 0`) the relief layers are drawn with 12 taps along the screen path each point takes when the camera moves along the veil's own fall line (the veil's nadir in the camera, the centre of its streak fan), length = `slip` times the fall speed times the camera's height over the deck, per pixel by depth (near clouds long, horizon none). Colour and alpha both. Outside the veil `uSlip` is 0, `uTaps` 1, `uHeld` 0: one `textureGrad` at the old place with the old gradients, so the judged frames should keep their bytes (to be proved by `cmp` at final tier).
+   - This is a blur drawn in my folder. Mail 13 forbids blur tricks that hide the engine's ghost copies in the fastest frames; this one is the handover on the slow side of the cover (the critic's own fix: "tie blur length to camera speed so detail sharpens as the descent eases", "let the blur build with it") and it is named as what it is in the cut message.
+   - The terrain move itself is not touched.
+
+### Tests (draft, preview, `r2/out/work/venus/p6/TAG-F.png`; pairs under `view/`)
+
+- g1: fill range and a one call anisotropic footprint. The footprint showed stepped copies at 2x zoom; replaced by taps.
+- g2, g3: `mist` range `[0.4, 0.9]` (streak sheets kept crisp longer): a pale lump of the nearest sheet shows as a blob at 1319 to 1321 (`view/g3-n2.png`, `view/g3-blob2.png`; it is in the veil, round 34 has it faintly). Dropped.
+- g5 (kept): `mist` range as in round 34, `mist[4] = 0`. Dive out: crisp streaks to 1316, soft streaked fog 1317 to 1319, the terrain comes up soft at 1319 to 1322 and is sharp by 1324; no blob. Rise in: terrain softens from 1550, soft terrain in fog 1552 and 1553, streaked fog 1554 to 1556, crisp streaks 1557. `view/g5-dive.jpg`, `view/g5-rise.jpg`, native `view/g5-dive-n.jpg`, `view/g5-rise-n.jpg`.
+- g6: 24 taps equals 12 taps to the eye (`view/g6-taps.png`): what looks like copies at 2x zoom are the separate bright cloud tops, each drawn as its own short streak.
+- Not cured, as before: the veil's limb line (the orbit view's horizon, tilted) gives way to the terrain's horizon over the frames where the fill opens (now 1319 to 1321 and 1552 to 1554, before 1318 to 1319 and 1555 to 1556).
+
+### Proof queue q39 (started 16:29, log `/tmp/q39.log`), in this order
+
+1. Orbit side draft frames 1305, 1310, 1312, 1562, 1566, 1572 against `qd-F.png` (round 34 state): must be the same bytes.
+2. `fin.sh f27`, `cmp` with `f26-F.png`: all four judged finals must keep their bytes.
+3. Both cover sheets at review (`view/c27-rc.png`, `view/c27-dc.png`), read every frame beside `view/c26-rc.png` and `view/c25-dc.png`.
+4. Review frames of the cure outside the cover sheets: `h5-F.png`, 1321 to 1328 and 1546 to 1554.
+5. G13 every frame; audit; vitest; gates G11, G12, G15; repeat on 1185, 1287, 1440, 1586, 1320, 1553; G5 and G17.
+6. Round 34 state review frames `r34-F.png` (1321 to 1324, 1326, 1548, 1550 to 1554) for pairs, then the cure is copied back into r2.
+
+If a judged final differs, or the sheets do not read clearly better, a revert commit of 84039da0 goes in and `CUT35 venus` says the round 34 state stands.
