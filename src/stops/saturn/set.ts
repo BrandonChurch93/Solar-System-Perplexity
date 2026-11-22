@@ -146,9 +146,12 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      seat.copy(shot.camera.quaternion).multiply(plan.seat(state.time)).multiply(seatBack.copy(shot.camera.quaternion).invert())
-      world.position.applyQuaternion(seat)
-      world.quaternion.premultiply(seat)
+      const turned = plan.seat(state.time)
+      if (turned.w !== 1) {
+        seat.copy(shot.camera.quaternion).multiply(turned).multiply(seatBack.copy(shot.camera.quaternion).invert())
+        world.position.applyQuaternion(seat)
+        world.quaternion.premultiply(seat)
+      }
       if (inOrbit) {
         body.position.set(0, 0, 0)
         body.quaternion.identity()
