@@ -1,9 +1,115 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T08:38:11.671Z",
- "head": "62acb139f3ba586ed0a736981a6d9823e5ad8fb2",
- "note": "Earth READY 2 re-proof on engine batch 20: arrival strip with the cure rendered, 1755 and 2010 byte equal; before strip, finals 1857 and 2156, sheets, repeat, measure running",
+ "pushed": "2026-11-22T09:06:53.085Z",
+ "head": "82fabb4ff4e9abf74c577c9e19dff6c00b84b17e",
+ "note": "Earth READY 2 re-proof on engine batch 20: mail 80 strips before and after done; finals 1755, 1857, 2010 byte equal, 2156 new sky only; sheets, cover frames, repeat, measure running",
  "looks": [
+  {
+   "time": "2026-11-22T09:06:51.994Z",
+   "file": "20261122090651994-note-moon-2156.jpg",
+   "source": "out/work/earth/pb/m/moon-2156.png",
+   "kind": "note",
+   "label": "Item 7 on batch 20: the Moon at 2156 at 4 times, kept build left, new right. agent/earth 82fabb4 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:06:50.745Z",
+   "file": "20261122090650745-note-night-new.jpg",
+   "source": "out/work/earth/pb/m/night-new.png",
+   "kind": "note",
+   "label": "Item 4 on batch 20 stills: night limb 1755, 1857, 2156, native at 3 times and at 3 times gain; dips 3, 0, 0 of 11. agent/earth 82fabb4 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:06:49.733Z",
+   "file": "20261122090649733-note-v-2156-b19-b20.jpg",
+   "source": "out/work/earth/pb/m/v-2156-b19-b20.png",
+   "kind": "note",
+   "label": "2156 at the final tier: batch 19 (fcde160f) left, batch 20 (747dab7f) right. The disc is the same picture (inside 495 px of the centre at most 2 levels); the sky has batch 20's points. Moon night side (8, 15, 22) against its sky (9, 16, 23) on both. agent/earth 82fabb4 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T09:06:07.760Z",
+   "file": "20261122090607760-frame-f01680-review.jpg",
+   "source": "out/work/sheets/.frames-O4CMlC/f01680-review.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1680, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:05:27.036Z",
+   "file": "20261122090527036-frame-f-2156-final.jpg",
+   "source": "out/work/earth/pb/m/f-2156-final.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T09:00:27.853Z",
+   "file": "20261122090027853-frame-f-1857-final.jpg",
+   "source": "out/work/earth/pb/m/f-1857-final.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8c3819aa56f46da4"
+  },
+  {
+   "time": "2026-11-22T08:56:14.512Z",
+   "file": "20261122085614512-note-v-1666-red.jpg",
+   "source": "out/work/earth/pb/m/v-1666-red.png",
+   "kind": "note",
+   "label": "1666 and 1667 on batch 20 at 3 times, with the dark red mask (red over max(green, blue) by more than 8): on main a red band along the limb, with the cure only the warm dust of the band in the sky behind. agent/earth 62acb13 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:56:13.407Z",
+   "file": "20261122085613407-note-v-arrival-frames-2.jpg",
+   "source": "out/work/earth/pb/m/v-arrival-frames-2.png",
+   "kind": "note",
+   "label": "MAIL 80 STRIP, whole frames 1673 to 1679, review tier, preview format, three rows: main 89715a1 kept Earth on batch 19 (what round 30 saw), main f24046b kept Earth on batch 20 (before), my branch with the cure on batch 20 (after). agent/earth 62acb13 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:56:12.243Z",
+   "file": "20261122085612243-note-v-arrival-limb-2.jpg",
+   "source": "out/work/earth/pb/m/v-arrival-limb-2.png",
+   "kind": "note",
+   "label": "MAIL 80 STRIP, upper right limb 1673 to 1679, review tier, preview format, three rows: main 89715a1 kept Earth on batch 19 (what round 30 saw), main f24046b kept Earth on batch 20 (before), my branch with the cure on batch 20 (after). Green band and red edge gone in all frames. agent/earth 62acb13 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:56:10.922Z",
+   "file": "20261122085610922-note-v-arrival-frames-1.jpg",
+   "source": "out/work/earth/pb/m/v-arrival-frames-1.png",
+   "kind": "note",
+   "label": "MAIL 80 STRIP, whole frames 1666 to 1672, review tier, preview format, three rows: main 89715a1 kept Earth on batch 19 (what round 30 saw), main f24046b kept Earth on batch 20 (before), my branch with the cure on batch 20 (after). agent/earth 62acb13 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:56:09.899Z",
+   "file": "20261122085609899-note-v-arrival-limb-1.jpg",
+   "source": "out/work/earth/pb/m/v-arrival-limb-1.png",
+   "kind": "note",
+   "label": "MAIL 80 STRIP, upper right limb 1666 to 1672, review tier, preview format, three rows: main 89715a1 kept Earth on batch 19 (what round 30 saw), main f24046b kept Earth on batch 20 (before), my branch with the cure on batch 20 (after). Green band and red edge gone in all frames. agent/earth 62acb13 (code c2a211a), tree holds main f24046b (engine batch 20, engine hash 8c3819aa)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-22T08:38:10.719Z",
    "file": "20261122083810719-note-v-b19-b20.jpg",
@@ -237,48 +343,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T08:12:01.638Z",
-   "file": "20261122081201638-frame-f-1755-final.jpg",
-   "source": "out/work/earth/pb/k/f-1755-final.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T08:09:15.188Z",
-   "file": "20261122080915188-frame-r-2133.jpg",
-   "source": "out/work/earth/pb/j/r-2133.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2133, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2133,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T08:06:27.429Z",
-   "file": "20261122080627429-frame-r-1888.jpg",
-   "source": "out/work/earth/pb/j/r-1888.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1888, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1888,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
    "time": "2026-11-22T08:04:04.201Z",
    "file": "20261122080404201-sheet-earth.terrain-16x9-review.jpg",
    "source": "out/work/sheets/earth.terrain-16x9-review.png",
@@ -450,38 +514,6 @@
    "source": "out/work/earth/pb/j/v-arrival-limb-1.png",
    "kind": "note",
    "label": "Mail 80, arrival 1666 to 1672, upper right limb at preview pixels, review tier: main 89715a1 (kept Earth), agent/earth 3b3819e before, agent/earth with the cure. Green pixels in this crop: 2505 to 4403 on main, 9 to 120 with the cure. Tree: agent/earth 3f32bf0 plus the cure (earth hash d2fd0232), main 89715a1, engine batch 19 7a880ac6, engine hash 7553966a.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:54:56.232Z",
-   "file": "20261122065456232-note-v-onset-2.jpg",
-   "source": "out/work/earth/pb/i/v-onset-2.png",
-   "kind": "note",
-   "label": "Mail 80, the aurora rising after the arrival, draft stills 1670, 1679, 1686, 1692, 1698, 1704, 1710, 1716 (first variant of the disc mask). agent/earth c457e9c plus the uncommitted onset change, tree holds main 89715a1 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:54:55.568Z",
-   "file": "20261122065455568-note-v-bed-2.jpg",
-   "source": "out/work/earth/pb/i/v-bed-2.png",
-   "kind": "note",
-   "label": "Mail 80, draft stills at 2 times: 1679 with the cure (aurora not yet risen, the baked green of the disc held back) and 1722 (full aurora, as before). agent/earth c457e9c plus the uncommitted onset change, tree holds main 89715a1 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:54:54.924Z",
-   "file": "20261122065454924-note-v-ba-2.jpg",
-   "source": "out/work/earth/pb/h/v-ba-2.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1673 to 1679, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:54:54.306Z",
-   "file": "20261122065454306-note-v-ba-1.jpg",
-   "source": "out/work/earth/pb/h/v-ba-1.png",
-   "kind": "note",
-   "label": "Mail 80, arrival 1666 to 1672, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure. The green band is on both.",
    "stop": "earth"
   }
  ]
