@@ -1,9 +1,33 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T02:50:16.354Z",
- "head": "cfe7fff26ab07d8be99d808aeb942d735e445770",
- "note": "merged tree (main 3d48581): judged rise frames, travel heads, 3922 and 4492 with the new timing",
+ "pushed": "2026-11-22T02:55:36.511Z",
+ "head": "edea3c96ebfdac808276e99d0a4401c5771ea2e5",
+ "note": "merged tree: finals 3922 4492 495 with the new timing",
  "looks": [
+  {
+   "time": "2026-11-22T02:53:20.668Z",
+   "file": "20261122025320668-note-f495-final.jpg",
+   "source": "out/work/travel/m2/f495-final.png",
+   "kind": "note",
+   "label": "m2: f495-final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T02:53:20.029Z",
+   "file": "20261122025320029-note-f4492-final.jpg",
+   "source": "out/work/travel/m2/f4492-final.png",
+   "kind": "note",
+   "label": "m2: f4492-final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T02:53:19.389Z",
+   "file": "20261122025319389-note-f3922-final.jpg",
+   "source": "out/work/travel/m2/f3922-final.png",
+   "kind": "note",
+   "label": "m2: f3922-final",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T02:48:55.465Z",
    "file": "20261122024855465-note-f3328-review.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/travel/m2/f1615-review.png",
    "kind": "note",
    "label": "m2: f1615-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T02:48:52.244Z",
-   "file": "20261122024852244-note-f1606-review.jpg",
-   "source": "out/work/travel/m2/f1606-review.png",
-   "kind": "note",
-   "label": "m2: f1606-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T02:48:51.597Z",
-   "file": "20261122024851597-note-f1048-review.jpg",
-   "source": "out/work/travel/m2/f1048-review.png",
-   "kind": "note",
-   "label": "m2: f1048-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T02:48:50.954Z",
-   "file": "20261122024850954-note-f1042-review.jpg",
-   "source": "out/work/travel/m2/f1042-review.png",
-   "kind": "note",
-   "label": "m2: f1042-review",
    "stop": "travel"
   }
  ]
