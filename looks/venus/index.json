@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T00:03:58.297Z",
- "head": "246312a7a8196d6b1e73ad1a4df4ad38d5d5e479",
- "note": "Phase 6 proof: final tier stills f2 (1185, 1287, 1586) and review cover sheets c13 on 830a506",
+ "pushed": "2026-11-22T00:51:47.240Z",
+ "head": "b59114ab8275501d5015620cbbdb721edfcf038b",
+ "note": "POLISH READY: final tier stills f2 (1185, 1287, 1440, 1586) and review cover sheets c14, code 0b35992",
  "looks": [
+  {
+   "time": "2026-11-22T00:51:45.148Z",
+   "file": "20261122005145148-note-c14-rc.jpg",
+   "source": "../view/c14-rc.png",
+   "kind": "note",
+   "label": "P6 rise cover sheet 1555 to 1566, review tier, window 1.0 s, code 0b35992 on engine 837adbb",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:51:44.558Z",
+   "file": "20261122005144558-note-c14-dc.jpg",
+   "source": "../view/c14-dc.png",
+   "kind": "note",
+   "label": "P6 dive cover sheet 1309 to 1320, review tier, window 1.0 s, code 0b35992 on engine 837adbb",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:10:25.385Z",
+   "file": "20261122001025385-note-f2-1440-pair.jpg",
+   "source": "../view/f2-1440-pair.jpg",
+   "kind": "note",
+   "label": "P6 f2 terrain 1440 final tier: round 23 above, now below",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T00:10:24.596Z",
+   "file": "20261122001024596-note-f2-1440-left.jpg",
+   "source": "../view/f2-1440-left.png",
+   "kind": "note",
+   "label": "P6 f2 terrain 1440 left limb native, lifted 1.6 times: round 23, now (second star copy gone)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T00:03:56.159Z",
    "file": "20261122000356159-note-c13-rc.jpg",
@@ -66,54 +98,6 @@
    "source": "../view/f2-1586-lr.png",
    "kind": "note",
    "label": "P6 f2 rise 1586 lower right limb native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:04.945Z",
-   "file": "20261121234404945-note-f2-1586-top.jpg",
-   "source": "../view/f2-1586-top.png",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 plume native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:04.221Z",
-   "file": "20261121234404221-note-f2-1586-pair.jpg",
-   "source": "../view/f2-1586-pair.jpg",
-   "kind": "note",
-   "label": "P6 f2 rise 1586 final tier: round 23 above, now below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:03.378Z",
-   "file": "20261121234403378-note-f2-1287-night.jpg",
-   "source": "../view/f2-1287-night.png",
-   "kind": "note",
-   "label": "P6 f2 dive 1287 night limb native: round 23, now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:02.596Z",
-   "file": "20261121234402596-note-f2-1287-pair.jpg",
-   "source": "../view/f2-1287-pair.jpg",
-   "kind": "note",
-   "label": "P6 f2 dive 1287 final tier: round 23 above, now below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:01.808Z",
-   "file": "20261121234401808-note-b5-bolts.jpg",
-   "source": "../view/b5-bolts.png",
-   "kind": "note",
-   "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:00.973Z",
-   "file": "20261121234400973-note-f2-1185-lit.jpg",
-   "source": "../view/f2-1185-lit.png",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
    "stop": "venus"
   },
   {
