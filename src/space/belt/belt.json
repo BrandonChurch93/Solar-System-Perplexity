@@ -4,7 +4,7 @@
   "aperture": 12,
   "near": 0.02,
   "far": 200,
-  "steps": {"min": 16, "max": 96, "gap": 1.5},
+  "steps": {"min": 16, "max": 96, "gap": 1.5, "window": 1},
   "light": {
     "tint": [0.61, 0.54, 0.5],
     "gain": 0.25,
@@ -23,8 +23,8 @@
     "shade": [0, 0, 1]
   },
   "rocks": [
-    {"id": "hero", "asset": "a", "frame": 2782, "at": [0.672, 0.333], "distance": 2.0, "radius": 0.195, "hold": 1, "approach": 0, "velocity": [-0.0218, 0.0845, 0], "ease": 22, "tilt": [20, -35, 10], "axis": [0.3, 0.9, 0.2], "spin": 20, "mesh": 256, "gain": 1, "fill": 1, "flow": 0, "look": {"crisp": [-1.0, 0.05, 1.1], "tile": [2.3, 5.1], "detail": 1.0, "rim": 0.3, "lift": 1.85, "night": [0.2, 0.5, 1.6], "shade": [2.0, 1.0, 0.5]}, "follow": 1},
-    {"id": "near", "asset": "b", "frame": 2769, "at": [0.2, 0.75], "distance": 0.5, "radius": 0.052, "hold": 1, "approach": 0, "velocity": [-0.535, 0.47, 0], "ease": 0, "tilt": [100, 40, 0], "axis": [0.7, 0.2, 0.6], "spin": 40, "mesh": 128, "gain": 1.2, "fill": 1, "flow": 0},
+    {"id": "hero", "asset": "a", "frame": 2782, "at": [0.672, 0.333], "distance": 2.0, "radius": 0.195, "hold": 1, "approach": 0, "velocity": [-0.0218, 0.0845, 0], "ease": 22, "tilt": [20, -35, 10], "axis": [0.3, 0.9, 0.2], "spin": 20, "mesh": 256, "gain": 1, "fill": 1, "flow": 0, "look": {"crisp": [-1.0, 0.05, 1.4], "tile": [2.3, 5.1], "detail": 1.0, "rim": 0.3, "lift": 1.85, "night": [0.2, 0.5, 1.6], "shade": [2.0, 1.7, 0.5]}, "follow": 1},
+    {"id": "near", "asset": "b", "frame": 2769, "at": [0.2, 0.75], "distance": 0.5, "radius": 0.052, "hold": 1, "approach": 0, "velocity": [-0.535, 0.47, 0], "ease": 0, "tilt": [100, 40, 0], "axis": [0.7, 0.2, 0.6], "spin": 40, "mesh": 128, "gain": 1.2, "fill": 1, "flow": 0, "look": {"night": [0.8, 0.3, 0.4]}},
     {"id": "far1", "asset": "c", "frame": 2766, "at": [0.9, 0.13], "distance": 11, "radius": 0.22, "hold": 1, "approach": 0, "velocity": [-4.9, 3.05, 0], "ease": 0, "tilt": [140, 20, 60], "axis": [0.1, 0.5, 0.8], "spin": 25, "mesh": 96, "gain": 1, "fill": 1, "flow": 0},
     {"id": "far2", "asset": "c", "frame": 2793, "at": [0.07, 0.85], "distance": 13, "radius": 0.26, "hold": 1, "approach": 0, "velocity": [-4.1, 5.4, 0], "ease": 0, "tilt": [30, 200, -50], "axis": [0.5, 0.2, 0.8], "spin": 20, "mesh": 96, "gain": 1, "fill": 1, "flow": 0}
   ],
