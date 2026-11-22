@@ -57,7 +57,13 @@ Mars on main `3d48581` and on the branch: 2325 `fd128b1a999f76fa`, 2427 `5636a97
 
 Against main `0bfe5690` the new main moved these of the 53 frames: 247, 615, 717, 1016, 1185, 1287, 1314, 1560, 1586, 1857, 2130, 2156, 2895, 2997, 3024, 3150, 3296, 3567, 3594, 3720, 3840, 3866, 4035, 4137, 4436, 4605, 4707, 5006.
 
-Not run again on this tree (they stand on the base `0bfe5690`, next section): the Venus veil frames (they need `agent/venus`, which does not hold main `3d48581`), the review tier frame, a second render of Saturn on main, the ten extra frames where the cover pass is now skipped, the 53 frames of the band branch.
+Saturn rendered a second time on main `3d48581` itself: 3567, 3594, 3840, 3866 differ from the first render of the same tree, so the frames that differ above are within what main does against itself.
+
+The ten extra frames where the cover pass of main is skipped now (212, 1307, 1876, 2122, 2446, 2692, 3016, 4151, 4396, 4726), main `3d48581` against the branch: 10 of 10 byte equal.
+
+The band branch (`a8299d2`, main `3d48581` merged in) against main `3d48581`: 50 of 53 byte equal; the ones that differ are 3594, 3840, 3866.
+
+Not run again on this tree (they stand on the base `0bfe5690`, next section): the Venus veil frames (they need `agent/venus`, which does not hold main `3d48581`), the review tier frame.
 
 ## Earlier proof on the base `0bfe5690`
 
