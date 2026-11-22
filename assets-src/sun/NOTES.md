@@ -933,3 +933,20 @@ Disk, 07:06: `git gc --prune=now` ran out of space (it needs about 2 GB of temp 
 - Open offer, not built into any branch: the globe as a cross fade too (`out/work/sun/t92/globe.ts.new`; takes out a step of about 3.5 levels in blue at 499 to 500). Only if the Builder or the travel agent asks.
 - Local branch `scratch/t92` = agent/sun-hook plus agent/travel a3c388b, for looking at travel frames with the travel code. Never push it.
 - The final render of the nine hook frames for 8a and 8b was stopped at 07:27 for this mail and started again at 07:39 (`out/work/sun/mh/after92.sh`, log `mh/k4f.log`: drafts 0, 90, 150, 208, 247, 360 against `b20` first, then finals into `mh/k4f`).
+
+## Items 8a and 8b at the final tier; item 6 (streamers outside the approved frame) built (07:46 to 08:05 UTC Nov 22, main 681d8da, head b6bbba7)
+
+Items 8a and 8b, finals (`out/work/sun/mh/k4f`, tree 6ca7e26):
+- Pixels with all channels at least 240 in the 400 by 300 native crops, count / longest run. Hook as accepted (739ae28 finals): f8 6861 / 76, f23 11465 / 75, f45 6528 / 56, f53 5770 / 58, f60 2646 / 25. Now: 2087 / 15, 1813 / 20, 2056 / 27, 2111 / 32, 1641 / 19.
+- Pictures `mh/feet-k4f.jpg`, `mh/crest-k4f.jpg`, `mh/strip-k4f-final-400px.jpg`, on looks. Low priority note sent to /root at 07:50. Weak points said: the before row is the hook branch (no polish items), runs of 15 to 32 px are under the 40 px of mail 85 so the feet may read less hot than wanted, the pulse measure is drafts only.
+- main 681d8da merged (docs and stills only), pushed as b6bbba7.
+
+Item 6, what was found:
+- Draft frames before and after the new card on this tree: 216, 220, 224, 360 keep their bytes. 236: 3 px. 247: 5183 px change by at most 3 levels (frame borders). 270: 7463 px, at most 5 levels. 449: 6686 px, at most 3. So the hold and the judged rise frame see next to nothing outside the approved frame. The critic's streaks at 360 are the hero's own and stay, as mail 34 says.
+- Outside the frame is seen in the travel only. With the travel agent's code (local scratch merge, hook plus cure plus agent/travel a3c388b, drafts): 470 3.2 percent of the frame changes (at most 11 levels), 480 12.0 percent (12), 488 13.9 percent (11), 495 9.9 percent (4).
+- Built: `streamers` in `halo.py` (`STREAM`): beyond the frame edge plus 0.006 R the broad light gets a power that varies with the angle, the fine rays a fade length that varies with the angle, and a small lean bends them. All factors are 1 at the edge. Offline trials with `python3 out/work/sun/stream/trial.py TAG '{"vary": 1.5, ...}'` (16 s, works on the saved polar corona, writes `TAG-view-gain1.jpg` and `-gain4.jpg`): s1 (fade 0.25, vary 0.9, steep 3, bend 0.08) too close to the old fan, s2 (vary 1.2, steep 3.5) in between, s3 (fade 0.3, vary 1.5, steep 4.5, bend 0.12) kept: groups of long and short rays with gaps. Relative spread of the top fan at 1.5 R 0.36 before, 0.72 after; mean level there 0.0064 to 0.0049 in scene values (fainter, stars show through).
+- Proof that the inside stays: polar corona equal bit for bit inside the edge plus 0.006 R (0 of the inside pixels changed), prominence, soft and reach files equal, card rows change only above 1.189 R.
+- Two traps met: `halo.py` had no main guard (an import ran it; fixed), and it takes about 4 GB, so a draft of frame 455 (two stops loaded) failed with a shader validation fault while it ran. Never run `halo.py` beside a render.
+- Pictures: `out/work/sun/stream/t1-470-480-before-after-gain3.jpg`, `t1-480-bottom-fan-native-before-after-gain1-over-gain3.jpg`, `s123-topfan-before-s1-s2-s3-gain4-native.jpg`.
+- Weak points: seen only as drafts and only on my local merge with the travel code; the change is faint at gain 1; nothing changes at 360.
+- How to look at travel frames with the travel code without committing: copy uncommitted files that differ between the branches aside, `git show HEAD:path > path`, `git checkout scratch/t92` (uncommitted files that are equal in both heads carry over), render, `git checkout agent/sun`, copy back. `scratch/t92` is now ec6e564 (hook c890ef0 merged in), local only.
