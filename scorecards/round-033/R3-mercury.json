@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "night side of the planet, lower left of the disc (crops D and P in image-02/03)",
+      "what": "a faint orange diagonal streak and soft ghost blobs from the lens flare sit on top of the unlit hemisphere, so it reads like a smudge or a stray layer on the surface rather than a flare in the lens",
+      "fix": "lower the flare ghost and streak opacity where they cross the planet, or move them off the disc"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night side, centre left of the disc (crops H and P in image-06/07)",
+      "what": "the same diagonal flare streak and ghost circles show over the dark terrain and make the surface look dirty",
+      "fix": "suppress or reposition the flare ghosts so they do not land on the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "sun disc, right edge of frame (crops M and N in image-03)",
+      "what": "the solar disc is blown out to an almost flat cream fill with only faint mottling, and the corona filaments look brushed on and airbrushed instead of having a structure",
+      "fix": "pull back exposure on the sun so granulation and limb darkening show, and give the prominences sharper, more varied filament detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "lit limb, crops C, E and G",
+      "what": "a soft orange halo runs outside the bright limb even though Mercury has no atmosphere, which looks like a glow layer added around the disc",
+      "fix": "narrow the rim bloom to a thin lens bloom or remove it"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "lit terrain, crops A, F and G",
+      "what": "crater rims carry a crunchy, over-sharpened HDR look with bright edge highlights and blue-orange colour speckle, which feels processed rather than photographic",
+      "fix": "reduce local contrast and sharpening on the albedo/normal maps and tone down the colour saturation"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crop T, lower left of frame",
+      "what": "a bright flare blob is clipped at the crop edge and the faint bluish ghost disc next to it is a visible shape over the starfield",
+      "fix": "soften or remove the secondary flare ghosts"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower-left starfield and dark night side of globe (image-14.png crop D, image-15.png crops N and O, image-16.png crop S)",
+      "what": "a blurry chromatic oval blob sits in the lower-left sky with a square ghost patch on the dark limb and muddy orange-brown diagonal streaks smeared across the unlit hemisphere",
+      "fix": "remove the synthetic lens-flare smudge and ghosted streak artifacts so the night side and surrounding starfield are clean"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "sunlit upper and right limb (image-14.png crops C, F, H; image-15.png crops K, P)",
+      "what": "an orange atmospheric glow halo surrounds an airless cratered globe along a dead-smooth circular edge with no crater relief",
+      "fix": "remove the orange limb halo and render a crisp, un-glowing silhouette with subtle crater-rim profile relief against space"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "bottom-right and bottom-left near foreground terrain (image-12.png crops T, W, X)",
+      "what": "the closest terrain goes soft, blurry, and smeared with stretched detail and bloomed white blotches at native crop scale",
+      "fix": "keep full-resolution displacement and crisp regolith micro-detail right to the bottom corners without lens-blur or texture stretching"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "left-center mid-ground ray craters (image-10.png crop B, image-11.png crop K)",
+      "what": "the two bright ejecta ray systems look airbrushed and scratchy, with fibrous painted white strokes floating over the surface",
+      "fix": "replace the painted radial streaks with physically grounded, granular high-albedo regolith ejecta tied to the underlying topography"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "across the dark regolith plains and crater rims (image-10.png crops D, E, F, G; image-11.png crops O, P; image-12.png crop U)",
+      "what": "dozens of isolated 1-3 pixel bright white and cyan/magenta sparkle specks sit on the dark terrain like render fireflies",
+      "fix": "clamp or filter sub-pixel specular fireflies and chromatic noise on the regolith surface"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper-left dark limb against the Milky Way (image-14.png crop B)",
+      "what": "a dark masking halo borders the unlit limb where dense stars and dust abruptly thin out before reaching the planet edge",
+      "fix": "extend the starfield and Milky Way evenly right up to a clean geometric occultation edge with no dark falloff band"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "horizon limb across the frame (image-10.png crops B, C, I; image-11.png crops L, M)",
+      "what": "a thin bright warm-white rim halo hugs a smooth circular horizon arc with almost no topographic silhouette",
+      "fix": "eliminate the bright edge halo/ringing along the limb and let sunlit crater rims break the horizon profile naturally"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Milky Way clouds on left and solar corona on upper right (image-14.png crops C, G; image-15.png crop K)",
+      "what": "Milky Way stars clump into soft blobs over blotchy brown patches, a horizontal green-grey band cuts left from the Sun, and sharp stars shine straight through the bright inner solar corona",
+      "fix": "sharpen star point-spread profiles, remove the horizontal flare band, and occlude or wash out faint background stars inside the blinding solar glare"
+     }
+    ]
+   }
+  }
+ ]
+}

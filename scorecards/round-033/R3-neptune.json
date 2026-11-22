@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crop W, lower-right planetary limb; also visible in image-08.png, crop W",
+      "what": "A narrow cyan rim is separated from the bright face by a broad dark-blue trough. The two edges read as a detached shell rather than a continuous atmospheric falloff.",
+      "fix": "Blend the surface haze into the outer atmospheric glow so brightness falls off continuously, without a separate neon outline."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A and H, cloud deck around and to the left of the central vortex; also visible in image-07.png, crops P and Q",
+      "what": "Cloud detail smears into broad directional streaks across the blue midtones, while the brightest nearby wisps retain much sharper edges. The mismatch makes parts of the cloud deck look stretched.",
+      "fix": "Reduce directional filtering on the cloud texture and restore fine, irregular structure across the midtones, not just along the bright wisps."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops U and X, foreground ring tracks",
+      "what": "A few thin, nearly parallel bright streaks stand out from the diffuse ring, especially the tapered marks in U, making them look like separate painted lines.",
+      "fix": "Vary the width and opacity of the narrow tracks and blend their ends into the surrounding ring dust."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crop J, illuminated moon face",
+      "what": "The moon's mottled texture is soft inside a relatively clean silhouette, with few sharply resolved pits or relief cues in the bright area.",
+      "fix": "Restore fine crater and relief detail on the lit face without sharpening the silhouette."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring system, both arcs (crops A, D, F, O, R, S)",
+      "what": "the rings are made of grainy, noisy speckle with faint repeated concentric streaks, so they look like a noise texture swept round an ellipse rather than particles or banded ringlets; at native size it reads as digital grain",
+      "fix": "build the rings from a radial density profile with clear ringlets and gaps, smooth the particle noise, and light them from the sun's side with a shadow cast by the planet"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "planet disc, cloud streaks on the day side (crops B, H, J)",
+      "what": "the cloud features are soft, smeared brush strokes on a smooth airbrushed blue base; the storm near the top right looks pasted on and has no fine structure, so the surface reads as a painted decal",
+      "fix": "add fine banded detail along latitude lines, sharpen the cloud edges and give the storm a spiral structure that blends into the bands around it"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "night-side ocean, lower left and bottom strip (crops D, M, R, S, T, U)",
+      "what": "the dark area is muddy and featureless, with fine diagonal streaky noise and a few stray bright specks that look like stars printed on the planet's surface",
+      "fix": "remove the specks on the surface, denoise the dark area and either add a clear terminator with city lights or real cloud shapes, or let it fall to clean black"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "storm eye, centre (crops A, G, O)",
+      "what": "the eye is a smooth dark oval with soft swirling streaks and no eyewall clouds, so it looks like a hole smudged into the texture; the spiral bands are blurry, motion-smeared strokes",
+      "fix": "model a bright eyewall with towering clouds and sharp spiral rain bands, and make the eye a small, defined clear centre"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "main cloud band, middle and right (crops E, H, N)",
+      "what": "the cloud ribbon has painterly, liquid-looking curls and wispy smearing with doubled light edges; the dark shadow band next to the right cloud streak is too even and sharp",
+      "fix": "give the clouds a cumulus texture with fine detail and soften and vary the cast shadow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon at right (crops C, G, K)",
+      "what": "the moon's dark disc is slightly larger than the lit crescent and shows a faint ring around its edge, which gives a doubled edge; the lit surface is smooth and airbrushed with no craters at native size",
+      "fix": "match the dark-side outline to the lit limb, remove the halo and add crater and albedo detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "left limb and top limb glow (crops B, I, J)",
+      "what": "the atmosphere glow is an even soft halo of the same width all round the lit limb, which makes it look like a blur filter",
+      "fix": "make the glow thinner and brighter toward the sun, fading it out over the terminator"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper right limb and sky (crops C, F, K)",
+      "what": "the stars are mostly clean, but a few bright stars have soft blobby glows and the Milky Way patch looks like a stamped texture",
+      "fix": "make the stars point-like with consistent PSFs and blend the Milky Way more gradually"
+     }
+    ]
+   }
+  }
+ ]
+}

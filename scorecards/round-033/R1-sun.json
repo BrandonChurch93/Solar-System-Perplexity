@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "lower right photosphere, from about three-quarter width to the right edge",
+   "what": "the convection pattern is a different draw, not a small shift of the same cells. Luminance correlation there is about 0.1, and a 15px blur only brings it to about 0.55. Cells in the approved frame are sheared along the diagonal; the candidate's cells do not sit on those lanes. The far right is also a little darker.",
+   "fix": "rebuild that surface so the cells and lanes land on the approved layout, and lift the far-right brightness back up. Contrast will not fix this."
+  },
+  {
+   "severity": "severe",
+   "file": "pair-04-b.png",
+   "where": "tile E, crop 1212,594",
+   "what": "native crop of that same lower-right surface. Correlation is 0.53, and even a 15px blur only reaches 0.72, so the cell layout itself does not match. Detail amount is not the problem; placement is.",
+   "fix": "repaint tile E from the approved crop so each cell and lane sits where it does in A."
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile F, crop 912,647",
+   "what": "the surface just left of that corner still diverges. Full correlation is 0.74 and 15px correlation is 0.89, so granule and penumbral lanes are not the same structures, only the same kind of texture.",
+   "fix": "move the cells and penumbral streaks onto the approved lanes. Do not stop at a sharpen or contrast match."
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower limb, and the left limb ring",
+   "what": "a hotter, harder bright rim sits on the disk edge. The lower limb ring is about 15 to 20 lum hotter than the approved frame, and the left limb ring is about 10 lum hotter. The approved edge blends into the spicules. The corona outside that rim is close.",
+   "fix": "knock the concentric rim down and soften the falloff so the disk blends into the spicules. Do not brighten the outer corona."
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "lower-limb crops, tiles D 252,594 and F 456,432",
+   "what": "the same hard bright rim shows in the native crops of the lower limb. Prominences sit in the right place; the edge between disk and spicules does not.",
+   "fix": "soften that rim in these crops the same way as the full frame, so the surface meets the spicules without a halo."
+  }
+ ]
+}

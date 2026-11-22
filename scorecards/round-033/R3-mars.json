@@ -1,0 +1,35 @@
+{
+ "critic": "R3",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-03.png",
+   "where": "crop L, white polar cap near the upper limb",
+   "what": "The cap resolves into tightly coiled white contour lines with a hard, nearly blown-out edge. It reads as a pinched decal rather than textured ice.",
+   "fix": "Reproject the polar texture without a singularity, break up the concentric lines with irregular ice detail, and recover tonal variation inside the cap."
+  },
+  {
+   "severity": "major",
+   "file": "image-07.png",
+   "where": "crop Q, raised fan and central canyon walls",
+   "what": "The fan forms a cluster of extruded spikes, while the adjacent walls show parallel dark grooves and bright rims that make the terrain look embossed.",
+   "fix": "Reduce the relief and rim contrast, break up the parallel grooves, and use finer irregular erosion detail at the fan and wall transitions."
+  },
+  {
+   "severity": "major",
+   "file": "image-06.png",
+   "where": "crops A and B, dust spiral and illuminated upper-left limb",
+   "what": "The spiral has broad, soft brushlike streaks, and the adjacent limb washes the ground into a smooth peach band. The loss of fine detail is conspicuous next to the sharp crater and canyon rims.",
+   "fix": "Add fine, irregular dust structure and make the optical thickness vary so ground texture fades progressively toward the limb."
+  },
+  {
+   "severity": "minor",
+   "file": "image-02.png",
+   "where": "crop G, foreground moon crown and large right-hand crater",
+   "what": "Rock texture drags into smooth parallel streaks across the lit crown, and the crater's bright interior has a crisp cutout edge against the shadow.",
+   "fix": "Remove directional stretching from the rock texture and use irregular rim geometry and subtle indirect light to break up the crater shadow edge."
+  }
+ ]
+}
