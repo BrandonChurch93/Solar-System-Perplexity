@@ -41,6 +41,7 @@ export const onset = [-0.1334, 1.2, 0.6]
 export const ebb = [0, 0.3]
 export const back = [1.03, 1.35]
 export const lights = [0.025, 0.065, 0.9]
+export const lightsFrom = [0.2, 0.9]
 
 export const shape: number[][] = shapeJson.matrix
 
