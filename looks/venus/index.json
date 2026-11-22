@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T00:51:56.163Z",
- "head": "b59114ab8275501d5015620cbbdb721edfcf038b",
- "note": "POLISH READY: final tier stills f2 (1185, 1287, 1440, 1586) and review cover sheets c14, code 0b35992",
+ "pushed": "2026-11-22T01:36:26.183Z",
+ "head": "b6f54261addd9aa3b4dabcdaf4324c77037da62b",
+ "note": "01:37 merged main (batch 16), wrap repaint and seam work in progress, cover sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T01:36:25.269Z",
+   "file": "20261122013625269-note-look-seam.jpg",
+   "source": "../../../../tmp/look-seam.jpg",
+   "kind": "note",
+   "label": "Terrain star layer at the seam above the approved horizon, four times the level: before (warm band, dark wedge), after",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:36:24.397Z",
+   "file": "20261122013624397-note-look-wrap.jpg",
+   "source": "../../../../tmp/look-wrap.jpg",
+   "kind": "note",
+   "label": "Wrap repaint, map crop lon 35 to 66 lat 41 to 52 (night side at 1287): before, after (patch A's detail laid into the wrap, low frequencies locked)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T01:36:23.545Z",
+   "file": "20261122013623545-note-look-pop.jpg",
+   "source": "../../../../tmp/look-pop.jpg",
+   "kind": "note",
+   "label": "Rise 1558 to 1569 on the merged chain (batch 16), draft, top half at twice the level: the shared band comes in at 1560 at 1.9 to 2.6 times the terrain sky",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T00:51:45.148Z",
    "file": "20261122005145148-note-c14-rc.jpg",
@@ -138,30 +162,6 @@
    "source": "../view/b5-bolts.png",
    "kind": "note",
    "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:00.973Z",
-   "file": "20261121234400973-note-f2-1185-lit.jpg",
-   "source": "../view/f2-1185-lit.png",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:44:00.161Z",
-   "file": "20261121234400161-note-f2-1185-night.jpg",
-   "source": "../view/f2-1185-night.png",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 night limb native: approved, now, round 23",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-21T23:43:59.296Z",
-   "file": "20261121234359296-note-f2-1185-trio.jpg",
-   "source": "../view/f2-1185-trio.jpg",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 final tier with grain: approved, now (830a506), round 23",
    "stop": "venus"
   },
   {
