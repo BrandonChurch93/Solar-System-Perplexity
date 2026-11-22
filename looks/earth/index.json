@@ -1,23 +1,23 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T16:44:14.593Z",
- "head": "e26002839626c888dc330d6bb5835fc15138c73f",
- "note": "CUT35: rise law as drafts (tree holds main 3dad4447, drafts on 94482a8c), star fill of the hold sky; proofs render next",
+ "pushed": "2026-11-22T17:01:14.956Z",
+ "head": "bb0004be2128874088deb908348cc5522d5c746a",
+ "note": "CUT35 head 5879f9ac (tree holds main 3dad4447): rise law and star fill as drafts; final 2156 keeps main's bytes (3f279b5f both); sheets render next",
  "looks": [
   {
-   "time": "2026-11-22T16:44:13.751Z",
-   "file": "20261122164413751-note-patch-pair-g6.jpg",
-   "source": "out/work/earth/pb/s/patch-pair-g6.png",
+   "time": "2026-11-22T17:01:14.263Z",
+   "file": "20261122170114263-note-void-all-g4.jpg",
+   "source": "out/work/earth/pb/c35/void-all-g4.png",
    "kind": "note",
-   "label": "sky-hold patch under the Moon at gain 6, round 34 left, star fill right (only inside 49 px, the Moon covers 58 at 1755)",
+   "label": "CUT35 star fill, drafts at levels times 4: round 34 above, star fill below, 1670 and 1840 to 1870; the void keeps its level and gets stars in its middle",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T16:44:12.129Z",
-   "file": "20261122164412129-note-strip-new.jpg",
-   "source": "out/work/earth/pb/c35/strip-new.png",
+   "time": "2026-11-22T17:01:13.529Z",
+   "file": "20261122170113529-note-strip-cover-new.jpg",
+   "source": "out/work/earth/pb/c35/strip-cover-new.png",
    "kind": "note",
-   "label": "CUT35 draft strip, the new rise 2118 to 2153 on main 94482a8c plus the rise law: the skyline stays in the frame and closes into the disc",
+   "label": "CUT35 drafts of the rise law under the white, 2126 to 2140: the skyline stays in the frame and closes into the disc",
    "stop": "earth"
   },
   {
