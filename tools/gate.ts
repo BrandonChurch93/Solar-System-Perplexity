@@ -224,6 +224,8 @@ const checks: Record<string, () => Promise<Result> | Result> = {
     if (p.frames <= 0) bad.push('no frames')
     if (p.width !== f.width || p.height !== f.height) bad.push(p.width + 'x' + p.height)
     if (p.fps !== cfg.fps + '/1') bad.push('fps ' + p.fps)
+    const proof = (rec?.extra ?? {}) as { pass?: boolean; errors?: string[] }
+    if (proof.pass !== true) bad.push('the newest npm run proof did not pass: ' + ((proof.errors ?? []).join('; ') || 'its record has no result'))
     return { id: 'G9', pass: bad.length === 0, note: bad.length === 0 ? 'proof ' + p.frames + ' frames ' + p.width + 'x' + p.height + ' ' + p.fps + ' from the current build' : bad.join('; ') }
   },
   G15: async () => {

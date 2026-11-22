@@ -158,7 +158,9 @@ if (!memoryMode) {
   if (!after || after.frame < travel.endFrame) errs.push('no memory sample after the travel')
   if (before && after) {
     if (after.loaded.length !== 1) errs.push('after the travel ' + after.loaded.length + ' sets are loaded, expected 1')
-    if (after.textureBytes > before.textureBytes * 1.05) errs.push('texture total after the travel ' + mb(after.textureBytes) + ' is over ' + mb(before.textureBytes) + ' plus 5 percent')
+    const arriving = Math.max(...mem.map((m) => m.textureBytes)) - before.textureBytes
+    if (arriving <= 0) errs.push('no memory sample holds both sets, so the size of the arriving set is not known')
+    else if (after.textureBytes > arriving * 1.05) errs.push('texture total after the travel ' + mb(after.textureBytes) + ' is over ' + mb(arriving) + ' plus 5 percent, the peak with both sets less the set before the travel')
   }
   const peakSets = Math.max(...mem.map((m) => m.loaded.length))
   if (peakSets > cfg.maxLoadedSets) errs.push('peak loaded sets ' + peakSets + ' over ' + cfg.maxLoadedSets)
