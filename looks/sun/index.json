@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T08:38:24.593Z",
- "head": "8eaae3bb420ea65a80c80f8e3e1b86030000260d",
- "note": "sun polish item 7: feet bloom and the loops grade at frame 90, trials; main 07aabf5, agent/sun 8eaae3b",
+ "pushed": "2026-11-22T09:21:43.278Z",
+ "head": "ddcbc746383b149dd321086560007a41ad419cc5",
+ "note": "Sun hook second take: take 3 strip and take 4 arch crop, main 8f13066, agent/sun-hook2 b9fb48c",
  "looks": [
+  {
+   "time": "2026-11-22T09:21:42.063Z",
+   "file": "20261122092142063-note-a4-f60-arch-native.jpg",
+   "source": "out/work/sun/h2/a4-f60-arch-native.jpg",
+   "kind": "note",
+   "label": "Sun hook second take, take 4, frame 60 arch at native size, draft, main 8f13066, agent/sun-hook2 b9fb48c",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T09:21:40.720Z",
+   "file": "20261122092140720-note-strip-a3-after.jpg",
+   "source": "out/work/sun/h2/strip-a3-after.jpg",
+   "kind": "note",
+   "label": "Sun hook second take, take 3, draft strip of 0 to 60 at 400 px, main 8f13066, agent/sun-hook2 cc8d869",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T08:38:24.010Z",
    "file": "20261122083824010-note-c1-f90-right-foot-zoom3.jpg",
@@ -120,22 +136,6 @@
    "source": "out/work/sun/mh/feet-k4.jpg",
    "kind": "note",
    "label": "item 8a feet, draft native 8 45 53, top merged hook 6f466c1, bottom knee and veil f38765a, main c92f97c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:39:35.190Z",
-   "file": "20261122073935190-note-t92-limb-before-after-495-497-499-native.jpg",
-   "source": "out/work/sun/t92/t92-limb-before-after-495-497-499-native.jpg",
-   "kind": "note",
-   "label": "mail 92 travel leave, left limb native 495 497 499 draft, top without, bottom with the two lines; local merge of agent/sun-hook df3458c with agent/travel a3c388b, main 2b50ee2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T07:12:43.938Z",
-   "file": "20261122071243938-note-v495-limb-x3-stretch.jpg",
-   "source": "out/work/sun/arc/v495-limb-x3-stretch.jpg",
-   "kind": "note",
-   "label": "Mail 81, frame 495 final tier, lower limb at 3 times with levels stretched: the pale band inside the limb. main 2b50ee2, agent/sun-hook 739ae28",
    "stop": "sun"
   }
  ]
