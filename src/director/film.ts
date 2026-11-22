@@ -525,7 +525,7 @@ export class FilmDirector implements Director {
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       const span = this.patchSpanOf(index)
-      skyPatch = smoother(ramp(span[0], span[1], u))
+      skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
       const open = lens + (1 - lens) * (OPEN.leave.level * mix(smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0) * (1 - arrive) + (1 - skyPatch) * arrive)
