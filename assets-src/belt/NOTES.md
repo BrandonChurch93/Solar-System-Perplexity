@@ -415,3 +415,23 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
 | 2796 | 1505, 6 | 234 | part | cut by the top edge |
 | 2799 | 1463, -52 | 234 | part | cut by the top edge |
 | 2802 | 1420, -110 | 234 | part | 7 px sliver at the top edge |
+- 02:07 byte proof at draft, f33fb07 against a worktree of 30f31af with its own build (`/tmp/chain8.sh`; the two bundles have different names, so the worktree did render its own code), six pairs equal:
+  - 2325 fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726 d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2745 0613d9a29c4aee6a32d86aca2220f5ea9d04ad012040d8d90eb97cc32c67f7b3
+  - 2819 51221b1bd4bd6008fb802afbd734ec6f261c427eca0bcedc1450c558249238a6
+  The same six hashes as in task 5. 2745 and 2819 are inside the segment and hold no rock on either side.
+- 02:13 the four Mars finals, f33fb07 against 30f31af (`out/work/belt/t6fin-branch/`, `t6fin-base/`), four pairs equal:
+  - 2325 9895a050abe22d0ce0ad92bdd6e8b1b52836d9728657555900b0f614b07f744d
+  - 2427 0a022282c24d2285b0262002cb1f92952ec9a6c0dbbf1c86ca404992be7fc814
+  - 2580 a7e1670abf3e4a249d78a07e48eab4264c3d4b0811584fb03984b87f45c1f5b8
+  - 2726 79352ec57fa5c00bacf5b4d004444bc515f7aaf5d7b9513a7d267c05e85c8b05
+  Seconds, branch and base: 38.6 and 33.3 (first frame, with the load), 61.1 and 61.5, 26.6 and 26.3, 50.7 and 51.3.
+- 14 repo test files green, 12 belt tests green, tsc clean, at f33fb07.
+- 02:15 the task 5 doubling, tested: 30f31af itself (task 5 code and cast) in a worktree with its own build, review, one session from 2745 as in the slow run: 2745 55.1 s (with the load), 2748 18.3, 2766 15.9, 2781 18.4. The slow run of 00:17 to 00:40 gave 70.6, 33.5, 27.0, 31.9 for the same frames of the same commit. So it does not come back: no draw, no rock and no frame of the belt caused it. That run was 1.7 to 1.8 times slower on every frame alike (also with no rock in frame, at every sample count, from the second frame of the session), which is what a loaded machine looks like. My command log of that half hour shows no second render and no build; what loaded the machine I cannot say. My claim at 01:23 above (that the belt's cover doubled the frames) was wrong; the numbers that suggested it compared a slow run with a normal one.
+- 02:17 what the belt does cost at review, 16 samples, f33fb07:
+  - The cover it hands to the dust: nothing measurable. A build whose `cover()` returns nothing (worktree, not committed): 2781 17.8 s, 2790 16.2 s; with the cover (sheet r3): 17.5 s, 16.1 s.
+  - Frames with the hero alone 14.0 to 15.1 s (2775, 2778, 2787); with the hero and the near streak 17.2 to 17.5 s (2781, 2784); with the hero and a far rock 14.2 to 17.0 s (2769, 2772, 2790 to 2796). The same frame 2781 with no rock in frame took 11.2 s in the task 5 test. So roughly 3 s for the hero, 3 s for the near streak (64 time steps over a 300 px box), 1 s or less for a far rock, all in the once per frame build of the layer, not per sample.
+  - Against batch 16 (dba3ebc, task 4 cast) on the same nine frames: 0.94.
