@@ -446,7 +446,8 @@ try {
     json(keyFile, { phase, round, files: key })
     writeRecord(keyFile, { ...capture.record(tier, []), stopHashes: capture.hashes.stops, extra: { phase, round } })
   }
-  rendered = (capture as unknown as { session?: object }).session !== undefined
+  const inside = capture as unknown as { session?: object; held?: { session?: object } }
+  rendered = inside.session !== undefined || inside.held?.session !== undefined
 } finally {
   try { await capture.close() } finally { rmSync(temp, { recursive: true, force: true }) }
 }
