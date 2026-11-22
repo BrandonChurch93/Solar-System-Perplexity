@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T05:22:22.501Z",
+ "pushed": "2026-11-22T05:52:47.229Z",
  "head": "36c09cfc7fe3062fac0e6f8ddb2df2b5a06f9143",
- "note": "Venus on main a45a07b (batch 19): judged frames 1185, 1287, 1440 same bytes, 1586 with the flight sky; patch fade at the swaps tried and rejected; cover sheets rendering",
+ "note": "Venus on batch 19 (main a45a07b): cover sheets c19 same bytes as before the merge; chain and terrain sheet running, POLISH READY next",
  "looks": [
+  {
+   "time": "2026-11-22T05:52:46.311Z",
+   "file": "20261122055246311-note-c19-rc.jpg",
+   "source": "../view/c19-rc.png",
+   "kind": "note",
+   "label": "Venus rise cover sheet c19, review tier, branch code b22e4fb on main a45a07b (batch 19 7a880ac6): same bytes as c18, the flight sky lift starts at 1575 after the window",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T05:52:45.507Z",
+   "file": "20261122055245507-note-c19-dc.jpg",
+   "source": "../view/c19-dc.png",
+   "kind": "note",
+   "label": "Venus dive cover sheet c19, review tier, branch code b22e4fb on main a45a07b (batch 19 7a880ac6): same bytes as c18 on batch 18, every frame read",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T05:22:21.517Z",
    "file": "20261122052221517-note-f16-1586.jpg",
@@ -162,22 +178,6 @@
    "source": "../view/f12-1586-pair.jpg",
    "kind": "note",
    "label": "1586 final tier, same branch state on main 3d48581 (batch 17, left) and main 0622510 (batch 18, right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T03:31:54.845Z",
-   "file": "20261122033154845-note-f13-1586.jpg",
-   "source": "../view/f13-1586.jpg",
-   "kind": "note",
-   "label": "1586 final tier, branch 47d7c6b on main 0622510 (batch 18): sky lift of batch 18; 28 pixels by one level from the shader fix of mail 63",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T03:31:54.262Z",
-   "file": "20261122033154262-note-f13-1440.jpg",
-   "source": "../view/f13-1440.jpg",
-   "kind": "note",
-   "label": "1440 final tier, branch 47d7c6b on main 0622510 (batch 18): same bytes as on batch 17",
    "stop": "venus"
   }
  ]
