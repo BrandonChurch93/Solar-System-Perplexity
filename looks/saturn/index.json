@@ -1,18 +1,41 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T06:15:54.868Z",
+ "pushed": "2026-11-22T06:21:53.691Z",
  "head": "68ae940302485898749921529af41be6e59009b3",
- "note": "e8e4984 on main 2621f00 (batch 19): rise cover sheet at the review tier still rendering (started 05:41), terrain, dive and rise sheets to follow",
+ "note": "e8e4984 on main 2621f00 (batch 19): rise cover sheet 3835 to 3846 at the review tier beside the kept build; terrain, dive and rise sheets rendering",
  "looks": [
   {
-   "time": "2026-11-22T06:15:48.864Z",
-   "file": "20261122061548864-frame-f03844-review.jpg",
-   "source": "out/work/sheets/.frames-7soOoO/f03844-review.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3844, review tier",
+   "time": "2026-11-22T06:21:52.795Z",
+   "file": "20261122062152795-note-item2-rise-cover-kept-now.jpg",
+   "source": "out/work/saturn/polish/item2-rise-cover-kept-now.png",
+   "kind": "note",
+   "label": "Item 2 rise, frames 3835 to 3846 at the review tier: kept build (left), e8e4984 on main 2621f00 batch 19 (right)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-22T06:21:29.465Z",
+   "file": "20261122062129465-sheet-saturn.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/saturn.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet saturn.rise, review tier",
    "stop": "saturn",
    "segment": "saturn.rise",
-   "frame": 3844,
+   "first": 3835,
+   "last": 3846,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:21:27.567Z",
+   "file": "20261122062127567-frame-f03846-review.jpg",
+   "source": "out/work/sheets/.frames-7soOoO/f03846-review.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3846, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3846,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -54,28 +77,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:10:42.782Z",
-   "file": "20261122051042782-job-frame-03465.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.hold frame 3465, final tier, nograin view, from the running measure job",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T05:00:56.515Z",
-   "file": "20261122050056515-note-c3866-left.jpg",
-   "source": "../../../../tmp/c3866-left.png",
-   "kind": "note",
-   "label": "Rise 3866 native, left of the globe: batch 18 (top), e8e4984 on main 2621f00 (batch 19 7a880ac6) (bottom). Sky points show through the C ring in both",
-   "stop": "saturn"
   },
   {
    "time": "2026-11-22T04:55:46.854Z",
