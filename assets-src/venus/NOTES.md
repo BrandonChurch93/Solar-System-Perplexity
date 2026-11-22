@@ -848,3 +848,11 @@ Next, in this order:
 - Queue `q27.sh` (log `/tmp/q27.log`, started 10:56, about 95 minutes), r2 on main d5b851f with the working tree copied in: review stills at master size of 1557 and 1317 (`view/f5n-1557.jpg`, `view/f5n-1317.jpg`; compare with `r2/out/work/venus/p6/f4n-1557.png`, `f4n-1317.png`); finals f23 with `cmp` against f16 (1185, 1287, 1440) and f22 (1586); audit and repeat (`/tmp/q27-audit.log`, `/tmp/q27-rep.log`); review cover sheets c23 (`view/c23-rc.png`, `view/c23-dc.png`, compare by cell with c22); review stills at master size of 1314 and 1566 (`view/f5m-1314.jpg`, `view/f5m-1566.jpg`; compare with `e2b-1314.png`, `now-1566.png`); chain (`/tmp/chain23.log`, `/tmp/c2-*.log`); prints "queue27 done". Do not change `src/stops/venus` or `public/assets/venus` in the repo until then (three steps of the queue sync).
 - If 1557 or 1317 shows a fault with xf: stop the queue, put the old values back (`fan [12, 1.6, 2.7, 5]`, `fray [6, 0.6, 0.25, 2]`), start the same queue again for the proof of code 1d3704c on batches 21 and 22.
 - After the queue: commit the code, push, looks, POLISH READY note to the Builder (head, main d5b851f, judged frames bytes, frames changed by take F5, numbers, cover sheets, weak list).
+
+## State at 11:06 (22 Nov): take F5 holds at the mist joins, finals on batches 21 and 22 keep their bytes (read this first after a compaction)
+
+Head 4b12149 and this note; main d5b851f; take F5 in the working tree of the repo (`look.ts` only), NOT committed until q27 is through.
+
+- F5 at 1557 and 1317 (review tier, master size, r2 on main d5b851f) against F4 (`f4n-*.png`): `view/p5-1557-full.jpg`, `view/p5-1557-a.jpg` (native crop under the limb), `view/p5-1317-full.jpg`. 1557: the dark slot with firm fine lines and the pale trapezoids are gone, soft cloud with faint soft columns stays. 1317: a little softer, nothing new. Both stills took one minute each (the terrain side frames are cheap; the orbit side frames near the swap cost 7 to 8 minutes).
+- Finals f23 (take F5, main d5b851f, engine batches 21 and 22): 1185, 1287, 1440 the same bytes as f16; 1586 the same bytes as f22. So batches 21 and 22 and take F5 move no pixel of the four judged frames at the final tier.
+- q27 goes on: audit and repeat, cover sheets c23, stills of 1314 and 1566, chain; "queue27 done" about 12:15.
