@@ -840,6 +840,8 @@ Phase 4 supporting agents, started 2026-11-21 about 02:42 UTC, each on its own V
 
 No render job runs on the Builder's VM.
 
+- Round 33 (polish 1 of 3), handed out 13:32 UTC on 2026-11-22: 77 jobs on render_01 to render_40 at commit 84b0ea4a (engine hash f92fd0ddfc332543): twelve groups of judged stills at the final tier, ten groups of whole film motion sheets, three stress encodes, and for each of the nine stops the measures, its two views and its dive, rise and cover sheets. The plan and the messages are in `out/work/rounds/round-033/` (`jobs.json`, `dispatch.json`). Estimated end of the longest job (the Sun's rise cover, 97 minutes) about 15:10 UTC, of 31 workers before 14:25. Returns are placed with `python3 tools/round.py place --round 33`. The first hand out reached 25 workers whole and one cut in the middle (a tool call returned the list shortened); render_17 got a correction and render_18 to render_31 their messages two minutes later.
+
 ## Rounds
 
 One line per round, written when the round starts: number, phase, stop. Scores and what changes next are added when it ends.
