@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T17:46:49.166Z",
- "head": "2b7bb61bd7760540adac46eef72aa49d0dcdd4ae",
- "note": "mercury: review cover sheet of the rise with the cap, no bars; pairs for MAIL 190 (pace out, flare back) at draft; tree 36424325 on main a265db97",
+ "pushed": "2026-11-22T17:54:54.437Z",
+ "head": "d76c01951cebde628d5793f591c21a8a50d32f3c",
+ "note": "mercury CUT35: the bars cure proved at review; pairs for MAIL 190 (round 33 main, round 34, pace out); tree 36424325 on main b22a7927",
  "looks": [
+  {
+   "time": "2026-11-22T17:54:53.865Z",
+   "file": "20261122175453865-note-rise-1000-review-r33-r34.jpg",
+   "source": "out/work/mercury/p6/r35/rise-1000-review-r33-r34.jpg",
+   "kind": "note",
+   "label": "mercury rise 1000 at the review tier, 960 wide: left the round 33 tree, right round 34 with the cap (tree 36424325 on main b22a7927). The Sun: 2495 and 2569 clipped px",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:54:53.293Z",
+   "file": "20261122175453293-note-rise-r33-r34-paceout-pair.jpg",
+   "source": "out/work/mercury/p6/r35/rise-r33-r34-paceout-pair.jpg",
+   "kind": "note",
+   "label": "mercury rise 994, 1000, 1007 at draft: top round 33's own main (84b0ea4), middle round 34 with the cap (tree 36424325 on main b22a7927), bottom the pace taken out (2a2ef9d6). The Sun at 1000: 9387, 9709, 9387 clipped px",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T17:46:48.555Z",
    "file": "20261122174648555-note-rise-flare-pair.jpg",
@@ -95,22 +111,6 @@
    "source": "out/work/mercury/p6/bars/looks/rise-991-994-cap.jpg",
    "kind": "note",
    "label": "Rise 991 to 994 at draft, whole frames, with the cure of the bright bars: tree a95b6d76 on main 9957a0b7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:27:05.809Z",
-   "file": "20261122162705809-note-bars-cause-plate.jpg",
-   "source": "out/work/mercury/p6/bars/looks/bars-cause-plate.jpg",
-   "kind": "note",
-   "label": "Cause of the bars at 993: the wide ground picture's own bright wall near its horizon (2 times enlarged), drawn out when the rise camera is higher than the picture's camera; tree 64e20ee on main 6460b4a",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:27:05.277Z",
-   "file": "20261122162705277-note-bars-991-992-before-after.jpg",
-   "source": "out/work/mercury/p6/bars/looks/bars-991-992-before-after.jpg",
-   "kind": "note",
-   "label": "Rise 991 (top) and 992 (bottom), draft crops: left tree 64e20ee on main 6460b4a, right the trial cure (uncommitted): the bright wall fades over 991 and is gone at 992",
    "stop": "mercury"
   }
  ]
