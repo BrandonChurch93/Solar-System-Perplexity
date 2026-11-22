@@ -52,7 +52,6 @@ in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   float r = length(vLocal.xy);
   float az = atan(vLocal.y, vLocal.x) - uTurn;
   vec2 uv = vec2(az / 6.283185307 + 0.5, (r - uRange.x) / (uRange.y - uRange.x));
@@ -76,6 +75,7 @@ void main() {
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Ring {

@@ -134,12 +134,16 @@ uniform int uDiag;
 out vec4 outColor;
 ${AIR_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vPos);
   float r = length(uCam);
   float b = -dot(uCam, dir);
-  if (b > 0.0 && r * r - b * b < 0.99) discard;
-  outColor = vec4(air(dir, false).rgb * uGain, 0.0);
+  bool hidden = uDiag >= 2 || (b > 0.0 && r * r - b * b < 0.99);
+  vec3 col = vec3(0.0);
+  for (int k = 0; k < (hidden ? 0 : 1); k++) {
+    col = air(dir, false).rgb * uGain;
+  }
+  outColor = vec4(col, 0.0);
+  if (hidden) discard;
 }`
 
 function vec(a: [number, number, number]): THREE.Vector3 {
