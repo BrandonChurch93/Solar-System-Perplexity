@@ -1,9 +1,33 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T00:35:03.307Z",
+ "pushed": "2026-11-22T00:50:54.520Z",
  "head": "aaae2d08fe9f4159d8fae56b86d38884750b2979",
- "note": "task 5: uranus.travel review sheet at the new state; earth, jupiter, venus, mercury, saturn rendering",
+ "note": "task 5: review sheets of uranus, earth and jupiter travel at the new state",
  "looks": [
+  {
+   "time": "2026-11-22T00:50:30.222Z",
+   "file": "20261122005030222-note-uranus.travel-review.jpg",
+   "source": "out/work/travel/t5/uranus.travel-review.png",
+   "kind": "note",
+   "label": "t5: uranus.travel-review",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T00:50:29.620Z",
+   "file": "20261122005029620-note-jupiter.travel-review.jpg",
+   "source": "out/work/travel/t5/jupiter.travel-review.png",
+   "kind": "note",
+   "label": "t5: jupiter.travel-review",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T00:50:28.981Z",
+   "file": "20261122005028981-note-earth.travel-review.jpg",
+   "source": "out/work/travel/t5/earth.travel-review.png",
+   "kind": "note",
+   "label": "t5: earth.travel-review",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T00:11:58.263Z",
    "file": "20261122001158263-note-f2726-final.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/travel/t5/sun.travel-review.png",
    "kind": "note",
    "label": "t5: sun.travel-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T00:07:34.576Z",
-   "file": "20261122000734576-note-mars.travel-review.jpg",
-   "source": "out/work/travel/t5/mars.travel-review.png",
-   "kind": "note",
-   "label": "t5: mars.travel-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:53:59.144Z",
-   "file": "20261121235359144-note-ending.lookback-review.jpg",
-   "source": "out/work/travel/t5/ending.lookback-review.png",
-   "kind": "note",
-   "label": "t5: ending.lookback-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:53:58.482Z",
-   "file": "20261121235358482-note-ending.fade-review.jpg",
-   "source": "out/work/travel/t5/ending.fade-review.png",
-   "kind": "note",
-   "label": "t5: ending.fade-review",
    "stop": "travel"
   }
  ]
