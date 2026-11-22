@@ -920,3 +920,34 @@ The ladder at the bottom centre of 1310 (experiments in the render copy only, pr
 - Still to find: what in the density changes in steps across the shutter. Next tests: draft stills at fractions of frame 1310 if the capture takes them, and v4 (the texture out of the colour only).
 
 Found on the way (`out/work/venus/scratch/orb.ts` prints amount, height, rush and the angle of the foot point off the camera axis per orbit side frame): the pole of the veil's fan (the camera's foot point) is in view in dive frames 1300 to 1308 (3 to 21 degrees off axis, amount 0.02 to 0.69, rush 0.31 to 0.85) and in rise frames 1571 to 1575 (16 to 10 degrees off axis, amount 0.37 to 0.07). At 1572 (draft, `view/rs-1572-pair.jpg`) pale spokes radiate from the bottom centre over the night side of the sharp globe. Candidate cure: fade the lines term toward the plain noise near the foot point (by the angle from the nadir), so the leaving cloud is soft wisps there and streaks further out. To be tried after the ladder.
+
+## State at 13:42 (22 Nov): round 33 holds my hash, main 84b0ea4 merged, pole fade in proof for CUT34, ladder traced (read this first after a compaction)
+
+Head 101aee4 (merge of main 84b0ea4 "Round 33: polish, machine checks green") and this note. Main took `agent/venus 3ac08219` for round 33 (merge 3b2f5109), so main's `src/stops/venus` and `public/assets/venus` are my folders now; the branch differs from main only in this file. Main since 481d2b8 also changed shared files: `config/showcase.json` (the deep star law and groups of the flight sky, `flightStrip.dust`), `src/director/film.ts` (pin frames, patch end, steady arrival), `src/space/sky.ts`, `src/space/travel/field.ts`, `path.ts`, the belt. So the shared star sky moved: my earlier finals (f23) are not the reference any more; the base for every comparison is now a render of main 84b0ea4 itself.
+
+Cuts: CUT34 by about 15:05 UTC, CUT35 by about 17:05 UTC, same five point form as CUT33 (see "State at 12:35"). After round 35 the build is frozen.
+
+### The pole fade (candidate for CUT34, in proof)
+
+- Fault: the veil's lines term (noise in angle and log radius about the camera's foot point) draws an urchin of fine spokes where the foot point is in view: dive 1300 to 1308 (strong at 1305, 1307), fine radial lines at the bottom of 1309, fine spokes at the bottom of rise 1571 to 1575 (`view/p7-dive-crop.jpg`, `view/rs-1572-pair.jpg`).
+- Cure: `python3 /home/user/workspace/pole.py ROOT 0.12 0.45` patches `veil.ts` and `look.ts`: look key `sheets.pole: [0.12, 0.45]` (radians from the nadir), uniform `uPole`, `float off = acos(cn); float away = smoothstep(uPole.x, uPole.y, off);` and `lump = mix(lump, lines, uRush * away)`. Near the foot point the leaving cloud is the plain soft noise, further out the streaks as before. Acts only where `uRush` is above 0 (dive 1299 to 1318, rise 1556 to 1575). The judged frames have the veil hidden or rush 0.
+- Seen (review tier, preview size, render copy on main d5b851f; pairs left present, right cure, in the looks 13:38): `view/q1-1305.jpg`, `view/q1-1307.jpg`, `view/q1-1309.jpg`, `view/q1-1571.jpg`, crops `view/q1-1571-crop.jpg`, `view/q1-1309-crop.jpg`: the urchin and the fine spokes are gone, soft cloud near the foot point, streaks further out.
+- Proof queue `q32.sh` (log `/tmp/q32.log`, started 13:38, ends "queue32 done" about 14:50), render copy r2 moved to main 84b0ea4:
+  1. base (repo as merged, no patch): finals `r2/out/work/venus/p6/f24b-{1185,1287,1440,1586}.png`, draft strip at preview size `bd-F.png` for 1296 to 1330 and 1543 to 1578;
+  2. the queue itself runs `pole.py repo 0.12 0.45` (so `veil.ts` and `look.ts` of the repo are changed and NOT committed from then on), `tsc`, finals `f24-F.png` with `cmp` against f24b, draft strip `pd-F.png` and the list "draft frames changed";
+  3. audit and repeat (`/tmp/q32-audit.log`, `/tmp/q32-rep.log`, 14 frames), review cover sheets c24 (`view/c24-rc.png`, `view/c24-dc.png`; c23 is on the old sky, so compare by eye and by cell below the sky rows), chain (`/tmp/chain24.log`, `/tmp/c2-*.log`).
+- While it runs: do not change `src/stops/venus` or `public/assets/venus` in the repo; commit this file alone (`git add assets-src/venus/NOTES.md`), never the whole folders, until the proof is read.
+- After it: read both cover sheets, every frame; read the draft strips 1299 to 1308 and 1567 to 1575; then commit the code, push, looks, `CUT34 venus` with READY and the full hash. If anything fails: `git checkout src/stops/venus/veil.ts src/stops/venus/look.ts` and send `NOT READY, next cut` (the round 33 hash stands).
+
+### The ladder at the bottom centre of 1310 (traced, not cured; candidate for CUT35)
+
+Experiments in the render copy only, review tier, preview size, frame 1310 (`view/lad6-1310.jpg`, `view/v67-1310.jpg`, `view/lad8-1310.jpg`, `view/v8-1310.jpg`, `view/lad9-1310.jpg`):
+- v4 the cloud texture out of the colour: ladder gone. v6 `fan[3]` 28 (texture read twice as coarse): rungs fainter, broader, same place. v7 sheets with x over 2.6 off: ladder stays, so it is in the near sheets. v8 `near [0.7, 1.3, 3]` (the nearest sheet fades in later): ladder gone, soft cloud forms, fewer speed lines, the veil a little thinner over the globe. v9 the present look at the final tier (256 samples): the same rungs at the same spacing, so they are not copies from the sample count.
+- Reading: the rungs are compact bright bits of the cloud tile in the nearest sheet (x 0.3 to 0.7), smeared sideways by the shutter. Near the foot point the radial expansion is slow and the camera's own sideways motion dominates, so the smear there is horizontal, across the radial column that the lines term draws: a ladder. At the draft tier (one sample) the same place shows a pale column with knots.
+- Sample count at 1310 (`npm run -s samples -- --tier review --range 1306-1314`): 128 at review (cap), globe motion 157 px; the engine tracks the globe only, the veil's nearest sheet moves faster on screen.
+- Candidate cures for CUT35, to try at 1310, 1309, 1312, 1558, 1563 after q32: (a) the near fade pushed out by the rush, `uFade.x = near[0] + rush * k`, k about 0.2 to 0.4; (b) a wider pole fade so that no radial column stands where the smear is sideways. Each needs both cover sheets read again.
+
+### Round 33 and the rise sky
+
+- Round 33 runs on main 84b0ea4 with my hash 3ac0821; no critic words yet (`scorecards/round-033` does not exist at 13:40).
+- The rise sky pair (sent 12:42): no reply. Main's flight sky changed in round 33 (denser deep field), so measure the right hand strip again on the new main before saying more.
