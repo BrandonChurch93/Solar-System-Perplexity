@@ -684,3 +684,24 @@ Three consecutive finals of the hold (1185 to 1187) and of the terrain view (144
 - Terrain: the sky moves 1.00 px left and 0.23 px up per frame, the same in both pairs. 749 stars: peak half under 11 percent, a tenth over 24 percent; flux half under 3.3 percent, a tenth over 10 percent.
 - The flux holds, the peak breathes a little as a small star crosses the pixel grid; grain is in both numbers. By eye in 3x crops of the three frames with the pair differences below (`view/crawl-h-sky.jpg`, `crawl-h-limb.jpg`, `crawl-h-cloud.jpg`, `crawl-t-sky.jpg`, `crawl-t-horizon.jpg`, `crawl-t-tower.jpg`): every star keeps its shape and size from frame to frame, the limb line and the horizon line change by one to three levels, the tower rims and the cloud filaments move as edges and show no crawl or pop. Nothing found to fix.
 - About 1,900 pixels per pair change by more than 6 levels in blue alone, all over the frame: the grain of the lens chain, not mine.
+
+## State at 06:50 (22 Nov): the veil at native size, experiment E2 and E3 in the working tree (read this first after a compaction)
+
+Head 3731a3f plus this note; the code below is NOT committed yet (working tree of `repo`: `veil.ts`, `look.ts`, `set.ts`). Main is 6267259 (docs only since 89715a1, merged with this note). No Builder mail since mail 71; the READY of 06:13 stands.
+
+What I found at native size (review tier, master size, `r2/out/work/venus/p6/rl-1558.png`, `rl-1314.png`, `rl-1570.png`, `rl-1566.png`):
+- 1558 and 1314 (under the cover, terrain side): straight pale bars and soft rectangles 40 to 70 px wide (`view/rl1558-full.jpg`, `view/rl1314-full.jpg`). Two causes, both in my veil (`veil.ts`), none in the engine:
+  1. the rush pattern `lines` is value noise on a lattice in fan coordinates (angle, log radius about the camera's foot), thresholded with a narrow band (`edge[1]` 0.25 against a noise swing of 1.2): radial planks with crisp sides.
+  2. the veil's sheets come in as small crisp islands of the cloud texture, flat in colour (the deep sheets are 85 percent fog colour): pale cream blobs and flat pink patches lying on the terrain from 1548 to 1556 and 1317 to 1327 (draft, master size: `view/dn-mid.jpg`; the same frame with the veil switched off in the render copy only: `view/nv-1550.jpg`, the terrain below is clean). A compact bright blob smeared by the shutter is the rectangle at 1558.
+- 1570 and 1566 (orbit side, 128 samples): smooth, the shreds leave as short streaks; acceptable.
+- Early rise 1529 to 1547 at draft, master size (`view/dn-early.jpg`): clean.
+
+Experiments (terrain side frames at draft master size `./e3.sh TAG` gives `view/TAG-r.jpg` 1546 to 1556 and `view/TAG-d.jpg` 1317 to 1327; review native `./e2n.sh TAG` gives `view/TAG-1558.jpg`, `view/TAG-1314.jpg`):
+- E2a `fray [6, 0.6, 0.25]` (a strand noise along the angle shifts the log radius of the lattice and adds to it): the planks break into bundles, but as crisp needles (`view/e2a-1558-crop.jpg`). Not enough alone.
+- E2b adds `fray[3]` 2: the threshold band widens with the rush (`soft = edge[1] * rush * fray[3]`, centred on the old band). 1558 and 1314 at review native: soft fine streaks, no plank (`view/e2b-1558.jpg`, `view/e2b-1314.jpg`). Kept so far. At rush 0 nothing changes.
+- E3a `mist [1, 0.5, 0.9]` (band wider at low amount, terrain side only): no visible change, the islands follow the texture's own hard edges.
+- E3b adds `wait [0.5, 0.95]` (the deep sheets, levels 1.1 to 3 below the camera, come in late): fewer patches, blobs still there.
+- E3c adds `mist[3]` 16: the cloud texture is read 16 times coarser while the veil is thin (`wide` in `textureGrad`), so the first veil is soft mist, not islands. 1546 to 1554 and 1321 to 1327: mist over a terrain that stays whole (`view/e3c-r.jpg`, `view/e3c-d.jpg`). 1556 still switches to crisp decks, so the range went to `mist [1, 0.7, 1, 16]` (take E3d, review strip `view/e3r.jpg` rendering at 06:49).
+- All of E3 is terrain side only (`mist` argument of `Veil.update`, 1 from the terrain branch of `set.ts`, 0 from the orbit branch), E2 acts wherever the rush is above 0.
+- The judged frames must not move: 1185, 1440 have no veil; 1287 and 1586 have amount 0 (check with `./fin.sh TAG` and `cmp` against `f16-*.png` before any commit).
+- Not the engine's: the soft squares are smeared veil islands, not coarse mips (`uGrad` never goes above 1).
