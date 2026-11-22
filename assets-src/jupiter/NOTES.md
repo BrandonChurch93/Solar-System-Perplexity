@@ -1086,3 +1086,9 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - Looked at each at half size and the sky rows of 3024 to 3026 at native size: 3024 the same haze, horizon line and cream as before, sky black (a few points at 1 level); 3025 first faint stars at the right; 3026 dim stars and the first trace of the band; 3027 the band clear, the storm showing through at the left as before; 3028 to 3030 the sky at nearly full level. Stars are points and hold their place (the sky moves 2 to 3 px a frame there). No star in front of the haze, no change below the horizon, no jump of the horizon or the colour at the cut.
 - Black sky on the dive now: 3019 to 3024 (was 3019 to 3026). 3019 to 3023 stay black by my own `skyLow` by altitude (stars would step 114 to 158 px a frame beside a smeared globe).
 - Looks pushed 10:02 and 10:16. Chain P renders the terrain review sheet now (about 10:45), then the full measure.
+
+### 10:16 to 10:24 UTC: terrain review sheet on the merged tree (2687a17, main f24046b)
+
+- `kept/terrain-sheet-b20.png` (10:22:26, 8 minutes: the terrain frames are slow frames, about 40 s each at review): the sheet is the same bytes as `kept/terrain-sheet-b19.png`, and all 12 frames (3060, 3076, 3093, 3109, 3125, 3141, 3158, 3174, 3190, 3206, 3223, 3239) are the same bytes as those of a06d2ae on main 2621f00 (`out/work/view/m19/`). The three cover fixes and batch 20 do not touch the terrain view outside the covers.
+- Looked at again: the storm grows from a third to more than half of the width, the near cloud tops pass under the camera at the bottom, the horizon and the blue limb hold; nothing new.
+- Look added and pushed 10:22. The full measure started 10:22:26.
