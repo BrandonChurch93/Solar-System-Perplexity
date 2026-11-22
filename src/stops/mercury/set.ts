@@ -338,9 +338,10 @@ export const createSet: SetFactory = async (ctx) => {
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
       const ghost = shown * clear * body * (1 + 2 * (breath - 1)) * ghosts
       const onBody = mix(look.flare.onBody[0], look.flare.onBody[1], diving ? smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u)) : rising || leaving ? 1 : 0)
-      lens.shade(world.position, view.camera, onBody)
+      const offBody = diving ? mix(1, look.flare.offBody, smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u))) : 1
+      lens.shade(world.position, view.camera, Math.min(onBody / Math.max(offBody, 1e-6), 1))
       streak.shade(world.position, view.camera, onBody)
-      lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
+      lens.update(sunShown, view.camera, ghost * offBody * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
     dispose: () => {
