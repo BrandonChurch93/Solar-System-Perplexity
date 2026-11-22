@@ -1,9 +1,31 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T15:15:50.701Z",
+ "pushed": "2026-11-22T15:36:33.166Z",
  "head": "bdbef6deee3dbd81327037c8d92c939823492a73",
- "note": "sun: hook gap at 390 px and the limb in the leave, agent/sun bdbef6de, main a60c5ffd",
+ "note": "sun: finals 360 and 247 with the limb cure, measure PASS on bdbef6de, main a60c5ffd",
  "looks": [
+  {
+   "time": "2026-11-22T15:36:32.173Z",
+   "file": "20261122153632173-note-c36-final-360-247-pairs.jpg",
+   "source": "out/work/sun/hk3/c36-final-360-247-pairs.jpg",
+   "kind": "note",
+   "label": "finals 360 beside the approved hero and 247 pair, limb cure. measure PASS, repeat clean. agent/sun bdbef6de, main a60c5ffd",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T15:24:50.808Z",
+   "file": "20261122152450808-job-frame-00090.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:15:49.617Z",
    "file": "20261122151549617-note-c36-leave-limb-b-x3.jpg",
@@ -19,20 +41,6 @@
    "kind": "note",
    "label": "hook take 3 at 390 px wide, frames 36 to 50, shell and arch (drafts), agent/sun bdbef6de, main a60c5ffd",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:14:25.232Z",
-   "file": "20261122151425232-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T15:10:25.491Z",
@@ -56,14 +64,6 @@
    "source": "out/work/sun/hk3/c36-final-360-limb-x3.jpg",
    "kind": "note",
    "label": "Sun hold 360 final, limb at 3 times: approved hero, main, limb cure. Ring 443 to 450 px mean luminance 156.9 hero, 174.6 main, 157.4 cure. agent/sun bdbef6de, main a60c5ffd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:03:26.824Z",
-   "file": "20261122150326824-note-c36-360-limb-draft-x3.jpg",
-   "source": "out/work/sun/hk3/c36-360-limb-draft-x3.jpg",
-   "kind": "note",
-   "label": "Sun hold 360, limb at 3 times, drafts: approved hero, main, limb cure (rim only where the hero has one, corona edge halved). agent/sun bdbef6de, main a60c5ffd",
    "stop": "sun"
   },
   {
