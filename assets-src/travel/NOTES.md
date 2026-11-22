@@ -802,3 +802,6 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 ## 17:46 UTC: CUT35 travel sent
 - Mail `CUT35 travel` sent to the Builder (high): nothing new to take; the two take outs (mercury 6b7c4224, venus ef8fb113, the second not advised); the measured cause of every motion word of round 34; what stays open (venus and ending band slide, Phobos, Triton, mercury peak 4.23 and change 0.36, earth leaving 0.41). Five sheets attached. Looks pushed 17:43.
 - Nothing in work. Wait for mail. If a take out is used, nothing more is needed from me; if a turn is to be tried after round 35, start from the turnDeg trial above and the exit views (REQUESTS items 3 and 4).
+
+## 21:50 UTC: new role, render worker
+- Mail from the Builder: the film is frozen, building is finished, nothing more goes onto main. From now on I am a render worker for the master. Brief: `assets-src/shared/RENDER-WORKER.md` at commit 567b3a555461d1e7d88300dbe5febc52073da828 (repo checked out detached there). No edit, commit or push after this entry.
