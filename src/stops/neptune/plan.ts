@@ -3,7 +3,6 @@ import { config, type Segment } from '../../config'
 import type { CoverHorizon, Pose } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { drift } from '../../director/rig'
-import { coverWindow } from '../../director/timeline'
 import close from './close.json'
 import fit from './fit.json'
 
@@ -22,9 +21,10 @@ export const params: MoveParams = {
   coverTerrain: [0.4, 0.56, 0.85],
   coverLowTerrain: [0.03, 0.065, 0.19],
   coverTop: [0.3, 0.06],
-  coverEdge: [0.2, 0.5],
+  coverEdge: [0.48, 0.5],
   coverEdgeRise: [0.4, 0.5],
   coverShell: [1.005, 1.03],
+  coverWindow: { dive: { seconds: 1, center: 0.7 } },
   coverRush: { speed: 2.4, reach: 2.5, billow: [2.2, 0.9, 1], streak: [9, 2.2, 1.6], contrast: [0.6, 0.45] },
   spinDegPerSecond: 1.3,
   moonDegPerSecond: 0.3,
@@ -36,7 +36,7 @@ const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.rad
 const rim: [number, number][] = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
 const hides = 0.4
 const closed = 0.98
-export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4730, place: [0, 0.1] as [number, number], placeOver: 14 }
+export const descent = { onset: 3, pin: 4707.25, settleDeg: 2, settlePower: 2.2, from: 4707.5, bankOver: 5, bankKneeDeg: 1, turnDeg: 45, turnTo: 4732, place: [0, 0.1] as [number, number], placeOver: 14, clear: { to: 4726, pace: 0.014174, height: 0.6722, speed: 0.10947 }, under: { ramp: 7, ease: 5 } }
 export const ascent = { turnDeg: 49, turnFrames: 24, place: [0.18, -0.26] as [number, number], placeFrames: 20, pace: { start: 0.04, ramp: 5, hold: 16, rest: 26, late: 0.006 } }
 export const steady = { hold: 0.5, terrain: 1 }
 const smooth = (x: number): number => {
@@ -53,7 +53,7 @@ const bankOf = (pose: Pose): number => {
 }
 
 interface Climb { from: number; span: number; h0: number; top: number; out: number }
-interface Fall { start: number; join: number; span: number; h0: number; drift: number; accel: number; knee: number; late: number; power: number }
+interface Fall { start: number; join: number; span: number; h0: number; drift: number; accel: number; knee: number; late: number; power: number; center: number; hJ: number; vJ: number; vC: number; top: number; under: number }
 
 class NeptunePlan extends StopPlan {
   private amount = 0
@@ -79,20 +79,26 @@ class NeptunePlan extends StopPlan {
     const seg = this.seg.dive!
     const fps = config.fps
     const start = seg.start
-    const join = coverWindow(seg)!.firstFrame / fps
+    const join = descent.clear.to / fps
     const span = (join - start) * fps
     const dt = 0.01 / fps
     const h0 = this.high(start)
     const drift = -Math.log(this.high(start + dt) / h0) / (dt * fps)
-    const hJ = this.high(join)
-    const vJ = -Math.log(this.high(join + dt) / this.high(join - dt)) / (2 * dt * fps)
+    const hJ = descent.clear.height
+    const vJ = descent.clear.speed
     const pin = descent.pin / fps
     const knee = (pin - start) * fps
-    const pace = -Math.log(this.high(pin + dt) / this.high(pin - dt)) / (2 * dt * fps)
+    const pace = descent.clear.pace
     const accel = (pace - drift) / this.ramped(knee).v
     const late = vJ - drift - accel * this.ramped(span).v
     const power = (late * (span - knee)) / (Math.log(h0 / hJ) - drift * span - accel * this.ramped(span).s) - 1
-    this.fall = { start, join, span, h0, drift, accel, knee, late, power }
+    const center = this.coverCenter(seg)
+    const hC = this.high(center - dt)
+    const vC = -Math.log(hC / this.high(center - 3 * dt)) / (2 * dt * fps)
+    const under = (center - join) * fps
+    const u = descent.under
+    const top = (Math.log(hJ / hC) - 0.5 * vJ * u.ramp - 0.5 * vC * u.ease) / (under - 0.5 * u.ramp - 0.5 * u.ease)
+    this.fall = { start, join, span, h0, drift, accel, knee, late, power, center, hJ, vJ, vC, top, under }
     return this.fall
   }
 
@@ -204,13 +210,21 @@ class NeptunePlan extends StopPlan {
       const settle = new THREE.Quaternion().setFromEuler(new THREE.Euler(-THREE.MathUtils.degToRad(descent.settleDeg) * Math.pow(x, descent.settlePower), 0, 0))
       return { pose: { position: shot.pose.position, quaternion: shot.pose.quaternion.clone().multiply(settle), vfov: shot.pose.vfov }, view: shot.view }
     }
-    if (time <= c.start || time >= c.join) return super.dive(time)
+    if (time <= c.start) return super.dive(time)
     const t = (time - c.start) * config.fps
-    const want = c.h0 * Math.exp(-(c.drift * t + c.accel * this.ramped(t).s + ((c.late * (c.span - c.knee)) / (c.power + 1)) * Math.pow(Math.max(t - c.knee, 0) / (c.span - c.knee), c.power + 1)))
+    const part = (x: number): number => {
+      const y = Math.min(Math.max(x, 0), 1)
+      return y * y * y - 0.5 * y * y * y * y
+    }
+    const s = t - c.span
+    const u = descent.under
+    const want = s <= 0
+      ? c.h0 * Math.exp(-(c.drift * t + c.accel * this.ramped(t).s + ((c.late * (c.span - c.knee)) / (c.power + 1)) * Math.pow(Math.max(t - c.knee, 0) / (c.span - c.knee), c.power + 1)))
+      : c.hJ * Math.exp(-(c.vJ * s + (c.top - c.vJ) * (u.ramp * part(s / u.ramp) + Math.max(s - u.ramp, 0)) - (c.top - c.vC) * u.ease * part((s - (c.under - u.ease)) / u.ease)))
     if (this.last?.time !== time) {
       let a = c.start
-      let b = c.join
-      for (let i = 0; i < 36; i++) {
+      let b = c.center - 1e-7
+      for (let i = 0; i < 40; i++) {
         const mid = 0.5 * (a + b)
         if (this.high(mid) > want) a = mid
         else b = mid
