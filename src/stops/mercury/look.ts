@@ -44,6 +44,8 @@ export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; 
 export const sky = { dive: [-11, -3] as [number, number], rise: [10.5, 16] as [number, number], band: { dive: [-5, -1] as [number, number], rise: [0.5, 5] as [number, number], soft: 0.012 } }
 
 export const smear = 1
+export const leaveStep = 0.5
+export const leaveSoft = 0.5
 export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }

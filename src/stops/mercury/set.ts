@@ -73,6 +73,10 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
   const sunAim = new THREE.Quaternion()
+  const sunWas = new THREE.Quaternion()
+  const { FilmDirector } = await import('../../director/film')
+  const { plans } = await import('../../director/plans')
+  const film = new FilmDirector(plans)
   const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
   const lens = new Lens(await ctx.texture(base + lensJson.file, { srgb: true, anisotropy: 1 }), lensJson, look.lens, diagUniform)
@@ -185,7 +189,8 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      const body = state.weight
+      const leaving = state.segment.stop === plan.id && state.segment.kind === 'travel'
+      const body = leaving ? 1 : state.weight
       orbit.visible = inOrbit && body > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
@@ -296,6 +301,8 @@ export const createSet: SetFactory = async (ctx) => {
       const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
       const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
       sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
+      const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1
       let limbRight = 1
       if (whole > 0) {

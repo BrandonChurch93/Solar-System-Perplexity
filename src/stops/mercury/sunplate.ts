@@ -27,6 +27,9 @@ uniform vec3 uLimbTravel;
 uniform vec4 uCorona;
 uniform float uTravel;
 uniform vec3 uPaint;
+uniform mat3 uBefore;
+uniform int uTaps;
+uniform vec2 uSpan;
 uniform int uDiag;
 in vec3 vRay;
 in vec2 vNdc;
@@ -80,7 +83,14 @@ void main() {
   vec2 dd = (uv - 0.5 - uPaint.xy) / uPaint.z;
   float r = length(dd);
   vec3 shade = mix(mix(vec3(1.0) - uLimb.rgb * (1.0 - sqrt(max(1.0 - held * held, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, held)), mix(vec3(1.0) - uLimbTravel * (1.0 - sqrt(max(1.0 - r * r, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, r)), uTravel);
-  vec3 c = inverseFilmic(textureGrad(uMap, uv, dFdx(uv), dFdy(uv)).rgb);
+  vec3 p0 = uBefore * vRay;
+  vec2 uv0 = ((p0.xy / max(-p0.z, 1e-3) - uRect.xy) / uRect.zw - 0.5) / uSmall.x + 0.5;
+  vec2 span = (uv0 - uv) * uSpan.x;
+  vec2 gx = dFdx(uv) * uSpan.y;
+  vec2 gy = dFdy(uv) * uSpan.y;
+  vec3 c = vec3(0.0);
+  for (int j = 0; j < uTaps; j++) c += inverseFilmic(textureGrad(uMap, uv + span * ((float(j) + 0.5) / float(uTaps) - 0.5), gx, gy).rgb);
+  c /= float(uTaps);
   vec3 glow = inverseFilmic(textureLod(uMap, uv, 5.0).rgb);
   float rr = min(r, 0.999);
   vec2 s = dd * (asin(rr) / max(rr, 1e-4));
@@ -109,13 +119,14 @@ export class SunPlate {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly m4 = new THREE.Matrix4()
+  private readonly m5 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
 
   constructor(map: THREE.Texture, rect: [number, number, number, number], disc: number, limb: SunLimb, private readonly small: SunSmall, diag: THREE.IUniform<number>, private readonly surface: SunSurface) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
-      uniforms: { uGrain: { value: new THREE.Vector4(surface.grain[0], surface.grain[1], surface.cells, surface.coarse) }, uLimbTravel: { value: new THREE.Vector3(...surface.limb) }, uCorona: { value: new THREE.Vector4(surface.corona.depth, surface.corona.reach[0], surface.corona.reach[1], surface.corona.soft) }, uTravel: { value: 0 }, uPaint: { value: new THREE.Vector3(...surface.disc) }, uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLimb: { value: new THREE.Vector4(limb.dark[0], limb.dark[1], limb.dark[2], disc) }, uLimbEdge: { value: new THREE.Vector2(limb.edge[0], limb.edge[1]) }, uSmall: { value: new THREE.Vector4(1, 0, 1, 1e-4) }, uPale: { value: new THREE.Vector3().fromArray(small.pale) }, uDiag: diag },
+      uniforms: { uGrain: { value: new THREE.Vector4(surface.grain[0], surface.grain[1], surface.cells, surface.coarse) }, uLimbTravel: { value: new THREE.Vector3(...surface.limb) }, uCorona: { value: new THREE.Vector4(surface.corona.depth, surface.corona.reach[0], surface.corona.reach[1], surface.corona.soft) }, uTravel: { value: 0 }, uPaint: { value: new THREE.Vector3(...surface.disc) }, uMap: { value: map }, uAim: { value: new THREE.Matrix3() }, uRect: { value: new THREE.Vector4(rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uLimb: { value: new THREE.Vector4(limb.dark[0], limb.dark[1], limb.dark[2], disc) }, uLimbEdge: { value: new THREE.Vector2(limb.edge[0], limb.edge[1]) }, uSmall: { value: new THREE.Vector4(1, 0, 1, 1e-4) }, uPale: { value: new THREE.Vector3().fromArray(small.pale) }, uBefore: { value: new THREE.Matrix3() }, uTaps: { value: 1 }, uSpan: { value: new THREE.Vector2(0, 1) }, uDiag: diag },
     })
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material)
     this.mesh.frustumCulled = false
@@ -133,6 +144,24 @@ export class SunPlate {
     u.uAspect!.value = aspect
     u.uTravel!.value = travel
     ;(u.uGrain!.value as THREE.Vector4).x = this.surface.grain[0] * still
+  }
+
+  smear(now: THREE.Quaternion, tanNow: number, before: THREE.Quaternion | null, tanBefore: number, aim: THREE.Quaternion, height: number, step: number, soft: number): void {
+    const u = this.material.uniforms
+    if (!before) {
+      u.uTaps!.value = 1
+      ;(u.uSpan!.value as THREE.Vector2).set(0, 1)
+      return
+    }
+    const k = tanBefore / tanNow
+    const m = this.m4.makeRotationFromQuaternion(this.q.copy(aim).invert())
+    m.multiply(this.m5.makeRotationFromQuaternion(before))
+    m.multiply(this.m5.makeScale(k, k, 1))
+    m.multiply(this.m5.makeRotationFromQuaternion(this.q.copy(now).invert()))
+    ;(u.uBefore!.value as THREE.Matrix3).setFromMatrix4(m)
+    const px = (now.angleTo(before) * height) / (2 * tanNow)
+    u.uTaps!.value = Math.min(Math.max(Math.ceil(px / step), 1), 8)
+    ;(u.uSpan!.value as THREE.Vector2).set(1, 1 + soft * Math.min(px, 4))
   }
 
   dispose(): void {
