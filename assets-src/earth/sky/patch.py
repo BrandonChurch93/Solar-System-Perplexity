@@ -123,6 +123,37 @@ def hold(film=None):
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 
+UNDER = (42.0, 49.0)
+SOURCE = (180, 280)
+
+
+def under(full, web):
+    old = np.asarray(Image.open(full).convert("RGB")).astype(np.float32)
+    small = np.asarray(Image.open(web).convert("RGB"))
+    m = geo.FIT["moons"][0]
+    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
+    cx, cy = m["cx"] + px, m["cy"] + py
+    yy, xx = np.mgrid[0:old.shape[0], 0:old.shape[1]].astype(np.float32) + 0.5
+    r = np.hypot(xx - cx, yy - cy)
+    w = (1 - step(r, UNDER[0], UNDER[1]))[..., None]
+    n = int(np.ceil(UNDER[1])) + 1
+    x0, y0 = int(cx), int(cy)
+    here = (slice(y0 - n, y0 + n + 1), slice(x0 - n, x0 + n + 1))
+    there = old[y0 + SOURCE[1] - n:y0 + SOURCE[1] + n + 1, x0 + SOURCE[0] - n:x0 + SOURCE[0] + n + 1][::-1, ::-1]
+    calm = np.stack([ndi.gaussian_filter(np.minimum(there[..., i], ndi.gaussian_filter(there[..., i], 4)), 4) for i in range(3)], -1)
+    new = old.copy()
+    new[here] = old[here] + np.maximum(there - calm, 0) * w[here]
+    img = Image.fromarray(np.clip(np.floor(new + 0.5), 0, 255).astype(np.uint8))
+    half = np.asarray(img.resize((img.size[0] // 2, img.size[1] // 2), Image.LANCZOS))
+    inside = (r[::2, ::2] < UNDER[1])[..., None]
+    twice = Image.fromarray(np.where(inside, half, small))
+    moved = np.abs(np.asarray(img).astype(np.int16) - old.astype(np.int16)).max(-1) > 0
+    print("under the Moon: pixels changed", int(moved.sum()), "farthest from the Moon's centre", float(r[moved].max().round(2)), "px; half size changed", int((np.asarray(twice) != small).any(-1).sum()))
+    for key, im in (("full", img), ("web", twice)):
+        im.save(OUT / key / "sky-hold.webp", lossless=True, quality=90, method=6)
+        print(key, im.size, round((OUT / key / "sky-hold.webp").stat().st_size / 1e6, 2), "MB")
+
+
 CLOSE = geo.ROOT / "references" / "approved" / "earth-close.jpg"
 TERRAIN_MARGIN = 0.5
 SUN_AT = (-0.083, 1.251)
@@ -268,5 +299,7 @@ def terrain(film):
 if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[1] == "terrain":
         terrain(sys.argv[2])
+    elif len(sys.argv) > 3 and sys.argv[1] == "under":
+        under(sys.argv[2], sys.argv[3])
     else:
         hold(sys.argv[1] if len(sys.argv) > 1 else None)
