@@ -1,29 +1,43 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T00:23:36.186Z",
- "head": "5ba7f451c01162a5393a31c3765572beb9b12473",
- "note": "Phase 6 start: item 1 experiments",
+ "pushed": "2026-11-22T00:49:48.638Z",
+ "head": "cfed62b4579e5f32bdb7c7d8c1be5e686edca63b",
+ "note": "Phase 6 item 1 in work: new terrain path in plan.ts (one arc, lowest and slowest at 870, flow 11 px per frame at 780, 7.6 at 870, 13 at 959; round 29 had 2.6 to 4.6), second ground behind and below the approved relief being built",
  "looks": [
   {
-   "time": "2026-11-22T00:23:35.606Z",
-   "file": "20261122002335606-note-t780-959.jpg",
-   "source": "../../../../tmp/t780-959.jpg",
+   "time": "2026-11-22T00:49:48.044Z",
+   "file": "20261122004948044-note-wide-use.jpg",
+   "source": "out/work/mercury/p6/wide-use.jpg",
    "kind": "note",
-   "label": "round 29 build: terrain 780 beside 959, the slow pan the critics named",
+   "label": "polish item 1: what the film sees of the second ground (bright: frames 752 to 981, pale: cover frames only, dark: never)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T00:23:34.992Z",
-   "file": "20261122002334992-note-sheet.jpg",
-   "source": "out/work/mercury/p6/e1/sheet.jpg",
+   "time": "2026-11-22T00:49:47.378Z",
+   "file": "20261122004947378-note-wide-paint-in.jpg",
+   "source": "out/work/mercury/p6/wide-paint-in.jpg",
    "kind": "note",
-   "label": "Phase 6 item 1 experiment, draft: level forward flight of 1.6 camera heights through 870 on the single relief layer (780 810 840 870 900 930 959); the ground ends at 780 to 840, to be painted",
+   "label": "polish item 1: second ground, the approved relief seen from a wide camera behind and above, magenta is ground still to paint",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T00:19:32.901Z",
-   "file": "20261122001932901-frame-f959.jpg",
-   "source": "out/work/mercury/p6/e1/f959.png",
+   "time": "2026-11-22T00:47:44.365Z",
+   "file": "20261122004744365-frame-f989.jpg",
+   "source": "out/work/mercury/p6/e3/f989.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 989, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 989,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-22T00:46:09.259Z",
+   "file": "20261122004609259-frame-f959.jpg",
+   "source": "out/work/mercury/p6/e3/f959.png",
    "kind": "frame",
    "label": "mercury.terrain frame 959, draft tier",
    "stop": "mercury",
@@ -35,20 +49,18 @@
    "engine": "f854c8146f64c7e4"
   },
   {
-   "time": "2026-11-21T22:19:32.535Z",
-   "file": "20261121221932535-note-sheet-risecover.jpg",
-   "source": "out/work/mercury/rr2/looks/sheet-risecover.jpg",
-   "kind": "note",
-   "label": "rise cover at review: 985 to 996",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-21T22:19:31.983Z",
-   "file": "20261121221931983-note-sheet-rise.jpg",
-   "source": "out/work/mercury/rr2/looks/sheet-rise.jpg",
-   "kind": "note",
-   "label": "rise sheet at review: 960 967 973 980 987 994 1000 1007 1014 1021 1027 1034",
-   "stop": "mercury"
+   "time": "2026-11-22T00:42:36.371Z",
+   "file": "20261122004236371-frame-f770.jpg",
+   "source": "out/work/mercury/p6/e3/f770.png",
+   "kind": "frame",
+   "label": "mercury.dive frame 770, draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 770,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T21:06:10.069Z",
