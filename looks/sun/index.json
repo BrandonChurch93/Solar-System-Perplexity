@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T05:56:01.742Z",
- "head": "235c2e3926c8c3238332bb71fc1f8f312a00110e",
- "note": "Sun polish: proof chain renders every frame 200 to 224 at review; offline: item 5b layer views, feet bloom at 90 traced (grade row and gain). main edbf7b8, batch 19",
+ "pushed": "2026-11-22T06:26:00.729Z",
+ "head": "96cf078138d949db0aaa595507ed292d08ec1251",
+ "note": "Sun hook surge (round 31 section F): before strip and a draft strip; finals rendering. main 2b50ee2, agent/sun-hook 96cf078",
  "looks": [
+  {
+   "time": "2026-11-22T06:26:00.069Z",
+   "file": "20261122062600069-note-hook-draft6-strip-400px.jpg",
+   "source": "out/work/sun/hook/hook-draft6-strip-400px.jpg",
+   "kind": "note",
+   "label": "Hook surge, draft tier, sixth tune, same nine frames at 400 px: the surge leaves the left foot (8), climbs (15, 23), crosses the crest (30), comes down (38), lands and flares the right foot (45, 53), fades (60). main 2b50ee2, agent/sun-hook 96cf078 (one number later than the picture)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:25:59.510Z",
+   "file": "20261122062559510-note-hook-before-strip-final-400px.jpg",
+   "source": "out/work/sun/hook/hook-before-strip-final-400px.jpg",
+   "kind": "note",
+   "label": "Hook (round 31 section F), BEFORE: frames 0 8 15 23 30 38 45 53 60, final tier, each 400 px wide. main 2b50ee2",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T05:56:00.740Z",
    "file": "20261122055600740-note-z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
@@ -106,22 +122,6 @@
    "source": "out/work/sun/rf17/f00247.png",
    "kind": "note",
    "label": "Final tier still, frame 247, item 5a. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:38.829Z",
-   "file": "20261122053038829-note-x2-f247-final-limb-before-left-now-right-zoom4.jpg",
-   "source": "out/work/sun/h1p/x2-f247-final-limb-before-left-now-right-zoom4.png",
-   "kind": "note",
-   "label": "Item 5a, frame 247 final tier at 4 times zoom, limb: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:37.730Z",
-   "file": "20261122053037730-note-x2-f247-final-upper-before-left-now-right-zoom4.jpg",
-   "source": "out/work/sun/h1p/x2-f247-final-upper-before-left-now-right-zoom4.png",
-   "kind": "note",
-   "label": "Item 5a, frame 247 final tier at 4 times zoom, upper: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
    "stop": "sun"
   },
   {
