@@ -1,9 +1,41 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T11:53:12.752Z",
- "head": "82b08371f17af065bfe0738bf37ec8ca44b6942c",
- "note": "Earth polish: the leave 2176 to 2186 before above after (aurora ebbs over the launch), tree holds main c5c4248, engine batches 21 and 22; arrival strip rendering",
+ "pushed": "2026-11-22T12:18:12.892Z",
+ "head": "3f8fdd81cc14bc3a6c0e9abdef94b82f5c2881fe",
+ "note": "Earth polish: arrival strip 1666 to 1679 on batches 21 and 22, before on main 90ad0a9 and after on agent/earth 3f8fdd8 (tree holds main 9f5ad80); third take of the terrain sky margin rendering",
  "looks": [
+  {
+   "time": "2026-11-22T12:18:12.132Z",
+   "file": "20261122121812132-note-arrival-frames-2.jpg",
+   "source": "out/work/earth/pb/w/arrival-frames-2.png",
+   "kind": "note",
+   "label": "Arrival 1673 to 1679, whole frames, review tier. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T12:18:11.341Z",
+   "file": "20261122121811341-note-arrival-frames-1.jpg",
+   "source": "out/work/earth/pb/w/arrival-frames-1.png",
+   "kind": "note",
+   "label": "Arrival 1666 to 1672, whole frames, review tier. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T12:18:10.656Z",
+   "file": "20261122121810656-note-arrival-limb-2.jpg",
+   "source": "out/work/earth/pb/w/arrival-limb-2.png",
+   "kind": "note",
+   "label": "Arrival 1673 to 1679, upper right limb, review tier. Green pixels on batch 22: main 3781 to 4289, with the cure 5 to 22 (the onset starts at 1676). Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T12:18:09.861Z",
+   "file": "20261122121809861-note-arrival-limb-1.jpg",
+   "source": "out/work/earth/pb/w/arrival-limb-1.png",
+   "kind": "note",
+   "label": "Arrival 1666 to 1672 (mail 80), upper right limb, review tier. Green pixels in the limb sector on batch 22: main 883 to 3644, with the cure 0 to 5. Rows: main batch 20, cure batch 20, main 90ad0a9 on batches 21 and 22 (kept Earth), agent/earth 3f8fdd8 with the cure on batches 21 and 22 (tree holds main 9f5ad80, engine hash be043ade).",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-22T11:51:13.036Z",
    "file": "20261122115113036-compare-compare-earth-terrain-view.jpg",
@@ -112,22 +144,6 @@
    "source": "out/work/earth/pb/w/twin-patch.png",
    "kind": "note",
    "label": "The patch itself at the left border, gain 3, 5 times: shipped above (mirrored twin), rebuilt below (twin taken out; the faint points are the approved image's own points moved 704 px, not mirrored). agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:32:14.296Z",
-   "file": "20261122113214296-note-proof-1921.jpg",
-   "source": "out/work/earth/pb/w/proof-1921.png",
-   "kind": "note",
-   "label": "Terrain sky margin, frame 1921, right edge, before beside after: 164 pixels differ; the faint mirrored point at the right border is gone. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T11:32:13.727Z",
-   "file": "20261122113213727-note-proof-2125.jpg",
-   "source": "out/work/earth/pb/w/proof-2125.png",
-   "kind": "note",
-   "label": "Terrain sky margin, frame 2125 (top margin out of view, sky dim under the cover), before beside after: 221 pixels differ, at most 3 levels, in the left 48 px. agent/earth 1dd74ae plus the rebuilt margin of sky-terrain.webp (not yet committed), tree holds main 6e46f06, engine batches 21 and 22, engine hash be043ade",
    "stop": "earth"
   }
  ]
