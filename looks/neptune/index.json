@@ -1,9 +1,57 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T15:00:44.435Z",
- "head": "88e925cfc9599e8b84f760f3aee774d8d0ae5ba8",
- "note": "CUT34: proving the arrival swing commit (4436, 4492, sheets), the lost points of the hold patch built offline",
+ "pushed": "2026-11-22T15:26:48.518Z",
+ "head": "53e5942a9948435caf777050f2eadb82d034ea96",
+ "note": "CUT34: the arrival swing commit proved against main (4436, 4492 finals, travel sheet, drafts old and new); judged finals rendering",
  "looks": [
+  {
+   "time": "2026-11-22T15:26:47.403Z",
+   "file": "20261122152647403-note-swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
+   "source": "out/work/nep/end34/swing/send/swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
+   "kind": "note",
+   "label": "swing 0, every second frame 4453 to 4499, drafts raised 4 (looking for sky edges)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:26:46.099Z",
+   "file": "20261122152646099-note-uranus-travel-4455-4529-draft-old-above-swing-0.jpg",
+   "source": "out/work/nep/end34/swing/send/uranus-travel-4455-4529-draft-old-above-swing-0.jpg",
+   "kind": "note",
+   "label": "uranus.travel drafts: main above, swing 0 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:26:44.997Z",
+   "file": "20261122152644997-note-uranus-rise-4405-4454-draft-old-above-swing-0.jpg",
+   "source": "out/work/nep/end34/swing/send/uranus-rise-4405-4454-draft-old-above-swing-0.jpg",
+   "kind": "note",
+   "label": "uranus.rise after its cover, drafts: main above, swing 0 below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:26:43.987Z",
+   "file": "20261122152643987-note-uranus-travel-sheet-review-swing-0.jpg",
+   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-swing-0.jpg",
+   "kind": "note",
+   "label": "uranus.travel review sheet with swing 0",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:26:43.071Z",
+   "file": "20261122152643071-note-4492-final-old-left-swing-0-right.jpg",
+   "source": "out/work/nep/end34/swing/send/4492-final-old-left-swing-0-right.jpg",
+   "kind": "note",
+   "label": "uranus.travel 4492 final: main left, swing 0 right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:26:42.097Z",
+   "file": "20261122152642097-note-4436-final-old-left-swing-0-right.jpg",
+   "source": "out/work/nep/end34/swing/send/4436-final-old-left-swing-0-right.jpg",
+   "kind": "note",
+   "label": "uranus.rise 4436 final: main left, Neptune arrival swing 0 right",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T15:00:43.701Z",
    "file": "20261122150043701-note-r1-points-hero-left-head-right-x4.jpg",
@@ -19,66 +67,6 @@
    "kind": "note",
    "label": "uranus.travel 4492 final with the Neptune arrival swing at 0 (commit 88e925c)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:00:42.092Z",
-   "file": "20261122150042092-note-view-new-4436.jpg",
-   "source": "out/work/nep/end34/swing/view-new-4436.jpg",
-   "kind": "note",
-   "label": "uranus.rise 4436 final with the Neptune arrival swing at 0 (commit 88e925c)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:00:41.443Z",
-   "file": "20261122150041443-note-where.jpg",
-   "source": "out/work/nep/end34/points/where.jpg",
-   "kind": "note",
-   "label": "hold sky patch: where the restored points sit (red rings on the approved hero)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:00:40.431Z",
-   "file": "20261122150040431-note-points-hero-old-new-x3.jpg",
-   "source": "out/work/nep/end34/points/points-hero-old-new-x3.png",
-   "kind": "note",
-   "label": "hold sky patch, lost points: hero, patch now, patch with the points back, native times 3 (not installed yet)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:30:36.507Z",
-   "file": "20261122143036507-job-frame-05006.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T14:26:01.273Z",
-   "file": "20261122142601273-note-head-night-lift4-before-after-05242.jpg",
-   "source": "out/work/nep/end34/stress2/head-night-lift4-before-after-05242.png",
-   "kind": "note",
-   "label": "stress 5242 night side raised 4: export above, 5 Mbps below (pole cap breaks into tiles)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T12:07:38.015Z",
-   "file": "20261122120738015-frame-f04933-review.jpg",
-   "source": "out/work/sheets/.frames-kVSthN/f04933-review.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4933, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4933,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   }
  ]
 }
