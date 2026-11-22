@@ -8,7 +8,7 @@ import fit from './fit.json'
 
 export const climbOut = { lead: 1.4, tail: 0.5, level: -4, fast: [0.24, 0.2, 3] as [number, number, number], settle: 2.9, turn: 0.75, lens: 2 }
 export const glide = { bankDeg: 7, lead: 0.8, arc: 1.0, swingDeg: 20 }
-export const plunge = { power: 4 }
+export const plunge = { power: 8, lead: 0.48 }
 export const veil = { hides: 0, closed: 0.98, lift: 2, sky: 0.75 }
 
 export const params: MoveParams = {
@@ -102,7 +102,7 @@ export class JupiterPlan extends StopPlan {
     const s1 = this.sized(c)
     const u = ramp(seg.start, c, time)
     const m0 = ((this.sized(seg.start + h) - s0) / h) * (c - seg.start) / (s1 - s0)
-    const want = s0 + (s1 - s0) * (m0 * u + (1 - m0) * Math.pow(u, plunge.power))
+    const want = s0 + (s1 - s0) * (m0 * u + plunge.lead * u * u + (1 - m0 - plunge.lead) * Math.pow(u, plunge.power))
     let lo = seg.start
     let hi = c
     for (let i = 0; i < 40; i++) {
