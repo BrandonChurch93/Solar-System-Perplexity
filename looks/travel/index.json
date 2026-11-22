@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T09:19:21.859Z",
- "head": "95a091a2d92ae62fc63f86326dee0ea6453ded9e",
- "note": "Pinned arrivals for five travels: point brightens in place, glow widens into the disc",
+ "pushed": "2026-11-22T09:40:49.921Z",
+ "head": "f4472a3e81fcc979b8e5f7dad9d372ce47a4f1a4",
+ "note": "Departure ease: Earth and Saturn leave on a cubic from rest",
  "looks": [
+  {
+   "time": "2026-11-22T09:40:49.160Z",
+   "file": "20261122094049160-note-e1-saturn-sheet12.jpg",
+   "source": "../../../../tmp/v/e1-saturn-sheet12.jpg",
+   "kind": "note",
+   "label": "saturn.travel with departure ease, 12 frames, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T09:40:48.301Z",
+   "file": "20261122094048301-note-e1-saturn-first24.jpg",
+   "source": "../../../../tmp/v/e1-saturn-first24.jpg",
+   "kind": "note",
+   "label": "saturn.travel departure ease, first 24 frames, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T09:40:47.556Z",
+   "file": "20261122094047556-note-e1-earth-first24.jpg",
+   "source": "../../../../tmp/v/e1-earth-first24.jpg",
+   "kind": "note",
+   "label": "earth.travel departure ease, first 24 frames, draft",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T09:40:46.895Z",
+   "file": "20261122094046895-note-e1-earth-sheet12.jpg",
+   "source": "../../../../tmp/v/e1-earth-sheet12.jpg",
+   "kind": "note",
+   "label": "earth.travel with departure ease, 12 frames, draft",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T09:19:21.205Z",
    "file": "20261122091921205-note-q2-earth-last24.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/pn-crops.jpg",
    "kind": "note",
    "label": "earth.travel pinned, draft: pn-crops",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:40:10.996Z",
-   "file": "20261122084010996-note-pn-2243-2250.jpg",
-   "source": "../../../../tmp/v/pn-2243-2250.jpg",
-   "kind": "note",
-   "label": "earth.travel pinned, draft: pn-2243-2250",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:40:10.268Z",
-   "file": "20261122084010268-note-pn-2227-2242.jpg",
-   "source": "../../../../tmp/v/pn-2227-2242.jpg",
-   "kind": "note",
-   "label": "earth.travel pinned, draft: pn-2227-2242",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:40:09.344Z",
-   "file": "20261122084009344-note-pn-2211-2226.jpg",
-   "source": "../../../../tmp/v/pn-2211-2226.jpg",
-   "kind": "note",
-   "label": "earth.travel pinned, draft: pn-2211-2226",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T08:40:08.307Z",
-   "file": "20261122084008307-note-pn-2195-2210.jpg",
-   "source": "../../../../tmp/v/pn-2195-2210.jpg",
-   "kind": "note",
-   "label": "earth.travel pinned, draft: pn-2195-2210",
    "stop": "travel"
   }
  ]
