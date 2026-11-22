@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T16:04:39.249Z",
- "head": "b57d9fab2d0580831b3915a0d8d5ecda89eb8f93",
- "note": "CUT34 sent: READY a135f6b8 (holds main 6460b4a), veil change and rise release over 24 frames; night side and hold rim tests left out",
+ "pushed": "2026-11-22T16:30:13.005Z",
+ "head": "6caa272097d33ce401b9d45ab9f4239a0d54aa6d",
+ "note": "venus: the veil's two gates on the terrain side, cure in proof for CUT35 (draft pairs beside the round 34 state)",
  "looks": [
+  {
+   "time": "2026-11-22T16:29:37.541Z",
+   "file": "20261122162937541-note-g5-rise.jpg",
+   "source": "../view/g5-rise.jpg",
+   "kind": "note",
+   "label": "venus rise in 1549 to 1558, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T16:29:36.886Z",
+   "file": "20261122162936886-note-g5-dive.jpg",
+   "source": "../view/g5-dive.jpg",
+   "kind": "note",
+   "label": "venus dive out 1316 to 1325, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T15:37:32.088Z",
    "file": "20261122153732088-note-c26-rc.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/k-1185-top.jpg",
    "kind": "note",
    "label": "1185 final, main 84b0ea4: top sunlit limb, round 33 R3 minor, double rim line",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:18.430Z",
-   "file": "20261122144718430-note-k-1287-lrlimb.jpg",
-   "source": "../view/k-1287-lrlimb.jpg",
-   "kind": "note",
-   "label": "1287 final, main 84b0ea4: lower right dark limb, grazing bands in the haze",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:17.551Z",
-   "file": "20261122144717551-note-k-1287-rlimb.jpg",
-   "source": "../view/k-1287-rlimb.jpg",
-   "kind": "note",
-   "label": "1287 final, main 84b0ea4: right dark limb, round 33 R3 major, stars at full strength to the edge",
    "stop": "venus"
   },
   {
