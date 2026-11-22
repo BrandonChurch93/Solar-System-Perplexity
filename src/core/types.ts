@@ -60,6 +60,7 @@ export interface Shot {
   post: PostParams
   cover: CoverState
   dust: number
+  dustLook?: number
   dustOffset: THREE.Vector3
 }
 
