@@ -1138,3 +1138,9 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - Repeat (`out/work/repeat/jupiter-b22.json`): 2895, 2997, 3150, 3296, 3026, 3267, 3272, 3274, 3280, 3 fresh sessions, 2 runs each: one hash per frame, not repeatable: none (2895 4d858b36e4255db8, 2997 89bf9565675073b4, 3150 a0a02bf05239a412, 3296 4dc7f91d4b39996d).
 - Build green, vitest 83 of 83, disk full 46.8 MB, web 13.6 MB.
 - The chain now renders the trial's "before" on the READY head: drafts 2970 to 3023, then the dive review sheet (`kept/dive-sheet-b22.png`), "end Q" about 13:00. No edit under `src/` until then.
+
+### 11:57 to 12:02 UTC: POLISH READY 686a7ea sent
+
+- origin/main c5c4248 (status 96, docs only: round 32's twelve scoring critics have answered, R5 7, R6 6, R7 10/9/6, R3 4 to 8, R4 6 and 10; Phase 6 polish rounds start with the eleven finished polish branches) merged as `686a7ea`, pushed. Code main is still 3a09527.
+- 12:00: `POLISH READY 686a7ea` sent to /root (high) with ten pictures: the four finals on 3a09527, the terrain review sheet on 3a09527, the rise and dive cover review sheets (rendered on f24046b, with the byte proof for 3a09527), three pair sheets against a06d2ae. It names the three cover fixes, the bytes of the judged frames (0 px moved in 2895, 2997, 3150; 3296 moved only by main's flight sky), the measures of this tree, eight weak points, and the trial as next (about 14:30).
+- THE READY HEAD IS 686a7ea. The dive trial is ONE commit on top of it (plus notes commits, which do not touch `src/`). If main moves in code before the trial is committed: merge first, then the trial commit, and say which head is the READY head with that main.
