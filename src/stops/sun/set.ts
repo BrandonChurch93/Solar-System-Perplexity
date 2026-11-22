@@ -44,7 +44,7 @@ export const createSet: SetFactory = async (ctx) => {
   const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
   const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
   const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
-  const fringe = new Fringe(plate, look.fringe)
+  const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)

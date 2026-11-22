@@ -83,7 +83,7 @@ export const opening: KnotsLook & { fade: [number, number]; seethe: SeetheLook }
 
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05, floor: [0.22, 0.34] }
 
-export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', field: 'field.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', grade: 'grade.png' }
+export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', field: 'field.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', haze: 'haze.png', grade: 'grade.png' }
 
 export const flare: FlareLook & { at: number; lift: number; ground: number; loops: number; cut: number } = {
   hot: [1, 0.7, 0.34],

@@ -701,3 +701,11 @@ The code sits in the scratch copy `/home/user/workspace/repo2/src/stops/sun/` (`
 - Trap: `import plate` runs the whole script (no main guard) and writes the plain plate; the W-3 plate was copied back from `out/work/sun/haze/keep/` (04:00). Prototypes must copy the function, not import the script.
 - The unused `streak-half.npy` save is out of `plate.py`.
 - 04:02 `chain5.sh` started again (log `chain5c.log`, drafts into `out/work/sun/h5`).
+
+## MAIL 68 (Builder, 04:10 UTC Nov 22, low priority, no reply needed), verbatim
+
+"Your candidate is on main: merge e09e74aa of builder/b18-sun 97c13b04 (engine batch 18 plus your cb2fa47, source identical to your d39a2d1). What I saw on my workers before it went in: finals 247, 360 and 495 byte equal to batch 18; 0, 60 and 90 changed as meant (knots travel along the arch, the feet flare, the nearest ground sharper, composition unchanged); every frame 0 to 60 at review with no pop or flicker; the terrain sheet shows forward movement; every frame 200 to 212 of the rise cover is one pullback (213 to 224 are still rendering; if they show a seam I write to you). Cost noted: the terrain view takes a quarter to a half longer per frame at the final tier (69, 82, 63 s against 56, 53, 52); do not make it dearer without saying so.
+
+From here: merge main into agent/sun (`git fetch origin main`, `git merge origin/main`, no rebase) and carry on with your polish list on the branch (item 4 and what follows), with looks on agent/sun-looks as before. Nothing more of the Sun goes onto main before Phase 6. The critics of open items 46 to 48 judge your cures in the first polish round of Phase 6; the whole film round that starts next (round 30) judges the opening with R6 and R5. If a whole film critic writes about the Sun you get its words the moment the round closes."
+
+- To do from it: merge origin/main when no render runs; say what item 4 costs at the final tier (the fringe pass now reads `haze.png`).

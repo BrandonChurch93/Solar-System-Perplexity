@@ -29,6 +29,7 @@ PEAK = 5
 UNDER = 0.88
 CUT = (5.0, 7.0)
 NEAR = (0.9, 1.8)
+STREAK = dict(row=1154, half=36, band=(80, 68), edge=10, line=121, share=50, box=41, most=0.9, left=(790, 850), right=(1040, 1100))
 
 
 def elevation(w, h):
@@ -64,6 +65,27 @@ def loop_mask(a2, c2):
     keep = cv2.dilate(keep, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (17, 17))).astype(np.float32)
     m = np.clip(cv2.GaussianBlur(keep, (0, 0), 6) * 1.6 - 0.3, 0, 1) * np.clip(box * 2 - 1, 0, 1)
     return cv2.resize(m, (a2.shape[1], a2.shape[0]), interpolation=cv2.INTER_LINEAR)
+
+
+def streak(part, look=STREAK):
+    C, H, B = look['row'], look['half'], look['band']
+    r0, r1 = C - B[0], C + B[1]
+    L = part[r0:r1]
+    lum = L @ LUM
+    even = ndi.percentile_filter(lum, look['share'], size=(1, look['line']), mode='nearest')
+    rows = np.arange(r0, r1, dtype=np.float32) - C
+    out = np.abs(rows) >= H
+    fit = np.polyfit(rows[out] / B[0], even[out], 2)
+    x = (rows / B[0])[:, None]
+    base = fit[0][None, :] * x * x + fit[1][None, :] * x + fit[2][None, :]
+    win = 0.5 + 0.5 * np.cos(np.clip((np.abs(rows) - H + look['edge']) / look['edge'], 0, 1) * np.pi)[:, None]
+    st = cv2.GaussianBlur(cv2.blur(np.maximum(even - base, 0) * win, (look['box'], 1)), (0, 0), 2)
+    cols = np.arange(L.shape[1], dtype=np.float32)[None, :]
+    st *= np.maximum(1 - np.clip((cols - look['left'][0]) / (look['left'][1] - look['left'][0]), 0, 1), np.clip((cols - look['right'][0]) / (look['right'][1] - look['right'][0]), 0, 1))
+    taken = np.zeros_like(part)
+    taken[r0:r1] = L * np.minimum(st / np.maximum(lum, 1e-5), look['most'])[..., None]
+    part[r0:r1] = L - taken[r0:r1]
+    return taken
 
 
 def boxed(shape):
@@ -139,7 +161,11 @@ def main():
     cv2.imwrite(f'{WORK}/loops-mask-wide.png', (wide_m * 255).astype(np.uint8))
     del da, dc, wide_m, ring
     x0, y0, x1, y1 = LOOPS_BOX
-    crop = display(loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)])
+    part = loops[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)]
+    taken = streak(part)
+    print('streak taken out of the loops card, scene peak', float(taken.max()), 'sum', float(taken.sum()))
+    del taken
+    crop = display(part)
     spill = to_srgb(baked[round(y0 * 3168):round(y1 * 3168), round(x0 * 5632):round(x1 * 5632)] / LIT[1]).astype(np.float32)
     del loops, baked
     write(f'{OUT}/full/loops-glow.png', cv2.resize(spill, (spill.shape[1] // 4, spill.shape[0] // 4), interpolation=cv2.INTER_AREA))
@@ -215,6 +241,7 @@ def main():
     ground = step(Y[:, None] - edge[None, :], -14, 4).astype(np.float32)
     np.save(f'{WORK}/canvas-edge.npy', edge)
     s = scene(canvas)
+    np.save(f'{WORK}/clean-half.npy', cv2.resize(s, (w // 2, h // 2), interpolation=cv2.INTER_AREA))
     del canvas, lum, body, hit
     band = (above > 0.8) & (above < 2.0) & (ground < 0.01)
     r, g, b = s[..., 0][band], s[..., 1][band], s[..., 2][band]
