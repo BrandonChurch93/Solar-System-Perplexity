@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T15:22:15.781Z",
+ "pushed": "2026-11-22T15:46:10.374Z",
  "head": "5d36d0ccefd385d759aedc4e29d27a4831840b36",
- "note": "CUT34: veil change A and rise release over 24 frames in proof (tree holds main 64fff6f); night side shade and hold rim refit tested and left out",
+ "note": "CUT34 proof running: rise release over 24 frames (e30dd702) on veil change A (539534e0), tree holds main 64fff6f; G13 0 of 433",
  "looks": [
+  {
+   "time": "2026-11-22T15:37:32.088Z",
+   "file": "20261122153732088-note-c26-rc.jpg",
+   "source": "../view/c26-rc.png",
+   "kind": "note",
+   "label": "rise cover sheet 1555 to 1566 at review with the release over 24 frames (commit e30dd702, tree holds main 64fff6f): Sun and blue sky carry through 1566, 1555 to 1559 same bytes as main",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T15:23:21.324Z",
+   "file": "20261122152321324-note-k24-pair.jpg",
+   "source": "../view/k24-pair.jpg",
+   "kind": "note",
+   "label": "rise 1567 and 1573 draft at native preview size: release over 12 frames (left) and 24 frames (right, commit e30dd702, tree holds main 64fff6f)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T15:21:14.202Z",
    "file": "20261122152114202-note-e-1287-rlimb.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/k-1287-rlimb.jpg",
    "kind": "note",
    "label": "1287 final, main 84b0ea4: right dark limb, round 33 R3 major, stars at full strength to the edge",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:47:16.668Z",
-   "file": "20261122144716668-note-k-1287-night.jpg",
-   "source": "../view/k-1287-night.jpg",
-   "kind": "note",
-   "label": "1287 final, main 84b0ea4 (tree holds main a60c5ff): night side at native size, round 33 R3 major, crunchy coral texture",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:21.387Z",
-   "file": "20261122142621387-note-qd-rise-c.jpg",
-   "source": "../view/qd-rise-c.jpg",
-   "kind": "note",
-   "label": "Venus cover strip rise-c: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
    "stop": "venus"
   },
   {
