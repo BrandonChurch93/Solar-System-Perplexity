@@ -824,3 +824,17 @@ Running (`q26.sh`, log `/tmp/q26.log`, about 10:38): the present look at 1563, 1
 If xf holds on those: put the two values into `look.ts` of the repo, then the proof as for F4 (`q22.sh` pattern: finals with `cmp` against f16 and f22-1586, audit, repeat, both cover sheets against c22, chain), commit, looks, note to the Builder.
 
 Note 10:37: the frames with the fastest motion take long at review tier and master size (1563 took 7 minutes 44 seconds), so `q26.sh` ends about 11:25, not 10:38. Its nine stills come in this order: now 1563, 1566, 1311; xf 1314, 1563, 1566, 1311, 1557, 1317. The png of each still lies in `r2/out/work/venus/p6/` as soon as it is done (the jpgs in `view/` only at the end of each group).
+
+## State at 10:45 (22 Nov): engine batch 21 merged, candidate take F5 on five frames (read this first after a compaction)
+
+Head 862cc0e (merge of main 8988279, engine batch 21: Sun hook and leave, travel pin with the launch from rest, ending rest, Mercury's leave, Neptune ending, belt rock, determinism cures, flight sky, Mars sky margin cure). No mail about batch 21 has reached me yet. The Builder's own proof (kit/PROGRESS.md, 10:20) says 1185, 1287, 1440 and 1586 keep main's bytes with main's round 23 state of my folders; my own proof on my branch state is still to run. `npx tsc --noEmit` passes on the merged tree. Code is still 1d3704c (veil take F4); nothing uncommitted in `src/stops/venus`.
+
+The render copy r2 still sits on main c479536 (batch 20) until the experiment is read, so now and xf are compared on one tree.
+- `q26.sh` was stopped at 10:41 after its first two stills (the present look at 1563 and 1566: `view/now-1563.jpg`, `view/now-1566.jpg`, png in `r2/out/work/venus/p6/`), because every fast frame costs about 7.5 minutes at review tier and master size and batch 21 needs its proof.
+- `q26b.sh` (log `/tmp/q26b.log`, started 10:41, about 30 minutes, ends with "queue26b done" after "render copy restored"): xf (`fan [12, 1.6, 2.7, 14]`, `fray [2.5, 0.4, 0.2, 2]`) at 1563, 1314, 1557, 1317, 1566 in that order. Present look to compare: `now-1563.png`, `e2b-1314.png`, `f4n-1557.png`, `f4n-1317.png`, `now-1566.png` in `r2/out/work/venus/p6/`. Side by side crops with `python3 pairF.py A.png B.png view/OUT.jpg x,y,w,h ...` (in `/home/user/workspace`).
+- What the present look shows at 1563 and 1566 (orbit side, the globe under the veil): the globe's cloud forms in stepped copies along the motion (the engine's sample count at review tier, 4 samples; not mine to hide) and the veil's fine streaks over the centre; at 1566 a patch of fine straight lines left of centre.
+
+Next, in this order:
+1. Read the xf stills as they land. If xf holds, put the two values into `look.ts` of the repo.
+2. Move r2 to batch 21 (`cd r2; git checkout --detach origin/main`), then the proof queue `q27.sh` on batch 21 (pattern `q22.sh`): finals f23 with `cmp` against `f16-{1185,1287,1440}.png` and `f22-1586.png`, audit, repeat on the same 12 frames, review cover sheets c23 against c22 by cell, chain. About 55 minutes.
+3. Commit, looks, note to the Builder: head, main 8988279, judged frames, which frames changed and by how many pixels, numbers, sheets, weak list.
