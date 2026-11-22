@@ -1,9 +1,85 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T00:37:55.723Z",
+ "pushed": "2026-11-22T00:53:28.980Z",
  "head": "1de9aa228885e4646490e79267438311294c495e",
- "note": "sun polish items 2 and 3: proof crops at the final tier, bottom strip beside middle ground at 0, 60, 90; critic's box at 60",
+ "note": "sun polish items 1 to 3: proof crops of the nearest ground at the final tier (0, 60, 90), critic's box at 60, draft sheet 200 to 224; measure running",
  "looks": [
+  {
+   "time": "2026-11-22T00:53:28.316Z",
+   "file": "20261122005328316-note-i273-draft-sheet-200-224.jpg",
+   "source": "out/work/sun/i273-draft-sheet-200-224.jpg",
+   "kind": "note",
+   "label": "sun polish proof (build P3): draft sheet 200 224, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:53:27.788Z",
+   "file": "20261122005327788-note-i272-f60-under-the-limb-x2.jpg",
+   "source": "out/work/sun/i272-f60-under-the-limb-x2.png",
+   "kind": "note",
+   "label": "sun polish proof (build P3): f60 under the limb x2, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:53:27.239Z",
+   "file": "20261122005327239-note-i272-f60-critic-box-native.jpg",
+   "source": "out/work/sun/i272-f60-critic-box-native.png",
+   "kind": "note",
+   "label": "sun polish proof (build P3): f60 critic box native, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:53:26.659Z",
+   "file": "20261122005326659-note-i272-f90-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i272-f90-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof (build P3): f90 bottom and middle native, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:53:26.085Z",
+   "file": "20261122005326085-note-i272-f60-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i272-f60-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof (build P3): f60 bottom and middle native, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:53:25.493Z",
+   "file": "20261122005325493-note-i272-f0-bottom-and-middle-native.jpg",
+   "source": "out/work/sun/i272-f0-bottom-and-middle-native.png",
+   "kind": "note",
+   "label": "sun polish proof (build P3): f0 bottom and middle native, round 24 beside now",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:46:54.452Z",
+   "file": "20261122004654452-frame-f00060.jpg",
+   "source": "out/work/sun/rf12/f00060.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, final tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-22T00:38:15.447Z",
+   "file": "20261122003815447-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T00:37:55.038Z",
    "file": "20261122003755038-note-i267-d12-sheet-0-212.jpg",
@@ -58,76 +134,6 @@
    "source": "out/work/sun/i266-f60-bottom-and-middle-native.png",
    "kind": "note",
    "label": "sun polish proof: f60 bottom and middle native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:50.535Z",
-   "file": "20261122003750535-note-i266-f0-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i266-f0-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f0 bottom and middle native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:33:23.907Z",
-   "file": "20261122003323907-frame-f00060.jpg",
-   "source": "out/work/sun/rf11/f00060.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-22T00:21:43.967Z",
-   "file": "20261122002143967-note-i262-v2-f90-bottom-right-native.jpg",
-   "source": "out/work/sun/i262-v2-f90-bottom-right-native.png",
-   "kind": "note",
-   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i262-v2-f90-bottom-right-native.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:21:43.315Z",
-   "file": "20261122002143315-note-i262-v2-f90-bottom-left-native.jpg",
-   "source": "out/work/sun/i262-v2-f90-bottom-left-native.png",
-   "kind": "note",
-   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i262-v2-f90-bottom-left-native.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:21:42.649Z",
-   "file": "20261122002142649-note-i259-f0-final-M11-whole-half.jpg",
-   "source": "out/work/sun/i259-f0-final-M11-whole-half.jpg",
-   "kind": "note",
-   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i259-f0-final-M11-whole-half.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:21:42.037Z",
-   "file": "20261122002142037-note-i255-f90-approved-r24-now-x2.jpg",
-   "source": "out/work/sun/i255-f90-approved-r24-now-x2.jpg",
-   "kind": "note",
-   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i255-f90-approved-r24-now-x2.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:21:41.116Z",
-   "file": "20261122002141116-note-i254-f0-left-native.jpg",
-   "source": "out/work/sun/i254-f0-left-native.png",
-   "kind": "note",
-   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i254-f0-left-native.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:02:23.602Z",
-   "file": "20261122000223602-note-i252-f0-lower-r24-over-now.jpg",
-   "source": "out/work/sun/i252-f0-lower-r24-over-now.jpg",
-   "kind": "note",
-   "label": "Frame 0, lower part: round 24 over now. Fault: bottom left corner too bright, in work",
    "stop": "sun"
   },
   {
