@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T18:21:23.057Z",
- "head": "917975bced25569af5f019fbbdef7ca277a19df1",
- "note": "venus: rise only night limb test at 1586 beside round 34, not in the branch (READY stays d2a59775); tree holds main 55319c5",
+ "pushed": "2026-11-22T18:29:49.722Z",
+ "head": "cb2b149d43e54461a6488ef23f20fb2a73e2e209",
+ "note": "round 35 is cut without a Venus change; finishing the measurements of the night limb test, which stays out of the branch",
  "looks": [
+  {
+   "time": "2026-11-22T18:29:48.503Z",
+   "file": "20261122182948503-note-d1-rise.jpg",
+   "source": "../view/d1-rise.jpg",
+   "kind": "note",
+   "label": "TEST, NOT in the branch and not in round 35: rise and departure 1562 to 1645 at draft, round 34's code beside the rise only night limb (dusk); engine main ff158d9, tree holds main 55319c5",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T18:21:22.000Z",
    "file": "20261122182122000-note-d1-crops.jpg",
@@ -154,14 +162,6 @@
    "source": "../view/g5-rise.jpg",
    "kind": "note",
    "label": "venus rise in 1549 to 1558, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T16:29:36.886Z",
-   "file": "20261122162936886-note-g5-dive.jpg",
-   "source": "../view/g5-dive.jpg",
-   "kind": "note",
-   "label": "venus dive out 1316 to 1325, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
    "stop": "venus"
   },
   {
