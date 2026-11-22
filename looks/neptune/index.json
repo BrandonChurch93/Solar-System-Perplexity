@@ -1,71 +1,71 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T07:13:36.746Z",
+ "pushed": "2026-11-22T07:23:59.517Z",
  "head": "7c1dfff0c21f1ec30f33aaab3748d33e61b8e32d",
- "note": "Neptune in the ending: take 7 proved on main's path (crops, probe), now on the new camera path of agent/ending",
+ "note": "Neptune in the ending proved on the new camera path of agent/ending: sheets of retreat and lookback, finals 5085 and 5235, native pairs against main's Neptune",
  "looks": [
   {
-   "time": "2026-11-22T07:13:36.080Z",
-   "file": "20261122071336080-note-new-path-lookback-sheet-review.jpg",
-   "source": "out/work/end/send/new-path-lookback-sheet-review.jpg",
+   "time": "2026-11-22T07:23:58.968Z",
+   "file": "20261122072358968-note-new-path-5105-ring-edge-on-native-crop.jpg",
+   "source": "out/work/end/send/new-path-5105-ring-edge-on-native-crop.jpg",
    "kind": "note",
-   "label": "Neptune ending on the new camera path, review sheet of ending.lookback, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5105-ring-edge-on-native-crop (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:13:00.668Z",
-   "file": "20261122071300668-note-lb-5226-crop.jpg",
-   "source": "../../../../tmp/lb-5226-crop.jpg",
+   "time": "2026-11-22T07:23:58.461Z",
+   "file": "20261122072358461-note-new-path-5235-main-and-take.jpg",
+   "source": "out/work/end/send/new-path-5235-main-and-take.jpg",
    "kind": "note",
-   "label": "Neptune ending on the new camera path, 5226 review native crop, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5235-main-and-take (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:13:00.105Z",
-   "file": "20261122071300105-note-probe-172-degrees.jpg",
-   "source": "out/work/end/send/probe-172-degrees.jpg",
+   "time": "2026-11-22T07:23:57.923Z",
+   "file": "20261122072357923-note-new-path-5125-main-and-take.jpg",
+   "source": "out/work/end/send/new-path-5125-main-and-take.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, probe-172-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5125-main-and-take (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:12:59.505Z",
-   "file": "20261122071259505-note-probe-165-degrees.jpg",
-   "source": "out/work/end/send/probe-165-degrees.jpg",
+   "time": "2026-11-22T07:23:57.404Z",
+   "file": "20261122072357404-note-new-path-5115-main-and-take.jpg",
+   "source": "out/work/end/send/new-path-5115-main-and-take.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, probe-165-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5115-main-and-take (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:12:58.932Z",
-   "file": "20261122071258932-note-probe-150-degrees.jpg",
-   "source": "out/work/end/send/probe-150-degrees.jpg",
+   "time": "2026-11-22T07:23:56.890Z",
+   "file": "20261122072356890-note-new-path-5080-main-and-take.jpg",
+   "source": "out/work/end/send/new-path-5080-main-and-take.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, probe-150-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, native crop, new-path-5080-main-and-take (left main's Neptune from the ending agent, right this take where a pair), scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:12:58.339Z",
-   "file": "20261122071258339-note-probe-120-degrees.jpg",
-   "source": "out/work/end/send/probe-120-degrees.jpg",
+   "time": "2026-11-22T07:21:06.124Z",
+   "file": "20261122072106124-note-new-path-retreat-sheet-review.jpg",
+   "source": "out/work/end/send/new-path-retreat-sheet-review.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, probe-120-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, review sheet of ending.retreat, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:12:57.769Z",
-   "file": "20261122071257769-note-probe-90-degrees.jpg",
-   "source": "out/work/end/send/probe-90-degrees.jpg",
+   "time": "2026-11-22T07:17:46.567Z",
+   "file": "20261122071746567-note-new-path-final-5085-native-crop.jpg",
+   "source": "out/work/end/send/new-path-final-5085-native-crop.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, probe-90-degrees, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, final tier, new-path-final-5085-native-crop, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T07:12:57.204Z",
-   "file": "20261122071257204-note-crops-5085-before-after.jpg",
-   "source": "out/work/end/send/crops-5085-before-after.jpg",
+   "time": "2026-11-22T07:17:45.850Z",
+   "file": "20261122071745850-note-new-path-final-5085.jpg",
+   "source": "out/work/end/send/new-path-final-5085.jpg",
    "kind": "note",
-   "label": "Neptune ending, review, crops-5085-before-after, main's path, branch df8d8c4 (notes 2a5bbc8), main 2b50ee2",
+   "label": "Neptune ending on the new camera path, final tier, new-path-final-5085, scratch 7c1dfff = agent/ending 41e144e (main 7717f95) + agent/neptune-ending 2a5bbc8",
    "stop": "neptune"
   }
  ]
