@@ -1,9 +1,47 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T16:04:42.737Z",
+ "pushed": "2026-11-22T16:27:06.370Z",
  "head": "64e20ee82a6a0e5e23917d2f41e59c0df81c6838",
- "note": "CUT34 taken with the hold's ghosts back (READY 0a08b493); now the bright bars at 993 and 994 for CUT35",
+ "note": "Mercury: the bright bars at 993 and 994 traced to the wide ground picture's sunlit wall, a trial cure in drafts",
  "looks": [
+  {
+   "time": "2026-11-22T16:27:05.809Z",
+   "file": "20261122162705809-note-bars-cause-plate.jpg",
+   "source": "out/work/mercury/p6/bars/looks/bars-cause-plate.jpg",
+   "kind": "note",
+   "label": "Cause of the bars at 993: the wide ground picture's own bright wall near its horizon (2 times enlarged), drawn out when the rise camera is higher than the picture's camera; tree 64e20ee on main 6460b4a",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T16:27:05.277Z",
+   "file": "20261122162705277-note-bars-991-992-before-after.jpg",
+   "source": "out/work/mercury/p6/bars/looks/bars-991-992-before-after.jpg",
+   "kind": "note",
+   "label": "Rise 991 (top) and 992 (bottom), draft crops: left tree 64e20ee on main 6460b4a, right the trial cure (uncommitted): the bright wall fades over 991 and is gone at 992",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T16:27:04.725Z",
+   "file": "20261122162704725-note-bars-993-994-before-after.jpg",
+   "source": "out/work/mercury/p6/bars/looks/bars-993-994-before-after.jpg",
+   "kind": "note",
+   "label": "Rise 993 (top) and 994 (bottom), draft crops: left tree 64e20ee on main 6460b4a with the bright bars, right the trial cure (uncommitted): the wide ground picture's highlights held to 1.3 times their surroundings in the rise",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T16:16:55.281Z",
+   "file": "20261122161655281-frame-f990-uvB.jpg",
+   "source": "out/work/mercury/p6/bars/f990-uvB.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 990, draft tier, layers view",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 990,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T16:04:42.154Z",
    "file": "20261122160442154-note-bars-993-look.jpg",
@@ -11,20 +49,6 @@
    "kind": "note",
    "label": "Rise 993 draft, tree a5e5207 on main 6460b4a: bright bars with pink and green edges below the horizon at the right (top: box 1440 560 400 300 at 3x; bottom: whole frame). Open, first thing for CUT35",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:59:52.633Z",
-   "file": "20261122155952633-frame-f994-layers.jpg",
-   "source": "out/work/mercury/p6/bars/f994-layers.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 994, draft tier, layers view",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 994,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T15:47:09.605Z",
@@ -98,30 +122,6 @@
    "source": "../../../../tmp/r1-b.jpg",
    "kind": "note",
    "label": "Mercury rise at draft: 990 and 1000 on d697e4c (left of each pair) against 05cc394 (new pace), then 999 and 1001 on 05cc394; main 64fff6f",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:10:31.714Z",
-   "file": "20261122151031714-note-r1-a.jpg",
-   "source": "../../../../tmp/r1-a.jpg",
-   "kind": "note",
-   "label": "Mercury rise cover 990 to 998 at draft, tree 05cc394 on main 64fff6f, with the new pace of the rise",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:10:31.146Z",
-   "file": "20261122151031146-note-r1-sheet.jpg",
-   "source": "../../../../tmp/r1-sheet.jpg",
-   "kind": "note",
-   "label": "Mercury rise 992 to 1015 at draft, every frame, tree 05cc394 on main 64fff6f: the slowing spread over 997 to 1016 (try R1), flare off, rim 0.2",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T14:57:35.807Z",
-   "file": "20261122145735807-note-495-limb3.jpg",
-   "source": "../../../../tmp/495-limb3.jpg",
-   "kind": "note",
-   "label": "495 limb native 2x: main final, head final on main's Sun, head draft on the Sun agent's d8ec4dd files (tree 2c5d787, main ca78dda)",
    "stop": "mercury"
   }
  ]
