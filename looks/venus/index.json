@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T18:17:03.279Z",
- "head": "a452a6c0a694f602952f3d6d283eeef0c834cebb",
- "note": "venus: after CUT35 (READY d2a59775): night limb test at 1586 and 1287, not in the branch; tree holds main 55319c5",
+ "pushed": "2026-11-22T18:21:23.057Z",
+ "head": "917975bced25569af5f019fbbdef7ca277a19df1",
+ "note": "venus: rise only night limb test at 1586 beside round 34, not in the branch (READY stays d2a59775); tree holds main 55319c5",
  "looks": [
+  {
+   "time": "2026-11-22T18:21:22.000Z",
+   "file": "20261122182122000-note-d1-crops.jpg",
+   "source": "../view/d1-crops.jpg",
+   "kind": "note",
+   "label": "venus 1586 final, native crops at 2x, test, NOT in the branch: round 34 (top), table test (middle), the rise only night limb in the shader (bottom): no halo round the unlit limb, no outer rim line lower right, the dark limb falls into black; main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T18:21:21.023Z",
+   "file": "20261122182121023-note-d1-whole.jpg",
+   "source": "../view/d1-whole.jpg",
+   "kind": "note",
+   "label": "venus 1586 final, test, NOT in the branch (patch assets-src/venus/fit/dusk.patch): round 34 (left) beside the rise only night limb (right): after the terrain view the limb table's glow goes to 0 past the terminator and the limb veil is full on the night side; main ff158d9, tree holds main 55319c5",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T18:17:02.748Z",
    "file": "20261122181702748-note-n1-1287.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/g5-dive.jpg",
    "kind": "note",
    "label": "venus dive out 1316 to 1325, draft: round 34 state (left of each pair) beside the gate cure in proof (right); tree holds main 6460b4a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:37:32.088Z",
-   "file": "20261122153732088-note-c26-rc.jpg",
-   "source": "../view/c26-rc.png",
-   "kind": "note",
-   "label": "rise cover sheet 1555 to 1566 at review with the release over 24 frames (commit e30dd702, tree holds main 64fff6f): Sun and blue sky carry through 1566, 1555 to 1559 same bytes as main",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:23:21.324Z",
-   "file": "20261122152321324-note-k24-pair.jpg",
-   "source": "../view/k24-pair.jpg",
-   "kind": "note",
-   "label": "rise 1567 and 1573 draft at native preview size: release over 12 frames (left) and 24 frames (right, commit e30dd702, tree holds main 64fff6f)",
    "stop": "venus"
   },
   {
