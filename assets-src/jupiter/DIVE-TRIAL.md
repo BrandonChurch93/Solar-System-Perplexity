@@ -115,3 +115,12 @@ Chosen: quadratic lead 0.48, power 8: 610 px at 8.74 px. It gives a larger disc 
   - 2970: the hold's picture. 2978: the disc a little larger (499 against 490). 2986: clearly larger (529 against 497). 2994: 582 against 526, the top of the disc at the frame edge. 3002: 672 against 611. 3010: 852 against 836, and less smeared (42.6 px against 54.1): the curls of the belt beside the storm hold their shape.
   - 3019 (under the cover): the camera is higher (0.249 against 0.204 planet radii), so the black corner of sky at the upper left is larger; the cream haze and the pale smear at the lower left are the same in kind.
   - In the READY head the sheet reads still, still, still, a little, more, plunge. In the trial each of the first six frames is larger than the one before by a growing step.
+
+## Measures on the trial (every frame, 1856 s)
+
+Tree: d96263f, main da02e63 (code 3a09527), engine hash be043ade04a7ab6e, stop hash fcee457e7faf488b (the READY head: 02fedb3bb7c19edb). File `out/work/measure/jupiter-trial-full.json` on the agent's VM.
+
+- G13 pass: 0 of 463 frames over 0.02 soft. The dive frames it counts (2970 to 3015; the cover frames are skipped) have 0 soft pixels in both. Texels a pixel, READY head | trial: 2990 2.000 | 1.972, 2997 1.975 | 1.885, 3000 1.932 | 1.814, 3005 1.745 | 1.749, 3010 1.796 | 1.784, 3012 1.680 | 1.691, 3014 1.684 | 1.700, 3015 1.614 | 1.652. The floor is 1.
+- The G13 numbers of the other 417 frames (hold, terrain side of the dive, terrain, rise) are the same to the last digit as the READY head's. Worst frames as before: 3253 0.95 percent, 3254 0.78, 3261 0.71.
+- G5 pass: coverage at 2997 0.544 (READY head 0.460); 2895 0.352, 3150 0.754, 3296 0.280 as before; invalid 0.
+- G17 pass, unchanged: 2895 median 1.039, quarter point 0.949; 3150 median 1.023, quarter point 0.963.
