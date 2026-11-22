@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Io's shadow at the terminator, right of centre (crops E and I in image-06, P in image-07)",
+      "what": "the shadow is a hard-edged black oval that runs past the terminator into the night side and shows up as a darker blob on an already dark limb. It reads as a sticker pasted over the shading, not a shadow cast onto cloud",
+      "fix": "project the shadow onto the sphere so it stretches and fades with the terminator, give it a soft penumbra, and hide it where it falls on the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "southern limb and south polar region (crops S and T in image-04)",
+      "what": "the south cap turns into a smeared, desaturated brown-grey surface with crater-like ovals. It looks like a rocky moon texture rather than Jovian cloud bands, and the detail is much softer than in the equatorial bands",
+      "fix": "carry the banded cloud texture with festoons and small ovals to the pole at matching resolution, and avoid crater-like rimmed spots"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "southern limb (crops T and U in image-08)",
+      "what": "the same soft, low-detail pole with crater-like spots, plus a bright rim along the lower limb where the night side meets space. The lighting band ends in a fairly hard line",
+      "fix": "use the same polar texture fix, and make the limb glow fall off smoothly into the night side"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "Milky Way at the far right edge (crop W in image-08, crop F in image-06)",
+      "what": "two round, opaque black blobs in the bright star cloud look like holes or stamped artifacts, not dust lanes",
+      "fix": "remove the blobs or turn them into irregular, wispy dust lanes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "Io in both frames (crop A in image-02, crop P in image-07)",
+      "what": "Io has a smooth, plastic, airbrushed look with blotchy spots and little surface detail at native size",
+      "fix": "add finer surface detail, sharper volcanic features and a slight limb darkening"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "cloud bands across the disk (crops A, I, J, N)",
+      "what": "the turbulent swirls are painterly and slightly airbrushed, with some soft, smeared zones between the sharp eddies",
+      "fix": "raise high-frequency cloud detail evenly across bands and cut the smudged transitions"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "sunlit left and southern limb in crops F, G, H (also image-13.png sunlit limb, image-15.png crops L, P, Q, and image-16.png crop V top edge)",
+      "what": "Jupiter's sunlit edge is a jagged stair-stepped sphere cutoff wrapped in a pasted outer glow halo, and unoccluded background stars shine straight through the bright atmospheric haze and overlap the limb edge itself",
+      "fix": "supersample and anti-alias the planet limb, replace the additive bloom halo with a physically integrated atmospheric scattering falloff, and mask or attenuate background stars behind both the planet disc and dense limb glare"
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "moon in crop Q upper-right of the Great Red Spot (also image-13.png center and image-14.png crop A right edge)",
+      "what": "at native size the moon is visibly pixelated with a raw stair-stepped sunlit left edge, blocky surface blotches, and an airbrushed dark smudge directly beneath its south pole that reads as a fake 2D drop shadow",
+      "fix": "render the moon at higher supersampled resolution with clean anti-aliased limb edges and crisp surface detail, and remove the misplaced blurry drop-shadow smudge underneath it"
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "Jupiter cloud bands, Great Red Spot, and polar limbs in crops L and Q (also image-13.png globe and image-14.png crops A, G, H)",
+      "what": "the globe texture is soft, airbrushed, and under-resolved compared to the crisp 1-2 px background stars, smearing into muddy blur toward both poles while showing pixelated stair-stepping along diagonal creases like the upper-left rim of the Great Red Spot",
+      "fix": "use a higher-resolution cloud albedo/detail map with proper anisotropic filtering near the poles and limb so cloud filaments stay sharp at 1:1 pixel scale without upscale softness or jagged creases"
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "near-foreground clouds in crops S, T, U (also image-09.png bottom foreground and image-10.png crops E and H)",
+      "what": "the bottom-left foreground clouds in crop S and lower crop H dissolve into a soft, muddy generative smear with mushy orange/grey blobs, while the dark blue storm troughs in crop U and image-10.png crop E mix airbrushed cyan glow patches with isolated pixelated white/blue pinpoint dots on the clouds",
+      "fix": "render crisp near-field cloud detail (or physically consistent camera depth-of-field) instead of uneven foreground blur, and replace the airbrushed cyan blotches and stray pinpoint specks with coherent volumetric internal cloud lightning"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "diagonal vortex cloud ridges and upper-right limb in crops B, C, E, G, I (also image-09.png and image-11.png crops Q, R)",
+      "what": "high-contrast diagonal cloud rims show crunchy oversharpened stair-stepped aliasing at native scale, the upper-right limb has a hard cyan rim line with blobby stars inside the blue atmospheric haze, and the Milky Way dust lanes carry blotchy color noise",
+      "fix": "reduce post-sharpening/upscale ringing with clean supersampling on diagonal cloud edges, soften the cyan limb line into a smooth atmospheric gradient that dims overlapping stars, and denoise the Milky Way background"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "unlit nightside hemisphere and right limb in crop C (also image-15.png crops M and R)",
+      "what": "faint noisy blue patches and a dim bluish rim remain slightly visible on Jupiter's unlit nightside with minor dark-tone banding near the terminator",
+      "fix": "drop unlit nightside surface illumination cleanly to zero while still occluding background stars, and dither the terminator shadow falloff from 16-bit to eliminate dark-side blotches and banding"
+     }
+    ]
+   }
+  }
+ ]
+}

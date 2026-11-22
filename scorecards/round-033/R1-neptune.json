@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower-left rings and night-side shadow, and the lower-right ring edge",
+   "what": "bright ring specks in the approved frame are missing or crushed: a sparkle near the lower left drops from about 140 to black, and specks on the lower-right ring edge drop from the 160s to the 40s. The faint grain in that shadow is flatter and blacker than the approved frame.",
+   "fix": "restore those ring specks and lift the shadow grain back up to the approved frame; do not smooth or crush the dark rings"
+  },
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "middle-left night-side crop, label D 252,594",
+   "what": "the same shadow crush at native size: near-black pixels more than double, and the faint ring streaks lose their bright specks",
+   "fix": "restore the faint night-side structure and specks from the approved crop"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon",
+   "what": "placement and phase match, but the lit face is darker and flatter, about 5 levels down with local highlights much darker, and the faint glow on the unlit limb is crushed out",
+   "fix": "raise the lit-face highlights and bring back the faint night-side limb glow"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "top-middle moon crop, label B 252,54",
+   "what": "native crop of the same moon: the lit face is about 6 levels darker than the approved crop",
+   "fix": "brighten the lit face to the approved crop"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right star core",
+   "what": "position, spikes, and halo match, but a small cluster on the right side of the saturated core is up to about 70 levels darker, a dark bite in the white peak",
+   "fix": "fill the core back to a solid white peak like the approved frame"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "top-right limb crop, label C 1212,54",
+   "what": "the star peak that is solid white in the approved crop is about 26 levels darker at the same pixel",
+   "fix": "restore the solid white peak"
+  }
+ ]
+}
