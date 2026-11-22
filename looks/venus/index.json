@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T10:14:27.322Z",
- "head": "08b2e2cc84759d3fe8f986bdece36633d8d871e1",
- "note": "10:16 UTC: full dive and rise sheets on engine batch 20 (main c479536), read frame by frame",
+ "pushed": "2026-11-22T10:36:36.939Z",
+ "head": "a017f7cc2b19324648eddbb874368d53b8148686",
+ "note": "veil at full amount: fine lines and soft rectangles traced, candidate take F5 being checked on six more frames in the render copy",
  "looks": [
+  {
+   "time": "2026-11-22T10:36:35.746Z",
+   "file": "20261122103635746-note-x5b-1558-quad.jpg",
+   "source": "../view/x5b-1558-quad.jpg",
+   "kind": "note",
+   "label": "experiment in the render copy, not committed: rise 1558 review tier, coarser cloud read at full rush and a wider fibre, candidate take F5 among them (branch b506dc3, main c479536, engine batch 20)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T10:36:34.791Z",
+   "file": "20261122103634791-note-x5-1558-quad.jpg",
+   "source": "../view/x5-1558-quad.jpg",
+   "kind": "note",
+   "label": "experiment in the render copy, not committed: rise 1558 review tier, veil at full amount, four variants of the fibre term (branch b506dc3, main c479536, engine batch 20)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T10:14:26.725Z",
    "file": "20261122101426725-note-s23-dive.jpg",
@@ -162,22 +178,6 @@
    "source": "../view/e3t.jpg",
    "kind": "note",
    "label": "dive tail 1321 1323 1325 1327 review tier, veil take E3d (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:44:41.873Z",
-   "file": "20261122074441873-note-c20-dc.jpg",
-   "source": "../view/c20-dc.png",
-   "kind": "note",
-   "label": "dive cover 1309 to 1320 review tier, veil take E3d: soft streaks, terrain clear under mist at 1319 and 1320 (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:44:40.844Z",
-   "file": "20261122074440844-note-c20-rc.jpg",
-   "source": "../view/c20-rc.png",
-   "kind": "note",
-   "label": "rise cover 1555 to 1566 review tier, veil take E3d: soft streaks, no planks (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
    "stop": "venus"
   }
  ]
