@@ -277,7 +277,10 @@ void main() {
           float an = float(m) * 1.0471976;
           vec2 scale = vec2(uBandMap.x / 6.2831853, uBandWiden / uBandMap.z);
           wide += textureLod(uBandGlow, bc.xy + vec2(cos(an), sin(an)) * scale * uFlightFill.y, 0.0).rgb / 6.0;
-          far += textureLod(uBandGlow, bc.xy + vec2(cos(an + 0.5235988), sin(an + 0.5235988)) * scale * uFlightRim.w, 0.0).rgb / 6.0;
+        }
+        for (int m = 0; m < 3; m++) {
+          float an = float(m) * 2.0943951 + 0.5235988;
+          far += textureLod(uBandGlow, bc.xy + vec2(cos(an), sin(an)) * vec2(uBandMap.x / 6.2831853, uBandWiden / uBandMap.z) * uFlightRim.w, 0.0).rgb / 3.0;
         }
         float rim = clamp(1.0 - 0.5 * dot(wide + far, vec3(0.3, 0.5, 0.2)) / max(dot(sq, vec3(0.3, 0.5, 0.2)), 1e-4), 0.0, 1.0);
         vec3 fill = inverseFilmic(wide * wide) * uFlightFill.x + inverseFilmic(far * far) * uFlightRim.z;
@@ -310,9 +313,12 @@ void main() {
     col += uFlightHaze.rgb * (uFlightGlow.w * (uFlightHaze.w + (1.0 - uFlightHaze.w) * exp(-pow(asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth, 2.0)))) + uFlightGlow.rgb * (uFlightGlow.w * fm.r);
     for (int k = 0; k < (uFlightWarm.w > 0.0 ? 1 : 0); k++) {
       vec3 gq = uGal * sd;
-      vec3 hq = vec3(gq.xy, gq.z * 2.0) * uFlightSpread.x;
-      float hn = mix(skyNoise(hq).x, skyNoise(hq * 2.7 + 5.0).y, 0.35);
-      col += uFlightWarm.rgb * (uFlightStrip.x * uFlightGlow.w * (1.0 - uFlightSpread.z * bz) * exp(-pow(asin(clamp(gq.z, -1.0, 1.0)) / uFlightWarm.w, 2.0)) * (1.0 + uFlightSpread.y * (hn - 0.5)));
+      float fall = exp(-pow(asin(clamp(gq.z, -1.0, 1.0)) / uFlightWarm.w, 2.0));
+      for (int n = 0; n < (fall > 0.004 ? 1 : 0); n++) {
+        vec3 hq = vec3(gq.xy, gq.z * 2.0) * uFlightSpread.x;
+        float hn = mix(skyNoise(hq).x, skyNoise(hq * 2.7 + 5.0).y, 0.35);
+        col += uFlightWarm.rgb * (uFlightStrip.x * uFlightGlow.w * (1.0 - uFlightSpread.z * bz) * fall * (1.0 + uFlightSpread.y * (hn - 0.5)));
+      }
     }
     vec2 vq = (vUv - 0.5) * vec2(uLens.y, 1.0);
     highp uint h = uint(gl_FragCoord.x) * 0x9E3779B1u ^ uint(gl_FragCoord.y) * 0x85EBCA77u;
