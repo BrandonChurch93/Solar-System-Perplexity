@@ -50,6 +50,14 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 - Prompt, exact: "Edit image 1. Remove the planet Earth completely, remove the small moon at the upper right, remove the green and red aurora, and remove every trace of the planet's blue glow and atmosphere halo. Fill the area they covered with deep space that continues the surrounding sky exactly: the same dense field of fine, pinpoint, slightly colored stars, the same faint dusty Milky Way with soft brown dust lanes crossing behind where the planet was, the same near-black blue background, the same star sizes, density, brightness and grain. Keep everything else in the image unchanged: same framing, same stars in the same places, same exposure and color. No planet, no moon, no sun, no glow, no aurora, no blue haze, no nebula colors that are not already present, no text, no border. Wide 16:9 image."
 - Takes: 1 of 6, kept. It fills the planet, the Moon and the aurora with sky and keeps the stars outside in place.
 
+### Fine Moon (working input of the Moon maps, not shipped as is)
+
+- Output: `out/work/earth/moon/gen-t1.png` (2048 x 2048).
+- Tool and model: `generate_image`, `seedream_5`, aspect 1:1. Input: `out/work/earth/moon/src-1024.png` (the hero's Moon, 176 px round hero px (2509, 226), Lanczos to 1024).
+- Prompt, exact (also in `assets-src/earth/moon-prompt.txt`): "Edit image 1, a small soft enlargement of a painted view of the Moon in space, gibbous phase, sunlit from the left, with the right part of the disc in deep shadow. Redraw it as a crisp high resolution image of exactly the same Moon. Keep the framing, the size and the position of the disc, the phase, the soft terminator and the dark shadowed right side exactly as they are. Keep every dark mare, every bright highland area and every crater that can be seen in exactly the same place, with the same shape, the same brightness and the same neutral grey color with its slight warm tone. Add fine sharp natural lunar detail that the soft enlargement lacks: many small sharp rimmed craters of varied sizes, crater ray streaks, fine mare wrinkle ridges, rough highland texture, tiny shadows inside craters near the terminator. The lit left edge of the disc is a clean smooth circular arc, without any bright outline. The background stays plain black space with the same few faint stars. Photographic astronomy look, natural, not stylized. No text, no border, no glow, no halo. Square 1:1 image."
+- Takes: 1 of 6, kept. Coarse flow on the lit disc against the hero: median 0.01, p99 0.32 hero px (every mare, highland and crater of the hero in its place). `tools/ml/checkmoved.py` reports p99 5.15 px, which is the new fine craters and not a move of the hero's features.
+- Use: `python3 assets-src/earth/moonfine.py` writes `out/work/earth/moon/moon-fine.png` (1056 x 1056, 6 times the hero): the hero kept in full below 2 hero px (Gaussian 1.5 px), times the take's fine ratio (the take over its own blur), clipped to 0.4 to 2.5. High pass rms at film scale inside the lit disc 12.04 against the hero's 10.92.
+
 ## Shipped files
 
 ### `public/assets/earth/<set>/wrap-surface.jpg` (8192 x 4096 and 4096 x 2048, JPEG 4:4:4)
@@ -90,15 +98,22 @@ python3 assets-src/earth/sky/patch.py out/work/earth/still/hold-nosky.png
 
 ### `public/assets/earth/<set>/air-glow.png` (180 x 72)
 
-- Tool: `air.py`. Rows 0 to 63: ratio of the hero's glow off the limb to the fitted layers, per position angle and height. Rows 64 to 71: colour of the hero's rim per position angle. Input: hero and the sky fill.
+- Tool: `air.py`, then `air.py --under` once on the file `air.py` wrote (it blends the alpha row it finds, so it is never run twice on its own output). Input: hero and the sky fill. No generation.
+- Rows 0 to 63, RGB: ratio of the hero's glow off the limb to the fitted layers, per position angle and height. Rows 0 to 63, alpha: share of the fitted limb line per position angle; `--under` replaces it on the night side (day factor under 0.58 to 0.64) by the line the hero shows there (peak within -0.005 to 0.002 radii over the mean of the bands inside and outside it), never above 1 where the day factor is under 0.44.
+- Rows 64 to 71, RGB: colour of the hero's rim per position angle, median of the band -0.011 to -0.004 radii; `--under` takes the aurora's excess green out first in the sector 2 to 92 degrees and calms the row there (median of 3 columns).
+- Rows 64 to 71, alpha (`--under`): depth of the dark gap the hero has inside its night limb, per position angle: lower of the two blue peaks (inside -0.03 to -0.012 radii, at the edge -0.001 to 0.0075) minus the minimum between them, in scene light, median over 5 columns, capped at 0.04, faded out where the day factor passes 0.10 to 0.14, stored as `0.125 + 0.875 depth / 0.04`. The air shell adds 0.7 of it back at the hold, so the film has one edge where the hero has two (Phase 6 item 4).
 
-### `public/assets/earth/<set>/moon-color.jpg`, `public/assets/earth/<set>/moon-lit.webp` (1024 x 512 and 512 x 256)
+### `public/assets/earth/<set>/moon-color.jpg`, `public/assets/earth/<set>/moon-lit.webp` (2048 x 1024 and 1024 x 512)
 
-- Tool: `moon.py`. Limb circle fitted on the lit arc of the 2x hero (69 points, rms 0.65 px, radius 58.1 px at 1x). `moon-lit.webp` holds the hero's own Moon pixels with their light baked, alpha = front mask. `moon-color.jpg` is the albedo from those pixels, mirrored to fill the far side.
+- Tool: `moonfine.py`, then `moon.py`. Limb circle fitted on the lit arc of the 2x hero (69 points, rms 0.65 px, radius 58.1 px at 1x). `moon-lit.webp` holds the Moon's pixels with their light baked, alpha = front mask. `moon-color.jpg` is the albedo from those pixels, mirrored to fill the far side.
+- The pixels are `out/work/earth/moon/moon-fine.png` (1056 x 1056, the hero's Moon at 6 times): the hero kept in full below 2 hero px (Gaussian 1.5 px), times the fine ratio of the generated take below (the take over its own blur), clipped to 0.4 to 2.5. The map is twice the size the film shows the Moon (Phase 6 item 7). High pass rms at film scale inside the lit disc 12.04 against the hero's 10.92.
 
-### `public/assets/earth/<set>/aurora.webp` (2048 x 384 and 1024 x 192)
+### `public/assets/earth/<set>/aurora.webp` (2048 x 448 and 1024 x 224)
 
-- Tool: `aurora.py`. The hero's curtains above the limb between position angles 2 and 92, unrolled along the limb: hero minus the smoothed sky fill minus the fitted glow, stars removed by opening and closing, gated on green or red chroma, faded at the ends and the top. Where the residue is red (red over green above `RED`, 0.9 to 1.8) only its smooth part is kept (opening of `CALM` 25 px, then a blur), so the red glow carries no star points and no blotches.
+- Tool: `aurora.py`. Input: hero (2x), the sky fill, `src/stops/earth/air.json`. No generation. The map is the emission of the aurora inside the air shell (Phase 6 item 5): position angle 2 to 92 degrees across, height -0.03 to 0.27 radii up, sampled from the hero along the lines of sight of the hold camera.
+- Above the limb: hero minus the smoothed sky fill minus the fitted glow. Stars are removed by a closing (5 px) and then the largest opening along line segments of 23 px at seven angles (-60 to 30 degrees), so only what is as long as a ray stays: the rays are the hero's own, at their places, spacing and heights. Green keeps its rays. Red (red minus 0.2 green) is not kept as pixels: its height profile is measured along the rays' lean (blurred, made to rise to one peak and fall from it) and its strength per position angle is the fit of that profile (blur 14 px), so the red is a falloff with height and carries no points and no blotches.
+- Below the limb: the hero's excess green on the disc (green over 1.08 times the larger of red and blue, opened by 3 px), times the share of the disc the rim layer leaves in view, so a ray has its base on the disc and no edge at the limb. The 12 rows round the limb are blended along the height.
+- Gate on green or red chroma, floor 0.004, faded at both ends, at the top and at the bottom row.
 
 ### `public/assets/earth/<set>/sky-hold.webp` (3520 x 1980 and 1760 x 990, lossless)
 
