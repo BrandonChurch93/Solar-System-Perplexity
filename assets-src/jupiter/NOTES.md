@@ -1077,3 +1077,12 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - PROGRESS: arrivals as a point of light come with engine batch 21 for round 32; "Jupiter comes up from the bottom edge as a disc at 2799" is with the travel agent.
 - Chain P goes on: dive cover sheet (frames into `out/work/view/b20r/`, first one 3019 landed 09:37), then terrain review sheet, full measure, gates, repeat, build, vitest. Chain Q waits for "end P". No edit under `src/` or `public/assets/jupiter/` until "end Q".
 - Next: `cmp` 3019 to 3023 against `out/work/view/m19/`, look at 3024 to 3030 beside m19 (E1 on the dive side at review tier), push the looks naming "agent/jupiter 2687a17 on main f24046b".
+
+### 09:40 to 10:16 UTC: dive cover sheet on the merged tree (2687a17, main f24046b) done, every frame looked at beside a06d2ae
+
+- `kept/dive-cover-b20.png` (10:14:00), frames `out/work/view/b20r/f03019-review.png` to `f03030-review.png`. Pairs beside a06d2ae (`out/work/view/m19/`) in `out/work/view/b20r/v/` (`d3024.jpg`, `d3024_top.jpg`, `d3025_28.jpg`, `d3025_26_top.jpg`, `d3029_30.jpg`), tool `out/work/jupiter/e12/rv4.py` (rv3 with the b20r folder).
+- 3019 to 3023 (orbit side): the same bytes as a06d2ae (`cmp`). E1 to E3 and batch 20 do not touch them.
+- 3024 to 3030 (terrain side, E1), sky luma before → after: 3024 1.95 → 2.13, 3025 2.21 → 4.23, 3026 2.84 → 7.56, 3027 4.35 → 11.39, 3028 7.34 → 14.87, 3029 11.69 → 17.32, 3030 15.34 → 18.17 (clear sky 18.6). The same numbers as the drafts gave.
+- Looked at each at half size and the sky rows of 3024 to 3026 at native size: 3024 the same haze, horizon line and cream as before, sky black (a few points at 1 level); 3025 first faint stars at the right; 3026 dim stars and the first trace of the band; 3027 the band clear, the storm showing through at the left as before; 3028 to 3030 the sky at nearly full level. Stars are points and hold their place (the sky moves 2 to 3 px a frame there). No star in front of the haze, no change below the horizon, no jump of the horizon or the colour at the cut.
+- Black sky on the dive now: 3019 to 3024 (was 3019 to 3026). 3019 to 3023 stay black by my own `skyLow` by altitude (stars would step 114 to 158 px a frame beside a smeared globe).
+- Looks pushed 10:02 and 10:16. Chain P renders the terrain review sheet now (about 10:45), then the full measure.
