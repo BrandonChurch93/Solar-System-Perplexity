@@ -50,6 +50,7 @@ export const rings: RingLook = {
   near: [0.45, 120],
   shade: [0.55, 0.004],
   air: [1.0, 1.04],
+  cutSky: 0,
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
 
@@ -75,6 +76,7 @@ export const deckRings: RingLook = {
   near: [0, 0],
   shade: [0, 0.004],
   air: [1, 1.04],
+  cutSky: 1,
   hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
 }
 
