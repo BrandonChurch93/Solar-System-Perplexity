@@ -56,6 +56,7 @@ export class Engine {
   private readonly skyPatches: { patch: SkyPatch; weight: number }[] = []
   private skyTexture: THREE.Texture | null = null
   private skyBand: THREE.Texture | null = null
+  private skyStrip: THREE.Texture | null = null
   private attached: string[] = []
   private lastShot: Shot | null = null
   private readonly solid: THREE.Material[] = []
@@ -144,7 +145,7 @@ export class Engine {
     this.sets.freeAll()
   }
 
-  private async skyMap(name: string): Promise<{ tex: THREE.Texture; bytes: number }> {
+  private async skyMap(name: string, smooth = false): Promise<{ tex: THREE.Texture; bytes: number }> {
     const res = await fetch(new URL('./assets/shared/' + this.assets + '/' + name, document.baseURI))
     if (!res.ok) throw new Error('sky map missing: ' + name)
     const bitmap = await createImageBitmap(await res.blob(), { imageOrientation: 'flipY', colorSpaceConversion: 'none' })
@@ -153,14 +154,21 @@ export class Engine {
     tex.colorSpace = THREE.SRGBColorSpace
     tex.wrapS = THREE.RepeatWrapping
     tex.wrapT = THREE.ClampToEdgeWrapping
-    tex.minFilter = THREE.LinearMipmapLinearFilter
+    tex.minFilter = smooth ? THREE.LinearFilter : THREE.LinearMipmapLinearFilter
     tex.magFilter = THREE.LinearFilter
-    tex.anisotropy = Math.min(4, this.renderer.capabilities.getMaxAnisotropy())
+    tex.generateMipmaps = !smooth
+    tex.anisotropy = smooth ? 1 : Math.min(4, this.renderer.capabilities.getMaxAnisotropy())
     tex.needsUpdate = true
     this.renderer.initTexture(tex)
-    const bytes = bitmap.width * bitmap.height * 4 * (4 / 3)
+    const bytes = bitmap.width * bitmap.height * 4 * (smooth ? 1 : 4 / 3)
     bitmap.close()
     return { tex, bytes }
+  }
+
+  private async skyStars(name: string): Promise<ArrayBuffer> {
+    const res = await fetch(new URL('./assets/shared/' + this.assets + '/' + name, document.baseURI))
+    if (!res.ok) throw new Error('sky stars missing: ' + name)
+    return res.arrayBuffer()
   }
 
   private async ensureSky(): Promise<void> {
@@ -168,18 +176,24 @@ export class Engine {
     const epoch = this.sets.epoch
     const glow = await this.skyMap('sky.jpg')
     const band = await this.skyMap('skyband.jpg')
+    const strip = await this.skyMap('skybandglow.png', true)
+    const points = await this.skyStars('skybandstars.bin')
     if (epoch !== this.sets.epoch) {
       glow.tex.dispose()
       band.tex.dispose()
+      strip.tex.dispose()
       return this.ensureSky()
     }
-    this.skyBytes = glow.bytes + band.bytes
+    this.skyBytes = glow.bytes + band.bytes + strip.bytes
     this.skyTexture?.dispose()
     this.skyBand?.dispose()
+    this.skyStrip?.dispose()
     this.skyTexture = glow.tex
     this.skyBand = band.tex
+    this.skyStrip = strip.tex
     this.skyAssets = this.assets
     this.sky.setTexture(glow.tex, band.tex)
+    this.sky.setFlightBand(strip.tex, points, config.raw.travel.sky.flightStrip)
   }
 
   skyBytes = 0
@@ -325,7 +339,9 @@ export class Engine {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
       const glare = this.director?.glareOf?.(mid)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, glare ? { ...shot.sun, dir: glare } : shot.sun, shot.post.vignette, width / height, open)
+      const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
       r.setRenderTarget(this.sampleTarget)
@@ -341,7 +357,6 @@ export class Engine {
     }
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
-    if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
     if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
