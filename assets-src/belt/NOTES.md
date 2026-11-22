@@ -131,7 +131,7 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | far3 | c | 2760 | 0.80, 0.35 | 12 | 0.33 | -0.08 | 0 | 2754 to 2773 | 0.6 percent | Mars, 798 px |
 | far1 | c | 2782 | 0.60, 0.20 | 11 | 0.30 | -0.05 | 0 | 2769 to 2796 | 0.5 percent | Jupiter, 603 px |
-| hero | a | 2782 | 0.36, 0.47 | 3.5 | 0.30 | 0.2 | 0.1 | 2770 to 2799 | 6.2 percent | Jupiter, 565 px |
+| hero | a | 2782 | 0.36, 0.50 | 3.5 | 0.20 | 1 | 20 px per frame, down left | 1.1 | 70 | 2757 to 2804 | 72 px per frame at the entry |
 | near | b | 2782 | 0.86, 0.15 | 1.05 | 0.16 | -1.6 | 0.3 | 2774 to 2792 | 15.8 percent | Jupiter, 357 px |
 | far2 | d | 2800 | 0.08, 0.69 | 15 | 0.36 | -0.1 | 0 | 2779 to 2802 | 0.4 percent | Jupiter, 131 px at 2788 |
 
@@ -168,6 +168,45 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
 
 - 08:38 review contact sheet of the final state: `out/work/belt/r3/sheet.jpg` (25 frames, every third, patch applied). Seconds per frame: 31.8 (2745), 15.5, 16.1, 16.0, 14.9, 13.3, 12.1, 10.3, 9.6, 10.1 (2772), 11.8, 14.3, 15.3, 14.7, 15.3, 16.1 (2790), 14.1, 12.7, 12.2, 11.9, 10.8, 10.5, 10.1, 10.3, 10.4. Draft proof of 2325, 2580, 2212 repeated with the final patch: same three sha256 as main.
 - 08:39 looks pushed, DONE sent. Working tree keeps `dust.patch` applied (two shared files modified, never committed). `/tmp/mainwt` was a worktree of plain main for the proof, removed.
+- 16:57 the Builder's answer to the UPDATE (no reply needed): the sheet reads as a beat; two notes. (1) The hero sits at nearly the same screen place from 2775 to 2793 and reads as attached to the camera: let it pass, a steady drift across at least a quarter of the frame width over its time in frame, with its tumble, while the near rock crosses in front. (2) The travel agent makes the sky sparser and the dust fainter: check the dark sides on a draft with about half the stars and say what is seen.
+- 16:58 hero drift. Killed the review sheet `t3r3` (old hero path; 2745 to 2778 exist). Hero: `at` 0.36, 0.50, `velocity` -0.6253, -0.8337, 0 (12 px left and 16 px down per frame at the anchor, 20 px per frame), `ease` 6 to 1.1. Planner: in frame 2757 to 2804 (48 frames), enters at the top edge at x 1438 with 72 px per frame, 20 px per frame from 2778 to 2787 (10 px of blur), leaves at the bottom at x 358. Screen places: 2760 (1317, 72), 2769 (1003, 398), 2775 (823, 476), 2781 (707, 529), 2784 (660, 566), 2793 (533, 744), 2802 (358, 1081). So it crosses 1080 px in x (56 percent of the width) and the whole height, never slower than 20 px per frame; from 2775 to 2793 it moves 290 px left and 268 px down where it moved about 60 px before. Other rocks unchanged. Jupiter gap 440 px at the least (2793).
+- Test changed: "lets the hero drift across" (at least 20 frames under 16 px of blur, never under 15 px per frame while in frame, x range over a quarter of the width). 9 belt tests green.
+- 16:59 half star check (note 2). `sky.flightStars.count` 800000 to 400000 in `config/showcase.json`, working tree only, restored from a copy right after the still (`git status` shows no shared file). Draft 2782: `out/work/belt/t3/half2782.png`. Star maxima counted in two sky rectangles (500 x 300 at 100,700 and 400 x 400 at 1400,600), luma over 40: 1275 and 1941 with half the stars against 2126 and 3189 with all (bright ones over 120: 300 and 501 against 549 and 798). So the sky is at 60 percent of its points.
+  - Seen at native size: the hero's dark side (upper right, about 150 x 120 px) is still a clean black shape, its outline carried by the stars it hides (roughly one star per 12 x 12 px around it). The near rock's dark side is a soft black hole about 250 px wide beside the warm streak; it reads. far1 and far2 read by their lit halves; their dark halves are too small to count as holes.
+  - What does not hold: there is no rim on the dark limb. `rim` is a grazing term times `smoothstep(-0.25, 0.35, dot(normal, sun))`, so it lights only the Sun side of the limb. The dark side reads by hidden stars alone. At a quarter of the stars or with a soft dark band behind it the hero would read as a half rock (lit face with a straight terminator), which is how Phobos reads in the approved hero, but its full outline would be gone.
+  - Not changed now: a rim that wraps onto the dark limb is a shader change and needs its own look (rim 1.5 gave a bright contour line at 16:43). Knob if wanted: the lower edge of that smoothstep, or `fill` (0.016, 0.018, 0.024 now).
+- 17:08 review sheet with the drift path: `out/work/belt/t3sheet/sheet.jpg` (25 frames, every third from 2745 to 2817). To save ten minutes it is put together from three runs of the same build of the belt: 2757 to 2802 rendered new (`out/work/belt/t3r4/`, the 16 frames in which the hero can be in frame), 2745 to 2754 from the run of 16:52 (`t3r3/`, layout of 2011164, hero not yet in frame), 2805 to 2817 from the run of 16:43 (`t3r2/`, no rock in frame under any layout). Seconds per frame of the new run (samples): 84.4 (2757, with the asset load, 62), 79.1 (84), 84.4 (104), 78.2 (2766, 105), 13.4 (2769, 16), 13.8, 15.6, 17.2 (2778), 16.6, 16.6 (2784), 14.8, 15.2, 15.2, 16.1 (2796), 27.3 (23), 36.4 (2802, 29).
+  - Read: the hero comes in at the top right at 2757, crosses down and left through every row and leaves at the bottom at 2802; it shows a different face in each cell. The near rock crosses in front of it on the right from 2778 to 2784. The mid rock leads from 2748 to 2775, far1 and far2 are small above and below.
+- 17:11 finals of the drift layout, one session (`out/work/belt/t3f2/`, 64 samples each, 77.2 s with the asset load, then 53.1 and 53.5 s):
+  - 2782: 32fe32c8404880cfea462225f74c1b11e045f66ea36b9ad575de6d4cc4e76d53
+  - 2783 (near rock at its nearest while whole in frame): 75bb19cb4f20ac74c137cd0630870ba8a73c00c2ffed7eb7420c7d0e6bb0637e
+  - 2784: 563e74c67ba035a22014d0162a469844a9320cd0642e8a07a2922d819072e3a8
+  - The finals of 16:47 (`t3f/`) are stale.
+  - Read at native size: the hero now carries 10 px of blur along its path at 2782 (20 px per frame), so its craters and the ridge are softer than in the finals of 16:47 (4.5 px); they still read, the grain of the regolith does not. Stars and motes show through the outer part of the near rock's streak, as they should for a blurred edge.
+- Tone of the drift finals: hero lit face, final 2782, rectangle 90 x 85 at (598,528), wholly on the lit face: mean sRGB 95.2, 82.7, 68.2 (luma 84.3, p95 123.3). Final 2783 at (590,535): 94.3, 80.9, 66.0. Near rock, final 2783, 150 x 150 at (1280,190): 61.6, 52.8, 43.5. Phobos: 133.6, 106.2, 87.6 (luma 110.7, p95 177.0). The hero shows a different face than at 16:47 (83.4, 71.1, 57.6), same light.
+- 17:13 byte proof, draft tier, branch 5a66b15 against a worktree of origin/main bf74284 with its own build (`/tmp/proof.sh`, `out/work/belt/t3proof-branch/`, `out/work/belt/t3proof-main/`). All six pairs equal:
+  - 2325: fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf
+  - 2427: 5636a9764d87cc2e1d50589c7806279c2e71f94d990003e475686d17ce196781
+  - 2580: 7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a
+  - 2726: d408b434a0b12d9f5a44f277e53164b49caa400663b58f5f41e3f9ae87a3a607
+  - 2745: 3fae3f66c3ab5cb527a2e784023fbfff5419047fb9a9553c16fe1bb8982d46bd
+  - 2819: 22e950adb924e2c9d090cec87d7c9aaa98cc1d7adb77b82428e893a9b3834960
+- tsc clean, 13 repo test files green, 9 belt tests green (17:01).
+- 17:15 check of the reused sheet frames: 2754 and 2805 rendered new at review on 5a66b15 (`out/work/belt/t3r5/`, 64.8 s with the asset load and 44.1 s): 2754 is byte equal to the frame of 16:52 (a95cd6dd65b578f1...), 2805 is byte equal to the frame of 16:43 (39b0e56198bfd8b1...). So the sheet is what one run of 5a66b15 gives.
+- 17:17 pushed, looks pushed, DONE sent. Next if the Builder wants it: a hero that drifts slower through 2782 (12 px per frame gives 6 px of blur and 700 px of travel in x) for a crisper judged frame; a rim that wraps onto the dark limb for the sparse sky; the web set.
+
+## Still weak (after task 3)
+- The near rock is in frame for 11 frames (2776 to 2786) and stays in the upper right quarter; it does not cross the middle of the frame. Its face is not readable, by design (65 to 85 px of streak, 9 to 17 px circle of confusion): it reads as a soft warm streak with a black side.
+- The middle rocks ride with the camera (`hold` 1) and their own path is slow at the anchor and faster at the ends (`ease`, a cubic in time). That is a made path, not an orbit. Since 17:00 the hero drifts (never under 20 px per frame, 1080 px in x over its 48 frames), but the sky still whips past behind it at about 100 px per frame in the fast pan while it moves at 30 to 70.
+- Far rocks carry 30 to 50 px of streak in the fastest pan (2766 to 2778): at native size they are smears there, shapes again from 2781.
+- Tone: the hero's lit face is under Phobos (95, 83, 68 against 134, 106, 88) and warm, but with the Sun nearly behind the camera (2758 to 2772) the face is flat lit and reads lighter.
+- The hero is no longer crisp in the judged frame: the drift the Builder asked for costs 10 px of blur along the path at 2782 (it was 4.5 px while it hung).
+- The dark side is black (fill 0.016, 0.018, 0.024). It was judged against the dense star sky of bf74284. Against the new flight sky with sparse stars there is less to hide; the rim is only on the Sun side of the limb, so the dark limb has no line of its own.
+- Dust: motes in front of the hero (it is at 3.5 units, the motes live within 3.5) draw on its face, which is right but busy. Behind the near rock the outer part of its streak does not dim the motes (sphere margin 1.25 radii).
+- The middle rock and the near rock share asset b.
+- The web set was not rendered in task 3 (assets unchanged, layout new).
+- Review cost: plus 5.5 s per frame in the 11 frames of the pass, plus 2 to 3 s elsewhere. Frames 2754 to 2766 and 2799 to 2808 cost 27 to 85 s at review because of the sample law of main, with or without rocks.
+- The belt test is outside `tests/`; `npm run looks -- --push --folder belt` does not accept `belt` (own `pushlooks.ts`).
 
 ## Still weak (after task 2)
 - No rock before 2754 or after 2802. The pan is under a degree per frame there, so a rock could only cross with a speed of its own (`approach` exists in the model but is 0 for all rocks).
@@ -190,3 +229,47 @@ The Builder's task: fit the rocks to the travel agent's new camera of `mars.trav
 - About 92 MB of half float render targets at 1080p while the segment is prepared, on top of 36.7 MB of textures.
 - The web set is softer (half size maps); only a draft still was checked with it.
 - The belt test is outside `tests/`; `npm run looks -- --push --folder belt` does not accept `belt`.
+
+## Task 3 (Phase 5 work started early), Nov 21 from 16:09 UTC
+
+The task is saved verbatim in `assets-src/belt/TASK3.md`. Findings of the Builder on finals 2772, 2782, 2796: no beat (nothing close, nothing blurred), rocks pale against Phobos, far rocks without blur in the fast pan, hero enters dark side first, dust order as a request only, cost up to 10 s per frame at review.
+
+- 16:10 dust patch reversed in the working tree, merged origin/main bf74284, `npm ci`, build. The dust order is already on main (ffe0a2d): `git diff origin/main` of the two shared files is empty.
+- 16:15 final 2782 of the merged state before any change (`out/work/belt/t3/main-f2782.png`, 80.5 s, 64 samples): the task 2 picture, near rock r 330 px top right, soft from focus, almost no streak; hero crisp. So the near rock was there but read as a second big rock, not as a pass.
+- Decided, model (`src/space/belt/motion.ts`, `belt.ts`):
+  - `smear` is gone. Every time step of a rock is drawn with the camera of its own time, so the layer holds the rock's full screen motion as blur (pan, own speed, parallax, spin). No star convention for rocks.
+  - New per rock: `velocity` (own speed in units per second, in the camera axes of the anchor frame: x right, y up, z toward the lens) and `ease` (the own path runs at `dt (1 + ease dt dt)`: slow at the anchor, faster away from it; closed form of film time). `approach` stays (radial).
+  - With `hold` 1 a rock rides with the camera and crosses the frame by its own speed alone, so it can cross while the pan is slow.
+- Phobos tone, measured: rectangle 220 x 150 at (1320,1090) of `references/approved/mars-hero.png`, wholly on the lit face: mean sRGB 133.6, 106.2, 87.6. The hero of task 2 in the same kind of rectangle: 101, 97, 95. Luma is close; the rocks read pale because they are neutral grey where Phobos is a warm grey brown, and their brightest parts are as bright (p95 luma 170 against 177).
+- 16:21 first layout with the new model, draft 2782 (`out/work/belt/t3/a2782.png`), draft sheet `out/work/belt/t3d1/sheet.jpg`: the near rock is a smooth streak, no copies; far1 sat right beside the near rock at 2782 and the hero was as large as the near rock, so the near rock did not read as near. Changes: hero radius 0.26 to 0.20 (r 115 px), mid 0.25 to 0.21, far1 lane moved left and 5 frames later with an own speed upward so it leaves by the top before Jupiter is large.
+- Layout now (planner, `npx tsx assets-src/belt/plan.ts --all`):
+
+| Rock | Asset | Anchor | At | Distance | Radius | Hold | Own speed at the anchor | Ease | Spin | In frame | Fastest |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| mid | d | 2762 | 0.80, 0.42 | 5.5 | 0.21 | 1 | 10 px per frame, down left | 14 | 80 | 2748 to 2777 | 115 px per frame at the exit |
+| hero | a | 2782 | 0.34, 0.52 | 3.5 | 0.20 | 1 | 7 px per frame, down left | 6 | 70 | 2758 to 2804 | 93 px per frame at the entry |
+| far1 | c | 2787 | 0.45, 0.16 | 11 | 0.30 | 0.35 | 8 px per frame, up | 0 | 40 | 2764 to 2798 | 101 px per frame |
+| near | b | 2782 | 0.78, 0.30 | 0.7 | 0.059 | 1 | 129 px per frame, up left | 0 | 120 | 2776 to 2786 | 175 px per frame |
+| far2 | c | 2794 | 0.12, 0.72 | 13 | 0.33 | 0.3 | none | 0 | 30 | 2779 to 2798 | 70 px per frame |
+
+  - Rocks are in frame from 2748 to 2804. Nothing in 2745, nothing from 2805 on (Jupiter r 301 px at 2805, 385 at 2808).
+  - hero: under 24 px per frame (12 px of blur) for 22 frames around 2782 (9 px per frame from 2781 to 2785), 93 px per frame when it enters at the top edge at 2758 and 90 when it leaves at the bottom left. It moves down and left, toward the Sun in the frame, so its lit side leads (test).
+  - near: enters at the right edge low at 2776, leaves through the top at 2786. r 143 px at 2776, 177 at 2782, 184 at 2783 (the last frame it is whole in frame), 193 at 2784 (cut by the top edge). It grows because the flow carries the camera toward it (0.96 to 0.60 units). Blur along the path 65 to 85 px, circle of confusion 9 to 17 px.
+  - far rocks: hold 0.35 and 0.3, so they cross at about two thirds of the pan (up to 100 px per frame, 50 px of blur in the fastest pan).
+- Tone: `light.gain` 0.36 to 0.24 to 0.21, `tint` from the blue grey 0.55, 0.57, 0.66 to the warm 0.61, 0.54, 0.50, `fill` cut to 0.016, 0.018, 0.024 (was 0.034, 0.038, 0.05 with 2.0 on the near rock), `rim` 0.9 to 1.5 so the rim keeps its level under the lower gain. At gain 0.24 (review 2782, `out/work/belt/t3r1/f02782.png`) the hero's lit face, rectangle 100 x 95 at (570,525): mean sRGB 91.1, 80.4, 65.2 against Phobos 133.6, 106.2, 87.6.
+- 16:25 review stills 2766, 2772, 2782, 2783, 2796 (`out/work/belt/t3r1/`): 2766 took 103 s with 105 samples (the new sample law of main with Mars moving fast; not the belt), the others 13 to 18 s with 16 samples.
+- 16:30 pushed ca4b1a1 and 8 looks. Dust order: `assets-src/belt/dust.patch` regenerated with the context of bf74284 (it reverse applies on main: main has the order), ENGINE-REQUESTS.md restated.
+- 16:43 review sheet of that layout at gain 0.21: `out/work/belt/t3r2/sheet.jpg`. Seconds per frame in one session (samples in brackets): 46.4 (2745, asset load, 16), 20.2, 22.1 (20), 39.5 (39), 59.4 (62), 75.0 (84), 85.4 (104), 78.8 (2766, 105), 13.2 (2769, 16), 13.5, 14.8, 16.6 (2778), 16.6, 17.0 (2784), 14.7, 14.8, 15.2, 16.2 (2796), 27.3 (23), 37.0 (29), 41.9 (2805, 32), 34.6 (24), 24.8, 25.4, 23.6 (2817). The slow frames are the engine's sample law for fast frames (Mars moving, then Jupiter growing), with or without rocks in frame.
+- Read at native size: near rock at 2778, 2781, 2784 is one smooth soft streak, lit lower left, its dark side a hole in the stars. Two faults: the early middle rock (asset d, mesh 64) had a bright contour line on its lit limb and a blotchy face (`rim` 1.5 was too much on the darker face); its outline was wobbly. Fixed: `rim` 1.0, the middle rock uses asset b (512 px maps, mesh 128, tilt 100, -50, 30; asset b is also the near rock, which is blurred past recognition and never beside it). Near rock radius 0.059 to 0.056 so it is 350 px tall at 2783 (32 percent of the frame height). Draft stills 2754 to 2772 checked (`out/work/belt/t3d2/`).
+- 16:43 UPDATE sent to the Builder with the sheet; looks pushed.
+- 16:47 finals of the final layout, one session (`out/work/belt/t3f/`, 64 samples each, 76.4 s with the asset load, then 51.8 and 51.9 s):
+  - 2782: 8ac2aeb47b99e7570f39762bb2d57fbf433a2b7da53e865e74aef9c5e9f94f24
+  - 2783 (near rock at its nearest while whole in frame, r 175 px, 350 px tall): 289b3f780de57bcd621799ab267fd499142d6274388f0b546c19a5d8aa597055
+  - 2784: f37a246f9854b100bfd71ac986dc66fd4ec297d7b76dce45c42588d51707fbff
+  - Read at native size: hero crisp left of the middle (craters, ridge shadow, dark side black against the stars), far1 above the middle with about 15 px of streak, the near rock top right as one soft streak toward the upper left, far2 at the bottom edge. Jupiter's point at (1306,947) in 2782 is clear.
+- Tone, final numbers (`python3 assets-src/belt/tone.py FILE x,y,w,h`, mean of a rectangle wholly on the lit face):
+  - Phobos, `references/approved/mars-hero.png` 1320,1090,220,150: mean sRGB 133.6, 106.2, 87.6 (luma 110.7, p95 177.0).
+  - hero, final 2782, 575,530,95,90: 83.4, 71.1, 57.6 (luma 72.8, p95 127.4). Final 2783, 575,535,95,90: 79.6, 67.7, 54.7.
+  - near rock, final 2783, 1280,190,150,150 (blurred lit part): 61.6, 52.8, 43.5.
+  - hero in the fast pan, review 2772 at gain 0.24: 98.4, 87.2, 70.9; at the final gain 0.21 about a tenth lower.
+- Cost at review, same session, rocks moved out of frame against rocks in frame (`out/work/belt/t3nobelt/`): 2782 12.5 s without, 17.8 s with; 2783 11.9 s without, 17.6 s with; 2796 14.0 s without, 16.2 s with. So the belt adds about 5.5 s per frame while the near rock passes and 2 to 3 s with the hero and far rocks alone.
