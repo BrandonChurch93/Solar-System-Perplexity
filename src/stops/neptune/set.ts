@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, held, moon as moonAsset, ringBands, ringMap, wrap } from './assets'
+import { close, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { limbField } from './field'
 import * as look from './look'
@@ -39,6 +39,7 @@ export const createSet: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
   const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
+  const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const planet = new NeptunePlanet({
     field, near: look.near.dive, night: look.night,
@@ -46,6 +47,7 @@ export const createSet: SetFactory = async (ctx) => {
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
+    flow,
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
@@ -70,7 +72,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonLight = new THREE.Vector3()
   const moonSun = new THREE.Vector3()
 
-  const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }), bands: await ctx.texture(base + ringBands.file, { srgb: false, anisotropy: 16, repeat: true }) })
+  const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }), bands: await ctx.texture(base + ringBands.file, { srgb: false, anisotropy: 16, repeat: true }), grain: { ...look.ring.grain, map: await ctx.texture(base + ringGrain.file, { srgb: false, anisotropy: 16, mirror: true }) } })
   orbit.add(ring.mesh)
 
   const far = new FarPoint()
@@ -131,13 +133,15 @@ export const createSet: SetFactory = async (ctx) => {
       const grade = rising ? look.near.rise : look.near.dive
       const high = camera.length() - 1
       const near = look.near.amount * (1 - smooth((high - grade.altitude[0]!) / (grade.altitude[1]! - grade.altitude[0]!)))
-      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight, near, grade.air)
+      const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
+      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight, near, grade.air, 1 - deep)
+      pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep))
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
       ;(pu.uDarkDir!.value as THREE.Vector3).copy(darkAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
-      ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home
+      ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home * (1 - deep)
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
       ;(pu.uNight!.value as THREE.Vector4).x = look.night.flat * (1 - home)
       ;(pu.uMelt!.value as THREE.Vector2).x = look.limb.melt[1] + (look.limb.melt[0] - look.limb.melt[1]) * home

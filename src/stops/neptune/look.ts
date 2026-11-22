@@ -28,6 +28,8 @@ export const field = { amount: 1 }
 export const held = { ...holdJson, amount: 1 }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
+export const diving = { from: 2.06, to: 1.8 }
+export const flow = { amount: 0.6 }
 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
@@ -58,4 +60,5 @@ export const ring = {
   bandAway: [0.45, 0.2, 2.2] as [number, number, number],
   mapScale: 0.25,
   degPerSecond: 0.8,
+  grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
 }

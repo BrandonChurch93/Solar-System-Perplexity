@@ -77,6 +77,7 @@ export interface NeptuneOptions {
   night: { flat: number; edge: [number, number]; texels: number }
   patches?: PatchSet
   hold?: { map: THREE.Texture; box: number[]; head: number }
+  flow?: THREE.Texture
   segments?: number
 }
 
@@ -168,6 +169,8 @@ uniform vec4 uAirShade;
 uniform sampler2D uHoldMap;
 uniform vec4 uHoldBox;
 uniform vec2 uHold;
+uniform sampler2D uFlowMap;
+uniform float uFlow;
 uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
@@ -278,6 +281,13 @@ void main() {
   float shadow = 0.6 * min(layerAt(cloudDir(ps), uShadow.y, texelsShadow).a, 1.0) + 0.4 * min(layerAt(cloudDir(ps2), uShadow.y * 1.8, texelsShadow).a, 1.0);
   float lit = smoothstep(0.0, 0.2, ndl);
   vec3 albedo = deckTexel.rgb / uCode;
+  vec2 fq = vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5);
+  float fq2 = fract(fq.x + 0.5) - 0.5;
+  vec2 fx = vec2(abs(dFdx(fq.x)) < abs(dFdx(fq2)) ? dFdx(fq.x) : dFdx(fq2), dFdx(fq.y)) * uGrad;
+  vec2 fy = vec2(abs(dFdy(fq.x)) < abs(dFdy(fq2)) ? dFdy(fq.x) : dFdy(fq2), dFdy(fq.y)) * uGrad;
+  for (int k = 0; k < (uFlow > 0.0 ? 1 : 0); k++) {
+    albedo *= 1.0 + uFlow * (textureGrad(uFlowMap, fq, fx, fy).r - 0.5);
+  }
   float flatten = uNight.x * (1.0 - smoothstep(uNight.y, uNight.z, ndl));
   for (int k = 0; k < (flatten > 0.0 ? 1 : 0); k++) {
     albedo = mix(albedo, textureLod(uMap, vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5), uNight.w).rgb / uCode, flatten);
@@ -365,6 +375,7 @@ export class NeptunePlanet {
         ...airUniforms(o.air),
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
         uHoldMap: { value: o.hold?.map ?? o.map }, uHoldBox: { value: o.hold ? new THREE.Vector4(o.hold.box[0], o.hold.box[1], 1 / (o.hold.box[2]! - o.hold.box[0]!), 1 / (o.hold.box[3]! - o.hold.box[1]!)) : new THREE.Vector4(0, 0, 1, 1) }, uHold: { value: new THREE.Vector2(0, o.hold?.head ?? 1) },
+        uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchCount: { value: p?.textures.length ?? 0 },

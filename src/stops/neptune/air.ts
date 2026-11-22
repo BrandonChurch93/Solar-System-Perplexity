@@ -212,7 +212,7 @@ export class Air {
     this.users.push(uniforms)
   }
 
-  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[]): void {
+  update(camera: THREE.Vector3, light: THREE.Vector3, rotation: THREE.Quaternion, home: number, line: number, gain: number, near = 0, tint?: number[], seat = 1): void {
     for (const u of this.users) {
       const hue = u.uAirNear!.value as THREE.Vector4
       if (tint) hue.set(tint[0]!, tint[1]!, tint[2]!, near)
@@ -237,7 +237,7 @@ export class Air {
       ;(u.uLineTail!.value as THREE.Vector3).fromArray(ln.tail).multiplyScalar(home)
       ;(u.uLineFade!.value as THREE.Vector3).z = ln.fade[2] * home
       this.work.set(ln.bulge[0], ln.bulge[1], ln.bulge[2]).applyQuaternion(rotation).normalize()
-      ;(u.uLineBulge!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.bulge[3] * home)
+      ;(u.uLineBulge!.value as THREE.Vector4).set(this.work.x, this.work.y, this.work.z, ln.bulge[3] * home * seat)
       ;(u.uCrestLight!.value as THREE.Vector3).fromArray(ln.crest.light).multiplyScalar(home)
       u.uCrestGap!.value = ln.crest.gap * home
       this.work.set(ln.crest.head[0], ln.crest.head[1], ln.crest.head[2]).applyQuaternion(rotation).normalize()
