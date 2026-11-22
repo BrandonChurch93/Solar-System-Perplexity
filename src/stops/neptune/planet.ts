@@ -189,6 +189,7 @@ uniform vec4 uEndDusk;
 uniform vec3 uEndBreak;
 uniform vec2 uEndLimb;
 uniform vec2 uEndBoost;
+uniform vec2 uEndCresc;
 uniform vec4 uEndStruct;
 uniform vec3 uEndPole;
 uniform vec3 uDarkDir;
@@ -352,7 +353,7 @@ void main() {
     vec3 wide = textureLod(uMap, muv, uEndNight.z).rgb;
     vec3 lum = vec3(0.2, 0.5, 0.3);
     float rel = dot(mid.rgb, lum) / max(dot(wide, lum), 1e-4);
-    ndd = ndl + uEnd.x * uEndBreak.x * (rel - 1.0 + uEndBreak.z * mid.a);
+    ndd = ndl + uEnd.x * uEndBreak.x * (rel - 1.0 + uEndBreak.z * mid.a) + uEnd.x * uEndCresc.x;
     float dark = uEnd.x * (1.0 - smoothstep(uNight.y, uNight.z, ndd));
     float polar = smoothstep(uEndPole.x, uEndPole.y, abs(dd.y));
     float fineRel = clamp(dot(deckTexel.rgb, lum) / max(dot(mid.rgb, lum), 1e-4), 0.5, 1.7);
@@ -366,7 +367,7 @@ void main() {
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
   vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
-  float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
+  float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
     vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
@@ -382,6 +383,7 @@ void main() {
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
   col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
   col += uForward * graze * fwd * mix(smoothstep(-0.25, 0.1, ndl), smoothstep(uEnd.y, uEnd.z, ndd) * detail, uEnd.x);
+  col *= 1.0 + uEnd.x * uEndCresc.y * smoothstep(-0.1, 0.3, ndd);
   col *= 1.0 - uEnd.x * uEndLimb.x * (1.0 - smoothstep(0.0, uEndLimb.y, mu));
   vec4 sky = air(dir, true);
   sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
@@ -495,6 +497,7 @@ export class NeptunePlanet {
     this.material.uniforms.uEndBreak = { value: new THREE.Vector3(0, 0, 0) }
     this.material.uniforms.uEndLimb = { value: new THREE.Vector2(0, 1) }
     this.material.uniforms.uEndBoost = { value: new THREE.Vector2(0, 1) }
+    this.material.uniforms.uEndCresc = { value: new THREE.Vector2(0, 0) }
     this.material.uniforms.uEndStruct = { value: new THREE.Vector4(1, 0, 0, 0) }
     this.material.uniforms.uEndPole = { value: new THREE.Vector3(2, 3, 0) }
   }
@@ -517,7 +520,7 @@ export class NeptunePlanet {
     this.material.dispose()
   }
 
-  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb']): void {
+  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb'], crescent: number): void {
     const u = this.material.uniforms
     const width = u.uMapWidth!.value as number
     const texels = night.texels
@@ -540,7 +543,8 @@ export class NeptunePlanet {
     ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
     ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.lit[0]!, e.lit[1]!)
-    ;(u.uEndCloud!.value as THREE.Vector2).set(e.cloudLimb[0]!, e.cloudLimb[1]!)
+    ;(u.uEndCloud!.value as THREE.Vector2).set(e.cloudLimb[0]! + (e.crescent.cloudLimb[0]! - e.cloudLimb[0]!) * crescent, e.cloudLimb[1]! + (e.crescent.cloudLimb[1]! - e.cloudLimb[1]!) * crescent)
+    ;(u.uEndCresc!.value as THREE.Vector2).set(e.crescent.bias * crescent, e.crescent.gain * crescent)
     ;(u.uForwardShape!.value as THREE.Vector2).x = limb.forwardWidth + (e.forwardWidth - limb.forwardWidth) * end
     const knots = u.uCloud!.value as THREE.Vector3[]
     for (let i = 0; i < KNOTS; i++) {
