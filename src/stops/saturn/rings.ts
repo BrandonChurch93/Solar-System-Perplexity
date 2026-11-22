@@ -392,13 +392,15 @@ void main() {
     mottle += ga * 2.0 * gr / length(wg);
   }
   col *= mottle;
+  vec2 azg = vec2(vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x), vLocal.x * dFdy(vLocal.z) - vLocal.z * dFdy(vLocal.x)) / (6.283185307 * r * r);
+  vec2 rpg = vec2(dFdx(rp), dFdy(rp));
   float wP = far || disc ? 0.0 : uPolarW * smoothstep(uPolarFit.x, uPolarFit.y, rp) * (1.0 - smoothstep(uPolarOuter.x, uPolarOuter.y, rs));
   for (int k = 0; k < (wP > 0.0 && !gone ? 1 : 0); k++) {
     float pa = phi / 6.283185307 + 0.5;
     float pv = (rp - uPolarSpan.x) * uPolarSpan.y;
     float pr = clamp(pv - shape * uPolarSpan.y, 0.5 / uPolarSize.y, 1.0 - 0.5 / uPolarSize.y);
-    vec2 pgx = vec2((vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x)) / (6.283185307 * r * r), dFdx(rp) * uPolarSpan.y);
-    vec2 pgy = vec2((vLocal.x * dFdy(vLocal.z) - vLocal.z * dFdy(vLocal.x)) / (6.283185307 * r * r), dFdy(rp) * uPolarSpan.y);
+    vec2 pgx = vec2(azg.x, rpg.x * uPolarSpan.y);
+    vec2 pgy = vec2(azg.y, rpg.y * uPolarSpan.y);
     vec2 tx = pgx * uPolarSize;
     vec2 ty = pgy * uPolarSize;
     float w = wP * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
@@ -414,8 +416,8 @@ void main() {
   for (int k = 0; k < (wC > 0.0 && !gone ? 1 : 0); k++) {
     float pa = phi / 6.283185307 + 0.5;
     float pr = clamp((rs - uInnerSpan.x) * uInnerSpan.y, 0.5 / uInnerSize.y, 1.0 - 0.5 / uInnerSize.y);
-    vec2 pgx = vec2((vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x)) / (6.283185307 * r * r), dFdx(rp) * uInnerSpan.y);
-    vec2 pgy = vec2((vLocal.x * dFdy(vLocal.z) - vLocal.z * dFdy(vLocal.x)) / (6.283185307 * r * r), dFdy(rp) * uInnerSpan.y);
+    vec2 pgx = vec2(azg.x, rpg.x * uInnerSpan.y);
+    vec2 pgy = vec2(azg.y, rpg.y * uInnerSpan.y);
     vec2 tx = pgx * uInnerSize;
     vec2 ty = pgy * uInnerSize;
     wIn = wC * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
