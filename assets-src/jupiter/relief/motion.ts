@@ -27,7 +27,7 @@ const point = (cx: number, cy: number, layer: number): THREE.Vector3 => {
   const ratio = raw / base
   const edge = Math.min(cx, iw + 2 * ox - cx, ih + 2 * oy - cy)
   let scale = 1
-  for (let n = 0; n < layer; n++) scale -= tiers.tiers[n].lift * (1 - smooth(cy, tiers.rise[0], tiers.rise[1])) * (1 - smooth(cx, tiers.tiers[n].taper[0], tiers.tiers[n].taper[1]))
+  for (let n = 0; n < layer; n++) scale -= tiers.tiers[n].lift * THREE.MathUtils.clamp((tiers.rise[1] - cy) / (tiers.rise[1] - tiers.rise[0]), 0, 1) * (1 - smooth(cx, tiers.tiers[n].taper[0], tiers.tiers[n].taper[1]))
   return d.multiplyScalar(scale * (ratio > 0 ? base * Math.pow(ratio, 1 + (deck.depth - 1) * smooth(edge, 0, deck.depthBorder)) : raw))
 }
 const screen = (frame: number, w: THREE.Vector3): [number, number] => {

@@ -80,8 +80,8 @@ def layers():
         soft = t.get('soft')
         feather = soft[2] + (soft[3] - soft[2]) * smooth(soft[0], soft[1], xs) if soft else 2.0
         taper = 1 - smooth(t['taper'][0], t['taper'][1], xs)
-        matte = smooth(0, 1, (sd + GROW + feather) / feather) * smooth(0, 0.08, taper)
-        under = np.clip((sd + GROW - GAP) / UNDER, 0, 1) * (1 - smooth(t['band'][0], t['band'][1], sd)) * smooth(0.08, 0.2, taper) * smooth(OX, OX + 32, xs)
+        matte = smooth(0, 1, (sd + GROW + feather) / feather) * smooth(0, 0.02, taper)
+        under = np.clip((sd + GROW - GAP) / UNDER, 0, 1) * (1 - smooth(t['band'][0], t['band'][1], sd)) * smooth(0.02, 0.1, taper) * smooth(OX, OX + 32, xs)
         out.append((sd, matte.astype(np.float32), under.astype(np.float32)))
     return out
 
@@ -133,7 +133,7 @@ def hidden(name):
     part = np.asarray(sd[y:y + H // k, x:x + W // k])
     if k == 2:
         part = cv2.resize(part, (W, H), interpolation=cv2.INTER_LINEAR)
-    return part > -(GROW + 2)
+    return part > -SPEC['hide']
 
 
 def prep(name):
