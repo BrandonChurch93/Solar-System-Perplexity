@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 2, glareRise: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3 } }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -630,7 +630,7 @@ export class FilmDirector implements Director {
       const arrived = segment.kind === 'retreat' ? smoother(ramp(OPEN.retreatGlare, 1, u)) : 1
       const lifted = riseLift(p.id)
       const open = mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), LOOKBACK.skyExposure, lifted)
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), open, smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u))) : open }
+      light = { ...this.sunFor(i), glare: Math.min(mix(p.p.light.sunGlare, LOOKBACK.glareRise, arrived), LOOKBACK.glare), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), open, smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u))) : open }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       skyStars = lifted
       if (segment.kind === 'retreat') {
