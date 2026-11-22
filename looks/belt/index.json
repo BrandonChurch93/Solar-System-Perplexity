@@ -1,13 +1,67 @@
 {
  "folder": "belt",
- "pushed": "2026-11-21T23:47:29.759Z",
- "head": "67fe289de76fed5bb349bc92e1583ef09e194a29",
- "note": "task 4 done: review sheet, final 2782 and 2783, native crops of each rock",
+ "pushed": "2026-11-22T00:48:14.333Z",
+ "head": "30f31afdcd210c7d1a456205da791eb48865fe78",
+ "note": "task 5: review sheet, final 2782, crops, tried faces",
  "looks": [
   {
-   "time": "2026-11-21T23:45:20.603Z",
-   "file": "20261121234520603-frame-f02325.jpg",
-   "source": "out/work/belt/t4proof-branch/f02325.png",
+   "time": "2026-11-22T00:48:13.642Z",
+   "file": "20261122004813642-note-b0full.jpg",
+   "source": "../view/t5/b0full.jpg",
+   "kind": "note",
+   "label": "belt task 5 draft 2782 of the task 4 cast on the batch 16 sky",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T00:48:13.117Z",
+   "file": "20261122004813117-note-c6z.jpg",
+   "source": "../view/t5/c6z.png",
+   "kind": "note",
+   "label": "belt task 5 near rock stopped at draft, three faces tried",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T00:48:12.576Z",
+   "file": "20261122004812576-note-crops-2782.jpg",
+   "source": "out/work/belt/t5/f1/crops-2782.png",
+   "kind": "note",
+   "label": "belt task 5 native crops of hero and near streak at final 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T00:48:12.027Z",
+   "file": "20261122004812027-note-belt-t5-final-2782.jpg",
+   "source": "../send/belt-t5-final-2782.jpg",
+   "kind": "note",
+   "label": "belt task 5 final 2782, a9da36c",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T00:48:11.453Z",
+   "file": "20261122004811453-note-sheet.jpg",
+   "source": "out/work/belt/t5/r1/sheet.jpg",
+   "kind": "note",
+   "label": "belt task 5 review sheet, every third frame 2745 to 2817, a9da36c",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T00:46:52.540Z",
+   "file": "20261122004652540-frame-f02772.jpg",
+   "source": "out/work/belt/t5/cost/f02772.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2772, review tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2772,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "0e87733079fe0f1d"
+  },
+  {
+   "time": "2026-11-22T00:43:20.720Z",
+   "file": "20261122004320720-frame-f02325.jpg",
+   "source": "out/work/belt/t5proof-branch/f02325.png",
    "kind": "frame",
    "label": "mars.hold frame 2325, draft tier",
    "stop": "mars",
@@ -16,7 +70,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "d914815b15cda576"
+   "engine": "0e87733079fe0f1d"
   },
   {
    "time": "2026-11-21T23:45:17.689Z",
@@ -24,60 +78,6 @@
    "source": "out/work/belt/t4/f1/crops-2782.png",
    "kind": "note",
    "label": "task 4 final 2782, native crops of each rock: hero (400 px, and its middle), near (600 px), far1 and far2 (240 px)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:45:16.897Z",
-   "file": "20261121234516897-note-f02783.jpg",
-   "source": "out/work/belt/t4/f1/f02783.png",
-   "kind": "note",
-   "label": "task 4 final 2783, near rock at its nearest while whole in frame",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:45:16.172Z",
-   "file": "20261121234516172-note-f02782.jpg",
-   "source": "out/work/belt/t4/f1/f02782.png",
-   "kind": "note",
-   "label": "task 4 final 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:45:15.350Z",
-   "file": "20261121234515350-note-sheet.jpg",
-   "source": "out/work/belt/t4/r1/sheet.jpg",
-   "kind": "note",
-   "label": "task 4 review sheet of mars.travel, every third frame 2745 to 2817, one run",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:44:51.847Z",
-   "file": "20261121234451847-frame-f02783.jpg",
-   "source": "out/work/belt/t4/f1/f02783.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2783, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2783,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d914815b15cda576"
-  },
-  {
-   "time": "2026-11-21T23:28:52.970Z",
-   "file": "20261121232852970-note-d2hero3x.jpg",
-   "source": "out/work/belt/t4/d2hero3x.png",
-   "kind": "note",
-   "label": "task 4 draft 2782, hero at three times native: clean limb, night side with relief",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-21T23:28:52.420Z",
-   "file": "20261121232852420-note-t3-limb-fault-3x.jpg",
-   "source": "out/work/belt/t4/t3-limb-fault-3x.png",
-   "kind": "note",
-   "label": "task 3 fault found in task 4, three times native: hatch strokes and dotted second contour on the lit limb (final 2782, review 2763)",
    "stop": "mars"
   }
  ]
