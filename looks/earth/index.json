@@ -1,9 +1,81 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T01:22:21.079Z",
- "head": "11f13c171b3d26d23829b1b26ab701f554af801d",
- "note": "Phase 6 items 1 to 3, version c: rise cover proof sheet every frame 2122 to 2140 (review tier, preview format). Horizon leaves the top at 39 to 48 px per frame over 2125 to 2130 while the deck closes; top third 79 to 211; no still frame, no black top. Main merged with engine batch 16; measures running.",
+ "pushed": "2026-11-22T01:44:54.018Z",
+ "head": "56cc980cda0e92e91646c76f132973858ef80d5d",
+ "note": "Phase 6: measure of the merged tree running; 1857 cloud fringes traced to the fine cloud term (fix coded off tree); items 4, 5, 7 wait for the render slot",
  "looks": [
+  {
+   "time": "2026-11-22T01:42:24.721Z",
+   "file": "20261122014224721-note-limb1857-nn.jpg",
+   "source": "out/work/earth/p6/limb1857-nn.png",
+   "kind": "note",
+   "label": "kept 1857 final at 10 times nearest: the cloud fringes are 2 to 3 px white, cyan and pink blocks",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:42:23.714Z",
+   "file": "20261122014223714-note-limb1857-hero-film.jpg",
+   "source": "out/work/earth/p6/limb1857-hero-film.png",
+   "kind": "note",
+   "label": "kept 1857 final, south west limb at 4 times: hero above, film below; coloured square fringes on the clouds (cause found in the fine cloud term, fix coded, not rendered yet)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:38:07.513Z",
+   "file": "20261122013807513-job-frame-01954.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1954, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1954,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T01:28:06.299Z",
+   "file": "20261122012806299-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T01:27:29.073Z",
+   "file": "20261122012729073-frame-p-2134.jpg",
+   "source": "out/work/earth/p6/eq/p-2134.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2134, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2134,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T01:23:46.362Z",
+   "file": "20261122012346362-frame-p-1877.jpg",
+   "source": "out/work/earth/p6/eq/p-1877.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1877, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1877,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
   {
    "time": "2026-11-22T01:21:30.686Z",
    "file": "20261122012130686-note-sheet-rise-c.jpg",
@@ -18,60 +90,6 @@
    "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
    "kind": "note",
    "label": "Phase 6 item 2 proof: rise cover, every frame 2122 to 2140, review tier at preview format, version c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:21:02.720Z",
-   "file": "20261122012102720-frame-p-2140.jpg",
-   "source": "out/work/earth/p6/rr/p-2140.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2140, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2140,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-22T01:08:39.347Z",
-   "file": "20261122010839347-note-night-low2.jpg",
-   "source": "out/work/earth/p6/night-low2.png",
-   "kind": "note",
-   "label": "Item 8: isolated green streak PA 140 to 146, hero over kept film, then both at 2.5 times gain",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:08:38.428Z",
-   "file": "20261122010838428-note-clip-sky.jpg",
-   "source": "out/work/earth/p6/clip-sky.jpg",
-   "kind": "note",
-   "label": "Item 6: kept clip frames 2147, 2156, 2165, 2174: the shared band stands upright behind the globe",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:08:37.224Z",
-   "file": "20261122010837224-note-sky2156m-band3.jpg",
-   "source": "out/work/earth/p6/sky2156m-band3.png",
-   "kind": "note",
-   "label": "Item 6: kept 2156 on main, the shared band behind the globe at 3 times (upper left and bottom): band map texels as blobs, point stars sharp",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:26.894Z",
-   "file": "20261122010026894-note-night-streak2.jpg",
-   "source": "out/work/earth/p6/night-streak2.png",
-   "kind": "note",
-   "label": "Item 8: night limb streak PA 70 to 130, hero over kept film",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T01:00:25.814Z",
-   "file": "20261122010025814-note-sheet-rise-a.jpg",
-   "source": "out/work/earth/p6/sheet-rise-a.jpg",
-   "kind": "note",
-   "label": "Item 2: rise review proof 2122 to 2131, version c (queue running)",
    "stop": "earth"
   }
  ]
