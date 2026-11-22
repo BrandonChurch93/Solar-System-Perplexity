@@ -749,3 +749,16 @@ What the columns were (dive 1319 to 1325, `view/e3n-1321.jpg` at review tier, ma
 
 Queue `q21.sh` (log `/tmp/q21.log`, started 08:16, about an hour): finals f21 of the four judged frames with `cmp` against f16; review strips `view/f4t.jpg` (1319 to 1328) and `view/f4u.jpg` (1546 to 1556); review cover sheets c21 (`view/c21-rc.png`, `view/c21-dc.png`); audit and repeat (`/tmp/q21-audit.log`, `/tmp/q21-rep.log`, frames 1185, 1287, 1440, 1586, 1300, 1307, 1310, 1563, 1556, 1320, 1318, 1552); chain (`/tmp/chain21.log`); prints "queue21 done". Do not change `src/stops/venus` or `public/assets/venus` in the repo until then.
 After it: read every frame of both sheets against c20 and c19, commit the code, looks, note to the Builder.
+
+## State at 09:00 (22 Nov): take F4 proved on batch 19, batch 20 merged, proof queue q22 running (read this first after a compaction)
+
+Head 7cd0277 (merge of main 8f13066, which holds engine batch 20: travels, belt, ending, dust, flight sky with the sharper band; the Builder's log says every judged hold, dive and terrain frame keeps its bytes and the rise, travel and ending frames change as designed). No mail about batch 20 has reached me yet. The veil change (take F4) is still NOT committed: it is committed and told to the Builder once the proof on batch 20 is in. r2 sits on main 8f13066.
+
+Take F4 on batch 19 (queue q21, main e4b509e), like for like against take E3d (c20):
+- Finals f21 of 1185, 1287, 1440, 1586: the same bytes as f16, all four.
+- Review strips: dive tail 1319 to 1328 (`view/f4t.jpg`): the mist thins evenly, no column, 1328 clean. Rise entry 1546 to 1556 (`view/f4u.jpg`): the mist thickens evenly, the terrain stays whole, 1555 thick haze, 1556 soft streaks.
+- Review cover sheets c21 (`view/c21-rc.png`, `view/c21-dc.png`), every frame read. Rise: cells 1558 to 1566 the same bytes as c20; 1555 to 1557 changed inside the veil only (61,000, 64,000 and 40,000 pixels over one level, none in the top 40 rows); 1557 to 1559 keep fine vertical lines under the limb (the crisp veil, as in c20). Dive: cells 1309 to 1315 the same bytes as c20; 1316 3,110 pixels by one level (late samples of the shutter fall under amount 1); 1317 to 1320 changed (56,000 to 67,000 pixels over one level, one pixel in the top 40 rows): soft haze at 1317 and 1318 where c20 had fine vertical lines, the terrain through an even mist at 1319 and 1320. The sky is never black.
+- The repeat and the chain of q21 were stopped at 08:58 because main moved: they run on batch 20 instead.
+
+Queue `q22.sh` (log `/tmp/q22.log`, started 08:58, about 55 minutes), r2 on main 8f13066 with the working tree copied in: finals f22 with `cmp` against f16 (1586 is expected to differ by design of batch 20: look at it at native size, limb and disc); audit and repeat (`/tmp/q22-audit.log`, `/tmp/q22-rep.log`); review cover sheets c22 (`view/c22-rc.png`, `view/c22-dc.png`, compare by cell with c21); chain (`/tmp/chain22.log`, `/tmp/c2-*.log`); prints "queue22 done". Do not change `src/stops/venus` or `public/assets/venus` in the repo until then.
+After it: commit the code, push, looks, note to the Builder (head, main 8f13066, frames changed, numbers, sheets, the stability result of 06:15 not yet told, what is weak).
