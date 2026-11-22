@@ -1,9 +1,23 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T05:42:42.340Z",
+ "pushed": "2026-11-22T06:15:54.868Z",
  "head": "68ae940302485898749921529af41be6e59009b3",
- "note": "e8e4984 on main 2621f00 (batch 19): dive cover sheet at the review tier beside the kept build; rise cover sheet rendering",
+ "note": "e8e4984 on main 2621f00 (batch 19): rise cover sheet at the review tier still rendering (started 05:41), terrain, dive and rise sheets to follow",
  "looks": [
+  {
+   "time": "2026-11-22T06:15:48.864Z",
+   "file": "20261122061548864-frame-f03844-review.jpg",
+   "source": "out/work/sheets/.frames-7soOoO/f03844-review.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3844, review tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3844,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T05:42:34.033Z",
    "file": "20261122054234033-note-item2-dive-cover-kept-now.jpg",
@@ -61,14 +75,6 @@
    "source": "../../../../tmp/c3866-left.png",
    "kind": "note",
    "label": "Rise 3866 native, left of the globe: batch 18 (top), e8e4984 on main 2621f00 (batch 19 7a880ac6) (bottom). Sky points show through the C ring in both",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T05:00:55.430Z",
-   "file": "20261122050055430-note-r3866-three.jpg",
-   "source": "../../../../tmp/r3866-three.png",
-   "kind": "note",
-   "label": "Rise 3866, final tier: kept build (top), c5a7fa2 on main 36d7b64 batch 18 (middle), e8e4984 on main 2621f00 (batch 19 7a880ac6) (bottom, with the flight stars)",
    "stop": "saturn"
   },
   {
