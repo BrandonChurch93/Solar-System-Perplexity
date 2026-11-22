@@ -4,7 +4,7 @@ export type SegmentKind = 'hold' | 'dive' | 'terrain' | 'rise' | 'travel' | 'ret
 export interface FormatDef { id: string; width: number; height: number }
 export interface TierDef { samplesPerFrame: number; fastSamplesPerFrame: number; maxSamplesPerFrame: number }
 export interface MotionDef { maxStepPx: number; probeGrid: [number, number]; bodyReach: number; minBodyPx: number; terrainGround: number; softFromPx: number; softToPx: number }
-export interface AssetSetDef { wrapMapWidth: number; reliefWidth: number; skyWidth: number; maxSetMemoryMb: number }
+export interface AssetSetDef { wrapMapWidth: number; reliefWidth: number; skyWidth: number; skyStripWidth: number; maxSetMemoryMb: number }
 export interface StopDef { id: string; name: string; hero: string; close: string; moons: string[]; rings: boolean }
 export interface SegmentDef { id: string; stop: string; kind: SegmentKind; start: number; end: number }
 export interface Segment extends SegmentDef { index: number; firstFrame: number; endFrame: number; frames: number }
@@ -104,6 +104,11 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   if (!(r.posts.introMaxSeconds > 0) || !(r.posts.readHoldSeconds >= 0) || !(r.posts.readHoldSeconds < r.posts.introMaxSeconds)) fail('posts.readHoldSeconds must fit inside posts.introMaxSeconds')
   if (!(r.posts.introMaxTries >= 1) || !isWhole(r.posts.introMaxTries) || !(r.posts.checkMaxFixes >= 0) || !isWhole(r.posts.checkMaxFixes)) fail('posts.introMaxTries and posts.checkMaxFixes must be whole numbers')
   if (!(r.export.warmUpFrames >= 0) || !isWhole(r.export.warmUpFrames)) fail('export.warmUpFrames must be a whole number, 0 or more')
+  for (const [id, set] of Object.entries(r.assetSets as Record<string, AssetSetDef>)) {
+    for (const key of ['wrapMapWidth', 'reliefWidth', 'skyWidth', 'skyStripWidth', 'maxSetMemoryMb'] as const) {
+      if (!isWhole(set[key]) || !(set[key] > 0)) fail('assetSets.' + id + '.' + key + ' must be a whole number above 0')
+    }
+  }
   for (const [id, t] of Object.entries(r.tiers)) {
     if (!(t.samplesPerFrame >= 1) || !(t.fastSamplesPerFrame >= 1)) fail('tier ' + id + ' has no samples')
     if (!isWhole(t.maxSamplesPerFrame) || t.maxSamplesPerFrame < Math.max(t.samplesPerFrame, t.fastSamplesPerFrame)) fail('tier ' + id + ' has maxSamplesPerFrame under its sample counts')

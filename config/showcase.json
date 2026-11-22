@@ -67,8 +67,8 @@
     "softToPx": 18
   },
   "assetSets": {
-    "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "maxSetMemoryMb": 450},
-    "full": {"wrapMapWidth": 8192, "reliefWidth": 5632, "skyWidth": 8192, "maxSetMemoryMb": 1400}
+    "web": {"wrapMapWidth": 4096, "reliefWidth": 2816, "skyWidth": 4096, "skyStripWidth": 2048, "maxSetMemoryMb": 450},
+    "full": {"wrapMapWidth": 8192, "reliefWidth": 5632, "skyWidth": 8192, "skyStripWidth": 8192, "maxSetMemoryMb": 1400}
   },
   "sets": {
     "maxLoaded": 2

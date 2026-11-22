@@ -3,6 +3,7 @@ import type { Engine } from '../core/engine'
 import { clipRange, setsForFrame } from '../director/timeline'
 import { FilmEncoder, chooseFallback, chooseH264, type CodecChoice, type EncodeSpec, type Sink } from './encoder'
 import css from './export.module.css'
+import { skyBytesFor } from './skybytes'
 
 export interface MemorySample { frame: number; textureBytes: number; loaded: string[]; jsHeap: number | null }
 
@@ -74,11 +75,6 @@ function hostSets(): Promise<string[]> {
     .then((j: { sets?: string[] } | null) => (j && Array.isArray(j.sets) ? j.sets.filter((x) => !!config.assetSets[x]) : Object.keys(config.assetSets)))
     .catch(() => Object.keys(config.assetSets))
   return carried
-}
-
-function skyBytesFor(assets: string): number {
-  const w = config.assetSets[assets]!.skyWidth
-  return w * (w / 2) * 4 * (4 / 3) + w * (w / 4) * 4 * (4 / 3) + (w / 2) * (w / 8) * 4
 }
 
 export function mountExport(engine: Engine, params: URLSearchParams): void {
@@ -270,7 +266,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
       results.push({ level: 'warn', text: 'This copy of the site carries the ' + here.join(' and ') + ' texture set only, so the export uses it. The full set comes with the repository.' })
     }
     const set = config.assetSets[assets]!
-    const largest = Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth)
+    const largest = Math.max(set.wrapMapWidth, set.reliefWidth, set.skyWidth, set.skyStripWidth)
     const gl = engine.renderer.getContext()
     const maxTex = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number
     let setFits = true
