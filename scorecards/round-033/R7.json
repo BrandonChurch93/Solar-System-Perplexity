@@ -1,0 +1,117 @@
+{
+ "critic": "R7",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R7",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "Encoded crops C and I, in the dark haze just outside the solar loops",
+      "what": "The smooth falloff breaks into faint rectangular patches at native size, and a few isolated dim stars no longer resolve. The patches are not prominent in the full-frame comparison.",
+      "fix": "Reduce fine background noise before encoding, then lift the faintest stars slightly so they survive without having to brighten the whole sky."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "Encoded crops D and E, across the foreground solar cells",
+      "what": "Some narrow dark seams soften into neighboring highlights. The larger cells and sunspot filaments remain distinct.",
+      "fix": "Increase local contrast at the cell boundaries without sharpening the finest grain."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R7",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crop I, Earth night side over the Atlantic storm",
+      "what": "the faint city-light speckle and the fine cloud streaks are a little dimmer and softer in the encode, so the dark ocean reads slightly flatter than the source",
+      "fix": "give dark, low-contrast areas a few more bits (for example raise aq-strength or lower the CRF a little for dark scenes)"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crop D, the cloud-hazed volcano flank near the left limb",
+      "what": "fine dust and haze texture is slightly smoothed; the volcano rims and ridges still hold, so this is within the expected grain loss",
+      "fix": "none needed; if wanted, add a light psy-rd or film-grain tune to keep the haze texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crops D and H, star fields beside the limb",
+      "what": "a few of the faintest single-pixel stars fade a little; no stars that matter vanish, and the limb glow shows no banding or blocking",
+      "fix": "none needed"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R7",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-18.png",
+      "where": "crops H (0,318,225,212) and I (0,530,225,212), encoded right panel",
+      "what": "the cyan limb glow and lower-right nebula haze break into 8x8/16x16 blocks and stepped bands, over 20% of faint and mid-brightness stars vanish or smear into blobs, and the leftmost ~25px smears into flat horizontal streaks that erase stars along the frame edge",
+      "fix": "apply stronger 2px spatio-temporal blue-noise dithering across the atmosphere and nebula falloff, tune the stress encoder for dark gradients and point sources (e.g. aq-mode=3 or -tune grain), and fix the x=0 edge-clamp artifact in the video render path"
+     },
+     {
+      "severity": "major",
+      "file": "image-24.png",
+      "where": "crops B (368,164,225,212), F (1120,106,225,212), and G (560,106,225,212), encoded right panel",
+      "what": "dense Milky Way star clouds and warm dust haze degrade across inter-frames into blocky, mushy 8x8 patches, with hundreds of pinpoint stars losing over half their contrast or vanishing into blurred clumps",
+      "fix": "tighten P/B-frame quantizer ratios (ipratio/pbratio) or enable psy-rd/grain retention in the stress encode, and give sub-pixel stars a slightly wider 1.5-2px soft kernel so inter-frame DCT quantization does not wipe them out"
+     },
+     {
+      "severity": "major",
+      "file": "image-22.png",
+      "where": "crops B (368,164,225,212), F (1120,106,225,212), and G (560,106,225,212), encoded right panel",
+      "what": "inter-frame compression softens the Milky Way dust lanes into blocky clumps and causes dozens of faint cluster stars to vanish compared with the keyframe in image-20.png",
+      "fix": "reduce P/B-frame quantization drop-off relative to keyframes and preserve high-frequency star contrast with higher psy-rd or slightly larger star point-spread radii"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "full Mars disc, pre-encode left panel vs encoded right panel",
+      "what": "the pre-encode reference still has radial motion blur across Mars's canyons and craters while the stress-encoded frame is unblurred on the disc and clamped along the left border, preventing an exact like-for-like frame comparison (also visible in image-18.png crops C, D, and G)",
+      "fix": "save the pre-encode reference PNGs directly from the exact frame buffer fed to ffmpeg during npm run stress so both sides share identical camera velocity and shader state"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crops C (1328,164,225,212) and E (1328,704,225,212), encoded right panel",
+      "what": "in Mars's dark terminator and nightside shadow falloff, compression strips out the fine grain and leaves subtle blotchy macroblocking and luma/chroma stepping",
+      "fix": "use dark-biased adaptive quantization (aq-mode=3) and slightly coarser 2x2-correlated blue-noise dithering in near-black shadow regions so gradients survive yuv420p quantization"
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "crops D (368,704,225,212) and E (1328,704,225,212), encoded right panel",
+      "what": "quantization flattens the dithered dark sky gradient into stepped 8x8 macroblocks around the blue planet's nightside and outer cyan glow edge while dimming faint isolated stars (persisting across image-19.png through image-24.png)",
+      "fix": "allocate more bits to dark blocks via aq-mode=3 and add low-frequency dither above the yuv420p quantization threshold along the outer limb falloff and deep-space background"
+     }
+    ]
+   }
+  }
+ ]
+}

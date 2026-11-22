@@ -1,0 +1,145 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "Crops T through X, foreground granulation",
+      "what": "Broad, smooth highlights on the rounded cells and dark grooves between them make the foreground look like hammered gold. The finest detail is concentrated at the edges, leaving many cell interiors smeared.",
+      "fix": "Reduce the polished specular response, break up the dark grooves, and add finer variation in brightness and structure across the cell interiors."
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "Crop A, dark spot and its lower and right rim",
+      "what": "Surface detail stretches into long, straight strands that converge on a nearly featureless black oval, making the spot read as a hole cut into the surface.",
+      "fix": "Shorten and vary the radial strands, break up the rim, and retain faint detail inside the darkest region."
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Left and right plasma footpoints and the upper-right crest of the main arch",
+      "what": "Multiple strands merge into nearly solid white ribbons where the loop is brightest, wiping out separation between filaments and obscuring the surface at their bases.",
+      "fix": "Roll off the highlights and reduce the bloom radius so the brightest strands remain distinct and the surface stays visible around their bases."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "Crops N and Q, distant left and right horizon away from the loop",
+      "what": "A nearly continuous bright outline with a fringe of similarly sized spikes makes the limb look like a separate brushed-on layer.",
+      "fix": "Vary the fringe height, spacing, and intensity, and let the brightest rim fade more gradually into the atmosphere."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "near foreground granulation, bottom strip (crops S-W, y 866-1080)",
+      "what": "the near terrain smears into directional streaks and stretched, glassy cell interiors; cells lose structure and look like warped wet caramel instead of resolving into finer detail as the camera gets closer",
+      "fix": "add higher-frequency granule and intergranular lane detail in the near field and remove the stretched/smeared texture projection at grazing angle"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "whole photosphere (crops D, E, F, N, O, P)",
+      "what": "granules have glossy specular highlights and hard dark cracks, giving a plastic, cracked-lacquer surface rather than a self-luminous gas; light reads as reflected, not emitted",
+      "fix": "remove specular sheen, make cells emissive with soft brightness falloff into narrower, less inky lanes"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "coronal loops over the spot (crops A, C, H, I, K)",
+      "what": "loops render as thin spark trails like steel-wool long exposure, with stray spark threads and droplets falling off; reads as a photo effect, not plasma loops",
+      "fix": "build loops from coherent, thicker glowing strands with smooth emission along the arc and no spark droplets"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "prominences at left and right limb (crops C, D, E, H, M, O)",
+      "what": "red prominences are crisp, saturated ribbons with a different sharpness and hue from the soft corona and limb, so they look pasted on as a separate layer",
+      "fix": "match the prominence edge softness and colour to the limb glow and blend their bases into the chromosphere"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "corona streamers all around the disc (crops B, K, L, U, V, W)",
+      "what": "streamers are painterly airbrushed white strokes with a grey cast; they look like a brush layer and stop with visible stroke ends",
+      "fix": "use finer, more varied filament structure with smooth radial falloff and warmer tint near the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "lower-left limb (crop V, left of centre near the limb)",
+      "what": "a small flat, desaturated patch where the surface texture smooths out just inside the limb",
+      "fix": "continue the surface texture and limb darkening through that patch"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "sunspot umbra (crop A)",
+      "what": "umbra is a flat featureless black ellipse with a hard inner edge against the penumbra filaments",
+      "fix": "give the umbra faint dark-red structure and a softer transition into the penumbra"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "disc surface (crops A, P, Q)",
+      "what": "surface detail has a uniform busy swirl at one scale and is close to repeating; limb darkening is weak so the disc looks flat",
+      "fix": "add multi-scale variation and stronger limb darkening toward the edge"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-20.png",
+      "where": "solar limb in crops U and V (and around the full disk edge in image-17.png, image-18.png crops C, F, G, and image-19.png crops K, L, P, R)",
+      "what": "a razor-sharp 1-2 px bright yellow circular outline with slight stair-stepping and an adjacent thin dark trough separates the solar disk from the corona, cutting off prominence and spicule bases along a hard mask edge",
+      "fix": "feather the limb transition into continuous chromospheric spicules, eliminate the bright 1-2 px rim line and dark outer gap, and blend prominence footpoints across the limb onto surface active regions"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "inner corona and prominence loops in crops C, D, and G (also visible in image-19.png crops K, L, R and image-20.png crops U, V)",
+      "what": "crisp single-pixel background stars shine unattenuated through the bright inner coronal streamers and directly through opaque red prominence filaments, giving away an unmasked additive starfield layer",
+      "fix": "occlude and attenuate the starfield layer using prominence alpha/optical depth and inner coronal glare luminance so stars do not pierce dense plasma or bright near-limb glow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-20.png",
+      "where": "faint red prominence wisps in crop U and dark red prominence arch in image-18.png crop C",
+      "what": "isolated high-contrast 1-2 px orange-white hot pixels sit inside otherwise smooth dark-red plasma filaments",
+      "fix": "filter out isolated single-pixel fireflies in the prominence pass and prevent background star pixels from additively spiking red filament highlights"
+     }
+    ]
+   }
+  }
+ ]
+}
