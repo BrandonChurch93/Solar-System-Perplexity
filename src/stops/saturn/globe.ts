@@ -21,6 +21,8 @@ export interface GlobeLook {
   rimNight: [number, number, number, number]
   termShift: [number, number, number]
   nightBlur: number
+  fine: [number, number, number]
+  fineTop: number
   probe: number
   edgePx: number
   limbFit: number[]
@@ -85,6 +87,8 @@ uniform vec4 uRim;
 uniform vec4 uRimNight;
 uniform float uRimPower;
 uniform float uNightBlur;
+uniform vec4 uFine;
+uniform float uFineTop;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform sampler2D uTableC;
@@ -179,6 +183,13 @@ void main() {
   vec3 light = mix(curveAt(ndl) * tableAt(uTable, ndl, lat), curveCloseAt(ndl) * tableAt(uTableC, ndl, lat), uClose);
   vec3 night = min(light, vec3(uNightFloor));
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
+  for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
+    vec3 mid = inverseFilmic(equirectGrad(uMap, d, uFine.x).rgb);
+    vec3 lw = vec3(0.2126, 0.7152, 0.0722);
+    float lm = max(dot(mid, lw), 1e-3);
+    float power = clamp(uFine.y * pow(1.0 + 5.0 * lm * dot(lit, lw), 1.2), 1.0, uFine.z);
+    albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w * (1.0 - pw));
+  }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
@@ -223,7 +234,7 @@ export class Globe {
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uHazeShadow: { value: look.hazeShadow },
         uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
-        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
+        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },

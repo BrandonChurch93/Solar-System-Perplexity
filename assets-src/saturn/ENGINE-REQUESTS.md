@@ -23,3 +23,7 @@
   - 2580: sha256 `7322ef9576f06ffb418698ffa8b0a82fe155aa5542608d8d4122681ea5700d5a` with and without.
 - Exit and travel: `npx tsx assets-src/saturn/check/exit.ts` against `out/work/saturn/exit-before.json`: frames 3885, 3886, 3900, 3930, 3959, 3960 and 4000 are identical in every field; 3883 and 3884 keep exposure 0.55. `skyAim.orbit` is untouched.
 - Without the patch the stop does not type check (`override skyGain`) and the terrain patch would be 2.86 times too bright, so the stop's polish commits need this request merged with them.
+
+## State (01:40, Nov 22)
+
+- Request 2 is on main since engine batch 16 (0bfe569, `StopPlan.skyGain(time)`). The local copies of `src/director/film.ts` and `src/director/moves.ts` were dropped and main was merged (af83cf4). `assets-src/saturn/engine.patch` is removed: no engine request is open.
