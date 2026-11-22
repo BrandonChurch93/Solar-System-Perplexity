@@ -2,25 +2,26 @@
 
 Both files are derived from `public/assets/shared/full/skyband.jpg` (recipe in `assets-src/shared/RECIPE.md`). No image model is used; the only tool is `assets-src/flightsky/make.py` (Python 3, `numpy`, `opencv-python-headless`, `Pillow`, all in `tools/ml/requirements.txt`). The seed is `seed` of `config/showcase.json`.
 
-Command, from the repo root, about 30 s:
+Command, from the repo root, about 90 s:
 
 ```
-python3 assets-src/flightsky/make.py --thr 0.0008 --extra 400000
+python3 assets-src/flightsky/make.py --thr 0.0008 --extra 400000 --detail 1 0.9 1 1.0 --size 8192 2048
 ```
 
 Defaults that the command relies on: `--blur 1.5`, `--vivid 1.6`, `--warm 0.5`, `--faint 0.02 0.1`, `--fill 0.3 6 0.04`. `--checks` also writes `starless-x3.png` and `starless-over.jpg` to `/tmp/fs` for a look at the starless strip beside the source.
 
 ## public/assets/shared/full/skybandglow.png and public/assets/shared/web/skybandglow.png
 
-- Output: `public/assets/shared/full/skybandglow.png` (4096 x 1024, 8 bit RGB PNG, about 2.3 MB) and `public/assets/shared/web/skybandglow.png` (2048 x 512, about 0.8 MB). The Milky Way strip without stars, the smooth light of the band in flight.
+- Output: `public/assets/shared/full/skybandglow.png` (8192 x 2048, 8 bit RGB PNG, 10.3 MB) and `public/assets/shared/web/skybandglow.png` (2048 x 512, 1.0 MB). The Milky Way strip without stars, the smooth light of the band in flight.
 - Steps:
   1. Read the source strip (8192 x 2048), padded 64 columns on each side with its own wrap.
   2. Median 13 x 13 removes the stars. Where a pixel is more than 40 of 255 above that median (a large star), a soft mask (Gaussian sigma 5 of the mask, times 30, clamped) blends to a median 31 x 31.
   3. Gaussian sigma 1.5 on the padded strip, then the pad is cut off.
   4. To scene light (sRGB decode, inverse film curve). Three tenths of the light of the removed stars go back in as smooth light, so the star clouds keep their level: residual = source minus starless in scene light, each pixel's luminance capped at 0.04 so a bright star adds no blob, Gaussian sigma 6, times 0.3 (`--fill 0.3 6 0.04`), added to the starless strip.
-  5. Film curve, square root, area scale to the output size, sRGB encode, 8 bit. The shader squares the sample. The square root keeps precision in the dark lanes.
+  5. Dark detail (`--detail 1 0.9 1 1.0`): the median also removes dark veins thinner than its window. Luminance of the source in scene light, Gaussian sigma 0.9 twice (the kernel value 1 turns the grey opening between the two off), is compared with the luminance of the starless strip: where the source is darker, the starless strip is scaled down to it (ratio clamped to 0.2 to 1.0, so nothing gets brighter and no star comes back). Color stays that of the median, so no chroma speckle returns. The smooth light of step 4 is multiplied by the same ratio over its own Gaussian (sigma 6), so it does not fog the veins.
+  6. Film curve, square root, area scale to the output size (`--size 8192 2048`: the full set keeps the source size), sRGB encode, 8 bit. The shader squares the sample. The square root keeps precision in the dark lanes.
 - Why PNG: no 8 x 8 blocks, no chroma subsampling. A JPEG of this smooth map saved almost nothing and brought the blocks back.
-- Loaded with linear filtering, without mipmaps. GPU memory: 16.8 MB (full), 4.2 MB (web).
+- Loaded with linear filtering, without mipmaps. GPU memory: 67.1 MB (full), 4.2 MB (web).
 
 ## public/assets/shared/full/skybandstars.bin and public/assets/shared/web/skybandstars.bin
 

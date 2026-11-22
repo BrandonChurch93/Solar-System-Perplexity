@@ -15,6 +15,8 @@ P.add_argument('--vivid', type=float, default=1.6)
 P.add_argument('--warm', type=float, default=0.5)
 P.add_argument('--faint', type=float, nargs=2, default=[0.02, 0.1])
 P.add_argument('--fill', type=float, nargs=3, default=[0.3, 6.0, 0.04])
+P.add_argument('--detail', type=float, nargs=4, default=[0, 0.8, 7, 1.25])
+P.add_argument('--size', type=int, nargs=2, default=[4096, 2048])
 P.add_argument('--checks', action='store_true')
 A = P.parse_args()
 CFG = json.loads((ROOT / 'config/showcase.json').read_text())
@@ -127,13 +129,28 @@ def main():
     Rc = Rp * np.minimum(1, A.fill[2] / np.maximum(Rp @ np.array([0.3, 0.5, 0.2], np.float32), 1e-9))[..., None]
     Rw = np.concatenate([Rc[:, -pad:], Rc, Rc[:, :pad]], 1)
     fill = cv2.GaussianBlur(Rw, (0, 0), A.fill[1])[:, pad:-pad]
-    s = np.sqrt(filmic(Bbg + A.fill[0] * fill))
-    for name, w in (('full', 4096), ('web', 2048)):
+    base = Bbg
+    if A.detail[0] > 0:
+        L = np.array([0.3, 0.5, 0.2], np.float32)
+        Bw = np.concatenate([B[:, -pad:], B, B[:, :pad]], 1)
+        lg = cv2.GaussianBlur(Bw @ L, (0, 0), A.detail[1])
+        k = int(A.detail[2])
+        lo = cv2.morphologyEx(lg, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+        lo = cv2.GaussianBlur(lo, (0, 0), A.detail[1])[:, pad:-pad]
+        lm = Bbg @ L
+        ratio = np.clip(np.minimum(lo, lm * A.detail[3]) / np.maximum(lm, 1e-6), 0.2, A.detail[3])
+        ratio = 1 + (ratio - 1) * A.detail[0]
+        base = Bbg * ratio[..., None]
+        rw = np.concatenate([ratio[:, -pad:], ratio, ratio[:, :pad]], 1)
+        fill = fill * (ratio / np.maximum(cv2.GaussianBlur(rw, (0, 0), A.fill[1])[:, pad:-pad], 1e-3))[..., None]
+    s = np.sqrt(filmic(base + A.fill[0] * fill))
+    for name, w in (('full', A.size[0]), ('web', A.size[1])):
         h = w // 4
-        small = cv2.resize(s, (w, h), interpolation=cv2.INTER_AREA)
+        small = s if w == W else cv2.resize(s, (w, h), interpolation=cv2.INTER_AREA)
         out8 = np.clip(np.round(enc(small) * 255), 0, 255).astype(np.uint8)
         d = Path(A.out) / name
         Image.fromarray(out8).save(d / 'skybandglow.png', optimize=True)
+        d.mkdir(parents=True, exist_ok=True)
         (d / 'skybandstars.bin').write_bytes(blob)
         back = np.asarray(Image.open(d / 'skybandglow.png')).astype(np.float32)
         print(name, 'glow', (d / 'skybandglow.png').stat().st_size, 'bytes, max err', float(np.abs(back - enc(small) * 255).max().round(2)), 'stars', len(blob), 'bytes')
