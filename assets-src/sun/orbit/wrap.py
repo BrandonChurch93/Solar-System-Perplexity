@@ -2,6 +2,7 @@ import sys
 import numpy as np
 import cv2
 from geo import *
+import cells
 
 MW, MH = 8192, 4096
 LIMB = (0.2, 0.42)
@@ -168,6 +169,7 @@ def main():
             own = own * wh[..., None] + fill * (1 - wh[..., None])
         out[y0:y0 + CH] = own
         print('rows', y0, flush=True)
+    out = cells.apply(out, np.load(sys.argv[3]) if len(sys.argv) > 3 else None)
     full = sys.argv[1]
     web = sys.argv[2]
     cv2.imwrite(full, cv2.cvtColor((np.clip(out, 0, 1) * 255 + 0.5).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 94, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444])

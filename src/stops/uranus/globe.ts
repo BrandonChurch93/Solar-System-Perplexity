@@ -39,7 +39,7 @@ const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       vec2 q = g * uPatchScale[${i}];
-      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) enc = mix(enc, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -67,8 +67,15 @@ uniform float uWeight;
 uniform vec3 uNear;
 uniform float uSoft;
 uniform vec2 uSharp;
+uniform float uWrapSoft;
 uniform float uShadeMix;
 uniform float uVignette;
+uniform sampler2D uFaceMap;
+uniform vec4 uFace;
+uniform float uFaceGain;
+uniform vec3 uFaceN;
+uniform vec3 uFaceE;
+uniform vec3 uFaceU;
 uniform float uAspect;
 uniform vec3 uSunW;
 uniform vec3 uCloudWhite;
@@ -112,10 +119,17 @@ void main() {
   vec3 n = normalize(vWorldN);
   float mu = clamp(dot(d0, normalize(vCamL - d0)), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  vec3 enc = equirectGrad(uMap, d, uGrad).rgb;
-  enc = max(enc + (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, uGrad * 4.0).rgb), vec3(0.0));
-  vec3 wide = inverseFilmic(enc);
   float texels = diagTexelsDir(d, uMapWidth);
+  vec3 ax = dFdx(d);
+  vec3 ay = dFdy(d);
+  float aa = dot(ax, ax) + dot(ay, ay);
+  float ad = length(cross(ax, ay));
+  float lean = max(2.0 * ad / max(aa + sqrt(max(aa * aa - 4.0 * ad * ad, 0.0)), 1e-20), 1.0 / 16.0);
+  float close = 1.0 - smoothstep(uPatchFade.x, uPatchFade.y, texels * lean);
+  float grad = max(uGrad, close * uWrapSoft / max(texels * lean, 1e-3));
+  vec3 enc = equirectGrad(uMap, d, grad).rgb;
+  enc = max(enc + (1.0 - close) * (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, grad * 4.0).rgb), vec3(0.0));
+  vec3 wide = inverseFilmic(enc);
   float dn = dot(d, uSpotN);
   vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) / max(dn, 0.05);
   vec2 gx = dFdx(g);
@@ -124,12 +138,19 @@ void main() {
   gx *= uGrad;
   gy *= uGrad;
   float parent = texels;
-  for (int k = 0; k < (dn > 0.3 && texels < uPatchFade.y ? 1 : 0); k++) {
+  for (int k = 0; k < (dn > 0.3 && texels * lean < uPatchFade.y ? 1 : 0); k++) {
 ${PATCH_LEVELS}
   }
   vec3 albedo = inverseFilmic(enc);
   vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg;
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
+  vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
+  vec2 fx = dFdx(fq) * (uFace.y * uGrad);
+  vec2 fy = dFdy(fq) * (uFace.y * uGrad);
+  for (int k = 0; k < (uFace.x > 0.0 ? 1 : 0); k++) {
+    float w = uFace.x * (1.0 - smoothstep(uFace.z, uFace.w, length(fq))) * smoothstep(uPatchFade.x, uPatchFade.y, texels * lean);
+    albedo *= exp2((textureGrad(uFaceMap, fq * uFace.y + 0.5, fx, fy).rgb - 128.0 / 255.0) * (uFaceGain * w));
+  }
   vec3 light = lightAt(ndl, mu);
   for (int k = 0; k < (uSoft > 0.0 ? 1 : 0); k++) {
     light = vec3(0.0);
@@ -162,7 +183,9 @@ export interface GlobeOptions {
   cloudRate: [number, number, number, number]
   cloudFine: number
   sharp: [number, number]
+  wrapSoft: number
   patches: { textures: THREE.Texture[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
+  face: { map: THREE.Texture; centre: [number, number, number]; reachDeg: number; fadeDeg: [number, number]; gain: number }
 }
 
 export class Globe {
@@ -175,6 +198,9 @@ export class Globe {
     const spot = p.spot.clone().normalize()
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const faceN = new THREE.Vector3().fromArray(o.face.centre).normalize()
+    const faceE = new THREE.Vector3(0, 1, 0).cross(faceN).normalize()
+    const lambert = (deg: number): number => 2 * Math.sin(THREE.MathUtils.degToRad(deg) / 2)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: SPHERE_VERT,
@@ -187,13 +213,15 @@ export class Globe {
         uPatchSize: { value: p.textures.map((t) => (t.image as unknown as { width: number }).width) },
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
-        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
+        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCloudWhite: { value: new THREE.Vector3(o.cloudWhite, o.cloudWhite, o.cloudWhite) },
         uShadowTint: { value: new THREE.Vector3().fromArray(o.shadowTint) },
         uBandRate: { value: new THREE.Vector4().fromArray(o.bandRate) },
         uCloudRate: { value: new THREE.Vector4().fromArray(o.cloudRate) },
         uCloudFine: { value: o.cloudFine },
+        uFaceMap: { value: o.face.map }, uFace: { value: new THREE.Vector4(0, 0.5 / lambert(o.face.reachDeg), lambert(o.face.fadeDeg[0]), lambert(o.face.fadeDeg[1])) }, uFaceGain: { value: o.face.gain },
+        uFaceN: { value: faceN }, uFaceE: { value: faceE }, uFaceU: { value: faceN.clone().cross(faceE) },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -229,6 +257,10 @@ export class Globe {
     this.mesh.updateWorldMatrix(true, false)
     ;(u.uToRing!.value as THREE.Matrix4).copy(ring.matrixWorld).invert().multiply(this.mesh.matrixWorld)
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
+  }
+
+  face(weight: number): void {
+    ;(this.material.uniforms.uFace!.value as THREE.Vector4).x = weight
   }
 
   near(tint: [number, number, number], amount: number): void {

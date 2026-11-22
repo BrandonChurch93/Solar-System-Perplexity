@@ -14,7 +14,7 @@ export interface GlobeLight {
   reliefNear: number
   reliefDay: number
   reliefRange: [number, number]
-  silhouette: { amp: number; floor: number; taps: number; fade: [number, number] }
+  silhouette: { amp: number; floor: number; taps: number; fade: [number, number]; wide: [number, number] }
   nightFlat: number
   nightDetail: number
   nightVeil: number
@@ -22,7 +22,8 @@ export interface GlobeLight {
   nightSoft: [number, number, number, number]
   dusk: { from: number; range: [number, number, number, number] }
   edge: number
-  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number }
+  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number; nearGain: number; nearTint: [number, number, number]; lobe: [number, number, number]; toLight: number; after: number }
+  line: { dir: [number, number, number]; gain: number; width: [number, number]; side: [number, number]; sun: [number, number, number, number]; dip: number; dipWidth: [number, number]; dipSun: [number, number]; dipTight: [number, number, number] }
   glareGate: [number, number, number]
   glareLens: [number, number]
   nightAfter: number
@@ -64,7 +65,7 @@ const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(${i === 0 ? 'mix(uPatchFade.x, uMend.w, mend)' : 'uPatchFade.x'}, uPatchFade.y, parent));
       for (int k = 0; k < (uSmear > 0.0 ? 0 : 1); k++) {
         if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       }
@@ -74,27 +75,15 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
-const CLOSE_SIDES = [1, -1, 0]
-
-const CLOSE_SPOTS = CLOSE_SIDES.map((side, i) => `  vec3 q${i} = closeSpot(${side === 0 ? 'dc' : `closeTurn(dc, ${side > 0 ? '' : '-'}uCloseTurn.x, uCloseTurn.y)`});
-  vec2 uv${i} = vec2(q${i}.x, 1.0 - q${i}.y);
-  vec2 ax${i} = dFdx(uv${i});
-  vec2 ay${i} = dFdy(uv${i});
-  float es${i} = min(q${i}.x, 1.0 - q${i}.x) / uCloseFade.z;
-  float eb${i} = (1.0 - q${i}.y) / uCloseFade.w;
-  float w${i} = span * step(0.02, q${i}.z) * step(0.0, q${i}.y) * smoothstep(0.0, 1.0, es${i}) * smoothstep(0.0, 1.0, eb${i})${side === 0 ? '' : ' * uCloseTurn.z'};`).join('\n')
-
-const CLOSE_DRAWS = CLOSE_SIDES.map((side, i) => `  for (int k = 0; k < (w${i} > 0.0${side === 0 ? '' : ' && bare'} ? 1 : 0); k++) {
+const CLOSE_DRAWS = [['uWide', 'uvw', 'axw', 'ayw', 'ww', 'uWideSize'], ['uClose', 'uvc', 'axc', 'ayc', 'wc', 'uCloseSize']].map(([map, uv, ax, ay, w, size]) => `  for (int k = 0; k < (${w} > 0.0 ? 1 : 0); k++) {
     vec3 photo = vec3(0.0);
-    for (int j = 0; j < (uSmear > 0.0 ? 0 : 1); j++) photo = textureGrad(uClose, uv${i}, ax${i} * uGrad, ay${i} * uGrad).rgb;
-    for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(uClose, uv${i}, ax${i} * mh.x + ay${i} * mh.y, ay${i} * mh.x - ax${i} * mh.y, along, lat);
-    float core = smoothstep(1.0, uCloseW.z, es${i}) * smoothstep(1.0, uCloseW.z, eb${i}) * inner;
-    vec3 tone = inverseFilmic(photo);
-    tone = mix(tone, dot(tone, vec3(0.2126, 0.7152, 0.0722)) * uClosePlain.rgb, uClosePlain.a * smoothstep(uCloseFade.x, mix(uCloseFade.x, uCloseFade.y, 0.4), reach));
-    col = mix(col, mix(tone, uHaze.rgb, uHaze.a * mix(1.0, ${side === 0 ? 'uCloseW.y' : 'uCloseTurn.w'}, core)), w${i});
-    vec2 tx = ax${i} * uCloseSize;
-    vec2 ty = ay${i} * uCloseSize;
-    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), step(0.5, w${i}));
+    for (int j = 0; j < (uSmear > 0.0 ? 0 : 1); j++) photo = textureGrad(${map}, ${uv}, ${ax} * uGrad, ${ay} * uGrad).rgb;
+    for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(${map}, ${uv}, ${ax} * mh.x + ${ay} * mh.y, ${ay} * mh.x - ${ax} * mh.y, along, lat);
+    vec3 ph = inverseFilmic(photo) * thin;
+    col = mix(col, mix(ph, dot(ph, vec3(0.2126, 0.7152, 0.0722)) * uPlain, mute), ${w});
+    vec2 tx = ${ax} * ${size};
+    vec2 ty = ${ay} * ${size};
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), step(0.5, ${w}));
   }`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -108,6 +97,7 @@ uniform float uPatchNear[${MAX_PATCHES}];
 uniform float uPatchCount;
 uniform float uFeather;
 uniform vec2 uPatchFade;
+uniform vec4 uMend;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
@@ -129,7 +119,6 @@ uniform vec4 uRelief;
 uniform vec4 uNightFlat;
 uniform vec4 uNightSoft;
 uniform vec3 uCarry;
-uniform vec4 uHaze;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
 uniform vec3 uCloseUp;
@@ -137,22 +126,51 @@ uniform vec4 uCloseLens;
 uniform vec4 uCloseBox;
 uniform vec4 uCloseFade;
 uniform vec2 uCloseSize;
-uniform vec3 uCloseW;
-uniform vec3 uClosePivot;
-uniform vec4 uCloseTurn;
+uniform float uCloseW;
+uniform sampler2D uWide;
+uniform sampler2D uWideAlpha;
+uniform mat3 uWideCam;
+uniform vec3 uWideEye;
+uniform vec3 uWideLens;
+uniform vec4 uWideBox;
+uniform vec4 uWideFade;
+uniform vec2 uWideOver;
+uniform vec4 uWideDrop;
+uniform vec3 uWideDown;
+uniform vec3 uWideHold;
+uniform vec2 uWideSize;
+uniform float uSink;
+uniform vec3 uHazeSun;
+uniform vec3 uHazeGain[17];
+uniform vec4 uHazeSpan;
+uniform vec3 uHazeCut;
+uniform vec3 uHazeCalm;
+uniform vec2 uWash;
+uniform vec2 uLift;
+uniform vec2 uKnee;
 uniform vec4 uDusk;
 uniform float uDuskFrom;
 uniform vec2 uReliefRange;
 uniform vec3 uSil;
-uniform vec4 uClosePlain;
+uniform vec2 uSilWide;
+uniform vec3 uPlain;
 uniform float uEdge;
 uniform vec3 uRimColor;
-uniform float uRimWide;
+uniform vec2 uRimWide;
+uniform vec3 uRimNear;
+uniform vec3 uRimLobe;
+uniform float uRimSpill;
 uniform vec3 uRimDir;
 uniform vec3 uGlareW;
 uniform vec3 uGlareGate;
 uniform float uGlareLens;
 uniform vec2 uRimWidth;
+uniform vec4 uLine;
+uniform vec4 uLineDip;
+uniform vec3 uLineW;
+uniform vec2 uLineSide;
+uniform vec4 uLineSun;
+uniform vec3 uLineTight;
 uniform mat3 uBodyToWorld;
 uniform vec3 uCenter;
 uniform vec3 uSunW;
@@ -161,7 +179,6 @@ uniform float uAspect;
 uniform mat4 uPrev;
 uniform float uSmear;
 uniform vec3 uJitter;
-uniform float uCut;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -203,9 +220,6 @@ vec3 closeSpot(vec3 dc) {
   vec3 cp = uCloseLens.x * dc - (uCloseLens.x + 1.0) * uCloseUp;
   return vec3((uCloseLens.zw + uCloseLens.y * vec2(cp.x, -cp.y) / max(-cp.z, 0.02) - uCloseBox.xy) / uCloseBox.zw, -cp.z);
 }
-vec3 closeTurn(vec3 dc, float s, float c) {
-  return dc * c + cross(uClosePivot, dc) * s + uClosePivot * (dot(uClosePivot, dc) * (1.0 - c));
-}
 vec3 limbAt(float mu) {
   float x = clamp(mu / uLimbTo, 0.0, 1.0) * 16.0;
   int i = int(min(floor(x), 15.0));
@@ -226,22 +240,24 @@ void main() {
     float w = max(uSil.z * px, uHeightStep);
     float hh = 0.0;
     for (int i = -2; i <= 2; i++) hh += heightAt(normalize(dl + tl * (w * float(i))));
-    crest = uSil.x * max(hh / 5.0 - uSil.y, 0.0);
+    float wide = 0.0;
+    for (int i = 1; i <= 4; i++) wide += heightAt(normalize(dl + tl * (w * uSilWide.x * float(i)))) + heightAt(normalize(dl - tl * (w * uSilWide.x * float(i))));
+    crest = uSil.x * max(hh / 5.0 - mix(uSil.y, wide / 8.0, uSilWide.y), 0.0);
   }
-  float cov = c > 0.0 ? clamp(0.5 + (1.0 + crest - s) / (px * uEdge), 0.0, 1.0) : 1.0;
+  float cov = c > 0.0 ? clamp(0.5 + (1.0 - uSink + crest - s) / (px * uEdge), 0.0, 1.0) : 1.0;
   if (c > 0.0 && b > 0.0) cov = 0.0;
   float h = b * b - c;
   float t = -b - sqrt(max(h, 0.0));
   vec3 n = normalize(oc + ray * t);
-  float out1 = max(s - 1.0 - crest, 0.0);
+  float out1 = max(s - 1.0 + uSink - crest, 0.0);
   float toward = smoothstep(uGlareGate.x, uGlareGate.y, dot(ray, uGlareW)) * uGlareLens;
   float ndlRim = dot(n, uSunW);
   vec3 rim = vec3(0.0);
   vec3 d = spinY(n * uBodyToWorld, uSpin);
   if (c > 0.0 && b < 0.0 && cov < 1.0) {
-    vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim);
-    float fall = exp(-out1 / uRimWidth.x) + uRimWide * exp(-out1 / uRimWidth.y);
-    rim = uRimColor * lit * fall * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
+    vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim) * (uRimLobe.x + uRimLobe.y * exp((ndlRim - 1.0) / uRimLobe.z));
+    vec3 fall = uRimNear * (uRimWide.x * exp(-out1 / uRimWidth.x)) + uRimWide.y * exp(-out1 / uRimWidth.y);
+    rim = uRimColor * lit * fall * uRimSpill * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
   }
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   vec2 ndc = vClip.xy / vClip.z;
@@ -260,11 +276,39 @@ void main() {
   for (int k = 0; k < (uSmear > 0.0 ? 1 : 0); k++) d = normalize(d + jx * jit.x + jy * jit.y);
   vec3 dc = uCloseCam * d;
   float reach = uCloseLens.x * acos(clamp(dot(dc, uCloseUp), -1.0, 1.0));
-  float cut = uCut > 0.0 ? 1.0 - clamp(0.5 + (reach - uCut) / max(fwidth(reach), 1e-6), 0.0, 1.0) : 1.0;
-  float span = uCloseW.x * (1.0 - smoothstep(uCloseFade.x, uCloseFade.y, reach));
-  float inner = 1.0 - smoothstep(2.0 * uCloseFade.x - uCloseFade.y, uCloseFade.x, reach);
-${CLOSE_SPOTS}
-  bool bare = w2 < 1.0;
+  float span = uCloseW * (1.0 - smoothstep(uCloseFade.x, uCloseFade.y, reach));
+  vec3 qc = closeSpot(dc);
+  float glow = acos(clamp(dot(normalize(uCloseLens.x * dc - (uCloseLens.x + 1.0) * uCloseUp), uHazeSun), -1.0, 1.0));
+  float hx = clamp((glow - uHazeSpan.x) / (uHazeSpan.y - uHazeSpan.x), 0.0, 1.0) * 16.0;
+  int hi = int(min(floor(hx), 15.0));
+  vec3 raw = mix(uHazeGain[hi], uHazeGain[hi + 1], hx - float(hi));
+  vec3 thin = mix(vec3(1.0), min(raw * uHazeSpan.w, vec3(1.0)), uHazeSpan.z);
+  float mute = uHazeCalm.z * (1.0 - smoothstep(uHazeCalm.x, uHazeCalm.y, raw.g));
+  float clearOf = mix(1.0, smoothstep(uHazeCut.x, uHazeCut.y, glow), uHazeCut.z);
+  vec2 uvc = vec2(qc.x, 1.0 - qc.y);
+  vec2 axc = dFdx(uvc);
+  vec2 ayc = dFdy(uvc);
+  float wc = span * step(0.02, qc.z) * step(0.0, qc.y) * smoothstep(0.0, 1.0, min(qc.x, 1.0 - qc.x) / uCloseFade.z) * smoothstep(0.0, 1.0, (1.0 - qc.y) / uCloseFade.w) * clearOf;
+  float sunk = 1.0 - uWideDrop.x * smoothstep(uWideDrop.y, uWideDrop.z, reach);
+  vec3 ns = normalize(oc + ray * (-b - sqrt(max(h + (sunk * sunk - 1.0), 0.0))));
+  vec3 dw = uWideCam * (d + spinY((ns - n) * uBodyToWorld, uSpin));
+  vec3 wp = uCloseLens.x * sunk * dw - uWideEye;
+  float wal = dot(wp, uWideDown);
+  vec3 wpp = wp - wal * uWideDown;
+  float wpl = max(length(wpp), 1e-6);
+  wp = dot(dw, uWideEye) < uCloseLens.x * sunk || wpl > wal * uWideDrop.w ? uWideDown + wpp * (uWideDrop.w / wpl) : wp;
+  vec2 qw = (uWideLens.yz + uWideLens.x * vec2(wp.x, -wp.y) / max(-wp.z, 0.02) - uWideBox.xy) / uWideBox.zw;
+  vec2 uvw = vec2(qw.x, 1.0 - qw.y);
+  vec2 axw = dFdx(uvw);
+  vec2 ayw = dFdy(uvw);
+  vec2 fold = step(uWideOver.y, uvw) * 2.0 - 1.0;
+  float held = uWideHold.y * smoothstep(0.0, uWideHold.z, uCloseLens.x * acos(clamp(-dot(dw, uWideDown), -1.0, 1.0)) - uWideHold.x);
+  axw = axw * fold + vec2(held / uWideSize.x, 0.0);
+  ayw = ayw * fold + vec2(0.0, held / uWideSize.y);
+  uvw = uWideOver.y + abs(uvw - uWideOver.y);
+  float ww = uCloseW * step(0.02, -wp.z) * smoothstep(0.0, 1.0, min(min(qw.x + uWideOver.x, 1.0 - qw.x), min(qw.y, 1.0 - qw.y + uWideOver.x)) / uWideFade.x) * (1.0 - smoothstep(uWideFade.y, uWideFade.z, reach)) * clearOf;
+  for (int k = 0; k < (ww > 0.0 ? 1 : 0); k++) ww *= smoothstep(uWideFade.w, 1.0, textureGrad(uWideAlpha, uvw, axw, ayw).r);
+  bool bare = max(wc, ww) < 1.0;
   float wu = atan(d.x, d.z) / (2.0 * PI) + 0.5;
   float wv = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
   float wu2 = fract(wu + 0.5) - 0.5;
@@ -288,6 +332,7 @@ ${CLOSE_SPOTS}
     gy *= uGrad;
     float front = step(0.3, dn);
     float parent = texels;
+    float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
 ${PATCH_LEVELS}
   }
   vec3 east = cross(vec3(0.0, 1.0, 0.0), d);
@@ -315,8 +360,13 @@ ${PATCH_LEVELS}
   float strength = mix(mix(uRelief.z, uRelief.x, dusk), uRelief.y, near) * smoothstep(0.0, 0.12, mu);
   vec3 np = normalize(n - slopeW * strength);
   float ndl = dot(np, uSunW);
-  float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
-  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu), toward) * (1.0 + lift);
+  float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), uLift.x, uLift.y);
+  float inn = c > 0.0 ? max(1.0 - uSink + crest - s, 0.0) : 1.0;
+  float side = smoothstep(uLineSide.x, uLineSide.y, dot(n, uLineW)) * smoothstep(uLineSun.x, uLineSun.y, ndl0);
+  float kick = side * (1.0 - smoothstep(uLineSun.z, uLineSun.w, ndl0));
+  float tight = mix(1.0, uLineTight.z, smoothstep(uLineTight.x, uLineTight.y, ndl0));
+  float brim = (1.0 - uLine.w * max(smoothstep(uLineDip.z, uLineDip.w, ndl0), side) * (1.0 - smoothstep(uLineDip.x * tight, uLineDip.y * tight, inn))) * (1.0 + uLine.x * kick * (1.0 - smoothstep(uLine.y, uLine.z, inn)));
+  vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu) * brim, toward) * (1.0 + lift);
   vec3 ground = inverseFilmic(albedo);
   float band = smoothstep(uDusk.x, uDusk.y, ndl0) * (1.0 - smoothstep(uDusk.z, uDusk.w, ndl0));
   vec3 calm = ground;
@@ -324,18 +374,19 @@ ${PATCH_LEVELS}
   for (int k = 0; k < (deep > 0.0 && bare ? 1 : 0); k++) calm = mix(ground, mix(inverseFilmic(textureGrad(uMap, vec2(wu, wv), wx * uNightSoft.w, wy * uNightSoft.w).rgb), ground, uNightSoft.z), deep);
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
   vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
-  col = mix(col, dot(col, vec3(0.2126, 0.7152, 0.0722)) * uClosePlain.rgb, uCarry.z);
+  col = mix(col, dot(col, vec3(0.2126, 0.7152, 0.0722)) * uPlain, uCarry.z);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
-  col = mix(col, uHaze.rgb, uHaze.a);
+  col *= 1.0 / (1.0 + uKnee.y * max(max(col.r, max(col.g, col.b)) - uKnee.x, 0.0));
+  vec3 wash = 1.0 / max(raw, vec3(0.02));
+  wash *= min(1.0, uWash.y / max(wash.r, max(wash.g, wash.b)));
+  col *= mix(vec3(1.0), wash, uWash.x);
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  cov *= cut;
-  rim *= cut;
   vec4 beauty = vec4((col * cov + rim) * k, cov);
-  if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
   outColor = diagOut(beauty, texels, 1.0, vec3(0.55, 0.5, 0.45), vec2(0.0), t);
+  if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
 }`
 
 export class Globe {
@@ -346,6 +397,9 @@ export class Globe {
   private readonly center = new THREE.Vector3()
   private readonly edge: number
   private readonly rim: [number, number]
+  private readonly toLight: number
+  private readonly lit = new THREE.Vector3()
+  private readonly line: [number, number, number, number]
   private readonly axis = new THREE.Vector3()
   private readonly q = new THREE.Quaternion()
 
@@ -354,6 +408,8 @@ export class Globe {
     const l = o.light
     this.edge = l.edge
     this.rim = [l.rim.width, l.rim.wide]
+    this.toLight = l.rim.toLight
+    this.line = [l.line.width[0], l.line.width[1], l.line.dipWidth[0], l.line.dipWidth[1]]
     if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
     const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
     const scale = (i: number): number => {
@@ -385,19 +441,21 @@ export class Globe {
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
-        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
-        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) },
+        uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
-        uRimWide: { value: l.rim.wideGain }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) },
+        uRimWide: { value: new THREE.Vector2(l.rim.nearGain, l.rim.wideGain) }, uRimNear: { value: new THREE.Vector3().fromArray(l.rim.nearTint) }, uRimLobe: { value: new THREE.Vector3().fromArray(l.rim.lobe) }, uRimSpill: { value: 1 }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) }, uLine: { value: new THREE.Vector4(l.line.gain, l.line.width[0], l.line.width[1], l.line.dip) }, uLineDip: { value: new THREE.Vector4(l.line.dipWidth[0], l.line.dipWidth[1], l.line.dipSun[0], l.line.dipSun[1]) }, uLineW: { value: new THREE.Vector3(1, 0, 0) }, uLineSide: { value: new THREE.Vector2().fromArray(l.line.side) }, uLineSun: { value: new THREE.Vector4().fromArray(l.line.sun) }, uLineTight: { value: new THREE.Vector3().fromArray(l.line.dipTight) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
-        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) }, uHaze: { value: new THREE.Vector4() },
-        uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: new THREE.Vector3(0, 0, 2) }, uClosePivot: { value: new THREE.Vector3(0, 1, 0) }, uCloseTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() },
-        uCut: { value: 0 }, uClosePlain: { value: new THREE.Vector4(1, 1, 1, 0) }, uDiag: diagUniform, uGrad: gradUniform,
+        uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
+        uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
+        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
+        uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
+        uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(SHELL, 96, 48), this.material)
@@ -408,30 +466,82 @@ export class Globe {
     ;(this.material.uniforms.uCarry!.value as THREE.Vector3).set(lift, knee, grey)
   }
 
-  close(texture: THREE.Texture, toCamera: THREE.Quaternion, up: THREE.Vector3, pivot: THREE.Vector3, turn: readonly [number, number, number], radius: number, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], far: readonly [number, number], feather: readonly [number, number]): void {
+  close(texture: THREE.Texture, toCamera: THREE.Quaternion, up: THREE.Vector3, radius: number, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], far: readonly [number, number], feather: readonly [number, number]): void {
     const u = this.material.uniforms
     const size = texture.image as unknown as { width: number; height: number }
     u.uClose!.value = texture
     ;(u.uCloseCam!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(toCamera))
     ;(u.uCloseUp!.value as THREE.Vector3).copy(up)
-    ;(u.uClosePivot!.value as THREE.Vector3).copy(pivot)
-    ;(u.uCloseTurn!.value as THREE.Vector4).set(Math.sin(THREE.MathUtils.degToRad(turn[0])), Math.cos(THREE.MathUtils.degToRad(turn[0])), turn[1], turn[2])
     ;(u.uCloseLens!.value as THREE.Vector4).set(radius, focal, center[0], center[1])
     ;(u.uCloseBox!.value as THREE.Vector4).set(box[0], box[1], box[2], box[3])
     ;(u.uCloseFade!.value as THREE.Vector4).set(far[0], far[1], feather[0], feather[1])
     ;(u.uCloseSize!.value as THREE.Vector2).set(size.width, size.height)
   }
 
-  near(weight: number, haze: number, soft: number): void {
-    ;(this.material.uniforms.uCloseW!.value as THREE.Vector3).set(weight, haze, soft)
+  wide(texture: THREE.Texture, alpha: THREE.Texture, toCamera: THREE.Quaternion, eye: THREE.Vector3, focal: number, center: readonly [number, number], box: readonly [number, number, number, number], feather: number, far: readonly [number, number], solid: number, radius: number, sink: number, drop: readonly [number, number], margin: number, blur: readonly [number, number]): void {
+    const u = this.material.uniforms
+    const size = texture.image as unknown as { width: number; height: number }
+    const cone = Math.asin((radius - sink) / eye.length()) - margin
+    ;(u.uWideDrop!.value as THREE.Vector4).set(sink / radius, drop[0], drop[1], Math.tan(cone))
+    ;(u.uWideHold!.value as THREE.Vector3).set(radius * (Math.asin((eye.length() * Math.sin(cone)) / (radius - sink)) - cone), blur[0], blur[1])
+    ;(u.uWideDown!.value as THREE.Vector3).copy(eye).normalize().negate()
+    u.uWide!.value = texture
+    u.uWideAlpha!.value = alpha
+    ;(u.uWideCam!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(toCamera))
+    ;(u.uWideEye!.value as THREE.Vector3).copy(eye)
+    ;(u.uWideLens!.value as THREE.Vector3).set(focal, center[0], center[1])
+    ;(u.uWideBox!.value as THREE.Vector4).set(box[0], box[1], box[2], box[3])
+    ;(u.uWideFade!.value as THREE.Vector4).set(feather, far[0], far[1], solid)
+    ;(u.uWideSize!.value as THREE.Vector2).set(size.width, size.height)
   }
 
-  cut(reach: number, from: number, to: number): void {
+  reach(from: number, to: number, feather: number, over: readonly [number, number]): void {
+    ;(this.material.uniforms.uWideOver!.value as THREE.Vector2).set(over[0], over[1])
+    const fade = this.material.uniforms.uWideFade!.value as THREE.Vector4
+    fade.x = feather
+    fade.y = from
+    fade.z = to
+  }
+
+  mend(at: THREE.Vector3, reach: number, from: number): void {
     const u = this.material.uniforms
-    u.uCut!.value = reach
-    const fade = u.uCloseFade!.value as THREE.Vector4
-    fade.x = from
-    fade.y = to
+    const d = at.clone().normalize()
+    const n = d.dot(u.uSpotN!.value as THREE.Vector3)
+    ;(u.uMend!.value as THREE.Vector4).set(d.dot(u.uSpotE!.value as THREE.Vector3) / n, d.dot(u.uSpotU!.value as THREE.Vector3) / n, reach, from)
+  }
+
+  near(weight: number, sink: number): void {
+    this.material.uniforms.uCloseW!.value = weight
+    this.material.uniforms.uSink!.value = sink
+  }
+
+  haze(sun: readonly number[], fromDeg: number, toDeg: number, gain: readonly number[][], cutDeg: readonly [number, number], calm: readonly [number, number]): void {
+    const u = this.material.uniforms
+    ;(u.uHazeSun!.value as THREE.Vector3).fromArray(sun)
+    ;(u.uHazeGain!.value as THREE.Vector3[]).forEach((v, i) => v.fromArray(gain[i]!))
+    const span = u.uHazeSpan!.value as THREE.Vector4
+    span.x = THREE.MathUtils.degToRad(fromDeg)
+    span.y = THREE.MathUtils.degToRad(toDeg)
+    ;(u.uHazeCut!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(cutDeg[0]), THREE.MathUtils.degToRad(cutDeg[1]), 0)
+    ;(u.uHazeCalm!.value as THREE.Vector3).set(calm[0], calm[1], 0)
+  }
+
+  wash(amount: number, cap: number): void {
+    ;(this.material.uniforms.uWash!.value as THREE.Vector2).set(amount, cap)
+  }
+
+  clear(amount: number, level: number, lift: readonly [number, number], knee: readonly [number, number], calm: number): void {
+    const u = this.material.uniforms
+    ;(u.uHazeSpan!.value as THREE.Vector4).z = amount
+    ;(u.uHazeSpan!.value as THREE.Vector4).w = level
+    ;(u.uHazeCut!.value as THREE.Vector3).z = amount
+    ;(u.uHazeCalm!.value as THREE.Vector3).z = calm
+    ;(u.uLift!.value as THREE.Vector2).set(lift[0], lift[1])
+    ;(u.uKnee!.value as THREE.Vector2).set(knee[0], knee[1])
+  }
+
+  spill(amount: number): void {
+    this.material.uniforms.uRimSpill!.value = amount
   }
 
   night(dim: number, shoulder: number): void {
@@ -439,16 +549,12 @@ export class Globe {
     ;(this.material.uniforms.uShoulder!.value as THREE.Vector2).y = shoulder
   }
 
-  plain(tint: readonly [number, number, number], amount: number): void {
-    ;(this.material.uniforms.uClosePlain!.value as THREE.Vector4).set(tint[0], tint[1], tint[2], amount)
+  plain(tint: readonly [number, number, number]): void {
+    ;(this.material.uniforms.uPlain!.value as THREE.Vector3).set(tint[0], tint[1], tint[2])
   }
 
   silhouette(amp: number): void {
     ;(this.material.uniforms.uSil!.value as THREE.Vector3).x = amp
-  }
-
-  haze(color: readonly [number, number, number], weight: number): void {
-    ;(this.material.uniforms.uHaze!.value as THREE.Vector4).set(color[0], color[1], color[2], weight)
   }
 
   update(sun: THREE.Vector3, glare: THREE.Vector3, lens: number, spin: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void {
@@ -458,6 +564,12 @@ export class Globe {
     u.uGain!.value = gain
     u.uWeight!.value = weight
     ;(u.uRimWidth!.value as THREE.Vector2).set(this.rim[0] * rim, this.rim[1] * rim)
+    const line = u.uLine!.value as THREE.Vector4
+    line.y = this.line[0] * rim
+    line.z = this.line[1] * rim
+    const dip = u.uLineDip!.value as THREE.Vector4
+    dip.x = this.line[2] * rim
+    dip.y = this.line[3] * rim
     u.uEdge!.value = this.edge * Math.max(gradUniform.value, 0.35)
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
@@ -468,9 +580,15 @@ export class Globe {
     ;(u.uGlareW!.value as THREE.Vector3).copy(glare).normalize()
     u.uGlareLens!.value = lens
     const dir = u.uRimDir!.value as THREE.Vector3
+    const lit = this.lit.copy(sun).addScaledVector(axis, -sun.dot(axis))
     dir.copy(glare).addScaledVector(axis, -glare.dot(axis))
-    if (dir.lengthSq() < 1e-6) dir.copy(sun).addScaledVector(axis, -sun.dot(axis))
+    if (dir.lengthSq() < 1e-6) dir.copy(lit)
     dir.normalize()
+    if (lit.lengthSq() > 1e-6) dir.lerp(lit.normalize(), this.toLight).normalize()
+  }
+
+  kick(dir: THREE.Vector3): void {
+    ;(this.material.uniforms.uLineW!.value as THREE.Vector3).copy(dir)
   }
 
   smear(camera: THREE.PerspectiveCamera, now: Pose | null, before: Pose | null, strength: number, jitterX: number, jitterY: number, samples: number): void {
