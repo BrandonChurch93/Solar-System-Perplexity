@@ -1,57 +1,37 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T02:01:57.081Z",
- "head": "ff3865ece630adea0beebdb8d5d6c9a02054a90c",
- "note": "item 6: globe fine structure, hero detail carried into the map past the keep lune",
+ "pushed": "2026-11-22T02:29:57.059Z",
+ "head": "2cb2f2b364f49ace7b81fc67277035e855e723c4",
+ "note": "item 6 done: globe fine structure; main 3d48581 merged",
  "looks": [
   {
-   "time": "2026-11-22T02:01:56.507Z",
-   "file": "20261122020156507-note-F5_3465t2.jpg",
-   "source": "../../../../tmp/F5_3465t2.png",
+   "time": "2026-11-22T02:29:56.521Z",
+   "file": "20261122022956521-note-G4_3567n.jpg",
+   "source": "../../../../tmp/G4_3567n.png",
    "kind": "note",
-   "label": "3465 lower terminator at 2x: hero, before, F5",
+   "label": "3567 final nograin, globe with the hero detail carried past the terminator",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T02:01:55.937Z",
-   "file": "20261122020155937-note-F5_3465t1.jpg",
-   "source": "../../../../tmp/F5_3465t1.png",
+   "time": "2026-11-22T02:29:55.965Z",
+   "file": "20261122022955965-note-G5_3866z1.jpg",
+   "source": "../../../../tmp/G5_3866z1.png",
    "kind": "note",
-   "label": "3465 terminator at 2x: hero, before, with hero detail (F5)",
+   "label": "3866 upper left at 2x, draft: first gain above, kept build below (main 3d48581)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T02:01:08.021Z",
-   "file": "20261122020108021-frame-F5-3866.jpg",
-   "source": "out/work/saturn/F5-3866.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3866, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3866,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "time": "2026-11-22T02:29:55.411Z",
+   "file": "20261122022955411-note-G4_t1.jpg",
+   "source": "../../../../tmp/G4_t1.png",
+   "kind": "note",
+   "label": "3465 terminator at 2x, final: hero, before, after item 6 (main 3d48581 not yet merged)",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-22T02:00:47.759Z",
-   "file": "20261122020047759-frame-F5-3567.jpg",
-   "source": "out/work/saturn/F5-3567.png",
-   "kind": "frame",
-   "label": "saturn.dive frame 3567, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3567,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:00:26.306Z",
-   "file": "20261122020026306-frame-F5-3465.jpg",
-   "source": "out/work/saturn/F5-3465.png",
+   "time": "2026-11-22T02:29:07.137Z",
+   "file": "20261122022907137-frame-G5-3465.jpg",
+   "source": "out/work/saturn/G5-3465.png",
    "kind": "frame",
    "label": "saturn.hold frame 3465, draft tier",
    "stop": "saturn",
@@ -60,12 +40,40 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "26442750f28b11e0"
+   "engine": "1e61fa4049d34863"
   },
   {
-   "time": "2026-11-22T01:52:02.221Z",
-   "file": "20261122015202221-frame-F4-3720.jpg",
-   "source": "out/work/saturn/F4-3720.png",
+   "time": "2026-11-22T02:28:46.571Z",
+   "file": "20261122022846571-frame-G5-3567.jpg",
+   "source": "out/work/saturn/G5-3567.png",
+   "kind": "frame",
+   "label": "saturn.dive frame 3567, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.dive",
+   "frame": 3567,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:28:25.162Z",
+   "file": "20261122022825162-frame-G5-3852.jpg",
+   "source": "out/work/saturn/G5-3852.png",
+   "kind": "frame",
+   "label": "saturn.rise frame 3852, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.rise",
+   "frame": 3852,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:14:01.000Z",
+   "file": "20261122021401000-frame-G3-3720.jpg",
+   "source": "out/work/saturn/G3-3720.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3720, draft tier",
    "stop": "saturn",
@@ -77,19 +85,11 @@
    "engine": "26442750f28b11e0"
   },
   {
-   "time": "2026-11-22T01:47:42.848Z",
-   "file": "20261122014742848-note-F2_3567z.jpg",
-   "source": "../../../../tmp/F2_3567z.png",
+   "time": "2026-11-22T02:01:56.507Z",
+   "file": "20261122020156507-note-F5_3465t2.jpg",
+   "source": "../../../../tmp/F5_3465t2.png",
    "kind": "note",
-   "label": "Dive 3567 draft, terminator at 2x, before above, wrap with fine structure below (item 6, first gain)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T01:47:42.292Z",
-   "file": "20261122014742292-note-t0a_small.jpg",
-   "source": "../../../../tmp/t0a_small.jpg",
-   "kind": "note",
-   "label": "Globe wrap window 0 repainted for fine structure, take a (item 6); only its high pass is used",
+   "label": "3465 lower terminator at 2x: hero, before, F5",
    "stop": "saturn"
   }
  ]
