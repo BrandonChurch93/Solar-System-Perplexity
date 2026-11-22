@@ -593,3 +593,11 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Corrections sent 11:44: patch at 495 is 0.272 against 0.089 on main; far light at 3922 is 0.069 against 0.001 (I had written estimates in the 11:41 mail).
 - Saturn point place main against branch (`/tmp/v/p3-ptab.jpg`): main point visible 3924 to 3928, disc from 3929; branch point visible 3922 to 3931, disc from 3932.
 - Next: the same law in venus.travel (Moon) and jupiter.travel (Titan); measure, render one final each, own commits.
+
+## 12:06 UTC: steady for venus.travel (31a2683) and jupiter.travel (1108185)
+- Mail 11:58 to /root: jobs 4 and 5 (head 68f0089, sheets p5-triton, p5-wide, ura-sun). One slip in it: I wrote the leaving limit as 0.4; the scan allowed 0.44, which is what uranus.travel has now at 4471.
+- Finals main against steady [60, 200] (`out/work/travel/fm` and `f6`, sheets `/tmp/v/p6-moons.jpg`, `p6-wide.jpg`): 3362 Titan is a 37 px streak on main (radius 9 px), a clean disc with steady; Saturn's rings are smeared on main, crisp with the Cassini gap with steady. 1650 the Moon is a faint 162 px smear on main, a dim disc with steady; Earth (radius 12.5 px) is soft on main, crisp with steady.
+- Probe after: Titan's blur 0 to 3365, then 0.4, 1.5, 2.8, 4.2, 5.7, 7.2, 8.5, 9.3 (3373), as before from 3376. The Moon is out of frame from 1651 to about 1666, so its blur there is not seen.
+- Proofs: mid shutter shot hashes of all 5400 frames equal fbb6379 with both lines in; tsc clean, vitest 83, build green, shaderaudit equal to main. Final hashes: 1650 main 482471ae4d0b4439, steady 056a865fe6552488; 3362 main 7717188c337aa750, steady 461091f29691126a. 3362 is the judged frame of jupiter.travel and changes at review and final (Saturn has radius 24.6 px there).
+- Trade to tell the Builder: with steady the moon is sharp but still steps 150 px (Triton) to 300 px (the Moon) a frame; in play that is a few sharp places instead of a smear. A cap on the weight (say 0.7) would leave a blur of about one diameter.
+- Not changed: saturn.travel (two Uranus moons, 15 to 20 px blur at radius 5 to 9 px while Uranus is 95 to 250 px; needs a range of about [100, 300], the Builder has not asked), earth.travel (Phobos fine), mars.travel (Jupiter's moon under 7 px blur), mercury.travel and sun.travel (no moons).
