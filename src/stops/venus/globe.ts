@@ -231,8 +231,10 @@ ${PATCH_LEVELS}
   float eu = atan(dc.x, dc.z) / (2.0 * PI) + 0.5;
   float ev = asin(clamp(dc.y, -1.0, 1.0)) / PI + 0.5;
   float eu2 = fract(eu + 0.5) - 0.5;
-  vec2 ex = vec2(abs(dFdx(eu)) < abs(dFdx(eu2)) ? dFdx(eu) : dFdx(eu2), dFdx(ev)) * grad;
-  vec2 ey = vec2(abs(dFdy(eu)) < abs(dFdy(eu2)) ? dFdy(eu) : dFdy(eu2), dFdy(ev)) * grad;
+  vec2 eux = vec2(dFdx(eu), dFdx(eu2));
+  vec2 euy = vec2(dFdy(eu), dFdy(eu2));
+  vec2 ex = vec2(abs(eux.x) < abs(eux.y) ? eux.x : eux.y, dFdx(ev)) * grad;
+  vec2 ey = vec2(abs(euy.x) < abs(euy.y) ? euy.x : euy.y, dFdy(ev)) * grad;
   vec3 sx = dFdx(vLocal);
   vec3 sy = dFdy(vLocal);
   for (int once = 0; once < (uTaps > 0 ? 1 : 0); once++) {
@@ -321,7 +323,9 @@ ${TAP_LEVELS}
     float lit = 0.015 + 1.5 * min(lum, 1.2) * lift * lift * lift;
     float bn = dot(dc, uBoltN);
     vec2 bq = vec2(dot(dc, uBoltE), dot(dc, uBoltU)) / max(bn, 0.05) * uBoltLook.x;
-    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(textureGrad(uBolt, bq + 0.5, dFdx(bq) * uGrad, dFdy(bq) * uGrad).rgb) * uBoltLook.y : vec3(0.0);
+    vec2 bqx = dFdx(bq) * uGrad;
+    vec2 bqy = dFdy(bq) * uGrad;
+    vec3 painted = bn > 0.3 && max(abs(bq.x), abs(bq.y)) < 0.5 ? inverseFilmic(textureGrad(uBolt, bq + 0.5, bqx, bqy).rgb) * uBoltLook.y : vec3(0.0);
     vec3 glow = vec3(0.0);
     for (int i = 0; i < ${MAX_CELLS}; i++) {
       if (float(i) >= uCellCount) break;
