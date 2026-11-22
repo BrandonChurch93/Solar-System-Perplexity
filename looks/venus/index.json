@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T11:27:44.367Z",
- "head": "5ebfa54a4b02446cafbb6c4bc0664032ca92f094",
- "note": "veil take F5: rise cover sheet on main d5b851f read; dive cover sheet rendering",
+ "pushed": "2026-11-22T11:41:45.047Z",
+ "head": "a387129f4fcabbcede56916028ea26b969dd7737",
+ "note": "veil take F5: both cover sheets on main d5b851f read, ladders at 1309 gone; chain still to run",
  "looks": [
+  {
+   "time": "2026-11-22T11:41:15.335Z",
+   "file": "20261122114115335-note-p5-1309-10-pair.jpg",
+   "source": "../view/p5-1309-10-pair.jpg",
+   "kind": "note",
+   "label": "dive 1309 and 1310 review tier, cover sheet cells: left veil take F4, right take F5: the stepped ladders of bright bits were the veil's texture read, now soft cloud (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T11:41:14.694Z",
+   "file": "20261122114114694-note-c23-dc.jpg",
+   "source": "../view/c23-dc.png",
+   "kind": "note",
+   "label": "dive cover 1309 to 1320 review tier, veil take F5 (not committed yet): 1319 and 1320 the same bytes as take F4; 1309 to 1317 soft streaked cloud, the ladders of bright bits at 1309 and 1310 are gone (branch 5ebfa54 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T11:27:43.245Z",
    "file": "20261122112743245-note-c23-rc.jpg",
@@ -186,22 +202,6 @@
    "source": "../view/c21-dc.png",
    "kind": "note",
    "label": "dive cover 1309 to 1320 review tier, veil take F4: 1309 to 1315 same bytes as take E3d, 1317 to 1320 even mist, no column (branch e31356d plus veil take F4 uncommitted, rendered on main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:59:00.716Z",
-   "file": "20261122085900716-note-c21-rc.jpg",
-   "source": "../view/c21-rc.png",
-   "kind": "note",
-   "label": "rise cover 1555 to 1566 review tier, veil take F4: 1558 to 1566 same bytes as take E3d, 1555 to 1557 softer (branch e31356d plus veil take F4 uncommitted, rendered on main e4b509e, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:27:35.937Z",
-   "file": "20261122082735937-note-f4u.jpg",
-   "source": "../view/f4u.jpg",
-   "kind": "note",
-   "label": "rise entry 1546 to 1556 review tier, veil take F4: the mist thickens evenly, terrain whole (branch 66e9868 plus veil take F4 uncommitted, main e4b509e, engine batch 19)",
    "stop": "venus"
   }
  ]
