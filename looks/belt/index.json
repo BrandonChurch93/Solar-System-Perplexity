@@ -1,59 +1,21 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T02:38:52.430Z",
- "head": "819e07e6641342ea8fce4ef055fd85c5b823343c",
- "note": "belt task 6 on engine batch 17: review sheet, final 2782, crops, hero against the warm band",
+ "pushed": "2026-11-22T02:57:09.738Z",
+ "head": "dfc11e4f986a0b4b89dc05cce9cdec671d793438",
+ "note": "belt task 6 DONE on engine batch 17: sheet, final 2782, crops, exit against the warm band",
  "looks": [
   {
-   "time": "2026-11-22T02:38:46.392Z",
-   "file": "20261122023846392-note-m1-exit-native.jpg",
-   "source": "../view/t6/m1-exit-native.png",
+   "time": "2026-11-22T02:57:09.034Z",
+   "file": "20261122025709034-note-belt-t6-exit-2790-2793.jpg",
+   "source": "../send/belt-t6-exit-2790-2793.jpg",
    "kind": "note",
-   "label": "belt task 6 on batch 17: hero against the warm band at 2790 and 2793, native, review",
+   "label": "belt task 6 on batch 17: hero leaving against the warm band, 2790 and 2793 native",
    "stop": "mars"
   },
   {
-   "time": "2026-11-22T02:38:45.524Z",
-   "file": "20261122023845524-note-belt-t6-crops-2782.jpg",
-   "source": "../send/belt-t6-crops-2782.jpg",
-   "kind": "note",
-   "label": "belt task 6 on batch 17: native crops of hero and near streak at final 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T02:38:44.621Z",
-   "file": "20261122023844621-note-f02782.jpg",
-   "source": "out/work/belt/t6/mf/f02782.png",
-   "kind": "note",
-   "label": "belt task 6 on batch 17: final 2782",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T02:38:43.671Z",
-   "file": "20261122023843671-note-sheet.jpg",
-   "source": "out/work/belt/t6/m1/sheet.jpg",
-   "kind": "note",
-   "label": "belt task 6 on batch 17: review sheet of mars.travel, every third frame",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T02:37:48.986Z",
-   "file": "20261122023748986-frame-f02783.jpg",
-   "source": "out/work/belt/t6/mf/f02783.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2783, final tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2783,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2951458547d8f79f"
-  },
-  {
-   "time": "2026-11-22T02:19:10.004Z",
-   "file": "20261122021910004-frame-f04600.jpg",
-   "source": "out/work/belt/t6proof2-branch/f04600.png",
+   "time": "2026-11-22T02:53:52.292Z",
+   "file": "20261122025352292-frame-f04600.jpg",
+   "source": "out/work/belt/t6det-b/f04600.png",
    "kind": "frame",
    "label": "neptune.hold frame 4600, draft tier",
    "stop": "neptune",
@@ -62,12 +24,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "2f9a9b3a36ec83be"
+   "engine": "2951458547d8f79f"
   },
   {
-   "time": "2026-11-22T02:18:18.496Z",
-   "file": "20261122021818496-frame-f02200.jpg",
-   "source": "out/work/belt/t6proof2-branch/f02200.png",
+   "time": "2026-11-22T02:53:01.713Z",
+   "file": "20261122025301713-frame-f02200.jpg",
+   "source": "out/work/belt/t6det-b/f02200.png",
    "kind": "frame",
    "label": "earth.travel frame 2200, draft tier",
    "stop": "earth",
@@ -76,12 +38,12 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "2f9a9b3a36ec83be"
+   "engine": "2951458547d8f79f"
   },
   {
-   "time": "2026-11-22T02:17:22.792Z",
-   "file": "20261122021722792-frame-f00060.jpg",
-   "source": "out/work/belt/t6proof2-branch/f00060.png",
+   "time": "2026-11-22T02:52:05.927Z",
+   "file": "20261122025205927-frame-f00060.jpg",
+   "source": "out/work/belt/t6det-b/f00060.png",
    "kind": "frame",
    "label": "sun.terrain frame 60, draft tier",
    "stop": "sun",
@@ -90,7 +52,63 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "2f9a9b3a36ec83be"
+   "engine": "2951458547d8f79f"
+  },
+  {
+   "time": "2026-11-22T02:51:35.556Z",
+   "file": "20261122025135556-frame-f02900.jpg",
+   "source": "out/work/belt/t6det-a/f02900.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2900, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2900,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2951458547d8f79f"
+  },
+  {
+   "time": "2026-11-22T02:48:07.714Z",
+   "file": "20261122024807714-frame-f02726.jpg",
+   "source": "out/work/belt/t6mfin-branch/f02726.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2726, final tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2726,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2951458547d8f79f"
+  },
+  {
+   "time": "2026-11-22T02:46:49.399Z",
+   "file": "20261122024649399-frame-f02427.jpg",
+   "source": "out/work/belt/t6mfin-branch/f02427.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2427, final tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2427,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2951458547d8f79f"
+  },
+  {
+   "time": "2026-11-22T02:45:47.259Z",
+   "file": "20261122024547259-frame-f02325.jpg",
+   "source": "out/work/belt/t6mfin-branch/f02325.png",
+   "kind": "frame",
+   "label": "mars.hold frame 2325, final tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2951458547d8f79f"
   }
  ]
 }
