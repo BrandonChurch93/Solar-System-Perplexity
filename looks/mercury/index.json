@@ -1,9 +1,23 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T15:21:55.597Z",
- "head": "a5e5207154f9cece25390c150aed882d8e702c09",
- "note": "Mercury round 34: rise pace taken (a5e5207 on main 64fff6f), G5, G17, G13 running for CUT34",
+ "pushed": "2026-11-22T15:39:45.260Z",
+ "head": "cc67a53a2f1eabdbac8fe48207ffde7353acd93d",
+ "note": "CUT34 proofs: full G13 running on tree a5e5207 (rise pace r6, flare, hand over, leave) on main 22cfb06; no new picture since 15:22",
  "looks": [
+  {
+   "time": "2026-11-22T15:37:08.403Z",
+   "file": "20261122153708403-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:21:54.288Z",
    "file": "20261122152154288-note-r6-speck.jpg",
@@ -27,20 +41,6 @@
    "kind": "note",
    "label": "Mercury rise 992 to 1015 at draft, every frame, tree a5e5207 on main 64fff6f: the taken pace (slowing from 1001 to 1016, cover frames near their old speed)",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:21:48.820Z",
-   "file": "20261122152148820-job-frame-00615.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T15:19:52.752Z",
