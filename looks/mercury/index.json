@@ -1,9 +1,33 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T03:38:44.428Z",
+ "pushed": "2026-11-22T04:02:48.191Z",
  "head": "dccb4e63477467c4c7a48ede16e35302caea783a",
- "note": "Phase 6 polish in progress on main a67c9c34: rise rebuilt (items 3, 4), dive drafts earlier; island under the cover is the open fault",
+ "note": "Phase 6 polish on main a67c9c34: the pale island under both covers is cured at draft; review frames rendering",
  "looks": [
+  {
+   "time": "2026-11-22T04:02:47.039Z",
+   "file": "20261122040247039-note-n-743-744.jpg",
+   "source": "out/work/mercury/p6/h3/n-743-744.jpg",
+   "kind": "note",
+   "label": "Dive swap at draft: 743 (globe) beside 744 (terrain view) (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T04:02:46.210Z",
+   "file": "20261122040246210-note-proof-rise.jpg",
+   "source": "out/work/mercury/p6/h7/proof-rise.jpg",
+   "kind": "note",
+   "label": "Rise cover 988 to 1004 at draft, every frame, Sun place and mean ground colour (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T04:02:45.231Z",
+   "file": "20261122040245231-note-proof-dive.jpg",
+   "source": "out/work/mercury/p6/h7/proof-dive.jpg",
+   "kind": "note",
+   "label": "Dive cover 722 to 744 at draft, every frame, Sun place and mean ground colour: glare island cured, one grade (tree on main a67c9c34, work in progress)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T03:38:35.499Z",
    "file": "20261122033835499-note-look-994-996.jpg",
@@ -26,30 +50,6 @@
    "source": "out/work/mercury/p6/s2/sheet-a.jpg",
    "kind": "note",
    "label": "Rise drafts 988 to 1016, new pullback line with the Sun kept in frame (tree on main a67c9c34, work in progress, uncommitted)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:18:50.189Z",
-   "file": "20261122031850189-note-look.jpg",
-   "source": "out/work/mercury/p6/r1/look.jpg",
-   "kind": "note",
-   "label": "dive 736 and 739 at review tier, 128 samples (tree on main 3d48581, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:18:49.633Z",
-   "file": "20261122031849633-note-proof.jpg",
-   "source": "out/work/mercury/p6/d4/proof.jpg",
-   "kind": "note",
-   "label": "dive cover draft after grade and wide reach changes (tree on main 3d48581, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T03:18:48.959Z",
-   "file": "20261122031848959-note-proof.jpg",
-   "source": "out/work/mercury/p6/d3/proof.jpg",
-   "kind": "note",
-   "label": "dive cover 722 to 746 draft, every frame, Sun place and ground colour (tree on main 3d48581, work in progress)",
    "stop": "mercury"
   },
   {
