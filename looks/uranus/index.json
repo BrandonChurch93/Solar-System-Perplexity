@@ -1,9 +1,37 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T03:24:16.836Z",
- "head": "19b03e1c65a7a414311de56052ae819a6a8a041c",
- "note": "Uranus polish: batch 18 merged (main 0622510), discard rule applied with no frame changed, measure and proofs rendering again",
+ "pushed": "2026-11-22T03:45:13.148Z",
+ "head": "5b64a4c96b268882f115a3f0a84950075499b203",
+ "note": "Uranus: batch 18 measure green (main 0622510, head 19b03e1 + notes), proofs rendering, item 6 face layer in dev",
  "looks": [
+  {
+   "time": "2026-11-22T03:44:18.960Z",
+   "file": "20261122034418960-job-frame-04436.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4436, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T03:34:04.720Z",
+   "file": "20261122033404720-job-frame-04275.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.terrain frame 4275, draft tier, texels view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4275,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T03:24:15.930Z",
    "file": "20261122032415930-note-pair-4137.jpg",
@@ -26,22 +54,6 @@
    "source": "../../../../tmp/t5-proof-M.png",
    "kind": "note",
    "label": "Item 5 proof M, 4290 final at native size: round 3 left, new right (rendered on main 3d48581, same bytes on main 0622510)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T03:24:13.485Z",
-   "file": "20261122032413485-note-t5-proof-L.jpg",
-   "source": "../../../../tmp/t5-proof-L.png",
-   "kind": "note",
-   "label": "Item 5 proof L, 4290 final at native size: round 3 left, new right (rendered on main 3d48581, same bytes on main 0622510)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-22T03:24:12.518Z",
-   "file": "20261122032412518-note-pair18-4436.jpg",
-   "source": "../../../../tmp/pair18-4436.png",
-   "kind": "note",
-   "label": "4436 final: left before the batch 17 merge, right on main 0622510 (batch 18, rise lift 0.74), head 19b03e1",
    "stop": "uranus"
   },
   {
