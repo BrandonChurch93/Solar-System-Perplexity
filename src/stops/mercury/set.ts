@@ -251,7 +251,9 @@ export const createSet: SetFactory = async (ctx) => {
         glareSun.copy(sunShown)
         shrink = Math.max(ramp(tanFrom, tanTo, tanHalf), 1 - smoother(ramp(lift.grow[0], lift.grow[1], fromRise)))
         plate = smoother(ramp(lift.plate[0], lift.plate[1], fromRise))
-        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise))
+        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise)) * look.flare.after
+      } else if (leaving) {
+        ghosts = look.flare.after
       }
       glare.update(on ? glare.bloom(first ? fromDive : fromRise, first ? 'dive' : 'rise') : 0, glareSun, view.camera, gain, aspect, state.time)
       const skyWeight = diving ? smoother(ramp(look.sky.dive[0], look.sky.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.rise[0], look.sky.rise[1], fromRise)) : 0
@@ -334,6 +336,9 @@ export const createSet: SetFactory = async (ctx) => {
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
       const ghost = shown * clear * body * (1 + 2 * (breath - 1)) * ghosts
+      const onBody = mix(look.flare.onBody[0], look.flare.onBody[1], diving ? smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u)) : rising || leaving ? 1 : 0)
+      lens.shade(world.position, view.camera, onBody)
+      streak.shade(world.position, view.camera, onBody)
       lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
