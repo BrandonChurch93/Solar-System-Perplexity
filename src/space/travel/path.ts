@@ -23,9 +23,10 @@ export interface TravelLook {
   pin: [number, number]
   pinEase: [number, number]
   turnRun: [number, number]
+  turnKnee: [number, number, number]
 }
 
-const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0] }
+const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: [2, 2], rollSpan: [0, 0.97], bowDeg: 0, grow: [2, 3], swing: [0.1, 1], offset: [0.1, 1], settle: 0.5, clearDeg: 2, passBy: 0.3, passPower: 2, passKnee: 1, follow: 0, cruise: 0.3, early: 0.06, point: 0, growRun: [0, 0, 0], pin: [0, 0], pinEase: [2, 2], turnRun: [0, 0], turnKnee: [0, 0, 0] }
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0 },
@@ -94,6 +95,26 @@ export function slowEase(lead: number, tail: number): (t: number) => number {
   }
 }
 
+export function kneeEase(lead: number, from: number, at: number, level: number): (t: number) => number {
+  const up = (x: number): number => x * x * x * x * (1 - 0.6 * x)
+  const fall = at - from
+  const glide = 1 - at
+  const slope = (-2 * level * fall) / glide
+  const drop = (t: number): number => {
+    const t2 = t * t
+    const t3 = t2 * t
+    const t4 = t3 * t
+    return fall * (t4 / 2 - t3 + t + level * (t3 - t4 / 2) + slope * (t4 / 4 - t3 / 3))
+  }
+  const before = 0.4 * lead + from - lead
+  const total = before + drop(1) + (level * glide) / 3
+  return (t) => {
+    const x = Math.min(Math.max(t, 0), 1)
+    const done = x < lead ? lead * up(x / lead) : x < from ? x - 0.6 * lead : x < at ? before + drop((x - from) / fall) : before + drop(1) + (level * glide * (1 - Math.pow((1 - x) / glide, 3))) / 3
+    return done / total
+  }
+}
+
 const span = (r: [number, number], t: number): number => Math.min(Math.max((t - r[0]) / (r[1] - r[0]), 0), 1)
 
 export class TravelShape {
@@ -111,7 +132,7 @@ export class TravelShape {
 
   constructor(id: string, over: Partial<TravelLook> = {}) {
     this.look = { ...travelLook(id), ...over }
-    this.panEase = this.look.turnRun[0] > 0 ? slowEase(this.look.turnRun[0], this.look.turnRun[1]) : this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.pan[0], this.look.pan[1])
+    this.panEase = this.look.turnKnee[1] > 0 ? kneeEase(this.look.turnRun[0], this.look.turnKnee[0], this.look.turnKnee[1], this.look.turnKnee[2]) : this.look.turnRun[0] > 0 ? slowEase(this.look.turnRun[0], this.look.turnRun[1]) : this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.pan[0], this.look.pan[1])
     this.rollEase = this.look.cruise > 0 ? cruiseEase(this.look.cruise) : betaEase(this.look.roll[0], this.look.roll[1])
     this.pinEase = betaEase(this.look.pinEase[0], this.look.pinEase[1])
     const run = this.look.growRun
