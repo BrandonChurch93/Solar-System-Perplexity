@@ -1,0 +1,49 @@
+{
+ "critic": "R5",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-01.png",
+   "where": "Mercury row: frames 615 and 717 upper right, 870 upper left, 1016 upper right; Venus frame 1440 right horizon versus 1185",
+   "what": "The sun does not shrink with distance and the light does not follow it. At Mercury it is a half-frame disk in the upper right, then a small flare in the upper left on the surface, then a half-frame disk in the upper right again. Venus is keyed from the upper left, then the cloud skim puts a still-large sun on the right horizon.",
+   "fix": "Lock one light axis per stop and scale the solar disk to distance, not to the lens. The Mercury surface pass must see the same sun, same side, smaller than the solar close-ups and larger than Venus."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "hold grid, Mercury upper middle through Neptune lower right",
+   "what": "Stop to stop, the sun is not shown shrinking. It is a huge disk only at Mercury, absent from Venus through Uranus, then a pinpoint at Neptune. Key light is upper right at Mercury, upper left for the next six holds, then upper right again at Neptune.",
+   "fix": "Put a steadily smaller sun in each hold, or keep every planet lit from one side that matches that sun."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "second row, ocean frame 2010, then Earth portrait 2156 on the right",
+   "what": "After the low pass over the ocean, the cut returns to the same Americas orbital portrait already held at 1755 and 1857. The journey goes in and then back out.",
+   "fix": "Leave Earth outward after the ocean pass. Do not reprint the orbital portrait."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "bottom-left frame 5362 against wide frame 5235 above right",
+   "what": "The voyage builds outward, but the ending does not land. Frame 5362 is the same Milky Way pull-away as 5235 at about half the brightness, a dissolve frozen mid-fade, and the same departure move used at the other stops.",
+   "fix": "End on one resolved frame, a completed fade or a new last composition, not a darkened copy of the previous shot."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "Jupiter top row, Milky Way upper right, versus departure 3296 and Saturn speck 3352",
+   "what": "The galactic band is strong behind Jupiter, gone on the departure and the Saturn approach, then back behind the close Saturn view. The sky does not stay one sky.",
+   "fix": "Hold the same starfield and galactic band across the transit, or move the camera enough that the sky change is earned."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "all nine holds, especially Neptune lower right",
+   "what": "Signature dives differ, but the spine of every stop is the same centered full-disk portrait and pull-away. Neptune is the only hold cropped off the lower left, so the catalog lens breaks on the last stop.",
+   "fix": "Change the hold angle per stop, and frame Neptune with the same centered full-disk lens as the others."
+  }
+ ]
+}

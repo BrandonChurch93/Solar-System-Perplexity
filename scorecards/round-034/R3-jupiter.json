@@ -1,0 +1,85 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops J and K (northern polar region and upper globe, also visible in image-05.png and image-06.png crops A, B, D)",
+      "what": "Jupiter's cloud surface softens into heavy directional blur and coarse diagonal streaks across the closer second frame, with stretched and mushy polar texels at native crop scale",
+      "fix": "use a higher-resolution polar-corrected planetary texture (or cube-sphere/multi-tile mapping) and eliminate surface motion or temporal smearing so cloud filaments stay crisp at close range"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop F lower-right Milky Way cloud (and continuing vertically down the left third of crop W in image-08.png)",
+      "what": "a straight vertical tile seam cuts through the Milky Way star cloud where two sky-map edges meet with an abrupt brightness jump",
+      "fix": "blend or re-project the environment sky map across tile boundaries so no hard vertical mosaic seam appears in the background"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crops B, C, F, G, H sky background (and matching sky crops in image-03.png, image-06.png, and image-08.png)",
+      "what": "at native size the Milky Way backdrop shows visible pixel blocks, compression chroma noise, and blocky multi-pixel star blobs",
+      "fix": "replace the low-resolution sky panorama with a higher-resolution uncompressed starfield and dust map (or procedural sub-pixel stars over smooth high-res nebulosity) with proper filtering"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop A moon Io and cast shadow (also image-03.png crop O, image-06.png crop I, and image-07.png crop P)",
+      "what": "Io's surface texture is visibly pixelated and blurry in the closer frame, with a stair-stepped silhouette, a dark rim artifact on the upper-right edge, and an aliased cast-shadow edge on Jupiter",
+      "fix": "increase Io's texture map resolution and sphere subdivision, supersample the moon limb, and soften/anti-alias the cast shadow penumbra on the cloud deck"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crop J upper limb (also lower limb in image-04.png crop S and image-08.png crop T, bright left limb in image-02.png crops B/D, and dark right limb in image-02.png crop C and image-06.png crop E)",
+      "what": "the bright left atmospheric glow clips to flat white and then disappears abruptly toward both poles, leaving a bare, jagged stair-stepped sphere edge against space and across the Milky Way",
+      "fix": "extend a smooth, unclipped atmospheric scattering falloff continuously around the lit limb to the poles and apply higher geometric anti-aliasing along both sunlit and dark silhouettes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop C unlit night side of Jupiter",
+      "what": "faint ambient light leaks onto the dark side past the terminator, revealing isolated cyan concentric storm rings floating in the shadow",
+      "fix": "clamp night-side ambient illumination to zero past the terminator falloff so unlit cloud albedo does not leak through"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "tile A, Great Red Spot collar and pale belts; same dayside in image-13.png",
+      "what": "the belts are a little airbrushed: medium swirls are smooth and fine grain is thin, so the disk looks filtered next to the storm crops",
+      "fix": "add finer filament and grain in the pale zones and around the spot so the native crops stay sharp"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "sky tiles B, D, F, and H, the brightest stars",
+      "what": "the brightest stars are soft round disks about 5–7 px across with flat clipped centers and a clean radial falloff, so they read as point sprites",
+      "fix": "shrink bright stars to a 1–2 px core, break the perfect disk, and do not clip a flat white center"
+     }
+    ]
+   }
+  }
+ ]
+}

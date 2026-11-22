@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "sky above the limb, frames 3265–3274",
+   "what": "The star field fades almost completely to black around 3269–3271, then the Milky Way returns from the left. The sky looks switched out during the cover rather than carried through the climb.",
+   "fix": "Keep one world-space star field through the cover and match its rotation, exposure, and shutter blur on both sides."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "curved limb and red storm, frames 3021–3030",
+   "what": "The opaque beige blur erases the storm just as the limb swings into a descending diagonal; the detailed vortex and blue rim then resolve in its place. The silhouette moves smoothly, but the same cloud feature is hard to follow across the cover.",
+   "fix": "Track the same storm feature and horizon through both views, and shorten or localize the haze so a low-contrast landmark survives the fastest frames."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "near cloud ridges below the storm eye, frames 3158–3239",
+   "what": "The foreground ridges spread outward with the widening storm eye while the horizon moves relatively little. There is some depth, but much of the approach reads as scaling the cloud image rather than flying past distinct layers.",
+   "fix": "Give the nearest cloud ridges more lateral parallax relative to the eye and add subtle independent advection between cloud layers."
+  }
+ ]
+}

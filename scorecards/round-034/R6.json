@@ -1,0 +1,14 @@
+{
+ "critic": "R6",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "image-05.png",
+   "where": "crest of the main solar loop",
+   "what": "At the peak flash, several bright strands merge into a white band at phone size, briefly obscuring the filament detail that makes the growth rewarding.",
+   "fix": "Tame the peak highlights just enough to keep a few strands distinct while preserving the flash and the taller arc that follows."
+  }
+ ]
+}
