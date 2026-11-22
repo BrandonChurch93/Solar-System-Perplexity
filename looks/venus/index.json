@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T10:01:48.996Z",
- "head": "052ba8b0f8723435d1ee271f93800cb32c55c00e",
- "note": "10:02 UTC: veil take F4 committed (1d3704c) and proved on engine batch 20 (main c479536): judged 1185, 1287, 1440 same bytes, chain green; full dive and rise sheets rendering",
+ "pushed": "2026-11-22T10:14:27.322Z",
+ "head": "08b2e2cc84759d3fe8f986bdece36633d8d871e1",
+ "note": "10:16 UTC: full dive and rise sheets on engine batch 20 (main c479536), read frame by frame",
  "looks": [
+  {
+   "time": "2026-11-22T10:14:26.725Z",
+   "file": "20261122101426725-note-s23-dive.jpg",
+   "source": "../view/s23-dive.png",
+   "kind": "note",
+   "label": "venus.dive full sheet 1260 to 1349 review tier (branch 08b2e2c, main c479536, engine batch 20)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T10:14:26.139Z",
+   "file": "20261122101426139-note-s23-rise.jpg",
+   "source": "../view/s23-rise.png",
+   "kind": "note",
+   "label": "venus.rise full sheet 1530 to 1604 review tier (branch 08b2e2c, main c479536, engine batch 20)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T10:01:48.389Z",
    "file": "20261122100148389-note-g4u.jpg",
@@ -162,22 +178,6 @@
    "source": "../view/c20-rc.png",
    "kind": "note",
    "label": "rise cover 1555 to 1566 review tier, veil take E3d: soft streaks, no planks (branch a57e642 plus veil take E3d uncommitted, main 6f82d7d, engine batch 19)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:07:42.381Z",
-   "file": "20261122070742381-note-e3r-orbit.jpg",
-   "source": "../view/e3r-orbit.jpg",
-   "kind": "note",
-   "label": "venus rise 1560 to 1566 review tier, veil take E3d not committed yet (branch d998482 plus working tree, on main a87578e): the orbit side after the swap, soft streaks, no blades",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T07:07:41.833Z",
-   "file": "20261122070741833-note-e3r-part.jpg",
-   "source": "../view/e3r-part.jpg",
-   "kind": "note",
-   "label": "venus rise 1549 to 1559 review tier, veil take E3d not committed yet (branch d998482 plus working tree, on main a87578e, batch 19): mist thickens over a terrain that stays whole, then soft streaks; no planks, no decals",
    "stop": "venus"
   }
  ]
