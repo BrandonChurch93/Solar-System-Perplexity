@@ -448,7 +448,7 @@ export class FilmDirector implements Director {
         const off = THREE.MathUtils.radToDeg(this.travelCamera(index, seg.start + (k / steps) * (seg.end - seg.start)).quaternion.angleTo(end))
         if (off > OPEN.patchSettleDeg) from = (k + 1) / steps
       }
-      span = [Math.min(from, OPEN.patchDone - OPEN.patchSpan), OPEN.patchDone]
+      span = [Math.min(from, (OPEN.patchFrom as Record<string, number>)[this.plans[index]!.id] ?? OPEN.patchDone - OPEN.patchSpan), OPEN.patchDone]
       this.settled.set(index, span)
     }
     return span
