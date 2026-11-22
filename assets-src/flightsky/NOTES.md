@@ -225,3 +225,32 @@ Jobs from the Builder, one commit each, flight frames only: 1 D and A, stars thi
 - Star groups (6eb06cef): the "stamped" clumps at 3352 are the groups of the deep set. Now 340 groups, radius 0.25 to 5 degrees uniform in log (skew 1), 12 to 340 stars, member factor 0.3 to 1.7 (was 480 groups, 0.2 to 3.2, skew 1.4, factor 0.6 to 1.4). The stream `flight deep` is consumed differently, so every deep star moves.
 - Blue glow patches (6eb06cef): the round bluish patch at 3922 and the smooth haze at 3352 are the lobes of the flight glow map (512 by 256, Gaussian lobes). The map is now times `1 - m + 2 m coarse(f1) (0.4 + 0.6 coarse(f2))`, `clouds.mottle` [0.75, 9, 20], at build time, no render cost.
 - Cost at the final tier, main 84b0ea4a to tag h: 3922 123 to 163 s, 5235 60 to 68, 4492 132 to 171, 2212 114 to 137, 1072 112 to 127, 3352 91 to 102. Tests on 3352: star law off 104 s, detail off 103 s, so the cost on a frame without band is not those; drafts cost the same on both trees (30.5 s). The cost sits in texture taps of the sky pass (noise cube, strip rings).
+
+### Proofs for CUT34 (tag k, tree 734e7a91, 14:40 to 15:20 UTC)
+- Finals against main 84b0ea4a (`/tmp/fs/p6/<f>-m33.png` and `<f>-k.png`), pixels that differ, mean level main to head, median (r, g, b) main to head, pixels at 250 or more main to head:
+  - 3922: 1677455, 24.43 to 27.65, (11, 18, 24) to (14, 20, 25), 2256 to 1788, 123 s to 160 s.
+  - 4492: 1874524, 37.46 to 42.54, (17, 24, 30) to (24, 28, 32), 4167 to 3106, 132 s to 168 s.
+  - 5235: 1507081, 28.01 to 32.01, (13, 19, 25) to (17, 23, 27), 3460 to 2499, 60 s to 67 s.
+  - 2212: 1394290, 13.82 to 14.93, (6, 12, 16) to (7, 12, 16), 1038 to 869, 114 s to 137 s.
+  - 1072: 526236, 12.75 to 12.72, median equal, 1189 to 932, 112 s to 125 s.
+  - 3352: 1437148, 11.95 to 11.37, (6, 11, 14) to (6, 10, 14), 771 to 605, 91 s to 100 s.
+- Stop finals 2325 and 2427 equal main byte for byte. Eleven stop drafts equal main (2325 2427 2580 615 1440 2010 3150 3720 4290 4860 4605). Saturn hold 3465 and dive 3567 drafts equal main; the rise 3866 moves (lift 0.74, flight terms).
+- Drafts of 495, 1642, 2782, 5085, 5362 looked at: no fault seen.
+
+### Saturn stop sky, MAIL 170 (15:00 to 15:10 UTC), tried and taken out
+- The sky at the dive 3567 is Saturn's own plates (`sky-hold.webp`, `sky-terrain.webp`, both 3520 by 1980, owner the Saturn stop). The orange blobs are painted in the plate, 6 to 10 px across.
+- Trial: a per plate `wear` value (texels per pixel thresholds) that swaps the plate for its star free 13 tap estimate where the plate is magnified. With thresholds [0.8, 1.15] nothing fires at 3567: the plate has more than 1.15 texels per pixel there, so it is not stretched by sampling, the softness is its content. Forced fully on, 558899 pixels move, the blobs stay and the plate only gets softer. Reverted, nothing committed.
+- So hold and dive are not answered by a commit of mine. The rise 3866 gets the flight detail layer through the lift. A cure needs a new plate or the plate star pass of the Saturn stop.
+
+### Neptune arrival swing 0 (commit 88e925cf on agent/neptune), MAIL 173
+- Rendered on top of this branch, final tier: 4436 mean 38.63, median (19, 29, 32), 2024 pixels at 250 or more; the band crosses behind the upper half of Uranus from lower left to upper right, detail layer and lanes hold, no edge, no Sun. 4492 mean 30.61, median (16, 22, 28); the band sits only in the lower right, the rest is star field with the mottled blue glow as a faint haze in the upper centre. The lanes the Neptune builder saw at 4 times the level in the upper left are there on this branch too, about 1 level, not seen at normal exposure.
+- With swing 0 the proofs of the band edge and of the baked blobs for 4492 lose their frame (the core is out of it); they still stand at 3922 and 5235.
+
+### The wide Sun at Uranus and Neptune (R5 severe, frames 4290 and 4605), tested, not offered
+- Trial, not committed: `flightStrip.sun.glare` [0.3, 0.55] turns the tight Sun law on in the stops with a Sun under 6 px. Eleven stop drafts: only 4290, 4860 and 4605 move, Mars 2580 and the rest keep their bytes.
+- 4290: 84427 pixels move by at most 3 levels. The wide orb there is not drawn by the Sun block of the sky pass. 4605: the flare keeps its width and its centre turns into a dark dot. 4860: 1922 pixels by 1 level.
+- So the orb the critic names is the flare of those stops, not the sky's Sun. The gate stays at [0.7, 1.6].
+
+### CUT34 (sent about 15:30 UTC on the VM clock)
+- READY on the merge of this notebook commit with origin/main. Separable commits: 8f84206d, 64fd4698, d7ced701, 84ad5ea2, aa1e700e, c6782b81, 6eb06cef.
+- Not in it: the far point lines for `src/bodies/farpoint.ts` (FOREIGN LINES in a message), anything for the Saturn plates, anything for the stop flares.
