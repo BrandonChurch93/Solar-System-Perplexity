@@ -1,9 +1,37 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T13:23:40.034Z",
- "head": "b8ac1a1a5fe843aed193abc7cdb465cf31f6bc4c",
- "note": "CUT34 work: every frame watch of mercury.travel 1073 to 1090",
+ "pushed": "2026-11-22T13:40:04.199Z",
+ "head": "9ced89595809f21cc6dbd623999733811aec6122",
+ "note": "CUT34 work: every frame watch of uranus.travel 4492 to 4505, finals of 1072, 1642, 2212",
  "looks": [
+  {
+   "time": "2026-11-22T13:40:03.001Z",
+   "file": "20261122134003001-note-g8-finals-a.jpg",
+   "source": "../../../../tmp/v/g8-finals-a.jpg",
+   "kind": "note",
+   "label": "finals 1072, 1642, 2212 on main 0ac6d2a0 plus the branch, full frame above, native crop below"
+  },
+  {
+   "time": "2026-11-22T13:33:55.958Z",
+   "file": "20261122133355958-note-w-ura-native.jpg",
+   "source": "../../../../tmp/v/w-ura-native.jpg",
+   "kind": "note",
+   "label": "uranus.travel 4496, 4497, 4502, 4503 native crops"
+  },
+  {
+   "time": "2026-11-22T13:33:55.403Z",
+   "file": "20261122133355403-note-w-ura-b.jpg",
+   "source": "../../../../tmp/v/w-ura-b.jpg",
+   "kind": "note",
+   "label": "uranus.travel review every frame 4500 to 4505"
+  },
+  {
+   "time": "2026-11-22T13:33:54.828Z",
+   "file": "20261122133354828-note-w-ura-a.jpg",
+   "source": "../../../../tmp/v/w-ura-a.jpg",
+   "kind": "note",
+   "label": "uranus.travel review every frame 4492 to 4500, new window (trial tree, same shots as the head)"
+  },
   {
    "time": "2026-11-22T13:23:39.123Z",
    "file": "20261122132339123-note-w-merc-native.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/2782-final-ab.jpg",
    "kind": "note",
    "label": "2782 final main against agent/travel-polish"
-  },
-  {
-   "time": "2026-11-22T13:11:42.849Z",
-   "file": "20261122131142849-note-t1-native.jpg",
-   "source": "../../../../tmp/v/t1-native.jpg",
-   "kind": "note",
-   "label": "trial review native crops of Venus and Neptune"
-  },
-  {
-   "time": "2026-11-22T13:11:42.302Z",
-   "file": "20261122131142302-note-t1-4492.jpg",
-   "source": "../../../../tmp/v/t1-4492.jpg",
-   "kind": "note",
-   "label": "trial final 4492"
-  },
-  {
-   "time": "2026-11-22T13:11:41.682Z",
-   "file": "20261122131141682-note-t1-1072.jpg",
-   "source": "../../../../tmp/v/t1-1072.jpg",
-   "kind": "note",
-   "label": "trial final 1072"
-  },
-  {
-   "time": "2026-11-22T13:11:41.160Z",
-   "file": "20261122131141160-note-t1-ura-ab.jpg",
-   "source": "../../../../tmp/v/t1-ura-ab.jpg",
-   "kind": "note",
-   "label": "uranus.travel review main above trial"
   }
  ]
 }
