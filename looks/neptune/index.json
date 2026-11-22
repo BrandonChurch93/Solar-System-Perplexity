@@ -1,9 +1,31 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T02:30:09.882Z",
- "head": "170a6b301363ebc19b753396786062413aa4dc49",
- "note": "main 3d48581 merged (170a6b3); cover sheets rendering again on the merged tree; cirrus trial 2 looked at and not kept",
+ "pushed": "2026-11-22T02:40:29.964Z",
+ "head": "5433fb67e60f4d4ba5a3c01d4c4a980f9e3487bd",
+ "note": "main 3d48581 in the tree (170a6b3): dive cover sheet rendering at review, 4738 in and clean; far side cirrus take 5 and Triton light prepared offline",
  "looks": [
+  {
+   "time": "2026-11-22T02:38:57.717Z",
+   "file": "20261122023857717-frame-f04738-review.jpg",
+   "source": "out/work/sheets/.frames-qWjF9j/f04738-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4738, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4738,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:38:50.977Z",
+   "file": "20261122023850977-note-fit-preview-hero.jpg",
+   "source": "out/work/nep/p6/tri/fit-preview-hero.png",
+   "kind": "note",
+   "label": "Triton at 4605: approved hero / film on 170a6b3 (main 3d48581) / model prediction with the fitted light (offline, not rendered yet)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T02:30:03.152Z",
    "file": "20261122023003152-note-s-4605.jpg",
@@ -69,28 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:19:40.553Z",
-   "file": "20261122021940553-note-terr3.jpg",
-   "source": "../../../../tmp/terr3.jpg",
-   "kind": "note",
-   "label": "terrain review stills 4800, 4860, 4930: the eye moves 163, 140 px, the foreground band grows 1.5 times (motion check, no change)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T02:15:28.512Z",
-   "file": "20261122021528512-frame-f04739-review.jpg",
-   "source": "out/work/sheets/.frames-4a3k9Q/f04739-review.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4739, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4739,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
   }
  ]
 }
