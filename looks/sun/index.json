@@ -1,9 +1,65 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T06:26:00.729Z",
- "head": "96cf078138d949db0aaa595507ed292d08ec1251",
- "note": "Sun hook surge (round 31 section F): before strip and a draft strip; finals rendering. main 2b50ee2, agent/sun-hook 96cf078",
+ "pushed": "2026-11-22T06:51:23.481Z",
+ "head": "c3c2118bfc099ebbae5c5470e7fc6d18d5701a76",
+ "note": "Sun hook surge (round 31 section F): before and after strips at the final tier, finals of 0 and 60, native crops. main 2b50ee2, agent/sun-hook 6e33a5d (c3c2118 same bytes)",
  "looks": [
+  {
+   "time": "2026-11-22T06:50:42.416Z",
+   "file": "20261122065042416-note-hook-native-arch-f00045.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00045.jpg",
+   "kind": "note",
+   "label": "Hook surge, frame 45, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:41.899Z",
+   "file": "20261122065041899-note-hook-native-arch-f00030.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00030.jpg",
+   "kind": "note",
+   "label": "Hook surge, frame 30, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:41.369Z",
+   "file": "20261122065041369-note-hook-native-arch-f00023.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00023.jpg",
+   "kind": "note",
+   "label": "Hook surge, frame 23, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:40.838Z",
+   "file": "20261122065040838-note-hook-native-arch-f00015.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-native-arch-f00015.jpg",
+   "kind": "note",
+   "label": "Hook surge, frame 15, final tier, the arch at native size. main 2b50ee2, agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:40.299Z",
+   "file": "20261122065040299-note-hook-final-f00000-fullsize.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-final-f00000-fullsize.jpg",
+   "kind": "note",
+   "label": "Hook surge, final tier still, frame 0, full size: byte equal to main 2b50ee2. agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:39.744Z",
+   "file": "20261122065039744-note-hook-final-f00060-fullsize.jpg",
+   "source": "out/work/sun/hook/send-hook/hook-final-f00060-fullsize.jpg",
+   "kind": "note",
+   "label": "Hook surge, final tier still, frame 60 (end of the hook), full size: the right foot still flares from the landing. main 2b50ee2, agent/sun-hook 6e33a5d",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T06:50:39.061Z",
+   "file": "20261122065039061-note-hook-after-strip-final-400px-6e33a5d.jpg",
+   "source": "out/work/sun/hook/hook-after-strip-final-400px-6e33a5d.jpg",
+   "kind": "note",
+   "label": "Hook surge (round 31 section F), AFTER: frames 0 8 15 23 30 38 45 53 60, final tier, each 400 px wide. Frame 0 is byte equal to main. main 2b50ee2, agent/sun-hook 6e33a5d (c3c2118 gives the same bytes)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T06:26:00.069Z",
    "file": "20261122062600069-note-hook-draft6-strip-400px.jpg",
@@ -66,62 +122,6 @@
    "source": "out/work/sun/h1p/z10-f90-right-foot-approved-film-ungraded-model-zoom3.png",
    "kind": "note",
    "label": "Item 7, right foot at frame 90, 3 times zoom: approved, film final (item 4 tree), offline model without the loops grade row. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:54.907Z",
-   "file": "20261122055554907-note-z10-f90-left-foot-approved-film-ungraded-model-zoom3.jpg",
-   "source": "out/work/sun/h1p/z10-f90-left-foot-approved-film-ungraded-model-zoom3.png",
-   "kind": "note",
-   "label": "Item 7, left foot at frame 90, 3 times zoom: approved, film final (item 4 tree), offline model without the loops grade row. The approved bloom veils the cells, the film has crisp yellow cells. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:38:14.467Z",
-   "file": "20261122053814467-note-z4-f0-right-of-arch-film-gain3.jpg",
-   "source": "out/work/sun/h1p/z4-f0-right-of-arch-film-gain3.png",
-   "kind": "note",
-   "label": "Item 7, frame 0 final at 3 times gain, right of the arch: the dark ribbon the critic named. Traced: the sky card is darker inside the arch's mask and keeps the arch's warm halo outside it; at frame 0 the arch stands elsewhere, so both show beside it. Not cured yet. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:38:13.587Z",
-   "file": "20261122053813587-note-y2-fine-source-plain-mask-over-hero.jpg",
-   "source": "out/work/sun/h1p/y2-fine-source-plain-mask-over-hero.jpg",
-   "kind": "note",
-   "label": "Item 5b, offline study: the plain granulation of the approved hero that feeds the finer layer (spots and plage masked out so no small starbursts are copied). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:38:12.199Z",
-   "file": "20261122053812199-note-y3-left-uhd-scale.jpg",
-   "source": "out/work/sun/h1p/y3-left-uhd-scale.png",
-   "kind": "note",
-   "label": "Item 5b, offline study, not built: left limb at twice film size: approved, the map as it is, and a finer cell layer (the hero's own fine structure at half size) added toward the limb at two strengths. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:41.825Z",
-   "file": "20261122053041825-note-u9-f247-pore-six-zoom4.jpg",
-   "source": "out/work/sun/h1p/u9-f247-pore-six-zoom4.png",
-   "kind": "note",
-   "label": "Item 5a, the variants at draft 247 at 4 times zoom: as committed before (gv0), four tries, push off (goff); gv5 kept. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:41.060Z",
-   "file": "20261122053041060-note-f00360.jpg",
-   "source": "out/work/sun/rf17/f00360.png",
-   "kind": "note",
-   "label": "Final tier still, frame 360, item 5a (0.5 percent of the pixels differ from before by more than 1 level). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:30:39.946Z",
-   "file": "20261122053039946-note-f00247.jpg",
-   "source": "out/work/sun/rf17/f00247.png",
-   "kind": "note",
-   "label": "Final tier still, frame 247, item 5a. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
    "stop": "sun"
   },
   {
