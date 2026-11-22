@@ -1,9 +1,30 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T13:11:43.966Z",
- "head": "a0a13eb08c3780e3a1b2f8102d5d7f3560efe9ce",
- "note": "trial for items 79 and 80: Venus and Neptune as small discs at 1072 and 4492",
+ "pushed": "2026-11-22T13:23:40.034Z",
+ "head": "b8ac1a1a5fe843aed193abc7cdb465cf31f6bc4c",
+ "note": "CUT34 work: every frame watch of mercury.travel 1073 to 1090",
  "looks": [
+  {
+   "time": "2026-11-22T13:23:39.123Z",
+   "file": "20261122132339123-note-w-merc-native.jpg",
+   "source": "../../../../tmp/v/w-merc-native.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1079 to 1082 native crops, sky slides 95 px a frame under the pinned disc"
+  },
+  {
+   "time": "2026-11-22T13:23:38.247Z",
+   "file": "20261122132338247-note-w-merc-b.jpg",
+   "source": "../../../../tmp/v/w-merc-b.jpg",
+   "kind": "note",
+   "label": "mercury.travel review every frame 1082 to 1090"
+  },
+  {
+   "time": "2026-11-22T13:23:37.002Z",
+   "file": "20261122132337002-note-w-merc-a.jpg",
+   "source": "../../../../tmp/v/w-merc-a.jpg",
+   "kind": "note",
+   "label": "mercury.travel review every frame 1073 to 1081, new window (trial tree, same shots as the head)"
+  },
   {
    "time": "2026-11-22T13:11:43.395Z",
    "file": "20261122131143395-note-2782-final-ab.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/t1-ura-ab.jpg",
    "kind": "note",
    "label": "uranus.travel review main above trial"
-  },
-  {
-   "time": "2026-11-22T13:11:40.632Z",
-   "file": "20261122131140632-note-t1-merc-ab.jpg",
-   "source": "../../../../tmp/v/t1-merc-ab.jpg",
-   "kind": "note",
-   "label": "mercury.travel review main above trial"
-  },
-  {
-   "time": "2026-11-22T13:11:40.099Z",
-   "file": "20261122131140099-note-t1-ura.jpg",
-   "source": "../../../../tmp/v/t1-ura.jpg",
-   "kind": "note",
-   "label": "trial uranus.travel review, 12 frames, Neptune a disc from 4488"
-  },
-  {
-   "time": "2026-11-22T13:11:39.425Z",
-   "file": "20261122131139425-note-t1-merc.jpg",
-   "source": "../../../../tmp/v/t1-merc.jpg",
-   "kind": "note",
-   "label": "trial mercury.travel review, 12 frames, Venus a disc from 1066"
   }
  ]
 }
