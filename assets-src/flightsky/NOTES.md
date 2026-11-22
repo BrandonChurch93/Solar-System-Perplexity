@@ -86,3 +86,23 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
 - Proof 1 (steps 1 to 3 on the merge with builder/b20 9a3ec26): final sha256 before and after equal, 4492 b154b5e6..., 5235 8db8e994....
 - Proof 2 (all four steps on the merge with origin/main 07aabf5), final sha256 on main and on the branch equal: 1072 d5216671..., 3352 91c9c5bb..., 5235 8db8e994..., 4492 b154b5e6.... Build green, vitest 79 of 79, shaderaudit prints the same lines as main.
 - Render time at final on main at 08:10 UTC, machine idle: 1072 88.4 s, 3352 79.8 s, 4492 119.1 s; on the branch 84.4 s, 78.7 s, 118.7 s. The 102 s for 3352 reported at 07:29 was measured before batch 20; the figures are not comparable across code states.
+
+## Batch 21, second part (reply of 08:23 UTC, due 09:15 UTC): vertex memory of the shared sky
+
+- Why the band points are in the buffer twice: the band strip repeats twice around the sky (`skyframe.json` `band.repeats` 2), so every star of the file stands at two places half a turn apart. Each placement has its own edge fade (veil map cell at that place, its own jitter draw), and 1468235 of the 1529168 placements survive the edge. It is one draw call, and only the points in view are drawn (index list).
+- One copy drawn twice (instancing) does not give the same bytes for sure: the second place would be computed in the vertex shader in 32 bit floats instead of in doubles on the CPU, and the fade would need a slot per repeat. Left as it is.
+- Done, bytes equal:
+  1. Star and color arrays of every point set (catalog, flight, deep, band) are released after their upload (`shed`, the `onUpload` hook). Positions and the index lists stay: the view culling reads the positions every time the view turns.
+  2. `Sky` keeps only the veil map of the flight field (for the band's edge), no longer the whole field.
+  3. Catalog stars: `aStar` three floats (the fourth was never read). The flight set keeps four: `assets-src/travel/dense.ts` and `fieldview.ts` read its layout.
+  4. What read the arrays again: only a restored WebGL context (three uploads every attribute again). `Sky.render` now listens for `webglcontextrestored` on the canvas and fills the sets again from their deterministic generators before the next draw (`refill`); the band points are rebuilt from the kept file bytes.
+- Counts: catalog 3465000 points, flight 500000, deep 760000, band 1468235. The same in the full and the web set.
+- Vertex bytes, computed from the layouts (per point: position 12, star, color 12, index 4), in MB of a million bytes, catalog / flight / deep / band / sum:
+  - GPU on main 07aabf5e: 152.5 / 22.0 / 33.4 / 64.6 / 272.5.
+  - GPU after the first part (6b40894a): 152.5 / 22.0 / 24.3 / 52.9 / 251.6.
+  - GPU after this part: 138.6 / 22.0 / 24.3 / 52.9 / 237.8.
+  - CPU on main: the same arrays as the GPU, 272.5, after the first part 251.6; after this part, once a set is uploaded, position and index only: 55.4 / 8.0 / 12.2 / 23.5 / 99.1.
+  - Kept beside these on the CPU, before and after: the view list of the catalog (13.9), the bytes of `skybandstars.bin` (7.6, the band points are built from them again), the veil map (0.5).
+  - A set that is never drawn is never uploaded and keeps its arrays (the flight sets at a hold only render, the catalog never is such a set).
+- Proof on this tree against origin/main 07aabf5e: finals 1072, 3352, 4492, 5235 and drafts 615, 2325, 2427, 4860 byte equal; `tools/restore.ts` at 3352 and at 2325 (draft) all lines pass, the frame after the restored context has the same sha256 as before; vitest green; shader audit the same lines.
+- Considered and left for the risk to the bytes: colors as bytes, positions at half precision, one band copy drawn twice.

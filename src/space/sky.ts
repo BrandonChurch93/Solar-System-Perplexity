@@ -387,6 +387,59 @@ function bandMap(): THREE.Vector4 {
   return new THREE.Vector4(b.repeats, b.offsetDeg / 360 * b.repeats, THREE.MathUtils.degToRad(b.latSpanDeg), b.fadeStart)
 }
 
+function catalog(base: number): { pos: Float32Array; star: Float32Array; col: Float32Array } {
+  const st = skyFrame.stars
+  const main = Math.round(base * st.countScale)
+  const count = main + Math.round(base * st.micro)
+  const rnd = stream('stars')
+  const pos = new Float32Array(count * 3)
+  const star = new Float32Array(count * 3)
+  const col = new Float32Array(count * 3)
+  const pole = new THREE.Vector3(...POLE).normalize()
+  const v = new THREE.Vector3()
+  const warm = new THREE.Color(1.0, 0.58, 0.34)
+  const cool = new THREE.Color(0.5, 0.7, 1.0)
+  const white = new THREE.Color(1, 1, 1)
+  const rose = new THREE.Color(1.0, 0.42, 0.5)
+  const amber = new THREE.Color(1.0, 0.62, 0.25)
+  const azure = new THREE.Color(0.38, 0.6, 1.0)
+  const c = new THREE.Color()
+  let i = 0
+  while (i < count) {
+    const z = rnd.range(-1, 1)
+    const a = rnd.range(0, Math.PI * 2)
+    const s = Math.sqrt(1 - z * z)
+    v.set(s * Math.cos(a), z, s * Math.sin(a))
+    const lat = v.dot(pole)
+    const micro = i >= main
+    const band = micro ? Math.exp(-Math.pow(lat / st.microWidth, 2)) : Math.exp(-Math.pow(lat / st.bandWidth, 2)) + st.halo * Math.exp(-Math.pow(lat / 0.5, 2))
+    const floor = micro ? 0 : st.floor
+    if (rnd.next() > floor + (1 - floor) * Math.min(band, 1)) continue
+    pos[i * 3] = v.x
+    pos[i * 3 + 1] = v.y
+    pos[i * 3 + 2] = v.z
+    const u = Math.max(rnd.next(), 1e-6)
+    const bright = micro ? st.microBright * (0.4 + 0.6 * u) : Math.min(st.brightness * Math.pow(u, -st.slope), 14)
+    star[i * 3] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), STAR_MAX_SIZE)
+    star[i * 3 + 1] = bright
+    star[i * 3 + 2] = micro ? 1 : 1 - Math.min(bright * 0.024 / st.brightness, 1)
+    const temp = rnd.next()
+    if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
+    else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
+    const vivid = rnd.next()
+    if (vivid < 0.35 * st.vivid) c.copy(rose)
+    else if (vivid < 0.65 * st.vivid) c.copy(amber)
+    else if (vivid < st.vivid) c.copy(azure)
+    col[i * 3] = Math.max(1 + (c.r - 1) * st.color, 0.05)
+    col[i * 3 + 1] = Math.max(1 + (c.g - 1) * st.color, 0.05)
+    col[i * 3 + 2] = Math.max(1 + (c.b - 1) * st.color, 0.05)
+    i++
+  }
+  return { pos, star, col }
+}
+
+const shed = (a: THREE.BufferAttribute): THREE.BufferAttribute => a.onUpload(() => { (a as unknown as { array: null }).array = null })
+
 export class Sky {
   cull = false
   private readonly pass: Pass
@@ -400,7 +453,11 @@ export class Sky {
   private stripGlow: THREE.Texture | null = null
   private stripBytes: ArrayBuffer | null = null
   private stripDef: StripDef | null = null
-  private field: FlightField | null = null
+  private field: Pick<FlightField, 'veil' | 'width' | 'height'> | null = null
+  private flightDef: FlightDef | null = null
+  private base = 0
+  private canvas: HTMLCanvasElement | null = null
+  private stale = false
   private readonly inView: { points: THREE.Points; pos: Float32Array; order: THREE.BufferAttribute; key: Float64Array }[] = []
   private readonly ahead = new THREE.Vector3()
   private flightLevel = 0
@@ -432,8 +489,6 @@ export class Sky {
 
   constructor(base: number) {
     const st = skyFrame.stars
-    const main = Math.round(base * st.countScale)
-    const count = main + Math.round(base * st.micro)
     this.pass = new Pass(SKY_FRAG, {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uGlow: { value: 1 }, uTerrainBand: { value: skyFrame.band.terrainGain }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
@@ -441,56 +496,14 @@ export class Sky {
       uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
-    const rnd = stream('stars')
-    const pos = new Float32Array(count * 3)
-    const star = new Float32Array(count * 4)
-    const col = new Float32Array(count * 3)
-    const pole = new THREE.Vector3(...POLE).normalize()
-    const v = new THREE.Vector3()
-    const warm = new THREE.Color(1.0, 0.58, 0.34)
-    const cool = new THREE.Color(0.5, 0.7, 1.0)
-    const white = new THREE.Color(1, 1, 1)
-    const rose = new THREE.Color(1.0, 0.42, 0.5)
-    const amber = new THREE.Color(1.0, 0.62, 0.25)
-    const azure = new THREE.Color(0.38, 0.6, 1.0)
-    const c = new THREE.Color()
-    let i = 0
-    while (i < count) {
-      const z = rnd.range(-1, 1)
-      const a = rnd.range(0, Math.PI * 2)
-      const s = Math.sqrt(1 - z * z)
-      v.set(s * Math.cos(a), z, s * Math.sin(a))
-      const lat = v.dot(pole)
-      const micro = i >= main
-      const band = micro ? Math.exp(-Math.pow(lat / st.microWidth, 2)) : Math.exp(-Math.pow(lat / st.bandWidth, 2)) + st.halo * Math.exp(-Math.pow(lat / 0.5, 2))
-      const floor = micro ? 0 : st.floor
-      if (rnd.next() > floor + (1 - floor) * Math.min(band, 1)) continue
-      pos[i * 3] = v.x
-      pos[i * 3 + 1] = v.y
-      pos[i * 3 + 2] = v.z
-      const u = Math.max(rnd.next(), 1e-6)
-      const bright = micro ? st.microBright * (0.4 + 0.6 * u) : Math.min(st.brightness * Math.pow(u, -st.slope), 14)
-      star[i * 4] = Math.min(2.6 + 2.2 * Math.log2(1 + bright), STAR_MAX_SIZE)
-      star[i * 4 + 1] = bright
-      star[i * 4 + 2] = micro ? 1 : 1 - Math.min(bright * 0.024 / st.brightness, 1)
-      const temp = rnd.next()
-      if (temp < 0.5) c.copy(warm).lerp(white, Math.pow(temp * 2, 0.6))
-      else c.copy(white).lerp(cool, Math.pow((temp - 0.5) * 2, 1.4))
-      const vivid = rnd.next()
-      if (vivid < 0.35 * st.vivid) c.copy(rose)
-      else if (vivid < 0.65 * st.vivid) c.copy(amber)
-      else if (vivid < st.vivid) c.copy(azure)
-      col[i * 3] = Math.max(1 + (c.r - 1) * st.color, 0.05)
-      col[i * 3 + 1] = Math.max(1 + (c.g - 1) * st.color, 0.05)
-      col[i * 3 + 2] = Math.max(1 + (c.b - 1) * st.color, 0.05)
-      i++
-    }
+    const { pos, star, col } = catalog(base)
+    this.base = base
     const geo = new THREE.BufferGeometry()
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    geo.setAttribute('aStar', new THREE.BufferAttribute(star, 4))
-    geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3))
+    geo.setAttribute('aStar', shed(new THREE.BufferAttribute(star, 3)))
+    geo.setAttribute('aColor', shed(new THREE.BufferAttribute(col, 3)))
     this.starPos = pos
-    this.starOrder = new THREE.BufferAttribute(new Uint32Array(count), 1)
+    this.starOrder = new THREE.BufferAttribute(new Uint32Array(pos.length / 3), 1)
     this.starOrder.setUsage(THREE.DynamicDrawUsage)
     const culled = new THREE.BufferGeometry()
     for (const name of ['position', 'aStar', 'aColor']) culled.setAttribute(name, geo.getAttribute(name))
@@ -576,8 +589,8 @@ export class Sky {
     const set = bandField(this.stripBytes, { repeats: b.repeats, offset: b.offsetDeg / 360 * b.repeats, latSpan: THREE.MathUtils.degToRad(b.latSpanDeg), widen: b.widen, gal: galactic().elements }, def, this.field)
     const geo = this.strip.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(set.position, 3))
-    geo.setAttribute('aStar', new THREE.BufferAttribute(set.star, 2))
-    geo.setAttribute('aColor', new THREE.BufferAttribute(set.color, 3))
+    geo.setAttribute('aStar', shed(new THREE.BufferAttribute(set.star, 2)))
+    geo.setAttribute('aColor', shed(new THREE.BufferAttribute(set.color, 3)))
     const order = new THREE.BufferAttribute(new Uint32Array(set.position.length / 3), 1)
     order.setUsage(THREE.DynamicDrawUsage)
     geo.setIndex(order)
@@ -586,17 +599,29 @@ export class Sky {
     this.inView.push({ points: this.strip, pos: set.position, order, key: new Float64Array(4).fill(NaN) })
   }
 
+  private refill(): void {
+    const c = catalog(this.base)
+    const star = shed(new THREE.BufferAttribute(c.star, 3))
+    const col = shed(new THREE.BufferAttribute(c.col, 3))
+    for (const g of [this.starPlain, this.starCulled]) {
+      g.setAttribute('aStar', star)
+      g.setAttribute('aColor', col)
+    }
+    if (this.flightDef) this.setFlightStars(this.flightDef)
+  }
+
   setFlightStars(def: FlightDef): void {
     const field = flightField(def)
-    this.field = field
+    this.flightDef = def
+    this.field = { veil: field.veil, width: field.width, height: field.height }
     const geo = this.flight.geometry
     geo.setAttribute('position', new THREE.BufferAttribute(field.position, 3))
-    geo.setAttribute('aStar', new THREE.BufferAttribute(field.star, 4))
-    geo.setAttribute('aColor', new THREE.BufferAttribute(field.color, 3))
+    geo.setAttribute('aStar', shed(new THREE.BufferAttribute(field.star, 4)))
+    geo.setAttribute('aColor', shed(new THREE.BufferAttribute(field.color, 3)))
     const dg = this.deep.geometry
     dg.setAttribute('position', new THREE.BufferAttribute(field.deep.position, 3))
-    dg.setAttribute('aStar', new THREE.BufferAttribute(field.deep.star, 1))
-    dg.setAttribute('aColor', new THREE.BufferAttribute(field.deep.color, 3))
+    dg.setAttribute('aStar', shed(new THREE.BufferAttribute(field.deep.star, 1)))
+    dg.setAttribute('aColor', shed(new THREE.BufferAttribute(field.deep.color, 3)))
     this.deepLevel = def.deep.level
     this.deepLens = def.deep.lens
     this.inView.length = 0
@@ -764,6 +789,14 @@ export class Sky {
   }
 
   render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null): void {
+    if (this.canvas !== renderer.domElement) {
+      this.canvas = renderer.domElement
+      this.canvas.addEventListener('webglcontextrestored', () => { this.stale = true })
+    }
+    if (this.stale) {
+      this.stale = false
+      this.refill()
+    }
     const saved = camera.quaternion.clone()
     const savedPos = camera.position.clone()
     camera.quaternion.copy(skyQuaternion)

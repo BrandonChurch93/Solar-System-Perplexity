@@ -266,7 +266,7 @@ export interface BandField {
   color: Float32Array
 }
 
-export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, field: FlightField): BandField {
+export function bandField(bytes: ArrayBuffer, frame: BandFrame, def: StripDef, field: Pick<FlightField, 'veil' | 'width' | 'height'>): BandField {
   const view = new DataView(bytes)
   if (view.getUint32(0, true) !== 0x52545342) throw new Error('band stars: bad file')
   const total = view.getUint32(8, true)
