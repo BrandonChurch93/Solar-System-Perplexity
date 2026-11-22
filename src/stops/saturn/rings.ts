@@ -306,14 +306,14 @@ void main() {
   float azd = degrees(atan(vLocal.z, vLocal.x));
   rp += (disc || far) ? 0.0 : (uInner.z * smoothstep(45.0, 60.0, azd) + uInner.w * smoothstep(80.0, 95.0, azd)) * uPolarShape * (1.0 - smoothstep(uInner.x, uInner.y, azd)) * (1.0 - smoothstep(1.2, 1.45, rp));
   float shape = 0.0;
-  for (int k = 0; k < ((uPolarShape > 0.0 && !far && !disc) ? 1 : 0); k++) shape = uPolarShape * texture(uPolarWarp, vec2(atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5, (rp - uPolarSpan.x) * uPolarSpan.y)).r;
+  for (int k = 0; k < ((uPolarShape > 0.0 && !far && !disc) ? 1 : 0); k++) shape = uPolarShape * textureLod(uPolarWarp, vec2(atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5, (rp - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
   float rs = rp - shape;
   float rq = rp - shape * smoothstep(uShapeFit.x, uShapeFit.y, rp);
   float x = far ? -1.0 : ringRadius(rq);
   bool span = x > 0.0 && x < 1.0;
   wS *= span ? 1.0 : uSkimNear;
   float wC = (far || disc) ? 0.0 : uPolarW * (1.0 - smoothstep(uPolarFit.x, uPolarFit.y, rp)) * smoothstep(uInnerSpan.x, uInnerSpan.x + 0.012, rs);
-  if (!span && wS <= 0.0 && wC <= 0.0 && (far || disc || uPolarShape * uPolarW <= 0.0)) discard;
+  bool gone = !span && wS <= 0.0 && wC <= 0.0 && (far || disc || uPolarShape * uPolarW <= 0.0);
   vec3 toCam = uCamL - vLocal;
   float dist = length(toCam);
   vec3 V = toCam / dist;
@@ -332,19 +332,19 @@ void main() {
   wS *= mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim) * (hidden ? 1.0 - smoothstep(uSkimUnder.z, uSkimUnder.w, rim) : 1.0), 1.0 - smoothstep(0.55, 0.95, km.g));
   if (!hidden && !disc) wS *= mix(1.0 - behind, 1.0, km.r);
   bool top = disc || hidden;
-  if (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top)) discard;
+  gone = gone || (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top));
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
   float texels = ringTexels(fr);
   float pose = uPolarShape * (1.0 - uClose);
   float edgeCut = smoothstep(uEdge.y + uOuterFit.w, uEdge.y + uOuterFit.w + 0.002, rq);
   float xo = ringRadius(rq - pose * uOuterFit.x * smoothstep(uOuterFit.y, uOuterFit.z, rq));
   float lodP = texels * uGrad * mix(uLodBias.x, uLodBias.y, uClose);
-  vec4 s = span ? profAt(xo, lodP) * (1.0 - pose * edgeCut) : vec4(0.0);
-  for (int k = 0; k < ((pose > 0.0 && span && !disc && rq > uEdge.y + 0.02) ? 1 : 0); k++) {
+  vec4 s = span && !gone ? profAt(xo, lodP) * (1.0 - pose * edgeCut) : vec4(0.0);
+  for (int k = 0; k < ((pose > 0.0 && span && !disc && !gone && rq > uEdge.y + 0.02) ? 1 : 0); k++) {
     float ua = atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5;
     float re = uEdge.y + uOuterFit.x;
-    float e1 = re + uPolarShape * texture(uPolarWarp, vec2(ua, (re - uPolarSpan.x) * uPolarSpan.y)).r;
-    float e2 = re + uPolarShape * texture(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y)).r;
+    float e1 = re + uPolarShape * textureLod(uPolarWarp, vec2(ua, (re - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
+    float e2 = re + uPolarShape * textureLod(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
     float along = smoothstep(uArcAz.x, uArcAz.y, azd) + 1.0 - smoothstep(uArcAz.z, uArcAz.w, azd);
     float rl = uArc.x + (rp - e2 - uArc.y) * uArc.z;
     s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * profAt(ringRadius(rl), lodP * uArc.z);
@@ -387,13 +387,13 @@ void main() {
   vec2 cg = 1e-4 * exp2(floor(lg));
   vec4 wg = vec4((1.0 - fg.x) * (1.0 - fg.y), fg.x * (1.0 - fg.y), (1.0 - fg.x) * fg.y, fg.x * fg.y);
   float ga = mix(uGrain.x, uGrain.y, uClose) * smoothstep(0.02, 0.1, s.a) * smoothstep(2e-6, 2e-5, fr) * (top ? 0.0 : 1.0);
-  for (int k = 0; k < (ga > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (ga > 0.0 && !gone ? 1 : 0); k++) {
     float gr = wg.x * grain(phi, rp, cg.y, cg.x) + wg.y * grain(phi, rp, cg.y, 2.0 * cg.x) + wg.z * grain(phi, rp, 2.0 * cg.y, cg.x) + wg.w * grain(phi, rp, 2.0 * cg.y, 2.0 * cg.x);
     mottle += ga * 2.0 * gr / length(wg);
   }
   col *= mottle;
   float wP = far || disc ? 0.0 : uPolarW * smoothstep(uPolarFit.x, uPolarFit.y, rp) * (1.0 - smoothstep(uPolarOuter.x, uPolarOuter.y, rs));
-  for (int k = 0; k < (wP > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (wP > 0.0 && !gone ? 1 : 0); k++) {
     float pa = phi / 6.283185307 + 0.5;
     float pv = (rp - uPolarSpan.x) * uPolarSpan.y;
     float pr = clamp(pv - shape * uPolarSpan.y, 0.5 / uPolarSize.y, 1.0 - 0.5 / uPolarSize.y);
@@ -411,7 +411,7 @@ void main() {
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
   }
   float wIn = 0.0;
-  for (int k = 0; k < (wC > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (wC > 0.0 && !gone ? 1 : 0); k++) {
     float pa = phi / 6.283185307 + 0.5;
     float pr = clamp((rs - uInnerSpan.x) * uInnerSpan.y, 0.5 / uInnerSize.y, 1.0 - 0.5 / uInnerSize.y);
     vec2 pgx = vec2((vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x)) / (6.283185307 * r * r), dFdx(rp) * uInnerSpan.y);
@@ -436,7 +436,7 @@ void main() {
   float cell = uSparkleCell;
   float det = qx.x * qy.y - qx.y * qy.x;
   float show = 1.0 - smoothstep(0.12, 0.3, major / cell);
-  for (int k = 0; k < ((uAzimuth.w > 0.0 && show > 0.0 && abs(det) > 1e-16) ? 1 : 0); k++) {
+  for (int k = 0; k < ((uAzimuth.w > 0.0 && show > 0.0 && abs(det) > 1e-16 && !gone) ? 1 : 0); k++) {
     int row = int(floor(r / cell));
     int per = max(int(floor(6.283185307 * (float(row) + 0.5))), 1);
     float cx = tu * float(per);
@@ -476,7 +476,7 @@ void main() {
   col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
   float hb = max(bb - 1.0, 0.0);
   vec3 shine = (uShine.rgb * exp(-hb / uShine.w) + uShineWide.rgb * exp(-hb / uShineWide.w)) * (uPolarShape * day * (1.0 - uClose) * smoothstep(0.0, uShineBack, (1.0 + ob / oa) * sqrt(oa)));
-  for (int k = 0; k < (over > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (over > 0.0 && !gone ? 1 : 0); k++) {
     float sx = ringRadius(uStrand.x + (rq - uEdge.x) * uStrand.y);
     float sl = texels * uGrad * uStrand.y * 1.5;
     float zone = over * (1.0 - smoothstep(uOver.y, uOver.w, rq)) * (1.0 - wIn);
@@ -491,7 +491,7 @@ void main() {
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  for (int k = 0; k < (wS > 0.0 ? 1 : 0); k++) {
+  for (int k = 0; k < (wS > 0.0 && !gone ? 1 : 0); k++) {
     vec2 kq = (clamp(kv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
     vec3 pix = vec3(0.0);
     for (int j = 0; j < (wK > 0.0 ? 1 : 0); j++) pix = textureGrad(uSkimMap, kv, kgx * uSkimFit.w, kgy * uSkimFit.w).rgb;
@@ -512,8 +512,8 @@ void main() {
     texels = mix(texels, skimTexels, wS);
   }
   col = (col + (wedge + shine * alpha + halo * lit) * (1.0 - wS)) * uGain * uWeight / vig;
-  if (uDiag >= 2 && alpha * cut < 0.5) discard;
   outColor = diagOut(vec4(col, alpha * uWeight) * cut, texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
+  if (gone || (uDiag >= 2 && alpha * cut < 0.5)) discard;
 }`
 
 export class Rings {

@@ -57,8 +57,8 @@ void main() {
   float glow = exp(-max(miss - 1.0, 0.0) / uHaloHeight) * smoothstep(-0.35, 0.5, dot(edge, uSun));
   vec3 col = body + uHalo * glow * (1.0 - disc * 0.6);
   float cover = max(disc, 0.0);
-  if (uDiag >= 2 && disc < 0.5) discard;
   outColor = diagOut(vec4(col * uGain, cover), 0.0, 0.0, vec3(0.9, 0.5, 0.1), vec2(0.0), length(vView));
+  if (uDiag >= 2 && disc < 0.5) discard;
 }`
 
 export class Titan {

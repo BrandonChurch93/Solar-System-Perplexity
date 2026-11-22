@@ -170,9 +170,12 @@ void main() {
   vec2 q = vec2(atan(e.z, e.x) / uPatchBox.y * 0.5 + 0.5, (asin(clamp(e.y, -1.0, 1.0)) - uPatchBox.z) / (uPatchBox.w - uPatchBox.z));
   vec2 qe = min(q, 1.0 - q);
   float pw = e.x > 0.0 ? uClose * smoothstep(0.0, 0.1, qe.x) * smoothstep(0.0, 0.1, qe.y) : 0.0;
+  vec2 qgx = dFdx(q);
+  vec2 qgy = dFdy(q);
+  float patchTexels = diagTexels(q * uPatchSize);
   for (int k = 0; k < (pw > 0.0 ? 1 : 0); k++) {
-    albedo = mix(albedo, inverseFilmic(textureGrad(uPatch, q, dFdx(q) * uGrad, dFdy(q) * uGrad).rgb), pw);
-    texels = mix(texels, diagTexels(q * uPatchSize), pw);
+    albedo = mix(albedo, inverseFilmic(textureGrad(uPatch, q, qgx * uGrad, qgy * uGrad).rgb), pw);
+    texels = mix(texels, patchTexels, pw);
   }
   for (int k = 0; k < (uProbe >= 5 ? 1 : 0); k++) {
     albedo = vec3(uProbe == 5 ? 0.0 : 0.6);
@@ -209,9 +212,9 @@ void main() {
     layer = vec3(hi / 255.0, val * 255.0 - hi, 1.0);
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
-  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
   outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(drift * 8.0, 0.0), length(vView));
+  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -281,7 +284,7 @@ void main() {
   float r = length(uCam);
   float b = -dot(uCam, dir);
   float rt2 = r * r - b * b;
-  if (b > 0.0 && rt2 < (uLimbW > 0.0 ? 0.96 : 0.99)) discard;
+  bool under = b > 0.0 && rt2 < (uLimbW > 0.0 ? 0.96 : 0.99);
   float rt = sqrt(max(rt2, 0.0));
   vec3 tp = (uCam + dir * b) / max(rt, 1e-4);
   float fit = b > 0.0 ? uLimbW : 0.0;
@@ -299,6 +302,7 @@ void main() {
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
   outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
+  if (under) discard;
 }`
 
 export class Shell {
