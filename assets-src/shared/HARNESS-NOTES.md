@@ -128,6 +128,8 @@ Proofs of MAIL 93 (draft tier, this clone at engine of main 2026-11-22 07:30 UTC
 - Cues: sheet written with the intro records in `out/work/posts/`, records moved to `out/posts/`, `--check` gave no fault for `cut/CUES.md`; it names `cut/SHOTS.md` as stale with `npm run shots` (the file on main is stale at line 9; not remade by me).
 - `npx tsc --noEmit -p .` clean, `npx vitest run` 79 passed, pyflakes clean.
 
+MAIL 106 (2026-11-22 08:03 UTC): `tools/site.ts` treats `post-<stop>.mp4` as a clip (1280 wide, crf 24, maxrate 2800k), by the Builder's decision. The rehearsal clone is not on this disk, so the sizes I can measure are from stand in intros joined to the clips of main.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
