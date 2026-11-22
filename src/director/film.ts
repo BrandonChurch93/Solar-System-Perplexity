@@ -671,7 +671,15 @@ export class FilmDirector implements Director {
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
         const px = (Math.asin(Math.min(1 / to.length(), 1)) / THREE.MathUtils.degToRad(pose.vfov)) * 1080
-        const lock = 1 - smooth(ramp(LOCK_PX[0], LOCK_PX[1], px))
+        const steady = this.shapes[index]!.look.steady
+        const lock = steady[1] > 0 ? 0 : 1 - smooth(ramp(LOCK_PX[0], LOCK_PX[1], px))
+        const still = steady[1] > 0 ? 1 - smooth(ramp(steady[0], steady[1], px)) : 0
+        if (still > 0) {
+          const mid = this.travelCamera(index, midTime)
+          const turn = pose.quaternion.clone().multiply(drift(time)).multiply(mid.quaternion.multiply(drift(midTime)).invert())
+          arriving.origin.copy(to.lerp(arriving.origin.clone().sub(mid.position).applyQuaternion(turn), still).add(position))
+          arriving.rotation.premultiply(new THREE.Quaternion().slerp(turn, still))
+        }
         if (lock > 0) {
           const mid = this.travelCamera(index, midTime)
           const qs = pose.quaternion.clone().multiply(drift(time))

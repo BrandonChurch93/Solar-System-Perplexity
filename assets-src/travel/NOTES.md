@@ -585,3 +585,11 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Looks pushed 11:37 (c48064a): mars.travel and sun.travel before and after.
 - Sheets: `/tmp/v/p1-ab.jpg`, `p1-pt.jpg`, `p2-ab.jpg`, `p2-big.jpg`, `p3-sat.jpg`, `p3-ptz.jpg` (point place at 6x), `p3-swing.jpg`.
 - Still running: chain17 (final 4502 on main label fm; finals 4502, 4500, 4504 with `steady` label f4; main strip m0 3912 to 3936).
+
+## 11:56 UTC: job 4 committed, steady [60, 200] for uranus
+- Finals looked at in native and 2x crops (`out/work/travel/fm`, `f4`, `f5`; sheets `/tmp/v/p4-triton.jpg`, `p5-triton.jpg`, `p5-native.png`, `p5-wide.jpg`). Main 4502: Triton is an 81 px pill. steady [0, 90]: still a pill at 4502 (42 px) and 4504 (67 px), dropped. steady [60, 200]: a sharp half lit moon at 4502, a moon with a soft edge at 4504 (5.5 px) and 4506 (22 px, leaving over the top), Neptune's limb crisp while small.
+- Probe (`moons.ts uranus 4498 4511`) with [60, 200]: Triton's blur over the shutter 0 to 4502, 0.4, 5.5, 14.5, 22.0, 24.3 (4507), 21.9, 18.3, 17.3, 17.9 at 4511; never over a fifth of its diameter. Neptune's limb blur 0, 0.05, 0.83, 2.90, 6.12, 9.86, 12.94, 14.10 from 4502 to 4509, as before from 4509.
+- Proofs: all 5400 mid shutter shot hashes equal fbb6379 (so draft bytes cannot move; the change is only in the sub frame samples of uranus.travel while Neptune is under 200 px radius, frames to 4508). tsc clean, vitest 83, shaderaudit equal to main.
+- Corrections sent 11:44: patch at 495 is 0.272 against 0.089 on main; far light at 3922 is 0.069 against 0.001 (I had written estimates in the 11:41 mail).
+- Saturn point place main against branch (`/tmp/v/p3-ptab.jpg`): main point visible 3924 to 3928, disc from 3929; branch point visible 3922 to 3931, disc from 3932.
+- Next: the same law in venus.travel (Moon) and jupiter.travel (Titan); measure, render one final each, own commits.
