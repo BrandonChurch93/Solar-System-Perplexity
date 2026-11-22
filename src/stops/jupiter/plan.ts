@@ -48,8 +48,17 @@ export class JupiterPlan extends StopPlan {
   }
 
   override skyUnderCover(amount: number, time: number): number {
-    const low = time >= this.coverCenter(this.seg.dive!) && time < this.coverCenter(this.seg.rise)
-    return Math.pow(1 - amount, low ? veil.sky : 2)
+    if (time >= this.coverCenter(this.seg.rise)) return 1
+    return Math.pow(1 - amount, time >= this.coverCenter(this.seg.dive!) ? veil.sky : 2)
+  }
+
+  override skyGain(time: number): number {
+    const seg = this.seg.rise
+    const low = this.p.light.skyLow
+    if (!low || time < this.coverCenter(seg) || time >= seg.end) return 1
+    const now = mix(low[2], 1, smooth(ramp(low[0], low[1], Math.abs(this.rise(time).pose.position.length() - 1))))
+    const want = Math.max(now, Math.pow(1 - super.coverAmount(seg, time), veil.sky))
+    return now > 0 ? want / now : 1
   }
 
   override turn(time: number): THREE.Quaternion {
