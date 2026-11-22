@@ -1,18 +1,57 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T04:53:48.355Z",
- "head": "26ca948eaa739b49da2da9d9d4ab80b093dca2b6",
- "note": "batch 19 merged (6c4c455, main a45a07b): judged hold, dive, terrain same bytes, 5006 with the open sky; final chain running: rise cover sheet",
+ "pushed": "2026-11-22T05:20:47.595Z",
+ "head": "21edb3b811ac58890c1b1d12f1ae5ce11e950f4a",
+ "note": "rise cover sheet at review on batch 19 done; dive cover sheet rendering",
  "looks": [
   {
-   "time": "2026-11-22T04:52:49.658Z",
-   "file": "20261122045249658-frame-f04981-review.jpg",
-   "source": "out/work/sheets/.frames-0zLmiD/f04981-review.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4981, review tier",
+   "time": "2026-11-22T05:20:42.070Z",
+   "file": "20261122052042070-note-sheet-rise-cover.jpg",
+   "source": "out/work/nep/p6/final/sheet-rise-cover.png",
+   "kind": "note",
+   "label": "rise cover sheet at review, 4975 to 4986, every frame looked at; switch 4979 to 4980 step 4.00; tree 6c4c455, main a45a07b (engine batch 19)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T05:20:34.403Z",
+   "file": "20261122052034403-note-rise-4985-4986.jpg",
+   "source": "out/work/nep/p6/final/rise-4985-4986.jpg",
+   "kind": "note",
+   "label": "rise cover at review, 4985 and 4986; tree 6c4c455, main a45a07b (engine batch 19)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T05:20:29.808Z",
+   "file": "20261122052029808-note-rise-4982-4983.jpg",
+   "source": "out/work/nep/p6/final/rise-4982-4983.jpg",
+   "kind": "note",
+   "label": "rise cover at review, 4982 and 4983: the veil's top comes down to the limb in this one frame (frame to frame mean abs 43.84, veil.clear 0.55); tree 6c4c455, main a45a07b (engine batch 19)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T05:19:46.971Z",
+   "file": "20261122051946971-sheet-neptune.rise-cover-16x9-review.jpg",
+   "source": "out/work/sheets/neptune.rise-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet neptune.rise, review tier",
    "stop": "neptune",
    "segment": "neptune.rise",
-   "frame": 4981,
+   "first": 4975,
+   "last": 4986,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:19:45.216Z",
+   "file": "20261122051945216-frame-f04986-review.jpg",
+   "source": "out/work/sheets/.frames-0zLmiD/f04986-review.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 4986, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4986,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -25,28 +64,6 @@
    "kind": "note",
    "label": "5006 review on engine batch 19 raised 3 times: no new point on the night side or on Triton, points show through the ring's gaps; tree 6c4c455, main a45a07b",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:46:16.599Z",
-   "file": "20261122044616599-note-b19-5006-pair.jpg",
-   "source": "out/work/nep/p6/final/b19-5006-pair.jpg",
-   "kind": "note",
-   "label": "5006 review: left on main 1138eb2 (engine batch 18), right on main a45a07b (engine batch 19, the open sky); same branch state; tree 6c4c455",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:41:46.965Z",
-   "file": "20261122044146965-frame-b19-4707.jpg",
-   "source": "out/work/nep/p6/final/b19-4707.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4707, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T04:40:13.381Z",
@@ -75,22 +92,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:32:30.519Z",
-   "file": "20261122043230519-note-rise-4979-4982.jpg",
-   "source": "out/work/nep/p6/final/rise-4979-4982.jpg",
-   "kind": "note",
-   "label": "rise cover at review, frames 4979 to 4982, the view switch is between 4979 and 4980: frame to frame mean abs 4.00 (12.25 before the cure, neighbours 4.12 and 4.59); tree 2613788, main 1138eb2 (engine batch 18)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:32:24.007Z",
-   "file": "20261122043224007-note-rise-4975-4978.jpg",
-   "source": "out/work/nep/p6/final/rise-4975-4978.jpg",
-   "kind": "note",
-   "label": "rise cover at review, frames 4975 to 4978 (terrain side, with the cover's horizon on the sphere's own limb); tree 2613788, main 1138eb2 (engine batch 18)",
-   "stop": "neptune"
   }
  ]
 }
