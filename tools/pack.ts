@@ -3,6 +3,7 @@ import { basename, join } from 'node:path'
 import type { Segment, StopDef } from '../src/config'
 import { judgedFrames } from '../src/director/timeline'
 import { samplesOf } from './lib/samples'
+import { polishBuilds, type Selection } from './select'
 import { args, loadConfig, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
 import { Capture, cached, chunk, filmSheets, fingerprint, image, imageRevision, json, judged, outputFolder, padFrame, padImage, safeRecord, sheetFrames, spread, stopDependencies, type FrameSpec, type Rect } from './lib/render'
 
@@ -168,7 +169,7 @@ async function blockout(): Promise<void> {
   publish('R4', singles(list), 'sheet')
 }
 
-async function stopImages(stops: StopDef[]): Promise<{ match: Art[][]; jury: Art[]; recognition: Art[] }> {
+async function stopImages(stops: StopDef[], withJury = whole === false): Promise<{ match: Art[][]; jury: Art[]; recognition: Art[] }> {
   const match: Art[][] = []
   const recognition: Art[] = []
   const jury: Art[] = []
@@ -185,9 +186,9 @@ async function stopImages(stops: StopDef[]): Promise<{ match: Art[][]; jury: Art
         const prefix = 'pair-' + padImage(++pairIndex)
         return pair.map((item, j) => ({ ...item, name: prefix + (j === 0 ? '-a.png' : '-b.png') }))
       }))
-      if (whole === false || view === 'hold') {
+      if (withJury || view === 'hold') {
         const prepared = inputs.map((source, i) => simple(source, 'jury-' + segment.id + '-' + i, { size }))
-        if (whole === false) jury.push(...prepared)
+        if (withJury) jury.push(...prepared)
         if (view === 'hold') recognition.push(...prepared)
       }
     }
@@ -215,10 +216,13 @@ async function recordPacks(stops: StopDef[]): Promise<void> {
   publish('R8', singles(shuffle(recognition)))
 }
 
-async function detail(segments: Segment[], scope?: string): Promise<void> {
+async function detail(segments: Segment[], scope?: string, frames?: Set<number>): Promise<void> {
   const groups: Art[][] = []
   const ids = new Set(segments.map((s) => s.id))
-  for (const j of judgedFrames().filter((x) => ids.has(x.segment))) {
+  const mine = judgedFrames().filter((x) => ids.has(x.segment))
+  const strangers = [...(frames ?? [])].filter((f) => mine.some((x) => x.frame === f) === false)
+  if (strangers.length > 0) throw new Error('select: not a judged frame of ' + (scope ?? 'the travels and the ending') + ': ' + strangers.join(', '))
+  for (const j of mine.filter((x) => frames === undefined || frames.has(x.frame))) {
     const film = await renderSource(j.frame, tier, true)
     const items = [simple(film, 'detail-' + j.frame), ...pages('crops', 'detail-crop-' + j.frame, [film], { cover: true })]
     groups.push(...chunk(items, maxImages))
@@ -226,11 +230,15 @@ async function detail(segments: Segment[], scope?: string): Promise<void> {
   publish('R3', groups, 'image', scope)
 }
 
-async function motion(segments: Segment[], scope?: string): Promise<void> {
+async function motion(segments: Segment[], scope?: string, sheets?: Set<string>): Promise<void> {
   const list: Art[] = []
+  const pick = sheets ?? only
+  const known = segments.flatMap((s) => (s.kind === 'dive' || s.kind === 'rise' ? [s.id, s.id + '-cover'] : [s.id]))
+  const strangers = [...(sheets ?? [])].filter((id) => known.includes(id) === false)
+  if (strangers.length > 0) throw new Error('select: not a sheet of ' + (scope ?? 'the travels and the ending') + ': ' + strangers.join(', '))
   for (const s of segments) {
-    if (only === null || only.has(s.id)) list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
-    if ((s.kind === 'dive' || s.kind === 'rise') && (only === null || only.has(s.id + '-cover'))) {
+    if (pick === null || pick.has(s.id)) list.push(await contact('motion-' + s.id, sheetFrames(cfg, s, false), motionTier, { kind: 'sheet', segment: s.id }))
+    if ((s.kind === 'dive' || s.kind === 'rise') && (pick === null || pick.has(s.id + '-cover'))) {
       list.push(await contact('motion-' + s.id + '-cover', sheetFrames(cfg, s, true), motionTier, { kind: 'cover', segment: s.id }))
     }
   }
@@ -300,7 +308,9 @@ function plan(): object {
     sheets.push({ part: s.id, stop: between ? null : s.stop, samples: cost(sheetFrames(cfg, s, false)) })
     if (between === false && (s.kind === 'dive' || s.kind === 'rise')) sheets.push({ part: s.id + '-cover', stop: s.stop, samples: cost(sheetFrames(cfg, s, true)) })
   }
+  const frames = a.judged ? { judged: judgedFrames().map((j) => ({ frame: j.frame, segment: j.segment, stop: j.stop, kind: cfg.segments.find((s) => s.id === j.segment)?.kind, why: j.why })) } : {}
   return {
+    ...frames,
     tier, motionTier, sheets,
     finals: finalFrames().map((frame) => ({ frame, samples: samplesOf(frame, tier) })),
     composites: [
@@ -338,11 +348,15 @@ function stressRecord(segment: string): OutputRecord | null {
   try { return JSON.parse(readFileSync(join(WORK, 'stress', segment + '.json'), 'utf8')) as OutputRecord } catch { return null }
 }
 
-function compression(): void {
+function compression(chosen?: string[]): void {
   const dir = join(WORK, 'stress')
   const groups: Art[][] = []
   const entries = existsSync(dir) ? readdirSync(dir).sort() : []
-  for (const segment of cfg.raw.quality.stress.segments) {
+  const listed: string[] = cfg.raw.quality.stress.segments
+  const strangers = (chosen ?? []).filter((id) => listed.includes(id) === false)
+  if (strangers.length > 0) throw new Error('select: not a stress segment: ' + strangers.join(', '))
+  for (const segment of listed) {
+    if (chosen && chosen.includes(segment) === false) continue
     for (const file of entries) {
       if (file.startsWith(segment + '-before-') === false || /-before-\d{5}\.png$/.test(file) === false) continue
       const stem = basename(file, '.png').split('-').pop()
@@ -370,6 +384,29 @@ function compression(): void {
   else publish('R7', groups)
 }
 
+async function polish(): Promise<void> {
+  const selection = JSON.parse(readFileSync(String(a.select), 'utf8')) as Selection
+  const between = cfg.segments.filter((s) => s.kind === 'travel' || s.stop === cfg.endingId)
+  for (const b of polishBuilds(selection, cfg.stops.map((s) => s.id))) {
+    const stops = cfg.stops.filter((s) => b.stops.includes(s.id))
+    const segments = b.scope ? cfg.segments.filter((s) => s.stop === b.scope && stopKinds.has(s.kind)) : between
+    const scope = b.scope || undefined
+    if (b.critic === 'R1') publish('R1', (await stopImages(stops)).match, 'image', scope)
+    else if (b.critic === 'R3') await detail(segments, scope, new Set(b.frames))
+    else if (b.critic === 'R4') await motion(segments, scope, new Set(b.sheets))
+    else if (b.critic === 'R8') {
+      const recognition: Art[] = []
+      for (const stop of stops) recognition.push(...(await stopImages([stop])).recognition)
+      publish('R8', singles(shuffle(recognition)))
+    } else if (b.critic === 'R2') {
+      if (b.jury === 'film') await wholeJury()
+      else publish('R2', singles(shuffle((await stopImages(stops, true)).jury)))
+    } else if (b.critic === 'R7') compression(b.segments)
+    else if (b.critic === 'R6') publish('R6', singles(await hook()))
+    else if (b.critic === 'R5') await continuity()
+  }
+}
+
 let rendered = false
 try {
   if (a.plan) console.log('PLAN ' + JSON.stringify(plan()))
@@ -387,6 +424,9 @@ try {
       const segments = cfg.segments.filter((s) => stops.some((p) => p.id === s.stop) && stopKinds.has(s.kind))
       await detail(segments)
       await motion(segments)
+    } else if (a.select) {
+      if (phase !== 6 || selectedStop) throw new Error('--select is for --phase 6 without --stop')
+      await polish()
     } else {
       if (phase === 6) await recordPacks(stops)
       compression()

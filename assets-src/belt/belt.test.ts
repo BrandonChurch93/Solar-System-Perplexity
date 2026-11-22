@@ -27,6 +27,7 @@ function look(motion: BeltMotion, index: number, time: number, frame: number): S
   const inside = !(depth < -rock.radius || (focal * Math.abs(c.x) - hx * depth) / Math.hypot(focal, hx) > rock.radius || (focal * Math.abs(c.y) - hy * depth) / Math.hypot(focal, hy) > rock.radius)
   let gap = 1e9
   for (const set of shot.sets) {
+    if (set.id !== shot.segment.stop && shot.farLight !== undefined && shot.farLight <= 0) continue
     const j = set.origin.clone().sub(shot.camera.position).applyQuaternion(inv)
     gap = Math.min(gap, (c.angleTo(j) - Math.asin(Math.min(1, rock.radius / dist)) - Math.asin(Math.min(1, 1 / j.length()))) * focal - coc / 2)
   }
@@ -95,7 +96,7 @@ describe('belt motion', () => {
     expect(Math.abs(rock.spin)).toBeGreaterThanOrEqual(10)
   })
 
-  it('keeps every rock off the discs of Mars and Jupiter, out of the lens and under a fifth of the frame', () => {
+  it('keeps every rock off the discs of Mars and Jupiter (Jupiter from the frame its light comes on), out of the lens and under a fifth of the frame', () => {
     motion.rocks.forEach((rock, i) => {
       for (let f = segment.firstFrame; f < segment.endFrame; f++) {
         for (let k = 0; k < 4; k++) {

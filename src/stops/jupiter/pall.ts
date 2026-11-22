@@ -6,7 +6,7 @@ import { slerpDir, smooth } from '../../director/rig'
 import { DIAG_GLSL, diagUniform } from '../../diagnostics/diag'
 import { NOISE_GLSL } from '../../terrain/relief'
 
-export interface PallLook { clear: number; gather: number; orbitClear: number; orbitGather: number; shell: [number, number]; morph: number }
+export interface PallLook { clear: number; gather: number; orbitClear: number; orbitGather: number; orbitThin?: number; orbitRays?: number; lit?: [number, number, number]; shell: [number, number]; morph: number }
 
 export interface PallSeaShape { centre: [number, number, number]; radius: number; orbitShell: [number, number] }
 
@@ -22,6 +22,7 @@ uniform vec3 uPallStreak;
 uniform vec2 uPallContrast;
 uniform vec2 uPallShell;
 uniform vec4 uPallSea;
+uniform vec3 uPallLit;
 ${NOISE_GLSL}
 float pallHash(vec2 p) {
   vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
@@ -87,20 +88,20 @@ out vec4 outColor;
 ${DIAG_GLSL}
 ${PALL_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec4 cloud = vec4(0.0);
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     cloud = pall(vNdc);
     cloud.a *= pallReach(vNdc);
   }
   outColor = vec4(cloud.rgb * uGain * cloud.a, cloud.a);
+  if (uDiag >= 2) discard;
 }`
 
 export function pallUniforms(shell: [number, number]): Record<string, THREE.IUniform> {
   return {
     uPall: { value: new THREE.Vector4(0, 1, 1, 0) }, uPallFocus: { value: new THREE.Vector3() }, uPallHorizon: { value: new THREE.Vector4(0, 1, 0, 0.22) }, uPallFlow: { value: new THREE.Vector2() },
     uPallColor: { value: new THREE.Vector3() }, uPallLow: { value: new THREE.Vector3() }, uPallBillow: { value: new THREE.Vector3(1, 1, 1) }, uPallStreak: { value: new THREE.Vector3(1, 1, 1) },
-    uPallContrast: { value: new THREE.Vector2() }, uPallShell: { value: new THREE.Vector2(shell[0], shell[1]) }, uPallSea: { value: new THREE.Vector4(0, 0, -2, 0) },
+    uPallContrast: { value: new THREE.Vector2() }, uPallShell: { value: new THREE.Vector2(shell[0], shell[1]) }, uPallSea: { value: new THREE.Vector4(0, 0, -2, 0) }, uPallLit: { value: new THREE.Vector3(-2, -1, 1) },
   }
 }
 
@@ -180,7 +181,8 @@ export class Pall {
     const blend = (x: [number, number, number], y?: [number, number, number]): [number, number, number] => (y ? [x[0] + (y[0] - x[0]) * side, x[1] + (y[1] - x[1]) * side, x[2] + (y[2] - x[2]) * side] : x)
     const top = p.p.coverTop
     const t = Math.tan(THREE.MathUtils.degToRad(vfov) / 2)
-    state.set(smooth(1 - Math.abs(dt) / span), t * aspect, t, top ? top[0] + (top[1] - top[0]) * side : 0.3)
+    const open = Math.min(Math.abs(dt) / span, 1)
+    state.set(view !== 'terrain' && !dive && l.orbitThin !== undefined ? 1 - Math.pow(open, l.orbitThin) : smooth(1 - open), t * aspect, t, top ? top[0] + (top[1] - top[0]) * side : 0.3)
     const hz = p.horizon(view === 'terrain' ? 'terrain' : 'orbit', shot.pose)
     ;(u.uPallHorizon!.value as THREE.Vector4).set(hz.normal[0], hz.normal[1], hz.offset, hz.soft)
     ;(u.uPallFlow!.value as THREE.Vector2).set(0.7 * dt, (dive ? -3 : 3) * dt)
@@ -190,10 +192,11 @@ export class Pall {
     ;(u.uPallLow!.value as THREE.Vector3).fromArray(blend(p.p.coverLow ?? p.p.cover, p.p.coverLowTerrain))
     ;(u.uPallBillow!.value as THREE.Vector3).fromArray(k.billow)
     ;(u.uPallStreak!.value as THREE.Vector3).fromArray(k.streak)
-    ;(u.uPallContrast!.value as THREE.Vector2).fromArray(k.contrast)
+    ;(u.uPallContrast!.value as THREE.Vector2).set(k.contrast[0], k.contrast[1] * (view !== 'terrain' && !dive && l.orbitRays !== undefined ? 1 - smooth(Math.min(open / l.orbitRays, 1)) : 1))
     const shell = u.uPallShell!.value as THREE.Vector2
     if (view !== 'terrain') {
       shell.fromArray(this.sea.orbitShell)
+      if (l.lit) (u.uPallLit!.value as THREE.Vector3).fromArray(l.lit)
       return
     }
     const c = this.c.copy(this.centre).sub(shot.pose.position).divideScalar(this.sea.radius).applyQuaternion(this.q.copy(shot.pose.quaternion).invert())

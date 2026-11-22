@@ -29,19 +29,17 @@ in vec2 vNdc;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 ray = normalize(vRay);
   vec3 p = uAim * ray;
   vec2 uv = p.xy / max(-p.z, 1e-4) / uLens.xy * 0.5 + 0.5;
   vec2 e = min(uv, 1.0 - uv);
   float inside = step(1e-4, -p.z) * smoothstep(0.0, uLens.z, min(e.x, e.y)) * uWeight;
   float hole = uHole.x * (1.0 - smoothstep(uHole.y, uHole.z, acos(clamp(dot(ray, uSunAt), -1.0, 1.0))));
-  if (inside <= 0.0 && hole <= 0.0) discard;
   vec3 c = vec3(0.0);
   float alpha = 0.0;
+  vec2 gx = dFdx(uv);
+  vec2 gy = dFdy(uv);
   for (int i = 0; i < (inside > 0.0 ? 1 : 0); i++) {
-    vec2 gx = dFdx(uv);
-    vec2 gy = dFdy(uv);
     vec2 dx = gx * 0.25;
     vec2 dy = gy * 0.25;
     vec3 t = 0.25 * (textureGrad(uMap, uv + dx + dy, gx, gy).rgb + textureGrad(uMap, uv - dx + dy, gx, gy).rgb + textureGrad(uMap, uv + dx - dy, gx, gy).rgb + textureGrad(uMap, uv - dx - dy, gx, gy).rgb);
@@ -53,6 +51,7 @@ void main() {
   }
   float cover = 1.0 - (1.0 - hole) * (1.0 - alpha);
   outColor = vec4(c * (alpha / max(cover, 1e-6)), cover);
+  if (uDiag >= 2 || (inside <= 0.0 && hole <= 0.0)) discard;
 }`
 
 export class SkyPlate {
