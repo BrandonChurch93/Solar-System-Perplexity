@@ -993,3 +993,16 @@ While it runs: no change to `src/stops/venus` or `public/assets/venus` in the re
 After it: commit the code, push, looks, and when the cut time is named `CUT34 venus`: READY with the full hash; judged frames differing from main: none if `cmp` holds; motion changed in venus.dive, venus.dive-cover, venus.rise, venus.rise-cover (orbit side frames under the veil); item 28; worse or new: fewer fine speed lines and a slightly thinner veil over the globe at 1309 to 1311. If a sheet shows a fault: `git checkout src/stops/venus/veil.ts src/stops/venus/look.ts` and say that the round 33 hash stands; the pole fade alone would then go to CUT35 with its own proof.
 
 Round 33: Venus measures green on the Builder's workers (status 104); the film jury R2 is asked for Venus (open item 32); critics' words between about 14:40 and 15:30.
+
+## State at 14:33 (22 Nov): q34 half way: finals, draft strips, audit and repeat hold (read this first after a compaction)
+
+Head 0af6f18 and this note; tree holds main a60c5ff (main is 96c754d now, status only; merge it before the commit of the code). Working tree: pole fade and push (orbit side only), NOT committed. r2 on main 84b0ea4.
+
+q34 so far (started 14:17):
+- `tsc` exit 0. Finals f25 against main's own finals f24b: 1185, 1287, 1440, 1586 the same bytes.
+- Draft strip at preview size against main (`bd` against `qd`): the frames whose bytes change are 1300 to 1313 and 1560 to 1575, that is the orbit side under the veil and nothing else; no terrain side frame changes (1314 to 1330 and 1543 to 1559 the same bytes).
+- Strips read pair by pair, left main, right working tree (`view/qd-dive-a.jpg`, `qd-dive-b.jpg`, `qd-dive-c.jpg`, `qd-rise-a.jpg`, `qd-rise-b.jpg`, `qd-rise-c.jpg`, in the looks 14:26; made with `python3 strip.py OUT A-%d.png B-%d.png FRAMES`):
+  - Dive 1303 to 1308: main shows a burst of straight spokes from the bottom centre over the sharp globe; the working tree shows soft cloud wisps coming in. 1309, 1310: the fine hair lines and the pale column with knots are soft cloud. 1311 to 1313: soft streaked haze on both, forms a little different.
+  - Rise 1560 to 1564: nearly the same. 1565 to 1567: the pale upright column is softer. 1568 to 1572: the burst of spokes at the lower left is soft wisps leaving. 1573 to 1575: nearly the same.
+- Audit: no line of my folder. Repeat, 14 frames, 3 fresh sessions, 2 runs each: one hash each. 1185 1cb37f56f94478ec, 1287 267438642d6a031c, 1440 dca2f98d69a0cded (as on every main since batch 20), 1586 77f333178b7f48e1 (main's new flight sky, was d7ef9f560f184a75), 1320 a85d3986273234f0, 1318 e3ede6a4ac67af68, 1552 756a021b3d8c7e07 (terrain side, as before), new: 1300 fa8d77d9c3dcb30a, 1305 be3efc960f18745b, 1307 bf14cb2c9c0bfcbf, 1310 a07c55752f695b80, 1563 84f2cc1bda109618, 1571 f5d06e7c0dd7c743, 1573 88abc6e7ce5d4ec2.
+- Running: review cover sheets c25 (about 15:03), review stills r25, chain (about 15:27).
