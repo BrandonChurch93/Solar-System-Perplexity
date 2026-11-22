@@ -630,3 +630,9 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - chain25 (`/tmp/chain25.sh`, log `/tmp/chain25.log`): finals branch (f7) against main (fm) of 3352, 1642, 4492, 2782; marker JUDGED; finals of the trial 1072, 4492 (ft); trial review 24 frames (rt); main review 12 frames (rm); CHAIN25DONE.
 - Looks pushed 12:25 (84516ea).
 - Trap: `m0` in `out/work/travel` is an old main; do not compare against it.
+
+## 12:39 UTC: judged frames at the final tier, branch against main
+- Finals on HEAD's tree (label f7) against main (fm), file hashes: 3352 8ea2ec7329051c99 both, 1642 e951a693099ea402 both, 4492 afc0bc3b22cb4600 both (steady moves no byte there: the body is a point at its pinned place). 2782 main 42997fcf3b8eccba, branch a5b35d6b5edd2329.
+- 2782 seen side by side (`/tmp/v/2782-final-ab.jpg`, native `2782-rock.png`, `2782-centre.png`): the belt rock keeps its place, size and outline; the stars behind differ (the turn starts at 2760, not 2763) and the light on the rock falls a little differently; Jupiter is a warm point at the centre of the frame (far light 0.85).
+- Not rendered at final by me: 495 and 3922 on the branch (shots differ: sky patch 0.272 against 0.089 at 495; far light 0.069 against 0.001 and the pinned camera at 3922).
+- CUT33 message goes out now with this head.
