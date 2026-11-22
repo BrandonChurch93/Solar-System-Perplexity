@@ -1,63 +1,63 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T13:28:29.304Z",
+ "pushed": "2026-11-22T13:48:25.139Z",
  "head": "4f72047d9965003cc6040bbca98d28b5a3462e68",
- "note": "leave ramp l4/l5, 486 and 495 native pairs, camera speed curve; agent/sun 4f72047d on main 5e3462bd",
+ "note": "CUT34 proof pictures so far: finals 0 30 60 90, strip, 60 and 495 pairs; agent/sun 4f72047d on main 5e3462bd",
  "looks": [
   {
-   "time": "2026-11-22T13:28:28.561Z",
-   "file": "20261122132828561-note-speed-0-90.jpg",
-   "source": "out/work/sun/hk3/speed-0-90.jpg",
+   "time": "2026-11-22T13:48:24.054Z",
+   "file": "20261122134824054-note-c34-final-60-native.jpg",
+   "source": "out/work/sun/hk3/c34-final-60-native.jpg",
    "kind": "note",
-   "label": "camera speed 0 to 90 as share of cruise, agent/sun 4f72047d: the round 33 path, plan.ts same bytes",
+   "label": "final 60 native crop, the outer strand with sky between, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:28:27.455Z",
-   "file": "20261122132827455-note-l5-495-red-x4.jpg",
-   "source": "out/work/sun/hk3/l5-495-red-x4.jpg",
+   "time": "2026-11-22T13:48:22.871Z",
+   "file": "20261122134822871-note-c34-final-30-native.jpg",
+   "source": "out/work/sun/hk3/c34-final-30-native.jpg",
    "kind": "note",
-   "label": "495 x4 nearest, left head 969a8a6, right agent/sun 4f72047d: the two red double lines (corona map remnants) are gone",
+   "label": "final 30 native crop, the flash, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:28:26.515Z",
-   "file": "20261122132826515-note-l5-495-native.jpg",
-   "source": "out/work/sun/hk3/l5-495-native.jpg",
+   "time": "2026-11-22T13:48:21.850Z",
+   "file": "20261122134821850-note-c34-final-495-native.jpg",
+   "source": "out/work/sun/hk3/c34-final-495-native.jpg",
    "kind": "note",
-   "label": "495 native crop, left round 33 head 969a8a6, right agent/sun 4f72047d (main 5e3462bd): stars masked by the corona's radiance; the plate is Mercury's",
+   "label": "final 495 native crop at the left limb, head 969a8a6 left, new leave right, agent/sun 4f72047d on main 5e3462bd: stars masked by radiance, red lines gone; the burnt loops' stepped edges are open",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:28:25.451Z",
-   "file": "20261122132825451-note-l5-486-native.jpg",
-   "source": "out/work/sun/hk3/l5-486-native.jpg",
+   "time": "2026-11-22T13:48:20.986Z",
+   "file": "20261122134820986-note-c34-final-495-pair.jpg",
+   "source": "out/work/sun/hk3/c34-final-495-pair.jpg",
    "kind": "note",
-   "label": "486 native crop, left round 33 head 969a8a6, right agent/sun 4f72047d: limb darkens, no white band over the limb",
+   "label": "final 495, round 33 head 969a8a6 left, new leave right, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:28:24.368Z",
-   "file": "20261122132824368-note-l4-sheet.jpg",
-   "source": "out/work/sun/hk3/l4-sheet.jpg",
+   "time": "2026-11-22T13:48:19.849Z",
+   "file": "20261122134819849-note-c34-final-60-pair.jpg",
+   "source": "out/work/sun/hk3/c34-final-60-pair.jpg",
    "kind": "note",
-   "label": "leave ramp, drafts 450 to 495 every 4th frame, agent/sun 4f72047d on main 5e3462bd: the wash, exposure and corona ramp over the whole pan (head stepped 474 to 482)",
+   "label": "final 60, round 33 head 969a8a6 left, take 3 right, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:11:40.001Z",
-   "file": "20261122131140001-note-l1-sheet.jpg",
-   "source": "out/work/sun/hk3/l1-sheet.jpg",
+   "time": "2026-11-22T13:48:18.799Z",
+   "file": "20261122134818799-note-p4-strip9.jpg",
+   "source": "out/work/sun/hk3/p4-strip9.jpg",
    "kind": "note",
-   "label": "sun.travel 450 to 495, drafts: exposure and wash ramped over the whole pan (uncommitted on b34f946, main 8cd0877)",
+   "label": "hook nine frame strip at 390 px, round 33 head 969a8a6 above, take 3 below, drafts, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T13:11:39.333Z",
-   "file": "20261122131139333-note-b13-pairs2.jpg",
-   "source": "out/work/sun/hk3/b13-pairs2.jpg",
+   "time": "2026-11-22T13:48:17.655Z",
+   "file": "20261122134817655-note-c34-finals-0-30-60-90.jpg",
+   "source": "out/work/sun/hk3/c34-finals-0-30-60-90.jpg",
    "kind": "note",
-   "label": "hook take 3, drafts 45, 53, 60, 66: second strand with sky between; agent/sun b34f946 on main 8cd0877",
+   "label": "hook take 3, finals 0, 30, 60, 90, agent/sun 4f72047d on main 5e3462bd",
    "stop": "sun"
   },
   {
