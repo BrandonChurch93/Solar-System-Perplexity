@@ -49,6 +49,7 @@
     "earth.hold",
     "earth.dive",
     "earth.dive-cover",
+    "earth.rise",
     "earth.rise-cover"
    ],
    "R1": true,
@@ -80,6 +81,7 @@
     3720
    ],
    "sheets": [
+    "saturn.dive",
     "saturn.terrain",
     "saturn.rise"
    ],
@@ -94,6 +96,7 @@
    "sheets": [
     "uranus.dive",
     "uranus.dive-cover",
+    "uranus.rise",
     "uranus.rise-cover"
    ],
    "R1": false,
@@ -123,7 +126,8 @@
    "venus.travel",
    "earth.travel",
    "mars.travel",
-   "uranus.travel"
+   "uranus.travel",
+   "ending.retreat"
   ],
   "R5": true,
   "R6": true,
