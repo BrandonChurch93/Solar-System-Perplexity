@@ -4,7 +4,7 @@ import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
-import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
+import { arc, drift, forward, lookAt, mix, ramp, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
@@ -25,7 +25,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
+export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, azimuthPerSecond: 0, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turnFrom: 0, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3, aimFrom: 0 } }
 const OFFSET_FROM = 0.15
 const BOW_REACH = 24
 const SUN_SWAP: [number, number] = [0.3, 0.42]
@@ -36,6 +36,16 @@ const SUN_GLOW_FROM = 0.06
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
+const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
+  const x = first.clone().normalize()
+  const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
+  return new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, new THREE.Vector3().crossVectors(x, y)))
+}
+const glide = (u: number, e: number): number => {
+  const x = Math.min(Math.max(u, 0), 1)
+  const edge = (t: number): number => e * (t * t * t - (t * t * t * t) / 2)
+  return (x < e ? edge(x / e) : x > 1 - e ? 1 - e - edge((1 - x) / e) : x - e / 2) / (1 - e)
+}
 const OPEN = config.raw.travel.sky
 const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number>)[id] ?? 0
 const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number>)[id] ?? 0
@@ -59,6 +69,7 @@ export class FilmDirector implements Director {
   private readonly settled = new Map<number, [number, number]>()
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
+  private lookbackSide = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
   sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
@@ -99,6 +110,8 @@ export class FilmDirector implements Director {
     const up = axis.clone()
     this.lookbackUp = up
     this.lookbackSun = s
+    const out = n.exitPose(n.seg.rise.end).position.clone().normalize()
+    this.lookbackSide = out
     this.sky = this.aimSky()
   }
 
@@ -157,20 +170,42 @@ export class FilmDirector implements Director {
     const back = judged(config.endingId + '.lookback')
     const lastId = this.plans[this.plans.length - 1]!.id
     const kept = out.orbits[lastId]
-    if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(cam(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
+    if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(this.skyAnchor(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
     else if (kept) out.orbits[config.endingId] = kept
     return out
   }
 
-  private lookback(t: number): Pose {
+  private skyAnchor(frame: number): THREE.Quaternion {
+    const rad = THREE.MathUtils.degToRad
+    const up = this.lookbackUp
+    const aim = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.skyAnchor.aimDeg))
+    const local = lookAt(new THREE.Vector3(), aim, up, LOOKBACK.skyAnchor.rollDeg)
+    return this.frames[this.plans.length - 1]!.rotation.clone().multiply(local).multiply(drift(frame / config.fps))
+  }
+
+  private lookbackPlace(t: number): { phase: number; azimuth: number; distance: number; s: number } {
     const lb = config.segments.find((x) => x.kind === 'lookback')!
     const s = t - (lb.start + lb.end) / 2
     const rad = THREE.MathUtils.degToRad
-    const up = this.lookbackUp
-    const position = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.neptuneDeg + LOOKBACK.neptunePerSecond * s)).multiplyScalar(-LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s))
-    const flat = this.lookbackSun.clone().applyAxisAngle(up, rad(LOOKBACK.aimDeg + LOOKBACK.aimPerSecond * s))
-    const aim = flat.clone().applyAxisAngle(new THREE.Vector3().crossVectors(flat, up).normalize(), rad(LOOKBACK.liftDeg))
-    return { position, quaternion: lookAt(position, position.clone().add(aim), up, LOOKBACK.rollDeg + LOOKBACK.rollPerSecond * s), vfov: LOOKBACK.vfov }
+    return { phase: rad(LOOKBACK.phaseDeg + LOOKBACK.phasePerSecond * s), azimuth: rad(LOOKBACK.azimuthDeg + LOOKBACK.azimuthPerSecond * s), distance: LOOKBACK.distance * Math.exp(LOOKBACK.pullPerSecond * s), s }
+  }
+
+  private nightSide(phase: number, azimuth: number, distance: number, sun = this.lookbackSun): THREE.Vector3 {
+    const side = this.lookbackSide.clone().addScaledVector(sun, -this.lookbackSide.dot(sun)).normalize()
+    return sun.clone().multiplyScalar(Math.cos(phase)).addScaledVector(side.applyAxisAngle(sun, azimuth), Math.sin(phase)).multiplyScalar(distance)
+  }
+
+  private lookback(t: number): Pose {
+    const at = this.lookbackPlace(t)
+    const s = at.s
+    const rad = THREE.MathUtils.degToRad
+    const position = this.nightSide(at.phase, at.azimuth, at.distance)
+    const tan = Math.tan(rad(LOOKBACK.vfov) / 2)
+    const sx = (LOOKBACK.sun[0] + LOOKBACK.sunPerSecond[0] * s) * tan
+    const sy = (LOOKBACK.sun[1] + LOOKBACK.sunPerSecond[1] * s) * tan
+    const line = rad(LOOKBACK.lineDeg + LOOKBACK.linePerSecond * s)
+    const seen = basis(new THREE.Vector3(sx, sy, -1), new THREE.Vector3(sx + Math.cos(line), sy + Math.sin(line), -1))
+    return { position, quaternion: basis(this.lookbackSun, position.clone().negate()).multiply(seen.invert()), vfov: LOOKBACK.vfov }
   }
 
   private turnEnd(i: number): number {
@@ -506,21 +541,26 @@ export class FilmDirector implements Director {
       const p = this.plans[i]!
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
-      const arrived = segment.kind === 'retreat' ? smooth(ramp(OPEN.retreatGlare, 1, u)) : 1
+      const arrived = segment.kind === 'retreat' ? smoother(ramp(OPEN.retreatGlare[0], OPEN.retreatGlare[1], u)) : 1
       const lifted = riseLift(p.id)
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
+      const open = mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), LOOKBACK.skyExposure, lifted)
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), open, smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u))) : open }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
+      skyStars = lifted
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
         const b = look(time)
-        const lead = u + OPEN.retreatLead * Math.pow(Math.sin(Math.PI * u), 2)
-        const w = smoother(ramp(0, 1, lead))
-        const wp = easeInOut(lead)
-        const dir = slerpDir(a.position.clone().normalize(), b.position.clone().normalize(), wp)
-        const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
-        const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
+        const end = this.lookbackPlace(time)
+        const g = LOOKBACK.glide
+        const wp = glide(ramp(g.turnFrom, 1, u), g.turn)
+        const w = glide(ramp(g.aimFrom, 1, u), g.aim)
+        const lit = p.lightDir.clone().lerp(this.lookbackSun, smooth(u * g.light)).normalize()
+        const phase = mix(a.position.angleTo(p.lightDir), end.phase, glide(u, g.phase))
+        const position = this.nightSide(phase, end.azimuth * wp, a.position.length() * Math.pow(end.distance / a.position.length(), glide(u, g.pull)), lit)
+        const track = (x: THREE.Vector3): THREE.Quaternion => lookAt(x, new THREE.Vector3(), this.lookbackSun)
+        const held = track(a.position).invert().multiply(a.quaternion)
+        const local: Pose = { position, quaternion: track(position).multiply(held.slerp(track(b.position).invert().multiply(b.quaternion), w)), vfov: mix(a.vfov, b.vfov, w) }
         pose = inSet(s, local)
-        skyStars = mix(lifted, 1, smoother(ramp(OPEN.retreatOpen[0], OPEN.retreatOpen[1], u))) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
