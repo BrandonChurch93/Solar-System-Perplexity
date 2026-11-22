@@ -1,9 +1,25 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T11:10:23.159Z",
- "head": "217a588cd3a2cacc1a26df5794221386bdbcc451",
- "note": "Phase 6 job 1: mars.travel pinned, Jupiter a point from 2773",
+ "pushed": "2026-11-22T11:37:23.259Z",
+ "head": "fbb637912189a6697c9bc949957daf49f7a9133a",
+ "note": "Phase 6: mars.travel Jupiter as a point first, sun.travel sky patch ends with the turn",
  "looks": [
+  {
+   "time": "2026-11-22T11:37:22.691Z",
+   "file": "20261122113722691-note-p2-ab.jpg",
+   "source": "../../../../tmp/v/p2-ab.jpg",
+   "kind": "note",
+   "label": "sun.travel main above, patch end 0.7 below",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T11:37:22.162Z",
+   "file": "20261122113722162-note-p1-ab.jpg",
+   "source": "../../../../tmp/v/p1-ab.jpg",
+   "kind": "note",
+   "label": "mars.travel main above, job 1 below",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T11:10:13.169Z",
    "file": "20261122111013169-note-p1-pt.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/g1-2228-final.jpg",
    "kind": "note",
    "label": "grow b4edbdb 2228 final, Mars 158 px radius, turn 4.34",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:17:34.231Z",
-   "file": "20261122101734231-note-g1-uranus.jpg",
-   "source": "../../../../tmp/v/g1-uranus.jpg",
-   "kind": "note",
-   "label": "grow window 33 uranus.travel 4494 to 4529 draft",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-22T10:15:08.817Z",
-   "file": "20261122101508817-note-g1-jupiter.jpg",
-   "source": "../../../../tmp/v/g1-jupiter.jpg",
-   "kind": "note",
-   "label": "grow window 33 jupiter.travel 3354 to 3389 draft",
    "stop": "travel"
   }
  ]
