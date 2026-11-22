@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crop T, curved cloud bands just inside the bright lower-left limb",
+      "what": "A fine, evenly spaced diagonal texture runs through multiple cloud streaks, and the streaks become smeared in the direction of the limb. The regular texture reads as resampling rather than cloud detail.",
+      "fix": "Improve the cloud texture filtering at grazing angles and break up the remaining streaks with nonrepeating fine cloud detail."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crop H, Andes and the Pacific coast of southern South America",
+      "what": "The Andes look like an embossed bright ridge, with a soft, nearly continuous highlight tracing the coast and obscuring finer terrain detail in the closer frame.",
+      "fix": "Reduce the terrain relief and sharpening, and preserve separate fine detail in the mountains and along the coastline."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop C, upper-right aurora where it meets the globe",
+      "what": "Several green columns have similar tapered profiles and merge into a narrow, bright stripe at the limb, making the aurora look like a layer laid over the edge.",
+      "fix": "Vary the spacing and shape of the curtains and soften their bases into the surrounding atmosphere."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crops L and M, moon at the upper right",
+      "what": "The moon's crater detail and lit outline look soft and slightly smeared compared with the nearby stars.",
+      "fix": "Render the moon at higher sampling resolution and retain fine crater contrast without sharpening the silhouette."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops W and X, brighter stars in the lower-right sky",
+      "what": "Some bright stars are colored, elongated blobs rather than points, even away from the atmospheric glow.",
+      "fix": "Tighten the bright-star profiles and limit the colored bloom to the few brightest stars."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper right limb, crops C, I, L, M, R",
+      "what": "the aurora is a flat green comb of vertical strokes pasted over the limb, with a muddy red smudge behind it. It sits on top of the atmosphere rim and the stars instead of inside it, its edges are soft blobs, and it carries on down the night limb as a faint green line (crop R, V) that looks like a halo around a layer",
+      "fix": "remove it, or redo it as a thin, translucent curtain that follows the limb curve at altitude, fades with height, has fine ray structure, and is only clearly visible on the night side"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Milky Way patches above the north pole and below the south limb, crops F, K, H, V",
+      "what": "the brown dust and dense star cloud show up only in two patches that hug the globe, as if a texture was masked around it. The stars there are dense, blotchy and brighter than the rest of the sky, and the patch edges are visible",
+      "fix": "use one continuous, faint Milky Way band that runs across the whole frame and is not tied to where the globe is, or drop it"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "continents, especially the Andes, Rockies and Mexican plateau, crops A, F, G, H, Q",
+      "what": "the relief is exaggerated and looks embossed, and the land has an airbrushed, plastic, illustrative look with oversaturated green and cyan shelf rings. It reads as a stylised render, not a photograph",
+      "fix": "flatten the relief strength, desaturate the vegetation and shallow-water cyan, and add natural tonal variation and haze over the land"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower third and lower corners, crops T, U, V, W, X, H, D",
+      "what": "the near field is soft and smeared. The small popcorn clouds turn into repeated near-identical dots, the shadows are blurry dark streaks, and the ocean has lost texture at native size, so the closest part of the view has the least detail",
+      "fix": "render the foreground at higher detail: sharp cumulus edges, crisp shadow edges and fine sea-surface texture, with more variety in cloud size and shape"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "top centre sun and black sky, crops J, K, L",
+      "what": "the sun is a vague grey-blue glow cut off by the top edge, with no defined disc or flare structure, and stars are visible in a sky right beside the sun",
+      "fix": "either show a crisp sun with proper bloom or keep it out of frame, and remove the stars near the bright sun"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "sun glint and island, crops A, F, Q",
+      "what": "the glint is a broad, uniform, washed-out cream area with little wave structure, and the island's coastal shelf has a slightly airbrushed cyan gradient",
+      "fix": "break up the glint with wave-scale variation and a sharper core, and add texture to the shallow-water shelf"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "left limb atmosphere, crops B, D, G, P, U",
+      "what": "the atmosphere is a bright, uniform, glowing cyan band of the same thickness all round the day side, which looks like an added outer-glow effect",
+      "fix": "make the rim thinner and vary its brightness with the sun angle, with a soft falloff into space"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon, crop M",
+      "what": "the moon is small and soft with little surface detail, and has a slight dark halo against the stars",
+      "fix": "sharpen the moon's texture and remove the edge halo"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "star field, crops J, O, S, T, W, X",
+      "what": "the stars are evenly spread, with some slightly blobby, coloured points and no variation in density",
+      "fix": "use point-sharp stars with a natural range of brightness and some clustering"
+     }
+    ]
+   }
+  }
+ ]
+}

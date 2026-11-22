@@ -1,0 +1,56 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "left limb of planet, about 115,580 (crop O)",
+   "what": "a stray warm lens-flare blob sits right on the dark-side limb. It has no light source on that side and reads as a pasted object",
+   "fix": "remove the flare ghost, or move it onto the line from the sun through the frame centre and make it much fainter"
+  },
+  {
+   "severity": "major",
+   "file": "image-01.png",
+   "where": "sun limb and corona, upper right (crops C, M, S)",
+   "what": "the sun disc is blown out and looks airbrushed with no granulation. The corona filaments look painted, and there is a darker doubled ring between the disc edge and the outer glow",
+   "fix": "add surface granulation and limb darkening, and make the glow fall off smoothly from the disc edge with no dark ring"
+  },
+  {
+   "severity": "major",
+   "file": "image-05.png",
+   "where": "Milky Way band, upper left (crops B, G, H, N)",
+   "what": "the dust lane looks like a blotchy, painterly smear with even clumps of stars pasted on it. At native size it reads as a texture overlay, not depth",
+   "fix": "use a finer, lower-contrast dust structure with soft dark lanes, and spread the stars by brightness so they are not clumped evenly"
+  },
+  {
+   "severity": "minor",
+   "file": "image-05.png",
+   "where": "sun corona and prominence, upper right (crops C, Q, R)",
+   "what": "the prominence loop and corona streaks are smeared and soft, and the disc is flat white with no texture",
+   "fix": "sharpen the prominence structure and add surface detail plus limb darkening to the disc"
+  },
+  {
+   "severity": "minor",
+   "file": "image-05.png",
+   "where": "night-side limb against stars, lower left (crops D, T)",
+   "what": "the dark limb is a perfectly clean cut-out. The stars stop at a crisp vector-like edge with no faint earthshine or rim detail, which gives away the layering",
+   "fix": "add a very faint rim and a little terrain relief on the night limb so the edge does not look like a mask"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "sunlit hemisphere centre (crops A, G, Q)",
+   "what": "the crater field is crisp, but the bright ray systems and bluish patches have a slightly oversharpened HDR halo, and fine detail softens toward the terminator",
+   "fix": "reduce local-contrast sharpening and keep crater detail resolved into the terminator"
+  },
+  {
+   "severity": "minor",
+   "file": "image-05.png",
+   "where": "sky near the sun (crop E top)",
+   "what": "the warm glow gradient into the black sky shows faint banding",
+   "fix": "add dither or grain to the glow gradient"
+  }
+ ]
+}
