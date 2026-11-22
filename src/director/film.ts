@@ -39,7 +39,7 @@ const glide = (u: number, e: number): number => {
 const OFFSET_FROM = 0.15
 const PASS_REACH = 60
 const SUN_LEAVE = 0.55
-const SUN_SWAP: [number, number] = [0.42, 0.55]
+const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
 const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
@@ -494,7 +494,6 @@ export class FilmDirector implements Director {
     let far = 80000
     let dust = 0
     let dustLook = 0
-    const dustOffset = new THREE.Vector3()
     let light = this.sunFor(0)
     let sunWeight = 1
     let flare = 0
@@ -540,7 +539,6 @@ export class FilmDirector implements Director {
         pose = inSet(s, local)
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
         dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
-        dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * smoother(u))
       } else {
         pose = inSet(s, look(time))
         if (segment.kind === 'fade') post.fade = frame >= config.frameCount - 1 ? 0 : 1 - smooth(ramp(segment.start, segment.end - 2 / config.fps, time))
@@ -595,7 +593,6 @@ export class FilmDirector implements Director {
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
       dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
       dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * dustLook)
-      dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
       const t = this.sky.orbits[b.id]
       if (t) skyTurn = t
@@ -695,7 +692,7 @@ export class FilmDirector implements Director {
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, dustLook, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

@@ -61,8 +61,6 @@ export interface Shot {
   post: PostParams
   cover: CoverState
   dust: number
-  dustLook?: number
-  dustOffset: THREE.Vector3
 }
 
 export interface TextureOptions { srgb?: boolean; mips?: boolean; repeat?: boolean; mirror?: boolean; anisotropy?: number; flipY?: boolean; linear?: boolean }
