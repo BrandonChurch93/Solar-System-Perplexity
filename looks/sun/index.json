@@ -1,75 +1,75 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T17:04:29.383Z",
- "head": "997883b8ca120674ea4a61b4ac3204910a8f5679",
- "note": "sun: the lower right corner back on the approved lanes (open item 101), finals of 0, 60, 90 beside main; proofs running",
+ "pushed": "2026-11-22T17:48:37.233Z",
+ "head": "5ac86e824774aff65f62f8d0012fa39bba0a2169",
+ "note": "CUT35 sun as sent 17:39 UTC: READY agent/sun 795fbfdc (corner 24d509dd), main bca607b1. The sun.hold review frames from 17:48 on are a trial of one number (spinDegPerSecond 1 instead of 3.4), not committed",
  "looks": [
   {
-   "time": "2026-11-22T17:04:28.760Z",
-   "file": "20261122170428760-note-cut35-f0-full-main-over-new.jpg",
-   "source": "out/work/sun/cn/cut35-f0-full-main-over-new.jpg",
+   "time": "2026-11-22T17:48:36.027Z",
+   "file": "20261122174836027-note-cut35-sheet-terrain-today.jpg",
+   "source": "out/work/sun/cn/cut35-sheet-terrain-today.jpg",
    "kind": "note",
-   "label": "sun frame 0 final, whole frame: main (round 34) above, new corner below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "label": "CUT35 sun as sent 17:39, sheet terrain today; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:04:28.192Z",
-   "file": "20261122170428192-note-cut35-f90-corner-approved-r24-new.jpg",
+   "time": "2026-11-22T17:48:35.061Z",
+   "file": "20261122174835061-note-cut35-sheet-terrain-new.jpg",
+   "source": "out/work/sun/cn/cut35-sheet-terrain-new.jpg",
+   "kind": "note",
+   "label": "CUT35 sun as sent 17:39, sheet terrain new; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:48:33.938Z",
+   "file": "20261122174833938-note-cut35-rise-180-196-204-215-main-left-new-right.jpg",
+   "source": "out/work/sun/cn/cut35-rise-180-196-204-215-main-left-new-right.jpg",
+   "kind": "note",
+   "label": "CUT35 sun as sent 17:39, rise 180 196 204 215 main left new right; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:48:32.989Z",
+   "file": "20261122174832989-note-cut35-f90-full-main-over-new.jpg",
+   "source": "out/work/sun/cn/cut35-f90-full-main-over-new.jpg",
+   "kind": "note",
+   "label": "CUT35 sun as sent 17:39, f90 full main over new; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T17:48:31.949Z",
+   "file": "20261122174831949-note-cut35-f90-corner-approved-r24-new.jpg",
    "source": "out/work/sun/cn/cut35-f90-corner-approved-r24-new.jpg",
    "kind": "note",
-   "label": "sun frame 90 final, lower right corner at 1 to 1: approved, round 24, new corner (build C3), not committed yet; agent/sun 997883b8, main ff158d90",
+   "label": "CUT35 sun as sent 17:39, f90 corner approved r24 new; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:04:27.549Z",
-   "file": "20261122170427549-note-cut35-f90-corner-1to1-main-over-new.jpg",
+   "time": "2026-11-22T17:48:31.149Z",
+   "file": "20261122174831149-note-cut35-f90-corner-1to1-main-over-new.jpg",
    "source": "out/work/sun/cn/cut35-f90-corner-1to1-main-over-new.jpg",
    "kind": "note",
-   "label": "sun frame 90 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
+   "label": "CUT35 sun as sent 17:39, f90 corner 1to1 main over new; agent/sun 795fbfdc (corner commit 24d509dd), main bca607b1",
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T17:04:26.850Z",
-   "file": "20261122170426850-note-cut35-f60-corner-1to1-main-over-new.jpg",
-   "source": "out/work/sun/cn/cut35-f60-corner-1to1-main-over-new.jpg",
-   "kind": "note",
-   "label": "sun frame 60 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T17:04:26.230Z",
-   "file": "20261122170426230-note-cut35-f0-corner-1to1-main-over-new.jpg",
-   "source": "out/work/sun/cn/cut35-f0-corner-1to1-main-over-new.jpg",
-   "kind": "note",
-   "label": "sun frame 0 final, lower right corner at 1 to 1: main (round 34) above, the corner on the approved lanes (take W-1, build C3) below, not committed yet; agent/sun 997883b8, main ff158d90",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T16:49:59.116Z",
-   "file": "20261122164959116-frame-f00204-review.jpg",
-   "source": "out/work/sheets/.frames-VFWXji/f00204-review.png",
+   "time": "2026-11-22T17:48:07.817Z",
+   "file": "20261122174807817-frame-f00270-review.jpg",
+   "source": "out/work/sheets/.frames-RPB8JI/f00270-review.png",
    "kind": "frame",
-   "label": "sun.rise frame 204, review tier",
+   "label": "sun.hold frame 270, review tier",
    "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 204,
+   "segment": "sun.hold",
+   "frame": 270,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
    "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T16:43:47.667Z",
-   "file": "20261122164347667-note-c15-rise-190-200-210-215-today-new.jpg",
-   "source": "out/work/sun/cn/c15-rise-190-200-210-215-today-new.jpg",
-   "kind": "note",
-   "label": "frames 190, 200, 210, 215 lower right, today left, new right (drafts, build T3), agent/sun bd12ce2a, main 94482a8c",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T15:56:03.261Z",
-   "file": "20261122155603261-frame-f00179-review.jpg",
-   "source": "out/work/sheets/.frames-fhMZBm/f00179-review.png",
+   "time": "2026-11-22T17:24:38.690Z",
+   "file": "20261122172438690-frame-f00179-review.jpg",
+   "source": "out/work/sheets/.frames-NuG486/f00179-review.png",
    "kind": "frame",
    "label": "sun.terrain frame 179, review tier",
    "stop": "sun",
@@ -78,7 +78,7 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   }
  ]
 }
