@@ -381,6 +381,7 @@ export class NeptunePlanet {
     ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
     ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.lit[0]!, e.lit[1]!)
+    ;(u.uForwardShape!.value as THREE.Vector2).x = limb.forwardWidth + (e.forwardWidth - limb.forwardWidth) * end
     const knots = u.uCloud!.value as THREE.Vector3[]
     for (let i = 0; i < KNOTS; i++) {
       const c = cloud[i]!
