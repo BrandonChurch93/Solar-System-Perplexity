@@ -1,9 +1,75 @@
 {
  "folder": "belt",
- "pushed": "2026-11-22T07:33:34.381Z",
- "head": "2ca53e20402ccabcd47791babf90cec71724eadf",
- "note": "belt placement check on the travel head",
+ "pushed": "2026-11-22T09:42:57.256Z",
+ "head": "3e22629501da876c2c1b8b96f6a1e094049042a1",
+ "note": "belt task 9: hero after round 31 words, final 2782, native crop pair, draft strip",
  "looks": [
+  {
+   "time": "2026-11-22T09:42:40.357Z",
+   "file": "20261122094240357-note-sheet.jpg",
+   "source": "out/work/belt/t9/strip/sheet.jpg",
+   "kind": "note",
+   "label": "belt draft strip 2762 to 2795 every third frame, hero follows the camera turn",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T09:42:39.729Z",
+   "file": "20261122094239729-note-hero.jpg",
+   "source": "../view/t9/hero.png",
+   "kind": "note",
+   "label": "belt hero 2782 native crop, before left, after right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T09:42:38.926Z",
+   "file": "20261122094238926-note-f02782.jpg",
+   "source": "out/work/belt/t9/after/f02782.png",
+   "kind": "note",
+   "label": "belt hero after round 31 words: take 6 surface, final 2782",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-22T09:41:34.462Z",
+   "file": "20261122094134462-frame-f02800.jpg",
+   "source": "out/work/belt/t9/hash/f02800.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2800, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2800,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "8ec0e4d8dd9dddfb"
+  },
+  {
+   "time": "2026-11-22T07:56:56.074Z",
+   "file": "20261122075656074-still-f02769-16x9-final-full.jpg",
+   "source": "out/work/stills/f02769-16x9-final-full.png",
+   "kind": "still",
+   "label": "mars.travel frame 2769, final tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2769,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6de1641714a14974"
+  },
+  {
+   "time": "2026-11-22T07:55:04.207Z",
+   "file": "20261122075504207-still-f02782-16x9-final-full.jpg",
+   "source": "out/work/stills/f02782-16x9-final-full.png",
+   "kind": "still",
+   "label": "mars.travel frame 2782, final tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6de1641714a14974"
+  },
   {
    "time": "2026-11-22T07:33:33.662Z",
    "file": "20261122073333662-note-belt-t7-travel-a3c388b-draft-strip-2756-2804.jpg",
@@ -19,66 +85,6 @@
    "kind": "note",
    "label": "belt on travel head a3c388b: final 2782",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:23:48.952Z",
-   "file": "20261122072348952-frame-f02790.jpg",
-   "source": "out/work/belt/t7/dC/f02790.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2790, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2790,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "323127ba29b6b6d6"
-  },
-  {
-   "time": "2026-11-22T07:15:12.762Z",
-   "file": "20261122071512762-note-belt-t7-final-2787-after.jpg",
-   "source": "../send/belt-t7-final-2787-after.jpg",
-   "kind": "note",
-   "label": "task 7: belt-t7-final-2787-after",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:15:12.252Z",
-   "file": "20261122071512252-note-belt-t7-final-2777-after.jpg",
-   "source": "../send/belt-t7-final-2777-after.jpg",
-   "kind": "note",
-   "label": "task 7: belt-t7-final-2777-after",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:15:11.744Z",
-   "file": "20261122071511744-note-belt-t7-review-sheet.jpg",
-   "source": "../send/belt-t7-review-sheet.jpg",
-   "kind": "note",
-   "label": "task 7: belt-t7-review-sheet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:15:11.196Z",
-   "file": "20261122071511196-note-belt-t7-near-native-before-2782-after-2769.jpg",
-   "source": "../send/belt-t7-near-native-before-2782-after-2769.jpg",
-   "kind": "note",
-   "label": "task 7: belt-t7-near-native-before-2782-after-2769",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-22T07:14:27.298Z",
-   "file": "20261122071427298-still-f02782-16x9-draft-web.jpg",
-   "source": "out/work/stills/f02782-16x9-draft-web.png",
-   "kind": "still",
-   "label": "mars.travel frame 2782, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2782,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "cd28657af7d3b4d0"
   }
  ]
 }
