@@ -20,12 +20,12 @@ const BASE: TravelLook = { pan: [2, 4], panSpan: [0, 1], lead: [0, 1], roll: [2,
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { pan: [2, 4], roll: [2, 2], rollSpan: [0, 1], grow: [2, 3] },
   mercury: { pan: [2, 5], bowDeg: 9, rollSpan: [0.1, 0.92], grow: [3, 3] },
-  venus: { pan: [2, 4], panSpan: [0.2, 1], lead: [0.25, 0.35], bowDeg: -12, rollSpan: [0.2, 0.96], grow: [3, 3], clearBy: 0.7 },
+  venus: { pan: [2, 4], panSpan: [0, 0.72], bowDeg: -12, rollSpan: [0.2, 0.96], grow: [3, 3], clearBy: 0.7 },
   earth: { pan: [2, 4], panSpan: [0, 0.9], bowDeg: -7, rollSpan: [0.02, 0.86], grow: [3, 4] },
   mars: { pan: [2, 4], bowDeg: 10, roll: [2, 2], rollSpan: [0.02, 0.98], grow: [2, 3] },
   jupiter: { pan: [2, 5], bowDeg: -10, rollSpan: [0.08, 0.9], grow: [3, 4] },
-  saturn: { pan: [2, 3], panSpan: [0, 0.96], bowDeg: 8, rollSpan: [0.05, 0.85], grow: [2, 3] },
-  uranus: { pan: [2, 4], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
+  saturn: { pan: [2, 3], panSpan: [0, 0.76], bowDeg: 8, rollSpan: [0.05, 0.85], grow: [2, 3] },
+  uranus: { pan: [1, 2], panSpan: [0, 0.8], bowDeg: -6, rollSpan: [0.1, 0.95], grow: [4, 3] },
 }
 
 export function travelLook(id: string): TravelLook {

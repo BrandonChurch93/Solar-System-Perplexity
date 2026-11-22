@@ -1,0 +1,35 @@
+{
+ "critic": "R3",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame, night side of the planet and the sky above the limb",
+   "what": "blacks are lifted a touch and the grade is slightly brighter and cooler (mean about +0.7 R, +0.5 G), so the dark lower-left of the planet and the sky lose a little depth; fine high-frequency detail in the cloud streaks is also slightly lower than in -a",
+   "fix": "pull the black point back down to match -a and restore a little micro-contrast and sharpening in the cloud bands"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, D and E (cloud bands and night side)",
+   "what": "cloud streaks are a little softer and the night side in D reads slightly milky compared with -a",
+   "fix": "recover fine texture in the atmosphere bands and deepen shadow density in the dark hemisphere"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops E and F (Milky Way core right of the planet)",
+   "what": "the bright dust knot in the galactic band has slightly smoother, less mottled texture than -a",
+   "fix": "bring back the fine dust mottling in the Milky Way core"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left lit limb of the planet",
+   "what": "the limb glow is a hair brighter and wider than in -a, slightly flattening the edge highlight",
+   "fix": "pull the limb glow intensity back slightly to match -a"
+  }
+ ]
+}

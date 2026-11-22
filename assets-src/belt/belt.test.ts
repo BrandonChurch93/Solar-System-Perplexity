@@ -9,7 +9,7 @@ const director = new FilmDirector(plans)
 const segment = beltSegment()
 const format = config.formats[config.formatKeys.master]!
 
-interface Seen { inside: boolean; gap: number; depth: number; share: number }
+interface Seen { inside: boolean; gap: number; depth: number; share: number; x: number; y: number; radius: number; sun: THREE.Vector3 }
 
 function look(motion: BeltMotion, index: number, time: number, frame: number): Seen {
   const shot = director.shotAt(frame, time)
@@ -35,7 +35,7 @@ function look(motion: BeltMotion, index: number, time: number, frame: number): S
   const y = format.height / 2 - (c.y / Math.max(depth, 1e-6)) * focal
   const w = Math.max(0, Math.min(format.width, x + reach) - Math.max(0, x - reach))
   const h = Math.max(0, Math.min(format.height, y + reach) - Math.max(0, y - reach))
-  return { inside, gap, depth: depth - rock.radius, share: Math.min(Math.PI * reach * reach, w * h) / (format.width * format.height) }
+  return { inside, gap, depth: depth - rock.radius, share: Math.min(Math.PI * reach * reach, w * h) / (format.width * format.height), x, y, radius: (focal * rock.radius) / Math.max(depth, 1e-6), sun: shot.sun.dir.clone().applyQuaternion(inv) }
 }
 
 describe('belt motion', () => {
@@ -73,11 +73,27 @@ describe('belt motion', () => {
     })
   })
 
-  it('shows the hero and two more rocks in the judged frame', () => {
+  it('shows the hero whole and one streak apart from it in the judged frame', () => {
     const judged = beltJudgedFrame()
-    const inside = motion.rocks.filter((_, i) => look(motion, i, (judged + 0.25) / config.fps, judged).inside).map((r) => r.id)
-    expect(inside).toContain('hero')
-    expect(inside.length).toBeGreaterThanOrEqual(3)
+    const seen: { id: string; s: Seen; blur: number }[] = []
+    motion.rocks.forEach((rock, i) => {
+      const a = look(motion, i, (judged + 0.25) / config.fps, judged)
+      const b = look(motion, i, (judged + 0.75) / config.fps, judged)
+      if (!a.inside && !b.inside) return
+      seen.push({ id: rock.id, s: a, blur: Math.hypot(b.x - a.x, b.y - a.y) })
+    })
+    const hero = seen.find((v) => v.id === 'hero')!
+    expect(hero.blur).toBeGreaterThanOrEqual(7)
+    expect(hero.blur).toBeLessThanOrEqual(12)
+    expect(2 * hero.s.radius).toBeGreaterThanOrEqual(220)
+    expect(2 * hero.s.radius).toBeLessThanOrEqual(320)
+    expect(Math.min(hero.s.x, format.width - hero.s.x, hero.s.y, format.height - hero.s.y) - hero.s.radius).toBeGreaterThanOrEqual(80)
+    const others = seen.filter((v) => v.id !== 'hero')
+    expect(others.length).toBeGreaterThanOrEqual(1)
+    for (const o of others) {
+      expect(o.blur, o.id + ' blur').toBeGreaterThan(60)
+      expect(Math.hypot(o.s.x - hero.s.x, o.s.y - hero.s.y) - o.s.radius - hero.s.radius - o.blur, o.id + ' apart').toBeGreaterThan(100)
+    }
   })
 
   it('keeps every rock off the discs of Mars and Jupiter, out of the lens and under a fifth of the frame', () => {
@@ -92,5 +108,97 @@ describe('belt motion', () => {
         }
       }
     })
+  })
+  it('leaves 2745 to 2757 and 2803 to 2819 empty', () => {
+    motion.rocks.forEach((rock, i) => {
+      for (let f = segment.firstFrame; f < segment.endFrame; f++) {
+        if (f > segment.firstFrame + 12 && f < segment.endFrame - 17) continue
+        for (let k = 0; k <= 2; k++) expect(look(motion, i, (f + k / 4) / config.fps, f).inside, rock.id + ' at frame ' + f).toBe(false)
+      }
+    })
+  })
+
+  it('keeps every rock 150 px or more from Jupiter from 2780 to 2799', () => {
+    motion.rocks.forEach((rock, i) => {
+      for (let f = beltJudgedFrame() - 2; f <= beltJudgedFrame() + 17; f++) {
+        for (let k = 0; k <= 2; k++) {
+          const s = look(motion, i, (f + k / 4) / config.fps, f)
+          if (s.inside) expect(s.gap, rock.id + ' at frame ' + f).toBeGreaterThanOrEqual(150)
+        }
+      }
+    })
+  })
+
+  it('lets no rock stay within 100 px of one place for more than ten frames', () => {
+    motion.rocks.forEach((rock, i) => {
+      for (let f = segment.firstFrame; f < segment.endFrame - 10; f++) {
+        const a = look(motion, i, (f + 0.25) / config.fps, f)
+        const b = look(motion, i, (f + 10.25) / config.fps, f + 10)
+        if (a.inside && b.inside) expect(Math.hypot(b.x - a.x, b.y - a.y), rock.id + ' from frame ' + f).toBeGreaterThan(200)
+      }
+    })
+  })
+
+  it('passes the near rock as a long streak with firm sides: blur over its own width, focus blur under 3 px', () => {
+    const i = motion.rocks.findIndex((r) => r.id === 'near')
+    let seen = 0
+    for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
+      const a = look(motion, i, (f + 0.25) / config.fps, f)
+      const b = look(motion, i, (f + 0.75) / config.fps, f)
+      if (!a.inside) continue
+      seen++
+      const blur = Math.hypot(b.x - a.x, b.y - a.y)
+      expect(blur, 'blur at frame ' + f).toBeGreaterThan(2 * a.radius)
+      expect(blur, 'blur at frame ' + f).toBeGreaterThan(60)
+      const pose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() }
+      motion.pose(i, director.shotAt(f, (f + 0.25) / config.fps), pose)
+      const shot = director.shotAt(f, (f + 0.25) / config.fps)
+      const dist = pose.position.clone().sub(shot.camera.position).length()
+      expect(beltSpec.aperture * Math.max(0, 1 / Math.min(dist, pose.position.length()) - 1 / beltSpec.focus)).toBeLessThan(3)
+    }
+    expect(seen).toBeGreaterThanOrEqual(4)
+  })
+
+  it('passes the hero through at one even pace of 14 to 24 px per frame, whole for twelve frames or more around the judged frame', () => {
+    const i = motion.rocks.findIndex((r) => r.id === 'hero')
+    let slow = 1e9
+    let fast = 0
+    const whole: number[] = []
+    for (let f = segment.firstFrame; f < segment.endFrame - 1; f++) {
+      const a = look(motion, i, (f + 0.25) / config.fps, f)
+      const b = look(motion, i, (f + 1.25) / config.fps, f + 1)
+      if (!a.inside) continue
+      const speed = Math.hypot(b.x - a.x, b.y - a.y)
+      slow = Math.min(slow, speed)
+      fast = Math.max(fast, speed)
+      if (Math.min(a.x, format.width - a.x, a.y, format.height - a.y) >= a.radius) whole.push(f)
+    }
+    expect(slow).toBeGreaterThanOrEqual(14)
+    expect(fast).toBeLessThanOrEqual(24)
+    expect(fast / slow).toBeLessThan(1.1)
+    expect(whole.length).toBeGreaterThanOrEqual(12)
+    expect(whole[0]!).toBeLessThanOrEqual(beltJudgedFrame() - 5)
+    expect(whole[whole.length - 1]!).toBeGreaterThanOrEqual(beltJudgedFrame() + 5)
+    expect(whole[whole.length - 1]! - whole[0]! + 1).toBe(whole.length)
+  })
+
+  it('brings the hero in lit: the part that shows first, between the way into the frame and the lens, faces the Sun', () => {
+    const i = motion.rocks.findIndex((r) => r.id === 'hero')
+    let seen = 0
+    for (let f = segment.firstFrame; f < segment.endFrame - 1 && seen < 12; f++) {
+      const a = look(motion, i, (f + 0.25) / config.fps, f)
+      if (!a.inside) continue
+      seen++
+      const into = new THREE.Vector3(Math.min(Math.max(a.x, 0), format.width) - a.x, a.y - Math.min(Math.max(a.y, 0), format.height), 0)
+      if (into.length() < 1) continue
+      const part = into.normalize().add(new THREE.Vector3(0, 0, 1)).normalize()
+      expect(part.dot(a.sun), 'frame ' + f + ' sun ' + a.sun.toArray().map((v) => v.toFixed(2)).join(' ')).toBeGreaterThan(0.2)
+    }
+    expect(seen).toBe(12)
+  })
+
+  it('turns the hero by 40 degrees or more between 2772 and 2792', () => {
+    const hero = motion.rocks.find((r) => r.id === 'hero')!
+    expect((Math.abs(hero.spin) * 20) / config.fps).toBeGreaterThanOrEqual(40)
   })
 })

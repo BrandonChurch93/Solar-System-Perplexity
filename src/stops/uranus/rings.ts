@@ -192,6 +192,32 @@ export function hairLines(look: RingLook): RingLine[] {
   return lines
 }
 
+export function strandLines(lines: RingLine[], look: { count: number; spread: number; amp: [number, number]; minSpan: number }): RingLine[] {
+  const long = lines.filter((l) => l.step * l.radius.length > look.minSpan)
+  const out: RingLine[] = []
+  for (let k = 0; k < (long.length > 0 ? look.count : 0); k++) {
+    const src = long[k % long.length]!
+    const f = (k * 0.6180339887 + 0.31) % 1
+    const g = (k * 0.7548776662 + 0.11) % 1
+    const offset = (f * 2 - 1) * look.spread
+    const level = look.amp[0] + (look.amp[1] - look.amp[0]) * g * g
+    const m = src.radius.length
+    let top = 0
+    for (const a of src.amp) top = Math.max(top, a)
+    const radius = new Float32Array(m)
+    const amp = new Float32Array(m)
+    for (let i = 0; i < m; i++) {
+      const a = src.theta0 + i * src.step
+      const taper = THREE.MathUtils.smoothstep(Math.min(i, m - 1 - i) / m, 0, 0.1)
+      const broken = 0.6 + 0.25 * Math.sin(a * 7 + k * 1.3) + 0.15 * Math.sin(a * 17 + k * 2.9)
+      radius[i] = src.radius[i]! + offset * (1 + 0.2 * Math.sin(a * 3 + k * 0.9))
+      amp[i] = level * broken * taper * (0.35 + 0.65 * Math.sqrt(src.amp[i]! / top))
+    }
+    out.push({ normal: src.normal, closed: false, theta0: src.theta0, step: src.step, radius, amp })
+  }
+  return out
+}
+
 export function ringGeometry(look: RingLook, lines: RingLine[], flat?: { eye: THREE.Vector3; normal: THREE.Vector3 }): THREE.BufferGeometry {
   let count = 0
   for (const line of lines) count += (line.radius.length + (line.closed ? 1 : 0)) * 2

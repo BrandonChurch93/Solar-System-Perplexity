@@ -22,7 +22,8 @@ const APPROACH_START = 0.2
 const APPROACH_POWER = 2.5
 const SWING_FROM = 0.3
 const CLEAR_DEG = 3
-const SUN_PULL_END = 0.34
+const SUN_PULL_FROM = 0.2
+const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 const LOOKBACK = { neptuneDeg: 44, neptunePerSecond: 0.4, aimDeg: 14, aimPerSecond: -1.6, liftDeg: 0, distance: 5.6, pullPerSecond: 0.015, rollDeg: 13, rollPerSecond: 0.4, vfov: 34, glare: 3, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 1 }
 const OFFSET_FROM = 0.15
@@ -36,6 +37,9 @@ const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const Y = new THREE.Vector3(0, 1, 0)
 const OPEN = config.raw.travel.sky
+const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number>)[id] ?? 0
+const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number>)[id] ?? 0
+const DUST_LOOK = config.raw.travel.dust
 const OPEN_TAPS = 8
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 
@@ -359,7 +363,7 @@ export class FilmDirector implements Director {
     const to = this.toWorld(index + 1, this.approachLocal(index + 1, x, time, shape))
     const start = this.toWorld(index + 1, this.approachLocal(index + 1, 0, time, shape))
     if (index === 0) {
-      const g = easeInOut(ramp(0, SUN_PULL_END, u))
+      const g = easeInOut(ramp(SUN_PULL_FROM, SUN_PULL_END, u))
       const radial = this.frames[0]!.origin.clone().addScaledVector(this.sunWorld, -this.sunStart * Math.pow(this.sunSwap / this.sunStart, g))
       from.position.lerp(radial, smooth(u / 0.12))
     }
@@ -444,10 +448,27 @@ export class FilmDirector implements Director {
         const off = THREE.MathUtils.radToDeg(this.travelCamera(index, seg.start + (k / steps) * (seg.end - seg.start)).quaternion.angleTo(end))
         if (off > OPEN.patchSettleDeg) from = (k + 1) / steps
       }
-      span = [Math.min(from, OPEN.patchDone - OPEN.patchSpan), OPEN.patchDone]
+      span = [Math.min(from, (OPEN.patchFrom as Record<string, number>)[this.plans[index]!.id] ?? OPEN.patchDone - OPEN.patchSpan), OPEN.patchDone]
       this.settled.set(index, span)
     }
     return span
+  }
+
+  glareOf(shot: Shot): THREE.Vector3 | null {
+    const seg = shot.segment
+    const index = config.stopIds.indexOf(seg.stop)
+    const p = this.plans[index]
+    if (!p || (seg.kind !== 'dive' && seg.kind !== 'rise') || shot.sets[0]?.view !== 'orbit') return null
+    const share = Math.min(p.glareCarry(seg, shot.time), 1)
+    if (!(share > 0)) return null
+    const c = p.coverCenter(seg)
+    const at = seg.kind === 'dive' ? c : c - 1e-6
+    const low = seg.kind === 'dive' ? p.dive(at) : p.rise(at)
+    if (low.view !== 'terrain') return null
+    const q = this.frames[index]!.rotation.clone().multiply(p.turn(at)).multiply(p.terrainFrame).multiply(low.pose.quaternion).multiply(drift(at))
+    const place = this.sunWorld.clone().applyQuaternion(q.invert())
+    const own = shot.sun.dir.clone().applyQuaternion(shot.camera.quaternion.clone().invert())
+    return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
   }
 
   shotAt(frame: number, time: number): Shot {
@@ -460,6 +481,7 @@ export class FilmDirector implements Director {
     let near = 0.01
     let far = 80000
     let dust = 0
+    let dustLook = 0
     const dustOffset = new THREE.Vector3()
     let light = this.sunFor(0)
     let sunWeight = 1
@@ -469,6 +491,7 @@ export class FilmDirector implements Director {
     let skyStars = 0
     let skyPatch = 1
     const index = config.stopIds.indexOf(segment.stop)
+    let skyLook = bandLook(segment.stop === config.endingId ? this.plans[this.plans.length - 1]!.id : segment.stop)
     const state = (i: number, view: ViewKind, weight = 1): SetState => {
       const p = this.plans[i]!
       const f = this.frames[i]!
@@ -483,20 +506,23 @@ export class FilmDirector implements Director {
       const p = this.plans[i]!
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
-      const arrived = segment.kind === 'retreat' ? smooth(ramp(0.5, 1, u)) : 1
-      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
+      const arrived = segment.kind === 'retreat' ? smooth(ramp(OPEN.retreatGlare, 1, u)) : 1
+      const lifted = riseLift(p.id)
+      light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), OPEN.retreatGlow, smoother(ramp(0, OPEN.retreat[0], u))), LOOKBACK.skyExposure, smoother(ramp(OPEN.retreat[1], 1, u))) : LOOKBACK.skyExposure }
       flare = mix(p.p.light.flare, LOOKBACK.flare, arrived)
       if (segment.kind === 'retreat') {
         const a = p.exitPose(time)
         const b = look(time)
-        const w = smoother(ramp(0, 1, u))
-        const wp = easeInOut(u)
+        const lead = u + OPEN.retreatLead * Math.pow(Math.sin(Math.PI * u), 2)
+        const w = smoother(ramp(0, 1, lead))
+        const wp = easeInOut(lead)
         const dir = slerpDir(a.position.clone().normalize(), b.position.clone().normalize(), wp)
         const dist = a.position.length() * Math.pow(b.position.length() / a.position.length(), wp)
         const local: Pose = { position: dir.multiplyScalar(dist), quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: mix(a.vfov, b.vfov, w) }
         pose = inSet(s, local)
-        skyStars = smoother(ramp(OPEN.retreatOpen[0], OPEN.retreatOpen[1], u)) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
+        skyStars = mix(lifted, 1, smoother(ramp(OPEN.retreatOpen[0], OPEN.retreatOpen[1], u))) * (1 - smoother(ramp(OPEN.retreatClose[0], OPEN.retreatClose[1], u)))
         dust = Math.pow(Math.sin(Math.PI * u), 2) * RETREAT_DUST
+        dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
         dustOffset.copy(forward(pose.quaternion)).multiplyScalar(-6 * wp)
       } else {
         pose = inSet(s, look(time))
@@ -516,10 +542,11 @@ export class FilmDirector implements Director {
       const k = smooth(ramp(0.25, 0.8, u))
       light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       const span = this.patchSpanOf(index)
-      skyPatch = smoother(ramp(span[0], span[1], u))
+      skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
-      const open = lens + (1 - lens) * (OPEN.leave.level * smoother(ramp(0, OPEN.leave.by, u)) * (1 - arrive) + (1 - skyPatch) * arrive)
+      const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
+      skyLook = mix(bandLook(a.id), bandLook(b.id), smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       light.sky = mix(light.sky, OPEN.openExposure, open)
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u)
@@ -544,7 +571,8 @@ export class FilmDirector implements Director {
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
-      dust = Math.sin(Math.PI * smooth(u))
+      dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
+      dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * dustLook)
       dustOffset.copy(this.approach[index + 1]!).multiplyScalar(-28 * smoother(ramp(0.1, 1, u)))
       flare = mix(a.p.light.flare, b.p.light.flare, k)
       const t = this.sky.orbits[b.id]
@@ -566,6 +594,8 @@ export class FilmDirector implements Director {
         view = r.view
         cover.amount = p.coverAmount(segment, time)
         if (p.p.coverHides !== undefined) cover.hides = p.p.coverHides
+        const hidden = p.coverHidden(segment, time)
+        if (hidden !== undefined) cover.hidden = hidden
         const side = p.coverSide(segment, time)
         const blend = (x: [number, number, number], y?: [number, number, number]): [number, number, number] => (y ? [x[0] + (y[0] - x[0]) * side, x[1] + (y[1] - x[1]) * side, x[2] + (y[2] - x[2]) * side] : x)
         cover.color = blend(p.p.cover, p.p.coverTerrain)
@@ -610,6 +640,14 @@ export class FilmDirector implements Director {
       }
       pose = inSet(s, local)
       sets = [s]
+      if (segment.kind === 'dive' || segment.kind === 'rise') {
+        const share = p.skyTurnShare(segment, time)
+        if (share !== null) {
+          const high = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id] ?? NO_TURN
+          const low = this.sky.turns[p.id] ?? NO_TURN
+          skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
+        }
+      }
       if (view === 'terrain') {
         near = 0.01
         far = 4000
@@ -618,15 +656,24 @@ export class FilmDirector implements Director {
         near = Math.min(Math.max(0.02 * d, 0.0004), 1)
         const low = p.p.light.skyLow
         if (low && segment.kind !== 'hold') light = { ...light, sky: light.sky * mix(low[2], 1, smooth(ramp(low[0], low[1], d))) }
+        const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
+        if (lift > 0) {
+          const w = coverWindow(segment)
+          const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : segment.start, segment.end, time))
+          skyStars = lift * (1 - (1 - x) * (1 - x))
+          light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
+        }
       }
+      const gain = p.skyGain(time)
+      if (gain !== 1) light = { ...light, sky: light.sky * gain }
     }
 
     pose.quaternion.multiply(drift(time))
-    if (cover.amount > 0) light = { ...light, sky: light.sky * Math.pow(1 - cover.amount, 2) }
+    if (cover.amount > 0) light = { ...light, sky: light.sky * this.plans[index]!.skyUnderCover(cover.amount, time) }
     post.exposure = light.exposure
     post.flare = flare
     const sun: SunState = { dir: this.sunWorld.clone(), color: SUN_COLOR, intensity: 3, angularRadius: light.radius, glare: light.glare * sunWeight }
-    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, near, far, sun, sets, post, cover, dust, dustOffset }
+    return { frame, time, segment, u, camera: pose, skyQuaternion: pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, dustLook, dustOffset }
   }
 
   liveShot(c: LiveControl, frame: number): Shot {

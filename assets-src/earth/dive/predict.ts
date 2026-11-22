@@ -100,6 +100,15 @@ for (const f of frames) {
     }
   }
   blur.sort((u, v) => u - v)
+  const sky: number[] = []
+  if (p0.view === 'orbit' && p1.view === 'orbit') {
+    for (const [sx, sy] of [[60, 60], [1860, 60], [960, 540], [60, 1020], [1860, 1020]] as [number, number][]) {
+      const t = Math.tan(THREE.MathUtils.degToRad(p0.pose.vfov) / 2)
+      const ray = new THREE.Vector3(((2 * sx) / W - 1) * t * (W / H), (1 - (2 * sy) / H) * t, -1).normalize().applyQuaternion(p0.pose.quaternion)
+      const b = project({ position: new THREE.Vector3(), quaternion: p1.pose.quaternion, vfov: p1.pose.vfov }, ray)
+      sky.push(Math.hypot(b[0] - sx, b[1] - sy))
+    }
+  }
   const h = pose.position.length() - 1
   const out = pose.position.clone().normalize()
   const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(pose.quaternion)
@@ -113,5 +122,6 @@ for (const f of frames) {
   console.log(
     f, s.kind, 'h', h.toFixed(4), 'vfov', pose.vfov.toFixed(1), 'pitch', pitch.toFixed(1), 'horizon y', horizonY.toFixed(2), 'heading on screen deg', THREE.MathUtils.radToDeg(Math.atan2(hv.y, hv.x)).toFixed(0),
     'spot off', off.toFixed(2), 'body', (counted / ((W / step) * (H / step))).toFixed(2), 'soft', (soft / Math.max(counted, 1)).toFixed(3), 'blur px median', blur.length ? blur[blur.length >> 1]!.toFixed(1) : '-', 'p90', blur.length ? blur[Math.floor(blur.length * 0.9)]!.toFixed(1) : '-', 'cover', cover.toFixed(2),
+    'sky px', sky.map((v) => v.toFixed(1)).join(' ')
   )
 }

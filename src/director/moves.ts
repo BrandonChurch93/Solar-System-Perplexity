@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { CoverHorizon, Pose } from '../core/types'
-import { coverWindow } from './timeline'
+import { coverWindow, setCoverWindow, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -26,7 +26,7 @@ export interface MoveParams {
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number } }
   cover: [number, number, number]
   coverLow?: [number, number, number]
   coverTerrain?: [number, number, number]
@@ -35,6 +35,8 @@ export interface MoveParams {
   coverEdge?: [number, number]
   coverEdgeRise?: [number, number]
   coverHides?: number
+  coverWindow?: CoverTimings
+  skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
@@ -129,6 +131,7 @@ export class StopPlan {
     this.id = id
     this.fit = fit
     this.p = p
+    setCoverWindow(id, p.coverWindow)
     const find = (kind: string): Segment | undefined => config.segments.find((s) => s.stop === id && s.kind === kind)
     const hold = find('hold')
     const terrain = find('terrain')
@@ -245,6 +248,33 @@ export class StopPlan {
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
     const w = coverWindow(seg)!
     return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+  }
+
+  skyGain(_time: number): number {
+    return 1
+  }
+
+  skyUnderCover(amount: number, _time: number): number {
+    return Math.pow(1 - amount, 2)
+  }
+
+  coverHidden(_seg: Segment, _time: number): number | undefined {
+    return undefined
+  }
+
+  skyTurnShare(seg: Segment, time: number): number | null {
+    const w = coverWindow(seg)
+    if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise') || !this.p.skyTurnEase?.[seg.kind]) return null
+    const k = smoother(ramp(w.firstFrame / config.fps, (w.lastFrame + 1) / config.fps, time))
+    return seg.kind === 'dive' ? k : 1 - k
+  }
+
+  glareCarry(seg: Segment, time: number): number {
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
+    const span = this.p.light.glareCarry?.[seg.kind]
+    if (!span || !coverWindow(seg)) return 0
+    const since = seg.kind === 'dive' ? this.coverCenter(seg) - time : time - this.coverCenter(seg)
+    return 1 - smoother(ramp(0, span, since))
   }
 
   coverAmount(seg: Segment, time: number): number {

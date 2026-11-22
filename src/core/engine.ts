@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type FormatDef } from '../config'
 import { Accumulator } from './accumulator'
-import { OPTIONAL_EXTENSIONS, missing, needs } from './caps'
+import { OPTIONAL_EXTENSIONS, REQUIRED_EXTENSIONS, missing, needs } from './caps'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
@@ -16,7 +16,7 @@ import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import type { SkyAims } from '../space/aim'
-import { Cover } from '../terrain/cover'
+import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
 import { marksIn } from '../terrain/shield'
@@ -24,6 +24,7 @@ import { setsForFrame } from '../director/timeline'
 
 export interface Director {
   shotAt(frame: number, time: number): Shot
+  glareOf?(shot: Shot): THREE.Vector3 | null
   readonly sky?: SkyAims
 }
 
@@ -64,6 +65,8 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  private asked = 0
+  private lastFrame: { frame: number; tier: string } | null = null
   private readonly marked = new WeakSet<THREE.Material>()
   private alpha = new Uint16Array(0)
 
@@ -89,6 +92,29 @@ export class Engine {
     this.sampleTarget = floatTarget(format.width, format.height, THREE.HalfFloatType, true, true)
     this.accumulator = new Accumulator(format.width, format.height)
     this.applySize()
+    this.canvas.addEventListener('webglcontextlost', (e) => e.preventDefault())
+    this.canvas.addEventListener('webglcontextrestored', () => void this.revive().catch((e: unknown) => console.error(e)))
+  }
+
+  private async revive(): Promise<void> {
+    const gl = this.renderer.getContext()
+    for (const e of [...REQUIRED_EXTENSIONS, ...OPTIONAL_EXTENSIONS]) gl.getExtension(e)
+    this.renderer.setClearColor(0x000000, 0)
+    const ids = this.sets.loadedIds()
+    const last = this.lastFrame
+    const shot = this.lastShot
+    const mine = ++this.asked
+    this.sets.reset()
+    this.world.clear()
+    this.near.clear()
+    this.attached = []
+    this.skyAssets = ''
+    await this.ensureSky()
+    await this.sets.ensure(ids, this.assets)
+    if (last) await this.prepare(last.frame)
+    if (mine !== this.asked) return
+    if (last) this.drawFrame(last.frame, last.tier)
+    else if (shot && shot.sets.every((x) => this.sets.has(x.id, this.assets))) this.renderLive(shot)
   }
 
   private applySize(): void {
@@ -139,8 +165,14 @@ export class Engine {
 
   private async ensureSky(): Promise<void> {
     if (this.skyAssets === this.assets && this.skyTexture) return
+    const epoch = this.sets.epoch
     const glow = await this.skyMap('sky.jpg')
     const band = await this.skyMap('skyband.jpg')
+    if (epoch !== this.sets.epoch) {
+      glow.tex.dispose()
+      band.tex.dispose()
+      return this.ensureSky()
+    }
     this.skyBytes = glow.bytes + band.bytes
     this.skyTexture?.dispose()
     this.skyBand?.dispose()
@@ -161,7 +193,16 @@ export class Engine {
   async renderFrame(frame: number, tier: string): Promise<void> {
     if (!this.director) throw new Error('no director')
     const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
+    const epoch = this.sets.epoch
+    this.asked++
     await this.prepare(f)
+    if (epoch !== this.sets.epoch) return this.renderFrame(f, tier)
+    this.drawFrame(f, tier)
+  }
+
+  private drawFrame(f: number, tier: string): void {
+    if (!this.director) return
+    this.lastFrame = { frame: f, tier }
     const plan = framePlan(this.director, f, tier)
     const samples = samplesFor(plan.samples)
     this.soft = plan.soft
@@ -179,6 +220,7 @@ export class Engine {
   }
 
   renderLive(shot: Shot): void {
+    this.lastFrame = null
     this.soft = 0
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
@@ -225,6 +267,7 @@ export class Engine {
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
+      this.sky.setBandLook(shot.skyLook ?? 0)
     }
     const view: RenderView = { camera: cam, diag: this.diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position }
     const wanted = shot.sets.map((s) => s.id)
@@ -281,7 +324,8 @@ export class Engine {
     if (!raw) {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height, open)
+      const glare = this.director?.glareOf?.(mid)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, glare ? { ...shot.sun, dir: glare } : shot.sun, shot.post.vignette, width / height, open)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
       r.setRenderTarget(this.sampleTarget)
@@ -298,7 +342,7 @@ export class Engine {
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (raw) return
     if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, view, this.belt.cover(shot))
-    if (shot.cover.amount > 0) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+    if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
   }
 
   private hold(shot: Shot, mid: Shot): void {
