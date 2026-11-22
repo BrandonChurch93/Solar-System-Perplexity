@@ -373,10 +373,15 @@ class Gauntlet:
 
     def item12(self):
         if 'clone' not in self.a.run:
-            return self.add(12, 'NOT RUN', 'Asked for: the hash of frame 0 from a fresh clone against the same frame from the working copy. `--run clone` does it here: clones HEAD into a temporary folder, `npm ci`, renders frame 0 in both at the %s tier and compares the files.' % self.a.clone_tier)
+            return self.add(12, 'NOT RUN', 'Asked for: the hash of frame 0 from a fresh clone against the same frame from the working copy. `--run clone` does it here: clones HEAD into a temporary folder (`git clone --shared`, so only committed files and no copy of the objects), `npm ci`, renders frame 0 in both at the %s tier and compares the files.' % self.a.clone_tier)
         tmp = Path(tempfile.mkdtemp(prefix='gauntlet-clone-'))
         try:
-            steps = [(['git', 'clone', '-q', '--depth', '1', 'file://' + str(ROOT), str(tmp / 'c')], ROOT), ('npm ci --silent', tmp / 'c'), ('npm run -s still -- --frame 0 --tier %s --out %s' % (self.a.clone_tier, tmp / 'clone.png'), tmp / 'c'), ('npm run -s still -- --frame 0 --tier %s --out %s' % (self.a.clone_tier, tmp / 'here.png'), ROOT)]
+            need, parts = self.clone_need()
+            for where, want, what in ((tmp, need, parts), (ROOT, need if tmp.stat().st_dev == ROOT.stat().st_dev else self.raw['sandbox']['minFreeDiskGb'] * 1e9, 'the room the render tools ask for' if tmp.stat().st_dev != ROOT.stat().st_dev else parts)):
+                free = shutil.disk_usage(where).free
+                if free < want:
+                    return self.add(12, 'NOT RUN', 'Not started: the fresh clone needs about %.1f GB free on the disk of %s (%s) and %.1f GB are free there. Make room, then `npm run gauntlet -- --items 12 --run clone`.' % (want / 1e9, tmp.parent if where == tmp else where, what, free / 1e9))
+            steps = [(['git', 'clone', '-q', '--shared', str(ROOT), str(tmp / 'c')], ROOT), ('npm ci --silent', tmp / 'c'), ('npm run -s still -- --frame 0 --tier %s --out %s' % (self.a.clone_tier, tmp / 'clone.png'), tmp / 'c'), ('npm run -s still -- --frame 0 --tier %s --out %s' % (self.a.clone_tier, tmp / 'here.png'), ROOT)]
             for cmd, cwd in steps:
                 rc, out = sh(cmd, cwd=cwd, timeout=7200)
                 if rc != 0:
@@ -386,6 +391,19 @@ class Gauntlet:
             self.add(12, 'PASS' if x == y else 'FAIL', 'Frame 0 at the %s tier, sha256 of the PNG: fresh clone of %s %s, working copy %s: %s.%s' % (self.a.clone_tier, git('rev-parse', '--short', 'HEAD'), x[:16], y[:16], 'identical' if x == y else 'DIFFERENT', ' The working copy has uncommitted changes, which the clone does not have.' if dirty else ''))
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
+
+    def clone_need(self):
+        used = lambda d: sum(f.lstat().st_blocks * 512 for f in d.rglob('*') if not f.is_dir() and 'review' not in f.relative_to(d).parts[:1]) if d.is_dir() else 0
+        rows = [x.split(None, 4) for x in git('ls-tree', '-r', '-l', 'HEAD').split('\n')]
+        blobs = [(int(x[3]), x[4]) for x in rows if len(x) == 5 and x[3].isdigit()]
+        tree = sum((n + 4095) // 4096 * 4096 for n, _ in blobs)
+        nm = used(ROOT / 'node_modules')
+        dist = used(ROOT / 'dist') or sum(n for n, path in blobs if path.startswith('public/'))
+        here = 0 if (ROOT / 'dist/build.json').is_file() else dist
+        floor = self.raw['sandbox']['minFreeDiskGb'] * 1e9
+        spare = 0.2e9
+        gb = lambda n: '%.2f GB' % (n / 1e9)
+        return tree + nm + dist + here + floor + spare, 'the files of HEAD %s, its node_modules %s, its dist %s, %sthe %s GB of sandbox.minFreeDiskGb that the render tools ask for, %s to spare; the clone borrows the objects of this repo, so .git adds nothing' % (gb(tree), gb(nm), gb(dist), 'a new dist for the working copy %s, ' % gb(here) if here else '', self.raw['sandbox']['minFreeDiskGb'], gb(spare))
 
     def src_files(self):
         return [ROOT / p for p in sorted(self.tracked) if p.startswith('src/') and p.endswith(('.ts', '.tsx', '.js', '.glsl', '.vert', '.frag', '.html', '.css')) and not p.endswith('.test.ts')]

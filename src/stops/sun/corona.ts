@@ -128,8 +128,9 @@ export class Corona {
     this.mesh.frustumCulled = false
   }
 
-  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1): void {
+  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1, edge = look.edge): void {
     const u = this.material.uniforms
+    u.uEdge!.value = edge
     ;(u.uCenter!.value as THREE.Vector3).copy(center)
     this.toSet.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(rotation).invert()))
     u.uTime!.value = time

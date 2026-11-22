@@ -73,3 +73,69 @@ Task: section B of `assets-src/shared/ROUND31-FIXES.md`. After a compaction read
   2. The deep set uploads four floats per star (`field.ts` 209), the shader reads one (`aStar.y`, `sky.ts` 318 to 324): upload what is read.
   - Also: the ending now holds the lift at 1 through the lookback and the fade (`film.ts` 526), so 5235 and 5362 draw the strip band at sky exposure 0.36 on `builder/b20`; my lift 0 statement for those two is out of date.
 - Trial result (07:56 UTC): finals of 3352 and 1072 with the kernel 1 map. Dark veins and lane edges return inside the gold clouds, clearest at 1072; at three times no star blob, no block, no chroma speckle. Render time unchanged (3352 102.3 s, 1072 116.6 s against 119.1 s). Judged clearly better at 1072, modest at 3352. Committed as an asset and recipe change: full map 8192 x 2048 (67.1 MB on the GPU, 50.3 MB more than before; PNG 10.3 MB, 8.0 MB more), web map 2048 x 512 as before (4.2 MB; PNG 1.0 MB). `skybandstars.bin` is byte equal. Draft sha256 of 2325, 615, 4860 equal to main. The previous maps are the ones of commit a5e819c.
+
+## Batch 21 (MAIL 104 and the notice of 08:03 UTC)
+
+- 08:03 UTC: engine batch 20 is on main (b784153), with 7ec8107 (the strip with dark veins) taken as is. Base is `origin/main` from now on (merge, never rebase). The clone was shallow and gave false merge conflicts; `git fetch --unshallow origin` cured that.
+- Changes, picture byte for byte:
+  1. `config/showcase.json` line 147: `flightStars.deep.core` and `deep.halo` removed (no reader since the deep set draws with the star shader).
+  2. Deep set: `aStar` is one float per star (the level), was four. `field.ts` writes `deep.star[n] = b`, `sky.ts` `in float aStar`, attribute size 1. Saves 9.1 MB of vertex data.
+  3. Band points: `aStar` is two floats per star (level, starless luminance), was four. Saves up to 12 MB.
+  4. Uniforms cut to what is read: `uFlightStrip` vec3, `uDeepLaw` vec3, `uStripStar` vec2.
+- Not mine: `assets-src/travel/veil.ts` line 8 reads `f.deep.star[i * 4 + 1]`. With one float per star the line is `const b = Array.from(f.deep.star)`.
+- Proof 1 (steps 1 to 3 on the merge with builder/b20 9a3ec26): final sha256 before and after equal, 4492 b154b5e6..., 5235 8db8e994....
+- Proof 2 (all four steps on the merge with origin/main 07aabf5), final sha256 on main and on the branch equal: 1072 d5216671..., 3352 91c9c5bb..., 5235 8db8e994..., 4492 b154b5e6.... Build green, vitest 79 of 79, shaderaudit prints the same lines as main.
+- Render time at final on main at 08:10 UTC, machine idle: 1072 88.4 s, 3352 79.8 s, 4492 119.1 s; on the branch 84.4 s, 78.7 s, 118.7 s. The 102 s for 3352 reported at 07:29 was measured before batch 20; the figures are not comparable across code states.
+
+## Batch 21, second part (reply of 08:23 UTC, due 09:15 UTC): vertex memory of the shared sky
+
+- Why the band points are in the buffer twice: the band strip repeats twice around the sky (`skyframe.json` `band.repeats` 2), so every star of the file stands at two places half a turn apart. Each placement has its own edge fade (veil map cell at that place, its own jitter draw), and 1468235 of the 1529168 placements survive the edge. It is one draw call, and only the points in view are drawn (index list).
+- One copy drawn twice (instancing) does not give the same bytes for sure: the second place would be computed in the vertex shader in 32 bit floats instead of in doubles on the CPU, and the fade would need a slot per repeat. Left as it is.
+- Done, bytes equal:
+  1. Star and color arrays of every point set (catalog, flight, deep, band) are released after their upload (`shed`, the `onUpload` hook). Positions and the index lists stay: the view culling reads the positions every time the view turns.
+  2. `Sky` keeps only the veil map of the flight field (for the band's edge), no longer the whole field.
+  3. Catalog stars: `aStar` three floats (the fourth was never read). The flight set keeps four: `assets-src/travel/dense.ts` and `fieldview.ts` read its layout.
+  4. What read the arrays again: only a restored WebGL context (three uploads every attribute again). `Sky.render` now listens for `webglcontextrestored` on the canvas and fills the sets again from their deterministic generators before the next draw (`refill`); the band points are rebuilt from the kept file bytes.
+- Counts: catalog 3465000 points, flight 500000, deep 760000, band 1468235. The same in the full and the web set.
+- Vertex bytes, computed from the layouts (per point: position 12, star, color 12, index 4), in MB of a million bytes, catalog / flight / deep / band / sum:
+  - GPU on main 07aabf5e: 152.5 / 22.0 / 33.4 / 64.6 / 272.5.
+  - GPU after the first part (6b40894a): 152.5 / 22.0 / 24.3 / 52.9 / 251.6.
+  - GPU after this part: 138.6 / 22.0 / 24.3 / 52.9 / 237.8.
+  - CPU on main: the same arrays as the GPU, 272.5, after the first part 251.6; after this part, once a set is uploaded, position and index only: 55.4 / 8.0 / 12.2 / 23.5 / 99.1.
+  - Kept beside these on the CPU, before and after: the view list of the catalog (13.9), the bytes of `skybandstars.bin` (7.6, the band points are built from them again), the veil map (0.5).
+  - A set that is never drawn is never uploaded and keeps its arrays (the flight sets at a hold only render, the catalog never is such a set).
+- Proof on this tree against origin/main 07aabf5e: finals 1072, 3352, 4492, 5235 and drafts 615, 2325, 2427, 4860 byte equal; `tools/restore.ts` at 3352 and at 2325 (draft) all lines pass, the frame after the restored context has the same sha256 as before; vitest green; shader audit the same lines.
+- Considered and left for the risk to the bytes: colors as bytes, positions at half precision, one band copy drawn twice.
+
+## Round 31 critics (MAIL 114, 117, 121; due 10:25 UTC)
+
+Three commits on top of 36d0bd11, each cure its own commit: the band edge, the unfold flag in `sky.ts`, and one commit marked FOREIGN LINES (`src/core/types.ts`, `src/stops/mars/set.ts`, `src/stops/mars/sky.json`) for the Builder to take or drop.
+
+### Cure 1, the band edge (5235 lookback, 1072 corner)
+- Cause: the strip and its stars ended by one law of galactic latitude alone (`flightStrip.edge` 0.14 to 0.46 of the half span, plus 0.1 of veil noise), so the cut ran level; under it the band star carpet went on at full density while the glow had stopped, which read as a strip of other star density.
+- Cure, the same law in the shader (`SKY_FRAG`, flight block) and in `bandField()`:
+  - `ar = |lat| * (1 + reach * (1 - w))`, w the normalized veil: the edge comes in where the veil is thin.
+  - `ar + rough * roughMap * smoothstep(0, 0.5 * edgeFrom, ar)`: a second static cloud map (`rough`, 512 x 256, three octaves from `flightStars.veil.rough` = 6 cells round the sky) pushes the edge in by lobes; one sided, and off in the core.
+  - `fade = smoothstep(follow * (1 - lum), 1, fade)`: dark parts of the glow open first, so the edge follows the cloud shapes of the picture (`mean` stands for lum on the CPU side).
+  - Band stars: a star is kept when its own draw `pick <= fade ^ thin`; `pick` comes from its own stream (`flight band thin`) at build time, so the other draws are those of main and no star blinks. Level is times `fade ^ dim`.
+  - Behind the band: the soft sky under the strip (`off`, the blurred map) is brighter than the graded strip in the core, so a cut showed a grey fog lobe (up to 45 levels over main at 5235). Now `off` is shaded by `1 - shade * (fz0 - fz)` where the new law cuts inside main's footprint (fz0 is main's edge value), and the composite is the per channel minimum of the new mix and main's mix.
+- Never brighter than main (base composite, per channel, by the minimum above): every new term only adds to the edge argument or contracts the fade, `dim` is 1, the star set is a subset of main's with levels at or under main's.
+- No crawl: every term is a function of sky direction (static maps on the sphere), nothing reads the camera or the frame.
+- Config: `flightStrip.feather = {reach 1.2, rough 0.18, follow 0.7, mean 0.45, thin 1.5, dim 1, shade 0.85}`, `flightStars.veil.rough = 6`.
+- Tried and dropped: rough two sided 0.24 (parts brighter than main), one sided 0.22 without the core gate (ate the core of the band on the left of 5235), gate on raw latitude with 0.15 (edge level again: the reach term had already moved the edge inside the gate).
+- The glow is sampled wherever main sampled it (fz0 above 0), so the cost is main's.
+- With both cures the ten check frames at draft keep main's sha256 except 2427 (Mars dive): it moves only in the margin strips of the Mars patch (right of x 1700 and the top rows), which is cure 2 at work.
+
+### Cure 2, the mirror seam beside Mars (2242, 2249)
+- Cause: `public/assets/mars/full/sky-hold.webp` was padded by reflection: exact mirror axes at columns 352 and 3168 and rows 198 and 1782 of 3520 x 1980, the margin 0.1 of the patch per side. The patch fades in across that margin, so the reflected sky shows wherever the margin is in frame. Shared layers have no axis.
+- Where: 2242 axis at x 341; 2249 and 2250 left of x 170 plus a thin strip at the bottom; 2275 left of 115 plus bottom strip; 2325 none; 2399 right of 1750 plus top strip.
+- Cure: `unfolded()` in `SKY_FRAG`. Only in the margin, the texel is taken `unfold[0]` further in (a translation, so no axis) and crossfaded with the mirrored texel over the first 0.35 of the margin. `unfold[1]` moves the start of the patch fade (0 keeps main's fade). Mars hold: `[0.1, 0]`, the margin repeats the strip just inside the axis.
+- Tried and dropped: displacement that grows across the margin (smear line at the ramp), 0.25 with early fade 0.65 (soft vertical step to the flight sky, faint lump), 0.25 full (a bright piece of the Milky Way from behind Mars, cut on a vertical).
+- The same mirror padding is in `mars/sky-terrain.webp`, `venus/sky-terrain.webp`, `earth/sky-terrain.webp`: not checked in frame for lack of time, polish list.
+
+### Round 31 critics, proofs and what is left (DONE sent 10:18 UTC, head ddd8ab24)
+- Cure 1 is two commits (51f71589 and 57239993); cure 2 is 6d7276eb; the foreign lines are 44f0b38f.
+- Finals of 5235 against main: at a 6 px blur no pixel rises by more than 1 level; 0.06 percent of pixels rise by more than 2 in a channel, the most 17. Cost 5235 47.1 s to 45.3 s, 3352 79.0 s to 78.4 s.
+- Draft sha256 on the head: 615, 2325, 3150, 4860 equal to main. 2427 (Mars dive) moves by cure 2 only in the margin strips (196k pixels, right of x 1700 and the top rows).
+- Cure 2 moved pixels: 2249 174k, 2250 172k, 2275 113k, 2399 178k, about 12k each over 8 levels, 2325 none. A star just inside the axis gets a fainter copy about 232 px outward (2275 x 297 y 780, the blue clump in 2249 and 2250).
+- Open: the three sky-terrain patches with mirror padding (mars, venus, earth) not checked in frame; finals of 2242 not rendered; item 5 (Mercury's patch fades in by travel time u 0.4 to 0.96 over a still camera; `travel.sky.patchFrom.sun` can start it with the turn, a per stop end needs `film.ts`); items 3 and 4; saturn.travel 3932 to 3939 dark field (reach: `travel.sky` flight field floor, a cluster on that line of sight, or `patchFrom.saturn`).
