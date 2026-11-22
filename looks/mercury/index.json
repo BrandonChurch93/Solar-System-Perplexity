@@ -1,68 +1,76 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T05:22:57.645Z",
- "head": "ff0c7f20a48cadd3264fa5d441b16acb9f0baf72",
- "note": "Mercury polish: measures green on ff0c7f2, left edge of the dive cover in work (main 2621f00)",
+ "pushed": "2026-11-22T05:43:03.977Z",
+ "head": "1a18e507d59a6f8cc6e29b471f8f06f996604e1b",
+ "note": "Mercury polish: final stills of the four judged frames on 1a18e50 (main 5fce02c); cover and terrain sheets rendering",
  "looks": [
   {
-   "time": "2026-11-22T05:22:57.031Z",
-   "file": "20261122052257031-note-left-736-743.jpg",
-   "source": "out/work/mercury/p6/m2/left-736-743.jpg",
+   "time": "2026-11-22T05:43:03.159Z",
+   "file": "20261122054303159-note-f741.jpg",
+   "source": "out/work/mercury/p6/m3/f741.jpg",
    "kind": "note",
-   "label": "Dive cover, left frame edge 736 to 743 at draft: top the map beyond the wide picture's border, bottom the picture continued by its mirror image (tree on main 2621f00, batch 19 7a880ac6 in)",
+   "label": "Dive cover 741 at review, 960 x 540, after the left edge cure (tree 1a18e50 on main 5fce02c, batch 19 7a880ac6 in)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T05:10:43.743Z",
-   "file": "20261122051043743-job-frame-00924.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.terrain frame 924, draft tier, texels view, from the running measure job",
+   "time": "2026-11-22T05:43:02.451Z",
+   "file": "20261122054302451-note-c1016-face.jpg",
+   "source": "out/work/mercury/p6/proof/c1016-face.jpg",
+   "kind": "note",
+   "label": "Rise 1016 at final, native crop of the lit face (left) beside the same place in hold 615 (right) (tree 1a18e50 on main 5fce02c, batch 19 7a880ac6 in)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T05:43:01.568Z",
+   "file": "20261122054301568-note-f1016-1280.jpg",
+   "source": "out/work/mercury/p6/proof/f1016-1280.jpg",
+   "kind": "note",
+   "label": "Rise 1016 at final: the rise ends on the hold's face, Sun upper right (tree 1a18e50 on main 5fce02c, batch 19 7a880ac6 in)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T05:43:00.825Z",
+   "file": "20261122054300825-note-pair-870.jpg",
+   "source": "out/work/mercury/p6/proof/pair-870.jpg",
+   "kind": "note",
+   "label": "Terrain 870 at final: approved close image left, film right (tree 1a18e50 on main 5fce02c, batch 19 7a880ac6 in)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T05:43:00.007Z",
+   "file": "20261122054300007-note-c717-mark.jpg",
+   "source": "out/work/mercury/p6/proof/c717-mark.jpg",
+   "kind": "note",
+   "label": "Dive 717 at final, native crop at the mark: round 29 left, now right (tree 1a18e50 on main 5fce02c, batch 19 7a880ac6 in)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T05:39:43.127Z",
+   "file": "20261122053943127-frame-f870-final.jpg",
+   "source": "out/work/mercury/p6/proof/f870-final.png",
+   "kind": "frame",
+   "label": "mercury.terrain frame 870, final tier",
    "stop": "mercury",
    "segment": "mercury.terrain",
-   "frame": 924,
-   "tier": "draft",
+   "frame": 870,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T05:00:43.102Z",
-   "file": "20261122050043102-job-frame-00540.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "time": "2026-11-22T05:35:54.849Z",
+   "file": "20261122053554849-frame-f615-final.jpg",
+   "source": "out/work/mercury/p6/proof/f615-final.png",
+   "kind": "frame",
+   "label": "mercury.hold frame 615, final tier",
    "stop": "mercury",
    "segment": "mercury.hold",
-   "frame": 540,
-   "tier": "draft",
+   "frame": 615,
+   "tier": "final",
    "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T04:54:00.125Z",
-   "file": "20261122045400125-note-z717-3.jpg",
-   "source": "out/work/mercury/p6/i7/z717-3.jpg",
-   "kind": "note",
-   "label": "Mercury item 7: frame 717 at the mark, 3 times native: old patches, repaired patches, repaired patches with the map handed over to them early at the mark (draft) (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:53:59.528Z",
-   "file": "20261122045359528-note-crops-713-721.jpg",
-   "source": "out/work/mercury/p6/i7/crops-713-721.png",
-   "kind": "note",
-   "label": "Mercury item 7: native crops of frames 713 to 721 at review, top with the old patches, bottom with the repaired patches, before the local hand over (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T04:28:15.436Z",
-   "file": "20261122042815436-note-blue-before-after2.jpg",
-   "source": "out/work/mercury/p6/i7/blue-before-after2.jpg",
-   "kind": "note",
-   "label": "Mercury item 7: the blue streak in dive patches 1, 2, 3 at native size, top before, bottom after the repair (tree on main a67c9c34, work in progress)",
-   "stop": "mercury"
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T02:33:01.521Z",
@@ -70,20 +78,6 @@
    "source": "out/work/compare/compare-mercury-terrain-view.jpg",
    "kind": "compare",
    "label": "mercury.terrain: approved image left, film frame right, final tier",
-   "stop": "mercury",
-   "segment": "mercury.terrain",
-   "frame": 870,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:33:00.185Z",
-   "file": "20261122023300185-still-f00870-16x9-final-full.jpg",
-   "source": "out/work/stills/f00870-16x9-final-full.png",
-   "kind": "still",
-   "label": "mercury.terrain frame 870, final tier",
    "stop": "mercury",
    "segment": "mercury.terrain",
    "frame": 870,
