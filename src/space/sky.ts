@@ -660,7 +660,7 @@ export class Sky {
   }
 
   setFlightStars(def: FlightDef): void {
-    const field = flightField(def)
+    const field = flightField(def, galactic().elements)
     this.flightDef = def
     this.field = { veil: field.veil, veilLow: field.veilLow, veilHigh: field.veilHigh, rough: field.rough, width: field.width, height: field.height }
     const geo = this.flight.geometry
