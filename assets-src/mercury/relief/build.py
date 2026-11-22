@@ -251,6 +251,9 @@ def main():
     Image.fromarray((vis * 255).astype(np.uint8)).save(WORK + 'relief-detail.png')
     color = Image.open(WORK + 'ext-2x.png').convert('RGB')
     assert color.size == (CW * 2, CH * 2), color.size
+    if os.path.exists(WORK + 'walls-2x.png') and os.environ.get('RELIEF_WALLS', '1') == '1':
+        import walls
+        color = walls.paint(color)
     color = specks(color)
     if os.path.exists(WORK + 'lens-fix.npy'):
         color = lens(color, np.load(WORK + 'lens-fix.npy'))
