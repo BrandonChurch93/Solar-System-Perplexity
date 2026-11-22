@@ -1133,3 +1133,13 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - City light crops made again from the batch 19 stills (`pb/g/city-1755-b19.png`, `city-2156-b19.png`).
 - 05:40 queue F ended (`ready set done`). Queue G: draft stills 1868, 1870, 1872 (05:41), then `npm run measure -- --stop earth` on the batch 19 tree (started 05:41:55, `pb/g/measure.log`); `q5.sh` replaced by `out/work/earth/pb/q6.sh` (05:42), which waits for the measure and then renders the terrain sheet on batch 19 (`pb/g/sheet-terrain-b19.png`, so that every sheet of the READY but the dive cover sheet is from batch 19), stills 2140 and 2174, the full format rise cover sheet (`pb/g/rise-frames-full/`), `done`.
 - 05:43 low priority note to the Builder: READY 2 at about 06:15 with everything from the batch 19 tree. 05:44 looks pushed (94d7c9a4): the READY set but the four final stills and the terrain sheet, every label names main 2621f00 with engine batch 19.
+
+### Round 30 (whole film, round 1 of 3) closed on main 75fc24c; merged as bd93b1f (05:45 UTC)
+
+- Main 75fc24c carries `scorecards/round-030/` and PROGRESS only, no code; merged during the measure (nothing under `src` or `public` moved), pushed bd93b1f. The round judged main 2621f00, that is the kept Earth, not this branch.
+- Earth's lines in `scorecards/round-030/SUMMARY.md` (no mail from the Builder on them yet; nothing done about them before it):
+  - 4, R5 major, frames 1755, 1857, 2156: "Earth is the same plate three times: same clouds, aurora, terminator, and Moon. The orbit shot at 2010 is sandwiched between copies, then the cut returns to the frozen hero, so the journey loops." (the poses are fixed by the Builder).
+  - 22, R4 major, earth.travel sheet, frame 2188: "Earth is heavily smeared while the stars and the Milky Way right next to it stay pin-sharp. The blur also streaks the surface texture inside a fairly crisp limb." (the engine's shutter; the same thing as the aurora parallelograms at 1872).
+  - 45, R4 minor, venus.travel sheet, frames 1666 to 1679, Earth upper right limb: "a green band with a red edge sits on the limb. It reads as chromatic fringing or a stuck effect, not an aurora" (the kept build's curtain; to look at on this branch: review stills 1668 and 1676 queued after the terrain sheet, `pb/f/p-1668.png`, `p-1676.png`).
+  - 28, R7 minor, 1748 after the stress encode: red aurora fringe blotchy (encode).
+  - R2 juror on earth.hold: "the stair-stepped pixel aliasing along the Moon's silhouette and Earth's limb cutting visibly beneath the additive aurora shader" (kept build; item 7's smooth Moon edge and item 5's shell emission are the cures on this branch).
