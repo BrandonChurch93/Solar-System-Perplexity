@@ -116,7 +116,7 @@ function build(): { text: string; missing: string[] } {
     '',
     '## The posts',
     '',
-    'A post is the intro, then a hard cut to the first frame of the stop\'s clip. Times count from the first frame of the post. The submit is on the last frame of the intro and the cut is the next frame. Typing sound runs from the first key to the last key, with one key for each character of the prompt.',
+    'A post is the intro, then a hard cut to the first frame of the stop\'s clip. Times count from the first frame of the post. The submit is on the last frame of the intro and the cut is the next frame. Typing sound runs from the first key to the last key, with one key for each character of the prompt. Each record lies beside its intro, in `out/posts/` once `npm run keep -- --posts` has run.',
     '',
     '| Post | Prompt | Keys | First key | Last key | Submit | Cut to the clip | Frame of the cut | End of the post | Record |',
     '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
@@ -134,7 +134,7 @@ function build(): { text: string; missing: string[] } {
     const x = got.rec
     intros.set(stop, x)
     const cut = x.frames / fps
-    lines.push('| `' + stop + '` | ' + prompt + ' | ' + (x.keySeconds?.length ?? '') + ' | ' + time(x.firstKeySeconds) + ' | ' + time(x.lastKeySeconds) + ' | ' + time(x.submitSeconds) + ' | ' + time(cut) + ' | ' + x.frames + ' | ' + time(cut + clipCues.get(stop)!.frames / fps) + ' | `' + got.from + '/intro-' + stop + '.mp4.json` |')
+    lines.push('| `' + stop + '` | ' + prompt + ' | ' + (x.keySeconds?.length ?? '') + ' | ' + time(x.firstKeySeconds) + ' | ' + time(x.lastKeySeconds) + ' | ' + time(x.submitSeconds) + ' | ' + time(cut) + ' | ' + x.frames + ' | ' + time(cut + clipCues.get(stop)!.frames / fps) + ' | `intro-' + stop + '.mp4.json` |')
   }
   if (intros.size) {
     lines.push('', 'The time of every key, in seconds from the first frame of the post:', '')
@@ -191,18 +191,18 @@ const { text, missing } = (() => {
 })()
 if (process.argv.includes('--check')) {
   const fails: string[] = []
-  if (!existsSync(CUES)) fails.push('cut/CUES.md does not exist')
+  if (!existsSync(CUES)) fails.push('cut/CUES.md does not exist, make it with `npm run cues`')
   else {
     const d = firstDifference(readFileSync(CUES, 'utf8'), text)
-    if (d !== 'same') fails.push('cut/CUES.md: ' + d)
+    if (d !== 'same') fails.push('cut/CUES.md is stale, remake it with `npm run cues`: ' + d)
   }
-  if (!existsSync(SHOTS)) fails.push('cut/SHOTS.md does not exist')
+  if (!existsSync(SHOTS)) fails.push('cut/SHOTS.md does not exist, make it with `npm run shots`')
   else {
     const have = readFileSync(SHOTS, 'utf8')
     const rows = shotsRows(have)
-    if (rows.length) fails.push('cut/SHOTS.md against segments: ' + rows.slice(0, 4).join('; '))
+    if (rows.length) fails.push('cut/SHOTS.md is stale against `segments`, remake it with `npm run shots`: ' + rows.slice(0, 4).join('; '))
     const d = firstDifference(have, shotsNow())
-    if (d !== 'same') fails.push('cut/SHOTS.md is not what tools/shots.ts writes now: ' + d)
+    if (d !== 'same') fails.push('cut/SHOTS.md is stale, it is not what tools/shots.ts writes now; remake it with `npm run shots`: ' + d)
   }
   for (const f of fails) console.log('FAIL ' + f)
   if (missing.length) console.log('NOTE no intro record for ' + missing.join(', ') + '; the posts table says so')
