@@ -1,9 +1,109 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T00:53:28.980Z",
- "head": "1de9aa228885e4646490e79267438311294c495e",
- "note": "sun polish items 1 to 3: proof crops of the nearest ground at the final tier (0, 60, 90), critic's box at 60, draft sheet 200 to 224; measure running",
+ "pushed": "2026-11-22T01:14:49.627Z",
+ "head": "a9395582b344599c78f7c5bbab121c5e85c91d2e",
+ "note": "polish: review sheet 200 to 224 rendering; item 4 (limb and sky) studied offline",
  "looks": [
+  {
+   "time": "2026-11-22T01:14:48.635Z",
+   "file": "20261122011448635-note-i281-limb-right-approved-90-60-0-gain3.jpg",
+   "source": "out/work/sun/i281-limb-right-approved-90-60-0-gain3.png",
+   "kind": "note",
+   "label": "item 4 study: right limb, approved, 90, 60, 0 at 3 times gain (second glow shell at 0)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:47.823Z",
+   "file": "20261122011447823-note-i281-limb-left-approved-90-60-0-gain3.jpg",
+   "source": "out/work/sun/i281-limb-left-approved-90-60-0-gain3.png",
+   "kind": "note",
+   "label": "item 4 study: left limb, approved, 90, 60, 0 at 3 times gain (dark line above the spicules at 60 and 0)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:46.895Z",
+   "file": "20261122011446895-note-i279-sky-terrain-card-gain3.jpg",
+   "source": "out/work/sun/i279-sky-terrain-card-gain3.jpg",
+   "kind": "note",
+   "label": "item 4 study: terrain sky card at 3 times gain",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:46.076Z",
+   "file": "20261122011446076-note-i278-loops-card-left-foot.jpg",
+   "source": "out/work/sun/i278-loops-card-left-foot.png",
+   "kind": "note",
+   "label": "item 4 study: loops card at the left foot, plain and gained (the streak sits in the card)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:45.048Z",
+   "file": "20261122011445048-note-i277-approved-left-foot-gain3.jpg",
+   "source": "out/work/sun/i277-approved-left-foot-gain3.png",
+   "kind": "note",
+   "label": "item 4 study: approved image, left foot at 3 times gain",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:44.083Z",
+   "file": "20261122011444083-note-i276-foot-approved-90-60-0-gain3.jpg",
+   "source": "out/work/sun/i276-foot-approved-90-60-0-gain3.png",
+   "kind": "note",
+   "label": "item 4 study: left foot, approved, 90, 60, 0 at 3 times gain (the straight streak is in the approved image)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:43.104Z",
+   "file": "20261122011443104-note-i275-f90-approved-over-now-upper-gain3.jpg",
+   "source": "out/work/sun/i275-f90-approved-over-now-upper-gain3.jpg",
+   "kind": "note",
+   "label": "item 4 study: frame 90 upper half, approved over now, 3 times gain",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:42.203Z",
+   "file": "20261122011442203-note-i274-f60-upper-gain3-half.jpg",
+   "source": "out/work/sun/i274-f60-upper-gain3-half.jpg",
+   "kind": "note",
+   "label": "item 4 study: frame 60 upper half at 3 times gain",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:14:41.155Z",
+   "file": "20261122011441155-note-i274-f0-upper-gain3-half.jpg",
+   "source": "out/work/sun/i274-f0-upper-gain3-half.jpg",
+   "kind": "note",
+   "label": "item 4 study: frame 0 upper half at 3 times gain (build P3)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T01:05:00.058Z",
+   "file": "20261122010500058-job-frame-00247.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T00:54:22.378Z",
+   "file": "20261122005422378-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T00:53:28.316Z",
    "file": "20261122005328316-note-i273-draft-sheet-200-224.jpg",
@@ -29,30 +129,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T00:53:26.659Z",
-   "file": "20261122005326659-note-i272-f90-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i272-f90-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof (build P3): f90 bottom and middle native, round 24 beside now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:53:26.085Z",
-   "file": "20261122005326085-note-i272-f60-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i272-f60-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof (build P3): f60 bottom and middle native, round 24 beside now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:53:25.493Z",
-   "file": "20261122005325493-note-i272-f0-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i272-f0-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof (build P3): f0 bottom and middle native, round 24 beside now",
-   "stop": "sun"
-  },
-  {
    "time": "2026-11-22T00:46:54.452Z",
    "file": "20261122004654452-frame-f00060.jpg",
    "source": "out/work/sun/rf12/f00060.png",
@@ -65,76 +141,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-22T00:38:15.447Z",
-   "file": "20261122003815447-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T00:37:55.038Z",
-   "file": "20261122003755038-note-i267-d12-sheet-0-212.jpg",
-   "source": "out/work/sun/i267-d12-sheet-0-212.jpg",
-   "kind": "note",
-   "label": "sun polish proof: d12 sheet 0 212.jpg, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:54.443Z",
-   "file": "20261122003754443-note-i265-f90-final-N6-bottom-centre-native.jpg",
-   "source": "out/work/sun/i265-f90-final-N6-bottom-centre-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f90 final N6 bottom centre native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:53.805Z",
-   "file": "20261122003753805-note-i265-f90-final-N6-bottom-left-native.jpg",
-   "source": "out/work/sun/i265-f90-final-N6-bottom-left-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f90 final N6 bottom left native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:53.224Z",
-   "file": "20261122003753224-note-i266-f60-under-the-limb-x2.jpg",
-   "source": "out/work/sun/i266-f60-under-the-limb-x2.png",
-   "kind": "note",
-   "label": "sun polish proof: f60 under the limb x2, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:52.586Z",
-   "file": "20261122003752586-note-i266-f60-critic-box-native.jpg",
-   "source": "out/work/sun/i266-f60-critic-box-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f60 critic box native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:51.950Z",
-   "file": "20261122003751950-note-i266-f90-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i266-f90-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f90 bottom and middle native, round 24 beside now, final tier",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:37:51.328Z",
-   "file": "20261122003751328-note-i266-f60-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i266-f60-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "sun polish proof: f60 bottom and middle native, round 24 beside now, final tier",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T17:49:49.561Z",
