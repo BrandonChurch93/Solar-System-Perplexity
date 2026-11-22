@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T11:41:45.047Z",
- "head": "a387129f4fcabbcede56916028ea26b969dd7737",
- "note": "veil take F5: both cover sheets on main d5b851f read, ladders at 1309 gone; chain still to run",
+ "pushed": "2026-11-22T12:06:13.547Z",
+ "head": "c9d1af77355ed9d86a03a881c0b4a40641f71719",
+ "note": "veil take F5 committed d9b5c7c and proved on main d5b851f (finals same bytes, chain green); terrain, dive and rise review sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T11:49:52.357Z",
+   "file": "20261122114952357-note-p5-1566-a.jpg",
+   "source": "../view/p5-1566-a.jpg",
+   "kind": "note",
+   "label": "rise 1566 native crop: left veil take F4, right take F5 (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T11:49:51.788Z",
+   "file": "20261122114951788-note-p5-1566-full.jpg",
+   "source": "../view/p5-1566-full.jpg",
+   "kind": "note",
+   "label": "rise 1566 review tier, master size: left veil take F4 (main c479536), right take F5 (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22): torn bright bits and scratch lines become soft streaked cloud",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T11:49:51.218Z",
+   "file": "20261122114951218-note-p5-1314-full.jpg",
+   "source": "../view/p5-1314-full.jpg",
+   "kind": "note",
+   "label": "dive 1314 review tier, master size: left veil take E3d and F4 (same bytes there), right take F5: stepped rectangles and fine lines gone (branch a387129 plus take F5, main d5b851f, engine batches 21 and 22; the left still was rendered on main e4b509e)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T11:41:15.335Z",
    "file": "20261122114115335-note-p5-1309-10-pair.jpg",
@@ -178,30 +202,6 @@
    "source": "../view/c22-dc.png",
    "kind": "note",
    "label": "dive cover 1309 to 1320 review tier on engine batch 20 (branch 052ba8b, rendered on main 8f13066): every cell the same bytes as on batch 19; 1317 to 1320 even mist, no column",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T09:36:22.065Z",
-   "file": "20261122093622065-note-c22-rc.jpg",
-   "source": "../view/c22-rc.png",
-   "kind": "note",
-   "label": "rise cover 1555 to 1566 review tier on engine batch 20 (branch 58e4e6f plus veil take F4 uncommitted, main 8f13066): every cell the same bytes as on batch 19",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T09:07:12.461Z",
-   "file": "20261122090712461-note-b20-1586-pair.jpg",
-   "source": "../view/b20-1586-pair.jpg",
-   "kind": "note",
-   "label": "judged rise 1586 final tier: left batch 19 (main e4b509e), right batch 20 (branch e31356d plus veil take F4 uncommitted, main 8f13066); the globe keeps its pixels (358 of 504,000 inside the limb move by one level), the flight sky is the travel agent's new one",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T08:59:01.344Z",
-   "file": "20261122085901344-note-c21-dc.jpg",
-   "source": "../view/c21-dc.png",
-   "kind": "note",
-   "label": "dive cover 1309 to 1320 review tier, veil take F4: 1309 to 1315 same bytes as take E3d, 1317 to 1320 even mist, no column (branch e31356d plus veil take F4 uncommitted, rendered on main e4b509e, engine batch 19)",
    "stop": "venus"
   }
  ]
