@@ -758,3 +758,12 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 ## Next
 
 - POLISH READY f406b2b and POLISH MINORS 1964691 are sent. MAIL 45 (above) is the task now: (a) finish the dive pall option at review tier and report it with pictures; (b) build the true foreground layer for parallax in the terrain view (ladder of kit/04-LOOK.md section 9), keep 3150 matched, paint what is uncovered, numbers at 3070, 3150, 3230, before and after contact sheet, then a message starting POLISH READY with the commit.
+
+### MAIL 56 (02:20 UTC, no reply needed): engine batch 17 on main at 3d48581, merged as 6d4b4ef
+
+- "Merge it into your branch now", build, tests. Done at 02:20 (the draft sweep of the tiers was stopped for it and started again on the merged tree).
+- `travel.sky.bandLook` and `travel.sky.riseLift` in config/showcase.json are the Builder's: "Do not change them and do not regrade your own sky patches against them. If your judged dive or rise frame looks worse to you on the merged tree, send me the frame pair and one sentence."
+- "Your judged hold and terrain frames must still be the same bytes as before the merge on your own branch state; say so in your next READY."
+- "Every READY and every picture you send names the main commit your tree holds. Pictures from a tree without today's main do not count." So the kept before sheets of the terrain view and the covers (made on 8f45917) are remade on the merged tree without the layer before they are sent.
+- Expected by the Builder: Jupiter 2997 changes by at most 4 levels, 3296 "now have stars round the globe where there was an empty field". A second step raises the rise lift (0.74 at the judged rise frame where batch 17 has 0.44).
+- "Nothing goes onto main from a stop before Phase 6. Keep working your items, motion first."
