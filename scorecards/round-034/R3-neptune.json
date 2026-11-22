@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "rings, lower left (crops D, T, U) and right of the limb (crops I, X)",
+      "what": "the ring reads as loose, smeared brush streaks rather than a continuous ring. The left and right arcs do not line up into one ellipse, and they fade in and out in patches",
+      "fix": "render the ring as one continuous geometric ellipse with consistent radial banding, and occlude it correctly behind the globe"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "right limb, lower right (crops E, I, W)",
+      "what": "a thin cyan rim line sits apart from the dark edge of the disc, so the limb looks doubled, like a separate halo layer laid over the globe",
+      "fix": "fold the rim glow into the atmosphere falloff so it blends from the limb outward with no gap or second edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "right limb, lower right (crops I, R, W)",
+      "what": "the same detached cyan rim line and doubled limb edge",
+      "fix": "blend the rim light into a single soft atmospheric gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "cloud bands, mid and right of the disc (crops E, G, L)",
+      "what": "the cloud streaks look painterly and airbrushed, with smeared, motion-blurred strokes and little fine structure at native size",
+      "fix": "add higher-frequency cloud detail and sharper edges to the cirrus streaks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "interior of the dark storm (crops A, Q)",
+      "what": "the storm interior is filled with concentric swirl rings that look procedural and slightly pinched",
+      "fix": "break up the concentric swirl with irregular turbulence"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon, upper left (crops B, J)",
+      "what": "the moon's surface is soft and low in detail, with a flat pink and white tone and no crisp craters at native size",
+      "fix": "use a higher-resolution moon texture with stronger relief shading"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "dark sky and night side (crops D, O, T)",
+      "what": "when brightened, the black sky shows a blotchy, smudgy noise texture instead of a clean dark field",
+      "fix": "clean the sky background and keep the noise fine and uniform"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "lower-right dark limb where the rings cross the planet (crops A and D in image-14.png, N and O in image-15.png, S in image-16.png)",
+      "what": "a sharp circular silhouette edge of the planet cuts and dims the ring bands in a hard step while the rings simultaneously continue across the dark disk",
+      "fix": "fix planet-ring occlusion masking so the opaque globe cleanly blocks the far ring arc and the near ring arc passes cleanly in front without a semi-transparent disk cutout"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "across the opaque cloud deck, especially around the vortex and dark blue cloud bands (crops A, D, F, I in image-10.png, P in image-11.png, S in image-12.png)",
+      "what": "sharp pinpoint white star-like dots are scattered directly on top of the planet's clouds",
+      "fix": "mask the starfield strictly to space outside the planetary limb and remove stray bright single-pixel specks from the cloud layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right-hand limb transitioning into the nightside (crops A and F in image-14.png)",
+      "what": "the atmospheric glow pinches into a razor-thin hard cyan line with a dark inner trough before cutting off abruptly",
+      "fix": "widen and soften the radial and azimuthal falloff of the atmospheric scattering along the terminator and dark limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "ring bands at native resolution (crops A, C, D, F in image-14.png, M, O, R in image-15.png, S in image-16.png)",
+      "what": "the rings break into coarse, blotchy blue-grey speckles and noisy clumps rather than continuous fine ringlets",
+      "fix": "render continuous concentric ring density and optical-depth profiles with sub-pixel anti-aliasing instead of noisy stippled blotches"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "near-field lower cloud deck and bottom corners (crops D and E in image-10.png, M, O, R in image-11.png, S, T, U, V in image-12.png)",
+      "what": "cloud textures become soft, blurry, and smeared compared with the sharper mid-ground storm bands",
+      "fix": "maintain crisp high-frequency cloud detail across the foreground and lower frame without smear or low-resolution blur"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon on the right (crops C and G in image-14.png, K in image-15.png) and sunlit blue globe (crop B in image-14.png)",
+      "what": "the moon has a soft airbrushed surface with a stepped cyan-white fringe along its lit left limb, and the planet's blue cloud deck looks slightly painterly with a few stray bright specks",
+      "fix": "use higher-resolution surface and cloud displacement/albedo detail, anti-alias the moon's lit limb without chromatic fringing, and remove stray specks on the sunlit disk"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper-left starfield and upper-right Milky Way band (crops C, F, I in image-10.png)",
+      "what": "several stars near the upper-left edge are horizontally elongated blobs and dense Milky Way clusters dissolve into soft smudged patches",
+      "fix": "render stars as clean anti-aliased point-spread functions free of edge coma/smear and sharpen unresolved background star clouds"
+     }
+    ]
+   }
+  }
+ ]
+}

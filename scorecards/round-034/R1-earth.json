@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-02-b.png",
+   "where": "cells A, F, and G, the sunlit disc",
+   "what": "cloud edges and terrain ridges are much harsher than the approved crops, and the fine texture does not lock to -a",
+   "fix": "ease micro-contrast back to the softer photographic texture of -a; do not add edge crunch"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "sunlit Amazon and the Pacific storm",
+   "what": "land and bright clouds run too warm, with red lifted several points above -a",
+   "fix": "cool the sunlit grade and pull red down, especially on the Amazon and the storm clouds"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper limb aurora",
+   "what": "the curtain is in the right place but the fine rays do not match and the glow is a little bluer",
+   "fix": "restore the approved ray structure and reduce blue slightly"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "moon, upper right",
+   "what": "the disc is placed correctly, but a short run of bright limb pixels and the crater micro-texture do not match",
+   "fix": "match the lunar limb edge and crater texture; position is already right"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "sunlit disc against the limb",
+   "what": "surface texture sits about one pixel below the limb and sky, which already lock",
+   "fix": "nudge the disc texture up one pixel so it locks to the limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "cells A, F, and I",
+   "what": "same terrain shot and the limb glow matches, but surface texture sits about one pixel right of the limb, cloud edges and sunglint are a step harsher, and glint highlights are a little warm",
+   "fix": "nudge the surface one pixel left, ease micro-contrast, and cool the glint slightly"
+  }
+ ]
+}

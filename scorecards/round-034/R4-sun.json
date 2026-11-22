@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "solar disk interior, frames 270 through 449",
+   "what": "granulation slides steadily right, about 3 pixels every 16 frames and 34 pixels by frame 449, while the limb and large features stay put",
+   "fix": "lock surface detail to the disk so it cannot creep across a still limb; if the globe turns, move spots, limb, and granulation together, and keep that turn nearly imperceptible"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "near ground under the sunspot, frames 0 through 179",
+   "what": "surface texture slides down-left several pixels every 16 frames and is unrecognizable by about frame 81, while the starfield and limb barely move",
+   "fix": "hold granules and the sunspot registered to the locked camera, and limit change to slow convection instead of a sliding resynthesis"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 204 to 212, full frame",
+   "what": "the hold is still sharp at frame 204, and by frame 212 the pull-back is already in heavy radial blur with a wider field of view; the consecutive cover starts at 211 already at speed",
+   "fix": "lengthen the ease off the hold so field of view and blur ramp before the streak peaks"
+  }
+ ]
+}
