@@ -43,6 +43,7 @@ uniform vec3 uSunW;
 uniform vec2 uForward;
 uniform vec3 uEnd;
 uniform vec3 uCamL;
+uniform vec3 uEndShade;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
@@ -66,11 +67,11 @@ void main() {
   vec3 q = vLocal + uCentre;
   float b = dot(q, uSunL);
   float miss = sqrt(max(dot(q, q) - b * b, 0.0));
-  float shadow = b < 0.0 ? smoothstep(0.985, 1.025, miss) : 1.0;
+  float shadow = b < 0.0 ? smoothstep(mix(0.985, uEndShade.x, uEnd.x), mix(1.025, uEndShade.y, uEnd.x), miss) : 1.0;
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
-  outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
+  outColor = vec4(strands * edge * mix(mix(0.006 + 0.994 * shadow, uEndShade.z + (1.0 - uEndShade.z) * shadow, uEnd.x), 1.0, uHome) * phase * uGain, 0.0);
 }`
 
 export class Ring {
@@ -114,6 +115,7 @@ export class Ring {
     this.mesh.renderOrder = 3
     this.material.uniforms.uEnd = { value: new THREE.Vector3(0, 1, 1) }
     this.material.uniforms.uCamL = { value: new THREE.Vector3(0, 0, 1) }
+    this.material.uniforms.uEndShade = { value: new THREE.Vector3(0.985, 1.025, 0.006) }
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {
@@ -141,5 +143,6 @@ export class Ring {
     for (let k = 0; k < 3; k++) bands.setComponent(k, bands.getComponent(k) + (this.bandUnit[k]! * e.band[k]! - bands.getComponent(k)) * end)
     ;(u.uCamL!.value as THREE.Vector3).copy(camera).sub(this.mesh.position).applyQuaternion(this.inverse)
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
+    ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
   }
 }
