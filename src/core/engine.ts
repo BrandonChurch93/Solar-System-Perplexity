@@ -322,7 +322,7 @@ export class Engine {
     if (!raw) {
       cam.fov = mid.camera.vfov
       cam.updateProjectionMatrix()
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, shot.sun, shot.post.vignette, width / height, open)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, mid.sun.glareDir ? { ...shot.sun, dir: mid.sun.glareDir } : shot.sun, shot.post.vignette, width / height, open)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
       r.setRenderTarget(this.sampleTarget)

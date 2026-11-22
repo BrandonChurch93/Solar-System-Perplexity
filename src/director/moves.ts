@@ -26,7 +26,7 @@ export interface MoveParams {
   rise: { azimuthDeg: number; elevationDeg: number; distance: number; offset: [number, number]; driftSpeed: number; rollDeg: number; ahead?: number; hug?: number; tilt?: number; settle?: number; level?: boolean; pan?: number; gentle?: boolean; from?: number }
   travel: { turnDeg: number; side: number; turnEnd?: number; start?: number }
   arrive?: { swingDeg: number; axis: [number, number, number]; power?: number; from?: number; offset?: [number, number] }
-  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number] }
+  light: { exposure: number; skyExposure: number; terrainSkyGlow?: number; skyLow?: [number, number, number]; sunRadiusDeg: number; sunGlare: number; flare: number; sunDir?: [number, number, number]; glareCarry?: { dive?: number; rise?: number } }
   cover: [number, number, number]
   coverLow?: [number, number, number]
   coverTerrain?: [number, number, number]
@@ -267,6 +267,14 @@ export class StopPlan {
     if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise') || !this.p.skyTurnEase?.[seg.kind]) return null
     const k = smoother(ramp(w.firstFrame / config.fps, (w.lastFrame + 1) / config.fps, time))
     return seg.kind === 'dive' ? k : 1 - k
+  }
+
+  glareCarry(seg: Segment, time: number): number {
+    if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
+    const span = this.p.light.glareCarry?.[seg.kind]
+    if (!span || !coverWindow(seg)) return 0
+    const since = seg.kind === 'dive' ? this.coverCenter(seg) - time : time - this.coverCenter(seg)
+    return 1 - smoother(ramp(0, span, since))
   }
 
   coverAmount(seg: Segment, time: number): number {
