@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T11:09:02.365Z",
- "head": "63f5966c2dc9a29269b011d5266adb7bf9e624a5",
- "note": "Sun polish proof chain on head 89ca8d5 (main e9fc2a9): finals 247 and 360, measures green (G13 0 of 217 soft, G5 invalid 0, G17 1.415 1.329 1.216 1.019); repeat and review frames running",
+ "pushed": "2026-11-22T11:35:35.480Z",
+ "head": "f82118f7191f107d73a25a3a2d6abf0704ff403a",
+ "note": "Sun polish proof chain on head 89ca8d5 (main e9fc2a9): gates and repeat green; review frames 200 to 224 rendering (8 of 25)",
  "looks": [
+  {
+   "time": "2026-11-22T11:35:34.500Z",
+   "file": "20261122113534500-note-rv11-partial-8.jpg",
+   "source": "out/work/sun/p1/rv11-partial-8.jpg",
+   "kind": "note",
+   "label": "Sun rise cover, review tier, eight of the 25 frames 200 to 224 so far, polish head 89ca8d5 (main e9fc2a9)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T11:22:24.842Z",
+   "file": "20261122112224842-note-rv11-210-213-216.jpg",
+   "source": "out/work/sun/p1/rv11-210-213-216.jpg",
+   "kind": "note",
+   "label": "Sun rise cover 210, 213, 216, review tier, polish head 89ca8d5 (main e9fc2a9): first frames of the every frame sheet",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T11:06:47.964Z",
    "file": "20261122110647964-job-frame-00090.jpg",
@@ -48,22 +64,6 @@
    "source": "out/work/sun/p1/final-360-89ca8d5.jpg",
    "kind": "note",
    "label": "Sun hold 360, final tier, polish head 89ca8d5 (main e9fc2a9)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:41.420Z",
-   "file": "20261122105341420-note-f150-left-edge-zoom4.jpg",
-   "source": "out/work/sun/p1/f150-left-edge-zoom4.jpg",
-   "kind": "note",
-   "label": "Sun terrain 150, left frame edge at zoom 4: the two dashes are two stars",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T10:53:40.367Z",
-   "file": "20261122105340367-note-h30-f53-left.jpg",
-   "source": "out/work/sun/p1/h30-f53-left.jpg",
-   "kind": "note",
-   "label": "Sun hook 53 left foot: head beside a trial with more afterglow (rejected, the foot goes white again)",
    "stop": "sun"
   },
   {
