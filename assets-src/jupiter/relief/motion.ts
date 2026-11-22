@@ -67,9 +67,9 @@ const surface = (cx: number, cy: number): THREE.Vector3 => {
   const fy = gy - j
   return vertex(i, j).multiplyScalar((1 - fx) * (1 - fy)).addScaledVector(vertex(i + 1, j), fx * (1 - fy)).addScaledVector(vertex(i, j + 1), (1 - fx) * fy).addScaledVector(vertex(i + 1, j + 1), fx * fy)
 }
-const lifted = (tx: number, ty: number, layer: number): number => {
+const lifted = (tx: number, ty: number, cy: number, layer: number): number => {
   let scale = 1
-  for (let n = 0; n < layer; n++) scale -= tiers.tiers[n].lift * THREE.MathUtils.clamp((tiers.rise[1] - ty) / (tiers.rise[1] - tiers.rise[0]), 0, 1) * (1 - smooth(tx, tiers.tiers[n].taper[0], tiers.tiers[n].taper[1]))
+  for (let n = 0; n < layer; n++) scale -= tiers.tiers[n].lift * THREE.MathUtils.clamp((tiers.rise[1] - Math.max(ty, cy)) / (tiers.rise[1] - tiers.rise[0]), 0, 1) * (1 - smooth(tx, tiers.tiers[n].taper[0], tiers.tiers[n].taper[1]))
   return scale
 }
 const screen = (frame: number, tx: number, ty: number, layer: number): [number, number] => {
@@ -89,7 +89,7 @@ const screen = (frame: number, tx: number, ty: number, layer: number): [number, 
     world = surface(cx, cy)
   }
   const f = 540 / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
-  const v = world.multiplyScalar(lifted(tx, ty, layer)).sub(pose.position).applyQuaternion(pose.quaternion.clone().invert())
+  const v = world.multiplyScalar(lifted(tx, ty, cy, layer)).sub(pose.position).applyQuaternion(pose.quaternion.clone().invert())
   return [960 + (f * v.x) / -v.z, 540 - (f * v.y) / -v.z]
 }
 const points: [string, number, number, number][] = (process.env.POINTS ?? 'crest:2300:1990:1,lobe:2600:2010:1,mid:2300:1750:0,rim:2540:1420:0,far:2700:1000:0').split(',').map((p) => {
