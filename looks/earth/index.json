@@ -1,25 +1,9 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T13:16:03.136Z",
- "head": "ad867f8a1762f3e941dc3840cecbf5775a6c0b44",
- "note": "round 34 step 1: second take back as one commit b6764ba (tree holds main 8cd0877): hair line gone at 2060, 2099, 2112; 2010 final 60eb68c0; measure running",
+ "pushed": "2026-11-22T13:43:48.798Z",
+ "head": "f01711f7c33f26f4ee28f0f032c5fa130a5c9010",
+ "note": "round 34 step 1 proved: measure PASS on b6764ba (second take, tree holds main 8cd0877), G13 0 of 463, G5 and G17 as READY; next the rise start (d2) on the tree holding main 5e3462bd",
  "looks": [
-  {
-   "time": "2026-11-22T13:16:02.366Z",
-   "file": "20261122131602366-note-compare-terrain-final.jpg",
-   "source": "out/work/earth/pb/k2/compare-terrain-final.jpg",
-   "kind": "note",
-   "label": "earth 2010 final with the second take (60eb68c0, b6764ba, tree holds main 8cd0877) beside the approved close image",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T13:16:01.688Z",
-   "file": "20261122131601688-note-pair-x3.jpg",
-   "source": "out/work/earth/pb/k2/pair-x3.png",
-   "kind": "note",
-   "label": "earth top border of the terrain sky at 2060, 2099, 2112, review, 3 times: third take (READY 1ab7935, hair line where the Sun's ray crosses) above second take (b6764ba, tree holds main 8cd0877, line gone)",
-   "stop": "earth"
-  },
   {
    "time": "2026-11-22T13:14:32.439Z",
    "file": "20261122131432439-frame-t-2060-k2.jpg",
