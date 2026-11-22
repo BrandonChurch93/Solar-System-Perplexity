@@ -1,9 +1,23 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T11:57:00.059Z",
+ "pushed": "2026-11-22T12:11:31.160Z",
  "head": "6e89c8f33e6150c594e8dc1805c31af951b29ee7",
- "note": "Jupiter POLISH READY 686a7ea on main 3a09527: measures green, cover fixes; next the dive trial",
+ "note": "Jupiter: the dive trial's before sheet renders on the READY head 686a7ea (main 3a09527)",
  "looks": [
+  {
+   "time": "2026-11-22T12:11:12.003Z",
+   "file": "20261122121112003-frame-f03027-review.jpg",
+   "source": "out/work/sheets/.frames-dJceya/f03027-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3027, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3027,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "be043ade04a7ab6e"
+  },
   {
    "time": "2026-11-22T11:49:26.494Z",
    "file": "20261122114926494-job-frame-03296.jpg",
@@ -122,20 +136,6 @@
    "stop": "jupiter",
    "segment": "jupiter.dive",
    "frame": 3021,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
-  },
-  {
-   "time": "2026-11-22T10:59:18.774Z",
-   "file": "20261122105918774-still-f03267-16x9-review-full.jpg",
-   "source": "out/work/stills/f03267-16x9-review-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3267, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3267,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
