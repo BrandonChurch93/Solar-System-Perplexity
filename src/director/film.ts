@@ -616,6 +616,14 @@ export class FilmDirector implements Director {
       }
       pose = inSet(s, local)
       sets = [s]
+      if (segment.kind === 'dive' || segment.kind === 'rise') {
+        const share = p.skyTurnShare(segment, time)
+        if (share !== null) {
+          const high = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id] ?? NO_TURN
+          const low = this.sky.turns[p.id] ?? NO_TURN
+          skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
+        }
+      }
       if (view === 'terrain') {
         near = 0.01
         far = 4000

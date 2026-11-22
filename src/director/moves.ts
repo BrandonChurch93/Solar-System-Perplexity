@@ -36,6 +36,7 @@ export interface MoveParams {
   coverEdgeRise?: [number, number]
   coverHides?: number
   coverWindow?: CoverTimings
+  skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
   coverRush?: { speed: number; reach: number; billow: [number, number, number]; streak: [number, number, number]; contrast: [number, number] }
@@ -259,6 +260,13 @@ export class StopPlan {
 
   coverHidden(_seg: Segment, _time: number): number | undefined {
     return undefined
+  }
+
+  skyTurnShare(seg: Segment, time: number): number | null {
+    const w = coverWindow(seg)
+    if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise') || !this.p.skyTurnEase?.[seg.kind]) return null
+    const k = smoother(ramp(w.firstFrame / config.fps, (w.lastFrame + 1) / config.fps, time))
+    return seg.kind === 'dive' ? k : 1 - k
   }
 
   coverAmount(seg: Segment, time: number): number {
