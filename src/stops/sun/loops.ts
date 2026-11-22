@@ -6,7 +6,7 @@ import { STAGE_GLSL, stage } from './stage'
 
 export interface LoopsLook {
   grid: [number, number]
-  lean: { outerDeg: number; innerDeg: number; from: number; to: number }
+  lean: { outerDeg: number; innerDeg: number; from: number; to: number; late: [number, number] }
   gain: number
   far: number
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
@@ -15,16 +15,23 @@ export interface LoopsLook {
   burst: { surge: number; floor: number; reach: [number, number]; other: number; white: number; from: number }
 }
 
+export interface KnotsLook {
+  knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
+  feet: { amount: number; reach: number; over: number; lane: number; ground: number }
+}
+
 const VERT = /* glsl */ `
+in vec3 aLate;
+uniform float uLate;
 out vec3 vStage;
 out vec3 vClip;
 void main() {
   vStage = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate), 1.0);
   vClip = gl_Position.xyw;
 }`
 
-const FRAG = /* glsl */ `
+const frag = (knots: boolean): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 uniform sampler2D uNoise;
@@ -43,7 +50,13 @@ uniform vec4 uSwell;
 uniform float uCalm;
 uniform vec4 uBurst;
 uniform vec3 uBurstMore;
-uniform float uCut;
+uniform float uCut;${knots ? `
+uniform vec4 uKnot;
+uniform vec4 uKnotMore;
+uniform vec4 uKnotLane;
+uniform vec4 uKnotPick;
+uniform vec2 uKnotEnds;
+uniform vec2 uFoot;` : ''}
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -77,7 +90,26 @@ void main() {
   float swell = exp(-ds * ds / (uSwell.z * uSwell.z)) * smoothstep(0.0, 0.14, along) * (1.0 - smoothstep(0.86, 1.0, along)) * (1.0 - exp(-uTime * uTime / (uCalm * uCalm)));
   float strand = (1.0 - smoothstep(uFlowMask.x, uFlowMask.y, arc)) * smoothstep(uFlowMask.z, uFlowMask.w, dot(lin, vec3(0.3, 0.5, 0.2)));
   float wave = strand * (uFlow.x * run + uSwell.x * swell);
-  lin *= 1.0 + (wave < 0.0 ? -uFlowMore.y * (1.0 - exp(wave / uFlowMore.y)) : wave);
+  lin *= 1.0 + (wave < 0.0 ? -uFlowMore.y * (1.0 - exp(wave / uFlowMore.y)) : wave);${knots ? `
+  for (int k = 0; k < (uKnot.x > 0.0 ? 1 : 0); k++) {
+    vec2 ab = uFeet.zw - uFeet.xy;
+    float apart = length(ab);
+    ab /= apart;
+    float s = acos(clamp(dot(pb, ab) / max(lb, 1e-6), -1.0, 1.0)) / max(3.14159265 - arc, 1e-3);
+    float span = apart * (3.14159265 - arc) / max(sin(arc), 0.2);
+    float bundle = 0.5 + 0.5 * sin(arc * uKnotLane.z + 1.3) * cos(arc * uKnotLane.w + 0.4);
+    float gap = uKnot.y * uKnot.z;
+    float phase = uKnotMore.x / uKnot.z - bundle * uKnotMore.y - s * span / gap;
+    float nth = floor(phase + 0.5);
+    float ds = (phase - nth) * gap;
+    float pick = uKnotPick.w + (1.0 - uKnotPick.w) * smoothstep(uKnotPick.y, uKnotPick.z, textureLod(uNoise, vec2(arc * uKnotPick.x, fract(nth * 0.3183 + 0.17)), 0.0).r);
+    float above = smoothstep(0.0, 0.02, ab.x * (p.y - uFeet.y) - ab.y * (p.x - uFeet.x));
+    float shine = dot(lin, vec3(0.3, 0.5, 0.2));
+    float seen = above * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, shine);
+    float knot = uKnot.x * pick * exp(-ds * ds / (uKnot.w * uKnot.w)) * smoothstep(uKnotEnds.x, uKnotEnds.y, s) * (1.0 - smoothstep(1.0 - uKnotEnds.y, 1.0 - uKnotEnds.x, s)) * (1.0 - smoothstep(uKnotLane.x, uKnotLane.y, arc)) * seen;
+    knot += seen * (uFoot.x * exp(-s / uKnotMore.w) + uFoot.y * exp(-(1.0 - s) / uKnotMore.w));
+    lin = lin * (1.0 + knot) + shine * knot * uKnotMore.z * vec3(1.0, 0.9, 0.66);
+  }` : ''}
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
   for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0);
@@ -116,10 +148,13 @@ export class Loops {
   readonly material: THREE.ShaderMaterial
   private readonly gain: number
   private readonly reach: [number, number]
+  private readonly knots: KnotsLook | undefined
+  private readonly across: number
 
-  constructor(map: THREE.Texture, grade: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook) {
+  constructor(map: THREE.Texture, grade: THREE.Texture, noiseTexture: (data: Float32Array, size: number) => THREE.Texture, look: LoopsLook, knots?: KnotsLook) {
     this.gain = look.gain
     this.reach = look.burst.reach
+    this.knots = knots
     const [fa, fb] = stage.feet as [[number, number], [number, number]]
     const tan = (f: [number, number]): THREE.Vector2 => new THREE.Vector2((f[0] - 0.5) * 2 * stage.tan[0], (0.5 - f[1]) * 2 * stage.tan[1])
     const ta = tan(fa)
@@ -134,9 +169,11 @@ export class Loops {
     const box = stage.loopsBox
     const [nx, ny] = look.grid
     const positions = new Float32Array((nx + 1) * (ny + 1) * 3)
+    const late = new Float32Array((nx + 1) * (ny + 1) * 3)
     const lineDir = tb.clone().sub(ta).normalize()
     const lineNormal = new THREE.Vector2(-lineDir.y, lineDir.x)
     const feetApart = ta.distanceTo(tb)
+    this.across = knots ? (feetApart * (Math.PI - knots.feet.lane)) / Math.sin(knots.feet.lane) : 0
     const horizon = Math.sqrt((stage.radius + 1) ** 2 - stage.radius ** 2)
     const smooth = (x: number, lo: number, hi: number): number => {
       const t = Math.min(Math.max((x - lo) / (hi - lo), 0), 1)
@@ -153,22 +190,27 @@ export class Loops {
         const pa = ta.clone().sub(p)
         const pb = tb.clone().sub(p)
         const arc = Math.acos(Math.min(Math.max(pa.dot(pb) / Math.max(pa.length() * pb.length(), 1e-9), -1), 1))
-        const lean = THREE.MathUtils.degToRad(look.lean.outerDeg + (look.lean.innerDeg - look.lean.outerDeg) * smooth(arc, look.lean.from, look.lean.to))
-        lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
-        normal.copy(axis).cross(lift).normalize()
-        const denom = r.dot(normal)
+        const share = smooth(arc, look.lean.from, look.lean.to)
         const hit = stage.groundDistance(ax, ay)
         const tGround = (hit > 0 ? hit : look.far) / r.length()
-        let t = Math.abs(denom) > 1e-5 ? footA.dot(normal) / denom : tGround
-        if (!(t > 0.3)) t = tGround
-        t = Math.min(t, hit > 0 ? tGround * 1.15 : tGround)
         const under = smooth(-(p.clone().sub(ta).dot(lineNormal)), 0.0, 0.05)
         const span = p.clone().sub(ta).dot(lineDir) / feetApart
         const above = THREE.MathUtils.radToDeg(Math.acos(Math.min(Math.max(r.clone().normalize().dot(stage.down), -1), 1)) - stage.alpha)
         const pin = smooth(span, look.pin.from, look.pin.from + look.pin.soft) * (1 - smooth(span, 1 - look.pin.from - look.pin.soft, 1 - look.pin.from)) * (1 - smooth(above, look.pin.lowDeg, look.pin.highDeg))
-        const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
-        const k = held + (tGround - held) * under
-        r.multiplyScalar(k).toArray(positions, (j * (nx + 1) + i) * 3)
+        const place = (outerDeg: number, innerDeg: number, into: Float32Array): void => {
+          const lean = THREE.MathUtils.degToRad(outerDeg + (innerDeg - outerDeg) * share)
+          lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
+          normal.copy(axis).cross(lift).normalize()
+          const denom = r.dot(normal)
+          let t = Math.abs(denom) > 1e-5 ? footA.dot(normal) / denom : tGround
+          if (!(t > 0.3)) t = tGround
+          t = Math.min(t, hit > 0 ? tGround * 1.15 : tGround)
+          const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
+          const k = held + (tGround - held) * under
+          r.clone().multiplyScalar(k).toArray(into, (j * (nx + 1) + i) * 3)
+        }
+        place(look.lean.outerDeg, look.lean.innerDeg, positions)
+        place(look.lean.late[0], look.lean.late[1], late)
       }
     }
     const index: number[] = []
@@ -180,11 +222,12 @@ export class Loops {
     }
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    geometry.setAttribute('aLate', new THREE.BufferAttribute(late, 3))
     geometry.setIndex(index)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: FRAG,
+      fragmentShader: frag(knots !== undefined),
       uniforms: {
         uMap: { value: map }, uGrade: { value: grade }, uNoise: { value: noiseTexture(noise(256), 256) }, uDiag: diagUniform, uGrad: gradUniform,
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
@@ -194,7 +237,7 @@ export class Loops {
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
         uFlowMask: { value: new THREE.Vector4(look.flow.inside[0], look.flow.inside[1], look.flow.from[0], look.flow.from[1]) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
-        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uLate: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -207,17 +250,45 @@ export class Loops {
       depthTest: false,
       side: THREE.DoubleSide,
     })
+    if (knots) {
+      const k = knots.knots
+      this.material.uniforms.uKnot = { value: new THREE.Vector4(0, k.speed, k.every, k.width) }
+      this.material.uniforms.uKnotMore = { value: new THREE.Vector4(0, k.jitter, k.white, knots.feet.reach) }
+      this.material.uniforms.uKnotLane = { value: new THREE.Vector4(k.inside[0], k.inside[1], k.lanes[0], k.lanes[1]) }
+      this.material.uniforms.uKnotPick = { value: new THREE.Vector4(k.pick[0], k.pick[1], k.pick[2], k.pick[3]) }
+      this.material.uniforms.uKnotEnds = { value: new THREE.Vector2(k.ends[0], k.ends[1]) }
+      this.material.uniforms.uFoot = { value: new THREE.Vector2() }
+    }
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.renderOrder = 5
     this.mesh.frustumCulled = false
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0): void {
+  pulse(since: number): [number, number] {
+    const k = this.knots
+    if (!k) return [0, 0]
+    const beat = (x: number): number => {
+      const d = ((x - Math.floor(x + 0.5)) * k.knots.every) / k.feet.over
+      return Math.exp(-d * d)
+    }
+    const phase = (since + k.knots.lead) / k.knots.every - 0.5 * k.knots.jitter
+    return [beat(phase), beat(phase - this.across / (k.knots.speed * k.knots.every))]
+  }
+
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0): void {
     const u = this.material.uniforms
+    if (this.knots) {
+      const k = this.knots
+      const [a, b] = this.pulse(since)
+      ;(u.uKnot!.value as THREE.Vector4).x = k.knots.amount * open
+      ;(u.uKnotMore!.value as THREE.Vector4).x = since + k.knots.lead
+      ;(u.uFoot!.value as THREE.Vector2).set(k.feet.amount * open * a, k.feet.amount * open * b)
+    }
     const lit = u.uBurst!.value as THREE.Vector4
     lit.x = burst
     lit.z = this.reach[0] + (this.reach[1] - this.reach[0]) * burst
     u.uCut!.value = cut
+    u.uLate!.value = late
     u.uTime!.value = time
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette

@@ -27,6 +27,8 @@ const float AP_TOP = ${f(data.top)};
 const vec2 AP_NEAR = vec2(${f(data.near[0]!)}, ${f(data.near[1]!)});
 const float AP_FEATHER = ${f(data.feather)};
 const vec2 AP_NADIR = vec2(${f(rel.dot(side))}, ${f(rel.dot(fwd))});
+const vec4 AP_FRONT = vec4(${f(data.front.side)}, ${f(data.front.centre)}, ${f(data.front.at)}, ${f(data.front.feather)});
+const vec2 AP_SPAN = vec2(${f(data.front.span[0]!)}, ${f(data.front.span[1]!)});
 vec2 apImage(vec3 p) {
   vec3 r = p - AP_EYE;
   float z = max(-dot(r, AP_BACK), 0.02);
@@ -41,6 +43,8 @@ float apWeight(vec3 p, vec2 b) {
   float inside = smoothstep(0.0, AP_FEATHER, a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.x + shift) * smoothstep(0.0, AP_FEATHER, 1.0 - a.y + shift);
   vec3 r = p - ST_DOWN;
   float near = 1.0 - smoothstep(AP_NEAR.x, AP_NEAR.y, length(vec2(dot(r, ST_RIGHT), dot(r, ST_FWD)) - AP_NADIR));
-  float beyond = max(max(-b.x, b.x - 1.0), b.y - 1.0);
-  return (1.0 - inside) * near * (1.0 - smoothstep(0.08, 0.1, beyond));
+  float within = min(min(b.x, 1.0 - b.x), min(1.0 - b.y, b.y - AP_TOP));
+  float line = AP_FRONT.x + (AP_FRONT.y - AP_FRONT.x) * (1.0 - smoothstep(AP_SPAN.x, AP_SPAN.y, abs(a.x - AP_FRONT.z)));
+  float front = smoothstep(line - AP_FRONT.w, line, a.y);
+  return max(1.0 - inside, front) * max(near, front * inside) * smoothstep(mix(-0.0005, 0.004, uApronEdge), AP_FEATHER * uApronEdge, within);
 }`
