@@ -1624,3 +1624,13 @@ R5, score 6:
 - The grey patch on the bottom limb at 247 is in the map near the pole; with the turn it sits 35 px further right (945, 978 to about 980, 979 at 1920). Not answered.
 - Main is at b22a7927 (round 34 closed; kit, status stills, scorecards only). My open items there: 109 (frame 90, the near ground; the corner), 110 (R3's majors), 111 (R4's slide, hold and opening), 128 and 129 (495 and the flights).
 - `dr/after.sh` renders drafts 190 to 225 at spin 1 and the final of 495, then: merge main, notes and CUT35.md, push, the replacement CUT35 to `/root` before 18:30.
+
+## 18:21 UTC: CUT35 sun sent again, as a replacement, with the number
+
+- Sent to `/root` at about 18:21 UTC, high priority, ten new pictures (11 to 20); the text is `assets-src/sun/CUT35.md`; the first message of 17:39 is kept as `out/work/sun/dr/CUT35-first.md` (and in commit 5ac86e82).
+- READY 02e8dbc1e954dbf9ccf08017668bf2fbddd9c581 (holds main 55319c5a). Commits: corner 24d509dd5a0c05cdbef5365dcfec1285ac927c81, the number 20d06b435ff304d7aae3255c83d03c2cf4715189. The corner alone is 795fbfdc0287d8164010165d7d17f0cfc769dfc5.
+- Rise at spin 1, drafts only: 190, 200, 210 differ from the corner's by 9, 33, 36 levels in the mean (the ground turns with the globe at the new rate, so the camera's way over the ground in 180 to 214 differs a little), 215, 220, 225 show the face further round; 204 to 218 every second frame is one steady pull back (`dr/cut35-rise-drafts-204-218-spin1.jpg`).
+- The final of 495 at spin 1 ran from 18:13:53 and was stopped by me at 18:17:41 for the clock; draft 495 is 2abff83e7edc5756 against 9164709975e19223 (spin 3.4). Round 34's final of 495 is 621a8e5b9e62341f (`hk3/fin5`).
+- Named as prices in the message: G17 at 360 1.032 to 1.030 (25th percentile 0.996 to 0.994), 247 and 495 another face of the same globe, 360 moved by 0.1 px, the boil alone on a still globe in the hold.
+- Open after this cut: the slide of the near ground in the opening (item 111, second half; it is `climb.ease.speed`, the camera's ground speed, and 0, 60, 90 are on their poses), items 110, 128, 129, the seam contrast and near field focus at 90 (109).
+- Next: wait for the Builder's word. If he takes only the corner, the plan file goes back to 3.4 only on his word (it is its own commit, 20d06b43).
