@@ -42,3 +42,11 @@ Mine: in `src/director/film.ts` the ending only (`LOOKBACK`, `lookback()`, the e
 - Triton leaves the frame on the right about 5068 and cannot sit in the lookback frame honestly (14 radii out, 67 degrees from the Sun line, the frame holds 30 degrees each side).
 - Lookback drift: `sunPerSecond` raised to [-0.012, 0.003]: Neptune drifts right about 76 px and the Sun left about 53 px over 5145 to 5395, radius 214 to 194.
 - Sky: star level 1 from the rise on (the rise already hands over lift 1 at exposure 0.45), exposure eases 0.45 to `LOOKBACK.skyExposure` across the whole retreat. Trying 0.36 with glare 4 so the Sun is the one bright star.
+
+## Proved (06:38 UTC, commit a5b688f plus merge 6726a7c, pushed)
+
+- Draft hashes after equal before for all 14: 5024, 5020, 2325, 2427, 2580, 615, 1440, 2010, 3150, 3720, 4290, 4860, 5006, 5000 (`bytes-after.txt`).
+- `npm run build` passes, `npx vitest run` 79 of 79, `tools/shaderaudit.py` prints the same lines as main.
+- Table: `table-5025-5150.md`. Peak turn 1.356 at 5104, peak phase change 0.786 at 5097, peak change of the phase rate 0.024 a frame.
+- Chosen: `skyExposure` 0.36, `glare` 4. The engine keeps the flight stars at the same level whatever the exposure (`setStarLift` divides by it), so exposure only moves the band's glow; 0.45 to 0.36 took the band mean from 68.8 to 61.6 of 255.
+- Chain running in `/tmp/work` (`/tmp/chain.sh`, log `/tmp/chain.log`): review sheets of the three segments, draft strip 5050 to 5083 every third into `out/work/ending/strip`, finals of 5235, 5085, 5362 into `out/work/ending/final`.
