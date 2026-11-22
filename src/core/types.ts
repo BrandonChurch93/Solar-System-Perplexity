@@ -87,6 +87,7 @@ export interface SkyPatch {
   add: boolean
   ring: [number, number, number, number]
   edge: number
+  unfold?: [number, number]
   weight?: (time: number, view: ViewKind) => number
 }
 
