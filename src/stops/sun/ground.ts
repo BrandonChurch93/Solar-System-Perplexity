@@ -26,6 +26,8 @@ export interface GroundLook {
   inflow: { amount: number; waves: number; rate: number; inner: number; outer: number }
 }
 
+export interface SeetheLook { amount: number; rate: number; spread: number; near: [number, number]; far: number; crown: [number, number] }
+
 const VERT = /* glsl */ `
 out vec3 vStage;
 out vec3 vView;
@@ -38,7 +40,7 @@ void main() {
   vClip = gl_Position.xyw;
 }`
 
-const FRAG = /* glsl */ `
+const frag = (seethe: boolean): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uPlate;
 uniform sampler2D uApron;
@@ -69,7 +71,11 @@ uniform float uCellSize;
 uniform vec4 uBoil;
 uniform vec3 uTwinkle;
 uniform vec4 uInflow;
-uniform vec2 uInflowRate;
+uniform vec2 uInflowRate;${seethe ? `
+uniform vec4 uSeethe;
+uniform vec3 uSeetheNear;
+uniform vec2 uCrown;
+float seethe = 0.0;` : ''}
 uniform vec3 uCam;
 uniform vec2 uBand;
 uniform float uLod;
@@ -100,7 +106,8 @@ vec4 surface(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, flo
   float wide = lumAt(map, uv, lod + 2.0 + calm);
   float slow = wide * 26.0 + lumAt(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
   float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
-  vec3 lin = inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));
+  vec3 lin = inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));${seethe ? `
+  for (int k = 0; k < (seethe != 0.0 ? 1 : 0); k++) lin *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(map, uv + push * cell * swing, lod) / max(wide, 1e-3));` : ''}
   moved = push * swing;
   return vec4(lin, 1.0);
 }
@@ -170,7 +177,12 @@ void main() {
   vec2 moved = vec2(0.0);
   vec2 gq = gnd * uTwinkle.z;
   float beat = vnoise(vec3(gq, uTime * uTwinkle.y)) - vnoise(vec3(gq, 0.0)) + 0.5 * (vnoise(vec3(gq * 2.3 + 7.3, uTime * uTwinkle.y * 1.7 + 3.1)) - vnoise(vec3(gq * 2.3 + 7.3, 3.1)));
-  inflow *= max(1.0 + uTwinkle.x * beat, 0.35);
+  inflow *= max(1.0 + uTwinkle.x * beat, 0.35);${seethe ? `
+  for (int k = 0; k < (uSeethe.x > 0.0 ? 1 : 0); k++) {
+    vec2 sq = gnd * uSeethe.z;
+    float tick = uSeethe.w * uSeethe.y;
+    seethe = uSeethe.x * (vnoise(vec3(sq, tick)) + 0.5 * vnoise(vec3(sq * 2.1 + 3.7, tick * 1.6 + 1.9)) - 0.75) * mix(uSeetheNear.z, 1.0, 1.0 - smoothstep(uSeetheNear.x, uSeetheNear.y, length(vStage - uCam)));
+  }` : ''}
   for (int k = 0; k < ((w < 1.0 && own > 0.0) ? 1 : 0); k++) {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
@@ -224,8 +236,10 @@ export class Ground {
   private readonly pulse: [number, number]
   private readonly out: [number, number]
   private readonly edge: [number, number]
+  private readonly seethe: SeetheLook | undefined
 
-  constructor(plate: THREE.Texture, apron: THREE.Texture, field: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook) {
+  constructor(plate: THREE.Texture, apron: THREE.Texture, field: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook, seethe?: SeetheLook) {
+    this.seethe = seethe
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
     this.pulse = look.glow
@@ -243,7 +257,7 @@ export class Ground {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: FRAG,
+      fragmentShader: frag(seethe !== undefined),
       uniforms: {
         uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
@@ -256,6 +270,11 @@ export class Ground {
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
+    if (seethe) {
+      this.material.uniforms.uSeethe = { value: new THREE.Vector4(0, seethe.rate, seethe.spread, 0) }
+      this.material.uniforms.uSeetheNear = { value: new THREE.Vector3(seethe.near[0], seethe.near[1], seethe.far) }
+      this.material.uniforms.uCrown = { value: new THREE.Vector2(seethe.crown[0], seethe.crown[1]) }
+    }
     const rings = look.rings
     const sectors = look.sectors
     const cap = THREE.MathUtils.degToRad(look.cap)
@@ -303,14 +322,19 @@ export class Ground {
     this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0): void {
     const u = this.material.uniforms
+    if (this.seethe) {
+      const v = u.uSeethe!.value as THREE.Vector4
+      v.x = this.seethe.amount * open
+      v.w = since
+    }
     u.uLod!.value = lod
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     u.uTime!.value = time
     u.uApronOut!.value = THREE.MathUtils.smoothstep(time, this.out[0], this.out[1])
     u.uApronEdge!.value = THREE.MathUtils.smoothstep(time, this.edge[0], this.edge[1])
-    u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83)))
+    u.uGlowBeat!.value = stage.litMax * (1 + lit) * (1 + this.pulse[0] * (0.6 * Math.sin(time * this.pulse[1]) + 0.4 * Math.sin(time * this.pulse[1] * 1.83))) * (1 + beat)
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect

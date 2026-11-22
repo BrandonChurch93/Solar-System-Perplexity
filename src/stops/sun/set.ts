@@ -9,7 +9,7 @@ import { SunGlobe } from './globe'
 import { Ground } from './ground'
 import { Loops } from './loops'
 import * as look from './look'
-import { plan } from './plan'
+import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
 import { stage } from './stage'
@@ -43,9 +43,9 @@ export const createSet: SetFactory = async (ctx) => {
   const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
   const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
   const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
-  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground)
+  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
   const fringe = new Fringe(plate, look.fringe)
-  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops)
+  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
@@ -102,12 +102,15 @@ export const createSet: SetFactory = async (ctx) => {
         eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
         if (mixed) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
         ground.show(mixed, 1 - share(x, d.ground), 1 - share(x, d.site))
-        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst)
+        const since = state.time - plan.seg.terrain.start
+        const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
+        const feet = loops.pulse(since)
+        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - share(x, d.fringe))
         const strands = 1 - share(x, d.loops)
         loops.mesh.visible = strands > 0
         const late = kind === 'rise' ? share(state.time - plan.window[0], d.lean) : 0
-        loops.update(t, gain * strands, vignette, aspect, burst * look.flare.loops, Math.max(look.flare.cut * burst * burst, d.cut * late), late)
+        loops.update(t, gain * strands, vignette, aspect, burst * look.flare.loops, Math.max(look.flare.cut * burst * burst, d.cut * late), late, open, since)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid

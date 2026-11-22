@@ -2,9 +2,9 @@ import type { CoronaLook } from './corona'
 import type { GlobeLook } from './globe'
 import type { ProminenceLook } from './prominence'
 import type { SkyCardDef } from './skycard'
-import type { GroundLook } from './ground'
+import type { GroundLook, SeetheLook } from './ground'
 import type { FringeLook } from './fringe'
-import type { LoopsLook } from './loops'
+import type { KnotsLook, LoopsLook } from './loops'
 import type { FlareLook } from './flare'
 import { stage } from './stage'
 import fit from './fit.json'
@@ -72,6 +72,13 @@ export const loops: LoopsLook = {
   flow: { amount: 0.55, lanes: 0.12, along: 1.5, speed: 0.12, back: 0.07, floor: 0.25, inside: [1.9, 2.4], from: [0.02, 0.1] },
   swell: { amount: 1.6, speed: 0.42, width: 0.075, lanes: 0.5, calm: 0.45 },
   burst: { surge: 26, floor: 0.12, reach: [0.03, 0.55], other: 0.6, white: 0.5, from: 0.03 },
+}
+
+export const opening: KnotsLook & { fade: [number, number]; seethe: SeetheLook } = {
+  fade: [2.05, 2.85],
+  knots: { amount: 5, speed: 0.5, every: 0.9, width: 0.05, jitter: 0.25, white: 0.4, inside: [1.9, 2.2], lanes: [4, 1.7], lead: 0.2, pick: [0.25, 0.4, 0.75, 0.2], ends: [0.02, 0.1] },
+  feet: { amount: 1.2, reach: 0.1, over: 0.14, lane: 1.5, ground: 1.2 },
+  seethe: { amount: 1, rate: 2, spread: 4, near: [2.2, 4.5], far: 0.3, crown: [0.85, 1.25] },
 }
 
 export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05, floor: [0.22, 0.34] }
