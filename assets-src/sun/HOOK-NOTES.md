@@ -84,7 +84,39 @@ which. No answer needed before the hook is done.
 - The front is a line of constant arch coordinate; only the per strand lag (`ragged`, `lanes`) breaks it up.
 - The veil is a blurred copy of the loops card (mip 5), not a bloom of the picture.
 - The ground flare is a radial lift of the existing glow map around the right foot, no new light on the cells.
-- Times are seconds in `look.opening.surge` (lands at 1.5 s, hook is `film.hookSeconds` = 2 s); they are not
-  derived from the config value. If the hook length changes, `land`, `end` have to follow by hand.
+- The surge times follow `film.hookSeconds` since c3c2118, but `look.opening.fade` of main (2.05 to 2.85 s) does
+  not; it caps everything, so a longer hook would cut the surge off at 2.85 s.
 - Frames 61 to 77 also differ from main (the flare dies away until 2.6 s); from frame 78 the picture is main's.
 - Only draft and final tiers rendered, no review tier, no motion gate rerun (the change moves no geometry).
+
+## Second full after run (commit 6e33a5d), 06:38 to 06:49: the one that is sent
+- Draft sha256 of all 13 check frames equal to main again (90, 247, 360 and the ten frames of the other stops).
+- Final tier frame 0: byte equal to main (7cd40c50cd2343864b2700d6a7e2a9ad30ed044020f59e4807c6c369172a7916).
+  Final tier frame 60: changes by design, bf1840b913881b1a4752c3faf69b9b6dcb60b1228da726059974c35a6fb84861
+  (main: 74654f280f7cdc1d8c2e1f53889ff47b3ea91c6c58f6aea60178c7796327fc00).
+- After minus before at 400 px wide (pixels brighter by more than 16 levels), share of the frame and centroid x:
+  8: 1.00 percent, x 158. 15: 3.57, x 175. 23: 5.48, x 202. 30: 6.19, x 228. 38: 5.27, x 252. 45: 4.42, x 266.
+  53: 3.76, x 270. 60: 1.62, x 279. Feet at x 150 and x 286.
+- Final tier cost: 53.9 to 54.9 s per frame against 53.6 to 54.5 s on main, under 1 percent.
+- Sheets: `out/work/sun/hook/hook-before-strip-final-400px.jpg`, `hook-after-strip-final-400px-6e33a5d.jpg`.
+- 06:50 commit c3c2118: the surge times became shares of `film.hookSeconds` (`from` 0.05, `land` 0.75, `rise` 0.1,
+  `fade` 0.35, `peak` 0.09, `early` 0.05, `end` 1.3, `settle` 0.25 of the hook). With the hook at 2 s every product
+  is the same double as the number it replaced. Proof: draft 23 and 30 byte equal before and after the change
+  (8edafd66..., fdc89d7f...); harness stills of final 60 and final 0 compared below.
+- 06:53 on c3c2118, a fresh session: final 60 = bf1840b9... (equal to the 6e33a5d render, so the final tier also
+  repeats across sessions), final 0 = 7cd40c50... (main's bytes).
+- The harness `npm run -s still` refused to start on this VM: "2.4 GB free, need 3". The finals were made with
+  `out/work/sun/frames.ts`, which calls the same `openCapture` and `renderPng` with the full asset set. A bulk
+  delete of old sequence folders under `out/work/seq` was not carried out (their origin is not established);
+  the disk stays at 2.3 GB free until I clear my own scratch under `out/work/sun` by name.
+- Looks pushed 06:51 (agent/sun-looks 2c538c60): both strips, finals of 0 and 60 at full size, native crops.
+- 06:55 on c3c2118: the thirteen draft frames (90, 247, 360 and the ten of the other stops) again byte equal to main.
+- 06:56 the shader audit on c3c2118 printed the same 32 findings, but one of them with another line number
+  (ground.ts 206 became 208, the two new uniform lines sat above it). Decided: the audit text must be equal to
+  main's, so `uLand` and `uLandOn` are declared on the existing lines (`uniform vec4 uBox, uLand;`,
+  `uniform float uGlowBeat, uLandOn;`). `diff` of the audit output against main's is now empty.
+- Same commit: `ground.land()` held a bare `(16 / 9) * 0.5` for the depth of the glow ellipse; it is now the
+  second number of `look.opening.surge.reach` (`[0.06, 0.06 * (16 / 9) * 0.5]`), same float, so same bytes.
+- 06:59 to 07:01 on that tree: final 60 = bf1840b9..., final 0 = 7cd40c50... (main's bytes), the thirteen draft
+  frames equal to main, drafts 23 and 30 equal to the 6e33a5d drafts; build, tsc clean, vitest 15 files 79 tests.
+  The pictures of the 6e33a5d set therefore stand for this commit.

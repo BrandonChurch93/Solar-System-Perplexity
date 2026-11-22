@@ -59,10 +59,8 @@ uniform vec4 uEven;
 uniform vec4 uEvenTint;
 uniform vec2 uGlowReach;
 uniform vec2 uSite;
-uniform vec4 uBox;
-uniform float uGlowBeat;
-uniform vec4 uLand;
-uniform float uLandOn;
+uniform vec4 uBox, uLand;
+uniform float uGlowBeat, uLandOn;
 uniform vec2 uSize;
 uniform float uGrad;
 uniform float uGain;
@@ -324,10 +322,10 @@ export class Ground {
     this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
-  land(reach: number): void {
+  land(reach: [number, number]): void {
     const box = stage.loopsBox
     const foot = (stage.feet as [number, number][])[1]!
-    ;(this.material.uniforms.uLand!.value as THREE.Vector4).set((foot[0] - box[0]) / (box[2] - box[0]), 1 - (foot[1] - box[1]) / (box[3] - box[1]), (box[2] - box[0]) / reach, (box[3] - box[1]) / (reach * (16 / 9) * 0.5))
+    ;(this.material.uniforms.uLand!.value as THREE.Vector4).set((foot[0] - box[0]) / (box[2] - box[0]), 1 - (foot[1] - box[1]) / (box[3] - box[1]), (box[2] - box[0]) / reach[0], (box[3] - box[1]) / reach[1])
   }
 
   update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0): void {
