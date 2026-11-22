@@ -26,7 +26,7 @@ export const params: MoveParams = {
   coverEdgeRise: [0.4, 0.45],
   coverShell: [1.04, 1.14],
   coverHides: 0.3,
-  coverRush: { speed: 14, reach: 2.5, billow: [3, 3, 1], streak: [10, 6, 1.6], contrast: [0.75, 0.5] },
+  coverRush: { speed: 5, reach: 2.5, billow: [3, 3, 1], streak: [7, 7, 1.3], contrast: [0.75, 0.25] },
   spinDegPerSecond: -1,
   moonDegPerSecond: 0.6,
   tint: [0.6, 0.9, 0.95],
