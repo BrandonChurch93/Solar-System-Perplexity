@@ -1215,3 +1215,8 @@ Rules from the Builder: sky patch margin must not show a mirrored copy outside t
 - The same numbers as before the arrival cure.
 - 08:02 merged main 45004ec (harness tools, `package.json`, PROGRESS, status pictures; nothing under `src`, `public` or `config`) as **6998cc5**, pushed.
 - Running: `q11.sh` (terrain sheet, 1884, 1888, 2133 against the frames of code 3b3819e), then `q12b.sh` (log `pb/k/q.log`): build, audit, G12, G15, vitest, G11 and final 1755 on the merged tree, the venus.travel sheet at review (preview format), stills 2140 and 2174, the full format rise cover sheet.
+
+### The sheets of code 3b3819e stand for c2a211a; gates on the tree with main 45004ec (08:02 to 08:12 UTC)
+
+- `q11.sh` on c2a211a: terrain sheet at review, full format, again (131 s, `pb/j/sheet-terrain.png`): **0 pixels differ** from `pb/g/sheet-terrain-b19.png`. 1884 and 1888 at review, full format: **df7781a9, 85fa77b6**, the bytes of the dive cover sheet's frames. 2133 at review, preview format (128 samples, 158 s): **8fe0c619**, the bytes of the rise cover sheet's frame. So the cure of mail 80 moves no frame of the terrain sheet and none of the checked cover frames; the cover sheets and the terrain sheet of code 3b3819e are the pictures of this head.
+- On the merged tree 6998cc5 and later (main 45004ec): build passes; audit no line in `src/stops/earth`; PASS G12; PASS G15 earth/web 353 MB, earth/full 1391 MB; vitest 79 of 79; PASS G11; final 1755 **da369901** once more (engine hash 7553966a0ffa4014, earth hash d2fd0232a75ba588).
