@@ -67,11 +67,11 @@ void main() {
   vec3 q = vLocal + uCentre;
   float b = dot(q, uSunL);
   float miss = sqrt(max(dot(q, q) - b * b, 0.0));
-  float shadow = b < 0.0 ? smoothstep(mix(0.985, uEndShade.x, uEnd.x), mix(1.025, uEndShade.y, uEnd.x), miss) : 1.0;
+  float shadow = b < 0.0 ? mix(smoothstep(0.985, 1.025, miss), uEndShade.z + (1.0 - uEndShade.z) * smoothstep(uEndShade.x, uEndShade.y, miss), uEnd.x) : 1.0;
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
-  outColor = vec4(strands * edge * mix(mix(0.006 + 0.994 * shadow, uEndShade.z + (1.0 - uEndShade.z) * shadow, uEnd.x), 1.0, uHome) * phase * uGain, 0.0);
+  outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
 }`
 
 export class Ring {
