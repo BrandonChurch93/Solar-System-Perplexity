@@ -1,9 +1,53 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T18:32:30.159Z",
- "head": "5e75e36dbe29880093a0a3531228a3c7d1714ce8",
- "note": "CUT35 earth trim READY 5e75e36d on main 55319c5a: 1755 final over luma 60 +1.07 +0.42 +0.49 (was +3.13 +1.48 +1.04), outside the lit disc max 1 level, G17 1.195",
+ "pushed": "2026-11-22T18:45:55.523Z",
+ "head": "1304b68e0d626415f0a7d897057a4d823ed562cf",
+ "note": "Trim 5e75e36d taken into round 35 (mail 207). Finals with it: 1755 50bb49bf, 1857 0b8459bc, 2156 bdac4eea. Tree holds main 55319c5a.",
  "looks": [
+  {
+   "time": "2026-11-22T18:45:54.327Z",
+   "file": "20261122184554327-note-pair-2156-trim.jpg",
+   "source": "out/work/earth/pb/c35/pair-2156-trim.png",
+   "kind": "note",
+   "label": "2156 final: head 98f5054c above, with the trim 5e75e36d below (lit side -2.6 -1.4 -0.6 on changed px, dark of the frame max 1 level). Tree holds main 55319c5a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T18:45:52.908Z",
+   "file": "20261122184552908-note-pair-1857-trim.jpg",
+   "source": "out/work/earth/pb/c35/pair-1857-trim.png",
+   "kind": "note",
+   "label": "1857 final: head 98f5054c above, with the trim 5e75e36d below (lit side -2.6 -1.4 -0.6 on changed px, dark of the frame max 1 level). Tree holds main 55319c5a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T18:44:41.639Z",
+   "file": "20261122184441639-frame-f-2156-final-trim.jpg",
+   "source": "out/work/earth/pb/c35/f-2156-final-trim.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T18:39:10.956Z",
+   "file": "20261122183910956-frame-f-1857-final-trim.jpg",
+   "source": "out/work/earth/pb/c35/f-1857-final-trim.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, final tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T18:32:29.538Z",
    "file": "20261122183229538-note-trim-look-n-day.jpg",
@@ -107,51 +151,6 @@
    "kind": "note",
    "label": "CUT35 lights fade (d840bb14, main b22a7927): judged travel frame 1642 at the draft tier, 4 times native: main left, lights faded with distance right",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T17:55:57.181Z",
-   "file": "20261122175557181-note-pair-rise-sheets.jpg",
-   "source": "out/work/earth/pb/c35/pair-rise-sheets.png",
-   "kind": "note",
-   "label": "CUT35 rise law: earth.rise review sheets, round 34 (plain main 94482a8c) above, rise law below (code 5879f9ac on main 3dad4447). 2100 to 2113 and 2154 to 2174 byte equal; 2134 keeps the limb in the frame where round 34 is blank white",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T17:48:31.228Z",
-   "file": "20261122174831228-note-new-cover-sheet.jpg",
-   "source": "out/work/earth/pb/c35/new-cover-sheet.png",
-   "kind": "note",
-   "label": "CUT35 rise law: new cover sheet 2125 to 2136 at review, head 5879f9ac code (main 3dad4447): the horizon stays in the frame and curls into the limb",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T17:46:29.625Z",
-   "file": "20261122174629625-sheet-earth.rise-cover-preview-review.jpg",
-   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.rise, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2125,
-   "last": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T17:46:28.695Z",
-   "file": "20261122174628695-frame-f02136-review.jpg",
-   "source": "out/work/sheets/.frames-zPb8v1/f02136-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2136, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
   },
   {
    "time": "2026-11-22T17:02:16.777Z",
