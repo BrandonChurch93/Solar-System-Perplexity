@@ -33,6 +33,7 @@
     "videoCodec": "h264",
     "bitrateMbps": 20,
     "audio": "none",
+    "warmUpFrames": 8,
     "proofSeconds": 1,
     "memoryTestSeconds": 5,
     "files": {

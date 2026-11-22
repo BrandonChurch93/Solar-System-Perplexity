@@ -99,19 +99,27 @@ export class FilmEncoder {
   private readonly encoder: VideoEncoder
   private readonly muxer: Muxer<ArrayBufferTarget | FileSystemWritableFileStreamTarget>
   private readonly frameUs: number
+  private readonly warm: number
+  private decoderConfig: VideoDecoderConfig | undefined
+  private held: VideoFrame[] = []
   private submitted = 0
   chunks = 0
   error: Error | null = null
   private waiters: (() => void)[] = []
 
-  constructor(private readonly choice: CodecChoice, private readonly spec: EncodeSpec, private readonly sink: Sink) {
+  constructor(private readonly choice: CodecChoice, private readonly spec: EncodeSpec, private readonly sink: Sink, warmUpFrames: number) {
+    this.warm = warmUpFrames
     const target = sink.kind === 'disk' ? new FileSystemWritableFileStreamTarget(sink.stream) : new ArrayBufferTarget()
     this.muxer = new Muxer({ target, video: { codec: choice.muxCodec, width: spec.width, height: spec.height, frameRate: spec.fps }, fastStart: false })
     this.frameUs = 1e6 / spec.fps
     this.encoder = new VideoEncoder({
       output: (chunk, meta) => {
-        this.chunks++
-        this.muxer.addVideoChunk(chunk, meta)
+        this.decoderConfig = meta?.decoderConfig ?? this.decoderConfig
+        const index = Math.round(chunk.timestamp / this.frameUs) - this.warm
+        if (index >= 0) {
+          this.chunks++
+          this.muxer.addVideoChunk(chunk, index === 0 ? { ...meta, decoderConfig: this.decoderConfig } : meta, this.stamp(index))
+        }
         this.wake()
       },
       error: (e) => {
@@ -140,17 +148,41 @@ export class FilmEncoder {
     if (this.error) throw this.error
   }
 
+  private stamp(index: number): number {
+    return Math.round(index * this.frameUs)
+  }
+
+  private shot(source: HTMLCanvasElement | VideoFrame, at: number, index: number): VideoFrame {
+    return new VideoFrame(source, { timestamp: this.stamp(at), duration: this.stamp(index + 1) - this.stamp(index), alpha: 'discard' })
+  }
+
+  private put(frame: VideoFrame, keyFrame: boolean, keep = false): void {
+    try {
+      this.encoder.encode(frame, { keyFrame })
+    } finally {
+      if (!keep) frame.close()
+    }
+  }
+
   encodeCanvas(canvas: HTMLCanvasElement, index: number): void {
     if (this.error) throw this.error
-    const timestamp = Math.round(index * this.frameUs)
-    const duration = Math.round((index + 1) * this.frameUs) - timestamp
-    const frame = new VideoFrame(canvas, { timestamp, duration, alpha: 'discard' })
-    try {
-      this.encoder.encode(frame, { keyFrame: index % this.spec.fps === 0 })
-    } finally {
-      frame.close()
+    if (index < this.warm) {
+      const opening = this.shot(canvas, index, index)
+      this.held.push(opening)
+      this.put(opening, index === 0, true)
+      if (this.held.length === this.warm) {
+        this.held.forEach((h, i) => this.put(this.shot(h, i + this.warm, i), i % this.spec.fps === 0))
+        this.release()
+      }
+    } else {
+      this.put(this.shot(canvas, index + this.warm, index), index % this.spec.fps === 0)
     }
     this.submitted++
+  }
+
+  private release(): void {
+    for (const h of this.held) h.close()
+    this.held = []
   }
 
   async finish(expected: number): Promise<Uint8Array | null> {
@@ -167,6 +199,7 @@ export class FilmEncoder {
   }
 
   async abort(): Promise<void> {
+    this.release()
     try {
       if (this.encoder.state !== 'closed') this.encoder.close()
     } catch {

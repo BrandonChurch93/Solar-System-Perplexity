@@ -31,7 +31,7 @@ function need(obj: unknown, path: string): unknown {
 const REQUIRED = [
   'name', 'seed', 'repo.url', 'repo.branch', 'repo.maxFileMb', 'repo.maxTreeGb', 'film.fps', 'film.durationSeconds', 'film.shutterDegrees', 'film.hookSeconds',
   'formats.master', 'formats.preview', 'formats.uhd', 'platform.maxWidth', 'platform.maxHeight', 'platform.maxFps', 'platform.maxBitrateMbps', 'platform.loopsAtOrUnderSeconds',
-  'export.container', 'export.videoCodec', 'export.bitrateMbps', 'export.proofSeconds', 'export.memoryTestSeconds', 'export.files.master', 'export.files.uhd', 'export.files.clip', 'export.files.preview',
+  'export.container', 'export.videoCodec', 'export.bitrateMbps', 'export.warmUpFrames', 'export.proofSeconds', 'export.memoryTestSeconds', 'export.files.master', 'export.files.uhd', 'export.files.clip', 'export.files.preview',
   'previewFilm.bitrateMbps', 'tiers.draft', 'tiers.review', 'tiers.final', 'motion.fastKinds', 'motion.maxStepPx', 'motion.probeGrid', 'motion.bodyReach', 'motion.minBodyPx', 'motion.terrainGround', 'motion.softFromPx', 'motion.softToPx', 'assetSets.web', 'assetSets.full', 'sets.maxLoaded', 'lookLockStop', 'buildOrderAfterLookLock',
   'stops', 'segments', 'cover.seconds', 'cover.diveCenterFraction', 'cover.riseCenterFraction', 'judged.fractions', 'detail.minTexelsPerPixel', 'detail.maxSoftPixelFraction', 'detail.minSharpnessRatio', 'detail.minBodyCoverage',
   'assets.maxTakesPerAsset', 'quality.passScore', 'critics.maxImageLongEdgePx', 'critics.contactSheetFrames', 'critics.phonePreviewWidthPx', 'critics.maxFilesPerMessage',
@@ -103,6 +103,7 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   for (const id of stopIds) if (typeof prompts[id] !== 'string' || prompts[id].length === 0) fail('posts.prompts has no prompt for stop ' + id)
   if (!(r.posts.introMaxSeconds > 0) || !(r.posts.readHoldSeconds >= 0) || !(r.posts.readHoldSeconds < r.posts.introMaxSeconds)) fail('posts.readHoldSeconds must fit inside posts.introMaxSeconds')
   if (!(r.posts.introMaxTries >= 1) || !isWhole(r.posts.introMaxTries) || !(r.posts.checkMaxFixes >= 0) || !isWhole(r.posts.checkMaxFixes)) fail('posts.introMaxTries and posts.checkMaxFixes must be whole numbers')
+  if (!(r.export.warmUpFrames >= 0) || !isWhole(r.export.warmUpFrames)) fail('export.warmUpFrames must be a whole number, 0 or more')
   for (const [id, t] of Object.entries(r.tiers)) {
     if (!(t.samplesPerFrame >= 1) || !(t.fastSamplesPerFrame >= 1)) fail('tier ' + id + ' has no samples')
     if (!isWhole(t.maxSamplesPerFrame) || t.maxSamplesPerFrame < Math.max(t.samplesPerFrame, t.fastSamplesPerFrame)) fail('tier ' + id + ' has maxSamplesPerFrame under its sample counts')

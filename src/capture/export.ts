@@ -352,7 +352,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
       await win.showcase?.ready
       engine.setFormat(p.format.id)
       engine.setAssets(p.assets)
-      encoder = new FilmEncoder(choice, p.spec, sink)
+      encoder = new FilmEncoder(choice, p.spec, sink, Math.min(raw.export.warmUpFrames, total))
       const sample = (frame: number): void => {
         const mem = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
         status.memory.push({ frame, textureBytes: engine.sets.totalBytes(), loaded: engine.sets.loadedIds(), jsHeap: mem ? mem.usedJSHeapSize : null })
