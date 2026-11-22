@@ -1,9 +1,41 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T13:45:28.604Z",
+ "pushed": "2026-11-22T14:03:51.109Z",
  "head": "3fb355a0ef415f72c62415cf5d0d2c63a0a05b9f",
- "note": "13:45 UTC star mask and the ring at the limb, tree 3fb355a plus uncommitted, main 84b0ea4",
+ "note": "round 34: star mask, sum lift and rim cure at the Sun hand over, proofs rendering (tree 3fb355a plus uncommitted, main 84b0ea4)",
  "looks": [
+  {
+   "time": "2026-11-22T14:03:50.397Z",
+   "file": "20261122140350397-note-c8-h0.jpg",
+   "source": "../../../../tmp/c8-h0.jpg",
+   "kind": "note",
+   "label": "490 and 495 native 2x: main 84b0ea4 before (h0) and the working tree after (m8), both on main's Sun: stars gone from corona and loops, the radial hatch is main's Sun globe; working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:03:49.790Z",
+   "file": "20261122140349790-note-c8-495a.jpg",
+   "source": "../../../../tmp/c8-495a.jpg",
+   "kind": "note",
+   "label": "495 native 2x, limb left and lower left: Sun agent's files then main's Sun, twice; the arcs outside my limb are the Sun globe's edge (its fit); working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:03:49.191Z",
+   "file": "20261122140349191-note-s8b.jpg",
+   "source": "../../../../tmp/s8b.jpg",
+   "kind": "note",
+   "label": "sun.travel 498 500 505: top row on the Sun agent's 4f72047 files, bottom row on main's Sun; working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T14:03:48.543Z",
+   "file": "20261122140348543-note-s8a.jpg",
+   "source": "../../../../tmp/s8a.jpg",
+   "kind": "note",
+   "label": "sun.travel 486 490 495: top row on the Sun agent's 4f72047 files, bottom row on main's Sun; working tree on agent/mercury 3fb355a (main 84b0ea4), uncommitted star mask, lift and rim cure, draft",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T13:45:28.040Z",
    "file": "20261122134528040-note-s3-native.jpg",
@@ -57,38 +89,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T12:58:03.301Z",
-   "file": "20261122125803301-note-lv-step.jpg",
-   "source": "../../../../tmp/lv-step.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1058 1060 1062 at review, cure in (f76082f on main da02e63): the Sun leaves as one object",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:58:02.394Z",
-   "file": "20261122125802394-note-lv-native.jpg",
-   "source": "../../../../tmp/lv-native.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1064 and 1066 at review, 16 samples, 4x native, cure in (f76082f on main da02e63): small corona parts stand as a ladder of copies",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:58:01.148Z",
-   "file": "20261122125801148-note-c33d-leave.jpg",
-   "source": "../../../../tmp/c33d-leave.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1056 1058 1059 1062 1066 1072, draft, cut tree f189d77 (main da02e63): the Sun plate goes at 1059, the engine's flat sky Sun stands in its place to 1066",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:12.529Z",
-   "file": "20261122123912529-note-m4d-sheet.jpg",
-   "source": "../../../../tmp/m4d-sheet.jpg",
-   "kind": "note",
-   "label": "sun.travel drafts, tree 2c85dde plus the star mask patch (not in the cut): 486 as main | 486 with the mask on my plate: the Sun's globe under it is taken away | 490 as main",
-   "stop": "mercury"
   },
   {
    "time": "2026-11-22T08:27:22.479Z",
