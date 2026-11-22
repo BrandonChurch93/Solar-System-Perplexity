@@ -735,3 +735,10 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - `_far.ts` (probe, copied to both trees, not committed): per frame the Sun's screen place and each set's place, radius and weight.
 - mercury.travel turn per frame on the head (`turn.ts frames mercury`): 2.80 at 1066, 4.00 at 1070, 4.23 from 1073 to 1088, 4.09 at 1090, 2.27 at 1096. So the whole watch span 1073 to 1090 is at peak.
 - chain32: mercury watch 1073 to 1090 on the head (label s9), about 60 s a frame, done about 15:52; then sw 4494 to 4510.
+
+## 15:55 UTC: last proofs before the CUT34 mail
+- origin/main moved again to 732a67d3 (scorecards, tools/pack.ts, tools/round.py); merged. On this head: tsc clean, vitest green, shaderaudit equal to main (5 lines both); src, config, tests equal the proof tree `/tmp/wt-m34`.
+- Mercury watch on the head (label s9, review, every frame 1073 to 1090; `/tmp/v/w-merc34-a.jpg`, `w-merc34-b.jpg`), turn 4.23 a frame through the whole span: Venus stands still a little above centre and grows from about 125 px to about 590 px across; the lit limb walks from the top round to the left and the cloud bands turn as the camera arcs; limb clean, no copies; the band comes in at the lower left from 1088. The sky slide could not be measured (phase correlation finds no match from frame to frame); from the turn it is about 150 px a frame at the centre. Stars are points in each frame. Not pasted in the frames. Cost in play as before, and larger than on the 13:36 watch: a still disc over a sky that jumps about 150 px a frame.
+- Row main above head, `/tmp/v/c34-mercury-ab2.jpg` (1066, 1072, 1080): at 1066 main has a dim glow at the top right, the head has the Sun's bright corona and a smeared prominence in the corner; plain sky by 1068.
+- Swing watch (label sw, every second frame 4492 to 4512, `/tmp/v/w-sw.jpg`): Neptune grows low centre, the band slides out at the right by 4504, Triton leaves over the top at about x 310 (4496 to 4498) and is back at the top left at about x 110 from 4508. Calm; the moon's bob over the top edge is what stays of the critic's reversal.
+- Looks pushed 15:52. Next: send `CUT34 travel`.
