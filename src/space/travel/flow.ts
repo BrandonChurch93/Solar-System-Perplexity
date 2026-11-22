@@ -4,16 +4,32 @@ import type { Shot } from '../../core/types'
 
 export interface FlowDirector { shotAt(frame: number, time: number): Shot }
 
-export const FLOW = { stepsPerFrame: 4, speed: 0.9, knee: 0.6, full: 20000, kinds: ['travel', 'retreat'] }
+export const FLOW = { stepsPerFrame: 4, speed: 0.9, knee: 0.6, full: 20000, ease: 8, guard: 2, kinds: ['travel', 'retreat'] }
 
 export function flowSpeed(real: number): number {
   return FLOW.speed * Math.min(Math.log(1 + real / FLOW.knee) / Math.log(1 + FLOW.full / FLOW.knee), 1.25)
 }
 
+function smoothed(raw: Float64Array, n: number, width: number, guard: number): Float64Array {
+  const out = new Float64Array(raw.length)
+  for (let k = 0; k <= n; k++) {
+    const half = Math.min(Math.max(Math.min(k, n - k) - guard, 0), width)
+    let sum = 0
+    for (let c = 0; c < 3; c++) out[k * 3 + c] = 0
+    for (let j = -half; j <= half; j++) {
+      const w = half > 0 ? 0.5 + 0.5 * Math.cos((Math.PI * j) / (half + 1)) : 1
+      sum += w
+      for (let c = 0; c < 3; c++) out[k * 3 + c]! += w * raw[(k + j) * 3 + c]!
+    }
+    for (let c = 0; c < 3; c++) out[k * 3 + c] = half > 0 ? out[k * 3 + c]! / sum : raw[k * 3 + c]!
+  }
+  return out
+}
+
 export class Flow {
   private readonly tables = new Map<string, Float64Array>()
 
-  constructor(private readonly director: FlowDirector) {}
+  constructor(private readonly director: FlowDirector, private readonly ease = 0) {}
 
   private table(seg: Segment): Float64Array {
     const done = this.tables.get(seg.id)
@@ -38,8 +54,9 @@ export class Flow {
       out[(k + 1) * 3 + 2] = sum.z
       last = next
     }
-    this.tables.set(seg.id, out)
-    return out
+    const eased = this.ease > 0 ? smoothed(out, n, this.ease * FLOW.stepsPerFrame, FLOW.guard * FLOW.stepsPerFrame) : out
+    this.tables.set(seg.id, eased)
+    return eased
   }
 
   at(seg: Segment, frame: number, step: number, out: THREE.Vector3): THREE.Vector3 {
