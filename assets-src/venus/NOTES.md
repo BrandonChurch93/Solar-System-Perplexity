@@ -1166,3 +1166,40 @@ If a judged final differs, or the sheets do not read clearly better, a revert co
   - rise, 1548 to 1559. Round 34: 3.74 3.64 3.50 3.30 3.07 2.56 1.74 1.02 0.60 0.53 0.59 0.54 (largest step 0.82, 26 percent, at 1553 to 1554). Cure: 3.71 3.50 2.99 2.34 1.70 1.12 0.67 0.44 0.38 0.48 0.59 0.54 (largest step 0.65, 20 percent, at 1550 to 1551; the detail leaves between 1549 and 1555 instead of 1552 and 1556).
   - What the same measure says against the cure: the fog frames are flatter than round 34's. Band 4 to 12 px: dive 1317 to 1319 is 1.11, 0.83, 0.92 (round 34 1.52, 1.63, 1.94), rise 1554 to 1556 is 1.61, 1.13, 0.90 (round 34 3.16, 2.17, 1.54). The step from the crisp streaks at 1316 to the fog at 1317 is larger (2.47 to 1.11, before 2.47 to 1.52) and so is 1556 to 1557 (0.90 to 1.81, before 1.54 to 2.02).
 - The stepped look at 2x zoom in the smeared terrain (`view/g6-taps.png`): 24 taps give the same picture as 12, and the repeats run across the smear, not along it. Read as separate bright cloud tops, each drawn as its own short streak. Not measured further.
+
+## State at 16:50 (22 Nov): the cure changed before its proof; it is now commit 90cc5b23; proof queue q40 runs (read this first after a compaction)
+
+Head 90cc5b23 on 988b5aed (the revert of the first draft 84039da0) on notes; tree holds main 6460b4a. `git diff b18bf2f4 90cc5b23 -- src public` is three files: `look.ts`, `relief.ts`, `set.ts`. `veil.ts` is back at its round 34 text. The round 34 state of my folders is a135f6b8 (b18bf2f4 adds notes only).
+
+### Why the first draft (g5) was dropped at 16:39, before its sheets
+
+The structure numbers above showed three flat fog frames on each side with g5 (the fog fill opened over nine frames hid the terrain while it was smeared, which is the very thing the critic wants to see: detail "coming out of the motion blur"). Two more variants at draft, 17 frames each (`view/v78-dive.jpg`, `view/v78-rise.jpg`, native `view/v7-dive-q.jpg`, `view/v8-dive-q.jpg`, `view/v7-rise-q.jpg`, `view/v7-edge-q.jpg`):
+
+- v8: fill range `[0.4, 1]`, slip 0.25. Between g5 and v7.
+- v7 (kept): the fill exactly as in round 34 (`solid [0.55, 1]`, so `solidTerrain` and the change in `veil.ts` are gone), slip 0.3, `mist[4] = 0`, 12 taps. The terrain shows from 1319 as in round 34, but as streaks along the veil's own fan; the streaks shorten with the fall speed and the picture is sharp by 1326. On the rise the smear builds from 1548, is long at 1553 and 1554 and goes into the veil's streaked fog at 1555.
+- v9 = the committed code (v7 with `veil.ts` restored): the same bytes as v7 on all 17 draft frames (`cmp`, 16:45).
+
+### The cure as committed (90cc5b23)
+
+- `relief.ts`: uniforms `uSlip` (vec4: a camera step in view space, w = pixels per unit at depth 1), `uTaps`, `uHeld`. Colour = mean of `uTaps` `textureGrad` taps along the uv path of that step (`along = gx * slip.x + gy * slip.y`), each tap widened to the tap spacing; alpha the same with `uHeld` taps when the layer has an alpha map. `update(..., sky = 1, slip = null)`: with `slip` null the uniforms are 0, 1, 0 and the shader takes one tap at the old place with the old gradients.
+- `set.ts`, terrain branch: `thick <= 0` keeps the old calls. Else `slip` = minus the veil's eye direction turned into the camera, times `look.veil.slip * fell * fps / shutterFraction * (|localP| - 1) * deck.radius`, with `fell` the veil's fall inside the shutter (`plan.drop`), and `ground.update(..., 1, slip)`.
+- `look.ts`: `veil.slip 0.3`, `relief.slipTaps 12`, `veil.sheets.mist[4]` 1 to 0 (on the terrain side the soft veil keeps its streak pattern as long as the rush lasts).
+- Acts on frames 1314 to 1328 and 1546 to 1559 (terrain side with the veil above 0); 1314 to 1316, 1558 and 1559 are fully covered and keep their bytes. All inside the cover windows 1299 to 1328 and 1545 to 1575, which G13 skips. The terrain move, the veil's timing, the orbit side and every frame outside the windows are not touched.
+- Mail 13 said: no blur tricks in my folder to hide the engine's ghost copies in the fastest frames. This is a blur in my folder, on the slow side of the cover, along the veil's fall and not along the camera's path. It goes into the cut message in those words, so the Builder can refuse it.
+
+### Measured at draft (band 1.5 to 4 px on luma, rows 230 to 540, `v9-F.png` against `qd-F.png`)
+
+- dive 1316 to 1329. Round 34: 0.64 0.44 0.55 0.90 1.54 2.32 2.83 3.05 3.31 3.55 3.75 3.89 3.95 3.94, largest one frame step 0.78 (22 percent of the range, at 1320). Cure: 0.64 0.39 0.36 0.46 0.80 1.30 1.76 2.14 2.63 3.16 3.60 3.86 3.94 3.94, largest step 0.53 (15 percent, at 1324).
+- rise 1545 to 1559. Round 34: 3.71 3.76 3.78 3.74 3.64 3.50 3.30 3.07 2.56 1.74 1.02 0.60 0.53 0.59 0.54, largest step 0.82 (25 percent, at 1553). Cure: 3.71 3.76 3.74 3.56 3.19 2.67 2.15 1.70 1.21 0.73 0.46 0.38 0.48 0.59 0.54, largest step 0.53 (16 percent, at 1550).
+- Against the cure, band 4 to 12 px: the two fog frames are flatter (dive 1317, 1318: 1.12, 0.91 against 1.52, 1.63; rise 1555, 1556: 1.39, 0.94 against 2.17, 1.54), so the step from the crisp streaks to the soft ones is larger (1316 to 1317: 2.47 to 1.12, before 2.47 to 1.52; 1556 to 1557: 0.94 to 1.81, before 1.54 to 2.02). Cause: with `mist[4] = 0` the soft veil is soft streaks, not soft lumps.
+- Draft frames with the cure that equal round 34 to the byte: 1305, 1310, 1312, 1329, 1545, 1558, 1559.
+
+### Proof queue q40 (started 16:44, log `/tmp/q40.log`)
+
+1. `fin.sh f28`, `cmp` with `f26-F.png` (all four judged finals must keep bytes).
+2. Cover sheets at review: `view/c28-rc.png`, `view/c28-dc.png`, read every frame beside `view/c26-rc.png`, `view/c25-dc.png`; `cellcmp.py` for the cells that must keep bytes (1309 to 1316, 1558 to 1566).
+3. G13 every frame (`/tmp/c4-g13.log`), audit, vitest, gates G11, G12, G15, repeat on 1185, 1287, 1440, 1586, 1320, 1553 (`/tmp/rep28.log`).
+4. Review pairs outside the sheets: cure `h6-F.png` and round 34 `r34-F.png` for 1321, 1322, 1324, 1551, 1553, 1554.
+5. G5 and G17 (`/tmp/c4-g5.log`) last; if the clock does not allow it, the message says they were not run again and that the four judged finals keep their bytes.
+
+Send `CUT35 venus` by 18:15 VM time. If a judged final differs or the review sheets do not read clearly better: `git revert 90cc5b23`, push, and the message says the round 34 state stands.
