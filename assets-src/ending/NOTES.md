@@ -79,3 +79,12 @@ Asked: (1) sky and Neptune move as one picture through the lookback, (2) the mov
 - Point 3, measured with the probe, not rendered: `smoother(state.u)` in set.ts with `light: 1` makes it worse (peak turn 2.55 at 5068, two humps). `smoother(state.u * 1.5)` in set.ts with `smoother(u * g.light)` here and `light` still 1.5 takes the corner out (5100 1.46, 5105 1.35, 5110 1.19, 5115 1.04) but the peak rises from 1.35 to 1.47 at 5099 and there is a dip to 1.24 at 5080. Not applied: it needs the set's line.
 - Point 4, `ring.ts`: at 5085 the ring's points in frame move 1.0 to 11.6 px across the shutter, median 5.0 (before 1.3 to 12.6, median 5.4); Neptune's centre moves 3.2 px; the camera turns 0.59 degrees across the shutter, which is 19.5 px for a star at the frame centre.
 - Tools added: `hold.ts` (screen places of stars, Sun, limb from the director; `--rates A B STEP`), `measure.py` (the same from draft stills), `ring.ts` (motion across the shutter), `shots.ts` (hash of the director's output for a frame range). `shots.ts 0 5024` gives e9802926c398f7dc on main and on this branch.
+
+## Mail 113 proved (09:45 UTC)
+
+- PART sent 09:32 with the table at draft, the strip and native crops. Mail 124: accepted as chosen (5235 keeps its pose, 5085 shifts 39 and 31 px, radius 288 to 279); corner at 5105 and ring blur at 5085 go to the polish list.
+- Table in `table-rest.md`. After, steps of star upper left, star mid right, limb: 5145 to 5190 -13.0, -3.9 / -12.1, -3.0 / -11.9, -2.7; 5190 to 5235 -6.8, -1.2 / -6.3, -0.7 / -6.0, -0.6; 5235 to 5280 -1.6 each; 5280 to 5324 at most 0.5; 5324 to 5340 at most 0.1. Before, the stars went 45 and 35 px left and the limb 37.5 px right over 5145 to 5324.
+- Draft bytes on main 616695b and on the branch are equal for 2325, 2427, 2580, 615, 1440, 2010, 3150, 3720, 4290, 4860 and 5024 (`bytes-rest.txt`).
+- Finals on the branch: 5235 sha256 starts 70e60ec4e9902797, 5085 starts 4dc3fa465c8d77ae. In the 5085 final the stars are sharp points while the ring is blurred: the sky does not smear the stars by the shutter (not my file).
+- The VM's disk filled during the chain (the still tool refuses under 3 GB free); `/tmp/base` (old main) was deleted to make room.
+- `agent/neptune-ending` head seen at 09:35 is 2d7120a, already inside main; nothing newer was pushed. This branch does not touch `src/stops/neptune/`. If the owner changes `smooth(state.u * 1.5)` in set.ts, `LOOKBACK.glide.light` and the `smooth` in my retreat line must follow in the same merge.
