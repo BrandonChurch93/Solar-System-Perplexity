@@ -1,81 +1,73 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T03:24:45.294Z",
- "head": "0bb9eb5a274623795056314299daeaaa6e143228",
- "note": "main 3d48581 in the tree: dive cover sheet at review done and looked at frame by frame (4738 to 4749) plus closing still 4731; next merge of main a67c9c34, then rise cover sheet, measure, terrain sheet",
+ "pushed": "2026-11-22T03:49:28.596Z",
+ "head": "1b5682778ab54cbbce2bde3335ffc25ff95bd520",
+ "note": "rise cover sheet at review on batch 18 tree; rise switch step under study",
  "looks": [
   {
-   "time": "2026-11-22T03:24:43.682Z",
-   "file": "20261122032443682-frame-f04735-review.jpg",
-   "source": "out/work/nep/p6/h1/rev/f04735-review.png",
+   "time": "2026-11-22T03:49:27.599Z",
+   "file": "20261122034927599-note-rise-switch-4979-4980.jpg",
+   "source": "out/work/nep/p6/h1/rise-switch-4979-4980.jpg",
+   "kind": "note",
+   "label": "rise switch 4979, 4980, difference times 3: the veil steps by 12 levels mean abs, open fault, tree 7c74466, main 0622510",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T03:49:26.628Z",
+   "file": "20261122034926628-note-rise-b.jpg",
+   "source": "../../../../tmp/rise-b.png",
+   "kind": "note",
+   "label": "rise cover review 4978 to 4981, tree 7c74466, main 0622510 (batch 18)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T03:49:25.273Z",
+   "file": "20261122034925273-note-rise-a.jpg",
+   "source": "../../../../tmp/rise-a.png",
+   "kind": "note",
+   "label": "rise cover review 4975 to 4978, tree 7c74466, main 0622510 (batch 18)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T03:47:41.066Z",
+   "file": "20261122034741066-frame-f04982-review.jpg",
+   "source": "out/work/sheets/.frames-3fxGho/f04982-review.png",
    "kind": "frame",
-   "label": "neptune.dive frame 4735, review tier",
+   "label": "neptune.rise frame 4982, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4982,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:37:38.570Z",
+   "file": "20261122033738570-frame-f04749-review.jpg",
+   "source": "out/work/nep/p6/h1/rev/f04749-review.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4749, review tier",
    "stop": "neptune",
    "segment": "neptune.dive",
-   "frame": 4735,
+   "frame": 4749,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "1e61fa4049d34863"
+   "engine": "7cd5ba493f97ac9f"
   },
   {
-   "time": "2026-11-22T03:24:38.988Z",
-   "file": "20261122032438988-note-insp-4731-s.jpg",
-   "source": "../../../../tmp/insp-4731-s.jpg",
+   "time": "2026-11-22T03:36:59.848Z",
+   "file": "20261122033659848-note-rise-b17-b18.jpg",
+   "source": "../../../../tmp/rise-b17-b18.png",
    "kind": "note",
-   "label": "neptune dive 4731 at review (cover 0.13, closing side), tree 170a6b3 with main 3d48581: thin limb line, no wide whitish band, no grey green belt, smooth shutter blur",
+   "label": "neptune rise 5006 at review: left tree 170a6b3 with main 3d48581 (batch 17), right tree 84c3731 with main 0622510 (batch 18, rise lift 0.74): a little more sky round the globe, not worse",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-22T03:10:59.372Z",
-   "file": "20261122031059372-note-sheet-dive-cover-review-170a6b3.jpg",
-   "source": "out/work/nep/p6/h1/sheet-dive-cover-review-170a6b3.png",
-   "kind": "note",
-   "label": "neptune dive cover sheet at review, 4738 to 4749, cover window of 1 s centred at 0.7 of the dive (switch at 4743), tree 170a6b3 with main 3d48581",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T03:10:16.186Z",
-   "file": "20261122031016186-note-ur-b.jpg",
-   "source": "../../../../tmp/ur-b.jpg",
-   "kind": "note",
-   "label": "neptune dive cover, native crops of 4748 (upper right, and the cloud chain at the left), tree 170a6b3 with main 3d48581",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T03:10:15.169Z",
-   "file": "20261122031015169-note-ur-a.jpg",
-   "source": "../../../../tmp/ur-a.jpg",
-   "kind": "note",
-   "label": "neptune dive cover, native crop of the upper right at 4746 and 4747, tree 170a6b3 with main 3d48581: the gap in the veil is sky with stars, not a black patch",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T03:10:13.906Z",
-   "file": "20261122031013906-note-dive-cover-b.jpg",
-   "source": "../../../../tmp/dive-cover-b.png",
-   "kind": "note",
-   "label": "neptune dive cover at review, frames 4738 to 4748 (switch at 4743), tree 170a6b3 with main 3d48581: every frame looked at full size, soft limb, no bright band, no stepped copies, no star from 4739 to 4745, sky with stars in the gap from 4746",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T02:22:38.161Z",
-   "file": "20261122022238161-frame-s-4860.jpg",
-   "source": "out/work/nep/p6/m1/s-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:22:03.499Z",
-   "file": "20261122022203499-frame-s-4605.jpg",
-   "source": "out/work/nep/p6/m1/s-4605.png",
+   "time": "2026-11-22T03:33:11.157Z",
+   "file": "20261122033311157-frame-b-4605.jpg",
+   "source": "out/work/nep/p6/m2/b-4605.png",
    "kind": "frame",
    "label": "neptune.hold frame 4605, review tier",
    "stop": "neptune",
@@ -84,7 +76,21 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "1e61fa4049d34863"
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T03:26:40.782Z",
+   "file": "20261122032640782-frame-a-4860.jpg",
+   "source": "out/work/nep/p6/m2/a-4860.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, review tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
   }
  ]
 }
