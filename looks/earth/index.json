@@ -1,99 +1,174 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T05:20:55.385Z",
- "head": "8ba25f6a908d2aed8b56fe18159616184f0210ec",
- "note": "Earth polish: rise cover sheet on engine batch 19; dive frames 1884 and 1888, approach stills and isolation stills rendering; READY 2 about 06:00 UTC",
+ "pushed": "2026-11-22T05:44:38.547Z",
+ "head": "6417c3604d4e4fa21c4b5d279f95df728ebb63c5",
+ "note": "Earth polish: READY 2 set on engine batch 19 (proofs, cover sheets, compares); measure on batch 19 running, READY 2 about 06:15 UTC",
  "looks": [
   {
-   "time": "2026-11-22T05:20:54.487Z",
-   "file": "20261122052054487-note-rise-a.jpg",
-   "source": "out/work/earth/pb/f/rise-a.png",
-   "kind": "note",
-   "label": "Rise 2125 to 2127 under the growing cover, first READY above, now below. branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:20:53.252Z",
-   "file": "20261122052053252-note-rise-c.jpg",
-   "source": "out/work/earth/pb/f/rise-c.png",
-   "kind": "note",
-   "label": "Rise cover 2134 to 2136, first READY above, now below: same picture, the coloured fringes of the cloud dashes are gone (globe.ts fix of item 8). branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:20:52.417Z",
-   "file": "20261122052052417-note-sheet-rise-cover-preview-b19.jpg",
-   "source": "out/work/earth/pb/f/sheet-rise-cover-preview-b19.png",
-   "kind": "note",
-   "label": "Rise cover sheet, harness, review tier, preview format, frames 2125 to 2136. branch agent/earth 8ba25f6 (code 3b3819e), main 6043658 merged = engine batch 19 7a880ac6, engine hash 7553966a; rendered on main 2621f00, no code between",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:19:40.180Z",
-   "file": "20261122051940180-sheet-earth.rise-cover-preview-review.jpg",
-   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.rise, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2125,
-   "last": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T05:19:39.413Z",
-   "file": "20261122051939413-frame-f02136-review.jpg",
-   "source": "out/work/sheets/.frames-Qn5U7S/f02136-review.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2136, review tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2136,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:57:48.688Z",
-   "file": "20261122045748688-frame-f-1857-final.jpg",
-   "source": "out/work/earth/pb/f/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:53:12.420Z",
-   "file": "20261122045312420-note-f-2156-final.jpg",
-   "source": "out/work/earth/pb/f/f-2156-final.png",
-   "kind": "note",
-   "label": "Judged rise frame 2156, final tier, 64 samples; branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:53:11.265Z",
-   "file": "20261122045311265-note-moon-2156-b19.jpg",
-   "source": "out/work/earth/pb/f/moon-2156-b19.png",
-   "kind": "note",
-   "label": "Moon at 2156, 4 times: kept build, batch 18, batch 19. On batch 19 the sky round the Moon (10, 17, 23) is level with the Moon's night side (9, 16, 22); branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:53:10.278Z",
-   "file": "20261122045310278-note-pair-2156-b18-b19.jpg",
+   "time": "2026-11-22T05:44:33.157Z",
+   "file": "20261122054433157-note-pair-2156-b18-b19.jpg",
    "source": "out/work/earth/pb/f/pair-2156-b18-b19.png",
    "kind": "note",
-   "label": "Judged rise frame 2156, final tier: left on engine batch 18, right on batch 19 (flight stars and dust glow, by design); the disc is the same to one level; branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "label": "Rise 2156 at the final tier: my still on engine batch 18 and on batch 19 (flight sky lift 0.74). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:32.036Z",
+   "file": "20261122054432036-note-cmp-hold-b19.jpg",
+   "source": "out/work/earth/pb/f/cmp-hold-b19.jpg",
+   "kind": "note",
+   "label": "Hold 1755 beside the approved hero, harness compare, final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:31.127Z",
+   "file": "20261122054431127-note-cmp-terrain-b19.jpg",
+   "source": "out/work/earth/pb/f/cmp-terrain-b19.jpg",
+   "kind": "note",
+   "label": "Terrain 2010 beside the approved close image, harness compare, final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:30.012Z",
+   "file": "20261122054430012-note-sheet-rise-cover-preview-b19.jpg",
+   "source": "out/work/earth/pb/f/sheet-rise-cover-preview-b19.png",
+   "kind": "note",
+   "label": "Rise cover sheet, harness, review tier, preview format, frames 2125 to 2136. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:29.181Z",
+   "file": "20261122054429181-note-sheet-dive-cover-full-3b3819e.jpg",
+   "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
+   "kind": "note",
+   "label": "Dive cover sheet, harness, review tier, full format, frames 1879 to 1890. Rendered with agent/earth code 3b3819e on main b0dd302 (engine batch 18); on main 2621f00 (engine batch 19, engine hash 7553966a) frames 1884 and 1888 at the review tier are the same bytes (sha256 df7781a9, 85fa77b6).",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:20.553Z",
+   "file": "20261122054420553-note-dive-approach-b19.jpg",
+   "source": "out/work/earth/pb/f/dive-approach-b19.png",
+   "kind": "note",
+   "label": "Dive handover 1872 and 1876, review tier, preview format: first READY above, now below. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:19.472Z",
+   "file": "20261122054419472-note-aur-1872-draft-review.jpg",
+   "source": "out/work/earth/pb/g/aur-1872-draft-review.png",
+   "kind": "note",
+   "label": "Dive 1872, aurora by the Moon: draft still with 1 sample (no shutter) and review still with 49 samples. The rays are crisp; the 29 px of motion in the shutter draw them out to parallelograms. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:18.620Z",
+   "file": "20261122054418620-note-rise-2145-2165-b19.jpg",
+   "source": "out/work/earth/pb/f/rise-2145-2165-b19.png",
+   "kind": "note",
+   "label": "Rise after the cover, 2145 and 2165, review tier, preview format, with the flight sky of batch 19. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:03.921Z",
+   "file": "20261122054403921-note-night-new.jpg",
+   "source": "out/work/earth/pb/f/night-new.png",
+   "kind": "note",
+   "label": "Item 4, night limb at 1755, 1857, 2156 (PA 95, 125, 150), native at 3 times and at 3 times gain: new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:02.938Z",
+   "file": "20261122054402938-note-night-1755.jpg",
+   "source": "out/work/earth/pb/f/night-1755.png",
+   "kind": "note",
+   "label": "Item 4, night limb at 1755, native at 3 times and at 3 times gain: approved image, kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:02.073Z",
+   "file": "20261122054402073-note-aur-1755.jpg",
+   "source": "out/work/earth/pb/f/aur-1755.png",
+   "kind": "note",
+   "label": "Item 5, aurora at 1755: approved image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:44:00.864Z",
+   "file": "20261122054400864-note-aur-1857-n.jpg",
+   "source": "out/work/earth/pb/f/aur-1857-n.png",
+   "kind": "note",
+   "label": "Item 5, aurora at 1857 at 2 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:59.937Z",
+   "file": "20261122054359937-note-moon-1755.jpg",
+   "source": "out/work/earth/pb/f/moon-1755.png",
+   "kind": "note",
+   "label": "Item 7, Moon at 1755 at 4 times: approved image, kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:58.827Z",
+   "file": "20261122054358827-note-moon-2156.jpg",
+   "source": "out/work/earth/pb/f/moon-2156.png",
+   "kind": "note",
+   "label": "Item 7, Moon at 2156 at 4 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:57.947Z",
+   "file": "20261122054357947-note-moon-2156-b19.jpg",
+   "source": "out/work/earth/pb/f/moon-2156-b19.png",
+   "kind": "note",
+   "label": "Item 6 and 7, Moon at 2156 at 4 times: kept build, my still on batch 18, on batch 19. The night side lies 1 code value under the lifted sky. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:56.954Z",
+   "file": "20261122054356954-note-city-1755-b19.jpg",
+   "source": "out/work/earth/pb/g/city-1755-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 1755 at 3 times: approved image, new, before (clipped cores). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:55.856Z",
+   "file": "20261122054355856-note-city-2156-b19.jpg",
+   "source": "out/work/earth/pb/g/city-2156-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:54.936Z",
+   "file": "20261122054354936-note-cloud-1857.jpg",
+   "source": "out/work/earth/pb/f/cloud-1857.png",
+   "kind": "note",
+   "label": "Item 8, clouds near the limb at 1857 at 3 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:43:53.777Z",
+   "file": "20261122054353777-note-sky-2010.jpg",
+   "source": "out/work/earth/pb/f/sky-2010.png",
+   "kind": "note",
+   "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T05:42:24.705Z",
+   "file": "20261122054224705-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
    "time": "2026-11-22T04:52:42.855Z",
@@ -150,126 +225,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:44:49.268Z",
-   "file": "20261122044449268-note-sheet-dive-cover-full-3b3819e.jpg",
-   "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
-   "kind": "note",
-   "label": "Dive cover sheet from the harness, review tier, full format, frames 1879 to 1890; branch 3b3819e on main b0dd302 with engine batch 18 a67c9c34 (engine hash 7cd5ba49); dive frames are not touched by batch 19",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:44:13.362Z",
-   "file": "20261122044413362-sheet-earth.dive-cover-16x9-review.jpg",
-   "source": "out/work/sheets/earth.dive-cover-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.dive, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1879,
-   "last": 1890,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:32:04.462Z",
-   "file": "20261122043204462-note-dive-1879-1881.jpg",
-   "source": "out/work/earth/pb/e/dive-1879-1881.png",
-   "kind": "note",
-   "label": "Dive cover 1879, 1880, 1881 at the review tier, full format, half size; branch 3b3819e, engine batch 18 a67c9c34 (engine hash 7cd5ba49)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:06:03.936Z",
-   "file": "20261122040603936-note-sheet-terrain-b18.jpg",
-   "source": "out/work/earth/pb/e/sheet-terrain-b18.png",
-   "kind": "note",
-   "label": "earth.terrain sheet, review tier, branch 3b3819e, main with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:05:32.877Z",
-   "file": "20261122040532877-sheet-earth.terrain-16x9-review.jpg",
-   "source": "out/work/sheets/earth.terrain-16x9-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet earth.terrain, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "first": 1920,
-   "last": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:04:50.220Z",
-   "file": "20261122040450220-frame-f02018-review.jpg",
-   "source": "out/work/sheets/.frames-OOXPod/f02018-review.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2018, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2018,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:58:36.406Z",
-   "file": "20261122035836406-job-frame-01857.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T03:47:26.537Z",
-   "file": "20261122034726537-job-frame-01963.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.terrain frame 1963, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 1963,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T03:37:54.649Z",
-   "file": "20261122033754649-note-sky-2010.jpg",
-   "source": "out/work/earth/pb/e/sky-2010.png",
-   "kind": "note",
-   "label": "Sky at 2010 at 10 times gain: approved close image, new, kept build. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:53.527Z",
-   "file": "20261122033753527-note-cloud-1857.jpg",
-   "source": "out/work/earth/pb/e/cloud-1857.png",
-   "kind": "note",
-   "label": "Clouds near the limb at 1857, 3 times: kept build, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:52.563Z",
-   "file": "20261122033752563-note-aur-1755.jpg",
-   "source": "out/work/earth/pb/e/aur-1755.png",
-   "kind": "note",
-   "label": "Aurora at 1755: approved image, new, kept build. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
   }
  ]
 }
