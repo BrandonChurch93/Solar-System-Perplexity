@@ -29,7 +29,7 @@ export const params: MoveParams = {
   spinDegPerSecond: -1,
   moonDegPerSecond: 0,
   tint: [0.95, 0.8, 0.5],
-  ...({ coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } } } as object),
+  coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } },
 }
 
 export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
