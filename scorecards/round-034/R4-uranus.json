@@ -1,0 +1,84 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4407-4409, whole frame",
+   "what": "the rise cover does not connect one move. A straight diagonal cloud band in 4407 becomes a curved limb in a different place in 4409. In 4408 both are visible at once as a crossfade, so it reads as two shots dissolved together, not one flight out",
+   "fix": "drive both sides of the cover from one continuous camera path so the band in the haze becomes the limb, and drop the crossfade"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 4407-4411, sky and haze",
+   "what": "exposure and color drop from bright teal haze to black space in about three frames, which reads as a pop instead of climbing out of the atmosphere",
+   "fix": "stretch the haze-to-vacuum falloff over 15-20 frames and ease the exposure change"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 4420-4427, sky",
+   "what": "the Milky Way is missing in 4414-4420, then fills the upper left densely by 4427. At the same time the camera jumps from a limb at the bottom of the frame to a large three-quarter planet. Sky and framing both pop",
+   "fix": "keep the galaxy band in the sky all the way through the rise (dimmed by exposure if needed), and ease the pull-back so the scale changes steadily"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 4142-4150",
+   "what": "within 8 frames the view jumps from a dome on a black sky to a wide flat limb with a dense Milky Way across the top. The rings jump from upper left to the right side. This is a jump in direction and field of view during the dive",
+   "fix": "add an eased pitch-down over more frames, or check the camera keys for a discontinuity between 4142 and 4150"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "terrain frames 4200-4379, surface vs horizon",
+   "what": "the limb, sun and ring arcs stay locked in place while only the surface texture moves under them. There is no parallax between the near ground and the horizon, so it reads as a texture sliding, not flight over real terrain",
+   "fix": "add real camera translation and a slight drift in heading, so the near clouds move faster than the far limb and the horizon shifts slowly"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 4387-4393, sun and rings",
+   "what": "the bright sun flare and the ring hoops are gone within 6 frames. The sun turns into a faint point, so the start of the rise cover pops",
+   "fix": "fade the flare and rings together with the haze density over a longer, eased span"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 4415-4416, the bright star/sun point at right",
+   "what": "the point jumps about 17px upward in one frame while the horizon barely moves, so it is out of step with the camera",
+   "fix": "lock the point to the same sky transform as the starfield and horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 4409-4416, right edge near the limb",
+   "what": "a thin grey horizontal sliver (ring fragment) sits right against the right edge of the frame and flickers in and out",
+   "fix": "either fully show the ring or keep it out of frame, and make sure it is not being clipped at the edge"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 4175-4183, sky above the limb",
+   "what": "no rings in 4175, then fully drawn ring hoops in 4183, which reads as a pop-in when leaving the dive cover",
+   "fix": "fade the rings in as the haze clears"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 4160-4165, lower cloud deck",
+   "what": "dark blotchy noise in the blurred clouds changes shape from frame to frame, which reads as crawling noise rather than drifting cloud",
+   "fix": "raise samples or add temporal denoising on the cloud volume during the cover"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "ring hoops, frames 4346-4379",
+   "what": "the fine ring strands run into the top edge of the frame and their thin parallel lines are at risk of shimmering",
+   "fix": "add a little blur or supersampling to the ring lines, and reframe so the arc is not clipped"
+  }
+ ]
+}
