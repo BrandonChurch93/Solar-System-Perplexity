@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "lower left and bottom center foreground clouds (crops D, H)",
+   "what": "the dark foreground cloud billows are slightly softer, with about 10-13% less fine edge detail than the target; the small lit cloud tops read a touch mushier",
+   "fix": "restore fine texture and micro-contrast in the dark lower third so it matches -a; avoid extra denoise there"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper left Milky Way and right-side Milky Way band (crops G, H, F)",
+   "what": "the dust lanes and star clusters are slightly softer (about 5-7% less fine detail), and the dark sky has a little more fine grain and faint stars, so the band reads a bit noisier and less structured",
+   "fix": "sharpen dust-lane structure back toward -a and lower the background star and grain density slightly"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper left limb glow and sky near the planet (crops B, D)",
+   "what": "the sky beside the lit limb is very slightly lifted, so the halo is a touch flatter against the black",
+   "fix": "pull the near-limb sky blacks down slightly so the glow sits on deep black as in -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall grade",
+   "what": "a very slight warm/bright lift across the frame (mean +0.5 levels), and the lowest blacks are a hair lighter",
+   "fix": "drop exposure slightly and crush the deepest shadows back to the target black level"
+  }
+ ]
+}

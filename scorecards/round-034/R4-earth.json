@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 2125-2136 across the rise cover (and sheet-05.png frames 2100-2147)",
+   "what": "the camera reverses direction across the cover: frames 2100-2131 accelerate forward and downward into the terrain until the horizon exits the top edge at 2131, then frames 2135-2147 cut to a backward pull-out from the full globe in space, while zoomed-in reef streaks ghost in the lower corners of 2133-2136 over the emerging orbital globe",
+   "fix": "animate rise as one continuous upward and outward pull-back from the terrain through volumetric clouds into orbit so camera direction, horizon position, and velocity carry smoothly across the cover without double-exposing the two shots"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 1879-1890 across the dive cover (and sheet-02.png frames 1870-1895)",
+   "what": "between 1870 and 1879 the globe pops into an opaque, featureless white sphere with a bright cyan upper-sky glow and steep limb curvature, then across 1879-1883 the cyan sky abruptly drops to black while the horizon flattens and shifts down into a low-orbit plate whose top-center sun contradicts the left-lit orbital globe",
+   "fix": "align sun direction, sky exposure, and horizon curvature between the orbital globe and low-orbit view, and pass continuously through layered clouds instead of popping to a solid white sphere and warping the limb across four frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2147-2174 background starfield and globe interior compared with sheet-01.png and sheet-02.png",
+   "what": "after returning to the same orbital framing and Moon position, the Milky Way band behind Earth has jumped roughly 40 degrees clockwise from diagonal to nearly vertical, while Earth's longitudinal rotation has snapped back to its pre-dive 1829 angle instead of advancing continuously across the 345-frame visit",
+   "fix": "lock the starfield and Milky Way orientation in world space across the entire stop and drive Earth's rotation from a single continuous clock through hold, dive, terrain, and rise"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 1920-2099 cumulus clouds over islands in lower half and sun flare at top-center edge",
+   "what": "cumulus clouds are baked flat onto the ocean and island surface with zero drift and zero altitude parallax relative to their shadows beneath them, while an unanchored white sun flare slides into frame from the top-center border over 2034-2099",
+   "fix": "place clouds on an elevated layer above the sea mesh so they show subtle vertical parallax and gentle drift relative to their surface shadows, and lock the sun flare consistently to the sky and horizon geometry"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frame 1870 lower-right city lights and right-limb aurora (and sheet-06.png frames 2134-2136 lower corners)",
+   "what": "high-speed radial zoom blur breaks bright city lights, reef highlights, and aurora features into coarse stepped streaks",
+   "fix": "increase temporal motion-blur sampling during peak dive and rise speeds so bright point features and edges smear into a smooth continuous blur"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 1680-1721 upper-right limb",
+   "what": "the green aurora starts near zero at frame 1680 and ramps up sharply over the first 40 frames of hold rather than reading as ongoing planetary motion",
+   "fix": "begin hold with the aurora already at its steady baseline brightness and animate only gentle curtain drift"
+  }
+ ]
+}
