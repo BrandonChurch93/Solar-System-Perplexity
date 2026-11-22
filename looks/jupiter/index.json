@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T05:49:05.815Z",
+ "pushed": "2026-11-22T06:01:04.011Z",
  "head": "4bfe0c9d0a62a5be8da845b746f0d37cff07b89f",
- "note": "Jupiter: cover sheets of the READY tree a06d2ae (main 2621f00) rendering; analysis of the sky and the haze under the covers",
+ "note": "Jupiter: dive cover sheet of the READY tree a06d2ae (main 2621f00) rendering, frames 3019 to 3024 looked at",
  "looks": [
+  {
+   "time": "2026-11-22T06:01:02.741Z",
+   "file": "20261122060102741-note-d3023_24.jpg",
+   "source": "out/work/view/sky/d3023_24.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover, review tier, frames 3023 (last of the orbit side) and 3024 (first of the terrain side), agent/jupiter a06d2ae on main 2621f00",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T06:00:53.131Z",
+   "file": "20261122060053131-frame-f03024-review.jpg",
+   "source": "out/work/sheets/.frames-Y37tSp/f03024-review.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3024, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3024,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:54:19.701Z",
+   "file": "20261122055419701-note-d3021_22.jpg",
+   "source": "out/work/view/sky/d3021_22.jpg",
+   "kind": "note",
+   "label": "Jupiter dive cover, review tier, frames 3021 and 3022 (orbit side, before the cut at 3024), agent/jupiter a06d2ae on main 2621f00: the storm goes under the haze as a red smear with speed lines, sky black",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-22T05:49:02.667Z",
    "file": "20261122054902667-note-pallsim_val.jpg",
@@ -19,20 +49,6 @@
    "kind": "note",
    "label": "Jupiter rise cover, analysis only (no render): transmittance of my own haze by its formula, frames 3275 to 3281 (white = clear). Top row as on agent/jupiter a06d2ae (main 2621f00): vertical columns at the right, the paler column I named as weak. Bottom row: candidate with the fine ray term faded out in the thin phase",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T05:48:47.972Z",
-   "file": "20261122054847972-frame-f03021-review.jpg",
-   "source": "out/work/sheets/.frames-Y37tSp/f03021-review.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3021, review tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3021,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T05:43:59.828Z",
@@ -276,34 +292,6 @@
    "kind": "note",
    "label": "Jupiter hold 2895 final, branch d28870b holding main 2621f00 (batch 19): sha c34e30ce2c61de16, same bytes as before the layer and before batch 19",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T04:55:20.228Z",
-   "file": "20261122045520228-still-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:53:48.772Z",
-   "file": "20261122045348772-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
   },
   {
    "time": "2026-11-22T04:51:53.571Z",
