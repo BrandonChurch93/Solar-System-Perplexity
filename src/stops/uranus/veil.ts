@@ -31,7 +31,6 @@ in vec3 vLocal;
 in vec3 vClip;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   vec2 q = vec2(dot(vLocal, uE1), dot(vLocal, uE2));
   float r = max(length(q), 1e-4);
   float span = uRange.y - uRange.x;
@@ -45,6 +44,7 @@ void main() {
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float lens = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(t * t * (uRange.z * uGain * step(0.0, v) * step(v, 1.0) / lens), 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Veil {

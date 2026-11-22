@@ -7,7 +7,7 @@ import numpy as np
 from scipy.ndimage import gaussian_filter1d, grey_closing
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lib import ROOT, WORK, load_json, lum  # noqa: E402
+from lib import ROOT, WORK, calm, load_json, lum  # noqa: E402
 
 SPAN = (1.42, 2.48)
 SIZE = {"full": (8192, 1024), "web": (4096, 512)}
@@ -43,6 +43,11 @@ def unproject(key):
     base = WORK / "shot" / key
     img = cv2.imread(str(base / "hero-rings.jpg"), cv2.IMREAD_COLOR)
     mask = cv2.imread(str(base / "hero-rings-mask.png"), cv2.IMREAD_COLOR)
+    k = img.shape[1] / mask.shape[1]
+    ring = cv2.GaussianBlur(cv2.erode(cv2.morphologyEx((mask[..., 2] > 128).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((61, 61), np.uint8)), np.ones((5, 5), np.uint8)).astype(np.float32), (0, 0), 2)
+    img, share = calm(img, cv2.resize(ring, (img.shape[1], img.shape[0]), interpolation=cv2.INTER_LINEAR), k)
+    img = img.astype(np.uint8)
+    print(key, "share of ring texels calmed", round(share, 4))
     w, h = SIZE[key]
     phi = ((np.arange(w) + 0.5) / w - 0.5) * 2 * np.pi
     r = SPAN[0] + (1 - (np.arange(h) + 0.5) / h) * (SPAN[1] - SPAN[0])

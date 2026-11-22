@@ -137,9 +137,9 @@ def paste_max(dst, src, lon_c, lat_c):
     dst[ya:yb, xs] = np.maximum(block, src[ya - y0:yb - y0])
 
 
-def shell_shift(layers, height):
+def shell_shift(layers, height, alpha_key='alpha', weight_key='aweight'):
     x0, y0, x1, y1 = [int(v) for v in layers['window']]
-    alpha, weight = layers['alpha'], layers['aweight']
+    alpha, weight = layers[alpha_key], layers[weight_key]
     out_a = np.zeros_like(alpha)
     out_w = np.zeros_like(weight)
     step = 512
@@ -160,6 +160,22 @@ def shell_shift(layers, height):
         out_a[ya:yb] = cv2.remap(alpha, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * ok
         out_w[ya:yb] = cv2.remap(weight, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT) * ok
     return out_a, out_w
+
+
+def hold(layers, deck, alpha):
+    x0, y0, x1, y1 = [int(v) for v in layers['window']]
+    head = float(layers['head'])
+    ha, hw = shell_shift(layers, CLOUD_HEIGHT, 'over', 'haweight')
+    wd = layers['weight'][..., None]
+    rgb = (geo.linear_to_srgb(np.clip((deck * (1 - wd) + layers['deck'] * wd) * CODE, 0, 1)) * 255 + 0.5).astype(np.uint8)
+    a8 = (np.clip((alpha * (1 - np.maximum(hw, layers['gweight'])) + ha * hw) / head, 0, 1) * 255 + 0.5).astype(np.uint8)
+    rgba = np.dstack([rgb, a8])
+    Image.fromarray(rgba, 'RGBA').save(os.path.join(OUT, 'full/hold.webp'), quality=92, method=4, exact=True)
+    half = ((x1 - x0) // 2, (y1 - y0 + 1) // 2)
+    Image.fromarray(cv2.resize(rgba, half, interpolation=cv2.INTER_AREA), 'RGBA').save(os.path.join(OUT, 'web/hold.webp'), quality=88, method=4, exact=True)
+    json.dump({'box': [x0 / W, 1 - y1 / H, x1 / W, 1 - y0 / H], 'head': head}, open(os.path.join(geo.ROOT, 'src/stops/neptune/hold.json'), 'w'))
+    for f in ('full/hold.webp', 'web/hold.webp'):
+        print(f, rgba.shape, os.path.getsize(os.path.join(OUT, f)) / 1e6, 'MB')
 
 
 def main():
@@ -228,6 +244,7 @@ def main():
         lo, la = np.meshgrid(np.radians(lon), np.radians(lat[ya:ya + 256]))
         alpha[ya:ya + 256] *= np.interp(geo.lonlat_to_world(lo, la) @ geo.SUN, knots, dim).astype(np.float32)
     ha, hw = shell_shift(layers, CLOUD_HEIGHT)
+    hold(layers, acc[y0:y1, x0:x1], alpha[y0:y1, x0:x1])
     wd = layers['weight'][..., None]
     acc[y0:y1, x0:x1] = acc[y0:y1, x0:x1] * (1 - wd) + layers['deck'] * wd
     alpha[y0:y1, x0:x1] = alpha[y0:y1, x0:x1] * (1 - np.maximum(hw, layers['gweight'])) + ha * hw

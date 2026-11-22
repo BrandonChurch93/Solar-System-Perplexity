@@ -18,6 +18,7 @@ export interface IoOptions {
   term: [number, number]
   dusk: [number, number, number, number]
   crisp: number
+  night?: { fill: [number, number, number]; phase: [number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -44,6 +45,8 @@ uniform vec3 uPlanetW;
 uniform vec3 uSun;
 uniform vec3 uAmbient;
 uniform vec3 uBounce;
+uniform vec3 uNight;
+uniform vec2 uNightPhase;
 uniform vec3 uShape;
 uniform vec2 uTerm;
 uniform vec4 uDusk;
@@ -73,8 +76,9 @@ void main() {
   float toPlanet = dot(uPlanet.xyz, ray);
   float pm = sqrt(max(dot(uPlanet.xyz, uPlanet.xyz) - toPlanet * toPlanet, 0.0));
   float front = toPlanet - sqrt(max(uPlanet.w * uPlanet.w - pm * pm, 0.0));
-  alpha *= front < depth ? smoothstep(-uFeather.x, uFeather.x, (pm - uPlanet.w) / max(fwidth(pm), 1e-7)) : 1.0;
-  if (uDiag >= 2 && alpha < 0.5) discard;
+  float pmw = max(fwidth(pm), 1e-7);
+  alpha *= front < depth ? smoothstep(-uFeather.x, uFeather.x, (pm - uPlanet.w) / pmw) : 1.0;
+  bool gone = uDiag >= 2 && alpha < 0.5;
   vec3 d = uToLocal * n;
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
   float ndl = dot(n, uSunW);
@@ -85,11 +89,13 @@ void main() {
   float v = asin(clamp(d.y, -1.0, 1.0)) / PI + 0.5;
   float foot = min(px / uBall.w, uFeather.y) / PI * uGrad * uFeather.z;
   vec3 albedo = inverseFilmic(textureGrad(uMap, vec2(u, v), vec2(foot * 0.5, 0.0), vec2(0.0, foot)).rgb);
-  albedo = mix(dot(albedo, vec3(0.2126, 0.7152, 0.0722)) * uDusk.rgb, albedo, day);
+  float tone = dot(albedo, vec3(0.2126, 0.7152, 0.0722));
+  albedo = mix(tone * uDusk.rgb, albedo, day);
   vec3 shade = uSun * lit * (1.0 - uEclipse) + uAmbient + uBounce * max(dot(n, uPlanetW), 0.0);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  vec3 col = albedo * shade * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 col = (albedo * shade + uNight * tone * (1.0 - day) * (1.0 - smoothstep(uNightPhase.x, uNightPhase.y, dot(uSunW, -ray)))) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, alpha), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.95, 0.85, 0.2), vec2(0.0), length(vView));
+  if (gone) discard;
 }`
 
 export class Io {
@@ -106,7 +112,7 @@ export class Io {
       uniforms: {
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uGain: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uPlanetW: { value: new THREE.Vector3(0, 0, -1) },
-        uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) }, uBounce: { value: new THREE.Vector3().fromArray(o.bounce) },
+        uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) }, uBounce: { value: new THREE.Vector3().fromArray(o.bounce) }, uNight: { value: new THREE.Vector3().fromArray(o.night?.fill ?? [0, 0, 0]) }, uNightPhase: { value: new THREE.Vector2().fromArray(o.night?.phase ?? [2, 3]) },
         uShape: { value: new THREE.Vector3(o.wrap, o.power, o.rim) }, uTerm: { value: new THREE.Vector2(Math.max(o.term[0], 1e-4), o.term[1]) }, uEclipse: { value: 0 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uBall: { value: new THREE.Vector4(0, 0, -1, o.radius) }, uPlanet: { value: new THREE.Vector4(0, 0, -1, 1) }, uToLocal: { value: this.toLocal }, uFeather: { value: new THREE.Vector3(o.feather, o.blur, o.crisp) }, uDusk: { value: new THREE.Vector4().fromArray(o.dusk) },
         uDiag: diagUniform, uGrad: gradUniform,

@@ -1,6 +1,7 @@
 import type { AirParams } from './air'
 import curve from './curve.json'
 import hazeJson from './haze.json'
+import holdJson from './hold.json'
 import type { CloudParams, LimbParams } from './planet'
 
 export const code = curve.code
@@ -18,24 +19,34 @@ export const clouds: CloudParams = { height: 0.004, shadow: 0.45, shadowSoft: 3,
 export const storm = { lon: -0.25, lat: -18.8, radiusDeg: 7, degPerSecond: 2.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
-export const near = { altitude: [0.05, 0.45], altitudeRise: [0.4, 2.6], amount: 1, gain: 0.55, gainRise: 0.72, power: 1.4, saturation: 0.3, pivot: 0.3, tint: [0.75, 0.95, 1], rise: { power: 2.7, saturation: 0.12, pivot: 0.55, tint: [0.6, 0.82, 1] } }
+export const near = {
+  amount: 1,
+  dive: { altitude: [0.45, 1.25], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 0.1], fallAltitude: [0.5, 1] },
+  rise: { altitude: [0.4, 2.6], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 0.3], fallAltitude: [0.5, 1.6] },
+}
 export const field = { amount: 1 }
+export const held = { ...holdJson, amount: 1 }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
+export const diving = { from: 2.06, to: 1.8 }
+export const flow = { amount: 0.6 }
+export const cirrus = { amount: 1, bend: 0.018, shadow: 1.5, floor: 0.7, clump: [0.08, 0.28, 0.7] }
 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
   stage: [8.608, -10.036, -4.601] as [number, number, number],
-  aim: [0.2421, -0.6261, 0.2881] as [number, number, number],
+  aim: [0.2323, -0.3863, -0.044] as [number, number, number],
   gain: 1.75,
-  bump: 0.008,
-  rim: 0.4,
+  bump: 0.018,
+  rim: 0,
+  wrap: 0.432,
+  lift: 1.2,
   sun: [1, 0.98, 0.96] as [number, number, number],
   ambient: [0.004, 0.007, 0.014] as [number, number, number],
-  terminator: [-0.02, 0.18] as [number, number],
-  power: 0.7,
+  terminator: [-0.022, 0.41] as [number, number],
+  power: 1.258,
   spinDegPerSecond: 0.4,
-  rise: { sun: 0.4, ambient: [0.0057, 0.0142, 0.021] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.012 },
+  rise: { sun: 0.4, ambient: [0.0057, 0.0142, 0.021] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.012, rim: 0.4, wrap: 0, lift: 1 },
 }
 
 export const ring = {
@@ -52,4 +63,5 @@ export const ring = {
   bandAway: [0.45, 0.2, 2.2] as [number, number, number],
   mapScale: 0.25,
   degPerSecond: 0.8,
+  grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
 }
