@@ -1,83 +1,83 @@
 {
  "folder": "earth",
- "pushed": "2026-11-21T23:53:27.174Z",
- "head": "353a03d427d70c5fdc6f6beb3caa7037478c5c13",
- "note": "Phase 6 items 1 to 3, version b drafts complete: dive 1870 to 1900 and rise 2122 to 2140. Rise: horizon climbs 47 px per frame from 2124 and leaves at 2130 to 2131, top whitens over six frames. Version c (deck anchored to the globe, steadier level ramp, faster hidden swing on the rise) is rendering.",
+ "pushed": "2026-11-22T00:02:42.117Z",
+ "head": "cc64d1cf558d52676f2eae4bd5463d8089b59c63",
+ "note": "Phase 6 items 1 to 3, version c drafts: on the dive's orbit side the mist is now a cloud deck anchored to the globe (grows with it, keeps its roll), levels 81, 104, 138, 159, 178, 191, 202, 208, 213 from 1868 to 1878; rise swing to the nadir done by 2133 under the deck. Review proof rendering.",
  "looks": [
+  {
+   "time": "2026-11-22T00:02:41.244Z",
+   "file": "20261122000241244-note-f-1874.jpg",
+   "source": "out/work/earth/p6/c/f-1874.png",
+   "kind": "note",
+   "label": "p6 version c frame 1874, draft, full size: the mist is a deck on the globe",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:02:40.057Z",
+   "file": "20261122000240057-note-c-rise-a.jpg",
+   "source": "out/work/earth/p6/c-rise-a.jpg",
+   "kind": "note",
+   "label": "p6 version c c-rise-a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:02:39.382Z",
+   "file": "20261122000239382-note-c-dive-b.jpg",
+   "source": "out/work/earth/p6/c-dive-b.jpg",
+   "kind": "note",
+   "label": "p6 version c c-dive-b",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:02:38.783Z",
+   "file": "20261122000238783-note-c-dive-a.jpg",
+   "source": "out/work/earth/p6/c-dive-a.jpg",
+   "kind": "note",
+   "label": "p6 version c c-dive-a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:02:38.029Z",
+   "file": "20261122000238029-note-c-dive-c.jpg",
+   "source": "out/work/earth/p6/c-dive-c.jpg",
+   "kind": "note",
+   "label": "p6 version c c-dive-c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T00:01:28.900Z",
+   "file": "20261122000128900-frame-f-2134.jpg",
+   "source": "out/work/earth/p6/c/f-2134.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2134, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2134,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
+  {
+   "time": "2026-11-21T23:59:09.134Z",
+   "file": "20261121235909134-frame-f-1879.jpg",
+   "source": "out/work/earth/p6/c/f-1879.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1879, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1879,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-21T23:53:26.141Z",
    "file": "20261121235326141-note-b-dive-a3.jpg",
    "source": "out/work/earth/p6/b-dive-a3.jpg",
    "kind": "note",
    "label": "p6 version b b-dive-a3",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:53:24.835Z",
-   "file": "20261121235324835-note-b-rise-d.jpg",
-   "source": "out/work/earth/p6/b-rise-d.jpg",
-   "kind": "note",
-   "label": "p6 version b b-rise-d",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:53:23.646Z",
-   "file": "20261121235323646-note-b-rise-c.jpg",
-   "source": "out/work/earth/p6/b-rise-c.jpg",
-   "kind": "note",
-   "label": "p6 version b b-rise-c",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:53:22.437Z",
-   "file": "20261121235322437-note-b-rise-b.jpg",
-   "source": "out/work/earth/p6/b-rise-b.jpg",
-   "kind": "note",
-   "label": "p6 version b b-rise-b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:53:21.141Z",
-   "file": "20261121235321141-note-b-rise-a.jpg",
-   "source": "out/work/earth/p6/b-rise-a.jpg",
-   "kind": "note",
-   "label": "p6 version b b-rise-a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-21T23:51:47.327Z",
-   "file": "20261121235147327-frame-f-2140.jpg",
-   "source": "out/work/earth/p6/b/f-2140.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2140, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2140,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:42:12.688Z",
-   "file": "20261121234212688-frame-f-1878.jpg",
-   "source": "out/work/earth/p6/b/f-1878.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1878, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1878,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:41:18.494Z",
-   "file": "20261121234118494-note-b-dive-b.jpg",
-   "source": "out/work/earth/p6/b-dive-b.jpg",
-   "kind": "note",
-   "label": "p6 version b b-dive-b",
    "stop": "earth"
   }
  ]
