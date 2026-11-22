@@ -44,13 +44,15 @@ export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; 
 export const sky = { dive: [-11, -3] as [number, number], rise: [10.5, 16] as [number, number], band: { dive: [-5, -1] as [number, number], rise: [0.5, 5] as [number, number], soft: 0.012 } }
 
 export const smear = 1
+export const hide = { rate: 10, fade: [0.72, 0.99], power: 2, gone: 0.5556 }
+export const sunLook: [number, number] = [0.4, 0.97]
 export const leaveStep = 0.5
 export const leaveSoft = 0.5
 export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
-export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0.6, dive: [0, 0.2], disc: [0.0176, 0.0207, 0.2506], limb: [0.3, 0.42, 0.55], corona: { depth: 0.45, reach: [1.22, 0.5], soft: 0.17 } }
+export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0.6, dive: [0, 0.2], disc: [0.0176, 0.0207, 0.2506], limb: [0.42, 0.56, 0.7], rim: [0.8, 0.94, 0.75, 0.85], out: [1.0, 1.12, 0.35], hideEdge: [1.1, 1.3], corona: { depth: 0.45, reach: [1.22, 0.5], soft: 0.17 } }
 export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
 export const glare: GlareLook = {

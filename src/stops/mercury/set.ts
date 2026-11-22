@@ -299,8 +299,12 @@ export const createSet: SetFactory = async (ctx) => {
       const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
       const arriving = kind === 'travel' && !mine
       const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
+      const surface = arriving ? 1 - smooth(ramp(look.sunLook[0], look.sunLook[1], state.u)) : 0
       const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
+      const hide = arriving ? 1 - smoother(ramp(look.hide.fade[0]!, look.hide.fade[1]!, state.u)) : rising || leaving ? 1 : 0
+      const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
+      const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
       const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
       sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1
