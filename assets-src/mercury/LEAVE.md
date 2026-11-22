@@ -1,0 +1,9 @@
+# Mercury, branch agent/mercury-leave (MAIL 110, 22 Nov)
+
+A small branch from `origin/main` (616695b) that holds only the cure of what round 31 named at frame 495 of `sun.travel`, where the picture is mostly this stop's Sun plate and lens. The polish of Phase 6 lives on `agent/mercury`; its notes are in `NOTES.md` there. The mail's text is in `NOTES.md` on `agent/mercury` under "MAIL 110".
+
+## Item 1, the streak
+
+- Cause: the level streak is the approved hero's own streak cut out between the globe and the corona (`lens-streak.webp`, from 0.84 to 1.43 screen half heights left of the Sun's centre, greenish because the sky level was taken off it); the piece from 0.84 to the limb lives in the hold's sky patch, which the engine brings in only at the end of the travel (`shot.skyPatch`). Until then the plate hung alone, short of the corona, in its own hue.
+- Cure (`lens.ts`, `set.ts`, `look.ts streakCore`): while the hold's sky patch is not yet in (`whole = 1 - shot.skyPatch` in the travel that arrives at Mercury, 0 everywhere else), the streak pass draws the missing piece itself: a line on the plate's row from the plate's peak inward to the Sun's limb, rising as (0.958 / r) ^ 3, hidden under the disc (`rise` in limb radii), with the plate's own vertical profile (sigma 0.0177 half heights), and a short mirrored tail on the far side of the disc; plate and line take the glare's warm white (`warm`) by the same weight. The limb's place on the streak's row is found per frame by bisection through the Sun plate's own mapping. As the patch comes in, the line and the tint go out and the approved streak stands as before.
+- Draft, preview, web set, before against after (`out/work/mercury/leave/d0`, `d1`): 539 and 615 the same bytes; 474 1650 pixels by 1 code, 484 to 529 between 11547 and 1393 pixels, at most 27 codes, 534 161 pixels by 1 code.
