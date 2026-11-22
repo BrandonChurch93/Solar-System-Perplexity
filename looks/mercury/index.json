@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T09:25:53.095Z",
+ "pushed": "2026-11-22T09:54:36.240Z",
  "head": "3bd6b41959b572a40a9f10e5319b6e6a7becd380",
- "note": "MAIL 110 item 1: the streak at 495, tree agent/mercury-leave 3bd6b41 (main 616695b)",
+ "note": "MAIL 110 items 2 to 4 in work on agent/mercury-leave: granulation, limb darkening, active regions, varied corona, ghosts out of the travel; finals of the head rendering",
  "looks": [
+  {
+   "time": "2026-11-22T09:54:35.171Z",
+   "file": "20261122095435171-note-disc-495-native.jpg",
+   "source": "out/work/mercury/leave/proof/disc-495-native.png",
+   "kind": "note",
+   "label": "MAIL 110 item 2, 495 final, disc surface at native size: before (main 616695b) | interim state of agent/mercury-leave working tree on 3bd6b41 (main 616695b), one tuning step before the head",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T09:54:34.148Z",
+   "file": "20261122095434148-note-strip-474-539.jpg",
+   "source": "out/work/mercury/leave/proof/strip-474-539.jpg",
+   "kind": "note",
+   "label": "MAIL 110 items 2 to 4, draft strip 474 to 539 every fifth frame, preview, web set: main 616695b (top two rows) against agent/mercury-leave working tree on 3bd6b41 (main 616695b) (bottom two rows)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T09:25:52.423Z",
    "file": "20261122092552423-note-f495-final-streak.jpg",
@@ -18,22 +34,6 @@
    "source": "out/work/mercury/leave/f495-final-before.png",
    "kind": "note",
    "label": "Frame 495 at the final tier before the streak cure, main 616695b",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:25:51.209Z",
-   "file": "20261122092551209-note-streak-495-native.jpg",
-   "source": "out/work/mercury/leave/streak-495-native.png",
-   "kind": "note",
-   "label": "MAIL 110 item 1: streak at 495, final tier, native crop 600,170 to 1240,470, before (main 616695b) beside after; lower row at gain 3; tree agent/mercury-leave 3bd6b41 (main 616695b)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T09:09:36.952Z",
-   "file": "20261122090936952-note-f717-final.jpg",
-   "source": "out/work/mercury/p6/ready2/f717-final.png",
-   "kind": "note",
-   "label": "Frame 717 at the final tier, tree f269a9b (main 07aabf5, engine batch 20); head 9604703 holds main 616695b with no code change since",
    "stop": "mercury"
   },
   {
