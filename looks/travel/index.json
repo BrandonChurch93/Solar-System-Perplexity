@@ -1,9 +1,41 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T00:08:19.561Z",
- "head": "1b601533c50dc82c7f85e3feef0042daacbc3830",
- "note": "task 5: review sheets of the retreat, lookback, fade, mars.travel and sun.travel at the new state",
+ "pushed": "2026-11-22T00:35:03.307Z",
+ "head": "aaae2d08fe9f4159d8fae56b86d38884750b2979",
+ "note": "task 5: uranus.travel review sheet at the new state; earth, jupiter, venus, mercury, saturn rendering",
  "looks": [
+  {
+   "time": "2026-11-22T00:11:58.263Z",
+   "file": "20261122001158263-note-f2726-final.jpg",
+   "source": "out/work/travel/t5m/f2726-final.png",
+   "kind": "note",
+   "label": "t5m: f2726-final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T00:11:57.604Z",
+   "file": "20261122001157604-note-f2580-final.jpg",
+   "source": "out/work/travel/t5m/f2580-final.png",
+   "kind": "note",
+   "label": "t5m: f2580-final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T00:11:56.949Z",
+   "file": "20261122001156949-note-f2427-final.jpg",
+   "source": "out/work/travel/t5m/f2427-final.png",
+   "kind": "note",
+   "label": "t5m: f2427-final",
+   "stop": "travel"
+  },
+  {
+   "time": "2026-11-22T00:11:56.264Z",
+   "file": "20261122001156264-note-f2325-final.jpg",
+   "source": "out/work/travel/t5m/f2325-final.png",
+   "kind": "note",
+   "label": "t5m: f2325-final",
+   "stop": "travel"
+  },
   {
    "time": "2026-11-22T00:07:35.169Z",
    "file": "20261122000735169-note-sun.travel-review.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/travel/t5/ending.fade-review.png",
    "kind": "note",
    "label": "t5: ending.fade-review",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:50:51.108Z",
-   "file": "20261121235051108-note-f4492-native.jpg",
-   "source": "out/work/travel/t5/f4492-native.png",
-   "kind": "note",
-   "label": "task 5 f4492-native",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:50:50.139Z",
-   "file": "20261121235050139-note-f3922-native.jpg",
-   "source": "out/work/travel/t5/f3922-native.png",
-   "kind": "note",
-   "label": "task 5 f3922-native",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:50:49.556Z",
-   "file": "20261121235049556-note-f3352-native.jpg",
-   "source": "out/work/travel/t5/f3352-native.png",
-   "kind": "note",
-   "label": "task 5 f3352-native",
-   "stop": "travel"
-  },
-  {
-   "time": "2026-11-21T23:50:48.855Z",
-   "file": "20261121235048855-note-f2782-native.jpg",
-   "source": "out/work/travel/t5/f2782-native.png",
-   "kind": "note",
-   "label": "task 5 f2782-native",
    "stop": "travel"
   }
  ]
