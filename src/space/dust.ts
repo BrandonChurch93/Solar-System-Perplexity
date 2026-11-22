@@ -20,6 +20,7 @@ uniform vec4 uGlint;
 uniform vec3 uWarm;
 uniform vec3 uCool;
 uniform float uShare;
+uniform vec3 uSide;
 in vec3 aBase;
 in vec4 aSeed;
 in vec4 aGrain;
@@ -45,7 +46,7 @@ void main() {
   float wide = sqrt(sigma * sigma + tau * tau);
   float cosSun = dot(normalize(w0), uSun);
   float lobe = 0.5 + 0.5 * cosSun;
-  float phase = 0.32 + 0.4 * pow(lobe, 3.0) + 0.5 * pow(lobe, 22.0);
+  float phase = uSide.x + uSide.y * pow(lobe, 3.0) + uSide.z * pow(lobe, 22.0);
   float fade = smoothstep(span * 0.5, span * 0.34, d) * smoothstep(0.06, 0.2, d);
   float turn = fract(aGrain.z + uTime * mix(uGlint.z, uGlint.w, aGrain.w));
   float swing = 0.5 + 0.5 * cos(6.2831853 * turn);
@@ -83,7 +84,7 @@ void main() {
   outColor = vec4(vColor * (uUnit * clear * exp(-vAt.x * vAt.x * vShape.x - vAt.y * vAt.y * vShape.y)), 0.0);
 }`
 
-export const DUST = { span: [2.2, 48], share: 0.9, core: [0.42, 0.58], taper: 0.27, long: 28, level: [4.5, 6, 2], cap: 10, response: 0.5, glint: [0.18, 2.2], spin: [0.25, 0.9], warm: [1, 0.86, 0.68], cool: [0.86, 0.93, 1], unit: 0.00052, disc: [1.12, 2] }
+export const DUST = { span: [2.2, 48], share: 1, core: [0.42, 0.58], taper: 0.27, long: 28, level: [4.4, 5.6, 2.5], side: [0.8, 0.3, 0.3], cap: 10, response: 0.5, glint: [0.18, 2.2], spin: [0.25, 0.9], warm: [1, 0.86, 0.68], cool: [0.86, 0.93, 1], unit: 0.00052, disc: [1.12, 2] }
 
 export interface DustSun { dir: THREE.Vector3; angularRadius: number; glare: number }
 
@@ -133,6 +134,7 @@ export class Dust {
         uTime: { value: 0 },
         uUnit: { value: 0 },
         uShare: { value: DUST.share },
+        uSide: { value: new THREE.Vector3().fromArray(DUST.side) },
         uSpan: { value: new THREE.Vector2(DUST.span[0], DUST.span[1]! / DUST.span[0]!) },
         uCore: { value: new THREE.Vector4(DUST.core[0], DUST.core[1], DUST.taper, DUST.long) },
         uLevel: { value: new THREE.Vector4(DUST.level[0], DUST.level[1], DUST.level[2], DUST.cap) },
@@ -178,7 +180,7 @@ export class Dust {
     ;(u.uView!.value as THREE.Vector2).set(target.width, height)
     u.uPixel!.value = height / 1080
     u.uTime!.value = mid.time
-    u.uGain!.value = Math.pow(shot.dust / config.raw.travel.dust.level, DUST.response) / 0.4
+    u.uGain!.value = Math.pow(shot.dust / config.raw.travel.dust.level, DUST.response)
     u.uUnit!.value = DUST.unit / Math.max(shot.post.exposure, 1e-3)
     const e = view.camera.projectionMatrix.elements
     const pixel = 2 / (e[5]! * height)

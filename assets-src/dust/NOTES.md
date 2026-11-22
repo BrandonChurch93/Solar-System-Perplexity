@@ -34,3 +34,15 @@ Brief: `assets-src/shared/ROUND31-FIXES.md` section A. After a compaction read t
 6. Level in levels of 255: `DUST.level` [base, spread, power], soft cap `DUST.cap` 10, `DUST.unit` = linear value per level (measured). Brighter toward the Sun with the old phase curve. Amount: `(shot.dust / travel.dust.level) ^ 0.5`, so the travel windows stay and the retreat (amount 0.045) keeps a quarter of the level.
 7. Glint: 18 percent of the motes swing between 0.55 and 2.75 of their level with a period of 1.1 to 4 s (cos^8 lobe, at least 6 frames wide); the others breathe 0.8 to 1.2. The clock is the film time at mid shutter.
 8. `src/director/film.ts` not touched. `config/showcase.json` not touched.
+
+### Calibration (frame 1642, still minus the same still without dust, `motes.py`)
+
+- Old dust at the final tier: 74,185 changed pixels, 175 marks, 121 of them over 15 levels, largest 56 levels, largest mark 66 x 37 px, median 26 px over half the peak.
+- Try 1 (review tier, unit 0.0012, level [1.6, 9, 3], share 0.5): 61 marks, largest 20 levels. Too bright by two.
+- Try 2 (review, unit 0.00062, level [4.5, 6, 2], share 0.6): 82 marks, 37 at 3 to 6, 20 at 6 to 10, 9 over 10 (largest 16).
+- Try 3 (final tier, unit 0.00052, share 0.9, amplitude divided by the share of a grain's light that lands in its brightest pixel, 0.46 + (sigma - 0.42)): 1,299 changed pixels, 96 marks at 2 or more, 44 at 3 to 6, 14 at 6 to 10, one at 10, none over. Largest mark 3 x 3 px, median 2 px over half the peak. On spec.
+- The measured level of one grain moves with the sky behind it (the film curve's toe: about 860 levels per unit on black, 1150 on a level 40 sky) and with where it sits in the pixel grid (a factor up to 2 for the smallest grain). The soft cap is set for the worst case.
+- Probe `grains.ts` (the shader's arithmetic on the CPU) showed the old Sun curve (0.32 to 1.22) put half the grains at 6 to 10 when the camera looks toward the Sun (4492: 45 at 6 to 10, 46 at 3 to 6) and made the retreat as bright as a travel. Changed: `DUST.side` [0.8, 0.3, 0.3] (0.8 away from the Sun, 1.4 at the Sun), level [4.4, 5.6, 2.5], share 1. Predicted grains at nominal 3 or more: 1612 4, 1642 43, 1670 8, 495 45, 2212 31, 3352 36, 4492 62 (14 at 6 to 10), 5085 5.
+- Streak lengths of the drawn grains at 1642 (nominal 1 or more): 60 under 2 px, 41 at 2 to 5 px, 7 at 5 to 10 px, none longer (longer ones are under one level). The grains that show sit 0.6 to 16 units deep, median 6.
+- Ten draft hashes after the change: all equal to the base list above (run on the first build; the later value changes are in `DUST` only).
+- `npx vitest run` 79 passed. `python3 tools/shaderaudit.py` prints the same lines as on the base.
