@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T12:58:20.909Z",
- "head": "1fb1d97a2c7f299e35302581fe1b276b2df91266",
- "note": "Venus 13:03: tracing the ladder at 1310 and the spokes of the leaving veil at 1572 (experiments, not committed)",
+ "pushed": "2026-11-22T13:38:03.552Z",
+ "head": "101aee49bfb2e1d47a672bd9311f9614b2e29119",
+ "note": "venus: pole fade of the veil's speed lines (spokes at 1305, 1307, 1571 gone) and the ladder at 1310 traced to the nearest sheet; proof on main 84b0ea4 starts now",
  "looks": [
+  {
+   "time": "2026-11-22T13:37:42.154Z",
+   "file": "20261122133742154-note-lad8-1310.jpg",
+   "source": "../view/lad8-1310.jpg",
+   "kind": "note",
+   "label": "venus 1310 ladder trace: 3x crop at the bottom centre, left the present look, right the nearest sheet faded in later (experiment, not committed; branch 101aee49 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:37:41.226Z",
+   "file": "20261122133741226-note-q1-1571.jpg",
+   "source": "../view/q1-1571.jpg",
+   "kind": "note",
+   "label": "venus q1-1571: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:37:40.248Z",
+   "file": "20261122133740248-note-q1-1307.jpg",
+   "source": "../view/q1-1307.jpg",
+   "kind": "note",
+   "label": "venus q1-1307: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T13:37:39.200Z",
+   "file": "20261122133739200-note-q1-1305.jpg",
+   "source": "../view/q1-1305.jpg",
+   "kind": "note",
+   "label": "venus q1-1305: frame at review tier, preview size, left the present look (round 33 hash 3ac0821), right the pole fade of the veil's speed lines (experiment in the render copy on main d5b851f engine, not committed; branch 101aee49 holds main 84b0ea4)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T12:58:20.334Z",
    "file": "20261122125820334-note-rs-1572-pair.jpg",
@@ -131,44 +163,6 @@
    "kind": "note",
    "label": "rise 1557 native crop under the limb: left veil take F4, right take F5 (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T11:05:25.363Z",
-   "file": "20261122110525363-note-p5-1557-full.jpg",
-   "source": "../view/p5-1557-full.jpg",
-   "kind": "note",
-   "label": "rise 1557 review tier: left veil take F4, right take F5 (not committed yet): the dark slot with fine lines under the limb is gone (branch 4b12149 plus take F5, main d5b851f, engine batches 21 and 22)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:56:48.723Z",
-   "file": "20261122105648723-note-p5-1563-a.jpg",
-   "source": "../view/p5-1563-a.jpg",
-   "kind": "note",
-   "label": "experiment, not committed: rise 1563 native crop, left the present veil, right candidate take F5 (branch 2ce04c2, rendered on main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:56:48.158Z",
-   "file": "20261122105648158-note-p5-1563-full.jpg",
-   "source": "../view/p5-1563-full.jpg",
-   "kind": "note",
-   "label": "experiment, not committed: rise 1563 review tier, left the present veil, right candidate take F5 (coarser cloud read and wider fibre at full rush): stepped bright bits and fine straight streaks gone (branch 2ce04c2, rendered on main c479536, engine batch 20)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T10:54:52.344Z",
-   "file": "20261122105452344-frame-d22-1586.jpg",
-   "source": "out/work/venus/p6/d22-1586.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1586, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1586,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   },
   {
    "time": "2026-11-22T10:54:27.959Z",
