@@ -34,7 +34,6 @@ APRON_WARM = (0.5, 1.0, 2.2)
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
 APRON_CURVE = (0.85, 1.2, 6, 10)
-APRON_GLINT = (1.5, 0, 0.45, 0.7, 3)
 APRON_CANVAS = (1920, 1080)
 APRON_NET = (5.5, 9.0, 640, 1.6, 2.0, 2)
 
@@ -354,14 +353,6 @@ def apron_build(out_full, out_web, check):
         for ch in range(3):
             out[..., ch] *= 1 + (np.interp(out[..., ch] * 255, np.arange(256), c[:, ch]).astype(np.float32) - 1) * grey
         np.clip(out, 0, 1, out=out)
-    if APRON_GLINT[1] > 0:
-        lum = out @ key
-        soft = cv2.GaussianBlur(lum, (0, 0), APRON_GLINT[0] * s)
-        cut = APRON_GLINT[1] * np.maximum(lum - soft, 0) * step(soft, APRON_GLINT[2], APRON_GLINT[3]) * grey
-        out *= ((lum - cut + cv2.GaussianBlur(cut, (0, 0), APRON_GLINT[4] * s)) / np.maximum(lum, 1e-3))[..., None]
-        np.clip(out, 0, 1, out=out)
-        print('glints: share of the picture cut', round(float((cut > 0.004).mean()), 4), 'largest cut', round(float(cut.max()) * 255, 1))
-        del lum, soft, cut
     sky = step(np.arange(oh, dtype=np.float32), APRON_SKY[0] * oh, APRON_SKY[1] * oh)[:, None, None]
     res = b + (out - b) * sky
     write(out_full, res, 92)
