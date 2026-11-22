@@ -1,9 +1,23 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T05:01:10.792Z",
- "head": "a4340f04a2e41c27204109f1ea48c02c6e5297bc",
- "note": "e8e4984 on main 2621f00 (batch 19): final stills of the four judged frames; 3465, 3567, 3720 byte equal to batch 18, 3866 with the flight stars; measure running",
+ "pushed": "2026-11-22T05:20:17.484Z",
+ "head": "68ae940302485898749921529af41be6e59009b3",
+ "note": "e8e4984 on main 2621f00 (batch 19): measure green (G13 0 of 165, G5 0.514 0.548 0.743 0.379, G17 1.055 and 0.951); review sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T05:10:42.782Z",
+   "file": "20261122051042782-job-frame-03465.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "saturn.hold frame 3465, final tier, nograin view, from the running measure job",
+   "stop": "saturn",
+   "segment": "saturn.hold",
+   "frame": 3465,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T05:00:56.515Z",
    "file": "20261122050056515-note-c3866-left.jpg",
@@ -42,14 +56,6 @@
    "source": "out/work/saturn/polish/item4-hold-3465.png",
    "kind": "note",
    "label": "Item 4 hold 3465, final tier, e8e4984 on main 2621f00 (batch 19 7a880ac6): hero, kept build, now. Top: rings crossing the globe. Bottom: globe detail at 2.7x",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-22T05:00:51.024Z",
-   "file": "20261122050051024-note-item3-terrain-3720.jpg",
-   "source": "out/work/saturn/polish/item3-terrain-3720.png",
-   "kind": "note",
-   "label": "Item 3 terrain 3720, final tier, e8e4984 on main 2621f00 (batch 19 7a880ac6): approved close, kept build, now. Top: globe limb at 2.7x. Bottom: lower left at 1.4x",
    "stop": "saturn"
   },
   {
