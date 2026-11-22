@@ -1,56 +1,41 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T17:01:14.956Z",
- "head": "bb0004be2128874088deb908348cc5522d5c746a",
- "note": "CUT35 head 5879f9ac (tree holds main 3dad4447): rise law and star fill as drafts; final 2156 keeps main's bytes (3f279b5f both); sheets render next",
+ "pushed": "2026-11-22T17:23:58.549Z",
+ "head": "48f9631816c58a85da8dab7d593ab4163b36b6fe",
+ "note": "CUT35 head 5879f9ac code (tree holds main 3dad4447): review sheet of earth.rise with the rise law; 1857 as a pair at native size; cover sheet renders, round 34's sheets after it",
  "looks": [
   {
-   "time": "2026-11-22T17:01:14.263Z",
-   "file": "20261122170114263-note-void-all-g4.jpg",
-   "source": "out/work/earth/pb/c35/void-all-g4.png",
-   "kind": "note",
-   "label": "CUT35 star fill, drafts at levels times 4: round 34 above, star fill below, 1670 and 1840 to 1870; the void keeps its level and gets stars in its middle",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T17:01:13.529Z",
-   "file": "20261122170113529-note-strip-cover-new.jpg",
-   "source": "out/work/earth/pb/c35/strip-cover-new.png",
-   "kind": "note",
-   "label": "CUT35 drafts of the rise law under the white, 2126 to 2140: the skyline stays in the frame and closes into the disc",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T15:54:46.181Z",
-   "file": "20261122155446181-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "time": "2026-11-22T17:23:40.261Z",
+   "file": "20261122172340261-sheet-earth.rise-preview-review.jpg",
+   "source": "out/work/sheets/earth.rise-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.rise, review tier",
    "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "review",
+   "format": "preview",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T15:54:45.019Z",
-   "file": "20261122155445019-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
+   "time": "2026-11-22T17:23:22.286Z",
+   "file": "20261122172322286-frame-f02167-review.jpg",
+   "source": "out/work/sheets/.frames-93yd0k/f02167-review.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2167, review tier",
    "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
+   "segment": "earth.rise",
+   "frame": 2167,
+   "tier": "review",
+   "format": "preview",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T15:53:30.624Z",
-   "file": "20261122155330624-compare-compare-earth-hold-view.jpg",
+   "time": "2026-11-22T17:03:33.374Z",
+   "file": "20261122170333374-compare-compare-earth-hold-view.jpg",
    "source": "out/work/compare/compare-earth-hold-view.jpg",
    "kind": "compare",
    "label": "earth.hold: approved image left, film frame right, final tier",
@@ -60,11 +45,11 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T15:53:29.345Z",
-   "file": "20261122155329345-still-f01755-16x9-final-full.jpg",
+   "time": "2026-11-22T17:03:32.227Z",
+   "file": "20261122170332227-still-f01755-16x9-final-full.jpg",
    "source": "out/work/stills/f01755-16x9-final-full.png",
    "kind": "still",
    "label": "earth.hold frame 1755, final tier",
@@ -74,7 +59,35 @@
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:02:16.777Z",
+   "file": "20261122170216777-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:02:15.633Z",
+   "file": "20261122170215633-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
   }
  ]
 }
