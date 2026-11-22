@@ -1,9 +1,55 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T19:01:29.268Z",
- "head": "12396c0fee2d2ec6d7b518d9e75074f36dd17ccb",
- "note": "The ring opacity taken into round 35 has a fault I found late: a dark wedge over the lit limb at 4987 to 4993, reported to the Builder",
+ "pushed": "2026-11-22T19:16:14.718Z",
+ "head": "da6791a01de8b5dc12568fbfb8c8ba6a503d7558",
+ "note": "Ring opacity with a ramp in the rise (c588ee73): ramp frames, right limb, the far arc's cost, marked falling px",
  "looks": [
+  {
+   "time": "2026-11-22T19:16:04.675Z",
+   "file": "20261122191604675-note-ramp-04-5006-draft-native-where-falling-px-touch-the-globe-m.jpg",
+   "source": "out/work/nep/end35/solid/ramp-04-5006-draft-native-where-falling-px-touch-the-globe-main-new-marked.jpg",
+   "kind": "note",
+   "label": "Ramp: 5006 draft native where falling px touch the globe's surroundings, main, new, falling px in red",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T19:16:04.128Z",
+   "file": "20261122191604128-note-ramp-03-native-upper-right-arc-5002-5004-5006-main-left-new-.jpg",
+   "source": "out/work/nep/end35/solid/ramp-03-native-upper-right-arc-5002-5004-5006-main-left-new-right.jpg",
+   "kind": "note",
+   "label": "Ramp, the cost: native upper right far arc at 5002, 5004, 5006, main left, new right, the arc sinks to the sky's level",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T19:16:03.490Z",
+   "file": "20261122191603490-note-ramp-02-native-right-limb-4996-4997-4998-main-left-new-right.jpg",
+   "source": "out/work/nep/end35/solid/ramp-02-native-right-limb-4996-4997-4998-main-left-new-right.jpg",
+   "kind": "note",
+   "label": "Ramp: native right limb at 4996, 4997, 4998, main left, new right, no wedge",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T19:16:02.937Z",
+   "file": "20261122191602937-note-ramp-01-every-ramp-frame-4996-to-5005-main-left-new-right.jpg",
+   "source": "out/work/nep/end35/solid/ramp-01-every-ramp-frame-4996-to-5005-main-left-new-right.jpg",
+   "kind": "note",
+   "label": "Ring opacity with the ramp (c588ee73): every ramp frame 4996 to 5005 at draft, main left, new right",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T19:12:39.053Z",
+   "file": "20261122191239053-job-frame-04605.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4605, draft tier, nograin view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T19:01:28.693Z",
    "file": "20261122190128693-note-late-06-rise-entry-drafts-head-left-new-right.jpg",
@@ -18,46 +64,6 @@
    "source": "out/work/nep/end35/solid/late-07-rise-entry-drafts-4988-4990-head-left-new-right.jpg",
    "kind": "note",
    "label": "The same fault, drafts 4988 and 4990, head left, new right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T19:01:27.577Z",
-   "file": "20261122190127577-note-late-08-4992-draft-native-right-limb-head-above-new.jpg",
-   "source": "out/work/nep/end35/solid/late-08-4992-draft-native-right-limb-head-above-new.jpg",
-   "kind": "note",
-   "label": "A fault of the ring opacity found after it was sent: draft 4992 at native size at the right limb, head above, new below; the ring's near arc is a dark wedge over the lit limb",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:53:04.633Z",
-   "file": "20261122185304633-note-view-5006-draft-x4-left-ansa-head-above-new.jpg",
-   "source": "out/work/nep/end35/solid/view-5006-draft-x4-left-ansa-head-above-new.jpg",
-   "kind": "note",
-   "label": "Draft 5006, left ansa, levels times 4 for reading only: head above, new below; the ring off the disc is a little dimmer",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:53:04.115Z",
-   "file": "20261122185304115-note-late-05-retreat-drafts-5025-5030-5040-5055-head-left-new-rig.jpg",
-   "source": "out/work/nep/end35/solid/late-05-retreat-drafts-5025-5030-5040-5055-head-left-new-right.jpg",
-   "kind": "note",
-   "label": "The retreat's first second, drafts 5025, 5030, 5040, 5055: head left, new right; the opacity's weight runs 1, 0.93, 0.5, 0",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:53:03.586Z",
-   "file": "20261122185303586-note-late-04-rise-drafts-5006-5012-5018-5024-new.jpg",
-   "source": "out/work/nep/end35/solid/late-04-rise-drafts-5006-5012-5018-5024-new.jpg",
-   "kind": "note",
-   "label": "The last second of the rise with the ring's opacity, drafts 5006, 5012, 5018, 5024",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:53:03.032Z",
-   "file": "20261122185303032-note-late-03-5006-final-whole-round-34-left-new-right.jpg",
-   "source": "out/work/nep/end35/solid/late-03-5006-final-whole-round-34-left-new-right.jpg",
-   "kind": "note",
-   "label": "Rise 5006 at the final tier, whole frame: round 34 left, the ring with opacity right",
    "stop": "neptune"
   },
   {
