@@ -184,7 +184,9 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      orbit.visible = inOrbit && state.weight > 0
+      const leaving = state.segment.stop === plan.id && state.segment.kind === 'travel'
+      const body = leaving ? 1 : state.weight
+      orbit.visible = inOrbit && body > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
       lens.mesh.visible = false
@@ -274,7 +276,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
-      globe.mesh.visible = radiusPx > 0.6
+      globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const fast = view.samples > 1 && (diving || rising)
       const at = (t: number) => (kind === 'dive' ? plan.dive(t) : plan.rise(t))
       const now = fast ? at(state.time) : null
@@ -283,6 +285,7 @@ export const createSet: SetFactory = async (ctx) => {
       const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
       globe.smear(view.camera, moving ? now.pose : null, moving ? before.pose : null, look.smear, jitter?.jitterX ?? 0, jitter?.jitterY ?? 0, view.samples)
       far.update(radiusPx, view, plan.p.tint, gain)
+      if (state.weight <= 0) far.points.visible = false
       const travel = kind === 'travel' ? smooth(ramp(0.25, 0.8, state.u)) : 1
       const shown = kind === 'travel' && mine ? 1 - travel : travel
       const tau = state.time - plan.holdMid
@@ -317,7 +320,7 @@ export const createSet: SetFactory = async (ctx) => {
       const sep = sunShown.angleTo(world.position)
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
-      const ghost = shown * clear * state.weight * (1 + 2 * (breath - 1)) * ghosts
+      const ghost = shown * clear * body * (1 + 2 * (breath - 1)) * ghosts
       lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
