@@ -2,7 +2,7 @@ import fitted from './curve.json'
 import type { GlareLook } from './glare'
 import type { GlobeLight } from './globe'
 import type { LensCore, LensLook } from './lens'
-import type { SunLimb, SunSmall } from './sunplate'
+import type { SunLimb, SunSmall, SunSurface } from './sunplate'
 
 export const light: GlobeLight = {
   curve: fitted.curve,
@@ -29,12 +29,13 @@ export const light: GlobeLight = {
   shoulder: { from: 0.6, strength: 0.4, frames: [4, 14] },
 }
 
-export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; back: [number, number]; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
+export const sun: { gain: number; breathe: number; rate: number; limb: SunLimb; small: SunSmall; slide: { leave: [number, number]; lock: [number, number]; track: [number, number, number][] }; hand: [number, number]; ghost: [number, number]; ghostIn: number; back: [number, number]; hole: { dive: [number, number]; rise: [number, number]; radius: { dive: [number, number]; rise: [number, number] } } } = {
   gain: 1, breathe: 0.03, rate: 1.9, limb: { dark: [0.08, 0.16, 0.2], edge: [1.0, 1.06] },
   small: { to: 0.14, pale: [1, 0.97, 0.9], lift: 3, white: [0.25, 0.85], feather: 0.06 },
   slide: { leave: [-24, -15], lock: [-6.5, -2.5], track: [[-22, 1.04, 0.19], [-18, 0.96, 0.18], [-14, 0.86, 0.13], [-11, 0.76, 0.06], [-8, 0.6, 0.01], [-6, 0.46, -0.01], [-4, 0.33, -0.02], [-3, 0.285, -0.015], [0, 0.26, 0.05]] },
   hand: [-3.5, -0.5],
   ghost: [-14, -5],
+  ghostIn: 4,
   back: [18, 22],
   hole: { dive: [-26.5, -23.5], rise: [16, 20], radius: { dive: [1.5, 2.4], rise: [1.0, 1.6] } },
 }
@@ -47,6 +48,7 @@ export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
+export const sunSurface: SunSurface = { grain: [0.07, 0.3], cells: 53, coarse: 0.6, dive: [0, 0.2], limb: [0.3, 0.42, 0.55], corona: { depth: 0.45, reach: [1.22, 0.5], soft: 0.17 } }
 export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
 export const glare: GlareLook = {
