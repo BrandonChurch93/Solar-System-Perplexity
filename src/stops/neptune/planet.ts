@@ -410,7 +410,7 @@ export class NeptunePlanet {
     this.material.dispose()
   }
 
-  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, e: Ending['limb']): void {
+  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb']): void {
     const u = this.material.uniforms
     const width = u.uMapWidth!.value as number
     const texels = night.texels
@@ -419,7 +419,7 @@ export class NeptunePlanet {
     dim.y = night.edge[0] + (e.nightEdge[0]! - night.edge[0]) * end
     dim.z = night.edge[1] + (e.nightEdge[1]! - night.edge[1]) * end
     ;(u.uEndNight!.value as THREE.Vector4).set(e.nightDetail, Math.log2(width / e.nightMid), Math.log2(width / e.night), e.nightLimb)
-    ;(u.uEndShine!.value as THREE.Vector4).set(e.shine[0]!, e.shine[1]!, e.shine[2]!, e.shine[3]!)
+    ;(u.uEndShine!.value as THREE.Vector4).set(e.shine[0]! * shine, e.shine[1]! * shine, e.shine[2]!, e.shine[3]!)
     ;(u.uEndRingN!.value as THREE.Vector3).copy(ringLit)
     ;(u.uEndDusk!.value as THREE.Vector4).set(e.dusk[0]!, e.dusk[1]!, e.dusk[2]!, e.duskWidth)
     ;(u.uEndBreak!.value as THREE.Vector3).set(e.breakUp, e.detail, e.breakCloud)
