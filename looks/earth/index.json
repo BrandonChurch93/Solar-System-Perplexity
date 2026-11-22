@@ -1,39 +1,23 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T12:29:20.108Z",
- "head": "4589048f817489525ed1d13dee4fd1635c2f4346",
- "note": "Third take of the terrain sky margin (bec07f3, tree on main 9f5ad80): 2010 and 1755 final are the same bytes as READY 2's stills; the top border shows as a hair line on the Sun's ray at 2060, 2099, 2112 (pairs here), 2125 is covered. I would keep the second take.",
+ "pushed": "2026-11-22T13:10:44.038Z",
+ "head": "b6764ba4d6c59891fa08828c31edec1d510462d5",
+ "note": "round 34: second take of the terrain sky margin back as one commit (b6764ba, tree holds main 8cd0877), proof queue running; finals 1857 and 2156 on READY 1ab7935",
  "looks": [
   {
-   "time": "2026-11-22T12:29:18.902Z",
-   "file": "20261122122918902-note-f-2010-final.jpg",
-   "source": "out/work/earth/pb/y/f-2010-final.png",
+   "time": "2026-11-22T13:10:43.358Z",
+   "file": "20261122131043358-note-dive-cover-hp.jpg",
+   "source": "out/work/earth/pb/z/dive-cover-hp.png",
    "kind": "note",
-   "label": "2010 final tier with the third take of the sky margin (commit bec07f3, main 9f5ad80, engine be043ade): sha 6abe0501, the same bytes as READY 2's still",
+   "label": "earth dive cover 1879 to 1887, high pass 40 px, gain 6: the deck's rays keep one focus (risk note d1), tree holds main 481d2b8",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T12:29:17.761Z",
-   "file": "20261122122917761-note-three-2112-x3.jpg",
-   "source": "out/work/earth/pb/y/three-2112-x3.png",
+   "time": "2026-11-22T13:10:42.560Z",
+   "file": "20261122131042560-note-f-2156-final.jpg",
+   "source": "out/work/earth/pb/z/f-2156-final.png",
    "kind": "note",
-   "label": "2112 top border under the Sun at 3 times, first, second, third take (review tier, main 9f5ad80): hair line of the third take at rows 47 and 48",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T12:29:16.840Z",
-   "file": "20261122122916840-note-three-2060-x3.jpg",
-   "source": "out/work/earth/pb/y/three-2060-x3.png",
-   "kind": "note",
-   "label": "2060 top border under the Sun at 3 times, first, second, third take (review tier, main 9f5ad80): hair line of the third take at rows 35 and 36",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T12:29:15.729Z",
-   "file": "20261122122915729-note-three-2099-native.jpg",
-   "source": "out/work/earth/pb/y/three-2099-native.png",
-   "kind": "note",
-   "label": "2099 top border at native size, first, second, third take (review tier, main 9f5ad80): the hair line of the third take is a faint tick on the ray at row 66",
+   "label": "earth 2156 final on READY 1ab7935 (tree holds main 481d2b8): 1c170662",
    "stop": "earth"
   },
   {
