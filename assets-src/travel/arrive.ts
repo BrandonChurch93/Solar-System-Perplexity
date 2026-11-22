@@ -33,6 +33,11 @@ plans.slice(0, -1).forEach((p, i) => {
   let whole = 0
   let wholeAt = 0
   let prev = 0
+  let peak60 = 0
+  let peak250 = 0
+  let step = 0
+  let stepAt = 0
+  let last: [number, number] | null = null
   for (let f = seg.firstFrame; f <= seg.endFrame; f++) {
     const s = at(f)
     const t = at(f + 1)
@@ -47,19 +52,24 @@ plans.slice(0, -1).forEach((p, i) => {
     const sy = v.z < 0 ? (0.5 - v.y / -v.z / ty * 0.5) * fmt.height : NaN
     const inside = v.z < 0 && sx > -px && sx < fmt.width + px && sy > -px && sy < fmt.height + px
     const g = prev > 0 ? (px / prev - 1) * 100 : 0
+    const moved = last && inside ? Math.hypot(sx - last[0], sy - last[1]) : 0
+    last = inside ? [sx, sy] : null
     if (f < seg.endFrame) {
       if (inside && enter < 0) { enter = f; enterPx = px; enterAt = `${Math.round(sx)},${Math.round(sy)}` }
       if (px > LIMIT && over < 0) over = f
       if (px > GONE && gone < 0) gone = f
       if (px > LIMIT && full > peak) { peak = full; peakAt = f }
       if (px > GONE && full > peakGone) peakGone = full
+      if (px > 60 && full > peak60) peak60 = full
+      if (px > 250 && full > peak250) peak250 = full
+      if (px > LIMIT && moved > step) { step = moved; stepAt = f }
       if (px <= LIMIT) before = Math.max(before, full)
       if (full > whole) { whole = full; wholeAt = f }
       if (px > LIMIT && g > grow) { grow = g; growAt = f }
     }
     prev = px
-    if (mode === 'frames') rows.push(`${f} r ${px.toFixed(2)} px grow ${g.toFixed(1)}% at ${inside ? Math.round(sx) + ',' + Math.round(sy) : 'out'} turn ${full.toFixed(2)} off ${(to.angleTo(new THREE.Vector3(0, 0, -1).applyQuaternion(s.camera.quaternion)) * DEG).toFixed(1)} w ${set.weight.toFixed(2)}`)
+    if (mode === 'frames') rows.push(`${f} r ${px.toFixed(2)} px grow ${g.toFixed(1)}% at ${inside ? Math.round(sx) + ',' + Math.round(sy) : 'out'} step ${moved.toFixed(1)} turn ${full.toFixed(2)} off ${(to.angleTo(new THREE.Vector3(0, 0, -1).applyQuaternion(s.camera.quaternion)) * DEG).toFixed(1)} w ${set.weight.toFixed(2)}`)
   }
   if (mode === 'frames') console.log(p.id + '\n' + rows.join('\n'))
-  else console.log(`${p.id}.travel | enters ${enter} at ${enterAt} r ${enterPx.toFixed(2)} px | over ${LIMIT.toFixed(2)} px from ${over}, over ${GONE.toFixed(1)} px from ${gone} | peak turn while over the limit ${peak.toFixed(2)} at ${peakAt} (disc over ${GONE.toFixed(1)} px: ${peakGone.toFixed(2)}) | peak turn before ${before.toFixed(2)}, whole ${whole.toFixed(2)} at ${wholeAt} | largest growth ${grow.toFixed(1)}% at ${growAt}`)
+  else console.log(`${p.id}.travel | enters ${enter} at ${enterAt} r ${enterPx.toFixed(2)} px | over ${LIMIT.toFixed(2)} px from ${over}, over ${GONE.toFixed(1)} px from ${gone} | peak turn while over the limit ${peak.toFixed(2)} at ${peakAt} (disc over ${GONE.toFixed(1)} px: ${peakGone.toFixed(2)}) | peak turn before ${before.toFixed(2)}, whole ${whole.toFixed(2)} at ${wholeAt} | over 60 px ${peak60.toFixed(2)}, over 250 px ${peak250.toFixed(2)} | largest growth ${grow.toFixed(1)}% at ${growAt} | largest step of the body over the limit ${step.toFixed(1)} px at ${stepAt}`)
 })

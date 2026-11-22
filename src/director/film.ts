@@ -376,6 +376,22 @@ export class FilmDirector implements Director {
     const slide = this.slide[index] ?? 0
     if (slide > 0) position.addScaledVector(this.approach[index + 1]!, slide * shape.pass(u) * shape.settleLeft(x))
     const aim = index === 0 ? this.toWorld(1, this.approachLocal(1, ramp(SUN_APPROACH_START, 1, u), time, shape)).quaternion : to.quaternion
+    if (index > 0 && shape.look.pin[1] > 0) {
+      const b = this.plans[index + 1]!
+      const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
+      const body = this.frames[index + 1]!.origin
+      const quaternion = shape.spin(from.quaternion, hold.quaternion, u)
+      const reach = body.distanceTo(position)
+      const free = body.clone().sub(position).normalize()
+      const hero = body.clone().sub(hold.position).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(quaternion)
+      const angle = free.angleTo(hero)
+      const g = shape.pinned(u)
+      if (g > 0 && angle > 1e-9) {
+        const axis = new THREE.Vector3().crossVectors(free, hero).normalize()
+        free.applyAxisAngle(axis, angle * g)
+      }
+      return { position: body.clone().addScaledVector(free, -reach), quaternion, vfov: mix(from.vfov, to.vfov, smooth(u)) }
+    }
     return { position, quaternion: shape.turn(from.quaternion, aim, u), vfov: mix(from.vfov, to.vfov, smooth(u)) }
   }
 
