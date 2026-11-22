@@ -1,43 +1,43 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T07:59:50.333Z",
- "head": "c18b4fd2f93a170728432b0f9dffdea03a80f490",
- "note": "After POLISH READY: looking at the limb handover 3813 to 3823 in the rise (tree c18b4fd on main 45004ec)",
+ "pushed": "2026-11-22T08:22:50.628Z",
+ "head": "16b64e99278f6c0127218643dcc30b312cbd7fb2",
+ "note": "Limb handover 3813 to 3823 in the rise: trial that carries the ring lanes on behind the picture's limb (tree c18b4fd on main 45004ec)",
  "looks": [
   {
-   "time": "2026-11-22T07:59:49.765Z",
-   "file": "20261122075949765-note-w-b.jpg",
-   "source": "../../../../tmp/w-b.png",
+   "time": "2026-11-22T08:22:49.990Z",
+   "file": "20261122082249990-note-m0-pair.jpg",
+   "source": "../../../../tmp/m0-pair.png",
    "kind": "note",
-   "label": "Limb handover in the rise, draft stills 3809 to 3827 at head (c18b4fd on main 45004ec): junction strips, no code changed yet",
+   "label": "Limb handover: film left, the model alone right (picture switched off), draft 3809 to 3821, tree c18b4fd on main 45004ec",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T07:59:49.221Z",
-   "file": "20261122075949221-note-w-a.jpg",
-   "source": "../../../../tmp/w-a.png",
+   "time": "2026-11-22T08:22:49.342Z",
+   "file": "20261122082249342-note-look-f2.jpg",
+   "source": "../../../../tmp/look-f2.png",
    "kind": "note",
-   "label": "Limb handover in the rise, draft stills 3809 to 3827 at head (c18b4fd on main 45004ec): junction strips, no code changed yet",
+   "label": "Limb handover in the rise, draft, 3x: kept code left, trial F2 right (ring lanes carried on behind the picture's limb, not committed; tree c18b4fd on main 45004ec)",
    "stop": "saturn"
   },
   {
-   "time": "2026-11-22T07:56:19.177Z",
-   "file": "20261122075619177-frame-W-3827.jpg",
-   "source": "out/work/saturn/W-3827.png",
+   "time": "2026-11-22T08:21:36.623Z",
+   "file": "20261122082136623-frame-F2-3821.jpg",
+   "source": "out/work/saturn/F2-3821.png",
    "kind": "frame",
-   "label": "saturn.rise frame 3827, draft tier",
+   "label": "saturn.rise frame 3821, draft tier",
    "stop": "saturn",
    "segment": "saturn.rise",
-   "frame": 3827,
+   "frame": 3821,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T07:51:00.632Z",
-   "file": "20261122075100632-frame-W-3809.jpg",
-   "source": "out/work/saturn/W-3809.png",
+   "time": "2026-11-22T08:00:53.997Z",
+   "file": "20261122080053997-frame-M0-3809.jpg",
+   "source": "out/work/saturn/M0-3809.png",
    "kind": "frame",
    "label": "saturn.terrain frame 3809, draft tier",
    "stop": "saturn",
@@ -49,11 +49,11 @@
    "engine": "7553966a0ffa4014"
   },
   {
-   "time": "2026-11-22T07:49:30.975Z",
-   "file": "20261122074930975-note-rv-junction.jpg",
-   "source": "../../../../tmp/rv-junction.png",
+   "time": "2026-11-22T07:59:49.765Z",
+   "file": "20261122075949765-note-w-b.jpg",
+   "source": "../../../../tmp/w-b.png",
    "kind": "note",
-   "label": "Weak: limb handover at the review tier, 3810, 3817, 3823 at 2x, a1b10aa on main 681d8da. Pale step at 3817, smeared dark zone at 3823",
+   "label": "Limb handover in the rise, draft stills 3809 to 3827 at head (c18b4fd on main 45004ec): junction strips, no code changed yet",
    "stop": "saturn"
   },
   {
