@@ -93,6 +93,7 @@ export const createSet: SetFactory = async (ctx) => {
   const deck = new Deck({
     color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
     near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
+    cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     far: await ctx.texture(base + 'deck-far.jpg', { srgb: false, anisotropy: 16, repeat: true }),
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4),
