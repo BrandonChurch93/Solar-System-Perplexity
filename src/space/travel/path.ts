@@ -30,7 +30,7 @@ export const TRAVEL: Record<string, Partial<TravelLook>> = {
   mars: { bowDeg: 10, grow: [2, 3] },
   jupiter: { bowDeg: -10, grow: [3, 4] },
   saturn: { bowDeg: 8, growRun: [0.4, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.26 },
-  uranus: { bowDeg: -6, grow: [4, 3], passBy: 0.22 },
+  uranus: { bowDeg: -6, growRun: [0.45, 0.2, 0.3], point: 0.0015, swing: [0, 0.7], offset: [0, 0.8], early: 0.03, passBy: 0.22 },
 }
 
 export function travelLook(id: string): TravelLook {
