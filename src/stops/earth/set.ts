@@ -56,7 +56,8 @@ export const createSet: SetFactory = async (ctx) => {
 
   const moonMap = await ctx.texture(base + 'moon-color.jpg', { srgb: true, anisotropy: 8, repeat: true })
   const moonLit = await ctx.texture(base + 'moon-lit.webp', { srgb: true, anisotropy: 8, repeat: true })
-  const moon = new Moon(look.moon, moonMap, moonLit)
+  const moonEye = plan.hold(plan.holdMid - plan.seg.hold.start).position
+  const moon = new Moon({ ...look.moon, center: moonEye.clone().lerp(new THREE.Vector3().fromArray(look.moon.center), look.moon.near).toArray(), radius: look.moon.radius * look.moon.near }, moonMap, moonLit)
   orbit.add(moon.mesh)
 
   const far = new FarPoint()

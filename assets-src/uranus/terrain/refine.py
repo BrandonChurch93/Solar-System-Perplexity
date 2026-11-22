@@ -18,8 +18,9 @@ TAKE = WORK + 'l0-take2.png'
 KEEP = 8.0
 LIMB = (0.035, 0.11)
 RIM = 200
-DARK = (0.02, 0.12, 0.45)
+DARK = (0.02, 0.12, 0.0)
 TINT = (0.03, 0.15)
+OWN = (0.035, 0.07, 12.0)
 RETOUCH = ((300, 805, 500, 872),)
 FEATHER = 14
 SMALL = 'out/work/u/t/plate/wide-canvas.png'
@@ -89,7 +90,11 @@ def change():
     grey = fine.mean(-1, keepdims=True)
     tint = smooth(TINT[0], TINT[1], lit)[..., None]
     fine = (grey + tint * (fine - grey)) * gain[..., None]
-    return m * (fine - (a - cv2.GaussianBlur(a, (0, 0), KEEP)))
+    own = a - cv2.GaussianBlur(a, (0, 0), KEEP)
+    level = np.sqrt(cv2.GaussianBlur(own.mean(-1) ** 2, (0, 0), OWN[2]))
+    free = 1 - smooth(OWN[0], OWN[1], level)
+    print('share of the window that takes the detail', round(float((m[..., 0] * free).mean()), 3))
+    return m * free[..., None] * (fine - own)
 
 
 def base():

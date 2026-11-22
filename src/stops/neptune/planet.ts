@@ -78,6 +78,7 @@ export interface NeptuneOptions {
   night: { flat: number; edge: [number, number]; texels: number }
   patches?: PatchSet
   hold?: { map: THREE.Texture; box: number[]; head: number }
+  mend?: { map: THREE.Texture; box: number[] }
   flow?: THREE.Texture
   far?: THREE.Texture
   segments?: number
@@ -171,6 +172,8 @@ uniform vec4 uAirShade;
 uniform sampler2D uHoldMap;
 uniform vec4 uHoldBox;
 uniform vec2 uHold;
+uniform sampler2D uMendMap;
+uniform vec4 uMendBox;
 uniform sampler2D uFlowMap;
 uniform float uFlow;
 uniform sampler2D uFarMap;
@@ -189,6 +192,9 @@ uniform vec4 uEndDusk;
 uniform vec3 uEndBreak;
 uniform vec2 uEndLimb;
 uniform vec2 uEndBoost;
+uniform vec2 uEndCresc;
+uniform vec4 uEndStruct;
+uniform vec3 uEndPole;
 uniform vec3 uDarkDir;
 uniform vec4 uVeil;
 uniform vec2 uVeilMu;
@@ -241,6 +247,16 @@ vec3 bend(vec3 d, float a) {
   float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
   return vec3(d.x * s, y1, d.z * s);
 }
+float endHash(vec2 p) {
+  uvec2 q = uvec2(p);
+  uint h = q.x * 1664525u + q.y * 22695477u + 1013904223u;
+  h ^= h >> 16u;
+  h *= 2246822519u;
+  h ^= h >> 13u;
+  h *= 3266489917u;
+  h ^= h >> 16u;
+  return float(h >> 8u) / 16777216.0;
+}
 vec4 layerAt(vec3 dd, float soft, out float texels) {
   float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
@@ -269,6 +285,11 @@ ${FETCHES}
     for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
       vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
       base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
+    }
+    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
+      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
+      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
+      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
     }
     c += rest * base;
   }
@@ -337,12 +358,19 @@ void main() {
   for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
     vec2 muv = vec2(atan(dd.x, dd.z) / (2.0 * PI) + 0.5, asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5);
     vec4 mid = textureLod(uMap, muv, uEndNight.y);
+    vec2 mq = (muv - uMendBox.xy) * uMendBox.zw;
+    vec4 mend = textureLod(uMendMap, mq, uEndNight.y);
+    mid.rgb = mix(mid.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
     vec3 wide = textureLod(uMap, muv, uEndNight.z).rgb;
     vec3 lum = vec3(0.2, 0.5, 0.3);
     float rel = dot(mid.rgb, lum) / max(dot(wide, lum), 1e-4);
-    ndd = ndl + uEnd.x * uEndBreak.x * (rel - 1.0 + uEndBreak.z * mid.a);
+    ndd = ndl + uEnd.x * uEndBreak.x * (rel - 1.0 + uEndBreak.z * mid.a) + uEnd.x * uEndCresc.x;
     float dark = uEnd.x * (1.0 - smoothstep(uNight.y, uNight.z, ndd));
-    albedo *= mix(1.0, mix(1.0, rel, uEndNight.x), dark);
+    float polar = smoothstep(uEndPole.x, uEndPole.y, abs(dd.y));
+    float fineRel = clamp(dot(deckTexel.rgb, lum) / max(dot(mid.rgb, lum), 1e-4), 0.5, 1.7);
+    float thread = textureGrad(uFlowMap, fq, fx, fy).r - 0.5;
+    float calm = 1.0 - uEndPole.z * polar;
+    albedo *= mix(1.0, mix(1.0, mix(pow(rel, uEndStruct.x), 1.0, polar), uEndNight.x) * pow(fineRel, uEndStruct.y * calm) * (1.0 + uEndStruct.z * calm * thread), dark);
     shade = mix(1.0, (uEndShine.x + uEndShine.y * smoothstep(uEndShine.z, uEndShine.w, dot(n, uEndRingN))) * pow(mu, uEndNight.w), dark);
     float own = clamp(dot(deckTexel.rgb, lum) / max(dot(wide, lum), 1e-4), 0.4, 1.8);
     detail = mix(1.0, own, uEnd.x * uEndBreak.y);
@@ -350,7 +378,7 @@ void main() {
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
   vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * shadow * lit * (1.0 - min(alpha, 1.0)));
-  float ndlc = dot(normalize(uBodyToWorld * pc), uSunW);
+  float ndlc = dot(normalize(uBodyToWorld * pc), uSunW) + uEnd.x * uEndCresc.x;
   vec3 col = mix(deck, knot(uCloud, ndlc), alpha * smoothstep(-0.09, -0.03, ndlc)) * uTint;
   for (int k = 0; k < (uNear.x > 0.0 ? 1 : 0); k++) {
     vec3 nearCol = mix(vec3(dot(col, vec3(0.3, 0.5, 0.2))), col, uNear.w);
@@ -366,6 +394,7 @@ void main() {
   col *= 1.0 - uTwi.x * (1.0 - smoothstep(uTwi.y, uTwi.z, mu)) * smoothstep(uTwiSun.x, uTwiSun.y, ndl) * (1.0 - smoothstep(uTwiSun.z, uTwiSun.w, ndl));
   col *= 1.0 - uCut.x * uCut.w * smoothstep(uCutEdge.x, uCutEdge.y, dot(n, uCutDir)) * (1.0 - smoothstep(uCut.y - uCut.z, uCut.y + uCut.z, mu));
   col += uForward * graze * fwd * mix(smoothstep(-0.25, 0.1, ndl), smoothstep(uEnd.y, uEnd.z, ndd) * detail, uEnd.x);
+  col *= 1.0 + uEnd.x * uEndCresc.y * smoothstep(-0.1, 0.3, ndd);
   col *= 1.0 - uEnd.x * uEndLimb.x * (1.0 - smoothstep(0.0, uEndLimb.y, mu));
   vec4 sky = air(dir, true);
   sky.rgb *= mix(1.0, smoothstep(uAirShade.x, uAirShade.y, ndl), uAirShade.w * smoothstep(0.0, uAirShade.z, mu));
@@ -397,6 +426,9 @@ void main() {
     vec3 line = uEdgeCore * exp(-acos(clamp(cs, -1.0, 1.0)) / uEdgeShape.x) * smoothstep(uEdgeShape.y, uEdgeShape.z, cs) + uEdgeWide * smoothstep(uEdgeWidth.z, uEdgeWidth.w, dot(q, uEdgeWideDir));
     float turn = smoothstep(uEdgeNear.z, uEdgeNear.w, sn);
     col += line * exp(-abs(x) / (x > 0.0 ? mix(uEdgeNear.x, uEdgeWidth.x, turn) : mix(mix(uEdgeNear.y, uEdgeWidth.y, turn), uEdgeFar.x, smoothstep(uEdgeFar.y, uEdgeFar.z, sn)))) * uEdgeShape.w * uGain * uWeight;
+  }
+  for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
+    col = max(col + uEnd.x * uEndStruct.w * uWeight * (endHash(gl_FragCoord.xy) - 0.5), vec3(0.0));
   }
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
@@ -435,6 +467,7 @@ export class NeptunePlanet {
         ...airUniforms(o.air),
         uMap: { value: o.map }, uMapWidth: { value: o.mapWidth }, uCode: { value: o.code },
         uHoldMap: { value: o.hold?.map ?? o.map }, uHoldBox: { value: o.hold ? new THREE.Vector4(o.hold.box[0], o.hold.box[1], 1 / (o.hold.box[2]! - o.hold.box[0]!), 1 / (o.hold.box[3]! - o.hold.box[1]!)) : new THREE.Vector4(0, 0, 1, 1) }, uHold: { value: new THREE.Vector2(0, o.hold?.head ?? 1) },
+        uMendMap: { value: o.mend?.map ?? o.map }, uMendBox: { value: o.mend ? new THREE.Vector4(o.mend.box[0], o.mend.box[1], 1 / (o.mend.box[2]! - o.mend.box[0]!), 1 / (o.mend.box[3]! - o.mend.box[1]!)) : new THREE.Vector4(2, 2, 1, 1) },
         uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
         uFarMap: { value: o.far ?? o.map }, uCirrus: { value: new THREE.Vector4(0, 0, 0, 1) }, uClump: { value: new THREE.Vector3(0, 0.5, 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
@@ -476,6 +509,9 @@ export class NeptunePlanet {
     this.material.uniforms.uEndBreak = { value: new THREE.Vector3(0, 0, 0) }
     this.material.uniforms.uEndLimb = { value: new THREE.Vector2(0, 1) }
     this.material.uniforms.uEndBoost = { value: new THREE.Vector2(0, 1) }
+    this.material.uniforms.uEndCresc = { value: new THREE.Vector2(0, 0) }
+    this.material.uniforms.uEndStruct = { value: new THREE.Vector4(1, 0, 0, 0) }
+    this.material.uniforms.uEndPole = { value: new THREE.Vector3(2, 3, 0) }
   }
 
   update(spin: number, stream: number, storm: number, gain: number, weight: number, near = 0, nearGain = 1): void {
@@ -496,7 +532,7 @@ export class NeptunePlanet {
     this.material.dispose()
   }
 
-  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb']): void {
+  ending(end: number, limb: LimbParams, cloud: number[][], deck: number[][], night: { edge: [number, number]; texels: number }, ringLit: THREE.Vector3, shine: number, e: Ending['limb'], crescent: number): void {
     const u = this.material.uniforms
     const width = u.uMapWidth!.value as number
     const texels = night.texels
@@ -511,11 +547,16 @@ export class NeptunePlanet {
     ;(u.uEndBreak!.value as THREE.Vector3).set(e.breakUp, e.detail, e.breakCloud)
     ;(u.uEndLimb!.value as THREE.Vector2).set(e.limbDark[0]!, e.limbDark[1]!)
     ;(u.uEndBoost!.value as THREE.Vector2).set(e.deckBoost, e.cloudGain)
+    ;(u.uEndStruct!.value as THREE.Vector4).set(e.nightBand, e.nightFine, e.nightFlow, e.dither)
+    ;(u.uEndPole!.value as THREE.Vector3).set(e.nightPole[0]!, e.nightPole[1]!, e.nightPole[2]!)
+    const melt = u.uMelt!.value as THREE.Vector2
+    melt.x += (e.melt - melt.x) * end
     ;(u.uRim!.value as THREE.Vector3).fromArray(limb.rim).multiplyScalar(1 - end)
     ;(u.uTwi!.value as THREE.Vector3).x = limb.twilight[0]! * (1 - end)
     ;(u.uForward!.value as THREE.Vector3).fromArray(limb.forward).multiplyScalar(1 - end * (1 - e.forward))
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.lit[0]!, e.lit[1]!)
-    ;(u.uEndCloud!.value as THREE.Vector2).set(e.cloudLimb[0]!, e.cloudLimb[1]!)
+    ;(u.uEndCloud!.value as THREE.Vector2).set(e.cloudLimb[0]! + (e.crescent.cloudLimb[0]! - e.cloudLimb[0]!) * crescent, e.cloudLimb[1]! + (e.crescent.cloudLimb[1]! - e.cloudLimb[1]!) * crescent)
+    ;(u.uEndCresc!.value as THREE.Vector2).set(e.crescent.bias * crescent, e.crescent.gain * crescent)
     ;(u.uForwardShape!.value as THREE.Vector2).x = limb.forwardWidth + (e.forwardWidth - limb.forwardWidth) * end
     const knots = u.uCloud!.value as THREE.Vector3[]
     for (let i = 0; i < KNOTS; i++) {

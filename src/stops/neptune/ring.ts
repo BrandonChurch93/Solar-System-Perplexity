@@ -46,6 +46,7 @@ uniform vec3 uEnd;
 uniform vec3 uCamL;
 uniform vec3 uEndShade;
 uniform vec2 uEndCrisp;
+uniform float uEndFoot;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
@@ -66,6 +67,10 @@ void main() {
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
   vec2 fine = mix(vec2(1.0), uEndCrisp, uEnd.x);
   vec3 band = textureGrad(uBands, uv, gx * fine, gy * fine).rgb;
+  for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
+    float foot = length(vec2(gx.y, gy.y)) * float(textureSize(uBands, 0).y);
+    band = mix(band, textureLod(uBands, uv, log2(max(foot * uEndFoot, 1.0))).rgb, uEnd.x);
+  }
   band = mix(band, sqrt(band), uEnd.x);
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
   for (int k = 0; k < (uGrainShape.w > 0.0 ? 1 : 0); k++) {
@@ -132,6 +137,7 @@ export class Ring {
     this.material.uniforms.uCamL = { value: new THREE.Vector3(0, 0, 1) }
     this.material.uniforms.uEndShade = { value: new THREE.Vector3(0.985, 1.025, 0.006) }
     this.material.uniforms.uEndCrisp = { value: new THREE.Vector2(1, 1) }
+    this.material.uniforms.uEndFoot = { value: 1 }
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {
@@ -162,6 +168,7 @@ export class Ring {
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
     ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
     ;(u.uEndCrisp!.value as THREE.Vector2).set(e.crisp[0]!, e.crisp[1]!)
+    u.uEndFoot!.value = e.foot
     ;(u.uGrainShape!.value as THREE.Vector4).w *= 1 - end
   }
 }

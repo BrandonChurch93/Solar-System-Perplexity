@@ -257,7 +257,7 @@ export class Air {
     this.material.dispose()
   }
 
-  ending(end: number, top: number, e: Ending['air']): void {
+  ending(end: number, top: number, e: Ending['air'], shift = 0): void {
     const span = 0.5 * (top + Math.sqrt(top * top + 4 * e.span * e.span))
     const from = top - span * (1 + e.past)
     for (const u of this.users) {
@@ -267,8 +267,8 @@ export class Air {
       for (let i = 0; i < AIR_LAYERS; i++) {
         const l = this.params.layers[i]!
         shapes[i]!.x = l.scaleHeight + (e.scaleHeight[i]! - l.scaleHeight) * end
-        shapes[i]!.z += (from - shapes[i]!.z) * end
-        shapes[i]!.w += (top - shapes[i]!.w) * end
+        shapes[i]!.z += (from - shift - shapes[i]!.z) * end
+        shapes[i]!.w += (top - shift - shapes[i]!.w) * end
         days[i]!.lerp(this.work.fromArray(e.day[i]!), end)
         nights[i]!.fromArray(l.night).multiplyScalar(1 - end)
       }

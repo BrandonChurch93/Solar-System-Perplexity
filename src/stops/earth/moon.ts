@@ -13,6 +13,9 @@ export interface MoonLook {
   terminator: number[]
   power: number
   lift: number
+  round: number
+  edge: number
+  near: number
 }
 
 const VERT = /* glsl */ `
@@ -48,6 +51,7 @@ uniform vec3 uEarthshine;
 uniform vec3 uTerminator;
 uniform float uVignette;
 uniform float uAspect;
+uniform vec2 uRound;
 in vec3 vView;
 in vec3 vClip;
 flat in vec3 vCentre;
@@ -60,8 +64,12 @@ ${DIAG_GLSL}
 void main() {
   vec3 ray = normalize(vView);
   vec3 near = ray * dot(vCentre, ray) - vCentre;
+  vec3 axis = normalize(vCentre);
+  vec3 inward = vec3(0.0, 0.0, -1.0) + axis * axis.z;
+  inward /= max(length(inward), 1e-6);
+  near += inward * dot(near, inward) * uRound.x * (1.0 / max(-axis.z, 0.5) - 1.0);
   float off = length(near);
-  float cover = clamp((vRadius - off) / max(fwidth(off), 1e-7) + 0.5, 0.0, 1.0);
+  float cover = clamp((vRadius - off) / max(fwidth(off) * uRound.y, 1e-7) + 0.5, 0.0, 1.0);
   float inside = min(off, vRadius * 0.9995);
   vec3 d = normalize(vBack * (near * (inside / max(off, 1e-7)) - ray * sqrt(vRadius * vRadius - inside * inside)));
   float ndl = dot(d, uSun);
@@ -100,7 +108,7 @@ export class Moon {
         uSun: { value: new THREE.Vector3(1, 0, 0) }, uSunColor: { value: new THREE.Vector3().fromArray(look.sun) }, uEarthshine: { value: new THREE.Vector3().fromArray(look.earthshine) },
         uTerminator: { value: new THREE.Vector3(look.terminator[0], look.terminator[1], look.power) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-        uDiag: diagUniform, uGrad: gradUniform, uPad: { value: PAD },
+        uDiag: diagUniform, uGrad: gradUniform, uPad: { value: PAD }, uRound: { value: new THREE.Vector2(look.round, look.edge) },
       },
       transparent: true,
       depthWrite: false,
