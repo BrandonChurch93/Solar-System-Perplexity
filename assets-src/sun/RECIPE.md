@@ -87,6 +87,17 @@ Shared inputs:
 - In the film: `src/stops/sun/skycard.ts` draws it on a card at the far plane, fixed in the set frame where the hero camera looks, over the film's own sky. Its weight is 1 in the hold and the orbit part of the rise and fades out over the first third of the travel. The corona hides the sky behind it where it is bright (`hide` in `src/stops/sun/look.ts`), as the hero shows no stars inside the glare.
 - Checks: hold compare; star and floor statistics by zone against the hero (`out/work/sun/hstats.py`); frames 247, 269, 270, 449, 450, 472 for anything of the Sun left in the sky.
 
+### Round 35: the globe turns at the camera's own rate in the hold (`spinDegPerSecond` 1 in `plan.ts`)
+
+- The motion critic of round 34 on the hold: "granulation slides steadily right, about 3 pixels every 16 frames and 34 pixels by frame 449, while the limb and large features stay put". The review sheet measures the same (`out/work/sun/dr/sheetpc.py`, phase correlation of the disc interior of each tile against the tile of 270): +2.9 px a tile, +32.5 px by 449.
+- Cause: the map on the globe (spots and granulation are one picture) turned at 3.4 degrees a second, 20.4 degrees over the hold, while the camera goes round the globe by 6 degrees (`hold.orbitDeg`) and the limb, the corona and the prominences show no turn of that size. The eye read a texture sliding inside a still frame.
+- The one number: `spinDegPerSecond` 3.4 to 1, the camera's own rate round the globe in the hold (6 degrees in its 6 seconds). Globe, prominences and corona then stand still to the camera through the hold and the sky passes behind as before. What moves on the disc is the boil of `look.ts`, not touched, in place.
+- Result on the sheet: every tile within 1.0 px of the tile of 270. On drafts at 1920 against frame 360 (`dr/pc2.py`): disc centre -3.4, -3.9, -2.4, -1.9 px at 270, 300, 420, 449 (before -73, -50, +44, +67), left and right of the disc the same. Prominence boxes 270 to 449: response 0.83 and 0.87 at 2 px (before 0.08 and 0.22). The boil: mean change in the disc box 26.7 and 24.5 levels from 360 to 270 and to 449, 5.9 and 4.2 over 8 frames, on the same cells.
+- Tried and not chosen: 0.6 (the camera's orbit leads and the surface slides 21 px the other way over the hold).
+- What else the number moves, since the map's angle is the rate times the time from the middle of the hold: the face of the globe in the rise and in the leave. Finals against the corner's: 247 turned by 9 degrees (85 px at the disc centre), 360 by 0.1 px (response 0.99), 495 by about 11 degrees; 0, 60, 90 by 1 level and no more in 1,274, 1,066, 1,334 px of the upper half, none in the ground. Draft 30 and draft 500 keep their bytes.
+- The slide of the near ground in the opening (the same critic, 0 to 179) is the camera's travel over the ground and is not one number; it stays open.
+- Checks on the tree with the corner and this number (22 November, 18:13 UTC): hold sheet at the review tier before and after (`out/work/sun/dr/hold-before.png`, `hold-after.png`); measure PASS (G13 0 of 217; G5 0.532, 0.520, 0.511, 0.313, 0.309; G17 medians 1.415, 1.334, 1.216, 1.030 and 25th percentiles 1.157, 1.088, 1.076, 0.994, the hold frame 0.002 under the corner's); repeat clean (3 sessions, 2 runs each); vitest 87; tsc and shader audit clean; mirrorcheck clean on the finals of 0, 60, 90, 247, 360.
+
 ## Terrain view
 
 Shared inputs:
