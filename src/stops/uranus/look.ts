@@ -13,10 +13,10 @@ export const globe = {
   cloudFine: 4,
   sharp: [0.3, 0.8] as [number, number],
   wrapSoft: 2.2,
-  soft: 0.22,
+  soft: 0,
   diveSoft: [0.16, 2.3, 4.55] as [number, number, number],
-  away: 0.85,
-  awayShade: 0.3,
+  away: 1,
+  awayShade: 1,
 }
 
 export const face = {
@@ -46,12 +46,16 @@ export const rings: RingLook = {
   shadowFloor: 0.05,
   flat: true,
   vary: 0.35,
-  far: 0.5,
+  far: 1.5,
   near: [0.45, 120],
   shade: [0.55, 0.004],
   air: [1.0, 1.04],
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
+
+export const arrival = { rings: [-18, 10] as [number, number] }
+
+export const departing = { rings: [0.3, 5.5, 0.25] as [number, number, number] }
 
 export const veil: VeilLook = { normal: [-0.1989, -0.6042, 0.7716], range: [1.08, 1.84], max: 0.04, dive: [0.05, 0.17] }
 
@@ -144,3 +148,5 @@ export const clearing = { mist: [4, 30] as [number, number], arcs: [12, 30] as [
 export const closing = { mist: [-22, -3] as [number, number], arcs: [-22, -8] as [number, number] }
 
 export const lifting = { mist: [1, 13] as [number, number] }
+
+export const sinking = { mist: [-13, -4] as [number, number] }

@@ -13,7 +13,7 @@ export const params: MoveParams = {
   spot: { x: 0.5574, y: 0.6721 },
   dive: { headingDeg: 53.784, altitude: 0.02623, back: 0.07, ahead: 0.14, bow: 0.2, rollDeg: 7, swoop: true },
   terrain: { vfov: 60, forward: 3.2, rise: 0.7107, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
-  rise: { azimuthDeg: 65, elevationDeg: 0, distance: 6.8, offset: [0.345, -0.12], driftSpeed: 0.08, rollDeg: -5, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
+  rise: { azimuthDeg: 30, elevationDeg: -30, distance: 6.8, offset: [0.3, -0.32], driftSpeed: 0.08, rollDeg: -25, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
   travel: { turnDeg: 66, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [-0.5, 0.3] },
   light: { exposure: 1, skyExposure: 0.6, skyLow: [0.04, 0.6, 0.3], sunRadiusDeg: 0.2, sunGlare: 0.65, flare: 0 },

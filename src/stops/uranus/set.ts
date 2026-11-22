@@ -189,8 +189,10 @@ export const createSet: SetFactory = async (ctx) => {
       globe.near(look.near.tint, near)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near))
-      rings.update(sun, gain * state.weight)
-      farRings.update(sun, gain * state.weight)
+      const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
+      rings.update(sun, gain * state.weight * settling)
+      const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
+      farRings.update(sun, gain * state.weight * lifted)
       globe.shadeRings(left ? look.rings.shade[0] : 0, farRings.mesh, farRings.sunLocal)
       const veiled = kind === 'travel' ? (mine ? 0 : THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8)) : mine && kind === 'hold' ? 1 : mine && kind === 'dive' ? 1 - smooth(ramp(look.veil.dive[0], look.veil.dive[1], shot.u)) : 0
       veil.update(gain * state.weight * veiled * shot.skyGlow, shot.post.vignette, aspect)
@@ -214,7 +216,8 @@ export const createSet: SetFactory = async (ctx) => {
       for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
       const rush = shot.cover.rush
-      const thick = mine && kind === 'rise' && rush ? 1 - smooth(ramp(look.lifting.mist[0], look.lifting.mist[1], (state.time - plan.swap(shot.segment)) * config.fps)) : 0
+      const since = mine && rush && (kind === 'rise' || kind === 'dive') ? (state.time - plan.swap(shot.segment)) * config.fps : 0
+      const thick = !mine || !rush ? 0 : kind === 'rise' ? 1 - smooth(ramp(look.lifting.mist[0], look.lifting.mist[1], since)) : kind === 'dive' ? smooth(ramp(look.sinking.mist[0], look.sinking.mist[1], since)) : 0
       air.update(look.show.cover ? thick : 0, sun, rush ? rush.focus : [0, 0], rush ? rush.phase : 0, rush ? rush.billow : [1, 1, 1], gain)
     },
     dispose: () => {

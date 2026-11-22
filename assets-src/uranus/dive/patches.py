@@ -10,7 +10,7 @@ import geo
 
 OUT = 'out/work/u/dive/'
 PUB = 'public/assets/uranus/'
-WRAP = 'out/work/u/wrap/wrap-albedo.npy'
+WRAP = 'out/work/u/wrap/wrap-albedo-f.npy'
 LEVELS = [('patch-1.jpg', 80.0), ('patch-2.jpg', 46.0), ('patch-3.jpg', 24.0), ('patch-4.jpg', 12.2)]
 SIZE = 4096
 LAMBDA0 = 0.284
