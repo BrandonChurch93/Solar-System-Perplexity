@@ -12,6 +12,7 @@ export const globe = {
   cloudRate: [0.006, 0.004, 3.1, 1.2] as [number, number, number, number],
   cloudFine: 4,
   sharp: [0.3, 0.8] as [number, number],
+  wrapSoft: 2.2,
   soft: 0.22,
   diveSoft: [0.16, 2.3, 4.55] as [number, number, number],
   away: 0.85,

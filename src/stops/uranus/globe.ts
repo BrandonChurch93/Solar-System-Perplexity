@@ -39,7 +39,7 @@ const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sa
 
 const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       vec2 q = g * uPatchScale[${i}];
-      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      float w = smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * lean));
       for (int j = 0; j < (w > 0.0 ? 1 : 0); j++) enc = mix(enc, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -67,6 +67,7 @@ uniform float uWeight;
 uniform vec3 uNear;
 uniform float uSoft;
 uniform vec2 uSharp;
+uniform float uWrapSoft;
 uniform float uShadeMix;
 uniform float uVignette;
 uniform float uAspect;
@@ -112,10 +113,17 @@ void main() {
   vec3 n = normalize(vWorldN);
   float mu = clamp(dot(d0, normalize(vCamL - d0)), 0.0, 1.0);
   float ndl = dot(n, uSunW);
-  vec3 enc = equirectGrad(uMap, d, uGrad).rgb;
-  enc = max(enc + (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, uGrad * 4.0).rgb), vec3(0.0));
-  vec3 wide = inverseFilmic(enc);
   float texels = diagTexelsDir(d, uMapWidth);
+  vec3 ax = dFdx(d);
+  vec3 ay = dFdy(d);
+  float aa = dot(ax, ax) + dot(ay, ay);
+  float ad = length(cross(ax, ay));
+  float lean = max(2.0 * ad / max(aa + sqrt(max(aa * aa - 4.0 * ad * ad, 0.0)), 1e-20), 1.0 / 16.0);
+  float close = 1.0 - smoothstep(uPatchFade.x, uPatchFade.y, texels * lean);
+  float grad = max(uGrad, close * uWrapSoft / max(texels * lean, 1e-3));
+  vec3 enc = equirectGrad(uMap, d, grad).rgb;
+  enc = max(enc + (1.0 - close) * (uSharp.x + uSharp.y * (1.0 - mu)) * (enc - equirectGrad(uMap, d, grad * 4.0).rgb), vec3(0.0));
+  vec3 wide = inverseFilmic(enc);
   float dn = dot(d, uSpotN);
   vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) / max(dn, 0.05);
   vec2 gx = dFdx(g);
@@ -162,6 +170,7 @@ export interface GlobeOptions {
   cloudRate: [number, number, number, number]
   cloudFine: number
   sharp: [number, number]
+  wrapSoft: number
   patches: { textures: THREE.Texture[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
 }
 
@@ -187,7 +196,7 @@ export class Globe {
         uPatchSize: { value: p.textures.map((t) => (t.image as unknown as { width: number }).width) },
         uFeather: { value: p.feather }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
-        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
+        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCloudWhite: { value: new THREE.Vector3(o.cloudWhite, o.cloudWhite, o.cloudWhite) },
         uShadowTint: { value: new THREE.Vector3().fromArray(o.shadowTint) },
