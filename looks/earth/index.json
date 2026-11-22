@@ -1,30 +1,24 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T16:19:36.268Z",
- "head": "173aae25a61674d7106a37c8631094ce761d1df9",
- "note": "earth CUT35: CUT34 a401b201 taken whole; full measure on it running; rise arc on paper (limb held under the top edge 2130 to 2151), star fill under the Moon in work",
+ "pushed": "2026-11-22T16:44:14.593Z",
+ "head": "e26002839626c888dc330d6bb5835fc15138c73f",
+ "note": "CUT35: rise law as drafts (tree holds main 3dad4447, drafts on 94482a8c), star fill of the hold sky; proofs render next",
  "looks": [
   {
-   "time": "2026-11-22T16:19:35.330Z",
-   "file": "20261122161935330-note-patch-moon-g6.jpg",
-   "source": "out/work/earth/pb/s/patch-moon-g6.png",
+   "time": "2026-11-22T16:44:13.751Z",
+   "file": "20261122164413751-note-patch-pair-g6.jpg",
+   "source": "out/work/earth/pb/s/patch-pair-g6.png",
    "kind": "note",
-   "label": "CUT35 work: the hold sky patch under the Moon at 6 times gain, twice the size: the starless fill (radius 90 px of the patch, 61 px on the screen) that shows beside the Moon at 1845 to 1870",
+   "label": "sky-hold patch under the Moon at gain 6, round 34 left, star fill right (only inside 49 px, the Moon covers 58 at 1755)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T16:18:57.623Z",
-   "file": "20261122161857623-job-frame-01937.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.terrain frame 1937, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 1937,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
+   "time": "2026-11-22T16:44:12.129Z",
+   "file": "20261122164412129-note-strip-new.jpg",
+   "source": "out/work/earth/pb/c35/strip-new.png",
+   "kind": "note",
+   "label": "CUT35 draft strip, the new rise 2118 to 2153 on main 94482a8c plus the rise law: the skyline stays in the frame and closes into the disc",
+   "stop": "earth"
   },
   {
    "time": "2026-11-22T15:54:46.181Z",
