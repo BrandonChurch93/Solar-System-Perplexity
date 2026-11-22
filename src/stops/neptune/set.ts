@@ -4,7 +4,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
-import { close, moon as moonAsset, ringBands, ringMap, wrap } from './assets'
+import { close, farMap, flowMap, held, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import { ending as endLook } from './ending'
 import { limbField } from './field'
@@ -39,12 +39,18 @@ export const createSet: SetFactory = async (ctx) => {
 
   const map = await ctx.texture(base + wrap.file, { srgb: true, anisotropy: 16, repeat: true })
   const field = limbField()
+  const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
+  const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
+  const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const planet = new NeptunePlanet({
-    field, near: look.near, night: look.night,
+    field, near: look.near.dive, night: look.night,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!] },
+    hold: { map: holdMap, box: look.held.box, head: look.held.head },
+    flow,
+    far: farSide,
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
   planet.mesh.scale.fromArray(fit.globe.scale)
@@ -69,7 +75,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonLight = new THREE.Vector3()
   const moonSun = new THREE.Vector3()
 
-  const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }), bands: await ctx.texture(base + ringBands.file, { srgb: false, anisotropy: 16, repeat: true }) })
+  const ring = new Ring({ ...look.ring, map: await ctx.texture(base + ringMap.file, { srgb: false, anisotropy: 16, repeat: true }), bands: await ctx.texture(base + ringBands.file, { srgb: false, anisotropy: 16, repeat: true }), grain: { ...look.ring.grain, map: await ctx.texture(base + ringGrain.file, { srgb: false, anisotropy: 16, mirror: true }) } })
   orbit.add(ring.mesh)
 
   const far = new FarPoint()
@@ -82,6 +88,8 @@ export const createSet: SetFactory = async (ctx) => {
     cloudWide: await ctx.texture(base + close.cloudWide, { srgb: true, anisotropy: 16, mirror: true }),
     height: await ctx.texture(base + close.height, { srgb: false, anisotropy: 4, mirror: true }),
     glow: await ctx.texture(base + close.glow, { srgb: true, mips: false, anisotropy: 1 }),
+    bloom: await ctx.texture(base + close.bloom, { srgb: true, mips: false, anisotropy: 1 }),
+    fine: await ctx.texture(base + close.fine, { srgb: false, anisotropy: 16 }),
   })
   terrain.add(closeup.mesh)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
@@ -92,6 +100,8 @@ export const createSet: SetFactory = async (ctx) => {
   const side = new THREE.Vector3()
   const sideCam = new THREE.Vector3()
   const ringLit = new THREE.Vector3()
+  const edgeSun = new THREE.Vector3()
+  const edgeTurn = THREE.MathUtils.degToRad(look.limb.edge.wideDeg)
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const holdDirection = new THREE.Vector3()
 
@@ -113,7 +123,7 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
         camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
-        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height)
+        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height, shot.post.bloomStrength)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -126,22 +136,35 @@ export const createSet: SetFactory = async (ctx) => {
       const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
       const pu = planet.material.uniforms
       const rising = state.segment.kind === 'rise'
-      const nearRange = rising ? look.near.altitudeRise : look.near.altitude
-      const near = look.near.amount * (1 - smooth((camera.length() - 1 - nearRange[0]!) / (nearRange[1]! - nearRange[0]!)))
-      air.update(camera, light, state.rotation, home, 1 - smooth((look.lineFade[0] - (camera.length() - 1)) / (look.lineFade[0] - look.lineFade[1])), gain * state.weight, near)
+      const grade = rising ? look.near.rise : look.near.dive
+      const high = camera.length() - 1
+      const low = 1 - smooth((high - grade.altitude[0]!) / (grade.altitude[1]! - grade.altitude[0]!))
+      const near = look.near.amount * low
+      const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
+      const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
+      pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end)
+      ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
+      ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
       ;(pu.uRimDir!.value as THREE.Vector3).copy(rimAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCutDir!.value as THREE.Vector3).copy(cutAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uCut!.value as THREE.Vector4).w = home
       ;(pu.uDarkDir!.value as THREE.Vector3).copy(darkAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
       ;(pu.uVeilDir!.value as THREE.Vector3).copy(veilAim).applyQuaternion(state.rotation).multiplyScalar(home).add(light).normalize()
-      ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home
+      ;(pu.uLimbDark!.value as THREE.Vector3).x = look.limb.dark * home * (1 - deep)
       ;(pu.uAirShade!.value as THREE.Vector4).w = home
       ;(pu.uNight!.value as THREE.Vector4).x = look.night.flat * (1 - home)
       ;(pu.uMelt!.value as THREE.Vector2).x = look.limb.melt[1] + (look.limb.melt[0] - look.limb.melt[1]) * home
       side.copy(light).cross(sideCam.copy(camera).normalize()).normalize()
-      ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount)
-      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, rising ? look.near.gainRise : look.near.gain)
-      const grade = rising ? look.near.rise : look.near
+      edgeSun.copy(light).addScaledVector(sideCam, -light.dot(sideCam)).normalize()
+      ;(pu.uEdgeSun!.value as THREE.Vector3).copy(edgeSun)
+      ;(pu.uEdgeSide!.value as THREE.Vector3).copy(side).negate()
+      ;(pu.uEdgeWideDir!.value as THREE.Vector3).copy(edgeSun).multiplyScalar(Math.cos(edgeTurn)).addScaledVector(side, -Math.sin(edgeTurn))
+      ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount * line
+      ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount * (1 - low))
+      ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
+      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, grade.gain)
+      ;(pu.uNearFall!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(grade.fall[0]!), THREE.MathUtils.degToRad(grade.fall[1]!), 1 - (1 - grade.fall[2]!) * (1 - smooth((high - grade.fallAltitude[0]!) / (grade.fallAltitude[1]! - grade.fallAltitude[0]!))))
       ;(pu.uNear!.value as THREE.Vector4).z = grade.power
       ;(pu.uNear!.value as THREE.Vector4).w = grade.saturation
       ;(pu.uNearTint!.value as THREE.Vector4).set(grade.tint[0]!, grade.tint[1]!, grade.tint[2]!, grade.pivot)
@@ -152,7 +175,7 @@ export const createSet: SetFactory = async (ctx) => {
       triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
       const staged = state.time >= terrainMid
       const moonLook = staged ? look.triton.rise : look.triton
-      triton.shape(moonLook.terminator, moonLook.power, moonLook.ambient, look.triton.gain, moonLook.bump)
+      triton.shape(moonLook.terminator, moonLook.power, moonLook.ambient, look.triton.gain, moonLook.bump, moonLook.rim, moonLook.wrap, moonLook.lift)
       moonSun.copy(light)
       if (staged) moonSun.lerp(shot.sun.dir, look.triton.rise.sun).normalize()
       triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(moonSun).normalize(), gain * state.weight)

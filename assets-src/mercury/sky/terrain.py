@@ -4,6 +4,7 @@ import sys
 import cv2
 import numpy as np
 from PIL import Image
+from scipy.ndimage import median_filter
 
 sys.path.insert(0, 'assets-src/mercury/relief')
 sys.path.insert(0, 'assets-src/mercury/wrap')
@@ -27,6 +28,18 @@ SKIP = 2
 CLIP = 5.0
 GRAIN = ((35, 1), (52, 1.15), (70, 1.34), (95, 1.66), (130, 1.69), (175, 1.41), (228, 0.78))
 STARS = ((30, 1), (42, 0.4), (110, 0.4), (150, 0.12), (200, 0))
+HALO_TOP = 56
+HALO_RAMP = 24
+HALO_HOLD = 0
+HALO_NEAR = 8
+HALO_SEAM = 7
+HALO_STAR = 14.0
+HALO_CALM = 30
+HALO_REF = 360
+HALO_FADE = 40
+HALO_DOWN = 520
+HALO_LOW = 24
+HALO_SIZE = (2048, 128)
 
 
 def horizon2():
@@ -204,9 +217,141 @@ def top(out):
     for n in ('full', 'web'):
         os.makedirs(out + n, exist_ok=True)
     res.save(out + 'full/sky-terrain.webp', lossless=True, method=4)
+    res.save(WORK + 'terrain-top.webp', lossless=True, method=2)
     res.resize((CW // 2, CH // 2), Image.BOX).save(out + 'web/sky-terrain.webp', lossless=True, method=4)
     for n in ('full', 'web'):
         print(n, os.path.getsize(out + n + '/sky-terrain.webp') / 1e6, 'MB')
+
+
+def halo(out=OUT):
+    im = np.asarray(Image.open(WORK + 'terrain-top.webp').convert('RGB'))
+    edge = horizon2() - LIFT * S
+    ei = np.floor(edge).astype(int)
+    part = (edge - ei).astype(np.float32)[None, :, None]
+    whole = lambda v: np.concatenate([v[:1], v[:-1]]) * part + v * (1 - part)
+    up, down = HALO_DOWN + (HALO_SEAM + 8) * S, HALO_DOWN
+    kref, hold = up - HALO_TOP * S, up - HALO_HOLD
+    cols = np.arange(CW)
+    rows = np.clip(ei[None, :] + np.arange(-up, down)[:, None], 0, CH - 1)
+    strip = im[rows, cols[None, :]]
+    back = strip * (1 - part) + im[np.minimum(rows + 1, CH - 1), cols[None, :]] * part
+    back = cv2.GaussianBlur(median_filter(back, size=(1, HALO_CALM * S + 1, 1), mode='nearest'), (0, 0), sigmaX=2 * S, sigmaY=0.6)
+    ref = median_filter(back[kref - 4 * S:kref + 4 * S].mean(0), size=(HALO_REF * S + 1, 1), mode='nearest')
+    ref = cv2.GaussianBlur(ref.reshape(1, CW, 3), (0, 0), HALO_REF * S / 6).reshape(CW, 3)
+    cx, cy = (SUN[0] + ML) * S, (SUN[1] + MT) * S
+    r = np.hypot(cols[None, :] + 0.5 - cx, rows + 0.5 - cy) / S
+    lum = back @ geo.LUMA
+    bins = np.arange(0, 2400, 8.0)
+    idx = np.digitize(r[:kref], bins)
+    mids, meds = [], []
+    for i in range(1, len(bins)):
+        sel = idx == i
+        if sel.sum() > 400:
+            mids.append(bins[i] - 4)
+            meds.append(float(np.median(lum[:kref][sel][::5])))
+    meds = np.maximum.accumulate(np.array(meds)[::-1])[::-1]
+    meds = np.convolve(np.pad(meds, 4, mode='edge'), np.ones(9) / 9, mode='valid')
+    prof = lambda q: np.interp(q, mids, meds)
+    ratio = np.clip(prof(r[kref:]) / prof(r[kref])[None, :], 0.2, 1.0).astype(np.float32)
+    ratio = cv2.GaussianBlur(ratio, (0, 0), 3 * S)
+    floor = np.percentile(lum[:kref], 5)
+    bg = floor + (ref[None, :, :] - floor) * ratio[..., None]
+    bg = np.maximum(bg, np.minimum(ref[None, :, :], floor))
+    lin = lambda v: geo.unfilm(geo.to_linear(np.clip(v, 0, 255) / 255))
+    glow = np.maximum(lin(back[kref:]) - lin(bg), 0)
+    free = hold - kref - HALO_NEAR * S
+    glow[:free] = np.minimum.accumulate(glow[:free][::-1], axis=0)[::-1]
+    glow *= geo.smooth(0, HALO_RAMP * S, np.arange(len(glow), dtype=np.float32))[:, None, None]
+    glow[hold - kref:] = glow[hold - kref - 1]
+    glow = cv2.GaussianBlur(glow, (0, 0), sigmaX=S, sigmaY=0.01)
+    shown = whole(glow)
+    calm = whole(back)
+    bg = whole(bg)
+    last = geo.to_srgb(geo.film(lin(calm[hold - 1]) - shown[hold - kref - 1])) * 255 - bg[hold - kref]
+    last = cv2.GaussianBlur(last.reshape(1, CW, 3), (0, 0), 4 * S).reshape(CW, 3)
+    bg[hold - kref:] += last[None, :, :] * np.exp(-np.arange(up + down - hold, dtype=np.float32) / (HALO_FADE * S))[:, None, None]
+    seam = hold - HALO_SEAM * S
+    new = strip.astype(np.float32)
+    new[kref:hold] = geo.to_srgb(geo.film(lin(new[kref:hold]) - shown[:hold - kref])) * 255
+    flat = geo.to_srgb(geo.film(lin(calm[seam:hold]) - shown[seam - kref:hold - kref])) * 255
+    fine = strip[:seam].astype(np.float32) - calm[:seam]
+    w = 1 - geo.smooth(30, 45, lum[:seam])
+    w[seam - SKIP:] = 0
+    src = (fine * w[..., None])[::-1]
+    ws = w[::-1]
+    n = up + down - seam
+    acc = np.zeros((n, CW, 3), np.float32)
+    left = np.ones((n, CW), np.float32)
+    for flip, side in TAKES:
+        a, b = np.roll(src[:n], side * S, axis=1), np.roll(ws[:n], side * S, axis=1)
+        if flip:
+            a, b = a[:, ::-1], b[:, ::-1]
+        acc += a * left[..., None]
+        left *= 1 - b
+    grain = CLIP * np.tanh(acc / CLIP)
+    stars = acc - grain
+    under = np.concatenate([flat, bg[hold - kref:]])
+    lm = under @ geo.LUMA
+    under = under + grain * np.interp(lm, *zip(*GRAIN))[..., None].astype(np.float32) + stars * np.interp(lm, *zip(*STARS))[..., None].astype(np.float32)
+    t = geo.smooth(0, (HALO_SEAM - 2) * S, np.arange(n, dtype=np.float32))[:, None, None]
+    lit = strip[seam:hold].astype(np.float32) - calm[seam:hold]
+    under[:hold - seam] += lit * geo.smooth(HALO_STAR, HALO_STAR * 1.5, lit @ geo.LUMA)[..., None]
+    new[seam:] = new[seam:] * (1 - t) + under * t
+    full = im.copy()
+    under = (np.clip(bg[-1], 0, 255) + 0.5).astype(np.uint8)
+    yy = np.arange(CH)[:, None]
+    full[:] = np.where((yy >= ei[None, :] + down)[..., None], under[None, :, :], full)
+    inside = (ei[None, :] + np.arange(-up, down)[:, None] >= 0) & (ei[None, :] + np.arange(-up, down)[:, None] < CH)
+    sel = inside & (np.arange(up + down)[:, None] >= kref)
+    full[rows[sel], np.broadcast_to(cols[None, :], rows.shape)[sel]] = (np.clip(new, 0, 255) + 0.5).astype(np.uint8)[sel]
+    print('halo: rows above the band changed: %d; sky floor %.1f codes; glow at the edge, median %.4f max %.4f (scene values); fill without a source %.4f' % (int((full[:max(ei.min() - HALO_TOP * S - 1, 0)] != im[:max(ei.min() - HALO_TOP * S - 1, 0)]).sum()), floor, float(np.median(glow[-1])), float(glow[-1].max()), float((left > 0.5).mean())))
+    sys.path.insert(0, 'assets-src/mercury/relief')
+    u = geom.UP / np.linalg.norm(geom.UP)
+    ahead = np.array([0.0, 0.0, -1.0]) + u * u[2]
+    ahead /= np.linalg.norm(ahead)
+    side = np.cross(ahead, u)
+    dip = np.arcsin(geom.R / (geom.R + 1))
+    xs = np.array([-ML + 0.5, W + ML - 0.5])
+    flat = lambda d: np.arctan2(d @ side, d @ ahead)
+    span = []
+    for x in xs:
+        best = None
+        for y in np.arange(0, H, 0.5):
+            d = np.array([(x - W / 2) / geom.F, (H / 2 - y) / geom.F, -1.0])
+            d /= np.linalg.norm(d)
+            if np.arccos(np.clip(d @ -u, -1, 1)) <= dip:
+                best = d
+                break
+        span.append(float(flat(best)))
+    az0, az1 = span[0] - 0.02, span[1] + 0.02
+    el0, el1 = -HALO_LOW / geom.F, (HALO_TOP + 2) / geom.F
+    tw, th = HALO_SIZE
+    az = az0 + (np.arange(tw) + 0.5) / tw * (az1 - az0)
+    el = el1 - (np.arange(th) + 0.5) / th * (el1 - el0)
+    phi = dip + el[:, None]
+    d = -u[None, None, :] * np.cos(phi)[..., None] + (ahead[None, None, :] * np.cos(az)[None, :, None] + side[None, None, :] * np.sin(az)[None, :, None]) * np.sin(phi)[..., None]
+    X = ((W / 2 + geom.F * d[..., 0] / -d[..., 2]) + ML) * S - 0.5
+    Y = ((H / 2 - geom.F * d[..., 1] / -d[..., 2]) + MT) * S - 0.5
+    xi = np.clip(np.rint(X).astype(int), 0, CW - 1)
+    k = np.clip(Y - edge[xi] + up - kref, 0, len(glow) - 1.001)
+    k0 = np.floor(k).astype(int)
+    t = (k - k0)[..., None]
+    tex = glow[k0, xi] * (1 - t) + glow[k0 + 1, xi] * t
+    tex[(X < 0) | (X > CW - 1)] = 0
+    rng = np.random.default_rng(7)
+    code = np.clip(geo.to_srgb(geo.film(tex)) * 255 + rng.random(tex.shape[:2])[..., None] + rng.random(tex.shape[:2])[..., None] - 0.5, 0, 255).astype(np.uint8)
+    code[tex.max(-1) <= 0] = 0
+    res = Image.fromarray(full)
+    for name in ('full', 'web'):
+        os.makedirs(out + name, exist_ok=True)
+    res.save(out + 'full/sky-terrain.webp', lossless=True, method=4)
+    res.resize((CW // 2, CH // 2), Image.BOX).save(out + 'web/sky-terrain.webp', lossless=True, method=4)
+    Image.fromarray(code).save(out + 'full/limb-halo.png', optimize=True)
+    Image.fromarray(code).resize((tw // 2, th // 2), Image.BOX).save(out + 'web/limb-halo.png', optimize=True)
+    import json
+    json.dump({'file': 'limb-halo.png', 'az': [az0, az1], 'el': [el0, el1]}, open('src/stops/mercury/limb.json', 'w'), indent=1)
+    for name in ('full', 'web'):
+        print(name, os.path.getsize(out + name + '/sky-terrain.webp') / 1e6, 'MB', 'halo', os.path.getsize(out + name + '/limb-halo.png'), 'bytes')
 
 
 if __name__ == '__main__':
@@ -216,6 +361,8 @@ if __name__ == '__main__':
         write()
     elif sys.argv[1] == 'calm':
         calm()
+    elif sys.argv[1] == 'halo':
+        halo(sys.argv[2] if len(sys.argv) > 2 else OUT)
     elif sys.argv[1] == 'top':
         top(sys.argv[2] if len(sys.argv) > 2 else OUT)
     else:

@@ -43,6 +43,10 @@ uniform vec3 uGlowMap;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform sampler2D uBloomWide;
+uniform vec3 uBloomPre;
+uniform sampler2D uFineMap;
+uniform vec2 uFine;
 in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -113,16 +117,25 @@ void main() {
   float counted = 0.0;
   vec3 layer = vec3(0.05, 0.1, 0.3);
   float depth = 4000.0;
+  vec2 xyDeck = planeOf(deckSource(inSight(oc + rd * tDeck)));
+  vec2 ucDeck = coreUv(xyDeck);
+  float deckTexels = mix(diagTexels(wideUv(xyDeck) * uWideSize), diagTexels(ucDeck * uDeckSize), coreWeight(ucDeck));
+  float tHit = -1.0;
+  float cloudAlpha = 0.0;
   for (int k = 0; k < (deckHit ? 1 : 0); k++) {
     vec3 q = inSight(oc + rd * tDeck);
     vec2 xy = planeOf(deckSource(q));
     vec2 uc = coreUv(xy);
     float w = coreWeight(uc);
     vec3 deck = mix(textureGrad(uDeckWide, wideUv(xy), wgx, wgy).rgb, textureGrad(uDeck, uc, cgx, cgy).rgb, w);
+    for (int j = 0; j < (w > 0.0 && uFine.x + uFine.y > 0.0 ? 1 : 0); j++) {
+      vec2 fine = textureGrad(uFineMap, uc, cgx, cgy).rg * (255.0 / 127.0);
+      deck *= pow(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y), 2.2);
+    }
     float shade = textureGrad(uHeight, wideUv(planeOf(cloudSource(q))), wgx, wgy).g;
     col = deck * shade;
     alpha = 1.0;
-    texels = mix(diagTexels(wideUv(xy) * uWideSize), diagTexels(uc * uDeckSize), w);
+    texels = deckTexels;
     counted = 1.0;
     layer = vec3(0.1, 0.3, 0.85);
     depth = tDeck;
@@ -136,7 +149,6 @@ void main() {
     float dt = (tOut - tIn) / float(${STEPS});
     float tPrev = tIn;
     float fPrev = -1.0;
-    float tHit = -1.0;
     for (int i = 0; i <= ${STEPS}; i++) {
       float t = tIn + dt * float(i);
       vec3 q = oc + rd * t;
@@ -157,15 +169,24 @@ void main() {
       vec4 cloud = mix(textureGrad(uCloudWide, wideUv(xy), wgx, wgy), textureGrad(uCloud, uc, cgx, cgy), w);
       col = mix(col, cloud.rgb, cloud.a);
       alpha = max(alpha, cloud.a);
-      float ct = mix(diagTexels(wideUv(xy) * uWideSize), diagTexels(uc * uDeckSize), w);
-      texels = mix(texels, ct, cloud.a);
+      cloudAlpha = cloud.a;
       counted = max(counted, step(0.5, cloud.a));
       layer = mix(layer, vec3(0.95, 0.95, 0.9), cloud.a);
       depth = mix(depth, tHit, step(0.5, cloud.a));
     }
   }
+  vec2 xyCloud = planeOf(cloudSource(oc + rd * (tHit >= 0.0 ? tHit : -b)));
+  vec2 ucCloud = coreUv(xyCloud);
+  texels = mix(texels, mix(diagTexels(wideUv(xyCloud) * uWideSize), diagTexels(ucCloud * uDeckSize), coreWeight(ucCloud)), cloudAlpha);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col = inverseFilmic(col) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  col = inverseFilmic(col);
+  for (int k = 0; k < (deckHit && uBloomPre.x > 0.0 ? 1 : 0); k++) {
+    float mid = uRadius + uSlab.x + 0.5 * uSlab.y;
+    vec3 qm = inSight(oc + rd * max(-b - sqrt(max(mid * mid - rt2, 0.0)), 0.0));
+    vec3 wide = inverseFilmic(textureLod(uBloomWide, wideUv(planeOf(cloudSource(qm))), 0.0).rgb);
+    col = max(col - wide * uBloomPre.x, 0.0) / (1.0 - uBloomPre.x * uBloomPre.y);
+  }
+  col = col * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, alpha), texels, counted, layer, vec2(0.0), depth);
 }`
 
@@ -177,7 +198,7 @@ function unproject(px: number, py: number, radius: number, centre: THREE.Vector3
   return d.multiplyScalar(t).sub(centre)
 }
 
-export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture }
+export interface CloseMaps { deck: THREE.Texture; deckWide: THREE.Texture; cloud: THREE.Texture; cloudWide: THREE.Texture; height: THREE.Texture; glow: THREE.Texture; bloom: THREE.Texture; fine: THREE.Texture }
 
 export class Closeup {
   readonly mesh: THREE.Mesh
@@ -224,7 +245,8 @@ export class Closeup {
         uBandAxis: { value: bandAxis }, uStream: { value: new THREE.Vector3(0, look.streamShear, 0) },
         uStorm: { value: new THREE.Vector4(storm.x, storm.y, storm.z, look.stormRadius / radius) }, uStormAngle: { value: 0 },
         uNorth: { value: north }, uEast: { value: east }, uGlowMap: { value: new THREE.Vector3(THREE.MathUtils.degToRad(look.glowAzimuthDeg), look.glowTop, 0) },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform,
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uBloomWide: { value: maps.bloom }, uBloomPre: { value: new THREE.Vector3(0, look.bloomPre[1], look.bloomPre[0]) },
+        uFineMap: { value: maps.fine }, uFine: { value: new THREE.Vector2(look.fine[0], look.fine[1]) }, uDiag: diagUniform,
       },
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * (1 + look.glowTop), 96, 64), this.material)
@@ -232,7 +254,7 @@ export class Closeup {
     this.mesh.frustumCulled = false
   }
 
-  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number): void {
+  update(camera: THREE.Vector3, elapsed: number, gain: number, vignette: number, aspect: number, bloom: number): void {
     const u = this.material.uniforms
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
     ;(u.uStream!.value as THREE.Vector3).x = (look.streamPerSecond * elapsed) / fit.radius
@@ -240,6 +262,8 @@ export class Closeup {
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+    const pre = u.uBloomPre!.value as THREE.Vector3
+    pre.x = bloom * pre.z
   }
 
   dispose(): void {

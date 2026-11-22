@@ -886,7 +886,7 @@ def film_touched(a):
         v = out['stops'][st]
         print('%-8s frames %s; sheets %s; R1 %s, R8 %s, R2 %s' % (st, some(v['frames']), some(v['sheets']), yn(v['R1']), yn(v['R8']), yn(v['R2'])))
     v = out['film']
-    print('%-8s frames %s; sheets %s; R5 %s, R6 %s, R7 %s, R2 %s' % ('film', some(v['frames']), some(v['sheets']), yn(v['R5']), yn(v['R6']), some(v['R7']), yn(v['R2'])))
+    print('%-8s frames %s; sheets %s; R5 %s, R6 %s, R2 %s; R7 %s' % ('film', some(v['frames']), some(v['sheets']), yn(v['R5']), yn(v['R6']), yn(v['R2']), some(v['R7'])))
     print('compared %d stills and %d cache images with %s: %d stills and %d images differ or have no hash there; unknown: %s' % (len(stills), len(images), a.base, len(frames), moved, some(out['unknown'][:8]) + (' and %d more' % (len(out['unknown']) - 8) if len(out['unknown']) > 8 else '')))
     if wanted - here:
         print('final stills not placed yet: ' + some(sorted(wanted - here)))
@@ -1035,6 +1035,10 @@ def polish_close(a, n, s, c, sc, cards, asked, issues, kf, lines, jobs_, missing
     if not missing:
         shutil.copy(WORK / 'packs' / 'keys' / (rid(n) + '.json'), sc / 'key.json')
     r2_film = jury(lambda k: True) if film.get('R2') else None
+    for f in sc.glob('R*.json'):
+        m = re.match(r'(R[1-8])(?:-([a-z]+))?\.json$', f.name)
+        if m and (m.group(1), m.group(2) or '') not in cards:
+            f.unlink()
     r2 = {st: jury(own(st)) for st in stops if chosen[st].get('R2')}
     r8 = {}
     for st in stops:

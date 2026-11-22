@@ -1,5 +1,6 @@
 import type { ReliefDef } from '../../terrain/relief'
 import reliefJson from './relief.json'
+import wideJson from './wide.json'
 import wrapJson from './wrap.json'
 
 export const wrap = {
@@ -31,3 +32,18 @@ function reliefDef(key: 'full' | 'web'): ReliefDef {
 }
 
 export const relief = { full: reliefDef('full'), web: reliefDef('web') }
+
+function wideDef(key: 'full' | 'web'): ReliefDef {
+  const f = wideJson.files
+  const box = wideJson.box[key] as [number, number, number, number]
+  return {
+    imageSize: wideJson.imageSize[key] as [number, number],
+    vfovDeg: wideJson.vfovDeg,
+    layers: [{ color: f.color, alpha: f.alpha, dist: f.dist, box, distSize: wideJson.distSize[key] as [number, number], tint: [0.3, 0.6, 0.85] }],
+    masks: f.masks,
+    maskBox: box,
+    mistDir: [1, 0],
+  }
+}
+
+export const wide = { full: wideDef('full'), web: wideDef('web'), position: wideJson.position as [number, number, number], quaternion: wideJson.quaternion as [number, number, number, number] }

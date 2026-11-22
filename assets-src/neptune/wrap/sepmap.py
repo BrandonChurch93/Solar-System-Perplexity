@@ -20,6 +20,8 @@ TINT_KNOTS = np.array([-1, -0.03, 0.015, 0.06, 0.105, 0.14, 0.18, 0.225, 0.3, 0.
 TINT = np.array([[0.9, 0.97, 1], [0.9, 0.97, 1], [0.68, 0.83, 1], [0.68, 0.83, 1], [0.62, 0.75, 1], [0.52, 0.66, 1], [0.48, 0.62, 1], [0.36, 0.49, 1], [0.30, 0.43, 1], [0.30, 0.48, 1], [0.30, 0.50, 1]])
 CURVE = os.path.join(geo.ROOT, 'src/stops/neptune/curve.json')
 FIT = np.array([0.5, 0.5, 0.0], np.float32)
+HEAD = 1.5
+HOLD_MU = (0.22, 0.27)
 LIFT = {15: [0.05, 0.055, 0.06], 16: [0.24, 0.245, 0.235], 17: [0.2, 0.235, 0.28], 18: [0.315, 0.39, 0.56]}
 
 
@@ -107,17 +109,26 @@ def main():
     fill = fill * (1 + tex)[..., None]
     deck = a * (1 - m[..., None]) + fill * m[..., None]
     rise = wc - deck
-    alpha = np.clip((((a - deck) * rise) @ FIT) / np.maximum((rise * rise) @ FIT, 1e-6), 0, 1)
-    alpha *= separate.smoothstep(0.0, 0.5, m)
-    alpha = np.where(seen, alpha, 0)
+    raw = (((a - deck) * rise) @ FIT) / np.maximum((rise * rise) @ FIT, 1e-6)
+    gate = separate.smoothstep(0.0, 0.5, m)
+    alpha = np.where(seen, np.clip(raw, 0, 1) * gate, 0)
+    over = np.where(seen, np.clip(raw, 0, HEAD) * gate, 0)
+    del raw
     weight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(0.06, 0.2, ndl)
     aweight = separate.smoothstep(0.22, 0.42, mu) * separate.smoothstep(-0.06, -0.02, ndl)
     gweight = separate.smoothstep(0.08, 0.26, mu) * separate.smoothstep(-0.1, -0.04, ndl)
-    np.savez(os.path.join(WORK, 'hero-layers.npz'), deck=deck.astype(np.float32), alpha=alpha.astype(np.float32), weight=weight.astype(np.float32), aweight=aweight.astype(np.float32), gweight=gweight.astype(np.float32), window=g['window'])
+    hold = separate.smoothstep(HOLD_MU[0], HOLD_MU[1], mu)
+    hweight = hold * separate.smoothstep(0.06, 0.2, ndl)
+    haweight = hold * separate.smoothstep(-0.06, -0.02, ndl)
+    np.savez(os.path.join(WORK, 'hero-layers.npz'), deck=deck.astype(np.float32), alpha=alpha.astype(np.float32), weight=weight.astype(np.float32), aweight=aweight.astype(np.float32), gweight=gweight.astype(np.float32), over=over.astype(np.float32), hweight=hweight.astype(np.float32), haweight=haweight.astype(np.float32), head=HEAD, window=g['window'])
     comp = deck * (1 - alpha[..., None]) + alpha[..., None] * wc
     err = np.abs(geo.encode(comp * shade).astype(int) - img.astype(int))
     v = weight > 0.99
     print('recomposite err mean %.2f p99 %.0f p999 %.0f' % (err[v].mean(), np.percentile(err[v], 99), np.percentile(err[v], 99.9)))
+    open_ = deck * (1 - over[..., None]) + over[..., None] * wc
+    err = np.abs(geo.encode(open_ * shade).astype(int) - img.astype(int))
+    print('with opacity up to %.2f: err mean %.2f p99 %.0f p999 %.0f, share over 1: %.4f' % (HEAD, err[v].mean(), np.percentile(err[v], 99), np.percentile(err[v], 99.9), float((over[v] > 1).mean())))
+    del open_
     print('grain std', gs, 'tile from', x0, y0, 'deck median', np.median(deck[v], 0))
     show = geo.encode(deck * 0.8)
     show = np.where(weight[..., None] > 0.02, show, 30)

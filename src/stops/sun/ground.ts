@@ -98,7 +98,7 @@ ${GRADE_GLSL}
 float lumAt(sampler2D map, vec2 uv, float lod) {
   return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
 }
-vec4 surface(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, float calm, out vec2 moved) {
+vec4 boiled(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, float calm, out vec2 moved) {
   vec2 e = cell * uBoil.z;
   float lX = lumAt(map, uv + vec2(e.x, 0.0), lod) - lumAt(map, uv - vec2(e.x, 0.0), lod);
   float lY = lumAt(map, uv + vec2(0.0, e.y), lod) - lumAt(map, uv - vec2(0.0, e.y), lod);
@@ -188,7 +188,7 @@ void main() {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
     vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
-    vec4 s = surface(uPlate, uv, dx, dy, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, moved);
+    vec4 s = boiled(uPlate, uv, dx, dy, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, moved);
     vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
     col = s.rgb * max(s.a * inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
   }
@@ -204,7 +204,7 @@ void main() {
     float cellU = uApronCell.x / away / (2.0 * AP_TAN.x);
     vec2 cell = vec2(cellU, cellU * max(seen, 0.08) * uApronSize.x / uApronSize.y);
     vec2 m;
-    vec4 s = surface(uApron, uvB, dxB, dyB, cell, log2(max(cell.y * uApronSize.y * 0.25, 1.0)), uApronCell.y, m);
+    vec4 s = boiled(uApron, uvB, dxB, dyB, cell, log2(max(cell.y * uApronSize.y * 0.25, 1.0)), uApronCell.y, m);
     col = mix(col, s.rgb * max(s.a * inflow, 0.0) * tone, w);
     moved = mix(moved, m, w);
   }

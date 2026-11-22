@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 
-export type GlareSide = 'dive' | 'enter' | 'leave' | 'rise'
+export type GlareSide = 'dive' | 'rise'
 
 export interface GlareLook {
   peak: number
   fall: Record<GlareSide, number>
   span: Record<GlareSide, number>
+  height: number
   color: [number, number, number]
   halo: [number, number]
   core: [number, number]
@@ -38,7 +39,6 @@ uniform int uDiag;
 in vec2 vNdc;
 out vec4 outColor;
 void main() {
-  if (uDiag >= 2) discard;
   vec2 p = vNdc * vec2(uAspect, 1.0);
   vec2 d = p - uSun;
   float r = length(d);
@@ -56,6 +56,7 @@ void main() {
   float bar = uBar.z / ((1.0 + x * x) * (1.0 + y * y) * (1.0 + y * y));
   float g = uHalo.y / (h * h) + uCore.y / (k * k * k) + uRays.y * rays / (1.0 + pow(r / uRays.x, 3.0)) + bar;
   outColor = vec4(mix(uColor, vec3(1.0), clamp(g * uBloom * 0.25, 0.0, 1.0)) * (uBloom * g * uGain), 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Glare {
@@ -84,10 +85,10 @@ export class Glare {
     return Math.max((Math.exp(-Math.abs(frames) / this.look.fall[side]) - end) / (1 - end), 0)
   }
 
-  update(frames: number, side: GlareSide, on: boolean, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number): void {
-    const bloom = on ? this.look.peak * this.bloom(frames, side) : 0
+  update(amount: number, sun: THREE.Vector3, camera: THREE.PerspectiveCamera, gain: number, aspect: number, time: number): void {
+    const bloom = this.look.peak * amount
     const v = this.v.copy(sun).applyQuaternion(this.q.copy(camera.quaternion).invert())
-    this.mesh.visible = bloom > 0 && v.z < -0.05
+    this.mesh.visible = bloom > 1e-4 && v.z < -0.05
     if (!this.mesh.visible) return
     const u = this.material.uniforms
     const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)
