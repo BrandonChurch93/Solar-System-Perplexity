@@ -1,7 +1,7 @@
 import fitted from './curve.json'
 import type { GlareLook } from './glare'
 import type { GlobeLight } from './globe'
-import type { LensLook } from './lens'
+import type { LensCore, LensLook } from './lens'
 import type { SunLimb, SunSmall } from './sunplate'
 
 export const light: GlobeLight = {
@@ -47,6 +47,7 @@ export const spinRest = 1
 
 export const lens: LensLook = { gain: 1, fade: [1.15, 1.7] }
 export const streak: LensLook = { gain: 1, fade: [1.0, 1.35] }
+export const streakCore: LensCore = { row: -0.0393, sigma: 0.0177, rise: [0.94, 1.03], join: [0.84, 0.93], pivot: 0.958, tail: 1.27, power: 3, warm: [1.06, 0.99, 0.86], peak: [0.744, 0.5615] }
 
 export const glare: GlareLook = {
   peak: 1, fall: { dive: 8, enter: 7, leave: 6, rise: 7 }, span: { dive: 24, enter: 36, leave: 24, rise: 22 }, color: [1, 0.84, 0.6],
