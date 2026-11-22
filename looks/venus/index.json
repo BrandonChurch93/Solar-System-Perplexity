@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T15:06:44.982Z",
- "head": "539534e027bcd207eb327a6c6a33ba173bdfeeb7",
- "note": "CUT34 work: change A committed 539534e0 (tree holds main 64fff6f); rise release over 24 frames in test; hold rim refit and night side shade in test",
+ "pushed": "2026-11-22T15:22:15.781Z",
+ "head": "5d36d0ccefd385d759aedc4e29d27a4831840b36",
+ "note": "CUT34: veil change A and rise release over 24 frames in proof (tree holds main 64fff6f); night side shade and hold rim refit tested and left out",
  "looks": [
+  {
+   "time": "2026-11-22T15:21:14.202Z",
+   "file": "20261122152114202-note-e-1287-rlimb.jpg",
+   "source": "../view/e-1287-rlimb.jpg",
+   "kind": "note",
+   "label": "1287 right dark limb, same four states: no clear gain from the dim and dusk terms",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T15:21:13.185Z",
+   "file": "20261122152113185-note-e-1586-night2.jpg",
+   "source": "../view/e-1586-night2.jpg",
+   "kind": "note",
+   "label": "1586 night side at 2x, same four states: every test softens what the 1586 critic calls soft and muddy",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T15:21:12.180Z",
+   "file": "20261122152112180-note-e-1287-night2.jpg",
+   "source": "../view/e-1287-night2.jpg",
+   "kind": "note",
+   "label": "1287 night side at 2x: main shade 0.8, tests shade 0.35, mid band, 0.5 with dark limb dim: the crunch drops, left out because 1586 gets softer",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T15:21:11.443Z",
+   "file": "20261122152111443-note-hold-rim-cmp.jpg",
+   "source": "../view/hold-rim-cmp.jpg",
+   "kind": "note",
+   "label": "hold top limb at preview size, draft and review, main table left, refit table right: the refit puts a dark hairline inside the rim at frames off 1185, so it is left out of CUT34",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T15:21:10.402Z",
+   "file": "20261122152110402-note-rim-top.jpg",
+   "source": "../view/rim-top.jpg",
+   "kind": "note",
+   "label": "1185 final top limb: approved hero, main 84b0ea4, rim strip refit with a clamp of 4 stops (test, not shipped): the double rim line goes at the judged frame",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T15:06:25.889Z",
    "file": "20261122150625889-note-k24-n.jpg",
@@ -122,46 +162,6 @@
    "source": "../view/qd-rise-c.jpg",
    "kind": "note",
    "label": "Venus cover strip rise-c: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:20.349Z",
-   "file": "20261122142620349-note-qd-rise-b.jpg",
-   "source": "../view/qd-rise-b.jpg",
-   "kind": "note",
-   "label": "Venus cover strip rise-b: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:19.155Z",
-   "file": "20261122142619155-note-qd-rise-a.jpg",
-   "source": "../view/qd-rise-a.jpg",
-   "kind": "note",
-   "label": "Venus cover strip rise-a: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:18.423Z",
-   "file": "20261122142618423-note-qd-dive-c.jpg",
-   "source": "../view/qd-dive-c.jpg",
-   "kind": "note",
-   "label": "Venus cover strip dive-c: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:17.535Z",
-   "file": "20261122142617535-note-qd-dive-b.jpg",
-   "source": "../view/qd-dive-b.jpg",
-   "kind": "note",
-   "label": "Venus cover strip dive-b: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T14:26:16.481Z",
-   "file": "20261122142616481-note-qd-dive-a.jpg",
-   "source": "../view/qd-dive-a.jpg",
-   "kind": "note",
-   "label": "Venus cover strip dive-a: pole fade and near fade push against main: the burst of spokes and the ladder column are soft cloud (draft tier, preview size, left main 84b0ea4, right working tree of agent/venus 0af6f18 holding main a60c5ff, not committed)",
    "stop": "venus"
   },
   {
