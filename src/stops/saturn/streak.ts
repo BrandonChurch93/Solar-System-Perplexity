@@ -3,6 +3,7 @@ import { diagUniform } from '../../diagnostics/diag'
 
 export interface StreakLook {
   gain: number
+  fade: number
   upper: [number, number, number]
   lower: [number, number, number]
   smudge: [number, number, number]

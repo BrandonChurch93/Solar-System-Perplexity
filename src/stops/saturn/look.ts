@@ -148,19 +148,26 @@ export const ice: IceLook = {
 }
 
 export const titan: TitanLook = {
-  day: [0.7, 0.245, 0.085],
-  rim: [1.4, 0.72, 0.3],
+  day: [1.05, 0.37, 0.095],
+  rim: [1.9, 1.15, 0.6],
   night: [0.0082, 0.009, 0.0105],
   halo: [0.06, 0.035, 0.024],
   haloHeight: 0.035,
-  terminator: [0.05, 0.7],
+  terminator: [0.02, 1.0],
   limb: 0.3,
-  home: [8.167601, 4.265027, -17.74795],
-  size: 0.956,
+  edgePx: 0.9,
+  rimPower: 4,
+  bands: [0.11, 7, 19, 2.6],
+  hood: [0.84, 0.74, 0.7],
+  redden: [1, 0.85, 0.72],
+  mottle: [0.14, 3.2],
+  home: [8.191769, 4.235077, -17.74795],
+  size: 0.9766,
 }
 
 export const streak: StreakLook = {
   gain: 1,
+  fade: 0.6,
   upper: [0.785, 0.8505, 0.0058],
   lower: [0.885, 0.8915, 0.0032],
   smudge: [0.821, 0.8415, 0.009],

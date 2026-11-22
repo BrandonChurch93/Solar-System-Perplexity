@@ -124,6 +124,8 @@ export const createSet: SetFactory = async (ctx) => {
   const toRing = new THREE.Quaternion()
   const seat = new THREE.Quaternion()
   const seatBack = new THREE.Quaternion()
+  const bodyBack = new THREE.Quaternion()
+  const toBody = new THREE.Matrix4()
   const camL = new THREE.Vector3()
   const camS = new THREE.Vector3()
   const sunL = new THREE.Vector3()
@@ -257,7 +259,7 @@ export const createSet: SetFactory = async (ctx) => {
       const ku = streak.material.uniforms
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       ;(ku.uTan!.value as THREE.Vector2).set(half * view.format.width / view.format.height, half)
-      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain
+      ku.uGain!.value = gain * state.weight * poseW.value * look.streak.gain * (1 - smooth((state.time - plan.seg.hold.end) / look.streak.fade))
       streak.mesh.visible = inOrbit && poseW.value > 0
 
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
@@ -266,6 +268,8 @@ export const createSet: SetFactory = async (ctx) => {
       const tu = titan.material.uniforms
       ;(tu.uCentre!.value as THREE.Vector3).copy(moon)
       ;(tu.uSun!.value as THREE.Vector3).copy(light)
+      ;(tu.uAxis!.value as THREE.Vector3).copy(plan.axis)
+      ;(tu.uToBody!.value as THREE.Matrix3).setFromMatrix4(toBody.makeRotationFromQuaternion(bodyBack.copy(total).invert()))
       tu.uGain!.value = gain * state.weight
 
       const distance = centre.length()
