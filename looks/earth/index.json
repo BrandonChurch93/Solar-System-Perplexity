@@ -1,9 +1,129 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T08:12:34.610Z",
+ "pushed": "2026-11-22T08:13:31.620Z",
  "head": "b4b77d474ec1a3af163c2f6558b2831a382fdd34",
- "note": "Earth POLISH READY 2 set: arrival strips of mail 80 before and after, the aurora's rise, four judged frames at final (same bytes), hold, terrain and both cover sheets. Code c2a211a on main 45004ec, measure passes.",
+ "note": "Earth POLISH READY 2 set: arrival strips of mail 80 before and after, the aurora's rise, four judged frames at final (same bytes), hold, terrain and both cover sheets, proofs of items 4 to 8. Code c2a211a on main 45004ec, measure passes.",
  "looks": [
+  {
+   "time": "2026-11-22T08:13:30.726Z",
+   "file": "20261122081330726-note-rise-2145-2165-b19.jpg",
+   "source": "out/work/earth/pb/f/rise-2145-2165-b19.png",
+   "kind": "note",
+   "label": "Rise after the cover, 2145 and 2165, review tier, preview format, with the flight sky of batch 19. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:29.881Z",
+   "file": "20261122081329881-note-dive-approach-b19.jpg",
+   "source": "out/work/earth/pb/f/dive-approach-b19.png",
+   "kind": "note",
+   "label": "Dive handover 1872 and 1876, review tier, preview format: first READY above, now below. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:29.133Z",
+   "file": "20261122081329133-note-pair-2156-b18-b19.jpg",
+   "source": "out/work/earth/pb/f/pair-2156-b18-b19.png",
+   "kind": "note",
+   "label": "Rise 2156 at the final tier: my still on engine batch 18 and on batch 19 (flight sky lift 0.74). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:28.308Z",
+   "file": "20261122081328308-note-aur-1872-draft-review.jpg",
+   "source": "out/work/earth/pb/g/aur-1872-draft-review.png",
+   "kind": "note",
+   "label": "Dive 1872, aurora by the Moon: draft still with 1 sample (no shutter) and review still with 49 samples. The rays are crisp; the 29 px of motion in the shutter draw them out to parallelograms. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:27.514Z",
+   "file": "20261122081327514-note-moon-2156-b19.jpg",
+   "source": "out/work/earth/pb/f/moon-2156-b19.png",
+   "kind": "note",
+   "label": "Item 6 and 7, Moon at 2156 at 4 times: kept build, my still on batch 18, on batch 19. The night side lies 1 code value under the lifted sky. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:26.657Z",
+   "file": "20261122081326657-note-sky-2010.jpg",
+   "source": "out/work/earth/pb/f/sky-2010.png",
+   "kind": "note",
+   "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:25.860Z",
+   "file": "20261122081325860-note-city-2156-b19.jpg",
+   "source": "out/work/earth/pb/g/city-2156-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:25.071Z",
+   "file": "20261122081325071-note-city-1755-b19.jpg",
+   "source": "out/work/earth/pb/g/city-1755-b19.png",
+   "kind": "note",
+   "label": "Item 8, city lights at 1755 at 3 times: approved image, new, before (clipped cores). agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:24.017Z",
+   "file": "20261122081324017-note-cloud-1857.jpg",
+   "source": "out/work/earth/pb/f/cloud-1857.png",
+   "kind": "note",
+   "label": "Item 8, clouds near the limb at 1857 at 3 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:23.185Z",
+   "file": "20261122081323185-note-moon-2156.jpg",
+   "source": "out/work/earth/pb/f/moon-2156.png",
+   "kind": "note",
+   "label": "Item 7, Moon at 2156 at 4 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:22.352Z",
+   "file": "20261122081322352-note-moon-1755.jpg",
+   "source": "out/work/earth/pb/f/moon-1755.png",
+   "kind": "note",
+   "label": "Item 7, Moon at 1755 at 4 times: approved image, kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:21.563Z",
+   "file": "20261122081321563-note-aur-1857-n.jpg",
+   "source": "out/work/earth/pb/f/aur-1857-n.png",
+   "kind": "note",
+   "label": "Item 5, aurora at 1857 at 2 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:20.737Z",
+   "file": "20261122081320737-note-aur-1755.jpg",
+   "source": "out/work/earth/pb/f/aur-1755.png",
+   "kind": "note",
+   "label": "Item 5, aurora at 1755: approved image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:19.827Z",
+   "file": "20261122081319827-note-night-1755.jpg",
+   "source": "out/work/earth/pb/f/night-1755.png",
+   "kind": "note",
+   "label": "Item 4, night limb at 1755, native at 3 times and at 3 times gain: approved image, kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T08:13:18.876Z",
+   "file": "20261122081318876-note-night-new.jpg",
+   "source": "out/work/earth/pb/f/night-new.png",
+   "kind": "note",
+   "label": "Item 4, night limb at 1755, 1857, 2156 (PA 95, 125, 150), native at 3 times and at 3 times gain: new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a) Shown again for READY 2: the frames these are cut from are the same bytes on agent/earth b4b77d4 (code c2a211a), tree holds main 45004ec, engine hash 7553966a.",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-22T08:12:33.867Z",
    "file": "20261122081233867-note-sheet-rise-cover-preview-b19.jpg",
@@ -338,30 +458,6 @@
    "source": "out/work/earth/pb/h/v-ba-1.png",
    "kind": "note",
    "label": "Mail 80, arrival 1666 to 1672, upper right limb, review tier, preview format: main 89715a1 (kept Earth) above, agent/earth 3b3819e below, before the cure. The green band is on both.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:11:24.024Z",
-   "file": "20261122061124024-note-city-2156-b19.jpg",
-   "source": "out/work/earth/pb/g/city-2156-b19.png",
-   "kind": "note",
-   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:11:23.413Z",
-   "file": "20261122061123413-note-cloud-1857.jpg",
-   "source": "out/work/earth/pb/f/cloud-1857.png",
-   "kind": "note",
-   "label": "Item 8, clouds near the limb at 1857 at 3 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T06:11:22.800Z",
-   "file": "20261122061122800-note-sky-2010.jpg",
-   "source": "out/work/earth/pb/f/sky-2010.png",
-   "kind": "note",
-   "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
    "stop": "earth"
   }
  ]
