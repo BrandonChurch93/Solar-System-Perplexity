@@ -1,9 +1,41 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T18:02:18.609Z",
- "head": "55ac76f1a7fec0f68d1f0f9075feb4684e029df8",
- "note": "CUT35 proofs: the rise with the new pace at review (4982, 4984, 4990, 4997, 5004), final 5006 the same bytes, G13 over the rise passes; 4983 at review renders",
+ "pushed": "2026-11-22T18:21:36.295Z",
+ "head": "6e4733ced3a6a4c2aaf27bd932f54217ddf0da44",
+ "note": "CUT35: the veil of the rise cover leaves over four frames instead of two (veil.clear 0.15), proved at draft; review frames of it render",
  "looks": [
+  {
+   "time": "2026-11-22T18:21:35.695Z",
+   "file": "20261122182135695-note-view-4983-new-review-whole.jpg",
+   "source": "out/work/nep/end35/view-4983-new-review-whole.jpg",
+   "kind": "note",
+   "label": "Neptune rise 4983 at review with the new pace, before the veil number",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:21:35.129Z",
+   "file": "20261122182135129-note-view-new-4975-4976-4983-4984.jpg",
+   "source": "out/work/nep/end35/veil/view-new-4975-4976-4983-4984.jpg",
+   "kind": "note",
+   "label": "Neptune rise cover with the new veil number, drafts 4975, 4976, 4983, 4984",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:21:34.529Z",
+   "file": "20261122182134529-note-veil-02-dive-cover-drafts-4729-4740-before-above-new.jpg",
+   "source": "out/work/nep/end35/veil/veil-02-dive-cover-drafts-4729-4740-before-above-new.jpg",
+   "kind": "note",
+   "label": "Neptune dive cover, drafts 4729 to 4740, before above new (veil.clear 0.15)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:21:33.830Z",
+   "file": "20261122182133830-note-veil-01-rise-cover-drafts-4975-4986-round-34-above-new.jpg",
+   "source": "out/work/nep/end35/veil/veil-01-rise-cover-drafts-4975-4986-round-34-above-new.jpg",
+   "kind": "note",
+   "label": "Neptune rise cover, drafts 4975 to 4986, round 34 above new (veil.clear 0.15)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T18:02:17.386Z",
    "file": "20261122180217386-note-09-5006-final-round-34-left-new-right.jpg",
@@ -26,38 +58,6 @@
    "source": "out/work/nep/end35/view-4982-new-review-whole.jpg",
    "kind": "note",
    "label": "Neptune rise 4982 at review with the new pace, whole frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:02:14.434Z",
-   "file": "20261122180214434-note-08-rise-cover-review-frames-new-82a6f3c.jpg",
-   "source": "out/work/nep/end35/cut/08-rise-cover-review-frames-new-82a6f3c.jpg",
-   "kind": "note",
-   "label": "Neptune rise cover, review frames 4982 and 4984 with the new pace (82a6f3c)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T17:49:18.159Z",
-   "file": "20261122174918159-note-04-rise-review-frames-new-82a6f3c-4984-4990-4997-5004.jpg",
-   "source": "out/work/nep/end35/cut/04-rise-review-frames-new-82a6f3c-4984-4990-4997-5004.jpg",
-   "kind": "note",
-   "label": "neptune.rise at review, new pace (82a6f3c): 4984, 4990, 4997, 5004",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T17:49:17.001Z",
-   "file": "20261122174917001-note-06-rise-review-tiles-4984-4990-4997-5004-round-34-left-new-r.jpg",
-   "source": "out/work/nep/end35/cut/06-rise-review-tiles-4984-4990-4997-5004-round-34-left-new-right.jpg",
-   "kind": "note",
-   "label": "neptune.rise at review, tiles 4984 4990 4997 5004: round 34 sheet tile left, new pace (82a6f3c) right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T17:24:06.463Z",
-   "file": "20261122172406463-note-r34-rise-sheet.jpg",
-   "source": "out/work/nep/end35/r34-rise-sheet.png",
-   "kind": "note",
-   "label": "neptune.rise review sheet, round 34 state (19a4c767), for the pair with the new pace",
    "stop": "neptune"
   },
   {
