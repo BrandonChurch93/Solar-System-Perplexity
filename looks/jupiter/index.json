@@ -1,9 +1,95 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T16:09:03.465Z",
- "head": "8e28a0852561ba20259432a3ed3d255ff61ca962",
- "note": "16:09 UTC. CUT34 taken whole (MAIL 182). Seam notch left out: with the fill the final 2895 moves at its right edge. Io shadow toe trial at the draft tier, pictures at 3x beside the approved image. Tree holds main 732a67d3",
+ "pushed": "2026-11-22T16:30:08.824Z",
+ "head": "b1e7137d861e4a5a70bc732f81bb40f6367a34ac",
+ "note": "16:32 UTC. Shadow toe trial: final 2895 beside the approved image at 3x, hold strip; finals 2997, 3150, 3296 keep cut 34 bytes; measure running. Seam notch left out. Tree holds main 732a67d3",
  "looks": [
+  {
+   "time": "2026-11-22T16:30:07.765Z",
+   "file": "20261122163007765-note-jupiter-hold-shadow-strip-3x.jpg",
+   "source": "../../../../tmp/jup-c35/jupiter-hold-shadow-strip-3x.jpg",
+   "kind": "note",
+   "label": "Hold, shadow of Io with the toe at 3x, draft tier, frames 2816 2830 2850 2870 2895 2910 2930 2950 (middle row lifted 3 times, bottom row cut 34 at 2816 and 2895). Tree holds main 732a67d3",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T16:30:06.960Z",
+   "file": "20261122163006960-note-jupiter-2895-shadow-three-3x.jpg",
+   "source": "../../../../tmp/jup-c35/jupiter-2895-shadow-three-3x.jpg",
+   "kind": "note",
+   "label": "2895 final, shadow of Io at 3x (below lifted 3 times): approved image, cut 34 (kept bytes), shadow toe trial (tip 10 to 90 percent in 20.5 px from 62.0 px, approved 20.2 from 62.8, cut 34 9.5 from 74.0). Tree holds main 732a67d3",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T16:29:46.809Z",
+   "file": "20261122162946809-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T16:21:12.743Z",
+   "file": "20261122162112743-still-f03296-16x9-final-full.jpg",
+   "source": "out/work/stills/f03296-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:19:14.315Z",
+   "file": "20261122161914315-still-f03150-16x9-final-full.jpg",
+   "source": "out/work/stills/f03150-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:17:17.957Z",
+   "file": "20261122161717957-still-f02997-16x9-final-full.jpg",
+   "source": "out/work/stills/f02997-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
+  {
+   "time": "2026-11-22T16:15:08.780Z",
+   "file": "20261122161508780-still-f02895-16x9-final-full.jpg",
+   "source": "out/work/stills/f02895-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f92fd0ddfc332543"
+  },
   {
    "time": "2026-11-22T16:08:59.098Z",
    "file": "20261122160859098-note-v2997_kept_E.jpg",
@@ -19,62 +105,6 @@
    "kind": "note",
    "label": "Io shadow at 2895, 3x, draft tier: approved, kept film, toe trial take E (amount 0.2, a little too light, not offered yet). Tree holds main 732a67d3",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T16:03:09.657Z",
-   "file": "20261122160309657-still-f02895-16x9-final-full.jpg",
-   "source": "out/work/stills/f02895-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T16:02:20.439Z",
-   "file": "20261122160220439-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:53:46.202Z",
-   "file": "20261122155346202-still-f03296-16x9-final-full.jpg",
-   "source": "out/work/stills/f03296-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:51:49.781Z",
-   "file": "20261122155149781-still-f03150-16x9-final-full.jpg",
-   "source": "out/work/stills/f03150-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T15:44:58.468Z",
@@ -104,36 +134,6 @@
    "source": "out/work/view/c34/sh/v2895_kept.jpg",
    "kind": "note",
    "label": "2895, shadow of Io at 3x (below at 3 times the exposure): approved hero, cut 34 draft. The far tip is twice as hard as the hero's (10 to 90 percent in 9.5 px against 20.2 px). Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:34:02.650Z",
-   "file": "20261122153402650-job-frame-03208.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.terrain frame 3208, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3208,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:19:41.956Z",
-   "file": "20261122151941956-note-shadow2895_hero_film.jpg",
-   "source": "out/work/view/c34/shadow2895_hero_film.jpg",
-   "kind": "note",
-   "label": "2895, shadow of Io at 3x: approved hero (left), cut 34 final (right, the kept build's bytes). Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:40.782Z",
-   "file": "20261122151940782-note-seam_full.jpg",
-   "source": "out/work/view/c34/seam_full.jpg",
-   "kind": "note",
-   "label": "Hold sky patch at 7x, right margin seam: dark notch as shipped (left), filled offline (right), not in the tree yet. Tree holds main ca78dda5",
    "stop": "jupiter"
   }
  ]
