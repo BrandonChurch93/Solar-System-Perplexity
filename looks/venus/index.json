@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T04:00:58.348Z",
- "head": "97b2155bb7928cd5ebfe14af627d8bb8d7ff4463",
- "note": "Venus: review cover sheets on main 0622510 (batch 18), terrain sheet and the measure chain running, then POLISH READY",
+ "pushed": "2026-11-22T04:33:15.320Z",
+ "head": "42b9111ce9d0dea7c2d82c23c496f178868dff68",
+ "note": "Venus: POLISH READY state, head 42b9111 on main 0622510; review cover sheets on the new terrain patch rendering",
  "looks": [
+  {
+   "time": "2026-11-22T04:33:14.481Z",
+   "file": "20261122043314481-note-s2-sky.jpg",
+   "source": "../view/s2-sky.jpg",
+   "kind": "note",
+   "label": "Exit 1555, 1557, 1558 sky at draft, now (42b9111 on main 0622510) beside before: no seam above the horizon",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T04:33:13.691Z",
+   "file": "20261122043313691-note-sky1440-sun-b.jpg",
+   "source": "../view/sky1440-sun-b.jpg",
+   "kind": "note",
+   "label": "1440 sky above the Sun at 2.2 times: approved, now (42b9111), before (4d885b5); main 0622510",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T04:33:12.734Z",
+   "file": "20261122043312734-note-f15-1440.jpg",
+   "source": "../view/f15-1440.jpg",
+   "kind": "note",
+   "label": "Venus terrain 1440, final tier, star cure taken out of the Sun's glow; branch 42b9111 on main 0622510",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T04:03:08.106Z",
+   "file": "20261122040308106-note-venus.terrain-16x9-review.jpg",
+   "source": "../view/venus.terrain-16x9-review.png",
+   "kind": "note",
+   "label": "Venus terrain review sheet, 1350 to 1529, review tier; branch 47d7c6b on main 0622510",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T04:00:57.601Z",
    "file": "20261122040057601-note-c17-dc.jpg",
@@ -139,44 +171,6 @@
    "kind": "note",
    "label": "1185 final tier on main 3d48581, hold refitted on the repainted wrap, star cure pass 3",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:37:17.190Z",
-   "file": "20261122023717190-note-f7-1586.jpg",
-   "source": "../view/f7-1586.jpg",
-   "kind": "note",
-   "label": "1586 final tier on main 3d48581",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:37:16.625Z",
-   "file": "20261122023716625-note-f7-1287.jpg",
-   "source": "../view/f7-1287.jpg",
-   "kind": "note",
-   "label": "1287 final tier on main 3d48581, wrap repaint at 0.3",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:37:16.046Z",
-   "file": "20261122023716046-note-f5-night.jpg",
-   "source": "../view/f5-night.png",
-   "kind": "note",
-   "label": "1287 night side crop, final tier: before the wrap repaint, repaint at 0.3 strength (taken), full strength (rejected)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T02:33:02.095Z",
-   "file": "20261122023302095-frame-base.jpg",
-   "source": "out/work/venus/relief/base.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1440, review tier, nograin view",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "nograin",
-   "engine": "1e61fa4049d34863"
   },
   {
    "time": "2026-11-21T17:53:25.009Z",
