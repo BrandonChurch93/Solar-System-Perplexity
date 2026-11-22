@@ -144,6 +144,7 @@ uniform vec3 uHazeGain[17];
 uniform vec4 uHazeSpan;
 uniform vec3 uHazeCut;
 uniform vec3 uHazeCalm;
+uniform vec2 uWash;
 uniform vec2 uLift;
 uniform vec2 uKnee;
 uniform vec4 uDusk;
@@ -277,7 +278,7 @@ void main() {
   float wc = span * step(0.02, qc.z) * step(0.0, qc.y) * smoothstep(0.0, 1.0, min(qc.x, 1.0 - qc.x) / uCloseFade.z) * smoothstep(0.0, 1.0, (1.0 - qc.y) / uCloseFade.w) * clearOf;
   float sunk = 1.0 - uWideDrop.x * smoothstep(uWideDrop.y, uWideDrop.z, reach);
   vec3 ns = normalize(oc + ray * (-b - sqrt(max(h + (sunk * sunk - 1.0), 0.0))));
-  vec3 dw = uWideCam * normalize(d + spinY((ns - n) * uBodyToWorld, uSpin));
+  vec3 dw = uWideCam * (d + spinY((ns - n) * uBodyToWorld, uSpin));
   vec3 wp = uCloseLens.x * sunk * dw - uWideEye;
   float wal = dot(wp, uWideDown);
   vec3 wpp = wp - wal * uWideDown;
@@ -359,6 +360,9 @@ ${PATCH_LEVELS}
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
   col *= 1.0 / (1.0 + uKnee.y * max(max(col.r, max(col.g, col.b)) - uKnee.x, 0.0));
+  vec3 wash = 1.0 / max(raw, vec3(0.02));
+  wash *= min(1.0, uWash.y / max(wash.r, max(wash.g, wash.b)));
+  col *= mix(vec3(1.0), wash, uWash.x);
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -427,7 +431,7 @@ export class Globe {
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
         uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
-        uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
+        uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -497,6 +501,10 @@ export class Globe {
     span.y = THREE.MathUtils.degToRad(toDeg)
     ;(u.uHazeCut!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(cutDeg[0]), THREE.MathUtils.degToRad(cutDeg[1]), 0)
     ;(u.uHazeCalm!.value as THREE.Vector3).set(calm[0], calm[1], 0)
+  }
+
+  wash(amount: number, cap: number): void {
+    ;(this.material.uniforms.uWash!.value as THREE.Vector2).set(amount, cap)
   }
 
   clear(amount: number, level: number, lift: readonly [number, number], knee: readonly [number, number], calm: number): void {
