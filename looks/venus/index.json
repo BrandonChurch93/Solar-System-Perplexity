@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T08:27:36.534Z",
- "head": "66e98683b1eb8bbd2507085cde143a62c77d1076",
- "note": "08:28 UTC: veil take F4 at review tier, judged finals same bytes, cover sheets rendering",
+ "pushed": "2026-11-22T08:59:02.016Z",
+ "head": "e31356d5db5eb929d58c9e5fe622cd60530218ba",
+ "note": "09:00 UTC: veil take F4 cover sheets on batch 19; batch 20 merged (main 8f13066), proof on it running",
  "looks": [
+  {
+   "time": "2026-11-22T08:59:01.344Z",
+   "file": "20261122085901344-note-c21-dc.jpg",
+   "source": "../view/c21-dc.png",
+   "kind": "note",
+   "label": "dive cover 1309 to 1320 review tier, veil take F4: 1309 to 1315 same bytes as take E3d, 1317 to 1320 even mist, no column (branch e31356d plus veil take F4 uncommitted, rendered on main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T08:59:00.716Z",
+   "file": "20261122085900716-note-c21-rc.jpg",
+   "source": "../view/c21-rc.png",
+   "kind": "note",
+   "label": "rise cover 1555 to 1566 review tier, veil take F4: 1558 to 1566 same bytes as take E3d, 1555 to 1557 softer (branch e31356d plus veil take F4 uncommitted, rendered on main e4b509e, engine batch 19)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T08:27:35.937Z",
    "file": "20261122082735937-note-f4u.jpg",
@@ -162,22 +178,6 @@
    "source": "../view/dn-mid.jpg",
    "kind": "note",
    "label": "venus rise 1548 to 1553 draft, branch d2aa704 on main 6267259: the veil comes in as flat decals, the cause of the rectangles at 1558",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:36.751Z",
-   "file": "20261122064936751-note-nv-1550.jpg",
-   "source": "../view/nv-1550.jpg",
-   "kind": "note",
-   "label": "venus rise 1550 draft, master size crop, branch d2aa704 on main 6267259 (batch 19): top with my veil (flat pale blobs and pink patches on the terrain), bottom with the veil switched off in a test copy: the blobs are the veil's first sheets",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:35:15.399Z",
-   "file": "20261122063515399-note-e2a-1558-crop.jpg",
-   "source": "../view/e2a-1558-crop.jpg",
-   "kind": "note",
-   "label": "venus 1558 native crop, left as on the branch 3731a3f, right experiment (strands frayed, not committed): needles too crisp, a softer take is rendering",
    "stop": "venus"
   }
  ]
