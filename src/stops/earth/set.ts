@@ -159,7 +159,7 @@ export const createSet: SetFactory = async (ctx) => {
       const near = Math.sqrt((home * home - 1) / Math.max(camera.lengthSq() - 1, 1e-6))
       const away = plan.clock(state.time) !== state.time ? smooth((near - look.back[0]!) / (look.back[1]! - look.back[0]!)) : smooth((state.time - plan.seg.hold.end + look.away[0]!) / (look.away[0]! + look.away[1]!))
       const pace = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise') ? plan.pace(seg.kind, state.time) : 0
-      const lights = 1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))
+      const lights = (1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))) * smooth((near - look.lightsFrom[0]!) / (look.lightsFrom[1]! - look.lightsFrom[0]!))
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
       const gone = ending ? 0 : smooth((state.time - plan.seg.rise.end - look.ebb[0]!) / (look.ebb[1]! - look.ebb[0]!))

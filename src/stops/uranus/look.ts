@@ -50,6 +50,7 @@ export const rings: RingLook = {
   near: [0.45, 120],
   shade: [0.55, 0.004],
   air: [1.0, 1.04],
+  cutSky: 0,
   hair: { normal: [-0.1548, -0.6212, 0.7682], count: 30, from: 1.25, to: 1.63, amp: [0.0015, 0.006], tiltDeg: 1.2 },
 }
 
@@ -75,6 +76,7 @@ export const deckRings: RingLook = {
   near: [0, 0],
   shade: [0, 0.004],
   air: [1, 1.04],
+  cutSky: 1,
   hair: { normal: [0, 1, 0], count: 0, from: 1, to: 1, amp: [0, 0], tiltDeg: 0 },
 }
 
@@ -122,7 +124,7 @@ export const deck: DeckLook = {
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
-export const haze = { line: 0.07, chord: 0.6 }
+export const haze = { line: 0.14, chord: 0.6 }
 
 export const mist: MistLook = {
   glow: [0.2, 0.58, 0.7],
@@ -146,7 +148,7 @@ export const air: MistLook = {
   wisp: [0.35, 0.3],
 }
 
-export const clearing = { mist: [4, 30] as [number, number], arcs: [12, 30] as [number, number] }
+export const clearing = { mist: [4, 30] as [number, number], arcs: [-6, 38] as [number, number] }
 
 export const closing = { mist: [-22, -3] as [number, number], arcs: [-22, -8] as [number, number] }
 

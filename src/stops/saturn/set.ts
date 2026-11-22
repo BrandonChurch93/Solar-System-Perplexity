@@ -11,6 +11,7 @@ import { Rings } from './rings'
 import { shotMatrix, shotUniforms } from './shot'
 import apronJson from './apron.json'
 import bloomJson from './bloom.json'
+import toneJson from './skim-tone.json'
 import closeGlobe from './closeGlobe.json'
 import holdLight from './hold-light.json'
 import skimLight from './skim-light.json'
@@ -91,7 +92,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uInnerMap: { value: innerMap }, uInnerSpan: { value: new THREE.Vector2(innerJson.span[0], 1 / (innerJson.span[1]! - innerJson.span[0]!)) }, uInnerSize: { value: new THREE.Vector2(innerSize[0], innerSize[1]) }, uPolarW: polarW, uPolarShape: poseW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
   const apronSize = apronJson.sets[key] as [number, number]
   const apronBox = new THREE.Vector4(-apronJson.left, -apronJson.below, 1 / (1 + apronJson.left + apronJson.right), 1 / (1 + apronJson.below))
-  const apron = { uApronMap: { value: await ctx.texture(base + apronJson.file, { srgb: true, anisotropy: 16 }) }, uApronMask: { value: await ctx.texture(base + apronJson.mask, { srgb: false, anisotropy: 16 }) }, uApron: { value: apronBox }, uApronSize: { value: new THREE.Vector2(apronSize[0], apronSize[1]) }, uApronFit: { value: new THREE.Vector4(look.rings.apronEdge[0], look.rings.apronEdge[1], look.rings.apronEdge[2], 0) }, uBloomMap: { value: await ctx.texture(base + bloomJson.file, { srgb: false }) }, uDebloom: { value: new THREE.Vector2(look.rings.debloom, bloomJson.scale) }, uSkimHigh: { value: new THREE.Vector4().fromArray(look.rings.skimHigh) } }
+  const apron = { uApronMap: { value: await ctx.texture(base + apronJson.file, { srgb: true, anisotropy: 16 }) }, uApronMask: { value: await ctx.texture(base + apronJson.mask, { srgb: false, anisotropy: 16 }) }, uApron: { value: apronBox }, uApronSize: { value: new THREE.Vector2(apronSize[0], apronSize[1]) }, uApronFit: { value: new THREE.Vector4(look.rings.apronEdge[0], look.rings.apronEdge[1], look.rings.apronEdge[2], 0) }, uBloomMap: { value: await ctx.texture(base + bloomJson.file, { srgb: false }) }, uDebloom: { value: new THREE.Vector2(look.rings.debloom, bloomJson.scale) }, uSkimHigh: { value: new THREE.Vector4().fromArray(look.rings.skimHigh) }, uSkimTone: { value: await ctx.dataTexture(base + toneJson.file, toneJson.width, toneJson.height, 4) }, uSkimToneW: { value: look.rings.skimTone } }
   const limb = { uLimbFit: { value: look.globe.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.globe.limbLat) }, uLimbW: { value: 0 } }
   const rings = new Rings(profile, layout, { ...skimShot, ...ringMap, ...apron, ...limb }, look.rings, polar)
   tilt.add(globe.mesh, shell.mesh, rings.group)

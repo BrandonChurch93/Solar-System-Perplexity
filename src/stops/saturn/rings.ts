@@ -57,6 +57,7 @@ export interface RingLook {
   apronAway: [number, number]
   apronShow: number
   debloom: number
+  skimTone: number
   skimHigh: [number, number, number, number]
   reach: number
   skimReach: number
@@ -187,6 +188,8 @@ uniform vec4 uApron;
 uniform vec2 uApronSize;
 uniform vec4 uApronFit;
 uniform sampler2D uBloomMap;
+uniform sampler2D uSkimTone;
+uniform float uSkimToneW;
 uniform vec2 uDebloom;
 uniform vec4 uSkimHigh;
 uniform sampler2D uPolarMap;
@@ -247,6 +250,9 @@ vec3 skimFill(vec2 uv, vec2 gx, vec2 gy) {
   vec2 q = (clamp(uv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
   vec3 glow = textureLod(uBloomMap, clamp((uv - uApron.xy) * uApron.zw, 0.0, 1.0), 0.0).rgb;
   return max(lin / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x);
+}
+float skimTone(vec2 uv) {
+  return mix(1.0, textureLod(uSkimTone, vec2(clamp(uv.x, 0.0, 1.0), 1.0 - clamp(uv.y, 0.0, 1.0)), 0.0).r, uSkimToneW);
 }
 float azGain(float r, float phi) {
   int i = 0;
@@ -555,12 +561,12 @@ void main() {
       lin = max(lin + wK * uEven * (evenInverse(fine, textureGrad(uSkimMap, kv, kgx, kgy).rgb) - inverseFilmic(fine)), 0.0);
     }
     vec3 img = max(lin / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x) * vig;
-    col = mix(col, img * km.r, wS);
+    col = mix(col, img * km.r * skimTone(kv), wS);
     alpha = mix(alpha, km.r, wS);
     texels = mix(texels, skimTexels, wS);
   }
   for (int k = 0; k < (wF > 0.0 && !gone ? 1 : 0); k++) {
-    col += (skimFill(kvF, kgx, kgy) * vig * kmF.r - base) * wF;
+    col += (skimFill(kvF, kgx, kgy) * skimTone(kvF) * vig * kmF.r - base) * wF;
     alpha += (kmF.r - baseA) * wF;
     texels += (skimTexels - baseT) * wF;
   }
