@@ -1,0 +1,47 @@
+reviewer_1171|R2|image-01.png|claude_opus_5_5|b — confidence 50. Main factor: it's a polished but generic "hero" Saturn render with cinematic lighting and lots of empty space for text, which is typical of stock imagery. Its physical inaccuracies (the planet looks like a hemisphere sitting on the rings, the rings cast no shadow on the planet, and the ring detail is stylized) suggest it isn't a science textbook picture. It also doesn't look like a frame from a top-budget film or a real-time web demo.
+reviewer_1172|R2|image-01.png|gpt_6_2_sol|My visual-only pick: b, 58/100. Main cue: the self-contained, wallpaper-like composition isolates Saturn and a single moon as a clean, generic hero image, rather than showing anything specific to a scene or interface.
+reviewer_1173|R2|image-01.png|gemini_4_carbon|(e) Confidence: 75 Most influential factor: The procedural fragment-shader appearance of the materials and lighting—specifically the solid, vinyl-like radial bump-mapped rings and domain-warped FBM procedural noise bands on Saturn (with blown-out limb bloom and ambient-lit ring shadow) rather than photographic NASA textures or physically scattered ring particles.
+reviewer_1174|R2|image-01.png|kimi_k3|Classification for image-01.png (ringed planet with bands like Jupiter, huge Saturn-style rings, blue polar cap, small red moon upper right, Milky Way backdrop): Answer: (d) amateur generated art Confidence: 72 Most influential factor: physically inconsistent mash-up — Jupiter-like banded weather + Saturn-scale rings + a blue polar cap — combined with the smooth, over-polished, generic "cinematic space render" aesthetic typical of Midjourney-style AI generation rather than the art-directed realism of a film/game cinematic or a real astrophoto a textbook would use.
+reviewer_1175|R2|image-01.png|grok_4_7|(b) 76 The clean, unletterboxed beauty framing — whole ring system plus a decorative moon, with stars still visible beside a fully sunlit planet — is a commercial space-stock composition, not a graded film frame, a labeled textbook figure, warped amateur art, or a real-time demo.
+reviewer_1176|R2|image-02.png|claude_opus_5_5|(b) stock image — confidence 55. Main factor: it's a polished, generic, nicely framed Saturn hero shot, a common stock-render look. The rings have a "brushed-metal" streak texture that reads as an offline render made to look pretty, not a specific film shot or a scientifically careful textbook diagram. Second choice: (a), because the render quality is high.
+reviewer_1177|R2|image-02.png|gpt_6_2_sol|a, 67/100. The low, sweeping camera angle makes the rings dominate the foreground like a cinematic establishing shot.
+reviewer_1178|R2|image-02.png|gemini_4_carbon|e | Confidence: 88 | Most influential factor: Real-time procedural shader signatures—specifically the domain-warped fBm noise cloud bands on the sphere paired with a flat 1D radial-noise ring plane exhibiting pixel-level sampling/aliasing grain, semi-transparent analytical plane intersection at the planet's base, and screen-space bloom along the sunlit limb.
+reviewer_1179|R2|image-02.png|kimi_k3|Result for image-02.png (Saturn with rings over starfield): (b) a stock image Confidence: 68 Most influential factor: the clean, generic, single-subject composition — a photorealistic but static Saturn render with flat cinematic lighting and no narrative framing or filmic grain, characteristic of stock space-art renders rather than a composed film/game cinematic shot.
+reviewer_1180|R2|image-02.png|grok_4_7|(b) 76 — clean 16:9 beauty shot of Saturn with no film grain, letterboxing, labels, spacecraft, or UI, which reads as commercial stock CGI rather than a cinematic frame.
+reviewer_1181|R2|image-06.png|claude_opus_5_5|b — confidence 55. Main factor: the generic, perfectly centered "hero planet" shot. It's a glowing golden Venus-like world with a strong rim light, set against a Milky Way band and some tiny lightning flashes. That polished but context-free look is typical of stock or AI-made space imagery rather than a frame from a specific film or game shot. The detailed volumetric clouds make (a) the next most likely option.
+reviewer_1182|R2|image-06.png|gpt_6_2_sol|a, 64/100. The strongest cue is the coherent, cinematic lighting across the planet’s richly textured cloud layers as they fade into shadow.
+reviewer_1183|R2|image-06.png|gemini_4_carbon|d, 82 — The broken planetary scale of the clouds most influenced my answer: terrestrial-style fluffy cumulus heads and fibrous AI-diffusion swirls are rendered vastly oversized relative to the globe, making it read immediately as prompt-generated space art rather than physically grounded VFX, scientific imagery, or a real-time 3D shader.
+reviewer_1184|R2|image-06.png|kimi_k3|(a), confidence 84. Most influential factor: the polished cinematic lighting/composition — film-grade atmospheric shading, rim glow, and starfield depth look like a high-end film/AAA establishing shot rather than a stock, textbook, demo, or amateur image.
+reviewer_1185|R2|image-06.png|grok_4_7|(d) 74 — the cloud bands look feathered and paint-brushed rather than like simulated fluid, which is the usual tell of a diffusion-model planet render rather than a film still, stock photo, or real-time demo.
+reviewer_1186|R2|image-08.png|claude_opus_5_5|a, confidence 60. What most influenced me: the cinematic, film-grade volumetric lighting. Crepuscular god-rays cut through towering volumetric clouds seen from orbit, with a warm graded sun flare and a Milky Way backdrop, all in a widescreen 16:9 composition. That reads like a high-end VFX or cinematic frame rather than a web demo or a textbook picture. Stock image (b) is the runner-up.
+reviewer_1187|R2|image-08.png|gpt_6_2_sol|d, 68/100. The strongest tell is the implausible scale of the mountainous foreground cloud towers against the tightly curved planetary horizon.
+reviewer_1188|R2|image-08.png|gemini_4_carbon|d | Confidence: 78 | Most influential factor: The physically impossible scale and exposure mashup characteristic of single-prompt AI generation—airplane-altitude cumulus cloud towers enlarged to span a huge fraction of a curved planetary horizon while a blazing sun and a crisp Milky Way starfield appear simultaneously in the same exposure.
+reviewer_1189|R2|image-08.png|kimi_k3|(d), confidence 72 — biggest tell: the bright sun and dense star field coexist implausibly with an over-polished, generic epic cloudscape, suggesting AI/generated art rather than a real cinematic frame.
+reviewer_1190|R2|image-08.png|grok_4_7|(a) 78 — art-directed volumetric god rays plus a bright Milky Way in the same exposure as the sun, which reads as film or AAA cinematic VFX rather than a photo, diagram, or browser render.
+reviewer_1191|R8|image-03.png|claude_sonnet_5_5|Venus. The image looks like a stylized or artistic rendering of it, with thick pale-yellow clouds, a swirling vortex and lightning.
+reviewer_1192|R8|image-03.png|gpt_6_2_sol|Venus. The uniformly golden, dense cloud cover and polar-looking vortex fit a stylized Venus rather than a striped gas giant.
+reviewer_1193|R8|image-03.png|gemini_4_carbon|Venus
+reviewer_1194|R8|image-05.png|claude_sonnet_5_5|Neptune. The image shows a blue planet with a dark storm spot like the Great Dark Spot. Triton is the small pale moon at upper left.
+reviewer_1195|R8|image-05.png|gpt_6_2_sol|Neptune
+reviewer_1196|R8|image-05.png|gemini_4_carbon|Neptune
+reviewer_1197|R8|image-06.png|claude_sonnet_5_5|Uranus. The image shows a pale cyan planet with faint rings and two small moons.
+reviewer_1198|R8|image-06.png|gpt_6_2_sol|Uranus. The pale cyan ice giant with a prominent tilted narrow ring system is most consistent with Uranus.
+reviewer_1199|R8|image-06.png|gemini_4_carbon|Uranus
+reviewer_1200|R8|image-07.png|claude_sonnet_5_5|Mars. The image shows Mars with its moon Phobos in front of it.
+reviewer_1201|R8|image-07.png|gpt_6_2_sol|The large, dominant red planet is Mars (Valles Marineris and polar cap). The foreground moon is Phobos (prominent Stickney crater). For an unqualified singular question I'd answer Mars, though Phobos is plausible if the intended subject is the centered foreground moon.
+reviewer_1202|R8|image-07.png|gemini_4_carbon|Phobos
+reviewer_1203|R8|image-09.png|claude_sonnet_5_5|Jupiter. The image also shows one of its moons, probably Io, and the moon's shadow on the cloud tops.
+reviewer_1204|R8|image-09.png|gpt_6_2_sol|Jupiter
+reviewer_1205|R8|image-09.png|gemini_4_carbon|Jupiter
+reviewer_1206|R8|image-13.png|claude_sonnet_5_5|The Sun. The image shows our star with sunspots, prominence loops and a corona against a starfield.
+reviewer_1207|R8|image-13.png|gpt_6_2_sol|The Sun
+reviewer_1208|R8|image-13.png|gemini_4_carbon|The Sun
+reviewer_1209|R8|image-14.png|claude_sonnet_5_5|Earth. The image shows Earth, with the Moon in the upper right.
+reviewer_1210|R8|image-14.png|gpt_6_2_sol|Earth
+reviewer_1211|R8|image-14.png|gemini_4_carbon|Earth
+reviewer_1212|R8|image-15.png|claude_sonnet_5_5|Saturn. The image shows the ringed planet, with what looks like its moon Titan at the upper right.
+reviewer_1213|R8|image-15.png|gpt_6_2_sol|Saturn
+reviewer_1214|R8|image-15.png|gemini_4_carbon|Saturn
+reviewer_1215|R8|image-16.png|claude_sonnet_5_5|Mercury. The image shows a cratered planet lit from one side, with the Sun large and close in the upper right.
+reviewer_1216|R8|image-16.png|gpt_6_2_sol|Mercury
+reviewer_1217|R8|image-16.png|gemini_4_carbon|Mercury

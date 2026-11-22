@@ -138,7 +138,6 @@ SEED = 20101
 TWIN = (4.0 / 255, 8.0 / 255, 5.0, 37, 8.0, 1.5, 6.0, 1.6 / 255, 2.4 / 255)
 RAY = (12, 4.0, 110.0, 170.0, 30.0, 90.0, 64.0, 120.0)
 GRAIN = (0.7, 0.92, 0.63, 0.232, 4.0, 130.0)
-RING = 2
 
 
 def deband(lin, above):
@@ -219,7 +218,6 @@ def terrain(film):
     band = wide[0:RAY[0]].mean(0)
     top = np.stack([ndi.gaussian_filter1d(band[:, i], 24, mode="nearest") for i in range(3)], -1)
     fine = np.stack([ndi.gaussian_filter1d(band[:, i], RAY[1], mode="nearest") for i in range(3)], -1)
-    plain = wide
     wide = untwin(wide, twice(np.broadcast_to(w[..., 0], (H, W))), px, W)
     off = (np.arange(W) + 0.5)[None, :] - sx
     rr = np.hypot(off, (np.arange(0, 140) + 0.5)[:, None] - sy)
@@ -245,7 +243,6 @@ def terrain(film):
     calm = np.stack([ndi.gaussian_filter1d(band[:, i], RAY[6], mode="nearest") for i in range(3)], -1)
     even = step(-ym, 0.0, RAY[7])[..., None]
     margin = np.minimum(floor + np.maximum(top[None] + (calm - top)[None] * even - floor, 0) * rise * (1 + ray), cap)
-    was = np.minimum(floor + np.maximum(top[None] - floor, 0) * (np.hypot(xs - sx, 0.5 - sy)[None, :] / r1[-RING:])[..., None] ** power, cap).astype(np.float32)
     wide = np.concatenate([margin.astype(np.float32), wide], 0)
     wide = np.pad(wide, ((0, py), (0, 0), (0, 0)), mode="edge")
     smooth = np.pad(np.concatenate([np.ones((py, smooth.shape[1]), np.float32), smooth], 0), ((0, py), (0, 0)), mode="edge")
@@ -259,10 +256,6 @@ def terrain(film):
     amp = GRAIN[2] + GRAIN[3] * np.log(np.clip(code[0:py].mean(-1), GRAIN[4], GRAIN[5]))
     for i in range(3):
         code[0:py, :, i] += amp * (np.sqrt(GRAIN[1]) * field[0] + np.sqrt(1 - GRAIN[1]) * field[i + 1])
-    cols = slice(px - RING, px + W + RING)
-    code[py - RING:py, cols] = np.clip(geo.encode(was[:, cols].astype(np.float64)), 0, 1) * 255
-    for cols in (slice(px - RING, px), slice(px + W, px + W + RING)):
-        code[py:py + H, cols] = np.clip(geo.encode(plain[:, cols].astype(np.float64)), 0, 1) * 255
     noise = (np.random.default_rng(SEED).random(code.shape, dtype=np.float32) - 0.5) * (smooth > 0.5)[..., None] * (code > 1.0)
     img = Image.fromarray(np.clip(np.floor(code + 0.5 + noise), 0, 255).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):

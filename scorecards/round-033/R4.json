@@ -1,0 +1,92 @@
+{
+ "critic": "R4",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R4",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "sheet-01.png",
+      "where": "Sun and corona, frames 474–482",
+      "what": "The textured orange Sun and red prominences wash to nearly solid white over one sample interval. The exposure shift reads like a shot change rather than a continuation of the departure.",
+      "fix": "Carry one exposure and tone-mapping curve through the departure. If the glare needs to build, ramp it while preserving detail and color in the prominences."
+     },
+     {
+      "severity": "major",
+      "file": "sheet-02.png",
+      "where": "Sun in the upper-right corner, frames 1055–1069",
+      "what": "The bright, structured corona gives way to a flat, dark-edged disk before the Sun clears frame. The change in appearance breaks the continuity of the flyaway.",
+      "fix": "Track the same solar disk, corona and bloom through the exit, with continuous exposure and occlusion by Mercury."
+     },
+     {
+      "severity": "major",
+      "file": "sheet-08.png",
+      "where": "Milky Way and moon during Neptune approach, frames 4502–4516",
+      "what": "The bright galactic band drops out of the lower right as the moon moves from inside frame to clipped at the upper left, then the moon returns farther down the left edge. The reversal and background change make the arrival read as a reset.",
+      "fix": "Use a continuous eased camera orientation and field-of-view curve, and keep the moon and starfield registered in world space across the approach."
+     },
+     {
+      "severity": "major",
+      "file": "sheet-01.png through sheet-09.png",
+      "where": "review pack coverage",
+      "what": "The pack shows interplanetary travel and one closing pullback, sampled every 6–11 frames. It does not show the stop hold, dive, terrain and rise segments or consecutive frames across the covers, so terrain parallax and frame-to-frame stability cannot be verified.",
+      "fix": "Provide the missing stop sheets at review tier and consecutive frames on both sides of each cover; include sheets for any remaining ending segments."
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-05.png",
+      "where": "near-field asteroids, frames 2765–2772",
+      "what": "The closest rocks have stepped, doubled-looking silhouettes instead of a single continuous directional smear.",
+      "fix": "Increase temporal shutter sampling on the fast foreground rocks using their true camera-relative motion."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R4",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "sheet-10.png",
+      "where": "ringed planet, left third, frames 5145-5324",
+      "what": "the camera barely drifts (about 2 px of upward drift per 48 frames) and the planet shows no visible turn, cloud-band motion or ring motion across about 180 frames, so the hold reads close to a still image instead of a living scene",
+      "fix": "add a slow, eased camera drift or push-in and visible slow rotation of the planet's bands so the hold has life"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-11.png",
+      "where": "whole frame, frames 5332-5399",
+      "what": "the fade to black is smooth and eased (mean luma 28.7 down to 0 with no steps), but the camera seems to stop drifting as the fade begins, so the motion dies before the picture does",
+      "fix": "keep the slow camera drift going all the way through the fade so the ending stays one continuous move"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-10.png",
+      "where": "far left edge, ring arc at mid-height",
+      "what": "the ring is cut off by the left frame edge for the whole hold. This is stable and does not pop, but the planet hugs the frame edge",
+      "fix": "frame the planet slightly further right, or let the drift carry it inward"
+     },
+     {
+      "severity": "minor",
+      "file": "sheet-10.png",
+      "where": "pack coverage",
+      "what": "only two ending sheets (the hold and the fade) came in. No travel, dive, terrain, rise or cover sheets were attached, so continuity across covers and terrain parallax could not be checked",
+      "fix": "include the full R4 pack: hold, dive, terrain and rise sheets, cover frame sheets, and the travel and ending sheets"
+     }
+    ]
+   }
+  }
+ ]
+}

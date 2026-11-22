@@ -19,7 +19,7 @@ for (let f = seg.firstFrame; f < seg.endFrame; f++) {
   const s = d.shotAt(f, (f + shutterMid()) / config.fps)
   const inv = s.camera.quaternion.clone().invert()
   const fl = fmt.height / 2 / Math.tan(THREE.MathUtils.degToRad(s.camera.vfov) / 2)
-  const discs = s.sets.map((x) => {
+  const discs = s.sets.filter((x) => x.id === s.segment.stop || s.farLight === undefined || s.farLight > 0).map((x) => {
     const c = x.origin.clone().sub(s.camera.position).applyQuaternion(inv)
     return { id: x.id, c, r: Math.asin(Math.min(1, 1 / c.length())) }
   })

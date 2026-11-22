@@ -73,6 +73,10 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
   const sunAim = new THREE.Quaternion()
+  const sunWas = new THREE.Quaternion()
+  const { FilmDirector } = await import('../../director/film')
+  const { plans } = await import('../../director/plans')
+  const film = new FilmDirector(plans)
   const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
   const lens = new Lens(await ctx.texture(base + lensJson.file, { srgb: true, anisotropy: 1 }), lensJson, look.lens, diagUniform)
@@ -185,7 +189,8 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      const body = state.weight
+      const leaving = state.segment.stop === plan.id && state.segment.kind === 'travel'
+      const body = leaving ? 1 : state.weight
       orbit.visible = inOrbit && body > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
@@ -246,7 +251,9 @@ export const createSet: SetFactory = async (ctx) => {
         glareSun.copy(sunShown)
         shrink = Math.max(ramp(tanFrom, tanTo, tanHalf), 1 - smoother(ramp(lift.grow[0], lift.grow[1], fromRise)))
         plate = smoother(ramp(lift.plate[0], lift.plate[1], fromRise))
-        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise))
+        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise)) * look.flare.after
+      } else if (leaving) {
+        ghosts = look.flare.after
       }
       glare.update(on ? glare.bloom(first ? fromDive : fromRise, first ? 'dive' : 'rise') : 0, glareSun, view.camera, gain, aspect, state.time)
       const skyWeight = diving ? smoother(ramp(look.sky.dive[0], look.sky.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.rise[0], look.sky.rise[1], fromRise)) : 0
@@ -294,8 +301,14 @@ export const createSet: SetFactory = async (ctx) => {
       const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
       const arriving = kind === 'travel' && !mine
       const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
+      const surface = arriving ? 1 - smooth(ramp(look.sunLook[0], look.sunLook[1], state.u)) : 0
       const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
+      const hide = arriving ? 1 - smoother(ramp(look.hide.fade[0]!, look.hide.fade[1]!, state.u)) : rising || leaving ? 1 : 0
+      const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
+      const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
+      const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1
       let limbRight = 1
       if (whole > 0) {
@@ -323,6 +336,9 @@ export const createSet: SetFactory = async (ctx) => {
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
       const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
       const ghost = shown * clear * body * (1 + 2 * (breath - 1)) * ghosts
+      const onBody = mix(look.flare.onBody[0], look.flare.onBody[1], diving ? smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u)) : rising || leaving ? 1 : 0)
+      lens.shade(world.position, view.camera, onBody)
+      streak.shade(world.position, view.camera, onBody)
       lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },

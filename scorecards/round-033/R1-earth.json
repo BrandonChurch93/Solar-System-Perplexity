@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops E and H (lower-right South Atlantic night limb) and crop I (far-right West Africa night limb), also visible in pair-01-b.png",
+   "what": "the vivid emerald-green airglow/auroral patches present in -a are heavily desaturated and dimmed into faint grey-teal smudges",
+   "fix": "restore the green emission saturation and luminance in those lower-right and eastern night-side limb regions to match pair-01-a.png and pair-02-a.png"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right sky (the Moon and immediate surrounding sky)",
+   "what": "the Moon is stretched ~4% diagonally into a slight oval with a slightly crisper stair-stepped sunlit limb, and a faint dark circular mask ring suppresses the subtle green-blue background sky glow around the disc",
+   "fix": "keep the Moon circular without wide-angle corner stretch, soften anti-aliasing along its sunlit rim, and feather or remove the dark circular mask so surrounding sky values match pair-01-a.png"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "crops A, C, F, and G (cloud filaments, terrain detail, and city lights beneath the northern aurora)",
+   "what": "high-frequency micro-contrast is slightly oversharpened compared to -a, making fine cloud edges and yellow city-light speckles cutting into the green aurora band slightly crunchier",
+   "fix": "reduce sharpening or high-frequency detail boost slightly to match the smoother photographic roll-off of pair-02-a.png"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "crops A, F, and G (specular ocean sun-glint and cumulus cloud rims)",
+   "what": "fine wave-glint texture and bright cloud edges have slightly stronger 1:1 micro-sharpening/grain than -a",
+   "fix": "soften the micro-contrast/sharpening slightly on specular ocean highlights and cloud rims to match pair-04-a.png"
+  }
+ ]
+}
