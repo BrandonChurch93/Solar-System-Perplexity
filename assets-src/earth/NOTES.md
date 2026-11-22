@@ -1891,3 +1891,18 @@ It crossed MAIL 204, so a second high-priority message went out at once, startin
 - **2156 final, head against trim** (`c35/dfinal-2156.txt`): 543,586 px differ, 382,547 over 1, 63,424 over 4, 1,036 over 16, max 22; changed pixels mean -2.59, -1.39, -0.56; over-1 box x 513 to 1323, y 65 to 990. By old luma: 0 to 8: 2 px over 1, max 3; 8 to 20: 847 over 1, 82 over 2, max 6; 20 to 60: mean -0.38, -0.35, -0.06, max 16; over 60: mean -2.17, -1.04, -0.49, max 22. Pixels over 12 px from any over-1 change (1,527,830): max 1.
 - **Sent 18:34 (low)**: READY hash stays 5e75e36d, branch head 7e9a121e adds NOTES only. **Sent 18:45 (low)**: the three finals' sha256 and the two comparisons above; G5 and G17 lines to follow.
 - **Next**: when "trim measure done" stands in `q2.log`, send the G5 and G17 lines as printed (low priority unless a FAIL: then high). After "qb done": merge `origin/main` (it holds 8f62d49f), `npm run build`, `npx vitest run`, push; remove the work tree `/home/user/workspace/earth-wt`; looks due by 19:02. Then wait for the Builder's word on round 35 and the freeze; do not stop until the Builder says the stop is finished.
+
+## 18:46 to 19:00 UTC: G5 and G17 with the trim, main 31e1f290 merged
+
+- **Measure with the trim** (`c35/measure-trim.log`, on head 1304b68e = 5e75e36d plus NOTES, tree on main 55319c5a, exit 0, 719 s), lines as printed:
+  `PASS G5 earth: 1755 hold invalid 0 coverage 0.329; 1857 dive invalid 0 coverage 0.452; 2010 terrain invalid 0 coverage 0.780; 2156 rise invalid 0 coverage 0.386`
+  `PASS G17 earth: 1755 median 1.195 p25 1.131 over 72 tiles; 2010 median 1.044 p25 1.000 over 78 tiles`
+  Sent to `/root` 18:57 (high). G13 and the full measure with the trim: not run by me (the round's workers run them).
+- **Looks pushed 18:46** (agent/earth-looks 3694bbfc): pairs `c35/pair-1857-trim.png`, `c35/pair-2156-trim.png` (head above, trim below). Next due by 19:16.
+- **Main 31e1f290 merged at the queue boundary 18:57** ("Round 35: polish, the tree at the build"; head 66457a25, pushed). Under `src`, `public`, `config`, `tools` my tree equals main; the only difference to main is this file. Build passes, vitest 87 of 87.
+- **Hashes** (`npx tsx out/work/earth/pb/c35/h.ts`): on the merged tree engine 247ebad7e038ce06, earth 2b75dbd9c40c8387, both as the Builder named in mail 207. My finals and measure lines with the trim were rendered on main 55319c5a, where the engine was 096721f26986d35a and earth 2b75dbd9c40c8387. Between 55319c5a and 31e1f290 the engine differs only in `src/space/belt/belt.json` and `src/space/belt/belt.ts`.
+- **Queue `c35/qc.sh`** (started 18:58:05): the nine drafts again on the merged tree (`c35/db`), to see whether the engine change moves Earth's frames (compare with `c35/da`).
+- Work tree `/home/user/workspace/earth-wt` (plain main 94482a8c) is no longer needed: remove it after qc.
+- **qc done 18:59:35**: on the merged tree (main 31e1f290, engine 247ebad7e038ce06) all nine drafts keep the bytes they had with the trim on main 55319c5a (engine 096721f26986d35a): 1642 626a97c6, 1680 5ae94dc7, 1755 d7d08630, 1829 64c197fb, 1857 298dc974, 2010 511ff09c, 2156 b01c3063, 2174 c6621c33, 2212 560bda92. So the engine change (the belt) does not move Earth's frames at the draft tier; finals were not rendered again on the new engine.
+- Work tree `/home/user/workspace/earth-wt` removed 19:00.
+- **State at 19:00**: nothing running, no edit under `src` or `public` allowed (mail 207), tree equals main 31e1f290 but for this file. Waiting for the Builder's word on round 35 and the freeze. Looks due by 19:16, notes by 19:30.
