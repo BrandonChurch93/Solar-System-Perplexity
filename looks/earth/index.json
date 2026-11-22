@@ -1,9 +1,140 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T04:32:05.719Z",
- "head": "4ba10aa798df7f227508aeee6a1793f6ca80056a",
- "note": "Earth polish tree 3b3819e on engine batch 18: terrain sheet done, dive cover sheet rendering (frames 1879 to 1881 in), rise cover sheet next",
+ "pushed": "2026-11-22T04:53:13.616Z",
+ "head": "ff29eb212b755b4f2c60a576e9f69039f3ec4cf7",
+ "note": "Earth second polish READY in work on engine batch 19: 2156 with the new flight sky, hold and terrain compares (1755 and 2010 byte equal to batch 18), dive cover sheet",
  "looks": [
+  {
+   "time": "2026-11-22T04:53:12.420Z",
+   "file": "20261122045312420-note-f-2156-final.jpg",
+   "source": "out/work/earth/pb/f/f-2156-final.png",
+   "kind": "note",
+   "label": "Judged rise frame 2156, final tier, 64 samples; branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:53:11.265Z",
+   "file": "20261122045311265-note-moon-2156-b19.jpg",
+   "source": "out/work/earth/pb/f/moon-2156-b19.png",
+   "kind": "note",
+   "label": "Moon at 2156, 4 times: kept build, batch 18, batch 19. On batch 19 the sky round the Moon (10, 17, 23) is level with the Moon's night side (9, 16, 22); branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:53:10.278Z",
+   "file": "20261122045310278-note-pair-2156-b18-b19.jpg",
+   "source": "out/work/earth/pb/f/pair-2156-b18-b19.png",
+   "kind": "note",
+   "label": "Judged rise frame 2156, final tier: left on engine batch 18, right on batch 19 (flight stars and dust glow, by design); the disc is the same to one level; branch ff29eb2 = code 3b3819e with main 2621f00 merged (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:52:42.855Z",
+   "file": "20261122045242855-compare-compare-earth-terrain-view.jpg",
+   "source": "out/work/compare/compare-earth-terrain-view.jpg",
+   "kind": "compare",
+   "label": "earth.terrain: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:52:41.828Z",
+   "file": "20261122045241828-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:51:42.788Z",
+   "file": "20261122045142788-compare-compare-earth-hold-view.jpg",
+   "source": "out/work/compare/compare-earth-hold-view.jpg",
+   "kind": "compare",
+   "label": "earth.hold: approved image left, film frame right, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:51:41.750Z",
+   "file": "20261122045141750-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:50:32.731Z",
+   "file": "20261122045032731-frame-f-2156-final.jpg",
+   "source": "out/work/earth/pb/f/f-2156-final.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, final tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:44:49.268Z",
+   "file": "20261122044449268-note-sheet-dive-cover-full-3b3819e.jpg",
+   "source": "out/work/earth/pb/e/sheet-dive-cover-full-3b3819e.png",
+   "kind": "note",
+   "label": "Dive cover sheet from the harness, review tier, full format, frames 1879 to 1890; branch 3b3819e on main b0dd302 with engine batch 18 a67c9c34 (engine hash 7cd5ba49); dive frames are not touched by batch 19",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T04:44:13.362Z",
+   "file": "20261122044413362-sheet-earth.dive-cover-16x9-review.jpg",
+   "source": "out/work/sheets/earth.dive-cover-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.dive, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1879,
+   "last": 1890,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
+  {
+   "time": "2026-11-22T04:43:29.650Z",
+   "file": "20261122044329650-frame-f01889-review.jpg",
+   "source": "out/work/sheets/.frames-WdQKHM/f01889-review.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1889, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1889,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T04:32:04.462Z",
    "file": "20261122043204462-note-dive-1879-1881.jpg",
@@ -11,20 +142,6 @@
    "kind": "note",
    "label": "Dive cover 1879, 1880, 1881 at the review tier, full format, half size; branch 3b3819e, engine batch 18 a67c9c34 (engine hash 7cd5ba49)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T04:28:44.216Z",
-   "file": "20261122042844216-frame-f01881-review.jpg",
-   "source": "out/work/sheets/.frames-WdQKHM/f01881-review.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1881, review tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1881,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
   },
   {
    "time": "2026-11-22T04:06:03.936Z",
@@ -146,110 +263,6 @@
    "kind": "note",
    "label": "Night limb at 1755, 1857, 2156: native at 3 times, then at 3 times gain. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:47.229Z",
-   "file": "20261122033747229-note-city-2156.jpg",
-   "source": "out/work/earth/pb/e/city-2156.png",
-   "kind": "note",
-   "label": "City lights at 2156, 3 times: kept build, before, new. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:46.095Z",
-   "file": "20261122033746095-note-city-1755-c.jpg",
-   "source": "out/work/earth/pb/e/city-1755-c.png",
-   "kind": "note",
-   "label": "City lights at 1755, 3 times: approved image, new, before. branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:44.974Z",
-   "file": "20261122033744974-note-f-2156-final.jpg",
-   "source": "out/work/earth/pb/e/f-2156-final.png",
-   "kind": "note",
-   "label": "Earth 2156 rise, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:43.590Z",
-   "file": "20261122033743590-note-f-2010-final.jpg",
-   "source": "out/work/earth/pb/e/f-2010-final.png",
-   "kind": "note",
-   "label": "Earth 2010 terrain, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34 (same bytes as before the discard move and before batch 18)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:42.471Z",
-   "file": "20261122033742471-note-f-1857-final.jpg",
-   "source": "out/work/earth/pb/e/f-1857-final.png",
-   "kind": "note",
-   "label": "Earth 1857 dive, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:41.062Z",
-   "file": "20261122033741062-note-f-1755-final.jpg",
-   "source": "out/work/earth/pb/e/f-1755-final.png",
-   "kind": "note",
-   "label": "Earth 1755 hold, final tier, branch 3b3819e, main 0622510 with engine batch 18 a67c9c34",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T03:37:26.342Z",
-   "file": "20261122033726342-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T03:26:00.456Z",
-   "file": "20261122032600456-frame-f-1755-final.jpg",
-   "source": "out/work/earth/pb/e/f-1755-final.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T02:59:17.132Z",
-   "file": "20261122025917132-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:58:17.483Z",
-   "file": "20261122025817483-compare-compare-earth-hold-view.jpg",
-   "source": "out/work/compare/compare-earth-hold-view.jpg",
-   "kind": "compare",
-   "label": "earth.hold: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
   }
  ]
 }
