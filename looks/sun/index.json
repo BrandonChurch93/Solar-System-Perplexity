@@ -1,9 +1,125 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T02:31:20.365Z",
- "head": "e51a180206f3b501e40c71efe4fe76610756eda6",
- "note": "sun: opening switch on, final tier 0, 60, 90 on main 3d48581; measure running",
+ "pushed": "2026-11-22T02:48:02.399Z",
+ "head": "f31bba94acbb8534e77afecbb4e667aff3d3e2b6",
+ "note": "sun: opening switch 5dee843 proofs and judged frames at final tier, main 3d48581; review sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T02:48:01.296Z",
+   "file": "20261122024801296-note-i289-draft-sheet-200-224-every-frame-main-3d48581.jpg",
+   "source": "out/work/sun/i289-draft-sheet-200-224-every-frame-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun item 1: every frame 200 to 224 at DRAFT tier on main 3d48581 (the review sheet i286 is from main 1c7c297; 200 to 207 keep their bytes, 208 to 224 change in the shared sky)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:48:00.352Z",
+   "file": "20261122024800352-note-i289-f360-final-main-3d48581.jpg",
+   "source": "out/work/sun/i289-f360-final-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun: judged frame 360, final tier, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:59.356Z",
+   "file": "20261122024759356-note-i289-f247-final-main-3d48581.jpg",
+   "source": "out/work/sun/i289-f247-final-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun: judged frame 247, final tier, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:58.406Z",
+   "file": "20261122024758406-note-i289-f90-final-switch-on-main-3d48581.jpg",
+   "source": "out/work/sun/i289-f90-final-switch-on-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun: judged frame 90, final tier (same bytes switch on or off), main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:57.462Z",
+   "file": "20261122024757462-note-i289-f60-final-switch-on-main-3d48581.jpg",
+   "source": "out/work/sun/i289-f60-final-switch-on-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun: judged frame 60, final tier, opening switch on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:56.557Z",
+   "file": "20261122024756557-note-i289-f0-final-switch-on-main-3d48581.jpg",
+   "source": "out/work/sun/i289-f0-final-switch-on-main-3d48581.jpg",
+   "kind": "note",
+   "label": "sun: judged frame 0, final tier, opening switch on, main 3d48581",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:55.683Z",
+   "file": "20261122024755683-frame-f00000-review.jpg",
+   "source": "out/work/sheets/.frames-c4iB0f/f00000-review.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 0, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:47:55.606Z",
+   "file": "20261122024755606-note-i287-opening-arch-native-nine-frames-switch-on.jpg",
+   "source": "out/work/sun/i287-opening-arch-native-nine-frames-switch-on.jpg",
+   "kind": "note",
+   "label": "sun opening: the arch at native size in the nine R6 frames, switch ON (draft, same bytes on main 3d48581)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:54.821Z",
+   "file": "20261122024754821-note-i287-opening-nine-R6-frames-at-400-switch-on.jpg",
+   "source": "out/work/sun/i287-opening-nine-R6-frames-at-400-switch-on.png",
+   "kind": "note",
+   "label": "sun opening: the nine R6 frames at 400 px, switch ON (draft, same bytes on main 3d48581)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:53.903Z",
+   "file": "20261122024753903-note-i287-opening-nine-R6-frames-at-400-switch-off.jpg",
+   "source": "out/work/sun/i287-opening-nine-R6-frames-at-400-switch-off.png",
+   "kind": "note",
+   "label": "sun opening: the nine R6 frames at 400 px, switch OFF (draft, same bytes on main 3d48581)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:52.828Z",
+   "file": "20261122024752828-note-i289-opening-strip-400-switch-on.jpg",
+   "source": "out/work/sun/i289-opening-strip-400-switch-on.png",
+   "kind": "note",
+   "label": "sun opening: strip 0, 15, 30, 45, 60 at 400 px, switch ON (draft tier, main 3d48581)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:47:51.926Z",
+   "file": "20261122024751926-note-i289-opening-strip-400-switch-off.jpg",
+   "source": "out/work/sun/i289-opening-strip-400-switch-off.png",
+   "kind": "note",
+   "label": "sun opening: strip 0, 15, 30, 45, 60 at 400 px, switch OFF (draft tier, main 3d48581)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T02:40:37.475Z",
+   "file": "20261122024037475-job-frame-00090.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T02:31:19.205Z",
    "file": "20261122023119205-note-i288-f247-before-after-batch-17-draft.jpg",
@@ -69,20 +185,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T02:30:32.619Z",
-   "file": "20261122023032619-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-22T02:08:50.821Z",
    "file": "20261122020850821-note-i286-review-212-224-larger.jpg",
    "source": "out/work/sun/i286-review-212-224-larger.jpg",
@@ -105,44 +207,6 @@
    "kind": "note",
    "label": "sun item 1: review tier sheet of every frame 200 to 224 (rise cover), tree 6177d82",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:56:48.505Z",
-   "file": "20261122015648505-note-i285-item4-limb-haze-texture-gain3.jpg",
-   "source": "out/work/sun/haze/i285-item4-limb-haze-texture-gain3.jpg",
-   "kind": "note",
-   "label": "item 4 offline: the limb haze as its own layer in limb coordinates (azimuth by 0 to 8 degrees), 3 times gain",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:56:47.433Z",
-   "file": "20261122015647433-note-i285-item4-old-card-over-new-card-gain3.jpg",
-   "source": "out/work/sun/haze/i285-item4-old-card-over-new-card-gain3.jpg",
-   "kind": "note",
-   "label": "item 4 offline: terrain sky card, old over new, 3 times gain (the dark band along the limb is gone from the card)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T01:44:06.768Z",
-   "file": "20261122014406768-note-i284-opening-arch-lanes-contours.jpg",
-   "source": "out/work/sun/open/i284-opening-arch-lanes-contours.jpg",
-   "kind": "note",
-   "label": "Opening: lanes and arc length the knots run along",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:46:54.452Z",
-   "file": "20261122004654452-frame-f00060.jpg",
-   "source": "out/work/sun/rf12/f00060.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   }
  ]
 }
