@@ -1,9 +1,89 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T02:10:12.682Z",
- "head": "e3d718505d7d331a16ebf0d0b0285fa61e7dd523",
- "note": "POLISH READY items 1 to 3: three every frame proof sheets, terrain sheet at review, four final stills equal to the kept build",
+ "pushed": "2026-11-22T02:33:46.515Z",
+ "head": "b0bfbb76643de6938e79ef174d8d1eff2e20f528",
+ "note": "Phase 6 items 4, 5, 7, 8 in work on main 3d48581 (batch 17): night limb fill measured from the approved image, aurora inside the air shell",
  "looks": [
+  {
+   "time": "2026-11-22T02:33:34.330Z",
+   "file": "20261122023334330-note-limb70.jpg",
+   "source": "out/work/earth/pb/r1/limb70.png",
+   "kind": "note",
+   "label": "Earth 1755 limb at PA 60 to 80, x4 at gain 3: approved hero, Phase B in work, kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:33:33.731Z",
+   "file": "20261122023333731-note-aurA.jpg",
+   "source": "out/work/earth/pb/r1/aurA.png",
+   "kind": "note",
+   "label": "Earth 1755 aurora, x2: approved hero, Phase B in work (aurora inside the air shell), kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:33:33.019Z",
+   "file": "20261122023333019-note-night-1755.jpg",
+   "source": "out/work/earth/pb/r2/night-1755.png",
+   "kind": "note",
+   "label": "Earth 1755 night limb at PA 95, 125, 150, native x3 and gain 3: approved hero, kept build, Phase B in work (main 3d48581)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:32:51.323Z",
+   "file": "20261122023251323-frame-r-1755.jpg",
+   "source": "out/work/earth/pb/r2/r-1755.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, review tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:23:17.141Z",
+   "file": "20261122022317141-frame-f-2010-final.jpg",
+   "source": "out/work/earth/pb/m17/f-2010-final.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "1e61fa4049d34863"
+  },
+  {
+   "time": "2026-11-22T02:16:32.388Z",
+   "file": "20261122021632388-frame-r-2156.jpg",
+   "source": "out/work/earth/pb/r1/r-2156.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2156, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2156,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T02:15:02.785Z",
+   "file": "20261122021502785-frame-r-1857.jpg",
+   "source": "out/work/earth/pb/r1/r-1857.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1857, review tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
   {
    "time": "2026-11-22T02:09:00.436Z",
    "file": "20261122020900436-sheet-earth.terrain-16x9-review.jpg",
@@ -14,20 +94,6 @@
    "segment": "earth.terrain",
    "first": 1920,
    "last": 2099,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:08:18.621Z",
-   "file": "20261122020818621-frame-f02018-review.jpg",
-   "source": "out/work/sheets/.frames-8oMXg9/f02018-review.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2018, review tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2018,
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
@@ -74,20 +140,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T02:06:52.977Z",
-   "file": "20261122020652977-frame-f-1755-final.jpg",
-   "source": "out/work/earth/p6/qa/f-1755-final.png",
-   "kind": "frame",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
    "time": "2026-11-22T02:05:28.209Z",
    "file": "20261122020528209-note-f-2156-final.jpg",
    "source": "out/work/earth/p6/qa/f-2156-final.png",
@@ -102,34 +154,6 @@
    "kind": "note",
    "label": "final 1857 on version c: byte equal to the kept build",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T02:04:47.023Z",
-   "file": "20261122020447023-frame-f-2156-final.jpg",
-   "source": "out/work/earth/p6/qa/f-2156-final.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T02:00:15.650Z",
-   "file": "20261122020015650-frame-f-1857-final.jpg",
-   "source": "out/work/earth/p6/qa/f-1857-final.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1857, final tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
   },
   {
    "time": "2026-11-22T01:49:08.376Z",
@@ -174,6 +198,52 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
+  },
+  {
+   "time": "2026-11-22T01:28:06.299Z",
+   "file": "20261122012806299-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T01:21:30.686Z",
+   "file": "20261122012130686-note-sheet-rise-c.jpg",
+   "source": "out/work/earth/p6/sheet-rise-c.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 2: rise 2135 to 2140 larger, review tier at preview format",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:21:30.094Z",
+   "file": "20261122012130094-note-sheet-rise-2122-2140.jpg",
+   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
+   "kind": "note",
+   "label": "Phase 6 item 2 proof: rise cover, every frame 2122 to 2140, review tier at preview format, version c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:08:39.347Z",
+   "file": "20261122010839347-note-night-low2.jpg",
+   "source": "out/work/earth/p6/night-low2.png",
+   "kind": "note",
+   "label": "Item 8: isolated green streak PA 140 to 146, hero over kept film, then both at 2.5 times gain",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T01:08:38.428Z",
+   "file": "20261122010838428-note-clip-sky.jpg",
+   "source": "out/work/earth/p6/clip-sky.jpg",
+   "kind": "note",
+   "label": "Item 6: kept clip frames 2147, 2156, 2165, 2174: the shared band stands upright behind the globe",
+   "stop": "earth"
   }
  ]
 }
