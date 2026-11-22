@@ -1,9 +1,31 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T14:40:58.971Z",
- "head": "d8ec4ddf25e485d0fe8df62f25c8791117493105",
- "note": "Sun: finals of the CUT34 proof on agent/sun d8ec4ddf (main a60c5ffd): hook take 3 and the leave at 495",
+ "pushed": "2026-11-22T15:03:27.538Z",
+ "head": "bdbef6deee3dbd81327037c8d92c939823492a73",
+ "note": "sun: the limb at the hold for CUT34 (R1 and R3 words of round 33), proof chain running on bdbef6de",
  "looks": [
+  {
+   "time": "2026-11-22T15:03:26.824Z",
+   "file": "20261122150326824-note-c36-360-limb-draft-x3.jpg",
+   "source": "out/work/sun/hk3/c36-360-limb-draft-x3.jpg",
+   "kind": "note",
+   "label": "Sun hold 360, limb at 3 times, drafts: approved hero, main, limb cure (rim only where the hero has one, corona edge halved). agent/sun bdbef6de, main a60c5ffd",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T14:51:36.723Z",
+   "file": "20261122145136723-job-frame-00090.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T14:40:58.392Z",
    "file": "20261122144058392-note-c35-final-495-limb-x3.jpg",
@@ -42,22 +64,6 @@
    "source": "out/work/sun/hk3/c35-flash-onset.jpg",
    "kind": "note",
    "label": "Hook flash onset, drafts 25 to 28, agent/sun d8ec4ddf (main a60c5ffd)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:29:35.267Z",
-   "file": "20261122142935267-note-c35-strip9.jpg",
-   "source": "out/work/sun/hk3/c35-strip9.jpg",
-   "kind": "note",
-   "label": "Hook take 3, nine frames at 390 px, rows: round 33 head 969a8a6 above, agent/sun d8ec4ddf (main a60c5ffd) below, drafts",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T14:13:03.625Z",
-   "file": "20261122141303625-note-m1-486-full-x3.jpg",
-   "source": "out/work/sun/hk3/m1-486-full-x3.jpg",
-   "kind": "note",
-   "label": "Sun leave 486 left limb at 3 times, draft: before (4f72047d) and after the refit. Working tree on agent/sun 400cba54 with main 677e7286",
    "stop": "sun"
   },
   {
