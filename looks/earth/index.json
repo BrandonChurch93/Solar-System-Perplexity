@@ -1,9 +1,92 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T02:05:29.324Z",
- "head": "2851cd9f763542fa38d5d9c67481bab4299a6f22",
- "note": "Phase 6: final stills of the judged frames on version c equal the kept build byte for byte; terrain sheet rendering; then POLISH READY for items 1 to 3",
+ "pushed": "2026-11-22T02:10:12.682Z",
+ "head": "e3d718505d7d331a16ebf0d0b0285fa61e7dd523",
+ "note": "POLISH READY items 1 to 3: three every frame proof sheets, terrain sheet at review, four final stills equal to the kept build",
  "looks": [
+  {
+   "time": "2026-11-22T02:09:00.436Z",
+   "file": "20261122020900436-sheet-earth.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/earth.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.terrain, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "first": 1920,
+   "last": 2099,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T02:08:18.621Z",
+   "file": "20261122020818621-frame-f02018-review.jpg",
+   "source": "out/work/sheets/.frames-8oMXg9/f02018-review.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2018, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2018,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T02:07:41.947Z",
+   "file": "20261122020741947-note-sheet-rise-2122-2140.jpg",
+   "source": "out/work/earth/p6/sheet-rise-2122-2140.jpg",
+   "kind": "note",
+   "label": "item 2 proof: rise, every frame 2122 to 2140, review tier, preview format, version c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:07:41.143Z",
+   "file": "20261122020741143-note-sheet-dive-1884-1892.jpg",
+   "source": "out/work/earth/p6/sheet-dive-1884-1892.jpg",
+   "kind": "note",
+   "label": "item 3 proof: dive cover, every frame 1884 to 1892, review tier, preview format, version c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:07:40.318Z",
+   "file": "20261122020740318-note-sheet-dive-1868-1884.jpg",
+   "source": "out/work/earth/p6/sheet-dive-1868-1884.jpg",
+   "kind": "note",
+   "label": "item 1 proof: dive, every frame 1868 to 1884, review tier, preview format, version c",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:07:39.241Z",
+   "file": "20261122020739241-note-f-1755-final.jpg",
+   "source": "out/work/earth/p6/qa/f-1755-final.png",
+   "kind": "note",
+   "label": "final 1755 on version c: byte equal to the kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:07:38.396Z",
+   "file": "20261122020738396-note-f-2010-final.jpg",
+   "source": "out/work/earth/p6/qa/f-2010-final.png",
+   "kind": "note",
+   "label": "final 2010 on version c: byte equal to the kept build",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T02:06:52.977Z",
+   "file": "20261122020652977-frame-f-1755-final.jpg",
+   "source": "out/work/earth/p6/qa/f-1755-final.png",
+   "kind": "frame",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
+  },
   {
    "time": "2026-11-22T02:05:28.209Z",
    "file": "20261122020528209-note-f-2156-final.jpg",
