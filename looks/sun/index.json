@@ -1,9 +1,73 @@
 {
  "folder": "sun",
- "pushed": "2026-11-21T23:22:08.071Z",
- "head": "76566a0b2af70ace7af571407fe8baade7a6a0aa",
- "note": "Polish item 2: take A-3 of the nearest ground judged at the final tier, crisp but too glossy and too large; next take from a sketch of the approved lanes",
+ "pushed": "2026-11-22T00:02:24.325Z",
+ "head": "d30b8d658856c239ada45f37da17567996cccf9c",
+ "note": "Polish item 2: nearest ground is now the approved cells with a generated layer of crisp lanes, veins and bright points; tone matched to the approved image at frame 90",
  "looks": [
+  {
+   "time": "2026-11-22T00:02:23.602Z",
+   "file": "20261122000223602-note-i252-f0-lower-r24-over-now.jpg",
+   "source": "out/work/sun/i252-f0-lower-r24-over-now.jpg",
+   "kind": "note",
+   "label": "Frame 0, lower part: round 24 over now. Fault: bottom left corner too bright, in work",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:23.014Z",
+   "file": "20261122000223014-note-i250-f0-lower-r24-over-now.jpg",
+   "source": "out/work/sun/i250-f0-lower-r24-over-now.jpg",
+   "kind": "note",
+   "label": "Frame 0, lower part: round 24 over the film with the lane layer (first build)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:22.387Z",
+   "file": "20261122000222387-note-i248-f90-lower-approved-over-now.jpg",
+   "source": "out/work/sun/i248-f90-lower-approved-over-now.jpg",
+   "kind": "note",
+   "label": "Frame 90 draft, lower part: approved image over the film with the generated lane and point layer",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:21.698Z",
+   "file": "20261122000221698-note-i238-b-centre.jpg",
+   "source": "out/work/sun/i238-b-centre.png",
+   "kind": "note",
+   "label": "Prototype: approved cells, lanes of A-6, fine veins of A-5",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:21.043Z",
+   "file": "20261122000221043-note-i233-A-6-mix-c-centre.jpg",
+   "source": "out/work/sun/i233-A-6-mix-c-centre.png",
+   "kind": "note",
+   "label": "Prototype: approved cells with only the lanes and bright points of take A-6",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:20.497Z",
+   "file": "20261122000220497-note-i231-apron-take-A-6.jpg",
+   "source": "out/work/sun/i231-apron-take-A-6.jpg",
+   "kind": "note",
+   "label": "Take A-6 of the foreground from the lane sketch: crisp lanes, but flat glossy tiles",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:19.957Z",
+   "file": "20261122000219957-note-i227-apron-take-A-5.jpg",
+   "source": "out/work/sun/i227-apron-take-A-5.jpg",
+   "kind": "note",
+   "label": "Take A-5 of the foreground from the lane sketch: right cell size, but furry",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:02:18.860Z",
+   "file": "20261122000218860-note-i226-apron-input-A-5.jpg",
+   "source": "out/work/sun/i226-apron-input-A-5.png",
+   "kind": "note",
+   "label": "Input of takes A-5 and A-6: frame 0 with the foreground as grey with the approved lane network drawn in",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-21T23:22:07.489Z",
    "file": "20261121232207489-note-i221-f90-lower-approved-over-now.jpg",
@@ -53,38 +117,6 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-21T23:22:04.161Z",
-   "file": "20261121232204161-note-i218-d5-150-212.jpg",
-   "source": "out/work/sun/i218-d5-150-212.jpg",
-   "kind": "note",
-   "label": "Drafts 150 to 212 with take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:03.630Z",
-   "file": "20261121232203630-note-i217-d5-f0-bottom-right.jpg",
-   "source": "out/work/sun/i217-d5-f0-bottom-right.png",
-   "kind": "note",
-   "label": "Frame 0 draft, bottom right at native size, take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:03.070Z",
-   "file": "20261121232203070-note-i217-d5-f0-bottom-left.jpg",
-   "source": "out/work/sun/i217-d5-f0-bottom-left.png",
-   "kind": "note",
-   "label": "Frame 0 draft, bottom left at native size, take A-3 with the edge opening",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:02.416Z",
-   "file": "20261121232202416-note-i216-apron-take-A-4.jpg",
-   "source": "out/work/sun/i216-apron-take-A-4.jpg",
-   "kind": "note",
-   "label": "Rejected take A-4 of the foreground: giant cells below the line",
-   "stop": "sun"
-  },
-  {
    "time": "2026-11-21T23:18:10.141Z",
    "file": "20261121231810141-frame-f00060.jpg",
    "source": "out/work/sun/rf8/f00060.png",
@@ -97,38 +129,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f854c8146f64c7e4"
-  },
-  {
-   "time": "2026-11-21T23:06:33.594Z",
-   "file": "20261121230633594-note-i214-d4-f0-bottom-right.jpg",
-   "source": "out/work/sun/i214-d4-f0-bottom-right.png",
-   "kind": "note",
-   "label": "frame 0 draft native, bottom right, take A-3 foreground (edge band at the bottom still open)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:06:33.029Z",
-   "file": "20261121230633029-note-i214-d4-f90-bottom-left.jpg",
-   "source": "out/work/sun/i214-d4-f90-bottom-left.png",
-   "kind": "note",
-   "label": "frame 90 draft native, bottom left, take A-3 foreground",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:06:32.422Z",
-   "file": "20261121230632422-note-i214-d4-f90.jpg",
-   "source": "out/work/sun/i214-d4-f90.jpg",
-   "kind": "note",
-   "label": "frame 90 draft, foreground from apron take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:06:31.269Z",
-   "file": "20261121230631269-note-i214-d4-f0.jpg",
-   "source": "out/work/sun/i214-d4-f0.jpg",
-   "kind": "note",
-   "label": "frame 0 draft, foreground from apron take A-3 (front zone inside the approved frame)",
-   "stop": "sun"
   },
   {
    "time": "2026-11-21T17:49:49.561Z",
