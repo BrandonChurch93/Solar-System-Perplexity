@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, linkSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { basename, extname, join } from 'node:path'
 import { DIST, ROOT, ensureBuild, loadConfig } from './lib/common'
 import { encodeOnePass, rateFor, yuvScaleFilter } from './lib/encode'
@@ -12,6 +12,15 @@ const maxMb = Number(process.env.REVIEW_MAX_FILE_MB ?? cfg.raw.repo.maxFileMb)
 interface Item { file: string; title: string; kind: 'video' | 'image'; time: number; mb: number; left: boolean; note?: string }
 const items: Item[] = []
 
+function place(src: string, dest: string): void {
+  rmSync(dest, { force: true })
+  try {
+    linkSync(src, dest)
+  } catch {
+    copyFileSync(src, dest)
+  }
+}
+
 function add(path: string, title: string, prefix = ''): void {
   if (!existsSync(path)) return
   const st = statSync(path)
@@ -20,7 +29,7 @@ function add(path: string, title: string, prefix = ''): void {
   const mb = st.size / 1e6
   const left = mb > maxMb
   const name = prefix + basename(path)
-  if (!left) copyFileSync(path, join(out, name))
+  if (!left) place(path, join(out, name))
   items.push({ file: name, title, kind, time: st.mtimeMs, mb, left })
 }
 
@@ -36,6 +45,7 @@ for (const stop of cfg.stopIds) {
   if (item === undefined) continue
   if (item.left) {
     const copy = join(out, item.file)
+    rmSync(copy, { force: true })
     encodeOnePass(path, copy, { fps: cfg.fps, rate: rateFor(cfg, cfg.formatKeys.preview), filter: yuvScaleFilter(small.width, small.height) })
     const mb = statSync(copy).size / 1e6
     item.left = mb > maxMb
