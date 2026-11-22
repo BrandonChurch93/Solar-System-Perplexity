@@ -1223,7 +1223,7 @@ Head 5bd77c01 plus this note; the cure is 90cc5b23; tree holds main ff158d90 (me
   - Not cured, seen in the sheets: 1316 to 1317 and 1556 to 1557 are still one frame from crisp veil streaks to soft fog; the veil's limb line against the terrain's horizon; the two fog frames per side.
 - On the delivered tree (r2 moved to main ff158d90 plus my folders, 17:27): 32 draft frames of the two windows with the cure (`m9-F.png`) are the same bytes as on engine 84b0ea4 (`v9-F.png`). So main's engine changes do not move my cover frames and the review sheets stand for the delivered tree.
 
-## MAIL 191 (arrived about 17:37 VM time, 22 Nov), round 34's critics on my frames, word for word
+## MAIL 191 (arrived about 17:33 VM time, 22 Nov), round 34's critics on my frames, word for word
 
 "MAIL 191 from the Builder to venus_builder. Round 34's critics on your frames (build main 89ced51b, engine 096721f26986d35a), word for word; pack file names with the frame beside them. Use them for your CUT35 message, due 18:30 UTC, on the round 35 terms you have: take outs and small proven things, and one larger cure of a severe open item as its own commit, proved whole on review sheets beside round 34's. No reply needed to this mail. Scores: R3 4 on the rise frame 1586 (round 33: 6), R4 7 (round 33: 6). The motion critic's major is a coverage complaint (hold and terrain sheets did not move, so they were not in the pack). The far Venus at the judged travel frame 1072 is new in round 34 and is read as a cutout with two contours; that globe is yours in the flight.
 R3-venus, score 4:
@@ -1243,9 +1243,19 @@ R3-part1, score 7:
 R5, score 6:
 - severe, sheet-01.png (film part 1 90 to 1440), Mercury row: frames 615 and 717 upper right, 870 upper left, 1016 upper right; Venus frame 1440 right horizon versus 1185: "The sun does not shrink with distance and the light does not follow it. At Mercury it is a half-frame disk in the upper right, then a small flare in the upper left on the surface, then a half-frame disk in the upper right again. Venus is keyed from the upper left, then the cloud skim puts a still-large sun on the right horizon." Fix named: "Lock one light axis per stop and scale the solar disk to distance, not to the lens. The Mercury surface pass must see the same sun, same side, smaller than the solar close-ups and larger than Venus.""
 
-First reading (17:40):
+First reading (17:36):
 
 - Round 34's R4 critic says nothing against the two gates of the veil (1318 to 1320, 1550 to 1557). R4 went from 6 to 7 with CUT34's two commits. So the gate cure 90cc5b23 answers round 33's words, not an open item of round 34. That goes into the CUT35 message in those words; the Builder decides.
 - R3 on 1586 fell from 6 to 4 on a frame whose bytes did not change between round 33 and round 34 (CUT34 kept all four judged finals to the byte). The words are about the far limb table (halo all round the night side, doubled edge lower right), the wrap's painting (impasto, combs), the night side (smeared, streaks along the limb, orange spots), the lit limb's clip. None of them is a take out or a small proven thing that can be proved in the 45 minutes left with one render process; the night side shade and the rim refit were tested for CUT34 and left out.
 - R4 minor, 1591 to 1604: the globe does not turn at the end of the rise. To check in code after the proof: what turns in the rise (`look.drift` is clamped at `drift.to`).
 - Travel frame 1072 (the far Venus): two contours and an orange outline on the night side. That is the far rows of `limb.bin` (`fit/far.py`) seen small.
+
+## State at 17:48 (22 Nov): the cure does not touch a judged frame on the new main either; G13 holds (read this first after a compaction)
+
+Head 3c40a24a plus this note; the cure is 90cc5b23; tree holds main ff158d90.
+
+- Finals on main ff158d90 with the cure (`f29-F.png`): 1185, 1287, 1440 are the same bytes as round 34's finals (`f26-F.png`, engine 84b0ea4). 1586 differs from `f26-1586.png` in 764,091 pixels, mean 0.26 levels, all of it in the sky (stars and the faint sky cloud; the globe's disc is unchanged): `view/f29-1586-diff.png`.
+- The round 34 code (b18bf2f4) on main ff158d90 gives the same bytes for final 1586 as the cure does (`r34m-1586.png` against `f29-1586.png`, `cmp`). So the change at 1586 is main's sky (`src/space/sky.ts`, the flight field), not mine. It goes into the CUT35 message in the words of MAIL 141: a judged frame of mine moved against the old main and I did not mean it.
+- G13 on main ff158d90 with the cure: PASS, 0 of 433 frames over 0.02 soft (525 s).
+- Read in code (17:44), for after the deadline: `uLimbFar` is `left`, 0 until the dive starts, then up to 1 over `look.leave.seconds` and 1 through the rise and the departure. So the far rows of `limb.bin` (`fit/far.py`) draw the halo round the night side at 1586, and a change to them also reaches the dive's orbit side (1287 if `left` is above 0 there). The far Venus of the arrival at 1072 is drawn with the HOLD rows (`left` is 0 before the dive), so the two contours there are the hero's fitted rim seen small; a cure there needs a third state for the arrival and moves travel frames the Builder judges. Neither can be built and proved whole before 18:30.
+- R4 minor (globe locks 1591 to 1604): `plan.spin` is -1 degree per second about the axis, 0.47 degrees over those 14 frames, about one pixel on the sheet's cell. The cloud drift is clamped at `look.drift.to`. A faster turn only after 1586 would be a speed change in view; a faster turn through the rise moves the judged 1586. Not a take out, not offered.
