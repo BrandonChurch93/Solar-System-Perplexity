@@ -148,7 +148,7 @@ export const air: MistLook = {
   wisp: [0.35, 0.3],
 }
 
-export const clearing = { mist: [4, 30] as [number, number], arcs: [12, 30] as [number, number] }
+export const clearing = { mist: [4, 30] as [number, number], arcs: [-6, 38] as [number, number] }
 
 export const closing = { mist: [-22, -3] as [number, number], arcs: [-22, -8] as [number, number] }
 
