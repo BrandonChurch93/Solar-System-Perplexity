@@ -1,9 +1,51 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T05:14:41.377Z",
- "head": "2c1e13dbe3718cf0d7e59ef65a21de1175e5484e",
- "note": "Jupiter: terrain view before and after the foreground tiers on main 2621f00, judged finals, terrain review sheet",
+ "pushed": "2026-11-22T05:32:35.011Z",
+ "head": "a06d2ae6f78e0cf877625097aaf556315b813807",
+ "note": "Jupiter POLISH READY: foreground tiers, before and after terrain sheet, four judged finals, terrain review sheet, all on main 2621f00",
  "looks": [
+  {
+   "time": "2026-11-22T05:32:14.262Z",
+   "file": "20261122053214262-job-frame-02820.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T05:31:50.903Z",
+   "file": "20261122053150903-still-f03262-16x9-draft-full-layers.jpg",
+   "source": "out/work/stills/f03262-16x9-draft-full-layers.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3262, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3262,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T05:31:24.215Z",
+   "file": "20261122053124215-still-f03254-16x9-draft-full-layers.jpg",
+   "source": "out/work/stills/f03254-16x9-draft-full-layers.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3254, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3254,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T05:14:22.055Z",
    "file": "20261122051422055-note-f3296_lit_limb.jpg",
@@ -142,11 +184,93 @@
    "engine": "7553966a0ffa4014"
   },
   {
+   "time": "2026-11-22T04:56:07.101Z",
+   "file": "20261122045607101-note-f3296_pair.jpg",
+   "source": "out/work/view/m19/f3296_pair.jpg",
+   "kind": "note",
+   "label": "Jupiter rise 3296 final at half size: left main 0622510 (batch 18), right main 2621f00 (batch 19 flight sky). No star inside the disc, none on the night side",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T04:56:05.908Z",
+   "file": "20261122045605908-note-f03296-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f03296-final-b19.png",
+   "kind": "note",
+   "label": "Jupiter rise 3296 final, branch d28870b holding main 2621f00: sha bcd7b416628a62c1, new by batch 19 (flight sky); the disc of the planet and Io keep their bytes",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T04:56:04.709Z",
+   "file": "20261122045604709-note-f03150-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f03150-final-b19.png",
+   "kind": "note",
+   "label": "Jupiter terrain 3150 final with the foreground tiers, branch d28870b holding main 2621f00: sha 173790897f041964, same bytes as on main 0622510 with the layer",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T04:56:03.793Z",
+   "file": "20261122045603793-note-f02997-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f02997-final-b19.png",
+   "kind": "note",
+   "label": "Jupiter dive 2997 final, branch d28870b holding main 2621f00: sha 0a35fc826196a462, same bytes as before the layer and before batch 19",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T04:56:02.646Z",
+   "file": "20261122045602646-note-f02895-final-b19.jpg",
+   "source": "out/work/jupiter/fg/kept/f02895-final-b19.png",
+   "kind": "note",
+   "label": "Jupiter hold 2895 final, branch d28870b holding main 2621f00 (batch 19): sha c34e30ce2c61de16, same bytes as before the layer and before batch 19",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T04:55:20.228Z",
+   "file": "20261122045520228-still-f03296-16x9-final-full.jpg",
+   "source": "out/work/stills/f03296-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3296, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:53:48.772Z",
+   "file": "20261122045348772-still-f02997-16x9-final-full.jpg",
+   "source": "out/work/stills/f02997-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
    "time": "2026-11-22T04:51:53.571Z",
    "file": "20261122045153571-compare-compare-jupiter-terrain-view.jpg",
    "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
    "kind": "compare",
    "label": "jupiter.terrain: approved image left, film frame right, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:51:52.532Z",
+   "file": "20261122045152532-still-f03150-16x9-final-full.jpg",
+   "source": "out/work/stills/f03150-16x9-final-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, final tier",
    "stop": "jupiter",
    "segment": "jupiter.terrain",
    "frame": 3150,
@@ -182,6 +306,70 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:46:57.794Z",
+   "file": "20261122044657794-still-f03239-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03239-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3239, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:46:29.326Z",
+   "file": "20261122044629326-still-f03204-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03204-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3204, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3204,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:46:01.160Z",
+   "file": "20261122044601160-still-f03060-16x9-draft-full.jpg",
+   "source": "out/work/stills/f03060-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:32:19.764Z",
+   "file": "20261122043219764-job-frame-03213.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3213, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3213,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T04:32:12.566Z",
+   "file": "20261122043212566-note-terrain-sheet-after.jpg",
+   "source": "out/work/jupiter/fg/kept/terrain-sheet-after.png",
+   "kind": "note",
+   "label": "jupiter.terrain review sheet WITH the foreground layer, rendered on the tree that holds main 0622510",
+   "stop": "jupiter"
   }
  ]
 }
