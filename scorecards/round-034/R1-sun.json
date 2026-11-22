@@ -1,0 +1,77 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "Near foreground across the lower third, strongest from bottom center to lower right",
+   "what": "The surface is more sharply outlined and locally re-patterned. Thick dark seams and polished, high-contrast cell centers replace the softer, more directionally stretched texture in the target, making the foreground read flatter and more metallic.",
+   "fix": "Match the target's softer near-field focus and diagonal texture flow, especially at lower right. Reduce the contrast on the seams without smoothing away detail at the horizon."
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "Crops D, E and F; foreground in G",
+   "what": "The large foreground cells have harder reddish-black borders and more isolated specular peaks. E and F lose the target's continuous diagonal stretch, while D and G lose some of its smooth falloff into foreground blur.",
+   "fix": "Restore the directional stretch and focus gradient. Soften the seam edges and blend the bright cell centers into the surrounding texture."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "Central sunspot in A and the adjacent rim in F",
+   "what": "The black opening looks slightly fuller and more uniformly black, especially at its left end, and the bright radial fibers look harder against it.",
+   "fix": "Bring back the target's less uniform shadow and ragged edge, and ease the contrast of the brightest radial fibers."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Sky above the horizon, including the space inside the main arch",
+   "what": "Individual stars are brighter, larger and more conspicuous against the black, competing with the finer plasma strands.",
+   "fix": "Dim and tighten the brightest star points while retaining the diffuse dust band and deep sky blacks."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "Sky in B, C, H and I, and behind the inner strands in A",
+   "what": "The field has more prominent white and blue pinpoints, so the dust lane and dark space behind the arches read less softly than in the target.",
+   "fix": "Lower stellar peaks and shrink the larger points without removing the target's faint dust structure."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "Plasma strands in H and the horizon around both footpoints in G and I",
+   "what": "The filaments are a little more crisply separated from their glow, and the footpoint highlights sit more starkly against the amber horizon.",
+   "fix": "Soften just the hottest filament edges and the transition out of both footpoints, keeping the arch and horizon geometry."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Star field and dust band on both sides of the disk",
+   "what": "More of the stars stand out as bright hard pinpoints, while the right-hand orange dust knots are slightly less distinct.",
+   "fix": "Restrain the point highlights and recover the diffuse warm structure in the right-hand dust band."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Sky in B, C, D, E, H and I",
+   "what": "Larger and brighter star points are visible at crop scale. The diffuse copper structures in I look flatter next to them.",
+   "fix": "Reduce star size and peak brightness, and restore the target's dusty warm-to-cool contrast in I."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Disk center and bright active regions in A and F; upper disk in G",
+   "what": "Bright granules and filaments read slightly crisper and more individually outlined, with some loss of the target's softer transitions from white-hot cores to amber surface.",
+   "fix": "Ease local sharpening and blend the core highlights more gradually into the gold and rust midtones."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "Upper-right, lower-left and lower-right limb loops in C, D and E",
+   "what": "Some of the red and gold prominence edges are more defined against the creamy corona, and the very faint strands are less integrated into its haze.",
+   "fix": "Blend the outer prominence edges back into the soft coronal rays and retain the fine, low-contrast strands."
+  }
+ ]
+}

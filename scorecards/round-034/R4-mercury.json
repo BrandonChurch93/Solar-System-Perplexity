@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 3,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-01.png",
+   "where": "review pack across sheet-01.png, sheet-02.png, and sheet-03.png (missing frames 780-959 and first cover)",
+   "what": "the pack is incomplete: only three sheets are provided, omitting a dedicated hold sheet, the terrain segment sheet (frames 780-959 are absent), and the consecutive-frame sheet across the dive-to-terrain cover around frames 730-747",
+   "fix": "render and include contact sheets for all four segments (hold, dive, terrain, rise) plus consecutive-frame sheets across both the dive-to-terrain and terrain-to-rise covers"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 994, 1000, and 1007 (upper-right sun and left half of globe)",
+   "what": "across the rise cover the sun jumps from top-center (994) to upper-right as a tiny white lens-flare sprite (1000) and then pops ~5x larger into a textured orange solar sphere with prominences (1007), while the globe's left side snaps from brightly front-lit neutral gray in 1000 to pitch-black night shadow with brown-blue albedo in 1007",
+   "fix": "unify the sun model, angular size, light direction, and planet shading across terrain and globe rigs so horizon angle, illumination terminator, color, and sun scale carry across continuously"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-01.png",
+   "where": "frames 722, 730, 739, and 747 (right limb, sun, and upper horizon)",
+   "what": "across the dive cover the sun shrinks abruptly from 722 to 730 and jumps from the right of a vertical planet limb (730) to a small white starburst at top-center above a horizontal horizon (739), while side-lit warm globe shading pops to top-lit neutral gray terrain",
+   "fix": "match camera position, roll, field of view, sun placement, and surface exposure between the globe dive and terrain scene so the descent reads as a single continuous camera move"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 992-996 (surface below horizon, sky above right limb, and sky behind sun)",
+   "what": "the cover is a visible 2D cross-dissolve between unaligned renders: globe craters ghost over the foreground terrain basin (993-995), a second dark curved limb band cuts across the stars above the right horizon (993-994, matching sheet-01.png frame 739), and an orange Milky Way band fades in on the left that was absent before the dive in sheet-01.png (690-722)",
+   "fix": "replace the 2D cross-dissolve with a geometrically registered 3D transition that preserves a single horizon edge, consistent surface parallax, and one fixed background starfield orientation from pre-dive hold through post-rise hold"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 985-993 (left-edge crater highlights, bottom-left bright ejecta, and right-limb craters)",
+   "what": "fast motion blur breaks into 4-5 separate stepped ghost copies of sharp highlights and crater rims instead of a smooth blur",
+   "fix": "increase temporal motion-blur sub-samples so high-contrast surface edges smear into a continuous streak without comb or ghost copies"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frame 730 (lower-right globe face) and sheet-02.png frame 1000 (lower-center globe face)",
+   "what": "fast dive and rise frames apply a 2D radial zoom blur leaving a dead-sharp unblurred bullseye on the mid-globe while surrounding terrain streaks radially in screen space",
+   "fix": "render true 3D camera-velocity motion blur across the curved globe rather than a screen-space radial blur"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 690, 698, 706, and 714 (upper and right planet limb)",
+   "what": "the dive begins with an un-eased velocity jump around frame 698, stepping from ~1 px of limb movement over frames 690-698 to ~13 px over 698-706 and ~12 px over 706-714",
+   "fix": "ease camera acceleration smoothly out of the hold segment so velocity ramps up gradually with physical mass"
+  }
+ ]
+}
