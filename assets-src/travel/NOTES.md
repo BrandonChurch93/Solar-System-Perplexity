@@ -782,3 +782,8 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Branch `agent/travel-mercury-out` = origin/main b95b328a plus ONE commit 6b7c4224320e843cd0398d1cb02ad42c88028802: path.ts mercury back to `window: 33` (no pinFrames, no steady), the exact reverse of a8baf79. tsc clean. Pushed. Not merged into agent/travel-polish.
 - Shot probe, round 34 main (`/tmp/wt-m34`, outputs `/tmp/sub16-r34.txt`, `sub64-r34.txt`) against the take out tree (`/tmp/snap/mo`, `sub16-mo.txt`): 16 samples over all 5400 frames and 64 samples 1000 to 1140: differ only in 1035 to 1109 (75 frames).
 - chain38 running: review on mo 1060, 1064, 1068, 1072, 1080, 1088; final 1072 on mo and on round 34 main; markers MOROW, CHAIN38DONE.
+
+## 16:59 UTC: take out of the mercury window proved
+- Finals of 1072 (file sha256, first 16): round 34 main c7b45203ae7cd508 (my CUT34 hash 042dc205 no longer holds there, the sky offer and Mercury's plate law are on it); with the take out (label mo) 80317f4b0cabc27a.
+- Review, round 34 main (label r34) above the take out (mo), `/tmp/v/c35-mercury-out.jpg` (1064, 1068, 1072, 1080, 1088): 1064 the same Sun at the corner in both (the Sun fix does not need the window); main has Venus a ring at 1068, 120 px at 1072, 300 px at 1080, 500 px at 1088; the take out has plain sky at 1068 and 1072, a dot at 1080, a 230 px disc at 1088 lower right of centre.
+- So the take out is ready: agent/travel-mercury-out 6b7c4224, shots differ only 1035 to 1109, tsc clean. vitest and shader audit not run on it (path.ts number only).
