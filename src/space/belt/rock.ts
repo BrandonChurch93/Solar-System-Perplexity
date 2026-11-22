@@ -30,6 +30,7 @@ uniform vec3 uLook;
 uniform vec3 uNight;
 uniform vec3 uRelief;
 uniform vec3 uCrisp;
+uniform vec3 uShade;
 uniform float uGain;
 uniform float uMapWidth;
 uniform float uCounted;
@@ -64,12 +65,15 @@ void main() {
   vec3 n = normalize(m.xyz * 2.0 - 1.0);
   vec3 g = normalize(textureLod(uMap, d, 5.0).xyz * 2.0 - 1.0);
   n = normalize(g + (n - g) * uShape.x);
+  vec3 nf = normalize(texture(uMap, d, uCrisp.x + uShade.x).xyz * 2.0 - 1.0);
+  nf = normalize(g + (nf - g) * uShape.x);
   vec3 w = pow(abs(g), vec3(4.0));
   w /= w.x + w.y + w.z;
   vec4 t1 = tile(vLocal, w, uTile.x);
   vec4 t2 = tile(vLocal.yzx + 0.37, w.yzx, uTile.y);
   vec3 bump = lift(t1, w, n) + lift(t2, w.yzx, n.yzx).zxy * 0.6;
   n = normalize(n - bump * uShape.y);
+  nf = normalize(nf - bump * uShape.y * uShade.z);
   vec3 v = normalize(uEyeB - vLocal);
   float mu0 = max(dot(n, uSunB), 0.0);
   float mu = max(dot(n, v), 0.0);
@@ -85,8 +89,8 @@ void main() {
   vec3 albedo = uTint * tone * mix(vec3(0.94, 0.98, 1.05), vec3(1.05, 1.0, 0.93), clamp(tone * 1.4, 0.0, 1.0));
   float pit = texture(uAo, d).r;
   vec3 sun = uSunTint * (body * sh * mix(uRelief.x, 1.0, cavity) * mix(1.0, pit, uRelief.y) + uShape.z * edge * (0.35 + 0.65 * sh));
-  float side = max(dot(n, normalize(cross(uSunB, v) + 0.6 * v - 0.3 * uSunB)), 0.0);
-  vec3 col = albedo * (sun + uFill * ao * (uNight.x + uNight.y * max(dot(n, v), 0.0) + uNight.z * graze * graze + uCrisp.z * side)) * uGain;
+  float side = max(dot(nf, normalize(cross(uSunB, v) + 0.6 * v - 0.3 * uSunB)), 0.0);
+  vec3 col = albedo * (sun + uFill * (ao * mix(1.0, pit, uShade.y)) * (uNight.x + uNight.y * max(dot(nf, v), 0.0) + uNight.z * graze * graze + uCrisp.z * side)) * uGain;
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), uCounted, vec3(0.6, 0.4, 0.8), vec2(0.0), length(vView));
 }`
 
@@ -103,7 +107,7 @@ export function rockMaterial(asset: RockAsset, detail: THREE.Texture, look?: Roc
       uSunB: { value: new THREE.Vector3(1, 0, 0) }, uEyeB: { value: new THREE.Vector3(0, 0, 5) },
       uSunTint: { value: new THREE.Vector3(1, 1, 1) }, uTint: { value: new THREE.Vector3().fromArray(l.tint) }, uFill: { value: new THREE.Vector3().fromArray(l.fill) },
       uShape: { value: new THREE.Vector4(l.bump, l.detail, l.rim, l.shadow) }, uTile: { value: new THREE.Vector2(l.tile[0], l.tile[1]) }, uLook: { value: new THREE.Vector3(l.seeliger, l.contrast, l.lift) },
-      uNight: { value: new THREE.Vector3().fromArray(l.night) }, uRelief: { value: new THREE.Vector3().fromArray(l.relief) }, uCrisp: { value: new THREE.Vector3().fromArray(l.crisp) },
+      uNight: { value: new THREE.Vector3().fromArray(l.night) }, uRelief: { value: new THREE.Vector3().fromArray(l.relief) }, uCrisp: { value: new THREE.Vector3().fromArray(l.crisp) }, uShade: { value: new THREE.Vector3().fromArray(l.shade) },
       uGain: { value: 1 }, uMapWidth: { value: asset.size * 4 }, uCounted: { value: 1 }, uDiag: diagUniform,
     },
   })
