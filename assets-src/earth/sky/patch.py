@@ -128,6 +128,37 @@ TERRAIN_MARGIN = 0.5
 SUN_AT = (-0.083, 1.251)
 HELD = (40.0, 100.0, 70)
 GLOW = (120.0, 700.0, 3.0)
+TOL = 2.0 / 255
+BAND = 32.0
+TWICE = 2
+POINT = (2.5 / 255, 6.0 / 255)
+DARK = (0.3, 0.5)
+FAR = (110.0, 220.0)
+SEED = 20101
+
+
+def deband(lin, above):
+    e = geo.encode(lin.astype(np.float64)).astype(np.float32)
+    calm = np.stack([ndi.gaussian_filter(np.minimum(e[..., i], ndi.gaussian_filter(e[..., i], 4)), 4) for i in range(3)], -1)
+    star = ndi.maximum_filter(step((e - calm).max(-1), POINT[0], POINT[1]), 5)
+    free = 1 - star
+
+    def blur(v, sigma):
+        norm = np.maximum(ndi.gaussian_filter(free, sigma), 1e-4)
+        return np.stack([ndi.gaussian_filter(v[..., i] * free, sigma) / norm for i in range(3)], -1)
+
+    mid = blur(e, 3.0)
+    f = blur(mid, BAND)
+    for _ in range(TWICE):
+        f = f + blur(mid - f, BAND)
+    held = float((np.abs(f - mid) > TOL).any(-1).mean())
+    move = blur(np.clip(f - mid, -TOL, TOL), 4.0)
+    weight = (1 - step(mid.max(-1), DARK[0], DARK[1])) * step(above, FAR[0], FAR[1])
+    out = e + weight[..., None] * move
+    on = weight > 0.5
+    change = np.abs(move)[on] * 255
+    print("deband: share of the patch", float(on.mean().round(3)), "stars kept", round(float(star[on].mean()), 4), "held at the bound", round(held, 4), "local mean moved by, code values: mean", float(change.mean().round(2)), "p99", float(np.percentile(change, 99).round(2)), "max", float(change.max().round(2)))
+    return geo.decode(out.astype(np.float64)).astype(np.float32), weight
 
 
 def terrain(film):
@@ -146,9 +177,11 @@ def terrain(film):
     held = ndi.gaussian_filter1d(low[rows, np.arange(W)], 16, axis=0, mode="nearest")
     w = step(above, HELD[0], HELD[1])[..., None]
     lin = d * w + held[None] * (1 - w)
+    lin, smooth = deband(lin, np.broadcast_to(above, (H, W)))
     px, py = round(W * TERRAIN_MARGIN), round(H * TERRAIN_MARGIN)
     half = px // 2
     wide = np.pad(np.pad(lin, ((0, 0), (half, half), (0, 0)), mode="symmetric"), ((0, 0), (px - half, px - half), (0, 0)), mode="symmetric")
+    smooth = np.pad(np.pad(smooth, ((0, 0), (half, half)), mode="symmetric"), ((0, 0), (px - half, px - half)), mode="symmetric")
     sx, sy = W / 2 * (1 + SUN_AT[0]), H / 2 * (1 - SUN_AT[1])
     xs = np.arange(-px, W + px) + 0.5
     top = np.stack([ndi.gaussian_filter1d(wide[0:12, :, i].mean(0), 24, mode="nearest") for i in range(3)], -1)
@@ -170,8 +203,11 @@ def terrain(film):
     margin = np.minimum(floor + np.maximum(top[None] - floor, 0) * rise, cap)
     wide = np.concatenate([margin.astype(np.float32), wide], 0)
     wide = np.pad(wide, ((0, py), (0, 0), (0, 0)), mode="edge")
+    smooth = np.pad(np.concatenate([np.ones((py, smooth.shape[1]), np.float32), smooth], 0), ((0, py), (0, 0)), mode="edge")
     print("glow power", power.round(2), "floor", floor.round(4), "top max", float(top.max().round(3)), "margin max", float(margin.max().round(3)))
-    img = Image.fromarray((np.clip(geo.encode(wide.astype(np.float64)), 0, 1) * 255 + 0.5).astype(np.uint8))
+    code = np.clip(geo.encode(wide.astype(np.float64)), 0, 1) * 255
+    noise = (np.random.default_rng(SEED).random(code.shape, dtype=np.float32) - 0.5) * (smooth > 0.5)[..., None] * (code > 1.0)
+    img = Image.fromarray(np.clip(np.floor(code + 0.5 + noise), 0, 255).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):
         im = img if k == 1 else img.resize((img.size[0] // k, img.size[1] // k), Image.LANCZOS)
         im.save(OUT / key / "sky-terrain.webp", lossless=True, quality=90, method=6)

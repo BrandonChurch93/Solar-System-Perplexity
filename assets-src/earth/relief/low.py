@@ -134,6 +134,12 @@ def main():
         path = os.path.join(folder, 'relief-low.webp')
         Image.fromarray(code).save(path, lossless=True, method=6)
         print(path, code.shape[1], 'x', code.shape[0], os.path.getsize(path), 'bytes')
+    if a.out is None:
+        path = 'src/stops/earth/relief.json'
+        d = json.load(open(path))
+        d['low'] = {'file': 'relief-low.webp'}
+        json.dump(d, open(path, 'w'), indent=1)
+        print(path, 'low', d['low'])
 
 
 if __name__ == '__main__':
