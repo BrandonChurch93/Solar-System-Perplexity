@@ -35,16 +35,18 @@ export const cirrus = { amount: 1, bend: 0.018, shadow: 1.5, floor: 0.7, clump: 
 export const triton = {
   up: [-0.15, 0.835, 0.53] as [number, number, number],
   stage: [8.608, -10.036, -4.601] as [number, number, number],
-  aim: [0.2421, -0.6261, 0.2881] as [number, number, number],
+  aim: [0.2323, -0.3863, -0.044] as [number, number, number],
   gain: 1.75,
-  bump: 0.008,
-  rim: 0.4,
+  bump: 0.018,
+  rim: 0,
+  wrap: 0.432,
+  lift: 1.2,
   sun: [1, 0.98, 0.96] as [number, number, number],
   ambient: [0.004, 0.007, 0.014] as [number, number, number],
-  terminator: [-0.02, 0.18] as [number, number],
-  power: 0.7,
+  terminator: [-0.022, 0.41] as [number, number],
+  power: 1.258,
   spinDegPerSecond: 0.4,
-  rise: { sun: 0.4, ambient: [0.0057, 0.0142, 0.021] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.012 },
+  rise: { sun: 0.4, ambient: [0.0057, 0.0142, 0.021] as [number, number, number], terminator: [-0.08, 0.42] as [number, number], power: 0.9, bump: 0.012, rim: 0.4, wrap: 0, lift: 1 },
 }
 
 export const ring = {

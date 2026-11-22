@@ -172,7 +172,7 @@ export const createSet: SetFactory = async (ctx) => {
       triton.mesh.quaternion.copy(moonSpin.setFromAxisAngle(moonUp, THREE.MathUtils.degToRad(look.triton.spinDegPerSecond) * elapsed)).multiply(moonHold)
       const staged = state.time >= terrainMid
       const moonLook = staged ? look.triton.rise : look.triton
-      triton.shape(moonLook.terminator, moonLook.power, moonLook.ambient, look.triton.gain, moonLook.bump)
+      triton.shape(moonLook.terminator, moonLook.power, moonLook.ambient, look.triton.gain, moonLook.bump, moonLook.rim, moonLook.wrap, moonLook.lift)
       moonSun.copy(light)
       if (staged) moonSun.lerp(shot.sun.dir, look.triton.rise.sun).normalize()
       triton.update(moonLight.copy(moonAim).applyQuaternion(state.rotation).multiplyScalar(home).add(moonSun).normalize(), gain * state.weight)
