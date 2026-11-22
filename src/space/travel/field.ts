@@ -47,6 +47,7 @@ export interface StripDef {
   offLevel: number
   patchHold: number
   deep: { gain: number; tail: number; ref: number }
+  detail: { freq: number; stretch: number; mottle: number; warp: number; octave: number[]; lane: number[]; fill: number[] }
   dust: { span: number[]; lane: number[]; cloud: number[]; keep: number[]; red: number[]; strip: number[] }
   stars: { gain: number; power: number; max: number; tint: number; lane: number; ref: number; jitter: number; halo: number; warm: number }
 }
