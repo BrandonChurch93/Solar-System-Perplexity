@@ -1,9 +1,49 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T13:11:40.552Z",
- "head": "b34f94632fa1e30fb1b423edb9f56e84259ae972",
- "note": "hook take 3 b13 and the leave ramp, drafts",
+ "pushed": "2026-11-22T13:28:29.304Z",
+ "head": "4f72047d9965003cc6040bbca98d28b5a3462e68",
+ "note": "leave ramp l4/l5, 486 and 495 native pairs, camera speed curve; agent/sun 4f72047d on main 5e3462bd",
  "looks": [
+  {
+   "time": "2026-11-22T13:28:28.561Z",
+   "file": "20261122132828561-note-speed-0-90.jpg",
+   "source": "out/work/sun/hk3/speed-0-90.jpg",
+   "kind": "note",
+   "label": "camera speed 0 to 90 as share of cruise, agent/sun 4f72047d: the round 33 path, plan.ts same bytes",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:28:27.455Z",
+   "file": "20261122132827455-note-l5-495-red-x4.jpg",
+   "source": "out/work/sun/hk3/l5-495-red-x4.jpg",
+   "kind": "note",
+   "label": "495 x4 nearest, left head 969a8a6, right agent/sun 4f72047d: the two red double lines (corona map remnants) are gone",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:28:26.515Z",
+   "file": "20261122132826515-note-l5-495-native.jpg",
+   "source": "out/work/sun/hk3/l5-495-native.jpg",
+   "kind": "note",
+   "label": "495 native crop, left round 33 head 969a8a6, right agent/sun 4f72047d (main 5e3462bd): stars masked by the corona's radiance; the plate is Mercury's",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:28:25.451Z",
+   "file": "20261122132825451-note-l5-486-native.jpg",
+   "source": "out/work/sun/hk3/l5-486-native.jpg",
+   "kind": "note",
+   "label": "486 native crop, left round 33 head 969a8a6, right agent/sun 4f72047d: limb darkens, no white band over the limb",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T13:28:24.368Z",
+   "file": "20261122132824368-note-l4-sheet.jpg",
+   "source": "out/work/sun/hk3/l4-sheet.jpg",
+   "kind": "note",
+   "label": "leave ramp, drafts 450 to 495 every 4th frame, agent/sun 4f72047d on main 5e3462bd: the wash, exposure and corona ramp over the whole pan (head stepped 474 to 482)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T13:11:40.001Z",
    "file": "20261122131140001-note-l1-sheet.jpg",
@@ -19,53 +59,6 @@
    "kind": "note",
    "label": "hook take 3, drafts 45, 53, 60, 66: second strand with sky between; agent/sun b34f946 on main 8cd0877",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T13:11:38.752Z",
-   "file": "20261122131138752-note-b13-pairs1.jpg",
-   "source": "out/work/sun/hk3/b13-pairs1.jpg",
-   "kind": "note",
-   "label": "hook take 3 (today's camera), drafts 30, 34, 38, 40: flash and the outer strands leaving; agent/sun b34f946 on main 8cd0877",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:41:20.906Z",
-   "file": "20261122124120906-note-strip-a4.jpg",
-   "source": "out/work/sun/hk3/strip-a4.jpg",
-   "kind": "note",
-   "label": "hook take 3 draft a4, uncommitted on 969a8a6 (main da02e63): head above, take 3 below, frames 0 to 60 at 390 px",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:41:20.339Z",
-   "file": "20261122124120339-note-sheet-rise-89ca8d5.jpg",
-   "source": "out/work/sun/p1/sheet-rise-89ca8d5.jpg",
-   "kind": "note",
-   "label": "sun.rise harness sheet, review tier, head 969a8a6 code (main da02e63)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:41:19.802Z",
-   "file": "20261122124119802-note-f495-leavefinal-left-head969a8a6-right.jpg",
-   "source": "out/work/sun/p1/f495-leavefinal-left-head969a8a6-right.jpg",
-   "kind": "note",
-   "label": "sun 495 final: old leave branch left, head 969a8a6 right (main da02e63)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T12:17:53.277Z",
-   "file": "20261122121753277-sheet-sun.rise-preview-review.jpg",
-   "source": "out/work/sheets/sun.rise-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet sun.rise, review tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 180,
-   "last": 269,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "be043ade04a7ab6e"
   },
   {
    "time": "2026-11-22T12:09:03.565Z",
