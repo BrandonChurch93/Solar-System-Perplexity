@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Lower-middle moon and cast shadow (pair-02-b crop A)",
+   "what": "The cast shadow has a harder edge and a more sharply defined far tip than the reference, and the moon loses some of its red-brown shading at the bottom.",
+   "fix": "Restore a slightly wider penumbra toward the tip and recover the warm underside shading without moving the moon."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Right-hand terminator and dark disk (pair-02-b crops C, E, G and I)",
+   "what": "A few isolated curls and thin blue streaks remain legible too far into the night side; the reference rolls into a more continuous dark mass.",
+   "fix": "Suppress the isolated streaks and smooth the cloud-detail falloff into the deep black."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Lit left limb, especially upper-left (pair-02-b crops B and D)",
+   "what": "The atmospheric bloom spreads farther into the stars and looks slightly grayer than the tighter warm halo in the reference.",
+   "fix": "Pull in the outer bloom and keep the edge light a soft warm white."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Northern bands and central cloud belts (pair-02-b crops A, B and I)",
+   "what": "The finest pale and blue-gray cloud filaments have a little less definition against the ochre belts.",
+   "fix": "Recover fine local contrast in the cloud striations without changing the belt layout or overall exposure."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "Sky, particularly the sparse left field and bright galactic band to the right (pair-02-b crops B through H)",
+   "what": "Many stars look brighter and rounder, while the fine dusty texture in the galactic band reads a little softer.",
+   "fix": "Reduce star bloom and recover the distinction between crisp pinpoints and diffuse galactic dust."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Sky above the diagonal horizon (pair-04-b crops C and I)",
+   "what": "The brightest stars are more swollen and conspicuous than the reference's finer points, making the upper-right sky look busier.",
+   "fix": "Scale back point-source bloom and brightness while keeping the faint galactic structure in place."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Storm rim, sunlit shoulders and lower-left foreground curls (pair-04-b crops A, B, D, F, G and H)",
+   "what": "The vortex and cloud banks line up, but some of the thinnest lit edges and dark grooves blend together more than in the reference, reducing the sense of relief.",
+   "fix": "Restore selective microcontrast along the amber ridges and foreground folds without sharpening the shadow floor."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "Lower-right blue-lit cloud pockets (pair-04-b crop E)",
+   "what": "The blue glow is slightly more diffuse around its brightest cores, with less separation between the narrow illuminated filaments and surrounding black folds.",
+   "fix": "Tighten the blue bloom around the cores and recover the fine filament edges."
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 0-179, and the set as a whole",
+   "what": "the stop never flies to the surface. Frame 0 is already locked on the photosphere. The sheets then hold, pull away (sheet-02.png, covered at one-frame steps on sheet-03.png), and hold on the full disk (sheet-04.png). There is no dive, and no terrain pass where the near ground and the horizon move against each other. Sheets are unlabeled, so hold, dive, terrain, and rise are not separated.",
+   "fix": "add an eased dive and a moving terrain view with parallax, then label each contact sheet by segment"
+  }
+ ]
+}

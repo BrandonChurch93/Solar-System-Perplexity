@@ -162,6 +162,101 @@ Proofs (2026-11-22, scratch round 931 at draft, build 8070fc63, engine be043ade0
 - vitest 17 files, 87 tests; `npx tsc --noEmit -p .` clean; `npm run -s build` exit 0; pyflakes clean.
 - Not proven: the real mode (row pushed to main, the second `start` on a merged tree, select.json under `scorecards/`); the final and review tiers; a base file from another build (mine was the same build with hashes changed by hand); `--controls-from` in a polish round.
 
+## MAIL 161 (2026-11-22 13:28 UTC): start builds first, the checks follow
+
+Only `tools/round.py` changed. For polish rounds and the record round; whole film rounds and stop rounds start as before.
+
+### Decisions
+
+1. `start` has two steps. The build step: a dirty tree is committed without a push ("Round N: polish, the tree at the build"), `origin/main` is fetched and merged, `npm run -s build` runs (the same command as G1), the hashes come from `ensureBuild()` of `tools/lib/common.ts` (called, not changed) through one `npx tsx -e` line, the state gets `commit`, `engineHash`, `stopHashes`, they are printed, and the commit is pushed. The checks step: the build once more, the hashes of the tree against the state, the tests, the gate with the full machine list (so `gate.txt` has all eleven lines as before), `gateGreen` into the state.
+2. Which step runs: `--build-only` runs the build step and returns; `--checks` runs the checks step and refuses when the state has no build; a plain call runs the build step when the state has no build and then the checks step, so a plain second call after `--build-only` only checks.
+3. "Moved" is decided by the hashes of the tree, not by the commit: the state's engine hash and stop hashes against what the tree gives now. Commits that touch logs, scorecards, kit files or tools give the same hashes and do not trip it. When it trips, the tool stops in one line and names the hashes; `--build-only` takes the new tree, and when the hashes changed it drops `gateGreen` and `gate.txt`.
+4. `pack` (polish and record) refuses while the state has no `gateGreen`, and refuses when the tree's hashes are not the state's. A red gate with `--allow-red` writes `gateGreen` false and the pack runs, as before.
+5. The state's commit on origin: after the build step and after the checks step the tool fetches, and when the state's commit is not an ancestor of `origin/main` it merges and pushes (no force); if it still is not there it prints "commit X of the state is not on origin/main: push it before the jobs go out", and the last line of `--build-only` then reads "no jobs before the push".
+6. `start` without `--polish` or `--record` takes the mode from the state when the round has one.
+
+### How to run
+
+- `python3 tools/round.py start --round N --polish --row-only`, merge the batch, `start --round N --polish --build-only`, `jobs --round N --workers 40`, `start --round N --checks`, then `place`, `touched`, `pack`, `votes`, `close` as before.
+- One call does both: `start --round N --polish [--allow-red]` prints the build line, then runs the checks; `jobs` can run from a second shell after the build line.
+
+### Proofs
+
+- Real mode in a scratch clone (the second clone with a bare copy of the repo as its origin, `scratch/origin.git`; the gate and `proof` answered by a stand in script on the PATH so one call takes a minute; the build, the hashes and the tests were real). Round 34: `--row-only` wrote the row and pushed; a made up batch commit (one line in `src/stops/mercury/assets.ts`), not pushed; `--build-only` printed commit, engine and nine stop hashes (Mercury's changed), and origin's main was at the state's commit after it; `pack` refused in one line; `jobs --workers 40` gave 77 jobs at once. A commit that touched `kit/PROGRESS.md`, a scorecards file and this notebook, then `--checks`: green, state commit unchanged. A commit in `src/core`: `--checks` and the plain call both stopped with "the tree moved since the build at 3855f411: engine f92f... is now 930c..."; `pack` stopped the same way; `--build-only` took the new commit and dropped `gateGreen` and `gate.txt`; the plain second call checked only. A commit pushed to origin from a third clone while this tree was dirty: the dirty tree was committed, origin merged, built, pushed. Gate red: no `gateGreen`, pack refused; with `--allow-red` `gateGreen` false. Push refused by a hook in the origin: the line "commit ... is not on origin/main" and "no jobs before the push"; the next `--checks` pushed it.
+- Record mode in the same clone: round 36 `--record --build-only` (row, build, state), pack refused, plain second call checked; round 37 `--record` in one call.
+- Refusals: `--build-only` or `--checks` on a whole film round or a stop round, `--checks` with no build, two of the three flags.
+- Scratch round 941 in this repo at the review tier, real gate: `start --round 941 --polish --scratch --tier review --every 30 --build-only` (11 s), `jobs --workers 40 --stops mercury --no-stress` at once (19 jobs), `pack` refused, `start --checks` (the full gate, 18 min, green), a hand written `select.json` (Mercury R1 and R8), `pack` (7 critics), made up answers, `close`: SUMMARY with the checks line from `gate.txt`, row "R1 mercury 9, R8 mercury fail. 0 severe, 0 major".
+- Tests and build: `npx vitest run` 17 files 87 tests, `npm run -s build` clean, `pyflakes` clean.
+
+### A fault found on the way, in `tools/pack.ts`
+
+The last line of a pack ("frames were rendered" or "nothing was rendered, no render session was opened") looked for the render session in `capture.session`. Since main's 5c16a2cc (2026-11-21 17:39) `tools/lib/render.ts` keeps it in `capture.held.session`, so from then on the line said "nothing was rendered" every time. Seen here: the pack of round 941 rendered frames 615 and 870 at review (the two stills have its time) and printed "nothing was rendered". Fixed: the line reads both places. What this touches in older proofs: the byte comparisons of part 1 (2026-11-21 05:46, before that change) stand; the line quoted for scratch round 931 today proves nothing by itself. What does prove it there, checked after the fact: no draft still and no motion sheet of round 931 has a file time after `place` (the last sheet 13:04:54, placed 13:05:03, pack after that).
+
+## MAIL 162 (2026-11-22 13:36 UTC): a long sheet split by frames
+
+Changed: `tools/pack.ts`, `tools/round.py`. Nothing under `tools/lib/`.
+
+### Decisions
+
+1. A motion sheet was already put together from one still per frame by `Capture.sheet` of `tools/lib/render.ts`, which takes a still from the pack's temp folder when its record matches. So a tile is that still, kept: `npm run pack -- --phase P --round N [--stop ID] --only <part> --frames A-B` renders the frames of that sheet whose number lies in A to B into `out/work/packs/.cache/round-NNN/tiles/<part>/f<frame>-<tier>.png`, each with its record (engine hash, stop hashes, tier, frame). `--frames` goes with `--only` and one sheet.
+2. The join: when a sheet is not in the cache and its tiles folder is there, the pack checks every tile's record against this build; when all match it copies them into the temp folder and calls the same `Capture.sheet`, which then composes and renders nothing. When one is missing or from another build the pack stops with "sheet <part>: no tile of this build for frames ...; nothing rendered". With no tiles folder the pack behaves as before.
+3. `--join` (no `--only`): joins every split sheet whose tiles are complete, prints "sheet <part>: joined from 12 tiles" or "sheet <part>: not joined, no tile of this build for frames ...", publishes nothing and writes no key. `round.py place` calls it after unpacking when the cache has a tiles folder, so `touched` finds the joined sheet under its usual name.
+4. `--plan` gives each sheet its tiles as `[frame, samples]`. `round.py jobs` (whole film, record and polish rounds; not the stop rounds of Phase 4) cuts a job of one sheet whose estimate is over `--job-minutes` into runs of frames under it, named `<name>-a`, `-b`, and so on, same command plus `--frames A-B`, same tar. A single frame over the minutes stays one job.
+5. `place` checks the tiles' records too in its "records from another build" line.
+
+### Proofs
+
+- Review tier, `mars.dive-cover` (12 frames 2449 to 2460, 192 samples): one job into the cache of scratch round 951 (405.6 s, "frames were rendered"); two halves `--frames 2449-2454` and `--frames 2455-2460` as two processes into round 952 (178.5 s and 260.3 s), then `--join` ("joined from 12 tiles", "nothing was rendered", 1.8 s). Both sheets: pixel hash 912a8d38b48270fb, file sha256 1910a59ca3c03ea7, 1400 by 1156, and equal records.
+- One tile moved away: `--join` said "frames 2457" and rendered nothing in 0.0 s; the pack with `--only mars.dive-cover` stopped with the error line. One tile's record given another engine hash: named the same way.
+- The joined sheet deleted, then a plain `pack --only mars.dive-cover` with no `--frames`: joined inside the pack, "nothing was rendered", same file sha256.
+- The round tool, scratch polish round 943 at draft on ca8a73c5: `jobs --workers 40 --stops mars --no-stress --job-minutes 0.3` cut the four Mars dive and rise sheets into `-a`, `-b`, `-c` each; the second clone ran those 12 jobs and the views job (34 to 40 s each); `place` half way joined `mars.dive` and said "sheet mars.dive-cover: not joined, no tile of this build for frames 2453, ... 2460"; `place` at the end joined the other three, "nothing was rendered"; `touched` against a base with two sheet hashes changed by hand named `mars.dive-cover` and `mars.rise`; `start --checks` (real gate, green), `pack` (R4 mars, 2 images, nothing rendered, 0.1 s), `close`.
+- No change where nothing is split: `--plan --judged` of phases 5 and 6 is the old plan plus `tiles`, and each sheet's tiles sum to its samples; `jobs --job-minutes 200` writes the same `jobs.json` as the tool before this change. Tests 17 files 87, build clean.
+- Real tiers, plan only (state of a polish round, `jobs --workers 40`): 192 jobs in place of 77, longest job 20.0 min (a stop's measure, a fixed estimate), longest render job 17.2 min (the stress clips, `r34-film-stress02`), longest sheet job 15.0 min, 48 to 54 min per worker in place of 43 to 97. The Sun's rise cover is 11 jobs of 5.9 to 13.8 min. With `--job-minutes 20`: 138 jobs; with 30: 103 jobs, longest 30.0.
+
+## MAIL 168 (2026-11-22 14:44 UTC): R8 controls in polish and record rounds
+
+The gap: `pack --controls-from 30` skips the approved R8 images, and `close` read the control lines from round 30, a whole film round with no R8 line. Every stop showed control 0 of 0 and R8 passed on any answer.
+
+The change, in `tools/round.py` only, one commit a4ac1e71 on `agent/harness-r8` (cut from origin/main ca78dda5), merged here as 2802c2f8:
+
+- `r8_first(stop, skip)` walks `scorecards/round-NNN` in rising order (the real folder, and the scratch folder in a scratch round), skips the round being closed, and returns the first round whose `key.json` has an R8 entry of kind `approved` with that `stop` and whose `jurors.txt` has R8 lines on that image. It also returns that round's vote overrides from `out/work/rounds/round-NNN/state.json` when the file is there (it is read directly, no folder is made). With no such round it exits with "no R8 control votes for <stop>".
+- `r8_fill(r8c, stops, over, skip)` fills the control group of every stop that has no line from the control source. `r8_from(came)` writes "R8 controls: the stop's first round (mars 3, uranus 6)".
+- Used in the three closes: stop round (group key `hold`), record round (all nine stops), polish round (the stops whose select has R8). R2 is untouched. A source that has R8 control lines is used as before.
+- A line taken this way is named `reviewer_N@R` (for example `reviewer_38@3`), so that it never meets a critic of the same name in the closing round. An override of the first round is carried under that name, and `--vote reviewer_38@3=y` corrects one at close.
+- The line is printed at close and written under the R8 table of the polish summary, under the "R2 and R8 by stop" table of the record summary, and after the R8 sentence of a stop summary.
+
+What main's scorecards give: sun 10, mercury 7, venus 12, earth 11, mars 3, jupiter 8, saturn 13, uranus 6, neptune 9, each 3 of 3 lines. Mars round 3 has 7 R8 lines: 4 on the judged frame (one namer wrote twice) and 3 on the approved image; only those 3 are taken, and 1 of 3 names Mars (two said Phobos), as round 3's own summary says. All other stops 3 of 3 named right. No state file of those rounds is in this clone, so no override was applied here.
+
+Proofs (all scratch, draft): round 944 polish, select with R8 for mercury and mars, `pack --controls-from 30`, made up answers: before "R8 mars pass (2/3 vs 0/0)", after "(2/3 vs 1/3)" and mercury "(3/3 vs 3/3)"; with two judged votes turned to n mars fails (0/3 vs 1/3); `--vote reviewer_38@3=y` gives control 2/3. Round 921 (record) closed again with its controls pointed at round 30: before every stop "vs 0/0" and R8 pass, after the real counts and R8 fail for five stops. Round 901 (stop round) with its own control hidden in the key: before "control by 0 of 0", after "1 of 3" from round 3. With their own controls rounds 921 and 901 give byte identical output and scorecards before and after. Round 944's gate was not run: `gateGreen` and `gate.txt` were copied from scratch round 943 (same engine and stop hashes) to save the 18 minutes.
+
+Not proven: a real close of round 33, and a first round whose state has vote overrides (none is in this clone).
+
+## MAIL 176 (2026-11-22 15:30 UTC): R2 controls of a stop, a second close, the record round
+
+Cause: in a polish round `jury(own(stop))` compared a stop's judged R2 votes with the votes round 30 (a whole film round) gave that stop's two approved images. The kit keeps a stop's control votes from the stop's own rounds.
+
+The change, `tools/round.py` only:
+
+- `first_controls(role, stop, skip)` replaces `r8_first`: the earliest `scorecards/round-NNN` (not the round being closed) whose `key.json` has approved images of that role and stop and whose `jurors.txt` has lines on every one of them. It returns the round, the lines grouped as `<stop> hold` and `<stop> terrain`, and that round's vote overrides from its state file when there is one. None anywhere: "no R2 control votes for <stop>".
+- `r2_stops(stops, over, skip)` builds the stop control group `r2s`. `jury(keep, ctl)` takes it. Polish: every stop whose select has R2. Record: all nine stops. The whole film R2 keeps the `controlsFrom` round. A stop round and a whole film round are unchanged.
+- Unlike R8 (taken from the first round only when the source has no line), a stop's R2 control ALWAYS comes from the stop's first round in polish and record, also when the round judged its own controls.
+- Lines are named `reviewer_N@R` as for R8. They are in the "votes not read from the start" list and in the panel check ("R2 stop control"). Correct one with `--vote reviewer_15@3=a`.
+- Summary: "R2 controls: the stop's first round (venus 12, saturn 13)" under the R2 table (polish) and under "R2 and R8 by stop" (record); the vote lists have a bullet "Controls of the stops". The tables show the new control counts.
+- `put_tail(text, n, tail)`: close replaces the line of its round in PROGRESS.md from " Judged on main at" on, in all three closes, so a second close corrects the line. SUMMARY.md and the state scores were already rewritten by a second close.
+
+What main's scorecards give for R2 (a of 10, beside what round 30 gave): sun 10: 2 (2); mercury 7: 7 (4); venus 12: 5 (4); earth 11: 2 (1); mars 3: 4 (1); jupiter 8: 2 (1); saturn 13: 5 (2); uranus 6: 1 (1); neptune 9: 3 (2). Five lines on hold and five on terrain for every stop. Mars: reviewer_15@3 ("Independent vote: a, 82/100") is read as "?", so 4 of 10; round 3's own summary counted 5 of 10 by hand. When mars R2 is judged pass `--vote reviewer_15@3=a`.
+
+Record round with no approved image shown again:
+
+1. `python3 tools/round.py pack --round N --controls-from 30`: no juror gets an approved image (R2 or R8).
+2. `python3 tools/round.py close --round N --next "..."`: whole film R2 against round 30's control votes, each stop's R2 and R8 against the stop's first round. The summary names the rounds.
+
+A second close of a closed round: the same `close --round N --next "..."` once more; `--vote` corrections of the first close are kept in the state, the `--next` text is not and must be given again.
+
+Proofs (scratch, draft): round 945 polish, select with R2 for venus and saturn and R8 for mars, `pack --controls-from 30` (R2 8 images, 20 jurors; R8 3 jurors: no approved image went out). Before: "R2 venus pass (5/10 vs 4/10)", "R2 saturn pass (5/10 vs 2/10)". After: "vs 5/10" for both and both lines of origin. Closed again with four saturn votes turned to b: "R2 saturn fail (1/10 vs 5/10)", 1 major, and the PROGRESS line of round 945 replaced, one " Judged on main at" in it. Round 921 (record) closed with controls pointed at round 30: whole film "R2 67/135 vs 18/90" as before, per stop controls from the first rounds, mercury now fails (4/10 vs 7/10).
+
+Not proven: round 33 itself (its scorecard, state, key and /tmp/votes33.txt are not in this clone or on origin/main); a record pack with `--controls-from` (the pack folder of scratch round 921 is gone; the skip is the same line as in polish). Round 945's gate was not run, `gateGreen` copied from round 943 as for 944.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.

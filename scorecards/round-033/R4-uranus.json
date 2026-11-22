@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "whole terrain segment, frames 4200-4379",
+   "what": "the terrain view has almost no depth. The horizon, the sun and the ring arcs hold nearly fixed for 180 frames while only the ground texture drifts slightly, so the near ground does not move against the horizon. It reads as a still matte with a texture sliding over it, not as flight over a place",
+   "fix": "move the camera forward and laterally over the cloud deck so near detail sweeps past quickly and the horizon and rings move slowly. Add layered cloud tops at different heights for parallax"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "Milky Way band, upper left-center, frames 4409-4416",
+   "what": "the Milky Way fades in as a hard-edged vertical strip with vertical banding and stripes beside it, like a texture seam or a column of tiles, instead of a soft sky band. Its orientation (vertical) also disagrees with the diagonal band in the hold and the horizontal band in dive frame 4150",
+   "fix": "fix the skybox seam and mip/filter banding, and keep the galaxy in one fixed world orientation so it only changes on screen through camera roll and pan that you can see"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive cover into terrain, frames 4167-4183",
+   "what": "the cover does not join one move. The blurred cloud band at 4167-4170 turns into a smooth hazy limb with the sun at 4175, and the ring arcs pop in at 4183. Horizon angle and framing change between them, so the dive-to-terrain cover reads as a cut hidden by blur",
+   "fix": "carry one continuous camera path through the cloud layer. Have the horizon angle and the sun position at the end of the cover match the first terrain frame, and fade the rings in over many frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "lower center of the cover frames 4160-4167",
+   "what": "a radial starburst smear sits at a fixed point in the cloud layer and the cloud texture boils from frame to frame instead of streaming in one direction. It reads as a zoom-blur artifact, not as smooth motion blur through cloud",
+   "fix": "use directional motion blur along the camera velocity, advect the cloud noise with the camera instead of re-seeding it, and remove the radial pinch"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise, frames 4420-4434",
+   "what": "the pull-back from the limb to a small full disc happens in about 14 frames and then stops dead at 4434-4454. Speed jumps and there is no eased settle, so the camera has no mass at the end",
+   "fix": "lengthen the retreat and ease it out over at least 1-2 seconds into the final hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "top band of frame 4150",
+   "what": "a bright Milky Way band appears across the top that was not visible in 4134-4142 when the sky above the limb was black",
+   "fix": "check the camera pitch and the sky exposure across the dive so the galaxy stays at a steady brightness and position"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "right edge at the horizon, frames 4410-4416",
+   "what": "a thin dark horizontal bar sticks into frame at the right edge on the limb, like the edge-on ring or geometry clipping at the frame edge",
+   "fix": "make the ring plane render cleanly edge-on or move it out of frame, and check for geometry clipping at the frame border"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "end hold 4434-4454 compared with the opening hold on sheet-01",
+   "what": "the return view does not match the opening. The terminator, galaxy orientation and moon placement all differ, so the stop does not clearly read as going back to where it started",
+   "fix": "end the rise on a framing that matches the opening hold, or show the camera roll that explains the change"
+  }
+ ]
+}

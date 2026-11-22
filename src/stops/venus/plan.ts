@@ -32,7 +32,7 @@ export const params: MoveParams = {
   coverWindow: { dive: { seconds: 1 }, rise: { seconds: 1 } },
 }
 
-export const veil = { sky: 0.02, shoulder: 0.35, carry: 12, band: [0.36, 2, 6], ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
+export const veil = { sky: 0.02, shoulder: 0.35, carry: { dive: 12, rise: 24 }, band: [0.36, 2, 6], ease: 2, slow: 0.45, rush: 0.12, dive: { from: -0.95, full: -0.15, to: 0.15, clear: 0.95, span: 2.5 }, rise: { from: -0.95, full: -0.15, to: 0.15, clear: 1, span: 0.125 } }
 
 export const deck = { centre: new THREE.Vector3().fromArray(reliefJson.camera.up).normalize().multiplyScalar(-(reliefJson.camera.radius + 1)), radius: reliefJson.camera.radius }
 
@@ -154,7 +154,7 @@ class VenusPlan extends StopPlan {
     const w = coverWindow(seg)
     if (!w || (seg.kind !== 'dive' && seg.kind !== 'rise')) return 1
     const f = time * config.fps - w.centerFrame
-    return Math.min(Math.max((seg.kind === 'dive' ? -f : f) / veil.carry, 0), 1)
+    return Math.min(Math.max((seg.kind === 'dive' ? -f : f) / veil.carry[seg.kind], 0), 1)
   }
 }
 

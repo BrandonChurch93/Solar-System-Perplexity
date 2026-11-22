@@ -1,0 +1,106 @@
+{
+ "critic": "R3",
+ "score": 7.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "cell H, Andes along the terminator",
+      "what": "grazing light turns the ridges into an extruded plastic height map",
+      "fix": "cut normal and displacement strength so the mountains read at orbital scale"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "top-left crop, Rockies and Sierra Madre",
+      "what": "the ranges are embossed and glossy, more plastic than the day-side terrain",
+      "fix": "use one milder relief scale on both frames so ridges do not catch a plastic highlight"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "cell C, aurora on the night limb",
+      "what": "the curtain is a sheet of evenly spaced vertical rays",
+      "fix": "break the ray spacing and soften the fade so it does not read as a stripe texture"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "middle limb crop, sunlit cloud edge",
+      "what": "clouds smear into streaks that follow the curve",
+      "fix": "keep cloud detail from stretching at grazing angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "cells G and E, northern terrain and night lights",
+      "what": "softer than the matching crops in image-02, and the city lights bloom into specks",
+      "fix": "restore the sharpness of the first frame and keep night lights as small points"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "C and I, upper-right aurora above the night-side limb",
+      "what": "The green curtain breaks into a row of similar upright spikes, while a separate smooth green streak follows the surface below. The two edges read as stacked effects rather than one volume.",
+      "fix": "Vary the heights, spacing and density of the curtains, and fade their bases into the same atmospheric volume instead of drawing a separate green surface streak."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "D, F and H, long middle- and foreground cloud shadows across the sea",
+      "what": "Several shadows become narrow, nearly uniform dark shafts with smeared tips. The fine water texture that remains visible alongside them gets nearly erased inside the shafts.",
+      "fix": "Render the shadows from the cloud volumes with varied opacity and penumbra, modulating the ocean lighting without losing surface texture beneath them."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "B and D, illuminated left limb",
+      "what": "A thin white outline remains distinct inside the broad cyan halo, tracing the globe like a second edge.",
+      "fix": "Reduce the narrow white peak and blend it continuously into the atmospheric falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "K and P, Pacific cloud systems west of North and Central America",
+      "what": "Several cloud bands curl into similarly smooth, tightly pinched spirals. The bright spiral in P has especially regular, comb-like filaments around its center.",
+      "fix": "Break up the regular filaments with varied gaps, turbulence and uneven cloud density, while preserving the large storm shapes."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "A and H, northern Andes and western edge of South America",
+      "what": "The compressed band of bright ridges makes the mountains look embossed relative to the softer surrounding terrain.",
+      "fix": "Lower the relief and highlight contrast at globe scale and add irregular foothill and terrain transitions."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "T and W, open star field below and to the sides of the globe",
+      "what": "Some brighter stars resolve into similarly sized soft disks rather than distinct point-like cores.",
+      "fix": "Keep sharper subpixel cores and vary bloom with brightness, reserving visible halos for the brightest stars."
+     }
+    ]
+   }
+  }
+ ]
+}
