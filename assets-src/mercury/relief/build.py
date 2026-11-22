@@ -18,6 +18,7 @@ LIFT = 2.5
 DIST_SCALE = 0.25
 SPECK = (5.0, 8.0)
 GLINT = 0.7
+SHADE = (20.0, 34.0, 3.0, 40.0, 9, 0.85, 7)
 EDGE = (8.0, 10.0)
 FEATHER = (320.0, 170.0, 24.0)
 RIM = (16, 4, 10.0, 2.0, 160)
@@ -208,6 +209,27 @@ def specks(color):
     return Image.fromarray(cv2.cvtColor(np.clip(a + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_YCrCb2RGB))
 
 
+def shade(color):
+    img = np.asarray(color)
+    a = cv2.cvtColor(img.astype(np.float32) / 255, cv2.COLOR_RGB2YCrCb) * 255
+    y = a[..., 0]
+    w = (1 - smooth(SHADE[0], SHADE[1], cv2.GaussianBlur(y, (0, 0), SHADE[2]))).astype(np.float32)
+    den = np.maximum(cv2.GaussianBlur(w, (0, 0), SHADE[3]), 1e-3)
+    for c in (1, 2):
+        a[..., c] += w * (cv2.GaussianBlur(a[..., c] * w, (0, 0), SHADE[3]) / den - a[..., c])
+    n = SHADE[4]
+    op = None
+    for k in (np.ones((1, n), np.uint8), np.ones((n, 1), np.uint8), np.eye(n, dtype=np.uint8), np.eye(n, dtype=np.uint8)[::-1].copy()):
+        o = cv2.morphologyEx(y, cv2.MORPH_OPEN, k)
+        op = o if op is None else np.maximum(op, o)
+    a[..., 0] = y - w * SHADE[5] * (y - op)
+    print('shade: %.2f percent of the color' % (100 * float((w > 0.5).mean())))
+    rgb = cv2.cvtColor(a / 255, cv2.COLOR_YCrCb2RGB) * 255
+    grain = np.random.default_rng(SHADE[6]).random(rgb.shape[:2], dtype=np.float32)[..., None]
+    soft = np.clip(np.floor(rgb + grain), 0, 255).astype(np.uint8)
+    return Image.fromarray(np.where(w[..., None] > 0, soft, img))
+
+
 def main():
     drop = horizon()
     print('horizon drop in the margins, px at 2816: left max %.1f right max %.1f' % (drop[:ML].max(), drop[ML + W:].max()))
@@ -254,7 +276,7 @@ def main():
     if os.path.exists(WORK + 'walls-2x.png') and os.environ.get('RELIEF_WALLS', '1') == '1':
         import walls
         color = walls.paint(color)
-    color = specks(color)
+    color = shade(specks(color))
     if os.path.exists(WORK + 'lens-fix.npy'):
         color = lens(color, np.load(WORK + 'lens-fix.npy'))
     edge = rim(color, drop)
