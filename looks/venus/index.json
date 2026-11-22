@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T02:37:18.405Z",
- "head": "2907bb0c050db8530cd1db06e8cc2a843393382d",
- "note": "mail 50: wrap repaint at 0.3 strength with the hold refitted, star cure, on main 3d48581",
+ "pushed": "2026-11-22T02:47:56.934Z",
+ "head": "58c8cdfc4e26b0842e8b0eb521340214f97d3232",
+ "note": "Mail 50: wrap repaint, hold refit, star cure, dim sky pass committed (58c8cdf on main 3d48581); review cover sheets and terrain sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-22T02:47:56.039Z",
+   "file": "20261122024756039-note-s1-sky.jpg",
+   "source": "../view/s1-sky.png",
+   "kind": "note",
+   "label": "Rise 1554, 1556, 1558, sky above the horizon at 2.5 times the level, draft, on main 3d48581: no lane, band or wedge",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:47:55.256Z",
+   "file": "20261122024755256-note-s1.jpg",
+   "source": "../view/s1.jpg",
+   "kind": "note",
+   "label": "Rise 1552 to 1559, draft, on main 3d48581, branch 58c8cdf: the seam above the horizon is gone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:47:54.451Z",
+   "file": "20261122024754451-note-d1-night.jpg",
+   "source": "../view/d1-night.png",
+   "kind": "note",
+   "label": "Dive 1259 to 1279, night side crop, draft, on main 3d48581: no step where the hold layers leave",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:47:53.607Z",
+   "file": "20261122024753607-note-d1.jpg",
+   "source": "../view/d1.jpg",
+   "kind": "note",
+   "label": "Dive 1259 to 1303 every fourth frame, draft, on main 3d48581, branch 58c8cdf: repainted wrap, hold layers gone by 1275",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T02:47:52.765Z",
+   "file": "20261122024752765-note-f11-1440.jpg",
+   "source": "../view/f11-1440.jpg",
+   "kind": "note",
+   "label": "1440 final tier on main 3d48581, branch 58c8cdf: star cure of the terrain patch and the dim sky pass",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T02:37:17.817Z",
    "file": "20261122023717817-note-f7-1185.jpg",
@@ -136,46 +176,6 @@
    "source": "../view/f2-1440-pair.jpg",
    "kind": "note",
    "label": "P6 f2 terrain 1440 final tier: round 23 above, now below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:10:24.596Z",
-   "file": "20261122001024596-note-f2-1440-left.jpg",
-   "source": "../view/f2-1440-left.png",
-   "kind": "note",
-   "label": "P6 f2 terrain 1440 left limb native, lifted 1.6 times: round 23, now (second star copy gone)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:56.159Z",
-   "file": "20261122000356159-note-c13-rc.jpg",
-   "source": "../view/c13-rc.png",
-   "kind": "note",
-   "label": "P6 rise cover sheet 1555 to 1566, review tier, window 1.0 s (830a506 on engine 837adbb)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:55.518Z",
-   "file": "20261122000355518-note-c13-dc.jpg",
-   "source": "../view/c13-dc.png",
-   "kind": "note",
-   "label": "P6 dive cover sheet 1309 to 1320, review tier, window 1.0 s (830a506 on engine 837adbb)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:54.881Z",
-   "file": "20261122000354881-note-b5-bolts.jpg",
-   "source": "../view/b5-bolts.png",
-   "kind": "note",
-   "label": "P6 hold lightning: approved, 1185 now, round 23; 1150 and 1230 with the flash off, mask",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T00:03:54.298Z",
-   "file": "20261122000354298-note-f2-1185-lit.jpg",
-   "source": "../view/f2-1185-lit.png",
-   "kind": "note",
-   "label": "P6 f2 hold 1185 lit limb native: approved, now, round 23",
    "stop": "venus"
   },
   {
