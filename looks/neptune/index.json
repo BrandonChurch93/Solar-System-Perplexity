@@ -1,69 +1,69 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T14:26:02.406Z",
- "head": "46203f81fe94da821107747938a71b203245dba0",
- "note": "Round 34: READY checks running on 46203f8 (sheets, stress, measure, main's bytes on the new engine)",
+ "pushed": "2026-11-22T15:00:44.435Z",
+ "head": "88e925cfc9599e8b84f760f3aee774d8d0ae5ba8",
+ "note": "CUT34: proving the arrival swing commit (4436, 4492, sheets), the lost points of the hold patch built offline",
  "looks": [
+  {
+   "time": "2026-11-22T15:00:43.701Z",
+   "file": "20261122150043701-note-r1-points-hero-left-head-right-x4.jpg",
+   "source": "out/work/nep/end34/crit/r1-points-hero-left-head-right-x4.png",
+   "kind": "note",
+   "label": "hold 4605, the lost points: hero left, head right, times 4",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:00:42.692Z",
+   "file": "20261122150042692-note-view-new-4492.jpg",
+   "source": "out/work/nep/end34/swing/view-new-4492.jpg",
+   "kind": "note",
+   "label": "uranus.travel 4492 final with the Neptune arrival swing at 0 (commit 88e925c)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:00:42.092Z",
+   "file": "20261122150042092-note-view-new-4436.jpg",
+   "source": "out/work/nep/end34/swing/view-new-4436.jpg",
+   "kind": "note",
+   "label": "uranus.rise 4436 final with the Neptune arrival swing at 0 (commit 88e925c)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:00:41.443Z",
+   "file": "20261122150041443-note-where.jpg",
+   "source": "out/work/nep/end34/points/where.jpg",
+   "kind": "note",
+   "label": "hold sky patch: where the restored points sit (red rings on the approved hero)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:00:40.431Z",
+   "file": "20261122150040431-note-points-hero-old-new-x3.jpg",
+   "source": "out/work/nep/end34/points/points-hero-old-new-x3.png",
+   "kind": "note",
+   "label": "hold sky patch, lost points: hero, patch now, patch with the points back, native times 3 (not installed yet)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T14:30:36.507Z",
+   "file": "20261122143036507-job-frame-05006.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T14:26:01.273Z",
    "file": "20261122142601273-note-head-night-lift4-before-after-05242.jpg",
    "source": "out/work/nep/end34/stress2/head-night-lift4-before-after-05242.png",
    "kind": "note",
    "label": "stress 5242 night side raised 4: export above, 5 Mbps below (pole cap breaks into tiles)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:26:00.353Z",
-   "file": "20261122142600353-note-b-cresc-native.jpg",
-   "source": "out/work/nep/end34/mend/b-cresc-native.png",
-   "kind": "note",
-   "label": "crescent at 5235 native: before and after the mend",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:25:59.556Z",
-   "file": "20261122142559556-note-b-tick-x6-head-t4-t5.jpg",
-   "source": "out/work/nep/end34/mend/b-tick-x6-head-t4-t5.png",
-   "kind": "note",
-   "label": "crescent notch at 5235 times 6: before, take 4, take 5 of the mend",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:25:58.330Z",
-   "file": "20261122142558330-note-22-lookback-sheet-review.jpg",
-   "source": "out/work/nep/end34/part/22-lookback-sheet-review.jpg",
-   "kind": "note",
-   "label": "ending.lookback sheet at review on 46203f8",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:25:57.123Z",
-   "file": "20261122142557123-note-21-retreat-sheet-review.jpg",
-   "source": "out/work/nep/end34/part/21-retreat-sheet-review.jpg",
-   "kind": "note",
-   "label": "ending.retreat sheet at review on 46203f8 (crescent share ramps with the phase)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T14:19:57.200Z",
-   "file": "20261122141957200-job-frame-04530.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4530,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T13:44:33.109Z",
-   "file": "20261122134433109-note-v4-native.jpg",
-   "source": "out/work/nep/mend/v4-native.png",
-   "kind": "note",
-   "label": "wrap window mend, native texels: wrap left, corrected window right (take 4)",
    "stop": "neptune"
   },
   {
