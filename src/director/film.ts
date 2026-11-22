@@ -4,7 +4,7 @@ import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut } from './moves'
-import { arc, drift, forward, lookAt, mix, ramp, smooth, smoother } from './rig'
+import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
@@ -26,16 +26,6 @@ const SUN_PULL_FROM = 0.2
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
 export const LOOKBACK = { phaseDeg: 148, phasePerSecond: 0.45, azimuthDeg: 127, azimuthPerSecond: 0, distance: 8.6, pullPerSecond: 0.012, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.012, 0.003] as [number, number], lineDeg: 195, linePerSecond: 0.15, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { light: 1.5, turnFrom: 0, turn: 0.5, phase: 0.4, pull: 0.3, aim: 0.3, aimFrom: 0 } }
-const OFFSET_FROM = 0.15
-const BOW_REACH = 24
-const SUN_SWAP: [number, number] = [0.3, 0.42]
-const SUN_BOW_REACH = 90
-const SUN_HIDDEN = 0.14
-const SUN_HALO = 1.2
-const SUN_GLOW_FROM = 0.06
-const RETREAT_DUST = 0.045
-const LOCK_PX: [number, number] = [3, 40]
-const Y = new THREE.Vector3(0, 1, 0)
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -46,6 +36,16 @@ const glide = (u: number, e: number): number => {
   const edge = (t: number): number => e * (t * t * t - (t * t * t * t) / 2)
   return (x < e ? edge(x / e) : x > 1 - e ? 1 - e - edge((1 - x) / e) : x - e / 2) / (1 - e)
 }
+const OFFSET_FROM = 0.15
+const BOW_REACH = 24
+const SUN_SWAP: [number, number] = [0.3, 0.42]
+const SUN_BOW_REACH = 90
+const SUN_HIDDEN = 0.14
+const SUN_HALO = 1.2
+const SUN_GLOW_FROM = 0.06
+const RETREAT_DUST = 0.045
+const LOCK_PX: [number, number] = [3, 40]
+const Y = new THREE.Vector3(0, 1, 0)
 const OPEN = config.raw.travel.sky
 const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number>)[id] ?? 0
 const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number>)[id] ?? 0
@@ -192,7 +192,7 @@ export class FilmDirector implements Director {
 
   private nightSide(phase: number, azimuth: number, distance: number, sun = this.lookbackSun): THREE.Vector3 {
     const side = this.lookbackSide.clone().addScaledVector(sun, -this.lookbackSide.dot(sun)).normalize()
-    return sun.clone().multiplyScalar(Math.cos(phase)).addScaledVector(side.applyAxisAngle(sun, azimuth), Math.sin(phase)).multiplyScalar(distance)
+    return slerpDir(sun, side.applyAxisAngle(sun, azimuth), phase / (Math.PI / 2)).multiplyScalar(distance)
   }
 
   private lookback(t: number): Pose {
@@ -541,7 +541,7 @@ export class FilmDirector implements Director {
       const p = this.plans[i]!
       const s = state(i, 'orbit')
       const look = (t: number): Pose => this.lookback(t)
-      const arrived = segment.kind === 'retreat' ? smoother(ramp(OPEN.retreatGlare[0], OPEN.retreatGlare[1], u)) : 1
+      const arrived = segment.kind === 'retreat' ? smoother(ramp(OPEN.retreatGlare, 1, u)) : 1
       const lifted = riseLift(p.id)
       const open = mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), LOOKBACK.skyExposure, lifted)
       light = { ...this.sunFor(i), glare: mix(p.p.light.sunGlare, LOOKBACK.glare, arrived), sky: segment.kind === 'retreat' ? mix(mix(p.p.light.skyExposure, OPEN.openExposure, lifted), open, smoother(ramp(OPEN.retreat[0], OPEN.retreat[1], u))) : open }
