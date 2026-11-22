@@ -1,9 +1,81 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T05:18:08.172Z",
- "head": "4c3f6e5f0ca98a9c4936ab3be47e695ce23174c8",
- "note": "Sun item 4 closed on the final tier (card under the limb rebuilt); item 5 started: the boil push traced as the cause of the poured fluid look at 247. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
+ "pushed": "2026-11-22T05:38:15.471Z",
+ "head": "b8d0f888c6bc02d5baa0e37ee65ec03b3b9a843b",
+ "note": "Sun: item 5a built (boil push no longer pinches cells at 247), proof chain rendering (every frame 200 to 224, sheets, measures); item 5b studied offline. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
  "looks": [
+  {
+   "time": "2026-11-22T05:38:14.467Z",
+   "file": "20261122053814467-note-z4-f0-right-of-arch-film-gain3.jpg",
+   "source": "out/work/sun/h1p/z4-f0-right-of-arch-film-gain3.png",
+   "kind": "note",
+   "label": "Item 7, frame 0 final at 3 times gain, right of the arch: the dark ribbon the critic named. Traced: the sky card is darker inside the arch's mask and keeps the arch's warm halo outside it; at frame 0 the arch stands elsewhere, so both show beside it. Not cured yet. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:38:13.587Z",
+   "file": "20261122053813587-note-y2-fine-source-plain-mask-over-hero.jpg",
+   "source": "out/work/sun/h1p/y2-fine-source-plain-mask-over-hero.jpg",
+   "kind": "note",
+   "label": "Item 5b, offline study: the plain granulation of the approved hero that feeds the finer layer (spots and plage masked out so no small starbursts are copied). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:38:12.199Z",
+   "file": "20261122053812199-note-y3-left-uhd-scale.jpg",
+   "source": "out/work/sun/h1p/y3-left-uhd-scale.png",
+   "kind": "note",
+   "label": "Item 5b, offline study, not built: left limb at twice film size: approved, the map as it is, and a finer cell layer (the hero's own fine structure at half size) added toward the limb at two strengths. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:41.825Z",
+   "file": "20261122053041825-note-u9-f247-pore-six-zoom4.jpg",
+   "source": "out/work/sun/h1p/u9-f247-pore-six-zoom4.png",
+   "kind": "note",
+   "label": "Item 5a, the variants at draft 247 at 4 times zoom: as committed before (gv0), four tries, push off (goff); gv5 kept. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:41.060Z",
+   "file": "20261122053041060-note-f00360.jpg",
+   "source": "out/work/sun/rf17/f00360.png",
+   "kind": "note",
+   "label": "Final tier still, frame 360, item 5a (0.5 percent of the pixels differ from before by more than 1 level). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:39.946Z",
+   "file": "20261122053039946-note-f00247.jpg",
+   "source": "out/work/sun/rf17/f00247.png",
+   "kind": "note",
+   "label": "Final tier still, frame 247, item 5a. main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:38.829Z",
+   "file": "20261122053038829-note-x2-f247-final-limb-before-left-now-right-zoom4.jpg",
+   "source": "out/work/sun/h1p/x2-f247-final-limb-before-left-now-right-zoom4.png",
+   "kind": "note",
+   "label": "Item 5a, frame 247 final tier at 4 times zoom, limb: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:37.730Z",
+   "file": "20261122053037730-note-x2-f247-final-upper-before-left-now-right-zoom4.jpg",
+   "source": "out/work/sun/h1p/x2-f247-final-upper-before-left-now-right-zoom4.png",
+   "kind": "note",
+   "label": "Item 5a, frame 247 final tier at 4 times zoom, upper: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T05:30:36.575Z",
+   "file": "20261122053036575-note-x2-f247-final-pore-before-left-now-right-zoom4.jpg",
+   "source": "out/work/sun/h1p/x2-f247-final-pore-before-left-now-right-zoom4.png",
+   "kind": "note",
+   "label": "Item 5a, frame 247 final tier at 4 times zoom, pore: before left, now right (the boil push no longer pinches the cells into threads). main edbf7b8 (engine batch 19 7a880ac6), agent/sun 30594b7",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T05:18:07.529Z",
    "file": "20261122051807529-note-u5-f247-centre-push-now-masked-off-zoom3.jpg",
@@ -50,78 +122,6 @@
    "source": "out/work/sun/rf16/f00000.png",
    "kind": "note",
    "label": "Final tier still, frame 0. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:03.389Z",
-   "file": "20261122051803389-note-s9-card-1p5-q95-rows-850-1800-gain4.jpg",
-   "source": "out/work/sun/h1p/s9-card-1p5-q95-rows-850-1800-gain4.jpg",
-   "kind": "note",
-   "label": "Sky card rows 850 to 1800 at 4 times gain, the kept version: smooth level, star points and grain under the frame 90 limb. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:02.841Z",
-   "file": "20261122051802841-note-v2-rise-208-top-native-new-gain1.jpg",
-   "source": "out/work/sun/h1p/v2-rise-208-top-native-new-gain1.png",
-   "kind": "note",
-   "label": "Rise cover 208, draft, native size, gain 1, card of c941c65. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:02.204Z",
-   "file": "20261122051802204-note-v2-rise-211-213-top400-before-left-new-right-gain3.jpg",
-   "source": "out/work/sun/h1p/v2-rise-211-213-top400-before-left-new-right-gain3.png",
-   "kind": "note",
-   "label": "Rise cover 211-213, draft, top 400 rows at 3 times gain: first item 4 card left, card of c941c65 right (the vertical edge and the smears under the old limb line are gone). main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:01.627Z",
-   "file": "20261122051801627-note-v2-rise-208-210-top400-before-left-new-right-gain3.jpg",
-   "source": "out/work/sun/h1p/v2-rise-208-210-top400-before-left-new-right-gain3.png",
-   "kind": "note",
-   "label": "Rise cover 208-210, draft, top 400 rows at 3 times gain: first item 4 card left, card of c941c65 right (the vertical edge and the smears under the old limb line are gone). main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:01.029Z",
-   "file": "20261122051801029-note-v2-rise-205-207-top400-before-left-new-right-gain3.jpg",
-   "source": "out/work/sun/h1p/v2-rise-205-207-top400-before-left-new-right-gain3.png",
-   "kind": "note",
-   "label": "Rise cover 205-207, draft, top 400 rows at 3 times gain: first item 4 card left, card of c941c65 right (the vertical edge and the smears under the old limb line are gone). main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:18:00.427Z",
-   "file": "20261122051800427-note-w9b-f30-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/w9b-f30-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 30, final tier, limb at 3 times gain, first item 4 card over the card of c941c65. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:17:59.829Z",
-   "file": "20261122051759829-note-w9-f90-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/w9-f90-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 90, final tier, limb at 3 times gain, before item 4 over now. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:17:59.204Z",
-   "file": "20261122051759204-note-w9-f60-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/w9-f60-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 60, final tier, limb at 3 times gain, before item 4 over now. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:17:58.604Z",
-   "file": "20261122051758604-note-w9-f0-limb-whole-gain3-before-over-after.jpg",
-   "source": "out/work/sun/h1p/w9-f0-limb-whole-gain3-before-over-after.jpg",
-   "kind": "note",
-   "label": "Item 4 proof, frame 0, final tier, limb at 3 times gain, before item 4 over now. main 2621f00 (engine batch 19 7a880ac6), agent/sun c941c65",
    "stop": "sun"
   },
   {
