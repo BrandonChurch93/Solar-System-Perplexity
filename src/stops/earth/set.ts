@@ -161,6 +161,9 @@ export const createSet: SetFactory = async (ctx) => {
       const lights = 1 - look.lights[2]! * smooth((pace - look.lights[0]!) / (look.lights[1]! - look.lights[0]!))
       globe.update(light, eyeWorld, state.rotation, plan.spin(state.time), gain, state.weight, flow, plan.clock(state.time) - plan.holdMid, away, 0)
       const gu = globe.material.uniforms
+      const born = smooth((state.time - plan.seg.hold.start - look.onset[0]!) / (look.onset[1]! - look.onset[0]!))
+      ;(gu.uAuroraColor!.value as THREE.Vector3).fromArray(look.globe.auroraColor).multiplyScalar(born)
+      gu.uUnborn!.value = 1 - born
       gu.uLights!.value = lights
       gu.uVignette!.value = shot.post.vignette * (1 - low)
       ;(gu.uBloomPre!.value as THREE.Vector4).x = shot.post.bloomStrength
@@ -185,7 +188,7 @@ export const createSet: SetFactory = async (ctx) => {
       curtain.turn.premultiply(lean.setFromUnitVectors(stand, eyeDir.copy(eye).normalize()))
       const high = smooth((eye.length() - 1 - look.aurora.fade[0]!) / (look.aurora.fade[1]! - look.aurora.fade[0]!))
       sunLocal.copy(light).applyQuaternion(back)
-      curtain.update(plan.clock(state.time) - plan.holdMid, high, sunLocal)
+      curtain.update(plan.clock(state.time) - plan.holdMid, high * born, sunLocal, 1 - (1 - look.onset[2]!) * (1 - born))
       moon.update(sunLocal, plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * (plan.clock(state.time) - plan.holdMid), gain * state.weight, shot.post.vignette, aspect)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

@@ -74,9 +74,12 @@ export class Aurora {
     }
   }
 
-  update(clock: number, gain: number, sun: THREE.Vector3): void {
+  update(clock: number, gain: number, sun: THREE.Vector3, tall: number): void {
     const u = this.uniforms
     const c = this.look.calm
+    const span = u.uAuroraSpan!.value as THREE.Vector4
+    span.z = this.look.low * tall
+    span.w = this.look.top * tall
     const x = Math.min(Math.max((Math.abs(clock) - c[0]!) / (c[1]! - c[0]!), 0), 1)
     const lively = 1 + (c[2]! - 1) * x * x * (3 - 2 * x)
     ;(u.uAuroraSway!.value as THREE.Vector3).x = this.look.sway[0]! * lively
