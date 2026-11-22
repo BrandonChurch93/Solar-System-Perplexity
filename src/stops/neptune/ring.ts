@@ -162,5 +162,6 @@ export class Ring {
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
     ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
     ;(u.uEndCrisp!.value as THREE.Vector2).set(e.crisp[0]!, e.crisp[1]!)
+    ;(u.uGrainShape!.value as THREE.Vector4).w *= 1 - end
   }
 }
