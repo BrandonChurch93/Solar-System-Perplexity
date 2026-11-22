@@ -1,9 +1,57 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T14:03:59.092Z",
+ "pushed": "2026-11-22T14:27:25.818Z",
  "head": "e9058bed8b302d57c87dd23aca63ca256dac12b8",
- "note": "CUT34 work: finals of 3352 and 4492, the sky lift on Venus's rise",
+ "note": "CUT34 work: review rows main above branch for venus, earth, jupiter travel; every frame watch of earth.travel 2212 to 2227",
  "looks": [
+  {
+   "time": "2026-11-22T14:27:25.062Z",
+   "file": "20261122142725062-note-w-earth-native.jpg",
+   "source": "../../../../tmp/v/w-earth-native.jpg",
+   "kind": "note",
+   "label": "earth.travel 2217 to 2220 native crops: Phobos a smooth short streak, Mars's limb soft from the growth",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T14:27:24.461Z",
+   "file": "20261122142724461-note-w-earth-b.jpg",
+   "source": "../../../../tmp/v/w-earth-b.jpg",
+   "kind": "note",
+   "label": "earth.travel review every frame 2220 to 2227",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T14:27:23.889Z",
+   "file": "20261122142723889-note-w-earth-a.jpg",
+   "source": "../../../../tmp/v/w-earth-a.jpg",
+   "kind": "note",
+   "label": "earth.travel review every frame 2212 to 2219, main plus the branch",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T14:20:38.404Z",
+   "file": "20261122142038404-note-c34-jupiter-ab.jpg",
+   "source": "../../../../tmp/v/c34-jupiter-ab.jpg",
+   "kind": "note",
+   "label": "jupiter.travel review, main 0ac6d2a0 above, main plus the branch below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T14:20:37.857Z",
+   "file": "20261122142037857-note-c34-earth-ab.jpg",
+   "source": "../../../../tmp/v/c34-earth-ab.jpg",
+   "kind": "note",
+   "label": "earth.travel review, main 0ac6d2a0 above, main plus the branch below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T14:20:37.290Z",
+   "file": "20261122142037290-note-c34-venus-ab.jpg",
+   "source": "../../../../tmp/v/c34-venus-ab.jpg",
+   "kind": "note",
+   "label": "venus.travel review, main 0ac6d2a0 above, main plus the branch below",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T14:03:58.088Z",
    "file": "20261122140358088-note-lift-venus-ab.jpg",
@@ -18,48 +66,6 @@
    "source": "../../../../tmp/v/g8-finals-b.jpg",
    "kind": "note",
    "label": "finals 3352, 4492 on main plus the branch, full frame above, native crop below"
-  },
-  {
-   "time": "2026-11-22T13:40:03.001Z",
-   "file": "20261122134003001-note-g8-finals-a.jpg",
-   "source": "../../../../tmp/v/g8-finals-a.jpg",
-   "kind": "note",
-   "label": "finals 1072, 1642, 2212 on main 0ac6d2a0 plus the branch, full frame above, native crop below"
-  },
-  {
-   "time": "2026-11-22T13:33:55.958Z",
-   "file": "20261122133355958-note-w-ura-native.jpg",
-   "source": "../../../../tmp/v/w-ura-native.jpg",
-   "kind": "note",
-   "label": "uranus.travel 4496, 4497, 4502, 4503 native crops"
-  },
-  {
-   "time": "2026-11-22T13:33:55.403Z",
-   "file": "20261122133355403-note-w-ura-b.jpg",
-   "source": "../../../../tmp/v/w-ura-b.jpg",
-   "kind": "note",
-   "label": "uranus.travel review every frame 4500 to 4505"
-  },
-  {
-   "time": "2026-11-22T13:33:54.828Z",
-   "file": "20261122133354828-note-w-ura-a.jpg",
-   "source": "../../../../tmp/v/w-ura-a.jpg",
-   "kind": "note",
-   "label": "uranus.travel review every frame 4492 to 4500, new window (trial tree, same shots as the head)"
-  },
-  {
-   "time": "2026-11-22T13:23:39.123Z",
-   "file": "20261122132339123-note-w-merc-native.jpg",
-   "source": "../../../../tmp/v/w-merc-native.jpg",
-   "kind": "note",
-   "label": "mercury.travel 1079 to 1082 native crops, sky slides 95 px a frame under the pinned disc"
-  },
-  {
-   "time": "2026-11-22T13:23:38.247Z",
-   "file": "20261122132338247-note-w-merc-b.jpg",
-   "source": "../../../../tmp/v/w-merc-b.jpg",
-   "kind": "note",
-   "label": "mercury.travel review every frame 1082 to 1090"
   }
  ]
 }
