@@ -13,7 +13,7 @@ export const params: MoveParams = {
   spot: { x: 0.5144, y: 0.65436 },
   dive: { headingDeg: 278, altitude: 0.03234, back: 0.06, ahead: 0.12, bow: 0.2, rollDeg: 6, swoop: true, surge: { glide: 0.1, rise: 16, fall: 2, swell: [0.35, 5, 2] } },
   terrain: { vfov: 60, gather: 0.2, forward: 0.5, rise: 0.05, side: -0.1, yawDeg: 3, pitchDeg: 0.5, entryHeight: 1, entryBack: 0.6, entryPitchDeg: -4, entryDipDeg: -4.07, horizonDeg: 19.8, dipDeg: 10.25, rollDeg: 11.27, exitHeight: 0.3, exitForward: 0.25, exitPitchDeg: 1.5, exitDipDeg: 1.54 },
-  rise: { azimuthDeg: 12, elevationDeg: 14, distance: 4.8, offset: [-0.3, -0.06], driftSpeed: 0.08, rollDeg: 0, ahead: 0.01174, from: 0.02085, hug: 1.7, settle: 8, level: true, pan: 0.3 },
+  rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.8, offset: [-0.002, -0.189], driftSpeed: 0.08, rollDeg: 80, ahead: 0.01174, from: 0.02085, hug: 1.7, settle: 8, level: true, pan: 0.3 },
   travel: { turnDeg: 78, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [0.5, -0.1] },
   light: { exposure: 1, skyExposure: 0.25, sunRadiusDeg: 9.2, sunGlare: 0.012, flare: 1 },
@@ -200,7 +200,7 @@ export class Plan extends StopPlan {
     const span = config.shutterFraction
     const per = config.shutterFraction / span
     const m = sampled((w) => per * this.motion((s) => this.diveAt(s, s), Math.min(w, end - span / 2 - 0.005) / fps, span / fps), still - 0.5, end, 0.125)
-    const shape = curve(t.shape.map(([x, y]) => [still + x, y] as Knot))
+    const shape = curve(t.shape.map(([x, y]) => [still + x, y] as Knot), t.slope)
     const base = curve([[still, t.still], [still + t.shape[t.shape.length - 2]![0], t.still], [end, t.end]])
     const run = (top: number): Track => integrate((x, w) => (base(x) + top * shape(x)) / Math.max(m(w), 0.5), still, still, end, 1 / 16)
     const top = solve((x) => last(run(x)).value - end, 10, 600)

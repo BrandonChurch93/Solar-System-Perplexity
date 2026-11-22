@@ -36,7 +36,6 @@ in vec3 vSide;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 ray = normalize(vRay);
   float far = length(vDown);
   vec3 down = vDown / far;
@@ -44,11 +43,11 @@ void main() {
   float el = acos(clamp(c, -1.0, 1.0)) - asin(clamp(uRadius / far, 0.0, 1.0));
   vec3 level = ray - down * c;
   vec2 uv = vec2((atan(dot(level, vSide), dot(level, vAhead)) - uSpan.x) / (uSpan.y - uSpan.x), (el - uSpan.z) / (uSpan.w - uSpan.z));
-  if (uv.y >= 1.0 || uv.x <= 0.0 || uv.x >= 1.0) discard;
   vec3 t = textureLod(uMap, vec2(uv.x, max(uv.y, 0.0)), 0.0).rgb;
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float k = uGain / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   outColor = vec4(inverseFilmic(t) * k, 0.0);
+  if (uDiag >= 2 || uv.y >= 1.0 || uv.x <= 0.0 || uv.x >= 1.0) discard;
 }`
 
 export class Limb {

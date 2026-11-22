@@ -5,11 +5,12 @@ import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/type
 import { diagUniform } from '../../diagnostics/diag'
 import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
-import { closeAhead, closeImage, closePivot, closeRadius, closeUp as nearUp } from './close'
+import { closeAhead, closeImage, closeRadius, closeUp as nearUp, wideImage } from './close'
 import { config } from '../../config'
 import { patches, relief, wide, wrap } from './assets'
-import { Glare, type GlareSide } from './glare'
+import { Glare } from './glare'
 import { Globe } from './globe'
+import hazeJson from './haze.json'
 import { Lens } from './lens'
 import lensJson from './lens.json'
 import { Limb } from './limb'
@@ -23,6 +24,7 @@ import { Rim } from './rim'
 import rimJson from './rim.json'
 import skyJson from './sky.json'
 import { SkyPlate } from './skyplate'
+import { clearance, ride } from './sunpath'
 import { SunPlate } from './sunplate'
 import sunJson from './sunplate.json'
 
@@ -102,6 +104,8 @@ export const createSet: SetFactory = async (ctx) => {
   const slideY = curve(slide.track.map((k) => [k[0], k[2]] as [number, number]))
   const tanFrom = Math.tan(THREE.MathUtils.degToRad(plan.dive(covers[0]! + slide.leave[0] / config.fps).pose.vfov) / 2)
   const tanTo = Math.tan(THREE.MathUtils.degToRad(plan.dive(covers[0]!).pose.vfov) / 2)
+  const swap = plan.rise(covers[1]!)
+  const held = clearance(lowSunAt(covers[1]!, new THREE.Quaternion(), true).clone(), swap.pose.position.clone().negate(), swap.pose.position.length())
   const sunShown = new THREE.Vector3()
   const rimSun = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
@@ -130,14 +134,28 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(under.group)
   terrain.add(wipe)
   terrain.add(ground.group)
-  const shots: THREE.Texture[] = []
-  ground.group.traverse((o) => {
-    const found = ((o as THREE.Mesh).material as THREE.ShaderMaterial | undefined)?.uniforms?.uColor?.value as THREE.Texture | undefined
-    if (found) shots.push(found)
-  })
-  const hasClose = shots.length > 0
-  if (hasClose) globe.close(shots[0]!, plan.anchor.frame.clone().invert().multiply(new THREE.Quaternion().fromArray(fit.globe.quaternion)), nearUp, closePivot, look.close.turn, closeRadius, closeImage.focal, closeImage.center, closeImage.box, look.close.far, look.close.feather)
+  const maps = (group: THREE.Group, name: string): THREE.Texture | undefined => {
+    let found: THREE.Texture | undefined
+    group.traverse((o) => {
+      found ??= ((o as THREE.Mesh).material as THREE.ShaderMaterial | undefined)?.uniforms?.[name]?.value as THREE.Texture | undefined
+    })
+    return found
+  }
+  const shot = maps(ground.group, 'uColor')
+  const around = maps(under.group, 'uColor')
+  const aroundAlpha = maps(under.group, 'uAlpha')
+  const hasClose = !!shot && !!around && !!aroundAlpha
+  if (hasClose) {
+    const toClose = plan.anchor.frame.clone().invert().multiply(new THREE.Quaternion().fromArray(fit.globe.quaternion))
+    const toWide = under.group.quaternion.clone().invert()
+    globe.close(shot, toClose, nearUp, closeRadius, closeImage.focal, closeImage.center, closeImage.box, look.close.far, look.close.feather)
+    globe.haze(hazeJson.sun, hazeJson.fromDeg, hazeJson.toDeg, hazeJson.gain, look.close.haze.cut, look.close.haze.calm)
+    globe.wide(around, aroundAlpha, toWide.clone().multiply(toClose), nearUp.clone().multiplyScalar(closeRadius + 1).add(under.group.position).applyQuaternion(toWide), wideImage.focal, wideImage.center, wideImage.box, look.close.wide.feather[0]![1], [0, 1], 0)
+  }
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const wideFar = curve(look.close.wide.far)
+  const wideFeather = curve(look.close.wide.feather)
+  const above = (pose: { position: THREE.Vector3 } | null): number => Math.acos(closeRadius / (closeRadius + 1 + (pose ? pose.position.dot(nearUp) : 0)))
 
   const light = new THREE.Vector3()
   const forward = new THREE.Vector3()
@@ -153,8 +171,8 @@ export const createSet: SetFactory = async (ctx) => {
   const skyPlate = new SkyPlate(low.texture, low.tan, low.edge, closeUp, Math.sin(THREE.MathUtils.degToRad(reliefJson.camera.dipDeg)), look.sky.band.soft, diagUniform)
   orbit.add(skyPlate.mesh)
   globe.carry(look.carry.gain, look.carry.knee, 0)
-  globe.plain(look.close.plain.tint, 0)
-  globe.haze(look.haze.color, look.haze.peak)
+  globe.plain(look.carry.tint)
+  if (patchTextures.length > 0) globe.mend(direction(look.mend.lon, look.mend.lat), look.mend.reach, look.mend.from)
 
   return {
     id: plan.id,
@@ -174,12 +192,11 @@ export const createSet: SetFactory = async (ctx) => {
       const fromDive = (state.time - covers[0]!) * config.fps
       const fromRise = (state.time - covers[1]!) * config.fps
       const first = Math.abs(fromDive) <= Math.abs(fromRise)
-      const side: GlareSide = first ? (inOrbit ? 'dive' : 'enter') : inOrbit ? 'rise' : 'leave'
       const tanHalf = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const aspect = view.format.width / view.format.height
       toCamera.copy(view.camera.quaternion).invert()
       if (!inOrbit) {
-        glare.update(first ? fromDive : fromRise, side, on, lowSunAt(state.time, state.rotation, false), view.camera, gain, aspect, state.time)
+        glare.update(on ? Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height) : 0, lowSunAt(state.time, state.rotation, false), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)
@@ -218,13 +235,15 @@ export const createSet: SetFactory = async (ctx) => {
         plate = 1 - smoother(ramp(look.sun.hand[0], look.sun.hand[1], fromDive))
         ghosts = 1 - smoother(ramp(look.sun.ghost[0], look.sun.ghost[1], fromDive))
       } else if (rising) {
-        const back = smoother(ramp(look.sun.back[0], look.sun.back[1], fromRise))
-        plate = back
-        ghosts = back
-        glareSun.copy(lowSunAt(state.time, state.rotation, true))
-        rimSun.copy(glareSun).lerp(shot.sun.dir, back).normalize()
+        const lift = look.sun.lift
+        ride(lowSunAt(state.time, state.rotation, true), shot.sun.dir, world.position, world.position.length(), smoother(ramp(lift.frames[0], lift.frames[1], fromRise)), held, THREE.MathUtils.degToRad(lift.floor), sunShown)
+        rimSun.copy(sunShown)
+        glareSun.copy(sunShown)
+        shrink = Math.max(ramp(tanFrom, tanTo, tanHalf), 1 - smoother(ramp(lift.grow[0], lift.grow[1], fromRise)))
+        plate = smoother(ramp(lift.plate[0], lift.plate[1], fromRise))
+        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise))
       }
-      glare.update(first ? fromDive : fromRise, side, on, glareSun, view.camera, gain, aspect, state.time)
+      glare.update(on ? glare.bloom(first ? fromDive : fromRise, first ? 'dive' : 'rise') : 0, glareSun, view.camera, gain, aspect, state.time)
       const skyWeight = diving ? smoother(ramp(look.sky.dive[0], look.sky.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.rise[0], look.sky.rise[1], fromRise)) : 0
       const band = diving ? smoother(ramp(look.sky.band.dive[0], look.sky.band.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.band.rise[0], look.sky.band.rise[1], fromRise)) : 0
       closeBack.copy(state.rotation).multiply(plan.drawn(state.time)).multiply(plan.anchor.frame).multiply(closeFix.copy(closeFrame).multiply(plan.turn(state.time).invert()).multiply(closeTurn).multiply(plan.terrainFrame)).multiply(closeAim).invert().premultiply(midDrift)
@@ -237,13 +256,17 @@ export const createSet: SetFactory = async (ctx) => {
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / tanHalf * (view.format.height / 2)
       const offAxis = THREE.MathUtils.radToDeg(rimSun.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
-      const close = mine && hasClose && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.close.height[0], look.close.height[1]) : 0
-      globe.near(close, look.close.haze, look.close.soft)
-      globe.carry(mix(look.carry.gain, look.carry.lift, close), look.carry.knee, look.carry.grey * close)
-      const cut = diving ? smoother(ramp(look.cut.dive[0], look.cut.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.cut.rise[0], look.cut.rise[1], fromRise)) : 0
-      const reach = look.cut.reach[diving ? 0 : 1]
-      globe.cut(cut > 0 ? mix(closeRadius * Math.acos(Math.min(1 / distance, 1)) + look.cut.margin, reach, cut) : 0, mix(look.close.far[0], look.cut.far[0], cut), mix(look.close.far[1], look.cut.far[1], cut))
-      globe.plain(look.close.plain.tint, 1 - THREE.MathUtils.smoothstep(cut, look.close.plain.until[0], look.close.plain.until[1]))
+      const covered = mine && hasClose && (kind === 'dive' || kind === 'rise')
+      const close = covered ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.close.height[0], look.close.height[1]) : 0
+      const grade = diving ? smoother(ramp(look.carry.dive[0], look.carry.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.carry.rise[0], look.carry.rise[1], fromRise)) : 0
+      globe.near(close, (wideImage.sink / closeRadius) * close)
+      const high = (distance - 1) * closeRadius
+      const capped = covered ? 1 - THREE.MathUtils.smoothstep(high, look.close.lift.height[0], look.close.lift.height[1]) : 0
+      const way = rising ? 'rise' : 'dive'
+      globe.clear(close > 0 ? look.close.haze.amount * THREE.MathUtils.smoothstep(high, look.close.haze.height[0], look.close.haze.height[1]) : 0, look.close.haze.level[way], [mix(-0.85, look.close.lift.cap[0], capped), mix(1.6, look.close.lift.cap[1], capped)], [look.close.lift.knee[way][0], look.close.lift.knee[way][1] * capped], close > 0 ? THREE.MathUtils.smoothstep(high, look.close.haze.calmHeight[0], look.close.haze.calmHeight[1]) : 0)
+      const reach = wideFar(high)
+      globe.reach(reach - look.close.wide.soft, reach, wideFeather(high))
+      globe.carry(mix(look.carry.gain, look.carry.lift, grade), look.carry.knee, look.carry.grey * grade)
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
       globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)

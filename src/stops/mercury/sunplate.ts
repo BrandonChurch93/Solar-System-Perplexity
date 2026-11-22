@@ -28,19 +28,17 @@ in vec2 vNdc;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 p = uAim * normalize(vRay);
-  if (p.z > -1e-3) discard;
-  vec2 uv = ((p.xy / -p.z - uRect.xy) / uRect.zw - 0.5) / uSmall.x + 0.5;
-  if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
+  vec2 uv = ((p.xy / max(-p.z, 1e-3) - uRect.xy) / uRect.zw - 0.5) / uSmall.x + 0.5;
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float k = uGain / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   float r = length(uv - 0.5) / uLimb.w;
   vec3 shade = mix(vec3(1.0) - uLimb.rgb * (1.0 - sqrt(max(1.0 - r * r, 0.0))), vec3(1.0), smoothstep(uLimbEdge.x, uLimbEdge.y, r));
-  vec3 c = inverseFilmic(texture(uMap, uv).rgb) * shade;
+  vec3 c = inverseFilmic(textureGrad(uMap, uv, dFdx(uv), dFdy(uv)).rgb) * shade;
   c = mix(c, uPale * (dot(c, vec3(0.3, 0.5, 0.2)) * uSmall.z), uSmall.y);
   vec2 e = min(uv, 1.0 - uv);
   outColor = vec4(c * (k * smoothstep(0.0, uSmall.w, min(e.x, e.y))), 0.0);
+  if (uDiag >= 2 || p.z > -1e-3 || uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
 }`
 
 export interface SunLimb { dark: [number, number, number]; edge: [number, number] }

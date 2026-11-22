@@ -384,6 +384,7 @@ def build():
         'files': {'color': 'wide-color.jpg', 'alpha': 'wide-alpha.png', 'dist': 'wide-dist.bin', 'masks': 'relief-masks.png'},
         'position': [float(v) for v in wgeom.P],
         'quaternion': [float(-np.sin(half)), 0.0, 0.0, float(np.cos(half))],
+        'sink': SINK,
     }
     json.dump(out, open('src/stops/mercury/wide.json', 'w'), indent=1)
 

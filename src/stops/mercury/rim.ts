@@ -22,10 +22,10 @@ in vec3 vClip;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   outColor = vec4(inverseFilmic(textureLod(uMap, vUv, 0.0).rgb) * k, 0.0);
+  if (uDiag >= 2) discard;
 }`
 
 export class Rim {

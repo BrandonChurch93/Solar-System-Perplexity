@@ -27,17 +27,15 @@ in vec2 vNdc;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 void main() {
-  if (uDiag >= 2 || uAmount <= 0.0) discard;
   vec2 p = vNdc * vec2(uAspect, 1.0);
   float d = dot(uSun, uSun);
-  if (d < 1e-4) discard;
-  vec2 k = vec2(dot(uHome, uSun), uHome.y * uSun.x - uHome.x * uSun.y) / d;
+  vec2 k = vec2(dot(uHome, uSun), uHome.y * uSun.x - uHome.x * uSun.y) / max(d, 1e-4);
   vec2 g = mix(vec2(p.x * k.x - p.y * k.y, p.x * k.y + p.y * k.x), p - uSun + uHome, uSlide);
   vec2 uv = (g - uRect.xy) / uRect.zw;
-  if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
   vec2 v = vNdc * 0.5 * vec2(uAspect, 1.0);
   float gain = uGain * uAmount / mix(1.0, 1.0 / pow(1.0 + dot(v, v) * 0.9, 2.0), uVignette);
-  outColor = vec4(inverseFilmic(texture(uMap, uv).rgb) * gain, 0.0);
+  outColor = vec4(inverseFilmic(textureGrad(uMap, uv, dFdx(uv), dFdy(uv)).rgb) * gain, 0.0);
+  if (uDiag >= 2 || uAmount <= 0.0 || d < 1e-4 || uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) discard;
 }`
 
 export class Lens {
