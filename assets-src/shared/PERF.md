@@ -562,3 +562,7 @@ Not done: no frame was rendered with a longer window (the demonstration is numbe
 ## Task 6: engine batch 16
 
 Working notes and proof are in `assets-src/shared/BATCH16.md` on the branch `agent/engine-batch16` (read that file after a compaction).
+
+## Task 7: engine batch 18
+
+Working notes and proof are in `assets-src/shared/BATCH18.md` on the branch `agent/engine-batch18` (read that file after a compaction).
