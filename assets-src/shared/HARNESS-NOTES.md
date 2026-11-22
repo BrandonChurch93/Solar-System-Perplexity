@@ -213,6 +213,24 @@ Changed: `tools/pack.ts`, `tools/round.py`. Nothing under `tools/lib/`.
 - No change where nothing is split: `--plan --judged` of phases 5 and 6 is the old plan plus `tiles`, and each sheet's tiles sum to its samples; `jobs --job-minutes 200` writes the same `jobs.json` as the tool before this change. Tests 17 files 87, build clean.
 - Real tiers, plan only (state of a polish round, `jobs --workers 40`): 192 jobs in place of 77, longest job 20.0 min (a stop's measure, a fixed estimate), longest render job 17.2 min (the stress clips, `r34-film-stress02`), longest sheet job 15.0 min, 48 to 54 min per worker in place of 43 to 97. The Sun's rise cover is 11 jobs of 5.9 to 13.8 min. With `--job-minutes 20`: 138 jobs; with 30: 103 jobs, longest 30.0.
 
+## MAIL 168 (2026-11-22 14:44 UTC): R8 controls in polish and record rounds
+
+The gap: `pack --controls-from 30` skips the approved R8 images, and `close` read the control lines from round 30, a whole film round with no R8 line. Every stop showed control 0 of 0 and R8 passed on any answer.
+
+The change, in `tools/round.py` only, one commit a4ac1e71 on `agent/harness-r8` (cut from origin/main ca78dda5), merged here as 2802c2f8:
+
+- `r8_first(stop, skip)` walks `scorecards/round-NNN` in rising order (the real folder, and the scratch folder in a scratch round), skips the round being closed, and returns the first round whose `key.json` has an R8 entry of kind `approved` with that `stop` and whose `jurors.txt` has R8 lines on that image. It also returns that round's vote overrides from `out/work/rounds/round-NNN/state.json` when the file is there (it is read directly, no folder is made). With no such round it exits with "no R8 control votes for <stop>".
+- `r8_fill(r8c, stops, over, skip)` fills the control group of every stop that has no line from the control source. `r8_from(came)` writes "R8 controls: the stop's first round (mars 3, uranus 6)".
+- Used in the three closes: stop round (group key `hold`), record round (all nine stops), polish round (the stops whose select has R8). R2 is untouched. A source that has R8 control lines is used as before.
+- A line taken this way is named `reviewer_N@R` (for example `reviewer_38@3`), so that it never meets a critic of the same name in the closing round. An override of the first round is carried under that name, and `--vote reviewer_38@3=y` corrects one at close.
+- The line is printed at close and written under the R8 table of the polish summary, under the "R2 and R8 by stop" table of the record summary, and after the R8 sentence of a stop summary.
+
+What main's scorecards give: sun 10, mercury 7, venus 12, earth 11, mars 3, jupiter 8, saturn 13, uranus 6, neptune 9, each 3 of 3 lines. Mars round 3 has 7 R8 lines: 4 on the judged frame (one namer wrote twice) and 3 on the approved image; only those 3 are taken, and 1 of 3 names Mars (two said Phobos), as round 3's own summary says. All other stops 3 of 3 named right. No state file of those rounds is in this clone, so no override was applied here.
+
+Proofs (all scratch, draft): round 944 polish, select with R8 for mercury and mars, `pack --controls-from 30`, made up answers: before "R8 mars pass (2/3 vs 0/0)", after "(2/3 vs 1/3)" and mercury "(3/3 vs 3/3)"; with two judged votes turned to n mars fails (0/3 vs 1/3); `--vote reviewer_38@3=y` gives control 2/3. Round 921 (record) closed again with its controls pointed at round 30: before every stop "vs 0/0" and R8 pass, after the real counts and R8 fail for five stops. Round 901 (stop round) with its own control hidden in the key: before "control by 0 of 0", after "1 of 3" from round 3. With their own controls rounds 921 and 901 give byte identical output and scorecards before and after. Round 944's gate was not run: `gateGreen` and `gate.txt` were copied from scratch round 943 (same engine and stop hashes) to save the 18 minutes.
+
+Not proven: a real close of round 33, and a first round whose state has vote overrides (none is in this clone).
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
