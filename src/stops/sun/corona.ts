@@ -28,6 +28,7 @@ uniform sampler2D uMap;
 uniform int uDiag;
 uniform vec3 uCenter;
 uniform mat3 uToSet;
+uniform mat3 uFit;
 uniform vec2 uRange;
 uniform float uGain;
 uniform float uShow;
@@ -66,7 +67,7 @@ vec3 ray(vec2 uv, vec2 dx, vec2 dy) {
 }
 void main() {
   if (uDiag >= 2) discard;
-  vec3 dir = normalize(vPos);
+  vec3 dir = normalize(uFit * vPos);
   float t = max(dot(uCenter, dir), 0.0);
   vec3 near = dir * t - uCenter;
   float b = length(near);
@@ -119,7 +120,7 @@ export class Corona {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: map }, uDiag: diagUniform,
-        uCenter: { value: new THREE.Vector3() }, uToSet: { value: this.toSet },
+        uCenter: { value: new THREE.Vector3() }, uToSet: { value: this.toSet }, uFit: { value: new THREE.Matrix3() },
         uRange: { value: new THREE.Vector2(look.inner, look.outer) },
         uGain: { value: look.gain }, uShow: { value: 1 }, uEdge: { value: look.edge }, uTime: { value: 0 },
         uWave: { value: new THREE.Vector4(look.wave.amount, look.wave.scale, look.wave.speed, look.wave.sway) },
@@ -141,7 +142,7 @@ export class Corona {
     this.mesh.frustumCulled = false
   }
 
-  update(center: THREE.Vector3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1, edge = look.edge, veil = 0, ceil = 1, pale?: THREE.Vector4, behind = false, soft = 1): void {
+  update(center: THREE.Vector3, fit: THREE.Matrix3, rotation: THREE.Quaternion, time: number, gain: number, vignette: number, aspect: number, look: CoronaLook, shown = 1, edge = look.edge, veil = 0, ceil = 1, pale?: THREE.Vector4, behind = false, soft = 1): void {
     const u = this.material.uniforms
     ;(u.uVeil!.value as THREE.Vector3).set(veil, Math.max(ceil, 1e-6), soft)
     this.material.depthTest = behind
@@ -149,6 +150,7 @@ export class Corona {
     else (u.uPale!.value as THREE.Vector4).set(1, 1, 1, 0)
     u.uEdge!.value = Math.max(edge, 1e-6)
     ;(u.uCenter!.value as THREE.Vector3).copy(center)
+    ;(u.uFit!.value as THREE.Matrix3).copy(fit)
     this.toSet.setFromMatrix4(this.m4.makeRotationFromQuaternion(this.q.copy(rotation).invert()))
     u.uTime!.value = time
     u.uGain!.value = gain * look.gain

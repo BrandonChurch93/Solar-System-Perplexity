@@ -47,6 +47,22 @@ vec4 strand(vec2 uv, float phase, vec2 dx, vec2 dy) {
   vec4 c = textureGrad(uMap, p, dx, dy);
   return vec4(inverseFilmic(c.rgb), c.a);
 }
+vec4 broad(vec2 uv, float lod) {
+  vec2 size = vec2(textureSize(uMap, int(lod)));
+  vec2 p = uv * size - 0.5;
+  vec2 i = floor(p);
+  vec2 f = p - i;
+  vec2 f2 = f * f;
+  vec2 f3 = f2 * f;
+  vec2 w0 = (1.0 - 3.0 * f + 3.0 * f2 - f3) / 6.0;
+  vec2 w1 = (4.0 - 6.0 * f2 + 3.0 * f3) / 6.0;
+  vec2 w3 = f3 / 6.0;
+  vec2 s0 = w0 + w1;
+  vec2 s1 = 1.0 - s0;
+  vec2 o0 = (i - 0.5 + w1 / s0) / size;
+  vec2 o1 = (i + 1.5 + w3 / s1) / size;
+  return (textureLod(uMap, o0, lod) * s0.x + textureLod(uMap, vec2(o1.x, o0.y), lod) * s1.x) * s0.y + (textureLod(uMap, vec2(o0.x, o1.y), lod) * s0.x + textureLod(uMap, o1, lod) * s1.x) * s1.y;
+}
 void main() {
   if (uDiag >= 2) discard;
   vec2 dx = dFdx(vUv) * uGrad;
@@ -61,7 +77,12 @@ void main() {
   float run = 0.55 * (sin(s * 9.0 - uTime * 1.7) - sin(s * 9.0)) + 0.3 * (sin(s * 23.0 - uTime * 3.1) - sin(s * 23.0)) + 0.25 * (sin(s * 14.0 + uTime * 1.1) - sin(s * 14.0));
   c.rgb *= exp2(uMove.z * f.b * run);
   for (int k = 0; k < (uBurn.x > 0.0 ? 1 : 0); k++) {
-    vec4 w = textureGrad(uMap, vUv, dx * uBurn.y, dy * uBurn.y);
+    vec2 size = vec2(textureSize(uMap, 0));
+    vec2 gx = dx * size * uBurn.y;
+    vec2 gy = dy * size * uBurn.y;
+    float lod = clamp(0.5 * log2(max(max(dot(gx, gx), dot(gy, gy)), 1e-12)), 0.0, log2(max(size.x, size.y)) - 1.0);
+    float lo = floor(lod);
+    vec4 w = mix(broad(vUv, lo), broad(vUv, lo + 1.0), lod - lo);
     float l = dot(inverseFilmic(w.rgb), vec3(0.2126, 0.7152, 0.0722));
     c = mix(c, vec4(uHot * l * uBurn.z, c.a * uBurn.w), uBurn.x);
   }

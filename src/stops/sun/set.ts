@@ -72,7 +72,6 @@ export const createSet: SetFactory = async (ctx) => {
   const hot = new THREE.Vector3().fromArray(look.leave.burn.hot)
   const toCam = new THREE.Quaternion()
   const inCam = new THREE.Vector3()
-  const centre = new THREE.Vector3()
   const mWorld = new THREE.Matrix4()
   const mCam = new THREE.Matrix4()
   const mFit = new THREE.Matrix4()
@@ -80,6 +79,7 @@ export const createSet: SetFactory = async (ctx) => {
   const cone = new THREE.Matrix3().set(leaveFit.cone[0]!, leaveFit.cone[1]!, leaveFit.cone[2]!, leaveFit.cone[1]!, leaveFit.cone[3]!, leaveFit.cone[4]!, leaveFit.cone[2]!, leaveFit.cone[4]!, leaveFit.cone[5]!)
   const mTurn = new THREE.Matrix3()
   const mCone = new THREE.Matrix3()
+  const unfit = new THREE.Matrix3()
   orbit.matrixAutoUpdate = false
   const d = look.dissolve
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
@@ -148,7 +148,6 @@ export const createSet: SetFactory = async (ctx) => {
       const tucked = leaving ? share(state.u, look.leave.tuck) : 0
       const plateEnd = share(look.leave.gone, look.leave.plate)
       const level = going > 0 ? Math.min(Math.max(plateEnd - share(state.u, look.leave.plate), 0) / Math.max(state.weight, 1e-4), plateEnd * look.leave.cap) : 0
-      centre.copy(world.position)
       if (fitted > 0) {
         toCam.copy(view.camera.quaternion).invert()
         inCam.copy(world.position).applyQuaternion(toCam)
@@ -187,24 +186,25 @@ export const createSet: SetFactory = async (ctx) => {
         const b01 = s00 * i01 + s01 * i11
         const b10 = s01 * i00 + s11 * i01
         const b11 = s01 * i01 + s11 * i11
-        const near = 1 + Math.sin(alpha) ** 2
         const mx = mid * ex
         const my = mid * ey
-        const nx = (px - (b00 * mx + b01 * my)) / near + (b00 * inCam.x + b01 * inCam.y) / depth
-        const ny = (py - (b10 * mx + b11 * my)) / near + (b10 * inCam.x + b11 * inCam.y) / depth
         const l00 = 1 + fitted * (b00 - 1)
         const l01 = fitted * b01
         const l10 = fitted * b10
         const l11 = 1 + fitted * (b11 - 1)
-        const tx = fitted * (nx * depth - (b00 * inCam.x + b01 * inCam.y))
-        const ty = fitted * (ny * depth - (b10 * inCam.x + b11 * inCam.y))
-        mFit.set(l00, l01, 0, tx, l10, l11, 0, ty, 0, 0, 1, 0, 0, 0, 0, 1)
+        const cx = fitted * (px - (b00 * mx + b01 * my))
+        const cy = fitted * (py - (b10 * mx + b11 * my))
+        mFit.set(l00, l01, -cx, 0, l10, l11, -cy, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+        mBack.copy(mCam).multiply(mFit).multiply(mWorld.copy(mCam).invert())
+        unfit.setFromMatrix4(mWorld.copy(mBack).invert())
         mWorld.compose(world.position, world.quaternion, world.scale)
-        orbit.matrix.copy(mWorld).invert().multiply(mCam).multiply(mFit).multiply(mBack.copy(mCam).invert()).multiply(mWorld)
-        centre.set(l00 * inCam.x + l01 * inCam.y + tx, l10 * inCam.x + l11 * inCam.y + ty, inCam.z).applyQuaternion(view.camera.quaternion).divideScalar(Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11 - Math.sqrt(Math.max((l00 * l00 + l01 * l01 + l10 * l10 + l11 * l11) ** 2 - 4 * (l00 * l11 - l01 * l10) ** 2, 0))) / 2, 1e-9)))
-      } else orbit.matrix.identity()
+        orbit.matrix.copy(mWorld).invert().multiply(mBack).multiply(mWorld)
+      } else {
+        orbit.matrix.identity()
+        unfit.identity()
+      }
       globe.update(elapsed, spin, gain, state.weight, vignette, aspect, tint.set(1, 1, 1).lerp(tint2, match), calm.set(d.calm.knee[0], d.calm.knee[1], d.calm.knee[2], d.calm.press * match), open, wash.set(look.leave.pale[0] * level, look.leave.pale[1] * level, look.leave.pale[2] * level, going > 0 ? Math.max(flat, 1e-6) : 0), look.leave.shade)
-      corona.update(centre, state.rotation, elapsed, gain * dim * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
+      corona.update(world.position, unfit, state.rotation, elapsed, gain * dim * Math.pow(look.leave.corona, going), vignette, aspect, look.corona, glow * state.weight, look.corona.edge * (1 - tucked) + look.leave.edge * fitted, look.leave.veil * going, look.leave.ceil * plateEnd * gain * (0.2126 * look.leave.pale[0] + 0.7152 * look.leave.pale[1] + 0.0722 * look.leave.pale[2]), pale.set(look.leave.hue[0], look.leave.hue[1], look.leave.hue[2], going), tucked >= 1, look.leave.soft)
       prominences.update(elapsed, spin, gain * dim * open, vignette, aspect, glow * state.weight, burn.set(burnt, look.leave.burn.wide, look.leave.burn.level, look.leave.burn.cover), hot)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

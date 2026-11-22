@@ -19,7 +19,7 @@ export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
   surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: [number, number, number]; ends: [number, number]; grow: [number, number]; kick: number }
-  erupt: { from: number; top: number; time: number; lean: number; far: number; lanes: number; pick: [number, number]; outer: [number, number, number]; gate: [number, number, number, number]; gain: [number, number]; erode: number; thin: number; fade: [number, number]; tear: [number, number, number]; flash: { at: number; peak: number; amount: number; width: number; white: number; wide: number; haze: number; level: number; lane: [number, number]; tint: [number, number, number]; ground: number; veil: number; span: number } }
+  erupt: { from: number; top: number; time: number; lean: number; far: number; lanes: number; pick: [number, number]; outer: [number, number, number]; gate: [number, number, number, number]; gain: [number, number]; erode: number; thin: number; fade: [number, number]; tear: [number, number, number]; flash: { at: number; peak: number; ease: number; amount: number; width: number; white: number; wide: number; haze: number; level: number; lane: [number, number]; tint: [number, number, number]; ground: number; veil: number; span: number } }
 }
 
 const VERT = /* glsl */ `
@@ -390,7 +390,7 @@ export class Loops {
     const thrown = Math.max(after, 0) / e.time
     const lifted = e.top * (1 - Math.exp(-thrown * thrown / (1 + thrown)))
     const t = since - e.flash.at
-    return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * gone : 0]
+    return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp(-t * t / (e.flash.ease * e.flash.ease))) * gone : 0]
   }
 
   update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0): void {
