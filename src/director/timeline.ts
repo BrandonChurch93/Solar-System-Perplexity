@@ -22,17 +22,37 @@ export function fractionIn(segment: Segment, seconds: number): number {
   return Math.min(Math.max((seconds - segment.start) / (segment.end - segment.start), 0), 1)
 }
 
-export function coverWindow(segment: Segment): CoverWindow | null {
+export interface CoverTiming { seconds?: number; center?: number }
+export interface CoverTimings { dive?: CoverTiming; rise?: CoverTiming }
+
+const timings = new Map<string, CoverTimings>()
+
+export function setCoverWindow(stop: string, w: CoverTimings | undefined): void {
+  for (const t of [w?.dive, w?.rise]) {
+    if (t?.seconds !== undefined && !(t.seconds > 0)) throw new Error('coverWindow.seconds of ' + stop + ' must be above 0')
+    if (t?.center !== undefined && !(t.center > 0 && t.center < 1)) throw new Error('coverWindow.center of ' + stop + ' must lie between 0 and 1')
+  }
+  if (w) timings.set(stop, w)
+  else timings.delete(stop)
+}
+
+export function coverTiming(segment: Segment): { seconds: number; center: number } | null {
   const c = config.raw.cover
   const fraction = segment.kind === 'dive' ? c.diveCenterFraction : segment.kind === 'rise' ? c.riseCenterFraction : null
   if (fraction === null) return null
-  const center = segment.start + fraction * (segment.end - segment.start)
-  const first = Math.floor((center - c.seconds / 2) * config.fps + 1e-9)
-  const last = Math.floor((center + c.seconds / 2) * config.fps + 1e-9)
+  const own = timings.get(segment.stop)?.[segment.kind as 'dive' | 'rise']
+  return { seconds: own?.seconds ?? c.seconds, center: segment.start + (own?.center ?? fraction) * (segment.end - segment.start) }
+}
+
+export function coverWindow(segment: Segment): CoverWindow | null {
+  const t = coverTiming(segment)
+  if (t === null) return null
+  const first = Math.floor((t.center - t.seconds / 2) * config.fps + 1e-9)
+  const last = Math.floor((t.center + t.seconds / 2) * config.fps + 1e-9)
   return {
     firstFrame: Math.max(first, segment.firstFrame),
     lastFrame: Math.min(last, segment.endFrame - 1),
-    centerFrame: Math.floor(center * config.fps + 1e-9),
+    centerFrame: Math.floor(t.center * config.fps + 1e-9),
   }
 }
 

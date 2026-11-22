@@ -4,7 +4,8 @@ import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { config, type Segment } from '../src/config'
-import { clipRange, coverWindow, stopSegments } from '../src/director/timeline'
+import { clipRange, coverTiming, coverWindow, stopSegments } from '../src/director/timeline'
+import '../src/director/plans' // each plan sets its stop's cover window
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const CUES = join(ROOT, 'cut/CUES.md')
@@ -43,8 +44,7 @@ function cuesOf(segs: Segment[]): Cue[] {
     out.push({ segment: s.id, what: 'start of ' + s.kind, frame: s.firstFrame, seconds: s.start, sound: sound(s) })
     const w = coverWindow(s)
     if (w) {
-      const c = config.raw.cover
-      const center = s.start + (s.kind === 'dive' ? c.diveCenterFraction : c.riseCenterFraction) * (s.end - s.start)
+      const center = coverTiming(s)!.center
       out.push({ segment: s.id, what: 'center of the cover', frame: w.centerFrame, seconds: center, sound: 'The peak of the rush. The cover runs from frame ' + w.firstFrame + ' to ' + w.lastFrame + ' and the view changes under it.' })
     }
   }
