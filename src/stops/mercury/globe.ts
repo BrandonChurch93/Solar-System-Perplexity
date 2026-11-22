@@ -75,10 +75,10 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
-const CLOSE_DRAWS = [['uWide', 'uvw', 'axw', 'ayw', 'ww', 'uWideSize'], ['uClose', 'uvc', 'axc', 'ayc', 'wc', 'uCloseSize']].map(([map, uv, ax, ay, w, size]) => `  for (int k = 0; k < (${w} > 0.0 ? 1 : 0); k++) {
+const CLOSE_DRAWS = [['uWide', 'uvw', 'axw', 'ayw', 'ww', 'uWideSize', '\n    for (int j = 0; j < (uWideCap.x > 0.0 ? 1 : 0); j++) {\n      vec3 low = textureGrad(uWide, uvw, vec2(uWideLow, 0.0), vec2(0.0, uWideLow * uWideSize.x / uWideSize.y)).rgb;\n      photo *= mix(1.0, min(1.0, uWideCap.w * max(low.r, max(low.g, low.b)) / max(max(photo.r, max(photo.g, photo.b)), 1e-4)), uWideCap.x * smoothstep(uWideCap.y, uWideCap.z, reach));\n    }'], ['uClose', 'uvc', 'axc', 'ayc', 'wc', 'uCloseSize', '']].map(([map, uv, ax, ay, w, size, cap]) => `  for (int k = 0; k < (${w} > 0.0 ? 1 : 0); k++) {
     vec3 photo = vec3(0.0);
     for (int j = 0; j < (uSmear > 0.0 ? 0 : 1); j++) photo = textureGrad(${map}, ${uv}, ${ax} * uGrad, ${ay} * uGrad).rgb;
-    for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(${map}, ${uv}, ${ax} * mh.x + ${ay} * mh.y, ${ay} * mh.x - ${ax} * mh.y, along, lat);
+    for (int j = 0; j < (uSmear > 0.0 ? 1 : 0); j++) photo = streak(${map}, ${uv}, ${ax} * mh.x + ${ay} * mh.y, ${ay} * mh.x - ${ax} * mh.y, along, lat);${cap}
     vec3 ph = inverseFilmic(photo) * thin;
     col = mix(col, mix(ph, dot(ph, vec3(0.2126, 0.7152, 0.0722)) * uPlain, mute), ${w});
     vec2 tx = ${ax} * ${size};
@@ -138,6 +138,8 @@ uniform vec2 uWideOver;
 uniform vec4 uWideDrop;
 uniform vec3 uWideDown;
 uniform vec3 uWideHold;
+uniform vec4 uWideCap;
+uniform float uWideLow;
 uniform vec2 uWideSize;
 uniform float uSink;
 uniform vec3 uHazeSun;
@@ -453,7 +455,7 @@ export class Globe {
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
-        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
+        uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideCap: { value: new THREE.Vector4(0, 1, 2, 1) }, uWideLow: { value: 0.03 }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -493,6 +495,11 @@ export class Globe {
     ;(u.uWideBox!.value as THREE.Vector4).set(box[0], box[1], box[2], box[3])
     ;(u.uWideFade!.value as THREE.Vector4).set(feather, far[0], far[1], solid)
     ;(u.uWideSize!.value as THREE.Vector2).set(size.width, size.height)
+  }
+
+  cap(amount: number, from: number, to: number, over: number, span: number): void {
+    ;(this.material.uniforms.uWideCap!.value as THREE.Vector4).set(amount, from, to, over)
+    this.material.uniforms.uWideLow!.value = span
   }
 
   reach(from: number, to: number, feather: number, over: readonly [number, number]): void {
