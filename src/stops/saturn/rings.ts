@@ -56,6 +56,14 @@ export interface RingLook {
   skimHigh: [number, number, number, number]
   reach: number
   skimReach: number
+  sheetRadii: number[]
+  sheetThrough: number[]
+  wedgeGain: number[]
+  wedge: [number, number, number, number]
+  wedgeIn: [number, number]
+  sheetGlow: [number, number, number, number]
+  sheetFit: [number, number, number, number]
+  fillet: [number, number, number, number]
 }
 
 const VERT = /* glsl */ `
@@ -176,6 +184,17 @@ uniform vec4 uOuterFit;
 uniform vec2 uGapFit;
 uniform vec4 uArc;
 uniform vec4 uArcAz;
+uniform sampler2D uInnerMap;
+uniform vec2 uInnerSpan;
+uniform vec2 uInnerSize;
+uniform float uSheetR[9];
+uniform float uSheetT[9];
+uniform float uWedgeG[9];
+uniform vec4 uWedge;
+uniform vec2 uWedgeIn;
+uniform vec4 uSheetGlow;
+uniform vec4 uSheetFit;
+uniform vec4 uFillet;
 out vec4 outColor;
 ${DIAG_GLSL}
 ${RING_PROFILE_GLSL}
@@ -192,6 +211,11 @@ float azGain(float r, float phi) {
   float t = clamp((r - uAzRadii[i]) / (uAzRadii[i + 1] - uAzRadii[i]), 0.0, 1.0);
   vec4 h = vec4(cos(phi), sin(phi), cos(2.0 * phi), sin(2.0 * phi));
   return clamp(mix(azRow(i, h), azRow(i + 1, h), t), 0.4, 1.7);
+}
+float sheetAt(float r, float t[9]) {
+  int i = 0;
+  for (int k = 1; k < 8; k++) if (r >= uSheetR[k]) i = k;
+  return mix(t[i], t[i + 1], clamp((r - uSheetR[i]) / (uSheetR[i + 1] - uSheetR[i]), 0.0, 1.0));
 }
 float rowNoise(float phi, int row, float cellA, float cellR) {
   float rr = (float(row) + 0.5) * cellR;
@@ -261,7 +285,8 @@ void main() {
   float x = far ? -1.0 : ringRadius(rq);
   bool span = x > 0.0 && x < 1.0;
   wS *= span ? 1.0 : uSkimNear;
-  if (!span && wS <= 0.0) discard;
+  float wC = (far || disc) ? 0.0 : uPolarW * (1.0 - smoothstep(uPolarFit.x, uPolarFit.y, rp)) * smoothstep(uInnerSpan.x, uInnerSpan.x + 0.012, rs);
+  if (!span && wS <= 0.0 && wC <= 0.0 && (far || disc || uPolarShape * uPolarW <= 0.0)) discard;
   vec3 toCam = uCamL - vLocal;
   float dist = length(toCam);
   vec3 V = toCam / dist;
@@ -298,15 +323,15 @@ void main() {
     s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * profAt(ringRadius(rl), lodP * uArc.z);
   }
   float mu = abs(V.y);
-  float over = 0.0;
-  for (int k = 0; k < ((uClose < 1.0 && !disc && !far) ? 1 : 0); k++) {
-    vec3 c = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
-    vec3 d = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - c;
-    float qa = dot(d, d);
-    float qb = dot(c, d);
-    float od = (qb * qb - qa * (dot(c, c) - 1.0)) / qa;
-    over = -qb > qa ? smoothstep(-0.05, 0.0, od) * (1.0 - uClose) * smoothstep(uEdge.x, uEdge.x + uOver.x, rq) : 0.0;
-  }
+  vec3 oc = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
+  vec3 ov = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - oc;
+  float oa = dot(ov, ov);
+  float ob = dot(oc, ov);
+  float od = (ob * ob - oa * (dot(oc, oc) - 1.0)) / oa;
+  float bb = sqrt(max(1.0 - od, 0.0));
+  float bw = max(length(vec2(dFdx(bb), dFdy(bb))), 1e-5);
+  bool fore = uClose < 1.0 && !disc && !far && -ob > oa;
+  float over = fore ? smoothstep(-0.05, 0.0, od) * (1.0 - uClose) * smoothstep(uEdge.x, uEdge.x + uOver.x, rq) : 0.0;
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rq) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq));
   float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rq), 1.0 - uClose)), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
   float swept = (1.0 - smoothstep(uVeil.x, uVeil.y, uClose)) * uSweep;
@@ -355,6 +380,19 @@ void main() {
     alpha *= 1.0 - w * smoothstep(2.235, 2.25, rs) * (1.0 - smoothstep(uGapFit.x, uGapFit.y, dot(pm, vec3(0.2126, 0.7152, 0.0722))));
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), w);
   }
+  float wIn = 0.0;
+  for (int k = 0; k < (wC > 0.0 ? 1 : 0); k++) {
+    float pa = phi / 6.283185307 + 0.5;
+    float pr = clamp((rs - uInnerSpan.x) * uInnerSpan.y, 0.5 / uInnerSize.y, 1.0 - 0.5 / uInnerSize.y);
+    vec2 pgx = vec2((vLocal.x * dFdx(vLocal.z) - vLocal.z * dFdx(vLocal.x)) / (6.283185307 * r * r), dFdx(rp) * uInnerSpan.y);
+    vec2 pgy = vec2((vLocal.x * dFdy(vLocal.z) - vLocal.z * dFdy(vLocal.x)) / (6.283185307 * r * r), dFdy(rp) * uInnerSpan.y);
+    vec2 tx = pgx * uInnerSize;
+    vec2 ty = pgy * uInnerSize;
+    wIn = wC * smoothstep(uPolarFit.z, uPolarFit.w, sqrt(min(dot(tx, tx), dot(ty, ty))));
+    vec3 pm = inverseFilmic(textureGrad(uInnerMap, vec2(pa, pr), pgx * uGrad, pgy * uGrad).rgb);
+    col = mix(col, pm * mix(1.0, turning, uHeroTurn), wIn);
+    texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wIn);
+  }
 
   float cell = uSparkleCell;
   float det = qx.x * qy.y - qx.y * qy.x;
@@ -384,11 +422,20 @@ void main() {
   float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
   float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (disc ? 0.0 : 1.0);
   over *= lit;
-  alpha = max(alpha, uOver.z * over) * thin;
+  float through = sheetAt(rs, uSheetT) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
+  float bx = max(bb - uFillet.x, 0.0);
+  float rin = uEdge.x - uPolarShape * (uFillet.y * bx + uFillet.z * bx * bx * bx * bx);
+  float bout = mix(1.0, uWedge.w, uPolarShape);
+  float sheet = fore ? (1.0 - smoothstep(bout - bw, bout + bw, bb)) * (1.0 - uClose) * lit * smoothstep(rin - uFillet.w, rin + uFillet.w, rs) * mix(1.0, smoothstep(uSheetFit.x, uSheetFit.y, rs), smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) : 0.0;
+  alpha = max(alpha, (1.0 - through) * sheet) * thin;
+  vec3 on = oc + ov * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
+  float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
+  vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * uPolarShape * day;
+  col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
   for (int k = 0; k < (over > 0.0 ? 1 : 0); k++) {
     float sx = ringRadius(uStrand.x + (rq - uEdge.x) * uStrand.y);
     float sl = texels * uGrad * uStrand.y * 1.5;
-    float zone = over * (1.0 - smoothstep(uOver.y, uOver.w, rq));
+    float zone = over * (1.0 - smoothstep(uOver.y, uOver.w, rq)) * (1.0 - wIn);
     float tone = mix(mix(uOverTone.x, uOverTone.y, smoothstep(1.2, 1.4, rq)), uOverTone.z, mix(1.0, smoothstep(uOverTone.w - 6.0, uOverTone.w + 6.0, azd), uPolarShape));
     float st = clamp(pow(max(dot(profAt(sx, sl).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) / max(dot(profAt(sx, sl * 24.0).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3), uStrand.z), 0.5, 1.6);
     col *= mix(1.0, tone * st, zone);
@@ -415,7 +462,7 @@ void main() {
     alpha = mix(alpha, km.r, wS);
     texels = mix(texels, skimTexels, wS);
   }
-  col *= uGain * uWeight / vig;
+  col = (col + wedge * (1.0 - wS)) * uGain * uWeight / vig;
   if (uDiag >= 2 && alpha * cut < 0.5) discard;
   outColor = diagOut(vec4(col, alpha * uWeight) * cut, texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
 }`
@@ -462,6 +509,7 @@ export class Rings {
       ...layout,
       ...shots,
       uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimPart: { value: 0 }, uSkimUnder: { value: new THREE.Vector4(-0.005, -0.002, 0.009, 0.015) }, uGlobe: { value: new THREE.Vector2(1, polar) }, uSkimCam: { value: new THREE.Vector3() },
+      uSheetR: { value: look.sheetRadii }, uSheetT: { value: look.sheetThrough }, uWedgeG: { value: look.wedgeGain }, uWedge: { value: new THREE.Vector4().fromArray(look.wedge) }, uWedgeIn: { value: new THREE.Vector2().fromArray(look.wedgeIn) }, uSheetGlow: { value: new THREE.Vector4().fromArray(look.sheetGlow) }, uSheetFit: { value: new THREE.Vector4().fromArray(look.sheetFit) }, uFillet: { value: new THREE.Vector4().fromArray(look.fillet) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       uGain: { value: 1 }, uWeight: { value: 1 }, uTime: { value: 0 }, uSpinRate: { value: 0 },

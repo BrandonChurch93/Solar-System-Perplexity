@@ -62,7 +62,7 @@ export const rings: RingLook = {
   floorRamp: [1.2458, 1.5],
   penumbra: [0.978, 0.994, 0.006],
   penumbraFar: [1.5, 0.05],
-  inner: [112, 128, 0.01, 0.03],
+  inner: [112, 128, 0, 0],
   over: [0.03, 1.38, 0.985, 1.46],
   strand: [1.5, 2.0, 1.5],
   overTone: [0.4, 0.8, 1.12, 102],
@@ -102,6 +102,14 @@ export const rings: RingLook = {
   skimHigh: [0.8, 0.94, 0.3, 3],
   reach: 3.6,
   skimReach: 40,
+  sheetRadii: [1.1, 1.21, 1.24, 1.27, 1.31, 1.345, 1.37, 1.46, 1.56],
+  sheetThrough: [0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015],
+  wedgeGain: [0.62, 0.62, 0.75, 0.82, 1.05, 1, 0.85, 0, 0],
+  wedge: [0.063, 0.043, 0.029, 1.02],
+  wedgeIn: [0.985, 1.003],
+  sheetFit: [1.1, 1.16, 0.9, 0],
+  sheetGlow: [0.03, 0.029, 0.022, 0],
+  fillet: [0.76, 0.336, 29.8, 0.004],
 }
 
 export const ice: IceLook = {

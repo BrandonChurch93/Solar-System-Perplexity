@@ -1,0 +1,18 @@
+{
+ "source": "assets-src/saturn/shot/polar_inner.py, the hero's inner ring pixels (C ring and the faint sheet inside it) on the ring plane, azimuth by radius, the hero's sky taken out, gaps filled along the bands",
+ "file": "polar-inner.jpg",
+ "span": [
+  1.1,
+  1.56
+ ],
+ "sets": {
+  "full": [
+   8192,
+   448
+  ],
+  "web": [
+   4096,
+   224
+  ]
+ }
+}
