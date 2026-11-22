@@ -195,3 +195,33 @@ Proof (one render process at a time on your VM): finals of 5085 and 5235 before 
 "MAIL 125 from the Builder. PART read and the six pairs looked at. Accepted in direction: at 5235 the night disc now has depth (bands, the storm, the fall to black at the far limb) and the ring ends cleanly at the shadow edge; the ringlets hold their gaps. One change, your one number: at 5085 the night side in the ring lit zone is too light at 58 to 62 blue, the terminator stops reading as the edge of the light. Bring it to about 40 to 45 there (the storm and the lower limb fall with it), and leave 5235 as it is if that is a separate number; if it is the same number, tell me what 5235's night becomes and keep its p50 at 12 or more. Then DONE by 10:25 with the byte proofs as you list them; batch 21 is cut at about 10:30. The Sun of the lookback is noted as the engine's; nothing for you there."
 
 - It is one number for both frames (`shine`). A plain cut that brings 5085 to 43 would take 5235's p50 from 15 to about 10 (the levels follow `air + deck * factor`: 5085 about 12 + 19 * factor, 5235 about 6.5 * factor). So a second number: the ringshine is scaled by the phase angle, `shineNear` (0.46) at `shinePhase[0]` (100 degrees) and below, 1 at `shinePhase[1]` (146 degrees, the lookback starts at 146.6) and above; at 5085 (117.9 degrees) the scale is 0.64. At the start of the retreat (phase 90) the night side then stands near the stop's own level and comes up as the camera goes behind the globe and the crescent thins, as an exposure set for the crescent would do. Uniform values only, no shader text changes.
+
+### MAIL 125 result (09:50 VM clock), head 33a5902
+
+- Code: `planet.ending(...)` takes one more number, `shine`, that scales `e.shine[0]` and `e.shine[1]`; `set.ts` passes `shineNear + (1 - shineNear) * smooth((phase - shinePhase[0]) / (shinePhase[1] - shinePhase[0]))` with the phase angle `camera.angleTo(light)` in degrees, the same light the globe is lit with. `ending.limb.shineNear` 0.46, `shinePhase` [100, 146]. Uniform values only: the shader text is the one of f1df579.
+- Take 1 at draft (`t6`), `shineNear` 0.4: ring lit zone of 5085 (column x 524, y 600 to 680 every 20 px, 5 px means) 43, 41, 42, 38, 40 blue. Take 2 (`t7`), 0.46: 45, 43, 44, 40, 42. Kept.
+- Final 5085 on 33a5902 (`out/work/end/m112/after/final-5085.png`, 64 samples, 121 s): ring lit zone 45, 43, 44, 40, 42 blue (f1df579: 58, 60, 62, 58, 61; main 616695b: 34, 31, 28, 25, 22). Column x 524 every 40 px from y 440: 244, 197, 191, 97, 45, 44, 42, 11 (the storm), 40, 26, 11, 10, 11, 8 (f1df579: 244, 197, 191, 97, 58, 62, 61, 18, 58, 39, 19, 17, 19, 13). The lit side and the terminator did not move (the first four values).
+- Final 5235 on 33a5902: the same file bytes as on f1df579 (`cmp` with `after2/final-5235.png`); the draft hash c5a7dbcf679ef286 is the one of take 5. Night disc mean 2.5, 6.8, 16.7, blue p5, p50, p95 3, 15, 43. The phase angle of the whole lookback is 146.6 to 149.3 degrees, above `shinePhase[1]`, so every frame of it keeps the full ringshine.
+- Along the retreat (draft strip, blue inside 0.9 radii, p25 and p50): 5025 20 and 33, 5050 21 and 46, 5075 16 and 29, 5100 15 and 25, 5125 10 and 16, lookback 9 and 16 in every frame. The night level falls evenly into the lookback.
+
+### Byte proofs of the stop's judged frames (final tier, `tools/repeat.ts --tier final`, one fresh session each)
+
+- On f1df579 (`out/work/end/m112/proof/after/`): 4605 05c9e32de21a31a7, 4707 77af894ee89b5bef, 4860 49ef846b1a668b9a, 5006 1f55d6c8009da13f (397 s).
+- On the same tree with `src/stops/neptune` of main 616695b checked out (`proof/before/`): the same four hashes (391 s), and `cmp` finds the same file bytes for all four.
+- On 33a5902, the final code (`proof/head/`): the same four hashes (393 s), and `cmp` finds the same file bytes as with main's stop source for all four.
+- Draft hashes of the 13 judged frames on 33a5902 (`proof/draft-head/`) and on the same tree with main's stop source (`proof/draft-main/`), 130 s each: 13 of 13 the same. 2325 fd128b1a999f76fa, 2427 5636a9764d87cc2e, 2580 7322ef9576f06ffb, 615 87bc2833573448d9, 1440 042b228fca024f70, 2010 0f2303a6ad7dc69c, 3150 e72d79cc2e062b27, 3720 9f5eaf40e03e8edc, 4290 dd5c7580afadd5b7, 4860 1ccc4a12760db30a, 4605 0b621fa06e44c52c, 4707 163d0630bb6f65e8, 5006 f2a7f92df7f36487.
+
+### DONE (10:07 VM clock)
+
+- Strip: `out/work/end/m112/strip/` (13 drafts on 33a5902, 58 s), sheet `send/strip-5025-5324-draft.jpg`.
+- Pairs (finals, main 616695b left or top, 33a5902 right or bottom, native crops): `send/5235-near-arc-night-side`, `5235-far-arc-rim`, `5235-sun`, `5085-near-arc-on-disc`, `5085-far-arc`, `5085-day-side`, `5085-night-side`.
+- Checks on 33a5902: `npx tsc --noEmit -p .` clean, `npx vitest run` 79 of 79, `npm run build` passes, `python3 tools/shaderaudit.py` prints the same 32 lines as on main 616695b's source.
+- Merge test with the polish branch (`git merge-tree --write-tree HEAD origin/agent/neptune`, d7eb660): conflicts in `src/stops/neptune/planet.ts` and `set.ts`. Both are lines that stand side by side (`const ringLit` beside the polish branch's `edgeSun` lines in `set.ts`; the ending's loop beside the polish branch's edge code in the planet shader). Both sides are kept. It is resolved when main is merged into `agent/neptune` for Phase 6, and the four judged frames are proved again there.
+- Main moved by 16 commits since 616695b (kit, status stills, scorecards only); it is merged into the branch after the proofs, and `git diff 33a5902 HEAD -- src public config tools` is empty.
+
+### Open, for the Phase 6 polish rounds
+
+- The ring is additive and has no opacity: stars and the crescent show through it. It casts no shadow on the globe.
+- The near arc in front of the night disc at 5235 from azimuth 280 on is in sunlight (1.03 radii and more from the shadow's axis) and stays lit; only the left part of the crossing is in the planet's shadow.
+- What is left of the soft ring at 5085 is the shutter: 6.6 to 12.2 px over the near arc. That is the camera's turn rate, not this set.
+- The Sun of the lookback is the engine's sky pass.
