@@ -1,0 +1,209 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "crop V, with similar marks in U and S",
+      "what": "Numerous soft oblong smudges sit over the sharp star points. Several share almost the same diagonal shape and look like repeated foreground stamps rather than part of the sky.",
+      "fix": "Remove the repeated streaks or replace them with fainter, individually shaped diffuse objects that blend into the surrounding sky."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops W and X, bright galactic band at the lower right of the frame",
+      "what": "Fine stars and mottled dust smear together into short diagonal dashes, while nearby isolated points remain sharp. The bright patch looks stretched at native size.",
+      "fix": "Use a sharper sky texture in this area and correct the local stretch so the small stars resolve as points."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop M, just inside the lower edge of the solar disk",
+      "what": "A thin pale arc runs inside the true limb, creating a doubled contour across the solar texture.",
+      "fix": "Blend out the inner arc and preserve a single bright falloff at the limb without flattening the photosphere detail."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "dark sky left of the band, e.g. around x350 y555 and x125 y355 (crop D of image-10 at about 180,490)",
+      "what": "soft grey oval smudges sit in the empty sky; at native size they read as blurred stamps or dust on the lens rather than distant galaxies, and they have no internal structure",
+      "fix": "remove the smudges or swap them for small, sharp galaxy sprites with a bright core and realistic size, and use far fewer of them"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right half of the sky, e.g. around x1160 y50, x1140 y395, x720 y590, x700 y690 (crops A, C, P, Q, U of images 14-16)",
+      "what": "short grey dashes and faint elongated blobs are scattered over the star field; they look like motion-smeared or stretched sprites and give away a procedural layer",
+      "fix": "drop the streak/galaxy sprite layer or render it with sharp edges and no directional smear; keep its opacity low"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "left edge of the Milky Way band, from about x700 top to x680 bottom (crops A, G, H of image-10)",
+      "what": "the band starts along a fairly straight near-vertical edge with a sudden jump in star density, which reads as a mask edge rather than a soft galactic falloff",
+      "fix": "feather the band mask more widely and break up the edge with noise so the dust and star density fade gradually"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crop U (912,866) and crop P of image-11, the bright core of the band",
+      "what": "brighter stars in the dense regions are soft round discs of similar size that merge into a mottled, slightly airbrushed dust layer",
+      "fix": "sharpen the star point-spread function and vary star sizes; add finer detail to the dust lanes"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "bright star at lower left, about x150 y730 (crop S of image-16)",
+      "what": "the cross-shaped diffraction spike star looks pasted on and does not match the spikeless rendering of every other star",
+      "fix": "either give all bright stars consistent spikes or remove the spikes from this one"
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-21.png",
+      "where": "Milky Way band across lower two-thirds (crops D-I in image-22.png, O-R in image-23.png, S-X in image-24.png)",
+      "what": "the galactic background is an undersampled, blurry skybox texture that breaks into blocky, noisy mush at native size, with baked-in stars stretched into bloated 4-10 px oval blobs directly beneath crisp 1 px procedural overlay stars",
+      "fix": "replace the low-resolution skybox panorama with a native-resolution star-cloud/dust map free of bloated baked-in star blobs, or render galactic dust volumetrically/procedurally so star sharpness matches across a single star population without projection stretching"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "rocky moonlet/asteroid in upper right (crops C, H, I in image-18.png and L in image-19.png)",
+      "what": "the lit surface is soft, airbrushed, and diagonally stretched/smeared at native resolution, while the lower-left lit limb has faceted low-poly straight segments with stair-stepped pixel aliasing",
+      "fix": "subdivide the asteroid mesh for a smooth organic silhouette, use higher-resolution triplanar or non-stretched displacement/normal/albedo maps with crisp regolith and crater-rim micro-detail, and properly anti-alias the bright limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "lower-left-center diagonal streak (crop G in image-18.png, crop O in image-19.png)",
+      "what": "a large semi-transparent brown streak displays parallel linear stripes with sharp background stars shining straight through it, reading as an artificial smeared billboard or broken motion-blur pass",
+      "fix": "render passing foreground debris with physically consistent multi-sample 3D motion blur and proper occlusion/exposure weighting, or remove close-camera streaking debris if shutter blur cannot be sampled cleanly"
+     },
+     {
+      "severity": "major",
+      "file": "image-21.png",
+      "where": "upper dark sky in both scenes (crop L top-center and bottom-center in image-23.png; crops A, B in image-22.png; crops E, G, P in image-18.png and image-19.png)",
+      "what": "faint translucent grey oval blobs (35-50 px out-of-focus dust sprites in image-21.png) and dozens of small blurry grey/brown pill-shaped smudges (in image-17.png) float over crisp stars like low-res particle billboards",
+      "fix": "remove the out-of-focus foreground dust particle sprites or render fine debris with physically accurate sub-pixel sizing and clean depth-of-field/motion-blur sampling"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "dark sky upper-right of the asteroid and right edge (crop I upper-right in image-18.png, crop M in image-19.png)",
+      "what": "faint patches of the underlying skybox show up as gritty, blocky orange-red pixel speckles and chroma noise against black space",
+      "fix": "clean or denoise faint background skybox channels and render dark-sky nebula tinting at higher bit depth and native texel density"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "brightest star at lower right of image-17.png (crop E bottom-left in image-18.png, crop U right in image-20.png) and upper center of image-21.png (crop L mid-left in image-23.png)",
+      "what": "the bright star glare has a single-axis horizontal-only pixel spike with visible stair-stepping and no matching optical PSF symmetry",
+      "fix": "use a clean, radially symmetric or physically derived aperture diffraction PSF with smooth sub-pixel anti-aliasing"
+     }
+    ]
+   }
+  },
+  {
+   "part": 4,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-29.png",
+      "where": "dark sky above the galactic band; clearest in the upper-right tile of image-31.png and in image-30.png tiles A, C, D, H, and I",
+      "what": "short grey pill-shaped streaks share one tilt and read as ghosts, not stars",
+      "fix": "remove the streak ghosts and leave faint stars as round points"
+     },
+     {
+      "severity": "minor",
+      "file": "image-28.png",
+      "where": "tile W, upper middle of the dark crop",
+      "what": "a bluish pair of capsule smudges, with fainter streaks of the same kind in the other dark crops of image-25.png",
+      "fix": "clear the same streak ghosts from the darker sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-32.png",
+      "where": "tiles V and W, the bright band along the bottom of image-29.png",
+      "what": "medium stars are soft vertical ovals, and the brightest dust is mushy rather than filamentary",
+      "fix": "restore round star cores and break the smoothed clumps into finer dust"
+     }
+    ]
+   }
+  },
+  {
+   "part": 5,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-33.png",
+      "where": "inside the upper-left globe silhouette (crop B in image-34.png; crops J and K in image-35.png)",
+      "what": "Several isolated soft points show through the near-black disk and read as ghost stars on an otherwise opaque silhouette.",
+      "fix": "Use an opaque holdout for the globe before adding the background and bloom, then check that any genuine foreground light is visually distinct."
+     },
+     {
+      "severity": "major",
+      "file": "image-37.png",
+      "where": "bright right-facing limb of the planet at left (crop B in image-38.png; crops J and O in image-39.png)",
+      "what": "A thin bright contour and a broader cyan glow trace the same arc, giving the limb a doubled, outlined look.",
+      "fix": "Blend the bright contour into a single continuous atmospheric falloff while preserving the hard occultation edge of the solid globe."
+     },
+     {
+      "severity": "minor",
+      "file": "image-39.png",
+      "where": "crops J and O, narrow cloud strip just inside the lit limb",
+      "what": "The clouds break into similarly hooked, smeared wisps that line up along the rim, making the strip look pasted on.",
+      "fix": "Vary cloud scale and shape, and taper cloud opacity and contrast through the terminator instead of confining the forms to a narrow arc."
+     },
+     {
+      "severity": "minor",
+      "file": "image-36.png",
+      "where": "crops S and V, brightest blue-white stars",
+      "what": "Several stars look like soft circular blobs next to the much sharper surrounding field.",
+      "fix": "Keep compact stellar cores and reduce the radius of the glow on the brighter points."
+     }
+    ]
+   }
+  }
+ ]
+}

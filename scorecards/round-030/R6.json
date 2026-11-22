@@ -1,0 +1,14 @@
+{
+ "critic": "R6",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-01.png through image-09.png",
+   "where": "main arch and its two bright footpoints",
+   "what": "The glowing solar arch reads immediately against black space and could stop a scroll, but it is already fully formed in frame one. The later frames mostly shimmer within the same silhouette, so there is little visible payoff for staying.",
+   "fix": "Keep the bright arch readable in frame one, then send a clearly visible pulse from one footpoint over the crest to the other before the hook ends."
+  }
+ ]
+}
