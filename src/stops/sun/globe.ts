@@ -7,7 +7,7 @@ import { GRADE_GLSL } from './grade'
 
 export interface GlobeLook {
   limb: [number, number]
-  rim: { color: [number, number, number]; width: number; power: number }
+  rim: { color: [number, number, number]; width: number; power: number; by: [number, number, number, number] }
   boil: { reach: number; period: number; step: number; max: number; quiet: [number, number] }
   hot: { from: number; to: number; boost: number }
   pulse: { amount: number; rate: number; from: number; to: number }
@@ -88,6 +88,10 @@ uniform float uTime;
 uniform vec2 uLimb;
 uniform vec3 uRimColor;
 uniform vec2 uRimShape;
+uniform vec4 uRimBy;
+uniform vec3 uCenter;
+uniform mat3 uToSet;
+uniform mat3 uFit;
 uniform vec4 uBoil;
 uniform vec2 uQuiet;
 uniform vec3 uHot;
@@ -174,7 +178,14 @@ void main() {
   beat *= max(1.0 + uCell.x * churn, 0.35);
   float hot = smoothstep(uHot.x, uHot.y, min(lin.r, lin.g * 1.6));
   vec3 col = lin * ((uLimb.x + uLimb.y * (1.0 - mu)) / uLimb.x) * beat * (1.0 + uHot.z * hot * hot);
-  col += uRimColor * pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
+  float rim = pow(1.0 - mu, uRimShape.y) * exp(-mu / uRimShape.x);
+  for (int k = 0; k < (uRimBy.w > 0.0 && rim > 0.002 ? 1 : 0); k++) {
+    vec3 ray = normalize(uFit * vPos);
+    vec3 across = uToSet * (ray * dot(uCenter, ray) - uCenter);
+    float turn = abs(fract(atan(across.y, across.x) / 6.283185307179586 - uRimBy.y + 0.5) - 0.5);
+    rim *= mix(1.0, uRimBy.x, smoothstep(uRimBy.z, uRimBy.w, turn));
+  }
+  col += uRimColor * rim;
   for (int k = 0; k < (uWash.w > 0.0 ? 1 : 0); k++) {
     col = mix(col * uOpen, uWash.xyz * (1.0 - uShade.x * pow(1.0 - mu, uShade.y)), uWash.w);
   }
@@ -217,6 +228,8 @@ export class SunGlobe {
         uLimb: { value: new THREE.Vector2(l.limb[0], l.limb[1]) },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
         uRimShape: { value: new THREE.Vector2(l.rim.width, l.rim.power) },
+        uRimBy: { value: new THREE.Vector4(l.rim.by[0], l.rim.by[1], l.rim.by[2], l.rim.by[3]) },
+        uCenter: { value: new THREE.Vector3() }, uToSet: { value: new THREE.Matrix3() }, uFit: { value: new THREE.Matrix3() },
         uBoil: { value: new THREE.Vector4(l.boil.reach, l.boil.period, l.boil.step, l.boil.max) },
         uQuiet: { value: new THREE.Vector2(l.boil.quiet[0], l.boil.quiet[1]) },
         uHot: { value: new THREE.Vector3(l.hot.from, l.hot.to, l.hot.boost) },
@@ -245,6 +258,13 @@ export class SunGlobe {
     else (u.uTint!.value as THREE.Vector3).set(1, 1, 1)
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+  }
+
+  limb(center: THREE.Vector3, fit: THREE.Matrix3, toSet: THREE.Matrix3): void {
+    const u = this.material.uniforms
+    ;(u.uCenter!.value as THREE.Vector3).copy(center)
+    ;(u.uFit!.value as THREE.Matrix3).copy(fit)
+    ;(u.uToSet!.value as THREE.Matrix3).copy(toSet)
   }
 
   dispose(): void {

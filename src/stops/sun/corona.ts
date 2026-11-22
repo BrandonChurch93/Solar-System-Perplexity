@@ -109,7 +109,7 @@ void main() {
 export class Corona {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
-  private readonly toSet = new THREE.Matrix3()
+  readonly toSet = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
 
