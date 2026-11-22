@@ -140,3 +140,19 @@ Time on this VM (4 cores) at draft: about 4.6 s per render, plus about 11 s for 
 - The F cases left in shared code (`gradTexel`'s fast path, `patchTexel`, the seam choices) rest on what SwiftShader does: dead lanes still compute, they only do not store. That holds for the harness GPU of this film; on a real GPU derivatives inside non uniform flow are undefined by the standard, but those paths are the capture mode's.
 - The Mercury cases marked "in principle" were not reproduced.
 - Main moved to `76825c7` while I worked (progress commits only); the branch holds `0622510`.
+
+## Mail 66: main merged, the travel branch tried (03:52 to 04:00 UTC)
+
+Working notes: step 1 done (`5462ce8`, main 76825c7 merged). Step 2 done, below. Step 3 waits for the Builder's word that `builder/b19-pre` is pushed: then `npx tsx tools/repeat.ts --frames 482,495,1625,2772,3912,4502,5085,5235 --sessions 3 --runs 2` on that tree (about 11 minutes, travel frames take about 12 s each at draft) and one line per frame back.
+
+Scratch merge of `agent/travel` fd4fad6 into this branch (not committed, not pushed): `src/space/sky.ts` merges clean (automatic), `npx tsc --noEmit` clean. `python3 tools/shaderaudit.py` over the merged tree flags nothing new: the same lines as before in shared code and in the stop folders of main.
+
+The two new shader parts, read by hand:
+
+- The dust veil in the sky shader: inside `if (uFlightGlow.w > 0.0)`, a uniform branch; the map is read with `textureLod` at level 0; the dither is `fract(sin(dot(gl_FragCoord.xy, ...)) * 43758.5453)`, a function of the pixel's own position. No discard, no derivative, no implicit lookup. Clean.
+- `DEEP_FRAG`, the second point set: `gl_PointCoord`, two varyings, one `exp`. Clean. Its material is a clone of the star material and is fed the same way as the first flight set (pixel size, exposure and the two patch textures every frame, the patch uniforms shared).
+- `src/space/travel/field.ts` holds no shader. The veil map and the second point set are built on the CPU from seeded streams and `hash01`, in a fixed order, so they are the same in every session.
+
+Measured on the scratch merge: the eight travel frames over two fresh sessions, one render each, 227 s, one hash per frame (482 `6d20b8c85f00e654`, 495 `6c902577dcb78811`, 1625 `5ec0dae7cd3a0888`, 2772 `7b6281cc532b870c`, 3912 `2a334ee7272dc582`, 4502 `589c5246dcfda7cb`, 5085 `f9e1eb89d9f3a6aa`, 5235 `99cdf5b608e5cb3c`).
+
+One thing that is not about sessions but about machines: the dither multiplies `sin` of a number up to about 1e5 by 43758 and keeps the fraction, so the last bit of the GPU's `sin` decides the value. On one machine that is the same every time. Between machines with another CPU type or another Chrome build it need not be, and no other shader of the film leans on the last bit in that way. An integer hash of `uvec2(gl_FragCoord.xy)` (multiply, shift, xor on `uint`) gives the same bits everywhere. The pattern is also fixed to the screen and equal in every sample and every frame, by design of a dither. I did not render stop frames on the merge.
