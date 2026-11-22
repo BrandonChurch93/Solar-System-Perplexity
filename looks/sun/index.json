@@ -1,9 +1,25 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T06:51:33.476Z",
- "head": "c3c2118bfc099ebbae5c5470e7fc6d18d5701a76",
- "note": "Sun hook surge (round 31 section F): before and after strips at the final tier, finals of 0 and 60, native crops. main 2b50ee2, agent/sun-hook 6e33a5d (c3c2118 same bytes)",
+ "pushed": "2026-11-22T07:12:45.171Z",
+ "head": "28f37c7295e6cde479d1e4309ee34d9e9b1b5b06",
+ "note": "hook accepted at agent/sun-hook 739ae28 (main 2b50ee2); mail 81: the arc at 495 is not the sun globe",
  "looks": [
+  {
+   "time": "2026-11-22T07:12:43.938Z",
+   "file": "20261122071243938-note-v495-limb-x3-stretch.jpg",
+   "source": "out/work/sun/arc/v495-limb-x3-stretch.jpg",
+   "kind": "note",
+   "label": "Mail 81, frame 495 final tier, lower limb at 3 times with levels stretched: the pale band inside the limb. main 2b50ee2, agent/sun-hook 739ae28",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T07:12:42.757Z",
+   "file": "20261122071242757-note-arc495-who-draws-it-main-2b50ee2.jpg",
+   "source": "out/work/sun/arc/arc495-who-draws-it-main-2b50ee2.jpg",
+   "kind": "note",
+   "label": "Mail 81, frame 495 of sun.travel: with the whole Sun body of the sun set hidden the frame is byte equal, so the pale arc is not the sun globe (it is the sky disc plus Mercury's sun plate). main 2b50ee2, agent/sun-hook 739ae28",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T06:50:42.416Z",
    "file": "20261122065042416-note-hook-native-arch-f00045.jpg",
@@ -106,22 +122,6 @@
    "source": "out/work/sun/h1p/y7u-centre-hd.png",
    "kind": "note",
    "label": "Item 5b offline, map seen face on at turn 1.7 rad: map now, layer 0.45, layer 0.45 with bright cap 0.2 (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:57.004Z",
-   "file": "20261122055557004-note-y7t-centre-hd.jpg",
-   "source": "out/work/sun/h1p/y7t-centre-hd.png",
-   "kind": "note",
-   "label": "Item 5b offline, map seen face on at turn 1.0 rad: map now, finer layer at 0.35 and 0.6 (not in the tree). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:55:56.061Z",
-   "file": "20261122055556061-note-z10-f90-right-foot-approved-film-ungraded-model-zoom3.jpg",
-   "source": "out/work/sun/h1p/z10-f90-right-foot-approved-film-ungraded-model-zoom3.png",
-   "kind": "note",
-   "label": "Item 7, right foot at frame 90, 3 times zoom: approved, film final (item 4 tree), offline model without the loops grade row. main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
    "stop": "sun"
   },
   {
