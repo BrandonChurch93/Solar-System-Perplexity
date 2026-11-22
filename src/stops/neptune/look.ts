@@ -2,6 +2,7 @@ import type { AirParams } from './air'
 import curve from './curve.json'
 import hazeJson from './haze.json'
 import holdJson from './hold.json'
+import mendJson from './mend.json'
 import type { CloudParams, LimbParams } from './planet'
 
 export const code = curve.code
@@ -26,6 +27,7 @@ export const near = {
 }
 export const field = { amount: 1 }
 export const held = { ...holdJson, amount: 1 }
+export const mended = { ...mendJson }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
 export const diving = { from: 2.06, to: 1.8 }

@@ -187,3 +187,70 @@ Jobs from the Builder, one commit each, flight frames only: 1 D and A, stars thi
 - Cost at the final tier, old job 2 to here: 3922 110.6 to 111.9 s, 4492 112.7 to 114.8 s, 5235 47.3 to 46.9 s, 2212 101.4 to 101.2 s.
 - Left open after this job: the gas of the cloud itself (A, C, E: job 2 of this list), the band's lower edge (B: job 3), bright star cores (job 4).
 - Answer owed to the Builder on stars through the corona at 495: the sky can take a mask if the owner of the Sun and Mercury plates hands it a direction, two angular radii and a strength per frame (the star vertex shaders already dim by the patch lens the same way); a mask with the streamers' own shape needs a texture rendered by that owner.
+
+### CUT33 (sent 12:43 UTC)
+- `READY fcfd0dba154332fb3a9eb355df2fc53ad53efb6d`, taken into round 33 (MAIL 155). It holds the old jobs 1 and 2 and round 33 job 1.
+
+### Finding, the blobs at 5235 and 495
+- The "30 px white blob" at 5235 is not baked in the strip and is not a far point: it is the Sun of the lookback at (1278, 378), radius 4.3 px, glare 4, drawn by the Sun block at the end of `SKY_FRAG`. A first note to the Builder blamed `farpoint.ts`; a correction went out the same minute.
+- The "15 px blob" at 495 is Mercury's far point (`src/bodies/farpoint.ts`, 30 px sprite, Gaussian halo of sigma 3 px) at (823, 724). Not my file: lines go as FOREIGN LINES.
+- MAIL 155 grant: the Sun block at the end of `SKY_FRAG` is mine for the small Sun only. Above 6 px of radius and in every hold, dive, terrain and rise frame of every stop it gives today's bytes.
+
+### Round 33 job 2, detail layer on the band's light (commit 8f84206d)
+- `noiseCube(32)` in `sky.ts`: a 32 cube RGBA noise texture (integer hash by `Math.imul`, 128 KB on the GPU, nothing on disk), sampler `uFlightNoise`. `skyNoise(vec3)` reads it with a quintic warped coordinate at level 0.
+- `skyDetail(g, fp)`: one warp sample, five octaves with a rotation between octaves, each octave faded by the pixel footprint `fp`, returns a mottle value and a ridged value. Stretched along the galactic plane by `stretch`.
+- In the band branch, only where `uFlightStrip.x > 0` and `uFlightDetail.x > 0`: a ring of six strip samples at `fill[1]` gives `wide`; `glow = (glow * exp(mottle * min(mot, 0.1)) * (1 - depth * smoothstep(lo, hi, ridge)) + fill * exp(fill[2] * mot)) * grain`; the feather takes `max(sq, wide * fill[3])`, which joins the puffs.
+- First version used a float hash in the shader: marble look at thumbnail size with strong lanes, and 45 to 60 percent more time on the final of 3922. The cube texture version costs 132 s against 111 s there.
+- The strip is not rebuilt at a higher resolution: it has about 1.26 texels per pixel at vfov 30; its softness is content (a median of the photo), not sampling.
+
+### Round 33 job 3, the edge of the band (commit 64fd4698)
+- A second ring of six strip samples at `far[1]` degrees, turned 30 degrees: `rim = clamp(1 - 0.5 lum(wide + far) / lum(sq))` lowers the lane threshold by `rim[0] * rim` and deepens the lanes toward 1 by `rim[1] * rim`, so the cloud edge is eaten by the same multi scale noise; `fill += inverseFilmic(far^2) * far[0]`.
+- A warm additive glow along the galactic plane in the haze block: `col += tint * swap * lift * (1 - under * bz) * exp(-(lat / width)^2) * (1 + vary * (noise - 0.5))`, two low frequency samples of the cube. The band mix is a `min` of two mixes and the feather cuts the strip light outside the clouds, so a fill inside the band branch cannot make a broad glow; this term can.
+- Values: lane [0.62, 1.05, 0.5, 0.6], rim [0.5, 0.8], far [0.12, 4], spread tint [0.03, 0.026, 0.022], width 8 degrees, freq 6, vary 1.4, under 0.7.
+- 4492 draft, median row level (r, g, b) before and after: y 300 (55, 53, 49) to (66, 64, 60); y 350 (29, 34, 38) to (47, 50, 51); y 400 (19, 26, 32) to (35, 39, 42); y 500 (15, 23, 29) to (23, 29, 34); y 600 (13, 21, 29) to (16, 23, 30); y 800 unchanged. The drop of 36 levels in 100 px is now a fall of about 50 levels over 300 px.
+- Tried and dropped: keying the glow off the ring samples instead of `bz` (a dark rim under the clouds).
+
+### Round 33 job 4, bright stars and the far Sun (commit d7ced701)
+- Star law in `STAR_FRAG`, weight `uStarLaw.w = swap` (0 in every stop frame): core times `pow(max(peak / knee, 1), -power)`, wing `gain * edge^2 / (1 + r2)` in place of the Gaussian skirt. Values `flightStrip.stars.law` [2, 0.6, 0.06]. Shared by catalog, flight, deep and strip star materials.
+- Far Sun: `flightStrip.sun` {radiusPx 6, glare [0.7, 1.6], core [2.5, 2.25], wing [0.52, 4], stars [5, 26]}. Weight = (Sun radius under 6 px) times smoothstep(0.7, 1.6, shot glare). Scan of all segments: every stop frame with a small Sun has glare 0.60 to 0.65 (uranus dive, terrain, rise, travel; neptune hold, dive, terrain, rise); ending.retreat ramps 0.6 to 4, lookback and fade 4. So the weight is exactly 0 outside the ending, and today's `col +=` line is kept verbatim with the new term added in a gated loop.
+- Stars fade to zero inside 5 px of the Sun and are full at 26 px (`sunFade` in the star vertex shaders, the catalog one behind `if (uSunHalf.z > 0.0)`).
+
+### After the first proofs of jobs 2 to 4 (14:05 to 14:40 UTC)
+- Main moved the cameras of several travel frames in round 33 (84b0ea4a), so every before picture is rendered again on main: `/tmp/fs/p6/<f>-m33.png`, stop drafts in `/tmp/m33-draft.sha` (2325 2427 2580 615 1440 2010 3150 3720 4290 4860 4605), stop finals `2325-m33.png`, `2427-m33.png`. The old `-main`, `-e`, `-j1` files are from the camera before.
+- First proof of d7ced701 plus merge (tag h): eleven stop drafts and two stop finals equal main. 615 and 4605 (Sun in frame) keep their bytes at draft; the gate is the pair (Sun radius under 6 px, shot glare above 0.7).
+- Glow beside the band (84ad5ea2): the first values (tint [0.03, 0.026, 0.022], width 8, under 0.7) lifted the median of 4492 from (17, 24, 30) to (30, 33, 36) and read as grey fog. Now tint [0.024, 0.0185, 0.013], width 7 degrees, under 0.85. The far ring reads three taps.
+- Magenta knots (aa1e700e): they are strip stars with r and b above g (the photo's HII knots taken as stars). `stars.pink` [0.8, 0.5]: green lifted by 0.8 of the gap, level cut by up to half. The random streams are not touched.
+- Knee (c6782b81): the strip's stored luminance in the core runs median 0.39, 99 percent 0.56, top 0.716; `detail.knee` [0.52, 0.3] compresses what lies above 0.52, so baked cluster blobs sink to cloud level. Lanes a little softer: lane [0.62, 1.1, 0.5, 0.6], rim [0.5, 0.65].
+- Faint star colour (c6782b81): the deep set has a tenth of pure rose, amber and azure stars at any level; `flightStrip.deep.calm` [0.4, 0.05, 0.8] takes saturation to 0.4 below level 0.05. Mean saturation of pixels at 40 to 140 on 3352: 0.205 to 0.149. The same on the 500000 flight stars moved 8933 pixels by at most 3 levels (they are paled at build time already) and was taken out again.
+- Star groups (6eb06cef): the "stamped" clumps at 3352 are the groups of the deep set. Now 340 groups, radius 0.25 to 5 degrees uniform in log (skew 1), 12 to 340 stars, member factor 0.3 to 1.7 (was 480 groups, 0.2 to 3.2, skew 1.4, factor 0.6 to 1.4). The stream `flight deep` is consumed differently, so every deep star moves.
+- Blue glow patches (6eb06cef): the round bluish patch at 3922 and the smooth haze at 3352 are the lobes of the flight glow map (512 by 256, Gaussian lobes). The map is now times `1 - m + 2 m coarse(f1) (0.4 + 0.6 coarse(f2))`, `clouds.mottle` [0.75, 9, 20], at build time, no render cost.
+- Cost at the final tier, main 84b0ea4a to tag h: 3922 123 to 163 s, 5235 60 to 68, 4492 132 to 171, 2212 114 to 137, 1072 112 to 127, 3352 91 to 102. Tests on 3352: star law off 104 s, detail off 103 s, so the cost on a frame without band is not those; drafts cost the same on both trees (30.5 s). The cost sits in texture taps of the sky pass (noise cube, strip rings).
+
+### Proofs for CUT34 (tag k, tree 734e7a91, 14:40 to 15:20 UTC)
+- Finals against main 84b0ea4a (`/tmp/fs/p6/<f>-m33.png` and `<f>-k.png`), pixels that differ, mean level main to head, median (r, g, b) main to head, pixels at 250 or more main to head:
+  - 3922: 1677455, 24.43 to 27.65, (11, 18, 24) to (14, 20, 25), 2256 to 1788, 123 s to 160 s.
+  - 4492: 1874524, 37.46 to 42.54, (17, 24, 30) to (24, 28, 32), 4167 to 3106, 132 s to 168 s.
+  - 5235: 1507081, 28.01 to 32.01, (13, 19, 25) to (17, 23, 27), 3460 to 2499, 60 s to 67 s.
+  - 2212: 1394290, 13.82 to 14.93, (6, 12, 16) to (7, 12, 16), 1038 to 869, 114 s to 137 s.
+  - 1072: 526236, 12.75 to 12.72, median equal, 1189 to 932, 112 s to 125 s.
+  - 3352: 1437148, 11.95 to 11.37, (6, 11, 14) to (6, 10, 14), 771 to 605, 91 s to 100 s.
+- Stop finals 2325 and 2427 equal main byte for byte. Eleven stop drafts equal main (2325 2427 2580 615 1440 2010 3150 3720 4290 4860 4605). Saturn hold 3465 and dive 3567 drafts equal main; the rise 3866 moves (lift 0.74, flight terms).
+- Drafts of 495, 1642, 2782, 5085, 5362 looked at: no fault seen.
+
+### Saturn stop sky, MAIL 170 (15:00 to 15:10 UTC), tried and taken out
+- The sky at the dive 3567 is Saturn's own plates (`sky-hold.webp`, `sky-terrain.webp`, both 3520 by 1980, owner the Saturn stop). The orange blobs are painted in the plate, 6 to 10 px across.
+- Trial: a per plate `wear` value (texels per pixel thresholds) that swaps the plate for its star free 13 tap estimate where the plate is magnified. With thresholds [0.8, 1.15] nothing fires at 3567: the plate has more than 1.15 texels per pixel there, so it is not stretched by sampling, the softness is its content. Forced fully on, 558899 pixels move, the blobs stay and the plate only gets softer. Reverted, nothing committed.
+- So hold and dive are not answered by a commit of mine. The rise 3866 gets the flight detail layer through the lift. A cure needs a new plate or the plate star pass of the Saturn stop.
+
+### Neptune arrival swing 0 (commit 88e925cf on agent/neptune), MAIL 173
+- Rendered on top of this branch, final tier: 4436 mean 38.63, median (19, 29, 32), 2024 pixels at 250 or more; the band crosses behind the upper half of Uranus from lower left to upper right, detail layer and lanes hold, no edge, no Sun. 4492 mean 30.61, median (16, 22, 28); the band sits only in the lower right, the rest is star field with the mottled blue glow as a faint haze in the upper centre. The lanes the Neptune builder saw at 4 times the level in the upper left are there on this branch too, about 1 level, not seen at normal exposure.
+- With swing 0 the proofs of the band edge and of the baked blobs for 4492 lose their frame (the core is out of it); they still stand at 3922 and 5235.
+
+### The wide Sun at Uranus and Neptune (R5 severe, frames 4290 and 4605), tested, not offered
+- Trial, not committed: `flightStrip.sun.glare` [0.3, 0.55] turns the tight Sun law on in the stops with a Sun under 6 px. Eleven stop drafts: only 4290, 4860 and 4605 move, Mars 2580 and the rest keep their bytes.
+- 4290: 84427 pixels move by at most 3 levels. The wide orb there is not drawn by the Sun block of the sky pass. 4605: the flare keeps its width and its centre turns into a dark dot. 4860: 1922 pixels by 1 level.
+- So the orb the critic names is the flare of those stops, not the sky's Sun. The gate stays at [0.7, 1.6].
+
+### CUT34 (sent about 15:30 UTC on the VM clock)
+- READY on the merge of this notebook commit with origin/main. Separable commits: 8f84206d, 64fd4698, d7ced701, 84ad5ea2, aa1e700e, c6782b81, 6eb06cef.
+- Not in it: the far point lines for `src/bodies/farpoint.ts` (FOREIGN LINES in a message), anything for the Saturn plates, anything for the stop flares.

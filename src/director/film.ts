@@ -41,6 +41,7 @@ const PASS_REACH = 60
 const SUN_LEAVE = 0.55
 const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
+const SUN_HAND = { span: [0.25, 0.8] as [number, number], last: 0.6, reach: 2, behind: 1000 }
 const SUN_DIM = { level: 0.25, window: 0.4, taps: 6, back: [0.8, 1] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
@@ -69,6 +70,7 @@ export class FilmDirector implements Director {
   private readonly slide: number[] = []
   private readonly shapes: TravelShape[] = []
   private readonly lit: number[] = []
+  private readonly sunHand: number[] = []
   private readonly small: number[] = []
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
@@ -144,6 +146,18 @@ export class FilmDirector implements Director {
         }
       }
       this.lit.push(lit)
+      let hand = SUN_HAND.span[0]
+      if (i > 0) {
+        const seg = plans[i]!.seg.travel!
+        const master = config.formats[config.formatKeys.master]!
+        const steps = Math.round((seg.end - seg.start) * config.fps) * 8
+        const seen = (u: number): boolean => {
+          const pose = this.travelCamera(i, seg.start + u * (seg.end - seg.start))
+          return inFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld, Math.sin(Math.min(SUN_HAND.reach * this.sunFor(i).radius, Math.PI / 2)), 0)
+        }
+        while (hand < SUN_HAND.last && seen(hand)) hand = Math.min(hand + 1 / steps, SUN_HAND.last)
+      }
+      this.sunHand.push(hand)
     }
     const last = plans.length - 1
     const n = this.plans[last]!
@@ -494,7 +508,8 @@ export class FilmDirector implements Director {
   }
 
   private leaveWeight(index: number, u: number): number {
-    return index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < this.clear[index + 1]! ? 1 : 0
+    const hand = this.sunHand[index] ?? 0
+    return index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
   }
 
   private bright(index: number, at: number): number {
@@ -648,8 +663,9 @@ export class FilmDirector implements Director {
       const position = pose.position
       const la = this.sunFor(index)
       const lb = this.sunFor(index + 1)
-      const k = smooth(ramp(0.25, 0.8, u))
-      light = { radius: mix(la.radius, lb.radius, k), glare: mix(la.glare, lb.glare, k), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
+      const k = smooth(ramp(SUN_HAND.span[0], SUN_HAND.span[1], u))
+      const hand = smooth(ramp(this.sunHand[index]!, SUN_HAND.span[1], u))
+      light = { radius: mix(la.radius, lb.radius, hand), glare: mix(la.glare, lb.glare, hand), exposure: mix(la.exposure, lb.exposure, k), sky: mix(la.sky, lb.sky, k) }
       if (index === 0) {
         light.radius = u < SUN_LEAVE ? Math.max(lb.radius, Math.asin(Math.min(1 / position.distanceTo(this.frames[0]!.origin), 1))) : lb.radius
         light.glare = lb.glare
@@ -690,7 +706,9 @@ export class FilmDirector implements Director {
           arriving.rotation.premultiply(r)
         }
       }
-      sets = [state(index, 'orbit', leaveWeight), arriving]
+      const leaving = state(index, 'orbit', leaveWeight)
+      if (index > 0 && leaveWeight > 0 && u >= this.clear[index + 1]!) leaving.origin.copy(position).addScaledVector(forward(pose.quaternion), -SUN_HAND.behind)
+      sets = [leaving, arriving]
       const da = position.distanceTo(this.frames[index]!.origin) - 1.2
       const db = position.distanceTo(this.frames[index + 1]!.origin) - 1.2
       near = Math.min(Math.max(0.02 * Math.min(leaveWeight > 0 ? da : db, db), 0.002), 4)
@@ -781,7 +799,8 @@ export class FilmDirector implements Director {
         const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
         if (lift > 0) {
           const w = coverWindow(segment)
-          const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : segment.start, segment.end, time))
+          const from = p.p.light.skyLiftFrom
+          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : segment.start, segment.end, time))
           skyStars = lift * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }

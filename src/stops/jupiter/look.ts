@@ -67,7 +67,7 @@ export const io = {
 
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number], low: { sun: [-0.05, 0.1, 0.4, 0.75] as [number, number, number, number], pixels: 1.3, air: 0.15, scale: 0.014 } }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
 
 export const deck: DeckLook = {
   skyRimDeg: 5.2,
