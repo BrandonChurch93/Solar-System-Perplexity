@@ -1,4 +1,6 @@
 import json
+import sys
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -6,7 +8,9 @@ import numpy as np
 import geo
 
 SCALE = 2
-W = 1024
+W = 2048
+FINE = geo.WORK / "moon" / "moon-fine.png"
+FINE_BOX = (2509, 226, 88, 6)
 OUT = geo.ROOT / "src" / "stops" / "earth" / "moon.json"
 MASK = (0.03, 0.14)
 TERM = (-0.06, 0.2)
@@ -56,6 +60,11 @@ def main():
     centre = centre + (geo.CAM.R[:, 0] * shift[0] - geo.CAM.R[:, 1] * shift[1]) * z / geo.CAM.f
     print("moon from the fit: centre", round(cx - x0, 1), round(cy - y0, 1), "r", round(r * SCALE, 1), "limb circle:", round(fx, 1), round(fy, 1), round(fr, 1), "points", len(cnt), "rms", round(float(np.sqrt((res ** 2).mean())), 2))
     R = fr + 0.5
+    radius = m["radius"] * R / (r * SCALE)
+    out_dir = Path(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv else None
+    bx, by, bh, up = FINE_BOX
+    crop = geo.decode(geo.read(FINE)[..., :3].astype(np.float64))
+    fx, fy, R = ((x0 + fx) / SCALE - (bx - bh)) * up, ((y0 + fy) / SCALE - (by - bh)) * up, R * up / SCALE
 
     lon = (np.arange(W) + 0.5) / W * 2 * np.pi - np.pi
     lat = np.pi / 2 - (np.arange(W // 2) + 0.5) / (W // 2) * np.pi
@@ -102,20 +111,21 @@ def main():
     earth = np.median(baked[(ndl < -0.3) & (front > 0.4)], axis=0)
     mask = geo.smooth(MASK[0], MASK[1], front)
     for key, w in (("full", W), ("web", W // 2)):
-        base = geo.ROOT / "public" / "assets" / "earth" / key
+        base = out_dir or geo.ROOT / "public" / "assets" / "earth" / key
+        tag = (key + "-") if out_dir else ""
         a8 = np.clip(geo.encode(albedo * 0.4) * 255 + 0.5, 0, 255).astype(np.uint8)
         b8 = np.clip(np.concatenate([geo.encode(baked), mask[..., None]], -1) * 255 + 0.5, 0, 255).astype(np.uint8)
         if w != W:
             a8 = cv2.resize(a8, (w, w // 2), interpolation=cv2.INTER_AREA)
             b8 = cv2.resize(b8, (w, w // 2), interpolation=cv2.INTER_AREA)
-        cv2.imwrite(str(base / "moon-color.jpg"), a8[..., ::-1], [cv2.IMWRITE_JPEG_QUALITY, 92])
+        cv2.imwrite(str(base / (tag + "moon-color.jpg")), a8[..., ::-1], [cv2.IMWRITE_JPEG_QUALITY, 92])
         from PIL import Image
-        Image.fromarray(b8, "RGBA").save(base / "moon-lit.webp", lossless=True, exact=True, method=6)
+        Image.fromarray(b8, "RGBA").save(base / (tag + "moon-lit.webp"), lossless=True, exact=True, method=6)
     q = geo.mat_to_quat(frame)
-    out = {"center": [round(float(v), 6) for v in centre], "radius": round(float(m["radius"] * R / (r * SCALE)), 6), "quaternion": [round(float(v), 7) for v in q], "sun": [round(float(v), 4) for v in gain], "earthshine": [round(float(v), 5) for v in earth], "albedoScale": 2.5, "terminator": list(TERM), "power": power, "squeeze": squeeze, "mapWidth": {"full": W, "web": W // 2}}
-    OUT.write_text(json.dumps(out, indent=1) + "\n")
+    out = {"center": [round(float(v), 6) for v in centre], "radius": round(float(radius), 6), "quaternion": [round(float(v), 7) for v in q], "sun": [round(float(v), 4) for v in gain], "earthshine": [round(float(v), 5) for v in earth], "albedoScale": 2.5, "terminator": list(TERM), "power": power, "squeeze": squeeze, "mapWidth": {"full": W, "web": W // 2}}
+    (out_dir / "moon.json" if out_dir else OUT).write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out))
-    geo.write(geo.WORK / "view" / "moon-maps.jpg", np.concatenate([geo.encode(albedo * 0.4), geo.encode(baked) * mask[..., None]], 0))
+    geo.write((out_dir or geo.WORK / "view") / "moon-maps.jpg", np.concatenate([geo.encode(albedo * 0.4), geo.encode(baked) * mask[..., None]], 0))
 
 
 if __name__ == "__main__":

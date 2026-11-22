@@ -143,7 +143,7 @@ def main():
     band = cv2.GaussianBlur(A[z - 6:z + 6], (0, 0), sigmaX=0.01, sigmaY=1.2)
     w = np.clip(1 - np.abs(np.arange(-6, 6) + 0.5) / 4, 0, 1)[:, None, None]
     A[z - 6:z + 6] = A[z - 6:z + 6] * (1 - w) + band * w
-    fade = geo.smooth(0.0, 0.06, u)[None, :] * (1 - geo.smooth(0.94, 1.0, u))[None, :] * (1 - geo.smooth(0.82 * TOP, TOP, h))[:, None]
+    fade = geo.smooth(0.0, 0.06, u)[None, :] * (1 - geo.smooth(0.965, 1.0, u))[None, :] * (1 - geo.smooth(0.82 * TOP, TOP, h))[:, None] * geo.smooth(LOW, LOW + 0.01, h)[:, None]
     A = A * fade[..., None]
     print("offset", offset.round(4), "aurora peak", A.reshape(-1, 3).max(0).round(3), "mean", A.mean((0, 1)).round(4), "covered", float((A[..., 1] > 0.02).mean().round(3)), "limb row", z)
     img = np.clip(geo.encode(A.astype(np.float64))[::-1] * 255 + 0.5, 0, 255).astype(np.uint8)
