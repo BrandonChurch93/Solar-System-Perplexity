@@ -1189,3 +1189,31 @@ Jobs:
 3. Say in one line what agent/sun holds today beyond main (the items of your polish list that are done), and what is proved, so that round 33 can take it."
 
 - Plan (12:10): the chain goes on through the terrain and the rise sheet, the rise cover sheet is cut (the every frame review sheet 200 to 224 holds it), then finals 0, 60, 90 and the judged repeat; line 3 goes out with the head as soon as they are in. Hook take 3 is written meanwhile and rendered from then on. One render at a time.
+
+## MAIL 151 (Builder, 12:21 UTC Nov 22, high priority, to every polish branch), verbatim
+
+"MAIL 151 (12:21 UTC), to every polish branch. Phase 6 has three polish rounds and no more: 33, 34, 35. The cut for round 33 is 13:10 UTC. Round 34 is cut about 15:10 UTC and round 35 about 17:10 UTC; after round 35 the build is frozen and nothing more can land.
+
+By 13:05 UTC send me ONE message that starts with `CUT33 <folder>` and holds only this:
+1. `READY <full hash of the commit on your branch that I take>` or `NOT READY, next cut`. Take only what is built, proved and committed. A half proved change waits for round 34.
+2. The judged frames of your segments that differ from main (9f5ad80 or later, engine be043ade04a7ab6e) at the final tier, each with one clause on why it is better; and the frames you state are the same bytes.
+3. The segments whose motion changed (by id, for example venus.dive, venus.dive-cover), so the motion critic gets their sheets.
+4. The open items in kit/PROGRESS.md (numbers) that this hash answers, and anything it makes worse.
+5. For an engine branch: the files outside your own folders that the commit touches.
+
+I check every statement on the render workers by pixel hash against the kept build before a critic sees it; a judged frame of a finished stop that moves without a reason named here is taken out again. The words of round 32 are in scorecards/round-032/SUMMARY.md on main and under Open items 79 to 100. Keep working after the cut on what is left for round 34, worst first. No reply to this mail is needed beyond the CUT33 message."
+
+## Mail from mercury_builder (12:22 UTC Nov 22), on the step at sun.travel 482, for round 34, in short
+
+- Its facts on main: my globe has weight 1 to frame 486 (u 0.40), 0.887 at 490, 0.30 at 495, 0 from 500; my `leave.wash [0.26, 0.4]` takes the globe to `pale [2.76, 1.37, 0.52]` over frames 473 to 486, steepest near 480 to 482: "That wash is the step the critic names; my plate only shows from 486 on, under your fading globe." Its plate's centre at 495 is scene 1.62 0.91 0.34 (codes 242 229 185); its sky patch share is 0 to 485, 0.09 at 495, 0.19 at 500, 0.47 at 510, 0.76 at 520, 1 at 539.
+- Its round 33 head changes the plate's travel look only: limb darkening about 0.475 0.62 0.78 (was 0.3 0.42 0.55) with a luminance ceiling near the limb (no white ring), and the plate hides the stars behind its bright corona.
+- Its proposal for round 34: I drop the wash (the globe keeps its orange granulated look to the end of its weight, 486 to 500), it gives its plate my globe's look at the hand over (disc tint, cell size and contrast, limb darkening), gliding to the hero's pale Sun with its sky patch share over 486 to 539. It needs from me: mean scene colour of my disc at 486 at the centre and at 0.9 radius, cell size in px at 486, and whether my globe is drawn opaque (alpha = weight) or added. "If you would rather keep the wash and only stretch it, say so and I leave my centre alone." No reply needed before the 13:05 cut.
+- TO DO after the cut and the hook PART: answer it with the numbers.
+
+## 12:25 UTC Nov 22: state before the cut of round 33
+
+- Main is da02e63 now; against e9fc2a9 it changes only kit/PROGRESS.md, scorecards/round-032 and out/ (preview, stills): no source, no asset. So the proof on 89ca8d5 stands after the merge.
+- Proof chain: terrain sheet and rise sheet done (12:09, 12:17), the harness rise cover sheet was cut by me at 12:18 (the every frame review strip 200 to 224 holds it). Finals 0, 60, 90 on 1a02285 done 12:22 (`out/work/sun/p1/fin2`); the judged repeat runs (`p1/repeat-judged.log`).
+- Open items of kit/PROGRESS.md and my polish list: item 1 = 49 (rise cover), item 2 = 46 (near granulation), item 3 = 47 (mirror seams), these three went onto main earlier; item 4 = 48 (limb glow edge, straight line), item 5 = 50 (5a flow out of the pores, 5b finer cells toward the limb), item 6 = 51 (streamers outside the approved frame), item 7 = 53 (minors: 7a feet bloom and grade at 90 done, 7c and 7d closed without a change), hook weak point 1 is part of 84's history. Open for round 34: 84 (hook take 3), 87 (495), 88 (482), the R6 minors in 100.
+- Hook take 3 is written in the second worktree (`/home/user/workspace/repo-leave`, local branch `agent/sun-hook3` from 1a02285, not committed yet), no render there. What it holds: (c) `plan.ts`: a speed profile `opening.push` for the camera's run through the terrain (starts at today's speed so frame 0 keeps its shutter samples, 1.30 times cruise from frame 18 to 60, glide at 0.45 from 90 to 126, back on today's line at frame 150); the hero pose (today's frame 90) is reached at frame 60, frame 90 stands where today's frame 116 stands, frames from 150 on are untouched. With 0 and 90 both on their poses the push could only be re-timed: at most about 1.75 of the 2.35 units of run by frame 60 against 1.35 today, the sunspot 16 percent larger at 60 in place of 12. (a) `loops.ts`: a second draw of the loop card (`peel`), the strand groups picked by a noise lane across the arc angle (outer strands favoured) leave the arch (the main draw loses exactly what the second draw shows, so the start is seamless) and rise by `erupt.rate` with a lean. (b) a flash at the crest (`erupt.flash`, peak near frame 28) with a wide glow, and a pool of light on the ground between the feet (`ground.flash`).
+- 12:25: judged repeat on 1a02285 (`out/work/sun/p1/repeat-judged.log`, draft, 3 fresh sessions, 2 runs each, 153 s): 0, 60 47c2ba4787c49c4e, 90 a47c91ba7ee73c22, 247 ab17d87d0a47fa31, 360 f5a8c25e59af06ba, each 1 distinct of 6, not repeatable: none. Finals 0, 60, 90 on 1a02285 (`p1/fin2`): 9e0e80dc7c66e3a1, 0397db08e47c273b, 1d600f276fa17332, the same bytes as on 3b169a3.
