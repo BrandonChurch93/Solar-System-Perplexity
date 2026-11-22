@@ -1,9 +1,111 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T03:51:20.918Z",
- "head": "ce1994c5f0f381d2080ed188e7ab8485d2dbbafc",
- "note": "sun item 4 (limb and sky): dark rim traced to the plate slab against the haze rise and to the flame stretch; cure in work, main 0622510 (batch 18)",
+ "pushed": "2026-11-22T04:28:15.710Z",
+ "head": "255c792ee0a0b0b3828055d776bccc1a44daff00",
+ "note": "Item 4 (limb and sky) proof pictures, main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
  "looks": [
+  {
+   "time": "2026-11-22T04:28:15.023Z",
+   "file": "20261122042815023-note-i293-final-f90-item4.jpg",
+   "source": "out/work/sun/h1p/i293-final-f90-item4.png",
+   "kind": "note",
+   "label": "Frame 90, final tier, after item 4. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:14.314Z",
+   "file": "20261122042814314-note-i293-final-f60-item4.jpg",
+   "source": "out/work/sun/h1p/i293-final-f60-item4.png",
+   "kind": "note",
+   "label": "Frame 60, final tier, after item 4. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:13.583Z",
+   "file": "20261122042813583-note-i293-final-f0-item4.jpg",
+   "source": "out/work/sun/h1p/i293-final-f0-item4.png",
+   "kind": "note",
+   "label": "Frame 0, final tier, after item 4. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:06.825Z",
+   "file": "20261122042806825-note-r2-rise-210-214-top-before-now-gain1.jpg",
+   "source": "out/work/sun/h1p/r2-rise-210-214-top-before-now-gain1.png",
+   "kind": "note",
+   "label": "Item 4 side effect in the rise cover, top of frames 210 to 214, draft, before (left) and now: the sky no longer drops to black at 209 to 211. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:06.210Z",
+   "file": "20261122042806210-note-r2-rise-205-209-top-before-now-gain1.jpg",
+   "source": "out/work/sun/h1p/r2-rise-205-209-top-before-now-gain1.png",
+   "kind": "note",
+   "label": "Item 4 side effect in the rise cover, top of frames 205 to 209, draft, before (left) and now: the black band with a hard edge that swept up the sky is gone. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:05.593Z",
+   "file": "20261122042805593-note-w10-streak-quadratic-fit.jpg",
+   "source": "out/work/sun/h1p/w10-streak-quadratic-fit.png",
+   "kind": "note",
+   "label": "Item 4, the loops card at the left foot: before, after, the light taken out times 4 (the approved image's own lens streak). main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:04.887Z",
+   "file": "20261122042804887-note-x5-left-foot-f0-f60-before-over-now-gain1.jpg",
+   "source": "out/work/sun/h1p/x5-left-foot-f0-f60-before-over-now-gain1.png",
+   "kind": "note",
+   "label": "Item 4 proof, the straight line at the left foot, frames 0 and 60, draft, 3 times zoom, gain 1, before over now: the line is out of the loops card. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:04.291Z",
+   "file": "20261122042804291-note-i293d-f30-limb-whole-gain3-before-over-after.jpg",
+   "source": "out/work/sun/h1p/i293d-f30-limb-whole-gain3-before-over-after.jpg",
+   "kind": "note",
+   "label": "Item 4 proof, frame 30, draft tier, limb at 3 times gain, before over after. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:03.731Z",
+   "file": "20261122042803731-note-y1-f90-limb-whole-gain3-before-over-after.jpg",
+   "source": "out/work/sun/h1p/y1-f90-limb-whole-gain3-before-over-after.jpg",
+   "kind": "note",
+   "label": "Item 4 proof, frame 90, final tier, limb at 3 times gain, before over after. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:03.156Z",
+   "file": "20261122042803156-note-y1-f60-limb-whole-gain3-before-over-after.jpg",
+   "source": "out/work/sun/h1p/y1-f60-limb-whole-gain3-before-over-after.jpg",
+   "kind": "note",
+   "label": "Item 4 proof, frame 60, final tier, limb at 3 times gain, before over after. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:28:02.532Z",
+   "file": "20261122042802532-note-y1-f0-limb-whole-gain3-before-over-after.jpg",
+   "source": "out/work/sun/h1p/y1-f0-limb-whole-gain3-before-over-after.jpg",
+   "kind": "note",
+   "label": "Item 4 proof, frame 0, final tier, limb at 3 times gain, before over after: the glow fades into the sky, no shell edge, no dark rim. main 2bbf0f9 (engine batch 18 a67c9c34), agent/sun 255c792",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T04:03:59.630Z",
+   "file": "20261122040359630-frame-base90-item4c.jpg",
+   "source": "out/work/sun/base90-item4c.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, review tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7cd5ba493f97ac9f"
+  },
   {
    "time": "2026-11-22T03:51:20.217Z",
    "file": "20261122035120217-note-i292-haze-texture-first-try-toward-difference.jpg",
@@ -29,133 +131,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-22T03:43:56.924Z",
-   "file": "20261122034356924-frame-base90-item4b.jpg",
-   "source": "out/work/sun/base90-item4b.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
    "time": "2026-11-22T03:26:18.026Z",
    "file": "20261122032618026-note-i291-f90-limb-approved-over-film.jpg",
    "source": "out/work/sun/h1p/i291-f90-limb-approved-over-film.png",
    "kind": "note",
    "label": "item 4 trace, approved over film frame 90 over film frame 0, left limb, gain 3 x3, draft. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T03:26:17.467Z",
-   "file": "20261122032617467-note-i291-f0-limb-unwrapped-layers.jpg",
-   "source": "out/work/sun/h1p/i291-f0-limb-unwrapped-layers.png",
-   "kind": "note",
-   "label": "item 4 trace, frame 0 draft, limb unwrapped x 200 to 560, gain 3, x4: both, plate only, haze only. Dark rim sits where the plate has fallen and the haze not yet risen. Uncommitted item 4 tree on main 0622510 (batch 18 a67c9c34)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:57:44.547Z",
-   "file": "20261122025744547-note-i290-sheet-rise-review-main-3d48581.jpg",
-   "source": "out/work/sun/i290-sheet-rise-review-main-3d48581.png",
-   "kind": "note",
-   "label": "sun: harness sheet of the rise, review tier, main 3d48581 (batch 17)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:57:43.896Z",
-   "file": "20261122025743896-note-i290-sheet-terrain-review-main-3d48581.jpg",
-   "source": "out/work/sun/i290-sheet-terrain-review-main-3d48581.png",
-   "kind": "note",
-   "label": "sun: harness sheet of the terrain view, review tier, opening switch on, main 3d48581 (batch 17)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:57:25.567Z",
-   "file": "20261122025725567-sheet-sun.rise-preview-review.jpg",
-   "source": "out/work/sheets/sun.rise-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet sun.rise, review tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 180,
-   "last": 269,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:57:17.648Z",
-   "file": "20261122025717648-frame-f00261-review.jpg",
-   "source": "out/work/sheets/.frames-pDTiVC/f00261-review.png",
-   "kind": "frame",
-   "label": "sun.rise frame 261, review tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 261,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:49:15.627Z",
-   "file": "20261122024915627-sheet-sun.terrain-preview-review.jpg",
-   "source": "out/work/sheets/sun.terrain-preview-review.png",
-   "kind": "sheet",
-   "label": "Contact sheet sun.terrain, review tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "first": 0,
-   "last": 179,
-   "tier": "review",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "1e61fa4049d34863"
-  },
-  {
-   "time": "2026-11-22T02:48:01.296Z",
-   "file": "20261122024801296-note-i289-draft-sheet-200-224-every-frame-main-3d48581.jpg",
-   "source": "out/work/sun/i289-draft-sheet-200-224-every-frame-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun item 1: every frame 200 to 224 at DRAFT tier on main 3d48581 (the review sheet i286 is from main 1c7c297; 200 to 207 keep their bytes, 208 to 224 change in the shared sky)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:48:00.352Z",
-   "file": "20261122024800352-note-i289-f360-final-main-3d48581.jpg",
-   "source": "out/work/sun/i289-f360-final-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun: judged frame 360, final tier, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:59.356Z",
-   "file": "20261122024759356-note-i289-f247-final-main-3d48581.jpg",
-   "source": "out/work/sun/i289-f247-final-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun: judged frame 247, final tier, main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:58.406Z",
-   "file": "20261122024758406-note-i289-f90-final-switch-on-main-3d48581.jpg",
-   "source": "out/work/sun/i289-f90-final-switch-on-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun: judged frame 90, final tier (same bytes switch on or off), main 3d48581",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T02:47:57.462Z",
-   "file": "20261122024757462-note-i289-f60-final-switch-on-main-3d48581.jpg",
-   "source": "out/work/sun/i289-f60-final-switch-on-main-3d48581.jpg",
-   "kind": "note",
-   "label": "sun: judged frame 60, final tier, opening switch on, main 3d48581",
    "stop": "sun"
   }
  ]
