@@ -781,7 +781,8 @@ export class FilmDirector implements Director {
         const lift = segment.kind === 'rise' && index > 0 ? riseLift(p.id) : 0
         if (lift > 0) {
           const w = coverWindow(segment)
-          const x = smooth(ramp(w ? (w.lastFrame + 1) / config.fps : segment.start, segment.end, time))
+          const from = p.p.light.skyLiftFrom
+          const x = smooth(ramp(w ? (from === undefined ? w.lastFrame + 1 : mix(w.centerFrame, w.lastFrame + 1, from)) / config.fps : segment.start, segment.end, time))
           skyStars = lift * (1 - (1 - x) * (1 - x))
           light = { ...light, sky: mix(light.sky, OPEN.openExposure, skyStars) }
         }
