@@ -15,6 +15,7 @@ export interface MoonLook {
   lift: number
   round: number
   edge: number
+  near: number
 }
 
 const VERT = /* glsl */ `
