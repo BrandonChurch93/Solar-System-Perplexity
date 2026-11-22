@@ -1,9 +1,33 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T07:39:36.954Z",
- "head": "6ca7e2623c6c8400767bb8fc7d24d3e64d0c997d",
- "note": "mail 92 travel leave cure (agent/sun-hook df3458c); items 8a and 8b drafts (agent/sun f38765a); main c92f97c",
+ "pushed": "2026-11-22T07:50:19.733Z",
+ "head": "b6bbba7787e7d95405d537d5c384a5085ba3af52",
+ "note": "sun: items 8a and 8b (feet and crest of the surge) proved at the final tier; next the granulation layer toward the limb and the streamers outside the approved frame",
  "looks": [
+  {
+   "time": "2026-11-22T07:50:19.198Z",
+   "file": "20261122075019198-note-strip-k4f-final-400px.jpg",
+   "source": "out/work/sun/mh/strip-k4f-final-400px.jpg",
+   "kind": "note",
+   "label": "sun opening, nine final frames 0 to 60 with items 8a 8b; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T07:50:18.668Z",
+   "file": "20261122075018668-note-crest-k4f.jpg",
+   "source": "out/work/sun/mh/crest-k4f.jpg",
+   "kind": "note",
+   "label": "sun opening, item 8b at the final tier: the crest at f23 and the landing at f60, native crops; top the hook as accepted, bottom with the knee; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T07:50:17.986Z",
+   "file": "20261122075017986-note-feet-k4f.jpg",
+   "source": "out/work/sun/mh/feet-k4f.jpg",
+   "kind": "note",
+   "label": "sun opening, items 8a 8b at the final tier: launch foot f8, landing foot f45 and f53, 400 by 300 native crops; top the hook as accepted (739ae28), bottom with the knee; white count and longest run printed; main 681d8da, agent/sun b6bbba7 (code 6ca7e26)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T07:39:36.405Z",
    "file": "20261122073936405-note-crest-k4.jpg",
@@ -98,30 +122,6 @@
    "source": "out/work/sun/hook/hook-after-strip-final-400px-6e33a5d.jpg",
    "kind": "note",
    "label": "Hook surge (round 31 section F), AFTER: frames 0 8 15 23 30 38 45 53 60, final tier, each 400 px wide. Frame 0 is byte equal to main. main 2b50ee2, agent/sun-hook 6e33a5d (c3c2118 gives the same bytes)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:26:00.069Z",
-   "file": "20261122062600069-note-hook-draft6-strip-400px.jpg",
-   "source": "out/work/sun/hook/hook-draft6-strip-400px.jpg",
-   "kind": "note",
-   "label": "Hook surge, draft tier, sixth tune, same nine frames at 400 px: the surge leaves the left foot (8), climbs (15, 23), crosses the crest (30), comes down (38), lands and flares the right foot (45, 53), fades (60). main 2b50ee2, agent/sun-hook 96cf078 (one number later than the picture)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T06:25:59.510Z",
-   "file": "20261122062559510-note-hook-before-strip-final-400px.jpg",
-   "source": "out/work/sun/hook/hook-before-strip-final-400px.jpg",
-   "kind": "note",
-   "label": "Hook (round 31 section F), BEFORE: frames 0 8 15 23 30 38 45 53 60, final tier, each 400 px wide. main 2b50ee2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T05:56:00.740Z",
-   "file": "20261122055600740-note-z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
-   "source": "out/work/sun/h1p/z9-f90-lower-right-quadrant-approved-left-film-right-native.jpg",
-   "kind": "note",
-   "label": "Item 7, frame 90 lower right quadrant at native size: approved left, film final right (the generated near detail of item 2). main edbf7b8, engine batch 19 7a880ac6, agent/sun 30594b7",
    "stop": "sun"
   },
   {
