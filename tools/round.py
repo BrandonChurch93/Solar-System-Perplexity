@@ -126,8 +126,38 @@ def finished(text):
     return out
 
 
-def checks(n, gate_args, allow_red):
+def hashes():
+    out = sh('npx tsx -e "import { ensureBuild } from \'./tools/lib/common\'; console.log(\'HASHES \' + JSON.stringify(ensureBuild()))"')
+    h = json.loads([l for l in out.split('\n') if l.startswith('HASHES ')][-1][7:])
+    return {'engineHash': h['engine'], 'stopHashes': h['stops']}
+
+
+def moved(s, h):
+    out = []
+    if s.get('engineHash') != h['engineHash']:
+        out.append('engine %s is now %s' % (s.get('engineHash'), h['engineHash']))
+    stops = [k for k in h['stopHashes'] if (s.get('stopHashes') or {}).get(k) != h['stopHashes'][k]]
+    if stops:
+        out.append('stop hashes changed: ' + ', '.join(stops))
+    return '; '.join(out)
+
+
+def on_origin(full):
+    if SCRATCH:
+        return
+    there = lambda: subprocess.run('git fetch -q origin main && git merge-base --is-ancestor %s origin/main' % full, shell=True, cwd=ROOT, capture_output=True).returncode == 0
+    if not there():
+        subprocess.run('git merge -q --no-edit origin/main && git push -q origin HEAD:main', shell=True, cwd=ROOT, capture_output=True)
+        if not there():
+            print('commit %s of the state is not on origin/main: push it before the jobs go out' % full[:8])
+
+
+def checks(n, gate_args, allow_red, expect=None):
     sh('npm run -s build')
+    if expect:
+        diff = moved(expect, hashes())
+        if diff:
+            sys.exit('round %d: the tree moved since the build at %s: %s. Nothing checked; run start --round %d --build-only again and hand the jobs out again' % (n, expect['commit'][:8], diff, n))
     t = sh('npx vitest run 2>&1 | tail -12', check=False)
     if 'failed' in t or 'passed' not in t:
         sys.exit('tests:\n' + t)
@@ -661,13 +691,21 @@ def film_plan(n, s):
 
 def film_start(a):
     n = a.round
-    mode = 'polish' if a.polish else 'record' if a.record else 'whole'
+    mode = 'polish' if a.polish else 'record' if a.record else 'whole' if a.whole else state(n).get('mode', 'whole')
     phase, label, word, limit_key = FILM[mode]
     c = cfg()
     again = mode == 'polish' and any(l.startswith('- Round %d,' % n) for l in round_lines(PROG.read_text()))
     if a.row_only and (mode != 'polish' or again):
         sys.exit('--row-only is for the first start of a polish round' if mode != 'polish' else 'round %d has its row already; start it again without --row-only to run the machine checks' % n)
-    if not SCRATCH and not again:
+    if mode == 'whole' and (a.build_only or a.checks):
+        sys.exit('--build-only and --checks are for polish rounds and the record round')
+    if sum([a.row_only, a.build_only, a.checks]) > 1:
+        sys.exit('one of --row-only, --build-only, --checks at a time')
+    built = 'engineHash' in state(n)
+    if a.checks and not built:
+        sys.exit('round %d has no build in its state; run start --round %d --build-only first' % (n, n))
+    build = mode != 'whole' and (a.build_only or not built)
+    if not SCRATCH and not again and (build or mode == 'whole'):
         if sh('git status --porcelain').strip():
             sys.exit('the tree is not clean')
         sh('git fetch -q origin main && git merge -q --no-edit origin/main')
@@ -689,11 +727,38 @@ def film_start(a):
     if a.row_only:
         print('round %d polish, round %d of %d: the row is written; merge the batch, then start again without --row-only' % (n, state(n)['k'], state(n)['limit']))
         return
-    green, build = checks(n, '--phase %d --only %s' % (phase, MACHINE), a.allow_red)
-    sha = commit('Round %d: %s, machine checks %s' % (n, label, 'green' if green else 'not green'))
-    full = sh('git rev-parse HEAD').strip()
-    state(n, {'commit': full, 'engineHash': build.get('engineHash') or build.get('engine'), 'stopHashes': build.get('stopHashes') or build.get('stops') or {}, 'gateGreen': green})
-    print('round %d %s commit %s engine %s' % (n, label, sha, state(n)['engineHash']))
+    if mode == 'whole':
+        green, made = checks(n, '--phase %d --only %s' % (phase, MACHINE), a.allow_red)
+        sha = commit('Round %d: %s, machine checks %s' % (n, label, 'green' if green else 'not green'))
+        full = sh('git rev-parse HEAD').strip()
+        state(n, {'commit': full, 'engineHash': made.get('engineHash') or made.get('engine'), 'stopHashes': made.get('stopHashes') or made.get('stops') or {}, 'gateGreen': green})
+        print('round %d %s commit %s engine %s' % (n, label, sha, state(n)['engineHash']))
+        return
+    if build:
+        if not SCRATCH:
+            commit('Round %d: %s, the tree at the build' % (n, label), push=False)
+            sh('git fetch -q origin main && git merge -q --no-edit origin/main')
+        sh('npm run -s build')
+        h = hashes()
+        commit('Round %d: %s, the tree at the build' % (n, label), push=False)
+        full = sh('git rev-parse HEAD').strip()
+        s = state(n)
+        if moved(s, h):
+            s.pop('gateGreen', None)
+            (rdir(n) / 'gate.txt').unlink(missing_ok=True)
+        s.update({'commit': full, **h})
+        (rdir(n) / 'state.json').write_text(json.dumps(s, indent=1))
+        print('round %d %s build: commit %s engine %s stops %s' % (n, label, full, h['engineHash'], ' '.join('%s=%s' % x for x in h['stopHashes'].items())))
+        on_origin(full)
+    if a.build_only:
+        print('round %d %s: jobs can go out; the machine checks follow with start --round %d --checks' % (n, label, n))
+        return
+    s = state(n)
+    green, made = checks(n, '--phase %d --only %s' % (phase, MACHINE), a.allow_red, s)
+    commit('Round %d: %s, machine checks %s' % (n, label, 'green' if green else 'not green'))
+    state(n, {'gateGreen': green})
+    print('round %d %s commit %s engine %s: machine checks %s' % (n, label, s['commit'][:8], s['engineHash'], 'green' if green else 'not green'))
+    on_origin(s['commit'])
 
 
 def film_jobs(a):
@@ -900,6 +965,8 @@ def film_pack(a):
     s = state(n)
     c = cfg()
     extra = tiers(s, 'pack') + (' --stress-tier ' + s['tier'] if s.get('tier') else '')
+    if 'gateGreen' not in s:
+        sys.exit('round %d: no pack before the machine checks; run start --round %d --checks first' % (n, n))
     if s['mode'] == 'polish':
         chosen = SC / rid(n) / 'select.json'
         if not chosen.exists():
@@ -1357,6 +1424,8 @@ for name in STEPS:
     q.add_argument('--stops')
     q.add_argument('--no-stress', action='store_true')
     q.add_argument('--row-only', action='store_true')
+    q.add_argument('--build-only', action='store_true')
+    q.add_argument('--checks', action='store_true')
     q.add_argument('--base')
     q.add_argument('--controls-from', type=int)
     q.add_argument('--workers', type=int, default=8)
@@ -1394,6 +1463,8 @@ if film and a.stop:
     sys.exit('a whole film round and the record round take no --stop')
 if a.cmd == 'start' and not film and not a.stop:
     sys.exit('a stop round takes --stop; a whole film round takes --whole, the record round --record, a polish round --polish')
+if a.cmd == 'start' and not film and (a.build_only or a.checks):
+    sys.exit('--build-only and --checks are for polish rounds and the record round')
 if a.cmd == 'touched' and not film:
     sys.exit('touched is a step of a polish round')
 STEPS[a.cmd][1 if film else 0](a)
