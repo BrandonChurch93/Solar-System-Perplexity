@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-22T15:19:43.164Z",
- "head": "c4857a50613728f3de869f3df83f653149263b43",
- "note": "Cut 34 tree on main ca78dda5: finals, drafts against main, sky margin retouch; full measure running",
+ "pushed": "2026-11-22T15:39:04.727Z",
+ "head": "c8ecfe0a5e5a5cb82042a3035180ece13ea22314",
+ "note": "Cut 34 tree on main ca78dda5: full measure running; Io's shadow tip measured against the hero",
  "looks": [
+  {
+   "time": "2026-11-22T15:39:03.645Z",
+   "file": "20261122153903645-note-v2997_kept.jpg",
+   "source": "out/work/view/c34/sh/v2997_kept.jpg",
+   "kind": "note",
+   "label": "2997, shadow of Io at the terminator at 3x (below at 3 times the exposure), cut 34 draft: the far end stays a hard oval on the dark limb (R3 round 33). Tree holds main ca78dda5",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T15:39:02.773Z",
+   "file": "20261122153902773-note-v2895_kept.jpg",
+   "source": "out/work/view/c34/sh/v2895_kept.jpg",
+   "kind": "note",
+   "label": "2895, shadow of Io at 3x (below at 3 times the exposure): approved hero, cut 34 draft. The far tip is twice as hard as the hero's (10 to 90 percent in 9.5 px against 20.2 px). Tree holds main ca78dda5",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-22T15:34:02.650Z",
+   "file": "20261122153402650-job-frame-03208.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "jupiter.terrain frame 3208, draft tier, texels view, from the running measure job",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3208,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T15:19:41.956Z",
    "file": "20261122151941956-note-shadow2895_hero_film.jpg",
@@ -59,42 +89,6 @@
    "kind": "note",
    "label": "2997 final, cut 34 tree against main: where pixels differ (limb arcs and the two discs). Tree holds main ca78dda5",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:19:34.902Z",
-   "file": "20261122151934902-note-r2997_blobs6.jpg",
-   "source": "out/work/view/c34/r2997_blobs6.jpg",
-   "kind": "note",
-   "label": "2997 final at 6x, right margin of the hold sky: main (left) with the two black discs, cut 34 tree (right) without. Tree holds main ca78dda5",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-22T15:13:56.767Z",
-   "file": "20261122151356767-job-frame-02820.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2820, draft tier, texels view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:05:55.491Z",
-   "file": "20261122150555491-still-f02997-16x9-final-full.jpg",
-   "source": "out/work/stills/f02997-16x9-final-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T15:03:45.304Z",
