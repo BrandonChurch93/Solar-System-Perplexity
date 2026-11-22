@@ -132,3 +132,96 @@ Order: `agent/ending` 41e144e (holds main 7717f95) is the ending agent's deliver
 - `DONE` sent 07:30 (head 6f9cf31) with the native crop of 5105 and a review still of 5350; the other twenty pictures went with the two `PART` messages of 07:25 and 07:26.
 - MAIL 95 (07:32): DONE accepted, `agent/neptune-ending` 6f9cf31 goes into engine batch 20. The warm white dots are the old travel dust drawn over the body; the dust agent's new dust is held out behind bodies (0 changed pixels inside the dark disc at 5085 in its proof) and goes with the same batch. The Builder checks 5080, 5085 and 5105 on the merged tree. Nothing more is asked of this branch; if it is opened again, start from the weak points above and prove on the tree the Builder names.
 - The scratch branch `scratch/neptune-ending-proof` (7c1dfff) is local only and can be deleted; its pictures are in `out/work/end/n/` and `out/work/end/send/`, and in looks.
+
+## MAIL 112 (09:16 UTC Nov 22), word for word
+
+"MAIL 112 from the Builder, 09:16 UTC Nov 22. Whole film round 31 (second of three) ran on main 07aabf5e. The surface critic scored the ending's two judged frames, 5085 (retreat) and 5235 (lookback), 6 of 10 with four majors; three of them are on your globe and rings as the ending shows them. Round 32 is the last whole film round; its batch is cut at about 10:30 UTC. Branch: agent/neptune-ending from origin/main, holding only this. Your polish branch (the border cure) goes on as it is for Phase 6; this comes first until 10:25.
+
+The critic's words (1400 px wide copies):
+Frame 5085:
+- major: "the rings read as soft smeared brush strokes, like motion blur, with no sharp ringlet edges or gaps at native size; where the near arc crosses the night side it turns into a hazy ghost streak" (the near arc over the lower right of the disc and the far arc upper right). Fix named: "render the rings from a high-resolution radial profile with crisp ringlet boundaries and gaps, and give the arc in front of the disc proper opacity and lighting instead of a blurred overlay".
+- major: "the day side is a smooth airbrushed blue with only a few faint cloud wisps, and the terminator is an even, mechanical band across the disc; the surface looks plastic" (lit upper part of the globe). Fix named: "add banded cloud structure at several scales and storm features, and break up the terminator with altitude and haze variation".
+Frame 5235:
+- major: "the disc is a flat, featureless black cutout behind a thin blue rim; it has no night-side texture, ringshine or limb darkening, so it looks like a flat mask". Fix named: "add faint ringshine and starlight shading, gradual limb darkening and a softer inner edge to the rim light".
+- minor: "the ring strands crossing the unlit disc are as bright as the parts outside it, and the planet casts no shadow on them, so the ring looks pasted on top". Fix named: "apply the planet's shadow to the ring and dim the segment that crosses the night side".
+- minor: "the bright star is a soft round blob with no diffraction or point core" (the Sun, near the centre). Fix named: "render it as a sharp point source with a tight bloom".
+The whole film critic (minor): the Milky Way "competes with the crescent at the end".
+
+What I see at native size. 5085 is taken while the camera turns (the retreat is a fast kind), so the rings are motion blurred while the stars stay points; that mismatch is what reads as brush strokes. 5235: the night side is pure black inside a hard rim, the rings pass in front of the dark disc at full brightness.
+
+What I want:
+1. Rings in the ending: the planet's shadow falls on them (the stretch that crosses or lies behind the night side goes dark as it would), ringlets with sharp edges and gaps at native size at 5235, and at 5085 a ring that reads as ring. Tell me in one line why the near arc at 5085 is a haze: shutter blur alone, or a soft texture as well. If it is the shutter, say how many pixels the ring moves across the shutter at 5085; I will take the turn rate up with ending_builder.
+2. The night side at 5235: not a cutout. Faint detail a viewer finds at 1:1: a soft glow of scattered light inside the rim that falls off over a few percent of the radius, a trace of ringshine, limb darkening of the lit sliver. Blacks stay deep; the kit's line is "Blacks are deep but not crushed. Detail survives in the shadows of every lit body."
+3. The day side at 5085: your hold's cloud bands and storms carry to this side at this light, with a terminator broken by haze and height, not an even band.
+4. The Sun in the lookback, if it is drawn by your set: a point core with a tight glare and a small glint. If it is not yours, tell me whose.
+Your stop's judged frames (hold, dive, terrain, rise) keep their bytes at final; say which you rendered to prove it. Do not change the camera or the timing of the ending; ending_builder owns them and has its own mail.
+
+Proof (one render process at a time on your VM): finals of 5085 and 5235 before and after with native crops of the near arc on the disc, the far arc, the day side, the rim, the night side and the Sun; a draft strip of 5025 to 5324 every 25th frame. PART with the ring shadow and the night side at 5235 by 09:55 UTC; DONE by 10:25 UTC. What is not proved by then goes to the Phase 6 polish rounds."
+
+### Start (09:12 VM clock, about 4 minutes behind the Builder's)
+
+- Branch fast forwarded to main 616695b. Before pictures on that tree: `out/work/end/m112/before/final-5235.png` (16 samples, 45 s), `final-5085.png` (64 samples, 115 s), `draft-5085.png`, `draft-5235.png`.
+
+### What the before finals show (native crops)
+
+- 5235: night disc (inside 0.97 radii, left of the crescent) mean RGB 1.6, 3.6, 8.2; blue 5 to 7 over the middle, 20 just inside the top limb (the air). The night deck is the wrap map blurred to 12 texels times a constant, so the disc is one flat tone. The crescent's inner edge steps from 4, 14, 33 to 25, 60, 107 in 6 px. The near arc crosses the night side at 7 percent of its light inside the planet's shadow (my `shade` of the last round), the edge 0.9 to 1.12 radii wide: a streak that fades and never stops.
+- 5085: draft (1 sample) against final (64 samples): the ring is softer in the final. Both causes are there: the shutter and a soft texture.
+- Shutter at 5085 (`check/ending/shutter.ts`, new: projects ring points at shutter open and close, `config.shutterFraction` 0.5 of a frame): ring points in frame move 0.6 to 12.2 px; the near arc over the lower right of the disc (ring azimuth 270 to 330) moves 6.6 to 12.2 px, nearly along x, across ringlets whose gaps are 4 to 14 px wide there; the far arc at the upper right 2.6 to 5.0 px; the globe's centre 3.5 px. The harness counts 8.4 px for the frame (`npm run samples`). At 5235 nothing moves more than 0.3 px.
+- The soft texture: the ending read the band map with gains R 0.24, G 0.05, B 1 times `bandUnit`. The B channel holds four ringlets with three empty gaps (rows 104 to 180, 208 to 232, 248 to 344, 400 to 455 of 512); the R channel is a smooth sheet across all of them and filled the gaps. And the mip level was chosen from the azimuth gradient (7.9 texels per pixel at the ansa of 5235) where the radial one is 3.9, so the ringlets were read one level too soft.
+- The Sun of the lookback is not drawn by this set. It is the engine's sky pass, `src/space/sky.ts` lines 226 to 241 (disc, core and corona, scaled by `uSunGlare`), fed by the director: `LOOKBACK.glare` and `sunFor` in `src/director/film.ts`, the ending's path. Any glint is the lens chain's, `uFlare` in `src/post/chain.ts`.
+
+### The change (takes 1 to 5 at draft, `out/work/end/m112/tN/`)
+
+- Ring (`ring.ts`, `ending.ring`): the planet's shadow in the ending is the true one again, edge 0.975 to 1.04 radii from the shadow's axis and no light added back (`shade` [0.975, 1.04, 0], was [0.9, 1.12, 0.064]); band gains [0.1, 0.05, 1.3] (was [0.24, 0.05, 1]) so the gaps of the B channel are empty; new uniform `uEndCrisp` [0.25, 0.8] scales the azimuth and the radial gradient of the band read in the ending, so the mip level follows the radial footprint.
+- Planet (`planet.ts`, `ending.limb`), all inside one loop that runs only when `uEnd.x > 0`, or scaled by `uEnd.x`:
+  - Night side: the 12 texel flat tone is multiplied by the ratio of the map read 256 texels wide to the map read 12 texels wide (`nightMid`, `nightDetail` 1), so bands and the dark storm show at low contrast; ringshine `shine` [base, gain, from, to] on the cosine between the surface normal and the ring's normal on its lit side (passed from `set.ts` as `ringLit`), times `mu ^ nightLimb` (limb darkening of the night side, 0.35). The blur zone of the night side moves from the stop's edges (minus 0.1 to 0.25) to `nightEdge` minus 0.2 to 0, so the day side keeps its detail to the terminator.
+  - Dusk: `dusk` (0.004, 0.014, 0.05) times `exp(ndl / duskWidth)` past the terminator, `duskWidth` 0.07 (at 5235 an e fold of about 3 percent of the radius), fading out over the first 0.3 of the day side.
+  - Terminator: the light curve, the dusk and the gate of the forward term read `ndd = ndl + breakUp * (rel - 1 + breakCloud * cloud)` with `rel` the same band ratio and `cloud` the cloud alpha of the 256 texel read: bright bands and high cloud hold the light longer, dark bands lose it sooner (`breakUp` 0.09, `breakCloud` 1.2).
+  - Day side: the forward term and the dusk are multiplied by the deck's own detail (deck texel over the 12 texel read, `detail` 0.8); the deck's albedo by that ratio to the power `deckBoost` 1.2; cloud alpha times `cloudGain` 1.6; clouds reach their full ratio at 0.25 of the light (`cloudTo`, was 0.4).
+  - Lit sliver: `limbDark` [0.35, 0.25]: the surface loses up to 35 percent over the last cosine 0.25 toward the limb (2 percent of the radius), the air over it is not dimmed.
+- Take 1 (09:22): shine [0.7, 1.6, -0.25, 0.55]: 5085 night side 51 to 57 blue in the ring lit zone (22 to 34 before). Take 2: [0.55, 1, -0.6, 0.5], limb power 0.5: 5235 darker than before (13 blue at the top). Take 3: [0.7, 2, -0.8, 0.4], limb power 0.35: 5235 17 to 29 blue in the upper half, 5085 59 to 64. Take 4: [0.6, 1.4], detail 1: 5235 final night disc mean 1.8, 4.5, 10.7 (before 1.6, 3.6, 8.2), still close to a flat tone below the ring line. Take 5 (09:30): [0.9, 1.8, -0.8, 0] and the day side terms (`deckBoost`, `cloudGain`).
+
+### PART (09:36 VM clock), head f1df579
+
+- Finals on f1df579 against main 616695b (`out/work/end/m112/after/` and `before/`), pairs in `out/work/end/m112/send/` and in looks.
+- 5235, ring at radius 1.65 against the night disc beside it (`check/ending/arc.ts FRAME` prints for every 5 degrees of ring azimuth the pixel of three radii, the distance from the shadow's axis, whether the point is in front of the disc or hidden; `out/work/end/m112/arcmeasure.py` reads the finals there): inside the shadow (azimuth 255 to 275, 0.42 to 0.91 radii from the axis) before 2, 5, 12 on a night of 1, 2.5, 6.5; after 2, 6, 17 on 2, 6, 17, the ring is gone. Outside the shadow (azimuth 280 to 300, 1.03 to 1.4 radii) the near arc is sunlit and stays: 42, 74, 105 on the disc. The Sun is 32 degrees off the line of sight, so the shadow covers only the left part of the arc that crosses the disc.
+- 5235 far loop, column x 600: gaps 46 to 76 blue between ringlets of 103 to 128 (before 61 to 90).
+- 5235 night disc (inside 0.97 radii, left of the crescent): mean 2.5, 6.8, 16.6, blue p5, p50, p95 3, 15, 42 (before 1.6, 3.6, 8.2 and 3, 6, 21). Column x 200 from the top limb down every 40 px: 28, 30, 24, 19, 17, 15, 12, 9, 6, 5, 3 blue (before 22, 10, 7, 10, 6, 5, 5, 4, 4, 4, 5). Row y 643 through the inner edge of the crescent every 6 px: 23, 24, 28, 30, 29, 33, 34, 37, 44, 56, 87, 188, 217 (before 17, 18, 22, 21, 20, 23, 24, 26, 26, 30, 65, 178, 219).
+- 5235 Sun crop (x 1196 to 1356, y 294 to 454): 0 pixels differ. Right of x 760: 25 pixels differ by 1 level.
+- 5085: day side high pass (sigma 12 px, x 330 to 720, y 455 to 560) 12.1 to 15.1; night side column x 524 every 40 px from y 440: 244, 197, 191, 97, 58, 62, 61, 18 (the storm), 58, 39, 19, 17, 19, 13 blue (before 240, 206, 159, 47, 34, 28, 22, 19, 14, 9, 8, 7, 6, 6).
+
+### MAIL 125 (09:38 VM clock), word for word
+
+"MAIL 125 from the Builder. PART read and the six pairs looked at. Accepted in direction: at 5235 the night disc now has depth (bands, the storm, the fall to black at the far limb) and the ring ends cleanly at the shadow edge; the ringlets hold their gaps. One change, your one number: at 5085 the night side in the ring lit zone is too light at 58 to 62 blue, the terminator stops reading as the edge of the light. Bring it to about 40 to 45 there (the storm and the lower limb fall with it), and leave 5235 as it is if that is a separate number; if it is the same number, tell me what 5235's night becomes and keep its p50 at 12 or more. Then DONE by 10:25 with the byte proofs as you list them; batch 21 is cut at about 10:30. The Sun of the lookback is noted as the engine's; nothing for you there."
+
+- It is one number for both frames (`shine`). A plain cut that brings 5085 to 43 would take 5235's p50 from 15 to about 10 (the levels follow `air + deck * factor`: 5085 about 12 + 19 * factor, 5235 about 6.5 * factor). So a second number: the ringshine is scaled by the phase angle, `shineNear` (0.46) at `shinePhase[0]` (100 degrees) and below, 1 at `shinePhase[1]` (146 degrees, the lookback starts at 146.6) and above; at 5085 (117.9 degrees) the scale is 0.64. At the start of the retreat (phase 90) the night side then stands near the stop's own level and comes up as the camera goes behind the globe and the crescent thins, as an exposure set for the crescent would do. Uniform values only, no shader text changes.
+
+### MAIL 125 result (09:50 VM clock), head 33a5902
+
+- Code: `planet.ending(...)` takes one more number, `shine`, that scales `e.shine[0]` and `e.shine[1]`; `set.ts` passes `shineNear + (1 - shineNear) * smooth((phase - shinePhase[0]) / (shinePhase[1] - shinePhase[0]))` with the phase angle `camera.angleTo(light)` in degrees, the same light the globe is lit with. `ending.limb.shineNear` 0.46, `shinePhase` [100, 146]. Uniform values only: the shader text is the one of f1df579.
+- Take 1 at draft (`t6`), `shineNear` 0.4: ring lit zone of 5085 (column x 524, y 600 to 680 every 20 px, 5 px means) 43, 41, 42, 38, 40 blue. Take 2 (`t7`), 0.46: 45, 43, 44, 40, 42. Kept.
+- Final 5085 on 33a5902 (`out/work/end/m112/after/final-5085.png`, 64 samples, 121 s): ring lit zone 45, 43, 44, 40, 42 blue (f1df579: 58, 60, 62, 58, 61; main 616695b: 34, 31, 28, 25, 22). Column x 524 every 40 px from y 440: 244, 197, 191, 97, 45, 44, 42, 11 (the storm), 40, 26, 11, 10, 11, 8 (f1df579: 244, 197, 191, 97, 58, 62, 61, 18, 58, 39, 19, 17, 19, 13). The lit side and the terminator did not move (the first four values).
+- Final 5235 on 33a5902: the same file bytes as on f1df579 (`cmp` with `after2/final-5235.png`); the draft hash c5a7dbcf679ef286 is the one of take 5. Night disc mean 2.5, 6.8, 16.7, blue p5, p50, p95 3, 15, 43. The phase angle of the whole lookback is 146.6 to 149.3 degrees, above `shinePhase[1]`, so every frame of it keeps the full ringshine.
+- Along the retreat (draft strip, blue inside 0.9 radii, p25 and p50): 5025 20 and 33, 5050 21 and 46, 5075 16 and 29, 5100 15 and 25, 5125 10 and 16, lookback 9 and 16 in every frame. The night level falls evenly into the lookback.
+
+### Byte proofs of the stop's judged frames (final tier, `tools/repeat.ts --tier final`, one fresh session each)
+
+- On f1df579 (`out/work/end/m112/proof/after/`): 4605 05c9e32de21a31a7, 4707 77af894ee89b5bef, 4860 49ef846b1a668b9a, 5006 1f55d6c8009da13f (397 s).
+- On the same tree with `src/stops/neptune` of main 616695b checked out (`proof/before/`): the same four hashes (391 s), and `cmp` finds the same file bytes for all four.
+- On 33a5902, the final code (`proof/head/`): the same four hashes (393 s), and `cmp` finds the same file bytes as with main's stop source for all four.
+- Draft hashes of the 13 judged frames on 33a5902 (`proof/draft-head/`) and on the same tree with main's stop source (`proof/draft-main/`), 130 s each: 13 of 13 the same. 2325 fd128b1a999f76fa, 2427 5636a9764d87cc2e, 2580 7322ef9576f06ffb, 615 87bc2833573448d9, 1440 042b228fca024f70, 2010 0f2303a6ad7dc69c, 3150 e72d79cc2e062b27, 3720 9f5eaf40e03e8edc, 4290 dd5c7580afadd5b7, 4860 1ccc4a12760db30a, 4605 0b621fa06e44c52c, 4707 163d0630bb6f65e8, 5006 f2a7f92df7f36487.
+
+### DONE (10:07 VM clock)
+
+- Strip: `out/work/end/m112/strip/` (13 drafts on 33a5902, 58 s), sheet `send/strip-5025-5324-draft.jpg`.
+- Pairs (finals, main 616695b left or top, 33a5902 right or bottom, native crops): `send/5235-near-arc-night-side`, `5235-far-arc-rim`, `5235-sun`, `5085-near-arc-on-disc`, `5085-far-arc`, `5085-day-side`, `5085-night-side`.
+- Checks on 33a5902: `npx tsc --noEmit -p .` clean, `npx vitest run` 79 of 79, `npm run build` passes, `python3 tools/shaderaudit.py` prints the same 32 lines as on main 616695b's source.
+- Merge test with the polish branch (`git merge-tree --write-tree HEAD origin/agent/neptune`, d7eb660): conflicts in `src/stops/neptune/planet.ts` and `set.ts`. Both are lines that stand side by side (`const ringLit` beside the polish branch's `edgeSun` lines in `set.ts`; the ending's loop beside the polish branch's edge code in the planet shader). Both sides are kept. It is resolved when main is merged into `agent/neptune` for Phase 6, and the four judged frames are proved again there.
+- Main moved by 16 commits since 616695b (kit, status stills, scorecards only); it is merged into the branch after the proofs, and `git diff 33a5902 HEAD -- src public config tools` is empty.
+
+### Open, for the Phase 6 polish rounds
+
+- The ring is additive and has no opacity: stars and the crescent show through it. It casts no shadow on the globe.
+- The near arc in front of the night disc at 5235 from azimuth 280 on is in sunlight (1.03 radii and more from the shadow's axis) and stays lit; only the left part of the crossing is in the planet's shadow.
+- What is left of the soft ring at 5085 is the shutter: 6.6 to 12.2 px over the near arc. That is the camera's turn rate, not this set.
+- The Sun of the lookback is the engine's sky pass.

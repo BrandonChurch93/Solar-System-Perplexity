@@ -59,8 +59,9 @@ uniform vec4 uEven;
 uniform vec4 uEvenTint;
 uniform vec2 uGlowReach;
 uniform vec2 uSite;
-uniform vec4 uBox, uLand;
-uniform float uGlowBeat, uLandOn;
+uniform vec4 uBox, uLand, uKick;
+uniform float uGlowBeat, uLandOn, uKickOn;
+uniform vec3 uLandVeil;
 uniform vec2 uSize;
 uniform float uGrad;
 uniform float uGain;
@@ -220,7 +221,11 @@ void main() {
     gb = mix(gb, far, limb);
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
-  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + uLandOn * exp(-dot((gb - uLand.xy) * uLand.zw, (gb - uLand.xy) * uLand.zw))));
+  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
+    float landed = uLandOn * exp(-dot(vStage - uLand.xyz, vStage - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(vStage - uKick.xyz, vStage - uKick.xyz) * uKick.w);
+    col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + landed));
+    col += uLandVeil * landed;
+  }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float shown = 1.0;
@@ -259,7 +264,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: frag(seethe !== undefined),
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uLandVeil: { value: new THREE.Vector3() }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
@@ -322,15 +327,21 @@ export class Ground {
     this.mesh.visible = !mixed || weight > 0 || site > 0
   }
 
-  land(reach: [number, number]): void {
-    const box = stage.loopsBox
-    const foot = (stage.feet as [number, number][])[1]!
-    ;(this.material.uniforms.uLand!.value as THREE.Vector4).set((foot[0] - box[0]) / (box[2] - box[0]), 1 - (foot[1] - box[1]) / (box[3] - box[1]), (box[2] - box[0]) / reach[0], (box[3] - box[1]) / reach[1])
+  land(reach: number, veil: [number, number, number]): void {
+    ;(this.material.uniforms.uLandVeil!.value as THREE.Vector3).fromArray(veil)
+    const feet = stage.feet as [number, number][]
+    const at = (foot: [number, number], into: THREE.Vector4): void => {
+      const p = stage.onGround(foot[0], foot[1])
+      into.set(p.x, p.y, p.z, 1 / (reach * reach))
+    }
+    at(feet[1]!, this.material.uniforms.uLand!.value as THREE.Vector4)
+    at(feet[0]!, this.material.uniforms.uKick!.value as THREE.Vector4)
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0): void {
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0, kick = 0): void {
     const u = this.material.uniforms
     u.uLandOn!.value = land
+    u.uKickOn!.value = kick
     if (this.seethe) {
       const v = u.uSeethe!.value as THREE.Vector4
       v.x = this.seethe.amount * open
