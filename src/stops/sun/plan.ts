@@ -36,7 +36,9 @@ export const climb = {
   ease: { over: 1.3, speed: 0.095 },
 }
 
-export const opening = { on: true, level: 0.9, until: 2 }
+const hook = config.raw.film.hookSeconds
+
+export const opening = { on: true, level: 0.9, until: 2, push: { from: 0.02 * hook, up: 0.3 * hook, keep: hook, down: 1.5 * hook, glide: 0.45, hold: 2.1 * hook, back: 2.5 * hook } }
 
 interface Reading { out: THREE.Vector3; height: number; level: THREE.Vector3; limb: number; vfov: number; rest: THREE.Quaternion }
 
@@ -133,9 +135,13 @@ export class SunPlan extends StopPlan {
     return { position, quaternion, vfov }
   }
 
+  private cruise(t: number): number {
+    return t - climb.ease.over / 2
+  }
+
   private run(t: number): number {
     const k = climb.ease
-    if (opening.on && t < opening.until) return this.push(t)
+    if (opening.on && t < opening.push.back) return this.push(t)
     if (t <= 0) return 0
     if (t >= k.over) return t - k.over / 2
     const x = t / k.over
@@ -147,15 +153,27 @@ export class SunPlan extends StopPlan {
     const lead = config.shutterFraction / (2 * config.fps)
     const tail = (o.until - o.level) / 2
     const speed = (o.until - climb.ease.over / 2 - tail) / (o.until - lead - tail)
-    const x = Math.min(Math.max((t - o.level) / (o.until - o.level), 0), 1)
-    return speed * (t - lead) + (1 - speed) * 2 * tail * x * x * x * (1 - x / 2)
+    const p = o.push
+    if (t <= p.from) return speed * (t - lead)
+    const g = p.glide
+    const fast = (this.cruise(p.back) - speed * (p.from - lead) - (speed / 2) * (p.up - p.from) - (g / 2) * (p.down - p.keep) - g * (p.hold - p.down) - ((g + 1) / 2) * (p.back - p.hold)) / ((p.up - p.from) / 2 + (p.keep - p.up) + (p.down - p.keep) / 2)
+    const times = [p.from, p.up, p.keep, p.down, p.hold, p.back]
+    const speeds = [speed, fast, fast, g, g, 1]
+    let at = speed * (p.from - lead)
+    for (let i = 0; i < 5; i++) {
+      const span = times[i + 1]! - times[i]!
+      const y = Math.min((t - times[i]!) / Math.max(span, 1e-9), 1)
+      at += span * (speeds[i]! * y + (speeds[i + 1]! - speeds[i]!) * y * y * y * (1 - y / 2))
+      if (t <= times[i + 1]!) break
+    }
+    return at
   }
 
   override terrain(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const pivot = config.shutterFraction / (2 * config.fps * dur)
     const g = this.p.terrain.gather ?? 0
-    const u = climb.ease.speed * (this.run(tRel) - this.run(dur * (0.5 + pivot)))
+    const u = climb.ease.speed * (this.run(tRel) - this.cruise(dur * (0.5 + pivot)))
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
     return super.terrain((lin + 0.5) * dur)

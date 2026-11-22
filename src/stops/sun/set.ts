@@ -46,6 +46,7 @@ export const createSet: SetFactory = async (ctx) => {
   const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
   const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
   if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil)
+  if (opening.on) ground.flash(look.opening.erupt.flash.span)
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
@@ -122,7 +123,8 @@ export const createSet: SetFactory = async (ctx) => {
         const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
-        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2])
+        const erupt = loops.erupt(since, open)
+        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - share(x, d.fringe))
         const strands = 1 - share(x, d.loops)
         loops.mesh.visible = strands > 0
