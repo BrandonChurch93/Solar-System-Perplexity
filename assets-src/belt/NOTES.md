@@ -365,3 +365,7 @@ Saved verbatim in `assets-src/belt/TASK5.md` (after a compaction read BRIEF.md, 
 - The night side is hardly in the picture any more, so the task 4 work on it is judged on little.
 - 5.5 px of blur on the hero is under the 6 px line but not zero; at native size its craters are a touch soft along the heading.
 - Asset b is used only for the streak. The clean limb needs a multisampled half float target, tried only on this renderer. Motes in front of rocks draw on them. The web set was not rendered. Belt test outside `tests/`.
+
+## Task 6, Nov 22 from 01:05 UTC
+
+Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, TASK6.md, then this). The hero passes through the frame whole: whole at 2782, 80 px clear, a third in from a side, 220 to 320 px across, 14 to 24 px per frame, tumble visible 2772 to 2792; streaks kept; no rock within 150 px of Jupiter 2780 to 2799; 2745 to 2757 and 2803 to 2819 empty; find the review cost. DONE or PART at 02:10 UTC.
