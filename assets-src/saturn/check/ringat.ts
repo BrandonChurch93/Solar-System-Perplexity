@@ -23,6 +23,13 @@ const enter = (o: THREE.Vector3, d: THREE.Vector3): number => {
 const W = layoutJson.width, H = layoutJson.height
 const lay = new Float32Array(readFileSync('public/assets/saturn/full/layout.bin').buffer.slice(0))
 const tone = new Float32Array(readFileSync('public/assets/saturn/full/layout-tone.bin').buffer.slice(0))
+const even = new Float32Array(readFileSync('public/assets/saturn/full/layout-even.bin').buffer.slice(0))
+const tex1 = (data: Float32Array, u: number, v: number): number => {
+  const fx = Math.min(Math.max(u * W - 0.5, 0), W - 1), fy = Math.min(Math.max(v * H - 0.5, 0), H - 1)
+  const x0 = Math.floor(fx), y0 = Math.floor(fy), x1 = Math.min(x0 + 1, W - 1), y1 = Math.min(y0 + 1, H - 1)
+  const wx = fx - x0, wy = fy - y0
+  return (data[y0 * W + x0]! * (1 - wx) + data[y0 * W + x1]! * wx) * (1 - wy) + (data[y1 * W + x0]! * (1 - wx) + data[y1 * W + x1]! * wx) * wy
+}
 const cam = new THREE.PerspectiveCamera(layoutJson.vfovDeg, W / H, 0.01, 100)
 cam.position.copy(plan.skimPosition).addScaledVector(plan.skimForward, -layoutJson.back)
 cam.quaternion.copy(plan.skimQuaternion)
@@ -64,5 +71,5 @@ for (const s of process.argv.slice(3)) {
   const uu = foot.dot(P)
   const ct = ut / (foot.length() * Math.sqrt(rr))
   const chord = root > 0 && uu < ut && Math.abs(ct) < 1 ? Math.sqrt(rr) * 2 * Math.sin((Math.acos(Math.max(-1, Math.min(1, uu / (foot.length() * Math.sqrt(rr))))) - Math.acos(ct)) / 2) : 0
-  console.log(s, 'chord', chord.toFixed(3), 'r', P.length().toFixed(4), 'film', film, 'skim', sk, 'uv', u.toFixed(3), v.toFixed(3), 'dr', L[0]!.toFixed(4), 'gain', L[1]!.toFixed(3), 'k', L[2]!.toFixed(2), 'sd', L[3]!.toFixed(0), 'tone', T.slice(0, 3).map((q) => q.toFixed(2)).join(' '))
+  console.log(s, 'chord', chord.toFixed(3), 'r', P.length().toFixed(4), 'film', film, 'skim', sk, 'uv', u.toFixed(3), v.toFixed(3), 'dr', L[0]!.toFixed(4), 'gain', L[1]!.toFixed(3), 'even', (inside ? tex1(even, u, v) : NaN).toFixed(3), 'k', L[2]!.toFixed(2), 'sd', L[3]!.toFixed(0), 'tone', T.slice(0, 3).map((q) => q.toFixed(2)).join(' '))
 }
