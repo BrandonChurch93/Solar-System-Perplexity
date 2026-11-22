@@ -1,9 +1,25 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T15:26:48.518Z",
- "head": "53e5942a9948435caf777050f2eadb82d034ea96",
- "note": "CUT34: the arrival swing commit proved against main (4436, 4492 finals, travel sheet, drafts old and new); judged finals rendering",
+ "pushed": "2026-11-22T15:50:14.533Z",
+ "head": "a9de1f45977fc288b302c02ebb5c9fd70deee249",
+ "note": "CUT34: the arrival swing proved old against new (finals 4436 and 4492, travel review sheets, drafts); rise review frames rendering",
  "looks": [
+  {
+   "time": "2026-11-22T15:50:13.871Z",
+   "file": "20261122155013871-note-uranus-travel-sheet-review-swing-0.jpg",
+   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-swing-0.jpg",
+   "kind": "note",
+   "label": "uranus.travel review sheet with arrive.swingDeg 0 (88e925c): one slide of the band, Triton in frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T15:50:13.303Z",
+   "file": "20261122155013303-note-uranus-travel-sheet-review-old.jpg",
+   "source": "out/work/nep/end34/swing/send/uranus-travel-sheet-review-old.jpg",
+   "kind": "note",
+   "label": "uranus.travel review sheet on main 652da5b (old, swing -34): the band turns through level at 4489 and 4495, Triton cut by the corner at 4509",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T15:26:47.403Z",
    "file": "20261122152647403-note-swing-0-drafts-4405-4529-every-2-raised-4-part-2.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/end34/swing/send/4436-final-old-left-swing-0-right.jpg",
    "kind": "note",
    "label": "uranus.rise 4436 final: main left, Neptune arrival swing 0 right",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:00:43.701Z",
-   "file": "20261122150043701-note-r1-points-hero-left-head-right-x4.jpg",
-   "source": "out/work/nep/end34/crit/r1-points-hero-left-head-right-x4.png",
-   "kind": "note",
-   "label": "hold 4605, the lost points: hero left, head right, times 4",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T15:00:42.692Z",
-   "file": "20261122150042692-note-view-new-4492.jpg",
-   "source": "out/work/nep/end34/swing/view-new-4492.jpg",
-   "kind": "note",
-   "label": "uranus.travel 4492 final with the Neptune arrival swing at 0 (commit 88e925c)",
    "stop": "neptune"
   }
  ]
