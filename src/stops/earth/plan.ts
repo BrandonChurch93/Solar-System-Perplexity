@@ -41,7 +41,7 @@ export const timing: Tune = {
   dive: { ease: 12, cruise: 0.6, swell: [16, 30, 0.12], cap: [7.3, 8], until: 47.5 },
   rise: { lead: 2.5, peak: 30, tail: [0.4, 4], turn: [0.75, 1.3, 1.5] },
   entry: { free: [26, 14], hide: [5.5, 4], drop: [0.111, -1.33, 0.75], bend: 0.0556, lean: 0.4 },
-  leave: { from: 6.5, ramp: 3, rate: 0.085, gain: 0.17, soft: 1 },
+  leave: { from: 9.5, ramp: 9, rate: 0.085, gain: 0.17, soft: 1 },
 }
 
 const STEPS = 16
