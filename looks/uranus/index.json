@@ -1,28 +1,36 @@
 {
  "folder": "uranus",
- "pushed": "2026-11-22T16:33:47.054Z",
- "head": "3c9c0503a91134aea21095f8b0220bea6de2a42a",
- "note": "CUT35 candidates at draft: arcs fade at the dive join, ring cut against the sky; tree 058ffde1 holds main 94482a8c, finals follow",
+ "pushed": "2026-11-22T16:48:57.072Z",
+ "head": "042116be663c6643ed16af9435e00a945da0a59a",
+ "note": "CUT35 in work: 4436 final pairs (ring cut against the sky), cover band drafts; tree 85e44dac holds main 9957a0b7",
  "looks": [
   {
-   "time": "2026-11-22T16:33:40.458Z",
-   "file": "20261122163340458-note-rc-4436-pair2.jpg",
-   "source": "out/work/u/r11/rc-4436-pair2.png",
+   "time": "2026-11-22T16:48:53.186Z",
+   "file": "20261122164853186-note-h14-dive2.jpg",
+   "source": "out/work/u/r12/h14-dive2.png",
    "kind": "note",
-   "label": "4436 lower rings over the band at twice native, draft: cut on the sky (left) and cut only over the globe (right); dev tree = CUT34 stop code, main 732a67d3 plus swing 0",
+   "label": "dive join 4173 4175 4177 and 4158 at draft: band line 0.07 (top, as on main) and 0.14 (bottom); dev tree = CUT34 stop code, main 732a67d3 plus swing 0",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T16:33:39.449Z",
-   "file": "20261122163339449-note-aj2-sheet.jpg",
-   "source": "out/work/u/r11/aj2-sheet.png",
+   "time": "2026-11-22T16:48:52.223Z",
+   "file": "20261122164852223-note-p4436-low.jpg",
+   "source": "out/work/u/r12/p4436-low.png",
    "kind": "note",
-   "label": "dive join 4175 4179 4183 at draft, arcs 12 to 30 (top, as on main 94482a8c) and -6 to 38 (bottom); dev tree = CUT34 stop code, main 732a67d3 plus swing 0",
+   "label": "4436 final, lower rings over the star field at native: main 94482a8c (left) and ring cut only over the globe, 7a677e35 on main 9957a0b7 (right)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-22T16:32:26.289Z",
-   "file": "20261122163226289-still-f04492-16x9-final-full.jpg",
+   "time": "2026-11-22T16:48:51.217Z",
+   "file": "20261122164851217-note-p4436-up.jpg",
+   "source": "out/work/u/r12/p4436-up.png",
+   "kind": "note",
+   "label": "4436 final, upper rings over the band at native: main 94482a8c (left) and ring cut only over the globe, 7a677e35 on main 9957a0b7 (right)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-22T16:44:12.905Z",
+   "file": "20261122164412905-still-f04492-16x9-final-full.jpg",
    "source": "out/work/stills/f04492-16x9-final-full.png",
    "kind": "still",
    "label": "uranus.travel frame 4492, final tier",
@@ -35,22 +43,8 @@
    "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T16:30:06.575Z",
-   "file": "20261122163006575-still-f04436-16x9-final-full.jpg",
-   "source": "out/work/stills/f04436-16x9-final-full.png",
-   "kind": "still",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
-  },
-  {
-   "time": "2026-11-22T16:27:18.048Z",
-   "file": "20261122162718048-still-f04290-16x9-final-full.jpg",
+   "time": "2026-11-22T16:39:04.559Z",
+   "file": "20261122163904559-still-f04290-16x9-final-full.jpg",
    "source": "out/work/stills/f04290-16x9-final-full.png",
    "kind": "still",
    "label": "uranus.terrain frame 4290, final tier",
@@ -63,8 +57,8 @@
    "engine": "096721f26986d35a"
   },
   {
-   "time": "2026-11-22T16:24:39.155Z",
-   "file": "20261122162439155-still-f04035-16x9-final-full.jpg",
+   "time": "2026-11-22T16:36:22.811Z",
+   "file": "20261122163622811-still-f04035-16x9-final-full.jpg",
    "source": "out/work/stills/f04035-16x9-final-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, final tier",
