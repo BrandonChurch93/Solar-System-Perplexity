@@ -1,9 +1,31 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T16:27:06.370Z",
- "head": "64e20ee82a6a0e5e23917d2f41e59c0df81c6838",
- "note": "Mercury: the bright bars at 993 and 994 traced to the wide ground picture's sunlit wall, a trial cure in drafts",
+ "pushed": "2026-11-22T16:52:17.473Z",
+ "head": "a95b6d762a77f3e5e65bca72b6de7579330d5b4a",
+ "note": "Mercury: the bars at 993 and 994 cured in the rise (36424325), review cover sheet rendering",
  "looks": [
+  {
+   "time": "2026-11-22T16:52:16.197Z",
+   "file": "20261122165216197-note-rise-991-994-cap.jpg",
+   "source": "out/work/mercury/p6/bars/looks/rise-991-994-cap.jpg",
+   "kind": "note",
+   "label": "Rise 991 to 994 at draft, whole frames, with the cure of the bright bars: tree a95b6d76 on main 9957a0b7",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T16:51:50.508Z",
+   "file": "20261122165150508-frame-f00991-review.jpg",
+   "source": "out/work/sheets/.frames-Eno5Ow/f00991-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 991, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 991,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T16:27:05.809Z",
    "file": "20261122162705809-note-bars-cause-plate.jpg",
@@ -27,20 +49,6 @@
    "kind": "note",
    "label": "Rise 993 (top) and 994 (bottom), draft crops: left tree 64e20ee on main 6460b4a with the bright bars, right the trial cure (uncommitted): the wide ground picture's highlights held to 1.3 times their surroundings in the rise",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T16:16:55.281Z",
-   "file": "20261122161655281-frame-f990-uvB.jpg",
-   "source": "out/work/mercury/p6/bars/f990-uvB.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 990, draft tier, layers view",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "f92fd0ddfc332543"
   },
   {
    "time": "2026-11-22T16:04:42.154Z",
@@ -115,14 +123,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "g13"
-  },
-  {
-   "time": "2026-11-22T15:10:32.264Z",
-   "file": "20261122151032264-note-r1-b.jpg",
-   "source": "../../../../tmp/r1-b.jpg",
-   "kind": "note",
-   "label": "Mercury rise at draft: 990 and 1000 on d697e4c (left of each pair) against 05cc394 (new pace), then 999 and 1001 on 05cc394; main 64fff6f",
-   "stop": "mercury"
   }
  ]
 }
