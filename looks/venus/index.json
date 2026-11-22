@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T09:07:13.518Z",
- "head": "e31356d5db5eb929d58c9e5fe622cd60530218ba",
- "note": "09:08 UTC: batch 20 merged (main 8f13066): judged 1185, 1287, 1440 same bytes, 1586 changes in the sky only; repeat, cover sheets and chain running",
+ "pushed": "2026-11-22T09:36:23.180Z",
+ "head": "58e4e6fb79edc2369038843d4fd4db0ca6cc15cd",
+ "note": "09:37 UTC: batch 20 proof: rise cover sheet same bytes as on batch 19; dive cover sheet and chain running (main 8f13066)",
  "looks": [
+  {
+   "time": "2026-11-22T09:36:22.065Z",
+   "file": "20261122093622065-note-c22-rc.jpg",
+   "source": "../view/c22-rc.png",
+   "kind": "note",
+   "label": "rise cover 1555 to 1566 review tier on engine batch 20 (branch 58e4e6f plus veil take F4 uncommitted, main 8f13066): every cell the same bytes as on batch 19",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T09:07:12.461Z",
    "file": "20261122090712461-note-b20-1586-pair.jpg",
@@ -170,14 +178,6 @@
    "source": "../view/e3c-d.jpg",
    "kind": "note",
    "label": "venus dive 1317 to 1327 draft, experiment E3c not committed (tree on main 6267259): soft mist clearing in place of decals",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:38.412Z",
-   "file": "20261122064938412-note-e3c-r.jpg",
-   "source": "../view/e3c-r.jpg",
-   "kind": "note",
-   "label": "venus rise 1546 to 1556 draft, experiment E3c not committed (tree on main 6267259): the first veil read coarser, soft mist in place of decals",
    "stop": "venus"
   }
  ]
