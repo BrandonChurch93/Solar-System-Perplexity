@@ -21,7 +21,7 @@
     "relief": [0.5, 0.6, 0.45]
   },
   "rocks": [
-    {"id": "hero", "asset": "a", "frame": 2782, "at": [0.8969, 0.262], "distance": 2.0, "radius": 0.108, "hold": 1, "approach": 0, "velocity": [-0.3737, 0.5449, 0], "ease": 0, "tilt": [20, -35, 10], "axis": [0.3, 0.9, 0.2], "spin": 110, "mesh": 128, "gain": 1, "fill": 1, "flow": 0},
+    {"id": "hero", "asset": "a", "frame": 2782, "at": [0.8875, 0.2546], "distance": 2.0, "radius": 0.108, "hold": 1, "approach": 0, "velocity": [-0.3931, 0.533, 0], "ease": 0, "tilt": [20, -35, 10], "axis": [0.3, 0.9, 0.2], "spin": 110, "mesh": 128, "gain": 1, "fill": 1, "flow": 0},
     {"id": "near", "asset": "b", "frame": 2782, "at": [0.37, 0.5], "distance": 1.5, "radius": 0.0447, "hold": 1, "approach": 0, "velocity": [-3.3499, 4.3325, 0], "ease": 0, "tilt": [100, 40, 0], "axis": [0.7, 0.2, 0.6], "spin": 90, "mesh": 128, "gain": 1.5, "fill": 1, "flow": 1},
     {"id": "far1", "asset": "c", "frame": 2764, "at": [0.68, 0.6], "distance": 11, "radius": 0.17, "hold": 0, "approach": 0, "velocity": [-9.8, 6.0, 0], "ease": 0, "tilt": [140, 20, 60], "axis": [0.1, 0.5, 0.8], "spin": 40, "mesh": 48, "gain": 1, "fill": 1, "flow": 1},
     {"id": "far2", "asset": "c", "frame": 2794, "at": [0.5, 0.8], "distance": 13, "radius": 0.19, "hold": 0, "approach": 0, "velocity": [-12.5, 0, 0], "ease": 0, "tilt": [30, 200, -50], "axis": [0.5, 0.2, 0.8], "spin": 30, "mesh": 48, "gain": 1, "fill": 1, "flow": 1}
