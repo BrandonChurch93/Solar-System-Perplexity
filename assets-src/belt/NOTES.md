@@ -385,3 +385,33 @@ Saved verbatim in `assets-src/belt/TASK6.md` (after a compaction read BRIEF.md, 
   - Measured in that final at 2782: lit part of the hero x 1614 to 1837, y 193 to 378 (224 by 186); with the night side (taken from the colour, the sky is blue and the night side grey) x 1612 to 1845, y 188 to 380, so 234 by 193 and only 74 to 82 px clear of the right edge. Too close to the 80 px line, so the hero moved once more.
   - Tone: lit face 70 x 70 at (1660,290) 90.4, 77.6, 64.1 (p95 luma 137); night side 36 x 36 at (1770,225) 10.8, 10.2, 11.9; sky 6.5, 12.3, 15.7; near streak lit band 67.7, 58.9, 49.9. The night side is as dark as the sky and reads by its grey against the blue and by the stars it hides.
 - 01:49 third layout, f33fb07: the entry leg a little faster and the exit leg a little slower (still 24 px per frame at most), so the place at 2782 can sit 18 px further in: hero `at` [0.8875, 0.2546] (1704, 275), velocity [-0.3931, 0.533, 0] (14.2 left, 19.3 up), bounding ball 99 px clear of the right edge and 158 px of the top, whole 2775 to 2790 (16 frames), in frame 2759 to 2802, 421 px from Jupiter at the nearest. 12 tests green. Chain started (`/tmp/chain8.sh`): review sheet r3, finals f2, byte proof at draft, the four Mars finals, the task 5 cost test, the cover test.
+- 02:02 review sheet of f33fb07, one run (`out/work/belt/t6/r3/sheet.jpg`), seconds (samples): 2745 38.6 (16, with the load), 2748 16.2, 2751 21.9 (20), 2754 38.4 (39), 2757 57.2 (63), 2760 73.2 (86), 2763 83.5 (107), 2766 14.8, 2769 14.2, 2772 14.4, 2775 14.0, 2778 14.2, 2781 17.5, 2784 17.2, 2787 15.1, 2790 16.1, 2793 16.3, 2796 17.0, 2799 25.6 (22), 2802 34.0 (28), 2805 39.8 (31), 2808 33.3 (23), 2811 24.3, 2814 24.9, 2817 23.5. Sum 722 s. On the nine frames measured on dba3ebc: 218.7 s against 232.0 s, 0.94; worst single frame 2790 at 1.02.
+  - Read on the sheet: as r2, the hero a little further in. Sliver at 2760, half in 2763 to 2772, touching the right edge at 2775, whole 2778 to 2790, cut by the top 2793 and 2796, sliver 2799, gone 2802. far1 2763 to 2769, near 2781 and 2784, far2 2790 to 2799. 2745 to 2757 and 2805 to 2817 empty.
+- 02:04 finals of f33fb07 (`out/work/belt/t6/f2/`, 64 samples, 74.4 s with the load, 49.5 s):
+  - 2782: 86ed6a918ea007cab1c6559d4addd8cd4f6b945f0b21f64ed3b5cf3af177da02
+  - 2783: b6fabe5d1bf7e5175ec0b5ca536d411fab2f6148629d35ce1b5377c295d87b5a
+  - native crops at 2782: `crop-hero-2782.png` (x 1440 to 1920, y 35 to 515), `crop-near-2782.png` (x 470 to 950, y 300 to 780).
+  - Hero at 2782: lit part x 1597 to 1818, y 185 to 370 (222 by 186); with the night side x 1594 to 1827, y 181 to 372 (234 by 192, plus or minus 4 px): 92 px clear right, 181 px top.
+  - Tone: lit face 70 x 70 at (1642,282) 91.5, 78.7, 65.1 (luma 80.5, p95 138.2); night side 36 x 36 at (1752,217) 10.7, 10.2, 12.0; sky 6.5, 12.3, 15.7; near streak lit band 67.7, 58.9, 49.9.
+- 02:05 PART sent to the Builder with the sheet, the final, the crops (JPEG), the table, the cost and the critic list.
+
+### Hero, place and width (planner, f33fb07, bounding ball)
+
+| frame | centre x, y | width px | in frame | edges |
+|---|---|---|---|---|
+| 2757 | 2059, 756 | 234 | outside | - |
+| 2760 | 2016, 698 | 234 | part | cut by the right edge |
+| 2763 | 1973, 640 | 234 | part | cut by the right edge |
+| 2766 | 1931, 583 | 234 | part | cut by the right edge |
+| 2769 | 1888, 525 | 234 | part | cut by the right edge |
+| 2772 | 1846, 467 | 234 | part | cut by the right edge |
+| 2775 | 1803, 410 | 234 | whole | 0 px clear |
+| 2778 | 1761, 352 | 234 | whole | 42 px clear |
+| 2781 | 1718, 294 | 234 | whole | 85 px clear |
+| 2784 | 1676, 237 | 234 | whole | 120 px clear |
+| 2787 | 1633, 179 | 234 | whole | 62 px clear |
+| 2790 | 1591, 121 | 234 | whole | 4 px clear |
+| 2793 | 1548, 63 | 234 | part | cut by the top edge |
+| 2796 | 1505, 6 | 234 | part | cut by the top edge |
+| 2799 | 1463, -52 | 234 | part | cut by the top edge |
+| 2802 | 1420, -110 | 234 | part | 7 px sliver at the top edge |
