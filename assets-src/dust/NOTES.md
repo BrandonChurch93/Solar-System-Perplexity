@@ -79,3 +79,35 @@ Brief: `assets-src/shared/ROUND31-FIXES.md` section A. After a compaction read t
 - Sky-tracked strips: `strip.ts <first> <last> <w> <h>` lists windows that turn with the camera and the grains that stay in them, `strip.ts ... <grain>` prints the window, `strip.py` builds the sheet. A bright point that slides through such a window is a planet, not a star.
 - A stray render process survived a `pkill` at 07:23 and ran beside the queue until 07:28 (two renders at once for five minutes). Killed. Its outputs (`../shots/g1/f01620` to `f01622`) are not used.
 - 07:29 PART sent with the pair sheets for 495, 1642, 2212, 3352, 4492, 5085 and the fast strip, all from 394e3c2.
+
+### Results on the cap 8.5 build (328695c, same dust code as the head), final tier (`../shots/g3`)
+
+| frame | which | pixels changed | grains at 3 or more | 3 to 5 | 6 to 10 | 11 or more | largest | longest mark px |
+|---|---|---|---|---|---|---|---|---|
+| 495 | after | 1598 | 57 | 56 | 1 | 0 | 7 | 3 |
+| 1612 | after | 505 | 10 | 10 | 0 | 0 | 5 | 2 |
+| 1620 to 1627 | after | 1367 to 1482 | 24 to 36 | 22 to 36 | 0 to 2 | 0 | 4 to 7 | 2 to 4 |
+| 1640 to 1647 | after | 1091 to 1233 | 50 to 64 | 42 to 58 | 5 to 10 | 0 | 7 to 9 | 3 to 4 |
+| 1642 | after | 1175 | 56 | 47 | 9 | 0 | 9 | 3 |
+| 1670 | after | 488 | 10 | 10 | 0 | 0 | 3 | 2 |
+| 2212 | after | 1309 | 46 | 44 | 2 | 0 | 7 | 3 |
+| 2782 | before | 88931 | 196 | 13 | 17 | 166 | 52 | 84 |
+| 2782 | after | 1409 | 48 | 38 | 10 | 0 | 9 | 4 |
+| 3352 | after | 1260 | 46 | 40 | 6 | 0 | 8 | 3 |
+| 4492 | after | 1712 | 71 | 54 | 17 | 0 | 8 | 3 |
+| 5085 | after | 606 | 7 | 7 | 0 | 0 | 4 | 2 |
+
+- Hairlines (marks of 1 level or more, 8 px or longer): 1642 8, 2212 10, 495 18, 4492 28. Largest level among them 3, longest 17 px.
+- `follow.py`: 25 grains through 1640 to 1647, never absent, mean change 0.9 level, largest 4. Two grains through 1620 to 1627 (nominal 2.6 to 3.0), never absent, largest change 2.
+- 5085 (camera of 784fc52): 0 changed pixels inside Neptune's dark disc and 0 in a 10 px band outside its limb. 495: 5 pixels by 1 level inside the Sun's bright region. 2782 (rocks of 784fc52): 0 changed pixels inside the big rock (before: 1,630, up to 15 levels) and 0 inside the blurred one.
+- Ten stops, draft sha256 with this build: all ten equal to the base list at the top. 1642 draft rendered twice: same sha256 (85c4c192...).
+- 08:03 NOTICE: batch 20 is on main with this branch at fd563bd and the ending agent's camera. Merged origin/main b784153 (adbd876). The stills above were rendered before that merge; the dust code is the same.
+- On the merged head (`../dists/m`), a test build with `DUST.unit` 0.013 (25 times brighter) against a build with `DUST.unit` 0, review tier:
+  - 2782 (the belt agent's new rock): 300 marks in the frame, 14 in a 50 px ring round the rock, none inside it. Nine single pixels inside moved by 1 level in one channel.
+  - 5085 (the ending agent's new camera): 176 marks in the frame, 55 in a ring round Neptune, none inside its disc. 17 single pixels inside moved by 1 level in one channel.
+  - Those single pixels are the post chain's bloom carrying the test dust's light (`mix(hdr, bloom, uBloomStrength)`), not grains. At the real level the count is 0.
+  - 5235: test build and no-dust build give the same bytes (34c776d4...). No dust in the lookback.
+- Sheet of the test: `holdout.py`.
+- Merged head, 5085 final against the no-dust build of the same head: 671 pixels changed, 5 grains at 3 or more, largest 4. Inside Neptune's disc (255,133 px) one pixel moved by 1 level in blue, where the ring crosses the night side (bloom rounding, the test build has no mark there). 5235 draft: head and no-dust head give the same bytes (336fe3bf...).
+- Merged head: `npm run build` green, vitest 79 passed, `tools/shaderaudit.py` prints the same 32 lines as origin/main.
+- 08:3x DONE sent with ten sheets: pairs 495, 1642, 2212, 3352, 4492, 5085, 2782, strips 1620 to 1627 and 1640 to 1647, the hold-out test.
