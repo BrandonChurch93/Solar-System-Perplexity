@@ -670,3 +670,8 @@ Code b22e4fb (last code commit 42b9111) on main a45a07b (batch 19, 7a880ac6). Pr
 - `mirrorcheck.py` on f16-1185 and f16-1440: clean.
 - 1586 batch 18 against batch 19 inside the disc (limb angle from `tools/pose1586.json`): inside 0.995 of the limb angle 7,527 of 499,039 pixels changed, none by more than one level; inside 1.000: 19 pixels over one level; from 1.005 outward the dust glow and the flight stars. Limb dips of the dark side the same (az 150 to 175: 0.0 to 2.9). The disc itself did not move.
 - Running from 06:10 (`q19c.sh`, log `/tmp/q19c.log`): three consecutive final frames of the hold (1185 to 1187) and of the terrain view (1440 to 1442) for the R4 stability check (`tools/stab.py`), then the late rise 1566 to 1576 at review tier, master size, to look at the veil shreds at native size (at draft they read as pale torn flecks at 1568 and 1570, `view/rl-pair.jpg`).
+
+## State at 06:14 (22 Nov): POLISH READY sent on batch 19 (read this first after a compaction)
+
+- POLISH READY sent to the Builder at 06:13 with head 209bf6d, seven pictures attached. Main moved to 89715a1 (round 30 results, round 31 briefs, no code) and is merged (4328b78). Round 30 names no frame of my four segments except the Sun's size at 1440 (the approved close image). Round 31 work goes to other agents (dust, flight sky, ending, travels, belt, hook, Neptune in the ending); nothing in it is mine.
+- Next: read the stability frames (`/tmp/q19c.log`, `r2/out/work/venus/p6/stf-1185.png` to `stf-1187.png`, `stf-1440.png` to `stf-1442.png`, `python3 tools/stab.py hold|terrain FILES`), look at 3x crops of the three frames for crawl; then the late rise `rl-1566.png` to `rl-1576.png` at native size.
