@@ -106,7 +106,8 @@ export const createSet: SetFactory = async (ctx) => {
         const since = state.time - plan.seg.terrain.start
         const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
         const feet = loops.pulse(since)
-        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * loops.surge(since, open)[3])
+        const surge = loops.surge(since, open)
+        ground.update(eye, t, gain * (1 + d.lit.amount * share(x, d.lit.over)), vignette, aspect, fringe.lod(view.camera.fov, view.format.height), look.flare.ground * burst, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2])
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - share(x, d.fringe))
         const strands = 1 - share(x, d.loops)
         loops.mesh.visible = strands > 0

@@ -18,17 +18,19 @@ export interface LoopsLook {
 export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
-  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: [number, number]; knee: number; bloom: number; veil: [number, number, number] }
+  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: [number, number, number]; grow: [number, number]; kick: number }
 }
 
 const VERT = /* glsl */ `
 in vec3 aLate;
+in vec3 aGrow;
 uniform float uLate;
+uniform float uGrow;
 out vec3 vStage;
 out vec3 vClip;
 void main() {
   vStage = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate), 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate) + aGrow * uGrow, 1.0);
   vClip = gl_Position.xyw;
 }`
 
@@ -65,7 +67,8 @@ uniform vec2 uSurgeCore;
 uniform vec3 uSurgeInner;
 uniform vec2 uSurgeCrest;
 uniform vec2 uFoot;
-uniform vec4 uFlare;` : ''}
+uniform vec4 uFlare;
+uniform vec3 uHold;` : ''}
 in vec3 vStage;
 in vec3 vClip;
 out vec4 outColor;
@@ -122,13 +125,17 @@ void main() {
       float strandLag = textureLod(uNoise, vec2(arc * uSurgeLane.x, 0.83), 0.0).r;
       float lead = s - uSurge.x + uSurgeMore.x * (bundle + strandLag - 1.0);
       float ahead = max(lead, 0.0);
-      float front = exp(-ahead * ahead / (uSurge.z * uSurge.z)) * exp(min(lead, 0.0) / uSurge.w) + uSurgeCore.x * exp(-lead * lead / (uSurgeCore.y * uSurgeCore.y));
-      float carried = uSurge.y * front * above * smoothstep(0.75, 1.0, arc) * (1.0 - uSurgeInner.z * smoothstep(uSurgeInner.x, uSurgeInner.y, arc)) * (uSurgeCrest.x + uSurgeCrest.y * 4.0 * clamp(s * (1.0 - s), 0.0, 0.25));
+      float passed = exp(-ahead * ahead / (uSurge.z * uSurge.z));
+      float trail = exp(min(lead, 0.0) / uSurge.w);
+      float front = passed * trail + uSurgeCore.x * exp(-lead * lead / (uSurgeCore.y * uSurgeCore.y));
+      float held = passed * (1.0 - trail) * uHold.x;
+      float shaped = uSurge.y * above * smoothstep(0.75, 1.0, arc) * (1.0 - uSurgeInner.z * smoothstep(uSurgeInner.x, uSurgeInner.y, arc)) * (uSurgeCrest.x + uSurgeCrest.y * 4.0 * clamp(s * (1.0 - s), 0.0, 0.25));
       float onStrand = smoothstep(uFlowMask.z, uFlowMask.w, shine) * (uSurgeLane.y + uSurgeLane.z * strandLag);
       float wide = dot(inverseFilmic(grade(textureLod(uMap, uv, uSurgeMore.w).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
-      float pushed = carried * onStrand;
+      float pushed = shaped * front * onStrand;
       pushed /= 1.0 + uFlare.z * pushed * dot(lin, vec3(0.3, 0.5, 0.2));
-      lin = lin * (1.0 + pushed) + shine * pushed * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * carried;
+      float kept = shaped * held * onStrand;
+      lin = lin * (1.0 + pushed + kept) + shine * (pushed + kept * uHold.z) * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * shaped * (front + held * uHold.y);
       float foot = uFlare.x * exp(-s / uKnotMore.w) + uFlare.y * exp(-(1.0 - s) / uKnotMore.w);
       float flared = seen * foot;
       flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
@@ -195,6 +202,7 @@ export class Loops {
     const [nx, ny] = look.grid
     const positions = new Float32Array((nx + 1) * (ny + 1) * 3)
     const late = new Float32Array((nx + 1) * (ny + 1) * 3)
+    const grow = new Float32Array((nx + 1) * (ny + 1) * 3)
     const lineDir = tb.clone().sub(ta).normalize()
     const lineNormal = new THREE.Vector2(-lineDir.y, lineDir.x)
     const feetApart = ta.distanceTo(tb)
@@ -222,7 +230,7 @@ export class Loops {
         const span = p.clone().sub(ta).dot(lineDir) / feetApart
         const above = THREE.MathUtils.radToDeg(Math.acos(Math.min(Math.max(r.clone().normalize().dot(stage.down), -1), 1)) - stage.alpha)
         const pin = smooth(span, look.pin.from, look.pin.from + look.pin.soft) * (1 - smooth(span, 1 - look.pin.from - look.pin.soft, 1 - look.pin.from)) * (1 - smooth(above, look.pin.lowDeg, look.pin.highDeg))
-        const place = (outerDeg: number, innerDeg: number, into: Float32Array): void => {
+        const place = (outerDeg: number, innerDeg: number, into: Float32Array): number => {
           const lean = THREE.MathUtils.degToRad(outerDeg + (innerDeg - outerDeg) * share)
           lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
           normal.copy(axis).cross(lift).normalize()
@@ -233,8 +241,11 @@ export class Loops {
           const held = t + ((hit > 0 ? tGround : horizon / r.length()) - t) * pin
           const k = held + (tGround - held) * under
           r.clone().multiplyScalar(k).toArray(into, (j * (nx + 1) + i) * 3)
+          return k
         }
-        place(look.lean.outerDeg, look.lean.innerDeg, positions)
+        const high = Math.max(p.clone().sub(ta).dot(lineNormal), 0) * place(look.lean.outerDeg, look.lean.innerDeg, positions)
+        grow[(j * (nx + 1) + i) * 3] = lineNormal.x * high
+        grow[(j * (nx + 1) + i) * 3 + 1] = lineNormal.y * high
         place(look.lean.late[0], look.lean.late[1], late)
       }
     }
@@ -248,6 +259,7 @@ export class Loops {
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('aLate', new THREE.BufferAttribute(late, 3))
+    geometry.setAttribute('aGrow', new THREE.BufferAttribute(grow, 3))
     geometry.setIndex(index)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
@@ -262,7 +274,7 @@ export class Loops {
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
         uFlowMask: { value: new THREE.Vector4(look.flow.inside[0], look.flow.inside[1], look.flow.from[0], look.flow.from[1]) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
-        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uLate: { value: 0 },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uLate: { value: 0 }, uGrow: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -283,6 +295,7 @@ export class Loops {
       this.material.uniforms.uKnotPick = { value: new THREE.Vector4(k.pick[0], k.pick[1], k.pick[2], k.pick[3]) }
       this.material.uniforms.uKnotEnds = { value: new THREE.Vector2(k.ends[0], k.ends[1]) }
       this.material.uniforms.uFoot = { value: new THREE.Vector2() }
+      this.material.uniforms.uHold = { value: new THREE.Vector3(...knots.surge.hold) }
       this.material.uniforms.uFlare = { value: new THREE.Vector4(0, 0, knots.surge.knee, knots.surge.bloom) }
       const g = knots.surge
       this.material.uniforms.uSurge = { value: new THREE.Vector4(0, 0, g.width, g.tail) }
@@ -309,9 +322,9 @@ export class Loops {
     return [beat(phase), beat(phase - this.across / (k.knots.speed * k.knots.every))]
   }
 
-  surge(since: number, open: number): [number, number, number, number] {
+  surge(since: number, open: number): [number, number, number, number, number] {
     const g = this.knots?.surge
-    if (!g || open <= 0 || since <= g.from || since >= g.end) return [0, 0, 0, 0]
+    if (!g || open <= 0 || since <= g.from || since >= g.end) return [0, 0, 0, 0, 0]
     const ease = (x: number): number => {
       const t = Math.min(Math.max(x, 0), 1)
       return t * t * (3 - 2 * t)
@@ -319,8 +332,9 @@ export class Loops {
     const bump = (t: number): number => (t > 0 ? (t / g.peak) * Math.exp(1 - t / g.peak) : 0)
     const gone = open * (1 - ease((since - g.end + g.settle) / g.settle))
     const head = -g.lead + (1 + 2 * g.lead) * Math.min((since - g.from) / (g.land - g.from), 1)
-    const amount = g.amount * ease((since - g.from) / g.rise) * (1 - ease((since - g.land) / g.fade))
-    return [head, amount * gone, g.launch * bump(since - g.from) * gone, g.flare * bump(since - g.land + g.early) * gone]
+    const amount = g.amount * ease((since - g.from) / g.rise) * (1 - ease((since - g.land - g.keep) / g.fade))
+    const grow = g.grow[0] * (since < g.grow[1] ? ease((since - g.from) / (g.grow[1] - g.from)) : 1 - ease((since - g.grow[1]) / (g.end - g.grow[1])))
+    return [head, amount * gone, g.launch * bump(since - g.from) * gone, g.flare * bump(since - g.land + g.early) * gone, grow]
   }
 
   update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0): void {
@@ -328,7 +342,8 @@ export class Loops {
     if (this.knots) {
       const k = this.knots
       const [a, b] = this.pulse(since)
-      const [head, amount, launch, flare] = this.surge(since, open)
+      const [head, amount, launch, flare, grow] = this.surge(since, open)
+      u.uGrow!.value = grow
       ;(u.uKnot!.value as THREE.Vector4).x = k.knots.amount * open
       ;(u.uKnotMore!.value as THREE.Vector4).x = since + k.knots.lead
       ;(u.uFoot!.value as THREE.Vector2).set(k.feet.amount * open * a, k.feet.amount * open * b)
