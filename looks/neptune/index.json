@@ -1,9 +1,41 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T18:21:36.295Z",
- "head": "6e4733ced3a6a4c2aaf27bd932f54217ddf0da44",
- "note": "CUT35: the veil of the rise cover leaves over four frames instead of two (veil.clear 0.15), proved at draft; review frames of it render",
+ "pushed": "2026-11-22T18:32:26.893Z",
+ "head": "5c973fc150780c5efbb8f498a01f5cb040695439",
+ "note": "the veil at review: 4984 shows one brighter block in the haze hump, 4975 and 4976 read as streaks; ring step at 5006 under diagnosis",
  "looks": [
+  {
+   "time": "2026-11-22T18:32:26.219Z",
+   "file": "20261122183226219-note-view-review-4976-native-top.jpg",
+   "source": "out/work/nep/end35/veil/view-review-4976-native-top.jpg",
+   "kind": "note",
+   "label": "rise cover with veil.clear 0.15 at review: view-review-4976-native-top",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:32:25.541Z",
+   "file": "20261122183225541-note-view-review-4975-4976.jpg",
+   "source": "out/work/nep/end35/veil/view-review-4975-4976.jpg",
+   "kind": "note",
+   "label": "rise cover with veil.clear 0.15 at review: view-review-4975-4976",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:32:24.969Z",
+   "file": "20261122183224969-note-view-review-4984-native-top.jpg",
+   "source": "out/work/nep/end35/veil/view-review-4984-native-top.jpg",
+   "kind": "note",
+   "label": "rise cover with veil.clear 0.15 at review: view-review-4984-native-top",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T18:32:24.387Z",
+   "file": "20261122183224387-note-view-review-4984-whole.jpg",
+   "source": "out/work/nep/end35/veil/view-review-4984-whole.jpg",
+   "kind": "note",
+   "label": "rise cover with veil.clear 0.15 at review: view-review-4984-whole",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-22T18:21:35.695Z",
    "file": "20261122182135695-note-view-4983-new-review-whole.jpg",
@@ -26,38 +58,6 @@
    "source": "out/work/nep/end35/veil/veil-02-dive-cover-drafts-4729-4740-before-above-new.jpg",
    "kind": "note",
    "label": "Neptune dive cover, drafts 4729 to 4740, before above new (veil.clear 0.15)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:21:33.830Z",
-   "file": "20261122182133830-note-veil-01-rise-cover-drafts-4975-4986-round-34-above-new.jpg",
-   "source": "out/work/nep/end35/veil/veil-01-rise-cover-drafts-4975-4986-round-34-above-new.jpg",
-   "kind": "note",
-   "label": "Neptune rise cover, drafts 4975 to 4986, round 34 above new (veil.clear 0.15)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:02:17.386Z",
-   "file": "20261122180217386-note-09-5006-final-round-34-left-new-right.jpg",
-   "source": "out/work/nep/end35/cut/09-5006-final-round-34-left-new-right.jpg",
-   "kind": "note",
-   "label": "Neptune rise 5006 final, round 34 left, with the new pace right: the same bytes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:02:16.368Z",
-   "file": "20261122180216368-note-view-4982-new-review-native-limb.jpg",
-   "source": "out/work/nep/end35/view-4982-new-review-native-limb.jpg",
-   "kind": "note",
-   "label": "Neptune rise 4982 at review with the new pace, the right limb at native size",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T18:02:15.490Z",
-   "file": "20261122180215490-note-view-4982-new-review-whole.jpg",
-   "source": "out/work/nep/end35/view-4982-new-review-whole.jpg",
-   "kind": "note",
-   "label": "Neptune rise 4982 at review with the new pace, whole frame",
    "stop": "neptune"
   },
   {
