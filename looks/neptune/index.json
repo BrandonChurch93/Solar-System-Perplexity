@@ -1,9 +1,81 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T04:32:55.901Z",
- "head": "68ad29dea4b074997e461a2e9b90878fb052e92f",
- "note": "final chain on 2613788 (main 1138eb2): rise cover frames 4975 to 4982 in, switch step 4.00",
+ "pushed": "2026-11-22T04:53:27.667Z",
+ "head": "26ca948eaa739b49da2da9d9d4ab80b093dca2b6",
+ "note": "batch 19 merged (6c4c455, main a45a07b): judged hold, dive, terrain same bytes, 5006 with the open sky; final chain running: rise cover sheet",
  "looks": [
+  {
+   "time": "2026-11-22T04:52:49.658Z",
+   "file": "20261122045249658-frame-f04981-review.jpg",
+   "source": "out/work/sheets/.frames-0zLmiD/f04981-review.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 4981, review tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 4981,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:46:19.765Z",
+   "file": "20261122044619765-note-b19-5006-x3.jpg",
+   "source": "out/work/nep/p6/final/b19-5006-x3.jpg",
+   "kind": "note",
+   "label": "5006 review on engine batch 19 raised 3 times: no new point on the night side or on Triton, points show through the ring's gaps; tree 6c4c455, main a45a07b",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T04:46:16.599Z",
+   "file": "20261122044616599-note-b19-5006-pair.jpg",
+   "source": "out/work/nep/p6/final/b19-5006-pair.jpg",
+   "kind": "note",
+   "label": "5006 review: left on main 1138eb2 (engine batch 18), right on main a45a07b (engine batch 19, the open sky); same branch state; tree 6c4c455",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T04:41:46.965Z",
+   "file": "20261122044146965-frame-b19-4707.jpg",
+   "source": "out/work/nep/p6/final/b19-4707.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4707, review tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4707,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:40:13.381Z",
+   "file": "20261122044013381-frame-b19-4860.jpg",
+   "source": "out/work/nep/p6/final/b19-4860.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4860, review tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4860,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T04:39:38.244Z",
+   "file": "20261122043938244-frame-b19-4605.jpg",
+   "source": "out/work/nep/p6/final/b19-4605.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4605, review tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4605,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
   {
    "time": "2026-11-22T04:32:30.519Z",
    "file": "20261122043230519-note-rise-4979-4982.jpg",
@@ -19,72 +91,6 @@
    "kind": "note",
    "label": "rise cover at review, frames 4975 to 4978 (terrain side, with the cover's horizon on the sphere's own limb); tree 2613788, main 1138eb2 (engine batch 18)",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:30:51.107Z",
-   "file": "20261122043051107-frame-f04982-review.jpg",
-   "source": "out/work/sheets/.frames-AwnAbx/f04982-review.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 4982, review tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 4982,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T04:21:05.291Z",
-   "file": "20261122042105291-note-t3-4605.jpg",
-   "source": "../../../../tmp/t3-4605.jpg",
-   "kind": "note",
-   "label": "4605 review with Triton's new light, whole frame 3.0361 against the hero (3.0976 before); tree d2166f0, main b0dd302 (batch 18)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:21:04.140Z",
-   "file": "20261122042104140-note-tri-4707.jpg",
-   "source": "out/work/nep/p6/t3/tri-4707.png",
-   "kind": "note",
-   "label": "Triton at 4707 review, before and after its new light; main b0dd302 (batch 18)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:21:03.081Z",
-   "file": "20261122042103081-note-three-a.jpg",
-   "source": "out/work/nep/p6/t3/three-a.png",
-   "kind": "note",
-   "label": "Triton at 4605 review: hero, before, after (bump 0.008); main b0dd302 (batch 18)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T04:15:57.281Z",
-   "file": "20261122041557281-frame-c-4605.jpg",
-   "source": "out/work/nep/p6/t3/c-4605.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4605, review tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4605,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
-  },
-  {
-   "time": "2026-11-22T03:58:20.507Z",
-   "file": "20261122035820507-frame-b-4860.jpg",
-   "source": "out/work/nep/p6/g4/b-4860.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4860, review tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4860,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7cd5ba493f97ac9f"
   }
  ]
 }
