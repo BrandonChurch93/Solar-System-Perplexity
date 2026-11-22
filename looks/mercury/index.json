@@ -1,9 +1,47 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T12:58:05.991Z",
- "head": "a782331d4e074bee7b4602cb9990656b06e0274f",
- "note": "mercury after the cut of round 33: the leave at 1059 (swap against ladder), cure with the plate's own smear in work",
+ "pushed": "2026-11-22T13:23:48.787Z",
+ "head": "d568386095021c5104cffb0ab83147ac64a0e0fb",
+ "note": "mercury round 34: the leave at 1059 cured (plate kept and smeared, no ladder at review); next the star mask",
  "looks": [
+  {
+   "time": "2026-11-22T13:23:09.369Z",
+   "file": "20261122132309369-note-lv2-sheet.jpg",
+   "source": "../../../../tmp/lv2-sheet.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1058 to 1068 at review, the Sun plate kept through the leave (working tree on d7e468a, main 8cd0877)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T13:23:08.837Z",
+   "file": "20261122132308837-note-lv2-native.jpg",
+   "source": "../../../../tmp/lv2-native.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1062 1064 1066 at review, 4x native: top cure in without smear (ladder), bottom with taps along the plate's motion (working tree on d7e468a, main 8cd0877)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T13:23:08.294Z",
+   "file": "20261122132308294-note-lv3-native.jpg",
+   "source": "../../../../tmp/lv3-native.jpg",
+   "kind": "note",
+   "label": "mercury.travel 1062 1064 1066 at review, 16 samples, 4x native: top the plate's smear with taps only, bottom taps and a softer footprint (working tree on d7e468a, main 8cd0877): no ladder",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T13:04:33.680Z",
+   "file": "20261122130433680-job-frame-00615.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 615,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T12:58:03.301Z",
    "file": "20261122125803301-note-lv-step.jpg",
@@ -29,20 +67,6 @@
    "stop": "mercury"
   },
   {
-   "time": "2026-11-22T12:56:16.702Z",
-   "file": "20261122125616702-job-frame-00615.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-22T12:39:12.529Z",
    "file": "20261122123912529-note-m4d-sheet.jpg",
    "source": "../../../../tmp/m4d-sheet.jpg",
@@ -64,30 +88,6 @@
    "source": "../../../../tmp/c33-1016.jpg",
    "kind": "note",
    "label": "frame 1016 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:09.526Z",
-   "file": "20261122123909526-note-c33-870.jpg",
-   "source": "../../../../tmp/c33-870.jpg",
-   "kind": "note",
-   "label": "frame 870 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:08.647Z",
-   "file": "20261122123908647-note-c33-717.jpg",
-   "source": "../../../../tmp/c33-717.jpg",
-   "kind": "note",
-   "label": "frame 717 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T12:39:07.385Z",
-   "file": "20261122123907385-note-c33-615.jpg",
-   "source": "../../../../tmp/c33-615.jpg",
-   "kind": "note",
-   "label": "frame 615 at the final tier: main c5c4248 (same engine and stop code as 9f5ad80) | agent/mercury 2c85dde on main da02e63, the cut for round 33",
    "stop": "mercury"
   },
   {
