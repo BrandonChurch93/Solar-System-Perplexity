@@ -783,3 +783,14 @@ Report with a message that starts POLISH READY and names the commit on agent/jup
 - Tools added: `out/work/jupiter/fg/look.py TAG frames` (lower part with the layers inset), `full.py TAG frame` (kept above, new below), `crop.py TAG frame x y w h` (native crop beside the kept frame or the layers view), `flow.py TAG frames` (template match between frame - 1 and frame + 1 against `motion.ts`), `own.py files` (mean difference to the approved image).
 - Chain B waits for chain A (`/tmp/chainB.sh`, log `/tmp/chainB.log`): review sheet of the terrain view, review 3150, both cover sheets, four finals, compares, mirrorcheck, measure, gates, build, vitest. Review frames of the sheets are copied to `out/work/view/aft/` while it runs (`/tmp/copier.sh`).
 
+
+### 02:56 to 03:03 UTC: end of chain A (tree holds main 3d48581): the rest of the sweep, texels views, measured motion
+
+- Layers views 3156, 3164, 3172, 3180: red after the 3 x 3 erosion 0 (raw red 1, 0, 0, 0 px); plate on the base 0.2, 0.7, 1.3, 2.2 percent of the frame. `look_g_3156.jpg` looked at: no fault seen. So red is 0 after erosion at every eighth frame 3036 to 3236 and at 3239, 3246, 3254, 3262; only 3028 (under the dive cover) has the 19 px triangle.
+- Texels views with the layer (my count by the G13 rule, `count.py g ...`): 3060 0 soft of 1,454,687 counted (mean 1.98 texels per pixel), 3092 0 (1.98), 3223 0 (1.96), 3239 903 px = 0.05 percent (1.92; at x 0 to 70, y 878 to 1054), 3246 0.27 percent (1.91), 3253 0.95 percent (1.89; x 253 to 583, y 940 to 1079), 3254 0.78 percent (1.89). The same shares as before the layer at 3239 (0.05), 3253 (0.95, the worst frame of G13) and 3254 (0.78): the lifted bank adds no soft pixels.
+- Measured motion in the rendered drafts (`flow.py g 3070 3150 3230`: template match between frame - 1 and frame + 1, px per frame of 1920; the match agrees with `motion.ts` to 0.5 px per frame or better at every point):
+  - 3070: roll (tier 1) at (306,729) 5.41, 0.51 = 5.43; crest 3.64; tower (tier 2) 6.14; dome (tier 2) 8.50; mid deck at (330,579) 2.65, 0.48 = 2.70; rim of the storm 2.34; far band at (877,203) 0.70.
+  - 3150: roll at (807,829) 6.49, 1.83 = 6.74; crest 6.67; mid at (605,652) 4.40, 1.40 = 4.62; rim 2.13; far at (881,143) 0.72.
+  - 3230: roll at (1265,985) 5.27, 1.87 = 5.59; mid at (936,742) 3.68, 1.08 = 3.84; rim 1.46; far at (933,104) 0.50.
+  - Near against middle distance, measured (vector difference roll minus mid): 2.76 / 2.13 / 1.78 px per frame at 3070 / 3150 / 3230 (model 2.72 / 2.45 / 1.91; before the layer by the model 2.32 / 1.31 / 0.44). Near against far, measured: 5.8 / 7.1 / 5.2.
+- 03:01:31 chain B started behind chain A (review sheet of the terrain view first). Nothing under `src/` is touched while it runs.
