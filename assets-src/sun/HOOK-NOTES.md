@@ -40,3 +40,17 @@ which. No answer needed before the hook is done.
 
 ## Log
 - 06:04 before renders started. 06:07 code written (not built until the before renders end).
+- 06:15 before renders done (finals about 60 s per frame). Before strip: `out/work/sun/hook/strip-before.jpg`.
+- "One strip" of nine frames at 400 px is 3600 px wide, the attachment rule caps the long edge at 1400:
+  decided on one sheet of 3 by 3 tiles, each 400 px wide (1200 by 701), same for before and after.
+- 06:16 to 06:25 six draft rounds (d1 to d6, `out/work/sun/hook/strip-dN.jpg`):
+  d1 amount 5, tail 0.3: the whole arch lit by frame 30, reads as "arch brightens", not as a pulse.
+  d2 tail 0.16, amount 4: travels, but mild at the crest.
+  d3 core at the head, halo 0.7: at native size a foggy beam under the crest (the front is a line of
+  constant `s`, so the hanging inner strands and the veil lit up as a band) and a white cloud at the head.
+  d4 `inner` (the surge fades to a quarter on the inner strands, arc 1.8 to 2.3), core 0.5, halo 0.35: beam gone.
+  d5 crest boost: crest reads at 400 px. Veil outside the strands looked like beige fog over the stars.
+  d6 veil from mip 5 instead of 6, 0.35; amplitude profile along the arch `crest: [feet, crest]` so the feet,
+  where every strand converges, clip less than before.
+- 06:25 after renders started with `crest: [0.45, 1.35]`, `launch: 0.7` (`before.sh after`).
+- Shader audit (`python3 tools/shaderaudit.py`, HEAD export against the work tree, line numbers ignored): same 32 lines.

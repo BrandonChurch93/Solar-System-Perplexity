@@ -78,6 +78,7 @@ export const opening: KnotsLook & { fade: [number, number]; seethe: SeetheLook }
   fade: [2.05, 2.85],
   knots: { amount: 5, speed: 0.5, every: 0.9, width: 0.05, jitter: 0.25, white: 0.4, inside: [1.9, 2.2], lanes: [4, 1.7], lead: 0.2, pick: [0.25, 0.4, 0.75, 0.2], ends: [0.02, 0.1] },
   feet: { amount: 1.2, reach: 0.1, over: 0.14, lane: 1.5, ground: 1.2 },
+  surge: { from: 0.1, land: 1.5, lead: 0.1, rise: 0.2, fade: 0.7, amount: 5.5, width: 0.07, tail: 0.2, ragged: 0.08, white: 0.35, halo: 0.35, level: 5, lanes: [0.6, 0.45, 1.1], glow: [1, 0.6, 0.26], core: [0.5, 0.05], inner: [1.8, 2.3, 0.75], crest: [0.45, 1.35], launch: 0.7, flare: 6, peak: 0.18, early: 0.1, end: 2.6, settle: 0.5, ground: 2, reach: 0.06 },
   seethe: { amount: 1, rate: 2, spread: 4, near: [2.2, 4.5], far: 0.3, crown: [0.85, 1.25] },
 }
 
