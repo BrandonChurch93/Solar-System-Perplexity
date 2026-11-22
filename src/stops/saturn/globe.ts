@@ -279,7 +279,6 @@ ${HAZE_GLSL}
 ${RING_PROFILE_GLSL}
 ${LIMB_GLSL}
 void main() {
-  if (uDiag >= 2) discard;
   vec3 dir = normalize(vLocal - uCam);
   float r = length(uCam);
   float b = -dot(uCam, dir);
@@ -302,7 +301,7 @@ void main() {
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
   outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * mix(1.0, smoothstep(-0.03, 0.02, at.y), uClose), 0.0);
-  if (under) discard;
+  if (under || uDiag >= 2) discard;
 }`
 
 export class Shell {

@@ -109,9 +109,9 @@ in vec3 vInv;
 uniform int uDiag;
 out vec4 outColor;
 void main() {
-  if (uDiag != 0) discard;
   float m = vInv.x * vQ.x * vQ.x + 2.0 * vInv.y * vQ.x * vQ.y + vInv.z * vQ.y * vQ.y;
   outColor = vec4(vCol * exp(-0.5 * m), 0.0);
+  if (uDiag != 0) discard;
 }`
 
 function seeds(count: number): Float32Array {
