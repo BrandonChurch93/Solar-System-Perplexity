@@ -1,9 +1,39 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T17:08:04.016Z",
+ "pushed": "2026-11-22T17:20:49.542Z",
  "head": "3c1ea2e805a80bf0af598e91cb232a5be54e1d46",
- "note": "mercury: the bars at 993 gone at the review tier with the cap (36424325 on main a265db97); 994 to 996 of the review sheet still rendering",
+ "note": "mercury: the coloured bars at 994 gone at the review tier with the cap (36424325 on main a265db97); 995 and 996 of the review sheet still rendering",
  "looks": [
+  {
+   "time": "2026-11-22T17:20:48.151Z",
+   "file": "20261122172048151-note-bars-994-draft-same-camera-before-after.jpg",
+   "source": "out/work/mercury/p6/bars/looks/bars-994-draft-same-camera-before-after.jpg",
+   "kind": "note",
+   "label": "mercury rise 994 at draft, same camera, right limb: left main's bytes (a265db97 has the same film files as 9957a0b7), right the cap, tree 36424325",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:20:46.914Z",
+   "file": "20261122172046914-note-bars-994-review-before-after.jpg",
+   "source": "out/work/mercury/p6/bars/looks/bars-994-review-before-after.jpg",
+   "kind": "note",
+   "label": "mercury rise 994 at the review tier, right limb: left the round 33 tree (960 wide frame, scaled up, coloured bars), right the cap, tree 36424325 on main a265db97",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T17:19:54.104Z",
+   "file": "20261122171954104-frame-f00994-review.jpg",
+   "source": "out/work/sheets/.frames-Eno5Ow/f00994-review.png",
+   "kind": "frame",
+   "label": "mercury.rise frame 994, review tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 994,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
   {
    "time": "2026-11-22T17:08:02.962Z",
    "file": "20261122170802962-note-rise-993-review-whole-before-after.jpg",
@@ -19,20 +49,6 @@
    "kind": "note",
    "label": "mercury rise 993 at the review tier, the bars' place at 2x: left the round 33 tree (960 wide frame, scaled up), right the cap, tree 36424325 on main a265db97",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T17:07:30.312Z",
-   "file": "20261122170730312-frame-f00993-review.jpg",
-   "source": "out/work/sheets/.frames-Eno5Ow/f00993-review.png",
-   "kind": "frame",
-   "label": "mercury.rise frame 993, review tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 993,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "096721f26986d35a"
   },
   {
    "time": "2026-11-22T16:52:16.197Z",
@@ -101,22 +117,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-22T15:21:54.288Z",
-   "file": "20261122152154288-note-r6-speck.jpg",
-   "source": "../../../../tmp/r6-speck.jpg",
-   "kind": "note",
-   "label": "Mercury rise cover 993, 994, 995 at draft, crop x 1400 y 560 500 by 340: a patch of bright bars with green and red fringes on the ground at 993 and 994 (top a5e5207, bottom 05cc394; main 64fff6f), found today, not from the pace, left for the next cut",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T15:21:53.361Z",
-   "file": "20261122152153361-note-r6-a.jpg",
-   "source": "../../../../tmp/r6-a.jpg",
-   "kind": "note",
-   "label": "Mercury rise cover 990 to 998 at draft, tree a5e5207 on main 64fff6f",
-   "stop": "mercury"
   }
  ]
 }
