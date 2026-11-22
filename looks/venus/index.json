@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T09:36:23.180Z",
- "head": "58e4e6fb79edc2369038843d4fd4db0ca6cc15cd",
- "note": "09:37 UTC: batch 20 proof: rise cover sheet same bytes as on batch 19; dive cover sheet and chain running (main 8f13066)",
+ "pushed": "2026-11-22T10:01:48.996Z",
+ "head": "052ba8b0f8723435d1ee271f93800cb32c55c00e",
+ "note": "10:02 UTC: veil take F4 committed (1d3704c) and proved on engine batch 20 (main c479536): judged 1185, 1287, 1440 same bytes, chain green; full dive and rise sheets rendering",
  "looks": [
+  {
+   "time": "2026-11-22T10:01:48.389Z",
+   "file": "20261122100148389-note-g4u.jpg",
+   "source": "../view/g4u.jpg",
+   "kind": "note",
+   "label": "rise entry 1546 to 1556 review tier (branch 052ba8b, main c479536, engine batch 20; the same bytes as on batch 19): the mist thickens evenly over a terrain that stays whole",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T10:01:47.736Z",
+   "file": "20261122100147736-note-g4t.jpg",
+   "source": "../view/g4t.jpg",
+   "kind": "note",
+   "label": "dive tail 1319 to 1328 review tier (branch 052ba8b, main c479536, engine batch 20; the same bytes as on batch 19): the mist thins evenly, no pale column",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T09:56:46.146Z",
+   "file": "20261122095646146-note-c22-dc.jpg",
+   "source": "../view/c22-dc.png",
+   "kind": "note",
+   "label": "dive cover 1309 to 1320 review tier on engine batch 20 (branch 052ba8b, rendered on main 8f13066): every cell the same bytes as on batch 19; 1317 to 1320 even mist, no column",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T09:36:22.065Z",
    "file": "20261122093622065-note-c22-rc.jpg",
@@ -154,30 +178,6 @@
    "source": "../view/e3r-part.jpg",
    "kind": "note",
    "label": "venus rise 1549 to 1559 review tier, veil take E3d not committed yet (branch d998482 plus working tree, on main a87578e, batch 19): mist thickens over a terrain that stays whole, then soft streaks; no planks, no decals",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:40.834Z",
-   "file": "20261122064940834-note-e2b-1314.jpg",
-   "source": "../view/e2b-1314.jpg",
-   "kind": "note",
-   "label": "venus dive 1314 review tier native size, experiment E2b not committed (tree on main 6267259)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:40.084Z",
-   "file": "20261122064940084-note-e2b-1558.jpg",
-   "source": "../view/e2b-1558.jpg",
-   "kind": "note",
-   "label": "venus rise 1558 review tier native size, experiment E2b not committed (tree on main 6267259): the pale planks are soft fine streaks",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T06:49:39.198Z",
-   "file": "20261122064939198-note-e3c-d.jpg",
-   "source": "../view/e3c-d.jpg",
-   "kind": "note",
-   "label": "venus dive 1317 to 1327 draft, experiment E3c not committed (tree on main 6267259): soft mist clearing in place of decals",
    "stop": "venus"
   }
  ]
