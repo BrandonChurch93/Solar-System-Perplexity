@@ -1,67 +1,13 @@
 {
  "folder": "neptune",
- "pushed": "2026-11-22T01:31:48.863Z",
- "head": "c43d01335cdf8fc405a191dce29827a0dd5b6d2f",
- "note": "Neptune: cover window of the dive in work, draft frames 4724 to 4755 and two faults being cured",
+ "pushed": "2026-11-22T01:54:14.156Z",
+ "head": "ea88a1ac903da10167636b1cab65380bb62ee157",
+ "note": "Neptune: cover window of the dive, limb band and edge line cured at the draft tier, review stills and cover sheets next",
  "looks": [
   {
-   "time": "2026-11-22T01:31:44.694Z",
-   "file": "20261122013144694-note-d-5006-slash.jpg",
-   "source": "out/work/nep/p6/g1/d-5006-slash.jpg",
-   "kind": "note",
-   "label": "Cirrus slashes at 5006, trial 1 before and after (parked, softer but still strokes)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:31:44.181Z",
-   "file": "20261122013144181-note-draft-4746-4749.jpg",
-   "source": "out/work/nep/p6/h1/draft-4746-4749.jpg",
-   "kind": "note",
-   "label": "Fault in work: 4746 to 4749, a black patch of sky at the upper right where the veil thins first",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:31:43.671Z",
-   "file": "20261122013143671-note-draft-limb-4730-4737.jpg",
-   "source": "out/work/nep/p6/h1/draft-limb-4730-4737.jpg",
-   "kind": "note",
-   "label": "Fault in work: right limb 4730 to 4737, a wide whitish green limb line that glows through the veil",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:31:43.097Z",
-   "file": "20261122013143097-note-draft-open.jpg",
-   "source": "out/work/nep/p6/h1/draft-open.png",
-   "kind": "note",
-   "label": "Cover window, draft tier, dive 4740 to 4755: full cover 4742 to 4745, terrain comes out 4746 to 4752 (work in progress)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:31:42.508Z",
-   "file": "20261122013142508-note-draft-close.jpg",
-   "source": "out/work/nep/p6/h1/draft-close.png",
-   "kind": "note",
-   "label": "Cover window, draft tier, dive 4724 to 4739: the veil closes over the limb (work in progress)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-22T01:29:17.082Z",
-   "file": "20261122012917082-frame-r-4707.jpg",
-   "source": "out/work/nep/p6/h1/r-4707.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4707, review tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "26442750f28b11e0"
-  },
-  {
-   "time": "2026-11-22T01:18:52.636Z",
-   "file": "20261122011852636-frame-d-4605.jpg",
-   "source": "out/work/nep/p6/g1/d-4605.png",
+   "time": "2026-11-22T01:54:07.737Z",
+   "file": "20261122015407737-frame-s-4605.jpg",
+   "source": "out/work/nep/p6/h1/s-4605.png",
    "kind": "frame",
    "label": "neptune.hold frame 4605, review tier",
    "stop": "neptune",
@@ -70,7 +16,61 @@
    "tier": "review",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
+   "engine": "26442750f28b11e0"
+  },
+  {
+   "time": "2026-11-22T01:53:33.468Z",
+   "file": "20261122015333468-note-d2-olive2.jpg",
+   "source": "out/work/nep/p6/h1/d2-olive2.jpg",
+   "kind": "note",
+   "label": "Cause of the grey green band at 4729: one part off at a time; it goes only with the fitted field off (top right)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T01:53:32.829Z",
+   "file": "20261122015332829-note-d2-sky-native.jpg",
+   "source": "out/work/nep/p6/h1/d2-sky-native.jpg",
+   "kind": "note",
+   "label": "Dive 4747 to 4751, upper right at native size: sky under the cover, base law (left) against the linear law on the terrain side (right)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T01:53:32.178Z",
+   "file": "20261122015332178-note-d2-open.jpg",
+   "source": "out/work/nep/p6/h1/d2-open.png",
+   "kind": "note",
+   "label": "Dive 4742 to 4757 at the draft tier: full cover 4742 to 4745, terrain comes out, stars show in the gap from 4747",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T01:53:31.411Z",
+   "file": "20261122015331411-note-d3-close.jpg",
+   "source": "out/work/nep/p6/h1/d3-close.png",
+   "kind": "note",
+   "label": "Dive 4718 to 4740 at the draft tier with the cover window: limb to horizon, the veil closes from 4733",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T01:53:30.748Z",
+   "file": "20261122015330748-note-d3-limb-pairs.jpg",
+   "source": "out/work/nep/p6/h1/d3-limb-pairs.jpg",
+   "kind": "note",
+   "label": "Dive 4720 to 4732, right limb, draft tier, before and now: the grey green band and the wide bright line are gone (the hold's fitted field and edge line now leave by camera height)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-22T01:52:20.894Z",
+   "file": "20261122015220894-frame-f04736.jpg",
+   "source": "out/work/seq/4714-4742/f04736.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4736, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4736,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "26442750f28b11e0"
   },
   {
    "time": "2026-11-22T01:02:50.979Z",
