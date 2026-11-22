@@ -22,11 +22,15 @@ APRON_CROP = 688
 APRON_FIT = (0.36, 0.6, 0.1, 0.9)
 APRON_LANES = ('A-6', 6, 0.95, 0.9, (0.85, 1.05, 1.25), 60, 0.6, 40)
 APRON_UNEVEN = (20261121, 70, 0.45)
-APRON_VEINS = ('A-5', 2.5, 0.4, 0.6)
+APRON_VEINS = ('A-5', 1.6, 1.1, 0.8)
 APRON_CROWN = (-0.3, 0.9)
 APRON_FLOOR = 0.03
-APRON_MATCH = (40, 0.75, 1.3, 0.1)
-APRON_HOLD = (0.55, 0.9, 0.5)
+APRON_MATCH = (110, 0.8, 1.25, 0.1, 0.7, 1.45)
+APRON_HOLD = (0.55, 0.9, 0.75)
+APRON_BRIGHT = (0.66, 0.84, 0.5, 3)
+APRON_SPLIT = (2.2, 0.3, 1.5)
+APRON_KEEP = 0.85
+APRON_WARM = (0.5, 1.0, 2.2)
 APRON_PEAK = (96, 0.75)
 APRON_SKY = (0.02, 0.1)
 APRON_CANVAS = (1920, 1080)
@@ -310,24 +314,34 @@ def apron_build(out_full, out_web, check):
     rng = np.random.default_rng(APRON_UNEVEN[0])
     vary = cv2.resize(rng.random((oh // int(APRON_UNEVEN[1] * s) + 2, ow // int(APRON_UNEVEN[1] * s) + 2), dtype=np.float32), (ow, oh), interpolation=cv2.INTER_CUBIC)
     vary = APRON_UNEVEN[2] + (1 - APRON_UNEVEN[2]) * step(vary, 0.25, 0.75)
-    e *= np.where(e < 0, gain * vary * (1 - crown * step(band, APRON_CROWN[0], APRON_CROWN[1])), lift)
+    bright = step(lb, APRON_BRIGHT[0], APRON_BRIGHT[1])
+    fine = e - cv2.GaussianBlur(e, (0, 0), APRON_SPLIT[0] * s)
+    e = (e - fine) * APRON_SPLIT[1] + fine * APRON_SPLIT[2]
+    del fine
+    e *= np.where(e < 0, gain * vary * (1 - APRON_BRIGHT[2] * bright) * (1 - crown * step(band, APRON_CROWN[0], APRON_CROWN[1])), lift)
     del vary
     del band, lb
     tag, sigma, gain, up = APRON_VEINS
     v, _ = apron_layer(tag, (h, w), sigma)
-    e += v * np.where(v < 0, gain, gain * up)
+    e += v * np.where(v < 0, gain * (1 - APRON_BRIGHT[2] * bright), gain * up)
     del v
     e *= grey
-    out = b * np.exp(e[..., None] * np.where(e[..., None] < 0, np.array(tint, np.float32), 1))
-    del e
+    hue = np.array(tint, np.float32) + (np.array(APRON_WARM, np.float32) - np.array(tint, np.float32)) * bright[..., None]
+    del bright
+    out = b * np.exp(e[..., None] * np.where(e[..., None] < 0, hue, 1))
+    del e, hue
     q = 4
     small = cv2.resize(b, (ow // q, oh // q), interpolation=cv2.INTER_AREA)
     top = cv2.dilate(small, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (APRON_PEAK[0] // q, APRON_PEAK[0] // q)))
     top = cv2.resize(cv2.GaussianBlur(top, (0, 0), APRON_PEAK[0] / q / 3), (ow, oh), interpolation=cv2.INTER_LINEAR)
     out -= np.maximum(out - top, 0) * APRON_PEAK[1]
     del top, small
-    for ch in range(3):
-        out[..., ch] *= (low(b[..., ch], tone * s) + APRON_FLOOR) / (low(out[..., ch], tone * s) + APRON_FLOOR)
+    for _ in range(APRON_BRIGHT[3]):
+        keep = 1 - APRON_KEEP * step(out @ key, APRON_BRIGHT[0], APRON_BRIGHT[1])
+        for ch in range(3):
+            r = (low(b[..., ch], tone * s) + APRON_FLOOR) / (low(out[..., ch], tone * s) + APRON_FLOOR)
+            out[..., ch] *= 1 + (r - 1) * np.where(r > 1, keep, 1)
+        del keep
     if os.path.exists(f'{DIR}/apron-tone.npy'):
         t = cv2.resize(np.load(f'{DIR}/apron-tone.npy'), (ow, oh), interpolation=cv2.INTER_CUBIC)
         out *= 1 + (t - 1) * np.where(t > 1, 1 - APRON_HOLD[2] * step(out.max(2), APRON_HOLD[0], APRON_HOLD[1])[..., None], 1)
@@ -359,6 +373,7 @@ def apron_tone(frame):
     path = f'{DIR}/apron-tone.npy'
     if os.path.exists(path):
         t = t * np.load(path)
+    t = np.clip(t, APRON_MATCH[4], APRON_MATCH[5])
     np.save(path, t.astype(np.float32))
     zone = (hit & (ay > line) & (ay < 1) & (ax > 0) & (ax < 1))[h // 2:]
     print('tone factor in the front zone, mean r g b', t[zone].mean(0).round(4).tolist(), 'range', round(float(t[zone].min()), 3), round(float(t[zone].max()), 3))
