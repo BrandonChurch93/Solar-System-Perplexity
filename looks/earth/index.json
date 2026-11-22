@@ -1,8 +1,8 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T17:59:47.064Z",
+ "pushed": "2026-11-22T17:59:58.247Z",
  "head": "8a395ad4f36d1a58be260d496e8f449871273a4f",
- "note": "CUT35 on head 8a395ad4 (main b22a7927): rise sheets round 34 above the new arc; lights fade at 1642, 1650, 1660 at the draft tier; final 1755 keeps 143b0a53",
+ "note": "CUT35 on head 8a395ad4 (main b22a7927): rise sheets round 34 above the new arc; lights fade at 1642, 1650, 1660 at the draft tier; final 1755 keeps 143b0a53; star fill pair at 1857; new cover sheet",
  "looks": [
   {
    "time": "2026-11-22T17:58:30.517Z",
@@ -47,6 +47,80 @@
    "kind": "note",
    "label": "CUT35 lights fade (d840bb14, main b22a7927): judged travel frame 1642 at the draft tier, 4 times native: main left, lights faded with distance right",
    "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T17:55:57.181Z",
+   "file": "20261122175557181-note-pair-rise-sheets.jpg",
+   "source": "out/work/earth/pb/c35/pair-rise-sheets.png",
+   "kind": "note",
+   "label": "CUT35 rise law: earth.rise review sheets, round 34 (plain main 94482a8c) above, rise law below (code 5879f9ac on main 3dad4447). 2100 to 2113 and 2154 to 2174 byte equal; 2134 keeps the limb in the frame where round 34 is blank white",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T17:48:31.228Z",
+   "file": "20261122174831228-note-new-cover-sheet.jpg",
+   "source": "out/work/earth/pb/c35/new-cover-sheet.png",
+   "kind": "note",
+   "label": "CUT35 rise law: new cover sheet 2125 to 2136 at review, head 5879f9ac code (main 3dad4447): the horizon stays in the frame and curls into the limb",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T17:46:29.625Z",
+   "file": "20261122174629625-sheet-earth.rise-cover-preview-review.jpg",
+   "source": "out/work/sheets/earth.rise-cover-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.rise, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2125,
+   "last": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:46:28.695Z",
+   "file": "20261122174628695-frame-f02136-review.jpg",
+   "source": "out/work/sheets/.frames-zPb8v1/f02136-review.png",
+   "kind": "frame",
+   "label": "earth.rise frame 2136, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2136,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:23:40.261Z",
+   "file": "20261122172340261-sheet-earth.rise-preview-review.jpg",
+   "source": "out/work/sheets/earth.rise-preview-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.rise, review tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "review",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "096721f26986d35a"
+  },
+  {
+   "time": "2026-11-22T17:12:10.306Z",
+   "file": "20261122171210306-job-frame-01840.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1840, draft tier, texels view, from the running g13 job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1840,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
   },
   {
    "time": "2026-11-22T17:02:16.777Z",
