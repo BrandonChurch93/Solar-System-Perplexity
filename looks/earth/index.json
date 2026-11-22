@@ -1,9 +1,106 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T05:44:38.547Z",
- "head": "6417c3604d4e4fa21c4b5d279f95df728ebb63c5",
- "note": "Earth polish: READY 2 set on engine batch 19 (proofs, cover sheets, compares); measure on batch 19 running, READY 2 about 06:15 UTC",
+ "pushed": "2026-11-22T06:10:48.604Z",
+ "head": "9f49c8b3dafabe73cee92f5ddf643a79f246743f",
+ "note": "Earth POLISH READY 2 set on engine batch 19: judged frames at the final tier, terrain sheet, cover sheets, proofs of items 4 to 8. Next: the arrival 1666 to 1679 (mail 80).",
  "looks": [
+  {
+   "time": "2026-11-22T06:10:37.373Z",
+   "file": "20261122061037373-note-sheet-terrain-b19.jpg",
+   "source": "out/work/earth/pb/g/sheet-terrain-b19.png",
+   "kind": "note",
+   "label": "Terrain sheet, harness, review tier, full format, frames 1920 to 2099: 0 pixels differ from the sheet on engine batch 18. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:10:36.506Z",
+   "file": "20261122061036506-note-f-2156-final.jpg",
+   "source": "out/work/earth/pb/f/f-2156-final.png",
+   "kind": "note",
+   "label": "Judged rise frame 2156 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:10:35.625Z",
+   "file": "20261122061035625-note-f-2010-final.jpg",
+   "source": "out/work/earth/pb/f/f-2010-final.png",
+   "kind": "note",
+   "label": "Judged terrain frame 2010 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:10:34.825Z",
+   "file": "20261122061034825-note-f-1857-final.jpg",
+   "source": "out/work/earth/pb/f/f-1857-final.png",
+   "kind": "note",
+   "label": "Judged dive frame 1857 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:10:34.064Z",
+   "file": "20261122061034064-note-f-1755-final.jpg",
+   "source": "out/work/earth/pb/f/f-1755-final.png",
+   "kind": "note",
+   "label": "Judged hold frame 1755 at the final tier. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-22T06:10:04.334Z",
+   "file": "20261122061004334-sheet-earth.terrain-16x9-review.jpg",
+   "source": "out/work/sheets/earth.terrain-16x9-review.png",
+   "kind": "sheet",
+   "label": "Contact sheet earth.terrain, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "first": 1920,
+   "last": 2099,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:09:20.459Z",
+   "file": "20261122060920459-frame-f02018-review.jpg",
+   "source": "out/work/sheets/.frames-528SAe/f02018-review.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 2018, review tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2018,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "7553966a0ffa4014"
+  },
+  {
+   "time": "2026-11-22T06:03:15.747Z",
+   "file": "20261122060315747-job-frame-01857.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T05:52:25.884Z",
+   "file": "20261122055225884-job-frame-01970.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1970, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1970,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-22T05:44:33.157Z",
    "file": "20261122054433157-note-pair-2156-b18-b19.jpg",
@@ -133,63 +230,11 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-22T05:43:55.856Z",
-   "file": "20261122054355856-note-city-2156-b19.jpg",
-   "source": "out/work/earth/pb/g/city-2156-b19.png",
-   "kind": "note",
-   "label": "Item 8, city lights at 2156 at 3 times: kept build, before (clipped cores), new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:54.936Z",
-   "file": "20261122054354936-note-cloud-1857.jpg",
-   "source": "out/work/earth/pb/f/cloud-1857.png",
-   "kind": "note",
-   "label": "Item 8, clouds near the limb at 1857 at 3 times: kept build, new. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:43:53.777Z",
-   "file": "20261122054353777-note-sky-2010.jpg",
-   "source": "out/work/earth/pb/f/sky-2010.png",
-   "kind": "note",
-   "label": "Item 8, sky at 2010 at 10 times gain: approved close image, new, kept build. agent/earth code 3b3819e on main 2621f00 (engine batch 19 7a880ac6, engine hash 7553966a)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T05:42:24.705Z",
-   "file": "20261122054224705-job-frame-01680.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-22T04:52:42.855Z",
    "file": "20261122045242855-compare-compare-earth-terrain-view.jpg",
    "source": "out/work/compare/compare-earth-terrain-view.jpg",
    "kind": "compare",
    "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T04:52:41.828Z",
-   "file": "20261122045241828-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
    "stop": "earth",
    "segment": "earth.terrain",
    "frame": 2010,
