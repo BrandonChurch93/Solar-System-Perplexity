@@ -174,7 +174,7 @@ export const createSet: SetFactory = async (ctx) => {
         eye.multiplyScalar(1 + sw.height * Math.exp(timing.slow * sw.rate * fall))
         veilTurn.copy(sw.turn).multiply(localQ)
         sunCam.copy(sunTerrain).applyQuaternion(localBack)
-        veil.update(view.camera, view.format.width, view.format.height, centre, eye, rush, 1, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, rush, 1, veilTurn, thick, 0, sw, sunCam, 0, airFwd, airRight, gain, gain * look.relief.air.gain, shot.post.vignette, 1)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -206,7 +206,7 @@ export const createSet: SetFactory = async (ctx) => {
         const after = Math.max((kind === 'dive' ? plan.dive(state.time + config.shutterFraction / config.fps) : plan.rise(state.time + config.shutterFraction / config.fps)).pose.position.length() - 1, 1e-6)
         eye.copy(localP).normalize().multiplyScalar(1 + low)
         const air = Math.pow(1 - released, look.veil.sunFade)
-        veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette)
+        veil.update(view.camera, view.format.width, view.format.height, centre, eye, Math.min(Math.abs(Math.log(after / high)) / timing.rush, 1), Math.asin(1 / (1 + low)) / Math.asin(1 / (1 + high)), localQ, thick, released, sw, sunCam, air, airFwd, airRight, gain, gain * look.relief.air.gain * (1 + look.veil.sunLift * air), vignette, 0)
       } else veil.hide()
       const aspect = view.format.width / view.format.height
       limbFrame(camera, light, limbS, limbT)

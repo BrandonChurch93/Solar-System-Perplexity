@@ -3,7 +3,7 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 
 export interface VeilLook {
-  sheets: { lowest: number; step: number; size: number; near: [number, number, number]; gamma: number; top: number; holes: [number, number]; deep: number; edge: [number, number]; thin: number; ramp: number; fan: [number, number, number, number]; wave: number; haze: number; sunward: [number, number]; shift: [number, number]; dense: number; ceiling: [number, number]; solid: [number, number] }
+  sheets: { lowest: number; step: number; size: number; near: [number, number, number]; gamma: number; top: number; holes: [number, number]; deep: number; edge: [number, number]; thin: number; ramp: number; fan: [number, number, number, number]; fray: [number, number, number, number]; mist: [number, number, number, number, number, number]; wait: [number, number]; wave: number; haze: number; sunward: [number, number]; shift: [number, number]; dense: number; ceiling: [number, number]; solid: [number, number] }
   fog: [number, number, number]
   fogOrbit: [number, number, number]
   pad: number
@@ -34,6 +34,10 @@ uniform mat3 uRot;
 uniform vec3 uCam;
 uniform float uRush;
 uniform vec4 uFan;
+uniform vec4 uFray;
+uniform float uSoft;
+uniform float uWait;
+uniform float uBlur;
 uniform float uWave;
 uniform float uBend;
 uniform float uRamp;
@@ -124,13 +128,16 @@ void main() {
       float lump = vnoise(vec3(st * uForm.w, i * 3.7));
       fan.x += (lump - 0.5) * uWave;
       for (int k = 0; k < (uRush > 0.0 ? 1 : 0); k++) {
-        float lines = 0.65 * vnoise(vec3(fan * uFan.xy, i * 3.7)) + 0.35 * vnoise(vec3(fan * uFan.xy * vec2(uFan.z, 1.0) + 7.3, i * 5.1));
+        float fibre = vnoise(vec3(fan.x * uFan.x * uFray.x, 1.3, i * 2.9)) - 0.5;
+        vec2 fq = vec2(fan.x, fan.y + fibre * uFray.y);
+        float lines = 0.65 * vnoise(vec3(fq * uFan.xy, i * 3.7)) + 0.35 * vnoise(vec3(fq * uFan.xy * vec2(uFan.z, 1.0) + 7.3, i * 5.1)) + fibre * uFray.z;
         lump = mix(lump, lines, uRush);
       }
-      float wide = 1.0 + uRush * uFan.w;
+      float wide = 1.0 + uRush * uFan.w + uBlur;
       vec3 tex = textureGrad(uClouds, vec2(uv.x, (fract(uv.y) + uPad) * uTall), gx * vec2(1.0, uTall) * wide, gy * vec2(1.0, uTall) * wide).rgb;
       float n = sqrt(clamp(dot(tex, vec3(0.2126, 0.7152, 0.0722)) / uTone.y, 0.0, 1.0)) - 0.5 + (lump - 0.5) * uTone.x;
-      float al = smoothstep(bar, bar + uForm.y, n) * open * uDense * smoothstep(uFade.x, uFade.y, x) * (1.0 - smoothstep(uFade.z, ${COUNT.toFixed(1)}, x)) * (1.0 - smoothstep(uCeil.x, uCeil.y, a));
+      float soft = uForm.y * uRush * uFray.w + uSoft;
+      float al = smoothstep(bar - 0.5 * soft, bar + uForm.y + 0.5 * soft, n) * open * uDense * smoothstep(uFade.x, uFade.y, x) * (1.0 - smoothstep(uFade.z, ${COUNT.toFixed(1)}, x)) * (1.0 - smoothstep(uCeil.x, uCeil.y, a)) * (1.0 - uWait * smoothstep(uFade.y, uFade.z, x));
       float misted = 1.0 - (1.0 - uTone.w * smoothstep(0.1, 0.9, t / horizon)) * (1.0 - uTone.z * smoothstep(uFade.x, uFade.z, x));
       vec3 c = mix(uLit * pow(tex / uMean, vec3(uGamma)) * sunward, fog, misted);
       col += through * al * c;
@@ -177,7 +184,7 @@ export class Veil {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, depthTest: false, depthWrite: false, transparent: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor,
       uniforms: {
-        uInvProj: { value: new THREE.Matrix4() }, uRot: { value: new THREE.Matrix3() }, uCam: { value: new THREE.Vector3(0, 0, 2) }, uRush: { value: 0 }, uFan: { value: new THREE.Vector4().fromArray(s.fan) }, uWave: { value: s.wave }, uBend: { value: 1 }, uRamp: { value: s.ramp }, uCentre: { value: new THREE.Vector3(0, 0, -2) }, uPx: { value: 0.001 }, uAmount: { value: 0 },
+        uInvProj: { value: new THREE.Matrix4() }, uRot: { value: new THREE.Matrix3() }, uCam: { value: new THREE.Vector3(0, 0, 2) }, uRush: { value: 0 }, uFan: { value: new THREE.Vector4().fromArray(s.fan) }, uFray: { value: new THREE.Vector4().fromArray(s.fray) }, uSoft: { value: 0 }, uWait: { value: 0 }, uBlur: { value: 0 }, uWave: { value: s.wave }, uBend: { value: 1 }, uRamp: { value: s.ramp }, uCentre: { value: new THREE.Vector3(0, 0, -2) }, uPx: { value: 0.001 }, uAmount: { value: 0 },
         uSheet: { value: new THREE.Vector4(s.lowest, s.step, s.size, 0) }, uFade: { value: new THREE.Vector3().fromArray(s.near) }, uForm: { value: new THREE.Vector4(s.edge[0], s.edge[1], s.thin, s.holes[1]) }, uTone: { value: new THREE.Vector4(s.holes[0], s.top, s.deep, s.haze) }, uGamma: { value: s.gamma }, uDense: { value: s.dense }, uCeil: { value: new THREE.Vector2().fromArray(s.ceiling) }, uSolid: { value: new THREE.Vector2().fromArray(s.solid) }, uFog: { value: new THREE.Vector3() }, uPad: { value: look.pad }, uTall: { value: 1 / (1 + 2 * look.pad) },
         uClouds: { value: clouds }, uUp: { value: new THREE.Vector3(0, 1, 0) }, uE1: { value: new THREE.Vector3(1, 0, 0) }, uE2: { value: new THREE.Vector3(0, 0, 1) }, uLight: { value: new THREE.Vector4(look.light[0], look.light[1], s.shift[0], s.shift[1]) }, uMean: { value: new THREE.Vector3().fromArray(look.mean) },
         uSunCam: { value: new THREE.Vector3(0, 0, -1) }, uSunward: { value: new THREE.Vector2().fromArray(s.sunward) },
@@ -195,7 +202,7 @@ export class Veil {
     this.mesh.visible = false
   }
 
-  update(camera: THREE.PerspectiveCamera, width: number, height: number, centre: THREE.Vector3, eye: THREE.Vector3, rush: number, bend: number, turn: THREE.Quaternion, amount: number, side: number, frame: { up: THREE.Vector3; e1: THREE.Vector3; e2: THREE.Vector3 }, sunCam: THREE.Vector3, air: number, airFwd: THREE.Vector3, airRight: THREE.Vector3, gain: number, airGain: number, vignette: number): void {
+  update(camera: THREE.PerspectiveCamera, width: number, height: number, centre: THREE.Vector3, eye: THREE.Vector3, rush: number, bend: number, turn: THREE.Quaternion, amount: number, side: number, frame: { up: THREE.Vector3; e1: THREE.Vector3; e2: THREE.Vector3 }, sunCam: THREE.Vector3, air: number, airFwd: THREE.Vector3, airRight: THREE.Vector3, gain: number, airGain: number, vignette: number, mist: number): void {
     const on = amount > 0 || air > 0
     this.mesh.visible = on
     if (!on) return
@@ -204,11 +211,16 @@ export class Veil {
     ;(u.uInvProj!.value as THREE.Matrix4).copy(camera.projectionMatrixInverse)
     ;(u.uRot!.value as THREE.Matrix3).setFromMatrix4(this.m.makeRotationFromQuaternion(turn))
     ;(u.uCam!.value as THREE.Vector3).copy(eye)
-    u.uRush!.value = rush
     u.uBend!.value = bend
     ;(u.uCentre!.value as THREE.Vector3).copy(centre)
     u.uPx!.value = l.edgePx * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / height
     u.uAmount!.value = amount
+    const thin = mist * (1 - THREE.MathUtils.smoothstep(amount, l.sheets.mist[1], l.sheets.mist[2]))
+    u.uRush!.value = rush * (1 - thin * l.sheets.mist[4])
+    u.uSoft!.value = thin * l.sheets.mist[0]
+    ;(u.uFade!.value as THREE.Vector3).set(l.sheets.near[0] + thin * l.sheets.mist[5], l.sheets.near[1] + thin * l.sheets.mist[5], l.sheets.near[2])
+    u.uBlur!.value = thin * l.sheets.mist[3]
+    u.uWait!.value = mist * (1 - THREE.MathUtils.smoothstep(amount, l.sheets.wait[0], l.sheets.wait[1]))
     ;(u.uUp!.value as THREE.Vector3).copy(frame.up)
     ;(u.uE1!.value as THREE.Vector3).copy(frame.e1)
     ;(u.uE2!.value as THREE.Vector3).copy(frame.e2)
