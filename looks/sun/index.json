@@ -1,9 +1,17 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T01:14:49.627Z",
- "head": "a9395582b344599c78f7c5bbab121c5e85c91d2e",
- "note": "polish: review sheet 200 to 224 rendering; item 4 (limb and sky) studied offline",
+ "pushed": "2026-11-22T01:30:26.685Z",
+ "head": "35cc331f2dcc34402507518c5cd825beddd8d123",
+ "note": "Review sheet 200 to 224 rendering (6 of 25); opening switch being written offline; today's opening at 400 px",
  "looks": [
+  {
+   "time": "2026-11-22T01:30:25.262Z",
+   "file": "20261122013025262-note-i283-strip-0-30-60-90-at-400-today.jpg",
+   "source": "out/work/sun/i283-strip-0-30-60-90-at-400-today.png",
+   "kind": "note",
+   "label": "Opening today at 400 px wide, frames 0, 30, 60, 90: the four look nearly alike (mail 53, before the switch)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-22T01:14:48.635Z",
    "file": "20261122011448635-note-i281-limb-right-approved-90-60-0-gain3.jpg",
@@ -118,14 +126,6 @@
    "source": "out/work/sun/i272-f60-under-the-limb-x2.png",
    "kind": "note",
    "label": "sun polish proof (build P3): f60 under the limb x2, round 24 beside now",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-22T00:53:27.239Z",
-   "file": "20261122005327239-note-i272-f60-critic-box-native.jpg",
-   "source": "out/work/sun/i272-f60-critic-box-native.png",
-   "kind": "note",
-   "label": "sun polish proof (build P3): f60 critic box native, round 24 beside now",
    "stop": "sun"
   },
   {
