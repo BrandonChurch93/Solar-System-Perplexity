@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-22T16:46:56.191Z",
- "head": "90cc5b23c02518385458424ddefd8eb3833281f4",
- "note": "venus: the veil's two gates on the terrain side, cure 90cc5b2 in proof for CUT35 (draft pairs beside the round 34 state; tree holds main 6460b4a)",
+ "pushed": "2026-11-22T17:11:37.439Z",
+ "head": "5bd77c011f3b09d811b016afdbde4369d195fb79",
+ "note": "venus: gate cure 90cc5b2 in proof for CUT35, rise cover at review beside round 34 (tree holds main ff158d9)",
  "looks": [
+  {
+   "time": "2026-11-22T17:11:36.490Z",
+   "file": "20261122171136490-note-c28-rc.jpg",
+   "source": "../view/c28-rc.png",
+   "kind": "note",
+   "label": "venus rise cover sheet 1555 to 1566 at review with the gate cure 90cc5b2; rendered on engine 84b0ea4, tree now holds main ff158d9",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-22T17:11:35.523Z",
+   "file": "20261122171135523-note-c28-rise-pairs.jpg",
+   "source": "../view/c28-rise-pairs.jpg",
+   "kind": "note",
+   "label": "venus rise cover at review, cells 1555 to 1558: round 34 (left of each pair) beside the gate cure 90cc5b2 (right); cells 1558 to 1566 are the same pixels as round 34; rendered on engine 84b0ea4, tree now holds main ff158d9",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-22T16:46:55.558Z",
    "file": "20261122164655558-note-v78-rise.jpg",
@@ -146,22 +162,6 @@
    "source": "../view/m-rise-in.jpg",
    "kind": "note",
    "label": "rise in 1551 to 1558 as it is on main 84b0ea4 (round 33 R4 smear), left for now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:20.758Z",
-   "file": "20261122150620758-note-m-dive-out.jpg",
-   "source": "../view/m-dive-out.jpg",
-   "kind": "note",
-   "label": "dive out 1314 to 1322 as it is on main 84b0ea4: veil streaks over the sharp terrain picture (round 33 R4 dissolve), left for now",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-22T15:06:19.728Z",
-   "file": "20261122150619728-note-c25-dc.jpg",
-   "source": "../view/c25-dc.png",
-   "kind": "note",
-   "label": "dive cover sheet 1309 to 1320 at review, change A, tree holds main 64fff6f; 1309 to 1313 changed, 1314 to 1320 same bytes as main",
    "stop": "venus"
   },
   {
