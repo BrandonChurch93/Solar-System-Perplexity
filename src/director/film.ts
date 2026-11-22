@@ -570,6 +570,8 @@ export class FilmDirector implements Director {
         view = r.view
         cover.amount = p.coverAmount(segment, time)
         if (p.p.coverHides !== undefined) cover.hides = p.p.coverHides
+        const hidden = p.coverHidden(segment, time)
+        if (hidden !== undefined) cover.hidden = hidden
         const side = p.coverSide(segment, time)
         const blend = (x: [number, number, number], y?: [number, number, number]): [number, number, number] => (y ? [x[0] + (y[0] - x[0]) * side, x[1] + (y[1] - x[1]) * side, x[2] + (y[2] - x[2]) * side] : x)
         cover.color = blend(p.p.cover, p.p.coverTerrain)

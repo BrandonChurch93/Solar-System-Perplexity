@@ -257,6 +257,10 @@ export class StopPlan {
     return Math.pow(1 - amount, 2)
   }
 
+  coverHidden(_seg: Segment, _time: number): number | undefined {
+    return undefined
+  }
+
   coverAmount(seg: Segment, time: number): number {
     const w = coverWindow(seg)
     if (!w) return 0
