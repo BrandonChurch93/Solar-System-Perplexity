@@ -774,3 +774,18 @@ Head e31356d and this note, main 8f13066 (engine batch 20) merged; the veil take
 - Round 31 of the whole film is rendering from main (my folders on main are the round 23 state; nothing of mine goes onto main before Phase 6).
 
 Still weak in the veil after F4 (candidate take F5, only after F4 is committed and proved): at amount 1 on the terrain side (1557 to 1559, 1311 to 1316) fine straight lines and one dark slot with crisp sides run from the limb down (`view/f4n-1557-top.jpg`). Cause read from `veil.ts`: `fibre` is a function of the fan angle alone (72 cells per radian), so each strand has no end, and its share `fray[2]` 0.25 enters a threshold whose band is 0.25 wide. The branch cut of `atan` is not it: `e1` points to the Sun's side, the camera looks sunward, the cut lies behind it. Ideas, one at a time: give the fibre noise a slow second coordinate along the log radius (finite strands); lower `fray[2]`; widen `fray[3]`.
+
+## State at 09:58 (22 Nov): veil take F4 committed, proved on batch 20 (read this first after a compaction)
+
+Head 0eb220a (merge of main c479536: round 31 results, docs only since batch 20), code commit 1d3704c (veil take F4: `veil.ts`, `look.ts`, `set.ts`). r2 sits on main c479536. Queue q22 done 09:55, all on main 8f13066 (batch 20) with the tree of 1d3704c (`diff -rq` of `src/stops/venus` equal):
+
+- Finals f22: 1185, 1287, 1440 the same bytes as f16; 1586 changed by batch 20 in the sky only (see 09:12).
+- Audit clean, repeat one hash each for 12 frames (see 09:12).
+- Review cover sheets c22 (`view/c22-rc.png`, `view/c22-dc.png`) against c21 on batch 19: every cell of both sheets the same bytes (1555 to 1566, 1309 to 1320). Batch 20 changes nothing inside my cover windows; the reading of c21 at 09:00 stands.
+- Chain: vitest 79 passed; G11, G12, G15 pass (venus web 253 MB, full 1002 MB); G5 pass (invalid 0; coverage 0.316, 0.446, 0.685, 0.245); G17 pass (1185 median 0.959, p25 0.844 over 77 tiles; 1440 median 0.936, p25 0.804 over 76 tiles); G13 pass (0 of 433 frames over 0.02). The same numbers as at 06:12 and 07:53.
+
+Round 31 (whole film, main 07aabf5, my folders there are the round 23 state): no issue names a frame of my hold, dive, terrain or rise. Item 5 (R4, severe) names the Venus exit in the travel, 1612 to 1618: the limb in four stepped copies at peak speed. That is the engine's sample count (mail 13: no blur tricks in my folder). R2 votes: venus.hold b d d b d, venus.terrain b d d a d; the jurors fault the painterly cloud texture and the star field beside the Sun, both in the approved images.
+
+Running since 09:56 (`q23.sh`, log `/tmp/q23.log`): the two review strips again on batch 20 (tags g4t, g4u, `cmp` against f4t, f4u of batch 19), then the full review sheets of venus.rise and venus.dive at preview size (`r2/out/work/sheets/`), to read every frame as the critics will. Ends with "queue23 done".
+
+Next: note to the Builder (sent once the strips are in); read both full sheets; then take F5 on the fine straight lines at amount 1 (see 09:12), tried first in the render copy with `./e2n.sh TAG 1557,1558,1314`.
