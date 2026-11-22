@@ -37,3 +37,11 @@ A small branch from `origin/main` (616695b) that holds only the cure of what rou
 
 - The disc `sunplate.json` states (centre of the picture, radius 0.227585) is the hero's disc as fitted in the hold's quarter. The disc painted on the whole plate is larger and off centre: centre uv 0.5176, 0.5207, radius 0.2506 (sun_builder's fit on `sun-plate.webp`, 405 rays, median residual 0.67 px). In the hold's quarter the two limbs agree within about 9 px; on the right and the top, which only the travel shows, the painted limb is 55 and 65 px further out at 495.
 - 1962bf3 laid the grain, the travel's limb darkening and the corona's reach on the stated disc, which left a pale band without grain along the right limb at 495. Now `sunSurface.disc` carries the painted disc and those three are laid on it; the hold's own limb darkening keeps the stated disc, so with the travel weight at 0 the shade is the hold's to the bit.
+
+## Proof at the head 7c21dbf (main c479536), 10:15
+
+- Finals, 16x9, full set, against main 616695b rendered on this VM (`out/work/mercury/leave/fb` before, `fe` after; sha256, first 16): 495 759052 pixels change, 408136 over 2 codes, at most 149 (d7e6e6191f224c4b to b67a03ae487739b9); 615 126644 pixels, 3031 over 2 codes, at most 4, x from 1485, rows 0 to 468 (9c0e8827f0a8e823 to 2f07afda9b6b740e); 717 (7b9c0cb4fa1f63ed), 870 (1999a34df58e29f7), 1016 (aa8801fefb404945) 0 pixels, the same files.
+- Draft, preview, web set, against main (`s0` before, `d8` after): dive 710, 717, 720, 724, 728, 732, 736, 740, 744, rise 985 to 1035 every fifth and 1016, leaving travel 1040, 1050, 1060: 0 pixels each. 690 26287 pixels at most 4 codes, 700 13430 at most 2 (the hold's grain going out). Strip 474 to 539 every fifth (`d0` before): 474 77690 pixels at most 8 codes, 484 to 519 between 137116 and 224433 pixels, 539 47171 at most 4.
+- tsc clean, vitest 79 of 79, `tools/shaderaudit.py`: for mercury only main's `skyplate.ts:43, 44`.
+- PART 09:26 (3bd6b41), PART 2 10:05 (1962bf3 proved, 7c21dbf pushed), DONE 10:12 (7c21dbf), the line on 1016, 870 and the strip 10:16.
+- To carry to `agent/mercury` in Phase 6: this whole branch (the streak's core line, `sunSurface`, `ghostIn`), then full jitter of the cells, the ring of loops repainted, and the streak in `mercury.travel` after 1035, where the hold's patch drops and the outer piece is alone again.
