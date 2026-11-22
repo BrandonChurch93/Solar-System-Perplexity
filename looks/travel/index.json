@@ -1,71 +1,71 @@
 {
  "folder": "travel",
- "pushed": "2026-11-22T09:52:32.338Z",
- "head": "f4472a3e81fcc979b8e5f7dad9d372ce47a4f1a4",
- "note": "DONE proofs: draft sheets and strips of jupiter, venus, mercury, uranus, saturn at f4472a3; steady growth design started",
+ "pushed": "2026-11-22T10:17:34.791Z",
+ "head": "b4edbdb044b367593f165f25ba6fe3e9547d795a",
+ "note": "steady growth b4edbdb: draft strips of the last 36 frames of seven travels, window 33 (sun 41)",
  "looks": [
   {
-   "time": "2026-11-22T09:52:31.326Z",
-   "file": "20261122095231326-note-e1-saturn-last24.jpg",
-   "source": "../../../../tmp/v/e1-saturn-last24.jpg",
+   "time": "2026-11-22T10:17:34.231Z",
+   "file": "20261122101734231-note-g1-uranus.jpg",
+   "source": "../../../../tmp/v/g1-uranus.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-saturn-last24",
+   "label": "grow window 33 uranus.travel 4494 to 4529 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:30.338Z",
-   "file": "20261122095230338-note-e1-uranus-last24.jpg",
-   "source": "../../../../tmp/v/e1-uranus-last24.jpg",
+   "time": "2026-11-22T10:15:08.817Z",
+   "file": "20261122101508817-note-g1-jupiter.jpg",
+   "source": "../../../../tmp/v/g1-jupiter.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-uranus-last24",
+   "label": "grow window 33 jupiter.travel 3354 to 3389 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:29.292Z",
-   "file": "20261122095229292-note-e1-uranus-first24.jpg",
-   "source": "../../../../tmp/v/e1-uranus-first24.jpg",
+   "time": "2026-11-22T10:12:57.454Z",
+   "file": "20261122101257454-note-g1-venus.jpg",
+   "source": "../../../../tmp/v/g1-venus.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-uranus-first24",
+   "label": "grow window 33 venus.travel 1644 to 1679 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:28.407Z",
-   "file": "20261122095228407-note-e1-uranus-sheet12.jpg",
-   "source": "../../../../tmp/v/e1-uranus-sheet12.jpg",
+   "time": "2026-11-22T10:12:56.844Z",
+   "file": "20261122101256844-note-g1-mercury.jpg",
+   "source": "../../../../tmp/v/g1-mercury.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-uranus-sheet12",
+   "label": "grow window 33 mercury.travel 1074 to 1109 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:27.447Z",
-   "file": "20261122095227447-note-e1-mercury-last24.jpg",
-   "source": "../../../../tmp/v/e1-mercury-last24.jpg",
+   "time": "2026-11-22T10:08:45.104Z",
+   "file": "20261122100845104-note-g1-saturn.jpg",
+   "source": "../../../../tmp/v/g1-saturn.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-mercury-last24",
+   "label": "grow window 33 saturn.travel 3924 to 3959 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:26.516Z",
-   "file": "20261122095226516-note-e1-mercury-first24.jpg",
-   "source": "../../../../tmp/v/e1-mercury-first24.jpg",
+   "time": "2026-11-22T10:07:29.710Z",
+   "file": "20261122100729710-note-g1-sun.jpg",
+   "source": "../../../../tmp/v/g1-sun.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-mercury-first24",
+   "label": "grow window 41 sun.travel 498 to 538 draft",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:25.434Z",
-   "file": "20261122095225434-note-e1-mercury-sheet12.jpg",
-   "source": "../../../../tmp/v/e1-mercury-sheet12.jpg",
+   "time": "2026-11-22T10:07:29.044Z",
+   "file": "20261122100729044-note-g1-earth-crops.jpg",
+   "source": "../../../../tmp/v/g1-earth-crops.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-mercury-sheet12",
+   "label": "grow window 33 earth.travel native crops at Mars place 2205 to 2228",
    "stop": "travel"
   },
   {
-   "time": "2026-11-22T09:52:24.459Z",
-   "file": "20261122095224459-note-e1-venus-last24.jpg",
-   "source": "../../../../tmp/v/e1-venus-last24.jpg",
+   "time": "2026-11-22T10:07:28.063Z",
+   "file": "20261122100728063-note-g1-earth.jpg",
+   "source": "../../../../tmp/v/g1-earth.jpg",
    "kind": "note",
-   "label": "draft at f4472a3: e1-venus-last24",
+   "label": "grow window 33 earth.travel 2214 to 2249 draft",
    "stop": "travel"
   }
  ]
