@@ -22,7 +22,7 @@ export interface GlobeLight {
   nightSoft: [number, number, number, number]
   dusk: { from: number; range: [number, number, number, number] }
   edge: number
-  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number; nearGain: number; toLight: number; after: number }
+  rim: { color: [number, number, number]; width: number; wide: number; wideGain: number; nearGain: number; nearTint: [number, number, number]; lobe: [number, number, number]; toLight: number; after: number }
   line: { dir: [number, number, number]; gain: number; width: [number, number]; side: [number, number]; sun: [number, number, number, number]; dip: number; dipWidth: [number, number]; dipSun: [number, number]; dipTight: [number, number, number] }
   glareGate: [number, number, number]
   glareLens: [number, number]
@@ -157,6 +157,8 @@ uniform vec3 uPlain;
 uniform float uEdge;
 uniform vec3 uRimColor;
 uniform vec2 uRimWide;
+uniform vec3 uRimNear;
+uniform vec3 uRimLobe;
 uniform float uRimSpill;
 uniform vec3 uRimDir;
 uniform vec3 uGlareW;
@@ -253,8 +255,8 @@ void main() {
   vec3 rim = vec3(0.0);
   vec3 d = spinY(n * uBodyToWorld, uSpin);
   if (c > 0.0 && b < 0.0 && cov < 1.0) {
-    vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim);
-    float fall = uRimWide.x * exp(-out1 / uRimWidth.x) + uRimWide.y * exp(-out1 / uRimWidth.y);
+    vec3 lit = max(curveAt(dot(n, uRimDir)) - uNight, vec3(0.0)) * smoothstep(0.0, 0.35, ndlRim) * (uRimLobe.x + uRimLobe.y * exp((ndlRim - 1.0) / uRimLobe.z));
+    vec3 fall = uRimNear * (uRimWide.x * exp(-out1 / uRimWidth.x)) + uRimWide.y * exp(-out1 / uRimWidth.y);
     rim = uRimColor * lit * fall * uRimSpill * (1.0 - cov) * mix(uGlareGate.z, 1.0, toward);
   }
   float mu = clamp(dot(n, -ray), 0.0, 1.0);
@@ -447,7 +449,7 @@ export class Globe {
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },
         uEdge: { value: l.edge },
         uRimColor: { value: new THREE.Vector3().fromArray(l.rim.color) },
-        uRimWide: { value: new THREE.Vector2(l.rim.nearGain, l.rim.wideGain) }, uRimSpill: { value: 1 }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) }, uLine: { value: new THREE.Vector4(l.line.gain, l.line.width[0], l.line.width[1], l.line.dip) }, uLineDip: { value: new THREE.Vector4(l.line.dipWidth[0], l.line.dipWidth[1], l.line.dipSun[0], l.line.dipSun[1]) }, uLineW: { value: new THREE.Vector3(1, 0, 0) }, uLineSide: { value: new THREE.Vector2().fromArray(l.line.side) }, uLineSun: { value: new THREE.Vector4().fromArray(l.line.sun) }, uLineTight: { value: new THREE.Vector3().fromArray(l.line.dipTight) },
+        uRimWide: { value: new THREE.Vector2(l.rim.nearGain, l.rim.wideGain) }, uRimNear: { value: new THREE.Vector3().fromArray(l.rim.nearTint) }, uRimLobe: { value: new THREE.Vector3().fromArray(l.rim.lobe) }, uRimSpill: { value: 1 }, uRimDir: { value: new THREE.Vector3(1, 0, 0) }, uGlareW: { value: new THREE.Vector3(1, 0, 0) }, uGlareGate: { value: new THREE.Vector3().fromArray(l.glareGate) }, uGlareLens: { value: 1 }, uRimWidth: { value: new THREE.Vector2(l.rim.width, l.rim.wide) }, uLine: { value: new THREE.Vector4(l.line.gain, l.line.width[0], l.line.width[1], l.line.dip) }, uLineDip: { value: new THREE.Vector4(l.line.dipWidth[0], l.line.dipWidth[1], l.line.dipSun[0], l.line.dipSun[1]) }, uLineW: { value: new THREE.Vector3(1, 0, 0) }, uLineSide: { value: new THREE.Vector2().fromArray(l.line.side) }, uLineSun: { value: new THREE.Vector4().fromArray(l.line.sun) }, uLineTight: { value: new THREE.Vector3().fromArray(l.line.dipTight) },
         uBodyToWorld: { value: this.bodyToWorld }, uCenter: { value: this.center }, uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
