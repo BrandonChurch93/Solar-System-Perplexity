@@ -1,34 +1,32 @@
 {
  "folder": "earth",
- "pushed": "2026-11-22T15:12:07.169Z",
- "head": "30ce2e850118f705bb9c6eb9efdbb7d42f2593be",
- "note": "CUT34 batch on head 483cf916 (main ffbef501): terrain fine detail back at the finished build's level, Moon rounder with a softer rim, Moon near the Earth so the dive pushes it out. Proof running, measure ends about 15:40",
+ "pushed": "2026-11-22T15:41:30.203Z",
+ "head": "d4cb5fc6ca71ec36e3eef219f9a63d792099a492",
+ "note": "15:41 UTC, tree holds main ffbef501, head d4cb5fc6 (code as 483cf916). Measure on the head: G13 0 of 463, G5 0.329 0.452 0.780 0.386, G17 1755 1.198 / 1.138, 2010 1.044 / 1.000. Pictures as at 15:12 (Moon near the Earth, Moon shape, terrain fine detail). In work: the dive arc for the first severe of R4 (horizon kept at the top of the frame into the cover), drafts follow.",
  "looks": [
   {
-   "time": "2026-11-22T15:12:06.173Z",
-   "file": "20261122151206173-note-t2010-cut34.jpg",
-   "source": "out/work/earth/pb/r1/t2010-cut34.png",
-   "kind": "note",
-   "label": "R1 terrain 2010, 2x crops: approved, finished build, READY of CUT33, head 483cf916 (final 16af9335). Fine detail against the approved image 0.4 to 1.6 px: 1.05 1.02 1.01, 1.13 1.10 1.09, now 1.06 1.03 1.03",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T15:12:04.966Z",
-   "file": "20261122151204966-note-moon-cut34.jpg",
-   "source": "out/work/earth/pb/r1/moon-cut34.png",
-   "kind": "note",
-   "label": "R1 Moon at 1755, 4x: hero, finished build, head 483cf916 (final 143b0a53). Limb ellipse radial over tangential 1.055, 1.101, 1.058; rim gradient p50 69.8, 73.5, 66.9",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-22T15:12:04.409Z",
-   "file": "20261122151204409-job-frame-01680.jpg",
+   "time": "2026-11-22T15:35:24.638Z",
+   "file": "20261122153524638-job-frame-01857.jpg",
    "source": "memory",
    "kind": "job",
-   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "label": "earth.dive frame 1857, final tier, nograin view, from the running measure job",
    "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1680,
+   "segment": "earth.dive",
+   "frame": 1857,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-22T15:22:05.257Z",
+   "file": "20261122152205257-job-frame-01942.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.terrain frame 1942, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1942,
    "tier": "draft",
    "format": "16x9",
    "diag": "texels",
@@ -89,14 +87,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f92fd0ddfc332543"
-  },
-  {
-   "time": "2026-11-22T15:09:05.198Z",
-   "file": "20261122150905198-note-m1-ends.jpg",
-   "source": "out/work/earth/pb/r1/m1-ends.png",
-   "kind": "note",
-   "label": "Near Moon at the ends: main against head at 1650 1660 1670 (arrival) and 2180 2185 2190 (leaving)",
-   "stop": "earth"
   }
  ]
 }
