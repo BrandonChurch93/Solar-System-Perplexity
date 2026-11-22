@@ -1,9 +1,17 @@
 {
  "folder": "saturn",
- "pushed": "2026-11-22T08:49:49.305Z",
+ "pushed": "2026-11-22T09:06:45.933Z",
  "head": "3cb24939869a7deedb0b69589f810ee7d5e01b3c",
- "note": "Limb handover 3813 to 3820 in the rise: trial F4 at draft, review tier stills rendering (tree 3cb2493 on main 45004ec)",
+ "note": "Limb handover in the rise: review tier stills of the kept code and of trial F4 (fill behind the limb) rendering",
  "looks": [
+  {
+   "time": "2026-11-22T09:06:44.478Z",
+   "file": "20261122090644478-note-rvk.jpg",
+   "source": "../../../../tmp/rvk.png",
+   "kind": "note",
+   "label": "Limb handover in the rise at the review tier, kept code 16b64e9, 3813 to 3820 at 3x: pale sliver and hard vertical edge at the junction",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-22T08:49:48.680Z",
    "file": "20261122084948680-note-f4-a.jpg",
@@ -63,6 +71,14 @@
    "engine": "7553966a0ffa4014"
   },
   {
+   "time": "2026-11-22T08:22:49.990Z",
+   "file": "20261122082249990-note-m0-pair.jpg",
+   "source": "../../../../tmp/m0-pair.png",
+   "kind": "note",
+   "label": "Limb handover: film left, the model alone right (picture switched off), draft 3809 to 3821, tree c18b4fd on main 45004ec",
+   "stop": "saturn"
+  },
+  {
    "time": "2026-11-22T07:11:47.000Z",
    "file": "20261122071147000-compare-compare-saturn-terrain-view.jpg",
    "source": "out/work/compare/compare-saturn-terrain-view.jpg",
@@ -71,34 +87,6 @@
    "stop": "saturn",
    "segment": "saturn.terrain",
    "frame": 3720,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:10:13.073Z",
-   "file": "20261122071013073-compare-compare-saturn-hold-view.jpg",
-   "source": "out/work/compare/compare-saturn-hold-view.jpg",
-   "kind": "compare",
-   "label": "saturn.hold: approved image left, film frame right, final tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "7553966a0ffa4014"
-  },
-  {
-   "time": "2026-11-22T07:10:12.070Z",
-   "file": "20261122071012070-still-f03465-16x9-final-full.jpg",
-   "source": "out/work/stills/f03465-16x9-final-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, final tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
