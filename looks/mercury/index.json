@@ -1,9 +1,25 @@
 {
  "folder": "mercury",
- "pushed": "2026-11-22T11:06:18.844Z",
- "head": "2426a2ed3811eae281f1592aca51db7935ad900c",
- "note": "Mercury polish: the leaving travel, Sun plate kept until it leaves the frame (1059 to 1068); tree on main d5b851f",
+ "pushed": "2026-11-22T11:29:47.377Z",
+ "head": "3476ba705caaf37afc08210956a064a82f4d47ce",
+ "note": "Mercury polish, tree 2426a2e + notes (holds main d5b851f): left streak in the hold sky, limb profiles for items 10a and 10c",
  "looks": [
+  {
+   "time": "2026-11-22T11:20:33.596Z",
+   "file": "20261122112033596-note-s11-left.jpg",
+   "source": "../../../../tmp/s11-left.png",
+   "kind": "note",
+   "label": "mercury.hold 615 upper left at gain 4, draft, tree 2426a2e plus the left streak in sky-hold on main d5b851f: approved, before, after (item 10a, the level streak now runs to the limb)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-22T11:16:51.332Z",
+   "file": "20261122111651332-note-f730.jpg",
+   "source": "out/work/mercury/p6/f5/f730.png",
+   "kind": "note",
+   "label": "mercury.dive frame 730, final tier (134 samples), tree 2426a2e on main d5b851f: item 5, the zoom blur is smooth, no repeated crater copies",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-22T11:06:16.853Z",
    "file": "20261122110616853-note-t4-limb.jpg",
@@ -35,28 +51,6 @@
    "kind": "note",
    "label": "Mercury 870 final, far wall and shadow edge at 1.5x: approved, polish READY 9604703, tree 05e91da (main d5b851f) with the wall layer",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:48:23.822Z",
-   "file": "20261122104823822-note-wallA-approved-before-after.jpg",
-   "source": "out/work/mercury/p6/i8/wallA-approved-before-after.png",
-   "kind": "note",
-   "label": "Mercury 870 final, crater wall at 1.5x: approved, polish READY 9604703, tree 05e91da (main d5b851f) with the wall layer: the ribbons resolve into fluted rock",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-22T10:36:39.921Z",
-   "file": "20261122103639921-job-frame-00615.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mercury.hold frame 615, final tier, nograin view, from the running measure job",
-   "stop": "mercury",
-   "segment": "mercury.hold",
-   "frame": 615,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-22T08:27:22.479Z",
