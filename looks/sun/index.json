@@ -1,9 +1,63 @@
 {
  "folder": "sun",
- "pushed": "2026-11-22T00:02:24.325Z",
- "head": "d30b8d658856c239ada45f37da17567996cccf9c",
- "note": "Polish item 2: nearest ground is now the approved cells with a generated layer of crisp lanes, veins and bright points; tone matched to the approved image at frame 90",
+ "pushed": "2026-11-22T00:21:44.605Z",
+ "head": "abaeecbb6f7f5cbe9ce33a1c0ac0d343c8e9b514",
+ "note": "sun polish item 2: nearest ground, lane and grain layer over the approved cells, tone matched at frame 90",
  "looks": [
+  {
+   "time": "2026-11-22T00:21:43.967Z",
+   "file": "20261122002143967-note-i262-v2-f90-bottom-right-native.jpg",
+   "source": "out/work/sun/i262-v2-f90-bottom-right-native.png",
+   "kind": "note",
+   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i262-v2-f90-bottom-right-native.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:21:43.315Z",
+   "file": "20261122002143315-note-i262-v2-f90-bottom-left-native.jpg",
+   "source": "out/work/sun/i262-v2-f90-bottom-left-native.png",
+   "kind": "note",
+   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i262-v2-f90-bottom-left-native.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:21:42.649Z",
+   "file": "20261122002142649-note-i259-f0-final-M11-whole-half.jpg",
+   "source": "out/work/sun/i259-f0-final-M11-whole-half.jpg",
+   "kind": "note",
+   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i259-f0-final-M11-whole-half.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:21:42.037Z",
+   "file": "20261122002142037-note-i255-f90-approved-r24-now-x2.jpg",
+   "source": "out/work/sun/i255-f90-approved-r24-now-x2.jpg",
+   "kind": "note",
+   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i255-f90-approved-r24-now-x2.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:21:41.116Z",
+   "file": "20261122002141116-note-i254-f0-left-native.jpg",
+   "source": "out/work/sun/i254-f0-left-native.png",
+   "kind": "note",
+   "label": "sun polish item 2, nearest ground with the lane and grain layer over the approved cells: i254-f0-left-native.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-22T00:16:11.001Z",
+   "file": "20261122001611001-frame-f00090.jpg",
+   "source": "out/work/sun/rf9/f00090.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, final tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f854c8146f64c7e4"
+  },
   {
    "time": "2026-11-22T00:02:23.602Z",
    "file": "20261122000223602-note-i252-f0-lower-r24-over-now.jpg",
@@ -75,60 +129,6 @@
    "kind": "note",
    "label": "Frame 90 lower part: approved image over take A-3. Not good enough: cells too large and glossy, a new take follows",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:06.893Z",
-   "file": "20261121232206893-note-i220-f90-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i220-f90-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "Frame 90 final: bottom strip and middle ground at native size, round 24 beside take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:06.320Z",
-   "file": "20261121232206320-note-i220-f60-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i220-f60-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "Frame 60 final: bottom strip and middle ground at native size, round 24 beside take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:05.755Z",
-   "file": "20261121232205755-note-i220-f0-bottom-and-middle-native.jpg",
-   "source": "out/work/sun/i220-f0-bottom-and-middle-native.png",
-   "kind": "note",
-   "label": "Frame 0 final: bottom strip and middle ground at native size, round 24 beside take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:05.237Z",
-   "file": "20261121232205237-note-i219-d5-f204.jpg",
-   "source": "out/work/sun/i219-d5-f204.jpg",
-   "kind": "note",
-   "label": "Frame 204 draft from above, take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:22:04.697Z",
-   "file": "20261121232204697-note-i219-d5-f179-bottom.jpg",
-   "source": "out/work/sun/i219-d5-f179-bottom.jpg",
-   "kind": "note",
-   "label": "Frame 179 draft, bottom, take A-3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-21T23:18:10.141Z",
-   "file": "20261121231810141-frame-f00060.jpg",
-   "source": "out/work/sun/rf8/f00060.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f854c8146f64c7e4"
   },
   {
    "time": "2026-11-21T17:49:49.561Z",
