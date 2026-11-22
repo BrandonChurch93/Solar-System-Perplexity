@@ -66,6 +66,17 @@ Takes of the paint: `t1` rejected (tall boulders with long shadows, one large fl
 
 `python3 assets-src/mercury/relief/haze.py` reads `public/assets/mercury/web/relief-color.jpg` and `relief-alpha.png` and writes `src/stops/mercury/haze.json`. No file under `public/` comes from it. The approved image washes the ground toward its Sun with glare; seen from above under the two covers that wash sat on the globe as a pale island. The script measures, in rings of angle from the picture's Sun (6 to 38 degrees, 17 knots, Sun at 745, -40 px of 2816 x 1584), the lit level of the ground (85th percentile of scene values above the far field's 2nd percentile, per channel) and writes the factor that brings each ring to the level of the far field (38 to 62 degrees), monotone toward the Sun and smoothed: 0.03 at 6 degrees, 0.09 at 10, 0.27 at 14, 0.39 at 20, 0.62 at 28, 1 at 38. `src/stops/mercury/globe.ts` multiplies both ground pictures by it once the camera is well above the terrain (`look.close.haze`), never in the terrain view itself.
 
+## Crater walls and dark ground (Phase 6 polish, items 8 and 10)
+
+The approved image shows the lit crater walls as smooth ribbons; at frame 870 the film shows it at 0.68 of its size, so the layer carries relief of 6 to 18 canvas px. `W=out/work/mercury/walls`.
+
+1. `python3 assets-src/mercury/relief/walls.py prep`: the box 1344, 720 to 2880, 1584 of the approved image from the 2x canvas (`$W/in.png`, 3072 x 1728) and three tiles of 1536 x 864 (`a` the wall at 1536, 200; `b` the near rim left at 0, 560; `c` the near rim right at 1236, 800), each written at 1024 x 576 so that it reads as a soft enlargement (`$W/tile-a-in.jpg`, `tile-b-in.jpg`, `tile-c-in.jpg`).
+2. Paint: `nano_banana_pro`, 16:9, 2752 x 1536, one tile as the only input, prompt `assets-src/mercury/relief/prompts/walls-tile.txt`. One take per tile: `$W/a-t1.png`, `b-t1.png`, `c-t1.png`.
+3. `python3 assets-src/mercury/relief/walls.py comp a=$W/a-t1.png b=$W/b-t1.png c=$W/c-t1.png` writes `out/work/mercury/relief/walls-2x.png`: each take is registered to the approved pixels by optical flow (median 1.4 to 1.7 px of 1536 before, 0.09 to 0.10 after; agreement of the low passes 0.997 to 0.999); log luminance = the approved low pass (sigma 8 canvas px) + the take's high pass; colour = the approved image's own tint (sigma 3 px); only on lit ground (linear luma over 0.006 to 0.03), not on the crater floor and not on the plain beyond the far rim (two polygons), faded over 160 px toward each tile's border. The low pass of the change at 32 px is 0.6 codes rms: the approved pixels stay as the low frequencies.
+4. `python3 assets-src/mercury/relief/build.py` paints `walls-2x.png` into the canvas before `specks` (`RELIEF_WALLS=0` builds without it). After `specks` comes `shade`: where the luma blurred by 3 px is under 20 codes (off from 34) the chroma becomes its own mean over dark pixels (sigma 40 canvas px), compact bright dots (top hat of a 9 px opening along four directions, so dashes and crests stay) lose 85 percent, and the result is rounded with a fixed seed dither. It takes the approved JPEG's teal and purple chroma blocks and its star like dots out of the shadows.
+5. Lens fix: `python3 assets-src/mercury/relief/lens.py FILM` (not fresh) once more on the final still of 870: update over the old fix median 1.004.
+6. Wide ground again with the new main colour, surface untouched: `python3 assets-src/mercury/relief/wide.py comp out/work/mercury/wide/paint-t2.png out/work/mercury/wide/paint-t2-2x.png`, `wide.py farcomp 1 out/work/mercury/wide/far-t3-1.png`, `wide.py build`. `relief-dist.bin`, `wide-dist.bin`, `wide-alpha.png`, `relief.json`, `rim.json` and `wide.json` come out the same bytes; `relief-color.jpg`, `relief-alpha.png` (7396 px along the far edge), `relief-rim.png`, `relief-rim.bin` (largest move 0.005) and `wide-color.jpg` change.
+
 ## Takes
 
 | Asset | Takes | Kept | Why |
@@ -73,9 +84,12 @@ Takes of the paint: `t1` rejected (tall boulders with long shadows, one large fl
 | left margin | `t1` (`nano_banana_pro`), `t2` (`seedream_5`) | `t1` | `t2` changed the whole picture to orange streaks |
 | right margin | `t1` (`nano_banana_pro`) | `t1` | continues the plain and the horizon; flow in the known part under 1 px |
 | bottom margin | `t1`, `t2` (`nano_banana_pro`) | `t1` | `t2` showed a visible rectangle |
+| crater walls, whole box | `t1` (`nano_banana_pro`, `prompts/walls.txt`) | none | faithful, but smoother than the input: the ribbons stay ribbons |
+| crater walls, tiles a, b, c | `a-t1`, `b-t1`, `c-t1` (`nano_banana_pro`, `prompts/walls-tile.txt`) | all three | every terrace, ridge and shadow in place, the scarps resolved into fluted rock with small crisp shadows |
 
 ## Checks
 
 - Painted horizon against the fitted sphere: within 1 to 4 px, except the far right edge (5 to 12 px low), where the alpha follows the detected horizon.
 - Frame 870 at review, film over approved (`python3 out/work/mercury/tprobe.py FILM`): ground median 0.994 (10th percentile 0.943, 90th 1.041), under the Sun 0.998, shadows 1.007, bright ground 0.995. Laplacian rms film over approved on the ground 1.138.
 - Frames 781, 870 and 959: foreground and horizon move against each other, no stretching at the crater rims, no box edge in frame (`out/work/mercury/check-apron.ts`: frame 744 sees canvas x -583 to 3443 against the limits -640 and 3456).
+- Walls and shade (22 Nov, tree 05e91da with main d5b851f): frame 870 at the final tier, ground under row 330 of 1080: approved 76.4 72.5 67.8, before 75.5 72.1 67.7, after 75.8 72.4 68.0. G17 at 870: median 0.927, p25 0.856 over 85 tiles (before 0.913 and 0.844); 615 unchanged. Drafts against the tree before: 730, 734, 999, 1000 the same bytes; 735 to 998 change (the ground pictures). Sizes: full 109 MB, web 32 MB.
