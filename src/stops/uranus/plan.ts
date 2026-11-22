@@ -37,7 +37,7 @@ export const move = {
   diveJoin: 2,
   diveEase: [30, 42] as [number, number],
   diveLook: [2, 16, 32, 47] as [number, number, number, number],
-  divePace: { slow: 0.08, brake: [18, 26] as [number, number], fall: [28.5, 38] as [number, number], join: [47, 54] as [number, number] },
+  divePace: { slow: 0.08, last: 1, brake: [20, 26] as [number, number], fall: [28.5, 35] as [number, number], pay: [-6, -2] as [number, number] },
   riseSwap: -8,
   riseJoin: 0,
   riseAim: [0, 0.95] as [number, number],
@@ -87,16 +87,15 @@ function eased(a: number, b: number, x: number): number {
   return (b - a) * (u * u * u - (u * u * u * u) / 2) + Math.max(x - b, 0)
 }
 
-function paced(f: number, still: number): number {
+function paced(f: number, still: number, end: number): number {
   const p = move.divePace
-  const end = p.join[1]
   if (f <= 0 || f >= end) return f
   const i1 = (x: number): number => eased(p.brake[0], p.brake[1], x)
   const i2 = (x: number): number => eased(p.fall[0], p.fall[1], x)
-  const i3 = (x: number): number => eased(p.join[0], p.join[1], x)
+  const i3 = (x: number): number => eased(end + p.pay[0], end + p.pay[1], x)
   const first = (still - p.slow * i1(still)) / (still - i1(still))
-  const last = (end - first * end - (p.slow - first) * i1(end) + p.slow * i2(end) - i3(end)) / (i2(end) - i3(end))
-  return first * f + (p.slow - first) * i1(f) + (last - p.slow) * i2(f) + (1 - last) * i3(f)
+  const open = (x: number): number => first * x + (p.slow - first) * i1(x) + (p.last - p.slow) * i2(x)
+  return open(f) + ((end - open(end)) / i3(end)) * i3(f)
 }
 
 export class UranusPlan extends StopPlan {
@@ -159,7 +158,7 @@ export class UranusPlan extends StopPlan {
     const d = this.p.dive
     const fps = config.fps
     const film = time
-    time = seg.start + paced((film - seg.start) * fps, Math.floor((config.raw.judged.fractions as Record<string, number>).dive! * seg.frames + 1e-9) + 0.5 * config.shutterFraction) / fps
+    time = seg.start + paced((film - seg.start) * fps, Math.floor((config.raw.judged.fractions as Record<string, number>).dive! * seg.frames + 1e-9) + 0.5 * config.shutterFraction, (c - seg.start) * fps) / fps
     const m = this.mapped(this.entryPath(time), time)
     const held = this.hold(time - this.seg.hold.start)
     const span = (c - seg.start) * fps - move.diveJoin

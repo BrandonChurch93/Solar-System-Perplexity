@@ -132,7 +132,7 @@ void main() {
   gx *= uGrad;
   gy *= uGrad;
   float parent = texels;
-  for (int k = 0; k < (dn > 0.3 && texels < uPatchFade.y ? 1 : 0); k++) {
+  for (int k = 0; k < (dn > 0.3 && texels * lean < uPatchFade.y ? 1 : 0); k++) {
 ${PATCH_LEVELS}
   }
   vec3 albedo = inverseFilmic(enc);
