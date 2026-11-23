@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of a canyon region on Mars, north at the top, about 500 km across. It is incomplete: a wide flat grey area across its middle is where the photograph is missing. In the centre of the grey area a small square holds a sharp piece of the missing ground at its true place and scale: rugged canyon land of mesas, layered cliffs and gullied walls. Outside the grey area the photograph is complete: smooth plains with small craters in the north, scarps that meet the grey area at its left and right ends, and in the south a great canyon that runs from the left edge to the right edge.
+
+Image 2 is an oblique aerial photograph taken low over the land of the small centre square, looking east south east. It shows what this land is: a flat topped mesa ending in a tall layered cliff, beyond it a canyon running away from the viewer with a rough dark floor of rubble and landslide lobes, a sunlit layered wall on its left and a tall shadowed wall under a broad plateau on its right.
+
+Task: complete image 1 into one seamless nadir orbital photograph, the same framing and scale, north at the top.
+
+1. Fill the grey area with a branch of the canyon system: one long canyon, 30 to 60 km wide, with steep gullied walls, layered cliffs and a rough floor. It begins at the left end of the grey area where the scarps of the complete photograph meet it, runs east through the small centre square, goes on east beyond the square, then bends to the south east and opens into the great canyon of the south. On both sides of this canyon draw side canyons, flat topped mesas, landslide lobes, chaotic blocks and troughs of the same kind and the same size as in the centre square. Away from the canyon the relief becomes lower and sparser little by little over a long distance: isolated mesas, pits, short troughs and low scarps, before the smooth plains begin.
+
+2. The centre square is only a sample of the ground. The canyon walls and the canyon floor run through it and continue beyond it on both sides without a break, so that nobody can tell where the square was. The rugged land must not end along the outline of the square or along the outline of the grey area, must not form a round or oval island, and nothing may radiate from one point like the spokes of a wheel.
+
+3. Outside the grey area keep every feature exactly where it is and as it looks.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west. Colour: brown, ochre and rust rock with deep brown shadows near the centre, passing little by little into the rust red and orange of the complete photograph. No grey may remain. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
