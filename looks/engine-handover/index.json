@@ -1,64 +1,70 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T16:35:20.467Z",
+ "pushed": "2026-11-23T16:48:24.410Z",
  "head": "cf32e781e8a477b80e33d04b50cee47285b5d47a",
- "note": "follow test on Mars 2444 and 2446 (draft); E4 of the newest Mars plates running",
+ "note": "draft E4 of both Mars kinds on 4f7b2dd2 (fifth bake): sheets, under pictures, the far wall crop",
  "looks": [
   {
-   "time": "2026-11-23T16:35:06.451Z",
-   "file": "20261123163506451-note-2446-follow-crops.jpg",
-   "source": "out/work/follow/2446-follow-crops.png",
+   "time": "2026-11-23T16:48:23.843Z",
+   "file": "20261123164823843-note-mars-4f7b-rise-under.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-rise-under.png",
    "kind": "note",
-   "label": "Mars dive 2446 draft crops at full size: left committed, right follow test; far wall strokes fewer but not gone"
+   "label": "Mars 4f7b2dd2 rise at T: with the place picture, the globe alone, difference times 4 (under 21.43)",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:35:05.727Z",
-   "file": "20261123163505727-note-2444-follow-vs-committed.jpg",
-   "source": "out/work/follow/2444-follow-vs-committed.png",
+   "time": "2026-11-23T16:48:23.207Z",
+   "file": "20261123164823207-note-mars-4f7b-dive-under.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-dive-under.png",
    "kind": "note",
-   "label": "Mars dive 2444 draft: top as committed, bottom the follow test; test only"
+   "label": "Mars 4f7b2dd2 dive at T: with the place picture, the globe alone, difference times 4 (under 21.78: tone 16.02, detail 12.05)",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:35:04.506Z",
-   "file": "20261123163504506-note-2446-follow-vs-committed.jpg",
-   "source": "out/work/follow/2446-follow-vs-committed.png",
+   "time": "2026-11-23T16:48:22.538Z",
+   "file": "20261123164822538-note-mars-4f7b-dive-draft-across.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-dive-draft-across.png",
    "kind": "note",
-   "label": "Mars dive 2446 draft: top as committed (picture from the eye of T laid flat), bottom the follow test (picture from the camera's own eye); test only, not committed"
+   "label": "Mars 4f7b2dd2 dive 2448 to 2459, draft E4 sheet across T 2454",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:09:43.462Z",
-   "file": "20261123160943462-note-cmp-2698-far.jpg",
-   "source": "out/work/edgein/cmp-2698-far.png",
+   "time": "2026-11-23T16:48:21.948Z",
+   "file": "20261123164821948-note-mars-4f7b-dive-draft-before.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-dive-draft-before.png",
    "kind": "note",
-   "label": "Mars rise 2698, far wall: as committed and with maxEnlarge 1.2"
+   "label": "Mars 4f7b2dd2 dive 2442 to 2453, draft E4 sheet (place window)",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:09:42.824Z",
-   "file": "20261123160942824-note-cmp-2446-far.jpg",
-   "source": "out/work/edgein/cmp-2446-far.png",
+   "time": "2026-11-23T16:48:21.343Z",
+   "file": "20261123164821343-note-mars-4f7b-rise-draft-across.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-rise-draft-across.png",
    "kind": "note",
-   "label": "Mars dive 2446, far canyon wall: as committed, with maxEnlarge 1.2, and with no place picture; the upright strokes are the place picture, not the plates"
+   "label": "Mars 4f7b2dd2 rise 2686 to 2697, draft E4 sheet across T 2692",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:09:42.003Z",
-   "file": "20261123160942003-note-fd2d-2448-2459.jpg",
-   "source": "out/work/edgein/fd2d-2448-2459.png",
+   "time": "2026-11-23T16:48:20.710Z",
+   "file": "20261123164820710-note-mars-4f7b-rise-draft-after.jpg",
+   "source": "out/work/e4-4f7b/mars-4f7b-rise-draft-after.png",
    "kind": "note",
-   "label": "Mars dive with edgeIn, draft, frames 2448 to 2459 across T 2454"
+   "label": "Mars 4f7b2dd2 rise 2693 to 2704, draft E4 sheet: the picture is a dark island on lighter, redder plate ground (tone under the picture)",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T16:09:41.067Z",
-   "file": "20261123160941067-note-fd2d-2436-2447.jpg",
-   "source": "out/work/edgein/fd2d-2436-2447.png",
+   "time": "2026-11-23T16:48:20.100Z",
+   "file": "20261123164820100-note-wall-2444-2454-08ae.jpg",
+   "source": "out/work/e4-4f7b/wall-2444-2454-08ae.png",
    "kind": "note",
-   "label": "Mars dive with edgeIn, draft, frames 2436 to 2447 (T 2454, place window from 2442)"
+   "label": "the same crop on the plates of 08ae5f4 for comparison"
   },
   {
-   "time": "2026-11-23T15:51:34.572Z",
-   "file": "20261123155134572-note-fd2-2718-2729.jpg",
-   "source": "out/work/edgein/fd2-2718-2729.png",
+   "time": "2026-11-23T16:48:19.452Z",
+   "file": "20261123164819452-note-wall-2444-2454-4f7b.jpg",
+   "source": "out/work/e4-4f7b/wall-2444-2454-4f7b.png",
    "kind": "note",
-   "label": "Mars rise with fromDive, T 2692 (draft): frames 2718 to 2729"
+   "label": "Mars 4f7b2dd2 dive, far canyon wall (x 330 to 810, y 400 to 660) at 2444 to 2454, draft: the wall comes in as a ghost over red veined plate ground"
   }
  ]
 }
