@@ -1,0 +1,176 @@
+{
+ "note": "Values of the Mars place tools (assets-src/mars/place). oldLadder: the levels of main that the old land is read from.",
+ "dehaze": {
+  "note": "dehaze.py: the dark envelope of the place picture by distance from the twin and picture column; landKnee and landMost: the luminance of the land (scene) is bent over above landKnee and never passes landMost (what is brighter in the picture is taken as glow)",
+  "nearDeg": 0.1,
+  "distBins": 28,
+  "columnBins": 16,
+  "percentile": 2,
+  "smoothBins": 1.0,
+  "monotone": false,
+  "strength": 0.9,
+  "leastT": 0.2,
+  "keepShare": 0.3,
+  "landKnee": 0.2,
+  "landMost": 0.45
+ },
+ "oldLadder": [
+  {
+   "file": "patch-wide.jpg",
+   "widthDeg": 96
+  },
+  {
+   "file": "patch-1.jpg",
+   "widthDeg": 48
+  },
+  {
+   "file": "patch-mid.jpg",
+   "widthDeg": 24
+  },
+  {
+   "file": "patch-2.jpg",
+   "widthDeg": 12
+  },
+  {
+   "file": "patch-3.jpg",
+   "widthDeg": 3
+  }
+ ],
+ "lead": {
+  "note": "lead.py: light is what the globe multiplies a lit level with near the ground at T (r g b, measured with flat.sh and light.py); the old land keeps its brightness and is moved by paletteMix to the hue of the picture's land (paletteHue, the median where the lay back leads at 1.2 deg) inside paletteCoreDeg, fading out to paletteEndDeg",
+  "size": 2048,
+  "light": [
+   0.1464,
+   0.1278,
+   0.0897
+  ],
+  "paletteCoreDeg": 0.8,
+  "paletteEndDeg": 4.0,
+  "edgeShare": 0.05,
+  "tFrom": 0.3,
+  "tTo": 0.7,
+  "paletteHue": [
+   0.0853,
+   0.0459,
+   0.0337
+  ],
+  "paletteMix": 0.85,
+  "paletteLum": 1.0
+ },
+ "force": {
+  "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used; spreadDeg is how far outside the fan the difference fades out (degrees on the ground), spreadShare its share at the edge, spreadBlurPx the blur of the spread field (plate px); edgePx the feather of the fan edge on the plate (plate px); calmShare how far the broad colour of the far fan (seen, but through thick haze) is brought to the land around it, calmBlurDeg the blur of that comparison (degrees), calmLeast and calmMost the limits of the ratio; groundBlur: the difference is blurred on the ground with a radius of blurPx x stretch x groundBlur plate px; calmHue how far the far fan takes the hue of the land around; outside the fan the broad tone of the take (blur of toneBlur of the plate width) is brought by a gain (toneLeast to toneMost) to the tone at the nearest edge of the fan, fading over spreadDeg; holdFromDeg to holdToDeg: the ground one picture px covers along the view (degrees) over which the hold and the sharp lay back fall away, about 0.33 to 0.5 degrees from the twin's foot (cliff faces laid back over the land behind them read from above as strokes that run out from the twin); beyond it only the broad tone of the picture is held, the difference blurred round on the ground over broadDeg",
+  "pictureStep": 2,
+  "blurPx": 16,
+  "share": 1.0,
+  "directFrom": 1.5,
+  "directTo": 3.0,
+  "spreadDeg": 1.2,
+  "spreadShare": 1.0,
+  "spreadBlurPx": 24,
+  "edgePx": 96,
+  "calmShare": 1.0,
+  "calmBlurDeg": 0.12,
+  "calmLeast": 0.1,
+  "calmMost": 1.5,
+  "groundBlur": 0.5,
+  "calmHue": 0.6,
+  "toneBlur": 0.012,
+  "toneLeast": 0.15,
+  "toneMost": 3.0,
+  "holdFromDeg": 0.00054,
+  "holdToDeg": 0.00124,
+  "broadDeg": 0.06
+ },
+ "bake": {
+  "note": "bake.py: plates from the deepest up (look: the plate of force.py, empty for the toned old land), the new lit level, the lit levels above that take the difference, the options of the stop; matchBlur and matchReach (shares of the plate width): the broad difference to the plate above is added at the rim and fades out matchReach inside it; matchLeast and matchMost bound the gain of the rim match; lookKnee and lookMost: the luminance of a plate (look values) is bent over above lookKnee and never passes lookMost",
+  "workSize": 4096,
+  "jpegQuality": 94,
+  "webShare": 0.5,
+  "nestFeather": 0.12,
+  "oldRef": "03510ddd",
+  "plates": [
+   {
+    "widthDeg": 0.3,
+    "look": "out/work/place/plate/p0.3.png",
+    "file": "place-0p3.jpg",
+    "size": 3277
+   },
+   {
+    "widthDeg": 0.7,
+    "look": "out/work/place/plate/p0.7.png",
+    "file": "place-0p7.jpg",
+    "size": 3277
+   },
+   {
+    "widthDeg": 1.6,
+    "look": "out/work/place/plate/p1.6.png",
+    "file": "place-1p6.jpg",
+    "size": 3686
+   },
+   {
+    "widthDeg": 3.8,
+    "look": "out/work/place/plate/p3.8.png",
+    "file": "place-3p8.jpg",
+    "size": 4096
+   },
+   {
+    "widthDeg": 8.5,
+    "look": "out/work/place/plate/p8.5.png",
+    "file": "place-8p5.jpg",
+    "size": 3686
+   }
+  ],
+  "lit": [
+   {
+    "widthDeg": 19,
+    "file": "patch-19.jpg",
+    "size": 4096
+   },
+   {
+    "widthDeg": 42,
+    "file": "patch-42.jpg",
+    "size": 4096
+   }
+  ],
+  "delta": [
+   {
+    "file": "patch-wide.jpg",
+    "widthDeg": 96,
+    "share": 0.5
+   }
+  ],
+  "fadeMinor": true,
+  "oneChannel": [
+   "wrap-storm.png",
+   "phobos-lit-mask.png",
+   "relief-L0-alpha.png",
+   "relief-L1-alpha.png",
+   "relief-L2-alpha.png"
+  ],
+  "matchBlur": 0.04,
+  "matchReach": 0.3,
+  "matchLeast": 0.5,
+  "matchMost": 2.0,
+  "lookKnee": 0.14,
+  "lookMost": 0.3,
+  "ladderNote": "Eight levels: 96, 42, 19 lit (4096 px); 8.5 (3686), 3.8 (4096), 1.6 (3686), 0.7 (3277), 0.3 (3277) with their own light. Chosen with predict.py --minor on the paths of E3 (main 03510ddd): dive worst 0.0082, rise worst about 0.016 of ground pixels under 1.0 texels. The 8.5 level at 3686 px reads the same as at 4096 and frees 17 MB: the full set then stands near 1376 MB of 1400. Smaller 42 or 19 levels fail in the rise (0.042 at 2724, 0.035 at 2720). Nine levels with every density doubled would need 53 MB more than the set may use."
+ },
+ "size": 4096,
+ "jpegQuality": 94,
+ "feather": 0.12,
+ "matte": {
+  "note": "matte.py (values in field px at scale 1 and in shares of the margin depth): formPx the blur against which the light and dark of the land is taken, smoothPx the blur of that difference, formShare how far a form moves the cut across the margin, rampIn the depth over which the forms come in from the frame's edge, cut and soft the level and half width of the cut; where dehaze.py's t (blurred) is under tFrom to tTo the picture is haze or sky and the matte is a ramp from airFrom to airTo of the depth; endFrom to endTo: the matte is 0 before the field's own edge",
+  "formPx": 28,
+  "smoothPx": 2.5,
+  "formShare": 0.38,
+  "rampIn": 0.5,
+  "cut": 0.78,
+  "soft": 0.035,
+  "tFrom": 0.25,
+  "tTo": 0.55,
+  "airFrom": 0.45,
+  "airTo": 0.97,
+  "endFrom": 0.9,
+  "endTo": 1.0
+ }
+}

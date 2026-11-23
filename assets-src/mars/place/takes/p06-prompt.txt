@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 35 km across. It is incomplete. The right part holds measured ground with a straight edged outline: a dark, shadowed mesa and cliff land with a few warm sunlit rock faces. A large flat grey area is where the photograph is missing. A narrow band along the outer rim of the image is complete but blurred.
+
+Image 2 is an oblique aerial photograph of the land in the measured right part, taken from a point in the grey area just left of that part, looking toward the right of the map (east south east). It shows what this land is: in the foreground a flat topped mesa of dark layered rock ending in a tall layered cliff; beyond it a canyon with a rough dark floor of rubble and landslide lobes; sunlit layered walls on the left, a tall wall in deep shadow on the right.
+
+Task: complete image 1 into one seamless nadir orbital photograph, the same framing and scale, north at the top.
+
+1. Fill the grey area with land that continues the measured part outward: the dark mesa top of layered rock goes on to the left, cut by gullies and side canyons, with cliffs, spurs, talus aprons, ledges and boulder fields, lit from the same direction, in the same dark brown and rust colours and the same contrast as the measured part next to it. Cliff lines and rock surfaces must run across the straight outline of the measured part without a break, so that nobody can tell where it ended. Toward the outer rim let the land join the brighter features of the rim band along natural boundaries such as cliff edges and slopes. No grey may remain and no straight line may remain.
+
+2. Inside the measured part keep the brightness and colour of every area as it is, each light and dark area in its place, but draw it as sharp land seen from straight above: where the ground is smeared into streaks or blurred, replace streaks and blur with layered cliff bands, gullied walls, spurs, talus aprons, landslide lobes and rubble. Do not brighten it.
+
+3. In the rim band keep every feature where it is, drawn sharp.
+
+Fine detail everywhere, down to single ledges and boulders. Muted dark brown, rust and ochre rock, deep brown shadows. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
