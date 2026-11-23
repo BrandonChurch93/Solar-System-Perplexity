@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T15:42:20.196Z",
+ "pushed": "2026-11-23T16:01:26.885Z",
  "head": "569bef703bc72ec8c07f4a9cf85eb4c71dcc078f",
- "note": "mail 287: grains as single bodies, ringlets near the lens, rings past the rim, grey night side; merged main 0eae595",
+ "note": "READY proofs: hold 3465 at the final tier beside the hero and the kept still; G17 red at 3720 (0.519)",
  "looks": [
+  {
+   "time": "2026-11-23T16:01:25.612Z",
+   "file": "20261123160125612-note-hold3465_pair.jpg",
+   "source": "../../../../tmp/v/fin/hold3465_pair.png",
+   "kind": "note",
+   "label": "hold 3465 final tier: this build and the kept still, their difference times 4, crops at native size (this build left)"
+  },
+  {
+   "time": "2026-11-23T16:01:24.537Z",
+   "file": "20261123160124537-note-hold3465_three.jpg",
+   "source": "../../../../tmp/v/fin/hold3465_three.png",
+   "kind": "note",
+   "label": "hold 3465 at the final tier: this build, the approved hero, the kept still (left to right)"
+  },
   {
    "time": "2026-11-23T15:42:19.120Z",
    "file": "20261123154219120-note-spot.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/t7r/three_ll.png",
    "kind": "note",
    "label": "3719, 3720, 3721 at the review tier, lower left at native size: three frames in a row"
-  },
-  {
-   "time": "2026-11-23T15:42:12.381Z",
-   "file": "20261123154212381-note-mid2.jpg",
-   "source": "../../../../tmp/v/t7r/mid2.png",
-   "kind": "note",
-   "label": "3720 middle at native size, approved on top"
-  },
-  {
-   "time": "2026-11-23T15:42:11.134Z",
-   "file": "20261123154211134-note-ll2.jpg",
-   "source": "../../../../tmp/v/t7r/ll2.png",
-   "kind": "note",
-   "label": "3720 lower left at native size, approved on top"
   }
  ]
 }
