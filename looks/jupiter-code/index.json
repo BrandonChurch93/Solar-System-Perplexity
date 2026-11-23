@@ -1,9 +1,51 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T10:42:03.958Z",
- "head": "1f087db4b748c6d1dc9b966af39dfbe9a1517a64",
- "note": "plate deck drawn with footprint filtering; 3150 and 3239 hold, 3060 shows the margin problem outside the image's fan; next: haze table by view angle, margin tone, slower approach",
+ "pushed": "2026-11-23T11:08:58.990Z",
+ "head": "f76e969dffc04d99e450886c385fc155a22fbbea",
+ "note": "v7: every field now laid back from the wide canvas, so poses behind the fit pose see finished ground; remaking the top down plates on the wide wedge",
  "looks": [
+  {
+   "time": "2026-11-23T11:08:58.429Z",
+   "file": "20261123110858429-note-near-t2-rejoined.jpg",
+   "source": "../work/f/near-t2-rejoined.jpg",
+   "kind": "note",
+   "label": "near plate: take 2 joined again with the wide wedge, top down"
+  },
+  {
+   "time": "2026-11-23T11:08:57.836Z",
+   "file": "20261123110857836-note-near-t3.jpg",
+   "source": "../work/f/near-t3.jpg",
+   "kind": "note",
+   "label": "near plate take 3 led by the wide wedge: kept the fan edge as a hard line (rejected)"
+  },
+  {
+   "time": "2026-11-23T11:08:57.227Z",
+   "file": "20261123110857227-note-v6b-3060-margins.jpg",
+   "source": "../work/f/v6b-3060-margins.jpg",
+   "kind": "note",
+   "label": "v6b 3060 before the wide canvas: pale soft margins with a straight seam (rejected)"
+  },
+  {
+   "time": "2026-11-23T11:08:56.492Z",
+   "file": "20261123110856492-note-v7-3239.jpg",
+   "source": "../work/f/v7-3239.jpg",
+   "kind": "note",
+   "label": "v7 draft 3239, 0.95 units ahead: paler, soft bottom strip still to fix"
+  },
+  {
+   "time": "2026-11-23T11:08:55.857Z",
+   "file": "20261123110855857-note-v7-3060.jpg",
+   "source": "../work/f/v7-3060.jpg",
+   "kind": "note",
+   "label": "v7 draft 3060, half a unit behind the fit pose: no seam, margins from the wide canvas"
+  },
+  {
+   "time": "2026-11-23T11:08:55.209Z",
+   "file": "20261123110855209-note-v7-row.jpg",
+   "source": "../work/f/v7-row.jpg",
+   "kind": "note",
+   "label": "v7 draft row 3060 3090 3120 3150 3195 3239: fields from the wide canvas, complete pictures at every pose"
+  },
   {
    "time": "2026-11-23T10:42:03.394Z",
    "file": "20261123104203394-note-v6p-3239.jpg",
@@ -17,48 +59,6 @@
    "source": "../work/f/v6p-3060.jpg",
    "kind": "note",
    "label": "plates only draft 3060"
-  },
-  {
-   "time": "2026-11-23T10:42:02.310Z",
-   "file": "20261123104202310-note-v6p-3150.jpg",
-   "source": "../work/f/v6p-3150.jpg",
-   "kind": "note",
-   "label": "plates only (image field off) draft 3150: the plates carry the composition by themselves"
-  },
-  {
-   "time": "2026-11-23T10:42:01.742Z",
-   "file": "20261123104201742-note-v6a-3239.jpg",
-   "source": "../work/f/v6a-3239.jpg",
-   "kind": "note",
-   "label": "plate deck draft 3239 (camera 0.9 units ahead of the fit pose)"
-  },
-  {
-   "time": "2026-11-23T10:42:01.173Z",
-   "file": "20261123104201173-note-v6a-3060.jpg",
-   "source": "../work/f/v6a-3060.jpg",
-   "kind": "note",
-   "label": "plate deck draft 3060: BAD, ground outside the image's fan shows the repaint's bright cumulus at low resolution; fix under way (tone field, slower approach)"
-  },
-  {
-   "time": "2026-11-23T10:42:00.595Z",
-   "file": "20261123104200595-note-v6a-3150.jpg",
-   "source": "../work/f/v6a-3150.jpg",
-   "kind": "note",
-   "label": "plate deck draft 3150 after footprint filtering (image field over plates), mean abs diff to approved 4.56"
-  },
-  {
-   "time": "2026-11-23T10:27:55.522Z",
-   "file": "20261123102755522-note-v6-c2.jpg",
-   "source": "../work/f/v6-c2.jpg",
-   "kind": "note",
-   "label": "plate deck first draft 3150, native crop far field | approved: grain from unfiltered plates and detail"
-  },
-  {
-   "time": "2026-11-23T10:27:54.999Z",
-   "file": "20261123102754999-note-v6-c0.jpg",
-   "source": "../work/f/v6-c0.jpg",
-   "kind": "note",
-   "label": "plate deck first draft 3150, native crop storm | approved"
   }
  ]
 }
