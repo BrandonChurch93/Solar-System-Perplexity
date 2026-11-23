@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T13:18:21.871Z",
+ "pushed": "2026-11-23T13:32:58.546Z",
  "head": "194d20716ed85eb5d2d470ab30b1628c474908f7",
- "note": "trial of mail 268 items 1 and 2: arms in the plate files from 4697 on, stain mended, full dive and rise rendering now",
+ "note": "s6/b: plates with arms from 4697, stain gone on the dive, tan fringe at the bank still there",
  "looks": [
+  {
+   "time": "2026-11-23T13:32:57.303Z",
+   "file": "20261123133257303-note-crop-mid.jpg",
+   "source": "out/work/nep/s6/b/crop-mid.jpg",
+   "kind": "note",
+   "label": "s6/b native crops round the eye, 4704 to 4724 every second frame: no stain, tan fringe at the bank",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:32:56.617Z",
+   "file": "20261123133256617-note-crop-in.jpg",
+   "source": "out/work/nep/s6/b/crop-in.jpg",
+   "kind": "note",
+   "label": "s6/b native crops round the storm, 4680 to 4702 every second frame: plates coming in",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:32:55.948Z",
+   "file": "20261123133255948-note-dive-03.jpg",
+   "source": "out/work/nep/s6/b/dive-03.jpg",
+   "kind": "note",
+   "label": "s6/b dive 4704 to 4715, every frame, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:32:54.958Z",
+   "file": "20261123133254958-note-dive-02.jpg",
+   "source": "out/work/nep/s6/b/dive-02.jpg",
+   "kind": "note",
+   "label": "s6/b dive 4692 to 4703, every frame, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T13:32:53.828Z",
+   "file": "20261123133253828-note-dive-01.jpg",
+   "source": "out/work/nep/s6/b/dive-01.jpg",
+   "kind": "note",
+   "label": "s6/b dive 4680 to 4691, every frame, draft",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T13:18:21.016Z",
    "file": "20261123131821016-note-rise-t1.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/nep/s6/a/dive-t1.jpg",
    "kind": "note",
    "label": "trial: dive 4684 to 4716 every fourth frame, arms in the plate files, dark ground mended, layer ground late",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:48:43.841Z",
-   "file": "20261123124843841-note-dive-a.jpg",
-   "source": "out/work/nep/s5/a/dive-a.jpg",
-   "kind": "note",
-   "label": "dive 4692 to 4728 every second frame, flat plates; smudge under the eye 4696 to 4712, contrast low near 4710",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:48:43.280Z",
-   "file": "20261123124843280-note-rise-b.jpg",
-   "source": "out/work/nep/s5/a/rise-b.jpg",
-   "kind": "note",
-   "label": "rise 4990 to 5000 every second frame, small red brown smudge south east of the eye still there",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:48:42.464Z",
-   "file": "20261123124842464-note-rise-a.jpg",
-   "source": "out/work/nep/s5/a/rise-a.jpg",
-   "kind": "note",
-   "label": "rise 4966 to 4988 every second frame, flat plates, no wedge (local f8378cd8)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:22.992Z",
-   "file": "20261123122022992-note-bank-pairs.jpg",
-   "source": "out/work/nep/s4/h/bank-pairs.jpg",
-   "kind": "note",
-   "label": "S4 bank: film (left) against live layer forced on (right) at 4964, 4970, 4976",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T12:20:22.440Z",
-   "file": "20261123122022440-note-limb-g.jpg",
-   "source": "out/work/nep/s4/g/limb-g.jpg",
-   "kind": "note",
-   "label": "S4 rise limb native crop, 4956 close side then 4957 to 4964",
    "stop": "neptune"
   }
  ]
