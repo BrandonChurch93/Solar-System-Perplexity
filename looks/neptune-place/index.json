@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T10:29:59.613Z",
- "head": "6a4f848967e754a011a39f4e2e75774c5e774ad3",
- "note": "10:30 VM M2 proofs: dive and rise sheets on the globe side alone, twin pairs at T, the dark wedge fault in the rise",
+ "pushed": "2026-11-23T10:55:38.193Z",
+ "head": "e912b46b0396a473f927d85afba3a1ad3e215800",
+ "note": "S4: both sides at T now one picture (mean 0.06 of 255); wedge traced to plates and layer tone, rings traced to the hold look passing by; fixes rendering",
  "looks": [
   {
-   "time": "2026-11-23T10:29:49.187Z",
-   "file": "20261123102949187-note-crop-wedge.jpg",
-   "source": "out/work/nep/s2/r2/crop-wedge.jpg",
+   "time": "2026-11-23T10:55:37.521Z",
+   "file": "20261123105537521-note-plates-carry.jpg",
+   "source": "out/work/nep/s4/plates-carry.jpg",
    "kind": "note",
-   "label": "Fault: dark wedge south of the eye, rise 4970 to 4990",
+   "label": "plates 26 16 10 6 deg before and after the new tone carry (pairs, before on the left)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:48.655Z",
-   "file": "20261123102948655-note-pair-4956.jpg",
-   "source": "out/work/nep/s2/twin/pair-4956.jpg",
+   "time": "2026-11-23T10:55:36.895Z",
+   "file": "20261123105536895-note-masks.jpg",
+   "source": "out/work/nep/s4/b/masks.jpg",
    "kind": "note",
-   "label": "Both sides at T of the rise, 4956, side forced, place picture off (old rise path)",
+   "label": "where the live layer's ground is drawn at 4976 4983 4990 (white) beside the frame: the wedge is the point of the canvas fan",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:48.123Z",
-   "file": "20261123102948123-note-pair-4758.jpg",
-   "source": "out/work/nep/s2/twin/pair-4758.jpg",
+   "time": "2026-11-23T10:55:36.193Z",
+   "file": "20261123105536193-note-rise-b.jpg",
+   "source": "out/work/nep/s4/b/rise-b.jpg",
    "kind": "note",
-   "label": "Both sides at T of the dive, 4758, side forced, place picture off",
+   "label": "S4 rise globe side 4990 to 5024 before the ring fix: rings faint at 4996 and 5002",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:47.597Z",
-   "file": "20261123102947597-note-rise-b.jpg",
-   "source": "out/work/nep/s2/r2/rise-b.jpg",
+   "time": "2026-11-23T10:55:35.608Z",
+   "file": "20261123105535608-note-rise-a.jpg",
+   "source": "out/work/nep/s4/b/rise-a.jpg",
    "kind": "note",
-   "label": "M2 rise 4990 to 5024 with arc 2, globe side alone, draft",
+   "label": "S4 rise globe side 4958 to 4983 before the wedge fix: black sky and thin rim now, dark wedge at 4976 4983 still there",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:47.052Z",
-   "file": "20261123102947052-note-rise-a.jpg",
-   "source": "out/work/nep/s2/r2/rise-a.jpg",
+   "time": "2026-11-23T10:55:34.938Z",
+   "file": "20261123105534938-note-pair-T.jpg",
+   "source": "out/work/nep/s4/a/pair-T.jpg",
    "kind": "note",
-   "label": "M2 rise 4957 to 4983 with arc 2, globe side alone, place picture off, draft",
+   "label": "S4 both sides at T: 4758 globe, 4758 close, 4956 globe, 4956 close (mean difference 0.059 and 0.058 of 255)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:46.407Z",
-   "file": "20261123102946407-note-dive-b.jpg",
-   "source": "out/work/nep/s2/m2/dive-b.jpg",
+   "time": "2026-11-23T10:39:58.066Z",
+   "file": "20261123103958066-note-native-4962.jpg",
+   "source": "out/work/nep/s4/t6/native-4962.jpg",
    "kind": "note",
-   "label": "M2 dive 4728 to 4769, globe side alone, place picture off, draft",
+   "label": "Native size crop, globe side (left) beside close side (right), frame 4962 (6 frames from T), draft",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:29:45.855Z",
-   "file": "20261123102945855-note-dive-a.jpg",
-   "source": "out/work/nep/s2/m2/dive-a.jpg",
+   "time": "2026-11-23T10:39:57.533Z",
+   "file": "20261123103957533-note-native-4950.jpg",
+   "source": "out/work/nep/s4/t6/native-4950.jpg",
    "kind": "note",
-   "label": "M2 dive 4680 to 4720, globe side alone, place picture off, draft",
+   "label": "Native size crop, globe side (left) beside close side (right), frame 4950 (6 frames from T), draft",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T10:10:50.149Z",
-   "file": "20261123101050149-note-crop-right.jpg",
-   "source": "out/work/nep/s2/g/crop-right.jpg",
+   "time": "2026-11-23T10:39:56.869Z",
+   "file": "20261123103956869-note-native-4764.jpg",
+   "source": "out/work/nep/s4/t6/native-4764.jpg",
    "kind": "note",
-   "label": "S2: thin straight lines right of the right bank at 4736 and 4744, after (top) and before (bottom) the cut",
+   "label": "Native size crop, globe side (left) beside close side (right), frame 4764 (6 frames from T), draft",
    "stop": "neptune"
   }
  ]
