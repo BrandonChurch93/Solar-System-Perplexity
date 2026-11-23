@@ -19,7 +19,7 @@
     "pitchDeg": 0
   },
   "light": {
-    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close.",
+    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close.",
     "heights": [0.6, 1.8],
     "globe": [1, 1.5],
     "rings": [1, 0.85],
@@ -32,7 +32,7 @@
       },
       "near": {
         "dense": [0.9, 0.926, 0.888],
-        "thin": [1.28, 1.42, 1.29]
+        "thin": [0.89, 0.966, 0.885]
       }
     },
     "halo": {
@@ -40,14 +40,15 @@
       "gain": [1, 0.8]
     },
     "dusk": {
-      "from": -0.2,
-      "to": 0.0,
+      "from": -0.02,
+      "to": 0.12,
       "amount": [0, 1],
-      "night": [1, 0.45]
+      "night": [1, 0.5],
+      "grey": [0, 1]
     },
     "flatten": {
       "pivot": 0.42,
-      "power": [0, -0.6],
+      "power": [0, -0.45],
       "width": 0.02,
       "reach": 1.6
     }
@@ -58,7 +59,20 @@
     "length": [0.09, 0.45],
     "end": [3.2, 3.9],
     "inset": 0.012,
-    "inkBy": 8
+    "inkBy": 8,
+    "bands": {
+      "note": "the ice past the rim lies in ringlets of its own: three sets of plateaus of these widths (waves, in radii). At the rim all of them are open; the share that is a gap grows to gap over the distance over past the rim. width: how soft the edge of a gap is, as a share of the range of levels. soft: the least softness of a plateau's edge in cells; filter: that softness in footprints. floor: the share of the depth a gap keeps. lines: the strength of the thin lines at the edges of the plateaus. seed and shift: which plateaus.",
+      "waves": [0.085, 0.031, 0.0115],
+      "over": 0.3,
+      "gap": 0.6,
+      "width": 0.25,
+      "soft": 0.05,
+      "filter": 1.8,
+      "floor": 0.03,
+      "lines": 0.4,
+      "seed": 41,
+      "shift": 7.31
+    }
   },
   "handover": {
     "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); skyFrames: over how many frames the picture of the sky of the hold gives way to that of the skim before that, and that of the skim to the open sky after it in the rise. dive.rise and dive.fall: the distance of the lens to the globe's surface falls by a steady factor a frame through the middle of the dive; over the first share (rise) that rate comes up from the hold's own, over the last share (fall) it comes to the skim's own, so neither end has a step in speed. rise.rise and rise.fall: the shares of the rise over which the way out is taken up from the skim's own motion and comes to the motion after the rise, the middle is steady. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",

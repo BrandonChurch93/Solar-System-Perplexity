@@ -931,3 +931,121 @@ Fix (numbers only, the hold keeps its values at close 0): ringfine.json near.foo
 ringlet under one pixel, in full from two) and a new near.filter 1.2 (edges and lines 1.8 px wide at many
 takes) blended from filter 0.6 by close in field.ts set().
 Review tier costs 5.6 s a take at 3720 with grains (17 takes, 95 s).
+
+COMMITS OF 14:50 UTC AND WHAT WAS MEASURED ON 0111bf2
+
+5c4004a (dive and rise as one scene, no cover), 715861f (ringlet filter of the skim), 0111bf2 (merge of
+origin/main 7f7d7b4). Pushed 14:54, named to the Builder as the commit with mail 276 points 1, 2, 8.
+On 0111bf2: npm run build green, vitest 162 of 162, tsc, shaderaudit exit 0, gauntlet 24a 24b pass.
+Hold at draft 3390, 3465, 3539: 0 differing pixels against f9007f0.
+npm run handover -- --stop saturn --tier draft --only sides,flow,path on 0111bf2: every line passes (copy
+of the report in /tmp/v/handover_0111bf2.md).
+Hold 3465 at the final tier against the approved hero (tools/measure/g17.py): median 1.073, p25 0.717 over
+71 tiles (rule: median at least 0.8). Before, at draft: median 0.950, p25 0.570.
+The plane passes the lens at a steady rate by the plan through the whole skim (out/scratch/flow.ts): 7.7 px
+a frame at the bottom middle, 14.1 at (200, 1000), 2.6 at (960, 800), 3636 to 3804, no stall before the
+rise. In the rise the flight turns round (the skim flies toward the globe, the way out lies behind): the
+flow falls to 6.2 at 3816 and is 27 to 60 px a frame at 3828. That is a jolt; to solve after READY.
+
+MAIL 287 (14:58 UTC, from the Builder, verbatim core)
+
+"0111bf2 is rendering: JOB st4, the skim 3630 to 3809, every frame at the review tier, on 18 render
+machines. You get my findings from the clip when it is back, about 15:40 UTC. Keep working, do not wait for
+it. Seen in your looks of 14:50 (rise across T 3854 to 3865, skim every 15th frame, 3720 beside the approved
+image): 1. Both handovers read as one scene. I cannot name the frame either. Good. 2. 3720 against the
+approved image: in the approved the ringlets run sharp and readable to the bottom edge, with fine coloured
+lines. In yours the lower left quarter is a bright carpet of grains that hides them, and from 3750 on the
+lower third is gravel, as you say yourself. The grains must read as separate bodies with sheet between
+them, fewer and darker than now at 3720, so the ringlets stay the picture and the grains give it depth.
+Judge it on the pair at 3720, the approved image is the target there. 3. The far left of the plane (upper
+left of the frame in 3630 to 3690 and through the rise) fades into a pale soft glow with no structure. It
+reads as a wash. Give it ringlets or let it fall off into the dark, not into a haze. 4. The globe is larger
+and further right at 3720 than in the approved image, and its bands are plainer. That is your point 6 and
+point 5, they count for the match critic. READY saturn <commit> by 16:30 UTC stands, with G5, G13, G17, G15
+and the handover report measured on that commit and the hold 3465 at the final tier against the kept
+still. What is still wrong then goes into round 1 as your list."
+The kept still is out/stills/f03465-saturn.hold.jpg (final tier, beauty, 16 samples, JPEG quality 92).
+
+MAIL 289 (15:10 UTC, from the Builder to every stop builder, core)
+
+"Main is e4782fe (plus a status commit)... the last engine piece for the handover... StopPlan now has a
+public method named above (the top down view of the harness). If your plan class has a member of that name,
+rename yours... Merge origin/main before you name your READY commit. READY times stand: ... Jupiter and
+Saturn 16:30 UTC. A commit I take is checked as main plus your three folders on twelve render machines, so
+what you send must build there. The engineer's report now prints a number "under the place picture"... It is
+a warning, not a gate."
+Checked: src/stops/saturn/plan.ts has no member named above. Main is 5eba228 at 15:13 (the method is now
+topDown). Merge it before READY.
+
+WORK ON MAIL 287 (15:00 to 15:45 UTC)
+
+What the pair at 3720 showed, read from the frames and from out/scratch/planemap.ts:
+- The lower left quarter at 3720 is the A ring of the model (radius 2.02 to 2.36), not the ice past the rim.
+  Past the rim (2.3394) lies only the corner x under 100, y over 950. At 3660 the camera's foot is at 3.18
+  and the left third of the frame is ice past the rim; the foot crosses the rim at about 3745.
+- Point 2, grains. Trial A (share 0.35) took the carpet away at 3720 but 3809 was still gravel. Trial B:
+  share 0.15, sand pixels [3, 6], gain [0.7, 0.7, 0.5], lift 0, presence [1, 0.06, 0.05]: at 3720 and 3809
+  the ringlets are the picture and single bodies lie on it. Bodies read as pale beads: light.ambient 0.22 to
+  0.12 and wrap 0.35 to 0.15 so a body has a lit side and a dark limb.
+- Point 3, the wash. Past the rim the ice had no structure wider than the fine ladder, so far from the lens
+  it was a plain veil. Now it lies in ringlets of its own (skim.json outer.bands, sheet.ts sheetOuterBands):
+  three sets of plateaus (0.085, 0.031, 0.0115 radii) that are all open at the rim and have more and wider
+  gaps the further out (gap share 0.6 at 0.3 radii past the rim), filtered by the footprint, a set finer than
+  the footprint counts by its mean. Seen at 3660: the rings go on outward in fewer and fainter ringlets and
+  end in the dark, no haze. None of it in the hold (the depth past the rim is 0 there).
+- Why the near ringlets were soft bands of pastel colour: the strengths of the ladder are per octave, so near
+  the lens the octaves 0.032 to 0.008 radii, 40 to 10 px wide there, had the weak level and the soft edge
+  (0.35 cells) and the strong hue that suit them in the middle distance where they are 5 to 10 px wide. And
+  the finer octaves that carry the contrast are wiped near the lens by the sweep of the shutter (7 px a
+  frame at the lower left, about 4 px across the ringlets). Fix in field.ts ringFine with numbers in
+  ringfine.json near.wide: an octave from the third on that is wide on screen (8 to 24 footprints) gets
+  level + 0.2, an edge of 0.07 cells and keeps 0.4 of its hue. Exact zero in the hold (the terms are times
+  0 there).
+- Point 4 of mail 276, the night side: the dusk now cuts between the cosines -0.02 and 0.12 (was -0.2 and
+  0), and the floor of the night side is grey (dusk.grey, globe.ts uDuskGrey) instead of the red of the low
+  Sun. Measured at x 1600 to 1700, y 450 to 550 at 3720: 45, 26, 12 before; 24, 7, 2.5 with the narrower dusk
+  alone; the approved image has 14, 14, 12 there.
+
+MAIL 290 (15:14 UTC, from the Builder, core)
+
+"Main is 5eba228. The engine's top down view of the harness is now StopPlan.topDown, not StopPlan.above...
+Merge origin/main (5eba228) before you name a READY commit. Nothing else in mail 289 changes."
+Note from the handover engineer (15:20): a new place option edgeIn for stops with a place picture. Saturn
+has none (one scene, no cover): nothing to do.
+
+TRIALS C TO F (15:12 to 15:30 UTC), the pair at 3720 at the review tier
+
+Regions (x, y in the 1920 x 1080 frame) and the approved means: lower left 0 to 500, 700 to 1080: 118, 109,
+101; left edge 0 to 250, 480 to 700: 115, 104, 94; A ring mid 150 to 450, 560 to 700: 93, 85, 80; mid B 700
+to 1300, 640 to 760: 196, 178, 159; B near 700 to 1300, 850 to 1050: 142, 128, 114; night 1600 to 1700, 450
+to 550: 14, 14, 12.
+- Trial C (wide law level 0.2, no tint change): lower left 142, 135, 123, left edge 158, 149, 138, A ring mid
+  130, 121, 112: the A ring near the lens too bright and olive. Cause: tint.near.thin [1.28, 1.42, 1.29]
+  lifted the thin ring (the gap and the A ring, thin is 1 from radius 1.95 outward) with more green.
+- Trial E (thin tint [0.89, 0.966, 0.885], hue.green 0.1, dark 0.25, flatten.power -0.35, wide level 0.3 from
+  3 to 9 footprints): 102, 93, 84; 118, 108, 99; 105, 95, 86; 190, 166, 142; 121, 106, 93; night 12, 12, 12.
+- Trial F, kept (dark 0.1, flatten.power -0.45, wide level 0.4 from 2.5 to 7.5 footprints, hue kept 0.6
+  between 12 and 36 footprints): 101, 92, 83; 114, 105, 96; 105, 94, 86; 189, 165, 141; 120, 105, 93; night
+  12, 12, 12.
+- Fine detail, the standard deviation of the picture minus its Gaussian blur of radius 2, 5, 12, 30 px. Lower
+  left: approved 25.4, 31.8, 34.6, 36.8; trial C 6.4, 12.5, 19.0, 24.3; trial F 8.0, 16.9, 25.3, 31.9. Mid B:
+  approved 16.9, 20.2, 21.7, 22.7; trial C 8.9, 12.1, 13.8, 16.0; trial F 11.1, 15.4, 18.6, 21.3. So the
+  ringlets 10 to 60 px wide are close to the approved now, the lines of 2 to 5 px are a third to a half of
+  it: the shutter sweeps 4 to 7 px across them near the lens. Still wrong, on the list.
+- Three frames in a row at native size (3719, 3720, 3721 at the review tier, three_ll.png and three_mid.png
+  in the looks): the same ringlets in the same places, no hatch, no crawl; the bodies drift.
+- The hold keeps its bytes with all the new terms: beauty drafts 3390, 3465, 3539 equal the bases of the
+  kept build byte for byte (15:30). Use plain npm run still for this check, not the script with --diag
+  nograin: the bases are beauty frames.
+
+STILL WRONG AT READY (16:30 UTC), for round 1
+1. Fit at 3720: the globe is about a sixth too large, too low and further right than in the approved image.
+   At x 1400 to 1900, y 760 to 900 ours shows the thin inner ring and the gap over the night globe (83, 66,
+   54) where the approved has bright rings (193, 177, 162).
+2. The globe's bands are plain, no small swirls (3740).
+3. Fine lines near the lens are fewer than in the approved (numbers above), and the B ring near the lens is a
+   little dark (120, 105, 93 against 142, 128, 114 at 3720).
+4. The rise: the flow over the plane falls to 6.2 px a frame at 3816 and is 27 to 60 px a frame at 3828, a
+   jolt. The moon passes the limb fast at 3870 to 3872.
+5. Bodies: shapes still few; some read as pale beads.
+6. The terminator may read hard at 3630 to 3660.

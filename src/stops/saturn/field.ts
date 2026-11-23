@@ -27,6 +27,9 @@ uniform vec4 uRfFine;
 uniform vec4 uRfAmp;
 uniform vec4 uRfGroove;
 uniform vec4 uRfGrooveFit;
+uniform vec4 uRfWide;
+uniform vec4 uRfWideFit;
+uniform float uRfWideDark;
 uniform vec4 uRfBunch;
 uniform vec4 uRfLine;
 uniform vec4 uRfRough[2];
@@ -137,7 +140,11 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       vec2 h;
       float b;
       float lanes = float(o) < uRfLanes.x ? 0.0 : uRfLanes.y;
-      vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfMore[o].x, uRfGrooveFit.w * fp / wave), lanes, h, b);
+      // near the sheet a ringlet that is many footprints wide on screen is drawn stronger, with a crisper edge
+      // and less hue of its own (uRfWide, nothing of it in the hold): the picture then has ringlets at every
+      // width on screen, as a sheet with structure at every scale has, and no broad bands of pastel colour
+      float wide = o < 2 ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fp);
+      vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfMore[o].x - (uRfMore[o].x - uRfWideFit.x) * (wide * uRfWideFit.y), uRfGrooveFit.w * fp / wave), lanes, h, b);
       float held = smoothstep(uRfBunch.x, uRfBunch.y, bunch);
       vec4 span = float(o) < uRfLine.w ? uRfRough[0] : uRfRough[1];
       float rough = o < 2 ? 1.0 : mix(mix(span.x, span.y, held), mix(span.z, span.w, held), thin);
@@ -145,14 +152,15 @@ void ringFine(float r, float fp, float amp, float thin, float side, inout float 
       // the level moves the brightness by a factor (even in the logarithm), divided by its mean so that the
       // sheet keeps its brightness where the octave is too fine to see; so do the lines, dark ones deeper
       // than bright ones are bright, and a dark line is a thinner sheet
-      float e = g * mix(a.x, a.w, thin);
+      float e = g * (mix(a.x, a.w, thin) + uRfWide.z * wide);
       float et = e * uRfAmp.y;
       float l = g * mix(a.z * uRfBunch.z, uRfMore[o].y * uRfBunch.w, thin);
       float mean = mix(1.0 / 6.0, uRfAmp.x, lanes);
-      kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x)) / ((1.0 + e * e * (mean + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
+      float wider = o < 2 ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fp);
+      kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x) - uRfWideDark * wider * g * (0.5 + 0.5 * q.x)) / ((1.0 + e * e * (mean + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
       kt *= exp(et * q.x + l * q.z * uRfLine.x) / (1.0 + et * et * (mean + et * et / 120.0));
       // a ringlet has a hue of its own, and a brighter one is warmer
-      hue += amp * seen * mix(uRfTint[o].xy, uRfTint[o].zw, thin) * h + mix(uRfFollow.xy, uRfFollow.zw, thin) * (e * q.x);
+      hue += amp * seen * (1.0 - uRfWide.w * wider) * mix(uRfTint[o].xy, uRfTint[o].zw, thin) * h + mix(uRfFollow.xy, uRfFollow.zw, thin) * (e * q.x);
       bunch = next;
       next = b;
     }
@@ -238,6 +246,9 @@ export function ringField(ctx: SetContext): RingField {
   const hueFit = new THREE.Vector4(fine.hue.warm, fine.hue.pink, fine.hue.green, fine.hue.gold)
   const fineFit = new THREE.Vector4(fine.first, fine.ratio, fine.filterFloor, 1)
   const grooveFit = new THREE.Vector4(groove.dark, groove.bright, 0, fine.filter)
+  const wide = new THREE.Vector4(near.wide.from, near.wide.to, 0, 0)
+  const wideDark = { value: 0 }
+  const wideFit = new THREE.Vector4(near.wide.edge, 0, near.wide.hueFrom, near.wide.hueTo)
   const mix = THREE.MathUtils.lerp
   // the strengths of the ladder for a camera this near the sheet (0 in the hold, 1 in the skim)
   const set = (t: number): void => {
@@ -253,6 +264,10 @@ export function ringField(ctx: SetContext): RingField {
     grooveFit.w = mix(fine.filter, near.filter, t)
     hueFit.z = mix(fine.hue.green, near.hue.green, t)
     hueFit.w = mix(fine.hue.gold, near.hue.gold, t)
+    wide.z = near.wide.level * t
+    wide.w = near.wide.hue * t
+    wideFit.y = t
+    wideDark.value = near.wide.dark * t
   }
   set(0)
   // the mean of the square of a ringlet's level where the ringlets take turns, over two: the level lies
@@ -273,6 +288,9 @@ export function ringField(ctx: SetContext): RingField {
       uRfAmp: { value: new THREE.Vector4(lanesMean, fine.tau, 0, fine.shift) },
       uRfGroove: { value: new THREE.Vector4(groove.width[0], groove.width[1] - groove.width[0], groove.rare, fine.slopeWidth) },
       uRfGrooveFit: { value: grooveFit.setZ(lineMean) },
+      uRfWide: { value: wide },
+      uRfWideFit: { value: wideFit },
+      uRfWideDark: wideDark,
       uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
       uRfLine: { value: new THREE.Vector4(groove.open, fine.jitter[0], fine.jitter[1], fine.even.from) },
       uRfRough: { value: rough },

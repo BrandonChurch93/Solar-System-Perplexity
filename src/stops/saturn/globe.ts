@@ -99,6 +99,7 @@ uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform float uNightFloor;
 uniform vec4 uDusk;
+uniform float uDuskGrey;
 uniform int uProbe;
 uniform float uVignette;
 uniform float uAspect;
@@ -179,6 +180,8 @@ void main() {
     albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w);
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
+  // near the sheet the night side is grey, not the colour of the clouds in the last red light (none in the hold)
+  col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey * (1.0 - smoothstep(uDusk.x, uDusk.y, ndl)));
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
   vec3 at;
@@ -213,7 +216,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...field,
-        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: 0 }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },

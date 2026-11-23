@@ -30,6 +30,26 @@ float sheetOuter(float r) {
   float past = r - uOuter.x;
   return past > 0.0 ? (uOuter.y * exp(-past / uOuter.z) + uOuter.w * exp(-past / uOuter2.x)) * (1.0 - smoothstep(uOuter2.y, uOuter2.z, r)) : 0.0;
 }
+// past the rim the ice lies in ringlets of its own: three sets of plateaus, all open at the rim, with more and
+// wider gaps the further out, seen with the footprint fp; a set finer than the footprint counts by its mean
+uniform vec4 uOuterBands;
+uniform vec4 uOuterWaves;
+uniform vec4 uOuterGaps;
+float sheetOuterBands(float r, float fp) {
+  float at = mix(-uOuterBands.z, uOuterBands.x, clamp((r - uOuter.x) / uOuterBands.w, 0.0, 1.0));
+  float mean = uOuterGaps.x + (1.0 - uOuterGaps.x) * clamp(1.0 - at, 0.0, 1.0);
+  float k = 1.0;
+  for (int i = 0; i < 3; i++) {
+    float wave = i == 0 ? uOuterWaves.x : (i == 1 ? uOuterWaves.y : uOuterWaves.z);
+    float seen = clamp(wave / (fp * uRfFine.w) - 1.0, 0.0, 1.0);
+    vec2 h;
+    float b;
+    vec3 q = ringOctave(r / wave + uOuterGaps.w * float(i), uint(uOuterWaves.w) + uint(i), max(uOuterBands.y, uOuterGaps.z * fp / wave), 0.0, h, b);
+    float open = uOuterGaps.x + (1.0 - uOuterGaps.x) * smoothstep(at - uOuterBands.z, at + uOuterBands.z, q.x * 0.5 + 0.5);
+    k *= mix(mean, open * exp(uOuterGaps.y * q.z), seen);
+  }
+  return k;
+}
 // the brightness that depth returns where the model was measured
 float sheetOuterLum(float depth) {
   return uOuter2.w * ringSat(depth * uRfLight.x);
@@ -70,6 +90,7 @@ uniform vec4 uFlatten;
 void sheetAt(vec2 q, float r, float fp, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
   float more = sheetOuter(r);
+  for (int k = 0; k < (more > 0.0 ? 1 : 0); k++) more *= sheetOuterBands(r, fp);
   knots += vec2(more, sheetOuterLum(more));
   float rc = sheetInkRadius(r);
   ink = ringInk(rc);
@@ -267,6 +288,9 @@ export class Sheet {
       uOuter: { value: this.outer },
       uOuter2: { value: new THREE.Vector4(skim.outer.length[1], skim.outer.end[0], skim.outer.end[1], rimLum()) },
       uOuterInk: { value: this.outerInk },
+      uOuterBands: { value: new THREE.Vector4(skim.outer.bands.gap, skim.outer.bands.soft, skim.outer.bands.width, skim.outer.bands.over) },
+      uOuterWaves: { value: new THREE.Vector4(skim.outer.bands.waves[0], skim.outer.bands.waves[1], skim.outer.bands.waves[2], skim.outer.bands.seed) },
+      uOuterGaps: { value: new THREE.Vector4(skim.outer.bands.floor, skim.outer.bands.lines, skim.outer.bands.filter, skim.outer.bands.shift) },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({

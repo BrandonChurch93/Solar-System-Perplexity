@@ -1,7 +1,7 @@
 {
   "source": "the ice near the lens that is seen grain by grain: every grain is a body of its own on the orbit of its radius, at a height of its own above or below the middle of the plane, lit by the Sun. Lengths in planet radii, a size is the width of a grain. Read by ice.ts (how much of the sheet the grains carry) and grains.ts (the grains).",
   "seed": 20276,
-  "share": 0.92,
+  "share": 0.15,
   "bound": 2.5,
   "soft": 0.2,
   "foot": 1.0,
@@ -13,19 +13,19 @@
     "name": ["sand", "pebbles", "chunks"],
     "cell": [0.0022, 0.012, 0.08],
     "layers": [4, 2, 1],
-    "presence": [1.0, 0.2, 0.15],
+    "presence": [1.0, 0.06, 0.05],
     "size": [[0.00096, 0.002], [0.003, 0.007], [0.008, 0.03]],
     "power": [1.6, 2, 3],
     "height": [0.008, 0.01, 0.05],
     "heightFar": [4, 4, 3],
-    "pixels": [[1.6, 3.0], [4, 7], [3, 6]],
+    "pixels": [[3.0, 6.0], [4, 7], [3, 6]],
     "reach": [[90, 100], [90, 100], [1.0, 1.9]],
     "counted": [1, 1, 0],
     "bySheet": [1, 1, 0.3],
     "largest": [[400, 800], [400, 800], [70, 140]],
-    "white": [0.1, 0.2, 0.5],
-    "gain": [1, 1, 0.75],
-    "lift": [0.42, 0.42, 0]
+    "white": [0.0, 0.1, 0.3],
+    "gain": [0.7, 0.7, 0.5],
+    "lift": [0, 0, 0]
   },
   "lobes": {
     "note": "the shape of a grain: three balls that overlap, inside the grain's round outline, one near the middle and two further out. spread: how far from the middle the centres of the outer balls may lie, as a share of the grain's radius (they lie between half of that and all of it); first: the first ball lies within this share of that from the middle; radius: smallest and largest radius of a ball as a share of the grain's (no further out than the outline). pixels: a grain narrower than the first number of pixels is drawn as one ball of the same area, from the second its balls stand fully apart. tumble: how many times a grain turns about the line of sight while the orbit that keeps pace with the globe turns once, at most (each grain has its own rate, to either side).",
@@ -37,8 +37,8 @@
   },
   "light": {
     "note": "how a grain is lit over its body: ambient, the light from the ice around it; wrap, how far the Sun's light reaches around the body (0: a hard edge of shade at a right angle to the Sun); through, the light that comes through the thin rim of a grain that is seen against the Sun; spread: a grain is brighter or darker than the ice at its place by up to this share. layer: the height of the layer the shade of grain on grain is counted in (a grain this far above the middle of the plane is in full light, one this far below has all counted grains above it).",
-    "ambient": 0.22,
-    "wrap": 0.35,
+    "ambient": 0.12,
+    "wrap": 0.15,
     "through": 0.6,
     "spread": 0.25,
     "layer": 0.006

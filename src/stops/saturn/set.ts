@@ -155,6 +155,7 @@ export const createSet: SetFactory = async (ctx) => {
       su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, close)
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, close)
       ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, close), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, close))
+      gu.uDuskGrey!.value = THREE.MathUtils.lerp(tune.dusk.grey[0]!, tune.dusk.grey[1]!, close)
 
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const focal = view.format.height / 2 / half
