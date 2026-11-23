@@ -1,9 +1,55 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T19:35:33.223Z",
+ "pushed": "2026-11-23T19:59:41.305Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "19:42 work in progress on mail 314 item 2: far field matched by measure, fixed matte fails the sides at T, moving matte next",
+ "note": "land matte moves (0 at T, full two frames off), sides pass, far tone within 3 levels; horizon band of the terrain view still swaps at 743 and 991",
  "looks": [
+  {
+   "time": "2026-11-23T19:59:40.600Z",
+   "file": "20261123195940600-note-e5-n1016-x6.jpg",
+   "source": "out/work/mercury/place/tmp/e5-n1016-x6.jpg",
+   "kind": "note",
+   "label": "1016 night side at six times gain, before (top) and after: the level edges in the dark are gone, a few lit rims left at the terminator",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:59:40.067Z",
+   "file": "20261123195940067-note-e5-nA.jpg",
+   "source": "out/work/mercury/place/tmp/e5-nA.jpg",
+   "kind": "note",
+   "label": "dive horizon at native x2, top to bottom 742 743 744 (T) 745 780: the band and dark line of the terrain view come in at 743, still a nameable frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:59:39.478Z",
+   "file": "20261123195939478-note-e5-nZ.jpg",
+   "source": "out/work/mercury/place/tmp/e5-nZ.jpg",
+   "kind": "note",
+   "label": "rise horizon at native x2, top to bottom 959 989 990 (T) 991 992: one limb and one tone from 992; fault still there: the terrain view's own pale band and dark line swap to the clean limb at 991",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:39:50.882Z",
+   "file": "20261123193950882-compare-mercury-rise-sides.jpg",
+   "source": "out/work/handover/mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 990) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 990,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T19:39:32.348Z",
+   "file": "20261123193932348-compare-mercury-dive-sides.jpg",
+   "source": "out/work/handover/mercury-dive-sides.png",
+   "kind": "compare",
+   "label": "mercury dive, both sides at T (frame 744) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 744,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T19:35:32.588Z",
    "file": "20261123193532588-note-e2-np.jpg",
@@ -26,52 +72,6 @@
    "source": "out/work/mercury/place/tmp/e4-hzA.jpg",
    "kind": "note",
    "label": "work in progress, native crop of the horizon 990 to 993 (top to bottom) with a fixed land matte: one horizon from 991 on, but the terrain's own horizon at 990 (comb, glow) swaps to the globe's in one frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:33:43.242Z",
-   "file": "20261123193343242-compare-mercury-rise-sides.jpg",
-   "source": "out/work/handover/mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 990) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T19:33:24.667Z",
-   "file": "20261123193324667-compare-mercury-dive-sides.jpg",
-   "source": "out/work/handover/mercury-dive-sides.png",
-   "kind": "compare",
-   "label": "mercury dive, both sides at T (frame 744) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 744,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T19:14:26.634Z",
-   "file": "20261123191426634-note-n1016-x6.jpg",
-   "source": "out/work/mercury/place/tmp/n1016-x6.jpg",
-   "kind": "note",
-   "label": "the fault being cured: night side at 1016 at six times gain (plate edges in the dark)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:14:26.051Z",
-   "file": "20261123191426051-note-hz743.jpg",
-   "source": "out/work/mercury/place/tmp/hz743.jpg",
-   "kind": "note",
-   "label": "the fault being cured, native size: the doubled horizon at 743 (dark line of the picture's soft horizon under the band of globe)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:14:25.313Z",
-   "file": "20261123191425313-note-look-matte-dive.jpg",
-   "source": "out/work/mercury/place/tmp/look-matte-dive.jpg",
-   "kind": "note",
-   "label": "work in progress: land matte for the place picture of the dive (top: the picture's own alpha at 742, bottom: the matte that ends it under its horizon)",
    "stop": "mercury"
   }
  ]
