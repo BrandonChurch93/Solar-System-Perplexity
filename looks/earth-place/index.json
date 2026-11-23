@@ -1,72 +1,86 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T14:19:16.588Z",
+ "pushed": "2026-11-23T14:30:15.997Z",
  "head": "3c7515304eb340655854d66a42b3a0da3b9b9f9a",
- "note": "Earth place 3c751530: every draft frame of dive and rise looked at; G13 fix for 2118 (low plate as a window) in proof",
+ "note": "q13 proof of the low plate window: handover six verdicts pass, side difference at T mean 0.101 dive 0.103 rise; measure of every frame running",
  "looks": [
   {
-   "time": "2026-11-23T14:19:15.769Z",
-   "file": "20261123141915769-note-s-2137-2148.jpg",
-   "source": "out/work/earth/place/all/sheets/s-2137-2148.jpg",
+   "time": "2026-11-23T14:30:14.756Z",
+   "file": "20261123143014756-note-look.jpg",
+   "source": "out/work/earth/place/w18/look.jpg",
    "kind": "note",
-   "label": "draft, every frame 2137-2148, commit 3c751530",
+   "label": "w18 frames with the low plate window against before",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T14:19:15.070Z",
-   "file": "20261123141915070-note-s-2125-2136.jpg",
-   "source": "out/work/earth/place/all/sheets/s-2125-2136.jpg",
+   "time": "2026-11-23T14:30:13.796Z",
+   "file": "20261123143013796-note-rise-full-2108.jpg",
+   "source": "out/work/earth/place/tmp/hv/rise-full-2108.jpg",
    "kind": "note",
-   "label": "draft, every frame 2125-2136, commit 3c751530",
+   "label": "q13 rise place window 2108 to 2111 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T14:19:14.463Z",
-   "file": "20261123141914463-note-s-2113-2124.jpg",
-   "source": "out/work/earth/place/all/sheets/s-2113-2124.jpg",
+   "time": "2026-11-23T14:30:12.601Z",
+   "file": "20261123143012601-note-rise-full-2100.jpg",
+   "source": "out/work/earth/place/tmp/hv/rise-full-2100.jpg",
    "kind": "note",
-   "label": "draft, every frame 2113-2124, commit 3c751530",
+   "label": "q13 rise place window 2100 to 2103 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T14:19:13.819Z",
-   "file": "20261123141913819-note-s-1890-1901.jpg",
-   "source": "out/work/earth/place/all/sheets/s-1890-1901.jpg",
+   "time": "2026-11-23T14:30:11.464Z",
+   "file": "20261123143011464-note-dive-full-1915.jpg",
+   "source": "out/work/earth/place/tmp/hv/dive-full-1915.jpg",
    "kind": "note",
-   "label": "draft, every frame 1890-1901, commit 3c751530",
+   "label": "q13 dive place window 1915 to 1918 draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T14:19:13.187Z",
-   "file": "20261123141913187-note-s-1878-1889.jpg",
-   "source": "out/work/earth/place/all/sheets/s-1878-1889.jpg",
+   "time": "2026-11-23T14:30:10.586Z",
+   "file": "20261123143010586-note-dive-full-1907.jpg",
+   "source": "out/work/earth/place/tmp/hv/dive-full-1907.jpg",
    "kind": "note",
-   "label": "draft, every frame 1878-1889, commit 3c751530",
+   "label": "q13 dive place window 1907 to 1910 draft, low plate as window",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T14:19:12.388Z",
-   "file": "20261123141912388-note-s-1866-1877.jpg",
-   "source": "out/work/earth/place/all/sheets/s-1866-1877.jpg",
-   "kind": "note",
-   "label": "draft, every frame 1866-1877, commit 3c751530",
-   "stop": "earth"
+   "time": "2026-11-23T14:29:40.231Z",
+   "file": "20261123142940231-job-frame-01680.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "earth.hold frame 1680, draft tier, texels view, from the running measure job",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1680,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
-   "time": "2026-11-23T14:19:11.720Z",
-   "file": "20261123141911720-note-s-1854-1865.jpg",
-   "source": "out/work/earth/place/all/sheets/s-1854-1865.jpg",
-   "kind": "note",
-   "label": "draft, every frame 1854-1865, commit 3c751530",
-   "stop": "earth"
+   "time": "2026-11-23T14:29:03.890Z",
+   "file": "20261123142903890-sheet-earth-rise-draft-after.jpg",
+   "source": "out/work/handover/earth-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2101,
+   "last": 2112,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T13:49:56.925Z",
-   "file": "20261123134956925-note-dive-down-sheet.jpg",
-   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
-   "kind": "note",
-   "label": "dive seen straight down, 12 frames: cream glint patch 1858 to 1889 and plate outline still wrong",
-   "stop": "earth"
+   "time": "2026-11-23T14:29:01.933Z",
+   "file": "20261123142901933-sheet-earth-rise-draft-across.jpg",
+   "source": "out/work/handover/earth-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2105,
+   "tier": "draft"
   }
  ]
 }
