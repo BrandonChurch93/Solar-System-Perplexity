@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T10:10:56.567Z",
+ "pushed": "2026-11-23T10:29:59.613Z",
  "head": "6a4f848967e754a011a39f4e2e75774c5e774ad3",
- "note": "10:11 VM: S2 stage F and G on the globe side alone. The place comes in over 4680 to 4697 while the storm is small, the coarse light grows in to 4731. Thin line fan at 4736 and 4744 cut to one or two faint lines. M2 proof chain is rendering",
+ "note": "10:30 VM M2 proofs: dive and rise sheets on the globe side alone, twin pairs at T, the dark wedge fault in the rise",
  "looks": [
+  {
+   "time": "2026-11-23T10:29:49.187Z",
+   "file": "20261123102949187-note-crop-wedge.jpg",
+   "source": "out/work/nep/s2/r2/crop-wedge.jpg",
+   "kind": "note",
+   "label": "Fault: dark wedge south of the eye, rise 4970 to 4990",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:48.655Z",
+   "file": "20261123102948655-note-pair-4956.jpg",
+   "source": "out/work/nep/s2/twin/pair-4956.jpg",
+   "kind": "note",
+   "label": "Both sides at T of the rise, 4956, side forced, place picture off (old rise path)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:48.123Z",
+   "file": "20261123102948123-note-pair-4758.jpg",
+   "source": "out/work/nep/s2/twin/pair-4758.jpg",
+   "kind": "note",
+   "label": "Both sides at T of the dive, 4758, side forced, place picture off",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:47.597Z",
+   "file": "20261123102947597-note-rise-b.jpg",
+   "source": "out/work/nep/s2/r2/rise-b.jpg",
+   "kind": "note",
+   "label": "M2 rise 4990 to 5024 with arc 2, globe side alone, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:47.052Z",
+   "file": "20261123102947052-note-rise-a.jpg",
+   "source": "out/work/nep/s2/r2/rise-a.jpg",
+   "kind": "note",
+   "label": "M2 rise 4957 to 4983 with arc 2, globe side alone, place picture off, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:46.407Z",
+   "file": "20261123102946407-note-dive-b.jpg",
+   "source": "out/work/nep/s2/m2/dive-b.jpg",
+   "kind": "note",
+   "label": "M2 dive 4728 to 4769, globe side alone, place picture off, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:29:45.855Z",
+   "file": "20261123102945855-note-dive-a.jpg",
+   "source": "out/work/nep/s2/m2/dive-a.jpg",
+   "kind": "note",
+   "label": "M2 dive 4680 to 4720, globe side alone, place picture off, draft",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T10:10:50.149Z",
    "file": "20261123101050149-note-crop-right.jpg",
    "source": "out/work/nep/s2/g/crop-right.jpg",
    "kind": "note",
    "label": "S2: thin straight lines right of the right bank at 4736 and 4744, after (top) and before (bottom) the cut",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:10:48.995Z",
-   "file": "20261123101048995-note-sheet.jpg",
-   "source": "out/work/nep/s2/g/sheet.jpg",
-   "kind": "note",
-   "label": "S2 stage G: 4728 4736 4744 4752, globe side alone, after the cut of the far cirrus tail",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:10:47.761Z",
-   "file": "20261123101047761-note-sheetB.jpg",
-   "source": "out/work/nep/s2/f/sheetB.jpg",
-   "kind": "note",
-   "label": "S2 stage F: 4698 4704 4712 4720 4728 4736, globe side alone, place picture off",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:10:46.454Z",
-   "file": "20261123101046454-note-crop-in.jpg",
-   "source": "out/work/nep/s2/f/crop-in.jpg",
-   "kind": "note",
-   "label": "S2 stage F: the storm cut out, 4680 to 4698 every second frame, globe side alone. The place comes in over 4680 to 4697 while the storm is small",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:54:04.386Z",
-   "file": "20261123095404386-note-sheet1.jpg",
-   "source": "out/work/nep/s2/d/sheet1.jpg",
-   "kind": "note",
-   "label": "S2 stage D, globe side 4704 4712 4728 4744 (threads round the storm at 4728, since replaced by soft takes)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:54:03.669Z",
-   "file": "20261123095403669-note-crop-in.jpg",
-   "source": "out/work/nep/s2/e/crop-in.jpg",
-   "kind": "note",
-   "label": "S2 stage E, storm crop 4684 to 4696 step 2: the place comes in over 6 frames and reads as a repaint (fault, being reworked)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:23:06.151Z",
-   "file": "20261123092306151-note-sheet2.jpg",
-   "source": "out/work/nep/s2/b/sheet2.jpg",
-   "kind": "note",
-   "label": "S2 stage B sheet2, globe side forced: repainted spiral round the wedge; orange streaks near the limb and dark wedge edges still wrong",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:23:05.485Z",
-   "file": "20261123092305485-note-sheet1.jpg",
-   "source": "out/work/nep/s2/b/sheet1.jpg",
-   "kind": "note",
-   "label": "S2 stage B sheet1, globe side forced: repainted spiral round the wedge; orange streaks near the limb and dark wedge edges still wrong",
    "stop": "neptune"
   }
  ]
