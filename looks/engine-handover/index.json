@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T18:45:33.141Z",
- "head": "1a777a3b746d40351878e1258f4f13be20edeeb3",
- "note": "E6: capped shutter proven at draft (bytes kept), capped Mars frames at review; hooks for the sky clock in work",
+ "pushed": "2026-11-23T18:58:43.622Z",
+ "head": "650e87bbb24ed743778a159041e58cc40ea08407",
+ "note": "E6 and the sky hooks pushed (63f9dfd); byte proofs against the E6 tree and main are rendering",
  "looks": [
+  {
+   "time": "2026-11-23T18:58:42.389Z",
+   "file": "20261123185842389-note-f04195-review.jpg",
+   "source": "../../../../tmp/e6/after/f04195-review.png",
+   "kind": "note",
+   "label": "E6 capped shutter (6 px), frame 4195, review tier, commit aca5732"
+  },
+  {
+   "time": "2026-11-23T18:58:41.533Z",
+   "file": "20261123185841533-note-f02156-review.jpg",
+   "source": "../../../../tmp/e6/after/f02156-review.png",
+   "kind": "note",
+   "label": "E6 capped shutter (6 px), frame 2156, review tier, commit aca5732"
+  },
+  {
+   "time": "2026-11-23T18:58:40.437Z",
+   "file": "20261123185840437-note-f01857-review.jpg",
+   "source": "../../../../tmp/e6/after/f01857-review.png",
+   "kind": "note",
+   "label": "E6 capped shutter (6 px), frame 1857, review tier, commit aca5732"
+  },
+  {
+   "time": "2026-11-23T18:58:39.355Z",
+   "file": "20261123185839355-note-f01016-review.jpg",
+   "source": "../../../../tmp/e6/after/f01016-review.png",
+   "kind": "note",
+   "label": "E6 capped shutter (6 px), frame 1016, review tier, commit aca5732"
+  },
+  {
+   "time": "2026-11-23T18:58:37.534Z",
+   "file": "20261123185837534-note-f00717-review.jpg",
+   "source": "../../../../tmp/e6/after/f00717-review.png",
+   "kind": "note",
+   "label": "E6 capped shutter (6 px), frame 717, review tier, commit aca5732"
+  },
   {
    "time": "2026-11-23T18:45:19.067Z",
    "file": "20261123184519067-note-f02726-review.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/e6/after/f02692-review.png",
    "kind": "note",
    "label": "E6 capped shutter (6 px), Mars frame 2692, review tier, 16 samples, commit aca5732"
-  },
-  {
-   "time": "2026-11-23T18:45:15.643Z",
-   "file": "20261123184515643-note-f02427-review.jpg",
-   "source": "../../../../tmp/e6/after/f02427-review.png",
-   "kind": "note",
-   "label": "E6 capped shutter (6 px), Mars frame 2427, review tier, 16 samples, commit aca5732"
-  },
-  {
-   "time": "2026-11-23T18:45:13.900Z",
-   "file": "20261123184513900-note-f02440-review.jpg",
-   "source": "../../../../tmp/e6/after/f02440-review.png",
-   "kind": "note",
-   "label": "E6 capped shutter (6 px), Mars frame 2440, review tier, 16 samples, commit aca5732"
-  },
-  {
-   "time": "2026-11-23T18:05:08.583Z",
-   "file": "20261123180508583-note-dive-ba-2452.jpg",
-   "source": "../../../../tmp/tone/dive-ba-2452.png",
-   "kind": "note",
-   "label": "Mars dive 2452 before and after the tone split, first form (veil, rejected)"
-  },
-  {
-   "time": "2026-11-23T18:05:07.843Z",
-   "file": "20261123180507843-note-tri-2698s.jpg",
-   "source": "../../../../tmp/tone/tri-2698s.png",
-   "kind": "note",
-   "label": "Mars rise 2698: today, shares 1, globe alone (draft)"
-  },
-  {
-   "time": "2026-11-23T18:05:07.215Z",
-   "file": "20261123180507215-note-tri-2696s.jpg",
-   "source": "../../../../tmp/tone/tri-2696s.png",
-   "kind": "note",
-   "label": "Mars rise 2696, tone split: today, shares 1, shares 2 (draft)"
   }
  ]
 }
