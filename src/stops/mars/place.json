@@ -1,0 +1,5 @@
+{
+  "note": "The field of the place picture beyond the frame, as shares of the frame's width and height: left, right, bottom, top. Measured on the place picture itself (diag view beauty/picture at frames 2448 and 2706): the relief's apron is painted to the left and below as far as an eighth of the frame, to the right its outer layers end between 0.066 and 0.08 of the width beyond the frame, the sky above has no end.",
+  "dive": { "valid": [0.11, 0.06, 0.11, 0.125] },
+  "rise": { "valid": [0.11, 0.06, 0.11, 0.125] }
+}

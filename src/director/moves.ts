@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { CoverHorizon, Pose, ViewKind } from '../core/types'
 import { handoverOf, sideAt, type HandoverParams } from './handover'
-import { coverFrames, coverWindow, setCoverWindow, setHandover, type CoverTimings } from './timeline'
+import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -51,6 +51,10 @@ export interface MoveParams {
 export interface SegmentTimes { hold: Segment; dive?: Segment; terrain: Segment; rise: Segment; travel?: Segment }
 
 export interface OrbitShot { pose: Pose; view: 'orbit' | 'terrain' }
+
+export interface TwinFrame { rotation: THREE.Quaternion; origin: THREE.Vector3; scale: number }
+
+interface Target { key: string; centre: THREE.Vector3; ahead: THREE.Vector3 }
 
 const Y = new THREE.Vector3(0, 1, 0)
 const SURGE_STEPS = 2048
@@ -108,6 +112,14 @@ const easeOut = ease('power3.out')
 const easeRise = ease('sine.out')
 const easeInOut = ease('power2.inOut')
 
+export function trapeze(x: number, rise: number, fall: number): number {
+  const k = Math.min(Math.max(x, 0), 1)
+  const area = (y: number): number => (y >= 1 ? y - 0.5 : y * y * y - 0.5 * y * y * y * y)
+  const total = 1 - 0.5 * rise - 0.5 * fall
+  const done = k <= 1 - fall ? (rise > 0 ? rise * area(k / rise) : k) : total - fall * area((1 - k) / fall)
+  return done / total
+}
+
 function v3(a: number[]): THREE.Vector3 {
   return new THREE.Vector3(a[0], a[1], a[2])
 }
@@ -128,6 +140,7 @@ export class StopPlan {
   readonly holdMid: number
   readonly riseEnd: Pose
   readonly riseOut: THREE.Vector3
+  private readonly targets: Target[] = []
 
   constructor(id: string, fit: Fit, p: MoveParams) {
     this.id = id
@@ -250,6 +263,114 @@ export class StopPlan {
 
   get handsOver(): boolean {
     return this.p.handover !== undefined
+  }
+
+  coverBare(seg: Segment | undefined): boolean {
+    if (!seg) return false
+    return withoutHandover(this.id, () => !!coverWindow(seg) && this.coverAmount(seg, this.coverCenter(seg)) === 0)
+  }
+
+  closeUp(): { up: THREE.Vector3; dip: number } {
+    const t = this.p.terrain
+    const dip = THREE.MathUtils.degToRad(t.dipDeg ?? 2)
+    const tilt = THREE.MathUtils.degToRad(t.horizonDeg ?? 0) + dip
+    const up = new THREE.Vector3(0, Math.cos(tilt), Math.sin(tilt))
+    if (t.rollDeg) up.applyAxisAngle(new THREE.Vector3(0, 0, 1), -THREE.MathUtils.degToRad(t.rollDeg))
+    return { up, dip }
+  }
+
+  twinFrame(time: number): TwinFrame {
+    const { up, dip } = this.closeUp()
+    const rho = this.ground / (1 / Math.cos(dip) - 1)
+    const tq = this.turn(time)
+    const rotation = tq.clone().multiply(this.terrainFrame).multiply(new THREE.Quaternion().setFromUnitVectors(up, Y))
+    const origin = this.normal.clone().applyQuaternion(tq).multiplyScalar(1 + this.ground / rho)
+    return { rotation, origin, scale: 1 / rho }
+  }
+
+  twin(local: Pose, time: number): Pose {
+    const f = this.twinFrame(time)
+    return { position: local.position.clone().multiplyScalar(f.scale).applyQuaternion(f.rotation).add(f.origin), quaternion: f.rotation.clone().multiply(local.quaternion), vfov: local.vfov }
+  }
+
+  closePose(kind: 'dive' | 'rise', time: number): Pose {
+    return kind === 'dive' ? this.divePose(time, 'terrain') : this.risePose(time, 'terrain')
+  }
+
+  private target(kind: 'dive' | 'rise', at: number, time: number): { centre: THREE.Vector3; ahead: THREE.Vector3 } {
+    const key = kind + '|' + at
+    let hit = this.targets.find((t) => t.key === key)
+    if (!hit) {
+      const tw = this.twin(this.closePose(kind, at), at)
+      const eye = tw.position
+      const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(tw.quaternion)
+      const out = eye.clone().normalize()
+      const level = dir.clone().addScaledVector(out, -dir.dot(out))
+      if (level.lengthSq() < 1e-12) level.copy(this.heading).applyQuaternion(this.turn(at)).addScaledVector(out, -this.heading.clone().applyQuaternion(this.turn(at)).dot(out))
+      level.normalize()
+      const b = eye.dot(dir)
+      const c = eye.lengthSq() - 1
+      const disc = b * b - c
+      const reach = Math.acos(Math.min(1 / eye.length(), 1)) * config.raw.handover.descent.targetReach
+      let arc = reach
+      if (disc > 0 && b < 0) {
+        const p = eye.clone().addScaledVector(dir, c / (-b + Math.sqrt(disc))).normalize()
+        arc = Math.min(Math.acos(Math.min(Math.max(p.dot(out), -1), 1)), reach)
+      }
+      const centre = out.clone().multiplyScalar(Math.cos(arc)).addScaledVector(level, Math.sin(arc))
+      const ahead = level.clone().multiplyScalar(Math.cos(arc)).addScaledVector(out, -Math.sin(arc))
+      const back = this.turn(at).invert()
+      hit = { key, centre: centre.applyQuaternion(back), ahead: ahead.applyQuaternion(back) }
+      if (this.targets.length > 8) this.targets.length = 0
+      this.targets.push(hit)
+    }
+    const tq = this.turn(time)
+    return { centre: hit.centre.clone().applyQuaternion(tq), ahead: hit.ahead.clone().applyQuaternion(tq) }
+  }
+
+  place(kind: 'dive' | 'rise', time: number): THREE.Vector3 {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    return this.target(kind, this.coverCenter(seg), time).centre
+  }
+
+  private glide(kind: 'dive' | 'rise', time: number, far: Pose, low: Pose, share: number, at: number): Pose {
+    if (share <= 0) return far
+    if (share >= 1) return low
+    const { centre, ahead } = this.target(kind, at, time)
+    const seen = (p: Pose): { h: number; out: THREE.Vector3; rel: THREE.Quaternion } => {
+      const out = p.position.clone().sub(centre)
+      const look = lookAt(p.position, centre, ahead)
+      return { h: p.position.length() - 1, out: out.normalize(), rel: look.invert().multiply(p.quaternion) }
+    }
+    const a = seen(far)
+    const b = seen(low)
+    const h = Math.exp(mix(Math.log(Math.max(a.h, 1e-9)), Math.log(Math.max(b.h, 1e-9)), share))
+    const out = slerpDir(a.out, b.out, share)
+    const lift = centre.dot(out)
+    const range = (h * (2 + h)) / (lift + Math.sqrt(lift * lift + h * (2 + h)))
+    const position = centre.clone().addScaledVector(out, range)
+    return { position, quaternion: lookAt(position, centre, ahead).multiply(a.rel.slerp(b.rel, share)), vfov: mix(far.vfov, low.vfov, share) }
+  }
+
+  private descent(time: number): Pose {
+    const seg = this.seg.dive!
+    const h = handoverOf(this.id, 'dive')!
+    const low = this.twin(this.diveTerrain(time), time)
+    if (time >= h.time) return low
+    const d = config.raw.handover.descent
+    const share = trapeze((time - seg.start) / (h.time - seg.start), d.rise, d.fall)
+    return this.glide('dive', time, this.hold(time - this.seg.hold.start), low, share, h.time)
+  }
+
+  private ascent(time: number): Pose {
+    const seg = this.seg.rise
+    const h = handoverOf(this.id, 'rise')!
+    const low = this.twin(this.risePose(time, 'terrain'), time)
+    if (time <= h.time) return low
+    const d = config.raw.handover.descent
+    const share = trapeze((seg.end - time) / (seg.end - h.time), d.rise, d.fall)
+    return this.glide('rise', time, this.after(time), low, share, h.time)
   }
 
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
@@ -426,6 +547,7 @@ export class StopPlan {
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
     if (view === 'terrain') return this.diveTerrain(time)
+    if (this.handsOver) return this.descent(time)
     const held = this.hold(time - this.seg.hold.start)
     if (this.p.dive.swoop) return blendPose(held, this.swoop(time), smooth(u / 0.22))
     const start = this.hold(this.seg.hold.end - this.seg.hold.start)
@@ -463,6 +585,7 @@ export class StopPlan {
         vfov: t.vfov,
       }
     }
+    if (this.handsOver) return this.ascent(time)
     const settle = this.p.rise.settle
     const x = ramp(f.center, 1, u)
     const e = settle ? 1 - Math.pow(1 - x, settle) * (this.p.rise.gentle ? 1 + settle * x : 1) : easeRise(ramp(f.first, 1, u))

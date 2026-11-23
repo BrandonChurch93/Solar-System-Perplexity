@@ -10,7 +10,9 @@ export interface ShotSource { shotAt(frame: number, time: number, side?: ViewKin
 const RAD = Math.PI / 180
 const CENTRE = new THREE.Vector3()
 
-export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
+export type MotionProbe = (column: number, row: number, px: number) => void
+
+export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProbe): number {
   const m = config.motion
   const master = config.formats[config.formatKeys.master]!
   const half = master.height / 2
@@ -28,10 +30,13 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
     const a = open.sets[i]
     const b = close.sets[i]
     if (s.weight <= 0 || !a || !b || a.id !== s.id || b.id !== s.id) return
-    const track = (local: THREE.Vector3): void => {
+    const track = (local: THREE.Vector3, x = -1, y = -1): void => {
       const pa = seen(open, a, local)
       const pb = seen(close, b, local)
-      if (pa && pb) most = Math.max(most, pa.distanceTo(pb))
+      if (!pa || !pb) return
+      const px = pa.distanceTo(pb)
+      most = Math.max(most, px)
+      if (probe && x >= 0) probe(x, y, px)
     }
     const inverse = s.rotation.clone().invert()
     const eye = mid.camera.position.clone().sub(s.origin).applyQuaternion(inverse)
@@ -49,7 +54,7 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
       for (let x = 0; x < cols; x++) {
         const ray = new THREE.Vector3(((x / (cols - 1)) * 2 - 1) * tan * aspect, ((y / (rows - 1)) * 2 - 1) * tan, -1).normalize().applyQuaternion(mid.camera.quaternion).applyQuaternion(inverse)
         if (!orbit) {
-          if (height > 0 && ray.y < -1e-9) track(eye.clone().addScaledVector(ray, height / -ray.y))
+          if (height > 0 && ray.y < -1e-9) track(eye.clone().addScaledVector(ray, height / -ray.y), x, y)
           continue
         }
         const along = -eye.dot(ray)
@@ -57,7 +62,7 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot): number {
         const t = disc > 0 ? along - Math.sqrt(disc) : eye.length()
         if (t <= 0) continue
         const p = eye.clone().addScaledVector(ray, t)
-        if (disc > 0 || p.length() <= reach) track(p)
+        if (disc > 0 || p.length() <= reach) track(p, x, y)
       }
     }
   })
