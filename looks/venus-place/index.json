@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T15:31:18.942Z",
- "head": "6eae8441d52f9bfe1dad92c121349587939a5c3d",
- "note": "READY venus 7907a57a: harness on the head passes; under the place picture dive 4.18, rise 4.09; top down sheets",
+ "pushed": "2026-11-23T15:54:55.854Z",
+ "head": "ab8ba57e464e956a78771b4c801d59241c4bf30d",
+ "note": "venus: ring of level a rebuilt from the fifth take, level w painted new about it; not rendered yet",
  "looks": [
+  {
+   "time": "2026-11-23T15:54:55.260Z",
+   "file": "20261123155455260-note-w-comp-3.jpg",
+   "source": "../../../../tmp/v/w-comp-3.jpg",
+   "kind": "note",
+   "label": "venus level w, ring take 3 about the new plate a, before its tiles",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T15:54:54.679Z",
+   "file": "20261123155454679-note-a-plate-t1b.jpg",
+   "source": "../../../../tmp/v/a-plate-t1b.jpg",
+   "kind": "note",
+   "label": "venus plate a, ring from the fifth take made (takes 7 and 8 out), straight lines at the child border healed",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T15:31:18.218Z",
    "file": "20261123153118218-note-venus-rise-top.jpg",
@@ -64,30 +80,6 @@
    "stop": "venus",
    "segment": "venus.dive",
    "frame": 1343,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:27:06.551Z",
-   "file": "20261123152706551-sheet-venus-rise-draft-after.jpg",
-   "source": "out/work/handover/venus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1543 to 1554 (after T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1543,
-   "last": 1554,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:26:20.918Z",
-   "file": "20261123152620918-sheet-venus-rise-draft-before.jpg",
-   "source": "out/work/handover/venus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "venus rise, every frame 1530 to 1541 (before T, frame 1542), draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1530,
-   "last": 1541,
    "tier": "draft"
   }
  ]
