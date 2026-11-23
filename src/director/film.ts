@@ -739,7 +739,7 @@ export class FilmDirector implements Director {
         const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
         local = r.pose
         view = r.view
-        if (view === 'orbit' && topForced()) local = p.above(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
+        if (view === 'orbit' && topForced()) local = p.topDown(segment.kind === 'dive' ? 'dive' : 'rise', time, local)
       }
       if ((segment.kind === 'dive' || segment.kind === 'rise') && !p.handsOver) {
         cover.amount = p.coverAmount(segment, time)
