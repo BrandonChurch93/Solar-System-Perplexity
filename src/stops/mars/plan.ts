@@ -1,6 +1,19 @@
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
+import type { HandoverSide, PathOptions, PlaceOptions } from '../../director/handover'
 import fit from './fit.json'
 import place from './place.json'
+
+// A side of place.json: at, placeFrames and path belong to the handover, every other key is an option of the place picture and reaches the
+// engine as it stands, so a number set in that file can not be lost on the way.
+type SideFile = PlaceOptions & { at?: number; placeFrames?: number; path?: PathOptions }
+function side(file: unknown): HandoverSide {
+  const { at, placeFrames, path, ...picture } = file as SideFile
+  const out: HandoverSide = { skyFloor: true, place: picture }
+  if (at !== undefined) out.at = at
+  if (placeFrames !== undefined) out.placeFrames = placeFrames
+  if (path !== undefined) out.path = path
+  return out
+}
 
 export const params: MoveParams = {
   hold: { orbitDeg: -8, axis: [-0.15, 1, 0], push: -0.04 },
@@ -23,7 +36,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 0.9,
   moonDegPerSecond: -1.2,
   tint: [0.9, 0.5, 0.3],
-  handover: { dive: { skyFloor: true, place: { valid: place.dive.valid as [number, number, number, number], limbReachDeg: place.dive.limbReachDeg }, path: place.dive.path }, rise: { at: 0.2, placeFrames: 26, skyFloor: true, place: { valid: place.rise.valid as [number, number, number, number], maxEnlarge: place.rise.maxEnlarge, enlargeSoft: place.rise.enlargeSoft, limbReachDeg: place.rise.limbReachDeg } } },
+  handover: { dive: side(place.dive), rise: side(place.rise) },
 }
 
 export const plan = new StopPlan('mars', fit as Fit, params)

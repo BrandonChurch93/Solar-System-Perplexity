@@ -445,3 +445,66 @@ describe('the coast of the close side past T', () => {
     }
   })
 })
+
+describe('a rise that leaves from the eye of the dive', () => {
+  const power = 2.2
+  const lead = { handover: { rise: { path: { fromDive: power } } } }
+
+  it('stands at T where the twin of the dive stood, with its look and its field, and the globe side takes over there', () => {
+    const own = coveredPlan(lead)
+    const h = handoverOf(own.id, 'rise')!
+    const d = handoverOf(own.id, 'dive')!
+    const at = own.closePose('rise', h.time)
+    const from = own.closePose('dive', d.time)
+    expect(at.position.distanceTo(from.position)).toBeLessThan(1e-12)
+    expect(at.quaternion.angleTo(from.quaternion)).toBeLessThan(1e-7)
+    expect(at.vfov).toBe(from.vfov)
+    const tw = own.twin(at, h.time)
+    expect(globe(own, 'rise', h.time).position.distanceTo(tw.position)).toBeLessThan(1e-12)
+    const onBody = (p: Pose, time: number): THREE.Vector3 => p.position.clone().applyQuaternion(own.turn(time).invert())
+    expect(onBody(tw, h.time).distanceTo(onBody(own.twin(from, d.time), d.time))).toBeLessThan(1e-12)
+  })
+
+  it('starts as the own close path of the stop at its own speed, and passes T moving away from that path at the rate its power gives', () => {
+    const plain = coveredPlan({ handover: {} })
+    const own = coveredPlan(lead)
+    const s = own.seg.rise
+    const h = handoverOf(own.id, 'rise')!
+    const d = handoverOf(own.id, 'dive')!
+    const dt = 1e-5
+    for (const t of [s.start - 0.2, s.start]) expect(JSON.stringify(own.closePose('rise', t))).toBe(JSON.stringify(plain.closePose('rise', t)))
+    const v0 = velocity((t) => own.closePose('rise', t), s.start, dt)
+    const p0 = velocity((t) => plain.closePose('rise', t), s.start, dt)
+    expect(v0.v.distanceTo(p0.v)).toBeLessThan(1e-3 * p0.v.length())
+    const to = own.closePose('dive', d.time)
+    const gap = to.position.clone().sub(plain.closePose('rise', h.time).position)
+    expect(gap.length()).toBeGreaterThan(0)
+    for (const far of [-dt, dt]) {
+      const kv = velocity((t) => own.closePose('rise', t), h.time, far)
+      expect(kv.v.distanceTo(gap.clone().multiplyScalar(power / (h.time - s.start)))).toBeLessThan(1e-3 * kv.v.length())
+    }
+    let last = Number.POSITIVE_INFINITY
+    const half = Math.ceil((s.firstFrame + Math.floor(h.time * fps)) / 2)
+    for (let f = half; f <= Math.floor(h.time * fps); f++) {
+      const gone = own.closePose('rise', Math.min(mid(f), h.time)).position.distanceTo(to.position)
+      expect(gone).toBeLessThan(last)
+      last = gone
+    }
+  })
+
+  it('leaves the close path of the rise and every pose of the dive untouched when the stop does not ask for it', () => {
+    const plain = coveredPlan({ handover: {} })
+    const own = coveredPlan(lead)
+    const other = coveredPlan({ handover: { rise: { path: { levelBy: c.ascent.levelBy } } } })
+    const s = plain.seg.rise
+    const d = plain.seg.dive!
+    for (let f = s.firstFrame; f < s.endFrame; f += 3) expect(JSON.stringify(other.closePose('rise', mid(f)))).toBe(JSON.stringify(plain.closePose('rise', mid(f))))
+    for (let f = d.firstFrame; f < d.endFrame; f += 3) for (const view of ['orbit', 'terrain'] as const) expect(JSON.stringify(own.divePose(mid(f), view))).toBe(JSON.stringify(plain.divePose(mid(f), view)))
+  })
+
+  it('is refused on a dive, under a power of 1 and without a number', () => {
+    expect(() => handoverOf(coveredPlan({ handover: { dive: { path: { fromDive: 2 } } } }).id, 'dive')).toThrow(/fromDive/)
+    for (const fromDive of [0.5, 0, Number.NaN, Number.POSITIVE_INFINITY]) expect(() => handoverOf(coveredPlan({ handover: { rise: { path: { fromDive } } } }).id, 'rise')).toThrow(/fromDive/)
+    expect(() => handoverOf(coveredPlan(lead).id, 'rise')).not.toThrow()
+  })
+})
