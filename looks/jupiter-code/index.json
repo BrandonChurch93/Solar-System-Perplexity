@@ -1,9 +1,39 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T18:41:10.710Z",
+ "pushed": "2026-11-23T18:51:12.548Z",
  "head": "c91222cae67882b2a3b921631ab697e2ea785872",
- "note": "18:45 UTC: life work started on 3060 to 3239 (storm turn trial), native crops of 2997",
+ "note": "Jupiter life: storm turn in, haze trial 1 (too faint, veil over the dark blue rejected), next wisps with shadows and lightning",
  "looks": [
+  {
+   "time": "2026-11-23T18:51:11.919Z",
+   "file": "20261123185111919-note-h1-3150-diff.jpg",
+   "source": "../work/f/h1-3150-diff.jpg",
+   "kind": "note",
+   "label": "Where the first haze sits at 3150 (difference to the frame without it, times 8): long streaks beyond the storm, a pale veil over the dark blue at the right that I do not keep",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T18:51:11.315Z",
+   "file": "20261123185111315-note-h1-sheet.jpg",
+   "source": "../work/f/h1-sheet.jpg",
+   "kind": "note",
+   "label": "Life trial h1, draft: storm turn 2 deg a second (bound 8) and a first thin haze, frames 3060 3105 3195 3239. Haze still far too faint to see; wash lower left at 3239 and the climbing level are still there",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T18:46:36.621Z",
+   "file": "20261123184636621-frame-f03060.jpg",
+   "source": "out/work/jupiter/frames/h1/f03060.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3060, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3060,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
   {
    "time": "2026-11-23T18:41:10.107Z",
    "file": "20261123184110107-note-n2997-1.jpg",
@@ -21,20 +51,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T18:39:58.106Z",
-   "file": "20261123183958106-frame-f03180.jpg",
-   "source": "out/work/jupiter/frames/l1/f03180.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3180, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3180,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "743c10b0a56aaca7"
-  },
-  {
    "time": "2026-11-23T18:28:06.364Z",
    "file": "20261123182806364-frame-f03270.jpg",
    "source": "out/work/jupiter/frames/b2/f03270.png",
@@ -47,34 +63,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "743c10b0a56aaca7"
-  },
-  {
-   "time": "2026-11-23T18:17:54.801Z",
-   "file": "20261123181754801-job-frame-02974.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.dive frame 2974, draft tier, texels view, from the running texels job",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2974,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "texels"
-  },
-  {
-   "time": "2026-11-23T18:17:16.978Z",
-   "file": "20261123181716978-job-frame-02895.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.hold frame 2895, draft tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
