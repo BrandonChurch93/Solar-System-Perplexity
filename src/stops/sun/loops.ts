@@ -21,7 +21,7 @@ export interface LoopsLook {
 export interface KnotsLook {
   knots: { amount: number; speed: number; every: number; width: number; jitter: number; white: number; inside: [number, number]; lanes: [number, number]; lead: number; pick: [number, number, number, number]; ends: [number, number] }
   feet: { amount: number; reach: number; over: number; lane: number; ground: number }
-  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; keep: number; hold: [number, number, number]; ends: [number, number]; grow: [number, number]; kick: number }
+  surge: { from: number; land: number; lead: number; rise: number; fade: number; amount: number; width: number; tail: number; ragged: number; white: number; halo: number; level: number; lanes: [number, number, number]; glow: [number, number, number]; core: [number, number]; inner: [number, number, number]; crest: [number, number]; launch: number; flare: number; peak: number; early: number; end: number; settle: number; ground: number; reach: number; knee: number; bloom: number; veil: [number, number, number]; most: number; keep: number; hold: [number, number, number]; ends: [number, number]; grow: [number, number]; kick: number }
   erupt: { from: number; top: number; time: number; lean: number; far: number; lanes: number; pick: [number, number]; outer: [number, number, number]; gate: [number, number, number, number]; gain: [number, number]; erode: number; thin: number; fade: [number, number]; tear: [number, number, number]; flash: { at: number; peak: number; ease: number; amount: number; width: number; white: number; wide: number; haze: number; level: number; lane: [number, number]; tint: [number, number, number]; ground: number; veil: number; span: number } }
 }
 
@@ -89,7 +89,17 @@ uniform vec3 uPeelOuter;
 uniform vec4 uPeelGate;
 uniform vec3 uPeelTear;
 uniform vec4 uGap;
-uniform vec4 uGapMore;` : ''}
+uniform vec4 uGapMore;
+uniform float uThrownMost;
+// light the release throws on a foot lifts it toward uThrownMost and no further; where the foot is brighter
+// than that already it adds nothing, so a lit foot glows gold round its white cores and does not grow wider
+vec3 thrownOn(vec3 base, vec3 lit) {
+  float b = dot(base, vec3(0.3, 0.5, 0.2));
+  float d = dot(lit, vec3(0.3, 0.5, 0.2)) - b;
+  if (uThrownMost <= 0.0 || d <= 0.0) return lit;
+  float room = max(uThrownMost - b, 0.0);
+  return mix(base, lit, room / (d + room));
+}` : ''}
 uniform float uSince;
 uniform float uLifeOn;
 uniform vec4 uSway;
@@ -314,11 +324,13 @@ void main() {
       float pushed = shaped * front * onStrand;
       pushed /= 1.0 + uFlare.z * pushed * dot(lin, vec3(0.3, 0.5, 0.2));
       float kept = shaped * held * onStrand;
-      lin = lin * (1.0 + pushed + kept) + shine * (pushed + kept * uHold.z) * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * shaped * (front + held * uHold.y);
+      vec3 surged = lin * (1.0 + pushed + kept) + shine * (pushed + kept * uHold.z) * uSurgeMore.y * vec3(1.0, 0.9, 0.66) + wide * uSurgeMore.z * uSurgeGlow * shaped * (front + held * uHold.y);
+      // near a foot the wave is thrown light like the flare: bound there, free along the arc
+      lin = mix(surged, thrownOn(lin, surged), min(exp(-s / uKnotMore.w) + exp(-(1.0 - s) / uKnotMore.w), 1.0));
       float foot = uFlare.x * exp(-s / uKnotMore.w) + uFlare.y * exp(-(1.0 - s) / uKnotMore.w);
       float flared = seen * foot;
       flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
-      lin = lin * (1.0 + flared) + shine * flared * uKnotMore.z * vec3(1.0, 0.9, 0.66) + wide * uFlare.w * uSurgeGlow * foot;
+      lin = thrownOn(lin, lin * (1.0 + flared) + shine * flared * uKnotMore.z * vec3(1.0, 0.9, 0.66) + wide * uFlare.w * uSurgeGlow * foot);
       float inKnot = exp(-(arc - uFlashGlow.z) * (arc - uFlashGlow.z) / (uFlashGlow.w * uFlashGlow.w));
       float crest = uFlash.x * exp(-(s - 0.5) * (s - 0.5) / (uFlash.y * uFlash.y)) * inKnot;
       float burnt = seen * crest;
@@ -548,6 +560,7 @@ export class Loops {
       this.material.uniforms.uHold = { value: new THREE.Vector3(...knots.surge.hold) }
       this.material.uniforms.uHoldEnds = { value: new THREE.Vector2(...knots.surge.ends) }
       this.material.uniforms.uFlare = { value: new THREE.Vector4(0, 0, knots.surge.knee, knots.surge.bloom) }
+      this.material.uniforms.uThrownMost = { value: knots.surge.most }
       const g = knots.surge
       this.material.uniforms.uSurge = { value: new THREE.Vector4(0, 0, g.width, g.tail) }
       this.material.uniforms.uSurgeMore = { value: new THREE.Vector4(g.ragged, g.white, g.halo, g.level) }
