@@ -1,9 +1,51 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T13:24:38.927Z",
+ "pushed": "2026-11-23T13:57:47.839Z",
  "head": "b3bf167d187ac76f0ea65bd4ccb2d40660a2306f",
- "note": "v23: fore height map at 0.002 units a pixel. Dome outlines at 3150 remain and are from the chart mask (pad around hidden ground), next: colour by the fit camera's own image with a depth test",
+ "note": "v27: near deck of 3200 to 3238 without the dark dashes (exact hidden mask, interpolating fill, picture shown on steep ground); lower left of 3236 to 3239 still soft; dive and rise next",
  "looks": [
+  {
+   "time": "2026-11-23T13:57:47.043Z",
+   "file": "20261123135747043-note-v27-3150-full.jpg",
+   "source": "../work/f/v27-3150-full.png",
+   "kind": "note",
+   "label": "v27 frame 3150 draft"
+  },
+  {
+   "time": "2026-11-23T13:57:46.505Z",
+   "file": "20261123135746505-note-v27-3239-ll.jpg",
+   "source": "../work/f/v27-3239-ll.png",
+   "kind": "note",
+   "label": "v27 frame 3239 lower left at native size"
+  },
+  {
+   "time": "2026-11-23T13:57:45.852Z",
+   "file": "20261123135745852-note-v27-3236-full.jpg",
+   "source": "../work/f/v27-3236-full.png",
+   "kind": "note",
+   "label": "v27 frame 3236 draft: dark dashes and cracks on the near deck gone, lower left still soft"
+  },
+  {
+   "time": "2026-11-23T13:57:45.278Z",
+   "file": "20261123135745278-note-v27-sheet15.jpg",
+   "source": "../work/f/v27-sheet15.jpg",
+   "kind": "note",
+   "label": "v27 surface view, every 15th frame 3060 to 3239, draft, near deck fix"
+  },
+  {
+   "time": "2026-11-23T13:56:04.268Z",
+   "file": "20261123135604268-frame-f03239.jpg",
+   "source": "out/work/jupiter/frames/v27/f03239.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c049c4c0efb85c12"
+  },
   {
    "time": "2026-11-23T13:24:38.234Z",
    "file": "20261123132438234-note-f03236.jpg",
@@ -19,53 +61,11 @@
    "label": "3150 lower left at 4x: approved, fine height map (v23), same with a 7 times tighter march. Dome outlines stay: the fault is the mask of the view chart, not the march"
   },
   {
-   "time": "2026-11-23T13:20:34.609Z",
-   "file": "20261123132034609-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/v23m/f03150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c049c4c0efb85c12"
-  },
-  {
    "time": "2026-11-23T13:02:29.898Z",
    "file": "20261123130229898-note-v20-curl-track.jpg",
    "source": "../work/f/v20-curl-track.png",
    "kind": "note",
    "label": "v20 draft, the tower at 3195, 3210, 3225, 3236 enlarged 3 times: mirrored crest highlight in the hidden zone behind it, being fixed"
-  },
-  {
-   "time": "2026-11-23T13:02:29.303Z",
-   "file": "20261123130229303-note-v20-3236-ll-b.jpg",
-   "source": "../work/f/v20-3236-ll-b.png",
-   "kind": "note",
-   "label": "v20 draft 3236 native crop (x 700 to 1600, y 480 to 1080): a small bright chip behind the tower near (850, 720) is still wrong"
-  },
-  {
-   "time": "2026-11-23T13:02:28.700Z",
-   "file": "20261123130228700-note-v20-3236-ll-a.jpg",
-   "source": "../work/f/v20-3236-ll-a.png",
-   "kind": "note",
-   "label": "v20 draft 3236 native crop lower left (x 0 to 900, y 480 to 1080): no rows of dashes, hidden zones filled by the carry fill"
-  },
-  {
-   "time": "2026-11-23T13:02:28.069Z",
-   "file": "20261123130228069-note-v20-sheet15.jpg",
-   "source": "../work/f/v20-sheet15.jpg",
-   "kind": "note",
-   "label": "v20 draft, every 15th frame 3060 to 3239, wide canvas in every frame, 2 x core, slower end of the flight"
-  },
-  {
-   "time": "2026-11-23T12:33:10.140Z",
-   "file": "20261123123310140-note-chart-tower.jpg",
-   "source": "../work/f/chart-tower.png",
-   "kind": "note",
-   "label": "why dashes are left: the view chart at a tower (top: chart, then hidden ground in red and steep in green, stored length, the approved image). The fill mirrors column by column"
   }
  ]
 }
