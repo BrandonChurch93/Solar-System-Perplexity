@@ -1,12 +1,47 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T10:57:21.926Z",
- "head": "412d2d097ed760d43dd2094ac6d5eca2f8efb027",
- "note": "Options off: 11 draft stills byte equal to the starting commit 412d2d09 (first proof run, planet shader only). Options own, fadeMinor and one channel textures are written and tested, not yet committed. No picture with an option on yet.",
+ "pushed": "2026-11-23T11:31:02.457Z",
+ "head": "9c2197bfb31d41cddf6acaedc0123e98159949ad",
+ "note": "Task 2 (fadeMinor) at Mars frame 2454, side=orbit/noplace, draft. With the five levels of today the change is small (10.9 percent of ground pixels, far ground only). With scratch levels down to 0.6 deg the share of ground magnified across the fine axis falls from 0.876 to 0.387. Three consecutive frames: no sparkle seen; second difference up 4 percent with 10 percent more detail. Scratch levels reuse patch-3.jpg, so the content of the near ground is wrong on purpose.",
  "looks": [
   {
-   "time": "2026-11-23T10:53:45.770Z",
-   "file": "20261123105345770-still-f04707-16x9-draft-full.jpg",
+   "time": "2026-11-23T11:31:00.416Z",
+   "file": "20261123113100416-note-strip7-three-frames.jpg",
+   "source": "out/work/t2/strip7-three-frames.png",
+   "kind": "note",
+   "label": "fadeMinor moving check: frames 2453, 2454, 2455 before and after at 1 to 1, draft, grain off, scratch levels down to 0.6 deg; no sparkle seen"
+  },
+  {
+   "time": "2026-11-23T11:26:29.828Z",
+   "file": "20261123112629828-note-pair7-f2454-crop.jpg",
+   "source": "out/work/t2/pair7-f2454-crop.png",
+   "kind": "note",
+   "label": "fadeMinor before and after, crop at 1 to 1, Mars 2454, scratch levels down to 0.6 deg"
+  },
+  {
+   "time": "2026-11-23T11:26:29.176Z",
+   "file": "20261123112629176-note-pair7-f2454-beauty.jpg",
+   "source": "out/work/t2/pair7-f2454-beauty.png",
+   "kind": "note",
+   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, scratch levels down to 0.6 deg (last two reuse patch-3.jpg, wrong content, right density)"
+  },
+  {
+   "time": "2026-11-23T11:26:28.555Z",
+   "file": "20261123112628555-note-pair7-f2454-texels.jpg",
+   "source": "out/work/t2/pair7-f2454-texels.png",
+   "kind": "note",
+   "label": "fadeMinor texels view before and after, Mars 2454, scratch levels down to 0.6 deg: fine axis under 1.0 falls from 0.876 to 0.387 of ground pixels"
+  },
+  {
+   "time": "2026-11-23T11:26:27.618Z",
+   "file": "20261123112627618-note-pair5-f2454-beauty.jpg",
+   "source": "out/work/t2/pair5-f2454-beauty.png",
+   "kind": "note",
+   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, the five levels of today (10.9 percent of ground pixels change level)"
+  },
+  {
+   "time": "2026-11-23T11:02:22.004Z",
+   "file": "20261123110222004-still-f04707-16x9-draft-full.jpg",
    "source": "out/work/stills/f04707-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4707, draft tier",
@@ -16,11 +51,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "21208bbe7c480448"
+   "engine": "6f0b7a4ecf75e9a1"
   },
   {
-   "time": "2026-11-23T10:53:12.136Z",
-   "file": "20261123105312136-still-f04035-16x9-draft-full.jpg",
+   "time": "2026-11-23T11:01:48.892Z",
+   "file": "20261123110148892-still-f04035-16x9-draft-full.jpg",
    "source": "out/work/stills/f04035-16x9-draft-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, draft tier",
@@ -30,11 +65,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "21208bbe7c480448"
+   "engine": "6f0b7a4ecf75e9a1"
   },
   {
-   "time": "2026-11-23T10:52:44.472Z",
-   "file": "20261123105244472-still-f03465-16x9-draft-full.jpg",
+   "time": "2026-11-23T11:01:21.569Z",
+   "file": "20261123110121569-still-f03465-16x9-draft-full.jpg",
    "source": "out/work/stills/f03465-16x9-draft-full.png",
    "kind": "still",
    "label": "saturn.hold frame 3465, draft tier",
@@ -44,77 +79,7 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "21208bbe7c480448"
-  },
-  {
-   "time": "2026-11-23T10:52:19.004Z",
-   "file": "20261123105219004-still-f02997-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02997-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "21208bbe7c480448"
-  },
-  {
-   "time": "2026-11-23T10:51:52.635Z",
-   "file": "20261123105152635-still-f02427-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02427-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.dive frame 2427, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2427,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "21208bbe7c480448"
-  },
-  {
-   "time": "2026-11-23T10:51:25.087Z",
-   "file": "20261123105125087-still-f02325-16x9-draft-full.jpg",
-   "source": "out/work/stills/f02325-16x9-draft-full.png",
-   "kind": "still",
-   "label": "mars.hold frame 2325, draft tier",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2325,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "21208bbe7c480448"
-  },
-  {
-   "time": "2026-11-23T10:50:57.222Z",
-   "file": "20261123105057222-still-f01857-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01857-16x9-draft-full.png",
-   "kind": "still",
-   "label": "earth.dive frame 1857, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1857,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "21208bbe7c480448"
-  },
-  {
-   "time": "2026-11-23T10:50:22.174Z",
-   "file": "20261123105022174-still-f01185-16x9-draft-full.jpg",
-   "source": "out/work/stills/f01185-16x9-draft-full.png",
-   "kind": "still",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "21208bbe7c480448"
+   "engine": "6f0b7a4ecf75e9a1"
   }
  ]
 }
