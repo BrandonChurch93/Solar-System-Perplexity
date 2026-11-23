@@ -1,5 +1,7 @@
 # Mars Dive Patches Recipe
 
+> Note of brief 238 (2026-11-23): of the files below only `patch-wide.jpg` is still in the sets, and it is rewritten by `assets-src/mars/place/bake.py` (the place nested at half share). `patch-1.jpg`, `patch-mid.jpg`, `patch-2.jpg`, `patch-3.jpg` and `patch-26.jpg` are replaced by `patch-42.jpg`, `patch-19.jpg` and the `place-*.jpg` plates; `bake.py` reads the old files from commit 03510ddd as its inputs. The recipe of the new files is `assets-src/mars/RECIPE.md`, section "The place under the dive". The steps below stay as the record of how the inputs were made.
+
 ## Overview
 
 Five nested gnomonic surface-color patches centered on the Mars dive spot in Valles Marineris (`lon = -81.86`, `lat = -4.54` in the body frame; hero pixel `(1267.110, 855.387)` vs target `(1267, 855)`, `0.402 px` error through `assets-src/mars/fit.json`):

@@ -1,0 +1,243 @@
+{
+ "stop": "venus",
+ "source": "references/approved/venus-close.jpg",
+ "frame": 1440,
+ "measured": "The horizon of the approved close image was traced at 70 points (assets-src/venus/place/horizon-points.json, pixels of the 2816 x 1584 upscale). A horizon ray makes the angle 90 deg + dip with the local up, so the up direction in camera space (pitch, roll) and the dip follow from a least squares fit at the vertical field of view of the terrain view, 60 deg (assets-src/venus/place/horizon.py: pitch -21.47, roll 1.03 in its sign, dip 10.92, height 0.01843, rms 1.14 px, largest 3.9 px; the residual is flat from 50 to 60 deg, so the horizon alone cannot fix the field of view). The camera written here is the one the close side is built on (relief.json camera: up, radius in camera heights, dip), so the terrain view does not change; horizonCheck is the same 70 points against that camera. Height = 1 / cos(dip) - 1 in radii. Heading and position follow from the engine: the close side is drawn in the frame turn(time) * terrainFrame at the spot, and the twin keeps the same world orientation, so the Sun and the sky stand where they stand on the close side. That puts the point under the camera 21.5 deg of arc from the spot of the plan (the close image looks 21.5 deg below the local level, the terrain frame takes its own y axis as the normal). Made by assets-src/venus/place/solve.ts.",
+ "camera": {
+  "vfovDeg": 60,
+  "pitchDeg": -21.48,
+  "rollDeg": -1.03,
+  "dipDeg": 10.907956815069824,
+  "height": 0.01839999964376826,
+  "radiusInCameraHeights": 54.34782608695652,
+  "up": [
+   0.01672741330229255,
+   0.9303950868629735,
+   0.36617642740276773
+  ]
+ },
+ "horizonCheck": {
+  "points": 70,
+  "rmsPx": 1.2398737231397254,
+  "maxPx": 4.399848863540487,
+  "of": [
+   2816,
+   1584
+  ]
+ },
+ "twin": {
+  "note": "The globe side camera that draws the same picture as the close side at the middle of the shutter of the frame. Plan frame: globe centre at the origin, radius 1, the hold camera at fit.json camera.position. It turns with the globe (plan.turn).",
+  "time": 48.00833333333333,
+  "position": [
+   0.5677445910980425,
+   0.15121200697626347,
+   0.8318290494443881
+  ],
+  "quaternion": [
+   0.5075488656905875,
+   0.595203760733581,
+   0.42371729973595085,
+   0.4567168510677862
+  ],
+  "vfovDeg": 60,
+  "body": {
+   "note": "The same camera in the body fixed (map) frame: position in radii, and the camera axes x (right), y (up), z (back).",
+   "position": [
+    0.5618941247489972,
+    0.781768639111928,
+    0.33204116589213484
+   ],
+   "x": [
+    -0.48312210499683994,
+    0.6281092214388028,
+    -0.60997690737666
+   ],
+   "y": [
+    0.2744841960254991,
+    0.7702096254217128,
+    0.575704392981973
+   ],
+   "z": [
+    0.8314153328430005,
+    0.11070649531088839,
+    -0.5445113543603579
+   ]
+  }
+ },
+ "place": {
+  "note": "Body fixed (map) frame: dir(lon, lat) = (cos lat sin lon, sin lat, cos lat cos lon).",
+  "under": {
+   "lonDeg": 59.41980425784379,
+   "latDeg": 50.14279005645478,
+   "direction": [
+    0.5517420708420516,
+    0.7676439899699403,
+    0.3260419933309912
+   ],
+   "east": [
+    0.5087438702919808,
+    0,
+    -0.860917925496
+   ],
+   "north": [
+    -0.6608784713643933,
+    0.6408765046031268,
+    -0.3905341744636859
+   ]
+  },
+  "headingFromNorthCwDeg": -73.3987791317558,
+  "heading": [
+   -0.6763564275920069,
+   0.18310404891477827,
+   0.7134527934825087
+  ],
+  "aim": {
+   "lonDeg": 55.07063726562564,
+   "latDeg": 50.88022412967285,
+   "arcDeg": 2.861878138742492,
+   "range": 0.053655014180057525
+  },
+  "horizonArcDeg": 10.907956711071973,
+  "spotArcDeg": 21.5035141883013,
+  "footprint": [
+   {
+    "at": [
+     0,
+     1
+    ],
+    "lonDeg": 57.68354943375477,
+    "latDeg": 49.232477132142904,
+    "arcDeg": 1.445762431031505,
+    "range": 0.031415941802231395
+   },
+   {
+    "at": [
+     0.5,
+     1
+    ],
+    "lonDeg": 58.15618626436702,
+    "latDeg": 50.38885867372824,
+    "arcDeg": 0.8443754355508476,
+    "range": 0.02365872346268616
+   },
+   {
+    "at": [
+     1,
+     1
+    ],
+    "lonDeg": 58.63977335321447,
+    "latDeg": 51.59682872985885,
+    "arcDeg": 1.535082944390657,
+    "range": 0.03270395974829765
+   },
+   {
+    "at": [
+     0,
+     0.75
+    ],
+    "lonDeg": 56.66878260896151,
+    "latDeg": 48.85669468833514,
+    "arcDeg": 2.201167347465498,
+    "range": 0.04291206446084389
+   },
+   {
+    "at": [
+     0.5,
+     0.75
+    ],
+    "lonDeg": 57.324827164349706,
+    "latDeg": 50.5301878235921,
+    "arcDeg": 1.392108159309996,
+    "range": 0.030655025135350678
+   },
+   {
+    "at": [
+     1,
+     0.75
+    ],
+    "lonDeg": 57.95178637121498,
+    "latDeg": 52.3244282349238,
+    "arcDeg": 2.367246999596323,
+    "range": 0.04557142723945318
+   },
+   {
+    "at": [
+     0,
+     0.6
+    ],
+    "lonDeg": 55.43796579446877,
+    "latDeg": 48.37671963643289,
+    "arcDeg": 3.141311009123656,
+    "range": 0.05830108460077166
+   },
+   {
+    "at": [
+     0.5,
+     0.6
+    ],
+    "lonDeg": 56.325717517917724,
+    "latDeg": 50.69126227208594,
+    "arcDeg": 2.0462299785668936,
+    "range": 0.04046406753263182
+   },
+   {
+    "at": [
+     1,
+     0.6
+    ],
+    "lonDeg": 57.024860772035716,
+    "latDeg": 53.27264844925541,
+    "arcDeg": 3.4633990614332157,
+    "range": 0.06370703087710045
+   },
+   {
+    "at": [
+     0.25,
+     0.45
+    ],
+    "lonDeg": 53.399388996860026,
+    "latDeg": 49.15847144049465,
+    "arcDeg": 4.019010256653112,
+    "range": 0.0731256124401751
+   },
+   {
+    "at": [
+     0.5,
+     0.45
+    ],
+    "lonDeg": 54.007778452108525,
+    "latDeg": 51.02876189205813,
+    "arcDeg": 3.54767604542009,
+    "range": 0.06512889701934854
+   },
+   {
+    "at": [
+     0.75,
+     0.45
+    ],
+    "lonDeg": 54.27286187979228,
+    "latDeg": 53.1022080050589,
+    "arcDeg": 4.353339342511755,
+    "range": 0.07883483540999417
+   }
+  ]
+ },
+ "sun": {
+  "note": "inFrame is the Sun of the engine (plan.lightDir) seen by this camera, inCloseImage the painted Sun of the approved image; both in shares of the frame from the top left. The engine Sun stands 3.2 percent of the width left and 4.6 percent of the height above the painted one. On the close side the air dome hides the engine Sun (look.relief.air.sunHideDeg) and the painted one is seen.",
+  "inFrame": [
+   0.7154769589092242,
+   0.27170146181485627
+  ],
+  "inCloseImage": [
+   0.7470170454545454,
+   0.31767676767676767
+  ],
+  "elevationAtPlaceDeg": -5.791956782113868,
+  "azimuthFromNorthCwDeg": -50.383504079139115,
+  "body": [
+   -0.8648348213046494,
+   0.3290979501030009,
+   0.3791507231003085
+  ]
+ }
+}
