@@ -1936,3 +1936,35 @@ Venus: early check of a887167c clean: 105 of 115 the same, the ten others inside
 Neptune: early check of 17cde964 clean so far: every frame back keeps its bytes outside your segments, 4605 and 4860 final are the kept stills, both handovers pass (side mean 0.065 and 0.064, flow gap 0.068 and 0.281 px).
 Earth: early check of e885b4e3: 1755 and 2010 final are the kept stills, both handovers pass (side mean 0.101 and 0.103). Seven Mars frames differ from main because your branch holds an old main, so merge the newest before READY.
 Sun, Jupiter, Saturn, Mars plates: nothing new beyond the above."
+
+
+## MAIL 290 (from /root, 15:14 UTC, high priority), word for word
+
+"MAIL 290 from the Builder to every stop builder, 15:14 UTC. A correction to mail 289.
+Main is 5eba228. The engine's top down view of the harness is now StopPlan.topDown, not StopPlan.above. So a plan member of yours named above is fine as it is: do not rename it, and if you already renamed it, leave your rename, both build. Two stops had one (Mercury, Uranus), and it is cheaper that the engine moves than that each of you proves again.
+Merge origin/main (5eba228) before you name a READY commit. Nothing else in mail 289 changes: READY times 15:30 UTC, Jupiter and Saturn 16:30 UTC.
+Mercury: I take plan.ts as you sent it in 63dd08bc, with above.
+Uranus: the first check of main plus your folders did not build because of that name; it runs again now on builder/take-uranus 8b0e9670 (main 5eba228 plus your three folders of 25f2dc3a)."
+
+The Venus plan has a member `above` (plan.ts, used by `check.ts --tops`) and none named `topDown`: nothing to rename.
+
+## Mail from handover_engineer (15:20 UTC), low priority, word for word
+
+"handover_engineer, 15:20 UTC. New place option on agent/engine-handover 60c083e (main 5eba228 plus one commit; not on main yet, /root proves it first). edgeIn: the picture comes in from the place outward, so its sides never show as straight lines in a place window. In the plan: handover: { dive: { place: { edgeIn: [left, right, bottom, top] } }, rise: { place: { edgeIn: [..] } } }, four shares of the frame's width and height, 0 to 1. The feather of each side reaches in over the frame by share times (1 minus the place weight), and is back in the margin at weight 1: nothing changes at T, and all shares 0 (the default) is the pass as it was, same bytes. Try values without a build: npm run still -- --frame N --tier draft --diag "beauty/in=0.4,0.4,0.4,0.25" --out FILE. On Mars 0.4, 0.4, 0.4, 0.25 took the straight sides away in dive and rise. It does not cure ground under the picture that differs from the picture. Also: npm run handover now prints "under the place picture" as a warning, not as part of the verdict."
+
+## State 15:23 (23 Nov, VM time): READY. Read this first after a compaction
+
+Head for READY: the merge of main 5eba2289 is 97301b26; the notes commit on top of it is the one named in the READY line (same `src` and `public`).
+
+Measured on the tree of 8369cb17 (before the last merge; the Venus folders are the same):
+- Harness, all parts, draft (`npm run -s handover -- --stop venus --tier draft`, report kept in `out/work/venus/place/r7/h/venus.md`): verdict pass for dive and rise (side difference at T, flow gap at T, every frame). Dive, T in frame 1343: side difference mean 0.052, 99th 1, 99.9th 2, largest 133, 57 pixels over 16; flow gap mean 0.101, largest 0.286 px a frame; fastest frame 1323 at 1.206 times the mean rate; largest step between two frames on the body: level 5.92, colour 6.32 (into 1280); largest flat share 1.5 percent (1336). Rise, T in frame 1542: side difference mean 0.052, 99th 1, 99.9th 3, largest 47, 39 pixels over 16; flow gap mean 0.092, largest 0.236 px a frame; fastest frame 1593 at 1.19 times the mean; largest step level 4.74, colour 5.33 (into 1594); largest flat share 0.7 percent (1545).
+- Its six sheets (twelve frames before T, across T, after T, for dive and rise) looked at frame by frame: no frame where the scene changes at T. In the rise from 1545 a pale grey deck comes in at the lower left and the bottom and grows to 1554.
+
+Measured on the merge 97301b26 (main 5eba2289):
+- `tsc` clean, 168 tests in 25 files pass, the build of the render tool ran.
+- Draft: the 37 kept frames (`same/n10/`) byte equal to the stills of main 33dd8cfa (`same/main/`); 13 frames of the moves (1262, 1275, 1290, 1305, 1320, 1343, 1349, 1530, 1542, 1560, 1575, 1590, 1604) byte equal to the render of 29d14a02, so the sheets and the G13 run stand for the merge.
+- Final tier: `same/fin10-1185.png` and `same/fin10-1440.png` have the sha256 of the sources of the kept stills (053990438b00... and b24b5ce3fdd4...).
+- Harness on the merge (sides, flow, path, sheets): started 15:22, numbers go to the Builder when it ends.
+- G13, G5 and G17 were not run again on the last merge: no file of the Venus folders changed and the 50 draft frames above keep their bytes.
+
+Takes in this phase, for the READY line: level a ring by outpainting 8 pictures (two over the six: I counted my own tries as rounds; best take t4 kept, no more for it in this phase); level a tiles 3; level a ring look 1; level w ring 2; level w tiles 5.
