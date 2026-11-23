@@ -1080,3 +1080,74 @@ THE MERGE OF MAIN 0eae595 (15:35 UTC) AND THE TEST IT BROUGHT
 - With the unit place the handover path still passes: the place is at most 0.172 of the half frame from
   the middle in the dive (frame 3550, it was 0.406 with the point of the plane) and 0.378 in the rise (3879).
 - vitest 170 of 170, tsc clean.
+
+MAIL 295 (16:04 UTC, from the Builder, core for Saturn)
+
+"MAIN is c9bc056... Merge main before your next named commit. Nothing outside your three folders, as before.
+ROUNDS... G13 is counted on every frame of the dive and the rise... Batch two (the Sun, Mars, Venus, Jupiter,
+Saturn) starts at about 17:15 UTC with every stop that is on main by then... A check of a named commit takes
+about 25 minutes on twelve machines, so name it by 16:45 UTC to be in batch two... saturn_coder: READY by
+16:30 UTC stands. A commit named by then is checked and on main by about 17:10 UTC and in batch two."
+
+READY (16:20 UTC): WHAT WAS MEASURED AND ON WHICH STATE
+
+The states: fefa26e (work on mail 287), 92226bb (merge of main 0eae595), 569bef7 (plan.ts place and topDown),
+then the merge of main c9bc056 and this notebook on top. The Saturn sources of 92226bb and of the named
+commit differ in plan.ts place() and topDown() only, which no pixel reads.
+
+Measured on 92226bb (render tree, full assets):
+- G5 PASS at the final tier: 3465 hold invalid 0 coverage 0.559; 3567 dive invalid 0 coverage 0.449; 3720
+  terrain invalid 0 coverage 0.737; 3866 rise invalid 0 coverage 0.560.
+- G17 FAIL: 3465 median 1.073, p25 0.717 over 71 tiles; 3720 median 0.519, p25 0.206 over 62 tiles (rule
+  0.8). Tile map at 3720 (12 by 8 tiles of 160 by 135 px, ours over approved): 18 tiles at 0.8 or more, 32
+  are needed, 15 lie between 0.5 and 0.8. The lower left (rows 4 to 7, columns 0 to 3) is at 0.07 to 0.42:
+  the approved image has sharp lines of 3 to 12 px period to the bottom edge, ours has few. The grain carpet
+  that carried G17 before (mail 287 point 2) is gone, and lines of that period near the lens are wiped by
+  the true blur of the flight across the ringlets (4 to 7 px sweep a frame).
+- G13 FAIL (every 10th frame, 50 frames): 3810 4.10 percent and 3820 4.57 percent soft against 2 percent;
+  every other frame 0 (3800: 29 pixels). The soft pixels are the globe at the right frame edge (x 1684 to
+  1919, y 412 to 903 at 3820) at 0.93 to 1.0 map texels a pixel: the closest pass of the globe at the end
+  of the skim and the first frames of the rise. The sheet has none. Not measured before with this flight;
+  the flight and the globe are those of 0111bf2, so it holds there too.
+- G15 PASS (at most 2 sets a frame; saturn/web 63 MB, saturn/full 239 MB).
+- Handover sides, flow and path pass: dive T 3589, flow gap mean 0.004 px, largest 0.006; rise T 3860, gap
+  mean 0.046 px, largest 0.056.
+- The final tier 3720 without grain is byte equal to the review tier render (17 takes).
+
+The hold 3465 at the final tier (16 samples, 85 s): sha256
+4765f239f22e6d470a79ecc1c7bef0e52b80f53a6eb397e44524be2ed6d78b52. The kept still's source fingerprint is
+f671886b1bf3099675d2378858080385e2ac703a0dfb000a94861ad6e5cacd0e: not the same bytes.
+- Against the kept still: mean difference 13.80 levels (7.66 after a 12 px blur), 37 percent of the pixels
+  over 8 levels, no shift. The globe is equal (under 2 levels). The rings differ: they come from the ring
+  model, every ringlet lies elsewhere, the A ring is smoother, the bright outer line of the A ring and the
+  thin lines outside it are missing, the inner edge of the B ring is brighter.
+- Against the approved hero: this build 14.56 (8.08 blurred), the kept still 5.05 (2.13 blurred). G17
+  against the hero: this build median 1.079, p25 0.719; the kept still median 1.061, p25 0.933.
+- Region means hero, this build, kept: A ring left 154,137,122 / 159,142,125 / 159,141,125; B ring
+  195,176,152 / 188,165,140 / 199,179,155; A ring near 101,89,80 / 109,95,82 / 108,94,84; globe 198,174,138
+  all three.
+- So the hold is a worse match of the approved hero than the kept still, in the rings. "The hold keeps its
+  bytes" in these notes means against my own f9007f0 and 0111bf2 (the bases in /tmp/v/hold), not against
+  main's kept build.
+
+STILL WRONG AT READY (the list sent with it)
+
+1. G17 red at 3720 (0.519 against 0.8): too few sharp fine lines in the lower left and near the lens.
+2. G13 red at 3801 to about 3828 (3810 4.10, 3820 4.57 percent): the globe's map under one texel a pixel at
+   the closest pass. Cures: a finer code layer on the globe (also point 4) or a wider pass.
+3. The hold's rings are not the kept still's and match the hero worse (numbers above), 3390 to 3539.
+4. Fit at 3720: the globe about a sixth too large, too low and further right (top of globe 9 against 7,
+   globe meets the near rings 69 against 57, far ring edge at the left frame edge 35 against 38 percent of
+   the frame height). At x 1400 to 1900, y 760 to 900 ours shows the thin inner ring and the gap over the
+   night globe (83, 66, 54) where the approved image has bright rings (193, 177, 162).
+5. The globe's bands are plain, no small swirls (3740; globe tiles 0.50 and 0.54).
+6. B ring near the lens and lower left a little dark at 3720 (120,105,93 against 142,128,114; 101,92,83
+   against 118,109,101).
+7. 3630 to 3690: the globe seen through the Cassini division is a wedge with a sawtooth edge (x 1060, y 756
+   at 3630; x 1090, y 824 at 3660). Already in 0111bf2. A moire of the rings' fine shadow lines on the globe
+   with the lines of the gap. Cure idea: soften the ring shadow on the globe in the skim (exactly 0 in the
+   hold).
+8. Rise: the flow falls to 6.2 px a frame at 3816, then 27 to 60 px at 3828 (a jolt); the moon passes the
+   limb fast at 3870 to 3872.
+9. The bodies near the lens: few shapes, some read as pale beads (3750 to 3809).
+10. The terminator may read hard at 3630 to 3660.
