@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T22:18:21.967Z",
+ "pushed": "2026-11-23T22:36:14.152Z",
  "head": "4e4ce56823b4859b96be2b337e0b45d2d69aea93",
- "note": "cure of mail 344 stopped by mail 350 (it moves the picture); next looks are the ground from functions with relief",
+ "note": "G 1 first picture of the function ground (unfinished)",
  "looks": [
+  {
+   "time": "2026-11-23T22:36:13.392Z",
+   "file": "20261123223613392-note-a1-vs-ref.jpg",
+   "source": "out/work/sun/convect/a1-vs-ref.jpg",
+   "kind": "note",
+   "label": "G 1 first picture 22:37, unfinished. Top: frame 60 of the named commit (the picture ground). Bottom: frame 60 with the ground as a displaced mesh from the cell functions (no picture read for the ground). Cells too smooth and too tall, spot flat, lanes too light: all still to do.",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T22:18:21.375Z",
    "file": "20261123221821375-note-cure-strip-b.jpg",
@@ -70,14 +78,6 @@
    "source": "out/work/sun/life/v/sim-lanes-two.jpg",
    "kind": "note",
    "label": "simulation on the plate, not a render: lanes moving, frame 110 left, 170 right, both over each other below (red 110, cyan 170)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:30:01.772Z",
-   "file": "20261123213001772-note-sim-cure-eight.jpg",
-   "source": "out/work/sun/life/v/sim-cure-eight.jpg",
-   "kind": "note",
-   "label": "simulation on the plate, not a render: ground cure of mail 344, eight consecutive frames (each life of a look shows another piece of the cell)",
    "stop": "sun"
   }
  ]
