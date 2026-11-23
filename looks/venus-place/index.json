@@ -1,96 +1,78 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T09:40:49.551Z",
- "head": "709e9b2b96f7f70fb707f4c0fb1e078e22881cf8",
- "note": "M2 at 709e9b2b: dense dive and rise sheets on the steady path (globe side, draft), top down dive sheet, judged frames beside the kept stills",
+ "pushed": "2026-11-23T10:06:34.395Z",
+ "head": "37769b50537416398088ced8478836217e9f5e02",
+ "note": "venus opted in (dive T 1343, rise T 1544): harness draft passes; place window still shows a black band above the limb, a second Sun in the rise, towers shift; fixing",
  "looks": [
   {
-   "time": "2026-11-23T09:38:53.899Z",
-   "file": "20261123093853899-frame-m3-1605.jpg",
-   "source": "out/work/venus/place/same/m3-1605.png",
-   "kind": "frame",
-   "label": "venus.travel frame 1605, draft tier",
-   "stop": "venus",
-   "segment": "venus.travel",
-   "frame": 1605,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T09:38:33.955Z",
-   "file": "20261123093833955-note-m2-judged.jpg",
-   "source": "out/work/venus/place/p7/m2-judged.jpg",
+   "time": "2026-11-23T10:06:33.800Z",
+   "file": "20261123100633800-note-close-rise-1530.jpg",
+   "source": "out/work/venus/place/p9/close-rise-1530.jpg",
    "kind": "note",
-   "label": "M2 judged frames beside the kept stills: 1185 and 1440 same picture, 1287 and 1586 on the steady path",
+   "label": "opt in h1 close-rise-1530",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T09:38:02.002Z",
-   "file": "20261123093802002-frame-m3-1604.jpg",
-   "source": "out/work/venus/place/same/m3-1604.png",
+   "time": "2026-11-23T10:06:33.243Z",
+   "file": "20261123100633243-note-close-dive-1322.jpg",
+   "source": "out/work/venus/place/p9/close-dive-1322.jpg",
+   "kind": "note",
+   "label": "opt in h1 close-dive-1322",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:32.699Z",
+   "file": "20261123100632699-note-pics.jpg",
+   "source": "out/work/venus/place/h1/pics.jpg",
+   "kind": "note",
+   "label": "opt in h1 pics",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:32.167Z",
+   "file": "20261123100632167-note-rise-b.jpg",
+   "source": "out/work/venus/place/h1/rise-b.jpg",
+   "kind": "note",
+   "label": "opt in h1 rise-b",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:31.628Z",
+   "file": "20261123100631628-note-rise-a.jpg",
+   "source": "out/work/venus/place/h1/rise-a.jpg",
+   "kind": "note",
+   "label": "opt in h1 rise-a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:31.104Z",
+   "file": "20261123100631104-note-dive-b.jpg",
+   "source": "out/work/venus/place/h1/dive-b.jpg",
+   "kind": "note",
+   "label": "opt in h1 dive-b",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:30.461Z",
+   "file": "20261123100630461-note-dive-a.jpg",
+   "source": "out/work/venus/place/h1/dive-a.jpg",
+   "kind": "note",
+   "label": "opt in h1 dive-a",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:06:04.102Z",
+   "file": "20261123100604102-frame-mask-1550.jpg",
+   "source": "out/work/venus/place/h1/mask-1550.png",
    "kind": "frame",
-   "label": "venus.rise frame 1604, draft tier",
+   "label": "venus.rise frame 1550, draft tier, beauty/mask view",
    "stop": "venus",
    "segment": "venus.rise",
-   "frame": 1604,
+   "frame": 1550,
    "tier": "draft",
    "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T09:37:03.362Z",
-   "file": "20261123093703362-frame-m3-1440.jpg",
-   "source": "out/work/venus/place/same/m3-1440.png",
-   "kind": "frame",
-   "label": "venus.terrain frame 1440, draft tier",
-   "stop": "venus",
-   "segment": "venus.terrain",
-   "frame": 1440,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T09:36:27.214Z",
-   "file": "20261123093627214-frame-m3-1185.jpg",
-   "source": "out/work/venus/place/same/m3-1185.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T09:29:04.488Z",
-   "file": "20261123092904488-note-dense-rise-1578.jpg",
-   "source": "out/work/venus/place/p7/dense-rise-1578.jpg",
-   "kind": "note",
-   "label": "M2 rise steady path globe side dense-rise-1578",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:29:03.689Z",
-   "file": "20261123092903689-note-dense-rise-1554.jpg",
-   "source": "out/work/venus/place/p7/dense-rise-1554.jpg",
-   "kind": "note",
-   "label": "M2 rise steady path globe side dense-rise-1554",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:29:03.149Z",
-   "file": "20261123092903149-note-dense-rise-1530.jpg",
-   "source": "out/work/venus/place/p7/dense-rise-1530.jpg",
-   "kind": "note",
-   "label": "M2 rise steady path globe side dense-rise-1530",
-   "stop": "venus"
+   "diag": "beauty/mask",
+   "engine": "8b9f780b26a50bc3"
   }
  ]
 }
