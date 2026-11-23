@@ -1,9 +1,39 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T11:39:34.551Z",
- "head": "ac61d51ae352ebb804c60a561fb5dee52f8d9fa3",
- "note": "plates 3.25, 1.2 and 0.6 repainted by fill takes and held; first bake of 8 levels; rim match and haze still open",
+ "pushed": "2026-11-23T12:11:26.149Z",
+ "head": "eb3138b1e193d34b8700c28b8a077dac5820def7",
+ "note": "first globe side at dive T with own plates beside the film frame; top down sheet of the second bake",
  "looks": [
+  {
+   "time": "2026-11-23T12:11:25.096Z",
+   "file": "20261123121125096-note-topdown-m2d.jpg",
+   "source": "out/work/place/view/topdown-m2d.jpg",
+   "kind": "note",
+   "label": "top down sheet, second bake: rim match as a gain (no teal), pale fan SE of the place still too bright",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T12:11:24.492Z",
+   "file": "20261123121124492-note-cmp2454-a.jpg",
+   "source": "out/work/place/view/cmp2454-a.jpg",
+   "kind": "note",
+   "label": "2454 draft: globe side alone with the first plates (top) over the film frame of the same build (bottom)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T11:54:33.145Z",
+   "file": "20261123115433145-frame-s2454-full.jpg",
+   "source": "out/work/place/view/s2454-full.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2454, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f0b7a4ecf75e9a1"
+  },
   {
    "time": "2026-11-23T11:39:33.210Z",
    "file": "20261123113933210-note-p06-take1.jpg",
@@ -42,30 +72,6 @@
    "source": "out/work/place/view/p3-t1-twin.jpg",
    "kind": "note",
    "label": "work: take 1 held to the picture, drawn from the dive twin (top) against the picture's land with the haze out (bottom), 3.25 deg plate alone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T11:07:45.252Z",
-   "file": "20261123110745252-note-p3-take1.jpg",
-   "source": "out/work/place/view/p3-take1.jpg",
-   "kind": "note",
-   "label": "work: 3.25 deg plate, lead (old land toned to the picture, lay back in the wedge) and repaint take 1, top down",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:52:43.288Z",
-   "file": "20261123105243288-note-design0.jpg",
-   "source": "out/work/place/view/design0.jpg",
-   "kind": "note",
-   "label": "work: old land in look space (top) and with the dive lay back in the wedge (bottom) at 13, 6.5, 3.25 deg, before any repaint",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:52:42.539Z",
-   "file": "20261123105242539-note-pictures.jpg",
-   "source": "out/work/place/view/pictures.jpg",
-   "kind": "note",
-   "label": "place pictures at T as the engine draws them: dive (top), rise (bottom)",
    "stop": "mars"
   }
  ]
