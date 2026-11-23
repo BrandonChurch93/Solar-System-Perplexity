@@ -405,7 +405,7 @@ export class Engine {
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (place && picture) {
       const mode: PlaceMode = raw ? 'texels' : this.probe.mask ? 'mask' : this.probe.picture ? 'picture' : 'beauty'
-      this.place.render(r, this.sampleTarget, picture, place, shot.camera, cam, mode, shot.post.vignette, width / height, gradUniform.value, this.probe.dump)
+      this.place.render(r, this.sampleTarget, picture, place, shot.camera, cam, mode, shot.post.vignette, width / height, gradUniform.value, this.probe.dump, this.sets.get(place.stop)?.placeMatte?.[place.kind] ?? null)
     }
     if (this.over.children.length > 0) {
       r.setRenderTarget(this.sampleTarget)

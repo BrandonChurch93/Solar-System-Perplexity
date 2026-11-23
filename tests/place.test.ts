@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
-import { placeCamera, placeGeometry, placeLayout, placeUv, type PlaceLayout } from '../src/core/place'
+import { Place, placeCamera, placeGeometry, placeLayout, placeUv, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
@@ -407,6 +407,37 @@ describe('the curve of a descent', () => {
       const mid = (rise + (1 - fall)) / 2
       if (1 - fall - rise > 0.01) expect((trapeze(mid + 1e-4, rise, fall) - trapeze(mid, rise, fall)) / 1e-4).toBeCloseTo(cruise, 6)
     }
+  })
+})
+
+describe('the land matte of a place picture', () => {
+  it('multiplies the weight of the pass after every limit, and only when a set gives one', () => {
+    const pass = new Place()
+    const lay = (pass as unknown as { lay: { material: THREE.ShaderMaterial } }).lay.material
+    const source = lay.fragmentShader
+    const cut = 'if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;'
+    expect(source.split(cut).length).toBe(2)
+    expect(source.indexOf(cut)).toBeGreaterThan(source.indexOf('float k = '))
+    // Every view reads the weight after the matte: the texel count, the mask and the picture itself.
+    for (const reader of ['if (k <= 0.5) discard;', 'outColor = vec4(k, k, k, 1.0);', 'outColor = vec4(col * k, k);']) {
+      expect(source.split(reader).length).toBe(2)
+      expect(source.indexOf(reader)).toBeGreaterThan(source.indexOf(cut))
+    }
+    const hd = handoverOf('mars', 'dive')!
+    const shot = film.shotAt(hd.firstFrame, hd.time, 'orbit')
+    const layout = placeLayout(master, shot.place!, 8192)
+    const texture = new THREE.Texture()
+    const matte = new THREE.Texture()
+    const pic = { key: 'test', target: { texture, width: layout.width, height: layout.height } as unknown as THREE.WebGLRenderTarget, layout, proj: [1, 1, 0, 0] as [number, number, number, number], used: 0 }
+    const u = lay.uniforms
+    const drawn: [number, THREE.Texture][] = []
+    const r = { setRenderTarget: () => undefined, render: () => drawn.push([u.uMatteOn!.value as number, u.uMatte!.value as THREE.Texture]) } as unknown as THREE.WebGLRenderer
+    const target = { width: master.width, height: master.height } as unknown as THREE.WebGLRenderTarget
+    const cam = frameCamera(shot.camera, master)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'beauty', 0, master.width / master.height, 1)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'beauty', 0, master.width / master.height, 1, undefined, matte)
+    pass.render(r, target, pic, shot.place!, shot.camera, cam, 'texels', 0, master.width / master.height, 1, undefined, null)
+    expect(drawn).toEqual([[0, texture], [1, matte], [0, texture]])
   })
 })
 
