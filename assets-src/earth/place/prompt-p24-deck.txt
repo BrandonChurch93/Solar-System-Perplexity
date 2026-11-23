@@ -1,0 +1,11 @@
+Edit Image 1, a strict top-down nadir photograph from orbit of a tropical sea with islands, coasts and cloud (24 x 24 degrees, 1:1 square, north at the top). Image 2 is an oblique photograph of the place in the middle of Image 1: the bright cloud deck that reaches to its horizon is what is unfinished in Image 1.
+
+In Image 1 a large flat pale area without any detail lies around the upper left of the detailed cloud sheet in the middle. It is a placeholder. Repaint ONLY that flat pale area as a sharp photograph of a cloud deck taken from straight above:
+- It is the outward continuation of the detailed bright cloud sheet in the middle: marine stratocumulus with fine closed cells, lumpy tops, small dark gaps and soft shadows, lit by a low Sun in the upper left. It joins the detailed sheet without any seam, step or straight line; the square outline where the placeholder meets the middle must vanish.
+- Dense and white where it touches the detailed sheet. Toward its outer outline it thins and breaks up into open cells, ragged tongues and scattered small cumulus with sea or land showing between them, so the deck has an irregular natural margin.
+- Cell texture only. No long streaks, no arcs, no rings, no radial lines, no blur.
+- Where the deck is dense no land or sea shows through.
+
+KEEP EXACTLY, at the same pixel position, shape, size, brightness and hue: everything that is not the flat pale placeholder. The middle of the picture with its detailed cloud sheet, sun glint, islands and cumulus, every coastline and land mass, the turquoise shallows, the open sea, the other clouds. No vignette.
+
+Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.

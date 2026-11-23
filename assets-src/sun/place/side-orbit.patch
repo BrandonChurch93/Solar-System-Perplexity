@@ -1,0 +1,24 @@
+diff --git a/src/stops/sun/plan.ts b/src/stops/sun/plan.ts
+index 8459b12d..f3ad9872 100644
+--- a/src/stops/sun/plan.ts
++++ b/src/stops/sun/plan.ts
+@@ -1,7 +1,7 @@
+ import * as THREE from 'three'
+ import { config } from '../../config'
+ import type { Pose, ViewKind } from '../../core/types'
+-import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
++import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
+ import { handoverOf } from '../../director/handover'
+ import { coverFrames } from '../../director/timeline'
+ import { lookAt, mix, slerpDir, smooth } from '../../director/rig'
+@@ -142,6 +142,10 @@ export class SunPlan extends StopPlan {
+     return super.terrain((lin + 0.5) * dur)
+   }
+ 
++  override rise(time: number): OrbitShot {
++    return { pose: this.risePose(time, 'orbit'), view: 'orbit' }
++  }
++
+   override risePose(time: number, view: ViewKind): Pose {
+     const path = this.path(time)
+     return view === 'terrain' ? this.local(this.uncarried(path, time)) : path
