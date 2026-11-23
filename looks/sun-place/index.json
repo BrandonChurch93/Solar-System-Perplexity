@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T16:53:27.645Z",
+ "pushed": "2026-11-23T17:09:29.433Z",
  "head": "be822da6ed202db81069a3669641a9f4b659a87f",
- "note": "Sun: mail 296 in work, not yet a commit. 26 to 31 strands separate (near white 0.035 against 0.15), frame 60 near white 0.012 against 0.036 (approved 0.008), dashes: floor between clumps raised from 0.19 to 0.59. Still wrong: thrown arc ends in a cut at 40 to 46 (cure rendering)",
+ "note": "cure for mail 296 at draft: release keeps its strands, frame 60 near approved, thrown arc in drops; full 0 to 179 still rendering",
  "looks": [
+  {
+   "time": "2026-11-23T17:09:27.980Z",
+   "file": "20261123170927980-note-full1-024.jpg",
+   "source": "out/work/sun/life/v/full1-024.jpg",
+   "kind": "note",
+   "label": "cure, draft: every frame 24 to 35",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:09:27.196Z",
+   "file": "20261123170927196-note-q-thrown.jpg",
+   "source": "out/work/sun/life/v/q-thrown.jpg",
+   "kind": "note",
+   "label": "cure, draft: thrown arc 40 to 47 breaks into drops",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:09:26.385Z",
+   "file": "20261123170926385-note-q-60.jpg",
+   "source": "out/work/sun/life/v/q-60.jpg",
+   "kind": "note",
+   "label": "cure, draft: frame 60 beside approved and before",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T17:09:25.333Z",
+   "file": "20261123170925333-note-q-26.jpg",
+   "source": "out/work/sun/life/v/q-26.jpg",
+   "kind": "note",
+   "label": "cure, draft: arcade 26 to 31 native, strands separate in the release",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T16:53:26.841Z",
    "file": "20261123165326841-note-b2-60.jpg",
@@ -41,50 +73,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-23T16:29:07.399Z",
-   "file": "20261123162907399-note-ho-top.jpg",
-   "source": "out/work/sun/life/v/ho-top.png",
-   "kind": "note",
-   "label": "Sun rise from straight above the place, globe side alone, 269 down to 216 (handover tool, draft), commit 944bf377",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T16:27:15.043Z",
-   "file": "20261123162715043-sheet-sun-rise-top.jpg",
-   "source": "out/work/handover/sun-rise-top.png",
-   "kind": "sheet",
-   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 216,
-   "last": 269,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:26:11.221Z",
-   "file": "20261123162611221-sheet-sun-rise-draft-after.jpg",
-   "source": "out/work/handover/sun-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 217,
-   "last": 228,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T16:26:09.341Z",
-   "file": "20261123162609341-sheet-sun-rise-draft-before.jpg",
-   "source": "out/work/handover/sun-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 204,
-   "last": 215,
-   "tier": "draft"
   }
  ]
 }
