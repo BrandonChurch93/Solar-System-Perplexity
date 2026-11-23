@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T20:40:19.568Z",
+ "pushed": "2026-11-23T21:14:03.865Z",
  "head": "0595a6ec458e9a3a3274b28d2b576ee30de32a8b",
- "note": "item 1: block's top edge cured in the globe's levels, footprint edge in the plates still open",
+ "note": "plate edge cure in draft crops; rise horizon band still open, cause being narrowed",
  "looks": [
+  {
+   "time": "2026-11-23T21:14:03.276Z",
+   "file": "20261123211403276-note-v2-hz.jpg",
+   "source": "out/work/mercury/place/h1/v2-hz.jpg",
+   "kind": "note",
+   "label": "rise horizon 980 to 990 and 746: pale band at the far edge still there, wide layer reach is not the cause",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T21:14:02.346Z",
+   "file": "20261123211402346-note-right1.jpg",
+   "source": "out/work/mercury/place/h1/right1.jpg",
+   "kind": "note",
+   "label": "736 738 740 before and after the plate cure: hard block edge gone (draft)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T20:40:18.939Z",
    "file": "20261123204018939-note-s1.jpg",
@@ -56,22 +72,6 @@
    "source": "out/work/mercury/place/f1/sh/d740.jpg",
    "kind": "note",
    "label": "20:15 draft 740 to 747 every frame, merged tree: dive handover at 744",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:59:40.600Z",
-   "file": "20261123195940600-note-e5-n1016-x6.jpg",
-   "source": "out/work/mercury/place/tmp/e5-n1016-x6.jpg",
-   "kind": "note",
-   "label": "1016 night side at six times gain, before (top) and after: the level edges in the dark are gone, a few lit rims left at the terminator",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:59:40.067Z",
-   "file": "20261123195940067-note-e5-nA.jpg",
-   "source": "out/work/mercury/place/tmp/e5-nA.jpg",
-   "kind": "note",
-   "label": "dive horizon at native x2, top to bottom 742 743 744 (T) 745 780: the band and dark line of the terrain view come in at 743, still a nameable frame",
    "stop": "mercury"
   }
  ]
