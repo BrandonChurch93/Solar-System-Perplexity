@@ -1,9 +1,31 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T11:19:11.697Z",
- "head": "e885b4e33d4189efece5cefd94072f487faf48aa",
- "note": "M2 proofs on e885b4e3: handover sheets of dive and rise (draft), sides at T, top down dive sheet, orbit sheets; G13 fails in 13 of 165 frames near T, deeper plates next",
+ "pushed": "2026-11-23T11:35:43.491Z",
+ "head": "cc583ada8bf5d4ee08a2112c6741835b193d14dd",
+ "note": "G13 round: model of soft share per frame agrees with the measure; the full set is at 1391 of 1400 MB, so the four levels are being re-planned (centres and widths) instead of adding levels",
  "looks": [
+  {
+   "time": "2026-11-23T11:35:42.712Z",
+   "file": "20261123113542712-note-tex-1884-soft.jpg",
+   "source": "out/work/earth/place/tmp/tex-1884-soft.jpg",
+   "kind": "note",
+   "label": "Frame 1884, where the globe has under one texel a pixel (magenta): far left beyond level 24, bottom right beyond the 12 degree plate",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T11:24:54.038Z",
+   "file": "20261123112454038-frame-tex-1908.jpg",
+   "source": "out/work/earth/place/tmp/tex-1908.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1908, draft tier, texels view",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1908,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "engine": "17850b869227c6ee"
+  },
   {
    "time": "2026-11-23T11:10:59.909Z",
    "file": "20261123111059909-note-rise-orbit-sheet.jpg",
@@ -50,22 +72,6 @@
    "source": "out/work/handover/earth-rise-draft-across.png",
    "kind": "note",
    "label": "M2 rise across T, draft (q9)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:52.227Z",
-   "file": "20261123111052227-note-earth-rise-draft-after.jpg",
-   "source": "out/work/handover/earth-rise-draft-after.png",
-   "kind": "note",
-   "label": "M2 rise, every frame after T, draft (q9)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T11:10:51.005Z",
-   "file": "20261123111051005-note-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
-   "kind": "note",
-   "label": "M2 dive across T, draft (q9)",
    "stop": "earth"
   }
  ]
