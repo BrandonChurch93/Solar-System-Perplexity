@@ -9,6 +9,7 @@ export interface GlobePatches {
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
+  place?: { centre: THREE.Vector3; from: number; tone: THREE.Texture; toneDeg: number; toneCloud: number[]; earlyDeg: number; gain: number[]; day: number[] }
 }
 
 export interface GlobeLook {
@@ -62,12 +63,15 @@ export const MAX_PATCHES = 6
 const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
-      vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
-      for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+      float at = uPatchPlace[${i}];
+      vec2 q = mix(g, h, at) * uPatchScale[${i}];
+      float w = mix(front, frontH, at) * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent));
+      w = max(w, ${i === 0 ? 'early' : '0.0'});
+      for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, mix(gx, hx, at) * uPatchScale[${i}], mix(gy, hy, at) * uPatchScale[${i}]).rgb, w);
+      parent = mix(gd, hd, at) * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
       baked = max(baked, w);
+      laid += w - laid * w;
     }`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -84,6 +88,19 @@ uniform vec2 uPatchFade;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
+uniform float uPatchPlace[${MAX_PATCHES}];
+uniform vec3 uPlaceN;
+uniform vec3 uPlaceE;
+uniform vec3 uPlaceU;
+uniform sampler2D uTone;
+uniform float uToneScale;
+uniform float uNear;
+uniform float uPlaceScale;
+uniform float uPlaceIn;
+uniform float uEarlyScale;
+uniform vec2 uToneCloud;
+uniform vec3 uPlaceGain;
+uniform vec2 uPlaceDay;
 uniform float uMapWidth;
 uniform float uGrad;
 uniform float uSpin;
@@ -177,6 +194,12 @@ vec3 cloudDir(vec3 d) {
   float lat = asin(clamp(t.y, -1.0, 1.0));
   return spinY(t, -uDrift * cos(3.0 * lat) * uFlow);
 }
+vec3 toCode(vec3 c) {
+  return mix(12.92 * c, 1.055 * pow(max(c, vec3(0.0031308)), vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), c));
+}
+vec3 fromCode(vec3 c) {
+  return mix(c / 12.92, pow((max(c, vec3(0.04045)) + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
+}
 float ramp(vec2 e, float x) {
   float t = clamp((x - e.x) / (e.y - e.x), 0.0, 1.0);
   return t * t * (3.0 - 2.0 * t);
@@ -231,6 +254,7 @@ void main() {
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
   float baked = 0.0;
+  float place = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
@@ -240,8 +264,27 @@ void main() {
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
+    float hn = dot(d, uPlaceN);
+    vec2 h = vec2(dot(d, uPlaceE), dot(d, uPlaceU)) / max(hn, 0.05);
+    vec2 hx = dFdx(h);
+    vec2 hy = dFdy(h);
+    float hd = sqrt(max(dot(hx, hx), dot(hy, hy)));
+    hx *= uGrad;
+    hy *= uGrad;
+    float frontH = step(0.3, hn);
     float parent = texels;
+    float laid = 0.0;
+    vec2 qp = h * uPlaceScale;
+    float inside = frontH * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)));
+    float early = front * frontH * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)) * uEarlyScale) * uPlaceIn;
 ${PATCH_LEVELS}
+    for (int k = 0; k < (uNear + uPlaceIn > 0.0 ? 1 : 0); k++) {
+      vec4 tone = texture(uTone, h * uToneScale + 0.5);
+      place = uNear * frontH * tone.a * ramp(uPlaceDay, ndl);
+      vec3 code = toCode(albedo);
+      float sea = 1.0 - smoothstep(uToneCloud.x, uToneCloud.y, min(code.r, min(code.g, code.b)));
+      albedo = fromCode(clamp(code + (uNear * frontH - inside * laid) * sea * tone.rgb, 0.0, 1.0));
+    }
   }
   float deep = uAway * ramp(uNightFlat.xy, ndl) * past;
   vec3 lin = inverseFilmic(albedo);
@@ -283,6 +326,7 @@ ${PATCH_LEVELS}
     reach *= uBloomPre.z;
   }
   col = max(col - wide * shade * uTint * (uBloomPre.x / 3.0) * mix(uBloomPre.w, 1.0, smoothstep(0.0, 0.5, mu)), 0.0) / (1.0 - uBloomPre.x);
+  for (int k = 0; k < (place > 0.0 ? 1 : 0); k++) col = mix(col, lin * uPlaceGain, place);
   float f = exp(-pow(mu / uLimbShape.x, uLimbShape.y));
   vec3 through = exp(-uLimbDepth * f);
   float lit = pow(shade.g * 0.5, uLimbShape.z) * ramp(uLimbDay, ndl);
@@ -339,6 +383,10 @@ export class Globe {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
+    const centre = p?.place?.centre.clone().normalize() ?? spot
+    const centreEast = new THREE.Vector3(0, 1, 0).cross(centre).normalize()
+    const centreNorth = centre.clone().cross(centreEast)
+    const from = p?.place?.from ?? MAX_PATCHES
     this.stormHome = direction(l.storm.lon, l.storm.lat)
     const rad = THREE.MathUtils.degToRad
     this.material = new THREE.ShaderMaterial({
@@ -352,6 +400,8 @@ export class Globe {
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+        uPatchPlace: { value: levels.map((i) => (i >= from ? 1 : 0)) }, uPlaceN: { value: centre }, uPlaceE: { value: centreEast }, uPlaceU: { value: centreNorth },
+        uTone: { value: p?.place?.tone ?? null }, uToneScale: { value: p?.place ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.place.toneDeg) / 2)) : 1 }, uNear: { value: 0 }, uPlaceScale: { value: from < MAX_PATCHES ? scale(from) : 1 }, uPlaceIn: { value: 0 }, uEarlyScale: { value: p?.place && from < MAX_PATCHES ? Math.tan(rad((p.widthsDeg[from] ?? p.place.earlyDeg) / 2)) / Math.tan(rad(p.place.earlyDeg / 2)) : 1 }, uToneCloud: { value: new THREE.Vector2().fromArray(p?.place?.toneCloud ?? [1, 2]) }, uPlaceGain: { value: new THREE.Vector3().fromArray(p?.place?.gain ?? [1, 1, 1]) }, uPlaceDay: { value: new THREE.Vector2().fromArray(p?.place?.day ?? [0, 1]) },
         uMapWidth: { value: o.mapWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: l.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },

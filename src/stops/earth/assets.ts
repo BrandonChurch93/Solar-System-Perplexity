@@ -1,3 +1,4 @@
+import placeJson from './place.json'
 import wrapJson from './wrap.json'
 
 export const wrap = {
@@ -13,8 +14,9 @@ export const patches = {
     { file: 'patch-96.jpg', widthDeg: 96 },
     { file: 'patch-48.jpg', widthDeg: 48 },
     { file: 'patch-24.jpg', widthDeg: 24 },
-    { file: 'patch-12.jpg', widthDeg: 12 },
+    ...placeJson.plates.levels,
   ] as { file: string; widthDeg: number }[],
+  placeFrom: 3,
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
 }

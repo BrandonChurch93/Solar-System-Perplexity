@@ -28,5 +28,99 @@
     "lat": 16.492,
     "azimuthDeg": -50.594,
     "how": "The nadir of the close camera on the body and the azimuth of its view from north. Chosen so that the long island of the close image lies on the island south of the large one in the patch pyramid (1.75 degrees west and 1.65 south of the spot), with the view within 6 degrees of the azimuth of the Sun so the glint lies ahead on both sides. Checked with assets-src/earth/place/overlay.py."
+  },
+  "plates": {
+    "how": "Top down gnomonic plates of the place, north up, about the point where the centre of the close frame meets the sea. Built by assets-src/earth/place/levels.py. The plate is the lay back of the approved close image where that looks at the ground steeply and its repaint where the lay back stretches, used as it is. The patch levels under it are the hold's levels with the plate laid in, and with the far cloud sheet of the place laid in where it reaches past the plate (assets-src/earth/place/ring.py). The place comes in while it is small: the first level is forced in inside earlyDeg about the centre between the two heights of look.descent.place. The tone is the low frequencies of what seaGain does to the hold's sea; it is added to the globe round the place by nearness (the descent ramp of look.ts) and taken from the place by farness, never on cloud (tone.cloud, code values of the darkest channel), so the look changes with height only. With nearness the place is drawn as the picture it is, times gain, where the Sun stands above day; the globe's own shading, city lights and shape give way by the same ramp.",
+    "centre": {
+      "lon": -82.122527,
+      "lat": 18.669862
+    },
+    "size": 4096,
+    "feather": 0.12,
+    "levels": [
+      {
+        "file": "place-12.jpg",
+        "widthDeg": 12
+      }
+    ],
+    "tone": {
+      "file": "place-tone.bin",
+      "widthDeg": 32,
+      "size": 512,
+      "edge": 0.1,
+      "cloud": [
+        0.588,
+        0.824
+      ]
+    },
+    "toneSigmaDeg": 0.8,
+    "seaGain": [
+      0.55,
+      0.481,
+      0.371
+    ],
+    "holdCommit": "6da6c641",
+    "gain": [
+      1,
+      1,
+      1
+    ],
+    "day": [
+      0.02,
+      0.12
+    ],
+    "earlyDeg": 30
+  },
+  "path": {
+    "how": "One steady move on the globe side for the dive and for the rise. The close side is the level glide of the terrain view carried on in time; its twin is the anchor. The globe side camera stands above the anchor by a factor exp(lift): lift and its rate are 0 at T, the rate eases over ease[0] frames to a constant, and over ease[1] frames into the rate of the hold (dive) or of the travel (rise). With k the share of the lift: the nadir goes from the anchor to the far pose over the span over, the aim from the place to the far pose over aim, the up vector over turn, each with a quintic ease. The handover of the dive is in its last frame and that of the rise in its first, so every frame of both is drawn from the globe side. rewind is the frame after T of the rise from which the spin is wound back to the state the travel starts with.",
+    "handover": {
+      "dive": {
+        "at": 0.99,
+        "dissolveFrames": 1,
+        "placeFrames": 12
+      },
+      "rise": {
+        "at": 0.005,
+        "dissolveFrames": 1,
+        "placeFrames": 12
+      }
+    },
+    "dive": {
+      "ease": [
+        22,
+        20
+      ],
+      "over": [
+        0.4,
+        1
+      ],
+      "aim": [
+        0.6,
+        1
+      ],
+      "turn": [
+        0.05,
+        1
+      ]
+    },
+    "rise": {
+      "ease": [
+        22,
+        26
+      ],
+      "over": [
+        0.4,
+        1
+      ],
+      "aim": [
+        0.6,
+        1
+      ],
+      "turn": [
+        0.05,
+        1
+      ]
+    },
+    "rewind": 0
   }
 }

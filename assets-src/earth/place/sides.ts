@@ -16,8 +16,8 @@ mkdirSync(dir, { recursive: true })
 for (const side of String(a.sides ?? 'terrain,orbit').split(',')) {
   const held: { session?: Session } = {}
   for (const frame of frames) {
-    const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format, assets: 'full', diag, query: '&earthSide=' + side }), held, frame, tier)
-    const file = join(dir, 'f' + String(frame).padStart(5, '0') + '-' + side + '.png')
+    const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format, assets: 'full', diag: diag + '/side=' + side + (a.place === 'on' ? '' : '/noplace'), query: a.tune ? '&earthTune=' + encodeURIComponent(String(a.tune)) : '' }), held, frame, tier)
+    const file = join(dir, 'f' + String(frame).padStart(5, '0') + '-' + side + (a.place === 'on' ? '-place' : '') + (a.tag ? '-' + a.tag : '') + '.png')
     writeFileSync(file, png)
     console.log(file + ' ' + seconds.toFixed(1) + 's')
   }

@@ -1,0 +1,178 @@
+{
+ "south": {
+  "take": "p12-t3-4096.png",
+  "of": 1024,
+  "featherPx": 14,
+  "keepCanvas": false,
+  "polygon": [
+   [
+    770,
+    520
+   ],
+   [
+    1024,
+    470
+   ],
+   [
+    1024,
+    905
+   ],
+   [
+    905,
+    905
+   ],
+   [
+    800,
+    945
+   ],
+   [
+    780,
+    1024
+   ],
+   [
+    500,
+    1024
+   ],
+   [
+    490,
+    935
+   ],
+   [
+    375,
+    935
+   ],
+   [
+    330,
+    860
+   ],
+   [
+    300,
+    800
+   ],
+   [
+    420,
+    770
+   ],
+   [
+    560,
+    730
+   ],
+   [
+    690,
+    640
+   ]
+  ]
+ },
+ "far": {
+  "take": "p12-t4-4096.png",
+  "fromDeg": [
+   5.0,
+   6.4
+  ],
+  "edgeDeg": 0.5,
+  "cloud": [
+   110,
+   225
+  ],
+  "lean": [
+   0.6,
+   0.5
+  ]
+ },
+ "ring": {
+  "take": "p24-t3-4096.png",
+  "widthDeg": 24,
+  "cloud": [
+   120,
+   215
+  ],
+  "cloudSigmaDeg": 0.02,
+  "moved": [
+   14,
+   40
+  ],
+  "movedSigmaDeg": 0.12,
+  "fromDeg": [
+   4.5,
+   6.0
+  ],
+  "edge": 0.1,
+  "deck": {
+   "fromDeg": [
+    5.0,
+    6.5
+   ],
+   "toDeg": [
+    11.5,
+    14.5
+   ],
+   "sideDeg": [
+    44,
+    70
+   ],
+   "rough": 1.0,
+   "cut": [
+    0.45,
+    0.55
+   ],
+   "seed": 11,
+   "fill": [
+    232,
+    224,
+    214
+   ],
+   "fillVary": 30
+  },
+  "tint": [
+   0.91,
+   0.959,
+   1.03
+  ],
+  "cells": [
+   0.12,
+   0.5
+  ],
+  "lean": 0.6
+ },
+ "cast": {
+  "size": 1024,
+  "fromDeg": [
+   5.0,
+   6.5
+  ],
+  "measureDeg": [
+   6.5,
+   9.5
+  ],
+  "bright": [
+   60,
+   95
+  ],
+  "edgeDeg": 0.25,
+  "cloud": [
+   140,
+   190
+  ],
+  "wideDeg": 1.2,
+  "share": [
+   0.08,
+   0.3
+  ],
+  "limit": [
+   0.8,
+   1.1
+  ]
+ },
+ "tone": {
+  "how": "Inside the plate the tone is the real low frequency difference of the plate and the hold, taken over open sea only (blue minus red in code values, no cloud), so from far up the plate carries the sea of the hold and the dark sea round the glint, a look of the low view, comes in with nearness. share is how much open sea the window must hold before the difference is trusted.",
+  "perDeg": 16,
+  "blue": [
+   6,
+   18
+  ],
+  "share": [
+   0.12,
+   0.35
+  ]
+ }
+}
