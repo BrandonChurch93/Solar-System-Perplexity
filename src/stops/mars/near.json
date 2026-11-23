@@ -44,7 +44,7 @@
   "shellScaleHeight": 0.04,
   "hazeScaleHeight": 0.15,
   "ownGain": {
-    "note": "Gain on the levels with their own light (linear look values), by height above the surface (radii, between entries by log height; held beyond the ends): dive for the way down, rise for the way up. Measured: see assets-src/mars/PLACE-NOTES.md.",
+    "note": "Gain on the levels with their own light (linear look values). tintFollow: how far they follow the descent tint of the lit levels (look.ts descent.tint: a lit level is multiplied with 1 high up and with the tint below descent.low, where the plates were made; 1 follows it in full). dive and rise: a further gain by height above the surface (radii, between entries by log height, held beyond the ends) for the way down and the way up. Measured with owngain.py: see assets-src/mars/PLACE-NOTES.md.",
     "dive": [
       {
         "height": 1,
@@ -80,6 +80,7 @@
           1
         ]
       }
-    ]
+    ],
+    "tintFollow": 1.0
   }
 }

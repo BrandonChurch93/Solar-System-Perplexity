@@ -157,5 +157,20 @@
  },
  "size": 4096,
  "jpegQuality": 94,
- "feather": 0.12
+ "feather": 0.12,
+ "matte": {
+  "note": "matte.py (values in field px at scale 1 and in shares of the margin depth): formPx the blur against which the light and dark of the land is taken, smoothPx the blur of that difference, formShare how far a form moves the cut across the margin, rampIn the depth over which the forms come in from the frame's edge, cut and soft the level and half width of the cut; where dehaze.py's t (blurred) is under tFrom to tTo the picture is haze or sky and the matte is a ramp from airFrom to airTo of the depth; endFrom to endTo: the matte is 0 before the field's own edge",
+  "formPx": 28,
+  "smoothPx": 2.5,
+  "formShare": 0.38,
+  "rampIn": 0.3,
+  "cut": 0.45,
+  "soft": 0.035,
+  "tFrom": 0.25,
+  "tTo": 0.55,
+  "airFrom": 0.05,
+  "airTo": 0.8,
+  "endFrom": 0.8,
+  "endTo": 0.95
+ }
 }

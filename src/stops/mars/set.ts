@@ -100,6 +100,7 @@ export const createSet: SetFactory = async (ctx) => {
   const glowShell = new THREE.Vector3(1, 0, 0)
   const glowWorld = new THREE.Vector3()
   const ownGain: [number, number, number] = [1, 1, 1]
+  const hasOwn = patches.levels.some((l) => l.own)
   const diveT = handoverOf(plan.id, 'dive')?.time
   if (diveT !== undefined) {
     const twin = plan.twin(plan.closePose('dive', diveT), diveT)
@@ -209,9 +210,11 @@ export const createSet: SetFactory = async (ctx) => {
         const a = table[i]!
         const b = table[i + 1]!
         const k = Math.min(Math.max((Math.log(a.height) - height) / (Math.log(a.height) - Math.log(b.height)), 0), 1)
-        for (let c = 0; c < 3; c++) ownGain[c] = a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k
+        // a lit level is multiplied with the descent tint, 1 high up and descent.tint near the ground, where the plates
+        // were made: the own levels follow it by tintFollow
+        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1))
       }
-      planet.setOwnGain(ownGain)
+      if (hasOwn) planet.setOwnGain(ownGain)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)
       pu.uVignette!.value = shot.post.vignette * (1 - low)
       pu.uAspect!.value = view.format.width / view.format.height
