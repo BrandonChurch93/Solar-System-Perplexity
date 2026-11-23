@@ -1,0 +1,8 @@
+{
+  "note": "The shape of the Venus dive and rise (src/stops/venus/path.ts). Each is one move between two motions that run on: the hold and the close view for the dive, the close view and the travel for the rise. Shares are of the segment, 0 at its first frame time and 1 at its end. rate: the fall or climb of the logarithm of height rises over rate[0] of the segment, stays constant, and settles over the last rate[1]. turn: the window over which the camera turns from one motion's orientation to the other's. keep: the window over which the anchor moves across the frame from where one motion sees it to where the other sees it. lens: the window of the field of view. anchor: the point of the body the move is tied to, in degrees of arc ahead of the point under the twin of place.json along its heading.",
+  "anchorAheadDeg": 2.861878138742492,
+  "dive": { "rate": [0.16, 0.3], "turn": [0.0, 1.0], "keep": [0.0, 0.7], "lens": [0.05, 0.75] },
+  "rise": { "rate": [0.4, 0.16], "turn": [0.1, 1.0], "keep": [0.3, 1.0], "lens": [0.25, 0.95] },
+  "handoverNote": "The handover (cut/HANDOVER.md, E1 and E2). at: the share of the segment where T lies. The dive hands over at frame 1343 and the rise at frame 1542: between them the close scene fills the frame from the camera of the steady move (before 1342 its near edge is in frame at the bottom; in the rise it comes into frame at the lower left and at the bottom from 1545 on, measured with assets-src/venus/place/fill.ts and seen on close side stills).",
+  "handover": { "dive": { "at": 0.928 }, "rise": { "at": 0.1667 } }
+}

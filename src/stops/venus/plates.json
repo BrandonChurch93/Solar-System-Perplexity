@@ -1,0 +1,194 @@
+{
+  "note": "The plates of the place (assets-src/venus/place/lay.py lays the close image back, assets-src/venus/place/build.py makes the full plates). Centre: aheadDeg of arc ahead of the point under the twin of place.json, along its heading. North at the top. Levels a, b and c each have half the half tangent of their parent; the widest, w, is 40 deg so the ground near the point under the camera stays inside the plates down to the height where level a alone covers the frame (G13 at frames 1296 to 1304); the deepest is a little wider than half so it holds the bottom of the frame at the twin. feather and fade are read by the globe shader like those of the patch pyramid; rim is the share of the half width over which the widest level fades out, measured on a circle.",
+  "source": "out/work/venus/place/canvas-2x.png",
+  "aheadDeg": 1.5,
+  "size": 4096,
+  "levels": [
+    {
+      "tag": "w",
+      "file": "place2-w.jpg",
+      "widthDeg": 40.0
+    },
+    {
+      "tag": "a",
+      "file": "place2-a.jpg",
+      "widthDeg": 24.0
+    },
+    {
+      "tag": "b",
+      "file": "place2-b.jpg",
+      "widthDeg": 12.13304945
+    },
+    {
+      "tag": "c",
+      "file": "place2-c.jpg",
+      "widthDeg": 6.08357505
+    },
+    {
+      "tag": "d",
+      "file": "place2-d.jpg",
+      "widthDeg": 3.4
+    }
+  ],
+  "feather": 0.06,
+  "fade": [
+    1.02,
+    1.5
+  ],
+  "canvas": {
+    "note": "The source canvas: the 2x upscale of the approved close image at `at` with size `frame`, and below fullFromY the margins of the relief over the whole width (relief-L0 and relief-L1 of the full set, see RECIPE.md).",
+    "at": [
+      704,
+      0
+    ],
+    "frame": [
+      5632,
+      3168
+    ],
+    "fullFromY": 1010
+  },
+  "show": {
+    "note": "The weight of the plates over the globe, by the height of the camera over the cloud tops (radii, eased in the logarithm): none above the upper height, full below the lower one. The upper height is the height of the first frame of the dive, so the place comes in from that frame on and grows with nearness, and it is gone in the rise before the travel starts. Outside the dive and the rise of Venus the plates are off, so the hold is not touched.",
+    "heights": [0.8, 3.4]
+  },
+  "forms": {
+    "note": "The border of the widest plate (level w) follows its own cloud forms and not a circle: the weight falls over rim (share of the plate width, from the inscribed circle inward), and the circle is drawn inward by up to look[0] of the plate width where the plate is brighter than its surroundings (the ratio of its mip levels look[1] and look[2]).",
+    "look": [0.06, 6, 9]
+  },
+  "tone": {
+    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve, not below floor) is raised to a power and multiplied by a factor per channel: the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
+    "files": {"dive": "place-tone-dive.bin", "rise": "place-tone-rise.bin"},
+    "size": 256,
+    "widthDeg": 24.0,
+    "sigmaDeg": 1.0,
+    "fineDeg": 0.35,
+    "floor": 0.002,
+    "contrast": 0.4,
+    "power": [0.4, 3.0],
+    "edge": [0.72, 0.92],
+    "cos": [0.5, 0.995],
+    "curve": 1.5,
+    "heights": [0.1, 0.6]
+  },
+
+  "dusk": {
+    "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure, so they are dim like the dusk about them when they come in.",
+    "gain": 4.5,
+    "limbHeights": [0.5, 1.6],
+    "limbNote": "The glow of the limb is a fit of the hold picture seen from far away. It is not raised by the gain, and in the dive and the rise it goes out between these two heights (radii, eased in the logarithm): below the lower one the horizon is made by the haze of the globe alone, so the fit does not lie on the cloud tops as a wide band with a red and a green edge.",
+    "dive": [
+      0.2,
+      0.6
+    ],
+    "rise": [
+      0.4,
+      0.8
+    ],
+    "tint": [
+      1.12,
+      0.9,
+      0.7
+    ]
+  },
+  "trust": {
+    "note": "Where the laid back picture is used as it is: inside the source canvas by edge (share of the frame height) and where the camera of the close image stands at least this high over the ground point (sine of the elevation, from no trust to full trust). Outside it the plate is repainted. soft: the border of that part is drawn in and softened by this share of the plate width. fine: source pixels for one plate pixel along the direction the laying back stretches most, from none to all of the laid back picture staying as it is; below it the picture keeps its place and its tones and takes its detail from the tiles.",
+    "edge": 0.03,
+    "sinElevation": [
+      0.1,
+      0.2
+    ],
+    "soft": 0.012,
+    "fine": [
+      0.5,
+      1.0
+    ]
+  },
+  "rim": 0.2,
+  "air": {
+    "note": "The air of the place on the globe side (relief.ts: the dome of the close side, drawn from the globe camera, so it lies on the globe's own limb). It has no weight above the upper height and its full weight below the lower one (radii, eased in the logarithm). By its weight it hides the engine's Sun as the close side does, and the lens darkening is undone on the globe as on the close side.",
+    "heights": [0.035, 0.12],
+    "hazeNote": "The same air between the camera and the far ground: where the line of sight meets the cloud tops at a low angle the ground goes to the colour the close side has on its far deck at that bearing (the deck colours of the relief, look.ts). Weight: most times e to the minus (cosine of the angle between the line of sight and the vertical at the ground point) over mu, times the weight of the air. gain: the deck colour times this.",
+    "haze": { "most": 0.9, "mu": 0.06, "gain": 1.0 },
+    "sunNote": "The Sun's own light in the air picture, and the rest of it (assets-src/venus/place/airsun.py, files relief-air-sun.png and relief-air-limb.png). The dome of the globe side lays the rest from the limb upward and the Sun's light from the limb as it stood at T, so the Sun keeps its direction when the camera climbs and the limb sinks, and at T the dome is the close side's own. atDeg: azimuth and elevation over the horizon of the Sun in the air picture (measured by the tool, which stops if they differ). boxDeg: what the Sun's picture holds about the Sun: azimuth to each side, elevation below, elevation above. halfWidthDeg: azimuth to each side of the Sun inside which light above the row's own level counts as the Sun's. smoothPx, rowMedian: smoothing along the row and median over rows before that level is taken. coreDeg: across the Sun the level is a blend of its two sides over this azimuth. edge: feather at the sides, share of the half width. rimDeg, rimHalfWidthDeg: below this elevation over the horizon the glow stays with the limb, and only this far to each side of the Sun the level is a straight line between the two ends. turnDeg: from the Sun down to this far below it the light blends into the light above the Sun turned half round. heights: the Sun's light is full below the first height of the globe camera (unit radii) and gone above the second, eased in the logarithm; between them the Sun and its glow are out of frame in both moves (the glow comes in at the top of the frame at about 1311 in the dive, height 0.135, and has left it by about 1564 in the rise, height 0.147).",
+    "sun": { "file": "relief-air-sun.png", "limbFile": "relief-air-limb.png", "atDeg": [26.33, 2.5], "boxDeg": [32, 12, 20], "halfWidthDeg": 30, "smoothPx": 3, "rowMedian": 6, "coreDeg": 6, "edge": 0.25, "rimDeg": [1.2, 2.2], "rimHalfWidthDeg": 6, "turnDeg": 2.5, "heights": [0.16, 0.35] }
+  },
+  "atT": {
+    "note": "The plates at the T of a handover (assets-src/venus/place/tlay.py, files place-<tag>-dive.jpg and place-<tag>-rise.jpg): the close side drawn at T is laid back through the globe camera of T. tags: the levels that are made again for each handover. edge: feather inside the border of the frame, share of the frame height. trustSinElevation: from where on the laid back picture replaces the plate (sine of the elevation of the camera at T over the ground point). coverSinElevation: from where on the plate takes the tones of the picture. soft: softening of the border of the replaced part, share of the plate width. toneSigma: the scale at which tones are compared, share of the plate width, by level (finer on the wide levels, which the frame at T sees at a low angle: there the plate keeps only its finest forms and takes the rest from the picture). ratio and floor: limits of a tone ratio and the level added to both of its sides (of 1). shiftDeg: the globe draws its plates this far (degrees of arc, east and north in the plate) from where the camera of tcam.ts alone puts them; measured by tlay.py calib on level d from the draw of the globe at T laid back against the plate it shows (with the shift the left over is under 0.1 plate pixels), cause not found.",
+    "tags": ["w", "a", "b", "c", "d"],
+    "shiftDeg": {"dive": [0.00006, 0.0044], "rise": [0.00075, 0.00518]},
+    "edge": 0.06,
+    "trustSinElevation": [0.1, 0.2],
+    "coverSinElevation": [0.015, 0.05],
+    "soft": 0.012,
+    "toneSigma": {"w": 0.003, "a": 0.004, "b": 0.006, "c": 0.008, "d": 0.008},
+    "ratio": [0.4, 2.5],
+    "floor": 0.01
+  },
+  "build": {
+    "note": "Values of assets-src/venus/place/build.py. views: the check renders of the globe from straight above the plate centre with the plates off and the full dusk gain (check.ts --tops), from which the plates take the look of the globe at their rim. toGlobeDeg: arc from the plate centre over which the painted part goes from the tones of the close image to the tones of the globe.",
+    "views": [
+      {
+        "file": "out/work/venus/place/g4/globe-top-1.2.png",
+        "height": 1.2,
+        "vfovDeg": 60
+      },
+      {
+        "file": "out/work/venus/place/g4/globe-top-0.62.png",
+        "height": 0.62,
+        "vfovDeg": 60
+      },
+      {
+        "file": "out/work/venus/place/g4/globe-top-0.2.png",
+        "height": 0.2,
+        "vfovDeg": 60
+      }
+    ],
+    "toGlobeDeg": [
+      5,
+      9.5
+    ],
+    "guideSize": 2048,
+    "compLockSigma": 40,
+    "childFeather": 0.06,
+    "tileInput": 1120,
+    "tileLockSigma": 12,
+    "tileLift": {
+      "median": 0.4,
+      "power": [0.5556, 1.6]
+    },
+    "takes": {
+      "note": "The tile takes kept for every level (top left, top right, bottom left, bottom right). 0: no tile take, the composition as it is.",
+      "w": ["5", "5", "5", "5"],
+      "a": ["3", "3", "3", "3"],
+      "b": ["3", "3", "3", "3"],
+      "c": ["1", "1", "1", "1"],
+      "d": ["0", "2", "0", "2"]
+    },
+    "edgeMatch": {
+      "note": "How a child plate is nested into its parent (build.py nest). ramp: share of the child's half width, from its border inward, over which its tones go from the tones of the parent outside it to its own. clip: limits of that gain. seam: where, in shares of the half width from the border, the child's own picture begins (outside it the child shows the parent's picture, enlarged); forms: how far the child's own cloud forms (sizes between formsSigma, shares of the plate width) move that line.",
+      "ramp": 0.42,
+      "clip": [0.4, 2.5],
+      "seam": [0.14, 0.34],
+      "forms": 0.08,
+      "formsSigma": [0.012, 0.06]
+    },
+    "globeForms": {
+      "note": "Levels whose painted part is led by the globe's own cloud forms: the light and dark of the globe's look (forms between fromDeg and sigmaDeg of arc), limited to clip (floor: another lower limit for one level) and raised to power, laid on the carried colour of the close image in the guide. The plate then comes in over the forms it shows. Level b has a higher floor: a straight wind streak of the globe that passes the place came out of the tiles as a smooth dark trench with a hard line in it.",
+      "levels": ["a", "b"],
+      "fromDeg": 0.05,
+      "sigmaDeg": 0.5,
+      "clip": [0.5, 1.8],
+      "floor": {"b": 0.78},
+      "power": 1.5
+    },
+    "ring": {
+      "note": "Levels whose ring (the part outside the child) is painted new by an outpainting take (build.py ringguide, ring): the cloud of the close view seen from above, towers with lit sides and long shadows. grey: the flat value of the part to paint in the guide. matte: the border of the child in the guide, broken up by smooth noise (amount in shares of the child width, sigma in pixels of the guide) and eased over edge (shares of the child width). guideChild: the width in pixels of the child in the guide of the kept take, where it was not the true square. lockSigmaDeg: the tones of the take go to the tones of the plate of the earlier method at this scale, within clip. chroma: its colour goes this share of the way to the colour of that plate, taken at sigmaDeg.",
+      "grey": 0.5,
+      "matte": {"seed": 7, "noise": [[0.05, 40], [0.02, 12]], "edge": [0.03, 0.12]},
+      "guideChild": {},
+      "lockSigmaDeg": 1.0,
+      "clip": [0.33, 3.0],
+      "chroma": {"sigmaDeg": 0.3, "share": 0.75}
+    }
+  }
+}
