@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T22:24:37.980Z",
- "head": "c1be1901392b633ad9e275128272b06927a11d28",
- "note": "second review note read; main E6 merged; step at 3832 measured on E6 (fine contrast 0.075 to 0.084 in one frame); plan for F being written",
+ "pushed": "2026-11-23T22:47:39.718Z",
+ "head": "d95a46b9d7aa56db7796bd7a0b9c291a48a416a8",
+ "note": "step 1 of mail 374: the pace rebuilt as one move in four measures; study of 3720 with one ring look",
  "looks": [
+  {
+   "time": "2026-11-23T22:47:38.993Z",
+   "file": "20261123224738993-note-far_3720.jpg",
+   "source": "../../../../tmp/v/r23/far_3720.png",
+   "kind": "note",
+   "label": "3720 draft with the near light pool switched off: the far look of the rings carried to the skim (study for step 2, one look of the ring per pixel)"
+  },
   {
    "time": "2026-11-23T22:24:37.291Z",
    "file": "20261123222437291-note-att_crop.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/r21/rv_full.png",
    "kind": "note",
    "label": "c984dd4 frame 3832, review tier, plain engine, 37 samples"
-  },
-  {
-   "time": "2026-11-23T21:58:39.775Z",
-   "file": "20261123215839775-note-e6_ll.jpg",
-   "source": "../../../../tmp/v/r21/e6_ll.png",
-   "kind": "note",
-   "label": "3831 and 3832 on the trial engine with the gentler shutter (top, middle) and 3832 on the plain engine (bottom), review tier, lower left at full size: one look, 3832 a little crisper with the cap"
   }
  ]
 }
