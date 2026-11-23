@@ -79,6 +79,8 @@
   }
  ],
  "feather": 0.12,
+ "featherOwn": 0.04,
+ "featherHow": "feather: share of a level's width over which its weight falls to nothing at its border, for the shown plates (they are pictures of their own and need a wide ramp). featherOwn: the same for the globe's own levels (the first three), which are the same picture as the map under them at a finer grain, so a narrow ramp shows no border. With 0.12 the outer 3.7 degrees of the widest level counted as the coarser map under it, and the rising camera saw that ground at 0.91 to 1 texel a pixel in the corner of frame 5000 (1.84 percent of the frame).",
  "fade": [
   1.1,
   1.6

@@ -37,6 +37,7 @@ for (const part of (opt('set') ?? '').split(';').filter(Boolean)) {
 }
 const shownFrom = patches.place.shownFrom
 const feather = patches.feather
+const featherOwn = (patches as { featherOwn?: number }).featherOwn ?? feather
 const fade = patches.fade as [number, number]
 const rad = THREE.MathUtils.degToRad
 // The spot, its east and its north in the world at spin zero: the eye of place.json and the spin axis of the plan (planet.ts builds the same frame in the body).
@@ -106,7 +107,7 @@ function frame(f: number): { counted: number; soft: number; rows: string[]; unde
         const shownLevel = i >= shownFrom
         const qx = (g[0] - (shownLevel ? Math.tan(rad(l.off[0])) : 0)) * scale
         const qy = (g[1] - (shownLevel ? Math.tan(rad(l.off[1])) : 0)) * scale
-        const inside = 1 - smooth(0.5 - feather, 0.5, Math.max(Math.abs(qx), Math.abs(qy)))
+        const inside = 1 - smooth(0.5 - (shownLevel ? feather : featherOwn), 0.5, Math.max(Math.abs(qx), Math.abs(qy)))
         const gate = i === shownFrom ? 1 : 1 - smooth(fade[0], fade[1], parent)
         const w = (shownLevel ? shown : 1) * front * inside * gate
         parent = gd * scale * l.texels

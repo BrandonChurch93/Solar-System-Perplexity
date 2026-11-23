@@ -12,6 +12,7 @@ import { ending as endLook } from './ending'
 import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
+import move from './move.json'
 import patches from './patches.json'
 import place from './place.json'
 import { NeptunePlanet } from './planet'
@@ -52,7 +53,7 @@ export const createSet: SetFactory = async (ctx) => {
     field, near: look.near.dive, night: look.night,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], vivid: [patches.place.vivid[0]!, patches.place.vivid[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, featherOwn: patches.featherOwn, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], vivid: [patches.place.vivid[0]!, patches.place.vivid[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
     mend: { map: mendMap, box: look.mended.box },
     flow,
@@ -183,7 +184,8 @@ export const createSet: SetFactory = async (ctx) => {
         laid.toned(layEast, layNorth, layOut, (pu.uPatchOff!.value as THREE.Vector2[])[patches.place.shownFrom]!, (pu.uPatchScale!.value as number[])[patches.place.shownFrom]!, patches.place.tone.stops * (1 - closeLight))
       }
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
-      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb)
+      const moving = kind === 'dive' || kind === 'rise' ? 1 - smooth((high - move.near.height[0]!) / (move.near.height[1]! - move.near.height[0]!)) : 0
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb, moving, move.rim)
       pu.uAirGround!.value = 1 - limb
       const distant = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.distant.height[1]!) / Math.log(closeLook.lay.distant.height[0]! / closeLook.lay.distant.height[1]!))
       ;(pu.uDistantAir!.value as THREE.Vector4).set(closeLook.lay.distant.air[0]!, closeLook.lay.distant.air[1]!, closeLook.lay.distant.air[2]!, closeLook.lay.distant.veil)
@@ -236,6 +238,7 @@ export const createSet: SetFactory = async (ctx) => {
       const behind = smooth((THREE.MathUtils.radToDeg(camera.angleTo(light)) - endLook.limb.shinePhase[0]!) / (endLook.limb.shinePhase[1]! - endLook.limb.shinePhase[0]!))
       planet.ending(end, look.limb, look.cloud, look.deck, look.night, ringLit, endLook.limb.shineNear + (1 - endLook.limb.shineNear) * behind, endLook.limb, crescent)
       ring.ending(end, camera, endLook.ring)
+      ring.along(move.ring.along * moving)
       ring.solid(rising ? smooth((state.u - look.ring.solid.rise[0]) / (look.ring.solid.rise[1] - look.ring.solid.rise[0])) : ending ? 1 - end : 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)

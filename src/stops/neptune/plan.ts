@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-import { config } from '../../config'
+import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
+import { handoverOf } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
@@ -141,6 +142,16 @@ class NeptunePlan extends StopPlan {
   override risePose(time: number, view: ViewKind): Pose {
     const pose = this.flown('rise', time)
     return view === 'orbit' ? this.spun(pose, time) : this.toClose(pose)
+  }
+
+  // The sky of the hold stays on the Sun while the Sun and the sky are in the frame; the turn toward the sky of the close view is made
+  // between two frames when the globe fills the frame but for one corner (move.json, sky.turnFrame). The rise keeps the engine's law.
+  override skyTurnShare(seg: Segment, time: number): number | null {
+    const h = seg.kind === 'dive' ? handoverOf(this.id, 'dive') : null
+    if (!h) return super.skyTurnShare(seg, time)
+    const at = move.sky.turnFrame
+    if (!(at > seg.firstFrame && at <= h.firstFrame - h.skyFrames)) throw new Error('sky.turnFrame of neptune must lie inside the dive and before the sky of the close view fades in')
+    return time * config.fps + 1e-6 >= at ? 1 : 0
   }
 
   override hold(tRel: number): Pose {
