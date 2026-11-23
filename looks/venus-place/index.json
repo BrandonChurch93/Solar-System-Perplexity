@@ -1,9 +1,61 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T10:06:34.395Z",
+ "pushed": "2026-11-23T10:15:48.509Z",
  "head": "37769b50537416398088ced8478836217e9f5e02",
- "note": "venus opted in (dive T 1343, rise T 1544): harness draft passes; place window still shows a black band above the limb, a second Sun in the rise, towers shift; fixing",
+ "note": "venus opt in: globe side without the picture beside the close side at both T (t-pairs); horizon crops show the black band and the bare Sun; next the air dome on the globe side, then plates laid from the T pictures",
  "looks": [
+  {
+   "time": "2026-11-23T10:15:47.943Z",
+   "file": "20261123101547943-note-hz-rise.jpg",
+   "source": "out/work/venus/place/h1/hz-rise.jpg",
+   "kind": "note",
+   "label": "opt in h1 hz-rise",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:15:47.395Z",
+   "file": "20261123101547395-note-hz-dive.jpg",
+   "source": "out/work/venus/place/h1/hz-dive.jpg",
+   "kind": "note",
+   "label": "opt in h1 hz-dive",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:15:46.852Z",
+   "file": "20261123101546852-note-t-pairs.jpg",
+   "source": "out/work/venus/place/h1/t-pairs.jpg",
+   "kind": "note",
+   "label": "opt in h1 t-pairs",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:14:59.441Z",
+   "file": "20261123101459441-frame-t-1544-side_terrain.jpg",
+   "source": "out/work/venus/place/h1/t-1544-side_terrain.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1544, draft tier, beauty/side=terrain view",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1544,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=terrain",
+   "engine": "8b9f780b26a50bc3"
+  },
+  {
+   "time": "2026-11-23T10:13:46.183Z",
+   "file": "20261123101346183-frame-t-1343-side_terrain.jpg",
+   "source": "out/work/venus/place/h1/t-1343-side_terrain.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1343, draft tier, beauty/side=terrain view",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=terrain",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T10:06:33.800Z",
    "file": "20261123100633800-note-close-rise-1530.jpg",
@@ -27,52 +79,6 @@
    "kind": "note",
    "label": "opt in h1 pics",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:32.167Z",
-   "file": "20261123100632167-note-rise-b.jpg",
-   "source": "out/work/venus/place/h1/rise-b.jpg",
-   "kind": "note",
-   "label": "opt in h1 rise-b",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:31.628Z",
-   "file": "20261123100631628-note-rise-a.jpg",
-   "source": "out/work/venus/place/h1/rise-a.jpg",
-   "kind": "note",
-   "label": "opt in h1 rise-a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:31.104Z",
-   "file": "20261123100631104-note-dive-b.jpg",
-   "source": "out/work/venus/place/h1/dive-b.jpg",
-   "kind": "note",
-   "label": "opt in h1 dive-b",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:30.461Z",
-   "file": "20261123100630461-note-dive-a.jpg",
-   "source": "out/work/venus/place/h1/dive-a.jpg",
-   "kind": "note",
-   "label": "opt in h1 dive-a",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:06:04.102Z",
-   "file": "20261123100604102-frame-mask-1550.jpg",
-   "source": "out/work/venus/place/h1/mask-1550.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1550, draft tier, beauty/mask view",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1550,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/mask",
-   "engine": "8b9f780b26a50bc3"
   }
  ]
 }
