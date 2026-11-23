@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T22:36:09.186Z",
+ "pushed": "2026-11-23T22:53:34.826Z",
  "head": "f7a9e0012da7f546eac24a2d5f51a5ff7cb49f27",
- "note": "22:37 VM: layout of the function scene read from the approved image; deep.ts written, first frame of 4860 next",
+ "note": "22:54 VM: first frames of the function scene at 4860 beside the approved image; 35 s a frame at 960 wide draft",
  "looks": [
+  {
+   "time": "2026-11-23T22:53:34.186Z",
+   "file": "20261123225334186-note-d-f.jpg",
+   "source": "../../../../tmp/d-f.jpg",
+   "kind": "note",
+   "label": "deep.ts, the surface view from functions, 4860 at 960 wide draft (left) beside the approved image (right): unfinished, cirrus still soft, storm and deck first tone",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T22:36:08.588Z",
    "file": "20261123223608588-note-lay-cirrus.jpg",
@@ -70,14 +78,6 @@
    "source": "../../../../tmp/sunset.jpg",
    "kind": "note",
    "label": "neptune dive with rampIn 0.38, upper right at native size, 4702 to 4710, draft: one Sun, it sets behind the limb between 4705 and 4706",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T22:03:10.729Z",
-   "file": "20261123220310729-note-T-limb.jpg",
-   "source": "../../../../tmp/T-limb.png",
-   "kind": "note",
-   "label": "neptune dive after the cure of the dim: 4757 (above) and 4758 (below) at the limb, 2x, draft: the glow above the limb no longer steps at T (sides at T: mean 0.065 dive, 0.064 rise, pass)",
    "stop": "neptune"
   }
  ]
