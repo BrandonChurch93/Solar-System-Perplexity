@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T09:55:31.374Z",
+ "pushed": "2026-11-23T10:20:44.303Z",
  "head": "11e977f374595c03f75f02fdd6afd8d64f31d545",
- "note": "M2 on main; raw motion rides the turning body; every frame of the Mars dive and rise at draft; next: the rise path (E3), the frozen run (E4), the plates (E5)",
+ "note": "E3 under way: frozen build measured through the E4 tool (fails as it should), two schedules for height and attitude being built, patch levels up to 10 for the Mars plates",
  "looks": [
+  {
+   "time": "2026-11-23T10:20:43.558Z",
+   "file": "20261123102043558-note-frozen-vs-new-dive-2446-2457.jpg",
+   "source": "out/work/e3/frozen-vs-new-dive-2446-2457.jpg",
+   "kind": "note",
+   "label": "Mars dive 2446 to 2457, frozen build (cover) against the build before E3, draft tier"
+  },
+  {
+   "time": "2026-11-23T09:57:43.191Z",
+   "file": "20261123095743191-frame-f2712-mask.jpg",
+   "source": "out/work/e3/f2712-mask.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2712, draft tier, beauty/mask view",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2712,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/mask",
+   "engine": "87a382c1c9cb3848"
+  },
   {
    "time": "2026-11-23T09:55:30.788Z",
    "file": "20261123095530788-note-dump-00.jpg",
@@ -45,27 +66,6 @@
    "source": "out/work/e3/dive-2424-2447.jpg",
    "kind": "note",
    "label": "every frame at the draft tier, dive-2424-2447"
-  },
-  {
-   "time": "2026-11-23T09:55:27.364Z",
-   "file": "20261123095527364-note-dive-2400-2423.jpg",
-   "source": "out/work/e3/dive-2400-2423.jpg",
-   "kind": "note",
-   "label": "every frame at the draft tier, dive-2400-2423"
-  },
-  {
-   "time": "2026-11-23T09:52:19.438Z",
-   "file": "20261123095219438-frame-dump-00.jpg",
-   "source": "out/work/e5/dump-00.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier, ungraded/side=orbit/dump=0,0,image view",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "ungraded/side=orbit/dump=0,0,image",
-   "engine": "e06ab8cd159f5c49"
   }
  ]
 }
