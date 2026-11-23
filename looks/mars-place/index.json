@@ -1,9 +1,58 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T22:08:36.541Z",
- "head": "9f08b87e8a5a1926a83920dd5d3fb4b8c0fa2f42",
- "note": "three takes for an eleventh bake: the ground round the lay back painted as relief, not baked yet; tenth bake in proof",
+ "pushed": "2026-11-23T22:25:53.292Z",
+ "head": "19880f1ed3a750248df4c68297a1f678c09b3d71",
+ "note": "plan F step 1: the true heights of the Mars place from above and its meshes seen by the dive camera",
  "looks": [
+  {
+   "time": "2026-11-23T22:25:52.730Z",
+   "file": "20261123222552730-note-h-all.jpg",
+   "source": "out/work/place/height/h-all.jpg",
+   "kind": "note",
+   "label": "The place from straight above at 0.3, 0.7, 1.6, 3.8 degrees: top heights rasterised from the meshes (white 0 km plateau, dark canyon to 7 km deep, blue never seen by the picture's eye), bottom the picture's colour at its true place",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:25:52.184Z",
+   "file": "20261123222552184-note-cam-high.jpg",
+   "source": "out/work/place/height/cam-high.jpg",
+   "kind": "note",
+   "label": "The same meshes from higher up, native 700 px crops of 2416, 2420, 2424, 2427: the far field is a pale fan of streaks, only the canyon at its point is ground",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:25:51.626Z",
+   "file": "20261123222551626-note-cam-all.jpg",
+   "source": "out/work/place/height/cam-all.jpg",
+   "kind": "note",
+   "label": "The close view's own meshes (no aprons, no globe, blue is nothing) drawn in their place on the globe and seen by the dive camera of 2430, 2436, 2442, 2448, 2454: real relief from 0.031 radii down",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T22:15:02.100Z",
+   "file": "20261123221502100-compare-mars-dive-under.jpg",
+   "source": "out/work/handover/mars-dive-under.png",
+   "kind": "compare",
+   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T22:10:11.877Z",
+   "file": "20261123221011877-job-frame-02537.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mars.terrain frame 2537, draft tier, texels view, from the running measure job",
+   "stop": "mars",
+   "segment": "mars.terrain",
+   "frame": 2537,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T22:08:35.432Z",
    "file": "20261123220835432-note-p16-lead-take6.jpg",
@@ -26,52 +75,6 @@
    "source": "out/work/place/view/p03-lead-take1.jpg",
    "kind": "note",
    "label": "0.3 degree plate from above: lead (tenth bake, left) and take 1 (right), ground outside the fan painted as relief",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:00:08.924Z",
-   "file": "20261123220008924-note-crop2427-b9-b10.jpg",
-   "source": "out/work/place/view/crop2427-b9-b10.jpg",
-   "kind": "note",
-   "label": "2427 draft native 700 px crop: left ninth, right tenth (nearly the same)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:00:08.679Z",
-   "file": "20261123220008679-job-frame-02250.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "mars.hold frame 2250, draft tier, texels view, from the running measure job",
-   "stop": "mars",
-   "segment": "mars.hold",
-   "frame": 2250,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T22:00:08.223Z",
-   "file": "20261123220008223-note-cmp2444-b9-b10.jpg",
-   "source": "out/work/place/view/cmp2444-b9-b10.jpg",
-   "kind": "note",
-   "label": "2444 draft: top ninth, bottom tenth",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:00:07.322Z",
-   "file": "20261123220007322-note-cmp2699-b9-b10.jpg",
-   "source": "out/work/place/view/cmp2699-b9-b10.jpg",
-   "kind": "note",
-   "label": "2699 draft: top ninth, bottom tenth: calmer round the place, the dark place still has an outline at the right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T22:00:06.641Z",
-   "file": "20261123220006641-note-cmp2696-b9-b10.jpg",
-   "source": "out/work/place/view/cmp2696-b9-b10.jpg",
-   "kind": "note",
-   "label": "2696 draft: top ninth bake (on main), bottom tenth (grain hold, wandering fan edge): the band of bright crests is gone",
    "stop": "mars"
   }
  ]
