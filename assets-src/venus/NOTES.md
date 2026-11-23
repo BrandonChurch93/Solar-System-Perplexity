@@ -1968,3 +1968,24 @@ Measured on the merge 97301b26 (main 5eba2289):
 - G13, G5 and G17 were not run again on the last merge: no file of the Venus folders changed and the 50 draft frames above keep their bytes.
 
 Takes in this phase, for the READY line: level a ring by outpainting 8 pictures (two over the six: I counted my own tries as rounds; best take t4 kept, no more for it in this phase); level a tiles 3; level a ring look 1; level w ring 2; level w tiles 5.
+
+
+## State 15:33 (23 Nov, VM time): READY sent, the harness on the head. Read this first after a compaction
+
+- 15:27: "READY venus 7907a57a" sent to /root with a to d of MAIL 275, the frames changed since 6326371c (1260 to 1343 and 1542 to 1604), the takes statement and the list of what is still wrong (eight items, text in the state entry of 15:23 and below).
+- 15:31: second message to /root with the harness on the head. Two runs at draft (`--only sides,flow,sheets`, then `--only under,top`; the parts of the harness are now sides, under, flow, frames, sheets, top): verdict pass for dive and rise. Sides and flow as before the merge. Under the place picture at T (warning limit `underMean` 6): dive mean 4.18, median 2, 99th 46, tone 1.95, detail 3.68 on 64.4 percent of the frame; rise mean 4.09, median 2, 99th 48, tone 1.78, detail 3.68 on 62.9 percent. The difference sits along the limb (the air of the picture, which the globe alone does not draw) and at the bottom edge. Reports kept in `out/work/venus/place/r7/h10/`.
+- Close to a limit: the largest step of the body level between two frames of the dive is 5.92 against `levelStep` 6 (into frame 1280).
+- Top down sheets of the harness (`out/work/handover/venus-dive-top.png`, `venus-rise-top.png`), every frame looked at: one place coming closer from 3.46 to about 0.07 radii; below that (dive 1328 to 1343, rise 1553 to 1542) the towers of the two deepest plates are smeared along the line of sight of the close view and read as a stretched painting from straight above. Item 9 of the list.
+
+The list of what is still wrong, as sent:
+1. Dive 1300 to 1310 and rise 1566 to 1577: the tones change in view over about ten frames.
+2. Rise 1562 to 1569: a smooth golden band with soft streaks along the limb at the top (the globe's own look past the widest plate). Weaker, not cured.
+3. Rise 1578 to 1592 (judged frame 1586) and dive 1280 to 1300: the place is a dark rust brown field of towers on a globe that is cream and pale gold on the lit side: one kind of cloud by form, two by tone. Bright cream towers at the edge of the field stand out hard; orange red tints on lit tower tops.
+4. Dusk side of the widest plate: grey white crisp ridges that can read as rock or frost (dive lower left 1284 to 1300, rise left 1578 to 1590).
+5. Rise 1545 to 1554 and dive 1320 to 1335: a paler grey deck comes in at the lower left and the bottom.
+6. Dive 1276 to 1300: combed streaks of the globe at the right limb.
+7. Air over the limb only in 1310 to 1318; thin bright lines on the limb 1545 to 1554 (`limbReachDeg` not tried yet).
+8. Not proven at the review tier. `atT.shiftDeg` is fitted, not explained.
+9. The two deepest plates from straight above (see above).
+
+Next, between the rounds, in this order unless a mail says otherwise: item 3 and 4 by code (the tone map of the ring: take the mean of the field nearer to the globe about it, and the grey white ridges to the colour of the deck); item 1 (the tone change spread over more frames, or tied to height alone); item 7 with `limbReachDeg` (on main since 5eba2289); item 2.
