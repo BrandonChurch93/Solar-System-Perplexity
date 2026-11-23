@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T18:28:32.744Z",
- "head": "20e47f29dfeae8b4c06d810aab63e58555f0d8a2",
- "note": "answers to mails 315 and 318; drawing one look from far to near and a longer distance to the globe for G13",
+ "pushed": "2026-11-23T19:01:35.246Z",
+ "head": "a623b3725dccb90928cd0d4f06b3713bb6c298d5",
+ "note": "one look from far to near by distance per pixel; the globe's fine bands from functions near the lens (G13 cause); proofs for mail 321",
  "looks": [
   {
-   "time": "2026-11-23T18:28:32.077Z",
-   "file": "20261123182832077-note-moon_rev.jpg",
-   "source": "../../../../tmp/v/bld/moon_rev.png",
+   "time": "2026-11-23T18:59:28.664Z",
+   "file": "20261123185928664-note-b_3815.jpg",
+   "source": "../../../../tmp/v/r12/b_3815.png",
    "kind": "note",
-   "label": "the moon goes behind the night limb 3586 to 3590 (crops of the review stills)"
+   "label": "3815 draft, closest pass to the globe"
   },
   {
-   "time": "2026-11-23T18:28:31.517Z",
-   "file": "20261123182831517-note-g13_3810.jpg",
-   "source": "../../../../tmp/v/t1/g13_3810.png",
+   "time": "2026-11-23T18:59:27.975Z",
+   "file": "20261123185927975-note-b_3866.jpg",
+   "source": "../../../../tmp/v/r12/b_3866.png",
    "kind": "note",
-   "label": "G13: beauty 3809 and the soft mask of 3810 in red, the globe's map under one texel a pixel at the frame's edge"
+   "label": "3866 draft, rise"
   },
   {
-   "time": "2026-11-23T18:28:30.783Z",
-   "file": "20261123182830783-note-sheet_3621_3640.jpg",
-   "source": "../../../../tmp/v/r6/sheet_3621_3640.png",
+   "time": "2026-11-23T18:59:27.403Z",
+   "file": "20261123185927403-note-c_3780.jpg",
+   "source": "../../../../tmp/v/r12/c_3780.png",
    "kind": "note",
-   "label": "drafts 3621 to 3640 on f06bc5c: steady approach, no plunge (mail 315 point 3)"
+   "label": "3780 draft native crop, the globe near the lens with streaks from functions"
   },
   {
-   "time": "2026-11-23T18:28:30.057Z",
-   "file": "20261123182830057-note-slide_new.jpg",
-   "source": "../../../../tmp/v/slide_new.png",
+   "time": "2026-11-23T18:59:26.725Z",
+   "file": "20261123185926725-note-b_3720.jpg",
+   "source": "../../../../tmp/v/r12/b_3720.png",
    "kind": "note",
-   "label": "the tone slide 3590 to 3630 on f06bc5c, before its cure (mail 315 point 2)"
+   "label": "3720 draft, one look from far to near"
   },
   {
-   "time": "2026-11-23T18:28:29.480Z",
-   "file": "20261123182829480-note-pair_3590.jpg",
-   "source": "../../../../tmp/v/r1/pair_3590.png",
+   "time": "2026-11-23T18:59:26.120Z",
+   "file": "20261123185926120-note-fine_3820.jpg",
+   "source": "../../../../tmp/v/r12/fine_3820.png",
    "kind": "note",
-   "label": "pair at 3590 on f06bc5c: kept set alone, model alone, difference (mean 0.059 of 255)"
+   "label": "3820 nograin native crop of the globe: map alone, with the functions"
   },
   {
-   "time": "2026-11-23T17:38:20.900Z",
-   "file": "20261123173820900-note-look_3720_draft.jpg",
-   "source": "../../../../tmp/v/look_3720_draft.png",
+   "time": "2026-11-23T18:59:25.476Z",
+   "file": "20261123185925476-note-fine_3810.jpg",
+   "source": "../../../../tmp/v/r12/fine_3810.png",
    "kind": "note",
-   "label": "3720 draft: the skim with the kept profile as the model's knots, tints not final"
+   "label": "3810 nograin native crop of the globe: map alone, with the functions"
   },
   {
-   "time": "2026-11-23T17:38:20.231Z",
-   "file": "20261123173820231-note-look_dive_3602_3630.jpg",
-   "source": "../../../../tmp/v/look_dive_3602_3630.png",
+   "time": "2026-11-23T18:59:24.865Z",
+   "file": "20261123185924865-note-proof2_2.jpg",
+   "source": "../../../../tmp/v/r8/proof2_2.png",
    "kind": "note",
-   "label": "dive 3602 to 3630 every 6 frames, draft: far look of the model going over to its own light (window then at 3588 to 3602)"
+   "label": "point 2 proof: new above, f06bc5c below, 3620 3625 3630 draft"
   },
   {
-   "time": "2026-11-23T17:38:19.601Z",
-   "file": "20261123173819601-note-look_pair_3595.jpg",
-   "source": "../../../../tmp/v/look_pair_3595.png",
+   "time": "2026-11-23T18:59:24.262Z",
+   "file": "20261123185924262-note-proof2_1.jpg",
+   "source": "../../../../tmp/v/r8/proof2_1.png",
    "kind": "note",
-   "label": "3595 with the shutter closed: the kept set alone, the model alone, their difference times 8 (mean 0.06 of 255, 99th percentile 1)"
+   "label": "point 2 proof: new above, f06bc5c below, 3605 3610 3615 draft"
   }
  ]
 }
