@@ -86,6 +86,10 @@ uniform vec3 uSeetheNear;
 uniform vec2 uCrown;
 float seethe = 0.0;` : ''}
 uniform vec3 uCam;
+uniform float uExact;
+uniform mat4 projectionMatrix;
+uniform mat3 uSightTurn;
+uniform vec4 uPort;
 uniform vec2 uBand;
 uniform float uLod;
 uniform vec3 uSpot;
@@ -132,16 +136,28 @@ vec3 fieldAt(vec2 g, vec2 dx, vec2 dy) {
   return max(mean + (sum - mean) / sqrt(dot(wt, wt)), vec3(0.0));
 }
 void main() {
-  vec3 at = vStage;
-  vec3 lay = vStage - ST_DOWN;
+  // The place on the ball that this pixel sees. In the rise it is where the line of sight of the pixel meets the
+  // ball itself: the sight comes from the lens and the turn of the camera, not from the face of the mesh, which
+  // lies a little inside the ball and is interpolated less finely than a tenth of a pixel. The globe side takes
+  // the same line by the same arithmetic, so both sides of the handover read the pictures at one place.
+  vec3 here = vStage;
+  for (int k = 0; k < (uExact > 0.0 ? 1 : 0); k++) {
+    vec2 ndc = (gl_FragCoord.xy - uPort.xy) / uPort.zw * 2.0 - 1.0;
+    vec3 sight = normalize(uSightTurn * vec3((ndc.x + projectionMatrix[2][0]) / projectionMatrix[0][0], (ndc.y + projectionMatrix[2][1]) / projectionMatrix[1][1], -1.0));
+    vec3 oc = uCam - ST_CENTRE;
+    float b = dot(oc, sight);
+    here = uCam + sight * (-b - sqrt(max(b * b - dot(oc, oc) + ST_RADIUS * ST_RADIUS, 0.0)));
+  }
+  vec3 at = here;
+  vec3 lay = here - ST_DOWN;
   vec2 gnd = vec2(dot(lay, ST_RIGHT), dot(lay, ST_FWD));
   float ring = length(gnd);
   vec2 fromApex = gnd - ST_FOLD.yz;
   float phi = atan(fromApex.x, fromApex.y);
   float dist = length(at);
   float graze = clamp(dot(normalize(at - ST_CENTRE), -at / dist), 0.0, 1.0);
-  vec3 normal = normalize(vStage - ST_CENTRE);
-  float now = clamp(dot(normal, normalize(uCam - vStage)), 0.0, 1.0);
+  vec3 normal = normalize(here - ST_CENTRE);
+  float now = clamp(dot(normal, normalize(uCam - here)), 0.0, 1.0);
   float lift = smoothstep(uLift.x, uLift.y, now - graze);
   float edge = ring;
   for (int k = 0; k < (lift > 0.0 ? 1 : 0); k++) edge += lift * uUp.z * (vnoise(vec3(gnd * uUp.w, 1.7)) + 0.5 * vnoise(vec3(gnd * uUp.w * 2.7, 5.3)) - 0.75);
@@ -153,18 +169,18 @@ void main() {
   vec2 uv = stPlate(stImage(at));
   vec2 dx = dFdx(uv) * uGrad;
   vec2 dy = dFdy(uv) * uGrad;
-  vec2 ab = apImage(vStage);
+  vec2 ab = apImage(here);
   vec2 uvB = apUv(ab);
   vec2 dxB = dFdx(uvB) * uGrad;
   vec2 dyB = dFdy(uvB) * uGrad;
-  float w = apWeight(vStage, ab) * uApronOn;
+  float w = apWeight(here, ab) * uApronOn;
   float bare = (1.0 - own) * (1.0 - w);
   float texF = diagTexels(uvF * uFieldSize.y);
   // a finer level of the field where the camera of the rise comes so near that the field would be enlarged:
   // the field's own fine structure at a smaller size, as a ratio over its own soft copy
   float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF));
   float texels = bare > 0.5 ? texF * mix(1.0, uFieldFine.w, step(0.5, finer)) : mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
-  vec3 rel = vStage - uSpot;
+  vec3 rel = here - uSpot;
   vec3 up = cross(uSpotE, uSpotN);
   rel -= up * dot(rel, up);
   float r = length(rel);
@@ -184,7 +200,7 @@ void main() {
   for (int k = 0; k < (uSeethe.x > 0.0 ? 1 : 0); k++) {
     vec2 sq = gnd * uSeethe.z;
     float tick = uSeethe.w * uSeethe.y;
-    seethe = uSeethe.x * (vnoise(vec3(sq, tick)) + 0.5 * vnoise(vec3(sq * 2.1 + 3.7, tick * 1.6 + 1.9)) - 0.75) * mix(uSeetheNear.z, 1.0, 1.0 - smoothstep(uSeetheNear.x, uSeetheNear.y, length(vStage - uCam)));
+    seethe = uSeethe.x * (vnoise(vec3(sq, tick)) + 0.5 * vnoise(vec3(sq * 2.1 + 3.7, tick * 1.6 + 1.9)) - 0.75) * mix(uSeetheNear.z, 1.0, 1.0 - smoothstep(uSeetheNear.x, uSeetheNear.y, length(here - uCam)));
   }` : ''}
   for (int k = 0; k < ((w < 1.0 && own > 0.0) ? 1 : 0); k++) {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
@@ -211,7 +227,7 @@ void main() {
     col = mix(f * max(inflow, 0.0) * tone, col, own);
   }
   for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
-    vec3 toEye = AP_EYE - vStage;
+    vec3 toEye = AP_EYE - here;
     float away = length(toEye);
     float seen = clamp(dot(normal, toEye / away), 0.0, 1.0);
     float tone = clamp(stLimb(now) / stLimb(seen), 0.25, 5.0);
@@ -242,10 +258,10 @@ void main() {
   vec3 to = ST_CENTRE - uCam;
   float away = length(to);
   vec3 c1 = to / away;
-  vec3 ray = normalize(vStage - uCam);
+  vec3 ray = normalize(here - uCam);
   float el = (acos(clamp(dot(ray, c1), -1.0, 1.0)) - asin(clamp(ST_RADIUS / away, 0.0, 1.0))) * sqrt(max(away * away - ST_RADIUS * ST_RADIUS, 0.0)) / ST_RADIUS * tan(ST_ALPHA);
   float limb = smoothstep(uBand.x, uBand.y, el);
-  vec2 gb = stImage(vStage);
+  vec2 gb = stImage(here);
   for (int k = 0; k < (limb > 0.0 ? 1 : 0); k++) {
     vec2 far = stImage(stLimbDir(ray, c1, el));
     col = mix(col, inverseFilmic(textureLod(uPlate, stPlate(far), uLod).rgb), limb);
@@ -255,27 +271,27 @@ void main() {
   // a thin glowing haze low over the ground: a layer at its own height, so it shifts against the cells as the
   // camera flies, and drifts on its own wind. It is thin: seen from steeply above there is none of it.
   for (int k = 0; k < ((uHazeLow.x > 0.0 && now < uHazeSteep.y && limb < 1.0) ? 1 : 0); k++) {
-    vec3 hp = vStage + normalize(uCam - vStage) * (uHazeLow.y / max(now, uHazeLow.w)) - ST_DOWN;
+    vec3 hp = here + normalize(uCam - here) * (uHazeLow.y / max(now, uHazeLow.w)) - ST_DOWN;
     vec2 hq = (vec2(dot(hp, ST_RIGHT), dot(hp, ST_FWD)) - uHazeWind.xy * uTime) * uHazeScale.xy;
     float hn = (vnoise(vec3(hq, uTime * uHazeWind.z)) + 0.5 * vnoise(vec3(hq * 2.3 + 5.1, uTime * uHazeWind.z * 1.6 + 2.7))) / 1.5;
     float thick = smoothstep(uHazeScale.z, uHazeScale.w, hn) * min(1.0 / max(now, 1e-3), uHazeLow.z);
     float veil = (1.0 - exp(-uHazeLow.x * thick)) * (1.0 - smoothstep(uHazeSteep.x, uHazeSteep.y, now)) * (1.0 - limb) * uLifeCalm;
     col = mix(col, inverseFilmic(uHazeTint.rgb) * uHazeTint.w, veil);
   }
-  for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
-    float landed = uLandOn * exp(-dot(vStage - uLand.xyz, vStage - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(vStage - uKick.xyz, vStage - uKick.xyz) * uKick.w);
+  for (int k = 0; k < ((here.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
+    float landed = uLandOn * exp(-dot(here - uLand.xyz, here - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(here - uKick.xyz, here - uKick.xyz) * uKick.w);
     col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + landed));
     col += uLandVeil * landed;
   }
   for (int k = 0; k < (uFlashOn.x + uFlashOn.y > 0.0 ? 1 : 0); k++) {
-    float pool = exp(-dot(vStage - uFlash.xyz, vStage - uFlash.xyz) * uFlash.w);
+    float pool = exp(-dot(here - uFlash.xyz, here - uFlash.xyz) * uFlash.w);
     col = col * (1.0 + uFlashOn.x * pool) + uLandVeil * (uFlashOn.y * pool);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float shown = 1.0;
   for (int k = 0; k < (uMixed > 0.5 ? 1 : 0); k++) {
-    shown = mix(uShow.x, uShow.y, 1.0 - smoothstep(uSite.x, uSite.y, r)) * step(0.0, dot(normal, uCam - vStage));
+    shown = mix(uShow.x, uShow.y, 1.0 - smoothstep(uSite.x, uSite.y, r)) * step(0.0, dot(normal, uCam - here));
   }
   outColor = diagOut(vec4(col, shown), texels, 1.0, vec3(0.9, 0.5, 0.1), moved * 4.0, length(vView));
 }`
@@ -317,7 +333,7 @@ export class Ground {
         uTwinkle: { value: new THREE.Vector3(look.twinkle.amount, look.twinkle.rate, look.twinkle.spread) },
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
-        uCam: { value: new THREE.Vector3() }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector2(1, 1) }, uMixed: { value: 0 },
+        uCam: { value: new THREE.Vector3() }, uExact: { value: 0 }, uSightTurn: { value: new THREE.Matrix3() }, uPort: { value: new THREE.Vector4(0, 0, 1, 1) }, uBand: { value: new THREE.Vector2(-THREE.MathUtils.degToRad(look.band[0]), -THREE.MathUtils.degToRad(look.band[1])) }, uLod: { value: 0 }, uSpot: { value: spot }, uSpotE: { value: spotE }, uSpotN: { value: spotN }, uShow: { value: new THREE.Vector2(1, 1) }, uMixed: { value: 0 },
         uDiag: diagUniform, uGrad: gradUniform,
       },
     })
@@ -361,6 +377,22 @@ export class Ground {
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.frustumCulled = false
   }
+
+  /** The line of sight of a pixel for the place of the rise: the turn from the camera's axes to the axes of the
+   *  stage, and the size of the picture in pixels. */
+  sight(turn: THREE.Quaternion, width: number, height: number): void {
+    const u = this.material.uniforms
+    ;(u.uSightTurn!.value as THREE.Matrix3).setFromMatrix4(this.turned.makeRotationFromQuaternion(turn))
+    ;(u.uPort!.value as THREE.Vector4).set(0, 0, width, height)
+  }
+
+  /** How much of the low haze is left: it thins out as the camera of the rise climbs, and is gone before the
+   *  side changes, since the globe does not draw it. */
+  haze(keep: number): void {
+    ;(this.material.uniforms.uHazeLow!.value as THREE.Vector4).x = lifeData.haze.amount * keep
+  }
+
+  private readonly turned = new THREE.Matrix4()
 
   show(mixed: boolean, weight: number, site: number): void {
     const m = this.material
