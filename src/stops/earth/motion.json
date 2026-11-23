@@ -4,5 +4,6 @@
  "shadow": { "height": 0.006, "strength": 0.4, "lod": 2.5, "floor": 0.12 },
  "night": [0.04, -0.14],
  "auroraGate": [0.3, 0.05],
+ "nightRim": [1, 1],
  "emissivePeak": 5
 }

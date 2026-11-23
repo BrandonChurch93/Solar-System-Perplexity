@@ -2342,3 +2342,264 @@ earth_builder: a29f6f87 under check since 15:30 (builder/take-earth cddc7448).
 - Disk: at 15:40 UTC the tools refused to start (2.8 GB free). Removed: the draft PNGs of `out/work/earth/place/all/` (sheets kept; twelve frames kept in `pre-glint/` for the comparison of the glint cure), `sides/`, `down/`, the PNGs of the samebytes labels `merged`, `place`, `mainkept` (their `hashes.json` kept).
 - A hole in the READY of 15:24 UTC: the handover tool was called with `--only sides,flow,path,sheets`. On main the parts are `sides,under,flow,frames,sheets,top`, so `under` (the number under the place picture) and `top` did not run. Said to `/root` at 15:41 UTC (low). The tool runs in full on 933e2b41 since 15:44:35 UTC (`out/work/earth/place/q18.sh`).
 - The glint cure is applied in the second work tree only (tsc exit 0 there); it goes into the repo tree when the handover tool has ended.
+
+## MAIL 295 from the Builder (16:04 UTC, high priority; the first two parts and Earth's paragraph, verbatim)
+
+MAIN is c9bc056. On it since mail 293: Uranus (25f2dc3a) and the Sun (c2524de5) at 15:45 UTC, Neptune (d39658df) and Earth (a29f6f87) at 15:55 UTC. With Mercury that is five stops with no cover. Merge main before your next named commit. Nothing outside your three folders, as before.
+
+ROUNDS. Batch one started at 15:56 UTC on that state: round 37 Mercury, 38 Uranus, 39 Neptune, 40 Earth, each round 1 of 3 for the note. Their frames render on 28 machines now. Fresh critics then judge the kept frames beside the approved images, the surfaces at native size, and the motion on sheets of the hold, the dive, the surface view and the rise plus a sheet of consecutive frames across each handover. G13 is counted on every frame of the dive and the rise. Each list of issues reaches its builder when the round closes, at about 18:15 UTC. Round 2 of a stop runs on the commit its builder names after that list. Until the list comes, work on your own list and name a commit when a cure is rendered and proven.
+Batch two (the Sun, Mars, Venus, Jupiter, Saturn) starts at about 17:15 UTC with every stop that is on main by then; a stop that lands later starts with the next gate run, about 40 minutes after. A check of a named commit takes about 25 minutes on twelve machines, so name it by 16:45 UTC to be in batch two.
+
+earth_builder: taken. Round 40 runs. The glint cure is your next commit. The full set stands at 1393 of 1400 MB.
+
+## MAIL 297 from the Builder (16:11 UTC, high priority; verbatim)
+
+Your correction of 16:08 is read and it is the right thing to send. My own take check had the same gap (its handover job ran sides, flow, path and sheets only), so it could not have caught it; that is corrected in the log (decision of 16:10 UTC) and the full report with every part runs now for every stop on main.
+a29f6f87 stays on main and round 40 runs on it: the take has four conditions (builds on main, tests, bytes of the frames that may not change, G15) and they hold. The level step of the rise (7.5 into 2124, over 6 on three frames) is the first severe issue of round 40, and the number under the place picture (13.35 and 15.48 against 6) goes on its list as a warning.
+Your order is right: glint cure, then the level step of the rise under 6 with the full tool green, then the number under the place picture. Name one commit when the first two are rendered and proven with every part of the tool; if the second takes more than about 40 minutes, name the glint cure alone and say so. It is taken as the fix of round 1, and round 2 runs on it.
+
+## MAIL 304 from the Builder to mercury_builder and earth_builder (16:57 UTC, high priority; verbatim)
+
+From handover_engineer, on why the globe alone differs from the place picture by 13 to 15.5 levels at your handovers (limit 6, a warning) and what shows of it. His words:
+"Part is a setting, part can be the engine, the rest is plates. Setting: neither Mercury nor Earth sets edgeIn (on main since 0eae595). Mercury's four sided outline at 738 to 741 is the picture's valid rectangle with the film's narrow feather; with edgeIn (Mars uses 0.4, 0.4, 0.4, 0.25) the sides become a ramp that reaches in while the weight is low and draws back by T. Engine: a tone difference shows as an outline or an island because the picture brings its broad tone and its detail in with one weight. I can split the two: the detail keeps today's weight and edges, the broad tone of the picture is led over to the tone of the plates toward the picture's rim while the weight is under 1, and the correction is zero at T. Off unless a stop asks. It can not make the tone change inside the window smaller, only take its edge away: at T the picture has its own tone over the whole frame, so plates 15 levels off still turn the frame within 12 frames. Mercury's far field going pale and flat from 993: its rise sets maxEnlarge 1.2, which cuts the picture there, so that is the plates alone showing (or the rise path: on Mars fromDive made the cut needless)."
+What I ask of each of you, inside your own folders, beside what you are on:
+1. Set edgeIn for your dive and rise and look at the frames of the place window with the blur off (npm run handover -- --stop ID --tier draft --only sheets,under). Mercury: 738 to 741 is the test. Earth: the same test in 1907 to 1919 and 2100 to 2112.
+2. The plates themselves are yours: bring the globe alone closer to the picture where it is cheap (broad tone first, it is what turns the frame inside 12 frames). The number is "under the place picture" in the handover report; under 6 takes the warning away.
+3. Mercury: try the rise with fromDive (as Mars does) in place of maxEnlarge 1.2 and look at 993 to 995.
+The tone split in the engine is being built now and will be offered to you when it is proven; do not wait for it. Your round 1 lists (fresh critics, measures, my own list) follow when the rounds close, about 18:00 UTC. Name a commit only when G5, G13 on every frame, G17, G11 and the handover tool with every part are green on it.
+
+## MAIL 307 from the Builder (17:50 UTC, high priority; verbatim)
+
+Round 40 (Earth, round 1 of 3) is with its critics on main 9972260 (your commit as it stands on main). The first answers are in. Start on them now; the rest of the list follows when the round closes. Critics' words, with the frames from the key:
+
+R3 surface, part 1 (frames 1755 and 1857), score 2:
+1. SEVERE. Judged dive frame 1857, the whole globe, land, ocean and clouds: "Extreme radial zoom-blur and low-resolution texture stretching across the entire closer view; continents, coastlines, and South American terrain are heavily smeared and blurry, while cloud and highlight details break into blocky, stepped, pixelated radial streaks". Fix asked: "Use higher-resolution planetary surface and cloud textures or multi-scale procedural detail for close camera distances, and either disable radial motion blur on static judged frames or increase motion-blur sampling and texture filtering so features do not smear into pixelated blocks."
+2. SEVERE. 1857, Gulf of Mexico, Yucatan, Cuba and the Caribbean: "A dense, noisy patch of fine cellular popcorn clouds and a bright orange-white sunlit island/reef patch in the central Caribbean abruptly terminate with a hard circular patch border, clashing starkly with the surrounding low-resolution smeared base map." Fix asked: "Blend high-resolution local detail patches seamlessly into the global base map with wide, feathered transitions and matching resolution/blur characteristics, or use a unified high-resolution global cloud and bathymetry map."
+3. MAJOR. 1857, upper right limb: "The planetary limb and atmospheric edge exhibit a dull, muddy greenish-brown double-edge halo with color banding against space instead of a clean atmospheric scattering falloff."
+4. minor. 1755 (hold, not yours to change): aurora "slightly airbrushed", city lights on the sunlit coast before the terminator, the Moon "slightly soft".
+
+R4 motion, score 7:
+5. MAJOR. Dive sheet, frames 1879 to 1895, on either side of the central sun reflection: "The dark coastal shapes fade under the brighter oblique view instead of tracking cleanly into it. The overlapping geography makes the descent read as a blend between views rather than a single flight." Fix asked: "Align the coastlines and cloud shadows in the same 3D camera move before blending, and carry the same light and exposure through the transition."
+6. MAJOR. Rise sheet, frames 2120 to 2154, from the Caribbean to the full globe: "The rise looks like the dive played backward. The framing retraces the same landmarks, and the Cuban coastline and the large Pacific cloud spiral reappear in essentially the same configuration." Fix asked: "Give the climb a different heading or bank and keep clouds moving forward in time so the ascent reads as a continuation rather than a rewind."
+7. minor. Dive 1854 to 1879, bright cloud edges round the Gulf and the Caribbean: "Some bright cloud details break into short, separated marks along the zoom direction instead of reading as one smooth streak."
+8. minor. Hold 1680 to 1829 (not yours to change): the Pacific cloud spiral "appears pinned to the surface".
+
+R1 match, score 9, pass: four minor notes on 1755 and 2010 (aurora flecks fainter on the night side, red fringe weaker, micro texture slightly less crisp, glint a hair less smooth). No action.
+
+My own from the sheets and the report: 1862 to 1887 and 2127 to 2147 smeared at the edges; clouds as blocky blobs; the glint as an elongated patch; the handover report red on the rise (level step 7.5 into 2124, colour 7.99).
+
+Read 1, 2 and 7 together: at 1857 the picture moves fast and what is under the blur is too coarse and ends in a round border. The cure is at the cause: real detail at every height of the dive (plates and clouds that hold up under the shutter, no level that ends in a visible border, levels that come in while they are small on screen), and a descent whose image speed at 1846 to 1887 is no higher than it must be. Measure it and say the numbers (raw motion in px at the centre and the edge at 1857, texels per pixel there, which level of the pyramid the round border belongs to).
+
+What I need from you: a fix commit for round 2 of 3 on agent/earth-place that cures 1 to 3 and 5 to 7 at the cause, merged with origin/main, with your proof as before (finals 1755 and 2010 keep the bytes of the kept stills, hold and terrain untouched, the handover report green, measure, review tier sheets of the dive and the rise that you have looked at frame by frame, and a native size crop of 1857 at the final tier). Say plainly what is still wrong. Do not wait for the rest of the list to start.
+
+## MAIL 309 from the Builder (17:53 UTC, high priority; verbatim)
+
+Round 40, one more answer. Add it to mail 307.
+
+R3 surface, part 2 (frames 2010 and 2156), score 5:
+A. SEVERE. Judged rise frame 2156, "Americas, Andes, hurricane, and limb-cloud tiles": "land, clouds, coasts, and city lights are dragged into parallel streaks and do not hold detail at native size". Fix asked: "remove the directional blur so terrain and cloud edges stay sharp".
+B. MAJOR. 2156, "sky beside the disc, and the moon at the upper right": "stars stay crisp points while the globe and moon are streaked, so the blur reads as a filter on one layer". Fix asked: "blur the whole exposure together, or leave the planet and moon as sharp as the stars".
+C. minor. 2156, "sunlit cloud strip and the southern coast": "bright edges along the streaks break into stepped dashes and faint color fringes".
+
+Read with the first answer on 1857 (mail 307: extreme radial zoom blur, blocky stepped streaks): both judged frames of your dive and rise (1857 and 2156) are scored as smear, and they alone hold R3 at 2 and 5. Two things to settle with numbers before you change the path:
+1. At 1857 and 2156, how many px does a point at the frame edge and at the frame centre move across the open shutter, and how many shutter samples does the final tier give that frame? Streaks that end in steps and dashes are too few samples for the distance; say whether more samples cure it or the move itself is too fast there.
+2. B is a true fault of the picture: the globe and the Moon streak while the stars stand still. Either the camera turns and the stars must streak with it, or the camera only moves toward the globe and then a far Moon may not streak either. Find which layer gets the wrong motion and say so.
+The pace limits of the handover report are met at these frames, so the cure may be a slower passage through 1857 and 2156 inside the limits, a shorter shutter there, or both; the choice is yours, the proof is frames 1857 and 2156 at the final tier beside these.
+
+## MAIL 311 from the Builder (18:03 UTC, high priority, to every stop builder; verbatim)
+
+Decision d129, engine part E6 (handover_engineer builds it now).
+
+What: in the dives and rises of a stop that opted in, the shutter of a frame is shortened so that the motion across it is at most 6 px at the point of the frame that moves most (config handover.maxBlurPx), eased back to the full shutter over the last 12 frames of a rise. Every other frame of the film keeps the full shutter.
+
+Why: the critics of rounds 37 and 40 score the judged dive and rise frames as smear, severe (Earth 1857 "extreme radial zoom blur and low resolution stretching, blocky stepped streaks", Earth 2156 "dragged into parallel streaks and do not hold detail at native size", Mercury 1016 "smeared into long directional streaks"). The motion across the full shutter is 25 to 80 px there, because one steady move changes scale by 6 to 14 percent a frame. The path cannot be slower, so the shutter is shorter.
+
+What it means for you:
+1. Do not slow or bend your path to get less blur and do not build a blur cure of your own.
+2. From the next round your judged dive and rise frames (Sun 247; Mercury 717, 1016; Venus 1287, 1586; Earth 1857, 2156; Mars 2427, 2726; Jupiter 2997, 3296; Saturn 3567, 3866; Uranus 4137, 4436; Neptune 4707, 5006) and every frame of the motion sheets are nearly as sharp as your draft frames. Every fault the blur hid will be seen: plate edges, a level that pops, thin texture, clouds as blobs, the place picture as a patch, a halo at the limb. Look at those two frames at the draft tier at native size (crops of about 700 px, not the whole frame resized) and put what you find on your list, worst first.
+3. Nothing to merge yet. I tell you when E6 is on main.
+No answer needed.
+
+## MAIL 312 from the Builder (18:06 UTC, high priority; verbatim)
+
+Your numbers settle both points; thank you for measuring before changing. Our mails crossed: the capped shutter is an engine part now (E6, d129, mail 311), built by handover_engineer for every stop with the same rule you describe (the middle of the shutter stays, the fastest point of the grid moves at most a limit from the config). So:
+1. Do not commit your own shutter in plan.ts. Keep it in your tree only as a trial until E6 is on main, then drop it.
+2. Do finish the trial, it sets the number for the whole film: frames 1857 and 2156 at the final tier with the limit at 6, 8 and 10 px, and the fastest rise frame (2133) plus the two frames after it at 6 and 10. Send me the stills (full frames as JPEG at quality 92 or better, not resized) and one line on what you see at each limit. Say plainly which you would take and why.
+3. The Moon: with the cap it moves 4.6 px against 0.6 to 1.1 for the stars. Leave look.moon.near as it is for now; if it still reads as another layer in your stills, say so.
+4. Go on with the glint cure, the level step, then the border and the popcorn field at 1857, the limb, 1879 to 1895 and the climb. Name a commit when the report passes with every part.
+
+## 16:00 to 18:10 UTC: the glint cure, the veil of the low plate, the numbers for round 40, the shutter trial
+
+The glint cure (MAIL 297, first). The cream patch south of Cuba in 1860 to 1876 was the plate's sun glint: the plate is the look from the close camera, which looks into the Sun's reflection, and the globe showed that reflection from straight above, where no camera would see it. Cure: `levels.py` (`glint_of`) measures the glint on the plate, works out the calm sea under it (`place-glint-sea.png`) and the glint's light (`place-glint-light.png`), and the globe takes the light off the plate per pixel where the ray from the ground to the camera is `plates.glint.seenDeg[0]` (45) degrees or more from the ray to the close camera; the whole glint shows from `seenDeg[1]` (15). Trials as the looks notes hold them: trial 1 turned the cream to mint, not taken; trials 2 and 3 rejected; trial 5 (the plate without its glint by view angle) took the patch off in 1860 to 1876 but left clouds over the glint and a red tail wrong; trial 6 (the one in the tree) takes the measured light off per pixel and keeps the clouds. glint7 was trial 6 with the low plate's angle changed, for the level step. Seen on draft frames: the cream patch is gone in 1860 to 1876 and the glint comes in over 1880 to 1892; at half strength (1884) it is a muted brown, on the list. Texture memory of the stop 1394 MB (limit 1400).
+
+The level step of the rise (MAIL 297, second). Measured with `out/work/earth/place/tmp/lev.py` (whole frame mean luma and mean colour of consecutive draft frames, the same quantity as the tool's level step), frames 2113 to 2146:
+
+| state | largest level step | largest colour step |
+| --- | --- | --- |
+| a29f6f87 (frames of the handover tool) | 7.50 into 2124 | 7.99 into 2124 |
+| glint cure alone (glint7) | 8.15 into 2124 | 8.92 into 2124 |
+| veil1 | 5.10 into 2124 | 5.79 into 2124 |
+| veil2 | 5.36 into 2126 | 6.00 into 2125 |
+| veil3 (in the tree) | 4.84 into 2124 | 5.57 into 2124 |
+
+Limits 6 and 8. Cause: the low plate (the lay back of the close picture) differs from the plate in two things, its haze (a broad paler tone) and its detail, and both came in over the same 14 frames. Cure: the two are split. `levels.py` writes the broad part as `place-12-low-veil.bin` (the lay back less the plate, blurred over 0.4 degrees, 256 px, float16) and the globe adds it by `plates.low.veil.angleDeg` [60, 10], so the tone moves over about twice as many frames, while the detail still comes in by `plates.low.angleDeg` [35, 10]. veil1 and veil2 were other spans of the same thing; their frames are in `out/work/earth/place/veil1`, `veil2` until the disk is needed. Frames 2110 to 2112 keep their levels (112.98, 114.04, 115.65). This is the tool's number only as far as `lev.py` is the tool's measure; the full tool has not run on this tree yet.
+
+edgeIn (MAIL 304, 1): tried `0.4,0.4,0.4,0.25` on 1905 to 1919 and 2100 to 2114. Without it I find no four sided outline in 1908 to 1912 or 2103 to 2111. With it frames 1908 to 1916 differ by a mean of 0.13 to 0.60 levels and 2104 to 2112 by 0.06 to 0.86, and the top right corner of 2104 to 2106 is slightly worse. Not set.
+
+The low plate's bytes: `plate.py 12 4096 q12` was run again (its work files had been deleted for disk space), and `place-12-low.jpg` built from the new work files differs from the file of a29f6f87 by a mean of 0.019 code values, at most 12, in the far north west corner only.
+
+Numbers for MAILs 307 and 309 (tools `out/work/earth/place/tmp/smear.ts`, `texel.ts`, `npx tsx tools/samples.ts`):
+- 1857: height 1.026 radii, field 31.6 degrees. Motion over the open shutter: centre 3.6 px, left edge 21.8, right 25.5, top 11.6, bottom 19.9, fastest grid point 29.2. Final tier 64 samples (0.46 px a step), review 49.
+- 2156: height 1.921, field 30.3. Centre 3.7 px, top of the disc 15.3, bottom 22.9, fastest 25.3. Final 64, review 43.
+- So the dashes are not too few samples (under half a px a step). The streak itself is 20 to 29 px at the edges, and a speck of 2 to 3 px drawn over 25 px is a dash.
+- Stars at 2156 move 1.9 to 3.5 px over the shutter (the camera turns 0.109 degrees), the Moon 15.0 px. The Moon is the layer with the wrong motion: `look.moon.near` 0.1 since aa846e3d (the cure of round 34's pinned Moon) puts it near enough to shift with the camera's travel. A far Moon would move 3.4 px.
+- Texels per pixel at 1857: centre base map 0.67 to 0.70, patch-96 1.00, patch-48 2.5, patch-24 5.2, place-12 10.5. At the right edge and in the corners the base map alone gives 0.8 to 2.5.
+- Raw motion a frame (full shutter) peaks at 41.2 px in the dive (1882) and 55.0 px in the rise (2133).
+
+The shutter trial (in the tree only, never committed; MAIL 312, 1). `plan.ts`: `route(kind, time)` is the pose without the warp; `streak(kind, frame)` the motion of the fastest grid point over the open shutter; `open(kind, frame)` = min(1, maxPx / streak); `seen(kind, time)` pulls the time toward the middle of the shutter by that share. With the limit at 8: 1857 fastest 8.0 px, centre 1.0; 2156 fastest 8.1, centre 1.2, Moon 4.6, stars 0.6 to 1.1. The open share is 0.27 at 1857, 0.32 at 2156, least 0.194 (1882) and 0.146 (2133); the full shutter stays in 1830 to 1840, 1910 to 1919, 2100 to 2108 and 2164 to 2174. The engine builds this as E6; mine goes when E6 is on main. Chain q30 renders the final stills for the Builder's choice of the limit: 1857 and 2156 at 6, 8, 10; 2133 to 2135 at 6 and 10.
+
+Draft frames 1857 and 2156 at native size (MAIL 311, 2; frames of the handover tool at cdaaa893, six crops of 700 by 540 each, every one looked at). What the blur hid, worst first:
+1. 1857: the popcorn field from Florida over Cuba to Yucatan and Central America is one dense patch of equal small bodies that ends at once, along an arc in the Gulf and along a straight slope toward the Bahamas. The arc is the outer edge of the deck mask of `ring.py` (`mend.json` `ring.deck`, 11.5 to 14.5 degrees from the point under the twin camera, a sector of 44 to 70 degrees): overlay `/tmp/gl/outline-1857.jpg` from `out/work/earth/place/tmp/outline.ts`. At 2156 the same field is a grey dotted veil over Florida and Cuba.
+2. 1857: the sea inside about 6 degrees of the point under the twin camera is the plate's turquoise, outside it is the hold's deep blue; the border is a soft round arc from Cuba to Panama (`ring.fromDeg` 4.5 to 6).
+3. 1857, 2156: the cream glint patch (cured in the tree).
+4. 1857: a white capped cone standing in the sea north of Panama (x 900, y 650 of the frame) and a comb of short white dashes off the Pacific coast of Colombia (x 965, y 770 to 870).
+5. 1857: hard edged white cloud blobs east of the Antilles and over Venezuela (x 1410, y 880; x 1580, y 690), the hold's clouds outside the field.
+6. 1857 top right corner, 2156 right limb: a thin green line along the night limb with blue above it. It is the hold's airglow line; under the full shutter it smeared into the band the critic names. At the limit of 8 px it is a clean line again (`/tmp/gl/limb-1857.jpg`).
+7. 2156: nothing else found; the disc is the hold's globe.
+
+## MAIL 317 from the Builder (18:16 UTC, high priority; verbatim)
+
+Round 40 (Earth round 1 of 3, the build with no cover) is closed: R1 9 (pass), R3 2 (part 1: 2, part 2: 5), R4 7, R2 pass (1 of 10 against the control's 1 of 10), R8 pass, measures green. 3 severe, 4 major, 9 minor. The pass bar does not hold. Two rounds are left; round 2 starts when the engine's capped shutter (E6) is on main and you have named a commit that I have checked.
+
+The full list with every critic's words, file and frames is on main:
+  git fetch --depth 1 origin main && git show origin/main:scorecards/round-040/SUMMARY.md
+(R1.json, R3.json, R4.json, jurors.txt beside it). Read all 16 issues and the jurors' words. My order follows; where my words and a critic's differ, the critic's count.
+
+The engine's (E6): the blur half of issue 1 ("extreme radial zoom-blur"), issue 3 (2156 "dragged into parallel streaks"), issue 5 ("stars stay crisp points while the globe and moon are streaked, so the blur reads as a filter on one layer"; the sky is drawn at the middle of the shutter by the kit, so the cure is the short shutter, not a blurred sky), issues 14 and 15 (stepped dashes along the zoom).
+
+Yours, worst first:
+1. Issue 2, severe, 1857: "A dense, noisy patch of fine cellular popcorn clouds and a bright orange-white sunlit island/reef patch in the central Caribbean abruptly terminate with a hard circular patch border, clashing starkly with the surrounding low-resolution smeared base map." No level may end in a border that shows: wide feather, and on both sides of it the same cloud forms at the same sharpness and tone. Find which level it is (you were laying the window outlines over the frame) and prove the cure on 1850 to 1865 at draft at native size.
+2. The other half of issue 1, severe, 1857: "low-resolution texture stretching across the entire closer view". Your numbers say why: base map at 0.67 to 0.86 texels per pixel across most of the frame and the right edge and the corners on the base map alone. Every part of the frame needs at least 1 texel per pixel in every frame of the dive and the rise: bring the finer levels in earlier and make them reach the frame's edges and corners. Print the least texels per pixel over the frame for every fifth frame of both moves, before and after.
+3. Issue 4, major, 1857 upper right limb: "a dull, muddy greenish-brown double-edge halo with color banding against space instead of a clean atmospheric scattering falloff".
+4. Issue 6, major, 1879 to 1895: "The dark coastal shapes fade under the brighter oblique view instead of tracking cleanly into it. The overlapping geography makes the descent read as a blend between views rather than a single flight." The coast of the far levels and the coast of the near levels must be the same coast in the same place, and the light and exposure must carry through; nothing may fade in over another shape.
+5. Issue 7, major, 2120 to 2154: "The rise looks like the dive played backward. The framing retraces the same landmarks, and the Cuban coastline and the large Pacific cloud spiral reappear in essentially the same configuration." Give the climb its own heading and bank (you had "a different climb" on your list) and let the clouds go forward in time. The handover at T and the arrival at the retreat pose stay as they are.
+6. The Moon at a tenth of its distance moves 4.6 px against the stars' 0.6 to 1.1 with the short shutter. Judge it on your trial stills and say what you see.
+7. Minor issues 8 to 13 and 16 lie in the hold 1755 and the terrain 2010, where the match critic gave 9 against the approved images: leave them, unless a change brings the frame closer to its approved image. Say which you left.
+
+Already in your tree and wanted: the glint cure (1855 to 1890, 2125 to 2152) and the level step of the rise (4.84 into 2124; main is red there with 7.5).
+
+Rules as before: only your folders; hold 1680 to 1829 and the terrain frames outside the handover windows keep their bytes; never tune one critic's item at the cost of another; a cure is proved on the frames. Send READY with the commit, one line per item (cured, better, or left with the reason) and what you still see yourself. The trial stills for the shutter limit (mail 312) come first, they set a number for the whole film.
+
+## MAIL 326 from the Builder (18:53 UTC, high priority; verbatim)
+
+Mail 326 from the Builder (/root), 18:53 UTC. To every builder. Three things, then carry on.
+
+1. Main is fdf97b84de6f3e33e10a906f8f82e2c81fe9b32a. New on it: the engine's fromDive files (no frame of any stop changed: 115 of 115 draft frames equal, proven) and the harness with --place-window on every pack command. Merge it into your branch before your next commit (git fetch --depth 1 origin main; git merge FETCH_HEAD; never rebase, never force).
+
+2. New rule, from now on, before you name any commit to me as READY: on your own tree run
+   npm run gate -- --phase 6 --only G11,G15 --g15-stops <your stop>
+and put the two lines that start with PASS or FAIL into your mail, word for word. A commit without two PASS lines is not READY. Reason: a commit went through a twelve machine check today and then failed G15 (memory: web 483 of 450 MB, full 1903 of 1400 MB) and G11 (plates named by a pattern in RECIPE.md). The limits live in config/showcase.json; read them there. A red gate is fixed in your folder; it is never a reason to shrink what the picture shows without telling me what was given up.
+
+3. The capped shutter (E6) is NOT on main yet. It is on agent/engine-handover 1a777a3b746d40351878e1258f4f13be20edeeb3 (handover.maxBlurPx 6, handover.blurEaseFrames 12). I am rendering trial clips of three dives at 6 and at 14 now and set the number once, on moving pictures. Do not copy engine files into your folder and do not set your own shutter until I write that E6 is on main. Until then keep working on the faults you already have; the place picture, the flow across T and the far field do not depend on the number.
+
+No answer needed unless one of the three stops you.
+
+## Mail from the handover engineer (about 19:00 UTC, low priority; noted)
+
+The sky share hook is on agent/engine-handover commit 63f9dfd (hooks commit fe1fad4, with E6 and main fdf97b8 under it). It is not on main; the Builder decides when. `StopPlan.skyShare(seg, time): { low: number; high?: number } | null` (type SkyShares in src/director/handover.ts), null by default. low is the weight of the close view's sky on the globe side (it also drives floor, glow and exposure), high is the weight of the globe view's own sky patch; both 0 to 1, else the film throws. Also `skyCarryShare(seg, time)` and `skyLiftAt(seg, time)`; tests/skyshare.test.ts. Not used in this tree until it is on main.
+
+## Shutter trial, sent to the Builder (18:40 part 1, 19:08 part 2)
+
+Trial stills at limits 6, 8 and 10 px for 1857 and 2156, and at 6 and 10 for 2133 to 2135 (`/tmp/gl/trial/`). What was seen: 8 is the pick; on the fastest frames 6 is clearly better than 10; if only 6 or 14 can be had: 6. A comb of hard ended copies shows at 6 and at 10 alike. The trial shutter (`path.shutter` in place.json; `streak, open, seen, route, opens` in plan.ts) stays in the tree only as a trial and is dropped before any commit (mail 312, mail 326).
+
+## Geography of the dive (18:19 to 19:10)
+
+The hold map is Caribbean like. The place is the Jamaica like island; the plate's island replaces it. Nadir of the twin camera: lon -79.3, lat 16.49. Plate centre P: lon -82.12, lat 18.67. The lay back wedge runs north west from the nadir, sides at about azimuth -14 and -86, near edge 1.4 degrees ahead. Low look: off nearer than 4.2 degrees from the nadir, full from 5.0; by ray angle 35 to 10 degrees; by height 0.6 to 0.25.
+
+What the frames showed before the new field (tree of cdaaa893 plus glint and veil): at 1857 the popcorn is a fan from the Yucatan like land to the Florida like land (the old ring sector). At 1874 to 1894 the lay back wedge reads as a lighter hazy window with an outline (straight east edge, arc); the Central America like land at the left fades under the low look; the south east end of the Cuba like land at the right is cut by the straight east edge of the wedge (it is cut in place-12.jpg itself; the land lies 4 to 5 degrees from the nadir inside the wedge, where no bodies may lie).
+
+## New field density (item 1), 18:48 to 19:12
+
+mend.json `field.density`: `lift [-2.4, 0.3], reachDeg 4.5, land [2.0, 0.5], open 0.25`; `far [5.0, 6.4]`, `farVary [1.5, 1.2]`, sizes as before. Measured by deck.py: density mean 0.238; over land inside the lay back's cover 0.906; over sea inside the cover 0.446; the wide part 0.044; body cover 0.524 where density is over 0.9; total cover 0.1136. Aim: the field ends in thinning cloud bodies of the same kind, never in a line, and the lands under the low look carry cover so no dark land shows through a fade.
+
+## The climb (item 5), 19:05 to 19:15
+
+`Leg.swing` (deg, headingDeg, at): the position direction and the aimed ground point are carried along the anchor's heading by `deg` degrees, in with the height (a logistic of k about at[1], zero at at[0]) and out by time from at[2] of the leg's frames. `Leg.bank` (deg, at): a roll about the view axis, in and out by time. First try with `turnTime` gave north on screen within a few degrees of the dive and a centre that ran 11 degrees off at 2154 and came back by 2160; dropped. Now: swing 6 degrees, bank 25 degrees over [0.16, 0.55, 1]. Framing: north on screen 58.7 at 2124 (dive at the same height 48), 45.3 at 2136 (27), 33.9 at 2142 (8.8), 26.5 at 2148 (1.7), 11.1 at 2160, -0.5 at 2172. Centre of frame: -83.4, 20.3 at 2136; -85.5, 21.2 at 2148; -90.1, 18.9 at 2160; -84.4, 14.1 at 2172. Streak of the fastest frame point (open shutter, px): 54.9 before, 45.7 after at the worst frame; 2156: 25.3 before, 28.2 after; 2162: 10.7 before, 17.7 after. Sky in frame on a 29 by 17 grid: none from 2116 to 2147 before and after.
+
+Clouds forward in time: set.ts lets `flow` run in the rise from `-(y*y)/(y+ease)` to 0 at the rise end (y = rise end minus time), so the wrap's cloud layer moves forward and ends at rest in the pose the travel starts with.
+
+## MAIL 333 from the Builder (19:27 UTC, high priority; verbatim)
+
+Mail 333 from the Builder (/root), 19:27 UTC, to mercury_builder, earth_builder, uranus_builder, neptune_builder, mars_place_builder. Render machines are free now and a take check does not depend on the shutter decision (it proves only that frames outside your dive and rise keep their bytes). If you hold a commit that is better than what main has for your stop and that you would stand behind in a round, send it now in one short mail: the sha (merged with main c8b4c8b or newer: git fetch --depth 1 origin main; git merge FETCH_HEAD), the two lines of npm run gate -- --phase 6 --only G11,G15 --g15-stops <your stop> word for word, and in three lines what it cures and what is still wrong. If your work is in the middle of something, say so in one line and carry on; nothing is lost, the next sha is taken the same way. The shutter (E6) follows on main separately; do not wait for it and do not build around it. Mars: your take also needs the globe engineer's ownGain change (agent/engine-globe e62c658f); say whether your sha needs anything else from an engine branch.
+
+Answer sent 19:27: in the middle (new field density and a new climb in the tree, not yet proven by the handover tool); no commit to name yet.
+
+## Field density second pass and three body sizes (item 1), 19:23 to 19:36
+
+What the drafts of 19:20 (dir f1) showed at 1857: a straight top edge of the field (the rim of the 24 degree raster at lat 30.67) and a carpet of tiny flecks. deck.py now thins to `open` also outside the lay back's cover and carries the lay back's cloud on from the cover edge over `spreadDeg 1.5`, so the wedge's straight edges are no step; the rim falloff (`wide.edgeDeg [0.5, 3.0]`, `edgeVary 0.8`) ends the whole field. mend.json: `land [2.0, 1.0]`, `open 0.15`, `sizes [[0.4,[0.25,0.1,0.4,0.9]],[0.7,[0.4,0.6,0.2,0.7]],[1.0,[0.0,0.35,0.5,0.9]]]`. Measured by deck.py with the old sizes (run 7): density mean 0.1736, over land inside the cover 0.899, over sea inside the cover 0.429, wide part 0.063, body cover 0.552 where the density is over 0.9. With the new sizes (run 8): body cover 0.385 where the density is over 0.9, 0.093 between 0.3 and 0.6, 0.0003 under 0.05.
+
+## The night limb at 1857 (item 3), 19:28 to 19:36
+
+Found: the dull green band at the night limb in 1857 (15 to 20 px wide at native size) is the inner wide rim band of air.ts drawn in the hold's baked limb colours (`innerWide [0.02, 0.6]`); the camera is three times nearer than in the hold, so the band is three times wider on screen. The curtain is off there (`aurora.fade`), the globe's emissive is off (away 1 from frame 1856). Change: air.ts `uNightRim` (motion.json `nightRim [1, 1]`): where the camera is away and the limb is on the night side, the rim colour goes to the physical night rim and the wide inner band is taken out. away is 0 in the hold and at the retreat pose. Seen on 1857 at native size: the green band is gone, a thin blue line is left at the limb. To prove: 1755, 1829, 2175 bytes and the frames 1850 to 1865 one by one.
+
+## Still seen in the drafts of 19:20 (f1), frames 1878 to 1902
+
+The plate reads as a lighter hazy dome with a dark arc at its south side (the plate's ring 5 to 6.4 degrees from the nadir against the hold's navy sea). The haze of the low look shows as a wedge with a straight east edge at 1884 to 1889 (the veil ends at the lay back's cover and at the low window). Small orange specks lie over the plate. The Yucatan like land at the left is under the field and tracks to the horizon; the east part of the Cuba like land leaves by the right frame edge by 1896 and dims a little; its west part inside the wedge lies under field bodies.
+
+## Risk of the cloud flow in the rise
+
+The patch levels hold the hold's clouds baked and do not flow. With the rise flow on, the wrap's storm turns under patch-96's feather. To test: 2100, 2106, 2112, 2139, 2145 with the flow on and off, the feather zone at native size. If a ghost shows or 2100 to 2112 change, the flow goes back to 0 and the list says that the cloud map is the hold's.
+
+## Field third pass, limb and flow proven on drafts, shutter trial dropped, main merged (19:36 to 20:02)
+
+Drafts of 19:40 (dir f2), every frame 1850 to 1865 looked at at native size: no circular border and no straight edge; the field ends by thinning. Two faults found there: bodies cut by the raster's edge (alpha up to 251 on the top and right edge rows of the 8192 raster) and single bright bodies standing on the soft cloud band of the hold's map in the north east (1857 to 1863). deck.py now: the rim's variation is 0 at the rim itself, `wide.edgeDeg [1.2, 3.5]`, every body that the raster's edge would cut is dropped, and outside the lay back's cover no body lies where the hold's map has cloud (`density.base`: cloud [120, 170], deg 0.3). Measured (run 9): density mean 0.154, over land inside the cover 0.899, over sea inside the cover 0.424, body cover 0.365 where the density is over 0.9, 0.094 between 0.3 and 0.6, 0.0005 under 0.05; alpha 0 on all four edge rows.
+
+Limb: air.ts `dark = uAway * (1 - smoothstep(0.42, 0.68, x))` drives both the rim colour and the cut of the wide inner band. 1850 to 1861 looked at one by one at the upper right: the green band of 1857 is gone, the curtain leaves the frame by 1856.
+
+Flow of the rise: with the flow on and off, 2103 equal (max 0), 2112 max 1, 2121 max 4, 2130 max 31, 2139 max 81, 2145 max 173 (mean 1.04), 2151 max 210 (mean 3.6). No doubled storm arm seen at 2145 and 2151 at native size. The flow stays. It moves the cloud of the wrap only; the cloud pattern is the hold's and the patch levels hold it baked.
+
+Shutter trial dropped from plan.ts (`streak`, `open`, `seen`, `opens`, `Path.shutter`) and from place.json (`path.shutter`), as mail 312 says. `route` stays (the pose of a leg at a time). The climb (`swing`, `bank`) stays and is described in `path.how`.
+
+Main e13dc058 merged at 19:55 (merge commit c6f57f7b; outside the three folders the tree equals main). tsc clean, vitest 27 files 186 tests passed, build passed.
+
+Item 2, least texels per pixel over the frame, every fifth frame (tool `out/work/earth/place/tmp/need.ts min`): dive unchanged by this step (1855 0.87, 1860 0.67, 1865 0.60, 1870 0.60, 1875 0.53, 1880 0.80, 1885 0.70, 1890 0.62, 1895 0.56, 1900 0.57, 1905 0.54, 1910 0.54, 1915 0.53, 1919 0.54; 1.17 and more to 1850). Rise before and after the new climb: 2100 0.45 and 0.45, 2105 0.46 and 0.46, 2110 0.48 and 0.48, 2115 0.49 and 0.49, 2120 0.54 and 0.56, 2125 0.62 and 0.60, 2130 0.73 and 0.70, 2135 0.50 and 0.92, 2140 0.61 and 0.60, 2145 0.63 and 0.60, 2150 0.85 and 0.84, 2155 1.24 and 1.23. What a whole cure needs by the same tool: patch-96 4220 px (now 2400), patch-48 10527 px (now 4096), patch-24 22049 px (now 4096). The set stands at 1394 of 1400 MB, and the textures the hold shows cannot shrink without changing its bytes. Left; the trade is the Builder's.
+
+## MAIL 340 from the Builder (20:30 UTC, high priority; "Three things, nothing to answer"; as kept in my working summary)
+
+1. Main is a9ed9a0 (the tree of 42b1585c). New on it since 20:00 UTC: Saturn's surface view from code (32c488ab), Jupiter's surface view from code (9838e122), the test line that lets any stop set place.edgeIn in its own plan (bc2e4c41, asked by Mercury), the globe engineer's change of the own gain (42b1585c: the gain now multiplies the scene value; no stop on main sets it). Merge origin main into your branch before you name a commit; never rebase, never force. 2. The shutter of the dives and rises is set (decision d140 in kit/PROGRESS.md): handover.maxBlurPx 14 with handover.minShutter 0.5. ... the draft tier does not change at all. It comes onto main after its proof on machines, in about 40 minutes; I write when it is there. Do not add blur, softness or a cover of your own to hide a fault at the handover: what the half shutter no longer hides has to be cured in the plates and the path. 3. What Brandon asked for stays the measure of every dive and rise, word for word: "the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to." The place has to be in the picture early (as detail on the globe well before the handover, not a patch that arrives in the last frames), it has to agree with the globe around it in tone, and the camera has to travel to it in one move. When your commit is ready write READY with the full sha and your gate lines (tsc, tests, G11, G15 web and full, G13 on every frame of the dive and rise, the handover report verdict with every part). I prove it on twelve machines and take it; the next round of your stop starts on main with the shutter.
+
+## Proof chain of the tree of 20:00 (field run 9, limb, climb, rise flow), 20:01 to 21:10
+
+Handover tool (`npm run handover -- --stop earth`, ended 20:22:48, report `out/work/handover/earth.md`): dive verdict pass (side difference at T mean 0.101, P99 1, max 26; flow gap mean 0.001 px, largest 0.002; largest body level step 1.91 into 1882; colour step 2.69 into 1869). Rise verdict pass (side difference mean 0.103, P99 1, max 34; flow gap mean 0.001, largest 0.003; level step 5.3 into 2124, limit 6; colour step 6.24 into 2124, limit 8). The warning beside the verdict, not part of it: under the place picture mean 13.2 in the dive and 15.32 in the rise, limit 6 (13.35 and 15.48 on the report before).
+
+Every frame of both moves looked at on sheets made from the tool's draft frames (`out/work/earth/place/all/sheets/s-*.jpg`): dive 1830 to 1873 steady, no border. 1874 to 1889: a lighter hazy dome whose edges can be named. 1890 to 1901: land without haze shows in the top corners beyond the haze. Rise 2100 to 2119 steady. 2120 to 2131: the same dome, a brownish veil wedge with a straight edge. 2132 to 2147: the climb with its own heading. 2148 to 2174: the globe recedes to the retreat pose.
+
+Same bytes at draft against the kept set merged2 (`tools/samebytes.ts`): 14 frames the same, 0 different (1755, 1829, 1920, 2010, 2099, 2175, 1680, 1720, 1760, 1800, 1956, 1992, 2028, 2064).
+
+Gate before the merge of the newest main: "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished stops: earth/web 354 MB, earth/full 1394 MB".
+
+Measure on that tree (`npm run -s measure -- --stop earth`, 20:26 to 21:05, `out/work/earth/place/measure9.log`): "FAIL G13 earth: 5 of 495 frames over 0.02 soft; worst frame 2142 3.88%, frame 2141 3.76%, frame 2140 3.13%"; "PASS G5 earth: 1755 hold invalid 0 coverage 0.329; 1857 dive invalid 0 coverage 0.994; 2010 terrain invalid 0 coverage 0.780; 2156 rise invalid 0 coverage 0.668"; "PASS G17 earth: 1755 median 1.195 p25 1.131 over 72 tiles; 2010 median 1.044 p25 1.000 over 78 tiles". The tree of 20:00 is therefore not named.
+
+## G13 in the climb (21:06 to 21:22)
+
+Cause: with the climb's own heading and bank the frames 2139 to 2143 reach past the west and north edges of patch-48 (window centred on the spot, 4096 px), so their upper left is drawn from patch-96 at 0.56 to 0.67 texels a pixel. G13 soft share: 2139 2.06%, 2140 3.13%, 2141 3.76%, 2142 3.88%, 2143 2.88%, 2144 1.90%, 2145 1.21%, 2146 1.21%; dive 1868 0.43%, 1869 0.65%, 1870 0.53%, 1871 0.45%.
+
+Tried and dropped: moving the window of patch-48 west and north (offset [-300, 150]: 2139 to 2143 at most 0.55%, 1862 to 1870 at most 0.05%, by the harness's texel view and count, `out/work/earth/place/tmp/g13.ts`). Dropped because the kept 48 degree level ends at its old edge: levels.py fills the strip beyond it from the level above (share from the level itself 0.882, of the fill 0.219 from the ring take), so the count would say 1 texel a pixel where the picture holds the 96 degree level enlarged. That would tune the number, not the picture. A true cure of that strip is a new generated take of the 48 degree level; not done.
+
+Taken instead: the climb keeps its swing (6 degrees) and bank (25 degrees) but swings to the right of the glide's heading (`path.rise.swing.headingDeg` 90, was 0), over ground the kept levels cover. A copy of the texel count on the plan's poses (`out/work/earth/place/tmp/need2.ts`, 49 by 28 grid; it gave 4.01% at 2142 where the harness gave 3.88%) over the headings 0 to 315 in steps of 45, bank 25 and -25: heading 0 bank 25 max 4.01% (2142); 45: 2.84%; 90: 1.60% (2141); 135: 0.95%; 180: 1.17%; 225: 2.19%; 270: 3.72%; 315: 4.45%. Bank -25 gave less (heading 90: 0.73%) but turns the frame past north up by 22 degrees and back (north on screen -21.9 at 2148), a roll that reverses; with bank 25 the roll runs one way. Heading 180 puts the camera back on the dive's line (under the camera -78.9, 15.3 at 2142; the dive at that height -79.7, 15.4). Heading 90 at 2142: under the camera -79.2, 18.2, centre of frame -80.9, 21.2 (the dive at that height: centre -81.7, 18.0); at 2154 centre -78.0, 21.8 (dive -82.2, 15.3).
+
+## Tree of 21:25: heading 90 and the carried haze (21:22 to 21:42)
+
+Harness count with heading 90 at draft (`out/work/earth/place/tmp/g13.ts --frames 2128-2152`): soft share 2137 0.02%, 2138 0.20%, 2139 0.64%, 2140 1.22%, 2141 1.37%, 2142 1.12%, 2143 0.51%, 2144 0.08%, 2145 0.09%, 2146 0.02%, 0 on the other frames of 2128 to 2152 (limit 2%). The climb that swung forward of the glide (heading 0) failed G13 on 2139 to 2143 and was turned for that reason; what was given up is the forward swing, the climb now swings to the right of the glide.
+
+Least texels per pixel over the frame in the rise, every fifth frame, with heading 90 (`need.ts min`): 2100 0.45, 2105 0.46, 2110 0.48, 2115 0.49, 2120 0.56, 2125 0.60, 2130 0.72, 2135 0.92, 2140 0.62, 2145 0.60, 2150 0.85, 2155 1.23. Dive unchanged (list above).
+
+Framing of the climb with heading 90 (`framing.ts`): north on screen 58.8 degrees at 2124 (the dive at equal height 48), 45.9 at 2136 (27), 34.2 at 2142 (8.8), 25.1 at 2148, 7.5 at 2160, -0.6 at 2172. Centre of frame -81.8, 20.5 at 2136; -79.3, 21.8 at 2148; -78.9, 20.1 at 2160; -84.2, 14.1 at 2172.
+
+The haze of the low view (`place-12-low-veil.bin`, recipe in RECIPE.md, values in `mend.json` block `veil` and `place.json plates.low.veil`): the raster now spans a square four plates wide. Inside the lay back's cover it is the lay back less the plate; outside it is the ring mean of that difference about the point under the close camera, held from 7 degrees, with the residual at the cover's edge dying over 1.5 degrees. The shader adds it wherever the low look is on, so the haze no longer ends at the lay back's cover or at the low window. Printed profile (BGR, code values): 0 to 3.4 degrees 0; 4.375: 3, 4, 4; 5.375: 53, 56, 64; 6.375: 121, 117, 122; held from 7.0 at 125.6, 125.3, 132.1.
+
+Drafts of this tree, every frame of 1866 to 1906 and 2113 to 2162 looked at (`out/work/earth/place/v1/`): no wedge with a straight edge. Still seen: 1872 to 1878 the whole frame lightens as the haze comes in; 1875 to 1881 the plate's navy sea stands as a roundish darker region inside milky surroundings; 1881 to 1887 the turquoise island and the glint of the low view come up over the plate's sea (a fade in, not a tracked shape); 1884 to 1893 the close image's dark green land at the right edge beside pale haze. Rise: 2121 to 2128 a pale yellowish land at top right and the dark green wedge at lower right; 2129 to 2136 the navy roundish region with cyan round it while the frame turns; 2137 to 2144 a bright white oval cloud at top right.
+
+Frame to frame level step on these drafts (`/tmp/gl/pw/steps.py`, which gives the tool's own 5.30 and 6.24 on the earlier tree's frames): dive at most 3.65 into 1904 (colour 3.69); rise at most 5.03 into 2138 (colour 5.17), 4.4 to 4.9 at 2114 to 2116, 4.1 at 2122 and 2123 (limits 6 and 8).
+
+tsc clean, vitest 27 files 186 tests passed, build passed (21:25, 21:40).

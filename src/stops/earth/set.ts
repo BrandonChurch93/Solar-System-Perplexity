@@ -35,7 +35,14 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const plates = placeJson.plates
+  const glintLight = await ctx.texture(base + plates.glint.calm.light, { srgb: false, mips: false })
+  const glintSea = await ctx.texture(base + plates.glint.calm.sea, { srgb: false, mips: false })
+  const glintOf = (pl: typeof plates) => ({ at: [pl.glint.centre[0]! / pl.size - 0.5, 0.5 - pl.glint.centre[1]! / pl.size], win: pl.size / pl.glint.calm.window, feather: pl.glint.calm.feather, seenDeg: pl.glint.seenDeg, cloud: pl.glint.calm.cloud, warm: pl.glint.calm.warm, glow: pl.glint.calm.glow, floor: pl.glint.calm.floor, light: glintLight, sea: glintSea })
   const lowPlate = await ctx.texture(base + plates.low.file, { srgb: true, anisotropy: 16 })
+  const lowVeil = new THREE.DataTexture(new Uint16Array(await ctx.buffer(base + plates.low.veil.file)), plates.low.veil.size, plates.low.veil.size, THREE.RGBAFormat, THREE.HalfFloatType)
+  lowVeil.minFilter = THREE.LinearFilter
+  lowVeil.magFilter = THREE.LinearFilter
+  lowVeil.needsUpdate = true
   const tone = new THREE.DataTexture(new Uint16Array(await ctx.buffer(base + plates.tone.file)), plates.tone.size, plates.tone.size, THREE.RGBAFormat, THREE.HalfFloatType)
   tone.minFilter = THREE.LinearFilter
   tone.magFilter = THREE.LinearFilter
@@ -44,7 +51,7 @@ export const createSet: SetFactory = async (ctx) => {
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, low: { map: lowPlate, eye: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), angleDeg: plates.low.angleDeg, fromDeg: plates.low.fromDeg, window: plates.low.window, feather: plates.low.feather } } },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, glint: glintOf(plates), earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, low: { map: lowPlate, eye: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), angleDeg: plates.low.angleDeg, fromDeg: plates.low.fromDeg, window: plates.low.window, feather: plates.low.feather, veil: { map: lowVeil, angleDeg: plates.low.veil.angleDeg, times: plates.low.veil.times, feather: plates.low.veil.feather } } } },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)
@@ -142,7 +149,8 @@ export const createSet: SetFactory = async (ctx) => {
       const d = descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
       const x = plan.seg.hold.end - state.time
-      const flow = x > 0 ? (-x * x) / (x + ease) : 0
+      const y = plan.seg.rise.end - state.time
+      const flow = x > 0 ? (-x * x) / (x + ease) : y > 0 && state.time >= plan.seg.rise.start ? (-y * y) / (y + ease) : 0
       const aspect = view.format.width / view.format.height
       back.copy(state.rotation).invert()
       reshape(low)

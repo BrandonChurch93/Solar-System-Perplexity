@@ -34,7 +34,7 @@ export const globe: GlobeLook = {
   away: { tone: [0.032, 0.12, 0.215], land: [0.17, 0.166, 0.16], landAt: [0.4, 1, 0.085, 0.5], landClamp: [0.6, 1.25], flat: [0.1, -0.08], soft: 0, dim: 0.8, gate: [-0.03, -0.16], fine: [0.6, 4, 0.6, 1.2], far: { light: [0.05, 0.3], cap: [-25, 52, 0.4, 22, 38], rim: [0.3, 0.55], gold: [1, 0.72, 0.36], ring: [0.5, 0.66, 0.2], zone: [0.5, 0.62], east: [-38.5, -0.06, 0.05, 0.08, 0.18] } },
 }
 
-export const air: AirLook = { ...airJson, lineAway: [2, 0.6], inner: 0.007, innerStrength: 0.35, innerWide: [0.02, 0.6], nightLine: [1.455, 0.5], nightGlow: [0.007, 0.015, 0.022, 0.016], nightAt: [-0.006, 0.012], nightSide: [0.2, 0.4], lineEnd: [0.44, 0.53] }
+export const air: AirLook = { ...airJson, lineAway: [2, 0.6], inner: 0.007, innerStrength: 0.35, innerWide: [0.02, 0.6], nightLine: [1.455, 0.5], nightGlow: [0.007, 0.015, 0.022, 0.016], nightAt: [-0.006, 0.012], nightSide: [0.2, 0.4], nightRim: motion.nightRim, lineEnd: [0.44, 0.53] }
 
 export const away = [0, 0.85]
 export const onset = [-0.1334, 1.2, 0.6]
