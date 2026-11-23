@@ -1,4 +1,5 @@
 import { afterAll, describe, expect, it } from 'vitest'
+import * as THREE from 'three'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { config, type Segment } from '../src/config'
@@ -304,6 +305,35 @@ describe('a stop that opted in', () => {
         }
       }
     }
+    off()
+  })
+  it('gives raw motion the turn of the body on the globe side of its dive and rise, and nowhere else', () => {
+    const film = withMars(opt({}))
+    const turned = (f: number, side?: ViewKind): boolean => film.shotAt(f, (f + shutterMid()) / fps, side).sets.some((x) => x.id === COVERED && x.turn !== undefined)
+    for (const s of moves) {
+      for (let f = s.firstFrame; f < s.endFrame; f++) {
+        expect(turned(f, 'orbit')).toBe(true)
+        expect(turned(f, 'terrain')).toBe(false)
+      }
+    }
+    for (const kind of ['hold', 'terrain', 'travel']) {
+      const s = seg('mars', kind)
+      for (const f of [s.firstFrame, s.firstFrame + Math.floor(s.frames / 2), s.endFrame - 1]) expect(turned(f)).toBe(false)
+    }
+    const before = withMars(off())
+    for (const s of moves) for (let f = s.firstFrame; f < s.endFrame; f += 7) expect(before.shotAt(f, (f + shutterMid()) / fps, 'orbit').sets.some((x) => x.turn !== undefined)).toBe(false)
+    // A camera that turns with the body sees nothing move: without the turn in the state the same shots would report the whole sweep.
+    const hold = seg('mars', 'hold')
+    const mid = film.shotAt(hold.firstFrame, (hold.firstFrame + shutterMid()) / fps)
+    const set = mid.sets.find((x) => x.id === COVERED)!
+    const riding = (deg: number, carry: boolean): Shot => {
+      const turn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), (deg * Math.PI) / 180)
+      const world = set.rotation.clone().multiply(turn).multiply(set.rotation.clone().invert())
+      const camera: Pose = { position: mid.camera.position.clone().sub(set.origin).applyQuaternion(world).add(set.origin), quaternion: world.clone().multiply(mid.camera.quaternion), vfov: mid.camera.vfov }
+      return { ...mid, camera, sets: mid.sets.map((x) => (x === set && carry ? { ...x, turn } : x)) }
+    }
+    expect(rawMotion(riding(-1, true), riding(0, true), riding(1, true))).toBeLessThan(1e-6)
+    expect(rawMotion(riding(-1, false), riding(0, false), riding(1, false))).toBeGreaterThan(5)
     off()
   })
   it('keeps its hold and its terrain view as they were', () => {

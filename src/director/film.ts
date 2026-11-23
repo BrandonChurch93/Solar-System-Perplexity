@@ -622,7 +622,8 @@ export class FilmDirector implements Director {
       const f = this.frames[i]!
       const rotation = view === 'terrain' ? f.rotation.clone().multiply(p.turn(time)).multiply(p.terrainFrame) : f.rotation.clone()
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground }
+      const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
