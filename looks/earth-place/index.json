@@ -1,77 +1,71 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T11:01:20.331Z",
- "head": "4ddf9dba01cb6fc61c31fbcf63286864142cb84f",
- "note": "second handover run on the draft tier passes all six; still wrong: band under the horizon dissolves inside the place window, purple on the deck (cause found)",
+ "pushed": "2026-11-23T11:19:11.697Z",
+ "head": "e885b4e33d4189efece5cefd94072f487faf48aa",
+ "note": "M2 proofs on e885b4e3: handover sheets of dive and rise (draft), sides at T, top down dive sheet, orbit sheets; G13 fails in 13 of 165 frames near T, deeper plates next",
  "looks": [
   {
-   "time": "2026-11-23T10:59:54.474Z",
-   "file": "20261123105954474-frame-f02010.jpg",
-   "source": "out/work/earth/place/proof/f02010.jpg",
-   "kind": "frame",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T10:58:21.800Z",
-   "file": "20261123105821800-note-crop.jpg",
-   "source": "out/work/earth/place/tmp/crop.jpg",
-   "kind": "note",
-   "label": "purple on the deck: level 24, plate, level 24 with tone, tone (cause found, fix in levels.py not yet run)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T10:58:21.143Z",
-   "file": "20261123105821143-note-rise-band-2105.jpg",
-   "source": "out/work/earth/place/tmp/hv/rise-band-2105.jpg",
-   "kind": "note",
-   "label": "band under the horizon 2105 to 2109 at full size (still wrong)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T10:58:20.243Z",
-   "file": "20261123105820243-note-dive-band-1907.jpg",
-   "source": "out/work/earth/place/tmp/hv/dive-band-1907.jpg",
-   "kind": "note",
-   "label": "band under the horizon 1907 to 1911 at full size: the sheet dissolves into the close picture (still wrong)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T10:58:19.526Z",
-   "file": "20261123105819526-note-rise-orbit-sheet.jpg",
+   "time": "2026-11-23T11:10:59.909Z",
+   "file": "20261123111059909-note-rise-orbit-sheet.jpg",
    "source": "out/work/earth/place/down/rise-orbit-sheet.jpg",
    "kind": "note",
-   "label": "rise along the real path, globe side alone, 12 frames",
+   "label": "M2 rise along the real path, globe alone, 12 frames",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T10:58:18.745Z",
-   "file": "20261123105818745-note-dive-orbit-sheet.jpg",
+   "time": "2026-11-23T11:10:59.021Z",
+   "file": "20261123111059021-note-dive-orbit-sheet.jpg",
    "source": "out/work/earth/place/down/dive-orbit-sheet.jpg",
    "kind": "note",
-   "label": "dive along the real path, globe side alone, 12 frames",
+   "label": "M2 dive along the real path, globe alone, 12 frames",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T10:58:17.854Z",
-   "file": "20261123105817854-note-dive-down-sheet.jpg",
+   "time": "2026-11-23T11:10:57.710Z",
+   "file": "20261123111057710-note-dive-down-sheet.jpg",
    "source": "out/work/earth/place/down/dive-down-sheet.jpg",
    "kind": "note",
-   "label": "top down dive sheet, place picture off, local cast and own tone",
+   "label": "M2 S2 proof: top down dive, globe alone, place picture off, 12 frames, draft",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T10:58:17.171Z",
-   "file": "20261123105817171-note-earth-rise-sides.jpg",
+   "time": "2026-11-23T11:10:56.397Z",
+   "file": "20261123111056397-note-earth-rise-sides.jpg",
    "source": "out/work/handover/earth-rise-sides.png",
    "kind": "note",
-   "label": "rise, both sides at T and difference times 8",
+   "label": "M2 rise, both sides at T and their difference",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T11:10:55.081Z",
+   "file": "20261123111055081-note-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "note",
+   "label": "M2 dive, both sides at T and their difference",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T11:10:53.541Z",
+   "file": "20261123111053541-note-earth-rise-draft-across.jpg",
+   "source": "out/work/handover/earth-rise-draft-across.png",
+   "kind": "note",
+   "label": "M2 rise across T, draft (q9)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T11:10:52.227Z",
+   "file": "20261123111052227-note-earth-rise-draft-after.jpg",
+   "source": "out/work/handover/earth-rise-draft-after.png",
+   "kind": "note",
+   "label": "M2 rise, every frame after T, draft (q9)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T11:10:51.005Z",
+   "file": "20261123111051005-note-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "note",
+   "label": "M2 dive across T, draft (q9)",
    "stop": "earth"
   }
  ]
