@@ -44,7 +44,7 @@ export const createSet: SetFactory = async (ctx) => {
   const field = limbField()
   const holdMap = await ctx.texture(base + held.file, { srgb: true, anisotropy: 16 })
   const mendMap = await ctx.texture(base + mended.file, { srgb: true, anisotropy: 16 })
-  const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
+  const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true, channels: 1 })
   const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
   const toneMap = await ctx.texture(base + patches.place.tone.file, { srgb: false, mips: false })
