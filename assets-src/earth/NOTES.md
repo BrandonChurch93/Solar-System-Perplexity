@@ -2334,3 +2334,11 @@ Merge main 0eae595 before your next named commit. Nothing outside your three fol
 HOW IT GOES ON for every stop: the commit you named READY is checked on the machines (reference frames, kept frames at the final tier, handover report, then G15 here). Green: it goes onto main and the stop's first round starts with fresh critics. Your own list of what is still wrong goes into that round beside what the critics name. Keep working on your list meanwhile and name the next commit when a cure is rendered and proven; it is taken as the fix of the round.
 
 earth_builder: a29f6f87 under check since 15:30 (builder/take-earth cddc7448).
+
+## 15:38 to 16:00 UTC: main 0eae595 merged, the full handover tool, the glint cure started
+
+- 933e2b41 = a29f6f87 + the notes commit c6837401 + a merge of main 0eae595e (made in the sparse second work tree, pushed 15:40 UTC, not named). Outside the three folders it equals main (git diff: 0 files). tsc exit 0, vitest 170 of 170 (25 files). In the repo tree (fast forward): build exit 0, shader audit exit 0; `tools/samebytes.ts` on the 21 draft frames of before (1755, 1829, 1920, 2010, 2099, 2175, seven of dive and rise, eight more of hold and terrain): the same bytes as on 9553ff1f, 21 of 21.
+- The three files of main that the swap of step 4 left untracked were removed at 15:38 UTC, before the build above.
+- Disk: at 15:40 UTC the tools refused to start (2.8 GB free). Removed: the draft PNGs of `out/work/earth/place/all/` (sheets kept; twelve frames kept in `pre-glint/` for the comparison of the glint cure), `sides/`, `down/`, the PNGs of the samebytes labels `merged`, `place`, `mainkept` (their `hashes.json` kept).
+- A hole in the READY of 15:24 UTC: the handover tool was called with `--only sides,flow,path,sheets`. On main the parts are `sides,under,flow,frames,sheets,top`, so `under` (the number under the place picture) and `top` did not run. Said to `/root` at 15:41 UTC (low). The tool runs in full on 933e2b41 since 15:44:35 UTC (`out/work/earth/place/q18.sh`).
+- The glint cure is applied in the second work tree only (tsc exit 0 there); it goes into the repo tree when the handover tool has ended.
