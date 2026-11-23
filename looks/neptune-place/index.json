@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T10:55:38.193Z",
+ "pushed": "2026-11-23T11:13:42.771Z",
  "head": "e912b46b0396a473f927d85afba3a1ad3e215800",
- "note": "S4: both sides at T now one picture (mean 0.06 of 255); wedge traced to plates and layer tone, rings traced to the hold look passing by; fixes rendering",
+ "note": "S4: both sides at T 0.059 and 0.058 mean, same bits 0 on 8 kept frames; open fault: purple smear in the carried dark at 4696 to 4712 and 4990 to 5002, cause found (plate red at the 8 bit floor)",
  "looks": [
+  {
+   "time": "2026-11-23T11:13:42.219Z",
+   "file": "20261123111342219-note-rgb-4990.jpg",
+   "source": "out/work/nep/s4/x/rgb-4990.jpg",
+   "kind": "note",
+   "label": "neptune 4990 red times 4, green times 2, blue: the dark wedge is in green and blue, not in red (cause of the purple smear)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T11:13:41.692Z",
+   "file": "20261123111341692-note-dive-b.jpg",
+   "source": "out/work/nep/s4/c/dive-b.jpg",
+   "kind": "note",
+   "label": "neptune dive 4728 to 4752, then both T frames (4758, 4956) from the globe side, draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T11:13:41.154Z",
+   "file": "20261123111341154-note-dive-a.jpg",
+   "source": "out/work/nep/s4/c/dive-a.jpg",
+   "kind": "note",
+   "label": "neptune dive 4680 to 4720, globe side alone, draft; FAULT a reddish streak below the eye at 4696 to 4712",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T11:13:40.618Z",
+   "file": "20261123111340618-note-rise-b.jpg",
+   "source": "out/work/nep/s4/c/rise-b.jpg",
+   "kind": "note",
+   "label": "neptune rise 4990 to 5024, globe side alone, draft: rings enter by the camera's turn; FAULT a dull purple smear south east of the eye at 4990 to 5002",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T11:13:40.063Z",
+   "file": "20261123111340063-note-rise-a.jpg",
+   "source": "out/work/nep/s4/c/rise-a.jpg",
+   "kind": "note",
+   "label": "neptune rise 4957 to 4983, globe side alone, draft, second S4 code (plates carry the close view's dark, layer on the same tone map)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T10:55:37.521Z",
    "file": "20261123105537521-note-plates-carry.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/nep/s4/b/rise-b.jpg",
    "kind": "note",
    "label": "S4 rise globe side 4990 to 5024 before the ring fix: rings faint at 4996 and 5002",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:55:35.608Z",
-   "file": "20261123105535608-note-rise-a.jpg",
-   "source": "out/work/nep/s4/b/rise-a.jpg",
-   "kind": "note",
-   "label": "S4 rise globe side 4958 to 4983 before the wedge fix: black sky and thin rim now, dark wedge at 4976 4983 still there",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:55:34.938Z",
-   "file": "20261123105534938-note-pair-T.jpg",
-   "source": "out/work/nep/s4/a/pair-T.jpg",
-   "kind": "note",
-   "label": "S4 both sides at T: 4758 globe, 4758 close, 4956 globe, 4956 close (mean difference 0.059 and 0.058 of 255)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:39:58.066Z",
-   "file": "20261123103958066-note-native-4962.jpg",
-   "source": "out/work/nep/s4/t6/native-4962.jpg",
-   "kind": "note",
-   "label": "Native size crop, globe side (left) beside close side (right), frame 4962 (6 frames from T), draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:39:57.533Z",
-   "file": "20261123103957533-note-native-4950.jpg",
-   "source": "out/work/nep/s4/t6/native-4950.jpg",
-   "kind": "note",
-   "label": "Native size crop, globe side (left) beside close side (right), frame 4950 (6 frames from T), draft",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T10:39:56.869Z",
-   "file": "20261123103956869-note-native-4764.jpg",
-   "source": "out/work/nep/s4/t6/native-4764.jpg",
-   "kind": "note",
-   "label": "Native size crop, globe side (left) beside close side (right), frame 4764 (6 frames from T), draft",
    "stop": "neptune"
   }
  ]
