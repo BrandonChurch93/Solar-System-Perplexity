@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
-import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
+import type { SetContext, SetFactory, SkyPatch, TextureOptions, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -42,15 +42,18 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(orbit, terrain)
 
   const sizes = wrap.sets[key]
+  const single = (file: string, options: TextureOptions): TextureOptions => (patches.oneChannel.includes(file) ? ({ ...options, channels: 1 } as TextureOptions) : options)
+  const lean: SetContext = { ...ctx, texture: (path, options = {}) => ctx.texture(path, single(path.slice(path.lastIndexOf('/') + 1), options)) }
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const stormMask = await ctx.texture(base + 'wrap-storm.png', { srgb: false, repeat: true })
+  const stormMask = await lean.texture(base + 'wrap-storm.png', { srgb: false, repeat: true })
   const wrapHeight = ctx.floatTexture(await heights(ctx, base + 'wrap-height.bin', sizes.height[0], sizes.height[1]), sizes.height[0], sizes.height[1], true)
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
   const planet = new Planet({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: look.haze, grazing: look.grazing,
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
+      ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true) } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
   planet.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -66,7 +69,7 @@ export const createSet: SetFactory = async (ctx) => {
   const moonHeights = await heights(ctx, base + 'phobos-height.bin', moonSizes.heightSize[0]!, moonSizes.heightSize[1]!)
   const moonMap = await ctx.texture(base + 'phobos-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const moonLit = await ctx.texture(base + 'phobos-lit.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const moonLitMask = await ctx.texture(base + 'phobos-lit-mask.png', { srgb: false, repeat: true })
+  const moonLitMask = await lean.texture(base + 'phobos-lit-mask.png', { srgb: false, repeat: true })
   const moon = new MoonBody({
     lit: { map: moonLit, mask: moonLitMask },
     map: moonMap, mapWidth: moonSizes.colorSize[0]!, height: ctx.floatTexture(moonHeights, moonSizes.heightSize[0]!, moonSizes.heightSize[1]!, true), heights: moonHeights,
@@ -80,7 +83,7 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const ground = await Relief.load(ctx, base, reliefDefs[key], look.relief)
+  const ground = await Relief.load(lean, base, reliefDefs[key], look.relief)
   terrain.add(ground.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 

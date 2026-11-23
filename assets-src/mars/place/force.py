@@ -1,0 +1,123 @@
+"""Holds a repainted plate to the place picture where the twin sees it.
+
+The repaint (top down, look values in the patch encoding) is drawn into the twin's picture, compared there with the
+picture's land (dehaze.py), and the difference, blurred to the scale the config names, is laid back and added inside
+the lay back's mask: the broad light and dark of the plate then are the picture's, the fine drawing stays the
+repaint's. Where the lay back is sharp enough (stretch under directFrom) the lay back itself is used as it is.
+Printed: the mean difference to the picture, seen from the twin, before and after.
+  python3 assets-src/mars/place/force.py --kind dive --width-deg 3.25 --repaint R.png --lay out/work/place/lay/dive-land-3.25 --t out/work/place/lay/dive-t-3.25.png --land out/work/place/dehaze/dive-land.png --tpic out/work/place/dehaze/dive-t.png --out out/work/place/plate/p3.25
+"""
+import argparse
+import json
+import subprocess
+import sys
+import cv2
+import numpy as np
+import geom
+
+ap = argparse.ArgumentParser()
+ap.add_argument('--kind', default='dive')
+ap.add_argument('--width-deg', type=float, required=True)
+ap.add_argument('--size', type=int, default=4096)
+ap.add_argument('--repaint', required=True)
+ap.add_argument('--lay', required=True, help='lay back of the land without the ending: FILE.png and FILE-stretch.npy')
+ap.add_argument('--t', required=True)
+ap.add_argument('--land', required=True)
+ap.add_argument('--tpic', required=True)
+ap.add_argument('--geometry', default='out/work/place/geometry.json')
+ap.add_argument('--config', default='assets-src/mars/place/plates.json')
+ap.add_argument('--out', required=True)
+a = ap.parse_args()
+cfg = json.load(open(a.config))
+fc, lead = cfg['force'], cfg['lead']
+g = geom.load(a.geometry)
+k = g[a.kind]
+lay = k['layout']
+W, H = g['format']['width'], g['format']['height']
+cam = geom.Camera(k['twin'], W, H)
+size = a.size
+
+
+def read(path):
+    img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+    return img.astype(np.float32) / (65535 if img.dtype == np.uint16 else 255)
+
+
+R = read(a.repaint)[..., :3]
+if R.shape[0] != size:
+    R = cv2.resize(R, (size, size), interpolation=cv2.INTER_CUBIC if R.shape[0] < size else cv2.INTER_AREA)
+R = np.clip(R, 0, 1)
+L = read(a.lay + '.png')
+stretch = np.load(a.lay + '-stretch.npy')
+t = read(a.t)[..., 0]
+if L.shape[0] != size:
+    raise SystemExit('the lay back is %d px, the plate %d' % (L.shape[0], size))
+m = geom.picture_edge(cam, lay, a.width_deg, size, lead['edgeShare']) * geom.smoothstep(lead['tFrom'], lead['tTo'], t)
+
+step = fc['pictureStep']
+pw, ph = lay['width'] // step, lay['height'] // step
+ys, xs = np.mgrid[0:ph, 0:pw].astype(np.float32)
+fx = ((xs + 0.5) * step - lay['shift']) / lay['scale'] - lay['left']
+fy = ((ys + 0.5) * step - lay['shift']) / lay['scale'] - lay['top']
+pts, ok = cam.hit(cam.rays(fx, fy))
+ge, gn, dn = geom.to_patch(pts)
+del pts
+ht = geom.half_tan(a.width_deg)
+u = (ge / (2 * ht) + 0.5) * size
+v = (0.5 - gn / (2 * ht)) * size
+inside = ok & (dn > 0.3) & (u > 1) & (u < size - 1) & (v > 1) & (v < size - 1)
+
+
+def draw(plate):
+    """The plate as the twin's picture shows it (picture grid of pictureStep)."""
+    pyr = [plate]
+    while pyr[-1].shape[0] > 8:
+        pyr.append(cv2.pyrDown(pyr[-1]))
+    du = np.hypot(np.gradient(u, axis=1), np.gradient(v, axis=1))
+    dv = np.hypot(np.gradient(u, axis=0), np.gradient(v, axis=0))
+    lod = np.clip(np.log2(np.maximum(np.maximum(du, dv), 1e-6)) - 0.5, 0, len(pyr) - 1.001)
+    lod = np.where(inside, lod, 0)
+    lo = np.floor(lod).astype(np.int32)
+    fr = (lod - lo).astype(np.float32)
+    out = np.zeros((ph, pw, 3), np.float32)
+    for lv in range(len(pyr)):
+        use = inside & ((lo == lv) | (lo == lv - 1))
+        if not use.any():
+            continue
+        s = 2.0 ** lv
+        tex = cv2.remap(pyr[lv], (u / s - 0.5).astype(np.float32), (v / s - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        w = np.where(lo == lv, 1 - fr, 0) + np.where(lo == lv - 1, fr, 0)
+        out += tex * (w * use)[..., None]
+    return out
+
+
+land = cv2.resize(read(a.land)[..., :3], (pw, ph), interpolation=cv2.INTER_AREA)
+tp = cv2.resize(read(a.tpic)[..., 0], (pw, ph), interpolation=cv2.INTER_AREA)
+valid = (inside & (tp > lead['tFrom'])).astype(np.float32)
+judge = inside & (tp > lead['tTo'])
+
+
+def report(name, plate):
+    d = np.abs(draw(plate) - land)[judge] * 255
+    print('%s: mean difference to the picture from the twin %.2f of 255 (95th percentile %.1f) on %d picture points' % (name, d.mean(), np.percentile(d, 95), judge.sum()))
+
+
+report('repaint', R)
+D = (land - draw(R)) * valid[..., None]
+sigma = fc['blurPx'] / step
+D = cv2.GaussianBlur(D, (0, 0), sigma) / np.maximum(cv2.GaussianBlur(valid, (0, 0), sigma), 0.05)[..., None]
+D *= (valid > 0)[..., None]
+full = cv2.resize(np.clip(D * 0.5 + 0.5, 0, 1), (lay['width'], lay['height']), interpolation=cv2.INTER_LINEAR)
+tmp = a.out + '-diff'
+cv2.imwrite(tmp + '-pic.png', np.round(full * 65535).astype(np.uint16))
+subprocess.run([sys.executable, 'assets-src/mars/place/layback.py', '--kind', a.kind, '--width-deg', str(a.width_deg), '--size', str(size), '--image', tmp + '-pic.png', '--out', tmp, '--geometry', a.geometry], check=True, stdout=subprocess.DEVNULL)
+Dp = (read(tmp + '.png')[..., :3] - 0.5) * 2
+plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
+report('held to the picture', plate)
+direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch))
+plate = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]
+report('with the sharp lay back', plate)
+print('lay back leads on %.4f of the plate, is used as it is on %.4f' % ((m > 0.5).mean(), (direct > 0.5).mean()))
+cv2.imwrite(a.out + '.png', np.round(plate * 65535).astype(np.uint16))
+cv2.imwrite(a.out + '-mask.png', np.round(m * 255).astype(np.uint8))
+cv2.imwrite(a.out + '-twin.jpg', np.round(np.vstack([draw(plate), land]) * 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 92])

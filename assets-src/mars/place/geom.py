@@ -213,3 +213,23 @@ def ground(wrap, levels, width_deg, size, feather=0.12, fade=(1.02, 1.5), centre
             deepest = ('%g' % pw, tpp)
         parent = tpp
     return np.clip(col, 0, 1), deepest
+
+
+def picture_edge(cam, layout, width_deg, size, share, rows=512):
+    """For every texel of a plate: 0 at the left, right and bottom border of the twin's picture, 1 from share of
+    the picture's width inside it; 0 where the twin does not see the texel."""
+    n, east, north = patch_frame()
+    t = half_tan(width_deg)
+    c = (np.arange(size) + 0.5) / size
+    x = (2 * c - 1) * t
+    y = (1 - 2 * c) * t
+    out = np.zeros((size, size), np.float32)
+    for r0 in range(0, size, rows):
+        d = n[None, None, :] + x[None, :, None] * east[None, None, :] + y[r0:r0 + rows, None, None] * north[None, None, :]
+        d /= np.linalg.norm(d, axis=2, keepdims=True)
+        fx, fy, front = cam.project(d)
+        cosv, _ = cam.seen(d)
+        px, py = picture_xy(layout, fx, fy)
+        near = np.minimum(np.minimum(px, layout['width'] - px), layout['height'] - py) / layout['width']
+        out[r0:r0 + rows] = np.where(front & (cosv > 0), smoothstep(0, share, near), 0)
+    return out

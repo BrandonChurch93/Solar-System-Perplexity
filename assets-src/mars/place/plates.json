@@ -4,18 +4,117 @@
   "jpegQuality": 94,
   "feather": 0.12,
   "kept": [
-    { "file": "patch-wide.jpg", "widthDeg": 96 },
-    { "file": "patch-1.jpg", "widthDeg": 48 },
-    { "file": "patch-mid.jpg", "widthDeg": 24 },
-    { "file": "patch-2.jpg", "widthDeg": 12 }
+    {
+      "file": "patch-wide.jpg",
+      "widthDeg": 96
+    },
+    {
+      "file": "patch-1.jpg",
+      "widthDeg": 48
+    },
+    {
+      "file": "patch-mid.jpg",
+      "widthDeg": 24
+    },
+    {
+      "file": "patch-2.jpg",
+      "widthDeg": 12
+    }
   ],
-  "old": [{ "file": "patch-3.jpg", "widthDeg": 3 }],
+  "old": [
+    {
+      "file": "patch-3.jpg",
+      "widthDeg": 3
+    }
+  ],
   "plates": [
-    { "file": "plate-6.jpg", "widthDeg": 6 },
-    { "file": "plate-3.jpg", "widthDeg": 3 },
-    { "file": "plate-1p5.jpg", "widthDeg": 1.5 },
-    { "file": "plate-0p75.jpg", "widthDeg": 0.75 },
-    { "file": "plate-0p375.jpg", "widthDeg": 0.375 }
+    {
+      "file": "plate-6.jpg",
+      "widthDeg": 6
+    },
+    {
+      "file": "plate-3.jpg",
+      "widthDeg": 3
+    },
+    {
+      "file": "plate-1p5.jpg",
+      "widthDeg": 1.5
+    },
+    {
+      "file": "plate-0p75.jpg",
+      "widthDeg": 0.75
+    },
+    {
+      "file": "plate-0p375.jpg",
+      "widthDeg": 0.375
+    }
   ],
-  "rough": { "edgeErodePx": 24, "edgeFeatherPx": 96, "maxStretch": 1e9 }
+  "rough": {
+    "edgeErodePx": 24,
+    "edgeFeatherPx": 96,
+    "maxStretch": 1000000000.0
+  },
+  "dehaze": {
+    "note": "dehaze.py: the dark envelope of the place picture by distance from the twin and picture column",
+    "nearDeg": 0.1,
+    "distBins": 28,
+    "columnBins": 16,
+    "percentile": 2,
+    "smoothBins": 1.0,
+    "monotone": false,
+    "strength": 0.9,
+    "leastT": 0.2,
+    "keepShare": 0.3
+  },
+  "oldLadder": [
+    {
+      "file": "patch-wide.jpg",
+      "widthDeg": 96
+    },
+    {
+      "file": "patch-1.jpg",
+      "widthDeg": 48
+    },
+    {
+      "file": "patch-mid.jpg",
+      "widthDeg": 24
+    },
+    {
+      "file": "patch-2.jpg",
+      "widthDeg": 12
+    },
+    {
+      "file": "patch-3.jpg",
+      "widthDeg": 3
+    }
+  ],
+  "lead": {
+    "note": "lead.py: light is what the globe multiplies a lit level with near the ground at T (r g b, measured with flat.sh and light.py); the old land keeps its brightness and is moved by paletteMix to the hue of the picture's land (paletteHue, the median where the lay back leads at 1.2 deg) inside paletteCoreDeg, fading out to paletteEndDeg",
+    "size": 2048,
+    "light": [
+      0.1464,
+      0.1278,
+      0.0897
+    ],
+    "paletteCoreDeg": 0.8,
+    "paletteEndDeg": 4.0,
+    "edgeShare": 0.05,
+    "tFrom": 0.12,
+    "tTo": 0.6,
+    "paletteHue": [
+      0.0853,
+      0.0459,
+      0.0337
+    ],
+    "paletteMix": 0.85,
+    "paletteLum": 1.0
+  },
+  "force": {
+    "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used",
+    "pictureStep": 2,
+    "blurPx": 16,
+    "share": 1.0,
+    "directFrom": 1.5,
+    "directTo": 3.0
+  }
 }

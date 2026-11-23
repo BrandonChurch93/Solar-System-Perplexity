@@ -13,7 +13,9 @@ export const wrap = {
 
 export const patches = {
   spot: { lon: -81.86, lat: -4.54 },
-  levels: levelsJson.levels as { file: string; widthDeg: number }[],
+  levels: levelsJson.levels as { file: string; widthDeg: number; own?: boolean }[],
+  fadeMinor: (levelsJson as { fadeMinor?: boolean }).fadeMinor === true,
+  oneChannel: ((levelsJson as { oneChannel?: string[] }).oneChannel ?? []) as string[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
   nearDeg: 12,
