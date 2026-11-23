@@ -8,10 +8,18 @@ import type { Shot } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import { segmentAtFrame } from '../src/director/timeline'
+import { COVERED, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 const director = new FilmDirector(plans)
 const step = config.motion.maxStepPx
-const ends = (f: number): [Shot, Shot, Shot] => [0, config.shutterFraction / 2, config.shutterFraction].map((o) => director.shotAt(f, (f + o) / config.fps)) as [Shot, Shot, Shot]
+const ends = (f: number, film: FilmDirector = director): [Shot, Shot, Shot] => [0, config.shutterFraction / 2, config.shutterFraction].map((o) => film.shotAt(f, (f + o) / config.fps)) as [Shot, Shot, Shot]
+const underCover = <T>(run: (film: FilmDirector) => T): T => {
+  try {
+    return run(filmWith(coveredPlan()))
+  } finally {
+    restorePlans()
+  }
+}
 const first = (kind: string, stop: string): number => {
   const s = config.segments.find((x) => x.kind === kind && x.stop === stop)!
   return s.firstFrame + Math.floor(s.frames / 2)
@@ -86,12 +94,15 @@ describe('samples of a frame', () => {
     for (const [tier, t] of Object.entries(config.tiers)) {
       for (let f = 0; f < config.frameCount; f += 7) {
         const base = sampleCount(tier, segmentAtFrame(f).kind)
-        const n = frameSamples(director, f, tier)
+        const plan = framePlan(director, f, tier)
+        const n = plan.samples
         expect(n).toBe(frameSamples(director, f, tier))
         expect(n).toBeGreaterThanOrEqual(base)
         expect(n).toBeLessThanOrEqual(Math.max(t.maxSamplesPerFrame, base))
-        if (n > base && n < t.maxSamplesPerFrame) expect(shutterMotion(...ends(f)) / n).toBeLessThanOrEqual(step + 1e-9)
-        if (n === base && t.maxSamplesPerFrame > base) expect(shutterMotion(...ends(f))).toBeLessThanOrEqual(base * step + 1e-9)
+        const seen = plan.split ? plan.seen : shutterMotion(...ends(f))
+        if (!plan.split) expect(plan.seen).toBe(seen)
+        if (n > base && n < t.maxSamplesPerFrame) expect(seen / n).toBeLessThanOrEqual(step + 1e-9)
+        if (n === base && t.maxSamplesPerFrame > base) expect(seen).toBeLessThanOrEqual(base * step + 1e-9)
       }
     }
   })
@@ -135,48 +146,66 @@ describe('gradient scale under motion', () => {
     }
     setSamples(1, 0.5)
   })
-  it('leaves the slow Mars frames alone and softens a fast dive whatever its cover', () => {
-    for (const f of [2325, 2427, 2580, 2726, 2772, 2782, 2796]) expect(framePlan(director, f, 'final').soft).toBe(0)
-    const fast = framePlan(director, 1870, 'review')
-    expect(fast.raw).toBeGreaterThan(m.softToPx)
-    expect(fast.soft).toBe(1)
-    const s = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
-    let covered = 0
-    for (let f = s.firstFrame; f < s.endFrame; f++) {
-      const [a, b, c] = ends(f)
+  it('leaves the slow frames of a stop under a cover alone and softens its fast dive whatever the cover', () => {
+    underCover((film) => {
+      for (const f of [2325, 2427, 2580, 2726, 2772, 2782, 2796]) expect(framePlan(film, f, 'final').soft).toBe(0)
+      const s = config.segments.find((x) => x.kind === 'dive' && x.stop === COVERED)!
+      let covered = 0
+      let fastest = { raw: 0, soft: 0 }
+      for (let f = s.firstFrame; f < s.endFrame; f++) {
+        const [a, b, c] = ends(f, film)
+        const plan = framePlan(film, f, 'review')
+        expect(plan.raw).toBe(rawMotion(a, b, c))
+        expect(plan.seen).toBe(shutterMotion(a, b, c))
+        expect(plan.soft).toBe(softness(plan.raw))
+        expect(plan.samples).toBe(frameSamples(film, f, 'review'))
+        if (b.cover.amount > 0.5 && plan.raw > m.softToPx) covered++
+        if (plan.raw > fastest.raw) fastest = plan
+      }
+      expect(covered).toBeGreaterThan(0)
+      expect(fastest.raw).toBeGreaterThan(m.softToPx)
+      expect(fastest.soft).toBe(1)
+    })
+  })
+  it('adds no softness in a dive or a rise of a stop that hands over, and the rule of the cover in every other frame of the film', () => {
+    for (let f = 0; f < config.frameCount; f += 3) {
+      const seg = segmentAtFrame(f)
       const plan = framePlan(director, f, 'review')
-      expect(plan.raw).toBe(rawMotion(a, b, c))
-      expect(plan.seen).toBe(shutterMotion(a, b, c))
-      expect(plan.soft).toBe(softness(plan.raw))
-      expect(plan.samples).toBe(frameSamples(director, f, 'review'))
-      if (b.cover.amount > 0.5 && plan.raw > m.softToPx) covered++
+      const hands = (seg.kind === 'dive' || seg.kind === 'rise') && plans.find((p) => p.id === seg.stop)!.handsOver
+      if (hands) expect(plan.soft).toBe(0)
+      else {
+        expect(plan.split).toBe(false)
+        expect(plan.soft).toBe(softness(plan.raw))
+      }
     }
-    expect(covered).toBeGreaterThan(0)
   })
 })
 
 describe('what a cover hides', () => {
   it('is all of its amount by default and the share a stop sets', () => {
-    const f = config.segments.find((x) => x.kind === 'dive' && x.stop === 'uranus')!
-    let n = 0
-    for (let i = f.firstFrame; i < f.endFrame; i++) {
-      const [a, set, c] = ends(i)
-      if (!(set.cover.amount > 0.2 && set.cover.amount < 1)) continue
-      n++
-      const cover = { ...set.cover }
-      delete cover.hides
-      const b: Shot = { ...set, cover }
-      const raw = rawMotion(a, b, c)
-      expect(seenShare(b)).toBe(Math.max(1 - b.cover.amount, 0))
-      expect(shutterMotion(a, b, c)).toBe(raw * Math.max(1 - b.cover.amount, 0))
-      const half: Shot = { ...b, cover: { ...b.cover, hides: 0.5 } }
-      expect(seenShare(half)).toBeCloseTo(1 - b.cover.amount * 0.5, 12)
-      expect(shutterMotion(a, half, c)).toBeCloseTo(raw * (1 - b.cover.amount * 0.5), 9)
-      const none: Shot = { ...b, cover: { ...b.cover, hides: 0 } }
-      expect(shutterMotion(a, none, c)).toBe(raw)
-      const all: Shot = { ...b, cover: { ...b.cover, hides: 1 } }
-      expect(shutterMotion(a, all, c)).toBe(shutterMotion(a, b, c))
-    }
+    const f = config.segments.find((x) => x.kind === 'dive' && x.stop === COVERED)!
+    const n = underCover((film) => {
+      let count = 0
+      for (let i = f.firstFrame; i < f.endFrame; i++) {
+        const [a, set, c] = ends(i, film)
+        if (!(set.cover.amount > 0.2 && set.cover.amount < 1)) continue
+        count++
+        const cover = { ...set.cover }
+        delete cover.hides
+        const b: Shot = { ...set, cover }
+        const raw = rawMotion(a, b, c)
+        expect(seenShare(b)).toBe(Math.max(1 - b.cover.amount, 0))
+        expect(shutterMotion(a, b, c)).toBe(raw * Math.max(1 - b.cover.amount, 0))
+        const half: Shot = { ...b, cover: { ...b.cover, hides: 0.5 } }
+        expect(seenShare(half)).toBeCloseTo(1 - b.cover.amount * 0.5, 12)
+        expect(shutterMotion(a, half, c)).toBeCloseTo(raw * (1 - b.cover.amount * 0.5), 9)
+        const none: Shot = { ...b, cover: { ...b.cover, hides: 0 } }
+        expect(shutterMotion(a, none, c)).toBe(raw)
+        const all: Shot = { ...b, cover: { ...b.cover, hides: 1 } }
+        expect(shutterMotion(a, all, c)).toBe(shutterMotion(a, b, c))
+      }
+      return count
+    })
     expect(n).toBeGreaterThan(0)
     for (const p of plans) expect(p.p.coverHides === undefined || (p.p.coverHides >= 0 && p.p.coverHides <= 1)).toBe(true)
   })

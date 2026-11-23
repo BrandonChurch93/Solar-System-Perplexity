@@ -3,8 +3,10 @@ import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface HandoverParams { dive?: Partial<HandoverTimes>; rise?: Partial<HandoverTimes> }
-export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number }
+export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions }
+export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
+export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions }
 
 const CELLS = 8
 const STEP = 0.618
@@ -31,14 +33,14 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
   const seg = config.segments.find((s) => s.stop === stop && s.kind === kind)
   let out: Handover | null = null
   if (own && seg) {
-    const t: HandoverTimes = { ...config.raw.handover[kind], ...own[kind] }
+    const t = { ...config.raw.handover[kind], ...own[kind] }
     const centre = Math.floor((seg.start + t.at * (seg.end - seg.start)) * config.fps + 1e-9)
     const firstFrame = centre - Math.floor((t.dissolveFrames - 1) / 2)
     const lastFrame = firstFrame + t.dissolveFrames - 1
     const placeFirstFrame = kind === 'dive' ? firstFrame - t.placeFrames : firstFrame
     const placeLastFrame = kind === 'dive' ? lastFrame : lastFrame + t.placeFrames
     if (placeFirstFrame < seg.firstFrame || placeLastFrame > seg.endFrame - 1) throw new Error('the handover of ' + seg.id + ' does not fit inside its segment')
-    out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame }
+    out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture: own[kind]?.picture !== false, place: own[kind]?.place ?? {} }
   }
   known.set(key, out)
   return out
@@ -82,6 +84,29 @@ export function placeWeight(seg: Segment, time: number): number {
   if (seg.kind === 'dive') return time >= h.firstFrame / fps ? 1 : smooth((time - from) / (h.firstFrame / fps - from))
   const full = (h.lastFrame + 1) / fps
   return time < full ? 1 : smooth((to - time) / (to - full))
+}
+
+export function skyWeight(seg: Segment, time: number): number {
+  if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
+  const h = handoverOf(seg.stop, seg.kind)
+  if (!h) return 0
+  const fps = config.fps
+  if (seg.kind === 'dive') {
+    const full = h.firstFrame / fps
+    return time >= full ? 1 : h.skyFrames > 0 ? smooth((time - full) / (h.skyFrames / fps) + 1) : 0
+  }
+  const full = (h.lastFrame + 1) / fps
+  return time < full ? 1 : h.skyFrames > 0 ? smooth(1 - (time - full) / (h.skyFrames / fps)) : 0
+}
+
+export function skyTurnWeight(seg: Segment, time: number): number {
+  if (seg.kind !== 'dive' && seg.kind !== 'rise') return 0
+  const h = handoverOf(seg.stop, seg.kind)
+  if (!h) return 0
+  const fps = config.fps
+  const x = seg.kind === 'dive' ? (time - seg.start) / (h.firstFrame / fps - seg.start) : (seg.end - time) / (seg.end - (h.lastFrame + 1) / fps)
+  const k = Math.min(Math.max(x, 0), 1)
+  return k * k * k * (k * (k * 6 - 15) + 10)
 }
 
 export function forceSide(view: ViewKind | null): void {
