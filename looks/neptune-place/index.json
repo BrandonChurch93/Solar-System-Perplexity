@@ -1,71 +1,71 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T14:02:56.336Z",
- "head": "194d20716ed85eb5d2d470ab30b1628c474908f7",
- "note": "s6c: red rule changes little at the bank, same bits 0 on eight kept frames, sides at T 0.064 and 0.065",
+ "pushed": "2026-11-23T14:58:02.373Z",
+ "head": "c4473f6757be610b6e0748b6c74e802dfa88fc5a",
+ "note": "5fd4b413: handover report passes both ways; sheets of the report; G13 probe sheets; G15 green at 1393 MB",
  "looks": [
   {
-   "time": "2026-11-23T14:02:55.121Z",
-   "file": "20261123140255121-note-cmp-bank.jpg",
-   "source": "out/work/nep/s6/c/cmp-bank.jpg",
+   "time": "2026-11-23T14:58:01.795Z",
+   "file": "20261123145801795-note-ho-rise-after.jpg",
+   "source": "out/work/nep/s8/ho-rise-after.jpg",
    "kind": "note",
-   "label": "s6 bank, second bake left, third bake right, 4704 4712 4720 4728",
+   "label": "handover report sheet rise after, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:53.881Z",
-   "file": "20261123140253881-note-crop-mid.jpg",
-   "source": "out/work/nep/s6/c/crop-mid.jpg",
+   "time": "2026-11-23T14:58:01.223Z",
+   "file": "20261123145801223-note-ho-rise-across.jpg",
+   "source": "out/work/nep/s8/ho-rise-across.jpg",
    "kind": "note",
-   "label": "s6c third bake red rule, eye crops 4700 to 4728",
+   "label": "handover report sheet rise across, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:53.113Z",
-   "file": "20261123140253113-note-rise-04.jpg",
-   "source": "out/work/nep/s6/b/rise-04.jpg",
+   "time": "2026-11-23T14:58:00.668Z",
+   "file": "20261123145800668-note-ho-rise-before.jpg",
+   "source": "out/work/nep/s8/ho-rise-before.jpg",
    "kind": "note",
-   "label": "s6b rise 4986 to 4997",
+   "label": "handover report sheet rise before, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:52.248Z",
-   "file": "20261123140252248-note-rise-03.jpg",
-   "source": "out/work/nep/s6/b/rise-03.jpg",
+   "time": "2026-11-23T14:58:00.091Z",
+   "file": "20261123145800091-note-ho-dive-after.jpg",
+   "source": "out/work/nep/s8/ho-dive-after.jpg",
    "kind": "note",
-   "label": "s6b rise 4974 to 4985",
+   "label": "handover report sheet dive after, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:51.008Z",
-   "file": "20261123140251008-note-rise-02.jpg",
-   "source": "out/work/nep/s6/b/rise-02.jpg",
+   "time": "2026-11-23T14:57:59.336Z",
+   "file": "20261123145759336-note-ho-dive-across.jpg",
+   "source": "out/work/nep/s8/ho-dive-across.jpg",
    "kind": "note",
-   "label": "s6b rise 4962 to 4973",
+   "label": "handover report sheet dive across, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:49.748Z",
-   "file": "20261123140249748-note-dive-05.jpg",
-   "source": "out/work/nep/s6/b/dive-05.jpg",
+   "time": "2026-11-23T14:57:58.683Z",
+   "file": "20261123145758683-note-ho-dive-before.jpg",
+   "source": "out/work/nep/s8/ho-dive-before.jpg",
    "kind": "note",
-   "label": "s6b dive 4728 to 4739",
+   "label": "handover report sheet dive before, draft, tree of 5fd4b413",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T14:02:48.568Z",
-   "file": "20261123140248568-note-dive-04.jpg",
-   "source": "out/work/nep/s6/b/dive-04.jpg",
+   "time": "2026-11-23T14:57:58.114Z",
+   "file": "20261123145758114-note-soft.jpg",
+   "source": "out/work/nep/s8/soft.jpg",
    "kind": "note",
-   "label": "s6b dive 4716 to 4727 second bake",
+   "label": "s8 soft.jpg (5fd4b413 tree or its step before)",
    "stop": "neptune"
   },
   {
-   "time": "2026-11-23T13:32:57.303Z",
-   "file": "20261123133257303-note-crop-mid.jpg",
-   "source": "out/work/nep/s6/b/crop-mid.jpg",
+   "time": "2026-11-23T14:57:57.503Z",
+   "file": "20261123145757503-note-soft.jpg",
+   "source": "out/work/nep/s7/soft.jpg",
    "kind": "note",
-   "label": "s6/b native crops round the eye, 4704 to 4724 every second frame: no stain, tan fringe at the bank",
+   "label": "s7 soft.jpg (5fd4b413 tree or its step before)",
    "stop": "neptune"
   }
  ]
