@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
+import { handoverOf } from '../../director/handover'
 import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
@@ -98,9 +99,14 @@ export const createSet: SetFactory = async (ctx) => {
   }
   const closeup = new Closeup(closeMaps)
   terrain.add(closeup.mesh)
-  const laid = new Closeup(closeMaps, true)
+  const laid = new Closeup({ ...closeMaps, tone: toneMap }, true)
   orbit.add(laid.mesh)
   const laySeat = new THREE.Vector3()
+  const layTurn = new THREE.Quaternion()
+  const layEast = new THREE.Vector3()
+  const layNorth = new THREE.Vector3()
+  const layOut = new THREE.Vector3()
+  const spinAxis = new THREE.Vector3(0, 1, 0)
   const layBack = new THREE.Quaternion()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
@@ -114,6 +120,11 @@ export const createSet: SetFactory = async (ctx) => {
   const edgeTurn = THREE.MathUtils.degToRad(look.limb.edge.wideDeg)
   const holdPose = plan.hold(plan.holdMid - plan.seg.hold.start)
   const holdDirection = new THREE.Vector3()
+  const seatAt = (kind: 'dive' | 'rise'): THREE.Vector3 => {
+    const time = handoverOf(plan.id, kind)!.time
+    return (kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')).position.clone().applyQuaternion(plan.laid(time).invert())
+  }
+  const layRef = { dive: seatAt('dive'), rise: seatAt('rise') }
 
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
@@ -143,25 +154,35 @@ export const createSet: SetFactory = async (ctx) => {
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
-      const home = ending ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
-      const pu = planet.material.uniforms
       const rising = state.segment.kind === 'rise'
+      const home = ending || rising ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
+      const pu = planet.material.uniforms
       const grade = rising ? look.near.rise : look.near.dive
       const high = camera.length() - 1
-      const low = 1 - smooth((high - grade.altitude[0]!) / (grade.altitude[1]! - grade.altitude[0]!))
+      const tone = smooth(Math.log(closeLook.lay.tone[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.tone[0]! / closeLook.lay.tone[1]!))
+      const low = tone
+      const lens = shot.post.vignette * Math.max(home, tone)
       const near = look.near.amount * low
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       const kind = state.segment.kind
       const lay = ending ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
-      const tone = smooth(Math.log(closeLook.lay.tone[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.tone[0]! / closeLook.lay.tone[1]!))
       const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
+      const limb = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.glow[1]!) / Math.log(closeLook.lay.glow[0]! / closeLook.lay.glow[1]!))
       const layEdge = closeLook.lay.edge[1]! + (closeLook.lay.edge[0]! - closeLook.lay.edge[1]!) * smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.edgeHeight[1]!) / Math.log(closeLook.lay.edgeHeight[0]! / closeLook.lay.edgeHeight[1]!))
       if (lay > 0) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
-        laid.update(laid.lay(laySeat, plan.laid(state.time), lay, lay * tone, settle, grade, near, layEdge), state.time - terrainMid, gain * state.weight, shot.post.vignette * Math.max(home, settle), view.format.width / view.format.height, shot.post.bloomStrength * settle)
+        laid.update(laid.lay(laySeat, plan.laid(state.time), lay, lay * tone, settle, limb, rising ? layRef.rise : layRef.dive, grade, near, layEdge), state.time - terrainMid, gain * state.weight, lens, view.format.width / view.format.height, shot.post.bloomStrength * settle)
+        layTurn.copy(laid.mesh.quaternion).invert().multiply(planet.mesh.quaternion)
+        const spin = plan.spin(state.time)
+        layEast.copy(pu.uSpotE!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
+        layNorth.copy(pu.uSpotU!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
+        layOut.copy(pu.uSpotN!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
+        laid.toned(layEast, layNorth, layOut, (pu.uPatchOff!.value as THREE.Vector2[])[patches.place.shownFrom]!, (pu.uPatchScale!.value as number[])[patches.place.shownFrom]!, patches.place.tone.stops * (1 - tone))
       }
-      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
+      const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
+      air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep, thin, 1 - limb)
+      pu.uAirGround!.value = 1 - limb
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
@@ -191,7 +212,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uNear!.value as THREE.Vector4).z = grade.power
       ;(pu.uNear!.value as THREE.Vector4).w = grade.saturation
       ;(pu.uNearTint!.value as THREE.Vector4).set(grade.tint[0]!, grade.tint[1]!, grade.tint[2]!, grade.pivot)
-      pu.uVignette!.value = shot.post.vignette * Math.max(home, settle)
+      pu.uVignette!.value = lens
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       triton.mesh.position.copy(state.time < terrainMid ? moonHome : moonStage).applyQuaternion(turn)

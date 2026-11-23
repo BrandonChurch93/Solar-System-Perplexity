@@ -115,21 +115,20 @@ def from_parent(parent_rgba, parent, level, size=SIZE):
 
 
 def settle(take, deck, exact, reach, fine):
-    """The laid back deck inside the exact zone; round it the take, scaled by the ratio of deck to take that the nearest
-    point of the zone has (per channel, coarser than fine texels), the scaling dying away with the distance from the
-    zone over reach texels. So no step in tone is left where the zone ends, and the light of the close view (dark on
-    one side, bright on the other) runs out into the repaint. A ratio, not a difference: a dark deck beside a paler
-    take must not clip to black."""
+    """The laid back deck inside the exact zone; round it the take, whose coarse tone (coarser than fine texels) is moved
+    to the coarse tone the deck has at the nearest point of the zone, per channel, the move dying away with the distance
+    from the zone over reach texels. So the repaint beside the zone starts at the deck's own light and dark, whatever
+    the take drew there, and no step in tone is left where the zone ends: the dark foreground and the bright far side
+    of the close view run out into the repaint. A ratio, not a difference: the threads of the take stay threads."""
     w = exact[..., None]
-    soft = blur(exact, fine)
-    floor = 1e-3 * soft[..., None] + 1e-6
-    ratio = np.clip(np.log(np.maximum(blur(deck * w, fine), floor) / np.maximum(blur(take * w, fine), floor)), -1.5, 1.5)
+    soft = blur(exact, fine)[..., None]
     inside = exact >= 0.5
+    coarse = np.log(np.maximum(blur(deck * w, fine) / np.maximum(soft, 1e-3), 2e-3))
     out, labels = cv2.distanceTransformWithLabels((~inside).astype(np.uint8), cv2.DIST_L2, 5, labelType=cv2.DIST_LABEL_PIXEL)
     index = np.zeros(int(labels.max()) + 1, np.int64)
     index[labels[inside]] = np.flatnonzero(inside)
-    nearest = ratio.reshape(-1, 3)[index[labels]]
-    scale = blur(nearest.astype(np.float32), reach / 4)
+    target = blur(coarse.reshape(-1, 3)[index[labels]].astype(np.float32), reach / 6)
+    scale = np.clip(target - np.log(np.maximum(blur(take, fine), 2e-3)), -3.0, 3.0)
     carry = np.exp(-out / reach)[..., None]
     return deck * w + np.clip(take * np.exp(scale * carry), 0, 1) * (1 - w)
 
