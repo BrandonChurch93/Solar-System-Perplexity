@@ -1,9 +1,37 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T07:21:08.678Z",
+ "pushed": "2026-11-23T07:46:47.724Z",
  "head": "49e63f04916d3187abec573d93cdf67fb44ed625",
- "note": "building the deck tool: fields from the approved image at its true resolution, next the march shader",
+ "note": "march deck v2 at 3150: coarse image fields plus functions is far too poor; next the image field at its true resolved scale in a view matched chart",
  "looks": [
+  {
+   "time": "2026-11-23T07:46:47.179Z",
+   "file": "20261123074647179-note-near-albedo-s.jpg",
+   "source": "../work/f/near-albedo-s.jpg",
+   "kind": "note",
+   "label": "jupiter near map albedo v2, top down, 20 units: image wedge plus function made deck"
+  },
+  {
+   "time": "2026-11-23T07:46:46.639Z",
+   "file": "20261123074646639-note-v2-3150.jpg",
+   "source": "../work/f/v2-3150.jpg",
+   "kind": "note",
+   "label": "jupiter terrain 3150 draft, march deck v2: coarse image fields plus function streaks and towers, far too poor beside the approved image"
+  },
+  {
+   "time": "2026-11-23T07:43:20.005Z",
+   "file": "20261123074320005-still-v2-3150.jpg",
+   "source": "out/work/stills/v2-3150.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:21:08.125Z",
    "file": "20261123072108125-note-near-lay-s.jpg",
@@ -31,20 +59,6 @@
    "source": "../work/layback-near-s.jpg",
    "kind": "note",
    "label": "tool check: approved close image laid back top down near the storm (12 x 10 units), a layout guide only"
-  },
-  {
-   "time": "2026-11-23T06:46:29.044Z",
-   "file": "20261123064629044-still-f03150-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03150-16x9-draft-full.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   }
  ]
 }
