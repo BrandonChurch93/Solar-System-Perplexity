@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { Director } from '../core/engine'
+import { shutterScale } from '../core/motion'
 import type { CoverState, PlaceState, Pose, SetState, Shot, SkyFloor, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { handoverFrame, handoverOf, placeWeight, skyTurnWeight, skyWeight, topForced } from './handover'
+import { handoverFrame, handoverOf, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -77,6 +78,9 @@ export class FilmDirector implements Director {
   private readonly openRef = new Map<number, number>()
   private readonly settled = new Map<number, [number, number]>()
   private readonly skyFloors = new Map<string, SkyFloor>()
+  // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
+  // handover, where a sample takes its side by its position inside the shutter that is open.
+  private readonly shutterOf = (frame: number): number => shutterScale(this, frame)
   private lookbackUp = new THREE.Vector3()
   private lookbackSun = new THREE.Vector3()
   private lookbackSide = new THREE.Vector3()
@@ -85,6 +89,7 @@ export class FilmDirector implements Director {
   sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
 
   constructor(plans: StopPlan[]) {
+    shutterScales(this.shutterOf)
     this.plans = plans
     this.frames.push({ rotation: new THREE.Quaternion(), origin: new THREE.Vector3() })
     this.approach.push(new THREE.Vector3(0, 0, -1))
@@ -595,6 +600,7 @@ export class FilmDirector implements Director {
   }
 
   shotAt(frame: number, time: number, forced?: ViewKind): Shot {
+    shutterScales(this.shutterOf)
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()

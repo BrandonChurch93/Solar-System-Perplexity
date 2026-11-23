@@ -1,4 +1,5 @@
 import { config, type CoverWindow, type Segment } from '../config'
+import { shutterPosition } from '../core/sampler'
 import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
@@ -21,6 +22,7 @@ const known = new Map<string, Handover | null>()
 let knownAt = -1
 let forced: ViewKind | null = null
 let above = false
+let shutterOf: ((frame: number) => number) | null = null
 
 function smooth(t: number): number {
   const x = Math.min(Math.max(t, 0), 1)
@@ -84,8 +86,18 @@ export function sideAt(seg: Segment, time: number): ViewKind {
   }
   const x = time * config.fps
   const frame = Math.floor(x + 1e-9)
-  const s = (x - frame) / config.shutterFraction
-  return dissolveWeight(h, seg.kind, frame) > shutterThreshold(s) ? 'terrain' : 'orbit'
+  const weight = dissolveWeight(h, seg.kind, frame)
+  // Outside the dissolve the weight is 0 or 1 and the position inside the shutter decides nothing, so the share of the shutter the frame keeps is
+  // asked for only inside it. That also keeps the measure of that share, which takes shots of other frames, from coming back here for itself.
+  const s = shutterPosition(x - frame, weight > 0 && weight < 1 && shutterOf ? shutterOf(frame) : 1)
+  return weight > shutterThreshold(s) ? 'terrain' : 'orbit'
+}
+
+// E6, the capped shutter: in a dive or a rise the shutter of a frame may keep only a share of the film's shutter around its middle, and a sample
+// takes its side by its position inside the shutter that is open. The share is measured on shots (core/motion.ts, shutterScale), which this
+// module can not take, so the film that asked for a shot last says how to ask. null: every frame keeps the full shutter.
+export function shutterScales(of: ((frame: number) => number) | null): void {
+  shutterOf = of
 }
 
 export function placeWeight(seg: Segment, time: number): number {
@@ -136,6 +148,11 @@ export function forceTop(on: boolean): void {
 
 export function topForced(): boolean {
   return above
+}
+
+// What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
+export function forcedWord(): string {
+  return (forced ?? 'film') + (above ? '|top' : '')
 }
 
 export function handoverFrame(h: Handover): number {

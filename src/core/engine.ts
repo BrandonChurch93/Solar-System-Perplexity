@@ -73,6 +73,7 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  private shutter = 1
   private asked = 0
   private lastFrame: { frame: number; tier: string } | null = null
   private readonly marked = new WeakSet<THREE.Material>()
@@ -239,8 +240,9 @@ export class Engine {
     const probe = this.probe
     applyProbe(probe)
     const plan = framePlan(this.director, f, tier)
-    const samples = samplesFor(plan.samples)
+    const samples = samplesFor(plan.samples, plan.shutter)
     this.soft = plan.soft
+    this.shutter = plan.shutter
     const still = probe.shut
     const middle = probe.time ?? (f + shutterMid()) / config.fps
     const mid = this.director.shotAt(f, middle)
@@ -267,6 +269,7 @@ export class Engine {
   renderLive(shot: Shot): void {
     this.lastFrame = null
     this.soft = 0
+    this.shutter = 1
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
@@ -340,7 +343,7 @@ export class Engine {
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
       this.sky.setBandLook(shot.skyLook ?? 0)
     }
-    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight }
+    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter }
     for (const state of shot.sets) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(shot.camera.position)
