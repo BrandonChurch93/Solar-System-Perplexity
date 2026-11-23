@@ -1,64 +1,71 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T11:30:28.622Z",
- "head": "fad3a82dacdac78a957c95911b662750c2e3da77",
- "note": "v9: surface view from the wide canvas with nested plates, measured air over the plates, limb end fixed; M2 proofs next",
+ "pushed": "2026-11-23T11:46:55.899Z",
+ "head": "37289eb3bc693c9ec16cd000d22d1e9750c04a5a",
+ "note": "Mail 251 item 2: the dashes are hidden zones and steep slopes of the lay back; filling them by mirrored image texture, trust from the level ground length",
  "looks": [
+  {
+   "time": "2026-11-23T11:46:55.217Z",
+   "file": "20261123114655217-note-v12-3239-dots.jpg",
+   "source": "../work/f/v12-3239-dots.png",
+   "kind": "note",
+   "label": "v12 3239 at 6x beside the layer view: what is left at a hidden zone"
+  },
+  {
+   "time": "2026-11-23T11:46:54.612Z",
+   "file": "20261123114654612-note-v12n-3239-zones.jpg",
+   "source": "../work/f/v12n-3239-zones.png",
+   "kind": "note",
+   "label": "v12 without the blur of stretched texels: wires gone, small taffy on steep slopes"
+  },
+  {
+   "time": "2026-11-23T11:46:53.990Z",
+   "file": "20261123114653990-note-v12-3239-zones.jpg",
+   "source": "../work/f/v12-3239-zones.png",
+   "kind": "note",
+   "label": "v12 3239 three zones at 3x: wires and a rainbow line from the plate detail ratio"
+  },
+  {
+   "time": "2026-11-23T11:46:53.406Z",
+   "file": "20261123114653406-note-v12-3239-bl.jpg",
+   "source": "../work/f/v12-3239-bl.jpg",
+   "kind": "note",
+   "label": "v12 3239 lower left: hidden zones filled by mirroring the image on both sides (kept)"
+  },
+  {
+   "time": "2026-11-23T11:46:52.831Z",
+   "file": "20261123114652831-note-v11-3239-bl.jpg",
+   "source": "../work/f/v11-3239-bl.jpg",
+   "kind": "note",
+   "label": "v11 3239 lower left: hidden zones blurred to smudges (rejected)"
+  },
+  {
+   "time": "2026-11-23T11:46:52.236Z",
+   "file": "20261123114652236-note-v10-3239-bl.jpg",
+   "source": "../work/f/v10-3239-bl.jpg",
+   "kind": "note",
+   "label": "v10 3239 lower left native: trust from the level ground length, stretched texels blurred (comb and wires still there)"
+  },
+  {
+   "time": "2026-11-23T11:46:22.451Z",
+   "file": "20261123114622451-frame-layers-3239.jpg",
+   "source": "out/work/jupiter/frames/v12/layers-3239.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "8b9f780b26a50bc3"
+  },
   {
    "time": "2026-11-23T11:30:28.047Z",
    "file": "20261123113028047-note-v9a-3060-limb.jpg",
    "source": "../work/f/v9a-3060-limb.jpg",
    "kind": "note",
    "label": "v9a: limb end at 3060 with the measured air over the plates, streak gone"
-  },
-  {
-   "time": "2026-11-23T11:30:27.507Z",
-   "file": "20261123113027507-note-v9-row.jpg",
-   "source": "../work/f/v9-row.jpg",
-   "kind": "note",
-   "label": "v9 drafts 3060 3105 3150 3195 3239"
-  },
-  {
-   "time": "2026-11-23T11:30:26.971Z",
-   "file": "20261123113026971-note-v8r-3060-limb.jpg",
-   "source": "../work/f/v8r-3060-limb.jpg",
-   "kind": "note",
-   "label": "bug: cream streak at the right end of the limb at 3060"
-  },
-  {
-   "time": "2026-11-23T11:30:26.435Z",
-   "file": "20261123113026435-note-fore-nest2.jpg",
-   "source": "../work/f/fore-nest2.jpg",
-   "kind": "note",
-   "label": "fore plate after the nest, top down"
-  },
-  {
-   "time": "2026-11-23T11:30:25.892Z",
-   "file": "20261123113025892-note-near-nest3.jpg",
-   "source": "../work/f/near-nest3.jpg",
-   "kind": "note",
-   "label": "near plate, nested rounded square, top down"
-  },
-  {
-   "time": "2026-11-23T11:30:25.336Z",
-   "file": "20261123113025336-note-v8-row.jpg",
-   "source": "../work/f/v8-row.jpg",
-   "kind": "note",
-   "label": "v8 drafts 3060 to 3239"
-  },
-  {
-   "time": "2026-11-23T11:30:24.769Z",
-   "file": "20261123113024769-note-v8r-3239.jpg",
-   "source": "../work/f/v8r-3239.jpg",
-   "kind": "note",
-   "label": "v8 review tier 3239"
-  },
-  {
-   "time": "2026-11-23T11:30:24.175Z",
-   "file": "20261123113024175-note-v8r-3060.jpg",
-   "source": "../work/f/v8r-3060.jpg",
-   "kind": "note",
-   "label": "v8 review tier 3060: wide canvas, flight 0.32 above at the start"
   }
  ]
 }
