@@ -1,0 +1,79 @@
+{
+ "how": "assets-src/neptune/place/solve.py: the fitted camera of references/approved/neptune-close.jpg (close.json: field of view, nadir, radius from the dip and curve of its horizon) is carried onto the unit globe by X -> Q (X - C) / R. Q puts the centre of the close storm on the spot of the patch pyramid and sets the heading of the line from under the camera to the storm; the heading was chosen so the cirrus banks of the close image run east to west like the cirrus of the hero and the Sun of the globe stands ahead and to the right, where the close image is bright.",
+ "storm": {
+  "pixel": [
+   1490,
+   722
+  ],
+  "lonDeg": 0.2304,
+  "latDeg": -20.1669,
+  "arcFromUnderCameraDeg": 4.487900357937389,
+  "headingDeg": -30.0,
+  "atSpinZero": [
+   0.10357643170369778,
+   0.3796569644121584,
+   0.9193109031635481
+  ]
+ },
+ "camera": {
+  "lonDeg": 2.57929066172792,
+  "latDeg": -24.092427094716903,
+  "height": 0.023919749442762372,
+  "headingDeg": -30.881061991508467,
+  "pitchDownDeg": 20.626667150676834,
+  "rollDeg": -9.53912536004378,
+  "vfovDeg": 30.0,
+  "dipDeg": 12.408865843117168
+ },
+ "radius": 41.80645798121349,
+ "centre": [
+  -6.63918025203951,
+  -39.50842307630239,
+  -15.079742587399211
+ ],
+ "toBody": [
+  0.7145441428879176,
+  0.05811890651725794,
+  0.28379347026884855,
+  0.636796770408404
+ ],
+ "toWorld": [
+  0.4421672876800192,
+  0.05918686705586466,
+  0.09202859637708824,
+  0.8902335375470831
+ ],
+ "twin": {
+  "position": [
+   0.1169883030683059,
+   0.31378797767726796,
+   0.967606593684694
+  ],
+  "quaternion": [
+   0.4421672876800192,
+   0.05918686705586466,
+   0.09202859637708824,
+   0.8902335375470831
+  ]
+ },
+ "sun": {
+  "azimuthAtStormDeg": 26.137653310685362,
+  "elevationAtStormDeg": 19.13797413114727,
+  "fromHeadingDeg": 56.137653310685366,
+  "inCloseFrame": [
+   0.8503898473488793,
+   0.3233598945506309,
+   -0.4150608476730862
+  ]
+ },
+ "rest": {
+  "stormLonDeg": -0.25,
+  "stormLatDeg": -18.8,
+  "stormRadiusDeg": 7.0,
+  "stormTurnDeg": 8.5,
+  "streamDeg": 5.1,
+  "shear": 0.35,
+  "shearBands": 5.0,
+  "fromFrame": 4731
+ }
+}

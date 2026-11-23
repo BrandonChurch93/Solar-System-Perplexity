@@ -1,0 +1,12 @@
+Edit Image 1, a strict top-down nadir photograph from low orbit of a tropical sea with islands, cloud fields and a sun glint (12 x 12 degrees, 1:1 square, north at the top). Image 2 is an oblique photograph of the same place: the bright cloud sheet that reaches to its horizon is the region to finish in Image 1.
+
+The upper left half of Image 1 is unfinished: a pale, smeared, blurred sheet without detail. Repaint ONLY that pale smeared region as a sharp photograph taken from straight above:
+- It is a broad bright sheet of low cloud: stratocumulus with fine cellular texture, cloud streets and long parallel bands, lit by a low Sun in the upper left, about 85 percent cover, with small dark gaps where deep blue sea shows through.
+- White and bright where the smear is white, with crisp cloud edges and fine detail everywhere. The same cloud scale as the cumulus in the middle of the picture or finer.
+- Toward the middle of the picture the sheet breaks up into separate cumulus clusters that join the clouds already there. No hard line where it ends.
+- Where the smear is cream near the glint, the cloud sheet is thinner and the sea under it shines pale cream through the gaps.
+- No land shows through the sheet. The straight vertical edge of the smear on the upper right becomes an irregular natural cloud edge.
+
+KEEP EXACTLY, at the same pixel position, shape, size, brightness and hue: the cream white sun glint in the middle, every island, coastline and turquoise bank that is visible now, the cumulus clusters and their shadows in the middle and in the lower right, the deep blue sea in the lower right half, the land masses at the bottom and on the right. No vignette.
+
+No streaks, no smears, no motion blur, no haze. Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.
