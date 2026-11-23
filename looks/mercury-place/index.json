@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T11:33:41.193Z",
+ "pushed": "2026-11-23T11:55:59.212Z",
  "head": "ba28cb3a9ccd7e8a8e895a3a7d45d363e4f5a0d7",
- "note": "band of place ground quilted around the place by code: the wedge is gone on the dive frames; next: dusk behind the place, detail farther out, top down sheet",
+ "note": "rise rendered for the first time with its own plates; top down dive sheet; wrong: dark band at the horizon 992 to 1000, far part of the place soft seen from above",
  "looks": [
   {
-   "time": "2026-11-23T11:33:40.562Z",
-   "file": "20261123113340562-note-r5-c.jpg",
-   "source": "out/work/mercury/place/tmp/r5-c.jpg",
+   "time": "2026-11-23T11:55:58.607Z",
+   "file": "20261123115558607-note-r7-rise-T.jpg",
+   "source": "out/work/mercury/place/tmp/r7-rise-T.jpg",
    "kind": "note",
-   "label": "dive r5 draft 740 to 745, T at 744: wrong: thin strip at the left edge at 740 to 743 where the place picture ends (place.valid set)",
+   "label": "rise 989 990 991 994 996 998 larger",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:33:40.015Z",
-   "file": "20261123113340015-note-r5-b.jpg",
-   "source": "out/work/mercury/place/tmp/r5-b.jpg",
+   "time": "2026-11-23T11:55:58.076Z",
+   "file": "20261123115558076-note-r7-d.jpg",
+   "source": "out/work/mercury/place/tmp/r7-d.jpg",
    "kind": "note",
-   "label": "dive r5 draft 728 to 738: one cratered ground to the horizon; wrong: pale soft slabs at the left edge at 728 to 732",
+   "label": "rise draft 1020 to 1035",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:33:39.357Z",
-   "file": "20261123113339357-note-r5-a.jpg",
-   "source": "out/work/mercury/place/tmp/r5-a.jpg",
+   "time": "2026-11-23T11:55:57.520Z",
+   "file": "20261123115557520-note-r7-c.jpg",
+   "source": "out/work/mercury/place/tmp/r7-c.jpg",
    "kind": "note",
-   "label": "dive r5 draft 704 to 724 with the band: no wedge; wrong: soft grey ground with white blobs low left at 716 to 724 (night side shown lit)",
+   "label": "rise draft 996 to 1016: wrong: dark band along the horizon 992 to 1000 (ground beyond the horizon of the place picture)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:33:38.800Z",
-   "file": "20261123113338800-note-B234-view.jpg",
-   "source": "out/work/mercury/place/tmp/B234-view.jpg",
+   "time": "2026-11-23T11:55:56.977Z",
+   "file": "20261123115556977-note-r7-b.jpg",
+   "source": "out/work/mercury/place/tmp/r7-b.jpg",
    "kind": "note",
-   "label": "plates with the band, levels 2 3 4",
+   "label": "rise first render, draft 960 to 994, T at 990 (rise plates made by code from the rise view): 989 990 991 one picture",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:33:38.141Z",
-   "file": "20261123113338141-note-B4-edge.jpg",
-   "source": "out/work/mercury/place/tmp/B4-edge.jpg",
+   "time": "2026-11-23T11:55:56.441Z",
+   "file": "20261123115556441-note-r6-c.jpg",
+   "source": "out/work/mercury/place/tmp/r6-c.jpg",
    "kind": "note",
-   "label": "level 4 at the edge of the place after the band: ground cut from the sharp place and quilted around it by code (assets-src/mercury/place/band.py), no generation; the straight edge is gone",
+   "label": "dive r6 draft 736 to 744: wrong: strip at the left edge at 740 to 743, second line at the horizon at 740 and 742",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:10:04.612Z",
-   "file": "20261123111004612-note-L234-view.jpg",
-   "source": "out/work/mercury/place/tmp/L234-view.jpg",
+   "time": "2026-11-23T11:55:55.892Z",
+   "file": "20261123115555892-note-r6-b.jpg",
+   "source": "out/work/mercury/place/tmp/r6-b.jpg",
    "kind": "note",
-   "label": "plates third pass, levels 2 3 4 (38, 19, 9.5 deg): tone at the edge matched, style outside the wedge too bold",
+   "label": "dive r6 draft 724 to 734",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:10:04.078Z",
-   "file": "20261123111004078-note-r4-c.jpg",
-   "source": "out/work/mercury/place/tmp/r4-c.jpg",
+   "time": "2026-11-23T11:55:55.313Z",
+   "file": "20261123115555313-note-r6-a.jpg",
+   "source": "out/work/mercury/place/tmp/r6-a.jpg",
    "kind": "note",
-   "label": "dive r4 draft 740 to 746, T at 744: 743 744 745 one picture; wrong: at 740 and 742 the place picture shows its straight left and lower edge over ground of another style (place.valid not set, surroundings not in the style of the place)",
+   "label": "dive r6 draft 700 to 720 with the second band (dusk behind the place, pieces to 9 deg)",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T11:10:03.544Z",
-   "file": "20261123111003544-note-r4-b.jpg",
-   "source": "out/work/mercury/place/tmp/r4-b.jpg",
+   "time": "2026-11-23T11:55:54.443Z",
+   "file": "20261123115554443-note-td2.jpg",
+   "source": "out/work/mercury/place/tmp/td2.jpg",
    "kind": "note",
-   "label": "dive r4 draft 728 to 738: steady approach, Sun enters at the top; wrong: straight edges of the wedge, white slabs and black holes around it",
+   "label": "S2 proof, draft: top down dive sheet 690 to 743, globe side alone, place picture off (before the far fill): wrong: right third soft at 725 to 743 (far part of the place, stretched by the laying back)",
    "stop": "mercury"
   }
  ]
