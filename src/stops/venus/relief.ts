@@ -24,6 +24,8 @@ export interface CloudReliefDef {
   masks: string
   maskBox: [number, number, number, number]
   air: string
+  // The air picture in two parts for the globe side (assets-src/venus/place/airsun.py): the Sun's own light and the rest.
+  airSun: { file: string; limbFile: string; atDeg: [number, number]; boxDeg: [number, number, number] }
 }
 
 export interface CloudMotion {
@@ -113,6 +115,56 @@ void main() {
   if (uDiag >= 2) discard;
 }`
 
+// The same air on the globe side (the handover): the dome hangs in the globe's scene at the globe's scale, so the eye
+// is given (the globe camera brought into this scene by the similarity of the plan) and not read from the camera.
+// The air picture comes in two parts there. The rest of it (uAir) is laid from the limb upward as on the close side and
+// comes in with uWeight as the camera comes down to the place. The Sun's own light (uSunMap) is laid from the limb as it
+// stands at T (uUpT, uDipT): the Sun is at infinity and keeps its direction while the limb sinks under a climbing
+// camera. It comes in with uSunWeight, and with it the engine's Sun is hidden as on the close side. At T both weights
+// are 1 and the sum is the close side's dome. The fragment shader is the close side's own with these swaps.
+const AIR_VERT_GLOBE = /* glsl */ `
+uniform vec3 uEye;
+uniform float uRadius;
+out vec3 vDir;
+out vec3 vClip;
+out vec3 vUp;
+out vec3 vWorld;
+out float vDip;
+out float vHigh;
+void main() {
+  vDir = position;
+  vWorld = mat3(modelMatrix) * position;
+  float r = max(length(uEye), uRadius + 0.02);
+  vUp = uEye / r;
+  vDip = acos(uRadius / r);
+  vHigh = r - uRadius - 1.0;
+  gl_Position = projectionMatrix * vec4(mat3(modelViewMatrix) * position, 1.0);
+  vClip = gl_Position.xyw;
+  gl_Position.z = gl_Position.w * 0.9999;
+}`
+
+const swapOnce = (text: string, from: string, to: string): string => {
+  if (text.split(from).length !== 2) throw new Error('the air shader of the globe side: no single place for ' + from)
+  return text.replace(from, to)
+}
+
+const GLOBE_SWAPS: [string, string][] = [
+  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform float uSunWeight;\nuniform sampler2D uSunMap;\nuniform vec3 uUpT;\nuniform float uDipT;\nuniform vec4 uSunBox;'],
+  [
+    '  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);',
+    `  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
+  float sT = clamp(dot(d, uUpT), -1.0, 1.0);
+  vec3 levelT = d - uUpT * sT;
+  vec2 atT = vec2(atan(dot(levelT, uRight), dot(levelT, uFwd)), asin(sT) + uDipT);
+  vec3 sunGlow = inverseFilmic(textureLod(uSunMap, clamp((atT - uSunBox.xy) / uSunBox.zw, 0.0, 1.0), 0.0).rgb);`,
+  ],
+  ['dot(glow, vec3(0.3, 0.5, 0.2))', 'dot(glow * uWeight + sunGlow * uSunWeight, vec3(0.3, 0.5, 0.2))'],
+  ['cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, off));', 'cut = max(cut, (1.0 - smoothstep(uSunHide.x, uSunHide.y, off)) * uSunWeight);'],
+  ['cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));', 'cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev) * uWeight);'],
+  ['outColor = vec4(glow * uGain * vig, cut);', 'outColor = vec4((glow * uWeight + sunGlow * uSunWeight) * uGain * vig, cut);'],
+]
+const AIR_FRAG_GLOBE = GLOBE_SWAPS.reduce((text, [from, to]) => swapOnce(text, from, to), AIR_FRAG)
+
 const VERT = /* glsl */ `
 in vec2 aImage;
 uniform vec3 uUp;
@@ -198,8 +250,12 @@ export class CloudRelief {
   readonly group = new THREE.Group()
   private readonly layers: Layer[] = []
   private air: Layer | null = null
+  private globeAir: Layer | null = null
   private readonly motion: CloudMotion
+  private radius = 1
   carry: { map: THREE.Texture; fwd: THREE.Vector3; right: THREE.Vector3; span: THREE.Vector3; cut: THREE.Vector3; gain: number } | null = null
+  // The colours of the far deck by azimuth and the frame they are laid in (this scene's axes), for the haze of the globe side.
+  deck: { colours: THREE.Vector3[]; fwd: THREE.Vector3; right: THREE.Vector3 } | null = null
 
   private constructor(motion: CloudMotion) {
     this.motion = motion
@@ -207,6 +263,7 @@ export class CloudRelief {
 
   static async load(ctx: SetContext, base: string, def: CloudReliefDef, motion: CloudMotion): Promise<CloudRelief> {
     const r = new CloudRelief(motion)
+    r.radius = def.radius
     const [W, H] = def.imageSize
     const th = Math.tan(rad(def.vfovDeg) / 2)
     const aspect = W / H
@@ -237,6 +294,25 @@ export class CloudRelief {
     dome.renderOrder = -1
     r.group.add(dome)
     r.air = { mesh: dome, material: airMaterial }
+    const globeUniforms: Record<string, THREE.IUniform> = {}
+    for (const [name, u] of Object.entries(airMaterial.uniforms)) globeUniforms[name] = name === 'uDiag' ? u : { value: u.value }
+    globeUniforms.uSun = { value: new THREE.Vector3(0, 0, 1) }
+    globeUniforms.uEye = { value: up.clone().multiplyScalar(def.radius + 1) }
+    globeUniforms.uWeight = { value: 0 }
+    globeUniforms.uSunWeight = { value: 0 }
+    const sb = def.airSun
+    globeUniforms.uAir = { value: await ctx.texture(base + sb.limbFile, { srgb: true, mips: false }) }
+    globeUniforms.uSunMap = { value: await ctx.texture(base + sb.file, { srgb: true, mips: false }) }
+    globeUniforms.uUpT = { value: up.clone() }
+    globeUniforms.uDipT = { value: dip }
+    globeUniforms.uSunBox = { value: new THREE.Vector4(rad(sb.atDeg[0] - sb.boxDeg[0]), rad(sb.atDeg[1] - sb.boxDeg[1]), rad(2 * sb.boxDeg[0]), rad(sb.boxDeg[1] + sb.boxDeg[2])) }
+    const globeMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: AIR_VERT_GLOBE, fragmentShader: AIR_FRAG_GLOBE, uniforms: globeUniforms, ...BLEND, side: THREE.BackSide, depthTest: true, depthWrite: false })
+    const globeDome = new THREE.Mesh(dome.geometry, globeMaterial)
+    globeDome.frustumCulled = false
+    globeDome.renderOrder = 5
+    globeDome.visible = false
+    r.globeAir = { mesh: globeDome, material: globeMaterial }
+    r.deck = { colours: airMaterial.uniforms.uDeck!.value as THREE.Vector3[], fwd, right }
     r.carry = { map: airMap, fwd, right, span: airMaterial.uniforms.uSpan!.value as THREE.Vector3, cut: airMaterial.uniforms.uCut!.value as THREE.Vector3, gain: a.gain }
 
     for (let k = 0; k < def.layers.length; k++) {
@@ -345,11 +421,37 @@ export class CloudRelief {
     }
   }
 
+  // The dome of the globe side: to be added to the globe's group.
+  get globeDome(): THREE.Mesh {
+    return this.globeAir!.mesh
+  }
+
+  // eye: the globe camera in this scene, from the centre of the deck sphere. turn: this scene's frame in the globe's group.
+  // eyeT: the same eye at the T of the handover. weight: the air on the limb. sunWeight: the Sun's own light.
+  updateGlobe(eye: THREE.Vector3, eyeT: THREE.Vector3, turn: THREE.Quaternion, weight: number, sunWeight: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3): void {
+    const g = this.globeAir!
+    g.mesh.visible = weight > 0 || sunWeight > 0
+    g.mesh.quaternion.copy(turn)
+    const u = g.material.uniforms
+    ;(u.uEye!.value as THREE.Vector3).copy(eye)
+    const rT = Math.max(eyeT.length(), this.radius + 0.02)
+    ;(u.uUpT!.value as THREE.Vector3).copy(eyeT).divideScalar(eyeT.length())
+    u.uDipT!.value = Math.acos(this.radius / rT)
+    u.uWeight!.value = weight
+    u.uSunWeight!.value = sunWeight
+    u.uGain!.value = gain * this.motion.air.gain
+    u.uThrough!.value = 1
+    ;(u.uSun!.value as THREE.Vector3).copy(sun)
+    u.uVignette!.value = vignette
+    u.uAspect!.value = view.format.width / view.format.height
+  }
+
   dispose(): void {
     if (this.air) {
       this.air.mesh.geometry.dispose()
       this.air.material.dispose()
     }
+    this.globeAir?.material.dispose()
     for (const l of this.layers) {
       l.mesh.geometry.dispose()
       l.material.dispose()
