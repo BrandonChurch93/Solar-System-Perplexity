@@ -219,7 +219,8 @@ def start(a):
         if not state(m).get('deferred'):
             sys.exit('round %d was not started with --defer' % m)
     done = sorted(set(finished(PROG.read_text()) + [stop] + [state(m)['stop'] for m in others]))
-    green, build = checks(n, '--phase %d --g15-stops %s' % (phase, ','.join(done)), a.allow_red)
+    gate_args = '--phase %d --g15-stops %s' % (phase, ','.join(done)) + (' --only ' + MACHINE if phase == 6 else '')
+    green, build = checks(n, gate_args, a.allow_red)
     s = state(n)
     sha = commit('Round %d: %s from agent/%s at %s' % (n, stop, stop, s.get('agentHead', 'main')))
     full = sh('git rev-parse HEAD').strip()
