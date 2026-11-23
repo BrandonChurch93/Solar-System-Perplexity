@@ -22,8 +22,8 @@ export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
 export const near = {
   amount: 1,
-  dive: { altitude: [0.45, 1.25], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 0.1], fallAltitude: [0.5, 1] },
-  rise: { altitude: [0.4, 2.6], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 0.3], fallAltitude: [0.5, 1.6] },
+  dive: { altitude: [0.45, 1.25], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 1], fallAltitude: [0.5, 1] },
+  rise: { altitude: [0.4, 2.6], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 1], fallAltitude: [0.5, 1.6] },
 }
 export const field = { amount: 1 }
 export const held = { ...holdJson, amount: 1 }

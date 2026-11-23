@@ -118,7 +118,7 @@ class NeptunePlan extends StopPlan {
     const b = about(kind === 'dive' ? this.closeTrack(time) : this.exitTrack(time))
     return posed({
       height: a.height + (b.height - a.height) * w,
-      arc: a.arc + (b.arc - a.arc) * w,
+      arc: a.arc + (b.arc - a.arc) * Math.pow(w, m.arc),
       azimuth: a.azimuth + wrapped(b.azimuth - a.azimuth) * w,
       turn: a.turn.clone().slerp(b.turn, w),
       field: a.field + (b.field - a.field) * w,
@@ -127,6 +127,10 @@ class NeptunePlan extends StopPlan {
 
   twin(local: Pose, time: number): Pose {
     return this.spun(this.fromClose(local), time)
+  }
+
+  laid(time: number): THREE.Quaternion {
+    return this.turn(time).multiply(onGlobe)
   }
 
   override divePose(time: number, view: ViewKind): Pose {

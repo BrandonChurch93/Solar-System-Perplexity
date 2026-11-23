@@ -6,35 +6,67 @@
  "levels": [
   {
    "file": "patch-96.webp",
-   "widthDeg": 96
+   "widthDeg": 96,
+   "offsetDeg": [
+    0,
+    0
+   ]
   },
   {
    "file": "patch-64.webp",
-   "widthDeg": 64
+   "widthDeg": 64,
+   "offsetDeg": [
+    0,
+    0
+   ]
   },
   {
    "file": "patch-40.webp",
-   "widthDeg": 40
+   "widthDeg": 40,
+   "offsetDeg": [
+    0,
+    0
+   ]
   },
   {
-   "file": "patch-26.webp",
-   "widthDeg": 26
+   "file": "place-26.webp",
+   "widthDeg": 26,
+   "offsetDeg": [
+    0,
+    0
+   ]
   },
   {
-   "file": "plate-16.webp",
-   "widthDeg": 16
+   "file": "place-16.webp",
+   "widthDeg": 16,
+   "offsetDeg": [
+    0,
+    0
+   ]
   },
   {
-   "file": "plate-10.webp",
-   "widthDeg": 10
+   "file": "place-10.webp",
+   "widthDeg": 10,
+   "offsetDeg": [
+    1,
+    -1.5
+   ]
   },
   {
-   "file": "plate-6.webp",
-   "widthDeg": 6
+   "file": "place-6.webp",
+   "widthDeg": 6,
+   "offsetDeg": [
+    1.6,
+    -2.8
+   ]
   },
   {
-   "file": "plate-3.5.webp",
-   "widthDeg": 3.5
+   "file": "place-3.5.webp",
+   "widthDeg": 3.5,
+   "offsetDeg": [
+    2,
+    -3.2
+   ]
   }
  ],
  "feather": 0.12,
@@ -43,9 +75,21 @@
   1.6
  ],
  "place": {
-  "flatDeg": [
-   9,
-   14
-  ]
+  "how": "Levels from shownFrom on are shown plates: top down pictures of the place in the look of the close view, with their own alpha, drawn through the inverse of the tone curve and of the near grade (assets-src/neptune/place/shown.py). They come in with the place (closeup.json lay.dive and lay.rise, shares of the segment, while the storm is small in frame). offsetDeg moves a level off the spot, degrees east and north, so the deepest plates lie where the dive and the rise look at ground the close canvas never saw. clearDeg: inside the first arc from the spot the cirrus of the levels above is cleared with the same ramp, outside the second it is untouched. plainDeg: arc from the point under the camera of place.json; inside the first a shown plate is seen as painted, without the globe's air, limb and field steps that follow the near grade (the live close layer has none of them, and near that point its border is narrow), outside the second it has them all. tone: a small map over the widest plate, log2 of the place's coarse light against the globe's (blur of deg degrees, stops stops across the 8 bit range, shown.py tone). While the camera is high the plates are divided by it, so only what is finer than that blur changes when the place comes in; the coarse light and dark of the close view grow in with closeup.json lay.tone.",
+  "shownFrom": 3,
+  "clearDeg": [
+   7,
+   10
+  ],
+  "plainDeg": [
+   4,
+   7
+  ],
+  "tone": {
+   "file": "place-tone.webp",
+   "deg": 1.0,
+   "stops": 12,
+   "size": 512
+  }
  }
 }

@@ -6,11 +6,13 @@ import { smooth } from '../../director/rig'
 import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
+import closeLook from './closeup.json'
 import { ending as endLook } from './ending'
 import { limbField } from './field'
 import * as look from './look'
 import { plan } from './plan'
 import patches from './patches.json'
+import place from './place.json'
 import { NeptunePlanet } from './planet'
 import { Ring } from './ring'
 import skyJson from './sky.json'
@@ -44,11 +46,12 @@ export const createSet: SetFactory = async (ctx) => {
   const flow = await ctx.texture(base + flowMap.file, { srgb: false, anisotropy: 16, repeat: true })
   const farSide = await ctx.texture(base + farMap.file, { srgb: false, repeat: true })
   const patchTextures = await Promise.all(patches.levels.map((level) => ctx.texture(base + level.file, { srgb: true, anisotropy: 16 })))
+  const toneMap = await ctx.texture(base + patches.place.tone.file, { srgb: false, mips: false })
   const planet = new NeptunePlanet({
     field, near: look.near.dive, night: look.night,
     map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!], flatDeg: [patches.place.flatDeg[0]!, patches.place.flatDeg[1]!] },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
     mend: { map: mendMap, box: look.mended.box },
     flow,
@@ -83,7 +86,7 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const closeup = new Closeup({
+  const closeMaps = {
     deck: await ctx.texture(base + close.deck, { srgb: true, anisotropy: 16 }),
     cloud: await ctx.texture(base + close.cloud, { srgb: true, anisotropy: 16 }),
     deckWide: await ctx.texture(base + close.deckWide, { srgb: true, anisotropy: 16, mirror: true }),
@@ -92,8 +95,13 @@ export const createSet: SetFactory = async (ctx) => {
     glow: await ctx.texture(base + close.glow, { srgb: true, mips: false, anisotropy: 1 }),
     bloom: await ctx.texture(base + close.bloom, { srgb: true, mips: false, anisotropy: 1 }),
     fine: await ctx.texture(base + close.fine, { srgb: false, anisotropy: 16 }),
-  })
+  }
+  const closeup = new Closeup(closeMaps)
   terrain.add(closeup.mesh)
+  const laid = new Closeup(closeMaps, true)
+  orbit.add(laid.mesh)
+  const laySeat = new THREE.Vector3()
+  const layBack = new THREE.Quaternion()
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
 
   const light = new THREE.Vector3()
@@ -144,6 +152,15 @@ export const createSet: SetFactory = async (ctx) => {
       const near = look.near.amount * low
       const deep = smooth((look.diving.from - high) / (look.diving.from - look.diving.to))
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
+      const kind = state.segment.kind
+      const lay = ending ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
+      const tone = smooth(Math.log(closeLook.lay.tone[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.tone[0]! / closeLook.lay.tone[1]!))
+      const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
+      const layEdge = closeLook.lay.edge[1]! + (closeLook.lay.edge[0]! - closeLook.lay.edge[1]!) * smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.edgeHeight[1]!) / Math.log(closeLook.lay.edgeHeight[0]! / closeLook.lay.edgeHeight[1]!))
+      if (lay > 0) {
+        laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
+        laid.update(laid.lay(laySeat, plan.laid(state.time), lay, lay * tone, settle, grade, near, layEdge), state.time - terrainMid, gain * state.weight, shot.post.vignette * Math.max(home, settle), view.format.width / view.format.height, shot.post.bloomStrength * settle)
+      }
       air.update(camera, light, state.rotation, home, line, gain * state.weight, near, grade.air, 1 - deep)
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
@@ -165,13 +182,16 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount * line
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount * (1 - low))
       ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
-      ;(pu.uPlace!.value as THREE.Vector3).z = ending ? 0 : deep
+      ;(pu.uPlace!.value as THREE.Vector3).z = lay
+      pu.uShown!.value = lay
+      pu.uToneAmt!.value = patches.place.tone.stops * (1 - tone)
+      ;(pu.uPlain!.value as THREE.Vector3).z = lay * tone
       planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, grade.gain)
       ;(pu.uNearFall!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(grade.fall[0]!), THREE.MathUtils.degToRad(grade.fall[1]!), 1 - (1 - grade.fall[2]!) * (1 - smooth((high - grade.fallAltitude[0]!) / (grade.fallAltitude[1]! - grade.fallAltitude[0]!))))
       ;(pu.uNear!.value as THREE.Vector4).z = grade.power
       ;(pu.uNear!.value as THREE.Vector4).w = grade.saturation
       ;(pu.uNearTint!.value as THREE.Vector4).set(grade.tint[0]!, grade.tint[1]!, grade.tint[2]!, grade.pivot)
-      pu.uVignette!.value = shot.post.vignette * home
+      pu.uVignette!.value = shot.post.vignette * Math.max(home, settle)
       pu.uAspect!.value = view.format.width / view.format.height
       turn.setFromAxisAngle(plan.axis, THREE.MathUtils.degToRad(plan.p.moonDegPerSecond) * elapsed)
       triton.mesh.position.copy(state.time < terrainMid ? moonHome : moonStage).applyQuaternion(turn)
@@ -198,6 +218,7 @@ export const createSet: SetFactory = async (ctx) => {
       air.mesh.visible = visible
       triton.mesh.visible = visible
       ring.mesh.visible = visible
+      laid.mesh.visible = visible && lay > 0
       far.update(radiusPx, view, plan.p.tint, gain)
     },
     dispose: () => {
@@ -208,6 +229,7 @@ export const createSet: SetFactory = async (ctx) => {
       ring.dispose()
       far.dispose()
       closeup.dispose()
+      laid.dispose()
     },
   }
 }

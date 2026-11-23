@@ -13,5 +13,22 @@
   "glowAzimuthDeg": 80,
   "sightMargin": 0.012,
   "bloomPre": [1, 0.5],
-  "fine": [1, 0.5]
+  "fine": [1, 0.5],
+  "lay": {
+    "how": "The close scene drawn a second time, as a layer on the globe (the globe side of the handover). dive, rise: shares of the dive over which the place comes in and of the rise over which it goes (the storm is small in frame then); the shown plates of the globe, the cirrus of the layer and the clearing of the old cirrus use that ramp. tone: camera heights in radii between which the coarse light of the close view grows in (none, full), even in the log of the height: the layer's ground comes in with it and the plates are divided by their tone map by the share that is left (patches.json place.tone). The layer's ground is shown through the inverse of the globe's near grade by the share the grade is not in yet, so it has the globe's look while the globe has it; its cirrus is not, white cloud stays white. nearDeg: arc from the point under the fitted camera inside which the layer always shows (full, gone). edge: feather at the edge of the wide canvas, in camera heights of the close view, measured from the planes through the fitted camera that bound the canvas; wide while the camera is high (first value, above the first of edgeHeight in radii), narrow near the fitted height (second value, below the second of edgeHeight), because near the handover the frame fills with ground close to the canvas border. graze: beyond the near zone the layer shows where the present view is about as grazing as the fitted one (ratio of the sines of elevation, full and gone). texels: and where the canvas keeps this many texels per pixel in its worst direction (gone, full); coreEdge: the finer core canvas counts for that measure only this far inside its border (share of its width), so the measure has no step where the core ends. edgeRange: beyond this distance from the fitted camera (camera heights) the feather grows in proportion to the distance, so far away it is a constant angle of the fitted view. cloudEdge: the cirrus of the layer is drawn wherever the canvas has it, at any height and from any side (it is a thing in the scene), with this feather at the canvas border in units of the tangent of the fitted view; cloudDeg: arc from the point under the fitted camera within which that cirrus is drawn (full, gone), beyond it the canvas has thin streaks near its horizon, which laid back from above are long straight lines; they come in with the honest view instead. cloudBox: left, right and bottom of the part of the canvas whose cirrus is drawn that way, as tangents of the fitted view (the canvas itself is 0.834 wide each way, the frame 0.476): right of 0.6 the wide canvas holds the thin tail of the right bank, 3.2 to 3.7 camera heights away and 12 degrees under the fitted camera, which from above is a fan of straight lines (seen at 4736 and 4744). settle: heights between which the limb glow of the close view comes in and the lens compensation goes to the close side's.",
+    "dive": [0.0, 0.19],
+    "rise": [0.64, 1.0],
+    "tone": [2.06, 0.13],
+    "nearDeg": [5.5, 7.0],
+    "edge": [0.5, 0.12],
+    "edgeHeight": [0.3, 0.045],
+    "edgeRange": 1.5,
+    "cloudEdge": 0.12,
+    "cloudDeg": [6.0, 7.5],
+    "cloudBox": [-0.834, 0.6, -0.67],
+    "coreEdge": 0.5,
+    "graze": [1.6, 3.0],
+    "texels": [0.7, 1.1],
+    "settle": [0.06, 0.03]
+  }
 }
