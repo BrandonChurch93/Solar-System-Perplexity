@@ -92,7 +92,7 @@
     "earlyDeg": 30,
     "low": {
       "file": "place-12-low.jpg",
-      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate where the camera sees the ground from the direction the close camera sees it: full when the two rays are angleDeg[1] apart or less, none from angleDeg[0], and only below height[0] (full gate from height[1], in radii above the sea). From straight above the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]).",
+      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate where the camera sees the ground from the direction the close camera sees it: full when the two rays are angleDeg[1] apart or less, none from angleDeg[0], and only below height[0] (full gate from height[1], in radii above the sea). From straight above the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]). The file holds a window of the plate raster (window: raster, size, offset as for a level) at size px, so its texels go where the lay back lies; the low look ends inside the window over feather times its width.",
       "angleDeg": [
         35,
         10
@@ -104,6 +104,15 @@
       "edgeDeg": 0.12,
       "fadeDeg": 0.5,
       "size": 2048,
+      "window": {
+        "raster": 4096,
+        "size": 3456,
+        "offset": [
+          -320,
+          320
+        ]
+      },
+      "feather": 0.03,
       "fromDeg": [
         4.2,
         5.0

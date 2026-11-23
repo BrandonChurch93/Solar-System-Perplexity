@@ -118,6 +118,13 @@ def low(img, per_deg):
     return cv2.GaussianBlur(img, (0, 0), SIGMA * per_deg)
 
 
+def footprint_px(size, w, feather):
+    i = np.arange(size) + 0.5
+    fx = step(0, feather * w.n, np.minimum(i - w.x0, w.x0 + w.n - i))
+    fy = step(0, feather * w.n, np.minimum(i - w.y0, w.y0 + w.n - i))
+    return fy[:, None] * fx[None, :]
+
+
 def save(path, img, n=None):
     im = Image.fromarray(cv2.cvtColor(np.clip(img + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_BGR2RGB))
     if n and n != im.width:
@@ -276,7 +283,12 @@ def main():
     low_ = fs['low']
     detail = (f12 - cv2.GaussianBlur(f12, (0, 0), low_['sigmaDeg'] * per)) * (step(low_['alpha'][0], low_['alpha'][1], cv2.GaussianBlur(a[..., 0], (0, 0), low_['sigmaDeg'] * per)) * step(low_['cloud'][0], low_['cloud'][1], cv2.GaussianBlur(lay12.min(axis=2), (0, 0), low_['sigmaDeg'] * per)))[..., None]
     cover = step(0.5, 1.0, cv2.GaussianBlur(inside12, (0, 0), lw['fadeDeg'] * per))[..., None]
-    save(lw['file'], f12 * (1 - cover) + (lay12 + detail) * cover, lw['size'])
+    lwin = win_of({**lw['window'], 'widthDeg': deg}, P)
+    if lwin.raster != size or min(lwin.x0, lwin.y0) < 0 or max(lwin.x0, lwin.y0) + lwin.n > size:
+        raise SystemExit('the window of the low plate must lie on the plate raster')
+    if float((cover[..., 0] * footprint_px(size, whole, FEATHER) * (1 - footprint_px(size, lwin, lw['feather']))).max()) > 0.02:
+        raise SystemExit('the lay back reaches past the window of the low plate')
+    save(lw['file'], (f12 * (1 - cover) + (lay12 + detail) * cover)[int(lwin.y0):int(lwin.y0) + lwin.n, int(lwin.x0):int(lwin.x0) + lwin.n], lw['size'])
     cv2.imwrite(str(WORK / 'f12-look.jpg'), cv2.resize(np.clip(np.hstack([f12, f12 * (1 - cover) + (lay12 + detail) * cover]), 0, 255).astype(np.uint8), (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
     cv2.imwrite(str(WORK / 'f12-native.jpg'), np.clip(np.hstack([f12[1850:2350, 2800:3500], f12[2950:3450, 1450:2150], f12[504:1004, 2298:2998]]), 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 90])
     print('low plate done, lay back share', round(float(cover.mean()), 4), 'field cover on the plate', round(float(a.mean()), 4), 'detail rms', round(float(np.sqrt((detail ** 2).mean())), 2), flush=True)
