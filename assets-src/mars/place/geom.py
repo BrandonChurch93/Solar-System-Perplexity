@@ -233,3 +233,10 @@ def picture_edge(cam, layout, width_deg, size, share, rows=512):
         near = np.minimum(np.minimum(px, layout['width'] - px), layout['height'] - py) / layout['width']
         out[r0:r0 + rows] = np.where(front & (cosv > 0), smoothstep(0, share, near), 0)
     return out
+
+
+def near_tint(path='src/stops/mars/near.json'):
+    """The colour gain of the look near the ground (near.json tint, b g r): the globe multiplies every level with it
+    at the height of the place picture and with 1 above the near range. The plates are made in the look at T."""
+    import json
+    return np.array(json.load(open(path)).get('tint', [1, 1, 1])[::-1], np.float32)

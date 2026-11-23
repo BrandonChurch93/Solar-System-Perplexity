@@ -27,6 +27,7 @@ ap.add_argument('--fade', default='1.02,1.5')
 ap.add_argument('--film-px', type=float, default=1080, help='levels come in as they would in a film frame this many px high')
 ap.add_argument('--east-deg', type=float, default=0, help='centre of the view, degrees east of the spot at the last tile')
 ap.add_argument('--north-deg', type=float, default=0)
+ap.add_argument('--high', action='store_true', help='the look above the near range (near.json tint at 1): the sheet is in the look at T without it')
 a = ap.parse_args()
 f0, f1 = [float(x) for x in a.fade.split(',')]
 
@@ -66,13 +67,16 @@ with open(a.levels) as f:
 if isinstance(spec, dict):
     spec = [dict(s, file=a.assets + '/' + s['file']) for s in spec['levels']]
 shown = any(s.get('own') for s in spec)
-light = np.array(json.load(open(a.config))['lead']['light'][::-1], np.float32)
+tint = geom.near_tint()
+light = np.array(json.load(open(a.config))['lead']['light'][::-1], np.float32) * (1 if a.high else tint)
 
 
 def read(path, own):
     """With own levels in the ladder the sheet is in look values: a lit picture is shown times the globe's light."""
     img = cv2.imread(path, cv2.IMREAD_COLOR).astype(np.float32) / 255
-    return geom.texel_of(geom.scene_of(img) * light) if shown and not own else img
+    if shown and not own:
+        return geom.texel_of(geom.scene_of(img) * light)
+    return geom.texel_of(geom.scene_of(img) / tint) if a.high and own else img
 
 
 wrap = mips(read(a.wrap, False))

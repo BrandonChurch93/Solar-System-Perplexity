@@ -3,7 +3,9 @@
 Everything is a square gnomonic picture about the spot, north at the top. The work runs in look values: what the
 globe shows near the ground before haze (for a lit level: scene_of(texel) x light, for an own level: scene_of(texel)).
   1. The plates of the place (force.py, look values) are read; a plate without a file is the old land of main in
-     look values, toned toward the picture's colours near the place as in lead.py.
+     look values. Look values are those at the height of the place picture: there the globe multiplies a lit level
+     with lead.light times the tint of near.json (geom.near_tint), so the old land is brought to the picture's
+     colours by height and not by place (lead.paletteMix is 0: no disc of another hue lies round the place).
   2. From the deepest plate up, every plate is faded into the plate above over nestFeather of its width at its rim
      and the plate above takes the result, sized down, as its middle: a feature of one level is at its place in
      the next.
@@ -37,7 +39,7 @@ bk, lead = cfg['bake'], cfg['lead']
 N = bk['workSize']
 os.makedirs(a.old, exist_ok=True)
 os.makedirs(a.work, exist_ok=True)
-light = np.array(lead['light'][::-1], np.float32)
+light = np.array(lead['light'][::-1], np.float32) * geom.near_tint()
 
 
 def old_file(name):

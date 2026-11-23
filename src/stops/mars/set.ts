@@ -192,6 +192,7 @@ export const createSet: SetFactory = async (ctx) => {
       const n = nearJson
       const near = ending || diveT === undefined ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(n.low)) / (Math.log(n.high) - Math.log(n.low)))
       const mix = (v: THREE.Vector3, by: number[]): void => { v.set(v.x * (1 + (by[0]! - 1) * near), v.y * (1 + (by[1]! - 1) * near), v.z * (1 + (by[2]! - 1) * near)) }
+      mix(pu.uTint!.value as THREE.Vector3, n.tint)
       mix(pu.uHazeDay!.value as THREE.Vector3, n.hazeDay)
       mix(su.uHazeDay!.value as THREE.Vector3, n.shellDay)
       mix(su.uHazeTwilight!.value as THREE.Vector3, n.shellTwilight)
@@ -216,7 +217,8 @@ export const createSet: SetFactory = async (ctx) => {
         const k = Math.min(Math.max((Math.log(a.height) - height) / (Math.log(a.height) - Math.log(b.height)), 0), 1)
         // a lit level is multiplied with the descent tint, 1 high up and descent.tint near the ground, where the plates
         // were made: the own levels follow it by tintFollow
-        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1))
+        // and the tint of near.json the same way: the plates hold the look at the height of the place picture
+        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!)
       }
       if (hasOwn) planet.setOwnGain(ownGain)
       planet.update(camera, light, plan.spin(state.time), gain, state.weight)

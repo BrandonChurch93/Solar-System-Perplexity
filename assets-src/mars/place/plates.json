@@ -37,7 +37,7 @@
   }
  ],
  "lead": {
-  "note": "lead.py: light is what the globe multiplies a lit level with near the ground at T (r g b, measured with flat.sh and light.py); the old land keeps its brightness and is moved by paletteMix to the hue of the picture's land (paletteHue, the median where the lay back leads at 1.2 deg) inside paletteCoreDeg, fading out to paletteEndDeg",
+  "note": "lead.py: light is what the globe multiplies a lit level with near the ground at T (r g b, measured with flat.sh and light.py); the old land keeps its brightness and is moved by paletteMix to the hue of the picture's land (paletteHue, the median where the lay back leads at 1.2 deg) inside paletteCoreDeg, fading out to paletteEndDeg; paletteMix is 0 since the eighth bake (it was 0.85 and made a grey disc of 8 degrees on the red land): the hue of the land goes to the picture's by height, with the tint of src/stops/mars/near.json, which bake.py and topdown.py read through geom.near_tint",
   "size": 2048,
   "light": [
    0.1464,
@@ -54,7 +54,7 @@
    0.0459,
    0.0337
   ],
-  "paletteMix": 0.85,
+  "paletteMix": 0.0,
   "paletteLum": 1.0
  },
  "force": {
