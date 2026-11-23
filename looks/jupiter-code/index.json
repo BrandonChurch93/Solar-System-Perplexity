@@ -1,110 +1,122 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T17:52:24.883Z",
- "head": "1db511ce6ff5dccdd3a54d715b9bf0ea19d4e71b",
- "note": "17:52 UTC. Rise with the pace and the new tail: worst body level step 5.21 into 3309 at the draft tier (limit 6). Sky trial: the turn is finished early, behind the planet; with 17 frames the Milky Way still crosses the top right corner at 3281 to 3283, a shorter turn is rendering. Nothing committed yet.",
+ "pushed": "2026-11-23T18:16:36.834Z",
+ "head": "e5ac78cd2a2e330b37c6bc6646274025e8df5ae8",
+ "note": "Full handover report on the working tree: every part passes for dive and rise (worst body level step 4.84 into 3041 and 5.21 into 3309, limit 6). Sheets at the draft tier. Still seen: the place as a patch of its own colour from 3276 to 3282, soft dark belt at the bottom 3274 to 3279, Milky Way in the top right corner 3281 to 3283",
  "looks": [
   {
-   "time": "2026-11-23T17:52:19.476Z",
-   "file": "20261123175219476-note-q1-3296-final.jpg",
-   "source": "../work/f/q1-3296-final.jpg",
+   "time": "2026-11-23T18:16:29.381Z",
+   "file": "20261123181629381-note-jupiter-rise-top.jpg",
+   "source": "out/work/handover/jupiter-rise-top.png",
    "kind": "note",
-   "label": "3296 at the final tier with the pace",
+   "label": "handover report, rise, top, working tree after the pace and the air weight by time",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:52:18.742Z",
-   "file": "20261123175218742-note-q2-corner-3276-3284.jpg",
-   "source": "../work/f/q2-corner-3276-3284.png",
+   "time": "2026-11-23T18:16:28.262Z",
+   "file": "20261123181628262-note-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
    "kind": "note",
-   "label": "top right corner 3276 to 3284 at full size: the Milky Way crosses the corner 3281 to 3283 (sky turn in 17 frames)",
+   "label": "handover report, rise, draft-after, working tree after the pace and the air weight by time",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:52:18.108Z",
-   "file": "20261123175218108-note-q2-rise-3270-3285.jpg",
-   "source": "../work/f/q2-rise-3270-3285.jpg",
+   "time": "2026-11-23T18:16:27.106Z",
+   "file": "20261123181627106-note-jupiter-rise-draft-across.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-across.png",
    "kind": "note",
-   "label": "rise 3270 to 3285 draft, sky turn in 17 frames",
+   "label": "handover report, rise, draft-across, working tree after the pace and the air weight by time",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:52:17.509Z",
-   "file": "20261123175217509-note-q2-sky-b.jpg",
-   "source": "../work/f/q2-sky-b.jpg",
+   "time": "2026-11-23T18:16:25.910Z",
+   "file": "20261123181625910-note-jupiter-rise-draft-before.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-before.png",
    "kind": "note",
-   "label": "rise 3299 to 3314 draft, pace with the new tail",
+   "label": "handover report, rise, draft-before, working tree after the pace and the air weight by time",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:52:16.897Z",
-   "file": "20261123175216897-note-q2-sky-a.jpg",
-   "source": "../work/f/q2-sky-a.jpg",
+   "time": "2026-11-23T18:16:24.949Z",
+   "file": "20261123181624949-note-jupiter-dive-top.jpg",
+   "source": "out/work/handover/jupiter-dive-top.png",
    "kind": "note",
-   "label": "rise 3283 to 3298 draft, pace with the new tail, sky turn done by 3287",
+   "label": "handover report, dive, top, working tree after the pace and the air weight by time",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T17:49:37.006Z",
-   "file": "20261123174937006-frame-f03280.jpg",
-   "source": "out/work/jupiter/frames/q2/f03280.png",
+   "time": "2026-11-23T18:16:23.590Z",
+   "file": "20261123181623590-note-jupiter-dive-draft-after.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-after.png",
+   "kind": "note",
+   "label": "handover report, dive, draft-after, working tree after the pace and the air weight by time",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T18:16:22.624Z",
+   "file": "20261123181622624-note-jupiter-dive-draft-across.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-across.png",
+   "kind": "note",
+   "label": "handover report, dive, draft-across, working tree after the pace and the air weight by time",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T18:16:21.213Z",
+   "file": "20261123181621213-note-jupiter-dive-draft-before.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-before.png",
+   "kind": "note",
+   "label": "handover report, dive, draft-before, working tree after the pace and the air weight by time",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T18:15:06.898Z",
+   "file": "20261123181506898-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/b1/f02820.png",
    "kind": "frame",
-   "label": "jupiter.rise frame 3280, draft tier",
+   "label": "jupiter.hold frame 2820, draft tier",
    "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3280,
+   "segment": "jupiter.hold",
+   "frame": 2820,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "743c10b0a56aaca7"
   },
   {
-   "time": "2026-11-23T17:34:54.759Z",
-   "file": "20261123173454759-note-p1-rise-3303-3314.jpg",
-   "source": "../work/f/p1-rise-3303-3314.jpg",
-   "kind": "note",
-   "label": "jupiter rise 3303 to 3314, every frame, paced (draft)",
-   "stop": "jupiter"
+   "time": "2026-11-23T18:14:31.295Z",
+   "file": "20261123181431295-sheet-jupiter-rise-top.jpg",
+   "source": "out/work/handover/jupiter-rise-top.png",
+   "kind": "sheet",
+   "label": "jupiter rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 3270), place picture off, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3270,
+   "last": 3314,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:34:54.047Z",
-   "file": "20261123173454047-note-q1-sky-a.jpg",
-   "source": "../work/f/q1-sky-a.jpg",
-   "kind": "note",
-   "label": "jupiter rise 3283 to 3302, every frame, paced; fault: the Milky Way flashes at the right edge 3291 to 3294 (draft)",
-   "stop": "jupiter"
+   "time": "2026-11-23T18:13:52.627Z",
+   "file": "20261123181352627-sheet-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3271 to 3282 (after T, frame 3270), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3271,
+   "last": 3282,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:34:53.477Z",
-   "file": "20261123173453477-note-q1-rise-c.jpg",
-   "source": "../work/f/q1-rise-c.jpg",
-   "kind": "note",
-   "label": "jupiter rise close side 3264 to 3270, every frame, air weight by time (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:34:52.873Z",
-   "file": "20261123173452873-note-q1-rise-b.jpg",
-   "source": "../work/f/q1-rise-b.jpg",
-   "kind": "note",
-   "label": "jupiter rise close side 3252 to 3263, every frame, air weight by time (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:34:52.276Z",
-   "file": "20261123173452276-note-q1-rise-a.jpg",
-   "source": "../work/f/q1-rise-a.jpg",
-   "kind": "note",
-   "label": "jupiter rise close side 3240 to 3251, every frame, air weight by time (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T17:30:20.113Z",
-   "file": "20261123173020113-note-q1-dive-c.jpg",
-   "source": "../work/f/q1-dive-c.jpg",
-   "kind": "note",
-   "label": "jupiter dive close side 3048 to 3059, every frame, air weight by time (draft)",
-   "stop": "jupiter"
+   "time": "2026-11-23T18:13:50.716Z",
+   "file": "20261123181350716-sheet-jupiter-rise-draft-before.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3258 to 3269 (before T, frame 3270), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3258,
+   "last": 3269,
+   "tier": "draft"
   }
  ]
 }
