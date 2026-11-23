@@ -42,11 +42,11 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 | `mars.rise` | the handover | 01:29.508 | 00:01:29:15 | 2685 | The peak of the rush. The view changes in frame 2685 with no cover: the place stays in view. |
 | `mars.travel` | start of travel | 01:31.500 | 00:01:31:15 | 2745 | Music builds from the first frame toward the next hold. A few rocks pass close to the lens: one low pass for each. |
 | `jupiter.hold` | start of hold | 01:34.000 | 00:01:34:00 | 2820 | Music lands on the first frame and carries the hold. |
-| `jupiter.dive` | start of dive | 01:39.000 | 00:01:39:00 | 2970 | The rush of the dive: a rising rush of air from the first frame that peaks at the cover center. |
-| `jupiter.dive` | center of the cover | 01:40.800 | 00:01:40:24 | 3024 | The peak of the rush. The cover runs from frame 3016 to 3031 and the view changes under it. |
+| `jupiter.dive` | start of dive | 01:39.000 | 00:01:39:00 | 2970 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
+| `jupiter.dive` | the handover | 01:40.808 | 00:01:40:24 | 3024 | The peak of the rush. The view changes in frame 3024 with no cover: the place stays in view. |
 | `jupiter.terrain` | start of terrain | 01:42.000 | 00:01:42:00 | 3060 | The hush: music drops to a quiet bed on the first frame, under a soft air tone. |
-| `jupiter.rise` | start of rise | 01:48.000 | 00:01:48:00 | 3240 | A shorter rush that peaks at the cover center and opens out after it. |
-| `jupiter.rise` | center of the cover | 01:49.000 | 00:01:49:00 | 3270 | The peak of the rush. The cover runs from frame 3262 to 3277 and the view changes under it. |
+| `jupiter.rise` | start of rise | 01:48.000 | 00:01:48:00 | 3240 | A shorter rush that peaks at the handover and opens out after it. |
+| `jupiter.rise` | the handover | 01:49.008 | 00:01:49:00 | 3270 | The peak of the rush. The view changes in frame 3270 with no cover: the place stays in view. |
 | `jupiter.travel` | start of travel | 01:50.500 | 00:01:50:15 | 3315 | Music builds from the first frame toward the next hold. |
 | `saturn.hold` | start of hold | 01:53.000 | 00:01:53:00 | 3390 | Music lands on the first frame and carries the hold. |
 | `saturn.dive` | start of dive | 01:58.000 | 00:01:58:00 | 3540 | The rush of the dive: a rising rush of air from the first frame that peaks at the handover. |
@@ -79,8 +79,8 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 - Music builds through every travel, from its first frame to the first frame of the next hold: 00:15.000 to 00:18.000, 00:34.500 to 00:37.000, 00:53.500 to 00:56.000, 01:12.500 to 01:15.000, 01:31.500 to 01:34.000, 01:50.500 to 01:53.000, 02:09.500 to 02:12.000, 02:28.500 to 02:31.000.
 - Music lands on the first frame of every hold: 00:09.000 sun, 00:18.000 mercury, 00:37.000 venus, 00:56.000 earth, 01:15.000 mars, 01:34.000 jupiter, 01:53.000 saturn, 02:12.000 uranus, 02:31.000 neptune.
 - Music drops to a quiet bed for every terrain view, the hush: 00:00.000 to 00:06.000, 00:26.000 to 00:32.000, 00:45.000 to 00:51.000, 01:04.000 to 01:10.000, 01:23.000 to 01:29.000, 01:42.000 to 01:48.000, 02:01.000 to 02:07.000, 02:20.000 to 02:26.000, 02:39.000 to 02:45.000.
-- A rush of air peaks at the center of every cover: 00:43.800, 00:52.000, 01:40.800, 01:49.000.
-- A rush of air peaks at every handover: 00:07.208, 00:24.808, 00:33.008, 01:03.975, 01:10.008, 01:21.808, 01:29.508, 01:59.642, 02:08.675, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
+- A rush of air peaks at the center of every cover: 00:43.800, 00:52.000.
+- A rush of air peaks at every handover: 00:07.208, 00:24.808, 00:33.008, 01:03.975, 01:10.008, 01:21.808, 01:29.508, 01:40.808, 01:49.008, 01:59.642, 02:08.675, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
 - The ending: music lands for the last time at 02:51.500, the start of the lookback, and fades with the picture from 02:57.500 to silence at 03:00.000.
 
 ## The clips
@@ -124,10 +124,10 @@ A clip is cut from the same frames as the film. Its cues are the film's cues cou
 | `mars` | | end of the clip | 00:16.500 | 495 | 01:31.500 |
 | `jupiter` | `jupiter.hold` | start of hold | 00:00.000 | 0 | 01:34.000 |
 | `jupiter` | `jupiter.dive` | start of dive | 00:05.000 | 150 | 01:39.000 |
-| `jupiter` | `jupiter.dive` | center of the cover | 00:06.800 | 204 | 01:40.800 |
+| `jupiter` | `jupiter.dive` | the handover | 00:06.808 | 204 | 01:40.808 |
 | `jupiter` | `jupiter.terrain` | start of terrain | 00:08.000 | 240 | 01:42.000 |
 | `jupiter` | `jupiter.rise` | start of rise | 00:14.000 | 420 | 01:48.000 |
-| `jupiter` | `jupiter.rise` | center of the cover | 00:15.000 | 450 | 01:49.000 |
+| `jupiter` | `jupiter.rise` | the handover | 00:15.008 | 450 | 01:49.008 |
 | `jupiter` | | end of the clip | 00:16.500 | 495 | 01:50.500 |
 | `saturn` | `saturn.hold` | start of hold | 00:00.000 | 0 | 01:53.000 |
 | `saturn` | `saturn.dive` | start of dive | 00:05.000 | 150 | 01:58.000 |
@@ -213,10 +213,10 @@ The clip's cues inside each post, after the cut:
 | `mars` | `mars.rise` | the handover | 00:19.142 | 574 |
 | `jupiter` | `jupiter.hold` | start of hold | 00:04.767 | 143 |
 | `jupiter` | `jupiter.dive` | start of dive | 00:09.767 | 293 |
-| `jupiter` | `jupiter.dive` | center of the cover | 00:11.567 | 347 |
+| `jupiter` | `jupiter.dive` | the handover | 00:11.575 | 347 |
 | `jupiter` | `jupiter.terrain` | start of terrain | 00:12.767 | 383 |
 | `jupiter` | `jupiter.rise` | start of rise | 00:18.767 | 563 |
-| `jupiter` | `jupiter.rise` | center of the cover | 00:19.767 | 593 |
+| `jupiter` | `jupiter.rise` | the handover | 00:19.775 | 593 |
 | `saturn` | `saturn.hold` | start of hold | 00:04.733 | 142 |
 | `saturn` | `saturn.dive` | start of dive | 00:09.733 | 292 |
 | `saturn` | `saturn.dive` | the handover | 00:11.375 | 341 |
