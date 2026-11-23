@@ -1026,3 +1026,57 @@ R4-part1, score 4:
   - tsc clean, vitest 87 passed, shader audit no line in mercury. Motion changed: dive 690 to 708 (the ghosts in the sky fade out; before they stayed to the cover).
   - Worse or new, in my own words: the lens now flares in the hold and not from a fifth into the dive, as it already does not in the rise; a viewer who watches the ghost in the hold sees it go over 18 frames while the camera starts to move. Take out: revert c8e4a1dd alone; d76c0195 stays whole without it.
 - 18:11 main moved to 55319c5a (status only, `kit/PROGRESS.md` and status stills): merged plain (c35d462d).
+- 18:12 `CUT35 mercury, addition` sent to `/root` (high): READY 4a323009e9ded6b2a99653127c92adf42b445c2e (main 55319c5a merged; film tree = main with 36424325, the bars cure, and c8e4a1dd, the ghost fade, two separable commits). d76c0195 stays valid without the second. Repeat at draft on the pushed head: 717 the same bytes as `p6/g35z` (sha256 767976c24c937d70), 615 the same bytes as `p6/c35` (02f179d090292851). Looks pushed 18:12.
+- Left for after the cut, none started: the list of round 34 above without the ghost at 717.
+- 21:50 NEW ROLE from the Builder (high): the film is frozen, the building work on Mercury is finished, nothing more goes onto main. From here this VM is a render worker for the master: repo detached at 567b3a555461d1e7d88300dbe5febc52073da828, brief `assets-src/shared/RENDER-WORKER.md`. No edit, commit or push on `agent/mercury` after this line. Branch head before the role: 44c22b76 (pushed).
+- 21:54 to 00:55 (22 to 23 Nov) render worker jobs for the master on 567b3a55: film-16x9-final-350, 400, 426, 458, 469, 457, 371 rendered and sent, `LIST DONE` sent. Scratch under `out/work/mercury` was thinned for disk (frame dumps and `.npy` arrays deleted; `tiles`, `patches`, `wide`, `relief`, `sky`, the scripts and small files kept).
+
+## MAIL 213 (23 Nov, about 06:40 UTC): the place. New task, replaces everything held before
+
+Branch `agent/mercury-place`, cut from main 6da6c64146a47e56fe8d549e56883ed5b698ce67. Main took all of `agent/mercury` (src and assets equal). No code is carried across. Push only to `agent/mercury-place`. Looks: `npm run looks -- --push --folder mercury-place --note "one line"`, at least every 30 minutes of working time. Shared code requests go to `/root/handover_engineer` by message, short and exact, and are noted here. Reports to `/root` at each milestone and when blocked: branch, commit, what to look at, what was measured, what is still wrong.
+
+The mail, word for word:
+
+"MAIL 213 from the Builder (/root). A new task for you, mercury_builder. It replaces anything you still held. Answer with one line as soon as your new branch exists: "ACK 213 <branch> <commit>".
+
+What happened since your last work. The film was frozen (main, commit 567b3a55), the record round ran, the master, the nine clips and the nine posts were made. Brandon watched it and wrote this note at 05:57 UTC on 2026-11-23. It outranks the kit's cover rules:
+
+"The main issue I have is the transitions between the planet view and the moment before the surface view comes in, it's a blurry mess, and it's obviously a transition. I think the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to. Hey next, the surface for Jupiter, and Saturn both look completely weird. It looks like an image that is being stretched and contorted it shouldn't look like that. It should look like it's actually generated out of code."
+
+So every dive and every rise in the film is rebuilt: no cover, no wash, no stall and rush, no swap that can be seen. The spec is cut/HANDOVER.md on main. Part B of it is yours for mercury.
+
+Setup
+- git fetch origin main, then git checkout -b agent/mercury-place FETCH_HEAD. Main holds the kept build. Whatever is on your old branch and not on main was not taken: do not carry code across. Carry your notebook across if yours is newer than main's (assets-src/mercury/NOTES.md), and commit it first.
+- npm ci if the lock file changed, npm run build, npx vitest run: green before you change anything.
+- Read whole, from disk: cut/HANDOVER.md; kit/PROGRESS.md section "Review note of 2026-11-23" and the open items 152, 113, 133 and 69 to 78 (the critics' words on your dive and rise in the frozen build); AGENTS.md and kit/addenda/ again; your own notebook.
+- Write this task into your notebook before you start, with this mail's number, so it survives a compaction.
+
+The task, in this order
+1. S1 now: solve the camera of your approved close image (references/approved/mercury-close.jpg) against the sphere at your spot and write src/stops/mercury/place.json. Check it by drawing the globe side from that camera beside the close side at the same frame: horizon on horizon, features where they belong.
+2. S2 now: lay the place onto the globe as plates, repaint what the laying back stretches, match colour, nest them under your patch pyramid, hold G13 down the whole dive. Proof: the 12 frame top down dive sheet with no blur.
+3. S3: one steady move for dive and rise by the rules of E3. You may write your own path or wait for the generic one; write divePose(time, view) and risePose(time, view) against the contract of E1 in cut/HANDOVER.md either way.
+4. S4 and S5 when I tell you that E1 and E2 are on main (the engine is being built now by another agent, handover_engineer, and proven on Mars first): merge main, opt in, remove your cover, bring light, exposure, haze, Sun and sky to one function of time through T, and run npm run handover for dive and rise.
+
+What may not change: your hold segment and your terrain segment. Their judged frames must come out as the same picture as the kept stills in out/stills/, because those chunks of the film are not rendered again. The travel after your rise is not rendered again either: your rise must end in the pose, the speed and the look that travel starts with today. The timeline does not change.
+
+Your stop
+- Frames: hold 540 to 689, dive 690 to 779, terrain 780 to 959, rise 960 to 1034. Judged: 615, 717, 870, 1016.
+- The place is the cratered ground of the close image with its big terraced crater, seen from low orbit. Airless rock is the hardest case and the most rewarding: every crater seen on the way down must be the same crater one level deeper, down to the terraced crater the camera arrives over.
+- In the frozen build frames 690 to 722 hardly move, 730 and 739 smear, and by 747 the close scene is there. The old cover was a glare of the Sun. It goes: the Sun may be in frame as the Sun, with the same size, place and flare on both sides at T.
+- What the critics wrote: "camera angle, field of view, horizon orientation, and sun position jump abruptly: the large yellow sun at the right edge in 722 shrinks into a small ball at upper right over black sky in 730, then leaps to upper-left-center as a white diffraction starburst in 739 while the vertical right limb flips to a diagonal horizon"; "entering the dive swaps visibly from the hold plate to a different 3D globe setup: between frames 698 and 706 the upper-left starfield drops to solid black, the bright orbiting dot at lower left vanishes, and sharper procedural bump craters pop in along the terminator"; of the rise: "camera motion reverses direction across the cover via a visible cross-dissolve: frames 985-992 push forward and downward over the terrain, then frames 993-996 pull rapidly backward from a brighter globe while the foreground crater dissolves out, the sun slides rightward, a dark ghost band appears above the right limb, and an orange nebula pops into the upper-left sky"; "between frames 1000 and 1007 the small white starburst sun pops into a huge yellow solar disc at the right edge while the pale gray globe shifts to warm brown shading".
+- So besides the place: the step from the hold into the dive (698 to 706) must be no step at all, and the Sun, the sky and the colour of the globe must run as one function of time from the hold through the dive, the close view and the rise into the travel.
+
+Working rules
+- Your folders only: src/stops/mercury/, assets-src/mercury/, public/assets/mercury/. Push only to agent/mercury-place. Never main, never force, never rebase. If shared code must change, send the request to /root/handover_engineer by message, short and exact, and note it in your notebook.
+- Looks at least every 30 minutes of working time, also while something renders, good or bad: npm run looks -- --push --folder mercury-place --note "one line".
+- Draft tier to iterate, review tier to prove. One render process at a time. Motion is judged on consecutive frames: look at every frame of every sheet yourself before you report.
+- Image generation only through the skill named media, at most 6 takes per asset per round, recipe in assets-src/mercury/RECIPE.md, binaries committed once per milestone. No file over 95 MB. Values the picture depends on live in config or in a JSON file of your stop. No Math.random, Date.now, performance.now on a pixel path.
+- Every commit message ends with the trailer: Co-authored-by: Perplexity <noreply@perplexity.ai>. No em dashes, no en dashes, no exclamation points, no model names in any file or message.
+- Report to /root by message at each milestone and when blocked: branch, commit, what to look at, what you measured, what is still wrong. Do not wait for an answer unless blocked. M1 is S1 with its check picture and the first laid back plate, rough is fine, within about 90 minutes. M2 is S2 and S3 with their proofs. M3 is the handover, dive and rise, with the E4 reports and the dense sheets.
+- The bar: a viewer who steps through the frames one by one cannot name the frame where the scene changes, and every frame shows a place on the body that the camera is flying to or leaving."
+
+After a compaction: read `cut/HANDOVER.md`, this section and everything below it, then carry on. M1 is due about 08:10 UTC.
+
+### Log of the place
+
+- 06:41 branch cut, notebook carried across (3 lines newer than main's), this task written down.
