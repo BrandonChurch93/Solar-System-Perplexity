@@ -1,9 +1,51 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T12:08:11.419Z",
- "head": "f3b7abbc582bed05ffa9a55748bbfbd6073f2cba",
- "note": "Haze glow (HazeParams.glow, setGlow) off and on at Mars 2454 and 2448 with scratch values; fadeMinor pairs at Mars 2454 (five levels of today, scratch seven levels, texels, three frame strip). Options off stay byte equal (11 stills, also in this folder). The fadeMinor pair with the real Mars plates waits for agent/mars-place to push them.",
+ "pushed": "2026-11-23T12:42:07.529Z",
+ "head": "2e8a84984631679c48784bec7972f813d7dc85c1",
+ "note": "fadeMinor off and on with the real Mars plates (agent/mars-place 41d7784) at 2448 and 2704, draft, side=orbit noplace. 2448: fine axis under 0.5 texels 0.3946 to 0.0156 of ground, 23.5 percent of ground pixels change. 2704 is on the old path of that branch (red under 1.0 0.1041 both).",
  "looks": [
+  {
+   "time": "2026-11-23T12:42:06.880Z",
+   "file": "20261123124206880-note-pairM-2704-texels.jpg",
+   "source": "out/work/t2/pairM-2704-texels.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2704 texels view (blue fine axis)"
+  },
+  {
+   "time": "2026-11-23T12:42:06.273Z",
+   "file": "20261123124206273-note-pairM-2704-crop.jpg",
+   "source": "out/work/t2/pairM-2704-crop.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2704 far band crop x2"
+  },
+  {
+   "time": "2026-11-23T12:42:05.509Z",
+   "file": "20261123124205509-note-pairM-2704-full.jpg",
+   "source": "out/work/t2/pairM-2704-full.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2704 side=orbit noplace, 8 levels of agent/mars-place 41d7784"
+  },
+  {
+   "time": "2026-11-23T12:42:04.858Z",
+   "file": "20261123124204858-note-pairM-2448-texels.jpg",
+   "source": "out/work/t2/pairM-2448-texels.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2448 texels view (blue fine axis)"
+  },
+  {
+   "time": "2026-11-23T12:42:04.098Z",
+   "file": "20261123124204098-note-pairM-2448-crop.jpg",
+   "source": "out/work/t2/pairM-2448-crop.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2448 far band crop x2"
+  },
+  {
+   "time": "2026-11-23T12:42:02.927Z",
+   "file": "20261123124202927-note-pairM-2448-full.jpg",
+   "source": "out/work/t2/pairM-2448-full.png",
+   "kind": "note",
+   "label": "fadeMinor off and on, Mars 2448 side=orbit noplace, 8 levels of agent/mars-place 41d7784"
+  },
   {
    "time": "2026-11-23T12:07:58.273Z",
    "file": "20261123120758273-note-pair-glow-f2448.jpg",
@@ -178,34 +220,6 @@
    "source": "out/work/t2/strip7-three-frames.png",
    "kind": "note",
    "label": "fadeMinor moving check: frames 2453, 2454, 2455 before and after at 1 to 1, draft, grain off, scratch levels down to 0.6 deg; no sparkle seen"
-  },
-  {
-   "time": "2026-11-23T11:26:29.828Z",
-   "file": "20261123112629828-note-pair7-f2454-crop.jpg",
-   "source": "out/work/t2/pair7-f2454-crop.png",
-   "kind": "note",
-   "label": "fadeMinor before and after, crop at 1 to 1, Mars 2454, scratch levels down to 0.6 deg"
-  },
-  {
-   "time": "2026-11-23T11:26:29.176Z",
-   "file": "20261123112629176-note-pair7-f2454-beauty.jpg",
-   "source": "out/work/t2/pair7-f2454-beauty.png",
-   "kind": "note",
-   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, scratch levels down to 0.6 deg (last two reuse patch-3.jpg, wrong content, right density)"
-  },
-  {
-   "time": "2026-11-23T11:26:28.555Z",
-   "file": "20261123112628555-note-pair7-f2454-texels.jpg",
-   "source": "out/work/t2/pair7-f2454-texels.png",
-   "kind": "note",
-   "label": "fadeMinor texels view before and after, Mars 2454, scratch levels down to 0.6 deg: fine axis under 1.0 falls from 0.876 to 0.387 of ground pixels"
-  },
-  {
-   "time": "2026-11-23T11:26:27.618Z",
-   "file": "20261123112627618-note-pair5-f2454-beauty.jpg",
-   "source": "out/work/t2/pair5-f2454-beauty.png",
-   "kind": "note",
-   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, the five levels of today (10.9 percent of ground pixels change level)"
   }
  ]
 }
