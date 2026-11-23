@@ -43,6 +43,14 @@
       "preview": "proof-preview.mp4"
     }
   },
+  "capture": {
+    "rates": {
+      "uhd": 2
+    },
+    "bitrateMbps": {
+      "uhd": 80
+    }
+  },
   "previewFilm": {
     "bitrateMbps": 2
   },

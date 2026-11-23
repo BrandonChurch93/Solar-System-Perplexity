@@ -1,4 +1,5 @@
 import { config, type FormatDef } from '../config'
+import { setCapture, shutterAsked } from '../core/clock'
 import type { Engine } from '../core/engine'
 import { clipRange, setsForFrame } from '../director/timeline'
 import { FilmEncoder, chooseFallback, chooseH264, type CodecChoice, type EncodeSpec, type Sink } from './encoder'
@@ -21,6 +22,7 @@ export interface ExportStatus {
   assets: string
   first: number
   last: number
+  rate: number
   sink: string
   seconds: number
 }
@@ -29,7 +31,7 @@ type Win = Window & { exportStatus?: ExportStatus; exportResult?: Uint8Array; sh
 
 interface CheckResult { text: string; level: 'ok' | 'warn' | 'bad' }
 
-interface Plan { format: FormatDef; tier: string; assets: string; stop: string | null; first: number; last: number; file: string; spec: EncodeSpec }
+interface Plan { format: FormatDef; tier: string; assets: string; stop: string | null; first: number; last: number; rate: number; frames: number; file: string; spec: EncodeSpec }
 
 const MB = 1024 * 1024
 const MEMORY_EVERY = 15
@@ -82,7 +84,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
   const raw = config.raw
   const auto = params.get('auto') === '1'
   const allowFallback = params.get('fallback') === '1' || auto
-  const status: ExportStatus = { state: 'idle', framesDone: 0, framesTotal: 0, message: '', memory: [], codec: '', h264: false, file: '', format: '', tier: '', assets: '', first: 0, last: 0, sink: '', seconds: 0 }
+  const status: ExportStatus = { state: 'idle', framesDone: 0, framesTotal: 0, message: '', memory: [], codec: '', h264: false, file: '', format: '', tier: '', assets: '', first: 0, last: 0, rate: 1, sink: '', seconds: 0 }
   win.exportStatus = status
 
   const k = config.formatKeys
@@ -92,6 +94,9 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
   const askedTier = params.get('tier')
   const askedAssets = params.get('assets')
   const askedStop = params.get('stop')
+  const askedRate = Number(params.get('rate'))
+  const rateOf = (id: string): number => (Number.isInteger(askedRate) && askedRate >= 1 ? askedRate : (raw.capture.rates as Record<string, number>)[formatKey(id)] ?? 1)
+  const mbpsOf = (id: string): number => (raw.capture.bitrateMbps as Record<string, number>)[formatKey(id)] ?? raw.export.bitrateMbps
   const firstParam = params.get('first')
   const lastParam = params.get('last')
 
@@ -132,7 +137,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
   }
 
   const formatName = (id: string): string => (id === k.master ? 'Master' : id === k.uhd ? 'Ultra HD' : id === k.preview ? 'Preview' : id)
-  const formats = radioGroup('Format', 'format', formatIds.map((id) => ({ value: id, label: formatName(id), note: config.formats[id]!.width + ' by ' + config.formats[id]!.height })), format, (v) => {
+  const formats = radioGroup('Format', 'format', formatIds.map((id) => ({ value: id, label: formatName(id), note: config.formats[id]!.width + ' by ' + config.formats[id]!.height + (rateOf(id) > 1 ? ', ' + config.fps * rateOf(id) + ' frames a second' : '') })), format, (v) => {
     format = v
     void refresh()
   })
@@ -232,7 +237,8 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
     if (lastParam !== null && Number.isFinite(Number(lastParam))) last = Math.min(last, Math.floor(Number(lastParam)))
     const key = formatKey(f.id)
     const file = stop ? raw.export.files.clip.split('{stop}').join(stop) : raw.export.files[key]
-    return { format: f, tier, assets, stop, first, last, file, spec: { width: f.width, height: f.height, fps: config.fps, bitrate: raw.export.bitrateMbps * 1e6 } }
+    const rate = rateOf(f.id)
+    return { format: f, tier, assets, stop, first, last, rate, frames: Math.max(last - first + 1, 0) * rate, file, spec: { width: f.width, height: f.height, fps: config.fps * rate, bitrate: mbpsOf(f.id) * 1e6 } }
   }
 
   let codec: CodecChoice | null = null
@@ -286,7 +292,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
       fatal = true
       results.push({ level: 'bad', text: 'This machine reports ' + dm + ' GB of memory, and the ' + assets + ' set needs about ' + needGb.toFixed(1) + ' GB for two stops and the sky.' })
     }
-    const frames = p.last - p.first + 1
+    const frames = p.frames
     if (frames < 1) {
       fatal = true
       results.push({ level: 'bad', text: 'The chosen range has no frames.' })
@@ -331,8 +337,8 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
     if (!choice || blocked) return
     running = true
     lock(true)
-    const total = p.last - p.first + 1
-    Object.assign(status, { state: 'running', framesDone: 0, framesTotal: total, memory: [], codec: choice.codec, h264: choice.h264, file: p.file, format: p.format.id, tier: p.tier, assets: p.assets, first: p.first, last: p.last, sink: sink.kind, seconds: 0 })
+    const total = p.frames
+    Object.assign(status, { state: 'running', framesDone: 0, framesTotal: total, memory: [], codec: choice.codec, h264: choice.h264, file: p.file, format: p.format.id, tier: p.tier, assets: p.assets, first: p.first, last: p.last, rate: p.rate, sink: sink.kind, seconds: 0 })
     delete win.exportResult
     let wake: WakeLockSentinel | null = null
     try {
@@ -346,6 +352,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
     let encoder: FilmEncoder | null = null
     try {
       await win.showcase?.ready
+      setCapture(p.rate, shutterAsked())
       engine.setFormat(p.format.id)
       engine.setAssets(p.assets)
       encoder = new FilmEncoder(choice, p.spec, sink, Math.min(raw.export.warmUpFrames, total))
@@ -353,15 +360,17 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
         const mem = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
         status.memory.push({ frame, textureBytes: engine.sets.totalBytes(), loaded: engine.sets.loadedIds(), jsHeap: mem ? mem.usedJSHeapSize : null })
       }
-      for (let f = p.first; f <= p.last; f++) {
+      const firstShot = p.first * p.rate
+      for (let shot = firstShot; shot < firstShot + total; shot++) {
         if (lost) throw new Error('lost')
+        const f = shot / p.rate
         const wanted = setsForFrame(f)
         for (const id of engine.sets.loadedIds()) if (!wanted.includes(id)) engine.sets.free(id)
         await engine.renderFrame(f, p.tier)
         if (lost || engine.renderer.getContext().isContextLost()) throw new Error('lost')
-        const i = f - p.first
+        const i = shot - firstShot
         encoder.encodeCanvas(engine.canvas, i)
-        if (i % MEMORY_EVERY === 0 || f === p.last) sample(f)
+        if (i % MEMORY_EVERY === 0 || i === total - 1) sample(f)
         await encoder.drainTo(MAX_QUEUE, yieldNow)
         status.framesDone = i + 1
         const elapsed = (performance.now() - t0) / 1000
@@ -369,7 +378,7 @@ export function mountExport(engine: Engine, params: URLSearchParams): void {
         elapsedEl.textContent = clock(elapsed)
         remainEl.textContent = clock((elapsed / status.framesDone) * (total - status.framesDone))
         fill.style.width = ((100 * status.framesDone) / total).toFixed(2) + '%'
-        if (status.framesDone === 1 || status.framesDone % 10 === 0) say('Rendering frame ' + f + '.')
+        if (status.framesDone === 1 || status.framesDone % 10 === 0) say('Rendering frame ' + (p.rate > 1 ? f.toFixed(2) : f) + '.')
         await yieldNow()
       }
       say('Finishing the file.')

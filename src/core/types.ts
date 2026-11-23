@@ -120,7 +120,9 @@ export interface SetContext {
 
 // shutter: the share of the film's shutter the frame keeps (E6, the capped shutter of a dive or a rise). 1 or absent: all of it. A set that takes a
 // time step from the shutter (one sample's share of it, for a smear along the motion) multiplies the step by this.
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number }
+// shutterSeconds: how long the full shutter of the frame being drawn is open, in seconds, at the capture rate (film.shutterDegrees of the capture
+// frame; shutterFraction / fps at rate 1). One sample's share of it is shutterSeconds / samples.
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number }
 
 export interface SkyPatch {
   view: ViewKind

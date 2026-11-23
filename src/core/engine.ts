@@ -6,7 +6,8 @@ import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
 import { framePlan } from './motion'
-import { samplesFor, shutterMid } from './sampler'
+import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from './clock'
+import { samplesFor } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
 import { floorRing, sharedSkyWeight } from './skyfloor'
@@ -218,7 +219,8 @@ export class Engine {
 
   skyBytes = 0
 
-  async prepare(frame: number): Promise<void> {
+  async prepare(at: number): Promise<void> {
+    const frame = wholeFrame(at)
     await this.ensureSky()
     await this.sets.ensure(setsForFrame(frame), this.assets)
     await this.belt.prepare(frame, this.assets, this.renderer)
@@ -226,7 +228,7 @@ export class Engine {
 
   async renderFrame(frame: number, tier: string): Promise<void> {
     if (!this.director) throw new Error('no director')
-    const f = Math.min(Math.max(Math.floor(frame), 0), config.frameCount - 1)
+    const f = Math.min(Math.max(frame, 0), (captureFrames() - 1) / captureRate())
     const epoch = this.sets.epoch
     this.asked++
     await this.prepare(f)
@@ -244,7 +246,7 @@ export class Engine {
     this.soft = plan.soft
     this.shutter = plan.shutter
     const still = probe.shut
-    const middle = probe.time ?? (f + shutterMid()) / config.fps
+    const middle = probe.time ?? (f + spanMid()) / config.fps
     const mid = this.director.shotAt(f, middle)
     let other: Shot | null = null
     const midOf = (shot: Shot): Shot => {
@@ -348,7 +350,7 @@ export class Engine {
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
       this.sky.setBandLook(shot.skyLook ?? 0)
     }
-    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter }
+    const view: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds() }
     for (const state of shot.sets) {
       const set = this.sets.get(state.id)!
       set.world.position.copy(state.origin).sub(shot.camera.position)
@@ -579,7 +581,8 @@ export class Engine {
     await this.sets.ensure(ids, this.assets)
   }
 
-  ready(frame: number): boolean {
+  ready(at: number): boolean {
+    const frame = wholeFrame(at)
     return this.skyTexture !== null && this.skyAssets === this.assets && setsForFrame(frame).every((id) => this.sets.has(id, this.assets)) && this.belt.ready(frame, this.assets)
   }
 
