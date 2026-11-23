@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
 import type { CoverHorizon, Pose, ViewKind } from '../core/types'
-import { handoverOf, sideAt, type HandoverParams, type Sidestep } from './handover'
+import { handoverOf, sideAt, type HandoverParams, type Sidestep, type SkyShares } from './handover'
 import { coverFrames, coverWindow, setCoverWindow, setHandover, withoutHandover, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
@@ -506,6 +506,27 @@ export class StopPlan {
 
   coverHidden(_seg: Segment, _time: number): number | undefined {
     return undefined
+  }
+
+  // Three schedules of the sky on the globe side of a dive or rise that hands over run on the film's clock. A stop whose path runs at a pace of
+  // its own may give each of them itself. Every one returns null by default, and then the engine's own schedule is taken.
+
+  // The share of each sky layer: low is the weight of the sky of the close view (it also sets the floor, the glow and the exposure the sky
+  // takes from the close view), high the weight of the sky of the globe view. Null leaves both to the engine: low is skyWeight of the
+  // handover, high is 1 minus low in a dive and 0 in a rise. A stop may give low alone.
+  skyShare(_seg: Segment, _time: number): SkyShares | null {
+    return null
+  }
+
+  // The weight, 0 to 1, of the carry: how far the sky has turned from the globe view's frame to the close view's (the carry of the stars and
+  // the turn towards the low turn). Null: skyTurnWeight of the handover.
+  skyCarryShare(_seg: Segment, _time: number): number | null {
+    return null
+  }
+
+  // The time the star lift of a rise is read at, in seconds of the film. Null: the time of the shot.
+  skyLiftAt(_seg: Segment, _time: number): number | null {
+    return null
   }
 
   skyTurnShare(seg: Segment, time: number): number | null {
