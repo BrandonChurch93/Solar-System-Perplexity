@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
-import { handoverOf, skyTurnWeight, type HandoverParams } from '../../director/handover'
+import { handoverOf, type HandoverParams } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { lookAt, smooth } from '../../director/rig'
 import deck from './deck.json'
@@ -119,20 +119,12 @@ function paceOf(knots: number[][], end = 1): Pace {
   return { film, path, slope }
 }
 
-const paces = { dive: paceOf(place.pace.dive), rise: paceOf(place.pace.rise) }
-
 function along(p: Pace, seconds: number): number {
   const n = p.film.length
   let i = 0
   while (i < n - 2 && seconds > p.film[i + 1]!) i++
   const span = p.film[i + 1]! - p.film[i]!
   return hermite((seconds - p.film[i]!) / span, p.path[i]!, p.path[i + 1]!, span * p.slope[i]!, span * p.slope[i + 1]!)
-}
-
-export function paced(kind: 'dive' | 'rise', seconds: number): number {
-  const p = paces[kind]
-  if (seconds <= p.film[0]! || seconds >= p.film[p.film.length - 1]!) return seconds
-  return along(p, seconds)
 }
 
 const lifts = { dive: paceOf(deck.air.lift.dive, 0), rise: paceOf(deck.air.lift.rise, 0) }
@@ -205,34 +197,25 @@ export class JupiterPlan extends StopPlan {
     return { position: local.position.clone().sub(centre).multiplyScalar(1 / relief.radius).applyQuaternion(q), quaternion: q.clone().multiply(local.quaternion), vfov: local.vfov }
   }
 
-  private onPath(kind: 'dive' | 'rise', time: number, pose: (at: number) => Pose): Pose {
-    const start = kind === 'dive' ? this.seg.dive!.start : this.seg.rise.start
-    const at = start + paced(kind, time - start)
-    const p = pose(at)
-    if (at === time) return p
-    const on = this.turn(time).multiply(this.turn(at).invert())
-    return { position: p.position.clone().applyQuaternion(on), quaternion: on.multiply(p.quaternion), vfov: p.vfov }
-  }
-
   override divePose(time: number, view: ViewKind): Pose {
     if (view === 'terrain') return this.close('dive', time)
     const h = handoverOf(this.id, 'dive')
     if (h && time >= h.time) return this.twin(this.close('dive', time), time)
-    return this.onPath('dive', time, (at) => super.divePose(at, view))
+    return super.divePose(time, view)
   }
 
   override risePose(time: number, view: ViewKind): Pose {
     if (view === 'terrain') return this.close('rise', time)
     const h = handoverOf(this.id, 'rise')
     if (h && time <= h.time) return super.risePose(time, view)
-    return this.onPath('rise', time, (at) => super.risePose(at, view))
+    return super.risePose(time, view)
   }
 
   override skyTurnShare(seg: Segment, time: number): number | null {
     const h = handoverOf(this.id, 'rise')
     if (seg.kind !== 'rise' || !h) return super.skyTurnShare(seg, time)
     const span = place.sky.turnFrames / config.fps
-    if (span <= 0) return skyTurnWeight(seg, seg.start + paced('rise', time - seg.start))
+    if (span <= 0) return super.skyTurnShare(seg, time)
     const k = Math.min(Math.max(1 - (time - (h.lastFrame + 1) / config.fps) / span, 0), 1)
     return k * k * k * (k * (k * 6 - 15) + 10)
   }
