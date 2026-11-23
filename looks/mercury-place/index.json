@@ -1,9 +1,57 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T18:10:16.566Z",
+ "pushed": "2026-11-23T18:33:32.340Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "mercury: rise far band, 717 full shutter and 717 native crop, all open faults",
+ "note": "baseline of dive and rise frame by frame before the cures of mail 314; Sun table printed: plate Sun sets behind the limb 705 to 714, a second Sun enters at the top 731 to 737",
  "looks": [
+  {
+   "time": "2026-11-23T18:33:31.776Z",
+   "file": "20261123183331776-note-hzB1.jpg",
+   "source": "out/work/mercury/place/tmp/hzB1.jpg",
+   "kind": "note",
+   "label": "rise horizon 988 to 995 native, open fault: globe band above the picture's own horizon line",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:33:31.075Z",
+   "file": "20261123183331075-note-t-rise3.jpg",
+   "source": "out/work/mercury/place/tmp/t-rise3.jpg",
+   "kind": "note",
+   "label": "baseline working tree draft, every frame, t-rise3 (before the cures of mail 314)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:33:30.540Z",
+   "file": "20261123183330540-note-t-rise2.jpg",
+   "source": "out/work/mercury/place/tmp/t-rise2.jpg",
+   "kind": "note",
+   "label": "baseline working tree draft, every frame, t-rise2 (before the cures of mail 314)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:33:29.974Z",
+   "file": "20261123183329974-note-t-rise1.jpg",
+   "source": "out/work/mercury/place/tmp/t-rise1.jpg",
+   "kind": "note",
+   "label": "baseline working tree draft, every frame, t-rise1 (before the cures of mail 314)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:33:29.414Z",
+   "file": "20261123183329414-note-t-dive3.jpg",
+   "source": "out/work/mercury/place/tmp/t-dive3.jpg",
+   "kind": "note",
+   "label": "baseline working tree draft, every frame, t-dive3 (before the cures of mail 314)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:33:28.829Z",
+   "file": "20261123183328829-note-t-dive2.jpg",
+   "source": "out/work/mercury/place/tmp/t-dive2.jpg",
+   "kind": "note",
+   "label": "baseline working tree draft, every frame, t-dive2 (before the cures of mail 314)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T18:10:07.232Z",
    "file": "20261123181007232-note-n717-01.jpg",
@@ -19,62 +67,6 @@
    "kind": "note",
    "label": "mercury 717 review tier full shutter, top left native: rims drawn into slabs by the 59 px shutter, the engine cap E6 is the cure",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:10:05.946Z",
-   "file": "20261123181005946-note-risefar.jpg",
-   "source": "out/work/mercury/place/tmp/risefar.jpg",
-   "kind": "note",
-   "label": "mercury rise 990 to 993 draft, working tree: far band pale and flat beyond the horizon, second limb line, not cured",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T17:41:08.036Z",
-   "file": "20261123174108036-note-topleft.jpg",
-   "source": "out/work/mercury/place/tmp/topleft.jpg",
-   "kind": "note",
-   "label": "Mercury dive 741 742 743 top left, draft, uncommitted: still wrong, pale flat slab of far field with a straight edge under the limb",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T17:41:07.314Z",
-   "file": "20261123174107314-note-d9left2.jpg",
-   "source": "out/work/mercury/place/tmp/d9left2.jpg",
-   "kind": "note",
-   "label": "Mercury dive 740 to 743 left border at 2x, draft, uncommitted: junction of picture and copied ground no longer a straight line",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T17:41:06.281Z",
-   "file": "20261123174106281-note-d9dive.jpg",
-   "source": "out/work/mercury/place/tmp/d9dive.jpg",
-   "kind": "note",
-   "label": "Mercury dive 738 740 741 742, draft, uncommitted: place picture to the terrain end with a minimum cut seam, no four sided patch",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T17:37:38.958Z",
-   "file": "20261123173738958-sheet-mercury-rise-draft-after.jpg",
-   "source": "out/work/handover/mercury-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 991 to 1002 (after T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 991,
-   "last": 1002,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:37:00.084Z",
-   "file": "20261123173700084-sheet-mercury-rise-draft-before.jpg",
-   "source": "out/work/handover/mercury-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "mercury rise, every frame 978 to 989 (before T, frame 990), draft tier",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "first": 978,
-   "last": 989,
-   "tier": "draft"
   }
  ]
 }
