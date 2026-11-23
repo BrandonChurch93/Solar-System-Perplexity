@@ -1,0 +1,21 @@
+{
+  "note": "The ladder of the Mars patch pyramid with the place plates. size is the full set; web is half.",
+  "size": 4096,
+  "jpegQuality": 94,
+  "feather": 0.12,
+  "kept": [
+    { "file": "patch-wide.jpg", "widthDeg": 96 },
+    { "file": "patch-1.jpg", "widthDeg": 48 },
+    { "file": "patch-mid.jpg", "widthDeg": 24 },
+    { "file": "patch-2.jpg", "widthDeg": 12 }
+  ],
+  "old": [{ "file": "patch-3.jpg", "widthDeg": 3 }],
+  "plates": [
+    { "file": "plate-6.jpg", "widthDeg": 6 },
+    { "file": "plate-3.jpg", "widthDeg": 3 },
+    { "file": "plate-1p5.jpg", "widthDeg": 1.5 },
+    { "file": "plate-0p75.jpg", "widthDeg": 0.75 },
+    { "file": "plate-0p375.jpg", "widthDeg": 0.375 }
+  ],
+  "rough": { "edgeErodePx": 24, "edgeFeatherPx": 96, "maxStretch": 1e9 }
+}

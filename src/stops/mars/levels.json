@@ -1,0 +1,9 @@
+{
+  "levels": [
+    { "file": "patch-wide.jpg", "widthDeg": 96 },
+    { "file": "patch-1.jpg", "widthDeg": 48 },
+    { "file": "patch-mid.jpg", "widthDeg": 24 },
+    { "file": "patch-2.jpg", "widthDeg": 12 },
+    { "file": "patch-3.jpg", "widthDeg": 3 }
+  ]
+}

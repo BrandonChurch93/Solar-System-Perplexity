@@ -1,4 +1,5 @@
 import type { ReliefDef } from '../../terrain/relief'
+import levelsJson from './levels.json'
 import reliefJson from './relief.json'
 import wrapJson from './wrap.json'
 
@@ -12,7 +13,7 @@ export const wrap = {
 
 export const patches = {
   spot: { lon: -81.86, lat: -4.54 },
-  levels: [{ file: 'patch-wide.jpg', widthDeg: 96 }, { file: 'patch-1.jpg', widthDeg: 48 }, { file: 'patch-mid.jpg', widthDeg: 24 }, { file: 'patch-2.jpg', widthDeg: 12 }, { file: 'patch-3.jpg', widthDeg: 3 }],
+  levels: levelsJson.levels as { file: string; widthDeg: number }[],
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
   nearDeg: 12,
