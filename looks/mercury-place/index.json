@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T18:33:32.340Z",
+ "pushed": "2026-11-23T18:53:01.571Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "baseline of dive and rise frame by frame before the cures of mail 314; Sun table printed: plate Sun sets behind the limb 705 to 714, a second Sun enters at the top 731 to 737",
+ "note": "item 2 cause pinned at native size: globe alone band over the picture's horizon; item 3 path values chosen by table, frames next",
  "looks": [
+  {
+   "time": "2026-11-23T18:53:00.955Z",
+   "file": "20261123185300955-note-far0-rise.jpg",
+   "source": "out/work/mercury/place/tmp/far0-rise.jpg",
+   "kind": "note",
+   "label": "rise 991 to 996 with the flat far wash off: the band is the globe alone",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:53:00.380Z",
+   "file": "20261123185300380-note-sunin-before.jpg",
+   "source": "out/work/mercury/place/tmp/sunin-before.jpg",
+   "kind": "note",
+   "label": "Sun entering 731 to 737 before the cure: amount ramps on top of the approach",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:52:59.836Z",
+   "file": "20261123185259836-note-hz990.jpg",
+   "source": "out/work/mercury/place/tmp/hz990.jpg",
+   "kind": "note",
+   "label": "990 terrain (top) and 991 first globe frame (bottom): dark striped band between the picture's horizon and the limb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T18:52:59.252Z",
+   "file": "20261123185259252-note-limbcmp993.jpg",
+   "source": "out/work/mercury/place/tmp/limbcmp993.jpg",
+   "kind": "note",
+   "label": "993 native crop at the horizon: now (top) and with limb reach 0.5 (bottom); the band above the picture's horizon is still a second line",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T18:33:31.776Z",
    "file": "20261123183331776-note-hzB1.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/tmp/t-rise1.jpg",
    "kind": "note",
    "label": "baseline working tree draft, every frame, t-rise1 (before the cures of mail 314)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:29.414Z",
-   "file": "20261123183329414-note-t-dive3.jpg",
-   "source": "out/work/mercury/place/tmp/t-dive3.jpg",
-   "kind": "note",
-   "label": "baseline working tree draft, every frame, t-dive3 (before the cures of mail 314)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:28.829Z",
-   "file": "20261123183328829-note-t-dive2.jpg",
-   "source": "out/work/mercury/place/tmp/t-dive2.jpg",
-   "kind": "note",
-   "label": "baseline working tree draft, every frame, t-dive2 (before the cures of mail 314)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:10:07.232Z",
-   "file": "20261123181007232-note-n717-01.jpg",
-   "source": "out/work/mercury/place/tmp/n717-01.jpg",
-   "kind": "note",
-   "label": "mercury 717 draft native crop top middle: place plates paler with a straight left edge, open fault",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:10:06.678Z",
-   "file": "20261123181006678-note-r717-tl.jpg",
-   "source": "out/work/mercury/place/tmp/r717-tl.jpg",
-   "kind": "note",
-   "label": "mercury 717 review tier full shutter, top left native: rims drawn into slabs by the 59 px shutter, the engine cap E6 is the cure",
    "stop": "mercury"
   }
  ]
