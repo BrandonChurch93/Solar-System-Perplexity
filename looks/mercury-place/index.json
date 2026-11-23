@@ -1,72 +1,91 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T17:22:27.153Z",
- "head": "b7da15abef066f68c06350b1b277ae1de1eec6c1",
- "note": "dive patch: junction between picture and copied ground now a minimum cut, not a straight line; plates only, render follows",
+ "pushed": "2026-11-23T17:41:09.166Z",
+ "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
+ "note": "Mercury 17:41: junction cure rendered at draft (uncommitted), proof chain running; pale far slab top left 741 to 743 open",
  "looks": [
   {
-   "time": "2026-11-23T17:22:26.117Z",
-   "file": "20261123172226117-note-seamz-dive.jpg",
-   "source": "out/work/mercury/place/tmp/seamz-dive.jpg",
+   "time": "2026-11-23T17:41:08.036Z",
+   "file": "20261123174108036-note-topleft.jpg",
+   "source": "out/work/mercury/place/tmp/topleft.jpg",
    "kind": "note",
-   "label": "mercury plate level 4 at 1 to 1, far left of the T frame, working tree: left the plate, right the same with the field edge (red), the outer edge of the place picture (green) and the new junction (yellow, minimum cut between picture and copied ground). Not rendered yet, not committed",
+   "label": "Mercury dive 741 742 743 top left, draft, uncommitted: still wrong, pale flat slab of far field with a straight edge under the limb",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T16:45:37.592Z",
-   "file": "20261123164537592-note-dy743.jpg",
-   "source": "out/work/mercury/place/tmp/dy743.jpg",
+   "time": "2026-11-23T17:41:07.314Z",
+   "file": "20261123174107314-note-d9left2.jpg",
+   "source": "out/work/mercury/place/tmp/d9left2.jpg",
    "kind": "note",
-   "label": "mercury 743 left border 2x, left with the picture, right plates alone: thin dotted line and pale haze at the junction still in the plate; open",
+   "label": "Mercury dive 740 to 743 left border at 2x, draft, uncommitted: junction of picture and copied ground no longer a straight line",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T16:45:36.760Z",
-   "file": "20261123164536760-note-d7dive.jpg",
-   "source": "out/work/mercury/place/tmp/d7dive.jpg",
+   "time": "2026-11-23T17:41:06.281Z",
+   "file": "20261123174106281-note-d9dive.jpg",
+   "source": "out/work/mercury/place/tmp/d9dive.jpg",
    "kind": "note",
-   "label": "mercury dive 738 740 741 742 draft, working tree (field to the terrain end, border 64, dive margins cut): whole frames read as one ground; not committed",
+   "label": "Mercury dive 738 740 741 742, draft, uncommitted: place picture to the terrain end with a minimum cut seam, no four sided patch",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-23T16:20:13.972Z",
-   "file": "20261123162013972-note-edge4.jpg",
-   "source": "out/work/mercury/place/tmp/edge4.jpg",
-   "kind": "note",
-   "label": "level 4 plate, terrain laid to its true end, green frame of T, yellow picture with margins: the terrain ends at the picture border",
-   "stop": "mercury"
+   "time": "2026-11-23T17:37:38.958Z",
+   "file": "20261123173738958-sheet-mercury-rise-draft-after.jpg",
+   "source": "out/work/handover/mercury-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "mercury rise, every frame 991 to 1002 (after T, frame 990), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 991,
+   "last": 1002,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:20:13.438Z",
-   "file": "20261123162013438-note-dx743.jpg",
-   "source": "out/work/mercury/place/tmp/dx743.jpg",
-   "kind": "note",
-   "label": "743 left border 2x: with picture, plates alone, picture weight. The plate under the picture margin is not the picture, cause of the seam",
-   "stop": "mercury"
+   "time": "2026-11-23T17:37:00.084Z",
+   "file": "20261123173700084-sheet-mercury-rise-draft-before.jpg",
+   "source": "out/work/handover/mercury-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "mercury rise, every frame 978 to 989 (before T, frame 990), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 978,
+   "last": 989,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:20:12.894Z",
-   "file": "20261123162012894-note-d6left.jpg",
-   "source": "out/work/mercury/place/tmp/d6left.jpg",
-   "kind": "note",
-   "label": "trial d6 left border 740 to 744 at 1 to 1: seam still at 743, 25 px from the left",
-   "stop": "mercury"
+   "time": "2026-11-23T17:36:40.945Z",
+   "file": "20261123173640945-sheet-mercury-rise-draft-across.jpg",
+   "source": "out/work/handover/mercury-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "mercury rise, every frame 984 to 995 (across T, frame 990), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "first": 984,
+   "last": 995,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T16:20:12.114Z",
-   "file": "20261123162012114-note-d6dive.jpg",
-   "source": "out/work/mercury/place/tmp/d6dive.jpg",
-   "kind": "note",
-   "label": "trial d6 dive 736 738 740 741 742 743, uncommitted plates: picture copied outward past its border, no mirror",
-   "stop": "mercury"
+   "time": "2026-11-23T17:35:50.956Z",
+   "file": "20261123173550956-compare-mercury-rise-under.jpg",
+   "source": "out/work/handover/mercury-rise-under.png",
+   "kind": "compare",
+   "label": "mercury rise, the globe side at T (frame 990) with the place picture, alone, and their difference times 4",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 990,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T15:50:59.160Z",
-   "file": "20261123155059160-note-ei2left.jpg",
-   "source": "out/work/mercury/place/tmp/ei2left.jpg",
-   "kind": "note",
-   "label": "same state, left border 740 to 744 at 1 to 1: the spine of the mirror",
-   "stop": "mercury"
+   "time": "2026-11-23T17:35:27.188Z",
+   "file": "20261123173527188-sheet-mercury-dive-draft-after.jpg",
+   "source": "out/work/handover/mercury-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "mercury dive, every frame 745 to 756 (after T, frame 744), draft tier",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "first": 745,
+   "last": 756,
+   "tier": "draft"
   }
  ]
 }
