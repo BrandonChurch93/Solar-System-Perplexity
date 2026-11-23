@@ -1,9 +1,52 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T20:47:14.729Z",
- "head": "0285df9b02cf6bab490443c1082a32a6680de7dd",
- "note": "batch A merged with main locally (not named), all 165 move frames viewed at draft, proof chain runs; ring far arc fade still open",
+ "pushed": "2026-11-23T21:19:39.674Z",
+ "head": "001f0a73e338fba6056d2b32740098f18d532355",
+ "note": "ring fault at the 5006 limb found and cured; blocky patches of 4707 traced to hard cirrus bits times shutter samples, cirrus opacity read with 2 px in the moves; final proof chain running",
  "looks": [
+  {
+   "time": "2026-11-23T21:19:39.068Z",
+   "file": "20261123211939068-note-look-job4707.jpg",
+   "source": "../../../../tmp/look-job4707.jpg",
+   "kind": "note",
+   "label": "round 39 4707 crop E, what the blocks were",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T21:19:38.367Z",
+   "file": "20261123211938367-note-look-4725.jpg",
+   "source": "../../../../tmp/look-4725.jpg",
+   "kind": "note",
+   "label": "4725 largest change of the cirrus footprint",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T21:19:37.559Z",
+   "file": "20261123211937559-note-look-4707E.jpg",
+   "source": "../../../../tmp/look-4707E.jpg",
+   "kind": "note",
+   "label": "4707 crop E before and after the 2 px cirrus footprint",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T21:19:36.784Z",
+   "file": "20261123211936784-note-look-ring5006.jpg",
+   "source": "../../../../tmp/look-ring5006.jpg",
+   "kind": "note",
+   "label": "5006 ring across the dark limb, fault of batch A and cure",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:54:38.238Z",
+   "file": "20261123205438238-compare-neptune-dive-sides.jpg",
+   "source": "out/work/handover/neptune-dive-sides.png",
+   "kind": "compare",
+   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4758,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T20:47:13.367Z",
    "file": "20261123204713367-note-ring5006-low-ba.jpg",
@@ -26,46 +69,6 @@
    "source": "../../../../tmp/A-rise4.jpg",
    "kind": "note",
    "label": "batch A draft rise, late frames, the place shrinks to a fleck",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:47:09.400Z",
-   "file": "20261123204709400-note-A-dive3.jpg",
-   "source": "../../../../tmp/A-dive3.jpg",
-   "kind": "note",
-   "label": "batch A draft 4712 to 4727, the place grows in on the globe",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:27:52.268Z",
-   "file": "20261123202752268-note-p40-dashes.jpg",
-   "source": "../../../../tmp/p40-dashes.png",
-   "kind": "note",
-   "label": "alpha and rgb of patch-40 at the same bits",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:27:50.955Z",
-   "file": "20261123202750955-note-A4707-E.jpg",
-   "source": "../../../../tmp/A4707-E.png",
-   "kind": "note",
-   "label": "4707 crop E draft x2: hard cirrus bits = the blocks of item 3",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:27:49.744Z",
-   "file": "20261123202749744-note-A4707-ur.jpg",
-   "source": "../../../../tmp/A4707-ur.png",
-   "kind": "note",
-   "label": "4707 upper right native, cold stars, clean limb",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T20:27:48.535Z",
-   "file": "20261123202748535-note-A-dive2.jpg",
-   "source": "../../../../tmp/A-dive2.jpg",
-   "kind": "note",
-   "label": "batch A draft 4696 to 4711",
    "stop": "neptune"
   }
  ]
