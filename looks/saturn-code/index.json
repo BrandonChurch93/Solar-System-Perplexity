@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T09:58:32.863Z",
- "head": "747239c3f31a605973e98434b323e0e17c7cb488",
- "note": "ice rebuilt as lit balls from grains to blocks, floating levels, wakes and spokes; flight path longer (forward 0.5) so the plane streams past; look still too pebbly, colours of the A ring next",
+ "pushed": "2026-11-23T10:11:39.150Z",
+ "head": "0da1bbe8c2a6c37ed25509a62fdffd55bd6a7086",
+ "note": "ice near the camera: blocks with faces tried, dashes found to be floater shadows; next sand, colour of the A ring, finer lines",
  "looks": [
+  {
+   "time": "2026-11-23T10:11:38.355Z",
+   "file": "20261123101138355-note-d_3720.jpg",
+   "source": "../../../../tmp/v/d_3720.png",
+   "kind": "note",
+   "label": "3720 draft no grain: ice as blocks, before the sand and colour pass"
+  },
+  {
+   "time": "2026-11-23T10:11:37.788Z",
+   "file": "20261123101137788-note-zp_nearleft.jpg",
+   "source": "../../../../tmp/v/zp_nearleft.png",
+   "kind": "note",
+   "label": "3720 draft, A ring near left at 2x, approved left, mine right: blocks with faces, dashes are floater shadows (to remove)"
+  },
   {
    "time": "2026-11-23T09:58:32.296Z",
    "file": "20261123095832296-note-zp_nearleft.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/look_3720_ice1.png",
    "kind": "note",
    "label": "3720 draft, first grains of ice in the sheet (too soft, too sparse yet)"
-  },
-  {
-   "time": "2026-11-23T08:46:27.445Z",
-   "file": "20261123084627445-note-pair_mid.jpg",
-   "source": "../../../../tmp/v/pair_mid.png",
-   "kind": "note",
-   "label": "3720 mid field at native size, approved beside ladder four"
-  },
-  {
-   "time": "2026-11-23T08:46:26.916Z",
-   "file": "20261123084626916-note-pair_nearleft.jpg",
-   "source": "../../../../tmp/v/pair_nearleft.png",
-   "kind": "note",
-   "label": "3720 near left at native size, approved beside ladder four"
   }
  ]
 }
