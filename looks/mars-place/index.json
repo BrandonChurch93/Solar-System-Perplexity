@@ -1,9 +1,63 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T13:35:50.259Z",
- "head": "f7aa13d775f55df8e5aeabc1f15cb5b10c8f8bce",
- "note": "third bake: top down ring levels, glow lobes at the handover; radial ribs of the lay back still to go",
+ "pushed": "2026-11-23T14:23:49.283Z",
+ "head": "950bfe25427839004f6eaaf5095e4e66aca07818",
+ "note": "fourth ladder: place joined to the canyon, dive 2418 to 2450 with glow, own gain and limb reach; fan near the mesa and pale tone at 2418 still open",
  "looks": [
+  {
+   "time": "2026-11-23T14:23:48.593Z",
+   "file": "20261123142348593-note-p16-take2.jpg",
+   "source": "assets-src/mars/place/takes/p16-take2.png",
+   "kind": "note",
+   "label": "1.6 degree plate take 2 of 6, top down",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:23:48.017Z",
+   "file": "20261123142348017-note-matte-dive-a-view.jpg",
+   "source": "out/work/place/view/matte-dive-a-view.jpg",
+   "kind": "note",
+   "label": "land matte preview for the dive place picture (not yet in the set)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:23:47.413Z",
+   "file": "20261123142347413-note-sheet-i2.jpg",
+   "source": "out/work/place/view/sheet-i2.jpg",
+   "kind": "note",
+   "label": "film frames 2440 2443 2444 2446 2448 2450, glow and limb reach merged, no matte yet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:23:46.826Z",
+   "file": "20261123142346826-note-sheet-i1.jpg",
+   "source": "out/work/place/view/sheet-i1.jpg",
+   "kind": "note",
+   "label": "film frames 2418 2421 2424 2428 2432 2436, fourth ladder, own gain follows the tint",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:23:46.137Z",
+   "file": "20261123142346137-note-topdown-m2h.jpg",
+   "source": "out/work/place/view/topdown-m2h.jpg",
+   "kind": "note",
+   "label": "top down of the fourth ladder: canyon land round the place, fan and stripes of the 3.8 take remain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:23:20.946Z",
+   "file": "20261123142320946-frame-i2450.jpg",
+   "source": "out/work/place/view/i2450.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2450, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2450,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c5fbc65c8302b556"
+  },
   {
    "time": "2026-11-23T13:35:49.482Z",
    "file": "20261123133549482-note-p38-take5.jpg",
@@ -18,66 +72,6 @@
    "source": "assets-src/mars/place/takes/p85-take1.png",
    "kind": "note",
    "label": "take 1 of the 8.5 deg ring plate, top down",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T13:35:48.307Z",
-   "file": "20261123133548307-note-cmp-g7.jpg",
-   "source": "out/work/place/view/cmp-g7.jpg",
-   "kind": "note",
-   "label": "2454 globe side alone with the glow lobes (top) against the film frame (bottom): mean difference 17.4 of 255",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T13:35:47.734Z",
-   "file": "20261123133547734-note-sheet-h1.jpg",
-   "source": "out/work/place/view/sheet-h1.jpg",
-   "kind": "note",
-   "label": "draft frames 2418 2424 2428 2432 2436 2440 on the third bake with the near look: canyon land round the place; faults: pale patch with a dark dot at 2418, radial ribs behind the dark mesa 2424 to 2436",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T13:35:47.125Z",
-   "file": "20261123133547125-note-topdown-m2g.jpg",
-   "source": "out/work/place/view/topdown-m2g.jpg",
-   "kind": "note",
-   "label": "top down sheet of the third bake: ring levels 8.5 and 3.8 are new top down takes, no smooth plain round the place; the fan of the lay back still shows as radial streaks at 2 to 0.4 deg",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T13:34:11.231Z",
-   "file": "20261123133411231-frame-h2440.jpg",
-   "source": "out/work/place/view/h2440.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2440, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2440,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "4ddc9ba8a9f8e8b0"
-  },
-  {
-   "time": "2026-11-23T13:14:20.506Z",
-   "file": "20261123131420506-frame-s2685-terrain.jpg",
-   "source": "out/work/place/view/s2685-terrain.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2685, draft tier, beauty/side=terrain view",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2685,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=terrain",
-   "engine": "4ddc9ba8a9f8e8b0"
-  },
-  {
-   "time": "2026-11-23T12:59:04.037Z",
-   "file": "20261123125904037-note-cmp-c1.jpg",
-   "source": "out/work/place/view/cmp-c1.jpg",
-   "kind": "note",
-   "label": "mars E3 path, new ladder: 2436 film; 2448 globe alone; 2448 film; 2454 globe alone; 2454 film (close side)",
    "stop": "mars"
   }
  ]
