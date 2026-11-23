@@ -20,7 +20,8 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
   const tan = Math.tan((mid.camera.vfov * RAD) / 2)
   const [cols, rows] = m.probeGrid
   const seen = (shot: Shot, state: SetState, local: THREE.Vector3): THREE.Vector2 | null => {
-    const v = local.clone().applyQuaternion(state.rotation).add(state.origin).sub(shot.camera.position).applyQuaternion(shot.camera.quaternion.clone().invert())
+    const turned = state.turn ? local.clone().applyQuaternion(state.turn) : local.clone()
+    const v = turned.applyQuaternion(state.rotation).add(state.origin).sub(shot.camera.position).applyQuaternion(shot.camera.quaternion.clone().invert())
     if (v.z > -1e-9) return null
     const k = half / Math.tan((shot.camera.vfov * RAD) / 2) / -v.z
     return new THREE.Vector2(v.x * k, v.y * k)
@@ -39,6 +40,7 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
       if (probe && x >= 0) probe(x, y, px)
     }
     const inverse = s.rotation.clone().invert()
+    const unturn = s.turn ? s.turn.clone().invert() : null
     const eye = mid.camera.position.clone().sub(s.origin).applyQuaternion(inverse)
     const orbit = s.view === 'orbit'
     const reach = config.stops.find((x) => x.id === s.id)?.rings ? m.bodyReach : 0
@@ -47,7 +49,10 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
       const radius = distance > 1 ? (half / tan) * Math.tan(Math.asin(1 / distance)) : Infinity
       if (radius < m.minBodyPx) return
       const c = seen(mid, s, CENTRE)
-      if (c && Math.abs(c.x) <= half * aspect + radius && Math.abs(c.y) <= half + radius) track(CENTRE)
+      // The centre stands for a disc the grid may miss. Where the body turns under a camera that follows the place, a disc larger than the frame
+      // is met by the grid, and its centre far outside the frame would only report the stretch of the flat picture plane out there.
+      const slack = s.turn ? Math.min(radius, half) : radius
+      if (c && Math.abs(c.x) <= half * aspect + slack && Math.abs(c.y) <= half + slack) track(CENTRE)
     }
     const height = eye.y + (s.ground ?? 0)
     for (let y = 0; y < rows; y++) {
@@ -62,7 +67,7 @@ export function rawMotion(open: Shot, mid: Shot, close: Shot, probe?: MotionProb
         const t = disc > 0 ? along - Math.sqrt(disc) : eye.length()
         if (t <= 0) continue
         const p = eye.clone().addScaledVector(ray, t)
-        if (disc > 0 || p.length() <= reach) track(p, x, y)
+        if (disc > 0 || p.length() <= reach) track(unturn ? p.applyQuaternion(unturn) : p, x, y)
       }
     }
   })
