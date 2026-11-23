@@ -35,6 +35,9 @@ export interface PlaceGeometry {
 
 const MODES: Record<PlaceMode, number> = { beauty: 0, texels: 1, mask: 2, picture: 3 }
 const KEPT = 2
+const TONE_TAPS = 64
+const TONE_GLOBE = 4
+const TONE_OWN = 5
 
 export function placeLayout(format: { width: number; height: number }, size: PlaceSize, maxEdge: number): PlaceLayout {
   const c = config.raw.handover.place
@@ -67,6 +70,32 @@ export function edgeReach(place: Pick<PlaceState, 'weight' | 'edgeIn'>, layout: 
   const width = layout.width - (layout.left + layout.right) * layout.scale
   const height = layout.height - (layout.bottom + layout.top) * layout.scale
   return [share[0] * open * width, share[1] * open * width, share[2] * open * height, share[3] * open * height]
+}
+
+// How far the picture's own broad tone stays back from each side of the picture, in texels of the picture: left, right, bottom, top.
+// The picture and the globe under it are seldom of one tone, and a picture that brings its own tone with it stands on the globe as an
+// island with a rim. With toneIn the picture is split in two: its detail comes in as before, its broad tone (a wide blur of the frame)
+// is the globe's own near the picture's sides and the picture's only toward its middle, over a feather far wider than the one of the
+// detail. The reach of that feather is the side's share of the frame times what is missing of the weight raised to
+// handover.place.tonePower: 0 at T, where the weight is 1 and the picture is itself, so the two sides stay equal there. All four
+// shares 0 is the pass as it was, with no tone pass at all.
+export function toneReach(place: Pick<PlaceState, 'weight' | 'toneIn'>, layout: PlaceLayout): [number, number, number, number] {
+  const c = config.raw.handover.place
+  const share = place.toneIn ?? c.toneIn
+  const open = Math.pow(1 - Math.min(Math.max(place.weight, 0), 1), c.tonePower)
+  const width = layout.width - (layout.left + layout.right) * layout.scale
+  const height = layout.height - (layout.bottom + layout.top) * layout.scale
+  return [share[0] * open * width, share[1] * open * width, share[2] * open * height, share[3] * open * height]
+}
+
+// The grid of the tone pass: cells of handover.place.toneCell frame pixels, and the blur of handover.place.toneReach of the frame's
+// height (one sigma) counted in cells, with the taps it takes on each side.
+export function toneGrid(width: number, height: number): { cols: number; rows: number; sigma: number; taps: number } {
+  const c = config.raw.handover.place
+  const cols = Math.max(Math.ceil(width / c.toneCell), 1)
+  const rows = Math.max(Math.ceil(height / c.toneCell), 1)
+  const sigma = Math.max((c.toneReach * height) / c.toneCell, 1e-3)
+  return { cols, rows, sigma, taps: Math.min(Math.ceil(3 * sigma), TONE_TAPS) }
 }
 
 export function placeCamera(cam: THREE.PerspectiveCamera, format: { width: number; height: number }, layout: PlaceLayout, pose: Pose, near: number, far: number): void {
@@ -196,7 +225,85 @@ void main() {
   outColor = vec4(k.rgb, uPair > 1.5 ? k.a : clamp(solid, 0.0, 1.0));
 }`
 
-const LAY = /* glsl */ `
+// The tone pass of the place picture. The same shader as the picture's own with three additions, so that a film in which no stop asks
+// for toneIn compiles and runs the shader exactly as it was.
+// uCell: frame pixels along one side of a cell of the tone pass (1 when the picture itself is drawn). The rates of the picture along the
+// frame are taken per frame pixel whatever the pass, so the weight of a cell is the weight of the frame pixels in it.
+// Mode 4 writes, per cell, the frame under the picture times how far the picture counts there, and that share itself; mode 5 the same of
+// the picture. Blurred, colour over share is the broad tone of each. The picture is then moved from its own tone to the globe's channel by
+// channel: what lies under the picture's own tone is scaled by the ratio of the two, so the shadows keep their depth against what is around
+// them, and what lies over it is shifted by their difference, so the lights keep their height over it. The two meet at the tone itself, and
+// neither can go under zero nor over what the picture had plus the globe's tone.
+// land: the tone is the ground's alone. A ray that misses the ball counts for nothing in either tone and is lent nothing, and a ray
+// that meets it counts by how far under the horizon it does, from nothing at the first angle of handover.place.toneLandDeg to all at
+// the second: the sky and the haze over the horizon stay the picture's own, the dark of the sky does not leak into the tone of the far
+// field, and the far field comes to the globe's tone over a band wide enough to show no line along the horizon.
+const TONE_UNIFORMS = /* glsl */ `
+uniform sampler2D uUnder;
+uniform sampler2D uTone;
+uniform sampler2D uOwn;
+uniform vec4 uToneFeather;
+uniform vec2 uPixel;
+uniform vec2 uLand;
+uniform float uCell;`
+
+const TONE_CELL = /* glsl */ `  dx /= uCell;
+  dy /= uCell;
+`
+
+const TONE_SPLIT = /* glsl */ `  float land = disc > 0.0 && b > 0.0 ? smoothstep(uLand.x, uLand.y, b / uBall.w - uSinDip) : 0.0;
+  if (mode >= 4) {
+    float counts = uLimits.x > 0.0 ? clamp(k / uLimits.x, 0.0, 1.0) * land : 0.0;
+    vec3 cell = col;
+    if (mode == 4) {
+      cell = vec3(0.0);
+      for (int j = 0; j < 4; j++) for (int i = 0; i < 4; i++) cell += texture(uUnder, vUv + ((vec2(float(i), float(j)) + 0.5) * 0.25 - 0.5) * uCell * uPixel).rgb;
+      cell /= 16.0;
+    }
+    outColor = vec4(max(cell, vec3(0.0)) * counts, counts);
+    return;
+  }
+  if (mode == 0) {
+    vec4 wide = clamp((vec4(pt.x, uSize.x - pt.x, pt.y, uSize.y - pt.y) - 0.5) * uToneFeather, 0.0, 1.0);
+    wide = wide * wide * (3.0 - 2.0 * wide);
+    float lent = (1.0 - wide.x * wide.y * wide.z * wide.w) * land;
+    vec4 globe = texture(uTone, vUv);
+    vec4 own = texture(uOwn, vUv);
+    vec3 mine = own.rgb / max(own.a, 1e-4);
+    vec3 theirs = globe.rgb / max(globe.a, 1e-4);
+    col = mix(col, mix(col + theirs - mine, col * theirs / max(mine, vec3(1e-6)), vec3(lessThanEqual(col, mine))), lent);
+  }
+`
+
+const BLUR = /* glsl */ `
+precision highp float;
+uniform sampler2D uFrom;
+uniform vec2 uStep;
+uniform float uSigma;
+uniform int uTaps;
+in vec2 vUv;
+out vec4 outColor;
+void main() {
+  vec4 sum = texture(uFrom, vUv);
+  float total = 1.0;
+  float fall = -0.5 / (uSigma * uSigma);
+  for (int i = 1; i <= uTaps; i++) {
+    float w = exp(float(i * i) * fall);
+    vec2 a = vUv + uStep * float(i);
+    vec2 b = vUv - uStep * float(i);
+    if (a.x < 1.0 && a.y < 1.0) {
+      sum += texture(uFrom, a) * w;
+      total += w;
+    }
+    if (b.x > 0.0 && b.y > 0.0) {
+      sum += texture(uFrom, b) * w;
+      total += w;
+    }
+  }
+  outColor = sum / total;
+}`
+
+const lay = (tone: boolean): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uPicture;
 uniform sampler2D uSky;
@@ -220,7 +327,7 @@ uniform vec2 uScale;
 uniform vec4 uDump;
 uniform float uDumpAs;
 uniform sampler2D uMatte;
-uniform float uMatteOn;
+uniform float uMatteOn;${tone ? TONE_UNIFORMS : ''}
 in vec2 vUv;
 out vec4 outColor;
 ${FILMIC_GLSL}
@@ -288,7 +395,7 @@ void main() {
     dx = 0.5 * ((uProj.xy * wx.xy + uProj.zw * wx.z) * den + num * wx.z) / (den * den) * uSize;
     dy = 0.5 * ((uProj.xy * wy.xy + uProj.zw * wy.z) * den + num * wy.z) / (den * den) * uSize;
   }
-  vec4 edge = clamp((vec4(pt.x, uSize.x - pt.x, pt.y, uSize.y - pt.y) - 0.5) * uFeather, 0.0, 1.0);
+${tone ? TONE_CELL : ''}  vec4 edge = clamp((vec4(pt.x, uSize.x - pt.x, pt.y, uSize.y - pt.y) - 0.5) * uFeather, 0.0, 1.0);
   edge = edge * edge * (3.0 - 2.0 * edge);
   float s1 = dot(dx, dx) + dot(dy, dy);
   float det = dx.x * dy.y - dx.y * dy.x;
@@ -298,7 +405,7 @@ void main() {
   if (hold > 0.0) k = max(k, uLimits.x * front * edge.x * edge.y * edge.z * edge.w * hold);
   float most = max(length(dx), length(dy)) * uLens.z;
   float fit = min(1.0, uLens.w / max(most, 1e-9)) * uLens.z;
-  vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
+${tone ? '  fit *= uCell;\n' : ''}  vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
   if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;
   if (mode == 1) {
     if (k <= 0.5) discard;
@@ -319,8 +426,19 @@ void main() {
   vec2 lq = (vUv - 0.5) * vec2(uLens.y, 1.0);
   float undo = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x);
   vec3 col = texture(uSky, vUv).rgb * (1.0 - pic.a) + pic.rgb * undo;
-  outColor = vec4(col * k, k);
+${tone ? TONE_SPLIT : ''}  outColor = vec4(col * k, k);
 }`
+
+function layUniforms(): Record<string, THREE.IUniform> {
+  return {
+    uPicture: { value: null }, uSky: { value: null }, uSize: { value: new THREE.Vector2(1, 1) }, uRay: { value: new THREE.Vector4() }, uProj: { value: new THREE.Vector4() },
+    uRel: { value: new THREE.Matrix3() }, uDelta: { value: new THREE.Vector3() }, uShift: { value: new THREE.Vector3() }, uCentre: { value: new THREE.Vector3() }, uBall: { value: new THREE.Vector4() },
+    uHorizon: { value: new THREE.Vector4() }, uSinDip: { value: 0 }, uLimb: { value: new THREE.Vector4() }, uReach: { value: new THREE.Vector2(1, 0) }, uHold: { value: new THREE.Vector2(0, 1) }, uFeather: { value: new THREE.Vector4() }, uLimits: { value: new THREE.Vector4() }, uLens: { value: new THREE.Vector4() }, uScale: { value: new THREE.Vector2(1, 0) },
+    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 }, uMatte: { value: null }, uMatteOn: { value: 0 },
+  }
+}
+
+const LAY_BLEND: Partial<THREE.ShaderMaterialParameters> = { transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor }
 
 export class Place {
   readonly camera = new THREE.PerspectiveCamera()
@@ -331,12 +449,12 @@ export class Place {
   private clock = 0
   private readonly copy = new Pass(COPY, { uFrom: { value: null } }, { blending: THREE.NoBlending })
   private readonly pack = new Pass(PACK, { uBlack: { value: null }, uWhite: { value: null }, uPair: { value: 1 } }, { blending: THREE.NoBlending })
-  private readonly lay = new Pass(LAY, {
-    uPicture: { value: null }, uSky: { value: null }, uSize: { value: new THREE.Vector2(1, 1) }, uRay: { value: new THREE.Vector4() }, uProj: { value: new THREE.Vector4() },
-    uRel: { value: new THREE.Matrix3() }, uDelta: { value: new THREE.Vector3() }, uShift: { value: new THREE.Vector3() }, uCentre: { value: new THREE.Vector3() }, uBall: { value: new THREE.Vector4() },
-    uHorizon: { value: new THREE.Vector4() }, uSinDip: { value: 0 }, uLimb: { value: new THREE.Vector4() }, uReach: { value: new THREE.Vector2(1, 0) }, uHold: { value: new THREE.Vector2(0, 1) }, uFeather: { value: new THREE.Vector4() }, uLimits: { value: new THREE.Vector4() }, uLens: { value: new THREE.Vector4() }, uScale: { value: new THREE.Vector2(1, 0) },
-    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 }, uMatte: { value: null }, uMatteOn: { value: 0 },
-  }, { transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor })
+  private readonly lay = new Pass(lay(false), layUniforms(), LAY_BLEND)
+  private split: Pass | null = null
+  private blur: Pass | null = null
+  private toneGlobe: THREE.WebGLRenderTarget | null = null
+  private toneOwn: THREE.WebGLRenderTarget | null = null
+  private toneHalf: THREE.WebGLRenderTarget | null = null
 
   find(key: string): PlacePicture | null {
     const hit = this.pictures.find((p) => p.key === key) ?? null
@@ -405,8 +523,11 @@ export class Place {
   render(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, pic: PlacePicture, place: PlaceState, camera: Pose, frame: THREE.PerspectiveCamera, mode: PlaceMode, vignette: number, aspect: number, grad: number, dump?: PlaceDump, matte: THREE.Texture | null = null): void {
     const c = config.raw.handover.place
     const g = placeGeometry(camera, place)
-    const u = this.lay.material.uniforms
     const l = pic.layout
+    const wide = toneReach(place, l)
+    const toned = mode === 'beauty' && wide.some((x) => x > 0)
+    const pass = toned ? this.splitPass() : this.lay
+    const u = pass.material.uniforms
     const e = frame.projectionMatrix.elements
     u.uPicture!.value = pic.target.texture
     u.uSky!.value = this.sky?.texture ?? pic.target.texture
@@ -434,11 +555,62 @@ export class Place {
     u.uDumpAs!.value = mode === 'picture' && dump ? (dump.what === 'alpha' ? 2 : 1) : 0
     u.uMatte!.value = matte ?? pic.target.texture
     u.uMatteOn!.value = matte ? 1 : 0
-    const m = this.lay.material
+    const m = pass.material
+    if (toned) {
+      // The broad tones first: the frame under the picture and the picture, per cell, each blurred along both axes.
+      const grid = toneGrid(target.width, target.height)
+      this.toneGlobe = this.cells(this.toneGlobe, grid.cols, grid.rows)
+      this.toneOwn = this.cells(this.toneOwn, grid.cols, grid.rows)
+      this.toneHalf = this.cells(this.toneHalf, grid.cols, grid.rows)
+      const blur = this.blurPass()
+      const b = blur.material.uniforms
+      b.uSigma!.value = grid.sigma
+      b.uTaps!.value = grid.taps
+      u.uUnder!.value = target.texture
+      u.uTone!.value = pic.target.texture
+      u.uOwn!.value = pic.target.texture
+      ;(u.uPixel!.value as THREE.Vector2).set(1 / target.width, 1 / target.height)
+      ;(u.uLand!.value as THREE.Vector2).set(Math.sin(THREE.MathUtils.degToRad(c.toneLandDeg[0]!)), Math.sin(THREE.MathUtils.degToRad(c.toneLandDeg[1]!)))
+      u.uCell!.value = target.width / grid.cols
+      m.blending = THREE.NoBlending
+      m.transparent = false
+      for (const [code, into] of [[TONE_GLOBE, this.toneGlobe], [TONE_OWN, this.toneOwn]] as const) {
+        ;(u.uScale!.value as THREE.Vector2).set(l.scale, code)
+        pass.render(r, into)
+        b.uFrom!.value = into.texture
+        ;(b.uStep!.value as THREE.Vector2).set(1 / grid.cols, 0)
+        blur.render(r, this.toneHalf)
+        b.uFrom!.value = this.toneHalf.texture
+        ;(b.uStep!.value as THREE.Vector2).set(0, 1 / grid.rows)
+        blur.render(r, into)
+      }
+      u.uUnder!.value = pic.target.texture
+      u.uTone!.value = this.toneGlobe.texture
+      u.uOwn!.value = this.toneOwn.texture
+      ;(u.uToneFeather!.value as THREE.Vector4).set(feather(l.left, wide[0]), feather(l.right, wide[1]), feather(l.bottom, wide[2]), feather(l.top, wide[3]))
+      u.uCell!.value = 1
+      ;(u.uScale!.value as THREE.Vector2).set(l.scale, MODES[mode])
+    }
     const plain = mode !== 'beauty'
     m.blending = plain ? THREE.NoBlending : THREE.CustomBlending
     m.transparent = !plain
-    this.lay.render(r, target)
+    pass.render(r, target)
+  }
+
+  private splitPass(): Pass {
+    this.split ??= new Pass(lay(true), { ...layUniforms(), uUnder: { value: null }, uTone: { value: null }, uOwn: { value: null }, uToneFeather: { value: new THREE.Vector4() }, uPixel: { value: new THREE.Vector2() }, uLand: { value: new THREE.Vector2() }, uCell: { value: 1 } }, LAY_BLEND)
+    return this.split
+  }
+
+  private blurPass(): Pass {
+    this.blur ??= new Pass(BLUR, { uFrom: { value: null }, uStep: { value: new THREE.Vector2() }, uSigma: { value: 1 }, uTaps: { value: 0 } }, { blending: THREE.NoBlending })
+    return this.blur
+  }
+
+  private cells(old: THREE.WebGLRenderTarget | null, cols: number, rows: number): THREE.WebGLRenderTarget {
+    if (old && old.width === cols && old.height === rows) return old
+    old?.dispose()
+    return floatTarget(cols, rows, THREE.HalfFloatType, false, false)
   }
 
   reset(): void {
@@ -447,6 +619,12 @@ export class Place {
     this.release()
     this.sky?.dispose()
     this.sky = null
+    this.toneGlobe?.dispose()
+    this.toneOwn?.dispose()
+    this.toneHalf?.dispose()
+    this.toneGlobe = null
+    this.toneOwn = null
+    this.toneHalf = null
   }
 
   dispose(): void {
@@ -454,5 +632,9 @@ export class Place {
     this.copy.dispose()
     this.pack.dispose()
     this.lay.dispose()
+    this.split?.dispose()
+    this.blur?.dispose()
+    this.split = null
+    this.blur = null
   }
 }

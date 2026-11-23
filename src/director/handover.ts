@@ -1,9 +1,10 @@
 import { config, type CoverWindow, type Segment } from '../config'
+import { shutterPosition } from '../core/sampler'
 import type { ViewKind } from '../core/types'
 import { coverFrames, coverWindow, handoverChanges, handoverParams } from './timeline'
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
-export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number] }
+export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number] }
 export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
@@ -11,6 +12,10 @@ export interface Sidestep { right: number; up: number; by: number }
 export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number }
 export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; skyFloor?: boolean }
 export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
+// The shares of the two sky layers on the globe side of a dive or rise that hands over: low for the sky of the close view, high for the sky
+// of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
+// engine's rule (what low leaves in a dive, nothing in a rise).
+export interface SkyShares { low: number; high?: number }
 export interface Handover { time: number; firstFrame: number; lastFrame: number; placeFirstFrame: number; placeLastFrame: number; skyFrames: number; live: boolean; picture: boolean; place: PlaceOptions; skyFloor: boolean }
 
 const CELLS = 8
@@ -21,6 +26,7 @@ const known = new Map<string, Handover | null>()
 let knownAt = -1
 let forced: ViewKind | null = null
 let above = false
+let shutterOf: ((frame: number) => number) | null = null
 
 function smooth(t: number): number {
   const x = Math.min(Math.max(t, 0), 1)
@@ -54,6 +60,7 @@ export function handoverOf(stop: string, kind: 'dive' | 'rise'): Handover | null
     const lead = own.rise?.path?.fromDive
     if (lead !== undefined && (!(lead >= 1) || !Number.isFinite(lead) || !config.segments.some((s) => s.stop === stop && s.kind === 'dive'))) throw new Error('the rise of ' + stop + ' needs fromDive of 1 or more and a dive to leave from')
     if (lim && lim.edgeIn !== undefined && !(Array.isArray(lim.edgeIn) && lim.edgeIn.length === 4 && lim.edgeIn.every((x) => x >= 0 && x <= 1))) throw new Error('the place of ' + seg.id + ' needs edgeIn as four shares from 0 to 1: left, right, bottom, top')
+    if (lim && lim.toneIn !== undefined && !(Array.isArray(lim.toneIn) && lim.toneIn.length === 4 && lim.toneIn.every((x) => x >= 0 && x <= 4))) throw new Error('the place of ' + seg.id + ' needs toneIn as four shares from 0 to 4: left, right, bottom, top')
     out = { time: ((firstFrame + lastFrame) / 2 + config.shutterFraction / 2) / config.fps, firstFrame, lastFrame, placeFirstFrame, placeLastFrame, skyFrames: t.skyFrames, live: own[kind]?.live === true, picture: own[kind]?.picture !== false, place: own[kind]?.place ?? {}, skyFloor: own[kind]?.skyFloor === true }
   }
   known.set(key, out)
@@ -83,8 +90,18 @@ export function sideAt(seg: Segment, time: number): ViewKind {
   }
   const x = time * config.fps
   const frame = Math.floor(x + 1e-9)
-  const s = (x - frame) / config.shutterFraction
-  return dissolveWeight(h, seg.kind, frame) > shutterThreshold(s) ? 'terrain' : 'orbit'
+  const weight = dissolveWeight(h, seg.kind, frame)
+  // Outside the dissolve the weight is 0 or 1 and the position inside the shutter decides nothing, so the share of the shutter the frame keeps is
+  // asked for only inside it. That also keeps the measure of that share, which takes shots of other frames, from coming back here for itself.
+  const s = shutterPosition(x - frame, weight > 0 && weight < 1 && shutterOf ? shutterOf(frame) : 1)
+  return weight > shutterThreshold(s) ? 'terrain' : 'orbit'
+}
+
+// E6, the capped shutter: in a dive or a rise the shutter of a frame may keep only a share of the film's shutter around its middle, and a sample
+// takes its side by its position inside the shutter that is open. The share is measured on shots (core/motion.ts, shutterScale), which this
+// module can not take, so the film that asked for a shot last says how to ask. null: every frame keeps the full shutter.
+export function shutterScales(of: ((frame: number) => number) | null): void {
+  shutterOf = of
 }
 
 export function placeWeight(seg: Segment, time: number): number {
@@ -135,6 +152,11 @@ export function forceTop(on: boolean): void {
 
 export function topForced(): boolean {
   return above
+}
+
+// What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
+export function forcedWord(): string {
+  return (forced ?? 'film') + (above ? '|top' : '')
 }
 
 export function handoverFrame(h: Handover): number {
