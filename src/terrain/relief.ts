@@ -7,6 +7,7 @@ import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
 export interface ReliefLayerDef {
   color: string
   alpha?: string
+  alphaOne?: boolean
   dist: string
   box: [number, number, number, number]
   distSize: [number, number]
@@ -514,7 +515,7 @@ export class Relief {
       const l = def.layers[k]!
       const color = await ctx.texture(base + l.color, { srgb: true, anisotropy: 8 })
       const alphaMips = !motion.apron?.baseAlphaNoMips.some((id) => l.alpha === `relief-${id}-alpha.png`)
-      const alpha = l.alpha ? await ctx.texture(base + l.alpha, { srgb: false, anisotropy: 4, mips: alphaMips }) : null
+      const alpha = l.alpha ? await ctx.texture(base + l.alpha, l.alphaOne ? { srgb: false, anisotropy: 4, mips: alphaMips, channels: 1 } : { srgb: false, anisotropy: 4, mips: alphaMips }) : null
       const dist = new Float32Array(await ctx.buffer(base + l.dist))
       const [dw, dh] = l.distSize
       if (dist.length !== dw * dh) throw new Error('relief distance size mismatch: ' + l.dist)
