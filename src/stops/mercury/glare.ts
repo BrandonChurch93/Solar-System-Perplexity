@@ -7,6 +7,7 @@ export interface GlareLook {
   fall: Record<GlareSide, number>
   span: Record<GlareSide, number>
   height: number
+  top: [number, number]
   keep: [number, number]
   color: [number, number, number]
   halo: [number, number]

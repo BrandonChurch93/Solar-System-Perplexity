@@ -87,10 +87,11 @@ export const createSet: SetFactory = async (ctx) => {
   const over = new THREE.Group()
   const glare = new Glare(look.glare, diagUniform)
   over.add(lens.mesh, streak.mesh, glare.mesh)
-  const covers = [look.flight.entry.at / config.fps, look.flight.exit.at / config.fps]
+  const covers = [look.path.dive.at / config.fps, look.path.rise.at / config.fps]
+  const rests = [look.flight.rest[0] / config.fps, look.flight.rest[1] / config.fps]
   const keep = (x: number): number => (x <= look.glare.keep[0] ? x : look.glare.keep[0] + (look.glare.keep[1] - look.glare.keep[0]) * (1 - Math.exp(-(x - look.glare.keep[0]) / (look.glare.keep[1] - look.glare.keep[0]))))
   const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
-  const spin = (time: number) => plan.spin(time) - spinRate * look.spinRest * Math.min(Math.max(time - covers[0]!, 0), covers[1]! - covers[0]!)
+  const spin = (time: number) => plan.spin(time) - spinRate * look.spinRest * plan.rested(time)
   const closeTan = Math.tan(THREE.MathUtils.degToRad(relief.full.vfovDeg) / 2)
   const closeSun = new THREE.Vector3((look.glare.terrainSun[0] - 0.5) * 2 * closeTan * relief.full.imageSize[0] / relief.full.imageSize[1], (0.5 - look.glare.terrainSun[1]) * 2 * closeTan, -1).normalize()
   const glareSun = new THREE.Vector3()
@@ -158,6 +159,9 @@ export const createSet: SetFactory = async (ctx) => {
   const wideFar = curve(look.close.wide.far)
   const wideFeather = curve(look.close.wide.feather)
   const above = (pose: { position: THREE.Vector3 } | null): number => Math.acos(closeRadius / (closeRadius + 1 + (pose ? pose.position.dot(nearUp) : 0)))
+  const shine = (time: number, side: number): number => keep(Math.pow(Math.max((above(plan.low(time)) - above(null)) / (look.glare.top[side]! - above(null)), 0), look.glare.height))
+  const lifted = (time: number): number => Math.log(1 + plan.low(time).position.dot(nearUp))
+  const haloEnds = { dive: [lifted(covers[0]!), lifted(plan.seg.terrain.start)], rise: [lifted(covers[1]!), lifted(plan.seg.terrain.end)] }
 
   const light = new THREE.Vector3()
   const forward = new THREE.Vector3()
@@ -197,15 +201,15 @@ export const createSet: SetFactory = async (ctx) => {
       const kind = state.segment.kind
       const fromDive = (state.time - covers[0]!) * config.fps
       const fromRise = (state.time - covers[1]!) * config.fps
-      const first = Math.abs(fromDive) <= Math.abs(fromRise)
+      const first = Math.abs((state.time - rests[0]!) * config.fps) <= Math.abs((state.time - rests[1]!) * config.fps)
       const tanHalf = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
       const aspect = view.format.width / view.format.height
       toCamera.copy(view.camera.quaternion).invert()
       if (!inOrbit) {
-        glare.update(on ? keep(Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height)) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
+        glare.update(on ? shine(state.time, first ? 0 : 1) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
-        const halo = !mine ? 1 : kind === 'dive' ? smoother(ramp(look.halo.dive[0], look.halo.dive[1], fromDive)) : kind === 'rise' ? 1 - smoother(ramp(look.halo.rise[0], look.halo.rise[1], fromRise)) : 1
+        const halo = !mine || (kind !== 'dive' && kind !== 'rise') ? 1 : smoother(ramp(haloEnds[kind][0]!, haloEnds[kind][1]!, lifted(state.time)))
         limb.update(low.gain * shot.skyGlow * shot.skyExposure * halo, shot.post.vignette, aspect)
         rim.update(gain, shot.post.vignette, aspect)
         return
@@ -228,7 +232,7 @@ export const createSet: SetFactory = async (ctx) => {
       } else if (leaving) {
         ghosts = look.flare.after
       }
-      glare.update(diving ? keep(1) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? keep(1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
+      glare.update(diving ? shine(covers[0]!, 0) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? shine(covers[1]!, 1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
