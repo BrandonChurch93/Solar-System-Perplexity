@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T07:17:17.594Z",
+ "pushed": "2026-11-23T07:29:33.329Z",
  "head": "b9b585d8e328e58110c8e732b82fd0ab9195e6e3",
- "note": "measured the hero rings into a model by radius; chose the skim pose in one rigid world; writing the ring field shader",
+ "note": "writing the ring field, sheet and particle shaders; no render yet",
  "looks": [
+  {
+   "time": "2026-11-23T07:29:32.704Z",
+   "file": "20261123072932704-note-chroma.jpg",
+   "source": "../../../../tmp/v/chroma.png",
+   "kind": "note",
+   "label": "hero ring colour over luma by radius in three sectors (measuring for the ring model)"
+  },
   {
    "time": "2026-11-23T07:17:17.023Z",
    "file": "20261123071717023-note-ring_model.jpg",
