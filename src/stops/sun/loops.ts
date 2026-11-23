@@ -8,6 +8,8 @@ export interface LoopsLook {
   grid: [number, number]
   lean: { outerDeg: number; innerDeg: number; from: number; to: number; late: [number, number] }
   gain: number
+  trim: [number, number]
+  pinCut: [number, number]
   far: number
   pin: { from: number; soft: number; lowDeg: number; highDeg: number }
   flow: { amount: number; lanes: number; along: number; speed: number; back: number; floor: number; inside: [number, number]; from: [number, number] }
@@ -25,13 +27,16 @@ export interface KnotsLook {
 const VERT = /* glsl */ `
 in vec3 aLate;
 in vec3 aGrow;
+in float aPin;
 uniform float uLate;
 uniform float uGrow;
 uniform float uShear;
 out vec3 vStage;
 out vec3 vClip;
+out float vPin;
 void main() {
   vStage = position;
+  vPin = aPin;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(mix(position, aLate, uLate) + aGrow * uGrow + vec3(aGrow.y, -aGrow.x, 0.0) * uShear, 1.0);
   vClip = gl_Position.xyw;
 }`
@@ -55,7 +60,9 @@ uniform vec4 uSwell;
 uniform float uCalm;
 uniform vec4 uBurst;
 uniform vec3 uBurstMore;
-uniform float uCut;${knots ? `
+uniform float uCut;
+uniform vec3 uTrim;
+uniform vec2 uPinCut;${knots ? `
 uniform vec4 uKnot;
 uniform vec4 uKnotMore;
 uniform vec4 uKnotLane;
@@ -82,6 +89,7 @@ uniform vec4 uPeelGate;
 uniform vec3 uPeelTear;` : ''}
 in vec3 vStage;
 in vec3 vClip;
+in float vPin;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 ${STAGE_GLSL}
@@ -160,7 +168,7 @@ void main() {
   }` : ''}
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
-  for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0);
+  for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0) * (1.0 - uTrim.z * (1.0 - smoothstep(uTrim.x, uTrim.y, arc))) * (1.0 - uTrim.z * smoothstep(uPinCut.x, uPinCut.y, vPin));
   float lit = uBurst.x * uBurst.y * (uBurst.w + (1.0 - uBurst.w) * min(climb, 1.0)) * smoothstep(uBurstMore.z, uBurstMore.z * 6.0, glow);
   lin = lin * (1.0 + lit) + glow * lit * uBurstMore.y * vec3(1.0, 0.9, 0.66);${knots ? `
   for (int k = 0; k < (uPeel.y != 0.0 ? 1 : 0); k++) {
@@ -225,6 +233,7 @@ export class Loops {
     const positions = new Float32Array((nx + 1) * (ny + 1) * 3)
     const late = new Float32Array((nx + 1) * (ny + 1) * 3)
     const grow = new Float32Array((nx + 1) * (ny + 1) * 3)
+    const pinned = new Float32Array((nx + 1) * (ny + 1))
     const lineDir = tb.clone().sub(ta).normalize()
     const lineNormal = new THREE.Vector2(-lineDir.y, lineDir.x)
     const feetApart = ta.distanceTo(tb)
@@ -252,6 +261,7 @@ export class Loops {
         const span = p.clone().sub(ta).dot(lineDir) / feetApart
         const above = THREE.MathUtils.radToDeg(Math.acos(Math.min(Math.max(r.clone().normalize().dot(stage.down), -1), 1)) - stage.alpha)
         const pin = smooth(span, look.pin.from, look.pin.from + look.pin.soft) * (1 - smooth(span, 1 - look.pin.from - look.pin.soft, 1 - look.pin.from)) * (1 - smooth(above, look.pin.lowDeg, look.pin.highDeg))
+        pinned[j * (nx + 1) + i] = pin
         const place = (outerDeg: number, innerDeg: number, into: Float32Array): number => {
           const lean = THREE.MathUtils.degToRad(outerDeg + (innerDeg - outerDeg) * share)
           lift.copy(up).multiplyScalar(Math.cos(lean)).addScaledVector(toward, Math.sin(lean))
@@ -282,6 +292,7 @@ export class Loops {
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('aLate', new THREE.BufferAttribute(late, 3))
     geometry.setAttribute('aGrow', new THREE.BufferAttribute(grow, 3))
+    geometry.setAttribute('aPin', new THREE.BufferAttribute(pinned, 1))
     geometry.setIndex(index)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
@@ -296,7 +307,7 @@ export class Loops {
         uFlowMore: { value: new THREE.Vector2(look.flow.back, look.flow.floor) },
         uFlowMask: { value: new THREE.Vector4(look.flow.inside[0], look.flow.inside[1], look.flow.from[0], look.flow.from[1]) },
         uSwell: { value: new THREE.Vector4(look.swell.amount, look.swell.speed, look.swell.width, look.swell.lanes) }, uCalm: { value: look.swell.calm },
-        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uLate: { value: 0 }, uGrow: { value: 0 },
+        uBurst: { value: new THREE.Vector4(0, look.burst.surge, look.burst.reach[0], look.burst.floor) }, uBurstMore: { value: new THREE.Vector3(look.burst.other, look.burst.white, look.burst.from) }, uCut: { value: 0 }, uTrim: { value: new THREE.Vector3(look.trim[0], look.trim[1], 0) }, uPinCut: { value: new THREE.Vector2(look.pinCut[0], look.pinCut[1]) }, uLate: { value: 0 }, uGrow: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -430,6 +441,10 @@ export class Loops {
     u.uGain!.value = this.gain * gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
+  }
+
+  trim(amount: number): void {
+    ;(this.material.uniforms.uTrim!.value as THREE.Vector3).z = amount
   }
 
   dispose(): void {

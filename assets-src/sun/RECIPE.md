@@ -19,7 +19,6 @@ Every file under `public/assets/sun/`. The `web` file is always derived from the
 | `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
 | `public/assets/sun/<set>/haze.png` | Terrain view |
 | `public/assets/sun/<set>/grade.png` | Grade |
-| `public/assets/sun/<set>/place-12.jpg` | Place |
 
 `<set>` is `full` or `web`.
 
@@ -290,9 +289,16 @@ The place of the close view laid onto the globe (task of mail 212, `cut/HANDOVER
 
 - Tool: `python3 assets-src/sun/place/limb.py` (reads the limb of `references/approved/sun-close.jpg` again, writes `out/work/sun/pl/limb.json`), then `npx tsx assets-src/sun/place/solve.ts`. It writes the camera of the approved close image against the sphere (height, dip, pitch, roll, heading), the stage to body transform, the spot and its north in body axes and in the axes of the globe map, and the twin camera. It keeps an existing `plates` block.
 
-### public/assets/sun/<set>/place-12.jpg
+### The place on the globe (no file: the globe draws the close ground itself)
 
-- Output: 4096 x 4096 JPG (web 2048), a top down gnomonic picture of the ground round the spot, 12 deg wide (0.00293 deg per texel), east right, north up, in the display coding of `plate.jpg`. Level 0 of the patch levels of the globe (`place.plates.levels`).
-- Steps: `python3 assets-src/sun/place/layback.py 12 4096 out/work/sun/pl/lay12` lays `public/assets/sun/full/plate.jpg` (the approved image on its wide canvas, loops removed) back through the solved camera of `place.json` and writes the picture, what the camera sees, and the stretch of every texel (how many plate texels wide one source pixel is). Then `python3 assets-src/sun/place/plate.py 12 4096 place-12` keeps the laid back picture where the stretch is under `plates.keepStretch` (3 full, 6 none) and fills the rest with `field.jpg` in the same frame, tone matched over `plates.matchDeg`.
-- State: first rough plate of milestone 1. 45.5 percent of it is the laid back picture, the rest is the soft field (enlarged 2.96 times). The far half of the penumbra and the ground beyond are stretched and not repainted yet. Colour is not matched to the globe map yet.
+- Milestone 1 had one laid back plate, `place-12.jpg` (12 deg, 4096 px, by `layback.py` and `plate.py`). It is no longer used and is removed: a plate freezes the ground, and the ground of the close view is not a picture but a function of time (plate, apron, field tiles, boil, twinkle, inflow, spot, loop glow). The two scripts stay as tools for a look at the laid back picture and its stretch.
+- What is used now: the globe shader (`src/stops/sun/globe.ts`) draws that same ground function round the place, from the same textures (`plate.jpg`, `apron.jpg`, `field.jpg`, `loops-glow.png`) and the same uniforms as the terrain view, at the stage point under each globe direction. No new picture, no model, no prompt. Values: `src/stops/sun/place.json` `onGlobe` (cap, fade by map texels per pixel, heights of each handover, spot keep, loops cut) and `rise` (the move).
+- The loops are the terrain view's own sheet (`loops.ts`), carried into the globe frame in the orbit view of the rise. From above two parts of it are trimmed with camera height (`place.json` `onGlobe.heights.strands`): the spray outside the feet by arc angle (`look.loops.trim`) and the part of the sheet that is pinned to the ground behind the feet (`look.loops.pinCut`), which from above ran along the ground as a spike.
+- Tools of the rise, all without a model:
+  - `npx tsx assets-src/sun/place/rise.ts OUT.tsv [all]`: the move per frame (height, ratio to the frame before, pitch, turn, spot on screen, share of sky) and the checks of both ends against the close view and the hold.
+  - `npx tsx assets-src/sun/place/frames.ts --frames 180:269:6,269 --tier draft --dir DIR [--diag texels]`: renders a list of frames in one session.
+  - `npx tsx assets-src/sun/place/g13.ts DIR`: the G13 rule of `tools/measure.ts` on the texel views in DIR.
+  - `python3 assets-src/sun/place/sheet.py OUT.jpg COLS WIDTH FILES`: a labelled sheet.
+  - `python3 assets-src/sun/place/steps.py DIR FROM TO`: per frame of a run of consecutive frames the mean level, the mean difference to the frame before and a sharpness number (mean absolute Laplacian), to see whether any frame steps out of the row.
+  - `side-orbit.patch`, `side-terrain.patch` (`git apply`, then `git apply -R`; never in a commit): draw the whole rise from one side alone, for the proof sheet of the globe side and for the difference of the two sides at T until the measures of E4 are on main.
 - Checks: `hero.py WIDTH_DEG SIZE OUT.png` cuts the globe map in the same frame; `check.py GLOBE.png CLOSE.jpg OUT.jpg [GLOBE_TEXELS.png]` puts the globe side from the solved camera beside the close side with the predicted limb marked; `same.py NEW.png KEPT.jpg` compares a new final tier render with a kept still in the kept still's own coding.

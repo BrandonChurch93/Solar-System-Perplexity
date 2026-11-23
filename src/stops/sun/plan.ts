@@ -1,10 +1,12 @@
 import * as THREE from 'three'
-import { config, type Segment } from '../../config'
-import type { Pose } from '../../core/types'
-import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
-import { coverWindow } from '../../director/timeline'
-import { lookAt, mix, ramp, slerpDir, smooth } from '../../director/rig'
+import { config } from '../../config'
+import type { Pose, ViewKind } from '../../core/types'
+import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
+import { handoverOf } from '../../director/handover'
+import { coverFrames } from '../../director/timeline'
+import { lookAt, mix, slerpDir, smooth } from '../../director/rig'
 import fit from './fit.json'
+import place from './place.json'
 import { stage } from './stage'
 
 export const params: MoveParams = {
@@ -16,46 +18,32 @@ export const params: MoveParams = {
   travel: { turnDeg: 26, side: 1 },
   light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
+  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames } },
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
   skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: [8.48669, -141.8932, 32.09218] },
 }
 
-export const climb = {
-  peak: 0.385,
-  early: 0,
-  before: 0.12,
-  after: 0.143,
-  ends: [0.06, 0.25] as [number, number],
-  limb: 3,
-  lens: 3,
-  level: 0.15,
-  coast: 4,
-  steps: 2048,
-  ease: { over: 1.3, speed: 0.095 },
-}
+export const climb = { ease: { over: 1.3, speed: 0.095 } }
 
 export const opening = { on: true, level: 0.9, until: 2 }
-
-interface Reading { out: THREE.Vector3; height: number; level: THREE.Vector3; limb: number; vfov: number; rest: THREE.Quaternion }
 
 export class SunPlan extends StopPlan {
   readonly toGlobe: THREE.Quaternion
   readonly toStage: THREE.Quaternion
   readonly anchorStage: THREE.Vector3
   readonly anchorGlobe: THREE.Vector3
-  readonly switchTime: number
-  readonly window: [number, number]
+  readonly anchorTime: number
+  readonly handoverTime: number
   private readonly table: Float64Array
 
   constructor(id: string, f: Fit, p: MoveParams) {
     super(id, f, p)
     const seg = this.seg.rise
-    const w = coverWindow(seg)!
-    this.window = [w.firstFrame / config.fps, (w.lastFrame + 1) / config.fps]
-    this.switchTime = this.window[0]
-    const tq = this.turn(this.switchTime)
+    this.anchorTime = coverFrames(seg)!.firstFrame / config.fps
+    this.handoverTime = handoverOf(id, 'rise')?.time ?? this.anchorTime
+    const tq = this.turn(this.anchorTime)
     const n = this.normal.clone().applyQuaternion(tq)
     const north = this.heading.clone().applyQuaternion(tq)
     const g = stage.onGround(stage.spot[0], stage.spot[1])
@@ -68,35 +56,12 @@ export class SunPlan extends StopPlan {
     this.toStage = this.toGlobe.clone().invert()
     this.anchorStage = g
     this.anchorGlobe = n
-    const table = new Float64Array(climb.steps + 1)
-    const rate = (x: number): number => {
-      const s = x < climb.peak ? climb.before : climb.after
-      const k = (x - climb.peak) / s
-      const g = Math.exp(-0.5 * k * k)
-      return (x < climb.peak ? climb.early + (1 - climb.early) * g : g) * smooth(x / climb.ends[0]) * smooth((1 - x) / climb.ends[1])
-    }
-    const step = 1 / climb.steps
-    for (let i = 0; i < climb.steps; i++) table[i + 1] = table[i]! + (step / 6) * (rate(i * step) + 4 * rate((i + 0.5) * step) + rate((i + 1) * step))
+    const r = place.rise
+    const table = new Float64Array(r.steps + 1)
+    const rate = (x: number): number => smooth(x / r.easeIn) * smooth((1 - x) / r.easeOut)
+    const step = 1 / r.steps
+    for (let i = 0; i < r.steps; i++) table[i + 1] = table[i]! + (step / 6) * (rate(i * step) + 4 * rate((i + 0.5) * step) + rate((i + 1) * step))
     this.table = table
-  }
-
-  private read(pose: Pose): Reading {
-    const out = pose.position.clone().normalize()
-    const height = pose.position.length() - 1
-    const aim = new THREE.Vector3(0, 0, -1).applyQuaternion(pose.quaternion)
-    const beta = Math.acos(Math.min(Math.max(-aim.dot(out), -1), 1))
-    const top = new THREE.Vector3(0, 1, 0).applyQuaternion(pose.quaternion)
-    const level = (beta > 0.2 ? aim : top).clone().addScaledVector(out, -(beta > 0.2 ? aim : top).dot(out)).normalize()
-    const limb = Math.tan(Math.asin(1 / (1 + height)) - beta) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
-    const rest = this.frame(out, height, level, limb, pose.vfov).invert().multiply(pose.quaternion)
-    return { out, height, level, limb, vfov: pose.vfov, rest }
-  }
-
-  private frame(out: THREE.Vector3, height: number, level: THREE.Vector3, limb: number, vfov: number): THREE.Quaternion {
-    const beta = Math.asin(1 / (1 + height)) - Math.atan(limb * Math.tan(THREE.MathUtils.degToRad(vfov) / 2))
-    const aim = out.clone().multiplyScalar(-Math.cos(beta)).addScaledVector(level, Math.sin(beta))
-    const top = out.clone().multiplyScalar(Math.sin(beta)).addScaledVector(level, Math.cos(beta))
-    return lookAt(new THREE.Vector3(), aim, top)
   }
 
   globe(pose: Pose): Pose {
@@ -108,28 +73,44 @@ export class SunPlan extends StopPlan {
   }
 
   progress(x: number): number {
-    const at = Math.min(Math.max(x, 0), 1) * climb.steps
-    const i = Math.min(Math.floor(at), climb.steps - 1)
-    return mix(this.table[i]!, this.table[i + 1]!, at - i) / this.table[climb.steps]!
+    const steps = place.rise.steps
+    const at = Math.min(Math.max(x, 0), 1) * steps
+    const i = Math.min(Math.floor(at), steps - 1)
+    return mix(this.table[i]!, this.table[i + 1]!, at - i) / this.table[steps]!
   }
 
-  path(x: number): Pose {
+  carried(pose: Pose, time: number): Pose {
+    const c = this.carry(time)
+    return { position: pose.position.clone().applyQuaternion(c), quaternion: c.multiply(pose.quaternion), vfov: pose.vfov }
+  }
+
+  uncarried(pose: Pose, time: number): Pose {
+    const c = this.carry(time).invert()
+    return { position: pose.position.clone().applyQuaternion(c), quaternion: c.multiply(pose.quaternion), vfov: pose.vfov }
+  }
+
+  path(time: number): Pose {
     const seg = this.seg.rise
-    const since = x * (seg.end - seg.start)
-    const coast = seg.start + climb.coast * (1 - Math.exp(-since / climb.coast))
-    const a = this.read(this.globe(this.terrain(coast - this.seg.terrain.start)))
-    const b = this.read(this.hold(seg.start + since - this.seg.hold.start))
-    const e = this.progress(x)
-    const height = a.height * Math.pow(b.height / a.height, e)
-    const out = slerpDir(a.out, b.out, (height - a.height) / (b.height - a.height))
-    const position = out.clone().multiplyScalar(1 + height)
-    const vfov = mix(a.vfov, b.vfov, Math.pow(e, climb.lens))
-    const limb = mix(a.limb, b.limb, 1 - Math.pow(1 - e, climb.limb))
-    const level = slerpDir(a.level, b.level, smooth(e))
-    level.addScaledVector(out, -level.dot(out)).normalize()
-    const quaternion = this.frame(out, height, level, limb, vfov)
-    quaternion.multiply(new THREE.Quaternion().slerp(a.rest, 1 - smooth(ramp(0, climb.level, e))))
-    quaternion.multiply(new THREE.Quaternion().slerp(b.rest, smooth(e)))
+    const r = place.rise
+    const since = Math.min(Math.max(time, seg.start), seg.end) - seg.start
+    const coast = seg.start + r.coast * (1 - Math.exp(-since / r.coast))
+    const a = this.carried(this.globe(this.terrain(coast - this.seg.terrain.start)), seg.start + since)
+    const b = this.hold(seg.start + since - this.seg.hold.start)
+    const e = this.progress(since / (seg.end - seg.start))
+    const ha = a.position.length() - 1
+    const hb = b.position.length() - 1
+    const height = ha * Math.pow(hb / ha, e)
+    const out = slerpDir(a.position.clone().normalize(), b.position.clone().normalize(), (height - ha) / (hb - ha))
+    const position = out.multiplyScalar(1 + height)
+    const tq = this.turn(seg.start + since)
+    const spot = this.normal.clone().applyQuaternion(tq)
+    const north = this.heading.clone().applyQuaternion(tq)
+    const ra = lookAt(a.position, spot, north).invert().multiply(a.quaternion)
+    const rb = lookAt(b.position, spot, north).invert().multiply(b.quaternion)
+    const quaternion = lookAt(position, spot, north).multiply(ra.slerp(rb, 1 - Math.pow(1 - e, r.turn)))
+    const ta = Math.tan(THREE.MathUtils.degToRad(a.vfov) / 2)
+    const tb = Math.tan(THREE.MathUtils.degToRad(b.vfov) / 2)
+    const vfov = 2 * THREE.MathUtils.radToDeg(Math.atan(ta * Math.pow(tb / ta, e)))
     return { position, quaternion, vfov }
   }
 
@@ -161,24 +142,13 @@ export class SunPlan extends StopPlan {
     return super.terrain((lin + 0.5) * dur)
   }
 
-  override rise(time: number): OrbitShot {
-    const seg = this.seg.rise
-    const path = this.path((time - seg.start) / (seg.end - seg.start))
-    return time < this.switchTime ? { pose: this.local(path), view: 'terrain' } : { pose: path, view: 'orbit' }
+  override risePose(time: number, view: ViewKind): Pose {
+    const path = this.path(time)
+    return view === 'terrain' ? this.local(this.uncarried(path, time)) : path
   }
 
   carry(time: number): THREE.Quaternion {
-    return this.turn(time).multiply(this.turn(this.switchTime).invert())
-  }
-
-  blend(time: number): number {
-    return (time - this.window[0]) / (this.window[1] - this.window[0])
-  }
-
-  override coverAmount(seg: Segment, time: number): number {
-    const w = coverWindow(seg)
-    if (!w) return 0
-    return time > w.firstFrame / config.fps && time < (w.lastFrame + 1) / config.fps ? 1e-4 : 0
+    return this.turn(time).multiply(this.turn(this.anchorTime).invert())
   }
 }
 

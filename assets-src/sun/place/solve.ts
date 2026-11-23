@@ -37,8 +37,8 @@ const mapSpot = plan.normal.clone().applyQuaternion(unfit)
 const mapNorth = plan.heading.clone().applyQuaternion(unfit)
 const patchEast = new THREE.Vector3(0, 1, 0).cross(mapSpot).normalize()
 const patchNorth = mapSpot.clone().cross(patchEast)
-const before = JSON.parse(readFileSync('src/stops/sun/place.json', 'utf8')) as { plates?: unknown; onGlobe?: unknown }
-const plates = before.plates ?? { keepStretch: [3, 6], featherDeg: 0.25, matchDeg: 1.5, feather: 0.12, fade: [1.1, 1.7], levels: [{ file: 'place-12.jpg', widthDeg: 12 }] }
+const before = JSON.parse(readFileSync('src/stops/sun/place.json', 'utf8')) as { plates?: unknown; onGlobe?: unknown; rise?: unknown }
+const plates = before.plates ?? { keepStretch: [3, 6], featherDeg: 0.25, matchDeg: 1.5, feather: 0.12, fade: [1.1, 1.7], levels: [] }
 const twinPosition = eye.clone().divideScalar(stage.radius).applyQuaternion(toBody)
 const out = {
   source: 'references/approved/sun-close.jpg',
@@ -59,10 +59,11 @@ const out = {
   globe: { spot: arr(plan.normal, 8), north: arr(plan.heading, 8), mapSpot: arr(mapSpot, 8), mapNorth: arr(mapNorth, 8), patchNorthOffDeg: r(deg(patchNorth.angleTo(mapNorth)), 5), note: 'spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east' },
   plates,
   onGlobe: before.onGlobe,
+  rise: before.rise,
   twin: { position: arr(twinPosition, 8), quaternion: arr(toBody, 8), vfovDeg: terrain.vfovDeg, note: 'the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90' },
 }
 writeFileSync('src/stops/sun/place.json', JSON.stringify(out, null, 2) + '\n')
 console.log(JSON.stringify(out, null, 1).slice(0, 2400))
 const check = plan.globe({ position: new THREE.Vector3(), quaternion: new THREE.Quaternion(), vfov: 55 })
-const carried = twinPosition.clone().applyQuaternion(plan.turn(plan.switchTime))
+const carried = twinPosition.clone().applyQuaternion(plan.turn(plan.anchorTime))
 console.log('check against plan.globe at the switch time: position difference', check.position.distanceTo(carried).toExponential(2))

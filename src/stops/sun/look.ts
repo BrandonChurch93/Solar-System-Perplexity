@@ -5,7 +5,6 @@ import type { SkyCardDef } from './skycard'
 import type { GroundLook, SeetheLook } from './ground'
 import type { FringeLook } from './fringe'
 import type { KnotsLook, LoopsLook } from './loops'
-import type { FlareLook } from './flare'
 import { config } from '../../config'
 import { stage } from './stage'
 import fit from './fit.json'
@@ -89,6 +88,8 @@ export const loops: LoopsLook = {
   grid: [160, 96],
   lean: { outerDeg: 22, innerDeg: -28, from: 1.3, to: 2.55, late: [-24, -42] },
   gain: 1,
+  trim: [0.85, 1.15],
+  pinCut: [0, 0.08],
   far: 9, pin: { from: 0.1, soft: 0.2, lowDeg: 0.2, highDeg: 3 },
   flow: { amount: 0.55, lanes: 0.12, along: 1.5, speed: 0.12, back: 0.07, floor: 0.25, inside: [1.9, 2.4], from: [0.02, 0.1] },
   swell: { amount: 1.6, speed: 0.42, width: 0.075, lanes: 0.5, calm: 0.45 },
@@ -110,35 +111,3 @@ export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, m
 
 export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', field: 'field.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', haze: 'haze.png', grade: 'grade.png' }
 
-export const flare: FlareLook & { at: number; lift: number; ground: number; loops: number; cut: number } = {
-  hot: [1, 0.7, 0.34],
-  warm: [1, 0.38, 0.09],
-  core: { radius: 0.3, gain: 1.3, power: 2 },
-  halo: { radius: 1.1, gain: 0.4, power: 2 },
-  veil: 0.35,
-  at: 0.03,
-  before: 0.28,
-  after: 0.28,
-  powerIn: 1.5,
-  powerOut: 1.5,
-  lift: 0.12,
-  ground: 1.5,
-  loops: 0.15,
-  cut: 0.2,
-}
-
-export const dissolve = {
-  loops: [0.25, 0.9] as [number, number],
-  lean: [-0.6, 0.15] as [number, number],
-  cut: 0.12,
-  ground: [0.1, 0.75] as [number, number],
-  site: [0.4, 0.97] as [number, number],
-  lit: { amount: 0.3, over: [-0.25, 0.4] as [number, number] },
-  fringe: [0.1, 0.6] as [number, number],
-  sky: [0.1, 0.7] as [number, number],
-  corona: [0.1, 0.8] as [number, number],
-  match: [0.6, 2] as [number, number],
-  tint: [0.77, 0.69, 0.65] as [number, number, number],
-  calm: { knee: [0.8, 0.5, 0.22] as [number, number, number], press: 0.85 },
-  glow: 0.5,
-}

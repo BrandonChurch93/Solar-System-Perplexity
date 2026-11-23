@@ -32,6 +32,7 @@ export interface GlobePlace {
   capDeg: [number, number]
   fade: [number, number]
   lowLod: number
+  spotKeep: [number, number]
 }
 
 export interface GlobeOptions {
@@ -154,6 +155,7 @@ uniform vec2 uCap;
 uniform vec2 uPlaceFade;
 uniform float uPlaceOn;
 uniform float uTidy;
+uniform vec3 uSpotKeep;
 uniform float uBare;
 uniform float uLowLod;
 in vec3 vClip;
@@ -303,7 +305,11 @@ void main() {
   float dC = dot(ddy, ddy);
   float dB = dot(ddx, ddy);
   float isoRate = sqrt(max(0.5 * (dA + dC - sqrt((dA - dC) * (dA - dC) + 4.0 * dB * dB)), 0.0)) * uMapWidth / 6.283185307179586;
-  float wPlace = uPlaceOn * smoothstep(uCap.x, uCap.y, dot(d, uNadir)) * (1.0 - smoothstep(uPlaceFade.x, uPlaceFade.y, isoRate));
+  vec3 fromSpot = at - uGSpot;
+  vec3 spotUp = cross(uGSpotE, uGSpotN);
+  fromSpot -= spotUp * dot(fromSpot, spotUp);
+  float keep = uSpotKeep.z * (1.0 - smoothstep(uSpotKeep.x, uSpotKeep.y, length(fromSpot)));
+  float wPlace = uPlaceOn * smoothstep(uCap.x, uCap.y, dot(d, uNadir)) * max(1.0 - smoothstep(uPlaceFade.x, uPlaceFade.y, isoRate), keep);
   for (int k = 0; k < (wPlace > 0.0 ? 1 : 0); k++) {
     vec2 fromApex = gnd - ST_FOLD.yz;
     float phi = atan(fromApex.x, fromApex.y);
@@ -381,8 +387,12 @@ void main() {
     for (int j = 0; j < ((at.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); j++) {
       lit += textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)));
     }
-    vec3 detail = clamp(fine / max(mid, vec3(1e-4)), 0.0, 4.0);
-    col = mix(col, mix(col * detail, close, uTidy) * lit, wPlace);
+    float detail = clamp(dot(fine, vec3(0.2126, 0.7152, 0.0722)) / max(dot(mid, vec3(0.2126, 0.7152, 0.0722)), 1e-4), 0.0, 3.0);
+    vec3 wideCol = col * detail;
+    wideCol.g = min(wideCol.g, wideCol.r);
+    wideCol.b = min(wideCol.b, wideCol.g);
+    float closeShare = max(uTidy, keep);
+    col = mix(col, pow(max(wideCol, vec3(1e-5)), vec3(1.0 - closeShare)) * pow(max(close, vec3(1e-5)), vec3(closeShare)) * lit, wPlace);
     placed = wPlace * uBare;
     texels = mix(texels, bare > 0.5 ? texF : mix(texP, texB, step(0.5, w)), step(0.5, wPlace));
   }
@@ -450,7 +460,7 @@ export class SunGlobe {
         uNadir: { value: nadir },
         uCap: { value: new THREE.Vector2(Math.cos(THREE.MathUtils.degToRad(o.place?.capDeg[1] ?? 44)), Math.cos(THREE.MathUtils.degToRad(o.place?.capDeg[0] ?? 36))) },
         uPlaceFade: { value: new THREE.Vector2(o.place?.fade[0] ?? 1.1, o.place?.fade[1] ?? 1.7) },
-        uPlaceOn: { value: 0 }, uTidy: { value: 0 }, uBare: { value: 0 }, uLowLod: { value: o.place?.lowLod ?? 3 },
+        uPlaceOn: { value: 0 }, uTidy: { value: 0 }, uBare: { value: 0 }, uSpotKeep: { value: new THREE.Vector3(o.place?.spotKeep[0] ?? 1, o.place?.spotKeep[1] ?? 2, 0) }, uLowLod: { value: o.place?.lowLod ?? 3 },
         ...shared,
         uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -477,7 +487,8 @@ export class SunGlobe {
     u.uAspect!.value = aspect
   }
 
-  place(on: number, tidy: number, bare: number): void {
+  place(on: number, tidy: number, bare: number, spot: number): void {
+    ;(this.material.uniforms.uSpotKeep!.value as THREE.Vector3).z = spot
     this.material.uniforms.uPlaceOn!.value = on
     this.material.uniforms.uTidy!.value = tidy
     this.material.uniforms.uBare!.value = bare

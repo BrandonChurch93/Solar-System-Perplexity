@@ -3,7 +3,6 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
 import { config } from '../../config'
 import { Corona } from './corona'
-import { Flare } from './flare'
 import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
 import { Ground } from './ground'
@@ -35,7 +34,7 @@ export const createSet: SetFactory = async (ctx) => {
   const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
   const fitTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const mapToStage = new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(place.stage.toBody).invert().multiply(fitTurn)))
-  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches, place: { ground: ground.material.uniforms, toStage: mapToStage, capDeg: place.onGlobe.capDeg as [number, number], fade: place.onGlobe.fade as [number, number], lowLod: place.onGlobe.lowLod } })
+  const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches, place: { ground: ground.material.uniforms, toStage: mapToStage, capDeg: place.onGlobe.capDeg as [number, number], fade: place.onGlobe.fade as [number, number], lowLod: place.onGlobe.lowLod, spotKeep: place.onGlobe.spotKeep as [number, number] } })
   globe.mesh.quaternion.copy(fitTurn)
   orbit.add(globe.mesh)
 
@@ -58,9 +57,6 @@ export const createSet: SetFactory = async (ctx) => {
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   terrain.add(ground.mesh, fringe.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)
-  const flare = new Flare(look.flare)
-  world.add(flare.mesh)
-  const kernel = stage.onGround(stage.feet[0]![0]!, stage.feet[0]![1]!).sub(stage.centre).setLength(stage.radius + look.flare.lift).add(stage.centre)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
@@ -118,7 +114,6 @@ export const createSet: SetFactory = async (ctx) => {
       const shown = !inOrbit ? 0 : kind === 'travel' ? 1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]) : skyIn
       backdrop.update(shown, gain, vignette, aspect)
       backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
-      flare.update(kernel, world, view.camera, 0, 1, gain, aspect)
       if (terrain.visible) {
         const t = state.time - terrainMid
         ground.show(placing, 0, 0)
@@ -131,12 +126,13 @@ export const createSet: SetFactory = async (ctx) => {
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
-        loops.update(t, gain * strands, vignette, aspect, 0, 0, 0, open, since)
+        loops.trim(above(by.strands))
+        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
       const spin = plan.spin(state.time)
-      globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona))
+      globe.place(placing ? 1 : 0, 1 - above(by.tidy), 1 - above(by.corona), 1 - above(by.spot))
       const glow = above(by.corona)
       const leaving = kind === 'travel'
       const going = leaving ? even(state.u, look.leave.over) : 0
@@ -219,7 +215,6 @@ export const createSet: SetFactory = async (ctx) => {
       corona.dispose()
       prominences.dispose()
       far.dispose()
-      flare.dispose()
       backdrop.dispose()
       backdropTerrain.dispose()
       ground.dispose()
