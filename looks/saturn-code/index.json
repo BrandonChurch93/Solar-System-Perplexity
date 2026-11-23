@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T09:34:11.818Z",
+ "pushed": "2026-11-23T09:58:32.863Z",
  "head": "747239c3f31a605973e98434b323e0e17c7cb488",
- "note": "ice: stones as lit balls with shadows, on the sheet and on levels above it for parallax; motion proof next",
+ "note": "ice rebuilt as lit balls from grains to blocks, floating levels, wakes and spokes; flight path longer (forward 0.5) so the plane streams past; look still too pebbly, colours of the A ring next",
  "looks": [
+  {
+   "time": "2026-11-23T09:58:32.296Z",
+   "file": "20261123095832296-note-zp_nearleft.jpg",
+   "source": "../../../../tmp/v/zp_nearleft.png",
+   "kind": "note",
+   "label": "3720 near left at 2x: approved (left) against the code scene (right), draft"
+  },
+  {
+   "time": "2026-11-23T09:58:31.662Z",
+   "file": "20261123095831662-note-d_3720.jpg",
+   "source": "../../../../tmp/v/d_3720.png",
+   "kind": "note",
+   "label": "3720 draft: ice as balls in a size ladder (dense small ones, blocks with shadows, floaters), wakes, spokes; path forward 0.5 sink 0.12"
+  },
   {
    "time": "2026-11-23T09:34:11.262Z",
    "file": "20261123093411262-note-look_ice2_nearleft.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/pair_nearleft.png",
    "kind": "note",
    "label": "3720 near left at native size, approved beside ladder four"
-  },
-  {
-   "time": "2026-11-23T08:46:26.273Z",
-   "file": "20261123084626273-note-look_3720_v4.jpg",
-   "source": "../../../../tmp/v/look_3720_v4.png",
-   "kind": "note",
-   "label": "3720 review tier, ladder four (levels in the logarithm, bunches, new light by angle, paler ice): fine detail 1.42 of the approved, lines too hard and too even, no grain yet"
-  },
-  {
-   "time": "2026-11-23T08:30:02.034Z",
-   "file": "20261123083002034-note-pair_mid.jpg",
-   "source": "../../../../tmp/v/pair_mid.png",
-   "kind": "note",
-   "label": "3720 mid field at native size, approved close beside ladder three"
   }
  ]
 }
