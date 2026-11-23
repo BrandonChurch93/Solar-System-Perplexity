@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "right limb, where the dark edge meets the milky way",
+   "what": "a warm orange flare breaks out of the limb; the approved frame keeps that edge cool dark teal with almost no spill",
+   "fix": "remove the warm limb spill and match the cool narrow edge"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "sun-side ring arcs and the faint outer rings with the blue star cluster",
+   "what": "rings are softer, the magenta and cyan edge fringe is flattened, and the faint stars are dimmer and smeared",
+   "fix": "restore ring-edge sharpness and chromatic fringe, and bring the faint star peaks back up"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "milky way star cores in the native crops",
+   "what": "stellar peaks are about twenty levels darker and slightly softer than the approved crops",
+   "fix": "restore star-core brightness and crispness without lifting the dust lanes"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper limb and the rings above it",
+   "what": "the cyan atmosphere falls off harder and narrower, and the ring edges read slightly harsher",
+   "fix": "widen and soften the upper-limb glow, and match the approved ring-edge thickness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "planet disk clouds in the native disk crop",
+   "what": "the same cloud pattern sits about two pixels down and left of the approved crop",
+   "fix": "nudge the cloud texture up and right by two pixels"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "lit atmosphere and ring midtones",
+   "what": "midtones are slightly lifted while the brightest peaks are a little lower, so contrast is flatter",
+   "fix": "drop the midtone haze slightly and restore the highlight peaks"
+  }
+ ]
+}
