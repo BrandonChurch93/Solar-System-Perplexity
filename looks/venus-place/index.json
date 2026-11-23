@@ -1,71 +1,71 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T13:54:20.304Z",
- "head": "c40fd8743519947ec51d04acc58c50ce9200f0bb",
- "note": "every frame of dive and rise at draft, commit 3aba4963: cloud of the close view round the place, no dot at the far ends",
+ "pushed": "2026-11-23T14:36:56.699Z",
+ "head": "29d14a02937bcb22a6ffa7ee9acf132d56a68879",
+ "note": "every frame of dive and rise at draft, commit 29d14a02 (merge of main 33dd8cfa, widest plate reaches further out after G13 failed on 1576)",
  "looks": [
   {
-   "time": "2026-11-23T13:54:19.742Z",
-   "file": "20261123135419742-note-rise-D.jpg",
-   "source": "out/work/venus/place/r6/rise-D.jpg",
+   "time": "2026-11-23T14:36:55.655Z",
+   "file": "20261123143655655-note-rise-D.jpg",
+   "source": "out/work/venus/place/r7/rise-D.jpg",
    "kind": "note",
-   "label": "rise 1590 to 1604 draft, 3aba4963",
+   "label": "rise 1590 to 1604 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:19.177Z",
-   "file": "20261123135419177-note-rise-C.jpg",
-   "source": "out/work/venus/place/r6/rise-C.jpg",
+   "time": "2026-11-23T14:36:54.479Z",
+   "file": "20261123143654479-note-rise-C.jpg",
+   "source": "out/work/venus/place/r7/rise-C.jpg",
    "kind": "note",
-   "label": "rise 1570 to 1589 draft, 3aba4963",
+   "label": "rise 1570 to 1589 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:18.626Z",
-   "file": "20261123135418626-note-rise-B.jpg",
-   "source": "out/work/venus/place/r6/rise-B.jpg",
+   "time": "2026-11-23T14:36:53.701Z",
+   "file": "20261123143653701-note-rise-B.jpg",
+   "source": "out/work/venus/place/r7/rise-B.jpg",
    "kind": "note",
-   "label": "rise 1550 to 1569 draft, 3aba4963",
+   "label": "rise 1550 to 1569 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:17.973Z",
-   "file": "20261123135417973-note-rise-A.jpg",
-   "source": "out/work/venus/place/r6/rise-A.jpg",
+   "time": "2026-11-23T14:36:52.542Z",
+   "file": "20261123143652542-note-rise-A.jpg",
+   "source": "out/work/venus/place/r7/rise-A.jpg",
    "kind": "note",
-   "label": "rise 1530 to 1549 draft, 3aba4963",
+   "label": "rise 1530 to 1549 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:17.430Z",
-   "file": "20261123135417430-note-dive-D.jpg",
-   "source": "out/work/venus/place/r6/dive-D.jpg",
+   "time": "2026-11-23T14:36:51.717Z",
+   "file": "20261123143651717-note-dive-D.jpg",
+   "source": "out/work/venus/place/r7/dive-D.jpg",
    "kind": "note",
-   "label": "dive 1332 to 1349 draft, 3aba4963",
+   "label": "dive 1332 to 1349 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:16.863Z",
-   "file": "20261123135416863-note-dive-C.jpg",
-   "source": "out/work/venus/place/r6/dive-C.jpg",
+   "time": "2026-11-23T14:36:50.600Z",
+   "file": "20261123143650600-note-dive-C.jpg",
+   "source": "out/work/venus/place/r7/dive-C.jpg",
    "kind": "note",
-   "label": "dive 1308 to 1331 draft, 3aba4963",
+   "label": "dive 1308 to 1331 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:16.304Z",
-   "file": "20261123135416304-note-dive-B.jpg",
-   "source": "out/work/venus/place/r6/dive-B.jpg",
+   "time": "2026-11-23T14:36:49.581Z",
+   "file": "20261123143649581-note-dive-B.jpg",
+   "source": "out/work/venus/place/r7/dive-B.jpg",
    "kind": "note",
-   "label": "dive 1284 to 1307 draft, 3aba4963",
+   "label": "dive 1284 to 1307 draft, 29d14a02",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T13:54:15.735Z",
-   "file": "20261123135415735-note-dive-A.jpg",
-   "source": "out/work/venus/place/r6/dive-A.jpg",
+   "time": "2026-11-23T14:36:48.578Z",
+   "file": "20261123143648578-note-dive-A.jpg",
+   "source": "out/work/venus/place/r7/dive-A.jpg",
    "kind": "note",
-   "label": "dive 1260 to 1283 draft, 3aba4963",
+   "label": "dive 1260 to 1283 draft, 29d14a02",
    "stop": "venus"
   }
  ]
