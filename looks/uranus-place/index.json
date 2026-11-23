@@ -1,84 +1,90 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T17:26:14.806Z",
- "head": "ac8019ba83f7c3e929acff43eb69c73af197ad47",
- "note": "Shell trial with fibres, rise and dive; main c9bc056d under the trial; chain D on 7cb13201: measure green (G13 worst 4155 0.69 percent at every third frame), edges and hold run",
+ "pushed": "2026-11-23T17:52:19.584Z",
+ "head": "06034e1621b088c54d0e237c67ede0d852bc1ddb",
+ "note": "06034e16 (local, in proof): shell tops and the dive's plate span; under the place picture 2.11 dive, 4.99 rise; main 8eba73e9; finals keep their bytes, rise renders",
  "looks": [
   {
-   "time": "2026-11-23T17:26:13.603Z",
-   "file": "20261123172613603-note-s4-d.jpg",
-   "source": "../../../../tmp/s4-d.jpg",
+   "time": "2026-11-23T17:52:19.007Z",
+   "file": "20261123175219007-note-under-rise.jpg",
+   "source": "../../../../tmp/under-rise.jpg",
    "kind": "note",
-   "label": "TRIAL, same shell: dive 4159 to 4170. The bank keeps its light and its fibres and goes over the limb as the camera sinks to the layer",
+   "label": "Under the place picture, rise T 4391, tree 06034e16: mean 4.99 of 255, limit 6",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:26:12.555Z",
-   "file": "20261123172612555-note-s4-c.jpg",
-   "source": "../../../../tmp/s4-c.jpg",
+   "time": "2026-11-23T17:52:18.085Z",
+   "file": "20261123175218085-note-under-dive.jpg",
+   "source": "../../../../tmp/under-dive.jpg",
    "kind": "note",
-   "label": "TRIAL in the scratch tree, not committed: rise 4396 to 4407, white tops on a shell 0.02 R above the deck, with the fibres of the plates in the white. The streak comes out under the limb at 4396 and slides to its place, no amount depends on time",
+   "label": "Under the place picture, dive T 4186, tree 06034e16: mean 2.11 of 255, limit 6",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T17:25:51.913Z",
-   "file": "20261123172551913-frame-f04200.jpg",
-   "source": "out/work/seq/4200-4203/f04200.png",
+   "time": "2026-11-23T17:52:16.938Z",
+   "file": "20261123175216938-note-s5-b.jpg",
+   "source": "../../../../tmp/s5-b.jpg",
+   "kind": "note",
+   "label": "For comparison 82516be3 (named 17:36): the storm comes in from 4118 and is still gaining at 4127",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T17:52:15.792Z",
+   "file": "20261123175215792-note-s5-a.jpg",
+   "source": "../../../../tmp/s5-a.jpg",
+   "kind": "note",
+   "label": "Dive 4110 to 4127 on 06034e16 files (scratch tree render, main c9bc056d under it), draft, crop round the globe: the dive's plates come in between 4.55 and 3.2 R, the storm is whole by 4121 while it is a speck",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T17:42:41.479Z",
+   "file": "20261123174241479-frame-final-4290.jpg",
+   "source": "out/work/u/base/final-4290.png",
    "kind": "frame",
-   "label": "uranus.terrain frame 4200, draft tier",
+   "label": "uranus.terrain frame 4290, final tier",
    "stop": "uranus",
    "segment": "uranus.terrain",
-   "frame": 4200,
-   "tier": "draft",
+   "frame": 4290,
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "743c10b0a56aaca7"
   },
   {
-   "time": "2026-11-23T17:20:26.187Z",
-   "file": "20261123172026187-job-frame-04436.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4436, final tier, nograin view, from the running measure job",
+   "time": "2026-11-23T17:41:06.121Z",
+   "file": "20261123174106121-compare-uranus-rise-under.jpg",
+   "source": "out/work/handover/uranus-rise-under.png",
+   "kind": "compare",
+   "label": "uranus rise, the globe side at T (frame 4391) with the place picture, alone, and their difference times 4",
    "stop": "uranus",
    "segment": "uranus.rise",
-   "frame": 4436,
+   "frame": 4391,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T17:40:11.920Z",
+   "file": "20261123174011920-compare-uranus-dive-under.jpg",
+   "source": "out/work/handover/uranus-dive-under.png",
+   "kind": "compare",
+   "label": "uranus dive, the globe side at T (frame 4186) with the place picture, alone, and their difference times 4",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T17:37:57.903Z",
+   "file": "20261123173757903-frame-final-4035.jpg",
+   "source": "out/work/u/base/final-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
    "tier": "final",
    "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T17:01:29.000Z",
-   "file": "20261123170129000-note-s3-b.jpg",
-   "source": "../../../../tmp/s3-b.jpg",
-   "kind": "note",
-   "label": "TRIAL, shell: rise 4408 to 4425",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T17:01:28.038Z",
-   "file": "20261123170128038-note-s3-a.jpg",
-   "source": "../../../../tmp/s3-a.jpg",
-   "kind": "note",
-   "label": "TRIAL, shell: rise 4390 to 4407",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T17:01:27.330Z",
-   "file": "20261123170127330-note-d-b.jpg",
-   "source": "../../../../tmp/d-b.jpg",
-   "kind": "note",
-   "label": "For comparison, the branch tree 7cb13201: dive 4160 to 4171, the bank dims in place",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T17:01:26.225Z",
-   "file": "20261123170126225-note-s2-b.jpg",
-   "source": "../../../../tmp/s2-b.jpg",
-   "kind": "note",
-   "label": "TRIAL in the scratch tree, not committed: dive 4160 to 4171 with the white tops on a shell 0.02 R above the deck. The bank does not dim, it goes over the limb as the camera sinks under the layer",
-   "stop": "uranus"
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
   }
  ]
 }
