@@ -300,6 +300,20 @@ MAIL 202 (18:00 UTC): the clock goes on with no end time. One mail `TICK HH:MM` 
 
 MAIL 305 (2026-11-23 17:17 UTC), JOB harness-stop-pack: `pack(a)` in `tools/round.py` now calls `npm run -s pack` with phase 4 when a stop round has phase 6, because in `tools/pack.ts` phase 6 without `--only` is the whole film path (`recordPacks`, hook, whole film jury, continuity, travels) and never writes `R1`, `R2`, `R3-partN`, `R4`, `R8` of one stop; the render jobs keep `--phase 6 --only` (they go through `part()`); tier final and motion tier review are the same for both phases; no pack was run by me, rounds 37 and 40 at the Builder are the proof; the ticks stopped at 00:40 UTC on the word of the Builder.
 
+## MAIL 323 (2026-11-23 18:32 UTC): the cover sheet of a stop round shows the place window
+
+Fault: `sheetFrames(cfg, s, true)` took `judgedWindow` and showed T-5 to T+6, but the place window of a handover (the "window" of the handover report, `placeFirstFrame` to `placeLastFrame`) ends at T for a dive and starts at T for a rise, so the motion critic saw half of it.
+
+Change, four files, nothing under `src/`:
+- `tools/lib/render.ts` (used by the renderers, named in the report): `sheetFrames` has a fourth argument `placeWindow`, default false. With it, for a dive or rise of a stop with a handover, the sheet holds `critics.contactSheetFrames` consecutive frames centred on the middle of the place window, kept inside the segment. When the centre falls between two frames the run leans to the end where the sides change: the last frame of a dive's window, the first of a rise's. Without the argument, and for a stop with a cover, the frames are the old ones.
+- `tools/pack.ts`: the flag `--place-window` is passed on to the three `sheetFrames(cfg, s, true)` calls (the sheet and the two in the plan).
+- `tools/round.py`: the stop round's `jobs` and `pack` commands carry `--place-window`. `film_jobs`, `film_pack` and the `--plan` calls of the whole film rounds do not, so record and polish rounds keep their frames (item 2 of the mail, read by the letter). To give the whole film rounds the place window too, add the flag in `film_jobs` (the plan and `cmd`), `film_touched` and `film_pack`.
+- `tests/coversheet.test.ts`: five tests (dive ending at T, rise starting at T, longer and shorter windows, the segment edge, the old path).
+
+Frames on main bab673f with the flag: sun.rise 216 to 227; mercury 733 to 744 and 990 to 1001; earth 1908 to 1919 and 2100 to 2111; mars 2443 to 2454 and 2692 to 2703 (rise window 2685 to 2711, longer than the sheet, T 2685 not on it); uranus 4175 to 4186 and 4391 to 4402; neptune 4747 to 4758 and 4956 to 4967. Venus, Jupiter and Saturn have a cover on bab673f and keep 1309 to 1320, 1555 to 1566, 3019 to 3030, 3265 to 3276, 3589 to 3600, 3835 to 3846. The sun has no dive.
+
+Checks: pyflakes clean, tsc clean, vitest 26 files 175 tests passed, build ok. Not run: `pack --plan` (my sandbox has 2.7 GB free and `requireDisk` wants 3), no pack, no render.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
