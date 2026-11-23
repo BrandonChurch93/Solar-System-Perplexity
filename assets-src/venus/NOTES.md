@@ -1783,3 +1783,46 @@ Do now, in this order: finish the step you are in, merge origin/main, build, run
 (Then lines for mars_place_builder, handover_engineer and the other builders; nothing in them for Venus.)
 
 - Venus flies its own path (`src/stops/venus/path.ts`, `move.json`), so after the merge the frames of both moves should keep their bytes. To be measured, not assumed.
+
+## State 12:40 (23 Nov, VM time): item 5 tries so far, and the order of MAIL 265. Read this first after a compaction
+
+Order of MAIL 265 as done: mail recorded, commit 76c12541 (notes); merge 728e51b2 of origin/main 03510ddd (E3), no conflict; `npx tsc --noEmit` clean; vitest 155 of 155; `npm run build` passed. The dive (1260 to 1349) and the rise (1530 to 1604) render at the draft tier, one after the other, into `out/work/seq/`. Then: byte check against the stills made before the merge, harness, every frame looked at, push, looks, report.
+
+Item 5 of MAIL 247 (plates between the wide globe and the deck), tries from 12:12 to 12:40, all judged by eye, none used:
+
+- A cloud deck by code (three versions: cell noise puffs, soft blobs, ridged gradient noise). Reads as rock, boulders or veins, not as cloud tops. The tool was deleted and never committed.
+- A quilt of the ring of plate a (6 to 12 deg) from pieces of plate b (`quilt.py`, not committed). Version 1 is a blocky patchwork. Version 2 (forms and tones laid apart, cheapest cut between pieces) has no tone blocks but reads as a jumbled collage.
+- Round 2 of the composition take of plate a, 3 pictures of 6 used: q2 (guide: quilt 1 blurred) gave the patchwork back sharpened; r1 (guide: plate a itself, a repaint prompt) came back nearly unchanged; q3 (guide: quilt 2 with the ring blurred) gave a softer cloud field in the ring, but at native size straight seams and the square edge of the inset stay in view. One more call (q1) failed in transit without a picture. Lesson again: the composition take keeps the layout of its guide and sharpens it, seams included.
+- Finding: at native size the frames 1284 to 1306 and 1573 to 1585 of the present plates read as a cloud field, better than each try above. What is wrong in them: a bright yellow ridge with hard blown out rims at upper left (dive) or upper right (rise); thin bright streaks near the limb; olive and green tints at left and bottom; combed diagonal striations right of the place; a pale smooth blue white fan north west of the dark eye with a soft straight edge; smooth zones with little detail.
+- Next for item 5, after MAIL 265 is answered: a bounded cure by code on the painted parts of the base plates w and a (soft knee on the highlights, olive toward the palette of the place by lightness as measured in plate b, fading out toward the rim of w), then the T plates again. The combed forms and the fan are not cured by that; say so.
+
+## MAIL 266 (23 Nov, 12:41 UTC), from the Builder, high priority, word for word. Read this first after a compaction
+
+"MAIL 266 from the Builder (/root), 12:41 UTC. Venus: your dive and rise at 6326371c, seen by me on every frame (my render on the render machines, draft tier, 165 frames).
+
+Good, and close to what Brandon asked for: from 1310 to 1349 and from 1530 to 1553 it is one place under one Sun, and I cannot name the frame where the scene changes at either T.
+
+Wrong, worst first:
+1. 1270 to 1276: the place comes onto the globe as a dark dot with a pale spot, inside six frames, while it is 30 to 60 px wide. It reads as a mole that pops in. Bring it in from the first frame of the dive with a contrast that grows with nearness, and make the outermost level agree with the globe at its own scale (mean colour, direction of the swirls), so there is nothing to pop.
+2. 1278 to 1309 and 1556 to 1597: the place is a dark hollow under a pale smooth fan, set in olive pebbles and combed gold streaks. The place and the globe are two kinds of cloud. The cloud round the place has to be the cloud of the close view seen from above: ridges and towers with lit sides and long shadows in the low Sun, out to where it is small on screen, then easing into the swirls of the globe. This is your item 5. Your first try by code read as rock veins, as you wrote. The road that worked on Mercury and Mars: lay the close view back, fill the stretched parts by image generation led by that lay back and by a top down crop of its sharp part, keep it in the place's own light (`PatchSet.own`), and cut it in with a matte that follows cloud forms, never a circle or a square.
+3. 1562 to 1569: a combed golden band along the limb.
+4. 1597 to 1604: the place is still a dark dot on the small globe. Before the travel starts it must be gone, or be a feature the globe of the hold has.
+
+Proof I need with your next commit: your own sheet of every frame of both moves at the draft tier, after you looked at each frame; the report of `npm run handover -- --stop venus` for dive and rise; 1185 and 1440 at the final tier against the kept stills. Then I render both moves at the review tier and start your round.
+
+Merge origin/main first (E3, mail 265). Do not wait for an answer."
+
+## State 12:55 (23 Nov, VM time): MAIL 265 done on the merge. Read this first after a compaction
+
+Measured on the merge 728e51b2 (origin/main 03510ddd with E3), draft tier:
+
+- Venus flies its own path (`path.ts`, `move.json`), so E3 changes no Venus frame: 43 stills made before the merge (dive 1284 to 1322 by steps, the 19 frames 1331 to 1349 of the harness, rise 1541 to 1585 by steps) have the same bytes as the frames of the full render after it.
+- The dive (1260 to 1349) and the rise (1530 to 1604) rendered in full, 165 frames, every frame looked at on sheets of twelve (`/tmp/v/m265/`). What I saw is what mail 266 lists: the place comes in as a dark dot 1270 to 1276; a dark hollow under a pale smooth fan in olive pebbles and combed gold streaks, 1278 to 1309 and 1556 to 1597; the combed band on the limb 1562 to 1569; the dark dot to the end of the rise. 1310 to 1349 and 1530 to 1553 read as one place.
+- Harness (`--only sides,flow,path,sheets`): all six checks pass, numbers as before the merge (dive side difference mean 0.052, 99.9th 2, largest 133, flow gap mean 0.101, largest 0.286 px a frame; rise 0.052, 3, 47, 0.092, 0.236).
+- `quilt.py` and its block in `plates.json` were not used and are not committed.
+
+Plan for mail 266 (in its order of weight, item 2 first because items 1, 3 and 4 hang on the plates):
+
+1. Item 2: new base plates b, a, w whose ring and whose far, stretched part are a cloud field seen from above (ridges and towers, lit sides toward the Sun at upper left, long shadows to the lower right), by image generation led by the lay back, with the blank parts left blank so the take must paint them, and with the close image as the second picture. Tones locked to the underpainting by code. Then the tile takes, the T plates, the checks.
+2. Item 1 and 4: the weight of the place grows with nearness from the first frame of the dive (and falls to nothing before the travel), and the outer level keeps the mean colour and the directions of the globe at its own scale.
+3. Item 3: the band on the limb, after the new plates are in (it is the ring of w and a seen flat).
