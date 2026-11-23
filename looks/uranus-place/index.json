@@ -1,9 +1,63 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T12:18:30.636Z",
- "head": "0d93d0c69769ab2e169446cbbbea6540f26491eb",
- "note": "dive stills d: place carried by a sunlit cloud bank and the streak from 4125, grain gone at native size",
+ "pushed": "2026-11-23T12:47:02.456Z",
+ "head": "b0c9e2b03e528a044c6b100d91d50161b93475f8",
+ "note": "Dive with cloud tops on main e54b29e8 (E3 merged, bytes unchanged): every third frame and every frame 4126 to 4189",
  "looks": [
+  {
+   "time": "2026-11-23T12:47:01.221Z",
+   "file": "20261123124701221-note-dive-i-4174-4189.jpg",
+   "source": "out/work/u/dive/dive-i-4174-4189.jpg",
+   "kind": "note",
+   "label": "Dive, every frame 4174-4189, draft, b0c9e2b0",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:47:00.074Z",
+   "file": "20261123124700074-note-dive-i-4158-4173.jpg",
+   "source": "out/work/u/dive/dive-i-4158-4173.jpg",
+   "kind": "note",
+   "label": "Dive, every frame 4158-4173, draft, b0c9e2b0",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:46:58.914Z",
+   "file": "20261123124658914-note-dive-i-4142-4157.jpg",
+   "source": "out/work/u/dive/dive-i-4142-4157.jpg",
+   "kind": "note",
+   "label": "Dive, every frame 4142-4157, draft, b0c9e2b0",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:46:57.760Z",
+   "file": "20261123124657760-note-dive-i-4126-4141.jpg",
+   "source": "out/work/u/dive/dive-i-4126-4141.jpg",
+   "kind": "note",
+   "label": "Dive, every frame 4126-4141, draft, b0c9e2b0",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:46:57.091Z",
+   "file": "20261123124657091-note-dive-i.jpg",
+   "source": "out/work/u/dive/dive-i.jpg",
+   "kind": "note",
+   "label": "Dive 4110 to 4199 every third frame, draft, commit b0c9e2b0 on main e54b29e8: cloud tops to fly toward",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:46:08.207Z",
+   "file": "20261123124608207-frame-f04197.jpg",
+   "source": "out/work/seq/4110-4199/f04197.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4197, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4197,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "6f5cd496b40446f2"
+  },
   {
    "time": "2026-11-23T12:18:30.026Z",
    "file": "20261123121830026-note-d-low.jpg",
@@ -18,60 +72,6 @@
    "source": "../../../../tmp/grain-cmp.jpg",
    "kind": "note",
    "label": "4152 centre at 2 times: commit 54f4ffc6, now, now without film grain",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T12:18:28.752Z",
-   "file": "20261123121828752-note-d-native.jpg",
-   "source": "../../../../tmp/d-native.jpg",
-   "kind": "note",
-   "label": "dive 4152 (top) and 4158 (bottom) native crops, stills d: no sand at the cloud edges",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T12:18:28.117Z",
-   "file": "20261123121828117-note-h-d.jpg",
-   "source": "../../../../tmp/h-d.jpg",
-   "kind": "note",
-   "label": "dive stills d 4119 to 4170 draft: tops as one filtered map, cloud bank on the Sun side of the storm, uncommitted tree on main da69509a",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T12:17:01.039Z",
-   "file": "20261123121701039-frame-d-ng-4152.jpg",
-   "source": "out/work/u/h/d-ng-4152.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4152, draft tier, nograin view",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4152,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "nograin",
-   "engine": "c049c4c0efb85c12"
-  },
-  {
-   "time": "2026-11-23T12:02:31.149Z",
-   "file": "20261123120231149-note-h-b.jpg",
-   "source": "../../../../tmp/h-b.jpg",
-   "kind": "note",
-   "label": "dive stills b draft, tops light first pass",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T12:02:30.577Z",
-   "file": "20261123120230577-note-h-c.jpg",
-   "source": "../../../../tmp/h-c.jpg",
-   "kind": "note",
-   "label": "dive stills c 4119 to 4170 draft, tops light with far cover map, uncommitted tree on main ec3f3d90",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T11:32:07.585Z",
-   "file": "20261123113207585-note-g9.jpg",
-   "source": "../../../../tmp/g9.jpg",
-   "kind": "note",
-   "label": "dive g frames 4140 to 4185: the dark, low contrast stretch MAIL 249 names (4146 to 4164), before the fix",
    "stop": "uranus"
   }
  ]
