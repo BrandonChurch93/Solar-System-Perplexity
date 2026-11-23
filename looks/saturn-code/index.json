@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T13:25:30.497Z",
+ "pushed": "2026-11-23T13:54:53.432Z",
  "head": "f9007f07a1ffc3c29ef4d022f13b96c432236b2d",
- "note": "Mail 276 taken: working on 1 (sheet reads as a floor) and 2 (woven hatch); these are the last pictures before that work",
+ "note": "mail 276: the hatch is the sand, planks are the wakes; both go, grains as true ice come next",
  "looks": [
+  {
+   "time": "2026-11-23T13:54:52.786Z",
+   "file": "20261123135452786-note-bare0_ll.jpg",
+   "source": "../../../../tmp/v/bare0_ll.png",
+   "kind": "note",
+   "label": "bare sheet lower left beside the approved close (approved left, mine right)"
+  },
+  {
+   "time": "2026-11-23T13:54:52.239Z",
+   "file": "20261123135452239-note-bare0_s.jpg",
+   "source": "../../../../tmp/v/bare0_s.jpg",
+   "kind": "note",
+   "label": "3720 draft, bare sheet: wakes, sand and blocks off, no shutter blur (the ringlets are continuous)"
+  },
   {
    "time": "2026-11-23T13:25:29.850Z",
    "file": "20261123132529850-note-f_3720.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/b3e/c3765_bl.png",
    "kind": "note",
    "label": "draft 3765 bottom left at native size, blocks third version"
-  },
-  {
-   "time": "2026-11-23T12:58:06.102Z",
-   "file": "20261123125806102-note-sheet.jpg",
-   "source": "../../../../tmp/v/b3e/sheet.jpg",
-   "kind": "note",
-   "label": "draft, every 15th frame 3630 to 3795, blocks third version (white ice, own shapes)"
-  },
-  {
-   "time": "2026-11-23T12:40:15.232Z",
-   "file": "20261123124015232-note-holdpair.jpg",
-   "source": "../../../../tmp/v/b2/holdpair.png",
-   "kind": "note",
-   "label": "hold 3465 crops: head left, now right (old stones gone from the hold)"
   }
  ]
 }
