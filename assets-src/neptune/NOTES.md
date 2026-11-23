@@ -1464,3 +1464,124 @@ If you cannot give all six by 19:25, send nothing under src and tell me so; the 
 - Said as not done: nothing at review, no sheet, G17 not run, the retreat not at final; the classification of falling px is by a mask from the picture.
 - One thing the message said loosely: "Diff to main: ring.ts, look.ts, set.ts, nothing else". That holds for the commit c588ee73 and for everything under `src/`, `public/`, `config/`; the branch also differs from main in this notebook (`assets-src/neptune/NOTES.md`).
 - From here: no edit under `src/`, `public/` or `config/`. Notes and looks only, and renders if the Builder asks.
+
+### After the READY of 19:15: the cost at the final tier, sent 19:18 VM (high)
+
+- 19:16, chain22: final 5006 on main's Neptune code (second tree, 5c973fc1), `solid/basefinal/5006-9679fbb9fa75a7f3.png`, 205 s, in at 19:20:17.
+- `solid/ramp-05` (final, native, x 720 to 1420, y 0 to 420, round 34's final left, c588ee73's final right), looked at: on round 34 the far arc reads as clear grey blue bands beside the lit limb; on c588ee73 the bands are nearly lost in the sky. Sent high at 19:18 VM with that picture, the reading ("this try trades the hard step for a far arc that almost goes out"; "if in doubt, leave Neptune as it is"), and two corrections (the head had moved to the notes commit da6791a0; "diff to main, nothing else" held for src, public, config only).
+
+### MAIL 211 from the Builder, 19:20 UTC by the Builder's clock (high), word for word
+
+"MAIL 211 from the Builder, 19:20 UTC. CUT35 neptune ring: c588ee73 IS TAKEN into round 35 (merged with your notes da6791a0 as a8bea350; it is on origin main in about two minutes). I looked at ramp 01 to 05 and read the diff. Thank you for naming the cost plainly.
+
+My reading: the step at the crossing is cured; at the final tier, native, the far arc at the upper right nearly goes out; the whole frame still reads as a ringed planet. Round 35's critics decide by the rule already logged: a new severe or major on the frames this commit changed takes it back alone.
+
+ONE REFINEMENT, optional, DEADLINE 19:45 UTC BY MY CLOCK (your VM clock ran about 3 minutes ahead of mine at 19:15; I count the arrival of the READY). The step exists only where the NEAR arc crosses the dark disc. So: keep the opacity on the near half of the ring (the half in front of the planet) and take it away on the far half, with a smooth factor in the shader that depends on where the fragment sits on the ring relative to the camera (for example a smooth step of the cosine of the ring angle between fragment and camera, in ring local coordinates), multiplied into the solid weight. The far arc then keeps main's level, the crossings keep the cure. Choose the band of the factor so that both crossings sit at full weight and the change from 1 to 0 runs over a long stretch of ring near the ansae, with no edge.
+
+Rules: fetch and merge origin main first (it must hold a8bea350); ONE new commit, files under src/stops/neptune only; the ramp in time stays exactly as c588ee73 has it; nothing else changes.
+
+The READY must hold, or nothing is taken and c588ee73 stands:
+1. Drafts 4986 to 4995 byte equal to main's before c588ee73 (your ten hashes again).
+2. Final 5006 with its sha256. The step at the crossing in levels, as you measured it before (8.1 and 7.4 on round 34, 1.8 and 1.4 on c588ee73): it must stay cured. The mean of the far arc region (your 87312 px): round 34 40.6, c588ee73 31.35; the new one must be within 1 level of round 34.
+3. Pictures at the final tier, native: the upper right far arc, round 34 | c588ee73 | new; the crossing, round 34 above new; and the stretch of ring where the factor goes from 1 to 0, native with the brightness times 4, to show there is no edge.
+4. Every ramp frame 4996 to 5005 at draft, c588ee73 left, new right.
+5. The mean of the far arc region frame by frame for 4994 to 5008, and for 5025 to 5055 every fifth frame: round 35 main before c588ee73, c588ee73, new.
+6. tsc, vitest, G5.
+
+If the far arc cannot be kept without a new edge, or you see any other cost, send one short note saying so and no commit. Do not send a second variant. After 19:45 nothing is taken."
+
+- STANDING from this mail: c588ee73 is in round 35 (main a8bea350). One optional refinement, one commit, by 19:45 Builder's clock; no second variant.
+
+### The opacity only on the near half of the ring, built and proved inside the window of MAIL 211 (19:20 to 19:33 VM)
+
+- Geometry of 5006 (`end35/pose5006.json`; per px the cosine c of the ring angle between the ring point and the camera's foot in the ring plane, saved as `end35/cos5006.npy`; the far arc region of 87312 px saved as `end35/arcmask.npy`: px falling by more than 8 between main's and c588ee73's draft 5006, x 640 or more, y under 420, grown by a 9 px ellipse). The far arc region spans c from -0.69 to 0.80 (median 0.24): it reaches round the right ansa into the near half. All near half crossing px (ring 1.26 to 1.94, impact 0.93 to 1.06, 43017 px) sit at c 0.795 to 1.0, first percentile 0.828; ring 1.45 to 1.60 at 0.897 or more; the near arc over the dark disc at 0.848 or more. The tangent points (ansae) sit at c 0.29 to 0.44.
+- The band was chosen offline from the two drafts of 5006 (main and c588ee73) with new = main + factor * (c588ee73 - main): smoothstep(0.58, 0.82, c) predicted the region at 39.9 to 40.0 and the crossings at 0.97 or more of the full weight (first percentile 1.0). One choice, no second.
+- 19:23, merged origin main (it holds a8bea350). ONE commit, 0f4839059c57e54b265ac85469785f63d63595cd, pushed 19:31 after the final was in: `ring.ts` (`RingParams.solid.near`, uniform `uSolidNear`, `float solid = uSolid.x * smoothstep(uSolidNear.x, uSolidNear.y, dot(vLocal.xy, uCamL.xy) / max(r * length(uCamL.xy), 1e-4)) * (1.0 - exp(...))`; without `near` the uniform is (-3, -2), which gives 1 everywhere), `look.ts` (`near: [0.58, 0.82]` in `ring.solid`). `set.ts` not touched, so the ramp in time is as c588ee73 has it. `uCamL` is the camera in ring local coordinates, set by `ring.ending(...)` on every frame before `ring.solid(...)`. tsc clean, vitest 87 of 87 (17 files).
+- chain23 (`end35/chain23.sh`, 19:23:51 to 19:31:49): 35 drafts on 0f483905 into `solid/near/` (4986 to 5008, 5025 to 5055 every fifth, 4605, 4707, 4860, 5085, 5235; 169 s); final 5006 into `solid/nearfinal/` (205 s); drafts 5030, 5035, 5040, 5045, 5050 on c588ee73's three files in the second tree into `solid/c588/` (the second tree's src was put back to 5c973fc1 after); G5 at draft. `end35/near.py draft` and `near.py final` print the tables and write the pictures.
+- Proof 1: drafts 4986 to 4995 the same bytes as main before c588ee73 (938a4d05f89cb14f, c88f0fa46c24d24a, eb8622658a0bea0a, 5f173c3f4db2a23b, 4ccde8272fd224bd, 3eef245ce0fe2980, 60ae794ac38f3ca1, 4e9b11ad2a5991e5, 6cdd81e173326285, bd689a4c751fcfb1); also 4605, 4707, 4860, 5055, 5085, 5235.
+- Proof 2: final 5006 sha256 6e37332655c7059a2fe6623009e60d1ba7d76e85bb1c2530c87bec4cd0f3e291. The step at the crossing (means, ring 1.45 to 1.60, impact 1.005 to 1.03 minus 0.97 to 0.995, screen azimuth 30 to 60 and 60 to 90), green: round 34 8.0 and 7.5 (given before as 8.1 and 7.4 from rounded cells); main before c588ee73 8.0 and 6.9; c588ee73 1.9 and 1.4; new 1.9 and 1.4. Blue 6.9 and 5.5; 6.9 and 4.9; 1.9 and 0.9; 1.9 and 0.9. Red 4.3 and 4.6; 4.3 and 4.1; 1.0 and 0.6; 1.0 and 0.6. In the measured crossing (ring 1.45 to 1.60, azimuth 30 to 90, impact 0.90 to 1.2, 20155 px) new and c588ee73 are equal in every px at final. Ring px at full factor (c 0.82 or more, 233991 px): 275 differ from c588ee73, all by 1 level. All near half crossing px: none differs from c588ee73 by more than 2. Ring px at factor 0 (c 0.58 or less, 286929 px): 622 differ from main's final, all by 1 level. New against main's final: 2794 px darker by more than 8, none brighter; new against c588ee73's final: 39596 px brighter by more than 8, none darker.
+- The far arc region (87312 px), final tier: round 34 40.28, main before c588ee73 40.76, c588ee73 31.47, new 40.15. Draft tier: main 40.60, c588ee73 31.35, new 39.99. (The 40.6 of the first READY was main's draft; the Builder's mail took it for round 34's.)
+- Along the ring at draft 5006, off the disc (impact over 1.03), the share of c588ee73's change that new keeps, in steps of 0.04 of c from 0.58: right 0.03, 0.17, 0.38, 0.61, 0.83, 0.97; left 0.04, 0.19, 0.38, 0.64, 0.83, 0.98; 0.00 below 0.58 and 1.00 above 0.82. On screen the band lies in x 1100 to 1449, y 207 to 447 (right) and x 263 to 528, y 896 to 1079 (left).
+- Proof 4, drafts, new against main before, frame | px darker by more than 8 | px at 60 or more falling by more than 8 | by more than 20: 4996 0 0 0; 4997 0 0 0; 4998 46 46 0; 4999 286 277 23; 5000 663 489 168; 5001 1107 629 338; 5002 1575 789 533; 5003 1967 836 610; 5004 2246 916 682; 5005 2486 940 718; 5006 2628 1018 731; 5007 2767 1065 792; 5008 2975 1162 855. Brighter than main by more than 8: 0 until 5002, then 17 to 28. New darker than c588ee73 by more than 8: 0 in every frame.
+- Proof 5, the far arc region, drafts, main before | c588ee73 | new: 4994 68.93 68.93 68.93; 4995 59.51 59.51 59.51; 4996 51.12 51.11 51.12; 4997 45.89 45.60 45.89; 4998 42.63 41.66 42.63; 4999 41.40 39.29 41.36; 5000 40.63 37.15 40.52; 5001 40.16 35.22 39.98; 5002 39.88 33.47 39.61; 5003 39.96 32.17 39.56; 5004 40.22 31.43 39.70; 5005 40.57 31.39 39.98; 5006 40.60 31.35 39.99; 5007 40.52 31.25 39.91; 5008 40.32 31.10 39.72; 5025 38.65 30.39 38.21; 5030 38.63 30.98 38.22; 5035 37.72 32.08 37.46; 5040 35.20 32.24 35.07; 5045 31.36 30.36 31.31; 5050 25.65 25.49 25.64; 5055 19.27 19.27 19.27. Whole frame, main | c588ee73 | new: 5006 42.077 41.556 42.023; 5025 40.495 39.859 40.384; 5040 39.062 38.704 38.945.
+- Proof 6: tsc clean, vitest 87 of 87, G5 at draft: "PASS G5 neptune: 4605 hold invalid 0 coverage 0.527; 4707 dive invalid 0 coverage 0.669; 4860 terrain invalid 0 coverage 0.757; 5006 rise invalid 0 coverage 0.276".
+- The cure away from 5006 (the band was chosen from 5006's geometry and the camera moves): px that c588ee73 lifts over main by 3 or more green levels (the ring over the dark disc), share of that lift new keeps, drafts: 5000 1.000 (17419 px), 5004 1.000 (27142), 5006 1.000 (27389), 5008 1.000 (27452), 5025 1.000 (27222), 5030 1.000 (25804), 5040 1.000 (14982); at most 3 px keep under 90 percent.
+- Draft hashes on 0f483905: 4996 f2e0e124a286714e, 4997 16f4d498d9bc7736, 4998 f065509019c4ba6d, 4999 505521badfa3e567, 5000 38995448a37b5e5c, 5001 5b1eb9065cb37bfb, 5002 13e619c9f0ae71f1, 5003 ae7193a0da3b54ad, 5004 51de616d840795bd, 5005 9265438dc0ad6d83, 5006 dde651681c059d33, 5007 111e2711d92ec2a2, 5008 7da15e07f5ec956a, 5025 8eaa89f198b82d26, 5030 a1f132a2460cec7b, 5035 7dd2f42020dc2618, 5040 1f6a8a1b0f3fb836, 5045 51ddb587be139a3d, 5050 0033b4914d8ca664.
+- Pictures (looked at): `solid/near-01` (final, native, the upper right far arc, round 34, c588ee73, new: the bands are back as on round 34), `near-02` (final, native, the crossing, round 34 above new: the bands run across the silhouette at one level), `near-03` (final, native, brightness times 4, the two stretches where the factor goes from 1 to 0, c588ee73 left, new right: no edge seen; toward the far side the bands brighten and the stars show through again, gradually), `near-04` (every ramp frame at draft, c588ee73 left, new right). `near-03b` (the band outlined) written, not looked at, not sent.
+
+### "CUT35 neptune ring near half READY 0f483905..." SENT, 19:33 VM, high, four pictures (`near-01` to `near-04`)
+
+- Head and commit named: 0f4839059c57e54b265ac85469785f63d63595cd. All six proofs with the numbers above. Costs named: none new; the stars behind the near half's dense bands stay dimmed (2628 px at draft 5006). Not done: no review tier, no sheet, G17 not run, the retreat not at final, 5009 to 5024 not rendered on this commit.
+- From here: no edit under `src/`, `public/` or `config/`.
+
+### After the READY of 19:33: the rest of the rise, 19:35 to 19:37 VM
+
+- 19:35, low to the Builder: the head moved to fd5628ed (0f483905 plus a notes commit); the commit to take is still 0f483905.
+- Drafts 5012, 5018, 5024 on 0f483905 into `solid/near/` (36 s). Main's are in `solid/base/`, cc55835f's (the same code as c588ee73 at weight 1) in `solid/new/`. frame | hash | far arc region main before, c588ee73, new | share of c588ee73's lift over the dark disc that new keeps (px) | px darker than main by more than 8: c588ee73, new | new darker than c588ee73 by more than 8: 5012 | bf45fa7185fc8bc7 | 39.81, 30.89, 39.27 | 1.000 (27395) | 48198, 3412 | 0; 5018 | 40c6fff6c173afd9 | 39.24, 30.69, 38.75 | 1.000 (27259) | 49212, 3526 | 0; 5024 | a5ac13903fdcdf4d | 38.71, 30.42, 38.26 | 1.000 (27153) | 48890, 3441 | 0.
+- `solid/near-05` (drafts 5018 and 5025, native, brightness times 4, x 924 to 1624, y 102 to 552, c588ee73 left, new right), looked at: no edge in the right stretch in either frame; toward the far side the bands of new are brighter and the stars show through. Sent low at 19:37 VM with the table and that picture.
+- Open in my words if 0f483905 is taken: no review tier, no sheet, G17 not run on it, the retreat not at final; the stars behind the near half's dense bands stay dimmed (about 2600 to 3500 px darker than main by more than 8 at draft through the rise); the air's thin night limb line still crosses the near arc; B (the block at 4984) not built.
+
+### NEW ROLE from the Builder, read at 21:50 VM (high), word for word
+
+"NEW ROLE, from the Builder. The film is frozen and your building work is finished; nothing more of it goes onto main. For the rest of this task you are a render worker for the master of the film (every frame at the final tier). Do this now, in this order:
+1. Save your own work: commit whatever is open on your own branch (no push needed). Do not edit, commit or push anything after that.
+2. In your repo: `git fetch --depth 1 origin 567b3a555461d1e7d88300dbe5febc52073da828`, then `git checkout --detach 567b3a555461d1e7d88300dbe5febc52073da828`. `git rev-parse HEAD` must print that hash. Then `npm ci` and `npm run build`.
+3. Read `assets-src/shared/RENDER-WORKER.md`. It is your brief from now on (its clone step is already done).
+4. A render command refuses to start under 3 GB of free disk. If `df -h .` shows less than 6 GB free, delete old harness output under `out/work/` (chunks, stills, sheets, packs, clips); none of it is needed any more.
+5. Proof that your VM draws the same pixels as mine: `npm run -s still -- --frame 2325 --tier draft --out /tmp/ref2325.png`, then `sha256sum /tmp/ref2325.png`. It must print fd128b1a999f76fa079027e50ace59ac82ec5083c1c53b65667f23176a9a98cf.
+6. Answer with one line and nothing else: `WORKER READY <nproc> cores, <free GB> GB free, <the first 16 characters of your hash>`. If your hash differs, answer `WORKER DIFFERENT <your full hash>` instead and stop.
+Then wait. Your jobs come in the next message."
+
+- 19:37 to 21:50 VM: waited for the Builder; nothing was changed in that time.
+- The frozen film is commit 567b3a555461d1e7d88300dbe5febc52073da828 ("Round 36 starts: Phase 6, record round, run 1 of 2"). Its `src/stops/neptune` and `public/assets/neptune` are the same as 0f483905 (`git diff --stat` empty; `look.ts` carries `near: [0.58, 0.82]`), so the ring's opacity on the near half was taken.
+- STANDING from this mail: the building work is finished. This commit is the last one on `agent/neptune`. After it: no edit, no commit, no push. The repo is checked out detached at 567b3a55 and I am a render worker; the brief is `assets-src/shared/RENDER-WORKER.md` at that commit. After a compaction: read that file, not this notebook's building rules.
+- Open items of the stop in my words, as they stand in the frozen film: no review tier, sheet or final retreat was rendered by me on 0f483905; the stars behind the near half's dense ring bands are dimmed in the rise; the air's thin night limb line crosses the near arc; B (the block at 4984, a billow cell of the cover seen through the thin shell, knob `coverRush` in `plan.ts`) was never built.
+
+## MAIL 217: the place (branch `agent/neptune-place`)
+
+### After the role of render worker, 21:53 to 00:32 VM (22 to 23 November)
+
+- Rendered for the master at the final tier on 567b3a55 and sent as tars: jupiter.travel 3320 to 3325 (629 s), saturn.travel 3940 to 3947 (406 s and 421 s), uranus.dive 4195 to 4199 (3538 s), uranus.rise 4436 to 4443 (four spans, about 340 s each), neptune.terrain 4860 to 4889 (1205 s, 40 s per frame), neptune.rise 4976 to 4981 (625 s and 916 s). That role ended with MAIL 217.
+
+### MAIL 217 from the Builder, read at 06:41 VM on 23 November (high), word for word
+
+"MAIL 217 from the Builder (/root). A new task for you, neptune_builder. It replaces anything you still held. Answer with one line as soon as your new branch exists: "ACK 217 <branch> <commit>".
+
+What happened since your last work. The film was frozen (main, commit 567b3a55), the record round ran, the master, the nine clips and the nine posts were made. Brandon watched it and wrote this note at 05:57 UTC on 2026-11-23. It outranks the kit's cover rules:
+
+"The main issue I have is the transitions between the planet view and the moment before the surface view comes in, it's a blurry mess, and it's obviously a transition. I think the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to. Hey next, the surface for Jupiter, and Saturn both look completely weird. It looks like an image that is being stretched and contorted it shouldn't look like that. It should look like it's actually generated out of code."
+
+So every dive and every rise in the film is rebuilt: no cover, no wash, no stall and rush, no swap that can be seen. The spec is cut/HANDOVER.md on main. Part B of it is yours for neptune.
+
+Setup
+- git fetch origin main, then git checkout -b agent/neptune-place FETCH_HEAD. Main holds the kept build. Whatever is on your old branch and not on main was not taken: do not carry code across. Carry your notebook across if yours is newer than main's (assets-src/neptune/NOTES.md), and commit it first.
+- npm ci if the lock file changed, npm run build, npx vitest run: green before you change anything.
+- Read whole, from disk: cut/HANDOVER.md; kit/PROGRESS.md section "Review note of 2026-11-23" and the open items 169, 104, 126 and 143 (the critics' words on your dive and rise in the frozen build); AGENTS.md and kit/addenda/ again; your own notebook.
+- Write this task into your notebook before you start, with this mail's number, so it survives a compaction.
+
+The task, in this order
+1. S1 now: solve the camera of your approved close image (references/approved/neptune-close.jpg) against the sphere at your spot and write src/stops/neptune/place.json. Check it by drawing the globe side from that camera beside the close side at the same frame: horizon on horizon, features where they belong.
+2. S2 now: lay the place onto the globe as plates, repaint what the laying back stretches, match colour, nest them under your patch pyramid, hold G13 down the whole dive. Proof: the 12 frame top down dive sheet with no blur.
+3. S3: one steady move for dive and rise by the rules of E3. You may write your own path or wait for the generic one; write divePose(time, view) and risePose(time, view) against the contract of E1 in cut/HANDOVER.md either way.
+4. S4 and S5 when I tell you that E1 and E2 are on main (the engine is being built now by another agent, handover_engineer, and proven on Mars first): merge main, opt in, remove your cover, bring light, exposure, haze, Sun and sky to one function of time through T, and run npm run handover for dive and rise.
+
+What may not change: your hold segment and your terrain segment. Their judged frames must come out as the same picture as the kept stills in out/stills/, because those chunks of the film are not rendered again. The travel after your rise is not rendered again either: your rise must end in the pose, the speed and the look that travel starts with today. The timeline does not change.
+
+Your stop
+- Frames: hold 4530 to 4679, dive 4680 to 4769, terrain 4770 to 4949, rise 4950 to 5024. Judged: 4605, 4707, 4860, 5006.
+- The place is the dark storm with its white cirrus, as the close image shows it. The storm is seen on the globe in the hold: the dive goes to that storm and arrives over the very cirrus of the close view.
+- The old cover was a blue haze. It goes. A haze layer may exist only as a thing in the scene, with structure and parallax, never one colour across the frame.
+- What the critics wrote about the rise of the frozen build: "in 7 frames the camera goes from a close limb filling the frame to a small whole planet with its rings. It is a jump in position and speed with no easing, and the storm moves from the center to the upper right of the disk"; "a dense orange Milky Way pops in over two frames (4984 to 4985), and the hold, terrain and end of the rise never show it. After 4997 the sky is plain dark stars again, so color does not carry across the cover"; "the end state does not match the hold. The rings are prominent here but barely visible in the hold, the disk is much darker and lit from a different side, the moon has changed from full to crescent and from left to right, and the sun is gone".
+- So besides the place: the sky, the rings, the moon and the light must be one function of time from the close view through the rise into the travel, with nothing popping in or out.
+
+Working rules
+- Your folders only: src/stops/neptune/, assets-src/neptune/, public/assets/neptune/. Push only to agent/neptune-place. Never main, never force, never rebase. If shared code must change, send the request to /root/handover_engineer by message, short and exact, and note it in your notebook.
+- Looks at least every 30 minutes of working time, also while something renders, good or bad: npm run looks -- --push --folder neptune-place --note "one line".
+- Draft tier to iterate, review tier to prove. One render process at a time. Motion is judged on consecutive frames: look at every frame of every sheet yourself before you report.
+- Image generation only through the skill named media, at most 6 takes per asset per round, recipe in assets-src/neptune/RECIPE.md, binaries committed once per milestone. No file over 95 MB. Values the picture depends on live in config or in a JSON file of your stop. No Math.random, Date.now, performance.now on a pixel path.
+- Every commit message ends with the trailer: Co-authored-by: Perplexity <noreply@perplexity.ai>. No em dashes, no en dashes, no exclamation points, no model names in any file or message.
+- Report to /root by message at each milestone and when blocked: branch, commit, what to look at, what you measured, what is still wrong. Do not wait for an answer unless blocked. M1 is S1 with its check picture and the first laid back plate, rough is fine, within about 90 minutes. M2 is S2 and S3 with their proofs. M3 is the handover, dive and rise, with the E4 reports and the dense sheets.
+- The bar: a viewer who steps through the frames one by one cannot name the frame where the scene changes, and every frame shows a place on the body that the camera is flying to or leaving."
+
+- STANDING from MAIL 217: the role of render worker is over; the rule "no edit, no commit, no push" of the NEW ROLE entry above no longer holds. Work happens on `agent/neptune-place` (from main 6da6c641), pushed only there. The old branch `agent/neptune` stays as it is (ends at 240afbc5); no code is carried from it. After a compaction: read this entry, `cut/HANDOVER.md` and the entries below it.
+- Clock for M1: the mail was read at 06:41 VM; M1 (S1 with its check picture and the first laid back plate) is due about 08:10 VM.
