@@ -32,6 +32,9 @@ export interface SetState {
   u: number
   weight: number
   view: ViewKind
+  // The height of the camera above the unit sphere of this body, in radii. One number for both views of a stop: the close view's camera is
+  // measured through the twin. What follows the height (air, haze, the reach of the close ground) reads it here and not from the clock.
+  height: number
   ground?: number
   // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
   // where the camera follows the turning place: raw motion then tracks points that turn with the body.

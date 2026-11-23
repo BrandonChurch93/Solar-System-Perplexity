@@ -5,7 +5,7 @@ import { buildConfig, config } from '../src/config'
 import type { Pose } from '../src/core/types'
 import { handoverOf } from '../src/director/handover'
 import type { StopPlan } from '../src/director/moves'
-import { coveredPlan, restorePlans } from './lib/covered'
+import { coveredPlan, ownPath, restorePlans } from './lib/covered'
 
 const fps = config.fps
 const c = config.raw.handover
@@ -64,6 +64,10 @@ function velocity(at: (t: number) => Pose, time: number, dt: number): { v: THREE
   return { v: b.position.clone().sub(a.position).divideScalar(dt), turn: a.quaternion.angleTo(b.quaternion) / Math.abs(dt), climb: Math.log(height(b) / height(a)) / dt }
 }
 
+// This file holds the paths of the classes: the generic descent and ascent, the level glide, the sidestep, the coast and the rise from the
+// eye of the dive, which the stops named in handover.ownPath fly until their builders take them off the list. The engine's one move has
+// its own file, onemove.test.ts.
+ownPath(true)
 afterAll(() => restorePlans())
 
 describe('the numbers of the path in the config', () => {

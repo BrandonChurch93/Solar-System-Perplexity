@@ -72,20 +72,12 @@ export function bellStep(f: Flanks, frames: number): number {
 
 export interface PaceLimits { maxStep: number; maxRebound: number; seamFrames: number; ringPx: number; floors: { turnDeg: number; speedPx: number }; rate: number; reachFrames: number }
 
-// The limits of a smooth move. They live once, in the harness's `smooth` block of the config. Until that block is on main the numbers of the
-// second review note stand in for it here, and only here.
+// The limits of a smooth move. They live once, in the harness's `smooth` block of the config, and are read here and nowhere else in the
+// engine.
 export function paceLimits(): PaceLimits {
-  const s = (config.raw as unknown as { smooth?: { rate?: number; reachFrames?: number; path?: { maxStep: number; maxRebound: number; seamFrames: number; ringPx?: number; floors?: { turnDeg: number; speedPx: number } } } }).smooth
-  const p = s?.path
-  return {
-    maxStep: p?.maxStep ?? 0.08,
-    maxRebound: p?.maxRebound ?? 0.03,
-    seamFrames: p?.seamFrames ?? 2,
-    ringPx: p?.ringPx ?? 96,
-    floors: p?.floors ?? { turnDeg: 0.05, speedPx: 0.5 },
-    rate: s?.rate ?? 2,
-    reachFrames: s?.reachFrames ?? 12,
-  }
+  const s = config.raw.smooth
+  const p = s.path
+  return { maxStep: p.maxStep, maxRebound: p.maxRebound, seamFrames: p.seamFrames, ringPx: p.ringPx, floors: { turnDeg: p.floors.turnDeg, speedPx: p.floors.speedPx }, rate: s.rate, reachFrames: s.reachFrames }
 }
 
 export type PaceKind = 'dive' | 'rise'

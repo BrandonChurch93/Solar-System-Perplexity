@@ -5,12 +5,18 @@ import { coverFrames, coverWindow, handoverChanges, handoverParams } from './tim
 
 export interface HandoverTimes { at: number; dissolveFrames: number; placeFrames: number }
 export interface PlaceOptions { scale?: number; margin?: number; matte?: 'pair' | 'alpha'; valid?: [number, number, number, number]; lens?: number; seen?: number; maxEnlarge?: number; enlargeSoft?: number; limbReachDeg?: number; limbHoldDeg?: [number, number]; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number]; limbSky?: boolean; limbLap?: number }
+// The sidestep of a path: the far pose is moved round the place by so many radii to the right and up in its own frame. On a path of the
+// stop's own it is complete by the share `by` of the way to T; on the engine's one move by the share `by` of the time of the segment,
+// counted from the far end (the start of a dive, the end of a rise).
 export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
 // of the rise stands where the twin of the dive stood. Plates of the globe that are true from that one eye are then true in both handovers.
 export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number }
-export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; skyFloor?: boolean }
+// pace: the flanks of the engine's one move (plan E) for this side, where the stop wants other than handover.pace: rise is the share of the
+// segment over which the rate comes up from the far end, fall the share over which it goes down to the surface view, corner the share of a
+// flank over which its slope comes in and goes out.
+export interface HandoverSide extends Partial<HandoverTimes> { skyFrames?: number; live?: boolean; picture?: boolean; place?: PlaceOptions; path?: PathOptions; pace?: { rise?: number; fall?: number; corner?: number }; skyFloor?: boolean }
 export interface HandoverParams { dive?: HandoverSide; rise?: HandoverSide }
 // The shares of the two sky layers on the globe side of a dive or rise that hands over: low for the sky of the close view, high for the sky
 // of the globe view. Both from 0 to 1. A stop may give its own through StopPlan.skyShare; without a high the globe view's sky keeps the
@@ -36,6 +42,7 @@ let knownAt = -1
 let forced: ViewKind | null = null
 let above = false
 let horizon: boolean | null = null
+let oneMove = false
 let shutterOf: ((frame: number) => number) | null = null
 
 function smooth(t: number): number {
@@ -182,9 +189,19 @@ export function topForced(): boolean {
   return above
 }
 
+// Plan E as the harness asks for it (--diag onemove): every stop that hands over flies the engine's one move in its dive and its rise, whatever
+// handover.ownPath says. For the harness only, like forceSide: a builder looks at its stop on the one move before it leaves the list.
+export function forceOneMove(on: boolean): void {
+  oneMove = on
+}
+
+export function oneMoveForced(): boolean {
+  return oneMove
+}
+
 // What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
 export function forcedWord(): string {
-  return (forced ?? 'film') + (above ? '|top' : '')
+  return (forced ?? 'film') + (above ? '|top' : '') + (oneMove ? '|onemove' : '')
 }
 
 export function handoverFrame(h: Handover): number {

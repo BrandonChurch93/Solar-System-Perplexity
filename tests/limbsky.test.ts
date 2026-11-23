@@ -9,7 +9,7 @@ import { FilmDirector } from '../src/director/film'
 import { handoverOf, horizonWeight, placeWeight, skyWeight, type HandoverParams, type SkyShares } from '../src/director/handover'
 import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, restorePlans } from './lib/covered'
+import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, ownPath, restorePlans } from './lib/covered'
 
 type Four = [number, number, number, number]
 const fps = config.fps
@@ -69,6 +69,9 @@ function lapUnder(g: PlaceGeometry, lap: number): number {
   return Math.PI / 2 - dip - Math.asin((1 - lap) * Math.cos(dip))
 }
 
+// The geometry these tests stand on (a camera above the twin a few frames after T, the picture ahead of it) is that of the covered stop on
+// the path of its class. The horizon of the place picture stays off and goes with the place picture when the one air of plan F lands.
+ownPath(true)
 afterAll(() => {
   applyProbe(null)
   restorePlans()

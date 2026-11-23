@@ -489,7 +489,7 @@ describe('the two sides of a stop that hands over', () => {
       for (const kind of kinds) {
         const h = handoverOf(p.id, kind)
         if (!h) continue
-        const pose = (t: number): Pose => (kind === 'dive' ? p.divePose(t, 'orbit') : p.risePose(t, 'orbit'))
+        const pose = (t: number): Pose => p.eye(kind, t, 'orbit')
         const a = pose(h.time - dt)
         const b = pose(h.time)
         const d = pose(h.time + dt)
@@ -685,7 +685,7 @@ describe('the top down view of the harness', () => {
           const close = film.shotAt(f, time, 'terrain')
           forceTop(false)
           const place = p.place(kind, time)
-          const path = kind === 'dive' ? p.divePose(time, 'orbit') : p.risePose(time, 'orbit')
+          const path = p.eye(kind, time, 'orbit')
           const above = p.topDown(kind, time, path)
           expect(above.position.length()).toBeCloseTo(path.position.length(), 12)
           expect(above.position.clone().normalize().distanceTo(place)).toBeLessThan(1e-9)
@@ -693,8 +693,10 @@ describe('the top down view of the harness', () => {
           const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(above.quaternion)
           expect(dir.distanceTo(place.clone().negate())).toBeLessThan(1e-9)
           const up = new THREE.Vector3(0, 1, 0).applyQuaternion(above.quaternion)
-          const twin = p.twin(p.closePose(kind, h.time), h.time)
-          const look = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion).applyQuaternion(p.turn(h.time).invert()).applyQuaternion(p.turn(time))
+          // The heading is that of the close pose at T on a path of the stop's own, and that of the surface view at its seam on the one move.
+          const from = p.engineMove ? (kind === 'dive' ? p.seg.terrain.start : p.seg.terrain.end) : h.time
+          const twin = p.engineMove ? p.twin(p.terrain(from - p.seg.terrain.start), from) : p.twin(p.closePose(kind, from), from)
+          const look = new THREE.Vector3(0, 0, -1).applyQuaternion(twin.quaternion).applyQuaternion(p.turn(from).invert()).applyQuaternion(p.turn(time))
           const flat = look.addScaledVector(place, -look.dot(place)).normalize()
           expect(up.dot(flat)).toBeGreaterThan(0.999)
           // The film puts the pose into the set and adds its drift on the camera side, so the turn from the path's camera to the one above is the same angle in both, and the step between them the same length times the size of the set.
