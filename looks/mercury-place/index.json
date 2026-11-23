@@ -1,9 +1,55 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T19:14:27.252Z",
+ "pushed": "2026-11-23T19:35:33.223Z",
  "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "19:16 work in progress on mail 314 items 2 and 4: land matte and night side, faults shown, cures rendering",
+ "note": "19:42 work in progress on mail 314 item 2: far field matched by measure, fixed matte fails the sides at T, moving matte next",
  "looks": [
+  {
+   "time": "2026-11-23T19:35:32.588Z",
+   "file": "20261123193532588-note-e2-np.jpg",
+   "source": "out/work/mercury/place/tmp/e2-np.jpg",
+   "kind": "note",
+   "label": "far field of the globe alone (right) against the place picture (left) at 741 and 992: the wash now keeps the relief and takes the picture's tone",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:35:31.894Z",
+   "file": "20261123193531894-note-look-sides-rise-fail.jpg",
+   "source": "out/work/mercury/place/tmp/look-sides-rise-fail.png",
+   "kind": "note",
+   "label": "bad: with the fixed matte the two sides differ at T along the horizon (handover tool: mean 2.127 over 0.5, p99 77 over 4). Next: the matte comes in over two frames from T so T stays the same picture",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:35:31.322Z",
+   "file": "20261123193531322-note-e4-hzA.jpg",
+   "source": "out/work/mercury/place/tmp/e4-hzA.jpg",
+   "kind": "note",
+   "label": "work in progress, native crop of the horizon 990 to 993 (top to bottom) with a fixed land matte: one horizon from 991 on, but the terrain's own horizon at 990 (comb, glow) swaps to the globe's in one frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T19:33:43.242Z",
+   "file": "20261123193343242-compare-mercury-rise-sides.jpg",
+   "source": "out/work/handover/mercury-rise-sides.png",
+   "kind": "compare",
+   "label": "mercury rise, both sides at T (frame 990) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.rise",
+   "frame": 990,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T19:33:24.667Z",
+   "file": "20261123193324667-compare-mercury-dive-sides.jpg",
+   "source": "out/work/handover/mercury-dive-sides.png",
+   "kind": "compare",
+   "label": "mercury dive, both sides at T (frame 744) and their difference times 8",
+   "stop": "mercury",
+   "segment": "mercury.dive",
+   "frame": 744,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T19:14:26.634Z",
    "file": "20261123191426634-note-n1016-x6.jpg",
@@ -26,46 +72,6 @@
    "source": "out/work/mercury/place/tmp/look-matte-dive.jpg",
    "kind": "note",
    "label": "work in progress: land matte for the place picture of the dive (top: the picture's own alpha at 742, bottom: the matte that ends it under its horizon)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:53:00.955Z",
-   "file": "20261123185300955-note-far0-rise.jpg",
-   "source": "out/work/mercury/place/tmp/far0-rise.jpg",
-   "kind": "note",
-   "label": "rise 991 to 996 with the flat far wash off: the band is the globe alone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:53:00.380Z",
-   "file": "20261123185300380-note-sunin-before.jpg",
-   "source": "out/work/mercury/place/tmp/sunin-before.jpg",
-   "kind": "note",
-   "label": "Sun entering 731 to 737 before the cure: amount ramps on top of the approach",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:52:59.836Z",
-   "file": "20261123185259836-note-hz990.jpg",
-   "source": "out/work/mercury/place/tmp/hz990.jpg",
-   "kind": "note",
-   "label": "990 terrain (top) and 991 first globe frame (bottom): dark striped band between the picture's horizon and the limb",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:52:59.252Z",
-   "file": "20261123185259252-note-limbcmp993.jpg",
-   "source": "out/work/mercury/place/tmp/limbcmp993.jpg",
-   "kind": "note",
-   "label": "993 native crop at the horizon: now (top) and with limb reach 0.5 (bottom); the band above the picture's horizon is still a second line",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T18:33:31.776Z",
-   "file": "20261123183331776-note-hzB1.jpg",
-   "source": "out/work/mercury/place/tmp/hzB1.jpg",
-   "kind": "note",
-   "label": "rise horizon 988 to 995 native, open fault: globe band above the picture's own horizon line",
    "stop": "mercury"
   }
  ]
