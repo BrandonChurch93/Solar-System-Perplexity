@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T18:58:35.772Z",
- "head": "a3066d414e5f2a6df5796417e38578a91ba53fdf",
- "note": "r39 work: causes found, slower dive start on trial, comb of the laid cirrus not yet cured",
+ "pushed": "2026-11-23T19:19:34.049Z",
+ "head": "488113e897506b4a508c1712072eb4c497be1b9a",
+ "note": "batch A trial: rim falloff and ring arcs at 5006; plate fault under the eye found, not cured",
  "looks": [
+  {
+   "time": "2026-11-23T19:19:33.453Z",
+   "file": "20261123191933453-note-f4996-eye.jpg",
+   "source": "../../../../tmp/f4996-eye.png",
+   "kind": "note",
+   "label": "4996 eye at 2x: cream streak and tan patch under the eye are in the place plates, still wrong",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T19:19:32.898Z",
+   "file": "20261123191932898-note-f5006.jpg",
+   "source": "../../../../tmp/f5006.jpg",
+   "kind": "note",
+   "label": "5006 draft, batch A in the working tree, not yet proved",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T19:19:32.308Z",
+   "file": "20261123191932308-note-e-ring5006.jpg",
+   "source": "../../../../tmp/e-ring5006.png",
+   "kind": "note",
+   "label": "5006 ring grain averaged along the ring's own circles",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T19:19:31.703Z",
+   "file": "20261123191931703-note-rim-pair-5006.jpg",
+   "source": "../../../../tmp/rim-pair-5006.png",
+   "kind": "note",
+   "label": "5006 rim at native, before and after the move rim law (line weaker, light tapering into the night, stars dimmed in the glow)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T18:58:35.196Z",
    "file": "20261123185835196-note-a4732-bank2x.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/eye-layers.png",
    "kind": "note",
    "label": "r39 item 2: 4707 eye, full, no laid layer, globe alone: the white cut pieces are the laid cirrus",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:28:22.243Z",
-   "file": "20261123182822243-note-vivid-pairs.jpg",
-   "source": "../../../../tmp/vivid-pairs.jpg",
-   "kind": "note",
-   "label": "round 39 issue 1, electric blue specks: 4698 and 4707 at native size, before and with the limit on the plates' depth of colour (commit pushed)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:28.826Z",
-   "file": "20261123180728826-note-n4707-blue.jpg",
-   "source": "../../../../tmp/n4707-blue.png",
-   "kind": "note",
-   "label": "FAULT 4707 draft, the blue blobs four times enlarged",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:28.252Z",
-   "file": "20261123180728252-note-n4707-01.jpg",
-   "source": "../../../../tmp/n4707-01.png",
-   "kind": "note",
-   "label": "FAULT 4707 draft native crop: saturated blue blobs right of the eye (plate saturation boost clips red to 0)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:27.651Z",
-   "file": "20261123180727651-note-d5-dive.jpg",
-   "source": "../../../../tmp/d5-dive.jpg",
-   "kind": "note",
-   "label": "FAULT dive 4741 to 4750 with the haze: pale block with a straight edge upper left, so the haze is rise only",
    "stop": "neptune"
   }
  ]
