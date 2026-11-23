@@ -1,86 +1,72 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T15:54:55.854Z",
- "head": "ab8ba57e464e956a78771b4c801d59241c4bf30d",
- "note": "venus: ring of level a rebuilt from the fifth take, level w painted new about it; not rendered yet",
+ "pushed": "2026-11-23T16:18:58.282Z",
+ "head": "6d3d78f3b65251ba1c168173cab36c44827f3231",
+ "note": "venus: both moves rendered at draft with the ring of level a from the fifth take; proofs running",
  "looks": [
   {
-   "time": "2026-11-23T15:54:55.260Z",
-   "file": "20261123155455260-note-w-comp-3.jpg",
-   "source": "../../../../tmp/v/w-comp-3.jpg",
+   "time": "2026-11-23T16:18:57.338Z",
+   "file": "20261123161857338-note-rise-5.jpg",
+   "source": "out/work/venus/place/r9/rise-5.jpg",
    "kind": "note",
-   "label": "venus level w, ring take 3 about the new plate a, before its tiles",
+   "label": "venus rise, draft, consecutive frames (rise-5), ring of level a from the fifth take, level w new, plates tinted as the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:54:54.679Z",
-   "file": "20261123155454679-note-a-plate-t1b.jpg",
-   "source": "../../../../tmp/v/a-plate-t1b.jpg",
+   "time": "2026-11-23T16:18:56.440Z",
+   "file": "20261123161856440-note-rise-4.jpg",
+   "source": "out/work/venus/place/r9/rise-4.jpg",
    "kind": "note",
-   "label": "venus plate a, ring from the fifth take made (takes 7 and 8 out), straight lines at the child border healed",
+   "label": "venus rise, draft, consecutive frames (rise-4), ring of level a from the fifth take, level w new, plates tinted as the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:31:18.218Z",
-   "file": "20261123153118218-note-venus-rise-top.jpg",
-   "source": "../../../../tmp/v/venus-rise-top.jpg",
+   "time": "2026-11-23T16:18:55.494Z",
+   "file": "20261123161855494-note-rise-3.jpg",
+   "source": "out/work/venus/place/r9/rise-3.jpg",
    "kind": "note",
-   "label": "rise, harness top down sheet, globe alone, head 7907a57a",
+   "label": "venus rise, draft, consecutive frames (rise-3), ring of level a from the fifth take, level w new, plates tinted as the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:31:17.622Z",
-   "file": "20261123153117622-note-venus-dive-top.jpg",
-   "source": "../../../../tmp/v/venus-dive-top.jpg",
+   "time": "2026-11-23T16:18:54.440Z",
+   "file": "20261123161854440-note-rise-2.jpg",
+   "source": "out/work/venus/place/r9/rise-2.jpg",
    "kind": "note",
-   "label": "dive, harness top down sheet, globe alone, head 7907a57a",
+   "label": "venus rise, draft, consecutive frames (rise-2), ring of level a from the fifth take, level w new, plates tinted as the globe",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:30:20.151Z",
-   "file": "20261123153020151-sheet-venus-rise-top.jpg",
-   "source": "out/work/handover/venus-rise-top.png",
-   "kind": "sheet",
-   "label": "venus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1542), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "first": 1542,
-   "last": 1604,
-   "tier": "draft"
+   "time": "2026-11-23T16:18:53.681Z",
+   "file": "20261123161853681-note-rise-1.jpg",
+   "source": "out/work/venus/place/r9/rise-1.jpg",
+   "kind": "note",
+   "label": "venus rise, draft, consecutive frames (rise-1), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:29:36.447Z",
-   "file": "20261123152936447-compare-venus-rise-under.jpg",
-   "source": "out/work/handover/venus-rise-under.png",
-   "kind": "compare",
-   "label": "venus rise, the globe side at T (frame 1542) with the place picture, alone, and their difference times 4",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1542,
-   "tier": "draft"
+   "time": "2026-11-23T16:18:52.561Z",
+   "file": "20261123161852561-note-dive-6.jpg",
+   "source": "out/work/venus/place/r9/dive-6.jpg",
+   "kind": "note",
+   "label": "venus dive, draft, consecutive frames (dive-6), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:29:19.173Z",
-   "file": "20261123152919173-sheet-venus-dive-top.jpg",
-   "source": "out/work/handover/venus-dive-top.png",
-   "kind": "sheet",
-   "label": "venus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1343), place picture off, draft tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "first": 1260,
-   "last": 1343,
-   "tier": "draft"
+   "time": "2026-11-23T16:18:51.442Z",
+   "file": "20261123161851442-note-dive-5.jpg",
+   "source": "out/work/venus/place/r9/dive-5.jpg",
+   "kind": "note",
+   "label": "venus dive, draft, consecutive frames (dive-5), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "stop": "venus"
   },
   {
-   "time": "2026-11-23T15:28:34.840Z",
-   "file": "20261123152834840-compare-venus-dive-under.jpg",
-   "source": "out/work/handover/venus-dive-under.png",
-   "kind": "compare",
-   "label": "venus dive, the globe side at T (frame 1343) with the place picture, alone, and their difference times 4",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
-   "tier": "draft"
+   "time": "2026-11-23T16:18:50.685Z",
+   "file": "20261123161850685-note-dive-4.jpg",
+   "source": "out/work/venus/place/r9/dive-4.jpg",
+   "kind": "note",
+   "label": "venus dive, draft, consecutive frames (dive-4), ring of level a from the fifth take, level w new, plates tinted as the globe",
+   "stop": "venus"
   }
  ]
 }
