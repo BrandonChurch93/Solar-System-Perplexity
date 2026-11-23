@@ -8,7 +8,8 @@ import { midShutterCarry } from './held'
 import { framePlan } from './motion'
 import { samplesFor, shutterMid } from './sampler'
 import { SetLoader } from './sets'
-import type { PlaceState, RenderView, Shot, SkyPatch, ViewKind } from './types'
+import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
+import { floorRing } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -59,6 +60,7 @@ export class Engine {
   readonly belt = new Belt()
   private skyAssets = ''
   private readonly skyPatches: { patch: SkyPatch; weight: number }[] = []
+  private readonly floors = new WeakMap<SkyPatch, { floor: SkyFloor; patch: SkyPatch }>()
   private skyTexture: THREE.Texture | null = null
   private skyBand: THREE.Texture | null = null
   private skyStrip: THREE.Texture | null = null
@@ -326,7 +328,7 @@ export class Engine {
           if (weight <= 0) continue
           const aim = aims?.patches[state.id]?.[patch.view]
           if (aim) patch.aim.copy(aim)
-          this.skyPatches.push({ patch, weight })
+          this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
       if (share > 0 && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
@@ -411,6 +413,16 @@ export class Engine {
     }
     if (raw) return
     if (shot.cover.amount > 0 && coverReaches(shot.cover, shot.camera.vfov, width / height)) this.cover.render(r, this.sampleTarget, shot.cover, shot.post.exposure, shot.camera.vfov, width / height)
+  }
+
+  private floored(patch: SkyPatch, floor: SkyFloor): SkyPatch {
+    if (patch.ring[2] >= 0) return patch
+    const hit = this.floors.get(patch)
+    if (hit && hit.floor === floor) return hit.patch
+    const ring = floorRing(floor, patch.tan, config.raw.handover.skyFloor)
+    const cut = ring ? { ...patch, ring } : patch
+    this.floors.set(patch, { floor, patch: cut })
+    return cut
   }
 
   private picture(place: PlaceState, shot: Shot): PlacePicture | null {
