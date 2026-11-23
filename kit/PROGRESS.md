@@ -55,15 +55,15 @@ Brandon wrote in the thread at 05:57 UTC on 2026-11-23, after the frozen build a
 
 | Part | Owner | State |
 | --- | --- | --- |
-| Engine for the handover, Mars dive and rise | | not started |
-| Jupiter surface from code, dive and rise | | not started |
-| Saturn surface from code, dive and rise | | not started |
-| Sun rise | | not started |
-| Mercury dive and rise | | not started |
-| Venus dive and rise | | not started |
-| Earth dive and rise | | not started |
-| Uranus dive and rise | | not started |
-| Neptune dive and rise | | not started |
+| Engine for the handover, Mars dive and rise | handover_engineer, `agent/engine-handover` | started 06:40 UTC |
+| Jupiter surface from code, dive and rise | jupiter_coder, `agent/jupiter-code` | started 06:40 UTC |
+| Saturn surface from code, dive and rise | saturn_coder, `agent/saturn-code` | started 06:40 UTC |
+| Sun rise | sun_builder, `agent/sun-place` | started 06:40 UTC: the camera of the close view and the plates first |
+| Mercury dive and rise | mercury_builder, `agent/mercury-place` | started 06:40 UTC: the camera of the close view and the plates first |
+| Venus dive and rise | venus_builder, `agent/venus-place` | started 06:40 UTC: the camera of the close view and the plates first |
+| Earth dive and rise | earth_builder, `agent/earth-place` | started 06:40 UTC: the camera of the close view and the plates first |
+| Uranus dive and rise | uranus_builder, `agent/uranus-place` | started 06:40 UTC: the camera of the close view and the plates first |
+| Neptune dive and rise | neptune_builder, `agent/neptune-place` | started 06:40 UTC: the camera of the close view and the plates first |
 
 ## Latest pictures
 
@@ -906,6 +906,10 @@ Round 5 left these open (open items 6 to 15 hold the critics' words). Each of th
 - 2026-11-23 06:18 UTC, limits for the work the note asks for: `quality.maxRoundsPerStop` new rounds per stop, by the kit's own row for rounds on a stop after a review note. This is not a new loop without a limit and no threshold, critic, rubric or judged frame changes. Mars is inside the note only for its dive and rise: its judged hold and terrain frames have to come out as the kept stills, checked by comparison before its change is merged.
 - 2026-11-23 06:18 UTC, measured for the plan: Mars meets its globe at 0.032 radii (`dive.altitude`) while its close image has a horizon dip of 2.6 degrees (`terrain.dipDeg`), which is a height of about 0.001 radii. The patches of Mars are 96, 48, 24, 12 and 3 degrees wide and were drawn by an image tool from the wrap map with the close image as a style reference only. Both are causes of the visible swap and both are fixed by solving the close camera against the sphere and laying the close view back onto the globe.
 - 2026-11-23 06:18 UTC, who does what: one agent owns the shared engine for the handover (`src/director/moves.ts`, the cover part of `src/director/film.ts`, `src/core/`, `src/bodies/planet.ts`, `src/terrain/`, new harness commands) together with the Mars folders, and proves it on Mars. One agent each owns Jupiter and Saturn. The other six stops get one agent each. All run in their own machine, push to `agent/<folder>` and push looks to `agent/<folder>-looks` at least every `status.maxGapMinutes`. I do not edit those folders while they are owned. Nothing is merged before I have rendered it through the harness myself.
+- 2026-11-23 06:38 UTC, the working spec for the note is `cut/HANDOVER.md` (the cut folder holds the shot papers; no new top folder is made). It fixes the names the stops code against (`src/director/handover.ts`: `handoverOf`, `sideAt`, `placeWeight`, `forceSide`; `divePose` and `risePose` on the plan; `handover` in the plan's params opts a stop in), the place picture (the close side drawn at the handover time into a texture at run time and laid over the globe side from the twin camera, so both sides are one picture at the handover; no asset, no recipe), the steady descent, the measures (`npm run handover`), and the parts for Jupiter and Saturn from code.
+- 2026-11-23 06:38 UTC, nothing outside the changed segments may change. A stop that has not opted in keeps its pixels and its cover. The softness added in fast motion (`motion.softFromPx`) is switched off only inside the dives and rises of a stop that opted in, not removed, because it also acts in the travels, whose chunks are not rendered again. Before the changed chunks are rendered, the judged frames outside the changed segments are proved to be the same bytes as in the frozen build.
+- 2026-11-23 06:38 UTC, agents for the note. Three fresh agents at the highest reasoning setting, each on its own machine: `handover_engineer` (Part A, the engine and Mars, branch `agent/engine-handover`), `jupiter_coder` (Part C, branch `agent/jupiter-code`), `saturn_coder` (Part D, branch `agent/saturn-code`). Jupiter and Saturn get fresh agents because their surface views are rebuilt from nothing and the old builders' notebooks stay readable in the repo. The six other stops go back to their own builders (`sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`), who wrote those plans and globes, on new branches `agent/<id>-place` started from `origin/main`, so nothing that was not taken from their old branches comes along. A builder that does not answer is replaced by a fresh agent with the standing brief `assets-src/shared/STOP-AGENT.md` and the stop's notebook.
+- 2026-11-23 06:38 UTC, branches of this work are not merged. As before, I take the owner's folders from the branch (`git checkout origin/<branch> -- <folders>`) after the harness shows what the report says, so no history that was not checked reaches main.
 
 ## Open items
 
@@ -1089,6 +1093,8 @@ One entry per issue left open by a round limit: the stop, the frame, the critic 
 ## Running jobs
 
 One entry per long job while it runs: the command, the frame range, the log file, the VM, when it started.
+
+Work for the review note of 2026-11-23, started 06:40 UTC, each agent on its own VM. The spec is `cut/HANDOVER.md`; who owns what and its state is the table "State" in the section "Review note of 2026-11-23"; looks arrive on `agent/<branch folder>-looks`. Fresh agents: `handover_engineer`, `jupiter_coder`, `saturn_coder`. Builders taken up again: `sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`. If a task starts and one of these is not alive, start a fresh agent for its part with `cut/HANDOVER.md`, `assets-src/shared/STOP-AGENT.md` and the stop's notebook.
 
 Phase 4 supporting agents, started 2026-11-21 about 02:42 UTC, each on its own VM. Their memory is in the repo (`assets-src/<id>/NOTES.md` on `agent/<id>`), their standing brief is `assets-src/shared/STOP-AGENT.md`, their looks arrive on `agent/<id>-looks`. If a task starts and one of these is not alive, start a fresh agent for that folder with the same brief and tell it to read its notebook on its branch first.
 
