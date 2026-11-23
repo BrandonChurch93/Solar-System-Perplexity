@@ -1,78 +1,91 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T18:27:35.239Z",
- "head": "0158d376eecbd925e67cc3a163162e17dcccd2b9",
- "note": "sun: thrown light bound at the feet (frames 0 to 58), arcade leaves earlier in the rise (218 to 232)",
+ "pushed": "2026-11-23T18:45:15.915Z",
+ "head": "2ba81df32219dad81eace37dc85aaded6e403895",
+ "note": "sun: 2ba81df3 under proof (handover every part pass); release 26 to 31; rise 250 to 270 at native size",
  "looks": [
   {
-   "time": "2026-11-23T18:27:34.583Z",
-   "file": "20261123182734583-note-rise2-b.jpg",
-   "source": "out/work/sun/life/v/rise2-b.png",
+   "time": "2026-11-23T18:45:14.633Z",
+   "file": "20261123184514633-note-spot-out.jpg",
+   "source": "out/work/sun/life/v/spot-out.jpg",
    "kind": "note",
-   "label": "rise 232, 236, 240 at native size, draft: the arcade as a flat sliver over the spot (top) and gone by 232 (bottom)",
+   "label": "rise 250, 256, 262 and hold 270, centre of the disc at twice native, draft: grain of the close ground at 250, the map from 256",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T18:27:34.023Z",
-   "file": "20261123182734023-note-f2-right.jpg",
-   "source": "out/work/sun/life/v/f2-right.jpg",
+   "time": "2026-11-23T18:45:13.440Z",
+   "file": "20261123184513440-note-ho-q2-after.jpg",
+   "source": "out/work/sun/life/v/ho-q2-after.jpg",
    "kind": "note",
-   "label": "right foot, frames 30 to 36, draft: before (top) and with the bound on thrown light (bottom)",
+   "label": "handover sheet after T (217 to 228), draft, commit 2ba81df3: the arcade thins and leaves",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T18:27:33.443Z",
-   "file": "20261123182733443-note-f2-left.jpg",
-   "source": "out/work/sun/life/v/f2-left.jpg",
+   "time": "2026-11-23T18:45:12.150Z",
+   "file": "20261123184512150-note-r-26.jpg",
+   "source": "out/work/sun/life/v/r-26.jpg",
    "kind": "note",
-   "label": "left foot in the release, frames 22 to 27, draft, twice native with near white mask, after the bound on thrown light",
+   "label": "release 26 to 31 at native size, draft, commit a24fe051: strands apart, feet narrow",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T18:03:59.069Z",
-   "file": "20261123180359069-note-w8-foot.jpg",
-   "source": "out/work/sun/life/v/w8-foot.jpg",
-   "kind": "note",
-   "label": "left foot at frame 8, draft, twice native with near white mask: before, ground light capped, launch off, surge off",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T17:47:35.220Z",
-   "file": "20261123174735220-job-frame-00000.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "time": "2026-11-23T18:44:11.919Z",
+   "file": "20261123184411919-sheet-sun-rise-top.jpg",
+   "source": "out/work/handover/sun-rise-top.png",
+   "kind": "sheet",
+   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
    "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 0,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
+   "segment": "sun.rise",
+   "first": 216,
+   "last": 269,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:37:26.512Z",
-   "file": "20261123173726512-note-q-footrow.jpg",
-   "source": "out/work/sun/life/v/q-footrow.jpg",
-   "kind": "note",
-   "label": "76efaddc, draft: left foot at 21 and 24 with near white mask, still wider than approved on the ground",
-   "stop": "sun"
+   "time": "2026-11-23T18:43:06.138Z",
+   "file": "20261123184306138-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:37:25.389Z",
-   "file": "20261123173725389-note-ho-q1-across.jpg",
-   "source": "out/work/sun/life/v/ho-q1-across.jpg",
-   "kind": "note",
-   "label": "76efaddc, draft: handover across T, sides pass (mean 0.004 of 255)",
-   "stop": "sun"
+   "time": "2026-11-23T18:43:04.233Z",
+   "file": "20261123184304233-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:37:24.159Z",
-   "file": "20261123173724159-note-rise-q1-180.jpg",
-   "source": "out/work/sun/life/v/rise-q1-180.jpg",
-   "kind": "note",
-   "label": "76efaddc, draft: rise every frame 180 to 191",
-   "stop": "sun"
+   "time": "2026-11-23T18:43:02.419Z",
+   "file": "20261123184302419-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T18:33:32.463Z",
+   "file": "20261123183332463-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
   }
  ]
 }
