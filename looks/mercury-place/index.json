@@ -1,9 +1,39 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T20:18:03.740Z",
+ "pushed": "2026-11-23T20:40:19.568Z",
  "head": "0595a6ec458e9a3a3274b28d2b576ee30de32a8b",
- "note": "every dive and rise frame at draft on the merged tree; outline proof of item 1 in work",
+ "note": "item 1: block's top edge cured in the globe's levels, footprint edge in the plates still open",
  "looks": [
+  {
+   "time": "2026-11-23T20:40:18.939Z",
+   "file": "20261123204018939-note-s1.jpg",
+   "source": "out/work/mercury/place/g4/s1.jpg",
+   "kind": "note",
+   "label": "dive 706 to 742 at draft after the level change, whole frames",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T20:40:18.319Z",
+   "file": "20261123204018319-note-right.jpg",
+   "source": "out/work/mercury/place/g4/right.jpg",
+   "kind": "note",
+   "label": "dive 732 to 742, native crop right of centre: the pale strip above the block is cured, the straight edge between the place ground and the repainted ground is still there",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T20:18:48.451Z",
+   "file": "20261123201848451-job-frame-00540.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "mercury.hold frame 540, draft tier, texels view, from the running measure job",
+   "stop": "mercury",
+   "segment": "mercury.hold",
+   "frame": 540,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T20:18:03.148Z",
    "file": "20261123201803148-note-pair738.jpg",
@@ -43,36 +73,6 @@
    "kind": "note",
    "label": "dive horizon at native x2, top to bottom 742 743 744 (T) 745 780: the band and dark line of the terrain view come in at 743, still a nameable frame",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:59:39.478Z",
-   "file": "20261123195939478-note-e5-nZ.jpg",
-   "source": "out/work/mercury/place/tmp/e5-nZ.jpg",
-   "kind": "note",
-   "label": "rise horizon at native x2, top to bottom 959 989 990 (T) 991 992: one limb and one tone from 992; fault still there: the terrain view's own pale band and dark line swap to the clean limb at 991",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:39:50.882Z",
-   "file": "20261123193950882-compare-mercury-rise-sides.jpg",
-   "source": "out/work/handover/mercury-rise-sides.png",
-   "kind": "compare",
-   "label": "mercury rise, both sides at T (frame 990) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.rise",
-   "frame": 990,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T19:39:32.348Z",
-   "file": "20261123193932348-compare-mercury-dive-sides.jpg",
-   "source": "out/work/handover/mercury-dive-sides.png",
-   "kind": "compare",
-   "label": "mercury dive, both sides at T (frame 744) and their difference times 8",
-   "stop": "mercury",
-   "segment": "mercury.dive",
-   "frame": 744,
-   "tier": "draft"
   }
  ]
 }
