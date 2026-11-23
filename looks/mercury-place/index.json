@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T06:55:50.909Z",
- "head": "96d6c832563c0746301e3ba43d6b801eb4e391d3",
- "note": "M1: S1 check sheet and the first laid back plate (rough)",
+ "pushed": "2026-11-23T07:13:15.545Z",
+ "head": "8f12d9498fdbcb7dc96e788d60df356b0274c37d",
+ "note": "S2 started: studying the hold at the spot and the relief depth of the close scene before the plates are made",
  "looks": [
+  {
+   "time": "2026-11-23T07:13:14.255Z",
+   "file": "20261123071314255-note-hold615-spot4x.jpg",
+   "source": "out/work/mercury/place/hold615-spot4x.jpg",
+   "kind": "note",
+   "label": "S2 study: the spot in the kept hold still at 4x (the ring crater right of the mark is the place the dive goes to)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T06:55:17.870Z",
    "file": "20261123065517870-note-m1-plate.jpg",
@@ -85,20 +93,6 @@
    "stop": "uranus",
    "segment": "uranus.rise",
    "frame": 4421,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T22:26:47.769Z",
-   "file": "20261122222647769-job-frame-03890.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.travel frame 3890, final tier, from the running film job",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3890,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
