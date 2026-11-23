@@ -1,9 +1,39 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T07:39:18.430Z",
- "head": "2d9cf1a66fb7ded37346e7daeebe018df6210801",
- "note": "M1 committed 2d9cf1a6: hold and terrain frames pixel identical to main; next the new path and the rework of the levels",
+ "pushed": "2026-11-23T08:04:14.181Z",
+ "head": "d25c0b872ddd44029129c0226bd018b1c3681324",
+ "note": "S3 committed d25c0b87: first no cover dive sheet, steady move, plates still rough",
  "looks": [
+  {
+   "time": "2026-11-23T08:04:13.490Z",
+   "file": "20261123080413490-note-sheet-b.jpg",
+   "source": "out/work/nep/d1/sheet-b.jpg",
+   "kind": "note",
+   "label": "Same, frames 4728 to 4769: rough plate wedge shows as a hard dark polygon, blocky old cirrus lower left, teal sky; all S2 work",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T08:04:12.028Z",
+   "file": "20261123080412028-note-sheet-a.jpg",
+   "source": "out/work/nep/d1/sheet-a.jpg",
+   "kind": "note",
+   "label": "First draft of the new dive, globe side forced, no cover, frames 4680 to 4720: one steady approach; faults are old painted spiral and a tone drop 4704 to 4712",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T08:01:58.437Z",
+   "file": "20261123080158437-frame-f4769.jpg",
+   "source": "out/work/nep/d1/f4769.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4769, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4769,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:39:16.521Z",
    "file": "20261123073916521-note-same-as-main.jpg",
@@ -54,36 +84,6 @@
    "source": "out/work/nep/place/twin-pair1.jpg",
    "kind": "note",
    "label": "S1 check with the first plates: globe side from the twin (top left) and close side (top right) at 4860, globe edges in red on the close frame, split view",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T07:18:48.055Z",
-   "file": "20261123071848055-frame-twin-globe1-texels.jpg",
-   "source": "out/work/nep/place/twin-globe1-texels.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4769, draft tier, texels view",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4769,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:01:33.989Z",
-   "file": "20261123070133989-note-lay-10.jpg",
-   "source": "out/work/nep/place/lay-10.jpg",
-   "kind": "note",
-   "label": "First layback of the close side onto the globe, 10 deg plate, north up, heading -30: left the picture, right green where sharp and red where stretched",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T07:01:30.860Z",
-   "file": "20261123070130860-note-twin-pair0.jpg",
-   "source": "out/work/nep/place/twin-pair0.jpg",
-   "kind": "note",
-   "label": "S1 first check, before any plate: globe side from the twin (top, frame 4769 forced to the twin of 4860) over the close side at 4860. Horizon sits on horizon; the ground is still the old level 10",
    "stop": "neptune"
   }
  ]
