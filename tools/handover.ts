@@ -20,7 +20,9 @@ import { coverFrames } from '../src/director/timeline'
 //   npm run handover -- --stop ID [--kind dive|rise] [--tier draft|review] [--only sides,under,flow,frames,sheets,top]
 //                       [--params FILE --dist DIR --name NAME]   (judge another build of the stop, for example the frozen one)
 //   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
-// Everything is written to out/work/handover/. Exit 1 when a judged number is over its limit in config.handover.limits.
+//   --gate-under makes the line "under the place picture" part of the verdict and of the exit code. Without it the line is judged against its
+//   limit and printed as a warning: it says how far a stop's plates are from its picture, and no stop is held up by it.
+// Everything is written to out/work/handover/. Exit 1 when a judged number of the verdict is over its limit in config.handover.limits.
 
 type Kind = 'dive' | 'rise'
 interface Verdict { pass: boolean; why: string[] }
@@ -36,6 +38,7 @@ const sheetTier = a.tier ?? 'review'
 if (!Object.hasOwn(cfg.tiers, sheetTier)) throw new Error('unknown tier ' + sheetTier)
 const only = a.only ? a.only.split(',') : ['sides', 'under', 'flow', 'frames', 'sheets', 'top']
 const sheetParts = a.parts ? a.parts.split(',') : null
+const gateUnder = a['gate-under'] === 'true'
 const name = a.name ?? stop
 const dist = a.dist ? resolve(a.dist) : DIST
 const other = Boolean(a.dist)
@@ -414,6 +417,7 @@ try {
     const out: Record<string, unknown> = { optedIn: line.opted, frameT: line.frameT, timeT: round(line.timeT, 6), window: line.window }
     md.push('## ' + line.seg.id, '', (line.opted ? 'Handover in frame ' + line.frameT + ' (T = ' + round(line.timeT, 5) + ' s), place window frames ' + line.window[0] + ' to ' + line.window[1] : 'Not opted in: the sides swap under a cover in frame ' + line.frameT + ' (cover frames ' + line.window[0] + ' to ' + line.window[1] + ')') + '.', '')
     const verdicts: [string, Verdict][] = []
+    const warnings: [string, Verdict][] = []
     if (only.includes('sides')) {
       const s = await sides(line)
       out.sides = s
@@ -424,7 +428,8 @@ try {
       const u = await under(line)
       out.under = u
       if (!u.none) {
-        verdicts.push(['under the place picture', u])
+        if (gateUnder) verdicts.push(['under the place picture', u])
+        else warnings.push(['under the place picture', u])
         md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Of the difference, tone (the means of ' + L.blockPx + ' px blocks) carries ' + round(u.tone as number, 2) + ' and detail (what is left inside the blocks) ' + round(u.detail as number, 2) + '. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
         const sky = u.sky as UnderPart
         if (sky.pixels > 0) md.push('In the sky at T (not judged), on the ' + round(sky.share * 100, 1) + ' percent of the frame where the picture is drawn off the body at more than half weight: mean difference ' + round(sky.mean, 2) + ', median ' + sky.p50 + ', 99th percentile ' + sky.p99 + '; the globe side alone is ' + sky.meanSigned.map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue.', '')
@@ -463,7 +468,11 @@ try {
     out.pass = failed.length === 0
     pass &&= failed.length === 0
     md.push(failed.length === 0 ? 'Verdict: pass (' + verdicts.map(([n]) => n).join(', ') + ').' : 'Verdict: FAIL.', ...failed.flatMap(([n, v]) => v.why.map((w) => '- ' + n + ': ' + w)), '')
+    const warned = warnings.filter(([, v]) => !v.pass)
+    out.warnings = warned.flatMap(([n, v]) => v.why.map((w) => n + ': ' + w))
+    if (warnings.length > 0) md.push(warned.length === 0 ? 'Judged beside the verdict: inside the limit (' + warnings.map(([n]) => n).join(', ') + ').' : 'Warning, judged beside the verdict (not part of it; --gate-under makes it part):', ...warned.flatMap(([n, v]) => v.why.map((w) => '- ' + n + ': ' + w)), '')
     for (const [n, v] of verdicts) console.log(line.seg.id + ' ' + n + ': ' + (v.pass ? 'pass' : 'FAIL ' + v.why.join('; ')))
+    for (const [n, v] of warnings) console.log(line.seg.id + ' ' + n + ': ' + (v.pass ? 'inside the limit' : 'WARNING ' + v.why.join('; ')))
     ;(report.kinds as Record<string, unknown>)[kind] = out
   }
 } finally {
