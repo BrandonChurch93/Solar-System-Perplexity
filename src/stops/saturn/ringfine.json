@@ -1,0 +1,22 @@
+{
+  "source": "the structure of the ring sheet below the measured knots of ringfield.json: octaves of plateaus and ringlets by radius, wave trains, hue lanes. Lengths in planet radii. Read by field.ts.",
+  "first": 0.0026,
+  "ratio": 0.55,
+  "octaves": 6,
+  "edge": 0.16,
+  "footprints": 1.5,
+  "lum": 0.3,
+  "tau": 0.45,
+  "falloff": 0.85,
+  "shift": 7.31,
+  "hue": { "first": 0.03, "ratio": 0.45, "octaves": 3, "edge": 0.3, "shift": 3.77, "warm": 0.5, "pink": 0.5, "warmAxis": [0.07, 0.0, -0.11], "pinkAxis": [0.07, -0.045, 0.03] },
+  "waves": {
+    "note": "each train: radius of the resonance, length, wavelength at its far end, 1 for outward and -1 for inward. rise and fall are fractions of the length; tight caps how short the waves get near the resonance.",
+    "lum": 0.16,
+    "tau": 0.3,
+    "rise": [0.25, 0.45],
+    "fall": [0.7, 1.2],
+    "tight": 0.08,
+    "trains": [[2.092, 0.03, 0.0016, 1], [2.148, 0.026, 0.0014, 1], [2.186, 0.02, 0.0012, 1], [2.236, 0.03, 0.0015, 1], [2.282, 0.022, 0.0012, 1], [2.31, 0.016, 0.001, 1], [1.64, 0.02, 0.0018, -1], [1.3, 0.02, 0.002, 1]]
+  }
+}

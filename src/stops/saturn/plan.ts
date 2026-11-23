@@ -3,14 +3,14 @@ import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
-import close from './close.json'
 import fit from './fit.json'
+import skimJson from './skim.json'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 7, axis: [-0.2, 1, 0.1], push: -0.03 },
   spot: { x: 0.256, y: 0.856, on: 'rings' },
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
-  terrain: { vfov: close.vfov, forward: 0.5, rise: -0.12, side: -0.04, yawDeg: -3, pitchDeg: 1.5, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0.27 },
+  terrain: { vfov: skimJson.pose.vfov, forward: skimJson.path.forward, rise: -skimJson.path.sink, side: skimJson.path.side, yawDeg: skimJson.path.yawDeg, pitchDeg: skimJson.path.pitchDeg, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
   travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
   arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
@@ -22,7 +22,7 @@ export const params: MoveParams = {
   skyAim: { orbit: [-14, 153, -7.3] },
 }
 
-export const skim = { azimuthDeg: -2, heightScale: 1, distanceScale: 1, diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35, seatIn: 0.8 }
+export const skim = { diveBow: 0, diveSwitch: 0.5, riseSwitch: 0.47, riseBow: 0, riseEnd: 0.96, divePower: 1.5, risePower: 1.5, skyNear: 0.35, seatIn: 0.8 }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -34,23 +34,25 @@ export class SaturnPlan extends StopPlan {
 
   constructor(id: string, f: Fit, p: MoveParams) {
     super(id, f, p)
+    const rad = THREE.MathUtils.degToRad
+    const pose = skimJson.pose
     const n = this.normal.clone()
     this.ringNormal = n
     const sun = this.lightDir.clone()
     const flat = sun.clone().addScaledVector(n, -sun.dot(n)).normalize()
-    const out = new THREE.Vector3().crossVectors(n, flat).normalize().applyAxisAngle(n, THREE.MathUtils.degToRad(skim.azimuthDeg))
-    const tilt = THREE.MathUtils.degToRad(close.tiltDeg)
-    const roll = THREE.MathUtils.degToRad(close.rollDeg)
+    const out = new THREE.Vector3().crossVectors(n, flat).normalize().applyAxisAngle(n, rad(pose.azimuthDeg))
+    const tilt = rad(pose.tiltDeg)
+    const roll = rad(pose.rollDeg)
+    const yaw = rad(pose.yawDeg)
     const nc = new THREE.Vector3(-Math.sin(roll) * Math.cos(tilt), Math.cos(roll) * Math.cos(tilt), Math.sin(tilt))
-    const c = new THREE.Vector3().fromArray(close.centre)
-    const height = -c.dot(nc)
-    const hc = c.clone().negate().addScaledVector(nc, -height)
-    const reach = hc.length()
-    hc.normalize()
-    const cam = new THREE.Matrix4().makeBasis(nc, hc, new THREE.Vector3().crossVectors(nc, hc))
-    const world = new THREE.Matrix4().makeBasis(n, out, new THREE.Vector3().crossVectors(n, out))
+    const fp = new THREE.Vector3(0, 0, -1).addScaledVector(nc, nc.z).normalize()
+    const left = new THREE.Vector3().crossVectors(nc, fp)
+    const toGlobe = fp.clone().multiplyScalar(Math.cos(yaw)).addScaledVector(left, -Math.sin(yaw))
+    const inward = out.clone().negate()
+    const cam = new THREE.Matrix4().makeBasis(nc, toGlobe, new THREE.Vector3().crossVectors(nc, toGlobe))
+    const world = new THREE.Matrix4().makeBasis(n, inward, new THREE.Vector3().crossVectors(n, inward))
     this.skimQuaternion = new THREE.Quaternion().setFromRotationMatrix(world.multiply(cam.transpose()))
-    this.skimPosition = out.clone().multiplyScalar(reach * skim.distanceScale).addScaledVector(n, height * skim.heightScale)
+    this.skimPosition = out.clone().multiplyScalar(pose.foot).addScaledVector(n, pose.height)
     const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(this.skimQuaternion)
     this.skimForward = fwd.addScaledVector(n, -fwd.dot(n)).normalize()
     this.skimRight = new THREE.Vector3().crossVectors(this.skimForward, n).normalize()
@@ -58,14 +60,14 @@ export class SaturnPlan extends StopPlan {
   }
 
   skimAt(time: number): Pose {
-    const t = this.p.terrain
+    const path = skimJson.path
     const seg = this.seg.terrain
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
-    const position = this.skimPosition.clone().addScaledVector(this.skimForward, t.forward * u).addScaledVector(this.skimRight, t.side * u).addScaledVector(this.ringNormal, t.rise * u)
-    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(t.yawDeg) * u).multiply(this.skimQuaternion)
-    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.pitchDeg) * u))
-    return { position, quaternion, vfov: t.vfov }
+    const position = this.skimPosition.clone().addScaledVector(this.skimForward, path.forward * u).addScaledVector(this.skimRight, path.side * u).addScaledVector(this.ringNormal, -path.sink * u)
+    const quaternion = new THREE.Quaternion().setFromAxisAngle(this.ringNormal, THREE.MathUtils.degToRad(path.yawDeg) * u).multiply(this.skimQuaternion)
+    quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(path.pitchDeg) * u))
+    return { position, quaternion, vfov: skimJson.pose.vfov }
   }
 
   private local(pose: Pose): Pose {

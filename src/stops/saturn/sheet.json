@@ -1,0 +1,15 @@
+{
+  "source": "how the ring sheet is lit and drawn (sheet.ts). Lengths in planet radii, angles as sines.",
+  "segments": 720,
+  "view": 0.25,
+  "phase": 0,
+  "gain": [1, 1],
+  "unlit": 0.12,
+  "shadow": {
+    "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it",
+    "soft": [0.006, 0.012],
+    "reach": [2.6, 1.6, 1],
+    "floor": [0.012, 0.016, 0.024]
+  },
+  "layer": [0.95, 0.7, 0.2]
+}

@@ -1,13 +1,15 @@
 """Build the ring model of the code built Saturn: src/stops/saturn/ringfield.json.
 
 The model is what the ring plane is, not a picture of it: for each of N radii across the span it holds the
-normal optical depth of the sheet and the brightness of its ice at full depth, and for a few radii the colour
-of the ice. The film's shader draws every pixel of the plane from these numbers and from functions that carry
-the structure on to finer scales (src/stops/saturn/field.ts).
+normal optical depth of the sheet, the brightness the sheet returns to the hero's camera, the colour of its
+ice and how strongly the finer structure may modulate it there. The film's shader draws every pixel of the
+plane from these numbers and from functions that carry the structure on to finer scales
+(src/stops/saturn/field.ts).
 
 The numbers are measured on the approved hero (hero_profile.py): the median scene linear colour of the lit
-sheet by radius. From the brightness the depth follows by one rule (thin where dark, dense where bright), and
-the ice brightness is what, with that depth, returns the hero's brightness from the hero's camera.
+sheet by radius. From the brightness the depth follows by one rule (thin where dark, dense where bright).
+Outside the hero's outer edge the model adds what the hero is too far away to show: a thin sheet of dust that
+dies away outward and one narrow strand, so the plane has no hard end.
 
   python3 ring_model.py            writes the JSON and out/ring_model.png
 """
@@ -28,11 +30,15 @@ TAU_REF = 1.6       # depth of a sheet as bright as L_REF
 L_REF = 0.45
 TAU_POWER = 1.6
 TAU_MAX = 3.5
+DUST = {'tau': 0.006, 'length': 0.045, 'ice': 0.26}                 # the sheet of dust outside the outer edge
+STRANDS = [(2.418, 0.0035, 0.022), (2.408, 0.0018, 0.008), (2.431, 0.0022, 0.006)]   # radius, half width, depth
+FINE = [(1.2, 0.5), (1.26, 0.75), (1.5, 0.8), (1.62, 0.9), (1.7, 1.0), (1.93, 1.0), (1.95, 0.9), (2.06, 0.9), (2.08, 0.6), (2.3, 0.55), (2.34, 0.7), (2.5, 0.7)]
+CHROMA_SIGMA = 0.006
+CHROMA_TOP = 0.6    # the hero clips above this, where the colour of a bin can not be trusted
 LUMA = np.array([0.2126, 0.7152, 0.0722])
 INNER = geom.FIT['rings']['inner']
 OUTER = geom.FIT['rings']['outer']
 EDGE = 0.004        # how fast the sheet ends at its inner and outer rim, in radii
-CHROMA_KNOTS = 33
 SHOCK_STEPS = 14
 SHOCK_RATE = 0.22
 
@@ -75,28 +81,34 @@ rim = np.clip((r - INNER) / EDGE, 0, 1) * np.clip((OUTER - r) / EDGE, 0, 1)
 lum *= rim
 
 tau = np.minimum(TAU_REF * (lum / L_REF) ** TAU_POWER, TAU_MAX)
-seen = 1 - np.exp(-tau * kh)
-ice = np.where(seen > 1e-6, lum / np.maximum(seen, 1e-6), 0)
-ice = np.minimum(ice, 2.6)
+# outside the outer edge: dust and strands, with the brightness they return to the hero's camera
+out = np.maximum(r - OUTER, 0)
+dust = np.where(r > OUTER, DUST['tau'] * np.exp(-out / DUST['length']) * np.clip((SPAN[1] - r) / 0.03, 0, 1), 0)
+for at, wide, depth in STRANDS:
+    dust += depth * np.exp(-0.5 * ((r - at) / wide) ** 2)
+dust *= np.clip((r - OUTER) / EDGE, 0, 1)
+tau = tau + dust
+lum = lum + DUST['ice'] * (1 - np.exp(-dust * kh))
 
-# colour of the ice by radius: the hero's colour over its luma, smoothed, at a few knots
+# colour of the ice by radius: the hero's colour over its luma, smoothed over CHROMA_SIGMA
 ratio = col / np.maximum(lum_src[:, None], 1e-4)
-weight = np.clip(lum_src / 0.05, 0, 1)
-kr = np.linspace(SPAN[0], SPAN[1], CHROMA_KNOTS)
-chroma = np.zeros((CHROMA_KNOTS, 3))
-for i, x in enumerate(kr):
-    w = weight * np.exp(-0.5 * ((rc - x) / 0.03) ** 2)
-    if w.sum() < 1e-3:
-        chroma[i] = np.nan
-    else:
-        chroma[i] = (ratio * w[:, None]).sum(0) / w.sum()
+weight = np.clip(lum_src / 0.05, 0, 1) * (lum_src < CHROMA_TOP)
+chroma = np.zeros((KNOTS, 3))
+step = rc[1] - rc[0]
+reach = int(np.ceil(3 * CHROMA_SIGMA / step))
+kernel = np.exp(-0.5 * (np.arange(-reach, reach + 1) * step / CHROMA_SIGMA) ** 2)
+num = np.stack([np.convolve(ratio[:, c] * weight, kernel, mode='same') for c in range(3)], -1)
+den = np.convolve(weight, kernel, mode='same')
+good = den > 0.5
+smooth = np.where(good[:, None], num / np.maximum(den[:, None], 1e-6), np.nan)
 for c in range(3):
-    bad = ~np.isfinite(chroma[:, c])
-    chroma[bad, c] = np.interp(kr[bad], kr[~bad], chroma[~bad, c])
+    chroma[:, c] = np.interp(r, rc[good], smooth[good, c])
 chroma /= (chroma @ LUMA)[:, None]
 
+fine = np.interp(r, [f[0] for f in FINE], [f[1] for f in FINE])
+
 model = {
-    'source': 'assets-src/saturn/code/ring_model.py, the ring sheet by radius measured on the approved hero: normal optical depth, brightness of the ice at full depth, colour of the ice',
+    'source': 'assets-src/saturn/code/ring_model.py, the ring sheet by radius measured on the approved hero: normal optical depth, the brightness returned to the hero camera, the colour of the ice as red and blue over luma, the strength of the finer structure',
     'span': list(SPAN),
     'knots': KNOTS,
     'inner': INNER,
@@ -104,9 +116,10 @@ model = {
     'muSun': round(float(mu0), 6),
     'muHero': round(float(muh), 6),
     'tau': [round(float(v), 4) for v in tau],
-    'ice': [round(float(v), 4) for v in ice],
-    'chromaKnots': CHROMA_KNOTS,
-    'chroma': [[round(float(v), 4) for v in c] for c in chroma],
+    'lum': [round(float(v), 4) for v in lum],
+    'red': [round(float(v), 3) for v in chroma[:, 0]],
+    'blue': [round(float(v), 3) for v in chroma[:, 2]],
+    'fine': [round(float(v), 3) for v in fine],
 }
 path = os.path.join(geom.STOP, 'ringfield.json')
 with open(path, 'w') as f:
@@ -115,7 +128,7 @@ with open(path, 'w') as f:
 print('wrote', path, os.path.getsize(path), 'bytes; muSun %.4f muHero %.4f' % (mu0, muh))
 for a, b in [(1.25, 1.5), (1.5, 1.94), (1.955, 2.05), (2.07, 2.33)]:
     k = (r >= a) & (r < b)
-    print('  %.2f to %.2f: tau p10 %.3f p50 %.3f p90 %.3f, ice p50 %.3f, luma p50 %.3f' % (a, b, *np.percentile(tau[k], [10, 50, 90]), np.median(ice[k]), np.median(lum[k])))
+    print('  %.2f to %.2f: tau p10 %.3f p50 %.3f p90 %.3f, luma p50 %.3f' % (a, b, *np.percentile(tau[k], [10, 50, 90]), np.median(lum[k])))
 
 import matplotlib
 matplotlib.use('Agg')
@@ -126,10 +139,10 @@ ax[0].plot(r, lum, 'r', lw=0.5, label='model luma at the hero camera')
 ax[0].legend()
 ax[1].plot(r, tau, 'b', lw=0.5)
 ax[1].set_title('normal optical depth')
-ax[2].plot(r, ice, 'g', lw=0.5)
-ax[2].set_title('ice brightness at full depth')
+ax[2].plot(r, fine, 'g', lw=0.8)
+ax[2].set_title('strength of the finer structure')
 for c, name in enumerate('rgb'):
-    ax[3].plot(kr, chroma[:, c], name)
+    ax[3].plot(r, chroma[:, c], name, lw=0.6)
 ax[3].set_title('ice colour over luma')
 for a in ax:
     a.set_xlim(*SPAN)

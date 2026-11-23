@@ -1,0 +1,28 @@
+{
+  "source": "the camera of the skim over the ring plane and how the light changes with the camera's height. Lengths in planet radii, angles in degrees. Read by plan.ts and set.ts.",
+  "pose": {
+    "note": "the middle of the skim: where the camera stands (azimuth from the Sun's side, radius of its foot on the plane, height), and how it looks (the globe this far right of the view axis, tilt down, roll)",
+    "azimuthDeg": 17,
+    "foot": 2.44,
+    "height": 0.3,
+    "yawDeg": 25.51,
+    "tiltDeg": 7.72,
+    "rollDeg": -12.87,
+    "vfov": 48
+  },
+  "path": {
+    "note": "travel over the whole skim: along the view axis on the plane, downward, sideways, and the turn of the camera",
+    "forward": 0.24,
+    "sink": 0.08,
+    "side": 0,
+    "yawDeg": 0,
+    "pitchDeg": 0
+  },
+  "light": {
+    "note": "exposure of the globe and of the rings in the hold and in the skim, blended by the logarithm of the camera's height between the two heights",
+    "heights": [0.35, 1.6],
+    "globe": [1, 1],
+    "rings": [1, 1],
+    "heroRange": [0.6, 1.6]
+  }
+}

@@ -180,3 +180,80 @@ Design (decided)
 
 Next: field.ts (texture and GLSL), sheet.ts (ring pass), globe without the close patch, set.ts,
 plan.ts, look.ts; stills at 3720, 3630, 3809; M1.
+
+### Day 1, 07:15 to 07:35 UTC: decisions before the first code
+
+- ring_model.py now writes ringfield.json with span, knots (2048), inner, outer, muSun, muHero, tau,
+  lum (brightness at the hero's camera), red and blue (colour over luma, green follows from luma 1),
+  fine (strength of the structure below the knots). A dust sheet and three strands lie outside the
+  outer edge 2.3394. Model depth: C p50 0.13, B 1.13, A 0.62.
+- Field texture (field.ts): 2048 wide; rows 0 to 11 tau at box widths 2^k knots, rows 12 to 23 lum,
+  row 24 red, row 25 blue, row 26 fine. textureLod at row centres, level = log2(footprint over knot
+  spacing).
+- Shading: I = lum * (1 - exp(-tau k)) / (1 - exp(-tau kh)) with k = 1/mu0 + 1/mu and kh the hero's,
+  times a view term (mu0/(mu0+mu) over its hero value, by a strength) and a sphere phase ratio (by a
+  strength). Alpha = 1 - exp(-tau/mu). Premultiplied.
+- Fine structure (ringfine.json): plateau steps (one hashed level per cell with a soft step, never
+  narrower than the footprint), octaves from wavelength 0.0026 by ratio 0.55, products on lum and
+  tau, each faded by the footprint; hue lanes; wave trains in the A ring. The octaves lie below the
+  hero's resolution, so the hold shows the measured profile.
+- No flat grain on the sheet: at grazing angles it reads as a stretched texture. Ice is instanced
+  sphere impostors in size classes, one per cell of a (radius row, azimuth) grid from a hash of the
+  cell, a window of cells that follows the camera, rows sliding by Kepler (prograde is decreasing
+  atan2(z, x), the sense of the globe's spin), fading out below about one pixel, lit as spheres, in
+  the globe's shadow where the sheet is, with their own shadows on the plane.
+- Passes: rings behind, shell, globe, rings in front, particle shadows, particles. Front when the
+  ring point lies nearer than the ray's closest approach to the globe (tc > 1).
+- Globe shadow on the rings analytic in the polar scaled space, soft edge growing with distance, warm
+  penumbra, faint bluish floor. Ring shadow on the globe = exp(-tau(rho)/mu0) at the point where the
+  Sun ray from the globe point crosses the plane.
+- G13 on the sheet: texels = diagTexels(position over the finest octave), counted.
+- Skim pose (mid): foot 2.44, height 0.30, yaw 25.51, tilt 7.72, roll -12.87, vfov 48. Camera build:
+  flat = Sun projected on the plane; out = flat turned about the normal by 90 deg plus azimuthDeg;
+  view axis = -out turned by yaw; position = out * foot + normal * height.
+- Path: forward 0.24 along the view axis with a sink of 0.08 keeps the bottom left corner inside
+  radius 2.340, so the outer edge never crosses the near field; a forward of 0.36 would put 2.41 in
+  the corner at the start. About 3 px per frame at the bottom of the frame. The outer edge shows only
+  in the distance at the left (y about 411 of 1080 at mid), as in the approved image. This replaces
+  the earlier idea of starting outside the edge.
+- Hold in the true world: the near ring arcs pass in front of the globe's southern part. Allowed by
+  Mail 219 if no worse; judge after M2.
+
+### Day 1, 07:35 to 08:05 UTC: first render from code, pose and light checked (M1)
+
+- First still of 3720 from code: 9.2 to 9.6 s for one sample at 1920 x 1080 (the frozen build took 16.1 s
+  here). No shader error. Files: field.ts (ring field texture and functions), sheet.ts (two ring passes),
+  globe.ts (close patch and skim light removed, ring shadow read from the field), set.ts (rigid world),
+  plan.ts (skim camera from skim.json), skim.json, sheet.json, ringfine.json. The frozen rings.ts, ice.ts
+  and profile.ts are gone from the stop.
+- Light check with the globe's probe view (look.ts probe 3, --diag layers gives the cosine to the Sun per
+  pixel): at azimuthDeg -8 the geometric terminator leaves the frame at the right (cosine 0 at x 1750 to
+  1900 of 1920). The approved close has its light boundary from (1196, 63) to (1081, 441) of 1408 x 792,
+  left of the globe's centre at the base: phase a little over 90 deg, and it leans 19 deg from the
+  vertical where the true Sun (15.8 deg over the plane, camera roll -12.87) gives 30 to 40 deg. The
+  approved light is not the hero's Sun; the true world keeps the hero's Sun.
+- azimuthDeg is now +17 (camera 107 deg round from the Sun, phase about 106 deg). Two reasons: the
+  terminator comes into frame with a night side on the right as in the approved image, and the hero camera
+  stands at 109.3 deg, so the dive needs almost no swing round the axis: it becomes a straight descent
+  toward a place on the plane.
+- The prompt of the approved close (references/approved/saturn-close.prompt.txt) asks for the true
+  geometry in words: "the near rings sweep across the lower frame in front of the globe's lower limb, the
+  dense bright bands hiding it and the thin dusky inner ring letting the globe show dimly through; between
+  that inner ring and the globe there is a dark empty gap". The image model drew a dome cut at the equator
+  instead. The code scene follows the words: the lit southern part of the globe shows through the gap and
+  the C ring down to the B ring's inner edge.
+- The globe's shadow on the near rings lies just outside the right frame edge at this pose (the shadow
+  strip is 1 radius wide and starts behind the globe). In the approved image the dark band under the dome
+  is not a true shadow. To be decided: a little more yaw or azimuth to bring the shadow's edge into frame.
+- Sharpness as the gate counts it (assets-src/saturn/code/detail_grid.py prints it tile by tile): the first
+  render has 0.115 of the approved fine detail energy (median over 62 tiles; needs 0.8). The approved has
+  5 to 8 percent band contrast in the B ring and 10 to 17 percent in the A ring at 3 to 12 px, at every
+  distance; the first render has 2.5 percent. The measured knots hold 5 to 12 percent (linear) in B and
+  2.5 to 5 percent in A. So the ladder of ringlets must start at about 0.05 radii, not 0.0026, carry
+  about the same contrast in every octave, and add thin dark grooves; the A ring needs the most.
+- Stars show through the Cassini division (depth 0.008): the approved has thin grey ringlets there and no
+  stars. Raise its floor.
+- Rings are too bright and too pale in the A ring (display luma 0.61 to 0.66 against 0.42 to 0.48).
+
+Next: ringlet ladder with grooves, colour lanes, brightness by ring; then ice particles; then the globe's
+light near the terminator, the halo, the shadow. Then M2.
