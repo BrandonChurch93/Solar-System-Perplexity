@@ -1,78 +1,77 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T13:50:21.266Z",
- "head": "b8f9399c9618bd992c38f5867c90eb73288b3a4f",
- "note": "the horizon line in the place window is cured on Mars (b8f9399): sky lifted onto the limb, ground held, no dashes; off by default for the other stops",
+ "pushed": "2026-11-23T14:04:46.747Z",
+ "head": "7f507d9dae943fb3658092e6c348365fbe7c7c1d",
+ "note": "E4 draft at 7f507d9 with the limb hold, on main's old globe; waiting for the Mars plate ladder to judge the colour step into 2449",
  "looks": [
   {
-   "time": "2026-11-23T13:50:20.719Z",
-   "file": "20261123135020719-note-f2700-hold-small.jpg",
-   "source": "out/work/e4/limb/f2700-hold-small.jpg",
+   "time": "2026-11-23T14:04:42.092Z",
+   "file": "20261123140442092-note-mars-dive-top.jpg",
+   "source": "out/work/handover/mars-dive-top.png",
    "kind": "note",
-   "label": "rise frame 2700 whole, before the dash cure: the canyon as a six sided patch on the old globe, the haze band on the right of the limb"
+   "label": "Mars dive from straight above, place picture off, 7f507d9 on main's old globe: soft from 2439",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-23T13:50:20.186Z",
-   "file": "20261123135020186-note-f2696-hold2-crop.jpg",
-   "source": "out/work/e4/limb/f2696-hold2-crop.png",
+   "time": "2026-11-23T14:04:41.478Z",
+   "file": "20261123140441478-note-dive-limb-L-b.jpg",
+   "source": "out/work/e4/d3/dive-limb-L-b.png",
    "kind": "note",
-   "label": "rise frame 2696 at the limb: the dashes are gone (size of a sky pixel from algebra, not from its neighbours)"
+   "label": "Mars dive 2449 to 2454 limb rows left half at full size: the globe's own hard limb fades under the picture's soft horizon"
   },
   {
-   "time": "2026-11-23T13:50:19.631Z",
-   "file": "20261123135019631-note-f2696-hold-crop.jpg",
-   "source": "out/work/e4/limb/f2696-hold-crop.png",
+   "time": "2026-11-23T14:04:40.724Z",
+   "file": "20261123140440724-note-dive-limb-R-b.jpg",
+   "source": "out/work/e4/d3/dive-limb-R-b.png",
    "kind": "note",
-   "label": "rise frame 2696 at the limb: a dashed dark line, pixels on the limb judged by the ground beside them"
+   "label": "Mars dive 2449 to 2454 limb rows right half at full size with the limb hold: no dark line"
   },
   {
-   "time": "2026-11-23T13:50:18.856Z",
-   "file": "20261123135018856-note-f2447-three-crop.jpg",
-   "source": "out/work/e4/limb/f2447-three-crop.png",
+   "time": "2026-11-23T14:04:40.028Z",
+   "file": "20261123140440028-note-rise-2692-2711.jpg",
+   "source": "out/work/e4/d3/rise-2692-2711.png",
    "kind": "note",
-   "label": "frame 2447 at the limb, three times enlarged: as it was, the sky lifted, the sky lifted and the ground held (no line left)"
+   "label": "Mars rise 2692 to 2711 at 7f507d9, old globe: the patch shrinks and fades by 2705"
   },
   {
-   "time": "2026-11-23T13:49:36.065Z",
-   "file": "20261123134936065-frame-f2685-orbit-hold3.jpg",
-   "source": "out/work/e4/limb/f2685-orbit-hold3.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2685, draft tier, beauty/side=orbit/t=89.508333 view",
+   "time": "2026-11-23T14:04:39.369Z",
+   "file": "20261123140439369-note-mars-rise-draft-after.jpg",
+   "source": "out/work/handover/mars-rise-draft-after.png",
+   "kind": "note",
+   "label": "E4 draft at 7f507d9, Mars rise 2686 to 2697 on main's old globe: six sided patch from 2693 (plates not merged)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:04:38.705Z",
+   "file": "20261123140438705-note-mars-dive-draft-before.jpg",
+   "source": "out/work/handover/mars-dive-draft-before.png",
+   "kind": "note",
+   "label": "E4 draft at 7f507d9, Mars dive 2442 to 2453 on main's old globe: the picture comes in over plain ground (plates not merged)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T14:01:55.192Z",
+   "file": "20261123140155192-sheet-mars-rise-top.jpg",
+   "source": "out/work/handover/mars-rise-top.png",
+   "kind": "sheet",
+   "label": "mars rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2685), place picture off, draft tier",
    "stop": "mars",
    "segment": "mars.rise",
-   "frame": 2685,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/t=89.508333",
-   "engine": "ef45a5a562d954c3"
+   "first": 2685,
+   "last": 2744,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T13:48:52.948Z",
-   "file": "20261123134852948-frame-f2454-orbit-hold3.jpg",
-   "source": "out/work/e4/limb/f2454-orbit-hold3.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/t=81.808333 view",
+   "time": "2026-11-23T14:01:32.809Z",
+   "file": "20261123140132809-sheet-mars-rise-draft-after.jpg",
+   "source": "out/work/handover/mars-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2686 to 2697 (after T, frame 2685), draft tier",
    "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/side=orbit/t=81.808333",
-   "engine": "ef45a5a562d954c3"
-  },
-  {
-   "time": "2026-11-23T13:30:34.298Z",
-   "file": "20261123133034298-note-f2447-limb0-limb8-crop.jpg",
-   "source": "out/work/e4/limb/f2447-limb0-limb8-crop.png",
-   "kind": "note",
-   "label": "frame 2447 at the limb: above as it was, below with the sky of the picture lifted onto the limb (a thin dashed line is left, next step)"
-  },
-  {
-   "time": "2026-11-23T13:20:11.015Z",
-   "file": "20261123132011015-note-f2454-dump-horizon.jpg",
-   "source": "out/work/e4/matte/f2454-dump-horizon.png",
-   "kind": "note",
-   "label": "the Mars place picture at its horizon: image above, alpha below"
+   "segment": "mars.rise",
+   "first": 2686,
+   "last": 2697,
+   "tier": "draft"
   }
  ]
 }
