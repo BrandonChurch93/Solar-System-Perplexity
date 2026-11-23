@@ -1,9 +1,23 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T14:58:02.373Z",
+ "pushed": "2026-11-23T14:58:37.336Z",
  "head": "c4473f6757be610b6e0748b6c74e802dfa88fc5a",
- "note": "5fd4b413: handover report passes both ways; sheets of the report; G13 probe sheets; G15 green at 1393 MB",
+ "note": "5fd4b413: handover report passes both ways; its sheets; G13 probe sheets; G15 green at 1393 MB",
  "looks": [
+  {
+   "time": "2026-11-23T14:58:16.461Z",
+   "file": "20261123145816461-job-frame-04530.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "neptune.hold frame 4530, draft tier, texels view, from the running measure job",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4530,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
   {
    "time": "2026-11-23T14:58:01.795Z",
    "file": "20261123145801795-note-ho-rise-after.jpg",
@@ -58,14 +72,6 @@
    "source": "out/work/nep/s8/soft.jpg",
    "kind": "note",
    "label": "s8 soft.jpg (5fd4b413 tree or its step before)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T14:57:57.503Z",
-   "file": "20261123145757503-note-soft.jpg",
-   "source": "out/work/nep/s7/soft.jpg",
-   "kind": "note",
-   "label": "s7 soft.jpg (5fd4b413 tree or its step before)",
    "stop": "neptune"
   }
  ]
