@@ -2055,3 +2055,35 @@ No answer is needed. Go on with your work."
 - Ending frames after the flow map change: 5200 (lookback) and 5330 (fade) at draft in this tree against the old main worktree (6da6c641): 0 of 2,073,600 differ on both (`out/work/nep/s8/end/`, `s8/endmain/`).
 - Build good on c4473f67. Looks pushed 14:59 (c6453e68): the six report sheets and the G13 probe sheets.
 - Measure started 14:57:44: `npm run measure -- --stop neptune --every 3` (`out/work/nep/s8/measure.log`). The two final tier stills of the last measure run (22 Nov) kept in `out/work/nep/s8/g17old/` to compare bits on 4605 and 4860 at the final tier.
+
+### MAIL 289 from the Builder to every stop builder, 15:10 UTC (word for word)
+
+Main is e4782fe (plus a status commit). New on it since f8bc034e: (1) the last engine piece for the handover, from agent/engine-handover 73b8dca5: config.handover.place.limbReachDeg (0 film wide, a stop asks for it per kind) and limbHoldDeg, StopSet.placeMatte { dive, rise } (off unless your set gives one), a top down harness view, the handover tools; notes in assets-src/shared/HANDOVER-NOTES.md. (2) alphaOne on a relief layer (the alpha loads as one channel, a quarter of its memory, off unless set).
+One thing to check when you merge it: StopPlan now has a public method named above (the top down view of the harness). If your plan class has a member of that name, rename yours. Mercury had one.
+Merge origin/main before you name your READY commit. READY times stand: 15:30 UTC, Jupiter and Saturn 16:30 UTC. A commit I take is checked as main plus your three folders on twelve render machines, so what you send must build there.
+The engineer's report now prints a number "under the place picture" (the globe alone against the globe with the picture at T). It is a warning, not a gate. Bring it down: it says how far your plates are from your picture, and that is what shows as a patch with straight sides before T.
+Per stop:
+Mercury: READY 63dd08bc received. Your private method above in plan.ts is renamed to aloft in my tree (five places, no pixel changes); do the same on your branch. The check of main plus your folders runs (builder/take-mercury 3d2b0476).
+Uranus: READY 25f2dc3a received. The early check of d55b7947 was clean (reference frames keep their bytes outside your dive and rise, 4035 and 4290 at the final tier are the kept stills, both handovers pass). The check of main plus your folders runs (builder/take-uranus d5458366). Go on with the one ring system and name its commit when it is rendered and proven.
+Venus: early check of a887167c clean: 105 of 115 the same, the ten others inside your dive and rise, 1185 and 1440 final are the kept stills, both handovers pass (side mean 0.052, flow gap 0.101 and 0.092 px).
+Neptune: early check of 17cde964 clean so far: every frame back keeps its bytes outside your segments, 4605 and 4860 final are the kept stills, both handovers pass (side mean 0.065 and 0.064, flow gap 0.068 and 0.281 px).
+Earth: early check of e885b4e3: 1755 and 2010 final are the kept stills, both handovers pass (side mean 0.101 and 0.103). Seven Mars frames differ from main because your branch holds an old main, so merge the newest before READY.
+Sun, Jupiter, Saturn, Mars plates: nothing new beyond the above.
+
+### MAIL 290 from the Builder to every stop builder, 15:14 UTC (word for word)
+
+A correction to mail 289.
+Main is 5eba228. The engine's top down view of the harness is now StopPlan.topDown, not StopPlan.above. So a plan member of yours named above is fine as it is: do not rename it, and if you already renamed it, leave your rename, both build. Two stops had one (Mercury, Uranus), and it is cheaper that the engine moves than that each of you proves again.
+Merge origin/main (5eba228) before you name a READY commit. Nothing else in mail 289 changes: READY times 15:30 UTC, Jupiter and Saturn 16:30 UTC.
+Mercury: I take plan.ts as you sent it in 63dd08bc, with above.
+Uranus: the first check of main plus your folders did not build because of that name; it runs again now on builder/take-uranus 8b0e9670 (main 5eba228 plus your three folders of 25f2dc3a).
+
+### Note from /root/handover_engineer, 15:20 UTC (low, no answer needed)
+
+New place option on agent/engine-handover 60c083e, not on main yet: `handover.dive.place.edgeIn` and `handover.rise.place.edgeIn`, four shares of the frame (left, right, bottom, top), the picture comes in from the place outward so its sides never show as straight lines in a place window; all 0 is the pass as it was. Try without a build: `npm run still -- --frame N --tier draft --diag "beauty/in=0.4,0.4,0.4,0.25" --out FILE`. The handover report now prints "under the place picture" as a warning. Neptune lays its own close layer, so this is to try only once it is on main.
+
+### 15:00 to 15:22 VM, merges of main, measure still running
+
+- Main moved three times: 7f7d7b45 (relief alphaOne), 4357cbb0 (engine piece for the handover), 5eba2289 (StopPlan.topDown). Merged as 27ffeb2d, 98ea68b2, ef8aa84f. No member named above or topDown in `src/stops/neptune/`. On ef8aa84f: tsc clean, vitest 168 of 168 in 25 files, `vite build` good into a second out folder (the measure was drawing from `dist`, so `dist` was not rebuilt).
+- Measure: G13 part done by about 15:12 (165 frames, every third), then the judged frames at the final tier: 4605 written 15:12, 4707 (dive, final tier) still drawing at 15:21. Its numbers are only written at the end. FAULT of planning: I counted 5 min for the four final tier frames from the run of 22 Nov, when the dive had the cover; with the place layer a dive frame at the final tier takes far longer.
+- NOT measured on the merged tree at the time of READY: same bits of the kept frames and G15 (both measured on c4473f67, same three folders, main two engine steps older). Chain `/tmp/after.sh` runs them when the measure ends (`out/work/nep/s9/after.log`).
