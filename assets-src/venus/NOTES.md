@@ -1826,3 +1826,46 @@ Plan for mail 266 (in its order of weight, item 2 first because items 1, 3 and 4
 1. Item 2: new base plates b, a, w whose ring and whose far, stretched part are a cloud field seen from above (ridges and towers, lit sides toward the Sun at upper left, long shadows to the lower right), by image generation led by the lay back, with the blank parts left blank so the take must paint them, and with the close image as the second picture. Tones locked to the underpainting by code. Then the tile takes, the T plates, the checks.
 2. Item 1 and 4: the weight of the place grows with nearness from the first frame of the dive (and falls to nothing before the travel), and the outer level keeps the mean colour and the directions of the globe at its own scale.
 3. Item 3: the band on the limb, after the new plates are in (it is the ring of w and a seen flat).
+
+## MAIL 275 (from /root, about 13:13 UTC, high priority), word for word
+
+From the Builder (/root) to every stop builder and coder. Mail 275: how your stop gets to its critic rounds. No answer needed unless a point below is red for you.
+
+1. A stop is taken onto main and its round 1 starts (rounds are numbered on from 37, up to three per stop, every critic each round) when four things hold on one commit that you name:
+ a. both handovers run with no cover and read as one place (Jupiter and Saturn: also the surface view from code; the Sun: the surface view with its new motion and the rise);
+ b. the machine checks are green on every frame you changed: G5, G13 and G17 as the harness gives them, and the handover report of `npm run handover -- --stop <id>`;
+ c. the frames you may not change keep their bytes (your hold and your surface view where it is approved, at the draft tier everywhere and at the final tier on the judged frames);
+ d. build, tsc and tests are green on a merge of the newest main.
+ It does not have to be finished. What is still wrong goes to the critics with the rest. Do not wait for a perfect state: when a to d hold, send me "READY <stop> <commit>" with the list of what you still see as wrong.
+2. Takes of generated assets: kit/06-ASSETS.md gives six takes per asset per round, and six per phase for an asset made outside a round. A mail of mine with findings is not a round. If an asset has used its six in this phase, keep its best take and say so in your READY line. In a round each asset has six again where a critic asks for a change. Work by code has no take limit.
+3. I render every commit you name at every frame on the render machines and write what I see. Push your code branch whenever your looks show something you want judged, and name the commit.
+
+What it means for me (written at once):
+- Takes in this phase. "a composition" has had 8 pictures (take 1 of M2; q2, r1, q3; t1, t2, t3, t4) and one failed call: over six, because I counted my own tries as rounds. No more takes for it: the best take is kept (t4 or t3) and the READY line says so. "a tiles": 2 each so far, 4 left each. "w composition": none so far, 6 left. "w tiles": 3 each, 3 left each. "deck" (a look reference only, not in the film): 1.
+- The READY line goes out when a to d hold on one commit, with the list of what is still wrong.
+
+## State 13:41 (23 Nov, VM time): MAIL 266 items 1, 2 and 4 built, dive rendered at draft. Read this first after a compaction
+
+What is built (nothing committed yet at this entry; pushed head is a887167c):
+- Item 2, the ring of the levels a and w painted new by outpainting takes (RECIPE, "Place plates", step 5; `build.py ringguide`, `ring`; values `build.ring` in `plates.json`). Kept: a ring take 4 with tile takes 3, w ring take 1 with tile takes 5. The plates of M2 are kept as `out/work/venus/place/<tag>/plate-m2.png` and give the tones (lock at 1 deg). All plate files have new names (`place2-<tag>.jpg`, `-dive`, `-rise`); the old `place-*.jpg` are removed from `public/`.
+- Items 1, 2 and 4, the look of the place from above (RECIPE, "The look of the place from above"; `tlay.py tone KIND`; values `tone` in `plates.json`; shader `globe.ts`): a map of a power and a factor on the light of the plates, in full where the line of sight is far from the one of the camera at T, absent at T. First form (a gain and an offset) could not darken the pale fan without cutting light at zero; the power and factor form is the one kept.
+- Items 1 and 4, the weight of the plates by camera height (`show.heights` [0.8, 3.4] radii, eased in the logarithm): 0 at the first frame of the dive (3.46) and from 1597 (3.53) on.
+- The border of level w follows its own cloud forms (`forms`, `rim` 0.3), drawn inward only.
+- `MAX_PATCHES` 6 to 4 in `globe.ts`: with the tone map the shader had 17 samplers and a browser guarantees 16. Now 6 + 4 + 5 + 1 = 16. This changes the shader text of the hold, so the hold frames must be proven to keep their bytes (below).
+- T pipeline run again for both handovers with the new plates: shift left over dive 0.01, -0.03 and rise -0.16, -0.04 plate pixels (unchanged `atT.shiftDeg`).
+
+Seen on every frame of the dive at draft (sheets `out/work/venus/place/r6/dive-01.jpg` to `dive-08.jpg`, twelve frames each):
+- 1260 to 1271: no dot, no mole. The place comes in as cloud texture from about 1272, growing with nearness.
+- 1276 to 1300: a field of cloud towers with long shadows about the place, one kind of cloud. No dark hollow, no pale smooth fan.
+- 1300 to 1310: the pale far deck of the T look comes up in view as the line of sight nears the one of T. A slow change of tone in view.
+- 1310 to 1349: as before, one place under one Sun.
+- Still wrong on the dive: bright cream towers at the left of 1280 to 1300 stand out hard against the brown deck; grey white ridges at lower left 1284 to 1300; orange red tints on the lit tower tops; the combed streaks of the globe at the right limb.
+
+Seen on every frame of the rise at draft (sheets `out/work/venus/place/r6/rise-01.jpg` to `rise-07.jpg`):
+- 1530 to 1553: as before, one place under one Sun. From 1547 a paler grey deck comes in at the lower left and the bottom: the ground near the point under the camera, seen steeply, takes the look from above.
+- 1554 to 1565: the place with its dark towers, its rays and the pale far deck, set in a deck of towers with long shadows. Along the limb at the top a smooth golden band with soft streaks is still there (item 3: weaker, not cured; it is the globe's own look beyond level w).
+- 1566 to 1577: the pale far deck fades and the dark towers of the place become brown towers like those about them: the tone change from the look at T to the look from above, about ten frames, in view.
+- 1578 to 1590: a field of towers going over into the swirls of the globe. Grey white crisp ridges at the left (level w on the dusk side) can read as rock.
+- 1591 to 1604: no dot. From 1597 on the plates have no weight: the globe is the globe of the hold.
+
+The looks tool keeps the eight newest pictures of a folder, so the fifteen sheets do not fit in one push: for the report they are made again as eight sheets (four per move).

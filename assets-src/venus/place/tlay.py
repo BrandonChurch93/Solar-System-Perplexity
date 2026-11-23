@@ -18,6 +18,7 @@ python3 assets-src/venus/place/tlay.py calib KIND TAG      the shift between the
 python3 assets-src/venus/place/tlay.py check KIND TAG      the globe's draw laid back beside the plate (is the camera right?)
 python3 assets-src/venus/place/tlay.py make KIND [TAG ...]  out/work/venus/place/t/<kind>-<tag>.png from the plates of build.py
 python3 assets-src/venus/place/tlay.py lock KIND SUFFIX [TAG ...]  the same plates, tones locked again with t/globe-<frame><suffix>.png
+python3 assets-src/venus/place/tlay.py tone KIND             public/assets/venus/{full,web}/place-tone-<kind>.bin, the look of the place from above (plates.json, tone)
 python3 assets-src/venus/place/tlay.py export KIND [TAG ...]  public/assets/venus/{full,web}/place-<tag>-<kind>.jpg
 """
 import json
@@ -210,6 +211,63 @@ def calib(kind, tag):
     print(kind, tag, 'with shiftDeg', AT['shiftDeg'][kind], 'left over, plate pixels', np.median(now, axis=0).round(2), 'spread', now.std(axis=0).round(2))
 
 
+def light(img):
+    """The light a plate value stands for: the display value taken back through the film curve (as inverseFilmic of src/post/chain.ts)."""
+    v = np.where(img <= 0.04045, img / 12.92, ((img + 0.055) / 1.055) ** 2.4)
+    y = np.clip(v, 0.0, 0.985).astype(np.float64)
+    a, b, c, d, e = 2.51, 0.03, 2.43, 0.59, 0.14
+    k = d * y - b
+    return ((-k - np.sqrt(np.maximum(k * k - 4 * (c * y - a) * e * y, 0))) / (2 * (c * y - a))).astype(np.float32)
+
+
+def band(y, fine, sigma):
+    """The spread of the logarithm of y about every point, counted in the forms smaller than fine."""
+    d = y - cv2.GaussianBlur(y, (0, 0), fine)
+    return np.sqrt(np.maximum(cv2.GaussianBlur(d * d, (0, 0), sigma), 1e-12))
+
+
+def tone(kind, plate=None):
+    """The look of the place from above, as a power and a factor on the light of the plates (plates.json, tone).
+    Returns the map (factor blue, green, red; power), the plate as it then shows and as it is, for a look."""
+    tn = SPEC['tone']
+    tag = next(t for t, l in LEVELS.items() if abs(l['widthDeg'] - tn['widthDeg']) < 1e-6)
+    work = 1024
+    floor = tn['floor']
+    p = np.log(np.maximum(light(cv2.resize(read(T / f'{kind}-{tag}.png') if plate is None else plate, (work, work), interpolation=cv2.INTER_AREA)), floor))
+    g = np.log(np.maximum(light(cv2.resize(read(WORK / f'base-{tag}.png'), (work, work), interpolation=cv2.INTER_AREA)), floor))
+    per = work / tn['widthDeg']
+    sigma = tn['sigmaDeg'] * per
+    luma = np.array([0.0722, 0.7152, 0.2126], np.float32)
+    mp = cv2.GaussianBlur(p, (0, 0), sigma)
+    mg = cv2.GaussianBlur(g, (0, 0), sigma)
+    spread = band(p @ luma, tn['fineDeg'] * per, sigma)
+    power = np.clip(tn['contrast'] / spread, tn['power'][0], tn['power'][1])
+    power = cv2.GaussianBlur(power, (0, 0), sigma / 2)
+    r = (np.arange(work, dtype=np.float32) + 0.5) / work * 2 - 1
+    off = lay.smooth(tn['edge'][0], tn['edge'][1], np.maximum(np.abs(r)[:, None], np.abs(r)[None, :]))
+    power = 1 + (power - 1) * (1 - off)
+    factor = (mg - power[..., None] * mp) * (1 - off)[..., None]  # its logarithm
+    top = np.exp(factor + power[..., None] * p)
+    size = tn['size']
+    m = np.dstack([np.exp(cv2.resize(factor, (size, size), interpolation=cv2.INTER_AREA))[..., ::-1], cv2.resize(power, (size, size), interpolation=cv2.INTER_AREA)]).astype(np.float32)
+    return m, top, np.exp(p), spread
+
+
+def film(x):
+    """Light to display value (filmic of src/post/chain.ts, then the sRGB curve), for a look at a tone map."""
+    a, b, c, d, e = 2.51, 0.03, 2.43, 0.59, 0.14
+    v = np.clip((x * (a * x + b)) / (x * (c * x + d) + e), 0, 1)
+    return np.where(v <= 0.0031308, v * 12.92, 1.055 * v ** (1 / 2.4) - 0.055)
+
+
+def tone_out(kind):
+    m, top, p, _ = tone(kind)
+    for folder in ('full', 'web'):
+        np.ascontiguousarray(m[::-1]).tofile(str(ROOT / 'public/assets/venus' / folder / SPEC['tone']['files'][kind]))  # rows from south to north
+    write(T / f'tone-{kind}-view.jpg', np.hstack([film(p), film(top)]))
+    print(kind, 'tone map', m.shape, 'power', round(float(m[..., 3].min()), 3), 'to', round(float(m[..., 3].max()), 3), 'factor', round(float(m[..., :3].min()), 4), 'to', round(float(m[..., :3].max()), 3))
+
+
 def export(kind, tag):
     q = [cv2.IMWRITE_JPEG_QUALITY, 92, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444]
     img = cv2.imread(str(T / f'{kind}-{tag}.png'), cv2.IMREAD_COLOR)
@@ -223,6 +281,9 @@ def export(kind, tag):
 if __name__ == '__main__':
     cmd, kind = sys.argv[1], sys.argv[2]
     rest = sys.argv[3:]
+    if cmd == 'tone':
+        tone_out(kind)
+        raise SystemExit(0)
     if cmd == 'lock':
         suffix, rest = rest[0], rest[1:]
     tags = rest or AT['tags']

@@ -126,14 +126,14 @@ class VenusPlan extends StopPlan {
 
   // The plates and the exposure of the globe side: on is the weight of the plates, dusk the share (0 to 1,
   // in the logarithm) of the gain of plates.json. Both are 0 outside the dive and the rise of this stop.
-  placeLook(seg: Segment, time: number): { on: number; dusk: number } {
+  // on: whether the plates of the place are drawn at all; near: whether their weight follows the height of the camera (plates.json, show).
+  placeLook(seg: Segment, time: number): { on: number; near: boolean; dusk: number } {
     const pr = probe()
     const mine = seg.stop === this.id && (seg.kind === 'dive' || seg.kind === 'rise')
     const u = (time - seg.start) / (seg.end - seg.start)
     const ramp = (w: [number, number]): number => ease((u - w[0]) / (w[1] - w[0]))
-    const on = !mine ? 0 : seg.kind === 'dive' ? ramp(place.show.dive) : 1 - ramp(place.show.rise)
     const dusk = !mine ? 0 : seg.kind === 'dive' ? ramp(place.dusk.dive) : 1 - ramp(place.dusk.rise)
-    return { on: pr?.on ?? on, dusk: pr?.dusk ?? dusk }
+    return { on: pr?.on ?? (mine ? 1 : 0), near: pr?.on === undefined, dusk: pr?.dusk ?? dusk }
   }
 
   // The height of the steady dive at a time, whatever the film's path is.

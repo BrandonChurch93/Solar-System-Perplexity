@@ -5,6 +5,8 @@ Order: the deepest level first (d, c, b, a, w), because every parent carries its
   python3 assets-src/venus/place/build.py base [TAG ...]    the globe's own look at dusk in the frame of every plate, or of the named ones (from the check renders build.views)
   python3 assets-src/venus/place/build.py guide TAG         <tag>/guide.png, the input of the composition take
   python3 assets-src/venus/place/build.py comp TAG TAKE     <tag>/comp-4096.png and the four tile inputs <tag>/in-<tile>.png
+  python3 assets-src/venus/place/build.py ringguide TAG     <tag>/ring-guide.jpg, the input of the outpainting take of a level whose ring is painted new (build.ring)
+  python3 assets-src/venus/place/build.py ring TAG TAKE     as comp, from <tag>/ring-take-TAKE.png, its tones locked to the plate of the earlier method (<tag>/plate-m2.png)
   python3 assets-src/venus/place/build.py plate TAG         <tag>/plate-raw.png from the tile takes kept (build.takes in plates.json), its child nested in;
                                                             it also writes the final <child>/plate-4096.png, matched to this level at its edge
   python3 assets-src/venus/place/build.py plates            all plates, deepest first
@@ -208,16 +210,8 @@ def nest(tag, own):
     return child_into(own, tag, c), c
 
 
-def comp(tag, take):
-    size = BUILD['guideSize']
-    g = read(WORK / tag / 'guide.png')
-    if str(take) == '0':  # take 0: no composition take, the guide itself goes to the tiles (a level whose painted part is the globe's own look)
-        r = g
-    else:
-        r = resize(read(WORK / tag / f'comp-take-{take}.png'), size)
-        s = BUILD['compLockSigma']
-        r = r * np.clip((cv2.GaussianBlur(g, (0, 0), s) + 0.004) / (cv2.GaussianBlur(r, (0, 0), s) + 0.004), 0.5, 2.0)
-    out = keep(resize(r, SIZE), tag)
+def to_tiles(tag, out):
+    """comp-4096.png of a level and its four tile inputs."""
     write(WORK / tag / 'comp-4096.png', out)
     tiles.split(str(WORK / tag / 'comp-4096.png'), str(WORK / tag), BUILD['tileInput'])
     # The tile inputs are brought to a middle exposure, so the model sees the forms of a dark deck and of a bright haze alike:
@@ -230,7 +224,74 @@ def comp(tag, take):
         lift[t] = float(np.clip(np.log(BUILD['tileLift']['median']) / np.log(med), BUILD['tileLift']['power'][0], BUILD['tileLift']['power'][1]))
         write(f, img ** lift[t])
     (WORK / tag / 'lift.json').write_text(json.dumps(lift))
-    print(tag, 'comp from take', take, 'tile powers', {t: round(v, 3) for t, v in lift.items()})
+    print(tag, 'tile powers', {t: round(v, 3) for t, v in lift.items()})
+
+
+def ring_guide(tag):
+    """The input of the outpainting take of a level whose ring is painted new: the child plate in its square, its border broken up
+    along a smooth noise (so the take does not keep a square), on flat grey. The take must paint everything that is grey."""
+    rg = BUILD['ring']
+    size = BUILD['guideSize']
+    n = rg['guideChild'].get(tag) or square(tag, size)[0]
+    o = (size - n) // 2
+    child = TAGS[TAGS.index(tag) + 1]
+    c = resize(read(WORK / child / 'plate-raw.png'), n)
+    rng = np.random.default_rng(rg['matte']['seed'])
+
+    def noise(sigma):
+        x = cv2.GaussianBlur(rng.standard_normal((n, n)).astype(np.float32), (0, 0), sigma)
+        return x / x.std()
+
+    yy, xx = np.mgrid[0:n, 0:n].astype(np.float32)
+    d = np.minimum(np.minimum(xx, n - 1 - xx), np.minimum(yy, n - 1 - yy)) / n
+    for amount, sigma in rg['matte']['noise']:
+        d = d + amount * noise(sigma)
+    m = lay.smooth(rg['matte']['edge'][0], rg['matte']['edge'][1], d)[..., None]
+    g = np.full((size, size, 3), rg['grey'], np.float32)
+    g[o:o + n, o:o + n] = g[o:o + n, o:o + n] * (1 - m) + c * m
+    cv2.imwrite(str(WORK / tag / 'ring-guide.jpg'), np.clip(g * 255 + 0.5, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 95])
+    print(tag, 'ring guide', size, 'child', child, 'square', n)
+
+
+def ring(tag, take):
+    """As comp, for an outpainting take: the take is set to the true square of the child (the guide of a kept take may have held the
+    child at another size, build.ring.guideChild), its tones go to the tones of the plate of the earlier method (the globe's own look
+    in the ring, the close image near the place) at the scale build.ring.lockSigmaDeg, so only its cloud forms are new."""
+    rg = BUILD['ring']
+    size = BUILD['guideSize']
+    r = resize(read(WORK / tag / f'ring-take-{take}.png'), size)
+    n = square(tag, size)[0]
+    was = rg['guideChild'].get(tag) or n
+    if was != n:
+        k = n / was
+        r = cv2.warpAffine(r, np.float32([[k, 0, size / 2 * (1 - k)], [0, k, size / 2 * (1 - k)]]), (size, size), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT)
+    old = resize(read(WORK / tag / 'plate-m2.png'), size)
+    s = rg['lockSigmaDeg'] * size / LEVELS[TAGS.index(tag)]['widthDeg']
+    r = np.clip(r * np.clip((cv2.GaussianBlur(old, (0, 0), s) + 0.004) / (cv2.GaussianBlur(r, (0, 0), s) + 0.004), rg['clip'][0], rg['clip'][1]), 0, 1)
+    # The colour goes most of the way to the colour the earlier plate has there (the take painted its shadows blue in places).
+    c = cv2.GaussianBlur(old, (0, 0), rg['chroma']['sigmaDeg'] * size / LEVELS[TAGS.index(tag)]['widthDeg'])
+    y = r @ tiles.LUMA
+    r = np.clip(r * (1 - rg['chroma']['share']) + c * (y / (c @ tiles.LUMA + 1e-4))[..., None] * rg['chroma']['share'], 0, 1)
+    write(WORK / tag / 'ring-locked.png', r)
+    # The child as it is now (plate-raw.png: its final plate is written only when this level is assembled).
+    out = keep(resize(r, SIZE), tag, child=False)
+    if TAGS.index(tag) + 1 < len(TAGS):
+        out = child_into(out, tag, read(WORK / TAGS[TAGS.index(tag) + 1] / 'plate-raw.png'))
+    to_tiles(tag, out)
+    print(tag, 'ring from take', take, 'child square', n, 'in the guide', was)
+
+
+def comp(tag, take):
+    size = BUILD['guideSize']
+    g = read(WORK / tag / 'guide.png')
+    if str(take) == '0':  # take 0: no composition take, the guide itself goes to the tiles (a level whose painted part is the globe's own look)
+        r = g
+    else:
+        r = resize(read(WORK / tag / f'comp-take-{take}.png'), size)
+        s = BUILD['compLockSigma']
+        r = r * np.clip((cv2.GaussianBlur(g, (0, 0), s) + 0.004) / (cv2.GaussianBlur(r, (0, 0), s) + 0.004), 0.5, 2.0)
+    to_tiles(tag, keep(resize(r, SIZE), tag))
+    print(tag, 'comp from take', take)
 
 
 def lock(tile, ref, sigma):
@@ -290,6 +351,10 @@ if __name__ == '__main__':
         guide(sys.argv[2])
     elif cmd == 'comp':
         comp(sys.argv[2], sys.argv[3])
+    elif cmd == 'ringguide':
+        ring_guide(sys.argv[2])
+    elif cmd == 'ring':
+        ring(sys.argv[2], sys.argv[3])
     elif cmd == 'plate':
         plate(sys.argv[2])
     elif cmd == 'plates':

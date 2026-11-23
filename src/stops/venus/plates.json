@@ -6,27 +6,27 @@
   "levels": [
     {
       "tag": "w",
-      "file": "place-w.jpg",
+      "file": "place2-w.jpg",
       "widthDeg": 40.0
     },
     {
       "tag": "a",
-      "file": "place-a.jpg",
+      "file": "place2-a.jpg",
       "widthDeg": 24.0
     },
     {
       "tag": "b",
-      "file": "place-b.jpg",
+      "file": "place2-b.jpg",
       "widthDeg": 12.13304945
     },
     {
       "tag": "c",
-      "file": "place-c.jpg",
+      "file": "place2-c.jpg",
       "widthDeg": 6.08357505
     },
     {
       "tag": "d",
-      "file": "place-d.jpg",
+      "file": "place2-d.jpg",
       "widthDeg": 3.4
     }
   ],
@@ -48,16 +48,29 @@
     "fullFromY": 1010
   },
   "show": {
-    "note": "The plates come in over these shares of the dive and go out over these shares of the rise (0 at the first frame time of the segment, 1 at its end). Outside the dive and the rise of Venus they are off, so the hold is not touched.",
-    "dive": [
-      0.02,
-      0.2
-    ],
-    "rise": [
-      0.8,
-      0.98
-    ]
+    "note": "The weight of the plates over the globe, by the height of the camera over the cloud tops (radii, eased in the logarithm): none above the upper height, full below the lower one. The upper height is the height of the first frame of the dive, so the place comes in from that frame on and grows with nearness, and it is gone in the rise before the travel starts. Outside the dive and the rise of Venus the plates are off, so the hold is not touched.",
+    "heights": [0.8, 3.4]
   },
+  "forms": {
+    "note": "The border of the widest plate (level w) follows its own cloud forms and not a circle: the weight falls over rim (share of the plate width, from the inscribed circle inward), and the circle is drawn inward by up to look[0] of the plate width where the plate is brighter than its surroundings (the ratio of its mip levels look[1] and look[2]).",
+    "look": [0.1, 6, 9]
+  },
+  "tone": {
+    "note": "The look of the place from above (assets-src/venus/place/tlay.py tone, files place-tone-<kind>.bin: size by size texels of four floats over the extent of level a, rows from south to north). The plates hold the tones of the close view at T: the far deck pale under its haze, the near towers dark against the Sun. Seen from above those tones are a pale fan over a dark hollow. So from above the light of the plates (the display value taken back through the film curve, not below floor) is raised to a power and multiplied by a factor per channel: the map holds the factor in its first three values and the power in the fourth. They take the mean of the logarithm of the light about every point (at sigmaDeg) to that of the globe's own look there (build.py base), and the spread of its forms smaller than fineDeg to contrast (the spread measured in the ring of towers of level a), the power within power; eased to no change between edge (shares of the half width of the map). They are used in full where the line of sight at a ground point is far from the line of sight of the camera at T, and not at all where the cosine between the two is above cos[1] (cos[0]: where they are in full, curve: the power of the ramp between); and only above the heights (radii, eased in the logarithm: no change below the lower one). At T the plates show as they are.",
+    "files": {"dive": "place-tone-dive.bin", "rise": "place-tone-rise.bin"},
+    "size": 256,
+    "widthDeg": 24.0,
+    "sigmaDeg": 1.0,
+    "fineDeg": 0.35,
+    "floor": 0.002,
+    "contrast": 0.4,
+    "power": [0.4, 3.0],
+    "edge": [0.72, 0.92],
+    "cos": [0.5, 0.995],
+    "curve": 1.5,
+    "heights": [0.1, 0.6]
+  },
+
   "dusk": {
     "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure, so they are dim like the dusk about them when they come in.",
     "gain": 4.5,
@@ -90,7 +103,7 @@
       1.0
     ]
   },
-  "rim": 0.12,
+  "rim": 0.3,
   "air": {
     "note": "The air of the place on the globe side (relief.ts: the dome of the close side, drawn from the globe camera, so it lies on the globe's own limb). It has no weight above the upper height and its full weight below the lower one (radii, eased in the logarithm). By its weight it hides the engine's Sun as the close side does, and the lens darkening is undone on the globe as on the close side.",
     "heights": [0.035, 0.12],
@@ -145,8 +158,8 @@
     },
     "takes": {
       "note": "The tile takes kept for every level (top left, top right, bottom left, bottom right). 0: no tile take, the composition as it is.",
-      "w": ["3", "3", "3", "3"],
-      "a": ["2", "2", "2", "2"],
+      "w": ["5", "5", "5", "5"],
+      "a": ["3", "3", "3", "3"],
       "b": ["3", "3", "3", "3"],
       "c": ["1", "1", "1", "1"],
       "d": ["0", "2", "0", "2"]
@@ -167,6 +180,15 @@
       "clip": [0.5, 1.8],
       "floor": {"b": 0.78},
       "power": 1.5
+    },
+    "ring": {
+      "note": "Levels whose ring (the part outside the child) is painted new by an outpainting take (build.py ringguide, ring): the cloud of the close view seen from above, towers with lit sides and long shadows. grey: the flat value of the part to paint in the guide. matte: the border of the child in the guide, broken up by smooth noise (amount in shares of the child width, sigma in pixels of the guide) and eased over edge (shares of the child width). guideChild: the width in pixels of the child in the guide of the kept take, where it was not the true square. lockSigmaDeg: the tones of the take go to the tones of the plate of the earlier method at this scale, within clip. chroma: its colour goes this share of the way to the colour of that plate, taken at sigmaDeg.",
+      "grey": 0.5,
+      "matte": {"seed": 7, "noise": [[0.05, 40], [0.02, 12]], "edge": [0.03, 0.12]},
+      "guideChild": {},
+      "lockSigmaDeg": 1.0,
+      "clip": [0.33, 3.0],
+      "chroma": {"sigmaDeg": 0.3, "share": 0.75}
     }
   }
 }

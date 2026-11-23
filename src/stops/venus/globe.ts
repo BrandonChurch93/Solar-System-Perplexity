@@ -7,7 +7,8 @@ import { wrap } from './assets'
 import holdJson from './hold.json'
 import { HOLD_RIM_GLSL, LIMB, LIMB_GLSL, type HoldRim } from './rim'
 
-export const MAX_PATCHES = 6
+// Sixteen samplers is all a browser has to give a fragment shader: six of the globe, these four, five place plates and the tone map of the place.
+export const MAX_PATCHES = 4
 export const MAX_CELLS = 16
 
 export interface GlobePatches {
@@ -27,6 +28,12 @@ export interface GlobePlace {
   centre: THREE.Vector3
   feather: number
   fade: [number, number]
+  // The border of the widest plate follows its own cloud forms: amount (share of the plate width) and the two mip levels whose ratio gives the forms.
+  forms: [number, number, number]
+  // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
+  // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
+  // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
+  tone: { widthDeg: number; cos: [number, number]; power: number; floor: number }
 }
 
 export interface GlobeFlow {
@@ -100,7 +107,7 @@ const PLACE_SAMPLERS = Array.from({ length: PLACE_LEVELS }, (_, i) => 'uniform s
 
 const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
       vec2 q = pg * uPlaceScale[${i}];
-      float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q))'};
+      float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q) + uPlaceForms.x * clamp(0.5 + dot(textureLod(uPlace0, q + 0.5, uPlaceForms.y).rgb, vec3(0.2126, 0.7152, 0.0722)) / max(dot(textureLod(uPlace0, q + 0.5, uPlaceForms.z).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) - 1.0, 0.0, 1.0))'};
       for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
         vec3 c = textureGrad(uPlace${i}, q + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad).rgb;
         laid = laid * (1.0 - w) + c * w;
@@ -128,7 +135,12 @@ uniform vec3 uPlaceU;
 uniform float uPlaceScale[${PLACE_LEVELS}];
 uniform float uPlaceSize[${PLACE_LEVELS}];
 uniform vec4 uPlaceLook;
+uniform vec3 uPlaceForms;
 uniform float uPlaceOn;
+uniform sampler2D uPlaceTone;
+uniform vec3 uToneEye;
+uniform vec4 uToneLook;
+uniform vec2 uTonePower;
 uniform vec4 uDusk;
 uniform vec3 uAirDeck[10];
 uniform vec3 uAirFwd;
@@ -404,7 +416,15 @@ ${TAP_LEVELS}
     float placeTexels = texels;
 ${PLACE_GLSL}
     for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
-      col = mix(col, inverseFilmic(laid / cover) * uDusk.w, cover * uPlaceOn);
+      // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
+      // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
+      vec3 light = inverseFilmic(laid / cover);
+      float same = pow(clamp((dot(normalize(spinY(uCamObj, uSpin) - dp), normalize(uToneEye - dp)) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower.x) * uToneLook.y;
+      for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
+        vec4 tone = textureGrad(uPlaceTone, pg * uToneLook.x + 0.5, pgx * uToneLook.x * uGrad, pgy * uToneLook.x * uGrad);
+        light = mix(tone.rgb * pow(max(light, vec3(uTonePower.y)), vec3(tone.a)), light, same);
+      }
+      col = mix(col, light * uDusk.w, cover * uPlaceOn);
       texels = mix(texels, placeTexels, uPlaceOn);
     }
   }
@@ -477,7 +497,11 @@ export class Globe {
         uPlaceScale: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[i] ?? 90) / 2))) },
         uPlaceSize: { value: Array.from({ length: PLACE_LEVELS }, (_, i) => (o.place.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1) },
         uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
+        uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], o.place.forms[1], o.place.forms[2]) },
         uPlaceOn: { value: 0 },
+        uPlaceTone: { value: o.map }, uToneEye: { value: new THREE.Vector3(0, 0, 5) },
+        uToneLook: { value: new THREE.Vector4(1 / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.tone.widthDeg) / 2)), 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
+        uTonePower: { value: new THREE.Vector2(o.place.tone.power, o.place.tone.floor) },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) },
         uMapWidth: { value: o.mapWidth },

@@ -88,6 +88,8 @@ export const createSet: SetFactory = async (ctx) => {
     placeTextures.push(dive)
     placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, { srgb: true, anisotropy: 16 }))
   }
+  const toneDive = await ctx.dataTexture(base + place.tone.dive, place.tone.size, place.tone.size, 4)
+  const toneRise = await ctx.dataTexture(base + place.tone.rise, place.tone.size, place.tone.size, 4)
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -104,7 +106,7 @@ export const createSet: SetFactory = async (ctx) => {
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -129,6 +131,17 @@ export const createSet: SetFactory = async (ctx) => {
     const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(plan.terrainFrame).invert()).multiplyScalar(deck.radius)
     eyesAtT[kind] = { time, eye }
+    return eye
+  }
+  // The same camera in the body fixed frame of the globe, the frame of the plates of the place (as assets-src/venus/place/tcam.ts).
+  const bodyEyes: Partial<Record<'dive' | 'rise', { time: number; eye: THREE.Vector3 }>> = {}
+  const bodyEyeAtT = (kind: 'dive' | 'rise'): THREE.Vector3 => {
+    const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
+    const hit = bodyEyes[kind]
+    if (hit && hit.time === time) return hit.eye
+    const pose = kind === 'dive' ? plan.divePose(time, 'orbit') : plan.risePose(time, 'orbit')
+    const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert())
+    bodyEyes[kind] = { time, eye }
     return eye
   }
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
@@ -233,8 +246,15 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, state.time)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
-      gu.uPlaceOn!.value = pl.on
-      for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (state.time > terrainMid ? placeRise : placeTextures)[i]
+      // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
+      const height = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const byHeight = (h: [number, number]): number => 1 - smooth((height - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
+      gu.uPlaceOn!.value = pl.near ? pl.on * byHeight(place.show.heights) : pl.on
+      const after = state.time > terrainMid
+      for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
+      gu.uPlaceTone!.value = after ? toneRise : toneDive
+      ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
+      ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
