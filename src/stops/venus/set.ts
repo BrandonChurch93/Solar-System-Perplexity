@@ -90,8 +90,7 @@ export const createSet: SetFactory = async (ctx) => {
     placeTextures.push(dive)
     placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, kind))
   }
-  const toneDive = await ctx.dataTexture(base + place.tone.dive, place.tone.size, place.tone.size, 4)
-  const toneRise = await ctx.dataTexture(base + place.tone.rise, place.tone.size, place.tone.size, 4)
+  const wideTexture = await ctx.texture(base + place.wide.file, { srgb: false, channels: 1 as const, anisotropy: 16 })
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -108,7 +107,7 @@ export const createSet: SetFactory = async (ctx) => {
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -255,11 +254,10 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uPlaceOn!.value = pl.near ? pl.on * byHeight(place.show.heights) : pl.on
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
-      gu.uPlaceTone!.value = after ? toneRise : toneDive
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
       ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
-      // The plates hold the light of the place at the full gain and the full tint (the tone map takes them to the globe's look drawn so),
+      // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
       // The fourth value: how far the colour of the plates is taken from their display value and not from their light (dusk.hue times
       // the share by which they are drawn dimmer than they are held), so a dimmed highlight does not turn red.

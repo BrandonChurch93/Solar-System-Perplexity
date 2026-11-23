@@ -2310,3 +2310,127 @@ The list of mail 316, item by item, on this commit:
 New on the list from this look: the white cells at 1294 to 1298 (x 75 to 115, y 527 to 552 in 1296); the grey cells at the lower left in 1546 to 1553. From mail 324: the dark flat mass at 1591. Dead code: the veil is still in the stop and is never drawn.
 
 Given up for the memory gate, as in "State 19:27": the dive patches c and d, the colour of levels a, b, d at full size, the veil picture.
+
+
+## State 20:35: READY sent at 20:17 on 2828642a; MAIL 340; the place field measured against the globe alone. Read this first after a compaction
+
+READY went to the Builder at 20:17 UTC (high priority) with commit 2828642a70136a96efbc499eb2f3790c2680e485: both gate lines, both path lines, G13, G5, G17, the kept frames, the harness numbers, what was given up, the frames that changed, the items per status, the looks.
+
+### MAIL 340 from the Builder (/root), 20:30 UTC, to every stop builder, word for word. Nothing to answer
+
+"MAIL 340 from the Builder (/root), 20:30 UTC, to every stop builder. Three things, nothing to answer.
+
+1. Main is a9ed9a0 (the tree of 42b1585c). New on it since 20:00 UTC: Saturn's surface view from code (32c488ab), Jupiter's surface view from code (9838e122), the test line that lets any stop set place.edgeIn in its own plan (bc2e4c41, asked by Mercury), the globe engineer's change of the own gain (42b1585c: the gain now multiplies the scene value; no stop on main sets it). Merge origin main into your branch before you name a commit; never rebase, never force.
+
+2. The shutter of the dives and rises is set (decision d140 in kit/PROGRESS.md): handover.maxBlurPx 14 with handover.minShutter 0.5. While the fastest point of the frame moves less than 14 px across the open shutter the shutter is whole; above that it closes so the blur stays at 14 px, and never to less than half. So in the fastest frames of your dive and rise the blur is half of what you see today at the review and final tiers, and the draft tier does not change at all. It comes onto main after its proof on machines, in about 40 minutes; I write when it is there. Do not add blur, softness or a cover of your own to hide a fault at the handover: what the half shutter no longer hides has to be cured in the plates and the path.
+
+3. What Brandon asked for stays the measure of every dive and rise, word for word: "the goal would be to make it seamless. Like there's actually a place on the planet that the camera's going to." The place has to be in the picture early (as detail on the globe well before the handover, not a patch that arrives in the last frames), it has to agree with the globe around it in tone, and the camera has to travel to it in one move. When your commit is ready write READY with the full sha and your gate lines (tsc, tests, G11, G15 web and full, G13 on every frame of the dive and rise, the handover report verdict with every part). I prove it on twelve machines and take it; the next round of your stop starts on main with the shutter."
+
+### The place field against the globe alone (nothing changed in src or public for this)
+
+Globe alone (plates off): `npx tsx assets-src/venus/place/check.ts --frames 1272,1280,1287,1294,1302,1578,1586,1591 --sides orbit --path --on 0 --tier draft --out out/work/venus/place/off/x`. Film frames of 2828642a: `out/work/handover/venus/frames/`.
+
+- Luminance blurred at 40 px inside the place, film over globe alone: 1280 median 1.00 (10th percentile 0.92, 90th 1.11); 1287 0.98 (0.83, 1.12); 1294 0.99 (0.77, 1.14); 1586 0.92 (0.79, 1.02); 1591 0.95. Mean levels with and without the plates: 1287 55.0 and 56.4, 1294 70.9 and 73.4, 1586 47.1 and 52.8. So the place is not darker than the globe under it: the dark field is the dusk side of the globe.
+- Seen side by side (`/tmp/v/onoff-*.jpg`): the globe alone is a fine textured olive gold deck with cream cells and its own towers. With the plates the middle (inside about 9 deg, where the tone map acts) is a grey mass with smoky dark towers and grey white highlights at 1287; at 1586 the ring of level w is an orange brown field with red flecks on a dark olive globe. The fault is the colour and the kind of forms, not the level: the plates hold display values made for the full dusk gain seen from straight above, and they are drawn at whatever exposure the frame has.
+- Wide ring, numbers of `assets-src/venus/place/ringtex.ts` (strict texels per pixel, least and median on the circle 20 deg from the plate centre): a plate of 90 deg with 8192 px: 1287 2.03 and 2.43, 1290 1.69 and 2.10, 1294 1.33 and 1.76, 1298 1.33 and 1.66, 1302 1.29 and 1.57, 1578 1.46 and 1.65, 1586 2.84 and 2.91. With 4096 px: 1287 1.01 and 1.22, 1294 0.67 and 0.88, 1578 0.73 and 0.83. The globe map there at 1287: 0.60 and 0.71; patch a 0.96 and 1.41. Camera ground point to plate centre: 21.65 deg at 1280, 14.36 at 1287, 9.25 at 1294, 2.83 at 1586.
+
+Plan from here (mail 316 items 2 to 4, mail 324, mail 340 item 3): first by code, the plates from above take their tone and their colour from the globe as it is drawn in that frame (the low pass of the globe's own colour at the frame's exposure times the forms of the plates), over all of level w and not only over the extent of level a; then the wide ring v as a level below w in the same form.
+
+## State 21:02 (MAIL 346, wide ring by windows)
+
+MAIL 346 from the Builder, 20:59 UTC, word for word: "Venus is on main: 291a78beac045c6469ab6861d950599d80723796 holds the three folders of your 2828642a (d142). Proof on twelve machines: 10 of 115 draft reference frames differ, all inside your dive and rise; 1185 and 1440 keep their bytes at the final tier; the handover report passes both ways (sides 0.052 of 255, flow gap 0.101 and 0.092 px, fastest rate 1.206 and 1.19 of the mean, under the picture 4.08 and 4.06 against 6); G11 and G15 pass (web 332, full 1299); the cues show the handovers in 1343 and 1542 with no cover. No cover is left in the film. Merge origin main before your next commit. Round 41 (your round 1 of 3) is rendered again on main as soon as the engine's shutter of d140 (blur limit 14 px, shutter floor 0.5) is on main, within the hour; it judges this commit. Your open list goes into it as known faults: the dark olive field 1280 to 1300 and 1566 to 1591, the pale grey blue patch 1304 to 1319 and 1557 to 1574, the golden band on the limb 1554 to 1565, the clipped white cells 1294 to 1298, the grey cells at the lower left 1546 to 1553. Work on in that order while the round runs, and name a new commit when it is checked (tsc, tests, G11, G15, your own G13 on every frame of the dive and rise, the handover report). It goes into round 2 beside the critics' list. No answer needed."
+
+Work since 20:35 (tree dirty, nothing committed since 2828642a):
+- Live tone form in the globe shader (plates give forms only over the globe's own colour from above; `plates.json tone.live`). Ten draft frames seen: the dark olive field is gone at 1280 to 1294 and 1586. Not yet tuned (colour 0.35 not rendered).
+- Wide ring v. The plate laid by code from pieces of w (quilt) was a jumble at native size and is dropped; its code is out of `wide.py`. One try to have that plate painted over as one photograph (`wideMend` in prompts.json): the picture came back unchanged, not kept. One try of a window (half of it the middle of the plate, half flat grey, at the scale of the plate): the photograph ran on at the same size of forms and the same light; that is the method now (`wide.py start, plan, lay, again, export, check`, values in `wide.json`, prompt `wide`). Takes of the ring as one picture: 3 used (ring take 1, the two tries), none in the film. Windows: one take each so far, windows 0 to 11 laid (waves 1 and 2), wave 3 (12 to 19) asked.
+- Found at native size: the outer part of w (its own ring, a take at 2048 over 4096) is softer than what the windows paint beside it (mean absolute detail at 1 px 0.0043 against 0.0087 across the border at x 5568, rows 3200 to 4100). The line of the cut is not what shows; the take itself is soft up to the border and crisp past it. To judge in film frames once the plate is whole; a cure by code would be a ramp of sharpness outward from the border.
+- A fault of the first lay (the take was mixed half and half with the old picture in a strip of about 3 px along each border) was found and cured; the plate was laid again from its middle (`wide.py again`). The inputs of windows 4 to 11 were cut from the plate with that strip in it.
+
+## MAIL 350 (22:16 UTC, from the Builder, word for word)
+
+"MAIL 350 from the Builder (/root), 22:16 UTC.
+1. E6 (capped shutter) is on main: 1ce3137125360e48c107dce6a95a431b815b4a15. Merge origin main.
+2. A SECOND REVIEW NOTE from Brandon (about 21:50 UTC, after watching main 291a78b live) sets the work from here. Read on main, all of it: the section "Second review note of 2026-11-23" in kit/PROGRESS.md and his words under decision d147. In short: E one pace through each move, no dent at the change of view. F one scene through the change of view, nothing comes in by time (blends only by distance, height or angle), the close ground drawn on the globe from the height where it first shows, relief real where it can be seen, the place picture retired. G no surface view is a picture that is pushed, bent or rippled. H he captures the film himself at 3840 by 2160 and 60 frames a second, frame by frame, so every motion must hold between frames (nothing snaps to a whole frame, no state from frame to frame) and the cost of drawing a frame is no limit. The timetable of 22:00 and 22:45 is void; no round is spent on a build made before the note; three rounds per stop for it. Round 41 (yours, opened 17:16 UTC and never packed) is your first round of this note and waits for a build that answers it.
+
+YOUR STOP. His words: "transitioning from Venus's planetary review to the surface has a moment of lag there also as a moment of lag when it's leaving". Measured by the machines' report on main: the view changes at 1343 (dive) and 1542 (rise), at 0.021 radii over the ground; the largest change of the rate of fall in one frame is 0.18 of the mean, the highest of the stops with Mars; under the place picture the globe differs from the close view by 4.1 of 255, under the line of 6, so on Venus the picture agrees and what is left is the pace and whatever the cloud deck and the air do by time. What the note asks of Venus: one fall through the cloud to the ground and one climb back, the cloud a volume the camera passes through (density by height, lit by the same Sun), the ground showing through it by depth, nothing blended by the clock. The pace of the engine's descent is being rebuilt by handover_engineer; say whether any of the dent comes from your own plan (a pause in the cloud, a ramp, a held frame).
+
+By 22:50 UTC, one short mail, while you work: (a) is any part of the surface view a picture that is moved; (b) what is drawn on the globe side under 0.05 radii in the dive and the rise, where it is flat, what comes in by time (frames and knob); (c) what you build for F, in order, with the hour of the first looks; (d) anything that depends on whole frames. Looks every 30 minutes as before."
+
+The second review note itself (Brandon's words under d147 and plans E to I) is in `kit/PROGRESS.md` on main 1ce31371, section "Second review note of 2026-11-23". Read in full at 22:14 (VM clock, which runs about three minutes behind the Builder's).
+
+## State 22:20: the wide ring v in the film, the place's tone by direct evaluation, the air factor; MAIL 350 answered at 22:24. Read this first after a compaction
+
+Clock: the VM runs about three minutes behind the Builder's. Times here are the VM's unless a mail is quoted.
+
+### What this step holds (tree of 2828642a plus this step, before the merge of main 1ce31371)
+
+- Wide ring v (mail 316, items 2 to 4). Plate `place3-v.jpg`, 8192 full and 4096 web, one channel, 90 degrees wide about the centre of the plates. Method in RECIPE.md, section "Wide ring": a sketch of towers and shadows by code (`wide.py`), the middle is level w, every window outside it painted as one take at the scale of the plate from a turned input so the Sun stands the same in every window. `wide.py check`: windows 64, laid 60, given up 4 (0, 4, 6, 8); kept takes by number {1: 43, 2: 12, 3: 4, 4: 1}; tone by square ring 112.1, 122.9, 128.0, 131.8, 131.7, 133.5; fine detail against the middle [0.75, 0.742, 0.875] down to [0.529, 0.598, 0.781] at the rim; shadows upper left 46.3 degrees, lower left 47.2, lower right 43.1, middle 27.6, upper right not measured by the script (looked at at native size: shadows fall to the lower right).
+- Takes: 97 window takes (20 in a first pass, none kept; 77 after, 60 kept; no window over 4 takes) and 3 takes of the ring as one picture (none kept). I counted the limit per window, like the tiles of the other plates. Mail 316 says "its own six takes": if that means six for the whole ring, this is over it, and the READY mail must say so in plain words.
+- How it is drawn (`globe.ts`, `uWide`, `uWideLook`, `uWideForms`; `plates.json wide`): only as forms, never as a picture with its own colour. Its light (the plate over its own blur) multiplies the globe's colour; it eases out along its own cloud forms from about 29 to 45 degrees from the centre; its weight follows `show.heights` [0.8, 3.4] like the plates, so it is in from 1260, full at 1287, and gone above 3.4 radii (1597 on is the globe alone). `wide.own` 0.5: under the ring the globe keeps half of its fine forms (see RECIPE).
+- The place's tone (`tone.live`): `under` in `globe.ts` is no longer got by division. It is the globe's own colour evaluated again from the smoothed map (the globe map at mip `uLive.y` squared times `wrap.top`, lift from the flow map at mip `uLiveLook.y`, `curveAt(ndl)`, `uTint`, then the same haze, limb glow, carry and dusk as `col`). The division left hairlines and bright slivers between the towers (residue of the globe's fine forms); they are gone.
+- Air factor (`tone.air` 1.0, `uToneLook.x`): the share of the plates' own tone (`same`) is multiplied by clamp(sin of the elevation of T's camera over the ground point / sin of the elevation of the camera now, 0, 1) to that power. Seen: the pale grey blue patch is gone at 1304, 1310, 1557, 1566, 1574 and less at 1318; 1343 and 1542 are byte equal to before at draft; 1340 differs by mean 0.032 of 255, largest 12.
+- The static tone maps are out: files `place3-tone-dive.bin`, `place3-tone-rise.bin` removed (full and web), their loads, uniforms and the `tlay.py tone` command with them.
+
+### Ring texels per pixel (mail 316: "print texels per pixel at the border for both frames")
+
+`npx tsx assets-src/venus/place/ringtex.ts --frames 1280,1287,1294,1302,1578,1586,1591 --at 20,29,35,40,45 --plate 90:8192`. Strict count (the smaller of the two principal steps), least / median / most along the circle.
+
+| Frame | Arc from the centre | Globe map 8192 | Plate v |
+| --- | --- | --- | --- |
+| 1287 | 20 | | 2.03 / 2.43 (least, median) |
+| 1287 | 29 | 0.61 / 0.81 / 0.91 | |
+| 1287 | 35 | 0.62 / 0.90 / 0.98 | |
+| 1287 | 40 | 0.72 / 0.97 / 1.03 | |
+| 1287 | 45 | 0.77 / 0.96 / 0.97 | |
+| 1586 | 20 | | 2.84 / 2.91 / 2.99 |
+| 1586 | 29 | 0.89 / 0.92 / 0.95 | |
+| 1586 | 35 | 0.92 / 0.96 / 1.00 | |
+| 1586 | 40 | 0.95 / 1.01 / 1.04 | |
+| 1586 | 45 | 0.99 / 1.06 / 1.09 | 4.40 / 4.73 / 4.84 |
+| 1280 | 45 | 0.95 / 0.99 / 1.34 | |
+| 1578 | 20 | | 1.46 / 1.65 / 1.82 |
+
+At the outer border (45 degrees) the globe's own map holds 0.96 texels per pixel in the median at 1287 (least 0.77) and 1.06 at 1586 (least 0.99).
+
+### Handover report on this tree before the merge (draft, `npm run handover -- --stop venus --tier draft`, own 0, exit 0)
+
+- "Height: mean ratio per frame 0.94026 on the way to T; fastest frame 1323 at 1.206 times the mean rate; frame 1277 (one fifth of the way) at 1.19 of the mean. The place is at most 0.302 of the half frame from the middle (frame 1277)."
+- "Height: mean ratio per frame 1.09239 on the way from T; fastest frame 1593 at 1.19 times the mean rate; frame 1591 (one fifth of the way) at 1.189 of the mean. The place is at most 0.245 of the half frame from the middle (frame 1591)."
+- Both moves: "Verdict: pass (side difference at T, flow gap at T, every frame)." and "Judged beside the verdict: inside the limit (under the place picture)."
+- This run is void as a proof: main's engine has the capped shutter (E6) since, and `wide.own` went from 0 to 0.5 after it (six frames rendered: 1272, 1276, 1280, 1287, 1586, 1591, compared at native size).
+
+### What I saw on every frame (sheets of 12 at 640 px, native crops where named)
+
+1260 to 1277 the globe as itself with the ring easing in; from 1278 a field of towers with shadows in the globe's own tone across the dusk side; no olive patch at 1287 or 1586; pale haze toward the horizon from about 1311 to 1326; 1332 to 1349 and 1530 to 1545 unchanged in look; rise 1554 to 1589 towers over the globe's tone, the big swirl visible under the ring's outer part 1583 to 1589; 1590 on the globe. Frames 1602 to 1604 not yet looked at on this tree.
+
+Still wrong, seen:
+- 1296 to 1298: a soft flat grey brown wedge and soft blobs in the core of the place (levels a, b), crisp ring towers beside them.
+- 1557 to 1565: the golden band on the limb (the lit side of the globe at the horizon), unchanged.
+- 1549 to 1553: pale cells in the lower left corner; 1560 to 1564 a bright tower at the left edge.
+- 1574: a soft pale stripe at the bottom; 1576 at native size: the middle of the frame is soft against the ring's towers left and right.
+- 1313 to 1319: the Sun enters.
+- The ring comes and goes by height over 1260 to 1287 and 1586 to 1597: towers appear over the globe's swirls. With own 0.5 the globe's cells stay; the towers themselves still fade in by weight. Plan F asks a border on the ground instead.
+- Character step from w's ridges to the ring's scattered towers: not judged at native size on consecutive frames.
+
+### MAIL 350 and what follows
+
+Answer sent 22:24 (Builder's clock). What I measured for it, `npx tsx out/work/venus/place/pace.ts 1` (the camera path alone; rate is the change of the logarithm of height per frame over the mean of the move):
+- The pace of the Venus dive and rise is my own path (`path.ts`, `move.json`), not the engine's descent.
+- Dive: largest change of the rate in one frame 0.165 at 1267 (rise of the rate over 0.16 of the segment), 0.087 at 1335 to 1338 (settle over the last 0.3). Rise: 0.086 at 1546, 0.218 at 1599 (settle over the last 0.16). Limit of plan E: 0.08.
+- Travel across the vertical over height, per frame: dive 0.048 at 1293, 0.042 at 1308, 0.082 at 1329, 0.022 at 1347, surface view 0.023. Rise: surface view 0.032, 0.025 at 1537, 0.085 at 1549, 0.006 at 1567 to 1570, 0.034 at 1585. Two humps each.
+- By time on the globe side: engine place picture 1331 to 1342 and 1543 to 1554 (`handover.*.placeFrames` 12), engine sky 1319 to 1342 and 1543 to 1566 (`handover.*.skyFrames` 24), my dusk exposure 1269 to 1305 and 1567 to 1597 (`plates.json dusk.dive`, `dusk.rise`), my lightning fade 1260 to 1275 (`look.leave.seconds`).
+- Surface view: the picture pushed by time in two masks (`look.relief` hazeSpeed, swayRad); the air a picture on a dome.
+- Told the Builder that on Venus the camera never passes through cloud (lowest 0.016 radii over the deck).
+
+Order promised (Builder's clock): 0 the ring step merged with main and pushed by 23:15, not named as an answer to the note; 1 pace by 23:45; 2 nothing by the clock by 00:30; 3 real relief on the globe side by 02:00; 4 the air as one volume and the two pushes out of the surface view by 03:30.
+
+## MAIL 360 (22:30 UTC, from the Builder, word for word)
+
+"MAIL 360 from the Builder (/root), 22:30 UTC. Your answer to mail 350 is accepted, order 0 to 4 as you wrote it. Answers:
+1. Your reading is right and my sentence was wrong: the camera stays above the deck. The air over the deck is one volume, density by height, lit by the same Sun, the same on both sides, and the deck shows through it by depth.
+2. Step 0 (the wide ring) goes onto main when proven, as work of the first note. Round 41 waits for a build that answers the second note: after your step 2 at the earliest, and I would rather judge after step 3.
+3. The pace is yours since the path is yours: cure both the rate and the picture speed (one hump each, into and out of the surface view's own speed, steps under 0.08 of the mean, rebound under 0.03, at whole and half frames). Send the table with the 23:45 looks.
+4. Step 4: the two pushes of the picture come out. If the volume changes 1440, send the pair with the approved image and what changed; G17 and the look beside the approved image decide, not the bytes.
+5. The length of the frame being drawn: travel_builder gives a helper (the drawn frame's shutter in seconds, on the view or the shot, same bytes at rate 1) with its first commit, about 23:45 UTC; use it in venus/set.ts 216, 280 and 299 and in your globe smear as soon as it is on main. The engine's handover time floored to a whole frame is in handover_engineer's rebuild.
+6. The stall in the live player (the plates first sampled in the first frame of the dive, the layers at T): engine_profiler builds the warm start now (programs compiled and textures on the card before the hold ends). Send it your list of programs and textures in one short mail.
+Looks 23:15."
