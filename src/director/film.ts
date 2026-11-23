@@ -3,7 +3,7 @@ import { config, type Segment } from '../config'
 import type { Director } from '../core/engine'
 import type { CoverState, Pose, SetState, Shot, SunState, ViewKind } from '../core/types'
 import { defaultPost } from '../post/chain'
-import { StopPlan, easeInOut } from './moves'
+import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
 import skyFrame from '../space/skyframe.json'
@@ -592,7 +592,7 @@ export class FilmDirector implements Director {
     return own.applyQuaternion(new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(own, place), share)).applyQuaternion(shot.camera.quaternion).normalize()
   }
 
-  shotAt(frame: number, time: number): Shot {
+  shotAt(frame: number, time: number, forced?: ViewKind): Shot {
     const segment = segmentAtFrame(frame)
     const u = (time - segment.start) / (segment.end - segment.start)
     const post = defaultPost()
@@ -729,9 +729,11 @@ export class FilmDirector implements Director {
         local = p.terrain(time - segment.start)
         view = 'terrain'
       } else {
-        const r = segment.kind === 'dive' ? p.dive(time) : p.rise(time)
+        const r: OrbitShot = forced ? { pose: segment.kind === 'dive' ? p.divePose(time, forced) : p.risePose(time, forced), view: forced } : segment.kind === 'dive' ? p.dive(time) : p.rise(time)
         local = r.pose
         view = r.view
+      }
+      if ((segment.kind === 'dive' || segment.kind === 'rise') && !p.handsOver) {
         cover.amount = p.coverAmount(segment, time)
         if (p.p.coverHides !== undefined) cover.hides = p.p.coverHides
         const hidden = p.coverHidden(segment, time)

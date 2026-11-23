@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import type { CoverHorizon, Pose } from '../core/types'
-import { coverWindow, setCoverWindow, type CoverTimings } from './timeline'
+import type { CoverHorizon, Pose, ViewKind } from '../core/types'
+import { handoverOf, sideAt, type HandoverParams } from './handover'
+import { coverFrames, coverWindow, setCoverWindow, setHandover, type CoverTimings } from './timeline'
 import { blendPose, ease, lookAt, mix, ramp, slerpDir, smooth, smoother } from './rig'
 
 export interface FitMoon { id: string; position: number[]; radius: number }
@@ -36,6 +37,7 @@ export interface MoveParams {
   coverEdgeRise?: [number, number]
   coverHides?: number
   coverWindow?: CoverTimings
+  handover?: HandoverParams
   skyTurnEase?: { dive?: boolean; rise?: boolean }
   coverShell?: [number, number]
   coverSea?: { centre: [number, number, number]; radius: number; edge: [number, number] }
@@ -124,7 +126,7 @@ export class StopPlan {
   readonly lightDir: THREE.Vector3
   readonly axis: THREE.Vector3
   readonly holdMid: number
-  readonly risePose: Pose
+  readonly riseEnd: Pose
   readonly riseOut: THREE.Vector3
 
   constructor(id: string, fit: Fit, p: MoveParams) {
@@ -132,6 +134,7 @@ export class StopPlan {
     this.fit = fit
     this.p = p
     setCoverWindow(id, p.coverWindow)
+    setHandover(id, p.handover)
     const find = (kind: string): Segment | undefined => config.segments.find((s) => s.stop === id && s.kind === kind)
     const hold = find('hold')
     const terrain = find('terrain')
@@ -173,9 +176,9 @@ export class StopPlan {
     const q0 = lookAt(pos, new THREE.Vector3(), Y, p.rise.rollDeg)
     const half = Math.tan(THREE.MathUtils.degToRad(fit.vfovDeg) / 2) * p.rise.distance
     const target = new THREE.Vector3(-p.rise.offset[0] * half * fit.aspect, -p.rise.offset[1] * half, 0).applyQuaternion(q0)
-    this.risePose = { position: pos, quaternion: lookAt(pos, target, Y, p.rise.rollDeg), vfov: fit.vfovDeg }
+    this.riseEnd = { position: pos, quaternion: lookAt(pos, target, Y, p.rise.rollDeg), vfov: fit.vfovDeg }
     this.riseOut = dir
-    if (p.rise.level) this.risePose.quaternion = this.climb(pos, this.heading.clone().applyQuaternion(this.turn(rise.end)), 1)
+    if (p.rise.level) this.riseEnd.quaternion = this.climb(pos, this.heading.clone().applyQuaternion(this.turn(rise.end)), 1)
   }
 
   turn(time: number): THREE.Quaternion {
@@ -241,13 +244,19 @@ export class StopPlan {
   }
 
   exit(tRel: number): Pose {
-    const r = this.risePose
+    const r = this.riseEnd
     return { position: r.position.clone().addScaledVector(this.riseOut, this.p.rise.driftSpeed * tRel), quaternion: r.quaternion.clone(), vfov: r.vfov }
   }
 
+  get handsOver(): boolean {
+    return this.p.handover !== undefined
+  }
+
   private coverFractions(seg: Segment): { first: number; center: number; last: number } {
-    const w = coverWindow(seg)!
-    return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center: (w.centerFrame - seg.firstFrame) / seg.frames, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
+    const w = coverFrames(seg)!
+    const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
+    const center = h ? (h.time * config.fps - seg.firstFrame) / seg.frames : (w.centerFrame - seg.firstFrame) / seg.frames
+    return { first: (w.firstFrame - seg.firstFrame) / seg.frames, center, last: (w.lastFrame + 1 - seg.firstFrame) / seg.frames }
   }
 
   skyGain(_time: number): number {
@@ -303,7 +312,8 @@ export class StopPlan {
   }
 
   coverCenter(seg: Segment): number {
-    return coverWindow(seg)!.centerFrame / config.fps
+    const h = seg.kind === 'dive' || seg.kind === 'rise' ? handoverOf(this.id, seg.kind) : null
+    return h ? h.time : coverFrames(seg)!.centerFrame / config.fps
   }
 
   horizon(view: 'orbit' | 'terrain', local: Pose): CoverHorizon {
@@ -401,13 +411,23 @@ export class StopPlan {
   }
 
   dive(time: number): OrbitShot {
+    const view = sideAt(this.seg.dive!, time)
+    return { pose: this.divePose(time, view), view }
+  }
+
+  rise(time: number): OrbitShot {
+    const view = sideAt(this.seg.rise, time)
+    return { pose: this.risePose(time, view), view }
+  }
+
+  divePose(time: number, view: ViewKind): Pose {
     const seg = this.seg.dive!
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
-    if (time >= this.coverCenter(seg)) return { pose: this.diveTerrain(time), view: 'terrain' }
+    if (view === 'terrain') return this.diveTerrain(time)
     const held = this.hold(time - this.seg.hold.start)
-    if (this.p.dive.swoop) return { pose: blendPose(held, this.swoop(time), smooth(u / 0.22)), view: 'orbit' }
+    if (this.p.dive.swoop) return blendPose(held, this.swoop(time), smooth(u / 0.22))
     const start = this.hold(this.seg.hold.end - this.seg.hold.start)
     const e = easeIn(ramp(0, f.last, u))
     const d = this.p.dive
@@ -425,24 +445,23 @@ export class StopPlan {
     const target = far.lerp(spot.clone().addScaledVector(heading, d.ahead), smooth(e * 1.4))
     const up = slerpDir(Y.clone().applyQuaternion(start.quaternion), normal, smooth(e * 1.2))
     const path: Pose = { position, quaternion: lookAt(position, target, up, d.rollDeg * Math.sin(Math.PI * e)), vfov: mix(start.vfov, this.p.terrain.vfov, smooth(e)) }
-    return { pose: blendPose(held, path, smooth(u / 0.3)), view: 'orbit' }
+    return blendPose(held, path, smooth(u / 0.3))
   }
 
-  rise(time: number): OrbitShot {
+  risePose(time: number, view: ViewKind): Pose {
     const seg = this.seg.rise
     const dur = seg.end - seg.start
     const u = (time - seg.start) / dur
     const f = this.coverFractions(seg)
     const t = this.p.terrain
-    if (time < this.coverCenter(seg)) {
+    if (view === 'terrain') {
       const base = this.terrain(time - this.seg.terrain.start)
       const g = Math.pow(ramp(0, f.last, u), 2.2)
-      const pose: Pose = {
+      return {
         position: base.position.clone().add(new THREE.Vector3(0, t.exitHeight * g, -t.exitForward * g)),
         quaternion: base.quaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.exitPitchDeg) * g)),
         vfov: t.vfov,
       }
-      return { pose, view: 'terrain' }
     }
     const settle = this.p.rise.settle
     const x = ramp(f.center, 1, u)
@@ -478,7 +497,7 @@ export class StopPlan {
       const level0 = lookAt(position, position.clone().add(aim), out.clone().add(level).normalize(), t.rollDeg ?? 0)
       path.quaternion = level0.slerp(path.quaternion, smoother(since / tilt))
     }
-    return { pose: blendPose(path, this.after(time), smooth(ramp(0.6, 1, u))), view: 'orbit' }
+    return blendPose(path, this.after(time), smooth(ramp(0.6, 1, u)))
   }
 
   exitPose(time: number): Pose {

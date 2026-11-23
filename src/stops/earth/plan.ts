@@ -88,7 +88,7 @@ export class Plan extends StopPlan {
 
   constructor(p: MoveParams = params, readonly tune: Tune = timing) {
     super('earth', fit as Fit, p)
-    this.risePose.quaternion.copy(this.hold(this.seg.hold.end - this.seg.hold.start).quaternion)
+    this.riseEnd.quaternion.copy(this.hold(this.seg.hold.end - this.seg.hold.start).quaternion)
   }
 
   clock(time: number): number {
