@@ -1,9 +1,72 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T23:34:39.510Z",
+ "pushed": "2026-11-23T23:56:58.608Z",
  "head": "9f96846fe0d8ed62207b3dccef7a638799b4af92",
- "note": "Venus step 2 in work: nothing by the clock, place picture off, the surface view's own ground on the globe side at the handover; pace table of the film as is",
+ "note": "step 2 at draft, not committed: place picture off, the surface view's ground drawn on the globe side by height (0.028 to 0.0213 radii), sides at T 0.050 and 0.061 of 255; proofs running",
  "looks": [
+  {
+   "time": "2026-11-23T23:56:47.592Z",
+   "file": "20261123235647592-note-e1343.jpg",
+   "source": "../../../../tmp/v/sd/e1343.jpg",
+   "kind": "note",
+   "label": "step 2 draft: globe side against surface side at T of the dive, difference times 8 (mean 0.050 of 255)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:56:46.905Z",
+   "file": "20261123235646905-note-s5-r.jpg",
+   "source": "../../../../tmp/v/s5-r.jpg",
+   "kind": "note",
+   "label": "step 2 draft, place picture off: rise 1542 to 1552",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:56:45.845Z",
+   "file": "20261123235645845-note-s5-d.jpg",
+   "source": "../../../../tmp/v/s5-d.jpg",
+   "kind": "note",
+   "label": "step 2 draft, place picture off, ground of the surface view on the globe side: dive 1330 to 1341",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T23:54:07.620Z",
+   "file": "20261123235407620-compare-venus-dive-sides.jpg",
+   "source": "out/work/handover/venus-dive-sides.png",
+   "kind": "compare",
+   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1343,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T23:44:23.986Z",
+   "file": "20261123234423986-frame-f01548.jpg",
+   "source": "out/work/venus/place/s5/f01548.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1548, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1548,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
+  {
+   "time": "2026-11-23T23:43:37.148Z",
+   "file": "20261123234337148-frame-f01340.jpg",
+   "source": "out/work/venus/place/s5/f01340.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1340, draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1340,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "94288983d3b2cf97"
+  },
   {
    "time": "2026-11-23T23:34:34.838Z",
    "file": "20261123233434838-note-s3-d2.jpg",
@@ -18,54 +81,6 @@
    "source": "../../../../tmp/v/s3-r.jpg",
    "kind": "note",
    "label": "rise 1545 to 1550 with the ground on the globe side: the ground gives way to the plates by height, darker at 1547 to 1549 (fault, being fixed)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:33.760Z",
-   "file": "20261123233433760-note-s3-pair-r.jpg",
-   "source": "../../../../tmp/v/s3-pair-r.jpg",
-   "kind": "note",
-   "label": "1542 and 1543: top row place picture off (swap), bottom row with the surface view's own ground drawn on the globe side",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:33.201Z",
-   "file": "20261123233433201-note-s3-pair.jpg",
-   "source": "../../../../tmp/v/s3-pair.jpg",
-   "kind": "note",
-   "label": "1342 and 1343: top row place picture off (swap), bottom row with the surface view's own ground drawn on the globe side",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:32.671Z",
-   "file": "20261123233432671-note-r1545.jpg",
-   "source": "../../../../tmp/v/s2s/r1545.jpg",
-   "kind": "note",
-   "label": "step 2 draft, place picture off: rise 1545 to 1559",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:32.140Z",
-   "file": "20261123233432140-note-r1530.jpg",
-   "source": "../../../../tmp/v/s2s/r1530.jpg",
-   "kind": "note",
-   "label": "step 2 draft, place picture off: rise 1530 to 1544, the swap shows from 1542 to 1543",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:31.600Z",
-   "file": "20261123233431600-note-d1335.jpg",
-   "source": "../../../../tmp/v/s2s/d1335.jpg",
-   "kind": "note",
-   "label": "step 2 draft, place picture off: dive 1335 to 1349, the swap shows from 1342 to 1343",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T23:34:31.062Z",
-   "file": "20261123233431062-note-d1320.jpg",
-   "source": "../../../../tmp/v/s2s/d1320.jpg",
-   "kind": "note",
-   "label": "step 2 draft, nothing by the clock, place picture off: dive 1320 to 1334",
    "stop": "venus"
   }
  ]
