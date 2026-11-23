@@ -1,64 +1,70 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T14:24:50.305Z",
- "head": "f9007f07a1ffc3c29ef4d022f13b96c432236b2d",
- "note": "grains replace blocks and wakes (mail 276 points 1 and 2); proofs rendering, commit follows",
+ "pushed": "2026-11-23T14:50:28.897Z",
+ "head": "50b7312130e0838d89da549fe8e82eec81b1b4dd",
+ "note": "handover opted in: dive and rise as one scene with no cover, all handover checks pass at draft; hatch at the review tier found in the ringlet filter and fixed",
  "looks": [
   {
-   "time": "2026-11-23T14:24:49.493Z",
-   "file": "20261123142449493-note-look_grains_3809.jpg",
-   "source": "../../../../tmp/v/look_grains_3809.png",
+   "time": "2026-11-23T14:50:28.341Z",
+   "file": "20261123145028341-note-sheet.jpg",
+   "source": "../../../../tmp/v/e15g/sheet.jpg",
    "kind": "note",
-   "label": "3809 draft, same grains at the lowest point of the skim"
+   "label": "skim every 15th frame 3630 to 3809, draft, grains (before the hatch fix)"
   },
   {
-   "time": "2026-11-23T14:24:48.722Z",
-   "file": "20261123142448722-note-look_grains_3720.jpg",
-   "source": "../../../../tmp/v/look_grains_3720.png",
+   "time": "2026-11-23T14:50:27.767Z",
+   "file": "20261123145027767-note-saturn-rise-draft-after.jpg",
+   "source": "../rt/out/work/handover/saturn-rise-draft-after.png",
    "kind": "note",
-   "label": "3720 draft, grains in place of blocks and wakes: sand that carries the sheet's own depth near the lens, sparse pebbles over the sheet, few chunks; the hatch (sand smeared along the motion) is gone with the sand in the skim"
+   "label": "handover sheet, rise after T (3861 to 3872), draft",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T14:24:47.914Z",
-   "file": "20261123142447914-note-look_iceoff_3720.jpg",
-   "source": "../../../../tmp/v/look_iceoff_3720.png",
+   "time": "2026-11-23T14:50:27.059Z",
+   "file": "20261123145027059-note-saturn-rise-draft-before.jpg",
+   "source": "../rt/out/work/handover/saturn-rise-draft-before.png",
    "kind": "note",
-   "label": "3720 draft with the ice switched off: the sheet alone, ringlets continuous to the bottom edge (planks were the wakes, they are deleted)"
+   "label": "handover sheet, rise before T (3848 to 3859), draft",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T13:54:52.786Z",
-   "file": "20261123135452786-note-bare0_ll.jpg",
-   "source": "../../../../tmp/v/bare0_ll.png",
+   "time": "2026-11-23T14:50:26.492Z",
+   "file": "20261123145026492-note-saturn-rise-draft-across.jpg",
+   "source": "../rt/out/work/handover/saturn-rise-draft-across.png",
    "kind": "note",
-   "label": "bare sheet lower left beside the approved close (approved left, mine right)"
+   "label": "handover sheet, rise across T (3854 to 3865), draft, no cover",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T13:54:52.239Z",
-   "file": "20261123135452239-note-bare0_s.jpg",
-   "source": "../../../../tmp/v/bare0_s.jpg",
+   "time": "2026-11-23T14:50:25.912Z",
+   "file": "20261123145025912-note-saturn-dive-draft-after.jpg",
+   "source": "../rt/out/work/handover/saturn-dive-draft-after.png",
    "kind": "note",
-   "label": "3720 draft, bare sheet: wakes, sand and blocks off, no shutter blur (the ringlets are continuous)"
+   "label": "handover sheet, dive after T (3590 to 3601), draft",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T13:25:29.850Z",
-   "file": "20261123132529850-note-f_3720.jpg",
-   "source": "../../../../tmp/v/b5r/f_3720.png",
+   "time": "2026-11-23T14:50:25.327Z",
+   "file": "20261123145025327-note-saturn-dive-draft-before.jpg",
+   "source": "../rt/out/work/handover/saturn-dive-draft-before.png",
    "kind": "note",
-   "label": "3720 review tier, blocks gathered, grain over the whole shutter; the hatch at lower left is still there (Mail 276 point 2)"
+   "label": "handover sheet, dive before T (3577 to 3588), draft",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T13:25:29.216Z",
-   "file": "20261123132529216-note-f_3720.jpg",
-   "source": "../../../../tmp/v/b5/f_3720.png",
+   "time": "2026-11-23T14:50:24.750Z",
+   "file": "20261123145024750-note-saturn-dive-draft-across.jpg",
+   "source": "../rt/out/work/handover/saturn-dive-draft-across.png",
    "kind": "note",
-   "label": "3720 draft, blocks gathered in groups, grain over the whole shutter"
+   "label": "handover sheet, dive across T (3583 to 3594), draft, no cover",
+   "stop": "saturn"
   },
   {
-   "time": "2026-11-23T13:25:28.535Z",
-   "file": "20261123132528535-note-f_3720.jpg",
-   "source": "../../../../tmp/v/b4r/f_3720.png",
+   "time": "2026-11-23T14:50:24.131Z",
+   "file": "20261123145024131-note-f_3720.jpg",
+   "source": "../../../../tmp/v/revh/f_3720.png",
    "kind": "note",
-   "label": "3720 review tier, blocks fourth version before gathering (17 takes, 5.7 s a take)"
+   "label": "3720 review tier (17 takes) after the hatch fix, grains on"
   }
  ]
 }
