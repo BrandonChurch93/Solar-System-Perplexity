@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T12:55:15.391Z",
+ "pushed": "2026-11-23T13:17:13.081Z",
  "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
- "note": "ground takes g9 and g10: light made by function, plate still; next the flow map of mail 272",
+ "note": "flow map on the ground, first takes h1 and h2, numbers in the labels; h2 moves but its frames between the judged ones are torn, being rebuilt",
  "looks": [
+  {
+   "time": "2026-11-23T13:17:12.299Z",
+   "file": "20261123131712299-note-flow-h2-zoom.jpg",
+   "source": "../../../../tmp/flow-h2-zoom.png",
+   "kind": "note",
+   "label": "take h2 at twice native: frame 90 is the plate, frames 93 and 95 are torn and doubled, too far a travel. Not kept",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T13:17:11.670Z",
+   "file": "20261123131711670-note-flow-h2-d5.jpg",
+   "source": "../../../../tmp/flow-h2-d5.jpg",
+   "kind": "note",
+   "label": "flow map take h2, change over 1 frame (x8) and 5 frames (x4): 12.61 raw, 6.87 blurred, penumbra streams too",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T13:17:10.898Z",
+   "file": "20261123131710898-note-flow-h1-near.jpg",
+   "source": "../../../../tmp/flow-h1-near.jpg",
+   "kind": "note",
+   "label": "flow map take h1, frame 90 camera held, over the Builder's sf2 frame: 5.44 raw, 2.75 blurred, soft",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T12:55:14.741Z",
    "file": "20261123125514741-note-g10-pen.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/life/g5-d5.jpg",
    "kind": "note",
    "label": "12:37 take g5: frame 90 and four times the difference to frame 95. Rings follow the cells of the picture. Wrong: a straight line at y 930 where plate and apron meet, their depth maps differ there",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:35:51.575Z",
-   "file": "20261123123551575-note-g5-near.jpg",
-   "source": "out/work/sun/life/g5-near.jpg",
-   "kind": "note",
-   "label": "12:37 ground take g5, held camera frame 90 (top) against 4e9bdc02 (bottom): fronts and made texture now run on the distance from the lanes, no cell labels",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:19:35.255Z",
-   "file": "20261123121935255-note-g2-diff10.jpg",
-   "source": "out/work/sun/life/g2-diff10.jpg",
-   "kind": "note",
-   "label": "what changes between held frames 90 and 100, times 4, rows 620 to 1080: one ring system per cell, following the cell's own shape, no seams between cells",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:19:34.708Z",
-   "file": "20261123121934708-note-g3-ten.jpg",
-   "source": "out/work/sun/life/g3-ten.jpg",
-   "kind": "note",
-   "label": "ground, camera held, every 10th frame 0 to 170 (same crop): work in progress after mail 260, not yet a boil",
    "stop": "sun"
   }
  ]
