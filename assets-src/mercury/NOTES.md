@@ -1307,3 +1307,27 @@ No answer is needed. Go on with your work."
 - Sheets looked at frame by frame (before, across, after of both): the same place on both sides of T. Seen: 738 to 743 straight left edge of the place picture with a darker strip beside it; 991 to 993 thin double limb; 994 to 997 pale limb band; 1000 to 1002 pale comma strokes at the limb.
 - Review tier not run. Harness measure not run again on this state: own G13 count on all 165 changed frames is under 2 percent everywhere (worst 713 1.432).
 - Tried next (not in this commit): dusk of the band only away from the place edge (`u * dusk`), to lift the dark strip beside the place in 738 to 743.
+
+## 23 Nov 14:40 to 15:00 UTC: commit a42801fb, G15 found red, cure by the engine (mail 286)
+
+- 14:38 committed 1a260ddd (crater band, glow on the rise, feather 0.02, rise far field cut), merged main f8bc034e as a42801fb, pushed. Build clean, tsc clean, npm test 162 of 162. Kept frames 615, 689, 780, 870, 959, 1035 at draft: 0 px against `base/` (`out/work/mercury/place/c4`). Final tier 615 and 870 (`f4`): the PNG has the sha256 named in the kept stills (bbff0193..., f2130490...).
+- Frames changed against 08c4bb47 at draft (`c2` against `c3`): 698 to 743 and 991 to 1025. Same bytes: 690 to 697, 744 to 779, 960 to 990, 1026 to 1034.
+- 14:45 G15 measured with the loader's own count (`out/work/mercury/place/tools/mem.ts`, the same call as tools/gate.ts): full 1506 MB of 1400, web 377 of 450. Red since the six level plates came in (4096 with mips, 89 MB each). My note "memory gate unproven" had hidden it. Where the bytes go: six plates 537, wrap colour 179, wide colour 201, relief colour 169, relief alpha 169 (a one channel PNG loaded as four), sky terrain 151, rest 100.
+- Sent to /root at once with two cures: (1) shared, the relief alpha as one channel; (2) mine, no mips on five plates. Cure 2 built and counted (full 1394, web 349) but not kept: a level comes in at 2 to 3.9 texels a pixel (fade 1.02 to 1.95 of the parent), so without mips it would sparkle as it comes in.
+
+MAIL 286 from the Builder, 14:51 UTC, verbatim:
+"Cure 1 is on main now: commit 7f7d7b4 adds alphaOne (boolean, optional) to ReliefLayerDef in src/terrain/relief.ts. A layer with alphaOne true loads its alpha with channels 1 (one byte a texel, mips as before). The shader reads .r and the cell flags read the red channel of the readback, so nothing else has to change. It is off unless a layer sets it.
+Do this now: merge origin/main, set alphaOne true on your relief layer in your set code, then prove (1) G15 green by the loader's count, (2) the kept frames 615 689 780 870 959 1035 as draft hashes, (3) 870 at the final tier with the bytes of the kept still, (4) one terrain frame near an edge of the alpha, looked at. If any byte differs, tell me at once with the difference picture and go on with cure 2. Otherwise stop cure 2: the mips stay on the plates, a level that sparkles as it comes in would be a new fault.
+READY mercury <commit> by 15:30 UTC as planned.
+Seen by me in your sheet ho-dive-draft-across of a42801fb: in frames 738 to 742 the place picture still shows as a four sided patch with an edge on the left and below. Put it on your list with what you will do about it. The land matte of the engine branch (StopSet.placeMatte, a grey picture that lets the place picture end along forms of the land) comes onto main within the half hour."
+
+- 14:51 cure 2 taken out again (assets.ts, set.ts back). Merged main 7f7d7b45. `alphaOne: true` on the relief layer in `assets.ts` (the wide layer keeps four channels: its alpha is 13 MB).
+- Proofs (`out/work/mercury/place/c5` draft, `f5` final):
+  1. G15 by the loader's count: full 1380 MB of 1400, web 345 of 450.
+  2. Draft 615, 689, 780, 870, 959, 1035: 0 px against `base/`, the same sha256 as on a42801fb (02f179d0, 4b8b1e57, bfc268f6, 4a3c9534, 3d382806, e5f3eaf0).
+  3. Final tier 870 and 615: see the next line.
+  4. Terrain 800 and 940 at the edge of the alpha (the horizon of the close picture against the sky, `tmp/alpha-edge.jpg`): clean line, no fringe, no hole.
+  Also the same bytes as before the option: 717, 1016 (against `c4`), 738, 744, 990 (against `c3`), 1000 (against `e2`). So the handover sheets and verdicts of a42801fb stand for this commit.
+  3. Final tier (`f5`): 870 sha256 f21304904ac2430637472d42113654e0f78810c9f20df32344f2a6d498735e18, 615 sha256 bbff01933eb0ebadebd2f423227e7aa588de9905435ce7d28faad0fbe378c815: both the bytes of the kept stills.
+- Build clean, tsc clean, npm test 162 of 162 on the merge.
+- Open, named by the Builder in mail 286: 738 to 742 the place picture shows as a four sided patch with an edge on the left and below. Plan: (a) the land matte of the engine (`StopSet.placeMatte`) when it is on main: a grey picture per kind, made by code from the forms of the place picture (rims and shadow edges), so the picture ends along land; (b) the band tone follows the place further out (dusk of the band only away from the place edge, plates laid in `out/work`, not installed yet).

@@ -27,7 +27,7 @@ function reliefDef(key: 'full' | 'web'): ReliefDef {
   return {
     imageSize: reliefJson.imageSize[key] as [number, number],
     vfovDeg: reliefJson.vfovDeg,
-    layers: [{ color: f.color, alpha: f.alpha, dist: f.dist, box: reliefJson.box[key] as [number, number, number, number], distSize: reliefJson.distSize[key] as [number, number], tint: [0.85, 0.3, 0.25] }],
+    layers: [{ color: f.color, alpha: f.alpha, alphaOne: true, dist: f.dist, box: reliefJson.box[key] as [number, number, number, number], distSize: reliefJson.distSize[key] as [number, number], tint: [0.85, 0.3, 0.25] }],
     masks: f.masks,
     maskBox: reliefJson.box[key] as [number, number, number, number],
     mistDir: [1, 0],
