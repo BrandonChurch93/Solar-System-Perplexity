@@ -306,7 +306,8 @@ export class Engine {
       }
       this.attached = wanted
     }
-    const place = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
+    const placed = this.probe.place && shot.place && shot.place.weight > 0 && (!raw || diag === 'texels') ? shot.place : null
+    const place = placed && this.probe.limb !== undefined ? { ...placed, limbReachDeg: this.probe.limb } : placed
     const picture = place ? this.picture(place, shot) : null
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)
@@ -405,7 +406,7 @@ export class Engine {
     this.belt.render(r, this.sampleTarget, this.director!, shot, view)
     if (place && picture) {
       const mode: PlaceMode = raw ? 'texels' : this.probe.mask ? 'mask' : this.probe.picture ? 'picture' : 'beauty'
-      this.place.render(r, this.sampleTarget, picture, place, shot.camera, cam, mode, shot.post.vignette, width / height, gradUniform.value, this.probe.dump)
+      this.place.render(r, this.sampleTarget, picture, place, shot.camera, cam, mode, shot.post.vignette, width / height, gradUniform.value, this.probe.dump, this.sets.get(place.stop)?.placeMatte?.[place.kind] ?? null)
     }
     if (this.over.children.length > 0) {
       r.setRenderTarget(this.sampleTarget)
