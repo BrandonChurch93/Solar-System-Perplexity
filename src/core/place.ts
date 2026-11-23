@@ -322,7 +322,7 @@ export class Place {
     u.uSinDip!.value = g.sinDip
     const feather = (px: number): number => 1 / Math.max(c.edge * (px * l.scale - 1), 1e-3)
     ;(u.uFeather!.value as THREE.Vector4).set(feather(l.left), feather(l.right), feather(l.bottom), feather(l.top))
-    ;(u.uLimits!.value as THREE.Vector4).set(place.weight, c.seen, config.raw.handover.maxEnlarge, c.enlargeSoft)
+    ;(u.uLimits!.value as THREE.Vector4).set(place.weight, place.seen ?? c.seen, place.maxEnlarge ?? config.raw.handover.maxEnlarge, place.enlargeSoft ?? c.enlargeSoft)
     ;(u.uLens!.value as THREE.Vector4).set(vignette * (place.lens ?? c.lens), aspect, grad / l.scale, c.maxGradTexels)
     ;(u.uScale!.value as THREE.Vector2).set(l.scale, MODES[mode])
     ;(u.uDump!.value as THREE.Vector4).set(dump?.x ?? 0, dump?.y ?? 0, target.width, target.height)
