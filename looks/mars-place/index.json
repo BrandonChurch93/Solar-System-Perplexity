@@ -1,9 +1,61 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T18:09:02.168Z",
+ "pushed": "2026-11-23T18:22:20.069Z",
  "head": "46ba063ef015d4d02814cfe012dcaa94725c97c7",
- "note": "seventh bake: under 16.7 dive 16.6 rise (was 21.5 21.2), stills rendering",
+ "note": "seventh bake sheets: dive and rise read as one place, tone at T closer (under 16.7, 16.6); left: grey patch with dark dot and radial ridges when the place is small",
  "looks": [
+  {
+   "time": "2026-11-23T18:22:19.350Z",
+   "file": "20261123182219350-note-sheet-w-high.jpg",
+   "source": "out/work/place/view/sheet-w-high.jpg",
+   "kind": "note",
+   "label": "seventh bake, draft, high frames (dive 2436 to 2454 by twos and 2454; rise 2695 2697 2699 2701 2704 2708 2714 2722; high 2418 2424 2430)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T18:22:18.520Z",
+   "file": "20261123182218520-note-sheet-w-rise.jpg",
+   "source": "out/work/place/view/sheet-w-rise.jpg",
+   "kind": "note",
+   "label": "seventh bake, draft, rise frames (dive 2436 to 2454 by twos and 2454; rise 2695 2697 2699 2701 2704 2708 2714 2722; high 2418 2424 2430)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T18:22:17.901Z",
+   "file": "20261123182217901-note-sheet-w-dive.jpg",
+   "source": "out/work/place/view/sheet-w-dive.jpg",
+   "kind": "note",
+   "label": "seventh bake, draft, dive frames (dive 2436 to 2454 by twos and 2454; rise 2695 2697 2699 2701 2704 2708 2714 2722; high 2418 2424 2430)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T18:21:45.618Z",
+   "file": "20261123182145618-frame-w2430.jpg",
+   "source": "out/work/place/view/w2430.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2430, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2430,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
+  {
+   "time": "2026-11-23T18:20:12.683Z",
+   "file": "20261123182012683-frame-w2722.jpg",
+   "source": "out/work/place/view/w2722.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2722, draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2722,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
+  },
   {
    "time": "2026-11-23T18:09:01.488Z",
    "file": "20261123180901488-note-topdown-r9.jpg",
@@ -30,55 +82,6 @@
    "segment": "mars.rise",
    "frame": 2692,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T18:08:09.168Z",
-   "file": "20261123180809168-compare-mars-dive-under.jpg",
-   "source": "out/work/handover/mars-dive-under.png",
-   "kind": "compare",
-   "label": "mars dive, the globe side at T (frame 2454) with the place picture, alone, and their difference times 4",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2454,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T17:40:21.088Z",
-   "file": "20261123174021088-note-sheet-u-rise.jpg",
-   "source": "out/work/place/view/sheet-u-rise.jpg",
-   "kind": "note",
-   "label": "rise, draft, sixth bake with the new near.json: frames 2693, 2695, 2697 / 2699, 2701, 2704 / 2708, 2714 and dive frame 2430 last",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T17:40:20.468Z",
-   "file": "20261123174020468-note-sheet-u-dive.jpg",
-   "source": "out/work/place/view/sheet-u-dive.jpg",
-   "kind": "note",
-   "label": "dive, draft, sixth bake with the new near.json: frames 2436, 2440, 2442 / 2444, 2446, 2448 / 2450, 2452, 2454",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T17:40:19.893Z",
-   "file": "20261123174019893-note-near-v5-pair.jpg",
-   "source": "out/work/place/view/near-v5-pair.jpg",
-   "kind": "note",
-   "label": "frame 2454 (T of the dive): the globe side with the place picture (above) and the globe alone with the sixth bake and the thinner ground haze of near.json (below): the near field now sits at the picture's tone; the far field still shows red veins where the picture has the far wall and the lit plateau",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T17:40:14.063Z",
-   "file": "20261123174014063-frame-u2720.jpg",
-   "source": "out/work/place/view/u2720.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2720, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2720,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e85c8d53a860dafc"
   }
  ]
 }
