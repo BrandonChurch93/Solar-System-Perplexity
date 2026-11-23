@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T09:28:40.896Z",
+ "pushed": "2026-11-23T09:50:34.535Z",
  "head": "9a27f0c0f17b02f76093d4e1014ee48683129e08",
- "note": "S2 second pass: far cloud sheet on the plate, place in early; fan shape and tone step to fix",
+ "note": "S2: far ring to the limb, rim retuned; fan shape of the sheet from above still to fix",
  "looks": [
+  {
+   "time": "2026-11-23T09:50:33.060Z",
+   "file": "20261123095033060-note-dive-down-sheet.jpg",
+   "source": "out/work/earth/place/down/dive-down-sheet.jpg",
+   "kind": "note",
+   "label": "earth place: top down dive sheet, 12 frames, draft. The tent with straight edges is gone, but the cloud sheet is still a fan with a clean arc on top (1852 to 1877). A wider cloud deck with an irregular margin is being built to replace it. 1896 to 1919 sharp, no blur",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T09:50:30.746Z",
+   "file": "20261123095030746-note-f01915-check.jpg",
+   "source": "out/work/earth/place/sides/f01915-check.jpg",
+   "kind": "note",
+   "label": "earth place: both sides at 1915, draft. Far cloud sheet now runs to the limb on the globe side, sky floor and glow above the limb retuned (rim rows differ by 18.9 code values, ground rows 19.3, sky rows 12.0). Still wrong: the globe's limb edge is hard where the close picture goes blue to pale over 8 px, a little green land at the far right under the limb",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T09:28:40.261Z",
    "file": "20261123092840261-note-dive-down-sheet.jpg",
@@ -51,34 +67,6 @@
    "kind": "note",
    "label": "S1 and S2: frame 1915, close side and globe side from the twin, draft tier. Tone now added in the code domain. Still wrong: the globe side has a broad pale haze band below the horizon where the close side has cloud bands, stars in its sky, horizon edge 4 px higher",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T08:24:52.542Z",
-   "file": "20261123082452542-compare-compare-earth-terrain-view.jpg",
-   "source": "out/work/compare/compare-earth-terrain-view.jpg",
-   "kind": "compare",
-   "label": "earth.terrain: approved image left, film frame right, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:24:50.317Z",
-   "file": "20261123082450317-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
   }
  ]
 }
