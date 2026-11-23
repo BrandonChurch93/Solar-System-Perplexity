@@ -1,11 +1,12 @@
+import { createHash } from 'node:crypto'
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, loadConfig, requireDisk } from './lib/common'
 import { openCapture, pageFault } from './lib/browser'
-import { segmentAtFrame } from '../src/director/timeline'
+import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 
 interface Counts { programs: number; textures: number; buffers: number }
-interface Api { setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
+interface Api { png(): Promise<string>; setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
 
 // The warm start of the live player (kit/PROGRESS.md, second review note of 2026-11-23, plan H 3).
 //   npm run warm -- [--first F] [--last L] [--format ID] [--rate 2] [--player] [--cold] [--write] [--label NAME]
@@ -15,12 +16,15 @@ interface Api { setRate(rate: number): void; ahead(frame: number, tier: string, 
 // (or at frame 0), where the player is warm. --player takes the live page and the web assets instead of the capture page. --cold leaves the warm
 // start out and only lists. --write adds every frame outside a hold that did work to src/core/warm.json and exits 0: run it, then run again without
 // it. Every line goes to out/work/warm/<label>.jsonl.
+//   npm run warm -- --stills LABEL [--frames 100,200-210] [--format ID]
+// The proof that a warm draw changes no pixel: before each still every warm frame that is due is drawn, and the hash of the still is compared with
+// out/work/samebytes/LABEL/hashes.json (tools/samebytes.ts makes it from the same frames without the warm start). Exit 1 on any difference.
 
 const cfg = loadConfig()
 requireDisk(cfg)
 const a = args()
 const tier = a.tier ?? 'draft'
-const format = a.format ?? cfg.formatKeys.preview
+const format = a.format ?? (a.stills ? cfg.formatKeys.master : cfg.formatKeys.preview)
 const first = a.first ? Number(a.first) : 0
 const last = a.last ? Number(a.last) : cfg.frameCount - 1
 const cold = a.cold === 'true'
@@ -34,6 +38,38 @@ writeFileSync(file, '')
 ensureBuild()
 const player = a.player === 'true'
 const s = await openCapture({ dist: DIST, format, assets: a.assets ?? (player ? 'web' : 'full'), mode: player ? 'live' : 'capture', query: player ? '&frame=' + first : '' })
+if (a.stills) {
+  const frames = a.frames ? a.frames.split(',').flatMap((part) => {
+    const [x, y] = part.split('-').map(Number)
+    return y === undefined ? [x!] : Array.from({ length: y - x! + 1 }, (_, i) => x! + i)
+  }) : judgedFrames().map((j) => j.frame)
+  const other = JSON.parse(readFileSync(join(WORK, 'samebytes', a.stills, 'hashes.json'), 'utf8')) as Record<string, string>
+  const out = join(WORK, 'samebytes', a.stills + '-warm')
+  mkdirSync(out, { recursive: true })
+  const hashes: Record<string, string> = {}
+  let differ = 0
+  let drawnAll = 0
+  for (const f of frames) {
+    const r = await s.page.evaluate(async ([frame, tr]) => {
+      const api = (window as unknown as { showcase: Api }).showcase
+      const drawn = await api.ahead(frame as number, tr as string, true)
+      await api.renderFrame(frame as number, tr as string)
+      return { drawn, png: await api.png() }
+    }, [f, tier] as const)
+    const fault = await pageFault(s.page)
+    if (fault) throw new Error('frame ' + f + ' is not usable: ' + fault)
+    const key = f + ':' + tier
+    hashes[key] = createHash('sha256').update(Buffer.from(r.png, 'base64')).digest('hex')
+    writeFileSync(join(out, 'hashes.json'), JSON.stringify(hashes, null, 1) + '\n')
+    drawnAll += r.drawn
+    const same = other[key] === hashes[key]
+    if (!same) differ++
+    console.log('frame ' + f + ' ' + hashes[key]!.slice(0, 16) + ' after ' + r.drawn + ' warm draws: ' + (other[key] === undefined ? 'not in ' + a.stills : same ? 'same' : 'DIFFERENT'))
+  }
+  await s.close()
+  console.log(frames.length + ' stills after ' + drawnAll + ' warm draws, ' + differ + ' not the same bytes as ' + a.stills)
+  process.exit(differ > 0 ? 1 : 0)
+}
 const bad: string[] = []
 const found: number[] = []
 const t0 = Date.now()
