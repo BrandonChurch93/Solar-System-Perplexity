@@ -26,6 +26,8 @@ The ground on the globe under the place the dive flies to. All tools are in `ass
 
 ## public/assets/mars/{full,web}/place-8p5.jpg, place-3p8.jpg, place-1p6.jpg, place-0p7.jpg, place-0p3.jpg, patch-42.jpg, patch-19.jpg, patch-wide.jpg
 
+- Files, every one written by `bake.py`: `public/assets/mars/full/place-8p5.jpg`, `public/assets/mars/full/place-3p8.jpg`, `public/assets/mars/full/place-1p6.jpg`, `public/assets/mars/full/place-0p7.jpg`, `public/assets/mars/full/place-0p3.jpg`, `public/assets/mars/full/patch-42.jpg`, `public/assets/mars/full/patch-19.jpg`, `public/assets/mars/full/patch-wide.jpg`, `public/assets/mars/web/place-8p5.jpg`, `public/assets/mars/web/place-3p8.jpg`, `public/assets/mars/web/place-1p6.jpg`, `public/assets/mars/web/place-0p7.jpg`, `public/assets/mars/web/place-0p3.jpg`, `public/assets/mars/web/patch-42.jpg`, `public/assets/mars/web/patch-19.jpg`, `public/assets/mars/web/patch-wide.jpg`.
+
 - Chain: `sh assets-src/mars/place/dump.sh` (the close side at T as the engine draws it, and the twin cameras, `geometry.ts`), then `sh assets-src/mars/place/plates.sh lay force bake`.
   - lay: `dehaze.py` takes the air out of the close side picture; `layback.py` lays it back onto the unit sphere from the dive twin as top down gnomonic plates of 3.8, 1.6, 0.7 and 0.3 degrees.
   - force: every plate from 3.8 degrees down is the plate above, cropped, with its take nested (`nestbase.py`, tone matched at the rim), then held to the picture (`force.py`): where the twin sees the ground steeply the lay back is used as it is, where it stretches the take stands and only its tone is drawn to the picture (a gain between `broadLeast` and `broadMost`), fading with the stretch.
