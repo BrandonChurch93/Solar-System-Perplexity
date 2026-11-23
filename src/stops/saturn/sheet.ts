@@ -50,6 +50,9 @@ uniform vec4 uShade;
 uniform vec4 uViewFit;
 uniform vec3 uPhase[${look.phase.deg.length}];
 uniform float uSat;
+uniform vec3 uTintDense;
+uniform vec3 uTintThin;
+uniform vec4 uFlatten;
 uniform vec3 uFloor;
 uniform vec3 uLayer;
 out vec4 outColor;
@@ -95,6 +98,12 @@ void main() {
     vec2 grains = iceMarks(q, r, turn, toPixel, 1.0 / max(pixel, 1e-9), soft, ink.a);
     lum *= grains.x;
     tau *= grains.y;
+    // near the sheet the broad zones of the dense rings are evener than from afar
+    lum *= pow(clamp(ringKnots(r, uFlatten.z).y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
+    // the grain of the sheet and its sparks
+    vec2 sand = iceGrain(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin);
+    lum *= exp(sand.x);
+    tau *= exp(sand.x * uGrainFit.w);
     float dist = length(ray);
     float mu = max(abs(ray.y) / dist, 1e-3);
     float mu0 = max(abs(uSunL.y), 0.02);
@@ -103,7 +112,7 @@ void main() {
     float deg = degrees(acos(clamp(dot(ray, uSunL) / -dist, -1.0, 1.0)));
     vec2 byPhase = phaseGain(deg);
     float law = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), mix(uShade.x, uShade.y, thin)) * mix(byPhase.x, byPhase.y, thin);
-    vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint;
+    vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
     vec3 lit = globeShadow(P, uSunL, uPolar);
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
     float bn = dot(cs, ds) / length(ds);
@@ -111,12 +120,13 @@ void main() {
     alpha = 1.0 - exp(-tau / mu * mix(uViewFit.w, 1.0, behind));
     // the stones: their shadows on the sheet, the ones that rest on it, the ones that float above it
     float shade;
-    vec3 rest;
+    vec4 rest;
     vec4 raised;
     iceStones(q, turn, uCamL, ray / dist, uSunL, length(toPixel * normalize(vec2(-ray.z, ray.x))), soft, uSat, shade, rest, raised);
     vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
     float dense = pow(clamp((uRfLight.y + uRfLight.z) / (mu0 + mu), uViewFit.x, uViewFit.y), uShade.x) * byPhase.x;
-    col = lum * (seen * law) * under * (tone * ((1.0 - uStoneLook.w * shade) * (1.0 - rest.x) + rest.y) + mix(tone, vec3(1.0), uIceOrbit.w) * rest.z);
+    col = lum * (seen * law) * under * (tone * ((1.0 - uStoneLook.w * shade) * (1.0 - rest.x) + rest.y - rest.w) + mix(tone, vec3(1.0), uIceOrbit.w) * (rest.z + sand.y * uStoneLit.w));
+    col += uStoneTint * (uStoneFar.x * rest.w * dense) * under;
     col = col * (1.0 - raised.a) + raised.rgb * dense * under;
     alpha = alpha * (1.0 - raised.a) + raised.a;
   }
@@ -159,6 +169,9 @@ export class Sheet {
       uViewFit: { value: new THREE.Vector4(look.view.clamp[0], look.view.clamp[1], look.grey, look.starCover) },
       uPhase: { value: look.phase.deg.map((deg, k) => new THREE.Vector3(deg, look.phase.dense[k], look.phase.thin[k])) },
       uSat: { value: 1 },
+      uTintDense: { value: new THREE.Vector3(1, 1, 1) },
+      uTintThin: { value: new THREE.Vector3(1, 1, 1) },
+      uFlatten: { value: new THREE.Vector4(1, 0, 0.04, 2) },
       uShadowFit: { value: new THREE.Vector4(look.shadow.soft[0], look.shadow.soft[1], 0, 0) },
       uShadowReach: { value: new THREE.Vector3().fromArray(look.shadow.reach) },
       uFloor: { value: new THREE.Vector3().fromArray(look.shadow.floor) },

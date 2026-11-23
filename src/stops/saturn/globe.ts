@@ -98,6 +98,7 @@ uniform float uFineTop;
 uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform float uNightFloor;
+uniform vec4 uDusk;
 uniform int uProbe;
 uniform float uVignette;
 uniform float uAspect;
@@ -168,7 +169,8 @@ void main() {
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
   vec3 light = curveAt(ndl) * tableAt(uTable, ndl, lat);
   vec3 night = min(light, vec3(uNightFloor));
-  vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) + night;
+  // near the sheet the terminator is narrower: the twilight zone is cut down by the dusk (0 in the hold)
+  vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) * mix(1.0, smoothstep(uDusk.x, uDusk.y, ndl), uDusk.z) + night * uDusk.w;
   for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
     vec3 mid = inverseFilmic(equirectGrad(uMap, d, uFine.x).rgb);
     vec3 lw = vec3(0.2126, 0.7152, 0.0722);
@@ -211,7 +213,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...field,
-        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },

@@ -78,6 +78,8 @@ export const createSet: SetFactory = async (ctx) => {
   const turn = new THREE.Quaternion()
   const moon = new THREE.Vector3()
   const tune = skimJson.light
+  const tintDense = new THREE.Vector3().fromArray(tune.tint.near.dense)
+  const tintThin = new THREE.Vector3().fromArray(tune.tint.near.thin)
   const logLo = Math.log(tune.heights[0]!)
   const logHi = Math.log(tune.heights[1]!)
 
@@ -140,7 +142,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
-      su.uGain!.value = globeGain * state.weight
+      su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, close)
+      su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, close)
+      ;(gu.uDusk!.value as THREE.Vector4).set(tune.dusk.from, tune.dusk.to, THREE.MathUtils.lerp(tune.dusk.amount[0]!, tune.dusk.amount[1]!, close), THREE.MathUtils.lerp(tune.dusk.night[0]!, tune.dusk.night[1]!, close))
 
       ice.set(plan.spin(state.time), close)
       const ru = sheet.uniforms
@@ -148,6 +152,10 @@ export const createSet: SetFactory = async (ctx) => {
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShade!.value as THREE.Vector4).z = THREE.MathUtils.lerp(sheetJson.gain[0]!, sheetJson.gain[1]!, close) * THREE.MathUtils.lerp(tune.rings[0]!, tune.rings[1]!, close)
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
+      field.set(close)
+      ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
+      ;(ru.uTintDense!.value as THREE.Vector3).fromArray(tune.tint.far.dense).lerp(tintDense, close)
+      ;(ru.uTintThin!.value as THREE.Vector3).fromArray(tune.tint.far.thin).lerp(tintThin, close)
       ru.uGain!.value = gain
       ru.uWeight!.value = state.weight
       ru.uVignette!.value = shot.post.vignette

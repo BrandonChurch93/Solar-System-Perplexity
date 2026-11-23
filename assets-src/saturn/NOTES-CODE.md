@@ -460,3 +460,105 @@ path changed, so the poses at the end of the dive and at the start of the rise c
 Frame of the sheet shader (vLocal.xz): camera azimuth 90 to 95 degrees, B near at 98, A near left at 104,
 prograde is toward smaller azimuth, which is to the right in frame. Spin since the middle of the hold: 7.7
 degrees at 3630, 11.9 at 3720, 16.1 at 3809.
+
+### Day 1, 10:00 to 10:25 UTC: blocks, the dashes found, the ladder measured by band, nearness gains
+
+Head 0da1bbe is the merge of origin/main with E2 (pushed). The work below is on top of it.
+
+- Blocks: stones of the larger classes are now blocks with twelve faces (six axes ICE_AXIS and their
+  opposites, cut at a hashed depth between faces lo and hi), tumbling at tumble degrees a second about a
+  hashed axis, each face with its own tone (faceTone), thin ice glowing where the Sun is behind (glow,
+  glowDepth). ice.json: block per class, faces, tumble, edge, faceTone, glow, glowDepth.
+- The level dark dashes all over the near field were the shadows of the floating stones. The Sun's azimuth
+  lies about 70 degrees off the view direction and it stands 15.8 degrees over the plane, so a floater's
+  shadow lands far from its stone and reads as a dash with no owner. Floaters throw a shadow only where
+  throws is 1 for the class (all 0 now); the resting classes three and four keep theirs.
+- Measured by band against the approved close (band_energy.py, film over approved, rms contrast in bands 2-4,
+  4-8, 8-16, 16-32, 32-64, 64-128 px across the lanes) at draft 3720 after this pass: A near left 1.42 0.90
+  1.41 0.94 2.31 1.20; A left 0.87 0.80 1.38 0.95 1.51 1.19; A far left 1.39 1.47 2.25 1.03 0.60 0.81; B near
+  0.97 0.73 0.87 0.79 2.37 2.83; B far 1.19 1.17 1.35 1.64 1.41 1.74. Mean rgb film against approved: A near
+  left 0.464 0.424 0.382 / 0.520 0.476 0.431; A left 0.517 0.473 0.428 / 0.485 0.449 0.411; B near 0.814
+  0.745 0.668 / 0.758 0.689 0.612; B far 0.683 0.614 0.543 / 0.728 0.645 0.563. G17 at draft: median 1.133,
+  p25 0.764 (3720), 0.708 and 0.365 at the start of the segment. Draft has one sample and no shutter, so the
+  review tier will read lower. Still wrong: B ring contrast at 32 to 128 px is 2.4 to 2.8 times the
+  approved (it comes from the model's knots), and the B ring has less variety of colour than the approved's
+  pink, blue grey and yellow lanes.
+- Ladder (ringfine.json, field.ts): the fine ladder of the thin ring was rebuilt: level.thin and
+  groove.strengthThin per octave, hue.thin warm and pink per octave, even lines from octave 6 with their own
+  roughness. uRfMore[o] = (edge, strengthThin); uRfLine = (groove.open, even.rough lo, hi, even.from).
+  ringFine takes more = (gain, first octave it applies to): the gain acts on brightness and depth, the hues
+  keep their strength.
+- Nearness (skim.json light, set.ts, sheet.ts): by the logarithm of the camera's height between heights
+  [0.35, 1.6] the sheet gets detail gains (dense 2.0, thin 1.25 from octave 4), footprints 0.6 (octaves show
+  earlier), and a tint (dense [1.0, 1.02, 0.96], thin [0.99, 1.045, 0.94]) because the model's ink in the A
+  ring is rose while the approved close is olive neutral there. All of these are 1 in the hold.
+- Ice sizes: ten classes (five resting, five floating), cells 0.0006 to 0.048 radii, glints as stones turned
+  to the Sun (glintShare, glint), white share per class.
+- Six consecutive draft frames 3718 to 3723 (/tmp/v/six.sh): at A near left the lanes slide about 4 px a
+  frame toward the lens and the stones ride them; at B near one wake patch is seen to drift to the right
+  along its lane. Draft stills cost 17.9 to 19.1 s with about 6 s of start, so about 12 s a sample: twice
+  the aim. Savings to try: skip a wake class whose tone is 0, take the floaters' atan only where they throw.
+
+### Day 1, 10:25 to 11:05 UTC: the look of the skim against the approved close (soft lanes, sand, hues)
+
+All of this is on top of head 0da1bbe and NOT yet committed when this entry was written.
+
+MAIL 246 (low priority, about 10:53 UTC), verbatim: "Main is at d690e42a: the planet shader takes up to ten
+patch levels now (it took six). The shader text of a globe with six levels or fewer is unchanged, and the
+proof on the render machines shows every frame of every stop keeps its bytes. Also in it: raw motion follows
+a body that turns under a camera that follows the place (only for a stop that opted in), and a probe option
+that dumps the place picture. Merge origin/main into your branch when it suits you; no answer needed. If
+your stop needs more than six levels to hold one texel per pixel through the dive and the rise, use them
+inside your memory budget and say so in your next report."
+
+What the approved close shows at 8x (crops at 240,900 and 1060,880 of the 1920 wide picture):
+- A ring: wide soft lanes of grey beige, rose and blue grey; between them bunches of thin lines, 1 to 2 px
+  wide, the bright ones nearly white and the dark ones nearly black; over all of it a gentle grain of the
+  size of a pixel (about plus or minus 10 percent), a few white dots of 2 px and rose specks.
+- B ring: pastel lanes (cream, peach, rose) with thin dark grooves, the same gentle grain.
+- No olive and no green lanes anywhere; a hue that changes without the brightness reads as a rainbow.
+
+What was changed to get there:
+- Shadows of the globe on the rings fade by the slant of the Sun; halo and dusk of the globe by nearness
+  (skim.json light.halo, light.dusk): the globe row at y 480 reads close to the approved.
+- The ladder has its own strengths near the sheet: ringfine.json "near" (level, groove, hue with follow, green
+  and gold, edge, rough, even, footprints); RingField.set(near) blends far and near by the logarithm of the
+  camera's height (the same value as the light). The far values did not change, and near has no weight in
+  the hold. uRfNear and uDetail are gone; ringFine has no "more" any longer.
+- lanes {from 5, amount 0.7}: from octave 5 on the cells take turns, a bright one next to a dark one
+  (ringLane), so the fine structure is lines side by side and not noise. The mean for such an octave is
+  lanesMean in field.ts. TO DO: the two numbers in ringLane (0.15, 0.35) and in lanesMean (0.3) are literals;
+  move them to ringfine.json lanes.
+- hue.follow: a brighter ringlet is warmer and more rose (dense [0.2, 0], thin [1.0, 0.6] per unit of the
+  level's exponent). The hue axes act in linear light, so a difference seen on the display needs about 2.2
+  times the amplitude.
+- hue.green 0.25 near: the share of the rose to green axis kept on its green side. hue.gold 0.35 near: the
+  share of the warm to cool axis kept on its warm side in the thin rings (olive lanes in the A ring came from
+  there). Both are 1 in the hold.
+- flatten (skim.json light.flatten, sheet.ts uFlatten): near the sheet the broad zones of the dense rings are
+  evener: lum *= pow(clamp(knots at width 0.02 / pivot 0.42, 1/1.6, 1.6), power -0.6 * (1 - thin)). The
+  B ring's contrast at 32 to 128 px was 2.4 to 2.8 times the approved before.
+- The sand (ice.json grain, ice.ts iceGrain): the sheet has grains of many sizes, from finest 0.0002 radii by
+  7 doublings; a size is a pair (across the orbit, along it); each size is smooth noise in the sheet with
+  every row of cells on its own orbit (Kepler shear). A layer shows the sand whose grains are its number of
+  pixels across and along the orbit at that pixel, blended between the four sizes next to that and
+  normalised; beyond the coarsest size it merges into the sheet. Reason: a round grain seen at a slant is a
+  dash, and a single size is either mush far away or boulders near. Layers now: 1.1 px (dense 0.3, thin 0.28,
+  with sparks) and 5.6 px (0.08, 0.08). At 1.4 px and thin 0.55 the A ring read as brushed cloth with strokes
+  of 3 to 5 px: too coarse and too strong.
+- Stones: eight classes (three resting, five floating), cells 0.0024 to 0.048 radii; presence 1 - exp(-deep^2)
+  so a stone smaller than a pixel fades and does not flicker; their shadows fade by the slant.
+
+Scale facts at 3720 (pixels per radius, across the orbit and along it): A near left 2529, 1410; A left 2006,
+651; B near 807, 1547; B low right 608, 1848; B mid 742, 622; B far 557, 156. Octave cells: o3 0.016, o4
+0.008, o5 0.004, o6 0.002, o7 0.001, o8 0.0005 radii. A hard edged level octave of cells c px wide has its
+band energy peak at waves of 2.5c to 5c. The knots of the model are 2048 over 1.2 to 2.5 radii, 1.6 px a
+knot at A near left.
+
+Measured at draft 3720 after this pass (film over approved, bands 2-4 to 64-128 px, before the last hue and
+sand step): A near left luma across 1.13 0.67 0.98 0.69 1.85 1.44, along 1.35 1.69 1.76 1.58 0.98 0.71,
+red/blue across 0.41 0.34 0.43 0.50 0.49 0.25; B near luma across 0.88 0.70 0.88 0.65 1.74 2.01, along 1.14
+1.15 1.42 1.15 1.05 0.77, red/blue 1.72 1.45 1.26 1.07 2.40 1.26. Mean rgb film / approved: A near left 0.508
+0.478 0.426 / 0.520 0.476 0.431; B near 0.782 0.700 0.619 / 0.758 0.689 0.612; B far 0.693 0.620 0.553 /
+0.728 0.645 0.563. G17 at draft after the last step: median 0.864, p25 0.411 (it was 0.693 at the softest
+step and 1.133 before the softening, when the lines were too hard).

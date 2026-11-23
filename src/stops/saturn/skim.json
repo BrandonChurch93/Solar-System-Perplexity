@@ -19,11 +19,37 @@
     "pitchDeg": 0
   },
   "light": {
-    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim)",
+    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet as in the approved close; dusk.night is the factor on the floor of light the night side keeps. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close.",
     "heights": [0.35, 1.6],
     "globe": [1, 1.5],
     "rings": [1, 0.85],
     "ringSaturation": [1, 0.62],
-    "heroRange": [0.6, 1.6]
+    "heroRange": [0.6, 1.6],
+    "tint": {
+      "far": {
+        "dense": [0.97, 1.04, 1.08],
+        "thin": [1.21, 1.285, 1.21]
+      },
+      "near": {
+        "dense": [0.9, 0.926, 0.888],
+        "thin": [1.28, 1.42, 1.29]
+      }
+    },
+    "halo": {
+      "height": [1, 0.4],
+      "gain": [1, 0.8]
+    },
+    "dusk": {
+      "from": -0.2,
+      "to": 0.0,
+      "amount": [0, 1],
+      "night": [1, 0.45]
+    },
+    "flatten": {
+      "pivot": 0.42,
+      "power": [0, -0.6],
+      "width": 0.02,
+      "reach": 1.6
+    }
   }
 }
