@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T14:46:12.906Z",
- "head": "73b8dca5e4fef9f4872d15c930f164a1b5d7e638",
- "note": "M3 proof: same bytes 42 of 42 and Mars 2325, 2580; gate green; pack and sheet runs for mars and earth; E4 on the new Mars ladder is rendering",
+ "pushed": "2026-11-23T15:18:18.367Z",
+ "head": "60c083ea13812fb1bff47e8d5eae470833905927",
+ "note": "edgeIn on Mars: the picture comes in from the place outward, tried at draft on the plates of mars_place_builder",
  "looks": [
+  {
+   "time": "2026-11-23T15:18:17.239Z",
+   "file": "20261123151817239-note-l4-rise-2697-2712.jpg",
+   "source": "out/work/edgein/l4-rise-2697-2712.png",
+   "kind": "note",
+   "label": "Mars rise 2697 to 2712 on the plates of 2bd6dd29 without edgeIn: the picture as a dark patch with straight sides on striped ground"
+  },
+  {
+   "time": "2026-11-23T15:18:15.945Z",
+   "file": "20261123151815945-note-2696-left.jpg",
+   "source": "out/work/edgein/2696-left.png",
+   "kind": "note",
+   "label": "Mars rise 2696, left 1100 px: the stripes of the globe show through the cliff of the picture, with and without edgeIn (not cured by it)"
+  },
+  {
+   "time": "2026-11-23T15:18:14.738Z",
+   "file": "20261123151814738-note-cmp-rise-a.jpg",
+   "source": "out/work/edgein/cmp-rise-a.png",
+   "kind": "note",
+   "label": "Mars rise 2700, 2704, 2708 on the plates of 2bd6dd29: as it was (left) and with edgeIn (right)"
+  },
+  {
+   "time": "2026-11-23T15:18:13.673Z",
+   "file": "20261123151813673-note-2449-right.jpg",
+   "source": "out/work/edgein/2449-right.png",
+   "kind": "note",
+   "label": "Mars 2449, right 1100 px at 0.75: as it was, and with edgeIn"
+  },
+  {
+   "time": "2026-11-23T15:18:12.284Z",
+   "file": "20261123151812284-note-dive-a.jpg",
+   "source": "out/work/edgein/dive-a.png",
+   "kind": "note",
+   "label": "Mars dive 2444 to 2451 on the plates of 2bd6dd29, as it was (rows 1 and 3) and with edgeIn 0.4,0.4,0.4,0.25 (rows 2 and 4): the straight right side and the pale wedge are gone"
+  },
   {
    "time": "2026-11-23T14:44:22.758Z",
    "file": "20261123144422758-sheet-mars.rise-cover-preview-draft.jpg",
@@ -47,63 +82,6 @@
    "format": "preview",
    "diag": "beauty",
    "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:43:14.688Z",
-   "file": "20261123144314688-frame-f01879-draft.jpg",
-   "source": "out/work/sheets/.frames-usOJ9m/f01879-draft.png",
-   "kind": "frame",
-   "label": "earth.dive frame 1879, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1879,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:42:41.012Z",
-   "file": "20261123144241012-sheet-mars.dive-cover-preview-draft.jpg",
-   "source": "out/work/sheets/mars.dive-cover-preview-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet mars.dive, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "first": 2449,
-   "last": 2460,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:42:23.313Z",
-   "file": "20261123144223313-frame-f02449-draft.jpg",
-   "source": "out/work/sheets/.frames-C0vrbE/f02449-draft.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2449, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2449,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "c5fbc65c8302b556"
-  },
-  {
-   "time": "2026-11-23T14:29:27.666Z",
-   "file": "20261123142927666-note-m3-f02580-beside-kept.jpg",
-   "source": "out/work/e4/m3-f02580-beside-kept.png",
-   "kind": "note",
-   "label": "mars 2580 (terrain) at draft, same bytes as the frozen build, beside the kept still"
-  },
-  {
-   "time": "2026-11-23T14:29:27.012Z",
-   "file": "20261123142927012-note-m3-f02325-beside-kept.jpg",
-   "source": "out/work/e4/m3-f02325-beside-kept.png",
-   "kind": "note",
-   "label": "mars 2325 (hold) at draft, same bytes as the frozen build, beside the kept still"
   }
  ]
 }
