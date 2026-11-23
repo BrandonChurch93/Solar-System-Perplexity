@@ -1,5 +1,5 @@
 {
-  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii.",
+  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii. approach: how the close view comes to the surface view and leaves it. At the first frame of the surface view the camera is the surface view's own camera with its own speed; before it (dive) and after its last frame (rise) the camera is that flight carried on, plus height units up and back units behind along the heading, both times the share of seconds outside the surface view raised to power, so speed and turn rate have no step. Over track seconds the camera takes up a look at the vortex that keeps it where it stands in the frame at that first or last frame. handover: the options of the engine's handover per kind (assets-src/shared/HANDOVER-NOTES.md). freeze.releaseAfterRise: seconds after the handover of the rise from which the frozen flow time is led back to the running one, reached at the end of the rise. plates.fadeUnitsPerPixel: the globe shows the plates of the place (the same four the surface view reads, same chart, same weights) instead of its own imagery where a pixel covers less than the second number of units on the ground, not at all over the first. exposure.ratio: per channel, the light of the surface view's plates over the globe's light on the same plates at the handover (measured on stills of both sides); the globe is multiplied by it to the power of a share that runs smoothly from 0 at the start of the dive to 1 at the first frame of the surface view, the close side by it to the power of the share minus 1, and the same back in the rise, so the exposure is one function of time with no step at the handover.",
   "oval": {
     "lon": -26.628,
     "lat": -5.783
@@ -10,7 +10,8 @@
   ],
   "freeze": {
     "afterDiveStart": 0,
-    "easeSeconds": 0.5
+    "easeSeconds": 0.5,
+    "releaseAfterRise": 0.4
   },
   "handover": {
     "dive": {
@@ -61,5 +62,41 @@
     ],
     "radiusUnits": 331.94631945631824,
     "twinHeight": 0.003012535284734774
+  },
+  "approach": {
+    "dive": {
+      "seconds": 1.2,
+      "height": 12.5,
+      "back": 8.2,
+      "power": 2.5,
+      "track": 0.4
+    },
+    "rise": {
+      "seconds": 1.0,
+      "height": 13.0,
+      "back": 7.3,
+      "power": 2.5,
+      "track": 0.4
+    }
+  },
+  "plates": {
+    "fadeUnitsPerPixel": [
+      0.5,
+      0.2
+    ]
+  },
+  "exposure": {
+    "ratio": {
+      "dive": [
+        0.42,
+        0.467,
+        0.607
+      ],
+      "rise": [
+        0.487,
+        0.537,
+        0.69
+      ]
+    }
   }
 }

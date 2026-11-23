@@ -5,6 +5,45 @@ import deck from './deck.json'
 import fields from './deck-fields.json'
 
 const OCTAVES = 10
+const ABOVE_KNOTS = deck.above.gain.length
+
+export const DETAIL_GLSL = /* glsl */ `
+vec2 spot(ivec2 p) {
+  uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
+  h ^= h >> 15;
+  h *= 0x2C1B3C6Du;
+  h ^= h >> 12;
+  h *= 0x297A2D39u;
+  h ^= h >> 15;
+  uint k = h * 0x9E3779B1u;
+  k ^= k >> 16;
+  return vec2(float(h), float(k)) * (1.0 / 4294967296.0);
+}
+vec3 made(vec2 g, float cut, float least) {
+  int k0 = max(int(floor(log2(uDetail.x / (1.4 * cut)))), 0);
+  int k1 = min(int(ceil(log2(uDetail.x / least))), ${OCTAVES - 1});
+  vec3 sum = vec3(0.0);
+  for (int k = k0; k <= k1; k++) {
+    float wave = uDetail.x * exp2(-float(k));
+    float use = (1.0 - smoothstep(0.7 * cut, 1.4 * cut, wave)) * smoothstep(least, 1.6 * least, wave);
+    float a = 0.6 * float(k);
+    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
+    vec2 q = (turn * g) / wave + vec2(17.3, -9.1) * float(k);
+    vec2 base = floor(q);
+    ivec2 cell = ivec2(base);
+    vec2 f = q - base;
+    float best = 8.0;
+    vec2 to = vec2(0.0);
+    for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
+      vec2 r = vec2(float(i), float(j)) + spot(cell + ivec2(i, j)) - f;
+      float d = dot(r, r);
+      if (d < best) { best = d; to = r; }
+    }
+    sum += use * pow(wave / cut, uDetailLook.y) * vec3(2.0 * (to * turn), uDetailLook.x - best);
+  }
+  return sum;
+}
+`
 
 const VERT = /* glsl */ `
 uniform vec3 uS;
@@ -67,6 +106,7 @@ uniform float uGrad;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
+uniform float uDetailHigh;
 uniform vec3 uFoot;
 uniform vec2 uSunAz;
 uniform sampler2D uLimb;
@@ -76,6 +116,14 @@ uniform sampler2D uAir;
 uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
+uniform vec2 uAirLift;
+uniform vec3 uAboveGain[${ABOVE_KNOTS}];
+uniform vec3 uAboveAir[${ABOVE_KNOTS}];
+uniform sampler2D uTone;
+uniform vec4 uToneBox;
+uniform vec3 uToneLift;
+uniform vec2 uToneRim;
+uniform vec4 uToneRimNoise;
 uniform vec3 uExpose;
 uniform float uGain;
 uniform float uVignette;
@@ -153,6 +201,12 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
   float near = 1.0 / max(-q.z, 1e-6);
   vec2 at = uFitWindow.x * q.xy * near;
   float edge = q.z < 0.0 ? smoothstep(uFitWindow.w, uTrust.w, min(uFitWindow.y - abs(at.x), uFitWindow.z - abs(at.y))) : 0.0;
+  float toned = smoothstep(uToneLift.x, uToneLift.y, above(vEye));
+  for (int i = 0; i < (toned > 0.0 && edge > 0.0 ? 1 : 0); i++) {
+    vec2 inner = atan(uFitWindow.yz / uFitWindow.x) - atan(abs(at) / uFitWindow.x);
+    float moved = (vnoise(p.xy / uToneRimNoise.x) - 0.5) * uToneRimNoise.y + (vnoise(p.xy / uToneRimNoise.z + 37.0) - 0.5) * uToneRimNoise.w;
+    edge *= mix(1.0, smoothstep(uToneRim.x, uToneRim.y, min(inner.x, inner.y) + moved), toned);
+  }
   for (int i = 0; i < (inside && edge > 0.0 ? 1 : 0); i++) {
     vec2 spot = at + vec2(0.5, -0.5);
     vec2 cell = (uFitWindow.yz + spot) / uRangeShape.x - 0.5;
@@ -199,41 +253,11 @@ vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   size = exp2(wf * log2(uTexel.x) + wn * log2(uTexel.y) + wm * log2(uTexel.z) + wr * log2(uTexel.w));
   return c;
 }
-vec2 spot(ivec2 p) {
-  uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
-  h ^= h >> 15;
-  h *= 0x2C1B3C6Du;
-  h ^= h >> 12;
-  h *= 0x297A2D39u;
-  h ^= h >> 15;
-  uint k = h * 0x9E3779B1u;
-  k ^= k >> 16;
-  return vec2(float(h), float(k)) * (1.0 / 4294967296.0);
+vec3 toneAt(vec2 g) {
+  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
+  return uToneBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
-vec3 made(vec2 g, float cut, float least) {
-  int k0 = max(int(floor(log2(uDetail.x / (1.4 * cut)))), 0);
-  int k1 = min(int(ceil(log2(uDetail.x / least))), ${OCTAVES - 1});
-  vec3 sum = vec3(0.0);
-  for (int k = k0; k <= k1; k++) {
-    float wave = uDetail.x * exp2(-float(k));
-    float use = (1.0 - smoothstep(0.7 * cut, 1.4 * cut, wave)) * smoothstep(least, 1.6 * least, wave);
-    float a = 0.6 * float(k);
-    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
-    vec2 q = (turn * g) / wave + vec2(17.3, -9.1) * float(k);
-    vec2 base = floor(q);
-    ivec2 cell = ivec2(base);
-    vec2 f = q - base;
-    float best = 8.0;
-    vec2 to = vec2(0.0);
-    for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
-      vec2 r = vec2(float(i), float(j)) + spot(cell + ivec2(i, j)) - f;
-      float d = dot(r, r);
-      if (d < best) { best = d; to = r; }
-    }
-    sum += use * pow(wave / cut, uDetailLook.y) * vec3(2.0 * (to * turn), uDetailLook.x - best);
-  }
-  return sum;
-}
+${DETAIL_GLSL}
 void main() {
   vec3 D = normalize(vDir);
   vec3 E = vEye;
@@ -324,16 +348,30 @@ void main() {
       through = vec3(texture(uAirThrough, vec2(0.5, row)).r, texture(uAirThrough, vec2(0.5, row + 1.0 / 3.0)).r, texture(uAirThrough, vec2(0.5, row + 2.0 / 3.0)).r);
       added = vec3(texture(uAir, vec2(column, row)).r, texture(uAir, vec2(column, row + 1.0 / 3.0)).r, texture(uAir, vec2(column, row + 2.0 / 3.0)).r);
     }
+    float thin = smoothstep(uAirLift.x, uAirLift.y, above(E));
+    for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
+      through = mix(through, vec3(1.0), thin);
+      added *= 1.0 - thin;
+    }
     float size = mix(sizePlate, resolved, seen.a);
     int taps = int(clamp(ceil(major / (uFoot.y * minor)), 1.0, uFoot.z));
     float span = max(minor, major / float(taps));
     float cut = uDetail.z * size;
-    float least = uDetail.w * span;
+    float toned = smoothstep(uToneLift.x, uToneLift.y, above(E));
+    float least = mix(uDetail.w, uDetailHigh, toned) * span;
     float on = smoothstep(least, 2.0 * least, cut);
     vec3 fineSum = vec3(0.0);
     for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
     float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, uSunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
-    col = mix(unfilm(plate.rgb) * shade * through + added, seen.rgb * fine * shade, seen.a);
+    vec3 ground = unfilm(plate.rgb);
+    for (int i = 0; i < (toned > 0.0 && seen.a < 1.0 ? 1 : 0); i++) ground *= mix(vec3(1.0), toneAt(g), toned);
+    col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
+    for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
+      float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
+      int low = int(min(floor(knot), ${ABOVE_KNOTS - 2}.0));
+      float part = knot - float(low);
+      col = mix(col, col * mix(uAboveGain[low], uAboveGain[low + 1], part) + mix(uAboveAir[low], uAboveAir[low + 1], part), thin);
+    }
     float kept = mix(major / sizePlate, countView, seen.a) / uGrad;
     texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
     col *= uExpose;
@@ -420,6 +458,11 @@ export class CloudDeck {
     const glow = new Float32Array(3 * lr * lk[2]!)
     for (let ch = 0; ch < 3; ch++) for (let j = 0; j < lr; j++) for (let i = 0; i < lk[2]!; i++) glow[(ch * lr + j) * lk[2]! + i] = fields.limb.table[j]![i]![ch]!
     const vp = (v.pixels as Record<string, number[]>)[ctx.assets]!
+    const tn = deck.tone
+    const toneRaw = new Uint16Array(await ctx.buffer(base + 'deck-tone.bin'))
+    if (toneRaw.length !== 3 * tn.pixels * tn.pixels) throw new Error('deck tone size mismatch')
+    const tone = new Float32Array(toneRaw.length)
+    for (let i = 0; i < toneRaw.length; i++) tone[i] = toneRaw[i]! / 65535
     const air = fields.air
     const [as, ad] = air.knots as [number, number]
     const added = new Float32Array(3 * as * ad)
@@ -457,6 +500,7 @@ export class CloudDeck {
       uDetail: { value: new THREE.Vector4().fromArray(l.detail) },
       uDetailLook: { value: new THREE.Vector4().fromArray(l.detailLook) },
       uDetailTone: { value: l.detailTone },
+      uDetailHigh: { value: l.detailHigh },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
       uSunAz: { value: new THREE.Vector2(Math.cos(az), Math.sin(az)) },
       uLimb: { value: ctx.floatTexture(glow, lk[2]!, 3 * lr) },
@@ -466,6 +510,14 @@ export class CloudDeck {
       uAirThrough: { value: ctx.floatTexture(through, 1, 3 * as) },
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
+      uAirLift: { value: new THREE.Vector2().fromArray(deck.air.lift) },
+      uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
+      uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
+      uTone: { value: ctx.floatTexture(tone, tn.pixels, 3 * tn.pixels) },
+      uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
+      uToneLift: { value: new THREE.Vector3(tn.lift[0]!, tn.lift[1]!, 0.5 / tn.pixels) },
+      uToneRim: { value: new THREE.Vector2(THREE.MathUtils.degToRad(tn.rim[0]!), THREE.MathUtils.degToRad(tn.rim[1]!)) },
+      uToneRimNoise: { value: new THREE.Vector4(tn.rimNoise[0]!, THREE.MathUtils.degToRad(tn.rimNoise[1]!), tn.rimNoise[2]!, THREE.MathUtils.degToRad(tn.rimNoise[3]!)) },
       uExpose: { value: new THREE.Vector3(1, 1, 1) },
       uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform,
     })

@@ -6,13 +6,12 @@ import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
 import { CloudDeck } from './clouds'
-import type { DeckMeta } from './deck'
 import { Globe } from './globe'
 import { Io } from './io'
-import { Pall } from './pall'
 import * as look from './look'
+import fields from './deck-fields.json'
+import place from './place.json'
 import { exposure, plan } from './plan'
-import reliefJson from './relief.json'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -41,6 +40,9 @@ export const createSet: SetFactory = async (ctx) => {
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
+  const ground = await CloudDeck.load(ctx, base)
+  terrain.add(ground.mesh)
+
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
     curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, shadowTip: look.shadowTip, shadowToe: look.shadowToe, shadowHaze: look.shadowHaze, nightRim: look.nightRim, litEdge: look.litEdge, haze: look.haze, edge: look.edge, limbLit: look.limbLit,
@@ -48,6 +50,7 @@ export const createSet: SetFactory = async (ctx) => {
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
     pallShell: plan.p.coverShell ?? [1, 1.015],
+    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, fade: place.plates.fadeUnitsPerPixel, grade: fields.grade, uniforms: ground.material.uniforms },
     patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -62,16 +65,29 @@ export const createSet: SetFactory = async (ctx) => {
   const far = new FarPoint()
   orbit.add(far.points)
 
-  const ground = await CloudDeck.load(ctx, base)
-  terrain.add(ground.mesh)
-
-  const orbitShell = plan.p.coverShell ?? [1, 1.015]
-  const nadir = (reliefJson as DeckMeta).nadir
-  const seaRadius = (reliefJson as DeckMeta).radius
-  const pall = new Pall(plan, look.deck.pall, { centre: [nadir[0]! * (seaRadius + 1), nadir[1]! * (seaRadius + 1), nadir[2]! * (seaRadius + 1)], radius: seaRadius, orbitShell })
-  const riseMid = (plan.seg.rise.start + plan.seg.rise.end) / 2
-  const riseCover = plan.coverCenter(plan.seg.rise)
-  const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const dive = plan.seg.dive!
+  const land = plan.seg.terrain
+  const rise = plan.seg.rise
+  const riseMid = (rise.start + rise.end) / 2
+  const terrainMid = (land.start + land.end) / 2
+  const freezeAt = dive.start + place.freeze.afterDiveStart
+  const release = plan.coverCenter(rise) + place.freeze.releaseAfterRise
+  const flowTime = (time: number): number => {
+    if (time <= freezeAt) return settle(time - plan.holdMid, look.flow.settle)
+    if (time < terrainMid) {
+      const s = Math.min(time - freezeAt, place.freeze.easeSeconds)
+      return settle(freezeAt - plan.holdMid + s - s * s / (2 * place.freeze.easeSeconds), look.flow.settle)
+    }
+    const free = settle(time - riseMid, look.flow.settle)
+    if (time >= rise.end) return free
+    return place.solved.local + (free - place.solved.local) * smooth((time - release) / (rise.end - release))
+  }
+  const ramp = (time: number): number => (time < terrainMid ? smooth((time - dive.start) / (land.start - dive.start)) : 1 - smooth((time - land.end) / (rise.end - land.end)))
+  const ratio = (time: number): number[] => {
+    const kind = time < terrainMid ? 'dive' : 'rise'
+    const flown = exposure(kind === 'dive' ? land.start - terrainMid : land.end - terrainMid)
+    return place.exposure.ratio[kind].map((v) => v * flown)
+  }
   const holdTurn = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion
   const glowHome = new THREE.Vector3().fromArray(look.glowDir).normalize().applyQuaternion(holdTurn)
   const moonHome = new THREE.Vector3().fromArray(look.moonSun).normalize()
@@ -102,8 +118,11 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      const share = ramp(state.time)
+      const r = ratio(state.time)
       if (!inOrbit) {
         ground.update(gain * exposure(state.time - terrainMid), shot.post.vignette, view)
+        ;(ground.material.uniforms.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -111,8 +130,11 @@ export const createSet: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
-      const local = settle(state.time < terrainMid ? elapsed : state.time - riseMid, look.flow.settle)
+      const local = flowTime(state.time)
       const gu = globe.material.uniforms
+      const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
+      ;(gu.uPlace!.value as THREE.Vector4).w = own ? 1 : 0
+      ;(gu.uGrade!.value as THREE.Vector3).set(Math.pow(r[0]!, share), Math.pow(r[1]!, share), Math.pow(r[2]!, share))
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local
       gu.uWispT!.value = look.flow.wispTilesPerSecond * elapsed
@@ -133,24 +155,19 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(camera, light, plan.spin(state.time), gain, state.weight)
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = view.format.width / view.format.height
-      pall.apply(gu, state.segment, state.time, 'orbit', view.camera.fov, view.format.width / view.format.height)
       const along = ioWorld.dot(moonLight)
       const eclipse = along < 0 ? 1 - smooth((across.copy(ioWorld).addScaledVector(moonLight, -along).length() - 0.97) / 0.06) : 0
       toPlanet.copy(ioWorld).negate().normalize()
       io.update(moonLight, toPlanet, eclipse, gain * state.weight, shot.post.vignette, view.format.width / view.format.height, ioCentre.copy(world.position).add(ioWorld), world.position)
       glowDir.copy(glowHome).applyQuaternion(state.rotation).lerp(light, lit).normalize()
-      const clearing = Math.pow(1 - (gu.uPall!.value as THREE.Vector4).x, 2)
       for (const s of shells) {
         const su = s.material.uniforms
         ;(su.uCam!.value as THREE.Vector3).copy(camera)
         ;(su.uSunW!.value as THREE.Vector3).copy(glowDir)
         ;(su.uCoreSun!.value as THREE.Vector3).copy(glowDir)
-        su.uGain!.value = gain * state.weight * clearing
+        su.uGain!.value = gain * state.weight
       }
       const distance = world.position.length()
-      const veil = gu.uVeil!.value as THREE.Vector4
-      veil.x = (state.time < riseCover ? 1 : look.veil.rise) * look.veil.amount * smooth((look.veil.from - (distance - 1)) / (look.veil.from - look.veil.to))
-      veil.w = look.veil.drift * elapsed
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible

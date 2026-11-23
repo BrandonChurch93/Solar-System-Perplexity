@@ -3,6 +3,7 @@ import { HAZE_GLSL, hazeUniforms, type HazeParams } from '../../bodies/haze'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import { DETAIL_GLSL } from './clouds'
 import { PALL_GLSL, pallUniforms } from './pall'
 
 export const CURVE_KNOTS = 33
@@ -16,6 +17,16 @@ export interface PatchSet {
   widthsDeg: number[]
   feather: number
   fade: [number, number]
+}
+
+export interface PlaceSet {
+  n: number[]
+  e: number[]
+  u: number[]
+  radius: number
+  fade: number[]
+  grade: number[]
+  uniforms: Record<string, THREE.IUniform>
 }
 
 export interface SpotShape {
@@ -58,6 +69,7 @@ export interface GlobeOptions {
   spot: SpotShape
   wisp: WispParams
   patches?: PatchSet
+  place: PlaceSet
   veil: { color: [number, number, number]; height: number; repeats: number }
   limbLit: [number, number, number]
   edge: { pixels: number; inset: number; rim: number; cap: number; air: [number, number, number, number]; soft: [number, number]; low?: { sun: [number, number, number, number]; pixels: number; air: number; scale: number } }
@@ -150,6 +162,31 @@ uniform vec4 uLowSun;
 uniform vec3 uLowEdge;
 uniform float uVignette;
 uniform float uAspect;
+uniform sampler2D uPlateFore;
+uniform sampler2D uPlateNear;
+uniform sampler2D uPlateMid;
+uniform sampler2D uPlateFar;
+uniform vec4 uPlateBoxFore;
+uniform vec4 uPlateBoxNear;
+uniform vec4 uPlateBoxMid;
+uniform vec4 uPlateBoxFar;
+uniform vec4 uPlateTexel;
+uniform vec2 uPlateJoin;
+uniform vec3 uPlateGrade;
+uniform sampler2D uTone;
+uniform vec4 uToneBox;
+uniform vec3 uToneLift;
+uniform vec4 uDetail;
+uniform vec4 uDetailLook;
+uniform float uDetailTone;
+uniform float uDetailHigh;
+uniform vec3 uFoot;
+uniform vec2 uSunAz;
+uniform vec3 uPlaceN;
+uniform vec3 uPlaceE;
+uniform vec3 uPlaceU;
+uniform vec4 uPlace;
+uniform vec3 uGrade;
 in vec3 vClip;
 in vec3 vPos;
 in vec3 vView;
@@ -159,6 +196,7 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${HAZE_GLSL}
 ${PALL_GLSL}
+${DETAIL_GLSL}
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
   return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
@@ -255,6 +293,55 @@ void main() {
 ${PATCH_LEVELS}
   }
   vec3 lin = inverseFilmic(albedo);
+  float placed = 0.0;
+  for (int k = 0; k < (uPlace.w > 0.0 ? 1 : 0); k++) {
+    vec2 c = vec2(dot(d, uPlaceE), dot(d, uPlaceU)) * uPlace.x;
+    vec2 cx = dFdx(c);
+    vec2 cy = dFdy(c);
+    float foot = sqrt(max(dot(cx, cx), dot(cy, cy)));
+    vec2 r = abs(c - uPlateBoxFar.xy) * (2.0 * uPlateBoxFar.z);
+    placed = uPlace.w * step(0.5, dot(d, uPlaceN)) * (1.0 - smoothstep(uPlace.z, uPlace.y, foot)) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(r.x, r.y)));
+    for (int j = 0; j < (placed > 0.0 ? 1 : 0); j++) {
+      vec2 f = abs(c - uPlateBoxFore.xy) * (2.0 * uPlateBoxFore.zw);
+      vec2 a = abs(c - uPlateBoxNear.xy) * (2.0 * uPlateBoxNear.z);
+      vec2 b = abs(c - uPlateBoxMid.xy) * (2.0 * uPlateBoxMid.z);
+      float wf = 1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(f.x, f.y));
+      float wn = (1.0 - wf) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(a.x, a.y)));
+      float wm = (1.0 - wf - wn) * (1.0 - smoothstep(uPlateJoin.x, uPlateJoin.y, max(b.x, b.y)));
+      float wr = 1.0 - wf - wn - wm;
+      vec2 px = cx * uGrad;
+      vec2 py = cy * uGrad;
+      vec4 plate = vec4(0.0);
+      for (int i = 0; i < (wf > 0.0 ? 1 : 0); i++) plate += wf * textureGrad(uPlateFore, (c - uPlateBoxFore.xy) * uPlateBoxFore.zw + 0.5, px * uPlateBoxFore.zw, py * uPlateBoxFore.zw);
+      for (int i = 0; i < (wn > 0.0 ? 1 : 0); i++) plate += wn * textureGrad(uPlateNear, (c - uPlateBoxNear.xy) * uPlateBoxNear.z + 0.5, px * uPlateBoxNear.z, py * uPlateBoxNear.z);
+      for (int i = 0; i < (wm > 0.0 ? 1 : 0); i++) plate += wm * textureGrad(uPlateMid, (c - uPlateBoxMid.xy) * uPlateBoxMid.z + 0.5, px * uPlateBoxMid.z, py * uPlateBoxMid.z);
+      for (int i = 0; i < (wr > 0.0 ? 1 : 0); i++) plate += wr * textureGrad(uPlateFar, (c - uPlateBoxFar.xy) * uPlateBoxFar.z + 0.5, px * uPlateBoxFar.z, py * uPlateBoxFar.z);
+      float size = exp2(wf * log2(uPlateTexel.x) + wn * log2(uPlateTexel.y) + wm * log2(uPlateTexel.z) + wr * log2(uPlateTexel.w));
+      float high = smoothstep(uToneLift.x, uToneLift.y, (length(uCam) - 1.0) * uPlace.x);
+      float m00 = px.x * px.x + py.x * py.x;
+      float m11 = px.y * px.y + py.y * py.y;
+      float m01 = px.x * px.y + py.x * py.y;
+      float mean = 0.5 * (m00 + m11);
+      float diff = sqrt(0.25 * (m00 - m11) * (m00 - m11) + m01 * m01);
+      float major = sqrt(mean + diff);
+      float minor = sqrt(max(mean - diff, 1e-14));
+      vec2 lead = m00 > m11 ? vec2(mean + diff - m11, m01) : vec2(m01, mean + diff - m00);
+      float reach = length(lead);
+      vec2 axis = reach > 0.0 ? lead / reach : vec2(1.0, 0.0);
+      int taps = int(clamp(ceil(major / (uFoot.y * minor)), 1.0, uFoot.z));
+      float span = max(minor, major / float(taps));
+      float cut = uDetail.z * size;
+      float least = mix(uDetail.w, uDetailHigh, high) * span;
+      float on = smoothstep(least, 2.0 * least, cut);
+      vec3 fineSum = vec3(0.0);
+      for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(c + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
+      float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, uSunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
+      vec2 tv = clamp(vec2(c.x - uToneBox.x, uToneBox.y - c.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z);
+      vec3 tone = mix(vec3(1.0), uToneBox.w * vec3(texture(uTone, vec2(tv.x, tv.y / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 1.0) / 3.0)).r, texture(uTone, vec2(tv.x, (tv.y + 2.0) / 3.0)).r), high);
+      lin = mix(lin, inverseFilmic(plate.rgb) * uPlateGrade * tone * shade, placed);
+      texels = mix(texels, max(foot / size, on * 2.0 * span / (uGrad * 1.6 * least)), step(0.5, placed));
+    }
+  }
   float lat = asin(clamp(df.y, -1.0, 1.0));
   float lon = atan(df.x, df.z);
   float band = clamp(fl.x * uWispShape.w, -1.0, 1.0);
@@ -277,7 +364,7 @@ ${PATCH_LEVELS}
   float body = fine.r + (fine.g - 0.5) * uWispShadow.w;
   float shade2 = textureGrad(uWisp, wuv + toSun, wdx * uWispShadow.z, wdy * uWispShadow.z).r;
   float wisp = ((body - 0.5) * uWispShape.z - (shade2 - 0.5) * uWispShadow.x) * max(steady, fl.z * 0.6) * calm;
-  lin *= max(1.0 + wisp * (1.0 - soft), 0.0);
+  lin *= max(1.0 + wisp * (1.0 - soft) * (1.0 - placed), 0.0);
   vec3 direct = curveAt(ndl) * mix(vec3(1.0), limbAt(mu), uLimbAmount * mix(uLimbLit.x, 1.0, smoothstep(uLimbLit.y, uLimbLit.z, ndl)));
   float umbra = moonShadow(n, ndl);
   vec3 col = (lin * knee(direct) * (1.0 - umbra) + uNight * (1.0 - uShadowHaze.y * umbra) * mix(1.0, dot(lin, vec3(0.2126, 0.7152, 0.0722)) / dot(uNightRef.rgb, vec3(0.2126, 0.7152, 0.0722)), uNightRef.a)) * uTint;
@@ -298,7 +385,7 @@ ${PATCH_LEVELS}
   float cover = inside + (1.0 - inside) * air;
   col *= mix(min(1.0, uEdge.w / max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), 1.0, inside);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  col *= uGrade * (uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette));
   for (int k = 0; k < (uPall.x > 0.0 ? 1 : 0); k++) {
     vec4 cloud = pall(vClip.xy / vClip.z);
     cloud.rgb *= max(smoothstep(uPallLit.x, uPallLit.y, ndl), uPallLit.z);
@@ -370,6 +457,15 @@ export class Globe {
         uWispPolar: { value: new THREE.Vector2(rad(w.polarFrom), rad(w.polarTo)) },
         uExtinction: { value: o.haze.extinction },
         uToBody: { value: this.toBody }, uEdge: { value: new THREE.Vector4(o.edge.pixels, o.edge.inset, o.edge.rim, o.edge.cap) }, uAir: { value: new THREE.Vector4().fromArray(o.edge.air) }, uLowSun: { value: new THREE.Vector4().fromArray(o.edge.low?.sun ?? [2, 3, 2, 3]) }, uLowEdge: { value: new THREE.Vector3(o.edge.low?.pixels ?? o.edge.pixels, o.edge.low?.air ?? 0, o.edge.low?.scale ?? 1) },
+        uPlateFore: o.place.uniforms.uPlateFore!, uPlateNear: o.place.uniforms.uPlateNear!, uPlateMid: o.place.uniforms.uPlateMid!, uPlateFar: o.place.uniforms.uPlateFar!,
+        uPlateBoxFore: o.place.uniforms.uFore!, uPlateBoxNear: o.place.uniforms.uNear!, uPlateBoxMid: o.place.uniforms.uMid!, uPlateBoxFar: o.place.uniforms.uFar!,
+        uPlateTexel: o.place.uniforms.uTexel!, uPlateJoin: o.place.uniforms.uJoin!,
+        uTone: o.place.uniforms.uTone!, uToneBox: o.place.uniforms.uToneBox!, uToneLift: o.place.uniforms.uToneLift!,
+        uDetail: o.place.uniforms.uDetail!, uDetailLook: o.place.uniforms.uDetailLook!, uDetailTone: o.place.uniforms.uDetailTone!, uDetailHigh: o.place.uniforms.uDetailHigh!, uFoot: o.place.uniforms.uFoot!, uSunAz: o.place.uniforms.uSunAz!,
+        uPlateGrade: { value: new THREE.Vector3(1 / o.place.grade[0]!, 1 / o.place.grade[1]!, 1 / o.place.grade[2]!) },
+        uPlaceN: { value: new THREE.Vector3().fromArray(o.place.n) }, uPlaceE: { value: new THREE.Vector3().fromArray(o.place.e) }, uPlaceU: { value: new THREE.Vector3().fromArray(o.place.u) },
+        uPlace: { value: new THREE.Vector4(o.place.radius, o.place.fade[0]!, o.place.fade[1]!, 0) },
+        uGrade: { value: new THREE.Vector3(1, 1, 1) },
         uDiag: diagUniform, uGrad: gradUniform,
         ...pallUniforms(o.pallShell),
       },
