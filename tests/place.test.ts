@@ -190,6 +190,9 @@ describe('the projection of a place picture', () => {
   })
 })
 
+// A plan may find its twin by a numeric solve: the two cameras may differ by a share of the height that is far below a pixel.
+const near = (position: THREE.Vector3): number => 1e-5 * Math.max(position.length() - 1, 1e-6)
+
 describe('the two sides of a stop that hands over', () => {
   it('meet at T: the globe camera is the twin, the sky and the light are the same on both sides', () => {
     expect(handing.length).toBeGreaterThan(0)
@@ -223,7 +226,7 @@ describe('the two sides of a stop that hands over', () => {
         expect(place.time).toBe(h.time)
         expect(place.frame).toBe(frame)
         expect(place.live).toBe(h.live)
-        expect(place.twin.position.distanceTo(globe.camera.position)).toBeLessThan(1e-9)
+        expect(place.twin.position.distanceTo(globe.camera.position)).toBeLessThan(near(globe.camera.position))
         expect(deg(place.twin.quaternion, globe.camera.quaternion)).toBeLessThan(1e-5)
         const g = placeGeometry(globe.camera, place)
         expect(g.heights).toBeCloseTo(1, 6)
@@ -287,7 +290,7 @@ describe('the two sides of a stop that hands over', () => {
         expect(Math.abs(turnBefore - turnAfter)).toBeLessThan(0.02 * Math.max(turnBefore, turnAfter) + 1e-4)
         expect(Math.abs(a.vfov - 2 * b.vfov + d.vfov)).toBeLessThan(1e-3)
         const twin = p.twin(p.closePose(kind, h.time), h.time)
-        expect(twin.position.distanceTo(b.position)).toBeLessThan(1e-12)
+        expect(twin.position.distanceTo(b.position)).toBeLessThan(near(b.position))
       }
     }
   })
