@@ -1,13 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T07:27:04.756Z",
- "head": "18520d80ed4a06937c3ffcc084258155ce586cca",
- "note": "M1: twin solved, globe side with first plates and the deck light beside the close side at 4199 and 4164; ground matches within 1 px, sky and limb glow still differ",
+ "pushed": "2026-11-23T07:45:09.712Z",
+ "head": "cca3cfd440ccbc2b30bd66a7ff1bc7e77b5bea37",
+ "note": "S2 first top down sheet, rough plates, bad: square sticker and black light from above, rebuild in progress",
  "looks": [
   {
-   "time": "2026-11-23T07:25:58.128Z",
-   "file": "20261123072558128-frame-final-4035.jpg",
-   "source": "out/work/u/s1/final-4035.jpg",
+   "time": "2026-11-23T07:45:08.697Z",
+   "file": "20261123074508697-note-down-a.jpg",
+   "source": "out/work/u/down/down-a.jpg",
+   "kind": "note",
+   "label": "S2 first top down dive sheet, rough M1 plates, main cf300549. BAD: plates read as a square sticker of diagonal streaks, deck light goes black from straight above. Being rebuilt.",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T07:43:16.411Z",
+   "file": "20261123074316411-frame-a-4199.jpg",
+   "source": "out/work/u/down/a-4199.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4199, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4199,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:30:56.585Z",
+   "file": "20261123073056585-frame-final-4290.jpg",
+   "source": "out/work/u/s1/final-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
+  {
+   "time": "2026-11-23T07:29:07.236Z",
+   "file": "20261123072907236-frame-final-4035.jpg",
+   "source": "out/work/u/s1/final-4035.png",
    "kind": "frame",
    "label": "uranus.hold frame 4035, final tier",
    "stop": "uranus",
@@ -43,47 +79,11 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T07:23:56.446Z",
-   "file": "20261123072356446-frame-norm-4290.jpg",
-   "source": "out/work/u/s1/norm-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:18:35.675Z",
-   "file": "20261123071835675-frame-plate-4164.jpg",
-   "source": "out/work/u/s1/plate-4164.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4164, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4164,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
    "time": "2026-11-23T07:13:18.698Z",
    "file": "20261123071318698-note-laid-sheet.jpg",
    "source": "out/work/u/place/laid-sheet.jpg",
    "kind": "note",
    "label": "S2 first lay back, main 6da6c641: the deck albedo as four nested top down plates, 28 to 3.5 deg wide, not repainted yet",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:13:16.766Z",
-   "file": "20261123071316766-note-check-4199.jpg",
-   "source": "out/work/u/s1/check-4199.jpg",
-   "kind": "note",
-   "label": "S1 check, frame 4199, main 6da6c641: globe side from the twin beside the close side; horizon of the close side 4.9 px below the globe (2 to 8), 0.2 px with the globe made round",
    "stop": "uranus"
   }
  ]
