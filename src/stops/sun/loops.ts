@@ -105,6 +105,9 @@ uniform float uLifeOn;
 uniform vec4 uSway;
 uniform vec4 uSwayRate;
 uniform vec4 uSwayLane;
+uniform vec4 uRing;
+uniform vec4 uRingRest;
+uniform float uRingRound;
 uniform vec4 uStream;
 uniform vec4 uStreamEnds;
 uniform vec4 uStreamLayer[2];
@@ -119,6 +122,12 @@ uniform vec4 uRain;
 uniform vec4 uRainMore;
 uniform vec4 uRainLane;
 uniform vec3 uGusts[4];
+uniform vec4 uRace;
+uniform vec4 uRaceMore;
+uniform vec4 uRaceGust;
+uniform vec2 uRaceGlow;
+uniform float uRaceThin;
+uniform vec2 uRaceLow;
 uniform vec4 uFootLife;
 uniform vec4 uCore;
 in vec3 vStage;
@@ -136,6 +145,12 @@ float lh(float a, float b) {
 }
 // The arcade breathes and sways: the place the picture is read from moves across the strands, by a wave
 // that runs over the strands, so neighbours move against each other. Nothing moves at the feet.
+float sway(float t, float arc, float along) {
+  return uSway.x * sin(uSwayRate.x * t + uSwayLane.x * arc + 2.1 * along)
+    + uSway.y * sin(uSwayRate.y * t - uSwayLane.y * arc + 0.7)
+    + uSway.z * sin(uSwayRate.z * t + uSwayLane.z * arc + 4.4 * along + 1.9)
+    + uSwayRate.w * sin(uSwayLane.w * t + 0.5);
+}
 vec2 swayed(vec2 p, float t) {
   vec2 ab = uFeet.zw - uFeet.xy;
   float apart = length(ab);
@@ -153,11 +168,17 @@ vec2 swayed(vec2 p, float t) {
   n /= max(length(n), 1e-6);
   float above = smoothstep(0.0, 0.03, dot(p - uFeet.xy, up));
   float env = pow(clamp(4.0 * along * (1.0 - along), 0.0, 1.0), uSway.w) * above;
-  float w = uSway.x * sin(uSwayRate.x * t + uSwayLane.x * arc + 2.1 * along)
-    + uSway.y * sin(uSwayRate.y * t - uSwayLane.y * arc + 0.7)
-    + uSway.z * sin(uSwayRate.z * t + uSwayLane.z * arc + 4.4 * along + 1.9)
-    + uSwayRate.w * sin(uSwayLane.w * t + 0.5);
-  return p + n * (apart * env * w * uLifeOn);
+  // The strands do not rest at the calm moment (mail 327 point 1): they pass through the pose of the picture there at
+  // their full speed. What they would be away from that pose at the calm moment is taken off, all of it at that
+  // moment and none of it outside the calm (uRingRest.z: 1 at the moment, 0 outside; uRingRest.w: the moment).
+  float pin = uRingRest.z;
+  float w = sway(t, arc, along) - pin * sway(uRingRest.w, arc, along);
+  // struck by the release and again by the thrown arc that falls back, the arcade rings (mail 327 point 1): a wave runs
+  // from the crown down both legs, bundle against bundle, and dies away. uRing: the two parts of the swing at this time,
+  // how far the wave is behind at a foot, and how far one bundle is behind the next.
+  float turn = uRing.w * arc - uRing.z * sqrt((2.0 * along - 1.0) * (2.0 * along - 1.0) + uRingRound * uRingRound);
+  float ring = (uRing.x - pin * uRingRest.x) * sin(turn) + (uRing.y - pin * uRingRest.y) * cos(turn);
+  return p + n * (apart * env * (w + ring));
 }
 // The flow along the strands (mail 241). The light of a strand is carried by clumps of plasma that run from
 // one foot over the top to the other: a clump is a bright head with a tail behind it, and every lane of
@@ -204,16 +225,19 @@ float leading(float high) {
   return mix(w * leadPick(lane) + (1.0 - w) * leadPick(floor(y + 0.5) + 0.31), uLead.y, smoothstep(0.35, 0.8, fwidth(y)));
 }
 // How bright the drop is that left the top of its lane at this time: the rain comes in gusts.
-float dropAt(float lane, float n, float launch, float side) {
+// race: the knots that the release sends down both legs (mail 327 point 2); they leave in one volley of their own.
+float dropAt(float lane, float n, float launch, float side, float race) {
   float g = uRainLane.w;
   for (int i = 0; i < 4; i++) {
     float q = (launch - uGusts[i].x) / uGusts[i].y;
     g += uGusts[i].z * exp(-q * q);
   }
-  return step(lh(lane + side * 3.0 + 0.5, n), clamp(uRainLane.z * g, 0.0, 1.0)) * (0.5 + 0.5 * lh(n, lane + 1.7 + side)) * (0.6 + 0.4 * min(g, 1.5));
+  float v = (launch - uRaceGust.x) / uRaceGust.y;
+  g = mix(g, uRaceGust.z * exp(-v * v), race);
+  return step(lh(lane + side * 3.0 + 0.5, n), clamp(mix(uRainLane.z, 1.0, race) * g, 0.0, 1.0)) * (0.5 + 0.5 * lh(n, lane + 1.7 + side)) * (0.6 + 0.4 * min(g, 1.5)) * mix(1.0, min(g, 1.0), race);
 }
 // Rain: drops that leave the top of a strand and fall down its leg, faster and longer as they fall.
-float rainFall(float arc, float s, float t, float lanes, float seed) {
+float rainFall(float arc, float s, float t, float lanes, float seed, vec4 fall, vec4 more, float race) {
   float u = abs(2.0 * s - 1.0);
   float side = step(0.5, s);
   float x = arc * lanes + seed;
@@ -222,14 +246,14 @@ float rainFall(float arc, float s, float t, float lanes, float seed) {
   float win = smoothstep(0.0, 0.3, fx) * (1.0 - smoothstep(0.7, 1.0, fx)) * (1.0 - smoothstep(0.35, 0.8, fwidth(x)));
   float h1 = lh(lane, seed + side * 11.0);
   float h2 = lh(lane, seed + 2.3 + side * 11.0);
-  float period = mix(uRainMore.x, uRainMore.y, h1);
-  float fell = sqrt(2.0 * max(u - uRain.w, 0.0) / uRain.z);
+  float period = mix(more.x, more.y, h1);
+  float fell = sqrt(2.0 * max(u - fall.w, 0.0) / fall.z);
   float d = (t - fell) / period + h2;
   float n = floor(d);
   float e = (d - n) * period;
-  float streak = dropAt(lane, n, (n - h2) * period, side) * exp(-e / uRainMore.w)
-    + dropAt(lane, n + 1.0, (n + 1.0 - h2) * period, side) * exp(-(period - e) * (period - e) / (uRainMore.z * uRainMore.z));
-  return win * smoothstep(uRain.w, uRain.w + 0.12, u) * (1.0 - smoothstep(0.96, 1.0, u)) * streak * (0.55 + 0.75 * u);
+  float streak = dropAt(lane, n, (n - h2) * period, side, race) * exp(-e / more.w)
+    + dropAt(lane, n + 1.0, (n + 1.0 - h2) * period, side, race) * exp(-(period - e) * (period - e) / (more.z * more.z));
+  return win * smoothstep(fall.w, fall.w + 0.12, u) * (1.0 - smoothstep(0.96, 1.0, u)) * streak * (0.55 + 0.75 * u);
 }
 float packets(vec2 q, float t) {
   float a = textureLod(uNoise, vec2(q.x - t * uFlow.w, fract(q.y)), 0.0).r;
@@ -278,7 +302,9 @@ void main() {
   float streamL = stream(highL, sL * spanL, spanL, uSince, uStreamLayer[0], uStreamMix[0]) * stream(highL, sL * spanL, spanL, uSince, uStreamLayer[1], uStreamMix[1]);
   float flowL = mix(1.0, streamL, onL * ends);
   float leadL = leading(highL);
-  float rainL = uRain.x * (rainFall(arc, sL, uSince, uRainLane.x, 2.71) + rainFall(arc, sL, uSince, uRainLane.y, 6.13));
+  float rainL = uRain.x * (rainFall(arc, sL, uSince, uRainLane.x, 2.71, uRain, uRainMore, 0.0) + rainFall(arc, sL, uSince, uRainLane.y, 6.13, uRain, uRainMore, 0.0));
+  float raceL = 0.0;
+  for (int k = 0; k < (uRaceGust.w > 0.0 ? 1 : 0); k++) raceL = rainFall(arc, sL, uSince, uRace.y, 4.17, uRace, uRaceMore, 1.0) + rainFall(arc, sL, uSince, uRaceGust.w, 8.9, uRace, uRaceMore, 1.0);
   // the loops of the arcade light up one after another: each from its feet to its top, then it cools
   float litL = 0.0;
   for (int k = 0; k < (uLightMore.z > 0.0 ? 1 : 0); k++) {
@@ -346,18 +372,30 @@ void main() {
   // a clump cannot burn the strand out: what it adds is bent over where the strand is bright already
   float carried = max(flowL - 1.0, 0.0);
   carried /= 1.0 + uStream.y * carried * shineL;
-  float dropL = coreL * rainL;
+  // a racing knot is a clump of strands, not one strand: it lights their cores and, softer, the strands themselves
+  // on the lower leg, where the strands run together toward the foot, a knot is its bright cores only: no veil over the foot
+  float raceLow = smoothstep(uRaceLow.x, uRaceLow.y, min(sL, 1.0 - sL));
+  float dropL = coreL * rainL + uRace.x * raceL * (uRaceGlow.y * raceLow + (1.0 - uRaceGlow.y) * coreL);
   float warm = dropL + footL + litL;
   float bent = 1.0 / (1.0 + uLightKnee.x * warm * shineL);
   warm *= bent;
   float lifeL = onL * warm;
   // the leading strands: brighter, and with a soft body from the picture seen wide, which runs with the clumps
-  float bodyL = leadL * ends * smoothstep(0.0, 0.02, abL.x * (p.y - uFeet.y) - abL.y * (p.x - uFeet.x)) * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, wideL);
+  float bodyOn = ends * smoothstep(0.0, 0.02, abL.x * (p.y - uFeet.y) - abL.y * (p.x - uFeet.x)) * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, wideL);
+  float bodyL = leadL * bodyOn;
+  // and it has a soft body from the picture seen wide, so that it reads as matter and not as a spark
+  vec3 raceBody = wideC * (uRaceGlow.x * bodyOn * raceLow * min(raceL, 1.5));
   vec3 plain = lin;
+  // the rain does not rest at the calm moment (mail 327 point 1): there its drops fall on the picture itself
+  float bentD = onL * dropL / (1.0 + uLightKnee.x * dropL * shineL);
+  vec3 wet = plain * (1.0 + bentD) + shineL * (bentD * uRain.y) * vec3(1.0, 0.9, 0.66) + raceBody;
   lin = lin * mix(1.0, mix(uLead.z, uLead.w, leadL), onL * ends) * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * bent * (dropL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66)
-    + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + uLightKnee.y * bent * litL));
+    + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + uLightKnee.y * bent * litL)) + raceBody;
   // the life's own light falls to nil round the moment named in life.json (calm): there the strands are the picture itself
-  lin = mix(plain, lin, uLifeOn);
+  lin = mix(wet, lin, uLifeOn);
+  // the knots are gathered from the strands: while the volley is on its way the strands between the knots are thinner,
+  // so the arcade as a whole is no brighter for it (frame 60 is judged beside the approved image)
+  lin *= 1.0 - uRaceThin * onL * (1.0 - min(raceL, 1.0));
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
   for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0) * (1.0 - uTrim.z * (1.0 - smoothstep(uTrim.x, uTrim.y, arc))) * (1.0 - uTrim.z * smoothstep(uPinCut.x, uPinCut.y, vPin));
@@ -531,10 +569,19 @@ export class Loops {
         uLightKnee: { value: new THREE.Vector2(arcade.lights.knee, arcade.lights.body) },
         uBound: { value: arcade.core.most },
         uLifeOn: { value: 1 },
+        uRing: { value: new THREE.Vector4(0, 0, arcade.ring.behind, arcade.ring.lanes) },
+        uRingRest: { value: new THREE.Vector4(0, 0, 0, 0) },
+        uRingRound: { value: arcade.ring.round },
         uRain: { value: new THREE.Vector4(arcade.rain.amount, arcade.rain.white, (2 * (1 - arcade.rain.from)) / (arcade.rain.fall * arcade.rain.fall), arcade.rain.from) },
         uRainMore: { value: new THREE.Vector4(arcade.rain.period[0]!, arcade.rain.period[1]!, arcade.rain.head, arcade.rain.tail) },
         uRainLane: { value: new THREE.Vector4(arcade.rain.lanes[0]!, arcade.rain.lanes[1]!, arcade.rain.share, arcade.rain.base) },
         uGusts: { value: arcade.rain.gusts.map((g) => new THREE.Vector3(g[0]!, g[1]!, g[2]!)) },
+        uRace: { value: new THREE.Vector4(arcade.race.amount, arcade.race.lanes[0]!, (2 * (1 - arcade.race.from)) / (arcade.race.fall * arcade.race.fall), arcade.race.from) },
+        uRaceMore: { value: new THREE.Vector4(arcade.race.period[0]!, arcade.race.period[1]!, arcade.race.head, arcade.race.tail) },
+        uRaceGust: { value: new THREE.Vector4(arcade.race.at, arcade.race.width, arcade.race.share, 0) },
+        uRaceGlow: { value: new THREE.Vector2(arcade.race.body, arcade.race.strand) },
+        uRaceThin: { value: 0 },
+        uRaceLow: { value: new THREE.Vector2(arcade.race.low[0]!, arcade.race.low[1]!) },
         uFootLife: { value: new THREE.Vector4(0, 0, arcade.feet.reach, 0) },
         uCore: { value: new THREE.Vector4(arcade.core.from[0]!, arcade.core.from[1]!, arcade.core.level, arcade.core.dim) },
       },
@@ -636,6 +683,27 @@ export class Loops {
     return [lifted, after > 0 ? gone : 0, t > 0 ? (t / e.flash.peak) * Math.exp(1 - t / e.flash.peak) * (1 - Math.exp(-t * t / (e.flash.ease * e.flash.ease))) * gone : 0]
   }
 
+  /** The swing of the ringing arcade at this time, as the two parts of one wave (shares of the distance between the feet). */
+  ring(since: number): [number, number] {
+    const r = arcade.ring
+    const ease = (x: number): number => {
+      const t = Math.min(Math.max(x, 0), 1)
+      return t * t * (3 - 2 * t)
+    }
+    const out = 1 - ease((since - r.end[0]!) / (r.end[1]! - r.end[0]!))
+    let a = 0
+    let b = 0
+    for (const hit of r.hits) {
+      const t = since - hit[0]!
+      if (t <= 0 || out <= 0) continue
+      const size = hit[1]! * ease(t / r.rise) * Math.exp(-Math.max(t - r.rise, 0) / r.fade) * out
+      const at = (2 * Math.PI * t) / r.period
+      a += size * Math.cos(at)
+      b += size * Math.sin(at)
+    }
+    return [a, b]
+  }
+
   /** How hard the rain lands on the two feet at this time (left, right): the gusts, later by the fall. */
   landed(since: number): [number, number] {
     const r = arcade.rain
@@ -646,6 +714,8 @@ export class Loops {
         const q = (t - g[0]! - r.fall) / g[1]!
         sum += g[2]! * Math.exp(-q * q)
       }
+      const v = (t - arcade.race.at - arcade.race.fall) / arcade.race.width
+      sum += arcade.race.land * Math.exp(-v * v)
       return sum * (1 + f.flicker[0]! * (0.6 * Math.sin(f.flicker[1]! * t + k) + 0.4 * Math.sin(f.flicker[1]! * 1.83 * t + 2.2 * k)))
     }
     return [at(since + f.lag[0]!, 0.4), at(since + f.lag[1]!, 2.9)]
@@ -657,6 +727,33 @@ export class Loops {
     if (t <= 0) return 0
     if (t < l.rise) return (t / l.rise) * (t / l.rise) * (3 - (2 * t) / l.rise)
     return t < l.rise + l.keep ? 1 : Math.exp(-(t - l.rise - l.keep) / l.fall)
+  }
+
+  /** How far out the thrown shell is at this time, past the lift that shapes it: it keeps travelling at a steady pace (mail 327 point 2). */
+  gone(since: number): number {
+    const e = this.knots?.erupt
+    if (!e) return 0
+    const t = Math.max(since - e.from, 0)
+    return arcade.thrown.go * ((t * t) / (e.time + t))
+  }
+
+  /** The light the thrown shell throws on the ground under it: it rises as the shell leaves and falls as it breaks up. */
+  shell(since: number, open: number): number {
+    const e = this.knots?.erupt
+    if (!e || open <= 0 || since <= e.from) return 0
+    const after = (since - e.from) / e.time
+    const rest = 1 - this.fallen(since)
+    return arcade.thrown.ground * (1 - Math.exp((-after * after) / (1 + after))) * rest * Math.sqrt(rest)
+  }
+
+  /** How much thinner the strands between the racing knots are at this time: from the launch of the volley to its landing. */
+  thinned(since: number): number {
+    const r = arcade.race
+    const ease = (x: number): number => {
+      const t = Math.min(Math.max(x, 0), 1)
+      return t * t * (3 - 2 * t)
+    }
+    return r.thin * ease((since - r.at + r.width) / (2 * r.width)) * (1 - ease((since - r.at - r.fall + r.width) / (2 * r.width)))
   }
 
   /** How far the thrown arc has fallen back at this time: 0 while it is whole, 1 when its ends are down. */
@@ -673,10 +770,15 @@ export class Loops {
     return arcade.feet.ground * 0.5 * (a + b) + arcade.lights.ground * lamps
   }
 
-  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0, live = false, calm = 1): void {
+  update(time: number, gain: number, vignette: number, aspect: number, burst: number, cut = 0, late = 0, open = 0, since = 0, live = false, calm = 1, calmAt = 0): void {
     const u = this.material.uniforms
     u.uLifeOn!.value = calm
     u.uSince!.value = since
+    const ring = this.ring(live ? since : -1)
+    ;(u.uRing!.value as THREE.Vector4).x = ring[0]
+    ;(u.uRing!.value as THREE.Vector4).y = ring[1]
+    const rest = this.ring(live ? since - time + calmAt : -1)
+    ;(u.uRingRest!.value as THREE.Vector4).set(rest[0], rest[1], 1 - calm, calmAt)
     const landed = this.landed(since)
     const foot = u.uFootLife!.value as THREE.Vector4
     foot.x = arcade.feet.amount * landed[0]
@@ -690,6 +792,8 @@ export class Loops {
       any += level
     })
     ;(u.uLightMore!.value as THREE.Vector3).z = any
+    ;(u.uRaceGust!.value as THREE.Vector4).w = live ? arcade.race.lanes[1]! : 0
+    u.uRaceThin!.value = live ? this.thinned(since) : 0
     if (this.knots) {
       const k = this.knots
       const [a, b] = this.pulse(since)
@@ -715,8 +819,9 @@ export class Loops {
         const up = live && after > 0 ? e.top * (1 - Math.exp((-after * after) / (1 + after))) : 0
         const there = live && after > 0 && fall < 1 ? 1 : 0
         this.peel.visible = there > 0
-        w.uGrow!.value = grow + up
-        w.uShear!.value = e.lean * up
+        const out = up + (live ? this.gone(since) : 0)
+        w.uGrow!.value = grow + out
+        w.uShear!.value = e.lean * out
         ;(w.uPeel!.value as THREE.Vector2).set(0, there * (e.gain[0] + (e.gain[1] - e.gain[0]) * Math.min(up / e.far, 1)) * (1 - THREE.MathUtils.smoothstep(up, e.fade[0], e.fade[1])) * (1 - arcade.thrown.thin * fall))
         ;(w.uPeelPick!.value as THREE.Vector3).set(e.pick[0] + e.thin * up + arcade.thrown.fray * fall, e.pick[1] + e.thin * up + arcade.thrown.fray * fall, e.lanes)
         ;(w.uGap!.value as THREE.Vector4).x = fall * fall * arcade.thrown.reach
