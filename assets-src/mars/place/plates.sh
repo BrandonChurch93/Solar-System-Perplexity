@@ -24,11 +24,11 @@ for step in "$@"; do
     force)
       python3 $P/bake.py --toned 8.5,$W/plate/toned-8.5.png
       python3 $P/nestbase.py --above $W/plate/toned-8.5.png,8.5 --width-deg 8.5 --below $T/p85-take1-x2.png,8.5 --out $W/plate/p8.5.png
-      python3 $P/nestbase.py --above $W/plate/p8.5.png,8.5 --width-deg 3.8 --below $T/p38-take5-x2.png,3.8 --out $W/plate/base-3.8.png
+      python3 $P/nestbase.py --above $W/plate/p8.5.png,8.5 --width-deg 3.8 --below $T/p38-take6-x2.png,3.8 --out $W/plate/base-3.8.png
       held 3.8
-      python3 $P/nestbase.py --above $W/plate/p3.8.png,3.8 --width-deg 1.6 --below $T/p16-take2-x2.png,1.6 --out $W/plate/base-1.6.png
+      python3 $P/nestbase.py --above $W/plate/p3.8.png,3.8 --width-deg 1.6 --below $T/p16-take3-x2.png,1.6 --out $W/plate/base-1.6.png
       held 1.6
-      python3 $P/nestbase.py --above $W/plate/p1.6.png,1.6 --width-deg 0.7 --below $T/p06-take1-x2.png,0.6 --out $W/plate/base-0.7.png
+      python3 $P/nestbase.py --above $W/plate/p1.6.png,1.6 --width-deg 0.7 --below $T/p07-take2-x2.png,0.7 --out $W/plate/base-0.7.png
       held 0.7
       python3 $P/nestbase.py --above $W/plate/p0.7.png,0.7 --width-deg 0.3 --out $W/plate/base-0.3.png
       held 0.3 ;;

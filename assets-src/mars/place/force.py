@@ -188,10 +188,17 @@ q = 8
 sig = max(fc['broadDeg'] / a.width_deg * size / q, 0.5)
 ms = cv2.resize(m, (size // q, size // q), interpolation=cv2.INTER_AREA)
 broad = cv2.GaussianBlur(cv2.resize(Dp * m[..., None], (size // q, size // q), interpolation=cv2.INTER_AREA), (0, 0), sig) / np.maximum(cv2.GaussianBlur(ms, (0, 0), sig), 0.05)[..., None]
-broad = cv2.resize(broad, (size, size), interpolation=cv2.INTER_CUBIC)
-Dp = Dp * near[..., None] + broad * (1 - near)[..., None]
-del broad, ms
-plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
+# beyond the hold the broad tone is a gain on the take, kept between broadLeast and broadMost: as a sum the picture's
+# bright hazy far ground turned the take grey white, and from above the place stood pale in the land round it
+Rb = cv2.GaussianBlur(cv2.resize(R, (size // q, size // q), interpolation=cv2.INTER_AREA), (0, 0), sig)
+broad = np.clip((Rb + broad) / np.maximum(Rb, 0.02), fc['broadLeast'], fc['broadMost']).astype(np.float32)
+broad = cv2.resize(broad, (size, size), interpolation=cv2.INTER_LINEAR)
+held = (R + Dp) * near[..., None]
+held += R * broad * (1 - near)[..., None]
+del broad, ms, Rb
+k = (m * fc['share'])[..., None]
+plate = np.clip(R * (1 - k) + held * k, 0, 1)
+del held, k
 # (a gain on the broad tone, not a sum: the take is often lit where the picture's near ground is dark, and a sum
 # leaves the land beside the fan brighter than the fan)
 sig = fc['toneBlur'] * size
