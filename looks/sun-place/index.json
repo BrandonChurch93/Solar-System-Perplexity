@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T09:48:48.189Z",
- "head": "181401cc490fb42f272621cd6691e84b47407af0",
- "note": "mail 228: ground v2 (made, not dragged) and loops life, frozen 90 to 96, before and after",
+ "pushed": "2026-11-23T10:08:18.167Z",
+ "head": "c500257fdf2398613c3b546d32955a7af9646c3e",
+ "note": "life of the close view: loops and flare alive through 170; ground cells have two faults at native size (dashes, straight map edges), both in work",
  "looks": [
   {
-   "time": "2026-11-23T09:48:33.221Z",
-   "file": "20261123094833221-note-a5-ba.jpg",
-   "source": "out/work/sun/life/a5-ba.jpg",
+   "time": "2026-11-23T10:08:17.589Z",
+   "file": "20261123100817589-note-plate-check-crop.jpg",
+   "source": "out/work/sun/life/plate-check-crop.jpg",
    "kind": "note",
-   "label": "mail 228 loops at frame 102, before and after",
+   "label": "FAULT: cell map still has straight edges down the flanks of cells (flood artefact), being rebuilt from the lanes",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:48:32.080Z",
-   "file": "20261123094832080-note-a6-diff.jpg",
-   "source": "out/work/sun/life/a6-diff.jpg",
+   "time": "2026-11-23T10:08:17.046Z",
+   "file": "20261123100817046-note-a7-line.jpg",
+   "source": "out/work/sun/life/a7-line.png",
    "kind": "note",
-   "label": "mail 228 what changes, frozen: |91-90| x6 (left), |96-90| x2 (right)",
+   "label": "FAULT: 1 px dark dashes along cell edges at native size, cause found (blended cell numbers), fix not yet rendered",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:48:31.130Z",
-   "file": "20261123094831130-note-a6-spot.jpg",
-   "source": "out/work/sun/life/a6-spot.jpg",
+   "time": "2026-11-23T10:08:16.508Z",
+   "file": "20261123100816508-note-a7-haze.jpg",
+   "source": "out/work/sun/life/a7-haze.jpg",
    "kind": "note",
-   "label": "mail 228 spot and loops, frozen pose 90: before 90 (top left), after 90, 93, 96. Beads on strand cores, penumbra beads on fixed fibres",
+   "label": "life: first low haze, frozen camera, too heavy, retuned since",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:48:30.295Z",
-   "file": "20261123094830295-note-a6-gran.jpg",
-   "source": "out/work/sun/life/a6-gran.jpg",
+   "time": "2026-11-23T10:08:15.962Z",
+   "file": "20261123100815962-note-n1-ba.jpg",
+   "source": "out/work/sun/life/n1-ba.jpg",
    "kind": "note",
-   "label": "mail 228 ground v2, frozen pose 90: before 90 (top left), after 90, 93, 96. Cell cycle, dome, closing cells, flow cut to 0.35",
+   "label": "life: loops before and after at 40, 60, 120, 170",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:28:04.871Z",
-   "file": "20261123092804871-note-a1-crop90.jpg",
-   "source": "out/work/sun/life/a1-crop90.jpg",
+   "time": "2026-11-23T10:08:15.389Z",
+   "file": "20261123100815389-note-n1-l166.jpg",
+   "source": "out/work/sun/life/n1-l166.jpg",
    "kind": "note",
-   "label": "228 first pass of the cell flow, frozen 90: before left, after right. Penumbra zigzag is wrong, being fixed",
+   "label": "life: loops native, frames 166 to 171",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:28:04.303Z",
-   "file": "20261123092804303-note-run120.jpg",
-   "source": "out/work/sun/life/before/run120.jpg",
+   "time": "2026-11-23T10:08:14.834Z",
+   "file": "20261123100814834-note-n1-l120.jpg",
+   "source": "out/work/sun/life/n1-l120.jpg",
    "kind": "note",
-   "label": "228 before: frames 120 to 125",
+   "label": "life: loops native, frames 120 to 125",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:28:03.633Z",
-   "file": "20261123092803633-note-run40.jpg",
-   "source": "out/work/sun/life/before/run40.jpg",
+   "time": "2026-11-23T10:08:14.261Z",
+   "file": "20261123100814261-note-n1-l40.jpg",
+   "source": "out/work/sun/life/n1-l40.jpg",
    "kind": "note",
-   "label": "228 before: frames 40 to 45",
+   "label": "life: loops native, frames 40 to 45",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T09:28:03.018Z",
-   "file": "20261123092803018-note-frozen6.jpg",
-   "source": "out/work/sun/life/before/frozen6.jpg",
+   "time": "2026-11-23T10:08:13.626Z",
+   "file": "20261123100813626-note-n1-every10.jpg",
+   "source": "out/work/sun/life/n1-every10.jpg",
    "kind": "note",
-   "label": "228 before: camera frozen at pose of frame 90, every 6th frame",
+   "label": "life: every 10th frame 0 to 170, normal flight, draft (before haze and map fix)",
    "stop": "sun"
   }
  ]
