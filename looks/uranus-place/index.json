@@ -1,9 +1,61 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T08:30:50.980Z",
+ "pushed": "2026-11-23T08:56:01.415Z",
  "head": "4b1870f24303842355fa993d068674ddd7b01187",
- "note": "S2 top down sheet b: plates blend in colour, shell and diagonal streaks still wrong, storm rework next; S3 one path per kind written",
+ "note": "S3 dive and rise sheets on one camera, true eye light chosen; storm plates baking; main add6ccbe",
  "looks": [
+  {
+   "time": "2026-11-23T08:55:54.604Z",
+   "file": "20261123085554604-note-rise-c.jpg",
+   "source": "out/work/u/rise/rise-c.jpg",
+   "kind": "note",
+   "label": "rise sheet c, one camera both sides, true eye light, plates of bake b, hard swap at 4391 to 4392 (no E2 yet), main add6ccbe",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T08:55:02.739Z",
+   "file": "20261123085502739-frame-c-4454.jpg",
+   "source": "out/work/u/rise/c-4454.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4454, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:52:08.004Z",
+   "file": "20261123085208004-note-eye.jpg",
+   "source": "out/work/u/dive/eye.jpg",
+   "kind": "note",
+   "label": "place light on the globe side: fixed eye (milky patch, wrong) against true eye (dark from above, horizon brightens), main add6ccbe",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T08:52:07.318Z",
+   "file": "20261123085207318-note-dive-c.jpg",
+   "source": "out/work/u/dive/dive-c.jpg",
+   "kind": "note",
+   "label": "dive sheet c, one camera both sides, fixed eye light, plates of bake b, hard swap at 4186 (no E2 yet), main add6ccbe",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T08:47:00.377Z",
+   "file": "20261123084700377-frame-e-4186.jpg",
+   "source": "out/work/u/dive/e-4186.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4186, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T08:30:46.665Z",
    "file": "20261123083046665-note-laid-sheet.jpg",
@@ -21,20 +73,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T08:30:17.879Z",
-   "file": "20261123083017879-frame-b-4199.jpg",
-   "source": "out/work/u/down/b-4199.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4199, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4199,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
    "time": "2026-11-23T08:03:37.682Z",
    "file": "20261123080337682-frame-final-4456.jpg",
    "source": "out/work/u/base/final-4456.png",
@@ -43,50 +81,6 @@
    "stop": "uranus",
    "segment": "uranus.travel",
    "frame": 4456,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T08:03:36.317Z",
-   "file": "20261123080336317-note-laid-sheet.jpg",
-   "source": "out/work/u/place/laid-sheet.jpg",
-   "kind": "note",
-   "label": "S2 plates recentred, test bake at 1024 px, main cf300549. Top row: albedo of the four nested plates. Bottom row: the same on the globe in far light with the new colour field and soft mask. Still wrong: the fan reads as a shell, streaks around it are soft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:45:08.697Z",
-   "file": "20261123074508697-note-down-a.jpg",
-   "source": "out/work/u/down/down-a.jpg",
-   "kind": "note",
-   "label": "S2 first top down dive sheet, rough M1 plates, main cf300549. BAD: plates read as a square sticker of diagonal streaks, deck light goes black from straight above. Being rebuilt.",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T07:30:56.585Z",
-   "file": "20261123073056585-frame-final-4290.jpg",
-   "source": "out/work/u/s1/final-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:29:07.236Z",
-   "file": "20261123072907236-frame-final-4035.jpg",
-   "source": "out/work/u/s1/final-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
