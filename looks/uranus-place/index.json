@@ -1,9 +1,55 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T12:02:31.729Z",
- "head": "9b3452d83b76030138ec0919efa6c96d0464cc73",
- "note": "dive: place ringed by sunlit cloud tops from 4131, grain gate at 6 texels, work in progress",
+ "pushed": "2026-11-23T12:18:30.636Z",
+ "head": "0d93d0c69769ab2e169446cbbbea6540f26491eb",
+ "note": "dive stills d: place carried by a sunlit cloud bank and the streak from 4125, grain gone at native size",
  "looks": [
+  {
+   "time": "2026-11-23T12:18:30.026Z",
+   "file": "20261123121830026-note-d-low.jpg",
+   "source": "../../../../tmp/d-low.jpg",
+   "kind": "note",
+   "label": "dive 4164 (top) and 4170 (bottom) draft: the bank goes into the bright band under the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:18:29.383Z",
+   "file": "20261123121829383-note-grain-cmp.jpg",
+   "source": "../../../../tmp/grain-cmp.jpg",
+   "kind": "note",
+   "label": "4152 centre at 2 times: commit 54f4ffc6, now, now without film grain",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:18:28.752Z",
+   "file": "20261123121828752-note-d-native.jpg",
+   "source": "../../../../tmp/d-native.jpg",
+   "kind": "note",
+   "label": "dive 4152 (top) and 4158 (bottom) native crops, stills d: no sand at the cloud edges",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:18:28.117Z",
+   "file": "20261123121828117-note-h-d.jpg",
+   "source": "../../../../tmp/h-d.jpg",
+   "kind": "note",
+   "label": "dive stills d 4119 to 4170 draft: tops as one filtered map, cloud bank on the Sun side of the storm, uncommitted tree on main da69509a",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-23T12:17:01.039Z",
+   "file": "20261123121701039-frame-d-ng-4152.jpg",
+   "source": "out/work/u/h/d-ng-4152.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4152, draft tier, nograin view",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4152,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "nograin",
+   "engine": "c049c4c0efb85c12"
+  },
   {
    "time": "2026-11-23T12:02:31.149Z",
    "file": "20261123120231149-note-h-b.jpg",
@@ -21,69 +67,11 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T12:01:50.025Z",
-   "file": "20261123120150025-frame-c-4170.jpg",
-   "source": "out/work/u/h/c-4170.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4170, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4170,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "17850b869227c6ee"
-  },
-  {
    "time": "2026-11-23T11:32:07.585Z",
    "file": "20261123113207585-note-g9.jpg",
    "source": "../../../../tmp/g9.jpg",
    "kind": "note",
    "label": "dive g frames 4140 to 4185: the dark, low contrast stretch MAIL 249 names (4146 to 4164), before the fix",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T11:32:07.016Z",
-   "file": "20261123113207016-note-judged-r.jpg",
-   "source": "../../../../tmp/judged-r.jpg",
-   "kind": "note",
-   "label": "review tier 4137 and 4436 of 54f4ffc6 beside the kept stills (dive and rise are new paths)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-23T11:25:50.497Z",
-   "file": "20261123112550497-frame-review-4436.jpg",
-   "source": "out/work/u/judged/review-4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, review tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:17:47.727Z",
-   "file": "20261123111747727-job-frame-04419.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4419, draft tier, texels view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4419,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T11:07:54.138Z",
-   "file": "20261123110754138-note-sun-fg.jpg",
-   "source": "../../../../tmp/sun-fg.png",
-   "kind": "note",
-   "label": "defect: two Suns in dive 4167 4170 4173 (pairs: before S4, now). Cause being fixed",
    "stop": "uranus"
   }
  ]
