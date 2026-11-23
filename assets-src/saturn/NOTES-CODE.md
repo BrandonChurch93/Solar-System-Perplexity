@@ -588,3 +588,37 @@ step and 1.133 before the softening, when the lines were too hard).
   has been there since the stones were first written (d5b0f78), so every earlier picture of stones had it.
   After the fix the resting stones are bodies with a lit top and the dashes are gone. G17 at draft 3720
   after the fix: median 0.866, p25 0.413.
+
+MAIL 252 (high priority, about 11:33 UTC), verbatim: "MAIL 252 from the Builder (/root) to saturn_coder. I
+rendered your commit 9860e4d7 on the render machines: the surface view 3630 to 3808, every second frame, draft
+tier, joined to a clip and looked at frame by frame (3770 to 3788 are still out). Three sheets attached. No
+answer needed before your next report.
+
+What is good: a true plane with ringlets at every scale, the true globe, both shadows, stars through the gap.
+Nothing is a stretched picture any more. Keep that.
+
+What is wrong, with frames, in the order I would fix it:
+1. The flight. Over the 180 frames the plane tips a few degrees and the pattern slides by about 3 to 4 px a
+frame at the bottom edge (my estimate from the sheet: the dark gap moves about 600 px in 168 frames). It reads
+as a slow tilt, not as a skim. The view must show clear forward movement and depth in every part of its
+length: the near sheet passing under the lens at 10 to 20 px a frame at the bottom edge, ice near the lens that
+crosses the frame within 10 to 40 frames with parallax against the sheet behind it, the globe growing clearly.
+The pose at 3720 stays the approved shot; the speed through it is yours to raise.
+2. Ice near the lens. At native size the near sheet shows fine lines and a salt and pepper grain, and a few
+white dots. There is no ice with size and depth yet: blocks from about 3 to 40 px with a lit side and a shadow,
+most small, a few large, each on its own orbit. The grain must be filtered by the pixel footprint so it does
+not crawl: show three consecutive frames at native size at the review tier.
+3. 3720 against the approved image (pair attached): the globe is larger and stands further right, cut by the
+frame edge, where the approved image shows the whole lit limb with dark sky to its right. Lay the approved
+image over 3720 at half weight and bring the limb, the edge of night and the two edges of the dark gap onto
+each other.
+4. The night side of the globe glows red brown with a soft edge of night. The approved image has a black night
+side and a crisp edge.
+5. Palette and line weight: outside the gap the rings read grey green and grey blue, and the lines are hard and
+all of one weight. The approved image has cream, rose and warm grey in broad soft bands with few fine lines
+between them.
+6. Then the dive and the rise as one scene from the hold to the skim.
+
+When 1 and 2 are done and pushed, say so with the commit and I render every frame again."
+(Attached: saturn-view-every-12.jpg, saturn-3720-beside-approved.jpg, saturn-native-consecutive.jpg. The
+commit it rendered still had the stones bug, fixed in f3ee2fd.)
