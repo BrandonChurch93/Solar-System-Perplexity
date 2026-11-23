@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T23:08:54.845Z",
+ "pushed": "2026-11-23T23:28:32.267Z",
  "head": "0a965c8dddf9e40a466c683a0ee48acd8c5f88ef",
- "note": "step 1 of mail 374: the pace under the smooth tool (dive green, rise in work), the by time blends onto height and distance in work; sky test: the hold without its patch shows the film's own star field",
+ "note": "step 1: one sky for the stop (way A): the hold's patch leaves by pose, the skim's sky is the film's field; nothing rendered of the by height handover yet",
  "looks": [
+  {
+   "time": "2026-11-23T23:28:31.564Z",
+   "file": "20261123232831564-note-sky3_3720.jpg",
+   "source": "../../../../tmp/v/r23/sky3_3720.png",
+   "kind": "note",
+   "label": "3720 upper half: approved close, with the terrain sky picture, with the film's own star field at exposure 0.193 (no patch)"
+  },
   {
    "time": "2026-11-23T23:08:50.085Z",
    "file": "20261123230850085-note-three_3720.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/r21/rise_all.png",
    "kind": "note",
    "label": "rise at draft, one process, all 79 frames 3806 to 3884 (c984dd4 pictures)"
-  },
-  {
-   "time": "2026-11-23T21:58:42.861Z",
-   "file": "20261123215842861-note-e6_3832.jpg",
-   "source": "../../../../tmp/v/r21/e6_3832.png",
-   "kind": "note",
-   "label": "c984dd4 stop on the trial engine (7d9f486, shutter 0.64), frame 3832, review tier, 24 samples"
   }
  ]
 }
