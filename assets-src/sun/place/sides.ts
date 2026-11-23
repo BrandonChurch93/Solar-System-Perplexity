@@ -37,3 +37,21 @@ for (const [a, b] of [[0, 0], [3, 0], [-3, 0], [0, 3], [0, -3], [6, 6], [-6, -6]
   const dist = pose.position.distanceTo(x)
   console.log(`at ${a}, ${b}: off by ${off.length().toExponential(3)} stage units = ${(off.length() / (dist * px)).toFixed(3)} px at ${dist.toFixed(2)} units; along up ${off.dot(up).toExponential(2)}, e1 ${off.dot(e1).toExponential(2)}, e2 ${off.dot(e2).toExponential(2)}`)
 }
+
+// The same stage point on the screen of both sides: the terrain camera sees it in stage units, the orbit
+// camera sees it where the terrain group is placed on the globe.
+const orbit = plan.risePose(t, 'orbit')
+const screen = (p: typeof pose, world: THREE.Vector3): [number, number] => {
+  const d = world.clone().sub(p.position).applyQuaternion(p.quaternion.clone().invert())
+  const k = Math.tan(THREE.MathUtils.degToRad(p.vfov) / 2)
+  return [(0.5 + d.x / -d.z / (2 * k * (16 / 9))) * 1920, (0.5 - d.y / -d.z / (2 * k)) * 1080]
+}
+console.log('vfov terrain', pose.vfov, 'orbit', orbit.vfov)
+for (const [a, b] of [[0, 0], [3, 0], [-3, 0], [0, 3], [0, -3], [6, 6], [-6, -6]] as [number, number][]) {
+  const v = up.clone().multiplyScalar(stage.radius).addScaledVector(e1, a).addScaledVector(e2, b).normalize()
+  const x = v.clone().multiplyScalar(stage.radius).add(stage.centre)
+  const onGlobe = v.clone().applyQuaternion(plan.toGlobe).applyQuaternion(carry)
+  const s1 = screen(pose, x)
+  const s2 = screen(orbit, onGlobe)
+  console.log(`at ${a}, ${b}: terrain side ${s1[0].toFixed(3)}, ${s1[1].toFixed(3)}  orbit side ${s2[0].toFixed(3)}, ${s2[1].toFixed(3)}  apart ${(s2[0] - s1[0]).toFixed(4)}, ${(s2[1] - s1[1]).toFixed(4)} px`)
+}
