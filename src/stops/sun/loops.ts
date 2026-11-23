@@ -97,6 +97,8 @@ uniform vec4 uStream;
 uniform vec4 uStreamEnds;
 uniform vec4 uStreamLayer[2];
 uniform vec4 uStreamMix[2];
+uniform vec4 uLead;
+uniform vec2 uLeadMore;
 uniform vec4 uLight[8];
 uniform vec3 uLightMore;
 uniform vec4 uRain;
@@ -175,6 +177,18 @@ float stream(float high, float x, float span, float t, vec4 layer, vec4 speeds) 
   float c = w * clumps(lane, x, span, t, layer, speeds) + (1.0 - w) * clumps(floor(y + 0.5) + 0.31, x, span, t, layer, speeds);
   return mix(1.0, speeds.x + speeds.w * c, 1.0 - smoothstep(0.35, 0.8, fwidth(y)));
 }
+// A few strands lead, thick and bright, and the many others are faint (mail 250): 1 on a leading lane.
+// Lanes are equal steps of the height of a strand's top, two sets half a lane apart as in the flow.
+float leadPick(float lane) {
+  return 1.0 - smoothstep(uLead.y - 0.04, uLead.y + 0.04, lh(lane, 8.77));
+}
+float leading(float high) {
+  float y = high * uLead.x + 0.63;
+  float lane = floor(y);
+  float w = sin(3.14159265 * (y - lane));
+  w *= w;
+  return mix(w * leadPick(lane) + (1.0 - w) * leadPick(floor(y + 0.5) + 0.31), uLead.y, smoothstep(0.35, 0.8, fwidth(y)));
+}
 // How bright the drop is that left the top of its lane at this time: the rain comes in gusts.
 float dropAt(float lane, float n, float launch, float side) {
   float g = uRainLane.w;
@@ -245,7 +259,9 @@ void main() {
   float ends = smoothstep(uStreamEnds.x, uStreamEnds.y, sL) * (1.0 - smoothstep(1.0 - uStreamEnds.y, 1.0 - uStreamEnds.x, sL)) * (1.0 - smoothstep(uStreamEnds.w, uStreamEnds.w + 0.3, arc));
   float highL = 0.5 / tan(0.5 * clamp(arc, 0.05, 3.1));
   float spanL = (3.14159265 - arc) / max(sin(arc), 0.2);
-  float flowL = mix(1.0, stream(highL, sL * spanL, spanL, uSince, uStreamLayer[0], uStreamMix[0]) * stream(highL, sL * spanL, spanL, uSince, uStreamLayer[1], uStreamMix[1]), onL * ends);
+  float streamL = stream(highL, sL * spanL, spanL, uSince, uStreamLayer[0], uStreamMix[0]) * stream(highL, sL * spanL, spanL, uSince, uStreamLayer[1], uStreamMix[1]);
+  float flowL = mix(1.0, streamL, onL * ends);
+  float leadL = leading(highL);
   float rainL = uRain.x * (rainFall(arc, sL, uSince, uRainLane.x, 2.71) + rainFall(arc, sL, uSince, uRainLane.y, 6.13));
   // the loops of the arcade light up one after another: each from its feet to its top, then it cools
   float litL = 0.0;
@@ -303,13 +319,17 @@ void main() {
     }
   }` : ''}
   // beads and drops sit on the cores of the strands: where the picture is brighter than its own surroundings
-  float wideL = dot(inverseFilmic(grade(textureLod(uMap, uv, uCore.z).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
+  vec3 wideC = inverseFilmic(grade(textureLod(uMap, uv, uCore.z).rgb, 1.0));
+  float wideL = dot(wideC, vec3(0.3, 0.5, 0.2));
   float coreL = smoothstep(uCore.x, uCore.y, (shineL - wideL) / max(wideL, 0.03));
   // a clump cannot burn the strand out: what it adds is bent over where the strand is bright already
   float carried = max(flowL - 1.0, 0.0);
   carried /= 1.0 + uStream.y * carried * shineL;
   float lifeL = onL * (coreL * rainL + footL + litL);
-  lin = lin * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * (coreL * rainL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66);
+  // the leading strands: brighter, and with a soft body from the picture seen wide, which runs with the clumps
+  float bodyL = leadL * ends * smoothstep(0.0, 0.02, abL.x * (p.y - uFeet.y) - abL.y * (p.x - uFeet.x)) * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, wideL);
+  lin = lin * mix(1.0, mix(uLead.z, uLead.w, leadL), onL * ends) * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * (coreL * rainL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66)
+    + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + litL));
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
   float glow = dot(lin, vec3(0.3, 0.5, 0.2));
   for (int k = 0; k < (uCut > 0.0 ? 1 : 0); k++) lin *= clamp((glow - uCut) / (3.0 * uCut), 0.0, 1.0) * (1.0 - uTrim.z * (1.0 - smoothstep(uTrim.x, uTrim.y, arc))) * (1.0 - uTrim.z * smoothstep(uPinCut.x, uPinCut.y, vPin));
@@ -465,8 +485,10 @@ export class Loops {
         uStream: { value: new THREE.Vector4(arcade.flow.white, arcade.flow.knee, arcade.flow.head, arcade.flow.back) },
         uStreamEnds: { value: new THREE.Vector4(arcade.flow.ends[0]!, arcade.flow.ends[1]!, arcade.flow.share, arcade.flow.inside) },
         uStreamLayer: { value: arcade.flow.layers.map((l) => new THREE.Vector4(l[0]!, l[1]!, l[2]!, l[3]!)) },
-        // the amount of a layer follows from its low level: the mean of the factor over time is one
-        uStreamMix: { value: arcade.flow.layers.map((l, i) => new THREE.Vector4(arcade.flow.low[i]!, arcade.flow.speed[i]![0]!, arcade.flow.speed[i]![1]!, (1 - arcade.flow.low[i]!) / ((arcade.flow.share * 0.75 * l[2]! * (1 + 0.5 * arcade.flow.head)) / l[1]!))) },
+        // the amount of a layer follows from its low level: the mean of the factor over time is one, times lift
+        uStreamMix: { value: arcade.flow.layers.map((l, i) => new THREE.Vector4(arcade.flow.low[i]!, arcade.flow.speed[i]![0]!, arcade.flow.speed[i]![1]!, (arcade.flow.lift * (1 - arcade.flow.low[i]!)) / ((arcade.flow.share * 0.75 * l[2]! * (1 + 0.5 * arcade.flow.head)) / l[1]!))) },
+        uLead: { value: new THREE.Vector4(arcade.lead.lanes, arcade.lead.share, arcade.lead.faint, arcade.lead.bright) },
+        uLeadMore: { value: new THREE.Vector2(arcade.lead.body, arcade.lead.most) },
         uLight: { value: Array.from({ length: 8 }, () => new THREE.Vector4(0, 1, 0, 2)) },
         uLightMore: { value: new THREE.Vector3(arcade.lights.white, arcade.lights.lanes, 0) },
         uRain: { value: new THREE.Vector4(arcade.rain.amount, arcade.rain.white, (2 * (1 - arcade.rain.from)) / (arcade.rain.fall * arcade.rain.fall), arcade.rain.from) },
