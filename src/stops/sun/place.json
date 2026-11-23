@@ -143,6 +143,7 @@
     "at": 0.4,
     "dissolveFrames": 1,
     "placeFrames": 12,
+    "picture": false,
     "easeIn": 0.1556,
     "easeOut": 0.1778,
     "coast": 4,

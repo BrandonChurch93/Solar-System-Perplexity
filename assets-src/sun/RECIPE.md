@@ -302,3 +302,41 @@ The place of the close view laid onto the globe (task of mail 212, `cut/HANDOVER
   - `python3 assets-src/sun/place/steps.py DIR FROM TO`: per frame of a run of consecutive frames the mean level, the mean difference to the frame before and a sharpness number (mean absolute Laplacian), to see whether any frame steps out of the row.
   - `side-orbit.patch`, `side-terrain.patch` (`git apply`, then `git apply -R`; never in a commit): draw the whole rise from one side alone, for the proof sheet of the globe side and for the difference of the two sides at T until the measures of E4 are on main.
 - Checks: `hero.py WIDTH_DEG SIZE OUT.png` cuts the globe map in the same frame; `check.py GLOBE.png CLOSE.jpg OUT.jpg [GLOBE_TEXELS.png]` puts the globe side from the solved camera beside the close side with the predicted limb marked; `same.py NEW.png KEPT.jpg` compares a new final tier render with a kept still in the kept still's own coding.
+
+
+## Life of the close view (mail 228)
+
+No model, no prompt. Everything is a function of time alone.
+
+### public/assets/sun/<set>/cells-plate.png, swell-plate.png, cells-apron.png, swell-apron.png and src/stops/sun/cells.json
+
+- What they are: the map of the convection cells of the two pictures of the close ground (`plate.jpg`, `apron.jpg`), at half their size (plate 4096 x 1440, apron 2752 x 774; the web set at half of that).
+  - `cells-<name>.png`: red and green = a flow inside a cell, downhill from its middle to its lanes (128 = none, x to the right, y down; the length of a full byte in uv is `cells.json` `<name>.flow`; the shader does not use it at present, `life.json` `flow.amount` is 0), blue = a number per cell (its rate), laid softly over the cell edges. Only a cell whose whole edge is lane (`SURE` 0.8) can have a number under `UNSURE` 0.25, and only numbers under `life.json` `close.share` close and open again.
+  - `swell-<name>.png`: red and green = a point on the unit circle per cell (128 = zero), laid softly over the cell edges (`NUMBER` 0.12 of a cell): its angle is the cell's phase, its length is 1 inside a cell and falls where neighbours disagree, in the spot and where no cell is known; the shader lets the life fall with that length (`life.json` `known`). Blue = how far inside its cell the pixel is: the distance to the nearest lane against `DEPTH` 0.3 of the size a cell has there, rounded by `ROUNDED` 0.06, times `far` (0 where a cell is smaller than 3 px of the map).
+  - No alpha in either: the engine's loader would multiply the colours by it.
+- Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/life/cells.py plate check` and `... apron check` (about 30 s each, one after the other: both write `cells.json`). With `check` it also writes `out/work/sun/life/cells-<name>-check.jpg` (cell edges and seeds over the picture), `-flow.jpg`, `-swell.jpg`, `-inner.jpg`.
+- How: luminance smoothed by the local size of a cell on the ground (`CELL` 0.16 stage units, `SMOOTH` 0.11 of it), tops by `h_maxima` (`DEEP` 0.045), watershed, then cells with no lane between them are merged (`LANE` 0.11, `ROOM` 3; then any two with less than `NONE` 0.5 of their shared edge in a valley of the picture, `HOLLOW` 0.3, `VALLEY` 0.025). Plate 804 cells (712 sure), apron 523 (477 sure).
+- The flood still cuts a hill with two tops by straight lines down its flank. That is why the map gives only numbers that are laid softly over its edges, and why a lane is counted only where an edge of the flood lies in a valley of the picture. Read from the picture's own relief instead, the light of the life drew rings and outlines on every bright patch (rejected).
+- Values of the tool are the constants at its top (`CELL`, `SMOOTH`, `APART`, `DEEP`, `LANE`, `NONE`, `CALM`, `HOLLOW`, `VALLEY`, `ROOM`, `FLOW`, `SHAPE`, `SOFT`, `DEPTH`, `ROUNDED`, `SURE`, `UNSURE`, `STEEP`, `NUMBER`, `PEN`, `PEN_EDGE`, `PEN_FLOW`, `FAR`). If `plate.jpg` or `apron.jpg` changes, run it again.
+
+### Shaders and values
+
+- The ground is not dragged: one lookup of the plate, shifted only by the push of a cell on its neighbours (`swell.amount` 0.03, slope taken over `swell.step` 0.25 of a cell: the largest shift is about 0.06 of a cell; with a slope over 0.1 of a cell the lookup folded over in rows at the lanes). The life is light: the wave from the middle of a cell to its rim (`wave`), the breath of the whole cell (`wave.breath`), the dome lit from one side and the rim that darkens (`dome`), cells that close and open (`close`), grains in the lanes (`grain`), beads along the fibres of the penumbra (`stream`), dots in the dark core (`dots`).
+- A thin haze low over the ground, close side only, zero where the view is steeper than `haze.steep` (so zero at T): `ground.ts`, values `life.json` `haze`.
+- `src/stops/sun/life.ts` (`LIFE_GLSL`), included by the close ground (`ground.ts`) and by the globe (`globe.ts`), which share its uniforms by name (`LIFE_NAMES`), so both sides are in the same state at every time. Values: `src/stops/sun/life.json`.
+- `src/stops/sun/loops.ts` holds the life of the arcade; values: `src/stops/sun/arcade.json`:
+  - `sway`: the strands sway (as before).
+  - `flow`: the light of a strand is carried by clumps that run from foot to foot. Two layers of lanes (`layers`: lanes per unit of top height, spacing, length, seed; lengths in distances between the feet), each a factor on the light: `low` between the clumps, more in a clump, mean over time one. `speed` per layer in distances between the feet per second, `back` the share of lanes that runs the other way, `share` the share of clumps that are there, `head` how soft the head is, `knee` how the gain bends on bright strands, `ends` where the flow fades at the feet, `inside` the angle from which the outermost strands take no flow.
+  - `rain`: knots that fall down both legs and speed up, in gusts.
+  - `feet`: the feet flicker and light the ground.
+  - `lights`: the loops of the arcade light up one after another (time in s since the start of the terrain segment, angle of the loop, width, amount); each lights from its feet to its top in `climb`, stays `keep`, cools with `fall`.
+  - `thrown`: the arc that the release throws beyond the loop top stays, opens at its top from `open`, thins and frays, and is down at `down`.
+  - The timing of the event itself (foot, surge, flash, throw) is `look.ts` `opening`.
+- `src/stops/sun/fringe.ts`: the spicules as jets; values: `look.ts` `fringe.jets`.
+
+### Tools of the proof
+
+- `assets-src/sun/life/freeze-90.patch` (`git apply`, then `git apply -R`; never in a commit): the camera stands at the pose of frame 90 while time runs.
+- `python3 assets-src/sun/life/change.py DIR TEXELS.png A B [A B ...]`: the mean absolute difference between frame n and n+1 of each run A to B, over the ground and over the loops (areas from the texel view of frame 90 and the loops box), on frames with the camera frozen.
+- With `mask=FILE.png` as one more argument `change.py` keeps one loops mask for before and after (written if it is not there).
+- `python3 assets-src/sun/life/flow.py strand DIR OUT.png ANGLE FIRST LAST FLOWVIEW [FLOWVIEW ...] [ground=TEXELS.png]` and `... line DIR OUT.png X0 Y0 X1 Y1 FIRST LAST`: the picture of flow of mail 241 (the brightness along one strand, or one straight line, for every frame, rows stacked: place across, time down; what flows draws slanted streaks). Prints the shift per frame that best carries a row onto the next after what stands still is taken out, and the share of the light at a place that comes and goes. The strand's path comes from flow views of the same frozen pose: `npx tsx assets-src/sun/place/frames.ts --frames ... --tier draft --dir DIR --diag flow` with the freeze patch applied.

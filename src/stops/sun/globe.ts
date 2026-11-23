@@ -6,6 +6,7 @@ import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
 import fieldData from './field.json'
 import { GRADE_GLSL } from './grade'
+import { LIFE_GLSL, LIFE_NAMES } from './life'
 import { STAGE_GLSL } from './stage'
 import terrain from './terrain.json'
 
@@ -48,8 +49,9 @@ export interface GlobeOptions {
 const PLACE_SHARED: [string, string][] = [
   ['uPlate', 'uPlate'], ['uSize', 'uSize'], ['uApron', 'uApron'], ['uApronSize', 'uApronSize'], ['uApronOn', 'uApronOn'], ['uApronOut', 'uApronOut'], ['uApronEdge', 'uApronEdge'], ['uApronCell', 'uApronCell'],
   ['uGlow', 'uGlow'], ['uField', 'uField'], ['uFieldSize', 'uFieldSize'], ['uOwn', 'uOwn'], ['uUp', 'uUp'], ['uLift', 'uLift'], ['uEven', 'uEven'], ['uEvenTint', 'uEvenTint'], ['uGlowReach', 'uGlowReach'],
-  ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uGBoil', 'uBoil'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
+  ['uBox', 'uBox'], ['uGlowBeat', 'uGlowBeat'], ['uCellSize', 'uCellSize'], ['uTwinkle', 'uTwinkle'], ['uInflow', 'uInflow'], ['uInflowRate', 'uInflowRate'],
   ['uEye', 'uCam'], ['uBand', 'uBand'], ['uLod', 'uLod'], ['uGSpot', 'uSpot'], ['uGSpotE', 'uSpotE'], ['uGSpotN', 'uSpotN'], ['uGTime', 'uTime'],
+  ...LIFE_NAMES.map((name): [string, string] => [name, name]),
 ]
 
 const VERT = /* glsl */ `
@@ -138,7 +140,6 @@ uniform vec2 uGlowReach;
 uniform vec4 uBox;
 uniform float uGlowBeat;
 uniform float uCellSize;
-uniform vec4 uGBoil;
 uniform vec3 uTwinkle;
 uniform vec4 uInflow;
 uniform vec2 uInflowRate;
@@ -171,20 +172,9 @@ ${DIAG_GLSL}
 ${NOISE_GLSL}
 ${STAGE_GLSL}
 ${APRON_GLSL}
+${LIFE_GLSL}
 float lumOf(sampler2D map, vec2 uv, float lod) {
   return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
-}
-vec3 boiledAt(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, float calm, out vec3 low) {
-  vec2 e = cell * uGBoil.z;
-  float lX = lumOf(map, uv + vec2(e.x, 0.0), lod) - lumOf(map, uv - vec2(e.x, 0.0), lod);
-  float lY = lumOf(map, uv + vec2(0.0, e.y), lod) - lumOf(map, uv - vec2(0.0, e.y), lod);
-  vec2 push = vec2(lX, lY) * (uGBoil.x / (2.0 * uGBoil.z));
-  push /= sqrt(1.0 + dot(push, push) / (uGBoil.w * uGBoil.w));
-  float wide = lumOf(map, uv, lod + 2.0 + calm);
-  float slow = wide * 26.0 + lumOf(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
-  float swing = 0.5 * (sin(uGTime * 6.283185307179586 / uGBoil.y + slow) - sin(slow));
-  low = inverseFilmic(grade(textureLod(map, uv, lod + uLowLod).rgb, 0.0));
-  return inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));
 }
 vec2 fieldShift(vec2 id) {
   float lo = uFieldSize.z / uFieldSize.x + 0.02;
@@ -331,7 +321,10 @@ void main() {
     float band = smoothstep(uInflow.z * 0.85, uInflow.z * 1.35, r) * (1.0 - smoothstep(uInflow.w * 0.7, uInflow.w, r));
     float strand = 9.0 * sin(psi * 23.0) + 7.0 * sin(psi * 57.0 + 1.3) + 5.0 * sin(psi * 131.0 + 0.4);
     float wave = r / uInflow.w * uInflow.y * 6.283185307179586 + strand;
-    float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave + uGTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uGTime * uInflowRate.y) - sin(wave * 2.3)));
+    float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave - uGTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 - uGTime * uInflowRate.y) - sin(wave * 2.3)));
+    float spot = 1.0 - smoothstep(uInflow.w * 0.88, uInflow.w * 1.12, r);
+    float inner = 0.0;
+    float seen = 0.0;
     vec2 gq = gnd * uTwinkle.z;
     float flick = vnoise(vec3(gq, uGTime * uTwinkle.y)) - vnoise(vec3(gq, 0.0)) + 0.5 * (vnoise(vec3(gq * 2.3 + 7.3, uGTime * uTwinkle.y * 1.7 + 3.1)) - vnoise(vec3(gq * 2.3 + 7.3, 3.1)));
     inflow *= max(1.0 + uTwinkle.x * flick, 0.35);
@@ -342,8 +335,10 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
       float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
       vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
-      vec3 low;
-      vec3 s = boiledAt(uPlate, uvP, dxP, dyP, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, low);
+      vec3 low = inverseFilmic(grade(textureLod(uPlate, uvP, log2(max(cell.y * uSize.y * 0.25, 1.0)) + uLowLod).rgb, 0.0));
+      vec2 mv;
+      seen = lifeSeen(dxP, dyP, uSize);
+      vec3 s = alive(uPlate, uCellsPlate, uSwellPlate, uLifeReach.xy, uvP, dxP, dyP, cell, uGTime, seen, spot, inner, mv);
       vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
       close = s * max(inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
       fine = s;
@@ -364,11 +359,25 @@ void main() {
       float tone = clamp(stLimb(now) / stLimb(seen), 0.25, 5.0);
       float cellU = uApronCell.x / away / (2.0 * AP_TAN.x);
       vec2 cell = vec2(cellU, cellU * max(seen, 0.08) * uApronSize.x / uApronSize.y);
-      vec3 low;
-      vec3 s = boiledAt(uApron, uvB, dxB, dyB, cell, log2(max(cell.y * uApronSize.y * 0.25, 1.0)), uApronCell.y, low);
+      vec3 low = inverseFilmic(grade(textureLod(uApron, uvB, log2(max(cell.y * uApronSize.y * 0.25, 1.0)) + uLowLod).rgb, 0.0));
+      vec2 mv;
+      float in2;
+      float seen2 = lifeSeen(dxB, dyB, uApronSize);
+      vec3 s = alive(uApron, uCellsApron, uSwellApron, uLifeReach.zw, uvB, dxB, dyB, cell, uGTime, seen2, spot, in2, mv);
+      inner = mix(inner, in2, w);
+      seen = mix(seen, seen2, w);
       close = mix(close, s * max(inflow, 0.0) * tone, w);
       fine = mix(fine, s, w);
       mid = mix(mid, low, w);
+    }
+    for (int j = 0; j < (seen > 0.0 ? 1 : 0); j++) {
+      float px = 1.0 / max(max(length(dFdx(arc)), length(dFdy(arc))), 1e-9) / uLifeFade.z;
+      float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
+      float lane = (1.0 - smoothstep(uLifeGrainMore.x, uLifeGrainMore.y, inner)) * seen * (1.0 - bare) * (1.0 - spot);
+      vec2 q = vec2(dot(rel, uGSpotE), dot(rel, uGSpotN)) / uInflow.z;
+      close *= 1.0 + uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uGTime);
+      close += uLifeGrainTint.rgb * (uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uGTime));
+      close += uLifeDotsTint.rgb * (uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uGTime));
     }
     vec3 to = ST_CENTRE - uEye;
     float away = length(to);

@@ -13,6 +13,7 @@ import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
+import { lifeFormat } from './life'
 import { stage } from './stage'
 
 export const createSet: SetFactory = async (ctx) => {
@@ -28,7 +29,9 @@ export const createSet: SetFactory = async (ctx) => {
   const plate = await ctx.texture(base + look.files.plate, { srgb: true, anisotropy: 16, mirror: true })
   const apron = await ctx.texture(base + look.files.apron, { srgb: true, anisotropy: 16, mirror: true })
   const field = await ctx.texture(base + look.files.field, { srgb: true, anisotropy: 16 })
-  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, opening.on ? look.opening.seethe : undefined)
+  const lifeMap = (file: string): Promise<THREE.Texture> => ctx.texture(base + file, { srgb: false, anisotropy: 4, mirror: true })
+  const life = { cellsPlate: await lifeMap(look.files.cellsPlate), swellPlate: await lifeMap(look.files.swellPlate), cellsApron: await lifeMap(look.files.cellsApron), swellApron: await lifeMap(look.files.swellApron) }
+  const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, life, opening.on ? look.opening.seethe : undefined)
   const plates = place.plates.levels as { file: string; widthDeg: number }[]
   const levels = await Promise.all(plates.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
   const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
@@ -122,12 +125,13 @@ export const createSet: SetFactory = async (ctx) => {
         const feet = loops.pulse(since)
         const surge = loops.surge(since, open)
         const erupt = loops.erupt(since, open)
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * erupt[2], look.opening.erupt.flash.veil * erupt[2])
+        lifeFormat(ground.material.uniforms, view.format.height)
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
         const strands = 1 - above(by.loops)
         loops.mesh.visible = strands > 0
         loops.trim(above(by.strands))
-        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since)
+        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain')
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid

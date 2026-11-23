@@ -18,7 +18,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 26, side: 1 },
   light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
-  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames } },
+  handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, picture: place.rise.picture } },
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
@@ -140,6 +140,10 @@ export class SunPlan extends StopPlan {
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
     return super.terrain((lin + 0.5) * dur)
+  }
+
+  override twin(local: Pose, time: number): Pose {
+    return this.carried(this.globe(local), time)
   }
 
   override risePose(time: number, view: ViewKind): Pose {
