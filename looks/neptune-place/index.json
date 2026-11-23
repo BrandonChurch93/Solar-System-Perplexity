@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T18:28:22.832Z",
- "head": "e841b2b53792e1d675a03c26b3f9caf4627ba95c",
- "note": "blue specks of 4707 cured by code, pairs before and after; round 39 list read",
+ "pushed": "2026-11-23T18:58:35.772Z",
+ "head": "a3066d414e5f2a6df5796417e38578a91ba53fdf",
+ "note": "r39 work: causes found, slower dive start on trial, comb of the laid cirrus not yet cured",
  "looks": [
+  {
+   "time": "2026-11-23T18:58:35.196Z",
+   "file": "20261123185835196-note-a4732-bank2x.jpg",
+   "source": "../../../../tmp/a4732-bank2x.png",
+   "kind": "note",
+   "label": "batch A trial: 4732 cloud banks 2x, comb teeth still there with comb width 1, not yet cured",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:58:34.671Z",
+   "file": "20261123185834671-note-a4707.jpg",
+   "source": "../../../../tmp/a4707.jpg",
+   "kind": "note",
+   "label": "batch A trial: 4707 with dive rampIn 0.5 (slower start), draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:58:34.088Z",
+   "file": "20261123185834088-note-ring5006-4x.jpg",
+   "source": "../../../../tmp/ring5006-4x.png",
+   "kind": "note",
+   "label": "r39 item 5: ring at 5006 draft 4x, strokes are the grain, no blur",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T18:58:33.495Z",
+   "file": "20261123185833495-note-eye-layers.jpg",
+   "source": "../../../../tmp/eye-layers.png",
+   "kind": "note",
+   "label": "r39 item 2: 4707 eye, full, no laid layer, globe alone: the white cut pieces are the laid cirrus",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T18:28:22.243Z",
    "file": "20261123182822243-note-vivid-pairs.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/d5-dive.jpg",
    "kind": "note",
    "label": "FAULT dive 4741 to 4750 with the haze: pale block with a straight edge upper left, so the haze is rise only",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:27.056Z",
-   "file": "20261123180727056-note-d8-d.jpg",
-   "source": "../../../../tmp/d8-d.jpg",
-   "kind": "note",
-   "label": "rise 4984 to 4988 draft, haze d8: haze gone, tan patch beside the eye still there",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:26.497Z",
-   "file": "20261123180726497-note-d8-c.jpg",
-   "source": "../../../../tmp/d8-c.jpg",
-   "kind": "note",
-   "label": "rise 4978 to 4982 draft, haze d8: sharp again",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:25.921Z",
-   "file": "20261123180725921-note-d8-b.jpg",
-   "source": "../../../../tmp/d8-b.jpg",
-   "kind": "note",
-   "label": "rise 4968 to 4976 draft, haze d8: arcs come up from the middle of the frame over 4964 to 4972",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:07:25.302Z",
-   "file": "20261123180725302-note-d8-a.jpg",
-   "source": "../../../../tmp/d8-a.jpg",
-   "kind": "note",
-   "label": "rise 4956 to 4966 draft, far ground haze d8 (uncommitted): far ground stays pale and soft, canvas bank melts",
    "stop": "neptune"
   }
  ]
