@@ -23,6 +23,8 @@ def noglare(f):
 
 def tiles(f, kind):
     noglare(f)
+    for line in ["ground.update(state.time - terrainMid, gain, shot.post.vignette, view)", "under.update(state.time - terrainMid, gain, shot.post.vignette, view)", "limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)", "rim.update(gain, shot.post.vignette, aspect)"]:
+        f['set.ts'] = rep(f['set.ts'], line, line.replace('shot.post.vignette', '0'))
     t = SPEC[kind]
     s = f['plan.ts']
     s = rep(s, "import { ramp, smoother } from '../../director/rig'", "import { drift, ramp, smoother } from '../../director/rig'")
