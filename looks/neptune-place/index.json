@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T19:48:49.802Z",
+ "pushed": "2026-11-23T20:12:44.091Z",
  "head": "488113e897506b4a508c1712072eb4c497be1b9a",
- "note": "issue 10 and item 7 traced to the sky turn of the dive; hole trial dropped; a later turn is on test",
+ "note": "sky turn held to 4723: one star 4688 to 4710, corner clean; kept frames 0 pixels differ; proof chain runs",
  "looks": [
+  {
+   "time": "2026-11-23T20:12:43.483Z",
+   "file": "20261123201243483-note-h5006-ringtop.jpg",
+   "source": "../../../../tmp/h5006-ringtop.png",
+   "kind": "note",
+   "label": "neptune rise 5006 ring strokes follow the circles (draft, lifted below)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:12:42.827Z",
+   "file": "20261123201242827-note-l-corner.jpg",
+   "source": "../../../../tmp/l-corner.png",
+   "kind": "note",
+   "label": "neptune dive corner 4720 to 4734, sky step at 4723",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T20:12:42.169Z",
+   "file": "20261123201242169-note-i-sun.jpg",
+   "source": "../../../../tmp/i-sun.png",
+   "kind": "note",
+   "label": "neptune dive 4688 to 4710 one star with its flare, sky turn held",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T19:48:40.969Z",
    "file": "20261123194840969-note-h-ur.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/e-ring5006.png",
    "kind": "note",
    "label": "5006 ring grain averaged along the ring's own circles",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T19:19:31.703Z",
-   "file": "20261123191931703-note-rim-pair-5006.jpg",
-   "source": "../../../../tmp/rim-pair-5006.png",
-   "kind": "note",
-   "label": "5006 rim at native, before and after the move rim law (line weaker, light tapering into the night, stars dimmed in the glow)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:58:35.196Z",
-   "file": "20261123185835196-note-a4732-bank2x.jpg",
-   "source": "../../../../tmp/a4732-bank2x.png",
-   "kind": "note",
-   "label": "batch A trial: 4732 cloud banks 2x, comb teeth still there with comb width 1, not yet cured",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T18:58:34.671Z",
-   "file": "20261123185834671-note-a4707.jpg",
-   "source": "../../../../tmp/a4707.jpg",
-   "kind": "note",
-   "label": "batch A trial: 4707 with dive rampIn 0.5 (slower start), draft",
    "stop": "neptune"
   }
  ]
