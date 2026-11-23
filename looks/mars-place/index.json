@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T11:07:47.266Z",
- "head": "49f49f9335979c9cd300dc921cb8433f0eb63877",
- "note": "first repaint take of the 3.25 deg plate, held to the picture from the twin",
+ "pushed": "2026-11-23T11:39:34.551Z",
+ "head": "ac61d51ae352ebb804c60a561fb5dee52f8d9fa3",
+ "note": "plates 3.25, 1.2 and 0.6 repainted by fill takes and held; first bake of 8 levels; rim match and haze still open",
  "looks": [
+  {
+   "time": "2026-11-23T11:39:33.210Z",
+   "file": "20261123113933210-note-p06-take1.jpg",
+   "source": "out/work/place/view/p06-take1.jpg",
+   "kind": "note",
+   "label": "0.6 deg plate, fill take 1 (before holding)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T11:39:32.014Z",
+   "file": "20261123113932014-note-p3-t4-calm.jpg",
+   "source": "out/work/place/view/p3-t4-calm.jpg",
+   "kind": "note",
+   "label": "3.25 deg plate, take 4 held to the picture, far fan calmed by code",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-23T11:39:30.450Z",
+   "file": "20261123113930450-note-topdown-m2a.jpg",
+   "source": "out/work/place/view/topdown-m2a.jpg",
+   "kind": "note",
+   "label": "first bake of the 8 level ladder seen from above (look values): the 3.25 plate still shows as a lighter square and a pale wedge",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-23T11:07:46.690Z",
    "file": "20261123110746690-note-p3-t1-plate.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/view/pictures.jpg",
    "kind": "note",
    "label": "place pictures at T as the engine draws them: dive (top), rise (bottom)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:33:38.588Z",
-   "file": "20261123103338588-note-topdown-rough2.jpg",
-   "source": "out/work/place/view/topdown-rough2.jpg",
-   "kind": "note",
-   "label": "the same sheet with the plates baked as albedo for the globe's own light at T: the albedo the globe would need is blue white and black, which shows that shade and tint cannot carry the picture",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:33:38.035Z",
-   "file": "20261123103338035-note-topdown-rough0.jpg",
-   "source": "out/work/place/view/topdown-rough0.jpg",
-   "kind": "note",
-   "label": "M1 simulated top down dive sheet, 12 tiles from 60 to 0.12 degrees across, globe ground alone as painted, levels come in as in a 1080 px film frame: rough plates holding the picture's own values. The wedge appears at tile 6 as a dark smeared cut out, not nested above, the land around it is the old land",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T10:33:37.505Z",
-   "file": "20261123103337505-note-check-rough2.jpg",
-   "source": "out/work/place/view/check-rough2.jpg",
-   "kind": "note",
-   "label": "M1 check picture, frame 2454 draft: globe side with the place picture off and rough plates baked as albedo for the globe's light (left), close side (middle), difference x 4 (right). Ground differs by 19.1 of 255 on average: the globe side is softer, redder, its shadows are lifted by haze and its highlights cannot be reached",
    "stop": "mars"
   }
  ]
