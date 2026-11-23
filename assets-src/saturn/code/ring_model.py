@@ -32,7 +32,8 @@ TAU_POWER = 1.6
 TAU_MAX = 3.5
 DUST = {'tau': 0.006, 'length': 0.045, 'ice': 0.26}                 # the sheet of dust outside the outer edge
 STRANDS = [(2.418, 0.0035, 0.022), (2.408, 0.0018, 0.008), (2.431, 0.0022, 0.006)]   # radius, half width, depth
-FINE = [(1.2, 0.5), (1.26, 0.75), (1.5, 0.8), (1.62, 0.9), (1.7, 1.0), (1.93, 1.0), (1.95, 0.9), (2.06, 0.9), (2.08, 0.6), (2.3, 0.55), (2.34, 0.7), (2.5, 0.7)]
+FINE = [(1.2, 0.8), (1.26, 1.0), (1.5, 1.0), (1.56, 0.8), (1.93, 0.8), (1.95, 1.1), (2.06, 1.1), (2.08, 1.6), (2.3, 1.6), (2.34, 1.0), (2.5, 0.8)]
+GAP = {'from': 1.948, 'to': 2.058, 'edge': 0.006, 'tau': 0.05, 'ice': 0.11}   # the Cassini division is thin, not empty
 CHROMA_SIGMA = 0.006
 CHROMA_TOP = 0.6    # the hero clips above this, where the colour of a bin can not be trusted
 LUMA = np.array([0.2126, 0.7152, 0.0722])
@@ -81,6 +82,10 @@ rim = np.clip((r - INNER) / EDGE, 0, 1) * np.clip((OUTER - r) / EDGE, 0, 1)
 lum *= rim
 
 tau = np.minimum(TAU_REF * (lum / L_REF) ** TAU_POWER, TAU_MAX)
+gap = np.clip((r - GAP['from']) / GAP['edge'], 0, 1) * np.clip((GAP['to'] - r) / GAP['edge'], 0, 1)
+thin = np.maximum(tau, GAP['tau'] * gap)
+lum = lum + GAP['ice'] * ((1 - np.exp(-thin * kh)) - (1 - np.exp(-tau * kh))) * gap
+tau = thin
 # outside the outer edge: dust and strands, with the brightness they return to the hero's camera
 out = np.maximum(r - OUTER, 0)
 dust = np.where(r > OUTER, DUST['tau'] * np.exp(-out / DUST['length']) * np.clip((SPAN[1] - r) / 0.03, 0, 1), 0)

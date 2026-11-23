@@ -257,3 +257,42 @@ plan.ts, look.ts; stills at 3720, 3630, 3809; M1.
 
 Next: ringlet ladder with grooves, colour lanes, brightness by ring; then ice particles; then the globe's
 light near the terminator, the halo, the shadow. Then M2.
+
+## Mail 225 from /root (about 08:02 UTC day 1): E1 is on main
+
+- E1 of the handover engine is on main at 33ccccb6 (main head add6ccbe). Do: git fetch origin main, git
+  merge origin/main (never rebase), build, go on.
+- Engineer's notes: assets-src/shared/HANDOVER-NOTES.md, section "The contract of E1, for the stop
+  builders". Opt in with a `handover` object in the params (even {}). handover.dive and handover.rise may
+  set at, dissolveFrames, placeFrames; defaults in config.handover. plan.divePose(time, view) and
+  plan.risePose(time, view) must give a valid pose on both sides across the place window and the dissolve;
+  plan.dive(time) and plan.rise(time) pick the side with sideAt.
+- Rename: the old property risePose (pose at the end of the rise) is now riseEnd.
+- For a stop that opted in there is no cover and no added softness in its dive and rise;
+  coverWindow(segment) is null and judgedWindow(segment) is what tools use; G13 counts every frame of the
+  dive and the rise.
+- Not in yet: E2 (place picture on the globe side), E3 (steady descent in the generic plan), E4 (the
+  measures). /root will say when. Opting in today gives a hard swap at T; do not report that as S4.
+- Keep going with S2 and S3. Looks every 30 minutes.
+
+## Mail 226 from /root (about 08:03 UTC day 1): decision on M1 and the order of work
+
+- Decision: keep the one rigid true world. Do not build the dome. Logged in kit/PROGRESS.md.
+- Inside the true world come as near to the approved close as an honest camera and honest light allow, in
+  this order:
+  1. Richness first: the approved has hundreds of fine ringlets with colour variation (cream, rose, grey
+     green) at every distance; mine reads as about twenty soft bands. Bring the ladder of ringlets up
+     through the middle scales, each filtered by the footprint, with the colour varying by ringlet.
+  2. The dark band of the Cassini division and the outer A ring in the approved are darker and greyer; my
+     A ring is pale.
+  3. The junction: the slant opacity of the thin inner ring so the globe shows only dimly through it, the
+     ring shadow on the globe as the dark band under the equator, the globe's shadow on the far rings in
+     frame if the pose allows it. If a small change of camera height or foot brings less of the lower
+     globe into view without losing the ring layout, take it; say what it costs.
+  4. Sky: no stars through the Cassini division where the sheet has optical depth, and the same sky as the
+     approved (dark, few stars).
+  5. Then the ice near the camera with parallax, the limb halo and the terminator.
+- Speed: 9.4 s a sample is fine for now, do not trade the look for it.
+- The hold (3465) must still come out as the same picture as the kept still, and the dive needs no swap, so
+  after E3 the dive is one move through one scene. At the next milestone say whether the hold changed by a
+  single pixel, and push a sheet of every 15th frame of 3630 to 3809 plus consecutive frames 3718 to 3723.
