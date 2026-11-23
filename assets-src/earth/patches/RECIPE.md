@@ -9,6 +9,8 @@ Four nested gnomonic colour patches centred on the dive spot in the Caribbean (`
 | `public/assets/earth/<set>/patch-24.jpg` | 24 degrees | 4096 x 4096 | 2048 x 2048 |
 | `public/assets/earth/<set>/patch-12.jpg` | 12 degrees | 4096 x 4096 | 2048 x 2048 |
 
+Since the place task (23 November) `patch-12.jpg` is no longer shipped: `public/assets/earth/<set>/place-12.jpg` takes its place and the three wider levels carry the place laid in, see "The place on the globe" in `assets-src/earth/RECIPE.md`. This file describes the levels as commit 6da6c641 ships them, which are the input of that step.
+
 All are JPEG quality 94, 4:4:4. The `web` files are the `full` files reduced by Lanczos.
 
 ## What a patch holds

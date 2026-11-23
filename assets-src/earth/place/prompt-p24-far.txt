@@ -1,0 +1,10 @@
+Edit Image 1, a strict top-down nadir photograph from orbit of a tropical sea with islands, coasts and cloud (24 x 24 degrees, 1:1 square, north at the top). Image 2 is an oblique photograph of the place in the middle of Image 1: the bright cloud sheet that reaches to its horizon is what is unfinished in Image 1.
+
+In Image 1 a pale blue, smeared, blurred fan without detail lies around the upper left of the bright cloud sheet in the middle. Repaint ONLY that pale smeared fan as a sharp photograph taken from straight above:
+- It is the outward continuation of the bright white cloud sheet next to it: stratocumulus with fine cellular texture, cloud streets and long parallel bands, lit by a low Sun in the upper left, joined to the sheet without a seam.
+- Dense and white next to the existing sheet, then thinning outward into broken bands and small scattered cumulus, with an irregular natural outer edge. No hard arc, no straight edge, no fan shape left.
+- It lies over the sea and over the coast alike; where it is dense no land shows through.
+
+KEEP EXACTLY, at the same pixel position, shape, size, brightness and hue: everything else. The middle of the picture with its cloud sheet, sun glint, islands and cumulus, every coastline and land mass, the turquoise shallows, the open sea, the other clouds. No vignette.
+
+No streaks, no smears, no motion blur, no haze. Strict nadir map filling the square edge to edge. No horizon, no limb, no atmosphere glow, no stars, no border, no text, no watermark.
