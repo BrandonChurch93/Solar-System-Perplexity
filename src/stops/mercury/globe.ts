@@ -164,6 +164,11 @@ uniform vec4 uHazeSpan;
 uniform vec3 uHazeCut;
 uniform vec3 uHazeCalm;
 uniform vec2 uWash;
+uniform vec4 uFar;
+uniform vec4 uFarSun;
+uniform vec3 uFarDir;
+uniform vec3 uFarColor;
+uniform vec2 uFarLit;
 uniform vec2 uLift;
 uniform vec2 uKnee;
 uniform vec4 uDusk;
@@ -411,6 +416,9 @@ ${PATCH_LEVELS}
   vec3 wash = 1.0 / max(raw, vec3(0.02));
   wash *= min(1.0, uWash.y / max(wash.r, max(wash.g, wash.b)));
   col *= mix(vec3(1.0), wash, uWash.x);
+  float fs = exp(-acos(clamp(dot(ray, uFarDir), -1.0, 1.0)) / uFarSun.x);
+  float fw = uFar.x * uFarSun.z * (1.0 - smoothstep(uFar.y, uFar.z, mu / (1.0 + uFar.w * fs))) * smoothstep(uFarLit.x, uFarLit.y, ndl0);
+  col = mix(col, uFarColor * (1.0 + uFarSun.w * fs), fw);
 ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -484,6 +492,7 @@ export class Globe {
         uCarry: { value: new THREE.Vector3(1, 0, 0) }, uPlace: { value: new THREE.Vector4(1, 0, Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[0] ?? 1)), Math.tan(THREE.MathUtils.degToRad(p?.place?.ownDeg[1] ?? 2))) }, uPlaceFrom: { value: p?.place?.from ?? MAX_PATCHES }, uShoulder: { value: new THREE.Vector2(l.shoulder.from, 0) },
         uClose: { value: o.map }, uCloseCam: { value: new THREE.Matrix3() }, uCloseUp: { value: new THREE.Vector3(0, 1, 0) }, uCloseLens: { value: new THREE.Vector4(1, 1, 0, 0) }, uCloseBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uCloseFade: { value: new THREE.Vector4(1, 2, 0.1, 0) }, uCloseSize: { value: new THREE.Vector2(1, 1) }, uCloseW: { value: 0 },
         uWide: { value: o.map }, uWideAlpha: { value: o.map }, uWideCam: { value: new THREE.Matrix3() }, uWideEye: { value: new THREE.Vector3(0, 2, 0) }, uWideLens: { value: new THREE.Vector3(1, 0, 0) }, uWideBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uWideOver: { value: new THREE.Vector2(0, 0) }, uWideDrop: { value: new THREE.Vector4(0, 1, 2, 1e6) }, uWideDown: { value: new THREE.Vector3(0, -1, 0) }, uWideHold: { value: new THREE.Vector3(1e6, 0, 1) }, uWideCap: { value: new THREE.Vector4(0, 1, 2, 1) }, uWideLow: { value: 0.03 }, uWideFade: { value: new THREE.Vector4(0.1, 1, 2, 0.5) }, uWideSize: { value: new THREE.Vector2(1, 1) }, uSink: { value: 0 },
+        uFar: { value: new THREE.Vector4(0, 0, 1, 1) }, uFarSun: { value: new THREE.Vector4(0, 1, 1, 1) }, uFarDir: { value: new THREE.Vector3(0, 0, 1) }, uFarColor: { value: new THREE.Vector3(1, 1, 1) }, uFarLit: { value: new THREE.Vector2(0, 1) },
         uHazeSun: { value: new THREE.Vector3(0, 0, 1) }, uHazeGain: { value: Array.from({ length: 17 }, () => new THREE.Vector3(1, 1, 1)) }, uHazeSpan: { value: new THREE.Vector4(0, 1, 0, 1) }, uHazeCut: { value: new THREE.Vector3(0, 1, 0) }, uHazeCalm: { value: new THREE.Vector3(0, 1, 0) }, uWash: { value: new THREE.Vector2(0, 1) }, uLift: { value: new THREE.Vector2(-0.85, 1.6) }, uKnee: { value: new THREE.Vector2(1, 0) },
         uPrev: { value: new THREE.Matrix4() }, uSmear: { value: 0 }, uJitter: { value: new THREE.Vector3() }, uPlain: { value: new THREE.Vector3(1, 1, 1) }, uDiag: diagUniform, uGrad: gradUniform,
       },
@@ -569,6 +578,15 @@ export class Globe {
     span.y = THREE.MathUtils.degToRad(toDeg)
     ;(u.uHazeCut!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(cutDeg[0]), THREE.MathUtils.degToRad(cutDeg[1]), 0)
     ;(u.uHazeCalm!.value as THREE.Vector3).set(calm[0], calm[1], 0)
+  }
+
+  far(amount: number, mu: readonly [number, number], sun: THREE.Vector3, o: { color: readonly number[]; sunFallDeg: number; flat: number; sunReach: number; sunLevel: number; lit: readonly [number, number] }): void {
+    const u = this.material.uniforms
+    ;(u.uFar!.value as THREE.Vector4).set(amount, mu[0], mu[1], o.sunReach)
+    ;(u.uFarSun!.value as THREE.Vector4).set(THREE.MathUtils.degToRad(o.sunFallDeg), 0, o.flat, o.sunLevel)
+    ;(u.uFarDir!.value as THREE.Vector3).copy(sun)
+    ;(u.uFarColor!.value as THREE.Vector3).fromArray(o.color)
+    ;(u.uFarLit!.value as THREE.Vector2).fromArray(o.lit)
   }
 
   wash(amount: number, cap: number): void {
