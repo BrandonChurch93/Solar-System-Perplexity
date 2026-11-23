@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 95 km across. It is incomplete: a large flat grey area is where the photograph is missing. In the centre of the grey area a square holds a sharp piece of the missing ground at its true place and scale: a dark flat topped mesa of layered rock with cliffs, gullies and rubble. A narrow band along the outer rim of the image is complete but blurred: it shows where canyons, side canyons, mesas and plateaus lie around the missing part.
+
+Image 2 is an oblique aerial photograph taken low over the land of the centre square, looking east south east. It shows what this land is: a flat topped mesa ending in a tall layered cliff, beyond it a canyon running away from the viewer with a rough dark floor of rubble and landslide lobes, a sunlit layered wall on its left and a tall shadowed wall under a broad plateau on its right.
+
+Task: complete image 1 into one seamless nadir orbital photograph, the same framing and scale, north at the top.
+
+1. Fill the grey area with the canyon land that joins the centre square to the rim band, drawn as a map seen from straight above. East of the centre square the mesa ends in a cliff, seen from above as a narrow band of layered rock with a talus apron at its foot. Beyond it lies a canyon about 12 km wide that runs from north west to south east, with a rough floor of rubble, landslide lobes and dunes. On the far side of the canyon stands a long wall, seen from above as a narrow gullied band, and behind it a broad flat plateau with a dusty wind scoured top. West, north and south of the centre square draw more flat topped mesas, side canyons, troughs and chaotic blocks of the same kind and the same size, as far as the rim band, where they join what the rim band shows.
+
+2. The centre square is only a sample of the ground. Cliff lines, mesa tops and canyon floors run across its outline and continue beyond it on every side without a break, so that nobody can tell where the square was. Every cliff is seen from straight above: a thin band, never a tall face. Nothing may radiate from one point like the spokes of a wheel, no long parallel streaks, no round or oval island, no straight outline.
+
+3. In the rim band keep every feature where it is, drawn sharp.
+
+Fine detail everywhere, down to single ledges, gullies and boulders. Light: a low Sun in the south south east, long shadows falling toward the north north west. Colour: the dark brown, ochre and rust rock and the deep brown shadows of the centre square, passing little by little into the colours of the rim band. No grey may remain. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
