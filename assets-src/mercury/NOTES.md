@@ -1200,3 +1200,27 @@ Do now, in this order: finish the step you are in, merge origin/main, build, run
 
 For mars_place_builder: [not mine]. For handover_engineer: [not mine]. For jupiter_coder, saturn_coder, sun_builder, globe_engineer: nothing to change in your current step. Merge main when you next push."
 
+## MAIL 267 (23 Nov, about 12:50 UTC, from the Builder, high): b6bd7303 rendered and looked at, every frame
+
+Word for word:
+
+"From the Builder (/root) to mercury_builder. Mail 267. I rendered your commit b6bd7303 at the draft tier on the render machines: dive 690 to 779 and rise 960 to 1034, every frame, and looked at every frame.
+
+What holds: both ways read as one place. The crater pair is on the globe from about 714, stays put while the camera comes down, and is the same pair on the ground at 739 and through 779. The rise keeps it from 960 to about 1010 and the pull back to the small globe with the Sun behind it is one move. No cover, no cut, no second picture popping in. That is the goal of the review note and it is met in the large.
+
+What is still wrong, in order of weight:
+1. 720 to 733 and 999 to 1009: the ground between the globe picture and the place looks smeared and combed, crater rims pulled into long curved streaks, most at the left and bottom of the frame and along the limb (bright comma shapes along the limb 1000 to 1004). This is the "blurry mess" of Brandon's note in a milder form. The ground there must have real crater shapes at the scale it is seen, with no stretched picture.
+2. 960 to 985: white flecks inside the black shadow of the big crater (about ten of them, they look like dashes). Either they are lit peaks and then they need a body under them that reads, or they go.
+3. 996 to 999: the glow of the Sun at the top edge goes out over four frames while the camera pulls back. Make it leave with the Sun leaving the frame, at the pace of the move.
+4. 1001 to 1003: a faint green and red ghost above the place, top middle. If it is the lens ghost of the Sun it is fine but it must not flick on for three frames.
+5. Your own open points stay: far wash, second horizon.
+
+Send me the commit when 1 and 2 are done and I render both ways at the review tier. Then your stop gets its full check and its rounds. Report by message to /root, short."
+
+- 12:43 Consecutive frames at draft with the far wash, before E3 (`out/work/mercury/place/c1`, sheets `tmp/c1-690.jpg` to `c1-1024.jpg`, 16 frames each): every frame looked at. Kept frames 615, 689, 780, 870, 959, 1035: 0 px against `base/`. Seen: one place both ways; 714 to 721 the place is a paler grey patch on the warm globe; 728 to 731 a smooth pale band on the limb; 742 strip at the left edge; 991 to 999 the place picture stands as a window with a hard comb edge on a flat grey globe (crop `tmp/c1-rim.jpg`), the worst fault of the rise; 998 to 1003 the ground changes from the picture to the plates while the scale jumps; 1023 the nebula at the left comes out from behind the night limb (no fault).
+- 12:45 Committed 3cd7b74d (far wash), merged main e54b29e8 with E3 as 852f49ec. tsc clean.
+- 12:50 V1, place options of E3 in `plan.ts` for dive and rise: `seen: 1, maxEnlarge: 3, enlargeSoft: 0.95`. Render `v1` (736 740 742 992 994 996 998 1000): the comb edge of the picture is softer, the hard edge at the picture's horizon stays (honest falls from about 0.7 to 0 between 12 and 15.4 deg of arc, a few pixels on screen, no option widens it). Kept.
+- 12:55 Item 1 of mail 267, diagnosis. Test pattern plates (level 1 red, level 2 green with an 8 by 8 grid, level 3 blue, level 4 white; `tmp/pat.jpg`, patches restored after): at 716 to 732 and 1000 to 1008 the left and bottom of the frame are levels 3 and 4 around the place, the middle is level 2, the limb is level 1. At full size (`tmp/c1-bl.jpg`) the band is a muddle: flat dark brown blobs with hard edges (the take, its log contrast calmed to 0.55, so its black shadows turn into flat brown), combed streaks and dashes (the quilt at half share over it). Two pictures mixed, neither whole. Level 1 (old, 21 Nov) is clay with painted white rims: the commas on the limb.
+- 13:10 Mail 265 done. Build clean, vitest 155 of 155, tsc clean. Draft render with E3 and V1 (`c2`, same frames as `c1`): against `c1` 0 px on every frame but 732 to 743 and 991 to 1002 (V1, the place window); my plan draws its own path (`divePose`, `risePose`), so the new line of E3 and its path options do not reach the stop. Kept frames 615, 689, 780, 870, 959, 1035: 0 px against `base/`. Sheets `tmp/c2-732.jpg`, `c2-991.jpg` looked at, every frame.
+- 13:10 Item 2 of mail 267: the flecks are lit rock in the baked light of the close picture (`relief-color.jpg`), inside the shadow of the big crater. They are in the kept still of 870 too (`tmp/c1-flecks4.jpg`, frame 870, x 700 to 1340, y 330 to 690) and through the whole terrain segment. Taking them out of the picture changes 870, which may not change. Reported to the Builder as a conflict; a cleaned picture is prepared but not installed until he says so.
+- 13:12 Item 1, cure chosen: the band is painted again by generation, level 3 first with the whole quilt on the low tone as the lead (no calmed take under it), softened, then level 4 from level 3 enlarged, and level 2 takes the middle from level 3 made smaller and keeps take a6 outside without the quilt. Round: mail 267 is a new verdict, so the takes of this round count from one (b1...).
