@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T13:17:13.081Z",
+ "pushed": "2026-11-23T13:32:46.261Z",
  "head": "4e9bdc0291ebf903876a62f973b59547aaaab89a",
- "note": "flow map on the ground, first takes h1 and h2, numbers in the labels; h2 moves but its frames between the judged ones are torn, being rebuilt",
+ "note": "ground h5: flow map take, raw 8.37 blurred 3.79 with the camera held (frames 90 to 110, steady 8.3 to 8.5), not yet committed",
  "looks": [
+  {
+   "time": "2026-11-23T13:32:45.530Z",
+   "file": "20261123133245530-note-h5-zoom.jpg",
+   "source": "out/work/sun/life/h5-zoom.png",
+   "kind": "note",
+   "label": "sun ground h5 at twice native: frames 90, 93, 95 near the lens and the penumbra at 93",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T13:32:44.924Z",
+   "file": "20261123133244924-note-h5-heat.jpg",
+   "source": "out/work/sun/life/h5-heat.jpg",
+   "kind": "note",
+   "label": "sun ground h5: mean change per frame by place, frames 90 to 95, ground box y 620 to 1080",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T13:32:44.284Z",
+   "file": "20261123133244284-note-h5-d5.jpg",
+   "source": "out/work/sun/life/h5-d5.jpg",
+   "kind": "note",
+   "label": "sun ground h5: difference of frames 90 and 95 (top) and 93 and 98, times 5",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T13:32:43.628Z",
+   "file": "20261123133243628-note-h5-near.jpg",
+   "source": "out/work/sun/life/h5-near.jpg",
+   "kind": "note",
+   "label": "sun ground h5, camera held at 90: frames 90 (top) and 95, flow map on the fine texture, raw 8.37 blurred 3.79 over frames 90 to 110",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T13:17:12.299Z",
    "file": "20261123131712299-note-flow-h2-zoom.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/sun/life/g10-pen.jpg",
    "kind": "note",
    "label": "12:55 take g10, penumbra frames 90, 91, 92 and six times the difference 90 to 91: dashes with square ends, to be made soft grains (mail 272)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:55:14.212Z",
-   "file": "20261123125514212-note-g9-q1.jpg",
-   "source": "out/work/sun/life/g9-q1.jpg",
-   "kind": "note",
-   "label": "12:55 take g9 (a little weaker than g10), frames 0, 10, 20, 30 at native size, x 700 y 700: the cells stay, their light changes",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:55:13.688Z",
-   "file": "20261123125513688-note-g10-six-a.jpg",
-   "source": "out/work/sun/life/g10-six-a.jpg",
-   "kind": "note",
-   "label": "12:55 take g10, six frames 90 to 95 at native size, x 700 y 700",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:55:13.129Z",
-   "file": "20261123125513129-note-g10-near.jpg",
-   "source": "out/work/sun/life/g10-near.jpg",
-   "kind": "note",
-   "label": "12:55 ground take g10, held camera frame 90 (top) against 4e9bdc02 (bottom). Fronts and knots of light made by function on the distance from the lanes; the plate itself still stands. Ground number 4.33 raw, 3.15 blurred (4e9bdc02: 2.72 and 1.05)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T12:35:52.134Z",
-   "file": "20261123123552134-note-g5-d5.jpg",
-   "source": "out/work/sun/life/g5-d5.jpg",
-   "kind": "note",
-   "label": "12:37 take g5: frame 90 and four times the difference to frame 95. Rings follow the cells of the picture. Wrong: a straight line at y 930 where plate and apron meet, their depth maps differ there",
    "stop": "sun"
   }
  ]
