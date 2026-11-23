@@ -179,18 +179,21 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
   float z = dot(rel, cross(along, up));
   float sum = 0.0;
   heat = 0.0;
-  for (int s = 0; s < 3; s++) {
-    float shrink = 1.0 - 0.16 * float(s);
-    float k = shape.x * shrink;
-    float radius = shape.y * shrink;
-    float along2 = atan(x, y - k);
-    float wob = vnoise(vec3(along2 * 2.3 + shape.w, float(s) * 4.1, uTime * 0.05)) - 0.5;
-    float lean = z - 0.035 * float(s - 1) - 0.05 * (vnoise(vec3(along2 * 3.1, shape.w, float(s) * 1.9)) - 0.5);
-    float ring = length(vec2(x, y - k)) - radius * (1.0 + 0.22 * wob);
-    float width = max(shape.z * (1.0 + 0.5 * vnoise(vec3(along2 * 5.0, float(i) * 3.1, float(s) * 7.7))), soft);
+  for (int s = 0; s < 4; s++) {
+    float fs = float(s);
+    float a = shape.x * (1.0 - 0.17 * fs) * (1.0 + 0.25 * (vhash(vec3(fs, shape.w, 1.3)) - 0.5));
+    float h = shape.y * (1.0 - 0.2 * fs) * (1.0 + 0.3 * (vhash(vec3(fs, shape.w, 4.7)) - 0.5));
+    float xs = x - shape.x * 0.3 * (vhash(vec3(fs, shape.w, 8.1)) - 0.5);
+    vec2 pe = vec2(xs / a, y / h);
+    float e = length(pe);
+    float along2 = atan(pe.x, pe.y);
+    float wob = vnoise(vec3(along2 * 2.3 + shape.w, fs * 4.1, uTime * 0.05)) - 0.5;
+    float ring = (e - 1.0 - 0.16 * wob) * e / max(length(vec2(xs / (a * a), y / (h * h))), 1e-4);
+    float lean = z - shape.x * 0.5 * (vhash(vec3(fs, shape.w, 2.9)) - 0.5) * cos(along2) - 0.04 * (vnoise(vec3(along2 * 3.1, shape.w, fs * 1.9)) - 0.5);
+    float width = max(shape.z * (0.7 + 0.9 * vnoise(vec3(along2 * 5.0, float(i) * 3.1, fs * 7.7))), soft);
     float dist2 = ring * ring + lean * lean;
-    float strand = 0.35 + 1.3 * vnoise(vec3(along2 * 7.0 - uTime * uProm.w * (1.0 + 0.4 * float(s)), float(i) * 1.7 + shape.w, float(s) * 2.9));
-    float g = exp(-dist2 / (width * width)) * strand * (shape.z / width);
+    float strand = 0.3 + 1.4 * vnoise(vec3(along2 * 7.0 - uTime * uProm.w * (1.0 + 0.4 * fs), float(i) * 1.7 + shape.w, fs * 2.9));
+    float g = exp(-dist2 / (width * width)) * strand * (shape.z / width) * step(0.0, y + 0.05);
     sum += g;
     heat += g * strand;
   }
@@ -246,7 +249,7 @@ void main() {
   float end = cover > 0.5 ? min(hit, t1) : t1;
   vec3 gas = vec3(0.0);
   for (int k = 0; k < (miss < uReach && end > t0 && (uParts & 2) != 0 ? 1 : 0); k++) {
-    float through = miss < 1.0 ? 1.0 : 2.0;
+    float through = 2.0 * smoothstep(1.0 - pixel, 1.0 + pixel, miss);
     float top = 1.0 + uChromo.x;
     float path = (sqrt(max(top * top - near2, 0.0)) - sqrt(max(1.0 - near2, 0.0))) * through * ahead;
     vec3 tangent = spinY(normalize(ro + rd * (-b)), uSpin);
@@ -260,7 +263,7 @@ void main() {
       float r = length(q);
       vec3 sd = spinY(q / r, uSpin);
       float scale = mix(uCorona.z, uCorona.w, pow(vnoise(sd * 5.0 + 11.0), 2.0));
-      float rays = 0.2 + 1.6 * pow(vnoise(sd * uCoronaRays.x + 3.1), 2.5) + 0.9 * pow(vnoise(sd * uCoronaRays.y + 9.7), 3.0);
+      float rays = 0.06 + 1.6 * pow(vnoise(sd * uCoronaRays.x + 3.1), 2.5) + 0.9 * pow(vnoise(sd * uCoronaRays.y + 9.7), 3.0);
       float rho = exp(-(r - 1.0) / scale) * rays + uCoronaRays.z * pow(r, -2.5);
       rho *= smoothstep(uReach, uReach * 0.8, r) * step(1.0, r);
       sum += mix(uCoronaNear, uCoronaWide, smoothstep(1.0, 1.5, r)) * rho;
@@ -273,8 +276,8 @@ void main() {
     float sb = dot(sro, srd);
     for (int i = 0; i < uLoops; i++) {
       vec4 shape = uLoopShape[i];
-      vec3 mid = uLoopMid[i] + uLoopUp[i] * (shape.x + shape.y) * 0.5;
-      float bound = (shape.y + abs(shape.x)) * 0.75 + 0.06;
+      vec3 mid = uLoopMid[i] + uLoopUp[i] * shape.y * 0.5;
+      float bound = length(vec2(shape.x * 1.3, shape.y * 0.65)) + 0.08;
       vec3 oc = sro - mid;
       float bb = dot(oc, srd);
       float h = bb * bb - dot(oc, oc) + bound * bound;
@@ -294,7 +297,7 @@ void main() {
           sum += g;
           warm += heat;
         }
-        gas += mix(uPromColour, uPromHot, smoothstep(0.6, 2.4, warm * dt * 60.0)) * (sum * dt * uProm.z);
+        gas += mix(uPromColour, uPromHot, smoothstep(1.5, 5.0, warm * dt * 60.0)) * (sum * dt * uProm.z);
       }
     }
   }

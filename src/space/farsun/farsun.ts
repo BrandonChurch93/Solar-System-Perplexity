@@ -73,13 +73,11 @@ export class FarSun {
       const side = new THREE.Vector3().crossVectors(e, c).normalize()
       const lift = c.clone().addScaledVector(e, -c.dot(e)).normalize()
       const upward = lift.clone().multiplyScalar(Math.cos(l.lean)).addScaledVector(side, Math.sin(l.lean)).normalize()
-      const h = l.height
-      const k = (h * h - halfChord * halfChord) / (2 * h)
       const spun = (p: THREE.Vector3): THREE.Vector3 => p.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt)
       mid[i]!.copy(spun(centre))
       along[i]!.copy(spun(e))
       up[i]!.copy(spun(upward))
-      shape[i]!.set(k, h - k, l.width, i * 1.37)
+      shape[i]!.set(halfChord, l.height, l.width, i * 1.37)
     })
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: FARSUN_VERT, fragmentShader: FARSUN_FRAG, depthTest: false, depthWrite: false, transparent: true,
