@@ -1,9 +1,51 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T09:36:33.850Z",
- "head": "8c91c1941a7200118d92651c1f45771ba9fc816d",
- "note": "plates by repaint: canvases from the laid back close image, first take of the mid plate rejected (storm too large), near plate first now",
+ "pushed": "2026-11-23T10:02:15.317Z",
+ "head": "1f087db4b748c6d1dc9b966af39dfbe9a1517a64",
+ "note": "Jupiter plates: near plate kept (take 2), mid plate repaint running; E2 merged",
  "looks": [
+  {
+   "time": "2026-11-23T10:02:14.718Z",
+   "file": "20261123100214718-note-mid-in-s.jpg",
+   "source": "../work/f/mid-in-s.jpg",
+   "kind": "note",
+   "label": "mid plate canvas: the globe's own albedo at the place with the near plate laid in"
+  },
+  {
+   "time": "2026-11-23T10:02:14.172Z",
+   "file": "20261123100214172-note-near-t2j-c2.jpg",
+   "source": "../work/f/near-t2j-c2.jpg",
+   "kind": "note",
+   "label": "near plate, towers north of the funnel at full size"
+  },
+  {
+   "time": "2026-11-23T10:02:13.543Z",
+   "file": "20261123100213543-note-near-t2j-c1.jpg",
+   "source": "../work/f/near-t2j-c1.jpg",
+   "kind": "note",
+   "label": "near plate, centre at full size"
+  },
+  {
+   "time": "2026-11-23T10:02:12.913Z",
+   "file": "20261123100212913-note-near-t2j-s.jpg",
+   "source": "../work/f/near-t2j-s.jpg",
+   "kind": "note",
+   "label": "near plate after the join (canvas tone, the take's detail, sharp funnel kept), kept"
+  },
+  {
+   "time": "2026-11-23T10:02:12.258Z",
+   "file": "20261123100212258-note-near-t2-s.jpg",
+   "source": "../work/f/near-t2-s.jpg",
+   "kind": "note",
+   "label": "near plate, repaint take 2 as it came"
+  },
+  {
+   "time": "2026-11-23T10:02:11.575Z",
+   "file": "20261123100211575-note-near-in-s.jpg",
+   "source": "../work/f/near-in-s.jpg",
+   "kind": "note",
+   "label": "near plate canvas for the repaint (laid back close image at its own exposure, haze flattened, tone carried past the fan)"
+  },
   {
    "time": "2026-11-23T09:36:33.321Z",
    "file": "20261123093633321-note-near-in-s.jpg",
@@ -17,49 +59,6 @@
    "source": "../work/f/mid-t1-s.jpg",
    "kind": "note",
    "label": "plates: mid plate, first repaint, rejected: rich and top down, but the storm is drawn five times too large (it took the globe's orange oval for the funnel)"
-  },
-  {
-   "time": "2026-11-23T09:36:32.255Z",
-   "file": "20261123093632255-note-mid-in-s.jpg",
-   "source": "../work/f/mid-in-s.jpg",
-   "kind": "note",
-   "label": "plates: first canvas of the mid plate (61 units wide): the globe's own albedo at the place, the close image laid back top down inside its fan, soft parts marked by blur"
-  },
-  {
-   "time": "2026-11-23T09:17:44.009Z",
-   "file": "20261123091744009-note-place-pair-s.jpg",
-   "source": "../work/f/place-pair-s.jpg",
-   "kind": "note",
-   "label": "the place on the globe, 6 degrees wide: the small orange oval in the wake, flow at rest (left) and as frozen for the dive (right)"
-  },
-  {
-   "time": "2026-11-23T09:17:43.360Z",
-   "file": "20261123091743360-note-fore-in-s.jpg",
-   "source": "../work/f/fore-in-s.jpg",
-   "kind": "note",
-   "label": "first top down canvas of the foreground plate: laid back close image (sharp near, blurred far), flat draft outside, before any repaint"
-  },
-  {
-   "time": "2026-11-23T08:55:41.654Z",
-   "file": "20261123085541654-note-lay-near-crop1.jpg",
-   "source": "../work/f/lay-near-crop1.png",
-   "kind": "note",
-   "label": "approved close image laid back top down, vortex, 100 px per unit: input for the plates"
-  },
-  {
-   "time": "2026-11-23T08:55:41.114Z",
-   "file": "20261123085541114-note-wrap-grs.jpg",
-   "source": "../work/f/wrap-grs.jpg",
-   "kind": "note",
-   "label": "wrap round the Great Red Spot with a lon lat grid: the place of the dive is the small orange oval at lon -26.6 lat -5.8 (way B, mail 229)"
-  },
-  {
-   "time": "2026-11-23T08:30:59.333Z",
-   "file": "20261123083059333-note-compare-jupiter-terrain.jpg",
-   "source": "out/work/compare/compare-jupiter-terrain.jpg",
-   "kind": "note",
-   "label": "v5 compare at 3150, review tier",
-   "stop": "jupiter"
   }
  ]
 }
