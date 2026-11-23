@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T15:43:43.065Z",
+ "pushed": "2026-11-23T15:51:35.371Z",
  "head": "60c083ea13812fb1bff47e8d5eae470833905927",
- "note": "Mars rise leaves from the eye of the dive twin (new option fromDive, scratch tree): the handover is seamless at the draft tier, one colour step after T still fails",
+ "note": "Mars rise from the eye of the dive with T at 2692: E4 passes at the draft tier; four pictures of what the plates must still change",
  "looks": [
   {
-   "time": "2026-11-23T15:43:35.642Z",
-   "file": "20261123154335642-note-fd1-2733-2740.jpg",
-   "source": "out/work/edgein/fd1-2733-2740.png",
+   "time": "2026-11-23T15:51:34.572Z",
+   "file": "20261123155134572-note-fd2-2718-2729.jpg",
+   "source": "out/work/edgein/fd2-2718-2729.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft): frames 2733 to 2740, body colour step 8.32 into 2737 fails the limit of 8"
+   "label": "Mars rise with fromDive, T 2692 (draft): frames 2718 to 2729"
   },
   {
-   "time": "2026-11-23T15:43:34.844Z",
-   "file": "20261123154334844-note-fd1-2720-2731.jpg",
-   "source": "out/work/edgein/fd1-2720-2731.png",
+   "time": "2026-11-23T15:51:33.327Z",
+   "file": "20261123155133327-note-fd2-2706-2717.jpg",
+   "source": "out/work/edgein/fd2-2706-2717.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft): frames 2720 to 2731, the plates in the globe: pale star with a dark dot"
+   "label": "Mars rise with fromDive, T 2692 (draft): frames 2706 to 2717, the plates alone"
   },
   {
-   "time": "2026-11-23T15:43:33.955Z",
-   "file": "20261123154333955-note-fd1-2708-2719.jpg",
-   "source": "out/work/edgein/fd1-2708-2719.png",
+   "time": "2026-11-23T15:51:32.407Z",
+   "file": "20261123155132407-note-fd2-2694-2705.jpg",
+   "source": "out/work/edgein/fd2-2694-2705.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft): frames 2708 to 2719, the plates alone: dark middle and the fan north of it"
+   "label": "Mars rise with fromDive, T 2692 (draft): frames 2694 to 2705, the place window ends at 2704"
   },
   {
-   "time": "2026-11-23T15:43:33.261Z",
-   "file": "20261123154333261-note-fd1-2705-2708.jpg",
-   "source": "out/work/edgein/fd1-2705-2708.png",
+   "time": "2026-11-23T15:51:31.228Z",
+   "file": "20261123155131228-note-fd2-2682-2693.jpg",
+   "source": "out/work/edgein/fd2-2682-2693.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft): frames 2705 to 2708, the picture leaves, the plates take over"
+   "label": "Mars rise with fromDive, T 2692 (draft): frames 2682 to 2693, T is 2692"
   },
   {
-   "time": "2026-11-23T15:43:32.539Z",
-   "file": "20261123154332539-note-fd1-2701-2704.jpg",
-   "source": "out/work/edgein/fd1-2701-2704.png",
+   "time": "2026-11-23T15:51:30.530Z",
+   "file": "20261123155130530-note-fd2-plates-star.jpg",
+   "source": "out/work/edgein/fd2-plates-star.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft): frames 2701 to 2704, place picture weights 0.82 to 0.47"
+   "label": "For the plates, item 4: Mars rise 2719, 2722, 2725, 2728 middle at half size: the plates as a pale grey star with a dark dot in the globe"
   },
   {
-   "time": "2026-11-23T15:43:31.829Z",
-   "file": "20261123154331829-note-fd1-2697-2700.jpg",
-   "source": "out/work/edgein/fd1-2697-2700.png",
+   "time": "2026-11-23T15:51:29.420Z",
+   "file": "20261123155129420-note-fd2-plates-mound.jpg",
+   "source": "out/work/edgein/fd2-plates-mound.png",
    "kind": "note",
-   "label": "Mars rise with fromDive (draft, scratch): frames 2697 to 2700, T at 2698, the eye of the dive twin"
+   "label": "For the plates, item 3: Mars rise 2704, 2707, 2710, 2714 middle at half size: the dark mound and the fan of hatch lines north of it"
   },
   {
-   "time": "2026-11-23T15:18:17.239Z",
-   "file": "20261123151817239-note-l4-rise-2697-2712.jpg",
-   "source": "out/work/edgein/l4-rise-2697-2712.png",
+   "time": "2026-11-23T15:51:28.737Z",
+   "file": "20261123155128737-note-fd2-plates-island.jpg",
+   "source": "out/work/edgein/fd2-plates-island.png",
    "kind": "note",
-   "label": "Mars rise 2697 to 2712 on the plates of 2bd6dd29 without edgeIn: the picture as a dark patch with straight sides on striped ground"
+   "label": "For the plates, item 2: Mars rise 2696, 2698, 2700 lower left at 0.6 size: where the picture leaves, the plates are mottled paint with no relief under it"
   },
   {
-   "time": "2026-11-23T15:18:15.945Z",
-   "file": "20261123151815945-note-2696-left.jpg",
-   "source": "out/work/edgein/2696-left.png",
+   "time": "2026-11-23T15:51:27.723Z",
+   "file": "20261123155127723-note-fd2-rise-under.jpg",
+   "source": "out/work/edgein/fd2-rise-under.png",
    "kind": "note",
-   "label": "Mars rise 2696, left 1100 px: the stripes of the globe show through the cliff of the picture, with and without edgeIn (not cured by it)"
+   "label": "For the plates, item 1: Mars rise at T 2692 (draft): the globe with the place picture, the globe alone, the difference times 4. The plates alone are lighter by 12.7, 10.1, 7.8 and flatter"
   }
  ]
 }
