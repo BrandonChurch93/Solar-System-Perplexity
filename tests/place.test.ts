@@ -6,7 +6,7 @@ import { edgeReach, Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
-import { forceTop, handoverOf, placeWeight, skyTurnWeight, skyWeight } from '../src/director/handover'
+import { forceTop, handoverOf, placeWeight, skyTurnWeight, skyWeight, type HandoverParams } from '../src/director/handover'
 import { trapeze } from '../src/director/moves'
 import { plans } from '../src/director/plans'
 import { coveredPlan, filmWith, restorePlans } from './lib/covered'
@@ -19,6 +19,9 @@ const seg = (stop: string, kind: string): (typeof config.segments)[number] => co
 const film = new FilmDirector(plans)
 const handing = plans.filter((p) => p.handsOver)
 const kinds = ['dive', 'rise'] as const
+// What a stop's own plan asks of the place picture in a dive or a rise: undefined where it asks nothing. The options that are off unless a stop
+// asks are held against this, so no test names the stops that ask.
+const asked = (p: (typeof plans)[number], kind: (typeof kinds)[number]) => (p as unknown as { p?: { handover?: HandoverParams } }).p?.handover?.[kind]?.place
 
 afterAll(() => restorePlans())
 
@@ -710,7 +713,7 @@ describe('the picture coming in from the place outward', () => {
   it('is off unless a stop asks: the film wide shares are 0 and the reach is 0 at every weight', () => {
     expect(c.place.edgeIn).toEqual([0, 0, 0, 0])
     for (const weight of [0, 0.09, 0.5, 0.99, 1]) expect(edgeReach({ weight }, layout)).toEqual([0, 0, 0, 0])
-    for (const p of plans) for (const kind of kinds) if (p.id !== 'mars') expect(handoverOf(p.id, kind)?.place.edgeIn).toBe(undefined)
+    for (const p of plans) for (const kind of kinds) expect(handoverOf(p.id, kind)?.place.edgeIn).toEqual(asked(p, kind)?.edgeIn)
   })
   it('reaches in by each side\'s share of the frame while the weight is low and is back in the margin when the weight is 1', () => {
     expect([wide, high]).toEqual([master.width * layout.scale, master.height * layout.scale])
