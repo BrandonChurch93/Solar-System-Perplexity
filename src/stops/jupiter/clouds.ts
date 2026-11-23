@@ -116,7 +116,7 @@ uniform sampler2D uAir;
 uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
-uniform vec2 uAirLift;
+uniform float uAirLift;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform sampler2D uTone;
@@ -348,7 +348,7 @@ void main() {
       through = vec3(texture(uAirThrough, vec2(0.5, row)).r, texture(uAirThrough, vec2(0.5, row + 1.0 / 3.0)).r, texture(uAirThrough, vec2(0.5, row + 2.0 / 3.0)).r);
       added = vec3(texture(uAir, vec2(column, row)).r, texture(uAir, vec2(column, row + 1.0 / 3.0)).r, texture(uAir, vec2(column, row + 2.0 / 3.0)).r);
     }
-    float thin = smoothstep(uAirLift.x, uAirLift.y, above(E));
+    float thin = uAirLift;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       through = mix(through, vec3(1.0), thin);
       added *= 1.0 - thin;
@@ -510,7 +510,7 @@ export class CloudDeck {
       uAirThrough: { value: ctx.floatTexture(through, 1, 3 * as) },
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
-      uAirLift: { value: new THREE.Vector2().fromArray(deck.air.lift) },
+      uAirLift: { value: 0 },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uTone: { value: ctx.floatTexture(tone, tn.pixels, 3 * tn.pixels) },

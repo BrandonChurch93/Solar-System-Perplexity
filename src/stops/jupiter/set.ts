@@ -11,7 +11,7 @@ import { Io } from './io'
 import * as look from './look'
 import fields from './deck-fields.json'
 import place from './place.json'
-import { exposure, plan } from './plan'
+import { exposure, lifted, plan } from './plan'
 import skyJson from './sky.json'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
@@ -123,6 +123,7 @@ export const createSet: SetFactory = async (ctx) => {
       if (!inOrbit) {
         ground.update(gain * exposure(state.time - terrainMid), shot.post.vignette, view)
         ;(ground.material.uniforms.uExpose!.value as THREE.Vector3).set(Math.pow(r[0]!, share - 1), Math.pow(r[1]!, share - 1), Math.pow(r[2]!, share - 1))
+        ground.material.uniforms.uAirLift!.value = state.time < terrainMid ? lifted('dive', land.start - state.time) : lifted('rise', state.time - land.end)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
