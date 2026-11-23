@@ -7,13 +7,12 @@ import { samplesFor, shutterMid } from '../src/core/sampler'
 import type { Pose, Shot, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { dissolveWeight, forceSide, handoverFrame, handoverOf, judgedWindow, placeWeight, shutterThreshold, sideAt } from '../src/director/handover'
-import { StopPlan, type Fit, type MoveParams } from '../src/director/moves'
+import type { MoveParams, StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { coverFrames, coverWindow, setHandover } from '../src/director/timeline'
-import { params } from '../src/stops/mars/plan'
-import fit from '../src/stops/mars/fit.json'
+import { coverFrames, coverWindow } from '../src/director/timeline'
 import { cuesOf, swapOf } from '../tools/lib/cues'
 import { detailFrames, sheetFrames } from '../tools/lib/render'
+import { COVERED, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 const fps = config.fps
 const seg = (stop: string, kind: string): Segment => config.segments.find((s) => s.stop === stop && s.kind === kind)!
@@ -24,20 +23,21 @@ const sampleTimes = (frame: number, count: number): number[] => samplesFor(count
 const closeShare = (s: Segment, frame: number, count: number): number => sampleTimes(frame, count).filter((t) => sideAt(s, t) === 'terrain').length / count
 const finite = (p: Pose): boolean => [...p.position.toArray(), ...p.quaternion.toArray(), p.vfov].every(Number.isFinite)
 const flat = (shot: Shot): string => JSON.stringify({ c: shot.camera, s: shot.sets, sky: [shot.skyQuaternion, shot.skyExposure, shot.skyGlow, shot.skyTurn, shot.skyStars, shot.skyPatch, shot.skyLook], sun: shot.sun, post: shot.post, cover: shot.cover, near: shot.near, far: shot.far, dust: shot.dust })
-const opt = (h: MoveParams['handover']): StopPlan => new StopPlan('mars', fit as Fit, { ...params, handover: h })
-const off = (): StopPlan => new StopPlan('mars', fit as Fit, { ...params })
-const withMars = (plan: StopPlan): FilmDirector => new FilmDirector(plans.map((p) => (p.id === 'mars' ? plan : p)))
+const opt = (h: MoveParams['handover']): StopPlan => coveredPlan({ handover: h })
+const off = (): StopPlan => coveredPlan()
+const withMars = (plan: StopPlan): FilmDirector => filmWith(plan)
+const others = plans.filter((p) => p.id !== COVERED)
+const other = others.find((p) => p.id === 'earth')!
 
 afterAll(() => {
   forceSide(null)
-  setHandover('mars', params.handover)
+  restorePlans()
 })
 
 describe('a stop that did not opt in', () => {
   it('has no handover, no place weight and the sides of today', () => {
-    off()
-    for (const p of plans) {
-      if (p.p.handover) continue
+    for (const p of [off(), ...others]) {
+      if (p.handsOver) continue
       for (const s of [p.seg.dive, p.seg.rise]) {
         if (!s) continue
         const kind = s.kind as 'dive' | 'rise'
@@ -57,7 +57,7 @@ describe('a stop that did not opt in', () => {
     }
   })
   it('gets the same shots and the same frame plan whether or not another stop opted in', () => {
-    const before = new FilmDirector(plans.map((p) => (p.id === 'mars' ? off() : p)))
+    const before = withMars(off())
     const old = (f: number): { raw: number; soft: number } => {
       const at = (o: number): Shot => before.shotAt(f, (f + o) / fps)
       const raw = rawMotion(at(0), at(shutterMid()), at(config.shutterFraction))
@@ -66,21 +66,40 @@ describe('a stop that did not opt in', () => {
     const plansBefore: Record<number, { raw: number; soft: number; samples: number; seen: number }> = {}
     const shotsBefore: Record<string, string> = {}
     const frames: number[] = []
-    for (const id of ['earth', 'venus', 'jupiter', 'sun']) {
+    const plain = new Set<number>()
+    for (const q of others) {
       for (const kind of ['hold', 'dive', 'terrain', 'rise', 'travel']) {
-        const s = seg(id, kind)
+        const s = seg(q.id, kind)
         if (!s) continue
-        for (let f = s.firstFrame; f < s.endFrame; f += 5) frames.push(f)
+        const own: number[] = []
+        for (let f = s.firstFrame; f < s.endFrame; f += 5) own.push(f)
         const w = coverFrames(s)
-        if (w) frames.push(w.centerFrame - 1, w.centerFrame, w.centerFrame + 1)
+        if (w) own.push(w.centerFrame - 1, w.centerFrame, w.centerFrame + 1)
+        frames.push(...own)
+        if (!q.handsOver) for (const f of own) plain.add(f)
       }
     }
-    for (const f of frames) {
+    // The fixture stop never opts in: its frames keep this test meaningful when every stop of the film has opted in.
+    const fixture: number[] = []
+    for (const kind of ['hold', 'dive', 'terrain', 'rise', 'travel']) {
+      const s = seg(COVERED, kind)
+      if (!s) continue
+      for (let f = s.firstFrame; f < s.endFrame; f += 5) fixture.push(f)
+      const w = coverFrames(s)
+      if (w) fixture.push(w.centerFrame - 1, w.centerFrame, w.centerFrame + 1)
+    }
+    expect(fixture.length).toBeGreaterThan(0)
+    const same = (f: number): void => {
       const p = framePlan(before, f, 'review')
       expect(p.raw).toBe(old(f).raw)
       expect(p.soft).toBe(old(f).soft)
       expect(p.split).toBe(false)
       expect(p.seen).toBe(p.raw * seenShare(before.shotAt(f, (f + shutterMid()) / fps)))
+    }
+    for (const f of fixture) same(f)
+    for (const f of frames) {
+      const p = framePlan(before, f, 'review')
+      if (plain.has(f)) same(f)
       plansBefore[f] = { raw: p.raw, soft: p.soft, samples: p.samples, seen: p.seen }
       for (const o of [0, shutterMid(), 0.4]) shotsBefore[f + ':' + o] = flat(before.shotAt(f, (f + o) / fps))
     }
@@ -120,8 +139,7 @@ describe('a stop that opted in', () => {
     expect([r3.firstFrame, r3.lastFrame, r3.placeLastFrame]).toEqual([r.firstFrame - 1, r.firstFrame + 1, r.firstFrame + 7])
     expect(r3.time).toBeCloseTo((r.firstFrame + shutterMid()) / fps, 12)
     expect(handoverOf('mars', 'dive')).toBe(d4)
-    expect(handoverOf('earth', 'dive')).toBeNull()
-    expect(handoverOf('sun', 'dive')).toBeNull()
+    for (const q of others) for (const kind of ['dive', 'rise'] as const) if (q.seg[kind]) expect(handoverOf(q.id, kind) === null).toBe(!q.handsOver)
     expect(() => opt({ dive: { at: 0 } })).toThrow()
     expect(() => opt({ dive: { dissolveFrames: 0 } })).toThrow()
     expect(() => opt({ rise: { placeFrames: -1 } })).toThrow()
@@ -149,7 +167,7 @@ describe('a stop that opted in', () => {
         for (const tier of ['draft', 'review', 'final']) expect(framePlan(film, f, tier).soft).toBe(0)
       }
     }
-    expect(coverWindow(seg('earth', 'dive'))).not.toBeNull()
+    for (const q of others) for (const kind of ['dive', 'rise'] as const) if (q.seg[kind]) expect(coverWindow(q.seg[kind]!) === null).toBe(q.handsOver)
     off()
     expect(coverWindow(dive)).not.toBeNull()
   })
@@ -238,7 +256,7 @@ describe('a stop that opted in', () => {
     }
     expect(last).toBe(1)
     expect(placeWeight(seg('mars', 'hold'), seg('mars', 'hold').start + 1)).toBe(0)
-    expect(placeWeight(seg('earth', 'dive'), seg('earth', 'dive').start + 1.8)).toBe(0)
+    for (const q of others) if (q.seg.dive && !q.handsOver) for (let f = q.seg.dive.firstFrame; f < q.seg.dive.endFrame; f++) expect(placeWeight(q.seg.dive, (f + 0.25) / fps)).toBe(0)
     off()
   })
   it('gives a valid pose on both sides across the windows and builds dive and rise from them', () => {
@@ -339,7 +357,7 @@ describe('the tools around a handover', () => {
   it('centres the cover sheet of a stop that opted in on T and leaves the others as they are', () => {
     off()
     const limit = config.raw.critics.contactSheetFrames
-    const earth = seg('earth', 'dive')
+    const earth = seg(other.id, 'dive')
     const earthSheet = sheetFrames(config, earth, true)
     const marsBefore = sheetFrames(config, dive, true)
     expect(marsBefore.length).toBe(limit)
@@ -372,18 +390,18 @@ describe('the tools around a handover', () => {
     const covered = (stop: string): number => of(stop).reduce((n, s) => n + (coverFrames(s) ? coverFrames(s)!.lastFrame - coverFrames(s)!.firstFrame + 1 : 0), 0)
     expect(detailFrames(of('mars'), false).length).toBe(total('mars') - covered('mars'))
     expect(detailFrames(of('mars'), true).length).toBe(total('mars'))
-    const earth = detailFrames(of('earth'), false)
+    const earth = detailFrames(of(other.id), false)
     opt({})
     expect(detailFrames(of('mars'), false).length).toBe(total('mars'))
     expect(detailFrames(of('mars'), false)).toEqual(detailFrames(of('mars'), true))
-    expect(detailFrames(of('earth'), false)).toEqual(earth)
-    expect(earth.length).toBe(total('earth') - covered('earth'))
+    expect(detailFrames(of(other.id), false)).toEqual(earth)
+    expect(earth.length).toBe(other.handsOver ? total(other.id) : total(other.id) - covered(other.id))
     off()
   })
   it('lists T in the cues and the shots of a stop that opted in and the cover for the others', () => {
     off()
     const marsSegs = config.segments.filter((s) => s.stop === 'mars')
-    const earthSegs = config.segments.filter((s) => s.stop === 'earth')
+    const earthSegs = config.segments.filter((s) => s.stop === other.id)
     const before = cuesOf(marsSegs)
     const earth = cuesOf(earthSegs)
     expect(before.filter((c) => c.what === 'center of the cover').length).toBe(2)
@@ -406,7 +424,7 @@ describe('the tools around a handover', () => {
       if (c.what !== 'the handover') expect(c.frame).toBe(before[i]!.frame)
     })
     expect(swapOf(dive)).toEqual({ move: 'Handover in frame ' + handoverOf('mars', 'dive')!.firstFrame + ', no cover', seen: 'handover' })
-    expect(swapOf(seg('earth', 'rise')).seen).toBe('cover')
+    expect(swapOf(seg(other.id, 'rise')).seen).toBe(other.handsOver ? 'handover' : 'cover')
     expect(cuesOf(earthSegs)).toEqual(earth)
     opt({ rise: { dissolveFrames: 2 } })
     const r = handoverOf('mars', 'rise')!
