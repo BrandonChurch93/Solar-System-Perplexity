@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T08:26:50.428Z",
+ "pushed": "2026-11-23T08:44:13.159Z",
  "head": "2e1195a74f2122eb5f48a5cda78da44ca1c28ab7",
- "note": "E2 code under way: twin, generic descent, sky carry written; place picture and pass next. No new renders yet.",
+ "note": "E2 first renders on Mars: the place picture at T against the close side, mean difference 0.09 of 255, edges of the relief layers still differ, fixing the level of detail in the picture",
  "looks": [
+  {
+   "time": "2026-11-23T08:44:12.571Z",
+   "file": "20261123084412571-note-first-probes.jpg",
+   "source": "out/work/e2/first-probes.jpg",
+   "kind": "note",
+   "label": "E2 probes, Mars frame 2454: globe side alone with the place picture off (top left), the pass mask at T (top right), the place picture with its margins (bottom left)"
+  },
+  {
+   "time": "2026-11-23T08:44:11.912Z",
+   "file": "20261123084411912-note-f2454-sides.jpg",
+   "source": "out/work/e2/f2454-sides.jpg",
+   "kind": "note",
+   "label": "E2 first take, Mars dive at T, frame 2454, draft: close side (top left), globe side with the place picture (top right), difference times 8 (bottom left), pixels over 8 of 255 (bottom right)"
+  },
+  {
+   "time": "2026-11-23T08:42:42.857Z",
+   "file": "20261123084242857-frame-f2448-picture.jpg",
+   "source": "out/work/e2/f2448-picture.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2448, draft tier, beauty/picture view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2448,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/picture",
+   "engine": "f8458a89eae9ec83"
+  },
   {
    "time": "2026-11-23T07:40:17.340Z",
    "file": "20261123074017340-frame-f03024-review.jpg",
@@ -47,20 +75,6 @@
    "engine": "2d9dda353bfd7b6d"
   },
   {
-   "time": "2026-11-23T07:34:16.190Z",
-   "file": "20261123073416190-frame-f02450-review.jpg",
-   "source": "out/work/samebytes/after/f02450-review.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2450, review tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2450,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
    "time": "2026-11-23T07:33:46.686Z",
    "file": "20261123073346686-note-e1-mars-cover-same-bytes.jpg",
    "source": "out/work/handover/e1-mars-cover-same-bytes.jpg",
@@ -77,34 +91,6 @@
    "stop": "neptune",
    "segment": "neptune.dive",
    "frame": 4728,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T07:31:31.540Z",
-   "file": "20261123073131540-frame-f04164-draft.jpg",
-   "source": "out/work/samebytes/after/f04164-draft.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4164, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4164,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T07:30:39.183Z",
-   "file": "20261123073039183-frame-f03832-draft.jpg",
-   "source": "out/work/samebytes/after/f03832-draft.png",
-   "kind": "frame",
-   "label": "saturn.rise frame 3832, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3832,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
