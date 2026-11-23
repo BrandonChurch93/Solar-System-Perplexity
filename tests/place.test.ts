@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
-import { Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, type PlaceLayout } from '../src/core/place'
+import { edgeReach, Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
@@ -552,7 +552,11 @@ describe('the switches of a handover', () => {
     expect(own.hold[1]).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(0.4)), 12)
     expect(own.reach).toBeCloseTo(Math.sin(THREE.MathUtils.degToRad(3)), 12)
     restorePlans()
-    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }, { limbReachDeg: -1 }, { limbReachDeg: 90 }, { limbHoldDeg: [0.5, 0.5] as [number, number] }, { limbHoldDeg: [-0.1, 0.5] as [number, number] }, { limbHoldDeg: [0.5, 90] as [number, number] }]) {
+    const f = filmWith(coveredPlan({ handover: { rise: { place: { edgeIn: [0.4, 0.3, 0.2, 0.1] } } } }))
+    expect([none.edgeIn, f.shotAt(hd.firstFrame, hd.time, 'orbit').place!.edgeIn, f.shotAt(hr.firstFrame, hr.time, 'orbit').place!.edgeIn]).toEqual([undefined, undefined, [0.4, 0.3, 0.2, 0.1]])
+    restorePlans()
+    type Four = [number, number, number, number]
+    for (const bad of [{ seen: 0 }, { seen: 1.5 }, { maxEnlarge: 1 }, { enlargeSoft: 0 }, { enlargeSoft: 1 }, { limbReachDeg: -1 }, { limbReachDeg: 90 }, { limbHoldDeg: [0.5, 0.5] as [number, number] }, { limbHoldDeg: [-0.1, 0.5] as [number, number] }, { limbHoldDeg: [0.5, 90] as [number, number] }, { edgeIn: [0.4, 0.4, 0.4] as unknown as Four }, { edgeIn: [0.4, 0.4, 0.4, 1.1] as Four }, { edgeIn: [-0.1, 0, 0, 0] as Four }]) {
       filmWith(coveredPlan({ handover: { dive: { place: bad } } }))
       expect(() => handoverOf('mars', 'dive')).toThrow()
       restorePlans()
@@ -658,8 +662,9 @@ describe('the top down view of the harness', () => {
   it('puts the globe camera straight above the place at the height and field of the path, the heading up, and only while it is forced', () => {
     for (const p of handing) {
       for (const kind of kinds) {
+        const h = handoverOf(p.id, kind)
+        if (!h) continue
         const s = seg(p.id, kind)
-        const h = handoverOf(p.id, kind)!
         const sizes: number[] = []
         for (let f = s.firstFrame; f < s.endFrame; f += 3) {
           const time = (f + config.shutterFraction / 2) / fps
@@ -698,6 +703,38 @@ describe('the top down view of the harness', () => {
   })
 })
 
+describe('the picture coming in from the place outward', () => {
+  const layout = placeLayout(master, { valid: [0.11, 0.06, 0.11, 0.125] }, 16384)
+  const wide = layout.width - (layout.left + layout.right) * layout.scale
+  const high = layout.height - (layout.bottom + layout.top) * layout.scale
+  it('is off unless a stop asks: the film wide shares are 0 and the reach is 0 at every weight', () => {
+    expect(c.place.edgeIn).toEqual([0, 0, 0, 0])
+    for (const weight of [0, 0.09, 0.5, 0.99, 1]) expect(edgeReach({ weight }, layout)).toEqual([0, 0, 0, 0])
+    for (const p of plans) for (const kind of kinds) if (p.id !== 'mars') expect(handoverOf(p.id, kind)?.place.edgeIn).toBe(undefined)
+  })
+  it('reaches in by each side\'s share of the frame while the weight is low and is back in the margin when the weight is 1', () => {
+    expect([wide, high]).toEqual([master.width * layout.scale, master.height * layout.scale])
+    const share: [number, number, number, number] = [0.4, 0.3, 0.2, 0.1]
+    expect(edgeReach({ weight: 1, edgeIn: share }, layout)).toEqual([0, 0, 0, 0])
+    const gone = edgeReach({ weight: 0, edgeIn: share }, layout)
+    expect(gone[0]).toBeCloseTo(0.4 * wide, 9)
+    expect(gone[1]).toBeCloseTo(0.3 * wide, 9)
+    expect(gone[2]).toBeCloseTo(0.2 * high, 9)
+    expect(gone[3]).toBeCloseTo(0.1 * high, 9)
+    let last = gone
+    for (const weight of [0.1, 0.25, 0.5, 0.75, 0.9, 1]) {
+      const now = edgeReach({ weight, edgeIn: share }, layout)
+      now.forEach((v, i) => {
+        expect(v).toBeLessThan(last[i]!)
+        expect(v).toBeCloseTo(gone[i]! * (1 - weight), 9)
+      })
+      last = now
+    }
+    expect(edgeReach({ weight: 1.5, edgeIn: share }, layout)).toEqual([0, 0, 0, 0])
+    expect(edgeReach({ weight: -1, edgeIn: share }, layout)).toEqual(gone)
+  })
+})
+
 describe('the options on a diagnostic string', () => {
   it('reads the view and every option and writes them back', () => {
     expect(parseProbe('beauty')).toEqual({ view: 'beauty', side: null, shut: false, time: null, place: true, mask: false, picture: false, top: false })
@@ -718,6 +755,10 @@ describe('the options on a diagnostic string', () => {
     expect(() => parseProbe('beauty/limb=-1')).toThrow()
     expect(() => parseProbe('beauty/limb=90')).toThrow()
     expect(() => parseProbe('beauty/limb')).toThrow()
+    expect(parseProbe('beauty/side=orbit').edgeIn).toBe(undefined)
+    expect(parseProbe('beauty/in=0.4,0.3,0.2,0').edgeIn).toEqual([0.4, 0.3, 0.2, 0])
+    expect(probeString(parseProbe('beauty/side=orbit/limb=2/in=0,0,0,0'))).toBe('beauty/side=orbit/limb=2/in=0,0,0,0')
+    for (const bad of ['beauty/in', 'beauty/in=0.4', 'beauty/in=0.4,0.4,0.4', 'beauty/in=0.4,0.4,0.4,1.5', 'beauty/in=0.4,0.4,-0.1,0', 'beauty/in=a,b,c,d']) expect(() => parseProbe(bad)).toThrow()
     expect(() => parseProbe('beauty/side=left')).toThrow()
     expect(() => parseProbe('beauty/t=soon')).toThrow()
     expect(() => parseProbe('beauty/nothing')).toThrow()
