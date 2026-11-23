@@ -1,71 +1,95 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T09:24:22.711Z",
- "head": "746fa898381b915151925f4a5df3ea942264957f",
- "note": "M2 proofs in progress: steady dive 1260 to 1349 every frame (globe side, plates w a b c d) and top down sheet; rise frames rendering",
+ "pushed": "2026-11-23T09:40:49.551Z",
+ "head": "709e9b2b96f7f70fb707f4c0fb1e078e22881cf8",
+ "note": "M2 at 709e9b2b: dense dive and rise sheets on the steady path (globe side, draft), top down dive sheet, judged frames beside the kept stills",
  "looks": [
   {
-   "time": "2026-11-23T09:24:21.221Z",
-   "file": "20261123092421221-note-m2-top-sheet.jpg",
-   "source": "out/work/venus/place/p7/m2-top-sheet.jpg",
+   "time": "2026-11-23T09:38:53.899Z",
+   "file": "20261123093853899-frame-m3-1605.jpg",
+   "source": "out/work/venus/place/same/m3-1605.png",
+   "kind": "frame",
+   "label": "venus.travel frame 1605, draft tier",
+   "stop": "venus",
+   "segment": "venus.travel",
+   "frame": 1605,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T09:38:33.955Z",
+   "file": "20261123093833955-note-m2-judged.jpg",
+   "source": "out/work/venus/place/p7/m2-judged.jpg",
    "kind": "note",
-   "label": "M2 top down dive sheet, globe side alone, 12 frames 1260 to 1349",
+   "label": "M2 judged frames beside the kept stills: 1185 and 1440 same picture, 1287 and 1586 on the steady path",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T09:23:23.710Z",
-   "file": "20261123092323710-note-dense-dive-1332.jpg",
-   "source": "out/work/venus/place/p7/dense-dive-1332.jpg",
+   "time": "2026-11-23T09:38:02.002Z",
+   "file": "20261123093802002-frame-m3-1604.jpg",
+   "source": "out/work/venus/place/same/m3-1604.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1604, draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1604,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T09:37:03.362Z",
+   "file": "20261123093703362-frame-m3-1440.jpg",
+   "source": "out/work/venus/place/same/m3-1440.png",
+   "kind": "frame",
+   "label": "venus.terrain frame 1440, draft tier",
+   "stop": "venus",
+   "segment": "venus.terrain",
+   "frame": 1440,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T09:36:27.214Z",
+   "file": "20261123093627214-frame-m3-1185.jpg",
+   "source": "out/work/venus/place/same/m3-1185.png",
+   "kind": "frame",
+   "label": "venus.hold frame 1185, draft tier",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T09:29:04.488Z",
+   "file": "20261123092904488-note-dense-rise-1578.jpg",
+   "source": "out/work/venus/place/p7/dense-rise-1578.jpg",
    "kind": "note",
-   "label": "M2 dive steady path globe side dense-dive-1332",
+   "label": "M2 rise steady path globe side dense-rise-1578",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T09:23:22.985Z",
-   "file": "20261123092322985-note-dense-dive-1308.jpg",
-   "source": "out/work/venus/place/p7/dense-dive-1308.jpg",
+   "time": "2026-11-23T09:29:03.689Z",
+   "file": "20261123092903689-note-dense-rise-1554.jpg",
+   "source": "out/work/venus/place/p7/dense-rise-1554.jpg",
    "kind": "note",
-   "label": "M2 dive steady path globe side dense-dive-1308",
+   "label": "M2 rise steady path globe side dense-rise-1554",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T09:23:21.907Z",
-   "file": "20261123092321907-note-dense-dive-1284.jpg",
-   "source": "out/work/venus/place/p7/dense-dive-1284.jpg",
+   "time": "2026-11-23T09:29:03.149Z",
+   "file": "20261123092903149-note-dense-rise-1530.jpg",
+   "source": "out/work/venus/place/p7/dense-rise-1530.jpg",
    "kind": "note",
-   "label": "M2 dive steady path globe side dense-dive-1284",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:23:20.713Z",
-   "file": "20261123092320713-note-dense-dive-1260.jpg",
-   "source": "out/work/venus/place/p7/dense-dive-1260.jpg",
-   "kind": "note",
-   "label": "M2 dive steady path globe side dense-dive-1260",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:23:19.696Z",
-   "file": "20261123092319696-note-m2-dive-sheet.jpg",
-   "source": "out/work/venus/place/p7/m2-dive-sheet.jpg",
-   "kind": "note",
-   "label": "M2 dive steady path globe side m2-dive-sheet",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:00:54.864Z",
-   "file": "20261123090054864-note-guide-view.jpg",
-   "source": "out/work/venus/place/w/guide-view.jpg",
-   "kind": "note",
-   "label": "guide of the new widest plate level w, 40 deg, in work",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T09:00:54.227Z",
-   "file": "20261123090054227-note-p6-t2.jpg",
-   "source": "out/work/venus/place/p6-t2.jpg",
-   "kind": "note",
-   "label": "dive 1284 to 1316 after the limb cure, globe side, draft",
+   "label": "M2 rise steady path globe side dense-rise-1530",
    "stop": "venus"
   }
  ]
