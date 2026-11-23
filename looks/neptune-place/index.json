@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T09:54:10.570Z",
+ "pushed": "2026-11-23T10:10:56.567Z",
  "head": "6a4f848967e754a011a39f4e2e75774c5e774ad3",
- "note": "09:54 VM: main with E2 merged (6a4f8489, tsc clean). S2: soft takes for the 6 and 3.5 degree plates in; fault found: the place comes in over 4688 to 4694 as a visible repaint of the storm, reworking the plates so their coarse part is the globe's own",
+ "note": "10:11 VM: S2 stage F and G on the globe side alone. The place comes in over 4680 to 4697 while the storm is small, the coarse light grows in to 4731. Thin line fan at 4736 and 4744 cut to one or two faint lines. M2 proof chain is rendering",
  "looks": [
+  {
+   "time": "2026-11-23T10:10:50.149Z",
+   "file": "20261123101050149-note-crop-right.jpg",
+   "source": "out/work/nep/s2/g/crop-right.jpg",
+   "kind": "note",
+   "label": "S2: thin straight lines right of the right bank at 4736 and 4744, after (top) and before (bottom) the cut",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:10:48.995Z",
+   "file": "20261123101048995-note-sheet.jpg",
+   "source": "out/work/nep/s2/g/sheet.jpg",
+   "kind": "note",
+   "label": "S2 stage G: 4728 4736 4744 4752, globe side alone, after the cut of the far cirrus tail",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:10:47.761Z",
+   "file": "20261123101047761-note-sheetB.jpg",
+   "source": "out/work/nep/s2/f/sheetB.jpg",
+   "kind": "note",
+   "label": "S2 stage F: 4698 4704 4712 4720 4728 4736, globe side alone, place picture off",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T10:10:46.454Z",
+   "file": "20261123101046454-note-crop-in.jpg",
+   "source": "out/work/nep/s2/f/crop-in.jpg",
+   "kind": "note",
+   "label": "S2 stage F: the storm cut out, 4680 to 4698 every second frame, globe side alone. The place comes in over 4680 to 4697 while the storm is small",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-23T09:54:04.386Z",
    "file": "20261123095404386-note-sheet1.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/s2/b/sheet1.jpg",
    "kind": "note",
    "label": "S2 stage B sheet1, globe side forced: repainted spiral round the wedge; orange streaks near the limb and dark wedge edges still wrong",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:00:36.103Z",
-   "file": "20261123090036103-note-sheet2.jpg",
-   "source": "out/work/nep/s2/a/sheet2.jpg",
-   "kind": "note",
-   "label": "S2 stage A, dive 4728 4744 4757, globe side: 4757 reads as the close view, wedge edge and tone step still there",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T09:00:35.205Z",
-   "file": "20261123090035205-note-sheet1.jpg",
-   "source": "out/work/nep/s2/a/sheet1.jpg",
-   "kind": "note",
-   "label": "S2 stage A, L over first shown plates, dive 4688 4694 4704 4712, globe side: wedge still hard edged, no repaint yet",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:36:42.943Z",
-   "file": "20261123083642943-note-crop4712.jpg",
-   "source": "out/work/nep/l1/crop4712.png",
-   "kind": "note",
-   "label": "L 4712 crop: hard wedge edge and canvas streaks, lighter than the planet round it",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:36:41.517Z",
-   "file": "20261123083641517-note-sheet.jpg",
-   "source": "out/work/nep/l1/sheet.jpg",
-   "kind": "note",
-   "label": "L first frames 4694 4712 4744 4769, globe side forced: layer geometry right, tone and edges and surroundings wrong",
    "stop": "neptune"
   }
  ]
