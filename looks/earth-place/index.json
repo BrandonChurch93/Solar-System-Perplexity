@@ -1,83 +1,82 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T21:45:39.156Z",
- "head": "77a180cdea794b7cde821284f1d02122783bf228",
- "note": "Earth 21:46: climb turned to heading 90 (G13 fail of 2139 to 2143 cured by the path), haze of the low view carried past the lay back so no straight wedge; still seen: lighter frame 1872 to 1878, roundish navy region 1875 to 1881; proof chain runs on 77a180cd",
+ "pushed": "2026-11-23T22:19:36.585Z",
+ "head": "884cdaeb601f9d6f9606f53ec8b0e8f09521c36b",
+ "note": "77a180cd plus an uncommitted trial: broad haze by the slant of the view, not by a fixed angle; dive 1868 to 1912 and rise 2100 to 2146 every second frame; ground still flat, place picture still on",
  "looks": [
+  {
+   "time": "2026-11-23T22:19:35.992Z",
+   "file": "20261123221935992-note-s1-rise-b.jpg",
+   "source": "../../../../tmp/gl/pw/s1-rise-b.jpg",
+   "kind": "note",
+   "label": "trial, not committed: haze by slant, s1-rise-b (drafts every second frame)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T22:19:35.435Z",
+   "file": "20261123221935435-note-s1-rise-a.jpg",
+   "source": "../../../../tmp/gl/pw/s1-rise-a.jpg",
+   "kind": "note",
+   "label": "trial, not committed: haze by slant, s1-rise-a (drafts every second frame)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T22:19:34.861Z",
+   "file": "20261123221934861-note-s1-dive-b.jpg",
+   "source": "../../../../tmp/gl/pw/s1-dive-b.jpg",
+   "kind": "note",
+   "label": "trial, not committed: haze by slant, s1-dive-b (drafts every second frame)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T22:19:34.287Z",
+   "file": "20261123221934287-note-s1-dive-a.jpg",
+   "source": "../../../../tmp/gl/pw/s1-dive-a.jpg",
+   "kind": "note",
+   "label": "trial, not committed: haze by slant, s1-dive-a (drafts every second frame)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T21:55:32.998Z",
+   "file": "20261123215532998-sheet-earth-dive-draft-before.jpg",
+   "source": "out/work/handover/earth-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1907,
+   "last": 1918,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:55:31.146Z",
+   "file": "20261123215531146-sheet-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1913,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:46:37.589Z",
+   "file": "20261123214637589-compare-earth-dive-under.jpg",
+   "source": "out/work/handover/earth-dive-under.png",
+   "kind": "compare",
+   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T21:45:38.535Z",
    "file": "20261123214538535-note-v1-rbig-b.jpg",
    "source": "../../../../tmp/gl/pw/v1-rbig-b.jpg",
    "kind": "note",
    "label": "earth rise, tree of 21:25 (draft) b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T21:45:37.953Z",
-   "file": "20261123214537953-note-v1-rbig-a.jpg",
-   "source": "../../../../tmp/gl/pw/v1-rbig-a.jpg",
-   "kind": "note",
-   "label": "earth rise, tree of 21:25 (draft) a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T21:45:37.359Z",
-   "file": "20261123214537359-note-v1-big-b.jpg",
-   "source": "../../../../tmp/gl/pw/v1-big-b.jpg",
-   "kind": "note",
-   "label": "earth dive 1884 to 1893, tree of 21:25 (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T21:45:36.646Z",
-   "file": "20261123214536646-note-v1-big-a.jpg",
-   "source": "../../../../tmp/gl/pw/v1-big-a.jpg",
-   "kind": "note",
-   "label": "earth dive 1872 to 1881, tree of 21:25 (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T21:25:54.599Z",
-   "file": "20261123212554599-job-frame-02128.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.rise frame 2128, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2128,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-23T21:14:39.172Z",
-   "file": "20261123211439172-job-frame-01862.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "earth.dive frame 1862, draft tier, texels view, from the running g13 job",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1862,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "texels",
-   "job": "g13"
-  },
-  {
-   "time": "2026-11-23T20:39:28.430Z",
-   "file": "20261123203928430-note-s-2136-2147.jpg",
-   "source": "out/work/earth/place/all/sheets/s-2136-2147.jpg",
-   "kind": "note",
-   "label": "rise 2136 to 2147 every frame, draft: the climb with its own heading and bank",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T20:39:27.515Z",
-   "file": "20261123203927515-note-s-2124-2135.jpg",
-   "source": "out/work/earth/place/all/sheets/s-2124-2135.jpg",
-   "kind": "note",
-   "label": "rise 2124 to 2135 every frame, draft: the veil ends in a straight edge at 2124 to 2131 (the dome of the dive, seen from the climb)",
    "stop": "earth"
   }
  ]
