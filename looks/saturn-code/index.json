@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T08:30:02.609Z",
+ "pushed": "2026-11-23T08:46:28.006Z",
  "head": "1f7e9c17cfb8bb4618dc0ba127b5295ab131dd57",
- "note": "ladder three is too smooth (fine detail 0.26 of the approved): measuring contrast by scale and light by angle against the approved close, next the ladder by those numbers",
+ "note": "ladder four: contrast by scale now measured against both approved images; next thin signed lines in place of hard plateaus, then grain anchored in the plane",
  "looks": [
+  {
+   "time": "2026-11-23T08:46:27.445Z",
+   "file": "20261123084627445-note-pair_mid.jpg",
+   "source": "../../../../tmp/v/pair_mid.png",
+   "kind": "note",
+   "label": "3720 mid field at native size, approved beside ladder four"
+  },
+  {
+   "time": "2026-11-23T08:46:26.916Z",
+   "file": "20261123084626916-note-pair_nearleft.jpg",
+   "source": "../../../../tmp/v/pair_nearleft.png",
+   "kind": "note",
+   "label": "3720 near left at native size, approved beside ladder four"
+  },
+  {
+   "time": "2026-11-23T08:46:26.273Z",
+   "file": "20261123084626273-note-look_3720_v4.jpg",
+   "source": "../../../../tmp/v/look_3720_v4.png",
+   "kind": "note",
+   "label": "3720 review tier, ladder four (levels in the logarithm, bunches, new light by angle, paler ice): fine detail 1.42 of the approved, lines too hard and too even, no grain yet"
+  },
   {
    "time": "2026-11-23T08:30:02.034Z",
    "file": "20261123083002034-note-pair_mid.jpg",
@@ -38,42 +59,6 @@
    "source": "../../../../tmp/v/ng_3720.png",
    "kind": "note",
    "label": "3720 draft, ringlet ladder second version (too striped and too colourful near, too smooth mid; being reworked)"
-  },
-  {
-   "time": "2026-11-23T08:03:48.073Z",
-   "file": "20261123080348073-compare-compare-saturn-hold-view.jpg",
-   "source": "out/work/compare/compare-saturn-hold-view.jpg",
-   "kind": "compare",
-   "label": "saturn.hold: approved image left, film frame right, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T08:03:47.013Z",
-   "file": "20261123080347013-still-f03465-16x9-draft-full.jpg",
-   "source": "out/work/stills/f03465-16x9-draft-full.png",
-   "kind": "still",
-   "label": "saturn.hold frame 3465, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.hold",
-   "frame": 3465,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:56:39.965Z",
-   "file": "20261123075639965-note-compare-saturn-terrain.jpg",
-   "source": "out/work/compare/compare-saturn-terrain.jpg",
-   "kind": "note",
-   "label": "M1 rough: 3720 from code beside the approved close (compare sheet, draft tier)",
-   "stop": "saturn"
   }
  ]
 }
