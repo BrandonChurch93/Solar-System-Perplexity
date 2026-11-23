@@ -298,6 +298,8 @@ State at 18:00 UTC on 2026-11-22: the clock of MAIL 143 is done (ticks 14:52 to 
 
 MAIL 202 (18:00 UTC): the clock goes on with no end time. One mail `TICK HH:MM` (nothing else, no UTC word) to /root every 10 minutes, at minutes 02, 12, 22, 32, 42, 52, until the Builder writes "TICKS STOP". Never stop it on my own, also with nothing else to do. Same method: a short wait loop that is polled, never one long sleep. After a compaction: run `date -u`, send the tick that is due, go on.
 
+MAIL 305 (2026-11-23 17:17 UTC), JOB harness-stop-pack: `pack(a)` in `tools/round.py` now calls `npm run -s pack` with phase 4 when a stop round has phase 6, because in `tools/pack.ts` phase 6 without `--only` is the whole film path (`recordPacks`, hook, whole film jury, continuity, travels) and never writes `R1`, `R2`, `R3-partN`, `R4`, `R8` of one stop; the render jobs keep `--phase 6 --only` (they go through `part()`); tier final and motion tier review are the same for both phases; no pack was run by me, rounds 37 and 40 at the Builder are the proof; the ticks stopped at 00:40 UTC on the word of the Builder.
+
 ## Not covered
 
 - No run at the final or review tier, so the cost model (4.3 s per sample, a fast frame four times a slow one) is not checked against a real worker; `--sample-seconds` moves it.
