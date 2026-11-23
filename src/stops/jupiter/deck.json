@@ -280,7 +280,7 @@
     "fadeFrom": 0.75
   },
   "plates": {
-    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding, so the globe shows them as the deepest levels of its patches. matchSigma: scale in units above which the plates take the globe's own colour; the ratio of the close image to the globe at that scale is the grade field (gradePixels a side over the mid plate) that brings the plates back to the close image near the deck. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units.",
+    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding (values above white kept), so the globe shows them as the deepest levels of its patches. order: the order in which the plates are made. parents: the plate a canvas is enlarged from; without one the canvas starts from the globe's own albedo at the place, with the flow frozen as in place.json (globeBlurPx: how soft that is in plate pixels). inset: a finished finer plate laid into the canvas at its own place. grade: one colour, the median over the laid back image within gradeRadius units of the vortex of the close image over the globe's albedo, both at a scale of gradeScale units. The plates are the close image divided by it, so they sit on the globe at the globe's own brightness and hue, and the surface view multiplies it back in as one exposure that changes with time alone. flatten: from flatten[0] to flatten[1] units of ground distance from the close camera the laid back image gives up its tone above a scale of flatten[2] units to the globe's, because there its tone is the haze of a low view, not the cloud. carry: outside the laid back image the canvas carries the image's tone on from the border (measured at a scale of carry[0] units) and lets it go over carry[1] units. free: outside the laid back image the repaint is tied to the canvas at a scale that grows by this many pixels of blur per pixel of distance from the border. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. clear: the globe's own structure is taken away within clear[0] units of the vortex (fading out to clear[1]) by a blur of clear[2] units, so the repaint closes the storm of the close image all the way round and the globe's small oval, which is that storm seen from far, does not stand beside it. bandPx: width and blur, in plate pixels, of the unfinished band along the border of the laid back image. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. lockGain: strength of the repaint's own structure. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units.",
     "fore": {
       "centre": [
         0,
@@ -324,21 +324,53 @@
       ]
     },
     "order": [
-      "mid",
       "near",
+      "mid",
       "fore"
     ],
-    "matchSigma": 2.0,
-    "gradePixels": 256,
     "softPx": 1.0,
     "parentBlurPx": 2.2,
     "finishedPx": 1.3,
     "lock": [
       2.5,
       4,
-      60
+      512
     ],
     "hiddenError": 0.02,
-    "feather": 0.06
+    "feather": 0.06,
+    "clear": [
+      9,
+      16,
+      6.0
+    ],
+    "bandPx": [
+      16,
+      10
+    ],
+    "lockGain": 1.0,
+    "parents": {
+      "near": null,
+      "mid": null,
+      "fore": "near"
+    },
+    "inset": {
+      "mid": "near"
+    },
+    "globeBlurPx": {
+      "near": 6.0,
+      "mid": 2.2
+    },
+    "carry": [
+      0.5,
+      5.0
+    ],
+    "free": 0.6,
+    "gradeScale": 1.0,
+    "gradeRadius": 12.0,
+    "flatten": [
+      5.0,
+      11.0,
+      2.0
+    ]
   }
 }
