@@ -1,9 +1,17 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T07:28:04.134Z",
+ "pushed": "2026-11-23T07:38:34.932Z",
  "head": "ad59ffc0df8fbe7c8574b0923da3f01475befb4c",
- "note": "S3 first try of the one move dive path (globe side, every 8th frame); plates still rough, fan edges and raw globe visible",
+ "note": "dive path with exposure ramp to dusk; plates still the rough fan (full repainted plates in work)",
  "looks": [
+  {
+   "time": "2026-11-23T07:38:32.628Z",
+   "file": "20261123073832628-note-sheet-dive.jpg",
+   "source": "out/work/venus/place/p2/sheet-dive.jpg",
+   "kind": "note",
+   "label": "S3 dive path, globe side, every 8th frame, draft, with an exposure ramp to dusk on the globe (gain 6): the ground about the place is now seen; plates still the rough fan of M1 with hard edges, sky and Sun not yet brought to the close side",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T07:28:02.598Z",
    "file": "20261123072802598-note-sheet-dive.jpg",
@@ -83,14 +91,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:04:21.241Z",
-   "file": "20261123070421241-note-m1-laid.jpg",
-   "source": "out/work/venus/place/m1-laid.jpg",
-   "kind": "note",
-   "label": "venus plates a, b, c (24, 9, 3.4 deg) as laid back, masked",
-   "stop": "venus"
   }
  ]
 }
