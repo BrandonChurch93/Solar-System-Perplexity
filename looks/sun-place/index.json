@@ -1,9 +1,39 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T07:54:47.240Z",
- "head": "43292488840a6cf245478002103dceaf6570819b",
- "note": "S2: the close ground function ported onto the globe, twin of frame 90 against the judged frame",
+ "pushed": "2026-11-23T08:11:34.561Z",
+ "head": "df56a11e24cac54aa0d812857a52a75c0c331463",
+ "note": "rise as one path, T in an all photosphere frame, no flare, weights by height; loops and map tone still to fix",
  "looks": [
+  {
+   "time": "2026-11-23T08:11:33.664Z",
+   "file": "20261123081133664-note-r1-b.jpg",
+   "source": "out/work/sun/pl/r1-b.jpg",
+   "kind": "note",
+   "label": "rise on the new path, every 6th frame 228 to 269, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T08:11:32.532Z",
+   "file": "20261123081132532-note-r1-a.jpg",
+   "source": "out/work/sun/pl/r1-a.jpg",
+   "kind": "note",
+   "label": "rise on the new path, every 6th frame 180 to 222, draft, T in 216",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T07:57:34.225Z",
+   "file": "20261123075734225-frame-f00191.jpg",
+   "source": "out/work/seq/180-193/f00191.png",
+   "kind": "frame",
+   "label": "sun.rise frame 191, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 191,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "247ebad7e038ce06"
+  },
   {
    "time": "2026-11-23T07:54:45.649Z",
    "file": "20261123075445649-note-t90-crop.jpg",
@@ -11,20 +41,6 @@
    "kind": "note",
    "label": "globe side at the twin of frame 90 (left) beside judged frame 90 (right): the globe now draws the close ground function itself; limb zone, fringe, loops and sky not yet matched",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T07:46:51.650Z",
-   "file": "20261123074651650-frame-f00192.jpg",
-   "source": "out/work/seq/192-193/f00192.png",
-   "kind": "frame",
-   "label": "sun.rise frame 192, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 192,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   },
   {
    "time": "2026-11-23T07:23:21.606Z",
@@ -69,22 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T06:55:37.118Z",
-   "file": "20261123065537118-note-lay-view.jpg",
-   "source": "out/work/sun/pl/lay-view.jpg",
-   "kind": "note",
-   "label": "S2 first lay back of the close plate, 12 and 30 deg, with stretch map",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T06:55:35.160Z",
-   "file": "20261123065535160-note-s1-check-a.jpg",
-   "source": "out/work/sun/pl/s1-check-a.jpg",
-   "kind": "note",
-   "label": "S1 first check: globe from solved camera over close f90 (no plates yet)",
-   "stop": "sun"
   }
  ]
 }
