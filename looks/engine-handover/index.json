@@ -1,78 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T11:46:24.852Z",
- "head": "412d2d097ed760d43dd2094ac6d5eca2f8efb027",
- "note": "E3: steady descent with a sidestep past Phobos, dive draft judged frame by frame, strokes at the rise traced",
+ "pushed": "2026-11-23T12:08:11.995Z",
+ "head": "0d14d1cf143660741fd3f26c494543f85fc36fc7",
+ "note": "E3 pushed at 0d14d1c; E4 draft run of both Mars handovers is rendering",
  "looks": [
   {
-   "time": "2026-11-23T11:46:24.227Z",
-   "file": "20261123114624227-note-moon-up-crops.jpg",
-   "source": "out/work/e3/moon-up-crops.png",
+   "time": "2026-11-23T12:08:11.292Z",
+   "file": "20261123120811292-note-f2701-three.jpg",
+   "source": "out/work/e3/f2701-three.png",
    "kind": "note",
-   "label": "E3 draft: Phobos at full size, frames 2402 to 2404, with the sidestep"
+   "label": "Rise 2701 crop: beauty, no place picture, place mask. The strokes are the far wall of the place picture"
   },
   {
-   "time": "2026-11-23T11:46:23.566Z",
-   "file": "20261123114623566-note-moon-up-2400-2411.jpg",
-   "source": "out/work/e3/moon-up-2400-2411.png",
+   "time": "2026-11-23T12:08:10.443Z",
+   "file": "20261123120810443-note-rise3-2690-2707.jpg",
+   "source": "out/work/e3/rise3-2690-2707.png",
    "kind": "note",
-   "label": "E3 draft: dive start 2400 to 2411 with the upward sidestep, Phobos leaves by the bottom edge"
+   "label": "BAD E3 rise draft 2692 to 2706 with the limit at 1.5: stretched canyon wall strokes 2698 to 2703"
   },
   {
-   "time": "2026-11-23T11:46:17.242Z",
-   "file": "20261123114617242-frame-f2701.jpg",
-   "source": "out/work/e3/f2701.png",
-   "kind": "frame",
-   "label": "mars.rise frame 2701, draft tier",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2701,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "16326da7882ca5a5"
-  },
-  {
-   "time": "2026-11-23T11:43:18.822Z",
-   "file": "20261123114318822-frame-f02400.jpg",
-   "source": "out/work/seq/2400-2411/f02400.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2400, draft tier",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2400,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "16326da7882ca5a5"
-  },
-  {
-   "time": "2026-11-23T11:43:02.703Z",
-   "file": "20261123114302703-note-dive2-2448-2459.jpg",
-   "source": "out/work/e3/dive2-2448-2459.png",
+   "time": "2026-11-23T12:08:09.625Z",
+   "file": "20261123120809625-note-rise4-2692-2706.jpg",
+   "source": "out/work/e3/rise4-2692-2706.png",
    "kind": "note",
-   "label": "E3 dive draft 2448 to 2459 across T 2454"
+   "label": "E3 rise draft 2692 to 2706, far field of the picture cut at 1.2 times: the wall strokes are gone; the flat red is the globe without plates"
   },
   {
-   "time": "2026-11-23T11:43:01.991Z",
-   "file": "20261123114301991-note-dive2-2436-2447.jpg",
-   "source": "out/work/e3/dive2-2436-2447.png",
+   "time": "2026-11-23T12:08:08.964Z",
+   "file": "20261123120808964-note-dive3-2448-2459.jpg",
+   "source": "out/work/e3/dive3-2448-2459.png",
    "kind": "note",
-   "label": "E3 dive draft 2436 to 2447: level glide into the place"
+   "label": "E3 dive draft, every frame 2448-2459, steady descent with the level glide and the sidestep past Phobos"
   },
   {
-   "time": "2026-11-23T11:43:01.255Z",
-   "file": "20261123114301255-note-dive2-2400-2411.jpg",
-   "source": "out/work/e3/dive2-2400-2411.png",
+   "time": "2026-11-23T12:08:08.291Z",
+   "file": "20261123120808291-note-dive3-2436-2447.jpg",
+   "source": "out/work/e3/dive3-2436-2447.png",
    "kind": "note",
-   "label": "BAD E3 dive draft 2400 to 2411 before the sidestep: Phobos fills a third of frame 2406"
+   "label": "E3 dive draft, every frame 2436-2447, steady descent with the level glide and the sidestep past Phobos"
   },
   {
-   "time": "2026-11-23T11:43:00.435Z",
-   "file": "20261123114300435-note-rise2-strokes.jpg",
-   "source": "out/work/e3/rise2-strokes.png",
+   "time": "2026-11-23T12:08:07.630Z",
+   "file": "20261123120807630-note-dive3-2424-2435.jpg",
+   "source": "out/work/e3/dive3-2424-2435.png",
    "kind": "note",
-   "label": "E3 rise 2697 to 2703 crop: light strokes at the far edge of the place picture (canyon wall stretched on the sphere)"
+   "label": "E3 dive draft, every frame 2424-2435, steady descent with the level glide and the sidestep past Phobos"
+  },
+  {
+   "time": "2026-11-23T12:08:06.931Z",
+   "file": "20261123120806931-note-dive3-2412-2423.jpg",
+   "source": "out/work/e3/dive3-2412-2423.png",
+   "kind": "note",
+   "label": "E3 dive draft, every frame 2412-2423, steady descent with the level glide and the sidestep past Phobos"
+  },
+  {
+   "time": "2026-11-23T12:08:06.249Z",
+   "file": "20261123120806249-note-dive3-2400-2411.jpg",
+   "source": "out/work/e3/dive3-2400-2411.png",
+   "kind": "note",
+   "label": "E3 dive draft, every frame 2400-2411, steady descent with the level glide and the sidestep past Phobos"
   }
  ]
 }
