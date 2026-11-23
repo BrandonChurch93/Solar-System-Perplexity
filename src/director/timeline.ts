@@ -1,4 +1,5 @@
 import { config, type CoverWindow, type Segment } from '../config'
+import type { HandoverParams } from './handover'
 
 export function segmentAtFrame(frame: number): Segment {
   const f = Math.min(Math.max(frame, 0), config.frameCount - 1)
@@ -44,7 +45,45 @@ export function coverTiming(segment: Segment): { seconds: number; center: number
   return { seconds: own?.seconds ?? c.seconds, center: segment.start + (own?.center ?? fraction) * (segment.end - segment.start) }
 }
 
-export function coverWindow(segment: Segment): CoverWindow | null {
+const handovers = new Map<string, HandoverParams>()
+let handoverEpoch = 0
+
+export function setHandover(stop: string, h: HandoverParams | undefined): void {
+  for (const t of [h?.dive, h?.rise]) {
+    if (t?.at !== undefined && !(t.at > 0 && t.at < 1)) throw new Error('handover.at of ' + stop + ' must lie between 0 and 1')
+    if (t?.dissolveFrames !== undefined && !(Number.isInteger(t.dissolveFrames) && t.dissolveFrames >= 1)) throw new Error('handover.dissolveFrames of ' + stop + ' must be a whole number of at least 1')
+    if (t?.placeFrames !== undefined && !(Number.isInteger(t.placeFrames) && t.placeFrames >= 0)) throw new Error('handover.placeFrames of ' + stop + ' must be a whole number, 0 or more')
+    if (t?.skyFrames !== undefined && !(Number.isInteger(t.skyFrames) && t.skyFrames >= 0)) throw new Error('handover.skyFrames of ' + stop + ' must be a whole number, 0 or more')
+    if (t?.place?.scale !== undefined && !(Number.isInteger(t.place.scale) && t.place.scale >= 1)) throw new Error('handover.place.scale of ' + stop + ' must be a whole number of at least 1')
+    if (t?.place?.margin !== undefined && !(t.place.margin >= 0 && t.place.margin <= 2)) throw new Error('handover.place.margin of ' + stop + ' must lie between 0 and 2')
+  }
+  if (h) handovers.set(stop, h)
+  else handovers.delete(stop)
+  handoverEpoch++
+}
+
+export function withoutHandover<T>(stop: string, run: () => T): T {
+  const own = handovers.get(stop)
+  if (!own) return run()
+  handovers.delete(stop)
+  handoverEpoch++
+  try {
+    return run()
+  } finally {
+    handovers.set(stop, own)
+    handoverEpoch++
+  }
+}
+
+export function handoverParams(stop: string): HandoverParams | null {
+  return handovers.get(stop) ?? null
+}
+
+export function handoverChanges(): number {
+  return handoverEpoch
+}
+
+export function coverFrames(segment: Segment): CoverWindow | null {
   const t = coverTiming(segment)
   if (t === null) return null
   const first = Math.floor((t.center - t.seconds / 2) * config.fps + 1e-9)
@@ -54,6 +93,10 @@ export function coverWindow(segment: Segment): CoverWindow | null {
     lastFrame: Math.min(last, segment.endFrame - 1),
     centerFrame: Math.floor(t.center * config.fps + 1e-9),
   }
+}
+
+export function coverWindow(segment: Segment): CoverWindow | null {
+  return handovers.has(segment.stop) ? null : coverFrames(segment)
 }
 
 export interface JudgedFrame { frame: number; segment: string; stop: string; why: string }

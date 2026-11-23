@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "foreground granulation, lower half and lower right (crops D, E, F, G in pair-04)",
+   "what": "intergranular lanes are darker and more crisply etched than in -a, giving a slightly harder, over-sharpened crackle look; -a cells are softer and more rounded with gentler lane contrast",
+   "fix": "reduce local contrast/sharpening on the surface and lift the lane blacks slightly to match the softer granule rendering of -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "star field, upper left and upper right sky (crops B, C, H, I)",
+   "what": "stars are slightly brighter and more numerous/crisper than -a, and the Milky Way band in the upper left reads a touch less smooth",
+   "fix": "dim the faint star layer slightly and soften the point stars to match the density and brightness of -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "full-frame disc and Milky Way band left and right",
+   "what": "overall a hair lower in global contrast and saturation than -a (mean levels and spread marginally lower); the galactic band at the left edge looks slightly flatter",
+   "fix": "nudge global contrast and saturation up very slightly to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "disc surface crops A, F, G",
+   "what": "surface texture is marginally crisper/higher-frequency than -a, a small shift toward a sharpened look in the granular detail",
+   "fix": "pull back sharpening on the disc a little so fine texture matches -a"
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night side of the planet and lower-left ring arc (crop D)",
+   "what": "flat dark areas carry visible grain/noise not present in -a (local texture roughly 0.6-0.9 in -a vs 1.1-1.3 in -b), and the faint ring streaks in the lower left read slightly more pronounced and streaky",
+   "fix": "denoise the shadowed hemisphere and deep sky back to the clean, smooth blacks of -a; soften the lower-left ring streaks to match"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lit cloud bands and bright limb, centre and upper right (crops A, C, E)",
+   "what": "fine cloud filament detail is slightly softer than -a (about 10% less micro-contrast in the lit centre)",
+   "fix": "restore a light amount of fine-detail sharpening in the lit cloud bands only"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame, especially the dark lower-left ocean and sky blacks (crops D, I)",
+   "what": "blacks are very slightly lifted and the overall grade is a touch brighter (mean about +0.6, 1st percentile 4.0 to 4.7), and the darkest ocean in the lower left has added grain",
+   "fix": "pull the black point back down slightly and denoise the deepest shadow areas to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "bright limb haze and cyclone cloud bands, right half (crops C, E, F)",
+   "what": "small loss of crispness in the bright atmospheric bands and cloud edges compared with -a",
+   "fix": "recover a little fine detail in the highlights without raising contrast"
+  }
+ ]
+}

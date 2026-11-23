@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 1879–1883, upper limb and both shoulders",
+   "what": "The globe's silhouette flattens conspicuously in just a few consecutive frames while its apex barely moves. The broad cyan halo also collapses to a thin line, so the visible horizon gives away the handoff even at peak cloud cover.",
+   "fix": "Match horizon curvature, screen-space velocity and atmospheric glow across the handoff. Spread the curvature change over more frames or conceal the limb as well as the surface at the overlap."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2131–2136, upper limb and lower-left surface detail",
+   "what": "On the way back the horizon rapidly bows into a globe and the blue rim blooms while the surface is still whited out. Bright details reappear as short broken streaks through the cover, making the acceleration look like a zoom transition rather than a continuous climb.",
+   "fix": "Track the same limb and atmospheric falloff through the cover, ease the change in curvature over a longer interval, and use continuous shutter sampling for the emerging surface detail."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 1920–2001, foreground cloud banks and turquoise shallows",
+   "what": "The horizon is stable and the featured cloud banks, their shadows and coastline drift together so closely that this stretch reads more like a slow move over a still than a layered flyover.",
+   "fix": "Give the nearer cloud banks slightly more screen-space travel relative to the distant horizon and add subtle independent cloud drift while keeping the shadows tied to their clouds."
+  }
+ ]
+}

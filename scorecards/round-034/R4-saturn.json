@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "lower ring plane, frames 3810 to 3817",
+   "what": "Near-ring detail drops in one step: high-frequency energy about halves while the planet stays sharp and shifts only a few pixels. The same ring patch does not match under any shift within 24 pixels, so the softness reads as a drop rather than a continuous directional streak.",
+   "fix": "Ease the near-ground blur on with the pull, along the ring motion, and keep the same ring pattern through 3810 to 3817 so the detail does not drop out."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "after frame 3629, before sheet-03 frame 3810",
+   "what": "The terrain dwell is not on these sheets, about 181 frames. The arrival eases in and the pull-up eases out, but the time at the place is missing, so the stop cannot be confirmed as one unbroken flight through the place.",
+   "fix": "Add the terrain contact sheet and a consecutive cover across the arrival into it and the departure out of it."
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import { samplesFor } from '../../core/sampler'
-import type { SetContext, SetFactory, SkyPatch, ViewKind } from '../../core/types'
+import type { SetContext, SetFactory, Shot, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
@@ -19,12 +19,9 @@ import streakJson from './streak.json'
 import * as look from './look'
 import { plan } from './plan'
 import { curve } from './pace'
-import reliefJson from './relief.json'
 import { Rim } from './rim'
 import rimJson from './rim.json'
 import skyJson from './sky.json'
-import { SkyPlate } from './skyplate'
-import { clearance, ride } from './sunpath'
 import { SunPlate } from './sunplate'
 import sunJson from './sunplate.json'
 
@@ -64,23 +61,32 @@ export const createSet: SetFactory = async (ctx) => {
     : ctx.floatTexture(new Float32Array(8), 4, 2, true)
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const risePlates: THREE.Texture[] = []
+  for (const level of patches.rise) risePlates.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
+  const plateLevels = patches.rise.map((level) => level.level)
+  const divePlates = plateLevels.map((level) => patchTextures[level]!)
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg } : undefined,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   const far = new FarPoint()
   const sunPlate = new SunPlate(await ctx.texture(base + sunJson.file, { srgb: true, anisotropy: 4 }), sunJson.rect as [number, number, number, number], sunJson.disc, look.sun.limb, look.sun.small, diagUniform, look.sunSurface)
   const sunAim = new THREE.Quaternion()
+  const sunWas = new THREE.Quaternion()
+  const { FilmDirector } = await import('../../director/film')
+  const { plans } = await import('../../director/plans')
+  const film = new FilmDirector(plans)
   const holdCam = plan.hold(plan.holdMid - plan.seg.hold.start).quaternion.clone().multiply(drift(plan.holdMid))
   orbit.add(sunPlate.mesh, globe.mesh, far.points)
   const lens = new Lens(await ctx.texture(base + lensJson.file, { srgb: true, anisotropy: 1 }), lensJson, look.lens, diagUniform)
   const streak = new Lens(await ctx.texture(base + streakJson.file, { srgb: true, anisotropy: 1 }), streakJson, look.streak, diagUniform, true, look.streakCore)
-  const near = new THREE.Group()
+  const over = new THREE.Group()
   const glare = new Glare(look.glare, diagUniform)
-  near.add(lens.mesh, streak.mesh, glare.mesh)
-  const covers = [plan.coverCenter(plan.seg.dive!), plan.coverCenter(plan.seg.rise)]
+  over.add(lens.mesh, streak.mesh, glare.mesh)
+  const covers = [look.flight.entry.at / config.fps, look.flight.exit.at / config.fps]
+  const keep = (x: number): number => (x <= look.glare.keep[0] ? x : look.glare.keep[0] + (look.glare.keep[1] - look.glare.keep[0]) * (1 - Math.exp(-(x - look.glare.keep[0]) / (look.glare.keep[1] - look.glare.keep[0]))))
   const spinRate = THREE.MathUtils.degToRad(plan.p.spinDegPerSecond)
   const spin = (time: number) => plan.spin(time) - spinRate * look.spinRest * Math.min(Math.max(time - covers[0]!, 0), covers[1]! - covers[0]!)
   const closeTan = Math.tan(THREE.MathUtils.degToRad(relief.full.vfovDeg) / 2)
@@ -90,22 +96,17 @@ export const createSet: SetFactory = async (ctx) => {
   const closeTurn = plan.turn((plan.seg.terrain.start + plan.seg.terrain.end) / 2).clone()
   const closeFrame = plan.terrainFrame.clone().invert()
   const closeFix = new THREE.Quaternion()
-  const closeBack = new THREE.Quaternion()
-  const midDrift = drift((plan.seg.terrain.start + plan.seg.terrain.end) / 2).invert()
-  const closeUp = new THREE.Vector3().fromArray(reliefJson.camera.up).applyQuaternion(midDrift)
   const lowSun = new THREE.Vector3()
-  const lowSunAt = (time: number, rotation: THREE.Quaternion, inOrbit: boolean): THREE.Vector3 => {
-    lowSun.copy(closeSun).applyQuaternion(closeAim).applyQuaternion(closeFix.copy(closeFrame).multiply(plan.turn(time).invert()).multiply(closeTurn).multiply(plan.terrainFrame))
-    if (inOrbit) lowSun.applyQuaternion(plan.anchor.frame).applyQuaternion(plan.drawn(time))
-    return lowSun.applyQuaternion(rotation)
-  }
-  const slide = look.sun.slide
-  const slideX = curve(slide.track.map((k) => [k[0], k[1]] as [number, number]))
-  const slideY = curve(slide.track.map((k) => [k[0], k[2]] as [number, number]))
-  const tanFrom = Math.tan(THREE.MathUtils.degToRad(plan.dive(covers[0]! + slide.leave[0] / config.fps).pose.vfov) / 2)
-  const tanTo = Math.tan(THREE.MathUtils.degToRad(plan.dive(covers[0]!).pose.vfov) / 2)
-  const swap = plan.rise(covers[1]!)
-  const held = clearance(lowSunAt(covers[1]!, new THREE.Quaternion(), true).clone(), swap.pose.position.clone().negate(), swap.pose.position.length())
+  const lowSunAt = (time: number, rotation: THREE.Quaternion): THREE.Vector3 => lowSun.copy(closeSun).applyQuaternion(closeAim).applyQuaternion(closeFix.copy(closeFrame).multiply(plan.turn(time).invert()).multiply(closeTurn).multiply(plan.terrainFrame)).applyQuaternion(rotation)
+  const lowTurn = film.sky.turns[plan.id]?.clone().invert() ?? new THREE.Quaternion()
+  const skyBack = new THREE.Quaternion()
+  const carried = new THREE.Vector3()
+  const carriedSun = (rotation: THREE.Quaternion, shot: Shot, camera: THREE.Camera): THREE.Vector3 => carried.copy(closeSun).applyQuaternion(closeAim).applyQuaternion(plan.terrainFrame).applyQuaternion(closeTurn).applyQuaternion(rotation).applyQuaternion(lowTurn).applyQuaternion(shot.skyTurn).applyQuaternion(skyBack.copy(shot.skyQuaternion).invert()).applyQuaternion(camera.quaternion)
+  const after = plans[plans.findIndex((p) => p.id === plan.id) + 1]
+  const skyDive = film.sky.orbits[plan.id]?.clone().invert() ?? new THREE.Quaternion()
+  const skyRise = (after ? film.sky.orbits[after.id] : undefined)?.clone().invert() ?? skyDive
+  const skyRide = (anchor: THREE.Quaternion, shot: Shot, camera: THREE.Camera, out: THREE.Quaternion): THREE.Quaternion => out.copy(camera.quaternion).multiply(skyBack.copy(shot.skyQuaternion).invert()).multiply(shot.skyTurn).multiply(anchor)
+  const sunDisc = Math.atan(sunJson.disc * (sunJson.rect[2]! - sunJson.rect[0]!))
   const sunShown = new THREE.Vector3()
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
@@ -114,11 +115,6 @@ export const createSet: SetFactory = async (ctx) => {
   const plateBack = new THREE.Quaternion()
   const limbRay = new THREE.Vector3()
   const sunRect = sunJson.rect as [number, number, number, number]
-  const inCamera = new THREE.Vector3()
-  const seen = (dir: THREE.Vector3, tan: number): [number, number] | null => {
-    inCamera.copy(dir).applyQuaternion(toCamera)
-    return inCamera.z > -0.02 ? null : [inCamera.x / -inCamera.z / tan, inCamera.y / -inCamera.z / tan]
-  }
 
   const ground = await Relief.load(ctx, base, relief[key], look.relief)
   const under = await Relief.load(ctx, base, wide[key], look.relief)
@@ -172,20 +168,20 @@ export const createSet: SetFactory = async (ctx) => {
   }
 
   const low = sky.find((p) => p.view === 'terrain')!
-  const skyPlate = new SkyPlate(low.texture, low.tan, low.edge, closeUp, Math.sin(THREE.MathUtils.degToRad(reliefJson.camera.dipDeg)), look.sky.band.soft, diagUniform)
-  orbit.add(skyPlate.mesh)
   globe.carry(look.carry.gain, look.carry.knee, 0)
   globe.plain(look.carry.tint)
+  globe.place(patches.place.gain, 1)
   if (patchTextures.length > 0) globe.mend(direction(look.mend.lon, look.mend.lat), look.mend.reach, look.mend.from)
 
   return {
     id: plan.id,
     world,
-    near,
+    over,
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
-      const body = state.weight
+      const leaving = state.segment.stop === plan.id && state.segment.kind === 'travel'
+      const body = leaving ? 1 : state.weight
       orbit.visible = inOrbit && body > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
@@ -201,7 +197,7 @@ export const createSet: SetFactory = async (ctx) => {
       const aspect = view.format.width / view.format.height
       toCamera.copy(view.camera.quaternion).invert()
       if (!inOrbit) {
-        glare.update(on ? Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height) : 0, lowSunAt(state.time, state.rotation, false), view.camera, gain, aspect, state.time)
+        glare.update(on ? keep(Math.pow(Math.max((above(plan.low(state.time)) - above(null)) / (above(plan.low(covers[first ? 0 : 1]!)) - above(null)), 0), look.glare.height)) : 0, lowSunAt(state.time, state.rotation), view.camera, gain, aspect, state.time)
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         limb.update(low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect)
@@ -210,73 +206,46 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const diving = mine && kind === 'dive'
       const rising = mine && kind === 'rise'
+      globe.plates(plateLevels, rising ? risePlates : divePlates)
       sunShown.copy(shot.sun.dir)
       rimSun.copy(shot.sun.dir)
       glareSun.copy(shot.sun.dir)
-      let shrink = 0
+      const shrink = 0
       let plate = 1
       let ghosts = 1
-      if (diving) {
-        const a = smoother(ramp(slide.leave[0], slide.leave[1], fromDive))
-        if (a > 0) {
-          const b = smoother(ramp(slide.lock[0], slide.lock[1], fromDive))
-          let x = (slideX(fromDive) - 0.5) * 2 * aspect
-          let y = (0.5 - slideY(fromDive)) * 2
-          const from = seen(shot.sun.dir, tanHalf)
-          if (from) {
-            x = mix(from[0], x, a)
-            y = mix(from[1], y, a)
-          }
-          const to = b > 0 ? seen(lowSunAt(state.time, state.rotation, true), tanHalf) : null
-          if (to) {
-            x = mix(x, to[0], b)
-            y = mix(y, to[1], b)
-          }
-          sunShown.set(x * tanHalf, y * tanHalf, -1).normalize().applyQuaternion(view.camera.quaternion)
-          rimSun.copy(sunShown)
-          glareSun.copy(sunShown)
-        }
-        shrink = ramp(tanFrom, tanTo, tanHalf)
-        plate = 1 - smoother(ramp(look.sun.hand[0], look.sun.hand[1], fromDive))
-        ghosts = 1 - smoother(ramp(look.sun.ghost[0], look.sun.ghost[1], fromDive))
-      } else if (rising) {
-        const lift = look.sun.lift
-        ride(lowSunAt(state.time, state.rotation, true), shot.sun.dir, world.position, world.position.length(), smoother(ramp(lift.frames[0], lift.frames[1], fromRise)), held, THREE.MathUtils.degToRad(lift.floor), sunShown)
+      if (diving || rising) {
+        sunShown.applyQuaternion(skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn))
         rimSun.copy(sunShown)
-        glareSun.copy(sunShown)
-        shrink = Math.max(ramp(tanFrom, tanTo, tanHalf), 1 - smoother(ramp(lift.grow[0], lift.grow[1], fromRise)))
-        plate = smoother(ramp(lift.plate[0], lift.plate[1], fromRise))
-        ghosts = smoother(ramp(lift.ghost[0], lift.ghost[1], fromRise))
+        glareSun.copy(carriedSun(state.rotation, shot, view.camera))
+        plate = 1 - (shot.skyShare ?? 0)
+        if (rising) ghosts = look.flare.after
+      } else if (leaving) {
+        ghosts = look.flare.after
       }
-      glare.update(on ? glare.bloom(first ? fromDive : fromRise, first ? 'dive' : 'rise') : 0, glareSun, view.camera, gain, aspect, state.time)
-      const skyWeight = diving ? smoother(ramp(look.sky.dive[0], look.sky.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.rise[0], look.sky.rise[1], fromRise)) : 0
-      const band = diving ? smoother(ramp(look.sky.band.dive[0], look.sky.band.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sky.band.rise[0], look.sky.band.rise[1], fromRise)) : 0
-      closeBack.copy(state.rotation).multiply(plan.drawn(state.time)).multiply(plan.anchor.frame).multiply(closeFix.copy(closeFrame).multiply(plan.turn(state.time).invert()).multiply(closeTurn).multiply(plan.terrainFrame)).multiply(closeAim).invert().premultiply(midDrift)
-      const hole = diving ? smoother(ramp(look.sun.hole.dive[0], look.sun.hole.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.sun.hole.rise[0], look.sun.hole.rise[1], fromRise)) : 0
-      const holeRadius = look.sun.hole.radius[rising ? 'rise' : 'dive']
-      skyPlate.update(closeBack, skyWeight * state.weight, band, low.gain * shot.skyGlow * shot.skyExposure, shot.post.vignette, aspect, shot.sun.dir, hole * state.weight, holeRadius[0] * shot.sun.angularRadius, holeRadius[1] * shot.sun.angularRadius)
+      glare.update(diving ? keep(1) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? keep(1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / tanHalf * (view.format.height / 2)
       const offAxis = THREE.MathUtils.radToDeg(rimSun.angleTo(forward.set(0, 0, -1).applyQuaternion(view.camera.quaternion)))
-      const covered = mine && hasClose && (kind === 'dive' || kind === 'rise')
-      const close = covered ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.close.height[0], look.close.height[1]) : 0
+      const close = 0
       const grade = diving ? smoother(ramp(look.carry.dive[0], look.carry.dive[1], fromDive)) : rising ? 1 - smoother(ramp(look.carry.rise[0], look.carry.rise[1], fromRise)) : 0
       globe.near(close, (wideImage.sink / closeRadius) * close)
       const high = (distance - 1) * closeRadius
-      const capped = covered ? 1 - THREE.MathUtils.smoothstep(high, look.close.lift.height[0], look.close.lift.height[1]) : 0
+      const capped = 0
       const way = rising ? 'rise' : 'dive'
       globe.clear(close > 0 ? look.close.haze.amount * THREE.MathUtils.smoothstep(high, look.close.haze.height[0], look.close.haze.height[1]) : 0, look.close.haze.level[way], [mix(-0.85, look.close.lift.cap[0], capped), mix(1.6, look.close.lift.cap[1], capped)], [look.close.lift.knee[way][0], look.close.lift.knee[way][1] * capped], close > 0 ? THREE.MathUtils.smoothstep(high, look.close.haze.calmHeight[0], look.close.haze.calmHeight[1]) : 0)
+      globe.far(diving || rising ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.far.height[0], look.far.height[1]) : 0, look.far.mu[way], glareSun, look.far)
       globe.wash(close > 0 ? look.close.haze.wash.amount * (1 - THREE.MathUtils.smoothstep(high, look.close.haze.wash.height[0], look.close.haze.wash.height[1])) : 0, look.close.haze.wash.cap)
       const reach = wideFar(high)
       globe.reach(reach - look.close.wide.soft, reach, wideFeather(high), look.close.wide.over)
+      globe.cap(rising ? THREE.MathUtils.smoothstep(high, look.close.wide.cap.height[0], look.close.wide.cap.height[1]) : 0, look.close.wide.cap.reach[0], look.close.wide.cap.reach[1], look.close.wide.cap.over, look.close.wide.cap.span)
       globe.carry(mix(look.carry.gain, look.carry.lift, grade), look.carry.knee, look.carry.grey * grade)
       globe.silhouette(look.light.silhouette.amp * THREE.MathUtils.smoothstep(distance - 1, look.light.silhouette.fade[0], look.light.silhouette.fade[1]))
-      globe.night(state.time > covers[0]! ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
+      globe.night(state.time > terrainMid ? look.light.nightAfter : 1, look.light.shoulder.strength * smoother(ramp(look.light.shoulder.frames[0], look.light.shoulder.frames[1], fromRise)))
       globe.kick(kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation))
-      globe.spill(state.time > covers[0]! ? look.light.rim.after : 1)
+      globe.spill(state.time > terrainMid ? look.light.rim.after : 1)
       globe.update(light, rimSun, 1 - THREE.MathUtils.smoothstep(offAxis, look.light.glareLens[0], look.light.glareLens[1]), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const fast = view.samples > 1 && (diving || rising)
@@ -294,8 +263,14 @@ export const createSet: SetFactory = async (ctx) => {
       const breath = 1 + look.sun.breathe * (Math.sin(tau * look.sun.rate) + 0.6 * Math.sin(tau * look.sun.rate * 1.63))
       const arriving = kind === 'travel' && !mine
       const whole = arriving ? 1 - (shot.skyPatch ?? 1) : 0
+      const surface = arriving ? 1 - smooth(ramp(look.sunLook[0], look.sunLook[1], state.u)) : 0
       const still = arriving || (mine && kind === 'hold') ? 1 : diving ? 1 - smoother(ramp(look.sunSurface.dive[0], look.sunSurface.dive[1], state.u)) : 0
-      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(sunTurn.setFromUnitVectors(shot.sun.dir, sunShown)), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, whole, still)
+      const hide = arriving ? 1 - smoother(ramp(look.hide.fade[0]!, look.hide.fade[1]!, state.u)) : rising || leaving ? 1 : 0
+      const beneath = arriving ? Math.pow(shot.sets.find((s) => s.id === state.segment.stop)?.weight ?? 0, look.hide.power) : 0
+      const lift = arriving ? (Math.max(smooth(ramp(0.25, 0.8, look.hide.gone)) - shown, 0) * (1 - beneath)) / Math.max(shown, 1e-4) : 0
+      sunPlate.update(sunAim.copy(state.rotation).multiply(holdCam).premultiply(diving || rising ? sunTurn : sunTurn.identity()), gain * shown * look.sun.gain * breath * plate, shot.post.vignette, aspect, shrink, surface, still, hide, hide * (1 - beneath), look.hide.rate, hide * lift)
+      const then = leaving && view.samples > 1 && shown > 0 ? film.shotAt(shot.frame, state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      sunPlate.smear(view.camera.quaternion, tanHalf, then ? then.camera.quaternion : null, then ? Math.tan(THREE.MathUtils.degToRad(then.camera.vfov) / 2) : tanHalf, then ? sunWas.copy(then.sets.find((s) => s.id === plan.id)?.rotation ?? state.rotation).multiply(holdCam) : sunAim, view.format.height, look.leaveStep, look.leaveSoft)
       let limbLeft = 1
       let limbRight = 1
       if (whole > 0) {
@@ -321,15 +296,19 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const sep = sunShown.angleTo(world.position)
       const disc = Math.asin(Math.min(1 / Math.max(distance, 1), 1))
-      const clear = THREE.MathUtils.smoothstep(sep, disc - 0.6 * shot.sun.angularRadius, disc + 0.6 * shot.sun.angularRadius)
+      const soft = diving || rising ? sunDisc : 0.6 * shot.sun.angularRadius
+      const clear = THREE.MathUtils.smoothstep(sep, disc - soft, disc + soft)
       const ghost = shown * clear * body * (1 + 2 * (breath - 1)) * ghosts
-      lens.update(sunShown, view.camera, ghost * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
+      const onBody = mix(look.flare.onBody[0], look.flare.onBody[1], diving ? smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u)) : rising || leaving ? 1 : 0)
+      const offBody = diving ? mix(1, look.flare.offBody, smoother(ramp(look.flare.dive[0], look.flare.dive[1], state.u))) : 1
+      lens.shade(world.position, view.camera, Math.min(onBody / Math.max(offBody, 1e-6), 1))
+      streak.shade(world.position, view.camera, onBody)
+      lens.update(sunShown, view.camera, ghost * offBody * (arriving ? Math.pow(shot.skyPatch ?? 1, look.sun.ghostIn) : 1), gain, shot.post.vignette, aspect)
       streak.update(sunShown, view.camera, ghost, gain, shot.post.vignette, aspect, whole, limbLeft, limbRight)
     },
     dispose: () => {
       globe.dispose()
       sunPlate.dispose()
-      skyPlate.dispose()
       lens.dispose()
       streak.dispose()
       glare.dispose()

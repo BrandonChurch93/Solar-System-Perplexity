@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 4420 to 4427, whole frame",
+   "what": "the rise breaks between these frames: in 7 frames the camera goes from a close arc of the limb against black sky to a far view of the globe. The Milky Way pops in at full brightness, the sun point disappears, and the planet's surface changes from soft haze to hard dark bands. It reads as a cut, not one pull-back",
+   "fix": "make the pull-back one eased move across more frames. Fade the Milky Way in with the exposure, keep the sun in place until it leaves the frame, and blend the banded far-view surface over the near haze across the transition"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 4150 to 4159, limb and sky",
+   "what": "the dive goes from a sharp limb with stars, Milky Way and rings straight to a blurred close-up of a cloud band. The tilt of the limb flips from a level arc to a steep diagonal, and the sky changes from black to teal fog. Direction and exposure jump instead of carrying across the cover",
+   "fix": "start the haze and the roll toward the diagonal before 4150, so the frames before the cover already lean and brighten into the frames after it"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 4183 to 4199 (terrain segment)",
+   "what": "the terrain view is a nearly frozen orbital limb with no near ground. There is no parallax between foreground and horizon, so the view has no depth. The clouds show no visible flow across 16 frames",
+   "fix": "bring the camera low enough to frame near cloud tops or ground against the horizon, add a slow drift so near and far layers move against each other, and animate cloud flow at a believable rate"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 4434 to 4454, rings at left of globe; also sheet-01 frames 4134 to 4142, upper right",
+   "what": "the rings draw as several separate thin parallel arcs with gaps between them, which reads as ghost copies of one edge rather than a continuous ring system or a smooth motion blur",
+   "fix": "render the rings as one continuous banded disc with smooth radial density, and use real motion blur, not stacked samples"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 4118 to 4126, right half of sky",
+   "what": "the bright Milky Way to the right of the globe disappears within 8 frames, and the background goes almost black, so the exposure seems to pop as the camera tilts",
+   "fix": "keep the background exposure constant and make sure the band leaves the frame through camera motion, not by fading or being culled"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frame 4159 to 4160, top edge of the bright band near upper left",
+   "what": "a small bump on the top edge of the band shows in 4159 and is gone in 4160. New bumps appear in 4169 to 4170, so detail pops in and out",
+   "fix": "keep cloud displacement and level of detail stable across the cover, or crossfade the detail over several frames"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 4412 to 4416, lower right edge",
+   "what": "a thin grey ring fragment slides in at the right edge of the frame as a hard line next to the limb",
+   "fix": "fade the ring in with the atmosphere, or keep it out of frame until the rings fully resolve"
+  }
+ ]
+}

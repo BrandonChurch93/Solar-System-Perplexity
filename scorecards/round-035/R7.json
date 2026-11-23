@@ -1,0 +1,42 @@
+{
+ "critic": "R7",
+ "score": 9.0,
+ "pass": true,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R7",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop B (368,164,225,212), lower-right star cluster",
+      "what": "an isolated bright single-pixel star and a few faint 1px stars vanish completely in the stress encode while adjacent 2x2-pixel stars survive",
+      "fix": "give all rendered stars a minimum 1.5 to 2 pixel Gaussian PSF footprint so inter-frame quantization cannot erase 1-pixel peaks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop C (1328,164,225,212), lower-left outer coronal loops",
+      "what": "the faintest 1-pixel-wide outer magnetic loop wisps break up slightly in the encoded inter-frame",
+      "fix": "slightly widen or raise contrast on the outermost hair-thin coronal strands so they retain continuity after stress encoding"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R7",
+    "score": 10,
+    "pass": true,
+    "issues": []
+   }
+  }
+ ]
+}

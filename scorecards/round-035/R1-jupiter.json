@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right terminator and nightside limb (pair-02-b.png crops C and I)",
+   "what": "the terminator shadow sits slightly further right with a steeper falloff than -a, leaving a faint pale oval swirl visible inside the dark crescent near 2 o'clock",
+   "fix": "widen and soften the terminator shadow falloff leftward and crush the nightside crescent to clean deep black so cloud features do not show through"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left illuminated limb (pair-02-b.png crop B)",
+   "what": "the outer atmospheric glow is slightly cooler gray-white and narrower where it meets the Milky Way dust than the warm golden-amber bloom in -a",
+   "fix": "warm the upper-left limb halo toward golden-amber and slightly widen its outer falloff"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "starfield near the limb (crops D, E, I) and pair-04-b.png sky (crops C, I)",
+   "what": "a subset of twinkling stars have slightly larger, softer white halos (~3-4px) that mute the crisp 1-2px pinpoints and warm star tints in -a, such as the orange star just above the top limb in crop I",
+   "fix": "tighten the animated star sprite radius to match 1-2px pinpoints and preserve original star color saturation"
+  }
+ ]
+}

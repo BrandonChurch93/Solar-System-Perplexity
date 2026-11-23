@@ -1,0 +1,35 @@
+{
+ "critic": "R5",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "Mercury sequence, frames 717, 870 and 1016",
+   "what": "The same Sun jumps from a huge clipped disk at upper right to a small horizon flare at upper left, then back to the huge disk. Across the film the Sun broadly recedes to a point, but this local reset and its absence from most intervening holds muddy the distance progression.",
+   "fix": "Match the solar disk, bloom and light direction across the Mercury flyby, accounting for visible camera turns, and use occasional small solar cues at later stops to make the outward progression legible."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "Earth and Mars approaches through departures, frames 1642–2726",
+   "what": "Both stops use the same tiny arrival, expanding globe, low horizon pass and receding globe. The point of interest changes, but the sequence starts to feel like a repeated tour pattern instead of a build. Saturn's ring skim is a welcome exception.",
+   "fix": "Keep Earth's gradual approach and make Mars a lateral pass led by its foreground moon, with the canyon revealed as the camera banks rather than by another straight push toward the globe."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "Saturn departure into Uranus arrival, frames 3866–4137",
+   "what": "The deep blacks and warm-to-cool grade still belong to one film, but the Milky Way changes angle and prominence enough that the sky reads as a new setup rather than one backdrop seen from a moving camera.",
+   "fix": "Carry a recognizable star grouping or section of the galactic band through the bank, and keep star size and contrast stable through the handoff."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "Final Neptune pullback, frames 5006–5362",
+   "what": "The cooling blue crescent and receding rings make a fitting end, but the bright galactic band competes with the crescent just before the fade, weakening the last image.",
+   "fix": "Let the pullback settle briefly on the crescent and distant Sun before fading, with slightly less contrast in the band so the final two points of interest stay clear."
+  }
+ ]
+}

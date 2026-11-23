@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "rise cover, frames 994, 1000 and 1007, upper-right sun and planet limb",
+   "what": "The pull-away is not one move. The sun pops from a white horizon flare, to a small cool starburst in open sky, to a large yellow corona with prominences. Scale, exposure and color jump with it, and the blur does not ease across the join.",
+   "fix": "Keep one sun, one exposure and one color across the rise, and ease scale and blur so the limb and the sun travel together."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "dive, frames 730, 739 and 747, sun and horizon",
+   "what": "Direction and speed jump. The sun leaps from the upper right to top center to the upper left, the horizon relevels, and severe blur at 739 is gone by 747 with no eased stop into the terrain pass.",
+   "fix": "Bank and decelerate over more frames so the sun, horizon and blur decay together into the cruise."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frame 1000, planet disk",
+   "what": "Fast blur shears in a swirl across the disk instead of one flight direction, so crater edges swim rather than streak.",
+   "fix": "Match the blur vector to the pull-out so each edge smears once along the move."
+  }
+ ]
+}

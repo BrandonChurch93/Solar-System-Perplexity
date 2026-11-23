@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "all tiles (frames 211-222), solar disk, limb and sky",
+   "what": "the cover is an unaligned cross-dissolve that double-exposes two mismatched rigs: a steeper globe limb with bright white coronal streamers, upper-right red prominences, coarse mottled orange-white surface blotches, and a bright angled Milky Way band fades in directly over the flatter chromosphere horizon, central sunspot umbra, glowing magnetic arch, and dark starfield of the terrain view",
+   "fix": "match camera FOV, limb curvature, sky orientation, color/exposure, and active-region features between the terrain and globe rigs at the handoff so the cover reads as one continuous pull-back without ghosted double exposure"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 180-269, full frame camera trajectory",
+   "what": "the camera lacks mass and smooth easing in rise: it keeps creeping closer to the sunspot through frames 180-196, abruptly reverses into a violent whip-zoom that covers nearly the entire surface-to-full-disk pullback in just 33 frames (196-229), and then sits nearly parked for frames 245-269",
+   "fix": "remove the forward drift at the start of rise and retime the pullback onto one monotonic, smoothly eased log-distance curve spanning the full 180-269 segment"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 220-253, background Milky Way band and solar disk framing",
+   "what": "as the pullback finishes, the camera whips in roll and lateral aim, swinging the Milky Way band by roughly 60 degrees from steep diagonal (220-229) past horizontal (245) and bouncing backward into 253 while the solar disk drifts right at 229 and snaps back toward center",
+   "fix": "lock the globe-rig camera roll to the hold orientation throughout rise and ease lateral framing smoothly into the steady horizontal orbit of frame 270 without overshoot"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 211-222, disk center loops and upper-right starfield",
+   "what": "fast motion blur is inconsistent across layers: thin 1px yellow filament loops near disk center (frames 216-222) and stars in the upper-right corner remain razor-sharp on top of a heavily radially smeared photosphere, while the fading terrain arch breaks into speckled streaks (frames 211-214)",
+   "fix": "render unified 3D camera motion blur with enough shutter subsamples across photosphere, coronal loops, and starfield alike rather than applying a 2D radial zoom blur only to the surface"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "frames 270-449, left and right solar limb prominences and coronal rays",
+   "what": "while the photosphere texture and starfield orbit steadily rightward across the hold, the red prominence loops and white coronal streamers remain glued to fixed 2D clock positions on the limb silhouette instead of rotating in 3D with the globe",
+   "fix": "anchor prominences and coronal streamers to 3D solar coordinates so they foreshorten and rotate around the limb at the same rate as the turning photosphere"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 16-81, coronal magnetic arch",
+   "what": "the magnetic arch flashes abruptly into white saturation around frame 33 and sheds its outer strand by frame 81, causing a noticeable exposure pulse followed by a much dimmer, nearly static arch for the rest of terrain (frames 81-179)",
+   "fix": "clamp and pace plasma flow along the arch strands continuously across frames 0-179 without a sudden full-arch exposure spike"
+  }
+ ]
+}

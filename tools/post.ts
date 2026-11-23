@@ -5,7 +5,7 @@ import { join, relative, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import type { Config } from '../src/config'
 import { ROOT, WORK, args, loadConfig, machineId, readRecord, writeRecord, type OutputRecord } from './lib/common'
-import { FFMPEG, FFPROBE, decodeFramePng, probeVideo, psnrPng, rateFor, tempDir, x264Args, yuvScaleFilter, type Probe } from './lib/encode'
+import { FFMPEG, FFPROBE, decodeFramePng, probeVideo, psnrPng, rateFor, regularTiming, tempDir, x264Args, yuvScaleFilter, type Probe } from './lib/encode'
 
 export interface PostsConfig { introMaxSeconds: number; readHoldSeconds: number; introMaxTries: number; checkMaxFixes: number; prompts: Record<string, string> }
 export interface Box { x: number; y: number; width: number; height: number }
@@ -179,6 +179,7 @@ function makePost(cfg: Config, stop: string, forceEncode: boolean): boolean {
   const t0 = Date.now()
   if (!forceEncode && diff.length === 0) {
     joinCopy(intro, clip, ip.frames / cfg.fps, tmp)
+    regularTiming(tmp, true)
     const p = probeVideo(tmp)
     if (p?.frames !== want) why = ['the join without encoding gave ' + (p?.frames ?? 0) + ' frames, expected ' + want]
     else if (!timesKept(tmp, intro, clip)) why = ['the join without encoding moved frame times']

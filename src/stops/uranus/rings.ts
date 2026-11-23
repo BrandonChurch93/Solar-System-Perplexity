@@ -26,6 +26,7 @@ export interface RingLook {
   near: [number, number]
   shade: [number, number]
   air: [number, number]
+  cutSky: number
   hair: { normal: [number, number, number]; count: number; from: number; to: number; amp: [number, number]; tiltDeg: number }
 }
 
@@ -60,6 +61,7 @@ uniform float uGain;
 uniform float uFilter;
 uniform vec2 uNearArc;
 uniform vec2 uAir;
+uniform float uCutSky;
 uniform int uDiag;
 in float vS;
 in float vAmp;
@@ -97,7 +99,8 @@ void main() {
     float span = length(rd);
     rd /= span;
     air = smoothstep(uAir.x, uAir.y, length(uCamL + rd * clamp(-dot(uCamL, rd), 0.0, span)));
-    cut = uNearArc.x * exp(-0.5 * vS * vS / (sig * sig)) * min(2.5 * uSigma / sig, 1.0) * clamp(vAmp * uNearArc.y, 0.0, 1.0);
+    float behind = length(uCamL + rd * max(-dot(uCamL, rd), span));
+    cut = uNearArc.x * exp(-0.5 * vS * vS / (sig * sig)) * min(2.5 * uSigma / sig, 1.0) * clamp(vAmp * uNearArc.y, 0.0, 1.0) * mix(uCutSky, 1.0, 1.0 - smoothstep(uAir.x, uAir.y, behind));
   }
   outColor = vec4(uColor * (vAmp * line * glint * forward * shadow * uGain * air), cut);
   if (uDiag >= 2) discard;
@@ -277,24 +280,35 @@ export function ringGeometry(look: RingLook, lines: RingLine[], flat?: { eye: TH
   return geometry
 }
 
+const SKY_FRAG = FRAG.replace('uniform int uDiag;', 'uniform int uDiag;\nuniform vec4 uBall;\nuniform vec2 uOnSky;').replace('void main() {', `float onSky() {
+  vec3 rd = vLocal - uCamL;
+  float span = length(rd);
+  rd /= span;
+  vec3 p = uCamL - uBall.xyz;
+  return smoothstep(uOnSky.x, uOnSky.y, length(p + rd * max(-dot(p, rd), span)) / uBall.w);
+}
+void main() {`).replace('uGain * air), cut);', 'uGain * air * onSky()), cut);')
+
 export class Rings {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   private readonly inverse = new THREE.Matrix4()
   private readonly rotation = new THREE.Matrix3()
+  private readonly centre = new THREE.Vector3()
   private readonly level: number
 
-  constructor(geometry: THREE.BufferGeometry, look: RingLook, holdCamera: THREE.Vector3, far = false) {
+  constructor(geometry: THREE.BufferGeometry, look: RingLook, holdCamera: THREE.Vector3, far = false, sky = false) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: FRAG,
+      fragmentShader: sky ? SKY_FRAG : FRAG,
       uniforms: {
+        uBall: { value: new THREE.Vector4(0, 0, 0, 1) }, uOnSky: { value: new THREE.Vector2(0, 1) },
         uSigma: { value: look.sigma }, uColor: { value: new THREE.Vector3().fromArray(look.color) },
         uSunL: { value: new THREE.Vector3(1, 0, 0) }, uCamL: { value: new THREE.Vector3(0, 0, 5) }, uHoldCamL: { value: holdCamera.clone() },
         uGlint: { value: new THREE.Vector2().fromArray(look.glint) }, uForward: { value: new THREE.Vector2().fromArray(look.forward) }, uBack: { value: new THREE.Vector2().fromArray(look.back) },
         uShadowFloor: { value: look.shadowFloor }, uGain: { value: 1 }, uDiag: diagUniform, uFilter: { value: look.filter },
-        uNearArc: { value: new THREE.Vector2().fromArray(far ? look.near : [0, 0]) }, uAir: { value: new THREE.Vector2().fromArray(look.air) },
+        uNearArc: { value: new THREE.Vector2().fromArray(far ? look.near : [0, 0]) }, uAir: { value: new THREE.Vector2().fromArray(look.air) }, uCutSky: { value: look.cutSky },
       },
       side: THREE.DoubleSide,
       blending: far ? THREE.CustomBlending : THREE.AdditiveBlending,
@@ -324,6 +338,13 @@ export class Rings {
     this.rotation.setFromMatrix4(this.inverse)
     ;(u.uSunL!.value as THREE.Vector3).copy(sunWorld).applyMatrix3(this.rotation).normalize()
     u.uGain!.value = gain * this.level
+  }
+
+  against(centre: THREE.Vector3, radius: number, range: [number, number]): void {
+    const u = this.material.uniforms
+    const c = this.centre.copy(centre).applyMatrix4(this.inverse)
+    ;(u.uBall!.value as THREE.Vector4).set(c.x, c.y, c.z, radius / this.mesh.matrixWorld.getMaxScaleOnAxis())
+    ;(u.uOnSky!.value as THREE.Vector2).fromArray(range)
   }
 
   dispose(): void {

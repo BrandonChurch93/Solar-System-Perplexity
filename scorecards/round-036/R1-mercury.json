@@ -1,0 +1,28 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "lit terrain and bright rays",
+   "what": "the grade is cooler and less saturated than the target, and the mineral color in the rays is flattened",
+   "fix": "warm the regolith and lift midtone saturation to the approved brown-gray grade"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile H ridges and tile E crater",
+   "what": "those crops are duller, cooler, and softer than the approved tiles; H loses ridge contrast and both lose color",
+   "fix": "lift the lit midtones, restore warmth and saturation, and bring ridge and rim micro-contrast back up"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "tiles A, D, F, G, and I",
+   "what": "the same cool, slightly desaturated grade, and D's plains are a bit soft",
+   "fix": "match each crop's color to the approved tile and restore a little fine contrast on D"
+  }
+ ]
+}

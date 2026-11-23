@@ -18,6 +18,7 @@ export interface RingParams {
   bandHold: [number, number, number]
   bandAway: [number, number, number]
   grain?: { map: THREE.Texture; repeat: [number, number]; fine: number; amount: number; top: number }
+  solid?: { amount: number; density: number; ground: [number, number, number]; near: [number, number] }
 }
 
 const VERT = /* glsl */ `
@@ -46,6 +47,7 @@ uniform vec3 uEnd;
 uniform vec3 uCamL;
 uniform vec3 uEndShade;
 uniform vec2 uEndCrisp;
+uniform float uEndFoot;
 uniform float uTurn;
 uniform vec2 uRange;
 uniform vec3 uCentre;
@@ -53,6 +55,9 @@ uniform float uHome;
 uniform sampler2D uGrain;
 uniform vec4 uGrainShape;
 uniform float uGrainTop;
+uniform vec2 uSolid;
+uniform vec3 uSolidGround;
+uniform vec2 uSolidNear;
 in vec3 vLocal;
 in vec3 vPos;
 out vec4 outColor;
@@ -66,6 +71,10 @@ void main() {
   vec3 code = textureGrad(uMap, uv, gx, gy).rgb;
   vec2 fine = mix(vec2(1.0), uEndCrisp, uEnd.x);
   vec3 band = textureGrad(uBands, uv, gx * fine, gy * fine).rgb;
+  for (int k = 0; k < (uEnd.x > 0.0 ? 1 : 0); k++) {
+    float foot = length(vec2(gx.y, gy.y)) * float(textureSize(uBands, 0).y);
+    band = mix(band, textureLod(uBands, uv, log2(max(foot * uEndFoot, 1.0))).rgb, uEnd.x);
+  }
   band = mix(band, sqrt(band), uEnd.x);
   vec3 strands = code * code * uMapScale * uHome + uColor * dot(band * band, uBandGain);
   for (int k = 0; k < (uGrainShape.w > 0.0 ? 1 : 0); k++) {
@@ -82,7 +91,8 @@ void main() {
   vec3 dir = normalize(vPos);
   float phase = 1.0 + uForward.x * pow(max(dot(dir, uSunW), 0.0), uForward.y);
   phase *= mix(1.0, (1.0 - exp(-uEnd.y / max(abs(normalize(uCamL - vLocal).z), 0.02))) / (1.0 - exp(-uEnd.y / uEnd.z)), uEnd.x);
-  outColor = vec4(strands * edge * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, 0.0);
+  float solid = uSolid.x * smoothstep(uSolidNear.x, uSolidNear.y, dot(vLocal.xy, uCamL.xy) / max(r * length(uCamL.xy), 1e-4)) * (1.0 - exp(-max(strands.r, max(strands.g, strands.b)) * edge * uSolid.y));
+  outColor = vec4((strands * edge + solid * uSolidGround) * mix(0.006 + 0.994 * shadow, 1.0, uHome) * phase * uGain, solid);
   if (uDiag >= 2) discard;
 }`
 
@@ -98,6 +108,7 @@ export class Ring {
   private readonly centre: THREE.Vector3
   private readonly untilt = new THREE.Quaternion()
   private readonly grain: number
+  private readonly solidAmount: number
 
   constructor(p: RingParams) {
     this.gain = p.gain
@@ -118,8 +129,12 @@ export class Ring {
         uGrain: { value: p.grain?.map ?? p.bands }, uGrainShape: { value: new THREE.Vector4(p.grain?.repeat[0] ?? 1, p.grain?.repeat[1] ?? 1, p.grain?.fine ?? 1, 0) }, uGrainTop: { value: p.grain?.top ?? 1 },
       },
       side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
-      premultipliedAlpha: true,
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
       transparent: true,
       depthWrite: false,
     })
@@ -132,6 +147,15 @@ export class Ring {
     this.material.uniforms.uCamL = { value: new THREE.Vector3(0, 0, 1) }
     this.material.uniforms.uEndShade = { value: new THREE.Vector3(0.985, 1.025, 0.006) }
     this.material.uniforms.uEndCrisp = { value: new THREE.Vector2(1, 1) }
+    this.material.uniforms.uEndFoot = { value: 1 }
+    this.material.uniforms.uSolid = { value: new THREE.Vector2(0, p.solid?.density ?? 0) }
+    this.material.uniforms.uSolidGround = { value: new THREE.Vector3().fromArray(p.solid?.ground ?? [0, 0, 0]) }
+    this.material.uniforms.uSolidNear = { value: new THREE.Vector2().fromArray(p.solid?.near ?? [-3, -2]) }
+    this.solidAmount = p.solid?.amount ?? 0
+  }
+
+  solid(weight: number): void {
+    ;(this.material.uniforms.uSolid!.value as THREE.Vector2).x = this.solidAmount * weight
   }
 
   update(light: THREE.Vector3, rotation: THREE.Quaternion, turn: number, home: number, gain: number): void {
@@ -162,6 +186,7 @@ export class Ring {
     ;(u.uEnd!.value as THREE.Vector3).set(end, e.depth, e.open)
     ;(u.uEndShade!.value as THREE.Vector3).set(e.shade[0]!, e.shade[1]!, e.shade[2]!)
     ;(u.uEndCrisp!.value as THREE.Vector2).set(e.crisp[0]!, e.crisp[1]!)
+    u.uEndFoot!.value = e.foot
     ;(u.uGrainShape!.value as THREE.Vector4).w *= 1 - end
   }
 }

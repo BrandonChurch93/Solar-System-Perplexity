@@ -1,0 +1,78 @@
+{
+ "critic": "R3",
+ "score": 7.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 9,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop A, north-central dust cyclone",
+      "what": "the spiral dust is softer and more brushed than the canyon terrain under it",
+      "fix": "break the veil into finer filaments so it matches the terrain detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop A, north-central dust cyclone",
+      "what": "the same brushed dust veil, with less internal structure than the ground",
+      "fix": "add finer filament structure inside the cyclone"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tiles D and G, bright white patch on the lower-left globe",
+      "what": "The patch is nearly blown out and ends in hard, detached chips. Its edge looks pasted on against the much softer surrounding surface.",
+      "fix": "Recover tonal detail in the whites and replace the hard chip-like edge with finer, irregular breakup that matches the surrounding surface."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "tiles F and H, lower-central globe",
+      "what": "The tight ochre spiral and surrounding wisps look smeared and airbrushed beside the sharply etched canyon. Fine surface detail drops away across a broad area.",
+      "fix": "Break up the tight spiral with irregular fine detail and retain some underlying terrain contrast through the thinner wisps."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "tiles T through V, illuminated lower limb",
+      "what": "A narrow pale rim sits inside a broader blue-gray glow, giving parts of the limb a double outline.",
+      "fix": "Blend the rim and outer glow into one continuous atmospheric falloff without losing the silhouette."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "tile S, bottom-left foreground canyon wall",
+      "what": "The near rock face softens into diagonal smears while the adjacent strata and rubble remain crisp.",
+      "fix": "Restore localized fracture and grain detail on the soft face without lifting the deep shadows."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "tile T, dense star field left of the globe",
+      "what": "Many of the faint stars are soft blue flecks rather than clean points, especially against the sharply defined brighter stars.",
+      "fix": "Tighten the faint stellar cores and keep the diffuse background texture separate from the points."
+     }
+    ]
+   }
+  }
+ ]
+}

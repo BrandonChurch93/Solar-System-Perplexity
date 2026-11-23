@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "rise, frames 4990 to 4997",
+   "what": "in 7 frames the camera goes from a close limb filling the frame to a small whole planet with its rings. It is a jump in position and speed with no easing, and the storm moves from the center to the upper right of the disk",
+   "fix": "lengthen the pull-back to cover this distance, ease its speed in and out, and keep the orientation of the storm continuous"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "rise cover exit, frames 4984 to 4990, background",
+   "what": "a dense orange Milky Way pops in over two frames (4984 to 4985), and the hold, terrain and end of the rise never show it. After 4997 the sky is plain dark stars again, so color does not carry across the cover",
+   "fix": "use one star and galaxy background for the whole stop, with the same hue and density, and fade it in at the cover exit"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise end, frames 4997 to 5024, against the hold in sheet-01",
+   "what": "the end state does not match the hold. The rings are prominent here but barely visible in the hold, the disk is much darker and lit from a different side, the moon has changed from full to crescent and from left to right, and the sun is gone",
+   "fix": "send the rise back to a framing and lighting that match the hold, and keep ring opacity, sun direction and moon phase consistent"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "terrain, frames 4770 to 4949, limb against the vortex and cloud band",
+   "what": "the limb, vortex and near cloud band shift and scale together, like a pan over a flat image. The near ground and the horizon show little parallax, so the view lacks depth",
+   "fix": "move the camera through 3D terrain, or layer near and far elements so near clouds move clearly faster than the horizon"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "dive, frames 4720 to 4737",
+   "what": "the dive goes from a slow approach to a full blur in about 15 frames, a sudden jump in speed before the cover",
+   "fix": "ease the dive's speed ramp over a longer span"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain cloud band, frames 4868 to 4949",
+   "what": "the billows of the cloud band reshape quickly from frame to frame, which reads as swimming more than steady flow",
+   "fix": "slow the cloud evolution and advect it along a consistent wind direction"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "frames 4982 to 4983, upper limb",
+   "what": "a hard, bright rim line appears suddenly as the planet comes out of the blur",
+   "fix": "fade the atmosphere rim in together with the limb as the blur clears"
+  }
+ ]
+}

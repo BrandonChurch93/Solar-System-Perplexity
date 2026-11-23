@@ -1,0 +1,35 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "sunlit ring bands in the middle-right and top-right crops",
+   "what": "fine filaments are softer than the approved crops and thin strands merge, so fewer separate rings read; edge strength in those crops is about 20% lower",
+   "fix": "restore filament contrast and the dark gaps between strands; do not move the arcs or widen the bright bands"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "right-side rings and the cyan limb under the flare",
+   "what": "the same ring softness shows up milder at frame size, and the limb midtones sit a little brighter and milkier than the approved frame",
+   "fix": "bring ring micro-contrast back and ease the limb midtones down toward the deeper cyan"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "faint rings over the milky-way crop and the lit ring arc above the limb",
+   "what": "those native crops are about 10-15% softer, so dust lanes and faint ring edges separate less cleanly",
+   "fix": "restore the fine ring and dust-lane separation without changing placement or grade"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon and upper-right moon",
+   "what": "same place and phase, but the lit faces are smoother and the left moon's night side is a flatter disk, so crater grain is lost",
+   "fix": "put the crater grain and the softer terminator shading back; do not move either moon"
+  }
+ ]
+}

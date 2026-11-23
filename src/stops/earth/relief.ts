@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import type { RenderView, SetContext } from '../../core/types'
-import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 
@@ -25,6 +25,7 @@ export interface GroundLook {
   shimmer: [number, number, number, number]
   lock: [number, number]
   bloom: number
+  plain: [number, number]
 }
 
 const VERT = /* glsl */ `
@@ -72,6 +73,7 @@ uniform sampler2D uColor;
 uniform sampler2D uMasks;
 uniform sampler2D uLow;
 uniform float uBloom;
+uniform vec2 uPlain;
 uniform vec2 uSize;
 uniform vec4 uBox;
 uniform vec4 uMaskBox;
@@ -80,8 +82,12 @@ uniform vec2 uDrift;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
+uniform float uOwnLens;
+uniform vec4 uFrame;
 uniform vec3 uLayer;
 uniform float uGrad;
+uniform float uFine;
+uniform float uBias;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -93,16 +99,20 @@ ${DIAG_GLSL}
 ${NOISE_GLSL}
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
-  return texture(uMasks, vec2(mq.x, 1.0 - mq.y)).rgb;
+  return texture(uMasks, vec2(mq.x, 1.0 - mq.y), uBias).rgb;
 }
 float lens() {
   vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   return 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
 }
-vec3 clear(vec3 col, float share) {
+vec3 clear(vec3 col, vec3 soft, float share) {
   vec2 q = clamp(vImage / uImage, 0.0, 1.0);
   vec3 low = inverseFilmic(textureLod(uLow, vec2(q.x, 1.0 - q.y), 0.0).rgb) * uGain;
-  return max(col - uBloom * share * low, 0.0) / (1.0 - uBloom);
+  if (uOwnLens > 0.0) {
+    vec2 f = (vClip.xy / vClip.z * 0.5 * uFrame.xy + uFrame.zw) * vec2(uAspect, 1.0);
+    low *= mix(1.0, 1.0 / pow(1.0 + dot(f, f) * 0.9, 2.0), uOwnLens);
+  }
+  return max(col - uBloom * (share * low + uPlain.x * (col - soft)), 0.0) / (1.0 - uBloom);
 }`
 
 const GROUND_FRAG = /* glsl */ `
@@ -124,13 +134,18 @@ void main() {
   uv.y += 2.0 * max(vImage.y - uUnder, 0.0) / uBox.w;
   float over = max(uTop.x - vImage.y, 0.0);
   float fold = uFold * (1.0 - exp(-over / uFold));
-  vec3 texel = textureGrad(uColor, uv - vec2(0.0, (over + fold) / uBox.w), dFdx(vUv) * uGrad + vec2(min(0.3 * over, 40.0) / uBox.z, 0.0), dFdy(vUv) * uGrad).rgb;
-  vec3 col = inverseFilmic(texel) * exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
+  vec2 at = uv - vec2(0.0, (over + fold) / uBox.w);
+  vec2 run = vec2(min(0.3 * over, 40.0) / uBox.z, 0.0);
+  vec3 texel = textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb;
+  vec3 wide = textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb;
+  float fall = exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
+  vec3 col = inverseFilmic(texel) * fall;
+  vec3 soft = inverseFilmic(wide) * fall;
   vec2 g = vLocal.xz * uShimmer.y;
-  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)));
+  float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine);
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
-  col *= 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
-  col = clear(col * uGain * lens(), 1.0);
+  float glint = 1.0 + uShimmer.x * m.r * fine * sparkle * 2.0;
+  col = clear(col * glint * uGain * lens(), soft * glint * uGain * lens(), 1.0);
   outColor = diagOut(vec4(col, ground), diagTexels(uv * uSize), step(0.5, ground), uLayer, shift / uImage * 60.0, length(vView));
   if (uDiag >= 2 && ground < 0.5) discard;
 }`
@@ -142,7 +157,9 @@ void main() {
   vec2 shift = uDrift * m.g;
   vec2 uv = vUv - vec2(shift.x, -shift.y) / uBox.zw;
   vec4 texel = textureGrad(uColor, uv, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
-  vec3 col = clear(inverseFilmic(texel.rgb) * uGain * lens(), texel.a);
+  vec4 wide = textureGrad(uColor, uv, dFdx(vUv) * (uPlain.y * uFine), dFdy(vUv) * (uPlain.y * uFine));
+  vec3 lit = inverseFilmic(texel.rgb) * uGain * lens();
+  vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * uGain * lens(), smoothstep(0.8, 1.0, wide.a)), texel.a);
   outColor = diagOut(vec4(col, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
   if (texel.a < 0.004 || (uDiag >= 2 && texel.a < 0.5)) discard;
 }`
@@ -233,10 +250,10 @@ export class Ground {
         vertexShader: VERT,
         fragmentShader: fragment,
         uniforms: {
-          uColor: { value: color }, uMasks: { value: masks }, uLow: { value: low }, uBloom: { value: 0 }, uSize: { value: new THREE.Vector2(size.width, size.height) },
+          uColor: { value: color }, uMasks: { value: masks }, uLow: { value: low }, uBloom: { value: 0 }, uPlain: { value: new THREE.Vector2(look.plain[0], look.plain[1]) }, uSize: { value: new THREE.Vector2(size.width, size.height) },
           uBox: { value: new THREE.Vector4().fromArray(box) }, uMaskBox: { value: new THREE.Vector4().fromArray(maskBox) }, uImage: { value: new THREE.Vector2(W, H) },
-          uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform,
+          uDrift: { value: new THREE.Vector2() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uOwnLens: { value: 0 }, uFrame: { value: new THREE.Vector4(1, 1, 0, 0) },
+          uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) }, ...extra,
         },
         transparent: true,
@@ -288,8 +305,10 @@ export class Ground {
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, under: number): void {
     const k = this.look
+    const part = view.camera.view
+    const cut = under > 0 && part !== null && part.enabled
     for (const l of this.layers) {
       const u = l.material.uniforms
       ;(u.uEye!.value as THREE.Vector3).copy(eye)
@@ -299,6 +318,9 @@ export class Ground {
       u.uVignette!.value = vignette
       u.uBloom!.value = this.low ? bloom * k.bloom : 0
       u.uAspect!.value = view.format.width / view.format.height
+      u.uOwnLens!.value = under
+      if (cut) (u.uFrame!.value as THREE.Vector4).set(part.width / part.fullWidth, part.height / part.fullHeight, (part.offsetX + 0.5 * part.width) / part.fullWidth - 0.5, 0.5 - (part.offsetY + 0.5 * part.height) / part.fullHeight)
+      else (u.uFrame!.value as THREE.Vector4).set(1, 1, 0, 0)
     }
   }
 

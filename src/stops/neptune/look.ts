@@ -2,6 +2,7 @@ import type { AirParams } from './air'
 import curve from './curve.json'
 import hazeJson from './haze.json'
 import holdJson from './hold.json'
+import mendJson from './mend.json'
 import type { CloudParams, LimbParams } from './planet'
 
 export const code = curve.code
@@ -21,13 +22,15 @@ export const stream = { degPerSecond: 1.5, fullSeconds: 2.6, easeSeconds: 1.6 }
 export const holdness = { fromDeg: 6, toDeg: 26 }
 export const near = {
   amount: 1,
-  dive: { altitude: [0.45, 1.25], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 0.1], fallAltitude: [0.5, 1] },
-  rise: { altitude: [0.4, 2.6], gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 0.3], fallAltitude: [0.5, 1.6] },
+  dive: { gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [9, 22, 1], fallAltitude: [0.5, 1] },
+  rise: { gain: 0.86, power: 1, saturation: 0.45, pivot: 0.3, tint: [0.78, 0.97, 1], air: [1, 1, 1], fall: [3, 11, 1], fallAltitude: [0.5, 1.6] },
 }
 export const field = { amount: 1 }
 export const held = { ...holdJson, amount: 1 }
+export const mended = { ...mendJson }
 export const night = { flat: 1, edge: [-0.1, 0.25] as [number, number], texels: 96 }
 export const lineFade: [number, number] = [0.6, 0.15]
+export const airThin = { reach: 2 }
 export const diving = { from: 2.06, to: 1.8 }
 export const flow = { amount: 0.6 }
 export const cirrus = { amount: 1, bend: 0.018, shadow: 1.5, floor: 0.7, clump: [0.08, 0.28, 0.7] }
@@ -64,4 +67,5 @@ export const ring = {
   mapScale: 0.25,
   degPerSecond: 0.8,
   grain: { repeat: [4, 0.25] as [number, number], fine: 4, amount: 0.8, top: 8 },
+  solid: { amount: 0.95, density: 250, ground: [0.0052, 0.0087, 0.0108] as [number, number, number], rise: [0.1, 0.35], near: [0.58, 0.82] as [number, number] },
 }

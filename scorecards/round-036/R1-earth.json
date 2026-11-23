@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "night-side limb, lower right of the globe below South America (crops E and H of pair-02)",
+   "what": "the small green aurora patches on the dark side near the lower limb are almost gone in -b; about 2% of the green energy of -a remains there",
+   "fix": "restore the lower night-side aurora patches at the brightness and size of -a"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "right limb aurora at mid height, about x 980-1080 y 330-420 (crop I of pair-02)",
+   "what": "the green aurora streaks along the right limb are much weaker, about 30% of the green of -a, so the curtain fades out early as it runs down the limb",
+   "fix": "raise aurora intensity along the right limb so the curtain carries down past the equator as in -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper right aurora curtain (crop C of pair-02)",
+   "what": "the main green curtain is about 17% less saturated green and slightly bluer than -a",
+   "fix": "push the curtain back toward the pure saturated green of -a and keep its red top fringe"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "central globe, Gulf of Mexico to Amazon (crop A of pair-02)",
+   "what": "-b has a little more local contrast and sharpening than -a (edge energy about 10% higher on the globe), so it reads slightly crunchier",
+   "fix": "ease the sharpening back to match the softer texture of -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame, strongest in the lower middle sunglint and clouds",
+   "what": "-b is lifted slightly, about 1 code value overall and 1.4 in the lower middle, and the shadows are a touch less deep",
+   "fix": "pull the overall exposure and the blacks down slightly to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "right third, islands and reefs (crop I of pair-04)",
+   "what": "slight extra sharpening and contrast on the island and reef texture compared to -a",
+   "fix": "soften the fine detail slightly to the level of -a"
+  }
+ ]
+}

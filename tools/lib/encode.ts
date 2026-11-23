@@ -94,7 +94,7 @@ export function encodeOnePass(src: string, dst: string, opts: { fps: number; rat
   runFf(['-y', '-i', src, ...(opts.filter ? ['-vf', opts.filter] : []), ...args, '-movflags', '+faststart', dst], 'encode')
 }
 
-export function concatCopy(files: string[], dst: string, faststart: boolean): void {
+export function concatCopy(files: string[], dst: string, faststart: boolean): { step: number; delay: number; fixed: number } {
   if (files.length === 0) throw new Error('nothing to join')
   mkdirSync(dirname(dst), { recursive: true })
   const list = dst + '.list.txt'
@@ -109,7 +109,55 @@ export function concatCopy(files: string[], dst: string, faststart: boolean): vo
   const tmp = dst + '.tmp.mp4'
   runFf(['-y', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-map', '0:v:0', ...(faststart ? ['-movflags', '+faststart'] : []), tmp], 'join')
   rmSync(list)
+  const timing = regularTiming(tmp, faststart)
   spawnSync('mv', [tmp, dst])
+  return timing
+}
+
+interface Timing { pts: number[]; dts: number[]; dur: number[]; tbNum: number; tbDen: number }
+
+function readTiming(file: string): Timing {
+  const r = spawnSync(FFPROBE, ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=time_base:packet=pts,dts,duration', '-of', 'json', file], { encoding: 'utf8', maxBuffer: 1 << 28 })
+  if (r.status !== 0) throw new Error('timing probe failed: ' + (r.stderr ?? '').slice(-400))
+  const j = JSON.parse(r.stdout) as { packets: { pts: number; dts: number; duration: number }[]; streams: { time_base: string }[] }
+  const [tbNum, tbDen] = j.streams[0]!.time_base.split('/').map(Number)
+  return { pts: j.packets.map((p) => Number(p.pts)), dts: j.packets.map((p) => Number(p.dts)), dur: j.packets.map((p) => Number(p.duration)), tbNum: tbNum!, tbDen: tbDen! }
+}
+
+function timingFaults(t: Timing): { step: number; delay: number; faults: number } {
+  const n = t.pts.length
+  if (n < 2) return { step: 0, delay: 0, faults: 0 }
+  const sorted = [...t.pts].sort((x, y) => x - y)
+  const step = sorted[1]! - sorted[0]!
+  if (step <= 0) throw new Error('timing: two frames share one time')
+  for (let i = 1; i < n; i++) if (sorted[i]! - sorted[i - 1]! !== step) throw new Error('timing: frame ' + i + ' is not one frame after frame ' + (i - 1))
+  let delay = 0
+  let faults = 0
+  for (let k = 0; k < n; k++) {
+    delay = Math.max(delay, k - (t.pts[k]! - sorted[0]!) / step)
+    if (t.dur[k] !== step || (k > 0 && t.dts[k]! - t.dts[k - 1]! !== step)) faults++
+  }
+  return { step, delay, faults }
+}
+
+// Spans encoded with and without reordered frames are joined without encoding again. The join then leaves decode times that
+// jump at each seam (a packet three frames long, then packets one tick long). Every frame still shows at its right time, but a
+// converter that reads packet lengths repeats and drops frames there. This writes the same stream again with even decode times.
+export function regularTiming(file: string, faststart: boolean): { step: number; delay: number; fixed: number } {
+  const before = readTiming(file)
+  const f = timingFaults(before)
+  if (f.faults === 0) return { step: f.step, delay: f.delay, fixed: 0 }
+  const tick = '(' + f.step * before.tbNum + '/(' + before.tbDen + '*TB))'
+  const tmp = file + '.even.mp4'
+  runFf(['-y', '-i', file, '-c', 'copy', '-map', '0:v:0', '-bsf:v', 'setts=pts=PTS:dts=(N-' + f.delay + ')*' + tick + ':duration=' + tick, ...(faststart ? ['-movflags', '+faststart'] : []), tmp], 'even timing')
+  const after = readTiming(tmp)
+  const g = timingFaults(after)
+  const first = Math.min(...before.pts)
+  const firstAfter = Math.min(...after.pts)
+  const same = after.pts.length === before.pts.length && after.pts.every((p, k) => (p - firstAfter) * after.tbNum * before.tbDen === (before.pts[k]! - first) * before.tbNum * after.tbDen)
+  if (g.faults !== 0 || !same || after.dts.some((d, k) => d > after.pts[k]!)) throw new Error('even timing failed on ' + file + ': ' + g.faults + ' uneven packets left, frame times kept: ' + same)
+  spawnSync('mv', [tmp, file])
+  return { step: f.step, delay: f.delay, fixed: f.faults }
 }
 
 export interface Probe { frames: number; width: number; height: number; fps: string; codec: string; profile: string; pixFmt: string; colorSpace: string; colorRange: string; durationSeconds: number }

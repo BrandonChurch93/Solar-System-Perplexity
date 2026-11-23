@@ -1,0 +1,92 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crops M and R, the right and lower solar limb",
+      "what": "Fine photospheric granulation gives way to a broad, nearly smooth yellow band just inside the silhouette. The bright contour and softer corona outside it make the band read like a separate shell.",
+      "fix": "Carry fine granulation into the limb with a gradual loss of contrast and blend the photosphere and corona without reinforcing the same contour twice."
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop A, the upper rim of the blue planet",
+      "what": "A narrow white-cyan outline sits inside a broader blue halo, giving the sunlit rim a neon, layered look.",
+      "fix": "Reduce the peak white-cyan intensity and let the atmosphere taper continuously from the lit edge into space."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crops A and F, the brightest isolated star in their overlap",
+      "what": "One bright star is a large, soft circular blob with no distinct point-like core, unlike nearby stars.",
+      "fix": "Keep a compact bright core and reduce the width and opacity of its bloom."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop H (and L), lower right of the asteroid where the lit side meets the shadow",
+      "what": "the surface texture is stretched into long smeared streaks running along the slope, like a texture projected at a grazing angle. It does not hold up at native size",
+      "fix": "use triplanar or curvature-aware projection on steep faces, or add displacement and texture density so the detail does not stretch at grazing angles"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop C, H and L, shadowed half of the asteroid",
+      "what": "the night side is filled with a strong flat blue-grey ambient light, so the shadow reads as an evenly lit plastic surface instead of deep shadow. Craters on that side have almost no shading",
+      "fix": "cut the ambient and sky fill on the asteroid sharply, make the shadow side close to black, and keep only a faint bounce"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "asteroid terminator, diagonal across the body",
+      "what": "the line between light and shadow is a hard, ragged, noisy band where single texture flecks switch from lit to dark. It looks like a mask cut, not light falling off over relief",
+      "fix": "drive the terminator from real normals and displacement with a soft-shadow light source, and filter the albedo so specks do not flicker across the boundary"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "sky in every crop, most visible in B, C and K",
+      "what": "a faint regular lattice of dim pixels sits in the black background. At native size it reads as a screen-door grid or a dither pattern",
+      "fix": "remove the ordered dither and tiled noise from the sky and use blue-noise dither or none"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "asteroid silhouette against the sky",
+      "what": "the outline is slightly stair-stepped with some single-pixel aliasing on the lit edge",
+      "fix": "raise the anti-aliasing samples on the asteroid edge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "star field, crops S to W",
+      "what": "the brightest stars are small square blobs a few pixels wide with a soft halo, and the faint stars are all much the same single pixel. The field looks procedurally even",
+      "fix": "render stars as point-spread sprites with a proper brightness range, and add slight clustering or a faint galactic gradient"
+     }
+    ]
+   }
+  }
+ ]
+}

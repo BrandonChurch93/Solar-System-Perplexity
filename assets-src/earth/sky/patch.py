@@ -123,6 +123,37 @@ def hold(film=None):
     Image.fromarray((np.clip(own, 0, 1) * 255).astype(np.uint8)).resize((FULL[0] // 2, FULL[1] // 2)).save(geo.WORK / "view" / "sky-own.jpg", quality=90)
 
 
+UNDER = (42.0, 49.0)
+SOURCE = (180, 280)
+
+
+def under(full, web):
+    old = np.asarray(Image.open(full).convert("RGB")).astype(np.float32)
+    small = np.asarray(Image.open(web).convert("RGB"))
+    m = geo.FIT["moons"][0]
+    px, py = round(FULL[0] * MARGIN), round(FULL[1] * MARGIN)
+    cx, cy = m["cx"] + px, m["cy"] + py
+    yy, xx = np.mgrid[0:old.shape[0], 0:old.shape[1]].astype(np.float32) + 0.5
+    r = np.hypot(xx - cx, yy - cy)
+    w = (1 - step(r, UNDER[0], UNDER[1]))[..., None]
+    n = int(np.ceil(UNDER[1])) + 1
+    x0, y0 = int(cx), int(cy)
+    here = (slice(y0 - n, y0 + n + 1), slice(x0 - n, x0 + n + 1))
+    there = old[y0 + SOURCE[1] - n:y0 + SOURCE[1] + n + 1, x0 + SOURCE[0] - n:x0 + SOURCE[0] + n + 1][::-1, ::-1]
+    calm = np.stack([ndi.gaussian_filter(np.minimum(there[..., i], ndi.gaussian_filter(there[..., i], 4)), 4) for i in range(3)], -1)
+    new = old.copy()
+    new[here] = old[here] + np.maximum(there - calm, 0) * w[here]
+    img = Image.fromarray(np.clip(np.floor(new + 0.5), 0, 255).astype(np.uint8))
+    half = np.asarray(img.resize((img.size[0] // 2, img.size[1] // 2), Image.LANCZOS))
+    inside = (r[::2, ::2] < UNDER[1])[..., None]
+    twice = Image.fromarray(np.where(inside, half, small))
+    moved = np.abs(np.asarray(img).astype(np.int16) - old.astype(np.int16)).max(-1) > 0
+    print("under the Moon: pixels changed", int(moved.sum()), "farthest from the Moon's centre", float(r[moved].max().round(2)), "px; half size changed", int((np.asarray(twice) != small).any(-1).sum()))
+    for key, im in (("full", img), ("web", twice)):
+        im.save(OUT / key / "sky-hold.webp", lossless=True, quality=90, method=6)
+        print(key, im.size, round((OUT / key / "sky-hold.webp").stat().st_size / 1e6, 2), "MB")
+
+
 CLOSE = geo.ROOT / "references" / "approved" / "earth-close.jpg"
 TERRAIN_MARGIN = 0.5
 SUN_AT = (-0.083, 1.251)
@@ -138,7 +169,6 @@ SEED = 20101
 TWIN = (4.0 / 255, 8.0 / 255, 5.0, 37, 8.0, 1.5, 6.0, 1.6 / 255, 2.4 / 255)
 RAY = (12, 4.0, 110.0, 170.0, 30.0, 90.0, 64.0, 120.0)
 GRAIN = (0.7, 0.92, 0.63, 0.232, 4.0, 130.0)
-RING = 2
 
 
 def deband(lin, above):
@@ -219,7 +249,6 @@ def terrain(film):
     band = wide[0:RAY[0]].mean(0)
     top = np.stack([ndi.gaussian_filter1d(band[:, i], 24, mode="nearest") for i in range(3)], -1)
     fine = np.stack([ndi.gaussian_filter1d(band[:, i], RAY[1], mode="nearest") for i in range(3)], -1)
-    plain = wide
     wide = untwin(wide, twice(np.broadcast_to(w[..., 0], (H, W))), px, W)
     off = (np.arange(W) + 0.5)[None, :] - sx
     rr = np.hypot(off, (np.arange(0, 140) + 0.5)[:, None] - sy)
@@ -245,7 +274,6 @@ def terrain(film):
     calm = np.stack([ndi.gaussian_filter1d(band[:, i], RAY[6], mode="nearest") for i in range(3)], -1)
     even = step(-ym, 0.0, RAY[7])[..., None]
     margin = np.minimum(floor + np.maximum(top[None] + (calm - top)[None] * even - floor, 0) * rise * (1 + ray), cap)
-    was = np.minimum(floor + np.maximum(top[None] - floor, 0) * (np.hypot(xs - sx, 0.5 - sy)[None, :] / r1[-RING:])[..., None] ** power, cap).astype(np.float32)
     wide = np.concatenate([margin.astype(np.float32), wide], 0)
     wide = np.pad(wide, ((0, py), (0, 0), (0, 0)), mode="edge")
     smooth = np.pad(np.concatenate([np.ones((py, smooth.shape[1]), np.float32), smooth], 0), ((0, py), (0, 0)), mode="edge")
@@ -259,10 +287,6 @@ def terrain(film):
     amp = GRAIN[2] + GRAIN[3] * np.log(np.clip(code[0:py].mean(-1), GRAIN[4], GRAIN[5]))
     for i in range(3):
         code[0:py, :, i] += amp * (np.sqrt(GRAIN[1]) * field[0] + np.sqrt(1 - GRAIN[1]) * field[i + 1])
-    cols = slice(px - RING, px + W + RING)
-    code[py - RING:py, cols] = np.clip(geo.encode(was[:, cols].astype(np.float64)), 0, 1) * 255
-    for cols in (slice(px - RING, px), slice(px + W, px + W + RING)):
-        code[py:py + H, cols] = np.clip(geo.encode(plain[:, cols].astype(np.float64)), 0, 1) * 255
     noise = (np.random.default_rng(SEED).random(code.shape, dtype=np.float32) - 0.5) * (smooth > 0.5)[..., None] * (code > 1.0)
     img = Image.fromarray(np.clip(np.floor(code + 0.5 + noise), 0, 255).astype(np.uint8))
     for key, k in (("full", 1), ("web", 2)):
@@ -275,5 +299,7 @@ def terrain(film):
 if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[1] == "terrain":
         terrain(sys.argv[2])
+    elif len(sys.argv) > 3 and sys.argv[1] == "under":
+        under(sys.argv[2], sys.argv[3])
     else:
         hold(sys.argv[1] if len(sys.argv) > 1 else None)

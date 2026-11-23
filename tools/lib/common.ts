@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, statfsSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { closeSync, existsSync, linkSync, mkdirSync, openSync, readFileSync, readSync, readdirSync, renameSync, rmSync, statSync, statfsSync, writeFileSync } from 'node:fs'
+import { dirname, join, relative } from 'node:path'
 import { hostname, cpus } from 'node:os'
 import { buildConfig, type Config } from '../../src/config'
 import { computeHashes, type Hashes } from './hashes'
@@ -71,8 +71,59 @@ export function ensureBuild(force = false): Hashes {
   if (force || !current || current.tree !== h.tree || current.engine !== h.engine || JSON.stringify(current.stops) !== JSON.stringify(h.stops)) {
     execFileSync('npx', ['vite', 'build', '--logLevel', 'warn'], { cwd: ROOT, stdio: 'inherit' })
     writeFileSync(stamp, JSON.stringify(h))
+    linkDist()
   }
   return h
+}
+
+function sameBytes(a: string, b: string): boolean {
+  const fa = openSync(a, 'r')
+  const fb = openSync(b, 'r')
+  try {
+    const x = Buffer.alloc(1 << 20)
+    const y = Buffer.alloc(1 << 20)
+    for (;;) {
+      const n = readSync(fa, x, 0, x.length, null)
+      const m = readSync(fb, y, 0, y.length, null)
+      if (n !== m) return false
+      if (n === 0) return true
+      if (x.compare(y, 0, n, 0, n) !== 0) return false
+    }
+  } finally {
+    closeSync(fa)
+    closeSync(fb)
+  }
+}
+
+// A build copies everything under public/ into dist/. On this small disk each copy that is byte for byte the file under public/ is replaced by a hard link to it, so the textures are held once.
+export function linkDist(): number {
+  let linked = 0
+  const walk = (dir: string): void => {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      const st = statSync(p)
+      if (st.isDirectory()) {
+        walk(p)
+        continue
+      }
+      const src = join(ROOT, 'public', relative(DIST, p))
+      if (!st.isFile() || st.size < 65536 || !existsSync(src)) continue
+      const ss = statSync(src)
+      if (!ss.isFile() || ss.size !== st.size || (ss.ino === st.ino && ss.dev === st.dev) || ss.dev !== st.dev) continue
+      if (!sameBytes(p, src)) continue
+      const tmp = p + '.lnk~'
+      try {
+        linkSync(src, tmp)
+        renameSync(tmp, p)
+        linked++
+      } catch {
+        rmSync(tmp, { force: true })
+      }
+    }
+  }
+  const assets = join(DIST, 'assets')
+  if (existsSync(assets)) walk(assets)
+  return linked
 }
 
 export interface OutputRecord {

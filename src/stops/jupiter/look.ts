@@ -15,6 +15,8 @@ export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 
 export const shadeKnee: [number, number] = [2.4, 3.4]
 export const shadow: [number, number, number] = [0.87, 1.01, 1.0]
 export const shadowFade: [number, number] = [0.0, 0.1]
+export const shadowTip: [number, number, number, number] = [0.845, 1.03, 0.6, 1.1]
+export const shadowToe: [number, number, number] = [0.92, 1.12, 0.1]
 export const shadowHaze: [number, number] = [1.0, 0.27]
 export const shadowCap = { stretch: 0.35, from: 0.12, to: 0.36 }
 export const nightRim = { glow: [0.0015, 0.0027, 0.003] as [number, number, number], power: 3, air: 0.011, from: -0.05, to: 0.2, out: 0.0105, bulge: 3 }
@@ -67,7 +69,7 @@ export const io = {
 
 export const descent = { high: 0.7, low: 0.05 }
 export const limbLit: [number, number, number] = [0.35, 0.1, 0.45]
-export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number], low: { sun: [-0.05, 0.1, 0.4, 0.75] as [number, number, number, number], pixels: 1.3, air: 0.15, scale: 0.014 } }
+export const edge = { pixels: 1, inset: 0.0015, rim: 0.03, cap: 2, air: [0.45, 0.0025, 0.4, 0.007] as [number, number, number, number], soft: [0.3, 128] as [number, number] }
 
 export const deck: DeckLook = {
   skyRimDeg: 5.2,

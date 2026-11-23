@@ -39,6 +39,9 @@ export interface RingLook {
   junction: number
   shadeTint: [number, number, number]
   shadeGrey: [number, number]
+  innerDark: [number, number, number, number]
+  shadeSolid: [number, number]
+  penumbraAway: [number, number, number]
   heroTone: [number, number, number]
   heroTurn: number
   shapeFit: [number, number]
@@ -54,6 +57,7 @@ export interface RingLook {
   apronAway: [number, number]
   apronShow: number
   debloom: number
+  skimTone: number
   skimHigh: [number, number, number, number]
   reach: number
   skimReach: number
@@ -157,6 +161,8 @@ uniform vec2 uGrainCell;
 uniform vec2 uFloorRamp;
 uniform vec3 uShadeTint;
 uniform vec2 uShadeGrey;
+uniform vec4 uInnerDark;
+uniform vec2 uSolid;
 uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
@@ -182,6 +188,8 @@ uniform vec4 uApron;
 uniform vec2 uApronSize;
 uniform vec4 uApronFit;
 uniform sampler2D uBloomMap;
+uniform sampler2D uSkimTone;
+uniform float uSkimToneW;
 uniform vec2 uDebloom;
 uniform vec4 uSkimHigh;
 uniform sampler2D uPolarMap;
@@ -242,6 +250,9 @@ vec3 skimFill(vec2 uv, vec2 gx, vec2 gy) {
   vec2 q = (clamp(uv, 0.0, 1.0) - 0.5) * vec2(uAspect, 1.0);
   vec3 glow = textureLod(uBloomMap, clamp((uv - uApron.xy) * uApron.zw, 0.0, 1.0), 0.0).rgb;
   return max(lin / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x);
+}
+float skimTone(vec2 uv) {
+  return mix(1.0, textureLod(uSkimTone, vec2(clamp(uv.x, 0.0, 1.0), 1.0 - clamp(uv.y, 0.0, 1.0)), 0.0).r, uSkimToneW);
 }
 float azGain(float r, float phi) {
   int i = 0;
@@ -496,7 +507,7 @@ void main() {
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss)));
   float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
-  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (disc ? 0.0 : 1.0);
+  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (1.0 - uSolid.x) * (disc ? 0.0 : 1.0);
   over *= lit;
   float through = sheetAt(rs, uSheetT) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
   float bx = max(bb - uFillet.x, 0.0);
@@ -508,6 +519,7 @@ void main() {
   float keep = max(smoothstep(uSheetFit.x, uSheetFit.y, rs), 1.0 - smoothstep(1.0 + bulge - bw, 1.0 + bulge + bw, bb));
   float sheet = fore ? (1.0 - smoothstep(bout - bw, bout + bw, bb)) * (1.0 - uClose) * lit * smoothstep(rin - fw, rin + fw, rs) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) : 0.0;
   alpha = max(alpha, (1.0 - through) * sheet) * thin;
+  alpha = max(alpha, uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * body * smoothstep(uFloorRamp.x, uFloorRamp.y, rq));
   float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
   vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * day;
   col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
@@ -525,6 +537,8 @@ void main() {
   vec3 unlit = mix(uFloorHold * (uFloorTone.x + uFloorTone.y * dense) * smoothstep(uFloorRamp.x, uFloorRamp.y, rq), uShadowFloor * (0.6 + 0.9 * dense), uClose) * body * thin;
   col = mix(unlit, col, mix(lit, 1.0, uShadowLift * uClose)) * lay.y * mix(vec3(1.0), layoutTone, lay.z);
   col = mix(vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))) * uShadeTint, col, mix(1.0, smoothstep(uShadeGrey.x, uShadeGrey.y, lay.y), lay.z));
+  float inner = lay.z * (1.0 - uGate) * (1.0 - smoothstep(uInnerDark.y, uInnerDark.z, rq)) * (1.0 - ((!far && -ob > oa) ? smoothstep(-0.05, 0.0, od) : 0.0));
+  col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))) * uShadeTint, uInnerDark.w * inner) * (1.0 - uInnerDark.x * inner);
   if (uSunL.y * uCamL.y < 0.0) col *= uUnlit * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float vig = mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -547,12 +561,12 @@ void main() {
       lin = max(lin + wK * uEven * (evenInverse(fine, textureGrad(uSkimMap, kv, kgx, kgy).rgb) - inverseFilmic(fine)), 0.0);
     }
     vec3 img = max(lin / mix(1.0, 1.0 / pow(1.0 + dot(kq, kq) * 0.9, 2.0), uVignette) - uDebloom.x * uDebloom.y * glow * glow, 0.0) / (1.0 - uDebloom.x) * vig;
-    col = mix(col, img * km.r, wS);
+    col = mix(col, img * km.r * skimTone(kv), wS);
     alpha = mix(alpha, km.r, wS);
     texels = mix(texels, skimTexels, wS);
   }
   for (int k = 0; k < (wF > 0.0 && !gone ? 1 : 0); k++) {
-    col += (skimFill(kvF, kgx, kgy) * vig * kmF.r - base) * wF;
+    col += (skimFill(kvF, kgx, kgy) * skimTone(kvF) * vig * kmF.r - base) * wF;
     alpha += (kmF.r - baseA) * wF;
     texels += (skimTexels - baseT) * wF;
   }
@@ -612,7 +626,7 @@ export class Rings {
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uInnerDark: { value: new THREE.Vector4().fromArray(look.innerDark) }, uSolid: { value: new THREE.Vector2(0, look.shadeSolid[0]) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({

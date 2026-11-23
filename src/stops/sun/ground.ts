@@ -4,8 +4,10 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
 import { APRON_GLSL } from './apron'
 import { GRADE_GLSL } from './grade'
+import { LIFE_GLSL, lifeUniforms, type LifeMaps } from './life'
 import { STAGE_GLSL, stage } from './stage'
 import fieldData from './field.json'
+import lifeData from './life.json'
 
 export interface GroundLook {
   cap: number
@@ -19,9 +21,8 @@ export interface GroundLook {
   even: { from: [number, number]; tint: [number, number, number]; far: [number, number]; dim: number }
   glowReach: [number, number]
   site: [number, number]
-  field: { grid: number; sharp: number }
+  field: { grid: number; sharp: number; fine: { below: [number, number]; scale: number; gain: number; soft: number } }
   glow: [number, number]
-  boil: { reach: number; period: number; step: number; max: number }
   twinkle: { amount: number; rate: number; spread: number }
   inflow: { amount: number; waves: number; rate: number; inner: number; outer: number }
 }
@@ -52,6 +53,8 @@ uniform vec2 uApronCell;
 uniform sampler2D uGlow;
 uniform sampler2D uField;
 uniform vec4 uFieldSize;
+uniform vec4 uFieldFine;
+uniform vec2 uFieldFineMore;
 uniform vec4 uOwn;
 uniform vec4 uUp;
 uniform vec2 uLift;
@@ -59,8 +62,9 @@ uniform vec4 uEven;
 uniform vec4 uEvenTint;
 uniform vec2 uGlowReach;
 uniform vec2 uSite;
-uniform vec4 uBox, uLand, uKick;
+uniform vec4 uBox, uLand, uKick, uFlash;
 uniform float uGlowBeat, uLandOn, uKickOn;
+uniform vec2 uFlashOn;
 uniform vec3 uLandVeil;
 uniform vec2 uSize;
 uniform float uGrad;
@@ -69,8 +73,12 @@ uniform float uVignette;
 uniform float uAspect;
 uniform float uTime;
 uniform float uCellSize;
-uniform vec4 uBoil;
 uniform vec3 uTwinkle;
+uniform vec4 uHazeLow;
+uniform vec4 uHazeWind;
+uniform vec4 uHazeScale;
+uniform vec4 uHazeSteep;
+uniform vec4 uHazeTint;
 uniform vec4 uInflow;
 uniform vec2 uInflowRate;${seethe ? `
 uniform vec4 uSeethe;
@@ -95,22 +103,9 @@ ${STAGE_GLSL}
 ${APRON_GLSL}
 ${NOISE_GLSL}
 ${GRADE_GLSL}
+${LIFE_GLSL}
 float lumAt(sampler2D map, vec2 uv, float lod) {
   return dot(textureLod(map, uv, lod).rgb, vec3(0.3, 0.5, 0.2));
-}
-vec4 boiled(sampler2D map, vec2 uv, vec2 dx, vec2 dy, vec2 cell, float lod, float calm, out vec2 moved) {
-  vec2 e = cell * uBoil.z;
-  float lX = lumAt(map, uv + vec2(e.x, 0.0), lod) - lumAt(map, uv - vec2(e.x, 0.0), lod);
-  float lY = lumAt(map, uv + vec2(0.0, e.y), lod) - lumAt(map, uv - vec2(0.0, e.y), lod);
-  vec2 push = vec2(lX, lY) * (uBoil.x / (2.0 * uBoil.z));
-  push /= sqrt(1.0 + dot(push, push) / (uBoil.w * uBoil.w));
-  float wide = lumAt(map, uv, lod + 2.0 + calm);
-  float slow = wide * 26.0 + lumAt(map, uv * 1.31 + 0.17, lod + 2.5 + calm) * 18.0;
-  float swing = 0.5 * (sin(uTime * 6.283185307179586 / uBoil.y + slow) - sin(slow));
-  vec3 lin = inverseFilmic(grade(textureGrad(map, uv + push * cell * swing, dx, dy).rgb, 0.0));${seethe ? `
-  for (int k = 0; k < (seethe != 0.0 ? 1 : 0); k++) lin *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(map, uv + push * cell * swing, lod) / max(wide, 1e-3));` : ''}
-  moved = push * swing;
-  return vec4(lin, 1.0);
 }
 vec2 fieldShift(vec2 id) {
   float lo = uFieldSize.z / uFieldSize.x + 0.02;
@@ -164,7 +159,11 @@ void main() {
   vec2 dyB = dFdy(uvB) * uGrad;
   float w = apWeight(vStage, ab) * uApronOn;
   float bare = (1.0 - own) * (1.0 - w);
-  float texels = bare > 0.5 ? diagTexels(uvF * uFieldSize.y) : mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
+  float texF = diagTexels(uvF * uFieldSize.y);
+  // a finer level of the field where the camera of the rise comes so near that the field would be enlarged:
+  // the field's own fine structure at a smaller size, as a ratio over its own soft copy
+  float finer = uFieldFine.x * (1.0 - smoothstep(uFieldFine.y, uFieldFine.z, texF));
+  float texels = bare > 0.5 ? texF * mix(1.0, uFieldFine.w, step(0.5, finer)) : mix(diagTexels(uv * uSize), diagTexels(uvB * uApronSize), step(0.5, w));
   vec3 rel = vStage - uSpot;
   vec3 up = cross(uSpotE, uSpotN);
   rel -= up * dot(rel, up);
@@ -173,7 +172,10 @@ void main() {
   float band = smoothstep(uInflow.z * 0.85, uInflow.z * 1.35, r) * (1.0 - smoothstep(uInflow.w * 0.7, uInflow.w, r));
   float strand = 9.0 * sin(psi * 23.0) + 7.0 * sin(psi * 57.0 + 1.3) + 5.0 * sin(psi * 131.0 + 0.4);
   float wave = r / uInflow.w * uInflow.y * 6.283185307179586 + strand;
-  float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave + uTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 + uTime * uInflowRate.y) - sin(wave * 2.3)));
+  float inflow = 1.0 + uInflow.x * band * (0.6 * (sin(wave - uTime * uInflowRate.x) - sin(wave)) + 0.4 * (sin(wave * 2.3 - uTime * uInflowRate.y) - sin(wave * 2.3)));
+  float spot = 1.0 - smoothstep(uInflow.w * 0.88, uInflow.w * 1.12, r);
+  float inner = 0.0;
+  float seen = 0.0;
   vec3 col = vec3(0.0);
   vec2 moved = vec2(0.0);
   vec2 gq = gnd * uTwinkle.z;
@@ -188,13 +190,25 @@ void main() {
     float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
     float cellU = uCellSize / dist / (2.0 * ST_TAN.x * ST_CANVAS.z);
     vec2 cell = vec2(cellU, cellU * max(graze, 0.08) * uSize.x / uSize.y);
-    vec4 s = boiled(uPlate, uv, dx, dy, cell, log2(max(cell.y * uSize.y * 0.25, 1.0)), 0.0, moved);
+    seen = lifeSeen(dx, dy, uSize);
+    vec4 s = vec4(alive(uPlate, uCellsPlate, uSwellPlate, arc / uCellSize, uv, dx, dy, cell, 1.0, uTime, seen, spot, inner, moved), 1.0);${seethe ? `
+    for (int j = 0; j < (seethe != 0.0 ? 1 : 0); j++) {
+      float lod = log2(max(cell.y * uSize.y * 0.25, 1.0));
+      s.rgb *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(uPlate, uv, lod) / max(lumAt(uPlate, uv, lod + 2.0), 1e-3));
+    }` : ''}
     vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
     col = s.rgb * max(s.a * inflow, 0.0) * tone * mix(vec3(1.0), even, lift);
   }
   for (int k = 0; k < (bare > 0.0 ? 1 : 0); k++) {
     float tone = clamp(stLimb(now) / stLimb(${fieldData.tone}), 0.25, 5.0);
-    col = mix(inverseFilmic(fieldAt(arc, dxF, dyF)) * max(inflow, 0.0) * tone, col, own);
+    vec3 f = inverseFilmic(fieldAt(arc, dxF, dyF));
+    for (int j = 0; j < (finer > 0.0 ? 1 : 0); j++) {
+      vec2 g2 = arc * uFieldFine.w + vec2(5.3, 2.9);
+      vec3 hi = inverseFilmic(fieldAt(g2, dxF * uFieldFine.w, dyF * uFieldFine.w));
+      vec3 lo = inverseFilmic(fieldAt(g2, dxF * uFieldFine.w * uFieldFineMore.y, dyF * uFieldFine.w * uFieldFineMore.y));
+      f *= mix(1.0, pow(clamp(dot(hi, vec3(0.3, 0.5, 0.2)) / max(dot(lo, vec3(0.3, 0.5, 0.2)), 1e-4), 0.25, 4.0), uFieldFineMore.x), finer);
+    }
+    col = mix(f * max(inflow, 0.0) * tone, col, own);
   }
   for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
     vec3 toEye = AP_EYE - vStage;
@@ -204,9 +218,26 @@ void main() {
     float cellU = uApronCell.x / away / (2.0 * AP_TAN.x);
     vec2 cell = vec2(cellU, cellU * max(seen, 0.08) * uApronSize.x / uApronSize.y);
     vec2 m;
-    vec4 s = boiled(uApron, uvB, dxB, dyB, cell, log2(max(cell.y * uApronSize.y * 0.25, 1.0)), uApronCell.y, m);
+    float in2;
+    float seen2 = lifeSeen(dxB, dyB, uApronSize);
+    vec4 s = vec4(alive(uApron, uCellsApron, uSwellApron, arc / uCellSize, uvB, dxB, dyB, cell, uCellSize / uApronCell.x, uTime, seen2, spot, in2, m), 1.0);${seethe ? `
+    for (int j = 0; j < (seethe != 0.0 ? 1 : 0); j++) {
+      float lod = log2(max(cell.y * uApronSize.y * 0.25, 1.0));
+      s.rgb *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(uApron, uvB, lod) / max(lumAt(uApron, uvB, lod + 2.0 + uApronCell.y), 1e-3));
+    }` : ''}
+    inner = mix(inner, in2, w);
+    seen = mix(seen, seen2, w);
     col = mix(col, s.rgb * max(s.a * inflow, 0.0) * tone, w);
     moved = mix(moved, m, w);
+  }
+  for (int k = 0; k < (seen > 0.0 ? 1 : 0); k++) {
+    float px = 1.0 / max(max(length(dFdx(arc)), length(dFdy(arc))), 1e-9) / uLifeFade.z;
+    float tone = clamp(stLimb(now) / stLimb(graze), 0.25, 5.0);
+    float lane = (1.0 - smoothstep(uLifeGrainMore.x, uLifeGrainMore.y, inner)) * seen * (1.0 - bare) * (1.0 - spot);
+    vec2 q = vec2(dot(rel, uSpotE), dot(rel, uSpotN)) / uInflow.z;
+    col *= 1.0 + uLifeCalm * uLifeStream.x * seen * lifeStream(q, px * uInflow.z, uTime);
+    col += uLifeGrainTint.rgb * (uLifeCalm * uLifeGrain.x * tone * lifeGrains(arc, lane, px * uLifeGrain.y, uTime));
+    col += uLifeDotsTint.rgb * (uLifeCalm * uLifeDots.x * tone * seen * lifeDots(q, px * uInflow.z * uLifeDots.y, uTime));
   }
   vec3 to = ST_CENTRE - uCam;
   float away = length(to);
@@ -221,10 +252,24 @@ void main() {
     gb = mix(gb, far, limb);
   }
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
+  // a thin glowing haze low over the ground: a layer at its own height, so it shifts against the cells as the
+  // camera flies, and drifts on its own wind. It is thin: seen from steeply above there is none of it.
+  for (int k = 0; k < ((uHazeLow.x > 0.0 && now < uHazeSteep.y && limb < 1.0) ? 1 : 0); k++) {
+    vec3 hp = vStage + normalize(uCam - vStage) * (uHazeLow.y / max(now, uHazeLow.w)) - ST_DOWN;
+    vec2 hq = (vec2(dot(hp, ST_RIGHT), dot(hp, ST_FWD)) - uHazeWind.xy * uTime) * uHazeScale.xy;
+    float hn = (vnoise(vec3(hq, uTime * uHazeWind.z)) + 0.5 * vnoise(vec3(hq * 2.3 + 5.1, uTime * uHazeWind.z * 1.6 + 2.7))) / 1.5;
+    float thick = smoothstep(uHazeScale.z, uHazeScale.w, hn) * min(1.0 / max(now, 1e-3), uHazeLow.z);
+    float veil = (1.0 - exp(-uHazeLow.x * thick)) * (1.0 - smoothstep(uHazeSteep.x, uHazeSteep.y, now)) * (1.0 - limb) * uLifeCalm;
+    col = mix(col, inverseFilmic(uHazeTint.rgb) * uHazeTint.w, veil);
+  }
   for (int k = 0; k < ((vStage.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
     float landed = uLandOn * exp(-dot(vStage - uLand.xyz, vStage - uLand.xyz) * uLand.w) + uKickOn * exp(-dot(vStage - uKick.xyz, vStage - uKick.xyz) * uKick.w);
     col *= 1.0 + textureLod(uGlow, gb, 0.0).rgb * (uGlowBeat * (1.0 - lift * smoothstep(uGlowReach.x, uGlowReach.y, ring)) * (1.0 + landed));
     col += uLandVeil * landed;
+  }
+  for (int k = 0; k < (uFlashOn.x + uFlashOn.y > 0.0 ? 1 : 0); k++) {
+    float pool = exp(-dot(vStage - uFlash.xyz, vStage - uFlash.xyz) * uFlash.w);
+    col = col * (1.0 + uFlashOn.x * pool) + uLandVeil * (uFlashOn.y * pool);
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -243,7 +288,7 @@ export class Ground {
   private readonly edge: [number, number]
   private readonly seethe: SeetheLook | undefined
 
-  constructor(plate: THREE.Texture, apron: THREE.Texture, field: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook, seethe?: SeetheLook) {
+  constructor(plate: THREE.Texture, apron: THREE.Texture, field: THREE.Texture, glow: THREE.Texture, grade: THREE.Texture, look: GroundLook, life: LifeMaps, seethe?: SeetheLook) {
     this.seethe = seethe
     const img = plate.image as unknown as { width: number; height: number }
     const second = apron.image as unknown as { width: number; height: number }
@@ -264,10 +309,11 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: frag(seethe !== undefined),
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uLandVeil: { value: new THREE.Vector3() }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uFieldFine: { value: new THREE.Vector4(0, look.field.fine.below[0], look.field.fine.below[1], look.field.fine.scale) }, uFieldFineMore: { value: new THREE.Vector2(look.field.fine.gain, look.field.fine.soft) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uFlash: { value: new THREE.Vector4(0, 0, 1, 1) }, uFlashOn: { value: new THREE.Vector2() }, uLandVeil: { value: new THREE.Vector3() }, uSize: { value: new THREE.Vector2(img.width, img.height) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
-        uBoil: { value: new THREE.Vector4(look.boil.reach, look.boil.period, look.boil.step, look.boil.max) },
+        ...lifeUniforms(life),
+        uHazeLow: { value: new THREE.Vector4(lifeData.haze.amount, lifeData.haze.height, lifeData.haze.cap, lifeData.haze.floor) }, uHazeWind: { value: new THREE.Vector4(lifeData.haze.wind[0]!, lifeData.haze.wind[1]!, lifeData.haze.churn, 0) }, uHazeScale: { value: new THREE.Vector4(lifeData.haze.scale[0]!, lifeData.haze.scale[1]!, lifeData.haze.cut[0]!, lifeData.haze.cut[1]!) }, uHazeSteep: { value: new THREE.Vector4(lifeData.haze.steep[0]!, lifeData.haze.steep[1]!, 0, 0) }, uHazeTint: { value: new THREE.Vector4(lifeData.haze.tint[0]!, lifeData.haze.tint[1]!, lifeData.haze.tint[2]!, lifeData.haze.level) },
         uTwinkle: { value: new THREE.Vector3(look.twinkle.amount, look.twinkle.rate, look.twinkle.spread) },
         uInflow: { value: new THREE.Vector4(look.inflow.amount, look.inflow.waves, umbra * look.inflow.inner, umbra * look.inflow.outer) },
         uInflowRate: { value: new THREE.Vector2(look.inflow.rate, look.inflow.rate * 1.7) },
@@ -338,10 +384,20 @@ export class Ground {
     at(feet[0]!, this.material.uniforms.uKick!.value as THREE.Vector4)
   }
 
-  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0, kick = 0): void {
+  flash(span: number): void {
+    const feet = stage.feet as [number, number][]
+    const a = stage.onGround(feet[0]![0], feet[0]![1])
+    const b = stage.onGround(feet[1]![0], feet[1]![1])
+    const p = stage.onGround((feet[0]![0] + feet[1]![0]) / 2, (feet[0]![1] + feet[1]![1]) / 2)
+    const reach = span * a.distanceTo(b)
+    ;(this.material.uniforms.uFlash!.value as THREE.Vector4).set(p.x, p.y, p.z, 1 / (reach * reach))
+  }
+
+  update(camera: THREE.Vector3, time: number, gain: number, vignette: number, aspect: number, lod: number, lit: number, open = 0, since = 0, beat = 0, land = 0, kick = 0, flash = 0, veil = 0): void {
     const u = this.material.uniforms
     u.uLandOn!.value = land
     u.uKickOn!.value = kick
+    ;(u.uFlashOn!.value as THREE.Vector2).set(flash, veil)
     if (this.seethe) {
       const v = u.uSeethe!.value as THREE.Vector4
       v.x = this.seethe.amount * open
