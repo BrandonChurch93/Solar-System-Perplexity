@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T19:59:41.305Z",
- "head": "3ec108739a61f9525815e1ba2ab2ac8715340e59",
- "note": "land matte moves (0 at T, full two frames off), sides pass, far tone within 3 levels; horizon band of the terrain view still swaps at 743 and 991",
+ "pushed": "2026-11-23T20:18:03.740Z",
+ "head": "0595a6ec458e9a3a3274b28d2b576ee30de32a8b",
+ "note": "every dive and rise frame at draft on the merged tree; outline proof of item 1 in work",
  "looks": [
+  {
+   "time": "2026-11-23T20:18:03.148Z",
+   "file": "20261123201803148-note-pair738.jpg",
+   "source": "out/work/mercury/place/f1/ol/pair738.jpg",
+   "kind": "note",
+   "label": "20:20 draft 738 beauty over a copy with the picture's weight contours (0.05 red, 0.5 yellow, 0.95 green of the plateau, display space)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T20:18:02.591Z",
+   "file": "20261123201802591-note-r992.jpg",
+   "source": "out/work/mercury/place/f1/sh/r992.jpg",
+   "kind": "note",
+   "label": "20:15 draft 992 to 999 every frame: rise after the handover at 990; pale flat far field still there, one horizon",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T20:18:02.003Z",
+   "file": "20261123201802003-note-d740.jpg",
+   "source": "out/work/mercury/place/f1/sh/d740.jpg",
+   "kind": "note",
+   "label": "20:15 draft 740 to 747 every frame, merged tree: dive handover at 744",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T19:59:40.600Z",
    "file": "20261123195940600-note-e5-n1016-x6.jpg",
@@ -49,30 +73,6 @@
    "segment": "mercury.dive",
    "frame": 744,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T19:35:32.588Z",
-   "file": "20261123193532588-note-e2-np.jpg",
-   "source": "out/work/mercury/place/tmp/e2-np.jpg",
-   "kind": "note",
-   "label": "far field of the globe alone (right) against the place picture (left) at 741 and 992: the wash now keeps the relief and takes the picture's tone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:35:31.894Z",
-   "file": "20261123193531894-note-look-sides-rise-fail.jpg",
-   "source": "out/work/mercury/place/tmp/look-sides-rise-fail.png",
-   "kind": "note",
-   "label": "bad: with the fixed matte the two sides differ at T along the horizon (handover tool: mean 2.127 over 0.5, p99 77 over 4). Next: the matte comes in over two frames from T so T stays the same picture",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T19:35:31.322Z",
-   "file": "20261123193531322-note-e4-hzA.jpg",
-   "source": "out/work/mercury/place/tmp/e4-hzA.jpg",
-   "kind": "note",
-   "label": "work in progress, native crop of the horizon 990 to 993 (top to bottom) with a fixed land matte: one horizon from 991 on, but the terrain's own horizon at 990 (comb, glow) swaps to the globe's in one frame",
-   "stop": "mercury"
   }
  ]
 }
