@@ -1,24 +1,116 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T16:43:23.683Z",
+ "pushed": "2026-11-23T17:10:00.397Z",
  "head": "1db511ce6ff5dccdd3a54d715b9bf0ea19d4e71b",
- "note": "Mail 299: the two red lines of the every frame part seen on the frames; cure in work (exposure ride, slower pull back)",
+ "note": "Pace of the dive and the rise: worst level step 4.42 in the dive (was 6.66), 5.99 in the rise (was 10.89); close side steps are next",
  "looks": [
   {
-   "time": "2026-11-23T16:43:23.091Z",
-   "file": "20261123164323091-note-s1-rise-3294-3314.jpg",
-   "source": "../work/f/s1-rise-3294-3314.jpg",
+   "time": "2026-11-23T17:09:59.384Z",
+   "file": "20261123170959384-note-p0-rise-3296-3303.jpg",
+   "source": "../work/f/p0-rise-3296-3303.jpg",
    "kind": "note",
-   "label": "1db511c rise 3290 to 3314, draft: pull back at 12.5 percent a frame, night side swings in; body level 165 to 41, step 10.89 into 3305 (limit 6)",
+   "label": "jupiter rise 3296 to 3303 before the pace (commit 1db511c), for comparison",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T16:43:22.496Z",
-   "file": "20261123164322496-note-s1-dive-2970-2992.jpg",
-   "source": "../work/f/s1-dive-2970-2992.jpg",
+   "time": "2026-11-23T17:09:58.180Z",
+   "file": "20261123170958180-note-p1-rise-d.jpg",
+   "source": "../work/f/p1-rise-d.jpg",
    "kind": "note",
-   "label": "1db511c dive 2970 to 2999, draft: the lit face fills the frame; body level 116 to 185, step 6.66 into 2980 (limit 6)",
+   "label": "jupiter rise with the pace, every frame from 3270, sheet d (draft tier, not committed yet)",
    "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:56.997Z",
+   "file": "20261123170956997-note-p1-rise-c.jpg",
+   "source": "../work/f/p1-rise-c.jpg",
+   "kind": "note",
+   "label": "jupiter rise with the pace, every frame from 3270, sheet c (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:56.049Z",
+   "file": "20261123170956049-note-p1-rise-b.jpg",
+   "source": "../work/f/p1-rise-b.jpg",
+   "kind": "note",
+   "label": "jupiter rise with the pace, every frame from 3270, sheet b (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:54.995Z",
+   "file": "20261123170954995-note-p1-rise-a.jpg",
+   "source": "../work/f/p1-rise-a.jpg",
+   "kind": "note",
+   "label": "jupiter rise with the pace, every frame from 3270, sheet a (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:54.342Z",
+   "file": "20261123170954342-note-p1-dive-e.jpg",
+   "source": "../work/f/p1-dive-e.jpg",
+   "kind": "note",
+   "label": "jupiter dive with the pace, every frame, sheet e (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:53.321Z",
+   "file": "20261123170953321-note-p1-dive-d.jpg",
+   "source": "../work/f/p1-dive-d.jpg",
+   "kind": "note",
+   "label": "jupiter dive with the pace, every frame, sheet d (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:52.323Z",
+   "file": "20261123170952323-note-p1-dive-c.jpg",
+   "source": "../work/f/p1-dive-c.jpg",
+   "kind": "note",
+   "label": "jupiter dive with the pace, every frame, sheet c (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:51.063Z",
+   "file": "20261123170951063-note-p1-dive-b.jpg",
+   "source": "../work/f/p1-dive-b.jpg",
+   "kind": "note",
+   "label": "jupiter dive with the pace, every frame, sheet b (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:50.134Z",
+   "file": "20261123170950134-note-p1-dive-a.jpg",
+   "source": "../work/f/p1-dive-a.jpg",
+   "kind": "note",
+   "label": "jupiter dive with the pace, every frame, sheet a (draft tier, not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T17:09:36.836Z",
+   "file": "20261123170936836-frame-f03024.jpg",
+   "source": "out/work/jupiter/frames/thin-one/f03024.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3024, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3024,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T17:03:21.727Z",
+   "file": "20261123170321727-frame-f03312.jpg",
+   "source": "out/work/jupiter/frames/p1/f03312.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3312, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3312,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
   }
  ]
 }
