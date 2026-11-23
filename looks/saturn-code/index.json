@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T17:03:47.551Z",
+ "pushed": "2026-11-23T17:38:21.659Z",
  "head": "6c584f490741c0859e97c04a4e518aa28596ab60",
- "note": "mail 302: measuring both scenes alone in the dive window before the cure; the model takes the kept profile next",
+ "note": "mail 302 cure: the model draws the far look of the kept set from the kept profile; both scenes alone differ by a mean of 0.06 of 255; retuning the skim on the new knots",
  "looks": [
+  {
+   "time": "2026-11-23T17:38:20.900Z",
+   "file": "20261123173820900-note-look_3720_draft.jpg",
+   "source": "../../../../tmp/v/look_3720_draft.png",
+   "kind": "note",
+   "label": "3720 draft: the skim with the kept profile as the model's knots, tints not final"
+  },
+  {
+   "time": "2026-11-23T17:38:20.231Z",
+   "file": "20261123173820231-note-look_dive_3602_3630.jpg",
+   "source": "../../../../tmp/v/look_dive_3602_3630.png",
+   "kind": "note",
+   "label": "dive 3602 to 3630 every 6 frames, draft: far look of the model going over to its own light (window then at 3588 to 3602)"
+  },
+  {
+   "time": "2026-11-23T17:38:19.601Z",
+   "file": "20261123173819601-note-look_pair_3595.jpg",
+   "source": "../../../../tmp/v/look_pair_3595.png",
+   "kind": "note",
+   "label": "3595 with the shutter closed: the kept set alone, the model alone, their difference times 8 (mean 0.06 of 255, 99th percentile 1)"
+  },
   {
    "time": "2026-11-23T17:03:46.933Z",
    "file": "20261123170346933-note-sheet87.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/fin/hold3465_three.png",
    "kind": "note",
    "label": "hold 3465 at the final tier: this build, the approved hero, the kept still (left to right)"
-  },
-  {
-   "time": "2026-11-23T15:42:19.120Z",
-   "file": "20261123154219120-note-spot.jpg",
-   "source": "../../../../tmp/v/t8/spot.png",
-   "kind": "note",
-   "label": "3630 and 3660: the globe seen through the Cassini division has a sawtooth edge (still wrong)"
-  },
-  {
-   "time": "2026-11-23T15:42:18.008Z",
-   "file": "20261123154218008-note-c.jpg",
-   "source": "../../../../tmp/v/t8/c.png",
-   "kind": "note",
-   "label": "3567, 3600, 3830, 3866 draft"
-  },
-  {
-   "time": "2026-11-23T15:42:16.820Z",
-   "file": "20261123154216820-note-b.jpg",
-   "source": "../../../../tmp/v/t8/b.png",
-   "kind": "note",
-   "label": "3690, 3750, 3780, 3809 draft"
   }
  ]
 }
