@@ -69,6 +69,13 @@ export class Plan extends StopPlan {
     return { pose: this.low(time), view: 'terrain' }
   }
 
+  twin(time: number): OrbitShot {
+    const low = this.low(time)
+    const a = this.anchor
+    const turn = this.drawn(time)
+    return { pose: { position: a.origin.clone().addScaledVector(low.position.clone().applyQuaternion(a.frame), 1 / closeRadius).applyQuaternion(turn), quaternion: turn.clone().multiply(a.frame).multiply(low.quaternion), vfov: low.vfov }, view: 'orbit' }
+  }
+
   get anchor(): Anchor {
     return (this.anchored ??= anchor(this.normal, this.heading, this.near.shift))
   }
