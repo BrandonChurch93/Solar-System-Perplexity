@@ -1,9 +1,23 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T08:30:59.942Z",
- "head": "da369f94f6ff15ad114b8dcfd03d3192b64f0ed8",
- "note": "M1 set: v5 at the review tier and the compare at 3150",
+ "pushed": "2026-11-23T08:55:42.204Z",
+ "head": "696515aceea8db19e6825ca2350bd9be1f838fcc",
+ "note": "place of the dive decided (small oval in the wake); building top down plates from the laid back image",
  "looks": [
+  {
+   "time": "2026-11-23T08:55:41.654Z",
+   "file": "20261123085541654-note-lay-near-crop1.jpg",
+   "source": "../work/f/lay-near-crop1.png",
+   "kind": "note",
+   "label": "approved close image laid back top down, vortex, 100 px per unit: input for the plates"
+  },
+  {
+   "time": "2026-11-23T08:55:41.114Z",
+   "file": "20261123085541114-note-wrap-grs.jpg",
+   "source": "../work/f/wrap-grs.jpg",
+   "kind": "note",
+   "label": "wrap round the Great Red Spot with a lon lat grid: the place of the dive is the small orange oval at lon -26.6 lat -5.8 (way B, mail 229)"
+  },
   {
    "time": "2026-11-23T08:30:59.333Z",
    "file": "20261123083059333-note-compare-jupiter-terrain.jpg",
@@ -67,20 +81,6 @@
    "source": "../work/f/v5-three.jpg",
    "kind": "note",
    "label": "v5 frames 3060, 3150, 3239 in a row, draft"
-  },
-  {
-   "time": "2026-11-23T08:26:32.152Z",
-   "file": "20261123082632152-note-v5-cmp.jpg",
-   "source": "../work/f/v5-cmp.jpg",
-   "kind": "note",
-   "label": "v5 frame 3150: approved image, render, difference x4"
-  },
-  {
-   "time": "2026-11-23T08:26:31.594Z",
-   "file": "20261123082631594-note-v5-consec.jpg",
-   "source": "../work/f/v5-consec.jpg",
-   "kind": "note",
-   "label": "v5 consecutive frames 3148 to 3153, draft"
   }
  ]
 }
