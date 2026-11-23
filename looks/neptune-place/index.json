@@ -1,9 +1,44 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T16:20:54.854Z",
- "head": "bed3787dad15401ced8a8c5f63d1f9db3be497c1",
- "note": "cure of G13 baked: dive 4700 to 4730 rendered, texels view worst 0.21 percent in the dive, 1.84 at 5000 in the rise; rise frames rendering",
+ "pushed": "2026-11-23T16:38:30.268Z",
+ "head": "d73c77620f7a4ed441c8e3a3167f4b0181f9fc28",
+ "note": "16:39 VM: rise after the G13 cure, every rise frame measured (worst 1.84 at 5000); recipe commit d73c7762 for G11; handover report running",
  "looks": [
+  {
+   "time": "2026-11-23T16:38:28.844Z",
+   "file": "20261123163828844-note-soft-5000.jpg",
+   "source": "../../../../tmp/soft-5000.jpg",
+   "kind": "note",
+   "label": "G13 view of rise 4995, 4999, 5000, 5001 (red = under 1 texel per pixel): 5000 at 1.84 percent, a kept level at the frame's lower left edge; every rise frame is now measured, worst 1.84, limit 2",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T16:38:27.612Z",
+   "file": "20261123163827612-note-b-rise2.jpg",
+   "source": "../../../../tmp/b-rise2.jpg",
+   "kind": "note",
+   "label": "rise 4982 to 4994 after the G13 cure; blue streaks east of the eye come back 4981 to 4983 (item 10), plate 26 edge as fine threads beside smooth ground bottom left 4985 to 4992 (item 11)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T16:38:26.453Z",
+   "file": "20261123163826453-note-b-rise1.jpg",
+   "source": "../../../../tmp/b-rise1.jpg",
+   "kind": "note",
+   "label": "rise 4970 to 4981 after the G13 cure (draft, merged tree): plate 26 ring 12 to 14.5 deg, plate 16 moved 1.5 deg south",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T16:34:57.065Z",
+   "file": "20261123163457065-compare-neptune-dive-sides.jpg",
+   "source": "out/work/handover/neptune-dive-sides.png",
+   "kind": "compare",
+   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4758,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T16:20:53.814Z",
    "file": "20261123162053814-note-c-south.jpg",
@@ -35,50 +70,6 @@
    "kind": "note",
    "label": "the southern fifth at the size of the take: guide above, take 3 below",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T15:55:15.720Z",
-   "file": "20261123155515720-note-take16-moved-guide-and-take3.jpg",
-   "source": "out/work/nep/s10/take16-moved-guide-and-take3.jpg",
-   "kind": "note",
-   "label": "16 degree plate moved south: guide (left) and take 3 (right); only the fine band of the take is used and only in the southern 1.5 degrees",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T15:55:15.067Z",
-   "file": "20261123155515067-note-texels-4721-old-rule-against-new.jpg",
-   "source": "out/work/nep/s10/texels-4721-old-rule-against-new.jpg",
-   "kind": "note",
-   "label": "4721 texels view: left the tree of d39658df (2.50 percent soft, bottom left corner outside the 16 degree plate), right plate 16 moved 1.5 degrees south, count only, old files",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T15:40:29.414Z",
-   "file": "20261123154029414-job-frame-05006.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.rise frame 5006, final tier, nograin view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-23T15:27:50.553Z",
-   "file": "20261123152750553-job-frame-04707.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.dive frame 4707, final tier, nograin view, from the running measure job",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4707,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
