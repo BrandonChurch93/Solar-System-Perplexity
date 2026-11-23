@@ -1,9 +1,59 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T08:04:14.181Z",
- "head": "d25c0b872ddd44029129c0226bd018b1c3681324",
- "note": "S3 committed d25c0b87: first no cover dive sheet, steady move, plates still rough",
+ "pushed": "2026-11-23T08:25:19.903Z",
+ "head": "b14f0a7e8fb22ec7516cd510318725961e8b34a6",
+ "note": "E1 merged and opted in, cover removed, hold terrain travel same bits on 8 frames; next the live close layer on the globe",
  "looks": [
+  {
+   "time": "2026-11-23T08:25:18.250Z",
+   "file": "20261123082518250-note-cmp-4769-4770.jpg",
+   "source": "out/work/nep/place/cmp-4769-4770.jpg",
+   "kind": "note",
+   "label": "globe side 4769 beside close side 4770, rough plates: horizon and eye agree, cirrus 330 px off (stream and parallax), reason for the live close layer",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T08:22:05.020Z",
+   "file": "20261123082205020-frame-f5085.jpg",
+   "source": "out/work/nep/e1/f5085.png",
+   "kind": "frame",
+   "label": "ending.retreat frame 5085, draft tier",
+   "stop": "ending",
+   "segment": "ending.retreat",
+   "frame": 5085,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:19:50.185Z",
+   "file": "20261123081950185-frame-f4949.jpg",
+   "source": "out/work/nep/e1/f4949.png",
+   "kind": "frame",
+   "label": "neptune.terrain frame 4949, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.terrain",
+   "frame": 4949,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:16:28.110Z",
+   "file": "20261123081628110-frame-f4679.jpg",
+   "source": "out/work/nep/e1/f4679.png",
+   "kind": "frame",
+   "label": "neptune.hold frame 4679, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.hold",
+   "frame": 4679,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T08:04:13.490Z",
    "file": "20261123080413490-note-sheet-b.jpg",
@@ -40,50 +90,6 @@
    "source": "out/work/nep/place/same-as-main.jpg",
    "kind": "note",
    "label": "hold 4605 and terrain 4860: main (left) and this branch (right), draft, 0 pixels differ",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T07:35:14.004Z",
-   "file": "20261123073514004-frame-f4640.jpg",
-   "source": "out/work/nep/now/f4640.png",
-   "kind": "frame",
-   "label": "neptune.hold frame 4640, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.hold",
-   "frame": 4640,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:33:54.079Z",
-   "file": "20261123073354079-frame-f4949.jpg",
-   "source": "out/work/nep/now/f4949.png",
-   "kind": "frame",
-   "label": "neptune.terrain frame 4949, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.terrain",
-   "frame": 4949,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:21:03.674Z",
-   "file": "20261123072103674-note-plates-rough.jpg",
-   "source": "out/work/nep/place/plates-rough.jpg",
-   "kind": "note",
-   "label": "First laid back plates, rough: 16, 10, 6, 3.5 deg, the close image's wedge over the old levels (hard seam, old big eye still around it)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T07:20:59.687Z",
-   "file": "20261123072059687-note-twin-pair1.jpg",
-   "source": "out/work/nep/place/twin-pair1.jpg",
-   "kind": "note",
-   "label": "S1 check with the first plates: globe side from the twin (top left) and close side (top right) at 4860, globe edges in red on the close frame, split view",
    "stop": "neptune"
   }
  ]
