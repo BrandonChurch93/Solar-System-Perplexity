@@ -124,34 +124,16 @@
   }
  },
  "band": {
-  "canvasDeg": 24,
-  "patchDeg": 0.8,
-  "overlapDeg": 0.2,
+  "canvasDeg": 26,
   "detailDeg": 0.4,
-  "darkBlurDeg": 0.15,
-  "darkLimit": -1.1,
-  "candidates": 600,
-  "seed": 7,
-  "inPx": 8,
   "fullDeg": 1.5,
-  "fadeDeg": 3.0,
-  "calm": 0.55,
-  "calmDeg": [
-   3.0,
-   6.0
-  ],
-  "calmLowDeg": 0.5,
   "baseLevel": 3,
   "baseSoftDeg": 0.15,
   "baseLowDeg": 1.0,
-  "draw": 80,
-  "reuse": 0.5,
-  "seamSoftPx": 2,
   "reachDeg": [
-   7.0,
-   9.0
+   11.4,
+   12.8
   ],
-  "farShare": 0.5,
   "dusk": [
    0.0,
    0.105
@@ -165,6 +147,75 @@
    0.04,
    0.08
   ],
-  "fillWindowDeg": 0.3
+  "fillWindowDeg": 0.3,
+  "lift": 0.0,
+  "midDeg": 0.15,
+  "midCap": [
+   0.3,
+   0.5
+  ],
+  "fadeDeg": [
+   12.3,
+   12.95
+  ]
+ },
+ "craters": {
+  "seed": 11,
+  "cover": 0.13,
+  "minPx": 3,
+  "radiusDeg": 0.45,
+  "complexDeg": 0.12,
+  "roundPx": 10,
+  "wobble": 0.12,
+  "reach": 2.5,
+  "shadow": [
+   0.3,
+   1.15
+  ],
+  "deepest": 0.4,
+  "worn": 0.7,
+  "rim": 0.18,
+  "terrace": 0.5,
+  "floor": 0.35,
+  "peak": 0.35,
+  "wipe": 0.75,
+  "rolling": [
+   [
+    900,
+    0.25
+   ],
+   [
+    300,
+    0.18
+   ],
+   [
+    90,
+    0.12
+   ]
+  ],
+  "minSun": 0.03,
+  "penumbra": 0.4,
+  "range": [
+   0.07,
+   2.4
+  ],
+  "rough": [
+   [
+    40,
+    0.2
+   ],
+   [
+    16,
+    0.2
+   ],
+   [
+    7,
+    0.18
+   ],
+   [
+    3,
+    0.15
+   ]
+  ]
  }
 }

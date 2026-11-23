@@ -222,7 +222,7 @@ export const createSet: SetFactory = async (ctx) => {
       } else if (leaving) {
         ghosts = look.flare.after
       }
-      glare.update(diving ? keep(1) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? keep(1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0, glareSun, view.camera, gain, aspect, state.time)
+      glare.update(diving ? keep(1) * smoother(ramp(-look.glare.span.dive, 0, fromDive)) : rising ? keep(1) * (1 - smoother(ramp(0, look.glare.span.rise, fromRise))) : 0, glareSun, view.camera, gain, aspect, state.time, rising ? 1 : 0)
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()

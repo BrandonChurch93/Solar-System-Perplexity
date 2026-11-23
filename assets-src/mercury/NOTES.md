@@ -1224,3 +1224,86 @@ Send me the commit when 1 and 2 are done and I render both ways at the review ti
 - 13:10 Mail 265 done. Build clean, vitest 155 of 155, tsc clean. Draft render with E3 and V1 (`c2`, same frames as `c1`): against `c1` 0 px on every frame but 732 to 743 and 991 to 1002 (V1, the place window); my plan draws its own path (`divePose`, `risePose`), so the new line of E3 and its path options do not reach the stop. Kept frames 615, 689, 780, 870, 959, 1035: 0 px against `base/`. Sheets `tmp/c2-732.jpg`, `c2-991.jpg` looked at, every frame.
 - 13:10 Item 2 of mail 267: the flecks are lit rock in the baked light of the close picture (`relief-color.jpg`), inside the shadow of the big crater. They are in the kept still of 870 too (`tmp/c1-flecks4.jpg`, frame 870, x 700 to 1340, y 330 to 690) and through the whole terrain segment. Taking them out of the picture changes 870, which may not change. Reported to the Builder as a conflict; a cleaned picture is prepared but not installed until he says so.
 - 13:12 Item 1, cure chosen: the band is painted again by generation, level 3 first with the whole quilt on the low tone as the lead (no calmed take under it), softened, then level 4 from level 3 enlarged, and level 2 takes the middle from level 3 made smaller and keeps take a6 outside without the quilt. Round: mail 267 is a new verdict, so the takes of this round count from one (b1...).
+
+## MAIL 274 (23 Nov, 13:14 UTC, from the Builder, high): flecks stay, takes, machine checks
+
+Word for word:
+
+"From the Builder (/root) to mercury_builder. Mail 274, answer to your report on 08c4bb47.
+
+1. The white flecks: (b), they stay. They are in the approved close picture and in the kept still of 870, and that frame does not change. Item 2 of mail 267 is withdrawn. Do not prepare (a) further.
+
+2. Takes: mail 267 is not a round. The rule is kit/06-ASSETS.md: at most six takes per asset in one round, and six per phase for an asset made outside a round. A round is only a numbered one that I start with critics (the next is 37). So a tile with takes left of its six for this phase may use them, and a tile that has used six keeps its best take. Tell me now, per tile of levels 1, 3 and 4, how many takes it has used in this phase. Work by code (not generation) has no take limit.
+
+3. The way to more takes is a round. Tell me the state of the machine checks on 08c4bb47 for the dive and the rise (G5, G13, G17, and the handover report of `npm run handover -- --stop mercury`), and what is red. When they are green and the band is at its best within the takes you have, name the commit: I run the full check on the render machines, take your folders onto main and start round 37 on Mercury. From then each asset has six takes again where a critic asks for a change.
+
+Short answer to /root."
+
+## MAIL 275 (23 Nov, 13:14 UTC, from the Builder, high, to every stop builder and coder): how a stop gets to its critic rounds
+
+Word for word:
+
+"From the Builder (/root) to every stop builder and coder. Mail 275: how your stop gets to its critic rounds. No answer needed unless a point below is red for you.
+
+1. A stop is taken onto main and its round 1 starts (rounds are numbered on from 37, up to three per stop, every critic each round) when four things hold on one commit that you name:
+ a. both handovers run with no cover and read as one place (Jupiter and Saturn: also the surface view from code; the Sun: the surface view with its new motion and the rise);
+ b. the machine checks are green on every frame you changed: G5, G13 and G17 as the harness gives them, and the handover report of `npm run handover -- --stop <id>`;
+ c. the frames you may not change keep their bytes (your hold and your surface view where it is approved, at the draft tier everywhere and at the final tier on the judged frames);
+ d. build, tsc and tests are green on a merge of the newest main.
+ It does not have to be finished. What is still wrong goes to the critics with the rest. Do not wait for a perfect state: when a to d hold, send me "READY <stop> <commit>" with the list of what you still see as wrong.
+2. Takes of generated assets: kit/06-ASSETS.md gives six takes per asset per round, and six per phase for an asset made outside a round. A mail of mine with findings is not a round. If an asset has used its six in this phase, keep its best take and say so in your READY line. In a round each asset has six again where a critic asks for a change. Work by code has no take limit.
+3. I render every commit you name at every frame on the render machines and write what I see. Push your code branch whenever your looks show something you want judged, and name the commit."
+
+- 13:15 Takes of this phase sent to /root: level 3 used tl 4, tr 4, bl 4, br 5, c 4 (kept a3); level 4 used 2, 2, 3, 2, 2 (kept a3); level 2 six on every tile (kept a6); level 1 none since mail 213 (21 Nov: 2, 4, 2, 2, 2). The 13:12 entry above ("takes count from one") is void: mail 267 is not a round.
+- 13:18 Disk: `c1`, `v1`, `w3`, `w4`, `r7*`, `td3`, `pat/r`, the painted level arrays and the worktree `/tmp/base` removed, 4.2 GB free. `out/work/mercury/place/old/` was gone too and is put back with `git show 1e492e92:public/assets/mercury/full/patch-N.jpg > old/full-patch-N.jpg` (N 1 to 4); `plates.py plate` reads it.
+- 13:18 `npm run -s measure -- --stop mercury` started on 08c4bb47 (`chk/measure.log`). G13 is 495 frames at draft, then the four judged frames at final.
+- 13:20 to 13:45 Item 1 of mail 267, the cure, by code (no takes): the ground between the globe picture and the place is a crater field made in `assets-src/mercury/place/craters.py`. One height field on a canvas of 26 deg at the texel of level 4 (11380 px): rolling ground, about 230 thousand craters (radius 3 px to 0.45 deg, equal cover per e fold of radius, bowls under 0.12 deg, terraced floors with a peak over it, depth tied to the local Sun slope so the shadow covers part of the floor), rough ground on top; cast shadows by a running maximum along the Sun's azimuth with the Sun height of each point; shade = shadow times the cosine to the Sun over the flat cosine. The same field is made smaller for levels 3 and 2, so a crater is the same crater on every level. `band.py lay`: outside the place the plate is the low tone of take a6 of level 2 (1 deg) plus its middle band (0.15 to 1 deg, highs capped 0.3, lows 0.5 in log) times the shade; the take's own fine detail comes back only where the field ends (11.4 to 12.8 deg from the spot, 4 norm), which lies in the feather of the own light (10 to 15 deg). Levels 3 and 4 no longer show a take outside the place. Values in `plates.json` (`craters`, `band`). Why not generation: the takes of levels 3 and 4 outside the place are bold white ridges with black holes, unlike the place; a pure quilt repeats dark blobs.
+- Known and accepted: inside about 11 deg of the spot the craters of levels 2 to 4 are new ones. The big craters of the globe picture (over about 0.3 deg across) stay only as soft tone (the middle band). The rule "the same crater one level deeper" holds from level 2 down and for the place itself, not from level 1 to level 2 inside this zone.
+
+## MAIL 279 (23 Nov, 13:56 UTC, from the Builder, high): a time for READY
+
+Word for word:
+
+"MAIL 279 from the Builder (/root), 13:56 UTC. A time for READY.
+
+The rule of mail 275 stands. This adds a time, so that no stop waits on its last fault while fresh critics could already be looking at it.
+
+1. Mercury, Venus, Earth, Mars plates, Uranus, Neptune, Sun: send "READY <stop> <commit>" by 15:30 UTC at the latest. Earlier is better: send it the moment (a) to (d) of mail 275 hold.
+2. Jupiter, Saturn: by 16:30 UTC at the latest, with the dive and the rise in it (no cover, no swap that shows).
+3. At that time I take the newest commit you have named, as long as it builds on a merge of newest main, its tests pass, the frames that may not change keep their bytes and G15 holds. What is still wrong then goes into round 1 as your own list beside the critics' issues. So keep your branch in a state that can be taken: commit and push whole steps, never half a step.
+4. With READY send: the commit, your list of what is still wrong with frame numbers, and which frames changed since my last render of your stop, so I render only those.
+5. Each stop then gets up to three rounds with fresh critics. You go on working between the rounds, on your list and on what the critics name.
+
+No answer is needed. Go on with your work."
+
+- 13:53 the full measure on 08c4bb47 ended (`out/work/mercury/place/chk/measure.log`, `out/work/measure/mercury.json`, 2071 s, full set, 16x9):
+  - G5 PASS: 615 hold invalid 0 coverage 0.365; 717 dive invalid 0 coverage 0.731; 870 terrain invalid 0 coverage 0.792; 1016 rise invalid 0 coverage 0.672.
+  - G17 PASS: 615 median 1.210 p25 1.058 over 71 tiles; 870 median 0.927 p25 0.856 over 85 tiles.
+  - G13 FAIL: 2 of 495 frames over 0.02 soft: 713 3.91 percent (59132 of 1511926), 1019 2.42 percent (33681 of 1390071). Near: 1014 1.95, 714 1.62, 722 0.68, 707 0.59, 721 0.19, 715 0.12, 1013 0.05. All other frames 0.
+  - What it is (`DIAG=texels` at draft, `out/work/mercury/place/tx0`, pictures `tmp/soft4.png`, `tmp/tex4.png`; my counter `tools/soft.py` gives the same counts as the measure): a wedge at the left edge of the frame, for one to three frames, where the frame reaches past the left edge of a level square while the parent level is just under one texel per pixel (713: level 1 at 0.98; 1019: the base map along the left limb at 0.93 to 0.95). The spot sits low and left in the frame on the path of mail 213, so the left edge of each level square crosses the frame. On the old path the same levels were 0 soft (a5e5207).
+  - No honest way to more texels: level 1 is built at 4096 from tiles made at 2048, a bigger file would carry no more detail and would only move the count. Not done.
+  - Cure tried: the feather of the level edges (`patches.feather` in `assets.ts`). A level counts where its weight is at least a half, which is at 0.5 minus half the feather of its width. Feather 0.12: reach 0.44. Feather 0.04: reach 0.48.
+- 13:57 state sent to `/root` (G5, G17 green, G13 red on 713 and 1019, handover report to follow on the next commit).
+- 13:59 crater plates installed (dive and rise, both sets), glow term for the rise patched in (`glare.ts`, `set.ts`, `look.ts`), feather 0.04, build and tsc clean.
+  - Texels with feather 0.04 (`tx1`): 707 0.013 percent, 713 1.916, 714 0.205, 721 0.193, 722 0, 1013 0, 1014 0.673, 1019 0.527, 712 715 1018 1020 0.
+  - Feather 0.02 (`tx2`): 707 0, 713 1.432 percent, 714 0.062, 715 0, 721 0.189, 722 0, 1013 0, 1014 0.394, 1019 0.310. Taken: `patches.feather` 0.02. Each level is locked to its parent in its low tones, and levels 3 and 4 are the same crater canvas at two scales, so a narrow feather shows no edge (looked at 708 to 734 and 996 to 1020 in `c3`).
+- 14:02 to 14:13 draft render with the crater plates, the glow and feather 0.02 (`out/work/mercury/place/c3`: 615, 689, 690 to 780, 870, 959, 960 to 1036). Kept frames 615 689 780 870 959 1035: 0 px against `base/`.
+  - Item 1 of mail 267 as seen (720 724 728 732, 999 1001 1003 1005, `tmp/c3-dive-a.jpg`, `tmp/c3-rise-a.jpg`): the ground left of and below the place is a cratered plain with cast shadows at the scale it is seen, no combed streaks. Still there: the bright comma strokes along the limb at the right (716 to 730, 1000 to 1010). They are the old level 2 beyond 13 deg from the spot and level 1, where no crater field reaches.
+  - Item 3 (glow at the top edge): mean of the brightest column in the top 40 rows, before and now: 995 159 and 161, 996 128 and 135, 997 93 and 115, 998 64 and 99, 999 47 and 75, 1000 40 and 59, 1001 34 and 40, 1002 31 and 37. The fall runs over 995 to 1001 instead of 996 to 999 (`tmp/c3-glow.jpg`).
+  - Item 4, what the ghost is: with `DIAG=beauty/noplace` it is gone (`tmp/ghost-np.jpg`), so it is in the place picture, not a lens ghost: the row of the close view just under its horizon (a thin haze line with a colour fringe, and the bright ground under the Sun as a pale green column), seen from above after the camera has risen over the twin, so the thin row becomes a wide arc on the ground (996 to 1001).
+  - Tried on the rise: `handover.rise.place.maxEnlarge` 1.5 with `enlargeSoft` 0.5 (`e1`), then 1.2 with 0.4 (`e2`, the values Mars uses). With 1.2 and 0.4 the far field of the picture leaves over 993 to 997 under the glow: the pale stripes, the upper half of the column and the double limb of 993 to 998 are gone; the arc and the lower half of the column stay, fainter, 996 to 1000 (`tmp/ghost-e2.jpg`, `tmp/e2.jpg`, `tmp/e2b.jpg`). Taken: 1.2 and 0.4 on the rise. The dive keeps 3 and 0.95.
+  - Item 5, far wash: `far.flat` 0.3 against 0.6 on 993 995 997 999 (`e3`, `tmp/wash-e3.jpg`): less of the smooth pale band, but more of the comma strokes along the limb. No gain. Kept 0.6.
+  - Found in `c3` and also in `c2` (08c4bb47): 738 to 743 the left edge of the place picture stands as a straight line about 60 to 260 px from the left frame edge (`tmp/edge-740.jpg`). Before, the strip left of it was combed and brighter than the picture (740 rows 480 to 640: 80 against 60). Now it is crater ground, close in the upper rows (64 against 59) and darker and flatter in the lower rows (742 rows 640 to 800: 47 against 72, deviation 18 against 32). Not cured. The cure is the matte of the handover engine (below) and a band tone that follows the place further out.
+- 14:14 note from `/root/handover_engineer` (low, no answer needed): on `agent/engine-handover` 7f507d9, to main with its M3, off by default: `handover.{dive,rise}.place.limbReachDeg` (holds the picture's horizon row on the camera's limb, not for a body without air) and `StopSet.placeMatte = { dive?, rise? }` (one channel, the whole field of the place picture, 1 keeps the picture, 0 leaves the globe), in `assets-src/shared/HANDOVER-NOTES.md`. For Mercury the matte is the cure for the straight picture edge (738 to 743, 991 to 999) and for the horizon row (item 4): to do when it is on main.
+- 14:25 to 14:31 texels of every changed frame with the state to commit (feather 0.02, rise far field 1.2 and 0.4, crater plates), `DIAG=texels`, draft, `out/work/mercury/place/tx3`, counted with `tools/soft.py` (the rule of the measure; on 08c4bb47 it gave the measure's own counts): 690 to 779 and 960 to 1034, 165 frames, none over 0.02. Worst 713 1.432 percent, 1014 0.394, 1019 0.310, 721 0.189, 714 0.062; all others 0. Not the harness itself: the full measure takes 35 minutes on this VM, the Builder runs it on the render machines.
+- 14:32 `npm run -s handover -- --stop mercury --tier draft --only sides,flow,path,sheets` started (`chk/handover.log`, output `out/work/handover/`). The first run of the tool for Mercury: my earlier reports used my own sheets.
+- 14:34 looks pushed (`agent/mercury-place-looks` 09146ed2): crater ground in dive and rise, glow, rise far field cut, the open straight edge at 740 and 742.
+
+## 23 Nov 14:37 UTC: handover tool on the crater band state (draft tier)
+
+`npm run handover -- --stop mercury --tier draft --only sides,flow,path,sheets`, exit 0, six verdicts pass.
+- dive (T in frame 744, place window 732 to 744): side difference mean 0.2, 99th percentile 2, 99.9th 5, max 171, 123 px over 16; flow 26.439 px before, 26.324 after, gap mean 0.321, largest 0.751; pose gap 0.
+- rise (T in frame 990, place window 990 to 1002): side difference mean 0.121, 99th percentile 1, 99.9th 3, max 24, 2 px over 16; flow 42.643 before, 42.322 after, gap mean 0.717, largest 2.132; pose gap 0.
+- Sheets looked at frame by frame (before, across, after of both): the same place on both sides of T. Seen: 738 to 743 straight left edge of the place picture with a darker strip beside it; 991 to 993 thin double limb; 994 to 997 pale limb band; 1000 to 1002 pale comma strokes at the limb.
+- Review tier not run. Harness measure not run again on this state: own G13 count on all 165 changed frames is under 2 percent everywhere (worst 713 1.432).
+- Tried next (not in this commit): dusk of the band only away from the place edge (`u * dusk`), to lift the dark strip beside the place in 738 to 743.
