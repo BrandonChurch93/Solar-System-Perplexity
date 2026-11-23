@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T23:02:44.634Z",
+ "pushed": "2026-11-23T23:24:52.952Z",
  "head": "4e4ce56823b4859b96be2b337e0b45d2d69aea93",
- "note": "G 1 function ground: frame 60 beside the approved image, eight frames over the terrain, frame 168 close (unfinished)",
+ "note": "G 1 function ground with lumps, jets and limb glow: frames 0, 60, 90 beside the approved image, nine consecutive frames, the limb (unfinished)",
  "looks": [
+  {
+   "time": "2026-11-23T23:24:52.228Z",
+   "file": "20261123232452228-note-b2-evo.jpg",
+   "source": "out/work/sun/convect/b2-evo.jpg",
+   "kind": "note",
+   "label": "G 1, 23:25, unfinished. One box of the screen at frames 0, 30, 60, 90, 120, 150, 168 (the film's camera moves in).",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:24:51.647Z",
+   "file": "20261123232451647-note-b2-limb.jpg",
+   "source": "out/work/sun/convect/b2-limb.jpg",
+   "kind": "note",
+   "label": "G 1, 23:25, unfinished. The limb at frame 60, twice native size: jets as geometry, the horizon is the outline of the cells. Stair steps on far cells are the draft's one sample a pixel and the mesh; not yet checked at review tier.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:24:51.062Z",
+   "file": "20261123232451062-note-b2-strip-60-68.jpg",
+   "source": "out/work/sun/convect/b2-strip-60-68.jpg",
+   "kind": "note",
+   "label": "G 1, 23:25, unfinished. Nine consecutive frames, 60 to 68, one box of the near ground at native size (draft, one sample a pixel).",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T23:24:50.485Z",
+   "file": "20261123232450485-note-b2-0-60-90.jpg",
+   "source": "out/work/sun/convect/b2-0-60-90.jpg",
+   "kind": "note",
+   "label": "G 1, 23:25, unfinished. The approved close image and frames 0, 60, 90 (draft). The ground is geometry from functions with relief; lumps on the cells, jets and glow at the limb are new since 23:03. Frame 60: G17 median 1.36, lower quarter 1.02; difference at a 40 pixel blur 0.060 on the ground (the old picture ground 0.028). Wrong: the cells read as rock, too angular and too bright in the middle distance; the spot is too regular and too small.",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T23:02:44.064Z",
    "file": "20261123230244064-note-m2-168-crop.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/sun/convect/a1-vs-ref.jpg",
    "kind": "note",
    "label": "G 1 first picture 22:37, unfinished. Top: frame 60 of the named commit (the picture ground). Bottom: frame 60 with the ground as a displaced mesh from the cell functions (no picture read for the ground). Cells too smooth and too tall, spot flat, lanes too light: all still to do.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T22:18:21.375Z",
-   "file": "20261123221821375-note-cure-strip-b.jpg",
-   "source": "out/work/sun/life/v/cure-strip-b.jpg",
-   "kind": "note",
-   "label": "cure of mail 344 as stopped at 22:14: time strips fixed lanes and moving lanes, it moves the picture, kept as record only",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T22:09:49.676Z",
-   "file": "20261123220949676-note-cureA-strip.jpg",
-   "source": "out/work/sun/life/v/cureA-strip.jpg",
-   "kind": "note",
-   "label": "ground cure, fixed lanes, time strip of 61 held frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T22:09:48.742Z",
-   "file": "20261123220948742-note-cureA-eight.jpg",
-   "source": "out/work/sun/life/v/cureA-eight.jpg",
-   "kind": "note",
-   "label": "ground cure, fixed lanes, held camera, eight consecutive frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:49:24.260Z",
-   "file": "20261123214924260-note-lanes-mask.jpg",
-   "source": "out/work/sun/life/v/lanes-mask.jpg",
-   "kind": "note",
-   "label": "held camera, kept build: how lane area is counted for the ground cure (picture, lanes under 0.7, lanes under 0.62 of the neighbourhood)",
    "stop": "sun"
   }
  ]
