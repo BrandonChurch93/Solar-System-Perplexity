@@ -1,28 +1,28 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-23T20:35:29.777Z",
+ "pushed": "2026-11-23T20:57:40.356Z",
  "head": "f37eeb933a52f5a0055a64a970674d3e61c2ce3b",
- "note": "rise after T with the tops growing over 0.13 R of height, main 02780a4f merged",
+ "note": "4137 and 4436 at native size with the shutter closed: the storm is crisp clumps on a soft base, item 3 open",
  "looks": [
   {
-   "time": "2026-11-23T20:35:29.138Z",
-   "file": "20261123203529138-note-i-rise-b.jpg",
-   "source": "../../../../tmp/i-rise-b.jpg",
+   "time": "2026-11-23T20:57:39.333Z",
+   "file": "20261123205739333-note-j-4137-native.jpg",
+   "source": "../../../../tmp/j-4137-native.png",
    "kind": "note",
-   "label": "rise 4403 to 4414, draft, same tree: tops whole by 4412; ring fan and white at the left side still wrong",
+   "label": "4137 draft (shutter closed), native 700 px crop at the storm, tree f37eeb93 plus port (main 02780a4f)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T20:35:28.526Z",
-   "file": "20261123203528526-note-i-rise-a.jpg",
-   "source": "../../../../tmp/i-rise-a.jpg",
+   "time": "2026-11-23T20:57:38.530Z",
+   "file": "20261123205738530-note-j-4436-native.jpg",
+   "source": "../../../../tmp/j-4436-native.png",
    "kind": "note",
-   "label": "rise 4391 to 4402, draft, tree f37eeb93 plus the port (main 02780a4f merged): white tops grow with the height above their shell, no frame to name",
+   "label": "4436 draft (shutter closed), native 700 px crop at the storm, tree f37eeb93 plus port (main 02780a4f)",
    "stop": "uranus"
   },
   {
-   "time": "2026-11-23T20:34:03.677Z",
-   "file": "20261123203403677-compare-uranus-rise-under.jpg",
+   "time": "2026-11-23T20:55:10.989Z",
+   "file": "20261123205510989-compare-uranus-rise-under.jpg",
    "source": "out/work/handover/uranus-rise-under.png",
    "kind": "compare",
    "label": "uranus rise, the globe side at T (frame 4391) with the place picture, alone, and their difference times 4",
@@ -32,55 +32,20 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-23T20:33:15.300Z",
-   "file": "20261123203315300-compare-uranus-dive-under.jpg",
-   "source": "out/work/handover/uranus-dive-under.png",
-   "kind": "compare",
-   "label": "uranus dive, the globe side at T (frame 4186) with the place picture, alone, and their difference times 4",
+   "time": "2026-11-23T20:54:11.099Z",
+   "file": "20261123205411099-sheet-uranus-dive-top.jpg",
+   "source": "out/work/handover/uranus-dive-top.png",
+   "kind": "sheet",
+   "label": "uranus dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4186), place picture off, draft tier",
    "stop": "uranus",
    "segment": "uranus.dive",
-   "frame": 4186,
+   "first": 4110,
+   "last": 4186,
    "tier": "draft"
   },
   {
-   "time": "2026-11-23T20:31:06.424Z",
-   "file": "20261123203106424-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:30:27.857Z",
-   "file": "20261123203027857-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:29:55.704Z",
-   "file": "20261123202955704-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T20:27:52.551Z",
-   "file": "20261123202752551-sheet-uranus-dive-draft-after.jpg",
+   "time": "2026-11-23T20:53:36.915Z",
+   "file": "20261123205336915-sheet-uranus-dive-draft-after.jpg",
    "source": "out/work/handover/uranus-dive-draft-after.png",
    "kind": "sheet",
    "label": "uranus dive, every frame 4187 to 4198 (after T, frame 4186), draft tier",
@@ -88,6 +53,41 @@
    "segment": "uranus.dive",
    "first": 4187,
    "last": 4198,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:53:35.203Z",
+   "file": "20261123205335203-sheet-uranus-dive-draft-before.jpg",
+   "source": "out/work/handover/uranus-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4174,
+   "last": 4185,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:53:33.466Z",
+   "file": "20261123205333466-sheet-uranus-dive-draft-across.jpg",
+   "source": "out/work/handover/uranus-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "first": 4180,
+   "last": 4191,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T20:45:57.758Z",
+   "file": "20261123204557758-compare-uranus-dive-under.jpg",
+   "source": "out/work/handover/uranus-dive-under.png",
+   "kind": "compare",
+   "label": "uranus dive, the globe side at T (frame 4186) with the place picture, alone, and their difference times 4",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4186,
    "tier": "draft"
   }
  ]
