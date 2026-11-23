@@ -56,9 +56,35 @@ fine = max(area / longer, longer / anisotropy) in texels of the level above
 
 `area / longer` is the short axis of the footprint (the cross product of the two screen derivatives over the longer one). `longer / anisotropy` is the size the filter really samples at when the footprint is more stretched than its limit: the filter takes its mip level from the longer axis divided by min(stretch, anisotropy). `anisotropy` is read from each level's texture (`tex.anisotropy`, which the loader has already capped by the machine's limit) and from the wrap map for the first level. So the fade never asks the filter for more than it gives, and the longer axis is never undersampled. For Mars nothing else has to be passed: `src/stops/mars/set.ts` loads the wrap and the patches with `anisotropy: 16` already.
 
-Texels view (`uDiag == 2`): red is unchanged, the longer axis in texels of the level really drawn (the drawn level is the last one with weight above one half, as today), so `tools/measure/texels.ts` and G13 read the truth with the flag on. With the flag the view also writes blue: `0.5 * (short axis in texels of the drawn level) / max(longer / anisotropy, 1)`, that is the texels of the mip really sampled per pixel on the fine axis; 0.5 means one to one, less means the picture is magnified across the fine axis. Blue is 0 without the flag, as today.
+Texels view (`uDiag == 2`): red is unchanged, the longer axis in texels of the level really drawn (the drawn level is the last one with weight above one half, as today), so `tools/measure/texels.ts` and G13 read the truth with the flag on. With the flag the view also writes blue: `0.5 * (short axis in texels of the drawn level) / max(longer / anisotropy, 1)`. The divisor is the mip the filter is forced to by its anisotropy limit. Blue at 0.5 (1.0 texels) or more means the level is at full sharpness across the fine axis; less means the picture is magnified across it, either because there is no finer level there or because the footprint is more stretched than the filter's limit (then no level can help). Blue is 0 without the flag, as today.
 
 Measured in `tests/globe-gl.test.ts` (a camera 0.005 radii up, pitched 20 degrees down, levels of 60, 30 and 15 degrees at 4096 px, anisotropy 16): at the centre pixel the 30 degree level has 2.92 by 0.92 texels per pixel. Without the flag the 15 degree level is not drawn there; with the flag it is drawn at full weight, red reads 1 (the longer axis is 5.93 texels of that level, clipped at 2) and blue reads 0.94 (1.88 texels on the fine axis). With anisotropy 2 on every texture the blue value falls to the predicted 1.88 / (5.93 / 2).
+
+### Mars frame 2454, `side=orbit/noplace`, draft tier
+
+Rendered in a scratch worktree with `fadeMinor: true` added to `src/stops/mars/set.ts` (never committed). `npm run still -- --frame 2454 --tier draft --diag "beauty/side=orbit/noplace"`, and the same with `texels`. Ground pixels counted: 1479102. "Before" blue values come from a scratch build that writes blue but leaves the fade on the longer axis.
+
+| levels | fade | red under 1.0 | mean red | blue under 1.0 | blue under 0.5 |
+| --- | --- | --- | --- | --- | --- |
+| the five of today (96, 48, 24, 12, 3 deg) | longer axis | 0.5637 | 1.007 | 1.0000 | 0.9098 |
+| the five of today | fadeMinor | 0.5637 | 1.053 | 0.9518 | 0.7741 |
+| scratch seven (96, 48, 24, 12, 3, 1.2, 0.6 deg) | longer axis | 0.0000 | 1.723 | 0.8763 | 0.3073 |
+| scratch seven | fadeMinor | 0.0000 | 1.872 | 0.3872 | 0.0235 |
+
+Red is the G13 measure (longer axis, clipped at 2.0); blue is the fine axis. With the five levels of today the option changes the level on 10.9 percent of the ground pixels, all between rows 302 and 477 of 1080 (the far ground); the near ground is limited by the finest level (3 degrees), where no fade rule can help, so red under 1.0 does not move. The scratch seven reuse `patch-3.jpg` for the 1.2 and 0.6 degree levels: wrong content, right density, close to the plan of the Mars builder. There the share of ground magnified across the fine axis falls from 0.876 to 0.387, and the rest is where the footprint is more stretched than 16 to 1.
+
+Moving check, scratch seven, frames 2453, 2454, 2455, draft (1 sample a pixel, the hardest case), grain off (`nograin/side=orbit/noplace`), luminance in 8 bit levels over the ground pixels:
+
+| | frame to frame mean | second difference mean | p99 | p99.9 | max | detail, mean abs dx | dy |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| longer axis | 2.844 | 4.180 | 41.59 | 65.00 | 105.3 | 0.723 | 1.355 |
+| fadeMinor | 2.948 | 4.352 | 41.89 | 63.93 | 104.8 | 0.797 | 1.376 |
+
+The second difference (a pixel that goes up and comes back) rises 4 percent in the mean with 10 percent more detail across; its tail does not rise. The same three frames with the five levels of today and the grain on: 3.757 before, 3.780 after. No sparkle is seen in the crops at 1 to 1 (`strip7-three-frames.png` in the looks). Limit of this check: the camera moves fast at these frames, so the numbers are mostly true motion; they show that the option adds no flicker beyond its added detail, not that there is none. The same holds at steps of a tenth of a frame (`shut/t=81.8000`, `81.8033`, `81.8067`): second difference mean 1.671 before, 1.720 after.
+
+Still check for undersampling, scratch seven, frame 2454, every sample at the shutter middle (`nograin/side=orbit/noplace/shut`): the 1 sample picture against the 16 sample picture of the review tier. Mean difference over the ground 0.181 levels before, 0.238 after; p99 1.64 and 2.14; p99.9 3.99 and 5.20; max 30.7 both. The 16 sample picture has 19 percent more detail across with the option (0.797 to 0.949), so part of the rise is detail the single sample filter smooths; the rest I cannot separate.
+
+Not checked: another GPU than the software renderer of the harness; the film tier in motion (a clip).
 
 ## 3. One channel textures (`channels: 1`)
 
@@ -95,3 +121,5 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 ## Log
 
 - Tasks 1, 2 and 3 (code and tests). `npx vitest run`: 64 files, 135 tests green, of them `tests/globe-levels.test.ts` (6, shader text per option set) and `tests/globe-gl.test.ts` (5, in the harness browser with its flags). Options off: the 11 draft stills are byte equal to the references (run with the planet shader change only, then again with every change in). Not yet shown: a film frame with an option on.
+- Task 2 on pictures: Mars 2454 `side=orbit/noplace` before and after, texels shares, three consecutive frames (section 2). The Mars set in the repository is unchanged; the flag was set only in a scratch worktree.
+- Merged main d690e42a (only `kit/PROGRESS.md` differs from the starting commit).
