@@ -1,72 +1,94 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T17:24:20.140Z",
+ "pushed": "2026-11-23T17:37:27.749Z",
  "head": "76efaddc6fbd213f380a09dd5b085472d1431cec",
- "note": "cure for mail 296 committed as 76efaddc (draft, every frame 0 to 179 looked at); hold bytes kept; machine checks running",
+ "note": "76efaddc: handover report every part exit 0, hold bytes kept; G13 and G5/G17 running; still wrong: ground pool at the left foot in the release 99 px wide against 27 approved",
  "looks": [
   {
-   "time": "2026-11-23T17:24:19.503Z",
-   "file": "20261123172419503-note-q-every12.jpg",
-   "source": "out/work/sun/life/v/q-every12.jpg",
+   "time": "2026-11-23T17:37:26.512Z",
+   "file": "20261123173726512-note-q-footrow.jpg",
+   "source": "out/work/sun/life/v/q-footrow.jpg",
    "kind": "note",
-   "label": "cure, draft: every 12th frame 0 to 179",
+   "label": "76efaddc, draft: left foot at 21 and 24 with near white mask, still wider than approved on the ground",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T17:24:18.892Z",
-   "file": "20261123172418892-note-q-foot.jpg",
-   "source": "out/work/sun/life/v/q-foot.jpg",
+   "time": "2026-11-23T17:37:25.389Z",
+   "file": "20261123173725389-note-ho-q1-across.jpg",
+   "source": "out/work/sun/life/v/ho-q1-across.jpg",
    "kind": "note",
-   "label": "cure, draft: left foot, approved, before and now",
+   "label": "76efaddc, draft: handover across T, sides pass (mean 0.004 of 255)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T17:24:18.307Z",
-   "file": "20261123172418307-note-q-100n.jpg",
-   "source": "out/work/sun/life/v/q-100n.jpg",
+   "time": "2026-11-23T17:37:24.159Z",
+   "file": "20261123173724159-note-rise-q1-180.jpg",
+   "source": "out/work/sun/life/v/rise-q1-180.jpg",
    "kind": "note",
-   "label": "cure, draft: frame 100 native, before and now (dashes against threads)",
+   "label": "76efaddc, draft: rise every frame 180 to 191",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T17:24:17.631Z",
-   "file": "20261123172417631-note-q-100.jpg",
-   "source": "out/work/sun/life/v/q-100.jpg",
-   "kind": "note",
-   "label": "cure, draft: arcade 100 to 105 native, threads with soft clumps",
-   "stop": "sun"
+   "time": "2026-11-23T17:36:38.021Z",
+   "file": "20261123173638021-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
   },
   {
-   "time": "2026-11-23T17:09:27.980Z",
-   "file": "20261123170927980-note-full1-024.jpg",
-   "source": "out/work/sun/life/v/full1-024.jpg",
-   "kind": "note",
-   "label": "cure, draft: every frame 24 to 35",
-   "stop": "sun"
+   "time": "2026-11-23T17:36:08.678Z",
+   "file": "20261123173608678-sheet-sun-rise-top.jpg",
+   "source": "out/work/handover/sun-rise-top.png",
+   "kind": "sheet",
+   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 216,
+   "last": 269,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:09:27.196Z",
-   "file": "20261123170927196-note-q-thrown.jpg",
-   "source": "out/work/sun/life/v/q-thrown.jpg",
-   "kind": "note",
-   "label": "cure, draft: thrown arc 40 to 47 breaks into drops",
-   "stop": "sun"
+   "time": "2026-11-23T17:35:03.078Z",
+   "file": "20261123173503078-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:09:26.385Z",
-   "file": "20261123170926385-note-q-60.jpg",
-   "source": "out/work/sun/life/v/q-60.jpg",
-   "kind": "note",
-   "label": "cure, draft: frame 60 beside approved and before",
-   "stop": "sun"
+   "time": "2026-11-23T17:35:01.217Z",
+   "file": "20261123173501217-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T17:09:25.333Z",
-   "file": "20261123170925333-note-q-26.jpg",
-   "source": "out/work/sun/life/v/q-26.jpg",
-   "kind": "note",
-   "label": "cure, draft: arcade 26 to 31 native, strands separate in the release",
-   "stop": "sun"
+   "time": "2026-11-23T17:34:59.410Z",
+   "file": "20261123173459410-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
   }
  ]
 }
