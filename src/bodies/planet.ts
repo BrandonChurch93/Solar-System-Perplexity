@@ -4,6 +4,7 @@ import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
+import { setHazeAir, type GlobeAir } from './air'
 
 export interface PlanetLight {
   wrap: number
@@ -374,6 +375,13 @@ export class Planet {
     u.uWeight!.value = weight
     this.mesh.updateWorldMatrix(true, false)
     this.bodyToWorld.setFromMatrix4(this.m4.extractRotation(this.mesh.matrixWorld))
+  }
+
+  setAir(air: GlobeAir): void {
+    const u = this.material.uniforms
+    u.uLimb!.value = air.limb
+    ;(u.uTint!.value as THREE.Vector3).fromArray(air.tint)
+    setHazeAir(u, air.haze)
   }
 
   setOwnGain(gain: [number, number, number]): void {

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { hazeHidden, keepTriangles, type Trim } from './trim'
+import { setHazeAir, type HazeAir } from './air'
 
 interface HazeCore {
   scaleHeight: number
@@ -203,6 +204,10 @@ export class HazeShell implements Trim {
 
   show(): void {
     this.mesh.geometry = this.full
+  }
+
+  setAir(air: HazeAir): void {
+    setHazeAir(this.material.uniforms, air)
   }
 
   setGlow(direction: THREE.Vector3, colour: [number, number, number], power: number): void {
