@@ -88,7 +88,8 @@ uniform vec3 uPeelPick;
 uniform vec3 uPeelOuter;
 uniform vec4 uPeelGate;
 uniform vec3 uPeelTear;
-uniform vec4 uGap;` : ''}
+uniform vec4 uGap;
+uniform vec4 uGapMore;` : ''}
 uniform float uSince;
 uniform float uLifeOn;
 uniform vec4 uSway;
@@ -102,6 +103,8 @@ uniform vec4 uLead;
 uniform vec2 uLeadMore;
 uniform vec4 uLight[8];
 uniform vec3 uLightMore;
+uniform vec2 uLightKnee;
+uniform float uBound;
 uniform vec4 uRain;
 uniform vec4 uRainMore;
 uniform vec4 uRainLane;
@@ -233,6 +236,8 @@ void main() {
   vec2 dx = dFdx(uv) * uGrad;
   vec2 dy = dFdy(uv) * uGrad;
   vec3 lin = inverseFilmic(grade(textureGrad(uMap, uv, dx, dy).rgb, 1.0));
+  // the brightest this sample may get: what the picture has here, or the bound of the life, whichever is more
+  float most = max(uBound, max(lin.r, max(lin.g, lin.b)));
   vec2 pa = uFeet.xy - p;
   vec2 pb = uFeet.zw - p;
   float la = length(pa);
@@ -292,6 +297,8 @@ void main() {
     float seen = above * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, shine);
     float knot = uKnot.x * pick * exp(-ds * ds / (uKnot.w * uKnot.w)) * smoothstep(uKnotEnds.x, uKnotEnds.y, s) * (1.0 - smoothstep(1.0 - uKnotEnds.y, 1.0 - uKnotEnds.x, s)) * (1.0 - smoothstep(uKnotLane.x, uKnotLane.y, arc)) * seen;
     knot += seen * (uFoot.x * exp(-s / uKnotMore.w) + uFoot.y * exp(-(1.0 - s) / uKnotMore.w));
+    // a knot or a lit foot cannot burn a strand out: what it adds is bent over where the strand is bright already
+    knot /= 1.0 + uFlare.z * knot * shine;
     lin = lin * (1.0 + knot) + shine * knot * uKnotMore.z * vec3(1.0, 0.9, 0.66);
     for (int j = 0; j < (uSurge.y + uFlare.x + uFlare.y + uFlash.x > 0.0 ? 1 : 0); j++) {
       float strandLag = textureLod(uNoise, vec2(arc * uSurgeLane.x, 0.83), 0.0).r;
@@ -312,11 +319,12 @@ void main() {
       float flared = seen * foot;
       flared /= 1.0 + uFlare.z * flared * dot(lin, vec3(0.3, 0.5, 0.2));
       lin = lin * (1.0 + flared) + shine * flared * uKnotMore.z * vec3(1.0, 0.9, 0.66) + wide * uFlare.w * uSurgeGlow * foot;
-      float crest = uFlash.x * exp(-(s - 0.5) * (s - 0.5) / (uFlash.y * uFlash.y));
+      float inKnot = exp(-(arc - uFlashGlow.z) * (arc - uFlashGlow.z) / (uFlashGlow.w * uFlashGlow.w));
+      float crest = uFlash.x * exp(-(s - 0.5) * (s - 0.5) / (uFlash.y * uFlash.y)) * inKnot;
       float burnt = seen * crest;
       burnt /= 1.0 + uFlare.z * burnt * dot(lin, vec3(0.3, 0.5, 0.2));
       float haze = dot(inverseFilmic(grade(textureLod(uMap, uv, uFlashGlow.y).rgb, 1.0)), vec3(0.3, 0.5, 0.2));
-      lin = lin * (1.0 + burnt) + shine * burnt * uFlash.z * vec3(1.0, 0.9, 0.66) + (wide * uFlash.w + haze * uFlashGlow.x) * uFlashTint * (crest * above * exp(-(arc - uFlashGlow.z) * (arc - uFlashGlow.z) / (uFlashGlow.w * uFlashGlow.w)));
+      lin = lin * (1.0 + burnt) + shine * burnt * uFlash.z * vec3(1.0, 0.9, 0.66) + (wide * uFlash.w + haze * uFlashGlow.x) * uFlashTint * (crest * above);
     }
   }` : ''}
   // beads and drops sit on the cores of the strands: where the picture is brighter than its own surroundings
@@ -326,12 +334,16 @@ void main() {
   // a clump cannot burn the strand out: what it adds is bent over where the strand is bright already
   float carried = max(flowL - 1.0, 0.0);
   carried /= 1.0 + uStream.y * carried * shineL;
-  float lifeL = onL * (coreL * rainL + footL + litL);
+  float dropL = coreL * rainL;
+  float warm = dropL + footL + litL;
+  float bent = 1.0 / (1.0 + uLightKnee.x * warm * shineL);
+  warm *= bent;
+  float lifeL = onL * warm;
   // the leading strands: brighter, and with a soft body from the picture seen wide, which runs with the clumps
   float bodyL = leadL * ends * smoothstep(0.0, 0.02, abL.x * (p.y - uFeet.y) - abL.y * (p.x - uFeet.x)) * smoothstep(0.75, 1.0, arc) * smoothstep(uFlowMask.z, uFlowMask.w, wideL);
   vec3 plain = lin;
-  lin = lin * mix(1.0, mix(uLead.z, uLead.w, leadL), onL * ends) * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * (coreL * rainL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66)
-    + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + litL));
+  lin = lin * mix(1.0, mix(uLead.z, uLead.w, leadL), onL * ends) * (min(flowL, 1.0) + carried - uCore.w * onL * coreL + lifeL) + shineL * (carried * uStream.x + onL * bent * (dropL * uRain.y + footL * uRain.y + litL * uLightMore.x)) * vec3(1.0, 0.9, 0.66)
+    + wideC * (uLeadMore.x * bodyL * min(streamL, uLeadMore.y) * (1.0 + uLightKnee.y * bent * litL));
   // the life's own light falls to nil round the moment named in life.json (calm): there the strands are the picture itself
   lin = mix(plain, lin, uLifeOn);
   float climb = exp(-along / uBurst.z) + uBurstMore.x * exp(-(1.0 - along) / uBurst.z);
@@ -347,8 +359,17 @@ void main() {
   for (int k = 0; k < (uGap.x > 0.0 ? 1 : 0); k++) {
     float fromTop = abs(2.0 * sL - 1.0);
     float edge = uGap.x * (0.55 + 0.9 * textureLod(uNoise, vec2(arc * 7.0, 0.47), 0.0).r);
-    lin *= smoothstep(edge - uGap.y, edge, fromTop) * (1.0 + uGap.z * exp(-max(fromTop - edge, 0.0) / uGap.w));
+    // No strand ends in a cut (mail 260 point 2). Below the opening a strand breaks up over a stretch that grows
+    // as it falls: first gaps, then clumps, then single drops, dimmer the nearer the opening. The drops run down
+    // the leg with the opening (uGapMore.z times as fast), so they fall and do not stand.
+    float s = clamp((fromTop - edge) / (uGap.y + uGapMore.x * uGap.x), 0.0, 1.0);
+    float n = textureLod(uNoise, vec2((fromTop - uGapMore.z * uGap.x) * uGapMore.y, fract(arc * 0.66 + 0.21)), 0.0).r;
+    float thr = (1.0 - s) * 1.25 - 0.25;
+    float drop = smoothstep(thr, thr + 0.25, n);
+    lin *= drop * mix(uGapMore.w, 1.0, s * s) * (1.0 + uGap.z * (1.0 - s) * smoothstep(0.55, 0.9, n) * exp(-max(fromTop - edge, 0.0) / uGap.w));
   }` : ''}
+  // no single sample outshines the picture's own white (mail 260 point 5): bound before the samples are added up
+  lin *= min(1.0, most / max(max(lin.r, max(lin.g, lin.b)), 1e-6));
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   lin *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(lin, 0.0);
@@ -495,6 +516,8 @@ export class Loops {
         uLeadMore: { value: new THREE.Vector2(arcade.lead.body, arcade.lead.most) },
         uLight: { value: Array.from({ length: 8 }, () => new THREE.Vector4(0, 1, 0, 2)) },
         uLightMore: { value: new THREE.Vector3(arcade.lights.white, arcade.lights.lanes, 0) },
+        uLightKnee: { value: new THREE.Vector2(arcade.lights.knee, arcade.lights.body) },
+        uBound: { value: arcade.core.most },
         uLifeOn: { value: 1 },
         uRain: { value: new THREE.Vector4(arcade.rain.amount, arcade.rain.white, (2 * (1 - arcade.rain.from)) / (arcade.rain.fall * arcade.rain.fall), arcade.rain.from) },
         uRainMore: { value: new THREE.Vector4(arcade.rain.period[0]!, arcade.rain.period[1]!, arcade.rain.head, arcade.rain.tail) },
@@ -550,6 +573,7 @@ export class Loops {
       u.uPeelGate = { value: new THREE.Vector4(...e.gate) }
       u.uPeelTear = { value: new THREE.Vector3(...e.tear) }
       u.uGap = { value: new THREE.Vector4(0, arcade.thrown.soft, arcade.thrown.ends[0]!, arcade.thrown.ends[1]!) }
+      u.uGapMore = { value: new THREE.Vector4(arcade.thrown.break, arcade.thrown.drops, arcade.thrown.drift, arcade.thrown.dim) }
       this.shed = this.material.clone()
       this.shed.uniforms = { ...u, uGrow: { value: 0 }, uShear: { value: 0 }, uPeel: { value: new THREE.Vector2(0, 0) }, uPeelPick: { value: new THREE.Vector3(e.pick[0], e.pick[1], e.lanes) }, uGap: { value: new THREE.Vector4(0, arcade.thrown.soft, arcade.thrown.ends[0]!, arcade.thrown.ends[1]!) } }
       this.peel = new THREE.Mesh(geometry, this.shed)

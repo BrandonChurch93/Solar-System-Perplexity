@@ -102,7 +102,7 @@
       1.7
     ],
     "lowLod": 3,
-    "note": "the globe draws the ground function of the close view itself round the place: inside capDeg of the stage nadir, while the globe map is enlarged (fade, map texels per pixel across the view). heights are camera heights in radii, each a smooth step in log height during the rise: tidy is where the close tone gives way to the map's own tone under the same cells; spot is where the close sunspot itself (inside spotKeep, stage units from its centre) gives way to the knot of the map; strands is where the faint haze between the loop strands and the spray outside the arcade are trimmed (loopsCut) and loops where the arcade leaves; fringe, corona and sky are where the fringe leaves and the corona, the prominences, the rim and the far sky come in, all inside the span in which the frame holds no sky; lowLod is the mip step that splits a close texture into cells and tone",
+    "note": "the globe draws the ground function of the close view itself round the place: inside capDeg of the stage nadir, while the globe map is enlarged (fade, map texels per pixel across the view). heights are camera heights in radii, each a smooth step in log height during the rise: tidy is where the close tone gives way to the map's own tone under the same cells; spot is where the close sunspot itself (inside spotKeep, stage units from its centre) gives way to the knot of the map; strands is where the faint haze between the loop strands and the spray outside the arcade are trimmed (loopsCut) and loops where the arcade leaves; fringe, corona and sky are where the fringe leaves and the corona, the prominences, the rim and the far sky come in, all inside the span in which the frame holds no sky; haze is where the low haze over the ground thins out, gone before the side changes; lowLod is the mip step that splits a close texture into cells and tone",
     "heights": {
       "tidy": [
         0.3,
@@ -135,6 +135,10 @@
       "field": [
         0.07,
         0.11
+      ],
+      "haze": [
+        0.07,
+        0.17
       ]
     },
     "loopsCut": 0.12,
