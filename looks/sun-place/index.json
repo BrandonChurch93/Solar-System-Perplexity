@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T22:09:50.680Z",
+ "pushed": "2026-11-23T22:18:21.967Z",
  "head": "4e4ce56823b4859b96be2b337e0b45d2d69aea93",
- "note": "ground cure of mail 344, fixed lanes: likeness under 0.2 from lag 6 in all boxes, moving lanes rendering",
+ "note": "cure of mail 344 stopped by mail 350 (it moves the picture); next looks are the ground from functions with relief",
  "looks": [
+  {
+   "time": "2026-11-23T22:18:21.375Z",
+   "file": "20261123221821375-note-cure-strip-b.jpg",
+   "source": "out/work/sun/life/v/cure-strip-b.jpg",
+   "kind": "note",
+   "label": "cure of mail 344 as stopped at 22:14: time strips fixed lanes and moving lanes, it moves the picture, kept as record only",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T22:09:49.676Z",
    "file": "20261123220949676-note-cureA-strip.jpg",
@@ -71,18 +79,6 @@
    "kind": "note",
    "label": "simulation on the plate, not a render: ground cure of mail 344, eight consecutive frames (each life of a look shows another piece of the cell)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:17:42.092Z",
-   "file": "20261123211742092-sheet-sun-rise-top.jpg",
-   "source": "out/work/handover/sun-rise-top.png",
-   "kind": "sheet",
-   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "first": 216,
-   "last": 269,
-   "tier": "draft"
   }
  ]
 }
