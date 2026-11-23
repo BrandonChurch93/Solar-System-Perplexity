@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T19:41:47.602Z",
+ "pushed": "2026-11-23T19:57:44.072Z",
  "head": "c3199d33a442ae351ec087ba6d74288279c6e6e4",
- "note": "Floor on the shutter share built and pushed with two trial branches; rendering Mars 2440 and the rise at T with floor 0.25",
+ "note": "Floor 0.25 looked at on Mars 2440 and across T of the rise; floor 0.5 at T is rendering, then the review byte proof",
  "looks": [
   {
-   "time": "2026-11-23T19:41:36.820Z",
-   "file": "20261123194136820-note-cmp-2694-three.jpg",
-   "source": "../../../../tmp/tone/cmp-2694-three.png",
+   "time": "2026-11-23T19:57:42.913Z",
+   "file": "20261123195742913-note-floor-rise-5.jpg",
+   "source": "../../../../tmp/e6/floor-rise-5.png",
    "kind": "note",
-   "label": "Mars rise 2694 and 2695, fifth bake: today, tone shares 1, tone shares 2, draft tier"
+   "label": "Mars rise with floor 0.25, review tier: 2690, 2691, 2692 (T), 2693, 2694, 2705"
   },
   {
-   "time": "2026-11-23T18:58:42.389Z",
-   "file": "20261123185842389-note-f04195-review.jpg",
-   "source": "../../../../tmp/e6/after/f04195-review.png",
+   "time": "2026-11-23T19:57:42.067Z",
+   "file": "20261123195742067-note-floor-rise-2693-bl.jpg",
+   "source": "../../../../tmp/e6/floor-rise-2693-bl.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), frame 4195, review tier, commit aca5732"
+   "label": "Mars rise 2693 (globe side) bottom left at full size: cap 6 alone against floor 0.25; the strokes of the place picture soften"
   },
   {
-   "time": "2026-11-23T18:58:41.533Z",
-   "file": "20261123185841533-note-f02156-review.jpg",
-   "source": "../../../../tmp/e6/after/f02156-review.png",
+   "time": "2026-11-23T19:57:40.987Z",
+   "file": "20261123195740987-note-floor-rise-2693-br.jpg",
+   "source": "../../../../tmp/e6/floor-rise-2693-br.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), frame 2156, review tier, commit aca5732"
+   "label": "Mars rise 2693 (globe side) bottom right at full size: cap 6 alone against floor 0.25; the red at the edge is the globe beside the place picture"
   },
   {
-   "time": "2026-11-23T18:58:40.437Z",
-   "file": "20261123185840437-note-f01857-review.jpg",
-   "source": "../../../../tmp/e6/after/f01857-review.png",
+   "time": "2026-11-23T19:52:08.282Z",
+   "file": "20261123195208282-note-floor-rise-br.jpg",
+   "source": "../../../../tmp/e6/floor-rise-br.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), frame 1857, review tier, commit aca5732"
+   "label": "Mars rise 2691, 2692, 2693 with floor 0.25, bottom right at full size: the globe's red at the edge of the place picture in 2693"
   },
   {
-   "time": "2026-11-23T18:58:39.355Z",
-   "file": "20261123185839355-note-f01016-review.jpg",
-   "source": "../../../../tmp/e6/after/f01016-review.png",
+   "time": "2026-11-23T19:52:06.989Z",
+   "file": "20261123195206989-note-floor-rise-ml.jpg",
+   "source": "../../../../tmp/e6/floor-rise-ml.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), frame 1016, review tier, commit aca5732"
+   "label": "Mars rise 2691, 2692, 2693 with floor 0.25, left of the middle at full size"
   },
   {
-   "time": "2026-11-23T18:58:37.534Z",
-   "file": "20261123185837534-note-f00717-review.jpg",
-   "source": "../../../../tmp/e6/after/f00717-review.png",
+   "time": "2026-11-23T19:52:05.861Z",
+   "file": "20261123195205861-note-floor-rise-whole.jpg",
+   "source": "../../../../tmp/e6/floor-rise-whole.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), frame 717, review tier, commit aca5732"
+   "label": "Mars rise across T with floor 0.25, review tier: 2691 close, 2692 the swap frame, 2693 globe side; last the swap frame with the cap alone at 6 px"
   },
   {
-   "time": "2026-11-23T18:45:19.067Z",
-   "file": "20261123184519067-note-f02726-review.jpg",
-   "source": "../../../../tmp/e6/after/f02726-review.png",
+   "time": "2026-11-23T19:52:04.792Z",
+   "file": "20261123195204792-note-floor-2440-crops-c.jpg",
+   "source": "../../../../tmp/e6/floor-2440-crops-c.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), Mars frame 2726, review tier, 16 samples, commit aca5732"
+   "label": "Mars dive 2440 the middle at full size: cap 6 alone against floor 0.25 (the place stays sharp)"
   },
   {
-   "time": "2026-11-23T18:45:17.877Z",
-   "file": "20261123184517877-note-f02705-review.jpg",
-   "source": "../../../../tmp/e6/after/f02705-review.png",
+   "time": "2026-11-23T19:52:03.626Z",
+   "file": "20261123195203626-note-floor-2440-crops-b.jpg",
+   "source": "../../../../tmp/e6/floor-2440-crops-b.png",
    "kind": "note",
-   "label": "E6 capped shutter (6 px), Mars frame 2705, review tier, 16 samples, commit aca5732"
+   "label": "Mars dive 2440 bottom left at full size: cap 6 alone against floor 0.25 (36.6 px of blur at the rim)"
   }
  ]
 }
