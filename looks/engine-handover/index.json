@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T22:08:19.815Z",
- "head": "cbb31e6d291dd2318e1857f0038b27a23705efd8",
- "note": "limbSky third step: the lap of the ball takes the globe's sky under the limb of the sphere; bright line gone, a thin darker line left, working on it",
+ "pushed": "2026-11-23T22:23:34.962Z",
+ "head": "d71c835972db5bae641f0977acd0aee3ec143b3a",
+ "note": "limbSky: the lap told by the depth of the frame cures both lines on Mars; next the one pace of plan E",
  "looks": [
+  {
+   "time": "2026-11-23T22:23:34.378Z",
+   "file": "20261123222334378-note-c-depth-zoom.jpg",
+   "source": "../../../../tmp/hz/c-depth-zoom.png",
+   "kind": "note",
+   "label": "limbSky on Mars rise 2699, left of frame at five times size: off, plain lap (dark dashes on the limb), depth aware lap (clean)"
+  },
   {
    "time": "2026-11-23T22:08:19.110Z",
    "file": "20261123220819110-note-c-lap-zoom.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/hz/c-rise-on-L2.png",
    "kind": "note",
    "label": "Mars rise 2702 to 2709, left 720 px at full size, ON (first try)"
-  },
-  {
-   "time": "2026-11-23T21:23:08.749Z",
-   "file": "20261123212308749-note-c-rise-on-L1.jpg",
-   "source": "../../../../tmp/hz/c-rise-on-L1.png",
-   "kind": "note",
-   "label": "Mars rise 2694 to 2701, left 720 px at full size, ON (first try): the haze stays on the sky clock, a dark stripe under the limb is the picture's own horizon row, to be cured"
   }
  ]
 }
