@@ -40,7 +40,8 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(orbit, terrain)
 
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
-  const cloud = await ctx.texture(base + 'wrap-cloud.png', { srgb: false, anisotropy: 16, repeat: true })
+  const cloud = await ctx.texture(base + 'wrap-cloud.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
+  const shadow = await ctx.texture(base + 'wrap-shadow.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
   const light = await ctx.dataTexture(base + 'light.bin', look.globe.lightSize[0], look.globe.lightSize[1], 4)
   const shade = await ctx.dataTexture(base + 'shade.bin', look.globe.shadeSize[0], look.globe.shadeSize[1], 4)
   const haloLut = await ctx.dataTexture(base + 'halo.bin', look.halo.size[0], look.halo.size[1], 4)
@@ -53,10 +54,10 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, tops: await ctx.texture(base + platesJson.tops.file, { srgb: false, channels: 1, anisotropy: 16 }), steep: look.place.steep, topLight: look.place.tops, feather: platesJson.feather,
+    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: look.place.tops, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
-  const globe = new Globe({ map, cloud, light, shade, patches, face, place, ...look.globe })
+  const globe = new Globe({ map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
   globe.mesh.quaternion.copy(globeTurn)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range, { map, light, shade, lightSize: look.globe.lightSize, bandRate: look.globe.bandRate, turn: globe.mesh.quaternion, rim: look.halo.rim, rimSun: look.halo.rimSun })
   const shape = new THREE.Group()
@@ -207,10 +208,10 @@ export const createSet: SetFactory = async (ctx) => {
       const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
-      const relit = low && !look.show.down ? reach(look.place.light, altitude) : 0
+      const relit = low && !look.show.down
       const plated = low ? reach(look.place.plates, altitude) : 0
-      if (low) globe.place(relit, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
-      else globe.place(0, 0, state.time - terrainMid, eyes.dive)
+      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, 1 - reach(look.place.tops.clear[kind as 'dive' | 'rise'], altitude), state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
+      else globe.place(0, 0, 0, 0, state.time - terrainMid, eyes.dive)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()

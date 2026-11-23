@@ -11,6 +11,7 @@ from scipy.ndimage import map_coordinates
 
 sys.path.insert(0, 'assets-src/uranus')
 import geo  # noqa: E402
+import pack  # noqa: E402
 
 Image.MAX_IMAGE_PIXELS = None
 PUB = 'public/assets/uranus/full/'
@@ -403,8 +404,8 @@ def repaint(a, seen, half, size, pyr):
 
 def save_tops(tops):
     img = Image.fromarray(tops)
-    img.save(PUB + 'place-tops.png', optimize=True)
-    img.resize((tops.shape[1] // 2, tops.shape[0] // 2), Image.LANCZOS).save(WEB + 'place-tops.png', optimize=True)
+    img.save(WORK + 'place-tops.png')
+    pack.plate(Image.open(WORK + 'place-1.png'), img)
 
 
 def tops_map(gain, one):
@@ -515,7 +516,7 @@ def main():
         gx, gy = grid(PLATES['halfTan'], size, 0, size)
         th, r = polar_of(dirs(gx, gy))
         keep, core = keep_of(z['seen'], th.astype(np.float32), r.astype(np.float32))
-        one = (np.asarray(Image.open(PUB + 'place-1.jpg').convert('RGB')).astype(np.float32) / 255) ** 2 * DECK['aMax']
+        one = (np.asarray(Image.open(WORK + 'place-1.png').convert('RGB')).astype(np.float32) / 255) ** 2 * DECK['aMax']
         tops = tops_map(tops_of(keep), one)
         if write:
             save_tops(tops)
@@ -582,49 +583,19 @@ def main():
         return
     for i, a in enumerate(levels):
         img = Image.fromarray(encode(a))
+        if i == 0:
+            img.save(WORK + 'place-1.png')
+            continue
         img.save(PUB + 'place-%d.jpg' % (i + 1), quality=93, subsampling=0)
         img.resize((size // 2, size // 2), Image.LANCZOS).save(WEB + 'place-%d.jpg' % (i + 1), quality=92, subsampling=0)
     field[::-1].tofile(PUB + 'place-field.bin')
     field[::-1].tofile(WEB + 'place-field.bin')
     save_tops(tops)
 
-    kept = []
-    for k in range(PLATES['patchKeep']):
-        name, width = PLATES['patchSource'][k]
-        old, scale = globe.levels[k]
-        n = old.shape[0]
-        halfp = 0.5 / scale
-        ratio = (2 * halfp / n) / (2 * half0 / size)
-        soft = cv2.GaussianBlur(levels[0], (0, 0), max(0.5 * ratio, 0.3))
-        out = np.empty((n, n, 3), np.uint8)
-        for r in range(0, n, 512):
-            g = ((np.arange(n) + 0.5) / n - 0.5) * 2 * halfp
-            x, y = np.meshgrid(g, -g[r:r + 512])
-            d = globe.n + x[..., None] * globe.e + y[..., None] * globe.u
-            d /= np.linalg.norm(d, axis=-1, keepdims=True)
-            nd = globe.deck(d)
-            pn = nd @ N0
-            px = (nd @ E0) / np.maximum(pn, 0.05)
-            py = (nd @ U0) / np.maximum(pn, 0.05)
-            inside = (pn > 0.5) & (np.maximum(np.abs(px), np.abs(py)) < half0)
-            a = cv2.remap(soft, ((px / (2 * half0) + 0.5) * size - 0.5).astype(np.float32), ((0.5 - py / (2 * half0)) * size - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-            f = cv2.remap(field, ((px / (2 * half0) + 0.5) * fs - 0.5).astype(np.float32), ((0.5 - py / (2 * half0)) * fs - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-            w = (f[..., 3] * inside)[..., None]
-            lin = geo.unfilm(geo.to_linear(old[r:r + 512].astype(np.float32) / 255))
-            out[r:r + 512] = (np.clip(geo.display(lin + (a * f[..., :3] - lin) * w), 0, 1) * 255 + 0.5).astype(np.uint8)
-        img = Image.fromarray(out)
-        img.save(PUB + name, quality=93, subsampling=0)
-        img.resize((n // 2, n // 2), Image.LANCZOS).save(WEB + name, quality=92, subsampling=0)
-        img.resize((1024, 1024), Image.LANCZOS).save(WORK + name.replace('.jpg', '-v.jpg'), quality=88)
-        kept.append({'file': name, 'widthDeg': width})
-        print('patch', name, 'ratio to plate 1', round(ratio, 3), flush=True)
-    patches = json.load(open('src/stops/uranus/patches.json'))
-    patches['levels'] = kept
-    json.dump(patches, open('src/stops/uranus/patches.json', 'w'), indent=1)
     json.dump({
         'n': N0.tolist(), 'e': E0.tolist(), 'u': U0.tolist(),
-        'levels': [{'file': 'place-%d.jpg' % (i + 1), 'halfTan': half0 / 2 ** i} for i in range(len(levels))],
-        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'tops': {'file': 'place-tops.png'}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
+        'levels': [{'file': 'place-1.png' if i == 0 else 'place-%d.jpg' % (i + 1), 'halfTan': half0 / 2 ** i} for i in range(len(levels))],
+        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
     }, open('src/stops/uranus/plates.json', 'w'), indent=1)
 
 

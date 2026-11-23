@@ -16,7 +16,7 @@
  ],
  "levels": [
   {
-   "file": "place-1.jpg",
+   "file": "place-1.png",
    "halfTan": 0.28
   },
   {
@@ -37,9 +37,6 @@
  "field": {
   "file": "place-field.bin",
   "size": 256
- },
- "tops": {
-  "file": "place-tops.png"
  },
  "clockRef": 3.25,
  "aimUnits": 1.2000000000000002
