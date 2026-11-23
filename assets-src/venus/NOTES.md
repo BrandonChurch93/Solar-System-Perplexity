@@ -2080,3 +2080,17 @@ What is still wrong, by frame:
 9. Below about 0.07 radii the two deepest plates read as a stretched painting from straight above (1320 to 1343, 1542 to 1562).
 10. The tint of the plates against the globe was not measured again after the cure (before it, 1287 red 1.14, green 0.93, blue 0.69 at the centre).
 11. The tiles of w have no take left in this phase.
+
+### State 17:00, the rest of the proofs for 8b65c470
+
+READY venus 8b65c470 sent to /root at 16:37 UTC with the measures of the entry above and the list. Measured after that, one render process at a time, on the same tree (8b65c470 differs from 6d3d78f3 in notes, recipe and `kit/PROGRESS.md` of main only):
+
+- G5 and G17, final tier, `npm run measure -- --stop venus --only G5,G17` (459 s): PASS G5 (1185 hold invalid 0 coverage 0.316; 1287 dive invalid 0 coverage 0.907; 1440 terrain invalid 0 coverage 0.685; 1586 rise invalid 0 coverage 0.887). PASS G17 (1185 median 0.959 p25 0.844 over 77 tiles; 1440 median 0.936 p25 0.804 over 76 tiles). Copy: `out/work/venus/place/r9/g5g17.json`.
+- Final tier bytes of 1185 and 1440 (`same/fin11/`): sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the values of the kept stills.
+- Harness, `npm run -s handover -- --stop venus --tier draft` (report copied to `out/work/venus/place/r9/h/`): every check pass, "under the place picture" inside the limit on both.
+  - Dive, T in 1343: side difference mean 0.052, 99th percentile 1, max 133, 57 pixels over 16; under the place picture mean 3.98 (tone 1.79, detail 3.57; it was 4.18); flow gap mean 0.101 px a frame, largest 0.286; largest step on the body level 5.9 and colour 6.45, both into frame 1280 (limits 6 and 8); largest flat share 1.5 percent (1336).
+  - Rise, T in 1542: side difference mean 0.052, 99th percentile 1, max 47, 39 pixels over 16; under the place picture mean 3.95 (tone 1.7, detail 3.57; it was 4.09); flow gap mean 0.092, largest 0.236; largest step on the body level 4.72 and colour 5.39, both into frame 1594; largest flat share 0.7 percent (1545).
+  - The sheets of consecutive frames across both handovers (1337 to 1348, 1536 to 1547): one place, no cover. Seen on them: crisp pale grey ridges in the lower left corner in 1337 and in 1545 to 1547 (item 5 of the list).
+- `npm run build` on 8b65c470: exit 0 (built in 2.74 s), dist linked again (441 links).
+
+Close to a limit: the level step into frame 1280 is 5.9 of 6. That is the frame where the dusk gain starts and the plates come in; to bring down with the next change of the place.
