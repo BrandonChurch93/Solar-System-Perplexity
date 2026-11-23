@@ -287,13 +287,13 @@ function flow(line: Line): FlowNumbers & Verdict {
 // far the point that moves most goes from the middle of this frame to the middle of the next one.
 interface FrameRow {
   frame: number; side: ViewKind; height: number; ratio: number | null; rate: number | null; place: [number, number] | null; motionCentre: number | null; motionEdge: number | null; motionMost: number
-  shutter: number; allowed: number | null; blurCentre: number | null; blurEdge: number | null; blurMost: number; stepMost: number | null
+  shutter: number; allowed: number | null; blurCentre: number | null; blurEdge: number | null; blurMost: number; stepMost: number | null; samples: number; atFloor?: true
   level?: number; colour?: number[]; bodyShare?: number; bodyLevel?: number; bodyColour?: number[]; flatShare?: number; contrast?: number
 }
 interface ImageNumbers { level: number; colour: number[]; bodyShare: number; bodyLevel: number; bodyColour: number[]; flatShare: number; contrast: number }
 
 interface Seam { with: string; own: number; other: number; ownBefore: number; ownAfter: number; otherBlur: number }
-interface BlurNumbers { maxBlurPx: number; easeFrames: number; capped: number; leastShutter: { frame: number; share: number }; mostLeft: { frame: number; px: number }; mostBefore: { frame: number; px: number }; ease: { first: number; last: number; px: number }[]; stepBefore: { frame: number; px: number }; stepAfter: { frame: number; px: number }; fastest: { frame: number; pxAFrame: number; blur: number }; seams: Seam[] }
+interface BlurNumbers { maxBlurPx: number; easeFrames: number; minShutter: number; floored: number; samplesMost: { frame: number; count: number }; capped: number; leastShutter: { frame: number; share: number }; mostLeft: { frame: number; px: number }; mostBefore: { frame: number; px: number }; ease: { first: number; last: number; px: number }[]; stepBefore: { frame: number; px: number }; stepAfter: { frame: number; px: number }; fastest: { frame: number; pxAFrame: number; blur: number }; seams: Seam[] }
 
 async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow[]; judged: Record<string, unknown>; blur: BlurNumbers | null } & Verdict> {
   const seg = line.seg
@@ -303,6 +303,7 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
   const h = line.opted ? handoverOf(stop!, line.kind) : null
   const full: number[] = []
   const left: number[] = []
+  const floor = cfg.raw.handover.minShutter
   for (let f = seg.firstFrame; f < seg.endFrame; f++) {
     const mid = (f + shutterMid()) / fps
     const side = line.sideOf(mid)
@@ -317,6 +318,8 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
     // The shutter that is open (E6) and the motion across it, measured the way the engine plans the frame: both sides inside the dissolve.
     const share = shutterScale(film, f)
     const allowed = blurAllowed(film, f)
+    // At the floor (handover.minShutter) a frame keeps more than the cap allows, by design: it is reported, not judged against the cap.
+    const atFloor = h !== null && floor > 0 && share < 1 && share <= floor
     let blurCentre: number | null = null
     let blurEdge: number | null = null
     let blurMost = 0
@@ -337,10 +340,12 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
       frame: f, side, height: Number(height.toExponential(4)), ratio: prev ? round(height / prev.height, 5) : null, rate: prev ? round(Math.log(prev.height / height), 5) : null,
       place: spot.front ? [round(spot.x, 1), round(spot.y, 1)] : null, motionCentre: centre === null ? null : round(centre, 2), motionEdge: edge === null ? null : round(edge, 2), motionMost: round(most, 2),
       shutter: round(share, 4), allowed: Number.isFinite(allowed) ? round(allowed, 2) : null, blurCentre: blurCentre === null ? null : round(blurCentre, 2), blurEdge: blurEdge === null ? null : round(blurEdge, 2), blurMost: round(blurMost, 2), stepMost: stepMost === null ? null : round(stepMost, 1),
+      samples: framePlan(film, f, 'review').samples, ...(atFloor ? { atFloor: true as const } : {}),
     })
     bodies.push(bodyGrid(cam))
   }
   // E6, judged: no frame keeps more blur than it may. Outside the ease frames that is handover.maxBlurPx; in them the ramp to the seam's motion.
+  // A frame at the floor keeps the motion across that share of the shutter, whatever the cap.
   const blurWhy: string[] = []
   let blur: BlurNumbers | null = null
   if (h) {
@@ -350,7 +355,7 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
       const px = Math.max(...v)
       return { frame: at(v.indexOf(px)), px: round(px, 2) }
     }
-    for (const r of rows) if (r.allowed !== null && r.blurMost > r.allowed) blurWhy.push('frame ' + r.frame + ' keeps ' + r.blurMost + ' px of motion across its shutter, ' + r.allowed + ' allowed' + (r.allowed > maxBlurPx ? ' in the ease to the seam' : ''))
+    for (const r of rows) if (r.allowed !== null && r.blurMost > r.allowed && !r.atFloor) blurWhy.push('frame ' + r.frame + ' keeps ' + r.blurMost + ' px of motion across its shutter, ' + r.allowed + ' allowed' + (r.allowed > maxBlurPx ? ' in the ease to the seam' : ''))
     // The seams: the frame before the segment and the frame after it run with the full shutter, as they always did.
     const seams: Seam[] = []
     const before = seg.firstFrame - 1
@@ -377,9 +382,10 @@ async function frames(line: Line, withImages: boolean): Promise<{ rows: FrameRow
       } else ease.push({ first: r.frame, last: r.frame, px: r.allowed })
     }
     const least = rows.reduce((a, b) => (b.shutter < a.shutter ? b : a))
+    const busiest = rows.reduce((a, b) => (b.samples > a.samples ? b : a))
     const fast = rows.reduce((a, b) => ((b.stepMost ?? 0) > (a.stepMost ?? 0) ? b : a))
     blur = {
-      maxBlurPx, easeFrames: cfg.raw.handover.blurEaseFrames, capped: rows.filter((r) => r.shutter < 1).length, leastShutter: { frame: least.frame, share: least.shutter }, mostLeft: top(left), mostBefore: top(full), ease,
+      maxBlurPx, easeFrames: cfg.raw.handover.blurEaseFrames, minShutter: floor, floored: rows.filter((r) => r.atFloor).length, samplesMost: { frame: busiest.frame, count: busiest.samples }, capped: rows.filter((r) => r.shutter < 1).length, leastShutter: { frame: least.frame, share: least.shutter }, mostLeft: top(left), mostBefore: top(full), ease,
       stepBefore: step(full), stepAfter: step(left), fastest: { frame: fast.frame, pxAFrame: fast.stepMost ?? 0, blur: fast.blurMost }, seams,
     }
   }
@@ -526,11 +532,14 @@ try {
       const b = f.blur
       if (b) {
         md.push('Shutter (E6): the motion across the shutter is capped at ' + b.maxBlurPx + ' px. ' + b.capped + ' of ' + f.rows.length + ' frames run with a shortened shutter, the shortest ' + b.leastShutter.share + ' of the film\'s shutter (frame ' + b.leastShutter.frame + '). Motion across the shutter at the point that moves most: up to ' + b.mostBefore.px + ' px with the full shutter (frame ' + b.mostBefore.frame + '), up to ' + b.mostLeft.px + ' px now (frame ' + b.mostLeft.frame + ').' + (b.ease.length > 0 ? ' Ease to a seam that moves more than the cap: ' + b.ease.map((e) => 'frames ' + e.first + ' to ' + e.last + ', up to ' + e.px + ' px').join('; ') + '.' : ' No seam moves more than the cap, so no frame is eased.'))
+        md.push(b.minShutter > 0
+          ? 'Floor (handover.minShutter ' + b.minShutter + ', the least share of the shutter a capped frame runs): ' + b.floored + ' of ' + f.rows.length + ' frames run at the floor and keep more than the cap, the longest blur ' + b.mostLeft.px + ' px (frame ' + b.mostLeft.frame + '). The review tier takes up to ' + b.samplesMost.count + ' samples (frame ' + b.samplesMost.frame + '). Share of the shutter and longest blur of every frame: the columns shutter and blur most of the table.'
+          : 'Floor: off (handover.minShutter 0). The review tier takes up to ' + b.samplesMost.count + ' samples (frame ' + b.samplesMost.frame + '). Share of the shutter and longest blur of every frame: the columns shutter and blur most of the table.')
         md.push('Seams, motion across the shutter in px: ' + b.seams.map((x) => 'frame ' + x.own + ' ' + x.ownBefore + ' with the full shutter and ' + x.ownAfter + ' now, beside it frame ' + x.other + ' of ' + x.with + ' ' + x.otherBlur).join('; ') + '. Largest change from one frame to the next, the frames beside the segment included: ' + b.stepBefore.px + ' px with the full shutter (into frame ' + b.stepBefore.frame + '), ' + b.stepAfter.px + ' px now (into frame ' + b.stepAfter.frame + ').')
         md.push('Motion from frame to frame against the blur: at the fastest frame (' + b.fastest.frame + ') the point that moves most goes ' + b.fastest.pxAFrame + ' px to the next frame and keeps ' + b.fastest.blur + ' px of blur. The table has both for every frame (blur most, px a frame).')
       }
-      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | shutter | blur centre | blur edge | blur most | px a frame | level | colour | body share | body level | body colour | flat |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
-      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.shutter, r.blurCentre ?? '', r.blurEdge ?? '', r.blurMost, r.stepMost ?? '', r.level ?? '', r.colour ? r.colour.join(' ') : '', r.bodyShare ?? '', r.bodyLevel ?? '', r.bodyColour ? r.bodyColour.join(' ') : '', r.flatShare ?? ''].join(' | ') + ' |')
+      md.push('', '| frame | side | height | ratio | place x, y | motion centre | motion edge | shutter | blur centre | blur edge | blur most | px a frame | samples at review | level | colour | body share | body level | body colour | flat |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |')
+      for (const r of f.rows) md.push('| ' + [r.frame + (r.frame === line.frameT ? ' T' : ''), r.side === 'orbit' ? 'globe' : 'close', r.height, r.ratio ?? '', r.place ? r.place.join(', ') : 'behind', r.motionCentre ?? '', r.motionEdge ?? '', r.shutter, r.blurCentre ?? '', r.blurEdge ?? '', r.blurMost, r.stepMost ?? '', r.samples, r.level ?? '', r.colour ? r.colour.join(' ') : '', r.bodyShare ?? '', r.bodyLevel ?? '', r.bodyColour ? r.bodyColour.join(' ') : '', r.flatShare ?? ''].join(' | ') + ' |')
       md.push('')
     }
     if (only.includes('sheets')) {

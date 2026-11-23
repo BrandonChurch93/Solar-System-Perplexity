@@ -101,6 +101,19 @@ describe('the numbers of the path in the config', () => {
       delete gone.handover[key]
       expect(() => buildConfig(gone)).toThrow(new RegExp('missing key handover.' + key))
     }
+    for (const bad of [-0.01, 1.01, Number.NaN]) {
+      const b = clone() as unknown as { handover: Record<string, unknown> }
+      b.handover.minShutter = bad
+      expect(() => buildConfig(b)).toThrow(/minShutter/)
+    }
+    for (const fine of [0, 0.25, 1]) {
+      const b = clone() as unknown as { handover: Record<string, unknown> }
+      b.handover.minShutter = fine
+      expect(() => buildConfig(b)).not.toThrow()
+    }
+    const noFloor = clone() as unknown as { handover: Record<string, unknown> }
+    delete noFloor.handover.minShutter
+    expect(() => buildConfig(noFloor)).toThrow(/missing key handover.minShutter/)
     const f = clone()
     f.handover.skyFloor.featherDeg = 0
     expect(() => buildConfig(f)).toThrow(/skyFloor/)

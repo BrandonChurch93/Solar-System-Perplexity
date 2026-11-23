@@ -118,11 +118,15 @@ function motionOver(source: ShotSource, frame: number, split: boolean, from: num
 // The seams: the segments before and after run with the full shutter. Where the segment's own first or last frame moves more than maxBlurPx, the
 // blur a frame may keep rises to that motion over handover.blurEaseFrames with a smooth ramp, so that frame keeps its full shutter and no frame
 // steps. Where it moves less, the cap lets go by itself and there is no ramp.
+// The floor (handover.minShutter, 0 for off): a capped frame never runs with less of the film's shutter than this share, scale = max(allowed / raw,
+// floor). A shutter that is far shorter than the step to the next frame shows a fast edge as separate sharp copies; with the floor the fastest
+// frames keep that share of their motion as blur instead, most at the rim of the picture and next to none at the place the camera goes to, and
+// the sample count follows the blur that results. A frame that is not capped keeps its full shutter, so the seams stay as they are.
 interface Cap { stamp: string; raw: Map<number, number>; scale: Map<number, number> }
 const caps = new WeakMap<ShotSource, Cap>()
 
 function capOf(source: ShotSource): Cap {
-  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + forcedWord()
+  const stamp = handoverChanges() + '|' + config.raw.handover.maxBlurPx + '|' + config.raw.handover.blurEaseFrames + '|' + config.raw.handover.minShutter + '|' + forcedWord()
   let cap = caps.get(source)
   if (!cap || cap.stamp !== stamp) {
     cap = { stamp, raw: new Map(), scale: new Map() }
@@ -146,8 +150,9 @@ function handing(frame: number): { segment: Segment; h: Handover } | null {
   return h ? { segment, h } : null
 }
 
-// The motion in px a frame may keep across its shutter: handover.maxBlurPx, and near a seam that moves faster, the ramp up to that seam's motion.
-// Infinity outside the dives and rises of the stops that hand over: nothing is capped there.
+// The motion in px the cap lets a frame keep across its shutter: handover.maxBlurPx, and near a seam that moves faster, the ramp up to that seam's
+// motion. Infinity outside the dives and rises of the stops that hand over: nothing is capped there. A frame that runs at the floor
+// (handover.minShutter) keeps more than this: its plan has the motion left in seen.
 export function blurAllowed(source: ShotSource, frame: number): number {
   const own = handing(frame)
   if (!own) return Infinity
@@ -187,6 +192,8 @@ export function shutterScale(source: ShotSource, frame: number): number {
         if (!(left > 0)) break
         scale = Math.min(scale * (allowed / left), 1)
       }
+      const floor = config.raw.handover.minShutter
+      if (scale < floor) scale = floor
     }
     cap.scale.set(frame, scale)
   }

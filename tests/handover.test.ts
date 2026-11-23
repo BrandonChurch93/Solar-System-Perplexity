@@ -315,7 +315,9 @@ describe('a stop that opted in', () => {
         else {
           expect(p.seen).toBe(Math.max(...left))
           expect(p.seen).toBeLessThan(p.raw)
-          expect(Math.abs(p.seen / blurAllowed(film, f) - 1)).toBeLessThan(1e-4)
+          // At the floor (handover.minShutter) a frame keeps more than the cap allows; above it, what the cap allows.
+          if (p.shutter > config.raw.handover.minShutter) expect(Math.abs(p.seen / blurAllowed(film, f) - 1)).toBeLessThan(1e-4)
+          else expect(p.seen).toBeGreaterThan(blurAllowed(film, f) * (1 - 1e-4))
         }
         for (const side of ['orbit', 'terrain'] as const) {
           for (const t of sampleTimes(f, 4)) {

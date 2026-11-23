@@ -126,7 +126,10 @@ describe('samples of a frame', () => {
     expect(plans.find((p) => p.id === 'jupiter')!.handsOver).toBe(false)
     expect(most('jupiter.rise')).toBeGreaterThan(fast)
     expect(plans.find((p) => p.id === 'neptune')!.handsOver).toBe(true)
-    expect(most('neptune.rise')).toBe(Math.max(fast, Math.ceil(config.raw.handover.maxBlurPx / step - 1e-9)))
+    // With the cap alone the count is what the cap leaves; a floor on the share (handover.minShutter) keeps more blur in the fastest frames.
+    const capped = Math.max(fast, Math.ceil(config.raw.handover.maxBlurPx / step - 1e-9))
+    if (config.raw.handover.minShutter === 0) expect(most('neptune.rise')).toBe(capped)
+    else expect(most('neptune.rise')).toBeGreaterThanOrEqual(capped)
   })
 })
 

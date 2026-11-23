@@ -12,7 +12,9 @@ import { segmentAtFrame } from '../src/director/timeline'
 const fps = config.fps
 const film = new FilmDirector(plans)
 const numbers = config.raw.handover
-const kept = { maxBlurPx: numbers.maxBlurPx, blurEaseFrames: numbers.blurEaseFrames }
+const kept = { maxBlurPx: numbers.maxBlurPx, blurEaseFrames: numbers.blurEaseFrames, minShutter: numbers.minShutter }
+// The cap is tested alone, with the floor off; the floor has its own tests at the end of this file and sets the shares it needs.
+numbers.minShutter = 0
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 const moving = config.segments.filter((s) => (s.kind === 'dive' || s.kind === 'rise') && handoverOf(s.stop, s.kind) !== null)
 const hands = (frame: number): boolean => moving.includes(segmentAtFrame(frame))
@@ -242,5 +244,107 @@ describe('the side of a sample in the frame that swaps sides', () => {
       }
     }
     expect(shortened).toBeGreaterThan(0)
+  })
+})
+
+describe('the floor of the share (handover.minShutter)', () => {
+  const step = config.motion.maxStepPx
+  const floors = [...new Set([0.25, 0.5, 1, kept.minShutter])].filter((x) => x > 0)
+  const shares = (): Map<number, number> => {
+    const out = new Map<number, number>()
+    for (const s of moving) for (let f = s.firstFrame; f < s.endFrame; f++) out.set(f, shutterScale(film, f))
+    return out
+  }
+  it('lifts a capped frame that would run with less to the floor and leaves every other frame its share, the seams included', () => {
+    try {
+      numbers.minShutter = 0
+      const alone = shares()
+      for (const floor of floors) {
+        numbers.minShutter = floor
+        let lifted = 0
+        for (const s of moving) {
+          const h = handoverOf(s.stop, s.kind as 'dive' | 'rise')!
+          for (let f = s.firstFrame; f < s.endFrame; f++) {
+            const was = alone.get(f)!
+            const share = shutterScale(film, f)
+            expect(share).toBe(was < 1 ? Math.max(was, floor) : 1)
+            const plan = framePlan(film, f, 'review')
+            expect(plan.shutter).toBe(share)
+            expect(plan.soft).toBe(0)
+            const split = f >= h.firstFrame && f <= h.lastFrame
+            const share1 = split ? 1 : seenShare(film.shotAt(f, (f + shutterMid()) / fps))
+            const left = share === 1 ? plan.raw : motionOf(f, shutterOffset(0, share), shutterOffset(1, share))
+            expect(plan.seen).toBe(left * share1)
+            const allowed = blurAllowed(film, f)
+            if (was < floor) {
+              // At the floor: more than the cap allows, by design, and less than the full shutter keeps unless the floor is the full shutter.
+              lifted++
+              expect(left).toBeGreaterThan(allowed)
+              if (floor < 1) expect(left).toBeLessThan(plan.raw)
+              else expect(left).toBe(plan.raw)
+            } else if (was < 1) expect(Math.abs(left / allowed - 1)).toBeLessThan(1e-4)
+            else expect(left).toBeLessThanOrEqual(allowed)
+          }
+          for (const edge of [s.firstFrame, s.endFrame - 1]) expect(shutterScale(film, edge)).toBe(1)
+        }
+        expect(lifted).toBeGreaterThan(0)
+      }
+      numbers.minShutter = 0
+      expect(shares()).toEqual(alone)
+    } finally {
+      numbers.minShutter = 0
+    }
+  })
+  it('lets the sample count follow the blur that results, one sample for every step of motion.maxStepPx, within the most the tier may take', () => {
+    try {
+      for (const floor of floors) {
+        numbers.minShutter = floor
+        for (const tier of ['review', 'final']) {
+          const most = config.tiers[tier]!.maxSamplesPerFrame
+          let raised = 0
+          for (const s of moving) {
+            const base = sampleCount(tier, s.kind)
+            for (let f = s.firstFrame; f < s.endFrame; f++) {
+              const plan = framePlan(film, f, tier)
+              const need = Math.ceil(plan.seen / step - 1e-9)
+              expect(plan.samples).toBe(Math.min(Math.max(need, base), Math.max(most, base)))
+              if (plan.samples > base && plan.samples < most) {
+                raised++
+                expect(plan.seen / plan.samples).toBeLessThanOrEqual(step + 1e-9)
+                expect(plan.seen / (plan.samples - 1)).toBeGreaterThan(step - 1e-9)
+              }
+              expect(framePlan(film, f, 'draft').samples).toBe(1)
+            }
+          }
+          // The review tier starts low enough that the blur at every one of these floors asks for more than its base count.
+          if (tier === 'review') expect(raised).toBeGreaterThan(0)
+        }
+      }
+    } finally {
+      numbers.minShutter = 0
+    }
+  })
+  it('keeps the pattern of the sides in the frame that swaps them', () => {
+    try {
+      for (const floor of floors) {
+        numbers.minShutter = floor
+        for (const s of moving) {
+          const kind = s.kind as 'dive' | 'rise'
+          const h = handoverOf(s.stop, kind)!
+          for (let f = h.firstFrame; f <= h.lastFrame; f++) {
+            const weight = dissolveWeight(h, kind, f)
+            const share = framePlan(film, f, 'review').shutter
+            samplesFor(16, share).forEach((x, i) => {
+              const time = (f + x.timeOffset) / fps
+              const side = film.shotAt(f, time).sets.find((set) => set.id === s.stop)!.view
+              expect(sideAt(s, time)).toBe(side)
+              expect(side).toBe(weight > shutterThreshold((i + 0.5) / 16) ? 'terrain' : 'orbit')
+            })
+          }
+        }
+      }
+    } finally {
+      numbers.minShutter = 0
+    }
   })
 })
