@@ -1,9 +1,39 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-23T08:25:19.903Z",
+ "pushed": "2026-11-23T08:36:43.618Z",
  "head": "b14f0a7e8fb22ec7516cd510318725961e8b34a6",
- "note": "E1 merged and opted in, cover removed, hold terrain travel same bits on 8 frames; next the live close layer on the globe",
+ "note": "08:38 VM first render of the live close layer on the globe side: geometry sits, tone and wedge edge and the old big spiral round it are wrong, work goes on in S2",
  "looks": [
+  {
+   "time": "2026-11-23T08:36:42.943Z",
+   "file": "20261123083642943-note-crop4712.jpg",
+   "source": "out/work/nep/l1/crop4712.png",
+   "kind": "note",
+   "label": "L 4712 crop: hard wedge edge and canvas streaks, lighter than the planet round it",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T08:36:41.517Z",
+   "file": "20261123083641517-note-sheet.jpg",
+   "source": "out/work/nep/l1/sheet.jpg",
+   "kind": "note",
+   "label": "L first frames 4694 4712 4744 4769, globe side forced: layer geometry right, tone and edges and surroundings wrong",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-23T08:34:32.458Z",
+   "file": "20261123083432458-frame-f4769.jpg",
+   "source": "out/work/nep/l1/f4769.png",
+   "kind": "frame",
+   "label": "neptune.dive frame 4769, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4769,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T08:25:18.250Z",
    "file": "20261123082518250-note-cmp-4769-4770.jpg",
@@ -60,36 +90,6 @@
    "source": "out/work/nep/d1/sheet-b.jpg",
    "kind": "note",
    "label": "Same, frames 4728 to 4769: rough plate wedge shows as a hard dark polygon, blocky old cirrus lower left, teal sky; all S2 work",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:04:12.028Z",
-   "file": "20261123080412028-note-sheet-a.jpg",
-   "source": "out/work/nep/d1/sheet-a.jpg",
-   "kind": "note",
-   "label": "First draft of the new dive, globe side forced, no cover, frames 4680 to 4720: one steady approach; faults are old painted spiral and a tone drop 4704 to 4712",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-23T08:01:58.437Z",
-   "file": "20261123080158437-frame-f4769.jpg",
-   "source": "out/work/nep/d1/f4769.png",
-   "kind": "frame",
-   "label": "neptune.dive frame 4769, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4769,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:39:16.521Z",
-   "file": "20261123073916521-note-same-as-main.jpg",
-   "source": "out/work/nep/place/same-as-main.jpg",
-   "kind": "note",
-   "label": "hold 4605 and terrain 4860: main (left) and this branch (right), draft, 0 pixels differ",
    "stop": "neptune"
   }
  ]
