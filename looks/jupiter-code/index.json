@@ -1,56 +1,68 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T19:14:55.358Z",
- "head": "c91222cae67882b2a3b921631ab697e2ea785872",
- "note": "Jupiter surface view: haze trials 3 to 5 over the deck (h3 too strong, h5 takes the tone of its ground), 3239 lower left wash seen at native; next the flight eases before the pale zone and the level is held",
+ "pushed": "2026-11-23T19:33:45.758Z",
+ "head": "65b032164e914da50df2f939268854ee29a4469a",
+ "note": "Jupiter surface view: flight eased after the middle so the pale collar is not enlarged, exposure as a table; haze trial 5 judged too foggy in the foreground, redo in progress; level 3120 to 3225 now 59.1 to 66.5 before the fit",
  "looks": [
   {
-   "time": "2026-11-23T19:14:54.751Z",
-   "file": "20261123191454751-note-h5-3239-sw.jpg",
-   "source": "../work/f/h5-3239-sw.jpg",
+   "time": "2026-11-23T19:33:45.170Z",
+   "file": "20261123193345170-note-e1-l1-3150-far.jpg",
+   "source": "../work/f/e1-l1-3150-far.jpg",
    "kind": "note",
-   "label": "jupiter surface life trial h5-3239-sw (haze layers with shadows, draft, not final)",
+   "label": "3150 far field: with haze (top) and without (bottom)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:14:54.188Z",
-   "file": "20261123191454188-note-h5-3239.jpg",
-   "source": "../work/f/h5-3239.jpg",
+   "time": "2026-11-23T19:33:44.593Z",
+   "file": "20261123193344593-note-e1-3150-sw.jpg",
+   "source": "../work/f/e1-3150-sw.jpg",
    "kind": "note",
-   "label": "jupiter surface life trial h5-3239 (haze layers with shadows, draft, not final)",
+   "label": "3150 lower left with haze trial 5: the veil fogs the dark foreground, to be redone",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:14:53.653Z",
-   "file": "20261123191453653-note-h5-3150-crop.jpg",
-   "source": "../work/f/h5-3150-crop.jpg",
+   "time": "2026-11-23T19:33:43.914Z",
+   "file": "20261123193343914-note-e1-3239.jpg",
+   "source": "../work/f/e1-3239.jpg",
    "kind": "note",
-   "label": "jupiter surface life trial h5-3150-crop (haze layers with shadows, draft, not final)",
+   "label": "3239 with eased flight: the wash lower left is smaller, a soft pale zone remains at the left middle (draft, not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:14:53.101Z",
-   "file": "20261123191453101-note-h5-3150.jpg",
-   "source": "../work/f/h5-3150.jpg",
+   "time": "2026-11-23T19:33:43.330Z",
+   "file": "20261123193343330-note-e1-sheet-a.jpg",
+   "source": "../work/f/e1-sheet-a.jpg",
    "kind": "note",
-   "label": "jupiter surface life trial h5-3150 (haze layers with shadows, draft, not final)",
+   "label": "surface view with eased flight and haze trial 5, draft, 3120 to 3240 (not final)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T19:14:52.562Z",
-   "file": "20261123191452562-note-h4-3150.jpg",
-   "source": "../work/f/h4-3150.jpg",
-   "kind": "note",
-   "label": "jupiter surface life trial h4-3150 (haze layers with shadows, draft, not final)",
-   "stop": "jupiter"
+   "time": "2026-11-23T19:30:08.590Z",
+   "file": "20261123193008590-frame-f03255.jpg",
+   "source": "out/work/jupiter/frames/e1/f03255.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3255, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3255,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
   },
   {
-   "time": "2026-11-23T19:14:51.956Z",
-   "file": "20261123191451956-note-h3-3150-crop.jpg",
-   "source": "../work/f/h3-3150-crop.jpg",
-   "kind": "note",
-   "label": "jupiter surface life trial h3-3150-crop (haze layers with shadows, draft, not final)",
-   "stop": "jupiter"
+   "time": "2026-11-23T19:29:21.026Z",
+   "file": "20261123192921026-frame-f03180.jpg",
+   "source": "out/work/jupiter/frames/e1/f03180.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3180, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3180,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e85c8d53a860dafc"
   }
  ]
 }
