@@ -1,29 +1,76 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T15:24:50.832Z",
- "head": "9553ff1f175d5cad1a30e478983d2dccb2035f79",
- "note": "a29f6f87 merged main 5eba2289: handover six pass, finals 1755 and 2010 kept, G15 1393 MB, READY sent 15:24",
+ "pushed": "2026-11-23T15:53:01.524Z",
+ "head": "933e2b4123cd26b5a9a2e6545bf14d00133d363f",
+ "note": "933e2b41 holds main 0eae595; every frame of dive and rise looked at; glint cure next",
  "looks": [
   {
-   "time": "2026-11-23T15:24:45.276Z",
-   "file": "20261123152445276-note-earth-rise-draft-across.jpg",
-   "source": "out/work/handover/earth-rise-draft-across.png",
+   "time": "2026-11-23T15:53:00.295Z",
+   "file": "20261123155300295-note-earth-dive-under.jpg",
+   "source": "out/work/handover/earth-dive-under.png",
    "kind": "note",
-   "label": "earth rise across T, merged main, 15:20",
+   "label": "earth dive, globe side at T with the place picture, alone, difference times 4 (933e2b41)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T15:24:44.236Z",
-   "file": "20261123152444236-note-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
+   "time": "2026-11-23T15:52:59.348Z",
+   "file": "20261123155259348-note-s-2125-2136.jpg",
+   "source": "out/work/earth/place/all/sheets/s-2125-2136.jpg",
    "kind": "note",
-   "label": "earth dive across T, merged main, 15:20",
+   "label": "earth rise 2125 to 2136 on the merged tree, before the glint cure",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T15:24:42.197Z",
-   "file": "20261123152442197-frame-f01755-draft.jpg",
-   "source": "out/work/samebytes/mainkept/f01755-draft.png",
+   "time": "2026-11-23T15:52:58.491Z",
+   "file": "20261123155258491-note-s-1866-1877.jpg",
+   "source": "out/work/earth/place/all/sheets/s-1866-1877.jpg",
+   "kind": "note",
+   "label": "earth dive 1866 to 1877 on the merged tree, before the glint cure",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T15:45:55.089Z",
+   "file": "20261123154555089-compare-earth-dive-under.jpg",
+   "source": "out/work/handover/earth-dive-under.png",
+   "kind": "compare",
+   "label": "earth dive, the globe side at T (frame 1919) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T15:44:28.042Z",
+   "file": "20261123154428042-frame-f01992-draft.jpg",
+   "source": "out/work/samebytes/merged3/f01992-draft.png",
+   "kind": "frame",
+   "label": "earth.terrain frame 1992, draft tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 1992,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T15:43:40.515Z",
+   "file": "20261123154340515-frame-f01906-draft.jpg",
+   "source": "out/work/samebytes/merged3/f01906-draft.png",
+   "kind": "frame",
+   "label": "earth.dive frame 1906, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1906,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "743c10b0a56aaca7"
+  },
+  {
+   "time": "2026-11-23T15:42:49.018Z",
+   "file": "20261123154249018-frame-f01755-draft.jpg",
+   "source": "out/work/samebytes/merged3/f01755-draft.png",
    "kind": "frame",
    "label": "earth.hold frame 1755, draft tier",
    "stop": "earth",
@@ -32,68 +79,15 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "67ac4e5e56087cf5"
+   "engine": "743c10b0a56aaca7"
   },
   {
-   "time": "2026-11-23T15:21:39.899Z",
-   "file": "20261123152139899-frame-m-f02010.jpg",
-   "source": "out/work/earth/place/proof/m-f02010.png",
-   "kind": "frame",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "67ac4e5e56087cf5"
-  },
-  {
-   "time": "2026-11-23T15:20:22.598Z",
-   "file": "20261123152022598-sheet-earth-rise-draft-after.jpg",
-   "source": "out/work/handover/earth-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2101,
-   "last": 2112,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:19:08.131Z",
-   "file": "20261123151908131-sheet-earth-rise-draft-across.jpg",
+   "time": "2026-11-23T15:24:45.276Z",
+   "file": "20261123152445276-note-earth-rise-draft-across.jpg",
    "source": "out/work/handover/earth-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2105,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:18:10.693Z",
-   "file": "20261123151810693-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T15:17:41.086Z",
-   "file": "20261123151741086-sheet-earth-dive-draft-before.jpg",
-   "source": "out/work/handover/earth-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1907,
-   "last": 1918,
-   "tier": "draft"
+   "kind": "note",
+   "label": "earth rise across T, merged main, 15:20",
+   "stop": "earth"
   }
  ]
 }
