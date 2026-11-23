@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T07:13:15.545Z",
+ "pushed": "2026-11-23T07:32:26.462Z",
  "head": "8f12d9498fdbcb7dc96e788d60df356b0274c37d",
- "note": "S2 started: studying the hold at the spot and the relief depth of the close scene before the plates are made",
+ "note": "S2 study: close side from 744 without cover; the crater on the levels against the laid back image",
  "looks": [
+  {
+   "time": "2026-11-23T07:32:24.800Z",
+   "file": "20261123073224800-note-cmp-4.jpg",
+   "source": "out/work/mercury/place/cmp-4.jpg",
+   "kind": "note",
+   "label": "the crater: level 1, level 3, the laid back close image, 4 deg across, same frame (sizes do not agree: 2.5 by 2.0 against 1.5 by 1.8 deg)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T07:32:22.140Z",
+   "file": "20261123073222140-note-close-sheet.jpg",
+   "source": "out/work/mercury/place/close-sheet.jpg",
+   "kind": "note",
+   "label": "close side 744 to 780 with the glare cover off, draft (study for T)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T07:13:14.255Z",
    "file": "20261123071314255-note-hold615-spot4x.jpg",
@@ -65,34 +81,6 @@
    "stop": "ending",
    "segment": "ending.retreat",
    "frame": 5078,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:17:09.638Z",
-   "file": "20261122231709638-job-frame-04686.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "neptune.dive frame 4686, final tier, from the running film job",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4686,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T22:41:17.455Z",
-   "file": "20261122224117455-job-frame-04421.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.rise frame 4421, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4421,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
