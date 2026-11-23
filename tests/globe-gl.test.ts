@@ -271,24 +271,28 @@ describe.skipIf(!have)('the globe options in a WebGL2 browser', () => {
     expect(outside).toBeGreaterThan(3)
   }, 120000)
 
-  it('multiplies the own levels by the gain of the stop before they become scene values', async () => {
+  it('multiplies the scene values of the own levels by the gain of the stop', async () => {
     const shoot = async (more: Partial<LevelShot>): Promise<number[][]> => row((await call<{ pixels: number[] }>('levels', { ...top, own: [false, true], ...more })).pixels, top, 64)
     const plain = await shoot({})
     expect(await shoot({ ownGain: [1, 1, 1] })).toEqual(plain)
-    const dark: LevelDef = { rgb: [77, 64, 102], size: 8, widthDeg: 30 }
-    const bright: LevelDef = { rgb: [154, 64, 51], size: 8, widthDeg: 30 }
-    const gained = await shoot({ levels: [top.levels[0]!, dark], ownGain: [2, 1, 0.5] })
-    const baked = await shoot({ levels: [top.levels[0]!, bright] })
-    const scene = bright.rgb.map((b) => filmicInverse(b / 255))
-    for (let c = 0; c < 3; c++) expect(gained[64]![c]).toBeCloseTo(scene[c]!, 5)
-    for (let x = 0; x < 128; x++) for (let c = 0; c < 3; c++) expect(gained[x]![c]!).toBeCloseTo(baked[x]![c]!, 5)
+    const gain = [2, 1, 0.5]
+    const gained = await shoot({ ownGain: [2, 1, 0.5] })
+    const scene = top.levels[1]!.rgb.map((b) => filmicInverse(b / 255))
+    for (let c = 0; c < 3; c++) expect(gained[64]![c]).toBeCloseTo(scene[c]! * gain[c]!, 5)
     const lit = row((await call<{ pixels: number[] }>('levels', { ...top, levels: [top.levels[0]!] })).pixels, top, 64)
     let outside = 0
+    let feather = 0
     for (let x = 0; x < 128; x++) {
-      if (lit[x]![0] === 0 || lit[x]![0] !== plain[x]![0] || lit[x]![1] !== plain[x]![1] || lit[x]![2] !== plain[x]![2]) continue
+      if (lit[x]![0] === 0) continue
+      expect(gained[x]![1]).toBe(plain[x]![1])
+      const w = (plain[x]![1]! - lit[x]![1]!) / (scene[1]! - lit[x]![1]!)
+      for (const c of [0, 2]) expect(gained[x]![c]! - plain[x]![c]!).toBeCloseTo(w * scene[c]! * (gain[c]! - 1), 4)
+      if (w > 0.2 && w < 0.8) feather++
+      if (w !== 0) continue
       outside++
       expect(gained[x]).toEqual(lit[x])
     }
+    expect(feather).toBeGreaterThan(1)
     expect(outside).toBeGreaterThan(3)
   }, 120000)
 

@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 225 km across. It is incomplete: one upright grey rectangle in the right half, east and south east of the centre, is where the photograph is missing. Everything outside the grey rectangle is finished and correct.
+
+Image 2 is an oblique aerial photograph taken low over the land at the centre of image 1, looking east south east. It shows what the missing land is: beyond a flat topped mesa a canyon runs away from the viewer with a rough dark floor of rubble and landslide lobes, and on its far side a tall wall stands under a broad flat plateau.
+
+Task: fill the grey rectangle so that image 1 becomes one seamless nadir orbital photograph, the same framing and scale, north at the top. Change nothing outside the grey rectangle.
+
+1. In the grey rectangle draw, as a map seen from straight above: the canyon floor that comes in from the north west continues to the south east as a rough floor of rubble, low hills, landslide lobes and small dune fields, about 25 km wide. East of it stands the canyon wall, seen from above as one narrow, irregular, gullied band that winds from north to south. East of the wall lies a broad flat plateau with small craters, shallow troughs and a few mesas, the same kind of ground as at the right border of image 1.
+
+2. Every cliff is seen from straight above: a thin winding band, never a tall face, never a slope seen from the side. No fan, no cone, no delta. No terraces, no steps, no stripes, no long parallel or curved lines. Nothing may radiate from one point like the spokes of a wheel.
+
+3. Cliff lines, canyon floor and plateau run across the outline of the rectangle and join the ground around it on all four sides without a break, so that nobody can tell where the rectangle was.
+
+Fine detail everywhere, down to single ledges, gullies and boulders, the same grain as the ground around the rectangle. Light: a low Sun in the south south east, long shadows falling toward the north north west. Colour: the same brown, ochre and rust rock and deep brown shadows as the ground around the rectangle, no pale or white patches. No grey may remain. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.

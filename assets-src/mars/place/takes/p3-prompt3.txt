@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of a canyon district on Mars, north at the top, about 190 km across. It is incomplete. A fan shaped piece in the middle right holds measured ground: bright sunlit plateau tops, a band of deep shadow, warm lit rock. Around that piece lies a flat grey area where the photograph is missing. Outside the grey area the photograph is complete.
+
+Image 2 is an oblique aerial photograph of the land inside the fan shaped piece, taken from above the fan's pointed left end looking toward the right of the map (east south east). It shows what this land is: in the foreground a flat topped mesa ending in a tall layered cliff; beyond it a canyon running away from the viewer with a rough dark floor of rubble and landslide lobes; left of the canyon a sunlit layered wall under a plateau; right of the canyon a tall wall in deep shadow under a broad plateau with a bright dusty top.
+
+Task: complete image 1 into one seamless nadir orbital photograph, the same framing and scale, north at the top.
+
+1. Fill the grey area with land that continues the fan shaped piece outward in every direction: the same mesas, cliffs, shadowed canyon walls, canyon floors and bright plateau tops, with the same brightness, the same strong contrast and the same direction of light as inside the piece. Cliff lines, canyon walls and plateau surfaces must run across the former boundary of the piece without a break, so that nobody can tell where the piece ended. Toward the outer rim of the grey area let this rugged land step down into the calm plains and join the features of the complete photograph there, along an irregular natural boundary of cliffs and spurs. No grey may remain.
+
+2. Inside the fan shaped piece keep the brightness and colour of every area as it is, each light and dark area in its place, but draw it as sharp land seen from straight above: near its pointed left end the ground is smeared into streaks that radiate from the point, and further right it is blurred. Replace streaks and blur with gullied canyon walls, spurs, talus aprons, landslide lobes and wind scoured plateau surfaces. Do not darken, dull or flatten it.
+
+3. Outside the grey area keep every feature exactly where it is and as it looks.
+
+Muted brown, rust and ochre rock, deep brown shadows. A photograph from orbit: no horizon, no sky, no haze, no clouds, no text, no border, no vignette.
