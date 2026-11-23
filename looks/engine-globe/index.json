@@ -1,47 +1,26 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-23T11:31:02.457Z",
- "head": "9c2197bfb31d41cddf6acaedc0123e98159949ad",
- "note": "Task 2 (fadeMinor) at Mars frame 2454, side=orbit/noplace, draft. With the five levels of today the change is small (10.9 percent of ground pixels, far ground only). With scratch levels down to 0.6 deg the share of ground magnified across the fine axis falls from 0.876 to 0.387. Three consecutive frames: no sparkle seen; second difference up 4 percent with 10 percent more detail. Scratch levels reuse patch-3.jpg, so the content of the near ground is wrong on purpose.",
+ "pushed": "2026-11-23T12:08:00.408Z",
+ "head": "f3b7abbc582bed05ffa9a55748bbfbd6073f2cba",
+ "note": "New: haze glow about a direction of the stop (HazeParams.glow, setGlow), off and on at Mars 2454 and 2448 with scratch values; options off stay byte equal (11 stills). The fadeMinor pair with the real Mars plates waits for the plates of agent/mars-place (not pushed yet); the pairs below use the five levels of today and scratch levels.",
  "looks": [
   {
-   "time": "2026-11-23T11:31:00.416Z",
-   "file": "20261123113100416-note-strip7-three-frames.jpg",
-   "source": "out/work/t2/strip7-three-frames.png",
+   "time": "2026-11-23T12:07:58.273Z",
+   "file": "20261123120758273-note-pair-glow-f2448.jpg",
+   "source": "out/work/t2/pair-glow-f2448.png",
    "kind": "note",
-   "label": "fadeMinor moving check: frames 2453, 2454, 2455 before and after at 1 to 1, draft, grain off, scratch levels down to 0.6 deg; no sparkle seen"
+   "label": "haze glow off and on, Mars 2448 side=orbit/noplace, scratch values"
   },
   {
-   "time": "2026-11-23T11:26:29.828Z",
-   "file": "20261123112629828-note-pair7-f2454-crop.jpg",
-   "source": "out/work/t2/pair7-f2454-crop.png",
+   "time": "2026-11-23T12:07:57.339Z",
+   "file": "20261123120757339-note-pair-glow-f2454.jpg",
+   "source": "out/work/t2/pair-glow-f2454.png",
    "kind": "note",
-   "label": "fadeMinor before and after, crop at 1 to 1, Mars 2454, scratch levels down to 0.6 deg"
+   "label": "haze glow off and on, Mars 2454 side=orbit/noplace, scratch values (40 deg right, 1.0 0.55 0.35, power 12): right third +28.9 red, left third unchanged"
   },
   {
-   "time": "2026-11-23T11:26:29.176Z",
-   "file": "20261123112629176-note-pair7-f2454-beauty.jpg",
-   "source": "out/work/t2/pair7-f2454-beauty.png",
-   "kind": "note",
-   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, scratch levels down to 0.6 deg (last two reuse patch-3.jpg, wrong content, right density)"
-  },
-  {
-   "time": "2026-11-23T11:26:28.555Z",
-   "file": "20261123112628555-note-pair7-f2454-texels.jpg",
-   "source": "out/work/t2/pair7-f2454-texels.png",
-   "kind": "note",
-   "label": "fadeMinor texels view before and after, Mars 2454, scratch levels down to 0.6 deg: fine axis under 1.0 falls from 0.876 to 0.387 of ground pixels"
-  },
-  {
-   "time": "2026-11-23T11:26:27.618Z",
-   "file": "20261123112627618-note-pair5-f2454-beauty.jpg",
-   "source": "out/work/t2/pair5-f2454-beauty.png",
-   "kind": "note",
-   "label": "fadeMinor before and after, Mars 2454 side=orbit/noplace, the five levels of today (10.9 percent of ground pixels change level)"
-  },
-  {
-   "time": "2026-11-23T11:02:22.004Z",
-   "file": "20261123110222004-still-f04707-16x9-draft-full.jpg",
+   "time": "2026-11-23T12:04:31.039Z",
+   "file": "20261123120431039-still-f04707-16x9-draft-full.jpg",
    "source": "out/work/stills/f04707-16x9-draft-full.png",
    "kind": "still",
    "label": "neptune.dive frame 4707, draft tier",
@@ -51,11 +30,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6f0b7a4ecf75e9a1"
+   "engine": "d25ff0df3e34c07a"
   },
   {
-   "time": "2026-11-23T11:01:48.892Z",
-   "file": "20261123110148892-still-f04035-16x9-draft-full.jpg",
+   "time": "2026-11-23T12:03:57.785Z",
+   "file": "20261123120357785-still-f04035-16x9-draft-full.jpg",
    "source": "out/work/stills/f04035-16x9-draft-full.png",
    "kind": "still",
    "label": "uranus.hold frame 4035, draft tier",
@@ -65,11 +44,11 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6f0b7a4ecf75e9a1"
+   "engine": "d25ff0df3e34c07a"
   },
   {
-   "time": "2026-11-23T11:01:21.569Z",
-   "file": "20261123110121569-still-f03465-16x9-draft-full.jpg",
+   "time": "2026-11-23T12:03:30.217Z",
+   "file": "20261123120330217-still-f03465-16x9-draft-full.jpg",
    "source": "out/work/stills/f03465-16x9-draft-full.png",
    "kind": "still",
    "label": "saturn.hold frame 3465, draft tier",
@@ -79,7 +58,49 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6f0b7a4ecf75e9a1"
+   "engine": "d25ff0df3e34c07a"
+  },
+  {
+   "time": "2026-11-23T12:03:03.088Z",
+   "file": "20261123120303088-still-f02997-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02997-16x9-draft-full.png",
+   "kind": "still",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d25ff0df3e34c07a"
+  },
+  {
+   "time": "2026-11-23T12:02:37.058Z",
+   "file": "20261123120237058-still-f02427-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02427-16x9-draft-full.png",
+   "kind": "still",
+   "label": "mars.dive frame 2427, draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2427,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d25ff0df3e34c07a"
+  },
+  {
+   "time": "2026-11-23T12:02:08.298Z",
+   "file": "20261123120208298-still-f02325-16x9-draft-full.jpg",
+   "source": "out/work/stills/f02325-16x9-draft-full.png",
+   "kind": "still",
+   "label": "mars.hold frame 2325, draft tier",
+   "stop": "mars",
+   "segment": "mars.hold",
+   "frame": 2325,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d25ff0df3e34c07a"
   }
  ]
 }
