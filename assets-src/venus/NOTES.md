@@ -2262,3 +2262,51 @@ The recipe names every file under `public/assets/venus/` by its full path in "Fi
 Checks on this tree: tsc 0, vitest 180 of 180, lint 0. Not yet run on it: both moves frame by frame, G13 on all 495 frames, G5, G17, the 37 kept frames, the harness. They come before READY.
 
 Mail 331 (rate): the numbers there (dive 1312 at 10.06 times the mean rate, 1271 at 0.11, rise 1561 at 4.63) are in the engine notebook (`assets-src/shared/HANDOVER-NOTES.md` on agent/engine-handover, line 291) as measured on the engine tree, where Venus is the Venus of main: the old stop without `handover` in its params, with the surge under the cover. This branch has `handover` in `move.json` since the handover milestone and flies its own steady path (`plan.ts`, `between`). The report of this branch at 18:09 said: dive fastest frame 1323 at 1.206 times the mean rate, 1277 (one fifth) at 1.19 of the mean; rise fastest frame 1593 at 1.19. Run again on this tree now.
+
+## State 20:15: proofs for READY on b1492bc1, main 525df9d6 merged as a60f3ae2
+
+All of this ran on the tree of b1492bc1 (19:41 to 20:11), one job after the other. The merge of main after it changes no file of my three folders, of the engine, of the config or of `tools/lib` (the 52 files between fdf97b84 and 525df9d6 are Saturn, the Sun, the report tool `tools/measure/carried.ts` with its test, and notes).
+
+- G13 on every frame (`npm run -s measure -- --stop venus --only G13 --every 1`): PASS, 0 of 495 frames over 0.02 soft; worst frame 1561 1.18 percent, 1560 1.06 percent, 1562 0.96 percent.
+- G5 PASS: 1185 hold invalid 0 coverage 0.316; 1287 dive invalid 0 coverage 0.907; 1440 terrain invalid 0 coverage 0.685; 1586 rise invalid 0 coverage 0.887. G17 PASS: 1185 median 0.959 p25 0.844 over 77 tiles; 1440 median 0.936 p25 0.804 over 76 tiles.
+- Frames that may not change, draft (`same/fin16/` against `same/main/`): 37 of 37 byte equal (hold 1110 to 1259 in tens with 1185 and 1259, terrain 1350 to 1529 in tens with 1440 and 1529, travel 1605).
+- Final tier 1185 and 1440: sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the values of the kept stills.
+- Harness (`npm run -s handover -- --stop venus --tier draft`, exit 0, report copied to `out/work/venus/place/r12/h/venus.md`): every check pass, "under the place picture" inside the limit on both.
+  - Dive, T in 1343, window 1331 to 1343: side difference mean 0.052, 99th percentile 1, max 133, 57 pixels over 16; under the place picture 4.08 (tone 1.82, detail 3.67); flow gap mean 0.101 px a frame, largest 0.286. "Height: mean ratio per frame 0.94026 on the way to T; fastest frame 1323 at 1.206 times the mean rate; frame 1277 (one fifth of the way) at 1.19 of the mean. The place is at most 0.302 of the half frame from the middle (frame 1277)." Largest step on the body: level 4.1 into 1280, colour 4.38 into 1281; flat 1.6 percent (1336).
+  - Rise, T in 1542, window 1542 to 1554: side difference mean 0.052, max 47, 39 pixels over 16; under 4.06 (tone 1.75, detail 3.67); flow gap mean 0.092, largest 0.236. "Height: mean ratio per frame 1.09239 on the way from T; fastest frame 1593 at 1.19 times the mean rate; frame 1591 (one fifth of the way) at 1.189 of the mean. The place is at most 0.245 of the half frame from the middle (frame 1591)." Largest step on the body: level 4.09 and colour 4.55 into 1596; flat 0.7 percent (1545).
+  - Against 8b65c470 (State 17:00): the side difference and the flow gap are the same numbers; "under the place picture" went from 3.98 to 4.08 (dive) and from 3.95 to 4.06 (rise), detail from 3.57 to 3.67. That is the price of the light channel at T, measured; I could not see it in the sheets across the handovers.
+
+Both moves looked at frame by frame (sheets of twelve, `/tmp/v/s5/`, draft frames of this tree, and the two sheets across the handovers of the harness). What I saw:
+
+- 1260 to 1279: the globe grows steadily, no step.
+- 1280 to 1300: the place is a dark olive brown field on the bright cream globe, crisp cells and towers inside, smooth streaks round it. The Builder's "stain" is still there. Soft patches lie beside crisp ridges in 1284 to 1295.
+- 1294 to 1298: a cluster of clipped white cells in a brown mesh patch at x 75 to 115, y 527 to 552 (frame 1296).
+- 1296 to 1307: a soft olive area at the left of the frame.
+- 1304 to 1319: a pale grey blue patch in the upper middle. 1313 to 1319: the Sun comes in at the top.
+- 1320 to 1349: holds up. I cannot name the handover (1343) from the frames.
+- 1530 to 1545: holds up, the handover (1542) cannot be named.
+- 1546 to 1553: grey cells without the gold of the scene come in at the lower left (x 0 to 400, y 650 to 1080).
+- 1554 to 1565: a golden band lies on the limb; the ground at the frame edges is drawn out by the shutter; the pale grey blue patch in the upper middle from 1557 to 1574.
+- 1566 to 1591: the place is a dark field again, at 1590 and 1591 the left half of the disc is dark with streaks.
+- 1592 to 1604: the globe leaves, its lower left dark.
+
+1604 against 1605 and against the hold (mail 324): frame 1604 of my rise against frame 1605 (the travel, the frame of main, equal by bytes on my tree): mean difference 1.49, most 61, the globe in the same box (x 273 to 1084, y 0 to 706), the same dark lower left. So the globe leaves into the travel without a step. The dark half is not the place: the plates are off above 3.4 radii (`show.heights`), 1597 is at 3.53 and 1604 at 4.40. It is the night side in the pose the travel starts with: the angle Sun, body, camera is 69.4 deg in the hold (1259, light from the left of the frame) and 78.4 deg at 1604 (79.9 at 1597, 84.4 at 1591, 89.3 at 1586; light from the upper right). `out/work/venus/place/phase.ts` prints these. At 1591 the plates are still drawn (height 1.94) and lie on the night side of that view, so the dark flat mass there is partly mine: open, with the place field.
+
+The merge (a60f3ae2, main 525df9d6): tsc 0, vitest 186 of 186, build exit 0. Sixteen draft frames rendered on the merged tree (`same/m17/`): 1185, 1440 and 1605 equal by bytes to the frames of main, and 1270, 1287, 1300, 1310, 1325, 1343, 1542, 1552, 1560, 1570, 1586, 1597, 1604 equal by bytes to the frames of b1492bc1 that the harness and my look used. The gate line on the merged tree, word for word:
+
+- `PASS G11  every asset has a row or a recipe`
+- `PASS G15  at most 2 sets per frame; finished stops: venus/web 332 MB, venus/full 1299 MB`
+
+Frames with other bytes than the Builder's last render of this stop (d908301d, the picture of 8b65c470), draft: 1265 to 1342 and 1543 to 1597 (the cure of the orange red 1265 to 1337 and 1545 to 1596, item 1 of mail 316 1265 to 1337 and 1545 to 1597, the memory cure 1293 to 1342 and 1543 to 1575). The same bytes: 1260 to 1264, 1343 to 1349, 1530 to 1542, 1598 to 1604.
+
+The list of mail 316, item by item, on this commit:
+
+1. The place field dark mud at 1287 and 1586: better (dusk ramp, tone contrast), not cured. It still reads as a dark field laid on the globe in 1280 to 1300 and 1566 to 1591, with soft patches beside crisp ridges in 1284 to 1295.
+2. to 4. The place ends as a patch against the smooth streaks of the globe (1287 x 1220 to 1920; 1586 x 0 to 1300, y 380 to 1080, and the arc at x 1220 to 1500, y 600 to 900): left. The wide ring is not built: one take of six made and not kept.
+5. to 7. The soft orange band and the smear at 1287, the smooth olive wedge at 1287, the soft orange glow at 1586: left.
+8. to 10. The pale grey blue patch (seen now in 1304 to 1319 and 1557 to 1574), the golden band on the limb (1554 to 1565), the Sun coming in at the top (1313 to 1319): left.
+11. The review tier is not proven on this commit; `atT.shiftDeg` is a fit whose cause is not found: left.
+
+New on the list from this look: the white cells at 1294 to 1298 (x 75 to 115, y 527 to 552 in 1296); the grey cells at the lower left in 1546 to 1553. From mail 324: the dark flat mass at 1591. Dead code: the veil is still in the stop and is never drawn.
+
+Given up for the memory gate, as in "State 19:27": the dive patches c and d, the colour of levels a, b, d at full size, the veil picture.
