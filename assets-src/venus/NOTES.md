@@ -2159,6 +2159,6 @@ Mail 311, item 2: 1287 and 1586 at draft, native size, six crops of 700 px each 
 4. 1586, x 1220 to 1500, y 600 to 900: the cells of the place end in an arc against the smooth lit globe: a patch edge. The swirl of the globe beside it is soft.
 5. 1287, x 860 to 1060, y 100 to 180: a soft orange band across the towers, and a soft smear down x 610 to 710, y 350 to 700, where the lit cloud of the globe meets the place.
 6. 1287, x 0 to 350, y 880 to 1080: a smooth olive wedge in the lower left corner, no forms, beside a pebbled grey deck.
-7. 1586, x 0 to 200, y 0 to 300: the glow of the lit limb lies over the cells in the upper left corner as a soft orange wash.
+7. 1586, x 0 to 200, y 0 to 300: a soft orange glow lies over the cells in the upper left corner (what it is has not been measured).
 
 Good at native size: 1287 upper left (the lit cloud with its towers), 1586 upper left and upper middle (cells, towers with lit sides and long shadows).
