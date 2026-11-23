@@ -1,0 +1,13 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 95 km across. Its broad layout of light and dark is right, but it is damaged in three ways that must be repaired.
+
+Image 2 is an oblique aerial photograph taken low over the middle of that land, looking east south east. It shows the true look of the rock: dark brown and rust layered rock, flat topped mesas with cliffs, strata on the slopes, rubble on the canyon floors, a low Sun.
+
+Task: redraw image 1 as one sharp, seamless nadir orbital photograph with the same framing, the same scale and north at the top. Keep the broad layout of image 1: the western two thirds are rust red broken land, the middle holds a dark area, the eastern third is paler dusty ground. The outer margin of image 1 (about one eighth of the width on every side) keeps its landforms exactly where they are.
+
+Repair 1, the black smear in the middle: redraw it as a deep canyon in shadow seen from straight above. A sharp, winding cliff edge on its south and east side, a floor in deep brown shade with boulders, rubble and landslide lobes that can be made out. No blur, no streaks, no smoke.
+
+Repair 2, the soft pale ground in the east and the white puff: redraw it as sharp sunlit land, a dusty ochre plateau cut by small ravines, with low mesas and knobs that cast shadows. No haze, no cloud, no fog, no soft patches. It stays paler than the west.
+
+Repair 3, the west and south west: the long pleated ridges that all point toward the middle are wrong. Replace them by an irregular maze of flat topped mesas, short spurs and winding troughs of different sizes that run in many directions, with strata on their slopes. No herringbone, no fan, no pleats, no long parallel or curved lines. Nothing may radiate from one point or point toward the middle like the spokes of a wheel. No round pits, no fields of craters, no dots.
+
+Light: a low Sun in the south south east, long shadows falling toward the north north west, the same everywhere. Every cliff is seen from straight above as a thin winding band, never as a tall face. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
