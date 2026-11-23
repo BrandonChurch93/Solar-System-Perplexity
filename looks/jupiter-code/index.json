@@ -1,87 +1,63 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T15:48:45.323Z",
- "head": "31fa13df53cd06bf26bfdd2d03877b295956dc1e",
- "note": "READY 31fa13d: dive and rise with no cover. Known wrong: limb glow goes out at 3024 and comes on at 3270; far field darker near the limb at T; cyan patch 3012 to 3036; storm eye changes 3024 to 3042",
+ "pushed": "2026-11-23T16:23:19.850Z",
+ "head": "e55a251014e4965a89781fd3c22aa6b0f9ed9d0d",
+ "note": "16:23 UTC limb cure: the orange rim no longer goes out at 3024 or comes on at 3270; report passes both ways",
  "looks": [
   {
-   "time": "2026-11-23T15:48:44.701Z",
-   "file": "20261123154844701-note-jupiter-rise-under.jpg",
-   "source": "out/work/handover/jupiter-rise-under.png",
-   "kind": "note",
-   "label": "31fa13d: rise, under the place picture at T",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:43.997Z",
-   "file": "20261123154843997-note-jupiter-rise-draft-after.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-after.png",
-   "kind": "note",
-   "label": "31fa13d handover sheet: rise after T, consecutive frames, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:43.174Z",
-   "file": "20261123154843174-note-jupiter-rise-draft-across.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-across.png",
-   "kind": "note",
-   "label": "31fa13d handover sheet: rise across T, consecutive frames, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:42.482Z",
-   "file": "20261123154842482-note-jupiter-rise-draft-before.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-before.png",
-   "kind": "note",
-   "label": "31fa13d handover sheet: rise before T, consecutive frames, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:41.843Z",
-   "file": "20261123154841843-note-jupiter-dive-under.jpg",
-   "source": "out/work/handover/jupiter-dive-under.png",
-   "kind": "note",
-   "label": "31fa13d: dive, under the place picture at T",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:41.163Z",
-   "file": "20261123154841163-note-jupiter-dive-draft-after.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-after.png",
-   "kind": "note",
-   "label": "31fa13d handover sheet: dive after T, consecutive frames, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:40.502Z",
-   "file": "20261123154840502-note-jupiter-dive-draft-across.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-across.png",
-   "kind": "note",
-   "label": "31fa13d handover sheet: dive across T, consecutive frames, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-23T15:48:39.770Z",
-   "file": "20261123154839770-note-jupiter-dive-draft-before.jpg",
+   "time": "2026-11-23T16:23:18.695Z",
+   "file": "20261123162318695-note-jupiter-dive-draft-before.jpg",
    "source": "out/work/handover/jupiter-dive-draft-before.png",
    "kind": "note",
-   "label": "31fa13d handover sheet: dive before T, consecutive frames, draft",
+   "label": "Dive before T after the limb cure (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T15:48:39.092Z",
-   "file": "20261123154839092-note-c11-T.jpg",
-   "source": "../work/f/c11-T.jpg",
+   "time": "2026-11-23T16:23:17.618Z",
+   "file": "20261123162317618-note-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
    "kind": "note",
-   "label": "31fa13d: 3022 to 3025, the four frames around dive T (draft)",
+   "label": "Rise after T after the limb cure (draft)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T15:48:38.431Z",
-   "file": "20261123154838431-note-x1-judged-dive-rise.jpg",
-   "source": "../work/f/x1-judged-dive-rise.jpg",
+   "time": "2026-11-23T16:23:16.642Z",
+   "file": "20261123162316642-note-jupiter-rise-draft-across.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-across.png",
    "kind": "note",
-   "label": "31fa13d: left 2997 and 3296 now (draft), right the kept stills",
+   "label": "Rise across T after the limb cure (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T16:23:15.508Z",
+   "file": "20261123162315508-note-jupiter-dive-draft-across.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-across.png",
+   "kind": "note",
+   "label": "Dive across T after the limb cure (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T16:23:14.925Z",
+   "file": "20261123162314925-note-limb8-dive.jpg",
+   "source": "../work/f/limb8-dive.png",
+   "kind": "note",
+   "label": "Limb before (top row) and with the engine's limb option alone (second row), 3018 to 3023, 3 times",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T16:23:14.205Z",
+   "file": "20261123162314205-note-l2-rise-limb.jpg",
+   "source": "../work/f/l2-rise-limb.png",
+   "kind": "note",
+   "label": "Limb cure: every frame 3268 to 3282 at the limb, 2 times (new)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T16:23:13.554Z",
+   "file": "20261123162313554-note-l2-dive-limb.jpg",
+   "source": "../work/f/l2-dive-limb.png",
+   "kind": "note",
+   "label": "Limb cure: every frame 3012 to 3025 at the limb, 2 times (new)",
    "stop": "jupiter"
   }
  ]
