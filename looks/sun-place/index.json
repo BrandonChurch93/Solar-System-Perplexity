@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T20:19:49.663Z",
- "head": "86dfc2d34fbdc139a061ea28aa372af9664c573c",
- "note": "sun: ground with a held camera, kept against mine (1.63 against 9.80 a frame near); full draft render 0 to 269 of the working tree at frame 100",
+ "pushed": "2026-11-23T20:48:08.989Z",
+ "head": "c0ad4f17e1b9be38dcb6a0f53b61d8ba55b7b97e",
+ "note": "sun: c0ad4f17 (items 1 to 3 of mail 327, main 02780a4f merged) in proof; ground cure of mail 344 is next",
  "looks": [
+  {
+   "time": "2026-11-23T20:48:08.244Z",
+   "file": "20261123204808244-note-f3-072.jpg",
+   "source": "out/work/sun/life/v/f3-072.jpg",
+   "kind": "note",
+   "label": "draft, tree before the lower leg change: frames 72 to 83, knots racing down",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T20:48:07.628Z",
+   "file": "20261123204807628-note-f3-048.jpg",
+   "source": "out/work/sun/life/v/f3-048.jpg",
+   "kind": "note",
+   "label": "draft, c0ad4f17: frames 48 to 59",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T20:48:06.971Z",
+   "file": "20261123204806971-note-s6-leftfoot.jpg",
+   "source": "out/work/sun/life/v/s6-leftfoot.png",
+   "kind": "note",
+   "label": "draft, left foot x 640 to 1000, y 330 to 590, frames 68 to 84: before (9971c23a), with the knots as first built, now (c0ad4f17: on the lower leg a knot is its cores only)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-23T20:19:48.654Z",
    "file": "20261123201948654-note-f3-036.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/sun/life/v/held-kept.jpg",
    "kind": "note",
    "label": "kept build 0eae595e, camera held at frame 90 pose, ground crop every 6 frames 110 to 170 and one line over 61 frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:53:21.044Z",
-   "file": "20261123195321044-note-s3-top-a.jpg",
-   "source": "out/work/sun/life/v/s3-top-a.jpg",
-   "kind": "note",
-   "label": "draft, working tree: shell leaving the crown, frames 24 to 52",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:53:20.301Z",
-   "file": "20261123195320301-note-s4-race.jpg",
-   "source": "out/work/sun/life/v/s4-race.png",
-   "kind": "note",
-   "label": "draft, working tree after 86dfc2d3: right leg x 1150 to 1410, y 120 to 450, every third frame 58 to 79, twice size: knots racing down after the release",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:28:51.759Z",
-   "file": "20261123192851759-note-s2-six-86.jpg",
-   "source": "out/work/sun/life/v/s2-six-86.jpg",
-   "kind": "note",
-   "label": "frames 86 to 91 of the second try, arcade at native size, draft: change per frame in the loops box 60 to 80: 12.60, 80 to 100: 9.39 (before 7.52, 6.27); frame 90 against the approved image 3.03 (before 2.96)",
    "stop": "sun"
   }
  ]
