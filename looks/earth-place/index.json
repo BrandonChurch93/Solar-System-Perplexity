@@ -1,60 +1,63 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T22:47:22.912Z",
+ "pushed": "2026-11-23T23:11:41.030Z",
  "head": "599855b2311e6701c929ddf90a2b02befe399124",
- "note": "step 1 trial: the close view's ground as an object on the globe, place picture off",
+ "note": "step 1 trial: close ground drawn on the globe, place picture off; under 0.54 and 0.48 at T; not committed",
  "looks": [
   {
-   "time": "2026-11-23T22:47:13.976Z",
-   "file": "20261123224713976-note-o5-rise.jpg",
-   "source": "../../../../tmp/gl/pw/o5-rise.jpg",
+   "time": "2026-11-23T23:11:40.422Z",
+   "file": "20261123231140422-note-earth-rise-draft-across.jpg",
+   "source": "../../../../tmp/gl/pw/earth-rise-draft-across.jpg",
    "kind": "note",
-   "label": "step 1 trial, rise 2101 to 2130, place picture off: the close view's own ground and towers stand on the globe",
+   "label": "step 1 trial: every frame 2100 to 2105 on the globe side, place picture off (handover sheet, draft)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T22:47:13.178Z",
-   "file": "20261123224713178-note-o5-dive.jpg",
-   "source": "../../../../tmp/gl/pw/o5-dive.jpg",
+   "time": "2026-11-23T23:11:39.783Z",
+   "file": "20261123231139783-note-earth-dive-draft-across.jpg",
+   "source": "../../../../tmp/gl/pw/earth-dive-draft-across.jpg",
    "kind": "note",
-   "label": "step 1 trial, dive 1872 to 1918, place picture off: the close view's own ground and towers stand on the globe",
+   "label": "step 1 trial: every frame 1913 to 1919 on the globe side, place picture off (handover sheet, draft)",
    "stop": "earth"
   },
   {
-   "time": "2026-11-23T22:19:35.992Z",
-   "file": "20261123221935992-note-s1-rise-b.jpg",
-   "source": "../../../../tmp/gl/pw/s1-rise-b.jpg",
-   "kind": "note",
-   "label": "trial, not committed: haze by slant, s1-rise-b (drafts every second frame)",
-   "stop": "earth"
+   "time": "2026-11-23T23:10:15.483Z",
+   "file": "20261123231015483-sheet-earth-rise-draft-after.jpg",
+   "source": "out/work/handover/earth-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2101 to 2112 (after T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2101,
+   "last": 2112,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T22:19:35.435Z",
-   "file": "20261123221935435-note-s1-rise-a.jpg",
-   "source": "../../../../tmp/gl/pw/s1-rise-a.jpg",
-   "kind": "note",
-   "label": "trial, not committed: haze by slant, s1-rise-a (drafts every second frame)",
-   "stop": "earth"
+   "time": "2026-11-23T23:09:03.723Z",
+   "file": "20261123230903723-sheet-earth-rise-draft-across.jpg",
+   "source": "out/work/handover/earth-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "earth rise, every frame 2100 to 2105 (across T, frame 2100), draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2105,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T22:19:34.861Z",
-   "file": "20261123221934861-note-s1-dive-b.jpg",
-   "source": "../../../../tmp/gl/pw/s1-dive-b.jpg",
-   "kind": "note",
-   "label": "trial, not committed: haze by slant, s1-dive-b (drafts every second frame)",
-   "stop": "earth"
+   "time": "2026-11-23T23:08:08.147Z",
+   "file": "20261123230808147-compare-earth-rise-under.jpg",
+   "source": "out/work/handover/earth-rise-under.png",
+   "kind": "compare",
+   "label": "earth rise, the globe side at T (frame 2100) with the place picture, alone, and their difference times 4",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T22:19:34.287Z",
-   "file": "20261123221934287-note-s1-dive-a.jpg",
-   "source": "../../../../tmp/gl/pw/s1-dive-a.jpg",
-   "kind": "note",
-   "label": "trial, not committed: haze by slant, s1-dive-a (drafts every second frame)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-23T21:55:32.998Z",
-   "file": "20261123215532998-sheet-earth-dive-draft-before.jpg",
+   "time": "2026-11-23T23:08:06.773Z",
+   "file": "20261123230806773-sheet-earth-dive-draft-before.jpg",
    "source": "out/work/handover/earth-dive-draft-before.png",
    "kind": "sheet",
    "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
@@ -65,8 +68,8 @@
    "tier": "draft"
   },
   {
-   "time": "2026-11-23T21:55:31.146Z",
-   "file": "20261123215531146-sheet-earth-dive-draft-across.jpg",
+   "time": "2026-11-23T23:07:06.567Z",
+   "file": "20261123230706567-sheet-earth-dive-draft-across.jpg",
    "source": "out/work/handover/earth-dive-draft-across.png",
    "kind": "sheet",
    "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
@@ -75,6 +78,14 @@
    "first": 1913,
    "last": 1919,
    "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T23:05:52.627Z",
+   "file": "20261123230552627-note-o7-pair.jpg",
+   "source": "../../../../tmp/gl/pw/o7-pair.jpg",
+   "kind": "note",
+   "label": "step 1 trial: 1888 over 2124 at full size halved, where the ground of the close view meets the globe's plates",
+   "stop": "earth"
   }
  ]
 }
