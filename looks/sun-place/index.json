@@ -1,21 +1,32 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T15:39:01.327Z",
+ "pushed": "2026-11-23T15:52:21.732Z",
  "head": "c2524de5bd9440329d7d2c096f151342019c649d",
- "note": "sun: READY c2524de5 sent 15:18; trial for the handover: side difference at T 9.35 to 0.81 (limit 0.5), not committed yet",
+ "note": "Sun: the two sides at T. Pixel sight on both sides plus haze fade, sides at 216 mean 0.012 p99 1 (was 9.354 and 71); 0, 60, 90, 120, 179, 300 byte equal to c2524de5; handover report rendering",
  "looks": [
   {
-   "time": "2026-11-23T15:39:00.612Z",
-   "file": "20261123153900612-note-sides-before-after.jpg",
-   "source": "out/work/sun/life/sides-before-after.jpg",
+   "time": "2026-11-23T15:52:09.570Z",
+   "file": "20261123155209570-note-look-cut.jpg",
+   "source": "out/work/sun/life/v/look-cut.jpg",
    "kind": "note",
-   "label": "sun, the two sides at T (frame 216, draft), difference times 8: left before (mean 9.35, plate and apron 2 px apart), right trial with the place read on the ball by one arithmetic on both sides (mean 0.81, shifts under 0.03 px; the patches top left and right are the low haze the globe side lacks)",
+   "label": "Rise cut 216 to 217, native crops: top c2524de5, bottom the pixel sight cure (uncommitted). Sides at T now mean 0.012 p99 1 (was 9.354 and 71). Proof renders running.",
    "stop": "sun"
   },
   {
-   "time": "2026-11-23T15:35:39.891Z",
-   "file": "20261123153539891-frame-same-orbit.jpg",
-   "source": "out/work/sun/life/sides/same-orbit.png",
+   "time": "2026-11-23T15:49:13.483Z",
+   "file": "20261123154913483-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T15:44:44.684Z",
+   "file": "20261123154444684-frame-pix-orbit.jpg",
+   "source": "out/work/sun/life/sides/pix-orbit.png",
    "kind": "frame",
    "label": "sun.rise frame 216, draft tier, beauty/side=orbit/t=7.208333 view",
    "stop": "sun",
@@ -25,6 +36,14 @@
    "format": "16x9",
    "diag": "beauty/side=orbit/t=7.208333",
    "engine": "3c1375ab69256384"
+  },
+  {
+   "time": "2026-11-23T15:39:00.612Z",
+   "file": "20261123153900612-note-sides-before-after.jpg",
+   "source": "out/work/sun/life/sides-before-after.jpg",
+   "kind": "note",
+   "label": "sun, the two sides at T (frame 216, draft), difference times 8: left before (mean 9.35, plate and apron 2 px apart), right trial with the place read on the ball by one arithmetic on both sides (mean 0.81, shifts under 0.03 px; the patches top left and right are the low haze the globe side lacks)",
+   "stop": "sun"
   },
   {
    "time": "2026-11-23T15:15:31.051Z",
@@ -68,22 +87,6 @@
    "source": "out/work/sun/life/sides-crops.png",
    "kind": "note",
    "label": "sun rise, both sides at T (frame 216), three crops: terrain side, globe side, difference x4 (trial with exact sight lines, not committed): same cells, plate and apron shifted about 1.5 px",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:53:55.063Z",
-   "file": "20261123145355063-note-c1-loops.jpg",
-   "source": "out/work/sun/life/c1-loops.jpg",
-   "kind": "note",
-   "label": "sun calm at 90, loops, frames 78 to 106 (take before the sway and the haze were calmed too)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:53:54.034Z",
-   "file": "20261123145354034-note-c3-ground.jpg",
-   "source": "out/work/sun/life/c3-ground.jpg",
-   "kind": "note",
-   "label": "sun c90dd570, film camera, frames 85 to 96 at native size, near ground x 700 y 760",
    "stop": "sun"
   }
  ]
