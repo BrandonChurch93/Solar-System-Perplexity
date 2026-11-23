@@ -1,39 +1,71 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T22:32:00.283Z",
+ "pushed": "2026-11-23T22:50:19.618Z",
  "head": "092b0f4250b4a6831dbe13d354eb371ada5a7a1c",
- "note": "092b0f4 across both changes of view and the two judged frames; the texture change at 3024 and 3270 is the next work (second review note, F)",
+ "note": "22:53 UTC. Step 1 of the second note (one pace), my part: the knots of my own pacing are out of plan.ts (place.pace, paced, onPath). Draft render k1, not committed yet at the time of this push. Measured with my pace tool: dive peak rate 1.33 of the mean at 3009, largest step 0.179 at 2976 (the engine's own start), up again after the peak 0.416 at 3043 (my close path, goes when the engine's one move is in); rise peak 1.33 at 3284, largest step 0.211 at 3311 (engine's end), down before the peak 0.485 at 3273. Still wrong and seen here: the texture of the ground changes between 3293 and 3294 lower left (plates fade out by units per pixel), a soft brown band at the bottom 3006 to 3018 and 3274 to 3282, the Milky Way crosses the top right corner 3281 to 3288, change of view at 3024 and 3270 unchanged. Next: one scene (the deck's program on the globe, place picture off).",
  "looks": [
   {
-   "time": "2026-11-23T22:31:57.037Z",
-   "file": "20261123223157037-note-c3g6-3296.jpg",
-   "source": "../work/f/c3g6-3296.jpg",
+   "time": "2026-11-23T22:50:09.119Z",
+   "file": "20261123225009119-note-k1-3296.jpg",
+   "source": "../work/f/k1-3296.jpg",
    "kind": "note",
-   "label": "3296 judged rise frame: left 145d9a9, right 092b0f4",
+   "label": "knots out, draft, judged 3296 (height 0.768 radii)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T22:31:56.504Z",
-   "file": "20261123223156504-note-c3g6-2997.jpg",
-   "source": "../work/f/c3g6-2997.jpg",
+   "time": "2026-11-23T22:50:08.569Z",
+   "file": "20261123225008569-note-k1-2997.jpg",
+   "source": "../work/f/k1-2997.jpg",
    "kind": "note",
-   "label": "2997 judged dive frame: left 145d9a9, right 092b0f4 (cold patch calmed; the straight dark line under the shade is still there)",
+   "label": "knots out, draft, judged 2997 (height 0.389 radii)",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T22:31:55.956Z",
-   "file": "20261123223155956-note-c2-T-rise.jpg",
-   "source": "../work/f/c2-T-rise.jpg",
+   "time": "2026-11-23T22:50:08.029Z",
+   "file": "20261123225008029-note-k1-rise3.jpg",
+   "source": "../work/f/k1-rise3.jpg",
    "kind": "note",
-   "label": "change of view in the rise on 092b0f4: 3270 (surface view) over 3271 (globe side); texture changes in one frame, still wrong",
+   "label": "knots out, draft, k1-rise3: every second frame of the far dive or every frame of the rise",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-23T22:31:55.389Z",
-   "file": "20261123223155389-note-c2-T-dive.jpg",
-   "source": "../work/f/c2-T-dive.jpg",
+   "time": "2026-11-23T22:50:07.501Z",
+   "file": "20261123225007501-note-k1-rise2.jpg",
+   "source": "../work/f/k1-rise2.jpg",
    "kind": "note",
-   "label": "change of view in the dive on 092b0f4: 3023 (globe side) over 3024 (surface view); dark band at the bottom of 3023 and the change of texture are still there",
+   "label": "knots out, draft, k1-rise2: every second frame of the far dive or every frame of the rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:50:06.967Z",
+   "file": "20261123225006967-note-k1-rise1.jpg",
+   "source": "../work/f/k1-rise1.jpg",
+   "kind": "note",
+   "label": "knots out, draft, k1-rise1: every second frame of the far dive or every frame of the rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:50:06.425Z",
+   "file": "20261123225006425-note-k1-dive3.jpg",
+   "source": "../work/f/k1-dive3.jpg",
+   "kind": "note",
+   "label": "knots out, draft, k1-dive3: every second frame of the far dive or every frame of the rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:50:05.894Z",
+   "file": "20261123225005894-note-k1-dive2.jpg",
+   "source": "../work/f/k1-dive2.jpg",
+   "kind": "note",
+   "label": "knots out, draft, k1-dive2: every second frame of the far dive or every frame of the rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T22:50:05.350Z",
+   "file": "20261123225005350-note-k1-dive1.jpg",
+   "source": "../work/f/k1-dive1.jpg",
+   "kind": "note",
+   "label": "knots out, draft, k1-dive1: every second frame of the far dive or every frame of the rise",
    "stop": "jupiter"
   }
  ]
