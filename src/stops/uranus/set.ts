@@ -225,9 +225,9 @@ export const createSet: SetFactory = async (ctx) => {
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
       const relit = low && !look.show.down
-      const plated = low ? reach(look.place.plates, altitude) : 0
-      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, 1 - reach(look.place.tops.clear[kind as 'dive' | 'rise'], altitude), state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
-      else globe.place(0, 0, 0, 0, state.time - terrainMid, eyes.dive)
+      const plated = low ? reach(look.place.plates[kind as 'dive' | 'rise'], altitude) : 0
+      if (low) globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? reach(look.place.light.down, altitude) : 0, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
+      else globe.place(0, 0, 0, state.time - terrainMid, eyes.dive)
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
       placeEye()
