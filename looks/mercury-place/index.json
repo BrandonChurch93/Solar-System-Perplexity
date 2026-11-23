@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-23T09:12:58.924Z",
+ "pushed": "2026-11-23T09:20:59.373Z",
  "head": "2afc5d610bc6c1b88e739adb593448e95c68ea8c",
- "note": "level 2 take a3 (bad): place still reads as a pasted polygon, generator invents craters; path numbers measured, nothing rendered yet",
+ "note": "level 2 take a4: place mask fixed (close sky was inside it), no outline now; place still finer and greyer than its surroundings",
  "looks": [
+  {
+   "time": "2026-11-23T09:20:58.550Z",
+   "file": "20261123092058550-note-L2-crop-a4.jpg",
+   "source": "out/work/mercury/place/repaint/L2-crop-a4.jpg",
+   "kind": "note",
+   "label": "level 2 take a4 built, 1:1 crop at the place",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-23T09:20:55.990Z",
+   "file": "20261123092055990-note-L2-mid-a4.jpg",
+   "source": "out/work/mercury/place/repaint/L2-mid-a4.jpg",
+   "kind": "note",
+   "label": "level 2 take a4: lead (left) and built plate (right), middle half: sky no longer leaks into the place, outline gone",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-23T09:12:55.445Z",
    "file": "20261123091255445-note-L2-crop.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/tiles/cmp-l4.jpg",
    "kind": "note",
    "label": "laid back from the tiles, 9.5 deg about the spot: dive camera, rise camera, old patch-4 (the old level is another terrain in another style: all of it has to be remade from the place)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:20:35.536Z",
-   "file": "20261123082035536-note-pano-rise.jpg",
-   "source": "out/work/mercury/place/tiles/pano-rise.jpg",
-   "kind": "note",
-   "label": "close side panorama from the camera of the rise T (990.25): the terraced crater lies below the frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-23T08:20:32.550Z",
-   "file": "20261123082032550-note-pano-dive.jpg",
-   "source": "out/work/mercury/place/tiles/pano-dive.jpg",
-   "kind": "note",
-   "label": "close side panorama from the camera of T (dive, 744.25), 8 tiles joined, green is the film frame: the place has ground only inside the frame plus a small margin",
    "stop": "mercury"
   }
  ]
