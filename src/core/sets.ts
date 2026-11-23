@@ -125,7 +125,7 @@ export class SetLoader {
       assets,
       format: this.getFormat(),
       url: (path) => base + path,
-      texture: async (path, options: TextureOptions & { channels?: 1 } = {}) => {
+      texture: async (path, options: TextureOptions = {}) => {
         const one = options.channels === 1
         if (one && options.srgb !== false) throw new Error('a one channel texture needs srgb: false: ' + path)
         const res = await fetch(base + path)
