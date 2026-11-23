@@ -2124,3 +2124,41 @@ Looked at, every frame of the fifteen sheets `out/work/venus/place/r10/dive-0..7
 - The orange red is gone from the place in both moves. The lit sides of the towers are warm brown and gold.
 - Still wrong, as before: the place is a dark olive brown field beside the cream gold globe in 1281 to 1303 and 1570 to 1589, with a soft smeared band between them at the left of the place in 1284 to 1303; a pale grey blue patch comes up in 1300 to 1307 and fades in 1566 to 1574; a smooth golden band along the limb in 1560 to 1565 with orange patches at its right; crisp grey ridges of level w at the left in 1574 to 1586, now olive grey and not white; pale blobs at the left in 1560 to 1565; the Sun comes in at the top of the frame over 1313 to 1319.
 - Frames that may not change, draft, on this tree (`same/n12/` against `same/main/`): 37 of 37 byte equal.
+
+### MAIL 311 from the Builder (/root), 18:03 UTC, to every stop builder, word for word. No answer needed
+
+"MAIL 311 from the Builder (/root), 18:03 UTC, to every stop builder. Decision d129, engine part E6 (handover_engineer builds it now).
+
+What: in the dives and rises of a stop that opted in, the shutter of a frame is shortened so that the motion across it is at most 6 px at the point of the frame that moves most (config handover.maxBlurPx), eased back to the full shutter over the last 12 frames of a rise. Every other frame of the film keeps the full shutter.
+
+Why: the critics of rounds 37 and 40 score the judged dive and rise frames as smear, severe (Earth 1857 "extreme radial zoom blur and low resolution stretching, blocky stepped streaks", Earth 2156 "dragged into parallel streaks and do not hold detail at native size", Mercury 1016 "smeared into long directional streaks"). The motion across the full shutter is 25 to 80 px there, because one steady move changes scale by 6 to 14 percent a frame. The path cannot be slower, so the shutter is shorter.
+
+What it means for you:
+1. Do not slow or bend your path to get less blur and do not build a blur cure of your own.
+2. From the next round your judged dive and rise frames (Sun 247; Mercury 717, 1016; Venus 1287, 1586; Earth 1857, 2156; Mars 2427, 2726; Jupiter 2997, 3296; Saturn 3567, 3866; Uranus 4137, 4436; Neptune 4707, 5006) and every frame of the motion sheets are nearly as sharp as your draft frames. Every fault the blur hid will be seen: plate edges, a level that pops, thin texture, clouds as blobs, the place picture as a patch, a halo at the limb. Look at those two frames at the draft tier at native size (crops of about 700 px, not the whole frame resized) and put what you find on your list, worst first.
+3. Nothing to merge yet. I tell you when E6 is on main.
+No answer needed."
+
+### State 18:10, the cure of the orange red committed and proven (1f0421d4, merge of main c4cefb3 as 41c78e7b), and what mail 311 asks for
+
+Commit 1f0421d4 (the cure), merged with main c4cefb3 as 41c78e7b (the merge brought recipes of other stops, `kit/PROGRESS.md`, `assets-src/shared/HARNESS-NOTES.md`, `tools/round.py`; nothing under `src` or `public`). Pushed to `agent/venus-place`. The diff against main holds the three Venus folders only. Round 41 (Venus, round 1 of 3) was started by the Builder at 17:16 UTC on 8b65c470, so this commit is for the round after.
+
+Proofs on 41c78e7b, one render process at a time:
+
+- Frames that may not change, draft: 37 of 37 byte equal. Final tier 1185 and 1440 (`same/fin12/`): sha256 053990438b0003a689f1035b00c7265fa2c192a1b09143fb453fad9ac222cedd and b24b5ce3fdd445c7ddcd1154f1d9f3e43168fa3e1cd62219c3bceabce75825c3, the values of the kept stills.
+- G13 on every frame (854 s): PASS, 0 of 495 over 2 percent, worst rise 1561 1.18 percent, 1560 1.06, 1562 0.96 (as before). Copy `out/work/venus/place/r10/g13.json`.
+- G5 and G17, final tier (460 s): PASS G5 (1185 coverage 0.316, 1287 0.907, 1440 0.685, 1586 0.887, invalid 0 on all four). PASS G17 (1185 median 0.959 p25 0.844 over 77 tiles; 1440 median 0.936 p25 0.804 over 76 tiles). Copy `r10/g5g17.json`.
+- Harness, draft (report copied to `r10/h/`): every check pass, "under the place picture" inside the limit on both. Dive, T in 1343: side difference mean 0.052, 99th percentile 1, max 133, 57 pixels over 16; under the place picture 3.98 (tone 1.79, detail 3.57); flow gap mean 0.101 px a frame, largest 0.286; largest step on the body level 5.9 and colour 6.45 into 1280; flat 1.5 percent (1336). Rise, T in 1542: side difference mean 0.052, max 47, 39 pixels over 16; under 3.95 (tone 1.7, detail 3.57); flow gap mean 0.092, largest 0.236; largest step level 4.72, colour 5.39 into 1594; flat 0.7 percent (1545). The same numbers as on 8b65c470: the cure does not touch the handover frames.
+- `npx tsc --noEmit` exit 0; `npx vitest run` 170 tests in 25 files pass; `npm run build` exit 0, dist linked (441 links).
+
+Mail 311, item 2: 1287 and 1586 at draft, native size, six crops of 700 px each (`/tmp/v/x1287-0..5.jpg`, `x1586-0..5.jpg`, crop k at x 0, 610, 1220 and y 0, 380). Found, worst first:
+
+1. 1287, x 610 to 1310, y 380 to 1080: the field of the place is dark mud (mean 34, 30, 19). Soft blurred patches lie beside crisp ridges, the towers read as dark blobs of smoke, the forms cannot be read. The soft parts are the painted haze of plate a, flattened by the tone map and drawn at the dusk exposure of this frame (gain 1.26 of 4.5).
+2. 1287, x 1220 to 1920: the place ends as a patch. Towers and cells stop against long smooth streaks of the globe along the right limb (the globe's own texture is thin at this scale). Olive yellow towers at x 1500 to 1560, y 580 to 700.
+3. 1586, x 0 to 1300, y 380 to 1080: below the crisp cells of level w the dark side of the globe is smooth diagonal streaks, and the cells end against them; dark mud in the middle (x 610 to 1000).
+4. 1586, x 1220 to 1500, y 600 to 900: the cells of the place end in an arc against the smooth lit globe: a patch edge. The swirl of the globe beside it is soft.
+5. 1287, x 860 to 1060, y 100 to 180: a soft orange band across the towers, and a soft smear down x 610 to 710, y 350 to 700, where the lit cloud of the globe meets the place.
+6. 1287, x 0 to 350, y 880 to 1080: a smooth olive wedge in the lower left corner, no forms, beside a pebbled grey deck.
+7. 1586, x 0 to 200, y 0 to 300: the glow of the lit limb lies over the cells in the upper left corner as a soft orange wash.
+
+Good at native size: 1287 upper left (the lit cloud with its towers), 1586 upper left and upper middle (cells, towers with lit sides and long shadows).
