@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, trapeze, type Fit, type MoveParams } from '../../director/moves'
-import { drift, mix, ramp, smooth } from '../../director/rig'
+import { drift, lookAt, mix, ramp, smooth } from '../../director/rig'
 import fit from './fit.json'
 import skimJson from './skim.json'
 
@@ -228,9 +228,26 @@ export class SaturnPlan extends StopPlan {
 
   // The place the dive goes to and the rise leaves: a point of the ring plane ahead of the lens of the skim.
   // The ground of this stop is the plane of the rings, not the sphere.
-  override place(_kind: 'dive' | 'rise', _time: number): THREE.Vector3 {
+  placePoint(): THREE.Vector3 {
     const foot = this.skimPosition.clone().addScaledVector(this.ringNormal, -this.skimPosition.dot(this.ringNormal))
     return foot.addScaledVector(this.skimForward, skimJson.handover.place.ahead)
+  }
+
+  // The engine reads a place as a direction from the centre of the globe: the direction of that point.
+  override place(_kind: 'dive' | 'rise', _time: number): THREE.Vector3 {
+    return this.placePoint().normalize()
+  }
+
+  // The harness's top down view: on the line from the centre through the place, at the distance and with the
+  // field of the given pose, looking at the centre, the heading of the lens at the handover up in the picture.
+  override topDown(kind: 'dive' | 'rise', time: number, pose: Pose): Pose {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const at = this.coverCenter(seg)
+    const tw = this.twin(this.closePose(kind, at), at)
+    const heading = new THREE.Vector3(0, 0, -1).applyQuaternion(tw.quaternion).applyQuaternion(this.turn(at).invert()).applyQuaternion(this.turn(time))
+    const position = this.place(kind, time).multiplyScalar(pose.position.length())
+    return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), heading), vfov: pose.vfov }
   }
 
   override skyGain(time: number): number {

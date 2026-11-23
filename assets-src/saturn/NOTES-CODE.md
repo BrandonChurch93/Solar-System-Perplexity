@@ -1049,3 +1049,34 @@ STILL WRONG AT READY (16:30 UTC), for round 1
    jolt. The moon passes the limb fast at 3870 to 3872.
 5. Bodies: shapes still few; some read as pale beads.
 6. The terminator may read hard at 3630 to 3660.
+
+MAIL 293 (15:36 UTC, from the Builder, core for Saturn)
+
+"MAIN is 0eae595... Merge main 0eae595 before your next named commit. Nothing outside your three folders, as
+before. HOW IT GOES ON for every stop: the commit you named READY is checked on the machines (reference
+frames, kept frames at the final tier, handover report, then G15 here). Green: it goes onto main and the
+stop's first round starts with fresh critics. Your own list of what is still wrong goes into that round
+beside what the critics name. Keep working on your list meanwhile and name the next commit when a cure is
+rendered and proven; it is taken as the fix of the round... saturn_coder: READY by 16:30 UTC stands. Your
+0111bf2 skim is rendered at the review tier, every frame 3630 to 3809, and shown to Brandon. Seen by me: the
+far left of the ring plane is a pale glow with no structure from 3630 to about 3700; from 3750 the near
+grains read as a gravel bed with no ringlets between them; the globe's bands are plain beside the approved
+image."
+
+THE MERGE OF MAIN 0eae595 (15:35 UTC) AND THE TEST IT BROUGHT
+
+- Merge 92226bb: main's version of every file outside the three folders (git diff origin/main outside them
+  is empty).
+- One test of the new main failed on the merge: tests/place.test.ts, "the top down view of the harness". It
+  reads a plan's place as a unit vector (a direction from the centre of the globe) and asks topDown to sit on
+  the line through it, looking at the centre. Saturn's place was a point of the ring plane ahead of the lens
+  of the skim, 2.6 and more radii out, so the test could not hold.
+- Cure in plan.ts: placePoint() is that point of the plane, place() is its direction, and topDown() is
+  overridden: on the line from the centre through the place at the distance and field of the given pose,
+  looking at the centre, the heading of the lens at the handover up.
+- Not on a pixel path: place is read by tools/handover.ts (where the place lies in the frame) and by the
+  test only, topDown by the harness's forced view only. So the frames keep their bytes; proven by drafts
+  after the change (see the READY report below).
+- With the unit place the handover path still passes: the place is at most 0.172 of the half frame from
+  the middle in the dive (frame 3550, it was 0.406 with the point of the plane) and 0.378 in the rise (3879).
+- vitest 170 of 170, tsc clean.
