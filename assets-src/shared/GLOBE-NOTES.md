@@ -171,6 +171,89 @@ Off: a set with own levels and no `ownGain` keeps the text it had (sha256 `813ce
 
 Measured in `tests/globe-gl.test.ts` (128 pixel row through an own level of 30 degrees over a lit level): gain 1 1 1 gives the pixels of the build without the option, exactly; with gain 2 1 0.5 the centre pixel is the scene value of the texel times the gain to 1e-5; the channel with gain 1 keeps its values exactly; across the feather the other two channels move by `w * scene * (gain - 1)` to 1e-4 with `w` the weight read from the channel with gain 1; the pixels the own level does not reach are exactly those of the lit level alone.
 
+## 7. The air of the globe by the eye's height (`setAir`)
+
+Second review note, plan F: nothing in the picture may come by the clock or by the view. The engine (handover_engineer, type `Air` in `src/core/types.ts`) mixes the knots of a stop's `air` params over the log of the eye's height and hands `shot.air` per shutter sample. In `src/bodies/air.ts`:
+
+- `HazeAir = { depth, scaleHeight, day, twilight, night, edge: [from, to], strength, extinction, forward }`, the numbers of `HAZE_GLSL`.
+- `GlobeAir = { limb, tint, haze: HazeAir }`, the part of `Air` the globe reads. `Air` has more fields (`height`, `share`, `exposure`, `shell`, `sky`, `stars`, `sunRadius`, `glare`); the globe does not read them.
+- `planet.setAir(air)` writes `uLimb`, `uTint` and the haze of the ground; `shell.setAir(air.shell)` writes a `HazeShell`; `setHazeAir(uniforms, hazeAir)` writes any material that includes `HAZE_GLSL` and made its uniforms with `hazeUniforms` (Venus, Jupiter, Saturn, Neptune). `uExtinction` is written where the material has it.
+- `hazeAir(params)` turns the `HazeParams` a globe was made with into a `HazeAir`, with the defaults the shader has (`night` 0 0 0, `edge` -0.16 0.34), for a stop that writes its top knot from its look.
+
+No shader text changes and no uniform is added: the setters write the uniforms the globe has today. A stop that never calls them keeps every byte. A stop turns it on in its `update`:
+
+```
+if (shot.air) {
+  planet.setAir(shot.air)
+  shell.setAir(shot.air.shell)
+}
+```
+
+and takes out its own lines keyed to a view, a segment or a time. The top knot of the stop's `air` holds today's numbers of the hold; the engine hands the top knot through untouched at and above its height, so the hold keeps its bytes.
+
+Measured (`tests/globe-air.test.ts`, 5 tests): with the air made from the params the globe was built with, every uniform of the planet and of the shell holds the value it had, compared as JSON; the planet text is `81b01893...` and the shell text `692d6d8b...` before and after; each field lands in its uniform; the arrays of the air are copied, not kept; uniforms without a haze are refused.
+
+### Patch for `src/stops/mars/set.ts` (owner: mars_place_builder)
+
+Today `low` and `near` are already functions of the log of the eye's height, but `ending` (the segment), `lit` (the retreat's clock) and `diveT` switch them. With the air:
+
+```
+-      const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
+-      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+-      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
++      const air = shot.air
++      if (!air) throw new Error('mars needs the air of its params')
++      light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, air.sunShare ?? 0).normalize()
+...
+-      const low = ending ? 0 : 1 - smooth(...)
+-      (the lines that write uTint, uHazeDay, uHazeTau, uHazeH, uHazeEdge of the planet and of the shell, and the `near` mixes over them)
++      planet.setAir(air)
++      shell.setAir(air.shell)
++      const low = air.share
+```
+
+and the numbers that stay in the set (`uGrazingShape.x`, `uGrazingDetail.w`, `uVignette`, the gains of halo and glint, the glow colours, the own gain) read `air.share` or their own knot field instead of `low`, `near`, `ending` and `diveT`. The knots: the heights `descent.high` 0.7, `near.high` 0.03, `descent.low` 0.05 and `near.low` 0.0022 of today, each with the values today's lines give at that height, the top knot equal to `look.haze`, `look.shellHaze`, tint 1 1 1 and `look.light.limb`. The curve between two knots is the engine's, not today's product of two smoothsteps, so dive frames move a little and hold frames do not. The light of the retreat (`lit`) is not air; it needs its own rule by height or by distance from the stop and is the stop builder's and the engine's to settle.
+
+## 8. Relief cap (`cap`)
+
+Second review note, plan F: relief as geometry on the globe itself from the height where the tallest thing shifts a pixel. `src/bodies/cap.ts`, class `ReliefCap`, turned on by `cap` in the options of `Planet`:
+
+```
+cap: {
+  levels: [{ height, size, widthDeg, low, high, mask? }, ...],   coarse to fine
+  border: [inner, outer],     radii of ground distance about the spot; the height goes to 0 between them
+  from: [high, low],          heights of the eye in radii; the relief grows from 0 at `high` to full at `low`, over the log of the height
+  cells: n,                   cells along the side of each level, a multiple of 64
+  pixel: radians,             the angle of one pixel row of the master format (also `cap.setPixel`)
+  feather, fade, reachDeg     optional
+}
+```
+
+What a stop hands: square gnomonic plates of heights about `patches.spot`, north up, row 0 at the north edge, texel centres at (i + 0.5) / N, raw uint16, radii over the unit sphere = low + v / 65535 * (high - low). The stop reads the file with `ctx.buffer(path)` and makes the texture with `heightTexture(ctx, new Uint16Array(buffer), size)` from `src/core/sets.ts`: the heights stay 16 bit integers on the card (`R16UI`, nearest, with a mip chain made by a 2 by 2 box in JS), are counted in the set's bytes (2 bytes a texel plus a third for the mips: 10.67 MB for 2048 squared) and are disposed with the set.
+
+What it draws:
+
+- A mesh, child of `planet.mesh`, in the same depth buffer. Instanced patches (64 by 64 to a level) on one integer lattice per level, the vertices on the texel centres of the level (of its mip when `cells` is less than `size`, of the texels and the points between when it is more). A coarser grid drops the patches that lie wholly inside the next finer square less two of its cells, so the grids overlap in a band and there is no T junction. `reachDeg` adds grids of twice the width each, with no height, out to that half angle, so the border against the 320 segment sphere can lie beyond the horizon.
+- Vertex shader only reads the heights (`usampler2D`, `texelFetch`, bilinear and between two mips by hand). The level of detail is the larger of the pixel's footprint (`pixel` times the distance of the vertex from the eye: an angle, no format in it) and the cell of the grid. Levels blend coarse to fine with the feather of the plates (0.12 of the width) and the fade of the patch levels (`fade`, in texels of the level above per pixel). Position = direction times (1 + height); the varying `vLocal` stays the undisplaced direction, so the fragment text reads colour, levels and light at the place straight under the point: colour is to be laid as a map from straight above.
+- Fragment text: the planet's own text for its option set, without one line; the uniforms are the planet's own objects, so `setAir`, `setOwnGain`, `setGlow` and every uniform a stop writes on the planet hold on the cap.
+- The sphere under it: the planet's text gets `uniform float uCapCut;` and one `discard` line. The cut is 0 and the cap is not drawn while the eye is at or above `from[0]`; below it the sphere is cut one cell inside the cap's outer edge.
+- `cap.setSink(depth, radius)` with a `mask` beside a level: the cap sinks by `depth` (radii) where the mask is 1, within `radius` (radians of ground) of the eye's foot, so a close view's own mesh wins the depth test there (asked by handover_engineer; the stop sets both by `air.height`).
+
+Off: a planet without `cap` keeps its text (`81b01893...`, own `813ceb84...`), has no child mesh and no uniform with `Cap` in its name.
+
+Not there yet: no normal from the heights (the light is the globe's; own levels stay as painted), no cast shadow, the haze depth is measured to the sphere, no march in the fragment shader.
+
+Other owners: `src/core/caps.ts` needs `MAX_VERTEX_TEXTURE_IMAGE_UNITS: 10` and `MAX_COMBINED_TEXTURE_IMAGE_UNITS: 26` (on agent/engine-handover 051a2226). `SetContext` in `src/core/types.ts` is not changed: `heightTexture` is a function beside the loader and finds the set's counter through the context, also through a copy of it (`{ ...ctx }`).
+
+Measured on the synthetic height (`tests/globe-cap.test.ts`, 8 tests in node and 6 in the harness browser, pictures of 96 to 192 pixels, float target):
+
+- Every height 0, eye above the spot: no pixel differs from the globe without a cap by more than 1e-6. Eye 0.02 radii up looking along the ground: under 1 percent of the values differ by more than 1e-4.
+- Eye above the band: the picture equals the picture of a globe without the option value for value, the triangle count is the sphere's, and the set's bytes rise by exactly the heights with their mips.
+- A ridge 0.03 radii tall seen from 0.02 radii up: the column through it has ground, then sky; the red ground behind the ridge is gone; its crest stands more than 4 rows above the horizon of the sphere and within 2.5 rows of the row computed from the geometry.
+- A trough 0.04 radii deep: the far ground moves down by more than 3 rows and every pixel the sphere covered is still covered (the sphere does not close the trough, the cap leaves no hole).
+- Rim: a bump inside the border seen from four sides at 0.01 radii, with and without a skirt of 20 degrees: every pixel the sphere covered is covered.
+- Pixel as an angle: a ridge one texel wide has its crest at the same share of the picture height at 96 and at 192 rows (within one row of 96); with a pixel 400 times wider it stands less than 0.6 as tall.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
