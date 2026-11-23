@@ -13,7 +13,9 @@ export interface PlaceDump { x: number; y: number; what: 'image' | 'alpha' }
 // wide number (0 turns it off).
 // in: four shares (left,right,bottom,top) by which the feather of the picture's sides reaches in over the frame while its weight is low, in place of
 // the stop's own or the film's (handover.place.edgeIn).
-export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number] }
+// tone: four shares (left,right,bottom,top) by which the picture's own broad tone stays back from its sides while its weight is low, in place of
+// the stop's own or the film's (handover.place.toneIn); 0,0,0,0 is the picture with its own tone throughout.
+export interface Probe { view: string; side: ViewKind | null; shut: boolean; time: number | null; place: boolean; mask: boolean; picture: boolean; top: boolean; dump?: PlaceDump; limb?: number; edgeIn?: [number, number, number, number]; toneIn?: [number, number, number, number] }
 
 export function parseProbe(diag: string): Probe {
   const parts = diag.split('/').map((s) => s.trim()).filter((s) => s.length > 0)
@@ -31,6 +33,7 @@ export function parseProbe(diag: string): Probe {
     else if (key === 'top') out.top = true
     else if (key === 'limb' && value !== undefined && Number(value) >= 0 && Number(value) < 90) out.limb = Number(value)
     else if (key === 'in' && value !== undefined && value.split(',').length === 4 && value.split(',').every((x) => Number(x) >= 0 && Number(x) <= 1)) out.edgeIn = value.split(',').map(Number) as [number, number, number, number]
+    else if (key === 'tone' && value !== undefined && value.split(',').length === 4 && value.split(',').every((x) => Number(x) >= 0 && Number(x) <= 4)) out.toneIn = value.split(',').map(Number) as [number, number, number, number]
     else if (key === 'dump' && value !== undefined) {
       const [x, y, what] = value.split(',')
       if (!Number.isInteger(Number(x)) || !Number.isInteger(Number(y)) || (what !== 'image' && what !== 'alpha')) throw new Error('unknown diagnostic option ' + part)
@@ -56,6 +59,7 @@ export function probeString(p: Partial<Probe>): string {
   if (p.top) parts.push('top')
   if (p.limb !== undefined) parts.push('limb=' + p.limb)
   if (p.edgeIn !== undefined) parts.push('in=' + p.edgeIn.join(','))
+  if (p.toneIn !== undefined) parts.push('tone=' + p.toneIn.join(','))
   if (p.dump) parts.push('dump=' + p.dump.x + ',' + p.dump.y + ',' + p.dump.what)
   else if (p.picture) parts.push('picture')
   return parts.join('/')
