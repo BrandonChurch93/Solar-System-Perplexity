@@ -1,9 +1,44 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T11:55:07.346Z",
- "head": "37289eb3bc693c9ec16cd000d22d1e9750c04a5a",
- "note": "Jupiter surface view v15: wide canvas in every frame, hidden zones filled, exposure eased over the second half",
+ "pushed": "2026-11-23T12:12:46.871Z",
+ "head": "b3bf167d187ac76f0ea65bd4ccb2d40660a2306f",
+ "note": "items 1 and 3 of mail 251 and the dashes done at b3bf167; now the soft near ground at 3200 to 3239",
  "looks": [
+  {
+   "time": "2026-11-23T12:12:46.317Z",
+   "file": "20261123121246317-note-v15r-3236-ll.jpg",
+   "source": "../work/f/v15r-3236-ll.jpg",
+   "kind": "note",
+   "label": "v15 review tier 3236, lower left native: dashes gone, ground still soft"
+  },
+  {
+   "time": "2026-11-23T12:12:45.765Z",
+   "file": "20261123121245765-note-v15b-consecutive.jpg",
+   "source": "../work/f/v15b-consecutive.jpg",
+   "kind": "note",
+   "label": "v15b: consecutive frames, draft tier"
+  },
+  {
+   "time": "2026-11-23T12:12:45.186Z",
+   "file": "20261123121245186-note-v15b-12.jpg",
+   "source": "../work/f/v15b-12.jpg",
+   "kind": "note",
+   "label": "v15b: 12 frames 3060 to 3239, draft tier, wide canvas in every frame"
+  },
+  {
+   "time": "2026-11-23T12:06:19.383Z",
+   "file": "20261123120619383-frame-t-3239-layers.jpg",
+   "source": "out/work/jupiter/frames/t-3239-layers.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "c049c4c0efb85c12"
+  },
   {
    "time": "2026-11-23T11:55:06.747Z",
    "file": "20261123115506747-note-v15-row.jpg",
@@ -31,49 +66,6 @@
    "source": "../work/f/v14-3239-bl.jpg",
    "kind": "note",
    "label": "v14 3239, native crop of the lower left at the draft tier: hidden zones filled, no dashes"
-  },
-  {
-   "time": "2026-11-23T11:52:19.191Z",
-   "file": "20261123115219191-sheet-jupiter.terrain-16x9-draft.jpg",
-   "source": "out/work/sheets/jupiter.terrain-16x9-draft.png",
-   "kind": "sheet",
-   "label": "Contact sheet jupiter.terrain, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "first": 3060,
-   "last": 3239,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:51:38.212Z",
-   "file": "20261123115138212-frame-f03060-draft.jpg",
-   "source": "out/work/sheets/.frames-BdnGiD/f03060-draft.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3060, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3060,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "8b9f780b26a50bc3"
-  },
-  {
-   "time": "2026-11-23T11:46:55.217Z",
-   "file": "20261123114655217-note-v12-3239-dots.jpg",
-   "source": "../work/f/v12-3239-dots.png",
-   "kind": "note",
-   "label": "v12 3239 at 6x beside the layer view: what is left at a hidden zone"
-  },
-  {
-   "time": "2026-11-23T11:46:54.612Z",
-   "file": "20261123114654612-note-v12n-3239-zones.jpg",
-   "source": "../work/f/v12n-3239-zones.png",
-   "kind": "note",
-   "label": "v12 without the blur of stretched texels: wires gone, small taffy on steep slopes"
   }
  ]
 }
