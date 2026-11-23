@@ -261,7 +261,7 @@ export const createSet: SetFactory = async (ctx) => {
       const fast = view.samples > 1 && (diving || rising)
       const at = (t: number) => (kind === 'dive' ? plan.dive(t) : plan.rise(t))
       const now = fast ? at(state.time) : null
-      const before = fast ? at(state.time - config.shutterFraction / (view.samples * config.fps)) : null
+      const before = fast ? at(state.time - (config.shutterFraction * (view.shutter ?? 1)) / (view.samples * config.fps)) : null
       const moving = now?.view === 'orbit' && before?.view === 'orbit'
       const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
       globe.smear(view.camera, moving ? now.pose : null, moving ? before.pose : null, look.smear, jitter?.jitterX ?? 0, jitter?.jitterY ?? 0, view.samples)
