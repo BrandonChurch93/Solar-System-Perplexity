@@ -52,8 +52,8 @@ export class Plan extends StopPlan {
     const pivot = seg.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).terrain! * seg.frames + 1e-9) + config.shutterFraction / 2
     const e = this.fly.entry
     const x = this.fly.exit
-    const a = Math.pow(Math.max(1 - (f - this.coverCenter(this.seg.dive!) * fps) / e.frames, 0), e.power)
-    const b = Math.pow(Math.max(1 - (this.coverCenter(this.seg.rise) * fps - f) / x.frames, 0), x.power)
+    const a = Math.pow(Math.max(1 - (f - e.at) / e.frames, 0), e.power)
+    const b = Math.pow(Math.max(1 - (x.at - f) / x.frames, 0), x.power)
     const u = (2 * (f - pivot)) / seg.frames
     const along = (this.fly.travel / (2 + (2 * this.fly.gather) / 3)) * (u + (this.fly.gather * u * u * u) / 3) - e.back * a + x.forward * b
     const position = closeAhead.clone().multiplyScalar(along).addScaledVector(closeUp, this.fly.swoop * u * u + e.height * a + x.height * b)
@@ -81,8 +81,8 @@ export class Plan extends StopPlan {
   }
 
   drawn(time: number): THREE.Quaternion {
-    const c0 = this.coverCenter(this.seg.dive!)
-    const c1 = this.coverCenter(this.seg.rise)
+    const c0 = this.fly.entry.at / config.fps
+    const c1 = this.fly.exit.at / config.fps
     return this.turn(time - spinRest * Math.min(Math.max(time - c0, 0), c1 - c0))
   }
 
