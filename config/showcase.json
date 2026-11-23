@@ -171,6 +171,14 @@
     "zenithDeg": [2, 8],
     "limits": {"sideMean": 0.5, "sideP99": 4, "flowStepFrames": 0.0625, "flowGapMeanPx": 1, "flowGapMaxPx": 4, "backRate": 0.02, "earlyShare": 0.2, "earlyRateOverMean": 0.5, "placeMiddle": 0.5, "levelStep": 6, "colourStep": 8, "underMean": 6, "bodyShare": 0.05, "flatShare": 0.5, "flatFloor": 1.5, "blockPx": 40, "sheetFrames": 12, "differenceGain": 8, "underGain": 4}
   },
+  "smooth": {
+    "rate": 2,
+    "reachFrames": 12,
+    "path": {"maxStep": 0.08, "maxRebound": 0.03, "seamFrames": 2, "ringPx": 96, "floors": {"turnDeg": 0.05, "speedPx": 0.5}},
+    "pictures": {"tier": "draft", "popWindow": 16, "flowScale": 0.25, "maxLevelStep": null, "maxPop": null},
+    "place": {"levelStep": null, "colourStep": null, "sideMean": null, "sideP99": null},
+    "counts": {"programs": 0, "textures": 0, "buffers": 0}
+  },
   "judged": {
     "fractions": {
       "hold": 0.5,
