@@ -1,78 +1,108 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-23T12:11:26.149Z",
- "head": "eb3138b1e193d34b8700c28b8a077dac5820def7",
- "note": "first globe side at dive T with own plates beside the film frame; top down sheet of the second bake",
+ "pushed": "2026-11-23T12:35:10.097Z",
+ "head": "41d778481693a63ea908321b5fb93b1008caaa85",
+ "note": "dense draft sheets of dive and rise on main's path with the first eight level ladder (41d7784): one place comes closer; haze band and the land beside the fan still step at 2447 to 2448",
  "looks": [
   {
-   "time": "2026-11-23T12:11:25.096Z",
-   "file": "20261123121125096-note-topdown-m2d.jpg",
-   "source": "out/work/place/view/topdown-m2d.jpg",
-   "kind": "note",
-   "label": "top down sheet, second bake: rim match as a gain (no teal), pale fan SE of the place still too bright",
-   "stop": "mars"
+   "time": "2026-11-23T12:33:38.707Z",
+   "file": "20261123123338707-sheet-mars-rise-draft-after.jpg",
+   "source": "out/work/handover/mars-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2701 to 2712 (after T, frame 2700), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2701,
+   "last": 2712,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T12:11:24.492Z",
-   "file": "20261123121124492-note-cmp2454-a.jpg",
-   "source": "out/work/place/view/cmp2454-a.jpg",
-   "kind": "note",
-   "label": "2454 draft: globe side alone with the first plates (top) over the film frame of the same build (bottom)",
-   "stop": "mars"
+   "time": "2026-11-23T12:33:36.932Z",
+   "file": "20261123123336932-sheet-mars-rise-draft-across.jpg",
+   "source": "out/work/handover/mars-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2694 to 2705 (across T, frame 2700), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2694,
+   "last": 2705,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T11:54:33.145Z",
-   "file": "20261123115433145-frame-s2454-full.jpg",
-   "source": "out/work/place/view/s2454-full.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2454, draft tier",
+   "time": "2026-11-23T12:33:35.133Z",
+   "file": "20261123123335133-sheet-mars-rise-draft-before.jpg",
+   "source": "out/work/handover/mars-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "mars rise, every frame 2688 to 2699 (before T, frame 2700), draft tier",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "first": 2688,
+   "last": 2699,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:31:45.968Z",
+   "file": "20261123123145968-sheet-mars-dive-draft-after.jpg",
+   "source": "out/work/handover/mars-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "mars dive, every frame 2455 to 2466 (after T, frame 2454), draft tier",
    "stop": "mars",
    "segment": "mars.dive",
-   "frame": 2454,
+   "first": 2455,
+   "last": 2466,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:31:44.110Z",
+   "file": "20261123123144110-sheet-mars-dive-draft-across.jpg",
+   "source": "out/work/handover/mars-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "mars dive, every frame 2448 to 2459 (across T, frame 2454), draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "first": 2448,
+   "last": 2459,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:31:42.041Z",
+   "file": "20261123123142041-sheet-mars-dive-draft-before.jpg",
+   "source": "out/work/handover/mars-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "mars dive, every frame 2442 to 2453 (before T, frame 2454), draft tier",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "first": 2442,
+   "last": 2453,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T12:14:51.002Z",
+   "file": "20261123121451002-frame-f02782-draft.jpg",
+   "source": "out/work/samebytes/m2a/f02782-draft.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2782, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2782,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "6f0b7a4ecf75e9a1"
+   "engine": "c049c4c0efb85c12"
   },
   {
-   "time": "2026-11-23T11:39:33.210Z",
-   "file": "20261123113933210-note-p06-take1.jpg",
-   "source": "out/work/place/view/p06-take1.jpg",
-   "kind": "note",
-   "label": "0.6 deg plate, fill take 1 (before holding)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T11:39:32.014Z",
-   "file": "20261123113932014-note-p3-t4-calm.jpg",
-   "source": "out/work/place/view/p3-t4-calm.jpg",
-   "kind": "note",
-   "label": "3.25 deg plate, take 4 held to the picture, far fan calmed by code",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T11:39:30.450Z",
-   "file": "20261123113930450-note-topdown-m2a.jpg",
-   "source": "out/work/place/view/topdown-m2a.jpg",
-   "kind": "note",
-   "label": "first bake of the 8 level ladder seen from above (look values): the 3.25 plate still shows as a lighter square and a pale wedge",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T11:07:46.690Z",
-   "file": "20261123110746690-note-p3-t1-plate.jpg",
-   "source": "out/work/place/view/p3-t1-plate.jpg",
-   "kind": "note",
-   "label": "work: the held plate from above, middle part: the fan shows again where the repaint was toned away from the picture, next take is led by this",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-23T11:07:46.046Z",
-   "file": "20261123110746046-note-p3-t1-twin.jpg",
-   "source": "out/work/place/view/p3-t1-twin.jpg",
-   "kind": "note",
-   "label": "work: take 1 held to the picture, drawn from the dive twin (top) against the picture's land with the haze out (bottom), 3.25 deg plate alone",
-   "stop": "mars"
+   "time": "2026-11-23T12:14:05.434Z",
+   "file": "20261123121405434-frame-f02212-draft.jpg",
+   "source": "out/work/samebytes/m2a/f02212-draft.png",
+   "kind": "frame",
+   "label": "earth.travel frame 2212, draft tier",
+   "stop": "earth",
+   "segment": "earth.travel",
+   "frame": 2212,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c049c4c0efb85c12"
   }
  ]
 }
