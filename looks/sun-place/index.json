@@ -1,80 +1,93 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T21:11:45.508Z",
+ "pushed": "2026-11-23T21:30:03.891Z",
  "head": "c0ad4f17e1b9be38dcb6a0f53b61d8ba55b7b97e",
- "note": "items 1 to 3 final frames while the proof runs; ground cure of mail 344 in work",
+ "note": "proof of items 1 to 3 runs (handover pass, G5 pass, G17 pass, G13 running); ground cure simulated, render after the proof",
  "looks": [
+  {
+   "time": "2026-11-23T21:30:02.722Z",
+   "file": "20261123213002722-note-sim-lanes-two.jpg",
+   "source": "out/work/sun/life/v/sim-lanes-two.jpg",
+   "kind": "note",
+   "label": "simulation on the plate, not a render: lanes moving, frame 110 left, 170 right, both over each other below (red 110, cyan 170)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:30:01.772Z",
+   "file": "20261123213001772-note-sim-cure-eight.jpg",
+   "source": "out/work/sun/life/v/sim-cure-eight.jpg",
+   "kind": "note",
+   "label": "simulation on the plate, not a render: ground cure of mail 344, eight consecutive frames (each life of a look shows another piece of the cell)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:28:11.073Z",
+   "file": "20261123212811073-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T21:17:42.092Z",
+   "file": "20261123211742092-sheet-sun-rise-top.jpg",
+   "source": "out/work/handover/sun-rise-top.png",
+   "kind": "sheet",
+   "label": "sun rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 216), place picture off, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 216,
+   "last": 269,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:16:39.829Z",
+   "file": "20261123211639829-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:16:38.069Z",
+   "file": "20261123211638069-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:16:36.278Z",
+   "file": "20261123211636278-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T21:11:44.351Z",
    "file": "20261123211144351-note-q3-60.jpg",
    "source": "out/work/sun/life/v/q3-60.jpg",
    "kind": "note",
    "label": "approved image left, frame 60 of the final tree right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:11:43.125Z",
-   "file": "20261123211143125-note-q3-six-100.jpg",
-   "source": "out/work/sun/life/v/q3-six-100.jpg",
-   "kind": "note",
-   "label": "final tree: frames 100 to 105 arcade native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:11:41.763Z",
-   "file": "20261123211141763-note-q3-release-30.jpg",
-   "source": "out/work/sun/life/v/q3-release-30.jpg",
-   "kind": "note",
-   "label": "final tree: release frames 30 to 41 consecutive, arcade with sky and ground",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T21:06:38.034Z",
-   "file": "20261123210638034-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T21:05:58.111Z",
-   "file": "20261123210558111-frame-f360-final-q3.jpg",
-   "source": "out/work/sun/life/f360-final-q3.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, final tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "45f909e84c1a1464"
-  },
-  {
-   "time": "2026-11-23T20:48:08.244Z",
-   "file": "20261123204808244-note-f3-072.jpg",
-   "source": "out/work/sun/life/v/f3-072.jpg",
-   "kind": "note",
-   "label": "draft, tree before the lower leg change: frames 72 to 83, knots racing down",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:48:07.628Z",
-   "file": "20261123204807628-note-f3-048.jpg",
-   "source": "out/work/sun/life/v/f3-048.jpg",
-   "kind": "note",
-   "label": "draft, c0ad4f17: frames 48 to 59",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:48:06.971Z",
-   "file": "20261123204806971-note-s6-leftfoot.jpg",
-   "source": "out/work/sun/life/v/s6-leftfoot.png",
-   "kind": "note",
-   "label": "draft, left foot x 640 to 1000, y 330 to 590, frames 68 to 84: before (9971c23a), with the knots as first built, now (c0ad4f17: on the lower leg a knot is its cores only)",
    "stop": "sun"
   }
  ]
