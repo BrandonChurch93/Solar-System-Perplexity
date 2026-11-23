@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-23T07:05:23.539Z",
- "head": "98465ea743d887d8bf8618cd67bfae9a1b70679d",
- "note": "S1: the twin puts the globe's horizon on the close side's horizon (1 to 2 px); features do not yet agree, the plates are next",
+ "pushed": "2026-11-23T07:37:11.579Z",
+ "head": "9fb358b942ba6d5ea096bc44f0249e1601b27314",
+ "note": "S1 at the chosen place: horizon on horizon within 2 to 5 px; the globe side does not show the place yet (no plates, no glint, wide pale rim)",
  "looks": [
+  {
+   "time": "2026-11-23T07:36:08.845Z",
+   "file": "20261123073608845-note-ov-m.jpg",
+   "source": "out/work/earth/place/ov-m.jpg",
+   "kind": "note",
+   "label": "the pyramid's land drawn into the close canvas at the chosen place (top), the 24 degree level seen from the twin (bottom); yellow: the approved frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T07:36:08.266Z",
+   "file": "20261123073608266-note-onglobe24-look.jpg",
+   "source": "out/work/earth/place/onglobe24-look.jpg",
+   "kind": "note",
+   "label": "first lay back of the close canvas on the 24 degree level (left: level as it is; red dot: nadir of the twin, yellow: the plan's spot)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T07:36:07.592Z",
+   "file": "20261123073607592-note-f02101-check.jpg",
+   "source": "out/work/earth/place/sides/f02101-check.jpg",
+   "kind": "note",
+   "label": "S1 at the chosen place, frame 2101 (rise start)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-23T07:36:05.798Z",
+   "file": "20261123073605798-note-f01915-check.jpg",
+   "source": "out/work/earth/place/sides/f01915-check.jpg",
+   "kind": "note",
+   "label": "S1 at the chosen place, frame 1915: close side, globe side from the twin, halves, mix",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-23T07:05:19.924Z",
    "file": "20261123070519924-note-lay-look.jpg",
@@ -41,62 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "job": "film"
-  },
-  {
-   "time": "2026-11-23T00:55:24.128Z",
-   "file": "20261123005524128-job-frame-04225.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.terrain frame 4225, final tier, from the running film job",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4225,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T23:09:50.254Z",
-   "file": "20261122230950254-job-frame-03838.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.rise frame 3838, final tier, from the running film job",
-   "stop": "saturn",
-   "segment": "saturn.rise",
-   "frame": 3838,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T22:35:38.183Z",
-   "file": "20261122223538183-job-frame-03584.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "saturn.dive frame 3584, final tier, from the running film job",
-   "stop": "saturn",
-   "segment": "saturn.dive",
-   "frame": 3584,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "job": "film"
-  },
-  {
-   "time": "2026-11-22T19:13:48.118Z",
-   "file": "20261122191348118-frame-f-2156-final-m35.jpg",
-   "source": "out/work/earth/pb/c35/f-2156-final-m35.png",
-   "kind": "frame",
-   "label": "earth.rise frame 2156, final tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2156,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
   }
  ]
 }
