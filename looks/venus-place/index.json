@@ -1,84 +1,92 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T10:43:23.796Z",
+ "pushed": "2026-11-23T11:00:52.332Z",
  "head": "cff2ea81330131ba6748ad3cfadf4d1c7db8dbbb",
- "note": "venus: air dome of the close side on the globe side (sky at T within 0.3 of 255), far haze; plates a to d laid back from the close side at each T, renders running",
+ "note": "h6: harness sheets with T plates; rise still wrong: two Suns 1549 to 1554, ground of the frame at T stands out pale from 1553",
  "looks": [
   {
-   "time": "2026-11-23T10:43:13.583Z",
-   "file": "20261123104313583-note-plates-rise.jpg",
-   "source": "out/work/venus/place/t/plates-rise.jpg",
+   "time": "2026-11-23T11:00:51.782Z",
+   "file": "20261123110051782-note-rise-4.jpg",
+   "source": "out/work/venus/place/h6/rise-4.jpg",
    "kind": "note",
-   "label": "plates a to d made again from the close side at the rise T (old left, new right of each pair)",
+   "label": "h6 rise 1550 1552 1554 1556 larger",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T10:43:12.993Z",
-   "file": "20261123104312993-note-plates-dive.jpg",
-   "source": "out/work/venus/place/t/plates-dive.jpg",
+   "time": "2026-11-23T11:00:51.269Z",
+   "file": "20261123110051269-note-dive-a.jpg",
+   "source": "out/work/venus/place/h6/dive-a.jpg",
    "kind": "note",
-   "label": "plates a to d made again from the close side at the dive T (old left, new right of each pair)",
+   "label": "h6 dive 1331 to 1342, draft, T plates of all five levels",
    "stop": "venus"
   },
   {
-   "time": "2026-11-23T10:34:27.970Z",
-   "file": "20261123103427970-frame-globe-1544.jpg",
-   "source": "out/work/venus/place/t/globe-1544.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1544, draft tier, nograin/side=orbit/t=51.475/noplace view",
+   "time": "2026-11-23T11:00:50.715Z",
+   "file": "20261123110050715-note-rise-b.jpg",
+   "source": "out/work/venus/place/h6/rise-b.jpg",
+   "kind": "note",
+   "label": "h6 rise 1545 to 1556, draft: T plates of all five levels; two Suns at 1549 to 1554, pale ground of the frame at T against olive ground round it",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T10:53:37.027Z",
+   "file": "20261123105337027-sheet-venus-rise-draft-after.jpg",
+   "source": "out/work/handover/venus-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1545 to 1556 (after T, frame 1544), draft tier",
    "stop": "venus",
    "segment": "venus.rise",
-   "frame": 1544,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "nograin/side=orbit/t=51.475/noplace",
-   "engine": "8b9f780b26a50bc3"
+   "first": 1545,
+   "last": 1556,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T10:32:57.441Z",
-   "file": "20261123103257441-frame-globe-1343.jpg",
-   "source": "out/work/venus/place/t/globe-1343.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1343, draft tier, nograin/side=orbit/t=44.775/noplace view",
+   "time": "2026-11-23T10:53:35.277Z",
+   "file": "20261123105335277-sheet-venus-rise-draft-across.jpg",
+   "source": "out/work/handover/venus-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1538 to 1549 (across T, frame 1544), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1538,
+   "last": 1549,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T10:53:33.491Z",
+   "file": "20261123105333491-sheet-venus-rise-draft-before.jpg",
+   "source": "out/work/handover/venus-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "venus rise, every frame 1532 to 1543 (before T, frame 1544), draft tier",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "first": 1532,
+   "last": 1543,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T10:51:40.594Z",
+   "file": "20261123105140594-sheet-venus-dive-draft-after.jpg",
+   "source": "out/work/handover/venus-dive-draft-after.png",
+   "kind": "sheet",
+   "label": "venus dive, every frame 1344 to 1349 (after T, frame 1343), draft tier",
    "stop": "venus",
    "segment": "venus.dive",
-   "frame": 1343,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "nograin/side=orbit/t=44.775/noplace",
-   "engine": "8b9f780b26a50bc3"
+   "first": 1344,
+   "last": 1349,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-23T10:25:56.274Z",
-   "file": "20261123102556274-note-t-hz.jpg",
-   "source": "out/work/venus/place/h3/t-hz.jpg",
-   "kind": "note",
-   "label": "air dome and far haze on the globe side: t-hz (globe without the picture left, close side right, at both T)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:25:55.735Z",
-   "file": "20261123102555735-note-t-pairs.jpg",
-   "source": "out/work/venus/place/h3/t-pairs.jpg",
-   "kind": "note",
-   "label": "air dome and far haze on the globe side: t-pairs (globe without the picture left, close side right, at both T)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:15:47.943Z",
-   "file": "20261123101547943-note-hz-rise.jpg",
-   "source": "out/work/venus/place/h1/hz-rise.jpg",
-   "kind": "note",
-   "label": "opt in h1 hz-rise",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-23T10:15:47.395Z",
-   "file": "20261123101547395-note-hz-dive.jpg",
-   "source": "out/work/venus/place/h1/hz-dive.jpg",
-   "kind": "note",
-   "label": "opt in h1 hz-dive",
-   "stop": "venus"
+   "time": "2026-11-23T10:51:39.315Z",
+   "file": "20261123105139315-sheet-venus-dive-draft-across.jpg",
+   "source": "out/work/handover/venus-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "venus dive, every frame 1337 to 1348 (across T, frame 1343), draft tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "first": 1337,
+   "last": 1348,
+   "tier": "draft"
   }
  ]
 }
