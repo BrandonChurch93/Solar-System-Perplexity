@@ -23,7 +23,7 @@ import { judgedFrames, segmentAtFrame } from '../src/director/timeline'
 // drawn again on another page after the warm start and after the other frames. Exit 1 on any difference.
 
 interface Counts { programs: number; textures: number; buffers: number }
-interface Api { png(): Promise<string>; setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
+interface Api { memory(): { peakBytes: number; loaded: string[] }; png(): Promise<string>; setRate(rate: number): void; ahead(frame: number, tier: string, all?: boolean): Promise<number>; renderFrame(frame: number, tier: string): Promise<void>; counts(): Counts }
 
 const cfg = loadConfig()
 requireDisk(cfg)
@@ -135,6 +135,8 @@ const s = await open(first)
 const bad: string[] = []
 const found: number[] = []
 const t0 = Date.now()
+let sets = 0
+let peak = 0
 try {
   await s.page.evaluate((r) => (window as unknown as { showcase: Api }).showcase.setRate(r), rate)
   for (let i = first * rate; i <= last * rate; i++) {
@@ -145,12 +147,14 @@ try {
       const drawn = warm ? await api.ahead(frame as number, tr as string, start as boolean) : 0
       const before = api.counts()
       await api.renderFrame(index as number, tr as string)
-      return { ...api.counts(), drawn, before }
+      return { ...api.counts(), drawn, before, sets: api.memory().loaded.length, peak: api.memory().peakBytes }
     }, [i, f, tier, !cold, i === first * rate] as const)
     await usable(s.page, f)
+    sets = Math.max(sets, c.sets)
+    peak = Math.max(peak, c.peak)
     const seg = segmentAtFrame(f)
     const work = c.programs + c.textures + c.buffers > 0
-    appendFileSync(file, JSON.stringify({ frame: f, segment: seg.id, programs: c.programs, textures: c.textures, buffers: c.buffers, warmed: c.drawn, ahead: c.before, ms: Date.now() - t }) + '\n')
+    appendFileSync(file, JSON.stringify({ frame: f, segment: seg.id, programs: c.programs, textures: c.textures, buffers: c.buffers, warmed: c.drawn, ahead: c.before, sets: c.sets, ms: Date.now() - t }) + '\n')
     if (work) {
       const line = 'frame ' + f + ' ' + seg.id + ': programs ' + c.programs + ', textures ' + c.textures + ', buffers ' + c.buffers
       console.log(line)
@@ -163,6 +167,7 @@ try {
   await s.close()
 }
 console.log('frames ' + first + '..' + last + ' at ' + rate + ' pictures a film frame, ' + format + ', tier ' + tier + (player ? ', the player\'s path' : ', the capture path') + (cold ? ', cold' : ', warm start') + ': ' + bad.length + ' frames of a dive, surface view, rise or travel did work, ' + ((Date.now() - t0) / 60000).toFixed(1) + ' minutes')
+console.log('at most ' + sets + ' sets loaded at a frame, peak ' + (peak / 1e6).toFixed(0) + ' MB of textures')
 if (write) {
   const was = listed()
   const frames = [...new Set([...was.frames, ...found])].sort((x, y) => x - y)
