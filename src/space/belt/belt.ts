@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { config } from '../../config'
+import { shutterSeconds } from '../../core/clock'
 import { Pass, floatTarget } from '../../core/pass'
 import { hash01 } from '../../core/random'
 import type { RenderView, Shot } from '../../core/types'
@@ -288,7 +289,7 @@ export class Belt {
     const fh = height + 2 * pad
     const frame = shot.frame
     const t0 = frame / config.fps
-    const span = config.shutterFraction / config.fps
+    const span = shutterSeconds()
     const open = director.shotAt(frame, t0)
     const close = director.shotAt(frame, t0 + span)
     const mid = director.shotAt(frame, t0 + span / 2)
