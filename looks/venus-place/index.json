@@ -1,9 +1,25 @@
 {
  "folder": "venus-place",
- "pushed": "2026-11-23T08:37:50.196Z",
+ "pushed": "2026-11-23T09:00:55.514Z",
  "head": "746fa898381b915151925f4a5df3ea942264957f",
- "note": "M2 proofs in work: final plates, top down sheet, dense dive; fringe near the limb at 1296 to 1310 still open",
+ "note": "limb fringe cured, level w (40 deg) in work for G13 at 1299 to 1303",
  "looks": [
+  {
+   "time": "2026-11-23T09:00:54.864Z",
+   "file": "20261123090054864-note-guide-view.jpg",
+   "source": "out/work/venus/place/w/guide-view.jpg",
+   "kind": "note",
+   "label": "guide of the new widest plate level w, 40 deg, in work",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-23T09:00:54.227Z",
+   "file": "20261123090054227-note-p6-t2.jpg",
+   "source": "out/work/venus/place/p6-t2.jpg",
+   "kind": "note",
+   "label": "dive 1284 to 1316 after the limb cure, globe side, draft",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-23T08:37:49.550Z",
    "file": "20261123083749550-note-p5-twin-cmp.jpg",
@@ -57,28 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:28:15.829Z",
-   "file": "20261123082815829-frame-m2-1185.jpg",
-   "source": "out/work/venus/place/same/m2-1185.png",
-   "kind": "frame",
-   "label": "venus.hold frame 1185, draft tier",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T08:15:47.412Z",
-   "file": "20261123081547412-note-p3-top-c.jpg",
-   "source": "out/work/venus/place/p3-top-c.jpg",
-   "kind": "note",
-   "label": "top down 1324 to 1349 larger",
-   "stop": "venus"
   }
  ]
 }
