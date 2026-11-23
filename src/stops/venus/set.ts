@@ -81,7 +81,6 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
   const placeTextures: THREE.Texture[] = []
   for (const level of place.levels) placeTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
-  const placeMask = await ctx.texture(base + place.mask, { srgb: false, anisotropy: 1 })
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -96,7 +95,7 @@ export const createSet: SetFactory = async (ctx) => {
     hold: { ...look.hold, map: holdMap, right: new THREE.Vector3(1, 0, 0).applyQuaternion(holdBack), up: new THREE.Vector3(0, 1, 0).applyQuaternion(holdBack), forward: new THREE.Vector3(0, 0, -1).applyQuaternion(holdBack), centre: [-holdCam.x / holdCam.z, -holdCam.y / holdCam.z], half: look.hold.margin / Math.sqrt(holdCam.lengthSq() - 1), lod: Math.log2(wrap.sets[key].color[0] / look.hold.base) },
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: spotBody, feather: patches.feather, fade: patches.fade },
-    place: { textures: placeTextures, mask: placeMask, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -195,7 +194,10 @@ export const createSet: SetFactory = async (ctx) => {
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       const vignette = shot.post.vignette * (1 - low)
       gu.uCarryOn!.value = 1 - released
-      gu.uPlaceOn!.value = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(place.near.low)) / (Math.log(place.near.high) - Math.log(place.near.low)))
+      const pl = plan.placeLook(state.segment, state.time)
+      const duskGain = Math.pow(place.dusk.gain, pl.dusk)
+      gu.uPlaceOn!.value = pl.on
+      ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       ;(gu.uHoldLook!.value as THREE.Vector4).x = ending ? 0 : look.hold.weight
       ;(gu.uSwirl!.value as THREE.Vector4).w = state.time > terrainMid ? THREE.MathUtils.degToRad(look.swirl.deg) : 0
       gu.uWeaveLit!.value = state.time > terrainMid ? look.weave.rise.lit : look.weave.lit
@@ -217,7 +219,9 @@ export const createSet: SetFactory = async (ctx) => {
       limbFrame(camera, light, limbS, limbT)
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
-      gu.uLimbK!.value = look.limb.gain * (1 - low)
+      const lh = place.dusk.limbHeights
+      const limbK = look.limb.gain * (1 - low) * (covering ? smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(lh[0])) / (Math.log(lh[1]) - Math.log(lh[0]))) : 1)
+      gu.uLimbK!.value = limbK
       gu.uLimbFar!.value = left
       ;(gu.uLimbS!.value as THREE.Vector3).copy(limbS)
       ;(gu.uLimbT!.value as THREE.Vector3).copy(limbT)
@@ -244,7 +248,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.motion(taps, smear, camera, shot.camera.quaternion, shift, turn, zoom, view.camera.view?.offsetX ?? 0, view.camera.view?.offsetY ?? 0)
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      rim.update(camera, limbS, limbT, gain * state.weight * look.limb.gain * (1 - low), vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
+      rim.update(camera, limbS, limbT, gain * state.weight * limbK, vignette, aspect, Math.min(LIMB.edgePx / radiusPx, 0.02), left)
       holdRim.update(camera, state.rotation, ending ? 0 : look.hold.weight * (1 - left))
       const visible = radiusPx > 0.6
       globe.mesh.visible = visible

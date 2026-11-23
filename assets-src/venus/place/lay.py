@@ -5,8 +5,10 @@ on the unit sphere; it is projected into that camera and takes the pixel of the 
 A plate is a tangent plane picture about the plate centre: x east, y north, north at the top row,
 the same convention as the patch pyramid (assets-src/venus/patches/patch.py).
 
-python3 assets-src/venus/place/lay.py [export]   writes out/work/venus/place/laid-<tag>.png, mask-<tag>.png, stretch-<tag>.png;
-with export also public/assets/venus/{full,web}/place-<tag>.jpg and place-mask.png (red, green, blue = the cover of a, b, c)
+python3 assets-src/venus/place/lay.py [TAG ...]   writes out/work/venus/place/laid-<tag>.png (the close image on the ground),
+cover-<tag>.png (where the source canvas has picture), trust-<tag>.png (where that picture is kept in place) and
+fine-<tag>.png (where it has pixels enough to stay as it is; elsewhere the tiles of build.py give it its detail), see trust in plates.json.
+The full plates are made from these by assets-src/venus/place/build.py.
 """
 import json
 import sys
@@ -69,51 +71,53 @@ def project(d):
     return fx, fy, cz < 0, seen
 
 
-def lay(img, tag, width_deg, size):
+def lay(img, width_deg, size):
+    """The source is a canvas that holds the approved frame at SPEC['canvas']['at'] with size SPEC['canvas']['frame'];
+    below SPEC['canvas']['fullFromY'] the canvas has picture over its whole width (the margins of the relief)."""
     h, w = img.shape[:2]
+    c = SPEC['canvas']
+    ax, ay = c['at']
+    aw, ah = c['frame']
     n, e, u = frame(centre_dir())
     d = grid(n, e, u, width_deg, size)
     fx, fy, front, seen = project(d)
-    mx = (fx * w - 0.5).astype(np.float32)
-    my = (fy * h - 0.5).astype(np.float32)
-    out = cv2.remap(img, mx, my, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
-    m = SPEC['mask']
-    edge = np.minimum(np.minimum(fx, 1 - fx), np.minimum(fy, 1 - fy))
-    grazing = seen / np.maximum(np.linalg.norm(d - np.array(PLACE['twin']['body']['position']), axis=-1), 1e-9)
-    mask = smooth(0.0, m['edge'], edge) * smooth(m['graze'][0], m['graze'][1], grazing) * (front & (seen > 0))
-    gx = np.gradient(fx * w, axis=1)
-    gy = np.gradient(fy * h, axis=0)
-    hx = np.gradient(fx * w, axis=0)
-    hy = np.gradient(fy * h, axis=1)
-    stretch = 1 / np.maximum(np.sqrt(np.abs(gx * gy - hx * hy)), 1e-6)
-    return out, mask.astype(np.float32), stretch.astype(np.float32)
+    px = ax + fx * aw
+    py = ay + fy * ah
+    out = cv2.remap(img, (px - 0.5).astype(np.float32), (py - 0.5).astype(np.float32), cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+    t = SPEC['trust']
+    feather = t['edge'] * ah
+    inside = np.minimum(np.minimum(px - ax, ax + aw - px), np.minimum(py - ay, ay + ah - py))
+    wide = np.minimum(np.minimum(px, w - px), np.minimum(py - c['fullFromY'], h - py))
+    edge = np.maximum(inside, wide)
+    elevation = seen / np.maximum(np.linalg.norm(d - np.array(PLACE['twin']['body']['position']), axis=-1), 1e-9)
+    cover = smooth(0.0, feather, edge) * smooth(0.0, 0.02, elevation) * (front & (seen > 0))
+    trust = smooth(0.0, feather, edge) * smooth(t['sinElevation'][0], t['sinElevation'][1], elevation) * (front & (seen > 0))
+    # The border of the part used as it is is drawn in and softened on the plate, so no line of the frame is seen on the ground.
+    trust = smooth(0.5, 0.95, cv2.GaussianBlur(trust.astype(np.float32), (0, 0), t['soft'] * size))
+    # How fine the laid back picture is: source pixels for one plate pixel along the direction it is stretched most
+    # (the smaller singular value of the map from plate to source).
+    ax_, bx_ = np.gradient(px, axis=1), np.gradient(px, axis=0)
+    ay_, by_ = np.gradient(py, axis=1), np.gradient(py, axis=0)
+    q = ax_ * ax_ + bx_ * bx_ + ay_ * ay_ + by_ * by_
+    det = np.abs(ax_ * by_ - bx_ * ay_)
+    least = np.sqrt(np.maximum(q - np.sqrt(np.maximum(q * q - 4 * det * det, 0)), 0) / 2)
+    f = t['fine']
+    fine = smooth(f[0], f[1], least)
+    fine = cv2.GaussianBlur(fine.astype(np.float32), (0, 0), t['soft'] * size)
+    return out, cover.astype(np.float32), trust.astype(np.float32), fine.astype(np.float32)
 
 
 if __name__ == '__main__':
     src = ROOT / SPEC['source']
-    if not src.exists():
-        src = ROOT / SPEC['fallback']
     img = cv2.imread(str(src), cv2.IMREAD_COLOR)
     WORK.mkdir(parents=True, exist_ok=True)
-    only = [a for a in sys.argv[1:] if a != 'export'] or [l['tag'] for l in SPEC['levels']]
-    export = 'export' in sys.argv[1:]
-    masks = []
+    only = sys.argv[1:] or [l['tag'] for l in SPEC['levels']]
     for level in SPEC['levels']:
         if level['tag'] not in only:
             continue
-        out, mask, stretch = lay(img, level['tag'], level['widthDeg'], SPEC['size'])
+        out, cover, trust, fine = lay(img, level['widthDeg'], SPEC['size'])
+        cv2.imwrite(str(WORK / f"fine-{level['tag']}.png"), np.clip(fine * 255 + 0.5, 0, 255).astype(np.uint8))
         cv2.imwrite(str(WORK / f"laid-{level['tag']}.png"), out)
-        cv2.imwrite(str(WORK / f"mask-{level['tag']}.png"), np.clip(mask * 255 + 0.5, 0, 255).astype(np.uint8))
-        cv2.imwrite(str(WORK / f"stretch-{level['tag']}.png"), np.clip(np.log2(np.maximum(stretch, 1)) * 32, 0, 255).astype(np.uint8))
-        seen = mask > 0.5
-        if export:
-            public = ROOT / 'public/assets/venus'
-            q = [cv2.IMWRITE_JPEG_QUALITY, 92, cv2.IMWRITE_JPEG_SAMPLING_FACTOR, cv2.IMWRITE_JPEG_SAMPLING_FACTOR_444]
-            cv2.imwrite(str(public / 'full' / level['file']), out, q)
-            cv2.imwrite(str(public / 'web' / level['file']), cv2.resize(out, (SPEC['size'] // 2, SPEC['size'] // 2), interpolation=cv2.INTER_AREA), q)
-            masks.append(cv2.resize(mask, (SPEC['maskSize'], SPEC['maskSize']), interpolation=cv2.INTER_AREA))
-        print(level['tag'], level['widthDeg'], 'covered share', float(seen.mean()), 'median stretch in cover', float(np.median(stretch[seen])) if seen.any() else None, 'least', float(stretch[seen].min()) if seen.any() else None)
-    if export and len(masks) == 3:
-        m = np.clip(np.stack(masks[::-1], axis=-1) * 255 + 0.5, 0, 255).astype(np.uint8)
-        for kind in ('full', 'web'):
-            cv2.imwrite(str(ROOT / 'public/assets/venus' / kind / SPEC['maskFile']), m)
+        cv2.imwrite(str(WORK / f"cover-{level['tag']}.png"), np.clip(cover * 255 + 0.5, 0, 255).astype(np.uint8))
+        cv2.imwrite(str(WORK / f"trust-{level['tag']}.png"), np.clip(trust * 255 + 0.5, 0, 255).astype(np.uint8))
+        print(level['tag'], level['widthDeg'], 'share with picture', round(float((cover > 0.5).mean()), 4), 'share kept in place', round(float((trust > 0.5).mean()), 4), 'share fine enough to stay as it is', round(float((trust * fine > 0.5).mean()), 4))

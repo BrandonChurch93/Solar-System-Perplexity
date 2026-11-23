@@ -1,10 +1,14 @@
 {
-  "note": "The plates of the place (assets-src/venus/place/lay.py). Centre: aheadDeg of arc ahead of the point under the twin of place.json, along its heading. source is the 2x upscale of the approved close image (RECIPE.md), fallback the approved image itself. feather and fade are read by the globe shader like those of the patch pyramid.",
-  "source": "out/work/venus/close-5632.png",
-  "fallback": "references/approved/venus-close.jpg",
-  "aheadDeg": 2.0,
+  "note": "The plates of the place (assets-src/venus/place/lay.py lays the close image back, assets-src/venus/place/build.py makes the full plates). Centre: aheadDeg of arc ahead of the point under the twin of place.json, along its heading. North at the top. Levels a, b and c each have half the half tangent of their parent; the widest, w, is 40 deg so the ground near the point under the camera stays inside the plates down to the height where level a alone covers the frame (G13 at frames 1296 to 1304); the deepest is a little wider than half so it holds the bottom of the frame at the twin. feather and fade are read by the globe shader like those of the patch pyramid; rim is the share of the half width over which the widest level fades out, measured on a circle.",
+  "source": "out/work/venus/place/canvas-2x.png",
+  "aheadDeg": 1.5,
   "size": 4096,
   "levels": [
+    {
+      "tag": "w",
+      "file": "place-w.jpg",
+      "widthDeg": 40.0
+    },
     {
       "tag": "a",
       "file": "place-a.jpg",
@@ -13,31 +17,136 @@
     {
       "tag": "b",
       "file": "place-b.jpg",
-      "widthDeg": 9.0
+      "widthDeg": 12.13304945
     },
     {
       "tag": "c",
       "file": "place-c.jpg",
+      "widthDeg": 6.08357505
+    },
+    {
+      "tag": "d",
+      "file": "place-d.jpg",
       "widthDeg": 3.4
     }
   ],
-  "mask": {
-    "edge": 0.02,
-    "graze": [
-      0.012,
-      0.05
-    ]
-  },
-  "maskFile": "place-mask.png",
-  "maskSize": 1024,
   "feather": 0.06,
   "fade": [
     1.02,
     1.5
   ],
-  "near": {
-    "note": "The plates come in with nearness: weight 0 above high, 1 below low (camera height in radii, smooth in the logarithm).",
-    "high": 1.6,
-    "low": 0.4
+  "canvas": {
+    "note": "The source canvas: the 2x upscale of the approved close image at `at` with size `frame`, and below fullFromY the margins of the relief over the whole width (relief-L0 and relief-L1 of the full set, see RECIPE.md).",
+    "at": [
+      704,
+      0
+    ],
+    "frame": [
+      5632,
+      3168
+    ],
+    "fullFromY": 1010
+  },
+  "show": {
+    "note": "The plates come in over these shares of the dive and go out over these shares of the rise (0 at the first frame time of the segment, 1 at its end). Outside the dive and the rise of Venus they are off, so the hold is not touched.",
+    "dive": [
+      0.02,
+      0.2
+    ],
+    "rise": [
+      0.8,
+      0.98
+    ]
+  },
+  "dusk": {
+    "note": "The exposure of the globe side on the way to the place: the globe is drawn gain times brighter and turned by tint at the place, against the hold (the plates hold the light of the close image, which is exposed for dusk). Gain and tint rise in the logarithm over these shares of the dive and fall over these shares of the rise. The plates are drawn at the same exposure, so they are dim like the dusk about them when they come in.",
+    "gain": 4.5,
+    "limbHeights": [0.5, 1.6],
+    "limbNote": "The glow of the limb is a fit of the hold picture seen from far away. It is not raised by the gain, and in the dive and the rise it goes out between these two heights (radii, eased in the logarithm): below the lower one the horizon is made by the haze of the globe alone, so the fit does not lie on the cloud tops as a wide band with a red and a green edge.",
+    "dive": [
+      0.2,
+      0.6
+    ],
+    "rise": [
+      0.4,
+      0.8
+    ],
+    "tint": [
+      1.12,
+      0.9,
+      0.7
+    ]
+  },
+  "trust": {
+    "note": "Where the laid back picture is used as it is: inside the source canvas by edge (share of the frame height) and where the camera of the close image stands at least this high over the ground point (sine of the elevation, from no trust to full trust). Outside it the plate is repainted. soft: the border of that part is drawn in and softened by this share of the plate width. fine: source pixels for one plate pixel along the direction the laying back stretches most, from none to all of the laid back picture staying as it is; below it the picture keeps its place and its tones and takes its detail from the tiles.",
+    "edge": 0.03,
+    "sinElevation": [
+      0.1,
+      0.2
+    ],
+    "soft": 0.012,
+    "fine": [
+      0.5,
+      1.0
+    ]
+  },
+  "rim": 0.12,
+  "build": {
+    "note": "Values of assets-src/venus/place/build.py. views: the check renders of the globe from straight above the plate centre with the plates off and the full dusk gain (check.ts --tops), from which the plates take the look of the globe at their rim. toGlobeDeg: arc from the plate centre over which the painted part goes from the tones of the close image to the tones of the globe.",
+    "views": [
+      {
+        "file": "out/work/venus/place/g4/globe-top-1.2.png",
+        "height": 1.2,
+        "vfovDeg": 60
+      },
+      {
+        "file": "out/work/venus/place/g4/globe-top-0.62.png",
+        "height": 0.62,
+        "vfovDeg": 60
+      },
+      {
+        "file": "out/work/venus/place/g4/globe-top-0.2.png",
+        "height": 0.2,
+        "vfovDeg": 60
+      }
+    ],
+    "toGlobeDeg": [
+      5,
+      9.5
+    ],
+    "guideSize": 2048,
+    "compLockSigma": 40,
+    "childFeather": 0.06,
+    "tileInput": 1120,
+    "tileLockSigma": 12,
+    "tileLift": {
+      "median": 0.4,
+      "power": [0.5556, 1.6]
+    },
+    "takes": {
+      "note": "The tile takes kept for every level (top left, top right, bottom left, bottom right). 0: no tile take, the composition as it is.",
+      "w": ["3", "3", "3", "3"],
+      "a": ["2", "2", "2", "2"],
+      "b": ["3", "3", "3", "3"],
+      "c": ["1", "1", "1", "1"],
+      "d": ["0", "2", "0", "2"]
+    },
+    "edgeMatch": {
+      "note": "How a child plate is nested into its parent (build.py nest). ramp: share of the child's half width, from its border inward, over which its tones go from the tones of the parent outside it to its own. clip: limits of that gain. seam: where, in shares of the half width from the border, the child's own picture begins (outside it the child shows the parent's picture, enlarged); forms: how far the child's own cloud forms (sizes between formsSigma, shares of the plate width) move that line.",
+      "ramp": 0.42,
+      "clip": [0.4, 2.5],
+      "seam": [0.14, 0.34],
+      "forms": 0.08,
+      "formsSigma": [0.012, 0.06]
+    },
+    "globeForms": {
+      "note": "Levels whose painted part is led by the globe's own cloud forms: the light and dark of the globe's look (forms between fromDeg and sigmaDeg of arc), limited to clip (floor: another lower limit for one level) and raised to power, laid on the carried colour of the close image in the guide. The plate then comes in over the forms it shows. Level b has a higher floor: a straight wind streak of the globe that passes the place came out of the tiles as a smooth dark trench with a hard line in it.",
+      "levels": ["a", "b"],
+      "fromDeg": 0.05,
+      "sigmaDeg": 0.5,
+      "clip": [0.5, 1.8],
+      "floor": {"b": 0.78},
+      "power": 1.5
+    }
   }
 }

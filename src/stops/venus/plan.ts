@@ -1,10 +1,14 @@
 import { config, type Segment } from '../../config'
 import * as THREE from 'three'
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
+import { drift as cameraDrift } from '../../director/rig'
 import { coverWindow } from '../../director/timeline'
 import type { CoverHorizon, Pose } from '../../core/types'
 import { place } from './assets'
 import fit from './fit.json'
+import moveJson from './move.json'
+import { between, type MoveShape } from './path'
+import placeJson from './place.json'
 import reliefJson from './relief.json'
 
 export const params: MoveParams = {
@@ -55,7 +59,14 @@ const hermite = (x: number, a: number, da: number, b: number, db: number): numbe
 
 interface Limb { tilt: number; gap: number }
 
-interface Probe { side: 'orbit' | 'terrain'; tRel?: number; top?: number; vfov?: number }
+interface Probe { side: 'orbit' | 'terrain'; tRel?: number; top?: number; vfov?: number; path?: boolean; on?: number; dusk?: number }
+
+export const move = { anchorAheadDeg: moveJson.anchorAheadDeg, dive: moveJson.dive as MoveShape, rise: moveJson.rise as MoveShape }
+
+const anchorBody = ((): THREE.Vector3 => {
+  const a = THREE.MathUtils.degToRad(move.anchorAheadDeg)
+  return new THREE.Vector3().fromArray(placeJson.place.under.direction).multiplyScalar(Math.cos(a)).addScaledVector(new THREE.Vector3().fromArray(placeJson.place.heading), Math.sin(a))
+})()
 
 const probe = (): Probe | undefined => (globalThis as { __venusProbe?: Probe }).__venusProbe
 
@@ -79,6 +90,55 @@ class VenusPlan extends StopPlan {
     return { position: close.position.clone().sub(deck.centre).divideScalar(deck.radius).applyQuaternion(rot), quaternion: rot.clone().multiply(close.quaternion), vfov: close.vfov }
   }
 
+  untwin(time: number, globe: Pose): Pose {
+    const back = this.turn(time).multiply(this.terrainFrame).invert()
+    return { position: globe.position.clone().applyQuaternion(back).multiplyScalar(deck.radius).add(deck.centre), quaternion: back.clone().multiply(globe.quaternion), vfov: globe.vfov }
+  }
+
+  anchor(time: number): THREE.Vector3 {
+    return anchorBody.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion)).applyQuaternion(this.turn(time))
+  }
+
+  // The one steady move is the film's dive and rise once the stop has opted in to the handover (params.handover);
+  // until then the film keeps the old path under its cover, and the check tools ask for the new one by the probe.
+  private get steady(): boolean {
+    return this.handsOver || probe()?.path === true
+  }
+
+  // The dive as one move from the hold to the close view, the same camera for both sides (contract E1 of cut/HANDOVER.md).
+  override divePose(time: number, view: 'orbit' | 'terrain'): Pose {
+    if (!this.steady) return super.divePose(time, view)
+    const seg = this.seg.dive!
+    const globe = between(this.hold(time - this.seg.hold.start), this.twin(time, this.terrain(time - this.seg.terrain.start)), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive)
+    return view === 'orbit' ? globe : this.untwin(time, globe)
+  }
+
+  // The rise as one move from the close view to the travel that follows.
+  override risePose(time: number, view: 'orbit' | 'terrain'): Pose {
+    if (!this.steady) return super.risePose(time, view)
+    const seg = this.seg.rise
+    const globe = between(this.twin(time, this.terrain(time - this.seg.terrain.start)), this.after(time), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.rise)
+    return view === 'orbit' ? globe : this.untwin(time, globe)
+  }
+
+  // The plates and the exposure of the globe side: on is the weight of the plates, dusk the share (0 to 1,
+  // in the logarithm) of the gain of plates.json. Both are 0 outside the dive and the rise of this stop.
+  placeLook(seg: Segment, time: number): { on: number; dusk: number } {
+    const pr = probe()
+    const mine = seg.stop === this.id && (seg.kind === 'dive' || seg.kind === 'rise')
+    const u = (time - seg.start) / (seg.end - seg.start)
+    const ramp = (w: [number, number]): number => ease((u - w[0]) / (w[1] - w[0]))
+    const on = !mine ? 0 : seg.kind === 'dive' ? ramp(place.show.dive) : 1 - ramp(place.show.rise)
+    const dusk = !mine ? 0 : seg.kind === 'dive' ? ramp(place.dusk.dive) : 1 - ramp(place.dusk.rise)
+    return { on: pr?.on ?? on, dusk: pr?.dusk ?? dusk }
+  }
+
+  // The height of the steady dive at a time, whatever the film's path is.
+  private steadyHeight(time: number): number {
+    const seg = this.seg.dive!
+    return between(this.hold(time - this.seg.hold.start), this.twin(time, this.terrain(time - this.seg.terrain.start)), this.anchor(time), (time - seg.start) / (seg.end - seg.start), move.dive).position.length() - 1
+  }
+
   above(time: number, height: number, vfov: number): Pose {
     const toPlan = this.turn(time).multiply(new THREE.Quaternion().fromArray(fit.globe.quaternion))
     const centre = new THREE.Vector3().fromArray(place.centre).applyQuaternion(toPlan)
@@ -90,11 +150,19 @@ class VenusPlan extends StopPlan {
   override dive(time: number): OrbitShot {
     const pr = probe()
     if (pr) {
-      if (pr.top !== undefined) return { pose: this.above(time, pr.top, pr.vfov ?? 60), view: 'orbit' }
+      if (pr.top !== undefined) {
+        const pose = this.above(time, pr.top > 0 ? pr.top : this.steadyHeight(time), pr.vfov ?? 60)
+        // A view from a fixed height is a survey picture for the plates (build.py base): the film's camera drift is taken out of it,
+        // so the picture is the ideal camera's and every frame gives the same one.
+        if (pr.top > 0) pose.quaternion.multiply(cameraDrift(time).invert())
+        return { pose, view: 'orbit' }
+      }
+      if (pr.path) return { pose: this.divePose(time, pr.side), view: pr.side }
       const close = this.terrain(pr.tRel ?? time - this.seg.terrain.start)
       return pr.side === 'terrain' ? { pose: close, view: 'terrain' } : { pose: this.twin(time, close), view: 'orbit' }
     }
     const shot = super.dive(time)
+    if (this.handsOver) return shot
     const seg = this.seg.dive!
     const centre = this.coverCenter(seg)
     const rollFrom = bank.roll / config.fps
@@ -123,6 +191,12 @@ class VenusPlan extends StopPlan {
     const want = new THREE.Vector3((turned.x / flat) * Math.sin(theta), (turned.y / flat) * Math.sin(theta), -Math.cos(theta))
     const fix = new THREE.Quaternion().setFromUnitVectors(turned, want).multiply(roll)
     return { pose: { position: pose.position, quaternion: pose.quaternion.clone().multiply(fix.invert()), vfov: pose.vfov }, view: 'orbit' }
+  }
+
+  override rise(time: number): OrbitShot {
+    const pr = probe()
+    if (pr?.path) return { pose: this.risePose(time, pr.side), view: pr.side }
+    return super.rise(time)
   }
 
   override terrain(tRel: number): Pose {
