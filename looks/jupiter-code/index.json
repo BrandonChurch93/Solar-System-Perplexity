@@ -1,9 +1,66 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-23T08:26:33.274Z",
- "head": "3c8ae1d0a4bf0f4427c586bacff079bb284bf8bf",
- "note": "v5: image field in a view matched chart on true relief, limb glow from a measured table; outside the wedge still the poor function deck (plates next)",
+ "pushed": "2026-11-23T08:30:59.942Z",
+ "head": "da369f94f6ff15ad114b8dcfd03d3192b64f0ed8",
+ "note": "M1 set: v5 at the review tier and the compare at 3150",
  "looks": [
+  {
+   "time": "2026-11-23T08:30:59.333Z",
+   "file": "20261123083059333-note-compare-jupiter-terrain.jpg",
+   "source": "out/work/compare/compare-jupiter-terrain.jpg",
+   "kind": "note",
+   "label": "v5 compare at 3150, review tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-23T08:30:58.791Z",
+   "file": "20261123083058791-note-v5r-three.jpg",
+   "source": "../work/f/v5r-three.jpg",
+   "kind": "note",
+   "label": "v5 frames 3060, 3150, 3239 at the review tier"
+  },
+  {
+   "time": "2026-11-23T08:29:51.199Z",
+   "file": "20261123082951199-compare-compare-jupiter-terrain-view.jpg",
+   "source": "out/work/compare/compare-jupiter-terrain-view.jpg",
+   "kind": "compare",
+   "label": "jupiter.terrain: approved image left, film frame right, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:29:50.197Z",
+   "file": "20261123082950197-still-f03150-16x9-review-full.jpg",
+   "source": "out/work/stills/f03150-16x9-review-full.png",
+   "kind": "still",
+   "label": "jupiter.terrain frame 3150, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
+  {
+   "time": "2026-11-23T08:28:01.723Z",
+   "file": "20261123082801723-frame-f03239.jpg",
+   "source": "out/work/jupiter/frames/v5r/f03239.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3239, review tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3239,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "2d9dda353bfd7b6d"
+  },
   {
    "time": "2026-11-23T08:26:32.668Z",
    "file": "20261123082632668-note-v5-three.jpg",
@@ -24,55 +81,6 @@
    "source": "../work/f/v5-consec.jpg",
    "kind": "note",
    "label": "v5 consecutive frames 3148 to 3153, draft"
-  },
-  {
-   "time": "2026-11-23T08:26:30.766Z",
-   "file": "20261123082630766-note-v5-sheet15.jpg",
-   "source": "../work/f/v5-sheet15.jpg",
-   "kind": "note",
-   "label": "v5 surface view, every 15th frame 3060 to 3239, draft, no blur"
-  },
-  {
-   "time": "2026-11-23T08:24:52.922Z",
-   "file": "20261123082452922-frame-f03151.jpg",
-   "source": "out/work/jupiter/frames/v5/f03151.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3151, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3151,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "2d9dda353bfd7b6d"
-  },
-  {
-   "time": "2026-11-23T07:55:58.136Z",
-   "file": "20261123075558136-still-v3-3150.jpg",
-   "source": "out/work/stills/v3-3150.png",
-   "kind": "still",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "247ebad7e038ce06"
-  },
-  {
-   "time": "2026-11-23T07:46:47.179Z",
-   "file": "20261123074647179-note-near-albedo-s.jpg",
-   "source": "../work/f/near-albedo-s.jpg",
-   "kind": "note",
-   "label": "jupiter near map albedo v2, top down, 20 units: image wedge plus function made deck"
-  },
-  {
-   "time": "2026-11-23T07:46:46.639Z",
-   "file": "20261123074646639-note-v2-3150.jpg",
-   "source": "../work/f/v2-3150.jpg",
-   "kind": "note",
-   "label": "jupiter terrain 3150 draft, march deck v2: coarse image fields plus function streaks and towers, far too poor beside the approved image"
   }
  ]
 }
