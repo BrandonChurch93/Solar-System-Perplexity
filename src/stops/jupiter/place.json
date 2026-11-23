@@ -1,0 +1,65 @@
+{
+  "note": "The place of the dive (cut/HANDOVER.md S1). oval: the centre of the small orange oval in the wake of the great storm, in degrees on the globe's surface with the flow at rest as frozen for the dive (measured by assets-src/jupiter/plates/place.py on the globe's own imagery). vortex: the centre of the close image's funnel in chart units (measured on the laid back image). The chart of the close view is laid on the globe so that the vortex sits on the oval and the baked Sun of the close image (deck.json light.azimuthDeg) points to the globe's Sun at the handover. freeze: the globe's band flow and the storm's swirl ease to rest from afterDiveStart seconds into the dive over easeSeconds, and the spin stops at the handover, so the place is a rigid ground while it is near. solved is written by the tool: local is the frozen flow time in seconds, toSurface the rotation from the close view's frame to the globe's surface frame (the frame of the lookups, before the spin), n e u the chart's origin and axes there, twinHeight the close camera's height in radii.",
+  "oval": {
+    "lon": -26.628,
+    "lat": -5.783
+  },
+  "vortex": [
+    -0.1,
+    -1.0
+  ],
+  "freeze": {
+    "afterDiveStart": 0,
+    "easeSeconds": 0.5
+  },
+  "handover": {
+    "dive": {
+      "at": 0.6
+    },
+    "rise": {
+      "at": 0.4
+    }
+  },
+  "solved": {
+    "local": 2.4095937488607793,
+    "spinDeg": 6.8799999999999955,
+    "handoverTime": 100.8,
+    "sunAzimuthDeg": 151.90526800945656,
+    "sunElevationDeg": 56.826617365190316,
+    "headingDeg": 111.90526800945656,
+    "toSurface": [
+      [
+        0.7073209028283344,
+        -0.7064337178989665,
+        -0.02546650030046878
+      ],
+      [
+        0.19103471768503255,
+        0.22571188688055294,
+        -0.9552800012351461
+      ],
+      [
+        0.6805900947421364,
+        0.6708245272321699,
+        0.2946041014694565
+      ]
+    ],
+    "n": [
+      -0.44679906479391096,
+      -0.09786801547185787,
+      0.8892651164005518
+    ],
+    "e": [
+      0.8126809780671882,
+      0.371204727985796,
+      0.44917332713413666
+    ],
+    "u": [
+      -0.3740591177702337,
+      0.9233790670513339,
+      -0.08631845077596749
+    ],
+    "radiusUnits": 331.94631945631824,
+    "twinHeight": 0.003012535284734774
+  }
+}

@@ -145,6 +145,37 @@ Geometry of B (computed 08:50 UTC):
 
 Light: the plates keep the baked shading of the low Sun (the richness), but the large gradient of the close image (bright haze toward the Sun, dark blue grey away from it) and its exposure are not a property of the place on the globe. Plan: plates stored flat (matched to the globe), a smooth grade field (gain and add per place) brings them to the image; its amount is a function of the camera's height over the deck (haze along grazing paths), so it is the same in the dive and the rise and has no step at T.
 
+## Mail 230 from the Builder (09:00 UTC): life in the surface view is a must
+
+Brandon wrote at 08:43 UTC about the Sun's surface view that the movement of its matter is lack luster. So on Jupiter life in frames 3060 to 3239 is a must. It comes after the plates and the rigid deck hold (M2), before the rounds. Kept small so nothing bends:
+- The storm turns: the vortex turns about its own centre as a near rigid core, the angular speed falling smoothly to zero at its collar, and the height field turns with the colour, so the shadows of the cloud tops move as they should. Bound the wind up: over the 180 frames the difference in angle between any two radii stays so small that no eye can see a shape stretch. Say the bound and the number chosen in the json.
+- Thin high cloud or haze drifts over the deck at the speed of its jet, as its own rigid layers at their own height, with their shadows on the deck. Neighbouring bands go opposite ways.
+- Lightning, if added (the kit names it: faint, inside the darker clouds, seeded): from time alone, never strobes.
+- Nothing else has to move. No field is dragged through a flow.
+Proof: a life only sheet (camera frozen at the pose of 3150, time running, every 15th frame) and six consecutive frames at two places.
+
+Plan for it (not built yet): lookups of height and colour inside the vortex are made at the place turned back by angle(r) x (time - time of 3150), so 3150 stays the approved picture; small angle, polynomial sine and cosine in the march. Drift layers are functions on rigid sheets per band. Lightning is a seeded list of flashes with smooth rise and decay.
+
+## Plates and the handover: design (09:20 UTC)
+
+Read again in `cut/HANDOVER.md`: E2, the engine draws the close side at T into a texture (the place picture) and lays it over the globe side during the place window (12 frames by default), only where it is honest (never enlarged over `maxEnlarge`, feathered). Outside it the globe's own surface shows, so the plates on the globe must agree with the close side by themselves. E3: the ratio of heights per frame is smooth with no spike; at T the globe pose is the twin of the close pose with the same velocity. The S2 check is a top down dive sheet.
+
+Decided:
+- One plate set in the globe's look. The plates hold albedo coded like the globe's patches (sRGB of the filmic curve); the globe decodes with its inverse curve and lights them. The close side draws the same plates times a grade: `plate x mix(globe light, M, a(h))`, with a = 1 at height 1 and 0 at T, where M is a smooth field (lowpass of the close image over lowpass of the globe's albedo, a small texture). So nothing changes locally at T; what is left is a global grade between T and the landing (the oval's region goes from the globe's orange toward the image's cream and rust, about 40 percent of the gap of way A). The exposure part can be spread over the whole dive as one function of time in both shaders. Knob `plates.matchSigma`: the scale above which the plates take the globe's colour.
+- Plates on the globe: a second patch group in `globe.ts`, looked up with the rigid direction (not the flowed one) through the orthographic chart: `c = (dot(d, e), dot(d, u)) * R`, `uv = (c - centre) / size + 0.5`. The chart's origin, axes and R on the globe come from `place.json` (`solved.n`, `e`, `u`, `radiusUnits`). Weight by footprint: the plates fade in while the oval is 15 to 44 px wide (footprint 0.56 to 0.19 units a pixel), and count as texels for G13. Check `MAX_PATCHES`.
+- The flow is frozen for the dive: `local = settle(elapsed, 5)` runs as today through the hold; from the dive's start the elapsed time eases to a constant over 0.5 s. Frozen local time 2.4096 s (bands 0.53 degrees times the jet, swirl 12.05 degrees times the turn). The rise starts at that value and releases after the plates are gone. The spin (1.6 degrees a second) runs to T of the dive, stands until T of the rise, then goes on from that value. The veil (`look.veil`) must be off in the dive.
+- T low: height about 12 to 15 units (dive `at` about 0.6, frame about 3024), the camera pitched about 60 degrees down so the frame lies inside the mid plate. The globe side needs the mid and near plates for G13. Relief and live shadows of the close side fade in with falling height below T.
+- Dive path: a constant ratio of 1.0775 a frame gives heights of 88 units at frame 30 of the dive, 42 at 40, 29 at 45, 20 at 50, 14.7 at 54, 9.4 at 60, 4.5 at 70, 2.1 at 80, 1 at 90. The sub point goes from about lon +4, lat +6 over the Great Red Spot's north west part (frames 35 to 45, the spot passes under and to the left), curves right and arrives from the south south east; the view stays on the oval.
+
+Measured (09:10 UTC, `plates/globe.py`, a numpy copy of the globe's lookups):
+- The orange oval with the flow frozen as above: centre lon -26.628, lat -5.783, 1.584 x 0.654 degrees (9.2 x 3.8 units), long axis 11.6 degrees north of east. At the middle of the hold: lon -26.594, lat -5.84, 1.357 x 0.711 degrees, mean colour (223, 164, 111).
+- The vortex in the chart (relief aware lay back): dark heart about (-0.28, -0.9), red brown funnel by colour threshold centre (0.06 to 0.1, -0.7 to -1.0), about 2.3 x 1.9 units; the cream ring about 6 units across, the tower ring to about 12 units. `place.json` takes vortex = (-0.1, -1.0).
+- So the oval on the globe (9.2 x 3.8 units) is larger than the close funnel (2.3 units) and of the size of the close image's cream ring and tower ring. The plates decide what a viewer sees there: the oval's orange at the scale of the globe, the funnel with its ring at the scale of the deck.
+
+`plates/place.py` writes `place.json` (S1): at T (100.8 s, spin 6.88 degrees) the globe's Sun stands 56.8 degrees high over the oval at azimuth 151.9 degrees from east; with the baked Sun of the chart at 130 degrees the heading (chart +y) is 111.9 degrees from east, 21.9 degrees west of north. The chart's origin lies at lon -26.677, lat -5.616; the camera of 3150 over lon -26.428, lat -6.23; 20 units ahead is lon -27.71, lat -3.05.
+
+`plates/prep.py NAME` makes the canvas of a plate for the repaint: the level above (for the mid plate the globe's own albedo with the flow frozen) enlarged, and inside the wedge the laid back close image divided by the grade field, blurred to what the image truly resolved there. It stores the blur map (plate pixels) so the join step knows what is finished.
+
 ## Next (08:40 UTC)
 
 1. Report M1 (way B: the image at its truly resolved scale in a view matched chart on true relief, trust that depends on the view so it is never shown stretched; way A, functions alone, was far too poor).

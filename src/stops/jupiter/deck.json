@@ -278,5 +278,67 @@
     "smoothRows": 0.7,
     "smoothKnots": 0.8,
     "fadeFrom": 0.75
+  },
+  "plates": {
+    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding, so the globe shows them as the deepest levels of its patches. matchSigma: scale in units above which the plates take the globe's own colour; the ratio of the close image to the globe at that scale is the grade field (gradePixels a side over the mid plate) that brings the plates back to the close image near the deck. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units.",
+    "fore": {
+      "centre": [
+        0,
+        -1.875
+      ],
+      "size": [
+        8.448,
+        4.752
+      ],
+      "pixels": [
+        2816,
+        1584
+      ]
+    },
+    "near": {
+      "centre": [
+        0,
+        0
+      ],
+      "size": [
+        20.48,
+        20.48
+      ],
+      "pixels": [
+        2048,
+        2048
+      ]
+    },
+    "mid": {
+      "centre": [
+        0,
+        0
+      ],
+      "size": [
+        61.44,
+        61.44
+      ],
+      "pixels": [
+        2048,
+        2048
+      ]
+    },
+    "order": [
+      "mid",
+      "near",
+      "fore"
+    ],
+    "matchSigma": 2.0,
+    "gradePixels": 256,
+    "softPx": 1.0,
+    "parentBlurPx": 2.2,
+    "finishedPx": 1.3,
+    "lock": [
+      2.5,
+      4,
+      60
+    ],
+    "hiddenError": 0.02,
+    "feather": 0.06
   }
 }
