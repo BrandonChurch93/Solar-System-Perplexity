@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
+import patchJson from './patches.json'
 
 export const SPHERE_VERT = /* glsl */ `
 out vec3 vLocal;
@@ -33,7 +34,7 @@ vec3 lightAt(float ndl, float mu) {
   return textureLod(uLight, uv, 0.0).rgb;
 }`
 
-export const PATCH_COUNT = 4
+export const PATCH_COUNT = patchJson.levels.length
 
 const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
@@ -56,7 +57,7 @@ const PLATE_LEVELS = Array.from({ length: PLATE_COUNT }, (_, i) => `    {
         vec3 s = textureGrad(uPlate${i}, q + 0.5, px * uPlateScale[${i}], py * uPlateScale[${i}]).rgb;
         aP = mix(aP, s * s * uPlace.w, ${i === 0 ? '1.0' : 'w'});
       }
-      ${i === 0 ? 'wP = w;' : ''}
+      ${i === 0 ? 'field = textureLod(uPlaceField, q + 0.5, 0.0); wP = w * field.a;' : ''}
       texP = mix(texP, pgd * uPlateScale[${i}] * uPlateSize[${i}], step(0.5, w));
     }`).join('\n')
 
@@ -68,7 +69,10 @@ ${PLATE_SAMPLERS}
 uniform float uPlateScale[${PLATE_COUNT}];
 uniform float uPlateSize[${PLATE_COUNT}];
 uniform vec4 uPlace;
-uniform vec3 uPlaceMatch;
+uniform sampler2D uPlaceField;
+uniform vec3 uPlaceEye;
+uniform float uPlaceRef;
+uniform float uCloudTime;
 uniform mat3 uPlaceRot;
 uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
@@ -152,7 +156,7 @@ void main() {
   vec3 d0 = normalize(vLocal);
   float lat = asin(clamp(d0.y, -1.0, 1.0));
   float bandTurn = uTime * rate(uBandRate, lat);
-  float cloudTurn = uTime * rate(uCloudRate, lat);
+  float cloudTurn = uCloudTime * rate(uCloudRate, lat);
   vec3 d = spinY(d0, uSpin + bandTurn);
   vec3 dc = spinY(d0, uSpin + cloudTurn);
   vec3 n = normalize(vWorldN);
@@ -180,7 +184,7 @@ void main() {
   for (int k = 0; k < (dn > 0.3 && texels * lean < uPatchFade.y ? 1 : 0); k++) {
 ${PATCH_LEVELS}
   }
-  vec3 nd = uPlaceRot * spinY(d0, uSpin);
+  vec3 nd = uPlaceRot * spinY(d0, uSpin + (uTime - uPlaceRef) * rate(uBandRate, lat));
   vec3 pS = uDeckCentre + uDeckRadius * nd;
   float alongF = dot(pS, uDeckF0) * uDeckFlowDir.y + dot(pS, uDeckR0) * uDeckFlowDir.x;
   float acrossF = dot(pS, uDeckF0) * uDeckFlowDir.x - dot(pS, uDeckR0) * uDeckFlowDir.y;
@@ -194,6 +198,7 @@ ${PATCH_LEVELS}
   px *= uGrad;
   py *= uGrad;
   vec3 aP = vec3(0.0);
+  vec4 field = vec4(1.0, 1.0, 1.0, 0.0);
   float wP = 0.0;
   float texP = 0.0;
   for (int k = 0; k < (pn > 0.5 && uPlace.y > 0.0 ? 1 : 0); k++) {
@@ -202,11 +207,12 @@ ${PLATE_LEVELS}
   wP *= uPlace.y;
   texels = mix(texels, texP, step(0.5, wP));
   vec3 parentAlbedo = inverseFilmic(enc);
-  vec3 albedo = mix(parentAlbedo, aP * uPlaceMatch, wP);
-  vec3 aEff = mix(parentAlbedo / uPlaceMatch, aP, wP);
-  vec3 dvD = uPlaceRot * spinY(normalize(d0 - vCamL), uSpin);
-  vec3 lD = deckLight(mu, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
-  vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg;
+  vec3 albedo = mix(parentAlbedo, aP * field.rgb, wP);
+  vec3 aEff = mix(parentAlbedo / field.rgb, aP, wP);
+  vec3 pD = uPlaceRot * spinY(d0, uSpin);
+  vec3 dvD = normalize(pD - uPlaceEye);
+  vec3 lD = deckLight(dot(pD, -dvD), atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
+  vec2 cloud = equirectGrad(uCloud, dc, uGrad).rg * (1.0 - wP);
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
   vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
   vec2 fx = dFdx(fq) * (uFace.y * uGrad);
@@ -259,7 +265,8 @@ export interface PlaceOptions {
   halfTans: number[]
   frame: { n: number[]; e: number[]; u: number[] }
   rot: THREE.Quaternion
-  match: number[]
+  field: THREE.Texture
+  clockRef: number
   aMax: number
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
@@ -305,7 +312,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uPlace: { value: new THREE.Vector4(0, 0, pl.feather, pl.aMax) }, uPlaceMatch: { value: v3(pl.match) },
+        uPlace: { value: new THREE.Vector4(0, 0, pl.feather, pl.aMax) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -317,11 +324,12 @@ export class Globe {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)
   }
 
-  update(sun: THREE.Vector3, spin: number, time: number, gain: number, weight: number, vignette: number, aspect: number): void {
+  update(sun: THREE.Vector3, spin: number, time: number, clock: number, gain: number, weight: number, vignette: number, aspect: number): void {
     const u = this.material.uniforms
     ;(u.uSunW!.value as THREE.Vector3).copy(sun)
     u.uSpin!.value = spin
-    u.uTime!.value = time
+    u.uTime!.value = clock
+    u.uCloudTime!.value = time
     u.uGain!.value = gain
     u.uWeight!.value = weight
     u.uVignette!.value = vignette
@@ -348,8 +356,9 @@ export class Globe {
     ;(u.uRingSun!.value as THREE.Vector3).copy(sunLocal)
   }
 
-  place(near: number, on: number, deckTime: number): void {
+  place(near: number, on: number, deckTime: number, eye: THREE.Vector3): void {
     const u = this.material.uniforms
+    ;(u.uPlaceEye!.value as THREE.Vector3).copy(eye)
     ;(u.uPlace!.value as THREE.Vector4).x = near
     ;(u.uPlace!.value as THREE.Vector4).y = on
     u.uDeckTime!.value = deckTime

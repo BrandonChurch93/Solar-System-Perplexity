@@ -1,3 +1,4 @@
+import { handoverOf } from '../../director/handover'
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
 import { config } from '../../config'
@@ -53,7 +54,7 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), match: platesJson.match, aMax: platesJson.aMax, feather: platesJson.feather,
+    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
   const globe = new Globe({ map, cloud, light, shade, patches, face, place, ...look.globe })
@@ -111,6 +112,9 @@ export const createSet: SetFactory = async (ctx) => {
   }, key, look.deck)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
+  const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
+  const eyeAt = (kind: 'dive' | 'rise', time: number): THREE.Vector3 => plan.unseat(plan.flown(kind, time), time).position.sub(deckCentre).divideScalar(deckJson.radius)
+  const eyes = { dive: eyeAt('dive', handoverOf(plan.id, 'dive')!.time), rise: eyeAt('rise', handoverOf(plan.id, 'rise')!.time) }
   const arcLines = parseLines(await ctx.buffer(base + 'deck-rings.bin'))
   const arcGeo = ringGeometry(look.deckRings, [...arcLines, ...strandLines(arcLines, look.deckStrands)])
   const arcCentre = new THREE.Vector3().fromArray(deckRingsJson.centre)
@@ -174,7 +178,7 @@ export const createSet: SetFactory = async (ctx) => {
         const mine = seg.stop === plan.id
         const diving = mine && seg.kind === 'dive'
         const rising = mine && seg.kind === 'rise'
-        const since = diving || rising ? (state.time - plan.swap(seg)) * config.fps : 0
+        const since = diving || rising ? (state.time - plan.coverCenter(seg)) * config.fps : 0
         const thick = diving ? 1 - smooth(ramp(look.clearing.mist[0], look.clearing.mist[1], since)) : rising ? smooth(ramp(look.closing.mist[0], look.closing.mist[1], since)) : 0
         const lines = diving ? smooth(ramp(look.clearing.arcs[0], look.clearing.arcs[1], since)) : rising ? 1 - smooth(ramp(look.closing.arcs[0], look.closing.arcs[1], since)) : 1
         ground(state.time, shot.sun.dir, gain, lines, shot.post.vignette, aspect, shot.post.bloomStrength)
@@ -192,15 +196,20 @@ export const createSet: SetFactory = async (ctx) => {
       sun.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       const elapsed = state.time - plan.holdMid
       const left = mine ? kind === 'rise' || kind === 'travel' : kind !== 'travel'
-      globe.update(sun, plan.spin(state.time), elapsed, gain * (left ? look.globe.away : 1), state.weight, shot.post.vignette, aspect)
+      const clock = plan.clock(state.time)
+      const sphere = low ? plan.roundness(state.time) : 0
+      shape.scale.set(look.shape.polar + (1 - look.shape.polar) * sphere, look.shape.equator + (1 - look.shape.equator) * sphere, look.shape.equator + (1 - look.shape.equator) * sphere)
+      shape.position.fromArray(look.shape.center).multiplyScalar(1 - sphere)
+      globe.update(sun, plan.spin(state.time), elapsed, clock, gain * (left ? look.globe.away : 1), state.weight, shot.post.vignette, aspect)
       const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
-      const relit = low ? 1 - smooth(ramp(Math.log(look.place.light[0]), Math.log(look.place.light[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
+      const relit = low && !look.show.down ? 1 - smooth(ramp(Math.log(look.place.light[0]), Math.log(look.place.light[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
       const plated = low ? 1 - smooth(ramp(Math.log(look.place.plates[0]), Math.log(look.place.plates[1]), Math.log(Math.max(altitude, 1e-4)))) : 0
-      globe.place(relit, plated, state.time - terrainMid)
+      if (low) globe.place(relit, plated, state.time - terrainMid, look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time))
+      else globe.place(0, 0, state.time - terrainMid, eyes.dive)
       globe.face(left ? look.face.weight : 0)
-      halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near), plan.spin(state.time), elapsed)
+      halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near), plan.spin(state.time), clock)
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(look.arrival.rings[0], look.arrival.rings[1], (state.time - plan.seg.hold.start) * config.fps)) : 1
       rings.update(sun, gain * state.weight * settling)
       const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
@@ -228,7 +237,7 @@ export const createSet: SetFactory = async (ctx) => {
       for (const m of moons) m.body.mesh.visible = visible && look.show.moons
       far.update(radiusPx, view, plan.p.tint, gain)
       const rush = shot.cover.rush
-      const since = mine && rush && (kind === 'rise' || kind === 'dive') ? (state.time - plan.swap(shot.segment)) * config.fps : 0
+      const since = mine && rush && (kind === 'rise' || kind === 'dive') ? (state.time - plan.coverCenter(shot.segment)) * config.fps : 0
       const thick = !mine || !rush ? 0 : kind === 'rise' ? 1 - smooth(ramp(look.lifting.mist[0], look.lifting.mist[1], since)) : kind === 'dive' ? smooth(ramp(look.sinking.mist[0], look.sinking.mist[1], since)) : 0
       air.update(look.show.cover ? thick : 0, sun, rush ? rush.focus : [0, 0], rush ? rush.phase : 0, rush ? rush.billow : [1, 1, 1], gain)
     },

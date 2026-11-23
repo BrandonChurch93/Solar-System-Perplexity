@@ -36,6 +36,7 @@ RATE = FRAME['bandRate']
 REF = PLATES['clockRef']
 PIXEL = 2 * np.tan(np.radians(DECK['vfovDeg']) / 2) / PLATES['masterRows']
 DET = PLATES['detail']
+STORM = PLATES['storm']
 
 
 def smoothstep(a, b, x):
@@ -73,11 +74,39 @@ def tex(img, u, v, wrap=False):
     return out.astype(np.float32) / (255 if img.dtype == np.uint8 else 1)
 
 
+def pyramid(img, n=8):
+    out = [img]
+    for _ in range(n):
+        out.append(cv2.pyrDown(out[-1], borderType=cv2.BORDER_REFLECT))
+    return out
+
+
+def sample_lod(pyr, x, y, lod, wrap=False):
+    lod = np.clip(lod, 0, len(pyr) - 1.001)
+    l0 = np.floor(lod).astype(np.int32)
+    f = (lod - l0).astype(np.float32)
+    out = np.zeros(x.shape + (3,), np.float32)
+    scale = 255.0 if pyr[0].dtype == np.uint8 else 1.0
+    for l in range(len(pyr)):
+        for sel, wgt in ((l0 == l, 1 - f), (l0 + 1 == l, f)):
+            if sel.any():
+                s = 2.0 ** l
+                v = cv2.remap(pyr[l], ((x + 0.5) / s - 0.5).astype(np.float32), ((y + 0.5) / s - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP if wrap else cv2.BORDER_REPLICATE)
+                out += v * (sel * wgt / scale)[..., None]
+    return out
+
+
+def tex_lod(pyr, u, v, lod, wrap=False):
+    h, w = pyr[0].shape[:2]
+    return sample_lod(pyr, u * w - 0.5, (1 - v) * h - 0.5, lod, wrap)
+
+
 class Source:
     def __init__(self):
-        self.color = np.asarray(Image.open(PUB + 'deck-color.jpg').convert('RGB'))
-        self.far = np.asarray(Image.open(PUB + 'deck-far.jpg').convert('RGB'))
-        self.near = np.asarray(Image.open(PUB + 'deck-near.jpg').convert('RGB'))
+        self.color = pyramid(np.asarray(Image.open(PUB + 'deck-color.jpg').convert('RGB')))
+        self.far = pyramid(np.asarray(Image.open(PUB + 'deck-far.jpg').convert('RGB')))
+        self.near = pyramid(np.asarray(Image.open(PUB + 'deck-near.jpg').convert('RGB')))
+        self.pixel = (WIN[2] - WIN[0]) / self.color[0].shape[1]
         nx, ny = DECK['lightSize']
         self.light = np.fromfile(PUB + 'deck-light.bin', np.float32).reshape(ny, nx, 4)[..., :3]
 
@@ -91,9 +120,31 @@ class Source:
             out[..., c] = map_coordinates(self.light[..., c], [y, x], order=1, mode='nearest', prefilter=False)
         return out
 
-    def albedo(self, n):
+    def image(self, n, texel):
         p = C + R * n
         dist = np.linalg.norm(p, axis=-1, keepdims=True)
+        raw = np.log2(np.maximum(texel / (dist[..., 0] * self.pixel), 1e-3))
+        lod = np.maximum(raw, 0)
+        di = p / dist
+        mu_i = -np.sum(n * di, -1)
+        psi_i = np.arctan2(di @ R0, di @ F0)
+        z = np.maximum(-p[..., 2], 1e-4)
+        u = np.clip((p[..., 0] / z - WIN[0]) / (WIN[2] - WIN[0]), 0, 1)
+        v = np.clip((p[..., 1] / z - WIN[1]) / (WIN[3] - WIN[1]), 0, 1)
+        enc = tex_lod(self.color, u, v, lod)
+        nw = NEAR['window']
+        un = (u - nw[0]) / (nw[2] - nw[0])
+        vn = (v - nw[1]) / (nw[3] - nw[1])
+        w_n = smoothstep(0, NEAR['edge'], np.minimum(np.minimum(un, 1 - un), np.minimum(vn, 1 - vn)))
+        fine = tex_lod(self.near, np.clip(un, 0, 1), np.clip(vn, 0, 1), np.maximum(raw + np.log2(self.near[0].shape[1] / ((nw[2] - nw[0]) * self.color[0].shape[1])), 0))
+        enc = enc + (fine - enc) * w_n[..., None]
+        return (geo.unfilm(geo.to_linear(enc)) + DECK['eps']) / (self.deck_light(mu_i, psi_i) + DECK['eps'])
+
+    def albedo(self, n, texel):
+        p = C + R * n
+        dist = np.linalg.norm(p, axis=-1, keepdims=True)
+        raw = np.log2(np.maximum(texel / (dist[..., 0] * self.pixel), 1e-3))
+        lod = np.maximum(raw, 0)
         di = p / dist
         mu_i = -np.sum(n * di, -1)
         psi_i = np.arctan2(di @ R0, di @ F0)
@@ -105,12 +156,12 @@ class Source:
         w_t = (p[..., 2] < 0) * smoothstep(0, EDGE, ey) * smoothstep(INSET[0], INSET[1], np.minimum(ex, v)) * smoothstep(LIMB[0], LIMB[1], mu_i)
         uc = np.clip(u, 0, 1)
         vc = np.clip(v, 0, 1)
-        enc = tex(self.color, uc, vc)
+        enc = tex_lod(self.color, uc, vc, lod)
         nw = NEAR['window']
         un = (u - nw[0]) / (nw[2] - nw[0])
         vn = (v - nw[1]) / (nw[3] - nw[1])
         w_n = smoothstep(0, NEAR['edge'], np.minimum(np.minimum(un, 1 - un), np.minimum(vn, 1 - vn)))
-        fine = tex(self.near, np.clip(un, 0, 1), np.clip(vn, 0, 1))
+        fine = tex_lod(self.near, np.clip(un, 0, 1), np.clip(vn, 0, 1), np.maximum(raw + np.log2(self.near[0].shape[1] / ((nw[2] - nw[0]) * self.color[0].shape[1])), 0))
         enc = enc + (fine - enc) * w_n[..., None]
         lin = geo.unfilm(geo.to_linear(enc))
         a_t = (lin + DECK['eps']) / (self.deck_light(mu_i, psi_i) + DECK['eps'])
@@ -120,7 +171,8 @@ class Source:
         psi = np.arctan2(t @ R0, t @ F0)
         us = psi / DECK['psiMax'] * 0.5 + 0.5
         vs = np.clip(np.log(np.maximum(s, 1e-4) / DECK['s0']) / np.log(DECK['s1'] / DECK['s0']), 0.002, 0.998)
-        far = tex(self.far, us, vs, wrap=True)
+        fh, fw = self.far[0].shape[:2]
+        far = tex_lod(self.far, us, vs, np.log2(np.maximum(texel / (np.maximum(s, 1e-3) * min(2 * DECK['psiMax'] / fw, np.log(DECK['s1'] / DECK['s0']) / fh)), 1.0)), wrap=True)
         a_s = far * far * DECK['aMax']
         return a_s + (a_t - a_s) * w_t[..., None], w_t
 
@@ -142,30 +194,123 @@ def bake(src, half, size, ss, rows=256):
     seen = np.empty((size, size), np.float32)
     for r in range(0, big, rows * ss):
         gx, gy = grid(half, big, r, r + rows * ss)
-        a, w = src.albedo(dirs(gx, gy))
+        a, w = src.albedo(dirs(gx, gy), 2 * half / big * R)
         k = r // ss
         out[k:k + rows] = a.reshape(rows, ss, size, ss, 3).mean((1, 3))
         seen[k:k + rows] = w.reshape(rows, ss, size, ss).mean((1, 3))
     return out, seen
 
 
+def polar_of(n):
+    c = n @ UP
+    t = n - UP * c[..., None]
+    return np.arctan2(t @ R0, t @ F0), R * np.arctan2(np.linalg.norm(t, axis=-1), c)
+
+
+def polar_dirs(th, r):
+    g = r / R
+    return UP * np.cos(g)[..., None] + np.sin(g)[..., None] * (F0 * np.cos(th)[..., None] + R0 * np.sin(th)[..., None])
+
+
+def tri01(x):
+    return 1 - np.abs(np.mod(x, 2) - 1)
+
+
+def fan(src):
+    cache = WORK + 'fan.npz'
+    if '--reuse' in sys.argv and os.path.exists(cache):
+        return np.load(cache)['f']
+    nt, nr = STORM['size']
+    tf = np.radians(STORM['fanDeg'])
+    r0, r1 = STORM['r']
+    th = ((np.arange(nt) + 0.5) / nt * 2 - 1) * tf
+    lr = np.log(r0) + (np.arange(nr) + 0.5) / nr * np.log(r1 / r0)
+    out = np.empty((nr, nt, 3), np.float32)
+    for k in range(0, nr, 256):
+        t, l = np.meshgrid(th, lr[k:k + 256])
+        out[k:k + 256] = src.image(polar_dirs(t, np.exp(l)), np.exp(l) * 2 * tf / nt)
+    np.savez(cache, f=out)
+    return out
+
+
+def storm(pyr, th, r, texel):
+    nr, nt = pyr[0].shape[:2]
+    tf = np.radians(STORM['fanDeg'])
+    r0, r1 = STORM['r']
+    span = np.log(r1 / r0)
+    rs = np.maximum(r, 1e-3)
+    x = rs * np.sin(th)
+    y = rs * np.cos(th)
+    lin = np.log(rs / r0) / span
+    wob = sample(noise_tile(STORM['seed'], 3.0), x / STORM['wobbleUnits'] * 128.0 + 11.0, y / STORM['wobbleUnits'] * 128.0 + 47.0)
+    b = lin * STORM['bands'] + STORM['wobble'] * wob + 64.0
+    k = np.floor(b).astype(np.int32)
+    f = b - k
+    rng = np.random.default_rng(STORM['seed'])
+    table = rng.uniform(0, 2, 256)
+    lod = np.log2(np.maximum(texel / (rs * min(np.pi / 2 / nt, span / nr)), 1.0))
+    row = tri01(lin) * nr - 0.5
+    out = np.zeros(th.shape + (3,), np.float32)
+    s = smoothstep(1 - STORM['blend'], 1, f).astype(np.float32)
+    cut = sample(noise_tile(STORM['seed'] + 1, 3.0), x / STORM['cutUnits'] * 128.0 + 31.0, y / STORM['cutUnits'] * 128.0 + 83.0)
+    e = STORM['cutBlend']
+    for step, wgt in ((0, 1 - s), (1, s)):
+        a = th * 2 / np.pi + 0.5 + table[(k + step) % 256]
+        b = a + STORM['cutWobble'] * cut - 0.5
+        j = np.floor(b)
+        c = smoothstep(0.5 - e, 0.5 + e, b - j).astype(np.float32)
+        for dj, w2 in ((0, 1 - c), (1, c)):
+            col = tri01(a - j - dj) * nt - 0.5
+            out += sample_lod(pyr, col, row, lod) * (wgt * w2)[..., None]
+    return out
+
+
+def source_blur(r):
+    r0, r1 = STORM['r']
+    span = np.log(r1 / r0)
+    rs = np.maximum(r, 1e-3)
+    rp = r0 * np.exp(tri01(np.log(rs / r0) / span) * span)
+    g = rp / R
+    h = PLATES['aheadUnits']
+    d = np.sqrt((R * np.sin(g)) ** 2 + (R + h - R * np.cos(g)) ** 2)
+    mu = np.maximum(((R + h) * np.cos(g) - R) / d, 1e-3)
+    return PIXEL * d / mu * rs / rp
+
+
+def keep_of(seen, th, r):
+    k = STORM['keep']
+    x = r * np.sin(th)
+    y = r * np.cos(th)
+    n1 = sample(noise_tile(STORM['seed'] + 3, 3.0), x / k['noiseUnits'] * 128.0 + 5.0, y / k['noiseUnits'] * 128.0 + 71.0)
+    n2 = sample(noise_tile(STORM['seed'] + 4, 3.0), x / (k['noiseUnits'] * 0.3) * 128.0 + 15.0, y / (k['noiseUnits'] * 0.3) * 128.0 + 21.0)
+    n = n1 + 0.5 * n2
+    w_fan = smoothstep(k['seen'][0], k['seen'][1], seen + k['noise'] * n) * (1 - smoothstep(k['far'][0], k['far'][1], r * (1 + k['farNoise'] * n)))
+    w_core = 1 - smoothstep(k['core'][0], k['core'][1], r * (1 + k['coreNoise'] * n))
+    return np.maximum(w_fan, w_core).astype(np.float32), w_core.astype(np.float32)
+
+
 TILES = {}
 
 
 def noise_tile(seed, octave=5.0, wide=0.55, n=2048):
-    key = (seed, octave, wide)
-    if key in TILES:
-        return TILES[key]
-    rng = np.random.default_rng(seed)
-    f = np.fft.fft2(rng.standard_normal((n, n)))
-    kx = np.fft.fftfreq(n)[None, :] * n
-    ky = np.fft.fftfreq(n)[:, None] * n
-    k = np.hypot(kx, ky) * (1024.0 / n)
-    band = np.exp(-((np.log2(np.maximum(k, 0.5)) - octave) ** 2) / (2 * wide ** 2))
-    t = np.real(np.fft.ifft2(f * band))
-    t = (t / t.std()).astype(np.float32)
-    TILES[key] = t
-    return t
+    key = (seed % 3, octave, wide)
+    if key not in TILES:
+        rng = np.random.default_rng(key[0] * 7919 + int(octave * 16) * 31 + int(wide * 100))
+        f = np.fft.fft2(rng.standard_normal((n, n)))
+        kx = np.fft.fftfreq(n)[None, :] * n
+        ky = np.fft.fftfreq(n)[:, None] * n
+        k = np.hypot(kx, ky) * (1024.0 / n)
+        band = np.exp(-((np.log2(np.maximum(k, 0.5)) - octave) ** 2) / (2 * wide ** 2))
+        t = np.real(np.fft.ifft2(f * band))
+        TILES[key] = (t / t.std()).astype(np.float32)
+    t = TILES[key]
+    h = (seed * 2654435761) % (2 ** 32)
+    t = np.roll(t, ((h >> 4) % n, (h >> 16) % n), axis=(0, 1))
+    if h & 1:
+        t = t.T
+    if h & 2:
+        t = t[::-1]
+    return np.ascontiguousarray(t)
 
 
 def sample(tile, u, v):
@@ -177,7 +322,11 @@ def footprint(half, size, angle, coarse=512):
     gx, gy = grid(half, coarse, 0, coarse)
     n = dirs(gx, gy)
     p = C + R * n
-    k = -np.sin(angle) * E0 + np.cos(angle) * U0
+    if angle is None:
+        k = n - UP * (n @ UP)[..., None]
+        k /= np.maximum(np.linalg.norm(k, axis=-1, keepdims=True), 1e-9)
+    else:
+        k = -np.sin(angle) * E0 + np.cos(angle) * U0
     out = None
     for name in PLATES['handoverCameras']:
         v = p - np.array(FRAME[name]['position'])
@@ -186,18 +335,15 @@ def footprint(half, size, angle, coarse=512):
         mu = np.maximum(-np.sum(d * n, -1), 1e-3)
         t = d + mu[..., None] * n
         t /= np.maximum(np.linalg.norm(t, axis=-1, keepdims=True), 1e-9)
-        kr = (t @ k) ** 2
+        kr = np.sum(t * k, -1) ** 2
         fp = PIXEL * slant * np.sqrt(kr / mu ** 2 + (1 - kr))
         out = fp if out is None else np.minimum(out, fp)
     return cv2.resize(out.astype(np.float32), (size, size), interpolation=cv2.INTER_LINEAR)
 
 
-def streaks(x, y, angle, texel, base, blur):
-    ca, sa = np.cos(angle), np.sin(angle)
-    along = x * ca + y * sa
-    across = -x * sa + y * ca
-    out = np.zeros(x.shape, np.float32)
-    wisp = np.zeros(x.shape, np.float32)
+def streaks(along, across, texel, base, blur):
+    out = np.zeros(along.shape, np.float32)
+    wisp = np.zeros(along.shape, np.float32)
     lam0 = DET['lambda0']
     bend = DET['bend'] * lam0 * sample(noise_tile(base + 1, 3.0), along / (lam0 * 30.0) * 128.0 + 5.0, across / (lam0 * 8.0) * 128.0 + 9.0)
     for o in range(DET['octaves']):
@@ -222,18 +368,32 @@ def streaks(x, y, angle, texel, base, blur):
     return out, wisp
 
 
-def repaint(a, seen, half, size):
+def repaint(a, seen, half, size, pyr):
     texel = 2 * half / size * R
     gx, gy = grid(half, size, 0, size)
+    th, r = polar_of(dirs(gx, gy))
+    th = th.astype(np.float32)
+    r = r.astype(np.float32)
+    keep, core = keep_of(seen, th, r)
+    a = a * keep[..., None] + storm(pyr, th, r, texel) * (1 - keep)[..., None]
+    blur_cam = footprint(half, size, None)
+    blur = blur_cam * keep + source_blur(r) * (1 - keep)
+    back = np.mod(th, 2 * np.pi) - np.pi
+    front = smoothstep(np.radians(120), np.radians(60), np.abs(th)).astype(np.float32)
+    d_a, w_a = streaks(th * r, r, texel, 1000, blur)
+    d_b, w_b = streaks(back * r + 400.0, r + 90.0, texel, 3000, blur)
+    d_arc = d_b + (d_a - d_b) * front
+    w_arc = w_b + (w_a - w_b) * front
+    fa = DECK['flowAngle']
     x = (gx * R).astype(np.float32)
     y = (gy * R).astype(np.float32)
+    d_f, w_f = streaks(x * np.cos(fa) + y * np.sin(fa), -x * np.sin(fa) + y * np.cos(fa), texel, 2000, footprint(half, size, fa))
     inside = cv2.GaussianBlur(seen, (0, 0), max(DET['zoneUnits'] / texel, 0.5))
-    d_e, w_e = streaks(x, y, 0.0, texel, 1000, footprint(half, size, 0.0))
-    d_f, w_f = streaks(x, y, DECK['flowAngle'], texel, 2000, footprint(half, size, DECK['flowAngle']))
-    d = d_f + (d_e - d_f) * inside
-    wisp = w_f + (w_e - w_f) * inside
+    flow = core * (1 - inside)
+    d = d_arc + (d_f - d_arc) * flow
+    wisp = w_arc + (w_f - w_arc) * flow
     out = a * np.exp(d + DET['wisp'] * wisp)[..., None] * (1 + (np.array(DET['wispTint'], np.float32) - 1) * np.clip(wisp, 0, 1)[..., None])
-    return np.clip(out, 0, DECK['aMax']), d
+    return np.clip(out, 0, DECK['aMax']), d, keep
 
 
 class Globe:
@@ -296,6 +456,7 @@ def main():
     src = Source()
     globe = Globe()
     half0 = PLATES['halfTan']
+    pyr = pyramid(fan(src))
     levels = []
     for i in range(PLATES['levels']):
         half = half0 / 2 ** i
@@ -306,10 +467,10 @@ def main():
         else:
             a, seen = bake(src, half, size, PLATES['supersample'][i] if ss == 0 else ss)
             np.savez(cache, a=a, seen=seen)
-        fixed, d = repaint(a, seen, half, size)
+        fixed, d, keep = repaint(a, seen, half, size, pyr)
         levels.append(fixed)
-        del a, seen
         print('level', i + 1, 'half tan', half, 'texel units', round(2 * half / size * R, 5), 'mean albedo', fixed.reshape(-1, 3).mean(0).round(3).tolist(), 'seen share', round(float((seen > 0.5).mean()), 3), 'detail rms', round(float(d.std()), 4), flush=True)
+        del a, seen, d
 
     q = np.abs((np.arange(size // 2) + 0.5) / (size // 2) - 0.5)
     inner = smoothstep(0.5, 0.5 - PLATES['feather'], np.maximum(q[None, :], q[:, None]))[..., None].astype(np.float32)
@@ -392,8 +553,9 @@ def main():
     json.dump({
         'n': N0.tolist(), 'e': E0.tolist(), 'u': U0.tolist(),
         'levels': [{'file': 'place-%d.jpg' % (i + 1), 'halfTan': half0 / 2 ** i} for i in range(len(levels))],
-        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'clockRef': REF,
+        'aMax': DECK['aMax'], 'feather': PLATES['feather'], 'field': {'file': 'place-field.bin', 'size': fs}, 'clockRef': REF, 'aimUnits': PLATES['aimUnits'] - PLATES['aheadUnits'],
     }, open('src/stops/uranus/plates.json', 'w'), indent=1)
 
 
-main()
+if __name__ == '__main__':
+    main()

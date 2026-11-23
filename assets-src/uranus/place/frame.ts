@@ -1,3 +1,4 @@
+import { handoverOf } from '../../../src/director/handover'
 import * as THREE from 'three'
 import { config } from '../../../src/config'
 import deck from '../../../src/stops/uranus/deck.json'
@@ -52,8 +53,8 @@ console.log(JSON.stringify({
   halfTans: plates.levels.map((l) => l.halfTan),
   patchHalfTans: patches.levels.map((l) => Math.round(Math.tan(THREE.MathUtils.degToRad(l.widthDeg / 2)) * 1e4) / 1e4),
   unitTan: 1 / deck.radius,
-  foot4199: foot(at(4199), plan.entryPath(at(4199))),
-  foot4164: foot(at(4164), plan.entryPath(at(4164))),
+  foot4199: foot(at(4199), plan.divePose(at(4199), 'terrain')),
+  foot4164: foot(at(4164), plan.divePose(at(4164), 'terrain')),
   foot4200: foot(at(4200), plan.terrain(at(4200) - seg.terrain.start)),
   foot4290: foot(at(4290), plan.terrain(at(4290) - seg.terrain.start)),
   foot4379: foot(at(4379), plan.terrain(at(4379) - seg.terrain.start)),
@@ -70,7 +71,9 @@ writeFileSync('out/work/u/place/frame.json', JSON.stringify({
   diveStart: seg.dive!.start,
   riseEnd: seg.rise!.end,
   fps,
-  cam4199: cam(4199, plan.entryPath(at(4199))),
+  cam4199: cam(4199, plan.divePose(at(4199), 'terrain')),
+  camDive: cam(0, plan.divePose(handoverOf('uranus', 'dive')!.time, 'terrain')),
+  camRise: cam(0, plan.risePose(handoverOf('uranus', 'rise')!.time, 'terrain')),
   cam4200: cam(4200, plan.terrain(at(4200) - seg.terrain.start)),
   cam4290: cam(4290, plan.terrain(at(4290) - seg.terrain.start)),
   cam4379: cam(4379, plan.terrain(at(4379) - seg.terrain.start)),

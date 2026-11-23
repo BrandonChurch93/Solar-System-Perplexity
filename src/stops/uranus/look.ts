@@ -122,7 +122,7 @@ export const deck: DeckLook = {
   cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [2.16, 1.92, 1.8], lit: [0.02, 0.12] },
 }
 
-export const place = { light: [0.03, 0.6] as [number, number], plates: [1.5, 3] as [number, number] }
+export const place = { light: [0.03, 0.6] as [number, number], plates: [1.5, 3] as [number, number], fixedEye: false }
 
 export const near = { tint: [0.45, 0.5, 0.6] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 
