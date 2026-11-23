@@ -1,0 +1,90 @@
+{
+  "how": "The surface view of Neptune made by functions (deep.ts). Lengths are in units of the close scene: the planet's radius is close.json radius, the camera of the approved close image stands 1 unit over the deck. u runs along the band (the great circle through closeup.json band), v across it, both from the point under that camera's nadir line; heights are over the smooth deck. Times are seconds from the middle of the surface view. Nothing here is a picture: every value below feeds a function of place, height and time. on: true draws this scene in the surface view; it stays false in the film until the same scene is drawn on the globe for the dive and the rise, so the film never shows two different places.",
+  "on": false,
+  "steps": { "how": "deck: steps of the relief march; shade: steps toward the Sun over the deck's own relief; cirrus: the most steps through the cirrus, each cirrusShare of its distance from the eye long; cirrusLimit: the shortest wavelength the cirrus keeps, in steps; light: taps toward the Sun inside the cirrus, the first lightStep long and each lightGrow times the one before, reading no wavelength shorter than lightLimit of the tap; cast: taps through the cirrus shell from the deck toward the Sun.", "deck": 200, "shade": 10, "cirrus": 420, "cirrusShare": 0.002, "cirrusLimit": 1.0, "light": 9, "lightStep": 0.006, "lightGrow": 1.45, "lightLimit": 0.75, "cast": 12 },
+  "storm": {
+    "how": "at: u, v of the middle. eye: radius of the bowl. wall: shares of the eye radius between which the wall falls. depth: of the floor under the deck. reach: radius inside which the streaks wind round the storm. arms: count, pitch (turn per e-fold of radius), height, core (added to the radius under the logarithm), warp. spin: degrees a second at the middle, radius of half speed, share of it the arm pattern turns at.",
+    "at": [-1.45, 0.98],
+    "eye": 0.46,
+    "wall": [0.6, 1.08],
+    "depth": 0.12,
+    "reach": 1.7,
+    "arms": { "count": 2, "pitch": 2.6, "height": 0.035, "core": 0.2, "warp": 0.35, "light": 0.4 },
+    "spin": { "degPerSecond": 7, "halfRadius": 0.9, "pattern": 0.5 },
+    "dark": 0.8,
+    "collar": [0.9, 1.6, 0.45]
+  },
+  "wind": {
+    "how": "deck: speed along the band, jet (its swing across the band), jetWidth (units per radian of the swing), phase. cirrus: speed along the band and its shear across (per unit). row: the size of the rows (and rings) an octave rides in, in its own wavelengths.",
+    "deck": { "speed": 0.05, "jet": 0.05, "jetWidth": 0.55, "phase": 0.6 },
+    "cirrus": { "speed": 0.12, "shear": 0.05 },
+    "row": 3
+  },
+  "deck": {
+    "how": "wave: the longest wavelength of the deck's structure. stretch: how far an octave is drawn out along the wind (share of its length across). gain: weight of each octave against the one before. relief: height of the rolls. march: the shortest wavelength the relief march follows (finer relief shades by its slope only). life: how fast an octave of wavelength 1 changes of itself (per second, grows as the wavelength falls). colours are linear light before the film's exposure and tone curve: night (lowest), blue (middle), pale (highest). contrast: how far the structure moves the brightness. band: v from, v to and the lift of the bright far band; near: v from, v to and the drop of the dark near deck. bounds: the highest and the lowest the deck can stand, for the march.",
+    "wave": 1.4,
+    "stretch": 0.12,
+    "gain": 0.6,
+    "octaves": 12,
+    "relief": 0.05,
+    "march": 0.09,
+    "life": 0.02,
+    "spiral": { "across": 2.2, "along": 0.4 },
+    "night": [0.001, 0.003, 0.008],
+    "blue": [0.004, 0.014, 0.038],
+    "pale": [0.07, 0.14, 0.28],
+    "contrast": 1.5,
+    "level": 0.35,
+    "band": [2.2, 3.4, 0.75],
+    "near": [-1.6, 0.2, 0.2],
+    "bounds": [0.07, 0.24],
+    "limit": 1.5,
+    "wisp": { "how": "The thin bright streaks: the ridges of the octaves from number from on, each raised to power, each weighing gain of the one before; light: how far they lift the brightness; mean: what is taken off so the deck keeps its level; where: the range of the structure over which they come in. limit (above): the shortest wavelength drawn, in footprints of a pixel on the deck.", "from": 3, "power": 5, "gain": 0.85, "light": 0.9, "mean": 0.12, "where": [-0.25, 0.15] }
+  },
+  "cirrus": {
+    "how": "shell: lowest and highest height any cirrus can stand at. streamers: line (u from, u to, v at from, v at to), wide (the width at the two ends as shares of halfWidth), halfWidth, base (height of its underside), thick, density, ends (length over which it fades at each end), lump (length of its thick and thin parts), lumpShare, seed. lee: how much wider the side away from the Sun trails. wave, stretch, rise, gain, octaves: the noise that tears it (rise: how far it is drawn out upward against across). erode: how much of the body the noise eats; soft: the density range over which it sets in. sigma: extinction per unit of density and length.",
+    "shell": [0.03, 0.26],
+    "streamers": [
+      { "line": [-4.4, 2.3, -0.26, 0.04], "wide": [2.4, 0.2], "halfWidth": 0.045, "base": 0.04, "thick": 0.2, "density": 0.9, "ends": 1.6, "lump": 0.6, "lumpShare": 0.12, "seed": 3.0 },
+      { "line": [-2.0, 0.6, 1.5, 1.5], "wide": [1.0, 1.0], "halfWidth": 0.035, "base": 0.05, "thick": 0.07, "density": 0.8, "ends": 0.35, "lump": 0.5, "lumpShare": 0.4, "seed": 11.0 },
+      { "line": [-5.5, -2.2, 0.55, 0.25], "wide": [1.0, 1.0], "halfWidth": 0.07, "base": 0.2, "thick": 0.06, "density": 0.45, "ends": 0.8, "lump": 0.6, "lumpShare": 0.7, "seed": 23.0 }
+    ],
+    "lee": 2.0,
+    "warp": 0.05,
+    "warpWave": 0.35,
+    "warpNext": [0.5, 0.6],
+    "core": 0.25,
+    "sweepDeg": 62,
+    "leeErode": 1.3,
+    "floor": 0.06,
+    "castWave": 0.06,
+    "wave": 0.26,
+    "stretch": 0.4,
+    "rise": 1.6,
+    "gain": 0.72,
+    "octaves": 9,
+    "erode": 1.0,
+    "soft": 0.14,
+    "sigma": 45,
+    "life": 0.03
+  },
+  "haze": {
+    "how": "Two layers of air whose density falls with height: low (the bright line at the limb and the pale far deck) and high (the wide blue glow). depth: optical depth straight down from space; scale: the height over which it falls by e; colour: what it scatters of white sunlight. forward: weight and sharpness of the lobe toward the Sun. top: height where the drawn shell ends.",
+    "low": { "depth": 0.012, "scale": 0.035, "colour": [0.22, 0.38, 0.7] },
+    "high": { "depth": 0.003, "scale": 0.12, "colour": [0.1, 0.25, 0.7] },
+    "forward": [0.5, 0.7],
+    "share": 0.25,
+    "top": 2.2
+  },
+  "light": {
+    "how": "sun: the strength of the far Sun (linear light before exposure). sky: what the deck gets from above without the Sun. cloud: what the cirrus gets from the deck below and from the air. forward: weight and sharpness of the cirrus's lobe toward the Sun. wrap: how far the deck's light wraps past the edge of the Sun's reach.",
+    "sun": 3.0,
+    "sky": [0.002, 0.005, 0.012],
+    "cloud": [0.06, 0.09, 0.15],
+    "cirrus": 0.6,
+    "deep": [0.06, 0.3, 0.02, 0.08],
+    "forward": [0.55, 0.6],
+    "wrap": 0.25,
+    "shadow": 0.12
+  }
+}

@@ -8,6 +8,8 @@ import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
 import closeLook from './closeup.json'
+import { Deep } from './deep'
+import deepLook from './deep.json'
 import { ending as endLook } from './ending'
 import { limbField } from './field'
 import * as look from './look'
@@ -99,7 +101,9 @@ export const createSet: SetFactory = async (ctx) => {
     fine: await ctx.texture(base + close.fine, { srgb: false, anisotropy: 16 }),
   }
   const closeup = new Closeup(closeMaps)
-  terrain.add(closeup.mesh)
+  const deepView = new Deep()
+  terrain.add(deepLook.on ? deepView.mesh : closeup.mesh)
+  const deepSun = new THREE.Vector3()
   const laid = new Closeup({ ...closeMaps, tone: toneMap }, true)
   orbit.add(laid.mesh)
   const laySeat = new THREE.Vector3()
@@ -146,7 +150,8 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       if (!inOrbit) {
         camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
-        closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height, shot.post.bloomStrength)
+        if (deepLook.on) deepView.update(camera, deepSun.copy(plan.lightDir).applyQuaternion(plan.laid(state.time).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain, shot.post.vignette, view.format.width / view.format.height)
+        else closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height, shot.post.bloomStrength)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
@@ -261,6 +266,7 @@ export const createSet: SetFactory = async (ctx) => {
       ring.dispose()
       far.dispose()
       closeup.dispose()
+      deepView.dispose()
       laid.dispose()
     },
   }
