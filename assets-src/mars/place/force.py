@@ -52,7 +52,49 @@ stretch = np.load(a.lay + '-stretch.npy')
 t = read(a.t)[..., 0]
 if L.shape[0] != size:
     raise SystemExit('the lay back is %d px, the plate %d' % (L.shape[0], size))
-m = geom.picture_edge(cam, lay, a.width_deg, size, lead['edgeShare']) * geom.smoothstep(lead['tFrom'], lead['tTo'], t)
+# seen: the fan the twin sees, its edge also feathered on the ground (plate px; near the twin the picture's own edge
+# feather is a hair line). m: where the picture leads (seen and clear enough air). far: seen through thick haze.
+seen = geom.picture_edge(cam, lay, a.width_deg, size, lead['edgeShare'])
+seen = seen * geom.smoothstep(0.0, fc['edgePx'], cv2.distanceTransform((seen > 0.02).astype(np.uint8), cv2.DIST_L2, 5))
+m = seen * geom.smoothstep(lead['tFrom'], lead['tTo'], t)
+far = np.clip(seen - m, 0, 1)
+
+
+def spread(D, w):
+    """Push pull fill: D where w is 1, outside it the nearest values of D, broader with distance."""
+    ds, ws = [D * w[..., None]], [w]
+    while ds[-1].shape[0] > 4:
+        ds.append(cv2.pyrDown(ds[-1]))
+        ws.append(cv2.pyrDown(ws[-1]))
+    fill = ds[-1] / np.maximum(ws[-1], 1e-6)[..., None]
+    for lv in range(len(ds) - 2, -1, -1):
+        up = cv2.resize(fill, (ds[lv].shape[1], ds[lv].shape[0]), interpolation=cv2.INTER_LINEAR)
+        own = ds[lv] / np.maximum(ws[lv], 1e-6)[..., None]
+        k = np.clip(ws[lv], 0, 1)[..., None]
+        fill = own * k + up * (1 - k)
+    return fill
+
+
+# the far fan: what the picture shows there is mostly its haze, and the take was led by it. Its broad colour is
+# brought to that of the land around the fan (look values, by ratio); the drawing stays.
+if far.max() > 0 and fc['calmShare'] > 0:
+    Rs = geom.scene_of(R)
+    q = 8  # the broad colours are compared on a grid of an eighth of the plate
+    small = cv2.resize(Rs, (size // q, size // q), interpolation=cv2.INTER_AREA)
+    sig = fc['calmBlurDeg'] / a.width_deg * size / q
+    low = cv2.GaussianBlur(small, (0, 0), sig)
+    out = 1 - np.clip(cv2.resize(seen, (size // q, size // q), interpolation=cv2.INTER_AREA) * 4, 0, 1)
+    around = cv2.GaussianBlur(spread(low, out), (0, 0), sig)
+    lum = lambda v: v @ np.array([0.0722, 0.7152, 0.2126], np.float32)
+    ratio = np.clip((lum(around) + 1e-3) / (lum(low) + 1e-3), fc['calmLeast'], fc['calmMost'])
+    ratio = cv2.resize(ratio, (size, size), interpolation=cv2.INTER_LINEAR)[..., None]
+    hue = cv2.resize(around / (lum(around)[..., None] + 1e-4), (size, size), interpolation=cv2.INTER_LINEAR)
+    k = (far * fc['calmShare'])[..., None]
+    Rs = Rs * (1 + (ratio - 1) * k)
+    Rs = Rs + (lum(Rs)[..., None] * hue - Rs) * (k * fc['calmHue'])
+    R = np.clip(geom.texel_of(Rs), 0, 1)
+    del hue, k
+    del Rs, around, ratio, small, low
 
 step = fc['pictureStep']
 pw, ph = lay['width'] // step, lay['height'] // step
@@ -112,7 +154,32 @@ tmp = a.out + '-diff'
 cv2.imwrite(tmp + '-pic.png', np.round(full * 65535).astype(np.uint16))
 subprocess.run([sys.executable, 'assets-src/mars/place/layback.py', '--kind', a.kind, '--width-deg', str(a.width_deg), '--size', str(size), '--image', tmp + '-pic.png', '--out', tmp, '--geometry', a.geometry], check=True, stdout=subprocess.DEVNULL)
 Dp = (read(tmp + '.png')[..., :3] - 0.5) * 2
-plate = np.clip(R + Dp * (m * fc['share'])[..., None], 0, 1)
+# The blur of the difference is round in the picture but long on the ground where the view grazes: it would lay
+# streaks that point at the twin. So the difference is blurred again on the ground, round, as wide as that length.
+need = np.log2(np.maximum(fc['blurPx'] * stretch * fc['groundBlur'], 1.0))
+dm, mm = Dp * m[..., None], m.copy()
+acc = np.zeros_like(Dp)
+lv = 0
+while True:
+    w = np.clip(1 - np.abs(need - lv), 0, 1) if (1 << (lv + 1)) < size // 8 else (need >= lv - 1) * np.clip(need - lv + 1, 0, 1)
+    if w.max() > 0:
+        d = dm / np.maximum(mm, 1e-4)[..., None]
+        if lv > 0:
+            d = cv2.resize(d, (size, size), interpolation=cv2.INTER_CUBIC)
+        acc += d * w[..., None]
+    if (1 << (lv + 1)) >= size // 8:
+        break
+    dm, mm = cv2.pyrDown(dm), cv2.pyrDown(mm)
+    lv += 1
+Dp = acc
+del acc, dm, mm, need
+
+# outside the fan the difference goes on, fading with the distance from the fan's edge: no light or dark of the
+# picture may end on the outline of what the twin sees
+far = cv2.distanceTransform((m < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / size * a.width_deg
+fall = (1 - geom.smoothstep(0.0, fc['spreadDeg'], far)) * fc['spreadShare']
+Dout = cv2.GaussianBlur(spread(Dp, m), (0, 0), fc['spreadBlurPx'])
+plate = np.clip(R + (Dp * (m * fc['share'])[..., None]) + Dout * ((1 - m) * fall)[..., None], 0, 1)
 report('held to the picture', plate)
 direct = m * (1 - geom.smoothstep(fc['directFrom'], fc['directTo'], stretch))
 plate = plate * (1 - direct[..., None]) + L[..., :3] * direct[..., None]

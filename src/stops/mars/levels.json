@@ -1,9 +1,14 @@
 {
   "levels": [
-    { "file": "patch-wide.jpg", "widthDeg": 96 },
-    { "file": "patch-1.jpg", "widthDeg": 48 },
-    { "file": "patch-mid.jpg", "widthDeg": 24 },
-    { "file": "patch-2.jpg", "widthDeg": 12 },
-    { "file": "patch-3.jpg", "widthDeg": 3 }
-  ]
+    {"file": "patch-wide.jpg", "widthDeg": 96},
+    {"file": "patch-1.jpg", "widthDeg": 48},
+    {"file": "patch-26.jpg", "widthDeg": 26},
+    {"file": "place-13.jpg", "widthDeg": 13, "own": true},
+    {"file": "place-6p5.jpg", "widthDeg": 6.5, "own": true},
+    {"file": "place-3p25.jpg", "widthDeg": 3.25, "own": true},
+    {"file": "place-1p2.jpg", "widthDeg": 1.2, "own": true},
+    {"file": "place-0p6.jpg", "widthDeg": 0.6, "own": true}
+  ],
+  "fadeMinor": true,
+  "oneChannel": ["wrap-storm.png", "phobos-lit-mask.png", "relief-L0-alpha.png", "relief-L1-alpha.png", "relief-L2-alpha.png"]
 }

@@ -67,6 +67,11 @@ t = np.where(ok, t, 0).astype(np.float32)
 keep = cfg['keepShare']
 kpix = np.minimum(kk, ((1 - keep) * S / np.maximum(E, 1e-6)).min(axis=2))[..., None]
 land = np.clip((S - kpix * E) / np.maximum(t, cfg['leastT'])[..., None], 0, None)
+# what is brighter than land can be is the picture's glow: the luminance is bent over above landKnee
+lum = land @ np.array([0.0722, 0.7152, 0.2126], np.float32)
+knee, most = cfg['landKnee'], cfg['landMost']
+bent = np.where(lum > knee, knee + (most - knee) * (1 - np.exp(-(lum - knee) / (most - knee))), lum)
+land *= (bent / np.maximum(lum, 1e-6))[..., None]
 land[~ok] = 0
 cv2.imwrite(a.out + '-land.png', np.round(geom.texel_of(land) * 65535).astype(np.uint16))
 cv2.imwrite(a.out + '-t.png', np.round(np.dstack([t, t, t]) * 65535).astype(np.uint16))

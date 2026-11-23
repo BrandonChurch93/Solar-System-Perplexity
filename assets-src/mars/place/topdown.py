@@ -15,6 +15,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument('--levels', required=True)
 ap.add_argument('--wrap', default='public/assets/mars/full/wrap-color.jpg')
 ap.add_argument('--out', required=True)
+ap.add_argument('--assets', default='public/assets/mars/full', help='folder of the files when --levels is the levels.json of the stop')
+ap.add_argument('--config', default='assets-src/mars/place/plates.json')
 ap.add_argument('--tile', type=int, default=640)
 ap.add_argument('--from-deg', type=float, default=60)
 ap.add_argument('--to-deg', type=float, default=0.12)
@@ -59,10 +61,22 @@ def sample(pyr, u, v, texels_per_px):
     return res
 
 
-wrap = mips(cv2.imread(a.wrap, cv2.IMREAD_COLOR).astype(np.float32) / 255)
 with open(a.levels) as f:
     spec = json.load(f)
-levels = [(mips(cv2.imread(s['file'], cv2.IMREAD_COLOR).astype(np.float32) / 255), float(s['widthDeg'])) for s in spec]
+if isinstance(spec, dict):
+    spec = [dict(s, file=a.assets + '/' + s['file']) for s in spec['levels']]
+shown = any(s.get('own') for s in spec)
+light = np.array(json.load(open(a.config))['lead']['light'][::-1], np.float32)
+
+
+def read(path, own):
+    """With own levels in the ladder the sheet is in look values: a lit picture is shown times the globe's light."""
+    img = cv2.imread(path, cv2.IMREAD_COLOR).astype(np.float32) / 255
+    return geom.texel_of(geom.scene_of(img) * light) if shown and not own else img
+
+
+wrap = mips(read(a.wrap, False))
+levels = [(mips(read(s['file'], s.get('own', False))), float(s['widthDeg'])) for s in spec]
 n, east, north = geom.patch_frame()
 widths = [a.from_deg * (a.to_deg / a.from_deg) ** (i / (a.count - 1)) for i in range(a.count)]
 rows = (a.count + a.cols - 1) // a.cols

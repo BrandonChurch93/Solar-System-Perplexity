@@ -17,6 +17,7 @@ ap.add_argument('--every', type=int, default=1)
 ap.add_argument('--grid', type=int, default=8)
 ap.add_argument('--geometry', default='out/work/place/geometry.json')
 ap.add_argument('--verbose', action='store_true')
+ap.add_argument('--where', type=int, default=-1, help='for this frame: where on the ground the soft pixels lie and what they would need')
 ap.add_argument('--centres', default='', help='per level centre as east:north in degrees from the spot, comma separated, empty entries are 0:0')
 ap.add_argument('--no-place', action='store_true', help='leave the place picture out of the count')
 ap.add_argument('--minor', action='store_true', help='levels fade in by the minor axis of the footprint (asked of the engine), capped by --aniso')
@@ -139,6 +140,16 @@ def frame(pose, kind='hold'):
         covered, pt = place_cover(kind, pose, (p0, p1, p2), px, py, weight)
         covered &= ok
         texels = np.where(covered, pt, texels)
+    if pose.get('frame') == a.where:
+        bad = ok & (texels < 1.0)
+        e, nn = np.degrees(np.arctan(gx0[bad])), np.degrees(np.arctan(gy0[bad]))
+        need = 1 / np.maximum(np.degrees(gd[bad]), 1e-12)
+        print('  soft ground of frame %d: east deg pct 2 25 50 75 98 %s; north %s; texels there %s; px per degree needed %s; rows of the frame %s' % (
+            a.where, np.round(np.percentile(e, [2, 25, 50, 75, 98]), 3), np.round(np.percentile(nn, [2, 25, 50, 75, 98]), 3),
+            np.round(np.percentile(texels[bad], [2, 50, 98]), 2), np.round(np.percentile(need, [2, 50, 98])), np.round(np.percentile(py[bad], [2, 50, 98]))))
+        for lim in (0.3, 0.6, 1.0, 1.625):
+            ins = np.maximum(np.abs(e), np.abs(nn)) < lim
+            print('    within %.3f deg of the spot: share of the soft pixels %.3f, px per degree needed there up to %s' % (lim, ins.mean(), np.round(need[ins].max()) if ins.any() else 0))
     n = int(ok.sum())
     soft = int((ok & (texels < 1.0)).sum())
     return n, soft, weights, int(covered.sum()), int((ok & ~covered & (texels < 1.0)).sum())

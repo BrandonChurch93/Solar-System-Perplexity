@@ -55,7 +55,7 @@
     "maxStretch": 1000000000.0
   },
   "dehaze": {
-    "note": "dehaze.py: the dark envelope of the place picture by distance from the twin and picture column",
+    "note": "dehaze.py: the dark envelope of the place picture by distance from the twin and picture column; landKnee and landMost: the luminance of the land (scene) is bent over above landKnee and never passes landMost (what is brighter in the picture is taken as glow)",
     "nearDeg": 0.1,
     "distBins": 28,
     "columnBins": 16,
@@ -64,7 +64,9 @@
     "monotone": false,
     "strength": 0.9,
     "leastT": 0.2,
-    "keepShare": 0.3
+    "keepShare": 0.3,
+    "landKnee": 0.2,
+    "landMost": 0.45
   },
   "oldLadder": [
     {
@@ -99,8 +101,8 @@
     "paletteCoreDeg": 0.8,
     "paletteEndDeg": 4.0,
     "edgeShare": 0.05,
-    "tFrom": 0.12,
-    "tTo": 0.6,
+    "tFrom": 0.3,
+    "tTo": 0.7,
     "paletteHue": [
       0.0853,
       0.0459,
@@ -110,11 +112,92 @@
     "paletteLum": 1.0
   },
   "force": {
-    "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used",
+    "note": "force.py: pictureStep is the grid of the twin's picture the comparison runs on (picture px), blurPx the blur of the difference (picture px), share how much of it is added, directFrom to directTo the stretch (plate texels per picture px) over which the lay back itself stops being used; spreadDeg is how far outside the fan the difference fades out (degrees on the ground), spreadShare its share at the edge, spreadBlurPx the blur of the spread field (plate px); edgePx the feather of the fan edge on the plate (plate px); calmShare how far the broad colour of the far fan (seen, but through thick haze) is brought to the land around it, calmBlurDeg the blur of that comparison (degrees), calmLeast and calmMost the limits of the ratio; groundBlur: the difference is blurred on the ground with a radius of blurPx x stretch x groundBlur plate px; calmHue how far the far fan takes the hue of the land around",
     "pictureStep": 2,
     "blurPx": 16,
     "share": 1.0,
     "directFrom": 1.5,
-    "directTo": 3.0
+    "directTo": 3.0,
+    "spreadDeg": 0.6,
+    "spreadShare": 1.0,
+    "spreadBlurPx": 24,
+    "edgePx": 96,
+    "calmShare": 1.0,
+    "calmBlurDeg": 0.12,
+    "calmLeast": 0.1,
+    "calmMost": 1.5,
+    "groundBlur": 0.5,
+    "calmHue": 0.6
+  },
+  "bake": {
+    "note": "bake.py: plates from the deepest up (look: the plate of force.py, empty for the toned old land), the new lit level, the lit levels above that take the difference, the options of the stop; matchBlur and matchReach (shares of the plate width): the broad difference to the plate above is added at the rim and fades out matchReach inside it; matchLeast and matchMost bound the gain of the rim match; lookKnee and lookMost: the luminance of a plate (look values) is bent over above lookKnee and never passes lookMost",
+    "workSize": 4096,
+    "jpegQuality": 94,
+    "webShare": 0.5,
+    "nestFeather": 0.12,
+    "oldRef": "origin/main",
+    "plates": [
+      {
+        "widthDeg": 0.6,
+        "look": "out/work/place/plate/p0.6.png",
+        "file": "place-0p6.jpg",
+        "size": 3277
+      },
+      {
+        "widthDeg": 1.2,
+        "look": "out/work/place/plate/p1.2.png",
+        "file": "place-1p2.jpg",
+        "size": 3072
+      },
+      {
+        "widthDeg": 3.25,
+        "look": "out/work/place/plate/p3.25.png",
+        "file": "place-3p25.jpg",
+        "size": 4096
+      },
+      {
+        "widthDeg": 6.5,
+        "look": "",
+        "file": "place-6p5.jpg",
+        "size": 4096
+      },
+      {
+        "widthDeg": 13,
+        "look": "",
+        "file": "place-13.jpg",
+        "size": 4096
+      }
+    ],
+    "lit": {
+      "widthDeg": 26,
+      "file": "patch-26.jpg",
+      "size": 4096
+    },
+    "delta": [
+      {
+        "file": "patch-1.jpg",
+        "widthDeg": 48,
+        "share": 1.0
+      },
+      {
+        "file": "patch-wide.jpg",
+        "widthDeg": 96,
+        "share": 0.5
+      }
+    ],
+    "fadeMinor": true,
+    "oneChannel": [
+      "wrap-storm.png",
+      "phobos-lit-mask.png",
+      "relief-L0-alpha.png",
+      "relief-L1-alpha.png",
+      "relief-L2-alpha.png"
+    ],
+    "matchBlur": 0.04,
+    "matchReach": 0.3,
+    "matchLeast": 0.5,
+    "matchMost": 2.0,
+    "lookKnee": 0.14,
+    "lookMost": 0.3
   }
 }
