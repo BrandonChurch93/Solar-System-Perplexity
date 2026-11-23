@@ -1,9 +1,58 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T20:48:08.989Z",
+ "pushed": "2026-11-23T21:11:45.508Z",
  "head": "c0ad4f17e1b9be38dcb6a0f53b61d8ba55b7b97e",
- "note": "sun: c0ad4f17 (items 1 to 3 of mail 327, main 02780a4f merged) in proof; ground cure of mail 344 is next",
+ "note": "items 1 to 3 final frames while the proof runs; ground cure of mail 344 in work",
  "looks": [
+  {
+   "time": "2026-11-23T21:11:44.351Z",
+   "file": "20261123211144351-note-q3-60.jpg",
+   "source": "out/work/sun/life/v/q3-60.jpg",
+   "kind": "note",
+   "label": "approved image left, frame 60 of the final tree right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:11:43.125Z",
+   "file": "20261123211143125-note-q3-six-100.jpg",
+   "source": "out/work/sun/life/v/q3-six-100.jpg",
+   "kind": "note",
+   "label": "final tree: frames 100 to 105 arcade native size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:11:41.763Z",
+   "file": "20261123211141763-note-q3-release-30.jpg",
+   "source": "out/work/sun/life/v/q3-release-30.jpg",
+   "kind": "note",
+   "label": "final tree: release frames 30 to 41 consecutive, arcade with sky and ground",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T21:06:38.034Z",
+   "file": "20261123210638034-compare-sun-rise-sides.jpg",
+   "source": "out/work/handover/sun-rise-sides.png",
+   "kind": "compare",
+   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T21:05:58.111Z",
+   "file": "20261123210558111-frame-f360-final-q3.jpg",
+   "source": "out/work/sun/life/f360-final-q3.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, final tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "45f909e84c1a1464"
+  },
   {
    "time": "2026-11-23T20:48:08.244Z",
    "file": "20261123204808244-note-f3-072.jpg",
@@ -26,46 +75,6 @@
    "source": "out/work/sun/life/v/s6-leftfoot.png",
    "kind": "note",
    "label": "draft, left foot x 640 to 1000, y 330 to 590, frames 68 to 84: before (9971c23a), with the knots as first built, now (c0ad4f17: on the lower leg a knot is its cores only)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:19:48.654Z",
-   "file": "20261123201948654-note-f3-036.jpg",
-   "source": "out/work/sun/life/v/f3-036.jpg",
-   "kind": "note",
-   "label": "draft, working tree: frames 36 to 47",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:19:47.675Z",
-   "file": "20261123201947675-note-f3-024.jpg",
-   "source": "out/work/sun/life/v/f3-024.jpg",
-   "kind": "note",
-   "label": "draft, working tree (full render in work): frames 24 to 35, the shell leaves the crown",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:19:46.512Z",
-   "file": "20261123201946512-note-held.jpg",
-   "source": "out/work/sun/life/v/held.jpg",
-   "kind": "note",
-   "label": "camera held, ground crop x 780 to 1100, y 800 to 980 every 6 frames 110 to 170: kept build above, working tree below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T20:19:45.480Z",
-   "file": "20261123201945480-note-held-time.jpg",
-   "source": "out/work/sun/life/v/held-time.jpg",
-   "kind": "note",
-   "label": "camera held, one line of the ground (y 890, x 300 to 1620) over frames 110 to 170: kept build 0eae595e above, working tree below. Change per frame, near ground: kept 1.63, mine 9.80",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T19:53:21.626Z",
-   "file": "20261123195321626-note-held-kept.jpg",
-   "source": "out/work/sun/life/v/held-kept.jpg",
-   "kind": "note",
-   "label": "kept build 0eae595e, camera held at frame 90 pose, ground crop every 6 frames 110 to 170 and one line over 61 frames",
    "stop": "sun"
   }
  ]
