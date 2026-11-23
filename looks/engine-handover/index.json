@@ -1,69 +1,85 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T12:57:26.647Z",
+ "pushed": "2026-11-23T13:30:35.014Z",
  "head": "c5799a8b2a85c7f99db67e079cf93f0fa533555b",
- "note": "E4 on a scratch merge of the first Mars plates (41d7784): step into 2449 is 2.55, dive still fails at 2420 (9.9) and under the picture (18.57); land matte added to the engine (c5799a8)",
+ "note": "the dark line along the horizon in the place window: found, first half of the fix (sky lifted onto the limb), ground side next",
  "looks": [
   {
-   "time": "2026-11-23T12:57:20.794Z",
-   "file": "20261123125720794-note-mars-plates-rise-under.jpg",
-   "source": "../repo-plates/out/work/handover/mars-plates-rise-under.png",
+   "time": "2026-11-23T13:30:34.298Z",
+   "file": "20261123133034298-note-f2447-limb0-limb8-crop.jpg",
+   "source": "out/work/e4/limb/f2447-limb0-limb8-crop.png",
    "kind": "note",
-   "label": "Mars rise with the first plates at T: globe with the place picture, globe alone, difference times 4 (mean 28.61, without plates 34.56)",
-   "stop": "mars"
+   "label": "frame 2447 at the limb: above as it was, below with the sky of the picture lifted onto the limb (a thin dashed line is left, next step)"
   },
   {
-   "time": "2026-11-23T12:57:20.069Z",
-   "file": "20261123125720069-note-mars-plates-rise-top.jpg",
-   "source": "../repo-plates/out/work/handover/mars-plates-rise-top.png",
-   "kind": "note",
-   "label": "Mars rise with the first plates: the globe side alone from straight above the place, 12 frames from the far end to T",
-   "stop": "mars"
+   "time": "2026-11-23T13:22:15.707Z",
+   "file": "20261123132215707-frame-f2447-limb8-mask.jpg",
+   "source": "out/work/e4/limb/f2447-limb8-mask.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2447, draft tier, beauty/mask view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2447,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/mask",
+   "engine": "cd5d5dddddb9495a"
   },
   {
-   "time": "2026-11-23T12:57:19.375Z",
-   "file": "20261123125719375-note-plates-rise-2697-2713.jpg",
-   "source": "../repo-plates/out/work/e4/view/plates-rise-2697-2713.png",
+   "time": "2026-11-23T13:20:11.015Z",
+   "file": "20261123132011015-note-f2454-dump-horizon.jpg",
+   "source": "out/work/e4/matte/f2454-dump-horizon.png",
    "kind": "note",
-   "label": "Mars rise with the first plates, draft, every second frame 2697 to 2713: the place stays a place on the body"
+   "label": "the Mars place picture at its horizon: image above, alpha below"
   },
   {
-   "time": "2026-11-23T12:57:18.722Z",
-   "file": "20261123125718722-note-mars-plates-rise-draft-after.jpg",
-   "source": "../repo-plates/out/work/handover/mars-plates-rise-draft-after.png",
+   "time": "2026-11-23T13:20:10.173Z",
+   "file": "20261123132010173-note-plates-limb-2443-2453.jpg",
+   "source": "../repo-plates/out/work/e4/view/plates-limb-2443-2453.png",
    "kind": "note",
-   "label": "Mars rise with the first plates, draft, frames 2686 to 2697: the far field of the picture leaves over 2692 to 2697, the near cliff wall stretches as the camera climbs",
-   "stop": "mars"
+   "label": "the same fault with the first plates merged, dive frames 2443 to 2453 at the limb"
   },
   {
-   "time": "2026-11-23T12:57:18.003Z",
-   "file": "20261123125718003-note-mars-plates-rise-draft-across.jpg",
-   "source": "../repo-plates/out/work/handover/mars-plates-rise-draft-across.png",
+   "time": "2026-11-23T13:20:09.423Z",
+   "file": "20261123132009423-note-f2447-limb-crop.jpg",
+   "source": "out/work/e4/matte/f2447-limb-crop.png",
    "kind": "note",
-   "label": "Mars rise with the first plates, draft, frames 2679 to 2690 across T (2685)",
-   "stop": "mars"
+   "label": "fault found: frame 2447, mask and beauty at the limb, a dark line between ground and haze (no weight between the camera limb and the twin horizon)"
   },
   {
-   "time": "2026-11-23T12:57:17.219Z",
-   "file": "20261123125717219-note-plates-dive-2416-2424.jpg",
-   "source": "../repo-plates/out/work/e4/view/plates-dive-2416-2424.png",
+   "time": "2026-11-23T13:20:08.692Z",
+   "file": "20261123132008692-note-test-matte.jpg",
+   "source": "out/work/e4/matte/test-matte.png",
    "kind": "note",
-   "label": "Mars dive with the first plates, frames 2416 to 2424: the body colour steps by 9.9 into 2420 (limit 8), where a darker level comes in"
+   "label": "matte proof: a test matte laid on the Mars place picture, frame 2447, upright as specified"
   },
   {
-   "time": "2026-11-23T12:57:16.650Z",
-   "file": "20261123125716650-note-plates-T-alone-over-picture.jpg",
-   "source": "../repo-plates/out/work/e4/view/plates-T-alone-over-picture.jpg",
-   "kind": "note",
-   "label": "Mars dive at T, full frame: the globe side alone with the first plates (top) over the globe side with the place picture (bottom)"
+   "time": "2026-11-23T12:59:59.500Z",
+   "file": "20261123125959500-frame-f05006-draft.jpg",
+   "source": "out/work/samebytes/m3b/f05006-draft.png",
+   "kind": "frame",
+   "label": "neptune.rise frame 5006, draft tier",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5006,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "614cbdb6af135d3e"
   },
   {
-   "time": "2026-11-23T12:57:16.079Z",
-   "file": "20261123125716079-note-mars-plates-dive-under.jpg",
-   "source": "../repo-plates/out/work/handover/mars-plates-dive-under.png",
-   "kind": "note",
-   "label": "Mars dive with the first plates at T: globe with the place picture, globe alone, difference times 4 (mean 18.57, without plates 41.91)",
-   "stop": "mars"
+   "time": "2026-11-23T12:59:14.202Z",
+   "file": "20261123125914202-frame-f03922-draft.jpg",
+   "source": "out/work/samebytes/m3b/f03922-draft.png",
+   "kind": "frame",
+   "label": "saturn.travel frame 3922, draft tier",
+   "stop": "saturn",
+   "segment": "saturn.travel",
+   "frame": 3922,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "614cbdb6af135d3e"
   }
  ]
 }
