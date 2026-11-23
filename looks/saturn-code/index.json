@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T14:50:28.897Z",
- "head": "50b7312130e0838d89da549fe8e82eec81b1b4dd",
- "note": "handover opted in: dive and rise as one scene with no cover, all handover checks pass at draft; hatch at the review tier found in the ringlet filter and fixed",
+ "pushed": "2026-11-23T15:18:12.139Z",
+ "head": "0111bf2f4932c240a0813ab03d37860b86c5b19e",
+ "note": "mail 287: grains few and darker, ringlets past the rim instead of the wash, night side grey, crisp wide ringlets near the lens; still tuning",
  "looks": [
+  {
+   "time": "2026-11-23T15:18:10.814Z",
+   "file": "20261123151810814-note-s3809.jpg",
+   "source": "../../../../tmp/v/t2/s3809.png",
+   "kind": "note",
+   "label": "3809 draft: no gravel, single bodies"
+  },
+  {
+   "time": "2026-11-23T15:18:09.883Z",
+   "file": "20261123151809883-note-ul_3660.jpg",
+   "source": "../../../../tmp/v/t2/ul_3660.png",
+   "kind": "note",
+   "label": "3660 draft upper left at native size: no wash past the rim"
+  },
+  {
+   "time": "2026-11-23T15:18:08.812Z",
+   "file": "20261123151808812-note-s3630.jpg",
+   "source": "../../../../tmp/v/t4/s3630.png",
+   "kind": "note",
+   "label": "3630 draft: the ice past the rim in ringlets that end in the dark, night side grey, 15:17"
+  },
+  {
+   "time": "2026-11-23T15:18:07.947Z",
+   "file": "20261123151807947-note-ll2.jpg",
+   "source": "../../../../tmp/v/t3r/ll2.png",
+   "kind": "note",
+   "label": "3720 review tier lower left at native size, approved on top, 15:16"
+  },
+  {
+   "time": "2026-11-23T15:18:06.795Z",
+   "file": "20261123151806795-note-pair_3720.jpg",
+   "source": "../../../../tmp/v/t3r/pair_3720.png",
+   "kind": "note",
+   "label": "3720 review tier beside the approved image (top approved): fewer grains, ringlets to the bottom edge, 15:16"
+  },
   {
    "time": "2026-11-23T14:50:28.341Z",
    "file": "20261123145028341-note-sheet.jpg",
@@ -26,45 +61,6 @@
    "kind": "note",
    "label": "handover sheet, rise before T (3848 to 3859), draft",
    "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T14:50:26.492Z",
-   "file": "20261123145026492-note-saturn-rise-draft-across.jpg",
-   "source": "../rt/out/work/handover/saturn-rise-draft-across.png",
-   "kind": "note",
-   "label": "handover sheet, rise across T (3854 to 3865), draft, no cover",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T14:50:25.912Z",
-   "file": "20261123145025912-note-saturn-dive-draft-after.jpg",
-   "source": "../rt/out/work/handover/saturn-dive-draft-after.png",
-   "kind": "note",
-   "label": "handover sheet, dive after T (3590 to 3601), draft",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T14:50:25.327Z",
-   "file": "20261123145025327-note-saturn-dive-draft-before.jpg",
-   "source": "../rt/out/work/handover/saturn-dive-draft-before.png",
-   "kind": "note",
-   "label": "handover sheet, dive before T (3577 to 3588), draft",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T14:50:24.750Z",
-   "file": "20261123145024750-note-saturn-dive-draft-across.jpg",
-   "source": "../rt/out/work/handover/saturn-dive-draft-across.png",
-   "kind": "note",
-   "label": "handover sheet, dive across T (3583 to 3594), draft, no cover",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-23T14:50:24.131Z",
-   "file": "20261123145024131-note-f_3720.jpg",
-   "source": "../../../../tmp/v/revh/f_3720.png",
-   "kind": "note",
-   "label": "3720 review tier (17 takes) after the hatch fix, grains on"
   }
  ]
 }
