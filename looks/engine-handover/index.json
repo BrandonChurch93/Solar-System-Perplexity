@@ -1,9 +1,65 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T13:30:35.014Z",
- "head": "c5799a8b2a85c7f99db67e079cf93f0fa533555b",
- "note": "the dark line along the horizon in the place window: found, first half of the fix (sky lifted onto the limb), ground side next",
+ "pushed": "2026-11-23T13:50:21.266Z",
+ "head": "b8f9399c9618bd992c38f5867c90eb73288b3a4f",
+ "note": "the horizon line in the place window is cured on Mars (b8f9399): sky lifted onto the limb, ground held, no dashes; off by default for the other stops",
  "looks": [
+  {
+   "time": "2026-11-23T13:50:20.719Z",
+   "file": "20261123135020719-note-f2700-hold-small.jpg",
+   "source": "out/work/e4/limb/f2700-hold-small.jpg",
+   "kind": "note",
+   "label": "rise frame 2700 whole, before the dash cure: the canyon as a six sided patch on the old globe, the haze band on the right of the limb"
+  },
+  {
+   "time": "2026-11-23T13:50:20.186Z",
+   "file": "20261123135020186-note-f2696-hold2-crop.jpg",
+   "source": "out/work/e4/limb/f2696-hold2-crop.png",
+   "kind": "note",
+   "label": "rise frame 2696 at the limb: the dashes are gone (size of a sky pixel from algebra, not from its neighbours)"
+  },
+  {
+   "time": "2026-11-23T13:50:19.631Z",
+   "file": "20261123135019631-note-f2696-hold-crop.jpg",
+   "source": "out/work/e4/limb/f2696-hold-crop.png",
+   "kind": "note",
+   "label": "rise frame 2696 at the limb: a dashed dark line, pixels on the limb judged by the ground beside them"
+  },
+  {
+   "time": "2026-11-23T13:50:18.856Z",
+   "file": "20261123135018856-note-f2447-three-crop.jpg",
+   "source": "out/work/e4/limb/f2447-three-crop.png",
+   "kind": "note",
+   "label": "frame 2447 at the limb, three times enlarged: as it was, the sky lifted, the sky lifted and the ground held (no line left)"
+  },
+  {
+   "time": "2026-11-23T13:49:36.065Z",
+   "file": "20261123134936065-frame-f2685-orbit-hold3.jpg",
+   "source": "out/work/e4/limb/f2685-orbit-hold3.png",
+   "kind": "frame",
+   "label": "mars.rise frame 2685, draft tier, beauty/side=orbit/t=89.508333 view",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2685,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/t=89.508333",
+   "engine": "ef45a5a562d954c3"
+  },
+  {
+   "time": "2026-11-23T13:48:52.948Z",
+   "file": "20261123134852948-frame-f2454-orbit-hold3.jpg",
+   "source": "out/work/e4/limb/f2454-orbit-hold3.png",
+   "kind": "frame",
+   "label": "mars.dive frame 2454, draft tier, beauty/side=orbit/t=81.808333 view",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2454,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/t=81.808333",
+   "engine": "ef45a5a562d954c3"
+  },
   {
    "time": "2026-11-23T13:30:34.298Z",
    "file": "20261123133034298-note-f2447-limb0-limb8-crop.jpg",
@@ -12,74 +68,11 @@
    "label": "frame 2447 at the limb: above as it was, below with the sky of the picture lifted onto the limb (a thin dashed line is left, next step)"
   },
   {
-   "time": "2026-11-23T13:22:15.707Z",
-   "file": "20261123132215707-frame-f2447-limb8-mask.jpg",
-   "source": "out/work/e4/limb/f2447-limb8-mask.png",
-   "kind": "frame",
-   "label": "mars.dive frame 2447, draft tier, beauty/mask view",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2447,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty/mask",
-   "engine": "cd5d5dddddb9495a"
-  },
-  {
    "time": "2026-11-23T13:20:11.015Z",
    "file": "20261123132011015-note-f2454-dump-horizon.jpg",
    "source": "out/work/e4/matte/f2454-dump-horizon.png",
    "kind": "note",
    "label": "the Mars place picture at its horizon: image above, alpha below"
-  },
-  {
-   "time": "2026-11-23T13:20:10.173Z",
-   "file": "20261123132010173-note-plates-limb-2443-2453.jpg",
-   "source": "../repo-plates/out/work/e4/view/plates-limb-2443-2453.png",
-   "kind": "note",
-   "label": "the same fault with the first plates merged, dive frames 2443 to 2453 at the limb"
-  },
-  {
-   "time": "2026-11-23T13:20:09.423Z",
-   "file": "20261123132009423-note-f2447-limb-crop.jpg",
-   "source": "out/work/e4/matte/f2447-limb-crop.png",
-   "kind": "note",
-   "label": "fault found: frame 2447, mask and beauty at the limb, a dark line between ground and haze (no weight between the camera limb and the twin horizon)"
-  },
-  {
-   "time": "2026-11-23T13:20:08.692Z",
-   "file": "20261123132008692-note-test-matte.jpg",
-   "source": "out/work/e4/matte/test-matte.png",
-   "kind": "note",
-   "label": "matte proof: a test matte laid on the Mars place picture, frame 2447, upright as specified"
-  },
-  {
-   "time": "2026-11-23T12:59:59.500Z",
-   "file": "20261123125959500-frame-f05006-draft.jpg",
-   "source": "out/work/samebytes/m3b/f05006-draft.png",
-   "kind": "frame",
-   "label": "neptune.rise frame 5006, draft tier",
-   "stop": "neptune",
-   "segment": "neptune.rise",
-   "frame": 5006,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "614cbdb6af135d3e"
-  },
-  {
-   "time": "2026-11-23T12:59:14.202Z",
-   "file": "20261123125914202-frame-f03922-draft.jpg",
-   "source": "out/work/samebytes/m3b/f03922-draft.png",
-   "kind": "frame",
-   "label": "saturn.travel frame 3922, draft tier",
-   "stop": "saturn",
-   "segment": "saturn.travel",
-   "frame": 3922,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "614cbdb6af135d3e"
   }
  ]
 }
