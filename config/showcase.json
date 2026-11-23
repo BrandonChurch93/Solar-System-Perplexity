@@ -162,11 +162,11 @@
     "maxRateOverMean": 2,
     "coastFrames": 8,
     "skyFloor": {"marginDeg": 0.25, "featherDeg": 4},
-    "place": {"scale": 2, "margin": 0.25, "maxShare": 0.5, "maxEdge": 4800, "edge": 0.8, "seen": 0.5, "enlargeSoft": 0.5, "lens": 1, "maxGradTexels": 8},
+    "place": {"scale": 2, "margin": 0.25, "maxShare": 0.5, "maxEdge": 4800, "edge": 0.8, "seen": 0.5, "enlargeSoft": 0.5, "lens": 1, "maxGradTexels": 8, "limbReachDeg": 0, "limbHoldDeg": [0.25, 0.75], "edgeIn": [0, 0, 0, 0]},
     "descent": {"rise": 0.2, "fall": 0.3, "turnRise": 0.2, "turnFall": 0.6, "level": true, "levelBy": 0.8, "targetReach": 0.5},
     "ascent": {"rise": 0.2, "fall": 0.3, "turnRise": 0.2, "turnFall": 0.6, "level": true, "levelBy": 0.5},
     "zenithDeg": [2, 8],
-    "limits": {"sideMean": 0.5, "sideP99": 4, "flowStepFrames": 0.0625, "flowGapMeanPx": 1, "flowGapMaxPx": 4, "backRate": 0.02, "earlyShare": 0.2, "earlyRateOverMean": 0.5, "placeMiddle": 0.5, "levelStep": 6, "colourStep": 8, "bodyShare": 0.05, "flatShare": 0.5, "flatFloor": 1.5, "blockPx": 40, "sheetFrames": 12, "differenceGain": 8}
+    "limits": {"sideMean": 0.5, "sideP99": 4, "flowStepFrames": 0.0625, "flowGapMeanPx": 1, "flowGapMaxPx": 4, "backRate": 0.02, "earlyShare": 0.2, "earlyRateOverMean": 0.5, "placeMiddle": 0.5, "levelStep": 6, "colourStep": 8, "underMean": 6, "bodyShare": 0.05, "flatShare": 0.5, "flatFloor": 1.5, "blockPx": 40, "sheetFrames": 12, "differenceGain": 8, "underGain": 4}
   },
   "judged": {
     "fractions": {

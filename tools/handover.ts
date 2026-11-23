@@ -17,9 +17,12 @@ import { plans } from '../src/director/plans'
 import { coverFrames } from '../src/director/timeline'
 
 // The measures of the handover (cut/HANDOVER.md, E4). One stop, its dive and its rise.
-//   npm run handover -- --stop ID [--kind dive|rise] [--tier draft|review] [--only sides,flow,frames,sheets]
+//   npm run handover -- --stop ID [--kind dive|rise] [--tier draft|review] [--only sides,under,flow,frames,sheets,top]
 //                       [--params FILE --dist DIR --name NAME]   (judge another build of the stop, for example the frozen one)
-// Everything is written to out/work/handover/. Exit 1 when a judged number is over its limit in config.handover.limits.
+//   --parts across,before,after picks the sheets (all three when not given; the one across T is made first)
+//   --gate-under makes the line "under the place picture" part of the verdict and of the exit code. Without it the line is judged against its
+//   limit and printed as a warning: it says how far a stop's plates are from its picture, and no stop is held up by it.
+// Everything is written to out/work/handover/. Exit 1 when a judged number of the verdict is over its limit in config.handover.limits.
 
 type Kind = 'dive' | 'rise'
 interface Verdict { pass: boolean; why: string[] }
@@ -33,7 +36,9 @@ if (!stop || !cfg.stopIds.includes(stop)) {
 }
 const sheetTier = a.tier ?? 'review'
 if (!Object.hasOwn(cfg.tiers, sheetTier)) throw new Error('unknown tier ' + sheetTier)
-const only = a.only ? a.only.split(',') : ['sides', 'flow', 'frames', 'sheets']
+const only = a.only ? a.only.split(',') : ['sides', 'under', 'flow', 'frames', 'sheets', 'top']
+const sheetParts = a.parts ? a.parts.split(',') : null
+const gateUnder = a['gate-under'] === 'true'
 const name = a.name ?? stop
 const dist = a.dist ? resolve(a.dist) : DIST
 const other = Boolean(a.dist)
@@ -180,6 +185,46 @@ async function sides(line: Line): Promise<Record<string, unknown> & Verdict> {
   if (n.mean > L.sideMean) why.push('mean side difference ' + round(n.mean, 3) + ' over ' + L.sideMean)
   if (n.p99 > L.sideP99) why.push('99th percentile of the side difference ' + n.p99 + ' over ' + L.sideP99)
   return { ...n, close, globe, difference: stem + '-difference.png', panel: stem + '-sides.png', pass: why.length === 0, why }
+}
+
+interface UnderPart { pixels: number; share: number; mean: number; p50: number; p99: number; meanSigned: number[] }
+interface UnderNumbers extends UnderPart { sky: UnderPart; tone: number; detail: number }
+
+// What lies under the place picture at T: the globe side drawn alone (place picture off) against the globe side with the picture, on the body where
+// the pass draws the picture at more than half weight. The place window fades from the one to the other, so this is how far the plates are from
+// the picture; where it is large the fade is a dissolve between two pictures that differ.
+async function under(line: Line): Promise<Record<string, unknown> & Verdict> {
+  if (!line.opted) return { pass: false, why: ['the stop has not opted in: there is no place picture'] }
+  if (other) return { pass: false, why: ['the place picture cannot be switched off in another build'] }
+  const h = handoverOf(stop!, line.kind)!
+  if (!h.picture) return { pass: true, why: [], none: true }
+  const t = String(round(line.timeT, 6))
+  const withPicture = await still(line.frameT, 'draft', 'beauty/side=orbit/t=' + t)
+  const alone = await still(line.frameT, 'draft', 'beauty/side=orbit/t=' + t + '/noplace')
+  const mask = await still(line.frameT, 'draft', 'beauty/side=orbit/t=' + t + '/mask')
+  const panel = join(dir, name + '-' + line.kind + '-under.png')
+  const n = measure<UnderNumbers>({ op: 'under', picture: withPicture, alone, mask, body: bodyGrid(line.carried(line.timeT, 'orbit')), panel, gain: L.underGain, limit: cfg.raw.critics.maxImageLongEdgePx })
+  addLook({ file: panel }, { kind: 'compare', label: stop + ' ' + line.kind + ', the globe side at T (frame ' + line.frameT + ') with the place picture, alone, and their difference times ' + L.underGain, stop: stop!, segment: line.seg.id, frame: line.frameT, tier: 'draft' })
+  const why: string[] = []
+  if (n.pixels > 0 && n.mean > L.underMean) why.push('under the place picture the globe alone differs from it by a mean of ' + round(n.mean, 2) + ' at T, limit ' + L.underMean)
+  return { ...n, picture: withPicture, alone, mask, panel, pass: why.length === 0, why }
+}
+
+// The check of the plates: the globe side alone (place picture off) from straight above the place, at the heights of the film's own path, from the
+// far end of the line to T. Every frame must look like one place coming closer.
+async function top(line: Line): Promise<string> {
+  const count = L.sheetFrames
+  const far = line.kind === 'dive' ? line.seg.firstFrame : line.seg.endFrame - 1
+  const inputs = []
+  for (let i = 0; i < count; i++) {
+    const f = Math.round(far + ((line.frameT - far) * i) / (count - 1))
+    const time = (f + shutterMid()) / fps
+    inputs.push({ path: await still(f, 'draft', 'beauty/side=orbit/noplace/top'), label: 'f' + padFrame(f) + ' height ' + Number((line.pose(time, 'orbit').position.length() - 1).toPrecision(3)) })
+  }
+  const file = join(dir, name + '-' + line.kind + '-top.png')
+  image({ op: 'sheet', output: file, inputs, limit: cfg.raw.critics.maxImageLongEdgePx })
+  addLook({ file }, { kind: 'sheet', label: stop + ' ' + line.kind + ', the globe side alone from straight above the place, ' + count + ' frames from the far end to T (frame ' + line.frameT + '), place picture off, draft tier', stop: stop!, segment: line.seg.id, first: Math.min(far, line.frameT), last: Math.max(far, line.frameT), tier: 'draft' })
+  return file
 }
 
 interface FlowNumbers { points: number; stepFrames: number; meanBefore: number; meanAfter: number; meanGap: number; maxGap: number; positionGap: number; angleGapDeg: number }
@@ -345,14 +390,14 @@ async function sheets(line: Line, tier: string): Promise<string[]> {
   const count = cfg.raw.critics.contactSheetFrames
   const lo = Math.max(T - span, line.seg.firstFrame)
   const hi = Math.min(T + span, line.seg.endFrame - 1)
-  const files = new Map<number, string>()
-  for (let f = lo; f <= hi; f++) files.set(f, await still(f, tier, 'beauty'))
-  const parts: [string, number, number][] = [['before', lo, T - 1], ['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['after', T + 1, hi]]
+  // The sheet across T first: its frames are the ones the swap is judged on, and the frames before T of a dive can ask for
+  // the most samples of the film. Each sheet is written as soon as its frames are there.
+  const parts: [string, number, number][] = [['across', Math.max(T - Math.floor(count / 2), lo), Math.min(T - Math.floor(count / 2) + count - 1, hi)], ['before', lo, T - 1], ['after', T + 1, hi]]
   const out: string[] = []
   for (const [part, first, last] of parts) {
-    if (last < first) continue
+    if (last < first || (sheetParts && !sheetParts.includes(part))) continue
     const inputs = []
-    for (let f = first; f <= last; f++) inputs.push({ path: files.get(f)!, label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
+    for (let f = first; f <= last; f++) inputs.push({ path: await still(f, tier, 'beauty'), label: 'f' + padFrame(f) + (f === T ? ' T' : f < T ? ' T' + (f - T) : ' T+' + (f - T)) })
     const file = join(dir, name + '-' + line.kind + '-' + tier + '-' + part + '.png')
     image({ op: 'sheet', output: file, inputs, limit: cfg.raw.critics.maxImageLongEdgePx })
     addLook({ file }, { kind: 'sheet', label: stop + ' ' + line.kind + ', every frame ' + first + ' to ' + last + ' (' + part + ' T, frame ' + T + '), ' + tier + ' tier', stop: stop!, segment: line.seg.id, first, last, tier })
@@ -372,11 +417,23 @@ try {
     const out: Record<string, unknown> = { optedIn: line.opted, frameT: line.frameT, timeT: round(line.timeT, 6), window: line.window }
     md.push('## ' + line.seg.id, '', (line.opted ? 'Handover in frame ' + line.frameT + ' (T = ' + round(line.timeT, 5) + ' s), place window frames ' + line.window[0] + ' to ' + line.window[1] : 'Not opted in: the sides swap under a cover in frame ' + line.frameT + ' (cover frames ' + line.window[0] + ' to ' + line.window[1] + ')') + '.', '')
     const verdicts: [string, Verdict][] = []
+    const warnings: [string, Verdict][] = []
     if (only.includes('sides')) {
       const s = await sides(line)
       out.sides = s
       verdicts.push(['side difference at T', s])
       if (typeof s.mean === 'number') md.push('Side difference at T (display values 0 to 255): mean ' + round(s.mean as number, 3) + ', median ' + s.p50 + ', 99th percentile ' + s.p99 + ', 99.9th ' + s.p999 + ', max ' + s.max + '; ' + round((s.shareOver1 as number) * 100, 3) + ' percent of pixels over 1, ' + round((s.shareOver4 as number) * 100, 3) + ' percent over 4, ' + s.pixelsOver16 + ' pixels over 16. Picture: `' + (s.panel as string).replace(ROOT + '/', '') + '`.', '')
+    }
+    if (only.includes('under') && line.opted && !other) {
+      const u = await under(line)
+      out.under = u
+      if (!u.none) {
+        if (gateUnder) verdicts.push(['under the place picture', u])
+        else warnings.push(['under the place picture', u])
+        md.push('Under the place picture at T (the globe side alone against the globe side with the picture, on the ' + round((u.share as number) * 100, 1) + ' percent of the frame where the body carries the picture at more than half weight): mean difference ' + round(u.mean as number, 2) + ', median ' + u.p50 + ', 99th percentile ' + u.p99 + '; the globe alone is ' + (u.meanSigned as number[]).map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue. Of the difference, tone (the means of ' + L.blockPx + ' px blocks) carries ' + round(u.tone as number, 2) + ' and detail (what is left inside the blocks) ' + round(u.detail as number, 2) + '. Picture: `' + (u.panel as string).replace(ROOT + '/', '') + '`.', '')
+        const sky = u.sky as UnderPart
+        if (sky.pixels > 0) md.push('In the sky at T (not judged), on the ' + round(sky.share * 100, 1) + ' percent of the frame where the picture is drawn off the body at more than half weight: mean difference ' + round(sky.mean, 2) + ', median ' + sky.p50 + ', 99th percentile ' + sky.p99 + '; the globe side alone is ' + sky.meanSigned.map((v) => (v >= 0 ? 'plus ' : 'minus ') + Math.abs(round(v, 1))).join(', ') + ' in red, green and blue.', '')
+      }
     }
     if (only.includes('flow')) {
       const f = flow(line)
@@ -402,11 +459,20 @@ try {
       out.sheets = files
       md.push('Sheets: ' + Object.values(files).flat().map((f) => '`' + f.replace(ROOT + '/', '') + '`').join(', ') + '.', '')
     }
+    if (only.includes('top') && line.opted && !other) {
+      const file = await top(line)
+      out.top = file
+      md.push('From straight above the place, the globe side alone: `' + file.replace(ROOT + '/', '') + '`.', '')
+    }
     const failed = verdicts.filter(([, v]) => !v.pass)
     out.pass = failed.length === 0
     pass &&= failed.length === 0
     md.push(failed.length === 0 ? 'Verdict: pass (' + verdicts.map(([n]) => n).join(', ') + ').' : 'Verdict: FAIL.', ...failed.flatMap(([n, v]) => v.why.map((w) => '- ' + n + ': ' + w)), '')
+    const warned = warnings.filter(([, v]) => !v.pass)
+    out.warnings = warned.flatMap(([n, v]) => v.why.map((w) => n + ': ' + w))
+    if (warnings.length > 0) md.push(warned.length === 0 ? 'Judged beside the verdict: inside the limit (' + warnings.map(([n]) => n).join(', ') + ').' : 'Warning, judged beside the verdict (not part of it; --gate-under makes it part):', ...warned.flatMap(([n, v]) => v.why.map((w) => '- ' + n + ': ' + w)), '')
     for (const [n, v] of verdicts) console.log(line.seg.id + ' ' + n + ': ' + (v.pass ? 'pass' : 'FAIL ' + v.why.join('; ')))
+    for (const [n, v] of warnings) console.log(line.seg.id + ' ' + n + ': ' + (v.pass ? 'inside the limit' : 'WARNING ' + v.why.join('; ')))
     ;(report.kinds as Record<string, unknown>)[kind] = out
   }
 } finally {

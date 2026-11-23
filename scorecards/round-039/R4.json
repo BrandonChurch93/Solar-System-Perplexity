@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "upper right star, frames 4688 and 4696",
+   "what": "fast motion splits the star into a black core and a separate ghost copy that drifts off the flare",
+   "fix": "keep the star one point and replace the double image with a single smooth blur"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "whole frame, frames 4688 to 4696",
+   "what": "dive speed and field of view jump: the star shifts about 12px over the previous 8 frames and about 76px over these 8, and the planet lunges from a slow approach toward filling the frame",
+   "fix": "ease the start over more frames so position, speed, and field of view ramp instead of lunging"
+  }
+ ]
+}

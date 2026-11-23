@@ -27,6 +27,10 @@ export interface PlaceGeometry {
   up: THREE.Vector3
   sinDipTwin: number
   sinDip: number
+  limb: THREE.Vector3
+  limbDip: number
+  reach: number
+  hold: [number, number]
 }
 
 const MODES: Record<PlaceMode, number> = { beauty: 0, texels: 1, mask: 2, picture: 3 }
@@ -52,6 +56,19 @@ export function placeLayout(format: { width: number; height: number }, size: Pla
   return { scale, left, right, bottom, top, width: (W + left + right) * scale, height: (H + bottom + top) * scale, shift: scale % 2 === 0 ? 0.5 : 0 }
 }
 
+// How far the feather of each side of the picture reaches in over the frame, in texels of the picture: left, right, bottom, top.
+// A picture that comes in with a weight by time alone shows its sides as straight lines wherever the ground under it is not quite
+// the same ground. With edgeIn the picture comes in from the place outward: while its weight is low the feather of a side reaches
+// in over the frame by that side's share of the frame's width or height, and it draws back to the margin as the weight goes to 1.
+// At T the weight is 1 and the reach is 0, so the two sides stay equal there. All four shares 0 is the pass as it was.
+export function edgeReach(place: Pick<PlaceState, 'weight' | 'edgeIn'>, layout: PlaceLayout): [number, number, number, number] {
+  const share = place.edgeIn ?? config.raw.handover.place.edgeIn
+  const open = 1 - Math.min(Math.max(place.weight, 0), 1)
+  const width = layout.width - (layout.left + layout.right) * layout.scale
+  const height = layout.height - (layout.bottom + layout.top) * layout.scale
+  return [share[0] * open * width, share[1] * open * width, share[2] * open * height, share[3] * open * height]
+}
+
 export function placeCamera(cam: THREE.PerspectiveCamera, format: { width: number; height: number }, layout: PlaceLayout, pose: Pose, near: number, far: number): void {
   const s = layout.scale
   cam.fov = pose.vfov
@@ -65,7 +82,7 @@ export function placeCamera(cam: THREE.PerspectiveCamera, format: { width: numbe
   cam.updateMatrixWorld(true)
 }
 
-export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'centre' | 'radius'>): PlaceGeometry {
+export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'centre' | 'radius' | 'limbReachDeg' | 'limbHoldDeg'>): PlaceGeometry {
   const back = camera.quaternion.clone().invert()
   const o = place.centre.clone().sub(camera.position)
   const distance = o.length()
@@ -75,6 +92,10 @@ export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'ce
   const twinDistance = tc.length()
   const heightTwin = twinDistance - r
   const height = distance - r
+  const sinDipTwin = Math.sqrt(Math.max(1 - (r / Math.max(twinDistance, 1e-30)) ** 2, 0))
+  const sinDip = Math.sqrt(Math.max(1 - (r / Math.max(distance, 1e-30)) ** 2, 0))
+  const upTwin = tc.clone().divideScalar(Math.max(twinDistance, 1e-30))
+  const band = place.limbHoldDeg ?? config.raw.handover.place.limbHoldDeg
   return {
     centre: o.clone().applyQuaternion(back),
     shift: shiftWorld.clone().applyQuaternion(back),
@@ -84,34 +105,72 @@ export function placeGeometry(camera: Pose, place: Pick<PlaceState, 'twin' | 'ce
     radius: r,
     heights: heightTwin > 0 ? height / heightTwin : 1,
     distance,
-    up: tc.clone().divideScalar(Math.max(twinDistance, 1e-30)).applyQuaternion(back),
-    sinDipTwin: Math.sqrt(Math.max(1 - (r / Math.max(twinDistance, 1e-30)) ** 2, 0)),
-    sinDip: Math.sqrt(Math.max(1 - (r / Math.max(distance, 1e-30)) ** 2, 0)),
+    up: upTwin.clone().applyQuaternion(back),
+    sinDipTwin,
+    sinDip,
+    limb: o.clone().divideScalar(-Math.max(distance, 1e-30)).sub(upTwin).applyQuaternion(back),
+    limbDip: sinDip - sinDipTwin,
+    reach: Math.sin(THREE.MathUtils.degToRad(place.limbReachDeg ?? config.raw.handover.place.limbReachDeg)),
+    hold: [Math.sin(THREE.MathUtils.degToRad(band[0]!)), Math.sin(THREE.MathUtils.degToRad(band[1]!))],
   }
 }
 
-export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3): { uv: [number, number]; hit: boolean; front: boolean; honest: number } {
+export function placeUv(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3): { uv: [number, number]; hit: boolean; front: boolean; honest: number; hold: number } {
   const d = ray.clone().normalize()
   const b = d.dot(g.centre)
   const disc = b * b - g.c
   const hit = disc > 0 && b > 0
   let q: THREE.Vector3
   let honest: number
+  let hold = 0
   if (hit) {
     const t = g.c / (b + Math.sqrt(disc))
     const p = d.clone().multiplyScalar(t)
     const n = p.clone().sub(g.centre).divideScalar(g.radius)
     const own = (g.c - t * b) / g.radius
     honest = ((own + n.dot(g.shift)) / Math.max(own, 1e-30)) * g.heights
+    if (g.reach > 0) {
+      const rim = n.dot(g.up)
+      const brink = Math.sqrt(Math.max(1 - g.sinDipTwin * g.sinDipTwin, 0))
+      if (rim < brink) {
+        const level = n.clone().addScaledVector(g.up, -rim)
+        const at = g.up.clone().multiplyScalar(brink).addScaledVector(level, g.sinDipTwin / Math.max(level.length(), 1e-12))
+        p.copy(g.centre).addScaledVector(at, g.radius)
+      }
+      const x = Math.min(Math.max((b / g.distance - g.sinDip - g.hold[0]) / (g.hold[1] - g.hold[0]), 0), 1)
+      hold = 1 - x * x * (3 - 2 * x)
+    }
     q = p.applyMatrix3(g.rel).sub(g.delta)
   } else {
     const own = g.sinDip - b / g.distance
-    honest = (d.dot(g.up) + g.sinDipTwin) / Math.max(own, 1e-30)
+    const s = d.dot(g.up)
+    if (g.reach > 0) {
+      const gap = d.dot(g.limb) + g.limbDip
+      const x = Math.min(Math.max(own / Math.max(g.reach, 2 * Math.abs(gap)), 0), 1)
+      const lift = gap * (1 - x * x * (3 - 2 * x))
+      const s2 = s + lift
+      const level = Math.sqrt(Math.max(1 - s * s, 0))
+      const along = d.clone().addScaledVector(g.up, -s).divideScalar(Math.max(level, 1e-6))
+      d.addScaledVector(g.up, lift).addScaledVector(along, Math.sqrt(Math.max(1 - s2 * s2, 0)) - level)
+      honest = 1
+    } else honest = (s + g.sinDipTwin) / Math.max(own, 1e-30)
     q = d.applyMatrix3(g.rel)
   }
   const front = -q.z > 0
   const w = Math.max(-q.z, 1e-30)
-  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest }
+  return { uv: [((proj[0] * q.x + proj[2] * q.z) / w) * 0.5 + 0.5, ((proj[1] * q.y + proj[3] * q.z) / w) * 0.5 + 0.5], hit, front, honest, hold }
+}
+
+export function placeSkyGrad(g: PlaceGeometry, proj: [number, number, number, number], ray: THREE.Vector3, step: [number, number]): { dx: [number, number]; dy: [number, number] } {
+  const w = ray.clone().applyMatrix3(g.rel)
+  const e = g.rel.elements
+  const den = Math.max(-w.z, 1e-30)
+  const num: [number, number] = [proj[0] * w.x + proj[2] * w.z, proj[1] * w.y + proj[3] * w.z]
+  const along = (ax: number, ay: number, az: number, by: number): [number, number] => [
+    (0.5 * ((proj[0] * ax + proj[2] * az) * den + num[0] * az) * by) / (den * den),
+    (0.5 * ((proj[1] * ay + proj[3] * az) * den + num[1] * az) * by) / (den * den),
+  ]
+  return { dx: along(e[0]!, e[1]!, e[2]!, step[0]), dy: along(e[3]!, e[4]!, e[5]!, step[1]) }
 }
 
 const COPY = /* glsl */ `
@@ -151,12 +210,17 @@ uniform vec3 uCentre;
 uniform vec4 uBall;
 uniform vec4 uHorizon;
 uniform float uSinDip;
+uniform vec4 uLimb;
+uniform vec2 uReach;
+uniform vec2 uHold;
 uniform vec4 uFeather;
 uniform vec4 uLimits;
 uniform vec4 uLens;
 uniform vec2 uScale;
 uniform vec4 uDump;
 uniform float uDumpAs;
+uniform sampler2D uMatte;
+uniform float uMatteOn;
 in vec2 vUv;
 out vec4 outColor;
 ${FILMIC_GLSL}
@@ -167,7 +231,10 @@ void main() {
   float b = dot(d, uCentre);
   float disc = b * b - uBall.x;
   vec3 q;
+  vec3 plain;
   float honest;
+  float hold = 0.0;
+  bool aloft = false;
   if (disc > 0.0 && b > 0.0) {
     float t = uBall.x / (b + sqrt(disc));
     vec3 p = d * t;
@@ -175,21 +242,52 @@ void main() {
     float own = (uBall.x - t * b) / uBall.y;
     honest = (own + dot(n, uShift)) / max(own, 1e-30) * uBall.z;
     q = uRel * p - uDelta;
+    plain = q;
+    if (uReach.y > 0.5) {
+      float rim = dot(n, uHorizon.xyz);
+      float brink = sqrt(max(1.0 - uHorizon.w * uHorizon.w, 0.0));
+      if (rim < brink) {
+        vec3 level = n - uHorizon.xyz * rim;
+        q = uRel * (uCentre + (uHorizon.xyz * brink + level * (uHorizon.w / max(length(level), 1e-12))) * uBall.y) - uDelta;
+        aloft = true;
+      }
+      hold = 1.0 - smoothstep(uHold.x, uHold.y, b / uBall.w - uSinDip);
+    }
   } else {
     float own = uSinDip - b / uBall.w;
-    honest = (dot(d, uHorizon.xyz) + uHorizon.w) / max(own, 1e-30);
-    q = uRel * d;
+    float s = dot(d, uHorizon.xyz);
+    float gap = dot(d, uLimb.xyz) + uLimb.w;
+    float lift = gap * (1.0 - smoothstep(0.0, 1.0, own / max(uReach.x, 2.0 * abs(gap))));
+    float s2 = s + lift;
+    float level = sqrt(max(1.0 - s * s, 0.0));
+    vec3 e = d + uHorizon.xyz * lift + (d - uHorizon.xyz * s) / max(level, 1e-6) * (sqrt(max(1.0 - s2 * s2, 0.0)) - level);
+    honest = uReach.y > 0.5 ? 1.0 : (s + uHorizon.w) / max(own, 1e-30);
+    q = uRel * e;
+    plain = uRel * d;
+    aloft = uReach.y > 0.5;
   }
   float front = -q.z > 0.0 ? 1.0 : 0.0;
   vec2 uv = (uProj.xy * q.xy + uProj.zw * q.z) / max(-q.z, 1e-30) * 0.5 + 0.5;
+  vec2 held = (uProj.xy * plain.xy + uProj.zw * plain.z) / max(-plain.z, 1e-30) * 0.5 + 0.5;
   if (mode == 3) {
     uv = uDumpAs > 0.5 ? vec2(uDump.x + vUv.x * uDump.z, uSize.y - uDump.y - (1.0 - vUv.y) * uDump.w) / uSize : vUv;
+    held = uv;
     front = 1.0;
     honest = 1.0;
   }
   vec2 pt = uv * uSize;
-  vec2 dx = dFdx(pt);
-  vec2 dy = dFdy(pt);
+  vec2 dx = dFdx(held * uSize);
+  vec2 dy = dFdy(held * uSize);
+  vec2 step = vec2(dFdx(vUv.x), dFdy(vUv.y)) * 2.0 * uRay.xy;
+  if (aloft && mode != 3) {
+    vec3 w = uRel * vec3(ndc.x * uRay.x + uRay.z, ndc.y * uRay.y + uRay.w, -1.0);
+    vec3 wx = uRel[0] * step.x;
+    vec3 wy = uRel[1] * step.y;
+    vec2 num = uProj.xy * w.xy + uProj.zw * w.z;
+    float den = max(-w.z, 1e-30);
+    dx = 0.5 * ((uProj.xy * wx.xy + uProj.zw * wx.z) * den + num * wx.z) / (den * den) * uSize;
+    dy = 0.5 * ((uProj.xy * wy.xy + uProj.zw * wy.z) * den + num * wy.z) / (den * den) * uSize;
+  }
   vec4 edge = clamp((vec4(pt.x, uSize.x - pt.x, pt.y, uSize.y - pt.y) - 0.5) * uFeather, 0.0, 1.0);
   edge = edge * edge * (3.0 - 2.0 * edge);
   float s1 = dot(dx, dx) + dot(dy, dy);
@@ -197,9 +295,11 @@ void main() {
   float least = sqrt(max(0.5 * (s1 - sqrt(max(s1 * s1 - 4.0 * det * det, 0.0))), 1e-12));
   float sharp = 1.0 - smoothstep(uLimits.z, uLimits.z * (1.0 + uLimits.w), uScale.x / least);
   float k = uLimits.x * front * edge.x * edge.y * edge.z * edge.w * smoothstep(0.0, uLimits.y, honest) * (mode == 3 ? 1.0 : sharp);
+  if (hold > 0.0) k = max(k, uLimits.x * front * edge.x * edge.y * edge.z * edge.w * hold);
   float most = max(length(dx), length(dy)) * uLens.z;
   float fit = min(1.0, uLens.w / max(most, 1e-9)) * uLens.z;
   vec4 pic = textureGrad(uPicture, uv, dx / uSize * fit, dy / uSize * fit);
+  if (uMatteOn > 0.5) k *= textureGrad(uMatte, uv, dx / uSize * fit, dy / uSize * fit).r;
   if (mode == 1) {
     if (k <= 0.5) discard;
     float texels = min(pic.r * 2.0, 1.0) * sqrt(max(dot(dx, dx), dot(dy, dy)));
@@ -234,8 +334,8 @@ export class Place {
   private readonly lay = new Pass(LAY, {
     uPicture: { value: null }, uSky: { value: null }, uSize: { value: new THREE.Vector2(1, 1) }, uRay: { value: new THREE.Vector4() }, uProj: { value: new THREE.Vector4() },
     uRel: { value: new THREE.Matrix3() }, uDelta: { value: new THREE.Vector3() }, uShift: { value: new THREE.Vector3() }, uCentre: { value: new THREE.Vector3() }, uBall: { value: new THREE.Vector4() },
-    uHorizon: { value: new THREE.Vector4() }, uSinDip: { value: 0 }, uFeather: { value: new THREE.Vector4() }, uLimits: { value: new THREE.Vector4() }, uLens: { value: new THREE.Vector4() }, uScale: { value: new THREE.Vector2(1, 0) },
-    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 },
+    uHorizon: { value: new THREE.Vector4() }, uSinDip: { value: 0 }, uLimb: { value: new THREE.Vector4() }, uReach: { value: new THREE.Vector2(1, 0) }, uHold: { value: new THREE.Vector2(0, 1) }, uFeather: { value: new THREE.Vector4() }, uLimits: { value: new THREE.Vector4() }, uLens: { value: new THREE.Vector4() }, uScale: { value: new THREE.Vector2(1, 0) },
+    uDump: { value: new THREE.Vector4() }, uDumpAs: { value: 0 }, uMatte: { value: null }, uMatteOn: { value: 0 },
   }, { transparent: true, blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor })
 
   find(key: string): PlacePicture | null {
@@ -302,7 +402,7 @@ export class Place {
     this.copy.render(r, this.sky)
   }
 
-  render(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, pic: PlacePicture, place: PlaceState, camera: Pose, frame: THREE.PerspectiveCamera, mode: PlaceMode, vignette: number, aspect: number, grad: number, dump?: PlaceDump): void {
+  render(r: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, pic: PlacePicture, place: PlaceState, camera: Pose, frame: THREE.PerspectiveCamera, mode: PlaceMode, vignette: number, aspect: number, grad: number, dump?: PlaceDump, matte: THREE.Texture | null = null): void {
     const c = config.raw.handover.place
     const g = placeGeometry(camera, place)
     const u = this.lay.material.uniforms
@@ -320,13 +420,20 @@ export class Place {
     ;(u.uBall!.value as THREE.Vector4).set(g.c, g.radius, g.heights, g.distance)
     ;(u.uHorizon!.value as THREE.Vector4).set(g.up.x, g.up.y, g.up.z, g.sinDipTwin)
     u.uSinDip!.value = g.sinDip
-    const feather = (px: number): number => 1 / Math.max(c.edge * (px * l.scale - 1), 1e-3)
-    ;(u.uFeather!.value as THREE.Vector4).set(feather(l.left), feather(l.right), feather(l.bottom), feather(l.top))
+    const lifted = g.reach > 0
+    ;(u.uLimb!.value as THREE.Vector4).set(lifted ? g.limb.x : 0, lifted ? g.limb.y : 0, lifted ? g.limb.z : 0, lifted ? g.limbDip : 0)
+    ;(u.uReach!.value as THREE.Vector2).set(lifted ? g.reach : 1, lifted ? 1 : 0)
+    ;(u.uHold!.value as THREE.Vector2).set(g.hold[0], g.hold[1])
+    const [inLeft, inRight, inBottom, inTop] = edgeReach(place, l)
+    const feather = (px: number, inward: number): number => 1 / Math.max(c.edge * (px * l.scale - 1) + inward, 1e-3)
+    ;(u.uFeather!.value as THREE.Vector4).set(feather(l.left, inLeft), feather(l.right, inRight), feather(l.bottom, inBottom), feather(l.top, inTop))
     ;(u.uLimits!.value as THREE.Vector4).set(place.weight, place.seen ?? c.seen, place.maxEnlarge ?? config.raw.handover.maxEnlarge, place.enlargeSoft ?? c.enlargeSoft)
     ;(u.uLens!.value as THREE.Vector4).set(vignette * (place.lens ?? c.lens), aspect, grad / l.scale, c.maxGradTexels)
     ;(u.uScale!.value as THREE.Vector2).set(l.scale, MODES[mode])
     ;(u.uDump!.value as THREE.Vector4).set(dump?.x ?? 0, dump?.y ?? 0, target.width, target.height)
     u.uDumpAs!.value = mode === 'picture' && dump ? (dump.what === 'alpha' ? 2 : 1) : 0
+    u.uMatte!.value = matte ?? pic.target.texture
+    u.uMatteOn!.value = matte ? 1 : 0
     const m = this.lay.material
     const plain = mode !== 'beauty'
     m.blending = plain ? THREE.NoBlending : THREE.CustomBlending

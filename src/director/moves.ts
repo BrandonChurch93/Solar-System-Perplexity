@@ -338,6 +338,16 @@ export class StopPlan {
     return this.target(kind, this.coverCenter(seg), time).centre
   }
 
+  // The harness's top down view: a camera straight above the place at the height and with the field of the given pose, looking down, the close
+  // side's heading up in the picture. It turns with the body, so a sheet of it shows one place coming closer.
+  topDown(kind: 'dive' | 'rise', time: number, pose: Pose): Pose {
+    const seg = kind === 'dive' ? this.seg.dive : this.seg.rise
+    if (!seg) throw new Error(this.id + ' has no ' + kind)
+    const t = this.target(kind, this.coverCenter(seg), time)
+    const position = t.centre.clone().multiplyScalar(pose.position.length())
+    return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), t.ahead), vfov: pose.vfov }
+  }
+
   handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep } {
     const base = kind === 'dive' ? config.raw.handover.descent : config.raw.handover.ascent
     const own = this.p.handover?.[kind]?.path
@@ -676,6 +686,29 @@ export class StopPlan {
     return blendPose(held, path, smooth(u / 0.3))
   }
 
+  // The close view of a rise that leaves from the eye of the dive (handover.rise.path.fromDive, off unless the stop asks): the stop's own close
+  // path is led over to the close pose the dive handed over at, complete at the T of the rise and carried on beyond it at the same rate, so the
+  // coast and the glide after T go on in the direction the camera was moving. Without the option the pose comes back untouched.
+  private fromDive(own: Pose, time: number): Pose {
+    const power = this.p.handover?.rise?.path?.fromDive
+    if (power === undefined) return own
+    const h = handoverOf(this.id, 'rise')
+    const d = handoverOf(this.id, 'dive')
+    if (!h || !d) return own
+    const start = this.seg.rise.start
+    const s = (time - start) / (h.time - start)
+    if (!(s > 0)) return own
+    const w = Math.pow(s, power)
+    const to = this.divePose(d.time, 'terrain')
+    const turn = own.quaternion.clone().invert().multiply(to.quaternion)
+    if (turn.w < 0) turn.set(-turn.x, -turn.y, -turn.z, -turn.w)
+    const half = Math.hypot(turn.x, turn.y, turn.z)
+    const angle = 2 * Math.atan2(half, turn.w)
+    const quaternion = own.quaternion.clone()
+    if (half > 1e-12) quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(turn.x, turn.y, turn.z).multiplyScalar(1 / half), angle * w))
+    return { position: own.position.clone().lerp(to.position, w), quaternion, vfov: own.vfov + (to.vfov - own.vfov) * Math.min(w, 1) }
+  }
+
   risePose(time: number, view: ViewKind): Pose {
     const seg = this.seg.rise
     const dur = seg.end - seg.start
@@ -685,11 +718,11 @@ export class StopPlan {
     if (view === 'terrain') {
       const base = this.terrain(time - this.seg.terrain.start)
       const g = Math.pow(ramp(0, f.last, u), 2.2)
-      return {
+      return this.fromDive({
         position: base.position.clone().add(new THREE.Vector3(0, t.exitHeight * g, -t.exitForward * g)),
         quaternion: base.quaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(t.exitPitchDeg) * g)),
         vfov: t.vfov,
-      }
+      }, time)
     }
     if (this.handsOver) return this.ascent(time)
     const settle = this.p.rise.settle

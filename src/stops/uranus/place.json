@@ -1,0 +1,102 @@
+{
+ "measured": "The horizon of references/approved/uranus-close.jpg was fitted as the outline of a sphere seen by a camera of vfov 60 (assets-src/uranus/terrain/fit.py, rms 1.9 px of 2816 x 1584): nadir, angular radius of the limb and from it the height. The Sun pixel (1998, 758) gives the Sun direction; spot and dive.headingDeg in plan.ts were solved so that the world Sun falls on it at the judged terrain frame. This file is printed by assets-src/uranus/place/solve.ts from the plan and the deck, so it follows them.",
+ "frame": 4290,
+ "time": 143.00833333333333,
+ "spinDeg": -8.508333333333326,
+ "vfovDeg": 60,
+ "heightRadii": 0.015132740987382931,
+ "dipDeg": 9.905490834280695,
+ "limbRadiusDeg": 80.09450916571939,
+ "pitchDeg": -12.777039563052409,
+ "rollDeg": -14.026655396160686,
+ "headingFromNorthDeg": -94.22894943070722,
+ "subPoint": {
+  "world": [
+   0.3770454866656656,
+   -0.1604599672340956,
+   0.9121892895119325
+  ],
+  "body": [
+   0.5466842894764845,
+   -0.40385489427248406,
+   0.733510402056269
+  ],
+  "latDeg": -23.819388835528294,
+  "lonDeg": 36.69711189425495
+ },
+ "twin": {
+  "position": [
+   0.3827512183558389,
+   -0.16288816635709313,
+   0.9259932137615814
+  ],
+  "quaternion": [
+   0.7064589513611322,
+   0.3119852108353966,
+   0.3557993616570312,
+   0.526296297256756
+  ]
+ },
+ "horizonArcDeg": 9.905490834280695,
+ "groundArcDeg": {
+  "bottomLeft": 1.0139760054548173,
+  "bottomCentre": 0.9843353463172648,
+  "bottomRight": 2.5597595373352924,
+  "centre": 4.665834429698138
+ },
+ "sun": {
+  "world": [
+   -0.543610995085213,
+   0.7953809928089605,
+   0.2680599975764696
+  ],
+  "fromImage": [
+   -0.5436829669056159,
+   0.7953723375573567,
+   0.2679396875142853
+  ],
+  "gapDeg": 0.008047837734440512,
+  "elevationDeg": -5.052667059489416,
+  "aboveLimbDeg": 4.852823774791279,
+  "screen": [
+   0.7095603161848287,
+   0.4784226023802507
+  ]
+ },
+ "rings": {
+  "latitudeDeg": 46.53598841752215,
+  "seen": [
+   {
+    "radius": 1.6,
+    "lonDeg": 45,
+    "x": 1.036,
+    "y": 0.768,
+    "elevDeg": 0.29
+   }
+  ]
+ },
+ "arcs": {
+  "centre": [
+   -0.12016059926064532,
+   0.11345345685490826,
+   0.7333412720423744
+  ],
+  "centreDistance": 0.751731120659331,
+  "radius": 0.5037599930024852,
+  "normal": [
+   0.670417865464587,
+   -0.5472967358389307,
+   -0.5010051582628253
+  ]
+ },
+ "unit": 0.01513274098738271,
+ "shape": {
+  "polar": 0.9833,
+  "equator": 1.00403,
+  "axisDotUp": 0.38429731624175084
+ },
+ "holdEnd": {
+  "distance": 5.597171574299143,
+  "placeFromCameraAxisDeg": 22.69716672142068
+ }
+}
