@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-23T17:39:22.784Z",
+ "pushed": "2026-11-23T18:05:09.335Z",
  "head": "cf32e781e8a477b80e33d04b50cee47285b5d47a",
- "note": "Tone split (toneIn) with shares 2 and the land band on Mars rise and Mercury dive stills; E4 draft of Mars with it on is rendering",
+ "note": "Tone split parked off for every stop (Mars shares 1 in E4 draft now); E6 capped shutter started",
  "looks": [
+  {
+   "time": "2026-11-23T18:05:08.583Z",
+   "file": "20261123180508583-note-dive-ba-2452.jpg",
+   "source": "../../../../tmp/tone/dive-ba-2452.png",
+   "kind": "note",
+   "label": "Mars dive 2452 before and after the tone split, first form (veil, rejected)"
+  },
+  {
+   "time": "2026-11-23T18:05:07.843Z",
+   "file": "20261123180507843-note-tri-2698s.jpg",
+   "source": "../../../../tmp/tone/tri-2698s.png",
+   "kind": "note",
+   "label": "Mars rise 2698: today, shares 1, globe alone (draft)"
+  },
+  {
+   "time": "2026-11-23T18:05:07.215Z",
+   "file": "20261123180507215-note-tri-2696s.jpg",
+   "source": "../../../../tmp/tone/tri-2696s.png",
+   "kind": "note",
+   "label": "Mars rise 2696, tone split: today, shares 1, shares 2 (draft)"
+  },
+  {
+   "time": "2026-11-23T18:05:06.629Z",
+   "file": "20261123180506629-note-tri-2695s.jpg",
+   "source": "../../../../tmp/tone/tri-2695s.png",
+   "kind": "note",
+   "label": "Mars rise 2695, tone split: today, shares 1, shares 2 (draft)"
+  },
+  {
+   "time": "2026-11-23T18:05:06.029Z",
+   "file": "20261123180506029-note-tri-2452.jpg",
+   "source": "../../../../tmp/tone/tri-2452.png",
+   "kind": "note",
+   "label": "Mars dive 2452, tone split: today, shares 1, shares 2 (draft)"
+  },
   {
    "time": "2026-11-23T17:39:17.972Z",
    "file": "20261123173917972-note-merc-crop-741.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/tone/c-2696d.png",
    "kind": "note",
    "label": "Mars rise 2696: today, tone split shares 2 with land band, globe alone"
-  },
-  {
-   "time": "2026-11-23T17:39:15.299Z",
-   "file": "20261123173915299-note-c-2695d.jpg",
-   "source": "../../../../tmp/tone/c-2695d.png",
-   "kind": "note",
-   "label": "Mars rise 2695: today, tone split shares 2 with land band, globe alone"
-  },
-  {
-   "time": "2026-11-23T17:39:14.309Z",
-   "file": "20261123173914309-note-q-2694d-tr.jpg",
-   "source": "../../../../tmp/tone/q-2694d-tr.png",
-   "kind": "note",
-   "label": "Mars rise 2694 upper right at full size: today, tone split with land band, globe alone (no teal haze)"
-  },
-  {
-   "time": "2026-11-23T17:39:13.374Z",
-   "file": "20261123173913374-note-q-2694d-tl.jpg",
-   "source": "../../../../tmp/tone/q-2694d-tl.png",
-   "kind": "note",
-   "label": "Mars rise 2694 upper left at full size: today, tone split with land band 1 to 6 degrees, globe alone"
-  },
-  {
-   "time": "2026-11-23T17:39:12.455Z",
-   "file": "20261123173912455-note-rise-tone2.jpg",
-   "source": "../../../../tmp/tone/rise-tone2.png",
-   "kind": "note",
-   "label": "Mars rise 2693 to 2698, draft: today above, tone split shares 2 below (before the land band)"
-  },
-  {
-   "time": "2026-11-23T17:17:51.159Z",
-   "file": "20261123171751159-note-merc-today.jpg",
-   "source": "../../../../tmp/tone/merc-today.png",
-   "kind": "note",
-   "label": "Mercury dive 738 to 741 today on the tone tree, draft: the pale four sided outline at the left"
   }
  ]
 }
