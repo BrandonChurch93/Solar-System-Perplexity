@@ -1,74 +1,101 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-23T14:09:34.245Z",
+ "pushed": "2026-11-23T14:34:43.801Z",
  "head": "2aedc0e7b6708ea2a4411a68e6adbabe12b1ba22",
- "note": "14:10 sun 2aedc0e7: ground stream with splits, finer field level in the rise",
+ "note": "sun: handover tool run on 2aedc0e7 (side difference red: mean 9.35, p99 71), frame 360 final byte equal, frame 90 against approved before the fix",
  "looks": [
+  {
+   "time": "2026-11-23T14:34:43.107Z",
+   "file": "20261123143443107-note-p4-feet.jpg",
+   "source": "out/work/sun/life/p4-feet.jpg",
+   "kind": "note",
+   "label": "sun 2aedc0e7 against the approved stills at 60 and 90: feet and ground beside them (before the calm at 90)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-23T14:30:26.008Z",
+   "file": "20261123143026008-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, draft tier, texels view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-23T14:27:44.905Z",
+   "file": "20261123142744905-frame-nolife-orbit.jpg",
+   "source": "out/work/sun/life/sides/nolife-orbit.png",
+   "kind": "frame",
+   "label": "sun.rise frame 216, draft tier, beauty/side=orbit/t=7.208333 view",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 216,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty/side=orbit/t=7.208333",
+   "engine": "ee77572156dd9714"
+  },
+  {
+   "time": "2026-11-23T14:19:19.976Z",
+   "file": "20261123141919976-frame-f360-final.jpg",
+   "source": "out/work/sun/life/f360-final.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, final tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee77572156dd9714"
+  },
+  {
+   "time": "2026-11-23T14:18:23.208Z",
+   "file": "20261123141823208-sheet-sun-rise-draft-after.jpg",
+   "source": "out/work/handover/sun-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 217 to 228 (after T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 217,
+   "last": 228,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T14:18:21.443Z",
+   "file": "20261123141821443-sheet-sun-rise-draft-across.jpg",
+   "source": "out/work/handover/sun-rise-draft-across.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 210 to 221 (across T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 210,
+   "last": 221,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-23T14:18:19.624Z",
+   "file": "20261123141819624-sheet-sun-rise-draft-before.jpg",
+   "source": "out/work/handover/sun-rise-draft-before.png",
+   "kind": "sheet",
+   "label": "sun rise, every frame 204 to 215 (before T, frame 216), draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "first": 204,
+   "last": 215,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-23T14:09:33.542Z",
    "file": "20261123140933542-note-r6-a.jpg",
    "source": "out/work/sun/pl/r6-a.jpg",
    "kind": "note",
    "label": "sun 2aedc0e7 rise, draft, frames 204 to 219 across T (216): field tiles with their finer level, G13 0 soft on 201 to 222 every 3rd",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:09:32.543Z",
-   "file": "20261123140932543-note-h7-split.jpg",
-   "source": "out/work/sun/life/h7-split.jpg",
-   "kind": "note",
-   "label": "sun ground, camera held, frames 90 to 175 every 5th, x 780 y 790: the big dome splits from 110, the bright dome above it from 150",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:09:31.413Z",
-   "file": "20261123140931413-note-h7-ten.jpg",
-   "source": "out/work/sun/life/h7-ten.jpg",
-   "kind": "note",
-   "label": "sun ground, camera held, one crop every 10th frame 0 to 170 (take h7: as 2aedc0e7 but the level lift at 0.045, not 0.11)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:09:30.339Z",
-   "file": "20261123140930339-note-h8-six-b.jpg",
-   "source": "out/work/sun/life/h8-six-b.jpg",
-   "kind": "note",
-   "label": "sun 2aedc0e7, camera held, six frames 90 to 95 at native size, x 150 y 780",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:09:29.329Z",
-   "file": "20261123140929329-note-h8-six-a.jpg",
-   "source": "out/work/sun/life/h8-six-a.jpg",
-   "kind": "note",
-   "label": "sun 2aedc0e7, camera held at 90, six frames 90 to 95 at native size, x 700 y 700; ground 8.97 raw 4.07 blurred",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T14:09:12.345Z",
-   "file": "20261123140912345-compare-sun-rise-sides.jpg",
-   "source": "out/work/handover/sun-rise-sides.png",
-   "kind": "compare",
-   "label": "sun rise, both sides at T (frame 216) and their difference times 8",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 216,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-23T13:54:39.965Z",
-   "file": "20261123135439965-note-h6-split.jpg",
-   "source": "out/work/sun/life/h6-split.jpg",
-   "kind": "note",
-   "label": "sun ground h6, held frames 95 to 170 every 5th, x 780 y 790: the big dome splits, a dark point at 105 grows into a lane by 135",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-23T13:54:39.410Z",
-   "file": "20261123135439410-note-h6-six-b.jpg",
-   "source": "out/work/sun/life/h6-six-b.jpg",
-   "kind": "note",
-   "label": "sun ground h6, six frames 90 to 95 at native size, x 150 y 780",
    "stop": "sun"
   }
  ]
