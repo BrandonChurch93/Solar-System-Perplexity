@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-23T13:54:53.432Z",
+ "pushed": "2026-11-23T14:24:50.305Z",
  "head": "f9007f07a1ffc3c29ef4d022f13b96c432236b2d",
- "note": "mail 276: the hatch is the sand, planks are the wakes; both go, grains as true ice come next",
+ "note": "grains replace blocks and wakes (mail 276 points 1 and 2); proofs rendering, commit follows",
  "looks": [
+  {
+   "time": "2026-11-23T14:24:49.493Z",
+   "file": "20261123142449493-note-look_grains_3809.jpg",
+   "source": "../../../../tmp/v/look_grains_3809.png",
+   "kind": "note",
+   "label": "3809 draft, same grains at the lowest point of the skim"
+  },
+  {
+   "time": "2026-11-23T14:24:48.722Z",
+   "file": "20261123142448722-note-look_grains_3720.jpg",
+   "source": "../../../../tmp/v/look_grains_3720.png",
+   "kind": "note",
+   "label": "3720 draft, grains in place of blocks and wakes: sand that carries the sheet's own depth near the lens, sparse pebbles over the sheet, few chunks; the hatch (sand smeared along the motion) is gone with the sand in the skim"
+  },
+  {
+   "time": "2026-11-23T14:24:47.914Z",
+   "file": "20261123142447914-note-look_iceoff_3720.jpg",
+   "source": "../../../../tmp/v/look_iceoff_3720.png",
+   "kind": "note",
+   "label": "3720 draft with the ice switched off: the sheet alone, ringlets continuous to the bottom edge (planks were the wakes, they are deleted)"
+  },
   {
    "time": "2026-11-23T13:54:52.786Z",
    "file": "20261123135452786-note-bare0_ll.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/b4r/f_3720.png",
    "kind": "note",
    "label": "3720 review tier, blocks fourth version before gathering (17 takes, 5.7 s a take)"
-  },
-  {
-   "time": "2026-11-23T12:58:09.987Z",
-   "file": "20261123125809987-note-c3630_s.jpg",
-   "source": "../../../../tmp/v/b3e/c3630_s.jpg",
-   "kind": "note",
-   "label": "draft 3630, soft shore and floaters, blocks third version"
-  },
-  {
-   "time": "2026-11-23T12:58:08.826Z",
-   "file": "20261123125808826-note-c3720_bl.jpg",
-   "source": "../../../../tmp/v/b3/c3720_bl.png",
-   "kind": "note",
-   "label": "draft 3720 bottom left at native size, blocks third version"
-  },
-  {
-   "time": "2026-11-23T12:58:08.058Z",
-   "file": "20261123125808058-note-c3765_bl.jpg",
-   "source": "../../../../tmp/v/b3e/c3765_bl.png",
-   "kind": "note",
-   "label": "draft 3765 bottom left at native size, blocks third version"
   }
  ]
 }
